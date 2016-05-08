@@ -35,7 +35,7 @@ public class Tile {
    */
   public static final int MAX_WIDTH = 32;
   /**
-   * Tile Maximum heigth
+   * Tile Maximum height
    */
   public static final int MAX_HEIGHT = 32;
 

@@ -52,6 +52,13 @@ public class Tiles {
     return listOfTiles.get(0);
   }
   
+  public static int getMaxTiles() {
+    if (listOfTiles == null) {
+      initTiles();
+    }
+    return listOfTiles.size();
+  }
+  
   private static void initTiles() {
     BufferedImage tilesImage = IOUtilities.loadImage(Tiles.class.getResource(
         "/resources/images/maptiles.png"));

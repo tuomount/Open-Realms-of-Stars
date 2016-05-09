@@ -137,10 +137,10 @@ public class Tiles {
     tile = new Tile(tilesImage, 6, 1,TileNames.GAS_GIANT_2_SE);
     addTile(tile);
     // Reading the rock planet 
-    tile = new Tile(tilesImage, 8, 0,TileNames.ROCK1);
+    tile = new Tile(tilesImage, 7, 0,TileNames.ROCK1);
     addTile(tile);
     // Reading the water planet 
-    tile = new Tile(tilesImage, 9, 0,TileNames.WATERWORLD1);
+    tile = new Tile(tilesImage, 8, 0,TileNames.WATERWORLD1);
     addTile(tile);
   }
   

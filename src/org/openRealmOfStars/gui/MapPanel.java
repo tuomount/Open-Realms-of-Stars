@@ -185,6 +185,11 @@ public class MapPanel extends JPanel {
     int pixelY = viewPointOffsetY;
     for (int j=-viewPointY;j<viewPointY;j++) {
       for (int i=-viewPointX;i<viewPointX;i++) {
+        gr.setColor(Color.blue);
+        gr.drawLine(pixelX, pixelY, pixelX+Tile.MAX_WIDTH, pixelY);
+        gr.drawLine(pixelX, pixelY, pixelX, pixelY+Tile.MAX_HEIGHT);
+        gr.drawLine(pixelX+Tile.MAX_WIDTH, pixelY, pixelX+Tile.MAX_WIDTH, pixelY+Tile.MAX_HEIGHT);
+        gr.drawLine(pixelX, pixelY+Tile.MAX_HEIGHT, pixelX+Tile.MAX_WIDTH, pixelY+Tile.MAX_HEIGHT);
         Tile tile = Tiles.getTileByIndex(map[i+cx][j+cy]);
         if (!tile.getName().equals(TileNames.EMPTY)) {
           // Draw only non empty tiles

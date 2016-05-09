@@ -104,13 +104,62 @@ public class StarMap {
     return false;
   }
   
+  /**
+   * Checks if 3x3 area is empty around the coordinate
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @return true if all are empty false otherwise
+   */
+  private boolean is9NeighboursEmpty(int x, int y) {
+    boolean result = true;
+    for (int i=-1;i<2;i++) {
+      for (int j=-1;j<2;j++) {
+        if (isValidCoordinate(x+i, y+j) && tiles[x+i][y+j]==0) {
+          result = true;
+        } else {
+          return false;
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Checks if 4x4 area is empty around the coordinate.
+   * Note this is not centered. This is more closer
+   * on leftupper corner but not in the corner.
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @return true if all are empty false otherwise
+   */
+  private boolean is16NeighboursEmpty(int x, int y) {
+    boolean result = true;
+    for (int i=-1;i<4;i++) {
+      for (int j=-1;j<4;j++) {
+        if (isValidCoordinate(x+i, y+j) && tiles[x+i][y+j]==0) {
+          result = true;
+        } else {
+          return false;
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Create Solar System
+   * @param sx Sun's about coordinates
+   * @param sy Sun's about coordinates
+   * @param numberOfPlanets Number of planets to Solar System
+   * @param numberOfGasGiants Number of Gas Giants to Solar System
+   */
   private void createSolarSystem(int sx,int sy, int numberOfPlanets, 
       int numberOfGasGiants) {
     if (numberOfPlanets > 5) {
       numberOfPlanets = 5;
     }
     if (numberOfGasGiants > 2) {
-      numberOfPlanets = 2;
+      numberOfGasGiants = 2;
     }
     // The Sun
     sx = sx +DiceGenerator.getRandom(-1, 1);
@@ -128,8 +177,7 @@ public class StarMap {
     while (planets < numberOfPlanets) {
       int px = sx +DiceGenerator.getRandom(-SOLARSYSTEMWIDTH, SOLARSYSTEMWIDTH);
       int py = sy +DiceGenerator.getRandom(-SOLARSYSTEMWIDTH, SOLARSYSTEMWIDTH);
-      if (isValidCoordinate(px, py) && Tiles.getTileByIndex(tiles[px][py]).
-          getName().equalsIgnoreCase(TileNames.EMPTY)) {
+      if (is9NeighboursEmpty(px, py)) {
         switch (DiceGenerator.getRandom(1)) {
         case 0: {
           tiles[px][py] = Tiles.getTileByName(TileNames.ROCK1).getIndex();
@@ -145,14 +193,7 @@ public class StarMap {
     while (gasGiants < numberOfGasGiants) {
       int px = sx +DiceGenerator.getRandom(-SOLARSYSTEMWIDTH, SOLARSYSTEMWIDTH);
       int py = sy +DiceGenerator.getRandom(-SOLARSYSTEMWIDTH, SOLARSYSTEMWIDTH);
-      if (isValidCoordinate(px, py) && Tiles.getTileByIndex(tiles[px][py]).
-          getName().equalsIgnoreCase(TileNames.EMPTY) &&
-          isValidCoordinate(px+1, py) && Tiles.getTileByIndex(tiles[px+1][py]).
-          getName().equalsIgnoreCase(TileNames.EMPTY) &&
-          isValidCoordinate(px, py+1) && Tiles.getTileByIndex(tiles[px][py+1]).
-          getName().equalsIgnoreCase(TileNames.EMPTY) &&
-          isValidCoordinate(px+1, py+1) && Tiles.getTileByIndex(tiles[px+1][py+1]).
-          getName().equalsIgnoreCase(TileNames.EMPTY)) {
+      if (is16NeighboursEmpty(px, py)) {
         switch (DiceGenerator.getRandom(1)) {
         case 0: {
           tiles[px][py] = Tiles.getTileByName(TileNames.GAS_GIANT_1_NW).getIndex();

@@ -83,7 +83,7 @@ public class Game extends JFrame implements ActionListener {
     setSize(1024, 768);
     setLocationRelativeTo(null);
     mapPanel = new MapPanel();
-    starMap = new StarMap(50, 50);    
+    starMap = new StarMap(75, 75);    
     mapPanel.drawMap(starMap,25,25);
     this.setLayout(new BorderLayout());
     this.add(mapPanel,BorderLayout.CENTER);
@@ -110,9 +110,9 @@ public class Game extends JFrame implements ActionListener {
   public void actionPerformed(ActionEvent arg0) {
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_ANIMATION_TIMER)) {
-      mapPanel.drawMap(starMap, x, 25);
+      mapPanel.drawMap(starMap, x, 0);
       x++;
-      if (x > 49) { x= 0;}
+      if (x > starMap.getMaxX()) { x= 0;}
       mapPanel.repaint();
     }
     

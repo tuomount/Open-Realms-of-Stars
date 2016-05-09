@@ -1,4 +1,4 @@
-package org.openRealmOfStars.Gui;
+package org.openRealmOfStars.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,9 +8,10 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.mapTiles.TileNames;
+import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.starMap.StarMap;
-import org.openRealmOfStars.starMap.Tile;
-import org.openRealmOfStars.starMap.Tiles;
 
 /**
  * 
@@ -185,7 +186,10 @@ public class MapPanel extends JPanel {
     for (int j=-viewPointY;j<viewPointY;j++) {
       for (int i=-viewPointX;i<viewPointX;i++) {
         Tile tile = Tiles.getTileByIndex(map[i+cx][j+cy]);
-        tile.draw(gr, pixelX, pixelY);
+        if (!tile.getName().equals(TileNames.EMPTY)) {
+          // Draw only non empty tiles
+          tile.draw(gr, pixelX, pixelY);
+        }
         pixelX=pixelX+Tile.MAX_WIDTH;
       }
       pixelX = viewPointOffsetX;

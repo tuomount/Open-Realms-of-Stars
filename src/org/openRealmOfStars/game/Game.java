@@ -1,4 +1,4 @@
-package org.openRealmOfStars.Game;
+package org.openRealmOfStars.game;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
-import org.openRealmOfStars.Gui.MapPanel;
+import org.openRealmOfStars.gui.MapPanel;
 import org.openRealmOfStars.starMap.StarMap;
 
 /**

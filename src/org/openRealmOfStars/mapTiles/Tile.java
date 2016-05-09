@@ -1,4 +1,4 @@
-package org.openRealmOfStars.starMap;
+package org.openRealmOfStars.mapTiles;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -45,18 +45,30 @@ public class Tile {
   private BufferedImage img;
   
   /**
+   * Tile name
+   */
+  private String name;
+  
+  /**
+   * Tile index in list of tiles
+   */
+  private int Index=-1;
+  
+  /**
    * Get tile from tileset image, where x is number of tiles in X axel and
    * y is number of tiles in y axel.
    * @param tilesetImage BufferedImage
    * @param x X-axel coordinate
    * @param y Y-axel coordinate
+   * @param name Name for the tile
    * @throws RasterFormatExcepition if tile is outside of tileset image.
    */
-  public Tile(BufferedImage tilesetImage,int x, int y) throws 
+  public Tile(BufferedImage tilesetImage,int x, int y,String name) throws 
   RasterFormatException {
     if (x >= 0 && y >= 0 && x*MAX_WIDTH < tilesetImage.getHeight() &&
         y*MAX_HEIGHT < tilesetImage.getHeight()) {
       img = tilesetImage.getSubimage(x*MAX_WIDTH, y*MAX_HEIGHT, MAX_WIDTH, MAX_HEIGHT);
+      this.name =name;
     } else {
       throw new RasterFormatException("Tile is outside of tileset.");
     }
@@ -71,4 +83,21 @@ public class Tile {
   public void draw(Graphics2D g,int x, int y) {
     g.drawImage(img, x, y, null);
   }
+
+  /**
+   * Get the Tile name
+   * @return Name
+   */
+  public String getName() {
+    return name;
+  }
+
+  public int getIndex() {
+    return Index;
+  }
+
+  public void setIndex(int index) {
+    Index = index;
+  }
+
 }

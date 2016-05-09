@@ -1,4 +1,4 @@
-package org.openRealmOfStars.Game;
+package org.openRealmOfStars.game;
 
 /**
  * 

@@ -1,6 +1,9 @@
 package org.openRealmOfStars.starMap;
 
-import org.openRealmOfStars.Utilities.DiceGenerator;
+import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.mapTiles.TileNames;
+import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  * 
@@ -45,9 +48,10 @@ public class StarMap {
     maxX = maxXSize;
     maxY = maxYSize;
     tiles = new int[maxX][maxY];
+    Tile empty = Tiles.getTileByName(TileNames.EMPTY);
     for (int i=0;i<maxX;i++) {
       for (int j=0;j<maxY;j++) {
-        tiles[i][j] = DiceGenerator.getRandom(Tiles.getMaxTiles());
+        tiles[i][j] = empty.getIndex();
       }
     }
   }

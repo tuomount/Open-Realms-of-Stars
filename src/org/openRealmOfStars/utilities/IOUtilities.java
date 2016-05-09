@@ -1,4 +1,4 @@
-package org.openRealmOfStars.Utilities;
+package org.openRealmOfStars.utilities;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

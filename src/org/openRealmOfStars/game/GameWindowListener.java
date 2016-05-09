@@ -1,4 +1,4 @@
-package org.openRealmOfStars.Game;
+package org.openRealmOfStars.game;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

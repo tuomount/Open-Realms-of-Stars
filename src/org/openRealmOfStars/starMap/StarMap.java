@@ -59,6 +59,15 @@ public class StarMap {
   private int cursorY;
   
   /**
+   * Draw X coordinate
+   */
+  private int drawX;
+  /**
+   * Draw Y Coordinate
+   */
+  private int drawY;
+  
+  /**
    * Constructor for StarMap. Generates universum with default settings.
    * @param maxXSize
    * @param maxYSize
@@ -66,6 +75,8 @@ public class StarMap {
   public StarMap(int maxXSize, int maxYSize) {
     maxX = maxXSize;
     maxY = maxYSize;
+    drawX = 0;
+    drawY = 0;
     tiles = new int[maxX][maxY];
     Tile empty = Tiles.getTileByName(TileNames.EMPTY);
     for (int i=0;i<maxX;i++) {
@@ -259,7 +270,7 @@ public class StarMap {
   }
   
   /**
-   * Set cursor cooridnates. Validates coordinate before sets it.
+   * Set cursor coordinates. Validates coordinate before sets it.
    * @param x X coordinate
    * @param y Y coordinate
    */
@@ -268,5 +279,33 @@ public class StarMap {
       cursorX = x;
       cursorY = y;
     }
+  }
+
+  /**
+   * Get Draw X coordinate
+   * @return x coordinate
+   */
+  public int getDrawX() {
+    return drawX;
+  }
+
+  /**
+   * Get Draw Y coordinate
+   * @return y coordinate
+   */
+  public int getDrawY() {
+    return drawY;
+  }
+  
+  /**
+   * Set draw coordinates. Validates coordinate before sets it.
+   * @param x X coordinate
+   * @param y Y coordinate
+   */
+  public void setDrawPos(int x, int y) {
+    if (isValidCoordinate(x, y)) {
+      drawX = x;
+      drawY = y;
+    }    
   }
 }

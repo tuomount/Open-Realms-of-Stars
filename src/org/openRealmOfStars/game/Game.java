@@ -10,6 +10,7 @@ import javax.swing.UIManager;
 
 import org.openRealmOfStars.gui.MapPanel;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapMouseListener;
 
 /**
  * 
@@ -65,8 +66,9 @@ public class Game extends JFrame implements ActionListener {
    * Star map for the game
    */
   private StarMap starMap = null;
+  
+  private StarMapMouseListener starMapMouseListener;
 
-  private int x =0;
   /**
    * Contructor of Game class
    */
@@ -83,8 +85,11 @@ public class Game extends JFrame implements ActionListener {
     setSize(1024, 768);
     setLocationRelativeTo(null);
     mapPanel = new MapPanel();
-    starMap = new StarMap(75, 75);    
-    mapPanel.drawMap(starMap,25,25);
+    starMap = new StarMap(75, 75);
+    mapPanel.drawMap(starMap);
+    starMapMouseListener = new StarMapMouseListener(starMap,mapPanel);
+    mapPanel.addMouseListener(starMapMouseListener);
+    mapPanel.addMouseMotionListener(starMapMouseListener);
     this.setLayout(new BorderLayout());
     this.add(mapPanel,BorderLayout.CENTER);
     animationTimer = new Timer(75,this);
@@ -110,10 +115,10 @@ public class Game extends JFrame implements ActionListener {
   public void actionPerformed(ActionEvent arg0) {
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_ANIMATION_TIMER)) {
-      starMap.setCursorPos(x, 0);
-      mapPanel.drawMap(starMap, x, 0);
-      x++;
-      if (x > starMap.getMaxX()) { x= 0;}
+      if (starMapMouseListener != null) {
+        starMapMouseListener.updateScrollingIfOnBorder();
+      }
+      mapPanel.drawMap(starMap);
       mapPanel.repaint();
     }
     

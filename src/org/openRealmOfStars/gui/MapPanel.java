@@ -87,6 +87,15 @@ public class MapPanel extends JPanel {
    */
   private boolean flickerGoUp=true;
   
+  /**
+   * Last drawn map center coordinate on x axel
+   */
+  private int lastDrawnCenterX;
+  /**
+   * Last drawn map center coordinate on y axel
+   */
+  private int lastDrawnCenterY;
+  
   public MapPanel() {
     screen = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
     Dimension size = new Dimension(WIDTH, HEIGHT);
@@ -165,7 +174,11 @@ public class MapPanel extends JPanel {
     }
   }
   
-  public void drawMap(StarMap starMap, int x, int y) {
+  /**
+   * Draw star map to Map panel
+   * @param starMap Star map to draw
+   */
+  public void drawMap(StarMap starMap) {
     if (screen == null) {
       calculateViewPoints();
       if (this.getWidth() > 0 && this.getHeight() > 0) {
@@ -178,8 +191,8 @@ public class MapPanel extends JPanel {
     gr.setColor(new Color(0,0,0));
     gr.fillRect(0, 0, screen.getWidth(), screen.getHeight());
     // Center coordinates
-    int cx = x;
-    int cy = y;
+    int cx = starMap.getDrawX();
+    int cy = starMap.getDrawY();
     if (cx < viewPointX) {
       cx = viewPointX;
     }
@@ -192,6 +205,8 @@ public class MapPanel extends JPanel {
     if (cy > starMap.getMaxY()-viewPointY-1) {
       cy = starMap.getMaxY()-viewPointY-1;
     }
+    lastDrawnCenterX = cx;
+    lastDrawnCenterY = cy;
     int scaled = 16*(flickerBlue-128)/256;
     Color colorDarkBlue = new Color(0, 118+scaled, 150+scaled);
     Color colorFlickerBlue = new Color(0, 0, 16);
@@ -257,4 +272,28 @@ public class MapPanel extends JPanel {
     }
   }
   
+  public int getLastDrawnX() {
+    return lastDrawnCenterX;
+  }
+  
+  public int getLastDrawnY() {
+    return lastDrawnCenterY;
+  }
+  
+  public int getOffsetX() {
+    return viewPointOffsetX;
+  }
+
+  public int getOffsetY() {
+    return viewPointOffsetY;
+  }
+
+  public int getViewPointX() {
+    return viewPointX;
+  }
+
+  public int getViewPointY() {
+    return viewPointY;
+  }
+
 }

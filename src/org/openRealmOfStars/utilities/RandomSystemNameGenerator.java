@@ -81,4 +81,27 @@ public class RandomSystemNameGenerator {
       }
     return sb.toString();
   }
+  
+  /**
+   * Converts integer into Roman number. Integer can be between 1-10.
+   * @param i Integer to conver
+   * @return String with Roman number.
+   */
+  public static String numberToRoman(int i) {
+    String result = "I";
+    switch (i) {
+    case 1: result = "I"; break;
+    case 2: result = "II"; break;
+    case 3: result = "III"; break;
+    case 4: result = "IV"; break;
+    case 5: result = "V"; break;
+    case 6: result = "VI"; break;
+    case 7: result = "VII"; break;
+    case 8: result = "VIII"; break;
+    case 9: result = "IX"; break;
+    case 10: result = "X"; break;
+    default: result = "I"; break;
+    }
+    return result;
+  }
 }

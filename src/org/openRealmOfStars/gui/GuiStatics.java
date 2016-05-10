@@ -44,8 +44,13 @@ public class GuiStatics {
       BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 1, new float[]{1f}, 0);
 
   /**
-   * Line type for text background, opactity 230.
+   * Sun Line type for text background, opacity 230.
    */
   public final static Color COLOR_GOLD = new Color(210, 181, 44, 230);
+
+  /**
+   * Planet Line type for text background, opacity 65.
+   */
+  public final static Color COLOR_GREYBLUE = new Color(180, 180, 200, 65);
 
 }

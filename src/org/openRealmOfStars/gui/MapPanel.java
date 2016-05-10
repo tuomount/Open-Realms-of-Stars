@@ -8,15 +8,16 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
-import javax.naming.TimeLimitExceededException;
 import javax.swing.JPanel;
 
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.starMap.Planet;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
 /**
  * 
@@ -250,8 +251,10 @@ public class MapPanel extends JPanel {
     int pixelY = viewPointOffsetY;
     for (int j=-viewPointY;j<viewPointY+1;j++) {
       for (int i=-viewPointX;i<viewPointX+1;i++) {
-        Stroke dashed = new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL, 1, new float[]{0.1f,4.5f}, 0);
-        Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL, 1, new float[]{1f}, 0);
+        Stroke dashed = new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.
+            JOIN_BEVEL, 1, new float[]{0.1f,4.5f}, 0);
+        Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.
+            JOIN_BEVEL, 1, new float[]{1f}, 0);
         if (i+cx == starMap.getCursorX() && j+cy == starMap.getCursorY()) {
           gr.setStroke(full);
           gr.setColor(colorFlickerBlue);
@@ -260,9 +263,11 @@ public class MapPanel extends JPanel {
           // Left line          
           gr.drawLine(pixelX, pixelY, pixelX, pixelY+Tile.MAX_HEIGHT-1);
           // Right line
-          gr.drawLine(pixelX+Tile.MAX_WIDTH-1, pixelY, pixelX+Tile.MAX_WIDTH-1, pixelY+Tile.MAX_HEIGHT-1);
+          gr.drawLine(pixelX+Tile.MAX_WIDTH-1, pixelY, pixelX+Tile.MAX_WIDTH-1,
+              pixelY+Tile.MAX_HEIGHT-1);
           // Bottom line
-          gr.drawLine(pixelX, pixelY+Tile.MAX_HEIGHT-1, pixelX+Tile.MAX_WIDTH-1, pixelY+Tile.MAX_HEIGHT-1);
+          gr.drawLine(pixelX, pixelY+Tile.MAX_HEIGHT-1, pixelX+Tile.MAX_WIDTH-1,
+              pixelY+Tile.MAX_HEIGHT-1);
           gr.setStroke(dashed);
           gr.setColor(colorDarkBlue);
         } else {
@@ -271,11 +276,13 @@ public class MapPanel extends JPanel {
         }
         if (i!=viewPointX) {
           // Right line
-          gr.drawLine(pixelX+Tile.MAX_WIDTH-1, pixelY, pixelX+Tile.MAX_WIDTH-1, pixelY+Tile.MAX_HEIGHT-1);
+          gr.drawLine(pixelX+Tile.MAX_WIDTH-1, pixelY, pixelX+Tile.MAX_WIDTH-1,
+              pixelY+Tile.MAX_HEIGHT-1);
         }
         if (j!=viewPointY) {
           // Bottom line
-          gr.drawLine(pixelX, pixelY+Tile.MAX_HEIGHT-1, pixelX+Tile.MAX_WIDTH-1, pixelY+Tile.MAX_HEIGHT-1);
+          gr.drawLine(pixelX, pixelY+Tile.MAX_HEIGHT-1, pixelX+Tile.MAX_WIDTH-1,
+              pixelY+Tile.MAX_HEIGHT-1);
         }
         Tile tile = Tiles.getTileByIndex(map[i+cx][j+cy]);
         if (!tile.getName().equals(TileNames.EMPTY)) {
@@ -284,16 +291,54 @@ public class MapPanel extends JPanel {
         }
         if (tile.getName().equals(TileNames.SUN_E) && i > -viewPointX+1) {
           Sun sun = starMap.getSunByCoordinate(i+cx, j+cy);
-          int textWidth = (int) GuiStatics.FONT_SMALL.getStringBounds(
+          if (sun != null) {
+            int textWidth = (int) GuiStatics.FONT_SMALL.getStringBounds(
               sun.getName(), gr.getFontRenderContext()).getWidth();
-          int offset = Tile.MAX_WIDTH/2+textWidth/2-2;
-          gr.setStroke(GuiStatics.TEXT_LINE);
-          gr.setColor(GuiStatics.COLOR_GOLD);
-          gr.drawLine(pixelX-offset, pixelY+Tile.MAX_HEIGHT/2-3,
+            int offset = Tile.MAX_WIDTH/2+textWidth/2-2;
+            gr.setStroke(GuiStatics.TEXT_LINE);
+            gr.setColor(GuiStatics.COLOR_GOLD);
+            gr.drawLine(pixelX-offset, pixelY+Tile.MAX_HEIGHT/2-3,
               pixelX-Tile.MAX_WIDTH+offset, pixelY+Tile.MAX_HEIGHT/2-3);
-          gr.setColor(Color.BLACK);
-          gr.setFont(GuiStatics.FONT_SMALL);
-          gr.drawString(sun.getName(), pixelX-Tile.MAX_WIDTH/2-textWidth/2, pixelY+Tile.MAX_HEIGHT/2);
+            gr.setColor(Color.BLACK);
+            gr.setFont(GuiStatics.FONT_SMALL);
+            gr.drawString(sun.getName(), pixelX-Tile.MAX_WIDTH/2-textWidth/2, 
+                pixelY+Tile.MAX_HEIGHT/2);
+          }
+        }
+        if ((tile.getName().equals(TileNames.GAS_GIANT_1_SE) && i > -viewPointX) ||
+            (tile.getName().equals(TileNames.GAS_GIANT_2_SE) && i > -viewPointX )) {
+          Planet planet = starMap.getPlanetByCoordinate(i+cx, j+cy);
+          if (planet != null) {
+            int textWidth = (int) GuiStatics.FONT_SMALL.getStringBounds(
+                RandomSystemNameGenerator.numberToRoman(planet.getOrderNumber()),
+                gr.getFontRenderContext()).getWidth();
+              int offset = textWidth/2-2;
+              gr.setStroke(GuiStatics.TEXT_LINE);
+              gr.setColor(GuiStatics.COLOR_GREYBLUE);
+              gr.drawLine(pixelX-offset, pixelY-3,
+                pixelX+offset, pixelY-3);
+              gr.setColor(Color.BLACK);
+              gr.setFont(GuiStatics.FONT_SMALL);
+              gr.drawString(RandomSystemNameGenerator.numberToRoman(planet.
+                  getOrderNumber()), pixelX-textWidth/2, pixelY);
+            
+          }
+        }
+        Planet planet = starMap.getPlanetByCoordinate(i+cx, j+cy);
+        if (planet != null && !planet.isGasGiant()) {
+          int textWidth = (int) GuiStatics.FONT_SMALL.getStringBounds(
+              RandomSystemNameGenerator.numberToRoman(planet.getOrderNumber()),
+              gr.getFontRenderContext()).getWidth();
+            int offset = Tile.MAX_WIDTH/2-textWidth/2-2;
+            gr.setStroke(GuiStatics.TEXT_LINE);
+            gr.setColor(GuiStatics.COLOR_GREYBLUE);
+            gr.drawLine(pixelX+offset, pixelY+Tile.MAX_HEIGHT/2-3,
+              pixelX+Tile.MAX_WIDTH-offset, pixelY+Tile.MAX_HEIGHT/2-3);
+            gr.setColor(Color.BLACK);
+            gr.setFont(GuiStatics.FONT_SMALL);
+            gr.drawString(RandomSystemNameGenerator.numberToRoman(planet.
+                getOrderNumber()), pixelX+Tile.MAX_WIDTH/2-textWidth/2, pixelY+Tile.MAX_HEIGHT/2);
+          
         }
         pixelX=pixelX+Tile.MAX_WIDTH;
       }

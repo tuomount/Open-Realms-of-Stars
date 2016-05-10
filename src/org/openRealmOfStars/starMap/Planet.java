@@ -1,5 +1,8 @@
 package org.openRealmOfStars.starMap;
 
+import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
+
 /**
  * 
  * Open Realm of Stars game project
@@ -31,6 +34,11 @@ public class Planet {
   private String name;
   
   /**
+   * Planet order number in system
+   */
+  private int OrderNumber;
+  
+  /**
    * Planet's radioation level between 1-10.
    */
   private int radiationLevel;
@@ -51,6 +59,41 @@ public class Planet {
    * How much metal has been mined and available to use
    */
   private int metal;
+  
+  /**
+   * Is planet inhabitable gas giant. Gas giants just block the radar.
+   */
+  private boolean gasGiant;
+  
+  /**
+   * Planet's x coordinate. On gas giant this left upper corner.
+   */
+  private int x;
+  /**
+   * Planet's y coordinate. On gas giant this left upper corner.
+   */
+  private int y;
+  
+  /**
+   * Create random planet with name + orderNumber with Roman numbers.
+   * Other planet attributes are randomized.
+   * @param x Planet's X coordinate
+   * @param y Planet's Y coordinate
+   * @param name Planet name
+   * @param orderNumber as integer
+   * @param gasGiant Is planet inhabitable gas giant
+   */
+  public Planet(int x, int y,String name,int orderNumber,boolean gasGiant) {
+    this.setX(x);
+    this.setY(y);
+    this.name = name+" "+RandomSystemNameGenerator.numberToRoman(orderNumber);
+    this.setOrderNumber(orderNumber);
+    this.setRadiationLevel(DiceGenerator.getRandom(1, 10));
+    this.setAmountMetalInGround(DiceGenerator.getRandom(2000,10000));
+    this.setGroundSize(DiceGenerator.getRandom(7,16));
+    this.setMetal(0);
+    this.gasGiant = gasGiant;
+  }
 
   public String getName() {
     return name;
@@ -65,7 +108,9 @@ public class Planet {
   }
 
   public void setRadiationLevel(int radiationLevel) {
-    this.radiationLevel = radiationLevel;
+    if (radiationLevel > 0 && radiationLevel < 11) {
+      this.radiationLevel = radiationLevel;
+    }
   }
 
   public int getGroundSize() {
@@ -73,7 +118,9 @@ public class Planet {
   }
 
   public void setGroundSize(int groundSize) {
-    this.groundSize = groundSize;
+    if (radiationLevel > 6 && radiationLevel < 17) {
+      this.groundSize = groundSize;
+    }
   }
 
   public int getAmountMetalInGround() {
@@ -81,7 +128,9 @@ public class Planet {
   }
 
   public void setAmountMetalInGround(int amountMetalInGround) {
-    this.amountMetalInGround = amountMetalInGround;
+    if (radiationLevel > 1999 && radiationLevel < 10001) {
+      this.amountMetalInGround = amountMetalInGround;
+    }
   }
 
   public int getMetal() {
@@ -90,6 +139,38 @@ public class Planet {
 
   public void setMetal(int metal) {
     this.metal = metal;
+  }
+
+  public int getOrderNumber() {
+    return OrderNumber;
+  }
+
+  public void setOrderNumber(int orderNumber) {
+    OrderNumber = orderNumber;
+  }
+
+  public boolean isGasGiant() {
+    return gasGiant;
+  }
+
+  public void setGasGiant(boolean gasGiant) {
+    this.gasGiant = gasGiant;
+  }
+
+  public int getX() {
+    return x;
+  }
+
+  public void setX(int x) {
+    this.x = x;
+  }
+
+  public int getY() {
+    return y;
+  }
+
+  public void setY(int y) {
+    this.y = y;
   }
   
   

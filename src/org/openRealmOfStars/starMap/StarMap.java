@@ -71,8 +71,16 @@ public class StarMap {
    */
   private int drawY;
   
+  /**
+   * List of suns in starmap
+   */
   private ArrayList<Sun> sunList;
-  
+
+  /**
+   * List of planets in starmap
+   */
+  private ArrayList<Planet> planetList;
+
   /**
    * Constructor for StarMap. Generates universum with default settings.
    * @param maxXSize
@@ -86,6 +94,7 @@ public class StarMap {
     tiles = new int[maxX][maxY];
     tileInfo = new SquareInfo[maxX][maxY];
     sunList = new ArrayList<>();
+    planetList = new ArrayList<>();
     Tile empty = Tiles.getTileByName(TileNames.EMPTY);
     for (int i=0;i<maxX;i++) {
       for (int j=0;j<maxY;j++) {
@@ -220,15 +229,20 @@ public class StarMap {
       int px = sx +DiceGenerator.getRandom(-SOLARSYSTEMWIDTH, SOLARSYSTEMWIDTH);
       int py = sy +DiceGenerator.getRandom(-SOLARSYSTEMWIDTH, SOLARSYSTEMWIDTH);
       if (is9NeighboursEmpty(px, py)) {
+        planets++;
+        Planet planet = new Planet(px,py,sun.getName(),planets,false);
+        planetList.add(planet);
+        int planetNumber = planetList.size()-1;
+        info = new SquareInfo(SquareInfo.TYPE_PLANET, planetNumber);
+        tileInfo[px][py] = info;
         switch (DiceGenerator.getRandom(1)) {
         case 0: {
-          tiles[px][py] = Tiles.getTileByName(TileNames.ROCK1).getIndex();
+          tiles[px][py] = Tiles.getTileByName(TileNames.ROCK1).getIndex();         
           break; } 
         case 1: {
           tiles[px][py] = Tiles.getTileByName(TileNames.WATERWORLD1).getIndex();
           break; }
         }
-        planets++;
       }
     }
     int gasGiants = 0;
@@ -236,21 +250,33 @@ public class StarMap {
       int px = sx +DiceGenerator.getRandom(-SOLARSYSTEMWIDTH, SOLARSYSTEMWIDTH);
       int py = sy +DiceGenerator.getRandom(-SOLARSYSTEMWIDTH, SOLARSYSTEMWIDTH);
       if (is16NeighboursEmpty(px, py)) {
+        gasGiants++;
+        Planet planet = new Planet(px,py,sun.getName(),planets+gasGiants,true);
+        planetList.add(planet);
+        int planetNumber = planetList.size()-1;
+        info = new SquareInfo(SquareInfo.TYPE_PLANET, planetNumber);
         switch (DiceGenerator.getRandom(1)) {
         case 0: {
           tiles[px][py] = Tiles.getTileByName(TileNames.GAS_GIANT_1_NW).getIndex();
           tiles[px+1][py] = Tiles.getTileByName(TileNames.GAS_GIANT_1_NE).getIndex();
           tiles[px][py+1] = Tiles.getTileByName(TileNames.GAS_GIANT_1_SW).getIndex();
           tiles[px+1][py+1] = Tiles.getTileByName(TileNames.GAS_GIANT_1_SE).getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px+1][py] = info;
+          tileInfo[px][py+1] = info;
+          tileInfo[px+1][py+1] = info;
           break; } 
         case 1: {
           tiles[px][py] = Tiles.getTileByName(TileNames.GAS_GIANT_2_NW).getIndex();
           tiles[px+1][py] = Tiles.getTileByName(TileNames.GAS_GIANT_2_NE).getIndex();
           tiles[px][py+1] = Tiles.getTileByName(TileNames.GAS_GIANT_2_SW).getIndex();
           tiles[px+1][py+1] = Tiles.getTileByName(TileNames.GAS_GIANT_2_SE).getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px+1][py] = info;
+          tileInfo[px][py+1] = info;
+          tileInfo[px+1][py+1] = info;
           break; }
         }
-        gasGiants++;
       }
     }
   }
@@ -346,4 +372,21 @@ public class StarMap {
     }
     return null;
   }
+  
+  /**
+   * Get Planet by coordinates. If not found then null is returned.
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @return Planet or null
+   */
+  public Planet getPlanetByCoordinate(int x, int y) {
+    if (isValidCoordinate(x, y)) {
+      SquareInfo info = tileInfo[x][y];
+      if (info.getType() == SquareInfo.TYPE_PLANET) {
+        return planetList.get(info.getValue());
+      }
+    }
+    return null;
+  }
+  
 }

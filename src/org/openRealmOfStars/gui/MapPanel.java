@@ -14,6 +14,7 @@ import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
  * 
@@ -96,6 +97,13 @@ public class MapPanel extends JPanel {
    */
   private int lastDrawnCenterY;
   
+  
+  private final static BufferedImage starFieldImage = IOUtilities.loadImage(Tiles.class.getResource(
+      "/resources/images/starfield.png"));
+
+  private final static BufferedImage nebulaeImage = IOUtilities.loadImage(Tiles.class.getResource(
+      "/resources/images/nebulae.png"));
+
   public MapPanel() {
     screen = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
     Dimension size = new Dimension(WIDTH, HEIGHT);
@@ -188,8 +196,6 @@ public class MapPanel extends JPanel {
       }
     }
     Graphics2D gr = screen.createGraphics();
-    gr.setColor(new Color(0,0,0));
-    gr.fillRect(0, 0, screen.getWidth(), screen.getHeight());
     // Center coordinates
     int cx = starMap.getDrawX();
     int cy = starMap.getDrawY();
@@ -205,6 +211,15 @@ public class MapPanel extends JPanel {
     if (cy > starMap.getMaxY()-viewPointY-1) {
       cy = starMap.getMaxY()-viewPointY-1;
     }
+    // -20 for safety
+    int speedX = (nebulaeImage.getWidth()-this.getWidth()-20)/starMap.getMaxX(); 
+    int speedY = (nebulaeImage.getHeight()-this.getHeight()-20)/starMap.getMaxY(); 
+    int speedStarX = (starFieldImage.getWidth()-this.getWidth()-20)/starMap.getMaxX(); 
+    int speedStarY = (starFieldImage.getHeight()-this.getHeight()-20)/starMap.getMaxY(); 
+    // Parallax Scrolling with just two lines!!!
+    gr.drawImage(starFieldImage, -10-cx*speedStarX, -10-cy*speedStarY, null);
+    gr.drawImage(nebulaeImage, -10-cx*speedX, -10-cy*speedY, null);
+    
     lastDrawnCenterX = cx;
     lastDrawnCenterY = cy;
     int scaled = 16*(flickerBlue-128)/256;

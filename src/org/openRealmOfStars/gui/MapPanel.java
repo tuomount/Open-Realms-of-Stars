@@ -8,12 +8,14 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
+import javax.naming.TimeLimitExceededException;
 import javax.swing.JPanel;
 
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -279,6 +281,19 @@ public class MapPanel extends JPanel {
         if (!tile.getName().equals(TileNames.EMPTY)) {
           // Draw only non empty tiles
           tile.draw(gr, pixelX, pixelY);
+        }
+        if (tile.getName().equals(TileNames.SUN_E) && i > -viewPointX+1) {
+          Sun sun = starMap.getSunByCoordinate(i+cx, j+cy);
+          int textWidth = (int) GuiStatics.FONT_SMALL.getStringBounds(
+              sun.getName(), gr.getFontRenderContext()).getWidth();
+          int offset = Tile.MAX_WIDTH/2+textWidth/2-2;
+          gr.setStroke(GuiStatics.TEXT_LINE);
+          gr.setColor(GuiStatics.COLOR_GOLD);
+          gr.drawLine(pixelX-offset, pixelY+Tile.MAX_HEIGHT/2-3,
+              pixelX-Tile.MAX_WIDTH+offset, pixelY+Tile.MAX_HEIGHT/2-3);
+          gr.setColor(Color.BLACK);
+          gr.setFont(GuiStatics.FONT_SMALL);
+          gr.drawString(sun.getName(), pixelX-Tile.MAX_WIDTH/2-textWidth/2, pixelY+Tile.MAX_HEIGHT/2);
         }
         pixelX=pixelX+Tile.MAX_WIDTH;
       }

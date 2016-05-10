@@ -1,0 +1,84 @@
+package org.openRealmOfStars.utilities;
+/**
+ * 
+ * Open Realm of Stars game project
+ * Copyright (C) 2016  Tuomo Untinen
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see http://www.gnu.org/licenses/
+ * 
+ * 
+ * Random System name Generator AKA Sun name generator
+ * 
+ */
+
+public class RandomSystemNameGenerator {
+
+  /**
+   * List of all greek alphabets
+   */
+  private static final String[] GREEK_ALPHABET = {"Alpha","Beta","Gamma",
+      "Delta","Epsilon","Zeta","Eta","Theta","Iota","Kappa","Lambda",
+      "Mu","Nu","Xi","Omicron","Pi","Rho","Sigma","Tau","Upsilon","Phi",
+      "Chi","Psi","Omega"};
+  
+  /**
+   * First parts of name list
+   */
+  private static final String[] FIRST_PART = {"Eri","Cas","Scor","Crux","Can",
+      "Leo","Tau","Ly","And","Vir","Aqua","Cyg","Cor","Cep","Grus","Dra","Cap",
+      "Per","Pe","Au","Ge","Co","Cra","Sag","Or","Hy","Pis","Lynx","Aqu","Ser",
+      "Pho","Le","Boo","Ce","Ar","Ca","Op","Del","Her","Vul","Pa","Lib","Cen",
+      "Bo"};
+
+  /**
+   * Second parts of name list
+   */
+  private static final String[] SECOND_PART = {"da","sio","pius","cer",
+      "rus","ra","rome","go","rius","nus","vus","heus","co","ri","tau","re",
+      "seus","ga","mi","lum","ter","itta","ion","dra","ces","ila","pens",
+      "enix","pus","tes","tus","ies","rina","hiu","phi","cu","pe","vo","ra"};
+
+  /**
+   * Third parts of name list
+   */
+  private static final String[] THIRD_PART = {"nus","peia",
+      "da","nis","chus","ni","rum","li","e","sus","ga","les",
+      "cula","si","rus","ri","na","nae","alis","chus","rius"};
+
+  /**
+   * Generate random system name
+   * @return Randomized System name
+   */
+  public static String generate() {
+    StringBuilder sb = new StringBuilder();
+      sb.append(GREEK_ALPHABET[DiceGenerator.getRandom(GREEK_ALPHABET.length-1)]);
+      sb.append(" ");
+      int parts = 1;
+      int random = DiceGenerator.getRandom(100);
+      if (random > 30) {
+        parts = 2;
+      }
+      if (random > 80) {
+        parts = 3;
+      }
+      sb.append(FIRST_PART[DiceGenerator.getRandom(FIRST_PART.length-1)]);
+      if (parts > 1) {
+        sb.append(SECOND_PART[DiceGenerator.getRandom(SECOND_PART.length-1)]);
+      }
+      if (parts > 2 && sb.toString().length() < 12) {
+        sb.append(THIRD_PART[DiceGenerator.getRandom(THIRD_PART.length-1)]);
+      }
+    return sb.toString();
+  }
+}

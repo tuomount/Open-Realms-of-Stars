@@ -1,5 +1,7 @@
 package org.openRealmOfStars.starMap;
 
+import java.util.ArrayList;
+
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
@@ -44,6 +46,8 @@ public class StarMap {
    */
   private int tiles[][];
   
+  private SquareInfo tileInfo[][];
+  
   /**
    * Solar system width
    */
@@ -67,6 +71,8 @@ public class StarMap {
    */
   private int drawY;
   
+  private ArrayList<Sun> sunList;
+  
   /**
    * Constructor for StarMap. Generates universum with default settings.
    * @param maxXSize
@@ -78,10 +84,13 @@ public class StarMap {
     drawX = 0;
     drawY = 0;
     tiles = new int[maxX][maxY];
+    tileInfo = new SquareInfo[maxX][maxY];
+    sunList = new ArrayList<>();
     Tile empty = Tiles.getTileByName(TileNames.EMPTY);
     for (int i=0;i<maxX;i++) {
       for (int j=0;j<maxY;j++) {
         tiles[i][j] = empty.getIndex();
+        tileInfo[i][j] = SquareInfo.EMPTY_TILE;
       }
     }
     // First starting Systems
@@ -184,6 +193,19 @@ public class StarMap {
     // The Sun
     sx = sx +DiceGenerator.getRandom(-1, 1);
     sy = sy +DiceGenerator.getRandom(-1, 1);
+    Sun sun = new Sun(sx, sy, null);
+    sunList.add(sun);
+    int sunNumber = sunList.size()-1;
+    SquareInfo info = new SquareInfo(SquareInfo.TYPE_SUN, sunNumber);
+    tileInfo[sx-1][sy-1] = info;
+    tileInfo[sx][sy-1] = info;
+    tileInfo[sx+1][sy-1] = info;
+    tileInfo[sx-1][sy] = info;
+    tileInfo[sx][sy] = info;
+    tileInfo[sx+1][sy] = info;
+    tileInfo[sx-1][sy+1] = info;
+    tileInfo[sx][sy+1] = info;
+    tileInfo[sx+1][sy+1] = info;
     tiles[sx][sy] = Tiles.getTileByName(TileNames.SUN_C).getIndex();
     tiles[sx-1][sy-1] = Tiles.getTileByName(TileNames.SUN_NW).getIndex();
     tiles[sx][sy-1] = Tiles.getTileByName(TileNames.SUN_N).getIndex();
@@ -307,5 +329,21 @@ public class StarMap {
       drawX = x;
       drawY = y;
     }    
+  }
+  
+  /**
+   * Get Sun by coordinates. If not found then null is returned.
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @return Sun or null
+   */
+  public Sun getSunByCoordinate(int x, int y) {
+    if (isValidCoordinate(x, y)) {
+      SquareInfo info = tileInfo[x][y];
+      if (info.getType() == SquareInfo.TYPE_SUN) {
+        return sunList.get(info.getValue());
+      }
+    }
+    return null;
   }
 }

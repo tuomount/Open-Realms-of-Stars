@@ -85,7 +85,7 @@ public class Game extends JFrame implements ActionListener {
     setSize(1024, 768);
     setLocationRelativeTo(null);
     mapPanel = new MapPanel();
-    starMap = new StarMap(255, 255);
+    starMap = new StarMap(75, 75);
     mapPanel.drawMap(starMap);
     starMapMouseListener = new StarMapMouseListener(starMap,mapPanel);
     mapPanel.addMouseListener(starMapMouseListener);

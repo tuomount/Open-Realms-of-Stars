@@ -110,6 +110,7 @@ public class Game extends JFrame implements ActionListener {
   public void actionPerformed(ActionEvent arg0) {
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_ANIMATION_TIMER)) {
+      starMap.setCursorPos(x, 0);
       mapPanel.drawMap(starMap, x, 0);
       x++;
       if (x > starMap.getMaxX()) { x= 0;}

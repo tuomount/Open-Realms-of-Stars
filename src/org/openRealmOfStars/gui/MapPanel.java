@@ -1,9 +1,11 @@
 package org.openRealmOfStars.gui;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -74,6 +76,16 @@ public class MapPanel extends JPanel {
    * Where the map is actually drawn
    */
   private BufferedImage screen;
+  
+  /**
+   * Value used to create flickering blue grid
+   */
+  private int flickerBlue=64;
+  
+  /**
+   * Is flicker value moving up 
+   */
+  private boolean flickerGoUp=true;
   
   public MapPanel() {
     screen = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
@@ -171,25 +183,68 @@ public class MapPanel extends JPanel {
     if (cx < viewPointX) {
       cx = viewPointX;
     }
-    if (cx > starMap.getMaxX()-viewPointX) {
-      cx = starMap.getMaxX()-viewPointX;
+    if (cx > starMap.getMaxX()-viewPointX-1) {
+      cx = starMap.getMaxX()-viewPointX-1;
     }
     if (cy < viewPointY) {
       cy = viewPointY;
     }
-    if (cy > starMap.getMaxY()-viewPointY) {
-      cy = starMap.getMaxY()-viewPointY;
+    if (cy > starMap.getMaxY()-viewPointY-1) {
+      cy = starMap.getMaxY()-viewPointY-1;
     }
+    int scaled = 16*(flickerBlue-128)/256;
+    Color colorDarkBlue = new Color(0, 118+scaled, 150+scaled);
+    Color colorFlickerBlue = new Color(0, 0, 16);
+    if (flickerBlue < 256) {
+      colorFlickerBlue = new Color(0, 0, flickerBlue);
+    } else {
+      int above = flickerBlue -256;
+      colorFlickerBlue = new Color(above, above, 255);
+    }
+    if (flickerGoUp) {
+      flickerBlue = flickerBlue +16;
+    } else {
+      flickerBlue = flickerBlue -16;
+    }
+    if (flickerBlue > 384) {
+      flickerGoUp = false;
+    }
+    if (flickerBlue < 128) {
+      flickerGoUp = true;
+    }
+
     int[][] map = starMap.getTiles();
     int pixelX = viewPointOffsetX;
     int pixelY = viewPointOffsetY;
-    for (int j=-viewPointY;j<viewPointY;j++) {
-      for (int i=-viewPointX;i<viewPointX;i++) {
-        gr.setColor(Color.blue);
-        gr.drawLine(pixelX, pixelY, pixelX+Tile.MAX_WIDTH, pixelY);
-        gr.drawLine(pixelX, pixelY, pixelX, pixelY+Tile.MAX_HEIGHT);
-        gr.drawLine(pixelX+Tile.MAX_WIDTH, pixelY, pixelX+Tile.MAX_WIDTH, pixelY+Tile.MAX_HEIGHT);
-        gr.drawLine(pixelX, pixelY+Tile.MAX_HEIGHT, pixelX+Tile.MAX_WIDTH, pixelY+Tile.MAX_HEIGHT);
+    for (int j=-viewPointY;j<viewPointY+1;j++) {
+      for (int i=-viewPointX;i<viewPointX+1;i++) {
+        Stroke dashed = new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL, 1, new float[]{0.1f,4.5f}, 0);
+        Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL, 1, new float[]{1f}, 0);
+        if (i+cx == starMap.getCursorX() && j+cy == starMap.getCursorY()) {
+          gr.setStroke(full);
+          gr.setColor(colorFlickerBlue);
+          // Top line
+          gr.drawLine(pixelX, pixelY, pixelX+Tile.MAX_WIDTH-1, pixelY);
+          // Left line          
+          gr.drawLine(pixelX, pixelY, pixelX, pixelY+Tile.MAX_HEIGHT-1);
+          // Right line
+          gr.drawLine(pixelX+Tile.MAX_WIDTH-1, pixelY, pixelX+Tile.MAX_WIDTH-1, pixelY+Tile.MAX_HEIGHT-1);
+          // Bottom line
+          gr.drawLine(pixelX, pixelY+Tile.MAX_HEIGHT-1, pixelX+Tile.MAX_WIDTH-1, pixelY+Tile.MAX_HEIGHT-1);
+          gr.setStroke(dashed);
+          gr.setColor(colorDarkBlue);
+        } else {
+          gr.setStroke(dashed);
+          gr.setColor(colorDarkBlue);
+        }
+        if (i!=viewPointX) {
+          // Right line
+          gr.drawLine(pixelX+Tile.MAX_WIDTH-1, pixelY, pixelX+Tile.MAX_WIDTH-1, pixelY+Tile.MAX_HEIGHT-1);
+        }
+        if (j!=viewPointY) {
+          // Bottom line
+          gr.drawLine(pixelX, pixelY+Tile.MAX_HEIGHT-1, pixelX+Tile.MAX_WIDTH-1, pixelY+Tile.MAX_HEIGHT-1);
+        }
         Tile tile = Tiles.getTileByIndex(map[i+cx][j+cy]);
         if (!tile.getName().equals(TileNames.EMPTY)) {
           // Draw only non empty tiles

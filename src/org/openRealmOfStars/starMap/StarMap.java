@@ -50,6 +50,15 @@ public class StarMap {
   private final static int SOLARSYSTEMWIDTH = 7;
   
   /**
+   * Cursor X coordinate
+   */
+  private int cursorX;
+  /**
+   * Cursor Y coordinate
+   */
+  private int cursorY;
+  
+  /**
    * Constructor for StarMap. Generates universum with default settings.
    * @param maxXSize
    * @param maxYSize
@@ -233,6 +242,31 @@ public class StarMap {
     return tiles;
   }
 
+  /**
+   * Get cursor X coordinate
+   * @return X coordinate
+   */
+  public int getCursorX() {
+    return cursorX;
+  }
   
+  /**
+   * Get cursor Y coordinate
+   * @return Y coordinate
+   */
+  public int getCursorY() {
+    return cursorY;
+  }
   
+  /**
+   * Set cursor cooridnates. Validates coordinate before sets it.
+   * @param x X coordinate
+   * @param y Y coordinate
+   */
+  public void setCursorPos(int x, int y) {
+    if (isValidCoordinate(x, y)) {
+      cursorX = x;
+      cursorY = y;
+    }
+  }
 }

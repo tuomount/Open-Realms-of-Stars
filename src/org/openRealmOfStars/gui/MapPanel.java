@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.openRealmOfStars.mapTiles.Tile;
@@ -50,9 +51,12 @@ public class MapPanel extends JPanel {
   private static final long serialVersionUID = 1L;
 
   /**
-   * 
+   * Map drawing area size width
    */
   private final static int WIDTH = 864;
+  /**
+   * Map drawing area size height
+   */
   private final static int HEIGHT = 672;
   
   /**
@@ -107,7 +111,7 @@ public class MapPanel extends JPanel {
   private final static BufferedImage nebulaeImage = IOUtilities.loadImage(Tiles.class.getResource(
       "/resources/images/nebulae.png"));
 
-  public MapPanel() {
+  public MapPanel(JFrame parent) {
     screen = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
     Dimension size = new Dimension(WIDTH, HEIGHT);
     this.setSize(size);

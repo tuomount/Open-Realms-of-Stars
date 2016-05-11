@@ -9,6 +9,8 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 
 import org.openRealmOfStars.gui.MapPanel;
+import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
+import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
 
@@ -63,6 +65,11 @@ public class Game extends JFrame implements ActionListener {
   private MapPanel mapPanel;
 
   /**
+   * Infopanel next to starMap
+   */
+  private InfoPanel infoPanel;
+  
+  /**
    * Star map for the game
    */
   private StarMap starMap = null;
@@ -84,14 +91,16 @@ public class Game extends JFrame implements ActionListener {
     addWindowListener(new GameWindowListener());
     setSize(1024, 768);
     setLocationRelativeTo(null);
-    mapPanel = new MapPanel();
+    mapPanel = new MapPanel(this);
     starMap = new StarMap(75, 75);
     mapPanel.drawMap(starMap);
     starMapMouseListener = new StarMapMouseListener(starMap,mapPanel);
     mapPanel.addMouseListener(starMapMouseListener);
     mapPanel.addMouseMotionListener(starMapMouseListener);
+    infoPanel = new EmptyInfoPanel();
     this.setLayout(new BorderLayout());
     this.add(mapPanel,BorderLayout.CENTER);
+    this.add(infoPanel, BorderLayout.EAST);
     animationTimer = new Timer(75,this);
     animationTimer.setActionCommand(GameCommands.COMMAND_ANIMATION_TIMER);
     animationTimer.start();

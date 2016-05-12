@@ -2,12 +2,15 @@ package org.openRealmOfStars.gui.infopanel;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
+
+import org.openRealmOfStars.gui.borders.ScifiBorder;
+
 
 /**
  * 
@@ -38,10 +41,24 @@ public abstract class InfoPanel extends JPanel {
    */
   private static final long serialVersionUID = 1L;
 
+
+  
   public InfoPanel() {
-    this.setBackground(Color.GRAY);
-    this.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+    this.setBackground(Color.BLACK);
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    this.add(Box.createRigidArea(new Dimension(156,50)));
+    this.add(Box.createRigidArea(new Dimension(130,50)));
+    ScifiBorder border = new ScifiBorder(null);
+    this.setBorder(border);
   }
+
+
+  @Override
+  protected void paintComponent(Graphics arg0) {
+    Graphics2D g2d = (Graphics2D)arg0;
+    g2d.setColor(Color.black);
+    g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
+    
+  }
+  
+  
 }

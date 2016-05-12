@@ -104,10 +104,15 @@ public class MapPanel extends JPanel {
    */
   private int lastDrawnCenterY;
   
-  
+  /**
+   * Star field image for parallax scrolling
+   */
   private final static BufferedImage starFieldImage = IOUtilities.loadImage(Tiles.class.getResource(
       "/resources/images/starfield.png"));
 
+  /**
+   * Nebula image for parallax scrolling
+   */
   private final static BufferedImage nebulaeImage = IOUtilities.loadImage(Tiles.class.getResource(
       "/resources/images/nebulae.png"));
 

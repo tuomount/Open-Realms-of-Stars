@@ -1,4 +1,6 @@
 package org.openRealmOfStars.gui.infopanel;
+
+
 /**
  * 
  * Open Realm of Stars game project
@@ -29,6 +31,7 @@ public class EmptyInfoPanel extends InfoPanel {
    */
   private static final long serialVersionUID = 1L;
 
+  
   public EmptyInfoPanel() {
     
   }

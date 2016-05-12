@@ -53,4 +53,9 @@ public class GuiStatics {
    */
   public final static Color COLOR_GREYBLUE = new Color(180, 180, 200, 65);
 
+  /**
+   * Panel background
+   */
+  public final static Color COLOR_SPACE_GREY_BLUE = new Color(81, 87, 133,255);
+
 }

@@ -9,6 +9,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.borders.ScifiBorder;
 
 
@@ -44,10 +45,9 @@ public abstract class InfoPanel extends JPanel {
 
   
   public InfoPanel() {
-    this.setBackground(Color.BLACK);
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     this.add(Box.createRigidArea(new Dimension(130,50)));
-    ScifiBorder border = new ScifiBorder(null);
+    ScifiBorder border = new ScifiBorder("Galactic Info");
     this.setBorder(border);
   }
 
@@ -55,7 +55,7 @@ public abstract class InfoPanel extends JPanel {
   @Override
   protected void paintComponent(Graphics arg0) {
     Graphics2D g2d = (Graphics2D)arg0;
-    g2d.setColor(Color.black);
+    g2d.setColor(GuiStatics.COLOR_SPACE_GREY_BLUE);
     g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
     
   }

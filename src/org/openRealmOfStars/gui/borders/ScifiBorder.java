@@ -27,6 +27,12 @@ public class ScifiBorder extends AbstractBorder
       "/resources/images/panel-corner.png"));
 
   /**
+   * Smaller and square corner piece for info panels
+   */
+  protected final static BufferedImage cornerSmallImage = IOUtilities.loadImage(Tiles.class.getResource(
+      "/resources/images/panel-corner-small.png"));
+
+  /**
    * Title left piece
    */
   protected final static BufferedImage titleLeftImage = IOUtilities.loadImage(Tiles.class.getResource(
@@ -135,11 +141,17 @@ public class ScifiBorder extends AbstractBorder
     g2d.drawLine(x, y+height-1, x+width, y+height-1);
     
     //Corners
-    
-    g2d.drawImage(cornerImage, x, y, null);
-    g2d.drawImage(cornerImage, x+width-cornerImage.getWidth(), y, null);
-    g2d.drawImage(cornerImage, x, y+height-cornerImage.getHeight(), null);
-    g2d.drawImage(cornerImage, x+width-cornerImage.getWidth(), y+height-cornerImage.getHeight(), null);
+    if (height >= cornerImage.getHeight()*2+10) {
+      g2d.drawImage(cornerImage, x, y, null);
+      g2d.drawImage(cornerImage, x+width-cornerImage.getWidth(), y, null);
+      g2d.drawImage(cornerImage, x, y+height-cornerImage.getHeight(), null);
+      g2d.drawImage(cornerImage, x+width-cornerImage.getWidth(), y+height-cornerImage.getHeight(), null);
+    } else {
+      g2d.drawImage(cornerSmallImage, x, y, null);
+      g2d.drawImage(cornerSmallImage, x+width-cornerSmallImage.getWidth(), y, null);
+      g2d.drawImage(cornerSmallImage, x, y+height-cornerSmallImage.getHeight(), null);
+      g2d.drawImage(cornerSmallImage, x+width-cornerSmallImage.getWidth(), y+height-cornerSmallImage.getHeight(), null);      
+    }
     
     if (title != null && !title.isEmpty()) {
       int textWidth = (int) GuiStatics.FONT_SMALL.getStringBounds(title,

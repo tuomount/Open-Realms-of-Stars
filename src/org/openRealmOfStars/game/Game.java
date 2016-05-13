@@ -98,9 +98,11 @@ public class Game extends JFrame implements ActionListener {
     mapPanel.addMouseListener(starMapMouseListener);
     mapPanel.addMouseMotionListener(starMapMouseListener);
     infoPanel = new EmptyInfoPanel();
+    InfoPanel bottomPanel = new EmptyInfoPanel();
     this.setLayout(new BorderLayout());
     this.add(mapPanel,BorderLayout.CENTER);
     this.add(infoPanel, BorderLayout.EAST);
+    this.add(bottomPanel, BorderLayout.SOUTH);
     animationTimer = new Timer(75,this);
     animationTimer.setActionCommand(GameCommands.COMMAND_ANIMATION_TIMER);
     animationTimer.start();

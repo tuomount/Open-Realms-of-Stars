@@ -122,11 +122,9 @@ public class MapPanel extends JPanel {
     this.setSize(size);
     this.setPreferredSize(size);
     this.setMinimumSize(size);
+    this.setMaximumSize(size);
     calculateViewPoints();
-    this.setBackground(Color.blue);
-    Graphics2D gr = screen.createGraphics();
-    gr.setColor(new Color(0,0,0));
-    gr.fillRect(0, 0, screen.getWidth(), screen.getHeight());
+    this.setBackground(Color.black);
   }
   
 

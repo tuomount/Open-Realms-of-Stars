@@ -1,5 +1,7 @@
 package org.openRealmOfStars.starMap;
 
+import org.openRealmOfStars.mapTiles.TileNames;
+import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
@@ -28,6 +30,13 @@ import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
 public class Planet {
 
+  /**
+   * List of Planet tile names for regular planets
+   */
+  public static final int[] PLANET_IMAGE_INDEX = 
+      {Tiles.getTileByName(TileNames.ROCK1).getIndex(),
+       Tiles.getTileByName(TileNames.WATERWORLD1).getIndex()};
+  
   /**
    * Planet name
    */
@@ -75,6 +84,11 @@ public class Planet {
   private int y;
   
   /**
+   * Planet Image Index
+   */
+  private int planetImageIndex;
+  
+  /**
    * Create random planet with name + orderNumber with Roman numbers.
    * Other planet attributes are randomized.
    * @param x Planet's X coordinate
@@ -93,6 +107,7 @@ public class Planet {
     this.setGroundSize(DiceGenerator.getRandom(7,16));
     this.setMetal(0);
     this.gasGiant = gasGiant;
+    this.planetImageIndex = 0;
   }
 
   public String getName() {
@@ -171,6 +186,14 @@ public class Planet {
 
   public void setY(int y) {
     this.y = y;
+  }
+
+  public int getPlanetImageIndex() {
+    return planetImageIndex;
+  }
+
+  public void setPlanetImageIndex(int planetImageIndex) {
+    this.planetImageIndex = planetImageIndex;
   }
   
   

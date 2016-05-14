@@ -231,18 +231,13 @@ public class StarMap {
       if (is9NeighboursEmpty(px, py)) {
         planets++;
         Planet planet = new Planet(px,py,sun.getName(),planets,false);
+        planet.setPlanetImageIndex(Planet.PLANET_IMAGE_INDEX[DiceGenerator.
+                                getRandom(Planet.PLANET_IMAGE_INDEX.length-1)]);
         planetList.add(planet);
         int planetNumber = planetList.size()-1;
         info = new SquareInfo(SquareInfo.TYPE_PLANET, planetNumber);
         tileInfo[px][py] = info;
-        switch (DiceGenerator.getRandom(1)) {
-        case 0: {
-          tiles[px][py] = Tiles.getTileByName(TileNames.ROCK1).getIndex();         
-          break; } 
-        case 1: {
-          tiles[px][py] = Tiles.getTileByName(TileNames.WATERWORLD1).getIndex();
-          break; }
-        }
+        tiles[px][py] = planet.getPlanetImageIndex();
       }
     }
     int gasGiants = 0;

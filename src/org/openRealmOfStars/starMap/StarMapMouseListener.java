@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
 import org.openRealmOfStars.gui.MapPanel;
+import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
 import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
 
 /**
@@ -44,13 +45,20 @@ public class StarMapMouseListener extends MouseAdapter implements
   private MapPanel mapPanel;
   
   /**
+   * Infopanel next to map panel
+   */
+  private MapInfoPanel mapInfoPanel;
+  
+  /**
    * Constructor for StarMap Mouse Listener
    * @param starMap StarMap which to use.
    * @param panel Map Panel where Star Map is being drawn.
    */
-  public StarMapMouseListener(StarMap starMap, MapPanel panel) {
+  public StarMapMouseListener(StarMap starMap, MapPanel panel, MapInfoPanel
+      mapInfoPanel) {
     this.starMap = starMap;
     this.mapPanel = panel;
+    this.mapInfoPanel = mapInfoPanel;
   }
   
   /**
@@ -85,7 +93,7 @@ public class StarMapMouseListener extends MouseAdapter implements
   }
   
   public void mouseMoved(MouseEvent e) {
-      coord= new PixelsToMapCoordinate(mapPanel.getLastDrawnX(),
+    coord= new PixelsToMapCoordinate(mapPanel.getLastDrawnX(),
           mapPanel.getLastDrawnY(),e.getX(),e.getY(),mapPanel.getOffsetX(),mapPanel.getOffsetY(),
           mapPanel.getViewPointX(),mapPanel.getViewPointY());
       if (!coord.isOutOfPanel()) {
@@ -107,4 +115,23 @@ public class StarMapMouseListener extends MouseAdapter implements
       }
   }
 
+  @Override
+  public void mouseClicked(MouseEvent e) {
+    coord= new PixelsToMapCoordinate(mapPanel.getLastDrawnX(),
+        mapPanel.getLastDrawnY(),e.getX(),e.getY(),mapPanel.getOffsetX(),mapPanel.getOffsetY(),
+        mapPanel.getViewPointX(),mapPanel.getViewPointY());
+    if (!coord.isOutOfPanel()) {
+      Planet planet = starMap.getPlanetByCoordinate(coord.getMapX(),
+                                                    coord.getMapY());
+      if (planet != null) {
+        mapInfoPanel.showPlanet(planet);
+      } else {
+        mapInfoPanel.showEmpty();
+      }
+    }
+
+  }
+
+  
+  
 }

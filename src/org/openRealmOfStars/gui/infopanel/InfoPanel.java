@@ -41,22 +41,35 @@ public abstract class InfoPanel extends JPanel {
    */
   private static final long serialVersionUID = 1L;
 
-
+  /**
+   * Border for panel
+   */
+  private ScifiBorder border;
   
+
+  /**
+   * Create info panel
+   */
   public InfoPanel() {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     this.add(Box.createRigidArea(new Dimension(130,50)));
-    ScifiBorder border = new ScifiBorder("Galactic Info");
+    border = new ScifiBorder("Galactic Info");
     this.setBorder(border);
   }
 
+  /**
+   * Set panel title. Set null to remove the title
+   * @param title String or null
+   */
+  public void setTitle(String title) {
+    border.setTitle(title);
+  }
 
   @Override
   protected void paintComponent(Graphics arg0) {
     Graphics2D g2d = (Graphics2D)arg0;
     g2d.setColor(GuiStatics.COLOR_SPACE_GREY_BLUE);
     g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
-    
   }
   
   

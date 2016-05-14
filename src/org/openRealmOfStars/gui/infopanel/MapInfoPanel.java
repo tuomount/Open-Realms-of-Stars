@@ -1,5 +1,13 @@
 package org.openRealmOfStars.gui.infopanel;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
+import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.labels.ImageLabel;
+import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.starMap.Planet;
 
 /**
@@ -33,9 +41,24 @@ public class MapInfoPanel extends InfoPanel {
   private static final long serialVersionUID = 1L;
 
   /**
+   * Image Label for image
+   */
+  private ImageLabel imageLabel;
+  
+  /**
    * Show info about the planet
    */
   private Planet planet;
+  
+  public MapInfoPanel() {
+    BufferedImage img = new BufferedImage(Tile.MAX_WIDTH*2, Tile.MAX_HEIGHT*2,
+        BufferedImage.TYPE_4BYTE_ABGR);
+    imageLabel = new ImageLabel(img, true);
+    Graphics2D g2d = img.createGraphics();
+    g2d.setColor(Color.black);
+    g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
+    this.add(imageLabel);
+  }
   
   /**
    * Show planet on info panel
@@ -43,6 +66,7 @@ public class MapInfoPanel extends InfoPanel {
    */
   public void showPlanet(Planet planet) {
     this.planet = planet;
+    updatePanel();
   }
   
   /**
@@ -50,6 +74,33 @@ public class MapInfoPanel extends InfoPanel {
    */
   public void showEmpty() {
     this.planet = null;
-    
+    updatePanel();
+  }
+  
+  /**
+   * Update panels according set data
+   */
+  public void updatePanel() {
+    if (planet != null) {
+      BufferedImage img = imageLabel.getImage();
+      Tile tile = Tiles.getTileByIndex(planet.getPlanetImageIndex());
+      Graphics2D g2d = img.createGraphics();
+      g2d.setColor(Color.black);
+      g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
+      tile.draw(g2d, Tile.MAX_WIDTH/2, Tile.MAX_HEIGHT/2);
+      imageLabel.setImage(img);
+      setTitle(planet.getName());
+      this.add(imageLabel);
+      this.repaint();
+    } else {
+      setTitle("Galactic info");
+      BufferedImage img = imageLabel.getImage();
+      Graphics2D g2d = img.createGraphics();
+      g2d.setColor(GuiStatics.COLOR_SPACE_GREY_BLUE);
+      g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
+      imageLabel.setImage(img);
+      this.remove(imageLabel);
+      this.repaint();
+    }
   }
 }

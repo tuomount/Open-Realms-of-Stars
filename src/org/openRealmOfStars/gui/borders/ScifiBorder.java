@@ -177,30 +177,37 @@ public class ScifiBorder extends AbstractBorder
       g2d.drawString(title, x+width/2-textWidth/2, y+16);
       
     }
+  }
 
-}
+  /**
+   * Set border title. Title can be removed when
+   * title is set to null
+   * @param title String or null.
+   */
+  public void setTitle(String title) {
+    this.title = title;
+  }
+  
+  @Override
+  public Insets getBorderInsets(Component c)
+  {
+      return (getBorderInsets(c, new Insets(topGap, leftGap, bottomGap, 
+          rightGap)));
+  }
 
+  @Override
+  public Insets getBorderInsets(Component c, Insets insets)
+  {
+      insets.left = leftGap;
+      insets.top = topGap;
+      insets.right = rightGap;
+      insets.bottom = bottomGap;
+      return insets;
+  }
 
-    @Override
-    public Insets getBorderInsets(Component c)
-    {
-        return (getBorderInsets(c, new Insets(topGap, leftGap, bottomGap, 
-            rightGap)));
-    }
-
-    @Override
-    public Insets getBorderInsets(Component c, Insets insets)
-    {
-        insets.left = leftGap;
-        insets.top = topGap;
-        insets.right = rightGap;
-        insets.bottom = bottomGap;
-        return insets;
-    }
-
-    @Override
-    public boolean isBorderOpaque()
-    {
-        return true;
-    }
+  @Override
+  public boolean isBorderOpaque()
+  {
+      return true;
+  }
 }

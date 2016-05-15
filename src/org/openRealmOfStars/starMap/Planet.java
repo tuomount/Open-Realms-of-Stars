@@ -196,6 +196,37 @@ public class Planet {
     this.planetImageIndex = planetImageIndex;
   }
   
+  public String getSizeAsString() {
+    switch (getGroundSize()) {
+    case 7: return "small";
+    case 8: return "small";
+    case 9: return "medium";
+    case 10: return "below average";
+    case 11: return "average";
+    case 12: return "average";
+    case 13: return "above average";
+    case 14: return "large";
+    case 15: return "huge";
+    case 16: return "huge";
+    default: return "small";
+    }
+  }
+  
+  /**
+   * Generate info text
+   * @return String
+   */
+  public String generateInfoText() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(this.getName());
+    sb.append("\n");
+    sb.append("Radiation:");
+    sb.append(getRadiationLevel());
+    sb.append("\n");
+    sb.append("Size:");
+    sb.append(getSizeAsString());
+    return sb.toString();
+  }
   
 
 }

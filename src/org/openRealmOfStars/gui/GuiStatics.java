@@ -59,4 +59,14 @@ public class GuiStatics {
    */
   public final static Color COLOR_SPACE_GREY_BLUE = new Color(81, 87, 133,255);
 
+  /**
+   * Green text dark one
+   */
+  public final static Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 0,255);
+
+  /**
+   * Green text 
+   */
+  public final static Color COLOR_GREEN_TEXT = new Color(4, 186, 0,255);
+
 }

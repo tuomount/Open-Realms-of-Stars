@@ -42,7 +42,7 @@ public class InfoTextArea extends JTextArea {
   /**
   * Y axel offset where to draw text
   */
-  private static final int Y_OFFSET = 5;
+  private static final int Y_OFFSET = 10;
   /**
    * Is cursor blinking
    */
@@ -90,7 +90,7 @@ public class InfoTextArea extends JTextArea {
    * Construct InfoTextArea with defaults.
    */
   public InfoTextArea() {
-    super(20,25);
+    super(17,10);
     this.setForeground(Color.white);
     this.setBackground(Color.BLACK);
     autoScroll = false;
@@ -182,7 +182,7 @@ public class InfoTextArea extends JTextArea {
     int width = getWidth()-inset.left-inset.right;
     int height = getHeight()-inset.top-inset.bottom;
     g.fillRect(sx, sx, width, height);
-    g.setFont(GuiStatics.FONT_NORMAL);
+    g.setFont(GuiStatics.FONT_SMALL);
     if (getText() != null ) {
       StringBuilder sb = new StringBuilder();
       if (autoScroll == false) {
@@ -197,9 +197,9 @@ public class InfoTextArea extends JTextArea {
       if (this.getLineWrap()== true) {
         int lastSpace = -1;
         int rowLen = 0;
-        int maxRowLen = (this.getWidth())/12;
+        int maxRowLen = width/12;
         if (customCharWidth > 0) {
-          maxRowLen = (this.getWidth())/customCharWidth;
+          maxRowLen = width/customCharWidth;
         } 
         for (int i=0;i<sb.length();i++) {
           if (sb.charAt(i)==' ') {
@@ -235,14 +235,20 @@ public class InfoTextArea extends JTextArea {
       }
       String[] texts = sb.toString().split("\n");
       for (int i=0;i<texts.length;i++) {
-        g.setColor(Color.black);
+        g.setColor(GuiStatics.COLOR_GREEN_TEXT_DARK);
         
         if (!smoothScroll) {
-          g.drawString(texts[i], sx+3, sy+i*Y_OFFSET+1+Y_OFFSET);
-          g.setColor(this.getForeground());
+          g.drawString(texts[i], sx+3, sy+i*Y_OFFSET+Y_OFFSET);
+          g.drawString(texts[i], sx+1, sy+i*Y_OFFSET+Y_OFFSET);
+          g.drawString(texts[i], sx+2, sy+i*Y_OFFSET-1+Y_OFFSET);
+          g.drawString(texts[i], sx+2, sy+i*Y_OFFSET+1+Y_OFFSET);
+          g.setColor(GuiStatics.COLOR_GREEN_TEXT);
           g.drawString(texts[i], sx+2, sy+i*Y_OFFSET+Y_OFFSET);
         } else {
-          g.drawString(texts[i], sx+3, sy+i*Y_OFFSET+1+Y_OFFSET-smoothScrollY);
+          g.drawString(texts[i], sx+3, sy+i*Y_OFFSET+Y_OFFSET-smoothScrollY);
+          g.drawString(texts[i], sx+1, sy+i*Y_OFFSET+Y_OFFSET-smoothScrollY);
+          g.drawString(texts[i], sx+2, sy+i*Y_OFFSET-1+Y_OFFSET-smoothScrollY);
+          g.drawString(texts[i], sx+2, sy+i*Y_OFFSET+1+Y_OFFSET-smoothScrollY);
           g.setColor(this.getForeground());
           g.drawString(texts[i], sx+2, sy+i*Y_OFFSET+Y_OFFSET-smoothScrollY);
         }

@@ -99,6 +99,7 @@ public class MapInfoPanel extends InfoPanel {
       tile.draw(g2d, Tile.MAX_WIDTH/2, Tile.MAX_HEIGHT/2);
       imageLabel.setImage(img);
       setTitle(planet.getName());
+      textArea.setText(planet.generateInfoText());
       this.add(imageLabel);
       this.repaint();
     } else {

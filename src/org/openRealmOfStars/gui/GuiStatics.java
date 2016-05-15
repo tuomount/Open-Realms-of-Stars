@@ -48,6 +48,7 @@ public class GuiStatics {
    */
   public final static Color COLOR_GOLD = new Color(210, 181, 44, 230);
 
+
   /**
    * Planet Line type for text background, opacity 65.
    */

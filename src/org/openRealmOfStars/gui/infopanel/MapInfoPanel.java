@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.labels.ImageLabel;
+import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.starMap.Planet;
@@ -46,6 +47,11 @@ public class MapInfoPanel extends InfoPanel {
   private ImageLabel imageLabel;
   
   /**
+   * Text area containing info
+   */
+  private InfoTextArea textArea;
+  
+  /**
    * Show info about the planet
    */
   private Planet planet;
@@ -58,6 +64,9 @@ public class MapInfoPanel extends InfoPanel {
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
     this.add(imageLabel);
+    textArea = new InfoTextArea();
+    textArea.setEditable(false);
+    this.add(textArea);
   }
   
   /**

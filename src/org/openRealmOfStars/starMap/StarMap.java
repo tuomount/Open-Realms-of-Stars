@@ -247,10 +247,11 @@ public class StarMap {
       if (is16NeighboursEmpty(px, py)) {
         gasGiants++;
         Planet planet = new Planet(px,py,sun.getName(),planets+gasGiants,true);
-        planetList.add(planet);
+        planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
+        planetList.add(planet);        
         int planetNumber = planetList.size()-1;
         info = new SquareInfo(SquareInfo.TYPE_PLANET, planetNumber);
-        switch (DiceGenerator.getRandom(1)) {
+        switch (planet.getPlanetImageIndex()) {
         case 0: {
           tiles[px][py] = Tiles.getTileByName(TileNames.GAS_GIANT_1_NW).getIndex();
           tiles[px+1][py] = Tiles.getTileByName(TileNames.GAS_GIANT_1_NE).getIndex();

@@ -143,7 +143,7 @@ public class Planet {
   }
 
   public void setAmountMetalInGround(int amountMetalInGround) {
-    if (radiationLevel > 1999 && radiationLevel < 10001) {
+    if (amountMetalInGround > 1999 && amountMetalInGround < 10001) {
       this.amountMetalInGround = amountMetalInGround;
     }
   }
@@ -196,6 +196,10 @@ public class Planet {
     this.planetImageIndex = planetImageIndex;
   }
   
+  /**
+   * Planet size as string. Size varies from small to huge.
+   * @return String
+   */
   public String getSizeAsString() {
     switch (getGroundSize()) {
     case 7: return "small";
@@ -220,11 +224,21 @@ public class Planet {
     StringBuilder sb = new StringBuilder();
     sb.append(this.getName());
     sb.append("\n");
-    sb.append("Radiation:");
-    sb.append(getRadiationLevel());
-    sb.append("\n");
-    sb.append("Size:");
-    sb.append(getSizeAsString());
+    if (isGasGiant()) {
+      sb.append("\n");
+      sb.append("Gas Giant");
+      sb.append("\n");
+      sb.append("Planet is inhabitable, but planet can block scanners.");
+    } else {
+      sb.append("Radiation:");
+      sb.append(getRadiationLevel());
+      sb.append("\n");
+      sb.append("Size:");
+      sb.append(getSizeAsString());
+      sb.append("\n");
+      sb.append("Metal:");
+      sb.append(getAmountMetalInGround());
+    }
     return sb.toString();
   }
   

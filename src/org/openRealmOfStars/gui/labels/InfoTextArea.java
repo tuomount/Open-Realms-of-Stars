@@ -54,6 +54,11 @@ public class InfoTextArea extends JTextArea {
    * Arrays of string used when scorlling the text
    */
   private String[] scrollText;
+  
+  /**
+   * Text to show in InfoTextArea
+   */
+  private String textToShow;
   /**
    * Number of lines to shown auto scrolling the text
    */
@@ -102,12 +107,27 @@ public class InfoTextArea extends JTextArea {
    */
   public InfoTextArea(String text){
     super(text);
+    textToShow = text;
     this.setForeground(Color.white);
     this.setBackground(Color.BLACK);
     autoScroll = false;
     this.setBorder(new SimpleBorder());
   }
   
+  
+  
+  @Override
+  public String getText() {
+    return textToShow;
+  }
+
+
+  @Override
+  public void setText(String t) {
+    textToShow = t;
+  }
+
+
   /**
    * disable auto scroll
    */
@@ -196,7 +216,7 @@ public class InfoTextArea extends JTextArea {
       if (this.getLineWrap()== true) {
         int lastSpace = -1;
         int rowLen = 0;
-        int maxRowLen = width/12;
+        int maxRowLen = width/6;
         if (customCharWidth > 0) {
           maxRowLen = width/customCharWidth;
         } 

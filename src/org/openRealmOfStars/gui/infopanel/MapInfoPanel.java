@@ -11,6 +11,7 @@ import javax.swing.BoxLayout;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.starMap.Planet;
 
@@ -71,6 +72,7 @@ public class MapInfoPanel extends InfoPanel {
     this.add(Box.createRigidArea(new Dimension(10,10)));
     textArea = new InfoTextArea();
     textArea.setEditable(false);
+    textArea.setLineWrap(true);
     this.add(textArea);
   }
   
@@ -101,7 +103,36 @@ public class MapInfoPanel extends InfoPanel {
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
-      tile.draw(g2d, Tile.MAX_WIDTH/2, Tile.MAX_HEIGHT/2);
+      if (!planet.isGasGiant()) {
+        tile.draw(g2d, Tile.MAX_WIDTH/2, Tile.MAX_HEIGHT/2);
+      } else {
+        switch (planet.getPlanetImageIndex()) {
+        default:
+        case 0: {
+          tile = Tiles.getTileByName(TileNames.GAS_GIANT_1_NW);
+          tile.draw(g2d, 0, 0);
+          tile = Tiles.getTileByName(TileNames.GAS_GIANT_1_NE);
+          tile.draw(g2d, Tile.MAX_WIDTH, 0);
+          tile = Tiles.getTileByName(TileNames.GAS_GIANT_1_SW);
+          tile.draw(g2d, 0,  Tile.MAX_HEIGHT);
+          tile = Tiles.getTileByName(TileNames.GAS_GIANT_1_SE);
+          tile.draw(g2d, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+
+          break;
+        }
+        case 1: {
+          tile = Tiles.getTileByName(TileNames.GAS_GIANT_2_NW);
+          tile.draw(g2d, 0, 0);
+          tile = Tiles.getTileByName(TileNames.GAS_GIANT_2_NE);
+          tile.draw(g2d, Tile.MAX_WIDTH, 0);
+          tile = Tiles.getTileByName(TileNames.GAS_GIANT_2_SW);
+          tile.draw(g2d, 0,  Tile.MAX_HEIGHT);
+          tile = Tiles.getTileByName(TileNames.GAS_GIANT_2_SE);
+          tile.draw(g2d, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+          break;
+        }
+        }
+      }
       imageLabel.setImage(img);
       setTitle(planet.getName());
       textArea.setText(planet.generateInfoText());
@@ -113,6 +144,7 @@ public class MapInfoPanel extends InfoPanel {
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
       imageLabel.setImage(img);
+      textArea.setText("");
       this.repaint();
     }
   }

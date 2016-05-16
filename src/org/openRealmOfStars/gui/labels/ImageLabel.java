@@ -48,6 +48,11 @@ public class ImageLabel extends JLabel {
    */
   private boolean border;
   
+  /**
+   * Construct an ImageLabel. 
+   * @param image Image to show
+   * @param border Boolean is there a border or not
+   */
   public ImageLabel(BufferedImage image, boolean border) {
     super();
     

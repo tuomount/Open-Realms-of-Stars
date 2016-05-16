@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Insets;
 
-import javax.swing.BorderFactory;
 import javax.swing.JTextArea;
 
 import org.openRealmOfStars.gui.GuiStatics;

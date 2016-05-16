@@ -1,10 +1,13 @@
 package org.openRealmOfStars.gui.infopanel;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import org.openRealmOfStars.gui.GuiStatics;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.mapTiles.Tile;
@@ -59,11 +62,13 @@ public class MapInfoPanel extends InfoPanel {
   public MapInfoPanel() {
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH*2, Tile.MAX_HEIGHT*2,
         BufferedImage.TYPE_4BYTE_ABGR);
+    this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     imageLabel = new ImageLabel(img, true);
     Graphics2D g2d = img.createGraphics();
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
     this.add(imageLabel);
+    this.add(Box.createRigidArea(new Dimension(10,10)));
     textArea = new InfoTextArea();
     textArea.setEditable(false);
     this.add(textArea);
@@ -100,16 +105,14 @@ public class MapInfoPanel extends InfoPanel {
       imageLabel.setImage(img);
       setTitle(planet.getName());
       textArea.setText(planet.generateInfoText());
-      this.add(imageLabel);
       this.repaint();
     } else {
       setTitle("Galactic info");
       BufferedImage img = imageLabel.getImage();
       Graphics2D g2d = img.createGraphics();
-      g2d.setColor(GuiStatics.COLOR_SPACE_GREY_BLUE);
+      g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
       imageLabel.setImage(img);
-      this.remove(imageLabel);
       this.repaint();
     }
   }

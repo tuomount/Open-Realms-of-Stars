@@ -3,7 +3,9 @@ package org.openRealmOfStars.gui;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.awt.image.BufferedImage;
 
 /**
  * 
@@ -46,8 +48,17 @@ public class GuiStatics {
   /**
    * Sun Line type for text background, opacity 230.
    */
-  public final static Color COLOR_GOLD = new Color(210, 181, 44, 230);
+  public final static Color COLOR_GOLD_OPAQUE = new Color(210, 181, 44, 230);
 
+  /**
+   * Gold color non opaque
+   */
+  public final static Color COLOR_GOLD = new Color(210, 181, 44);
+
+  /**
+   * Dark Gold color non opaque
+   */
+  public final static Color COLOR_GOLD_DARK = new Color(155, 130, 13);
 
   /**
    * Planet Line type for text background, opacity 65.
@@ -68,5 +79,67 @@ public class GuiStatics {
    * Green text 
    */
   public final static Color COLOR_GREEN_TEXT = new Color(4, 186, 0,255);
+
+  /**
+   * Cool space blue
+   */
+  public final static Color COLOR_COOL_SPACE_BLUE = new Color(88,210,255);
+
+  /**
+   * Cool space blue dark
+   */
+  public final static Color COLOR_COOL_SPACE_BLUE_DARK = new Color(25,120,193);
+
+  /**
+   * Deep Space Blue
+   */
+  public final static Color COLOR_DEEP_SPACE_BLUE = new Color(33,33,208);
+
+  /**
+   * Grey 160
+   */
+  public final static Color COLOR_GREY_160 = new Color(160,160,160);
+
+  /**
+   * Grey 80
+   */
+  public final static Color COLOR_GREY_80 = new Color(80,80,80);
+
+  /**
+   * Image used for calculation text width and heights.
+   */
+  private static final BufferedImage tempImage = new BufferedImage(100,100,BufferedImage.TYPE_4BYTE_ABGR);
+
+  /**
+   * Get text width for certain font
+   * @param font Font to use
+   * @param text String
+   * @return Text width in pixels
+   */
+  public static int getTextWidth(Font font, String text) {
+    if (font != null && text != null) {
+      Graphics2D g2d = tempImage.createGraphics();
+      int textWidth = (int) font.getStringBounds(text,
+        g2d.getFontRenderContext()).getWidth();
+      return textWidth;
+    }
+    return 0;
+  }
+
+  /**
+   * Get text height for certain font
+   * @param font Font to use
+   * @param text String
+   * @return Text height in pixels
+   */
+  public static int getTextHeight(Font font, String text) {
+    if (font != null && text != null) {
+      Graphics2D g2d = tempImage.createGraphics();
+      int textHeight = (int) font.getStringBounds(text,
+        g2d.getFontRenderContext()).getHeight();
+      return textHeight;
+    }
+    return 0;
+  }
 
 }

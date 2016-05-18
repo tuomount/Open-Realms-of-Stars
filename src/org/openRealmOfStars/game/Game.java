@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
+import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.MapPanel;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
@@ -75,7 +76,12 @@ public class Game extends JFrame implements ActionListener {
    */
   private StarMap starMap = null;
   
+  /**
+   * Mouse listener aka mouse handler for star map.
+   */
   private StarMapMouseListener starMapMouseListener;
+  
+  public GameState gameState;
 
   /**
    * Contructor of Game class
@@ -92,6 +98,22 @@ public class Game extends JFrame implements ActionListener {
     addWindowListener(new GameWindowListener());
     setSize(1024, 768);
     setLocationRelativeTo(null);
+    changeGameState(GameState.STARMAP);
+    animationTimer = new Timer(75,this);
+    animationTimer.setActionCommand(GameCommands.COMMAND_ANIMATION_TIMER);
+    animationTimer.start();
+
+    setResizable(false);
+
+    this.setVisible(true);
+
+  }
+  
+  /**
+   * Show Star Map panels
+   */
+  public void showStarMap() {
+    BlackPanel base = new BlackPanel();
     mapPanel = new MapPanel(this);
     starMap = new StarMap(75, 75);
     infoPanel = new MapInfoPanel();
@@ -101,18 +123,26 @@ public class Game extends JFrame implements ActionListener {
     mapPanel.addMouseMotionListener(starMapMouseListener);
     
     InfoPanel bottomPanel = new EmptyInfoPanel();
-    this.setLayout(new BorderLayout());
-    this.add(mapPanel,BorderLayout.CENTER);
-    this.add(infoPanel, BorderLayout.EAST);
-    this.add(bottomPanel, BorderLayout.SOUTH);
-    animationTimer = new Timer(75,this);
-    animationTimer.setActionCommand(GameCommands.COMMAND_ANIMATION_TIMER);
-    animationTimer.start();
-
-    setResizable(false);
-
-    this.setVisible(true);
-
+    base.setLayout(new BorderLayout());
+    base.add(mapPanel,BorderLayout.CENTER);
+    base.add(infoPanel, BorderLayout.EAST);
+    base.add(bottomPanel, BorderLayout.SOUTH);
+    
+    this.getContentPane().removeAll();
+    this.add(base);
+    this.validate();
+  }
+  
+  /**
+   * Change game state and show new panel/screen
+   * @param newState Game State where to change
+   */
+  public void changeGameState(GameState newState) {
+    gameState = newState;
+    switch (gameState) {
+    case STARMAP: showStarMap(); break;
+    case PLANETVIEW: break;
+    }
   }
   
   /**

@@ -195,7 +195,7 @@ public class ScifiBorder extends AbstractBorder
       g2d.drawImage(centerPiece, x+width/2-textWidth/2, y, null);
       g2d.drawImage(titleRightImage, x+width/2-textWidth/2+centerPiece.getWidth(), y, null);
 
-      g2d.setColor(GuiStatics.COLOR_GOLD);
+      g2d.setColor(GuiStatics.COLOR_GOLD_OPAQUE);
       g2d.setFont(GuiStatics.FONT_SMALL);
       g2d.drawString(title, x+width/2-textWidth/2, y+16);
       

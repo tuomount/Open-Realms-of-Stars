@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
+import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.mapTiles.Tile;
@@ -74,6 +75,9 @@ public class MapInfoPanel extends InfoPanel {
     textArea.setEditable(false);
     textArea.setLineWrap(true);
     this.add(textArea);
+    SpaceButton btn = new SpaceButton("View planet", "");
+    this.add(Box.createRigidArea(new Dimension(10,10)));
+    this.add(btn);
   }
   
   /**

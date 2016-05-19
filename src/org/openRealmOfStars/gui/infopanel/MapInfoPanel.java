@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.infopanel;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -66,6 +67,7 @@ public class MapInfoPanel extends InfoPanel {
         BufferedImage.TYPE_4BYTE_ABGR);
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     imageLabel = new ImageLabel(img, true);
+    imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
     Graphics2D g2d = img.createGraphics();
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
@@ -74,8 +76,10 @@ public class MapInfoPanel extends InfoPanel {
     textArea = new InfoTextArea();
     textArea.setEditable(false);
     textArea.setLineWrap(true);
+    textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
     this.add(textArea);
     SpaceButton btn = new SpaceButton("View planet", "");
+    btn.setAlignmentX(Component.CENTER_ALIGNMENT);
     this.add(Box.createRigidArea(new Dimension(10,10)));
     this.add(btn);
   }

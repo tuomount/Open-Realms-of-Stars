@@ -1,5 +1,6 @@
 package org.openRealmOfStars.gui.buttons;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -58,6 +59,7 @@ public class SpaceButton extends JButton {
     size.height = GuiStatics.getTextHeight(GuiStatics.FONT_NORMAL, text)+10;
     this.setMinimumSize(size);
     this.setPreferredSize(size);
+    this.setMaximumSize(size);
   }
   
   @Override
@@ -92,9 +94,9 @@ public class SpaceButton extends JButton {
     if (this.isEnabled())
     {
       if (this.getModel().isRollover()) {
-        g2d.setColor(GuiStatics.COLOR_GOLD);
-      } else {
         g2d.setColor(GuiStatics.COLOR_GOLD_DARK);
+      } else {
+        g2d.setColor(Color.black);
       }
     } else {
       g2d.setColor(GuiStatics.COLOR_GOLD_DARK);

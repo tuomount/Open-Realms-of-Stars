@@ -10,9 +10,11 @@ import javax.swing.UIManager;
 
 import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.MapPanel;
+import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
+import org.openRealmOfStars.starMap.Planet;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
 
@@ -116,7 +118,7 @@ public class Game extends JFrame implements ActionListener {
     BlackPanel base = new BlackPanel();
     mapPanel = new MapPanel(this);
     starMap = new StarMap(75, 75);
-    infoPanel = new MapInfoPanel();
+    infoPanel = new MapInfoPanel(this);
     mapPanel.drawMap(starMap);
     starMapMouseListener = new StarMapMouseListener(starMap,mapPanel,infoPanel);
     mapPanel.addMouseListener(starMapMouseListener);
@@ -132,7 +134,27 @@ public class Game extends JFrame implements ActionListener {
     this.add(base);
     this.validate();
   }
-  
+
+  /**
+   * Show planet view panel
+   * @param planet Planet to show
+   */
+  public void showPlanetView(Planet planet) {
+    BlackPanel base = new BlackPanel();
+    base.setLayout(new BorderLayout());
+    InfoPanel bottomPanel = new InfoPanel();
+    bottomPanel.setTitle(null);
+    SpaceButton btn = new SpaceButton("Back to star map", 
+        GameCommands.COMMAND_VIEW_STARMAP);
+    btn.addActionListener(this);
+    bottomPanel.add(btn);
+    base.add(bottomPanel,BorderLayout.SOUTH);
+
+    this.getContentPane().removeAll();
+    this.add(base);
+    this.validate();
+  }
+
   /**
    * Change game state and show new panel/screen
    * @param newState Game State where to change
@@ -141,7 +163,12 @@ public class Game extends JFrame implements ActionListener {
     gameState = newState;
     switch (gameState) {
     case STARMAP: showStarMap(); break;
-    case PLANETVIEW: break;
+    case PLANETVIEW: { 
+      if (starMapMouseListener.getLastClickedPlanet()!=null) {
+       showPlanetView(starMapMouseListener.getLastClickedPlanet());
+       break;
+      }
+    }
     }
   }
   
@@ -164,7 +191,15 @@ public class Game extends JFrame implements ActionListener {
       mapPanel.drawMap(starMap);
       mapPanel.repaint();
     }
-    
+    if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_VIEW_PLANET) &&
+        starMapMouseListener.getLastClickedPlanet() != null) {
+      changeGameState(GameState.PLANETVIEW);
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_VIEW_STARMAP)) {
+      changeGameState(GameState.STARMAP);
+    }
   }
 
 }

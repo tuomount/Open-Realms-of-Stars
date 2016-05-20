@@ -4,11 +4,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
+import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
@@ -62,7 +64,7 @@ public class MapInfoPanel extends InfoPanel {
    */
   private Planet planet;
   
-  public MapInfoPanel() {
+  public MapInfoPanel(ActionListener listener) {
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH*2, Tile.MAX_HEIGHT*2,
         BufferedImage.TYPE_4BYTE_ABGR);
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -78,7 +80,9 @@ public class MapInfoPanel extends InfoPanel {
     textArea.setLineWrap(true);
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
     this.add(textArea);
-    SpaceButton btn = new SpaceButton("View planet", "");
+    SpaceButton btn = new SpaceButton("View planet", 
+      GameCommands.COMMAND_VIEW_PLANET);
+    btn.addActionListener(listener);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
     this.add(Box.createRigidArea(new Dimension(10,10)));
     this.add(btn);

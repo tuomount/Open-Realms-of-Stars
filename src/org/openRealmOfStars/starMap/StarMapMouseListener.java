@@ -72,6 +72,13 @@ public class StarMapMouseListener extends MouseAdapter implements
   private PixelsToMapCoordinate coord;
   
   /**
+   * Last clicked planet
+   * This is Planet which was last clicked, null if empty space or
+   * other was clicked
+   */
+  private Planet lastClickedPlanet;
+  
+  /**
    * Update drawing coordinates if mouse cursor is on map border
    */
   public void updateScrollingIfOnBorder() {
@@ -125,11 +132,27 @@ public class StarMapMouseListener extends MouseAdapter implements
                                                     coord.getMapY());
       if (planet != null) {
         mapInfoPanel.showPlanet(planet);
+        setLastClickedPlanet(planet);
       } else {
         mapInfoPanel.showEmpty();
+        setLastClickedPlanet(null);
       }
     }
 
+  }
+
+  /**
+   * @return the lastClickedPlanet
+   */
+  public Planet getLastClickedPlanet() {
+    return lastClickedPlanet;
+  }
+
+  /**
+   * @param lastClickedPlanet the lastClickedPlanet to set
+   */
+  public void setLastClickedPlanet(Planet lastClickedPlanet) {
+    this.lastClickedPlanet = lastClickedPlanet;
   }
 
   

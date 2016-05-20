@@ -31,10 +31,10 @@ import org.openRealmOfStars.gui.borders.ScifiBorder;
  * along with this program; if not, see http://www.gnu.org/licenses/
  * 
  * 
- * Abstract Class for handling info on next to the star map
+ * Class for handling info 
  * 
  */
-public abstract class InfoPanel extends JPanel {
+public class InfoPanel extends JPanel {
 
   /**
    * 

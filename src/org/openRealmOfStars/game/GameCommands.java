@@ -28,5 +28,15 @@ public class GameCommands {
    * Animation timer command
    */
   public static final String COMMAND_ANIMATION_TIMER = "AnimationTimerCommand";
-  
+
+  /**
+   * View planet command
+   */
+  public static final String COMMAND_VIEW_PLANET = "ViewPlanetCommand";
+
+  /**
+   * View Star map
+   */
+  public static final String COMMAND_VIEW_STARMAP = "ViewStarMap";
+
 }

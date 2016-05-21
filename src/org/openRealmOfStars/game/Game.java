@@ -14,6 +14,7 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
+import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.starMap.Planet;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
@@ -144,11 +145,17 @@ public class Game extends JFrame implements ActionListener {
     base.setLayout(new BorderLayout());
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setTitle(null);
+    InfoPanel topPanel = new InfoPanel();
+    topPanel.setTitle(planet.getName());
+    InfoTextArea planetInfo = new InfoTextArea();
+    planetInfo.setText(planet.generateInfoText());
+    topPanel.add(planetInfo);
     SpaceButton btn = new SpaceButton("Back to star map", 
         GameCommands.COMMAND_VIEW_STARMAP);
     btn.addActionListener(this);
     bottomPanel.add(btn);
     base.add(bottomPanel,BorderLayout.SOUTH);
+    base.add(topPanel,BorderLayout.NORTH);
 
     this.getContentPane().removeAll();
     this.add(base);

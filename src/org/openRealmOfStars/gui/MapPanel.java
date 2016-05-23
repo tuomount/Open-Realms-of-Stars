@@ -17,7 +17,6 @@ import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.starMap.Planet;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
-import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
 /**
@@ -104,17 +103,6 @@ public class MapPanel extends JPanel {
    */
   private int lastDrawnCenterY;
   
-  /**
-   * Star field image for parallax scrolling
-   */
-  private final static BufferedImage starFieldImage = IOUtilities.loadImage(Tiles.class.getResource(
-      "/resources/images/starfield.png"));
-
-  /**
-   * Nebula image for parallax scrolling
-   */
-  private final static BufferedImage nebulaeImage = IOUtilities.loadImage(Tiles.class.getResource(
-      "/resources/images/nebulae.png"));
 
   public MapPanel(JFrame parent) {
     screen = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
@@ -222,13 +210,13 @@ public class MapPanel extends JPanel {
       cy = starMap.getMaxY()-viewPointY-1;
     }
     // -20 for safety
-    int speedX = (nebulaeImage.getWidth()-this.getWidth()-20)/starMap.getMaxX(); 
-    int speedY = (nebulaeImage.getHeight()-this.getHeight()-20)/starMap.getMaxY(); 
-    int speedStarX = (starFieldImage.getWidth()-this.getWidth()-20)/starMap.getMaxX(); 
-    int speedStarY = (starFieldImage.getHeight()-this.getHeight()-20)/starMap.getMaxY(); 
+    int speedX = (GuiStatics.nebulaeImage.getWidth()-this.getWidth()-20)/starMap.getMaxX(); 
+    int speedY = (GuiStatics.nebulaeImage.getHeight()-this.getHeight()-20)/starMap.getMaxY(); 
+    int speedStarX = (GuiStatics.starFieldImage.getWidth()-this.getWidth()-20)/starMap.getMaxX(); 
+    int speedStarY = (GuiStatics.starFieldImage.getHeight()-this.getHeight()-20)/starMap.getMaxY(); 
     // Parallax Scrolling with just two lines!!!
-    gr.drawImage(starFieldImage, -10-cx*speedStarX, -10-cy*speedStarY, null);
-    gr.drawImage(nebulaeImage, -10-cx*speedX, -10-cy*speedY, null);
+    gr.drawImage(GuiStatics.starFieldImage, -10-cx*speedStarX, -10-cy*speedStarY, null);
+    gr.drawImage(GuiStatics.nebulaeImage, -10-cx*speedX, -10-cy*speedY, null);
     
     lastDrawnCenterX = cx;
     lastDrawnCenterY = cy;

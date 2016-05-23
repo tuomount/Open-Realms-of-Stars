@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
+import org.openRealmOfStars.gui.BigImagePanel;
 import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.MapPanel;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -142,6 +143,8 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showPlanetView(Planet planet) {
     BlackPanel base = new BlackPanel();
+    BigImagePanel imgBase = new BigImagePanel(
+        Planet.PLANET_BIG_IMAGES[planet.getPlanetType()], true);
     base.setLayout(new BorderLayout());
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setTitle(null);
@@ -157,6 +160,7 @@ public class Game extends JFrame implements ActionListener {
     btn.addActionListener(this);
     bottomPanel.add(btn);
     base.add(bottomPanel,BorderLayout.SOUTH);
+    base.add(imgBase,BorderLayout.CENTER);
     base.add(topPanel,BorderLayout.NORTH);
 
     this.getContentPane().removeAll();

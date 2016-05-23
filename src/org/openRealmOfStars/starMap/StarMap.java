@@ -231,8 +231,8 @@ public class StarMap {
       if (is9NeighboursEmpty(px, py)) {
         planets++;
         Planet planet = new Planet(px,py,sun.getName(),planets,false);
-        planet.setPlanetImageIndex(Planet.PLANET_IMAGE_INDEX[DiceGenerator.
-                                getRandom(Planet.PLANET_IMAGE_INDEX.length-1)]);
+        planet.setPlanetType(DiceGenerator.
+            getRandom(Planet.PLANET_IMAGE_INDEX.length-1));
         planetList.add(planet);
         int planetNumber = planetList.size()-1;
         info = new SquareInfo(SquareInfo.TYPE_PLANET, planetNumber);

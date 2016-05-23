@@ -7,6 +7,9 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
+import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.utilities.IOUtilities;
+
 /**
  * 
  * Open Realm of Stars game project
@@ -106,10 +109,35 @@ public class GuiStatics {
   public final static Color COLOR_GREY_80 = new Color(80,80,80);
 
   /**
+   * Big planet screen Rock 1
+   */
+  public final static BufferedImage BIG_PLANET_ROCK1 = IOUtilities.loadImage(Tiles.class.getResource(
+      "/resources/images/rock1.png"));
+
+  /**
+   * Big planet screen waterworld 1
+   */
+  public final static BufferedImage BIG_PLANET_WATERWORLD1 = IOUtilities.loadImage(Tiles.class.getResource(
+      "/resources/images/waterworld1.png"));
+  
+  /**
+   * Star field image for parallax scrolling
+   */
+  public final static BufferedImage starFieldImage = IOUtilities.loadImage(Tiles.class.getResource(
+      "/resources/images/starfield.png"));
+
+  /**
+   * Nebula image for parallax scrolling
+   */
+  public final static BufferedImage nebulaeImage = IOUtilities.loadImage(Tiles.class.getResource(
+      "/resources/images/nebulae.png"));
+
+
+  /**
    * Image used for calculation text width and heights.
    */
   private static final BufferedImage tempImage = new BufferedImage(100,100,BufferedImage.TYPE_4BYTE_ABGR);
-
+  
   /**
    * Get text width for certain font
    * @param font Font to use

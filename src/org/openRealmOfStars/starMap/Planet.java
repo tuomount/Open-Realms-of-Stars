@@ -1,5 +1,8 @@
 package org.openRealmOfStars.starMap;
 
+import java.awt.image.BufferedImage;
+
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -36,7 +39,13 @@ public class Planet {
   public static final int[] PLANET_IMAGE_INDEX = 
       {Tiles.getTileByName(TileNames.ROCK1).getIndex(),
        Tiles.getTileByName(TileNames.WATERWORLD1).getIndex()};
-  
+
+  /**
+   * List of big planet images
+   */
+  public static final BufferedImage[] PLANET_BIG_IMAGES = 
+    {GuiStatics.BIG_PLANET_ROCK1,GuiStatics.BIG_PLANET_WATERWORLD1};
+
   /**
    * Planet name
    */
@@ -84,9 +93,14 @@ public class Planet {
   private int y;
   
   /**
-   * Planet Image Index
+   * Planet Image Index for planet tile
    */
   private int planetImageIndex;
+  
+  /**
+   * Planet type: 0 Rock, 1 Waterworld
+   */
+  private int planetType;
   
   /**
    * Create random planet with name + orderNumber with Roman numbers.
@@ -188,6 +202,10 @@ public class Planet {
     this.y = y;
   }
 
+  /**
+   * Get Planet tile index
+   * @return
+   */
   public int getPlanetImageIndex() {
     return planetImageIndex;
   }
@@ -240,6 +258,23 @@ public class Planet {
       sb.append(getAmountMetalInGround());
     }
     return sb.toString();
+  }
+
+  /**
+   * @return the planetType
+   */
+  public int getPlanetType() {
+    return planetType;
+  }
+
+  /**
+   * @param planetType the planetType to set
+   */
+  public void setPlanetType(int planetType) {
+    if (planetType >= 0 && planetType <  PLANET_IMAGE_INDEX.length) {
+      this.planetType = planetType;
+      setPlanetImageIndex(PLANET_IMAGE_INDEX[planetType]);
+    }
   }
   
 

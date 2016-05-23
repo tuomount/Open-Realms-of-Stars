@@ -147,7 +147,9 @@ public class Game extends JFrame implements ActionListener {
     bottomPanel.setTitle(null);
     InfoPanel topPanel = new InfoPanel();
     topPanel.setTitle(planet.getName());
-    InfoTextArea planetInfo = new InfoTextArea();
+    InfoTextArea planetInfo = new InfoTextArea(4,100);
+    planetInfo.setEditable(false);
+    planetInfo.setLineWrap(true);
     planetInfo.setText(planet.generateInfoText());
     topPanel.add(planetInfo);
     SpaceButton btn = new SpaceButton("Back to star map", 

@@ -90,6 +90,21 @@ public class InfoTextArea extends JTextArea {
    */
   private int smoothScrollY=0;
   
+
+  /**
+   * Construct InfoTextArea with default but set size on rows and
+   * columns.
+   * @param rows Number of rows
+   * @param columns Number of columns
+   */
+  public InfoTextArea(int rows, int columns) {
+    super(rows,columns);
+    this.setForeground(Color.white);
+    this.setBackground(Color.BLACK);
+    autoScroll = false;
+    this.setBorder(new SimpleBorder());
+  }
+
   /**
    * Construct InfoTextArea with defaults.
    */

@@ -143,22 +143,31 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showPlanetView(Planet planet) {
     BlackPanel base = new BlackPanel();
+    // Background image
     BigImagePanel imgBase = new BigImagePanel(
         Planet.PLANET_BIG_IMAGES[planet.getPlanetType()], true);
     base.setLayout(new BorderLayout());
-    InfoPanel bottomPanel = new InfoPanel();
-    bottomPanel.setTitle(null);
+
+    // Top Panel
     InfoPanel topPanel = new InfoPanel();
     topPanel.setTitle(planet.getName());
+    topPanel.setLayout(new BorderLayout());
     InfoTextArea planetInfo = new InfoTextArea(4,100);
     planetInfo.setEditable(false);
     planetInfo.setLineWrap(true);
     planetInfo.setText(planet.generateInfoText());
-    topPanel.add(planetInfo);
+    topPanel.add(planetInfo,BorderLayout.CENTER);
+    
+    // Bottom panel
+    InfoPanel bottomPanel = new InfoPanel();
+    bottomPanel.setLayout(new BorderLayout());
+    bottomPanel.setTitle(null);
     SpaceButton btn = new SpaceButton("Back to star map", 
         GameCommands.COMMAND_VIEW_STARMAP);
     btn.addActionListener(this);
-    bottomPanel.add(btn);
+    bottomPanel.add(btn,BorderLayout.CENTER);
+    
+    // Add panels to base
     base.add(bottomPanel,BorderLayout.SOUTH);
     base.add(imgBase,BorderLayout.CENTER);
     base.add(topPanel,BorderLayout.NORTH);

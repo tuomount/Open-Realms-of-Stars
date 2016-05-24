@@ -64,7 +64,9 @@ public class BigImagePanel extends JPanel {
       this.setBackground(Color.black);
       g2d.fillRect(0,0, this.getWidth(), this.getHeight());
     }
-    g2d.drawImage(backgroundImg,0,0,null);
+    int offsetX = (575-backgroundImg.getWidth())/2;
+    int offsetY = (575-backgroundImg.getHeight())/2;
+    g2d.drawImage(backgroundImg,offsetX,offsetY,null);
   }
   
   

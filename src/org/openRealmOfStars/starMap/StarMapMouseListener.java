@@ -99,6 +99,15 @@ public class StarMapMouseListener extends MouseAdapter implements
     
   }
   
+  
+  
+  @Override
+  public void mouseExited(MouseEvent e) {
+    coord = null;
+  }
+
+
+
   public void mouseMoved(MouseEvent e) {
     coord= new PixelsToMapCoordinate(mapPanel.getLastDrawnX(),
           mapPanel.getLastDrawnY(),e.getX(),e.getY(),mapPanel.getOffsetX(),mapPanel.getOffsetY(),

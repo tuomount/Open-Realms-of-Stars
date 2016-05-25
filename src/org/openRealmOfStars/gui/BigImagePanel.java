@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import org.openRealmOfStars.starMap.Planet;
+
 /**
  * 
  * Open Realm of Stars game project
@@ -47,19 +49,92 @@ public class BigImagePanel extends JPanel {
    */
   private boolean drawStarField;
   
-  public BigImagePanel(BufferedImage background, boolean starField) {
+  /**
+   * Planet to draw
+   */
+  private Planet planet;
+  
+  public BigImagePanel(Planet planet, boolean starField) {
     super();
     this.setBackground(Color.black);
-    backgroundImg = background;
+    this.planet = planet;
+    backgroundImg = Planet.PLANET_BIG_IMAGES[this.planet.getPlanetType()];
     drawStarField = starField;
     
   }
+  
+  /**
+   * Draw bold text with current font
+   * @param g Graphics to draw
+   * @param border Text border color
+   * @param center Text center color
+   * @param x X-coordinate
+   * @param y Y-coordinate
+   * @param text Text to draw
+   */
+  private void drawBoldText(Graphics g,Color border, Color center, int x, 
+      int y, String text) {
+    g.setColor(border);
+    g.drawString(text, x+1, y);
+    g.drawString(text, x-1, y);
+    g.drawString(text, x, y+1);
+    g.drawString(text, x, y-1);
+    g.setColor(center);
+    g.drawString(text, x, y);
 
+  }
+
+  private void drawTextArea(Graphics g) {
+    g.setFont(GuiStatics.FONT_SMALL);
+    StringBuilder sb = new StringBuilder(planet.generateInfoText());
+    int lastSpace = -1;
+    int rowLen = 0;
+    int maxRowLen = this.getWidth()/12;
+    for (int i=0;i<sb.length();i++) {
+      if (sb.charAt(i)==' ') {
+        lastSpace = i;
+      }
+      if (sb.charAt(i)=='\n') {
+        lastSpace = -1;
+        rowLen=0;
+      } else {
+        rowLen++;
+      }
+      if (rowLen > maxRowLen) {
+        if (lastSpace != -1) {
+          sb.setCharAt(lastSpace, '\n');
+          rowLen=i-lastSpace;
+          lastSpace = -1;
+        } else {
+          sb.setCharAt(i, '\n');
+          lastSpace = -1;
+          rowLen=0;
+        }
+      }
+    }
+    String[] texts = sb.toString().split("\n");
+    int offsetX = (575-backgroundImg.getWidth())/2-
+        GuiStatics.getTextWidth(GuiStatics.FONT_NORMAL, texts[0])/2+
+        backgroundImg.getWidth()/2;
+    int offsetY = (575-backgroundImg.getHeight())/2;
+    g.setFont(GuiStatics.FONT_NORMAL);
+    drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE,
+        GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE, offsetX, offsetY, texts[0]);
+    g.setFont(GuiStatics.FONT_SMALL);
+    for (int i=1;i<texts.length;i++) {
+      drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE,
+        GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE, 25, this.getHeight()/2+i*10, texts[i]);
+    }
+
+  }
+  
   @Override
   public void paint(Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
+    int sx = planet.getName().length()*(planet.getRadiationLevel()-1)*3;
+    int sy = planet.getName().length()*(planet.getGroundSize()-7)*3;
     if (drawStarField) {
-      g2d.drawImage(GuiStatics.starFieldImage,0,0,null);
+      g2d.drawImage(GuiStatics.starFieldImage,-sx,-sy,null);
     } else {
       this.setBackground(Color.black);
       g2d.fillRect(0,0, this.getWidth(), this.getHeight());
@@ -67,6 +142,8 @@ public class BigImagePanel extends JPanel {
     int offsetX = (575-backgroundImg.getWidth())/2;
     int offsetY = (575-backgroundImg.getHeight())/2;
     g2d.drawImage(backgroundImg,offsetX,offsetY,null);
+    
+    drawTextArea(g);
   }
   
   

@@ -94,6 +94,16 @@ public class GuiStatics {
   public final static Color COLOR_COOL_SPACE_BLUE_DARK = new Color(25,120,193);
 
   /**
+   * Cool space blue, opaque 128
+   */
+  public final static Color COLOR_COOL_SPACE_BLUE_OPAQUE = new Color(88,210,255,128);
+
+  /**
+   * Cool space blue dark, opaque 128
+   */
+  public final static Color COLOR_COOL_SPACE_BLUE_DARK_OPAQUE = new Color(25,120,193,128);
+
+  /**
    * Deep Space Blue
    */
   public final static Color COLOR_DEEP_SPACE_BLUE = new Color(33,33,208);

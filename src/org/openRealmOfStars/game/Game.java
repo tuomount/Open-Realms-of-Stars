@@ -15,7 +15,6 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
-import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.starMap.Planet;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
@@ -102,11 +101,13 @@ public class Game extends JFrame implements ActionListener {
     addWindowListener(new GameWindowListener());
     setSize(1024, 768);
     setLocationRelativeTo(null);
+    starMap = new StarMap(75, 75);
     changeGameState(GameState.STARMAP);
     animationTimer = new Timer(75,this);
     animationTimer.setActionCommand(GameCommands.COMMAND_ANIMATION_TIMER);
     animationTimer.start();
 
+    
     setResizable(false);
 
     this.setVisible(true);
@@ -119,7 +120,6 @@ public class Game extends JFrame implements ActionListener {
   public void showStarMap() {
     BlackPanel base = new BlackPanel();
     mapPanel = new MapPanel(this);
-    starMap = new StarMap(75, 75);
     infoPanel = new MapInfoPanel(this);
     mapPanel.drawMap(starMap);
     starMapMouseListener = new StarMapMouseListener(starMap,mapPanel,infoPanel);
@@ -144,19 +144,12 @@ public class Game extends JFrame implements ActionListener {
   public void showPlanetView(Planet planet) {
     BlackPanel base = new BlackPanel();
     // Background image
-    BigImagePanel imgBase = new BigImagePanel(
-        Planet.PLANET_BIG_IMAGES[planet.getPlanetType()], true);
+    BigImagePanel imgBase = new BigImagePanel(planet, true);
     base.setLayout(new BorderLayout());
 
     // Top Panel
     InfoPanel topPanel = new InfoPanel();
     topPanel.setTitle(planet.getName());
-    topPanel.setLayout(new BorderLayout());
-    InfoTextArea planetInfo = new InfoTextArea(4,100);
-    planetInfo.setEditable(false);
-    planetInfo.setLineWrap(true);
-    planetInfo.setText(planet.generateInfoText());
-    topPanel.add(planetInfo,BorderLayout.CENTER);
     
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();

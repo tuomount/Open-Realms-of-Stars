@@ -147,7 +147,7 @@ public class Planet {
   }
 
   public void setGroundSize(int groundSize) {
-    if (radiationLevel > 6 && radiationLevel < 17) {
+    if (groundSize > 6 && groundSize < 17) {
       this.groundSize = groundSize;
     }
   }

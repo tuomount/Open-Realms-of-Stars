@@ -55,8 +55,8 @@ public class SpaceButton extends JButton {
     this.setForeground(GuiStatics.COLOR_GOLD);
     this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     Dimension size = this.getPreferredSize();    
-    size.width = GuiStatics.getTextWidth(GuiStatics.FONT_NORMAL, text)+20;
-    size.height = GuiStatics.getTextHeight(GuiStatics.FONT_NORMAL, text)+10;
+    size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)+20;
+    size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), text)+10;
     this.setMinimumSize(size);
     this.setPreferredSize(size);
     this.setMaximumSize(size);
@@ -89,8 +89,8 @@ public class SpaceButton extends JButton {
     g2d.setPaint(gradient);    
     g2d.fillRect(sx, sy, width, height);
 
-    int textWidth = GuiStatics.getTextWidth(GuiStatics.FONT_NORMAL, getText());
-    int textHeight = GuiStatics.getTextHeight(GuiStatics.FONT_NORMAL, getText());
+    int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), getText());
+    int textHeight = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), getText());
     if (this.isEnabled())
     {
       if (this.getModel().isRollover()) {
@@ -101,7 +101,7 @@ public class SpaceButton extends JButton {
     } else {
       g2d.setColor(GuiStatics.COLOR_GOLD_DARK);
     }
-    g.setFont(GuiStatics.FONT_NORMAL);
+    g.setFont(GuiStatics.getFontCubellan());
     int offsetX = width/2-textWidth/2+sx;
     if (offsetX < 0) {
       offsetX = sx;

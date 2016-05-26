@@ -3,9 +3,12 @@ package org.openRealmOfStars.gui;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -41,6 +44,78 @@ public class GuiStatics {
    *  Monospace font size 12
    */
   public final static Font FONT_NORMAL = new Font("monospaced",Font.BOLD,12);
+  
+  /**
+   * Regular cubellan font
+   */
+  private static Font fontCubellan;
+  
+  /**
+   * Get Regular Cubellan font
+   * @return Cubellan font
+   */
+  public static Font getFontCubellan() {
+    if (fontCubellan == null) { 
+      try {
+        InputStream is = Tiles.class.getResource("/resources/fonts/Cubellan_v_0_7/Cubellan.ttf").openStream();
+        fontCubellan = Font.createFont(Font.TRUETYPE_FONT, is);
+        fontCubellan = fontCubellan.deriveFont(16F);
+        is.close();
+      } catch (IOException | FontFormatException e) {
+        System.err.println("Error:"+e.getMessage());
+        return FONT_SMALL;
+      }
+    }
+    return fontCubellan;
+  }
+
+  /**
+   * Bold cubellan font
+   */
+  private static Font fontCubellanBold;
+  
+  /**
+   * Get bold Cubellan font
+   * @return Cubellan font
+   */
+  public static Font getFontCubellanBold() {
+    if (fontCubellanBold == null) { 
+      try {
+        InputStream is = Tiles.class.getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf").openStream();
+        fontCubellanBold = Font.createFont(Font.TRUETYPE_FONT, is);
+        fontCubellanBold = fontCubellanBold.deriveFont(24F);
+        is.close();
+      } catch (IOException | FontFormatException e) {
+        System.err.println("Error:"+e.getMessage());
+        return FONT_SMALL;
+      }
+    }
+    return fontCubellanBold;
+  }
+
+  /**
+   * Small cubellan font
+   */
+  private static Font fontCubellanSC;
+  
+  /**
+   * Get Regular Cubellan font
+   * @return Cubellan font
+   */
+  public static Font getFontCubellanSC() {
+    if (fontCubellanSC == null) { 
+      try {
+        InputStream is = Tiles.class.getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_SC.ttf").openStream();
+        fontCubellanSC = Font.createFont(Font.TRUETYPE_FONT, is);
+        fontCubellanSC = fontCubellanSC.deriveFont(13F);
+        is.close();
+      } catch (IOException | FontFormatException e) {
+        System.err.println("Error:"+e.getMessage());
+        return FONT_SMALL;
+      }
+    }
+    return fontCubellanSC;
+  }
 
   /**
    * Line type for text background

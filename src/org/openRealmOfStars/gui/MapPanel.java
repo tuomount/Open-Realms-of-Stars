@@ -287,7 +287,7 @@ public class MapPanel extends JPanel {
         if (tile.getName().equals(TileNames.SUN_E) && i > -viewPointX+1) {
           Sun sun = starMap.getSunByCoordinate(i+cx, j+cy);
           if (sun != null) {
-            int textWidth = (int) GuiStatics.FONT_SMALL.getStringBounds(
+            int textWidth = (int) GuiStatics.getFontCubellanSC().getStringBounds(
               sun.getName(), gr.getFontRenderContext()).getWidth();
             int offset = Tile.MAX_WIDTH/2+textWidth/2-2;
             gr.setStroke(GuiStatics.TEXT_LINE);
@@ -295,7 +295,7 @@ public class MapPanel extends JPanel {
             gr.drawLine(pixelX-offset, pixelY+Tile.MAX_HEIGHT/2-3,
               pixelX-Tile.MAX_WIDTH+offset, pixelY+Tile.MAX_HEIGHT/2-3);
             gr.setColor(Color.BLACK);
-            gr.setFont(GuiStatics.FONT_SMALL);
+            gr.setFont(GuiStatics.getFontCubellanSC());
             gr.drawString(sun.getName(), pixelX-Tile.MAX_WIDTH/2-textWidth/2, 
                 pixelY+Tile.MAX_HEIGHT/2);
           }
@@ -304,7 +304,7 @@ public class MapPanel extends JPanel {
             (tile.getName().equals(TileNames.GAS_GIANT_2_SE) && i > -viewPointX )) {
           Planet planet = starMap.getPlanetByCoordinate(i+cx, j+cy);
           if (planet != null) {
-            int textWidth = (int) GuiStatics.FONT_SMALL.getStringBounds(
+            int textWidth = (int) GuiStatics.getFontCubellanSC().getStringBounds(
                 RandomSystemNameGenerator.numberToRoman(planet.getOrderNumber()),
                 gr.getFontRenderContext()).getWidth();
               int offset = textWidth/2-2;
@@ -313,7 +313,7 @@ public class MapPanel extends JPanel {
               gr.drawLine(pixelX-offset, pixelY-3,
                 pixelX+offset, pixelY-3);
               gr.setColor(Color.BLACK);
-              gr.setFont(GuiStatics.FONT_SMALL);
+              gr.setFont(GuiStatics.getFontCubellanSC());
               gr.drawString(RandomSystemNameGenerator.numberToRoman(planet.
                   getOrderNumber()), pixelX-textWidth/2, pixelY);
             
@@ -321,7 +321,7 @@ public class MapPanel extends JPanel {
         }
         Planet planet = starMap.getPlanetByCoordinate(i+cx, j+cy);
         if (planet != null && !planet.isGasGiant()) {
-          int textWidth = (int) GuiStatics.FONT_SMALL.getStringBounds(
+          int textWidth = (int) GuiStatics.getFontCubellanSC().getStringBounds(
               RandomSystemNameGenerator.numberToRoman(planet.getOrderNumber()),
               gr.getFontRenderContext()).getWidth();
             int offset = Tile.MAX_WIDTH/2-textWidth/2-2;
@@ -330,7 +330,7 @@ public class MapPanel extends JPanel {
             gr.drawLine(pixelX+offset, pixelY+Tile.MAX_HEIGHT/2-3,
               pixelX+Tile.MAX_WIDTH-offset, pixelY+Tile.MAX_HEIGHT/2-3);
             gr.setColor(Color.BLACK);
-            gr.setFont(GuiStatics.FONT_SMALL);
+            gr.setFont(GuiStatics.getFontCubellanSC());
             gr.drawString(RandomSystemNameGenerator.numberToRoman(planet.
                 getOrderNumber()), pixelX+Tile.MAX_WIDTH/2-textWidth/2, pixelY+Tile.MAX_HEIGHT/2);
           

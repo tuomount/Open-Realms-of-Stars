@@ -216,7 +216,7 @@ public class InfoTextArea extends JTextArea {
     int width = getWidth()-inset.left-inset.right;
     int height = getHeight()-inset.top-inset.bottom;
     g.fillRect(sx, sx, width, height);
-    g.setFont(GuiStatics.FONT_SMALL);
+    g.setFont(GuiStatics.getFontCubellanSC());
     if (getText() != null ) {
       StringBuilder sb = new StringBuilder();
       if (autoScroll == false) {

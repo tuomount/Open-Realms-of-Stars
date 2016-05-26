@@ -85,7 +85,7 @@ public class BigImagePanel extends JPanel {
   }
 
   private void drawTextArea(Graphics g) {
-    g.setFont(GuiStatics.FONT_SMALL);
+    g.setFont(GuiStatics.getFontCubellan());
     StringBuilder sb = new StringBuilder(planet.generateInfoText());
     int lastSpace = -1;
     int rowLen = 0;
@@ -114,16 +114,16 @@ public class BigImagePanel extends JPanel {
     }
     String[] texts = sb.toString().split("\n");
     int offsetX = (575-backgroundImg.getWidth())/2-
-        GuiStatics.getTextWidth(GuiStatics.FONT_NORMAL, texts[0])/2+
+        GuiStatics.getTextWidth(GuiStatics.getFontCubellanBold(), texts[0])/2+
         backgroundImg.getWidth()/2;
     int offsetY = (575-backgroundImg.getHeight())/2;
-    g.setFont(GuiStatics.FONT_NORMAL);
+    g.setFont(GuiStatics.getFontCubellanBold());
     drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE,
         GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE, offsetX, offsetY, texts[0]);
-    g.setFont(GuiStatics.FONT_SMALL);
+    g.setFont(GuiStatics.getFontCubellan());
     for (int i=1;i<texts.length;i++) {
       drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE,
-        GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE, 25, this.getHeight()/2+i*10, texts[i]);
+        GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE, 25, this.getHeight()/2+i*15, texts[i]);
     }
 
   }

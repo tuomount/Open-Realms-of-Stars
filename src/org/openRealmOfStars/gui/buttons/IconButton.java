@@ -2,7 +2,6 @@ package org.openRealmOfStars.gui.buttons;
 
 
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -135,8 +134,8 @@ public class IconButton extends JButton {
   public JToolTip createToolTip()
   {
       JToolTip toolTip = super.createToolTip();
-      toolTip.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE);
-      toolTip.setBackground(Color.BLACK);
+      toolTip.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+      toolTip.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE);
       toolTip.setBorder(BorderFactory.createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE));
       return toolTip;
   }

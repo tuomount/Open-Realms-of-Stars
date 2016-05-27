@@ -153,6 +153,11 @@ public class Game extends JFrame implements ActionListener {
     InfoPanel topPanel = new InfoPanel();
     IconButton iconBtn = new IconButton(Icons.getIconByName(Icons.ICON_MINUS), 
         Icons.getIconByName(Icons.ICON_MINUS_PRESSED), false, "TEST",topPanel);
+    iconBtn.setToolTipText("Decrease");
+    topPanel.add(iconBtn);
+    iconBtn = new IconButton(Icons.getIconByName(Icons.ICON_PLUS), 
+        Icons.getIconByName(Icons.ICON_PLUS_PRESSED), false, "TEST",topPanel);
+    iconBtn.setToolTipText("Increase");
     topPanel.add(iconBtn);
     topPanel.setTitle(planet.getName());
     

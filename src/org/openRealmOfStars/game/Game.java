@@ -11,7 +11,9 @@ import javax.swing.UIManager;
 import org.openRealmOfStars.gui.BigImagePanel;
 import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.MapPanel;
+import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
@@ -149,6 +151,9 @@ public class Game extends JFrame implements ActionListener {
 
     // Top Panel
     InfoPanel topPanel = new InfoPanel();
+    IconButton iconBtn = new IconButton(Icons.getIconByName(Icons.ICON_MINUS), 
+        Icons.getIconByName(Icons.ICON_MINUS_PRESSED), false, "TEST",topPanel);
+    topPanel.add(iconBtn);
     topPanel.setTitle(planet.getName());
     
     // Bottom panel

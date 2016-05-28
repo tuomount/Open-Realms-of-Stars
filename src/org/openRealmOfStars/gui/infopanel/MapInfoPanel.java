@@ -79,10 +79,10 @@ public class MapInfoPanel extends InfoPanel {
     textArea.setEditable(false);
     textArea.setLineWrap(true);
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
-    this.add(textArea);
     SpaceButton btn = new SpaceButton("View planet", 
-      GameCommands.COMMAND_VIEW_PLANET);
+        GameCommands.COMMAND_VIEW_PLANET);
     btn.addActionListener(listener);
+    this.add(textArea);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
     this.add(Box.createRigidArea(new Dimension(10,10)));
     this.add(btn);

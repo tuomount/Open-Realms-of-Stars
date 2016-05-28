@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
@@ -17,6 +18,8 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
+import org.openRealmOfStars.gui.labels.IconLabel;
+import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.starMap.Planet;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
@@ -151,15 +154,22 @@ public class Game extends JFrame implements ActionListener {
 
     // Top Panel
     InfoPanel topPanel = new InfoPanel();
+    InvisiblePanel invis = new InvisiblePanel(topPanel);
+    invis.setLayout(new BoxLayout(invis, BoxLayout.X_AXIS));
     IconButton iconBtn = new IconButton(Icons.getIconByName(Icons.ICON_MINUS), 
-        Icons.getIconByName(Icons.ICON_MINUS_PRESSED), false, "TEST",topPanel);
+        Icons.getIconByName(Icons.ICON_MINUS_PRESSED), false, "TEST",invis);
     iconBtn.setToolTipText("Decrease");
-    topPanel.add(iconBtn);
+    invis.add(iconBtn);
+    IconLabel label = new IconLabel(invis, Icons.getIconByName(Icons.ICON_MINE),
+        ": 1");
+    label.setToolTipText("Number of people working as a miners.");
+    invis.add(label);
     iconBtn = new IconButton(Icons.getIconByName(Icons.ICON_PLUS), 
-        Icons.getIconByName(Icons.ICON_PLUS_PRESSED), false, "TEST",topPanel);
+        Icons.getIconByName(Icons.ICON_PLUS_PRESSED), false, "TEST",invis);
     iconBtn.setToolTipText("Increase");
-    topPanel.add(iconBtn);
+    invis.add(iconBtn);
     topPanel.setTitle(planet.getName());
+    topPanel.add(invis);
     
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();

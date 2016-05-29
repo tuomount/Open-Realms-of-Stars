@@ -1,9 +1,11 @@
 package org.openRealmOfStars.game;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
@@ -16,6 +18,8 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
+import org.openRealmOfStars.gui.labels.IconLabel;
+import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.starMap.Planet;
 import org.openRealmOfStars.starMap.StarMap;
@@ -151,26 +155,69 @@ public class Game extends JFrame implements ActionListener {
 
     // Top Panel
     InfoPanel topPanel = new InfoPanel();
-    WorkerProductionPanel farmPanel = new WorkerProductionPanel(topPanel, 
+    topPanel.setLayout(new GridLayout(1, 0));
+    
+    InvisiblePanel invis = new InvisiblePanel(topPanel);
+    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    IconLabel totalPeople = new IconLabel(invis,
+        Icons.getIconByName(Icons.ICON_PEOPLE), ": 5");
+    totalPeople.setToolTipText("Total number of people on planet.");
+    invis.add(totalPeople);
+    WorkerProductionPanel farmPanel = new WorkerProductionPanel(invis, 
         GameCommands.COMMAND_MINUS_FARM, GameCommands.COMMAND_PLUS_FARM, 
         Icons.ICON_FARM, ": 1", "Number of people working as a farmers.",
         this);
-    topPanel.add(farmPanel);
-    WorkerProductionPanel minePanel = new WorkerProductionPanel(topPanel, 
+    invis.add(farmPanel);
+    WorkerProductionPanel minePanel = new WorkerProductionPanel(invis, 
         GameCommands.COMMAND_MINUS_MINE, GameCommands.COMMAND_PLUS_MINE, 
         Icons.ICON_MINE, ": 1", "Number of people working as a miners.",
         this);
-    topPanel.add(minePanel);
-    WorkerProductionPanel prodPanel = new WorkerProductionPanel(topPanel, 
+    invis.add(minePanel);
+    WorkerProductionPanel prodPanel = new WorkerProductionPanel(invis, 
         GameCommands.COMMAND_MINUS_PRODUCTION, GameCommands.COMMAND_PLUS_PRODUCTION, 
         Icons.ICON_FACTORY, ": 1", "Number of people working as a factory worker.",
         this);
-    topPanel.add(prodPanel);
-    WorkerProductionPanel resePanel = new WorkerProductionPanel(topPanel, 
+    invis.add(prodPanel);
+    WorkerProductionPanel resePanel = new WorkerProductionPanel(invis, 
         GameCommands.COMMAND_MINUS_RESEARCH, GameCommands.COMMAND_PLUS_RESEARCH, 
         Icons.ICON_RESEARCH, ": 1", "Number of people working as a scientist.",
         this);
-    topPanel.add(resePanel);
+    invis.add(resePanel);
+    IconLabel culture = new IconLabel(invis,
+        Icons.getIconByName(Icons.ICON_CULTURE), ": 0");
+    culture.setToolTipText("Number of people producing culture.");
+    invis.add(culture);
+    topPanel.add(invis);
+
+    invis = new InvisiblePanel(topPanel);
+    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    IconLabel peopleGrowth = new IconLabel(invis,
+        Icons.getIconByName(Icons.ICON_PEOPLE), "10 turns");
+    peopleGrowth.setToolTipText("How many turns to population growth.");
+    invis.add(peopleGrowth);
+    IconLabel farmProd = new IconLabel(invis,
+        Icons.getIconByName(Icons.ICON_FARM), ": 3");
+    farmProd.setToolTipText("Total production of food");
+    invis.add(farmProd);
+    IconLabel mineProd = new IconLabel(invis,
+        Icons.getIconByName(Icons.ICON_MINE), ": 3");
+    mineProd.setToolTipText("Total production of metal");
+    invis.add(mineProd);
+    IconLabel prodProd = new IconLabel(invis,
+        Icons.getIconByName(Icons.ICON_FACTORY), ": 3");
+    prodProd.setToolTipText("Total production of production");
+    invis.add(prodProd);
+    IconLabel reseProd = new IconLabel(invis,
+        Icons.getIconByName(Icons.ICON_RESEARCH), ": 3");
+    reseProd.setToolTipText("Total production of research");
+    invis.add(reseProd);
+    IconLabel cultProd = new IconLabel(invis,
+        Icons.getIconByName(Icons.ICON_CULTURE), ": 3");
+    cultProd.setToolTipText("Total production of culture");
+    invis.add(cultProd);
+    topPanel.add(invis);
+
+    
     topPanel.setTitle(planet.getName());
     
     // Bottom panel

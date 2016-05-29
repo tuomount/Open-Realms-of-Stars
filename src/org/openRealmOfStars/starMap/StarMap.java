@@ -233,6 +233,14 @@ public class StarMap {
         Planet planet = new Planet(px,py,sun.getName(),planets,false);
         planet.setPlanetType(DiceGenerator.
             getRandom(Planet.PLANET_IMAGE_INDEX.length-1));
+        if (planets == 1) {
+          planet.setPlanetOwner(0);
+          planet.setWorkers(Planet.FOOD_PRODUCTION, 2);
+          planet.setWorkers(Planet.METAL_PRODUCTION, 1);
+          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+        }
         planetList.add(planet);
         int planetNumber = planetList.size()-1;
         info = new SquareInfo(SquareInfo.TYPE_PLANET, planetNumber);

@@ -103,6 +103,44 @@ public class Planet {
   private int planetType;
   
   /**
+   * Planet Owner info, this is index to player index, -1 means
+   * that planet is not colonized yet.
+   */
+  private int planetOwner;
+  
+  /**
+   * Maximum number of productions
+   */
+  public static final int MAX_PRODUCTION = 5;
+  
+  /**
+   * Food production
+   */
+  public static final int FOOD_PRODUCTION = 0;
+
+  /**
+   * Metal production from mining
+   */
+  public static final int METAL_PRODUCTION = 1;
+
+  /**
+   * production from workers
+   */
+  public static final int PRODUCTION_WORKERS = 2;
+
+  /**
+   * Research from scientist
+   */
+  public static final int RESEARCH_SCIENTIST = 3;
+
+  /**
+   * Culture from artist
+   */
+  public static final int CULTURE_ARTIST = 4;
+
+  private int[] workers;
+  
+  /**
    * Create random planet with name + orderNumber with Roman numbers.
    * Other planet attributes are randomized.
    * @param x Planet's X coordinate
@@ -122,6 +160,43 @@ public class Planet {
     this.setMetal(0);
     this.gasGiant = gasGiant;
     this.planetImageIndex = 0;
+    this.planetOwner = -1;
+    this.workers = new int[MAX_PRODUCTION];
+  }
+
+  /**
+   * Get amount of workers in certain type
+   * @param workerType
+   * @return Amount of workers
+   */
+  public int getWorkers(int workerType) {
+    if (workerType >= 0 && workerType < MAX_PRODUCTION) {
+      return workers[workerType];
+    }
+    return 0;
+  }
+
+  /**
+   * Set amount of workers in certain type
+   * @param workerType
+   * @param value how many workers in this production
+   */
+  public void setWorkers(int workerType,int value) {
+    if (workerType >= 0 && workerType < MAX_PRODUCTION) {
+      workers[workerType] = value;
+    }
+  }
+  
+  /**
+   * Get total population number
+   * @return Total Population
+   */
+  public int getTotalPopulation() {
+    int result=0;
+    for (int i=0;i<workers.length;i++) {
+      result = result +workers[i];
+    }
+    return result;
   }
 
   public String getName() {
@@ -275,6 +350,20 @@ public class Planet {
       this.planetType = planetType;
       setPlanetImageIndex(PLANET_IMAGE_INDEX[planetType]);
     }
+  }
+
+  /**
+   * @return the planetOwner
+   */
+  public int getPlanetOwner() {
+    return planetOwner;
+  }
+
+  /**
+   * @param planetOwner the planetOwner to set
+   */
+  public void setPlanetOwner(int planetOwner) {
+    this.planetOwner = planetOwner;
   }
   
 

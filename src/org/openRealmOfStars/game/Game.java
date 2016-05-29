@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
@@ -12,14 +11,12 @@ import javax.swing.UIManager;
 import org.openRealmOfStars.gui.BigImagePanel;
 import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.MapPanel;
-import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
-import org.openRealmOfStars.gui.labels.IconLabel;
-import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.starMap.Planet;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
@@ -154,22 +151,27 @@ public class Game extends JFrame implements ActionListener {
 
     // Top Panel
     InfoPanel topPanel = new InfoPanel();
-    InvisiblePanel invis = new InvisiblePanel(topPanel);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.X_AXIS));
-    IconButton iconBtn = new IconButton(Icons.getIconByName(Icons.ICON_MINUS), 
-        Icons.getIconByName(Icons.ICON_MINUS_PRESSED), false, "TEST",invis);
-    iconBtn.setToolTipText("Decrease");
-    invis.add(iconBtn);
-    IconLabel label = new IconLabel(invis, Icons.getIconByName(Icons.ICON_MINE),
-        ": 1");
-    label.setToolTipText("Number of people working as a miners.");
-    invis.add(label);
-    iconBtn = new IconButton(Icons.getIconByName(Icons.ICON_PLUS), 
-        Icons.getIconByName(Icons.ICON_PLUS_PRESSED), false, "TEST",invis);
-    iconBtn.setToolTipText("Increase");
-    invis.add(iconBtn);
+    WorkerProductionPanel farmPanel = new WorkerProductionPanel(topPanel, 
+        GameCommands.COMMAND_MINUS_FARM, GameCommands.COMMAND_PLUS_FARM, 
+        Icons.ICON_FARM, ": 1", "Number of people working as a farmers.",
+        this);
+    topPanel.add(farmPanel);
+    WorkerProductionPanel minePanel = new WorkerProductionPanel(topPanel, 
+        GameCommands.COMMAND_MINUS_MINE, GameCommands.COMMAND_PLUS_MINE, 
+        Icons.ICON_MINE, ": 1", "Number of people working as a miners.",
+        this);
+    topPanel.add(minePanel);
+    WorkerProductionPanel prodPanel = new WorkerProductionPanel(topPanel, 
+        GameCommands.COMMAND_MINUS_PRODUCTION, GameCommands.COMMAND_PLUS_PRODUCTION, 
+        Icons.ICON_FACTORY, ": 1", "Number of people working as a factory worker.",
+        this);
+    topPanel.add(prodPanel);
+    WorkerProductionPanel resePanel = new WorkerProductionPanel(topPanel, 
+        GameCommands.COMMAND_MINUS_RESEARCH, GameCommands.COMMAND_PLUS_RESEARCH, 
+        Icons.ICON_RESEARCH, ": 1", "Number of people working as a scientist.",
+        this);
+    topPanel.add(resePanel);
     topPanel.setTitle(planet.getName());
-    topPanel.add(invis);
     
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();

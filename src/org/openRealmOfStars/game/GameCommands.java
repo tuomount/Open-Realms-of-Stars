@@ -38,5 +38,42 @@ public class GameCommands {
    * View Star map
    */
   public static final String COMMAND_VIEW_STARMAP = "ViewStarMap";
+  
+  /**
+   * Minus mine
+   */
+  public static final String COMMAND_MINUS_MINE = "MinusMine";
+  /**
+   * Plus mine
+   */
+  public static final String COMMAND_PLUS_MINE = "PlusMine";
+
+  /**
+   * Minus farm
+   */
+  public static final String COMMAND_MINUS_FARM = "MinusFarm";
+  /**
+   * Plus farm
+   */
+  public static final String COMMAND_PLUS_FARM = "PlusFarm";
+
+  /**
+   * Minus production
+   */
+  public static final String COMMAND_MINUS_PRODUCTION = "MinusProduction";
+  /**
+   * Plus production
+   */
+  public static final String COMMAND_PLUS_PRODUCTION = "PlusProduction";
+
+  /**
+   * Minus Research
+   */
+  public static final String COMMAND_MINUS_RESEARCH = "MinusResearch";
+  /**
+   * Plus Research
+   */
+  public static final String COMMAND_PLUS_RESEARCH = "PlusResearch";
+
 
 }

@@ -235,8 +235,8 @@ public class StarMap {
             getRandom(Planet.PLANET_IMAGE_INDEX.length-1));
         if (planets == 1) {
           planet.setPlanetOwner(0);
-          planet.setWorkers(Planet.FOOD_PRODUCTION, 2);
-          planet.setWorkers(Planet.METAL_PRODUCTION, 1);
+          planet.setWorkers(Planet.FOOD_FARMERS, 2);
+          planet.setWorkers(Planet.METAL_MINERS, 1);
           planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
           planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
           planet.setWorkers(Planet.CULTURE_ARTIST, 0);

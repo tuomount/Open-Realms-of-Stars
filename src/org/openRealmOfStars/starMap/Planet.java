@@ -109,19 +109,19 @@ public class Planet {
   private int planetOwner;
   
   /**
-   * Maximum number of productions
+   * Maximum number of different works
    */
-  public static final int MAX_PRODUCTION = 5;
+  public static final int MAX_WORKER_TYPE = 5;
   
   /**
-   * Food production
+   * Food production from farmers
    */
-  public static final int FOOD_PRODUCTION = 0;
+  public static final int FOOD_FARMERS = 0;
 
   /**
-   * Metal production from mining
+   * Metal production from miners
    */
-  public static final int METAL_PRODUCTION = 1;
+  public static final int METAL_MINERS = 1;
 
   /**
    * production from workers
@@ -138,8 +138,48 @@ public class Planet {
    */
   public static final int CULTURE_ARTIST = 4;
 
+  /**
+   * Amount of different workers
+   */
   private int[] workers;
   
+  
+  /**
+   * Maximum number of different production
+   */
+  public static final int MAX_PRODUCTION_TYPE = 6;
+  
+  /**
+   * Food production
+   */
+  public static final int PRODUCTION_FOOD = 0;
+
+  /**
+   * Metal production
+   */
+  public static final int PRODUCTION_METAL = 1;
+
+  /**
+   * Production production
+   */
+  public static final int PRODUCTION_PRODUCTION = 2;
+
+  /**
+   * Research production
+   */
+  public static final int PRODUCTION_RESEARCH = 3;
+
+  /**
+   * Culture production
+   */
+  public static final int PRODUCTION_CULTURE = 4;
+  
+  /**
+   * Credit production
+   */
+  public static final int PRODUCTION_CREDITS = 5;
+
+
   /**
    * Create random planet with name + orderNumber with Roman numbers.
    * Other planet attributes are randomized.
@@ -161,7 +201,7 @@ public class Planet {
     this.gasGiant = gasGiant;
     this.planetImageIndex = 0;
     this.planetOwner = -1;
-    this.workers = new int[MAX_PRODUCTION];
+    this.workers = new int[MAX_WORKER_TYPE];
   }
 
   /**
@@ -170,7 +210,7 @@ public class Planet {
    * @return Amount of workers
    */
   public int getWorkers(int workerType) {
-    if (workerType >= 0 && workerType < MAX_PRODUCTION) {
+    if (workerType >= 0 && workerType < MAX_WORKER_TYPE) {
       return workers[workerType];
     }
     return 0;
@@ -182,7 +222,7 @@ public class Planet {
    * @param value how many workers in this production
    */
   public void setWorkers(int workerType,int value) {
-    if (workerType >= 0 && workerType < MAX_PRODUCTION) {
+    if (workerType >= 0 && workerType < MAX_WORKER_TYPE) {
       workers[workerType] = value;
     }
   }
@@ -199,6 +239,42 @@ public class Planet {
     return result;
   }
 
+  /**
+   * Get total production from planet. This includes racial, worker, planetary
+   * improvement bonuss
+   * @param prod, Production to get: See all PRODUCTION_*
+   * @return amount of production in one turn
+   */
+  public int getTotalProduction(int prod) {
+    int result = 0;
+    int mult=100;
+    int div=100;
+    if (gasGiant) {
+      return 0;
+    }
+    switch (prod) {
+    case PRODUCTION_FOOD: { 
+      // Planet always produces +2 food
+      result=workers[FOOD_FARMERS]*mult/div+2;break;}
+    case PRODUCTION_METAL: { 
+    // Planet always produces +1 metal
+    result=workers[METAL_MINERS]*mult/div+1;break;}
+    case PRODUCTION_PRODUCTION: { 
+     //  Planet always produces +1 production
+    result=workers[PRODUCTION_PRODUCTION]*mult/div+1;break;}
+    case PRODUCTION_RESEARCH: { 
+      //  Planet does not have research bonus
+     result=workers[PRODUCTION_RESEARCH]*mult/div;break;}
+    case PRODUCTION_CULTURE: { 
+      //  Planet does not have culture bonus
+     result=workers[PRODUCTION_CULTURE]*mult/div;break;}
+    case PRODUCTION_CREDITS: { 
+      //  Planet does not have credit bonus
+     result=0;break;}
+    }
+    return result;
+  }
+  
   public String getName() {
     return name;
   }

@@ -60,6 +60,9 @@ public class PlanetView extends BlackPanel {
   private IconLabel prodProd;
   private IconLabel reseProd;
   private IconLabel cultProd;
+  private IconLabel credProd;
+  private IconLabel metal;
+  private IconLabel metalOre;
   
   public PlanetView(Planet planet,ActionListener listener) {
     // Background image
@@ -106,6 +109,18 @@ public class PlanetView extends BlackPanel {
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
     peopleGrowth = new IconLabel(invis, Icons.getIconByName(Icons.ICON_PEOPLE),
         "10 turns");
+    int peopleGrow = planet.getTotalProduction(Planet.PRODUCTION_POPULATION);
+    if (peopleGrow > 0) {
+      peopleGrowth.setText(peopleGrow+" turns.");
+      peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
+    } else if (peopleGrow < 0) {
+      peopleGrow = peopleGrow *-1;
+      peopleGrowth.setText(peopleGrow+" turns.");
+      peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_DEATH));
+    } else {
+      peopleGrowth.setText("stable ");
+      peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
+    }
     peopleGrowth.setToolTipText("How many turns to population growth.");
     invis.add(peopleGrowth);
     farmProd = new IconLabel(invis,Icons.getIconByName(Icons.ICON_FARM), 
@@ -130,7 +145,23 @@ public class PlanetView extends BlackPanel {
     invis.add(cultProd);
     topPanel.add(invis);
 
-    
+
+    invis = new InvisiblePanel(topPanel);
+    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    credProd = new IconLabel(invis,Icons.getIconByName(Icons.ICON_CREDIT), 
+        ": "+planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    credProd.setToolTipText("Total production of credits");
+    invis.add(credProd);
+    metal = new IconLabel(invis,Icons.getIconByName(Icons.ICON_METAL), 
+        ": "+planet.getMetal());
+    metal.setToolTipText("Total metal on surface");
+    invis.add(metal);
+    metalOre = new IconLabel(invis,Icons.getIconByName(Icons.ICON_METAL_ORE), 
+        ": "+planet.getAmountMetalInGround());
+    metalOre.setToolTipText("Total metal ore to mine.");
+    invis.add(metalOre);
+    topPanel.add(invis);
+
     topPanel.setTitle(planet.getName());
     
     // Bottom panel

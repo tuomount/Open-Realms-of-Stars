@@ -109,6 +109,12 @@ public class Planet {
   private int planetOwner;
   
   /**
+   * Extra food, each +10 increases people by one and each -10 decreseases
+   * people by one.
+   */
+  private int extraFood;
+  
+  /**
    * Maximum number of different works
    */
   public static final int MAX_WORKER_TYPE = 5;
@@ -179,6 +185,11 @@ public class Planet {
    */
   public static final int PRODUCTION_CREDITS = 5;
 
+  /**
+   * Population growth
+   */
+  public static final int PRODUCTION_POPULATION = 6;
+
 
   /**
    * Create random planet with name + orderNumber with Roman numbers.
@@ -202,6 +213,7 @@ public class Planet {
     this.planetImageIndex = 0;
     this.planetOwner = -1;
     this.workers = new int[MAX_WORKER_TYPE];
+    this.extraFood = 0;
   }
 
   /**
@@ -241,7 +253,7 @@ public class Planet {
 
   /**
    * Get total production from planet. This includes racial, worker, planetary
-   * improvement bonuss
+   * improvement bonus
    * @param prod, Production to get: See all PRODUCTION_*
    * @return amount of production in one turn
    */
@@ -271,6 +283,24 @@ public class Planet {
     case PRODUCTION_CREDITS: { 
       //  Planet does not have credit bonus
      result=0;break;}
+    case PRODUCTION_POPULATION: { 
+      //  Planet does not have credit bonus
+     result=getTotalProduction(PRODUCTION_FOOD)-getTotalPopulation();
+     if (result > 0) {
+       result = (10-extraFood)/result;
+       if (result < 1) {
+         result = 1;
+       }
+     } else if (result < 0) {
+       result = (-10-extraFood)/result;
+       if (result < 1) {
+         result = 1;
+       }
+       result = result *-1;
+     } else {
+       result = 0;
+     }
+     break;}
     }
     return result;
   }

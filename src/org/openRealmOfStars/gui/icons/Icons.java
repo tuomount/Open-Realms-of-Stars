@@ -42,6 +42,10 @@ public class Icons {
   public static final String ICON_RESEARCH = "Research";
   public static final String ICON_CULTURE = "Culture";
   public static final String ICON_PEOPLE = "People";
+  public static final String ICON_DEATH = "Death";
+  public static final String ICON_CREDIT = "Credit";
+  public static final String ICON_METAL = "Metal";
+  public static final String ICON_METAL_ORE = "MetalOre";
   
   /**
    * List of Icon
@@ -133,6 +137,14 @@ public class Icons {
     icon = new Icon(image, 6, 0,ICON_CULTURE);
     addIcon(icon);
     icon = new Icon(image, 7, 0,ICON_PEOPLE);
+    addIcon(icon);
+    icon = new Icon(image, 7, 1,ICON_DEATH);
+    addIcon(icon);
+    icon = new Icon(image, 0, 1,ICON_CREDIT);
+    addIcon(icon);
+    icon = new Icon(image, 3, 1,ICON_METAL);
+    addIcon(icon);
+    icon = new Icon(image, 4, 1,ICON_METAL_ORE);
     addIcon(icon);
   }
   

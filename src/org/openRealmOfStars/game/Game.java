@@ -201,6 +201,9 @@ public class Game extends JFrame implements ActionListener {
         GameCommands.COMMAND_VIEW_STARMAP)) {
       changeGameState(GameState.STARMAP);
     }
+    if (gameState == GameState.PLANETVIEW) {
+      planetView.handleAction(arg0);
+    }
   }
 
 }

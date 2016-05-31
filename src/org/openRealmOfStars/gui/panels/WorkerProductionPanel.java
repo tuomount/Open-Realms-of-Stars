@@ -84,6 +84,14 @@ public class WorkerProductionPanel extends InvisiblePanel {
   }
   
   /**
+   * Set label text
+   * @param text to show
+   */
+  public void setText(String text) {
+    label.setText(text);
+  }
+  
+  /**
    * Set Minus button tool tip
    * @param text Tool tip to show
    */

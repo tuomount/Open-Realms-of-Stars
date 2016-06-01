@@ -23,12 +23,9 @@ package org.openRealmOfStars.player;
  */
 public enum SpaceRace {
 
-  HUMAN(0,"Humans","Humans are about average in everything.",
-      //rese, mini, cult, prod,grow, foodReq, diplomacy
-      100,100,100,100,100,100,2),
-  MECHIONS(0,"Mechions","Mechanical beings whom do not eat food. Each now population must be built.",
-    //rese, mini, cult, prod,grow, foodReq, diplomacy
-      50,150,50,100,0,0,-2);
+  HUMAN(0,"Humans","Humans are about average in everything."),
+  MECHIONS(0,"Mechions","Mechanical beings whom do not eat food."
+      + " Each now population must be built.");
   
   /**
    * Create space race
@@ -43,13 +40,10 @@ public enum SpaceRace {
    * @param foodRequire
    * @param diplomacy
    */
-  SpaceRace(int index, String name, String description,int researchSpeed,
-      int miningSpeed,int cultureSpeed,int productionSpeed, int growthSpeed, 
-      int foodRequire,int diplomacy) {
+  SpaceRace(int index, String name, String description) {
     this.index = index;
     this.name= name;
     this.description = description;
-    this.researchSpeed = researchSpeed;
     
   }
   
@@ -69,44 +63,15 @@ public enum SpaceRace {
   private String description;
   
   /**
-   * Research speed for scientist
+   * Get scientis research speed
+   * @return
    */
-  private int researchSpeed;
-
-  /**
-   * Mining speed for miners
-   */
-  private int miningSpeed;
-
-  /**
-   * Culture speed for artist
-   */
-  private int cultureSpeed;
-
-  /**
-   * Production speed for workers
-   */
-  private int productionSpeed;
-
-  /**
-   * Population growth speed
-   */
-  private int growthSpeed;
-
-  /**
-   * Food require per people
-   */
-  private int foodRequire;
-
-  /**
-   * Diplomacy bonus
-   */
-  private int diplomacyBonus;
-
-
-  
   public int getResearchSpeed() {
-    return researchSpeed;
+    switch (this) {
+    case HUMAN: return 100;
+    case MECHIONS: return 50;
+    }
+    return 0;
   }
   
   /**
@@ -144,28 +109,76 @@ public enum SpaceRace {
     return description;
   }
 
+  /**
+   * Get miners mining speed
+   * @return normal 100, half 50, double 200
+   */
   public int getMiningSpeed() {
-    return miningSpeed;
+    switch (this) {
+    case HUMAN: return 100;
+    case MECHIONS: return 150;
+    }
+    return 0;
   }
 
+  /**
+   * Get artists culture speed
+   * @return normal 100, half 50, double 200
+   */
   public int getCultureSpeed() {
-    return cultureSpeed;
+    switch (this) {
+    case HUMAN: return 100;
+    case MECHIONS: return 50;
+    }
+    return 0;
   }
 
+  /**
+   * Get worker production speed
+   * @return normal 100, half 50, double 200
+   */
   public int getProductionSpeed() {
-    return productionSpeed;
+    switch (this) {
+    case HUMAN: return 100;
+    case MECHIONS: return 100;
+    }
+    return 0;
   }
 
+  /**
+   * Get population growth speed
+   * @return normal 100, half 50, double 200
+   */
   public int getGrowthSpeed() {
-    return growthSpeed;
+    switch (this) {
+    case HUMAN: return 100;
+    case MECHIONS: return 0;
+    }
+    return 0;
   }
 
+  /**
+   * Get population food requirement
+   * @return normal 100, half 50, double 200
+   */
   public int getFoodRequire() {
-    return foodRequire;
+    switch (this) {
+    case HUMAN: return 100;
+    case MECHIONS: return 0;
+    }
+    return 0;
   }
 
+  /**
+   * Get diplomacy bonus for race
+   * @return normal 0, +2 positive, -2 negative
+   */
   public int getDiplomacyBonus() {
-    return diplomacyBonus;
+    switch (this) {
+    case HUMAN: return 2;
+    case MECHIONS: return -2;
+    }
+    return 0;
   }
 
 }

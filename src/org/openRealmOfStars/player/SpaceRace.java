@@ -24,8 +24,9 @@ package org.openRealmOfStars.player;
 public enum SpaceRace {
 
   HUMAN(0,"Humans","Humans are about average in everything."),
-  MECHIONS(0,"Mechions","Mechanical beings whom do not eat food."
-      + " Each now population must be built.");
+  MECHIONS(1,"Mechions","Mechanical beings whom do not eat food."
+      + " Each now population must be built."),
+  SPORKS(2,"Sporks","Aggressive and warmongering spieces.");
   
   /**
    * Create space race
@@ -70,6 +71,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN: return 100;
     case MECHIONS: return 50;
+    case SPORKS: return 100;
     }
     return 0;
   }
@@ -82,6 +84,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN: return 4;
     case MECHIONS: return 8;
+    case SPORKS: return 5;
     }
     return -1;
   }
@@ -117,6 +120,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN: return 100;
     case MECHIONS: return 150;
+    case SPORKS: return 100;
     }
     return 0;
   }
@@ -129,6 +133,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN: return 100;
     case MECHIONS: return 50;
+    case SPORKS: return 100;
     }
     return 0;
   }
@@ -141,6 +146,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN: return 100;
     case MECHIONS: return 100;
+    case SPORKS: return 100;
     }
     return 0;
   }
@@ -153,6 +159,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN: return 100;
     case MECHIONS: return 0;
+    case SPORKS: return 100;
     }
     return 0;
   }
@@ -165,6 +172,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN: return 100;
     case MECHIONS: return 0;
+    case SPORKS: return 100;
     }
     return 0;
   }
@@ -177,6 +185,7 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN: return 2;
     case MECHIONS: return -2;
+    case SPORKS: return -5;
     }
     return 0;
   }

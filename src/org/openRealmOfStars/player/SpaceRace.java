@@ -26,7 +26,10 @@ public enum SpaceRace {
   HUMAN(0,"Humans","Humans are about average in everything."),
   MECHIONS(1,"Mechions","Mechanical beings whom do not eat food."
       + " Each now population must be built."),
-  SPORKS(2,"Sporks","Aggressive and warmongering spieces.");
+  SPORKS(2,"Sporks","Aggressive and warmongering spieces."),
+  GREYANS(3,"Greyans","Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers."),
+  CENTAURS(4,"Centaurs","Bipedal humanoid creatures which are big, about 5 meters tall. Due their"
+      + "enormous size their space ships are must more rigid. Centaurs need more food to survive.");
   
   /**
    * Create space race
@@ -72,6 +75,8 @@ public enum SpaceRace {
     case HUMAN: return 100;
     case MECHIONS: return 50;
     case SPORKS: return 100;
+    case GREYANS: return 150;
+    case CENTAURS: return 100;
     }
     return 0;
   }
@@ -85,6 +90,8 @@ public enum SpaceRace {
     case HUMAN: return 4;
     case MECHIONS: return 8;
     case SPORKS: return 5;
+    case GREYANS: return 3;
+    case CENTAURS: return 6;
     }
     return -1;
   }
@@ -121,6 +128,8 @@ public enum SpaceRace {
     case HUMAN: return 100;
     case MECHIONS: return 150;
     case SPORKS: return 100;
+    case GREYANS: return 100;
+    case CENTAURS: return 100;
     }
     return 0;
   }
@@ -134,6 +143,8 @@ public enum SpaceRace {
     case HUMAN: return 100;
     case MECHIONS: return 50;
     case SPORKS: return 100;
+    case GREYANS: return 100;
+    case CENTAURS: return 100;
     }
     return 0;
   }
@@ -147,6 +158,8 @@ public enum SpaceRace {
     case HUMAN: return 100;
     case MECHIONS: return 100;
     case SPORKS: return 100;
+    case GREYANS: return 100;
+    case CENTAURS: return 100;
     }
     return 0;
   }
@@ -160,6 +173,8 @@ public enum SpaceRace {
     case HUMAN: return 100;
     case MECHIONS: return 0;
     case SPORKS: return 100;
+    case GREYANS: return 50;
+    case CENTAURS: return 50;
     }
     return 0;
   }
@@ -173,6 +188,8 @@ public enum SpaceRace {
     case HUMAN: return 100;
     case MECHIONS: return 0;
     case SPORKS: return 100;
+    case GREYANS: return 100;
+    case CENTAURS: return 125;
     }
     return 0;
   }
@@ -185,7 +202,24 @@ public enum SpaceRace {
     switch (this) {
     case HUMAN: return 2;
     case MECHIONS: return -2;
-    case SPORKS: return -5;
+    case SPORKS: return -3;
+    case GREYANS: return 0;
+    case CENTAURS: return -1;
+    }
+    return 0;
+  }
+
+  /**
+   * Get racial hull point if available
+   * @return normal 0 or 1
+   */
+  public int getExtraHullPoint() {
+    switch (this) {
+    case HUMAN: return 0;
+    case MECHIONS: return 0;
+    case SPORKS: return 0;
+    case GREYANS: return 0;
+    case CENTAURS: return 1;
     }
     return 0;
   }

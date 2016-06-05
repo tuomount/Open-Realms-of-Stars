@@ -1,4 +1,7 @@
 package org.openRealmOfStars.player;
+
+import org.openRealmOfStars.utilities.DiceGenerator;
+
 /**
  * 
  * Open Realm of Stars game project
@@ -30,7 +33,7 @@ public enum SpaceRace {
   GREYANS(3,"Greyans","Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers."),
   CENTAURS(4,"Centaurs","Bipedal humanoid creatures which are big, about 5 meters tall. Due their"
       + "enormous size their space ships are must more rigid. Centaurs need more food to survive.");
-  
+    
   /**
    * Create space race
    * @param index
@@ -51,6 +54,27 @@ public enum SpaceRace {
     
   }
   
+  /**
+   * Get SpaceRace with indexed number
+   * @param index Space Race index
+   * @return SpaceRace, if index is out of bounds human is given
+   */
+  public static SpaceRace getRaceByIndex(int index) {
+    if (index > -1 && index < SpaceRace.values().length) {
+      return SpaceRace.values()[index];
+    } else {
+      return SpaceRace.HUMAN;
+    }
+  }
+  
+  /**
+   * Get Random race
+   * @return SpaceRace
+   */
+  public static SpaceRace getRandomRace() {
+    int index = DiceGenerator.getRandom(SpaceRace.values().length-1);
+    return getRaceByIndex(index);
+  }
   /**
    * Space race index
    */

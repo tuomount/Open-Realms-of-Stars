@@ -105,13 +105,13 @@ public class StarMap {
     // First starting Systems
     int sx = SOLARSYSTEMWIDTH;
     int sy = SOLARSYSTEMWIDTH;
-    createSolarSystem(sx,sy,5,2);
+    createSolarSystem(sx,sy,5,2,0);
     sx = maxX/2;
     sy = SOLARSYSTEMWIDTH;
     createSolarSystem(sx,sy,3,0);
     sx = maxX-SOLARSYSTEMWIDTH;
     sy = SOLARSYSTEMWIDTH;
-    createSolarSystem(sx,sy,3,1);
+    createSolarSystem(sx,sy,3,1,1);
     sx = SOLARSYSTEMWIDTH;
     sy = maxY/2;
     createSolarSystem(sx,sy,3,0);
@@ -120,13 +120,13 @@ public class StarMap {
     createSolarSystem(sx,sy,3,0);
     sx = SOLARSYSTEMWIDTH;
     sy = maxY-SOLARSYSTEMWIDTH;
-    createSolarSystem(sx,sy,3,0);
+    createSolarSystem(sx,sy,3,0,2);
     sx = maxX/2;
     sy = maxY-SOLARSYSTEMWIDTH;
     createSolarSystem(sx,sy,3,0);
     sx = maxX-SOLARSYSTEMWIDTH;
     sy = maxY-SOLARSYSTEMWIDTH;
-    createSolarSystem(sx,sy,3,0);
+    createSolarSystem(sx,sy,3,0,3);
   }
 
   /**
@@ -184,6 +184,7 @@ public class StarMap {
     return result;
   }
 
+
   /**
    * Create Solar System
    * @param sx Sun's about coordinates
@@ -193,6 +194,21 @@ public class StarMap {
    */
   private void createSolarSystem(int sx,int sy, int numberOfPlanets, 
       int numberOfGasGiants) {
+    createSolarSystem(sx, sy, numberOfPlanets, numberOfGasGiants,-1);
+  }
+
+  
+  /**
+   * Create Solar System
+   * @param sx Sun's about coordinates
+   * @param sy Sun's about coordinates
+   * @param numberOfPlanets Number of planets to Solar System
+   * @param numberOfGasGiants Number of Gas Giants to Solar System
+   * @param playerIndex if Player index is else than -1 then SolarSystem
+   * is created as home system for that player index.
+   */
+  private void createSolarSystem(int sx,int sy, int numberOfPlanets, 
+      int numberOfGasGiants,int playerIndex) {
     if (numberOfPlanets > 5) {
       numberOfPlanets = 5;
     }
@@ -234,12 +250,14 @@ public class StarMap {
         planet.setPlanetType(DiceGenerator.
             getRandom(Planet.PLANET_IMAGE_INDEX.length-1));
         if (planets == 1) {
-          planet.setPlanetOwner(0);
-          planet.setWorkers(Planet.FOOD_FARMERS, 2);
-          planet.setWorkers(Planet.METAL_MINERS, 1);
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
-          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+          if (playerIndex != -1) {
+            planet.setPlanetOwner(playerIndex);
+            planet.setWorkers(Planet.FOOD_FARMERS, 2);
+            planet.setWorkers(Planet.METAL_MINERS, 1);
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+            planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+          }
         }
         planetList.add(planet);
         int planetNumber = planetList.size()-1;

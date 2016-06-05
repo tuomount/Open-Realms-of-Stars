@@ -14,6 +14,8 @@ import org.openRealmOfStars.gui.MapPanel;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.starMap.Planet;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
@@ -79,6 +81,16 @@ public class Game extends JFrame implements ActionListener {
   private StarMap starMap = null;
   
   /**
+   * List of players
+   */
+  private PlayerInfo players[];
+  
+  /**
+   * Maximum players
+   */
+  private static final int MAX_PLAYERS = 4;
+  
+  /**
    * Mouse listener aka mouse handler for star map.
    */
   private StarMapMouseListener starMapMouseListener;
@@ -109,6 +121,11 @@ public class Game extends JFrame implements ActionListener {
     addWindowListener(new GameWindowListener());
     setSize(1024, 768);
     setLocationRelativeTo(null);
+    players = new PlayerInfo[MAX_PLAYERS];
+    for (int i=0;i<players.length;i++) {
+      players[i] = new PlayerInfo();
+      players[i].setRace(SpaceRace.getRandomRace());
+    }
     starMap = new StarMap(75, 75);
     changeGameState(GameState.STARMAP);
     animationTimer = new Timer(75,this);

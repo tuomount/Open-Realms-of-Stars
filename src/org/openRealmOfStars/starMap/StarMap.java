@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -82,13 +84,19 @@ public class StarMap {
   private ArrayList<Planet> planetList;
 
   /**
+   * List of players
+   */
+  private PlayerList players;
+  
+  /**
    * Constructor for StarMap. Generates universum with default settings.
    * @param maxXSize
    * @param maxYSize
    */
-  public StarMap(int maxXSize, int maxYSize) {
+  public StarMap(int maxXSize, int maxYSize,PlayerList players) {
     maxX = maxXSize;
     maxY = maxYSize;
+    this.players = players;
     drawX = 0;
     drawY = 0;
     tiles = new int[maxX][maxY];
@@ -251,7 +259,8 @@ public class StarMap {
             getRandom(Planet.PLANET_IMAGE_INDEX.length-1));
         if (planets == 1) {
           if (playerIndex != -1) {
-            planet.setPlanetOwner(playerIndex);
+            PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
+            planet.setPlanetOwner(playerIndex,playerInfo);
             planet.setWorkers(Planet.FOOD_FARMERS, 2);
             planet.setWorkers(Planet.METAL_MINERS, 1);
             planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);

@@ -200,7 +200,7 @@ public class PlanetView extends BlackPanel {
     // Add panels to base
     this.add(bottomPanel,BorderLayout.SOUTH);
     this.add(imgBase,BorderLayout.CENTER);
-    if (planet.getPlanetOwner() != -1) {
+    if (planet.getPlanetOwnerIndex() != -1) {
       this.add(topPanel,BorderLayout.NORTH);
     }
 

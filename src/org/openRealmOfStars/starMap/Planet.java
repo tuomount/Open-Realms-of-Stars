@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
@@ -107,6 +108,11 @@ public class Planet {
    * that planet is not colonized yet.
    */
   private int planetOwner;
+  
+  /**
+   * Planet playerInfo, null means not colonized yet.
+   */
+  private PlayerInfo planetOwnerInfo;
   
   /**
    * Extra food, each +10 increases people by one and each -10 decreseases
@@ -461,15 +467,24 @@ public class Planet {
   /**
    * @return the planetOwner
    */
-  public int getPlanetOwner() {
+  public int getPlanetOwnerIndex() {
     return planetOwner;
   }
 
   /**
+   * @return the planet player info
+   */
+  public PlayerInfo getPlanetPlayerInfo() {
+    return planetOwnerInfo;
+  }
+
+  /**
+   * Set Planet owner info and index. Use -1 and null for uncolonized.
    * @param planetOwner the planetOwner to set
    */
-  public void setPlanetOwner(int planetOwner) {
+  public void setPlanetOwner(int planetOwner, PlayerInfo info) {
     this.planetOwner = planetOwner;
+    this.planetOwnerInfo = info;
   }
   
 

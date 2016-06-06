@@ -15,6 +15,7 @@ import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.starMap.Planet;
 import org.openRealmOfStars.starMap.StarMap;
@@ -83,12 +84,8 @@ public class Game extends JFrame implements ActionListener {
   /**
    * List of players
    */
-  private PlayerInfo players[];
+  private PlayerList players;
   
-  /**
-   * Maximum players
-   */
-  private static final int MAX_PLAYERS = 4;
   
   /**
    * Mouse listener aka mouse handler for star map.
@@ -120,13 +117,14 @@ public class Game extends JFrame implements ActionListener {
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);         
     addWindowListener(new GameWindowListener());
     setSize(1024, 768);
-    setLocationRelativeTo(null);
-    players = new PlayerInfo[MAX_PLAYERS];
-    for (int i=0;i<players.length;i++) {
-      players[i] = new PlayerInfo();
-      players[i].setRace(SpaceRace.getRandomRace());
+    setLocationRelativeTo(null)    ;
+    players = new PlayerList();
+    for (int i=0;i<PlayerList.MAX_PLAYERS;i++) {
+      PlayerInfo info = new PlayerInfo();
+      info.setRace(SpaceRace.getRandomRace());
+      players.addPlayer(info);
     }
-    starMap = new StarMap(75, 75);
+    starMap = new StarMap(75, 75,players);
     changeGameState(GameState.STARMAP);
     animationTimer = new Timer(75,this);
     animationTimer.setActionCommand(GameCommands.COMMAND_ANIMATION_TIMER);

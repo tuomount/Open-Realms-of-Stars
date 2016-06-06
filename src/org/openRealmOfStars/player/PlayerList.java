@@ -1,0 +1,72 @@
+package org.openRealmOfStars.player;
+
+import java.util.ArrayList;
+
+/**
+ * 
+ * Open Realm of Stars game project
+ * Copyright (C) 2016  Tuomo Untinen
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see http://www.gnu.org/licenses/
+ * 
+ * 
+ * List of PLayer infos
+ * 
+ */
+public class PlayerList {
+
+  
+  /**
+   * Maximum players
+   */
+  public static final int MAX_PLAYERS = 4;
+
+  /**
+   * List of players
+   */
+  private ArrayList<PlayerInfo> list;
+  
+  public PlayerList() {
+    list = new ArrayList<>();
+  }
+  
+  /**
+   * Add new player to list
+   * @param info PlayerInfo
+   */
+  public void addPlayer(PlayerInfo info) {
+    list.add(info);
+  }
+  
+  /**
+   * Get PlayerInfo by index. If index is out of bounds then null is returned.
+   * @param index 
+   * @return PlayerInfo or null
+   */
+  public PlayerInfo getPlayerInfoByIndex(int index) {
+    if (index > -1 && index < list.size()) {
+      return list.get(index);
+    }
+    return null;
+  }
+  
+  /**
+   * Get maximum players
+   * @return
+   */
+  public int getCurrentMaxPlayers() {
+    return list.size();
+  }
+  
+}

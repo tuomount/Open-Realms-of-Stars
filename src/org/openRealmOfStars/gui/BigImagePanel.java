@@ -120,6 +120,14 @@ public class BigImagePanel extends JPanel {
     g.setFont(GuiStatics.getFontCubellanBold());
     drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE,
         GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE, offsetX, offsetY, texts[0]);
+    if (planet.getPlanetPlayerInfo() != null) {
+      offsetX = (575-backgroundImg.getWidth())/2-
+          GuiStatics.getTextWidth(GuiStatics.getFontCubellanBold(), 
+              planet.getPlanetPlayerInfo().getEmpireName())/2+
+          backgroundImg.getWidth()/2;
+      drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE,
+        GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE, offsetX, offsetY+25, planet.getPlanetPlayerInfo().getEmpireName());
+    }
     g.setFont(GuiStatics.getFontCubellan());
     for (int i=1;i<texts.length;i++) {
       drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE,

@@ -197,6 +197,8 @@ public class PlanetView extends BlackPanel {
     btn.addActionListener(listener);
     bottomPanel.add(btn,BorderLayout.CENTER);
     
+    this.updatePanel();
+    
     // Add panels to base
     this.add(bottomPanel,BorderLayout.SOUTH);
     this.add(imgBase,BorderLayout.CENTER);

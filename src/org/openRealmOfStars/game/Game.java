@@ -122,6 +122,7 @@ public class Game extends JFrame implements ActionListener {
     for (int i=0;i<PlayerList.MAX_PLAYERS;i++) {
       PlayerInfo info = new PlayerInfo();
       info.setRace(SpaceRace.getRandomRace());
+      info.setEmpireName("Empire of "+info.getRace().getName());
       players.addPlayer(info);
     }
     starMap = new StarMap(75, 75,players);

@@ -6,6 +6,7 @@ import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
@@ -273,38 +274,49 @@ public class Planet {
     switch (prod) {
     case PRODUCTION_FOOD: { 
       // Planet always produces +2 food
+      mult = 100;
       result=workers[FOOD_FARMERS]*mult/div+2;break;}
     case PRODUCTION_METAL: { 
-    // Planet always produces +1 metal
+      mult = planetOwnerInfo.getRace().getMiningSpeed();
+    // Planet always produces +1 metal      
     result=workers[METAL_MINERS]*mult/div+1;break;}
     case PRODUCTION_PRODUCTION: { 
+      mult = planetOwnerInfo.getRace().getProductionSpeed();
      //  Planet always produces +1 production
     result=workers[PRODUCTION_PRODUCTION]*mult/div+1;break;}
     case PRODUCTION_RESEARCH: { 
+      mult = planetOwnerInfo.getRace().getResearchSpeed();
       //  Planet does not have research bonus
      result=workers[PRODUCTION_RESEARCH]*mult/div;break;}
     case PRODUCTION_CULTURE: { 
+      mult = planetOwnerInfo.getRace().getCultureSpeed();
       //  Planet does not have culture bonus
      result=workers[PRODUCTION_CULTURE]*mult/div;break;}
     case PRODUCTION_CREDITS: { 
+      mult = 100;
       //  Planet does not have credit bonus
      result=0;break;}
     case PRODUCTION_POPULATION: { 
-      //  Planet does not have credit bonus
+      //  Planet does not have population bonus
      result=getTotalProduction(PRODUCTION_FOOD)-getTotalPopulation();
+     int require = 10*planetOwnerInfo.getRace().getFoodRequire()/100;
      if (result > 0) {
-       result = (10-extraFood)/result;
+       result = (require-extraFood)/result;
        if (result < 1) {
          result = 1;
        }
      } else if (result < 0) {
-       result = (-10-extraFood)/result;
+       result = (-1*require-extraFood)/result;
        if (result < 1) {
          result = 1;
        }
        result = result *-1;
      } else {
        result = 0;
+     }
+     if (planetOwnerInfo.getRace() == SpaceRace.MECHIONS) {
+       // Mechions never starve or populate
+       result = 0; 
      }
      break;}
     }

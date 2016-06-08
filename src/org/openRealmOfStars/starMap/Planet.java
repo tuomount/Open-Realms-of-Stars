@@ -1,6 +1,7 @@
 package org.openRealmOfStars.starMap;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.mapTiles.TileNames;
@@ -9,6 +10,8 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
+
+import com.sun.crypto.provider.ARCFOURCipher;
 
 /**
  * 
@@ -68,7 +71,7 @@ public class Planet {
    * This is between 7-16.
    */
   private int groundSize;
-  
+    
   /**
    * How much metal there is still in the ground.
    * This is between 2000-10000.
@@ -79,6 +82,11 @@ public class Planet {
    * How much metal has been mined and available to use
    */
   private int metal;
+  
+  /**
+   * How much production resources available for building stuff
+   */
+  private int productionResource;
   
   /**
    * Is planet inhabitable gas giant. Gas giants just block the radar.
@@ -221,6 +229,7 @@ public class Planet {
     this.planetOwner = -1;
     this.workers = new int[MAX_WORKER_TYPE];
     this.extraFood = 0;
+    this.productionResource = 0;
   }
 
   /**
@@ -409,6 +418,19 @@ public class Planet {
     return planetImageIndex;
   }
 
+  /**
+   * Get the production list for planet
+   * @return String list of production
+   */
+  public String[] getProductionList() {
+    ArrayList<String> result = new ArrayList<>();
+    result.add("Basic mine");
+    result.add("Basic farm");
+    result.add("Basic factory");
+    result.add("Basic lab");
+    return result.toArray(new String[result.size()]);
+  }
+  
   public void setPlanetImageIndex(int planetImageIndex) {
     this.planetImageIndex = planetImageIndex;
   }
@@ -497,6 +519,20 @@ public class Planet {
   public void setPlanetOwner(int planetOwner, PlayerInfo info) {
     this.planetOwner = planetOwner;
     this.planetOwnerInfo = info;
+  }
+
+  /**
+   * @return the productionResource
+   */
+  public int getProductionResource() {
+    return productionResource;
+  }
+
+  /**
+   * @param productionResource the productionResource to set
+   */
+  public void setProductionResource(int productionResource) {
+    this.productionResource = productionResource;
   }
   
 

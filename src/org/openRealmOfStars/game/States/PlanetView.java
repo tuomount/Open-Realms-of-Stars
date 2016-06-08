@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BigImagePanel;
@@ -185,6 +186,18 @@ public class PlanetView extends BlackPanel {
     metalOre.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(metalOre);
     topPanel.add(invis);
+
+    invis = new InvisiblePanel(topPanel);
+    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    IconLabel label = new IconLabel(invis,Icons.getIconByName(Icons.ICON_FACTORY), 
+        "Next project:");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    invis.add(label);
+    JComboBox<String> combo = new JComboBox<>(this.planet.getProductionList());
+    invis.add(combo);
+    topPanel.add(invis);
+    
+    
 
     topPanel.setTitle(planet.getName());
     

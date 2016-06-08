@@ -11,7 +11,6 @@ import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
-import com.sun.crypto.provider.ARCFOURCipher;
 
 /**
  * 

@@ -13,6 +13,8 @@ import javax.swing.JComboBox;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BigImagePanel;
 import org.openRealmOfStars.gui.BlackPanel;
+import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
@@ -194,6 +196,10 @@ public class PlanetView extends BlackPanel {
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(label);
     JComboBox<String> combo = new JComboBox<>(this.planet.getProductionList());
+    combo.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    combo.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    combo.setBorder(new SimpleBorder());
+    combo.setFont(GuiStatics.getFontCubellan());
     invis.add(combo);
     topPanel.add(invis);
     

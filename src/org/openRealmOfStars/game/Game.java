@@ -17,9 +17,9 @@ import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace;
-import org.openRealmOfStars.starMap.Planet;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
  * 

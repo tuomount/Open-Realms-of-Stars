@@ -21,7 +21,7 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
-import org.openRealmOfStars.starMap.Planet;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
  * 

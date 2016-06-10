@@ -14,9 +14,9 @@ import javax.swing.JPanel;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
-import org.openRealmOfStars.starMap.Planet;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
 /**

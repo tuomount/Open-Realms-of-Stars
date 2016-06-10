@@ -6,6 +6,7 @@ import java.awt.event.MouseMotionListener;
 
 import org.openRealmOfStars.gui.MapPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
+import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
 
 /**

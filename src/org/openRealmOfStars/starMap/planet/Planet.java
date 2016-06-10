@@ -1,4 +1,4 @@
-package org.openRealmOfStars.starMap;
+package org.openRealmOfStars.starMap.planet;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;

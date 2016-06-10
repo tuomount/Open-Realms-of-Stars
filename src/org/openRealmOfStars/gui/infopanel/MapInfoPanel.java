@@ -17,7 +17,7 @@ import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
-import org.openRealmOfStars.starMap.Planet;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
  * 

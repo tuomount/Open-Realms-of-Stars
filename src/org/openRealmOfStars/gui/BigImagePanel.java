@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import org.openRealmOfStars.starMap.Planet;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
  * 

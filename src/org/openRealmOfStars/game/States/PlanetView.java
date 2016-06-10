@@ -3,12 +3,15 @@ package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
+import javax.swing.JList;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BigImagePanel;
@@ -20,6 +23,7 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
+import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.starMap.planet.Building;
@@ -71,6 +75,7 @@ public class PlanetView extends BlackPanel {
   private IconLabel credProd;
   private IconLabel metal;
   private IconLabel metalOre;
+  private JComboBox<Building> productionSelect;
   
   /**
    * Planet to show
@@ -197,19 +202,34 @@ public class PlanetView extends BlackPanel {
         "Next project:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(label);
-    JComboBox<Building> combo = new JComboBox<>(this.planet.getProductionList());
-    combo.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
-    combo.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-    combo.setBorder(new SimpleBorder());
-    combo.setFont(GuiStatics.getFontCubellan());
-
-    combo.setRenderer(new ProductionListRenderer());
-    invis.add(combo);
+    productionSelect = new JComboBox<>(this.planet.getProductionList());
+    productionSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    productionSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    productionSelect.setBorder(new SimpleBorder());
+    productionSelect.setFont(GuiStatics.getFontCubellan());
+    productionSelect.setRenderer(new ProductionListRenderer());
+    invis.add(productionSelect);
+    invis.add(Box.createRigidArea(new Dimension(60,50)));
+    
     topPanel.add(invis);
     
     
 
     topPanel.setTitle(planet.getName());
+    
+    InvisiblePanel eastPanel = new InvisiblePanel(imgBase);
+    if (planet != null) {
+      TransparentLabel tlabel = new TransparentLabel(eastPanel, "Buildings:");
+      eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
+      eastPanel.add(tlabel);
+      JList<Building> buildingList = new JList<>(planet.getBuildingList());
+      buildingList.setCellRenderer(new ProductionListRenderer());
+      eastPanel.add(buildingList);
+      imgBase.setLayout(new BorderLayout());
+      if (planet.getPlanetOwnerIndex() != -1) {
+        imgBase.add(eastPanel,BorderLayout.EAST);
+      }
+    }
     
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();

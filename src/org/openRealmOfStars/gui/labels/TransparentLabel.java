@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JToolTip;
 
 import org.openRealmOfStars.gui.GuiStatics;
-import org.openRealmOfStars.gui.icons.Icon16x16;
+
 /**
  * 
  * Open Realm of Stars game project
@@ -29,11 +29,10 @@ import org.openRealmOfStars.gui.icons.Icon16x16;
  * along with this program; if not, see http://www.gnu.org/licenses/
  * 
  * 
- * Handling Icon label which draws Icon and text to next it.
- * Icon and text are transparent so parent is required.
+ * Handling label which draws text which is on transparent label.
  * 
  */
-public class IconLabel extends JLabel {
+public class TransparentLabel extends JLabel {
 
   /**
    * 
@@ -44,46 +43,20 @@ public class IconLabel extends JLabel {
    * Parent component
    */
   private Component parent;
-  
-  /**
-   * Icon to draw
-   */
-  private Icon16x16 icon;
 
   /**
-   * Get left side icon
-   * @return Icon
-   */
-  public Icon16x16 getLeftIcon() {
-    return icon;
-  }
-
-  /**
-   * Set icon on left side of Label
-   * @param icon 
-   */
-  public void setLeftIcon(Icon16x16 icon) {
-    this.icon = icon;
-  }
-
-  /**
-   * Create Icon label with transparency
+   * Create label with transparency
    * @param parent Parent component
-   * @param icon Icon to draw
    * @param text Text to show
    */
-  public IconLabel(Component parent, Icon16x16 icon, String text) {
+  public TransparentLabel(Component parent, String text) {
     super(text);
     this.parent = parent;
-    this.icon = icon;
     this.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     this.setFont(GuiStatics.getFontCubellan());
     Dimension size = this.getPreferredSize();
-    size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)+this.icon.getIcon().getWidth()+10;
+    size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)+10;
     size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), text);
-    if (size.height < this.icon.getIcon().getHeight()+2 ) {
-      size.height = this.icon.getIcon().getHeight()+2;
-    }
     this.setMinimumSize(size);
     this.setPreferredSize(size);
     this.setMaximumSize(size);
@@ -104,10 +77,9 @@ public class IconLabel extends JLabel {
     parent.repaint();
     int x = 0;
     int y = 0;
-    g.drawImage(icon.getIcon(), x,y, null);
     g.setFont(this.getFont());
     g.setColor(this.getForeground());
-    g.drawString(this.getText(),x+icon.getIcon().getWidth()+5, y+10);
+    g.drawString(this.getText(),x+5, y+10);
   }
 
 }

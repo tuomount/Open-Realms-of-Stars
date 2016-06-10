@@ -7,6 +7,7 @@ import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -262,6 +263,7 @@ public class StarMap {
           if (playerIndex != -1) {
             PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
             planet.setPlanetOwner(playerIndex,playerInfo);
+            planet.addBuilding(BuildingFactory.createByName("Basic farm"));
             planet.setWorkers(Planet.FOOD_FARMERS, 2);
             planet.setWorkers(Planet.METAL_MINERS, 1);
             planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);

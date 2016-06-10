@@ -163,7 +163,7 @@ public class Planet {
    */
   private int[] workers;
   
-  
+  private ArrayList<Building> buildings;
   /**
    * Maximum number of different production
    */
@@ -229,8 +229,19 @@ public class Planet {
     this.workers = new int[MAX_WORKER_TYPE];
     this.extraFood = 0;
     this.productionResource = 0;
+    this.buildings = new ArrayList<>();
   }
 
+  /**
+   * Add building to planet
+   * @param building to add
+   */
+  public void addBuilding(Building building) {
+    if (building != null) {
+      this.buildings.add(building);
+    }
+  }
+  
   /**
    * Get amount of workers in certain type
    * @param workerType
@@ -276,7 +287,7 @@ public class Planet {
     int result = 0;
     int mult=100;
     int div=100;
-    if (gasGiant) {
+    if (gasGiant || planetOwnerInfo == null ) {
       return 0;
     }
     switch (prod) {
@@ -419,7 +430,7 @@ public class Planet {
 
   /**
    * Get the production list for planet
-   * @return String list of production
+   * @return Building list of production
    */
   public Building[] getProductionList() {
     ArrayList<Building> result = new ArrayList<>();
@@ -445,6 +456,15 @@ public class Planet {
     }
     return result.toArray(new Building[result.size()]);
   }
+
+  /**
+   * Get the Building list for planet
+   * @return Building list of planet buildings
+   */
+  public Building[] getBuildingList() {
+    return buildings.toArray(new Building[buildings.size()]);
+  }
+
   
   public void setPlanetImageIndex(int planetImageIndex) {
     this.planetImageIndex = planetImageIndex;

@@ -152,6 +152,7 @@ public class BigImagePanel extends JPanel {
     g2d.drawImage(backgroundImg,offsetX,offsetY,null);
     
     drawTextArea(g);
+    this.paintChildren(g2d);
   }
   
   

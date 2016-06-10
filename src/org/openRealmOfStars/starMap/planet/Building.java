@@ -1,6 +1,6 @@
 package org.openRealmOfStars.starMap.planet;
 
-import org.openRealmOfStars.gui.icons.Icon;
+import org.openRealmOfStars.gui.icons.Icon16x16;
 
 /**
  * 
@@ -33,7 +33,7 @@ public class Building {
   /**
    * Icon for building
    */
-  private Icon icon;
+  private Icon16x16 icon;
   /**
    * Building type
    */
@@ -80,7 +80,7 @@ public class Building {
    * @param icon Icon to use next to the building
    * @param type BuildingType
    */
-  public Building(int index,String name, Icon icon, BuildingType type) {
+  public Building(int index,String name, Icon16x16 icon, BuildingType type) {
     this.index = index;
     this.name = name;
     this.icon = icon;
@@ -102,11 +102,11 @@ public class Building {
     this.name = name;
   }
 
-  public Icon getIcon() {
+  public Icon16x16 getIcon() {
     return icon;
   }
 
-  public void setIcon(Icon icon) {
+  public void setIcon(Icon16x16 icon) {
     this.icon = icon;
   }
 

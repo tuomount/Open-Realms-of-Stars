@@ -421,13 +421,29 @@ public class Planet {
    * Get the production list for planet
    * @return String list of production
    */
-  public String[] getProductionList() {
-    ArrayList<String> result = new ArrayList<>();
-    result.add("Basic mine");
-    result.add("Basic farm");
-    result.add("Basic factory");
-    result.add("Basic lab");
-    return result.toArray(new String[result.size()]);
+  public Building[] getProductionList() {
+    ArrayList<Building> result = new ArrayList<>();
+    Building tmp = BuildingFactory.createByName("Basic mine");
+    if (tmp != null) {
+      result.add(tmp);
+    }
+    tmp = BuildingFactory.createByName("Basic factory");
+    if (tmp != null) {
+      result.add(tmp);
+    }
+    tmp = BuildingFactory.createByName("Basic farm");
+    if (tmp != null) {
+      result.add(tmp);
+    }
+    tmp = BuildingFactory.createByName("Basic lab");
+    if (tmp != null) {
+      result.add(tmp);
+    }
+    tmp = BuildingFactory.createByName("Space port");
+    if (tmp != null) {
+      result.add(tmp);
+    }
+    return result.toArray(new Building[result.size()]);
   }
   
   public void setPlanetImageIndex(int planetImageIndex) {

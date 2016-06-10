@@ -14,6 +14,7 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BigImagePanel;
 import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.ListRenderers.ProductionListRenderer;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
@@ -21,6 +22,7 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
+import org.openRealmOfStars.starMap.planet.Building;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -195,11 +197,13 @@ public class PlanetView extends BlackPanel {
         "Next project:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(label);
-    JComboBox<String> combo = new JComboBox<>(this.planet.getProductionList());
+    JComboBox<Building> combo = new JComboBox<>(this.planet.getProductionList());
     combo.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
     combo.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     combo.setBorder(new SimpleBorder());
     combo.setFont(GuiStatics.getFontCubellan());
+
+    combo.setRenderer(new ProductionListRenderer());
     invis.add(combo);
     topPanel.add(invis);
     

@@ -13,7 +13,7 @@ import javax.swing.JToolTip;
 import javax.swing.border.EtchedBorder;
 
 import org.openRealmOfStars.gui.GuiStatics;
-import org.openRealmOfStars.gui.icons.Icon;
+import org.openRealmOfStars.gui.icons.Icon16x16;
 
 
 /**
@@ -68,8 +68,8 @@ public class IconButton extends JButton {
    * @param border Booolean
    * @param actionCommand String
    */
-  public IconButton(Icon notPressedImage, 
-                         Icon pressedImage, boolean border,
+  public IconButton(Icon16x16 notPressedImage, 
+                         Icon16x16 pressedImage, boolean border,
                          String actionCommand,
                          Component parent) {
     super();

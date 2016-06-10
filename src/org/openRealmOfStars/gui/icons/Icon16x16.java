@@ -4,6 +4,9 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 
 /**
  * 
@@ -28,7 +31,7 @@ import java.awt.image.RasterFormatException;
  *
  */
 
-public class Icon {
+public class Icon16x16 {
 
   /**
    * Icon Maximum width
@@ -63,7 +66,7 @@ public class Icon {
    * @param name Name for the icon
    * @throws RasterFormatExcepition if icon is outside of image.
    */
-  public Icon(BufferedImage image,int x, int y,String name) throws 
+  public Icon16x16(BufferedImage image,int x, int y,String name) throws 
   RasterFormatException {
     if (x >= 0 && y >= 0 && x*MAX_WIDTH < image.getHeight() &&
         y*MAX_HEIGHT < image.getHeight()) {
@@ -102,6 +105,14 @@ public class Icon {
   
   public BufferedImage getIcon() {
     return img;
+  }
+  
+  /**
+   * Get as Icon
+   * @return Icon
+   */
+  public Icon getAsIcon() {
+    return new ImageIcon(img);
   }
 
 }

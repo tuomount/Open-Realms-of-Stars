@@ -27,6 +27,13 @@ import org.openRealmOfStars.gui.icons.Icons;
 public class BuildingFactory {
 
   /**
+   * Current maximum buildings for whole game.
+   * Rememeber to increase this when new building is added to game.
+   * It should be one bigger than last index.
+   */
+  private static final int MAX_BUILDING = 5;
+  
+  /**
    * Create planetary building with index
    * @param index For creating a  new building
    * @return Building if index found otherwise null
@@ -41,6 +48,22 @@ public class BuildingFactory {
     case 4: tmp = createPlanetaryImprovement(index); break; // Space port
     }
     return tmp;
+  }
+  
+  /**
+   * Create planetary building with matching name
+   * @param name Building name
+   * @return Building or null if not found
+   */
+  public static Building createByName(String name) {
+    Building tmp = null;
+    for (int i=0;i<MAX_BUILDING;i++) {
+      tmp = create(i);
+      if ((tmp != null) && (tmp.getName().equalsIgnoreCase(name))) {
+        return tmp;
+      }
+    }
+    return null;
   }
   
   /**

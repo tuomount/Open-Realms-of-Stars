@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JToolTip;
 
 import org.openRealmOfStars.gui.GuiStatics;
-import org.openRealmOfStars.gui.icons.Icon;
+import org.openRealmOfStars.gui.icons.Icon16x16;
 /**
  * 
  * Open Realm of Stars game project
@@ -48,13 +48,13 @@ public class IconLabel extends JLabel {
   /**
    * Icon to draw
    */
-  private Icon icon;
+  private Icon16x16 icon;
 
   /**
    * Get left side icon
    * @return Icon
    */
-  public Icon getLeftIcon() {
+  public Icon16x16 getLeftIcon() {
     return icon;
   }
 
@@ -62,7 +62,7 @@ public class IconLabel extends JLabel {
    * Set icon on left side of Label
    * @param icon 
    */
-  public void setLeftIcon(Icon icon) {
+  public void setLeftIcon(Icon16x16 icon) {
     this.icon = icon;
   }
 
@@ -72,7 +72,7 @@ public class IconLabel extends JLabel {
    * @param icon Icon to draw
    * @param text Text to show
    */
-  public IconLabel(Component parent, Icon icon, String text) {
+  public IconLabel(Component parent, Icon16x16 icon, String text) {
     super(text);
     this.parent = parent;
     this.icon = icon;

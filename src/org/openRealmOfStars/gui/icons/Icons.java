@@ -50,11 +50,11 @@ public class Icons {
   /**
    * List of Icon
    */
-  private static ArrayList<Icon> listOfIcons;
+  private static ArrayList<Icon16x16> listOfIcons;
   /**
    * Hash map with Icon name to Icon
    */
-  private static HashMap<String, Icon> hashOfIcons;
+  private static HashMap<String, Icon16x16> hashOfIcons;
   
   /**
    * Get Icon with index. Initializes icons if they are uninitialized
@@ -62,7 +62,7 @@ public class Icons {
    * @return Icon Always returns a tile, If not found icon then first index is 
    * returned.
    */
-  public static Icon getIconByIndex(int index) {
+  public static Icon16x16 getIconByIndex(int index) {
     if (listOfIcons == null) {
       initIcons();
     }
@@ -78,11 +78,11 @@ public class Icons {
    * @return Always returns an icon if not found tile then first index is
    * returned.
    */
-  public static Icon getIconByName(String name) {
+  public static Icon16x16 getIconByName(String name) {
     if (hashOfIcons == null) {
       initIcons();
     }
-    Icon icon = hashOfIcons.get(name);
+    Icon16x16 icon = hashOfIcons.get(name);
     if (icon == null) {
       return getIconByIndex(0);
     } 
@@ -104,7 +104,7 @@ public class Icons {
    * Add new Icon to Icons list and map
    * @param Icon Icon to add
    */
-  public static void addIcon(Icon Icon) {
+  public static void addIcon(Icon16x16 Icon) {
     listOfIcons.add(Icon);
     Icon.setIndex(listOfIcons.size()-1);
     hashOfIcons.put(Icon.getName(), Icon);
@@ -118,33 +118,33 @@ public class Icons {
         "/resources/images/icons.png"));
     listOfIcons = new ArrayList<>();
     hashOfIcons = new HashMap<>();
-    Icon icon = new Icon(image, 0, 0,ICON_MINE);
+    Icon16x16 icon = new Icon16x16(image, 0, 0,ICON_MINE);
     addIcon(icon);
-    icon = new Icon(image, 1, 0,ICON_MINUS);
+    icon = new Icon16x16(image, 1, 0,ICON_MINUS);
     addIcon(icon);
-    icon = new Icon(image, 1, 1,ICON_MINUS_PRESSED);
+    icon = new Icon16x16(image, 1, 1,ICON_MINUS_PRESSED);
     addIcon(icon);
-    icon = new Icon(image, 2, 0,ICON_PLUS);
+    icon = new Icon16x16(image, 2, 0,ICON_PLUS);
     addIcon(icon);
-    icon = new Icon(image, 2, 1,ICON_PLUS_PRESSED);
+    icon = new Icon16x16(image, 2, 1,ICON_PLUS_PRESSED);
     addIcon(icon);
-    icon = new Icon(image, 3, 0,ICON_FACTORY);
+    icon = new Icon16x16(image, 3, 0,ICON_FACTORY);
     addIcon(icon);
-    icon = new Icon(image, 4, 0,ICON_FARM);
+    icon = new Icon16x16(image, 4, 0,ICON_FARM);
     addIcon(icon);
-    icon = new Icon(image, 5, 0,ICON_RESEARCH);
+    icon = new Icon16x16(image, 5, 0,ICON_RESEARCH);
     addIcon(icon);
-    icon = new Icon(image, 6, 0,ICON_CULTURE);
+    icon = new Icon16x16(image, 6, 0,ICON_CULTURE);
     addIcon(icon);
-    icon = new Icon(image, 7, 0,ICON_PEOPLE);
+    icon = new Icon16x16(image, 7, 0,ICON_PEOPLE);
     addIcon(icon);
-    icon = new Icon(image, 7, 1,ICON_DEATH);
+    icon = new Icon16x16(image, 7, 1,ICON_DEATH);
     addIcon(icon);
-    icon = new Icon(image, 0, 1,ICON_CREDIT);
+    icon = new Icon16x16(image, 0, 1,ICON_CREDIT);
     addIcon(icon);
-    icon = new Icon(image, 3, 1,ICON_METAL);
+    icon = new Icon16x16(image, 3, 1,ICON_METAL);
     addIcon(icon);
-    icon = new Icon(image, 4, 1,ICON_METAL_ORE);
+    icon = new Icon16x16(image, 4, 1,ICON_METAL_ORE);
     addIcon(icon);
   }
   

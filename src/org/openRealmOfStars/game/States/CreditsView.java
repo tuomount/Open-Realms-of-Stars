@@ -84,7 +84,8 @@ public class CreditsView extends BlackPanel {
     } finally {
       dis.close();
     }
-    creditsText = creditsText+"\n\n"+gpl2License+"\n\n"+cubellanLicense;
+    creditsText = creditsText+"\n\n"+"#GNU GENERAL PUBLIC LICENSE Version 2, June 1991\n"+
+        gpl2License+"\n\n"+"#SIL Open Font License, Version 1.1.\n\n"+cubellanLicense;
     this.setLayout(new BorderLayout());
     textArea = new StarFieldTextArea();
     textArea.setScrollText(creditsText,45);
@@ -100,6 +101,7 @@ public class CreditsView extends BlackPanel {
 
   }
   
+   
   /**
    * Update Text area
    */
@@ -109,4 +111,6 @@ public class CreditsView extends BlackPanel {
     }
     repaint();
   }
+
+
 }

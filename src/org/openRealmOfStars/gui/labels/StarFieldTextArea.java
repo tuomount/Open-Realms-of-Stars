@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JTextArea;
 
@@ -100,6 +102,8 @@ public class StarFieldTextArea extends JTextArea {
     this.setBackground(Color.BLACK);
     autoScroll = false;
     this.setBorder(new SimpleBorder());
+    this.addMouseListener(new CreditMouseListener());
+
   }
 
   /**
@@ -111,6 +115,7 @@ public class StarFieldTextArea extends JTextArea {
     this.setBackground(Color.BLACK);
     autoScroll = false;
     this.setBorder(new SimpleBorder());
+    this.addMouseListener(new CreditMouseListener());
   }
   
   /**
@@ -124,6 +129,7 @@ public class StarFieldTextArea extends JTextArea {
     this.setBackground(Color.BLACK);
     autoScroll = false;
     this.setBorder(new SimpleBorder());
+    this.addMouseListener(new CreditMouseListener());
   }
   
   
@@ -317,5 +323,19 @@ public class StarFieldTextArea extends JTextArea {
     }
   }
   
+  private class CreditMouseListener extends MouseAdapter {
+
+    
+    
+    @Override
+    public void mouseClicked(MouseEvent e) {
+      getNextLine();
+      getNextLine();
+      getNextLine();
+      getNextLine();
+      getNextLine();
+    }
+  }
+
 
 }

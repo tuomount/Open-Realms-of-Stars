@@ -87,7 +87,7 @@ public class PlanetView extends BlackPanel {
   public PlanetView(Planet planet,ActionListener listener) {
     this.setPlanet(planet);
     // Background image
-    BigImagePanel imgBase = new BigImagePanel(planet, true);
+    BigImagePanel imgBase = new BigImagePanel(planet, true,null);
     this.setLayout(new BorderLayout());
 
     // Top Panel

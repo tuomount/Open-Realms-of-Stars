@@ -94,6 +94,30 @@ public class GuiStatics {
   }
 
   /**
+   * Bold cubellan font
+   */
+  private static Font fontCubellanBoldBig;
+  
+  /**
+   * Get bold Cubellan font
+   * @return Cubellan font
+   */
+  public static Font getFontCubellanBoldBig() {
+    if (fontCubellanBoldBig == null) { 
+      try {
+        InputStream is = Tiles.class.getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf").openStream();
+        fontCubellanBoldBig = Font.createFont(Font.TRUETYPE_FONT, is);
+        fontCubellanBoldBig = fontCubellanBoldBig.deriveFont(35F);
+        is.close();
+      } catch (IOException | FontFormatException e) {
+        System.err.println("Error:"+e.getMessage());
+        return FONT_SMALL;
+      }
+    }
+    return fontCubellanBoldBig;
+  }
+
+  /**
    * Small cubellan font
    */
   private static Font fontCubellanSC;
@@ -177,6 +201,7 @@ public class GuiStatics {
    * Cool space blue dark, opaque 128
    */
   public final static Color COLOR_COOL_SPACE_BLUE_DARK_OPAQUE = new Color(25,120,193,128);
+
 
   /**
    * Deep Space Blue

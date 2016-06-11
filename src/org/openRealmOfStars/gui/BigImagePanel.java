@@ -54,13 +54,24 @@ public class BigImagePanel extends JPanel {
    */
   private Planet planet;
   
-  public BigImagePanel(Planet planet, boolean starField) {
+  /**
+   * Title text
+   */
+  private String title;
+  
+  /**
+   * Create BigImagePanel
+   * @param planet Planet to draw on background
+   * @param starField Use starfield or not
+   * @param title if this is not null then planet info is not shown.
+   */
+  public BigImagePanel(Planet planet, boolean starField,String title) {
     super();
     this.setBackground(Color.black);
     this.planet = planet;
     backgroundImg = Planet.PLANET_BIG_IMAGES[this.planet.getPlanetType()];
     drawStarField = starField;
-    
+    this.title = title;
   }
   
   /**
@@ -86,52 +97,63 @@ public class BigImagePanel extends JPanel {
 
   private void drawTextArea(Graphics g) {
     g.setFont(GuiStatics.getFontCubellan());
-    StringBuilder sb = new StringBuilder(planet.generateInfoText());
-    int lastSpace = -1;
-    int rowLen = 0;
-    int maxRowLen = this.getWidth()/12;
-    for (int i=0;i<sb.length();i++) {
-      if (sb.charAt(i)==' ') {
-        lastSpace = i;
-      }
-      if (sb.charAt(i)=='\n') {
-        lastSpace = -1;
-        rowLen=0;
-      } else {
-        rowLen++;
-      }
-      if (rowLen > maxRowLen) {
-        if (lastSpace != -1) {
-          sb.setCharAt(lastSpace, '\n');
-          rowLen=i-lastSpace;
-          lastSpace = -1;
-        } else {
-          sb.setCharAt(i, '\n');
+    if (title == null) {
+      StringBuilder sb = new StringBuilder(planet.generateInfoText());
+      int lastSpace = -1;
+      int rowLen = 0;
+      int maxRowLen = this.getWidth()/12;
+      for (int i=0;i<sb.length();i++) {
+        if (sb.charAt(i)==' ') {
+          lastSpace = i;
+        }
+        if (sb.charAt(i)=='\n') {
           lastSpace = -1;
           rowLen=0;
+        } else {
+          rowLen++;
+        }
+        if (rowLen > maxRowLen) {
+          if (lastSpace != -1) {
+            sb.setCharAt(lastSpace, '\n');
+            rowLen=i-lastSpace;
+            lastSpace = -1;
+          } else {
+            sb.setCharAt(i, '\n');
+            lastSpace = -1;
+            rowLen=0;
+          }
         }
       }
-    }
-    String[] texts = sb.toString().split("\n");
-    int offsetX = (575-backgroundImg.getWidth())/2-
-        GuiStatics.getTextWidth(GuiStatics.getFontCubellanBold(), texts[0])/2+
-        backgroundImg.getWidth()/2;
-    int offsetY = (575-backgroundImg.getHeight())/2;
-    g.setFont(GuiStatics.getFontCubellanBold());
-    drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE,
-        GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE, offsetX, offsetY, texts[0]);
-    if (planet.getPlanetPlayerInfo() != null) {
-      offsetX = (575-backgroundImg.getWidth())/2-
-          GuiStatics.getTextWidth(GuiStatics.getFontCubellanBold(), 
-              planet.getPlanetPlayerInfo().getEmpireName())/2+
+      String[] texts = sb.toString().split("\n");
+      int offsetX = (575-backgroundImg.getWidth())/2-
+          GuiStatics.getTextWidth(GuiStatics.getFontCubellanBold(), texts[0])/2+
           backgroundImg.getWidth()/2;
+      int offsetY = (575-backgroundImg.getHeight())/2;
+      g.setFont(GuiStatics.getFontCubellanBold());
       drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE,
-        GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE, offsetX, offsetY+25, planet.getPlanetPlayerInfo().getEmpireName());
-    }
-    g.setFont(GuiStatics.getFontCubellan());
-    for (int i=1;i<texts.length;i++) {
-      drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE,
-        GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE, 25, this.getHeight()/2+i*15, texts[i]);
+          GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE, offsetX, offsetY, texts[0]);
+      if (planet.getPlanetPlayerInfo() != null) {
+        offsetX = (575-backgroundImg.getWidth())/2-
+            GuiStatics.getTextWidth(GuiStatics.getFontCubellanBold(), 
+                planet.getPlanetPlayerInfo().getEmpireName())/2+
+            backgroundImg.getWidth()/2;
+        drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE,
+          GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE, offsetX, offsetY+25, planet.getPlanetPlayerInfo().getEmpireName());
+      }
+      g.setFont(GuiStatics.getFontCubellan());
+      for (int i=1;i<texts.length;i++) {
+        drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE,
+          GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE, 25, this.getHeight()/2+i*15, texts[i]);
+      }
+    } else {
+      g.setFont(GuiStatics.getFontCubellanBoldBig());
+      int offsetX = (this.getWidth()-backgroundImg.getWidth())/2-
+          GuiStatics.getTextWidth(GuiStatics.getFontCubellanBoldBig(), title)/2+
+          backgroundImg.getWidth()/2;
+      int offsetY = (575-backgroundImg.getHeight())/2;
+      drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK,
+          GuiStatics.COLOR_COOL_SPACE_BLUE, offsetX, offsetY, title);
+      
     }
 
   }
@@ -147,9 +169,16 @@ public class BigImagePanel extends JPanel {
       this.setBackground(Color.black);
       g2d.fillRect(0,0, this.getWidth(), this.getHeight());
     }
-    int offsetX = (575-backgroundImg.getWidth())/2;
-    int offsetY = (575-backgroundImg.getHeight())/2;
-    g2d.drawImage(backgroundImg,offsetX,offsetY,null);
+    if (title == null) {
+      int offsetX = (575-backgroundImg.getWidth())/2;
+      int offsetY = (575-backgroundImg.getHeight())/2;
+      g2d.drawImage(backgroundImg,offsetX,offsetY,null);
+    } else {
+      g2d.drawImage(GuiStatics.nebulaeImage,-sx,-sy,null);
+      int offsetX = (this.getWidth()-backgroundImg.getWidth())/2;
+      int offsetY = (575-backgroundImg.getHeight())/2;
+      g2d.drawImage(backgroundImg,offsetX,offsetY,null);      
+    }
     
     drawTextArea(g);
     this.paintChildren(g2d);

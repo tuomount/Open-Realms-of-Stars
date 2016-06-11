@@ -79,5 +79,19 @@ public class GameCommands {
    */
   public static final String COMMAND_PRODUCTION_LIST = "ProductionList";
 
+  /**
+   * New Game command
+   */
+  public static final String COMMAND_NEW_GAME = "NewGame";
+
+  /**
+   * Show credits command
+   */
+  public static final String COMMAND_CREDITS = "Credits";
+
+  /**
+   * Quit Game command
+   */
+  public static final String COMMAND_QUIT_GAME = "QuitGame";
 
 }

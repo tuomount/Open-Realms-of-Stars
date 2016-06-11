@@ -23,10 +23,9 @@ package org.openRealmOfStars.game;
  * 
  */
 public enum GameState {
-  //MAIN_MENU(),
-  //NEW_GAME(),
-  STARMAP(),
-  PLANETVIEW();
-  //PLANET_PRODUCTION_QUEUE(),
-  //STARDOCK();
+  MAIN_MENU,
+  NEW_GAME,
+  STARMAP,
+  PLANETVIEW,
+  CREDITS;
 }

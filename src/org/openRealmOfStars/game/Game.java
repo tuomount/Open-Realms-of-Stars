@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
+import org.openRealmOfStars.game.States.MainMenu;
 import org.openRealmOfStars.game.States.PlanetView;
 import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.MapPanel;
@@ -104,6 +105,11 @@ public class Game extends JFrame implements ActionListener {
   public PlanetView planetView;
 
   /**
+   * Main menu for the game
+   */
+  public MainMenu mainMenu;
+
+  /**
    * Contructor of Game class
    */
   public Game() {
@@ -118,19 +124,11 @@ public class Game extends JFrame implements ActionListener {
     addWindowListener(new GameWindowListener());
     setSize(1024, 768);
     setLocationRelativeTo(null)    ;
-    players = new PlayerList();
-    for (int i=0;i<PlayerList.MAX_PLAYERS;i++) {
-      PlayerInfo info = new PlayerInfo();
-      info.setRace(SpaceRace.getRandomRace());
-      info.setEmpireName("Empire of "+info.getRace().getName());
-      players.addPlayer(info);
-    }
-    starMap = new StarMap(75, 75,players);
-    changeGameState(GameState.STARMAP);
     animationTimer = new Timer(75,this);
     animationTimer.setActionCommand(GameCommands.COMMAND_ANIMATION_TIMER);
     animationTimer.start();
 
+    changeGameState(GameState.MAIN_MENU);
     
     setResizable(false);
 
@@ -173,12 +171,36 @@ public class Game extends JFrame implements ActionListener {
   }
 
   /**
+   * Show main menu panel
+   */
+  public void showMainMenu() {
+    mainMenu = new MainMenu(this);
+    this.getContentPane().removeAll();
+    this.add(mainMenu);
+    this.validate();
+  }
+
+  /**
    * Change game state and show new panel/screen
    * @param newState Game State where to change
    */
   public void changeGameState(GameState newState) {
     gameState = newState;
     switch (gameState) {
+    case MAIN_MENU: showMainMenu(); break;
+    case NEW_GAME: { 
+      players = new PlayerList();
+      for (int i=0;i<PlayerList.MAX_PLAYERS;i++) {
+        PlayerInfo info = new PlayerInfo();
+        info.setRace(SpaceRace.getRandomRace());
+        info.setEmpireName("Empire of "+info.getRace().getName());
+        players.addPlayer(info);
+      }
+      starMap = new StarMap(75, 75,players);
+      changeGameState(GameState.STARMAP);
+      break;
+    }
+    case CREDITS:  break;
     case STARMAP: showStarMap(); break;
     case PLANETVIEW: { 
       if (starMapMouseListener.getLastClickedPlanet()!=null) {
@@ -201,7 +223,7 @@ public class Game extends JFrame implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent arg0) {
     if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_ANIMATION_TIMER)) {
+        GameCommands.COMMAND_ANIMATION_TIMER) && gameState == GameState.STARMAP) {
       if (starMapMouseListener != null) {
         starMapMouseListener.updateScrollingIfOnBorder();
       }
@@ -219,6 +241,14 @@ public class Game extends JFrame implements ActionListener {
     }
     if (gameState == GameState.PLANETVIEW) {
       planetView.handleAction(arg0);
+    }
+    if (gameState == GameState.MAIN_MENU) {
+      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEW_GAME)) {
+        changeGameState(GameState.NEW_GAME);
+      }
+      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_QUIT_GAME)) {
+        System.exit(0);
+      }
     }
   }
 

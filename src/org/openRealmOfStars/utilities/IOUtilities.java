@@ -1,6 +1,7 @@
 package org.openRealmOfStars.utilities;
 
 import java.awt.image.BufferedImage;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.URL;
 
@@ -43,6 +44,19 @@ public class IOUtilities {
       System.err.print(urlToImage.toString()+" not found!");
       return null;
     } 
+  }
+
+  /**
+   * Read file as text file return as US-ASCII string
+   * @param is DataInputStream
+   * @return String
+   * @throws IOException
+   */
+  public static String readTextFile(DataInputStream is) throws IOException {
+    byte[] dataBuf = new byte[is.available()];
+    is.readFully(dataBuf);
+    String str = new String(dataBuf,"US-ASCII");
+    return str;
   }
 
 }

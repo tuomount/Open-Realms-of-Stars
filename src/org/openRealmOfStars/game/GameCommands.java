@@ -30,6 +30,11 @@ public class GameCommands {
   public static final String COMMAND_ANIMATION_TIMER = "AnimationTimerCommand";
 
   /**
+   * OK command
+   */
+  public static final String COMMAND_OK = "OK";
+
+  /**
    * View planet command
    */
   public static final String COMMAND_VIEW_PLANET = "ViewPlanetCommand";

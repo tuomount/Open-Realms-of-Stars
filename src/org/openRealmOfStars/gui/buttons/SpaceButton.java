@@ -91,10 +91,9 @@ public class SpaceButton extends JButton {
 
     int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), getText());
     int textHeight = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), getText());
-    if (this.isEnabled())
-    {
+    if (this.isEnabled()) {
       if (this.getModel().isRollover()) {
-        g2d.setColor(GuiStatics.COLOR_GOLD_DARK);
+        g2d.setColor(GuiStatics.COLOR_DEEP_SPACE_BLUE);
       } else {
         g2d.setColor(Color.black);
       }

@@ -3,11 +3,13 @@ package org.openRealmOfStars.game;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
+import org.openRealmOfStars.game.States.CreditsView;
 import org.openRealmOfStars.game.States.MainMenu;
 import org.openRealmOfStars.game.States.PlanetView;
 import org.openRealmOfStars.gui.BlackPanel;
@@ -110,6 +112,11 @@ public class Game extends JFrame implements ActionListener {
   public MainMenu mainMenu;
 
   /**
+   * Credits for the game
+   */
+  public CreditsView creditsView;
+
+  /**
    * Contructor of Game class
    */
   public Game() {
@@ -181,6 +188,21 @@ public class Game extends JFrame implements ActionListener {
   }
 
   /**
+   * Show credits panel
+   */
+  public void showCredits() {
+    try {
+      creditsView = new CreditsView(this, GAME_TITLE, GAME_VERSION);
+    } catch (IOException e) {
+      System.out.println("Could not show credits: "+e.getMessage());
+      System.exit(0);
+    }
+    this.getContentPane().removeAll();
+    this.add(creditsView);
+    this.validate();
+  }
+
+  /**
    * Change game state and show new panel/screen
    * @param newState Game State where to change
    */
@@ -200,7 +222,7 @@ public class Game extends JFrame implements ActionListener {
       changeGameState(GameState.STARMAP);
       break;
     }
-    case CREDITS:  break;
+    case CREDITS: showCredits(); break;
     case STARMAP: showStarMap(); break;
     case PLANETVIEW: { 
       if (starMapMouseListener.getLastClickedPlanet()!=null) {
@@ -231,6 +253,10 @@ public class Game extends JFrame implements ActionListener {
       mapPanel.repaint();
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_ANIMATION_TIMER) && gameState == GameState.CREDITS) {
+      creditsView.updateTextArea();
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_VIEW_PLANET) &&
         starMapMouseListener.getLastClickedPlanet() != null) {
       changeGameState(GameState.PLANETVIEW);
@@ -245,6 +271,9 @@ public class Game extends JFrame implements ActionListener {
     if (gameState == GameState.MAIN_MENU) {
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEW_GAME)) {
         changeGameState(GameState.NEW_GAME);
+      }
+      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_CREDITS)) {
+        changeGameState(GameState.CREDITS);
       }
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_QUIT_GAME)) {
         System.exit(0);

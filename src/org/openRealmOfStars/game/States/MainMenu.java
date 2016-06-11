@@ -1,6 +1,7 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 
@@ -61,12 +62,15 @@ public class MainMenu extends BlackPanel {
     
     SpaceButton btn = new SpaceButton("New game", GameCommands.COMMAND_NEW_GAME);
     btn.addActionListener(listener);
+    btn.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(btn);
     btn = new SpaceButton("Credits", GameCommands.COMMAND_CREDITS);
     btn.addActionListener(listener);
+    btn.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(btn);
     btn = new SpaceButton("Quit", GameCommands.COMMAND_QUIT_GAME);
     btn.addActionListener(listener);
+    btn.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(btn);
     imgBase.add(invis);
     this.add(imgBase,BorderLayout.CENTER);

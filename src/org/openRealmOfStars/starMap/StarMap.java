@@ -264,6 +264,7 @@ public class StarMap {
             PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
             planet.setPlanetOwner(playerIndex,playerInfo);
             planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+            planet.addBuilding(BuildingFactory.createByName("Basic farm"));
             planet.setWorkers(Planet.FOOD_FARMERS, 2);
             planet.setWorkers(Planet.METAL_MINERS, 1);
             planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);

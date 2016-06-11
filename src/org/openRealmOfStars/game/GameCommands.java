@@ -74,6 +74,10 @@ public class GameCommands {
    * Plus Research
    */
   public static final String COMMAND_PLUS_RESEARCH = "PlusResearch";
+  /**
+   * Production list changed in planet
+   */
+  public static final String COMMAND_PRODUCTION_LIST = "ProductionList";
 
 
 }

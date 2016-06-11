@@ -74,6 +74,16 @@ public class Building {
   private int credBonus;
   
   /**
+   * Production cost
+   */
+  private int prodCost;
+  
+  /**
+   * Metal cost
+   */
+  private int metalCost;
+  
+  /**
    * Construct building for planet
    * @param index Unique number for building
    * @param name Building name
@@ -92,6 +102,8 @@ public class Building {
     this.cultBonus = 0;
     this.credBonus = 0;
     this.reseBonus = 0;
+    this.prodCost = 1;
+    this.metalCost = 1;
   }
 
   public String getName() {
@@ -180,6 +192,34 @@ public class Building {
 
   public void setCredBonus(int credBonus) {
     this.credBonus = credBonus;
+  }
+
+  /**
+   * @return the prodCost
+   */
+  public int getProdCost() {
+    return prodCost;
+  }
+
+  /**
+   * @param prodCost the prodCost to set
+   */
+  public void setProdCost(int prodCost) {
+    this.prodCost = prodCost;
+  }
+
+  /**
+   * @return the metalCost
+   */
+  public int getMetalCost() {
+    return metalCost;
+  }
+
+  /**
+   * @param metalCost the metalCost to set
+   */
+  public void setMetalCost(int metalCost) {
+    this.metalCost = metalCost;
   }
 
   @Override

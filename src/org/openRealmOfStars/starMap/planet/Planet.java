@@ -83,6 +83,11 @@ public class Planet {
   private int metal;
   
   /**
+   * Amount of production resource available
+   */
+  private int prodResource;
+  
+  /**
    * How much production resources available for building stuff
    */
   private int productionResource;
@@ -230,6 +235,7 @@ public class Planet {
     this.extraFood = 0;
     this.productionResource = 0;
     this.buildings = new ArrayList<>();
+    this.prodResource = 0;
   }
 
   /**
@@ -239,6 +245,40 @@ public class Planet {
   public void addBuilding(Building building) {
     if (building != null) {
       this.buildings.add(building);
+    }
+  }
+
+  /**
+   * Get production time as String
+   * @param build
+   * @return
+   */
+  public String getProductionTime(Building build) {
+    int metalReq = getMetal()-build.getMetalCost();
+    int prodReq = getProdResource()-build.getProdCost();
+    if (metalReq > 0 &&prodReq > 0) {
+      return "1 turn";
+    } else {
+      metalReq = Math.abs(metalReq);
+      prodReq = Math.abs(prodReq);
+    }
+    if (getTotalProduction(PRODUCTION_METAL) > 0) {
+      metalReq = metalReq / getTotalProduction(PRODUCTION_METAL);
+    } else {
+      metalReq = -1;
+    }
+    if (getTotalProduction(PRODUCTION_PRODUCTION) > 0) {
+      prodReq = prodReq / getTotalProduction(PRODUCTION_PRODUCTION);
+    } else {
+      prodReq = -1;
+    }
+    if (prodReq == -1 || metalReq == -1) {
+      return "Never";
+    } else {
+      if (prodReq > metalReq) {
+        return prodReq+" turns";
+      }
+      return metalReq+" turns";
     }
   }
   
@@ -278,6 +318,55 @@ public class Planet {
   }
 
   /**
+   * Get total production from planetary improvements.
+   * @param prod, Production to get: See all PRODUCTION_*
+   * @return amount of production in one turn
+   */
+  private int getTotalProductionFromBuildings(int prod) {
+    int result = 0;
+    if (gasGiant || planetOwnerInfo == null ) {
+      return 0;
+    }
+    switch (prod) {
+    case PRODUCTION_FOOD: { 
+      for (Building build : getBuildingList()) {
+        result = result +build.getFarmBonus();
+      }
+      break;}
+    case PRODUCTION_METAL: { 
+      for (Building build : getBuildingList()) {
+        result = result +build.getMineBonus();
+      }
+      break;}
+    case PRODUCTION_PRODUCTION: { 
+      for (Building build : getBuildingList()) {
+        result = result +build.getFactBonus();
+      }
+      break;}
+    case PRODUCTION_RESEARCH: { 
+      for (Building build : getBuildingList()) {
+        result = result +build.getReseBonus();
+      }
+      break;}
+    case PRODUCTION_CULTURE: { 
+      for (Building build : getBuildingList()) {
+        result = result +build.getCultBonus();
+      }
+      break;}
+    case PRODUCTION_CREDITS: { 
+      for (Building build : getBuildingList()) {
+        result = result +build.getCredBonus();
+      }
+      break;}
+    case PRODUCTION_POPULATION: {
+      result = 0;
+     break;}
+    }
+    return result;
+    
+  }
+  
+  /**
    * Get total production from planet. This includes racial, worker, planetary
    * improvement bonus
    * @param prod, Production to get: See all PRODUCTION_*
@@ -294,11 +383,11 @@ public class Planet {
     case PRODUCTION_FOOD: { 
       // Planet always produces +2 food
       mult = 100;
-      result=workers[FOOD_FARMERS]*mult/div+2;break;}
+      result=workers[FOOD_FARMERS]*mult/div+2+getTotalProductionFromBuildings(prod);break;}
     case PRODUCTION_METAL: { 
       mult = planetOwnerInfo.getRace().getMiningSpeed();
     // Planet always produces +1 metal      
-    result=workers[METAL_MINERS]*mult/div+1;break;}
+    result=workers[METAL_MINERS]*mult/div+1+getTotalProductionFromBuildings(prod);break;}
     case PRODUCTION_PRODUCTION: { 
       mult = planetOwnerInfo.getRace().getProductionSpeed();
      //  Planet always produces +1 production
@@ -306,15 +395,15 @@ public class Planet {
     case PRODUCTION_RESEARCH: { 
       mult = planetOwnerInfo.getRace().getResearchSpeed();
       //  Planet does not have research bonus
-     result=workers[PRODUCTION_RESEARCH]*mult/div;break;}
+     result=workers[PRODUCTION_RESEARCH]*mult/div+getTotalProductionFromBuildings(prod);break;}
     case PRODUCTION_CULTURE: { 
       mult = planetOwnerInfo.getRace().getCultureSpeed();
       //  Planet does not have culture bonus
-     result=workers[PRODUCTION_CULTURE]*mult/div;break;}
+     result=workers[PRODUCTION_CULTURE]*mult/div+getTotalProductionFromBuildings(prod);break;}
     case PRODUCTION_CREDITS: { 
       mult = 100;
       //  Planet does not have credit bonus
-     result=0;break;}
+     result=getTotalProductionFromBuildings(prod);break;}
     case PRODUCTION_POPULATION: { 
       //  Planet does not have population bonus
      result=getTotalProduction(PRODUCTION_FOOD)-getTotalPopulation();
@@ -465,6 +554,13 @@ public class Planet {
     return buildings.toArray(new Building[buildings.size()]);
   }
 
+  /**
+   * Return how many buildings there are on planet
+   * @return int
+   */
+  public int getUsedPlanetSize() {
+    return buildings.size();
+  }
   
   public void setPlanetImageIndex(int planetImageIndex) {
     this.planetImageIndex = planetImageIndex;
@@ -568,6 +664,20 @@ public class Planet {
    */
   public void setProductionResource(int productionResource) {
     this.productionResource = productionResource;
+  }
+
+  /**
+   * @return the prodResource
+   */
+  public int getProdResource() {
+    return prodResource;
+  }
+
+  /**
+   * @param prodResource the prodResource to set
+   */
+  public void setProdResource(int prodResource) {
+    this.prodResource = prodResource;
   }
   
 

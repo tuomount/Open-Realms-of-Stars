@@ -76,6 +76,8 @@ public class PlanetView extends BlackPanel {
   private IconLabel metal;
   private IconLabel metalOre;
   private JComboBox<Building> productionSelect;
+  private TransparentLabel buildingLabel;
+  private TransparentLabel buildingEstimate;
   
   /**
    * Planet to show
@@ -203,13 +205,20 @@ public class PlanetView extends BlackPanel {
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(label);
     productionSelect = new JComboBox<>(this.planet.getProductionList());
+    productionSelect.addActionListener(listener);
+    productionSelect.setActionCommand(GameCommands.COMMAND_PRODUCTION_LIST);
     productionSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
     productionSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     productionSelect.setBorder(new SimpleBorder());
     productionSelect.setFont(GuiStatics.getFontCubellan());
     productionSelect.setRenderer(new ProductionListRenderer());
+    productionSelect.setEditable(false);
     invis.add(productionSelect);
-    invis.add(Box.createRigidArea(new Dimension(60,50)));
+    invis.add(Box.createRigidArea(new Dimension(60,5)));
+    buildingEstimate = new TransparentLabel(topPanel,
+        planet.getProductionTime((Building) productionSelect.getSelectedItem()));
+    invis.add(buildingEstimate);
+    invis.add(Box.createRigidArea(new Dimension(60,25)));
     
     topPanel.add(invis);
     
@@ -219,9 +228,11 @@ public class PlanetView extends BlackPanel {
     
     InvisiblePanel eastPanel = new InvisiblePanel(imgBase);
     if (planet != null) {
-      TransparentLabel tlabel = new TransparentLabel(eastPanel, "Buildings:");
+      buildingLabel = new TransparentLabel(eastPanel,
+          "Buildings("+planet.getUsedPlanetSize()+"/"+planet.getGroundSize()+"):");
+      buildingLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
       eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
-      eastPanel.add(tlabel);
+      eastPanel.add(buildingLabel);
       JList<Building> buildingList = new JList<>(planet.getBuildingList());
       buildingList.setCellRenderer(new ProductionListRenderer());
       eastPanel.add(buildingList);
@@ -282,7 +293,14 @@ public class PlanetView extends BlackPanel {
 
     credProd.setText(": "+planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
     metal.setText(": "+planet.getMetal());
-    metalOre.setText(": "+planet.getAmountMetalInGround());    
+    metalOre.setText(": "+planet.getAmountMetalInGround());
+    buildingLabel.setText(
+        "Buildings("+planet.getUsedPlanetSize()+"/"+planet.getGroundSize()+"):");
+    
+    buildingEstimate.setText(
+      planet.getProductionTime((Building) productionSelect.getSelectedItem()));
+
+
   }
 
   /**
@@ -351,6 +369,9 @@ public class PlanetView extends BlackPanel {
         GameCommands.COMMAND_PLUS_RESEARCH) && planet.getWorkers(Planet.CULTURE_ARTIST) >0) {
       planet.setWorkers(Planet.RESEARCH_SCIENTIST, planet.getWorkers(Planet.RESEARCH_SCIENTIST)+1);
       planet.setWorkers(Planet.CULTURE_ARTIST, planet.getWorkers(Planet.CULTURE_ARTIST)-1);
+      updatePanel();
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_PRODUCTION_LIST)) {
       updatePanel();
     }
   }

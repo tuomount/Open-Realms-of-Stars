@@ -77,6 +77,8 @@ public class BuildingFactory {
       tmp = new Building(index, "Basic mine", 
           Icons.getIconByName(Icons.ICON_MINE), BuildingType.MINE);
       tmp.setMineBonus(1);
+      tmp.setProdCost(10);
+      tmp.setMetalCost(6);
       tmp.setDescription("Basic mine that mine 1 metal per turn.");
       return tmp;
     } 
@@ -84,6 +86,8 @@ public class BuildingFactory {
       tmp = new Building(index, "Basic farm", 
           Icons.getIconByName(Icons.ICON_FARM), BuildingType.FARM);
       tmp.setFarmBonus(1);;
+      tmp.setProdCost(10);
+      tmp.setMetalCost(4);
       tmp.setDescription("Basic farm that farms 1 food per turn.");
       return tmp;
     } 
@@ -91,6 +95,8 @@ public class BuildingFactory {
       tmp = new Building(index, "Basic factory", 
           Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
       tmp.setFactBonus(1);;
+      tmp.setProdCost(15);
+      tmp.setMetalCost(5);
       tmp.setDescription("Basic factory that produces 1 production per turn.");
       return tmp;
     } 
@@ -98,6 +104,8 @@ public class BuildingFactory {
       tmp = new Building(index, "Basic lab", 
           Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
       tmp.setReseBonus(1);;
+      tmp.setProdCost(12);
+      tmp.setMetalCost(4);
       tmp.setDescription("Basic lab that creates 1 science point per turn.");
       return tmp;
     } 
@@ -115,6 +123,8 @@ public class BuildingFactory {
       tmp = new Building(index, "Space port", 
           Icons.getIconByName(Icons.ICON_DEATH), BuildingType.MILITARY);
       tmp.setDescription("Space port allows building the space ships.");
+      tmp.setProdCost(20);
+      tmp.setMetalCost(20);
       return tmp;
     } 
     return tmp;

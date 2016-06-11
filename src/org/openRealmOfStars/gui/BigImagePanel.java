@@ -130,20 +130,20 @@ public class BigImagePanel extends JPanel {
           backgroundImg.getWidth()/2;
       int offsetY = (575-backgroundImg.getHeight())/2;
       g.setFont(GuiStatics.getFontCubellanBold());
-      drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE,
-          GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE, offsetX, offsetY, texts[0]);
+      drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS,
+          GuiStatics.COLOR_COOL_SPACE_BLUE_TRANS, offsetX, offsetY, texts[0]);
       if (planet.getPlanetPlayerInfo() != null) {
         offsetX = (575-backgroundImg.getWidth())/2-
             GuiStatics.getTextWidth(GuiStatics.getFontCubellanBold(), 
                 planet.getPlanetPlayerInfo().getEmpireName())/2+
             backgroundImg.getWidth()/2;
-        drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE,
-          GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE, offsetX, offsetY+25, planet.getPlanetPlayerInfo().getEmpireName());
+        drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS,
+          GuiStatics.COLOR_COOL_SPACE_BLUE_TRANS, offsetX, offsetY+25, planet.getPlanetPlayerInfo().getEmpireName());
       }
       g.setFont(GuiStatics.getFontCubellan());
       for (int i=1;i<texts.length;i++) {
-        drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_OPAQUE,
-          GuiStatics.COLOR_COOL_SPACE_BLUE_OPAQUE, 25, this.getHeight()/2+i*15, texts[i]);
+        drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS,
+          GuiStatics.COLOR_COOL_SPACE_BLUE_TRANS, 25, this.getHeight()/2+i*15, texts[i]);
       }
     } else {
       g.setFont(GuiStatics.getFontCubellanBoldBig());

@@ -291,7 +291,7 @@ public class MapPanel extends JPanel {
               sun.getName(), gr.getFontRenderContext()).getWidth();
             int offset = Tile.MAX_WIDTH/2+textWidth/2-2;
             gr.setStroke(GuiStatics.TEXT_LINE);
-            gr.setColor(GuiStatics.COLOR_GOLD_OPAQUE);
+            gr.setColor(GuiStatics.COLOR_GOLD_TRANS);
             gr.drawLine(pixelX-offset, pixelY+Tile.MAX_HEIGHT/2-3,
               pixelX-Tile.MAX_WIDTH+offset, pixelY+Tile.MAX_HEIGHT/2-3);
             gr.setColor(Color.BLACK);

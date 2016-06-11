@@ -150,15 +150,25 @@ public class GuiStatics {
   /**
    * Sun Line type for text background, opacity 230.
    */
-  public final static Color COLOR_GOLD_OPAQUE = new Color(210, 181, 44, 230);
+  public final static Color COLOR_GOLD_TRANS = new Color(210, 181, 44, 230);
 
   /**
-   * Gold color non opaque
+   * Gold color 
    */
   public final static Color COLOR_GOLD = new Color(210, 181, 44);
 
   /**
-   * Dark Gold color non opaque
+   * Space yellow
+   */
+  public final static Color COLOR_SPACE_YELLOW = new Color(251, 255, 51);
+
+  /**
+   * Dark space yellow
+   */
+  public final static Color COLOR_SPACE_YELLOW_DARK = new Color(134, 134, 33);
+
+  /**
+   * Dark Gold color 
    */
   public final static Color COLOR_GOLD_DARK = new Color(155, 130, 13);
 
@@ -193,14 +203,14 @@ public class GuiStatics {
   public final static Color COLOR_COOL_SPACE_BLUE_DARK = new Color(25,120,193);
 
   /**
-   * Cool space blue, opaque 128
+   * Cool space blue, opacity 128
    */
-  public final static Color COLOR_COOL_SPACE_BLUE_OPAQUE = new Color(88,210,255,128);
+  public final static Color COLOR_COOL_SPACE_BLUE_TRANS = new Color(88,210,255,128);
 
   /**
-   * Cool space blue dark, opaque 128
+   * Cool space blue dark, opacity 128
    */
-  public final static Color COLOR_COOL_SPACE_BLUE_DARK_OPAQUE = new Color(25,120,193,128);
+  public final static Color COLOR_COOL_SPACE_BLUE_DARK_TRANS = new Color(25,120,193,128);
 
 
   /**

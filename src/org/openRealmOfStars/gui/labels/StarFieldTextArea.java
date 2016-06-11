@@ -42,7 +42,7 @@ public class StarFieldTextArea extends JTextArea {
   /**
   * Y axel offset where to draw text
   */
-  private static final int Y_OFFSET = 10;
+  private static final int Y_OFFSET = 18;
   /**
    * Does text have autoscroll on
    */
@@ -261,7 +261,8 @@ public class StarFieldTextArea extends JTextArea {
       }
       String[] texts = sb.toString().split("\n");
       for (int i=0;i<texts.length;i++) {
-        g.setColor(GuiStatics.COLOR_GREEN_TEXT_DARK);
+        g.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS);
+        boolean bigFont = false;
         
         if (!smoothScroll) {
           g.drawString(texts[i], sx+3, sy+i*Y_OFFSET+Y_OFFSET);
@@ -271,18 +272,35 @@ public class StarFieldTextArea extends JTextArea {
           g.setColor(GuiStatics.COLOR_GREEN_TEXT);
           g.drawString(texts[i], sx+2, sy+i*Y_OFFSET+Y_OFFSET);
         } else {
-          g.drawString(texts[i], sx+3, sy+i*Y_OFFSET+Y_OFFSET-smoothScrollY);
-          g.drawString(texts[i], sx+1, sy+i*Y_OFFSET+Y_OFFSET-smoothScrollY);
-          g.drawString(texts[i], sx+2, sy+i*Y_OFFSET-1+Y_OFFSET-smoothScrollY);
-          g.drawString(texts[i], sx+2, sy+i*Y_OFFSET+1+Y_OFFSET-smoothScrollY);
-          g.setColor(this.getForeground());
-          g.drawString(texts[i], sx+2, sy+i*Y_OFFSET+Y_OFFSET-smoothScrollY);
+          String line = texts[i];
+          if (line.startsWith("#")) {
+            g.setFont(GuiStatics.getFontCubellanBold());
+            line = line.substring(1);
+            bigFont = true;
+          } else {
+            g.setFont(GuiStatics.getFontCubellan());
+          }
+          int w = GuiStatics.getTextWidth(g.getFont(), line);
+          w = this.getWidth()/2+sx-w/2;
+          if (bigFont) {
+            g.setColor(GuiStatics.COLOR_SPACE_YELLOW_DARK);
+          }
+          g.drawString(line, w+3, sy+i*Y_OFFSET+Y_OFFSET-smoothScrollY);
+          g.drawString(line, w+1, sy+i*Y_OFFSET+Y_OFFSET-smoothScrollY);
+          g.drawString(line, w+2, sy+i*Y_OFFSET-1+Y_OFFSET-smoothScrollY);
+          g.drawString(line, w+2, sy+i*Y_OFFSET+1+Y_OFFSET-smoothScrollY);
+          if (bigFont) {
+            g.setColor(GuiStatics.COLOR_SPACE_YELLOW);
+          } else {
+            g.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_TRANS);
+          }
+          g.drawString(line, w+2, sy+i*Y_OFFSET+Y_OFFSET-smoothScrollY);
         }
         
       }
     }
     smoothScrollY++;
-    if (smoothScrollY==18) {
+    if (smoothScrollY==Y_OFFSET) {
       smoothScrollY=0;
       smoothScrollNextRow = true;
     }

@@ -50,10 +50,22 @@ public class CreditsView extends BlackPanel {
   
   public CreditsView(ActionListener listener,String title, String version) throws IOException {
     String creditsText = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
-        "\n\n\n\n\n\n\n\n\n\n\n"+title+" "+version+"\n\n"+
-        "Credits\n" +
-        "Programming and Design by\n" +
-        "Tuomo Untinen\n\n";
+        "\n\n\n\n\n\n\n\n\n\n\n"+
+        "#"+title+" "+version+"\n\n"+
+        "#Credits\n\n" +
+        "#Programming and Design by\n\n" +
+        "Tuomo Untinen\n\n" +
+        "All graphics under CC-BY-SA 3.0 license.\n"+
+        "See http://creativecommons.org/licenses/by-sa/3.0/\n"+
+        "#Graphics by\n\n" +
+        "Moons and planet made by Unnamed (Viktor.Hahn@web.de)\n"+
+        "(http://opengameart.org/content/16-planet-sprites)\n\n"+
+        "SunRed by Priest865 (http://opengameart.org/content/space-assets)\n\n"+
+        "141 Military Icons Set by AngryMeteor.com - http://opengameart.org/content/140-military-icons-set-fixed\n\n"+
+        "Nebulae, star field and space panel by Tuomo Untinen\n\n"+
+        "Fonts are under SIL Open Font License, Version 1.1.\n"+
+        "#Fonts by\n\n"+
+        "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n";
     InputStream is = CreditsView.class.getResourceAsStream("/resources/GPL2.txt");
     BufferedInputStream bis = new BufferedInputStream(is);
     DataInputStream dis = new DataInputStream(bis);
@@ -75,7 +87,7 @@ public class CreditsView extends BlackPanel {
     creditsText = creditsText+"\n\n"+gpl2License+"\n\n"+cubellanLicense;
     this.setLayout(new BorderLayout());
     textArea = new StarFieldTextArea();
-    textArea.setScrollText(creditsText, 70);
+    textArea.setScrollText(creditsText,45);
     textArea.setText(creditsText);
     textArea.setSmoothScroll(true);
     textArea.setEditable(false);

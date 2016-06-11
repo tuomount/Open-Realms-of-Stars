@@ -252,9 +252,16 @@ public class Game extends JFrame implements ActionListener {
       mapPanel.drawMap(starMap);
       mapPanel.repaint();
     }
-    if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_ANIMATION_TIMER) && gameState == GameState.CREDITS) {
-      creditsView.updateTextArea();
+    if (gameState == GameState.CREDITS) {
+      if (arg0.getActionCommand().equalsIgnoreCase(
+          GameCommands.COMMAND_ANIMATION_TIMER)) {
+        creditsView.updateTextArea();
+      }
+      if (arg0.getActionCommand().equalsIgnoreCase(
+          GameCommands.COMMAND_OK)) {
+        changeGameState(GameState.MAIN_MENU);
+      }
+      return;
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_VIEW_PLANET) &&

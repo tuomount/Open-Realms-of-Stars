@@ -168,7 +168,16 @@ public class Planet {
    */
   private int[] workers;
   
+  
+  /**
+   * Buildings / Planetary improvements
+   */
   private ArrayList<Building> buildings;
+  
+  /**
+   * What building / Planetary improvement is currently under construction
+   */
+  private Building underConstruction;
   /**
    * Maximum number of different production
    */
@@ -236,6 +245,7 @@ public class Planet {
     this.productionResource = 0;
     this.buildings = new ArrayList<>();
     this.prodResource = 0;
+    this.underConstruction = null;
   }
 
   /**
@@ -254,31 +264,34 @@ public class Planet {
    * @return
    */
   public String getProductionTime(Building build) {
-    int metalReq = getMetal()-build.getMetalCost();
-    int prodReq = getProdResource()-build.getProdCost();
-    if (metalReq > 0 &&prodReq > 0) {
+    int metalReq = build.getMetalCost()-getMetal();
+    int prodReq = build.getProdCost()-getProdResource();
+    int metalTurn = 0;
+    int prodTurn = 0;
+    if (metalReq <= 0 &&prodReq <= 0) {
       return "1 turn";
-    } else {
-      metalReq = Math.abs(metalReq);
-      prodReq = Math.abs(prodReq);
     }
-    if (getTotalProduction(PRODUCTION_METAL) > 0) {
-      metalReq = metalReq / getTotalProduction(PRODUCTION_METAL);
-    } else {
-      metalReq = -1;
+    if (getTotalProduction(PRODUCTION_METAL) > 0 && metalReq > 0) {
+      metalTurn = (int) Math.ceil((double) metalReq / (double) getTotalProduction(PRODUCTION_METAL));
+    } else if (getTotalProduction(PRODUCTION_METAL) == 0 && metalReq > 0) {
+      metalTurn = -1;
+    } else if (metalReq <= 0) {
+      metalTurn = 1;
     }
-    if (getTotalProduction(PRODUCTION_PRODUCTION) > 0) {
-      prodReq = prodReq / getTotalProduction(PRODUCTION_PRODUCTION);
-    } else {
-      prodReq = -1;
+    if (getTotalProduction(PRODUCTION_PRODUCTION) > 0 && prodReq > 0) {
+      prodTurn = (int) Math.ceil((double) prodReq / (double) getTotalProduction(PRODUCTION_PRODUCTION));
+    } else if (getTotalProduction(PRODUCTION_PRODUCTION) == 0 && prodReq > 0) {
+      prodTurn = -1;
+    } else if (prodReq <= 0) {
+      prodTurn = 1;
     }
-    if (prodReq == -1 || metalReq == -1) {
+    if (prodTurn == -1 || metalTurn== -1) {
       return "Never";
     } else {
-      if (prodReq > metalReq) {
-        return prodReq+" turns";
+      if (prodTurn > metalTurn) {
+        return prodTurn+" turns";
       }
-      return metalReq+" turns";
+      return metalTurn+" turns";
     }
   }
   
@@ -387,11 +400,16 @@ public class Planet {
     case PRODUCTION_METAL: { 
       mult = planetOwnerInfo.getRace().getMiningSpeed();
     // Planet always produces +1 metal      
-    result=workers[METAL_MINERS]*mult/div+1+getTotalProductionFromBuildings(prod);break;}
+    result=workers[METAL_MINERS]*mult/div+1+getTotalProductionFromBuildings(prod);
+    if (result > getAmountMetalInGround()) {
+      result = getAmountMetalInGround();
+    }
+    break;}
     case PRODUCTION_PRODUCTION: { 
       mult = planetOwnerInfo.getRace().getProductionSpeed();
      //  Planet always produces +1 production
-    result=workers[PRODUCTION_PRODUCTION]*mult/div+1;break;}
+    result=workers[PRODUCTION_PRODUCTION]*mult/div+1+getTotalProductionFromBuildings(prod);
+    break;}
     case PRODUCTION_RESEARCH: { 
       mult = planetOwnerInfo.getRace().getResearchSpeed();
       //  Planet does not have research bonus
@@ -678,6 +696,47 @@ public class Planet {
    */
   public void setProdResource(int prodResource) {
     this.prodResource = prodResource;
+  }
+
+  public Building getUnderConstruction() {
+    return underConstruction;
+  }
+
+  public void setUnderConstruction(Building underConstruction) {
+    this.underConstruction = underConstruction;
+  }
+  
+  public void updateOneTurn() {
+    if (planetOwnerInfo != null) {
+      int minedMetal = getTotalProduction(PRODUCTION_METAL);
+      if (minedMetal <= amountMetalInGround) {
+        amountMetalInGround = amountMetalInGround -minedMetal;
+        metal = metal + minedMetal;
+      } else {
+        metal = metal + amountMetalInGround;
+        amountMetalInGround = 0;
+      }
+      prodResource = prodResource + getTotalProduction(PRODUCTION_PRODUCTION);
+      
+      int food=getTotalProduction(PRODUCTION_FOOD)-getTotalPopulation();
+      extraFood = extraFood +food;
+      int require = 10*planetOwnerInfo.getRace().getFoodRequire()/100;
+      if (extraFood > 0 && extraFood >= require) {
+        extraFood = extraFood -require;
+        workers[FOOD_FARMERS] = workers[FOOD_FARMERS]+1; 
+      }
+  
+      
+      // Making building happens at the end
+      if (underConstruction != null) {
+        if (metal >= underConstruction.getMetalCost() &&
+            prodResource >= underConstruction.getProdCost()  && groundSize > buildings.size()) {
+          metal = metal - underConstruction.getMetalCost();
+          prodResource = prodResource - underConstruction.getProdCost();
+          buildings.add(underConstruction);
+        }
+      }
+    }
   }
   
 

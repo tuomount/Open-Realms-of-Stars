@@ -35,6 +35,11 @@ public class GameCommands {
   public static final String COMMAND_OK = "OK";
 
   /**
+   * End Turn command
+   */
+  public static final String COMMAND_END_TURN = "EndTurn";
+
+  /**
    * View planet command
    */
   public static final String COMMAND_VIEW_PLANET = "ViewPlanetCommand";

@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
@@ -14,6 +15,7 @@ import org.openRealmOfStars.game.States.MainMenu;
 import org.openRealmOfStars.game.States.PlanetView;
 import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.MapPanel;
+import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
@@ -115,6 +117,8 @@ public class Game extends JFrame implements ActionListener {
    * Credits for the game
    */
   public CreditsView creditsView;
+  
+  public SpaceButton endTurnButton;
 
   /**
    * Contructor of Game class
@@ -156,6 +160,10 @@ public class Game extends JFrame implements ActionListener {
     mapPanel.addMouseMotionListener(starMapMouseListener);
     
     InfoPanel bottomPanel = new EmptyInfoPanel();
+    bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
+    endTurnButton = new SpaceButton("End Turn "+starMap.getTurn(), GameCommands.COMMAND_END_TURN);
+    endTurnButton.addActionListener(this);
+    bottomPanel.add(endTurnButton);
     base.setLayout(new BorderLayout());
     base.add(mapPanel,BorderLayout.CENTER);
     base.add(infoPanel, BorderLayout.EAST);
@@ -272,10 +280,20 @@ public class Game extends JFrame implements ActionListener {
         GameCommands.COMMAND_VIEW_STARMAP)) {
       changeGameState(GameState.STARMAP);
     }
+    if (gameState == GameState.STARMAP) {
+      // Starmap
+      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
+        starMap.updateStarMapToNextTurn();
+        endTurnButton.setText("End turn "+starMap.getTurn());
+      }
+      
+    }
     if (gameState == GameState.PLANETVIEW) {
+      // Planet view
       planetView.handleAction(arg0);
     }
     if (gameState == GameState.MAIN_MENU) {
+      // Main menu
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEW_GAME)) {
         changeGameState(GameState.NEW_GAME);
       }

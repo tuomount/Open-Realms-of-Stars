@@ -91,6 +91,10 @@ public class StarMap {
   private PlayerList players;
   
   /**
+   * Game turn
+   */
+  private int turn;
+  /**
    * Constructor for StarMap. Generates universum with default settings.
    * @param maxXSize
    * @param maxYSize
@@ -112,6 +116,7 @@ public class StarMap {
         tileInfo[i][j] = SquareInfo.EMPTY_TILE;
       }
     }
+    turn = 0;
     // First starting Systems
     int sx = SOLARSYSTEMWIDTH;
     int sy = SOLARSYSTEMWIDTH;
@@ -423,5 +428,28 @@ public class StarMap {
     }
     return null;
   }
+
+  /**
+   * @return the turn
+   */
+  public int getTurn() {
+    return turn;
+  }
+
+  /**
+   * @param turn the turn to set
+   */
+  public void setTurn(int turn) {
+    this.turn = turn;
+  }
   
+  public void updateStarMapToNextTurn() {
+    for (int i=0;i<planetList.size();i++) {
+      Planet planet = planetList.get(i);
+      if (planet.getPlanetPlayerInfo() != null) {
+        planet.updateOneTurn();
+      }
+    }
+    turn=turn+1;
+  }
 }

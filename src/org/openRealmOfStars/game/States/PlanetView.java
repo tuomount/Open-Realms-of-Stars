@@ -213,6 +213,9 @@ public class PlanetView extends BlackPanel {
     productionSelect.setFont(GuiStatics.getFontCubellan());
     productionSelect.setRenderer(new ProductionListRenderer());
     productionSelect.setEditable(false);
+    if (planet.getUnderConstruction() != null) {
+      productionSelect.setSelectedItem(planet.getUnderConstruction());
+    }
     invis.add(productionSelect);
     invis.add(Box.createRigidArea(new Dimension(60,5)));
     buildingEstimate = new TransparentLabel(topPanel,
@@ -372,6 +375,7 @@ public class PlanetView extends BlackPanel {
       updatePanel();
     }
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_PRODUCTION_LIST)) {
+      planet.setUnderConstruction((Building) productionSelect.getSelectedItem()); 
       updatePanel();
     }
   }

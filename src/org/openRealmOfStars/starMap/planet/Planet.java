@@ -380,6 +380,22 @@ public class Planet {
   }
   
   /**
+   * Get planet's maintenance cost for full credits.
+   * @return int as maintenanceCost
+   */
+  public int getMaintenanceCost() {
+    double result=0;
+    for (Building build : getBuildingList()) {
+      result = result +build.getMaintenanceCost();
+    }
+    if (planetOwnerInfo.getRace() == SpaceRace.MECHIONS) {
+      // Mechions have maintenance cost for each 4th of population
+      result = result +Math.floor(getTotalPopulation()/4);
+    }
+    return (int) Math.floor(result);
+    
+  }
+  /**
    * Get total production from planet. This includes racial, worker, planetary
    * improvement bonus
    * @param prod, Production to get: See all PRODUCTION_*

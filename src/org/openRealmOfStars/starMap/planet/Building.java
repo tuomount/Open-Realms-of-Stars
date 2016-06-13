@@ -84,6 +84,11 @@ public class Building {
   private int metalCost;
   
   /**
+   * Maintenance Cost
+   */
+  private double maintenanceCost;
+  
+  /**
    * Construct building for planet
    * @param index Unique number for building
    * @param name Building name
@@ -104,6 +109,7 @@ public class Building {
     this.reseBonus = 0;
     this.prodCost = 1;
     this.metalCost = 1;
+    this.maintenanceCost = 0;
   }
 
   public String getName() {
@@ -225,6 +231,20 @@ public class Building {
   @Override
   public String toString() {
     return getName();
+  }
+
+  /**
+   * @return the maintenanceCost
+   */
+  public double getMaintenanceCost() {
+    return maintenanceCost;
+  }
+
+  /**
+   * @param maintenanceCost the maintenanceCost to set
+   */
+  public void setMaintenanceCost(double maintenanceCost) {
+    this.maintenanceCost = maintenanceCost;
   }
   
   

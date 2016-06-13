@@ -125,6 +125,7 @@ public class BuildingFactory {
       tmp.setDescription("Space port allows building the space ships.");
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
+      tmp.setMaintenanceCost(1.0);
       return tmp;
     } 
     return tmp;

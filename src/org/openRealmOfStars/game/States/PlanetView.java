@@ -73,6 +73,7 @@ public class PlanetView extends BlackPanel {
   private IconLabel reseProd;
   private IconLabel cultProd;
   private IconLabel credProd;
+  private IconLabel maintenance;
   private IconLabel metal;
   private IconLabel metalOre;
   private JComboBox<Building> productionSelect;
@@ -186,6 +187,13 @@ public class PlanetView extends BlackPanel {
     credProd.setToolTipText("Total production of credits");
     credProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(credProd);
+
+    maintenance = new IconLabel(invis,Icons.getIconByName(Icons.ICON_MAINTENANCE), 
+        ": "+planet.getMaintenanceCost());
+    maintenance.setToolTipText("Maintenance cost of planet");
+    maintenance.setAlignmentX(Component.LEFT_ALIGNMENT);
+    invis.add(maintenance);
+
     metal = new IconLabel(invis,Icons.getIconByName(Icons.ICON_METAL), 
         ": "+planet.getMetal());
     metal.setToolTipText("Total metal on surface");

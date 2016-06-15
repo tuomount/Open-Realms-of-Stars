@@ -46,6 +46,7 @@ public class Icons {
   public static final String ICON_CREDIT = "Credit";
   public static final String ICON_METAL = "Metal";
   public static final String ICON_METAL_ORE = "MetalOre";
+  public static final String ICON_MAINTENANCE = "Maintenance";
   
   /**
    * List of Icon
@@ -145,6 +146,8 @@ public class Icons {
     icon = new Icon16x16(image, 3, 1,ICON_METAL);
     addIcon(icon);
     icon = new Icon16x16(image, 4, 1,ICON_METAL_ORE);
+    addIcon(icon);
+    icon = new Icon16x16(image, 5, 1,ICON_MAINTENANCE);
     addIcon(icon);
   }
   

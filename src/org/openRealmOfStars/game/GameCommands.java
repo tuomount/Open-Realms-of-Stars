@@ -85,6 +85,14 @@ public class GameCommands {
    */
   public static final String COMMAND_PLUS_RESEARCH = "PlusResearch";
   /**
+   * Minus Tax
+   */
+  public static final String COMMAND_MINUS_TAX = "MinusTax";
+  /**
+   * Plus Tax
+   */
+  public static final String COMMAND_PLUS_TAX = "PlusTax";
+  /**
    * Production list changed in planet
    */
   public static final String COMMAND_PRODUCTION_LIST = "ProductionList";

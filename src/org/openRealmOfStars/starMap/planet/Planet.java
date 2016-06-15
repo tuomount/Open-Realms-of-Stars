@@ -134,6 +134,11 @@ public class Planet {
   private int extraFood;
   
   /**
+   * How many productions are converted to credits
+   */
+  private int tax;
+  
+  /**
    * Maximum number of different works
    */
   public static final int MAX_WORKER_TYPE = 5;
@@ -246,6 +251,7 @@ public class Planet {
     this.buildings = new ArrayList<>();
     this.prodResource = 0;
     this.underConstruction = null;
+    this.tax = 0;
   }
 
   /**
@@ -425,6 +431,7 @@ public class Planet {
       mult = planetOwnerInfo.getRace().getProductionSpeed();
      //  Planet always produces +1 production
     result=workers[PRODUCTION_PRODUCTION]*mult/div+1+getTotalProductionFromBuildings(prod);
+    result = result -getTax();
     break;}
     case PRODUCTION_RESEARCH: { 
       mult = planetOwnerInfo.getRace().getResearchSpeed();
@@ -437,7 +444,7 @@ public class Planet {
     case PRODUCTION_CREDITS: { 
       mult = 100;
       //  Planet does not have credit bonus
-     result=getTotalProductionFromBuildings(prod);break;}
+     result=getTotalProductionFromBuildings(prod)+getTax()-getMaintenanceCost();break;}
     case PRODUCTION_POPULATION: { 
       //  Planet does not have population bonus
      result=getTotalProduction(PRODUCTION_FOOD)-getTotalPopulation();
@@ -752,6 +759,44 @@ public class Planet {
           buildings.add(underConstruction);
         }
       }
+    }
+  }
+
+  /**
+   * Get the total production without taxes
+   * @return int
+   */
+  private int getTotalProductionWithoutTax() {
+    int mult;
+    int result =0;
+    int div = 100;
+    mult = planetOwnerInfo.getRace().getProductionSpeed();
+    //  Planet always produces +1 production
+    result=workers[PRODUCTION_PRODUCTION]*mult/div+1+
+        getTotalProductionFromBuildings(PRODUCTION_PRODUCTION);
+    return result;
+
+  }
+  
+  /**
+   * @return the tax
+   */
+  public int getTax() {
+    return tax;
+  }
+
+  /**
+   * Set tax cannot be bigger than maximum production
+   * @param tax the tax to set
+   */
+  public void setTax(int tax) {
+    int max = getTotalProductionWithoutTax();
+    this.tax = tax;
+    if (this.tax > max) {
+      this.tax = max;
+    }
+    if (this.tax < 0) {
+      this.tax = 0;
     }
   }
   

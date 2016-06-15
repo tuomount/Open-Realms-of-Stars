@@ -62,6 +62,7 @@ public class PlanetView extends BlackPanel {
   private WorkerProductionPanel minePanel;
   private WorkerProductionPanel factoryPanel;
   private WorkerProductionPanel resePanel;
+  private WorkerProductionPanel taxPanel;
   
   private IconLabel cultureLabel;
   
@@ -194,6 +195,13 @@ public class PlanetView extends BlackPanel {
     maintenance.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(maintenance);
 
+    taxPanel = new WorkerProductionPanel(invis, 
+        GameCommands.COMMAND_MINUS_TAX, GameCommands.COMMAND_PLUS_TAX, 
+        Icons.ICON_TAX, ": "+planet.getTax(),
+        "How many productions are converted to credits",listener);
+    taxPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    invis.add(taxPanel);
+
     metal = new IconLabel(invis,Icons.getIconByName(Icons.ICON_METAL), 
         ": "+planet.getMetal());
     metal.setToolTipText("Total metal on surface");
@@ -303,6 +311,8 @@ public class PlanetView extends BlackPanel {
     cultProd.setText(": "+planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
 
     credProd.setText(": "+planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    maintenance.setText(": "+planet.getMaintenanceCost());
+    taxPanel.setText(": "+planet.getTax());
     metal.setText(": "+planet.getMetal());
     metalOre.setText(": "+planet.getAmountMetalInGround());
     buildingLabel.setText(
@@ -380,6 +390,14 @@ public class PlanetView extends BlackPanel {
         GameCommands.COMMAND_PLUS_RESEARCH) && planet.getWorkers(Planet.CULTURE_ARTIST) >0) {
       planet.setWorkers(Planet.RESEARCH_SCIENTIST, planet.getWorkers(Planet.RESEARCH_SCIENTIST)+1);
       planet.setWorkers(Planet.CULTURE_ARTIST, planet.getWorkers(Planet.CULTURE_ARTIST)-1);
+      updatePanel();
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_MINUS_TAX)) {
+      planet.setTax(planet.getTax()-1);
+      updatePanel();
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_PLUS_TAX) ) {
+      planet.setTax(planet.getTax()+1);
       updatePanel();
     }
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_PRODUCTION_LIST)) {

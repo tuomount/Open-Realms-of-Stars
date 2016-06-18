@@ -28,5 +28,24 @@ public enum TechType {
    Hulls,
    Improvements,
    Propulsion,
-   Scanners
+   Scanners;
+  
+  /**
+   * Get Tech type index
+   * @return int
+   */
+  public int getIndex() {
+    switch (this) {
+    case Combat: return 0;
+    case Defense: return 1;
+    case Hulls: return 2;
+    case Improvements: return 3;
+    case Propulsion: return 4;
+    case Scanners: return 5;
+    }
+    return 0;
+  }
+
+   
+   
 }

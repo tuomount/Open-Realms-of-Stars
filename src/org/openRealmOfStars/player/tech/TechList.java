@@ -2,6 +2,7 @@ package org.openRealmOfStars.player.tech;
 
 import java.util.ArrayList;
 
+
 /**
  * 
  * Open Realm of Stars game project
@@ -27,9 +28,19 @@ import java.util.ArrayList;
 public class TechList {
   
   /**
-   * List of researched techs
+   * Maximum number of tech levels
    */
-  private ArrayList<Tech> techList;
+  public static final int MAX_TECH_LEVEL = 10;
+  
+  /**
+   * Maximum number of tech types
+   */
+  public static final int MAX_TECH_TYPES = TechType.values().length;
+  
+  /**
+   * List of researched techs, First are TechTypes, second is tech level
+   */
+  private TechListForLevel[][] techList;
   
   /**
    * Tech Levels
@@ -37,7 +48,12 @@ public class TechList {
   private int[] techLevels = new int[TechType.values().length];
   
   public TechList() {
-    techList = new ArrayList<>();
+    techList = new TechListForLevel[TechType.values().length][MAX_TECH_LEVEL];
+    for (int i=0;i<MAX_TECH_TYPES;i++) {
+      for (int j=0;j<MAX_TECH_LEVEL;j++) {
+        techList[i][j] = new TechListForLevel(j+1);
+      }
+    }
   }
   
   /**
@@ -46,10 +62,12 @@ public class TechList {
    * @return True if found, otherwise false
    */
   public boolean isTech(String techName) {
-    for (int i=0;i<techList.size();i++) {
-      Tech tech = techList.get(i);
-      if (tech.getName().equals(techName)) {
-        return true;
+    for (int i=0;i<MAX_TECH_TYPES;i++) {
+      for (int j=0;j<MAX_TECH_LEVEL;j++) {
+        TechListForLevel tech = techList[i][j];
+        if (tech.isTech(techName)) {
+          return true;
+        }
       }
     }
     return false;
@@ -60,8 +78,10 @@ public class TechList {
    * @param tech Tech to add
    */
   public void addTech(Tech tech) {
-    if (!isTech(tech.getName())) {
-      techList.add(tech);
+    int index =tech.getType().getIndex();
+    int lvl = tech.getLevel()-1;
+    if (!techList[index][lvl].isTech(tech.getName())) {
+      techList[index][lvl].addTech(tech);
     }
   }
   
@@ -91,10 +111,34 @@ public class TechList {
   }
   
   /**
-   * Get Tech List
+   * Get tech list for certain tech type
+   * @param type Tech Type to get the list
+   * @return tech list as a tech array
+   */
+  public Tech[] getListForType(TechType type) {
+    ArrayList<Tech> list = new ArrayList<>();
+    int index = type.getIndex();
+    for (int i=0;i<MAX_TECH_LEVEL;i++) {
+      for (Tech tech : techList[index][i].getList()) {
+        list.add(tech);
+      }
+    }
+    return list.toArray(new Tech[list.size()]);
+  }
+  
+  /**
+   * Get Full Tech List
    * @return tech list as a tech array
    */
   public Tech[] getList() {
-    return techList.toArray(new Tech[techList.size()]);
+    ArrayList<Tech> list = new ArrayList<>();
+    for (int j=0;j<MAX_TECH_TYPES;j++) {
+      for (int i=0;i<MAX_TECH_LEVEL;i++) {
+        for (Tech tech : techList[j][i].getList()) {
+          list.add(tech);
+        }
+      }
+    }
+    return list.toArray(new Tech[list.size()]);
   }
 }

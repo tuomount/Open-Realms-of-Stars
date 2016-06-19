@@ -28,7 +28,7 @@ public enum TechType {
    Hulls,
    Improvements,
    Propulsion,
-   Scanners;
+   Electrics;
   
   /**
    * Get Tech type index
@@ -41,7 +41,7 @@ public enum TechType {
     case Hulls: return 2;
     case Improvements: return 3;
     case Propulsion: return 4;
-    case Scanners: return 5;
+    case Electrics: return 5;
     }
     return 0;
   }

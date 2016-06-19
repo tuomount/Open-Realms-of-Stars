@@ -1,5 +1,7 @@
 package org.openRealmOfStars.player.tech;
 
+import org.openRealmOfStars.gui.icons.Icon16x16;
+import org.openRealmOfStars.gui.icons.Icons;
 
 /**
  * 
@@ -52,7 +54,12 @@ public class Tech {
   private String hull;
   
   /**
-   * Create a new Tech
+   * Icon for Tech
+   */
+  private Icon16x16 icon;
+  
+  /**
+   * Create a new Tech with defaults
    * @param name Tech Name
    * @param type Tech Type
    * @param level Tech level 1-10
@@ -64,6 +71,7 @@ public class Tech {
     hull = null;
     improvement = null;
     component = null;
+    icon = Icons.getIconByName(Icons.ICON_RESEARCH);
   }
   
   /**
@@ -127,6 +135,20 @@ public class Tech {
   }
   public void setHull(String hull) {
     this.hull = hull;
+  }
+
+  /**
+   * @return the icon
+   */
+  public Icon16x16 getIcon() {
+    return icon;
+  }
+
+  /**
+   * @param icon the icon to set
+   */
+  public void setIcon(Icon16x16 icon) {
+    this.icon = icon;
   }
   
   

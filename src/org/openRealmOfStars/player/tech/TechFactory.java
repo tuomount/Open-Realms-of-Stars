@@ -67,6 +67,27 @@ public class TechFactory {
   public static final String[] DEFENSE_TECH_LEVEL10_NAMES = 
     {"Shield Mk10","Armor Plating Mk10"};
 
+  public static final String[] HULL_TECH_LEVEL1_NAMES = 
+    {"Scout Mk1","Destroyer Mk1","Colony"};
+  public static final String[] HULL_TECH_LEVEL2_NAMES = 
+    {"Probe","Small Freighter","Small Starbase Mk1"};
+  public static final String[] HULL_TECH_LEVEL3_NAMES = 
+    {"Destroyer Mk2","Corvette Mk1","Small Starbase Mk2"};
+  public static final String[] HULL_TECH_LEVEL4_NAMES = 
+    {"Medium Freighter","Medium starbase","Scout Mk2"};
+  public static final String[] HULL_TECH_LEVEL5_NAMES = 
+    {"Cruiser","Battleship"};
+  public static final String[] HULL_TECH_LEVEL6_NAMES = 
+    {"Large Freighter","Large Starbase","Corvette Mk2","Privateer Mk1"};
+  public static final String[] HULL_TECH_LEVEL7_NAMES = 
+    {"Battle Cruiser","Privateer Mk2"};
+  public static final String[] HULL_TECH_LEVEL8_NAMES = 
+    {"Massive Freighter","Massive Starbase","Privateer Mk3"};
+  public static final String[] HULL_TECH_LEVEL9_NAMES = 
+    {"Capital Ship Mk1"};
+  public static final String[] HULL_TECH_LEVEL10_NAMES = 
+    {"Capital Ship Mk2"};
+
   /**
    * Create combat tech with certain name and level
    * @param name Tech Name
@@ -123,11 +144,47 @@ public class TechFactory {
     for (int i=0;i<list.length;i++) {
       String techName = list[i];
       if (name.equals(techName)) {
-        Tech tech = new Tech(techName, TechType.Combat, level);
+        Tech tech = new Tech(techName, TechType.Defense, level);
         if (techName.startsWith("Planetary Defense Turret Mk")) {
           tech.setImprovement(techName);
         } else {
           tech.setComponent(techName);
+        }
+        return tech;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Create Hull tech with certain name and level
+   * @param name Tech Name
+   * @param level level between 1-10
+   * @return Tech or null if match not found
+   */
+  public static Tech createHullTech(String name, int level) {
+    String[] list;
+    switch (level) {
+    case 1: list = DEFENSE_TECH_LEVEL1_NAMES; break;
+    case 2: list = DEFENSE_TECH_LEVEL2_NAMES; break;
+    case 3: list = DEFENSE_TECH_LEVEL3_NAMES; break;
+    case 4: list = DEFENSE_TECH_LEVEL4_NAMES; break;
+    case 5: list = DEFENSE_TECH_LEVEL5_NAMES; break;
+    case 6: list = DEFENSE_TECH_LEVEL6_NAMES; break;
+    case 7: list = DEFENSE_TECH_LEVEL7_NAMES; break;
+    case 8: list = DEFENSE_TECH_LEVEL8_NAMES; break;
+    case 9: list = DEFENSE_TECH_LEVEL9_NAMES; break;
+    case 10: list = DEFENSE_TECH_LEVEL10_NAMES; break;
+    default: return null;
+    }
+    for (int i=0;i<list.length;i++) {
+      String techName = list[i];
+      if (name.equals(techName)) {
+        Tech tech = new Tech(techName, TechType.Hulls, level);
+        if (techName.startsWith("Privateer Mk")) {
+          tech.setComponent("Privateer module");
+        } else {
+          tech.setHull(techName);
         }
         return tech;
       }

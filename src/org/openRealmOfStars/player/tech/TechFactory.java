@@ -88,6 +88,69 @@ public class TechFactory {
   public static final String[] HULL_TECH_LEVEL10_NAMES = 
     {"Capital Ship Mk2"};
 
+  public static final String[] IMPROVEMENT_TECH_LEVEL1_NAMES = 
+    {"Laboratory","Barracks","Tax center"};
+  public static final String[] IMPROVEMENT_TECH_LEVEL2_NAMES = 
+    {"Advanced farm","Advanced mine","Advanced Factory"};
+  public static final String[] IMPROVEMENT_TECH_LEVEL3_NAMES = 
+    {"Advanced laboratory","Market center","Culture center"};
+  public static final String[] IMPROVEMENT_TECH_LEVEL4_NAMES = 
+    {"Trade center","Extreme sports center","Recycle center"};
+  public static final String[] IMPROVEMENT_TECH_LEVEL5_NAMES = 
+    {"Farming center","Mining center","Manufacturing center","Radiation dampener"};
+  public static final String[] IMPROVEMENT_TECH_LEVEL6_NAMES = 
+    {"Research center","Stock market","Galactic sports center"};
+  public static final String[] IMPROVEMENT_TECH_LEVEL7_NAMES = 
+    {"New technology center","VR movie center","Advanced recycle center"};
+  public static final String[] IMPROVEMENT_TECH_LEVEL8_NAMES = 
+    {"Galactic bank","Radiation well"};
+  public static final String[] IMPROVEMENT_TECH_LEVEL9_NAMES = 
+    {"Hydropodic farming center","Nanobot mining center","Nanobot manufacturing center"};
+  public static final String[] IMPROVEMENT_TECH_LEVEL10_NAMES = 
+    {"Neural research center","Super AI Center","Replicator center"};
+
+  public static final String[] PROPULSION_TECH_LEVEL1_NAMES = 
+    {"Ion drive Mk2","Nuclear drive Mk1"};
+  public static final String[] PROPULSION_TECH_LEVEL2_NAMES = 
+    {"Ion drive Mk3","Hyper drive Mk1"};
+  public static final String[] PROPULSION_TECH_LEVEL3_NAMES = 
+    {"Warp drive Mk1","Nuclear drive Mk2"};
+  public static final String[] PROPULSION_TECH_LEVEL4_NAMES = 
+    {"Wrap drive Mk2","Hyper drive Mk2"};
+  public static final String[] PROPULSION_TECH_LEVEL5_NAMES = 
+    {"Wrap drive Mk3","Hyper drive Mk3"};
+  public static final String[] PROPULSION_TECH_LEVEL6_NAMES = 
+    {"Wrap drive Mk4","Hyper drive Mk4","Nuclear drive Mk3"};
+  public static final String[] PROPULSION_TECH_LEVEL7_NAMES = 
+    {"Wrap drive Mk5","Hyper drive Mk5","Impulse engine Mk1"};
+  public static final String[] PROPULSION_TECH_LEVEL8_NAMES = 
+    {"Wrap drive Mk6","Hyper drive Mk6","Impulse engine Mk2"};
+  public static final String[] PROPULSION_TECH_LEVEL9_NAMES = 
+    {"Wrap drive Mk7","Hyper drive Mk7","Impulse engine Mk3"};
+  public static final String[] PROPULSION_TECH_LEVEL10_NAMES = 
+    {"Wrap drive Mk8","Hyper drive Mk8","Impulse engine Mk4"};
+
+  public static final String[] ELECTRONICS_TECH_LEVEL1_NAMES = 
+    {"Scanner Mk1","Planetary scanner Mk1","Cloaking device Mk1"};
+  public static final String[] ELECTRONICS_TECH_LEVEL2_NAMES = 
+    {"Cloaking device Mk2","Targeting computer Mk1"};
+  public static final String[] ELECTRONICS_TECH_LEVEL3_NAMES = 
+    {"Scanner Mk2","Planetary scanner Mk2","Jammer Mk1"};
+  public static final String[] ELECTRONICS_TECH_LEVEL4_NAMES = 
+    {"Cloaking device Mk3","Targeting computer Mk2","LR scanner Mk1"};
+  public static final String[] ELECTRONICS_TECH_LEVEL5_NAMES = 
+    {"Scanner Mk3","Planetary scanner Mk3","Jammer Mk2"};
+  public static final String[] ELECTRONICS_TECH_LEVEL6_NAMES = 
+    {"Cloaking device Mk4","Targeting computer Mk3","LR scanner Mk2"};
+  public static final String[] ELECTRONICS_TECH_LEVEL7_NAMES = 
+    {"Scanner Mk4","Jammer Mk3"};
+  public static final String[] ELECTRONICS_TECH_LEVEL8_NAMES = 
+    {"Cloaking device Mk5","Planetary scanner Mk4","LR scanner Mk3"};
+  public static final String[] ELECTRONICS_TECH_LEVEL9_NAMES = 
+    {"Scanner Mk5","Targeting computer Mk4"};
+  public static final String[] ELECTRONICS_TECH_LEVEL10_NAMES = 
+    {"Cloaking device Mk6","Planetary scanner Mk5","Jammer Mk4"};
+
   /**
    * Create combat tech with certain name and level
    * @param name Tech Name
@@ -165,16 +228,16 @@ public class TechFactory {
   public static Tech createHullTech(String name, int level) {
     String[] list;
     switch (level) {
-    case 1: list = DEFENSE_TECH_LEVEL1_NAMES; break;
-    case 2: list = DEFENSE_TECH_LEVEL2_NAMES; break;
-    case 3: list = DEFENSE_TECH_LEVEL3_NAMES; break;
-    case 4: list = DEFENSE_TECH_LEVEL4_NAMES; break;
-    case 5: list = DEFENSE_TECH_LEVEL5_NAMES; break;
-    case 6: list = DEFENSE_TECH_LEVEL6_NAMES; break;
-    case 7: list = DEFENSE_TECH_LEVEL7_NAMES; break;
-    case 8: list = DEFENSE_TECH_LEVEL8_NAMES; break;
-    case 9: list = DEFENSE_TECH_LEVEL9_NAMES; break;
-    case 10: list = DEFENSE_TECH_LEVEL10_NAMES; break;
+    case 1: list = HULL_TECH_LEVEL1_NAMES; break;
+    case 2: list = HULL_TECH_LEVEL2_NAMES; break;
+    case 3: list = HULL_TECH_LEVEL3_NAMES; break;
+    case 4: list = HULL_TECH_LEVEL4_NAMES; break;
+    case 5: list = HULL_TECH_LEVEL5_NAMES; break;
+    case 6: list = HULL_TECH_LEVEL6_NAMES; break;
+    case 7: list = HULL_TECH_LEVEL7_NAMES; break;
+    case 8: list = HULL_TECH_LEVEL8_NAMES; break;
+    case 9: list = HULL_TECH_LEVEL9_NAMES; break;
+    case 10: list = HULL_TECH_LEVEL10_NAMES; break;
     default: return null;
     }
     for (int i=0;i<list.length;i++) {
@@ -185,6 +248,106 @@ public class TechFactory {
           tech.setComponent("Privateer module");
         } else {
           tech.setHull(techName);
+        }
+        return tech;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Create improvement tech with certain name and level
+   * @param name Tech Name
+   * @param level level between 1-10
+   * @return Tech or null if match not found
+   */
+  public static Tech createImprovementTech(String name, int level) {
+    String[] list;
+    switch (level) {
+    case 1: list = IMPROVEMENT_TECH_LEVEL1_NAMES; break;
+    case 2: list = IMPROVEMENT_TECH_LEVEL2_NAMES; break;
+    case 3: list = IMPROVEMENT_TECH_LEVEL3_NAMES; break;
+    case 4: list = IMPROVEMENT_TECH_LEVEL4_NAMES; break;
+    case 5: list = IMPROVEMENT_TECH_LEVEL5_NAMES; break;
+    case 6: list = IMPROVEMENT_TECH_LEVEL6_NAMES; break;
+    case 7: list = IMPROVEMENT_TECH_LEVEL7_NAMES; break;
+    case 8: list = IMPROVEMENT_TECH_LEVEL8_NAMES; break;
+    case 9: list = IMPROVEMENT_TECH_LEVEL9_NAMES; break;
+    case 10: list = IMPROVEMENT_TECH_LEVEL10_NAMES; break;
+    default: return null;
+    }
+    for (int i=0;i<list.length;i++) {
+      String techName = list[i];
+      if (name.equals(techName)) {
+        Tech tech = new Tech(techName, TechType.Improvements, level);
+        tech.setImprovement(techName);
+        return tech;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Create propulsion tech with certain name and level
+   * @param name Tech Name
+   * @param level level between 1-10
+   * @return Tech or null if match not found
+   */
+  public static Tech createPropulsionTech(String name, int level) {
+    String[] list;
+    switch (level) {
+    case 1: list = PROPULSION_TECH_LEVEL1_NAMES; break;
+    case 2: list = PROPULSION_TECH_LEVEL2_NAMES; break;
+    case 3: list = PROPULSION_TECH_LEVEL3_NAMES; break;
+    case 4: list = PROPULSION_TECH_LEVEL4_NAMES; break;
+    case 5: list = PROPULSION_TECH_LEVEL5_NAMES; break;
+    case 6: list = PROPULSION_TECH_LEVEL6_NAMES; break;
+    case 7: list = PROPULSION_TECH_LEVEL7_NAMES; break;
+    case 8: list = PROPULSION_TECH_LEVEL8_NAMES; break;
+    case 9: list = PROPULSION_TECH_LEVEL9_NAMES; break;
+    case 10: list = PROPULSION_TECH_LEVEL10_NAMES; break;
+    default: return null;
+    }
+    for (int i=0;i<list.length;i++) {
+      String techName = list[i];
+      if (name.equals(techName)) {
+        Tech tech = new Tech(techName, TechType.Propulsion, level);
+        tech.setComponent(techName);
+        return tech;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Create electronics tech with certain name and level
+   * @param name Tech Name
+   * @param level level between 1-10
+   * @return Tech or null if match not found
+   */
+  public static Tech createElectronicsTech(String name, int level) {
+    String[] list;
+    switch (level) {
+    case 1: list = ELECTRONICS_TECH_LEVEL1_NAMES; break;
+    case 2: list = ELECTRONICS_TECH_LEVEL2_NAMES; break;
+    case 3: list = ELECTRONICS_TECH_LEVEL3_NAMES; break;
+    case 4: list = ELECTRONICS_TECH_LEVEL4_NAMES; break;
+    case 5: list = ELECTRONICS_TECH_LEVEL5_NAMES; break;
+    case 6: list = ELECTRONICS_TECH_LEVEL6_NAMES; break;
+    case 7: list = ELECTRONICS_TECH_LEVEL7_NAMES; break;
+    case 8: list = ELECTRONICS_TECH_LEVEL8_NAMES; break;
+    case 9: list = ELECTRONICS_TECH_LEVEL9_NAMES; break;
+    case 10: list = ELECTRONICS_TECH_LEVEL10_NAMES; break;
+    default: return null;
+    }
+    for (int i=0;i<list.length;i++) {
+      String techName = list[i];
+      if (name.equals(techName)) {
+        Tech tech = new Tech(techName, TechType.Electrics, level);
+        if (techName.startsWith("Planetary scanner Mk")) {
+          tech.setImprovement(techName);
+        } else {
+          tech.setComponent(techName);
         }
         return tech;
       }

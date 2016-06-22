@@ -1,11 +1,9 @@
 package org.openRealmOfStars.game;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
@@ -13,20 +11,11 @@ import javax.swing.UIManager;
 import org.openRealmOfStars.game.States.CreditsView;
 import org.openRealmOfStars.game.States.MainMenu;
 import org.openRealmOfStars.game.States.PlanetView;
-import org.openRealmOfStars.gui.BlackPanel;
-import org.openRealmOfStars.gui.MapPanel;
-import org.openRealmOfStars.gui.buttons.SpaceButton;
-import org.openRealmOfStars.gui.icons.Icons;
-import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
-import org.openRealmOfStars.gui.infopanel.InfoPanel;
-import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
-import org.openRealmOfStars.gui.labels.IconLabel;
-import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.game.States.StarMapView;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.starMap.StarMap;
-import org.openRealmOfStars.starMap.StarMapMouseListener;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -74,15 +63,6 @@ public class Game extends JFrame implements ActionListener {
    */
   private Timer animationTimer;
 
-  /**
-   * MapPanel for drawing the star map
-   */
-  private MapPanel mapPanel;
-
-  /**
-   * Infopanel next to starMap
-   */
-  private MapInfoPanel infoPanel;
   
   /**
    * Star map for the game
@@ -95,10 +75,6 @@ public class Game extends JFrame implements ActionListener {
   private PlayerList players;
   
   
-  /**
-   * Mouse listener aka mouse handler for star map.
-   */
-  private StarMapMouseListener starMapMouseListener;
   
   /**
    * Current Game state
@@ -120,9 +96,12 @@ public class Game extends JFrame implements ActionListener {
    * Credits for the game
    */
   public CreditsView creditsView;
-  
-  public SpaceButton endTurnButton;
-  
+
+  /**
+   * StarMap view for the game
+   */
+  public StarMapView starMapView;
+
   /**
    * Contructor of Game class
    */
@@ -154,40 +133,9 @@ public class Game extends JFrame implements ActionListener {
    * Show Star Map panels
    */
   public void showStarMap() {
-    BlackPanel base = new BlackPanel();
-    mapPanel = new MapPanel(this);
-    infoPanel = new MapInfoPanel(this);
-    mapPanel.drawMap(starMap);
-    starMapMouseListener = new StarMapMouseListener(starMap,mapPanel,infoPanel);
-    mapPanel.addMouseListener(starMapMouseListener);
-    mapPanel.addMouseMotionListener(starMapMouseListener);
-    
-    InfoPanel bottomPanel = new EmptyInfoPanel();
-    bottomPanel.setTitle(players.getCurrentPlayerInfo().getEmpireName());
-    bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
-    InvisiblePanel invis = new InvisiblePanel(bottomPanel);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    IconLabel credProd = new IconLabel(invis,Icons.getIconByName(Icons.ICON_CREDIT), 
-        ": "+players.getCurrentPlayerInfo().getTotalCredits()+
-        "("+starMap.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_CREDITS,
-            players.getCurrentPlayer())+")");
-    invis.add(credProd);
-    IconLabel reseProd = new IconLabel(invis,Icons.getIconByName(Icons.ICON_RESEARCH), 
-        ": "+starMap.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
-            players.getCurrentPlayer()));
-    invis.add(reseProd);
-    bottomPanel.add(invis);
-
-    endTurnButton = new SpaceButton("End Turn "+starMap.getTurn(), GameCommands.COMMAND_END_TURN);
-    endTurnButton.addActionListener(this);
-    bottomPanel.add(endTurnButton);
-    base.setLayout(new BorderLayout());
-    base.add(mapPanel,BorderLayout.CENTER);
-    base.add(infoPanel, BorderLayout.EAST);
-    base.add(bottomPanel, BorderLayout.SOUTH);
-    
+    starMapView = new StarMapView(starMap, players, this);
     this.getContentPane().removeAll();
-    this.add(base);
+    this.add(starMapView);
     this.validate();
   }
 
@@ -251,8 +199,8 @@ public class Game extends JFrame implements ActionListener {
     case CREDITS: showCredits(); break;
     case STARMAP: showStarMap(); break;
     case PLANETVIEW: { 
-      if (starMapMouseListener.getLastClickedPlanet()!=null) {
-       showPlanetView(starMapMouseListener.getLastClickedPlanet());
+      if (starMapView.getStarMapMouseListener().getLastClickedPlanet()!=null) {
+       showPlanetView(starMapView.getStarMapMouseListener().getLastClickedPlanet());
        break;
       }
     }
@@ -270,13 +218,8 @@ public class Game extends JFrame implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent arg0) {
-    if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_ANIMATION_TIMER) && gameState == GameState.STARMAP) {
-      if (starMapMouseListener != null) {
-        starMapMouseListener.updateScrollingIfOnBorder();
-      }
-      mapPanel.drawMap(starMap);
-      mapPanel.repaint();
+    if (gameState == GameState.STARMAP) {
+      starMapView.handleActions(arg0);
     }
     if (gameState == GameState.CREDITS) {
       if (arg0.getActionCommand().equalsIgnoreCase(
@@ -291,7 +234,7 @@ public class Game extends JFrame implements ActionListener {
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_VIEW_PLANET) &&
-        starMapMouseListener.getLastClickedPlanet() != null) {
+        starMapView.getStarMapMouseListener().getLastClickedPlanet() != null) {
       changeGameState(GameState.PLANETVIEW);
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
@@ -299,11 +242,6 @@ public class Game extends JFrame implements ActionListener {
       changeGameState(GameState.STARMAP);
     }
     if (gameState == GameState.STARMAP) {
-      // Starmap
-      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
-        starMap.updateStarMapToNextTurn();
-        endTurnButton.setText("End turn "+starMap.getTurn());
-      }
       
     }
     if (gameState == GameState.PLANETVIEW) {

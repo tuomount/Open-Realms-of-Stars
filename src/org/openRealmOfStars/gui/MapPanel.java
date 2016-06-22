@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.image.BufferedImage;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import org.openRealmOfStars.mapTiles.Tile;
@@ -104,7 +103,7 @@ public class MapPanel extends JPanel {
   private int lastDrawnCenterY;
   
 
-  public MapPanel(JFrame parent) {
+  public MapPanel() {
     screen = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
     Dimension size = new Dimension(WIDTH, HEIGHT);
     this.setSize(size);

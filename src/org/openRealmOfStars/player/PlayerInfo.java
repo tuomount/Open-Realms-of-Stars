@@ -35,6 +35,11 @@ public class PlayerInfo {
    * Player's empire name
    */
   private String empireName;
+  
+  /**
+   * Total credits for player, these should not go negative
+   */
+  private int totalCredits;
 
   public SpaceRace getRace() {
     return race;
@@ -50,6 +55,14 @@ public class PlayerInfo {
 
   public void setEmpireName(String empireName) {
     this.empireName = empireName;
+  }
+
+  public int getTotalCredits() {
+    return totalCredits;
+  }
+
+  public void setTotalCredits(int totalCredits) {
+    this.totalCredits = totalCredits;
   }
   
   

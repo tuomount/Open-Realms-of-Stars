@@ -37,8 +37,14 @@ public class PlayerList {
    */
   private ArrayList<PlayerInfo> list;
   
+  /**
+   * Current player
+   */
+  private int currentPlayer;
+  
   public PlayerList() {
     list = new ArrayList<>();
+    currentPlayer = 0;
   }
   
   /**
@@ -67,6 +73,32 @@ public class PlayerList {
    */
   public int getCurrentMaxPlayers() {
     return list.size();
+  }
+  
+  /**
+   * Set currently playing player by index
+   * @param index 0 - MAX_PLAYERS
+   */
+  public void setCurrentPlayer(int index) {
+    if (index > -1 && index < list.size()) {
+      currentPlayer = index;
+    }
+  }
+  
+  /**
+   * Get current player index
+   * @return
+   */
+  public int getCurrentPlayer() {
+    return currentPlayer;
+  }
+  
+  /**
+   * Get Current player info
+   * @return PlayerInfo
+   */
+  public PlayerInfo getCurrentPlayerInfo() {
+    return getPlayerInfoByIndex(currentPlayer);
   }
   
 }

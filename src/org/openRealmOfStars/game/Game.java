@@ -16,9 +16,12 @@ import org.openRealmOfStars.game.States.PlanetView;
 import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.MapPanel;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
+import org.openRealmOfStars.gui.labels.IconLabel;
+import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace;
@@ -119,7 +122,7 @@ public class Game extends JFrame implements ActionListener {
   public CreditsView creditsView;
   
   public SpaceButton endTurnButton;
-
+  
   /**
    * Contructor of Game class
    */
@@ -160,7 +163,21 @@ public class Game extends JFrame implements ActionListener {
     mapPanel.addMouseMotionListener(starMapMouseListener);
     
     InfoPanel bottomPanel = new EmptyInfoPanel();
+    bottomPanel.setTitle(players.getCurrentPlayerInfo().getEmpireName());
     bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
+    InvisiblePanel invis = new InvisiblePanel(bottomPanel);
+    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    IconLabel credProd = new IconLabel(invis,Icons.getIconByName(Icons.ICON_CREDIT), 
+        ": "+players.getCurrentPlayerInfo().getTotalCredits()+
+        "("+starMap.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_CREDITS,
+            players.getCurrentPlayer())+")");
+    invis.add(credProd);
+    IconLabel reseProd = new IconLabel(invis,Icons.getIconByName(Icons.ICON_RESEARCH), 
+        ": "+starMap.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
+            players.getCurrentPlayer()));
+    invis.add(reseProd);
+    bottomPanel.add(invis);
+
     endTurnButton = new SpaceButton("End Turn "+starMap.getTurn(), GameCommands.COMMAND_END_TURN);
     endTurnButton.addActionListener(this);
     bottomPanel.add(endTurnButton);
@@ -227,6 +244,7 @@ public class Game extends JFrame implements ActionListener {
         players.addPlayer(info);
       }
       starMap = new StarMap(75, 75,players);
+      players.setCurrentPlayer(0);
       changeGameState(GameState.STARMAP);
       break;
     }

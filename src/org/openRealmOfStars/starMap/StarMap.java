@@ -443,6 +443,9 @@ public class StarMap {
     this.turn = turn;
   }
   
+  /**
+   * Update whole star map to next turn
+   */
   public void updateStarMapToNextTurn() {
     for (int i=0;i<planetList.size();i++) {
       Planet planet = planetList.get(i);
@@ -451,5 +454,23 @@ public class StarMap {
       }
     }
     turn=turn+1;
+  }
+  
+  /**
+   * Get total production for one player per turn for ceratin production
+   * @param production See Planet.PRODUCTION_*
+   * @param playerIndex Player index to match
+   * @return total production per turn
+   */
+  public int getTotalProductionByPlayerPerTurn(int production, int playerIndex) {
+    int result =0;
+    for (int i=0;i<planetList.size();i++) {
+      Planet planet = planetList.get(i);
+      if (planet.getPlanetPlayerInfo() != null &&
+          planet.getPlanetOwnerIndex()==playerIndex) {
+        result = result +planet.getTotalProduction(production);
+      }
+    }
+    return result;
   }
 }

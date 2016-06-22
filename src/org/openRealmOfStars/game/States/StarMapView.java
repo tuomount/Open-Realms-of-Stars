@@ -76,8 +76,17 @@ public class StarMapView extends BlackPanel {
   /**
    * End Turn Button
    */
-  public SpaceButton endTurnButton;
+  private SpaceButton endTurnButton;
 
+  /**
+   * Credit production
+   */
+  private IconLabel credProd;
+  
+  /**
+   * Research production
+   */
+  private IconLabel reseProd;
   
   public StarMapView(StarMap map, PlayerList players, ActionListener listener) {
     this.map = map;
@@ -96,12 +105,12 @@ public class StarMapView extends BlackPanel {
     bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
     InvisiblePanel invis = new InvisiblePanel(bottomPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    IconLabel credProd = new IconLabel(invis,Icons.getIconByName(Icons.ICON_CREDIT), 
-        ": "+players.getCurrentPlayerInfo().getTotalCredits()+
+    credProd = new IconLabel(invis,Icons.getIconByName(Icons.ICON_CREDIT), 
+        ": "+this.players.getCurrentPlayerInfo().getTotalCredits()+
         "("+this.map.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_CREDITS,
             this.players.getCurrentPlayer())+")");
     invis.add(credProd);
-    IconLabel reseProd = new IconLabel(invis,Icons.getIconByName(Icons.ICON_RESEARCH), 
+    reseProd = new IconLabel(invis,Icons.getIconByName(Icons.ICON_RESEARCH), 
         ": "+this.map.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
             this.players.getCurrentPlayer()));
     invis.add(reseProd);
@@ -139,6 +148,11 @@ public class StarMapView extends BlackPanel {
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
       map.updateStarMapToNextTurn();
       endTurnButton.setText("End turn "+map.getTurn());
+      credProd.setText(": "+players.getCurrentPlayerInfo().getTotalCredits()+
+        "("+this.map.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_CREDITS,
+            this.players.getCurrentPlayer())+")");
+      reseProd.setText(": "+this.map.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
+            this.players.getCurrentPlayer()));
     }
 
   }

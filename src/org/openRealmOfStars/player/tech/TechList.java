@@ -127,6 +127,36 @@ public class TechList {
   }
   
   /**
+   * Get Tech list for certain tech type and level
+   * @param type Tech Type to get the list
+   * @param level Level of tech list 1-10
+   * @return tech list as a tech array
+   */
+  public Tech[] getListForTypeAndLevel(TechType type, int level) {
+    level = level -1;
+    ArrayList<Tech> list = new ArrayList<>();
+    int index = type.getIndex();
+    for (Tech tech : techList[index][level].getList()) {
+      list.add(tech);
+    }
+    return list.toArray(new Tech[list.size()]);
+  }
+  
+  /**
+   * Is Tech list for certain level full
+   * @param type Tech Type
+   * @param level Level
+   * @return true if full or false if not
+   */
+  public boolean isTechListForLevelFull(TechType type, int level) {
+    Tech[] list = getListForTypeAndLevel(type, level);
+    String[] choices = TechFactory.getListByTechLevel(type, level);
+    if (list.length == choices.length) {
+      return true;
+    }
+    return false;
+  }
+  /**
    * Get Full Tech List
    * @return tech list as a tech array
    */

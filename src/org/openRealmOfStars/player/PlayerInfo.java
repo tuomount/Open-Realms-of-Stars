@@ -1,5 +1,10 @@
 package org.openRealmOfStars.player;
 
+import org.openRealmOfStars.player.tech.Tech;
+import org.openRealmOfStars.player.tech.TechFactory;
+import org.openRealmOfStars.player.tech.TechList;
+import org.openRealmOfStars.player.tech.TechType;
+
 /**
  * 
  * Open Realm of Stars game project
@@ -41,6 +46,107 @@ public class PlayerInfo {
    */
   private int totalCredits;
 
+  /**
+   * Technology list that player has studied or gained
+   */
+  private TechList techList;
+  
+  public PlayerInfo(SpaceRace race) {
+    setTechList(new TechList());
+    setRace(race);
+    switch (getRace()) {
+    case HUMAN:
+    case MECHIONS:
+    case CENTAURS:{
+      /*
+       * Humans, Mechions and Centaurs get 1 Combat, 1 Defense, Scout and Colony
+       */
+      Tech tech = TechFactory.createRandomTech(TechType.Combat, 1, 
+          techList.getListForTypeAndLevel(TechType.Combat, 1));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createRandomTech(TechType.Defense, 1, 
+          techList.getListForTypeAndLevel(TechType.Defense, 1));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createHullTech("Colony", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createHullTech("Scout Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      break;
+    }
+    case SPORKS:{
+      /*
+       * Sporks get 2 Combat, 1 Defense, Scout and Colony
+       */
+      Tech tech = TechFactory.createRandomTech(TechType.Combat, 1, 
+          techList.getListForTypeAndLevel(TechType.Combat, 1));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createRandomTech(TechType.Combat, 1, 
+          techList.getListForTypeAndLevel(TechType.Combat, 1));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createRandomTech(TechType.Defense, 1, 
+          techList.getListForTypeAndLevel(TechType.Defense, 1));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createHullTech("Colony", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createHullTech("Scout Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      break;
+    }
+    case GREYANS:{
+      /*
+       * Greyans get 1 Combat, 1 Defense, Scout and Colony, 1 propulsion, 1 electronics
+       */
+      Tech tech = TechFactory.createRandomTech(TechType.Combat, 1, 
+          techList.getListForTypeAndLevel(TechType.Combat, 1));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createRandomTech(TechType.Defense, 1, 
+          techList.getListForTypeAndLevel(TechType.Defense, 1));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createHullTech("Colony", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createHullTech("Scout Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createRandomTech(TechType.Propulsion, 1, 
+          techList.getListForTypeAndLevel(TechType.Propulsion, 1));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createRandomTech(TechType.Electrics, 1, 
+          techList.getListForTypeAndLevel(TechType.Electrics, 1));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      break;
+    }
+    }
+  }
+  
   public SpaceRace getRace() {
     return race;
   }
@@ -63,6 +169,14 @@ public class PlayerInfo {
 
   public void setTotalCredits(int totalCredits) {
     this.totalCredits = totalCredits;
+  }
+
+  public TechList getTechList() {
+    return techList;
+  }
+
+  public void setTechList(TechList techList) {
+    this.techList = techList;
   }
   
   

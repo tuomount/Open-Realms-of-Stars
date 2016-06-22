@@ -150,6 +150,11 @@ public class Tech {
   public void setIcon(Icon16x16 icon) {
     this.icon = icon;
   }
+
+  @Override
+  public String toString() {
+    return name;
+  }
   
   
 }

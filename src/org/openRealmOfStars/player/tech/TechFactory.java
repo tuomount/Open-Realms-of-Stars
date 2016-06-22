@@ -1,5 +1,9 @@
 package org.openRealmOfStars.player.tech;
 
+import java.util.ArrayList;
+
+import org.openRealmOfStars.utilities.DiceGenerator;
+
 /**
  * 
  * Open Realm of Stars game project
@@ -355,4 +359,142 @@ public class TechFactory {
     return null;
   }
 
+  /**
+   * Create random tech by tech type and level, but not choose those tech
+   * player already has
+   * @param type Tech Type: Combat, Defense, Hulls, Improvements, Propulsion and Electrics
+   * @param level Tech Level 1-10
+   * @param alreadyHas List of tech player has
+   * @return Tech or null if cannot find new
+   */
+  public static Tech createRandomTech(TechType type, int level, Tech[] alreadyHas) {
+    String[] alreadyHasList = new String[alreadyHas.length];
+    for (int i = 0;i<alreadyHasList.length;i++) {
+      alreadyHasList[i] = alreadyHas[i].getName();
+    }
+    String[] options = getListByTechLevel(type, level);
+    ArrayList<String> choices = new ArrayList<>();
+    for (String opt : options) {
+      boolean playerHas = false;
+      for (String has : alreadyHasList) {
+        if (has.equals(opt)) {
+          playerHas = true;
+          break;
+        }
+      }
+      if (!playerHas) {
+        choices.add(opt);
+      }
+    }
+    if (choices.size() > 0) {
+      int index = DiceGenerator.getRandom(choices.size()-1);
+      switch (type) {
+      case Combat: return createCombatTech(choices.get(index), level);
+      case Defense: return createDefenseTech(choices.get(index), level);
+      case Hulls: return createHullTech(choices.get(index), level);
+      case Improvements: return createImprovementTech(choices.get(index), level);
+      case Propulsion: return createPropulsionTech(choices.get(index), level);
+      case Electrics: return createElectronicsTech(choices.get(index), level);
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Get String list of tech by type and level
+   * @param type
+   * @param level
+   * @return String array of tech or empty array
+   */
+  public static String[] getListByTechLevel(TechType type,int level) {
+    switch (type) {
+    case Combat: 
+      switch(level) {
+      case 1 : return COMBAT_TECH_LEVEL1_NAMES;
+      case 2 : return COMBAT_TECH_LEVEL2_NAMES;
+      case 3 : return COMBAT_TECH_LEVEL3_NAMES;
+      case 4 : return COMBAT_TECH_LEVEL4_NAMES;
+      case 5 : return COMBAT_TECH_LEVEL5_NAMES;
+      case 6 : return COMBAT_TECH_LEVEL6_NAMES;
+      case 7 : return COMBAT_TECH_LEVEL7_NAMES;
+      case 8 : return COMBAT_TECH_LEVEL8_NAMES;
+      case 9 : return COMBAT_TECH_LEVEL9_NAMES;
+      case 10: return COMBAT_TECH_LEVEL10_NAMES;
+      }
+      break;
+    case Defense: 
+      switch(level) {
+      case 1 : return DEFENSE_TECH_LEVEL1_NAMES;
+      case 2 : return DEFENSE_TECH_LEVEL2_NAMES;
+      case 3 : return DEFENSE_TECH_LEVEL3_NAMES;
+      case 4 : return DEFENSE_TECH_LEVEL4_NAMES;
+      case 5 : return DEFENSE_TECH_LEVEL5_NAMES;
+      case 6 : return DEFENSE_TECH_LEVEL6_NAMES;
+      case 7 : return DEFENSE_TECH_LEVEL7_NAMES;
+      case 8 : return DEFENSE_TECH_LEVEL8_NAMES;
+      case 9 : return DEFENSE_TECH_LEVEL9_NAMES;
+      case 10: return DEFENSE_TECH_LEVEL10_NAMES;
+      }
+      break;
+    case Hulls: 
+      switch(level) {
+      case 1 : return HULL_TECH_LEVEL1_NAMES;
+      case 2 : return HULL_TECH_LEVEL2_NAMES;
+      case 3 : return HULL_TECH_LEVEL3_NAMES;
+      case 4 : return HULL_TECH_LEVEL4_NAMES;
+      case 5 : return HULL_TECH_LEVEL5_NAMES;
+      case 6 : return HULL_TECH_LEVEL6_NAMES;
+      case 7 : return HULL_TECH_LEVEL7_NAMES;
+      case 8 : return HULL_TECH_LEVEL8_NAMES;
+      case 9 : return HULL_TECH_LEVEL9_NAMES;
+      case 10: return HULL_TECH_LEVEL10_NAMES;
+      }
+      break;
+    case Improvements: 
+      switch(level) {
+      case 1 : return IMPROVEMENT_TECH_LEVEL1_NAMES;
+      case 2 : return IMPROVEMENT_TECH_LEVEL2_NAMES;
+      case 3 : return IMPROVEMENT_TECH_LEVEL3_NAMES;
+      case 4 : return IMPROVEMENT_TECH_LEVEL4_NAMES;
+      case 5 : return IMPROVEMENT_TECH_LEVEL5_NAMES;
+      case 6 : return IMPROVEMENT_TECH_LEVEL6_NAMES;
+      case 7 : return IMPROVEMENT_TECH_LEVEL7_NAMES;
+      case 8 : return IMPROVEMENT_TECH_LEVEL8_NAMES;
+      case 9 : return IMPROVEMENT_TECH_LEVEL9_NAMES;
+      case 10: return IMPROVEMENT_TECH_LEVEL10_NAMES;
+      }
+      break;
+    case Propulsion: 
+      switch(level) {
+      case 1 : return PROPULSION_TECH_LEVEL1_NAMES;
+      case 2 : return PROPULSION_TECH_LEVEL2_NAMES;
+      case 3 : return PROPULSION_TECH_LEVEL3_NAMES;
+      case 4 : return PROPULSION_TECH_LEVEL4_NAMES;
+      case 5 : return PROPULSION_TECH_LEVEL5_NAMES;
+      case 6 : return PROPULSION_TECH_LEVEL6_NAMES;
+      case 7 : return PROPULSION_TECH_LEVEL7_NAMES;
+      case 8 : return PROPULSION_TECH_LEVEL8_NAMES;
+      case 9 : return PROPULSION_TECH_LEVEL9_NAMES;
+      case 10: return PROPULSION_TECH_LEVEL10_NAMES;
+      }
+      break;
+    case Electrics: 
+      switch(level) {
+      case 1 : return ELECTRONICS_TECH_LEVEL1_NAMES;
+      case 2 : return ELECTRONICS_TECH_LEVEL2_NAMES;
+      case 3 : return ELECTRONICS_TECH_LEVEL3_NAMES;
+      case 4 : return ELECTRONICS_TECH_LEVEL4_NAMES;
+      case 5 : return ELECTRONICS_TECH_LEVEL5_NAMES;
+      case 6 : return ELECTRONICS_TECH_LEVEL6_NAMES;
+      case 7 : return ELECTRONICS_TECH_LEVEL7_NAMES;
+      case 8 : return ELECTRONICS_TECH_LEVEL8_NAMES;
+      case 9 : return ELECTRONICS_TECH_LEVEL9_NAMES;
+      case 10: return ELECTRONICS_TECH_LEVEL10_NAMES;
+      }
+      break;
+    }
+    return new String[0];
+  }
+  
+  
 }

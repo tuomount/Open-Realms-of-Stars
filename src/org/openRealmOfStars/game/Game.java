@@ -186,8 +186,7 @@ public class Game extends JFrame implements ActionListener {
     case NEW_GAME: { 
       players = new PlayerList();
       for (int i=0;i<PlayerList.MAX_PLAYERS;i++) {
-        PlayerInfo info = new PlayerInfo();
-        info.setRace(SpaceRace.getRandomRace());
+        PlayerInfo info = new PlayerInfo(SpaceRace.getRandomRace());
         info.setEmpireName("Empire of "+info.getRace().getName());
         players.addPlayer(info);
       }

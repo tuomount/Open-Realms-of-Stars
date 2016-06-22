@@ -26,11 +26,27 @@ import org.openRealmOfStars.utilities.DiceGenerator;
  */
 public enum SpaceRace {
 
+  /**
+   * Humans are about average in everything.
+   */
   HUMAN(0,"Humans","Humans are about average in everything."),
+  /**
+   * Mechanical beings whom do not eat food. Each now population must be built.
+   */
   MECHIONS(1,"Mechions","Mechanical beings whom do not eat food."
       + " Each now population must be built."),
+  /**
+   * Aggressive and warmongering spieces.
+   */
   SPORKS(2,"Sporks","Aggressive and warmongering spieces."),
+  /**
+   * Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers.
+   */
   GREYANS(3,"Greyans","Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers."),
+  /**
+   * Bipedal humanoid creatures which are big, about 5 meters tall. Due their
+     enormous size their space ships are must more rigid. Centaurs need more food to survive.
+   */
   CENTAURS(4,"Centaurs","Bipedal humanoid creatures which are big, about 5 meters tall. Due their"
       + "enormous size their space ships are must more rigid. Centaurs need more food to survive.");
     

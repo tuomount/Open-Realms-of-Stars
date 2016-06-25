@@ -457,7 +457,7 @@ public class StarMap {
   }
   
   /**
-   * Get total production for one player per turn for ceratin production
+   * Get total production for one player per turn for certain production
    * @param production See Planet.PRODUCTION_*
    * @param playerIndex Player index to match
    * @return total production per turn

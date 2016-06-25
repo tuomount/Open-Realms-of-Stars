@@ -11,6 +11,7 @@ import javax.swing.UIManager;
 import org.openRealmOfStars.game.States.CreditsView;
 import org.openRealmOfStars.game.States.MainMenu;
 import org.openRealmOfStars.game.States.PlanetView;
+import org.openRealmOfStars.game.States.ResearchView;
 import org.openRealmOfStars.game.States.StarMapView;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
@@ -101,6 +102,11 @@ public class Game extends JFrame implements ActionListener {
    * StarMap view for the game
    */
   public StarMapView starMapView;
+  
+  /**
+   * Research view for the game
+   */
+  public ResearchView researchView;
 
   /**
    * Contructor of Game class
@@ -136,6 +142,18 @@ public class Game extends JFrame implements ActionListener {
     starMapView = new StarMapView(starMap, players, this);
     this.getContentPane().removeAll();
     this.add(starMapView);
+    this.validate();
+  }
+
+  /**
+   * Show Research panels
+   */
+  public void showResearch() {
+    researchView = new ResearchView(players.getCurrentPlayerInfo(),
+        starMap.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
+            players.getCurrentPlayer()), this);
+    this.getContentPane().removeAll();
+    this.add(researchView);
     this.validate();
   }
 
@@ -197,6 +215,7 @@ public class Game extends JFrame implements ActionListener {
     }
     case CREDITS: showCredits(); break;
     case STARMAP: showStarMap(); break;
+    case RESEARCHVIEW: showResearch(); break;
     case PLANETVIEW: { 
       if (starMapView.getStarMapMouseListener().getLastClickedPlanet()!=null) {
        showPlanetView(starMapView.getStarMapMouseListener().getLastClickedPlanet());
@@ -239,6 +258,10 @@ public class Game extends JFrame implements ActionListener {
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_VIEW_STARMAP)) {
       changeGameState(GameState.STARMAP);
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_VIEW_RESEARCH)) {
+      changeGameState(GameState.RESEARCHVIEW);
     }
     if (gameState == GameState.STARMAP) {
       

@@ -48,7 +48,12 @@ public class GameCommands {
    * View Star map
    */
   public static final String COMMAND_VIEW_STARMAP = "ViewStarMap";
-  
+
+  /**
+   * View Research view
+   */
+  public static final String COMMAND_VIEW_RESEARCH = "ViewResearch";
+
   /**
    * Minus mine
    */
@@ -92,6 +97,56 @@ public class GameCommands {
    * Plus Tax
    */
   public static final String COMMAND_PLUS_TAX = "PlusTax";
+  
+  /**
+   * Minus Combat research
+   */
+  public static final String COMMAND_MINUS_COMBAT_RESEARCH = "MinusCombatRese";
+  /**
+   * Plus Combat research
+   */
+  public static final String COMMAND_PLUS_COMBAT_RESEARCH = "PlusCombatRese";
+  /**
+   * Minus Defense research
+   */
+  public static final String COMMAND_MINUS_DEFENSE_RESEARCH = "MinusDefenseRese";
+  /**
+   * Plus Defense research
+   */
+  public static final String COMMAND_PLUS_DEFENSE_RESEARCH = "PlusDefenseRese";
+  /**
+   * Minus Hull research
+   */
+  public static final String COMMAND_MINUS_HULL_RESEARCH = "MinusHullRese";
+  /**
+   * Plus Hull research
+   */
+  public static final String COMMAND_PLUS_HULL_RESEARCH = "PlusHullRese";
+  /**
+   * Minus Improvement research
+   */
+  public static final String COMMAND_MINUS_IMPROVEMENT_RESEARCH = "MinusImprovementRese";
+  /**
+   * Plus Improvement research
+   */
+  public static final String COMMAND_PLUS_IMPROVEMENT_RESEARCH = "PlusImprovementRese";
+  /**
+   * Minus Propulsion research
+   */
+  public static final String COMMAND_MINUS_PROPULSION_RESEARCH = "MinusPropulsionRese";
+  /**
+   * Plus Propulsion research
+   */
+  public static final String COMMAND_PLUS_PROPULSION_RESEARCH = "PlusPropulsionRese";
+  /**
+   * Minus Electronics research
+   */
+  public static final String COMMAND_MINUS_ELECTRONICS_RESEARCH = "MinusElectronicsRese";
+  /**
+   * Plus Electronics research
+   */
+  public static final String COMMAND_PLUS_ELECTRONICS_RESEARCH = "PlusElectronicsRese";
+
   /**
    * Production list changed in planet
    */

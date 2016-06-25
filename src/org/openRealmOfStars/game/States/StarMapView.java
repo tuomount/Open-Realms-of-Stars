@@ -1,9 +1,11 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.game.GameCommands;
@@ -79,6 +81,11 @@ public class StarMapView extends BlackPanel {
   private SpaceButton endTurnButton;
 
   /**
+   * View research Button
+   */
+  private SpaceButton viewResearchButton;
+
+  /**
    * Credit production
    */
   private IconLabel credProd;
@@ -115,10 +122,20 @@ public class StarMapView extends BlackPanel {
             this.players.getCurrentPlayer()));
     invis.add(reseProd);
     bottomPanel.add(invis);
+    bottomPanel.add(Box.createRigidArea(new Dimension(10,5)));
 
-    endTurnButton = new SpaceButton("End Turn "+this.map.getTurn(), GameCommands.COMMAND_END_TURN);
+    
+    endTurnButton = new SpaceButton("End Turn "+this.map.getTurn(), 
+        GameCommands.COMMAND_END_TURN);
     endTurnButton.addActionListener(listener);
     bottomPanel.add(endTurnButton);
+    bottomPanel.add(Box.createRigidArea(new Dimension(10,5)));
+    
+    viewResearchButton = new SpaceButton("Research",
+        GameCommands.COMMAND_VIEW_RESEARCH);
+    viewResearchButton.addActionListener(listener);
+    bottomPanel.add(viewResearchButton);
+    
     base.setLayout(new BorderLayout());
     base.add(mapPanel,BorderLayout.CENTER);
     base.add(infoPanel, BorderLayout.EAST);

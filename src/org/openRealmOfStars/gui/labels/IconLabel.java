@@ -69,7 +69,7 @@ public class IconLabel extends JLabel {
   /**
    * Create Icon label with transparency
    * @param parent Parent component
-   * @param icon Icon to draw
+   * @param icon Icon to draw, if null then not draw
    * @param text Text to show
    */
   public IconLabel(Component parent, Icon16x16 icon, String text) {
@@ -79,10 +79,15 @@ public class IconLabel extends JLabel {
     this.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     this.setFont(GuiStatics.getFontCubellan());
     Dimension size = this.getPreferredSize();
-    size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)+this.icon.getIcon().getWidth()+10;
-    size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), text);
-    if (size.height < this.icon.getIcon().getHeight()+2 ) {
-      size.height = this.icon.getIcon().getHeight()+2;
+    if (icon != null) {
+      size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)+this.icon.getIcon().getWidth()+10;
+      size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), text);
+      if (size.height < this.icon.getIcon().getHeight()+2 ) {
+        size.height = this.icon.getIcon().getHeight()+2;
+      }
+    } else {
+      size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)+10;
+      size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), text);
     }
     this.setMinimumSize(size);
     this.setPreferredSize(size);
@@ -104,10 +109,16 @@ public class IconLabel extends JLabel {
     parent.repaint();
     int x = 0;
     int y = 0;
-    g.drawImage(icon.getIcon(), x,y, null);
+    if (icon != null) {
+      g.drawImage(icon.getIcon(), x,y, null);
+    }
     g.setFont(this.getFont());
     g.setColor(this.getForeground());
-    g.drawString(this.getText(),x+icon.getIcon().getWidth()+5, y+10);
+    if (icon != null) {
+      g.drawString(this.getText(),x+icon.getIcon().getWidth()+5, y+10);
+    } else {
+      g.drawString(this.getText(),x+5, y+10);
+    }
   }
 
 }

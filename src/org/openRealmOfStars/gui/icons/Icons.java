@@ -158,17 +158,17 @@ public class Icons {
     addIcon(icon);
     icon = new Icon16x16(image, 6, 1,ICON_TAX);
     addIcon(icon);
-    icon = new Icon16x16(image, 0, 0,ICON_COMBAT_TECH);
+    icon = new Icon16x16(image, 0, 2,ICON_COMBAT_TECH);
     addIcon(icon);
-    icon = new Icon16x16(image, 0, 1,ICON_DEFENSE_TECH);
+    icon = new Icon16x16(image, 1, 2,ICON_DEFENSE_TECH);
     addIcon(icon);
-    icon = new Icon16x16(image, 0, 2,ICON_HULL_TECH);
+    icon = new Icon16x16(image, 2, 2,ICON_HULL_TECH);
     addIcon(icon);
-    icon = new Icon16x16(image, 0, 3,ICON_IMPROVEMENT_TECH);
+    icon = new Icon16x16(image, 3, 2,ICON_IMPROVEMENT_TECH);
     addIcon(icon);
-    icon = new Icon16x16(image, 0, 4,ICON_PROPULSION_TECH);
+    icon = new Icon16x16(image, 4, 2,ICON_PROPULSION_TECH);
     addIcon(icon);
-    icon = new Icon16x16(image, 0, 5,ICON_ELECTRONICS_TECH);
+    icon = new Icon16x16(image, 5, 2,ICON_ELECTRONICS_TECH);
     addIcon(icon);
   }
   

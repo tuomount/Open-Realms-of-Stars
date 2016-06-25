@@ -48,6 +48,12 @@ public class Icons {
   public static final String ICON_METAL_ORE = "MetalOre";
   public static final String ICON_MAINTENANCE = "Maintenance";
   public static final String ICON_TAX = "Tax";
+  public static final String ICON_COMBAT_TECH = "CombatTech";
+  public static final String ICON_DEFENSE_TECH = "DefenseTech";
+  public static final String ICON_HULL_TECH = "HullTech";
+  public static final String ICON_IMPROVEMENT_TECH = "ImprovementTech";
+  public static final String ICON_PROPULSION_TECH = "PropulsionTech";
+  public static final String ICON_ELECTRONICS_TECH = "ElectronicsTech";
   
   /**
    * List of Icon
@@ -151,6 +157,18 @@ public class Icons {
     icon = new Icon16x16(image, 5, 1,ICON_MAINTENANCE);
     addIcon(icon);
     icon = new Icon16x16(image, 6, 1,ICON_TAX);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 0,ICON_COMBAT_TECH);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 1,ICON_DEFENSE_TECH);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 2,ICON_HULL_TECH);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 3,ICON_IMPROVEMENT_TECH);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 4,ICON_PROPULSION_TECH);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 5,ICON_ELECTRONICS_TECH);
     addIcon(icon);
   }
   

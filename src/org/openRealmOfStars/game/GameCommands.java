@@ -148,6 +148,31 @@ public class GameCommands {
   public static final String COMMAND_PLUS_ELECTRONICS_RESEARCH = "PlusElectronicsRese";
 
   /**
+   * Upgrade combat
+   */
+  public static final String COMMAND_UPGRADE_COMBAT = "UpgradeCombat";
+  /**
+   * Upgrade defense
+   */
+  public static final String COMMAND_UPGRADE_DEFENSE = "UpgradeDefense";
+  /**
+   * Upgrade hull
+   */
+  public static final String COMMAND_UPGRADE_HULL = "UpgradeHull";
+  /**
+   * Upgrade improvement
+   */
+  public static final String COMMAND_UPGRADE_IMPROVEMENT = "UpgradeImprovement";
+  /**
+   * Upgrade propulsion
+   */
+  public static final String COMMAND_UPGRADE_PROPULSION = "UpgradePropulsion";
+  /**
+   * Upgrade electronics
+   */
+  public static final String COMMAND_UPGRADE_ELECTRONICS = "UpgradeElectronics";
+
+  /**
    * Production list changed in planet
    */
   public static final String COMMAND_PRODUCTION_LIST = "ProductionList";

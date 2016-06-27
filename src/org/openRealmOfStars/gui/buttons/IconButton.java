@@ -35,7 +35,8 @@ import org.openRealmOfStars.gui.icons.Icon16x16;
  * along with this program; if not, see http://www.gnu.org/licenses/
  * 
  * 
- * Class for handling IconButton
+ * Class for handling IconButton. Separate images for normal, pressing
+ * and disabled image.
  *
  */
 
@@ -54,6 +55,11 @@ public class IconButton extends JButton {
    * Icon when pressed
    */
   private BufferedImage pressedImage;
+  /**
+   * Icon when disabled
+   */
+  private BufferedImage disabledImage;
+
   /**
    * Is Border present on button
    */
@@ -122,9 +128,9 @@ public class IconButton extends JButton {
       y = y -getPressedImage().getHeight()/2;
       if(isBorder()) {
         this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));        
-        g.drawImage(getPressedImage(), x+2,y+2, null);        
+        g.drawImage(getDisabledImage(), x+2,y+2, null);        
       } else {
-        g.drawImage(getPressedImage(), x,y, null);
+        g.drawImage(getDisabledImage(), x,y, null);
       }
      
     }
@@ -167,6 +173,23 @@ public class IconButton extends JButton {
 
   public boolean isBorder() {
     return border;
+  }
+
+
+
+
+  public BufferedImage getDisabledImage() {
+    if (disabledImage == null) {
+      return pressedImage;
+    } 
+    return disabledImage;
+  }
+
+
+
+
+  public void setDisabledImage(BufferedImage disabledImage) {
+    this.disabledImage = disabledImage;
   }
   
 }

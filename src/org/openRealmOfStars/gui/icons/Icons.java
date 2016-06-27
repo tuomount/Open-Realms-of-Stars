@@ -54,6 +54,10 @@ public class Icons {
   public static final String ICON_IMPROVEMENT_TECH = "ImprovementTech";
   public static final String ICON_PROPULSION_TECH = "PropulsionTech";
   public static final String ICON_ELECTRONICS_TECH = "ElectronicsTech";
+  public static final String ICON_ARROWUP = "ArrowUp";
+  public static final String ICON_ARROWUP_PRESSED = "ArrowUp_Pressed";
+  public static final String ICON_ARROWUP_DISABLED = "ArrowUp_Disabled";
+  public static final String ICON_EMPTY = "Empty";
   
   /**
    * List of Icon
@@ -169,6 +173,14 @@ public class Icons {
     icon = new Icon16x16(image, 4, 2,ICON_PROPULSION_TECH);
     addIcon(icon);
     icon = new Icon16x16(image, 5, 2,ICON_ELECTRONICS_TECH);
+    addIcon(icon);
+    icon = new Icon16x16(image, 6, 2,ICON_ARROWUP);
+    addIcon(icon);
+    icon = new Icon16x16(image, 7, 2,ICON_ARROWUP_PRESSED);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 3,ICON_ARROWUP_DISABLED);
+    addIcon(icon);
+    icon = new Icon16x16(image, 1, 3,ICON_EMPTY);
     addIcon(icon);
   }
   

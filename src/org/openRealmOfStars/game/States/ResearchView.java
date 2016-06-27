@@ -16,6 +16,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.panels.ResearchTechPanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 
@@ -59,27 +60,27 @@ public class ResearchView extends BlackPanel {
   /**
    * Combat Research panel
    */
-  private WorkerProductionPanel combatRese;
+  private ResearchTechPanel combatRese;
   /**
    * Defense Research panel
    */
-  private WorkerProductionPanel defenseRese;
+  private ResearchTechPanel defenseRese;
   /**
    * Hull Research panel
    */
-  private WorkerProductionPanel hullRese;
+  private ResearchTechPanel hullRese;
   /**
    * Improvement Research panel
    */
-  private WorkerProductionPanel improvementRese;
+  private ResearchTechPanel improvementRese;
   /**
    * Propulsion Research panel
    */
-  private WorkerProductionPanel propulsionRese;
+  private ResearchTechPanel propulsionRese;
   /**
    * Electronics Research panel
    */
-  private WorkerProductionPanel electronicsRese;
+  private ResearchTechPanel electronicsRese;
   
   /**
    * Create new research for player
@@ -100,45 +101,51 @@ public class ResearchView extends BlackPanel {
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(label);
     invis.add(Box.createRigidArea(new Dimension(10,15)));
-    combatRese = new WorkerProductionPanel(invis, 
+    combatRese = new ResearchTechPanel(invis, 
         GameCommands.COMMAND_MINUS_COMBAT_RESEARCH,
         GameCommands.COMMAND_PLUS_COMBAT_RESEARCH, Icons.ICON_COMBAT_TECH,
-        "Combat 100%", "Focus on combat technology", listener);
+        "Combat 100%", "Focus on combat technology","Level:1 (1/6)",
+        GameCommands.COMMAND_UPGRADE_COMBAT, listener);
     combatRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(combatRese);
     invis.add(Box.createRigidArea(new Dimension(10,10)));
-    defenseRese = new WorkerProductionPanel(invis, 
+    defenseRese = new ResearchTechPanel(invis, 
         GameCommands.COMMAND_MINUS_DEFENSE_RESEARCH,
         GameCommands.COMMAND_PLUS_DEFENSE_RESEARCH, Icons.ICON_DEFENSE_TECH,
-        "Defense 100%", "Focus on defense technology", listener);
+        "Defense 100%", "Focus on defense technology","Level:1 (1/6)",
+        GameCommands.COMMAND_UPGRADE_DEFENSE, listener);
     defenseRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(defenseRese);
     invis.add(Box.createRigidArea(new Dimension(10,10)));
-    hullRese = new WorkerProductionPanel(invis, 
+    hullRese = new ResearchTechPanel(invis, 
         GameCommands.COMMAND_MINUS_HULL_RESEARCH,
         GameCommands.COMMAND_PLUS_HULL_RESEARCH, Icons.ICON_HULL_TECH,
-        "Hull 100%", "Focus on hull technology", listener);
+        "Hull 100%", "Focus on hull technology", "Level:1 (1/6)",
+        GameCommands.COMMAND_UPGRADE_HULL, listener);
     hullRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(hullRese);
     invis.add(Box.createRigidArea(new Dimension(10,10)));
-    improvementRese = new WorkerProductionPanel(invis, 
+    improvementRese = new ResearchTechPanel(invis, 
         GameCommands.COMMAND_MINUS_IMPROVEMENT_RESEARCH,
         GameCommands.COMMAND_PLUS_IMPROVEMENT_RESEARCH, Icons.ICON_IMPROVEMENT_TECH,
-        "Planetary improvement 100%", "Focus on planetary improvement technology", listener);
+        "Planetary improvement 100%", "Focus on planetary improvement technology",
+        "Level:1 (1/6)",GameCommands.COMMAND_UPGRADE_IMPROVEMENT, listener);
     improvementRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(improvementRese);
     invis.add(Box.createRigidArea(new Dimension(10,10)));
-    propulsionRese = new WorkerProductionPanel(invis, 
+    propulsionRese = new ResearchTechPanel(invis, 
         GameCommands.COMMAND_MINUS_PROPULSION_RESEARCH,
         GameCommands.COMMAND_PLUS_PROPULSION_RESEARCH, Icons.ICON_PROPULSION_TECH,
-        "Propulsion 100%", "Focus on propulsion technology", listener);
+        "Propulsion 100%", "Focus on propulsion technology", "Level:1 (1/6)",
+        GameCommands.COMMAND_UPGRADE_PROPULSION, listener);
     propulsionRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(propulsionRese);
     invis.add(Box.createRigidArea(new Dimension(10,10)));
-    electronicsRese = new WorkerProductionPanel(invis, 
+    electronicsRese = new ResearchTechPanel(invis, 
         GameCommands.COMMAND_MINUS_ELECTRONICS_RESEARCH,
         GameCommands.COMMAND_PLUS_ELECTRONICS_RESEARCH, Icons.ICON_ELECTRONICS_TECH,
-        "Electronics 100%", "Focus on electronics technology", listener);
+        "Electronics 100%", "Focus on electronics technology", "Level:1 (1/6)",
+        GameCommands.COMMAND_UPGRADE_ELECTRONICS, listener);
     electronicsRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(electronicsRese);
     invis.add(Box.createRigidArea(new Dimension(10,10)));

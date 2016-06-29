@@ -45,6 +45,23 @@ public enum TechType {
     }
     return 0;
   }
+  
+  /**
+   * Return Tech Type by index
+   * @param index This must be between 0-5
+   * @return Tech Type
+   */
+  public static TechType getTypeByIndex(int index) {
+    switch (index) {
+    case 0: return TechType.Combat;
+    case 1: return TechType.Defense;
+    case 2: return TechType.Hulls;
+    case 3: return TechType.Improvements;
+    case 4: return TechType.Propulsion;
+    case 5: return TechType.Electrics;
+    }
+    return TechType.Combat;
+  }
 
   @Override
   public String toString() {

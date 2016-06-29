@@ -263,9 +263,6 @@ public class Game extends JFrame implements ActionListener {
         GameCommands.COMMAND_VIEW_RESEARCH)) {
       changeGameState(GameState.RESEARCHVIEW);
     }
-    if (gameState == GameState.STARMAP) {
-      
-    }
     if (gameState == GameState.RESEARCHVIEW) {
       researchView.handleAction(arg0);
     }

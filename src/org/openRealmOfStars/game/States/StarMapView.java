@@ -18,6 +18,7 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
@@ -170,6 +171,13 @@ public class StarMapView extends BlackPanel {
             this.players.getCurrentPlayer())+")");
       reseProd.setText(": "+this.map.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
             this.players.getCurrentPlayer()));
+           
+     for (int i=0;i<players.getCurrentMaxPlayers();i++) {
+       PlayerInfo info = players.getPlayerInfoByIndex(i);
+       info.getTechList().updateResearchPointByTurn(map.
+           getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH, i));
+     }
+
     }
 
   }

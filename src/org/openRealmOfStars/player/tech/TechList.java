@@ -293,4 +293,25 @@ public class TechList {
   public double getTechResearchPoints(TechType type) {
     return techResearchPoint[type.getIndex()];
   }
+  
+  /**
+   * Update Research points by turn. This will also grant a new technology
+   * @param totalResearchPoints player makes per turn
+   */
+  public void updateResearchPointByTurn(int totalResearchPoints) {
+    for (int i=0;i<techFocus.length;i++) {
+      techResearchPoint[i] = techResearchPoint[i] + techFocus[i]*totalResearchPoints/100.0;
+      if (techResearchPoint[i] >= TechFactory.getTechCost(techLevels[i])) {
+        techResearchPoint[i] = techResearchPoint[i]-TechFactory.getTechCost(techLevels[i]);
+        TechType type = TechType.getTypeByIndex(i);
+        int lvl = techLevels[i];
+        Tech tech = TechFactory.createRandomTech(type, lvl,getListForTypeAndLevel(type, lvl));
+        addTech(tech);
+        if (isTechListForLevelFull(type, lvl)) {
+          techLevels[i] = lvl +1;
+        }
+      }
+    }
+
+  }
 }

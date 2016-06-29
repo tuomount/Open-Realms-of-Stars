@@ -101,6 +101,7 @@ public class ResearchTechPanel extends InvisiblePanel {
         Icons.getIconByName(Icons.ICON_ARROWUP_PRESSED),false,actionUpgrade,this);
     btnUpgrade.setDisabledImage(Icons.getIconByName(
         Icons.ICON_ARROWUP_DISABLED).getIcon());
+    btnUpgrade.addActionListener(listener);
     btnUpgrade.setEnabled(false);
     
     this.add(btnUpgrade);

@@ -197,6 +197,15 @@ public class ResearchView extends BlackPanel {
         updatePanel();
       }
     }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE_COMBAT)) {
+      // Assuming that upgrade button is disabled so no need to make check here
+      int lvl = player.getTechList().getTechLevel(TechType.Combat);
+      lvl = lvl +1;
+      player.getTechList().setTechLevel(TechType.Combat, lvl);
+      combatRese.setEnableUpgradeButton(false);
+      updatePanel();
+    }
+
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PLUS_DEFENSE_RESEARCH)) {
       int value = player.getTechList().getTechFocus(TechType.Defense);
       if (value <= 100-TechList.FINE_TUNE_VALUE) {
@@ -213,6 +222,15 @@ public class ResearchView extends BlackPanel {
         updatePanel();
       }
     }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE_DEFENSE)) {
+      // Assuming that upgrade button is disabled so no need to make check here
+      int lvl = player.getTechList().getTechLevel(TechType.Defense);
+      lvl = lvl +1;
+      player.getTechList().setTechLevel(TechType.Defense, lvl);
+      defenseRese.setEnableUpgradeButton(false);
+      updatePanel();
+    }
+
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PLUS_HULL_RESEARCH)) {
       int value = player.getTechList().getTechFocus(TechType.Hulls);
       if (value <= 100-TechList.FINE_TUNE_VALUE) {
@@ -229,6 +247,15 @@ public class ResearchView extends BlackPanel {
         updatePanel();
       }
     }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE_HULL)) {
+      // Assuming that upgrade button is disabled so no need to make check here
+      int lvl = player.getTechList().getTechLevel(TechType.Hulls);
+      lvl = lvl +1;
+      player.getTechList().setTechLevel(TechType.Hulls, lvl);
+      hullRese.setEnableUpgradeButton(false);
+      updatePanel();
+    }
+    
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PLUS_IMPROVEMENT_RESEARCH)) {
       int value = player.getTechList().getTechFocus(TechType.Improvements);
       if (value <= 100-TechList.FINE_TUNE_VALUE) {
@@ -245,6 +272,15 @@ public class ResearchView extends BlackPanel {
         updatePanel();
       }
     }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE_IMPROVEMENT)) {
+      // Assuming that upgrade button is disabled so no need to make check here
+      int lvl = player.getTechList().getTechLevel(TechType.Improvements);
+      lvl = lvl +1;
+      player.getTechList().setTechLevel(TechType.Improvements, lvl);
+      improvementRese.setEnableUpgradeButton(false);
+      updatePanel();
+    }
+
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PLUS_PROPULSION_RESEARCH)) {
       int value = player.getTechList().getTechFocus(TechType.Propulsion);
       if (value <= 100-TechList.FINE_TUNE_VALUE) {
@@ -261,6 +297,15 @@ public class ResearchView extends BlackPanel {
         updatePanel();
       }
     }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE_PROPULSION)) {
+      // Assuming that upgrade button is disabled so no need to make check here
+      int lvl = player.getTechList().getTechLevel(TechType.Propulsion);
+      lvl = lvl +1;
+      player.getTechList().setTechLevel(TechType.Propulsion, lvl);
+      propulsionRese.setEnableUpgradeButton(false);
+      updatePanel();
+    }
+
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PLUS_ELECTRONICS_RESEARCH)) {
       int value = player.getTechList().getTechFocus(TechType.Electrics);
       if (value <= 100-TechList.FINE_TUNE_VALUE) {
@@ -277,7 +322,15 @@ public class ResearchView extends BlackPanel {
         updatePanel();
       }
     }
-    
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE_ELECTRONICS)) {
+      // Assuming that upgrade button is disabled so no need to make check here
+      int lvl = player.getTechList().getTechLevel(TechType.Electrics);
+      lvl = lvl +1;
+      player.getTechList().setTechLevel(TechType.Electrics, lvl);
+      electronicsRese.setEnableUpgradeButton(false);
+      updatePanel();
+    }
+
   }
 
   

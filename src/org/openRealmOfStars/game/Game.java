@@ -266,6 +266,9 @@ public class Game extends JFrame implements ActionListener {
     if (gameState == GameState.STARMAP) {
       
     }
+    if (gameState == GameState.RESEARCHVIEW) {
+      researchView.handleAction(arg0);
+    }
     if (gameState == GameState.PLANETVIEW) {
       // Planet view
       planetView.handleAction(arg0);

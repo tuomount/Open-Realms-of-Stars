@@ -198,7 +198,7 @@ public class TechList {
   /**
    * Fine tune value for tech focus
    */
-  private static final int FINE_TUNE_VALUE = 4;
+  public static final int FINE_TUNE_VALUE = 4;
   /**
    * Tries to settle so that tech focus about evenly distributed
    * @param type Tech type not used for in settling
@@ -221,7 +221,7 @@ public class TechList {
               techFocus[i] = techFocus[i]+redis;
               redis = 0;
             }
-          }
+          }          
         }
         if (i != type.getIndex() && redis < 0) {
           if (techFocus[i] > average) {
@@ -236,7 +236,31 @@ public class TechList {
         }
 
       }
-    }
+      for (int i=0;i<TechType.values().length;i++) {
+        if (i != type.getIndex() && redis > 0) {
+          if (techFocus[i] == average) {
+            if (redis > FINE_TUNE_VALUE) {
+              techFocus[i] = techFocus[i]+FINE_TUNE_VALUE;
+              redis = redis -FINE_TUNE_VALUE;
+            } else {
+              techFocus[i] = techFocus[i]+redis;
+              redis = 0;
+            }
+          }          
+        }
+        if (i != type.getIndex() && redis < 0) {
+          if (techFocus[i] == average) {
+            if (redis < -FINE_TUNE_VALUE) {
+              techFocus[i] = techFocus[i]-FINE_TUNE_VALUE;
+              redis = redis +FINE_TUNE_VALUE;
+            } else {
+              techFocus[i] = techFocus[i]+redis;
+              redis = 0;
+            }
+          }
+        }
+
+      }    }
   }
   
   /**

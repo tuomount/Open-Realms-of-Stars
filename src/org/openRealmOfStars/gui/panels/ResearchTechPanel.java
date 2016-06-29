@@ -148,7 +148,7 @@ public class ResearchTechPanel extends InvisiblePanel {
    * @param text Text for button
    */
   public void setUpgadeBtnText(String text) {
-    btnUpgrade.setText(text);
+    lvlLabel.setText(text);
   }
 
   /**

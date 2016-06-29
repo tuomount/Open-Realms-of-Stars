@@ -17,8 +17,9 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.ResearchTechPanel;
-import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.tech.TechFactory;
+import org.openRealmOfStars.player.tech.TechType;
 
 /**
  * 
@@ -162,7 +163,7 @@ public class ResearchView extends BlackPanel {
     btn.addActionListener(listener);
     bottomPanel.add(btn,BorderLayout.CENTER);
     
-    
+    updatePanel();
     // Add panels to base
     this.add(bottomPanel,BorderLayout.SOUTH);
 
@@ -174,6 +175,69 @@ public class ResearchView extends BlackPanel {
    */
   public void handleAction(ActionEvent arg0) {
   }
+
+  
+  public void updatePanel() {
+    int focus = player.getTechList().getTechFocus(TechType.Combat);
+    int level = player.getTechList().getTechLevel(TechType.Combat);
+    int subLevel = player.getTechList().getListForTypeAndLevel(TechType.Combat, level).length;
+    int maxSubLevel = TechFactory.getListByTechLevel(TechType.Combat, level).length;
+    combatRese.setText(TechType.Combat.toString()+" "+focus+"%");
+    combatRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
+    if (subLevel >= Math.ceil(maxSubLevel / 2.0)) {
+      combatRese.setEnableUpgradeButton(true);
+    }
+    
+    focus = player.getTechList().getTechFocus(TechType.Defense);
+    level = player.getTechList().getTechLevel(TechType.Defense);
+    subLevel = player.getTechList().getListForTypeAndLevel(TechType.Defense, level).length;
+    maxSubLevel = TechFactory.getListByTechLevel(TechType.Defense, level).length;
+    defenseRese.setText(TechType.Defense.toString()+" "+focus+"%");
+    defenseRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
+    if (subLevel >= Math.ceil(maxSubLevel / 2.0)) {
+      defenseRese.setEnableUpgradeButton(true);
+    }
+
+    focus = player.getTechList().getTechFocus(TechType.Hulls);
+    level = player.getTechList().getTechLevel(TechType.Hulls);
+    subLevel = player.getTechList().getListForTypeAndLevel(TechType.Hulls, level).length;
+    maxSubLevel = TechFactory.getListByTechLevel(TechType.Hulls, level).length;
+    hullRese.setText(TechType.Hulls.toString()+" "+focus+"%");
+    hullRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
+    if (subLevel >= Math.ceil(maxSubLevel / 2.0)) {
+      hullRese.setEnableUpgradeButton(true);
+    }
+
+    focus = player.getTechList().getTechFocus(TechType.Improvements);
+    level = player.getTechList().getTechLevel(TechType.Improvements);
+    subLevel = player.getTechList().getListForTypeAndLevel(TechType.Improvements, level).length;
+    maxSubLevel = TechFactory.getListByTechLevel(TechType.Improvements, level).length;
+    improvementRese.setText(TechType.Improvements.toString()+" "+focus+"%");
+    improvementRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
+    if (subLevel >= Math.ceil(maxSubLevel / 2.0)) {
+      improvementRese.setEnableUpgradeButton(true);
+    }
+
+    focus = player.getTechList().getTechFocus(TechType.Propulsion);
+    level = player.getTechList().getTechLevel(TechType.Propulsion);
+    subLevel = player.getTechList().getListForTypeAndLevel(TechType.Propulsion, level).length;
+    maxSubLevel = TechFactory.getListByTechLevel(TechType.Propulsion, level).length;
+    propulsionRese.setText(TechType.Propulsion.toString()+" "+focus+"%");
+    propulsionRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
+    if (subLevel >= Math.ceil(maxSubLevel / 2.0)) {
+      propulsionRese.setEnableUpgradeButton(true);
+    }
+
+    focus = player.getTechList().getTechFocus(TechType.Electrics);
+    level = player.getTechList().getTechLevel(TechType.Electrics);
+    subLevel = player.getTechList().getListForTypeAndLevel(TechType.Electrics, level).length;
+    maxSubLevel = TechFactory.getListByTechLevel(TechType.Electrics, level).length;
+    electronicsRese.setText(TechType.Electrics.toString()+" "+focus+"%");
+    electronicsRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
+    if (subLevel >= Math.ceil(maxSubLevel / 2.0)) {
+      electronicsRese.setEnableUpgradeButton(true);
+    }
+}
 
 
 }

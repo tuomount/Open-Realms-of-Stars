@@ -401,6 +401,27 @@ public class TechFactory {
   }
 
   /**
+   * Get tech level cost as research points
+   * @param level Level to research
+   * @return Amount of research points required
+   */
+  public static int getTechCost(int level) {
+    switch (level) {
+    case 1: return 5;
+    case 2: return 7;
+    case 3: return 10;
+    case 4: return 15;
+    case 5: return 22;
+    case 6: return 33;
+    case 7: return 50;
+    case 8: return 75;
+    case 9: return 112;
+    case 10: return 168;
+    }
+    return 200;
+  }
+  
+  /**
    * Get String list of tech by type and level
    * @param type
    * @param level

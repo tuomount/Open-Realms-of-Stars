@@ -47,6 +47,12 @@ public class TechList {
    */
   private int[] techLevels = new int[TechType.values().length];
   
+  /**
+   * Tech Focus levels. These must be between 0-100%. When all techs
+   * are summed total must be 100%
+   */
+  private int[] techFocus = new int[TechType.values().length];
+  
   public TechList() {
     techList = new TechListForLevel[TechType.values().length][MAX_TECH_LEVEL];
     for (int i=0;i<MAX_TECH_TYPES;i++) {
@@ -54,6 +60,18 @@ public class TechList {
         techList[i][j] = new TechListForLevel(j+1);
       }
     }
+    techLevels[TechType.Combat.getIndex()] = 1;
+    techLevels[TechType.Defense.getIndex()] = 1;
+    techLevels[TechType.Hulls.getIndex()] = 1;
+    techLevels[TechType.Improvements.getIndex()] = 1;
+    techLevels[TechType.Propulsion.getIndex()] = 1;
+    techLevels[TechType.Electrics.getIndex()] = 1;
+    techFocus[TechType.Combat.getIndex()] = 20;
+    techFocus[TechType.Defense.getIndex()] = 16;
+    techFocus[TechType.Hulls.getIndex()] = 16;
+    techFocus[TechType.Improvements.getIndex()] = 16;
+    techFocus[TechType.Propulsion.getIndex()] = 16;
+    techFocus[TechType.Electrics.getIndex()] = 16;
   }
   
   /**
@@ -170,5 +188,71 @@ public class TechList {
       }
     }
     return list.toArray(new Tech[list.size()]);
+  }
+  
+  /**
+   * Fine tune value for tech focus
+   */
+  private static final int FINE_TUNE_VALUE = 4;
+  /**
+   * Tries to settle so that tech focus about evenly distributed
+   * @param type Tech type not used for in settling
+   * @param value Value which tech focus was set
+   */
+  private void settleTechFocus(TechType type, int value) {
+    int redis = 100;
+    for (int i=0;i<TechType.values().length;i++) {
+      redis = redis -techFocus[i];
+    }
+    int average = (100-value) / (TechType.values().length-1);
+    while (redis != 0) {
+      for (int i=0;i<TechType.values().length;i++) {
+        if (i != type.getIndex() && redis > 0) {
+          if (techFocus[i] < average) {
+            if (redis > FINE_TUNE_VALUE) {
+              techFocus[i] = techFocus[i]+FINE_TUNE_VALUE;
+              redis = redis -FINE_TUNE_VALUE;
+            } else {
+              techFocus[i] = techFocus[i]+redis;
+              redis = 0;
+            }
+          }
+        }
+        if (i != type.getIndex() && redis < 0) {
+          if (techFocus[i] > average) {
+            if (redis < -FINE_TUNE_VALUE) {
+              techFocus[i] = techFocus[i]-FINE_TUNE_VALUE;
+              redis = redis +FINE_TUNE_VALUE;
+            } else {
+              techFocus[i] = techFocus[i]+redis;
+              redis = 0;
+            }
+          }
+        }
+
+      }
+    }
+  }
+  
+  /**
+   * Set Tech Focus level for certain type with value.
+   * Makes sure that total focus level is set to 100%
+   * @param type Tech type
+   * @param value Value to set for certain type. Must be between 0-100%
+   */
+  public void setTechFocus(TechType type, int value) {
+    if (value >= 0 && value <= 100) {
+      techFocus[type.getIndex()] = value;
+      settleTechFocus(type,value);
+    }
+  }
+  
+  /**
+   * Get Tech focus for certain type of tech.
+   * @param type
+   * @return
+   */
+  public int getTechFocus(TechType type) {
+    return techFocus[type.getIndex()];
   }
 }

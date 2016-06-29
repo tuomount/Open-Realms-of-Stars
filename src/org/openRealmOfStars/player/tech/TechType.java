@@ -46,6 +46,20 @@ public enum TechType {
     return 0;
   }
 
-   
+  @Override
+  public String toString() {
+    switch (this) {
+    case Combat: return "Combat";
+    case Defense: return "Defense";
+    case Hulls: return "Hulls";
+    case Improvements: return "Improvements";
+    case Propulsion: return "Propulsion";
+    case Electrics: return "Electronics";
+    }
+    return "Error - Unknown";
+
+  }
+
+  
    
 }

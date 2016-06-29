@@ -105,7 +105,8 @@ public class ResearchView extends BlackPanel {
     combatRese = new ResearchTechPanel(invis, 
         GameCommands.COMMAND_MINUS_COMBAT_RESEARCH,
         GameCommands.COMMAND_PLUS_COMBAT_RESEARCH, Icons.ICON_COMBAT_TECH,
-        "Combat 100%", "Focus on combat technology","Level:1 (1/6)",
+        TechType.Combat.toString()+" 100% 1000 turns", 
+        "Focus on combat technology","Level:1 (1/6)",
         GameCommands.COMMAND_UPGRADE_COMBAT, listener);
     combatRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(combatRese);
@@ -113,7 +114,8 @@ public class ResearchView extends BlackPanel {
     defenseRese = new ResearchTechPanel(invis, 
         GameCommands.COMMAND_MINUS_DEFENSE_RESEARCH,
         GameCommands.COMMAND_PLUS_DEFENSE_RESEARCH, Icons.ICON_DEFENSE_TECH,
-        "Defense 100%", "Focus on defense technology","Level:1 (1/6)",
+        TechType.Defense.toString()+" 100% 1000 turns", 
+        "Focus on defense technology","Level:1 (1/6)",
         GameCommands.COMMAND_UPGRADE_DEFENSE, listener);
     defenseRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(defenseRese);
@@ -121,7 +123,8 @@ public class ResearchView extends BlackPanel {
     hullRese = new ResearchTechPanel(invis, 
         GameCommands.COMMAND_MINUS_HULL_RESEARCH,
         GameCommands.COMMAND_PLUS_HULL_RESEARCH, Icons.ICON_HULL_TECH,
-        "Hull 100%", "Focus on hull technology", "Level:1 (1/6)",
+        TechType.Hulls.toString()+" 100% 1000 turns", 
+        "Focus on hull technology", "Level:1 (1/6)",
         GameCommands.COMMAND_UPGRADE_HULL, listener);
     hullRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(hullRese);
@@ -129,7 +132,8 @@ public class ResearchView extends BlackPanel {
     improvementRese = new ResearchTechPanel(invis, 
         GameCommands.COMMAND_MINUS_IMPROVEMENT_RESEARCH,
         GameCommands.COMMAND_PLUS_IMPROVEMENT_RESEARCH, Icons.ICON_IMPROVEMENT_TECH,
-        "Planetary improvement 100%", "Focus on planetary improvement technology",
+        TechType.Improvements.toString()+" 100% 1000 turns", 
+        "Focus on planetary improvement technology",
         "Level:1 (1/6)",GameCommands.COMMAND_UPGRADE_IMPROVEMENT, listener);
     improvementRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(improvementRese);
@@ -137,7 +141,8 @@ public class ResearchView extends BlackPanel {
     propulsionRese = new ResearchTechPanel(invis, 
         GameCommands.COMMAND_MINUS_PROPULSION_RESEARCH,
         GameCommands.COMMAND_PLUS_PROPULSION_RESEARCH, Icons.ICON_PROPULSION_TECH,
-        "Propulsion 100%", "Focus on propulsion technology", "Level:1 (1/6)",
+        TechType.Propulsion.toString()+" 100% 1000 turns", 
+        "Focus on propulsion technology", "Level:1 (1/6)",
         GameCommands.COMMAND_UPGRADE_PROPULSION, listener);
     propulsionRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(propulsionRese);
@@ -145,7 +150,8 @@ public class ResearchView extends BlackPanel {
     electronicsRese = new ResearchTechPanel(invis, 
         GameCommands.COMMAND_MINUS_ELECTRONICS_RESEARCH,
         GameCommands.COMMAND_PLUS_ELECTRONICS_RESEARCH, Icons.ICON_ELECTRONICS_TECH,
-        "Electronics 100%", "Focus on electronics technology", "Level:1 (1/6)",
+        TechType.Electrics.toString()+" 100% 1000 turns", 
+        "Focus on electronics technology", "Level:1 (1/6)",
         GameCommands.COMMAND_UPGRADE_ELECTRONICS, listener);
     electronicsRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(electronicsRese);
@@ -182,60 +188,90 @@ public class ResearchView extends BlackPanel {
     int level = player.getTechList().getTechLevel(TechType.Combat);
     int subLevel = player.getTechList().getListForTypeAndLevel(TechType.Combat, level).length;
     int maxSubLevel = TechFactory.getListByTechLevel(TechType.Combat, level).length;
-    combatRese.setText(TechType.Combat.toString()+" "+focus+"%");
+    int required = TechFactory.getTechCost(level);
+    int turns = (int) ((int)  (required-player.getTechList().
+        getTechResearchPoints(TechType.Combat))/(focus*totalResearch/100.0));
+    combatRese.setText(TechType.Combat.toString()+" "+focus+"% "+turns+" turns");
     combatRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
-    if (subLevel >= Math.ceil(maxSubLevel / 2.0)) {
+    if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
       combatRese.setEnableUpgradeButton(true);
+      combatRese.setUpgadeBtnToolTip("<html>Upgrade combat to "+level+1+" level.<br>"
+          + " By upgrading you skip rest of technologies on your current level.</html>");
     }
     
     focus = player.getTechList().getTechFocus(TechType.Defense);
     level = player.getTechList().getTechLevel(TechType.Defense);
     subLevel = player.getTechList().getListForTypeAndLevel(TechType.Defense, level).length;
     maxSubLevel = TechFactory.getListByTechLevel(TechType.Defense, level).length;
-    defenseRese.setText(TechType.Defense.toString()+" "+focus+"%");
+    required = TechFactory.getTechCost(level);
+    turns = (int) ((int)  (required-player.getTechList().
+        getTechResearchPoints(TechType.Defense))/(focus*totalResearch/100.0));
+    defenseRese.setText(TechType.Defense.toString()+" "+focus+"% "+turns+" turns");
     defenseRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
-    if (subLevel >= Math.ceil(maxSubLevel / 2.0)) {
+    if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
       defenseRese.setEnableUpgradeButton(true);
+      defenseRese.setUpgadeBtnToolTip("<html>Upgrade defense to "+level+1+" level.<br>"
+          + " By upgrading you skip rest of technologies on your current level.</html>");
     }
 
     focus = player.getTechList().getTechFocus(TechType.Hulls);
     level = player.getTechList().getTechLevel(TechType.Hulls);
     subLevel = player.getTechList().getListForTypeAndLevel(TechType.Hulls, level).length;
     maxSubLevel = TechFactory.getListByTechLevel(TechType.Hulls, level).length;
-    hullRese.setText(TechType.Hulls.toString()+" "+focus+"%");
+    required = TechFactory.getTechCost(level);
+    turns = (int) ((int)  (required-player.getTechList().
+        getTechResearchPoints(TechType.Hulls))/(focus*totalResearch/100.0));
+    hullRese.setText(TechType.Hulls.toString()+" "+focus+"% "+turns+" turns");
     hullRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
-    if (subLevel >= Math.ceil(maxSubLevel / 2.0)) {
+    if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
       hullRese.setEnableUpgradeButton(true);
+      hullRese.setUpgadeBtnToolTip("<html>Upgrade hulls to "+level+1+" level.<br>"
+          + " By upgrading you skip rest of technologies on your current level.</html>");
     }
 
     focus = player.getTechList().getTechFocus(TechType.Improvements);
     level = player.getTechList().getTechLevel(TechType.Improvements);
     subLevel = player.getTechList().getListForTypeAndLevel(TechType.Improvements, level).length;
     maxSubLevel = TechFactory.getListByTechLevel(TechType.Improvements, level).length;
-    improvementRese.setText(TechType.Improvements.toString()+" "+focus+"%");
+    required = TechFactory.getTechCost(level);
+    turns = (int) ((int)  (required-player.getTechList().
+        getTechResearchPoints(TechType.Improvements))/(focus*totalResearch/100.0));
+    improvementRese.setText(TechType.Improvements.toString()+" "+focus+"% "+turns+" turns");
     improvementRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
-    if (subLevel >= Math.ceil(maxSubLevel / 2.0)) {
+    if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
       improvementRese.setEnableUpgradeButton(true);
+      improvementRese.setUpgadeBtnToolTip("<html>Upgrade improvements to "+level+1+" level.<br>"
+          + " By upgrading you skip rest of technologies on your current level.</html>");
     }
 
     focus = player.getTechList().getTechFocus(TechType.Propulsion);
     level = player.getTechList().getTechLevel(TechType.Propulsion);
     subLevel = player.getTechList().getListForTypeAndLevel(TechType.Propulsion, level).length;
     maxSubLevel = TechFactory.getListByTechLevel(TechType.Propulsion, level).length;
-    propulsionRese.setText(TechType.Propulsion.toString()+" "+focus+"%");
+    required = TechFactory.getTechCost(level);
+    turns = (int) ((int)  (required-player.getTechList().
+        getTechResearchPoints(TechType.Propulsion))/(focus*totalResearch/100.0));
+    propulsionRese.setText(TechType.Propulsion.toString()+" "+focus+"% "+turns+" turns");
     propulsionRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
-    if (subLevel >= Math.ceil(maxSubLevel / 2.0)) {
+    if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
       propulsionRese.setEnableUpgradeButton(true);
+      propulsionRese.setUpgadeBtnToolTip("<html>Upgrade propulsion to "+level+1+" level.<br>"
+          + " By upgrading you skip rest of technologies on your current level.</html>");
     }
 
     focus = player.getTechList().getTechFocus(TechType.Electrics);
     level = player.getTechList().getTechLevel(TechType.Electrics);
     subLevel = player.getTechList().getListForTypeAndLevel(TechType.Electrics, level).length;
     maxSubLevel = TechFactory.getListByTechLevel(TechType.Electrics, level).length;
-    electronicsRese.setText(TechType.Electrics.toString()+" "+focus+"%");
+    required = TechFactory.getTechCost(level);
+    turns = (int) ((int)  (required-player.getTechList().
+        getTechResearchPoints(TechType.Electrics))/(focus*totalResearch/100.0));
+    electronicsRese.setText(TechType.Electrics.toString()+" "+focus+"% "+turns+" turns");
     electronicsRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
-    if (subLevel >= Math.ceil(maxSubLevel / 2.0)) {
+    if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
       electronicsRese.setEnableUpgradeButton(true);
+      electronicsRese.setUpgadeBtnToolTip("<html>Upgrade electronics to "+level+1+" level.<br>"
+          + " By upgrading you skip rest of technologies on your current level.</html>");
     }
 }
 

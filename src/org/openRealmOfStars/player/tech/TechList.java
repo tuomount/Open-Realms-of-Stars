@@ -53,6 +53,11 @@ public class TechList {
    */
   private int[] techFocus = new int[TechType.values().length];
   
+  /**
+   * Tech research points
+   */
+  private double[] techResearchPoint = new double[TechType.values().length];
+  
   public TechList() {
     techList = new TechListForLevel[TechType.values().length][MAX_TECH_LEVEL];
     for (int i=0;i<MAX_TECH_TYPES;i++) {
@@ -254,5 +259,14 @@ public class TechList {
    */
   public int getTechFocus(TechType type) {
     return techFocus[type.getIndex()];
+  }
+  
+  /**
+   * Get Tech research points for certain type of tech
+   * @param type TechType
+   * @return research points spent so far as double
+   */
+  public double getTechResearchPoints(TechType type) {
+    return techResearchPoint[type.getIndex()];
   }
 }

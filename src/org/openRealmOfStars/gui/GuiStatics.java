@@ -264,6 +264,18 @@ public class GuiStatics {
   private static final BufferedImage tempImage = new BufferedImage(100,100,BufferedImage.TYPE_4BYTE_ABGR);
   
   /**
+   * Horizotal thumb
+   */
+  public final static BufferedImage IMAGE_SCROLL_BAR_THUMB = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/thumb.png"));
+
+  /**
+   * Vertical thumb
+   */
+  public final static BufferedImage IMAGE_SCROLL_BAR_THUMB2 = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/thumb2.png"));
+
+  /**
    * Get text width for certain font
    * @param font Font to use
    * @param text String

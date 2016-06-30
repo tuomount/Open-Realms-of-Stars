@@ -58,6 +58,14 @@ public class Icons {
   public static final String ICON_ARROWUP_PRESSED = "ArrowUp_Pressed";
   public static final String ICON_ARROWUP_DISABLED = "ArrowUp_Disabled";
   public static final String ICON_EMPTY = "Empty";
+  public static final String ICON_SCROLL_UP = "ScrollUp";
+  public static final String ICON_SCROLL_DOWN = "ScrollDown";
+  public static final String ICON_SCROLL_LEFT = "ScrollLeft";
+  public static final String ICON_SCROLL_RIGHT = "ScrollRight";
+  public static final String ICON_SCROLL_UP_PRESSED = "ScrollUpPressed";
+  public static final String ICON_SCROLL_DOWN_PRESSED = "ScrollDownPressed";
+  public static final String ICON_SCROLL_LEFT_PRESSED = "ScrollLeftPressed";
+  public static final String ICON_SCROLL_RIGHT_PRESSED = "ScrollRightPressed";
   
   /**
    * List of Icon
@@ -181,6 +189,22 @@ public class Icons {
     icon = new Icon16x16(image, 0, 3,ICON_ARROWUP_DISABLED);
     addIcon(icon);
     icon = new Icon16x16(image, 1, 3,ICON_EMPTY);
+    addIcon(icon);
+    icon = new Icon16x16(image, 2, 3,ICON_SCROLL_UP);
+    addIcon(icon);
+    icon = new Icon16x16(image, 3, 3,ICON_SCROLL_DOWN);
+    addIcon(icon);
+    icon = new Icon16x16(image, 4, 3,ICON_SCROLL_LEFT);
+    addIcon(icon);
+    icon = new Icon16x16(image, 5, 3,ICON_SCROLL_RIGHT);
+    addIcon(icon);
+    icon = new Icon16x16(image, 2, 4,ICON_SCROLL_UP_PRESSED);
+    addIcon(icon);
+    icon = new Icon16x16(image, 3, 4,ICON_SCROLL_DOWN_PRESSED);
+    addIcon(icon);
+    icon = new Icon16x16(image, 4, 4,ICON_SCROLL_LEFT_PRESSED);
+    addIcon(icon);
+    icon = new Icon16x16(image, 5, 4,ICON_SCROLL_RIGHT_PRESSED);
     addIcon(icon);
   }
   

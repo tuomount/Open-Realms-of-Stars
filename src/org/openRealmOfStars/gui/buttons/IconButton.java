@@ -100,7 +100,9 @@ public class IconButton extends JButton {
   
   @Override
   protected void paintComponent(Graphics g) {
-    parent.repaint();
+    if (parent != null) {
+      parent.repaint();
+    }
     int x = getWidth()/2;
     int y = getHeight()/2;
     if (this.isEnabled()) {

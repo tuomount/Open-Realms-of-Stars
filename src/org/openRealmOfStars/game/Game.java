@@ -13,6 +13,7 @@ import org.openRealmOfStars.game.States.MainMenu;
 import org.openRealmOfStars.game.States.PlanetView;
 import org.openRealmOfStars.game.States.ResearchView;
 import org.openRealmOfStars.game.States.StarMapView;
+import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace;
@@ -118,6 +119,7 @@ public class Game extends JFrame implements ActionListener {
     } catch (Exception e) {
               e.printStackTrace();
     }
+    UIManager.put("ScrollBarUI", SpaceScrollBarUI.class.getName());
     setTitle(GAME_TITLE+" "+GAME_VERSION);
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);         
     addWindowListener(new GameWindowListener());

@@ -67,8 +67,8 @@ public class TransparentLabel extends JLabel {
   {
       JToolTip toolTip = super.createToolTip();
       toolTip.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-      toolTip.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS);
-      toolTip.setBorder(BorderFactory.createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS));
+      toolTip.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+      toolTip.setBorder(BorderFactory.createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
       return toolTip;
   }
   

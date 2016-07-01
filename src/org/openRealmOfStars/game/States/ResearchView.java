@@ -11,6 +11,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BlackPanel;
@@ -19,6 +20,7 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
+import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.ResearchTechPanel;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -93,6 +95,11 @@ public class ResearchView extends BlackPanel {
    * Techs which have been researched
    */
   private JList<Tech> techList;
+  
+  /**
+   * Info Text for tech
+   */
+  private InfoTextArea infoText;
   
   /**
    * Create new research for player
@@ -170,12 +177,18 @@ public class ResearchView extends BlackPanel {
     base.add(invis,BorderLayout.EAST);
     
     invis = new InvisiblePanel(base);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    invis.setLayout(new BoxLayout(invis, BoxLayout.X_AXIS));
     techList = new JList<>(player.getTechList().getList());
     techList.setCellRenderer(new TechListRenderer());
     JScrollPane scroll = new JScrollPane(techList);
     techList.setBackground(Color.BLACK);
+    techList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     invis.add(scroll);
+    invis.add(Box.createRigidArea(new Dimension(10,10)));
+    infoText = new InfoTextArea(25, 40);
+    infoText.setEditable(false);
+    invis.add(infoText);
+    
     base.add(invis,BorderLayout.WEST);
     
     this.add(base, BorderLayout.CENTER);
@@ -200,6 +213,14 @@ public class ResearchView extends BlackPanel {
    * @param arg0 ActionEvent command what player did
    */
   public void handleAction(ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
+      if (techList.getSelectedIndex() != -1) {
+        Tech tech = techList.getSelectedValue();
+        infoText.setText(tech.getTechInfo());
+      } else {
+        infoText.setText("");
+      }
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PLUS_COMBAT_RESEARCH)) {
       int value = player.getTechList().getTechFocus(TechType.Combat);
       if (value <= 100-TechList.FINE_TUNE_VALUE) {

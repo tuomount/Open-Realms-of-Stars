@@ -156,5 +156,34 @@ public class Tech {
     return name;
   }
   
+  /**
+   * Get Tech info as a String
+   * @return tech info
+   */
+  public String getTechInfo() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(name);
+    sb.append("\n");
+    sb.append(getType().toString());
+    sb.append(" - ");
+    sb.append(level);
+    sb.append("\n");
+    if (improvement != null ){
+      sb.append("Improvement: ");
+      sb.append(improvement);
+      sb.append("\n");
+    }
+    if (hull != null ){
+      sb.append("Ship design: ");
+      sb.append(hull);
+      sb.append("\n");
+    }
+    if (component != null ){
+      sb.append("Ship component: ");
+      sb.append(component);
+      sb.append("\n");
+    }
+    return sb.toString();
+  }
   
 }

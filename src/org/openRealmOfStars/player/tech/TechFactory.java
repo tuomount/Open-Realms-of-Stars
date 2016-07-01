@@ -30,64 +30,64 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 public class TechFactory {
 
   public static final String[] COMBAT_TECH_LEVEL1_NAMES = 
-    {"Laser Mk1","Railgun Mk1","Photon Torpedo Mk1"};
+    {"Laser Mk1","Railgun Mk1","Photon torpedo Mk1"};
   public static final String[] COMBAT_TECH_LEVEL2_NAMES = 
-    {"Laser Mk2","Railgun Mk2","Photon Torpedo Mk2","Planetary invasion module"};
+    {"Laser Mk2","Railgun Mk2","Photon torpedo Mk2","Planetary invasion module"};
   public static final String[] COMBAT_TECH_LEVEL3_NAMES = 
-    {"Laser Mk3","Railgun Mk3","Photon Torpedo Mk3","ECM Torpedo Mk1","HE Missile Mk1"};
+    {"Laser Mk3","Railgun Mk3","Photon torpedo Mk3","ECM torpedo Mk1","HE missile Mk1"};
   public static final String[] COMBAT_TECH_LEVEL4_NAMES = 
-    {"Laser Mk4","Railgun Mk4","Photon Torpedo Mk4","ECM Torpedo Mk2","HE Missile Mk2","Orbital bombs Mk1"};
+    {"Laser Mk4","Railgun Mk4","Photon torpedo Mk4","ECM torpedo Mk2","HE missile Mk2","Orbital bombs Mk1"};
   public static final String[] COMBAT_TECH_LEVEL5_NAMES = 
-    {"Laser Mk5","Railgun Mk5","Photon Torpedo Mk5","ECM Torpedo Mk3","HE Missile Mk3","Orbital bombs Mk2"};
+    {"Laser Mk5","Railgun Mk5","Photon torpedo Mk5","ECM torpedo Mk3","HE missile Mk3","Orbital bombs Mk2"};
   public static final String[] COMBAT_TECH_LEVEL6_NAMES = 
-    {"Phasors Mk1","Massdrive Mk1","Photon Torpedo Mk6","ECM Torpedo Mk4","HE Missile Mk4"};
+    {"Phasors Mk1","Massdrive Mk1","Photon torpedo Mk6","ECM torpedo Mk4","HE missile Mk4"};
   public static final String[] COMBAT_TECH_LEVEL7_NAMES = 
-    {"Phasors Mk2","Massdrive Mk2","Photon Torpedo Mk7","ECM Torpedo Mk5","HE Missile Mk5","Shock trooper module"};
+    {"Phasors Mk2","Massdrive Mk2","Photon torpedo Mk7","ECM torpedo Mk5","HE missile Mk5","Shock trooper module"};
   public static final String[] COMBAT_TECH_LEVEL8_NAMES = 
-    {"Phasors Mk3","Massdrive Mk3","Photon Torpedo Mk8","ECM Torpedo Mk6","HE Missile Mk6","Orbital nuke"};
+    {"Phasors Mk3","Massdrive Mk3","Photon torpedo Mk8","ECM torpedo Mk6","HE missile Mk6","Orbital nuke"};
   public static final String[] COMBAT_TECH_LEVEL9_NAMES = 
-    {"Phasors Mk4","Massdrive Mk4","Photon Torpedo Mk9","ECM Torpedo Mk7","HE Missile Mk7","Orbital smart bombs"};
+    {"Antimatter beam Mk1","Massdrive Mk4","Photon torpedo Mk9","ECM torpedo Mk7","HE missile Mk7","Orbital smart bombs"};
   public static final String[] COMBAT_TECH_LEVEL10_NAMES = 
-    {"Phasors Mk5","Massdrive Mk5","Photon Torpedo Mk10","ECM Torpedo Mk8","HE Missile Mk8"};
+    {"Antimatter beam Mk1","Massdrive Mk5","Photon torpedo Mk10","ECM torpedo Mk8","HE missile Mk8"};
 
 
   public static final String[] DEFENSE_TECH_LEVEL1_NAMES = 
-    {"Shield Mk1","Armor Plating Mk1"};
+    {"Shield Mk1","Armor plating Mk1"};
   public static final String[] DEFENSE_TECH_LEVEL2_NAMES = 
-    {"Shield Mk2","Armor Plating Mk2","Planetary Defense Turret Mk1"};
+    {"Shield Mk2","Armor plating Mk2","Planetary defense turret Mk1"};
   public static final String[] DEFENSE_TECH_LEVEL3_NAMES = 
-    {"Shield Mk3","Armor Plating Mk3"};
+    {"Shield Mk3","Armor plating Mk3"};
   public static final String[] DEFENSE_TECH_LEVEL4_NAMES = 
-    {"Shield Mk4","Armor Plating Mk4","Shield Generator Mk1"};
+    {"Shield Mk4","Armor plating Mk4","Shield generator Mk1"};
   public static final String[] DEFENSE_TECH_LEVEL5_NAMES = 
-    {"Shield Mk5","Armor Plating Mk5","Planetary Defense Turret Mk2"};
+    {"Shield Mk5","Armor plating Mk5","Planetary defense turret Mk2"};
   public static final String[] DEFENSE_TECH_LEVEL6_NAMES = 
-    {"Shield Mk6","Armor Plating Mk6"};
+    {"Shield Mk6","Armor plating Mk6"};
   public static final String[] DEFENSE_TECH_LEVEL7_NAMES = 
-    {"Shield Mk7","Armor Plating Mk7"};
+    {"Shield Mk7","Armor plating Mk7"};
   public static final String[] DEFENSE_TECH_LEVEL8_NAMES = 
-    {"Shield Mk8","Armor Plating Mk8"};
+    {"Shield Mk8","Armor plating Mk8"};
   public static final String[] DEFENSE_TECH_LEVEL9_NAMES = 
-    {"Shield Mk9","Armor Plating Mk9","Shield Generator Mk2"};
+    {"Shield Mk9","Armor plating Mk9","Shield generator Mk2"};
   public static final String[] DEFENSE_TECH_LEVEL10_NAMES = 
-    {"Shield Mk10","Armor Plating Mk10"};
+    {"Shield Mk10","Armor plating Mk10"};
 
   public static final String[] HULL_TECH_LEVEL1_NAMES = 
     {"Scout Mk1","Destroyer Mk1","Colony"};
   public static final String[] HULL_TECH_LEVEL2_NAMES = 
-    {"Probe","Small Freighter","Small Starbase Mk1"};
+    {"Probe","Small Freighter","Small starbase Mk1"};
   public static final String[] HULL_TECH_LEVEL3_NAMES = 
-    {"Destroyer Mk2","Corvette Mk1","Small Starbase Mk2"};
+    {"Destroyer Mk2","Corvette Mk1","Small starbase Mk2"};
   public static final String[] HULL_TECH_LEVEL4_NAMES = 
     {"Medium Freighter","Medium starbase","Scout Mk2"};
   public static final String[] HULL_TECH_LEVEL5_NAMES = 
     {"Cruiser","Battleship"};
   public static final String[] HULL_TECH_LEVEL6_NAMES = 
-    {"Large Freighter","Large Starbase","Corvette Mk2","Privateer Mk1"};
+    {"Large Freighter","Large starbase","Corvette Mk2","Privateer Mk1"};
   public static final String[] HULL_TECH_LEVEL7_NAMES = 
     {"Battle Cruiser","Privateer Mk2"};
   public static final String[] HULL_TECH_LEVEL8_NAMES = 
-    {"Massive Freighter","Massive Starbase","Privateer Mk3"};
+    {"Massive Freighter","Massive starbase","Privateer Mk3"};
   public static final String[] HULL_TECH_LEVEL9_NAMES = 
     {"Capital Ship Mk1"};
   public static final String[] HULL_TECH_LEVEL10_NAMES = 
@@ -96,7 +96,7 @@ public class TechFactory {
   public static final String[] IMPROVEMENT_TECH_LEVEL1_NAMES = 
     {"Laboratory","Barracks","Tax center"};
   public static final String[] IMPROVEMENT_TECH_LEVEL2_NAMES = 
-    {"Advanced farm","Advanced mine","Advanced Factory"};
+    {"Advanced farm","Advanced mine","Advanced factory"};
   public static final String[] IMPROVEMENT_TECH_LEVEL3_NAMES = 
     {"Advanced laboratory","Market center","Culture center"};
   public static final String[] IMPROVEMENT_TECH_LEVEL4_NAMES = 
@@ -182,7 +182,24 @@ public class TechFactory {
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Combat, level);
         tech.setComponent(techName);
-        tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
+        if (techName.startsWith("Laser") || techName.startsWith("Phasor") ||
+            techName.startsWith("Antimatter beam")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_LASERGUN));
+        } else if (techName.startsWith("Railgun") || techName.startsWith("Massdrive")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
+        } else if (techName.startsWith("Photon torpedo") || techName.startsWith("ECM torpedo") 
+            || techName.startsWith("HE missile")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_MISSILE));
+        } else if (techName.startsWith("Orbital bomb") || techName.startsWith("Orbital smart bomb")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_BOMB));
+        } else if (techName.startsWith("Orbital nuke")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_NUKE));
+        } else if (techName.startsWith("Planetary invasion module") ||
+            techName.startsWith("Shock trooper module")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_TROOPS));
+        } else {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
+        }
         return tech;
       }
     }
@@ -214,12 +231,20 @@ public class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Defense, level);
-        if (techName.startsWith("Planetary Defense Turret Mk")) {
+        if (techName.startsWith("Planetary defense turret Mk")) {
           tech.setImprovement(techName);
         } else {
           tech.setComponent(techName);
         }
-        tech.setIcon(Icons.getIconByName(Icons.ICON_DEFENSE_TECH));
+        if (techName.startsWith("Shield")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_SHIELD));
+        } else if (techName.startsWith("Armor plating")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_ARMOR));
+        } else if (techName.startsWith("Planetary defense turret Mk")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_PLANETARY_TURRET));
+        } else {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_DEFENSE_TECH));
+        }
         return tech;
       }
     }
@@ -256,7 +281,11 @@ public class TechFactory {
         } else {
           tech.setHull(techName);
         }
-        tech.setIcon(Icons.getIconByName(Icons.ICON_HULL_TECH));
+        if (techName.contains("starbase")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
+        } else {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_HULL_TECH));
+        }
         return tech;
       }
     }
@@ -289,7 +318,42 @@ public class TechFactory {
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Improvements, level);
         tech.setImprovement(techName);
-        tech.setIcon(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+        if (techName.startsWith("Barracks")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_TROOPS));
+        } else if (techName.startsWith("Laboratory") || 
+            techName.startsWith("Advanced laboratory") ||
+            techName.startsWith("Research center") ||
+            techName.startsWith("New technology center") ||
+            techName.startsWith("Neural research center") ||
+            techName.startsWith("Super AI Center")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
+        } else if (techName.startsWith("Tax center") ||
+            techName.startsWith("Market center") ||
+            techName.startsWith("Trade center") ||
+            techName.startsWith("Stock market") ||
+            techName.startsWith("Galactic bank")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_CREDIT));
+        } else if (techName.startsWith("Advanced farm") ||
+            techName.startsWith("Farming center") ||
+            techName.startsWith("Hydropodic farming center")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
+        } else if (techName.startsWith("Advanced mine") ||
+            techName.startsWith("Mining center") ||
+            techName.startsWith("Nanobot mining center")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_MINE));
+        } else if (techName.startsWith("Advanced factory") ||
+            techName.startsWith("Manufacturing center") ||
+            techName.startsWith("Nanobot manufacturing center") ||
+            techName.startsWith("Replicator center")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_FACTORY));
+        } else if (techName.startsWith("Culture center") || 
+            techName.startsWith("Extreme sports center") ||
+            techName.startsWith("Galactic sports center") ||
+            techName.startsWith("VR movie center")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_CULTURE));
+        } else {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+        }
         return tech;
       }
     }
@@ -359,7 +423,18 @@ public class TechFactory {
         } else {
           tech.setComponent(techName);
         }
-        tech.setIcon(Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH));
+        if (techName.startsWith("Planetary scanner Mk") ||
+            techName.startsWith("LR scanner Mk")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_LR_SCANNER));
+        } else if (techName.startsWith("Scanner Mk")) { 
+          tech.setIcon(Icons.getIconByName(Icons.ICON_SCANNER));
+        } else if (techName.startsWith("Cloaking device")) { 
+          tech.setIcon(Icons.getIconByName(Icons.ICON_CLOACKING_DEVICE));
+        } else if (techName.startsWith("Jammer Mk")) { 
+          tech.setIcon(Icons.getIconByName(Icons.ICON_CIRCUIT_BOARD));
+        } else {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH));
+        }
         return tech;
       }
     }

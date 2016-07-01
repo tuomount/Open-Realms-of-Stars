@@ -66,6 +66,19 @@ public class Icons {
   public static final String ICON_SCROLL_DOWN_PRESSED = "ScrollDownPressed";
   public static final String ICON_SCROLL_LEFT_PRESSED = "ScrollLeftPressed";
   public static final String ICON_SCROLL_RIGHT_PRESSED = "ScrollRightPressed";
+  public static final String ICON_MISSILE = "Missile";
+  public static final String ICON_SCANNER = "Scanner";
+  public static final String ICON_ARMOR = "Armor";
+  public static final String ICON_SHIELD = "Shield";
+  public static final String ICON_CLOACKING_DEVICE = "CloackingDevice";
+  public static final String ICON_TROOPS = "Troops";
+  public static final String ICON_LASERGUN = "LaserGun";
+  public static final String ICON_BOMB = "Bomb";
+  public static final String ICON_NUKE = "Nuke";
+  public static final String ICON_PLANETARY_TURRET = "PlanetaryTurret";
+  public static final String ICON_STARBASE = "StarBase";
+  public static final String ICON_LR_SCANNER = "LRScanner";
+  public static final String ICON_CIRCUIT_BOARD = "CircuitBoard";
   
   /**
    * List of Icon
@@ -205,6 +218,32 @@ public class Icons {
     icon = new Icon16x16(image, 4, 4,ICON_SCROLL_LEFT_PRESSED);
     addIcon(icon);
     icon = new Icon16x16(image, 5, 4,ICON_SCROLL_RIGHT_PRESSED);
+    addIcon(icon);
+    icon = new Icon16x16(image, 6, 3,ICON_MISSILE);
+    addIcon(icon);
+    icon = new Icon16x16(image, 7, 3,ICON_SCANNER);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 4,ICON_ARMOR);
+    addIcon(icon);
+    icon = new Icon16x16(image, 1, 4,ICON_SHIELD);
+    addIcon(icon);
+    icon = new Icon16x16(image, 6, 4,ICON_CLOACKING_DEVICE);
+    addIcon(icon);
+    icon = new Icon16x16(image, 7, 4,ICON_TROOPS);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 5,ICON_LASERGUN);
+    addIcon(icon);
+    icon = new Icon16x16(image, 1, 5,ICON_BOMB);
+    addIcon(icon);
+    icon = new Icon16x16(image, 2, 5,ICON_NUKE);
+    addIcon(icon);
+    icon = new Icon16x16(image, 3, 5,ICON_PLANETARY_TURRET);
+    addIcon(icon);
+    icon = new Icon16x16(image, 4, 5,ICON_STARBASE);
+    addIcon(icon);
+    icon = new Icon16x16(image, 5, 5,ICON_LR_SCANNER);
+    addIcon(icon);
+    icon = new Icon16x16(image, 6, 5,ICON_CIRCUIT_BOARD);
     addIcon(icon);
   }
   

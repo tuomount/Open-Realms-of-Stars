@@ -157,6 +157,9 @@ public class TechList {
    */
   public Tech[] getListForTypeAndLevel(TechType type, int level) {
     level = level -1;
+    if (level >= 10 || level < 0) {
+      return new Tech[0];
+    }
     ArrayList<Tech> list = new ArrayList<>();
     int index = type.getIndex();
     for (Tech tech : techList[index][level].getList()) {

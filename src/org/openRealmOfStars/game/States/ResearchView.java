@@ -185,7 +185,7 @@ public class ResearchView extends BlackPanel {
     techList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     invis.add(scroll);
     invis.add(Box.createRigidArea(new Dimension(10,10)));
-    infoText = new InfoTextArea(25, 40);
+    infoText = new InfoTextArea(25, 35);
     infoText.setEditable(false);
     invis.add(infoText);
     

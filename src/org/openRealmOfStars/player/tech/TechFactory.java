@@ -2,6 +2,7 @@ package org.openRealmOfStars.player.tech;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -181,6 +182,7 @@ public class TechFactory {
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Combat, level);
         tech.setComponent(techName);
+        tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
         return tech;
       }
     }
@@ -217,6 +219,7 @@ public class TechFactory {
         } else {
           tech.setComponent(techName);
         }
+        tech.setIcon(Icons.getIconByName(Icons.ICON_DEFENSE_TECH));
         return tech;
       }
     }
@@ -253,6 +256,7 @@ public class TechFactory {
         } else {
           tech.setHull(techName);
         }
+        tech.setIcon(Icons.getIconByName(Icons.ICON_HULL_TECH));
         return tech;
       }
     }
@@ -285,6 +289,7 @@ public class TechFactory {
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Improvements, level);
         tech.setImprovement(techName);
+        tech.setIcon(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
         return tech;
       }
     }
@@ -317,6 +322,7 @@ public class TechFactory {
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Propulsion, level);
         tech.setComponent(techName);
+        tech.setIcon(Icons.getIconByName(Icons.ICON_PROPULSION_TECH));
         return tech;
       }
     }
@@ -353,6 +359,7 @@ public class TechFactory {
         } else {
           tech.setComponent(techName);
         }
+        tech.setIcon(Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH));
         return tech;
       }
     }

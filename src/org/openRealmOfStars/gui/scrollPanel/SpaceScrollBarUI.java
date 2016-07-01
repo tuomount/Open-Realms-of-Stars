@@ -161,14 +161,14 @@ public class SpaceScrollBarUI extends BasicScrollBarUI{
   protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
     if (scrollbar.getOrientation() == JScrollBar.VERTICAL) {
       GradientPaint gradient = new GradientPaint(0,0, GuiStatics.COLOR_GREY_80,
-          trackBounds.width,trackBounds.height, GuiStatics.COLOR_GREYBLUE, true);
+          trackBounds.width,trackBounds.height, GuiStatics.COLOR_GREY_40, true);
       Graphics2D g2d = (Graphics2D)g;
       g2d.setPaint(gradient);    
       g2d.fillRect(0, 0, scrollbar.getWidth(), scrollbar.getHeight());
       g2d.fillRect(0, incrButton.getHeight(), trackBounds.width, trackBounds.height);
     } else {
       GradientPaint gradient = new GradientPaint(0,0, GuiStatics.COLOR_GREY_80,
-          trackBounds.width,trackBounds.height, GuiStatics.COLOR_GREYBLUE, true);
+          trackBounds.width,trackBounds.height, GuiStatics.COLOR_GREY_40, true);
       Graphics2D g2d = (Graphics2D)g;
       g2d.setPaint(gradient);    
       g2d.fillRect(0, 0, scrollbar.getWidth(), scrollbar.getHeight());

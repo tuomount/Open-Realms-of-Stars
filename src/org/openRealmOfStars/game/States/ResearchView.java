@@ -1,6 +1,7 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -8,9 +9,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BlackPanel;
+import org.openRealmOfStars.gui.ListRenderers.TechListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
@@ -18,6 +22,7 @@ import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.ResearchTechPanel;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
@@ -83,6 +88,11 @@ public class ResearchView extends BlackPanel {
    * Electronics Research panel
    */
   private ResearchTechPanel electronicsRese;
+  
+  /**
+   * Techs which have been researched
+   */
+  private JList<Tech> techList;
   
   /**
    * Create new research for player
@@ -158,6 +168,15 @@ public class ResearchView extends BlackPanel {
     invis.add(electronicsRese);
     invis.add(Box.createRigidArea(new Dimension(10,10)));
     base.add(invis,BorderLayout.EAST);
+    
+    invis = new InvisiblePanel(base);
+    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    techList = new JList<>(player.getTechList().getList());
+    techList.setCellRenderer(new TechListRenderer());
+    JScrollPane scroll = new JScrollPane(techList);
+    techList.setBackground(Color.BLACK);
+    invis.add(scroll);
+    base.add(invis,BorderLayout.WEST);
     
     this.add(base, BorderLayout.CENTER);
     

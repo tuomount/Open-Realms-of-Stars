@@ -234,6 +234,11 @@ public class GuiStatics {
   public final static Color COLOR_GREY_80 = new Color(80,80,80);
 
   /**
+   * Grey 40
+   */
+  public final static Color COLOR_GREY_40 = new Color(40,40,40);
+
+  /**
    * Big planet screen Rock 1
    */
   public final static BufferedImage BIG_PLANET_ROCK1 = IOUtilities.loadImage(Tiles.class.getResource(

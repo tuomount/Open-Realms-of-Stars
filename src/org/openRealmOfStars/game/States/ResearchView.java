@@ -380,7 +380,7 @@ public class ResearchView extends BlackPanel {
     int subLevel = player.getTechList().getListForTypeAndLevel(TechType.Combat, level).length;
     int maxSubLevel = TechFactory.getListByTechLevel(TechType.Combat, level).length;
     int required = TechFactory.getTechCost(level);
-    int turns = (int) ((int)  (required-player.getTechList().
+    int turns = (int) Math.ceil((required-player.getTechList().
         getTechResearchPoints(TechType.Combat))/(focus*totalResearch/100.0));
     String turnsInStr = turns+" turns";
     if (turns > 10000) {
@@ -399,7 +399,7 @@ public class ResearchView extends BlackPanel {
     subLevel = player.getTechList().getListForTypeAndLevel(TechType.Defense, level).length;
     maxSubLevel = TechFactory.getListByTechLevel(TechType.Defense, level).length;
     required = TechFactory.getTechCost(level);
-    turns = (int) ((int)  (required-player.getTechList().
+    turns = (int) Math.ceil((required-player.getTechList().
         getTechResearchPoints(TechType.Defense))/(focus*totalResearch/100.0));
     turnsInStr = turns+" turns";
     if (turns > 10000) {
@@ -418,7 +418,7 @@ public class ResearchView extends BlackPanel {
     subLevel = player.getTechList().getListForTypeAndLevel(TechType.Hulls, level).length;
     maxSubLevel = TechFactory.getListByTechLevel(TechType.Hulls, level).length;
     required = TechFactory.getTechCost(level);
-    turns = (int) ((int)  (required-player.getTechList().
+    turns = (int) Math.ceil((required-player.getTechList().
         getTechResearchPoints(TechType.Hulls))/(focus*totalResearch/100.0));
     turnsInStr = turns+" turns";
     if (turns > 10000) {
@@ -437,7 +437,7 @@ public class ResearchView extends BlackPanel {
     subLevel = player.getTechList().getListForTypeAndLevel(TechType.Improvements, level).length;
     maxSubLevel = TechFactory.getListByTechLevel(TechType.Improvements, level).length;
     required = TechFactory.getTechCost(level);
-    turns = (int) ((int)  (required-player.getTechList().
+    turns = (int) Math.ceil((required-player.getTechList().
         getTechResearchPoints(TechType.Improvements))/(focus*totalResearch/100.0));
     turnsInStr = turns+" turns";
     if (turns > 10000) {
@@ -456,7 +456,7 @@ public class ResearchView extends BlackPanel {
     subLevel = player.getTechList().getListForTypeAndLevel(TechType.Propulsion, level).length;
     maxSubLevel = TechFactory.getListByTechLevel(TechType.Propulsion, level).length;
     required = TechFactory.getTechCost(level);
-    turns = (int) ((int)  (required-player.getTechList().
+    turns = (int) Math.ceil((required-player.getTechList().
         getTechResearchPoints(TechType.Propulsion))/(focus*totalResearch/100.0));
     turnsInStr = turns+" turns";
     if (turns > 10000) {
@@ -475,7 +475,7 @@ public class ResearchView extends BlackPanel {
     subLevel = player.getTechList().getListForTypeAndLevel(TechType.Electrics, level).length;
     maxSubLevel = TechFactory.getListByTechLevel(TechType.Electrics, level).length;
     required = TechFactory.getTechCost(level);
-    turns = (int) ((int)  (required-player.getTechList().
+    turns = (int) Math.ceil((required-player.getTechList().
         getTechResearchPoints(TechType.Electrics))/(focus*totalResearch/100.0));
     turnsInStr = turns+" turns";
     if (turns > 10000) {

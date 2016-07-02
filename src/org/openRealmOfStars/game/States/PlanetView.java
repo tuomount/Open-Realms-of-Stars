@@ -254,6 +254,7 @@ public class PlanetView extends BlackPanel {
       eastPanel.add(buildingLabel);
       JList<Building> buildingList = new JList<>(planet.getBuildingList());
       buildingList.setCellRenderer(new ProductionListRenderer());
+      buildingList.setAlignmentX(Component.LEFT_ALIGNMENT);
       eastPanel.add(buildingList);
       imgBase.setLayout(new BorderLayout());
       if (planet.getPlanetOwnerIndex() != -1) {

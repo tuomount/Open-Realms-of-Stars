@@ -124,7 +124,7 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_MINUS_COMBAT_RESEARCH,
         GameCommands.COMMAND_PLUS_COMBAT_RESEARCH, Icons.ICON_COMBAT_TECH,
         TechType.Combat.toString()+" 100% 1000 turns", 
-        "Focus on combat technology","Level:1 (1/6)",
+        "Focus on combat technology","Level:10 (1/6)",
         GameCommands.COMMAND_UPGRADE_COMBAT, listener);
     combatRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(combatRese);
@@ -133,7 +133,7 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_MINUS_DEFENSE_RESEARCH,
         GameCommands.COMMAND_PLUS_DEFENSE_RESEARCH, Icons.ICON_DEFENSE_TECH,
         TechType.Defense.toString()+" 100% 1000 turns", 
-        "Focus on defense technology","Level:1 (1/6)",
+        "Focus on defense technology","Level:10 (1/6)",
         GameCommands.COMMAND_UPGRADE_DEFENSE, listener);
     defenseRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(defenseRese);
@@ -142,7 +142,7 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_MINUS_HULL_RESEARCH,
         GameCommands.COMMAND_PLUS_HULL_RESEARCH, Icons.ICON_HULL_TECH,
         TechType.Hulls.toString()+" 100% 1000 turns", 
-        "Focus on hull technology", "Level:1 (1/6)",
+        "Focus on hull technology", "Level:10 (1/6)",
         GameCommands.COMMAND_UPGRADE_HULL, listener);
     hullRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(hullRese);
@@ -152,7 +152,7 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_PLUS_IMPROVEMENT_RESEARCH, Icons.ICON_IMPROVEMENT_TECH,
         TechType.Improvements.toString()+" 100% 1000 turns", 
         "Focus on planetary improvement technology",
-        "Level:1 (1/6)",GameCommands.COMMAND_UPGRADE_IMPROVEMENT, listener);
+        "Level:10 (1/6)",GameCommands.COMMAND_UPGRADE_IMPROVEMENT, listener);
     improvementRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(improvementRese);
     invis.add(Box.createRigidArea(new Dimension(10,10)));
@@ -160,7 +160,7 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_MINUS_PROPULSION_RESEARCH,
         GameCommands.COMMAND_PLUS_PROPULSION_RESEARCH, Icons.ICON_PROPULSION_TECH,
         TechType.Propulsion.toString()+" 100% 1000 turns", 
-        "Focus on propulsion technology", "Level:1 (1/6)",
+        "Focus on propulsion technology", "Level:10 (1/6)",
         GameCommands.COMMAND_UPGRADE_PROPULSION, listener);
     propulsionRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(propulsionRese);
@@ -169,7 +169,7 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_MINUS_ELECTRONICS_RESEARCH,
         GameCommands.COMMAND_PLUS_ELECTRONICS_RESEARCH, Icons.ICON_ELECTRONICS_TECH,
         TechType.Electrics.toString()+" 100% 1000 turns", 
-        "Focus on electronics technology", "Level:1 (1/6)",
+        "Focus on electronics technology", "Level:10 (1/6)",
         GameCommands.COMMAND_UPGRADE_ELECTRONICS, listener);
     electronicsRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(electronicsRese);

@@ -94,7 +94,7 @@ public class TechFactory {
     {"Capital Ship Mk2"};
 
   public static final String[] IMPROVEMENT_TECH_LEVEL1_NAMES = 
-    {"Laboratory","Barracks","Tax center"};
+    {"Basic lab","Barracks","Tax center"};
   public static final String[] IMPROVEMENT_TECH_LEVEL2_NAMES = 
     {"Advanced farm","Advanced mine","Advanced factory"};
   public static final String[] IMPROVEMENT_TECH_LEVEL3_NAMES = 
@@ -320,7 +320,7 @@ public class TechFactory {
         tech.setImprovement(techName);
         if (techName.startsWith("Barracks")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_TROOPS));
-        } else if (techName.startsWith("Laboratory") || 
+        } else if (techName.startsWith("Basic lab") || 
             techName.startsWith("Advanced laboratory") ||
             techName.startsWith("Research center") ||
             techName.startsWith("New technology center") ||

@@ -46,6 +46,7 @@ public class BuildingFactory {
     case 2: tmp = createProductionFacility(index); break; // Basic factory
     case 3: tmp = createProductionFacility(index); break; // Basic lab
     case 4: tmp = createPlanetaryImprovement(index); break; // Space port
+    case 5: tmp = createPlanetaryImprovement(index); break; // Barracks
     }
     return tmp;
   }
@@ -121,11 +122,20 @@ public class BuildingFactory {
     Building tmp = null;
     if (index == 4) {
       tmp = new Building(index, "Space port", 
-          Icons.getIconByName(Icons.ICON_DEATH), BuildingType.MILITARY);
+          Icons.getIconByName(Icons.ICON_STARBASE), BuildingType.MILITARY);
       tmp.setDescription("Space port allows building the space ships.");
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
       tmp.setMaintenanceCost(1.0);
+      return tmp;
+    } 
+    if (index == 5) {
+      tmp = new Building(index, "Barracks", 
+          Icons.getIconByName(Icons.ICON_TROOPS), BuildingType.MILITARY);
+      tmp.setDescription("Barracks train population to fight better against invaders.");
+      tmp.setProdCost(20);
+      tmp.setMetalCost(20);
+      tmp.setMaintenanceCost(0.5);
       return tmp;
     } 
     return tmp;

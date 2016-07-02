@@ -576,13 +576,20 @@ public class Planet {
     if (tmp != null) {
       result.add(tmp);
     }
-    tmp = BuildingFactory.createByName("Basic lab");
+/*    tmp = BuildingFactory.createByName("Basic lab");
     if (tmp != null) {
       result.add(tmp);
-    }
+    }*/
     tmp = BuildingFactory.createByName("Space port");
     if (tmp != null) {
       result.add(tmp);
+    }
+    String[] buildings = planetOwnerInfo.getTechList().getBuildingListFromTech();
+    for (int i=0;i<buildings.length;i++) {
+      tmp = BuildingFactory.createByName(buildings[i]);
+      if (tmp != null) {
+        result.add(tmp);
+      }
     }
     return result.toArray(new Building[result.size()]);
   }

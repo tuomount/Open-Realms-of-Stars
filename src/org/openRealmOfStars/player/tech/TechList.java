@@ -317,4 +317,19 @@ public class TechList {
     }
 
   }
+  
+  /**
+   * Get building list from researched technology
+   * @return String array of building names
+   */
+  public String[] getBuildingListFromTech() {
+    Tech[] techs = getList();
+    ArrayList<String> buildings = new ArrayList<>();
+    for (Tech tech : techs) {
+      if (tech.getImprovement() != null) {
+        buildings.add(tech.getImprovement());
+      }
+    }
+    return buildings.toArray(new String[buildings.size()]);
+  }
 }

@@ -90,7 +90,7 @@ public class BuildingFactory {
       tmp.setMineBonus(1);
       tmp.setProdCost(10);
       tmp.setMetalCost(6);
-      tmp.setDescription("Basic mine that mine 1 metal per turn.");
+      tmp.setDescription("Small scale automatic mine");
       return tmp;
     } 
     if (index == 1) {
@@ -99,7 +99,7 @@ public class BuildingFactory {
       tmp.setFarmBonus(1);;
       tmp.setProdCost(10);
       tmp.setMetalCost(4);
-      tmp.setDescription("Basic farm that farms 1 food per turn.");
+      tmp.setDescription("Automatic farm to produce food.");
       return tmp;
     } 
     if (index == 2) {
@@ -108,7 +108,7 @@ public class BuildingFactory {
       tmp.setFactBonus(1);;
       tmp.setProdCost(15);
       tmp.setMetalCost(5);
-      tmp.setDescription("Basic factory that produces 1 production per turn.");
+      tmp.setDescription("Single mass production line.");
       return tmp;
     } 
     if (index == 3) {
@@ -117,7 +117,7 @@ public class BuildingFactory {
       tmp.setReseBonus(1);;
       tmp.setProdCost(12);
       tmp.setMetalCost(4);
-      tmp.setDescription("Basic lab that creates 1 science point per turn.");
+      tmp.setDescription("Basic laboratory for science.");
       return tmp;
     } 
     if (index == 7) {
@@ -127,7 +127,7 @@ public class BuildingFactory {
       tmp.setProdCost(20);
       tmp.setMetalCost(8);
       tmp.setMaintenanceCost(0.25);
-      tmp.setDescription("Advanced farm that farms 2 food per turn.");
+      tmp.setDescription("Advanced automation farm.");
       return tmp;
     } 
     if (index == 8) {
@@ -137,7 +137,7 @@ public class BuildingFactory {
       tmp.setProdCost(20);
       tmp.setMetalCost(12);
       tmp.setMaintenanceCost(0.25);
-      tmp.setDescription("Advanced mine that mine 2 metal per turn.");
+      tmp.setDescription("Advanced mine with robotic miners.");
       return tmp;
     } 
     if (index == 9) {
@@ -147,7 +147,7 @@ public class BuildingFactory {
       tmp.setProdCost(30);
       tmp.setMetalCost(10);
       tmp.setMaintenanceCost(0.25);
-      tmp.setDescription("Advanced factory that produces 2 production per turn.");
+      tmp.setDescription("Advanced production line with robotics.");
       return tmp;
     } 
     if (index == 10) {
@@ -157,7 +157,7 @@ public class BuildingFactory {
       tmp.setProdCost(24);
       tmp.setMetalCost(8);
       tmp.setMaintenanceCost(0.25);
-      tmp.setDescription("Advanced lab that creates 2 science point per turn.");
+      tmp.setDescription("Fully equiped science laboratory.");
       return tmp;
     } 
     return tmp;
@@ -173,7 +173,7 @@ public class BuildingFactory {
     if (index == 4) {
       tmp = new Building(index, "Space port", 
           Icons.getIconByName(Icons.ICON_STARBASE), BuildingType.MILITARY);
-      tmp.setDescription("Space port allows building the space ships.");
+      tmp.setDescription("Allows building the space ships.");
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
       tmp.setMaintenanceCost(1.0);
@@ -183,7 +183,7 @@ public class BuildingFactory {
     if (index == 5) {
       tmp = new Building(index, "Barracks", 
           Icons.getIconByName(Icons.ICON_TROOPS), BuildingType.MILITARY);
-      tmp.setDescription("Barracks train population to fight better(50%) against invaders.");
+      tmp.setDescription("Train population to fight better against invaders.");
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
       tmp.setMaintenanceCost(0.5);
@@ -194,7 +194,7 @@ public class BuildingFactory {
     if (index == 6) {
       tmp = new Building(index, "Tax center", 
           Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
-      tmp.setDescription("Tax center provides 1 credit per turn.");
+      tmp.setDescription("Makes population to pay taxes.");
       tmp.setProdCost(15);
       tmp.setMetalCost(5);
       tmp.setMaintenanceCost(0);
@@ -205,7 +205,7 @@ public class BuildingFactory {
     if (index == 11) {
       tmp = new Building(index, "Market center", 
           Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
-      tmp.setDescription("Market center provides 1 credit per turn.");
+      tmp.setDescription("All sort of goods are sold.");
       tmp.setProdCost(12);
       tmp.setMetalCost(6);
       tmp.setMaintenanceCost(0);
@@ -216,7 +216,7 @@ public class BuildingFactory {
     if (index == 12) {
       tmp = new Building(index, "Culture center", 
           Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
-      tmp.setDescription("Culture center provides 1 culture per turn.");
+      tmp.setDescription("Music, Arts, poetry, movies and video games.");
       tmp.setProdCost(18);
       tmp.setMetalCost(4);
       tmp.setMaintenanceCost(0.25);
@@ -227,7 +227,7 @@ public class BuildingFactory {
     if (index == 13) {
       tmp = new Building(index, "Trade center", 
           Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
-      tmp.setDescription("Trade center provides 2 credit per turn.");
+      tmp.setDescription("Massive trade center for selling goods.");
       tmp.setProdCost(24);
       tmp.setMetalCost(12);
       tmp.setMaintenanceCost(0);
@@ -238,8 +238,7 @@ public class BuildingFactory {
     if (index == 14) {
       tmp = new Building(index, "Extreme sports center", 
           Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
-      tmp.setDescription("Extreme sports center provides 2 culture per turn \n"
-          + "and population to fight better(10%) against invaders.");
+      tmp.setDescription("Violent sports is a culture too.");
       tmp.setProdCost(30);
       tmp.setMetalCost(22);
       tmp.setMaintenanceCost(1);

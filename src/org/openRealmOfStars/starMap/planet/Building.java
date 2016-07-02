@@ -250,6 +250,61 @@ public class Building {
   public String toString() {
     return getName();
   }
+  
+  public String getFullDescription() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(name);
+    if (isSingleAllowed()) {
+      sb.append(" - one per planet");
+    }
+    sb.append("\n");
+    sb.append(description);
+    sb.append("\n");
+    sb.append("Cost: Prod:");
+    sb.append(getProdCost());
+    sb.append(" Metal:");
+    sb.append(getMetalCost());
+    if (getMaintenanceCost() > 0) {
+      sb.append(" Maintenance: ");
+      sb.append(getMaintenanceCost());
+    }
+    sb.append("\n");
+    if (getFarmBonus() > 0) {
+      sb.append("Food: +");
+      sb.append(getFarmBonus());
+    }
+    if (getMineBonus() > 0) {
+      sb.append("Mine: +");
+      sb.append(getMineBonus());
+    }
+    if (getFactBonus() > 0) {
+      sb.append("Prod: +");
+      sb.append(getFactBonus());
+    }
+    if (getCultBonus() > 0) {
+      sb.append("Cult: +");
+      sb.append(getCultBonus());
+    }
+    if (getReseBonus() > 0) {
+      sb.append("Research: +");
+      sb.append(getReseBonus());
+    }
+    if (getCredBonus() > 0) {
+      sb.append("Credit: +");
+      sb.append(getCredBonus());
+    }
+    if (getBattleBonus() > 0) {
+      sb.append("Battle: +");
+      sb.append(getBattleBonus());
+      sb.append("%");
+    }
+    if (getRecycleBonus() > 0) {
+      sb.append("Recycle: +");
+      sb.append(getRecycleBonus());
+      sb.append("%");
+    }
+    return sb.toString();
+  }
 
   /**
    * @return the maintenanceCost

@@ -4,7 +4,6 @@ package org.openRealmOfStars.game.States;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,6 +22,7 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
+import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
@@ -80,6 +80,7 @@ public class PlanetView extends BlackPanel {
   private JComboBox<Building> productionSelect;
   private TransparentLabel buildingLabel;
   private TransparentLabel buildingEstimate;
+  private InfoTextArea productionInfo;
   
   /**
    * Planet to show
@@ -94,7 +95,7 @@ public class PlanetView extends BlackPanel {
 
     // Top Panel
     InfoPanel topPanel = new InfoPanel();
-    topPanel.setLayout(new GridLayout(1, 0));
+    topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
     
     InvisiblePanel invis = new InvisiblePanel(topPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
@@ -133,6 +134,7 @@ public class PlanetView extends BlackPanel {
     cultureLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(cultureLabel);
     topPanel.add(invis);
+    topPanel.add(Box.createRigidArea(new Dimension(25,25)));
 
     invis = new InvisiblePanel(topPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
@@ -179,6 +181,7 @@ public class PlanetView extends BlackPanel {
     cultProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(cultProd);
     topPanel.add(invis);
+    topPanel.add(Box.createRigidArea(new Dimension(25,25)));
 
 
     invis = new InvisiblePanel(topPanel);
@@ -213,12 +216,13 @@ public class PlanetView extends BlackPanel {
     metalOre.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(metalOre);
     topPanel.add(invis);
+    topPanel.add(Box.createRigidArea(new Dimension(50,25)));
 
     invis = new InvisiblePanel(topPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
     IconLabel label = new IconLabel(invis,Icons.getIconByName(Icons.ICON_FACTORY), 
         "Next project:");
-    label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    label.setAlignmentX(Component.RIGHT_ALIGNMENT);
     invis.add(label);
     productionSelect = new JComboBox<>(this.planet.getProductionList());
     productionSelect.addActionListener(listener);
@@ -232,15 +236,22 @@ public class PlanetView extends BlackPanel {
     if (planet.getUnderConstruction() != null) {
       productionSelect.setSelectedItem(planet.getUnderConstruction());
     }
+    productionSelect.setAlignmentX(Component.RIGHT_ALIGNMENT);
     invis.add(productionSelect);
     invis.add(Box.createRigidArea(new Dimension(60,5)));
     buildingEstimate = new TransparentLabel(topPanel,
         planet.getProductionTime((Building) productionSelect.getSelectedItem()));
+    buildingEstimate.setAlignmentX(Component.RIGHT_ALIGNMENT);
     invis.add(buildingEstimate);
-    invis.add(Box.createRigidArea(new Dimension(60,25)));
-    
+    invis.add(Box.createRigidArea(new Dimension(50,25)));
     topPanel.add(invis);
     
+    topPanel.add(Box.createRigidArea(new Dimension(10,25)));
+    productionInfo = new InfoTextArea(5, 30);
+    productionInfo.setEditable(false);
+    topPanel.add(productionInfo);
+    topPanel.add(Box.createRigidArea(new Dimension(30,25)));
+
     
 
     topPanel.setTitle(planet.getName());
@@ -319,8 +330,11 @@ public class PlanetView extends BlackPanel {
     buildingLabel.setText(
         "Buildings("+planet.getUsedPlanetSize()+"/"+planet.getGroundSize()+"):");
     
+    Building building = (Building) productionSelect.getSelectedItem();
     buildingEstimate.setText(
-      planet.getProductionTime((Building) productionSelect.getSelectedItem()));
+      planet.getProductionTime(building));
+    
+    productionInfo.setText(building.getFullDescription());
 
 
   }

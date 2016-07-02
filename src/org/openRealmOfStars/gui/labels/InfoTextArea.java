@@ -99,6 +99,7 @@ public class InfoTextArea extends JTextArea {
    */
   public InfoTextArea(int rows, int columns) {
     super(rows,columns);
+    this.setFont(GuiStatics.getFontCubellanSC());
     this.setForeground(Color.white);
     this.setBackground(Color.BLACK);
     autoScroll = false;
@@ -110,6 +111,7 @@ public class InfoTextArea extends JTextArea {
    */
   public InfoTextArea() {
     super(17,10);
+    this.setFont(GuiStatics.getFontCubellanSC());
     this.setForeground(Color.white);
     this.setBackground(Color.BLACK);
     autoScroll = false;
@@ -122,6 +124,7 @@ public class InfoTextArea extends JTextArea {
    */
   public InfoTextArea(String text){
     super(text);
+    this.setFont(GuiStatics.getFontCubellanSC());
     textToShow = text;
     this.setForeground(Color.white);
     this.setBackground(Color.BLACK);
@@ -216,7 +219,7 @@ public class InfoTextArea extends JTextArea {
     int width = getWidth()-inset.left-inset.right;
     int height = getHeight()-inset.top-inset.bottom;
     g.fillRect(sx, sx, width, height);
-    g.setFont(GuiStatics.getFontCubellanSC());
+    g.setFont(this.getFont());
     if (getText() != null ) {
       StringBuilder sb = new StringBuilder();
       if (autoScroll == false) {

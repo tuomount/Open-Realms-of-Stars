@@ -247,10 +247,11 @@ public class PlanetView extends BlackPanel {
     topPanel.add(invis);
     
     topPanel.add(Box.createRigidArea(new Dimension(10,25)));
-    productionInfo = new InfoTextArea(5, 30);
+    productionInfo = new InfoTextArea(5, 35);
+    productionInfo.setFont(GuiStatics.getFontCubellanSmaller());
     productionInfo.setEditable(false);
     topPanel.add(productionInfo);
-    topPanel.add(Box.createRigidArea(new Dimension(30,25)));
+    topPanel.add(Box.createRigidArea(new Dimension(15,25)));
 
     
 

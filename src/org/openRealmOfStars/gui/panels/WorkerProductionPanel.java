@@ -73,13 +73,16 @@ public class WorkerProductionPanel extends InvisiblePanel {
     btnMinus = new IconButton(Icons.getIconByName(Icons.ICON_MINUS), 
         Icons.getIconByName(Icons.ICON_MINUS_PRESSED), false, actionMinus,this);
     btnMinus.addActionListener(listener);
+    btnMinus.setAlignmentX(Component.LEFT_ALIGNMENT);
     this.add(btnMinus);
     label = new IconLabel(this, Icons.getIconByName(iconName),text);
     label.setToolTipText(toolTip);
+    label.setAlignmentX(Component.CENTER_ALIGNMENT);
     this.add(label);
     btnPlus = new IconButton(Icons.getIconByName(Icons.ICON_PLUS), 
         Icons.getIconByName(Icons.ICON_PLUS_PRESSED), false, actionPlus,this);
     btnPlus.addActionListener(listener);
+    btnPlus.setAlignmentX(Component.RIGHT_ALIGNMENT);
     this.add(btnPlus);
   }
   

@@ -183,7 +183,7 @@ public class BuildingFactory {
     if (index == 5) {
       tmp = new Building(index, "Barracks", 
           Icons.getIconByName(Icons.ICON_TROOPS), BuildingType.MILITARY);
-      tmp.setDescription("Train population to fight better against invaders.");
+      tmp.setDescription("Population fights better against invaders.");
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
       tmp.setMaintenanceCost(0.5);
@@ -250,7 +250,7 @@ public class BuildingFactory {
     if (index == 15) {
       tmp = new Building(index, "Recycle center", 
           Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH), BuildingType.FACTORY);
-      tmp.setDescription("When destroying buildings or ships 50% metal is recycled.");
+      tmp.setDescription("When destroying buildings or ships 50%\nmetal is recycled.");
       tmp.setProdCost(15);
       tmp.setMetalCost(5);
       tmp.setMaintenanceCost(1);

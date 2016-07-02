@@ -49,7 +49,12 @@ public class GuiStatics {
    * Regular cubellan font
    */
   private static Font fontCubellan;
-  
+
+  /**
+   * Regular cubellan font but smaller
+   */
+  private static Font fontCubellanSmall;
+
   /**
    * Get Regular Cubellan font
    * @return Cubellan font
@@ -67,6 +72,25 @@ public class GuiStatics {
       }
     }
     return fontCubellan;
+  }
+
+  /**
+   * Get Regular Cubellan font but smaller
+   * @return Cubellan font
+   */
+  public static Font getFontCubellanSmaller() {
+    if (fontCubellanSmall == null) { 
+      try {
+        InputStream is = Tiles.class.getResource("/resources/fonts/Cubellan_v_0_7/Cubellan.ttf").openStream();
+        fontCubellanSmall = Font.createFont(Font.TRUETYPE_FONT, is);
+        fontCubellanSmall = fontCubellanSmall.deriveFont(13F);
+        is.close();
+      } catch (IOException | FontFormatException e) {
+        System.err.println("Error:"+e.getMessage());
+        return FONT_SMALL;
+      }
+    }
+    return fontCubellanSmall;
   }
 
   /**
@@ -118,12 +142,12 @@ public class GuiStatics {
   }
 
   /**
-   * Small cubellan font
+   * Small cubellan font for Small Caps
    */
   private static Font fontCubellanSC;
   
   /**
-   * Get Regular Cubellan font
+   * Get Cubellan font with Small Caps
    * @return Cubellan font
    */
   public static Font getFontCubellanSC() {

@@ -28,10 +28,10 @@ public class BuildingFactory {
 
   /**
    * Current maximum buildings for whole game.
-   * Rememeber to increase this when new building is added to game.
+   * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 5;
+  private static final int MAX_BUILDING = 16;
   
   /**
    * Create planetary building with index
@@ -41,12 +41,22 @@ public class BuildingFactory {
   public static Building create(int index) {
     Building tmp = null;
     switch (index) {
-    case 0: tmp = createProductionFacility(index); break; // Basic mine
-    case 1: tmp = createProductionFacility(index); break; // Basic farm
-    case 2: tmp = createProductionFacility(index); break; // Basic factory
-    case 3: tmp = createProductionFacility(index); break; // Basic lab
-    case 4: tmp = createPlanetaryImprovement(index); break; // Space port
-    case 5: tmp = createPlanetaryImprovement(index); break; // Barracks
+    case 0 : tmp = createProductionFacility(index); break; // Basic mine
+    case 1 : tmp = createProductionFacility(index); break; // Basic farm
+    case 2 : tmp = createProductionFacility(index); break; // Basic factory
+    case 3 : tmp = createProductionFacility(index); break; // Basic lab
+    case 4 : tmp = createPlanetaryImprovement(index); break; // Space port
+    case 5 : tmp = createPlanetaryImprovement(index); break; // Barracks
+    case 6 : tmp = createPlanetaryImprovement(index); break; // Tax center
+    case 7 : tmp = createProductionFacility(index); break; // Advanced farm
+    case 8 : tmp = createProductionFacility(index); break; // Advanced mine
+    case 9 : tmp = createProductionFacility(index); break; // Advanced factory
+    case 10: tmp = createProductionFacility(index); break; // Advanced laboratory
+    case 11: tmp = createPlanetaryImprovement(index); break; // Market center
+    case 12: tmp = createPlanetaryImprovement(index); break; // Culture center
+    case 13: tmp = createPlanetaryImprovement(index); break; // Trade center
+    case 14: tmp = createPlanetaryImprovement(index); break; // Extreme sports center
+    case 15: tmp = createPlanetaryImprovement(index); break; // Recycle center
     }
     return tmp;
   }
@@ -110,6 +120,46 @@ public class BuildingFactory {
       tmp.setDescription("Basic lab that creates 1 science point per turn.");
       return tmp;
     } 
+    if (index == 7) {
+      tmp = new Building(index, "Advanced farm", 
+          Icons.getIconByName(Icons.ICON_FARM), BuildingType.FARM);
+      tmp.setFarmBonus(2);
+      tmp.setProdCost(20);
+      tmp.setMetalCost(8);
+      tmp.setMaintenanceCost(0.25);
+      tmp.setDescription("Advanced farm that farms 2 food per turn.");
+      return tmp;
+    } 
+    if (index == 8) {
+      tmp = new Building(index, "Advanced mine", 
+          Icons.getIconByName(Icons.ICON_MINE), BuildingType.MINE);
+      tmp.setMineBonus(2);
+      tmp.setProdCost(20);
+      tmp.setMetalCost(12);
+      tmp.setMaintenanceCost(0.25);
+      tmp.setDescription("Advanced mine that mine 2 metal per turn.");
+      return tmp;
+    } 
+    if (index == 9) {
+      tmp = new Building(index, "Advanced factory", 
+          Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
+      tmp.setFactBonus(2);;
+      tmp.setProdCost(30);
+      tmp.setMetalCost(10);
+      tmp.setMaintenanceCost(0.25);
+      tmp.setDescription("Advanced factory that produces 2 production per turn.");
+      return tmp;
+    } 
+    if (index == 10) {
+      tmp = new Building(index, "Advanced laboratory", 
+          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+      tmp.setReseBonus(2);
+      tmp.setProdCost(24);
+      tmp.setMetalCost(8);
+      tmp.setMaintenanceCost(0.25);
+      tmp.setDescription("Advanced lab that creates 2 science point per turn.");
+      return tmp;
+    } 
     return tmp;
   }
   
@@ -127,15 +177,86 @@ public class BuildingFactory {
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
       tmp.setMaintenanceCost(1.0);
+      tmp.setSingleAllowed(true);
       return tmp;
     } 
     if (index == 5) {
       tmp = new Building(index, "Barracks", 
           Icons.getIconByName(Icons.ICON_TROOPS), BuildingType.MILITARY);
-      tmp.setDescription("Barracks train population to fight better against invaders.");
+      tmp.setDescription("Barracks train population to fight better(50%) against invaders.");
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
       tmp.setMaintenanceCost(0.5);
+      tmp.setBattleBonus(50);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    } 
+    if (index == 6) {
+      tmp = new Building(index, "Tax center", 
+          Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
+      tmp.setDescription("Tax center provides 1 credit per turn.");
+      tmp.setProdCost(15);
+      tmp.setMetalCost(5);
+      tmp.setMaintenanceCost(0);
+      tmp.setCredBonus(1);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    } 
+    if (index == 11) {
+      tmp = new Building(index, "Market center", 
+          Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
+      tmp.setDescription("Market center provides 1 credit per turn.");
+      tmp.setProdCost(12);
+      tmp.setMetalCost(6);
+      tmp.setMaintenanceCost(0);
+      tmp.setCredBonus(1);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    } 
+    if (index == 12) {
+      tmp = new Building(index, "Culture center", 
+          Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
+      tmp.setDescription("Culture center provides 1 culture per turn.");
+      tmp.setProdCost(18);
+      tmp.setMetalCost(4);
+      tmp.setMaintenanceCost(0.25);
+      tmp.setCultBonus(1);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    } 
+    if (index == 13) {
+      tmp = new Building(index, "Trade center", 
+          Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
+      tmp.setDescription("Trade center provides 2 credit per turn.");
+      tmp.setProdCost(24);
+      tmp.setMetalCost(12);
+      tmp.setMaintenanceCost(0);
+      tmp.setCredBonus(2);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    } 
+    if (index == 14) {
+      tmp = new Building(index, "Extreme sports center", 
+          Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
+      tmp.setDescription("Extreme sports center provides 2 culture per turn \n"
+          + "and population to fight better(10%) against invaders.");
+      tmp.setProdCost(30);
+      tmp.setMetalCost(22);
+      tmp.setMaintenanceCost(1);
+      tmp.setCultBonus(2);
+      tmp.setBattleBonus(110);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    } 
+    if (index == 15) {
+      tmp = new Building(index, "Recycle center", 
+          Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH), BuildingType.FACTORY);
+      tmp.setDescription("When destroying buildings or ships 50% metal is recycled.");
+      tmp.setProdCost(15);
+      tmp.setMetalCost(5);
+      tmp.setMaintenanceCost(1);
+      tmp.setRecycleBonus(50);
+      tmp.setSingleAllowed(true);
       return tmp;
     } 
     return tmp;

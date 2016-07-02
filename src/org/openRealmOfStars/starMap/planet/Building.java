@@ -89,6 +89,21 @@ public class Building {
   private double maintenanceCost;
   
   /**
+   * Only single bulding allowed per planet
+   */
+  private boolean singleAllowed;
+  
+  /**
+   * Building's battle bonus
+   */
+  private int battleBonus;
+
+  /**
+   * Building's recycle bonus
+   */
+  private int recycleBonus;
+
+  /**
    * Construct building for planet
    * @param index Unique number for building
    * @param name Building name
@@ -110,6 +125,9 @@ public class Building {
     this.prodCost = 1;
     this.metalCost = 1;
     this.maintenanceCost = 0;
+    this.singleAllowed = false;
+    this.battleBonus = 0;
+    this.recycleBonus = 0;
   }
 
   public String getName() {
@@ -245,6 +263,30 @@ public class Building {
    */
   public void setMaintenanceCost(double maintenanceCost) {
     this.maintenanceCost = maintenanceCost;
+  }
+
+  public boolean isSingleAllowed() {
+    return singleAllowed;
+  }
+
+  public void setSingleAllowed(boolean singleAllowed) {
+    this.singleAllowed = singleAllowed;
+  }
+
+  public int getBattleBonus() {
+    return battleBonus;
+  }
+
+  public void setBattleBonus(int battleBonus) {
+    this.battleBonus = battleBonus;
+  }
+
+  public int getRecycleBonus() {
+    return recycleBonus;
+  }
+
+  public void setRecycleBonus(int recycleBonus) {
+    this.recycleBonus = recycleBonus;
   }
   
   

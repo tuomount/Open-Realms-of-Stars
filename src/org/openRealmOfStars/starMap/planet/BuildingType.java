@@ -28,6 +28,7 @@ public enum BuildingType {
   FACTORY,
   RESEARCH,
   CULTURE,
-  MILITARY;
+  MILITARY,
+  CREDIT;
   
 }

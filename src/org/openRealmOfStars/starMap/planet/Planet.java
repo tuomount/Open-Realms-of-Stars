@@ -563,6 +563,7 @@ public class Planet {
    * @return Building list of production
    */
   public Building[] getProductionList() {
+    Building[] alreadyBuilt = getBuildingList();
     ArrayList<Building> result = new ArrayList<>();
     Building tmp = BuildingFactory.createByName("Basic mine");
     if (tmp != null) {
@@ -582,13 +583,39 @@ public class Planet {
     }*/
     tmp = BuildingFactory.createByName("Space port");
     if (tmp != null) {
-      result.add(tmp);
+      if (tmp.isSingleAllowed()) {
+        boolean built = false;
+        for (int j=0;j<alreadyBuilt.length;j++) {
+          if (alreadyBuilt[j].getName().equals(tmp.getName())) {
+           built = true;
+           break;
+          }
+        }
+        if (!built) {
+          result.add(tmp);
+        }
+      } else {
+        result.add(tmp);
+      }
     }
     String[] buildings = planetOwnerInfo.getTechList().getBuildingListFromTech();
     for (int i=0;i<buildings.length;i++) {
       tmp = BuildingFactory.createByName(buildings[i]);
       if (tmp != null) {
-        result.add(tmp);
+        if (tmp.isSingleAllowed()) {
+          boolean built = false;
+          for (int j=0;j<alreadyBuilt.length;j++) {
+            if (alreadyBuilt[j].getName().equals(tmp.getName())) {
+             built = true;
+             break;
+            }
+          }
+          if (!built) {
+            result.add(tmp);
+          }
+        } else {
+          result.add(tmp);
+        }
       }
     }
     return result.toArray(new Building[result.size()]);

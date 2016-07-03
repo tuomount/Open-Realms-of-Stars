@@ -263,6 +263,26 @@ public class Planet {
       this.buildings.add(building);
     }
   }
+  
+  /**
+   * Remove building from planet and apply recycle bonus if available
+   * @param building to remove
+   */
+  public void removeBuilding(Building building) {
+    if (building != null) {
+      int recycleBonus = getRecycleBonus();
+      for (int i=0;i<buildings.size();i++) {
+        Building temp = buildings.get(i);
+        if (temp.getName().equals(building.getName())) {
+          buildings.remove(i);
+          if (recycleBonus > 0) {
+            metal = metal +building.getMetalCost()*recycleBonus/100;
+          }
+        }
+      }
+    }
+    
+  }
 
   /**
    * Get production time as String
@@ -834,6 +854,21 @@ public class Planet {
     if (this.tax < 0) {
       this.tax = 0;
     }
+  }
+  
+  /**
+   * Get planet recycle bonus
+   * @return Recycle bonus
+   */
+  public int getRecycleBonus() {
+    int result = 0;
+    Building[] buildings = getBuildingList();
+    for (Building building : buildings) {
+      if (building.getRecycleBonus() > result) {
+        result = building.getRecycleBonus();
+      }
+    }
+    return result;
   }
   
 

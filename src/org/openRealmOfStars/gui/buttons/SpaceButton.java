@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.border.EtchedBorder;
 
 import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.icons.Icon16x16;
 
 
 /**
@@ -44,6 +45,11 @@ public class SpaceButton extends JButton {
   private static final long serialVersionUID = 1L;
 
   /**
+   * Space button icon
+   */
+  private Icon16x16 icon;
+
+  /**
    * Space Button with blue background and golden text
    * @param text Text shown in button
    * @param actionCommand Action command as String
@@ -57,6 +63,27 @@ public class SpaceButton extends JButton {
     Dimension size = this.getPreferredSize();    
     size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)+20;
     size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), text)+10;
+    this.setMinimumSize(size);
+    this.setPreferredSize(size);
+    this.setMaximumSize(size);
+    icon = null;
+  }
+  
+  
+  /**
+   * Set space Icon, Null to disable
+   * @param icon Icon16x16 icon
+   */
+  public void setSpaceIcon(Icon16x16 icon) {
+    this.icon = icon;
+    Dimension size = this.getPreferredSize();    
+    if (this.icon != null) {
+      size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), getText())+20+16;
+      size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), getText())+10;
+    } else {
+      size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), getText())+20;
+      size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), getText())+10;      
+    }
     this.setMinimumSize(size);
     this.setPreferredSize(size);
     this.setMaximumSize(size);
@@ -102,6 +129,10 @@ public class SpaceButton extends JButton {
     }
     g.setFont(GuiStatics.getFontCubellan());
     int offsetX = width/2-textWidth/2+sx;
+    if (icon != null) {
+      offsetX=offsetX+16;
+      icon.draw(g2d, sx, sy);
+    }
     if (offsetX < 0) {
       offsetX = sx;
     }

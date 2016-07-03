@@ -178,6 +178,11 @@ public class GameCommands {
   public static final String COMMAND_PRODUCTION_LIST = "ProductionList";
 
   /**
+   * Demolish/recycle building
+   */
+  public static final String COMMAND_DEMOLISH_BUILDING = "DemolishBuilding";
+
+  /**
    * New Game command
    */
   public static final String COMMAND_NEW_GAME = "NewGame";
@@ -191,5 +196,7 @@ public class GameCommands {
    * Quit Game command
    */
   public static final String COMMAND_QUIT_GAME = "QuitGame";
+  
+  
 
 }

@@ -21,6 +21,7 @@ import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.ProductionListRenderer;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
+import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
@@ -86,6 +87,7 @@ public class PlanetView extends BlackPanel {
   private InfoTextArea productionInfo;
   private InfoTextArea buildingInfo;
   private JList<Building> buildingList;
+  private SpaceButton demolishBuildingBtn;
   /**
    * Planet to show
    */
@@ -282,6 +284,14 @@ public class PlanetView extends BlackPanel {
       buildingInfo.setFont(GuiStatics.getFontCubellanSmaller());
       buildingInfo.setEditable(false);
       eastPanel.add(buildingInfo);
+      String demoBtnText = "Demolish";
+      if (planet.getRecycleBonus() > 0) {
+        demoBtnText = "Recycle";
+      }
+      demolishBuildingBtn = new SpaceButton(demoBtnText, GameCommands.COMMAND_DEMOLISH_BUILDING);
+      demolishBuildingBtn.setSpaceIcon(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+      demolishBuildingBtn.addActionListener(listener);
+      eastPanel.add(demolishBuildingBtn);
       
       imgBase.setLayout(new BorderLayout());
       if (planet.getPlanetOwnerIndex() != -1) {
@@ -351,7 +361,7 @@ public class PlanetView extends BlackPanel {
       planet.getProductionTime(building));
     
     productionInfo.setText(building.getFullDescription());
-
+    buildingList.setListData(planet.getBuildingList());
 
   }
 
@@ -379,6 +389,13 @@ public class PlanetView extends BlackPanel {
       Building building = buildingList.getSelectedValue();
       if (building != null) {
         buildingInfo.setText(building.getFullDescription());
+      }
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_DEMOLISH_BUILDING)) {
+      Building building = buildingList.getSelectedValue();
+      if (building != null) {
+        planet.removeBuilding(building);
+        updatePanel();
       }
     }
     if (arg0.getActionCommand().equalsIgnoreCase(

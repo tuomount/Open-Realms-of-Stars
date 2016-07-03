@@ -31,6 +31,7 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.planet.construction.Construction;
 
 /**
  * 
@@ -80,7 +81,7 @@ public class PlanetView extends BlackPanel {
   private IconLabel maintenance;
   private IconLabel metal;
   private IconLabel metalOre;
-  private JComboBox<Building> productionSelect;
+  private JComboBox<Construction> constructionSelect;
   private TransparentLabel buildingLabel;
   private TransparentLabel buildingEstimate;
   private InfoTextArea productionInfo;
@@ -230,23 +231,29 @@ public class PlanetView extends BlackPanel {
         "Next project:");
     label.setAlignmentX(Component.RIGHT_ALIGNMENT);
     invis.add(label);
-    productionSelect = new JComboBox<>(this.planet.getProductionList());
-    productionSelect.addActionListener(listener);
-    productionSelect.setActionCommand(GameCommands.COMMAND_PRODUCTION_LIST);
-    productionSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
-    productionSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-    productionSelect.setBorder(new SimpleBorder());
-    productionSelect.setFont(GuiStatics.getFontCubellan());
-    productionSelect.setRenderer(new ProductionListRenderer());
-    productionSelect.setEditable(false);
+    constructionSelect = new JComboBox<>(this.planet.getProductionList());
+    constructionSelect.addActionListener(listener);
+    constructionSelect.setActionCommand(GameCommands.COMMAND_PRODUCTION_LIST);
+    constructionSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    constructionSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    constructionSelect.setBorder(new SimpleBorder());
+    constructionSelect.setFont(GuiStatics.getFontCubellan());
+    constructionSelect.setRenderer(new ProductionListRenderer());
     if (planet.getUnderConstruction() != null) {
-      productionSelect.setSelectedItem(planet.getUnderConstruction());
+      Construction[] list = this.planet.getProductionList();
+      for (int i = 0;i<list.length;i++) {
+        if (list[i].getName().equals(planet.getUnderConstruction().getName())) {
+          constructionSelect.setSelectedIndex(i);
+          break;
+        }
+      }
     }
-    productionSelect.setAlignmentX(Component.RIGHT_ALIGNMENT);
-    invis.add(productionSelect);
+    constructionSelect.setEditable(false);
+    constructionSelect.setAlignmentX(Component.RIGHT_ALIGNMENT);
+    invis.add(constructionSelect);
     invis.add(Box.createRigidArea(new Dimension(60,5)));
     buildingEstimate = new TransparentLabel(topPanel,
-        planet.getProductionTime((Building) productionSelect.getSelectedItem()));
+        planet.getProductionTime((Building) constructionSelect.getSelectedItem()));
     buildingEstimate.setAlignmentX(Component.RIGHT_ALIGNMENT);
     invis.add(buildingEstimate);
     invis.add(Box.createRigidArea(new Dimension(50,25)));
@@ -355,7 +362,7 @@ public class PlanetView extends BlackPanel {
     buildingLabel.setText(
         "Buildings("+planet.getUsedPlanetSize()+"/"+planet.getGroundSize()+"):");
     
-    Building building = (Building) productionSelect.getSelectedItem();
+    Building building = (Building) constructionSelect.getSelectedItem();
     buildingEstimate.setText(
       planet.getProductionTime(building));
     
@@ -454,7 +461,7 @@ public class PlanetView extends BlackPanel {
       updatePanel();
     }
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_PRODUCTION_LIST)) {
-      planet.setUnderConstruction((Building) productionSelect.getSelectedItem()); 
+      planet.setUnderConstruction((Construction) constructionSelect.getSelectedItem()); 
       updatePanel();
     }
   }

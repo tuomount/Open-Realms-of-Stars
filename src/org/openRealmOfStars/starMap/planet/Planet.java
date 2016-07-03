@@ -9,6 +9,7 @@ import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
@@ -183,7 +184,7 @@ public class Planet {
   /**
    * What building / Planetary improvement is currently under construction
    */
-  private Building underConstruction;
+  private Construction underConstruction;
   /**
    * Maximum number of different production
    */
@@ -580,12 +581,12 @@ public class Planet {
   }
 
   /**
-   * Get the production list for planet
+   * Get the construction list for planet
    * @return Building list of production
    */
-  public Building[] getProductionList() {
+  public Construction[] getProductionList() {
     Building[] alreadyBuilt = getBuildingList();
-    ArrayList<Building> result = new ArrayList<>();
+    ArrayList<Construction> result = new ArrayList<>();
     Building tmp = BuildingFactory.createByName("Basic mine");
     if (tmp != null) {
       result.add(tmp);
@@ -598,10 +599,6 @@ public class Planet {
     if (tmp != null) {
       result.add(tmp);
     }
-/*    tmp = BuildingFactory.createByName("Basic lab");
-    if (tmp != null) {
-      result.add(tmp);
-    }*/
     tmp = BuildingFactory.createByName("Space port");
     if (tmp != null) {
       if (tmp.isSingleAllowed()) {
@@ -641,7 +638,7 @@ public class Planet {
         }
       }
     }
-    return result.toArray(new Building[result.size()]);
+    return result.toArray(new Construction[result.size()]);
   }
 
   /**
@@ -778,11 +775,11 @@ public class Planet {
     this.prodResource = prodResource;
   }
 
-  public Building getUnderConstruction() {
+  public Construction getUnderConstruction() {
     return underConstruction;
   }
 
-  public void setUnderConstruction(Building underConstruction) {
+  public void setUnderConstruction(Construction underConstruction) {
     this.underConstruction = underConstruction;
   }
   
@@ -813,7 +810,9 @@ public class Planet {
             prodResource >= underConstruction.getProdCost()  && groundSize > buildings.size()) {
           metal = metal - underConstruction.getMetalCost();
           prodResource = prodResource - underConstruction.getProdCost();
-          buildings.add(underConstruction);
+          if (underConstruction instanceof Building) {
+            buildings.add((Building) underConstruction);
+          }
         }
       }
     }

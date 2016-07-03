@@ -8,7 +8,7 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.openRealmOfStars.gui.GuiStatics;
-import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.planet.construction.Construction;
 
 /**
  * 
@@ -32,13 +32,13 @@ import org.openRealmOfStars.starMap.planet.construction.Building;
  * Production list renderer
  * 
  */
-public class ProductionListRenderer implements ListCellRenderer<Building> {
+public class ProductionListRenderer implements ListCellRenderer<Construction> {
 
   protected DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
   
 
   @Override
-  public Component getListCellRendererComponent(JList<? extends Building> list, Building value, int index,
+  public Component getListCellRendererComponent(JList<? extends Construction> list, Construction value, int index,
       boolean isSelected, boolean cellHasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(list, value, index,
         isSelected, cellHasFocus);

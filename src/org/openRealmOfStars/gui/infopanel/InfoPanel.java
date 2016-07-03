@@ -1,10 +1,8 @@
 package org.openRealmOfStars.gui.infopanel;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
@@ -52,7 +50,6 @@ public class InfoPanel extends JPanel {
    */
   public InfoPanel() {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    this.add(Box.createRigidArea(new Dimension(130,50)));
     border = new ScifiBorder("Galactic Info");
     this.setBorder(border);
   }

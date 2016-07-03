@@ -2,6 +2,7 @@ package org.openRealmOfStars.game.States;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -11,6 +12,8 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BigImagePanel;
@@ -81,7 +84,8 @@ public class PlanetView extends BlackPanel {
   private TransparentLabel buildingLabel;
   private TransparentLabel buildingEstimate;
   private InfoTextArea productionInfo;
-  
+  private InfoTextArea buildingInfo;
+  private JList<Building> buildingList;
   /**
    * Planet to show
    */
@@ -97,6 +101,7 @@ public class PlanetView extends BlackPanel {
     InfoPanel topPanel = new InfoPanel();
     topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
     
+    topPanel.add(Box.createRigidArea(new Dimension(15,25)));
     InvisiblePanel invis = new InvisiblePanel(topPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
     totalPeople = new IconLabel(invis,Icons.getIconByName(Icons.ICON_PEOPLE), 
@@ -264,10 +269,20 @@ public class PlanetView extends BlackPanel {
       buildingLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
       eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
       eastPanel.add(buildingLabel);
-      JList<Building> buildingList = new JList<>(planet.getBuildingList());
+      buildingList = new JList<>(planet.getBuildingList());
       buildingList.setCellRenderer(new ProductionListRenderer());
       buildingList.setAlignmentX(Component.LEFT_ALIGNMENT);
-      eastPanel.add(buildingList);
+      buildingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+      buildingList.setBackground(Color.BLACK);
+      JScrollPane scroll = new JScrollPane(buildingList);
+      scroll.setBackground(Color.BLACK);
+      scroll.setPreferredSize(new Dimension(200, 200));
+      eastPanel.add(scroll);
+      buildingInfo = new InfoTextArea(5, 35);
+      buildingInfo.setFont(GuiStatics.getFontCubellanSmaller());
+      buildingInfo.setEditable(false);
+      eastPanel.add(buildingInfo);
+      
       imgBase.setLayout(new BorderLayout());
       if (planet.getPlanetOwnerIndex() != -1) {
         imgBase.add(eastPanel,BorderLayout.EAST);
@@ -360,6 +375,12 @@ public class PlanetView extends BlackPanel {
    * @param arg0 ActionEvent command what player did
    */
   public void handleAction(ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
+      Building building = buildingList.getSelectedValue();
+      if (building != null) {
+        buildingInfo.setText(building.getFullDescription());
+      }
+    }
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_MINUS_FARM) && planet.getWorkers(Planet.FOOD_FARMERS) >0) {
       planet.setWorkers(Planet.FOOD_FARMERS, planet.getWorkers(Planet.FOOD_FARMERS)-1);

@@ -108,9 +108,10 @@ public class StarMapView extends BlackPanel {
     mapPanel.addMouseListener(starMapMouseListener);
     mapPanel.addMouseMotionListener(starMapMouseListener);
     
-    InfoPanel bottomPanel = new EmptyInfoPanel();
+    InfoPanel bottomPanel = new EmptyInfoPanel();    
     bottomPanel.setTitle(players.getCurrentPlayerInfo().getEmpireName());
     bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
+    bottomPanel.add(Box.createRigidArea(new Dimension(15,25)));
     InvisiblePanel invis = new InvisiblePanel(bottomPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
     credProd = new IconLabel(invis,Icons.getIconByName(Icons.ICON_CREDIT), 

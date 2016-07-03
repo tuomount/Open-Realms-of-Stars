@@ -394,7 +394,7 @@ public class Planet {
     for (Building build : getBuildingList()) {
       result = result +build.getMaintenanceCost();
     }
-    if (planetOwnerInfo.getRace() == SpaceRace.MECHIONS) {
+    if (planetOwnerInfo != null && planetOwnerInfo.getRace() == SpaceRace.MECHIONS) {
       // Mechions have maintenance cost for each 4th of population
       result = result +Math.floor(getTotalPopulation()/4);
     }
@@ -598,23 +598,25 @@ public class Planet {
         result.add(tmp);
       }
     }
-    String[] buildings = planetOwnerInfo.getTechList().getBuildingListFromTech();
-    for (int i=0;i<buildings.length;i++) {
-      tmp = BuildingFactory.createByName(buildings[i]);
-      if (tmp != null) {
-        if (tmp.isSingleAllowed()) {
-          boolean built = false;
-          for (int j=0;j<alreadyBuilt.length;j++) {
-            if (alreadyBuilt[j].getName().equals(tmp.getName())) {
-             built = true;
-             break;
+    if (planetOwnerInfo != null) {
+      String[] buildings = planetOwnerInfo.getTechList().getBuildingListFromTech();
+      for (int i=0;i<buildings.length;i++) {
+        tmp = BuildingFactory.createByName(buildings[i]);
+        if (tmp != null) {
+          if (tmp.isSingleAllowed()) {
+            boolean built = false;
+            for (int j=0;j<alreadyBuilt.length;j++) {
+              if (alreadyBuilt[j].getName().equals(tmp.getName())) {
+               built = true;
+               break;
+              }
             }
-          }
-          if (!built) {
+            if (!built) {
+              result.add(tmp);
+            }
+          } else {
             result.add(tmp);
           }
-        } else {
-          result.add(tmp);
         }
       }
     }

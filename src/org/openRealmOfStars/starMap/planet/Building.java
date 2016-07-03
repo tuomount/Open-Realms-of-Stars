@@ -260,12 +260,12 @@ public class Building {
     sb.append("\n");
     sb.append(description);
     sb.append("\n");
-    sb.append("Cost: Prod:");
+    sb.append("Cost: Prod.:");
     sb.append(getProdCost());
     sb.append(" Metal:");
     sb.append(getMetalCost());
     if (getMaintenanceCost() > 0) {
-      sb.append(" Maintenance: ");
+      sb.append(" Mainte.: ");
       sb.append(getMaintenanceCost());
     }
     sb.append("\n");
@@ -278,19 +278,19 @@ public class Building {
       sb.append(getMineBonus());
     }
     if (getFactBonus() > 0) {
-      sb.append("Prod: +");
+      sb.append("Prod.: +");
       sb.append(getFactBonus());
     }
     if (getCultBonus() > 0) {
-      sb.append("Cult: +");
+      sb.append("Cult.: +");
       sb.append(getCultBonus());
     }
     if (getReseBonus() > 0) {
-      sb.append("Research: +");
+      sb.append("Resea.: +");
       sb.append(getReseBonus());
     }
     if (getCredBonus() > 0) {
-      sb.append("Credit: +");
+      sb.append("Cred.: +");
       sb.append(getCredBonus());
     }
     if (getBattleBonus() > 0) {

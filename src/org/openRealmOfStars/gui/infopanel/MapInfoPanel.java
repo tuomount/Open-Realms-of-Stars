@@ -65,6 +65,7 @@ public class MapInfoPanel extends InfoPanel {
   private Planet planet;
   
   public MapInfoPanel(ActionListener listener) {
+    this.add(Box.createRigidArea(new Dimension(130,50)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH*2, Tile.MAX_HEIGHT*2,
         BufferedImage.TYPE_4BYTE_ABGR);
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

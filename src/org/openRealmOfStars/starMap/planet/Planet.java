@@ -613,12 +613,12 @@ public class Planet {
         result.add(tmp2);
       }
     } else {
-      tmp = BuildingFactory.createByName("Basic factory");
+      tmp = BuildingFactory.createByName("Basic farm");
       if (tmp != null) {
         result.add(tmp);
       }
     }
-    tmp = BuildingFactory.createByName("Basic farm");
+    tmp = BuildingFactory.createByName("Basic factory");
     if (tmp != null) {
       result.add(tmp);
     }
@@ -835,7 +835,7 @@ public class Planet {
       // Making building happens at the end
       if (underConstruction != null) {
         if (metal >= underConstruction.getMetalCost() &&
-            prodResource >= underConstruction.getProdCost()  && groundSize > buildings.size()) {
+            prodResource >= underConstruction.getProdCost()) {
           if (underConstruction instanceof Building && groundSize > buildings.size()) {
             metal = metal - underConstruction.getMetalCost();
             prodResource = prodResource - underConstruction.getProdCost();

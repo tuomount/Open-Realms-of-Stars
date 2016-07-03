@@ -21,7 +21,6 @@ import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.ProductionListRenderer;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
-import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;

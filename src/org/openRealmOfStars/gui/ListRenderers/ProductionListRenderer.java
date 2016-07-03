@@ -8,7 +8,7 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.openRealmOfStars.gui.GuiStatics;
-import org.openRealmOfStars.starMap.planet.Building;
+import org.openRealmOfStars.starMap.planet.construction.Building;
 
 /**
  * 

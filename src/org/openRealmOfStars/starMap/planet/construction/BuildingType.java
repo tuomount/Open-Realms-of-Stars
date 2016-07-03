@@ -1,4 +1,4 @@
-package org.openRealmOfStars.starMap.planet;
+package org.openRealmOfStars.starMap.planet.construction;
 
 /**
  * 

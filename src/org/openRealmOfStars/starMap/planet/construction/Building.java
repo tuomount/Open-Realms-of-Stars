@@ -1,4 +1,4 @@
-package org.openRealmOfStars.starMap.planet;
+package org.openRealmOfStars.starMap.planet.construction;
 
 import org.openRealmOfStars.gui.icons.Icon16x16;
 
@@ -24,16 +24,8 @@ import org.openRealmOfStars.gui.icons.Icon16x16;
  * Class for planetary building or improvement
  * 
  */
-public class Building {
+public class Building extends Construction {
   
-  /**
-   * Building name
-   */
-  private String name;
-  /**
-   * Icon for building
-   */
-  private Icon16x16 icon;
   /**
    * Building type
    */
@@ -42,10 +34,6 @@ public class Building {
    * Unique index for factories and saving the game
    */
   private int index;
-  /**
-   * Longer description about the building
-   */
-  private String description;
   
   /**
    * Bonus for farming
@@ -73,15 +61,6 @@ public class Building {
    */
   private int credBonus;
   
-  /**
-   * Production cost
-   */
-  private int prodCost;
-  
-  /**
-   * Metal cost
-   */
-  private int metalCost;
   
   /**
    * Maintenance Cost
@@ -111,11 +90,9 @@ public class Building {
    * @param type BuildingType
    */
   public Building(int index,String name, Icon16x16 icon, BuildingType type) {
+    super(name,icon);
     this.index = index;
-    this.name = name;
-    this.icon = icon;
     this.type = type;
-    this.description = "";
     this.farmBonus = 0;
     this.mineBonus = 0;
     this.factBonus = 0;
@@ -130,21 +107,7 @@ public class Building {
     this.recycleBonus = 0;
   }
 
-  public String getName() {
-    return name;
-  }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Icon16x16 getIcon() {
-    return icon;
-  }
-
-  public void setIcon(Icon16x16 icon) {
-    this.icon = icon;
-  }
 
   public BuildingType getType() {
     return type;
@@ -162,13 +125,6 @@ public class Building {
     this.index = index;
   }
 
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
 
   public int getFarmBonus() {
     return farmBonus;
@@ -218,47 +174,15 @@ public class Building {
     this.credBonus = credBonus;
   }
 
-  /**
-   * @return the prodCost
-   */
-  public int getProdCost() {
-    return prodCost;
-  }
-
-  /**
-   * @param prodCost the prodCost to set
-   */
-  public void setProdCost(int prodCost) {
-    this.prodCost = prodCost;
-  }
-
-  /**
-   * @return the metalCost
-   */
-  public int getMetalCost() {
-    return metalCost;
-  }
-
-  /**
-   * @param metalCost the metalCost to set
-   */
-  public void setMetalCost(int metalCost) {
-    this.metalCost = metalCost;
-  }
-
   @Override
-  public String toString() {
-    return getName();
-  }
-  
   public String getFullDescription() {
     StringBuilder sb = new StringBuilder();
-    sb.append(name);
+    sb.append(getName());
     if (isSingleAllowed()) {
       sb.append(" - one per planet");
     }
     sb.append("\n");
-    sb.append(description);
+    sb.append(getDescription());
     sb.append("\n");
     sb.append("Cost: Prod.:");
     sb.append(getProdCost());

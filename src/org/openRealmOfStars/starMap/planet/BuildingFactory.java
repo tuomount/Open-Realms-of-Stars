@@ -1,6 +1,8 @@
 package org.openRealmOfStars.starMap.planet;
 
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 
 /**
  * 

@@ -253,7 +253,7 @@ public class PlanetView extends BlackPanel {
     invis.add(constructionSelect);
     invis.add(Box.createRigidArea(new Dimension(60,5)));
     buildingEstimate = new TransparentLabel(topPanel,
-        planet.getProductionTime((Building) constructionSelect.getSelectedItem()));
+        planet.getProductionTime((Construction) constructionSelect.getSelectedItem()));
     buildingEstimate.setAlignmentX(Component.RIGHT_ALIGNMENT);
     invis.add(buildingEstimate);
     invis.add(Box.createRigidArea(new Dimension(50,25)));
@@ -362,7 +362,7 @@ public class PlanetView extends BlackPanel {
     buildingLabel.setText(
         "Buildings("+planet.getUsedPlanetSize()+"/"+planet.getGroundSize()+"):");
     
-    Building building = (Building) constructionSelect.getSelectedItem();
+    Construction building = (Construction) constructionSelect.getSelectedItem();
     buildingEstimate.setText(
       planet.getProductionTime(building));
     

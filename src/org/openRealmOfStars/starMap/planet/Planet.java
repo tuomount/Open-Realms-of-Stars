@@ -10,6 +10,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
+import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
@@ -141,6 +142,11 @@ public class Planet {
   private int tax;
   
   /**
+   * Planet's culture value
+   */
+  private int culture;
+  
+  /**
    * Maximum number of different works
    */
   public static final int MAX_WORKER_TYPE = 5;
@@ -254,6 +260,7 @@ public class Planet {
     this.prodResource = 0;
     this.underConstruction = null;
     this.tax = 0;
+    this.culture = 0;
   }
 
   /**
@@ -291,7 +298,7 @@ public class Planet {
    * @param build
    * @return
    */
-  public String getProductionTime(Building build) {
+  public String getProductionTime(Construction build) {
     int metalReq = build.getMetalCost()-getMetal();
     int prodReq = build.getProdCost()-getProdResource();
     int metalTurn = 0;
@@ -587,13 +594,29 @@ public class Planet {
   public Construction[] getProductionList() {
     Building[] alreadyBuilt = getBuildingList();
     ArrayList<Construction> result = new ArrayList<>();
+    Construction tmp2 = null;
+    tmp2 = ConstructionFactory.createByName(ConstructionFactory.EXTRA_CREDIT);
+    if (tmp2 != null) {
+      result.add(tmp2);
+    }
+    tmp2 = ConstructionFactory.createByName(ConstructionFactory.EXTRA_CULTURE);
+    if (tmp2 != null) {
+      result.add(tmp2);
+    }
     Building tmp = BuildingFactory.createByName("Basic mine");
     if (tmp != null) {
       result.add(tmp);
     }
-    tmp = BuildingFactory.createByName("Basic factory");
-    if (tmp != null) {
-      result.add(tmp);
+    if (planetOwnerInfo != null && planetOwnerInfo.getRace() == SpaceRace.MECHIONS) {
+      tmp2 = ConstructionFactory.createByName(ConstructionFactory.MECHION_CITIZEN);
+      if (tmp2 != null) {
+        result.add(tmp2);
+      }
+    } else {
+      tmp = BuildingFactory.createByName("Basic factory");
+      if (tmp != null) {
+        result.add(tmp);
+      }
     }
     tmp = BuildingFactory.createByName("Basic farm");
     if (tmp != null) {
@@ -695,14 +718,17 @@ public class Planet {
       sb.append("\n");
       sb.append("Planet is inhabitable, but planet can block scanners.");
     } else {
-      sb.append("Radiation:");
+      sb.append("Radiation: ");
       sb.append(getRadiationLevel());
       sb.append("\n");
-      sb.append("Size:");
+      sb.append("Size: ");
       sb.append(getSizeAsString());
       sb.append("\n");
-      sb.append("Metal:");
+      sb.append("Metal: ");
       sb.append(getAmountMetalInGround());
+      sb.append("\n");
+      sb.append("Culture: ");
+      sb.append(getCulture());
     }
     return sb.toString();
   }
@@ -794,6 +820,8 @@ public class Planet {
         amountMetalInGround = 0;
       }
       prodResource = prodResource + getTotalProduction(PRODUCTION_PRODUCTION);
+      planetOwnerInfo.setTotalCredits(planetOwnerInfo.getTotalCredits()+getTotalProduction(PRODUCTION_CREDITS));
+      culture = culture+getTotalProduction(PRODUCTION_CULTURE);
       
       int food=getTotalProduction(PRODUCTION_FOOD)-getTotalPopulation();
       extraFood = extraFood +food;
@@ -808,10 +836,26 @@ public class Planet {
       if (underConstruction != null) {
         if (metal >= underConstruction.getMetalCost() &&
             prodResource >= underConstruction.getProdCost()  && groundSize > buildings.size()) {
-          metal = metal - underConstruction.getMetalCost();
-          prodResource = prodResource - underConstruction.getProdCost();
-          if (underConstruction instanceof Building) {
+          if (underConstruction instanceof Building && groundSize > buildings.size()) {
+            metal = metal - underConstruction.getMetalCost();
+            prodResource = prodResource - underConstruction.getProdCost();
             buildings.add((Building) underConstruction);
+          } else  {
+            if (underConstruction.getName().equals(ConstructionFactory.MECHION_CITIZEN)) {
+              metal = metal - underConstruction.getMetalCost();
+              prodResource = prodResource - underConstruction.getProdCost();
+              workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS]+1;
+            }
+            if (underConstruction.getName().equals(ConstructionFactory.EXTRA_CULTURE)) {
+              metal = metal - underConstruction.getMetalCost();
+              prodResource = prodResource - underConstruction.getProdCost();
+              culture = culture +5;
+            }
+            if (underConstruction.getName().equals(ConstructionFactory.EXTRA_CREDIT)) {
+              metal = metal - underConstruction.getMetalCost();
+              prodResource = prodResource - underConstruction.getProdCost();
+              planetOwnerInfo.setTotalCredits(planetOwnerInfo.getTotalCredits()+12);
+            }
           }
         }
       }
@@ -869,6 +913,14 @@ public class Planet {
       }
     }
     return result;
+  }
+
+  public int getCulture() {
+    return culture;
+  }
+
+  public void setCulture(int culture) {
+    this.culture = culture;
   }
   
 

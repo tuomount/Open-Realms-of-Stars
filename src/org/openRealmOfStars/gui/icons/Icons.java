@@ -79,6 +79,7 @@ public class Icons {
   public static final String ICON_STARBASE = "StarBase";
   public static final String ICON_LR_SCANNER = "LRScanner";
   public static final String ICON_CIRCUIT_BOARD = "CircuitBoard";
+  public static final String ICON_RADIATION = "Radiation";
   
   /**
    * List of Icon
@@ -244,6 +245,8 @@ public class Icons {
     icon = new Icon16x16(image, 5, 5,ICON_LR_SCANNER);
     addIcon(icon);
     icon = new Icon16x16(image, 6, 5,ICON_CIRCUIT_BOARD);
+    addIcon(icon);
+    icon = new Icon16x16(image, 7, 5,ICON_RADIATION);
     addIcon(icon);
   }
   

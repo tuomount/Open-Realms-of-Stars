@@ -66,7 +66,7 @@ public class TechFactory {
   public static final String[] DEFENSE_TECH_LEVEL7_NAMES = 
     {"Shield Mk7","Armor plating Mk7"};
   public static final String[] DEFENSE_TECH_LEVEL8_NAMES = 
-    {"Shield Mk8","Armor plating Mk8"};
+    {"Shield Mk8","Armor plating Mk8","Planetary defense turret Mk3"};
   public static final String[] DEFENSE_TECH_LEVEL9_NAMES = 
     {"Shield Mk9","Armor plating Mk9","Shield generator Mk2"};
   public static final String[] DEFENSE_TECH_LEVEL10_NAMES = 

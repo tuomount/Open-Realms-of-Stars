@@ -33,7 +33,7 @@ public class BuildingFactory {
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 28;
+  private static final int MAX_BUILDING = 42;
   
   /**
    * Create planetary building with index
@@ -71,6 +71,20 @@ public class BuildingFactory {
     case 25: tmp = createPlanetaryImprovement(index); break; // Advanced recycle center
     case 26: tmp = createPlanetaryImprovement(index); break; // Galactic bank
     case 27: tmp = createPlanetaryImprovement(index); break; // Radiation well
+    case 28: tmp = createProductionFacility(index); break; // Hydropodic farming center
+    case 29: tmp = createProductionFacility(index); break; // Nanobot mining center
+    case 30: tmp = createProductionFacility(index); break; // Nanobot manufacturing center
+    case 31: tmp = createProductionFacility(index); break; // Neural reserach center
+    case 32: tmp = createPlanetaryImprovement(index); break; // Super AI center
+    case 33: tmp = createPlanetaryImprovement(index); break; // Replicator center
+    case 34: tmp = createMilitaryFacility(index); break; // Planetary defense turret Mk1
+    case 35: tmp = createMilitaryFacility(index); break; // Planetary defense turret Mk2
+    case 36: tmp = createMilitaryFacility(index); break; // Planetary defense turret Mk3
+    case 37: tmp = createMilitaryFacility(index); break; // Planetary scanner Mk1
+    case 38: tmp = createMilitaryFacility(index); break; // Planetary scanner Mk2
+    case 39: tmp = createMilitaryFacility(index); break; // Planetary scanner Mk3
+    case 40: tmp = createMilitaryFacility(index); break; // Planetary scanner Mk4
+    case 41: tmp = createMilitaryFacility(index); break; // Planetary scanner Mk5
     }
     return tmp;
   }
@@ -90,6 +104,99 @@ public class BuildingFactory {
     }
     return null;
   }
+
+  /**
+   * Create military facility
+   * @param index for creating a new building
+   * @return Building or null if not found with index
+   */
+  private static Building createMilitaryFacility(int index) {
+    Building tmp = null;
+    if (index == 34) {
+      tmp = new Building(index, "Planetary defense turret Mk1", 
+          Icons.getIconByName(Icons.ICON_PLANETARY_TURRET), BuildingType.MILITARY);
+      tmp.setProdCost(20);
+      tmp.setMetalCost(20);
+      tmp.setDescription("Planetary defense turret");
+      tmp.setDefenseDamage(3);
+      return tmp;
+    }
+    if (index == 35) {
+      tmp = new Building(index, "Planetary defense turret Mk2", 
+          Icons.getIconByName(Icons.ICON_PLANETARY_TURRET), BuildingType.MILITARY);
+      tmp.setProdCost(50);
+      tmp.setMetalCost(50);
+      tmp.setDescription("Planetary defense turret");
+      tmp.setDefenseDamage(6);
+      return tmp;
+    }
+    if (index == 36) {
+      tmp = new Building(index, "Planetary defense turret Mk3", 
+          Icons.getIconByName(Icons.ICON_PLANETARY_TURRET), BuildingType.MILITARY);
+      tmp.setProdCost(70);
+      tmp.setMetalCost(70);
+      tmp.setDescription("Planetary defense turret");
+      tmp.setDefenseDamage(9);
+      return tmp;
+    }
+    if (index == 37) {
+      tmp = new Building(index, "Planetary scanner Mk1", 
+          Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
+      tmp.setProdCost(16);
+      tmp.setMetalCost(16);
+      tmp.setDescription("Planetary scanner Mk1");
+      tmp.setScanRange(3);
+      tmp.setScanCloakingDetection(40);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    }
+    if (index == 38) {
+      tmp = new Building(index, "Planetary scanner Mk2", 
+          Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
+      tmp.setProdCost(24);
+      tmp.setMetalCost(24);
+      tmp.setDescription("Planetary scanner Mk2");
+      tmp.setScanRange(4);
+      tmp.setScanCloakingDetection(80);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    }
+    if (index == 39) {
+      tmp = new Building(index, "Planetary scanner Mk3", 
+          Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
+      tmp.setProdCost(40);
+      tmp.setMetalCost(40);
+      tmp.setDescription("Planetary scanner Mk3");
+      tmp.setScanRange(5);
+      tmp.setScanCloakingDetection(100);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    }
+    if (index == 40) {
+      tmp = new Building(index, "Planetary scanner Mk4", 
+          Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
+      tmp.setProdCost(60);
+      tmp.setMetalCost(60);
+      tmp.setDescription("Planetary scanner Mk4");
+      tmp.setScanRange(6);
+      tmp.setScanCloakingDetection(120);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    }
+    if (index == 41) {
+      tmp = new Building(index, "Planetary scanner Mk5", 
+          Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
+      tmp.setProdCost(80);
+      tmp.setMetalCost(80);
+      tmp.setDescription("Planetary scanner Mk5");
+      tmp.setScanRange(7);
+      tmp.setScanCloakingDetection(140);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    }
+    return tmp;
+  }
+
   
   /**
    * Create production facility
@@ -215,6 +322,50 @@ public class BuildingFactory {
       tmp.setMetalCost(16);
       tmp.setMaintenanceCost(0.25);
       tmp.setDescription("Group of research laboratories.");
+      tmp.setSingleAllowed(true);
+      return tmp;
+    } 
+    if (index == 28) {
+      tmp = new Building(index, "Hydropodic farming center", 
+          Icons.getIconByName(Icons.ICON_FARM), BuildingType.FARM);
+      tmp.setFarmBonus(4);
+      tmp.setProdCost(40);
+      tmp.setMetalCost(30);
+      tmp.setMaintenanceCost(0.33);
+      tmp.setDescription("Hydropodic farms producing food.");
+      tmp.setSingleAllowed(true);
+      return tmp;
+    } 
+    if (index == 29) {
+      tmp = new Building(index, "Nanobot mining center", 
+          Icons.getIconByName(Icons.ICON_MINE), BuildingType.MINE);
+      tmp.setMineBonus(4);
+      tmp.setProdCost(40);
+      tmp.setMetalCost(36);
+      tmp.setMaintenanceCost(0.33);
+      tmp.setDescription("Mining done by millions of nanobots");
+      tmp.setSingleAllowed(true);
+      return tmp;
+    } 
+    if (index == 30) {
+      tmp = new Building(index, "Nanobot manufacturing center", 
+          Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
+      tmp.setFactBonus(4);
+      tmp.setProdCost(50);
+      tmp.setMetalCost(30);
+      tmp.setMaintenanceCost(0.33);
+      tmp.setDescription("Production lines full of nanobots.");
+      tmp.setSingleAllowed(true);
+      return tmp;
+    } 
+    if (index == 31) {
+      tmp = new Building(index, "Neural research center", 
+          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+      tmp.setReseBonus(4);
+      tmp.setProdCost(48);
+      tmp.setMetalCost(24);
+      tmp.setMaintenanceCost(0.33);
+      tmp.setDescription("Neural network in huge research center");
       tmp.setSingleAllowed(true);
       return tmp;
     } 
@@ -400,6 +551,29 @@ public class BuildingFactory {
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
       tmp.setMaintenanceCost(1);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    } 
+    if (index == 32) {
+      tmp = new Building(index, "Super AI center", 
+          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+      tmp.setDescription("Super AI making science and improving production.");
+      tmp.setProdCost(60);
+      tmp.setMetalCost(80);
+      tmp.setMaintenanceCost(1);
+      tmp.setReseBonus(4);
+      tmp.setFactBonus(1);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    } 
+    if (index == 33) {
+      tmp = new Building(index, "Replicator center", 
+          Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
+      tmp.setDescription("Replicated goods can sold with good profit.");
+      tmp.setProdCost(40);
+      tmp.setMetalCost(40);
+      tmp.setCredBonus(2);
+      tmp.setFactBonus(2);
       tmp.setSingleAllowed(true);
       return tmp;
     } 

@@ -83,6 +83,21 @@ public class Building extends Construction {
   private int recycleBonus;
 
   /**
+   * Planetary defense damage
+   */
+  private int defenseDamage;
+  
+  /**
+   * Planetary scan range
+   */
+  private int scanRange;
+
+  /**
+   * Planetary scanner cloaking detection
+   */
+  private int scanCloakingDetection;
+
+  /**
    * Construct building for planet
    * @param index Unique number for building
    * @param name Building name
@@ -105,6 +120,9 @@ public class Building extends Construction {
     this.singleAllowed = false;
     this.battleBonus = 0;
     this.recycleBonus = 0;
+    this.defenseDamage = 0;
+    this.scanRange = 0;
+    this.scanCloakingDetection = 0;
   }
 
 
@@ -173,6 +191,8 @@ public class Building extends Construction {
   public void setCredBonus(int credBonus) {
     this.credBonus = credBonus;
   }
+  
+  
 
   @Override
   public String getFullDescription() {
@@ -193,39 +213,94 @@ public class Building extends Construction {
       sb.append(getMaintenanceCost());
     }
     sb.append("\n");
+    boolean space = false;
     if (getFarmBonus() > 0) {
       sb.append("Food: +");
       sb.append(getFarmBonus());
+      space = true;
     }
     if (getMineBonus() > 0) {
+      if (space) {
+        sb.append(" ");
+      }
       sb.append("Mine: +");
       sb.append(getMineBonus());
+      space = true;
     }
     if (getFactBonus() > 0) {
+      if (space) {
+        sb.append(" ");
+      }
       sb.append("Prod.: +");
       sb.append(getFactBonus());
+      space = true;
     }
     if (getCultBonus() > 0) {
+      if (space) {
+        sb.append(" ");
+      }
       sb.append("Cult.: +");
       sb.append(getCultBonus());
+      space = true;
     }
     if (getReseBonus() > 0) {
+      if (space) {
+        sb.append(" ");
+      }
       sb.append("Resea.: +");
       sb.append(getReseBonus());
+      space = true;
     }
     if (getCredBonus() > 0) {
+      if (space) {
+        sb.append(" ");
+      }
       sb.append("Cred.: +");
       sb.append(getCredBonus());
+      space = true;
     }
     if (getBattleBonus() > 0) {
+      if (space) {
+        sb.append(" ");
+      }
       sb.append("Battle: +");
       sb.append(getBattleBonus());
       sb.append("%");
+      space = true;
     }
     if (getRecycleBonus() > 0) {
+      if (space) {
+        sb.append(" ");
+      }
       sb.append("Recycle: +");
       sb.append(getRecycleBonus());
       sb.append("%");
+      space = true;
+    }
+    if (getDefenseDamage() > 0) {
+      if (space) {
+        sb.append(" ");
+      }
+      sb.append("Damage: ");
+      sb.append(getDefenseDamage());
+      space = true;
+    }
+    if (getScanRange() > 0) {
+      if (space) {
+        sb.append("\n");
+      }
+      sb.append("Scan range: ");
+      sb.append(getScanRange());
+      space = true;
+    }
+    if (getScanCloakingDetection() > 0) {
+      if (space) {
+        sb.append(" ");
+      }
+      sb.append("Cloaking det.: ");
+      sb.append(getScanCloakingDetection());
+      sb.append("%");
+      space = true;
     }
     return sb.toString();
   }
@@ -266,6 +341,42 @@ public class Building extends Construction {
 
   public void setRecycleBonus(int recycleBonus) {
     this.recycleBonus = recycleBonus;
+  }
+
+
+
+  public int getDefenseDamage() {
+    return defenseDamage;
+  }
+
+
+
+  public void setDefenseDamage(int defenseDamage) {
+    this.defenseDamage = defenseDamage;
+  }
+
+
+
+  public int getScanRange() {
+    return scanRange;
+  }
+
+
+
+  public void setScanRange(int scanRange) {
+    this.scanRange = scanRange;
+  }
+
+
+
+  public int getScanCloakingDetection() {
+    return scanCloakingDetection;
+  }
+
+
+
+  public void setScanCloakingDetection(int scanCloakingDetection) {
+    this.scanCloakingDetection = scanCloakingDetection;
   }
   
   

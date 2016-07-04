@@ -295,6 +295,7 @@ public class Planet {
           if (recycleBonus > 0) {
             metal = metal +building.getMetalCost()*recycleBonus/100;
           }
+          break;
         }
       }
     }
@@ -759,9 +760,16 @@ public class Planet {
       sb.append("\n");
       sb.append("Metal: ");
       sb.append(getAmountMetalInGround());
-      sb.append("\n");
-      sb.append("Culture: ");
-      sb.append(getCulture());
+      if (planetOwnerInfo != null) {
+        sb.append("\n");
+        sb.append(planetOwnerInfo.getEmpireName());
+        sb.append("\n");
+        sb.append("Population: ");
+        sb.append(getTotalPopulation());
+        sb.append("\n");
+        sb.append("Culture: ");
+        sb.append(getCulture());
+      }
     }
     return sb.toString();
   }

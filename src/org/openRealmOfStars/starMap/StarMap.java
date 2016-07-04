@@ -7,6 +7,7 @@ import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -268,13 +269,23 @@ public class StarMap {
           if (playerIndex != -1) {
             PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
             planet.setPlanetOwner(playerIndex,playerInfo);
-            planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-            planet.addBuilding(BuildingFactory.createByName("Basic farm"));
-            planet.setWorkers(Planet.FOOD_FARMERS, 2);
-            planet.setWorkers(Planet.METAL_MINERS, 1);
-            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
-            planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+            planet.setRadiationLevel(1);
+            planet.setGroundSize(12);
+            planet.setAmountMetalInGround(8000);
+            planet.addBuilding(BuildingFactory.createByName("Space port"));
+            if (playerInfo.getRace() == SpaceRace.MECHIONS) {
+              planet.setWorkers(Planet.FOOD_FARMERS, 0);
+              planet.setWorkers(Planet.METAL_MINERS, 0);
+              planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+              planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+              planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+            } else {
+              planet.setWorkers(Planet.FOOD_FARMERS, 1);
+              planet.setWorkers(Planet.METAL_MINERS, 0);
+              planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+              planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+              planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+            }
           }
         }
         planetList.add(planet);

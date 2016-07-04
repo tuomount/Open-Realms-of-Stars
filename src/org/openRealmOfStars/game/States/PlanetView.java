@@ -338,8 +338,13 @@ public class PlanetView extends BlackPanel {
     
     int peopleGrow = planet.getTotalProduction(Planet.PRODUCTION_POPULATION);
     if (peopleGrow > 0) {
-      peopleGrowth.setText(peopleGrow+" turns.");
-      peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
+      if (planet.exceedRadiation()) {
+        peopleGrowth.setText("Never");
+        peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_RADIATION));
+      } else {
+        peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
+        peopleGrowth.setText(peopleGrow+" turns.");
+      }
     } else if (peopleGrow < 0) {
       peopleGrow = peopleGrow *-1;
       peopleGrowth.setText(peopleGrow+" turns.");

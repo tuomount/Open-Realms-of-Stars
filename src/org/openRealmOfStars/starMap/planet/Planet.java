@@ -64,7 +64,7 @@ public class Planet {
   private int OrderNumber;
   
   /**
-   * Planet's radioation level between 1-10.
+   * Planet's radiation level between 1-10.
    */
   private int radiationLevel;
   
@@ -269,6 +269,10 @@ public class Planet {
    */
   public void addBuilding(Building building) {
     if (building != null) {
+      if (building.getName().equals("Radiation dampener") ||
+          building.getName().equals("Radiation well")) {
+        setRadiationLevel(getRadiationLevel()-1);
+      }
       this.buildings.add(building);
     }
   }
@@ -284,6 +288,10 @@ public class Planet {
         Building temp = buildings.get(i);
         if (temp.getName().equals(building.getName())) {
           buildings.remove(i);
+          if (building.getName().equals("Radiation dampener") ||
+              building.getName().equals("Radiation well")) {
+            setRadiationLevel(getRadiationLevel()+1);
+          }
           if (recycleBonus > 0) {
             metal = metal +building.getMetalCost()*recycleBonus/100;
           }
@@ -588,6 +596,19 @@ public class Planet {
   }
 
   /**
+   * Check if planet radiation exceeds current owner's max radiation level.
+   * @return True if planet radiation is higher and false if not
+   */
+  public boolean exceedRadiation() {
+    boolean exceedRad = false;
+    if (planetOwnerInfo != null && planetOwnerInfo.getRace().getMaxRad() < getRadiationLevel()) {
+      // Planet's radiation exceeds owner max rad level
+      exceedRad = true;
+    }
+    return exceedRad;
+  }
+  
+  /**
    * Get the construction list for planet
    * @return Building list of production
    */
@@ -600,7 +621,7 @@ public class Planet {
       result.add(tmp2);
     }
     tmp2 = ConstructionFactory.createByName(ConstructionFactory.EXTRA_CULTURE);
-    if (tmp2 != null) {
+    if (tmp2 != null && !exceedRadiation()) {
       result.add(tmp2);
     }
     Building tmp = BuildingFactory.createByName("Basic mine");
@@ -609,12 +630,12 @@ public class Planet {
     }
     if (planetOwnerInfo != null && planetOwnerInfo.getRace() == SpaceRace.MECHIONS) {
       tmp2 = ConstructionFactory.createByName(ConstructionFactory.MECHION_CITIZEN);
-      if (tmp2 != null) {
+      if (tmp2 != null && !exceedRadiation()) {
         result.add(tmp2);
       }
     } else {
       tmp = BuildingFactory.createByName("Basic farm");
-      if (tmp != null) {
+      if (tmp != null && !exceedRadiation()) {
         result.add(tmp);
       }
     }
@@ -623,7 +644,7 @@ public class Planet {
       result.add(tmp);
     }
     tmp = BuildingFactory.createByName("Space port");
-    if (tmp != null) {
+    if (tmp != null && !exceedRadiation()) {
       if (tmp.isSingleAllowed()) {
         boolean built = false;
         for (int j=0;j<alreadyBuilt.length;j++) {
@@ -643,6 +664,11 @@ public class Planet {
       String[] buildings = planetOwnerInfo.getTechList().getBuildingListFromTech();
       for (int i=0;i<buildings.length;i++) {
         tmp = BuildingFactory.createByName(buildings[i]);
+        if (getRadiationLevel() == 1 && (tmp.getName().equals("Radiation dampener") ||
+            tmp.getName().equals("Radiation well"))) {
+          // No need for radiation well or dampener on small radiation planets
+          tmp = null;
+        }
         if (tmp != null) {
           if (tmp.isSingleAllowed()) {
             boolean built = false;
@@ -652,11 +678,18 @@ public class Planet {
                break;
               }
             }
-            if (!built) {
+            if (!built  && !exceedRadiation()) {
+              result.add(tmp);
+            }
+            if (!built && (tmp.getName().equals("Radiation dampener") ||
+                tmp.getName().equals("Radiation well"))) {
+              // Radiation well and dampener can be built even planet has radiation.
               result.add(tmp);
             }
           } else {
-            result.add(tmp);
+            if  (!exceedRadiation()) {
+              result.add(tmp);
+            }
           }
         }
       }
@@ -823,12 +856,18 @@ public class Planet {
       planetOwnerInfo.setTotalCredits(planetOwnerInfo.getTotalCredits()+getTotalProduction(PRODUCTION_CREDITS));
       culture = culture+getTotalProduction(PRODUCTION_CULTURE);
       
-      int food=getTotalProduction(PRODUCTION_FOOD)-getTotalPopulation();
-      extraFood = extraFood +food;
-      int require = 10*planetOwnerInfo.getRace().getFoodRequire()/100;
-      if (extraFood > 0 && extraFood >= require) {
-        extraFood = extraFood -require;
-        workers[FOOD_FARMERS] = workers[FOOD_FARMERS]+1; 
+      if (planetOwnerInfo.getRace() != SpaceRace.MECHIONS) { 
+        int food=getTotalProduction(PRODUCTION_FOOD)-getTotalPopulation();
+        extraFood = extraFood +food;
+        int require = 10*planetOwnerInfo.getRace().getFoodRequire()/100;
+        if (exceedRadiation() && extraFood > 0) {
+          // Clear extra food if radiation is exceeded
+          extraFood = 0;
+        }
+        if (extraFood > 0 && extraFood >= require) {
+          extraFood = extraFood -require;
+          workers[FOOD_FARMERS] = workers[FOOD_FARMERS]+1; 
+        }
       }
   
       

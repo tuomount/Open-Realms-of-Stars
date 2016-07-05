@@ -128,6 +128,17 @@ public class Message {
   public void setMatchByString(String matchByString) {
     this.matchByString = matchByString;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(type.toString());
+    sb.append(" - ");
+    sb.append(message);
+    return sb.toString();
+  }
+  
+  
   
   
 }

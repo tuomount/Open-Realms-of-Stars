@@ -25,6 +25,57 @@ package org.openRealmOfStars.player.message;
  */
 
 public enum MessageType {
+  /**
+   * Player has researched new technology
+   */
   RESEARCH,
-  CONSTRUCTION
+  /**
+   * Player's planet has built new construction
+   */
+  CONSTRUCTION,
+  /**
+   * Information for player, no focus
+   */
+  INFORMATION;
+
+  
+  /**
+   * Get Message type index
+   * @return int
+   */
+  public int getIndex() {
+    switch (this) {
+    case RESEARCH: return 0;
+    case CONSTRUCTION: return 1;
+    case INFORMATION: return 2;
+    }
+    return 0;
+  }
+  
+  /**
+   * Return Message Type by index
+   * @param index This must be between 0-5
+   * @return Tech Type
+   */
+  public static MessageType getTypeByIndex(int index) {
+    switch (index) {
+    case 0: return MessageType.RESEARCH;
+    case 1: return MessageType.CONSTRUCTION;
+    case 2: return MessageType.INFORMATION;
+    }
+    return MessageType.RESEARCH;
+  }
+
+  
+  @Override
+  public String toString() {
+    switch (this) {
+    case RESEARCH: return "Research";
+    case CONSTRUCTION: return "Construction";
+    case INFORMATION: return "Information";
+    }
+    return "Error - Unknown";
+
+  }
+
 }

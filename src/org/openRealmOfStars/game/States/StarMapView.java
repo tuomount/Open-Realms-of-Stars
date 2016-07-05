@@ -18,6 +18,7 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.panels.MessagePanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.starMap.StarMap;
@@ -96,6 +97,11 @@ public class StarMapView extends BlackPanel {
    */
   private IconLabel reseProd;
   
+  /**
+   * Message panel for showing messages
+   */
+  private MessagePanel msgPanel;
+  
   public StarMapView(StarMap map, PlayerList players, ActionListener listener) {
     this.map = map;
     this.players = players;
@@ -138,11 +144,16 @@ public class StarMapView extends BlackPanel {
     viewResearchButton.addActionListener(listener);
     bottomPanel.add(viewResearchButton);
     
+    msgPanel = new MessagePanel(GameCommands.COMMAND_PREV_MSG, 
+        GameCommands.COMMAND_NEXT_MSG, GameCommands.COMMAND_FOCUS_MSG, listener);
+    bottomPanel.add(msgPanel);
+    
     base.setLayout(new BorderLayout());
     base.add(mapPanel,BorderLayout.CENTER);
     base.add(infoPanel, BorderLayout.EAST);
     base.add(bottomPanel, BorderLayout.SOUTH);
-    this.add(base);
+    this.setLayout(new BorderLayout());
+    this.add(base,BorderLayout.CENTER);
 
   }
 

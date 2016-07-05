@@ -5,12 +5,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import org.openRealmOfStars.gui.GuiStatics;
-import org.openRealmOfStars.gui.borders.ScifiBorder;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
 
@@ -83,9 +84,28 @@ public class MessagePanel extends JPanel {
     JPanel pane = new JPanel();
     pane.setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
     pane.setBorder(new SimpleBorder());
-    pane.setLayout(new BorderLayout());
-    TransparentLabel titleLabel = new TransparentLabel(pane, "1000/1000");
-    pane.add(titleLabel,BorderLayout.CENTER);
+    pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));
+    btnPrev = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_LEFT),
+        Icons.getIconByName(Icons.ICON_SCROLL_LEFT_PRESSED), false, 
+        prevCommand, pane);
+    btnPrev.addActionListener(listener);
+    pane.add(btnPrev);
+    titleLabel = new TransparentLabel(pane, "1000/1000");
+    pane.add(titleLabel);
+    btnNext = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_RIGHT),
+        Icons.getIconByName(Icons.ICON_SCROLL_RIGHT_PRESSED), false, 
+        nextCommand, pane);
+    btnFocus = new SpaceButton("Focus", focusCommand);
+    btnFocus.addActionListener(listener);
+    pane.add(btnFocus);
+    btnNext.addActionListener(listener);
+    pane.add(btnNext);
+    this.add(pane);
+    
+    msgText = new InfoTextArea(3,15);
+    msgText.setEditable(false);
+    JScrollPane scroll = new JScrollPane(msgText);
+    this.add(scroll);
 
   }
 }

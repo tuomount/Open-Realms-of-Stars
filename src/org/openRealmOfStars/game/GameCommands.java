@@ -197,6 +197,19 @@ public class GameCommands {
    */
   public static final String COMMAND_QUIT_GAME = "QuitGame";
   
+  /**
+   * Prev Message command
+   */
+  public static final String COMMAND_PREV_MSG = "PrevMessage";
   
+  /**
+   * Next Message command
+   */
+  public static final String COMMAND_NEXT_MSG = "NextMessage";
+
+  /**
+   * Focus Message command
+   */
+  public static final String COMMAND_FOCUS_MSG = "FocusMessage";
 
 }

@@ -4,10 +4,13 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
@@ -864,6 +867,7 @@ public class Planet {
       planetOwnerInfo.setTotalCredits(planetOwnerInfo.getTotalCredits()+getTotalProduction(PRODUCTION_CREDITS));
       culture = culture+getTotalProduction(PRODUCTION_CULTURE);
       
+      Message msg;
       if (planetOwnerInfo.getRace() != SpaceRace.MECHIONS) { 
         int food=getTotalProduction(PRODUCTION_FOOD)-getTotalPopulation();
         extraFood = extraFood +food;
@@ -874,7 +878,39 @@ public class Planet {
         }
         if (extraFood > 0 && extraFood >= require) {
           extraFood = extraFood -require;
-          workers[FOOD_FARMERS] = workers[FOOD_FARMERS]+1; 
+          workers[FOOD_FARMERS] = workers[FOOD_FARMERS]+1;
+          msg = new Message(MessageType.POPULATION, getName()+" has population growth!\n"
+              + "Population is now "+getTotalPopulation(), 
+              Icons.getIconByName(Icons.ICON_PEOPLE));
+          msg.setCoordinate(getX(), getY());
+          msg.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+        }
+        if (extraFood < 0 && extraFood <= require) {
+          extraFood = 0;
+          String workerName = "Culture artist";
+          if (workers[CULTURE_ARTIST] > 0) {
+            workers[CULTURE_ARTIST]--;
+            workerName = "Artist";
+          } else if (workers[METAL_MINERS] > 0) {
+            workers[METAL_MINERS]--;
+            workerName = "Miner";
+          } else if (workers[RESEARCH_SCIENTIST] > 0) {
+            workers[RESEARCH_SCIENTIST]--;
+            workerName = "Scientist";
+          }else if (workers[PRODUCTION_WORKERS] > 0) {
+            workers[PRODUCTION_WORKERS]--;
+            workerName = "Worker";
+          } else {
+            workers[FOOD_FARMERS]--;
+            workerName = "Farmer";
+          }
+          msg = new Message(MessageType.POPULATION, getName()+" has "+workerName+" died!\n"
+              + "Population is now "+getTotalPopulation(), 
+              Icons.getIconByName(Icons.ICON_DEATH));
+          msg.setCoordinate(getX(), getY());
+          msg.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
         }
       }
   
@@ -887,21 +923,41 @@ public class Planet {
             metal = metal - underConstruction.getMetalCost();
             prodResource = prodResource - underConstruction.getProdCost();
             buildings.add((Building) underConstruction);
+            msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(), 
+                Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+            msg.setCoordinate(getX(), getY());
+            msg.setMatchByString(getName());
+            planetOwnerInfo.getMsgList().addNewMessage(msg);
           } else  {
             if (underConstruction.getName().equals(ConstructionFactory.MECHION_CITIZEN)) {
               metal = metal - underConstruction.getMetalCost();
               prodResource = prodResource - underConstruction.getProdCost();
               workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS]+1;
+              msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(), 
+                  Icons.getIconByName(Icons.ICON_PEOPLE));
+              msg.setCoordinate(getX(), getY());
+              msg.setMatchByString(getName());
+              planetOwnerInfo.getMsgList().addNewMessage(msg);
             }
             if (underConstruction.getName().equals(ConstructionFactory.EXTRA_CULTURE)) {
               metal = metal - underConstruction.getMetalCost();
               prodResource = prodResource - underConstruction.getProdCost();
               culture = culture +5;
+              msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(), 
+                  Icons.getIconByName(Icons.ICON_CULTURE));
+              msg.setCoordinate(getX(), getY());
+              msg.setMatchByString(getName());
+              planetOwnerInfo.getMsgList().addNewMessage(msg);
             }
             if (underConstruction.getName().equals(ConstructionFactory.EXTRA_CREDIT)) {
               metal = metal - underConstruction.getMetalCost();
               prodResource = prodResource - underConstruction.getProdCost();
               planetOwnerInfo.setTotalCredits(planetOwnerInfo.getTotalCredits()+12);
+              msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(), 
+                  Icons.getIconByName(Icons.ICON_CREDIT));
+              msg.setCoordinate(getX(), getY());
+              msg.setMatchByString(getName());
+              planetOwnerInfo.getMsgList().addNewMessage(msg);
             }
           }
         }

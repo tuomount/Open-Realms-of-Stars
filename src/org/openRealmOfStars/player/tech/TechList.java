@@ -2,6 +2,11 @@ package org.openRealmOfStars.player.tech;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
+
 
 /**
  * 
@@ -300,8 +305,9 @@ public class TechList {
   /**
    * Update Research points by turn. This will also grant a new technology
    * @param totalResearchPoints player makes per turn
+   * @param playerInfo for message information
    */
-  public void updateResearchPointByTurn(int totalResearchPoints) {
+  public void updateResearchPointByTurn(int totalResearchPoints, PlayerInfo info) {
     for (int i=0;i<techFocus.length;i++) {
       techResearchPoint[i] = techResearchPoint[i] + techFocus[i]*totalResearchPoints/100.0;
       if (techResearchPoint[i] >= TechFactory.getTechCost(techLevels[i])) {
@@ -310,6 +316,11 @@ public class TechList {
         int lvl = techLevels[i];
         Tech tech = TechFactory.createRandomTech(type, lvl,getListForTypeAndLevel(type, lvl));
         addTech(tech);
+        Message msg = new Message(MessageType.RESEARCH, 
+            info.getEmpireName()+" researched "+tech.getName()+" in "+tech.getType().toString(), 
+            Icons.getIconByName(Icons.ICON_RESEARCH));
+        msg.setMatchByString(tech.getName());
+        info.getMsgList().addNewMessage(msg);
         if (isTechListForLevelFull(type, lvl)) {
           techLevels[i] = lvl +1;
         }

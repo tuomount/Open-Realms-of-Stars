@@ -36,7 +36,15 @@ public enum MessageType {
   /**
    * Information for player, no focus
    */
-  INFORMATION;
+  INFORMATION,
+  /**
+   * Population has decreased or increased on planet
+   */
+  POPULATION,
+  /**
+   * Planetary informat, focus to planet
+   */
+  PLANETARY;
 
   
   /**
@@ -48,13 +56,15 @@ public enum MessageType {
     case RESEARCH: return 0;
     case CONSTRUCTION: return 1;
     case INFORMATION: return 2;
+    case POPULATION: return 3;
+    case PLANETARY: return 4;
     }
     return 0;
   }
   
   /**
    * Return Message Type by index
-   * @param index This must be between 0-5
+   * @param index 
    * @return Tech Type
    */
   public static MessageType getTypeByIndex(int index) {
@@ -62,6 +72,8 @@ public enum MessageType {
     case 0: return MessageType.RESEARCH;
     case 1: return MessageType.CONSTRUCTION;
     case 2: return MessageType.INFORMATION;
+    case 3: return MessageType.POPULATION;
+    case 4: return MessageType.PLANETARY;
     }
     return MessageType.RESEARCH;
   }
@@ -70,9 +82,11 @@ public enum MessageType {
   @Override
   public String toString() {
     switch (this) {
-    case RESEARCH: return "Research";
+    case RESEARCH:     return "Research";
     case CONSTRUCTION: return "Construction";
-    case INFORMATION: return "Information";
+    case INFORMATION:  return "Information";
+    case POPULATION:   return "Population";
+    case PLANETARY:    return "Planetary";
     }
     return "Error - Unknown";
 

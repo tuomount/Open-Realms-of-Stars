@@ -2,12 +2,15 @@ package org.openRealmOfStars.starMap;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -268,6 +271,12 @@ public class StarMap {
         if (planets == 1) {
           if (playerIndex != -1) {
             PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
+            Message msg = new Message(MessageType.PLANETARY,
+                playerInfo.getEmpireName()+" starts at "+planet.getName()+".",
+                Icons.getIconByName(Icons.ICON_CULTURE));
+            msg.setCoordinate(planet.getX(),planet.getY());
+            msg.setMatchByString(planet.getName());
+            playerInfo.getMsgList().addNewMessage(msg);
             planet.setPlanetOwner(playerIndex,playerInfo);
             planet.setRadiationLevel(1);
             planet.setGroundSize(12);
@@ -458,6 +467,12 @@ public class StarMap {
    * Update whole star map to next turn
    */
   public void updateStarMapToNextTurn() {
+    for (int i=0;i<players.getCurrentMaxPlayers();i++) {
+      PlayerInfo info = players.getPlayerInfoByIndex(i);
+      if (info != null) {
+        info.getMsgList().clearMessages();
+      }
+    }
     for (int i=0;i<planetList.size();i++) {
       Planet planet = planetList.get(i);
       if (planet.getPlanetPlayerInfo() != null) {

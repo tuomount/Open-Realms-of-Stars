@@ -103,7 +103,7 @@ public class MessagePanel extends JPanel {
     pane.add(btnPrev);
     countLabel = new TransparentLabel(pane, "1000/1000");
     pane.add(countLabel);
-    titleLabel = new IconLabel(pane, Icons.getIconByName(Icons.ICON_PEOPLE), MessageType.INFORMATION.toString());
+    titleLabel = new IconLabel(pane, Icons.getIconByName(Icons.ICON_PEOPLE), MessageType.CONSTRUCTION.toString());
     pane.add(titleLabel);
     btnNext = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_RIGHT),
         Icons.getIconByName(Icons.ICON_SCROLL_RIGHT_PRESSED), false, 
@@ -123,11 +123,17 @@ public class MessagePanel extends JPanel {
     updatePanel(msg,index,maxIndex);
   }
   
+  /**
+   * Update Message panel with new message and indexes
+   * @param msg Message to show
+   * @param index Message index
+   * @param max Maximum messages
+   */
   public void updatePanel(Message msg, int index,int max) {
     index = index +1;
     countLabel.setText(index +"/"+max);
     titleLabel.setText(msg.getType().toString());
-    titleLabel.setIcon(msg.getIcon().getAsIcon());
+    titleLabel.setLeftIcon(msg.getIcon());
     msgText.setText(msg.getMessage());
     if (msg.getType() == MessageType.INFORMATION) {
       btnFocus.setEnabled(false);

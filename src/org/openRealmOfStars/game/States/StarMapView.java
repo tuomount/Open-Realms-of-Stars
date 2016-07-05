@@ -193,8 +193,12 @@ public class StarMapView extends BlackPanel {
      for (int i=0;i<players.getCurrentMaxPlayers();i++) {
        PlayerInfo info = players.getPlayerInfoByIndex(i);
        info.getTechList().updateResearchPointByTurn(map.
-           getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH, i));
+           getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH, i),info);
      }
+     Message msg = players.getCurrentPlayerInfo().getMsgList().getMsg();
+     msgPanel.updatePanel(msg, 
+         players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
+         players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
 
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_MSG)) {

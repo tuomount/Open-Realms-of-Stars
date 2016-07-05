@@ -21,6 +21,7 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.MessagePanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -144,8 +145,13 @@ public class StarMapView extends BlackPanel {
     viewResearchButton.addActionListener(listener);
     bottomPanel.add(viewResearchButton);
     
+    
+    
     msgPanel = new MessagePanel(GameCommands.COMMAND_PREV_MSG, 
-        GameCommands.COMMAND_NEXT_MSG, GameCommands.COMMAND_FOCUS_MSG, listener);
+        GameCommands.COMMAND_NEXT_MSG, GameCommands.COMMAND_FOCUS_MSG,        
+        players.getCurrentPlayerInfo().getMsgList().getMsg(),
+        players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
+        players.getCurrentPlayerInfo().getMsgList().getMaxMsg(),listener);
     bottomPanel.add(msgPanel);
     
     base.setLayout(new BorderLayout());
@@ -190,6 +196,18 @@ public class StarMapView extends BlackPanel {
            getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH, i));
      }
 
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_MSG)) {
+      Message msg = players.getCurrentPlayerInfo().getMsgList().getPrevMessage();
+      msgPanel.updatePanel(msg, 
+          players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
+          players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_MSG)) {
+      Message msg = players.getCurrentPlayerInfo().getMsgList().getNextMessage();
+      msgPanel.updatePanel(msg, 
+          players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
+          players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
     }
 
   }

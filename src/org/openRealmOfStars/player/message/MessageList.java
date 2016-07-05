@@ -122,7 +122,11 @@ public class MessageList {
    * @return Maximum number of messages
    */
   public int getMaxMsg() {
-    return list.size();
+    if (list.size() > 0) {
+      return list.size();
+    } else {
+      return 1;
+    }
   }
   
   @Override

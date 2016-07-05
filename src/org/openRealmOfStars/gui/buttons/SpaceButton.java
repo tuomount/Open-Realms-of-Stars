@@ -125,7 +125,7 @@ public class SpaceButton extends JButton {
         g2d.setColor(Color.black);
       }
     } else {
-      g2d.setColor(GuiStatics.COLOR_GOLD_DARK);
+      g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER);
     }
     g.setFont(GuiStatics.getFontCubellan());
     int offsetX = width/2-textWidth/2+sx;

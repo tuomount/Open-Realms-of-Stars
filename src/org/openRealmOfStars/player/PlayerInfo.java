@@ -1,5 +1,6 @@
 package org.openRealmOfStars.player;
 
+import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
@@ -51,8 +52,14 @@ public class PlayerInfo {
    */
   private TechList techList;
   
+  /**
+   * Message for player for one turn
+   */
+  private MessageList msgList;
+  
   public PlayerInfo(SpaceRace race) {
     setTechList(new TechList());
+    this.msgList = new MessageList();
     setRace(race);
     switch (getRace()) {
     case HUMAN:
@@ -179,5 +186,11 @@ public class PlayerInfo {
     this.techList = techList;
   }
   
+  /**
+   * Get message list for one turn
+   */
+  public MessageList getMsgList() {
+    return msgList;
+  }
   
 }

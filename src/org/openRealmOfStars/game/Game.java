@@ -262,7 +262,7 @@ public class Game extends JFrame implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent arg0) {
-    if (gameState == GameState.STARMAP) {
+    if (gameState == GameState.STARMAP && starMapView != null) {
       if (arg0.getActionCommand().equals(GameCommands.COMMAND_FOCUS_MSG)) {
         Message msg = players.getCurrentPlayerInfo().getMsgList().getMsg();
         if (msg.getType() == MessageType.RESEARCH) {
@@ -300,10 +300,10 @@ public class Game extends JFrame implements ActionListener {
         GameCommands.COMMAND_VIEW_RESEARCH)) {
       changeGameState(GameState.RESEARCHVIEW);
     }
-    if (gameState == GameState.RESEARCHVIEW) {
+    if (gameState == GameState.RESEARCHVIEW && researchView != null) {
       researchView.handleAction(arg0);
     }
-    if (gameState == GameState.PLANETVIEW) {
+    if (gameState == GameState.PLANETVIEW && planetView != null) {
       // Planet view
       planetView.handleAction(arg0);
     }

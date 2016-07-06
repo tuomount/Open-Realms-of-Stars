@@ -29,6 +29,7 @@ import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
+import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -350,7 +351,12 @@ public class PlanetView extends BlackPanel {
       peopleGrowth.setText(peopleGrow+" turns.");
       peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_DEATH));
     } else {
-      peopleGrowth.setText("stable ");
+      if (planet.getPlanetPlayerInfo().getRace() == SpaceRace.MECHIONS) {
+        peopleGrowth.setText("no growth");
+        peopleGrowth.setToolTipText("Mechions needs to be built to get more population.");
+      } else {
+        peopleGrowth.setText("stable ");
+      }
       peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
     }
     farmProd.setText(": "+planet.getTotalProduction(Planet.PRODUCTION_FOOD));

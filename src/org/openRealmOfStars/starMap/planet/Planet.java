@@ -486,10 +486,16 @@ public class Planet {
       mult = 100;
       //  Planet does not have credit bonus
      result=getTotalProductionFromBuildings(prod)+getTax()-getMaintenanceCost();break;}
-    case PRODUCTION_POPULATION: { 
+    case PRODUCTION_POPULATION: {
+      if (planetOwnerInfo.getRace() == SpaceRace.MECHIONS) {
+        // Mechions never starve or populate
+        result = 0;
+        break;
+      }
+
       //  Planet does not have population bonus
-     result=getTotalProduction(PRODUCTION_FOOD)-getTotalPopulation();
-     int require = 10*planetOwnerInfo.getRace().getFoodRequire()/100;
+     result=getTotalProduction(PRODUCTION_FOOD)-getTotalPopulation()*planetOwnerInfo.getRace().getFoodRequire()/100;
+     int require = 10*100/planetOwnerInfo.getRace().getGrowthSpeed();
      if (result > 0) {
        result = (require-extraFood)/result;
        if (result < 1) {
@@ -503,10 +509,6 @@ public class Planet {
        result = result *-1;
      } else {
        result = 0;
-     }
-     if (planetOwnerInfo.getRace() == SpaceRace.MECHIONS) {
-       // Mechions never starve or populate
-       result = 0; 
      }
      break;}
     }
@@ -869,9 +871,9 @@ public class Planet {
       
       Message msg;
       if (planetOwnerInfo.getRace() != SpaceRace.MECHIONS) { 
-        int food=getTotalProduction(PRODUCTION_FOOD)-getTotalPopulation();
+        int food=getTotalProduction(PRODUCTION_FOOD)-getTotalPopulation()*planetOwnerInfo.getRace().getFoodRequire()/100;
         extraFood = extraFood +food;
-        int require = 10*planetOwnerInfo.getRace().getFoodRequire()/100;
+        int require = 10*100/planetOwnerInfo.getRace().getGrowthSpeed();
         if (exceedRadiation() && extraFood > 0) {
           // Clear extra food if radiation is exceeded
           extraFood = 0;

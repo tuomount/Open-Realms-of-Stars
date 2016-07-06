@@ -268,6 +268,15 @@ public class Game extends JFrame implements ActionListener {
         if (msg.getType() == MessageType.RESEARCH) {
           changeGameState(GameState.RESEARCHVIEW, msg);
         }
+        if (msg.getType() == MessageType.PLANETARY) {
+          starMap.setCursorPos(msg.getX(), msg.getY());
+          starMap.setDrawPos(msg.getX(), msg.getY());
+          Planet planet = starMap.getPlanetByCoordinate(msg.getX(), msg.getY());
+          if (planet != null) {
+            starMapView.setShowPlanet(planet);
+            starMapView.getStarMapMouseListener().setLastClickedPlanet(planet);
+          }
+        }
         if (msg.getType() == MessageType.CONSTRUCTION ||
             msg.getType() == MessageType.POPULATION) {
           changeGameState(GameState.PLANETVIEW, msg);

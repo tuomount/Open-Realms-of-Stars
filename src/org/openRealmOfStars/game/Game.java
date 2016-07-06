@@ -227,11 +227,17 @@ public class Game extends JFrame implements ActionListener {
     case CREDITS: showCredits(); break;
     case STARMAP: showStarMap(); break;
     case RESEARCHVIEW: showResearch(focusMessage); break;
-    case PLANETVIEW: { 
-      if (starMapView.getStarMapMouseListener().getLastClickedPlanet()!=null) {
+    case PLANETVIEW: {
+      if (focusMessage != null) {
+        Planet planet = starMap.getPlanetByCoordinate(focusMessage.getX(), focusMessage.getY());
+        starMap.setCursorPos(focusMessage.getX(), focusMessage.getY());
+        starMap.setDrawPos(focusMessage.getX(), focusMessage.getY());
+        showPlanetView(planet);
+
+      } else if (starMapView.getStarMapMouseListener().getLastClickedPlanet()!=null) {
        showPlanetView(starMapView.getStarMapMouseListener().getLastClickedPlanet());
-       break;
       }
+      break;
     }
     }    
   }
@@ -260,6 +266,9 @@ public class Game extends JFrame implements ActionListener {
         Message msg = players.getCurrentPlayerInfo().getMsgList().getMsg();
         if (msg.getType() == MessageType.RESEARCH) {
           changeGameState(GameState.RESEARCHVIEW, msg);
+        }
+        if (msg.getType() == MessageType.CONSTRUCTION) {
+          changeGameState(GameState.PLANETVIEW, msg);
         }
       } else {
         starMapView.handleActions(arg0);

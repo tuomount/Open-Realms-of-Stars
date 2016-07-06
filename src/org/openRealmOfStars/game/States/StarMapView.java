@@ -113,6 +113,11 @@ public class StarMapView extends BlackPanel {
     infoPanel = new MapInfoPanel(listener);
     mapPanel.drawMap(this.map);
     starMapMouseListener = new StarMapMouseListener(this.map,mapPanel,infoPanel);
+    Planet planet = this.map.getPlanetByCoordinate(this.map.getCursorX(), this.map.getCursorY());
+    if (planet != null) {
+      setShowPlanet(planet);
+      starMapMouseListener.setLastClickedPlanet(planet);
+    }
     mapPanel.addMouseListener(starMapMouseListener);
     mapPanel.addMouseMotionListener(starMapMouseListener);
     
@@ -171,6 +176,14 @@ public class StarMapView extends BlackPanel {
    */
   public StarMapMouseListener getStarMapMouseListener() {
     return starMapMouseListener;
+  }
+  
+  /**
+   * Show planet info on planet info panel
+   * @param planet to show
+   */
+  public void setShowPlanet(Planet planet) {
+    infoPanel.showPlanet(planet);
   }
   
   public void handleActions(ActionEvent arg0) {

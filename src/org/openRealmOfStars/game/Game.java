@@ -17,6 +17,8 @@ import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 
@@ -149,11 +151,17 @@ public class Game extends JFrame implements ActionListener {
 
   /**
    * Show Research panels
+   * @param focusMsg which tech should have focus on show up. Can be null.
    */
-  public void showResearch() {
+  public void showResearch(Message focusMsg) {
+    String focusTech = null;
+    if (focusMsg != null && focusMsg.getType() == MessageType.RESEARCH &&
+        focusMsg.getMatchByString() != null) {
+      focusTech = focusMsg.getMatchByString();
+    }
     researchView = new ResearchView(players.getCurrentPlayerInfo(),
         starMap.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
-            players.getCurrentPlayer()), this);
+            players.getCurrentPlayer()),focusTech, this);
     this.getContentPane().removeAll();
     this.add(researchView);
     this.validate();
@@ -196,10 +204,11 @@ public class Game extends JFrame implements ActionListener {
   }
 
   /**
-   * Change game state and show new panel/screen
+   * Change game state so that focus is also changed to target message
    * @param newState Game State where to change
+   * @param focusMessage Focused message, can be also null
    */
-  public void changeGameState(GameState newState) {
+  public void changeGameState(GameState newState, Message focusMessage) {
     gameState = newState;
     switch (gameState) {
     case MAIN_MENU: showMainMenu(); break;
@@ -217,14 +226,22 @@ public class Game extends JFrame implements ActionListener {
     }
     case CREDITS: showCredits(); break;
     case STARMAP: showStarMap(); break;
-    case RESEARCHVIEW: showResearch(); break;
+    case RESEARCHVIEW: showResearch(focusMessage); break;
     case PLANETVIEW: { 
       if (starMapView.getStarMapMouseListener().getLastClickedPlanet()!=null) {
        showPlanetView(starMapView.getStarMapMouseListener().getLastClickedPlanet());
        break;
       }
     }
-    }
+    }    
+  }
+  
+  /**
+   * Change game state and show new panel/screen
+   * @param newState Game State where to change
+   */
+  public void changeGameState(GameState newState) {
+    changeGameState(newState,null);
   }
   
   /**
@@ -239,7 +256,14 @@ public class Game extends JFrame implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent arg0) {
     if (gameState == GameState.STARMAP) {
-      starMapView.handleActions(arg0);
+      if (arg0.getActionCommand().equals(GameCommands.COMMAND_FOCUS_MSG)) {
+        Message msg = players.getCurrentPlayerInfo().getMsgList().getMsg();
+        if (msg.getType() == MessageType.RESEARCH) {
+          changeGameState(GameState.RESEARCHVIEW, msg);
+        }
+      } else {
+        starMapView.handleActions(arg0);
+      }
     }
     if (gameState == GameState.CREDITS) {
       if (arg0.getActionCommand().equalsIgnoreCase(

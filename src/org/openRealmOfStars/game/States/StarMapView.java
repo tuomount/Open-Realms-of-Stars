@@ -109,12 +109,14 @@ public class StarMapView extends BlackPanel {
 
     BlackPanel base = new BlackPanel();
     mapPanel = new MapPanel();
+    // Side panel
     infoPanel = new MapInfoPanel(listener);
     mapPanel.drawMap(this.map);
     starMapMouseListener = new StarMapMouseListener(this.map,mapPanel,infoPanel);
     mapPanel.addMouseListener(starMapMouseListener);
     mapPanel.addMouseMotionListener(starMapMouseListener);
     
+    // Bottom panel is created here
     InfoPanel bottomPanel = new EmptyInfoPanel();    
     bottomPanel.setTitle(players.getCurrentPlayerInfo().getEmpireName());
     bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
@@ -148,7 +150,7 @@ public class StarMapView extends BlackPanel {
     
     
     msgPanel = new MessagePanel(GameCommands.COMMAND_PREV_MSG, 
-        GameCommands.COMMAND_NEXT_MSG, GameCommands.COMMAND_FOCUS_MSG,        
+        GameCommands.COMMAND_NEXT_MSG, GameCommands.COMMAND_FOCUS_MSG,
         players.getCurrentPlayerInfo().getMsgList().getMsg(),
         players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
         players.getCurrentPlayerInfo().getMsgList().getMaxMsg(),listener);

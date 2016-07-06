@@ -105,9 +105,10 @@ public class ResearchView extends BlackPanel {
    * Create new research for player
    * @param player whom clicked research button
    * @param totalResearch how much player is currently researching per turn
+   * @param focusTech, which tech will be focus on start, if null then none
    * @param listener ActionListener
    */
-  public ResearchView(PlayerInfo player,int totalResearch, ActionListener listener) {
+  public ResearchView(PlayerInfo player,int totalResearch,String focusTech, ActionListener listener) {
     this.player = player;
     this.totalResearch = totalResearch;
     InfoPanel base = new InfoPanel();
@@ -178,11 +179,20 @@ public class ResearchView extends BlackPanel {
     
     invis = new InvisiblePanel(base);
     invis.setLayout(new BoxLayout(invis, BoxLayout.X_AXIS));
-    techList = new JList<>(player.getTechList().getList());
+    Tech[] techs = player.getTechList().getList();
+    techList = new JList<>(techs);
     techList.setCellRenderer(new TechListRenderer());
     JScrollPane scroll = new JScrollPane(techList);
     techList.setBackground(Color.BLACK);
     techList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    if (focusTech != null) {
+      for (int i=0;i<techs.length;i++) {
+        if (techs[i].getName().equals(focusTech)) {
+          techList.setSelectedIndex(i);
+          break;
+        }
+      }
+    }
     invis.add(scroll);
     invis.add(Box.createRigidArea(new Dimension(10,10)));
     infoText = new InfoTextArea(25, 35);

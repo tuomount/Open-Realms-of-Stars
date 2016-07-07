@@ -25,6 +25,11 @@ package org.openRealmOfStars.player.ship;
 public class ShipHull {
 
   /**
+   * Unique index for factories and saving the game
+   */
+  private int index;
+
+  /**
    * Hull name needs to match one in techs
    */
   private String name;
@@ -51,14 +56,16 @@ public class ShipHull {
   
   /**
    * Constructor for Ship hull
+   * @param index Index for factory
    * @param name Hull name, must match one in techs
    * @param maxSlots How many slots in hull
    * @param hull How many hull points single slot has
    * @param type ShipHullType
    * @param size ShipSize
    */
-  public ShipHull(String name, int maxSlots, int hull, ShipHullType type,
+  public ShipHull(int index,String name, int maxSlots, int hull, ShipHullType type,
       ShipSize size) {
+    this.index = index;
     this.name = name;
     this.maxSlot = maxSlots;
     this.slotHull = hull;
@@ -66,6 +73,10 @@ public class ShipHull {
     this.size = size;
   }
 
+  public int getIndex() {
+    return index;
+  }
+  
   public String getName() {
     return name;
   }

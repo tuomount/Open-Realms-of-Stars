@@ -75,23 +75,23 @@ public class TechFactory {
   public static final String[] HULL_TECH_LEVEL1_NAMES = 
     {"Scout Mk1","Destroyer Mk1","Colony"};
   public static final String[] HULL_TECH_LEVEL2_NAMES = 
-    {"Probe","Small Freighter","Small starbase Mk1"};
+    {"Probe","Small freighter","Small starbase Mk1"};
   public static final String[] HULL_TECH_LEVEL3_NAMES = 
     {"Destroyer Mk2","Corvette Mk1","Small starbase Mk2"};
   public static final String[] HULL_TECH_LEVEL4_NAMES = 
-    {"Medium Freighter","Medium starbase","Scout Mk2"};
+    {"Medium freighter","Medium starbase","Scout Mk2"};
   public static final String[] HULL_TECH_LEVEL5_NAMES = 
     {"Cruiser","Battleship Mk1","Privateer Mk1"};
   public static final String[] HULL_TECH_LEVEL6_NAMES = 
-    {"Large Freighter","Large starbase","Corvette Mk2"};
+    {"Large freighter","Large starbase","Corvette Mk2"};
   public static final String[] HULL_TECH_LEVEL7_NAMES = 
-    {"Battle Cruiser Mk1","Privateer Mk2","Scout Mk3"};
+    {"Battle cruiser Mk1","Privateer Mk2","Scout Mk3"};
   public static final String[] HULL_TECH_LEVEL8_NAMES = 
-    {"Massive Freighter","Massive starbase","Destroyer Mk3","Corvette Mk3"};
+    {"Massive freighter","Massive starbase","Destroyer Mk3","Corvette Mk3"};
   public static final String[] HULL_TECH_LEVEL9_NAMES = 
-    {"Battleship Mk2","Privateer Mk3","Battle Cruiser Mk2"};
+    {"Battleship Mk2","Privateer Mk3","Battle cruiser Mk2"};
   public static final String[] HULL_TECH_LEVEL10_NAMES = 
-    {"Capital Ship","Destroyer Mk4","Scout Mk4"};
+    {"Capital ship","Destroyer Mk4","Scout Mk4"};
 
   public static final String[] IMPROVEMENT_TECH_LEVEL1_NAMES = 
     {"Basic lab","Barracks","Tax center"};

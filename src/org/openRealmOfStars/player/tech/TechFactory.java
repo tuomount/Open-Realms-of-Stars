@@ -81,17 +81,17 @@ public class TechFactory {
   public static final String[] HULL_TECH_LEVEL4_NAMES = 
     {"Medium Freighter","Medium starbase","Scout Mk2"};
   public static final String[] HULL_TECH_LEVEL5_NAMES = 
-    {"Cruiser","Battleship"};
+    {"Cruiser","Battleship Mk1","Privateer Mk1"};
   public static final String[] HULL_TECH_LEVEL6_NAMES = 
-    {"Large Freighter","Large starbase","Corvette Mk2","Privateer Mk1"};
+    {"Large Freighter","Large starbase","Corvette Mk2"};
   public static final String[] HULL_TECH_LEVEL7_NAMES = 
-    {"Battle Cruiser","Privateer Mk2"};
+    {"Battle Cruiser Mk1","Privateer Mk2","Scout Mk3"};
   public static final String[] HULL_TECH_LEVEL8_NAMES = 
-    {"Massive Freighter","Massive starbase","Privateer Mk3"};
+    {"Massive Freighter","Massive starbase","Destroyer Mk3","Corvette Mk3"};
   public static final String[] HULL_TECH_LEVEL9_NAMES = 
-    {"Capital Ship Mk1"};
+    {"Battleship Mk2","Privateer Mk3","Battle Cruiser Mk2"};
   public static final String[] HULL_TECH_LEVEL10_NAMES = 
-    {"Capital Ship Mk2"};
+    {"Capital Ship","Destroyer Mk4","Scout Mk4"};
 
   public static final String[] IMPROVEMENT_TECH_LEVEL1_NAMES = 
     {"Basic lab","Barracks","Tax center"};

@@ -59,6 +59,136 @@ public enum ShipComponentType {
   /**
    * Armor defense component
    */
-  ARMOR;
+  ARMOR,
+  /**
+   * Shield Generator
+   */
+  SHIELD_GENERATOR,
+  /**
+   * Propulsion Engine
+   */
+  ENGINE,
+  /**
+   * Powersource
+   */
+  POWERSOURCE,
+  /**
+   * Cloaking device
+   */
+  CLOAKING_DEVICE,
+  /**
+   * Jammer against missile
+   */
+  JAMMER,
+  /**
+   * Targeting computer
+   */
+  TARGETING_COMPUTER,  
+  /**
+   * Planetary invasion module
+   */
+  PLANETARY_INVASION_MODULE,
+  /**
+   * COLONY_MODULE
+   */
+  COLONY_MODULE,
+  /**
+   * Privateering module
+   */
+  PRIVATEERING_MODULE,
+  /**
+   * Orbital bombs
+   */
+  ORBITAL_BOMBS,
+  /**
+   * Orbital Nuke
+   */
+  ORBITAL_NUKE;
   
+  /**
+   * Get ShipComponentType index
+   * @return int
+   */
+  public int getIndex() {
+    switch (this) {
+    case WEAPON_BEAM: return 0;
+    case WEAPON_RAILGUN: return 1;
+    case WEAPON_PHOTON_TORPEDO: return 2;
+    case WEAPON_ECM_TORPEDO: return 3;
+    case WEAPON_HE_MISSILE: return 4;
+    case SCANNER: return 5;
+    case SHIELD: return 6;
+    case ARMOR: return 7;
+    case SHIELD_GENERATOR: return 8;
+    case ENGINE: return 9;
+    case POWERSOURCE: return 10;
+    case CLOAKING_DEVICE: return 11;
+    case JAMMER: return 12;
+    case TARGETING_COMPUTER: return 13;
+    case PLANETARY_INVASION_MODULE: return 14;
+    case COLONY_MODULE: return 15;
+    case PRIVATEERING_MODULE: return 16;
+    case ORBITAL_BOMBS: return 17;
+    case ORBITAL_NUKE: return 18;
+    }
+    return 0;
+  }
+  
+  /**
+   * Return ShipComponentType by index
+   * @param index This must be between 0-
+   * @return Ship component type
+   */
+  public static ShipComponentType getTypeByIndex(int index) {
+    switch (index) {
+    case 0: return ShipComponentType.WEAPON_BEAM;
+    case 1: return ShipComponentType.WEAPON_RAILGUN;
+    case 2: return ShipComponentType.WEAPON_PHOTON_TORPEDO;
+    case 3: return ShipComponentType.WEAPON_ECM_TORPEDO;
+    case 4: return ShipComponentType.WEAPON_HE_MISSILE;
+    case 5: return ShipComponentType.SCANNER;
+    case 6: return ShipComponentType.SHIELD;
+    case 7: return ShipComponentType.ARMOR;
+    case 8: return ShipComponentType.SHIELD_GENERATOR;
+    case 9: return ShipComponentType.ENGINE;
+    case 10: return ShipComponentType.POWERSOURCE;
+    case 11: return ShipComponentType.CLOAKING_DEVICE;
+    case 12: return ShipComponentType.JAMMER;
+    case 13: return ShipComponentType.TARGETING_COMPUTER;
+    case 14: return ShipComponentType.PLANETARY_INVASION_MODULE;
+    case 15: return ShipComponentType.COLONY_MODULE;
+    case 16: return ShipComponentType.PRIVATEERING_MODULE;
+    case 17: return ShipComponentType.ORBITAL_BOMBS;
+    case 18: return ShipComponentType.ORBITAL_NUKE;
+    }
+    return ShipComponentType.WEAPON_BEAM;
+  }
+
+  @Override
+  public String toString() {
+    switch (this) {
+    case WEAPON_BEAM: return "Beam weapon";
+    case WEAPON_RAILGUN: return "Railgun";
+    case WEAPON_PHOTON_TORPEDO: return "Photon torpedo";
+    case WEAPON_ECM_TORPEDO: return "ECM torpedo";
+    case WEAPON_HE_MISSILE: return "HE missile";
+    case SCANNER: return "Scanner";
+    case SHIELD: return "Shield";
+    case ARMOR: return "Armor";
+    case SHIELD_GENERATOR: return "Shield generator";
+    case ENGINE: return "Engine";
+    case POWERSOURCE: return "Powersource";
+    case CLOAKING_DEVICE: return "Cloaking device";
+    case JAMMER: return "Jammer";
+    case TARGETING_COMPUTER: return "Targeting computer";
+    case PLANETARY_INVASION_MODULE: return "Planetary invasion module";
+    case COLONY_MODULE: return "Colony module";
+    case PRIVATEERING_MODULE: return "Privateering module";
+    case ORBITAL_BOMBS: return "Orbital bombs";
+    case ORBITAL_NUKE: return "Orbital nuke";
+    }
+    return "Error - Unknown";
+
+  }
+
 }

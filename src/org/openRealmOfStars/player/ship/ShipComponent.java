@@ -99,6 +99,10 @@ public class ShipComponent {
   private int damage;
 
   /**
+   * Weapon range
+   */
+  private int weaponRange;
+  /**
    * Constructor for ship component
    * @param index Index for saving component
    * @param name Component name 
@@ -123,6 +127,7 @@ public class ShipComponent {
     this.cloaking = 0;
     this.defenseValue = 0;
     this.damage = 0;
+    this.setWeaponRange(0);
   }
 
   public int getIndex() {
@@ -223,6 +228,14 @@ public class ShipComponent {
 
   public void setDamage(int damage) {
     this.damage = damage;
+  }
+
+  public int getWeaponRange() {
+    return weaponRange;
+  }
+
+  public void setWeaponRange(int weaponRange) {
+    this.weaponRange = weaponRange;
   }
 
   

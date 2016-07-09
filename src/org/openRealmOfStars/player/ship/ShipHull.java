@@ -55,6 +55,16 @@ public class ShipHull {
   private ShipSize size;
   
   /**
+   * Hull cost in production
+   */
+  private int cost;
+
+  /**
+   * Hull cost in metal
+   */
+  private int metalCost;
+
+  /**
    * Constructor for Ship hull
    * @param index Index for factory
    * @param name Hull name, must match one in techs
@@ -62,15 +72,19 @@ public class ShipHull {
    * @param hull How many hull points single slot has
    * @param type ShipHullType
    * @param size ShipSize
+   * @param int cost in production
+   * @param int cost in metal
    */
   public ShipHull(int index,String name, int maxSlots, int hull, ShipHullType type,
-      ShipSize size) {
+      ShipSize size,int cost, int metal) {
     this.index = index;
     this.name = name;
     this.maxSlot = maxSlots;
     this.slotHull = hull;
     this.hullType = type;
     this.size = size;
+    this.cost = cost;
+    this.metalCost = metal;
   }
 
   public int getIndex() {
@@ -97,6 +111,13 @@ public class ShipHull {
     return size;
   }
   
+  public int getCost() {
+    return cost;
+  }
+  
+  public int getMetalCost() {
+    return metalCost;
+  }
   
   
 }

@@ -25,6 +25,31 @@ package org.openRealmOfStars.player.ship;
 
 public class ShipComponentFactory {
 
+  
+  /**
+   * Current maximum ShipComponent for whole game.
+   * Remember to increase this when new ship hull is added to game.
+   * It should be one bigger than last index.
+   */
+  private static final int MAX_SHIPCOMPONENT = 9;
+  
+
+  /**
+   * Create ShipComponent with matching name
+   * @param name Ship component name
+   * @return ShipComponent or null if not found
+   */
+  public static ShipComponent createByName(String name) {
+    ShipComponent tmp = null;
+    for (int i=0;i<MAX_SHIPCOMPONENT;i++) {
+      tmp = create(i);
+      if ((tmp != null) && (tmp.getName().equalsIgnoreCase(name))) {
+        return tmp;
+      }
+    }
+    return null;
+  }
+
   /**
    * Create Ship component with index
    * @param index Index to create
@@ -37,6 +62,11 @@ public class ShipComponentFactory {
     case 1: tmp = createWeapon(index); break; // Laser Mk1
     case 2: tmp = createWeapon(index); break; // RailGun Mk1
     case 3: tmp = createWeapon(index); break; // Photon torpedo Mk1
+    case 4: tmp = createDefense(index); break; // Shield Mk1
+    case 5: tmp = createDefense(index); break; // Armor Mk1
+    case 6: tmp = createElectronics(index); break; // Scanner Mk1
+    case 7: tmp = createElectronics(index); break; // Cloaking device Mk1
+    case 8: tmp = createElectronics(index); break; // Colony module
     }
     return tmp;
   }
@@ -58,7 +88,33 @@ public class ShipComponentFactory {
     return tmp;
     
   }
-  
+
+  /**
+   * Create Engine component with index
+   * @param index Index to create
+   * @return ShipComponent or null if index is not found
+   */
+  private static ShipComponent createElectronics(int index) {
+    ShipComponent tmp = null;
+    if (index == 6) {
+      tmp = new ShipComponent(index, "Scanner Mk1", 2, 2, ShipComponentType.SCANNER);
+      tmp.setScannerRange(2);
+      tmp.setCloakDetection(20);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == 7) {
+      tmp = new ShipComponent(index, "Cloaking device Mk1", 2, 2, ShipComponentType.CLOAKING_DEVICE);
+      tmp.setCloaking(20);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == 8) {
+      tmp = new ShipComponent(index, "Colony Module", 2, 8, ShipComponentType.COLONY_MODULE);
+      tmp.setEnergyRequirement(1);
+    }
+    return tmp;
+    
+  }
+
   /**
    * Create Weapon component with index
    * @param index Index to create
@@ -83,6 +139,26 @@ public class ShipComponentFactory {
       tmp.setDamage(1);
       tmp.setWeaponRange(3);
       tmp.setEnergyRequirement(1);
+    }
+    return tmp;
+    
+  }
+
+  /**
+   * Create Defense component with index
+   * @param index Index to create
+   * @return ShipComponent or null if index is not found
+   */
+  private static ShipComponent createDefense(int index) {
+    ShipComponent tmp = null;
+    if (index == 4) {
+      tmp = new ShipComponent(index, "Shield Mk1", 5, 1, ShipComponentType.SHIELD);
+      tmp.setDefenseValue(1);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == 5) {
+      tmp = new ShipComponent(index, "Armor Mk1", 2, 4, ShipComponentType.ARMOR);
+      tmp.setDefenseValue(1);
     }
     return tmp;
     

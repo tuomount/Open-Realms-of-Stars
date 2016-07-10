@@ -67,6 +67,8 @@ public class ShipComponentFactory {
     case 6: tmp = createElectronics(index); break; // Scanner Mk1
     case 7: tmp = createElectronics(index); break; // Cloaking device Mk1
     case 8: tmp = createElectronics(index); break; // Colony module
+    case 9: tmp = createElectronics(index); break; // Fission Source Mk1
+    case 10: tmp = createElectronics(index); break; // Fission Source Mk2
     }
     return tmp;
   }
@@ -110,6 +112,14 @@ public class ShipComponentFactory {
     if (index == 8) {
       tmp = new ShipComponent(index, "Colony Module", 2, 8, ShipComponentType.COLONY_MODULE);
       tmp.setEnergyRequirement(1);
+    }
+    if (index == 9) {
+      tmp = new ShipComponent(index, "Fission source Mk1", 3, 3, ShipComponentType.POWERSOURCE);
+      tmp.setEnergyResource(4);
+    }
+    if (index == 10) {
+      tmp = new ShipComponent(index, "Fission source Mk2", 3, 4, ShipComponentType.POWERSOURCE);
+      tmp.setEnergyResource(5);
     }
     return tmp;
     

@@ -15,6 +15,7 @@ import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BlackPanel;
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.TechListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
@@ -197,6 +198,7 @@ public class ResearchView extends BlackPanel {
     invis.add(Box.createRigidArea(new Dimension(10,10)));
     infoText = new InfoTextArea(25, 35);
     infoText.setEditable(false);
+    infoText.setFont(GuiStatics.getFontCubellanSmaller());
     invis.add(infoText);
     
     base.add(invis,BorderLayout.WEST);

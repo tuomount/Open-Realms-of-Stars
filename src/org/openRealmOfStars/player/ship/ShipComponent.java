@@ -237,6 +237,112 @@ public class ShipComponent {
   public void setWeaponRange(int weaponRange) {
     this.weaponRange = weaponRange;
   }
+  
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(getName());
+    sb.append("\n");
+    sb.append("Cost: ");
+    sb.append(getCost());
+    sb.append(" Metal: ");
+    sb.append(getMetalCost());
+    sb.append("\n");
+    if (getEnergyRequirement() > 0 && getEnergyResource() == 0) {
+      sb.append("Energy: ");
+      sb.append(getEnergyRequirement());
+    }
+    if (getEnergyResource() > 0) {
+      sb.append("Energy source: ");
+      sb.append(getEnergyResource());
+    }
+    sb.append("\n");
+    switch (getType()) {
+    case ARMOR: { 
+      sb.append("Armor value:");
+      sb.append(getDefenseValue()); break;}
+    case SHIELD: { 
+      sb.append("Shield value:");
+      sb.append(getDefenseValue()); break;}
+    case CLOAKING_DEVICE: { 
+      sb.append("Cloaking:");
+      sb.append(getCloaking()); break;}
+    case COLONY_MODULE:
+    case POWERSOURCE:
+    case PRIVATEERING_MODULE:
+    case ORBITAL_NUKE:{ 
+      // Do nothing
+      break;}
+    case ENGINE: { 
+      sb.append("Speed: ");
+      sb.append(getSpeed());
+      sb.append(" FTL:");
+      sb.append(getFtlSpeed());
+      sb.append(" Combat Speed:");
+      sb.append(getTacticSpeed());break;}
+    case WEAPON_BEAM: { 
+      sb.append("Damage: ");
+      sb.append(getDamage());
+      sb.append(" Range:");
+      sb.append(getWeaponRange());
+      sb.append(" Hit: 100%");
+      break;}
+    case WEAPON_ECM_TORPEDO: { 
+      sb.append("Shield damage: ");
+      sb.append(getDamage());
+      sb.append(" Range:");
+      sb.append(getWeaponRange());
+      sb.append(" Hit: 50%");
+      break;}
+    case WEAPON_HE_MISSILE: { 
+      sb.append("Damage: ");
+      sb.append(getDamage());
+      sb.append(" Range:");
+      sb.append(getWeaponRange());
+      sb.append(" Hit: 50%");
+      break;}
+    case WEAPON_PHOTON_TORPEDO: { 
+      sb.append("Damage: ");
+      sb.append(getDamage());
+      sb.append(" Range:");
+      sb.append(getWeaponRange());
+      sb.append(" Hit: 75%");
+      break;}
+    case WEAPON_RAILGUN: { 
+      sb.append("Damage: ");
+      sb.append(getDamage());
+      sb.append(" Range:");
+      sb.append(getWeaponRange());
+      sb.append(" Hit: 75%");
+      break;}
+    case JAMMER: { 
+      sb.append("Jammer: ");
+      sb.append(getDefenseValue());
+      break;}
+    case ORBITAL_BOMBS: { 
+      sb.append("Orbital bombs: ");
+      break;}
+    case PLANETARY_INVASION_MODULE: { 
+      sb.append("Troop combat: ");
+      break;}
+    case SCANNER: { 
+      sb.append("Range: ");
+      sb.append(getScannerRange());
+      sb.append(" Cloak detection:");
+      sb.append(getCloakDetection());
+      sb.append(" %");
+      break;}
+    case SHIELD_GENERATOR: { 
+      sb.append("Shield generator: ");
+      sb.append(getDefenseValue());
+      break;}
+    case TARGETING_COMPUTER: { 
+      sb.append("Targeting computer: ");
+      sb.append(getDamage());
+      break;}
+    }
+    return sb.toString();
+  }
 
   
 }

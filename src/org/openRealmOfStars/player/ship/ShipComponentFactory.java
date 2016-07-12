@@ -31,7 +31,7 @@ public class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 9;
+  private static final int MAX_SHIPCOMPONENT = 13;
   
 
   /**
@@ -58,7 +58,7 @@ public class ShipComponentFactory {
   public static ShipComponent create(int index) {
     ShipComponent tmp = null;
     switch (index) {
-    case 0: tmp = createEngine(index); break; // Ion Drive Mk1
+    case 0: tmp = createEngine(index); break; // Ion drive Mk1
     case 1: tmp = createWeapon(index); break; // Laser Mk1
     case 2: tmp = createWeapon(index); break; // RailGun Mk1
     case 3: tmp = createWeapon(index); break; // Photon torpedo Mk1
@@ -69,6 +69,8 @@ public class ShipComponentFactory {
     case 8: tmp = createElectronics(index); break; // Colony module
     case 9: tmp = createElectronics(index); break; // Fission Source Mk1
     case 10: tmp = createElectronics(index); break; // Fission Source Mk2
+    case 11: tmp = createEngine(index); break; // Ion drive Mk2
+    case 12: tmp = createEngine(index); break; // Nuclear drive Mk1
     }
     return tmp;
   }
@@ -81,9 +83,23 @@ public class ShipComponentFactory {
   private static ShipComponent createEngine(int index) {
     ShipComponent tmp = null;
     if (index == 0) {
-      tmp = new ShipComponent(index, "Ion Drive Mk1", 5, 2, ShipComponentType.ENGINE);
+      tmp = new ShipComponent(index, "Ion drive Mk1", 5, 2, ShipComponentType.ENGINE);
       tmp.setSpeed(1);
       tmp.setFtlSpeed(3);
+      tmp.setTacticSpeed(1);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == 11) {
+      tmp = new ShipComponent(index, "Ion drive Mk2", 6, 2, ShipComponentType.ENGINE);
+      tmp.setSpeed(1);
+      tmp.setFtlSpeed(4);
+      tmp.setTacticSpeed(1);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == 12) {
+      tmp = new ShipComponent(index, "Nuclear drive Mk1", 4, 4, ShipComponentType.ENGINE);
+      tmp.setSpeed(2);
+      tmp.setFtlSpeed(2);
       tmp.setTacticSpeed(1);
       tmp.setEnergyRequirement(1);
     }
@@ -145,7 +161,7 @@ public class ShipComponentFactory {
       tmp.setEnergyRequirement(1);
     }
     if (index == 3) {
-      tmp = new ShipComponent(index, "Photon torpedo", 6, 4, ShipComponentType.WEAPON_PHOTON_TORPEDO);
+      tmp = new ShipComponent(index, "Photon torpedo Mk1", 6, 4, ShipComponentType.WEAPON_PHOTON_TORPEDO);
       tmp.setDamage(1);
       tmp.setWeaponRange(3);
       tmp.setEnergyRequirement(1);

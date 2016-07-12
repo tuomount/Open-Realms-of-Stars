@@ -386,7 +386,11 @@ public class TechFactory {
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Propulsion, level);
         tech.setComponent(techName);
-        tech.setIcon(Icons.getIconByName(Icons.ICON_PROPULSION_TECH));
+        if (tech.getName().contains(" source Mk")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_POWERSOURCE));
+        } else {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_PROPULSION_TECH));
+        }
         return tech;
       }
     }

@@ -119,5 +119,28 @@ public class ShipHull {
     return metalCost;
   }
   
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(getName());
+    sb.append("\n");
+    sb.append("Cost: ");
+    sb.append(getCost());
+    sb.append(" Metal: ");
+    sb.append(getMetalCost());
+    sb.append("\n");
+    sb.append("Slots:");
+    sb.append(getMaxSlot());
+    sb.append(" Hull:");
+    sb.append(getMaxSlot()*getSlotHull());
+    sb.append("\n");
+    sb.append("Size:");
+    sb.append(getSize().toString());
+    sb.append("\n");
+    sb.append(getHullType().getDescription());
+    
+
+    return sb.toString();
+  }
   
 }

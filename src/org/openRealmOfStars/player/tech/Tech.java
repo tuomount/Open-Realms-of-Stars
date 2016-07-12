@@ -4,6 +4,8 @@ import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
+import org.openRealmOfStars.player.ship.ShipHull;
+import org.openRealmOfStars.player.ship.ShipHullFactory;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 
@@ -174,6 +176,7 @@ public class Tech {
     sb.append("\n");
     Building building = null;
     ShipComponent comp = null; 
+    ShipHull shipHull = null;
     if (improvement != null ){
       sb.append("Improvement: ");
       sb.append(improvement);
@@ -183,6 +186,7 @@ public class Tech {
     if (hull != null ){
       sb.append("Ship design: ");
       sb.append(hull);
+      shipHull = ShipHullFactory.createByName(hull);
       sb.append("\n");
     }
     if (component != null ){
@@ -197,6 +201,9 @@ public class Tech {
     }
     if (comp != null) {
       sb.append(comp.toString());
+    }
+    if (shipHull != null) {
+      sb.append(shipHull.toString());
     }
     return sb.toString();
   }

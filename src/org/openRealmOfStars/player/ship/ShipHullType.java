@@ -89,4 +89,20 @@ public enum ShipHullType {
 
   }
 
+  /**
+   * Get Hull type description as a string
+   * @return String
+   */
+  public String getDescription() {
+    switch (this) {
+    case NORMAL: return toString()+", All weapons allowed. No cargo.";
+    case FREIGHTER: return toString()+", no weapons allowed. Cargo ship";
+    case PROBE: return toString()+", no weapons allowed. FTL speed faster.";
+    case STARBASE: return toString()+", No engine, Starbase components";
+    case PRIVATEER: return toString()+", Weapons, cargo and privateering.";
+    }
+    return "Error - Unknown";
+
+  }
+
 }

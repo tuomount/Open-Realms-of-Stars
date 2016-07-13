@@ -316,14 +316,17 @@ public class ShipComponent {
       sb.append(" Hit: 75%");
       break;}
     case JAMMER: { 
-      sb.append("Jammer: ");
+      sb.append("Jammer: -");
       sb.append(getDefenseValue());
+      sb.append("%");
       break;}
     case ORBITAL_BOMBS: { 
       sb.append("Orbital bombs: ");
       break;}
     case PLANETARY_INVASION_MODULE: { 
       sb.append("Troop combat: ");
+      sb.append(getDamage());
+      sb.append("%");
       break;}
     case SCANNER: { 
       sb.append("Range: ");
@@ -337,8 +340,9 @@ public class ShipComponent {
       sb.append(getDefenseValue());
       break;}
     case TARGETING_COMPUTER: { 
-      sb.append("Targeting computer: ");
+      sb.append("Targeting computer: +");
       sb.append(getDamage());
+      sb.append("% to hit");
       break;}
     }
     return sb.toString();

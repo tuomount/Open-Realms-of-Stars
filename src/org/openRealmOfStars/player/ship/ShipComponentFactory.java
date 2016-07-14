@@ -31,7 +31,7 @@ public class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 24;
+  private static final int MAX_SHIPCOMPONENT = 49;
   
 
   /**
@@ -94,6 +94,19 @@ public class ShipComponentFactory {
     case 33: tmp = createEngine(index); break; // Warp drive Mk1
     case 34: tmp = createEngine(index); break; // Nuclear drive Mk2
     case 35: tmp = createElectronics(index); break; // Fusion source Mk2
+    case 36: tmp = createWeapon(index); break; // Laser Mk4
+    case 37: tmp = createWeapon(index); break; // RailGun Mk4
+    case 38: tmp = createWeapon(index); break; // Photon torpedo Mk4
+    case 39: tmp = createWeapon(index); break; // ECM torpedo Mk2
+    case 40: tmp = createWeapon(index); break; // HE missile Mk2
+    case 41: tmp = createDefense(index); break; // Shield Mk4
+    case 42: tmp = createDefense(index); break; // Armor Mk4
+    case 43: tmp = createElectronics(index); break; // Cloaking device Mk3
+    case 44: tmp = createElectronics(index); break; // Targeting computer Mk2
+    case 45: tmp = createElectronics(index); break; // LR Scanner Mk1
+    case 46: tmp = createEngine(index); break; // Warp drive Mk2
+    case 47: tmp = createEngine(index); break; // Hyper drive Mk2
+    case 48: tmp = createElectronics(index); break; // Tachyon source Mk1
     }
     return tmp;
   }
@@ -153,6 +166,20 @@ public class ShipComponentFactory {
       tmp.setFtlSpeed(2);
       tmp.setTacticSpeed(2);
       tmp.setEnergyResource(1);
+    }
+    if (index == 46) {
+      tmp = new ShipComponent(index, "Warp drive Mk2", 7, 2, ShipComponentType.ENGINE);
+      tmp.setSpeed(1);
+      tmp.setFtlSpeed(7);
+      tmp.setTacticSpeed(1);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == 47) {
+      tmp = new ShipComponent(index, "Hyper drive Mk2", 8, 3, ShipComponentType.ENGINE);
+      tmp.setSpeed(2);
+      tmp.setFtlSpeed(4);
+      tmp.setTacticSpeed(1);
+      tmp.setEnergyRequirement(2);
     }
     return tmp;
     
@@ -220,6 +247,26 @@ public class ShipComponentFactory {
     if (index == 35) {
       tmp = new ShipComponent(index, "Fusion source Mk2", 6, 5, ShipComponentType.POWERSOURCE);
       tmp.setEnergyResource(7);
+    }
+    if (index == 43) {
+      tmp = new ShipComponent(index, "Cloaking device Mk3", 4, 2, ShipComponentType.CLOAKING_DEVICE);
+      tmp.setCloaking(60);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == 44) {
+      tmp = new ShipComponent(index, "Targeting computer Mk2", 3, 2, ShipComponentType.TARGETING_COMPUTER);
+      tmp.setDamage(20);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == 45) {
+      tmp = new ShipComponent(index, "LR Scanner Mk1", 2, 2, ShipComponentType.SCANNER);
+      tmp.setScannerRange(5);
+      tmp.setCloakDetection(20);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == 48) {
+      tmp = new ShipComponent(index, "Tachyon source Mk1", 8, 6, ShipComponentType.POWERSOURCE);
+      tmp.setEnergyResource(9);
     }
     return tmp;
     
@@ -298,6 +345,36 @@ public class ShipComponentFactory {
       tmp.setWeaponRange(3);
       tmp.setEnergyRequirement(0);
     }
+    if (index == 36) {
+      tmp = new ShipComponent(index, "Laser Mk4", 7, 3, ShipComponentType.WEAPON_BEAM);
+      tmp.setDamage(3);
+      tmp.setWeaponRange(3);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == 37) {
+      tmp = new ShipComponent(index, "Railgun Mk4", 4, 5, ShipComponentType.WEAPON_RAILGUN);
+      tmp.setDamage(4);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == 38) {
+      tmp = new ShipComponent(index, "Photon torpedo Mk4", 7, 4, ShipComponentType.WEAPON_PHOTON_TORPEDO);
+      tmp.setDamage(4);
+      tmp.setWeaponRange(3);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == 39) {
+      tmp = new ShipComponent(index, "ECM torpedo Mk2", 9, 2, ShipComponentType.WEAPON_ECM_TORPEDO);
+      tmp.setDamage(4);
+      tmp.setWeaponRange(5);
+      tmp.setEnergyRequirement(0);
+    }
+    if (index == 40) {
+      tmp = new ShipComponent(index, "HE Missile Mk2", 3, 7, ShipComponentType.WEAPON_HE_MISSILE);
+      tmp.setDamage(4);
+      tmp.setWeaponRange(3);
+      tmp.setEnergyRequirement(0);
+    }
     return tmp;
     
   }
@@ -335,6 +412,15 @@ public class ShipComponentFactory {
     if (index == 30) {
       tmp = new ShipComponent(index, "Armor Mk3", 3, 7, ShipComponentType.ARMOR);
       tmp.setDefenseValue(3);
+    }
+    if (index == 41) {
+      tmp = new ShipComponent(index, "Shield Mk4", 8, 2, ShipComponentType.SHIELD);
+      tmp.setDefenseValue(4);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == 42) {
+      tmp = new ShipComponent(index, "Armor Mk4", 4, 7, ShipComponentType.ARMOR);
+      tmp.setDefenseValue(4);
     }
     return tmp;
     

@@ -1,0 +1,131 @@
+package org.openRealmOfStars.player.ship;
+
+/**
+ * 
+ * Open Realm of Stars game project
+ * Copyright (C) 2016  Tuomo Untinen
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, see http://www.gnu.org/licenses/
+ * 
+ * 
+ * Ship Stat class is always connect to certain ship design. Class contains
+ * statistical information about the certain ship
+ * 
+ */
+
+public class ShipStat {
+
+  /**
+   * Ship design to to keep stats
+   */
+  private ShipDesign design;
+  
+  /**
+   * In how many combats ship has taken a part
+   */
+  private int numberOfCombats;
+  
+  /**
+   * Number of victories ship
+   */
+  private int numberOfVictories;
+
+  /**
+   * Number of lost ships
+   */
+  private int numberOfLoses;
+
+  /**
+   * Number of kills aka last hit
+   */
+  private int numberOfKills;
+
+  /**
+   * Number of built
+   */
+  private int numberOfBuilt;
+
+  /**
+   * Number of ships in use
+   */
+  private int numberOfInUse;
+
+  /**
+   * Constructor
+   * @param design Ship Design
+   */
+  public ShipStat(ShipDesign design) {
+    this.design = design;
+    numberOfCombats = 0;
+    numberOfVictories = 0;
+    numberOfLoses = 0;
+    numberOfKills = 0;
+    numberOfBuilt = 0;
+    numberOfInUse = 0;
+  }
+
+  public int getNumberOfCombats() {
+    return numberOfCombats;
+  }
+
+  public void setNumberOfCombats(int numberOfCombats) {
+    this.numberOfCombats = numberOfCombats;
+  }
+
+  public int getNumberOfVictories() {
+    return numberOfVictories;
+  }
+
+  public void setNumberOfVictories(int numberOfVictories) {
+    this.numberOfVictories = numberOfVictories;
+  }
+
+  public int getNumberOfLoses() {
+    return numberOfLoses;
+  }
+
+  public void setNumberOfLoses(int numberOfLoses) {
+    this.numberOfLoses = numberOfLoses;
+  }
+
+  public int getNumberOfKills() {
+    return numberOfKills;
+  }
+
+  public void setNumberOfKills(int numberOfKills) {
+    this.numberOfKills = numberOfKills;
+  }
+
+  public int getNumberOfBuilt() {
+    return numberOfBuilt;
+  }
+
+  public void setNumberOfBuilt(int numberOfBuilt) {
+    this.numberOfBuilt = numberOfBuilt;
+  }
+
+  public int getNumberOfInUse() {
+    return numberOfInUse;
+  }
+
+  public void setNumberOfInUse(int numberOfInUse) {
+    this.numberOfInUse = numberOfInUse;
+  }
+
+  public ShipDesign getDesign() {
+    return design;
+  }
+  
+  
+}

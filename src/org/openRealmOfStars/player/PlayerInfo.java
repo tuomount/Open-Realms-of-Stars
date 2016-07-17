@@ -1,6 +1,9 @@
 package org.openRealmOfStars.player;
 
+import java.util.ArrayList;
+
 import org.openRealmOfStars.player.message.MessageList;
+import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
@@ -57,9 +60,15 @@ public class PlayerInfo {
    */
   private MessageList msgList;
   
+  /**
+   * Space ship stat and design list
+   */
+  private ArrayList<ShipStat> shipStatList;
+  
   public PlayerInfo(SpaceRace race) {
     setTechList(new TechList());
     this.msgList = new MessageList();
+    shipStatList = new ArrayList<>();
     setRace(race);
     switch (getRace()) {
     case HUMAN:
@@ -152,8 +161,49 @@ public class PlayerInfo {
       break;
     }
     }
+    
   }
   
+  /**
+   * Number of Ship stats player has
+   * @return Number of ship stats in list
+   */
+  public int getNumberOfShipStats() {
+    return shipStatList.size();
+  }
+  
+  /**
+   * Get ship stat by index. May return null if index invalid
+   * @param index ShipStat index
+   * @return ShipStat or null
+   */
+  public ShipStat getShipStat(int index) {
+    if (shipStatList.size() > 0 && index >= 0 && index < shipStatList.size()) {
+      return shipStatList.get(index);
+    }
+    return null;
+  }
+  
+  /**
+   * Add Ship Stat to list
+   * @param stat ShipStat to add
+   */
+  public void addShipStat(ShipStat stat) {
+    if (stat != null)  {
+      shipStatList.add(stat);
+    }
+  }
+
+  /**
+   * remove Ship Stat from list
+   * @param index Index to remove
+   */
+  public void removeShipStat(int index) {
+    if (shipStatList.size() > 0 && index >= 0 && index < shipStatList.size()) {
+      shipStatList.remove(index);
+    }
+  }
+
   public SpaceRace getRace() {
     return race;
   }

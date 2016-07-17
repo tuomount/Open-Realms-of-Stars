@@ -155,6 +155,48 @@ public class TechList {
   }
   
   /**
+   * Get Mark level from tech name and return it
+   * @param techName where Mark(Mk) is searched
+   * @return 0 if not found otherwise mark level.
+   */
+  public static int getMarkLevel(String techName) {
+    String[] temp = techName.split(" ");
+    for (String buf : temp) {
+      if (buf.startsWith("Mk") && buf.length() > 2) {
+        buf = buf.substring(2, buf.length());
+        try {
+          int result = Integer.parseInt(buf);
+          return result;
+        } catch (NumberFormatException e) {
+          // Do nothing
+        }
+      }
+    }
+    return 0;
+  }
+    
+  /**
+   * Search best tech with best mark level
+   * @param list Tech list where to search 
+   * @param techName name use for search 
+   * @return Best tech if found or null if not found
+   */
+  public static Tech getBestTech(Tech[] list, String techName) {
+    Tech best = null;
+    int bestLvl = -1;
+    for (Tech tech : list) {
+      if (tech.getName().startsWith(techName)) {
+        int lvl = getMarkLevel(tech.getName());
+        if (lvl > bestLvl) {
+          best = tech;
+          bestLvl = lvl;
+        }
+      }
+    }
+    return best;
+  }
+
+  /**
    * Get Tech list for certain tech type and level
    * @param type Tech Type to get the list
    * @param level Level of tech list 1-10

@@ -12,6 +12,7 @@ import org.openRealmOfStars.game.States.CreditsView;
 import org.openRealmOfStars.game.States.MainMenu;
 import org.openRealmOfStars.game.States.PlanetView;
 import org.openRealmOfStars.game.States.ResearchView;
+import org.openRealmOfStars.game.States.ShipView;
 import org.openRealmOfStars.game.States.StarMapView;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -112,6 +113,11 @@ public class Game extends JFrame implements ActionListener {
   public ResearchView researchView;
 
   /**
+   * Ship view for the game
+   */
+  public ShipView shipView;
+
+  /**
    * Contructor of Game class
    */
   public Game() {
@@ -164,6 +170,16 @@ public class Game extends JFrame implements ActionListener {
             players.getCurrentPlayer()),focusTech, this);
     this.getContentPane().removeAll();
     this.add(researchView);
+    this.validate();
+  }
+
+  /**
+   * Show Ship panels panels
+   */
+  public void showShipView() {
+    shipView = new ShipView(players.getCurrentPlayerInfo(), this);
+    this.getContentPane().removeAll();
+    this.add(shipView);
     this.validate();
   }
 
@@ -227,6 +243,7 @@ public class Game extends JFrame implements ActionListener {
     case CREDITS: showCredits(); break;
     case STARMAP: showStarMap(); break;
     case RESEARCHVIEW: showResearch(focusMessage); break;
+    case VIEWSHIPS: showShipView(); break;
     case PLANETVIEW: {
       if (focusMessage != null) {
         Planet planet = starMap.getPlanetByCoordinate(focusMessage.getX(), focusMessage.getY());
@@ -308,6 +325,10 @@ public class Game extends JFrame implements ActionListener {
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_VIEW_RESEARCH)) {
       changeGameState(GameState.RESEARCHVIEW);
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_SHIPS)) {
+      changeGameState(GameState.VIEWSHIPS);
     }
     if (gameState == GameState.RESEARCHVIEW && researchView != null) {
       researchView.handleAction(arg0);

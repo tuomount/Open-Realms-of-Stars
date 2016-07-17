@@ -28,5 +28,6 @@ public enum GameState {
   STARMAP,
   PLANETVIEW,
   RESEARCHVIEW,
+  VIEWSHIPS,
   CREDITS;
 }

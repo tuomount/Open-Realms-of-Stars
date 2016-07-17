@@ -212,4 +212,9 @@ public class GameCommands {
    */
   public static final String COMMAND_FOCUS_MSG = "FocusMessage";
 
+  /**
+   * View ships stats and designs
+   */
+  public static final String COMMAND_SHIPS = "ViewShips";
+
 }

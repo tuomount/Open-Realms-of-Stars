@@ -2,6 +2,7 @@ package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -89,6 +90,10 @@ public class StarMapView extends BlackPanel {
   private SpaceButton viewResearchButton;
 
   /**
+   * View space ship stat and designs.
+   */
+  private SpaceButton viewSpaceShips;
+  /**
    * Credit production
    */
   private IconLabel credProd;
@@ -140,19 +145,27 @@ public class StarMapView extends BlackPanel {
     bottomPanel.add(invis);
     bottomPanel.add(Box.createRigidArea(new Dimension(10,5)));
 
+    InvisiblePanel bottomBtnPanel = new  InvisiblePanel(bottomPanel);
+    bottomBtnPanel.setLayout(new GridLayout(3, 2));
+    
     
     endTurnButton = new SpaceButton("End Turn "+this.map.getTurn(), 
         GameCommands.COMMAND_END_TURN);
     endTurnButton.addActionListener(listener);
-    bottomPanel.add(endTurnButton);
+    bottomBtnPanel.add(endTurnButton);
     bottomPanel.add(Box.createRigidArea(new Dimension(10,5)));
     
     viewResearchButton = new SpaceButton("Research",
         GameCommands.COMMAND_VIEW_RESEARCH);
     viewResearchButton.addActionListener(listener);
-    bottomPanel.add(viewResearchButton);
-    
-    
+    bottomBtnPanel.add(viewResearchButton);
+
+    viewSpaceShips = new SpaceButton("Ships",
+        GameCommands.COMMAND_SHIPS);
+    viewSpaceShips.addActionListener(listener);
+    bottomBtnPanel.add(viewSpaceShips);
+
+    bottomPanel.add(bottomBtnPanel);
     
     msgPanel = new MessagePanel(GameCommands.COMMAND_PREV_MSG, 
         GameCommands.COMMAND_NEXT_MSG, GameCommands.COMMAND_FOCUS_MSG,

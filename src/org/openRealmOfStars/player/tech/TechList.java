@@ -6,6 +6,10 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipComponentFactory;
+import org.openRealmOfStars.player.ship.ShipComponentType;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 
 /**
@@ -190,6 +194,57 @@ public class TechList {
         if (lvl > bestLvl) {
           best = tech;
           bestLvl = lvl;
+        }
+      }
+    }
+    return best;
+  }
+
+  /**
+   * Get best Energy source for current technology
+   * @return Best energysource tech or null if not found
+   */
+  public Tech getBestEnergySource() {
+    Tech best = null;
+    int bestValue = -1;
+    Tech[] list = getListForType(TechType.Propulsion);
+    for (Tech tech : list) {
+      ShipComponent comp = ShipComponentFactory.createByName(tech.getComponent());
+      if (comp.getEnergyResource() > bestValue) {
+        best = tech;
+        bestValue = comp.getEnergyResource();
+        
+      }
+    }
+    return best;
+  }
+
+  /**
+   * Get best Engine for current technology. If there two equally good
+   * techs then it is randomized between those two.
+   * @return Best engine tech or null if not found
+   */
+  public Tech getBestEngine() {
+    Tech best = null;
+    int bestValue = -1;
+    Tech[] list = getListForType(TechType.Propulsion);
+    for (Tech tech : list) {
+      ShipComponent comp = ShipComponentFactory.createByName(tech.getComponent());
+      if (comp.getType() == ShipComponentType.ENGINE) {
+        int compValue = -1;
+        if (comp.getFtlSpeed() > 1 && comp.getSpeed() == 1 
+            && comp.getTacticSpeed() ==1) {
+          compValue = comp.getFtlSpeed()-1;
+        } else {
+          compValue = comp.getFtlSpeed()+(comp.getSpeed()-1)+
+              (comp.getTacticSpeed()-1)+comp.getEnergyResource();
+        }
+        if (compValue > bestValue) {
+          best = tech;
+          bestValue = compValue;
+        } else if (compValue == bestValue && DiceGenerator.getRandom(1) == 0) {
+          best = tech;
+          bestValue = compValue;
         }
       }
     }

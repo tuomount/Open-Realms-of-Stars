@@ -41,10 +41,12 @@ public class ShipComponentFactory {
    */
   public static ShipComponent createByName(String name) {
     ShipComponent tmp = null;
-    for (int i=0;i<MAX_SHIPCOMPONENT;i++) {
-      tmp = create(i);
-      if ((tmp != null) && (tmp.getName().equalsIgnoreCase(name))) {
-        return tmp;
+    if (name != null) {
+      for (int i=0;i<MAX_SHIPCOMPONENT;i++) {
+        tmp = create(i);
+        if ((tmp != null) && (tmp.getName().equalsIgnoreCase(name))) {
+          return tmp;
+        }
       }
     }
     return null;

@@ -95,6 +95,14 @@ public class PlayerInfo {
       if (tech != null) {
         techList.addTech(tech);
       }
+      tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
       break;
     }
     case SPORKS:{
@@ -124,6 +132,14 @@ public class PlayerInfo {
       if (tech != null) {
         techList.addTech(tech);
       }
+      tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
       break;
     }
     case GREYANS:{
@@ -145,6 +161,14 @@ public class PlayerInfo {
         techList.addTech(tech);
       }
       tech = TechFactory.createHullTech("Scout Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
       if (tech != null) {
         techList.addTech(tech);
       }

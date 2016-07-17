@@ -1,7 +1,11 @@
 package org.openRealmOfStars.player.ship.generator;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipDesign;
+import org.openRealmOfStars.player.ship.ShipHull;
+import org.openRealmOfStars.player.ship.ShipHullFactory;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
@@ -40,10 +44,17 @@ public class ShipGenerator {
    */
   public static ShipDesign createScout(PlayerInfo player) {
     ShipDesign result = null;
-    Tech[] hullTech = player.getTechList().getListForType(TechType.Hulls);
-    Tech hull = TechList.getBestTech(hullTech,"Scout");
-    if ( hull != null) {
-      
+    Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
+    Tech hullTech = TechList.getBestTech(hullTechs,"Scout");
+    if ( hullTech != null) {
+      ShipHull hull = ShipHullFactory.createByName(hullTech.getComponent());
+      result = new ShipDesign(hull);
+      ShipComponent engine = ShipComponentFactory.createByName(player.
+          getTechList().getBestEngine().getComponent());
+      result.addComponent(engine);
+      ShipComponent power = ShipComponentFactory.createByName(player.
+          getTechList().getBestEnergySource().getComponent());
+      result.addComponent(power);
     }
     return result;
   }

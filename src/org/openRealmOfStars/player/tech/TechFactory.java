@@ -115,7 +115,8 @@ public class TechFactory {
     {"Neural research center","Super AI Center","Replicator center"};
 
   public static final String[] PROPULSION_TECH_LEVEL1_NAMES = 
-    {"Ion drive Mk2","Nuclear drive Mk1","Fission source Mk2"};
+    {"Ion drive Mk1","Fission source Mk1","Ion drive Mk2","Nuclear drive Mk1",
+        "Fission source Mk2"};
   public static final String[] PROPULSION_TECH_LEVEL2_NAMES = 
     {"Ion drive Mk3","Hyper drive Mk1","Fusion source Mk1"};
   public static final String[] PROPULSION_TECH_LEVEL3_NAMES = 

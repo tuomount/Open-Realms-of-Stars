@@ -108,4 +108,74 @@ public class ShipDesign {
   public void setImage(BufferedImage image) {
     this.image = image;
   }
+  
+  /**
+   * Get current energy usage for ship. This is very useful information
+   * when ship is being design.
+   * @return Energy usage, positive means extra energy and negative
+   * that too much energy is used.
+   */
+  public int getFreeEnergy() {
+    int energy = 0;
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getEnergyResource() > 0) {
+        energy = energy +comp.getEnergyResource();
+      }
+      if (comp.getEnergyRequirement() > 0) {
+        energy = energy -comp.getEnergyRequirement();
+      }
+    }
+    return energy;
+  }
+
+  /**
+   * Get current cost for ship. This is very useful information
+   * when ship is being design.
+   * @return Cost in production
+   */
+  public int getCost() {
+    int cost = 0;
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      cost = cost +comp.getCost();
+    }
+    cost = cost +hull.getCost();
+    return cost;
+  }
+
+  /**
+   * Get current metal cost for ship. This is very useful information
+   * when ship is being design.
+   * @return Cost in production
+   */
+  public int getMetalCost() {
+    int cost = 0;
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      cost = cost +comp.getMetalCost();
+    }
+    cost = cost +hull.getMetalCost();
+    return cost;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(getName());
+    sb.append(" - ");
+    sb.append(hull.getHullType().toString());
+    sb.append("\n");
+    sb.append("Energy: ");
+    sb.append(getFreeEnergy());
+    sb.append("\n");
+    sb.append("Cost: ");
+    sb.append(getCost());
+    sb.append(" Metal: ");
+    sb.append(getMetalCost());
+    sb.append("\n");
+    return sb.toString();
+  }
+  
+  
 }

@@ -46,8 +46,9 @@ public class ShipGenerator {
     ShipDesign result = null;
     Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
     Tech hullTech = TechList.getBestTech(hullTechs,"Scout");
+    Tech[] defenseTechs = player.getTechList().getListForType(TechType.Defense);
     if ( hullTech != null) {
-      ShipHull hull = ShipHullFactory.createByName(hullTech.getComponent());
+      ShipHull hull = ShipHullFactory.createByName(hullTech.getHull());
       result = new ShipDesign(hull);
       ShipComponent engine = ShipComponentFactory.createByName(player.
           getTechList().getBestEngine().getComponent());
@@ -55,6 +56,27 @@ public class ShipGenerator {
       ShipComponent power = ShipComponentFactory.createByName(player.
           getTechList().getBestEnergySource().getComponent());
       result.addComponent(power);
+      ShipComponent weapon = ShipComponentFactory.createByName(player.
+          getTechList().getBestWeapon().getComponent());
+      result.addComponent(weapon);
+      Tech shield = TechList.getBestTech(defenseTechs,"Shield");
+      Tech armor = TechList.getBestTech(defenseTechs,"Armor plating");
+      ShipComponent shieldComp = null;
+      ShipComponent armorComp = null;
+      if (shield != null) {
+        shieldComp = ShipComponentFactory.createByName(
+          shield.getComponent());
+      }
+      if (armor != null) {
+        armorComp = ShipComponentFactory.createByName(
+          armor.getComponent());
+      }
+      if (shieldComp != null && 
+          result.getFreeEnergy()>=shieldComp.getEnergyRequirement()) {
+        result.addComponent(shieldComp);
+      } else if (armorComp != null){
+        result.addComponent(armorComp);
+      }
     }
     return result;
   }

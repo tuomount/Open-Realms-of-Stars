@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
@@ -103,6 +104,7 @@ public class PlayerInfo {
       if (tech != null) {
         techList.addTech(tech);
       }
+      ShipGenerator.createScout(this);
       break;
     }
     case SPORKS:{
@@ -140,6 +142,7 @@ public class PlayerInfo {
       if (tech != null) {
         techList.addTech(tech);
       }
+      ShipGenerator.createScout(this);
       break;
     }
     case GREYANS:{
@@ -182,6 +185,7 @@ public class PlayerInfo {
       if (tech != null) {
         techList.addTech(tech);
       }
+      ShipGenerator.createScout(this);
       break;
     }
     }

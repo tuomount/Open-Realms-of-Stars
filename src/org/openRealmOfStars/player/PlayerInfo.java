@@ -3,6 +3,7 @@ package org.openRealmOfStars.player;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.player.message.MessageList;
+import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.tech.Tech;
@@ -104,7 +105,9 @@ public class PlayerInfo {
       if (tech != null) {
         techList.addTech(tech);
       }
-      ShipGenerator.createScout(this);
+      ShipDesign design = ShipGenerator.createScout(this);
+      ShipStat stat = new ShipStat(design);
+      addShipStat(stat);
       break;
     }
     case SPORKS:{
@@ -142,7 +145,9 @@ public class PlayerInfo {
       if (tech != null) {
         techList.addTech(tech);
       }
-      ShipGenerator.createScout(this);
+      ShipDesign design = ShipGenerator.createScout(this);
+      ShipStat stat = new ShipStat(design);
+      addShipStat(stat);
       break;
     }
     case GREYANS:{
@@ -185,7 +190,9 @@ public class PlayerInfo {
       if (tech != null) {
         techList.addTech(tech);
       }
-      ShipGenerator.createScout(this);
+      ShipDesign design = ShipGenerator.createScout(this);
+      ShipStat stat = new ShipStat(design);
+      addShipStat(stat);
       break;
     }
     }
@@ -210,6 +217,14 @@ public class PlayerInfo {
       return shipStatList.get(index);
     }
     return null;
+  }
+  
+  /**
+   * Get Ship Stat list as a fixed array
+   * @return Ship Stat array
+   */
+  public ShipStat[] getShipStatList() {
+    return shipStatList.toArray(new ShipStat[shipStatList.size()]);
   }
   
   /**

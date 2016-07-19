@@ -10,6 +10,7 @@ import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BlackPanel;
+import org.openRealmOfStars.gui.ListRenderers.ShipStatRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -58,6 +59,8 @@ public class ShipView extends BlackPanel {
     InfoPanel base = new InfoPanel();
     base.setTitle("Ships");
     shipList = new JList<>();
+    shipList.setCellRenderer(new ShipStatRenderer());
+    shipList.setListData(this.player.getShipStatList());
     shipList.setBackground(Color.BLACK);
     shipList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     JScrollPane scroll = new JScrollPane(shipList);

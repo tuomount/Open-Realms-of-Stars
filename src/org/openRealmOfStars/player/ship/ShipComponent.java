@@ -260,13 +260,19 @@ public class ShipComponent {
     switch (getType()) {
     case ARMOR: { 
       sb.append("Armor value:");
-      sb.append(getDefenseValue()); break;}
+      sb.append(getDefenseValue()); 
+      sb.append("\n");
+      break;}
     case SHIELD: { 
       sb.append("Shield value:");
-      sb.append(getDefenseValue()); break;}
+      sb.append(getDefenseValue());
+      sb.append("\n");
+      break;}
     case CLOAKING_DEVICE: { 
       sb.append("Cloaking:");
-      sb.append(getCloaking()); break;}
+      sb.append(getCloaking());
+      sb.append("\n");
+      break;}
     case COLONY_MODULE:
     case POWERSOURCE:
     case PRIVATEERING_MODULE:
@@ -279,13 +285,16 @@ public class ShipComponent {
       sb.append(" FTL:");
       sb.append(getFtlSpeed());
       sb.append(" Combat Speed:");
-      sb.append(getTacticSpeed());break;}
+      sb.append(getTacticSpeed());
+      sb.append("\n");
+      break;}
     case WEAPON_BEAM: { 
       sb.append("Damage: ");
       sb.append(getDamage());
       sb.append(" Range:");
       sb.append(getWeaponRange());
       sb.append(" Hit: 100%");
+      sb.append("\n");
       break;}
     case WEAPON_ECM_TORPEDO: { 
       sb.append("Shield damage: ");
@@ -293,6 +302,7 @@ public class ShipComponent {
       sb.append(" Range:");
       sb.append(getWeaponRange());
       sb.append(" Hit: 50%");
+      sb.append("\n");
       break;}
     case WEAPON_HE_MISSILE: { 
       sb.append("Damage: ");
@@ -300,6 +310,7 @@ public class ShipComponent {
       sb.append(" Range:");
       sb.append(getWeaponRange());
       sb.append(" Hit: 50%");
+      sb.append("\n");
       break;}
     case WEAPON_PHOTON_TORPEDO: { 
       sb.append("Damage: ");
@@ -307,6 +318,7 @@ public class ShipComponent {
       sb.append(" Range:");
       sb.append(getWeaponRange());
       sb.append(" Hit: 75%");
+      sb.append("\n");
       break;}
     case WEAPON_RAILGUN: { 
       sb.append("Damage: ");
@@ -314,19 +326,23 @@ public class ShipComponent {
       sb.append(" Range:");
       sb.append(getWeaponRange());
       sb.append(" Hit: 75%");
+      sb.append("\n");
       break;}
     case JAMMER: { 
       sb.append("Jammer: -");
       sb.append(getDefenseValue());
       sb.append("%");
+      sb.append("\n");
       break;}
     case ORBITAL_BOMBS: { 
       sb.append("Orbital bombs: ");
+      sb.append("\n");
       break;}
     case PLANETARY_INVASION_MODULE: { 
       sb.append("Troop combat: ");
       sb.append(getDamage());
       sb.append("%");
+      sb.append("\n");
       break;}
     case SCANNER: { 
       sb.append("Range: ");
@@ -334,15 +350,18 @@ public class ShipComponent {
       sb.append(" Cloak detection:");
       sb.append(getCloakDetection());
       sb.append(" %");
+      sb.append("\n");
       break;}
     case SHIELD_GENERATOR: { 
       sb.append("Shield generator: ");
       sb.append(getDefenseValue());
+      sb.append("\n");
       break;}
     case TARGETING_COMPUTER: { 
       sb.append("Targeting computer: +");
       sb.append(getDamage());
       sb.append("% to hit");
+      sb.append("\n");
       break;}
     }
     return sb.toString();

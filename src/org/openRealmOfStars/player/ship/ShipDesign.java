@@ -173,7 +173,14 @@ public class ShipDesign {
     sb.append(getCost());
     sb.append(" Metal: ");
     sb.append(getMetalCost());
-    sb.append("\n");
+    sb.append("\n\nComponents:\n");
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      sb.append(i+1);
+      sb.append(": ");
+      sb.append(comp.toString());
+      sb.append("\n");
+    }
     return sb.toString();
   }
   

@@ -146,6 +146,17 @@ public class Game extends JFrame implements ActionListener {
   }
   
   /**
+   * Show planet view panel
+   * @param planet Planet to show
+   */
+  public void showPlanetView(Planet planet) {
+    planetView = new PlanetView(planet, this);
+    this.getContentPane().removeAll();
+    this.add(planetView);
+    this.validate();
+  }
+
+  /**
    * Show Star Map panels
    */
   public void showStarMap() {
@@ -180,17 +191,6 @@ public class Game extends JFrame implements ActionListener {
     shipView = new ShipView(players.getCurrentPlayerInfo(), this);
     this.getContentPane().removeAll();
     this.add(shipView);
-    this.validate();
-  }
-
-  /**
-   * Show planet view panel
-   * @param planet Planet to show
-   */
-  public void showPlanetView(Planet planet) {
-    planetView = new PlanetView(planet, this);
-    this.getContentPane().removeAll();
-    this.add(planetView);
     this.validate();
   }
 
@@ -332,6 +332,9 @@ public class Game extends JFrame implements ActionListener {
     }
     if (gameState == GameState.RESEARCHVIEW && researchView != null) {
       researchView.handleAction(arg0);
+    }
+    if (gameState == GameState.VIEWSHIPS && shipView != null) {
+      shipView.handleAction(arg0);
     }
     if (gameState == GameState.PLANETVIEW && planetView != null) {
       // Planet view

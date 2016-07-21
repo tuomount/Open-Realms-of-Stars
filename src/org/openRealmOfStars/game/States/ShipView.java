@@ -2,6 +2,7 @@ package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JList;
@@ -10,9 +11,11 @@ import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BlackPanel;
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.ShipStatRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipStat;
 
@@ -51,12 +54,21 @@ public class ShipView extends BlackPanel {
    */
   private PlayerInfo player;
   
+  /**
+   * List of ship design
+   */
   private JList<ShipStat> shipList;
+  
+  /**
+   * Text is containing information about the ship design and stats
+   */
+  private InfoTextArea infoText;
 
   public ShipView(PlayerInfo player, ActionListener listener) {
     this.player = player;
     this.setLayout(new BorderLayout());
     InfoPanel base = new InfoPanel();
+    base.setLayout(new BorderLayout());
     base.setTitle("Ships");
     shipList = new JList<>();
     shipList.setCellRenderer(new ShipStatRenderer());
@@ -64,10 +76,18 @@ public class ShipView extends BlackPanel {
     shipList.setBackground(Color.BLACK);
     shipList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     JScrollPane scroll = new JScrollPane(shipList);
-    base.add(scroll);
+    base.add(scroll,BorderLayout.WEST);
+
+    infoText = new InfoTextArea(30, 30);
+    infoText.setEditable(false);
+    infoText.setFont(GuiStatics.getFontCubellanSmaller());
+    scroll = new JScrollPane(infoText);
+    base.add(scroll,BorderLayout.CENTER);
+
     
     this.add(base, BorderLayout.CENTER);
     
+
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
@@ -83,4 +103,21 @@ public class ShipView extends BlackPanel {
 
   }
 
+  /**
+   * Handle actions for ship view.
+   * @param arg0 ActionEvent command what player did
+   */
+  public void handleAction(ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
+      if (shipList.getSelectedIndex() != -1) {
+        ShipStat stat = shipList.getSelectedValue();
+        infoText.setText(stat.toString());
+        this.repaint();
+      } else {
+        infoText.setText("");
+        this.repaint();
+      }
+    }
+  }
+ 
 }

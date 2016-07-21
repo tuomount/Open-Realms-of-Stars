@@ -126,6 +126,14 @@ public class ShipStat {
   public ShipDesign getDesign() {
     return design;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(design.toString());
+    return sb.toString();
+  }
+  
   
   
 }

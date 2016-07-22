@@ -228,7 +228,7 @@ public class ResearchView extends BlackPanel {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
       if (techList.getSelectedIndex() != -1) {
         Tech tech = techList.getSelectedValue();
-        infoText.setText(tech.getTechInfo());
+        infoText.setText(tech.getTechInfo(player.getRace()));
       } else {
         infoText.setText("");
       }

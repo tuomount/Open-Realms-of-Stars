@@ -131,6 +131,20 @@ public class ShipStat {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append(design.toString());
+    sb.append("\n\nStats:\n");
+    sb.append("Ships built: ");
+    sb.append(getNumberOfBuilt());
+    sb.append(" Ships in use: ");
+    sb.append(getNumberOfInUse());
+    sb.append("\n");
+    sb.append("Combats: ");
+    sb.append(getNumberOfCombats());
+    sb.append(" Victories: ");
+    sb.append(getNumberOfVictories());
+    sb.append(" Lost: ");
+    sb.append(getNumberOfLoses());
+    sb.append(" Kills: ");
+    sb.append(getNumberOfKills());
     return sb.toString();
   }
   

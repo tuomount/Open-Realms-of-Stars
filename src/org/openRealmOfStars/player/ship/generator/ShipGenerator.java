@@ -48,7 +48,7 @@ public class ShipGenerator {
     Tech hullTech = TechList.getBestTech(hullTechs,"Scout");
     Tech[] defenseTechs = player.getTechList().getListForType(TechType.Defense);
     if ( hullTech != null) {
-      ShipHull hull = ShipHullFactory.createByName(hullTech.getHull());
+      ShipHull hull = ShipHullFactory.createByName(hullTech.getHull(),player.getRace());
       result = new ShipDesign(hull);
       result.setName("Scout");
       ShipComponent engine = ShipComponentFactory.createByName(player.

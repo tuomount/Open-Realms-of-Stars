@@ -1,5 +1,7 @@
 package org.openRealmOfStars.player.ship;
 
+import org.openRealmOfStars.player.SpaceRace;
+
 /**
  * 
  * Open Realm of Stars game project
@@ -74,9 +76,10 @@ public class ShipHull {
    * @param size ShipSize
    * @param int cost in production
    * @param int cost in metal
+   * @param race whom builds the ship hull
    */
   public ShipHull(int index,String name, int maxSlots, int hull, ShipHullType type,
-      ShipSize size,int cost, int metal) {
+      ShipSize size,int cost, int metal, SpaceRace race) {
     this.index = index;
     this.name = name;
     this.maxSlot = maxSlots;
@@ -85,6 +88,22 @@ public class ShipHull {
     this.size = size;
     this.cost = cost;
     this.metalCost = metal;
+    switch (race) {
+    case CENTAURS: {
+      // Centaur ships have extra hull point per slot
+      // but hulls are more expensive.
+      this.slotHull = this.slotHull+1;
+      this.metalCost = this.metalCost*2;
+      this.cost = this.cost*2/3;
+      break;
+    }
+    case GREYANS:
+    case HUMAN:
+    case MECHIONS:
+    case SPORKS:{
+      //Default do nothing special
+    }
+    }
   }
 
   public int getIndex() {

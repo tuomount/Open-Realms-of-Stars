@@ -2,6 +2,7 @@ package org.openRealmOfStars.player.tech;
 
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipHull;
@@ -164,9 +165,10 @@ public class Tech {
   
   /**
    * Get Tech info as a String
+   * @param race SpaceRace who is building the tech
    * @return tech info
    */
-  public String getTechInfo() {
+  public String getTechInfo(SpaceRace race) {
     StringBuilder sb = new StringBuilder();
     sb.append(name);
     sb.append("\n");
@@ -186,7 +188,7 @@ public class Tech {
     if (hull != null ){
       sb.append("Ship design: ");
       sb.append(hull);
-      shipHull = ShipHullFactory.createByName(hull);
+      shipHull = ShipHullFactory.createByName(hull,race);
       sb.append("\n");
     }
     if (component != null ){

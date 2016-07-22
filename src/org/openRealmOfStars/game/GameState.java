@@ -29,5 +29,6 @@ public enum GameState {
   PLANETVIEW,
   RESEARCHVIEW,
   VIEWSHIPS,
+  SHIPDESIGN,
   CREDITS;
 }

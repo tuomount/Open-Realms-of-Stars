@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -16,6 +17,7 @@ import org.openRealmOfStars.gui.ListRenderers.ShipStatRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
+import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipStat;
 
@@ -76,7 +78,16 @@ public class ShipView extends BlackPanel {
     shipList.setBackground(Color.BLACK);
     shipList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     JScrollPane scroll = new JScrollPane(shipList);
-    base.add(scroll,BorderLayout.WEST);
+    InvisiblePanel invis = new InvisiblePanel(base);
+    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    invis.add(scroll);
+    SpaceButton btn = new SpaceButton("Copy design", GameCommands.COMMAND_COPY_SHIP);
+    btn.addActionListener(listener);
+    invis.add(btn);
+    btn = new SpaceButton("New design", GameCommands.COMMAND_SHIPDESIGN);
+    btn.addActionListener(listener);
+    invis.add(btn);
+    base.add(invis,BorderLayout.WEST);
 
     infoText = new InfoTextArea(30, 30);
     infoText.setEditable(false);
@@ -92,7 +103,7 @@ public class ShipView extends BlackPanel {
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
     bottomPanel.setTitle(null);
-    SpaceButton btn = new SpaceButton("Back to star map", 
+    btn = new SpaceButton("Back to star map", 
         GameCommands.COMMAND_VIEW_STARMAP);
     btn.addActionListener(listener);
     bottomPanel.add(btn,BorderLayout.CENTER);

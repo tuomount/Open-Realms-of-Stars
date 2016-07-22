@@ -217,4 +217,14 @@ public class GameCommands {
    */
   public static final String COMMAND_SHIPS = "ViewShips";
 
+  /**
+   * Copy ship design and start design screen
+   */
+  public static final String COMMAND_COPY_SHIP = "CopyShipDesign";
+
+  /**
+   * Start ship design with new ship
+   */
+  public static final String COMMAND_SHIPDESIGN = "ShipDesign";
+
 }

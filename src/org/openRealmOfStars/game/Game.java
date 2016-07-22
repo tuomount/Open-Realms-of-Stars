@@ -12,6 +12,7 @@ import org.openRealmOfStars.game.States.CreditsView;
 import org.openRealmOfStars.game.States.MainMenu;
 import org.openRealmOfStars.game.States.PlanetView;
 import org.openRealmOfStars.game.States.ResearchView;
+import org.openRealmOfStars.game.States.ShipDesignView;
 import org.openRealmOfStars.game.States.ShipView;
 import org.openRealmOfStars.game.States.StarMapView;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
@@ -118,6 +119,11 @@ public class Game extends JFrame implements ActionListener {
   public ShipView shipView;
 
   /**
+   * Ship design view for the game
+   */
+  public ShipDesignView shipDesignView;
+
+  /**
    * Contructor of Game class
    */
   public Game() {
@@ -185,12 +191,22 @@ public class Game extends JFrame implements ActionListener {
   }
 
   /**
-   * Show Ship panels panels
+   * Show Ship panels
    */
   public void showShipView() {
     shipView = new ShipView(players.getCurrentPlayerInfo(), this);
     this.getContentPane().removeAll();
     this.add(shipView);
+    this.validate();
+  }
+
+  /**
+   * Show Ship design panels
+   */
+  public void showShipDesignView() {
+    shipDesignView = new ShipDesignView(players.getCurrentPlayerInfo(), null, this);
+    this.getContentPane().removeAll();
+    this.add(shipDesignView);
     this.validate();
   }
 
@@ -244,6 +260,7 @@ public class Game extends JFrame implements ActionListener {
     case STARMAP: showStarMap(); break;
     case RESEARCHVIEW: showResearch(focusMessage); break;
     case VIEWSHIPS: showShipView(); break;
+    case SHIPDESIGN: showShipDesignView(); break;
     case PLANETVIEW: {
       if (focusMessage != null) {
         Planet planet = starMap.getPlanetByCoordinate(focusMessage.getX(), focusMessage.getY());
@@ -329,6 +346,14 @@ public class Game extends JFrame implements ActionListener {
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_SHIPS)) {
       changeGameState(GameState.VIEWSHIPS);
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_SHIPDESIGN)) {
+      changeGameState(GameState.SHIPDESIGN);
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_COPY_SHIP)) {
+      changeGameState(GameState.SHIPDESIGN);
     }
     if (gameState == GameState.RESEARCHVIEW && researchView != null) {
       researchView.handleAction(arg0);

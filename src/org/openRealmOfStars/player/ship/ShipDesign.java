@@ -130,6 +130,38 @@ public class ShipDesign {
   }
 
   /**
+   * Get maximum shield for ship. This is very useful information
+   * when ship is being design and shown on ship view
+   * @return Maximum shield
+   */
+  public int getTotalShield() {
+    int shield = 0;
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getDefenseValue() > 0 && comp.getType() == ShipComponentType.SHIELD) {
+        shield = shield +comp.getDefenseValue();
+      }
+    }
+    return shield;
+  }
+
+  /**
+   * Get maximum armor for ship. This is very useful information
+   * when ship is being design and shown on ship view
+   * @return Maximum armor
+   */
+  public int getTotalArmor() {
+    int armor = 0;
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getDefenseValue() > 0 && comp.getType() == ShipComponentType.ARMOR) {
+        armor = armor +comp.getDefenseValue();
+      }
+    }
+    return armor;
+  }
+
+  /**
    * Get current cost for ship. This is very useful information
    * when ship is being design.
    * @return Cost in production
@@ -173,6 +205,13 @@ public class ShipDesign {
     sb.append(getCost());
     sb.append(" Metal: ");
     sb.append(getMetalCost());
+    sb.append("\n");
+    sb.append("Shield: ");
+    sb.append(getTotalShield());
+    sb.append(" Armor: ");
+    sb.append(getTotalArmor());
+    sb.append(" Hull Points: ");
+    sb.append(hull.getSlotHull()*hull.getMaxSlot());
     sb.append("\n\nComponents:\n");
     for (int i=0;i<components.size();i++) {
       ShipComponent comp = components.get(i);

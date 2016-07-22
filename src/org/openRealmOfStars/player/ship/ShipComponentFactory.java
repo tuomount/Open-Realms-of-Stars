@@ -394,7 +394,7 @@ public class ShipComponentFactory {
       tmp.setEnergyRequirement(1);
     }
     if (index == 5) {
-      tmp = new ShipComponent(index, "Armor Mk1", 2, 4, ShipComponentType.ARMOR);
+      tmp = new ShipComponent(index, "Armor plating Mk1", 2, 4, ShipComponentType.ARMOR);
       tmp.setDefenseValue(1);
     }
     if (index == 17) {
@@ -403,7 +403,7 @@ public class ShipComponentFactory {
       tmp.setEnergyRequirement(1);
     }
     if (index == 18) {
-      tmp = new ShipComponent(index, "Armor Mk2", 3, 6, ShipComponentType.ARMOR);
+      tmp = new ShipComponent(index, "Armor plating Mk2", 3, 6, ShipComponentType.ARMOR);
       tmp.setDefenseValue(2);
     }
     if (index == 29) {
@@ -412,7 +412,7 @@ public class ShipComponentFactory {
       tmp.setEnergyRequirement(2);
     }
     if (index == 30) {
-      tmp = new ShipComponent(index, "Armor Mk3", 3, 7, ShipComponentType.ARMOR);
+      tmp = new ShipComponent(index, "Armor plating Mk3", 3, 7, ShipComponentType.ARMOR);
       tmp.setDefenseValue(3);
     }
     if (index == 41) {
@@ -421,7 +421,7 @@ public class ShipComponentFactory {
       tmp.setEnergyRequirement(2);
     }
     if (index == 42) {
-      tmp = new ShipComponent(index, "Armor Mk4", 4, 7, ShipComponentType.ARMOR);
+      tmp = new ShipComponent(index, "Armor plating Mk4", 4, 7, ShipComponentType.ARMOR);
       tmp.setDefenseValue(4);
     }
     return tmp;

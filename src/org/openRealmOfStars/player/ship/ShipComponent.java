@@ -251,12 +251,13 @@ public class ShipComponent {
     if (getEnergyRequirement() > 0 && getEnergyResource() == 0) {
       sb.append("Energy: ");
       sb.append(getEnergyRequirement());
-    }
+      sb.append("\n");
+    } 
     if (getEnergyResource() > 0) {
       sb.append("Energy source: ");
       sb.append(getEnergyResource());
+      sb.append("\n");
     }
-    sb.append("\n");
     switch (getType()) {
     case ARMOR: { 
       sb.append("Armor value:");
@@ -293,7 +294,7 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range:");
       sb.append(getWeaponRange());
-      sb.append(" Hit: 100%");
+      sb.append(" Hit: 100%, 50% penetrates armor");
       sb.append("\n");
       break;}
     case WEAPON_ECM_TORPEDO: { 
@@ -301,7 +302,7 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range:");
       sb.append(getWeaponRange());
-      sb.append(" Hit: 50%");
+      sb.append(" Hit: 50%, damages only shields");
       sb.append("\n");
       break;}
     case WEAPON_HE_MISSILE: { 
@@ -309,7 +310,7 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range:");
       sb.append(getWeaponRange());
-      sb.append(" Hit: 50%");
+      sb.append(" Hit: 50%, 50% penetrates shields");
       sb.append("\n");
       break;}
     case WEAPON_PHOTON_TORPEDO: { 
@@ -317,7 +318,7 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range:");
       sb.append(getWeaponRange());
-      sb.append(" Hit: 75%");
+      sb.append(" Hit: 75%, 50% penetrates armor");
       sb.append("\n");
       break;}
     case WEAPON_RAILGUN: { 
@@ -325,7 +326,7 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range:");
       sb.append(getWeaponRange());
-      sb.append(" Hit: 75%");
+      sb.append(" Hit: 50%, 50% penetrates shields");
       sb.append("\n");
       break;}
     case JAMMER: { 

@@ -1,5 +1,6 @@
 package org.openRealmOfStars.game;
 
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -144,10 +145,14 @@ public class Game extends JFrame implements ActionListener {
     animationTimer.start();
 
     changeGameState(GameState.MAIN_MENU);
-    
+
+    // Add new KeyEventDispatcher
+    KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+    kfm.addKeyEventDispatcher(new GameKeyAdapter(this));
     setResizable(false);
 
     this.setVisible(true);
+    
 
   }
   

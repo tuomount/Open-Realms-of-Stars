@@ -227,4 +227,9 @@ public class GameCommands {
    */
   public static final String COMMAND_SHIPDESIGN = "ShipDesign";
 
+  /**
+   * Ship Hull Selected from the list
+   */
+  public static final String COMMAND_SHIPDESIGN_HULLSELECTED = "ShipDesignHullSelected";
+
 }

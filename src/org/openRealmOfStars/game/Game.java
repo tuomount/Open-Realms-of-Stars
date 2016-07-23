@@ -361,10 +361,16 @@ public class Game extends JFrame implements ActionListener {
       changeGameState(GameState.SHIPDESIGN);
     }
     if (gameState == GameState.RESEARCHVIEW && researchView != null) {
+      // Research View
       researchView.handleAction(arg0);
     }
     if (gameState == GameState.VIEWSHIPS && shipView != null) {
+      // View Ship
       shipView.handleAction(arg0);
+    }
+    if (gameState == GameState.SHIPDESIGN && shipDesignView != null) {
+      // Ship Design View
+      shipDesignView.handleAction(arg0);
     }
     if (gameState == GameState.PLANETVIEW && planetView != null) {
       // Planet view

@@ -2,10 +2,12 @@ package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
+import javax.swing.JScrollPane;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BlackPanel;
@@ -15,6 +17,8 @@ import org.openRealmOfStars.gui.ListRenderers.ShipHullListRenderer;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.InfoTextArea;
+import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipHull;
@@ -67,6 +71,12 @@ public class ShipDesignView extends BlackPanel {
    */
   private JComboBox<ShipHull> hullSelect;
   
+  /**
+   * Text is containing information about the ship hull
+   */
+  private InfoTextArea hullInfoText;
+
+  
   public ShipDesignView(PlayerInfo player, ShipDesign oldDesign,
       ActionListener listener) {
     this.player = player;
@@ -93,14 +103,23 @@ public class ShipDesignView extends BlackPanel {
     
     hullSelect = new JComboBox<>(hulls);
     hullSelect.addActionListener(listener);
-    hullSelect.setActionCommand(GameCommands.COMMAND_PRODUCTION_LIST);
+    hullSelect.setActionCommand(GameCommands.COMMAND_SHIPDESIGN_HULLSELECTED);
     hullSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
     hullSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     hullSelect.setBorder(new SimpleBorder());
     hullSelect.setFont(GuiStatics.getFontCubellan());
     hullSelect.setRenderer(new ShipHullListRenderer());
+    InvisiblePanel invis = new InvisiblePanel(hullPanel);
     
-    hullPanel.add(hullSelect);
+    invis.add(hullSelect);
+    hullPanel.add(invis);
+    
+    hullInfoText = new InfoTextArea(10, 30);
+    hullInfoText.setEditable(false);
+    hullInfoText.setFont(GuiStatics.getFontCubellanSmaller());
+    JScrollPane scroll = new JScrollPane(hullInfoText);
+    hullPanel.add(scroll,BorderLayout.CENTER);
+
     base.add(hullPanel,BorderLayout.NORTH);
 
 
@@ -122,5 +141,26 @@ public class ShipDesignView extends BlackPanel {
     // Add panels to base
     this.add(bottomPanel,BorderLayout.SOUTH);
 
+    updatePanels();
+  }
+  
+  /**
+   * Update visible panels
+   */
+  public void updatePanels() {
+    ShipHull hull = (ShipHull) hullSelect.getSelectedItem();
+    if (hull != null) {
+      hullInfoText.setText(hull.toString());
+    }
+  }
+  
+  /**
+   * Handle action events for ShipDesignView
+   * @param arg0 ActionEvent
+   */
+  public void handleAction(ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_HULLSELECTED)) {
+      updatePanels();
+    }
   }
 }

@@ -1,10 +1,13 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
@@ -12,12 +15,12 @@ import javax.swing.JScrollPane;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.GuiStatics;
-import org.openRealmOfStars.gui.ListRenderers.ProductionListRenderer;
 import org.openRealmOfStars.gui.ListRenderers.ShipHullListRenderer;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
+import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipDesign;
@@ -90,11 +93,12 @@ public class ShipDesignView extends BlackPanel {
     base.setLayout(new BorderLayout());
     base.setTitle("Ship design");
     
-    
+    // Hull Panel
     InfoPanel hullPanel = new InfoPanel();
     hullPanel.setLayout(new BoxLayout(hullPanel, BoxLayout.X_AXIS));
     hullPanel.setTitle("Ship's hull");
     
+    hullPanel.add(Box.createRigidArea(new Dimension(25,25)));
     Tech[] hullTech = this.player.getTechList().getListForType(TechType.Hulls);
     ShipHull[] hulls  = new ShipHull[hullTech.length];
     for (int i = 0;i<hulls.length;i++) {
@@ -110,15 +114,34 @@ public class ShipDesignView extends BlackPanel {
     hullSelect.setFont(GuiStatics.getFontCubellan());
     hullSelect.setRenderer(new ShipHullListRenderer());
     InvisiblePanel invis = new InvisiblePanel(hullPanel);
-    
+    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    TransparentLabel label = new TransparentLabel(invis, "Ship's hull: ");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    invis.add(label);
+    invis.add(Box.createRigidArea(new Dimension(5,5)));
     invis.add(hullSelect);
+    invis.add(Box.createRigidArea(new Dimension(25,75)));
     hullPanel.add(invis);
     
     hullInfoText = new InfoTextArea(10, 30);
     hullInfoText.setEditable(false);
     hullInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     JScrollPane scroll = new JScrollPane(hullInfoText);
+    hullPanel.add(Box.createRigidArea(new Dimension(25,25)));
     hullPanel.add(scroll,BorderLayout.CENTER);
+    hullPanel.add(Box.createRigidArea(new Dimension(25,25)));
+    
+    invis = new InvisiblePanel(hullPanel);
+    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    label = new TransparentLabel(invis, "Confirm hull change: ");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    invis.add(label);
+    invis.add(Box.createRigidArea(new Dimension(5,5)));
+    SpaceButton btn = new SpaceButton("Change hull", GameCommands.COMMAND_SHIPDESIGN_CHANGEHULL);
+    btn.addActionListener(listener);
+    invis.add(btn);
+    invis.add(Box.createRigidArea(new Dimension(25,75)));
+    hullPanel.add(invis);
 
     base.add(hullPanel,BorderLayout.NORTH);
 
@@ -129,7 +152,7 @@ public class ShipDesignView extends BlackPanel {
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new GridLayout(1, 2));
     bottomPanel.setTitle(null);
-    SpaceButton btn = new SpaceButton("Cancel",GameCommands.COMMAND_SHIPS);
+    btn = new SpaceButton("Cancel",GameCommands.COMMAND_SHIPS);
     btn.addActionListener(listener);
     bottomPanel.add(btn);
     
@@ -161,6 +184,12 @@ public class ShipDesignView extends BlackPanel {
   public void handleAction(ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_HULLSELECTED)) {
       updatePanels();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_CHANGEHULL)) {
+      ShipHull hull = (ShipHull) hullSelect.getSelectedItem();
+      if (hull != null) {
+        design = new ShipDesign(hull);
+      }
     }
   }
 }

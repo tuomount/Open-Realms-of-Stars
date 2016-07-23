@@ -351,7 +351,8 @@ public class PlanetView extends BlackPanel {
       peopleGrowth.setText(peopleGrow+" turns.");
       peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_DEATH));
     } else {
-      if (planet.getPlanetPlayerInfo().getRace() == SpaceRace.MECHIONS) {
+      if (planet.getPlanetPlayerInfo() != null &&
+          planet.getPlanetPlayerInfo().getRace() == SpaceRace.MECHIONS) {
         peopleGrowth.setText("no growth");
         peopleGrowth.setToolTipText("Mechions needs to be built to get more population.");
       } else {

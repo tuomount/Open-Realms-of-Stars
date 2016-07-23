@@ -232,4 +232,9 @@ public class GameCommands {
    */
   public static final String COMMAND_SHIPDESIGN_HULLSELECTED = "ShipDesignHullSelected";
 
+  /**
+   * Change Hull button pressed
+   */
+  public static final String COMMAND_SHIPDESIGN_CHANGEHULL = "ChangeHull";
+
 }

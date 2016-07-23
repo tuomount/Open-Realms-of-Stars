@@ -1,20 +1,24 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.ListRenderers.ShipComponentListRenderer;
 import org.openRealmOfStars.gui.ListRenderers.ShipHullListRenderer;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -23,6 +27,8 @@ import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullFactory;
@@ -73,11 +79,26 @@ public class ShipDesignView extends BlackPanel {
    * ComboBox where to select hull
    */
   private JComboBox<ShipHull> hullSelect;
-  
+
+  /**
+   * ComboBox where to select component
+   */
+  private JComboBox<ShipComponent> componentSelect;
+
   /**
    * Text is containing information about the ship hull
    */
   private InfoTextArea hullInfoText;
+
+  /**
+   * Text is containing information about the ship component
+   */
+  private InfoTextArea componentInfoText;
+
+  /**
+   * Design's name Text
+   */
+  private JTextField designNameText;
 
   
   public ShipDesignView(PlayerInfo player, ShipDesign oldDesign,
@@ -115,12 +136,22 @@ public class ShipDesignView extends BlackPanel {
     hullSelect.setRenderer(new ShipHullListRenderer());
     InvisiblePanel invis = new InvisiblePanel(hullPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    TransparentLabel label = new TransparentLabel(invis, "Ship's hull: ");
+    TransparentLabel label = new TransparentLabel(invis, "Design's Name: ");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(label);
     invis.add(Box.createRigidArea(new Dimension(5,5)));
+    designNameText = new JTextField();
+    designNameText.setFont(GuiStatics.getFontCubellan());
+    designNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    designNameText.setBackground(Color.BLACK);
+    invis.add(designNameText);
+    invis.add(Box.createRigidArea(new Dimension(5,5)));
+    label = new TransparentLabel(invis, "Ship's hull: ");
+//    label.setAlignmentX(Component.);
+    invis.add(label);
+    invis.add(Box.createRigidArea(new Dimension(5,5)));
     invis.add(hullSelect);
-    invis.add(Box.createRigidArea(new Dimension(25,75)));
+    invis.add(Box.createRigidArea(new Dimension(25,25)));
     hullPanel.add(invis);
     
     hullInfoText = new InfoTextArea(10, 30);
@@ -143,7 +174,47 @@ public class ShipDesignView extends BlackPanel {
     invis.add(Box.createRigidArea(new Dimension(25,75)));
     hullPanel.add(invis);
 
+
     base.add(hullPanel,BorderLayout.NORTH);
+    
+    // Component Panel
+    InfoPanel componentPanel = new InfoPanel();
+    componentPanel.setLayout(new BoxLayout(componentPanel, BoxLayout.X_AXIS));
+    componentPanel.setTitle("Ship's components");
+    componentPanel.add(Box.createRigidArea(new Dimension(25,25)));
+    Tech[] allTech = this.player.getTechList().getList();
+    ArrayList<ShipComponent> components = new ArrayList<>();
+    for (int i = 0;i<allTech.length;i++) {
+      if (allTech[i].getComponent() != null) {
+        ShipComponent comp = ShipComponentFactory.createByName(allTech[i].getComponent());
+        if (comp != null) {
+          components.add(comp);
+        }
+      }
+    }
+
+    invis = new InvisiblePanel(componentPanel);
+    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    componentSelect = new JComboBox<>(components.toArray(new ShipComponent[components.size()]));
+    componentSelect.setActionCommand(GameCommands.COMMAND_SHIPDESIGN_COMPONENTSELECTED);
+    componentSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    componentSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    componentSelect.setBorder(new SimpleBorder());
+    componentSelect.setFont(GuiStatics.getFontCubellan());
+    componentSelect.setRenderer(new ShipComponentListRenderer());
+    componentSelect.addActionListener(listener);
+    invis.add(componentSelect);
+    componentInfoText = new InfoTextArea(10, 30);
+    componentInfoText.setEditable(false);
+    componentInfoText.setFont(GuiStatics.getFontCubellanSmaller());
+    scroll = new JScrollPane(componentInfoText);
+    hullPanel.add(Box.createRigidArea(new Dimension(25,25)));
+    hullPanel.add(scroll,BorderLayout.CENTER);
+    invis.add(componentInfoText);
+    componentPanel.add(invis);
+    
+    
+    base.add(componentPanel,BorderLayout.CENTER);
 
 
     this.add(base,BorderLayout.CENTER);
@@ -175,6 +246,13 @@ public class ShipDesignView extends BlackPanel {
     if (hull != null) {
       hullInfoText.setText(hull.toString());
     }
+    if (design != null) {
+      designNameText.setText(design.getName());
+    }
+    ShipComponent component = (ShipComponent) componentSelect.getSelectedItem();
+    if (component != null) {
+      componentInfoText.setText(component.toString());
+    }
   }
   
   /**
@@ -185,11 +263,16 @@ public class ShipDesignView extends BlackPanel {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_HULLSELECTED)) {
       updatePanels();
     }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENTSELECTED)) {
+      updatePanels();
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_CHANGEHULL)) {
       ShipHull hull = (ShipHull) hullSelect.getSelectedItem();
       if (hull != null) {
         design = new ShipDesign(hull);
+        design.setName(designNameText.getText());
       }
+      updatePanels();
     }
   }
 }

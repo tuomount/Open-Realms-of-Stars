@@ -233,7 +233,18 @@ public class ShipDesign {
     return power;
   }
   
-
+  /**
+   * Get ship component list in priority order
+   * @return Ship component array
+   */
+  public ShipComponent[] getComponentList() {
+    ShipComponent result[] =  new ShipComponent[getNumberOfComponents()];
+    for (int i=0;i<getNumberOfComponents();i++) {
+      result[i] = getComponent(i);
+    }
+    return result;
+  }
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

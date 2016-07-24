@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
+import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BlackPanel;
@@ -99,6 +101,12 @@ public class ShipDesignView extends BlackPanel {
    * Design's name Text
    */
   private JTextField designNameText;
+  
+  /**
+   * List of ship's components in priority order
+   */
+  private JList<ShipComponent> componentList;
+
 
   
   public ShipDesignView(PlayerInfo player, ShipDesign oldDesign,
@@ -159,7 +167,7 @@ public class ShipDesignView extends BlackPanel {
     hullInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     JScrollPane scroll = new JScrollPane(hullInfoText);
     hullPanel.add(Box.createRigidArea(new Dimension(25,25)));
-    hullPanel.add(scroll,BorderLayout.CENTER);
+    hullPanel.add(scroll);
     hullPanel.add(Box.createRigidArea(new Dimension(25,25)));
     
     invis = new InvisiblePanel(hullPanel);
@@ -208,11 +216,24 @@ public class ShipDesignView extends BlackPanel {
     componentInfoText.setEditable(false);
     componentInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(componentInfoText);
-    hullPanel.add(Box.createRigidArea(new Dimension(25,25)));
-    hullPanel.add(scroll,BorderLayout.CENTER);
+    componentPanel.add(Box.createRigidArea(new Dimension(25,25)));
+    componentPanel.add(scroll,BorderLayout.CENTER);
     invis.add(componentInfoText);
+    btn = new SpaceButton("Add component", GameCommands.COMMAND_SHIPDESIGN_COMPONENTADDED);
+    btn.addActionListener(listener);
+    invis.add(btn);
     componentPanel.add(invis);
-    
+
+    invis = new InvisiblePanel(componentPanel);
+    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    componentList = new JList<>(design.getComponentList());
+    componentList.setCellRenderer(new ShipComponentListRenderer());
+    componentList.setBackground(Color.BLACK);
+    componentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    scroll = new JScrollPane(componentList);
+    invis.add(scroll);
+    componentPanel.add(invis);
+
     
     base.add(componentPanel,BorderLayout.CENTER);
 
@@ -253,6 +274,7 @@ public class ShipDesignView extends BlackPanel {
     if (component != null) {
       componentInfoText.setText(component.toString());
     }
+    componentList.setListData(design.getComponentList());
   }
   
   /**
@@ -274,5 +296,12 @@ public class ShipDesignView extends BlackPanel {
       }
       updatePanels();
     }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENTADDED)) {
+      if (componentSelect.getSelectedItem() != null) {
+        design.addComponent((ShipComponent) componentSelect.getSelectedItem()); 
+        updatePanels();
+      }
+    }
+    
   }
 }

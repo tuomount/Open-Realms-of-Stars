@@ -242,4 +242,21 @@ public class GameCommands {
    */
   public static final String COMMAND_SHIPDESIGN_COMPONENTSELECTED = "ShipComponentSelected";
 
+  /**
+   * Ship Component added
+   */
+  public static final String COMMAND_SHIPDESIGN_COMPONENTADDED = "ShipComponentAdded";
+  /**
+   * Ship Component Removed
+   */
+  public static final String COMMAND_SHIPDESIGN_COMPONENTREMOVED = "ShipComponentRemoved";
+  /**
+   * Ship Component set higher priority
+   */
+  public static final String COMMAND_SHIPDESIGN_COMPONENT_PRIORITYHI = "ShipComponentPriorityHi";
+  /**
+   * Ship Component set lower priority
+   */
+  public static final String COMMAND_SHIPDESIGN_COMPONENT_PRIORITYLO = "ShipComponentPriorityLo";
+
 }

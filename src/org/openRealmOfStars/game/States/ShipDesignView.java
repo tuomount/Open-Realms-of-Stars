@@ -206,24 +206,27 @@ public class ShipDesignView extends BlackPanel {
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
     componentSelect = new JComboBox<>(components.toArray(new ShipComponent[components.size()]));
     componentSelect.setActionCommand(GameCommands.COMMAND_SHIPDESIGN_COMPONENTSELECTED);
-    componentSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    componentSelect.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     componentSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     componentSelect.setBorder(new SimpleBorder());
     componentSelect.setFont(GuiStatics.getFontCubellan());
     componentSelect.setRenderer(new ShipComponentListRenderer());
     componentSelect.addActionListener(listener);
     invis.add(componentSelect);
+    invis.add(Box.createRigidArea(new Dimension(5,5)));
     componentInfoText = new InfoTextArea(10, 30);
     componentInfoText.setEditable(false);
     componentInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(componentInfoText);
-    componentPanel.add(Box.createRigidArea(new Dimension(25,25)));
-    componentPanel.add(scroll,BorderLayout.CENTER);
-    invis.add(componentInfoText);
+    invis.add(scroll);
+    invis.add(Box.createRigidArea(new Dimension(5,5)));
     btn = new SpaceButton("Add component", GameCommands.COMMAND_SHIPDESIGN_COMPONENTADDED);
     btn.addActionListener(listener);
+    btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_OK));
     invis.add(btn);
     componentPanel.add(invis);
+    componentPanel.add(Box.createRigidArea(new Dimension(5,5)));
+
 
     invis = new InvisiblePanel(componentPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
@@ -233,15 +236,23 @@ public class ShipDesignView extends BlackPanel {
     componentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     scroll = new JScrollPane(componentList);
     invis.add(scroll);
+    invis.add(Box.createRigidArea(new Dimension(5,5)));
     btn = new SpaceButton("Higher priority", GameCommands.COMMAND_SHIPDESIGN_COMPONENT_PRIORITYHI);
     btn.addActionListener(listener);
     btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_ARROWUP));
     invis.add(btn);
+    invis.add(Box.createRigidArea(new Dimension(5,5)));
     btn = new SpaceButton("Lower priority", GameCommands.COMMAND_SHIPDESIGN_COMPONENT_PRIORITYLO);
     btn.addActionListener(listener);
-    btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_ARROWUP));
+    btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_ARROWDOWN));
+    invis.add(btn);
+    invis.add(Box.createRigidArea(new Dimension(5,5)));
+    btn = new SpaceButton("Remove component", GameCommands.COMMAND_SHIPDESIGN_COMPONENTREMOVED);
+    btn.addActionListener(listener);
+    btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_DELETE));
     invis.add(btn);
     componentPanel.add(invis);
+    componentPanel.add(Box.createRigidArea(new Dimension(25,5)));
 
     
     base.add(componentPanel,BorderLayout.CENTER);
@@ -311,17 +322,29 @@ public class ShipDesignView extends BlackPanel {
         updatePanels();
       }
     }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENTREMOVED) 
+        && componentList.getSelectedValue() != null) {
+      int index = componentList.getSelectedIndex();
+      design.removeComponent(index);
+      updatePanels();
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENT_PRIORITYHI) 
         && componentList.getSelectedValue() != null) {
       int index = componentList.getSelectedIndex();
-      design.changePriority(index, true);
+      index = design.changePriority(index, true);
+      int[] indices = new int[1];
+      indices[0] = index;
       updatePanels();
+      componentList.setSelectedIndices(indices);
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENT_PRIORITYLO) 
         && componentList.getSelectedValue() != null) {
       int index = componentList.getSelectedIndex();
-      design.changePriority(index, false);
+      index = design.changePriority(index, false);
+      int[] indices = new int[1];
+      indices[0] = index;
       updatePanels();
+      componentList.setSelectedIndices(indices);
     }
     
   }

@@ -227,6 +227,16 @@ public class GuiStatics {
   public final static Color COLOR_COOL_SPACE_BLUE_DARK = new Color(25,120,193);
 
   /**
+   * Deep space purple dark
+   */
+  public final static Color COLOR_DEEP_SPACE_PURPLE_DARK = new Color(25,9,61);
+
+  /**
+   * Deep space purple
+   */
+  public final static Color COLOR_DEEP_SPACE_PURPLE = new Color(47,27,92);
+
+  /**
    * Cool space blue darker
    */
   public final static Color COLOR_COOL_SPACE_BLUE_DARKER = new Color(20,110,180);

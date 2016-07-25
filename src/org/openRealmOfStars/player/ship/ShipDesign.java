@@ -82,6 +82,14 @@ public class ShipDesign {
     components.add(comp);
   }
   
+  /**
+   * Remove component from the list
+   * @param index Component's index to remove
+   */
+  public void removeComponent(int index) {
+    components.remove(index);
+  }
+  
 
   public String getName() {
     return name;
@@ -249,8 +257,9 @@ public class ShipDesign {
    * Change component priority order
    * @param index Index which to change
    * @param higher true for higher priority and false for lower
+   * @return int new changed index, if change happened
    */
-  public void changePriority(int index, boolean higher) {
+  public int changePriority(int index, boolean higher) {
     if (index >= 0 && index < getNumberOfComponents()) {
       ShipComponent result[] = getComponentList();
       ShipComponent temp = result[index];
@@ -262,6 +271,7 @@ public class ShipDesign {
         for (int i = 0;i<result.length;i++) {
           components.add(result[i]);
         }
+        return target;
       }
       if (!higher && index < result.length-1) {
         int target = index +1;
@@ -271,8 +281,10 @@ public class ShipDesign {
         for (int i = 0;i<result.length;i++) {
           components.add(result[i]);
         }
+        return target;
       }
     }
+    return index;
   }
   
   @Override

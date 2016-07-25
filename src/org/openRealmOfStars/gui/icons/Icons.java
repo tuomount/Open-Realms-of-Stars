@@ -81,6 +81,9 @@ public class Icons {
   public static final String ICON_CIRCUIT_BOARD = "CircuitBoard";
   public static final String ICON_RADIATION = "Radiation";
   public static final String ICON_POWERSOURCE = "PowerSource";
+  public static final String ICON_ARROWDOWN = "ArrowDown";
+  public static final String ICON_OK = "IconOk";
+  public static final String ICON_DELETE = "IconDelete";
   
   /**
    * List of Icon
@@ -250,6 +253,12 @@ public class Icons {
     icon = new Icon16x16(image, 7, 5,ICON_RADIATION);
     addIcon(icon);
     icon = new Icon16x16(image, 0, 6,ICON_POWERSOURCE);
+    addIcon(icon);
+    icon = new Icon16x16(image, 1, 6,ICON_ARROWDOWN);
+    addIcon(icon);
+    icon = new Icon16x16(image, 2, 6,ICON_OK);
+    addIcon(icon);
+    icon = new Icon16x16(image, 3, 6,ICON_DELETE);
     addIcon(icon);
   }
   

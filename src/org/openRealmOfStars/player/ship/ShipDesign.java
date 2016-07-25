@@ -245,6 +245,36 @@ public class ShipDesign {
     return result;
   }
   
+  /**
+   * Change component priority order
+   * @param index Index which to change
+   * @param higher true for higher priority and false for lower
+   */
+  public void changePriority(int index, boolean higher) {
+    if (index >= 0 && index < getNumberOfComponents()) {
+      ShipComponent result[] = getComponentList();
+      ShipComponent temp = result[index];
+      if (higher && index > 0) {
+        int target = index -1;
+        result[index] = result[target];
+        result[target] = temp;
+        components.clear();
+        for (int i = 0;i<result.length;i++) {
+          components.add(result[i]);
+        }
+      }
+      if (!higher && index < result.length-1) {
+        int target = index +1;
+        result[index] = result[target];
+        result[target] = temp;
+        components.clear();
+        for (int i = 0;i<result.length;i++) {
+          components.add(result[i]);
+        }
+      }
+    }
+  }
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

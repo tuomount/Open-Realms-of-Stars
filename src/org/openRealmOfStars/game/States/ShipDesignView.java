@@ -24,6 +24,7 @@ import org.openRealmOfStars.gui.ListRenderers.ShipComponentListRenderer;
 import org.openRealmOfStars.gui.ListRenderers.ShipHullListRenderer;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
@@ -232,6 +233,14 @@ public class ShipDesignView extends BlackPanel {
     componentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     scroll = new JScrollPane(componentList);
     invis.add(scroll);
+    btn = new SpaceButton("Higher priority", GameCommands.COMMAND_SHIPDESIGN_COMPONENT_PRIORITYHI);
+    btn.addActionListener(listener);
+    btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_ARROWUP));
+    invis.add(btn);
+    btn = new SpaceButton("Lower priority", GameCommands.COMMAND_SHIPDESIGN_COMPONENT_PRIORITYLO);
+    btn.addActionListener(listener);
+    btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_ARROWUP));
+    invis.add(btn);
     componentPanel.add(invis);
 
     
@@ -301,6 +310,18 @@ public class ShipDesignView extends BlackPanel {
         design.addComponent((ShipComponent) componentSelect.getSelectedItem()); 
         updatePanels();
       }
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENT_PRIORITYHI) 
+        && componentList.getSelectedValue() != null) {
+      int index = componentList.getSelectedIndex();
+      design.changePriority(index, true);
+      updatePanels();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENT_PRIORITYLO) 
+        && componentList.getSelectedValue() != null) {
+      int index = componentList.getSelectedIndex();
+      design.changePriority(index, false);
+      updatePanels();
     }
     
   }

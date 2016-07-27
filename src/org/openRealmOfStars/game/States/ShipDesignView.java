@@ -13,6 +13,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -108,6 +109,10 @@ public class ShipDesignView extends BlackPanel {
    */
   private JList<ShipComponent> componentList;
 
+  /**
+   * Text is containing information about the ship design
+   */
+  private InfoTextArea designInfoText;
 
   
   public ShipDesignView(PlayerInfo player, ShipDesign oldDesign,
@@ -185,6 +190,9 @@ public class ShipDesignView extends BlackPanel {
 
 
     base.add(hullPanel,BorderLayout.NORTH);
+
+    JPanel back = new JPanel();
+    back.setLayout(new BoxLayout(back, BoxLayout.Y_AXIS));
     
     // Component Panel
     InfoPanel componentPanel = new InfoPanel();
@@ -201,9 +209,13 @@ public class ShipDesignView extends BlackPanel {
         }
       }
     }
-
+ 
     invis = new InvisiblePanel(componentPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    label = new TransparentLabel(invis, "Add components: ");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    invis.add(label);
+    invis.add(Box.createRigidArea(new Dimension(5,5)));
     componentSelect = new JComboBox<>(components.toArray(new ShipComponent[components.size()]));
     componentSelect.setActionCommand(GameCommands.COMMAND_SHIPDESIGN_COMPONENTSELECTED);
     componentSelect.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
@@ -230,6 +242,10 @@ public class ShipDesignView extends BlackPanel {
 
     invis = new InvisiblePanel(componentPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    label = new TransparentLabel(invis, "Component's energy priority: ");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    invis.add(label);
+    invis.add(Box.createRigidArea(new Dimension(5,5)));
     componentList = new JList<>(design.getComponentList());
     componentList.setCellRenderer(new ShipComponentListRenderer());
     componentList.setBackground(Color.BLACK);
@@ -254,8 +270,22 @@ public class ShipDesignView extends BlackPanel {
     componentPanel.add(invis);
     componentPanel.add(Box.createRigidArea(new Dimension(25,5)));
 
+    // Design Panel
+    InfoPanel designPanel = new InfoPanel();
+    designPanel.setLayout(new BoxLayout(designPanel, BoxLayout.X_AXIS));
+    designPanel.setTitle("Design information");
+    designInfoText = new InfoTextArea(10, 30);
+    designInfoText.setEditable(false);
+    designInfoText.setFont(GuiStatics.getFontCubellanSmaller());
+    scroll = new JScrollPane(designInfoText);
+    designPanel.add(Box.createRigidArea(new Dimension(15,5)));
+    designPanel.add(scroll);
+    designPanel.add(Box.createRigidArea(new Dimension(15,5)));
+
+    back.add(componentPanel); 
+    back.add(designPanel); 
     
-    base.add(componentPanel,BorderLayout.CENTER);
+    base.add(back,BorderLayout.CENTER);
 
 
     this.add(base,BorderLayout.CENTER);
@@ -302,6 +332,15 @@ public class ShipDesignView extends BlackPanel {
    * @param arg0 ActionEvent
    */
   public void handleAction(ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
+      if (design != null) {
+        design.setName(designNameText.getText());
+        designInfoText.setText(design.toString());
+        designInfoText.repaint();
+      } else {
+        designInfoText.setText("");
+      }
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_HULLSELECTED)) {
       updatePanels();
     }
@@ -317,7 +356,8 @@ public class ShipDesignView extends BlackPanel {
       updatePanels();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENTADDED)) {
-      if (componentSelect.getSelectedItem() != null) {
+      if (componentSelect.getSelectedItem() != null 
+          && design.getNumberOfComponents() < design.getHull().getMaxSlot()) {
         design.addComponent((ShipComponent) componentSelect.getSelectedItem()); 
         updatePanels();
       }

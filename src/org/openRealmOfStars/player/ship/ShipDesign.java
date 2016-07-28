@@ -28,6 +28,8 @@ import java.util.ArrayList;
  */
 public class ShipDesign {
 
+  public static final String DESIGN_OK = "Design is OK!";
+  
   /**
    * Ship Design name
    */
@@ -168,6 +170,47 @@ public class ShipDesign {
     }
     return armor;
   }
+  
+  /**
+   * Does ship design have weapons? True if one weapon is in place.
+   * @return True if weapon is found, otherwise false
+   */
+  
+  public boolean hasWeapons() {
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.WEAPON_BEAM ||
+          comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO ||
+          comp.getType() == ShipComponentType.WEAPON_HE_MISSILE ||
+          comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO ||
+          comp.getType() == ShipComponentType.WEAPON_RAILGUN) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Does ship design have engine? True if engine is in place.
+   * @return True if engine is found, otherwise false
+   */
+  public boolean hasEngine() {
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.ENGINE) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Get number of free slots
+   * @return number of free slots in ship design
+   */
+  public int getFreeSlots() {
+    return hull.getMaxSlot()-components.size();
+  }
 
   /**
    * Get current cost for ship. This is very useful information
@@ -285,6 +328,85 @@ public class ShipDesign {
       }
     }
     return index;
+  }
+  
+  /**
+   * Get Design Info, but not the component info
+   * @return Design info as a String
+   */
+  public String getDesignInfo() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(getName());
+    sb.append(" - ");
+    sb.append(hull.getHullType().toString());
+    sb.append("\n");
+    sb.append("Energy: ");
+    sb.append(getFreeEnergy());
+    sb.append("\n");
+    sb.append("Cost: ");
+    sb.append(getCost());
+    sb.append(" Metal: ");
+    sb.append(getMetalCost());
+    sb.append("\n");
+    sb.append("Shield: ");
+    sb.append(getTotalShield());
+    sb.append(" Armor: ");
+    sb.append(getTotalArmor());
+    sb.append(" Hull Points: ");
+    sb.append(hull.getSlotHull()*hull.getMaxSlot());
+    if (getTotalMilitaryPower() > 0) {
+      sb.append("\n");
+      sb.append("Military power: ");
+      sb.append(getTotalMilitaryPower());
+    }
+    sb.append("\n");
+    sb.append("Slots: ");
+    sb.append(components.size());
+    sb.append("/");
+    sb.append(hull.getMaxSlot());
+    if (hull.getHullType() == ShipHullType.FREIGHTER) {
+      sb.append("\n");
+      sb.append("Cargo: ");
+      sb.append(getFreeSlots()*10);
+      sb.append("units or ");
+      sb.append(getFreeSlots()*2);
+      sb.append(" population");
+    }
+    return sb.toString();
+  }
+  
+  public String getFlaws() {
+    boolean designOk = true;
+    StringBuilder sb = new StringBuilder();
+    if (!hasEngine()) {
+      designOk = false;
+      sb.append("Engine is missing!\n");
+    }
+    if (getFreeSlots()<0) {
+      designOk = false;
+      sb.append("Too many components!\n");
+    }
+    if (getFreeSlots()== 0 
+        && (hull.getHullType()==ShipHullType.FREIGHTER ||
+            hull.getHullType()==ShipHullType.PRIVATEER)) {
+      designOk = false;
+      sb.append("No cargo space!\n");
+    }
+    if (hasWeapons() 
+        && (hull.getHullType()==ShipHullType.FREIGHTER ||
+            hull.getHullType()==ShipHullType.PROBE)) {
+      designOk = false;
+      sb.append("No weapons allowed in "+hull.getHullType().toString()+"!\n");
+    }
+    if (getFreeEnergy()<0) {
+      designOk = false;
+      sb.append("No enough energy resources!");
+    }
+    if (designOk) {
+      // Return OK text
+      sb.append(DESIGN_OK);
+    }
+    return sb.toString();
   }
   
   @Override

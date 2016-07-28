@@ -16,7 +16,7 @@ import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.ShipStatRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
-import org.openRealmOfStars.gui.labels.InfoTextArea;
+import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -64,7 +64,7 @@ public class ShipView extends BlackPanel {
   /**
    * Text is containing information about the ship design and stats
    */
-  private InfoTextArea infoText;
+  private BaseInfoTextArea infoText;
 
   public ShipView(PlayerInfo player, ActionListener listener) {
     this.player = player;
@@ -89,7 +89,7 @@ public class ShipView extends BlackPanel {
     invis.add(btn);
     base.add(invis,BorderLayout.WEST);
 
-    infoText = new InfoTextArea(30, 30);
+    infoText = new BaseInfoTextArea(30, 30);
     infoText.setEditable(false);
     infoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(infoText);

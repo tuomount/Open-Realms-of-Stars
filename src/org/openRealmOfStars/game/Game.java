@@ -357,6 +357,13 @@ public class Game extends JFrame implements ActionListener {
       changeGameState(GameState.SHIPDESIGN);
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_SHIPDESIGN_DONE)) {
+      if (shipDesignView != null && shipDesignView.isDesignOK()) {
+        shipDesignView.keepDesign();
+        changeGameState(GameState.VIEWSHIPS);
+      }
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_COPY_SHIP)) {
       changeGameState(GameState.SHIPDESIGN);
     }

@@ -1,4 +1,6 @@
 *.class
+# Screen shots
+/screenshots/
 
 # Backup files
 *~

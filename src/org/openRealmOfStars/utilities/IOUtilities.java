@@ -2,10 +2,13 @@ package org.openRealmOfStars.utilities;
 
 import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
 
 import javax.imageio.ImageIO;
+
 
 /**
  * 
@@ -58,5 +61,26 @@ public class IOUtilities {
     String str = new String(dataBuf,"US-ASCII");
     return str;
   }
+  
+  /**
+   * Save Buffered Image into file under directory screenshots
+   * @param image to save into screenshots directory.
+   */
+  public static void saveScreenShot(BufferedImage image) {
+    Calendar cal = Calendar.getInstance();
+    File dir = new File("screenshots");
+    if (!dir.exists()) {
+      dir.mkdir();
+    }
+    String filename="Screenshot-"+cal.getTimeInMillis()+"-"+DiceGenerator.getRandom(10000)+".png";
+    File file = new File("screenshots/"+filename);
+    try {
+      ImageIO.write(image, "png", file);
+    } catch (IOException e) {
+      System.err.println("Failing to write screenshot!");
+      e.printStackTrace();
+    }
+  }
+
 
 }

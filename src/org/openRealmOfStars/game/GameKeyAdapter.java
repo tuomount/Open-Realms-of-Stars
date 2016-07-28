@@ -2,6 +2,9 @@ package org.openRealmOfStars.game;
 
 import java.awt.KeyEventDispatcher;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+
+import org.openRealmOfStars.utilities.IOUtilities;
 
 
 /**
@@ -32,8 +35,18 @@ public class GameKeyAdapter implements KeyEventDispatcher {
   
   @Override
   public boolean dispatchKeyEvent(KeyEvent arg0) {
-    if (game.gameState == GameState.STARMAP && arg0.getKeyCode() == KeyEvent.VK_ESCAPE) {
+    if (game.gameState == GameState.STARMAP &&
+        arg0.getKeyCode() == KeyEvent.VK_ESCAPE &&
+        arg0.getID() == KeyEvent.KEY_PRESSED) {
       game.changeGameState(GameState.MAIN_MENU);
+      return true;
+    }
+    if (arg0.getKeyCode() == KeyEvent.VK_F10 &&
+        arg0.getID() == KeyEvent.KEY_PRESSED) {
+      BufferedImage result = new BufferedImage(game.getWidth(),game.getHeight(),
+        BufferedImage.TYPE_INT_RGB);
+      game.paint(result.getGraphics());
+      IOUtilities.saveScreenShot(result);
       return true;
     }
     return false;

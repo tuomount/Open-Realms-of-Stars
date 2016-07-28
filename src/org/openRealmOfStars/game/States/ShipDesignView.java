@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.Box;
@@ -27,6 +29,7 @@ import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
@@ -112,7 +115,8 @@ public class ShipDesignView extends BlackPanel {
   /**
    * Text is containing information about the ship design
    */
-  private InfoTextArea designInfoText;
+  private BaseInfoTextArea designInfoText;
+  
 
   
   public ShipDesignView(PlayerInfo player, ShipDesign oldDesign,
@@ -158,6 +162,27 @@ public class ShipDesignView extends BlackPanel {
     designNameText.setFont(GuiStatics.getFontCubellan());
     designNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
     designNameText.setBackground(Color.BLACK);
+    designNameText.addKeyListener(new KeyListener() {
+      
+      @Override
+      public void keyTyped(KeyEvent e) {
+        // TODO Auto-generated method stub
+        
+      }
+      
+      @Override
+      public void keyReleased(KeyEvent e) {
+        design.setName(designNameText.getText());
+        designInfoText.setText(design.toString());
+        designInfoText.repaint();
+      }
+      
+      @Override
+      public void keyPressed(KeyEvent e) {
+        // TODO Auto-generated method stub
+        
+      }
+    });
     invis.add(designNameText);
     invis.add(Box.createRigidArea(new Dimension(5,5)));
     label = new TransparentLabel(invis, "Ship's hull: ");
@@ -274,7 +299,7 @@ public class ShipDesignView extends BlackPanel {
     InfoPanel designPanel = new InfoPanel();
     designPanel.setLayout(new BoxLayout(designPanel, BoxLayout.X_AXIS));
     designPanel.setTitle("Design information");
-    designInfoText = new InfoTextArea(10, 30);
+    designInfoText = new BaseInfoTextArea(10, 30);
     designInfoText.setEditable(false);
     designInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(designInfoText);
@@ -332,15 +357,6 @@ public class ShipDesignView extends BlackPanel {
    * @param arg0 ActionEvent
    */
   public void handleAction(ActionEvent arg0) {
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
-      if (design != null) {
-        design.setName(designNameText.getText());
-        designInfoText.setText(design.toString());
-        designInfoText.repaint();
-      } else {
-        designInfoText.setText("");
-      }
-    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_HULLSELECTED)) {
       updatePanels();
     }
@@ -352,6 +368,8 @@ public class ShipDesignView extends BlackPanel {
       if (hull != null) {
         design = new ShipDesign(hull);
         design.setName(designNameText.getText());
+        designInfoText.setText(design.toString());
+        designInfoText.repaint();
       }
       updatePanels();
     }
@@ -359,6 +377,9 @@ public class ShipDesignView extends BlackPanel {
       if (componentSelect.getSelectedItem() != null 
           && design.getNumberOfComponents() < design.getHull().getMaxSlot()) {
         design.addComponent((ShipComponent) componentSelect.getSelectedItem()); 
+        design.setName(designNameText.getText());
+        designInfoText.setText(design.toString());
+        designInfoText.repaint();
         updatePanels();
       }
     }
@@ -366,6 +387,9 @@ public class ShipDesignView extends BlackPanel {
         && componentList.getSelectedValue() != null) {
       int index = componentList.getSelectedIndex();
       design.removeComponent(index);
+      design.setName(designNameText.getText());
+      designInfoText.setText(design.toString());
+      designInfoText.repaint();
       updatePanels();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENT_PRIORITYHI) 

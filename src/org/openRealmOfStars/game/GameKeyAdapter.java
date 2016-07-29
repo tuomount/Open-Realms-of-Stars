@@ -35,12 +35,48 @@ public class GameKeyAdapter implements KeyEventDispatcher {
   
   @Override
   public boolean dispatchKeyEvent(KeyEvent arg0) {
-    if (game.gameState == GameState.STARMAP &&
-        arg0.getKeyCode() == KeyEvent.VK_ESCAPE &&
+    if (game.gameState == GameState.STARMAP && game.starMapView != null) {
+     // Star Map Keys
+     if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE &&
         arg0.getID() == KeyEvent.KEY_PRESSED) {
-      game.changeGameState(GameState.MAIN_MENU);
-      return true;
+       game.changeGameState(GameState.MAIN_MENU);
+       return true;
+     }
+     if (arg0.getKeyCode() == KeyEvent.VK_LEFT &&
+         arg0.getID() == KeyEvent.KEY_PRESSED &&
+         game.starMapView.readyToMove) {
+        game.getStarMap().setDrawPos(game.getStarMap().getDrawX()-1,
+            game.getStarMap().getDrawY());
+        game.starMapView.readyToMove = false;
+        return true;
+      }
+     if (arg0.getKeyCode() == KeyEvent.VK_RIGHT &&
+         arg0.getID() == KeyEvent.KEY_PRESSED &&
+         game.starMapView.readyToMove) {
+        game.getStarMap().setDrawPos(game.getStarMap().getDrawX()+1,
+            game.getStarMap().getDrawY());
+        game.starMapView.readyToMove = false;
+        return true;
+      }
+     if (arg0.getKeyCode() == KeyEvent.VK_DOWN &&
+         arg0.getID() == KeyEvent.KEY_PRESSED &&
+         game.starMapView.readyToMove) {
+        game.getStarMap().setDrawPos(game.getStarMap().getDrawX(),
+            game.getStarMap().getDrawY()+1);
+        game.starMapView.readyToMove = false;
+        return true;
+      }
+     if (arg0.getKeyCode() == KeyEvent.VK_UP &&
+         arg0.getID() == KeyEvent.KEY_PRESSED &&
+         game.starMapView.readyToMove)  {
+        game.getStarMap().setDrawPos(game.getStarMap().getDrawX(),
+            game.getStarMap().getDrawY()-1);
+        game.starMapView.readyToMove = false;
+        return true;
+      }
     }
+    
+    // Common keys that work every where
     if (arg0.getKeyCode() == KeyEvent.VK_F10 &&
         arg0.getID() == KeyEvent.KEY_PRESSED) {
       BufferedImage result = new BufferedImage(game.getWidth(),game.getHeight(),

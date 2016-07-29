@@ -123,6 +123,14 @@ public class Game extends JFrame implements ActionListener {
    * Ship design view for the game
    */
   public ShipDesignView shipDesignView;
+  
+  /**
+   * Get Star map
+   * @return StarMap
+   */
+  public StarMap getStarMap() {
+    return starMap;
+  }
 
   /**
    * Contructor of Game class

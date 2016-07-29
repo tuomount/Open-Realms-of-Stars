@@ -104,6 +104,11 @@ public class StarMapView extends BlackPanel {
   private IconLabel reseProd;
   
   /**
+   * Is map ready to move with keys
+   */
+  public boolean readyToMove;
+  
+  /**
    * Message panel for showing messages
    */
   private MessagePanel msgPanel;
@@ -207,6 +212,7 @@ public class StarMapView extends BlackPanel {
       }
       mapPanel.drawMap(this.map);
       mapPanel.repaint();
+      readyToMove = true;
     }
     // Starmap
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {

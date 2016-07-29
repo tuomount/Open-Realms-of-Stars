@@ -277,15 +277,20 @@ public class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Hulls, level);
-        if (techName.startsWith("Privateer Mk")) {
-          tech.setComponent("Privateer module");
-        } else {
-          tech.setHull(techName);
-        }
         if (techName.contains("starbase")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_HULL_TECH));
+        }
+        if (techName.startsWith("Privateer Mk")) {
+          tech.setComponent("Privateer module");
+          tech.setHull(techName);
+        } else if (techName.startsWith("Colony")) {
+          tech.setHull(techName);
+          tech.setComponent("Colonization module");
+          tech.setIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
+        } else {
+          tech.setHull(techName);
         }
         return tech;
       }

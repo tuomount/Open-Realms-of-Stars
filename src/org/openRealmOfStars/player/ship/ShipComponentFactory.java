@@ -31,7 +31,7 @@ public class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 49;
+  private static final int MAX_SHIPCOMPONENT = 50;
   
 
   /**
@@ -109,6 +109,7 @@ public class ShipComponentFactory {
     case 46: tmp = createEngine(index); break; // Warp drive Mk2
     case 47: tmp = createEngine(index); break; // Hyper drive Mk2
     case 48: tmp = createElectronics(index); break; // Tachyon source Mk1
+    case 49: tmp = createElectronics(index); break; // Colonization module
     }
     return tmp;
   }
@@ -269,6 +270,10 @@ public class ShipComponentFactory {
     if (index == 48) {
       tmp = new ShipComponent(index, "Tachyon source Mk1", 8, 6, ShipComponentType.POWERSOURCE);
       tmp.setEnergyResource(9);
+    }
+    if (index == 49) {
+      tmp = new ShipComponent(index, "Colonization module", 2, 4, ShipComponentType.COLONY_MODULE);
+      tmp.setEnergyRequirement(1);
     }
     return tmp;
     

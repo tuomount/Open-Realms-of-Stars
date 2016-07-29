@@ -178,7 +178,7 @@ public class ShipDesignView extends BlackPanel {
       @Override
       public void keyReleased(KeyEvent e) {
         design.setName(designNameText.getText());
-        designInfoText.setText(design.toString());
+        designInfoText.setText(design.getDesignInfo());
         designInfoText.repaint();
       }
       

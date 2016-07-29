@@ -43,7 +43,11 @@ public class ShipHullListRenderer implements ListCellRenderer<ShipHull> {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(list, value, index,
         isSelected, cellHasFocus);
     renderer.setFont(GuiStatics.getFontCubellan());
-    renderer.setText(value.getName()+" - "+value.getSize().toString());
+    if (value != null) {
+      renderer.setText(value.getName()+" - "+value.getSize().toString());
+    } else {
+      renderer.setText("No hull");
+    }
     if (isSelected) {
       renderer.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
       renderer.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);

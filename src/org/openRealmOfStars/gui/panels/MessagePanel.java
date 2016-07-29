@@ -11,6 +11,7 @@ import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
@@ -60,7 +61,7 @@ public class MessagePanel extends JPanel {
   /**
    * Info Text for message
    */
-  private InfoTextArea msgText;
+  private BaseInfoTextArea msgText;
 
   /**
    * Message count label
@@ -115,7 +116,7 @@ public class MessagePanel extends JPanel {
     pane.add(btnNext);
     this.add(pane);
     
-    msgText = new InfoTextArea(3,15);
+    msgText = new BaseInfoTextArea(3,15);
     msgText.setEditable(false);
     JScrollPane scroll = new JScrollPane(msgText);
     this.add(scroll);

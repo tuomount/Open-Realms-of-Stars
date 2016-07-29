@@ -208,6 +208,7 @@ public class MapPanel extends JPanel {
     if (cy > starMap.getMaxY()-viewPointY-1) {
       cy = starMap.getMaxY()-viewPointY-1;
     }
+    starMap.setDrawPos(cx, cy);
     // -20 for safety
     int speedX = (GuiStatics.nebulaeImage.getWidth()-this.getWidth()-20)/starMap.getMaxX(); 
     int speedY = (GuiStatics.nebulaeImage.getHeight()-this.getHeight()-20)/starMap.getMaxY(); 

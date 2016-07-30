@@ -118,6 +118,10 @@ public class ShipHull {
     return maxSlot;
   }
 
+  /**
+   * Hull point per slot
+   * @return Hullpoints per slot aka "hitpoints"
+   */
   public int getSlotHull() {
     return slotHull;
   }

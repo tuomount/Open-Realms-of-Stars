@@ -11,6 +11,8 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
@@ -699,6 +701,10 @@ public class Planet {
           }
         }
       }
+      ShipStat[] ships = planetOwnerInfo.getShipStatList();
+      for (ShipStat stat : ships) {
+        result.add(new Ship(stat.getDesign()));
+      }
     }
     return result.toArray(new Construction[result.size()]);
   }
@@ -930,7 +936,16 @@ public class Planet {
             msg.setCoordinate(getX(), getY());
             msg.setMatchByString(getName());
             planetOwnerInfo.getMsgList().addNewMessage(msg);
-          } else  {
+          } else if (underConstruction instanceof Ship) {
+            metal = metal - underConstruction.getMetalCost();
+            prodResource = prodResource - underConstruction.getProdCost();
+            //FIXME Ship is not actually built yet
+            msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(), 
+                Icons.getIconByName(Icons.ICON_HULL_TECH));
+            msg.setCoordinate(getX(), getY());
+            msg.setMatchByString(getName());
+            planetOwnerInfo.getMsgList().addNewMessage(msg);
+          } else {
             if (underConstruction.getName().equals(ConstructionFactory.MECHION_CITIZEN)) {
               metal = metal - underConstruction.getMetalCost();
               prodResource = prodResource - underConstruction.getProdCost();

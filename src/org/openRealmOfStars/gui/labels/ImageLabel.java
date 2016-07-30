@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.labels;
 
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -49,6 +50,11 @@ public class ImageLabel extends JLabel {
   private boolean border;
   
   /**
+   * Fill color behind the image
+   */
+  private Color fillColor;
+  
+  /**
    * Construct an ImageLabel. 
    * @param image Image to show
    * @param border Boolean is there a border or not
@@ -60,6 +66,7 @@ public class ImageLabel extends JLabel {
     this.setIcon(icon);
     this.setImage(image);
     this.setBorder(border);
+    this.setFillColor(null);
     if (isBorder()) {
       this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     } else {
@@ -87,12 +94,24 @@ public class ImageLabel extends JLabel {
   
   @Override
   protected void paintComponent(Graphics g) {
+    if (getFillColor() != null) {
+      g.setColor(getFillColor());
+      g.fillRect(0, 0, getImage().getWidth(), getImage().getHeight());
+    }
     if(isBorder()) {
         this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         g.drawImage(getImage(), 2,2, null);
     } else {
       g.drawImage(getImage(), 0,0, null);
     }
+  }
+
+  public Color getFillColor() {
+    return fillColor;
+  }
+
+  public void setFillColor(Color fillColor) {
+    this.fillColor = fillColor;
   }
 
   

@@ -30,6 +30,7 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
+import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
@@ -39,6 +40,7 @@ import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullFactory;
+import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechType;
@@ -123,6 +125,10 @@ public class ShipDesignView extends BlackPanel {
    */
   private BaseInfoTextArea designFlawsText;
 
+  /**
+   * Ship's hull image
+   */
+  private ImageLabel hullImage;
   
   
   public ShipDesignView(PlayerInfo player, ShipDesign oldDesign,
@@ -207,6 +213,10 @@ public class ShipDesignView extends BlackPanel {
     
     invis = new InvisiblePanel(hullPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    hullImage = new ImageLabel(ShipImages.Humans().getColonyImage(), true);
+    hullImage.setFillColor(Color.BLACK);
+    invis.add(hullImage);
+    invis.add(Box.createRigidArea(new Dimension(5,5)));
     label = new TransparentLabel(invis, "Confirm hull change: ");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(label);
@@ -214,7 +224,7 @@ public class ShipDesignView extends BlackPanel {
     SpaceButton btn = new SpaceButton("Change hull", GameCommands.COMMAND_SHIPDESIGN_CHANGEHULL);
     btn.addActionListener(listener);
     invis.add(btn);
-    invis.add(Box.createRigidArea(new Dimension(25,75)));
+    invis.add(Box.createRigidArea(new Dimension(25,40)));
     hullPanel.add(invis);
 
 
@@ -364,6 +374,7 @@ public class ShipDesignView extends BlackPanel {
     ShipHull hull = (ShipHull) hullSelect.getSelectedItem();
     if (hull != null) {
       hullInfoText.setText(hull.toString());
+      hullImage.setImage(hull.getImage());
     }
     if (design != null) {
       designNameText.setText(design.getName());

@@ -9,6 +9,7 @@ import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -939,7 +940,9 @@ public class Planet {
           } else if (underConstruction instanceof Ship) {
             metal = metal - underConstruction.getMetalCost();
             prodResource = prodResource - underConstruction.getProdCost();
-            //FIXME Ship is not actually built yet
+            Ship ship = (Ship) underConstruction;
+            Fleet fleet = new Fleet(ship, getX(), getY());
+            planetOwnerInfo.Fleets().add(fleet);
             msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(), 
                 Icons.getIconByName(Icons.ICON_HULL_TECH));
             msg.setCoordinate(getX(), getY());

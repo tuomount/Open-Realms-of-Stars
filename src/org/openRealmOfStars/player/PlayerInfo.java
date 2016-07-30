@@ -2,6 +2,7 @@ package org.openRealmOfStars.player;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -66,11 +67,17 @@ public class PlayerInfo {
    * Space ship stat and design list
    */
   private ArrayList<ShipStat> shipStatList;
+
+  /**
+   * Player fleets
+   */
+  private FleetList fleets;
   
   public PlayerInfo(SpaceRace race) {
     setTechList(new TechList());
     this.msgList = new MessageList();
     shipStatList = new ArrayList<>();
+    fleets = new FleetList();
     setRace(race);
     switch (getRace()) {
     case HUMAN:
@@ -286,6 +293,14 @@ public class PlayerInfo {
 
   public void setTechList(TechList techList) {
     this.techList = techList;
+  }
+  
+  /**
+   * Get the player Fleets
+   * @return Fleets never null
+   */
+  public FleetList Fleets() {
+    return fleets;
   }
   
   /**

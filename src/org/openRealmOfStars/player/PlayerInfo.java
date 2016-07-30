@@ -108,6 +108,9 @@ public class PlayerInfo {
       ShipDesign design = ShipGenerator.createScout(this);
       ShipStat stat = new ShipStat(design);
       addShipStat(stat);
+      design = ShipGenerator.createColony(this, false);
+      stat = new ShipStat(design);
+      addShipStat(stat);
       break;
     }
     case SPORKS:{
@@ -147,6 +150,9 @@ public class PlayerInfo {
       }
       ShipDesign design = ShipGenerator.createScout(this);
       ShipStat stat = new ShipStat(design);
+      addShipStat(stat);
+      design = ShipGenerator.createColony(this, false);
+      stat = new ShipStat(design);
       addShipStat(stat);
       break;
     }
@@ -192,6 +198,9 @@ public class PlayerInfo {
       }
       ShipDesign design = ShipGenerator.createScout(this);
       ShipStat stat = new ShipStat(design);
+      addShipStat(stat);
+      design = ShipGenerator.createColony(this, false);
+      stat = new ShipStat(design);
       addShipStat(stat);
       break;
     }

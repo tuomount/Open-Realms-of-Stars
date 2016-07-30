@@ -6,6 +6,7 @@ import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullFactory;
+import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
@@ -81,6 +82,72 @@ public class ShipGenerator {
     }
     return result;
   }
-  
+
+  /**
+   * Create colony/troop ship with best possible technology. This is used
+   * for human players in beginning and AI every time they design
+   * new colony/troop ship.
+   * @param player whom is designing the new ship
+   * @return ShipDesign or null if fails
+   */
+  public static ShipDesign createColony(PlayerInfo player,boolean troop) {
+    ShipDesign result = null;
+    Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
+    int value = -1;
+    Tech hullTech = null;
+    for (Tech tech : hullTechs) {
+      ShipHull hull = ShipHullFactory.createByName(tech.getHull(), player.getRace());
+      if (hull.getMaxSlot() > value && hull.getHullType() == ShipHullType.FREIGHTER) {
+        hullTech = tech;
+        value = hull.getMaxSlot();
+      }
+      if (!troop && hullTech.getName().equals("Medium freighter")) {
+        break;
+      }
+    }
+    Tech[] defenseTechs = player.getTechList().getListForType(TechType.Defense);
+    if ( hullTech != null) {
+      ShipHull hull = ShipHullFactory.createByName(hullTech.getHull(),player.getRace());
+      result = new ShipDesign(hull);
+      if (!troop) {
+        result.setName("Colony");
+      } else {
+        result.setName("Trooper");
+      }
+      ShipComponent engine = ShipComponentFactory.createByName(player.
+          getTechList().getBestEngine().getComponent());
+      result.addComponent(engine);
+      ShipComponent power = ShipComponentFactory.createByName(player.
+          getTechList().getBestEnergySource().getComponent());
+      result.addComponent(power);
+      if (!troop) {
+        ShipComponent colony = ShipComponentFactory.createByName("Colonization module");
+        result.addComponent(colony);
+        
+      }
+      if (result.getFreeSlots() > 2) {
+        Tech armor = TechList.getBestTech(defenseTechs,"Armor plating");
+        ShipComponent armorComp = null;
+        if (armor != null) {
+          armorComp = ShipComponentFactory.createByName(
+            armor.getComponent());
+          result.addComponent(armorComp);
+        }
+      }
+      if (result.getFreeSlots() > 2) {
+        Tech shield = TechList.getBestTech(defenseTechs,"Shield");
+        ShipComponent shieldComp = null;
+        if (shield != null) {
+          shieldComp = ShipComponentFactory.createByName(
+            shield.getComponent());
+          if (shieldComp.getEnergyRequirement() <= result.getFreeEnergy()) {
+            result.addComponent(shieldComp);
+          }
+        }
+      }
+    }
+    return result;
+  }
+
 
 }

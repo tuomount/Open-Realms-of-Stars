@@ -1,6 +1,5 @@
 package org.openRealmOfStars.player.ship;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -45,10 +44,6 @@ public class ShipDesign {
    */
   private ArrayList<ShipComponent> components;
 
-  /**
-   * Ship's image
-   */
-  private BufferedImage image;
 
   public ShipDesign(ShipHull hull) {
     setHull(hull);
@@ -111,13 +106,6 @@ public class ShipDesign {
     }
   }
 
-  public BufferedImage getImage() {
-    return image;
-  }
-
-  public void setImage(BufferedImage image) {
-    this.image = image;
-  }
   
   /**
    * Get current energy usage for ship. This is very useful information

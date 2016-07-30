@@ -1,5 +1,7 @@
 package org.openRealmOfStars.player.ship;
 
+import java.awt.image.BufferedImage;
+
 import org.openRealmOfStars.player.SpaceRace;
 
 /**
@@ -65,6 +67,20 @@ public class ShipHull {
    * Hull cost in metal
    */
   private int metalCost;
+  
+  /**
+   * Ship's image
+   */
+  private BufferedImage image;
+
+  public BufferedImage getImage() {
+    return image;
+  }
+
+  public void setImage(BufferedImage image) {
+    this.image = image;
+  }
+
 
   /**
    * Constructor for Ship hull
@@ -88,6 +104,8 @@ public class ShipHull {
     this.size = size;
     this.cost = cost;
     this.metalCost = metal;
+    // Default to Scout image
+    this.image = ShipImages.getByRace(race).getScoutImage();
     switch (race) {
     case CENTAURS: {
       // Centaur ships have extra hull point per slot

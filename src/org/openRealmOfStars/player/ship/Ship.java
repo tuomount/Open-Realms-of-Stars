@@ -79,7 +79,7 @@ public class Ship extends Construction {
     }
     setShield(design.getTotalShield());
     setArmor(design.getTotalArmor());
-    image = design.getImage();
+    image = hull.getImage();
     setDescription(design.getDesignInfo());
   }
   

@@ -51,6 +51,26 @@ public class ShipImage {
   private BufferedImage colonyImage;
 
   /**
+   * Destroyer ship image
+   */
+  private BufferedImage destroyerImage;
+
+  /**
+   * Probe ship image
+   */
+  private BufferedImage probeImage;
+
+  /**
+   * Small freighter ship image
+   */
+  private BufferedImage smallFreighterImage;
+
+  /**
+   * Small starbase image
+   */
+  private BufferedImage smallStarbaseImage;
+
+  /**
    * Initialize ship images
    * @param fileToRead Needs to be inside JAR file
    */
@@ -59,6 +79,10 @@ public class ShipImage {
         "/resources/images/"+ fileToRead));
     scoutImage = image64x64(image,0,0);
     colonyImage = image64x64(image,1,0);
+    destroyerImage = image64x64(image,2,0);
+    probeImage = image64x64(image,3,0);
+    smallFreighterImage = image64x64(image,4,0);
+    smallStarbaseImage = image64x64(image,0,1);
   }
   
   private BufferedImage image64x64(BufferedImage image, int x, int y) throws
@@ -86,6 +110,38 @@ public class ShipImage {
    */
   public BufferedImage getColonyImage() {
     return colonyImage;
+  }
+
+  /**
+   * Get destroyer ship image
+   * @return Destroyer image
+   */
+  public BufferedImage getDestroyerImage() {
+    return destroyerImage;
+  }
+
+  /**
+   * Get probe ship image
+   * @return Probe image
+   */
+  public BufferedImage getProbeImage() {
+    return probeImage;
+  }
+
+  /**
+   * Get small freighter ship image
+   * @return Small freighter image
+   */
+  public BufferedImage getSmallFreighterImage() {
+    return smallFreighterImage;
+  }
+
+  /**
+   * Get small star base image
+   * @return Small star base image
+   */
+  public BufferedImage getSmallStarbaseImage() {
+    return smallStarbaseImage;
   }
 
 }

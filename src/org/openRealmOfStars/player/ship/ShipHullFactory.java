@@ -63,61 +63,73 @@ public class ShipHullFactory {
     if (index == 0) {
       tmp = new ShipHull(index, "Scout Mk1", 4, 1, ShipHullType.NORMAL,
           ShipSize.SMALL,5,5,race);
+      tmp.setImage(ShipImages.getByRace(race).getScoutImage());
       return tmp;
     }
     if (index == 1) {
       tmp = new ShipHull(index, "Destroyer Mk1", 6, 1, ShipHullType.NORMAL,
           ShipSize.MEDIUM,6,8,race);
+      tmp.setImage(ShipImages.getByRace(race).getDestroyerImage());
       return tmp;
     }
     if (index == 2) {
       tmp = new ShipHull(index, "Colony", 4, 1, ShipHullType.FREIGHTER,
           ShipSize.MEDIUM,4,6,race);
+      tmp.setImage(ShipImages.getByRace(race).getColonyImage());
       return tmp;
     }
     if (index == 3) {
       tmp = new ShipHull(index, "Probe", 4, 1, ShipHullType.PROBE, 
           ShipSize.SMALL,2,2,race);
+      tmp.setImage(ShipImages.getByRace(race).getProbeImage());
       return tmp;
     }
     if (index == 4) {
       tmp = new ShipHull(index, "Small freighter", 6, 1, ShipHullType.FREIGHTER,
           ShipSize.MEDIUM,4,6,race);
+      tmp.setImage(ShipImages.getByRace(race).getSmallFreighterImage());
       return tmp;
     }
     if (index == 5) {
       tmp = new ShipHull(index, "Small starbase Mk1", 4, 1, ShipHullType.STARBASE,
           ShipSize.SMALL,6,6,race);
+      tmp.setImage(ShipImages.getByRace(race).getSmallStarbaseImage());
       return tmp;
     }
     if (index == 6) {
       tmp = new ShipHull(index, "Destroyer Mk2", 6, 2, ShipHullType.NORMAL,
           ShipSize.MEDIUM,6,10,race);
+      tmp.setImage(ShipImages.getByRace(race).getDestroyerImage());
       return tmp;
     }
     if (index == 7) {
       tmp = new ShipHull(index, "Small starbase Mk2", 4, 2, ShipHullType.STARBASE,
           ShipSize.SMALL,6,8,race);
+      tmp.setImage(ShipImages.getByRace(race).getSmallStarbaseImage());
       return tmp;
     }
     if (index == 8) {
       tmp = new ShipHull(index, "Corvette Mk1", 5, 1, ShipHullType.NORMAL,
           ShipSize.SMALL,5,6,race);
+      tmp.setImage(ShipImages.getByRace(race).getDestroyerImage());
       return tmp;
     }
     if (index == 9) {
       tmp = new ShipHull(index, "Medium freighter", 8, 1, ShipHullType.FREIGHTER,
           ShipSize.LARGE,6,12,race);
+      tmp.setImage(ShipImages.getByRace(race).getDestroyerImage());
       return tmp;
     }
     if (index == 10) {
       tmp = new ShipHull(index, "Medium starbase", 6, 2, ShipHullType.STARBASE,
           ShipSize.MEDIUM,8,10,race);
+      tmp.setImage(ShipImages.getByRace(race).getDestroyerImage());
       return tmp;
     }
     if (index == 11) {
       tmp = new ShipHull(index, "Scout Mk2", 4, 2, ShipHullType.NORMAL,
           ShipSize.SMALL,4,8,race);
+      tmp.setImage(ShipImages.getByRace(race).getScoutImage());
       return tmp;
     }
     if (index == 12) {

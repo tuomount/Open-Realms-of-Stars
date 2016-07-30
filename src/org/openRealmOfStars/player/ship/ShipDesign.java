@@ -386,6 +386,13 @@ public class ShipDesign {
       designOk = false;
       sb.append("No weapons allowed in "+hull.getHullType().toString()+"!\n");
     }
+    for (int i = 0;i<getNumberOfComponents();i++) {
+      ShipComponent comp = getComponent(i);
+      if (comp.getType() == ShipComponentType.COLONY_MODULE && hull.getHullType() != ShipHullType.FREIGHTER) {
+        designOk = false;
+        sb.append("Colonization module in non freighter hull.");
+      }
+    }
     if (getFreeEnergy()<0) {
       designOk = false;
       sb.append("No enough energy resources!");

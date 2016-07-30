@@ -22,6 +22,7 @@ import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 
@@ -215,9 +216,10 @@ public class Game extends JFrame implements ActionListener {
 
   /**
    * Show Ship design panels
+   * @parm old design to copy to new one. Can be null.
    */
-  public void showShipDesignView() {
-    shipDesignView = new ShipDesignView(players.getCurrentPlayerInfo(), null, this);
+  public void showShipDesignView(ShipDesign oldDesign) {
+    shipDesignView = new ShipDesignView(players.getCurrentPlayerInfo(), oldDesign, this);
     this.getContentPane().removeAll();
     this.add(shipDesignView);
     this.validate();
@@ -273,7 +275,14 @@ public class Game extends JFrame implements ActionListener {
     case STARMAP: showStarMap(); break;
     case RESEARCHVIEW: showResearch(focusMessage); break;
     case VIEWSHIPS: showShipView(); break;
-    case SHIPDESIGN: showShipDesignView(); break;
+    case SHIPDESIGN: {
+        if (shipView != null && shipView.isCopyClicked()) {
+         showShipDesignView(shipView.getSelectedShip());
+        } else {
+          showShipDesignView(null);
+        }
+       break;
+    }
     case PLANETVIEW: {
       if (focusMessage != null) {
         Planet planet = starMap.getPlanetByCoordinate(focusMessage.getX(), focusMessage.getY());
@@ -362,6 +371,7 @@ public class Game extends JFrame implements ActionListener {
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_SHIPDESIGN)) {
+      shipView.setCopyClicked(false);
       changeGameState(GameState.SHIPDESIGN);
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
@@ -373,6 +383,7 @@ public class Game extends JFrame implements ActionListener {
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_COPY_SHIP)) {
+      shipView.setCopyClicked(true);
       changeGameState(GameState.SHIPDESIGN);
     }
     if (gameState == GameState.RESEARCHVIEW && researchView != null) {

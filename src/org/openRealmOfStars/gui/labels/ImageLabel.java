@@ -61,7 +61,6 @@ public class ImageLabel extends JLabel {
    */
   public ImageLabel(BufferedImage image, boolean border) {
     super();
-    
     ImageIcon icon = new ImageIcon(image, "");
     this.setIcon(icon);
     this.setImage(image);
@@ -100,8 +99,10 @@ public class ImageLabel extends JLabel {
     }
     if(isBorder()) {
         this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-        g.drawImage(getImage(), 2,2, null);
-    } else {
+        if (getImage() != null) {
+          g.drawImage(getImage(), 2,2, null);
+        }
+    } else if (getImage() != null) {
       g.drawImage(getImage(), 0,0, null);
     }
   }

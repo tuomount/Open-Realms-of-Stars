@@ -120,4 +120,20 @@ public class FleetList {
     return null;
   }
 
+  /**
+   * Get by fleet name fleet from the list
+   * @param name
+   * @return Fleet or null if list contains no fleets
+   */
+  public Fleet getByName(String name) {
+    if (fleetList.size() > 0) {
+      for (Fleet fleet : fleetList) {
+        if (fleet.getName().equals(name)) {
+          return fleet;
+        }
+      }
+    }
+    return null;
+  }
+
 }

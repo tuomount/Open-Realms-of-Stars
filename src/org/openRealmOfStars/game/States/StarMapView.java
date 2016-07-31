@@ -22,6 +22,7 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.MessagePanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
@@ -197,13 +198,21 @@ public class StarMapView extends BlackPanel {
   }
   
   /**
-   * Show planet info on planet info panel
+   * Show planet info on map info panel
    * @param planet to show
    */
   public void setShowPlanet(Planet planet) {
     infoPanel.showPlanet(planet);
   }
-  
+
+  /**
+   * Show fleet info on map info panel
+   * @param fleet to show
+   */
+  public void setShowFleet(Fleet fleet) {
+    infoPanel.showFleet(fleet);
+  }
+
   public void handleActions(ActionEvent arg0) {
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_ANIMATION_TIMER) ) {

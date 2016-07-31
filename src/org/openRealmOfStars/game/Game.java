@@ -20,6 +20,7 @@ import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.ShipDesign;
@@ -331,6 +332,17 @@ public class Game extends JFrame implements ActionListener {
           if (planet != null) {
             starMapView.setShowPlanet(planet);
             starMapView.getStarMapMouseListener().setLastClickedPlanet(planet);
+          }
+        }
+        if (msg.getType() == MessageType.FLEET) {
+          starMap.setCursorPos(msg.getX(), msg.getY());
+          starMap.setDrawPos(msg.getX(), msg.getY());
+          Fleet fleet = players.getCurrentPlayerInfo().Fleets().
+              getByName(msg.getMatchByString());
+          if (fleet != null) {
+            starMapView.setShowFleet(fleet);
+            starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
+            starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
           }
         }
         if (msg.getType() == MessageType.CONSTRUCTION ||

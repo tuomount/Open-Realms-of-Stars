@@ -23,6 +23,7 @@ import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipDesign;
+import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.player.ship.ShipStat;
 
@@ -107,7 +108,7 @@ public class ShipView extends BlackPanel {
 
     invis = new InvisiblePanel(base);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    shipImage = new ImageLabel(ShipImages.Humans().getColonyImage(), true);
+    shipImage = new ImageLabel(ShipImages.Humans().getShipImage(ShipImage.SCOUT), true);
     shipImage.setFillColor(Color.BLACK);
     invis.add(shipImage);
     invis.add(Box.createRigidArea(new Dimension(5,5)));
@@ -151,7 +152,7 @@ public class ShipView extends BlackPanel {
       } else {
         infoText.setText("");
         this.repaint();
-        shipImage.setImage(ShipImages.Humans().getColonyImage());
+        shipImage.setImage(ShipImages.Humans().getShipImage(ShipImage.COLONY));
       }
     }
   }

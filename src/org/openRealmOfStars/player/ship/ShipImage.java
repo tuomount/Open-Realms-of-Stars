@@ -39,37 +39,37 @@ public class ShipImage {
    * Ship image height
    */
   private static final int MAX_HEIGHT = 64;
+
+  /**
+   * Smaller Ship image width
+   */
+  private static final int MIN_WIDTH = 32;
+  /**
+   * Smaller Ship image height
+   */
+  private static final int MIN_HEIGHT = 32;
   
   /**
-   * Scout ship image
+   * MAX size ship images
    */
-  private BufferedImage scoutImage;
-
+  private BufferedImage[] shipImages;
   /**
-   * Colony ship image
+   * Min size ship images
    */
-  private BufferedImage colonyImage;
+  private BufferedImage[] smallShipImages;
 
+  public static final int SCOUT = 0;
+  public static final int COLONY = 1;
+  public static final int DESTROYER = 2;
+  public static final int PROBE = 3;
+  public static final int SMALL_FREIGHTER = 4;
+  public static final int SMALL_STARBASE = 5;
+  
   /**
-   * Destroyer ship image
+   * Must be one bigger than last ship
    */
-  private BufferedImage destroyerImage;
-
-  /**
-   * Probe ship image
-   */
-  private BufferedImage probeImage;
-
-  /**
-   * Small freighter ship image
-   */
-  private BufferedImage smallFreighterImage;
-
-  /**
-   * Small starbase image
-   */
-  private BufferedImage smallStarbaseImage;
-
+  private static final int NUMBER_OF_IMAGES = 6;
+  
   /**
    * Initialize ship images
    * @param fileToRead Needs to be inside JAR file
@@ -77,12 +77,20 @@ public class ShipImage {
   public ShipImage(String fileToRead) {
     BufferedImage image = IOUtilities.loadImage(Icons.class.getResource(
         "/resources/images/"+ fileToRead));
-    scoutImage = image64x64(image,0,0);
-    colonyImage = image64x64(image,1,0);
-    destroyerImage = image64x64(image,2,0);
-    probeImage = image64x64(image,3,0);
-    smallFreighterImage = image64x64(image,4,0);
-    smallStarbaseImage = image64x64(image,0,1);
+    shipImages = new BufferedImage[NUMBER_OF_IMAGES];
+    smallShipImages = new BufferedImage[NUMBER_OF_IMAGES];
+    shipImages[SCOUT] = image64x64(image,0,0);
+    smallShipImages[SCOUT] = scaleTo32x32(shipImages[SCOUT]);
+    shipImages[COLONY] = image64x64(image,1,0);
+    smallShipImages[COLONY] = scaleTo32x32(shipImages[COLONY]);
+    shipImages[DESTROYER] = image64x64(image,2,0);
+    smallShipImages[DESTROYER] = scaleTo32x32(shipImages[DESTROYER]);
+    shipImages[PROBE] = image64x64(image,3,0);
+    smallShipImages[PROBE] = scaleTo32x32(shipImages[PROBE]);
+    shipImages[SMALL_FREIGHTER] = image64x64(image,4,0);
+    smallShipImages[SMALL_FREIGHTER] = scaleTo32x32(shipImages[SMALL_FREIGHTER]);
+    shipImages[SMALL_STARBASE] = image64x64(image,0,1);
+    smallShipImages[SMALL_STARBASE] = scaleTo32x32(shipImages[SMALL_STARBASE]);
   }
   
   private BufferedImage image64x64(BufferedImage image, int x, int y) throws
@@ -97,51 +105,44 @@ public class ShipImage {
   }
   
   /**
-   * Get scout ship image
-   * @return Scout image
+   * Get ship image by index. If index is out of bounds scout image is returned.
+   * @param index
+   * @return BufferedImage
    */
-  public BufferedImage getScoutImage() {
-    return scoutImage;
-  }
-  
-  /**
-   * Get colony ship image
-   * @return Colony image
-   */
-  public BufferedImage getColonyImage() {
-    return colonyImage;
+  public BufferedImage getShipImage(int index) {
+    if (index >=0 && index < NUMBER_OF_IMAGES) {
+      return shipImages[index];
+    }
+    return shipImages[0];
   }
 
   /**
-   * Get destroyer ship image
-   * @return Destroyer image
+   * Get small ship image by index. If index is out of bounds scout image is
+   * returned.
+   * @param index
+   * @return BufferedImage
    */
-  public BufferedImage getDestroyerImage() {
-    return destroyerImage;
+  public BufferedImage getSmallShipImage(int index) {
+    if (index >=0 && index < NUMBER_OF_IMAGES) {
+      return smallShipImages[index];
+    }
+    return smallShipImages[0];
   }
 
-  /**
-   * Get probe ship image
-   * @return Probe image
-   */
-  public BufferedImage getProbeImage() {
-    return probeImage;
+  public static BufferedImage scaleTo32x32(BufferedImage source) {
+    BufferedImage target = new BufferedImage(MIN_WIDTH, MIN_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
+    if (source.getHeight() == MAX_HEIGHT && source.getWidth() == MAX_WIDTH) {
+      int mx = MAX_WIDTH/MIN_WIDTH;
+      int my = MAX_HEIGHT/MIN_HEIGHT;
+      for (int y = 0;y<MIN_HEIGHT;y++) {
+        for (int x = 0;x<MIN_WIDTH;x++) {
+          int color = source.getRGB(x*mx, y*my);
+          target.setRGB(x, y, color);
+        }
+      }
+    }
+    return target;
   }
 
-  /**
-   * Get small freighter ship image
-   * @return Small freighter image
-   */
-  public BufferedImage getSmallFreighterImage() {
-    return smallFreighterImage;
-  }
-
-  /**
-   * Get small star base image
-   * @return Small star base image
-   */
-  public BufferedImage getSmallStarbaseImage() {
-    return smallStarbaseImage;
-  }
 
 }

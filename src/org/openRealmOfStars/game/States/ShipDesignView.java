@@ -40,6 +40,7 @@ import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullFactory;
+import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.Tech;
@@ -218,7 +219,7 @@ public class ShipDesignView extends BlackPanel {
     
     invis = new InvisiblePanel(hullPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    hullImage = new ImageLabel(ShipImages.Humans().getColonyImage(), true);
+    hullImage = new ImageLabel(ShipImages.Humans().getShipImage(ShipImage.COLONY), true);
     hullImage.setFillColor(Color.BLACK);
     invis.add(hullImage);
     invis.add(Box.createRigidArea(new Dimension(5,5)));

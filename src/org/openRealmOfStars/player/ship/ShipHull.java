@@ -69,17 +69,22 @@ public class ShipHull {
   private int metalCost;
   
   /**
-   * Ship's image
+   * Ship's image index
    */
-  private BufferedImage image;
+  private int imageIndex;
 
-  public BufferedImage getImage() {
-    return image;
+  public int getImageIndex() {
+    return imageIndex;
   }
 
-  public void setImage(BufferedImage image) {
-    this.image = image;
+  public void setImageIndex(int imageIndex) {
+    this.imageIndex = imageIndex;
   }
+  
+  /**
+   * Save original builder information
+   */
+  private SpaceRace originalBuilder;
 
 
   /**
@@ -104,8 +109,9 @@ public class ShipHull {
     this.size = size;
     this.cost = cost;
     this.metalCost = metal;
+    this.originalBuilder = race;
     // Default to Scout image
-    this.image = ShipImages.getByRace(race).getScoutImage();
+    this.imageIndex = ShipImage.SCOUT;
     switch (race) {
     case CENTAURS: {
       // Centaur ships have extra hull point per slot
@@ -122,6 +128,22 @@ public class ShipHull {
       //Default do nothing special
     }
     }
+  }
+
+  /**
+   * Get ship's 64x64 pixel image
+   * @return BufferedImage
+   */
+  public BufferedImage getImage() {
+    return ShipImages.getByRace(originalBuilder).getShipImage(imageIndex);
+  }
+
+  /**
+   * Get ship's 32x32 pixel image
+   * @return BufferedImage
+   */
+  public BufferedImage getSmallImage() {
+    return ShipImages.getByRace(originalBuilder).getSmallShipImage(imageIndex);
   }
 
   public int getIndex() {

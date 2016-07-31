@@ -111,16 +111,19 @@ public class ShipHullFactory {
     if (index == 8) {
       tmp = new ShipHull(index, "Corvette Mk1", 5, 1, ShipHullType.NORMAL,
           ShipSize.SMALL,5,6,race);
+      tmp.setImageIndex(ShipImage.CORVETTE);
       return tmp;
     }
     if (index == 9) {
       tmp = new ShipHull(index, "Medium freighter", 8, 1, ShipHullType.FREIGHTER,
           ShipSize.LARGE,6,12,race);
+      tmp.setImageIndex(ShipImage.MEDIUM_FREIGHTER);
       return tmp;
     }
     if (index == 10) {
       tmp = new ShipHull(index, "Medium starbase", 6, 2, ShipHullType.STARBASE,
           ShipSize.MEDIUM,8,10,race);
+      tmp.setImageIndex(ShipImage.MEDIUM_STARBASE);
       return tmp;
     }
     if (index == 11) {
@@ -132,6 +135,7 @@ public class ShipHullFactory {
     if (index == 12) {
       tmp = new ShipHull(index, "Cruiser", 8, 2, ShipHullType.NORMAL,
           ShipSize.LARGE,8,14,race);
+      tmp.setImageIndex(ShipImage.CRUISER);
       return tmp;
     }
     if (index == 13) {
@@ -157,6 +161,7 @@ public class ShipHullFactory {
     if (index == 17) {
       tmp = new ShipHull(index, "Corvette Mk2", 5, 2, ShipHullType.NORMAL,
           ShipSize.SMALL,6,8,race);
+      tmp.setImageIndex(ShipImage.CORVETTE);
       return tmp;
     }
     if (index == 18) {
@@ -172,6 +177,7 @@ public class ShipHullFactory {
     if (index == 20) {
       tmp = new ShipHull(index, "Scout Mk3", 4, 3, ShipHullType.NORMAL,
           ShipSize.SMALL,8,10,race);
+      tmp.setImageIndex(ShipImage.SCOUT);
       return tmp;
     }
     if (index == 21) {
@@ -187,6 +193,7 @@ public class ShipHullFactory {
     if (index == 23) {
       tmp = new ShipHull(index, "Corvette Mk3", 5, 3, ShipHullType.NORMAL,
           ShipSize.SMALL,9,10,race);
+      tmp.setImageIndex(ShipImage.CORVETTE);
       return tmp;
     }
     if (index == 24) {

@@ -64,11 +64,15 @@ public class ShipImage {
   public static final int PROBE = 3;
   public static final int SMALL_FREIGHTER = 4;
   public static final int SMALL_STARBASE = 5;
+  public static final int CORVETTE = 6;
+  public static final int MEDIUM_STARBASE = 7;
+  public static final int MEDIUM_FREIGHTER = 8;
+  public static final int CRUISER = 9;
   
   /**
    * Must be one bigger than last ship
    */
-  private static final int NUMBER_OF_IMAGES = 6;
+  private static final int NUMBER_OF_IMAGES = 10;
   
   /**
    * Initialize ship images
@@ -91,6 +95,14 @@ public class ShipImage {
     smallShipImages[SMALL_FREIGHTER] = scaleTo32x32(shipImages[SMALL_FREIGHTER]);
     shipImages[SMALL_STARBASE] = image64x64(image,0,1);
     smallShipImages[SMALL_STARBASE] = scaleTo32x32(shipImages[SMALL_STARBASE]);
+    shipImages[CORVETTE] = image64x64(image,1,1);
+    smallShipImages[CORVETTE] = scaleTo32x32(shipImages[CORVETTE]);
+    shipImages[MEDIUM_STARBASE] = image64x64(image,2,1);
+    smallShipImages[MEDIUM_STARBASE] = scaleTo32x32(shipImages[MEDIUM_STARBASE]);
+    shipImages[MEDIUM_FREIGHTER] = image64x64(image,3,1);
+    smallShipImages[MEDIUM_FREIGHTER] = scaleTo32x32(shipImages[MEDIUM_FREIGHTER]);
+    shipImages[CRUISER] = image64x64(image,4,1);
+    smallShipImages[CRUISER] = scaleTo32x32(shipImages[CRUISER]);
   }
   
   private BufferedImage image64x64(BufferedImage image, int x, int y) throws

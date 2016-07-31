@@ -79,4 +79,11 @@ public class Fleet {
     this.y = y;
   }
 
+  /**
+   * Get first ship from the fleet
+   * @return Ship
+   */
+  public Ship getFirstShip() {
+    return ships.get(0);
+  }
 }

@@ -3,12 +3,14 @@ package org.openRealmOfStars.starMap;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
@@ -98,6 +100,11 @@ public class StarMap {
    * Game turn
    */
   private int turn;
+  
+  /**
+   * Fleet tiles on map
+   */
+  private FleetTileInfo[][] fleetTiles;
   /**
    * Constructor for StarMap. Generates universum with default settings.
    * @param maxXSize
@@ -111,6 +118,7 @@ public class StarMap {
     drawY = 0;
     tiles = new int[maxX][maxY];
     tileInfo = new SquareInfo[maxX][maxY];
+    fleetTiles = new FleetTileInfo[maxX][maxY];
     sunList = new ArrayList<>();
     planetList = new ArrayList<>();
     Tile empty = Tiles.getTileByName(TileNames.EMPTY);
@@ -361,6 +369,30 @@ public class StarMap {
     return tiles;
   }
 
+  /**
+   * Get the fleet tiles from the map.
+   * These fleet positions are always calculated
+   * @return FleetTiles
+   */
+  public FleetTileInfo[][] getFleetTiles() {
+    for (int x=0;x<maxX;x++) {
+      for (int y=0;y<maxY;y++) {
+        fleetTiles[x][y] = null;
+      }
+    }
+    for (int i=0;i<players.getCurrentMaxPlayers();i++) {
+      PlayerInfo player = players.getPlayerInfoByIndex(i);
+      for (int j=0;j<player.Fleets().getNumberOfFleets();j++) {
+        Fleet fleet = player.Fleets().getByIndex(j);
+        FleetTileInfo info = new FleetTileInfo(
+            fleet.getFirstShip().getHull().getRace(), 
+            fleet.getFirstShip().getHull().getImageIndex());
+        fleetTiles[fleet.getX()][fleet.getY()] = info;
+      }
+    }
+    return fleetTiles;
+  }
+  
   /**
    * Get cursor X coordinate
    * @return X coordinate

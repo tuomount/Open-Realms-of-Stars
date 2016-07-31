@@ -182,6 +182,14 @@ public class ShipHull {
     return metalCost;
   }
   
+  /**
+   * Get the race whom built this ship
+   * @return SpaceRace
+   */
+  public SpaceRace getRace() {
+    return originalBuilder;
+  }
+  
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

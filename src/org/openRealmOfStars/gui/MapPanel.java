@@ -10,9 +10,11 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -241,6 +243,8 @@ public class MapPanel extends JPanel {
       flickerGoUp = true;
     }
 
+    FleetTileInfo[][] fleetMap = starMap.getFleetTiles();
+    
     int[][] map = starMap.getTiles();
     int pixelX = viewPointOffsetX;
     int pixelY = viewPointOffsetY;
@@ -284,6 +288,14 @@ public class MapPanel extends JPanel {
           // Draw only non empty tiles
           tile.draw(gr, pixelX, pixelY);
         }
+        
+        if (fleetMap[i+cx][j+cy] != null) {
+          BufferedImage img = ShipImages.getByRace(
+              fleetMap[i+cx][j+cy].getRace()).getSmallShipImage(
+                  fleetMap[i+cx][j+cy].getImageIndex());
+          gr.drawImage(img, pixelX, pixelY, null);
+        }
+        
         if (tile.getName().equals(TileNames.SUN_E) && i > -viewPointX+1) {
           Sun sun = starMap.getSunByCoordinate(i+cx, j+cy);
           if (sun != null) {

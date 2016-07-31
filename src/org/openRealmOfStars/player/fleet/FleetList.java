@@ -107,4 +107,16 @@ public class FleetList {
     return null;
   }
 
+  /**
+   * Get by index fleet from the list
+   * @param index
+   * @return Fleet or null if list contains no fleets
+   */
+  public Fleet getByIndex(int i) {
+    if (fleetList.size() > 0 && i >= 0 && i <fleetList.size()) {
+      return fleetList.get(i);
+    }
+    return null;
+  }
+
 }

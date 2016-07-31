@@ -37,6 +37,10 @@ public class GameKeyAdapter implements KeyEventDispatcher {
   public boolean dispatchKeyEvent(KeyEvent arg0) {
     if (game.gameState == GameState.STARMAP && game.starMapView != null) {
      // Star Map Keys
+      if (arg0.getKeyCode() == KeyEvent.VK_R && 
+          arg0.getID() == KeyEvent.KEY_PRESSED) {
+        game.starMapView.getStarMapMouseListener().setRoutePlanning(true);
+      }
      if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE &&
         arg0.getID() == KeyEvent.KEY_PRESSED) {
        game.changeGameState(GameState.MAIN_MENU);

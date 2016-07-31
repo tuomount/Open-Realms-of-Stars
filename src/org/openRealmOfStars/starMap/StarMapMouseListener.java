@@ -52,6 +52,11 @@ public class StarMapMouseListener extends MouseAdapter implements
   private MapInfoPanel mapInfoPanel;
   
   /**
+   * Is route being planned
+   */
+  private boolean routePlanning;
+
+  /**
    * Constructor for StarMap Mouse Listener
    * @param starMap StarMap which to use.
    * @param panel Map Panel where Star Map is being drawn.
@@ -123,6 +128,14 @@ public class StarMapMouseListener extends MouseAdapter implements
           mapPanel.getViewPointX(),mapPanel.getViewPointY());
       if (!coord.isOutOfPanel()) {
         starMap.setCursorPos(coord.getMapX(), coord.getMapY());
+        if (routePlanning && lastClickedFleet != null) {
+          Route route = new Route(lastClickedFleet.getX(), lastClickedFleet.getY(),
+              coord.getMapX(), coord.getMapY(), lastClickedFleet.getFleetFtlSpeed());
+          mapPanel.setRoute(route);
+        } else {
+          routePlanning = false;
+          mapPanel.setRoute(null);
+        }
         boolean tempBorder = false;
         if (coord.getRelativeX() == mapPanel.getViewPointX()) {
           tempBorder = true;
@@ -193,6 +206,14 @@ public class StarMapMouseListener extends MouseAdapter implements
     this.lastClickedFleet = lastClickedFleet;
   }
 
-  
+  public boolean isRoutePlanning() {
+    return routePlanning;
+  }
+
+
+  public void setRoutePlanning(boolean routePlanning) {
+    this.routePlanning = routePlanning;
+  }
+
   
 }

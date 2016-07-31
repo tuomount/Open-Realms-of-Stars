@@ -15,6 +15,7 @@ import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.ship.ShipImages;
+import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -104,6 +105,11 @@ public class MapPanel extends JPanel {
    */
   private int lastDrawnCenterY;
   
+  /**
+   * Route to draw
+   */
+  private Route route;
+  
 
   public MapPanel() {
     screen = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
@@ -114,6 +120,7 @@ public class MapPanel extends JPanel {
     this.setMaximumSize(size);
     calculateViewPoints();
     this.setBackground(Color.black);
+    setRoute(null);
   }
   
 
@@ -193,6 +200,10 @@ public class MapPanel extends JPanel {
       } else {
         return;
       }
+    }
+    byte[][] routeData = null;
+    if (route != null) {
+      routeData = route.getRouteOnMap(starMap.getMaxX(), starMap.getMaxY());
     }
     Graphics2D gr = screen.createGraphics();
     // Center coordinates
@@ -347,6 +358,11 @@ public class MapPanel extends JPanel {
                 getOrderNumber()), pixelX+Tile.MAX_WIDTH/2-textWidth/2, pixelY+Tile.MAX_HEIGHT/2);
           
         }
+        if (routeData != null) {
+          if (routeData[i+cx][j+cy]==1) {
+            gr.drawImage(Route.getRouteDot(), pixelX, pixelY, null);
+          }
+        }
         pixelX=pixelX+Tile.MAX_WIDTH;
       }
       pixelX = viewPointOffsetX;
@@ -377,5 +393,17 @@ public class MapPanel extends JPanel {
   public int getViewPointY() {
     return viewPointY;
   }
+
+
+  public Route getRoute() {
+    return route;
+  }
+
+
+  public void setRoute(Route route) {
+    this.route = route;
+  }
+
+
 
 }

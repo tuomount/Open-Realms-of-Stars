@@ -50,6 +50,11 @@ public class Fleet {
   private String name;
   
   /**
+   * How many moves fleet has left
+   */
+  public int movesLeft;
+  
+  /**
    * Constructor for fleet
    */
   public Fleet(Ship firstShip,int x, int y) {

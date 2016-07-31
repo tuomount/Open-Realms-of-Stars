@@ -6,6 +6,7 @@ import java.awt.event.MouseMotionListener;
 
 import org.openRealmOfStars.gui.MapPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
 
@@ -80,6 +81,13 @@ public class StarMapMouseListener extends MouseAdapter implements
   private Planet lastClickedPlanet;
   
   /**
+   * Last clicked fleet
+   * This is fleet which was last clicked, null if empty space or
+   * other was clicked
+   */
+  private Fleet lastClickedFleet;
+  
+  /**
    * Update drawing coordinates if mouse cursor is on map border
    */
   public void updateScrollingIfOnBorder() {
@@ -140,9 +148,17 @@ public class StarMapMouseListener extends MouseAdapter implements
     if (!coord.isOutOfPanel()) {
       Planet planet = starMap.getPlanetByCoordinate(coord.getMapX(),
                                                     coord.getMapY());
-      if (planet != null) {
+      Fleet fleet = starMap.getFleetByCoordinate(coord.getMapX(), coord.getMapY());
+      if (lastClickedPlanet == planet && fleet != null) {
+        mapInfoPanel.showFleet(fleet);
+        setLastClickedFleet(fleet);
+        setLastClickedPlanet(null);
+      } else if (planet != null) {
         mapInfoPanel.showPlanet(planet);
         setLastClickedPlanet(planet);
+      } else if(fleet != null) {
+        mapInfoPanel.showFleet(fleet);
+        setLastClickedFleet(fleet);
       } else {
         mapInfoPanel.showEmpty();
         setLastClickedPlanet(null);
@@ -163,6 +179,18 @@ public class StarMapMouseListener extends MouseAdapter implements
    */
   public void setLastClickedPlanet(Planet lastClickedPlanet) {
     this.lastClickedPlanet = lastClickedPlanet;
+  }
+
+
+
+  public Fleet getLastClickedFleet() {
+    return lastClickedFleet;
+  }
+
+
+
+  public void setLastClickedFleet(Fleet lastClickedFleet) {
+    this.lastClickedFleet = lastClickedFleet;
   }
 
   

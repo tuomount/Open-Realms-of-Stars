@@ -45,6 +45,11 @@ public class GameCommands {
   public static final String COMMAND_VIEW_PLANET = "ViewPlanetCommand";
 
   /**
+   * View fleet command
+   */
+  public static final String COMMAND_VIEW_FLEET = "ViewFleet";
+
+  /**
    * View Star map
    */
   public static final String COMMAND_VIEW_STARMAP = "ViewStarMap";

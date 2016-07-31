@@ -38,14 +38,30 @@ public class FleetTileInfo {
   private int imageIndex;
   
   /**
+   * Player which has fleet on that position
+   */
+  private int playerIndex;
+
+  /**
+   * fleet index
+   */
+  private int fleetIndex;
+
+  /**
    * Constructor for Fleet Tile info
    * @param race Space Race information
    * @param index Ship's image index
+   * @param playerIndex player index
+   * @param fleetIndex player's fleet index
    */
-  public FleetTileInfo(SpaceRace race, int index) {
+  public FleetTileInfo(SpaceRace race, int index, int playerIndex,int fleetIndex) {
     this.race = race;
     this.imageIndex = index;
+    this.playerIndex = playerIndex;
+    this.setFleetIndex(fleetIndex);
   }
+  
+  
 
   public SpaceRace getRace() {
     return race;
@@ -61,6 +77,30 @@ public class FleetTileInfo {
 
   public void setImageIndex(int imageIndex) {
     this.imageIndex = imageIndex;
+  }
+
+
+
+  public int getPlayerIndex() {
+    return playerIndex;
+  }
+
+
+
+  public void setPlayerIndex(int playerIndex) {
+    this.playerIndex = playerIndex;
+  }
+
+
+
+  public int getFleetIndex() {
+    return fleetIndex;
+  }
+
+
+
+  public void setFleetIndex(int fleetIndex) {
+    this.fleetIndex = fleetIndex;
   }
 
   

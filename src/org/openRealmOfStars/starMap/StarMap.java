@@ -401,7 +401,7 @@ public class StarMap {
         Fleet fleet = player.Fleets().getByIndex(j);
         FleetTileInfo info = new FleetTileInfo(
             fleet.getFirstShip().getHull().getRace(), 
-            fleet.getFirstShip().getHull().getImageIndex());
+            fleet.getFirstShip().getHull().getImageIndex(),i,j);
         fleetTiles[fleet.getX()][fleet.getY()] = info;
       }
     }
@@ -491,6 +491,23 @@ public class StarMap {
       SquareInfo info = tileInfo[x][y];
       if (info.getType() == SquareInfo.TYPE_PLANET) {
         return planetList.get(info.getValue());
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Get Fleet by coordinates. If not found then null is returned.
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @return Fleet or null
+   */
+  public Fleet getFleetByCoordinate(int x, int y) {
+    if (isValidCoordinate(x, y) && fleetTiles != null) {
+      if (fleetTiles[x][y] != null) {
+        int playerIndex = fleetTiles[x][y].getPlayerIndex();
+        int fleetIndex = fleetTiles[x][y].getFleetIndex();
+        return players.getPlayerInfoByIndex(playerIndex).Fleets().getByIndex(fleetIndex);
       }
     }
     return null;

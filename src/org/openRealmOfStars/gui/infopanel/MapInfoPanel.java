@@ -17,6 +17,7 @@ import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -64,6 +65,11 @@ public class MapInfoPanel extends InfoPanel {
    */
   private Planet planet;
   
+  /**
+   * Show info about the fleet
+   */
+  private Fleet fleet;
+  
   public MapInfoPanel(ActionListener listener) {
     this.add(Box.createRigidArea(new Dimension(130,50)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH*2, Tile.MAX_HEIGHT*2,
@@ -71,6 +77,7 @@ public class MapInfoPanel extends InfoPanel {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     imageLabel = new ImageLabel(img, true);
     imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    imageLabel.setFillColor(Color.black);
     Graphics2D g2d = img.createGraphics();
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
@@ -95,14 +102,26 @@ public class MapInfoPanel extends InfoPanel {
    */
   public void showPlanet(Planet planet) {
     this.planet = planet;
+    this.fleet = null;
     updatePanel();
   }
-  
+
+  /**
+   * Show fleet on info panel
+   * @param fleet
+   */
+  public void showFleet(Fleet fleet) {
+    this.planet = null;
+    this.fleet = fleet;
+    updatePanel();
+  }
+
   /**
    * Show empty planet
    */
   public void showEmpty() {
     this.planet = null;
+    this.fleet = null;
     updatePanel();
   }
   
@@ -111,7 +130,7 @@ public class MapInfoPanel extends InfoPanel {
    */
   public void updatePanel() {
     if (planet != null) {
-      BufferedImage img = imageLabel.getImage();
+      BufferedImage img = new BufferedImage(64, 64, BufferedImage.TYPE_4BYTE_ABGR);
       Tile tile = Tiles.getTileByIndex(planet.getPlanetImageIndex());
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
@@ -150,9 +169,16 @@ public class MapInfoPanel extends InfoPanel {
       setTitle(planet.getName());
       textArea.setText(planet.generateInfoText());
       this.repaint();
-    } else {
+    } else if (fleet != null) {
+      BufferedImage img = new BufferedImage(64, 64, BufferedImage.TYPE_4BYTE_ABGR);
+      Graphics2D g2d = img.createGraphics();
+      g2d.setColor(Color.black);
+      g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
+      imageLabel.setImage(fleet.getFirstShip().getHull().getImage());
+      this.repaint();
+    }else {
       setTitle("Galactic info");
-      BufferedImage img = imageLabel.getImage();
+      BufferedImage img = new BufferedImage(64, 64, BufferedImage.TYPE_4BYTE_ABGR);
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());

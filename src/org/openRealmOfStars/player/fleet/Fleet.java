@@ -45,12 +45,18 @@ public class Fleet {
   private int y;
   
   /**
+   * Fleet name
+   */
+  private String name;
+  
+  /**
    * Constructor for fleet
    */
   public Fleet(Ship firstShip,int x, int y) {
     ships = new ArrayList<>();
     ships.add(firstShip);
     setPos(x, y);
+    setName("Fleet #-1");
   }
   
   /**
@@ -85,5 +91,13 @@ public class Fleet {
    */
   public Ship getFirstShip() {
     return ships.get(0);
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 }

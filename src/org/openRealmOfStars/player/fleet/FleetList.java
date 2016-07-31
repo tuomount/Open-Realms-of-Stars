@@ -48,6 +48,7 @@ public class FleetList {
    */
   public void add(Fleet fleet) {
     fleetList.add(fleet);
+    fleet.setName("Fleet #"+(fleetList.size()-1));
   }
   
   /**

@@ -42,9 +42,13 @@ public enum MessageType {
    */
   POPULATION,
   /**
-   * Planetary informat, focus to planet
+   * Planetary information, focus to planet
    */
-  PLANETARY;
+  PLANETARY,
+  /**
+   * Fleet information, focus to fleet
+   */
+  FLEET;
 
   
   /**
@@ -58,6 +62,7 @@ public enum MessageType {
     case INFORMATION: return 2;
     case POPULATION: return 3;
     case PLANETARY: return 4;
+    case FLEET: return 5;
     }
     return 0;
   }
@@ -74,6 +79,7 @@ public enum MessageType {
     case 2: return MessageType.INFORMATION;
     case 3: return MessageType.POPULATION;
     case 4: return MessageType.PLANETARY;
+    case 5: return MessageType.FLEET;
     }
     return MessageType.RESEARCH;
   }
@@ -87,6 +93,7 @@ public enum MessageType {
     case INFORMATION:  return "Information";
     case POPULATION:   return "Population";
     case PLANETARY:    return "Planetary";
+    case FLEET:    return "Fleet";
     }
     return "Error - Unknown";
 

@@ -13,6 +13,8 @@ import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -303,6 +305,19 @@ public class StarMap {
               planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
               planet.setWorkers(Planet.CULTURE_ARTIST, 0);
             }
+            ShipStat[] stats = playerInfo.getShipStatList();
+            for (ShipStat stat : stats) {
+              Ship ship = new Ship(stat.getDesign());
+              Fleet fleet = new Fleet(ship, planet.getX(), planet.getY());
+              playerInfo.Fleets().add(fleet);
+              msg = new Message(MessageType.FLEET,
+                  fleet.getName()+" is waiting for orders.",
+                  Icons.getIconByName(Icons.ICON_HULL_TECH));
+              msg.setCoordinate(planet.getX(),planet.getY());
+              msg.setMatchByString(fleet.getName());
+              playerInfo.getMsgList().addNewMessage(msg);
+            }
+            
           }
         }
         planetList.add(planet);

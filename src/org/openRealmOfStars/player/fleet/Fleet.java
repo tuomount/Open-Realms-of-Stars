@@ -105,4 +105,58 @@ public class Fleet {
   public void setName(String name) {
     this.name = name;
   }
+  
+  /**
+   * Get Fleet speed
+   * @return Speed
+   */
+  public int getFleetSpeed() {
+    int speed = 999;
+    for (Ship ship : ships) {
+      int shipSpeed = ship.getSpeed();
+      if (shipSpeed < speed) {
+        speed = shipSpeed;
+      }
+    }
+    if (speed == 999) {
+      speed = 0;
+    }
+    return speed;
+  }
+  
+  /**
+   * Get Fleet FTL speed
+   * @return Speed
+   */
+  public int getFleetFtlSpeed() {
+    int speed = 999;
+    for (Ship ship : ships) {
+      int shipSpeed = ship.getFtlSpeed();
+      if (shipSpeed < speed) {
+        speed = shipSpeed;
+      }
+    }
+    if (speed == 999) {
+      speed = 0;
+    }
+    return speed;
+  }
+  
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(name);
+    sb.append("\n");
+    sb.append("Speed: ");
+    sb.append(getFleetSpeed());
+    sb.append(" FTL: ");
+    sb.append(getFleetFtlSpeed());
+    sb.append("\n");
+    for (Ship ship : ships) {
+      sb.append(ship.getName());
+      sb.append("\n");
+    }
+    return sb.toString();
+  }
+
 }

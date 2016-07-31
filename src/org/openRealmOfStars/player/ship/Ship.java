@@ -84,6 +84,89 @@ public class Ship extends Construction {
   }
   
   /**
+   * Check if certain component has energy or not. Returns true if component has
+   * energy. This also checks that component is functional.
+   * @param index Component index
+   * @return true if has energy
+   */
+  public boolean hasComponentEnergy(int index) {
+    int energy = getTotalEnergy();
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0 && comp.getEnergyResource()>0) {
+        energy = energy -comp.getEnergyResource();
+      }
+      if (index == i && energy >= 0) {
+        return true;
+      }
+      if (index == i && energy < 0) {
+        return false;
+      }
+    }    
+    return false;
+  }
+  
+  /**
+   * Get total energy form current component status
+   * @return Total energy
+   */
+  public int getTotalEnergy() {
+    int energy = 0;
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0 && comp.getEnergyResource()>0) {
+        energy = energy +comp.getEnergyResource();
+      }
+    }
+    return energy;
+  }
+  
+  /**
+   * Get Speed depending on hullpoints and energy level
+   * @return Speed
+   */
+  public int getSpeed() {
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.ENGINE
+          && hasComponentEnergy(i)) {
+        return comp.getSpeed();
+      }
+    }
+    return 0;
+  }
+
+  /**
+   * Get tactic Speed depending on hullpoints and energy level
+   * @return Speed
+   */
+  public int getTacticSpeed() {
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.ENGINE
+          && hasComponentEnergy(i)) {
+        return comp.getTacticSpeed();
+      }
+    }
+    return 0;
+  }
+
+  /**
+   * Get FTL Speed depending on hullpoints and energy level
+   * @return Speed
+   */
+  public int getFtlSpeed() {
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.ENGINE
+          && hasComponentEnergy(i)) {
+        return comp.getFtlSpeed();
+      }
+    }
+    return 0;
+  }
+
+  /**
    * Get number of components in ship's component list
    * @return number of components
    */

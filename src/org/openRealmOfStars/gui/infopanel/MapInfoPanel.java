@@ -175,6 +175,8 @@ public class MapInfoPanel extends InfoPanel {
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
       imageLabel.setImage(fleet.getFirstShip().getHull().getImage());
+      setTitle(fleet.getName());
+      textArea.setText(fleet.toString());
       this.repaint();
     }else {
       setTitle("Galactic info");

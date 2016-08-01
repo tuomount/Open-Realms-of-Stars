@@ -111,9 +111,12 @@ public class Route {
    * Move a bit closed to end
    */
   public void makeNextMove() {
-    if (endX != startX && endY != startY) {
-      startX = startX +mx;
-      startY = startY +my;
+    for (int i=0;i<ftlSpeed;i++) {
+      if (distance > 0) {
+        startX = startX +mx;
+        startY = startY +my;
+        distance--;
+      }
     }
   }
   
@@ -139,15 +142,31 @@ public class Route {
     byte result[][] = new byte[maxX][maxY];
     double sx = startX;
     double sy = startY;
-    for (int i=0;i<distance;i++) {
+    for (int i=0;i<distance+1;i++) {
       if (sx >= 0 && sy >= 0 && sx < maxX && sy < maxY) {
-        result[(int)sx][(int)sy] = 1;
+        result[(int)Math.round(sx)][(int)Math.round(sy)] = 1;
       }
       sx = sx +mx;
       sy = sy +my;
       
     }
     return result;
+  }
+
+  /**
+   * Get current position for X coordinate
+   * @return X coordinate
+   */
+  public int getX() {
+    return (int) Math.round(startX);
+  }
+
+  /**
+   * Get current position for Y coordinate
+   * @return Y coordinate
+   */
+  public int getY() {
+    return (int) Math.round(startY);
   }
 
   /**

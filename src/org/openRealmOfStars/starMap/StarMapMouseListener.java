@@ -159,6 +159,11 @@ public class StarMapMouseListener extends MouseAdapter implements
         mapPanel.getLastDrawnY(),e.getX(),e.getY(),mapPanel.getOffsetX(),mapPanel.getOffsetY(),
         mapPanel.getViewPointX(),mapPanel.getViewPointY());
     if (!coord.isOutOfPanel()) {
+      if (getLastClickedFleet() != null && mapPanel.getRoute() != null) {
+        getLastClickedFleet().setRoute(mapPanel.getRoute());
+        mapPanel.setRoute(null);
+        routePlanning = false;
+      }
       Planet planet = starMap.getPlanetByCoordinate(coord.getMapX(),
                                                     coord.getMapY());
       Fleet fleet = starMap.getFleetByCoordinate(coord.getMapX(), coord.getMapY());

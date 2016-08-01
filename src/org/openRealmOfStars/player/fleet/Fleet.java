@@ -3,6 +3,7 @@ package org.openRealmOfStars.player.fleet;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.starMap.Route;
 
 /**
  * 
@@ -55,6 +56,11 @@ public class Fleet {
   public int movesLeft;
   
   /**
+   * Route for fleet to move with FLT speed
+   */
+  private Route route;
+  
+  /**
    * Constructor for fleet
    */
   public Fleet(Ship firstShip,int x, int y) {
@@ -62,6 +68,7 @@ public class Fleet {
     ships.add(firstShip);
     setPos(x, y);
     setName("Fleet #-1");
+    setRoute(null);
   }
   
   /**
@@ -157,6 +164,14 @@ public class Fleet {
       sb.append("\n");
     }
     return sb.toString();
+  }
+
+  public Route getRoute() {
+    return route;
+  }
+
+  public void setRoute(Route route) {
+    this.route = route;
   }
 
 }

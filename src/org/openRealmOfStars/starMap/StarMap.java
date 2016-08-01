@@ -535,6 +535,29 @@ public class StarMap {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null) {
         info.getMsgList().clearMessages();
+        for (int j = 0;j<info.Fleets().getNumberOfFleets();j++) {
+          Fleet fleet = info.Fleets().getByIndex(j);
+          if (fleet.getRoute() != null) {
+            fleet.getRoute().makeNextMove();
+            fleet.setPos(fleet.getRoute().getX(), fleet.getRoute().getY());
+            if (fleet.getRoute().isEndReached()) {
+              fleet.setRoute(null);
+              Message msg = new Message(MessageType.FLEET,
+                  fleet.getName()+" has reached it's target and waiting for orders.",
+                  Icons.getIconByName(Icons.ICON_HULL_TECH));
+              msg.setMatchByString(fleet.getName());
+              msg.setCoordinate(fleet.getX(), fleet.getY());
+              info.getMsgList().addNewMessage(msg);
+            }
+          } else {
+            Message msg = new Message(MessageType.FLEET,
+                fleet.getName()+" is waiting for orders.",
+                Icons.getIconByName(Icons.ICON_HULL_TECH));
+            msg.setMatchByString(fleet.getName());
+            msg.setCoordinate(fleet.getX(), fleet.getY());
+            info.getMsgList().addNewMessage(msg);
+          }
+        }
       }
     }
     for (int i=0;i<planetList.size();i++) {

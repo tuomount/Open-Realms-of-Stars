@@ -58,10 +58,10 @@ public class ShipImages {
   private static void initImages() {
     humans = new ShipImage("humanships.png");
     mechions = new ShipImage("mechionships.png");
+    centaurs = new ShipImage("centaurships.png");
     // FIXME: Need to create ships for other races too
     sporks = new ShipImage("humanships.png");
     greyans = new ShipImage("humanships.png");
-    centaurs = new ShipImage("humanships.png");
   }
   
   /**

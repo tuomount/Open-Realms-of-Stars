@@ -349,6 +349,28 @@ public class Game extends JFrame implements ActionListener {
             msg.getType() == MessageType.POPULATION) {
           changeGameState(GameState.PLANETVIEW, msg);
         }
+      } else if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_TARGET)) {
+        if (starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+          Fleet fleet = players.getCurrentPlayerInfo().Fleets().getPrev();
+          if (fleet != null) {
+            starMap.setCursorPos(fleet.getX(), fleet.getY());
+            starMap.setDrawPos(fleet.getX(), fleet.getY());
+            starMapView.setShowFleet(fleet);
+            starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
+            starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
+          }          
+        }
+      } else if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_TARGET)) {
+        if (starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+          Fleet fleet = players.getCurrentPlayerInfo().Fleets().getNext();
+          if (fleet != null) {
+            starMap.setCursorPos(fleet.getX(), fleet.getY());
+            starMap.setDrawPos(fleet.getX(), fleet.getY());
+            starMapView.setShowFleet(fleet);
+            starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
+            starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
+          }          
+        }
       } else {
         starMapView.handleActions(arg0);
       }

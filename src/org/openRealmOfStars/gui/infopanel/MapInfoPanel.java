@@ -11,9 +11,12 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
+import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
@@ -74,14 +77,27 @@ public class MapInfoPanel extends InfoPanel {
     this.add(Box.createRigidArea(new Dimension(130,50)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH*2, Tile.MAX_HEIGHT*2,
         BufferedImage.TYPE_4BYTE_ABGR);
+    InvisiblePanel invis = new InvisiblePanel(this);
+    invis.setLayout(new BoxLayout(invis, BoxLayout.X_AXIS));    
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    IconButton iBtn = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_LEFT),
+        Icons.getIconByName(Icons.ICON_SCROLL_LEFT_PRESSED), false, 
+        GameCommands.COMMAND_PREV_TARGET,this);
+    iBtn.addActionListener(listener);
+    invis.add(iBtn);
     imageLabel = new ImageLabel(img, true);
     imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
     imageLabel.setFillColor(Color.black);
     Graphics2D g2d = img.createGraphics();
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
-    this.add(imageLabel);
+    invis.add(imageLabel);
+    iBtn = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_RIGHT),
+        Icons.getIconByName(Icons.ICON_SCROLL_RIGHT_PRESSED), false, 
+        GameCommands.COMMAND_NEXT_TARGET,this);
+    iBtn.addActionListener(listener);
+    invis.add(iBtn);
+    this.add(invis);
     this.add(Box.createRigidArea(new Dimension(10,10)));
     textArea = new InfoTextArea();
     textArea.setEditable(false);

@@ -213,6 +213,16 @@ public class GameCommands {
   public static final String COMMAND_NEXT_MSG = "NextMessage";
 
   /**
+   * Prev planet/ship command
+   */
+  public static final String COMMAND_PREV_TARGET = "PrevPlanet/Ship";
+  
+  /**
+   * Next planet/ship command
+   */
+  public static final String COMMAND_NEXT_TARGET = "NextPlanet/Ship";
+
+  /**
    * Focus Message command
    */
   public static final String COMMAND_FOCUS_MSG = "FocusMessage";

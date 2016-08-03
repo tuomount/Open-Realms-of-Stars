@@ -85,6 +85,15 @@ public class BigImagePanel extends JPanel {
    */
   private void drawBoldText(Graphics g,Color border, Color center, int x, 
       int y, String text) {
+    g.setColor(Color.black);
+    g.drawString(text, x+2, y);
+    g.drawString(text, x-2, y);
+    g.drawString(text, x, y+2);
+    g.drawString(text, x, y-2);
+    g.drawString(text, x-1, y-1);
+    g.drawString(text, x+1, y-1);
+    g.drawString(text, x+1, y+1);
+    g.drawString(text, x-1, y+1);
     g.setColor(border);
     g.drawString(text, x+1, y);
     g.drawString(text, x-1, y);

@@ -69,7 +69,11 @@ public class BigImagePanel extends JPanel {
     super();
     this.setBackground(Color.black);
     this.planet = planet;
-    backgroundImg = Planet.PLANET_BIG_IMAGES[this.planet.getPlanetType()];
+    if (this.planet != null) {
+      backgroundImg = Planet.PLANET_BIG_IMAGES[this.planet.getPlanetType()];
+    } else {
+      backgroundImg = null;
+    }
     drawStarField = starField;
     this.title = title;
   }
@@ -106,7 +110,7 @@ public class BigImagePanel extends JPanel {
 
   private void drawTextArea(Graphics g) {
     g.setFont(GuiStatics.getFontCubellan());
-    if (title == null) {
+    if (title == null && planet != null) {
       StringBuilder sb = new StringBuilder(planet.generateInfoText());
       int lastSpace = -1;
       int rowLen = 0;
@@ -155,11 +159,18 @@ public class BigImagePanel extends JPanel {
           GuiStatics.COLOR_COOL_SPACE_BLUE_TRANS, 25, this.getHeight()/2+i*15, texts[i]);
       }
     } else {
+      if (title == null) {
+        title = "In Deep Space...";
+      }
       g.setFont(GuiStatics.getFontCubellanBoldBig());
-      int offsetX = (this.getWidth()-backgroundImg.getWidth())/2-
+      int offsetX = 50;
+      int offsetY = 75;
+      if (backgroundImg != null) {
+        offsetX = (this.getWidth()-backgroundImg.getWidth())/2-
           GuiStatics.getTextWidth(GuiStatics.getFontCubellanBoldBig(), title)/2+
           backgroundImg.getWidth()/2;
-      int offsetY = (575-backgroundImg.getHeight())/2;
+        offsetY = (575-backgroundImg.getHeight())/2;
+      }
       drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK,
           GuiStatics.COLOR_COOL_SPACE_BLUE, offsetX, offsetY, title);
       
@@ -170,23 +181,31 @@ public class BigImagePanel extends JPanel {
   @Override
   public void paint(Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
-    int sx = planet.getName().length()*(planet.getRadiationLevel()-1)*3;
-    int sy = planet.getName().length()*(planet.getGroundSize()-7)*3;
+    int sx = 0;
+    int sy = 0;
+    if (planet != null) {
+      sx = planet.getName().length()*(planet.getRadiationLevel()-1)*3;
+      sy = planet.getName().length()*(planet.getGroundSize()-7)*3;
+    }
     if (drawStarField) {
       g2d.drawImage(GuiStatics.starFieldImage,-sx,-sy,null);
     } else {
       this.setBackground(Color.black);
       g2d.fillRect(0,0, this.getWidth(), this.getHeight());
     }
-    if (title == null) {
-      int offsetX = (575-backgroundImg.getWidth())/2;
-      int offsetY = (575-backgroundImg.getHeight())/2;
-      g2d.drawImage(backgroundImg,offsetX,offsetY,null);
+    if (backgroundImg != null) {
+      if (title == null) {
+        int offsetX = (575-backgroundImg.getWidth())/2;
+        int offsetY = (575-backgroundImg.getHeight())/2;
+        g2d.drawImage(backgroundImg,offsetX,offsetY,null);
+      } else {
+        g2d.drawImage(GuiStatics.nebulaeImage,-sx,-sy,null);
+        int offsetX = (this.getWidth()-backgroundImg.getWidth())/2;
+        int offsetY = (575-backgroundImg.getHeight())/2;
+        g2d.drawImage(backgroundImg,offsetX,offsetY,null);      
+      }
     } else {
       g2d.drawImage(GuiStatics.nebulaeImage,-sx,-sy,null);
-      int offsetX = (this.getWidth()-backgroundImg.getWidth())/2;
-      int offsetY = (575-backgroundImg.getHeight())/2;
-      g2d.drawImage(backgroundImg,offsetX,offsetY,null);      
     }
     
     drawTextArea(g);

@@ -73,6 +73,11 @@ public class MapInfoPanel extends InfoPanel {
    */
   private Fleet fleet;
   
+  /**
+   * View planet or fleet
+   */
+  private SpaceButton viewBtn;
+  
   public MapInfoPanel(ActionListener listener) {
     this.add(Box.createRigidArea(new Dimension(130,50)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH*2, Tile.MAX_HEIGHT*2,
@@ -103,13 +108,13 @@ public class MapInfoPanel extends InfoPanel {
     textArea.setEditable(false);
     textArea.setLineWrap(true);
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
-    SpaceButton btn = new SpaceButton("View planet", 
+    viewBtn = new SpaceButton("View planet", 
         GameCommands.COMMAND_VIEW_PLANET);
-    btn.addActionListener(listener);
+    viewBtn.addActionListener(listener);
     this.add(textArea);
-    btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    viewBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
     this.add(Box.createRigidArea(new Dimension(10,10)));
-    this.add(btn);
+    this.add(viewBtn);
   }
   
   /**
@@ -119,6 +124,9 @@ public class MapInfoPanel extends InfoPanel {
   public void showPlanet(Planet planet) {
     this.planet = planet;
     this.fleet = null;
+    this.viewBtn.setEnabled(true);
+    this.viewBtn.setText("View planet");
+    this.viewBtn.setActionCommand(GameCommands.COMMAND_VIEW_PLANET);
     updatePanel();
   }
 
@@ -129,6 +137,9 @@ public class MapInfoPanel extends InfoPanel {
   public void showFleet(Fleet fleet) {
     this.planet = null;
     this.fleet = fleet;
+    this.viewBtn.setEnabled(true);
+    this.viewBtn.setText("View fleet");
+    this.viewBtn.setActionCommand(GameCommands.COMMAND_VIEW_FLEET);
     updatePanel();
   }
 
@@ -138,6 +149,7 @@ public class MapInfoPanel extends InfoPanel {
   public void showEmpty() {
     this.planet = null;
     this.fleet = null;
+    this.viewBtn.setEnabled(false);
     updatePanel();
   }
   

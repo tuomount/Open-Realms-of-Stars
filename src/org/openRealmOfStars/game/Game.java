@@ -10,6 +10,7 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 
 import org.openRealmOfStars.game.States.CreditsView;
+import org.openRealmOfStars.game.States.FleetView;
 import org.openRealmOfStars.game.States.MainMenu;
 import org.openRealmOfStars.game.States.PlanetView;
 import org.openRealmOfStars.game.States.ResearchView;
@@ -97,6 +98,11 @@ public class Game extends JFrame implements ActionListener {
   public PlanetView planetView;
 
   /**
+   * Fleet view Panel and handling the fleet
+   */
+  public FleetView fleetView;
+
+  /**
    * Main menu for the game
    */
   public MainMenu mainMenu;
@@ -174,6 +180,18 @@ public class Game extends JFrame implements ActionListener {
     planetView = new PlanetView(planet, this);
     this.getContentPane().removeAll();
     this.add(planetView);
+    this.validate();
+  }
+
+  /**
+   * Show fleet view panel
+   * @param planet Planet to show
+   */
+  public void showFleetView(Planet planet,Fleet fleet) {
+    fleetView = new FleetView(planet,fleet,
+        players.getCurrentPlayerInfo().Fleets(),players.getCurrentPlayerInfo(), this);
+    this.getContentPane().removeAll();
+    this.add(fleetView);
     this.validate();
   }
 
@@ -297,6 +315,14 @@ public class Game extends JFrame implements ActionListener {
       }
       break;
     }
+    case FLEETVIEW: {
+      if (starMapView.getStarMapMouseListener().getLastClickedFleet()!=null) {
+        Fleet fleet = starMapView.getStarMapMouseListener().getLastClickedFleet();
+        Planet planet = starMap.getPlanetByCoordinate(fleet.getX(), fleet.getY());
+        showFleetView(planet,fleet);
+      }
+      break;
+    }
     }    
   }
   
@@ -390,6 +416,11 @@ public class Game extends JFrame implements ActionListener {
         GameCommands.COMMAND_VIEW_PLANET) &&
         starMapView.getStarMapMouseListener().getLastClickedPlanet() != null) {
       changeGameState(GameState.PLANETVIEW);
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_VIEW_FLEET) &&
+        starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+      changeGameState(GameState.FLEETVIEW);
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_VIEW_STARMAP)) {

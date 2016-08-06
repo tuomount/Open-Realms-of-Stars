@@ -408,7 +408,6 @@ public class FleetView extends BlackPanel {
           Ship ship = mergeFleet.getShipByIndex(j);
           if (ship != null) {
             fleet.addShip(ship);
-            mergeFleet.removeShip(ship);
           }
         }
         int index = fleetList.getIndexByName(mergeFleet.getName());

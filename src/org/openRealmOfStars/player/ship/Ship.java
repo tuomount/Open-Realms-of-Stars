@@ -61,6 +61,15 @@ public class Ship extends Construction {
    * Ship's image
    */
   private BufferedImage image;
+  
+  /**
+   * Colonist cargo
+   */
+  private int colonist;
+  /**
+   * Metal cargo
+   */
+  private int metal;
   /**
    * Constructor for a ship
    * @param design from where actual ship is created
@@ -81,6 +90,8 @@ public class Ship extends Construction {
     setArmor(design.getTotalArmor());
     image = ShipImage.scaleTo32x32(hull.getImage());
     setDescription(design.getDesignInfo());
+    setColonist(0);
+    setMetal(0);
   }
   
   /**
@@ -244,6 +255,22 @@ public class Ship extends Construction {
 
   public void setArmor(int armor) {
     this.armor = armor;
+  }
+
+  public int getColonist() {
+    return colonist;
+  }
+
+  public void setColonist(int colonist) {
+    this.colonist = colonist;
+  }
+
+  public int getMetal() {
+    return metal;
+  }
+
+  public void setMetal(int metal) {
+    this.metal = metal;
   }
 
 

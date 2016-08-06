@@ -173,5 +173,101 @@ public class Fleet {
   public void setRoute(Route route) {
     this.route = route;
   }
+  
+  /**
+   * Get total amount of metal cargo
+   * @return Metal cargo for fleet
+   */
+  public int getTotalCargoMetal() {
+    int result = 0;
+    for (Ship ship : ships) {
+      result = result +ship.getMetal();
+    }
+    return result;
+  }
+
+  /**
+   * Get total amount of colonist cargo
+   * @return Colonist cargo for fleet
+   */
+  public int getTotalCargoColonist() {
+    int result = 0;
+    for (Ship ship : ships) {
+      result = result +ship.getColonist();
+    }
+    return result;
+  }
+
+  /**
+   * Get total free cargo space for metal
+   * @return free cargo space
+   */
+  public int getFreeSpaceForMetal() {
+    int result = 0;
+    for (Ship ship : ships) {
+      result = result +ship.getFreeCargoMetal();
+    }
+    return result;
+  }
+
+  /**
+   * Get total free cargo space for colonist
+   * @return free cargo space
+   */
+  public int getFreeSpaceForColonist() {
+    int result = 0;
+    for (Ship ship : ships) {
+      result = result +ship.getFreeCargoColonists();
+    }
+    return result;
+  }
+  
+  /** 
+   * Add single colonist for ship
+   */
+  public void addColonist() {
+    for (Ship ship : ships) {
+      if (ship.getFreeCargoColonists()>0) {
+        ship.setColonist(ship.getColonist()+1);
+        return;
+      }
+    }
+  }
+
+  /** 
+   * Add 10 metal for ship
+   */
+  public void addMetal() {
+    for (Ship ship : ships) {
+      if (ship.getFreeCargoMetal()>9) {
+        ship.setMetal(ship.getMetal()+10);
+        return;
+      }
+    }
+  }
+
+  /** 
+   * Remove single colonist for ship
+   */
+  public void removeColonist() {
+    for (Ship ship : ships) {
+      if (ship.getColonist() > 0) {
+        ship.setColonist(ship.getColonist()-1);
+        return;
+      }
+    }
+  }
+
+  /** 
+   * Remove 10 metal for ship
+   */
+  public void removeMetal() {
+    for (Ship ship : ships) {
+      if (ship.getMetal()>9) {
+        ship.setMetal(ship.getMetal()-10);
+        return;
+      }
+    }
+  }
 
 }

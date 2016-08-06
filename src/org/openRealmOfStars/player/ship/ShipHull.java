@@ -154,6 +154,10 @@ public class ShipHull {
     return name;
   }
 
+  /**
+   * Maximum number of component fit to hull
+   * @return Maximum number of slots
+   */
   public int getMaxSlot() {
     return maxSlot;
   }

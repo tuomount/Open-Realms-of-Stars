@@ -187,6 +187,26 @@ public class Planet {
    */
   private int[] workers;
   
+  /**
+   * Remove one colonist where are the most workers
+   * @return true if colonist is taken, otherwise false
+   */
+  public boolean takeColonist() {
+    boolean result = false;
+    int index = -1;
+    int value = 0;
+    for (int i = 0;i<MAX_WORKER_TYPE;i++) {
+      if (workers[i] > value) {
+        value = workers[i];
+        index = i;
+      }
+    }
+    if (index != -1 && value > 0) {
+      workers[index]--;
+      result = true;
+    }
+    return result;
+  }
   
   /**
    * Buildings / Planetary improvements

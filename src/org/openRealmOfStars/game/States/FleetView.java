@@ -26,6 +26,7 @@ import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -236,6 +237,14 @@ public class FleetView extends BlackPanel {
       totalPeople.setText(": "+planet.getTotalPopulation());
       metal.setText(": "+planet.getMetal());
     }
+    if (colonistSelection != null) {
+      colonistSelection.setText("Colonist: "+fleet.getTotalCargoColonist()+"/"+
+        fleet.getFreeSpaceForColonist());
+    }
+    if (metalSelection != null) {
+      metalSelection.setText("Metal: "+fleet.getTotalCargoMetal()+"/"+
+        fleet.getFreeSpaceForMetal());
+    }
 
   }
 
@@ -259,6 +268,24 @@ public class FleetView extends BlackPanel {
    * @param arg0 ActionEvent command what player did
    */
   public void handleAction(ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIST_PLUS) &&
+        fleet.getFreeSpaceForColonist() > 0 && planet != null) {
+      if (planet.takeColonist()) {
+        fleet.addColonist();
+        updatePanel();
+      }
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIST_MINUS) &&
+      fleet.getTotalCargoColonist() > 0 && planet != null) {
+      if (planet.getPlanetPlayerInfo().getRace() != SpaceRace.MECHIONS) {
+        planet.setWorkers(Planet.PRODUCTION_FOOD, planet.getWorkers(Planet.PRODUCTION_FOOD)+1);
+        fleet.removeColonist();
+      } else {
+        planet.setWorkers(Planet.PRODUCTION_WORKERS, planet.getWorkers(Planet.PRODUCTION_WORKERS)+1);
+        fleet.removeColonist();
+      }
+      updatePanel();
+    }
   }
 
   public Fleet getFleet() {

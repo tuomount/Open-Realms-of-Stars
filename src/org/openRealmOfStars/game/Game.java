@@ -467,6 +467,10 @@ public class Game extends JFrame implements ActionListener {
       // Planet view
       planetView.handleAction(arg0);
     }
+    if (gameState == GameState.FLEETVIEW && fleetView != null) {
+      // Fleet view
+      fleetView.handleAction(arg0);
+    }
     if (gameState == GameState.MAIN_MENU) {
       // Main menu
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEW_GAME)) {

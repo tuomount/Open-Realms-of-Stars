@@ -273,5 +273,32 @@ public class Ship extends Construction {
     this.metal = metal;
   }
 
+  /**
+   * How much metal can be fit to cargo space
+   * @return Cargo room for metal
+   */
+  public int getFreeCargoMetal() {
+    int result = 0;
+    if (hull.getHullType() == ShipHullType.FREIGHTER) {
+      result = hull.getMaxSlot()-getNumberOfComponents();
+      result = result -getColonist()/2-getMetal()/10-getColonist()%2;
+      result = result *10;
+    }
+    return result;
+  }
+  
+  /**
+   * How many colonists can be fit to cargo space
+   * @return Cargo room for colonists
+   */
+  public int getFreeCargoColonists() {
+    int result = 0;
+    if (hull.getHullType() == ShipHullType.FREIGHTER) {
+      result = hull.getMaxSlot()-getNumberOfComponents();
+      result = result -getColonist()/2-getMetal()/10;
+      result = result *2;
+    }
+    return result;
+  }
 
 }

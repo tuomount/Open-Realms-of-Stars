@@ -100,6 +100,14 @@ public class Fleet {
   }
 
   /**
+   * Get all the fleet ships
+   * @return Ships in array
+   */
+  public Ship[] getShips() {
+    return ships.toArray(new Ship[ships.size()]);
+  }
+  
+  /**
    * Get fleet's X coordinate in star map
    * @return X coordinate
    */

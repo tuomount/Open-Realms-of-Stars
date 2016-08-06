@@ -125,7 +125,7 @@ public class Route {
    * @return boolean
    */
   public boolean isEndReached() {
-    if (endX != startX && endY != startY) {
+    if (endX != startX || endY != startY) {
       return false;
     }
     return true;

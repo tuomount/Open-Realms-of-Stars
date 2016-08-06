@@ -1,8 +1,10 @@
 package org.openRealmOfStars.player.ship;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 
@@ -198,6 +200,33 @@ public class Ship extends Construction {
       }
     }
     return false;
+  }
+  
+  /**
+   * Get Ships damage level as color
+   * @return one of these:
+   * GuiStatics.COLOR_GREEN_TEXT 
+   * GuiStatics.COLOR_YELLOW_TEXT
+   * GuiStatics.COLOR_RED_TEXT
+   */
+  public Color getDamageColor() {
+    int damageLvl = 0;
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getDamage() > 0 && comp.getDamage() < hull.getSlotHull()) {
+        damageLvl = 1;
+      }
+      if (comp.getDamage() >= hull.getSlotHull()) {
+        damageLvl = 2;
+      }
+    }
+    switch (damageLvl) {
+    case 0: return GuiStatics.COLOR_GREEN_TEXT;
+    case 1: return GuiStatics.COLOR_YELLOW_TEXT;
+    case 2: return GuiStatics.COLOR_RED_TEXT;
+    default: return GuiStatics.COLOR_RED_TEXT;
+    }
+
   }
   
   

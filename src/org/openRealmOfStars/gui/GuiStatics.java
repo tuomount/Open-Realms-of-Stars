@@ -222,6 +222,11 @@ public class GuiStatics {
   public final static Color COLOR_RED_TEXT = new Color(186, 4, 0,255);
 
   /**
+   * Green text 
+   */
+  public final static Color COLOR_YELLOW_TEXT = new Color(220, 220, 4,255);
+
+  /**
    * Cool space blue
    */
   public final static Color COLOR_COOL_SPACE_BLUE = new Color(88,210,255);

@@ -12,12 +12,16 @@ import java.awt.event.KeyListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BigImagePanel;
 import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.ListRenderers.ShipListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
@@ -29,6 +33,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -92,6 +97,11 @@ public class FleetView extends BlackPanel {
    */
   private JTextField fleetNameText;
 
+  /**
+   * Ships in fleet
+   */
+  private JList<Ship> shipsInFleet;
+  
   /**
    * PlayerInfo
    */
@@ -176,7 +186,7 @@ public class FleetView extends BlackPanel {
       topPanel.add(invis);
       topPanel.add(Box.createRigidArea(new Dimension(50,25)));
       topPanel.setTitle(planet.getName());
-}
+    }
     // East panel
     InfoPanel eastPanel = new InfoPanel();
     eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
@@ -205,7 +215,15 @@ public class FleetView extends BlackPanel {
       }
     });
     eastPanel.add(fleetNameText);
-    eastPanel.add(Box.createRigidArea(new Dimension(5,500)));
+    eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
+    shipsInFleet = new JList<>();
+    shipsInFleet.setListData(fleet.getShips());
+    shipsInFleet.setCellRenderer(new ShipListRenderer());
+    shipsInFleet.setBackground(Color.BLACK);
+    shipsInFleet.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    JScrollPane scroll = new JScrollPane(shipsInFleet);
+    eastPanel.add(scroll);
+    eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
 
     
     // Bottom panel

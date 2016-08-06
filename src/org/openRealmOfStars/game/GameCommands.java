@@ -285,6 +285,16 @@ public class GameCommands {
   public static final String COMMAND_COLONIZE = "ColonizeCommand";
 
   /**
+   * Split the fleet
+   */
+  public static final String COMMAND_SPLIT_THE_FLEET ="SplitTheFleet";
+
+  /**
+   * Merge fleets
+   */
+  public static final String COMMAND_MERGE_FLEETS ="MergeFleets";
+
+  /**
    * Conquer command
    */
   public static final String COMMAND_CONQUER = "ConquerCommand";

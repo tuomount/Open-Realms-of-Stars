@@ -8,7 +8,7 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import org.openRealmOfStars.gui.GuiStatics;
-import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.fleet.Fleet;
 
 /**
  * 
@@ -29,26 +29,30 @@ import org.openRealmOfStars.player.ship.Ship;
  * along with this program; if not, see http://www.gnu.org/licenses/
  * 
  * 
- * Ship list renderer
+ * Fleet list renderer
  * 
  */
-public class ShipListRenderer implements ListCellRenderer<Ship> {
+public class FleetListRenderer implements ListCellRenderer<Fleet> {
 
   protected DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
   
 
   @Override
-  public Component getListCellRendererComponent(JList<? extends Ship> list, Ship value, int index,
+  public Component getListCellRendererComponent(JList<? extends Fleet> list, Fleet value, int index,
       boolean isSelected, boolean cellHasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(list, value, index,
         isSelected, cellHasFocus);
     renderer.setFont(GuiStatics.getFontCubellan());
-    renderer.setText(value.getName()+" - "+value.getHull().getHullType().toString());
+    if (value.getNumberOfShip() == 1) {
+      renderer.setText(value.getName()+" - "+value.getFirstShip().getName());
+    } else {
+      renderer.setText(value.getName()+" - "+value.getNumberOfShip()+" ships");
+    }
     if (isSelected) {
-      renderer.setForeground(value.getDamageColor());
+      renderer.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
       renderer.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
     } else {
-      renderer.setForeground(value.getDamageColor());
+      renderer.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
       renderer.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     }
     return renderer;

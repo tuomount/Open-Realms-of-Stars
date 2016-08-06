@@ -152,6 +152,23 @@ public class FleetList {
     return null;
   }
 
+  /**
+   * Get by fleet name fleet index number
+   * @param name
+   * @return index number or -1 if not found
+   */
+  public int getIndexByName(String name) {
+    if (fleetList.size() > 0) {
+      for (int i=0;i < fleetList.size();i++) {
+        Fleet fleet = fleetList.get(i);
+        if (fleet.getName().equals(name)) {
+          return i;
+        }
+      }
+    }
+    return -1;
+  }
+
   public void recalculateList() {
     for (int i=0;i<fleetList.size();i++) {
       Fleet fleet = fleetList.get(i);

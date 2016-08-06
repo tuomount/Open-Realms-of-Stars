@@ -98,6 +98,18 @@ public class Fleet {
   public int getNumberOfShip() {
     return ships.size();
   }
+  
+  /**
+   * Get ship by index or return null
+   * @param index to find
+   * @return Ship or null
+   */
+  public Ship getShipByIndex(int index) {
+    if (index >= 0 && index < ships.size()) {
+      return ships.get(index);
+    } 
+    return null;
+  }
 
   /**
    * Get all the fleet ships

@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -21,6 +22,7 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BigImagePanel;
 import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.ListRenderers.FleetListRenderer;
 import org.openRealmOfStars.gui.ListRenderers.ShipListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
@@ -101,7 +103,12 @@ public class FleetView extends BlackPanel {
    * Ships in fleet
    */
   private JList<Ship> shipsInFleet;
-  
+
+  /**
+   * Other fleets in same space
+   */
+  private JList<Fleet> fleetsInSpace;
+
   /**
    * PlayerInfo
    */
@@ -192,6 +199,9 @@ public class FleetView extends BlackPanel {
     eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
     eastPanel.setTitle("Fleet info");
     eastPanel.add(Box.createRigidArea(new Dimension(150,5)));
+    TransparentLabel label = new TransparentLabel(eastPanel, "Fleet name");
+    eastPanel.add(label);
+    eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
     fleetNameText = new JTextField();
     fleetNameText.setFont(GuiStatics.getFontCubellan());
     fleetNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
@@ -216,6 +226,9 @@ public class FleetView extends BlackPanel {
     });
     eastPanel.add(fleetNameText);
     eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
+    label = new TransparentLabel(eastPanel, "Ships in fleet");
+    eastPanel.add(label);
+    eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
     shipsInFleet = new JList<>();
     shipsInFleet.setListData(fleet.getShips());
     shipsInFleet.setCellRenderer(new ShipListRenderer());
@@ -224,14 +237,41 @@ public class FleetView extends BlackPanel {
     JScrollPane scroll = new JScrollPane(shipsInFleet);
     eastPanel.add(scroll);
     eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
+    SpaceButton btn = new SpaceButton("Split", GameCommands.COMMAND_SPLIT_THE_FLEET);
+    btn.addActionListener(listener);
+    eastPanel.add(btn);
+    eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
+    label = new TransparentLabel(eastPanel, "Other fleets");
+    eastPanel.add(label);
+    eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
+    ArrayList<Fleet> othFleets = new ArrayList<>();
+    for (int i=0;i<fleetList.getNumberOfFleets();i++) {
+      Fleet ite = fleetList.getByIndex(i);
+      if (ite.getX() == fleet.getX() && ite.getY() == fleet.getY() &&
+          !ite.getName().equals(fleet.getName())) {
+        othFleets.add(ite);
+      }
+    }
+    Fleet[] otherFleets = othFleets.toArray(new Fleet[othFleets.size()]);
+    fleetsInSpace = new JList<>();
+    fleetsInSpace.setListData(otherFleets);
+    fleetsInSpace.setCellRenderer(new FleetListRenderer());
+    fleetsInSpace.setBackground(Color.BLACK);
+    fleetsInSpace.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    scroll = new JScrollPane(fleetsInSpace);
+    eastPanel.add(scroll);
+    eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
+    btn = new SpaceButton("Merge", GameCommands.COMMAND_MERGE_FLEETS);
+    btn.addActionListener(listener);
+    eastPanel.add(btn);
+    eastPanel.add(Box.createRigidArea(new Dimension(5,175)));
 
     
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
     bottomPanel.setTitle(null);
-    SpaceButton btn = new SpaceButton("Back to star map", 
-        GameCommands.COMMAND_VIEW_STARMAP);
+    btn = new SpaceButton("Back to star map", GameCommands.COMMAND_VIEW_STARMAP);
     btn.addActionListener(listener);
     bottomPanel.add(btn,BorderLayout.CENTER);
     
@@ -263,6 +303,17 @@ public class FleetView extends BlackPanel {
       metalSelection.setText("Metal: "+fleet.getTotalCargoMetal()+"/"+
         fleet.getFreeSpaceForMetal());
     }
+    shipsInFleet.setListData(fleet.getShips());
+    ArrayList<Fleet> othFleets = new ArrayList<>();
+    for (int i=0;i<fleetList.getNumberOfFleets();i++) {
+      Fleet ite = fleetList.getByIndex(i);
+      if (ite.getX() == fleet.getX() && ite.getY() == fleet.getY() &&
+          !ite.getName().equals(fleet.getName())) {
+        othFleets.add(ite);
+      }
+    }
+    Fleet[] otherFleets = othFleets.toArray(new Fleet[othFleets.size()]);
+    fleetsInSpace.setListData(otherFleets);
 
   }
 
@@ -316,6 +367,40 @@ public class FleetView extends BlackPanel {
       fleet.getTotalCargoMetal() > 9 && planet != null) {
       fleet.removeMetal();
       planet.setMetal(planet.getMetal()+10);
+      updatePanel();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SPLIT_THE_FLEET) &&
+        shipsInFleet.getSelectedIndices().length > 0) {
+      Fleet newFleet = null;
+      for (int i=0;i<shipsInFleet.getSelectedIndices().length;i++) {
+        Ship ship = shipsInFleet.getSelectedValuesList().get(i);
+        if (newFleet == null) {
+          newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+        } else {
+          newFleet.addShip(ship);
+        }
+        fleet.removeShip(ship);
+      }
+      fleetList.add(newFleet);
+      updatePanel();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_MERGE_FLEETS) &&
+        fleetsInSpace.getSelectedIndices().length > 0) {
+      for (int i=0;i<fleetsInSpace.getSelectedIndices().length;i++) {
+        Fleet mergeFleet = fleetsInSpace.getSelectedValuesList().get(i);
+        for (int j=0;j<mergeFleet.getNumberOfShip();j++) {
+          Ship ship = mergeFleet.getShipByIndex(j);
+          if (ship != null) {
+            fleet.addShip(ship);
+            mergeFleet.removeShip(ship);
+          }
+        }
+        int index = fleetList.getIndexByName(mergeFleet.getName());
+        if (index > -1) {
+          fleetList.remove(index);
+        }
+      }
+      
       updatePanel();
     }
   }

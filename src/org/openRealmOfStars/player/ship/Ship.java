@@ -211,12 +211,11 @@ public class Ship extends Construction {
    */
   public Color getDamageColor() {
     int damageLvl = 0;
-    for (int i=0;i<components.size();i++) {
-      ShipComponent comp = components.get(i);
-      if (comp.getDamage() > 0 && comp.getDamage() < hull.getSlotHull()) {
+    for (int i=0;i<hullPoints.length;i++) {
+      if (hullPoints[i] <hull.getSlotHull() && hullPoints[i] > 0 && damageLvl < 1) {
         damageLvl = 1;
       }
-      if (comp.getDamage() >= hull.getSlotHull()) {
+      if (hullPoints[i] == 0 && damageLvl < 2) {
         damageLvl = 2;
       }
     }

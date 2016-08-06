@@ -28,7 +28,8 @@ import org.openRealmOfStars.gui.labels.IconLabel;
  * along with this program; if not, see http://www.gnu.org/licenses/
  * 
  * 
- * Class for handling worker production
+ * Class for handling worker production. Basicly a label wiht two buttons:
+ * plus and minus buttons.
  * 
  */
 

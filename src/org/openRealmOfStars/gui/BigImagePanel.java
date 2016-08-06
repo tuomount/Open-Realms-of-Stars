@@ -184,8 +184,9 @@ public class BigImagePanel extends JPanel {
     int sx = 0;
     int sy = 0;
     if (planet != null) {
-      sx = planet.getName().length()*(planet.getRadiationLevel()-1)*3;
-      sy = planet.getName().length()*(planet.getGroundSize()-7)*3;
+      
+      sx = planet.getName().length()*(planet.getOrderNumber()-1)*3+planet.getX();
+      sy = planet.getName().length()*(planet.getGroundSize()-7)*3+planet.getY();
     }
     if (drawStarField) {
       g2d.drawImage(GuiStatics.starFieldImage,-sx,-sy,null);

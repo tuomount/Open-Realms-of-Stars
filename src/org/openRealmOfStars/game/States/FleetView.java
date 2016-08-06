@@ -2,22 +2,29 @@ package org.openRealmOfStars.game.States;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JTextField;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BigImagePanel;
 import org.openRealmOfStars.gui.BlackPanel;
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
+import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
@@ -55,6 +62,16 @@ public class FleetView extends BlackPanel {
   
   private IconLabel totalPeople;
   private IconLabel metal;
+  private TransparentLabel ownerLabel;
+  
+  /**
+   * How much colonist has moved to fleet
+   */
+  private WorkerProductionPanel colonistSelection;
+  /**
+   * How much metal has moved to fleet
+   */
+  private WorkerProductionPanel metalSelection;
   /**
    * Planet to show, if any
    */
@@ -69,6 +86,11 @@ public class FleetView extends BlackPanel {
    */
   private FleetList fleetList;
   
+  /**
+   * Fleet's name Text
+   */
+  private JTextField fleetNameText;
+
   /**
    * PlayerInfo
    */
@@ -93,6 +115,23 @@ public class FleetView extends BlackPanel {
       topPanel.add(Box.createRigidArea(new Dimension(15,25)));
       InvisiblePanel invis = new InvisiblePanel(topPanel);
       invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+      SpaceButton conquerBtn = null;
+      SpaceButton colonizeBtn = null;
+      colonistSelection = null;
+      metalSelection = null;
+      
+      if (planet.getPlanetPlayerInfo() != null) {
+        ownerLabel = new TransparentLabel(invis, planet.getPlanetPlayerInfo().getEmpireName());
+        if (info != planet.getPlanetPlayerInfo()) {
+          conquerBtn = new SpaceButton("Conquer", GameCommands.COMMAND_CONQUER);
+          conquerBtn.addActionListener(listener);
+        }
+      } else {
+        ownerLabel = new TransparentLabel(invis, "Uncolonized planet");
+        colonizeBtn = new SpaceButton("Colonize", GameCommands.COMMAND_COLONIZE);
+        colonizeBtn.addActionListener(listener);
+      }
+      invis.add(ownerLabel);
       totalPeople = new IconLabel(invis,Icons.getIconByName(Icons.ICON_PEOPLE), 
         ": "+planet.getTotalPopulation());
       totalPeople.setToolTipText("Total number of people on planet.");
@@ -109,10 +148,64 @@ public class FleetView extends BlackPanel {
       metal.setAlignmentX(Component.LEFT_ALIGNMENT);
       invis.add(metal);
       topPanel.add(invis);
+      topPanel.add(Box.createRigidArea(new Dimension(25,25)));
+      topPanel.setTitle(planet.getName());
+
+      invis = new InvisiblePanel(topPanel);
+      invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+      if (colonizeBtn != null) {
+        invis.add(colonizeBtn);
+      }
+      if (conquerBtn != null) {
+        invis.add(conquerBtn);
+      }
+      if (planet.getPlanetPlayerInfo() != null &&
+          info == planet.getPlanetPlayerInfo()) {
+        colonistSelection = new WorkerProductionPanel(invis, 
+            GameCommands.COMMAND_COLONIST_MINUS, 
+            GameCommands.COMMAND_COLONIST_PLUS, Icons.ICON_PEOPLE, 
+            "Colonist: 10000", "How many colonist/troops is on board of fleet.", listener);
+        invis.add(colonistSelection);
+        metalSelection = new WorkerProductionPanel(invis, 
+            GameCommands.COMMAND_METAL_CARGO_MINUS, 
+            GameCommands.COMMAND_METAL_CARGO_PLUS, Icons.ICON_METAL, 
+            "Metal: 1000000", "How many metal cargo is on board of fleet.", listener);
+        invis.add(metalSelection);
+      }
+      topPanel.add(invis);
       topPanel.add(Box.createRigidArea(new Dimension(50,25)));
       topPanel.setTitle(planet.getName());
-    }
-    
+}
+    // East panel
+    InfoPanel eastPanel = new InfoPanel();
+    eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
+    eastPanel.setTitle("Fleet info");
+    eastPanel.add(Box.createRigidArea(new Dimension(150,5)));
+    fleetNameText = new JTextField();
+    fleetNameText.setFont(GuiStatics.getFontCubellan());
+    fleetNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    fleetNameText.setBackground(Color.BLACK);
+    fleetNameText.setText(getFleet().getName());
+    fleetNameText.addKeyListener(new KeyListener() {
+      
+      @Override
+      public void keyTyped(KeyEvent e) {
+        // Nothing to  do here
+      }
+      
+      @Override
+      public void keyReleased(KeyEvent e) {
+        getFleet().setName(fleetNameText.getText());
+      }
+      
+      @Override
+      public void keyPressed(KeyEvent e) {
+        // Nothing to  do here
+      }
+    });
+    eastPanel.add(fleetNameText);
+    eastPanel.add(Box.createRigidArea(new Dimension(5,500)));
+
     
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
@@ -127,6 +220,7 @@ public class FleetView extends BlackPanel {
     
     // Add panels to base
     this.add(bottomPanel,BorderLayout.SOUTH);
+    this.add(eastPanel,BorderLayout.EAST);
     this.add(imgBase,BorderLayout.CENTER);
     if (topPanel != null) {
       this.add(topPanel,BorderLayout.NORTH);

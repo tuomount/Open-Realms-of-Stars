@@ -279,4 +279,32 @@ public class GameCommands {
    */
   public static final String COMMAND_SHIPDESIGN_COMPONENT_PRIORITYLO = "ShipComponentPriorityLo";
 
+  /**
+   * Colonize command
+   */
+  public static final String COMMAND_COLONIZE = "ColonizeCommand";
+
+  /**
+   * Conquer command
+   */
+  public static final String COMMAND_CONQUER = "ConquerCommand";
+
+  /**
+   * Colonist plus command
+   */
+  public static final String COMMAND_COLONIST_PLUS = "ColonistPlus";
+  /**
+   * Colonist minus command
+   */
+  public static final String COMMAND_COLONIST_MINUS = "ColonistMinus";
+
+  /**
+   * Metal cargo plus command
+   */
+  public static final String COMMAND_METAL_CARGO_PLUS = "MetalCargoPlus";
+  /**
+   * Metal cargo minus command
+   */
+  public static final String COMMAND_METAL_CARGO_MINUS = "MetalCargoMinus";
+
 }

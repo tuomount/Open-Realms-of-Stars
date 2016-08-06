@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.Box;
@@ -114,6 +115,11 @@ public class FleetView extends BlackPanel {
    */
   private PlayerInfo info;
   
+  /**
+   * Background image
+   */
+  private BigImagePanel imgBase;
+  
   public FleetView(Planet planet, Fleet fleet, FleetList fleetList,
       PlayerInfo playerInfo, ActionListener listener) {
     this.setPlanet(planet);
@@ -121,7 +127,7 @@ public class FleetView extends BlackPanel {
     this.setFleetList(fleetList);
     this.setInfo(playerInfo);
     // Background image
-    BigImagePanel imgBase = new BigImagePanel(planet, true,null);
+    imgBase = new BigImagePanel(planet, true,null);
     this.setLayout(new BorderLayout());
 
     // Top Panel
@@ -314,6 +320,16 @@ public class FleetView extends BlackPanel {
     }
     Fleet[] otherFleets = othFleets.toArray(new Fleet[othFleets.size()]);
     fleetsInSpace.setListData(otherFleets);
+    
+    /*
+     * Set the orbting ships
+     */
+    Ship[] ships = fleet.getShips();
+    BufferedImage[] imgs = new BufferedImage[ships.length];
+    for (int i = 0;i<ships.length;i++) {
+      imgs[i] = ships[i].getHull().getImage();
+    }
+    imgBase.setShipImage(imgs);
 
   }
 

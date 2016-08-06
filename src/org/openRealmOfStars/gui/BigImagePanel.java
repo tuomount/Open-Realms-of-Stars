@@ -45,6 +45,11 @@ public class BigImagePanel extends JPanel {
   private BufferedImage backgroundImg;
   
   /**
+   * Ship images to draw
+   */
+  private BufferedImage[] shipImages;
+  
+  /**
    * Draw star field
    */
   private boolean drawStarField;
@@ -76,6 +81,7 @@ public class BigImagePanel extends JPanel {
     }
     drawStarField = starField;
     this.title = title;
+    this.shipImages = null;
   }
   
   /**
@@ -108,6 +114,11 @@ public class BigImagePanel extends JPanel {
 
   }
 
+  public void setShipImage(BufferedImage[] shipImages) {
+    this.shipImages = shipImages;
+    this.repaint();
+  }
+  
   private void drawTextArea(Graphics g) {
     g.setFont(GuiStatics.getFontCubellan());
     if (title == null && planet != null) {
@@ -178,6 +189,8 @@ public class BigImagePanel extends JPanel {
 
   }
   
+  
+  
   @Override
   public void paint(Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
@@ -207,6 +220,38 @@ public class BigImagePanel extends JPanel {
       }
     } else {
       g2d.drawImage(GuiStatics.nebulaeImage,-sx,-sy,null);
+    }
+    if (shipImages != null) {
+      for (int i=0;i<shipImages.length;i++) {
+        int offsetX = (575-backgroundImg.getWidth())/2 +backgroundImg.getWidth()/2+32;
+        int offsetY = (575-backgroundImg.getHeight())/2+backgroundImg.getHeight()/2+32;
+        switch (i) {
+        case 0: break;
+        case 1: { 
+          offsetY=offsetY-70;
+          offsetX=offsetX+70;
+          break;
+        }
+        case 2: { 
+          offsetY=offsetY+32;
+          offsetX=offsetX-70;
+          break;
+        }
+        case 3: { 
+          offsetY=offsetY-64;
+          offsetX=offsetX+140;
+          break;
+        }
+        case 4: { 
+          offsetY=offsetY+10;
+          offsetX=offsetX+70;
+          break;
+        }
+        }
+        if (i < 5) {
+          g2d.drawImage(shipImages[i], offsetX, offsetY, null);
+        }
+      }
     }
     
     drawTextArea(g);

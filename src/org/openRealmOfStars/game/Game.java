@@ -24,6 +24,7 @@ import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -469,6 +470,26 @@ public class Game extends JFrame implements ActionListener {
     }
     if (gameState == GameState.FLEETVIEW && fleetView != null) {
       // Fleet view
+      if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIZE)) {
+        Ship ship = fleetView.getFleet().getColonyShip();
+        if (ship != null && fleetView.getPlanet() != null &&
+            fleetView.getPlanet().getPlanetPlayerInfo() == null) {
+          // Make sure that ship is really colony and there is planet to colonize
+          fleetView.getPlanet().setPlanetOwner(players.getCurrentPlayer(), 
+              players.getCurrentPlayerInfo());
+          if (players.getCurrentPlayerInfo().getRace() == SpaceRace.MECHIONS) {
+            fleetView.getPlanet().setWorkers(Planet.PRODUCTION_WORKERS, ship.getColonist());
+          } else {
+            fleetView.getPlanet().setWorkers(Planet.PRODUCTION_FOOD, ship.getColonist());
+          }
+          // Remove the ship and show the planet view you just colonized
+          fleetView.getFleet().removeShip(ship);
+          fleetView.getFleetList().recalculateList();
+          starMapView.getStarMapMouseListener().setLastClickedFleet(null);
+          starMapView.getStarMapMouseListener().setLastClickedPlanet(fleetView.getPlanet());
+          changeGameState(GameState.PLANETVIEW);
+        }
+      }
       fleetView.handleAction(arg0);
     }
     if (gameState == GameState.MAIN_MENU) {

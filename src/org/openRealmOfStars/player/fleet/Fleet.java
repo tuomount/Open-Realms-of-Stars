@@ -72,6 +72,34 @@ public class Fleet {
   }
   
   /**
+   * Add new ship to list
+   * @param ship to add
+   */
+  public void addShip(Ship ship) {
+    if (ship != null) {
+      ships.add(ship);
+    }
+  }
+
+  /**
+   * Remove ship fro list
+   * @param ship to remove
+   */
+  public void removeShip(Ship ship) {
+    if (ship != null) {
+      ships.remove(ship);
+    }
+  }
+  
+  /**
+   * Get the number of ships in list
+   * @return Number of ships in list
+   */
+  public int getNumberOfShip() {
+    return ships.size();
+  }
+
+  /**
    * Get fleet's X coordinate in star map
    * @return X coordinate
    */
@@ -256,6 +284,19 @@ public class Fleet {
         return;
       }
     }
+  }
+  
+  /**
+   * Get first colony ship from the fleet
+   * @return Colony ship or null
+   */
+  public Ship getColonyShip() {
+    for (Ship ship : ships) {
+      if (ship.getColonist() > 0 && ship.isColonyShip()) {
+        return ship;
+      }
+    }
+    return null;
   }
 
   /** 

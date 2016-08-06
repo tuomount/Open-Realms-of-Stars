@@ -186,6 +186,22 @@ public class Ship extends Construction {
   }
   
   /**
+   * Is Ship colony ship or not
+   * @return True if ship has functional colony module, otherwise false
+   */
+  public boolean isColonyShip() {
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.COLONY_MODULE
+          && hasComponentEnergy(i) && getColonist() > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  
+  /**
    * Get ship component by index. Can return null if index is out list.
    * @param index Component list index
    * @return ShipComponent or null

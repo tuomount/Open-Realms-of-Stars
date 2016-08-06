@@ -286,6 +286,20 @@ public class FleetView extends BlackPanel {
       }
       updatePanel();
     }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_METAL_CARGO_PLUS) &&
+        fleet.getFreeSpaceForMetal() > 0 && planet != null) {
+      if (planet.getMetal() > 9) {
+        fleet.addMetal();
+        planet.setMetal(planet.getMetal()-10);
+        updatePanel();
+      }
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_METAL_CARGO_MINUS) &&
+      fleet.getTotalCargoMetal() > 9 && planet != null) {
+      fleet.removeMetal();
+      planet.setMetal(planet.getMetal()+10);
+      updatePanel();
+    }
   }
 
   public Fleet getFleet() {

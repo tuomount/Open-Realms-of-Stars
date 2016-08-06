@@ -2,6 +2,8 @@ package org.openRealmOfStars.player.ship;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.player.SpaceRace;
+
 /**
  * 
  * Open Realm of Stars game project
@@ -49,6 +51,21 @@ public class ShipDesign {
     setHull(hull);
     components = new ArrayList<>();
     name = "Design";
+  }
+  
+  /**
+   * Make a copy of current ship design
+   * @param race SpaceRace whom ever is creating the copy. This makes
+   * sense if other race ship is being copied.
+   * @return Copy of design
+   */
+  public ShipDesign copy(SpaceRace race) {
+    ShipDesign result = new ShipDesign(ShipHullFactory.createByName(this.getHull().getName(),race));
+    result.setName(this.name);
+    for (ShipComponent comp : components) {
+      result.addComponent(ShipComponentFactory.createByName(comp.getName()));
+    }
+    return result;
   }
   
   /**

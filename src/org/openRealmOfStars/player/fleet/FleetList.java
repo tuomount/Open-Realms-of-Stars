@@ -47,8 +47,24 @@ public class FleetList {
    * @param fleet Fleet to add to the list
    */
   public void add(Fleet fleet) {
+    int fleetNum = -1;
+    for (Fleet ite: fleetList) {
+      // Gets the next fleet number
+      if (ite.getName().startsWith("Fleet #")) {
+        String fleetStrNum = ite.getName().substring(7);
+        try {
+          int num = Integer.valueOf(fleetStrNum);
+          if (num > fleetNum) {
+            fleetNum = num;
+          }
+        } catch (NumberFormatException e) {
+          // Just don't do anything
+        }
+      }
+    }
+    fleetNum = fleetNum+1;
     fleetList.add(fleet);
-    fleet.setName("Fleet #"+(fleetList.size()-1));
+    fleet.setName("Fleet #"+fleetNum);
   }
   
   /**
@@ -136,4 +152,13 @@ public class FleetList {
     return null;
   }
 
+  public void recalculateList() {
+    for (int i=0;i<fleetList.size();i++) {
+      Fleet fleet = fleetList.get(i);
+      if (fleet.getNumberOfShip()==0) {
+        fleetList.remove(i);
+        break;
+      }
+    }
+  }
 }

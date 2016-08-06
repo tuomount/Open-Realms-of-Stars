@@ -131,12 +131,17 @@ public class ShipDesignView extends BlackPanel {
    */
   private ImageLabel hullImage;
   
-  
+  /**
+   * Constructor for ShipDesignView
+   * @param player Player whom is design the new ship design
+   * @param oldDesign Possible old design which is being copied
+   * @param listener ActionListener
+   */
   public ShipDesignView(PlayerInfo player, ShipDesign oldDesign,
       ActionListener listener) {
     this.player = player;
     if (oldDesign != null) {
-      design = oldDesign;
+      design = oldDesign.copy(player.getRace());
     } else {
       design = new ShipDesign(ShipHullFactory.createByName("Colony", player.getRace()));
     }

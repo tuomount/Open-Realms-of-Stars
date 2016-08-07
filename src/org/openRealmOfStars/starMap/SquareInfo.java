@@ -40,6 +40,11 @@ public class SquareInfo {
   public static final byte TYPE_PLANET = 2;
 
   /**
+   * Gas Planet info, value matches on list number
+   */
+  public static final byte TYPE_GAS_PLANET = 3;
+
+  /**
    * Square info type
    */
   private byte type;
@@ -80,6 +85,20 @@ public class SquareInfo {
       this.value = 0;
     } else {
       this.value = (short) value;
+    }
+  }
+  
+  /**
+   * Blocks sector visibility or not
+   * @return True if sector blocks visibility otherwise false
+   */
+  public boolean isVisibilityBlocked() {
+    switch (type) {
+    case TYPE_EMPTY: return false;
+    case TYPE_SUN: return true;
+    case TYPE_PLANET: return false;
+    case TYPE_GAS_PLANET: return true;
+    default: return false;
     }
   }
 }

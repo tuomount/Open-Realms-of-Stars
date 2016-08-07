@@ -287,6 +287,7 @@ public class Game extends JFrame implements ActionListener {
         players.addPlayer(info);
       }
       starMap = new StarMap(75, 75,players);
+      starMap.updateStarMapOnStartGame();
       players.setCurrentPlayer(0);
       changeGameState(GameState.STARMAP);
       break;

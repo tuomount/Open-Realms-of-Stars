@@ -80,7 +80,21 @@ public class PlayerInfo {
    * 2: Visible everything is drawn
    */
   private byte[][] mapData;
+
+  /**
+   * Cloaking detection per sector
+   */
+  private int[][] mapCloakDetection;
   
+  /**
+   * Map X size
+   */
+  private int maxX;
+  /**
+   * Map Y size
+   */
+  private int maxY;
+
   /**
    * Uncharted map sector, only suns are visible
    */
@@ -236,8 +250,16 @@ public class PlayerInfo {
     
   }
   
+  /**
+   * Init map visibility and cloaking detection maps
+   * @param maxX Map size in X axel
+   * @param maxY Map size in Y axel
+   */
   public void initMapData(int maxX, int maxY) {
+    this.maxX = maxX;
+    this.maxY = maxY;
     mapData = new byte[maxX][maxY];
+    mapCloakDetection = new int[maxX][maxY];
   }
   
   /**
@@ -269,6 +291,48 @@ public class PlayerInfo {
         mapData[x][y] = visibility;
       } catch (ArrayIndexOutOfBoundsException e) {
       // Do nothing
+      }
+    }
+  }
+
+  /**
+   * Get sector cloaking detection
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @return cloaking detection value
+   */
+  public int getSectorCloakDetection(int x, int y) {
+    int result = 0;
+    try {
+      result = mapCloakDetection[x][y];
+      
+    } catch (ArrayIndexOutOfBoundsException e) {
+      // Do nothing
+    }
+    return result;
+  }
+
+  /**
+   * Set sector cloaking detection value
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @param cloaking detection value
+   */
+  public void setSectorCloakingDetection(int x, int y,int value) {
+    try {
+      mapCloakDetection[x][y] = value;
+    } catch (ArrayIndexOutOfBoundsException e) {
+    // Do nothing
+    }
+  }
+  
+  public void resetVisibilityDataAfterTurn() {
+    for (int y=0;y<maxY;y++) {
+      for (int x=0;x<maxX;x++) {
+        mapCloakDetection[x][y] = 0;
+        if (mapData[x][y] == VISIBLE) {
+          mapData[x][y] = FOG_OF_WAR;
+        }
       }
     }
   }

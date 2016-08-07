@@ -1058,6 +1058,36 @@ public class Planet {
     return result;
   }
 
+  /**
+   * Get planet Scanner level
+   * @return Scanner level
+   */
+  public int getScannerLvl() {
+    int result = 2;
+    Building[] buildings = getBuildingList();
+    for (Building building : buildings) {
+      if (building.getScanRange() > 0 && result < building.getScanRange()) {
+        result = building.getScanRange();
+      }
+    }
+    return result;
+  }
+  /**
+   * Get planet Scanner Cloaking detection level
+   * @return Cloaking detection level
+   */
+  public int getCloakingDetectionLvl() {
+    int result = 0;
+    Building[] buildings = getBuildingList();
+    for (Building building : buildings) {
+      if (building.getScanCloakingDetection() > 0 && result < building.getScanCloakingDetection()) {
+        result = building.getScanCloakingDetection();
+      }
+    }
+    return result;
+  }
+
+  
   public int getCulture() {
     return culture;
   }

@@ -196,7 +196,37 @@ public class Fleet {
     }
     return speed;
   }
-  
+
+  /**
+   * Get Fleet Scanner level
+   * @return scanner level
+   */
+  public int getFleetScannerLvl() {
+    int lvl = 1;
+    for (Ship ship : ships) {
+      int shipLvl = ship.getScannerLvl();
+      if (shipLvl > lvl) {
+        lvl = shipLvl;
+      }
+    }
+    return lvl;
+  }
+
+  /**
+   * Get Fleet Cloak Detection
+   * @return cloak detection
+   */
+  public int getFleetCloakDetection() {
+    int lvl = 0;
+    for (Ship ship : ships) {
+      int shipLvl = ship.getScannerDetectionLvl();
+      if (shipLvl > lvl) {
+        lvl = shipLvl;
+      }
+    }
+    return lvl;
+  }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

@@ -338,7 +338,7 @@ public class StarMap {
         planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
         planetList.add(planet);        
         int planetNumber = planetList.size()-1;
-        info = new SquareInfo(SquareInfo.TYPE_PLANET, planetNumber);
+        info = new SquareInfo(SquareInfo.TYPE_GAS_PLANET, planetNumber);
         switch (planet.getPlanetImageIndex()) {
         case 0: {
           tiles[px][py] = Tiles.getTileByName(TileNames.GAS_GIANT_1_NW).getIndex();
@@ -490,7 +490,8 @@ public class StarMap {
   public Planet getPlanetByCoordinate(int x, int y) {
     if (isValidCoordinate(x, y)) {
       SquareInfo info = tileInfo[x][y];
-      if (info.getType() == SquareInfo.TYPE_PLANET) {
+      if (info.getType() == SquareInfo.TYPE_PLANET || 
+          info.getType() == SquareInfo.TYPE_GAS_PLANET) {
         return planetList.get(info.getValue());
       }
     }
@@ -535,6 +536,7 @@ public class StarMap {
     for (int i=0;i<players.getCurrentMaxPlayers();i++) {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null) {
+        info.resetVisibilityDataAfterTurn();
         info.getMsgList().clearMessages();
         for (int j = 0;j<info.Fleets().getNumberOfFleets();j++) {
           Fleet fleet = info.Fleets().getByIndex(j);
@@ -558,16 +560,110 @@ public class StarMap {
             msg.setCoordinate(fleet.getX(), fleet.getY());
             info.getMsgList().addNewMessage(msg);
           }
+          int scanRad = fleet.getFleetScannerLvl();
+          int cloakDetection = fleet.getFleetCloakDetection();
+          for (int y=-scanRad;y<scanRad+1;y++) {
+            for (int x=-scanRad;x<scanRad+1;x++) {
+              drawVisibilityLine(info, fleet.getX(), fleet.getY(),
+                  fleet.getX()+x, fleet.getY()+y, cloakDetection, scanRad);
+            }
+          }
+          
         }
       }
     }
     for (int i=0;i<planetList.size();i++) {
       Planet planet = planetList.get(i);
       if (planet.getPlanetPlayerInfo() != null) {
+        PlayerInfo info = planet.getPlanetPlayerInfo();
         planet.updateOneTurn();
+        int scanRad = planet.getScannerLvl();
+        int cloakDetection = planet.getCloakingDetectionLvl();
+        for (int y=-scanRad;y<scanRad+1;y++) {
+          for (int x=-scanRad;x<scanRad+1;x++) {
+            drawVisibilityLine(info, planet.getX(), planet.getY(),
+                planet.getX()+x, planet.getY()+y, cloakDetection, scanRad);
+          }
+        }
       }
     }
     turn=turn+1;
+  }
+  
+  /**
+   * Update starmap when game starts
+   */
+  public void updateStarMapOnStartGame() {
+    for (int i=0;i<planetList.size();i++) {
+      Planet planet = planetList.get(i);
+      if (planet.getPlanetPlayerInfo() != null) {
+        PlayerInfo info = planet.getPlanetPlayerInfo();
+        int scanRad = planet.getScannerLvl();
+        int cloakDetection = planet.getCloakingDetectionLvl();
+        for (int y=-scanRad;y<scanRad+1;y++) {
+          for (int x=-scanRad;x<scanRad+1;x++) {
+            drawVisibilityLine(info, planet.getX(), planet.getY(),
+                planet.getX()+x, planet.getY()+y, cloakDetection, scanRad);
+          }
+        }
+      }
+    }
+  }
+  /**
+   * Draw visibility line and set visibility info for one player
+   * @param info PlayerInfo
+   * @param sx Start X
+   * @param sy Stary Y
+   * @param ex End X
+   * @param ey End Y
+   * @param cloakDetection Cloaking Detection level
+   * @param maxRad maximum radius 
+   */
+  private void drawVisibilityLine(PlayerInfo info, int sx, int sy, int ex, 
+      int ey, int cloakDetection, int maxRad) {
+    double startX = sx;
+    double startY = sy;
+    double dx = Math.abs(startX-ex);
+    double dy = Math.abs(startY-ey);
+    int distance = (int) dy;
+    if (dx > dy) {
+      distance = (int) dx;
+    }
+    double mx;
+    double my;
+    if (distance > 0) {
+      mx = (ex-startX)/distance;
+      my = (ey-startY)/distance;
+    } else {
+      mx = 0;
+      my = 0;
+    }
+    int detectValue = cloakDetection;
+    info.setSectorVisibility(sx, sy, PlayerInfo.VISIBLE);
+    if (detectValue > 0){
+      info.setSectorCloakingDetection(sx, sy, detectValue);
+    }
+    for (int i=0;i<distance;i++) {
+      startX = startX +mx;
+      startY = startY +my;
+      int nx = (int) Math.round(startX);
+      int ny = (int) Math.round(startY);
+      if (getDistance(sx, sy, nx, ny) > maxRad) {
+        break;
+      }
+      if (isValidCoordinate(nx, ny)) {
+        info.setSectorVisibility(nx, ny, PlayerInfo.VISIBLE);
+        if (detectValue > 0){
+          info.setSectorCloakingDetection(nx, ny, detectValue);
+        }
+        if (tileInfo[nx][ny].isVisibilityBlocked()) {
+          break;
+        }
+        if (detectValue > 0) {
+          detectValue=detectValue-10;
+        }
+      }
+    }
   }
   
   /**
@@ -587,4 +683,47 @@ public class StarMap {
     }
     return result;
   }
+  
+  /**
+   * Get current player info
+   * @return PlayerInfo or null
+   */
+  public PlayerInfo getCurrentPlayerInfo() {
+    if (players != null) {
+      return players.getCurrentPlayerInfo();
+    } else {
+      return null;
+    }
+  }
+  
+  /**
+   * Get tile info from coordinate
+   * @param x
+   * @param y
+   * @return TileInfo
+   */
+  public SquareInfo getTileInfo(int x, int y) {
+    if (isValidCoordinate(x, y)) {
+      return tileInfo[x][y];
+    } else {
+      return null;
+    }
+  }
+  
+  /**
+   * Calculate distance between two coordinates
+   * @param x1 first coordinate's X
+   * @param y1 first coordinate's Y
+   * @param x2 second coordinate's X
+   * @param y2 second coordinate's Y
+   * @return distance as double
+   */
+  public static double getDistance(int x1,int y1, int x2, int y2) {
+    double result = 0;
+    int mx = Math.abs(x2-x1);
+    int my = Math.abs(y2-y1);
+    result = Math.sqrt(mx*mx+my*my);
+    return result;
+  }
+
 }

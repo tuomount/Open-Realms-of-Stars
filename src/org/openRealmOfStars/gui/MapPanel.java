@@ -14,8 +14,10 @@ import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.starMap.Route;
+import org.openRealmOfStars.starMap.SquareInfo;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -193,6 +195,7 @@ public class MapPanel extends JPanel {
    * @param starMap Star map to draw
    */
   public void drawMap(StarMap starMap) {
+    PlayerInfo info = starMap.getCurrentPlayerInfo();
     if (screen == null) {
       calculateViewPoints();
       if (this.getWidth() > 0 && this.getHeight() > 0) {
@@ -295,18 +298,39 @@ public class MapPanel extends JPanel {
               pixelY+Tile.MAX_HEIGHT-1);
         }
         Tile tile = Tiles.getTileByIndex(map[i+cx][j+cy]);
+        // Draw tiles
         if (!tile.getName().equals(TileNames.EMPTY)) {
           // Draw only non empty tiles
-          tile.draw(gr, pixelX, pixelY);
+          if ((info != null && info.getSectorVisibility(i+cx, j+cy)!=PlayerInfo.UNCHARTED) ||
+              starMap.getTileInfo(i+cx, j+cy).getType() == SquareInfo.TYPE_SUN) {
+            tile.draw(gr, pixelX, pixelY);
+          }
         }
         
-        if (fleetMap[i+cx][j+cy] != null) {
+        // Draw fleet
+        if (info != null &&
+            info.getSectorVisibility(i+cx, j+cy)==PlayerInfo.VISIBLE &&
+            fleetMap[i+cx][j+cy] != null) {
           BufferedImage img = ShipImages.getByRace(
               fleetMap[i+cx][j+cy].getRace()).getSmallShipImage(
                   fleetMap[i+cx][j+cy].getImageIndex());
           gr.drawImage(img, pixelX, pixelY, null);
         }
         
+        // Draw fog of war and uncharted tiles
+        if (info != null ) {
+          switch (info.getSectorVisibility(i+cx, j+cy)) {
+          case PlayerInfo.UNCHARTED: {
+            if (starMap.getTileInfo(i+cx, j+cy).getType() != SquareInfo.TYPE_SUN) {
+              Tiles.getTileByName(TileNames.UNCHARTED).draw(gr, pixelX, pixelY); 
+            }
+            break;
+          }
+          case PlayerInfo.FOG_OF_WAR: Tiles.getTileByName(TileNames.FOG_OF_WAR).draw(gr, pixelX, pixelY); break;
+          }
+        }
+        
+        // Draw sun's text
         if (tile.getName().equals(TileNames.SUN_E) && i > -viewPointX+1) {
           Sun sun = starMap.getSunByCoordinate(i+cx, j+cy);
           if (sun != null) {
@@ -323,10 +347,13 @@ public class MapPanel extends JPanel {
                 pixelY+Tile.MAX_HEIGHT/2);
           }
         }
+        
+        // Draw Gas giant text
         if ((tile.getName().equals(TileNames.GAS_GIANT_1_SE) && i > -viewPointX) ||
             (tile.getName().equals(TileNames.GAS_GIANT_2_SE) && i > -viewPointX )) {
           Planet planet = starMap.getPlanetByCoordinate(i+cx, j+cy);
-          if (planet != null) {
+          if (planet != null && info != null &&
+              info.getSectorVisibility(i+cx, j+cy)!=PlayerInfo.UNCHARTED) {
             int textWidth = (int) GuiStatics.getFontCubellanSC().getStringBounds(
                 RandomSystemNameGenerator.numberToRoman(planet.getOrderNumber()),
                 gr.getFontRenderContext()).getWidth();
@@ -342,8 +369,11 @@ public class MapPanel extends JPanel {
             
           }
         }
+        
+        // Draw planet text
         Planet planet = starMap.getPlanetByCoordinate(i+cx, j+cy);
-        if (planet != null && !planet.isGasGiant()) {
+        if (planet != null && !planet.isGasGiant() && info != null && 
+            info.getSectorVisibility(i+cx, j+cy)!=PlayerInfo.UNCHARTED) {
           int textWidth = (int) GuiStatics.getFontCubellanSC().getStringBounds(
               RandomSystemNameGenerator.numberToRoman(planet.getOrderNumber()),
               gr.getFontRenderContext()).getWidth();

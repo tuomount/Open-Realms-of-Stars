@@ -223,8 +223,8 @@ public class BigImagePanel extends JPanel {
     }
     if (shipImages != null) {
       for (int i=0;i<shipImages.length;i++) {
-        int offsetX = (575-backgroundImg.getWidth())/2 +backgroundImg.getWidth()/2+32;
-        int offsetY = (575-backgroundImg.getHeight())/2+backgroundImg.getHeight()/2+32;
+        int offsetX = 332;
+        int offsetY = 332;
         switch (i) {
         case 0: break;
         case 1: { 

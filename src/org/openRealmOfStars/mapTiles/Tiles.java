@@ -142,6 +142,12 @@ public class Tiles {
     // Reading the water planet 
     tile = new Tile(tilesImage, 8, 0,TileNames.WATERWORLD1);
     addTile(tile);
+    // Reading the fog of war 
+    tile = new Tile(tilesImage, 9, 0,TileNames.FOG_OF_WAR);
+    addTile(tile);
+    // Reading the uncharted 
+    tile = new Tile(tilesImage, 10, 0,TileNames.UNCHARTED);
+    addTile(tile);
   }
   
 

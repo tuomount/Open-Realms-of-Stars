@@ -116,6 +116,7 @@ public class StarMap {
     maxX = maxXSize;
     maxY = maxYSize;
     this.players = players;
+    this.players.initVisibilityMaps(maxX, maxY);
     drawX = 0;
     drawY = 0;
     tiles = new int[maxX][maxY];

@@ -101,5 +101,15 @@ public class PlayerList {
     return getPlayerInfoByIndex(currentPlayer);
   }
   
+  /**
+   * Init players visibility maps
+   * @param maxX Map x size
+   * @param maxY Map y size
+   */
+  public void initVisibilityMaps(int maxX, int maxY) {
+    for (PlayerInfo info : list) {
+      info.initMapData(maxX, maxY);
+    }
+  }
   
 }

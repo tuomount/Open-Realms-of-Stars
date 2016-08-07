@@ -73,6 +73,27 @@ public class PlayerInfo {
    */
   private FleetList fleets;
   
+  /**
+   * Map Data
+   * 0: Uncharted only suns are drawn
+   * 1: Fog of war, no fleets are drawn
+   * 2: Visible everything is drawn
+   */
+  private byte[][] mapData;
+  
+  /**
+   * Uncharted map sector, only suns are visible
+   */
+  public static final byte UNCHARTED = 0;
+  /**
+   * Fog of war, no fleets are drawn
+   */
+  public static final byte FOG_OF_WAR = 1;
+  /**
+   * Every thing are drawn
+   */
+  public static final byte VISIBLE = 2;
+  
   public PlayerInfo(SpaceRace race) {
     setTechList(new TechList());
     this.msgList = new MessageList();
@@ -215,6 +236,43 @@ public class PlayerInfo {
     
   }
   
+  public void initMapData(int maxX, int maxY) {
+    mapData = new byte[maxX][maxY];
+  }
+  
+  /**
+   * Get sector visibility
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @return UNCHARTED, FOG_OF_WAR or VISIBLE
+   */
+  public byte getSectorVisibility(int x, int y) {
+    byte result = UNCHARTED;
+    try {
+      result = mapData[x][y];
+      
+    } catch (ArrayIndexOutOfBoundsException e) {
+      // Do nothing
+    }
+    return result;
+  }
+
+  /**
+   * Set sector visibility
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @param visibility UNCHARTED, FOG_OF_WAR or VISIBLE
+   */
+  public void setSectorVisibility(int x, int y,byte visibility) {
+    if (visibility >= 0 && visibility <= VISIBLE) {
+      try {
+        mapData[x][y] = visibility;
+      } catch (ArrayIndexOutOfBoundsException e) {
+      // Do nothing
+      }
+    }
+  }
+
   /**
    * Number of Ship stats player has
    * @return Number of ship stats in list

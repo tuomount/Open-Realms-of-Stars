@@ -237,6 +237,9 @@ public class Fleet {
     sb.append(" FTL: ");
     sb.append(getFleetFtlSpeed());
     sb.append("\n");
+    sb.append("Moves:");
+    sb.append(movesLeft);
+    sb.append("\n");
     for (Ship ship : ships) {
       sb.append(ship.getName());
       sb.append("\n");

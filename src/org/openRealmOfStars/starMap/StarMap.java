@@ -560,15 +560,8 @@ public class StarMap {
             msg.setCoordinate(fleet.getX(), fleet.getY());
             info.getMsgList().addNewMessage(msg);
           }
-          int scanRad = fleet.getFleetScannerLvl();
-          int cloakDetection = fleet.getFleetCloakDetection();
-          for (int y=-scanRad;y<scanRad+1;y++) {
-            for (int x=-scanRad;x<scanRad+1;x++) {
-              drawVisibilityLine(info, fleet.getX(), fleet.getY(),
-                  fleet.getX()+x, fleet.getY()+y, cloakDetection, scanRad);
-            }
-          }
-          
+          fleet.movesLeft = fleet.getFleetSpeed();
+          doFleetScanUpdate(info, fleet);
         }
       }
     }
@@ -591,9 +584,35 @@ public class StarMap {
   }
   
   /**
+   * Do Fleet scan Update for starmap
+   * @param info Player who controls the fleet
+   * @param fleet Fleet which is doing the rescan
+   */
+  public void doFleetScanUpdate(PlayerInfo info, Fleet fleet) {
+    int scanRad = fleet.getFleetScannerLvl();
+    int cloakDetection = fleet.getFleetCloakDetection();
+    for (int y=-scanRad;y<scanRad+1;y++) {
+      for (int x=-scanRad;x<scanRad+1;x++) {
+        drawVisibilityLine(info, fleet.getX(), fleet.getY(),
+            fleet.getX()+x, fleet.getY()+y, cloakDetection, scanRad);
+      }
+    }
+  }
+  
+  /**
    * Update starmap when game starts
    */
   public void updateStarMapOnStartGame() {
+    for (int i=0;i<players.getCurrentMaxPlayers();i++) {
+      PlayerInfo info = players.getPlayerInfoByIndex(i);
+      if (info != null) {
+        for (int j = 0;j<info.Fleets().getNumberOfFleets();j++) {
+          Fleet fleet = info.Fleets().getByIndex(j);
+          fleet.movesLeft = fleet.getFleetSpeed();
+          doFleetScanUpdate(info, fleet);
+        }
+      }
+    }
     for (int i=0;i<planetList.size();i++) {
       Planet planet = planetList.get(i);
       if (planet.getPlanetPlayerInfo() != null) {

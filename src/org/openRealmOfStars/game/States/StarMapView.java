@@ -212,6 +212,13 @@ public class StarMapView extends BlackPanel {
   public void setShowFleet(Fleet fleet) {
     infoPanel.showFleet(fleet);
   }
+  
+  /**
+   * Update panels on StarMapView
+   */
+  public void updatePanels() {
+    infoPanel.updatePanel();
+  }
 
   public void handleActions(ActionEvent arg0) {
     if (arg0.getActionCommand().equalsIgnoreCase(

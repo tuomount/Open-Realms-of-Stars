@@ -83,7 +83,7 @@ public class Game extends JFrame implements ActionListener {
   /**
    * List of players
    */
-  private PlayerList players;
+  public PlayerList players;
   
   
   

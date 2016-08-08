@@ -544,12 +544,25 @@ public class StarMap {
           Fleet fleet = info.Fleets().getByIndex(j);
           if (fleet.getRoute() != null) {
             fleet.getRoute().makeNextMove();
-            fleet.setPos(fleet.getRoute().getX(), fleet.getRoute().getY());
-            if (fleet.getRoute().isEndReached()) {
-              fleet.setRoute(null);
-              Message msg = new Message(MessageType.FLEET,
+            if (!isBlocked(fleet.getRoute().getX(), fleet.getRoute().getY())) {
+              // Not blocked so fleet is moving
+              fleet.setPos(fleet.getRoute().getX(), fleet.getRoute().getY());
+              if (fleet.getRoute().isEndReached()) {
+                // End is reached giving a message
+                fleet.setRoute(null);
+                Message msg = new Message(MessageType.FLEET,
                   fleet.getName()+" has reached it's target and waiting for orders.",
                   Icons.getIconByName(Icons.ICON_HULL_TECH));
+                msg.setMatchByString(fleet.getName());
+                msg.setCoordinate(fleet.getX(), fleet.getY());
+                info.getMsgList().addNewMessage(msg);
+              }
+            } else {
+              // Movement was blocked, giving a message
+              fleet.setRoute(null);
+              Message msg = new Message(MessageType.FLEET,
+                fleet.getName()+" has encouter obstacle and waiting for more orders.",
+                Icons.getIconByName(Icons.ICON_HULL_TECH));
               msg.setMatchByString(fleet.getName());
               msg.setCoordinate(fleet.getX(), fleet.getY());
               info.getMsgList().addNewMessage(msg);

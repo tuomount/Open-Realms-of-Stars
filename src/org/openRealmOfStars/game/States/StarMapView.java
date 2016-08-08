@@ -114,9 +114,15 @@ public class StarMapView extends BlackPanel {
    */
   private MessagePanel msgPanel;
   
+  /**
+   * Should auto focus on newest message
+   */
+  private boolean autoFocus;
+  
   public StarMapView(StarMap map, PlayerList players, ActionListener listener) {
     this.map = map;
     this.players = players;
+    setAutoFocus(false);
 
     BlackPanel base = new BlackPanel();
     mapPanel = new MapPanel();
@@ -249,7 +255,8 @@ public class StarMapView extends BlackPanel {
      msgPanel.updatePanel(msg, 
          players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
          players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
-
+     setAutoFocus(true);
+     // end of end turn
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_MSG)) {
       Message msg = players.getCurrentPlayerInfo().getMsgList().getPrevMessage();
@@ -264,5 +271,13 @@ public class StarMapView extends BlackPanel {
           players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
     }
 
+  }
+
+  public boolean isAutoFocus() {
+    return autoFocus;
+  }
+
+  public void setAutoFocus(boolean autoFocus) {
+    this.autoFocus = autoFocus;
   }
 }

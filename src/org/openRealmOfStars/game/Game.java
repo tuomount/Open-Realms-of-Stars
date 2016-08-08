@@ -346,38 +346,46 @@ public class Game extends JFrame implements ActionListener {
 
   }
 
+  /**
+   * Focus on active message
+   * @param mapOnly focus only message which move map
+   */
+  private void focusOnMessage(boolean mapOnly) {
+    Message msg = players.getCurrentPlayerInfo().getMsgList().getMsg();
+    if (msg.getType() == MessageType.RESEARCH && !mapOnly) {
+      changeGameState(GameState.RESEARCHVIEW, msg);
+    }
+    if (msg.getType() == MessageType.PLANETARY) {
+      starMap.setCursorPos(msg.getX(), msg.getY());
+      starMap.setDrawPos(msg.getX(), msg.getY());
+      Planet planet = starMap.getPlanetByCoordinate(msg.getX(), msg.getY());
+      if (planet != null) {
+        starMapView.setShowPlanet(planet);
+        starMapView.getStarMapMouseListener().setLastClickedPlanet(planet);
+      }
+    }
+    if (msg.getType() == MessageType.FLEET) {
+      starMap.setCursorPos(msg.getX(), msg.getY());
+      starMap.setDrawPos(msg.getX(), msg.getY());
+      Fleet fleet = players.getCurrentPlayerInfo().Fleets().
+          getByName(msg.getMatchByString());
+      if (fleet != null) {
+        starMapView.setShowFleet(fleet);
+        starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
+        starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
+      }
+    }
+    if ((msg.getType() == MessageType.CONSTRUCTION ||
+        msg.getType() == MessageType.POPULATION) && (!mapOnly)) {
+      changeGameState(GameState.PLANETVIEW, msg);
+    }
+  }
+  
   @Override
   public void actionPerformed(ActionEvent arg0) {
     if (gameState == GameState.STARMAP && starMapView != null) {
       if (arg0.getActionCommand().equals(GameCommands.COMMAND_FOCUS_MSG)) {
-        Message msg = players.getCurrentPlayerInfo().getMsgList().getMsg();
-        if (msg.getType() == MessageType.RESEARCH) {
-          changeGameState(GameState.RESEARCHVIEW, msg);
-        }
-        if (msg.getType() == MessageType.PLANETARY) {
-          starMap.setCursorPos(msg.getX(), msg.getY());
-          starMap.setDrawPos(msg.getX(), msg.getY());
-          Planet planet = starMap.getPlanetByCoordinate(msg.getX(), msg.getY());
-          if (planet != null) {
-            starMapView.setShowPlanet(planet);
-            starMapView.getStarMapMouseListener().setLastClickedPlanet(planet);
-          }
-        }
-        if (msg.getType() == MessageType.FLEET) {
-          starMap.setCursorPos(msg.getX(), msg.getY());
-          starMap.setDrawPos(msg.getX(), msg.getY());
-          Fleet fleet = players.getCurrentPlayerInfo().Fleets().
-              getByName(msg.getMatchByString());
-          if (fleet != null) {
-            starMapView.setShowFleet(fleet);
-            starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
-            starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
-          }
-        }
-        if (msg.getType() == MessageType.CONSTRUCTION ||
-            msg.getType() == MessageType.POPULATION) {
-          changeGameState(GameState.PLANETVIEW, msg);
-        }
+        focusOnMessage(false);
       } else if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_TARGET)) {
         if (starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
           Fleet fleet = players.getCurrentPlayerInfo().Fleets().getPrev();
@@ -402,6 +410,10 @@ public class Game extends JFrame implements ActionListener {
         }
       } else {
         starMapView.handleActions(arg0);
+        if (starMapView.isAutoFocus() && arg0.getActionCommand().equals(GameCommands.COMMAND_END_TURN)) {
+          starMapView.setAutoFocus(false);
+          focusOnMessage(true);
+        }
       }
     }
     if (gameState == GameState.CREDITS) {

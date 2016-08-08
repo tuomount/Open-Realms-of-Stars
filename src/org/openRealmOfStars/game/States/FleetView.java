@@ -178,6 +178,12 @@ public class FleetView extends BlackPanel {
       invis = new InvisiblePanel(topPanel);
       invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
       if (colonizeBtn != null) {
+        if (planet.getRadiationLevel() > info.getRace().getMaxRad()) {
+          TransparentLabel radWarning = new TransparentLabel(invis, "Warning! High radiation!");
+          radWarning.setForeground(GuiStatics.COLOR_RED_TEXT);
+          invis.add(radWarning);
+          invis.add(Box.createRigidArea(new Dimension(5,5)));
+        }
         invis.add(colonizeBtn);
       }
       if (conquerBtn != null) {

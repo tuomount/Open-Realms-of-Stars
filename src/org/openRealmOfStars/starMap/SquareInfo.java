@@ -101,4 +101,19 @@ public class SquareInfo {
     default: return false;
     }
   }
+  
+  /**
+   * Is sector blocked or not
+   * @return True if sector is blocked otherwise false
+   */
+  public boolean isBlocked() {
+    switch (type) {
+    case TYPE_EMPTY: return false;
+    case TYPE_SUN: return true;
+    case TYPE_PLANET: return false;
+    case TYPE_GAS_PLANET: return true;
+    default: return false;
+    }
+  }
+
 }

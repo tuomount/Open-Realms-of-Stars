@@ -739,6 +739,20 @@ public class StarMap {
   }
   
   /**
+   * Is tile blocked or not
+   * @param x X coordinate
+   * @param y Y Coordinate
+   * @return true if tile is blocked otherwise false. Also if
+   * coordinate is out of map then true is returned.
+   */
+  public boolean isBlocked(int x, int y) {
+    SquareInfo sector = getTileInfo(x, y);
+    if (sector != null) {
+      return sector.isBlocked();
+    }
+    return true;
+  }
+  /**
    * Calculate distance between two coordinates
    * @param x1 first coordinate's X
    * @param y1 first coordinate's Y

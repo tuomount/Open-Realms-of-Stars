@@ -722,9 +722,11 @@ public class Planet {
           }
         }
       }
-      ShipStat[] ships = planetOwnerInfo.getShipStatList();
-      for (ShipStat stat : ships) {
-        result.add(new Ship(stat.getDesign()));
+      if (this.hasSpacePort()) {
+        ShipStat[] ships = planetOwnerInfo.getShipStatList();
+        for (ShipStat stat : ships) {
+          result.add(new Ship(stat.getDesign()));
+        }
       }
     }
     return result.toArray(new Construction[result.size()]);
@@ -961,6 +963,9 @@ public class Planet {
             metal = metal - underConstruction.getMetalCost();
             prodResource = prodResource - underConstruction.getProdCost();
             Ship ship = (Ship) underConstruction;
+            ShipStat stat = planetOwnerInfo.getShipStatByName(ship.getName());
+            stat.setNumberOfBuilt(stat.getNumberOfBuilt()+1);
+            stat.setNumberOfInUse(stat.getNumberOfInUse()+1);
             Fleet fleet = new Fleet(ship, getX(), getY());
             planetOwnerInfo.Fleets().add(fleet);
             msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(), 
@@ -1071,6 +1076,20 @@ public class Planet {
       }
     }
     return result;
+  }
+  
+  /**
+   * Check if planet has Space port for building ships
+   * @return True if planet has space port, otherwise false.
+   */
+  public boolean hasSpacePort() {
+    Building[] buildings  = getBuildingList();
+    for (Building building : buildings) {
+      if (building.getName().equals("Space port")) {
+        return true;
+      }
+    }
+    return false;
   }
   /**
    * Get planet Scanner Cloaking detection level

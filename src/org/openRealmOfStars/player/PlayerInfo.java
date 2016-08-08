@@ -67,7 +67,7 @@ public class PlayerInfo {
    * Space ship stat and design list
    */
   private ArrayList<ShipStat> shipStatList;
-
+  
   /**
    * Player fleets
    */
@@ -357,6 +357,19 @@ public class PlayerInfo {
     return null;
   }
   
+  /**
+   * Get Ship stat by name.
+   * @param name for search
+   * @return ShipStat if found otherwise null
+   */
+  public ShipStat getShipStatByName(String name) {
+    for (ShipStat stat : shipStatList) {
+      if (stat.getDesign().getName().equals(name)) {
+        return stat;
+      }
+    }
+    return null;
+  }
   /**
    * Get Ship Stat list as a fixed array
    * @return Ship Stat array

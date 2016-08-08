@@ -309,6 +309,8 @@ public class StarMap {
             ShipStat[] stats = playerInfo.getShipStatList();
             for (ShipStat stat : stats) {
               Ship ship = new Ship(stat.getDesign());
+              stat.setNumberOfBuilt(stat.getNumberOfBuilt()+1);
+              stat.setNumberOfInUse(stat.getNumberOfInUse()+1);
               Fleet fleet = new Fleet(ship, planet.getX(), planet.getY());
               playerInfo.Fleets().add(fleet);
               msg = new Message(MessageType.FLEET,

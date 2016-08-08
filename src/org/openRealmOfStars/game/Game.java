@@ -26,6 +26,7 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipDesign;
+import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 
@@ -485,6 +486,9 @@ public class Game extends JFrame implements ActionListener {
           }
           // Remove the ship and show the planet view you just colonized
           fleetView.getFleet().removeShip(ship);
+          ShipStat stat = starMap.getCurrentPlayerInfo()
+              .getShipStatByName(ship.getName());
+          stat.setNumberOfInUse(stat.getNumberOfInUse()-1);
           fleetView.getFleetList().recalculateList();
           starMapView.getStarMapMouseListener().setLastClickedFleet(null);
           starMapView.getStarMapMouseListener().setLastClickedPlanet(fleetView.getPlanet());

@@ -125,10 +125,10 @@ public class Route {
    * @return boolean
    */
   public boolean isEndReached() {
-    if (endX != startX || endY != startY) {
-      return false;
+    if (Math.round(endX) == Math.round(startX) && Math.round(endY) == Math.round(startY)) {
+      return true;
     }
-    return true;
+    return false;
   }
   
   /**

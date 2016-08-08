@@ -47,22 +47,27 @@ public class GameKeyAdapter implements KeyEventDispatcher {
        game.changeGameState(GameState.MAIN_MENU);
        return true;
      }
+     //FIXME: NUMPAD Move is missing
+     //FIXME: Collision detection is missing
      if (arg0.getKeyCode() == KeyEvent.VK_LEFT &&
          arg0.getID() == KeyEvent.KEY_PRESSED &&
          game.starMapView.readyToMove) {
        if (game.starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+         // Fleet move
          Fleet fleet = game.starMapView.getStarMapMouseListener().getLastClickedFleet(); 
          if (game.getStarMap().isValidCoordinate(fleet.getX()-1, fleet.getY())
              && fleet.movesLeft > 0) {
            fleet.setPos(fleet.getX()-1, fleet.getY());
            fleet.movesLeft--;
-           game.getStarMap().doFleetScanUpdate(game.players.getCurrentPlayerInfo(), fleet);
+           game.getStarMap().doFleetScanUpdate(game.players.getCurrentPlayerInfo(),
+               fleet,null);
            game.starMapView.updatePanels();
            game.getStarMap().setDrawPos(fleet.getX(),fleet.getY());
            game.starMapView.readyToMove = false;
          }
        } else {
-           game.getStarMap().setDrawPos(game.getStarMap().getDrawX()-1,
+         // Map scrolling
+         game.getStarMap().setDrawPos(game.getStarMap().getDrawX()-1,
               game.getStarMap().getDrawY());
            game.starMapView.readyToMove = false;
            return true;
@@ -72,17 +77,20 @@ public class GameKeyAdapter implements KeyEventDispatcher {
          arg0.getID() == KeyEvent.KEY_PRESSED &&
          game.starMapView.readyToMove) {
        if (game.starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+         // Fleet move
          Fleet fleet = game.starMapView.getStarMapMouseListener().getLastClickedFleet(); 
          if (game.getStarMap().isValidCoordinate(fleet.getX()+1, fleet.getY())
              && fleet.movesLeft > 0) {
            fleet.setPos(fleet.getX()+1, fleet.getY());
            fleet.movesLeft--;
-           game.getStarMap().doFleetScanUpdate(game.players.getCurrentPlayerInfo(), fleet);
+           game.getStarMap().doFleetScanUpdate(game.players.getCurrentPlayerInfo(),
+               fleet,null);
            game.starMapView.updatePanels();
            game.getStarMap().setDrawPos(fleet.getX(),fleet.getY());
            game.starMapView.readyToMove = false;
          }
        } else {
+         // Map scrolling
          game.getStarMap().setDrawPos(game.getStarMap().getDrawX()+1,
            game.getStarMap().getDrawY());
          game.starMapView.readyToMove = false;
@@ -93,17 +101,20 @@ public class GameKeyAdapter implements KeyEventDispatcher {
          arg0.getID() == KeyEvent.KEY_PRESSED &&
          game.starMapView.readyToMove) {
        if (game.starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+         // Fleet move
          Fleet fleet = game.starMapView.getStarMapMouseListener().getLastClickedFleet(); 
          if (game.getStarMap().isValidCoordinate(fleet.getX(), fleet.getY()+1) 
              && fleet.movesLeft > 0) {
            fleet.setPos(fleet.getX(), fleet.getY()+1);
            fleet.movesLeft--;
-           game.getStarMap().doFleetScanUpdate(game.players.getCurrentPlayerInfo(), fleet);
+           game.getStarMap().doFleetScanUpdate(game.players.getCurrentPlayerInfo(),
+               fleet,null);
            game.starMapView.updatePanels();
            game.getStarMap().setDrawPos(fleet.getX(),fleet.getY());
            game.starMapView.readyToMove = false;
          }
        } else {
+         // Map scrolling
          game.getStarMap().setDrawPos(game.getStarMap().getDrawX(),
            game.getStarMap().getDrawY()+1);
          game.starMapView.readyToMove = false;
@@ -114,17 +125,20 @@ public class GameKeyAdapter implements KeyEventDispatcher {
          arg0.getID() == KeyEvent.KEY_PRESSED &&
          game.starMapView.readyToMove)  {
        if (game.starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+         // Fleet move
          Fleet fleet = game.starMapView.getStarMapMouseListener().getLastClickedFleet(); 
          if (game.getStarMap().isValidCoordinate(fleet.getX(), fleet.getY()-1)
              && fleet.movesLeft > 0) {
            fleet.setPos(fleet.getX(), fleet.getY()-1);
            fleet.movesLeft--;
-           game.getStarMap().doFleetScanUpdate(game.players.getCurrentPlayerInfo(), fleet);
+           game.getStarMap().doFleetScanUpdate(game.players.getCurrentPlayerInfo(),
+               fleet,null);
            game.starMapView.updatePanels();
            game.getStarMap().setDrawPos(fleet.getX(),fleet.getY());
            game.starMapView.readyToMove = false;
          }         
        } else {
+         // Map scrolling
         game.getStarMap().setDrawPos(game.getStarMap().getDrawX(),
             game.getStarMap().getDrawY()-1);
         game.starMapView.readyToMove = false;

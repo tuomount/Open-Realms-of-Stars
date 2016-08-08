@@ -561,7 +561,7 @@ public class StarMap {
             info.getMsgList().addNewMessage(msg);
           }
           fleet.movesLeft = fleet.getFleetSpeed();
-          doFleetScanUpdate(info, fleet);
+          doFleetScanUpdate(info, fleet,null);
         }
       }
     }
@@ -570,31 +570,40 @@ public class StarMap {
       if (planet.getPlanetPlayerInfo() != null) {
         PlayerInfo info = planet.getPlanetPlayerInfo();
         planet.updateOneTurn();
-        int scanRad = planet.getScannerLvl();
-        int cloakDetection = planet.getCloakingDetectionLvl();
-        for (int y=-scanRad;y<scanRad+1;y++) {
-          for (int x=-scanRad;x<scanRad+1;x++) {
-            drawVisibilityLine(info, planet.getX(), planet.getY(),
-                planet.getX()+x, planet.getY()+y, cloakDetection, scanRad);
-          }
-        }
+        doFleetScanUpdate(info, null,planet);
       }
     }
     turn=turn+1;
   }
   
   /**
-   * Do Fleet scan Update for starmap
+   * Do Fleet/Planet scan Update for starmap. Fleet or planet can be null
+   * but only one should be null.
    * @param info Player who controls the fleet
    * @param fleet Fleet which is doing the rescan
+   * @param planet Planet which is doing the rescan
    */
-  public void doFleetScanUpdate(PlayerInfo info, Fleet fleet) {
-    int scanRad = fleet.getFleetScannerLvl();
-    int cloakDetection = fleet.getFleetCloakDetection();
-    for (int y=-scanRad;y<scanRad+1;y++) {
-      for (int x=-scanRad;x<scanRad+1;x++) {
-        drawVisibilityLine(info, fleet.getX(), fleet.getY(),
-            fleet.getX()+x, fleet.getY()+y, cloakDetection, scanRad);
+  public void doFleetScanUpdate(PlayerInfo info, Fleet fleet,Planet planet) {
+    int scanRad=-1; 
+    int cloakDetection=0; 
+    int cx=0;
+    int cy=0;
+    if (fleet != null) {
+      scanRad = fleet.getFleetScannerLvl();
+      cloakDetection = fleet.getFleetCloakDetection();
+      cx = fleet.getX();
+      cy = fleet.getY();
+    } else if (planet != null) {
+      scanRad = planet.getScannerLvl();
+      cloakDetection = planet.getCloakingDetectionLvl();
+      cx = planet.getX();
+      cy = planet.getY();
+    }
+    if (scanRad != -1) {
+      for (int y=-scanRad;y<scanRad+1;y++) {
+        for (int x=-scanRad;x<scanRad+1;x++) {
+          drawVisibilityLine(info, cx, cy,cx+x, cy+y, cloakDetection, scanRad);
+        }
       }
     }
   }
@@ -609,7 +618,7 @@ public class StarMap {
         for (int j = 0;j<info.Fleets().getNumberOfFleets();j++) {
           Fleet fleet = info.Fleets().getByIndex(j);
           fleet.movesLeft = fleet.getFleetSpeed();
-          doFleetScanUpdate(info, fleet);
+          doFleetScanUpdate(info, fleet,null);
         }
       }
     }
@@ -617,14 +626,7 @@ public class StarMap {
       Planet planet = planetList.get(i);
       if (planet.getPlanetPlayerInfo() != null) {
         PlayerInfo info = planet.getPlanetPlayerInfo();
-        int scanRad = planet.getScannerLvl();
-        int cloakDetection = planet.getCloakingDetectionLvl();
-        for (int y=-scanRad;y<scanRad+1;y++) {
-          for (int x=-scanRad;x<scanRad+1;x++) {
-            drawVisibilityLine(info, planet.getX(), planet.getY(),
-                planet.getX()+x, planet.getY()+y, cloakDetection, scanRad);
-          }
-        }
+        doFleetScanUpdate(info, null,planet);
       }
     }
   }
@@ -644,12 +646,14 @@ public class StarMap {
     double startY = sy;
     double dx = Math.abs(startX-ex);
     double dy = Math.abs(startY-ey);
+    // Calculate distance to end
     int distance = (int) dy;
     if (dx > dy) {
       distance = (int) dx;
     }
     double mx;
     double my;
+    // Calculate how much move each round
     if (distance > 0) {
       mx = (ex-startX)/distance;
       my = (ey-startY)/distance;
@@ -662,12 +666,14 @@ public class StarMap {
     if (detectValue > 0){
       info.setSectorCloakingDetection(sx, sy, detectValue);
     }
+    // Moving loop
     for (int i=0;i<distance;i++) {
       startX = startX +mx;
       startY = startY +my;
       int nx = (int) Math.round(startX);
       int ny = (int) Math.round(startY);
       if (getDistance(sx, sy, nx, ny) > maxRad) {
+        // We have moved to maximum radius
         break;
       }
       if (isValidCoordinate(nx, ny)) {
@@ -676,6 +682,7 @@ public class StarMap {
           info.setSectorCloakingDetection(nx, ny, detectValue);
         }
         if (tileInfo[nx][ny].isVisibilityBlocked()) {
+          // There is something that blocks the vision
           break;
         }
         if (detectValue > 0) {

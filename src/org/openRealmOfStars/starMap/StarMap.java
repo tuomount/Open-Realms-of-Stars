@@ -61,6 +61,11 @@ public class StarMap {
   private SquareInfo tileInfo[][];
   
   /**
+   * Culture level for each sector
+   */
+  private CulturePower culture[][];
+  
+  /**
    * Solar system width
    */
   private final static int SOLARSYSTEMWIDTH = 7;
@@ -122,6 +127,7 @@ public class StarMap {
     tiles = new int[maxX][maxY];
     tileInfo = new SquareInfo[maxX][maxY];
     fleetTiles = new FleetTileInfo[maxX][maxY];
+    culture = new CulturePower[maxX][maxY];
     sunList = new ArrayList<>();
     planetList = new ArrayList<>();
     Tile empty = Tiles.getTileByName(TileNames.EMPTY);
@@ -750,7 +756,21 @@ public class StarMap {
       return null;
     }
   }
-  
+
+  /**
+   * Get culture power
+   * @param x
+   * @param y
+   * @return Culture power or null
+   */
+  public CulturePower getSectorCulture(int x, int y) {
+    if (isValidCoordinate(x, y)) {
+      return culture[x][y];
+    } else {
+      return null;
+    }
+  }
+
   /**
    * Is tile blocked or not
    * @param x X coordinate

@@ -148,6 +148,17 @@ public class Tiles {
     // Reading the uncharted 
     tile = new Tile(tilesImage, 10, 0,TileNames.UNCHARTED);
     addTile(tile);
+    // Reading the culture tiles
+    tile = new Tile(tilesImage, 3, 2,TileNames.MECHIONS);
+    addTile(tile);
+    tile = new Tile(tilesImage, 4, 2,TileNames.SPORKS);
+    addTile(tile);
+    tile = new Tile(tilesImage, 5, 2,TileNames.HUMANS);
+    addTile(tile);
+    tile = new Tile(tilesImage, 6, 2,TileNames.CENTAURS);
+    addTile(tile);
+    tile = new Tile(tilesImage, 6, 3,TileNames.GREYANS);
+    addTile(tile);
   }
   
 

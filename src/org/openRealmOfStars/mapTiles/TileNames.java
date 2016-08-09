@@ -61,4 +61,11 @@ public class TileNames {
   public final static String FOG_OF_WAR = "FOG_OF_WAR";
   public final static String UNCHARTED = "UNCHARTED";
 
+  // Culture tiles
+  public final static String MECHIONS = "MechionCulture";
+  public final static String SPORKS = "SporkCulture";
+  public final static String HUMANS = "HumanCulture";
+  public final static String CENTAURS = "CentaurCulture";
+  public final static String GREYANS = "GreyanCulture";
+
 }

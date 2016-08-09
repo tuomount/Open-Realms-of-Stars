@@ -972,6 +972,9 @@ public class Planet {
             ShipStat stat = planetOwnerInfo.getShipStatByName(ship.getName());
             stat.setNumberOfBuilt(stat.getNumberOfBuilt()+1);
             stat.setNumberOfInUse(stat.getNumberOfInUse()+1);
+            if (stat.getDesign().getTotalMilitaryPower()>0) {
+              culture=culture+stat.getDesign().getTotalMilitaryPower()/4;
+            }
             Fleet fleet = new Fleet(ship, getX(), getY());
             planetOwnerInfo.Fleets().add(fleet);
             msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(), 

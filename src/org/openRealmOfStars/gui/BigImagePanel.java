@@ -74,8 +74,10 @@ public class BigImagePanel extends JPanel {
     super();
     this.setBackground(Color.black);
     this.planet = planet;
-    if (this.planet != null) {
+    if (this.planet != null && !this.planet.isGasGiant()) {
       backgroundImg = Planet.PLANET_BIG_IMAGES[this.planet.getPlanetType()];
+    } else if (this.planet != null && this.planet.isGasGiant()) {
+      backgroundImg = Planet.GASWORLD_BIG_IMAGES[this.planet.getPlanetType()];
     } else {
       backgroundImg = null;
     }
@@ -153,6 +155,9 @@ public class BigImagePanel extends JPanel {
           GuiStatics.getTextWidth(GuiStatics.getFontCubellanBold(), texts[0])/2+
           backgroundImg.getWidth()/2;
       int offsetY = (575-backgroundImg.getHeight())/2;
+      if (planet.isGasGiant()) {
+        offsetY = offsetY+200;
+      }
       g.setFont(GuiStatics.getFontCubellanBold());
       drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS,
           GuiStatics.COLOR_COOL_SPACE_BLUE_TRANS, offsetX, offsetY, texts[0]);

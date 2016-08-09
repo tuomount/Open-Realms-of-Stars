@@ -60,6 +60,12 @@ public class Planet {
     {GuiStatics.BIG_PLANET_ROCK1,GuiStatics.BIG_PLANET_WATERWORLD1};
 
   /**
+   * List of big planet images
+   */
+  public static final BufferedImage[] GASWORLD_BIG_IMAGES = 
+    {GuiStatics.BIG_GASWORLD2,GuiStatics.BIG_GASWORLD1};
+
+  /**
    * Planet name
    */
   private String name;

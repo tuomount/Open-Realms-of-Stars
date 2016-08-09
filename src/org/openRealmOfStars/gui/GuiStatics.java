@@ -293,7 +293,19 @@ public class GuiStatics {
    */
   public final static BufferedImage BIG_PLANET_WATERWORLD1 = IOUtilities.loadImage(Tiles.class.getResource(
       "/resources/images/waterworld1.png"));
-  
+
+  /**
+   * Big planet gasworld
+   */
+  public final static BufferedImage BIG_GASWORLD1 = IOUtilities.loadImage(Tiles.class.getResource(
+      "/resources/images/gasworld1.png"));
+
+  /**
+   * Big planet screen gasworld
+   */
+  public final static BufferedImage BIG_GASWORLD2 = IOUtilities.loadImage(Tiles.class.getResource(
+      "/resources/images/gasworld2.png"));
+
   /**
    * Star field image for parallax scrolling
    */

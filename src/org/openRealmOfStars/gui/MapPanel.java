@@ -326,7 +326,12 @@ public class MapPanel extends JPanel {
             }
             break;
           }
-          case PlayerInfo.FOG_OF_WAR: Tiles.getTileByName(TileNames.FOG_OF_WAR).draw(gr, pixelX, pixelY); break;
+          case PlayerInfo.FOG_OF_WAR: {
+            if (starMap.getTileInfo(i+cx, j+cy).getType() != SquareInfo.TYPE_SUN) {
+              Tiles.getTileByName(TileNames.FOG_OF_WAR).draw(gr, pixelX, pixelY);
+            }
+            break;
+          }
           }
         }
         

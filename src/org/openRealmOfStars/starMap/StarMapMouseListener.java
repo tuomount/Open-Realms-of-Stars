@@ -6,6 +6,7 @@ import java.awt.event.MouseMotionListener;
 
 import org.openRealmOfStars.gui.MapPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
@@ -126,7 +127,9 @@ public class StarMapMouseListener extends MouseAdapter implements
     coord= new PixelsToMapCoordinate(mapPanel.getLastDrawnX(),
           mapPanel.getLastDrawnY(),e.getX(),e.getY(),mapPanel.getOffsetX(),mapPanel.getOffsetY(),
           mapPanel.getViewPointX(),mapPanel.getViewPointY());
-      if (!coord.isOutOfPanel()) {
+      if (!coord.isOutOfPanel() &&
+          starMap.getCurrentPlayerInfo().getSectorVisibility(coord.getMapX(),
+              coord.getMapY())==PlayerInfo.VISIBLE) {
         starMap.setCursorPos(coord.getMapX(), coord.getMapY());
         if (routePlanning && lastClickedFleet != null) {
           Route route = new Route(lastClickedFleet.getX(), lastClickedFleet.getY(),

@@ -51,7 +51,12 @@ public class MainMenu extends BlackPanel {
    */
   public MainMenu(ActionListener listener) {
     Planet planet = new Planet(1, 1, "Main Menu Planet",1, false);
-    planet.setPlanetType(DiceGenerator.getRandom(Planet.PLANET_IMAGE_INDEX.length-1));
+    if (DiceGenerator.getRandom(100)<10) {
+      planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
+      planet.setGasGiant(true);
+    } else {
+      planet.setPlanetType(DiceGenerator.getRandom(Planet.PLANET_IMAGE_INDEX.length-1));
+    }
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true,"Open Realm of Stars");
     this.setLayout(new BorderLayout());

@@ -77,7 +77,7 @@ public class BigImagePanel extends JPanel {
     if (this.planet != null && !this.planet.isGasGiant()) {
       backgroundImg = Planet.PLANET_BIG_IMAGES[this.planet.getPlanetType()];
     } else if (this.planet != null && this.planet.isGasGiant()) {
-      backgroundImg = Planet.GASWORLD_BIG_IMAGES[this.planet.getPlanetType()];
+      backgroundImg = Planet.GASWORLD_BIG_IMAGES[this.planet.getPlanetImageIndex()];
     } else {
       backgroundImg = null;
     }
@@ -186,6 +186,9 @@ public class BigImagePanel extends JPanel {
           GuiStatics.getTextWidth(GuiStatics.getFontCubellanBoldBig(), title)/2+
           backgroundImg.getWidth()/2;
         offsetY = (575-backgroundImg.getHeight())/2;
+        if (planet.isGasGiant()) {
+          offsetY=offsetY+100;
+        }
       }
       drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK,
           GuiStatics.COLOR_COOL_SPACE_BLUE, offsetX, offsetY, title);
@@ -216,11 +219,19 @@ public class BigImagePanel extends JPanel {
       if (title == null) {
         int offsetX = (575-backgroundImg.getWidth())/2;
         int offsetY = (575-backgroundImg.getHeight())/2;
+        if (planet.isGasGiant()) {
+          offsetY = offsetY+200;
+          offsetX = offsetX+200;
+        }
         g2d.drawImage(backgroundImg,offsetX,offsetY,null);
       } else {
         g2d.drawImage(GuiStatics.nebulaeImage,-sx,-sy,null);
         int offsetX = (this.getWidth()-backgroundImg.getWidth())/2;
         int offsetY = (575-backgroundImg.getHeight())/2;
+        if (planet.isGasGiant()) {
+          offsetY = offsetY+100;
+          offsetX = offsetX+100;
+        }
         g2d.drawImage(backgroundImg,offsetX,offsetY,null);      
       }
     } else {

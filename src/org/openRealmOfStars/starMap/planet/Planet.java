@@ -63,7 +63,7 @@ public class Planet {
    * List of big planet images
    */
   public static final BufferedImage[] GASWORLD_BIG_IMAGES = 
-    {GuiStatics.BIG_GASWORLD2,GuiStatics.BIG_GASWORLD1};
+    {GuiStatics.BIG_GASWORLD1,GuiStatics.BIG_GASWORLD2};
 
   /**
    * Planet name

@@ -135,6 +135,7 @@ public class StarMap {
       for (int j=0;j<maxY;j++) {
         tiles[i][j] = empty.getIndex();
         tileInfo[i][j] = SquareInfo.EMPTY_TILE;
+        culture[i][j] = new CulturePower();
       }
     }
     turn = 0;
@@ -298,6 +299,7 @@ public class StarMap {
             planet.setRadiationLevel(1);
             planet.setGroundSize(12);
             planet.setAmountMetalInGround(8000);
+            planet.setCulture(5);
             planet.addBuilding(BuildingFactory.createByName("Space port"));
             if (playerInfo.getRace() == SpaceRace.MECHIONS) {
               planet.setWorkers(Planet.FOOD_FARMERS, 0);
@@ -541,6 +543,7 @@ public class StarMap {
    * Update whole star map to next turn
    */
   public void updateStarMapToNextTurn() {
+    resetCulture();
     for (int i=0;i<players.getCurrentMaxPlayers();i++) {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null) {
@@ -590,6 +593,10 @@ public class StarMap {
       Planet planet = planetList.get(i);
       if (planet.getPlanetPlayerInfo() != null) {
         PlayerInfo info = planet.getPlanetPlayerInfo();
+        int index =players.getIndex(info);
+        if (index > -1) {
+          calculateCulture(planet.getX(), planet.getY(), planet.getCulture(), index);
+        }
         planet.updateOneTurn();
         doFleetScanUpdate(info, null,planet);
       }
@@ -645,9 +652,205 @@ public class StarMap {
     }
     for (int i=0;i<planetList.size();i++) {
       Planet planet = planetList.get(i);
-      if (planet.getPlanetPlayerInfo() != null) {
+      if (planet.getPlanetPlayerInfo() != null) {        
         PlayerInfo info = planet.getPlanetPlayerInfo();
+        int index =players.getIndex(info);
+        if (index > -1) {
+          calculateCulture(planet.getX(), planet.getY(), planet.getCulture(), index);
+        }
         doFleetScanUpdate(info, null,planet);
+      }
+    }
+  }
+  
+  
+  /**
+   * Calculate culture on map
+   * @param cx Center of culture X coordinate
+   * @param cy Center of culture Y coordinate
+   * @param value Culture value
+   * @param index Player index
+   */
+  private void calculateCulture(int cx, int cy, int value, int index) {
+    String mask = null;
+    if (value < 5) {
+      //           765432101234567
+      mask = /*7*/"...............\n"+
+             /*6*/"...............\n"+
+             /*5*/"...............\n"+
+             /*4*/"...............\n"+
+             /*3*/"...............\n"+
+             /*2*/"...............\n"+
+             /*1*/".......X.......\n"+
+             /*0*/"......XXX......\n"+
+             /*1*/".......X.......\n"+
+             /*2*/"...............\n"+
+             /*3*/"...............\n"+
+             /*4*/"...............\n"+
+             /*5*/"...............\n"+
+             /*6*/"...............\n"+
+             /*7*/"...............\n";
+    } else if (value < 10) {
+      //           765432101234567
+      mask = /*7*/"...............\n"+
+             /*6*/"...............\n"+
+             /*5*/"...............\n"+
+             /*4*/"...............\n"+
+             /*3*/"...............\n"+
+             /*2*/"...............\n"+
+             /*1*/"......XXX......\n"+
+             /*0*/"......XXX......\n"+
+             /*1*/"......XXX......\n"+
+             /*2*/"...............\n"+
+             /*3*/"...............\n"+
+             /*4*/"...............\n"+
+             /*5*/"...............\n"+
+             /*6*/"...............\n"+
+             /*7*/"...............\n";
+    } else if (value < 20) {
+      //           765432101234567
+      mask = /*7*/"...............\n"+
+             /*6*/"...............\n"+
+             /*5*/"...............\n"+
+             /*4*/"...............\n"+
+             /*3*/"...............\n"+
+             /*2*/".......X.......\n"+
+             /*1*/"......XXX......\n"+
+             /*0*/".....XXXXX.....\n"+
+             /*1*/"......XXX......\n"+
+             /*2*/".......X.......\n"+
+             /*3*/"...............\n"+
+             /*4*/"...............\n"+
+             /*5*/"...............\n"+
+             /*6*/"...............\n"+
+             /*7*/"...............\n";
+    } else if (value < 40) {
+      //           765432101234567
+      mask = /*7*/"...............\n"+
+             /*6*/"...............\n"+
+             /*5*/"...............\n"+
+             /*4*/"...............\n"+
+             /*3*/".......X.......\n"+
+             /*2*/"......XXX......\n"+
+             /*1*/".....XXXXX.....\n"+
+             /*0*/"....XXXXXXX....\n"+
+             /*1*/".....XXXXX.....\n"+
+             /*2*/"......XXX......\n"+
+             /*3*/".......X.......\n"+
+             /*4*/"...............\n"+
+             /*5*/"...............\n"+
+             /*6*/"...............\n"+
+             /*7*/"...............\n";
+    } else if (value < 80) {
+      //           765432101234567
+      mask = /*7*/"...............\n"+
+             /*6*/"...............\n"+
+             /*5*/"...............\n"+
+             /*4*/".......X.......\n"+
+             /*3*/"......XXX......\n"+
+             /*2*/".....XXXXX.....\n"+
+             /*1*/"....XXXXXXX....\n"+
+             /*0*/"...XXXXXXXXX...\n"+
+             /*1*/"....XXXXXXX....\n"+
+             /*2*/".....XXXXX.....\n"+
+             /*3*/"......XXX......\n"+
+             /*4*/".......X.......\n"+
+             /*5*/"...............\n"+
+             /*6*/"...............\n"+
+             /*7*/"...............\n";
+    } else if (value < 160) {
+      //           765432101234567
+      mask = /*7*/"...............\n"+
+             /*6*/"...............\n"+
+             /*5*/"...............\n"+
+             /*4*/"......XXX......\n"+
+             /*3*/".....XXXXX.....\n"+
+             /*2*/"....XXXXXXX....\n"+
+             /*1*/"...XXXXXXXXX...\n"+
+             /*0*/"...XXXXXXXXX...\n"+
+             /*1*/"...XXXXXXXXX...\n"+
+             /*2*/"....XXXXXXX....\n"+
+             /*3*/".....XXXXX.....\n"+
+             /*4*/"......XXX......\n"+
+             /*5*/"...............\n"+
+             /*6*/"...............\n"+
+             /*7*/"...............\n";
+    } else if (value < 320) {
+      //           765432101234567
+      mask = /*7*/"...............\n"+
+             /*6*/"...............\n"+
+             /*5*/"......XXX......\n"+
+             /*4*/".....XXXXX.....\n"+
+             /*3*/"....XXXXXXX....\n"+
+             /*2*/"...XXXXXXXXX...\n"+
+             /*1*/"..XXXXXXXXXXX..\n"+
+             /*0*/"..XXXXXXXXXXX..\n"+
+             /*1*/"..XXXXXXXXXXX..\n"+
+             /*2*/"...XXXXXXXXX...\n"+
+             /*3*/"....XXXXXXX....\n"+
+             /*4*/".....XXXXX.....\n"+
+             /*5*/"......XXX......\n"+
+             /*6*/"...............\n"+
+             /*7*/"...............\n";
+    } else if (value < 640) {
+      //           765432101234567
+      mask = /*7*/"...............\n"+
+             /*6*/"......XXX......\n"+
+             /*5*/".....XXXXX.....\n"+
+             /*4*/"....XXXXXXX....\n"+
+             /*3*/"...XXXXXXXXX...\n"+
+             /*2*/"..XXXXXXXXXXX..\n"+
+             /*1*/".XXXXXXXXXXXXX.\n"+
+             /*0*/".XXXXXXXXXXXXX.\n"+
+             /*1*/".XXXXXXXXXXXXX.\n"+
+             /*2*/"..XXXXXXXXXXX..\n"+
+             /*3*/"...XXXXXXXXX...\n"+
+             /*4*/"....XXXXXXX....\n"+
+             /*5*/".....XXXXX.....\n"+
+             /*6*/"......XXX......\n"+
+             /*7*/"...............\n";
+    } else if (value < 1280) {
+      //           765432101234567
+      mask = /*7*/".......X.......\n"+
+             /*6*/"......XXX......\n"+
+             /*5*/"....XXXXXXX....\n"+
+             /*4*/"....XXXXXXX....\n"+
+             /*3*/"..XXXXXXXXXXX..\n"+
+             /*2*/"..XXXXXXXXXXX..\n"+
+             /*1*/".XXXXXXXXXXXXX.\n"+
+             /*0*/"XXXXXXXXXXXXXXX\n"+
+             /*1*/".XXXXXXXXXXXXX.\n"+
+             /*2*/"..XXXXXXXXXXX..\n"+
+             /*3*/"..XXXXXXXXXXX..\n"+
+             /*4*/"....XXXXXXX....\n"+
+             /*5*/"....XXXXXXX....\n"+
+             /*6*/"......XXX......\n"+
+             /*7*/".......X.......\n";
+    }
+
+    
+    String[] lines = mask.split("\n");
+    int x = -7;
+    int y = -7;
+    for (int line = 0;line <lines.length;line++) {
+      for (int col=0;col<lines[line].length();col++) {
+        if (lines[line].charAt(col)=='X') {
+          addSectorCulture(cx+x, cy+y, index, value);
+        }
+        x++;
+      }
+      x = -7;
+      y++;
+    }
+  }
+  
+  /**
+   * Reset culture information for whole map
+   */
+  private void resetCulture() {
+    for (int i=0;i<maxX;i++) {
+      for (int j=0;j<maxY;j++) {
+        culture[i][j].reset();
       }
     }
   }
@@ -768,6 +971,19 @@ public class StarMap {
       return culture[x][y];
     } else {
       return null;
+    }
+  }
+
+  /**
+   * Add culture power
+   * @param x X coordinate
+   * @param y Y Coordinate
+   * @param index Player index from player list
+   * @param value Culture value to add
+   */
+  public void addSectorCulture(int x, int y,int index,int value) {
+    if (isValidCoordinate(x, y)) {
+      culture[x][y].addCulture(index, value);
     }
   }
 

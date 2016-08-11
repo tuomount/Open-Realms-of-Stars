@@ -102,6 +102,21 @@ public class PlayerList {
   }
   
   /**
+   * Get player index for player info
+   * @param toMatch PlayerInfo to match
+   * @return Index or -1 if no match
+   */
+  public int getIndex(PlayerInfo toMatch) {
+    for (int i=0;i<list.size();i++) {
+      PlayerInfo info = list.get(i);
+      if (info.hashCode() == toMatch.hashCode() &&
+          info.getEmpireName().equals(toMatch.getEmpireName())) {
+        return i;
+      }
+    }
+    return -1;
+  }
+  /**
    * Init players visibility maps
    * @param maxX Map x size
    * @param maxY Map y size

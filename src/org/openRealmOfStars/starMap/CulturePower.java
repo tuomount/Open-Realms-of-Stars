@@ -64,7 +64,7 @@ public class CulturePower {
    * @return Player index or -1 if no culture at all
    */
   public int getHighestCulture() {
-    int value = -1;
+    int value = 0;
     int index = -1;
     for (int i=0;i<PlayerList.MAX_PLAYERS;i++) {
       if (culture[i]>value) {

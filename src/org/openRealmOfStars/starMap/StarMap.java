@@ -299,7 +299,6 @@ public class StarMap {
             planet.setRadiationLevel(1);
             planet.setGroundSize(12);
             planet.setAmountMetalInGround(8000);
-            planet.setCulture(5);
             planet.addBuilding(BuildingFactory.createByName("Space port"));
             if (playerInfo.getRace() == SpaceRace.MECHIONS) {
               planet.setWorkers(Planet.FOOD_FARMERS, 0);
@@ -593,11 +592,11 @@ public class StarMap {
       Planet planet = planetList.get(i);
       if (planet.getPlanetPlayerInfo() != null) {
         PlayerInfo info = planet.getPlanetPlayerInfo();
+        planet.updateOneTurn();
         int index =players.getIndex(info);
         if (index > -1) {
           calculateCulture(planet.getX(), planet.getY(), planet.getCulture(), index);
         }
-        planet.updateOneTurn();
         doFleetScanUpdate(info, null,planet);
       }
     }

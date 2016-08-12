@@ -127,9 +127,7 @@ public class StarMapMouseListener extends MouseAdapter implements
     coord= new PixelsToMapCoordinate(mapPanel.getLastDrawnX(),
           mapPanel.getLastDrawnY(),e.getX(),e.getY(),mapPanel.getOffsetX(),mapPanel.getOffsetY(),
           mapPanel.getViewPointX(),mapPanel.getViewPointY());
-      if (!coord.isOutOfPanel() &&
-          starMap.getCurrentPlayerInfo().getSectorVisibility(coord.getMapX(),
-              coord.getMapY())==PlayerInfo.VISIBLE) {
+      if (!coord.isOutOfPanel()) {
         starMap.setCursorPos(coord.getMapX(), coord.getMapY());
         if (routePlanning && lastClickedFleet != null) {
           Route route = new Route(lastClickedFleet.getX(), lastClickedFleet.getY(),
@@ -167,22 +165,25 @@ public class StarMapMouseListener extends MouseAdapter implements
         mapPanel.setRoute(null);
         routePlanning = false;
       }
-      Planet planet = starMap.getPlanetByCoordinate(coord.getMapX(),
-                                                    coord.getMapY());
-      Fleet fleet = starMap.getFleetByCoordinate(coord.getMapX(), coord.getMapY());
-      if (lastClickedPlanet == planet && fleet != null) {
-        mapInfoPanel.showFleet(fleet);
-        setLastClickedFleet(fleet);
-        setLastClickedPlanet(null);
-      } else if (planet != null) {
-        mapInfoPanel.showPlanet(planet);
-        setLastClickedPlanet(planet);
-      } else if(fleet != null) {
-        mapInfoPanel.showFleet(fleet);
-        setLastClickedFleet(fleet);
-      } else {
-        mapInfoPanel.showEmpty();
-        setLastClickedPlanet(null);
+      if (starMap.getCurrentPlayerInfo().getSectorVisibility(coord.getMapX(),
+              coord.getMapY())==PlayerInfo.VISIBLE) {
+        Planet planet = starMap.getPlanetByCoordinate(coord.getMapX(),
+                                                      coord.getMapY());
+        Fleet fleet = starMap.getFleetByCoordinate(coord.getMapX(), coord.getMapY());
+        if (lastClickedPlanet == planet && fleet != null) {
+          mapInfoPanel.showFleet(fleet);
+          setLastClickedFleet(fleet);
+          setLastClickedPlanet(null);
+        } else if (planet != null) {
+          mapInfoPanel.showPlanet(planet);
+          setLastClickedPlanet(planet);
+        } else if(fleet != null) {
+          mapInfoPanel.showFleet(fleet);
+          setLastClickedFleet(fleet);
+        } else {
+          mapInfoPanel.showEmpty();
+          setLastClickedPlanet(null);
+        }
       }
     }
 

@@ -62,10 +62,13 @@ public class TileNames {
   public final static String UNCHARTED = "UNCHARTED";
 
   // Culture tiles
-  public final static String MECHIONS = "MechionCulture";
-  public final static String SPORKS = "SporkCulture";
-  public final static String HUMANS = "HumanCulture";
-  public final static String CENTAURS = "CentaurCulture";
-  public final static String GREYANS = "GreyanCulture";
+  public final static String PLAYER_0 = "Player_0";
+  public final static String PLAYER_1 = "Player_1";
+  public final static String PLAYER_2 = "Player_2";
+  public final static String PLAYER_3 = "Player_3";
+  public final static String PLAYER_4 = "Player_4";
+  public final static String PLAYER_5 = "Player_5";
+  public final static String PLAYER_6 = "Player_6";
+  public final static String PLAYER_7 = "Player_7";
 
 }

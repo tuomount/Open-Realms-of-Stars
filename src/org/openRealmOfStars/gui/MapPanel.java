@@ -15,7 +15,6 @@ import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.Route;
@@ -303,9 +302,10 @@ public class MapPanel extends JPanel {
         if (culture != null) {
           int index = culture.getHighestCulture();
           if (index != -1) {
-            Tile tile = Tiles.getTileByName(SpaceRace.getRaceByIndex(index)
-                .getCultureTile());
-            tile.draw(gr, pixelX, pixelY);
+            Tile tile = Tiles.getTileByName("Player_"+index);
+            if (tile != null) {
+              tile.draw(gr, pixelX, pixelY);
+            }
           }
         }
         Tile tile = Tiles.getTileByIndex(map[i+cx][j+cy]);

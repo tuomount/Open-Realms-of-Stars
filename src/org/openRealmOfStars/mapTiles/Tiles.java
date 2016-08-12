@@ -149,15 +149,21 @@ public class Tiles {
     tile = new Tile(tilesImage, 10, 0,TileNames.UNCHARTED);
     addTile(tile);
     // Reading the culture tiles
-    tile = new Tile(tilesImage, 3, 2,TileNames.MECHIONS);
+    tile = new Tile(tilesImage, 3, 2,TileNames.PLAYER_0);
     addTile(tile);
-    tile = new Tile(tilesImage, 4, 2,TileNames.SPORKS);
+    tile = new Tile(tilesImage, 4, 2,TileNames.PLAYER_1);
     addTile(tile);
-    tile = new Tile(tilesImage, 5, 2,TileNames.HUMANS);
+    tile = new Tile(tilesImage, 5, 2,TileNames.PLAYER_2);
     addTile(tile);
-    tile = new Tile(tilesImage, 6, 2,TileNames.CENTAURS);
+    tile = new Tile(tilesImage, 6, 2,TileNames.PLAYER_3);
     addTile(tile);
-    tile = new Tile(tilesImage, 6, 3,TileNames.GREYANS);
+    tile = new Tile(tilesImage, 6, 3,TileNames.PLAYER_4);
+    addTile(tile);
+    tile = new Tile(tilesImage, 5, 3,TileNames.PLAYER_5);
+    addTile(tile);
+    tile = new Tile(tilesImage, 4, 3,TileNames.PLAYER_6);
+    addTile(tile);
+    tile = new Tile(tilesImage, 3, 3,TileNames.PLAYER_7);
     addTile(tile);
   }
   

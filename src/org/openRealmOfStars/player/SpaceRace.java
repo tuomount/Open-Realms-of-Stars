@@ -265,19 +265,5 @@ public enum SpaceRace {
     return 0;
   }
 
-  /**
-   * Get racial culture tiel
-   * @return Tile name
-   */
-  public String getCultureTile() {
-    switch (this) {
-    case HUMAN: return TileNames.HUMANS;
-    case MECHIONS: return TileNames.MECHIONS;
-    case SPORKS: return TileNames.SPORKS;
-    case GREYANS: return TileNames.GREYANS;
-    case CENTAURS: return TileNames.CENTAURS;
-    }
-    return TileNames.HUMANS;
-  }
 
 }

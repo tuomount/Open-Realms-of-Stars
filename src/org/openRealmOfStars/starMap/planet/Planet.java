@@ -201,13 +201,15 @@ public class Planet {
     boolean result = false;
     int index = -1;
     int value = 0;
+    int total=0;
     for (int i = 0;i<MAX_WORKER_TYPE;i++) {
+      total = total +workers[i];
       if (workers[i] > value) {
         value = workers[i];
         index = i;
       }
     }
-    if (index != -1 && value > 0) {
+    if (index != -1 && value > 0 && total > 1) {
       workers[index]--;
       result = true;
     }

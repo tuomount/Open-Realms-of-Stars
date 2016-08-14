@@ -56,6 +56,9 @@ public class TileNames {
   // Name for Planets
   public final static String ROCK1 = "ROCK1";
   public final static String WATERWORLD1 = "WATERWORLD1";
+  public final static String WATERWORLD2 = "WATERWORLD2";
+  public final static String IRONPLANET1 = "IRONPLANET1";
+  public final static String IRONPLANET2 = "IRONPLANET2";
   
   // Fog of war and uncharted
   public final static String FOG_OF_WAR = "FOG_OF_WAR";

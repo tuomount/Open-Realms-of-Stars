@@ -51,13 +51,18 @@ public class Planet {
    */
   public static final int[] PLANET_IMAGE_INDEX = 
       {Tiles.getTileByName(TileNames.ROCK1).getIndex(),
-       Tiles.getTileByName(TileNames.WATERWORLD1).getIndex()};
+       Tiles.getTileByName(TileNames.WATERWORLD1).getIndex(),
+       Tiles.getTileByName(TileNames.WATERWORLD2).getIndex(),
+       Tiles.getTileByName(TileNames.IRONPLANET1).getIndex(),
+       Tiles.getTileByName(TileNames.IRONPLANET2).getIndex()};
 
   /**
    * List of big planet images
    */
   public static final BufferedImage[] PLANET_BIG_IMAGES = 
-    {GuiStatics.BIG_PLANET_ROCK1,GuiStatics.BIG_PLANET_WATERWORLD1};
+    {GuiStatics.BIG_PLANET_ROCK1,GuiStatics.BIG_PLANET_WATERWORLD1,
+        GuiStatics.BIG_PLANET_WATERWORLD2,GuiStatics.BIG_PLANET_IRONPLANET1,
+        GuiStatics.BIG_PLANET_IRONPLANET2};
 
   /**
    * List of big planet images

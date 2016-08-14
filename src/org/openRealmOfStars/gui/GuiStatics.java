@@ -295,6 +295,24 @@ public class GuiStatics {
       "/resources/images/waterworld1.png"));
 
   /**
+   * Big planet screen waterworld 2
+   */
+  public final static BufferedImage BIG_PLANET_WATERWORLD2 = IOUtilities.loadImage(Tiles.class.getResource(
+      "/resources/images/waterworld2.png"));
+
+  /**
+   * Big planet screen iron planet 1
+   */
+  public final static BufferedImage BIG_PLANET_IRONPLANET1 = IOUtilities.loadImage(Tiles.class.getResource(
+      "/resources/images/ironplanet1.png"));
+
+  /**
+   * Big planet screen iron planet 2
+   */
+  public final static BufferedImage BIG_PLANET_IRONPLANET2 = IOUtilities.loadImage(Tiles.class.getResource(
+      "/resources/images/ironplanet2.png"));
+
+  /**
    * Big planet gasworld
    */
   public final static BufferedImage BIG_GASWORLD1 = IOUtilities.loadImage(Tiles.class.getResource(

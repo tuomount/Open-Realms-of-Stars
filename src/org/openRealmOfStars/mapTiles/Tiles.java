@@ -142,6 +142,8 @@ public class Tiles {
     // Reading the water planet 
     tile = new Tile(tilesImage, 8, 0,TileNames.WATERWORLD1);
     addTile(tile);
+    tile = new Tile(tilesImage, 11, 0,TileNames.WATERWORLD2);
+    addTile(tile);
     // Reading the fog of war 
     tile = new Tile(tilesImage, 9, 0,TileNames.FOG_OF_WAR);
     addTile(tile);
@@ -164,6 +166,11 @@ public class Tiles {
     tile = new Tile(tilesImage, 4, 3,TileNames.PLAYER_6);
     addTile(tile);
     tile = new Tile(tilesImage, 3, 3,TileNames.PLAYER_7);
+    addTile(tile);
+    // Reading the iron planet 
+    tile = new Tile(tilesImage, 12, 0,TileNames.IRONPLANET1);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 0,TileNames.IRONPLANET2);
     addTile(tile);
   }
   

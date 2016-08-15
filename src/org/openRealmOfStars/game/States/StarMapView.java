@@ -119,6 +119,12 @@ public class StarMapView extends BlackPanel {
    */
   private boolean autoFocus;
   
+  /**
+   * Star Map view
+   * @param map Star map to view
+   * @param players Player List
+   * @param listener Action Listener
+   */
   public StarMapView(StarMap map, PlayerList players, ActionListener listener) {
     this.map = map;
     this.players = players;
@@ -226,6 +232,10 @@ public class StarMapView extends BlackPanel {
     infoPanel.updatePanel();
   }
 
+  /**
+   * Handle actions for Star Map view
+   * @param arg0 Action Event
+   */
   public void handleActions(ActionEvent arg0) {
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_ANIMATION_TIMER) ) {

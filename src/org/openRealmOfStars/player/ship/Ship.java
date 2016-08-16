@@ -180,6 +180,50 @@ public class Ship extends Construction {
   }
 
   /**
+   * Get ship' initiative for combat. Bigger value is better in combat
+   * @return Initiative
+   */
+  public int getInitiative() {
+    int result = 0;
+    switch (hull.getSize()) {
+    case SMALL:{ 
+      result = 12; break; }
+    case MEDIUM:{ 
+      result = 8; break; }
+    case LARGE:{ 
+      result = 4; break; }
+    case HUGE:{ 
+      result = 0; break; }
+    }
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.ENGINE
+          && hasComponentEnergy(i)) {
+        result = result +comp.getSpeed()+comp.getTacticSpeed();
+      }
+      if (hullPoints[i] > 0 && hasComponentEnergy(i) && comp.getInitiativeBoost()>0) {
+        result = result +comp.getInitiativeBoost();
+      }
+    }
+    int emptySpace = this.hull.getMaxSlot()-components.size();
+    switch (emptySpace) {
+    case 1: 
+    case 0: {break;}
+    case 2: 
+    case 3: {result = result +1; break;}
+    case 4: {result = result +2; break;}
+    case 5: {result = result +3; break;}
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 11:
+    case 10: {result = result +4; break;}
+    }
+    return result;
+  }
+
+  /**
    * Get Scanner level
    * @return scanner Lvl
    */

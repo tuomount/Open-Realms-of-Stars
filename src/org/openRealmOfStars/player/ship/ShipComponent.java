@@ -102,6 +102,11 @@ public class ShipComponent {
    * Weapon range
    */
   private int weaponRange;
+  
+  /**
+   * Initiative boost for combat
+   */
+  private int initiativeBoost;
   /**
    * Constructor for ship component
    * @param index Index for saving component
@@ -127,6 +132,7 @@ public class ShipComponent {
     this.cloaking = 0;
     this.defenseValue = 0;
     this.damage = 0;
+    this.initiativeBoost = 0;
     this.setWeaponRange(0);
   }
 
@@ -174,6 +180,10 @@ public class ShipComponent {
     this.ftlSpeed = ftlSpeed;
   }
 
+  /**
+   * Get Speed for Star map moving without route or FTL
+   * @return Speed
+   */
   public int getSpeed() {
     return speed;
   }
@@ -182,6 +192,10 @@ public class ShipComponent {
     this.speed = speed;
   }
 
+  /**
+   * Get Speed in combat
+   * @return Combat speed
+   */
   public int getTacticSpeed() {
     return tacticSpeed;
   }
@@ -366,6 +380,14 @@ public class ShipComponent {
       break;}
     }
     return sb.toString();
+  }
+
+  public int getInitiativeBoost() {
+    return initiativeBoost;
+  }
+
+  public void setInitiativeBoost(int initiativeBoost) {
+    this.initiativeBoost = initiativeBoost;
   }
 
   

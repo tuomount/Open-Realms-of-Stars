@@ -229,6 +229,7 @@ public class ShipComponentFactory {
     }
     if (index == 20) {
       tmp = new ShipComponent(index, "Targeting computer Mk1", 2, 2, ShipComponentType.TARGETING_COMPUTER);
+      tmp.setInitiativeBoost(1);
       tmp.setDamage(10);
       tmp.setEnergyRequirement(1);
     }
@@ -258,6 +259,7 @@ public class ShipComponentFactory {
     }
     if (index == 44) {
       tmp = new ShipComponent(index, "Targeting computer Mk2", 3, 2, ShipComponentType.TARGETING_COMPUTER);
+      tmp.setInitiativeBoost(2);
       tmp.setDamage(20);
       tmp.setEnergyRequirement(2);
     }

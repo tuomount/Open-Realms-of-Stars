@@ -1,6 +1,5 @@
 package org.openRealmOfStars.player;
 
-import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**

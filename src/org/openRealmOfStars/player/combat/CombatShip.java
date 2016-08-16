@@ -26,7 +26,7 @@ import org.openRealmOfStars.player.ship.Ship;
  * 
  */
 
-public class CombatShip {
+public class CombatShip implements Comparable<CombatShip>{
 
   /**
    * Ship information
@@ -92,6 +92,11 @@ public class CombatShip {
 
   public void setPlayer(PlayerInfo player) {
     this.player = player;
+  }
+
+  @Override
+  public int compareTo(CombatShip o) {
+    return this.ship.getInitiative() -o.getShip().getInitiative();
   }
   
   

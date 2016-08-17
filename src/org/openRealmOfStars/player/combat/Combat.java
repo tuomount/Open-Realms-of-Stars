@@ -33,11 +33,24 @@ import org.openRealmOfStars.player.ship.Ship;
 
 public class Combat {
 
+  
+  /**
+   * Maximum combat map size
+   */
+  //private final static int MAX_X=9;
+  /**
+   * Maximu, combat map size
+   */
+  //private final static int MAX_Y=9;
   /**
    * Ships in list in initiative order
    */
   private ArrayList<CombatShip> shipList;
   
+  /**
+   * Current ship index
+   */
+  private int shipIndex;
   
   /**
    * Build shipList in initiative order
@@ -48,15 +61,302 @@ public class Combat {
    */
   public Combat(Fleet fleet1, Fleet fleet2, PlayerInfo info1, PlayerInfo info2) {
     Ship[] ships = fleet1.getShips();
-    for (Ship ship : ships) {
-      CombatShip combatShp = new CombatShip(ship, info1, 4, 7);
+    int index = 0;
+    for (Ship ship : ships) {      
+      CombatShip combatShp = new CombatShip(ship, info1, 
+          getStartPos(index, 0, true), getStartPos(index, 0, false));
       shipList.add(combatShp);
+      index++;
     }
     ships = fleet2.getShips();
+    index = 0;
     for (Ship ship : ships) {
-      CombatShip combatShp = new CombatShip(ship, info2, 4, 7);
+      CombatShip combatShp = new CombatShip(ship, info2, 
+          getStartPos(index, 1, true), getStartPos(index, 1, false));
       shipList.add(combatShp);
+      index++;
     }
     Collections.sort(shipList);
+    index = 0;
   }
+  
+  public CombatShip getCurrentShip() {
+    return shipList.get(shipIndex);
+  }
+  
+  
+  
+  /**
+   * Get starting position for ships
+   * @param index Ship Index in fleet
+   * @param team Which player it belong 0 on bottom, 1 on top
+   * @param x X coordinate or Y coordinate
+   * @return Coordinate
+   */
+  private int getStartPos(int index, int team, boolean x) {
+    if (team == 0) {
+      switch (index) {
+      case 0: {
+        if (x) {
+          return 4;
+        } else {
+          return 7;
+        }
+      }
+      case 1: {
+        if (x) {
+          return 3;
+        } else {
+          return 7;
+        }
+      }
+      case 2: {
+        if (x) {
+          return 5;
+        } else {
+          return 7;
+        }
+      }
+      case 3: {
+        if (x) {
+          return 2;
+        } else {
+          return 7;
+        }
+      }
+      case 4: {
+        if (x) {
+          return 6;
+        } else {
+          return 7;
+        }
+      }
+      case 5: {
+        if (x) {
+          return 4;
+        } else {
+          return 8;
+        }
+      }
+      case 6: {
+        if (x) {
+          return 1;
+        } else {
+          return 7;
+        }
+      }
+      case 7: {
+        if (x) {
+          return 7;
+        } else {
+          return 7;
+        }
+      }
+      case 8: {
+        if (x) {
+          return 3;
+        } else {
+          return 8;
+        }
+      }
+      case 9: {
+        if (x) {
+          return 5;
+        } else {
+          return 8;
+        }
+      }
+      case 10: {
+        if (x) {
+          return 2;
+        } else {
+          return 8;
+        }
+      }
+      case 11: {
+        if (x) {
+          return 6;
+        } else {
+          return 8;
+        }
+      }
+      case 12: {
+        if (x) {
+          return 0;
+        } else {
+          return 7;
+        }
+      }
+      case 13: {
+        if (x) {
+          return 8;
+        } else {
+          return 7;
+        }
+      }
+      case 14: {
+        if (x) {
+          return 1;
+        } else {
+          return 8;
+        }
+      }
+      case 15: {
+        if (x) {
+          return 7;
+        } else {
+          return 8;
+        }
+      }
+      case 16: {
+        if (x) {
+          return 0;
+        } else {
+          return 8;
+        }
+      }
+      case 17: {
+        if (x) {
+          return 8;
+        } else {
+          return 8;
+        }
+      }
+      }
+    } else {
+      // Second team on top side
+      switch (index) {
+      case 0: {
+        if (x) {
+          return 4;
+        } else {
+          return 1;
+        }
+      }
+      case 1: {
+        if (x) {
+          return 3;
+        } else {
+          return 1;
+        }
+      }
+      case 2: {
+        if (x) {
+          return 5;
+        } else {
+          return 1;
+        }
+      }
+      case 3: {
+        if (x) {
+          return 2;
+        } else {
+          return 1;
+        }
+      }
+      case 4: {
+        if (x) {
+          return 6;
+        } else {
+          return 1;
+        }
+      }
+      case 5: {
+        if (x) {
+          return 4;
+        } else {
+          return 0;
+        }
+      }
+      case 6: {
+        if (x) {
+          return 1;
+        } else {
+          return 1;
+        }
+      }
+      case 7: {
+        if (x) {
+          return 7;
+        } else {
+          return 1;
+        }
+      }
+      case 8: {
+        if (x) {
+          return 3;
+        } else {
+          return 0;
+        }
+      }
+      case 9: {
+        if (x) {
+          return 5;
+        } else {
+          return 0;
+        }
+      }
+      case 10: {
+        if (x) {
+          return 2;
+        } else {
+          return 0;
+        }
+      }
+      case 11: {
+        if (x) {
+          return 6;
+        } else {
+          return 0;
+        }
+      }
+      case 12: {
+        if (x) {
+          return 0;
+        } else {
+          return 1;
+        }
+      }
+      case 13: {
+        if (x) {
+          return 8;
+        } else {
+          return 1;
+        }
+      }
+      case 14: {
+        if (x) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+      case 15: {
+        if (x) {
+          return 7;
+        } else {
+          return 0;
+        }
+      }
+      case 16: {
+        if (x) {
+          return 0;
+        } else {
+          return 0;
+        }
+      }
+      case 17: {
+        if (x) {
+          return 8;
+        } else {
+          return 0;
+        }
+      }
+      }
+      
+    }
+    // This should not happen
+    return 4;
+  }
+  
 }

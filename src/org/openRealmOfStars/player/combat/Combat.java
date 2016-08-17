@@ -65,7 +65,7 @@ public class Combat {
     shipList = new ArrayList<>();
     for (Ship ship : ships) {      
       CombatShip combatShp = new CombatShip(ship, info1, 
-          getStartPos(index, 0, true), getStartPos(index, 0, false));
+          getStartPos(index, 0, true), getStartPos(index, 0, false),false);
       shipList.add(combatShp);
       index++;
     }
@@ -73,7 +73,7 @@ public class Combat {
     index = 0;
     for (Ship ship : ships) {
       CombatShip combatShp = new CombatShip(ship, info2, 
-          getStartPos(index, 1, true), getStartPos(index, 1, false));
+          getStartPos(index, 1, true), getStartPos(index, 1, false),true);
       shipList.add(combatShp);
       index++;
     }
@@ -85,6 +85,20 @@ public class Combat {
     return shipList.get(shipIndex);
   }
   
+  /**
+   * Get ship from combat coordinate
+   * @param x X Coordinate
+   * @param y Y Coordinate
+   * @return CombatShip
+   */
+  public CombatShip getShipFromCoordinate(int x, int y) {
+    for (CombatShip ship : shipList) {
+      if (ship.getX() == x && ship.getY() == y) {
+        return ship;
+      }
+    }
+    return null;
+  }
   
   
   /**

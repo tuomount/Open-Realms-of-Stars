@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
@@ -16,6 +18,7 @@ import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
+import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.starMap.CulturePower;
@@ -470,7 +473,7 @@ public class MapPanel extends JPanel {
             JOIN_BEVEL, 1, new float[]{0.1f,4.5f}, 0);
         Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.
             JOIN_BEVEL, 1, new float[]{1f}, 0);
-        if (i+cx == starMap.getCursorX() && j+cy == starMap.getCursorY()) {
+        if (i == starMap.getCursorX() && j == starMap.getCursorY()) {
           gr.setStroke(full);
           gr.setColor(colorFlickerBlue);
           // Top line
@@ -504,14 +507,20 @@ public class MapPanel extends JPanel {
         gr.drawLine(pixelX, pixelY+ShipImage.MAX_HEIGHT-1, pixelX+ShipImage.MAX_WIDTH-1,
               pixelY+ShipImage.MAX_HEIGHT-1);
         // Draw fleet
-/*        if (info != null &&
-            info.getSectorVisibility(i+cx, j+cy)==PlayerInfo.VISIBLE &&
-            fleetMap[i+cx][j+cy] != null) {
-          BufferedImage img = ShipImages.getByRace(
-              fleetMap[i+cx][j+cy].getRace()).getSmallShipImage(
-                  fleetMap[i+cx][j+cy].getImageIndex());
-          gr.drawImage(img, pixelX, pixelY, null);
-        }*/
+        CombatShip ship = combat.getShipFromCoordinate(i, j);
+        if (ship != null) {
+          BufferedImage img = ShipImages.getByRace(ship.getShip().getHull().
+              getRace()).getShipImage(ship.getShip().getHull().getImageIndex());
+          if (ship.isFlipY()) {
+            AffineTransform at = AffineTransform.getScaleInstance(1, -1);
+            at.translate(0,-img.getHeight(null));
+            AffineTransformOp ato = new AffineTransformOp(at, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+            BufferedImage flipImg = ato.filter(img, null);
+            gr.drawImage(flipImg, pixelX, pixelY, null); 
+          } else {
+            gr.drawImage(img, pixelX, pixelY, null);
+          }
+        }
         
         pixelX=pixelX+ShipImage.MAX_WIDTH;
       }

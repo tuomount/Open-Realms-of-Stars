@@ -49,17 +49,24 @@ public class CombatShip implements Comparable<CombatShip>{
   private PlayerInfo player;
   
   /**
+   * Flip Y axel on ship image
+   */
+  private boolean flipY;
+  
+  /**
    * Constructor for Combat ship
    * @param ship Ship to put in combat
    * @param player Player who owns the ship
    * @param x Ship's X coordinate in combat map
    * @param y Ship's Y coordinate in combat map
+   * @param flip Ship's image on Y axel
    */
-  public CombatShip(Ship ship, PlayerInfo player, int x, int y) {
+  public CombatShip(Ship ship, PlayerInfo player, int x, int y,boolean flip) {
     this.ship = ship;
     this.x = x;
     this.y = y;
     this.player = player;
+    this.flipY = flip;
   }
 
   public Ship getShip() {
@@ -97,6 +104,14 @@ public class CombatShip implements Comparable<CombatShip>{
   @Override
   public int compareTo(CombatShip o) {
     return this.ship.getInitiative() -o.getShip().getInitiative();
+  }
+
+  public boolean isFlipY() {
+    return flipY;
+  }
+
+  public void setFlipY(boolean flipY) {
+    this.flipY = flipY;
   }
   
   

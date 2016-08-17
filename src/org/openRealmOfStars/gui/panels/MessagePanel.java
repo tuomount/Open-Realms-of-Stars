@@ -115,7 +115,7 @@ public class MessagePanel extends JPanel {
     pane.add(btnNext);
     this.add(pane);
     
-    msgText = new BaseInfoTextArea(3,15);
+    msgText = new BaseInfoTextArea(2,15);
     msgText.setEditable(false);
     JScrollPane scroll = new JScrollPane(msgText);
     this.add(scroll);

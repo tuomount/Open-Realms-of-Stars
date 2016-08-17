@@ -183,6 +183,11 @@ public class StarMapView extends BlackPanel {
     viewSpaceShips.addActionListener(listener);
     bottomBtnPanel.add(viewSpaceShips);
 
+    SpaceButton debugBattle = new SpaceButton("Battle",
+        GameCommands.COMMAND_BATTLE);
+    debugBattle.addActionListener(listener);
+    bottomBtnPanel.add(debugBattle);
+
     bottomPanel.add(bottomBtnPanel);
     
     msgPanel = new MessagePanel(GameCommands.COMMAND_PREV_MSG, 

@@ -15,6 +15,8 @@ import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.combat.Combat;
+import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.Route;
@@ -415,7 +417,109 @@ public class MapPanel extends JPanel {
       pixelY=pixelY+Tile.MAX_HEIGHT;
     }
   }
-  
+
+  /**
+   * Draw battle map to Map panel
+   * @param Combat to draw on map panel
+   */
+  public void drawBattleMap(Combat combat, PlayerInfo info, StarMap starMap) {
+    if (screen == null) {
+      calculateViewPoints();
+      if (this.getWidth() > 0 && this.getHeight() > 0) {
+        screen = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+      } else {
+        return;
+      }
+    }
+    Graphics2D gr = screen.createGraphics();
+    // Center coordinates, to match starmap background
+    int cx = starMap.getDrawX();
+    int cy = starMap.getDrawY();
+
+    // -20 for safety
+    int speedStarX = (GuiStatics.starFieldImage.getWidth()-this.getWidth()-20)/starMap.getMaxX(); 
+    int speedStarY = (GuiStatics.starFieldImage.getHeight()-this.getHeight()-20)/starMap.getMaxY(); 
+    gr.drawImage(GuiStatics.starFieldImage, -10-cx*speedStarX, -10-cy*speedStarY, null);
+    
+    int scaled = 16*(flickerBlue-128)/256;
+    Color colorDarkBlue = new Color(0, 118+scaled, 150+scaled);
+    Color colorFlickerBlue = new Color(0, 0, 16);
+    if (flickerBlue < 256) {
+      colorFlickerBlue = new Color(0, 0, flickerBlue);
+    } else {
+      int above = flickerBlue -256;
+      colorFlickerBlue = new Color(above, above, 255);
+    }
+    if (flickerGoUp) {
+      flickerBlue = flickerBlue +16;
+    } else {
+      flickerBlue = flickerBlue -16;
+    }
+    if (flickerBlue > 384) {
+      flickerGoUp = false;
+    }
+    if (flickerBlue < 128) {
+      flickerGoUp = true;
+    }
+
+    int pixelX = viewPointOffsetX;
+    int pixelY = viewPointOffsetY;
+    for (int j=0;j<Combat.MAX_Y;j++) {
+      for (int i=0;i<Combat.MAX_X;i++) {
+        Stroke dashed = new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.
+            JOIN_BEVEL, 1, new float[]{0.1f,4.5f}, 0);
+        Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.
+            JOIN_BEVEL, 1, new float[]{1f}, 0);
+        if (i+cx == starMap.getCursorX() && j+cy == starMap.getCursorY()) {
+          gr.setStroke(full);
+          gr.setColor(colorFlickerBlue);
+          // Top line
+          gr.drawLine(pixelX, pixelY, pixelX+ShipImage.MAX_WIDTH-1, pixelY);
+          // Left line          
+          gr.drawLine(pixelX, pixelY, pixelX, pixelY+ShipImage.MAX_HEIGHT-1);
+          // Right line
+          gr.drawLine(pixelX+ShipImage.MAX_WIDTH-1, pixelY, pixelX+ShipImage.MAX_WIDTH-1,
+              pixelY+ShipImage.MAX_HEIGHT-1);
+          // Bottom line
+          gr.drawLine(pixelX, pixelY+ShipImage.MAX_HEIGHT-1, pixelX+ShipImage.MAX_WIDTH-1,
+              pixelY+ShipImage.MAX_HEIGHT-1);
+          gr.setStroke(dashed);
+          gr.setColor(colorDarkBlue);
+        } else {
+          gr.setStroke(dashed);
+          gr.setColor(colorDarkBlue);
+        }
+        if (i==0) {
+          // Left line
+          gr.drawLine(pixelX, pixelY, pixelX, pixelY+ShipImage.MAX_HEIGHT-1);
+        }
+        if (j==0) {
+          // Top line
+          gr.drawLine(pixelX, pixelY, pixelX+ShipImage.MAX_WIDTH-1, pixelY);
+        }
+        // Right line
+        gr.drawLine(pixelX+ShipImage.MAX_WIDTH-1, pixelY, pixelX+ShipImage.MAX_WIDTH-1,
+              pixelY+ShipImage.MAX_HEIGHT-1);
+        // Bottom line
+        gr.drawLine(pixelX, pixelY+ShipImage.MAX_HEIGHT-1, pixelX+ShipImage.MAX_WIDTH-1,
+              pixelY+ShipImage.MAX_HEIGHT-1);
+        // Draw fleet
+/*        if (info != null &&
+            info.getSectorVisibility(i+cx, j+cy)==PlayerInfo.VISIBLE &&
+            fleetMap[i+cx][j+cy] != null) {
+          BufferedImage img = ShipImages.getByRace(
+              fleetMap[i+cx][j+cy].getRace()).getSmallShipImage(
+                  fleetMap[i+cx][j+cy].getImageIndex());
+          gr.drawImage(img, pixelX, pixelY, null);
+        }*/
+        
+        pixelX=pixelX+ShipImage.MAX_WIDTH;
+      }
+      pixelX = viewPointOffsetX;
+      pixelY=pixelY+ShipImage.MAX_HEIGHT;
+    }
+  }
+
   public int getLastDrawnX() {
     return lastDrawnCenterX;
   }

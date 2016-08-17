@@ -233,6 +233,11 @@ public class GameCommands {
   public static final String COMMAND_SHIPS = "ViewShips";
 
   /**
+   * Start combat for no reason. This is more like debug purposes
+   */
+  public static final String COMMAND_BATTLE = "ViewBattle";
+
+  /**
    * Ship Design is done and ready
    */
   public static final String COMMAND_SHIPDESIGN_DONE = "ShipDesignIsReady";

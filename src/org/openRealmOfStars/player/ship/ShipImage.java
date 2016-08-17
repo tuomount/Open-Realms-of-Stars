@@ -34,11 +34,11 @@ public class ShipImage {
   /**
    * Ship image width
    */
-  private static final int MAX_WIDTH = 64;
+  public static final int MAX_WIDTH = 64;
   /**
    * Ship image height
    */
-  private static final int MAX_HEIGHT = 64;
+  public static final int MAX_HEIGHT = 64;
 
   /**
    * Smaller Ship image width

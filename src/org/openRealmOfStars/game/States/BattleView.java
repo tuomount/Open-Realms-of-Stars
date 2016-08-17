@@ -4,9 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BlackPanel;
+import org.openRealmOfStars.gui.MapPanel;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.ship.ShipImage;
+import org.openRealmOfStars.starMap.StarMap;
 
 /**
  * 
@@ -38,17 +43,42 @@ public class BattleView extends BlackPanel {
   private static final long serialVersionUID = 1L;
   
   /**
+   * MapPanel for drawing the star map
+   */
+  private MapPanel mapPanel;
+
+  /**
+   * Current combat
+   */
+  private Combat combat;
+  
+  /**
+   * Star map where combat happens
+   */
+  private StarMap map;
+
+  
+  /**
    * Battle view for space combat
    * @param fleet1 First fleet in combat
    * @param player1 First player in combat
    * @param fleet2 Second fleet in combat
    * @param player2 Second player in combat
+   * @param StarMap star map
    * @param listener ActionListener
    */
   public BattleView(Fleet fleet1, PlayerInfo player1, Fleet fleet2,
-      PlayerInfo player2, ActionListener listener) {
+      PlayerInfo player2,StarMap map, ActionListener listener) {
     BlackPanel base = new BlackPanel();
+    this.map = map;
+    combat = new Combat(fleet1, fleet2, player1, player2);
+    mapPanel = new MapPanel();
+    mapPanel.setSize(Combat.MAX_X*ShipImage.MAX_WIDTH, 
+        Combat.MAX_Y*ShipImage.MAX_HEIGHT);
+    mapPanel.drawBattleMap(combat, player1, this.map);
+
     this.setLayout(new BorderLayout());
+    base.add(mapPanel,BorderLayout.CENTER);
     this.add(base,BorderLayout.CENTER);
 
   }
@@ -65,6 +95,11 @@ public class BattleView extends BlackPanel {
    * @param arg0 Active Event
    */
   public void handleActions(ActionEvent arg0) {
+    if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_ANIMATION_TIMER) ) {
+      mapPanel.drawBattleMap(combat, map.getCurrentPlayerInfo(), map);
+      mapPanel.repaint();
+    }
 
   }
 

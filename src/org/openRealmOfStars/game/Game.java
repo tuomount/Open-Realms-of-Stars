@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
+import org.openRealmOfStars.game.States.BattleView;
 import org.openRealmOfStars.game.States.CreditsView;
 import org.openRealmOfStars.game.States.FleetView;
 import org.openRealmOfStars.game.States.MainMenu;
@@ -118,7 +119,12 @@ public class Game extends JFrame implements ActionListener {
    * StarMap view for the game
    */
   public StarMapView starMapView;
-  
+
+  /**
+   * Combat view for the game
+   */
+  public BattleView combatView;
+
   /**
    * Research view for the game
    */
@@ -204,6 +210,21 @@ public class Game extends JFrame implements ActionListener {
     starMapView = new StarMapView(starMap, players, this);
     this.getContentPane().removeAll();
     this.add(starMapView);
+    this.validate();
+  }
+
+  /**
+   * Show Combat
+   */
+  public void showCombat() {
+    // FIXME This is fixed combat
+    combatView = new BattleView(
+        players.getCurrentPlayerInfo().Fleets().getByIndex(0), 
+        players.getCurrentPlayerInfo(), 
+        players.getPlayerInfoByIndex(1).Fleets().getByIndex(0), 
+        players.getPlayerInfoByIndex(1),starMap, this);
+    this.getContentPane().removeAll();
+    this.add(combatView);
     this.validate();
   }
 
@@ -295,6 +316,7 @@ public class Game extends JFrame implements ActionListener {
     }
     case CREDITS: showCredits(); break;
     case STARMAP: showStarMap(); break;
+    case COMBAT: showCombat(); break;
     case RESEARCHVIEW: showResearch(focusMessage); break;
     case VIEWSHIPS: showShipView(); break;
     case SHIPDESIGN: {
@@ -416,6 +438,9 @@ public class Game extends JFrame implements ActionListener {
         }
       }
     }
+    if (gameState == GameState.COMBAT && combatView != null) {
+      combatView.handleActions(arg0);
+    }
     if (gameState == GameState.CREDITS) {
       if (arg0.getActionCommand().equalsIgnoreCase(
           GameCommands.COMMAND_ANIMATION_TIMER)) {
@@ -453,6 +478,10 @@ public class Game extends JFrame implements ActionListener {
         GameCommands.COMMAND_SHIPDESIGN)) {
       shipView.setCopyClicked(false);
       changeGameState(GameState.SHIPDESIGN);
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_BATTLE)) {
+      changeGameState(GameState.COMBAT);
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_SHIPDESIGN_DONE)) {

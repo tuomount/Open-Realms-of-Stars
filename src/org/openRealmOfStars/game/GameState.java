@@ -31,5 +31,6 @@ public enum GameState {
   RESEARCHVIEW,
   VIEWSHIPS,
   SHIPDESIGN,
+  COMBAT,
   CREDITS;
 }

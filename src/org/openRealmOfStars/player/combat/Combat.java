@@ -37,11 +37,11 @@ public class Combat {
   /**
    * Maximum combat map size
    */
-  //private final static int MAX_X=9;
+  public final static int MAX_X=9;
   /**
-   * Maximu, combat map size
+   * Maximum, combat map size
    */
-  //private final static int MAX_Y=9;
+  public final static int MAX_Y=9;
   /**
    * Ships in list in initiative order
    */
@@ -62,6 +62,7 @@ public class Combat {
   public Combat(Fleet fleet1, Fleet fleet2, PlayerInfo info1, PlayerInfo info2) {
     Ship[] ships = fleet1.getShips();
     int index = 0;
+    shipList = new ArrayList<>();
     for (Ship ship : ships) {      
       CombatShip combatShp = new CombatShip(ship, info1, 
           getStartPos(index, 0, true), getStartPos(index, 0, false));

@@ -53,6 +53,14 @@ public class Combat {
   private int shipIndex;
   
   /**
+   * Cursor position X coordinate
+   */
+  private int cursorX;
+  /**
+   * Cursor position Y coordinate
+   */
+  private int cursorY;
+  /**
    * Build shipList in initiative order
    * @param fleet1 Player1 fleet
    * @param fleet2 Player2 fleet
@@ -78,9 +86,48 @@ public class Combat {
       index++;
     }
     Collections.sort(shipList);
-    index = 0;
+    index = 0;    
   }
   
+  /**
+   * Set cursor position
+   * @param x X coordinate
+   * @param y Y coordinate
+   */
+  public void setCursorPos(int x,int y) {
+    cursorX = x;
+    cursorY = y;
+  }
+  
+  /**
+   * Is coordinate valid position on combat map
+   * @param x X Coordinate
+   * @param y Y Coordinate
+   * @return true if valid otherwise false
+   */
+  public boolean isValidPos(int x, int y) {
+    if (x >= 0 && y >= 0 && x < MAX_X && y < MAX_Y) {
+      return true;
+    }
+    return false;
+  }
+  
+  /**
+   * Get Cursor X coordinate
+   * @return X coordinate
+   */
+  public int getCursorX() {
+    return cursorX;
+  }
+
+  /**
+   * Get Cursor Y coordinate
+   * @return Y coordinate
+   */
+  public int getCursorY() {
+    return cursorY;
+  }
+
   public CombatShip getCurrentShip() {
     return shipList.get(shipIndex);
   }

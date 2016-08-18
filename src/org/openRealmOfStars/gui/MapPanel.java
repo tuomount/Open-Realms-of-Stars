@@ -467,13 +467,17 @@ public class MapPanel extends JPanel {
 
     int pixelX = viewPointOffsetX;
     int pixelY = viewPointOffsetY;
+    lastDrawnCenterX = (Combat.MAX_X-1)/2;
+    lastDrawnCenterY = (Combat.MAX_Y-1)/2;
+    viewPointX = (Combat.MAX_X-1)/2;
+    viewPointY = (Combat.MAX_Y-1)/2;
     for (int j=0;j<Combat.MAX_Y;j++) {
       for (int i=0;i<Combat.MAX_X;i++) {
         Stroke dashed = new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.
             JOIN_BEVEL, 1, new float[]{0.1f,4.5f}, 0);
         Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.
             JOIN_BEVEL, 1, new float[]{1f}, 0);
-        if (i == starMap.getCursorX() && j == starMap.getCursorY()) {
+        if (i == combat.getCursorX() && j == combat.getCursorY()) {
           gr.setStroke(full);
           gr.setColor(colorFlickerBlue);
           // Top line

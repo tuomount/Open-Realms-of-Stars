@@ -1,6 +1,7 @@
 package org.openRealmOfStars.utilities;
 
 import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.player.ship.ShipImage;
 
 /**
  * 
@@ -95,15 +96,21 @@ public class PixelsToMapCoordinate {
    * @param sy Start Y pixel coordinate in panel
    * @param radX View Port Radius X axel in star map
    * @param radY View port radius Y axel in star map
+   * @param combat Is combat map or star map
    */
   public PixelsToMapCoordinate(int mx,int my, int px, int py, int sx,int sy,
-      int radX,int radY) {
+      int radX,int radY,boolean combat) {
     startX = sx;
     startY = sy;
     numXTiles = radX*2+1;
     numYTiles = radY*2+1;
-    endX = startX+numXTiles*Tile.MAX_WIDTH;
-    endY = startY+numYTiles*Tile.MAX_HEIGHT;
+    if (combat) {
+      endX = startX+numXTiles*ShipImage.MAX_WIDTH;
+      endY = startY+numYTiles*ShipImage.MAX_HEIGHT;
+    } else {
+      endX = startX+numXTiles*Tile.MAX_WIDTH;
+      endY = startY+numYTiles*Tile.MAX_HEIGHT;
+    }
     centerMapX = mx;
     centerMapY = my;
     pixelX = px;
@@ -112,8 +119,13 @@ public class PixelsToMapCoordinate {
         && pixelX < endX && pixelY < endY) {
       pixelX = pixelX-startX;
       pixelY = pixelY-startY;
-      relativeMapX = (pixelX / Tile.MAX_WIDTH)-radX;
-      relativeMapY = (pixelY / Tile.MAX_HEIGHT)-radY;
+      if (combat) {
+        relativeMapX = (pixelX / ShipImage.MAX_WIDTH)-radX;
+        relativeMapY = (pixelY / ShipImage.MAX_HEIGHT)-radY;
+      } else {
+        relativeMapX = (pixelX / Tile.MAX_WIDTH)-radX;
+        relativeMapY = (pixelY / Tile.MAX_HEIGHT)-radY;
+      }
     } else {
       outOfPanel = true;
       relativeMapX = -1;

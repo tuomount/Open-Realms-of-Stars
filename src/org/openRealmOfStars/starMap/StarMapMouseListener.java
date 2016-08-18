@@ -126,7 +126,7 @@ public class StarMapMouseListener extends MouseAdapter implements
   public void mouseMoved(MouseEvent e) {
     coord= new PixelsToMapCoordinate(mapPanel.getLastDrawnX(),
           mapPanel.getLastDrawnY(),e.getX(),e.getY(),mapPanel.getOffsetX(),mapPanel.getOffsetY(),
-          mapPanel.getViewPointX(),mapPanel.getViewPointY());
+          mapPanel.getViewPointX(),mapPanel.getViewPointY(),false);
       if (!coord.isOutOfPanel()) {
         starMap.setCursorPos(coord.getMapX(), coord.getMapY());
         if (routePlanning && lastClickedFleet != null) {
@@ -158,7 +158,7 @@ public class StarMapMouseListener extends MouseAdapter implements
   public void mouseClicked(MouseEvent e) {
     coord= new PixelsToMapCoordinate(mapPanel.getLastDrawnX(),
         mapPanel.getLastDrawnY(),e.getX(),e.getY(),mapPanel.getOffsetX(),mapPanel.getOffsetY(),
-        mapPanel.getViewPointX(),mapPanel.getViewPointY());
+        mapPanel.getViewPointX(),mapPanel.getViewPointY(),false);
     if (!coord.isOutOfPanel()) {
       if (getLastClickedFleet() != null && mapPanel.getRoute() != null) {
         getLastClickedFleet().setRoute(mapPanel.getRoute());

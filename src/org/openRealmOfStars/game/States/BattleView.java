@@ -9,6 +9,7 @@ import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.MapPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
+import org.openRealmOfStars.player.combat.CombatMapMouseListener;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.StarMap;
@@ -57,6 +58,10 @@ public class BattleView extends BlackPanel {
    */
   private StarMap map;
 
+  /**
+   * Combat map mouse listener
+   */
+  private CombatMapMouseListener combatMapMouseListener;
   
   /**
    * Battle view for space combat
@@ -77,6 +82,11 @@ public class BattleView extends BlackPanel {
         Combat.MAX_Y*ShipImage.MAX_HEIGHT);
     mapPanel.drawBattleMap(combat, player1, this.map);
 
+    combatMapMouseListener = new CombatMapMouseListener(combat, mapPanel, null);
+    mapPanel.addMouseListener(combatMapMouseListener);
+    mapPanel.addMouseMotionListener(combatMapMouseListener);
+
+    
     this.setLayout(new BorderLayout());
     base.add(mapPanel,BorderLayout.CENTER);
     this.add(base,BorderLayout.CENTER);

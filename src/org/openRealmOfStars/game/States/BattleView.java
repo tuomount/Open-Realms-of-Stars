@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.MapPanel;
+import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatMapMouseListener;
@@ -59,6 +60,11 @@ public class BattleView extends BlackPanel {
   private StarMap map;
 
   /**
+   * Infopanel on east side
+   */
+  private BattleInfoPanel infoPanel;
+  
+  /**
    * Combat map mouse listener
    */
   private CombatMapMouseListener combatMapMouseListener;
@@ -82,14 +88,18 @@ public class BattleView extends BlackPanel {
         Combat.MAX_Y*ShipImage.MAX_HEIGHT);
     mapPanel.drawBattleMap(combat, player1, this.map);
 
-    combatMapMouseListener = new CombatMapMouseListener(combat, mapPanel, null);
+    infoPanel = new BattleInfoPanel(listener);
+
+    combatMapMouseListener = new CombatMapMouseListener(combat, mapPanel, infoPanel);
     mapPanel.addMouseListener(combatMapMouseListener);
     mapPanel.addMouseMotionListener(combatMapMouseListener);
+    
 
     
     this.setLayout(new BorderLayout());
     base.add(mapPanel,BorderLayout.CENTER);
     this.add(base,BorderLayout.CENTER);
+    this.add(infoPanel,BorderLayout.EAST);
 
   }
 

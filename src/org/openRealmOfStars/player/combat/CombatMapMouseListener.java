@@ -5,10 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
 import org.openRealmOfStars.gui.MapPanel;
-import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
-import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.fleet.Fleet;
-import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
 
 /**
@@ -51,7 +48,7 @@ public class CombatMapMouseListener extends MouseAdapter implements
   /**
    * Infopanel next to map panel
    */
-  private MapInfoPanel mapInfoPanel;
+  private BattleInfoPanel battleInfoPanel;
   
   /**
    * Is route being planned
@@ -63,11 +60,11 @@ public class CombatMapMouseListener extends MouseAdapter implements
    * @param starMap StarMap which to use.
    * @param panel Map Panel where Star Map is being drawn.
    */
-  public CombatMapMouseListener(Combat combat, MapPanel panel, MapInfoPanel
-      mapInfoPanel) {
+  public CombatMapMouseListener(Combat combat, MapPanel panel, BattleInfoPanel
+      battleInfoPanel) {
     this.combat = combat;
     this.mapPanel = panel;
-    this.mapInfoPanel = mapInfoPanel;
+    this.battleInfoPanel = battleInfoPanel;
   }
   
   
@@ -93,6 +90,7 @@ public class CombatMapMouseListener extends MouseAdapter implements
           mapPanel.getViewPointX(),mapPanel.getViewPointY(),true);
       if (!coord.isOutOfPanel()) {
         combat.setCursorPos(coord.getMapX(), coord.getMapY());
+        battleInfoPanel.showShip(combat.getCurrentShip());
       }
   }
 

@@ -83,12 +83,12 @@ public class BattleView extends BlackPanel {
     BlackPanel base = new BlackPanel();
     this.map = map;
     combat = new Combat(fleet1, fleet2, player1, player2);
-    mapPanel = new MapPanel();
+    mapPanel = new MapPanel(true);
     mapPanel.setSize(Combat.MAX_X*ShipImage.MAX_WIDTH, 
         Combat.MAX_Y*ShipImage.MAX_HEIGHT);
     mapPanel.drawBattleMap(combat, player1, this.map);
 
-    infoPanel = new BattleInfoPanel(listener);
+    infoPanel = new BattleInfoPanel(combat.getCurrentShip(),listener);
 
     combatMapMouseListener = new CombatMapMouseListener(combat, mapPanel, infoPanel);
     mapPanel.addMouseListener(combatMapMouseListener);

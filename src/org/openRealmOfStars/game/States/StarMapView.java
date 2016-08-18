@@ -131,7 +131,7 @@ public class StarMapView extends BlackPanel {
     setAutoFocus(false);
 
     BlackPanel base = new BlackPanel();
-    mapPanel = new MapPanel();
+    mapPanel = new MapPanel(false);
     // Side panel
     infoPanel = new MapInfoPanel(listener);
     mapPanel.drawMap(this.map);

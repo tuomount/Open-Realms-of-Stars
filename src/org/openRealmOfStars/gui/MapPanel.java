@@ -118,10 +118,21 @@ public class MapPanel extends JPanel {
    */
   private Route route;
   
+  /**
+   * Is this for battle panel or not
+   */
+  private boolean battle;
 
-  public MapPanel() {
-    screen = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
-    Dimension size = new Dimension(WIDTH, HEIGHT);
+  public MapPanel(boolean battle) {
+    this.battle = battle;
+    int width = WIDTH;
+    int height = HEIGHT;
+    if (battle) {
+      width = 576;
+      height = 576;
+    }
+    screen = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    Dimension size = new Dimension(width, height);
     this.setSize(size);
     this.setPreferredSize(size);
     this.setMinimumSize(size);
@@ -136,20 +147,34 @@ public class MapPanel extends JPanel {
    * Calculate view according the actual panel size;
    */
   private void calculateViewPoints() {
-    viewPointX = ((this.getWidth()/Tile.MAX_WIDTH)-1)/2;
-    viewPointY = ((this.getHeight()/Tile.MAX_HEIGHT)-1)/2;
+    if (battle) {
+      viewPointX = ((this.getWidth()/ShipImage.MAX_WIDTH)-1)/2;
+      viewPointY = ((this.getHeight()/ShipImage.MAX_HEIGHT)-1)/2;
+    } else {
+      viewPointX = ((this.getWidth()/Tile.MAX_WIDTH)-1)/2;
+      viewPointY = ((this.getHeight()/Tile.MAX_HEIGHT)-1)/2;
+    }
     if (viewPointX < 1) {
       viewPointX = 1;
     }
     if (viewPointY < 1) {
       viewPointY = 1;
     }
-    viewPointOffsetX = this.getWidth()-(2*viewPointX*Tile.MAX_WIDTH+
-        Tile.MAX_WIDTH);
-    viewPointOffsetX = viewPointOffsetX/2;
-    viewPointOffsetY = this.getHeight()-(2*viewPointY*Tile.MAX_HEIGHT+
-        Tile.MAX_HEIGHT);
-    viewPointOffsetY = viewPointOffsetY/2;
+    if (battle) {
+      viewPointOffsetX = this.getWidth()-(2*viewPointX*ShipImage.MAX_WIDTH+
+          ShipImage.MAX_WIDTH);
+      viewPointOffsetX = viewPointOffsetX/2;
+      viewPointOffsetY = this.getHeight()-(2*viewPointY*ShipImage.MAX_HEIGHT+
+          ShipImage.MAX_HEIGHT);
+      viewPointOffsetY = viewPointOffsetY/2;
+    } else {
+      viewPointOffsetX = this.getWidth()-(2*viewPointX*Tile.MAX_WIDTH+
+          Tile.MAX_WIDTH);
+      viewPointOffsetX = viewPointOffsetX/2;
+      viewPointOffsetY = this.getHeight()-(2*viewPointY*Tile.MAX_HEIGHT+
+          Tile.MAX_HEIGHT);
+      viewPointOffsetY = viewPointOffsetY/2;
+    }
   }
   @Override
   public void setMaximumSize(Dimension maximumSize) {

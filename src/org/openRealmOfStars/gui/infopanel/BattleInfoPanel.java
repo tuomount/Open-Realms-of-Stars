@@ -10,19 +10,12 @@ import java.awt.image.BufferedImage;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
-import org.openRealmOfStars.game.GameCommands;
-import org.openRealmOfStars.gui.buttons.IconButton;
-import org.openRealmOfStars.gui.buttons.SpaceButton;
-import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.buttons.ComponentButton;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.mapTiles.Tile;
-import org.openRealmOfStars.mapTiles.TileNames;
-import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.combat.CombatShip;
-import org.openRealmOfStars.player.fleet.Fleet;
-import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
  * 
@@ -69,7 +62,7 @@ public class BattleInfoPanel extends InfoPanel {
    */
   private CombatShip ship;
   
-  public BattleInfoPanel(ActionListener listener) {
+  public BattleInfoPanel(CombatShip ship, ActionListener listener) {
     this.add(Box.createRigidArea(new Dimension(130,50)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH*2, Tile.MAX_HEIGHT*2,
         BufferedImage.TYPE_4BYTE_ABGR);
@@ -83,6 +76,8 @@ public class BattleInfoPanel extends InfoPanel {
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
     invis.add(imageLabel);
+    ComponentButton btn = new ComponentButton(ship.getShip(), 0);
+    this.add(btn);
     this.add(invis);
     this.add(Box.createRigidArea(new Dimension(10,10)));
     textArea = new InfoTextArea();

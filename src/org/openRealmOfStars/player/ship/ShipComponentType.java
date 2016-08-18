@@ -1,5 +1,7 @@
 package org.openRealmOfStars.player.ship;
 
+import org.openRealmOfStars.gui.icons.Icons;
+
 /**
  * 
  * Open Realm of Stars game project
@@ -188,6 +190,36 @@ public enum ShipComponentType {
     case ORBITAL_NUKE: return "Orbital nuke";
     }
     return "Error - Unknown";
+
+  }
+  
+  /**
+   * Get Icon for component
+   * @return String
+   */
+  public String getIconName() {
+    switch (this) {
+    case WEAPON_BEAM: return Icons.ICON_LASERGUN;
+    case WEAPON_RAILGUN: return Icons.ICON_COMBAT_TECH;
+    case WEAPON_PHOTON_TORPEDO: return Icons.ICON_MISSILE;
+    case WEAPON_ECM_TORPEDO: return Icons.ICON_MISSILE;
+    case WEAPON_HE_MISSILE: return Icons.ICON_MISSILE;
+    case SCANNER: return Icons.ICON_SCANNER;
+    case SHIELD: return Icons.ICON_SHIELD;
+    case ARMOR: return Icons.ICON_ARMOR;
+    case SHIELD_GENERATOR: return Icons.ICON_CIRCUIT_BOARD;
+    case ENGINE: return Icons.ICON_PROPULSION_TECH;
+    case POWERSOURCE: return Icons.ICON_POWERSOURCE;
+    case CLOAKING_DEVICE: return Icons.ICON_CLOACKING_DEVICE;
+    case JAMMER: return Icons.ICON_CIRCUIT_BOARD;
+    case TARGETING_COMPUTER: return Icons.ICON_CIRCUIT_BOARD;
+    case PLANETARY_INVASION_MODULE: return Icons.ICON_TROOPS;
+    case COLONY_MODULE: return Icons.ICON_PEOPLE;
+    case PRIVATEERING_MODULE: return Icons.ICON_DEATH;
+    case ORBITAL_BOMBS: return Icons.ICON_BOMB;
+    case ORBITAL_NUKE: return Icons.ICON_NUKE;
+    }
+    return Icons.ICON_CIRCUIT_BOARD;
 
   }
 

@@ -142,22 +142,22 @@ public class PlanetView extends BlackPanel {
     cultureLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(cultureLabel);
     topPanel.add(invis);
-    topPanel.add(Box.createRigidArea(new Dimension(25,25)));
+    topPanel.add(Box.createRigidArea(new Dimension(15,25)));
 
     invis = new InvisiblePanel(topPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
     peopleGrowth = new IconLabel(invis, Icons.getIconByName(Icons.ICON_PEOPLE),
-        "10 turns");
+        "1000 turns");
     int peopleGrow = planet.getTotalProduction(Planet.PRODUCTION_POPULATION);
     if (peopleGrow > 0) {
       peopleGrowth.setText(peopleGrow+" turns.");
       peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
     } else if (peopleGrow < 0) {
       peopleGrow = peopleGrow *-1;
-      peopleGrowth.setText(peopleGrow+" turns.");
+      peopleGrowth.setText(peopleGrow+" turns. ");
       peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_DEATH));
     } else {
-      peopleGrowth.setText("stable ");
+      peopleGrowth.setText("no growth ");
       peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
     }
     peopleGrowth.setToolTipText("How many turns to population growth.");
@@ -189,7 +189,7 @@ public class PlanetView extends BlackPanel {
     cultProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(cultProd);
     topPanel.add(invis);
-    topPanel.add(Box.createRigidArea(new Dimension(25,25)));
+    topPanel.add(Box.createRigidArea(new Dimension(15,25)));
 
 
     invis = new InvisiblePanel(topPanel);
@@ -224,7 +224,7 @@ public class PlanetView extends BlackPanel {
     metalOre.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(metalOre);
     topPanel.add(invis);
-    topPanel.add(Box.createRigidArea(new Dimension(50,25)));
+    topPanel.add(Box.createRigidArea(new Dimension(25,25)));
 
     invis = new InvisiblePanel(topPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));

@@ -53,6 +53,8 @@ public class CombatShip implements Comparable<CombatShip>{
    */
   private boolean flipY;
   
+  private int movesLeft;
+  
   /**
    * Constructor for Combat ship
    * @param ship Ship to put in combat
@@ -67,6 +69,7 @@ public class CombatShip implements Comparable<CombatShip>{
     this.y = y;
     this.player = player;
     this.flipY = flip;
+    this.movesLeft = ship.getTacticSpeed();
   }
 
   public Ship getShip() {
@@ -113,6 +116,48 @@ public class CombatShip implements Comparable<CombatShip>{
   public void setFlipY(boolean flipY) {
     this.flipY = flipY;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(ship.getName());
+    sb.append(" - ");
+    sb.append(ship.getHull().getName());
+    sb.append("\n");
+    sb.append("Initiative: ");
+    sb.append(ship.getInitiative());
+    sb.append("\n");
+    sb.append("Moves: ");
+    sb.append(movesLeft);
+    sb.append("\n");
+    sb.append("Hull points: ");
+    sb.append(ship.getHullPoints());
+    sb.append("/");
+    sb.append(ship.getMaxHullPoints());
+    sb.append("\n");
+    if (ship.getTacticSpeed()==0) {
+      sb.append("Immobilized\n");
+    }
+    if (!ship.hasWeapons()) {
+      sb.append("No weapons\n");
+    }
+    if (ship.getShield()==0 && ship.getTotalShield()>0) {
+      sb.append("shields down\n");
+    }
+    if (ship.getShield()==0 && ship.getTotalShield()==0) {
+      sb.append("No shields\n");
+    }
+    return sb.toString();
+  }
+
+  public int getMovesLeft() {
+    return movesLeft;
+  }
+
+  public void setMovesLeft(int movesLeft) {
+    this.movesLeft = movesLeft;
+  }
+  
   
   
 }

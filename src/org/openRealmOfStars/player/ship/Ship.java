@@ -177,6 +177,26 @@ public class Ship extends Construction {
   }
 
   /**
+   * Are there any weapons left
+   * @return true if there are weapons left
+   */
+  public boolean hasWeapons() {
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0 && hasComponentEnergy(i)) {
+        if (comp.getType() == ShipComponentType.WEAPON_BEAM ||
+            comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO ||
+            comp.getType() == ShipComponentType.WEAPON_HE_MISSILE ||
+            comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO ||
+            comp.getType() == ShipComponentType.WEAPON_RAILGUN) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
    * Get FTL Speed depending on hullpoints and energy level
    * @return Speed
    */
@@ -371,6 +391,26 @@ public class Ship extends Construction {
       }
     }
     return armor;
+  }
+
+  /**
+   * Get Total amount of hull point
+   * @return Maximum hull points
+   */
+  public int getMaxHullPoints() {
+    return hull.getSlotHull()*hull.getMaxSlot();
+  }
+
+  /**
+   * Get current hull points
+   * @return hull points
+   */
+  public int getHullPoints() {
+    int value = 0;
+    for (int i=0;i<hullPoints.length;i++) {
+      value = value +hullPoints[i];
+    }
+    return value;
   }
 
   public int getShield() {

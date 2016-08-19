@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
@@ -62,12 +63,17 @@ public class BattleInfoPanel extends InfoPanel {
    */
   private CombatShip ship;
   
+  private static final int MAX_BTN = 12;
+  
+  /**
+   * Component Buttons
+   */
+  private ComponentButton[] cBtn = new ComponentButton[MAX_BTN];
+  
   public BattleInfoPanel(CombatShip ship, ActionListener listener) {
     this.add(Box.createRigidArea(new Dimension(130,50)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH*2, Tile.MAX_HEIGHT*2,
         BufferedImage.TYPE_4BYTE_ABGR);
-    InvisiblePanel invis = new InvisiblePanel(this);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.X_AXIS));    
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     imageLabel = new ImageLabel(img, true);
     imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -75,10 +81,7 @@ public class BattleInfoPanel extends InfoPanel {
     Graphics2D g2d = img.createGraphics();
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
-    invis.add(imageLabel);
-    ComponentButton btn = new ComponentButton(ship.getShip(), 0);
-    this.add(btn);
-    this.add(invis);
+    this.add(imageLabel);
     this.add(Box.createRigidArea(new Dimension(10,10)));
     textArea = new InfoTextArea();
     textArea.setEditable(false);
@@ -86,6 +89,13 @@ public class BattleInfoPanel extends InfoPanel {
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
     this.add(textArea);
     this.add(Box.createRigidArea(new Dimension(10,10)));
+    InvisiblePanel invis = new InvisiblePanel(this);
+    invis.setLayout(new GridLayout(6, 2));
+    for (int i=0;i<MAX_BTN;i++) {
+      cBtn[i] = new ComponentButton(ship.getShip(), i);
+      invis.add(cBtn[i]);
+    }
+    this.add(invis);
   }
   
 
@@ -95,6 +105,9 @@ public class BattleInfoPanel extends InfoPanel {
    */
   public void showShip(CombatShip ship) {
     this.ship = ship;
+    for (int i=0;i<MAX_BTN;i++) {
+      cBtn[i].setComponent(ship.getShip(), i);
+    }
     updatePanel();
   }
 

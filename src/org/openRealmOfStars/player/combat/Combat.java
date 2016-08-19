@@ -113,6 +113,21 @@ public class Combat {
   }
   
   /**
+   * Is coordinate blocked or not
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @return True if blocked false otherwise
+   */
+  public boolean isBlocked(int x, int y) {
+    for (CombatShip ship : shipList) {
+      if (x == ship.getX() && y == ship.getY()) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  /**
    * Get Cursor X coordinate
    * @return X coordinate
    */
@@ -128,8 +143,21 @@ public class Combat {
     return cursorY;
   }
 
+  /**
+   * Get Current Ship
+   * @return CombatShip
+   */
   public CombatShip getCurrentShip() {
     return shipList.get(shipIndex);
+  }
+  
+  public void nextShip() {
+    shipIndex++;
+    if (shipList.size() == shipIndex) {
+      shipIndex = 0;
+    }
+    CombatShip ship = getCurrentShip();
+    ship.setMovesLeft(ship.getShip().getTacticSpeed());
   }
   
   /**

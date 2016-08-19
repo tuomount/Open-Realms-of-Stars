@@ -40,6 +40,11 @@ public class GameCommands {
   public static final String COMMAND_END_TURN = "EndTurn";
 
   /**
+   * End battle round
+   */
+  public static final String COMMAND_END_BATTLE_ROUND = "EndBattleRound";
+
+  /**
    * View planet command
    */
   public static final String COMMAND_VIEW_PLANET = "ViewPlanetCommand";

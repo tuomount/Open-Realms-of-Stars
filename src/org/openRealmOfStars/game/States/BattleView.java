@@ -4,10 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
+
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.MapPanel;
+import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
+import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatMapMouseListener;
@@ -94,12 +98,20 @@ public class BattleView extends BlackPanel {
     mapPanel.addMouseListener(combatMapMouseListener);
     mapPanel.addMouseMotionListener(combatMapMouseListener);
     
+    InfoPanel bottom = new InfoPanel();
+    bottom.setTitle(null);
+    bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
+    SpaceButton btn = new SpaceButton("End round", GameCommands.COMMAND_END_BATTLE_ROUND);
+    btn.addActionListener(listener);
+    bottom.add(btn);
+    
 
     
     this.setLayout(new BorderLayout());
     base.add(mapPanel,BorderLayout.CENTER);
     this.add(base,BorderLayout.CENTER);
     this.add(infoPanel,BorderLayout.EAST);
+    this.add(bottom,BorderLayout.SOUTH);
 
   }
 
@@ -119,6 +131,11 @@ public class BattleView extends BlackPanel {
         GameCommands.COMMAND_ANIMATION_TIMER) ) {
       mapPanel.drawBattleMap(combat, map.getCurrentPlayerInfo(), map);
       mapPanel.repaint();
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_END_BATTLE_ROUND)) {
+      combat.nextShip();
+      infoPanel.showShip(combat.getCurrentShip());
+      this.repaint();
     }
 
   }

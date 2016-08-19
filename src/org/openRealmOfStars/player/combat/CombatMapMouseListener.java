@@ -6,6 +6,7 @@ import java.awt.event.MouseMotionListener;
 
 import org.openRealmOfStars.gui.MapPanel;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
 
 /**
@@ -100,6 +101,14 @@ public class CombatMapMouseListener extends MouseAdapter implements
         mapPanel.getLastDrawnY(),e.getX(),e.getY(),mapPanel.getOffsetX(),mapPanel.getOffsetY(),
         mapPanel.getViewPointX(),mapPanel.getViewPointY(),true);
     if (!coord.isOutOfPanel()) {
+      int dist = (int) StarMap.getDistance(combat.getCurrentShip().getX(), 
+          combat.getCurrentShip().getY(), coord.getMapX(), coord.getMapY());
+      if (dist == 1 && !combat.isBlocked(coord.getMapX(), coord.getMapY()) &&
+          combat.getCurrentShip().getMovesLeft() > 0) {
+        combat.getCurrentShip().setX(coord.getMapX());
+        combat.getCurrentShip().setY(coord.getMapY());
+        combat.getCurrentShip().setMovesLeft(combat.getCurrentShip().getMovesLeft()-1);
+      }
     }
 
   }

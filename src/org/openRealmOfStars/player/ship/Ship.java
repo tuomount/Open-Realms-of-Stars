@@ -97,6 +97,18 @@ public class Ship extends Construction {
   }
   
   /**
+   * Get hull points for certain component
+   * @param index Component index
+   * @return Hull points
+   */
+  public int getHullPointForComponent(int index) {
+    if (index >= 0 && index < hullPoints.length) {
+      return hullPoints[index];
+    }
+    return 0;
+  }
+  
+  /**
    * Check if certain component has energy or not. Returns true if component has
    * energy. This also checks that component is functional.
    * @param index Component index

@@ -227,6 +227,31 @@ public class GuiStatics {
   public final static Color COLOR_YELLOW_TEXT = new Color(220, 220, 4,255);
 
   /**
+   * Damage 3/4 
+   */
+  public final static Color COLOR_DAMAGE_LITTLE = new Color(177, 255, 11,255);
+
+  /**
+   * Damage half 
+   */
+  public final static Color COLOR_DAMAGE_HALF = new Color(252, 255, 11,255);
+
+  /**
+   * Damage MUCH 
+   */
+  public final static Color COLOR_DAMAGE_MUCH = new Color(255, 189, 11,255);
+
+  /**
+   * Damage almost destroyed 
+   */
+  public final static Color COLOR_DAMAGE_ALMOST_DESTROYED = new Color(255, 143, 11,255);
+
+  /**
+   * Damage destroyed 
+   */
+  public final static Color COLOR_DESTROYED = new Color(255, 28, 11,255);
+
+  /**
    * Cool space blue
    */
   public final static Color COLOR_COOL_SPACE_BLUE = new Color(88,210,255);

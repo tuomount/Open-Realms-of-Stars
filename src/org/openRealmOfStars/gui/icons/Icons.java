@@ -84,6 +84,7 @@ public class Icons {
   public static final String ICON_ARROWDOWN = "ArrowDown";
   public static final String ICON_OK = "IconOk";
   public static final String ICON_DELETE = "IconDelete";
+  public static final String ICON_BATTERY = "IconBattery";
   
   /**
    * List of Icon
@@ -259,6 +260,8 @@ public class Icons {
     icon = new Icon16x16(image, 2, 6,ICON_OK);
     addIcon(icon);
     icon = new Icon16x16(image, 3, 6,ICON_DELETE);
+    addIcon(icon);
+    icon = new Icon16x16(image, 4, 6,ICON_BATTERY);
     addIcon(icon);
   }
   

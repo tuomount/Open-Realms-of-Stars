@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipComponent;
 
 /**
  * 
@@ -70,4 +71,54 @@ public class ComponentButton extends JButton {
     this.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
   }
 
+  /**
+   * Set Component to show
+   * @param ship Ship
+   * @param index Component Index
+   */
+  public void setComponent(Ship ship, int index) {
+    this.ship = ship;
+    this.index = index;
+    updateButton();
+  }
+  
+  /**
+   * Update button according the component
+   */
+  public void updateButton() {
+    ShipComponent comp = ship.getComponent(index);
+    boolean hasEnergy = ship.hasComponentEnergy(index);
+    int hp = ship.getHullPointForComponent(index);
+    int maxHP = ship.getHull().getSlotHull();
+    if (comp != null) {
+      this.setEnabled(true);
+      if (!hasEnergy) {
+        icon = new ImageIcon(Icons.getIconByName(Icons.ICON_BATTERY).getIcon());
+        this.setIcon(icon);
+      } else {
+        icon = new ImageIcon(Icons.getIconByName(comp.getType().getIconName()).getIcon());
+        this.setIcon(icon);
+      }
+      if (hp == 0) {
+        this.setBackground(GuiStatics.COLOR_DESTROYED);
+      } else {
+        int ratio = hp*100/maxHP;
+        if (ratio >= 75) {
+          this.setBackground(GuiStatics.COLOR_DAMAGE_LITTLE);
+        } else if (ratio >= 50) {
+          this.setBackground(GuiStatics.COLOR_DAMAGE_HALF);
+        } else if (ratio > 25) {
+          this.setBackground(GuiStatics.COLOR_DAMAGE_MUCH);
+        } else {
+          this.setBackground(GuiStatics.COLOR_DAMAGE_ALMOST_DESTROYED);
+        }
+      }
+      
+    } else {
+      this.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
+      this.setEnabled(false);
+      this.setText("");
+    }
+    this.repaint();
+  }
 }

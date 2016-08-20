@@ -6,6 +6,7 @@ import java.util.Collections;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.starMap.StarMap;
 
 
 /**
@@ -87,6 +88,48 @@ public class Combat {
     }
     Collections.sort(shipList);
     index = 0;    
+  }
+  
+  /**
+   * Get most powerful ship opponent has or null
+   * @param info Player Info who is doing the comparison.
+   * @return CombatShip or null
+   */
+  public CombatShip getMostPowerfulShip(PlayerInfo info) {
+    int power = 0;
+    CombatShip result=null;
+    for (CombatShip ship : shipList) {
+      if (ship.getPlayer() != info) {
+        if (ship.getShip().getTotalMilitaryPower()>power) {
+          result =ship;
+          power = result.getShip().getTotalMilitaryPower();
+        }
+      }
+    }
+    return result;
+  }
+  
+  /**
+   * Get the closest enemy ship
+   * @param info Player info who is doing the comparison
+   * @param center Where to start looking the closet one
+   * @return CombatShip or null
+   */
+  public CombatShip getClosestEnemyShip(PlayerInfo info, CombatShip center) {
+    double maxDist = 0;
+    CombatShip result=null;
+    for (CombatShip ship : shipList) {
+      if (ship.getPlayer() != info) {
+        double dist = StarMap.getDistance(center.getX(), center.getY(), ship.getX(),
+            ship.getY());
+        if (dist >maxDist) {
+          result =ship;
+          maxDist = dist;
+        }
+      }
+    }
+    return result;
+
   }
   
   /**

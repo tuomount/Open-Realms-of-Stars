@@ -472,5 +472,48 @@ public class Ship extends Construction {
     }
     return result;
   }
+  
+  /**
+   * Calculate military power of design. Design needs to have at least single
+   * weapon to be a military ship
+   * @return Military power
+   */
+  public int getTotalMilitaryPower() {
+    int power = 0;
+    boolean militaryShip = false;
+    power = getHull().getSlotHull()*getHull().getMaxSlot();
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.WEAPON_BEAM || 
+          comp.getType() == ShipComponentType.WEAPON_RAILGUN ||
+          comp.getType() == ShipComponentType.WEAPON_HE_MISSILE || 
+          comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) {
+        militaryShip = true;
+        power = power+comp.getDamage();
+      }
+      if (comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO) {
+        power = power+comp.getDamage()/2;
+      }
+      if (comp.getType() == ShipComponentType.ARMOR ||
+          comp.getType() == ShipComponentType.SHIELD) {
+        power = power+comp.getDefenseValue();
+      }
+      if (comp.getType() == ShipComponentType.ENGINE && 
+          getHull().getHullType() != ShipHullType.STARBASE) {
+        power = power+comp.getTacticSpeed()-1;
+      }
+      if (comp.getType() == ShipComponentType.TARGETING_COMPUTER) {
+        power = power+comp.getDamage()/10;
+      }
+      if (comp.getType() == ShipComponentType.JAMMER) {
+        power = power+comp.getDamage()/10;
+      }
+    }
+    if (!militaryShip) {
+      power = 0;
+    }
+    return power;
+  }
+
 
 }

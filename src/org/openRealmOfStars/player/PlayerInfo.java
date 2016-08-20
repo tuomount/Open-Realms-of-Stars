@@ -94,6 +94,11 @@ public class PlayerInfo {
    * Map Y size
    */
   private int maxY;
+  
+  /**
+   * Human player if true
+   */
+  private boolean human;
 
   /**
    * Uncharted map sector, only suns are visible
@@ -113,6 +118,7 @@ public class PlayerInfo {
     this.msgList = new MessageList();
     shipStatList = new ArrayList<>();
     fleets = new FleetList();
+    human = false;
     setRace(race);
     switch (getRace()) {
     case HUMAN:
@@ -443,6 +449,14 @@ public class PlayerInfo {
    */
   public MessageList getMsgList() {
     return msgList;
+  }
+
+  public boolean isHuman() {
+    return human;
+  }
+
+  public void setHuman(boolean human) {
+    this.human = human;
   }
   
 }

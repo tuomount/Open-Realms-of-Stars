@@ -15,6 +15,7 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatMapMouseListener;
+import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.StarMap;
@@ -123,19 +124,40 @@ public class BattleView extends BlackPanel {
   }
 
   /**
+   * Handle AI
+   */
+  private void handleAI() {
+    PlayerInfo info = combat.getCurrentShip().getPlayer();
+    CombatShip deadliest = combat.getMostPowerfulShip(info);
+    CombatShip closest = combat.getClosestEnemyShip(info, combat.getCurrentShip());
+    endRound();
+  }
+  
+  /**
+   * End battle round
+   */
+  private void endRound() {
+    combat.nextShip();
+    infoPanel.showShip(combat.getCurrentShip());
+    this.repaint();
+  }
+  
+  /**
    * Handle actions for battle view
    * @param arg0 Active Event
    */
   public void handleActions(ActionEvent arg0) {
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_ANIMATION_TIMER) ) {
+      if (!combat.getCurrentShip().getPlayer().isHuman()) {
+        handleAI();
+      }
       mapPanel.drawBattleMap(combat, map.getCurrentPlayerInfo(), map);
       mapPanel.repaint();
     }
-    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_END_BATTLE_ROUND)) {
-      combat.nextShip();
-      infoPanel.showShip(combat.getCurrentShip());
-      this.repaint();
+    if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_END_BATTLE_ROUND) && combat.getCurrentShip().getPlayer().isHuman()) {
+      endRound();
     }
 
   }

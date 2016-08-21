@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 
+import org.openRealmOfStars.AI.PathFinding.AStarSearch;
+import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.MapPanel;
@@ -130,6 +132,15 @@ public class BattleView extends BlackPanel {
     PlayerInfo info = combat.getCurrentShip().getPlayer();
     CombatShip deadliest = combat.getMostPowerfulShip(info);
     CombatShip closest = combat.getClosestEnemyShip(info, combat.getCurrentShip());
+    AStarSearch aStar = new AStarSearch(combat, combat.getCurrentShip(),deadliest, 1);
+    if (aStar.doSearch()) {
+      aStar.doRoute();
+      PathPoint point = aStar.getNextMove();
+      if (!combat.isBlocked(point.getX(), point.getY())) {
+        combat.getCurrentShip().setX(point.getX());
+        combat.getCurrentShip().setY(point.getY());
+      }
+    }
     endRound();
   }
   

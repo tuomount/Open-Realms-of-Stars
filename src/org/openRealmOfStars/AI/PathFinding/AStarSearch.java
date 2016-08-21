@@ -136,14 +136,18 @@ public class AStarSearch {
     boolean noMorePoints = false;
     int count = 0;
     while (!noMorePoints) {
+      count++;
       if (points.size() > 0) {
         PathPoint point = points.get(0);
         points.remove(0);
         for (int y = -1;y<2;y++) {
           for (int x = -1;x<2;x++) {
+            if (y==0 && x== 0) {
+              continue;
+            }
             int mx = x+point.getX();
             int my = y+point.getY();
-            if (isValidPos(mx,my)) {
+            if (isValidPos(mx,my) && blockMap[mx][my] > count) {
               blockMap[mx][my] = count;
               double dist = StarMap.getDistance(mx, my, tx, ty);
               PathPoint newPoint = new PathPoint(mx, my, dist);
@@ -154,7 +158,7 @@ public class AStarSearch {
                 // Seems to be more far away so adding it to end
                 points.add(newPoint);
               }
-              if (dist == targetDistance) {
+              if ((int) Math.ceil(dist) == targetDistance) {
                 // Target found and acquired
                 targetPoint = newPoint;
                 return true;
@@ -168,5 +172,49 @@ public class AStarSearch {
     }
     // Target is not found, no path available
     return false;
+  }
+  
+  /**
+   * Calculate Route
+   */
+  public void doRoute() {
+    boolean targetReached = false;
+    if (targetPoint != null) {
+      points = new ArrayList<>();
+      points.add(targetPoint);
+      int count = UNBLOCKED;
+      while (!targetReached) {
+        PathPoint point = points.get(points.size()-1);
+        for (int y = -1;y<2;y++) {
+          for (int x = -1;x<2;x++) {
+            if (y==0 && x== 0) {
+              continue;
+            }
+            int mx = x+point.getX();
+            int my = y+point.getY();
+            if (isValidPos(mx,my) && blockMap[mx][my] < count) {
+              count = blockMap[mx][my];
+              double dist = StarMap.getDistance(mx, my, tx, ty);
+              PathPoint newPoint = new PathPoint(mx, my, dist);
+              points.add(newPoint);
+              if (blockMap[mx][my] == 0) {
+                targetReached = true;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  /**
+   * Get next move by return PathPoint
+   * @return PathPoint or null if cannot move
+   */
+  public PathPoint getNextMove() {
+    if (targetPoint != null && points.size() > 1)  {
+      return points.get(points.size()-2);
+    }
+    return null;
   }
 }

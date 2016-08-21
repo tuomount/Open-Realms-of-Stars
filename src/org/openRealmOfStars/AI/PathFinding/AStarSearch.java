@@ -45,12 +45,12 @@ public class AStarSearch {
   /**
    * Map value for blocked
    */
-  private static final int BLOCKED = 999;
+  private static final int BLOCKED = Integer.MAX_VALUE;
   
   /**
    * Map value for unblocked
    */
-  private static final int UNBLOCKED = 0;
+  private static final int UNBLOCKED = 200000;
   
   /**
    * Map containing the block information
@@ -75,6 +75,11 @@ public class AStarSearch {
    * Target Distance where to stop
    */
   private int targetDistance;
+  
+  /**
+   * Found target point after search
+   */
+  private PathPoint targetPoint;
   
   /**
    * Initialize A Star Search for combat map.
@@ -105,6 +110,63 @@ public class AStarSearch {
     PathPoint point1 = new PathPoint(start.getX(), start.getY(), 
         StarMap.getDistance(start.getX(), start.getY(), tx, ty));
     points.add(point1);
-    
+    blockMap[point1.getX()][point1.getY()] = 0;
+    targetPoint = null;
+  }
+  
+  /**
+   * Is coordinate valid position on map
+   * @param x X Coordinate
+   * @param y Y Coordinate
+   * @return true if valid otherwise false
+   */
+  private boolean isValidPos(int x, int y) {
+    if (x >= 0 && y >= 0 && x < maxX && y < maxY) {
+      return true;
+    }
+    return false;
+  }
+
+  
+  /**
+   * Do actual A Star search with initialized values
+   * @return True if successful and false if not
+   */
+  public boolean doSearch() {
+    boolean noMorePoints = false;
+    int count = 0;
+    while (!noMorePoints) {
+      if (points.size() > 0) {
+        PathPoint point = points.get(0);
+        points.remove(0);
+        for (int y = -1;y<2;y++) {
+          for (int x = -1;x<2;x++) {
+            int mx = x+point.getX();
+            int my = y+point.getY();
+            if (isValidPos(mx,my)) {
+              blockMap[mx][my] = count;
+              double dist = StarMap.getDistance(mx, my, tx, ty);
+              PathPoint newPoint = new PathPoint(mx, my, dist);
+              if (dist < point.getDistance()) {
+                // Seems to be closer, so adding it to first one
+                points.add(0, newPoint);
+              } else {
+                // Seems to be more far away so adding it to end
+                points.add(newPoint);
+              }
+              if (dist == targetDistance) {
+                // Target found and acquired
+                targetPoint = newPoint;
+                return true;
+              }
+            }
+          }
+        }
+      } else {
+        noMorePoints = true;
+      }
+    }
+    // Target is not found, no path available
+    return false;
   }
 }

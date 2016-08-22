@@ -136,6 +136,21 @@ public class ShipComponent {
     this.setWeaponRange(0);
   }
 
+  /**
+   * Is component weapon
+   * @return True if weapon
+   */
+  public boolean isWeapon() {
+    if (type == ShipComponentType.WEAPON_BEAM ||
+        type == ShipComponentType.WEAPON_ECM_TORPEDO ||
+        type == ShipComponentType.WEAPON_HE_MISSILE ||
+        type == ShipComponentType.WEAPON_PHOTON_TORPEDO ||
+        type == ShipComponentType.WEAPON_RAILGUN) {
+      return true;
+    }
+    return false;
+  }
+  
   public int getIndex() {
     return index;
   }

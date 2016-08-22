@@ -6,6 +6,7 @@ import java.util.Collections;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.starMap.StarMap;
 
 
@@ -95,6 +96,35 @@ public class Combat {
     Collections.sort(shipList);
     index = 0;
     componentUse = -1;
+  }
+  
+  public boolean isClearShot(CombatShip shooter, CombatShip target) {
+    boolean result = false;
+    ShipComponent weapon = shooter.getShip().getComponent(componentUse);
+    if (weapon != null && weapon.isWeapon()) {  
+      double startX = shooter.getX();
+      double startY = shooter.getY();
+      double endX = target.getX();
+      double endY = target.getY();;
+      double mx;
+      double my;
+      double dx = Math.abs(startX-endX);
+      double dy = Math.abs(startY-endY);
+      int distance = (int) dy;
+      if (dx > dy) {
+        distance = (int) dx;
+      }
+      if (distance > 0) {
+        mx = (endX-startX)/distance;
+        my = (endY-startY)/distance;
+      } else {
+        mx = 0;
+        my = 0;
+      }
+
+    }
+
+    return result;
   }
   
   /**

@@ -34,6 +34,11 @@ public class CombatShip implements Comparable<CombatShip>{
   private Ship ship;
   
   /**
+   * Is component used or not for this round
+   */
+  private boolean[] componentUsed;
+  
+  /**
    * Ship's X coordinate in combat
    */
   private int x;
@@ -53,6 +58,9 @@ public class CombatShip implements Comparable<CombatShip>{
    */
   private boolean flipY;
   
+  /**
+   * How many moves left for this round
+   */
   private int movesLeft;
   
   /**
@@ -70,6 +78,7 @@ public class CombatShip implements Comparable<CombatShip>{
     this.player = player;
     this.flipY = flip;
     this.movesLeft = ship.getTacticSpeed();
+    reInitShipForRound();
   }
 
   public Ship getShip() {
@@ -152,6 +161,39 @@ public class CombatShip implements Comparable<CombatShip>{
 
   public int getMovesLeft() {
     return movesLeft;
+  }
+  
+  /**
+   * Reinitialize ship for next round
+   */
+  public void reInitShipForRound() {
+    setMovesLeft(ship.getTacticSpeed());
+    componentUsed = new boolean[ship.getNumberOfComponents()];
+    for (int i=0;i<componentUsed.length;i++) {
+      componentUsed[i] = false;
+    }
+  }
+  
+  /**
+   * Is certain component used or not yet during this round
+   * @param index Component index
+   * @return true if component has been used
+   */
+  public boolean isComponentUsed(int index) {
+    if(index >= 0 && index <componentUsed.length) {
+      return componentUsed[index];
+    }
+    return true;
+  }
+  
+  /**
+   * Use certain component for this round
+   * @param index Component index
+   */
+  public void useComponent(int index) {
+    if(index >= 0 && index <componentUsed.length) {
+      componentUsed[index] = true;
+    }    
   }
 
   public void setMovesLeft(int movesLeft) {

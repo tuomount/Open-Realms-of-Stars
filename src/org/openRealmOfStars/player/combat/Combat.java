@@ -69,6 +69,11 @@ public class Combat {
   private int componentUse;
 
   /**
+   * Combat animation
+   */
+  private CombatAnimation animation;
+  
+  /**
    * Build shipList in initiative order
    * @param fleet1 Player1 fleet
    * @param fleet2 Player2 fleet
@@ -96,6 +101,7 @@ public class Combat {
     Collections.sort(shipList);
     index = 0;
     componentUse = -1;
+    animation = null;
   }
   
   /**
@@ -258,7 +264,7 @@ public class Combat {
       shipIndex = 0;
     }
     CombatShip ship = getCurrentShip();
-    ship.setMovesLeft(ship.getShip().getTacticSpeed());
+    ship.reInitShipForRound();
   }
   
   /**
@@ -556,6 +562,14 @@ public class Combat {
 
   public void setComponentUse(int componentUse) {
     this.componentUse = componentUse;
+  }
+
+  public CombatAnimation getAnimation() {
+    return animation;
+  }
+
+  public void setAnimation(CombatAnimation animation) {
+    this.animation = animation;
   }
   
 }

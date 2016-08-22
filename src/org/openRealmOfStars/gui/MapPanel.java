@@ -18,8 +18,10 @@ import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
+import org.openRealmOfStars.player.combat.CombatAnimation;
 import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.starMap.CulturePower;
@@ -551,6 +553,7 @@ public class MapPanel extends JPanel {
             gr.drawImage(img, pixelX, pixelY, null);
           }
         }
+        
         if (i == combat.getCursorX() && j == combat.getCursorY()) {
           ShipComponent weapon = combat.getCurrentShip().getShip().getComponent(combat.getComponentUse());
           if (combat.getComponentUse() != -1 && weapon != null && weapon.isWeapon()) {
@@ -569,6 +572,36 @@ public class MapPanel extends JPanel {
       pixelX = viewPointOffsetX;
       pixelY=pixelY+ShipImage.MAX_HEIGHT;
     }
+    if (combat.getAnimation() != null) {
+      CombatAnimation anim = combat.getAnimation();
+      if (anim.getWeapon().getType() == ShipComponentType.WEAPON_BEAM) {
+        Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.
+            JOIN_BEVEL, 1, new float[]{1f}, 0);
+        gr.setStroke(full);
+        gr.setColor(anim.getBeamColor());
+        gr.drawLine(anim.getSx()+viewPointOffsetX, anim.getSy()+viewPointOffsetY,
+            anim.getEx()+viewPointOffsetX, anim.getEy()+viewPointOffsetY);
+      }else if (anim.getWeapon().getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) { 
+        gr.setColor(GuiStatics.COLOR_GREEN_TEXT);
+        Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.
+            JOIN_BEVEL, 1, new float[]{1f}, 0);
+        gr.setStroke(full);
+        gr.drawLine(anim.getSx()+viewPointOffsetX, anim.getSy()+viewPointOffsetY,
+            anim.getSx()+viewPointOffsetX+1, anim.getSy()+viewPointOffsetY+1);
+      } else {
+        gr.setColor(GuiStatics.COLOR_GREY_160);
+        Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.
+            JOIN_BEVEL, 1, new float[]{1f}, 0);
+        gr.setStroke(full);
+        gr.drawLine(anim.getSx()+viewPointOffsetX, anim.getSy()+viewPointOffsetY,
+            anim.getSx()+viewPointOffsetX+1, anim.getSy()+viewPointOffsetY+1);
+      }
+      anim.doAnimation();
+      if (anim.isAnimationFinished()) {
+        combat.setAnimation(null);
+      }
+    }
+
   }
 
   public int getLastDrawnX() {

@@ -6,6 +6,7 @@ import java.awt.event.MouseMotionListener;
 
 import org.openRealmOfStars.gui.MapPanel;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
+import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
 
@@ -106,14 +107,28 @@ public class CombatMapMouseListener extends MouseAdapter implements
     coord= new PixelsToMapCoordinate(mapPanel.getLastDrawnX(),
         mapPanel.getLastDrawnY(),e.getX(),e.getY(),mapPanel.getOffsetX(),mapPanel.getOffsetY(),
         mapPanel.getViewPointX(),mapPanel.getViewPointY(),true);
-    if (!coord.isOutOfPanel()) {
-      int dist = (int) StarMap.getDistance(combat.getCurrentShip().getX(), 
-          combat.getCurrentShip().getY(), coord.getMapX(), coord.getMapY());
-      if (dist == 1 && !combat.isBlocked(coord.getMapX(), coord.getMapY()) &&
-          combat.getCurrentShip().getMovesLeft() > 0) {
-        combat.getCurrentShip().setX(coord.getMapX());
-        combat.getCurrentShip().setY(coord.getMapY());
-        combat.getCurrentShip().setMovesLeft(combat.getCurrentShip().getMovesLeft()-1);
+    if (!coord.isOutOfPanel() && combat.getAnimation() == null) {
+      if (componentUse != -1) {
+        CombatShip ship = combat.getCurrentShip();
+        ShipComponent weapon = ship.getShip().getComponent(componentUse);
+        if (weapon != null && weapon.isWeapon() && !ship.isComponentUsed(componentUse)) {
+          CombatShip target = combat.getShipFromCoordinate(combat.getCursorX(), combat.getCursorY());
+          if (target !=  null && combat.isClearShot(combat.getCurrentShip(), target)) {
+            combat.setAnimation(new CombatAnimation(ship, target, weapon, true));
+            ship.useComponent(componentUse);
+            componentUse = -1;
+            combat.setComponentUse(-1);
+          }
+        }
+      } else {
+        int dist = (int) StarMap.getDistance(combat.getCurrentShip().getX(), 
+            combat.getCurrentShip().getY(), coord.getMapX(), coord.getMapY());
+        if (dist == 1 && !combat.isBlocked(coord.getMapX(), coord.getMapY()) &&
+            combat.getCurrentShip().getMovesLeft() > 0) {
+          combat.getCurrentShip().setX(coord.getMapX());
+          combat.getCurrentShip().setY(coord.getMapY());
+          combat.getCurrentShip().setMovesLeft(combat.getCurrentShip().getMovesLeft()-1);
+        }
       }
     }
 

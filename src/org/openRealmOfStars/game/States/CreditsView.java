@@ -65,6 +65,7 @@ public class CreditsView extends BlackPanel {
         "Nebulae, star field and space panel by Tuomo Untinen\n\n"+
         "Route dot by Tuomo Untinen\n\n"+
         "Space ships are done with Surt's modular ships\n\n"+
+        "Explosions by Csaba Felvegi aka Chabull\n\n"+
         "Fonts are under SIL Open Font License, Version 1.1.\n"+
         "#Fonts by\n\n"+
         "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n";

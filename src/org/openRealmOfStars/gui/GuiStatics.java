@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.openRealmOfStars.gui.icons.AnimatedImage;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -62,7 +63,8 @@ public class GuiStatics {
   public static Font getFontCubellan() {
     if (fontCubellan == null) { 
       try {
-        InputStream is = Tiles.class.getResource("/resources/fonts/Cubellan_v_0_7/Cubellan.ttf").openStream();
+        InputStream is = Tiles.class.getResource(
+            "/resources/fonts/Cubellan_v_0_7/Cubellan.ttf").openStream();
         fontCubellan = Font.createFont(Font.TRUETYPE_FONT, is);
         fontCubellan = fontCubellan.deriveFont(16F);
         is.close();
@@ -81,7 +83,8 @@ public class GuiStatics {
   public static Font getFontCubellanSmaller() {
     if (fontCubellanSmall == null) { 
       try {
-        InputStream is = Tiles.class.getResource("/resources/fonts/Cubellan_v_0_7/Cubellan.ttf").openStream();
+        InputStream is = Tiles.class.getResource(
+            "/resources/fonts/Cubellan_v_0_7/Cubellan.ttf").openStream();
         fontCubellanSmall = Font.createFont(Font.TRUETYPE_FONT, is);
         fontCubellanSmall = fontCubellanSmall.deriveFont(13F);
         is.close();
@@ -105,7 +108,8 @@ public class GuiStatics {
   public static Font getFontCubellanBold() {
     if (fontCubellanBold == null) { 
       try {
-        InputStream is = Tiles.class.getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf").openStream();
+        InputStream is = Tiles.class.getResource(
+            "/resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf").openStream();
         fontCubellanBold = Font.createFont(Font.TRUETYPE_FONT, is);
         fontCubellanBold = fontCubellanBold.deriveFont(24F);
         is.close();
@@ -129,7 +133,8 @@ public class GuiStatics {
   public static Font getFontCubellanBoldBig() {
     if (fontCubellanBoldBig == null) { 
       try {
-        InputStream is = Tiles.class.getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf").openStream();
+        InputStream is = Tiles.class.getResource(
+            "/resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf").openStream();
         fontCubellanBoldBig = Font.createFont(Font.TRUETYPE_FONT, is);
         fontCubellanBoldBig = fontCubellanBoldBig.deriveFont(35F);
         is.close();
@@ -153,7 +158,8 @@ public class GuiStatics {
   public static Font getFontCubellanSC() {
     if (fontCubellanSC == null) { 
       try {
-        InputStream is = Tiles.class.getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_SC.ttf").openStream();
+        InputStream is = Tiles.class.getResource(
+            "/resources/fonts/Cubellan_v_0_7/Cubellan_SC.ttf").openStream();
         fontCubellanSC = Font.createFont(Font.TRUETYPE_FONT, is);
         fontCubellanSC = fontCubellanSC.deriveFont(13F);
         is.close();
@@ -308,64 +314,72 @@ public class GuiStatics {
   public final static Color COLOR_GREY_40 = new Color(40,40,40);
 
   /**
+   * Explosion animation
+   */
+  public final static AnimatedImage EXPLOSION1 = new AnimatedImage(64, 64, 
+      "/resources/images/explosion1.png");
+
+  
+  /**
    * Big planet screen Rock 1
    */
-  public final static BufferedImage BIG_PLANET_ROCK1 = IOUtilities.loadImage(Tiles.class.getResource(
-      "/resources/images/rock1.png"));
+  public final static BufferedImage BIG_PLANET_ROCK1 = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/rock1.png"));
 
   /**
    * Big planet screen waterworld 1
    */
-  public final static BufferedImage BIG_PLANET_WATERWORLD1 = IOUtilities.loadImage(Tiles.class.getResource(
-      "/resources/images/waterworld1.png"));
+  public final static BufferedImage BIG_PLANET_WATERWORLD1 = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/waterworld1.png"));
 
   /**
    * Big planet screen waterworld 2
    */
-  public final static BufferedImage BIG_PLANET_WATERWORLD2 = IOUtilities.loadImage(Tiles.class.getResource(
-      "/resources/images/waterworld2.png"));
+  public final static BufferedImage BIG_PLANET_WATERWORLD2 = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/waterworld2.png"));
 
   /**
    * Big planet screen iron planet 1
    */
-  public final static BufferedImage BIG_PLANET_IRONPLANET1 = IOUtilities.loadImage(Tiles.class.getResource(
-      "/resources/images/ironplanet1.png"));
+  public final static BufferedImage BIG_PLANET_IRONPLANET1 = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/ironplanet1.png"));
 
   /**
    * Big planet screen iron planet 2
    */
-  public final static BufferedImage BIG_PLANET_IRONPLANET2 = IOUtilities.loadImage(Tiles.class.getResource(
-      "/resources/images/ironplanet2.png"));
+  public final static BufferedImage BIG_PLANET_IRONPLANET2 = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/ironplanet2.png"));
 
   /**
    * Big planet gasworld
    */
-  public final static BufferedImage BIG_GASWORLD1 = IOUtilities.loadImage(Tiles.class.getResource(
-      "/resources/images/gasworld1.png"));
+  public final static BufferedImage BIG_GASWORLD1 = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/gasworld1.png"));
 
   /**
    * Big planet screen gasworld
    */
-  public final static BufferedImage BIG_GASWORLD2 = IOUtilities.loadImage(Tiles.class.getResource(
-      "/resources/images/gasworld2.png"));
+  public final static BufferedImage BIG_GASWORLD2 = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/gasworld2.png"));
 
   /**
    * Star field image for parallax scrolling
    */
-  public final static BufferedImage starFieldImage = IOUtilities.loadImage(Tiles.class.getResource(
-      "/resources/images/starfield.png"));
+  public final static BufferedImage starFieldImage = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/starfield.png"));
 
   /**
    * Nebula image for parallax scrolling
    */
-  public final static BufferedImage nebulaeImage = IOUtilities.loadImage(Tiles.class.getResource(
-      "/resources/images/nebulae.png"));
+  public final static BufferedImage nebulaeImage = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/nebulae.png"));
 
 
   /**
    * Image used for calculation text width and heights.
    */
-  private static final BufferedImage tempImage = new BufferedImage(100,100,BufferedImage.TYPE_4BYTE_ABGR);
+  private static final BufferedImage tempImage = new BufferedImage(100,100,
+      BufferedImage.TYPE_4BYTE_ABGR);
   
   /**
    * Horizotal thumb

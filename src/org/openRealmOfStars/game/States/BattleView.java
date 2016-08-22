@@ -77,6 +77,21 @@ public class BattleView extends BlackPanel {
   private CombatMapMouseListener combatMapMouseListener;
   
   /**
+   * aStar search for AI
+   */
+  private AStarSearch aStar;
+
+  /**
+   * Delay count for AI, since it's too fast for humans
+   */
+  private int delayCount;
+  
+  /**
+   * 2 Seconds with 75ms animation timer
+   */
+  private static final int MAX_DELAY_COUNT = 30;
+  
+  /**
    * Battle view for space combat
    * @param fleet1 First fleet in combat
    * @param player1 First player in combat
@@ -115,6 +130,8 @@ public class BattleView extends BlackPanel {
     this.add(base,BorderLayout.CENTER);
     this.add(infoPanel,BorderLayout.EAST);
     this.add(bottom,BorderLayout.SOUTH);
+    aStar = null;
+    delayCount = 0;
 
   }
 
@@ -132,16 +149,24 @@ public class BattleView extends BlackPanel {
     PlayerInfo info = combat.getCurrentShip().getPlayer();
     CombatShip deadliest = combat.getMostPowerfulShip(info);
     CombatShip closest = combat.getClosestEnemyShip(info, combat.getCurrentShip());
-    AStarSearch aStar = new AStarSearch(combat, combat.getCurrentShip(),deadliest, 1);
-    if (aStar.doSearch()) {
-      aStar.doRoute();
-      PathPoint point = aStar.getNextMove();
-      if (!combat.isBlocked(point.getX(), point.getY())) {
-        combat.getCurrentShip().setX(point.getX());
-        combat.getCurrentShip().setY(point.getY());
+    if (aStar == null) {
+      aStar = new AStarSearch(combat, combat.getCurrentShip(),deadliest, 1);
+      if (aStar.doSearch()) {
+        aStar.doRoute();
+      } else {
+        // Could not found route for deadliest 
       }
     }
-    endRound();
+    PathPoint point = aStar.getNextMove();
+    if (point != null && !combat.isBlocked(point.getX(), point.getY())) {
+      combat.getCurrentShip().setMovesLeft(combat.getCurrentShip().getMovesLeft()-1);
+      combat.getCurrentShip().setX(point.getX());
+      combat.getCurrentShip().setY(point.getY());
+    }
+    if (combat.getCurrentShip().getMovesLeft() == 0 || aStar.isLastMove()) {
+      aStar = null;
+      endRound();
+    }
   }
   
   /**
@@ -160,7 +185,11 @@ public class BattleView extends BlackPanel {
   public void handleActions(ActionEvent arg0) {
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_ANIMATION_TIMER) ) {
-      if (!combat.getCurrentShip().getPlayer().isHuman()) {
+      delayCount++;
+      if (delayCount >= MAX_DELAY_COUNT) {
+        delayCount = 0;
+      }
+      if (!combat.getCurrentShip().getPlayer().isHuman() && delayCount == 0) {
         handleAI();
       }
       mapPanel.drawBattleMap(combat, map.getCurrentPlayerInfo(), map);

@@ -82,6 +82,11 @@ public class AStarSearch {
   private PathPoint targetPoint;
   
   /**
+   * Route Index
+   */
+  private int routeIndex;
+  
+  /**
    * Initialize A Star Search for combat map.
    * @param combat Actual combat map
    * @param start Where to start looking the path
@@ -112,6 +117,7 @@ public class AStarSearch {
     points.add(point1);
     blockMap[point1.getX()][point1.getY()] = 0;
     targetPoint = null;
+    routeIndex = -1;
   }
   
   /**
@@ -204,6 +210,7 @@ public class AStarSearch {
           }
         }
       }
+      routeIndex = points.size()-1;
     }
   }
   
@@ -212,9 +219,24 @@ public class AStarSearch {
    * @return PathPoint or null if cannot move
    */
   public PathPoint getNextMove() {
-    if (targetPoint != null && points.size() > 1)  {
-      return points.get(points.size()-2);
+    if (targetPoint != null && points.size() > 1 && routeIndex != -1)  {
+      if (routeIndex > 0) {
+        routeIndex--;
+      }
+      return points.get(routeIndex);
     }
     return null;
   }
+  
+  /**
+   * Is last move reached
+   * @return True if last move reached or false if not
+   */
+  public boolean isLastMove() {
+    if (routeIndex == 0) {
+      return true;
+    }
+    return false;
+  }
 }
+

@@ -319,6 +319,12 @@ public class GuiStatics {
   public final static AnimatedImage EXPLOSION1 = new AnimatedImage(64, 64, 
       "/resources/images/explosion1.png");
 
+  /**
+   * Crosshair for combat
+   */
+  public final static BufferedImage CROSSHAIR = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/crosshair.png"));
+
   
   /**
    * Big planet screen Rock 1

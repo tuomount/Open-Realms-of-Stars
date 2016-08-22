@@ -550,6 +550,12 @@ public class MapPanel extends JPanel {
             gr.drawImage(img, pixelX, pixelY, null);
           }
         }
+        if (i == combat.getCursorX() && j == combat.getCursorY()) {
+          if (combat.getComponentUse() != -1) {
+            gr.drawImage(GuiStatics.CROSSHAIR, pixelX, pixelY, null);
+          }
+        }
+
         
         pixelX=pixelX+ShipImage.MAX_WIDTH;
       }

@@ -327,4 +327,9 @@ public class GameCommands {
    */
   public static final String COMMAND_METAL_CARGO_MINUS = "MetalCargoMinus";
 
+  /**
+   * Command for using components in battle
+   */
+  public static final String COMMAND_COMPONENT_USE = "UseComponent";
+
 }

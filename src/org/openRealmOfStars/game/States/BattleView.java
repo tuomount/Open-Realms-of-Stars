@@ -173,6 +173,8 @@ public class BattleView extends BlackPanel {
    * End battle round
    */
   private void endRound() {
+    combat.setComponentUse(-1);
+    combatMapMouseListener.setComponentUse(-1);
     combat.nextShip();
     infoPanel.showShip(combat.getCurrentShip());
     this.repaint();
@@ -198,6 +200,18 @@ public class BattleView extends BlackPanel {
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_END_BATTLE_ROUND) && combat.getCurrentShip().getPlayer().isHuman()) {
       endRound();
+    }
+    if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)
+        && combat.getCurrentShip().getPlayer().isHuman()) {
+      String number = arg0.getActionCommand().substring(GameCommands.COMMAND_COMPONENT_USE.length());
+      int index = Integer.valueOf(number);
+      if (combat.getComponentUse() != index) {
+        combatMapMouseListener.setComponentUse(index);
+        combat.setComponentUse(index);
+      } else {
+        combatMapMouseListener.setComponentUse(-1);
+        combat.setComponentUse(-1);
+      }
     }
 
   }

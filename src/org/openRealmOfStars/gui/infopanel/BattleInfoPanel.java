@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
+import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.ComponentButton;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
@@ -93,6 +94,8 @@ public class BattleInfoPanel extends InfoPanel {
     invis.setLayout(new GridLayout(6, 2));
     for (int i=0;i<MAX_BTN;i++) {
       cBtn[i] = new ComponentButton(ship.getShip(), i);
+      cBtn[i].setActionCommand(GameCommands.COMMAND_COMPONENT_USE+i);
+      cBtn[i].addActionListener(listener);
       invis.add(cBtn[i]);
     }
     this.add(invis);

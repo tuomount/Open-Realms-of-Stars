@@ -55,6 +55,11 @@ public class CombatMapMouseListener extends MouseAdapter implements
    * Is route being planned
    */
   private boolean routePlanning;
+  
+  /**
+   * Which component is in used
+   */
+  private int componentUse;
 
   /**
    * Constructor for StarMap Mouse Listener
@@ -66,6 +71,7 @@ public class CombatMapMouseListener extends MouseAdapter implements
     this.combat = combat;
     this.mapPanel = panel;
     this.battleInfoPanel = battleInfoPanel;
+    this.componentUse = -1;
   }
   
   
@@ -121,6 +127,18 @@ public class CombatMapMouseListener extends MouseAdapter implements
 
   public void setRoutePlanning(boolean routePlanning) {
     this.routePlanning = routePlanning;
+  }
+
+
+
+  public int getComponentUse() {
+    return componentUse;
+  }
+
+
+
+  public void setComponentUse(int componentUse) {
+    this.componentUse = componentUse;
   }
 
   

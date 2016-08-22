@@ -61,6 +61,12 @@ public class Combat {
    * Cursor position Y coordinate
    */
   private int cursorY;
+  
+  /**
+   * Which component is in used
+   */
+  private int componentUse;
+
   /**
    * Build shipList in initiative order
    * @param fleet1 Player1 fleet
@@ -87,7 +93,8 @@ public class Combat {
       index++;
     }
     Collections.sort(shipList);
-    index = 0;    
+    index = 0;
+    componentUse = -1;
   }
   
   /**
@@ -490,6 +497,14 @@ public class Combat {
     }
     // This should not happen
     return 4;
+  }
+
+  public int getComponentUse() {
+    return componentUse;
+  }
+
+  public void setComponentUse(int componentUse) {
+    this.componentUse = componentUse;
   }
   
 }

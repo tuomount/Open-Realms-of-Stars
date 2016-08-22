@@ -98,28 +98,49 @@ public class Combat {
     componentUse = -1;
   }
   
+  /**
+   * Is clear shot from shooter to target with used weapon
+   * @param shooter Shooter's combat ship
+   * @param target Target's combat Ship
+   * @return True if shot is possible to shoot
+   */
   public boolean isClearShot(CombatShip shooter, CombatShip target) {
     boolean result = false;
     ShipComponent weapon = shooter.getShip().getComponent(componentUse);
     if (weapon != null && weapon.isWeapon()) {  
-      double startX = shooter.getX();
-      double startY = shooter.getY();
+      double sx = shooter.getX();
+      double sy = shooter.getY();
       double endX = target.getX();
       double endY = target.getY();;
       double mx;
       double my;
-      double dx = Math.abs(startX-endX);
-      double dy = Math.abs(startY-endY);
+      double dx = Math.abs(sx-endX);
+      double dy = Math.abs(sy-endY);
       int distance = (int) dy;
       if (dx > dy) {
         distance = (int) dx;
       }
       if (distance > 0) {
-        mx = (endX-startX)/distance;
-        my = (endY-startY)/distance;
+        mx = (endX-sx)/distance;
+        my = (endY-sy)/distance;
       } else {
         mx = 0;
         my = 0;
+      }
+      if (weapon.getWeaponRange() >= distance && distance > 0) {
+        for (int i=0;i<distance+1;i++) {
+          sx = sx +mx;
+          sy = sy+my;
+          int ix = (int) Math.round(sx);
+          int iy = (int) Math.round(sy);
+          if (isBlocked(ix,iy) && (ix != target.getX() || iy != target.getY())) {
+            result = false;
+            break;
+          }
+          if (ix == target.getX() && iy == target.getY()) {
+            result = true;
+          }
+        }
       }
 
     }

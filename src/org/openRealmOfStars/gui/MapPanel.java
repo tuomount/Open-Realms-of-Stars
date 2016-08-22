@@ -19,6 +19,7 @@ import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatShip;
+import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.starMap.CulturePower;
@@ -551,8 +552,14 @@ public class MapPanel extends JPanel {
           }
         }
         if (i == combat.getCursorX() && j == combat.getCursorY()) {
-          if (combat.getComponentUse() != -1) {
-            gr.drawImage(GuiStatics.CROSSHAIR, pixelX, pixelY, null);
+          ShipComponent weapon = combat.getCurrentShip().getShip().getComponent(combat.getComponentUse());
+          if (combat.getComponentUse() != -1 && weapon != null && weapon.isWeapon()) {
+            CombatShip target = combat.getShipFromCoordinate(combat.getCursorX(), combat.getCursorY());
+            if (target !=  null && combat.isClearShot(combat.getCurrentShip(), target)) {
+              gr.drawImage(GuiStatics.CROSSHAIR, pixelX, pixelY, null);
+            } else {
+              gr.drawImage(GuiStatics.RED_CROSSHAIR, pixelX, pixelY, null);
+            }
           }
         }
 

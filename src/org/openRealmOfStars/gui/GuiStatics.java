@@ -325,6 +325,12 @@ public class GuiStatics {
   public final static BufferedImage CROSSHAIR = IOUtilities.
       loadImage(Tiles.class.getResource("/resources/images/crosshair.png"));
 
+  /**
+   * Red Crosshair for combat
+   */
+  public final static BufferedImage RED_CROSSHAIR = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/red_crosshair.png"));
+
   
   /**
    * Big planet screen Rock 1

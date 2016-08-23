@@ -1,4 +1,4 @@
-package org.openRealmOfStars.gui;
+package org.openRealmOfStars.gui.mapPanel;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;

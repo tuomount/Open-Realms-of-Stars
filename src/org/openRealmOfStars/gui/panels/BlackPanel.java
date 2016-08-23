@@ -1,4 +1,4 @@
-package org.openRealmOfStars.gui;
+package org.openRealmOfStars.gui.panels;
 
 import java.awt.Color;
 

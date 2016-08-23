@@ -4,8 +4,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
-import org.openRealmOfStars.gui.MapPanel;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
+import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.utilities.PixelsToMapCoordinate;

@@ -9,9 +9,9 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.game.GameCommands;
-import org.openRealmOfStars.gui.BigImagePanel;
-import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.panels.BigImagePanel;
+import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;

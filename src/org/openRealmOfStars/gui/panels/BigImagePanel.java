@@ -1,4 +1,4 @@
-package org.openRealmOfStars.gui;
+package org.openRealmOfStars.gui.panels;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**

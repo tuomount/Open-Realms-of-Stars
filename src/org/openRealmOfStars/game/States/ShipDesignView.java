@@ -21,7 +21,6 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
-import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.ShipComponentListRenderer;
 import org.openRealmOfStars.gui.ListRenderers.ShipHullListRenderer;
@@ -33,6 +32,7 @@ import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
+import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipComponent;

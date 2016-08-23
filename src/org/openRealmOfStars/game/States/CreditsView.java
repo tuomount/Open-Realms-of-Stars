@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.openRealmOfStars.game.GameCommands;
-import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.labels.StarFieldTextArea;
+import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**

@@ -14,7 +14,6 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
-import org.openRealmOfStars.gui.BlackPanel;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.TechListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -22,6 +21,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
+import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.ResearchTechPanel;
 import org.openRealmOfStars.player.PlayerInfo;

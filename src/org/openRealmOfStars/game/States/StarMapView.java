@@ -10,14 +10,14 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.game.GameCommands;
-import org.openRealmOfStars.gui.BlackPanel;
-import org.openRealmOfStars.gui.MapPanel;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
+import org.openRealmOfStars.gui.mapPanel.MapPanel;
+import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.MessagePanel;
 import org.openRealmOfStars.player.PlayerInfo;

@@ -209,13 +209,13 @@ public class BattleView extends BlackPanel {
       }
     }
     PathPoint point = aStar.getNextMove();
-    if (point != null && !combat.isBlocked(point.getX(), point.getY())) {
-      combat.getCurrentShip().setMovesLeft(combat.getCurrentShip().getMovesLeft()-1);
-      combat.getCurrentShip().setX(point.getX());
-      combat.getCurrentShip().setY(point.getY());
+    if (point != null && !combat.isBlocked(point.getX(), point.getY()) && ai.getMovesLeft() > 0) {
+      ai.setMovesLeft(ai.getMovesLeft()-1);
+      ai.setX(point.getX());
+      ai.setY(point.getY());
       handleAIShoot(ai, deadliest);
     }
-    if ((combat.getCurrentShip().getMovesLeft() == 0 || aStar.isLastMove()) &&
+    if ((ai.getMovesLeft() == 0 || aStar.isLastMove()) &&
         combat.getAnimation() == null) {
       aStar = null;
       endRound();

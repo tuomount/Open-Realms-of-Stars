@@ -108,6 +108,37 @@ public class Ship extends Construction {
     }
     return 0;
   }
+
+  /**
+   * Generate shields according the shields and generator
+   */
+  public void regenerateShield() {
+    boolean workingShields = false;
+    boolean shieldsUp = false;
+    boolean generatorUp = false;
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType()==ShipComponentType.SHIELD && componentIsWorking(i) &&
+          !shieldsUp){
+        workingShields = true;
+        shieldsUp = true;
+        if (shield < getTotalShield()) {
+          shield++;
+        }
+      }
+      if (comp.getType()==ShipComponentType.SHIELD_GENERATOR && componentIsWorking(i) &&
+          !generatorUp){
+        generatorUp = true;
+        if (shield+comp.getDefenseValue() <= getTotalShield()) {
+          shield=shield+comp.getDefenseValue();
+        }
+        
+      }
+    }
+    if (!workingShields) {
+      shield = 0;
+    }
+  }
   
   /**
    * Check if certain component has energy or not. Returns true if component has

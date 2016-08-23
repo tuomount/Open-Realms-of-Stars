@@ -172,6 +172,7 @@ public class CombatShip implements Comparable<CombatShip>{
     for (int i=0;i<componentUsed.length;i++) {
       componentUsed[i] = false;
     }
+    ship.regenerateShield();
   }
   
   /**

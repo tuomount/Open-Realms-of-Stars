@@ -94,6 +94,7 @@ public class ComponentButton extends JButton {
     int maxHP = ship.getHull().getSlotHull();
     if (comp != null) {
       this.setEnabled(true);
+      this.setText(comp.getName());
       if (!hasEnergy) {
         icon = new ImageIcon(Icons.getIconByName(Icons.ICON_BATTERY).getIcon());
         this.setIcon(icon);

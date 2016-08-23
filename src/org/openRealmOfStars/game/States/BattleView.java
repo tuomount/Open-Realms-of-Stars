@@ -181,12 +181,16 @@ public class BattleView extends BlackPanel {
     CombatShip closest = combat.getClosestEnemyShip(info, combat.getCurrentShip());
     CombatShip ai = combat.getCurrentShip();
     int range = ai.getShip().getMaxWeaponRange();
-    if (ai.getShip().getTotalMilitaryPower() > deadliest.getShip().getTotalMilitaryPower()) {
-      range = ai.getShip().getMinWeaponRange();
-    }
-    int distance = (int) Math.round(StarMap.getDistance(ai.getX(), ai.getY(), 
+    if (deadliest != null ) {
+      if (ai.getShip().getTotalMilitaryPower() > deadliest.getShip().getTotalMilitaryPower()) {
+        range = ai.getShip().getMinWeaponRange();
+      }
+      int distance = (int) Math.round(StarMap.getDistance(ai.getX(), ai.getY(), 
         deadliest.getX(), deadliest.getY()));
-    if (range < distance-ai.getMovesLeft()) {
+      if (range < distance-ai.getMovesLeft() && closest != null) {
+        handleAIShoot(ai, closest);
+      }
+    } else if (closest != null) {
       handleAIShoot(ai, closest);
     }
     if (aStar == null) {
@@ -199,7 +203,9 @@ public class BattleView extends BlackPanel {
       if (aStar != null && aStar.doSearch()) {
         aStar.doRoute();
       } else {
-        // Could not found route for deadliest or closest one 
+        // Could not found route for deadliest or closest one
+        endRound();
+        return;
       }
     }
     PathPoint point = aStar.getNextMove();

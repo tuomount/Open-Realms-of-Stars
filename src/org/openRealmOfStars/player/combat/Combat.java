@@ -291,12 +291,15 @@ public class Combat {
    * @return CombatShip
    */
   public CombatShip getCurrentShip() {
+    if (shipList.size() <= shipIndex) {
+      shipIndex = 0;
+    }
     return shipList.get(shipIndex);
   }
   
   public void nextShip() {
     shipIndex++;
-    if (shipList.size() == shipIndex) {
+    if (shipList.size() <= shipIndex) {
       shipIndex = 0;
     }
     CombatShip ship = getCurrentShip();

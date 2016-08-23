@@ -314,6 +314,11 @@ public class Game extends JFrame implements ActionListener {
       starMap = new StarMap(75, 75,players);
       starMap.updateStarMapOnStartGame();
       players.setCurrentPlayer(0);
+      starMapView = null;
+      combatView = null;
+      researchView = null;
+      shipView = null;
+      shipDesignView = null;
       changeGameState(GameState.STARMAP);
       break;
     }
@@ -451,6 +456,7 @@ public class Game extends JFrame implements ActionListener {
       }
       if (arg0.getActionCommand().equalsIgnoreCase(
           GameCommands.COMMAND_OK)) {
+        creditsView = null;
         changeGameState(GameState.MAIN_MENU);
       }
       return;
@@ -467,6 +473,15 @@ public class Game extends JFrame implements ActionListener {
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_VIEW_STARMAP)) {
+      if (gameState == GameState.PLANETVIEW) {
+        planetView = null;
+      }
+      if (gameState == GameState.FLEETVIEW) {
+        fleetView = null;
+      }
+      if (gameState == GameState.RESEARCHVIEW) {
+        researchView = null;
+      }
       changeGameState(GameState.STARMAP);
     }
     if (arg0.getActionCommand().equalsIgnoreCase(

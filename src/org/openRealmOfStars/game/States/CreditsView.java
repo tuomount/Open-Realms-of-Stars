@@ -64,6 +64,7 @@ public class CreditsView extends BlackPanel {
         "141 Military Icons Set by AngryMeteor.com - http://opengameart.org/content/140-military-icons-set-fixed\n\n"+
         "Nebulae, star field and space panel by Tuomo Untinen\n\n"+
         "Route dot by Tuomo Untinen\n\n"+
+        "Photon torpedo by Tuomo Untinen\n\n"+
         "Space ships are done with Surt's modular ships\n\n"+
         "Explosions by Csaba Felvegi aka Chabull\n\n"+
         "Fonts are under SIL Open Font License, Version 1.1.\n"+

@@ -313,6 +313,32 @@ public class GuiStatics {
    */
   public final static Color COLOR_GREY_40 = new Color(40,40,40);
 
+  
+  private final static Color EXPLOSION_COLOR_1 = new Color(255,196,18);
+  private final static Color EXPLOSION_COLOR_2 = new Color(244,101,14);
+  private final static Color EXPLOSION_COLOR_3 = new Color(255,218,72);
+  private final static Color EXPLOSION_COLOR_4 = new Color(241,223,17);
+  private final static Color EXPLOSION_COLOR_5 = new Color(255,133,13);
+  
+  /**
+   * Explosion color
+   */
+  public final static Color[] EXPLOSION_COLORS =  {EXPLOSION_COLOR_1,
+      EXPLOSION_COLOR_2,EXPLOSION_COLOR_3,EXPLOSION_COLOR_4,EXPLOSION_COLOR_5};
+  
+  private final static Color BEAM_COLOR_1 = new Color(255,36,0);
+  private final static Color BEAM_COLOR_2 = new Color(255,96,0);
+  private final static Color BEAM_COLOR_3 = new Color(255,128,0);
+  private final static Color BEAM_COLOR_4 = new Color(255,18,0);
+  private final static Color BEAM_COLOR_5 = new Color(255,115,77);
+  
+  /**
+   * Beam color
+   */
+  public final static Color[] BEAM_COLORS =  {BEAM_COLOR_1,BEAM_COLOR_2,
+      BEAM_COLOR_3,BEAM_COLOR_4,BEAM_COLOR_5,};
+
+  
   /**
    * Explosion animation
    */

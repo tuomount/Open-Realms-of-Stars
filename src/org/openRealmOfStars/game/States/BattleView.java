@@ -16,11 +16,14 @@ import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
+import org.openRealmOfStars.player.combat.CombatAnimation;
 import org.openRealmOfStars.player.combat.CombatMapMouseListener;
 import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  * 
@@ -143,18 +146,55 @@ public class BattleView extends BlackPanel {
   }
 
   /**
+   * Handle AI shooting
+   * @param ai AI which is shooting
+   * @param target shooting target
+   */
+  private void handleAIShoot(CombatShip ai, CombatShip target) {
+    if (target !=  null) {
+      int nComp = ai.getShip().getNumberOfComponents();
+      for (int i=0;i<nComp;i++) {
+        ShipComponent weapon = ai.getShip().getComponent(i);
+        combat.setComponentUse(i);
+        if (weapon != null && weapon.isWeapon() && !ai.isComponentUsed(i) &&
+            combat.isClearShot(ai, target) && ai.getShip().componentIsWorking(i)) {
+          int accuracy = ai.getShip().getHitChance(weapon);
+          accuracy = accuracy-target.getShip().getDefenseValue();
+          int value=1; // Not even a dent
+          if (DiceGenerator.getRandom(1, 100)<=accuracy) {
+            value = target.getShip().damageBy(weapon);
+          }
+          combat.setAnimation(new CombatAnimation(ai, target, weapon, value));
+          ai.useComponent(i);
+          combat.setComponentUse(-1);
+        }
+      }
+    }    
+  }
+  
+  /**
    * Handle AI
    */
   private void handleAI() {
     PlayerInfo info = combat.getCurrentShip().getPlayer();
     CombatShip deadliest = combat.getMostPowerfulShip(info);
     CombatShip closest = combat.getClosestEnemyShip(info, combat.getCurrentShip());
+    CombatShip ai = combat.getCurrentShip();
+    int range = ai.getShip().getMaxWeaponRange();
+    if (ai.getShip().getTotalMilitaryPower() > deadliest.getShip().getTotalMilitaryPower()) {
+      range = ai.getShip().getMinWeaponRange();
+    }
+    int distance = (int) Math.round(StarMap.getDistance(ai.getX(), ai.getY(), 
+        deadliest.getX(), deadliest.getY()));
+    if (range < distance-ai.getMovesLeft()) {
+      handleAIShoot(ai, closest);
+    }
     if (aStar == null) {
       if (deadliest != null) {
-        aStar = new AStarSearch(combat, combat.getCurrentShip(),deadliest, 1);
+        aStar = new AStarSearch(combat, combat.getCurrentShip(),deadliest, range);
       }
-      if (closest != null) {
-        aStar = new AStarSearch(combat, combat.getCurrentShip(),closest, 1);
+      if (aStar == null && closest != null) {
+        aStar = new AStarSearch(combat, combat.getCurrentShip(),closest, range);
       } 
       if (aStar != null && aStar.doSearch()) {
         aStar.doRoute();
@@ -167,8 +207,10 @@ public class BattleView extends BlackPanel {
       combat.getCurrentShip().setMovesLeft(combat.getCurrentShip().getMovesLeft()-1);
       combat.getCurrentShip().setX(point.getX());
       combat.getCurrentShip().setY(point.getY());
+      handleAIShoot(ai, deadliest);
     }
-    if (combat.getCurrentShip().getMovesLeft() == 0 || aStar.isLastMove()) {
+    if ((combat.getCurrentShip().getMovesLeft() == 0 || aStar.isLastMove()) &&
+        combat.getAnimation() == null) {
       aStar = null;
       endRound();
     }
@@ -192,12 +234,14 @@ public class BattleView extends BlackPanel {
   public void handleActions(ActionEvent arg0) {
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_ANIMATION_TIMER) ) {
-      delayCount++;
-      if (delayCount >= MAX_DELAY_COUNT) {
-        delayCount = 0;
-      }
-      if (!combat.getCurrentShip().getPlayer().isHuman() && delayCount == 0) {
-        handleAI();
+      if (combat.getAnimation() == null) {
+        delayCount++;
+        if (delayCount >= MAX_DELAY_COUNT) {
+          delayCount = 0;
+        }
+        if (!combat.getCurrentShip().getPlayer().isHuman() && delayCount == 0) {
+          handleAI();
+        }
       }
       mapPanel.drawBattleMap(combat, map.getCurrentPlayerInfo(), map);
       mapPanel.repaint();
@@ -210,7 +254,9 @@ public class BattleView extends BlackPanel {
         && combat.getCurrentShip().getPlayer().isHuman()) {
       String number = arg0.getActionCommand().substring(GameCommands.COMMAND_COMPONENT_USE.length());
       int index = Integer.valueOf(number);
-      if (combat.getComponentUse() != index) {
+      
+      if (combat.getComponentUse() != index &&
+          combat.getCurrentShip().getShip().componentIsWorking(index)) {
         combatMapMouseListener.setComponentUse(index);
         combat.setComponentUse(index);
       } else {

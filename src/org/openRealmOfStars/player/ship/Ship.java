@@ -133,6 +133,14 @@ public class Ship extends Construction {
   }
   
   /**
+   * Check if certain component has enery and hull points so it is functioning.
+   * @param index Component index
+   * @return True if component is functioning
+   */
+  public boolean componentIsWorking(int index) {
+    return (hasComponentEnergy(index) && getHullPointForComponent(index) > 0);
+  }
+  /**
    * Get total energy form current component status
    * @return Total energy
    */
@@ -523,6 +531,36 @@ public class Ship extends Construction {
       }
     }
     return shield;
+  }
+
+  /**
+   * Get the smallest weapon range
+   * @return range
+   */
+  public int getMinWeaponRange() {
+    int range = 999;
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.isWeapon() && comp.getWeaponRange() < range) {
+        range = comp.getWeaponRange();
+      }
+    }
+    return range;
+  }
+
+  /**
+   * Get the biggest weapon range
+   * @return range
+   */
+  public int getMaxWeaponRange() {
+    int range = 0;
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.isWeapon() && comp.getWeaponRange() > range) {
+        range = comp.getWeaponRange();
+      }
+    }
+    return range;
   }
 
   /**

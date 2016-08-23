@@ -1,10 +1,16 @@
 package org.openRealmOfStars.player.combat;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 
+import org.openRealmOfStars.gui.mapPanel.ParticleEffect;
+import org.openRealmOfStars.gui.mapPanel.ParticleEffectType;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipImage;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  * 
@@ -76,9 +82,19 @@ public class CombatAnimation {
   private int count;
   
   /**
+   * List of particle effects
+   */
+  private List<ParticleEffect> particles;
+  
+  /**
    * Beam weapon anim count
    */
   private static final int BEAM_ANIM_COUNT = 40;
+  
+  /**
+   * Original distance
+   */
+  private int distance;
   
   public CombatAnimation(CombatShip shooter, CombatShip target, 
       ShipComponent weapon, boolean hit) {
@@ -90,7 +106,7 @@ public class CombatAnimation {
     ey = target.getY()*ShipImage.MAX_HEIGHT+ShipImage.MAX_HEIGHT/2;
     double dx = Math.abs(sx-ex);
     double dy = Math.abs(sy-ey);
-    int distance = (int) dy;
+    distance = (int) dy;
     if (dx > dy) {
       distance = (int) dx;
     }
@@ -101,6 +117,7 @@ public class CombatAnimation {
       mx = 0;
       my = 0;
     }
+    particles = new ArrayList<>();
     switch (weapon.getType()) {
     case WEAPON_BEAM: { count = 40; break; }
     case WEAPON_RAILGUN: { count = 40; break; }
@@ -128,8 +145,77 @@ public class CombatAnimation {
    * Do animation update
    */
   public void doAnimation() {
+    ListIterator<ParticleEffect> particleIte = particles.listIterator(0);
+    while (particleIte.hasNext()) {
+      ParticleEffect particle = particleIte.next();
+      if (particle.getTtl() == 0) {
+        particleIte.remove();
+      } else {
+        particle.handleParticle();
+      }
+    }
     if (weapon.getType() == ShipComponentType.WEAPON_BEAM) {
       count--;
+      int parts = DiceGenerator.getRandom(5, 15);
+      for (int i=0;i<parts;i++) {
+        int dist = DiceGenerator.getRandom(distance);
+        int px = (int) Math.round(dist*mx+sx);
+        int py = (int) Math.round(dist*my+sy);
+        int nx = DiceGenerator.getRandom(5);
+        int ny = DiceGenerator.getRandom(5);
+        if (DiceGenerator.getRandom(1)==0) {
+          nx = nx*-1;
+        }
+        if (DiceGenerator.getRandom(1)==0) {
+          ny = ny*-1;
+        }
+        px = px+nx;
+        py = py+ny;
+        ParticleEffect particle = new ParticleEffect(ParticleEffectType.LASER_PARTICLE, px, py);
+        particles.add(particle);
+      }
+    } else if (weapon.getType() == ShipComponentType.WEAPON_RAILGUN) {
+      if (Math.round(sx) == Math.round(ex) && Math.round(sy)==Math.round(ey)) {
+        count--;
+      } else {
+        for (int i=0;i<10;i++) {
+          sx = sx+mx;
+          sy = sy+my;
+          int px = (int) Math.round(sx);
+          int py = (int) Math.round(sy);
+          ParticleEffect particle = new ParticleEffect(ParticleEffectType.RAILGUN_TRAIL, px, py);
+          particles.add(particle);
+          if (Math.round(sx) == Math.round(ex) && Math.round(sy)==Math.round(ey)) {
+            break;
+          }
+        }
+      }
+    } else if (weapon.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) {
+      if (Math.round(sx) == Math.round(ex) && Math.round(sy)==Math.round(ey)) {
+        count--;
+      } else {
+        for (int i=0;i<10;i++) {
+          sx = sx+mx;
+          sy = sy+my;
+          int px = (int) Math.round(sx);
+          int py = (int) Math.round(sy);
+          int nx = DiceGenerator.getRandom(5);
+          int ny = DiceGenerator.getRandom(5);
+          if (DiceGenerator.getRandom(1)==0) {
+            nx = nx*-1;
+          }
+          if (DiceGenerator.getRandom(1)==0) {
+            ny = ny*-1;
+          }
+          px = px+nx;
+          py = py+ny;
+          ParticleEffect particle = new ParticleEffect(ParticleEffectType.PHOTON_TORP_PARTICILE, px, py);
+          particles.add(particle);
+          if (Math.round(sx) == Math.round(ex) && Math.round(sy)==Math.round(ey)) {
+            break;
+          }
+        }
+      }
     } else {
       if (Math.round(sx) == Math.round(ex) && Math.round(sy)==Math.round(ey)) {
         count--;
@@ -144,6 +230,10 @@ public class CombatAnimation {
         
       }
     }
+  }
+  
+  public List<ParticleEffect> getParticles() {
+    return particles;
   }
   
   public Color getBeamColor() {

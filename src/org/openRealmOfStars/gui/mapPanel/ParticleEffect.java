@@ -121,6 +121,13 @@ public class ParticleEffect {
       my = 0;
       break;
     }
+    case RAILGUN_TRAIL: {
+      ttl = 5;
+      color = new Color(0,215-20*(5-ttl),255);
+      mx = 0;
+      my = 0;
+      break;
+    }
     }
   }
   
@@ -145,6 +152,9 @@ public class ParticleEffect {
     }
     if (type == ParticleEffectType.MISSILE_FIRE) {
       color = new Color(255,255-3*(30-ttl),0);
+    }
+    if (type == ParticleEffectType.RAILGUN_TRAIL) {
+      color = new Color(0,215-20*(5-ttl),255);
     }
   }
   

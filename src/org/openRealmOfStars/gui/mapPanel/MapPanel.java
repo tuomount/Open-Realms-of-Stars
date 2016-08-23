@@ -9,6 +9,7 @@ import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -596,6 +597,11 @@ public class MapPanel extends JPanel {
         gr.setStroke(full);
         gr.drawLine(anim.getSx()+viewPointOffsetX, anim.getSy()+viewPointOffsetY,
             anim.getSx()+viewPointOffsetX+1, anim.getSy()+viewPointOffsetY+1);
+      }
+      List<ParticleEffect> particles = anim.getParticles();
+      for (ParticleEffect part : particles) {
+        screen.setRGB(part.getX()+viewPointOffsetX, part.getY()+viewPointOffsetY,
+            part.getColor().getRGB());
       }
       anim.doAnimation();
       if (anim.isAnimationFinished()) {

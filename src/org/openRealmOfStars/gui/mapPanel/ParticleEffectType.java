@@ -38,5 +38,9 @@ public enum ParticleEffectType {
   /**
    * Short living photon particle
    */
-  PHOTON_TORP_PARTICILE
+  PHOTON_TORP_PARTICILE,
+  /**
+   * Rail gun ion trail
+   */
+  RAILGUN_TRAIL,
 }

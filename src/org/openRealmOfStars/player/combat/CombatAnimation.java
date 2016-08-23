@@ -1,10 +1,12 @@
 package org.openRealmOfStars.player.combat;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.mapPanel.ParticleEffect;
 import org.openRealmOfStars.gui.mapPanel.ParticleEffectType;
 import org.openRealmOfStars.player.ship.ShipComponent;
@@ -82,6 +84,16 @@ public class CombatAnimation {
   private int count;
   
   /**
+   * Animation frame number
+   */
+  private int animFrame;
+  
+  /**
+   * Show animation
+   */
+  private boolean showAnim;
+  
+  /**
    * List of particle effects
    */
   private List<ParticleEffect> particles;
@@ -117,13 +129,15 @@ public class CombatAnimation {
       mx = 0;
       my = 0;
     }
+    animFrame = 0;
+    showAnim = false;
     particles = new ArrayList<>();
     switch (weapon.getType()) {
     case WEAPON_BEAM: { count = 40; break; }
-    case WEAPON_RAILGUN: { count = 40; break; }
-    case WEAPON_ECM_TORPEDO: { count = 40; break; }
-    case WEAPON_HE_MISSILE: { count = 40; break; }
-    case WEAPON_PHOTON_TORPEDO: { count = 40; break; }
+    case WEAPON_RAILGUN: { count = GuiStatics.EXPLOSION1.getMaxFrames(); break; }
+    case WEAPON_ECM_TORPEDO: { count = GuiStatics.EXPLOSION2.getMaxFrames(); break; }
+    case WEAPON_HE_MISSILE: { count = GuiStatics.EXPLOSION1.getMaxFrames(); break; }
+    case WEAPON_PHOTON_TORPEDO: { count = GuiStatics.EXPLOSION1.getMaxFrames(); break; }
     default:
       count = 40;
       break;
@@ -156,6 +170,16 @@ public class CombatAnimation {
     }
     if (weapon.getType() == ShipComponentType.WEAPON_BEAM) {
       count--;
+      if (count < 24) {
+        if (hit) {
+          showAnim = true;
+        }
+        if (animFrame < GuiStatics.EXPLOSION1.getMaxFrames()) {
+          animFrame++;
+        } else {
+          showAnim = false;
+        }
+      }
       int parts = DiceGenerator.getRandom(5, 15);
       for (int i=0;i<parts;i++) {
         int dist = DiceGenerator.getRandom(distance);
@@ -177,6 +201,14 @@ public class CombatAnimation {
     } else if (weapon.getType() == ShipComponentType.WEAPON_RAILGUN) {
       if (Math.round(sx) == Math.round(ex) && Math.round(sy)==Math.round(ey)) {
         count--;
+        if (hit) {
+          showAnim = true;
+        }
+        if (animFrame < GuiStatics.EXPLOSION1.getMaxFrames()) {
+          animFrame++;
+        } else {
+          showAnim = false;
+        }
       } else {
         for (int i=0;i<10;i++) {
           sx = sx+mx;
@@ -193,6 +225,14 @@ public class CombatAnimation {
     } else if (weapon.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) {
       if (Math.round(sx) == Math.round(ex) && Math.round(sy)==Math.round(ey)) {
         count--;
+        if (hit) {
+          showAnim = true;
+        }
+        if (animFrame < GuiStatics.EXPLOSION1.getMaxFrames()) {
+          animFrame++;
+        } else {
+          showAnim = false;
+        }
       } else {
         for (int i=0;i<10;i++) {
           sx = sx+mx;
@@ -220,6 +260,22 @@ public class CombatAnimation {
         weapon.getType() == ShipComponentType.WEAPON_HE_MISSILE) {
       if (Math.round(sx) == Math.round(ex) && Math.round(sy)==Math.round(ey)) {
         count--;
+        if (hit) {
+          showAnim = true;
+        }
+        if (weapon.getType() == ShipComponentType.WEAPON_ECM_TORPEDO) {
+          if (animFrame < GuiStatics.EXPLOSION2.getMaxFrames()) {
+            animFrame++;
+          } else {
+            showAnim = false;
+          }
+        } else {
+          if (animFrame < GuiStatics.EXPLOSION1.getMaxFrames()) {
+            animFrame++;
+          } else {
+            showAnim = false;
+          }          
+        }
       } else {
         for (int i=0;i<5;i++) {
           sx = sx+mx;
@@ -234,6 +290,20 @@ public class CombatAnimation {
         }
       }
     } 
+  }
+  
+  /**
+   * Get Animation frame if it should be shown. Otherwise it is null
+   * @return BufferedImage
+   */
+  public BufferedImage getAnimFrame() {
+    if (showAnim) {
+      if (weapon.getType() == ShipComponentType.WEAPON_ECM_TORPEDO) {
+        return GuiStatics.EXPLOSION2.getFrame(animFrame);
+      }
+      return GuiStatics.EXPLOSION1.getFrame(animFrame);
+    }
+    return null;
   }
   
   public List<ParticleEffect> getParticles() {

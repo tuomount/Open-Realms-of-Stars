@@ -150,11 +150,16 @@ public class BattleView extends BlackPanel {
     CombatShip deadliest = combat.getMostPowerfulShip(info);
     CombatShip closest = combat.getClosestEnemyShip(info, combat.getCurrentShip());
     if (aStar == null) {
-      aStar = new AStarSearch(combat, combat.getCurrentShip(),deadliest, 1);
-      if (aStar.doSearch()) {
+      if (deadliest != null) {
+        aStar = new AStarSearch(combat, combat.getCurrentShip(),deadliest, 1);
+      }
+      if (closest != null) {
+        aStar = new AStarSearch(combat, combat.getCurrentShip(),closest, 1);
+      } 
+      if (aStar != null && aStar.doSearch()) {
         aStar.doRoute();
       } else {
-        // Could not found route for deadliest 
+        // Could not found route for deadliest or closest one 
       }
     }
     PathPoint point = aStar.getNextMove();

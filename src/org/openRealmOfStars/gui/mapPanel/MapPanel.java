@@ -607,6 +607,9 @@ public class MapPanel extends JPanel {
       }
       anim.doAnimation();
       if (anim.isAnimationFinished()) {
+        if (anim.getTarget().getShip().getHullPoints()<=0) {
+          combat.destroyShip(anim.getTarget());
+        }
         combat.setAnimation(null);
       }
     }

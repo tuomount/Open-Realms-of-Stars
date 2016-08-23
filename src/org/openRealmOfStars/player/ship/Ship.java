@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  * 
@@ -288,6 +289,153 @@ public class Ship extends Construction {
   }
 
   /**
+   * Get accuracy for certain weapon
+   * @param Weapon
+   * @return Accuracy
+   */
+  public int getHitChance(ShipComponent weapon) {
+    int result = 0;
+    switch (weapon.getType()) {
+    case WEAPON_BEAM: result = 100; break;
+    case WEAPON_PHOTON_TORPEDO: result = 75; break;
+    case WEAPON_RAILGUN:
+    case WEAPON_ECM_TORPEDO:
+    case WEAPON_HE_MISSILE:
+    default: result = 50; break;
+    }
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.TARGETING_COMPUTER
+          && hasComponentEnergy(i)) {
+        result = result+comp.getDamage();
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Damage component by randomly
+   * @param damage Amount damage to cause
+   * @return amount damage left aka pierced the component
+   */
+  private int damageComponent(int damage) {
+    int[] componentPos = new int[components.size()];
+    int positions = 0;
+    for (int i=0;i<hullPoints.length;i++) {
+      if (hullPoints[i] > 0) {
+        componentPos[positions] = i;
+        positions++;
+      }
+    }
+    int target = DiceGenerator.getRandom(positions-1);
+    int hp = hullPoints[componentPos[target]];
+    hullPoints[componentPos[target]] = hullPoints[componentPos[target]]-damage;
+    damage = damage-hp;
+    return damage;    
+  }
+  
+  /**
+   * Get accuracy for certain weapon
+   * @param Weapon
+   * @return 1 No damage, not even dent
+   *         0 No damage, but shield or armor got lower
+   *         -1 Got damage
+   *         -2 Destroyed
+   */
+  public int damageBy(ShipComponent weapon) {
+    int result = 1;
+    int damage = 0;
+    switch (weapon.getType()) {
+    case WEAPON_BEAM: 
+    case WEAPON_PHOTON_TORPEDO:{
+      damage = weapon.getDamage();
+      damage = damage -this.getShield();
+      if (damage > 0) {
+        this.setShield(this.getShield()-1);
+      } else {
+        if (this.getShield()/2 < weapon.getDamage()) {
+          this.setShield(this.getShield()-1);
+          return 0;
+        }
+        return 1;
+      }
+      damage = damage-this.getArmor()/2;
+      if (damage >= 0) {
+        this.setArmor(this.getArmor()-1);
+      } else {
+        damage = damage+this.getArmor()/2;
+        if (this.getArmor()/4 < damage) {
+          this.setArmor(this.getArmor()-1);
+          return 0;
+        }
+      }
+      break;
+    }
+    case WEAPON_RAILGUN: 
+    case WEAPON_HE_MISSILE:{
+      damage = weapon.getDamage();
+      damage = damage -this.getArmor();
+      if (damage > 0) {
+        this.setArmor(this.getArmor()-1);
+      } else {
+        if (this.getArmor()/2 < weapon.getDamage()) {
+          this.setArmor(this.getArmor()-1);
+          return 0;
+        }
+        return 1;
+      }
+      damage = damage-this.getShield()/2;
+      if (damage >= 0) {
+        this.setArmor(this.getShield()-1);
+      } else {
+        damage = damage+this.getShield()/2;
+        if (this.getShield()/4 < damage) {
+          this.setShield(this.getShield()-1);
+          return 0;
+        }
+      }
+      break;
+    }
+    case WEAPON_ECM_TORPEDO: {
+      damage = weapon.getDamage();
+      this.setShield(this.getShield()-damage);
+      return 1;
+    }
+    default: /* Not a weapon */break;
+    }    
+    while (damage > 0) {
+      result = -1;
+      damage = damageComponent(damage);
+    }
+    if (getHullPoints()==0) {
+      return -2;
+    }    
+    return result;
+  }
+
+  /**
+   * Get defense value for ship
+   * @return defense value for ship
+   */
+  public int getDefenseValue() {
+    int result = 0;
+    switch (hull.getSize()) {
+    case SMALL: result = 10; break;
+    case MEDIUM: result = 5; break;
+    case LARGE: result = 0; break;
+    case HUGE: result = -5; break;
+    }
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.JAMMER
+          && hasComponentEnergy(i)) {
+        result = result+comp.getDefenseValue();
+      }
+    }
+    return result;
+  }
+
+  /**
    * Get number of components in ship's component list
    * @return number of components
    */
@@ -418,7 +566,11 @@ public class Ship extends Construction {
   }
 
   public void setShield(int shield) {
-    this.shield = shield;
+    if (shield >= 0) {
+      this.shield = shield;
+    } else {
+      this.shield = 0;
+    }
   }
 
   public int getArmor() {
@@ -426,7 +578,11 @@ public class Ship extends Construction {
   }
 
   public void setArmor(int armor) {
-    this.armor = armor;
+    if (armor >= 0) {
+      this.armor = armor;
+    } else {
+      this.armor = 0;
+    }
   }
 
   public int getColonist() {

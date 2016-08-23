@@ -108,10 +108,30 @@ public class CombatAnimation {
    */
   private int distance;
   
+  /**
+   * Combatship which is the target
+   */
+  private CombatShip target;
+  
+  /**
+   * Combat Animation
+   * @param shooter Ship who shot
+   * @param target Ship who took the shot
+   * @param weapon Weapon which was used for shooting
+   * @param hit  1 Not even a dent
+   *             0 Armor or shield damaged
+   *            -1 Component damage
+   *            -2 Destoryed
+   */
   public CombatAnimation(CombatShip shooter, CombatShip target, 
-      ShipComponent weapon, boolean hit) {
+      ShipComponent weapon, int hit) {
     this.weapon = weapon;
-    this.hit = hit;
+    this.target = target;
+    if (hit <= 0) {
+      this.hit = true;
+    } else {
+      this.hit = false;
+    }
     sx = shooter.getX()*ShipImage.MAX_WIDTH+ShipImage.MAX_WIDTH/2;
     sy = shooter.getY()*ShipImage.MAX_HEIGHT+ShipImage.MAX_HEIGHT/2;
     ex = target.getX()*ShipImage.MAX_WIDTH+ShipImage.MAX_WIDTH/2;
@@ -142,6 +162,10 @@ public class CombatAnimation {
       count = 40;
       break;
     }
+  }
+  
+  public CombatShip getTarget() {
+    return target;
   }
   
   /**

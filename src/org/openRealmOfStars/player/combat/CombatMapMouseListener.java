@@ -8,6 +8,7 @@ import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
 
 /**
@@ -114,7 +115,13 @@ public class CombatMapMouseListener extends MouseAdapter implements
         if (weapon != null && weapon.isWeapon() && !ship.isComponentUsed(componentUse)) {
           CombatShip target = combat.getShipFromCoordinate(combat.getCursorX(), combat.getCursorY());
           if (target !=  null && combat.isClearShot(combat.getCurrentShip(), target)) {
-            combat.setAnimation(new CombatAnimation(ship, target, weapon, true));
+            int accuracy = ship.getShip().getHitChance(weapon);
+            accuracy = accuracy-target.getShip().getDefenseValue();
+            int value=1; // Not even a dent
+            if (DiceGenerator.getRandom(1, 100)<=accuracy) {
+              value = target.getShip().damageBy(weapon);
+            }
+            combat.setAnimation(new CombatAnimation(ship, target, weapon, value));
             ship.useComponent(componentUse);
             componentUse = -1;
             combat.setComponentUse(-1);

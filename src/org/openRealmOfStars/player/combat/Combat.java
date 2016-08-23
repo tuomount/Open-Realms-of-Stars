@@ -74,6 +74,15 @@ public class Combat {
   private CombatAnimation animation;
   
   /**
+   * First player's fleet
+   */
+  private Fleet fleet1;
+  /**
+   * Second player's fleet
+   */
+  private Fleet fleet2;
+  
+  /**
    * Build shipList in initiative order
    * @param fleet1 Player1 fleet
    * @param fleet2 Player2 fleet
@@ -81,6 +90,8 @@ public class Combat {
    * @param info2 Player2 Info
    */
   public Combat(Fleet fleet1, Fleet fleet2, PlayerInfo info1, PlayerInfo info2) {
+    this.fleet1 = fleet1;
+    this.fleet2 = fleet2;
     Ship[] ships = fleet1.getShips();
     int index = 0;
     shipList = new ArrayList<>();
@@ -171,6 +182,20 @@ public class Combat {
       }
     }
     return result;
+  }
+  
+  /**
+   * Destroy one single ship from fleets and combat
+   * @param ship Combat ship
+   */
+  public void destroyShip(CombatShip ship) {
+    if (fleet1.isShipInFleet(ship.getShip())) {
+      fleet1.removeShip(ship.getShip());
+      shipList.remove(ship);
+    } else if (fleet2.isShipInFleet(ship.getShip())) {
+      fleet2.removeShip(ship.getShip());
+      shipList.remove(ship);
+    }
   }
   
   /**

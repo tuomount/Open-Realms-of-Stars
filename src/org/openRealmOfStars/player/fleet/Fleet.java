@@ -82,7 +82,7 @@ public class Fleet {
   }
 
   /**
-   * Remove ship fro list
+   * Remove ship from list
    * @param ship to remove
    */
   public void removeShip(Ship ship) {
@@ -90,7 +90,15 @@ public class Fleet {
       ships.remove(ship);
     }
   }
-  
+
+  /**
+   * Is certain ship in fleet
+   * @param Certain ship is in fleet
+   */
+  public boolean isShipInFleet(Ship ship) {
+    return ships.contains(ship);
+  }
+
   /**
    * Get the number of ships in list
    * @return Number of ships in list

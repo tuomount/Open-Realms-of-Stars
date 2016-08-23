@@ -109,10 +109,15 @@ public class CombatAnimation {
   private int distance;
   
   /**
-   * Combatship which is the target
+   * Combat ship which is the target
    */
   private CombatShip target;
-  
+
+  /**
+   * Combat ship which is the shooter
+   */
+  private CombatShip shooter;
+
   /**
    * Combat Animation
    * @param shooter Ship who shot
@@ -127,6 +132,7 @@ public class CombatAnimation {
       ShipComponent weapon, int hit) {
     this.weapon = weapon;
     this.target = target;
+    this.shooter = shooter;
     if (hit <= 0) {
       this.hit = true;
     } else {
@@ -167,7 +173,11 @@ public class CombatAnimation {
   public CombatShip getTarget() {
     return target;
   }
-  
+
+  public CombatShip getShooter() {
+    return shooter;
+  }
+
   /**
    * Is animation ended
    * @return True if animation has finished

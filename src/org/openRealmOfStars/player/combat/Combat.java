@@ -7,6 +7,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.StarMap;
 
 
@@ -191,6 +192,16 @@ public class Combat {
   public void destroyShip(CombatShip ship) {
     if (fleet1.isShipInFleet(ship.getShip())) {
       fleet1.removeShip(ship.getShip());
+      ShipStat stat = animation.getShooter().getPlayer()
+          .getShipStatByName(animation.getShooter().getShip().getName());
+      if (stat != null) {
+        stat.setNumberOfKills(stat.getNumberOfKills()+1);
+      }
+      stat = ship.getPlayer().getShipStatByName(ship.getShip().getName());
+      if (stat != null) {
+        stat.setNumberOfLoses(stat.getNumberOfLoses()+1);
+        stat.setNumberOfInUse(stat.getNumberOfInUse()-1);
+      }      
       shipList.remove(ship);
     } else if (fleet2.isShipInFleet(ship.getShip())) {
       fleet2.removeShip(ship.getShip());

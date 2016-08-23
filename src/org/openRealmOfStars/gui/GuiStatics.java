@@ -338,7 +338,13 @@ public class GuiStatics {
   public final static Color[] BEAM_COLORS =  {BEAM_COLOR_1,BEAM_COLOR_2,
       BEAM_COLOR_3,BEAM_COLOR_4,BEAM_COLOR_5,};
 
-  
+
+  /**
+   * Photon torpedeo
+   */
+  public final static BufferedImage PHOTON_TORPEDO = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/photon_torp.png"));
+
   /**
    * Explosion animation
    */

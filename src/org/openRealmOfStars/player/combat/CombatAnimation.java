@@ -216,20 +216,24 @@ public class CombatAnimation {
           }
         }
       }
-    } else {
+    } else if (weapon.getType() == ShipComponentType.WEAPON_ECM_TORPEDO ||
+        weapon.getType() == ShipComponentType.WEAPON_HE_MISSILE) {
       if (Math.round(sx) == Math.round(ex) && Math.round(sy)==Math.round(ey)) {
         count--;
       } else {
-        for (int i=0;i<3;i++) {
+        for (int i=0;i<5;i++) {
           sx = sx+mx;
           sy = sy+my;
+          int px = (int) Math.round(sx);
+          int py = (int) Math.round(sy);
+          ParticleEffect particle = new ParticleEffect(ParticleEffectType.MISSILE_FIRE, px, py);
+          particles.add(particle);
           if (Math.round(sx) == Math.round(ex) && Math.round(sy)==Math.round(ey)) {
             break;
           }
         }
-        
       }
-    }
+    } 
   }
   
   public List<ParticleEffect> getParticles() {

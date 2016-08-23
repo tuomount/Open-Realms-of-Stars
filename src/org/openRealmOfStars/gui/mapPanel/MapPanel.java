@@ -583,13 +583,10 @@ public class MapPanel extends JPanel {
         gr.setColor(anim.getBeamColor());
         gr.drawLine(anim.getSx()+viewPointOffsetX, anim.getSy()+viewPointOffsetY,
             anim.getEx()+viewPointOffsetX, anim.getEy()+viewPointOffsetY);
-      }else if (anim.getWeapon().getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) { 
-        gr.setColor(GuiStatics.COLOR_GREEN_TEXT);
-        Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.
-            JOIN_BEVEL, 1, new float[]{1f}, 0);
-        gr.setStroke(full);
-        gr.drawLine(anim.getSx()+viewPointOffsetX, anim.getSy()+viewPointOffsetY,
-            anim.getSx()+viewPointOffsetX+1, anim.getSy()+viewPointOffsetY+1);
+      }else if (anim.getWeapon().getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) {
+        gr.drawImage(GuiStatics.PHOTON_TORPEDO, 
+            anim.getSx()+viewPointOffsetX-GuiStatics.PHOTON_TORPEDO.getWidth()/2, 
+            anim.getSy()+viewPointOffsetY-GuiStatics.PHOTON_TORPEDO.getHeight()/2,null);
       } else {
         gr.setColor(GuiStatics.COLOR_GREY_160);
         Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.

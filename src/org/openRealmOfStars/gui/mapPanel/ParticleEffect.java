@@ -115,8 +115,8 @@ public class ParticleEffect {
       break;
     }
     case MISSILE_FIRE: {
-      ttl = 30;
-      color = new Color(255,255-3*(30-ttl),0);
+      ttl = 15;
+      color = new Color(255,255-6*(15-ttl),0);
       mx = 0;
       my = 0;
       break;
@@ -151,7 +151,23 @@ public class ParticleEffect {
       ttl--;
     }
     if (type == ParticleEffectType.MISSILE_FIRE) {
-      color = new Color(255,255-3*(30-ttl),0);
+      if (ttl < 6) {
+        color = new Color(40+ttl*10,40+ttl*10,40+ttl*10);
+        if (ttl == 5) {
+          mx = DiceGenerator.getRandom(5, 20);
+          mx = mx/10;
+          my = DiceGenerator.getRandom(5, 20);
+          my = my/10;
+          if (DiceGenerator.getRandom(1)==0) {
+            mx = mx*-1;
+          }
+          if (DiceGenerator.getRandom(1)==0) {
+            my = my*-1;
+          }
+        }
+      } else {
+        color = new Color(255,255-6*(15-ttl),0);
+      }
     }
     if (type == ParticleEffectType.RAILGUN_TRAIL) {
       color = new Color(0,215-20*(5-ttl),255);

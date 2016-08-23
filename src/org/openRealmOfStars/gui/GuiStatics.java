@@ -358,6 +358,12 @@ public class GuiStatics {
       "/resources/images/explosion2.png");
 
   /**
+   * Small explosion animation
+   */
+  public final static AnimatedImage EXPLOSION3 = new AnimatedImage(32, 32, 
+      "/resources/images/explosion3.png");
+
+  /**
    * Crosshair for combat
    */
   public final static BufferedImage CROSSHAIR = IOUtilities.

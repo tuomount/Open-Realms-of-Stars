@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.icons.AnimatedImage;
 import org.openRealmOfStars.gui.mapPanel.ParticleEffect;
 import org.openRealmOfStars.gui.mapPanel.ParticleEffectType;
 import org.openRealmOfStars.player.ship.ShipComponent;
@@ -118,6 +119,8 @@ public class CombatAnimation {
    */
   private CombatShip shooter;
 
+  private AnimatedImage explosionAnim;
+  
   /**
    * Combat Animation
    * @param shooter Ship who shot
@@ -158,12 +161,21 @@ public class CombatAnimation {
     animFrame = 0;
     showAnim = false;
     particles = new ArrayList<>();
+    if (weapon.getType() == ShipComponentType.WEAPON_ECM_TORPEDO) {
+      explosionAnim = GuiStatics.EXPLOSION2;
+    } else {
+      if (hit == 0) {
+        explosionAnim = GuiStatics.EXPLOSION3;
+      } else {
+        explosionAnim = GuiStatics.EXPLOSION1;
+      }
+    }
     switch (weapon.getType()) {
     case WEAPON_BEAM: { count = 40; break; }
-    case WEAPON_RAILGUN: { count = GuiStatics.EXPLOSION1.getMaxFrames(); break; }
-    case WEAPON_ECM_TORPEDO: { count = GuiStatics.EXPLOSION2.getMaxFrames(); break; }
-    case WEAPON_HE_MISSILE: { count = GuiStatics.EXPLOSION1.getMaxFrames(); break; }
-    case WEAPON_PHOTON_TORPEDO: { count = GuiStatics.EXPLOSION1.getMaxFrames(); break; }
+    case WEAPON_RAILGUN: { count = explosionAnim.getMaxFrames(); break; }
+    case WEAPON_ECM_TORPEDO: { count = explosionAnim.getMaxFrames(); break; }
+    case WEAPON_HE_MISSILE: { count = explosionAnim.getMaxFrames(); break; }
+    case WEAPON_PHOTON_TORPEDO: { count = explosionAnim.getMaxFrames(); break; }
     default:
       count = 40;
       break;
@@ -208,7 +220,7 @@ public class CombatAnimation {
         if (hit) {
           showAnim = true;
         }
-        if (animFrame < GuiStatics.EXPLOSION1.getMaxFrames()) {
+        if (animFrame < explosionAnim.getMaxFrames()) {
           animFrame++;
         } else {
           showAnim = false;
@@ -238,7 +250,7 @@ public class CombatAnimation {
         if (hit) {
           showAnim = true;
         }
-        if (animFrame < GuiStatics.EXPLOSION1.getMaxFrames()) {
+        if (animFrame < explosionAnim.getMaxFrames()) {
           animFrame++;
         } else {
           showAnim = false;
@@ -262,7 +274,7 @@ public class CombatAnimation {
         if (hit) {
           showAnim = true;
         }
-        if (animFrame < GuiStatics.EXPLOSION1.getMaxFrames()) {
+        if (animFrame < explosionAnim.getMaxFrames()) {
           animFrame++;
         } else {
           showAnim = false;
@@ -297,18 +309,10 @@ public class CombatAnimation {
         if (hit) {
           showAnim = true;
         }
-        if (weapon.getType() == ShipComponentType.WEAPON_ECM_TORPEDO) {
-          if (animFrame < GuiStatics.EXPLOSION2.getMaxFrames()) {
-            animFrame++;
-          } else {
-            showAnim = false;
-          }
+        if (animFrame < explosionAnim.getMaxFrames()) {
+          animFrame++;
         } else {
-          if (animFrame < GuiStatics.EXPLOSION1.getMaxFrames()) {
-            animFrame++;
-          } else {
-            showAnim = false;
-          }          
+          showAnim = false;
         }
       } else {
         for (int i=0;i<5;i++) {
@@ -332,10 +336,7 @@ public class CombatAnimation {
    */
   public BufferedImage getAnimFrame() {
     if (showAnim) {
-      if (weapon.getType() == ShipComponentType.WEAPON_ECM_TORPEDO) {
-        return GuiStatics.EXPLOSION2.getFrame(animFrame);
-      }
-      return GuiStatics.EXPLOSION1.getFrame(animFrame);
+      return explosionAnim.getFrame(animFrame);
     }
     return null;
   }

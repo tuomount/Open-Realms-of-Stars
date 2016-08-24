@@ -1,9 +1,11 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
@@ -12,6 +14,7 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -100,6 +103,12 @@ public class BattleView extends BlackPanel {
   private SpaceButton endButton;
   
   /**
+   * Text area containing info
+   */
+  private InfoTextArea textArea;
+
+  
+  /**
    * Combat has ended
    */
   private boolean combatEnded;
@@ -135,6 +144,12 @@ public class BattleView extends BlackPanel {
     endButton.addActionListener(listener);
     bottom.add(endButton);
     
+    bottom.add(Box.createRigidArea(new Dimension(10,10)));
+    textArea = new InfoTextArea(10,30);
+    textArea.setEditable(false);
+    textArea.setLineWrap(true);
+    bottom.add(textArea);
+
 
     
     this.setLayout(new BorderLayout());
@@ -153,6 +168,16 @@ public class BattleView extends BlackPanel {
    * Update panels on BattleView
    */
   public void updatePanels() {
+    if (combatMapMouseListener.getActiveShip() != null) {
+      textArea.setText(combatMapMouseListener.getActiveShip().toString());
+    } else {
+      textArea.setText("");
+    }
+    this.repaint();
+  }
+  
+  public InfoTextArea getBottomTextArea() {
+    return textArea;
   }
 
   /**
@@ -270,6 +295,7 @@ public class BattleView extends BlackPanel {
           handleAI();
         }
       }
+      updatePanels();
       mapPanel.drawBattleMap(combat, map.getCurrentPlayerInfo(), map);
       mapPanel.repaint();
     }

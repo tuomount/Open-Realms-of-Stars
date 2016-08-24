@@ -191,6 +191,9 @@ public class AStarSearch {
       int count = UNBLOCKED;
       while (!targetReached) {
         PathPoint point = points.get(points.size()-1);
+        int bx = 0;
+        int by = 0;
+        double bdist = 999999;
         for (int y = -1;y<2;y++) {
           for (int x = -1;x<2;x++) {
             if (y==0 && x== 0) {
@@ -198,17 +201,22 @@ public class AStarSearch {
             }
             int mx = x+point.getX();
             int my = y+point.getY();
-            if (isValidPos(mx,my) && blockMap[mx][my] < count) {
-              count = blockMap[mx][my];
-              double dist = StarMap.getDistance(mx, my, tx, ty);
-              PathPoint newPoint = new PathPoint(mx, my, dist);
-              points.add(newPoint);
-              if (blockMap[mx][my] == 0) {
-                targetReached = true;
-              }
+            double dist = StarMap.getDistance(mx, my, tx, ty);
+            if (isValidPos(mx,my) && blockMap[mx][my] < count &&
+                dist < bdist) {
+              bx = mx;
+              by = my;
+              bdist = dist;
             }
           }
         }
+        count = blockMap[bx][by];
+        PathPoint newPoint = new PathPoint(bx, by, bdist);
+        points.add(newPoint);
+        if (blockMap[bx][by] == 0) {
+          targetReached = true;
+        }
+
       }
       routeIndex = points.size()-1;
     }

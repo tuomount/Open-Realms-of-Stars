@@ -150,10 +150,10 @@ public class Ship extends Construction {
     int energy = getTotalEnergy();
     for (int i=0;i<components.size();i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getEnergyResource()>0) {
-        energy = energy -comp.getEnergyResource();
+      if (hullPoints[i] > 0 && comp.getEnergyRequirement()>0) {
+        energy = energy -comp.getEnergyRequirement();
       }
-      if (index == i && energy >= 0) {
+      if (index == i && (energy >= 0 || comp.getEnergyRequirement()==0)) {
         return true;
       }
       if (index == i && energy < 0) {

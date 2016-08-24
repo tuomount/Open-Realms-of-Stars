@@ -82,7 +82,10 @@ public class CombatMapMouseListener extends MouseAdapter implements
    */
   private PixelsToMapCoordinate coord;
   
-  
+  /**
+   * Active ship under mouse cursor
+   */
+  private CombatShip activeShip;
   
  
   
@@ -91,6 +94,7 @@ public class CombatMapMouseListener extends MouseAdapter implements
     coord = null;
   }
 
+  
 
 
   public void mouseMoved(MouseEvent e) {
@@ -100,6 +104,7 @@ public class CombatMapMouseListener extends MouseAdapter implements
       if (!coord.isOutOfPanel()) {
         combat.setCursorPos(coord.getMapX(), coord.getMapY());
         battleInfoPanel.showShip(combat.getCurrentShip());
+        activeShip =combat.getShipFromCoordinate(coord.getMapX(), coord.getMapY());
       }
   }
 
@@ -161,6 +166,20 @@ public class CombatMapMouseListener extends MouseAdapter implements
 
   public void setComponentUse(int componentUse) {
     this.componentUse = componentUse;
+  }
+
+
+
+
+  public CombatShip getActiveShip() {
+    return activeShip;
+  }
+
+
+
+
+  public void setActiveShip(CombatShip activeShip) {
+    this.activeShip = activeShip;
   }
 
   

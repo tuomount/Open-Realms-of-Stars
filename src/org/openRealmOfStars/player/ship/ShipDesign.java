@@ -360,7 +360,7 @@ public class ShipDesign {
     sb.append(" Armor: ");
     sb.append(getTotalArmor());
     sb.append(" Hull Points: ");
-    sb.append(hull.getSlotHull()*hull.getMaxSlot());
+    sb.append(hull.getSlotHull()*getNumberOfComponents());
     if (getTotalMilitaryPower() > 0) {
       sb.append("\n");
       sb.append("Military power: ");
@@ -375,7 +375,7 @@ public class ShipDesign {
       sb.append("\n");
       sb.append("Cargo: ");
       sb.append(getFreeSlots()*10);
-      sb.append("units or ");
+      sb.append(" units or ");
       sb.append(getFreeSlots()*2);
       sb.append(" population");
     }
@@ -489,7 +489,7 @@ public class ShipDesign {
     sb.append(" Armor: ");
     sb.append(getTotalArmor());
     sb.append(" Hull Points: ");
-    sb.append(hull.getSlotHull()*hull.getMaxSlot());
+    sb.append(hull.getSlotHull()*getNumberOfComponents());
     if (getTotalMilitaryPower() > 0) {
       sb.append("\n");
       sb.append("Military power: ");

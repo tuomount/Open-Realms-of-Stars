@@ -615,7 +615,7 @@ public class Ship extends Construction {
    * @return Maximum hull points
    */
   public int getMaxHullPoints() {
-    return hull.getSlotHull()*hull.getMaxSlot();
+    return hull.getSlotHull()*hullPoints.length;
   }
 
   /**

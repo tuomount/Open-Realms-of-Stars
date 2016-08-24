@@ -447,7 +447,12 @@ public class Game extends JFrame implements ActionListener {
       }
     }
     if (gameState == GameState.COMBAT && combatView != null) {
-      combatView.handleActions(arg0);
+      if (combatView.isCombatEnded() &&
+          arg0.getActionCommand().equals(GameCommands.COMMAND_END_BATTLE_ROUND)) {
+        changeGameState(GameState.STARMAP);
+      } else {
+        combatView.handleActions(arg0);
+      }
     }
     if (gameState == GameState.CREDITS) {
       if (arg0.getActionCommand().equalsIgnoreCase(

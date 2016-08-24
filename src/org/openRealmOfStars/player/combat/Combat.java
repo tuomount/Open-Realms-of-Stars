@@ -83,6 +83,12 @@ public class Combat {
    */
   private Fleet fleet2;
   
+  private PlayerInfo winner;
+  
+  private PlayerInfo info1;
+  
+  private PlayerInfo info2;
+  
   /**
    * Build shipList in initiative order
    * @param fleet1 Player1 fleet
@@ -93,10 +99,16 @@ public class Combat {
   public Combat(Fleet fleet1, Fleet fleet2, PlayerInfo info1, PlayerInfo info2) {
     this.fleet1 = fleet1;
     this.fleet2 = fleet2;
+    this.info1 = info1;
+    this.info2 = info2;
     Ship[] ships = fleet1.getShips();
     int index = 0;
     shipList = new ArrayList<>();
     for (Ship ship : ships) {      
+      ShipStat stat = info1.getShipStatByName(ship.getName());
+      if (stat != null) {
+        stat.setNumberOfCombats(stat.getNumberOfCombats()+1);
+      }
       CombatShip combatShp = new CombatShip(ship, info1, 
           getStartPos(index, 0, true), getStartPos(index, 0, false),false);
       shipList.add(combatShp);
@@ -105,6 +117,10 @@ public class Combat {
     ships = fleet2.getShips();
     index = 0;
     for (Ship ship : ships) {
+      ShipStat stat = info2.getShipStatByName(ship.getName());
+      if (stat != null) {
+        stat.setNumberOfCombats(stat.getNumberOfCombats()+1);
+      }
       CombatShip combatShp = new CombatShip(ship, info2, 
           getStartPos(index, 1, true), getStartPos(index, 1, false),true);
       shipList.add(combatShp);
@@ -114,6 +130,15 @@ public class Combat {
     index = 0;
     componentUse = -1;
     animation = null;
+    winner = null;
+  }
+  
+  /**
+   * Get the winner. 
+   * @return PlayerInfo who won or null
+   */
+  public PlayerInfo getWinner() {
+    return winner;
   }
   
   /**
@@ -595,6 +620,73 @@ public class Combat {
     return 4;
   }
 
+  /**
+   * Hand winner fleet stats
+   * @param fleet
+   * @param info
+   */
+  private void handleWinner(Fleet fleet, PlayerInfo info) {
+    for (Ship ship : fleet.getShips()) {
+      ShipStat stat = info.getShipStatByName(ship.getName());
+      if (stat != null) {
+        stat.setNumberOfVictories(stat.getNumberOfVictories()+1);
+      }
+    }
+  }
+  
+  /**
+   * Handle End combat
+   */
+  public void handleEndCombat() {
+    if (winner != null && info1 == winner) {
+      handleWinner(fleet1, info1);
+      fleet1.setPos(fleet2.getX(), fleet2.getY());
+      int index =info2.Fleets().getIndexByName(fleet2.getName());
+      if (index != -1) {
+        info2.Fleets().remove(index);
+      }
+    }
+    if (winner != null && info2 == winner) {
+      handleWinner(fleet2, info2);
+      fleet2.setPos(fleet1.getX(), fleet1.getY());
+      int index =info1.Fleets().getIndexByName(fleet1.getName());
+      if (index != -1) {
+        info1.Fleets().remove(index);
+      }
+    }
+  }
+  
+  /**
+   * Is Combat over or not yet
+   * @return True if combat is over
+   */
+  public boolean isCombatOver() {
+    PlayerInfo first = null;
+    boolean moreThanOnePlayer = false;
+    boolean militaryPower = false;
+    for (CombatShip ship : shipList) {
+      if (first == null) {
+        first = ship.getPlayer();
+      }
+      if (first != ship.getPlayer()) {
+        moreThanOnePlayer = true;
+      }
+      if (ship.getShip().getTotalMilitaryPower()>0) {
+        militaryPower = true;
+      }
+    }
+    if (!moreThanOnePlayer) {
+      winner = first;
+      // There is no combat with one player
+      return true;
+    }
+    if (!militaryPower) {
+      // No reason to continue with non military ships
+      return true;
+    }
+    return false;
+  }
+  
   public int getComponentUse() {
     return componentUse;
   }

@@ -95,6 +95,15 @@ public class BattleView extends BlackPanel {
   private static final int MAX_DELAY_COUNT = 30;
   
   /**
+   * End button
+   */
+  private SpaceButton endButton;
+  
+  /**
+   * Combat has ended
+   */
+  private boolean combatEnded;
+  /**
    * Battle view for space combat
    * @param fleet1 First fleet in combat
    * @param player1 First player in combat
@@ -122,9 +131,9 @@ public class BattleView extends BlackPanel {
     InfoPanel bottom = new InfoPanel();
     bottom.setTitle(null);
     bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
-    SpaceButton btn = new SpaceButton("End round", GameCommands.COMMAND_END_BATTLE_ROUND);
-    btn.addActionListener(listener);
-    bottom.add(btn);
+    endButton = new SpaceButton("End round", GameCommands.COMMAND_END_BATTLE_ROUND);
+    endButton.addActionListener(listener);
+    bottom.add(endButton);
     
 
     
@@ -135,6 +144,7 @@ public class BattleView extends BlackPanel {
     this.add(bottom,BorderLayout.SOUTH);
     aStar = null;
     delayCount = 0;
+    combatEnded = false;
 
   }
 
@@ -210,6 +220,7 @@ public class BattleView extends BlackPanel {
     }
     PathPoint point = aStar.getNextMove();
     if (point != null && !combat.isBlocked(point.getX(), point.getY()) && ai.getMovesLeft() > 0) {
+      handleAIShoot(ai, deadliest);
       ai.setMovesLeft(ai.getMovesLeft()-1);
       ai.setX(point.getX());
       ai.setY(point.getY());
@@ -230,7 +241,16 @@ public class BattleView extends BlackPanel {
     combatMapMouseListener.setComponentUse(-1);
     combat.nextShip();
     infoPanel.showShip(combat.getCurrentShip());
+    if (combat.isCombatOver()) {
+      endButton.setText("End combat");
+      combatEnded = true;
+      combat.handleEndCombat();
+    }
     this.repaint();
+  }
+  
+  public boolean isCombatEnded() {
+    return combatEnded;
   }
   
   /**
@@ -245,7 +265,8 @@ public class BattleView extends BlackPanel {
         if (delayCount >= MAX_DELAY_COUNT) {
           delayCount = 0;
         }
-        if (!combat.getCurrentShip().getPlayer().isHuman() && delayCount == 0) {
+        if (!combat.getCurrentShip().getPlayer().isHuman() && delayCount == 0 &&
+            !combatEnded) {
           handleAI();
         }
       }
@@ -253,8 +274,10 @@ public class BattleView extends BlackPanel {
       mapPanel.repaint();
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_END_BATTLE_ROUND) && combat.getCurrentShip().getPlayer().isHuman()) {
-      endRound();
+        GameCommands.COMMAND_END_BATTLE_ROUND)) {
+      if (!combatEnded && combat.getCurrentShip().getPlayer().isHuman()) {
+        endRound();
+      }
     }
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)
         && combat.getCurrentShip().getPlayer().isHuman()) {

@@ -133,6 +133,14 @@ public class Combat {
     winner = null;
   }
   
+  public PlayerInfo getPlayer1() {
+    return info1;
+  }
+  public PlayerInfo getPlayer2() {
+    return info2;
+  }
+
+  
   /**
    * Get the winner. 
    * @return PlayerInfo who won or null

@@ -22,6 +22,7 @@ import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
@@ -216,13 +217,17 @@ public class Game extends JFrame implements ActionListener {
   /**
    * Show Combat
    */
-  public void showCombat() {
-    // FIXME This is fixed combat
-    combatView = new BattleView(
-        players.getCurrentPlayerInfo().Fleets().getByIndex(0), 
-        players.getCurrentPlayerInfo(), 
-        players.getPlayerInfoByIndex(1).Fleets().getByIndex(0), 
-        players.getPlayerInfoByIndex(1),starMap, this);
+  public void showCombat(Combat combat) {
+    if (combat == null) {
+      // This is fixed combat
+      combatView = new BattleView(
+          players.getCurrentPlayerInfo().Fleets().getByIndex(0), 
+          players.getCurrentPlayerInfo(), 
+          players.getPlayerInfoByIndex(1).Fleets().getByIndex(0), 
+          players.getPlayerInfoByIndex(1),starMap, this);
+    } else {
+      combatView = new BattleView(combat, starMap, this);
+    }
     this.getContentPane().removeAll();
     this.add(combatView);
     this.validate();
@@ -298,6 +303,26 @@ public class Game extends JFrame implements ActionListener {
    * @param focusMessage Focused message, can be also null
    */
   public void changeGameState(GameState newState, Message focusMessage) {
+    changeGameState(newState, focusMessage, null);
+  }
+
+  /**
+   * Change game state so that there is custom object given as a parameter
+   * @param newState Game State where to change
+   * @param dataObject Depends on which state is changed
+   */
+  public void changeGameState(GameState newState, Object dataObject) {
+    changeGameState(newState, null, dataObject);
+  }
+
+  /**
+   * Change game state so that focus is also changed to target message.
+   * There is also possibility to give data object which depends on new gamestate.
+   * @param newState Game State where to change
+   * @param focusMessage Focused message, can be also null
+   * @param dataObject Depends on which state is changed
+   */
+  private void changeGameState(GameState newState, Message focusMessage, Object dataObject) {
     gameState = newState;
     switch (gameState) {
     case MAIN_MENU: showMainMenu(); break;
@@ -324,7 +349,14 @@ public class Game extends JFrame implements ActionListener {
     }
     case CREDITS: showCredits(); break;
     case STARMAP: showStarMap(); break;
-    case COMBAT: showCombat(); break;
+    case COMBAT: {
+      if (dataObject instanceof Combat) {
+       showCombat((Combat) dataObject); 
+      } else {
+        showCombat(null);
+      }
+      break;
+    }
     case RESEARCHVIEW: showResearch(focusMessage); break;
     case VIEWSHIPS: showShipView(); break;
     case SHIPDESIGN: {

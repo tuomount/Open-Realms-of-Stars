@@ -112,6 +112,19 @@ public class BattleView extends BlackPanel {
    * Combat has ended
    */
   private boolean combatEnded;
+
+  /**
+   * Battle view for space combat
+   * @param combat Combat
+   * @param map Star Map
+   * @param listener ActionListener
+   */
+  public BattleView(Combat combat, StarMap map, ActionListener listener) {
+    this.combat = combat;
+    this.map = map;
+    initBattleView(listener);
+  }
+  
   /**
    * Battle view for space combat
    * @param fleet1 First fleet in combat
@@ -123,13 +136,21 @@ public class BattleView extends BlackPanel {
    */
   public BattleView(Fleet fleet1, PlayerInfo player1, Fleet fleet2,
       PlayerInfo player2,StarMap map, ActionListener listener) {
-    BlackPanel base = new BlackPanel();
     this.map = map;
     combat = new Combat(fleet1, fleet2, player1, player2);
+    initBattleView(listener);
+  }
+
+  /**
+   * Init Battle view
+   * @param listener Action Listener
+   */
+  private void initBattleView(ActionListener listener) {
+    BlackPanel base = new BlackPanel();
     mapPanel = new MapPanel(true);
     mapPanel.setSize(Combat.MAX_X*ShipImage.MAX_WIDTH, 
         Combat.MAX_Y*ShipImage.MAX_HEIGHT);
-    mapPanel.drawBattleMap(combat, player1, this.map);
+    mapPanel.drawBattleMap(combat, combat.getPlayer1(), this.map);
 
     infoPanel = new BattleInfoPanel(combat.getCurrentShip(),listener);
 
@@ -160,9 +181,7 @@ public class BattleView extends BlackPanel {
     aStar = null;
     delayCount = 0;
     combatEnded = false;
-
   }
-
   
   /**
    * Update panels on BattleView

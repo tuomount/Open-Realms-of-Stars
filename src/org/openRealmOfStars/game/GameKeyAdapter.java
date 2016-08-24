@@ -4,6 +4,7 @@ import java.awt.KeyEventDispatcher;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
+import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -108,6 +109,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
          int nx = fleet.getX();
          int ny = fleet.getY()-1;
          fleetMakeMove(fleet,nx,ny);
+         
        } else {
          // Map scrolling
         game.getStarMap().setDrawPos(game.getStarMap().getDrawX(),
@@ -139,13 +141,21 @@ public class GameKeyAdapter implements KeyEventDispatcher {
   private void fleetMakeMove(Fleet fleet, int nx, int ny) {
     if (game.getStarMap().isValidCoordinate(nx, ny) && fleet.movesLeft > 0 
         && !game.getStarMap().isBlocked(nx, ny)) {
-      fleet.setPos(nx, ny);
-      fleet.movesLeft--;
-      game.getStarMap().doFleetScanUpdate(game.players.getCurrentPlayerInfo(),
-          fleet,null);
-      game.starMapView.updatePanels();
-      game.getStarMap().setDrawPos(fleet.getX(),fleet.getY());
-      game.starMapView.readyToMove = false;
+      Combat combat = game.getStarMap().fightWithFleet(nx, ny, fleet, 
+          game.players.getCurrentPlayerInfo());
+      if (combat != null) {
+        fleet.movesLeft--;
+        game.starMapView.readyToMove = false;
+        game.changeGameState(GameState.COMBAT, combat);
+      } else {
+        fleet.setPos(nx, ny);
+        fleet.movesLeft--;
+        game.getStarMap().doFleetScanUpdate(game.players.getCurrentPlayerInfo(),
+            fleet,null);
+        game.starMapView.updatePanels();
+        game.getStarMap().setDrawPos(fleet.getX(),fleet.getY());
+        game.starMapView.readyToMove = false;
+      }
     }
   }
 

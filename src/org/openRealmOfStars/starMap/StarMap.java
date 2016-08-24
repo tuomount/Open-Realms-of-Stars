@@ -10,6 +10,7 @@ import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
@@ -519,6 +520,28 @@ public class StarMap {
         int playerIndex = fleetTiles[x][y].getPlayerIndex();
         int fleetIndex = fleetTiles[x][y].getFleetIndex();
         return players.getPlayerInfoByIndex(playerIndex).Fleets().getByIndex(fleetIndex);
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Fight with two fleets
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @return Combat or null
+   */
+  public Combat fightWithFleet(int x, int y,Fleet fleet1, PlayerInfo info1) {
+    if (isValidCoordinate(x, y) && fleetTiles != null) {
+      if (fleetTiles[x][y] != null) {
+        int playerIndex = fleetTiles[x][y].getPlayerIndex();
+        int fleetIndex = fleetTiles[x][y].getFleetIndex();
+        PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
+        if (info1 != info2) {
+          Fleet fleet2 = info2.Fleets().getByIndex(fleetIndex);
+          return new Combat(fleet1, fleet2, info1, info2);
+        }
+        
       }
     }
     return null;

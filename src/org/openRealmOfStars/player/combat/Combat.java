@@ -238,6 +238,16 @@ public class Combat {
       shipList.remove(ship);
     } else if (fleet2.isShipInFleet(ship.getShip())) {
       fleet2.removeShip(ship.getShip());
+      ShipStat stat = animation.getShooter().getPlayer()
+          .getShipStatByName(animation.getShooter().getShip().getName());
+      if (stat != null) {
+        stat.setNumberOfKills(stat.getNumberOfKills()+1);
+      }
+      stat = ship.getPlayer().getShipStatByName(ship.getShip().getName());
+      if (stat != null) {
+        stat.setNumberOfLoses(stat.getNumberOfLoses()+1);
+        stat.setNumberOfInUse(stat.getNumberOfInUse()-1);
+      }      
       shipList.remove(ship);
     }
   }

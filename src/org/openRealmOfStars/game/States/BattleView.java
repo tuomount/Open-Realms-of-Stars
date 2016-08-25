@@ -203,8 +203,9 @@ public class BattleView extends BlackPanel {
    * Handle AI shooting
    * @param ai AI which is shooting
    * @param target shooting target
+   * @return true if shooting was actually done
    */
-  private void handleAIShoot(CombatShip ai, CombatShip target) {
+  private boolean handleAIShoot(CombatShip ai, CombatShip target) {
     if (target !=  null) {
       int nComp = ai.getShip().getNumberOfComponents();
       for (int i=0;i<nComp;i++) {
@@ -221,9 +222,11 @@ public class BattleView extends BlackPanel {
           combat.setAnimation(new CombatAnimation(ai, target, weapon, value));
           ai.useComponent(i);
           combat.setComponentUse(-1);
+          return true;
         }
       }
-    }    
+    }
+    return false;
   }
   
   /**
@@ -234,6 +237,7 @@ public class BattleView extends BlackPanel {
     CombatShip deadliest = combat.getMostPowerfulShip(info);
     CombatShip closest = combat.getClosestEnemyShip(info, combat.getCurrentShip());
     CombatShip ai = combat.getCurrentShip();
+    boolean shot = false;
     int range = ai.getShip().getMaxWeaponRange();
     if (deadliest != null ) {
       if (ai.getShip().getTotalMilitaryPower() > deadliest.getShip().getTotalMilitaryPower()) {
@@ -242,10 +246,10 @@ public class BattleView extends BlackPanel {
       int distance = (int) Math.round(StarMap.getDistance(ai.getX(), ai.getY(), 
         deadliest.getX(), deadliest.getY()));
       if (range < distance-ai.getMovesLeft() && closest != null) {
-        handleAIShoot(ai, closest);
+        shot = handleAIShoot(ai, closest);
       }
     } else if (closest != null) {
-      handleAIShoot(ai, closest);
+      shot = handleAIShoot(ai, closest);
     }
     if (aStar == null) {
       if (deadliest != null) {
@@ -263,11 +267,17 @@ public class BattleView extends BlackPanel {
       }
     }
     PathPoint point = aStar.getNextMove();
+    if (ai.getShip().getTacticSpeed()==0) {
+      shot = handleAIShoot(ai, deadliest);
+    }
     if (point != null && !combat.isBlocked(point.getX(), point.getY()) && ai.getMovesLeft() > 0) {
-      handleAIShoot(ai, deadliest);
-      ai.setMovesLeft(ai.getMovesLeft()-1);
-      ai.setX(point.getX());
-      ai.setY(point.getY());
+      shot = handleAIShoot(ai, deadliest);
+      if (!shot) {
+        // Not moving after shooting
+        ai.setMovesLeft(ai.getMovesLeft()-1);
+        ai.setX(point.getX());
+        ai.setY(point.getY());
+      }
       handleAIShoot(ai, deadliest);
     }
     if ((ai.getMovesLeft() == 0 || aStar.isLastMove()) &&

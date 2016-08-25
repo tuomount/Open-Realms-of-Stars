@@ -577,7 +577,8 @@ public class MapPanel extends JPanel {
           ShipComponent weapon = combat.getCurrentShip().getShip().getComponent(combat.getComponentUse());
           if (combat.getComponentUse() != -1 && weapon != null && weapon.isWeapon()) {
             CombatShip target = combat.getShipFromCoordinate(combat.getCursorX(), combat.getCursorY());
-            if (target !=  null && combat.isClearShot(combat.getCurrentShip(), target)) {
+            if (target !=  null && combat.getCurrentShip().getPlayer().isHuman() 
+                && combat.isClearShot(combat.getCurrentShip(), target)) {
               gr.drawImage(GuiStatics.CROSSHAIR, pixelX, pixelY, null);
             } else {
               gr.drawImage(GuiStatics.RED_CROSSHAIR, pixelX, pixelY, null);

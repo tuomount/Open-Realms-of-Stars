@@ -139,6 +139,48 @@ public class CombatShip implements Comparable<CombatShip>{
     sb.append(" - ");
     sb.append(ship.getHull().getName());
     sb.append("\n");
+    sb.append("X: ");
+    sb.append(x);
+    sb.append(" Y: ");
+    sb.append(y);
+    sb.append("\n");
+    sb.append("Initiative: ");
+    sb.append(ship.getInitiative());
+    sb.append("\n");
+    sb.append("Moves: ");
+    sb.append(movesLeft);
+    sb.append("\n");
+    sb.append("Hull points: ");
+    sb.append(ship.getHullPoints());
+    sb.append("/");
+    sb.append(ship.getMaxHullPoints());
+    sb.append("\n");
+    if (ship.getTacticSpeed()==0) {
+      sb.append("Immobilized\n");
+    }
+    if (!ship.hasWeapons()) {
+      sb.append("No weapons\n");
+    }
+    if (ship.getShield()==0 && ship.getTotalShield()>0) {
+      sb.append("shields down\n");
+    }
+    if (ship.getShield()==0 && ship.getTotalShield()==0) {
+      sb.append("No shields\n");
+    }
+    return sb.toString();
+  }
+
+  /**
+   * Get Combat ship description
+   * @return String
+   */
+  public String getDescription() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(ship.getName());
+    sb.append(" - ");
+    sb.append(ship.getHull().getName());
+    sb.append("\n");
+    sb.append("\n");
     sb.append("Initiative: ");
     sb.append(ship.getInitiative());
     sb.append("\n");

@@ -153,7 +153,7 @@ public class AStarSearch {
             }
             int mx = x+point.getX();
             int my = y+point.getY();
-            if (isValidPos(mx,my) && blockMap[mx][my] > count) {
+            if (isValidPos(mx,my) && blockMap[mx][my] > count && blockMap[mx][my] != BLOCKED) {
               blockMap[mx][my] = count;
               double dist = StarMap.getDistance(mx, my, tx, ty);
               PathPoint newPoint = new PathPoint(mx, my, dist);
@@ -212,8 +212,9 @@ public class AStarSearch {
         }
         count = blockMap[bx][by];
         PathPoint newPoint = new PathPoint(bx, by, bdist);
+        if (blockMap[bx][by] != 0) {
         points.add(newPoint);
-        if (blockMap[bx][by] == 0) {
+        } else {
           targetReached = true;
         }
 
@@ -226,14 +227,19 @@ public class AStarSearch {
    * Get next move by return PathPoint
    * @return PathPoint or null if cannot move
    */
-  public PathPoint getNextMove() {
+  public PathPoint getMove() {
+    if (targetPoint != null && points.size() > 1 && routeIndex != -1)  {
+      return points.get(routeIndex);
+    }
+    return null;
+  }
+  
+  public void nextMove() {
     if (targetPoint != null && points.size() > 1 && routeIndex != -1)  {
       if (routeIndex > 0) {
         routeIndex--;
       }
-      return points.get(routeIndex);
     }
-    return null;
   }
   
   /**

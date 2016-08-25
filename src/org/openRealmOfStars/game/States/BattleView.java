@@ -188,7 +188,7 @@ public class BattleView extends BlackPanel {
    */
   public void updatePanels() {
     if (combatMapMouseListener.getActiveShip() != null) {
-      textArea.setText(combatMapMouseListener.getActiveShip().toString());
+      textArea.setText(combatMapMouseListener.getActiveShip().getDescription());
     } else {
       textArea.setText("");
     }
@@ -267,7 +267,7 @@ public class BattleView extends BlackPanel {
         return;
       }
     }
-    PathPoint point = aStar.getNextMove();
+    PathPoint point = aStar.getMove();
     if (ai.getShip().getTacticSpeed()==0) {
       shot = handleAIShoot(ai, deadliest);
     }
@@ -278,8 +278,12 @@ public class BattleView extends BlackPanel {
         ai.setMovesLeft(ai.getMovesLeft()-1);
         ai.setX(point.getX());
         ai.setY(point.getY());
+        aStar.nextMove();
       }
       handleAIShoot(ai, deadliest);
+    } else {
+      // Path is blocked
+      ai.setMovesLeft(0);
     }
     if ((ai.getMovesLeft() == 0 || aStar.isLastMove()) &&
         combat.getAnimation() == null) {

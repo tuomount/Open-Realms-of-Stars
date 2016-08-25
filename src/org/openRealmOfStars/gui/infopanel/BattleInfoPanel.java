@@ -126,7 +126,7 @@ public class BattleInfoPanel extends InfoPanel {
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
       imageLabel.setImage(ship.getShip().getHull().getImage());
       setTitle(ship.getShip().getName());
-      textArea.setText(ship.toString());
+      textArea.setText(ship.getDescription());
       this.repaint();
     }else {
       setTitle("Battle info");

@@ -126,7 +126,7 @@ public class Combat {
       shipList.add(combatShp);
       index++;
     }
-    Collections.sort(shipList);
+    Collections.sort(shipList,Collections.reverseOrder());
     index = 0;
     componentUse = -1;
     animation = null;
@@ -184,12 +184,13 @@ public class Combat {
           sy = sy+my;
           int ix = (int) Math.round(sx);
           int iy = (int) Math.round(sy);
-          if (isBlocked(ix,iy) && (ix != target.getX() || iy != target.getY())) {
-            result = false;
-            break;
-          }
           if (ix == target.getX() && iy == target.getY()) {
             result = true;
+            break;
+          }
+          if (isBlocked(ix,iy)) {
+            result = false;
+            break;
           }
         }
       }

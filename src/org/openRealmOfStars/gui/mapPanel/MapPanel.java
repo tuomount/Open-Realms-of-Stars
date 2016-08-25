@@ -522,6 +522,23 @@ public class MapPanel extends JPanel {
               pixelY+ShipImage.MAX_HEIGHT-1);
           gr.setStroke(dashed);
           gr.setColor(colorDarkBlue);
+        } if (i == combat.getCurrentShip().getX() &&
+            j == combat.getCurrentShip().getY()) {
+          gr.setStroke(full);
+          gr.setColor(GuiStatics.COLOR_GREEN_TEXT);
+          // Top line
+          gr.drawLine(pixelX, pixelY, pixelX+ShipImage.MAX_WIDTH-1, pixelY);
+          // Left line          
+          gr.drawLine(pixelX, pixelY, pixelX, pixelY+ShipImage.MAX_HEIGHT-1);
+          // Right line
+          gr.drawLine(pixelX+ShipImage.MAX_WIDTH-1, pixelY, pixelX+ShipImage.MAX_WIDTH-1,
+              pixelY+ShipImage.MAX_HEIGHT-1);
+          // Bottom line
+          gr.drawLine(pixelX, pixelY+ShipImage.MAX_HEIGHT-1, pixelX+ShipImage.MAX_WIDTH-1,
+              pixelY+ShipImage.MAX_HEIGHT-1);
+          gr.setStroke(dashed);
+          gr.setColor(colorDarkBlue);
+          
         } else {
           gr.setStroke(dashed);
           gr.setColor(colorDarkBlue);

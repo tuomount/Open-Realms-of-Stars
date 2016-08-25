@@ -284,10 +284,13 @@ public class BattleView extends BlackPanel {
     if ((ai.getMovesLeft() == 0 || aStar.isLastMove()) &&
         combat.getAnimation() == null) {
       if (ai.getAiShotsLeft() > 0) {
+        // We still got more shots left, let's shoot the deadliest
         shot = handleAIShoot(ai, deadliest);
         if (!shot) {
+          // Deadliest wasn't close enough, let's shoot the closest
           shot = handleAIShoot(ai, closest);
           if (!shot) {
+            // Even closest was too far away, ending the turn now
             aStar = null;
             endRound();
           }

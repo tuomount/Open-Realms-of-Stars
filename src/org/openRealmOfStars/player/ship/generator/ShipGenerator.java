@@ -1,6 +1,7 @@
 package org.openRealmOfStars.player.ship.generator;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipDesign;
@@ -73,11 +74,16 @@ public class ShipGenerator {
         armorComp = ShipComponentFactory.createByName(
           armor.getComponent());
       }
-      if (shieldComp != null && 
-          result.getFreeEnergy()>=shieldComp.getEnergyRequirement()) {
-        result.addComponent(shieldComp);
-      } else if (armorComp != null){
-        result.addComponent(armorComp);
+      if (player.getRace() == SpaceRace.CENTAURS) {
+        // Centaurs could ignore defense since they got more hullpoints
+        result.addComponent(weapon);
+      } else {
+        if (shieldComp != null && 
+            result.getFreeEnergy()>=shieldComp.getEnergyRequirement()) {
+          result.addComponent(shieldComp);
+        } else if (armorComp != null){
+          result.addComponent(armorComp);
+        }
       }
     }
     return result;

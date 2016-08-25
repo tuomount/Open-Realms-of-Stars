@@ -2,6 +2,7 @@ package org.openRealmOfStars.player.combat;
 
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipComponent;
 
 /**
  * 
@@ -63,6 +64,11 @@ public class CombatShip implements Comparable<CombatShip>{
    */
   private int movesLeft;
   
+  /**
+   * Used only for AI to calculate how many times AI can shoot
+   */
+  private int aiShotsLeft;
+    
   /**
    * Constructor for Combat ship
    * @param ship Ship to put in combat
@@ -167,11 +173,17 @@ public class CombatShip implements Comparable<CombatShip>{
    * Reinitialize ship for next round
    */
   public void reInitShipForRound() {
+    int weapons = 0;
     setMovesLeft(ship.getTacticSpeed());
     componentUsed = new boolean[ship.getNumberOfComponents()];
     for (int i=0;i<componentUsed.length;i++) {
       componentUsed[i] = false;
+      ShipComponent comp = ship.getComponent(i);
+      if (comp.isWeapon() && ship.componentIsWorking(i)) {
+        weapons++;
+      }
     }
+    setAiShotsLeft(weapons);
     ship.regenerateShield();
   }
   
@@ -199,6 +211,14 @@ public class CombatShip implements Comparable<CombatShip>{
 
   public void setMovesLeft(int movesLeft) {
     this.movesLeft = movesLeft;
+  }
+
+  public int getAiShotsLeft() {
+    return aiShotsLeft;
+  }
+
+  public void setAiShotsLeft(int aiShotsLeft) {
+    this.aiShotsLeft = aiShotsLeft;
   }
   
   

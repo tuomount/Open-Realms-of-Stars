@@ -291,7 +291,7 @@ public class ShipComponentFactory {
     if (index == 1) {
       tmp = new ShipComponent(index, "Laser Mk1", 6, 3, ShipComponentType.WEAPON_BEAM);
       tmp.setDamage(1);
-      tmp.setWeaponRange(2);
+      tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(1);
     }
     if (index == 2) {
@@ -303,13 +303,13 @@ public class ShipComponentFactory {
     if (index == 3) {
       tmp = new ShipComponent(index, "Photon torpedo Mk1", 6, 4, ShipComponentType.WEAPON_PHOTON_TORPEDO);
       tmp.setDamage(1);
-      tmp.setWeaponRange(3);
+      tmp.setWeaponRange(2);
       tmp.setEnergyRequirement(1);
     }
     if (index == 13) {
       tmp = new ShipComponent(index, "Laser Mk2", 6, 3, ShipComponentType.WEAPON_BEAM);
       tmp.setDamage(2);
-      tmp.setWeaponRange(2);
+      tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(1);
     }
     if (index == 14) {
@@ -321,13 +321,13 @@ public class ShipComponentFactory {
     if (index == 15) {
       tmp = new ShipComponent(index, "Photon torpedo Mk2", 6, 4, ShipComponentType.WEAPON_PHOTON_TORPEDO);
       tmp.setDamage(2);
-      tmp.setWeaponRange(3);
+      tmp.setWeaponRange(2);
       tmp.setEnergyRequirement(1);
     }
     if (index == 24) {
       tmp = new ShipComponent(index, "Laser Mk3", 6, 3, ShipComponentType.WEAPON_BEAM);
-      tmp.setDamage(2);
-      tmp.setWeaponRange(3);
+      tmp.setDamage(3);
+      tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(2);
     }
     if (index == 25) {
@@ -339,13 +339,13 @@ public class ShipComponentFactory {
     if (index == 26) {
       tmp = new ShipComponent(index, "Photon torpedo Mk3", 6, 4, ShipComponentType.WEAPON_PHOTON_TORPEDO);
       tmp.setDamage(3);
-      tmp.setWeaponRange(3);
+      tmp.setWeaponRange(2);
       tmp.setEnergyRequirement(2);
     }
     if (index == 27) {
       tmp = new ShipComponent(index, "ECM torpedo Mk1", 8, 2, ShipComponentType.WEAPON_ECM_TORPEDO);
       tmp.setDamage(3);
-      tmp.setWeaponRange(5);
+      tmp.setWeaponRange(4);
       tmp.setEnergyRequirement(0);
     }
     if (index == 28) {
@@ -357,25 +357,25 @@ public class ShipComponentFactory {
     if (index == 36) {
       tmp = new ShipComponent(index, "Laser Mk4", 7, 3, ShipComponentType.WEAPON_BEAM);
       tmp.setDamage(3);
-      tmp.setWeaponRange(3);
+      tmp.setWeaponRange(1);
       tmp.setEnergyRequirement(2);
     }
     if (index == 37) {
       tmp = new ShipComponent(index, "Railgun Mk4", 4, 5, ShipComponentType.WEAPON_RAILGUN);
-      tmp.setDamage(4);
+      tmp.setDamage(3);
       tmp.setWeaponRange(2);
       tmp.setEnergyRequirement(2);
     }
     if (index == 38) {
       tmp = new ShipComponent(index, "Photon torpedo Mk4", 7, 4, ShipComponentType.WEAPON_PHOTON_TORPEDO);
-      tmp.setDamage(4);
-      tmp.setWeaponRange(3);
+      tmp.setDamage(3);
+      tmp.setWeaponRange(2);
       tmp.setEnergyRequirement(2);
     }
     if (index == 39) {
       tmp = new ShipComponent(index, "ECM torpedo Mk2", 9, 2, ShipComponentType.WEAPON_ECM_TORPEDO);
       tmp.setDamage(4);
-      tmp.setWeaponRange(5);
+      tmp.setWeaponRange(4);
       tmp.setEnergyRequirement(0);
     }
     if (index == 40) {

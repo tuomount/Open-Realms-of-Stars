@@ -336,8 +336,8 @@ public class Ship extends Construction {
     int result = 0;
     switch (weapon.getType()) {
     case WEAPON_BEAM: result = 100; break;
-    case WEAPON_PHOTON_TORPEDO: result = 75; break;
     case WEAPON_RAILGUN:
+    case WEAPON_PHOTON_TORPEDO: result = 75; break;
     case WEAPON_ECM_TORPEDO:
     case WEAPON_HE_MISSILE:
     default: result = 50; break;
@@ -470,6 +470,9 @@ public class Ship extends Construction {
           && hasComponentEnergy(i)) {
         result = result+comp.getDefenseValue();
       }
+    }
+    if (getTacticSpeed() == 0) {
+      result = result -15;
     }
     return result;
   }

@@ -221,6 +221,7 @@ public class BattleView extends BlackPanel {
           }
           combat.setAnimation(new CombatAnimation(ai, target, weapon, value));
           ai.useComponent(i);
+          ai.setAiShotsLeft(ai.getAiShotsLeft()-1);
           combat.setComponentUse(-1);
           return true;
         }
@@ -233,7 +234,7 @@ public class BattleView extends BlackPanel {
    * Handle AI
    */
   private void handleAI() {
-    PlayerInfo info = combat.getCurrentShip().getPlayer();
+       PlayerInfo info = combat.getCurrentShip().getPlayer();
     CombatShip deadliest = combat.getMostPowerfulShip(info);
     CombatShip closest = combat.getClosestEnemyShip(info, combat.getCurrentShip());
     CombatShip ai = combat.getCurrentShip();
@@ -282,8 +283,19 @@ public class BattleView extends BlackPanel {
     }
     if ((ai.getMovesLeft() == 0 || aStar.isLastMove()) &&
         combat.getAnimation() == null) {
-      aStar = null;
-      endRound();
+      if (ai.getAiShotsLeft() > 0) {
+        shot = handleAIShoot(ai, deadliest);
+        if (!shot) {
+          shot = handleAIShoot(ai, closest);
+          if (!shot) {
+            aStar = null;
+            endRound();
+          }
+        }
+      } else {
+        aStar = null;
+        endRound();
+      }
     }
   }
   

@@ -2,6 +2,7 @@ package org.openRealmOfStars.starMap;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.AI.Research.Research;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
@@ -559,6 +560,18 @@ public class StarMap {
    */
   public void setTurn(int turn) {
     this.turn = turn;
+  }
+  
+  /**
+   * Make AI Turns
+   */
+  public void makeAITurns() {
+    for (int i=0;i<players.getCurrentMaxPlayers();i++) {
+      PlayerInfo info = players.getPlayerInfoByIndex(i);
+      if (info != null && !info.isHuman()) {
+        Research.handle(info);
+      }
+    }
   }
   
   /**

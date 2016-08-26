@@ -253,6 +253,7 @@ public class StarMapView extends BlackPanel {
     }
     // Starmap
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
+      map.makeAITurns();
       map.updateStarMapToNextTurn();
       endTurnButton.setText("End turn "+map.getTurn());
       credProd.setText(": "+players.getCurrentPlayerInfo().getTotalCredits()+

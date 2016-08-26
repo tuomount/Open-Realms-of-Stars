@@ -570,6 +570,12 @@ public class StarMap {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null && !info.isHuman()) {
         Research.handle(info);
+        for (int j=0;j<planetList.size();j++) {
+          Planet planet = planetList.get(j);
+          if (planet.getPlanetPlayerInfo() == info) {
+            
+          }
+        }
       }
     }
   }

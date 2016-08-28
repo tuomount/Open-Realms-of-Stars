@@ -222,6 +222,21 @@ public class Planet {
   }
   
   /**
+   * Move one worker from one position to another one.
+   * Method makes all the required checks
+   * @param from Worker position where to take a worker
+   * @param to Worker position where to move the worker
+   */
+  public void moveWorker(int from, int to) {
+    if (from > -1 && from <MAX_WORKER_TYPE &&
+        to > -1 && to <MAX_WORKER_TYPE &&
+        from != to && workers[from]>0) {
+      workers[from]=workers[from]-1;
+      workers[to]=workers[to]+1;
+    }
+  }
+  
+  /**
    * Buildings / Planetary improvements
    */
   private ArrayList<Building> buildings;

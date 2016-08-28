@@ -2,6 +2,7 @@ package org.openRealmOfStars.starMap;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.AI.PlanetHandling.PlanetHandling;
 import org.openRealmOfStars.AI.Research.Research;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
@@ -573,7 +574,7 @@ public class StarMap {
         for (int j=0;j<planetList.size();j++) {
           Planet planet = planetList.get(j);
           if (planet.getPlanetPlayerInfo() == info) {
-            
+            PlanetHandling.handlePlanet(this, planet, i);
           }
         }
       }
@@ -1056,6 +1057,15 @@ public class StarMap {
     int my = Math.abs(y2-y1);
     result = Math.sqrt(mx*mx+my*my);
     return result;
+  }
+  
+  /**
+   * Get Player info by index
+   * @param index Player index
+   * @return PlayerInfo or null
+   */
+  public PlayerInfo getPlayerByIndex(int index) {
+    return players.getPlayerInfoByIndex(index);
   }
 
 }

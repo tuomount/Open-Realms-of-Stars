@@ -10,6 +10,8 @@ import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
+import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  * 
@@ -73,6 +75,8 @@ public class PlanetHandling {
           new String[] {"Basic farm","Advanced farm"}, buildings);
       int gotMines = gotBuildings(
           new String[] {"Basic mine","Advanced mine"}, buildings);
+      int gotSpacePort = gotBuildings(
+          new String[] {"Space port"}, buildings);
       if (gotFactory == -1) {
         // No factories at all
         int i = getConstruction("Advanced factory", constructions);
@@ -101,7 +105,8 @@ public class PlanetHandling {
           }
         }
       }
-      if (gotFarms == -1 && !constructionSelected) {
+      if (gotFarms == -1 && !constructionSelected &&
+          info.getRace() != SpaceRace.MECHIONS) {
         // No farms at all
         int i = getConstruction("Advanced farm", constructions);
         if (i != -1) {
@@ -128,6 +133,30 @@ public class PlanetHandling {
             constructionSelected = true;
           }
         }
+      }
+      if (gotSpacePort == -1 && !constructionSelected) {
+        // No space port
+        int i = getConstruction("Space port", constructions);
+        if (i != -1) {
+          planet.setUnderConstruction(constructions[i]);
+          constructionSelected = true;
+        }
+      }
+      if (!constructionSelected) {
+        // Nothing to select to let's select culture or credit
+        int i = getConstruction(ConstructionFactory.EXTRA_CREDIT, constructions);
+        int j = getConstruction(ConstructionFactory.EXTRA_CULTURE, constructions);
+        if (i != -1 && j != -1) {
+          if (DiceGenerator.getRandom(1)==0) {
+            planet.setUnderConstruction(constructions[i]);
+          } else {
+            planet.setUnderConstruction(constructions[j]);
+          }
+        } else if (i != -1) {
+          planet.setUnderConstruction(constructions[i]);
+        } else if (j != -1) {
+          planet.setUnderConstruction(constructions[j]);
+        }  
       }
     }
   }

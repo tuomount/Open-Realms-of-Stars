@@ -69,6 +69,14 @@ public class MessageList {
   }
   
   /**
+   * Get full list of messages
+   * @return ArrayList of messages
+   */
+  public ArrayList<Message> getFullList() {
+    return list;
+  }
+  
+  /**
    * Get next message and move current message position to forward
    * if there are still messages left
    * @return Message, never null

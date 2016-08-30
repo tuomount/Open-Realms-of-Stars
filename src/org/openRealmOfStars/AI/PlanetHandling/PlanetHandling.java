@@ -195,21 +195,36 @@ public class PlanetHandling {
           constructionSelected = true;
         } else {
           ArrayList<Construction> list = new ArrayList<>();
+          ArrayList<Integer> listScore = new ArrayList<>();
+          int sum = 0;
           for (int i=0;i<scores.length;i++) {
             if (scores[i] >= minimum) {
               list.add(constructions[i]);
+              listScore.add(Integer.valueOf(scores[i]));
+              sum = sum+scores[i];
             } else {
               if (constructions[i] instanceof Ship && freeSlot < 3) {
                 list.add(constructions[i]);
+                listScore.add(Integer.valueOf(scores[i]));
+                sum = sum+scores[i];
               } else if (constructions[i].getName().equals(ConstructionFactory.MECHION_CITIZEN)
                   && freeSlot < 3 && planet.getTotalPopulation() <20) {
                 list.add(constructions[i]);
+                listScore.add(Integer.valueOf(scores[i]));
+                sum = sum+scores[i];
               }
             }
           }
-          int rand = DiceGenerator.getRandom(list.size()-1);
-          planet.setUnderConstruction(list.get(rand));
-          constructionSelected = true;
+          int rand = DiceGenerator.getRandom(sum);
+          int total = 0;
+          for (int i=0;i<listScore.size();i++) {
+            if (rand < total+listScore.get(i).intValue()) {
+              planet.setUnderConstruction(list.get(i));
+              constructionSelected = true;
+              break;
+            }
+            total = total+listScore.get(i).intValue();
+          }
 
         }
       }
@@ -295,6 +310,8 @@ public class PlanetHandling {
           // Mechions do not build farms
           scores[i] = -1;
         }
+        
+        scores[i] = scores[i] / (planet.howManyBuildings(building.getName())+1);
 
         if (planet.exceedRadiation()) {
           if (building.getName().equals("Radiation dampener") ||

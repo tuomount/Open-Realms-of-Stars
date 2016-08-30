@@ -1138,6 +1138,22 @@ public class Planet {
   }
 
   
+  /**
+   * How many buildings with same name planet has
+   * @param name Building name to search
+   * @return number of buildings with same name
+   */
+  public int howManyBuildings(String name) {
+    int result = 0;
+    Building[] buildings = getBuildingList();
+    for (Building building : buildings) {
+      if (building.getName().equals(name)) {
+        result = result+1;
+      }
+    }
+    return result;
+  }
+  
   public int getCulture() {
     return culture;
   }

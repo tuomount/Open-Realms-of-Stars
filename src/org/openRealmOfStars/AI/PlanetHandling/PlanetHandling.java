@@ -6,9 +6,11 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -120,6 +122,14 @@ public class PlanetHandling {
           }
         }
       }
+      if (!constructionSelected && info.getRace() == SpaceRace.MECHIONS &&
+          planet.getTotalPopulation() < 5) {
+        int i = getConstruction(ConstructionFactory.MECHION_CITIZEN, constructions);
+        if (i != -1) {
+          planet.setUnderConstruction(constructions[i]);
+          constructionSelected = true;
+        }
+      }
       if (gotMines == -1 && !constructionSelected) {
         // No mines at all
         int i = getConstruction("Advanced mine", constructions);
@@ -143,6 +153,67 @@ public class PlanetHandling {
         }
       }
       if (!constructionSelected) {
+        int[] scores = scoreConstructions(constructions,planet, info);
+        int highest = -1;
+        int value = -1;
+        boolean over400=false;
+        int minimum = 0;
+        int freeSlot = planet.getGroundSize()-planet.getUsedPlanetSize();
+        switch (freeSlot) {
+        case 0: minimum = 1000; break;
+        case 1: minimum = 200; break;
+        case 2: minimum = 120; break;
+        case 3: minimum = 80; break;
+        case 4: minimum = 40; break;
+        case 5: minimum = 20; break;
+        case 6: minimum = 10; break;
+        default: minimum = 0; break;
+        }
+        for (int i=0;i<scores.length;i++) {
+          if (scores[i] > value) {
+            value = scores[i];
+            highest = i;
+          }
+          if (scores[i] > 399) {
+            over400 =true;
+          }
+        }
+        if (highest == value) {
+          if (highest != -1) {
+            planet.setUnderConstruction(constructions[highest]);
+            constructionSelected = true;
+          }
+        } else if (over400) {
+          ArrayList<Construction> list = new ArrayList<>();
+          for (int i=0;i<scores.length;i++) {
+            if (scores[i] > 399) {
+              list.add(constructions[i]);
+            }
+          }
+          int rand = DiceGenerator.getRandom(list.size()-1);
+          planet.setUnderConstruction(list.get(rand));
+          constructionSelected = true;
+        } else {
+          ArrayList<Construction> list = new ArrayList<>();
+          for (int i=0;i<scores.length;i++) {
+            if (scores[i] >= minimum) {
+              list.add(constructions[i]);
+            } else {
+              if (constructions[i] instanceof Ship && freeSlot < 3) {
+                list.add(constructions[i]);
+              } else if (constructions[i].getName().equals(ConstructionFactory.MECHION_CITIZEN)
+                  && freeSlot < 3 && planet.getTotalPopulation() <20) {
+                list.add(constructions[i]);
+              }
+            }
+          }
+          int rand = DiceGenerator.getRandom(list.size()-1);
+          planet.setUnderConstruction(list.get(rand));
+          constructionSelected = true;
+
+        }
+      }
+      if (!constructionSelected) {
         // Nothing to select to let's select culture or credit
         int i = getConstruction(ConstructionFactory.EXTRA_CREDIT, constructions);
         int j = getConstruction(ConstructionFactory.EXTRA_CULTURE, constructions);
@@ -159,6 +230,109 @@ public class PlanetHandling {
         }  
       }
     }
+  }
+  
+  /**
+   * Calculate scores for each construction. Each score is between -1 and 1000
+   * @param constructions
+   * @param planet
+   * @param info
+   * @return
+   */
+  private static int[] scoreConstructions(Construction[] constructions, 
+      Planet planet, PlayerInfo info) {
+    int[] scores = new int[constructions.length];
+    for (int i=0;i<constructions.length;i++) {
+      scores[i] = -1;
+      if (constructions[i].getName().equals(ConstructionFactory.MECHION_CITIZEN)) {
+        scores[i] = planet.getAmountMetalInGround()/100 -10*planet.getTotalPopulation();
+        if (scores[i] < 30) {
+          scores[i] = 30;
+        }
+        // Does not take a planet space
+        scores[i] = scores[i]+20;
+
+      }
+      if (constructions[i] instanceof Building) {
+        Building building = (Building) constructions[i];
+        // Military score
+        scores[i] = building.getBattleBonus()+building.getDefenseDamage()*15;
+        scores[i] = scores[i]+building.getScanRange()*10+building.getScanCloakingDetection()/4;
+        if (info.getRace() == SpaceRace.SPORKS && building.getType() == BuildingType.MILITARY) {
+          scores[i] = scores[i] +15;
+        }
+
+        // Production score
+        scores[i] = scores[i]+building.getFactBonus()*60;
+        scores[i] = scores[i]+building.getMineBonus()*planet.getAmountMetalInGround()/120;
+        if (info.getRace() == SpaceRace.CENTAURS) {
+          scores[i] = scores[i]+building.getFarmBonus()*50;
+        } else if (info.getRace() != SpaceRace.MECHIONS) {
+          scores[i] = scores[i]+building.getFarmBonus()*40;
+        } else {
+          scores[i] = scores[i]-building.getFarmBonus()*40;
+        }
+        if (info.getRace() == SpaceRace.MECHIONS) {
+          scores[i] = scores[i]+building.getReseBonus()*80;
+          scores[i] = scores[i]+building.getCultBonus()*60;
+        } else {
+          scores[i] = scores[i]+building.getReseBonus()*60;
+          scores[i] = scores[i]+building.getCultBonus()*40;
+        }
+        scores[i] = scores[i]+building.getCredBonus()*50;
+        scores[i] = scores[i]+building.getRecycleBonus();
+        
+        scores[i] = scores[i]-(int) Math.round(building.getMaintenanceCost()*10);
+        // High cost drops the value
+        scores[i] = scores[i]-building.getMetalCost()/10;
+        scores[i] = scores[i]-building.getProdCost()/10;
+
+        if (info.getRace() == SpaceRace.GREYANS && building.getType() == BuildingType.RESEARCH) {
+          scores[i] = scores[i] +15;
+        }
+
+        if (info.getRace() == SpaceRace.MECHIONS && building.getType() == BuildingType.FARM) {
+          // Mechions do not build farms
+          scores[i] = -1;
+        }
+
+        if (planet.exceedRadiation()) {
+          if (building.getName().equals("Radiation dampener") ||
+              building.getName().equals("Radiation well")) {
+            // Radiation level is high so these are in high priority
+            scores[i] = 1000;
+          }
+        } else {
+          if (building.getName().equals("Radiation dampener") ||
+              building.getName().equals("Radiation well")) {
+            // Radiation level is not high so never building these
+            scores[i] = -1;
+          }
+
+        }
+        
+      }
+      if (constructions[i] instanceof Ship) {
+        Ship ship = (Ship) constructions[i];
+        // Does not take a planet space
+        scores[i] = 20;
+        scores[i] = scores[i]+ship.getTotalMilitaryPower()*2;
+        // High cost drops the value
+        scores[i] = scores[i]-ship.getMetalCost()/10;
+        scores[i] = scores[i]-ship.getProdCost()/10;
+      }
+
+      
+      // Sanitize score
+      if (scores[i] > 1000) {
+        scores[i] = 1000;
+      }
+      if (scores[i] < -1) {
+        scores[i] = -1;
+      }
+
+    }
+    return scores;
   }
   
   /**

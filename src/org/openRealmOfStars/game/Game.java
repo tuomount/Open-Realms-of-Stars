@@ -412,7 +412,7 @@ public class Game extends JFrame implements ActionListener {
    * Focus on active message
    * @param mapOnly focus only message which move map
    */
-  private void focusOnMessage(boolean mapOnly) {
+  public void focusOnMessage(boolean mapOnly) {
     Message msg = players.getCurrentPlayerInfo().getMsgList().getMsg();
     if (msg.getType() == MessageType.RESEARCH && !mapOnly) {
       changeGameState(GameState.RESEARCHVIEW, msg);

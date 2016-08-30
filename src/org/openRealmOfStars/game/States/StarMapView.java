@@ -238,6 +238,19 @@ public class StarMapView extends BlackPanel {
   }
 
   /**
+   * Update message panel
+   */
+  public void updateMessagePanel() {
+    Message msg = players.getCurrentPlayerInfo().getMsgList().getMsg();
+    if (msg.getX() != -1 && msg.getY() != -1) {
+      map.setCursorPos(msg.getX(), msg.getY());
+      map.setDrawPos(msg.getX(), msg.getY());
+    }
+    msgPanel.updatePanel(msg, 
+        players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
+        players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
+  }
+  /**
    * Handle actions for Star Map view
    * @param arg0 Action Event
    */
@@ -276,12 +289,20 @@ public class StarMapView extends BlackPanel {
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_MSG)) {
       Message msg = players.getCurrentPlayerInfo().getMsgList().getPrevMessage();
+      if (msg.getX() != -1 && msg.getY() != -1) {
+        map.setCursorPos(msg.getX(), msg.getY());
+        map.setDrawPos(msg.getX(), msg.getY());
+      }
       msgPanel.updatePanel(msg, 
           players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
           players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_MSG)) {
       Message msg = players.getCurrentPlayerInfo().getMsgList().getNextMessage();
+      if (msg.getX() != -1 && msg.getY() != -1) {
+        map.setCursorPos(msg.getX(), msg.getY());
+        map.setDrawPos(msg.getX(), msg.getY());
+      }
       msgPanel.updatePanel(msg, 
           players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
           players.getCurrentPlayerInfo().getMsgList().getMaxMsg());

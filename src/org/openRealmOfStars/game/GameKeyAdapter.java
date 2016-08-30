@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 
@@ -47,8 +48,27 @@ public class GameKeyAdapter implements KeyEventDispatcher {
        game.changeGameState(GameState.MAIN_MENU);
        return true;
      }
+     if (arg0.getKeyCode() == KeyEvent.VK_SPACE &&
+         arg0.getID() == KeyEvent.KEY_PRESSED) {
+       Message msg = game.getStarMap().getCurrentPlayerInfo().getMsgList().getMsg();
+       if (msg.getX() != -1 && msg.getY() != -1) {
+         if (game.getStarMap().getCursorX()==msg.getX() && 
+             game.getStarMap().getCursorY() == msg.getY()) {
+           game.getStarMap().getCurrentPlayerInfo().getMsgList().getNextMessage();
+         }
+       } else {
+         game.getStarMap().getCurrentPlayerInfo().getMsgList().getNextMessage();
+       }
+       game.starMapView.updateMessagePanel();
+       game.focusOnMessage(true);
+       return true;
+     }
+     if (arg0.getKeyCode() == KeyEvent.VK_P &&
+         arg0.getID() == KeyEvent.KEY_PRESSED) {
+        game.getStarMap().nextPlayer();
+        return true;
+      }
      //FIXME: NUMPAD Move is missing
-     //FIXME: Collision detection is missing
      if (arg0.getKeyCode() == KeyEvent.VK_LEFT &&
          arg0.getID() == KeyEvent.KEY_PRESSED &&
          game.starMapView.readyToMove) {

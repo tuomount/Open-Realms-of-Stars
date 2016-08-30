@@ -989,6 +989,19 @@ public class StarMap {
   }
   
   /**
+   * Change to next player
+   */
+  public void nextPlayer() {
+    if (players != null) {
+      if (players.getCurrentPlayer()+1 == players.getCurrentMaxPlayers()) {
+        players.setCurrentPlayer(0);
+      } else {
+        players.setCurrentPlayer(players.getCurrentPlayer()+1);
+      }
+    }
+  }
+
+  /**
    * Get tile info from coordinate
    * @param x
    * @param y

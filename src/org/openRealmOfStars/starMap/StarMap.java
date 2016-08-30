@@ -570,12 +570,41 @@ public class StarMap {
     for (int i=0;i<players.getCurrentMaxPlayers();i++) {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null && !info.isHuman()) {
+        // Handle reasearch
         Research.handle(info);
         for (int j=0;j<planetList.size();j++) {
+          // Handle planets
           Planet planet = planetList.get(j);
           if (planet.getPlanetPlayerInfo() == info) {
             PlanetHandling.handlePlanet(this, planet, i);
           }
+        }
+        boolean allFleetsHandled=false;
+        Fleet fleet = info.Fleets().getFirst();
+        while(!allFleetsHandled) {
+          // Handle fleet
+          
+          
+          for (int j=0;j<info.Fleets().getNumberOfFleets();j++) {
+            // Merge fleets in same space
+            Fleet mergeFleet = info.Fleets().getByIndex(j);
+            if (mergeFleet != fleet && mergeFleet.getX() == fleet.getX() &&
+                mergeFleet.getY() == fleet.getY()) {
+              for (int k=0;k<mergeFleet.getNumberOfShip();k++) {
+                Ship ship = mergeFleet.getShipByIndex(k);
+                if (ship != null) {
+                  fleet.addShip(ship);
+                }
+              }
+              info.Fleets().remove(j);
+              break;
+            }
+          }
+          fleet = info.Fleets().getNext();
+          if (info.Fleets().getIndex()==0) {
+            allFleetsHandled = true;
+          }
+
         }
       }
     }

@@ -499,7 +499,21 @@ public class Ship extends Construction {
     }
     return false;
   }
-  
+
+  /**
+   * Is Ship has colony module
+   * @return True if ship has colony module, otherwise false
+   */
+  public boolean isColonyModule() {
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType()==ShipComponentType.COLONY_MODULE) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /**
    * Get Ships damage level as color
    * @return one of these:

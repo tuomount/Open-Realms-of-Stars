@@ -89,6 +89,18 @@ public class FleetList {
     }
     return null;
   }
+
+  /**
+   * Get first fleet
+   * @return Fleet or null if no fleets
+   */
+  public Fleet getFirst() {
+    if (fleetList.size() > 0) {
+      index=0;
+      return fleetList.get(index);
+    }
+    return null;
+  }
   
   /**
    * Get previous fleet from the list
@@ -169,6 +181,13 @@ public class FleetList {
     return -1;
   }
 
+  public int getIndex() {
+    return index;
+  }
+  
+  /**
+   * Remove fleet from the list. This should be called after each remove.
+   */
   public void recalculateList() {
     for (int i=0;i<fleetList.size();i++) {
       Fleet fleet = fleetList.get(i);

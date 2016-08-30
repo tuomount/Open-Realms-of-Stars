@@ -337,6 +337,10 @@ public class PlanetHandling {
         // High cost drops the value
         scores[i] = scores[i]-ship.getMetalCost()/10;
         scores[i] = scores[i]-ship.getProdCost()/10;
+        if (ship.isColonyModule()) {
+          // Colony ship should be built only on request
+          scores[i] = -1;
+        }
       }
 
       

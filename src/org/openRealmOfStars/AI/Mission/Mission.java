@@ -110,6 +110,20 @@ public class Mission {
   public int getY() {
     return y;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(getType().toString());
+    sb.append(" - ");
+    sb.append(getPhase().toString());
+    sb.append("\nPlanet:");
+    sb.append(getPlanetBuilding());
+    sb.append("\nFleet:");
+    sb.append(getFleetName());
+    return sb.toString();
+  }
+  
   
   
 }

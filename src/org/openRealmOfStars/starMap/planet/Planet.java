@@ -3,6 +3,9 @@ package org.openRealmOfStars.starMap.planet;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionPhase;
+import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.TileNames;
@@ -999,6 +1002,17 @@ public class Planet {
             }
             Fleet fleet = new Fleet(ship, getX(), getY());
             planetOwnerInfo.Fleets().add(fleet);
+            Mission mission = planetOwnerInfo.getMissions().getMissionForPlanet(getName(), MissionPhase.BUILDING);
+            if (mission != null) {
+              fleet.setName(mission.getFleetName()+"#"+planetOwnerInfo.Fleets().
+                  howManyFleetWithStartingNames(mission.getFleetName()));
+              if (mission.getType() == MissionType.DEFEND) {
+                // For now one ship is enough for defend
+                mission.setPhase(MissionPhase.EXECUTING);
+              } else {
+                mission.setPhase(MissionPhase.TREKKING);
+              }
+            }
             msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(), 
                 Icons.getIconByName(Icons.ICON_HULL_TECH));
             msg.setCoordinate(getX(), getY());

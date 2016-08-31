@@ -2,6 +2,7 @@ package org.openRealmOfStars.player;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.AI.Mission.MissionList;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.ShipDesign;
@@ -99,6 +100,12 @@ public class PlayerInfo {
    * Human player if true
    */
   private boolean human;
+  
+  /**
+   * Missions list
+   */
+  private MissionList missions;
+  
 
   /**
    * Uncharted map sector, only suns are visible
@@ -118,7 +125,7 @@ public class PlayerInfo {
     this.msgList = new MessageList();
     shipStatList = new ArrayList<>();
     fleets = new FleetList();
-    human = false;
+    setHuman(false);
     setRace(race);
     switch (getRace()) {
     case HUMAN:
@@ -457,6 +464,21 @@ public class PlayerInfo {
 
   public void setHuman(boolean human) {
     this.human = human;
+    if (this.human) {
+      missions = null;
+    } else {
+      missions = new MissionList();
+    }
   }
+
+  
+  /**
+   * Get missions list. This is non null only for AI players
+   * @return Mission list
+   */
+  public MissionList getMissions() {
+    return missions;
+  }
+
   
 }

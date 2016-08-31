@@ -550,6 +550,7 @@ public class StarMap {
   }
 
   /**
+   * Which turn is now going on?
    * @return the turn
    */
   public int getTurn() {
@@ -583,7 +584,6 @@ public class StarMap {
         Fleet fleet = info.Fleets().getFirst();
         while(!allFleetsHandled) {
           // Handle fleet
-          
           
           for (int j=0;j<info.Fleets().getNumberOfFleets();j++) {
             // Merge fleets in same space

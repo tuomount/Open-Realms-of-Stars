@@ -68,6 +68,22 @@ public class FleetList {
   }
   
   /**
+   * How many fleet name with starting same name
+   * @param name
+   * @return number of fleet containing same starting name
+   */
+  public int howManyFleetWithStartingNames(String name) {
+    int fleetNum = 0;
+    for (Fleet ite: fleetList) {
+      // Gets the next fleet number
+      if (ite.getName().startsWith(name)) {
+        fleetNum++;
+      }
+    }
+    return fleetNum;
+  }
+  
+  /**
    * Remove fleet from the list by index
    * @param index to remove
    */

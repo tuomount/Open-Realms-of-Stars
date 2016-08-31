@@ -35,7 +35,12 @@ public enum MissionPhase {
   /**
    * Executing the mission
    */
-  EXECUTING;
+  EXECUTING,
+  /**
+   * Planning the mission, mission is not assigned yet for a planet
+   */
+  PLANNING;
+
   
   
   /**
@@ -47,6 +52,7 @@ public enum MissionPhase {
     case BUILDING: return 0;
     case TREKKING: return 1;
     case EXECUTING: return 2;
+    case PLANNING: return 3;
     }
     return 0;
   }
@@ -61,6 +67,7 @@ public enum MissionPhase {
     case 0: return MissionPhase.BUILDING;
     case 1: return MissionPhase.TREKKING;
     case 2: return MissionPhase.EXECUTING;
+    case 3: return MissionPhase.PLANNING;
     }
     return MissionPhase.BUILDING;
   }
@@ -71,6 +78,7 @@ public enum MissionPhase {
     case BUILDING: return "Building";
     case TREKKING: return "Traveling";
     case EXECUTING: return "Executing";
+    case PLANNING: return "Planning";
     }
     return "Unknown";
   }

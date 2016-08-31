@@ -2,6 +2,9 @@ package org.openRealmOfStars.AI.PlanetHandling;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionPhase;
+import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.message.Message;
@@ -152,6 +155,15 @@ public class PlanetHandling {
           constructionSelected = true;
         }
       }
+      if (map.getTurn() > 20 && !constructionSelected) {
+        Mission mission = info.getMissions().getMissionForPlanet(planet.getName(), MissionType.DEFEND);
+        if (mission == null) {
+          mission = new Mission(MissionType.DEFEND, MissionPhase.PLANNING, planet.getX(), planet.getY());
+          mission.setFleetName("Defender of "+planet.getName());
+          mission.setPlanetBuilding(planet.getName());
+          info.getMissions().add(mission);
+        }
+      }
       if (!constructionSelected) {
         int[] scores = scoreConstructions(constructions,planet, info);
         int highest = -1;
@@ -219,8 +231,19 @@ public class PlanetHandling {
           int total = 0;
           for (int i=0;i<listScore.size();i++) {
             if (rand < total+listScore.get(i).intValue()) {
-              planet.setUnderConstruction(list.get(i));
+              Construction cons = list.get(i);
+              planet.setUnderConstruction(cons);
               constructionSelected = true;
+              if (cons instanceof Ship) {
+                Mission mission = info.getMissions()
+                    .getMissionForPlanet(planet.getName(), MissionType.DEFEND);
+                if (mission != null) {
+                  if (mission.getPhase() == MissionPhase.PLANNING) {
+                    mission.setPhase(MissionPhase.BUILDING);
+                  }
+                }
+
+              }
               break;
             }
             total = total+listScore.get(i).intValue();
@@ -337,6 +360,17 @@ public class PlanetHandling {
         // High cost drops the value
         scores[i] = scores[i]-ship.getMetalCost()/10;
         scores[i] = scores[i]-ship.getProdCost()/10;
+        if (ship.getTotalMilitaryPower() > 0) {
+          Mission mission = info.getMissions().
+              getMissionForPlanet(planet.getName(), MissionType.DEFEND);
+          if (mission != null) {
+            if (mission.getPhase() == MissionPhase.PLANNING) {
+              scores[i] = scores[i]+ship.getTotalMilitaryPower()*2;
+            } else if (mission.getPhase() == MissionPhase.BUILDING) {
+              scores[i] = scores[i]+ship.getTotalMilitaryPower();
+            }
+          }
+        }
         if (ship.isColonyModule()) {
           // Colony ship should be built only on request
           scores[i] = -1;

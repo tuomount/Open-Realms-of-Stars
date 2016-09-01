@@ -658,8 +658,7 @@ public class StarMap {
           if (mission != null) {
             if (mission.getType() == MissionType.EXPLORE) {
               if (mission.getPhase() == MissionPhase.TREKKING && fleet.getRoute() == null) {
-                fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
-                    mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+                // Could not move further
               } 
               if (mission.getPhase() == MissionPhase.EXECUTING) {
                 //FIXME Not done yet

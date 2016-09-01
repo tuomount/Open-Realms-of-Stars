@@ -2,6 +2,7 @@ package org.openRealmOfStars.player.fleet;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -61,6 +62,11 @@ public class Fleet {
    * Route for fleet to move with FLT speed
    */
   private Route route;
+  
+  /**
+   * AStar search for path finding
+   */
+  private AStarSearch aStarSearch;
   
   /**
    * Constructor for fleet
@@ -394,6 +400,14 @@ public class Fleet {
       }
     }
     return false;
+  }
+
+  public AStarSearch getaStarSearch() {
+    return aStarSearch;
+  }
+
+  public void setaStarSearch(AStarSearch aStarSearch) {
+    this.aStarSearch = aStarSearch;
   }
 
 }

@@ -120,6 +120,29 @@ public class AStarSearch {
     routeIndex = -1;
   }
   
+  public AStarSearch(StarMap map, int sx, int sy, int tx, int ty, int radius) {
+    maxX = map.getMaxX();
+    maxY = map.getMaxY();
+    blockMap = new int[maxX][maxY];
+    for (int y=0;y<maxY;y++) {
+      for (int x=0;x<maxX;x++) {
+        if (map.isBlocked(x, y)) {
+          blockMap[x][y] = BLOCKED;
+        } else {
+          blockMap[x][y] = UNBLOCKED;
+        }
+      }
+    }
+    points = new ArrayList<>();
+    this.tx = tx;
+    this.ty = ty;
+    this.targetDistance = (int) Math.round(StarMap.getDistance(sx, sy, tx, ty))-radius;
+    PathPoint point1 = new PathPoint(sx, sy, StarMap.getDistance(sx, sy, tx, ty));
+    points.add(point1);
+    blockMap[point1.getX()][point1.getY()] = 0;
+    targetPoint = null;
+    routeIndex = -1;
+  }
   /**
    * Is coordinate valid position on map
    * @param x X Coordinate

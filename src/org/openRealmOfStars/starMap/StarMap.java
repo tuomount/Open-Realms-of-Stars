@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.AI.PathFinding.AStarSearch;
+import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.AI.PlanetHandling.PlanetHandling;
 import org.openRealmOfStars.AI.Research.Research;
 import org.openRealmOfStars.gui.icons.Icons;
@@ -658,7 +660,43 @@ public class StarMap {
           if (mission != null) {
             if (mission.getType() == MissionType.EXPLORE) {
               if (mission.getPhase() == MissionPhase.TREKKING && fleet.getRoute() == null) {
-                // Could not move further
+                Sun sun = locateSolarSystem(fleet.getX(), fleet.getY());
+                if (sun != null && sun.getName() == mission.getSunName()) {
+                  mission.setPhase(MissionPhase.EXECUTING);
+                } else if (fleet.getaStarSearch() == null) {
+                  AStarSearch search = new AStarSearch(this, fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
+                  search.doSearch();
+                  search.doRoute();
+                  fleet.setaStarSearch(search);
+                  for (int mv = 0;mv<fleet.movesLeft;mv++) {
+                    PathPoint point = search.getMove();
+                    if (!isBlocked(point.getX(), point.getY())) {
+                      //   Not blocked so fleet is moving
+                      fleet.setPos(point.getX(), point.getY());
+                      search.nextMove();
+                    }
+                  }
+                  fleet.movesLeft = 0;
+                  if (search.isLastMove()) {
+                    fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
+                        mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+                  }
+                } else {
+                  AStarSearch search = fleet.getaStarSearch();
+                  for (int mv = 0;mv<fleet.movesLeft;mv++) {
+                    PathPoint point = search.getMove();
+                    if (!isBlocked(point.getX(), point.getY())) {
+                    //   Not blocked so fleet is moving
+                      fleet.setPos(point.getX(), point.getY());
+                      search.nextMove();
+                    }
+                  }
+                  fleet.movesLeft = 0;
+                  if (search.isLastMove()) {
+                    fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
+                        mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+                  }
+                }
               } 
               if (mission.getPhase() == MissionPhase.EXECUTING) {
                 //FIXME Not done yet
@@ -671,6 +709,7 @@ public class StarMap {
               mission = new Mission(MissionType.EXPLORE, 
                   MissionPhase.TREKKING, sun.getCenterX(), sun.getCenterY());
               mission.setFleetName(fleet.getName());
+              mission.setSunName(sun.getName());
               info.getMissions().add(mission);
               fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
                   mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));

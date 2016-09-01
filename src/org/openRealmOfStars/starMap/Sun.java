@@ -80,4 +80,17 @@ public class Sun {
   public void setCenterY(int centerY) {
     this.centerY = centerY;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(name);
+    sb.append(" X:");
+    sb.append(centerX);
+    sb.append(" Y:");
+    sb.append(centerY);
+    return sb.toString();
+  }
+  
+  
 }

@@ -52,6 +52,11 @@ public class Mission {
    * Planet name which is building the ship
    */
   private String planetBuilding;
+  
+  /**
+   * Solar system name where to go to explore
+   */
+  private String sunName;
 
   /**
    * Create new mission for AI
@@ -121,7 +126,17 @@ public class Mission {
     sb.append(getPlanetBuilding());
     sb.append("\nFleet:");
     sb.append(getFleetName());
+    sb.append("\nSolar:");
+    sb.append(getSunName());
     return sb.toString();
+  }
+
+  public String getSunName() {
+    return sunName;
+  }
+
+  public void setSunName(String sunName) {
+    this.sunName = sunName;
   }
   
   

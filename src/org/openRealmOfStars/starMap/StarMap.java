@@ -2,6 +2,9 @@ package org.openRealmOfStars.starMap;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionPhase;
+import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.AI.PlanetHandling.PlanetHandling;
 import org.openRealmOfStars.AI.Research.Research;
 import org.openRealmOfStars.gui.icons.Icons;
@@ -317,18 +320,25 @@ public class StarMap {
               planet.setWorkers(Planet.CULTURE_ARTIST, 0);
             }
             ShipStat[] stats = playerInfo.getShipStatList();
+            int count=0;
             for (ShipStat stat : stats) {
               Ship ship = new Ship(stat.getDesign());
               stat.setNumberOfBuilt(stat.getNumberOfBuilt()+1);
               stat.setNumberOfInUse(stat.getNumberOfInUse()+1);
               Fleet fleet = new Fleet(ship, planet.getX(), planet.getY());
               playerInfo.Fleets().add(fleet);
+              if (ship.isColonyModule()) {
+                fleet.setName("Colony #"+count);
+              } else {
+                fleet.setName("Scout #"+count);
+              }
               msg = new Message(MessageType.FLEET,
                   fleet.getName()+" is waiting for orders.",
                   Icons.getIconByName(Icons.ICON_HULL_TECH));
               msg.setCoordinate(planet.getX(),planet.getY());
               msg.setMatchByString(fleet.getName());
               playerInfo.getMsgList().addNewMessage(msg);
+              count++;
             }
             
           }
@@ -375,6 +385,47 @@ public class StarMap {
         }
       }
     }
+  }
+
+  /**
+   * Locate in which solar system coordinate is
+   * @param x coordinate
+   * @param y coordinate
+   * @return Sun or null if not in any solar system
+   */
+  public Sun locateSolarSystem(int x, int y) {
+    for (Sun sun:sunList) {
+      if (x >= sun.getCenterX()-SOLARSYSTEMWIDTH && x <= sun.getCenterX()+SOLARSYSTEMWIDTH
+          && y >= sun.getCenterY()-SOLARSYSTEMWIDTH && y <= sun.getCenterY()+SOLARSYSTEMWIDTH) {
+        return sun;
+      }
+    }
+    return null;
+  }
+  
+  /**
+   * Get nearest Solar system for coordinate. This should never return null.
+   * Unless there are no suns in galaxy.
+   * @param x coordinate
+   * @param y coordinate
+   * @return Nearest sun
+   */
+  public Sun getNearestSolarSystem(int x, int y) {
+    double distance = 999999;
+    Sun result = null;
+    for (Sun sun:sunList) {
+      if (x >= sun.getCenterX()-SOLARSYSTEMWIDTH && x <= sun.getCenterX()+SOLARSYSTEMWIDTH
+          && y >= sun.getCenterY()-SOLARSYSTEMWIDTH && y <= sun.getCenterY()+SOLARSYSTEMWIDTH) {
+        return sun;
+      }
+      double dist = getDistance(x, y, sun.getCenterX(), sun.getCenterY());
+      if (dist < distance) {
+        distance = dist;
+        result = sun;
+      }
+    }
+    return result;
+
   }
   
   public int getMaxX() {
@@ -571,7 +622,7 @@ public class StarMap {
     for (int i=0;i<players.getCurrentMaxPlayers();i++) {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null && !info.isHuman()) {
-        // Handle reasearch
+        // Handle research
         Research.handle(info);
         for (int j=0;j<planetList.size();j++) {
           // Handle planets
@@ -585,11 +636,13 @@ public class StarMap {
         while(!allFleetsHandled) {
           // Handle fleet
           
+          // Merging fleets
+          String[] part = fleet.getName().split("#");          
           for (int j=0;j<info.Fleets().getNumberOfFleets();j++) {
-            // Merge fleets in same space
+            // Merge fleets in same space with same starting of fleet name
             Fleet mergeFleet = info.Fleets().getByIndex(j);
             if (mergeFleet != fleet && mergeFleet.getX() == fleet.getX() &&
-                mergeFleet.getY() == fleet.getY()) {
+                mergeFleet.getY() == fleet.getY() && mergeFleet.getName().startsWith(part[0])) {
               for (int k=0;k<mergeFleet.getNumberOfShip();k++) {
                 Ship ship = mergeFleet.getShipByIndex(k);
                 if (ship != null) {
@@ -598,6 +651,30 @@ public class StarMap {
               }
               info.Fleets().remove(j);
               break;
+            }
+          }
+          
+          Mission mission = info.getMissions().getMissionForFleet(fleet.getName());
+          if (mission != null) {
+            if (mission.getType() == MissionType.EXPLORE) {
+              if (mission.getPhase() == MissionPhase.TREKKING && fleet.getRoute() == null) {
+                fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
+                    mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+              } 
+              if (mission.getPhase() == MissionPhase.EXECUTING) {
+                //FIXME Not done yet
+              }
+            }
+          } else {
+            // No mission for fleet yet
+            if (fleet.isScoutFleet()) {
+              Sun sun = getNearestSolarSystem(fleet.getX(), fleet.getY());
+              mission = new Mission(MissionType.EXPLORE, 
+                  MissionPhase.TREKKING, sun.getCenterX(), sun.getCenterY());
+              mission.setFleetName(fleet.getName());
+              info.getMissions().add(mission);
+              fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
+                  mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
             }
           }
           fleet = info.Fleets().getNext();

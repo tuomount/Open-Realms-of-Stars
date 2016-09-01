@@ -52,6 +52,20 @@ public class MissionList {
     return null;
   }
 
+  /**
+   * Get mission for fleet name
+   * @param fleetName
+   * @return Mission or null if not found
+   */
+  public Mission getMissionForFleet(String fleetName) {
+    for (Mission mission : missions) {
+      if (mission.getFleetName().equals(fleetName)) {
+        return mission;
+      }
+    }
+    return null;
+  }
+
   
   /**
    * Get mission for planet

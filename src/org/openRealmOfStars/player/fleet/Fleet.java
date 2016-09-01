@@ -3,6 +3,8 @@ package org.openRealmOfStars.player.fleet;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipHullType;
+import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.starMap.Route;
 
 /**
@@ -370,6 +372,28 @@ public class Fleet {
         return;
       }
     }
+  }
+  
+  /**
+   * Is Fleet scouting fleet. Scout fleet contains only one ship,
+   * where hull type is probe or hull is small and contains no colony module
+   * or ship name contains word Scout or Explorer.
+   * @return true if scouting fleet.
+   */
+  public boolean isScoutFleet() {
+    if (ships.size() == 1) {
+      Ship ship = ships.get(0);
+      if (ship.getHull().getHullType()==ShipHullType.PROBE) {
+        return true;
+      }
+      if (ship.getHull().getSize()==ShipSize.SMALL && !ship.isColonyModule()) {
+        return true;
+      }
+      if (ship.getName().contains("Scout") || ship.getName().contains("Explorer")) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }

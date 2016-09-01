@@ -618,6 +618,99 @@ public class StarMap {
   }
   
   /**
+   * Merge fleet with in same space and starting with same fleet names
+   * @param fleet Fleet where to merge
+   * @param info PlayerInfo for both fleets
+   */
+  private void mergeFleets(Fleet fleet, PlayerInfo info) {
+    // Merging fleets
+    String[] part = fleet.getName().split("#");          
+    for (int j=0;j<info.Fleets().getNumberOfFleets();j++) {
+      // Merge fleets in same space with same starting of fleet name
+      Fleet mergeFleet = info.Fleets().getByIndex(j);
+      if (mergeFleet != fleet && mergeFleet.getX() == fleet.getX() &&
+          mergeFleet.getY() == fleet.getY() && mergeFleet.getName().startsWith(part[0])) {
+        for (int k=0;k<mergeFleet.getNumberOfShip();k++) {
+          Ship ship = mergeFleet.getShipByIndex(k);
+          if (ship != null) {
+            fleet.addShip(ship);
+          }
+        }
+        info.Fleets().remove(j);
+        break;
+      }
+    }    
+  }
+
+  /**
+   * Handle missions for AI player and single fleet
+   * @param fleet Fleet for doing the missing
+   * @param info PlayerInfo
+   */
+  private void handleMissions(Fleet fleet, PlayerInfo info) {
+    Mission mission = info.getMissions().getMissionForFleet(fleet.getName());
+    if (mission != null) {
+      if (mission.getType() == MissionType.EXPLORE) {
+        if (mission.getPhase() == MissionPhase.TREKKING && fleet.getRoute() == null) {
+          Sun sun = locateSolarSystem(fleet.getX(), fleet.getY());
+          if (sun != null && sun.getName() == mission.getSunName()) {
+            mission.setPhase(MissionPhase.EXECUTING);
+          } else if (fleet.getaStarSearch() == null) {
+            AStarSearch search = new AStarSearch(this, fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
+            search.doSearch();
+            search.doRoute();
+            fleet.setaStarSearch(search);
+            for (int mv = 0;mv<fleet.movesLeft;mv++) {
+              PathPoint point = search.getMove();
+              if (!isBlocked(point.getX(), point.getY())) {
+                //   Not blocked so fleet is moving
+                fleet.setPos(point.getX(), point.getY());
+                search.nextMove();
+              }
+            }
+            fleet.movesLeft = 0;
+            if (search.isLastMove()) {
+              fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
+                  mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+            }
+          } else {
+            AStarSearch search = fleet.getaStarSearch();
+            for (int mv = 0;mv<fleet.movesLeft;mv++) {
+              PathPoint point = search.getMove();
+              if (!isBlocked(point.getX(), point.getY())) {
+              //   Not blocked so fleet is moving
+                fleet.setPos(point.getX(), point.getY());
+                search.nextMove();
+              }
+            }
+            fleet.movesLeft = 0;
+            if (search.isLastMove()) {
+              fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
+                  mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+            }
+          }
+        } 
+        if (mission.getPhase() == MissionPhase.EXECUTING) {
+          //FIXME Not done yet
+        }
+      }
+    } else {
+      // No mission for fleet yet
+      if (fleet.isScoutFleet()) {
+        Sun sun = getNearestSolarSystem(fleet.getX(), fleet.getY());
+        mission = new Mission(MissionType.EXPLORE, 
+            MissionPhase.TREKKING, sun.getCenterX(), sun.getCenterY());
+        mission.setFleetName(fleet.getName());
+        mission.setSunName(sun.getName());
+        info.getMissions().add(mission);
+        fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
+            mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+      }
+    }
+    
+  }
+  
+  /**
    * Make AI Turns
    */
   public void makeAITurns() {
@@ -638,83 +731,8 @@ public class StarMap {
         while(!allFleetsHandled) {
           // Handle fleet
           
-          // Merging fleets
-          String[] part = fleet.getName().split("#");          
-          for (int j=0;j<info.Fleets().getNumberOfFleets();j++) {
-            // Merge fleets in same space with same starting of fleet name
-            Fleet mergeFleet = info.Fleets().getByIndex(j);
-            if (mergeFleet != fleet && mergeFleet.getX() == fleet.getX() &&
-                mergeFleet.getY() == fleet.getY() && mergeFleet.getName().startsWith(part[0])) {
-              for (int k=0;k<mergeFleet.getNumberOfShip();k++) {
-                Ship ship = mergeFleet.getShipByIndex(k);
-                if (ship != null) {
-                  fleet.addShip(ship);
-                }
-              }
-              info.Fleets().remove(j);
-              break;
-            }
-          }
-          
-          Mission mission = info.getMissions().getMissionForFleet(fleet.getName());
-          if (mission != null) {
-            if (mission.getType() == MissionType.EXPLORE) {
-              if (mission.getPhase() == MissionPhase.TREKKING && fleet.getRoute() == null) {
-                Sun sun = locateSolarSystem(fleet.getX(), fleet.getY());
-                if (sun != null && sun.getName() == mission.getSunName()) {
-                  mission.setPhase(MissionPhase.EXECUTING);
-                } else if (fleet.getaStarSearch() == null) {
-                  AStarSearch search = new AStarSearch(this, fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
-                  search.doSearch();
-                  search.doRoute();
-                  fleet.setaStarSearch(search);
-                  for (int mv = 0;mv<fleet.movesLeft;mv++) {
-                    PathPoint point = search.getMove();
-                    if (!isBlocked(point.getX(), point.getY())) {
-                      //   Not blocked so fleet is moving
-                      fleet.setPos(point.getX(), point.getY());
-                      search.nextMove();
-                    }
-                  }
-                  fleet.movesLeft = 0;
-                  if (search.isLastMove()) {
-                    fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
-                        mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
-                  }
-                } else {
-                  AStarSearch search = fleet.getaStarSearch();
-                  for (int mv = 0;mv<fleet.movesLeft;mv++) {
-                    PathPoint point = search.getMove();
-                    if (!isBlocked(point.getX(), point.getY())) {
-                    //   Not blocked so fleet is moving
-                      fleet.setPos(point.getX(), point.getY());
-                      search.nextMove();
-                    }
-                  }
-                  fleet.movesLeft = 0;
-                  if (search.isLastMove()) {
-                    fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
-                        mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
-                  }
-                }
-              } 
-              if (mission.getPhase() == MissionPhase.EXECUTING) {
-                //FIXME Not done yet
-              }
-            }
-          } else {
-            // No mission for fleet yet
-            if (fleet.isScoutFleet()) {
-              Sun sun = getNearestSolarSystem(fleet.getX(), fleet.getY());
-              mission = new Mission(MissionType.EXPLORE, 
-                  MissionPhase.TREKKING, sun.getCenterX(), sun.getCenterY());
-              mission.setFleetName(fleet.getName());
-              mission.setSunName(sun.getName());
-              info.getMissions().add(mission);
-              fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
-                  mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
-            }
-          }
+          mergeFleets(fleet, info);
+          handleMissions(fleet, info);
           fleet = info.Fleets().getNext();
           if (info.Fleets().getIndex()==0) {
             allFleetsHandled = true;

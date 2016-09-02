@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
@@ -57,6 +58,11 @@ public class AITurnView extends BlackPanel {
    * Reference to the game
    */
   private Game game;
+  
+  /**
+   * Text animation
+   */
+  private int textAnim; 
 
   /**
    * Constructor for main menu
@@ -79,15 +85,34 @@ public class AITurnView extends BlackPanel {
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
     invis.add(Box.createRigidArea(new Dimension(500, 500)));
 
-    TransparentLabel label = new TransparentLabel(invis, "Please wait...");
+    label = new TransparentLabel(invis, "Please wait.....");
+    label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+
     invis.add(label);
     imgBase.add(invis);
     this.add(imgBase,BorderLayout.CENTER);
+    textAnim = 0;
 
+    
   }
   
   public void setText(String text) {
     label.setText(text);
+  }
+  
+  public void updateText() {
+    switch (textAnim) {
+    case 0: setText("Please wait....."); break;
+    case 1: setText("Please wait*...."); break;
+    case 2: setText("Please wait.*..."); break;
+    case 3: setText("Please wait..*.."); break;
+    case 4: setText("Please wait...*."); break;
+    case 5: setText("Please wait....*"); break;
+    }
+    textAnim++;
+    if (textAnim > 5) {
+      textAnim = 0;
+    }
   }
 
   /**
@@ -97,6 +122,7 @@ public class AITurnView extends BlackPanel {
   public void handleActions(ActionEvent arg0) {
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_ANIMATION_TIMER) ) {
+      updateText();
       if (game.getStarMap().getAIFleet() == null) {
         game.getStarMap().handleAIResearchAndPlanets();
       } else {

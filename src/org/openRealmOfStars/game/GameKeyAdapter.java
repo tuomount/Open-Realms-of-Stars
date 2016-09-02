@@ -4,7 +4,6 @@ import java.awt.KeyEventDispatcher;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -77,7 +76,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
          Fleet fleet = game.starMapView.getStarMapMouseListener().getLastClickedFleet();
          int nx = fleet.getX()-1;
          int ny = fleet.getY();
-         fleetMakeMove(fleet,nx,ny);
+         game.fleetMakeMove(fleet,nx,ny);
        } else {
          // Map scrolling
          game.getStarMap().setDrawPos(game.getStarMap().getDrawX()-1,
@@ -94,7 +93,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
          Fleet fleet = game.starMapView.getStarMapMouseListener().getLastClickedFleet(); 
          int nx = fleet.getX()+1;
          int ny = fleet.getY();
-         fleetMakeMove(fleet,nx,ny);
+         game.fleetMakeMove(fleet,nx,ny);
        } else {
          // Map scrolling
          game.getStarMap().setDrawPos(game.getStarMap().getDrawX()+1,
@@ -111,7 +110,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
          Fleet fleet = game.starMapView.getStarMapMouseListener().getLastClickedFleet(); 
          int nx = fleet.getX();
          int ny = fleet.getY()+1;
-         fleetMakeMove(fleet,nx,ny);
+         game.fleetMakeMove(fleet,nx,ny);
        } else {
          // Map scrolling
          game.getStarMap().setDrawPos(game.getStarMap().getDrawX(),
@@ -128,7 +127,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
          Fleet fleet = game.starMapView.getStarMapMouseListener().getLastClickedFleet(); 
          int nx = fleet.getX();
          int ny = fleet.getY()-1;
-         fleetMakeMove(fleet,nx,ny);
+         game.fleetMakeMove(fleet,nx,ny);
          
        } else {
          // Map scrolling
@@ -152,32 +151,6 @@ public class GameKeyAdapter implements KeyEventDispatcher {
     return false;
   }
 
-  /**
-   * Cause Fleet to make a move
-   * @param fleet Fleet to move
-   * @param nx New coordinate x axel
-   * @param ny new coordinate y axel
-   */
-  private void fleetMakeMove(Fleet fleet, int nx, int ny) {
-    if (game.getStarMap().isValidCoordinate(nx, ny) && fleet.movesLeft > 0 
-        && !game.getStarMap().isBlocked(nx, ny)) {
-      Combat combat = game.getStarMap().fightWithFleet(nx, ny, fleet, 
-          game.players.getCurrentPlayerInfo());
-      if (combat != null) {
-        fleet.movesLeft--;
-        game.starMapView.readyToMove = false;
-        game.changeGameState(GameState.COMBAT, combat);
-      } else {
-        fleet.setPos(nx, ny);
-        fleet.movesLeft--;
-        game.getStarMap().doFleetScanUpdate(game.players.getCurrentPlayerInfo(),
-            fleet,null);
-        game.starMapView.updatePanels();
-        game.getStarMap().setDrawPos(fleet.getX(),fleet.getY());
-        game.starMapView.readyToMove = false;
-      }
-    }
-  }
 
   
   /**

@@ -188,6 +188,34 @@ public class Game extends JFrame implements ActionListener {
   }
   
   /**
+   * Cause Fleet to make a move
+   * @param fleet Fleet to move
+   * @param nx New coordinate x axel
+   * @param ny new coordinate y axel
+   */
+  public void fleetMakeMove(Fleet fleet, int nx, int ny) {
+    if (getStarMap().isValidCoordinate(nx, ny) && fleet.movesLeft > 0 
+        && !getStarMap().isBlocked(nx, ny)) {
+      Combat combat = getStarMap().fightWithFleet(nx, ny, fleet, 
+          players.getCurrentPlayerInfo());
+      if (combat != null) {
+        fleet.movesLeft--;
+        starMapView.readyToMove = false;
+        changeGameState(GameState.COMBAT, combat);
+      } else {
+        fleet.setPos(nx, ny);
+        fleet.movesLeft--;
+        getStarMap().doFleetScanUpdate(players.getCurrentPlayerInfo(),
+            fleet,null);
+        starMapView.updatePanels();
+        getStarMap().setDrawPos(fleet.getX(),fleet.getY());
+        starMapView.readyToMove = false;
+      }
+    }
+  }
+
+  
+  /**
    * Show planet view panel
    * @param planet Planet to show
    */

@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
+import org.openRealmOfStars.game.States.AITurnView;
 import org.openRealmOfStars.game.States.BattleView;
 import org.openRealmOfStars.game.States.CreditsView;
 import org.openRealmOfStars.game.States.FleetView;
@@ -112,6 +113,11 @@ public class Game extends JFrame implements ActionListener {
   public MainMenu mainMenu;
 
   /**
+   * AI Turn view
+   */
+  public AITurnView aiTurnView;
+
+  /**
    * Credits for the game
    */
   public CreditsView creditsView;
@@ -212,6 +218,8 @@ public class Game extends JFrame implements ActionListener {
     this.getContentPane().removeAll();
     this.add(starMapView);
     this.validate();
+    starMapView.setAutoFocus(false);
+    focusOnMessage(true);
   }
 
   /**
@@ -283,6 +291,16 @@ public class Game extends JFrame implements ActionListener {
   }
 
   /**
+   * Show AI Turn view
+   */
+  public void showAITurnView() {
+    aiTurnView = new AITurnView(this, this);
+    this.getContentPane().removeAll();
+    this.add(aiTurnView);
+    this.validate();
+  }
+
+  /**
    * Show credits panel
    */
   public void showCredits() {
@@ -325,6 +343,7 @@ public class Game extends JFrame implements ActionListener {
   private void changeGameState(GameState newState, Message focusMessage, Object dataObject) {
     gameState = newState;
     switch (gameState) {
+    case AITURN: showAITurnView(); break;
     case MAIN_MENU: showMainMenu(); break;
     case NEW_GAME: { 
       players = new PlayerList();
@@ -446,7 +465,9 @@ public class Game extends JFrame implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent arg0) {
     if (gameState == GameState.STARMAP && starMapView != null) {
-      if (arg0.getActionCommand().equals(GameCommands.COMMAND_FOCUS_MSG)) {
+      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
+        changeGameState(GameState.AITURN);
+      }else if (arg0.getActionCommand().equals(GameCommands.COMMAND_FOCUS_MSG)) {
         focusOnMessage(false);
       } else if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_TARGET)) {
         if (starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
@@ -485,6 +506,9 @@ public class Game extends JFrame implements ActionListener {
       } else {
         combatView.handleActions(arg0);
       }
+    }
+    if (gameState == GameState.AITURN && aiTurnView != null) {
+      aiTurnView.handleActions(arg0);
     }
     if (gameState == GameState.CREDITS) {
       if (arg0.getActionCommand().equalsIgnoreCase(

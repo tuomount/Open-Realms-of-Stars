@@ -20,7 +20,6 @@ import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.MessagePanel;
-import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
@@ -204,6 +203,12 @@ public class StarMapView extends BlackPanel {
     this.setLayout(new BorderLayout());
     this.add(base,BorderLayout.CENTER);
 
+    Message msg = players.getCurrentPlayerInfo().getMsgList().getMsg();
+    msgPanel.updatePanel(msg, 
+        players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
+        players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
+    setAutoFocus(true);
+
   }
 
   /**
@@ -265,28 +270,6 @@ public class StarMapView extends BlackPanel {
       readyToMove = true;
     }
     // Starmap
-    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
-      map.makeAITurns();
-      map.updateStarMapToNextTurn();
-      endTurnButton.setText("End turn "+map.getTurn());
-      credProd.setText(": "+players.getCurrentPlayerInfo().getTotalCredits()+
-        "("+this.map.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_CREDITS,
-            this.players.getCurrentPlayer())+")");
-      reseProd.setText(": "+this.map.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
-            this.players.getCurrentPlayer()));
-           
-     for (int i=0;i<players.getCurrentMaxPlayers();i++) {
-       PlayerInfo info = players.getPlayerInfoByIndex(i);
-       info.getTechList().updateResearchPointByTurn(map.
-           getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH, i),info);
-     }
-     Message msg = players.getCurrentPlayerInfo().getMsgList().getMsg();
-     msgPanel.updatePanel(msg, 
-         players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
-         players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
-     setAutoFocus(true);
-     // end of end turn
-    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_MSG)) {
       Message msg = players.getCurrentPlayerInfo().getMsgList().getPrevMessage();
       if (msg.getX() != -1 && msg.getY() != -1) {
@@ -317,4 +300,17 @@ public class StarMapView extends BlackPanel {
   public void setAutoFocus(boolean autoFocus) {
     this.autoFocus = autoFocus;
   }
+
+  public SpaceButton getEndTurnButton() {
+    return endTurnButton;
+  }
+
+  public IconLabel getCredProd() {
+    return credProd;
+  }
+
+  public IconLabel getReseProd() {
+    return reseProd;
+  }
+  
 }

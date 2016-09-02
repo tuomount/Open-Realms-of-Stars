@@ -120,6 +120,16 @@ public class StarMap {
    * Fleet tiles on map
    */
   private FleetTileInfo[][] fleetTiles;
+  
+  /**
+   * AI turn number
+   */
+  private int aiTurnNumber;
+  
+  /**
+   * AI fleet for current AI number
+   */
+  private Fleet aiFleet;
   /**
    * Constructor for StarMap. Generates universum with default settings.
    * @param maxXSize
@@ -147,6 +157,8 @@ public class StarMap {
       }
     }
     turn = 0;
+    aiTurnNumber = 0;
+    aiFleet = null;
     // First starting Systems
     int sx = SOLARSYSTEMWIDTH;
     int sy = SOLARSYSTEMWIDTH;
@@ -711,37 +723,76 @@ public class StarMap {
   }
   
   /**
-   * Make AI Turns
+   * Check if all AI players are handled
+   * @return
    */
-  public void makeAITurns() {
-    for (int i=0;i<players.getCurrentMaxPlayers();i++) {
-      PlayerInfo info = players.getPlayerInfoByIndex(i);
-      if (info != null && !info.isHuman()) {
-        // Handle research
-        Research.handle(info);
-        for (int j=0;j<planetList.size();j++) {
-          // Handle planets
-          Planet planet = planetList.get(j);
-          if (planet.getPlanetPlayerInfo() == info) {
-            PlanetHandling.handlePlanet(this, planet, i);
-          }
-        }
-        boolean allFleetsHandled=false;
-        Fleet fleet = info.Fleets().getFirst();
-        while(!allFleetsHandled) {
-          // Handle fleet
-          
-          mergeFleets(fleet, info);
-          handleMissions(fleet, info);
-          fleet = info.Fleets().getNext();
-          if (info.Fleets().getIndex()==0) {
-            allFleetsHandled = true;
-          }
-
+  public boolean isAllAIsHandled() {
+    if (aiTurnNumber == players.getCurrentMaxPlayers()) {
+      return true;
+    }
+    return false;
+  }
+  
+  /**
+   * Reset AI Turn number and fleet
+   */
+  public void clearAITurn() {
+    aiTurnNumber = 0;
+    aiFleet = null;
+  }
+  
+  /**
+   * Handle research and planets for single AI player
+   */
+  public void handleAIResearchAndPlanets() {
+    PlayerInfo info = players.getPlayerInfoByIndex(aiTurnNumber);
+    if (info != null && !info.isHuman()) {
+      // Handle research
+      Research.handle(info);
+      for (int j=0;j<planetList.size();j++) {
+        // Handle planets
+        Planet planet = planetList.get(j);
+        if (planet.getPlanetPlayerInfo() == info) {
+          PlanetHandling.handlePlanet(this, planet, aiTurnNumber);
         }
       }
+      aiFleet = info.Fleets().getFirst();
+    } else {
+      aiTurnNumber++;
     }
   }
+  
+  /**
+   * Get AI Fleet. If non null then handleAIFleet can be called
+   * otherwise HandleAIResearchAndPlanet should be called
+   * @return Fleet or null
+   */
+  public Fleet getAIFleet() {
+    return aiFleet;
+  }
+  
+  /**
+   * Handle single AI Fleet. If fleet was last then increas AI turn number
+   * and set aiFleet to null.
+   */
+  public void handleAIFleet() {
+    PlayerInfo info = players.getPlayerInfoByIndex(aiTurnNumber);
+    if (info != null && !info.isHuman() && aiFleet != null) {
+      // Handle fleet
+      
+      mergeFleets(aiFleet, info);
+      handleMissions(aiFleet, info);
+      aiFleet = info.Fleets().getNext();
+      if (info.Fleets().getIndex()==0) {
+        aiFleet = null;
+        aiTurnNumber++;
+      }
+      
+    }
+
+  }
+  
+  
   
   /**
    * Update whole star map to next turn

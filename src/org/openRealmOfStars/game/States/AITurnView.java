@@ -188,7 +188,7 @@ public class AITurnView extends BlackPanel {
             if (point != null) {
               mission.setTarget(point.getX(), point.getY());
               AStarSearch search = new AStarSearch(game.getStarMap(), 
-                  fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 1);
+                  fleet.getX(), fleet.getY(), mission.getX(), mission.getY());
               search.doSearch();
               search.doRoute();
               fleet.setaStarSearch(search);

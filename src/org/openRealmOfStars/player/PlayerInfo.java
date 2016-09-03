@@ -280,8 +280,8 @@ public class PlayerInfo {
     int[] charted = new int[4];
     int[] sectors = new int[4];
     int sector=0;
-    for (int x=-StarMap.SOLARSYSTEMWIDTH; x <StarMap.SOLARSYSTEMWIDTH+1;x++) {
-      for (int y=-StarMap.SOLARSYSTEMWIDTH; y <StarMap.SOLARSYSTEMWIDTH+1;y++) {
+    for (int x=-StarMap.SOLARSYSTEMWIDTH-2; x <StarMap.SOLARSYSTEMWIDTH+3;x++) {
+      for (int y=-StarMap.SOLARSYSTEMWIDTH-2; y <StarMap.SOLARSYSTEMWIDTH+3;y++) {
         if (x<=0 && y<= 0) {
           sector = 0;
         } else if (x>0 && y<= 0) {
@@ -319,12 +319,12 @@ public class PlayerInfo {
     case 2: { mx = -1; my = 1; break; }
     case 3: { mx = 1; my = 1; break; }
     }
-    if (value > 25) {
-      int range = scan*2;
-      int amount = StarMap.SOLARSYSTEMWIDTH/range;
+    if (value > 5) {
       int nx = sun.getCenterX();
       int ny = sun.getCenterY();
-      for (int i=0;i<=amount;i++) {
+      nx = nx+mx;
+      ny = ny+my;      
+      for (int i=0;i<StarMap.SOLARSYSTEMWIDTH+2;i++) {
         nx = nx+mx;
         ny = ny+my;
         if (isValidCoordinate(nx, ny)) {

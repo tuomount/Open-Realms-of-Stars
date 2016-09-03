@@ -120,6 +120,16 @@ public class AStarSearch {
     routeIndex = -1;
   }
   
+  /**
+   * Initialize A Star Search for star map to find a route over
+   * some obstacle.
+   * @param map StarMap
+   * @param sx Starting point X coordinate
+   * @param sy Starting point Y coordinate
+   * @param tx Target X coordinate
+   * @param ty Target Y coordinate
+   * @param radius What is the search radius 
+   */
   public AStarSearch(StarMap map, int sx, int sy, int tx, int ty, int radius) {
     maxX = map.getMaxX();
     maxY = map.getMaxY();
@@ -143,6 +153,39 @@ public class AStarSearch {
     targetPoint = null;
     routeIndex = -1;
   }
+
+  /**
+   * Initialize A Star Search for star map to find a route to target point
+   * @param map StarMap
+   * @param sx Starting point X coordinate
+   * @param sy Starting point Y coordinate
+   * @param tx Target X coordinate
+   * @param ty Target Y coordinate
+   */
+  public AStarSearch(StarMap map, int sx, int sy, int tx, int ty) {
+    maxX = map.getMaxX();
+    maxY = map.getMaxY();
+    blockMap = new int[maxX][maxY];
+    for (int y=0;y<maxY;y++) {
+      for (int x=0;x<maxX;x++) {
+        if (map.isBlocked(x, y)) {
+          blockMap[x][y] = BLOCKED;
+        } else {
+          blockMap[x][y] = UNBLOCKED;
+        }
+      }
+    }
+    points = new ArrayList<>();
+    this.tx = tx;
+    this.ty = ty;
+    this.targetDistance = 0;
+    PathPoint point1 = new PathPoint(sx, sy, StarMap.getDistance(sx, sy, tx, ty));
+    points.add(point1);
+    blockMap[point1.getX()][point1.getY()] = 0;
+    targetPoint = null;
+    routeIndex = -1;
+  }
+
   /**
    * Is coordinate valid position on map
    * @param x X Coordinate

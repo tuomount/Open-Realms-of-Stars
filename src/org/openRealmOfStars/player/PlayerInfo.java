@@ -327,10 +327,24 @@ public class PlayerInfo {
       for (int i=0;i<StarMap.SOLARSYSTEMWIDTH+2;i++) {
         nx = nx+mx;
         ny = ny+my;
-        if (isValidCoordinate(nx, ny)) {
+        if (isValidCoordinate(nx, ny) && i>=scan) {
           if (mapData[nx][ny]==UNCHARTED) {
             result = new PathPoint(nx, ny, StarMap.getDistance(fleet.getX(), fleet.getY(),
                 nx, ny));
+            break;
+          }
+        }
+        if (result == null  && isValidCoordinate(sun.getCenterX(), ny) && i>=scan) {
+          if (mapData[sun.getCenterX()][ny]==UNCHARTED) {
+            result = new PathPoint(sun.getCenterX(), ny, StarMap.getDistance(
+                fleet.getX(), fleet.getY(),sun.getCenterX(), ny));
+            break;
+          }
+        }
+        if (result == null  && isValidCoordinate(nx, sun.getCenterY()) && i>=scan) {
+          if (mapData[nx][sun.getCenterY()]==UNCHARTED) {
+            result = new PathPoint(nx, sun.getCenterY(), StarMap.getDistance(
+                fleet.getX(), fleet.getY(),nx, sun.getCenterY()));
             break;
           }
         }

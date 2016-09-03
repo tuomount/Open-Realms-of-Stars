@@ -587,6 +587,10 @@ public class StarMap {
     }
     return null;
   }
+  
+  public ArrayList<Planet> getPlanetList() {
+    return planetList;
+  }
 
   /**
    * Fight with two fleets
@@ -692,70 +696,6 @@ public class StarMap {
     this.aiTurnNumber = aiTurnNumber;
   }
   
-  /**
-   * Update whole star map to next turn
-   */
-  public void updateStarMapToNextTurn() {
-    resetCulture();
-    for (int i=0;i<players.getCurrentMaxPlayers();i++) {
-      PlayerInfo info = players.getPlayerInfoByIndex(i);
-      if (info != null) {
-        info.resetVisibilityDataAfterTurn();
-        info.getMsgList().clearMessages();
-        for (int j = 0;j<info.Fleets().getNumberOfFleets();j++) {
-          Fleet fleet = info.Fleets().getByIndex(j);
-          if (fleet.getRoute() != null) {
-            fleet.getRoute().makeNextMove();
-            if (!isBlocked(fleet.getRoute().getX(), fleet.getRoute().getY())) {
-              // Not blocked so fleet is moving
-              fleet.setPos(fleet.getRoute().getX(), fleet.getRoute().getY());
-              if (fleet.getRoute().isEndReached()) {
-                // End is reached giving a message
-                fleet.setRoute(null);
-                Message msg = new Message(MessageType.FLEET,
-                  fleet.getName()+" has reached it's target and waiting for orders.",
-                  Icons.getIconByName(Icons.ICON_HULL_TECH));
-                msg.setMatchByString(fleet.getName());
-                msg.setCoordinate(fleet.getX(), fleet.getY());
-                info.getMsgList().addNewMessage(msg);
-              }
-            } else {
-              // Movement was blocked, giving a message
-              fleet.setRoute(null);
-              Message msg = new Message(MessageType.FLEET,
-                fleet.getName()+" has encouter obstacle and waiting for more orders.",
-                Icons.getIconByName(Icons.ICON_HULL_TECH));
-              msg.setMatchByString(fleet.getName());
-              msg.setCoordinate(fleet.getX(), fleet.getY());
-              info.getMsgList().addNewMessage(msg);
-            }
-          } else {
-            Message msg = new Message(MessageType.FLEET,
-                fleet.getName()+" is waiting for orders.",
-                Icons.getIconByName(Icons.ICON_HULL_TECH));
-            msg.setMatchByString(fleet.getName());
-            msg.setCoordinate(fleet.getX(), fleet.getY());
-            info.getMsgList().addNewMessage(msg);
-          }
-          fleet.movesLeft = fleet.getFleetSpeed();
-          doFleetScanUpdate(info, fleet,null);
-        }
-      }
-    }
-    for (int i=0;i<planetList.size();i++) {
-      Planet planet = planetList.get(i);
-      if (planet.getPlanetPlayerInfo() != null) {
-        PlayerInfo info = planet.getPlanetPlayerInfo();
-        planet.updateOneTurn();
-        int index =players.getIndex(info);
-        if (index > -1) {
-          calculateCulture(planet.getX(), planet.getY(), planet.getCulture(), index);
-        }
-        doFleetScanUpdate(info, null,planet);
-      }
-    }
-    turn=turn+1;
-  }
   
   /**
    * Do Fleet/Planet scan Update for starmap. Fleet or planet can be null
@@ -824,7 +764,7 @@ public class StarMap {
    * @param value Culture value
    * @param index Player index
    */
-  private void calculateCulture(int cx, int cy, int value, int index) {
+  public void calculateCulture(int cx, int cy, int value, int index) {
     String mask = null;
     if (value < 5) {
       //           765432101234567
@@ -1000,7 +940,7 @@ public class StarMap {
   /**
    * Reset culture information for whole map
    */
-  private void resetCulture() {
+  public void resetCulture() {
     for (int i=0;i<maxX;i++) {
       for (int j=0;j<maxY;j++) {
         culture[i][j].reset();

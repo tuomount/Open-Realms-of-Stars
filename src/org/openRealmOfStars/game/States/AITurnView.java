@@ -17,12 +17,15 @@ import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.GameState;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.Sun;
@@ -134,11 +137,15 @@ public class AITurnView extends BlackPanel {
     if (mission != null) {
       if (mission.getType() == MissionType.EXPLORE) {
         if (mission.getPhase() == MissionPhase.TREKKING && fleet.getRoute() == null) {
+          // Fleet has encounter obstacle, taking a detour round it
           Sun sun = game.getStarMap().locateSolarSystem(fleet.getX(), fleet.getY());
           if (sun != null && sun.getName() == mission.getSunName()) {
+            // Fleet is in correct solar system, starting explore execution mode
             mission.setPhase(MissionPhase.EXECUTING);
           } else if (fleet.getaStarSearch() == null) {
-            AStarSearch search = new AStarSearch(game.getStarMap(), fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
+            // No A star search made yet, so let's do it
+            AStarSearch search = new AStarSearch(game.getStarMap(), 
+                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
             search.doSearch();
             search.doRoute();
             fleet.setaStarSearch(search);
@@ -146,7 +153,7 @@ public class AITurnView extends BlackPanel {
               PathPoint point = search.getMove();
               if (!game.getStarMap().isBlocked(point.getX(), point.getY())) {
                 //   Not blocked so fleet is moving
-                fleet.setPos(point.getX(), point.getY());
+                game.fleetMakeMove(info, fleet, point.getX(), point.getY());
                 search.nextMove();
               }
             }
@@ -161,7 +168,7 @@ public class AITurnView extends BlackPanel {
               PathPoint point = search.getMove();
               if (!game.getStarMap().isBlocked(point.getX(), point.getY())) {
               //   Not blocked so fleet is moving
-                fleet.setPos(point.getX(), point.getY());
+                game.fleetMakeMove(info, fleet, point.getX(), point.getY());
                 search.nextMove();
               }
             }
@@ -175,11 +182,15 @@ public class AITurnView extends BlackPanel {
         if (mission.getPhase() == MissionPhase.EXECUTING) {
           //FIXME Not done yet
         }
-      }
+      } // End Of Explore
     } else {
       // No mission for fleet yet
       if (fleet.isScoutFleet()) {
-        Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(), fleet.getY());
+        // Scout fleet should go to explore
+        // FIXME: Now selecting nearest Solar system
+        Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(), 
+            fleet.getY());
+        sun = game.getStarMap().locateSolarSystem(5, 5);
         mission = new Mission(MissionType.EXPLORE, 
             MissionPhase.TREKKING, sun.getCenterX(), sun.getCenterY());
         mission.setFleetName(fleet.getName());
@@ -204,7 +215,8 @@ public class AITurnView extends BlackPanel {
       // Merge fleets in same space with same starting of fleet name
       Fleet mergeFleet = info.Fleets().getByIndex(j);
       if (mergeFleet != fleet && mergeFleet.getX() == fleet.getX() &&
-          mergeFleet.getY() == fleet.getY() && mergeFleet.getName().startsWith(part[0])) {
+          mergeFleet.getY() == fleet.getY() && mergeFleet.getName()
+          .startsWith(part[0])) {
         for (int k=0;k<mergeFleet.getNumberOfShip();k++) {
           Ship ship = mergeFleet.getShipByIndex(k);
           if (ship != null) {
@@ -223,7 +235,8 @@ public class AITurnView extends BlackPanel {
    * and set aiFleet to null.
    */
   public void handleAIFleet() {
-    PlayerInfo info = game.players.getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
+    PlayerInfo info = game.players.getPlayerInfoByIndex(game.getStarMap()
+        .getAiTurnNumber());
     if (info != null && !info.isHuman() && game.getStarMap().getAIFleet() != null) {
       // Handle fleet
       
@@ -240,6 +253,74 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
+   * Update whole star map to next turn
+   */
+  public void updateStarMapToNextTurn() {
+    game.getStarMap().resetCulture();
+    for (int i=0;i<game.players.getCurrentMaxPlayers();i++) {
+      PlayerInfo info = game.players.getPlayerInfoByIndex(i);
+      if (info != null) {
+        info.resetVisibilityDataAfterTurn();
+        info.getMsgList().clearMessages();
+        for (int j = 0;j<info.Fleets().getNumberOfFleets();j++) {
+          Fleet fleet = info.Fleets().getByIndex(j);
+          if (fleet.getRoute() != null) {
+            fleet.getRoute().makeNextMove();
+            if (!game.getStarMap().isBlocked(fleet.getRoute().getX(), 
+                fleet.getRoute().getY())) {
+              // Not blocked so fleet is moving
+              game.fleetMakeMove(info, fleet, fleet.getRoute().getX(), fleet.getRoute().getY());
+              if (fleet.getRoute().isEndReached()) {
+                // End is reached giving a message
+                fleet.setRoute(null);
+                Message msg = new Message(MessageType.FLEET,
+                  fleet.getName()+" has reached it's target and waiting for orders.",
+                  Icons.getIconByName(Icons.ICON_HULL_TECH));
+                msg.setMatchByString(fleet.getName());
+                msg.setCoordinate(fleet.getX(), fleet.getY());
+                info.getMsgList().addNewMessage(msg);
+              }
+            } else {
+              // Movement was blocked, giving a message
+              fleet.setRoute(null);
+              Message msg = new Message(MessageType.FLEET,
+                fleet.getName()+" has encouter obstacle and waiting for more orders.",
+                Icons.getIconByName(Icons.ICON_HULL_TECH));
+              msg.setMatchByString(fleet.getName());
+              msg.setCoordinate(fleet.getX(), fleet.getY());
+              info.getMsgList().addNewMessage(msg);
+            }
+          } else {
+            Message msg = new Message(MessageType.FLEET,
+                fleet.getName()+" is waiting for orders.",
+                Icons.getIconByName(Icons.ICON_HULL_TECH));
+            msg.setMatchByString(fleet.getName());
+            msg.setCoordinate(fleet.getX(), fleet.getY());
+            info.getMsgList().addNewMessage(msg);
+          }
+          fleet.movesLeft = fleet.getFleetSpeed();
+          game.getStarMap().doFleetScanUpdate(info, fleet,null);
+        }
+      }
+    }
+    for (int i=0;i<game.getStarMap().getPlanetList().size();i++) {
+      Planet planet = game.getStarMap().getPlanetList().get(i);
+      if (planet.getPlanetPlayerInfo() != null) {
+        PlayerInfo info = planet.getPlanetPlayerInfo();
+        planet.updateOneTurn();
+        int index =game.players.getIndex(info);
+        if (index > -1) {
+          game.getStarMap().calculateCulture(planet.getX(), planet.getY(), 
+              planet.getCulture(), index);
+        }
+        game.getStarMap().doFleetScanUpdate(info, null,planet);
+      }
+    }
+    game.getStarMap().setTurn(game.getStarMap().getTurn()+1);
+  }
+
+  
+  /**
    * Handle actions for AI Turn view
    * Since AI Turn View can be null while handling the all the AI. AI handling
    * variables are stored in StarMap. These variables are AIFleet and AITurnNumber.
@@ -255,7 +336,7 @@ public class AITurnView extends BlackPanel {
         handleAIFleet();
       }
       if (game.getStarMap().isAllAIsHandled()) {
-        game.getStarMap().updateStarMapToNextTurn();
+        updateStarMapToNextTurn();
         for (int i=0;i<game.players.getCurrentMaxPlayers();i++) {
           PlayerInfo info = game.players.getPlayerInfoByIndex(i);
           info.getTechList().updateResearchPointByTurn(game.getStarMap().

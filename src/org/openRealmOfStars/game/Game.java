@@ -189,15 +189,15 @@ public class Game extends JFrame implements ActionListener {
   
   /**
    * Cause Fleet to make a move
+   * @param info Player who owns the fleet
    * @param fleet Fleet to move
    * @param nx New coordinate x axel
    * @param ny new coordinate y axel
    */
-  public void fleetMakeMove(Fleet fleet, int nx, int ny) {
+  public void fleetMakeMove(PlayerInfo info, Fleet fleet, int nx, int ny) {
     if (getStarMap().isValidCoordinate(nx, ny) && fleet.movesLeft > 0 
         && !getStarMap().isBlocked(nx, ny)) {
-      Combat combat = getStarMap().fightWithFleet(nx, ny, fleet, 
-          players.getCurrentPlayerInfo());
+      Combat combat = getStarMap().fightWithFleet(nx, ny, fleet,info);          
       if (combat != null) {
         fleet.movesLeft--;
         starMapView.readyToMove = false;
@@ -205,8 +205,7 @@ public class Game extends JFrame implements ActionListener {
       } else {
         fleet.setPos(nx, ny);
         fleet.movesLeft--;
-        getStarMap().doFleetScanUpdate(players.getCurrentPlayerInfo(),
-            fleet,null);
+        getStarMap().doFleetScanUpdate(info,fleet,null);
         starMapView.updatePanels();
         getStarMap().setDrawPos(fleet.getX(),fleet.getY());
         starMapView.readyToMove = false;

@@ -177,13 +177,19 @@ public class StarMapMouseListener extends MouseAdapter implements
         } else if (planet != null) {
           mapInfoPanel.showPlanet(planet);
           setLastClickedPlanet(planet);
+          setLastClickedFleet(null);
         } else if(fleet != null) {
           mapInfoPanel.showFleet(fleet);
           setLastClickedFleet(fleet);
         } else {
           mapInfoPanel.showEmpty();
           setLastClickedPlanet(null);
-        }
+          setLastClickedFleet(null);
+        } 
+      } else {
+        mapInfoPanel.showEmpty();
+        setLastClickedPlanet(null);
+        setLastClickedFleet(null);
       }
     }
 

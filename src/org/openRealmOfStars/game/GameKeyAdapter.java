@@ -76,7 +76,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
          Fleet fleet = game.starMapView.getStarMapMouseListener().getLastClickedFleet();
          int nx = fleet.getX()-1;
          int ny = fleet.getY();
-         game.fleetMakeMove(fleet,nx,ny);
+         game.fleetMakeMove(game.players.getCurrentPlayerInfo(),fleet,nx,ny);
        } else {
          // Map scrolling
          game.getStarMap().setDrawPos(game.getStarMap().getDrawX()-1,
@@ -93,7 +93,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
          Fleet fleet = game.starMapView.getStarMapMouseListener().getLastClickedFleet(); 
          int nx = fleet.getX()+1;
          int ny = fleet.getY();
-         game.fleetMakeMove(fleet,nx,ny);
+         game.fleetMakeMove(game.players.getCurrentPlayerInfo(),fleet,nx,ny);
        } else {
          // Map scrolling
          game.getStarMap().setDrawPos(game.getStarMap().getDrawX()+1,
@@ -110,7 +110,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
          Fleet fleet = game.starMapView.getStarMapMouseListener().getLastClickedFleet(); 
          int nx = fleet.getX();
          int ny = fleet.getY()+1;
-         game.fleetMakeMove(fleet,nx,ny);
+         game.fleetMakeMove(game.players.getCurrentPlayerInfo(),fleet,nx,ny);
        } else {
          // Map scrolling
          game.getStarMap().setDrawPos(game.getStarMap().getDrawX(),
@@ -127,7 +127,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
          Fleet fleet = game.starMapView.getStarMapMouseListener().getLastClickedFleet(); 
          int nx = fleet.getX();
          int ny = fleet.getY()-1;
-         game.fleetMakeMove(fleet,nx,ny);
+         game.fleetMakeMove(game.players.getCurrentPlayerInfo(),fleet,nx,ny);
          
        } else {
          // Map scrolling

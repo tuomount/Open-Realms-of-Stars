@@ -7,8 +7,6 @@ import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.starMap.StarMap;
 
-import sun.invoke.util.BytecodeName;
-
 /**
  * 
  * Open Realm of Stars game project

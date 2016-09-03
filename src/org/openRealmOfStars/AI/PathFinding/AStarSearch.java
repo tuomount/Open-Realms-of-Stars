@@ -7,6 +7,8 @@ import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.starMap.StarMap;
 
+import sun.invoke.util.BytecodeName;
+
 /**
  * 
  * Open Realm of Stars game project
@@ -207,6 +209,9 @@ public class AStarSearch {
   public boolean doSearch() {
     boolean noMorePoints = false;
     int count = 0;
+    if (blockMap[tx][ty]==BLOCKED && targetDistance==0) {
+      targetDistance = 1;
+    }
     while (!noMorePoints) {
       count++;
       if (points.size() > 0) {
@@ -313,7 +318,7 @@ public class AStarSearch {
    * @return True if last move reached or false if not
    */
   public boolean isLastMove() {
-    if (routeIndex == 0 && targetPoint != null) {
+    if (routeIndex == 0 || targetPoint == null) {
       return true;
     }
     return false;

@@ -71,7 +71,7 @@ public class StarMap {
   /**
    * Solar system width
    */
-  private final static int SOLARSYSTEMWIDTH = 7;
+  public final static int SOLARSYSTEMWIDTH = 7;
   
   /**
    * Cursor X coordinate

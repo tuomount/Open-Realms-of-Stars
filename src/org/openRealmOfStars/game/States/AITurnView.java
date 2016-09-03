@@ -142,6 +142,7 @@ public class AITurnView extends BlackPanel {
           if (sun != null && sun.getName() == mission.getSunName()) {
             // Fleet is in correct solar system, starting explore execution mode
             mission.setPhase(MissionPhase.EXECUTING);
+            fleet.setaStarSearch(null);
           } else if (fleet.getaStarSearch() == null) {
             // No A star search made yet, so let's do it
             AStarSearch search = new AStarSearch(game.getStarMap(), 
@@ -181,6 +182,50 @@ public class AITurnView extends BlackPanel {
         } 
         if (mission.getPhase() == MissionPhase.EXECUTING) {
           //FIXME Not done yet
+          if (fleet.getaStarSearch() == null) {
+            Sun sun = game.getStarMap().locateSolarSystem(fleet.getX(), fleet.getY());
+            PathPoint point = info.getUnchartedSector(sun, fleet);
+            if (point != null) {
+              mission.setTarget(point.getX(), point.getY());
+              AStarSearch search = new AStarSearch(game.getStarMap(), 
+                  fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 1);
+              search.doSearch();
+              search.doRoute();
+              fleet.setaStarSearch(search);
+              for (int mv = 0;mv<fleet.movesLeft;mv++) {
+                point = search.getMove();
+                if (point != null) {
+                  if (!game.getStarMap().isBlocked(point.getX(), point.getY())) {
+                  //   Not blocked so fleet is moving
+                    game.fleetMakeMove(info, fleet, point.getX(), point.getY());
+                    search.nextMove();
+                  }
+                }
+              }
+              fleet.movesLeft = 0;
+              if (search.isLastMove()) {
+                fleet.setaStarSearch(null);
+              }
+            }
+          } else {
+            AStarSearch search = fleet.getaStarSearch();
+            for (int mv = 0;mv<fleet.movesLeft;mv++) {
+              PathPoint point = search.getMove();
+              if (point != null) {
+
+                if (!game.getStarMap().isBlocked(point.getX(), point.getY())) {
+                //   Not blocked so fleet is moving
+                  game.fleetMakeMove(info, fleet, point.getX(), point.getY());
+                  search.nextMove();
+                }
+              }
+            }
+            fleet.movesLeft = 0;
+            if (search.isLastMove()) {
+              fleet.setaStarSearch(null);
+            }
+
+          }
         }
       } // End Of Explore
     } else {
@@ -190,7 +235,6 @@ public class AITurnView extends BlackPanel {
         // FIXME: Now selecting nearest Solar system
         Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(), 
             fleet.getY());
-        sun = game.getStarMap().locateSolarSystem(5, 5);
         mission = new Mission(MissionType.EXPLORE, 
             MissionPhase.TREKKING, sun.getCenterX(), sun.getCenterY());
         mission.setFleetName(fleet.getName());

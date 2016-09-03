@@ -270,7 +270,7 @@ public class AStarSearch {
    * @return True if last move reached or false if not
    */
   public boolean isLastMove() {
-    if (routeIndex == 0) {
+    if (routeIndex == 0 && targetPoint != null) {
       return true;
     }
     return false;

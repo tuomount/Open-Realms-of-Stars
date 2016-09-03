@@ -3,6 +3,8 @@ package org.openRealmOfStars.player;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.AI.Mission.MissionList;
+import org.openRealmOfStars.AI.PathFinding.PathPoint;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.ShipDesign;
@@ -12,6 +14,8 @@ import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.Sun;
 
 /**
  * 
@@ -263,6 +267,91 @@ public class PlayerInfo {
     
   }
   
+  /**
+   * Get best sector to explore in this Solar system
+   * @param sun Solar System
+   * @param fleet Fleet doing the exploring
+   * @return PathPoint where to go next or null if no more exploring
+   */
+  public PathPoint getUnchartedSector(Sun sun, Fleet fleet) {
+    PathPoint result = null;
+    int scan = fleet.getFleetScannerLvl();
+    int[] unCharted = new int[4];
+    int[] charted = new int[4];
+    int[] sectors = new int[4];
+    int sector=0;
+    for (int x=-StarMap.SOLARSYSTEMWIDTH; x <StarMap.SOLARSYSTEMWIDTH+1;x++) {
+      for (int y=-StarMap.SOLARSYSTEMWIDTH; y <StarMap.SOLARSYSTEMWIDTH+1;y++) {
+        if (x<=0 && y<= 0) {
+          sector = 0;
+        } else if (x>0 && y<= 0) {
+          sector = 1;
+        } else if (x<=0 && y> 0) {
+          sector = 2;
+        } else if (x>0 && y> 0) {
+          sector = 3;
+        }
+        if (isValidCoordinate(sun.getCenterX()+x, sun.getCenterY()+y)) {
+          if (mapData[sun.getCenterX()+x][sun.getCenterY()+y]==UNCHARTED) {
+            unCharted[sector]++;
+          } else {
+            charted[sector]++;
+          }
+        }
+      }
+    }
+    for (int i=0;i<sectors.length;i++) {
+      sectors[i] = 100*unCharted[i] /(charted[i]+unCharted[i]);
+    }
+    sector = 0;
+    int value = -1;
+    for (int i=0;i<sectors.length;i++) {
+      if (sectors[i] > value) {
+        sector = i;
+        value = sectors[i];
+      }
+    }
+    int mx = 0;
+    int my = 0;
+    switch (sector) {
+    case 0: { mx = -1; my = -1; break; }
+    case 1: { mx = 1; my = -1; break; }
+    case 2: { mx = -1; my = 1; break; }
+    case 3: { mx = 1; my = 1; break; }
+    }
+    if (value > 25) {
+      int range = scan*2;
+      int amount = StarMap.SOLARSYSTEMWIDTH/range;
+      int nx = sun.getCenterX();
+      int ny = sun.getCenterY();
+      for (int i=0;i<=amount;i++) {
+        nx = nx+mx;
+        ny = ny+my;
+        if (isValidCoordinate(nx, ny)) {
+          if (mapData[nx][ny]==UNCHARTED) {
+            result = new PathPoint(nx, ny, StarMap.getDistance(fleet.getX(), fleet.getY(),
+                nx, ny));
+            break;
+          }
+        }
+      }
+    }
+    return result;
+  }
+  
+  /**
+   * Check if coordinates are valid for this StarMap
+   * @param x X coordinate
+   * @param y y coordinate
+   * @return true if valid and false if invalid
+   */
+  private boolean isValidCoordinate(int x, int y) {
+    if (x >= 0 && y >= 0 && x < maxX && y<maxY ) {
+      return true;
+    }
+    return false;
+  }
+
   /**
    * Init map visibility and cloaking detection maps
    * @param maxX Map size in X axel

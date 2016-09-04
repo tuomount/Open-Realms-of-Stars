@@ -303,51 +303,55 @@ public class PlayerInfo {
     for (int i=0;i<sectors.length;i++) {
       sectors[i] = 100*unCharted[i] /(charted[i]+unCharted[i]);
     }
-    sector = 0;
-    int value = -1;
-    for (int i=0;i<sectors.length;i++) {
-      if (sectors[i] > value) {
-        sector = i;
-        value = sectors[i];
+    for (sector = 0;sector < 3;sector++) {
+      int mx = 0;
+      int my = 0;
+      switch (sector) {
+      case 0: { mx = -1; my = -1; break; }
+      case 1: { mx = 1; my = -1; break; }
+      case 2: { mx = -1; my = 1; break; }
+      case 3: { mx = 1; my = 1; break; }
       }
-    }
-    int mx = 0;
-    int my = 0;
-    switch (sector) {
-    case 0: { mx = -1; my = -1; break; }
-    case 1: { mx = 1; my = -1; break; }
-    case 2: { mx = -1; my = 1; break; }
-    case 3: { mx = 1; my = 1; break; }
-    }
-    if (value > 5) {
-      int nx = sun.getCenterX();
-      int ny = sun.getCenterY();
-      nx = nx+mx;
-      ny = ny+my;      
-      for (int i=0;i<StarMap.SOLARSYSTEMWIDTH+2;i++) {
+      PathPoint temp=null;
+      int oldSector = 0;
+      if (sectors[sector] > 5) {
+        int nx = sun.getCenterX();
+        int ny = sun.getCenterY();
         nx = nx+mx;
-        ny = ny+my;
-        if (isValidCoordinate(nx, ny) && i>=scan) {
-          if (mapData[nx][ny]==UNCHARTED) {
-            result = new PathPoint(nx, ny, StarMap.getDistance(fleet.getX(), fleet.getY(),
-                nx, ny));
-            break;
+        ny = ny+my;      
+        for (int i=0;i<StarMap.SOLARSYSTEMWIDTH+2;i++) {
+          nx = nx+mx;
+          ny = ny+my;
+          double dist = StarMap.getDistance(fleet.getX(), fleet.getY(), nx, ny);
+          if (isValidCoordinate(nx, ny) && i>=scan && dist > 1) {
+            if (mapData[nx][ny]==UNCHARTED) {
+              temp = new PathPoint(nx, ny, dist);
+              break;
+            }
+          }
+          dist = StarMap.getDistance(fleet.getX(), fleet.getY(), sun.getCenterX(), ny);
+          if (temp == null  && isValidCoordinate(sun.getCenterX(), ny) && i>=scan && dist > 1) {
+            if (mapData[sun.getCenterX()][ny]==UNCHARTED) {
+              temp = new PathPoint(sun.getCenterX(), ny, dist);
+              break;
+            }
+          }
+          dist = StarMap.getDistance(fleet.getX(), fleet.getY(), nx, sun.getCenterY());
+          if (temp == null  && isValidCoordinate(nx, sun.getCenterY()) && i>=scan && dist > 1) {
+            if (mapData[nx][sun.getCenterY()]==UNCHARTED) {
+              temp = new PathPoint(nx, sun.getCenterY(), dist);
+              break;
+            }
           }
         }
-        if (result == null  && isValidCoordinate(sun.getCenterX(), ny) && i>=scan) {
-          if (mapData[sun.getCenterX()][ny]==UNCHARTED) {
-            result = new PathPoint(sun.getCenterX(), ny, StarMap.getDistance(
-                fleet.getX(), fleet.getY(),sun.getCenterX(), ny));
-            break;
-          }
-        }
-        if (result == null  && isValidCoordinate(nx, sun.getCenterY()) && i>=scan) {
-          if (mapData[nx][sun.getCenterY()]==UNCHARTED) {
-            result = new PathPoint(nx, sun.getCenterY(), StarMap.getDistance(
-                fleet.getX(), fleet.getY(),nx, sun.getCenterY()));
-            break;
-          }
-        }
+      }
+      if (result == null && temp != null) {
+        result = temp;
+        oldSector = sector;
+      }
+      if (temp != null &&result != null && sectors[sector]>sectors[oldSector]) {
+        result = temp;
+        oldSector = sector;
       }
     }
     return result;

@@ -1012,6 +1012,13 @@ public class Planet {
               } else {
                 mission.setPhase(MissionPhase.TREKKING);
               }
+            } else {
+              // No mission for planet, so just adding defender
+              if (ship.getTotalMilitaryPower() > 0) {
+                String fleetName = "Defender of "+getName();
+                fleet.setName(fleetName+"#"+planetOwnerInfo.Fleets().
+                    howManyFleetWithStartingNames(fleetName));
+              }
             }
             msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(), 
                 Icons.getIconByName(Icons.ICON_HULL_TECH));

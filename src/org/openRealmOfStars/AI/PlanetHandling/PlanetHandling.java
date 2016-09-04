@@ -215,7 +215,7 @@ public class PlanetHandling {
               listScore.add(Integer.valueOf(scores[i]));
               sum = sum+scores[i];
             } else {
-              if (constructions[i] instanceof Ship && freeSlot < 3) {
+              if (constructions[i] instanceof Ship && freeSlot < 4) {
                 list.add(constructions[i]);
                 listScore.add(Integer.valueOf(scores[i]));
                 sum = sum+scores[i];

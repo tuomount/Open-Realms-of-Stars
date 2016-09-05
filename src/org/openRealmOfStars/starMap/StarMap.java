@@ -414,13 +414,15 @@ public class StarMap {
   }
   
   /**
-   * Get nearest Solar system for coordinate. This should never return null.
+   * Get nearest uncharted Solar system for coordinate. This should never return null.
    * Unless there are no suns in galaxy.
    * @param x coordinate
    * @param y coordinate
+   * @param info Player who is doing the search
+   * @param fleet doing the search
    * @return Nearest sun
    */
-  public Sun getNearestSolarSystem(int x, int y) {
+  public Sun getNearestSolarSystem(int x, int y, PlayerInfo info, Fleet fleet) {
     double distance = 999999;
     Sun result = null;
     for (Sun sun:sunList) {
@@ -430,8 +432,10 @@ public class StarMap {
       }
       double dist = getDistance(x, y, sun.getCenterX(), sun.getCenterY());
       if (dist < distance) {
-        distance = dist;
-        result = sun;
+        if (info.getUnchartedSector(sun, fleet) != null) {
+          distance = dist;
+          result = sun;
+        }
       }
     }
     return result;

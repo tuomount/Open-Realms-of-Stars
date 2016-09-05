@@ -211,7 +211,14 @@ public class AITurnView extends BlackPanel {
         } 
         if (mission.getPhase() == MissionPhase.EXECUTING) {
           if (fleet.getaStarSearch() == null) {
-            Sun sun = game.getStarMap().locateSolarSystem(fleet.getX(), fleet.getY());
+            Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(), fleet.getY(),info,fleet);
+            if (!sun.getName().equals(mission.getSunName())) {
+              mission.setTarget(sun.getCenterX(), sun.getCenterY());
+              fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
+                  mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+              mission.setPhase(MissionPhase.TREKKING);
+              return;
+            }
             PathPoint point = info.getUnchartedSector(sun, fleet);
             if (point != null) {
               mission.setTarget(point.getX(), point.getY());
@@ -301,9 +308,8 @@ public class AITurnView extends BlackPanel {
       // No mission for fleet yet
       if (fleet.isScoutFleet()) {
         // Scout fleet should go to explore
-        // FIXME: Now selecting nearest Solar system
         Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(), 
-            fleet.getY());
+            fleet.getY(),info,fleet);
         mission = new Mission(MissionType.EXPLORE, 
             MissionPhase.TREKKING, sun.getCenterX(), sun.getCenterY());
         mission.setFleetName(fleet.getName());

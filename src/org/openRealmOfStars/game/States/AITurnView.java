@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -128,6 +129,54 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
+   * Make reroute moves while on mission
+   * @param fleet Fleet to move
+   * @param info PlayerInfo
+   * @param mission Which mission
+   */
+  private void makeRerouteBeforeFTLMoves(Fleet fleet, PlayerInfo info, Mission mission) {
+    AStarSearch search = fleet.getaStarSearch();
+    for (int mv = 0;mv<fleet.movesLeft;mv++) {
+      PathPoint point = search.getMove();
+      if (!game.getStarMap().isBlocked(point.getX(), point.getY())) {
+        //   Not blocked so fleet is moving
+        game.fleetMakeMove(info, fleet, point.getX(), point.getY());
+        search.nextMove();
+      }
+    }
+    fleet.movesLeft = 0;
+    if (search.isLastMove()) {
+      fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
+          mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+    }
+
+  }
+  
+  /**
+   * Make Regular moves according A Star Search path finding
+   * @param fleet Fleet to move
+   * @param info Player who controls the fleet
+   */
+  private void makeRegularMoves(Fleet fleet, PlayerInfo info) {
+    AStarSearch search = fleet.getaStarSearch();
+    for (int mv = 0;mv<fleet.movesLeft;mv++) {
+      PathPoint point = search.getMove();
+      if (point != null) {
+        if (!game.getStarMap().isBlocked(point.getX(), point.getY())) {
+        //   Not blocked so fleet is moving
+          game.fleetMakeMove(info, fleet, point.getX(), point.getY());
+          search.nextMove();
+        }
+      }
+    }
+    fleet.movesLeft = 0;
+    if (search.isLastMove()) {
+      fleet.setaStarSearch(null);
+    }
+
+  }
+  
+  /**
    * Handle missions for AI player and single fleet
    * @param fleet Fleet for doing the missing
    * @param info PlayerInfo
@@ -150,34 +199,9 @@ public class AITurnView extends BlackPanel {
             search.doSearch();
             search.doRoute();
             fleet.setaStarSearch(search);
-            for (int mv = 0;mv<fleet.movesLeft;mv++) {
-              PathPoint point = search.getMove();
-              if (!game.getStarMap().isBlocked(point.getX(), point.getY())) {
-                //   Not blocked so fleet is moving
-                game.fleetMakeMove(info, fleet, point.getX(), point.getY());
-                search.nextMove();
-              }
-            }
-            fleet.movesLeft = 0;
-            if (search.isLastMove()) {
-              fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
-                  mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
-            }
+            makeRerouteBeforeFTLMoves(fleet, info, mission);
           } else {
-            AStarSearch search = fleet.getaStarSearch();
-            for (int mv = 0;mv<fleet.movesLeft;mv++) {
-              PathPoint point = search.getMove();
-              if (!game.getStarMap().isBlocked(point.getX(), point.getY())) {
-              //   Not blocked so fleet is moving
-                game.fleetMakeMove(info, fleet, point.getX(), point.getY());
-                search.nextMove();
-              }
-            }
-            fleet.movesLeft = 0;
-            if (search.isLastMove()) {
-              fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
-                  mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
-            }
+            makeRerouteBeforeFTLMoves(fleet,info,mission);
           }
         } 
         if (mission.getPhase() == MissionPhase.EXECUTING) {
@@ -192,42 +216,16 @@ public class AITurnView extends BlackPanel {
               search.doSearch();
               search.doRoute();
               fleet.setaStarSearch(search);
-              for (int mv = 0;mv<fleet.movesLeft;mv++) {
-                point = search.getMove();
-                if (point != null) {
-                  if (!game.getStarMap().isBlocked(point.getX(), point.getY())) {
-                  //   Not blocked so fleet is moving
-                    game.fleetMakeMove(info, fleet, point.getX(), point.getY());
-                    search.nextMove();
-                  }
-                }
-              }
-              fleet.movesLeft = 0;
-              if (search.isLastMove()) {
-                fleet.setaStarSearch(null);
-              }
+              makeRegularMoves(fleet, info);
             }
           } else {
-            AStarSearch search = fleet.getaStarSearch();
-            for (int mv = 0;mv<fleet.movesLeft;mv++) {
-              PathPoint point = search.getMove();
-              if (point != null) {
-
-                if (!game.getStarMap().isBlocked(point.getX(), point.getY())) {
-                //   Not blocked so fleet is moving
-                  game.fleetMakeMove(info, fleet, point.getX(), point.getY());
-                  search.nextMove();
-                }
-              }
-            }
-            fleet.movesLeft = 0;
-            if (search.isLastMove()) {
-              fleet.setaStarSearch(null);
-            }
-
+            makeRegularMoves(fleet, info);
           }
         }
       } // End Of Explore
+      if (mission.getType() == MissionType.COLONIZE) {
+        
+      } // End of colonize
     } else {
       // No mission for fleet yet
       if (fleet.isScoutFleet()) {
@@ -273,6 +271,32 @@ public class AITurnView extends BlackPanel {
     }    
   }
 
+
+  /**
+   * Search newly found uncolonized planets
+   */
+  public void searchForColonizablePlanets() {
+    PlayerInfo info = game.players.getPlayerInfoByIndex(game.getStarMap()
+        .getAiTurnNumber());
+    if (info != null && !info.isHuman()) {
+      ArrayList<Planet> planets = game.getStarMap().getPlanetList();
+      for (Planet planet : planets) {
+        if (planet.getRadiationLevel() <= info.getRace().getMaxRad()
+            && planet.getPlanetPlayerInfo() == null 
+            && info.getSectorVisibility(planet.getX(), planet.getY())==PlayerInfo.VISIBLE) {
+          // New planet to colonize, adding it to mission list
+          Mission mission = new Mission(MissionType.COLONIZE, 
+              MissionPhase.PLANNING, planet.getX(), planet.getY());
+          if (info.getMissions().getColonizeMission(mission.getX(), mission.getY())==null) {
+            // No colonize mission for this planet found, so adding it.
+            info.getMissions().add(mission);
+          }
+          
+        }
+      }
+    }
+
+  }
   
   /**
    * Handle single AI Fleet. If fleet was last then increase AI turn number
@@ -288,6 +312,8 @@ public class AITurnView extends BlackPanel {
       handleMissions(game.getStarMap().getAIFleet(), info);
       game.getStarMap().setAIFleet(info.Fleets().getNext());
       if (info.Fleets().getIndex()==0) {
+        // All fleets have moved. Checking the new possible planet
+        searchForColonizablePlanets();
         game.getStarMap().setAIFleet(null);
         game.getStarMap().setAiTurnNumber(game.getStarMap().getAiTurnNumber()+1);
       }

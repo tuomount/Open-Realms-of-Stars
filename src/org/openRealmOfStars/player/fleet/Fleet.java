@@ -389,7 +389,7 @@ public class Fleet {
   public boolean isScoutFleet() {
     if (ships.size() == 1) {
       Ship ship = ships.get(0);
-      if (getName().startsWith("Defender of")) {
+      if (getName().startsWith("Defender")) {
         return false;
       }
       if (ship.getHull().getHullType()==ShipHullType.PROBE) {

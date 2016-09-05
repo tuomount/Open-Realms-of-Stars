@@ -59,13 +59,30 @@ public class MissionList {
    */
   public Mission getMissionForFleet(String fleetName) {
     for (Mission mission : missions) {
-      if (mission.getFleetName().equals(fleetName)) {
+      if (mission.getFleetName() != null && mission.getFleetName().equals(fleetName)) {
         return mission;
       }
     }
     return null;
   }
 
+  /**
+   * Find a colonize mission for certain planet
+   * @param x Planet X coordinate
+   * @param y Planet Y coordinate
+   * @return Mission or null if not found
+   */
+  public Mission getColonizeMission(int x, int y) {
+    for (Mission mission : missions) {
+      if (mission.getX() == x && mission.getY() == y &&
+          mission.getType() == MissionType.COLONIZE) {
+        return mission;
+      }
+    }
+    return null;
+
+  }
+  
   
   /**
    * Get mission for planet

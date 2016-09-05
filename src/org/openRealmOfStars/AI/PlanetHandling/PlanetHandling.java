@@ -159,7 +159,7 @@ public class PlanetHandling {
         Mission mission = info.getMissions().getMissionForPlanet(planet.getName(), MissionType.DEFEND);
         if (mission == null) {
           mission = new Mission(MissionType.DEFEND, MissionPhase.PLANNING, planet.getX(), planet.getY());
-          mission.setFleetName("Defender of "+planet.getName());
+          mission.setFleetName("Defender");
           mission.setPlanetBuilding(planet.getName());
           info.getMissions().add(mission);
         }

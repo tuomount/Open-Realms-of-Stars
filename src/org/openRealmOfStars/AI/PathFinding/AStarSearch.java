@@ -231,8 +231,20 @@ public class AStarSearch {
               double dist = StarMap.getDistance(mx, my, tx, ty);
               PathPoint newPoint = new PathPoint(mx, my, dist);
               if (dist < point.getDistance()) {
-                // Seems to be closer, so adding it to first one
-                points.add(0, newPoint);
+                if (points.size()>0) {
+                  PathPoint first = points.get(0);
+                  if (first != null && dist < first.getDistance()) {
+                    // Seems to be closer, so adding it to first one
+                    points.add(0, newPoint);
+                  } else {
+                    // Seems to be closer, but not close as first one in list
+                    points.add(1, newPoint);
+                  }
+                } else {
+                  // Seems to be closer, so adding it to first one
+                  points.add(0, newPoint);
+
+                }
               } else {
                 // Seems to be more far away so adding it to end
                 points.add(newPoint);

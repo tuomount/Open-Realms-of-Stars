@@ -279,6 +279,10 @@ public class PlayerInfo {
     int[] unCharted = new int[4];
     int[] charted = new int[4];
     int[] sectors = new int[4];
+    PathPoint[] points = new PathPoint[4];
+    for (int i=0;i<points.length;i++) {
+      points[i] = null;
+    }
     int sector=0;
     for (int x=-StarMap.SOLARSYSTEMWIDTH-2; x <StarMap.SOLARSYSTEMWIDTH+3;x++) {
       for (int y=-StarMap.SOLARSYSTEMWIDTH-2; y <StarMap.SOLARSYSTEMWIDTH+3;y++) {
@@ -294,6 +298,15 @@ public class PlayerInfo {
         if (isValidCoordinate(sun.getCenterX()+x, sun.getCenterY()+y)) {
           if (mapData[sun.getCenterX()+x][sun.getCenterY()+y]==UNCHARTED) {
             unCharted[sector]++;
+            PathPoint tempPoint = new PathPoint(sun.getCenterX()+x, 
+                sun.getCenterY()+y, 
+                StarMap.getDistance(fleet.getX(), fleet.getY(), 
+                    sun.getCenterX()+x, sun.getCenterY()+y));
+            if(points[sector] == null) {
+              points[sector] = tempPoint;
+            } else if (points[sector].getDistance() < tempPoint.getDistance()) {
+              points[sector] = tempPoint;
+            }
           } else {
             charted[sector]++;
           }
@@ -303,7 +316,8 @@ public class PlayerInfo {
     for (int i=0;i<sectors.length;i++) {
       sectors[i] = 100*unCharted[i] /(charted[i]+unCharted[i]);
     }
-    for (sector = 0;sector < 3;sector++) {
+    int oldSector = 0;
+    for (sector = 0;sector < 4;sector++) {
       int mx = 0;
       int my = 0;
       switch (sector) {
@@ -313,8 +327,7 @@ public class PlayerInfo {
       case 3: { mx = 1; my = 1; break; }
       }
       PathPoint temp=null;
-      int oldSector = 0;
-      if (sectors[sector] > 5) {
+      if (sectors[sector] > 60) {
         int nx = sun.getCenterX();
         int ny = sun.getCenterY();
         nx = nx+mx;
@@ -344,6 +357,9 @@ public class PlayerInfo {
             }
           }
         }
+      }
+      if (temp == null && points[sector] != null && points[sector].getDistance()>1) {
+        temp = points[sector];
       }
       if (result == null && temp != null) {
         result = temp;

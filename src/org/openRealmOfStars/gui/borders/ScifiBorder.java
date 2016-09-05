@@ -179,6 +179,14 @@ public class ScifiBorder extends AbstractBorder
     if (title != null && !title.isEmpty()) {
       int textWidth = (int) GuiStatics.getFontCubellanSC().getStringBounds(title,
           g2d.getFontRenderContext()).getWidth();
+      String text = title;
+      if (textWidth > width-2*cornerImage.getWidth()) {
+        int newWidth = width*3/4;
+        int textLen = title.length()*newWidth/textWidth;
+        textWidth = newWidth;
+        text = title.substring(0, textLen);
+            
+      }
       BufferedImage centerPiece = new BufferedImage(textWidth, 
           titleCenterImage.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
       int repeats = textWidth/titleCenterImage.getWidth();
@@ -197,7 +205,7 @@ public class ScifiBorder extends AbstractBorder
 
       g2d.setColor(GuiStatics.COLOR_GOLD_TRANS);
       g2d.setFont(GuiStatics.getFontCubellanSC());
-      g2d.drawString(title, x+width/2-textWidth/2, y+15);
+      g2d.drawString(text, x+width/2-textWidth/2, y+15);
       
     }
   }

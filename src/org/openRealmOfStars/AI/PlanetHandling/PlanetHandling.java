@@ -165,7 +165,7 @@ public class PlanetHandling {
         }
       }
       if (!constructionSelected) {
-        int[] scores = scoreConstructions(constructions,planet, info);
+        int[] scores = scoreConstructions(constructions,planet, info,map);
         int highest = -1;
         int value = -1;
         boolean over400=false;
@@ -235,14 +235,19 @@ public class PlanetHandling {
               planet.setUnderConstruction(cons);
               constructionSelected = true;
               if (cons instanceof Ship) {
+                Ship ship = (Ship) cons;
                 Mission mission = info.getMissions()
                     .getMissionForPlanet(planet.getName(), MissionType.DEFEND);
-                if (mission != null) {
+                if (mission != null && ship.getTotalMilitaryPower()>0) {
                   if (mission.getPhase() == MissionPhase.PLANNING) {
                     mission.setPhase(MissionPhase.BUILDING);
                   }
                 }
-
+                mission = info.getMissions().getMission(MissionType.COLONIZE, MissionPhase.PLANNING);
+                if (mission != null && ship.isColonyModule()) {
+                  mission.setPhase(MissionPhase.BUILDING);
+                  mission.setPlanetBuilding(planet.getName());
+                }
               }
               break;
             }
@@ -278,15 +283,12 @@ public class PlanetHandling {
    * @return
    */
   private static int[] scoreConstructions(Construction[] constructions, 
-      Planet planet, PlayerInfo info) {
+      Planet planet, PlayerInfo info, StarMap map) {
     int[] scores = new int[constructions.length];
     for (int i=0;i<constructions.length;i++) {
       scores[i] = -1;
       if (constructions[i].getName().equals(ConstructionFactory.MECHION_CITIZEN)) {
         scores[i] = planet.getAmountMetalInGround()/100 -10*planet.getTotalPopulation();
-        if (scores[i] < 30) {
-          scores[i] = 30;
-        }
         // Does not take a planet space
         scores[i] = scores[i]+20;
 
@@ -317,7 +319,12 @@ public class PlanetHandling {
           scores[i] = scores[i]+building.getReseBonus()*60;
           scores[i] = scores[i]+building.getCultBonus()*40;
         }
-        scores[i] = scores[i]+building.getCredBonus()*50;
+        if (planet.getMaintenanceCost() >= planet.getTotalProduction(Planet.PRODUCTION_CREDITS)) {
+          // Planet has much expenses so build credit production is important
+          scores[i] = scores[i]+building.getCredBonus()*80;
+        } else {
+          scores[i] = scores[i]+building.getCredBonus()*50;
+        }
         scores[i] = scores[i]+building.getRecycleBonus();
         
         scores[i] = scores[i]-(int) Math.round(building.getMaintenanceCost()*10);
@@ -373,7 +380,16 @@ public class PlanetHandling {
         }
         if (ship.isColonyModule()) {
           // Colony ship should be built only on request
-          scores[i] = -1;
+          Mission mission = info.getMissions().
+              getMission(MissionType.COLONIZE, MissionPhase.PLANNING);
+          if (mission != null) {
+            Planet colonPlanet = map.getPlanetByCoordinate(mission.getX(), mission.getY());
+            int score = (colonPlanet.getGroundSize()-7)*3+colonPlanet.getAmountMetalInGround()/400;
+            score = score +info.getRace().getMaxRad()-colonPlanet.getRadiationLevel();
+            scores[i] = scores[i] +score;
+          } else {
+            scores[i] = -1;
+          }
         }
       }
 

@@ -147,6 +147,10 @@ public class AStarSearch {
     this.tx = tx;
     this.ty = ty;
     this.targetDistance = (int) Math.round(StarMap.getDistance(sx, sy, tx, ty))-radius;
+    if (this.targetDistance < 0) {
+      // Target is actually in reroute area
+      this.targetDistance = 0;
+    }
     PathPoint point1 = new PathPoint(sx, sy, StarMap.getDistance(sx, sy, tx, ty));
     points.add(point1);
     blockMap[point1.getX()][point1.getY()] = 0;
@@ -297,7 +301,7 @@ public class AStarSearch {
    * @return PathPoint or null if cannot move
    */
   public PathPoint getMove() {
-    if (targetPoint != null && points.size() > 1 && routeIndex != -1)  {
+    if (targetPoint != null && points.size() > 0 && routeIndex != -1)  {
       return points.get(routeIndex);
     }
     return null;
@@ -320,6 +324,14 @@ public class AStarSearch {
       return true;
     }
     return false;
+  }
+  
+  /**
+   * Get target distance. Zero means that target is going to be reached.
+   * @return target distance
+   */
+  public int getTargetDistance() {
+    return targetDistance;
   }
 }
 

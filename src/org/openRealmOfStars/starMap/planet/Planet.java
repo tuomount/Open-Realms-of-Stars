@@ -1004,11 +1004,21 @@ public class Planet {
             planetOwnerInfo.Fleets().add(fleet);
             Mission mission = planetOwnerInfo.getMissions().getMissionForPlanet(getName(), MissionPhase.BUILDING);
             if (mission != null) {
-              fleet.setName(mission.getFleetName()+" #"+planetOwnerInfo.Fleets().
-                  howManyFleetWithStartingNames(mission.getFleetName()));
+              if (mission.getFleetName() == null) {
+                if (mission.getType() == MissionType.COLONIZE) {
+                  fleet.setName("Colony #"+(planetOwnerInfo.Fleets().
+                      howManyFleetWithStartingNames("Colony #")+1));
+                  mission.setFleetName(fleet.getName());
+                }
+              } else {
+                fleet.setName(mission.getFleetName()+" #"+(planetOwnerInfo.Fleets().
+                  howManyFleetWithStartingNames(mission.getFleetName())+1));
+              }
               if (mission.getType() == MissionType.DEFEND) {
                 // For now one ship is enough for defend
                 mission.setPhase(MissionPhase.EXECUTING);
+              } else if (mission.getType() == MissionType.COLONIZE) {
+                mission.setPhase(MissionPhase.LOADING);
               } else {
                 mission.setPhase(MissionPhase.TREKKING);
               }
@@ -1016,8 +1026,8 @@ public class Planet {
               // No mission for planet, so just adding defender
               if (ship.getTotalMilitaryPower() > 0) {
                 String fleetName = "Defender";
-                fleet.setName(fleetName+" #"+planetOwnerInfo.Fleets().
-                    howManyFleetWithStartingNames(fleetName));
+                fleet.setName(fleetName+" #"+(planetOwnerInfo.Fleets().
+                    howManyFleetWithStartingNames(fleetName)+1));
               }
             }
             msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(), 

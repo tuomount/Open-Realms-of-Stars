@@ -207,7 +207,9 @@ public class Game extends JFrame implements ActionListener {
         fleet.movesLeft--;
         getStarMap().doFleetScanUpdate(info,fleet,null);
         starMapView.updatePanels();
-        getStarMap().setDrawPos(fleet.getX(),fleet.getY());
+        if (info.isHuman()) {
+          getStarMap().setDrawPos(fleet.getX(),fleet.getY());
+        }
         starMapView.readyToMove = false;
       }
     }

@@ -82,7 +82,23 @@ public class MissionList {
     return null;
 
   }
-  
+
+  /**
+   * Get mission where type is certain and phase is certain
+   * @param type Mission type
+   * @param phase Mission phase
+   * @return Mission or null if not found
+   */
+  public Mission getMission(MissionType type, MissionPhase phase) {
+    for (Mission mission : missions) {
+      if (mission.getType() == type && mission.getPhase() == phase) {
+        return mission;
+      }
+    }
+    return null;
+
+  }
+
   
   /**
    * Get mission for planet
@@ -118,6 +134,14 @@ public class MissionList {
     return null;
   }
 
+  /**
+   * Remove mission from the mission list
+   * @param mission Mission to remove
+   */
+  public void remove(Mission mission) {
+    missions.remove(mission);
+  }
+  
   /**
    * Adde new mission into mission list;
    * @param mission

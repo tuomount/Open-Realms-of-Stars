@@ -405,6 +405,21 @@ public class Fleet {
     return false;
   }
 
+  /**
+   * Is Fleet colony fleet. Colony fleet contains only one ship,
+   * where ship contains colony module
+   * @return true if scouting fleet.
+   */
+  public boolean isColonyFleet() {
+    if (ships.size() == 1) {
+      Ship ship = ships.get(0);
+      if (ship.isColonyModule()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public AStarSearch getaStarSearch() {
     return aStarSearch;
   }

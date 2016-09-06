@@ -603,5 +603,21 @@ public class PlayerInfo {
     return missions;
   }
 
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(empireName);
+    sb.append(" - ");
+    if (isHuman()) {
+      sb.append("Human");
+    } else {
+      sb.append("AI");
+    }
+    sb.append("\n");
+    sb.append(race.toString());
+    return sb.toString();
+  }
+
+  
   
 }

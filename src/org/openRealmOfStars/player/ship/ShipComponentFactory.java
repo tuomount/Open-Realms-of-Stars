@@ -31,7 +31,7 @@ public class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 91;
+  private static final int MAX_SHIPCOMPONENT = 121;
   
 
   /**
@@ -154,7 +154,41 @@ public class ShipComponentFactory {
     case 88: tmp = createEngine(index); break; // Impulse engine Mk1
     case 89: tmp = createElectronics(index); break; // Scanner Mk4
     case 90: tmp = createElectronics(index); break; // Jammer Mk3
+    case 91: tmp = createElectronics(index); break; // Shock trooper module
     // Level 7 techs done
+    case 92: tmp = createElectronics(index); break; // Orbital nuke
+    case 93: tmp = createWeapon(index); break; // Phasors Mk3
+    case 94: tmp = createWeapon(index); break; // Massdrive Mk3
+    case 95: tmp = createWeapon(index); break; // Photon torpedo Mk8
+    case 96: tmp = createWeapon(index); break; // ECM torpedo Mk6
+    case 97: tmp = createWeapon(index); break; // HE missile Mk6
+    case 98: tmp = createDefense(index); break; // Shield Mk8
+    case 99: tmp = createDefense(index); break; // Armor Mk8
+    case 100: tmp = createEngine(index); break; // Warp drive Mk6
+    case 101: tmp = createEngine(index); break; // Hyper drive Mk6
+    case 102: tmp = createEngine(index); break; // Impulse engine Mk2
+    case 103: tmp = createElectronics(index); break; // Antimatter source Mk2
+    case 104: tmp = createElectronics(index); break; // Cloaking device Mk5
+    case 105: tmp = createElectronics(index); break; // LR Scanner Mk3
+    // Level 8 techs done
+    case 106: tmp = createElectronics(index); break; // Orbital smart bombs
+    case 107: tmp = createWeapon(index); break; // Antimatter beam Mk1
+    case 108: tmp = createWeapon(index); break; // Massdrive Mk4
+    case 109: tmp = createWeapon(index); break; // Photon torpedo Mk9
+    case 110: tmp = createWeapon(index); break; // ECM torpedo Mk7
+    case 111: tmp = createWeapon(index); break; // HE missile Mk7
+    case 112: tmp = createDefense(index); break; // Shield generator Mk2
+    case 113: tmp = createDefense(index); break; // Shield Mk9
+    case 114: tmp = createDefense(index); break; // Armor Mk9
+    case 115: tmp = createEngine(index); break; // Warp drive Mk7
+    case 116: tmp = createEngine(index); break; // Hyper drive Mk7
+    case 117: tmp = createEngine(index); break; // Impulse engine Mk3
+    case 118: tmp = createElectronics(index); break; // Zero-point source Mk1
+    case 119: tmp = createElectronics(index); break; // Scanner Mk5
+    case 120: tmp = createElectronics(index); break; // Targeting computer Mk4
+    // Level 9 techs done
+
+
     }
     return tmp;
   }
@@ -284,6 +318,48 @@ public class ShipComponentFactory {
       tmp.setFtlSpeed(4);
       tmp.setTacticSpeed(2);
       tmp.setEnergyRequirement(1);
+    }
+    if (index == 100) {
+      tmp = new ShipComponent(index, "Warp drive Mk6", 10, 4, ShipComponentType.ENGINE);
+      tmp.setSpeed(1);
+      tmp.setFtlSpeed(11);
+      tmp.setTacticSpeed(1);
+      tmp.setEnergyRequirement(3);
+    }
+    if (index == 101) {
+      tmp = new ShipComponent(index, "Hyper drive Mk6", 11, 5, ShipComponentType.ENGINE);
+      tmp.setSpeed(2);
+      tmp.setFtlSpeed(8);
+      tmp.setTacticSpeed(1);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == 102) {
+      tmp = new ShipComponent(index, "Impulse engine Mk2", 7, 7, ShipComponentType.ENGINE);
+      tmp.setSpeed(3);
+      tmp.setFtlSpeed(5);
+      tmp.setTacticSpeed(2);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == 115) {
+      tmp = new ShipComponent(index, "Warp drive Mk7", 11, 4, ShipComponentType.ENGINE);
+      tmp.setSpeed(1);
+      tmp.setFtlSpeed(12);
+      tmp.setTacticSpeed(1);
+      tmp.setEnergyRequirement(3);
+    }
+    if (index == 116) {
+      tmp = new ShipComponent(index, "Hyper drive Mk7", 12, 5, ShipComponentType.ENGINE);
+      tmp.setSpeed(2);
+      tmp.setFtlSpeed(9);
+      tmp.setTacticSpeed(1);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == 117) {
+      tmp = new ShipComponent(index, "Impulse engine Mk3", 8, 8, ShipComponentType.ENGINE);
+      tmp.setSpeed(3);
+      tmp.setFtlSpeed(6);
+      tmp.setTacticSpeed(2);
+      tmp.setEnergyRequirement(2);
     }
     return tmp;
     
@@ -434,6 +510,47 @@ public class ShipComponentFactory {
       tmp = new ShipComponent(index, "Jammer Mk3", 4, 1, ShipComponentType.SCANNER);
       tmp.setDefenseValue(15);
       tmp.setEnergyRequirement(1);
+    }
+    if (index == 91) {
+      tmp = new ShipComponent(index, "Shock trooper module", 6, 8, ShipComponentType.PLANETARY_INVASION_MODULE);
+      tmp.setEnergyRequirement(1);
+      //FIXME How to differentiate this from Planetary invasion module
+    }
+    if (index == 92) {
+      tmp = new ShipComponent(index, "Orbital nuke", 10, 10, ShipComponentType.ORBITAL_NUKE);
+      tmp.setEnergyRequirement(0);
+      tmp.setDamage(100);
+    }
+    if (index == 103) {
+      tmp = new ShipComponent(index, "Antimatter source Mk2", 11, 8, ShipComponentType.POWERSOURCE);
+      tmp.setEnergyResource(13);
+    }
+    if (index == 104) {
+      tmp = new ShipComponent(index, "Cloaking device Mk5", 5, 2, ShipComponentType.CLOAKING_DEVICE);
+      tmp.setCloaking(100);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == 105) {
+      tmp = new ShipComponent(index, "LR Scanner Mk3", 3, 2, ShipComponentType.SCANNER);
+      tmp.setScannerRange(7);
+      tmp.setCloakDetection(60);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == 118) {
+      tmp = new ShipComponent(index, "Zero-point source Mk1", 20, 2, ShipComponentType.POWERSOURCE);
+      tmp.setEnergyResource(15);
+    }
+    if (index == 119) {
+      tmp = new ShipComponent(index, "Scanner Mk5", 5, 2, ShipComponentType.SCANNER);
+      tmp.setScannerRange(5);
+      tmp.setCloakDetection(100);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == 120) {
+      tmp = new ShipComponent(index, "Targeting computer Mk4", 6, 2, ShipComponentType.TARGETING_COMPUTER);
+      tmp.setInitiativeBoost(4);
+      tmp.setDamage(40);
+      tmp.setEnergyRequirement(3);
     }
     return tmp;
     
@@ -632,6 +749,66 @@ public class ShipComponentFactory {
       tmp.setWeaponRange(4);
       tmp.setEnergyRequirement(0);
     }
+    if (index == 93) {
+      tmp = new ShipComponent(index, "Phasors Mk3", 10, 3, ShipComponentType.WEAPON_BEAM);
+      tmp.setDamage(8);
+      tmp.setWeaponRange(2);
+      tmp.setEnergyRequirement(3);
+    }
+    if (index == 94) {
+      tmp = new ShipComponent(index, "Massdrive Mk3", 7, 7, ShipComponentType.WEAPON_RAILGUN);
+      tmp.setDamage(8);
+      tmp.setWeaponRange(3);
+      tmp.setEnergyRequirement(3);
+    }
+    if (index == 95) {
+      tmp = new ShipComponent(index, "Photon torpedo Mk8", 10, 4, ShipComponentType.WEAPON_PHOTON_TORPEDO);
+      tmp.setDamage(8);
+      tmp.setWeaponRange(3);
+      tmp.setEnergyRequirement(3);
+    }
+    if (index == 96) {
+      tmp = new ShipComponent(index, "ECM torpedo Mk6", 12, 3, ShipComponentType.WEAPON_ECM_TORPEDO);
+      tmp.setDamage(8);
+      tmp.setWeaponRange(5);
+      tmp.setEnergyRequirement(0);
+    }
+    if (index == 97) {
+      tmp = new ShipComponent(index, "HE Missile Mk6", 4, 10, ShipComponentType.WEAPON_HE_MISSILE);
+      tmp.setDamage(8);
+      tmp.setWeaponRange(4);
+      tmp.setEnergyRequirement(0);
+    }
+    if (index == 107) {
+      tmp = new ShipComponent(index, "Antimatter beam Mk1", 12, 6, ShipComponentType.WEAPON_BEAM);
+      tmp.setDamage(9);
+      tmp.setWeaponRange(3);
+      tmp.setEnergyRequirement(4);
+    }
+    if (index == 108) {
+      tmp = new ShipComponent(index, "Massdrive Mk4", 8, 8, ShipComponentType.WEAPON_RAILGUN);
+      tmp.setDamage(9);
+      tmp.setWeaponRange(4);
+      tmp.setEnergyRequirement(4);
+    }
+    if (index == 109) {
+      tmp = new ShipComponent(index, "Photon torpedo Mk9", 11, 4, ShipComponentType.WEAPON_PHOTON_TORPEDO);
+      tmp.setDamage(9);
+      tmp.setWeaponRange(4);
+      tmp.setEnergyRequirement(4);
+    }
+    if (index == 110) {
+      tmp = new ShipComponent(index, "ECM torpedo Mk7", 12, 4, ShipComponentType.WEAPON_ECM_TORPEDO);
+      tmp.setDamage(9);
+      tmp.setWeaponRange(6);
+      tmp.setEnergyRequirement(0);
+    }
+    if (index == 111) {
+      tmp = new ShipComponent(index, "HE Missile Mk7", 4, 11, ShipComponentType.WEAPON_HE_MISSILE);
+      tmp.setDamage(9);
+      tmp.setWeaponRange(5);
+      tmp.setEnergyRequirement(0);
+    }
     return tmp;
     
   }
@@ -710,6 +887,29 @@ public class ShipComponentFactory {
     if (index == 85) {
       tmp = new ShipComponent(index, "Armor plating Mk7", 4, 10, ShipComponentType.ARMOR);
       tmp.setDefenseValue(7);
+    }
+    if (index == 98) {
+      tmp = new ShipComponent(index, "Shield Mk8", 11, 3, ShipComponentType.SHIELD);
+      tmp.setDefenseValue(8);
+      tmp.setEnergyRequirement(3);
+    }
+    if (index == 99) {
+      tmp = new ShipComponent(index, "Armor plating Mk8", 5, 10, ShipComponentType.ARMOR);
+      tmp.setDefenseValue(8);
+    }
+    if (index == 112) {
+      tmp = new ShipComponent(index, "Shield generator Mk2", 8, 2, ShipComponentType.SHIELD_GENERATOR);
+      tmp.setDefenseValue(2);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == 113) {
+      tmp = new ShipComponent(index, "Shield Mk9", 10, 2, ShipComponentType.SHIELD);
+      tmp.setDefenseValue(9);
+      tmp.setEnergyRequirement(3);
+    }
+    if (index == 114) {
+      tmp = new ShipComponent(index, "Armor plating Mk9", 5, 12, ShipComponentType.ARMOR);
+      tmp.setDefenseValue(9);
     }
     return tmp;
     

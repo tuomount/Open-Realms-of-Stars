@@ -443,14 +443,25 @@ public class TechList {
         int lvl = techLevels[i];
         Tech tech = TechFactory.createRandomTech(type, lvl,getListForTypeAndLevel(type, lvl));
         addTech(tech);
-        Message msg = new Message(MessageType.RESEARCH, 
-            info.getEmpireName()+" researched "+tech.getName()+" in "+tech.getType().toString(), 
+        StringBuilder sb = new StringBuilder();
+        sb.append(info.getEmpireName());
+        sb.append(" researched ");
+        sb.append(tech.getName());
+        sb.append(" in ");
+        sb.append(tech.getType().toString());
+        sb.append(" with level ");
+        sb.append(lvl);
+        sb.append(".");
+        if (isTechListForLevelFull(type, lvl)) {
+          techLevels[i] = lvl +1;
+          sb.append("\n");
+          sb.append(tech.getType().toString());
+          sb.append(" has advenced to next level.");
+        }
+        Message msg = new Message(MessageType.RESEARCH, sb.toString(), 
             Icons.getIconByName(Icons.ICON_RESEARCH));
         msg.setMatchByString(tech.getName());
         info.getMsgList().addNewMessage(msg);
-        if (isTechListForLevelFull(type, lvl)) {
-          techLevels[i] = lvl +1;
-        }
       }
     }
 

@@ -333,13 +333,15 @@ public class MapPanel extends JPanel {
           gr.drawLine(pixelX, pixelY+Tile.MAX_HEIGHT-1, pixelX+Tile.MAX_WIDTH-1,
               pixelY+Tile.MAX_HEIGHT-1);
         }
-        CulturePower culture =starMap.getSectorCulture(i+cx, j+cy);
-        if (culture != null) {
-          int index = culture.getHighestCulture();
-          if (index != -1) {
-            Tile tile = Tiles.getTileByName("Player_"+index);
-            if (tile != null) {
-              tile.draw(gr, pixelX, pixelY);
+        if (info != null && info.getSectorVisibility(i+cx, j+cy) != PlayerInfo.UNCHARTED)  {
+          CulturePower culture =starMap.getSectorCulture(i+cx, j+cy);
+          if (culture != null) {
+            int index = culture.getHighestCulture();
+            if (index != -1) {
+              Tile tile = Tiles.getTileByName("Player_"+index);
+              if (tile != null) {
+                tile.draw(gr, pixelX, pixelY);
+              }
             }
           }
         }

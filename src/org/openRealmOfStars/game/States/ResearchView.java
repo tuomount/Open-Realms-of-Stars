@@ -402,7 +402,7 @@ public class ResearchView extends BlackPanel {
     combatRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
     if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
       combatRese.setEnableUpgradeButton(true);
-      combatRese.setUpgadeBtnToolTip("<html>Upgrade combat to "+level+1+" level.<br>"
+      combatRese.setUpgadeBtnToolTip("<html>Upgrade combat to "+(level+1)+" level.<br>"
           + " By upgrading you skip rest of technologies on your current level.</html>");
     }
     
@@ -421,7 +421,7 @@ public class ResearchView extends BlackPanel {
     defenseRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
     if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
       defenseRese.setEnableUpgradeButton(true);
-      defenseRese.setUpgadeBtnToolTip("<html>Upgrade defense to "+level+1+" level.<br>"
+      defenseRese.setUpgadeBtnToolTip("<html>Upgrade defense to "+(level+1)+" level.<br>"
           + " By upgrading you skip rest of technologies on your current level.</html>");
     }
 
@@ -440,7 +440,7 @@ public class ResearchView extends BlackPanel {
     hullRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
     if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
       hullRese.setEnableUpgradeButton(true);
-      hullRese.setUpgadeBtnToolTip("<html>Upgrade hulls to "+level+1+" level.<br>"
+      hullRese.setUpgadeBtnToolTip("<html>Upgrade hulls to "+(level+1)+" level.<br>"
           + " By upgrading you skip rest of technologies on your current level.</html>");
     }
 
@@ -459,7 +459,7 @@ public class ResearchView extends BlackPanel {
     improvementRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
     if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
       improvementRese.setEnableUpgradeButton(true);
-      improvementRese.setUpgadeBtnToolTip("<html>Upgrade improvements to "+level+1+" level.<br>"
+      improvementRese.setUpgadeBtnToolTip("<html>Upgrade improvements to "+(level+1)+" level.<br>"
           + " By upgrading you skip rest of technologies on your current level.</html>");
     }
 
@@ -478,7 +478,7 @@ public class ResearchView extends BlackPanel {
     propulsionRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
     if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
       propulsionRese.setEnableUpgradeButton(true);
-      propulsionRese.setUpgadeBtnToolTip("<html>Upgrade propulsion to "+level+1+" level.<br>"
+      propulsionRese.setUpgadeBtnToolTip("<html>Upgrade propulsion to "+(level+1)+" level.<br>"
           + " By upgrading you skip rest of technologies on your current level.</html>");
     }
 
@@ -497,7 +497,7 @@ public class ResearchView extends BlackPanel {
     electronicsRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
     if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
       electronicsRese.setEnableUpgradeButton(true);
-      electronicsRese.setUpgadeBtnToolTip("<html>Upgrade electronics to "+level+1+" level.<br>"
+      electronicsRese.setUpgadeBtnToolTip("<html>Upgrade electronics to "+(level+1)+" level.<br>"
           + " By upgrading you skip rest of technologies on your current level.</html>");
     }
 }

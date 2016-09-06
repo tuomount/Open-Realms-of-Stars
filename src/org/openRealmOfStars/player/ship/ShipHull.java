@@ -95,8 +95,8 @@ public class ShipHull {
    * @param hull How many hull points single slot has
    * @param type ShipHullType
    * @param size ShipSize
-   * @param int cost in production
-   * @param int cost in metal
+   * @param cost production cost
+   * @param metal metal cost
    * @param race whom builds the ship hull
    */
   public ShipHull(int index,String name, int maxSlots, int hull, ShipHullType type,

@@ -579,7 +579,22 @@ public class PlayerInfo {
     }
     return null;
   }
+
   /**
+   * Get count of Ship stats name starts with
+   * @param name for search
+   * @return Number of ship stats which start with that
+   */
+  public int getShipStatStartsWith(String name) {
+    int result = 0;
+    for (ShipStat stat : shipStatList) {
+      if (stat.getDesign().getName().startsWith(name)) {
+        result++;
+      }
+    }
+    return result;
+  }
+/**
    * Get Ship Stat list as a fixed array
    * @return Ship Stat array
    */

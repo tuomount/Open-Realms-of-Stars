@@ -268,7 +268,7 @@ public class TechList {
           comp.getType() == ShipComponentType.WEAPON_HE_MISSILE ||
           comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO ||
           comp.getType() == ShipComponentType.WEAPON_RAILGUN)  {
-        compValue = comp.getDamage()+comp.getWeaponRange();
+        compValue = comp.getDamage();
       }
       if (compValue > bestValue) {
         best = tech;

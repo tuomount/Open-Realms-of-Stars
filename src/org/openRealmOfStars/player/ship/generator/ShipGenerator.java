@@ -8,9 +8,11 @@ import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullFactory;
 import org.openRealmOfStars.player.ship.ShipHullType;
+import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  * 
@@ -36,7 +38,119 @@ import org.openRealmOfStars.player.tech.TechType;
  */
 
 public class ShipGenerator {
+
   
+  public static ShipDesign createBattleShip(PlayerInfo player, ShipSize size) {
+    ShipDesign result = null;
+    Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
+    ShipHull hull = null;
+    int value = 0;
+    for (Tech tech : hullTechs) {
+       ShipHull tempHull = ShipHullFactory.createByName(tech.getHull(), player.getRace());
+       if (tempHull.getHullType() ==ShipHullType.NORMAL && tempHull.getSize() == size) {
+         int tempValue = tempHull.getMaxSlot()*tempHull.getSlotHull();
+         if (tempValue > value) {
+           value = tempValue;
+           hull = tempHull;
+         }
+       }
+    }
+    if (hull != null) {
+      result = new ShipDesign(hull);
+      String[] part = hull.getName().split("Mk");
+      result.setName(part[0] +" Mk"+(player.getShipStatStartsWith(part[0])+1));
+      ShipComponent engine = ShipComponentFactory.createByName(player.
+          getTechList().getBestEngine().getComponent());
+      result.addComponent(engine);
+      ShipComponent power = ShipComponentFactory.createByName(player.
+          getTechList().getBestEnergySource().getComponent());
+      result.addComponent(power);
+      ShipComponent weapon = ShipComponentFactory.createByName(player.
+          getTechList().getBestWeapon().getComponent());
+      result.addComponent(weapon);
+      
+      Tech[] defenseTechs = player.getTechList().getListForType(TechType.Defense);
+      Tech[] electricsTechs = player.getTechList().getListForType(TechType.Electrics);
+      Tech shield = TechList.getBestTech(defenseTechs,"Shield");
+      Tech armor = TechList.getBestTech(defenseTechs,"Armor plating");
+      Tech shieldGen = TechList.getBestTech(electricsTechs,"Shield generator");
+      ShipComponent shieldComp = null;
+      ShipComponent shieldGenComp = null;
+      ShipComponent armorComp = null;
+      boolean shieldsAdded = false;
+      if (shield != null) {
+        shieldComp = ShipComponentFactory.createByName(
+          shield.getComponent());
+        shieldsAdded = true;
+      }
+      if (shieldGen != null) {
+        shieldGenComp = ShipComponentFactory.createByName(
+          shieldGen.getComponent());
+      }
+      if (armor != null) {
+        armorComp = ShipComponentFactory.createByName(
+          armor.getComponent());
+      }
+      if (shieldComp != null && 
+          result.getFreeEnergy()>=shieldComp.getEnergyRequirement()) {
+        result.addComponent(shieldComp);
+      } else if (armorComp != null){
+        result.addComponent(armorComp);
+      }
+      
+      int safetyCount = 500;
+      while(result.getFreeSlots()>0 || safetyCount < 1) {
+        safetyCount--;
+        int choice = DiceGenerator.getRandom(4);
+        switch (choice) {
+        case 0: { //Weapon
+          if (result.getFreeEnergy() >=weapon.getEnergyRequirement()) {
+            result.addComponent(weapon);
+          } else if (result.getFreeSlots() > 1 
+              && power.getEnergyResource()+result.getFreeEnergy() >= weapon.getEnergyRequirement()) {
+            result.addComponent(weapon);
+            result.addComponent(power);
+          }
+          break;
+        }
+        case 1: { //Armor
+          if (armorComp != null) {
+            result.addComponent(armorComp);
+          }
+          break;
+        }
+        case 2: { //Shield
+          if (result.getFreeEnergy() >=shieldComp.getEnergyRequirement()) {
+            result.addComponent(shieldComp);
+            shieldsAdded = true;
+          } else if (result.getFreeSlots() > 1 
+              && power.getEnergyResource()+result.getFreeEnergy() >= shieldComp.getEnergyRequirement()) {
+            result.addComponent(shieldComp);
+            shieldsAdded = true;
+            result.addComponent(power);
+          }
+          break;
+        }
+        case 3: { //Shield Generator
+          if (shieldsAdded) {
+            if (result.getFreeEnergy() >=shieldGenComp.getEnergyRequirement()) {
+              result.addComponent(shieldGenComp);
+            } else if (result.getFreeSlots() > 1 
+                && power.getEnergyResource()+result.getFreeEnergy() >= shieldGenComp.getEnergyRequirement()) {
+              result.addComponent(shieldGenComp);
+              result.addComponent(power);
+            }
+          }
+          break;
+        }
+        }
+      }
+
+
+    }
+    return result;
+  }
+
   /**
    * Create scout ship with best possible technology. This is used
    * for human players in beginning and AI every time they design

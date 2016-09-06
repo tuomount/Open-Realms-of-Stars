@@ -267,6 +267,66 @@ public class PlayerInfo {
     
   }
   
+ private int calculateUnchartedLine(int sx, int sy, int ex, int ey) {
+   double startX = sx;
+   double startY = sy;
+   double dx = Math.abs(startX-ex);
+   double dy = Math.abs(startY-ey);
+   // Calculate distance to end
+   int distance = (int) dy;
+   if (dx > dy) {
+     distance = (int) dx;
+   }
+   int result = 0;
+   double mx;
+   double my;
+   // Calculate how much move each round
+   if (distance > 0) {
+     mx = (ex-startX)/distance;
+     my = (ey-startY)/distance;
+   } else {
+     mx = 0;
+     my = 0;
+   }
+   // Moving loop
+   for (int i=0;i<distance;i++) {
+     startX = startX +mx;
+     startY = startY +my;
+     int nx = (int) Math.round(startX);
+     int ny = (int) Math.round(startY);
+     if (isValidCoordinate(nx, ny)) {
+       if (mapData[nx][ny] == UNCHARTED) {
+         result++;
+       }
+     }
+   }
+   return result;
+ }
+
+ /**
+  * Get best sector to explore in this Solar system
+  * @param sun Solar System
+  * @param fleet Fleet doing the exploring
+  * @return How many percentage is uncharted
+  */
+ public int getUnchartedValueSystem(Sun sun, Fleet fleet) {
+   int unCharted = 0;
+   int charted = 0;
+   for (int x=-StarMap.SOLARSYSTEMWIDTH-2; x <StarMap.SOLARSYSTEMWIDTH+3;x++) {
+     for (int y=-StarMap.SOLARSYSTEMWIDTH-2; y <StarMap.SOLARSYSTEMWIDTH+3;y++) {
+       if (isValidCoordinate(sun.getCenterX()+x, sun.getCenterY()+y) && (x > 1 || x < -1 || y> 1 || y <-1) ) {
+         if (mapData[sun.getCenterX()+x][sun.getCenterY()+y]==UNCHARTED) {
+           unCharted++;
+         } else {
+           charted++;
+         }
+       }
+     }
+   }
+   unCharted = 100*unCharted /(charted+unCharted);
+   return unCharted;
+ }
+  
   /**
    * Get best sector to explore in this Solar system
    * @param sun Solar System
@@ -280,6 +340,7 @@ public class PlayerInfo {
     int[] charted = new int[4];
     int[] sectors = new int[4];
     PathPoint[] points = new PathPoint[4];
+    int[] bestPoint = new int[4];
     for (int i=0;i<points.length;i++) {
       points[i] = null;
     }
@@ -295,17 +356,20 @@ public class PlayerInfo {
         } else if (x>0 && y> 0) {
           sector = 3;
         }
-        if (isValidCoordinate(sun.getCenterX()+x, sun.getCenterY()+y)) {
+        if (isValidCoordinate(sun.getCenterX()+x, sun.getCenterY()+y) && (x > 1 || x < -1 || y> 1 || y <-1) ) {
           if (mapData[sun.getCenterX()+x][sun.getCenterY()+y]==UNCHARTED) {
             unCharted[sector]++;
             PathPoint tempPoint = new PathPoint(sun.getCenterX()+x, 
                 sun.getCenterY()+y, 
                 StarMap.getDistance(fleet.getX(), fleet.getY(), 
                     sun.getCenterX()+x, sun.getCenterY()+y));
+            int value =calculateUnchartedLine(fleet.getX(), fleet.getY(), sun.getCenterX()+x, sun.getCenterY()+y);
             if(points[sector] == null) {
               points[sector] = tempPoint;
-            } else if (points[sector].getDistance() < tempPoint.getDistance()) {
+              bestPoint[sector] = value;
+            } else if (value > bestPoint[sector]) {
               points[sector] = tempPoint;
+              bestPoint[sector] = value;
             }
           } else {
             charted[sector]++;
@@ -316,7 +380,12 @@ public class PlayerInfo {
     for (int i=0;i<sectors.length;i++) {
       sectors[i] = 100*unCharted[i] /(charted[i]+unCharted[i]);
     }
-    int oldSector = 0;
+    int unChartedValue = (sectors[0]+sectors[1]+sectors[2]+sectors[3])/4;
+    if (unChartedValue < 20) {
+      return null;
+    }
+    int pathValue = 0;
+    int resultValue = 0;
     for (sector = 0;sector < 4;sector++) {
       int mx = 0;
       int my = 0;
@@ -339,6 +408,7 @@ public class PlayerInfo {
           if (isValidCoordinate(nx, ny) && i>=scan && dist > 1) {
             if (mapData[nx][ny]==UNCHARTED) {
               temp = new PathPoint(nx, ny, dist);
+              pathValue =calculateUnchartedLine(fleet.getX(), fleet.getY(), nx, ny);
               break;
             }
           }
@@ -346,6 +416,7 @@ public class PlayerInfo {
           if (temp == null  && isValidCoordinate(sun.getCenterX(), ny) && i>=scan && dist > 1) {
             if (mapData[sun.getCenterX()][ny]==UNCHARTED) {
               temp = new PathPoint(sun.getCenterX(), ny, dist);
+              pathValue =calculateUnchartedLine(fleet.getX(), fleet.getY(), sun.getCenterX(), ny);
               break;
             }
           }
@@ -353,6 +424,7 @@ public class PlayerInfo {
           if (temp == null  && isValidCoordinate(nx, sun.getCenterY()) && i>=scan && dist > 1) {
             if (mapData[nx][sun.getCenterY()]==UNCHARTED) {
               temp = new PathPoint(nx, sun.getCenterY(), dist);
+              pathValue =calculateUnchartedLine(fleet.getX(), fleet.getY(), nx, sun.getCenterY());
               break;
             }
           }
@@ -360,14 +432,15 @@ public class PlayerInfo {
       }
       if (temp == null && points[sector] != null && points[sector].getDistance()>1) {
         temp = points[sector];
+        pathValue = bestPoint[sector];
       }
       if (result == null && temp != null) {
         result = temp;
-        oldSector = sector;
+        resultValue = pathValue;
       }
-      if (temp != null &&result != null && sectors[sector]>sectors[oldSector]) {
+      if (temp != null &&result != null && pathValue > resultValue) {
         result = temp;
-        oldSector = sector;
+        resultValue = pathValue;
       }
     }
     return result;

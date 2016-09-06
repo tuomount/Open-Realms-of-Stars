@@ -432,7 +432,7 @@ public class StarMap {
       }
       double dist = getDistance(x, y, sun.getCenterX(), sun.getCenterY());
       if (dist < distance) {
-        if (info.getUnchartedSector(sun, fleet) != null) {
+        if (info.getUnchartedValueSystem(sun, fleet) > 50) {
           distance = dist;
           result = sun;
         }

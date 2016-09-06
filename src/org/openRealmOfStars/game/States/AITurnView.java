@@ -216,6 +216,7 @@ public class AITurnView extends BlackPanel {
               mission.setTarget(sun.getCenterX(), sun.getCenterY());
               fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
                   mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+              mission.setSunName(sun.getName());
               mission.setPhase(MissionPhase.TREKKING);
               return;
             }

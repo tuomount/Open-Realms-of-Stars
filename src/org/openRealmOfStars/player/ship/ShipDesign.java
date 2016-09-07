@@ -161,6 +161,22 @@ public class ShipDesign {
   }
 
   /**
+   * Has design certain type of component installed
+   * @param type Component type for search
+   * @return true if component type is in place
+   */
+  public boolean gotCertainType(ShipComponentType type) {
+    boolean result = false;
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == type) {
+        result = true;;
+      }
+    }
+    return result;
+  }
+
+  /**
    * Get maximum armor for ship. This is very useful information
    * when ship is being design and shown on ship view
    * @return Maximum armor

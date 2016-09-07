@@ -282,6 +282,33 @@ public class TechList {
   }
 
   /**
+   * Get best Weapon for current technology. If there two equally good
+   * techs then it is randomized between those two.
+   * @param type Weapon type for search
+   * @return Best weapon tech or null if not found
+   */
+  public Tech getBestWeapon(ShipComponentType type) {
+    Tech best = null;
+    int bestValue = -1;
+    Tech[] list = getListForType(TechType.Combat);
+    for (Tech tech : list) {
+      ShipComponent comp = ShipComponentFactory.createByName(tech.getComponent());
+      int compValue = -1;
+      if (comp.getType() == type)  {
+        compValue = comp.getDamage();
+      }
+      if (compValue > bestValue) {
+        best = tech;
+        bestValue = compValue;
+      } else if (compValue == bestValue && DiceGenerator.getRandom(1) == 0) {
+        best = tech;
+        bestValue = compValue;
+      }
+    }
+    return best;
+  }
+
+  /**
    * Get Tech list for certain tech type and level
    * @param type Tech Type to get the list
    * @param level Level of tech list 1-10

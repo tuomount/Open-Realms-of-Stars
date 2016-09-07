@@ -1,9 +1,12 @@
 package org.openRealmOfStars.player.ship.generator;
 
+import java.util.ArrayList;
+
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
+import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullFactory;
@@ -39,7 +42,95 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 
 public class ShipGenerator {
 
+  /**
+   * Score components for battle ship
+   * @param design Design for ship
+   * @param player Player doing the ship
+   * @param components Component list available
+   * @return array of scores
+   */
+  private static int[] scoreComponents(ShipDesign design, PlayerInfo player, ArrayList<ShipComponent> components) {
+    int[] scores = new int[components.size()];
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      scores[i] = 0;
+      scores[i] = scores[i] -comp.getEnergyRequirement();
+      scores[i] = scores[i] +comp.getEnergyResource();
+      scores[i] = scores[i] -comp.getCost()/4;
+      scores[i] = scores[i] -comp.getMetalCost()/4;
+      switch (comp.getType()) {
+      case ARMOR: {
+        scores[i] = scores[i] +comp.getDefenseValue()*5;
+        scores[i] = scores[i] +5; // No need for electricty
+        break;
+      }
+      case CLOAKING_DEVICE: {
+        if (!design.gotCertainType(ShipComponentType.CLOAKING_DEVICE)) { 
+          scores[i] = scores[i] +comp.getCloaking()/10;
+        } else  {
+          scores[i] = -1;
+        }
+        break;
+      }
+      case JAMMER: {
+        if (!design.gotCertainType(ShipComponentType.JAMMER)) { 
+          scores[i] = scores[i] +comp.getDefenseValue()*2;
+        } else {
+          scores[i] = -1;
+        }
+        break;
+      }
+      case SCANNER: {
+        if (!design.gotCertainType(ShipComponentType.CLOAKING_DEVICE)) { 
+          scores[i] = scores[i] +comp.getScannerRange()*2;
+          scores[i] = scores[i] +comp.getCloakDetection()/10;
+        } else {
+          scores[i] = -1;
+        }
+        break;
+      }
+      case SHIELD: {
+        scores[i] = scores[i] +comp.getDefenseValue();
+        scores[i] = scores[i] +5; // Recharge
+        break;
+      }
+      case SHIELD_GENERATOR: {
+        if (design.getTotalShield() > 0 &&
+            !design.gotCertainType(ShipComponentType.SHIELD_GENERATOR)) { 
+          scores[i] = scores[i] +25; 
+        } else {
+          scores[i] = -1; // No shield
+        }
+        break;
+      }
+      case TARGETING_COMPUTER: {
+        if (!design.gotCertainType(ShipComponentType.TARGETING_COMPUTER)) { 
+          scores[i] = scores[i] +comp.getDamage(); 
+        } else {
+          scores[i] = -1; // No shield
+        }
+        break;
+      }
+      case WEAPON_BEAM:
+      case WEAPON_ECM_TORPEDO:
+      case WEAPON_HE_MISSILE:
+      case WEAPON_PHOTON_TORPEDO:
+      case WEAPON_RAILGUN:{
+        scores[i] = scores[i] +comp.getDamage()*5; 
+        break;
+      }
+      default: { break; }
+      }
+    }
+    return scores;
+  }
   
+  /**
+   * Design new battle ship for certain size
+   * @param player Player doing the design
+   * @param size Ship Size
+   * @return ShipDesign if doable. Null if not doable for that size.
+   */
   public static ShipDesign createBattleShip(PlayerInfo player, ShipSize size) {
     ShipDesign result = null;
     Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
@@ -77,19 +168,21 @@ public class ShipGenerator {
       ShipComponent shieldComp = null;
       ShipComponent shieldGenComp = null;
       ShipComponent armorComp = null;
-      boolean shieldsAdded = false;
+      ArrayList<ShipComponent> components = new ArrayList<>();
       if (shield != null) {
         shieldComp = ShipComponentFactory.createByName(
           shield.getComponent());
-        shieldsAdded = true;
+        components.add(shieldComp);
       }
       if (shieldGen != null) {
         shieldGenComp = ShipComponentFactory.createByName(
           shieldGen.getComponent());
+        components.add(shieldGenComp);
       }
       if (armor != null) {
         armorComp = ShipComponentFactory.createByName(
           armor.getComponent());
+        components.add(armorComp);
       }
       if (shieldComp != null && 
           result.getFreeEnergy()>=shieldComp.getEnergyRequirement()) {
@@ -97,53 +190,76 @@ public class ShipGenerator {
       } else if (armorComp != null){
         result.addComponent(armorComp);
       }
-      
+      Tech weapTech = player.getTechList().getBestWeapon(ShipComponentType.WEAPON_BEAM);
+      if (weapTech != null) {
+        components.add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      weapTech = player.getTechList().getBestWeapon(ShipComponentType.WEAPON_ECM_TORPEDO);
+      if (weapTech != null) {
+        components.add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      weapTech = player.getTechList().getBestWeapon(ShipComponentType.WEAPON_HE_MISSILE);
+      if (weapTech != null) {
+        components.add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      weapTech = player.getTechList().getBestWeapon(ShipComponentType.WEAPON_PHOTON_TORPEDO);
+      if (weapTech != null) {
+        components.add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      weapTech = player.getTechList().getBestWeapon(ShipComponentType.WEAPON_RAILGUN);
+      if (weapTech != null) {
+        components.add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      Tech elecTech = TechList.getBestTech(electricsTechs,"Jammer");
+      if (elecTech != null) {
+        components.add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      elecTech = TechList.getBestTech(electricsTechs,"Targeting computer");
+      if (elecTech != null) {
+        components.add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      elecTech = TechList.getBestTech(electricsTechs,"Scanner");
+      if (elecTech != null) {
+        components.add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      elecTech = TechList.getBestTech(electricsTechs,"Cloaking device");
+      if (elecTech != null) {
+        components.add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      elecTech = TechList.getBestTech(electricsTechs,"LR scanner");
+      if (elecTech != null) {
+        components.add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      int[] componentScores = new int[components.size()]; 
       int safetyCount = 500;
       while(result.getFreeSlots()>0 || safetyCount < 1) {
         safetyCount--;
-        int choice = DiceGenerator.getRandom(4);
-        switch (choice) {
-        case 0: { //Weapon
-          if (result.getFreeEnergy() >=weapon.getEnergyRequirement()) {
-            result.addComponent(weapon);
-          } else if (result.getFreeSlots() > 1 
-              && power.getEnergyResource()+result.getFreeEnergy() >= weapon.getEnergyRequirement()) {
-            result.addComponent(weapon);
-            result.addComponent(power);
+        componentScores = scoreComponents(result, player, components);
+        int sum = 0;
+        for (int i=0;i<componentScores.length;i++) {
+          if (componentScores[i] > 0) {
+            sum = sum + componentScores[i];
           }
-          break;
         }
-        case 1: { //Armor
-          if (armorComp != null) {
-            result.addComponent(armorComp);
-          }
-          break;
-        }
-        case 2: { //Shield
-          if (result.getFreeEnergy() >=shieldComp.getEnergyRequirement()) {
-            result.addComponent(shieldComp);
-            shieldsAdded = true;
-          } else if (result.getFreeSlots() > 1 
-              && power.getEnergyResource()+result.getFreeEnergy() >= shieldComp.getEnergyRequirement()) {
-            result.addComponent(shieldComp);
-            shieldsAdded = true;
-            result.addComponent(power);
-          }
-          break;
-        }
-        case 3: { //Shield Generator
-          if (shieldsAdded) {
-            if (result.getFreeEnergy() >=shieldGenComp.getEnergyRequirement()) {
-              result.addComponent(shieldGenComp);
-            } else if (result.getFreeSlots() > 1 
-                && power.getEnergyResource()+result.getFreeEnergy() >= shieldGenComp.getEnergyRequirement()) {
-              result.addComponent(shieldGenComp);
-              result.addComponent(power);
+        int choice = DiceGenerator.getRandom(sum);
+        int total = 0;
+        for (int i=0;i<componentScores.length;i++) {
+          if (componentScores[i] > 0) {            
+            if (choice < total+componentScores[i]) {
+              if (result.getFreeEnergy() >=components.get(i).getEnergyRequirement()) {
+                result.addComponent(components.get(i));
+              }  else if (result.getFreeSlots() > 1 
+                  && power.getEnergyResource()+result.getFreeEnergy() >=
+                  components.get(i).getEnergyRequirement()) {
+                result.addComponent(components.get(i));
+                result.addComponent(power);
+              }
+              break;
             }
+            total = total +componentScores[i];
           }
-          break;
         }
-        }
+        
       }
 
 

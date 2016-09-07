@@ -149,7 +149,7 @@ public class ShipGenerator {
     if (hull != null) {
       result = new ShipDesign(hull);
       String[] part = hull.getName().split("Mk");
-      result.setName(part[0] +" Mk"+(player.getShipStatStartsWith(part[0])+1));
+      result.setName(part[0].trim() +" Mk"+(player.getShipStatStartsWith(part[0])+1));
       ShipComponent engine = ShipComponentFactory.createByName(player.
           getTechList().getBestEngine().getComponent());
       result.addComponent(engine);

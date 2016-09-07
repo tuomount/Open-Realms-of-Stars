@@ -296,14 +296,14 @@ public class TechList {
       int compValue = -1;
       if (comp.getType() == type)  {
         compValue = comp.getDamage();
-      }
-      if (compValue > bestValue) {
-        best = tech;
-        bestValue = compValue;
-      } else if (compValue == bestValue && DiceGenerator.getRandom(1) == 0) {
-        best = tech;
-        bestValue = compValue;
-      }
+        if (compValue > bestValue) {
+          best = tech;
+          bestValue = compValue;
+        } else if (compValue == bestValue && DiceGenerator.getRandom(1) == 0) {
+          best = tech;
+          bestValue = compValue;
+        }
+      } 
     }
     return best;
   }

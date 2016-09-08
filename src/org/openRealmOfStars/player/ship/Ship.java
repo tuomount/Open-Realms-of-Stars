@@ -366,7 +366,10 @@ public class Ship extends Construction {
         positions++;
       }
     }
-    int target = DiceGenerator.getRandom(positions-1);
+    int target = 0;
+    if (positions > 1) {
+      target = DiceGenerator.getRandom(positions-1);
+    }
     int hp = hullPoints[componentPos[target]];
     hullPoints[componentPos[target]] = hullPoints[componentPos[target]]-damage;
     damage = damage-hp;

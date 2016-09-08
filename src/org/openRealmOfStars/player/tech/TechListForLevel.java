@@ -1,6 +1,11 @@
 package org.openRealmOfStars.player.tech;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import org.openRealmOfStars.utilities.IOUtilities;
 /**
  * 
  * Open Realm of Stars game project
@@ -44,6 +49,50 @@ public class TechListForLevel {
     }
   }
   
+  /**
+   * Save Tech list for level
+   * @param dos DataOutputStream
+   * @throws IOException
+   */
+  public void saveTechListForLevel(DataOutputStream dos) throws IOException {
+    dos.writeInt(techList.size());
+    for (Tech tech : techList) {
+      IOUtilities.writeString(dos, tech.getName());
+    }
+  }
+
+  /**
+   * Create tech list for level from DataInputStream
+   * @param level Level
+   * @param type Tech Type
+   * @param dis DataInputStream
+   * @throws IOException
+   */
+  public TechListForLevel(int level, TechType type, DataInputStream dis) 
+      throws IOException {
+    techList = new ArrayList<>();
+    if (level >= 1 && level < 10) {
+      this.level = level;
+    } else {
+      this.level = 1;
+    }
+    int count = dis.readInt();
+    for (int i=0;i<count;i++) {
+      String name = IOUtilities.readString(dis);
+      Tech tech = null;
+      switch (type) {
+      case Combat: tech = TechFactory.createCombatTech(name, level); break;
+      case Defense: tech = TechFactory.createDefenseTech(name, level); break;
+      case Hulls: tech = TechFactory.createHullTech(name, level); break;
+      case Improvements: tech = TechFactory.createImprovementTech(name, level); break;
+      case Propulsion: tech = TechFactory.createPropulsionTech(name, level); break;
+      case Electrics: tech = TechFactory.createElectronicsTech(name, level); break;
+      }
+      if (tech != null) {
+        techList.add(tech);
+      }
+    }
+  }
   /**
    * Check if certain tech is in tech list
    * @param techName Techname to search

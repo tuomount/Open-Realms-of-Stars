@@ -1,5 +1,7 @@
 package org.openRealmOfStars.player;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.AI.Mission.MissionList;
@@ -16,6 +18,7 @@ import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
  * 
@@ -267,7 +270,23 @@ public class PlayerInfo {
     
   }
   
- private int calculateUnchartedLine(int sx, int sy, int ex, int ey) {
+  public void savePlayerInfo(DataOutputStream dos) throws IOException {
+    IOUtilities.writeString(dos, empireName);
+    dos.writeInt(race.getIndex());
+    dos.writeInt(totalCredits);
+    techList.saveTechList(dos);
+    //FIXME Not done yet
+  }
+  
+  /**
+   * Calculate how many uncharted sectors is between start and end
+   * @param sx Start X coordinate
+   * @param sy Start Y coordinate
+   * @param ex End X coordinate
+   * @param ey End Y coordinate
+   * @return Number of uncharted sector
+   */
+  private int calculateUnchartedLine(int sx, int sy, int ex, int ey) {
    double startX = sx;
    double startY = sy;
    double dx = Math.abs(startX-ex);

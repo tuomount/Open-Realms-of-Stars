@@ -1,5 +1,8 @@
 package org.openRealmOfStars.player.tech;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.icons.Icons;
@@ -86,6 +89,45 @@ public class TechList {
     techFocus[TechType.Improvements.getIndex()] = 16;
     techFocus[TechType.Propulsion.getIndex()] = 16;
     techFocus[TechType.Electrics.getIndex()] = 16;
+  }
+  
+  /**
+   * Save Tech list for DataOutputStream
+   * @param dos
+   * @throws IOException
+   */
+  public void saveTechList(DataOutputStream dos) throws IOException {
+    for (int i=0;i<MAX_TECH_TYPES;i++) {
+      for (int j=0;j<MAX_TECH_LEVEL;j++) {
+        techList[i][j].saveTechListForLevel(dos);
+      }
+    }
+    for (int i=0;i<MAX_TECH_TYPES;i++) {
+      dos.writeInt(techLevels[i]);
+      dos.writeInt(techFocus[i]);
+      dos.writeDouble(techResearchPoint[i]);
+    }
+    
+  }
+  
+  /**
+   * Read TechList from DataInputStream
+   * @param dis DataInputStream
+   * @throws IOException
+   */
+  public TechList(DataInputStream dis) throws IOException {
+    techList = new TechListForLevel[TechType.values().length][MAX_TECH_LEVEL];
+    for (int i=0;i<MAX_TECH_TYPES;i++) {
+      for (int j=0;j<MAX_TECH_LEVEL;j++) {
+        techList[i][j] = new TechListForLevel(j, TechType.values()[i], dis);
+      }
+    }
+    for (int i=0;i<MAX_TECH_TYPES;i++) {
+      techLevels[i] = dis.readInt();
+      techFocus[i] = dis.readInt();
+      techResearchPoint[i] = dis.readDouble();
+    }
+
   }
   
   /**

@@ -372,6 +372,10 @@ public class Ship extends Construction {
     }
     int hp = hullPoints[componentPos[target]];
     hullPoints[componentPos[target]] = hullPoints[componentPos[target]]-damage;
+    if (hullPoints[componentPos[target]]<0) {
+      // No negative hull points to components
+      hullPoints[componentPos[target]] = 0;
+    }
     damage = damage-hp;
     return damage;    
   }

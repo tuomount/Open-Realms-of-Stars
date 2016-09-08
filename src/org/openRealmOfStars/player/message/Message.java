@@ -1,6 +1,12 @@
 package org.openRealmOfStars.player.message;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 import org.openRealmOfStars.gui.icons.Icon16x16;
+import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
  * 
@@ -61,6 +67,12 @@ public class Message {
    */
   private String matchByString;
 
+  /**
+   * Create new message
+   * @param type MessageType
+   * @param msg Message text
+   * @param icon Icon for message
+   */
   public Message(MessageType type, String msg, Icon16x16 icon) {
     this.type = type;
     this.message = msg;
@@ -69,6 +81,43 @@ public class Message {
     this.y = -1;
     this.index = -1;
     this.matchByString = null;
+  }
+  
+  /**
+   * Read Message from DataInputStream
+   * @param dis DataInputStream
+   * @throws IOException
+   */
+  public Message(DataInputStream dis) throws IOException {
+    this.type = MessageType.getTypeByIndex(dis.readInt());
+    this.index = dis.readInt();
+    this.x = dis.readInt();
+    this.y = dis.readInt();
+    this.message = IOUtilities.readString(dis);
+    this.matchByString = IOUtilities.readString(dis);
+    if (this.matchByString.isEmpty()) {
+      this.matchByString = null;
+    }
+    this.icon = Icons.getIconByName(IOUtilities.readString(dis));
+  }
+  
+  /**
+   * Save message into DataOutputStream
+   * @param dos DataOutputStream
+   * @throws IOException
+   */
+  public void saveMessage(DataOutputStream dos) throws IOException {
+    dos.writeInt(type.getIndex());
+    dos.writeInt(index);
+    dos.writeInt(x);
+    dos.writeInt(y);
+    IOUtilities.writeString(dos, message);
+    if (matchByString == null) {
+      IOUtilities.writeString(dos, "");
+    } else {
+      IOUtilities.writeString(dos, matchByString);
+    }
+    IOUtilities.writeString(dos, icon.getName());
   }
   
   public int getIndex() {

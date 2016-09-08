@@ -1,5 +1,8 @@
 package org.openRealmOfStars.player.message;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.icons.Icons;
@@ -50,6 +53,32 @@ public class MessageList {
   public MessageList() {
     list = new ArrayList<>();
     index = 0;
+  }
+  
+  /**
+   * Read all the message from DataInputStream to list
+   * @param dis DataInputStream
+   * @throws IOException
+   */
+  public MessageList(DataInputStream dis) throws IOException {
+    list = new ArrayList<>();
+    index = 0;
+    int count = dis.readInt();
+    for (int i=0;i<count;i++) {
+      list.add(new Message(dis));
+    }
+  }
+  
+  /**
+   * Write all messages into DataOutputStream
+   * @param dos DataOutputStream
+   * @throws IOException
+   */
+  public void saveMessageList(DataOutputStream dos) throws IOException {
+    dos.writeInt(list.size());
+    for (int i=0;i<list.size();i++) {
+      list.get(i).saveMessage(dos);
+    }
   }
 
   /**

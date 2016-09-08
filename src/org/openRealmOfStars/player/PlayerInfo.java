@@ -275,6 +275,7 @@ public class PlayerInfo {
     dos.writeInt(race.getIndex());
     dos.writeInt(totalCredits);
     techList.saveTechList(dos);
+    msgList.saveMessageList(dos);
     //FIXME Not done yet
   }
   

@@ -197,13 +197,23 @@ public class StarMap {
    */
   public void saveGame(DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, MAGIC_STRING);
+    // Turn number
+    dos.writeInt(turn);
     // Map size
     dos.writeInt(maxX);
     dos.writeInt(maxY);
+    // Map data itself
     for (int x=0;x<maxX;x++) {
       for (int y=0;y<maxY;y++) {
         dos.writeInt(tiles[x][y]);
+        tileInfo[x][y].writeSquareInfo(dos);
       }
+    }
+    // Write suns
+    dos.writeInt(sunList.size());
+    for (int i=0;i<sunList.size();i++) {
+      Sun sun = sunList.get(i);
+      sun.saveSun(dos);
     }
   }
 

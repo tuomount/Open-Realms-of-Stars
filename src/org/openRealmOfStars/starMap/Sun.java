@@ -1,5 +1,10 @@
 package org.openRealmOfStars.starMap;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
+import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
 /**
@@ -55,6 +60,28 @@ public class Sun {
     } else {
       this.setName(name);
     }
+  }
+
+  /**
+   * Create the sun from DataInputStream
+   * @param dis DataInputStream
+   * @throws IOException
+   */
+  public Sun(DataInputStream dis) throws IOException {
+    this.setCenterX(dis.readInt());
+    this.setCenterY(dis.readInt());
+    this.setName(IOUtilities.readString(dis));
+  }
+  
+  /**
+   * Save Sun information to DataOutputStream
+   * @param dos DataOutputStream
+   * @throws IOException
+   */
+  public void saveSun(DataOutputStream dos) throws IOException {
+    dos.writeInt(centerX);
+    dos.writeInt(centerY);
+    IOUtilities.writeString(dos, name);
   }
 
   public String getName() {

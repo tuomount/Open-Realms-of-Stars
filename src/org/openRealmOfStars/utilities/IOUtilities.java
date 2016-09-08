@@ -2,6 +2,7 @@ package org.openRealmOfStars.utilities;
 
 import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -79,6 +80,40 @@ public class IOUtilities {
     } catch (IOException e) {
       System.err.println("Failing to write screenshot!");
       e.printStackTrace();
+    }
+  }
+
+  /**
+   * Reads string from DataInputStream. First 4 octets tell string length
+   * then each character is read with 2 octets.
+   * @param is DataInputStream
+   * @return string
+   * @throws IOException if read fails
+   */
+  public static String readString(DataInputStream is) throws IOException {
+    StringBuilder sb = new StringBuilder();
+    int len = is.readInt();
+    for (int i=0;i<len;i++) {
+      char ch =is.readChar();
+      sb.append(ch);
+    }
+    return sb.toString();
+  }
+  
+  /**
+   * Writes string into DataOutputStream. First 4 octets tell string length
+   * then each character is written with 2 octets
+   * @param os
+   * @param str
+   * @throws IOException
+   */
+  public static void writeString(DataOutputStream os, String str) 
+                                               throws IOException {
+    if (str!=null) {
+      os.writeInt(str.length());
+      os.writeChars(str);
+    } else {
+      os.writeInt(0);
     }
   }
 

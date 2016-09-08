@@ -1,4 +1,9 @@
 package org.openRealmOfStars.starMap;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 /**
  * 
  * Open Realm of Stars game project
@@ -64,6 +69,26 @@ public class SquareInfo {
   public SquareInfo(byte type, int value) {
     this.setType(type);
     this.setValue(value);
+  }
+  
+  /**
+   * Write Square info to DataOutput stream
+   * @param dos DataOutputStream to write
+   * @throws IOException
+   */
+  public void writeSquareInfo(DataOutputStream dos) throws IOException {
+    dos.writeByte(type);
+    dos.writeShort(value);
+  }
+  
+  /**
+   * Read square info from DataInputStream
+   * @param dis DataInputStream where to read
+   * @throws IOException
+   */
+  public SquareInfo(DataInputStream dis) throws IOException {
+    this.setType(dis.readByte());
+    this.setValue(dis.readShort());
   }
 
   public byte getType() {

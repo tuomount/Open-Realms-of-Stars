@@ -1,5 +1,7 @@
 package org.openRealmOfStars.starMap;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.AI.PlanetHandling.PlanetHandling;
@@ -21,6 +23,7 @@ import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
  * 
@@ -125,6 +128,11 @@ public class StarMap {
    * AI fleet for current AI number
    */
   private Fleet aiFleet;
+  
+  /**
+   * Magic string to save game files
+   */
+  public final static String MAGIC_STRING ="OROS-SAVE-GAME-0.0";
 
   /**
    * Constructor for StarMap. Generates universum with default settings.
@@ -180,6 +188,23 @@ public class StarMap {
     sx = maxX-SOLARSYSTEMWIDTH;
     sy = maxY-SOLARSYSTEMWIDTH;
     createSolarSystem(sx,sy,3,0,3);
+  }
+  
+  /**
+   * Save Game to DataOuputStream
+   * @param dos DataOutputStream
+   * @throws IOException
+   */
+  public void saveGame(DataOutputStream dos) throws IOException {
+    IOUtilities.writeString(dos, MAGIC_STRING);
+    // Map size
+    dos.writeInt(maxX);
+    dos.writeInt(maxY);
+    for (int x=0;x<maxX;x++) {
+      for (int y=0;y<maxY;y++) {
+        dos.writeInt(tiles[x][y]);
+      }
+    }
   }
 
   /**

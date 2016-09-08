@@ -3,6 +3,10 @@ package org.openRealmOfStars.game;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -589,7 +593,16 @@ public class Game extends JFrame implements ActionListener {
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_BATTLE)) {
-      changeGameState(GameState.COMBAT);
+      File file = new File("saves/game.dat");
+      try {
+        FileOutputStream os = new FileOutputStream(file);
+        BufferedOutputStream bos = new BufferedOutputStream(os);
+        DataOutputStream dos = new DataOutputStream(bos);
+        
+        dos.close();
+      } catch (IOException e) {
+        System.out.println(e.getMessage());
+      }
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_SHIPDESIGN_DONE)) {

@@ -1,6 +1,8 @@
 package org.openRealmOfStars.starMap.planet;
 
 import java.awt.image.BufferedImage;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.AI.Mission.Mission;
@@ -21,6 +23,7 @@ import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
 
@@ -110,10 +113,6 @@ public class Planet {
    */
   private int prodResource;
   
-  /**
-   * How much production resources available for building stuff
-   */
-  private int productionResource;
   
   /**
    * Is planet inhabitable gas giant. Gas giants just block the radar.
@@ -312,12 +311,49 @@ public class Planet {
     this.planetOwner = -1;
     this.workers = new int[MAX_WORKER_TYPE];
     this.extraFood = 0;
-    this.productionResource = 0;
     this.buildings = new ArrayList<>();
     this.prodResource = 0;
     this.underConstruction = null;
     this.tax = 0;
     this.culture = 0;
+  }
+  
+  /**
+   * Save Planet data to DataOutputStream
+   * @param dos DataOutputStream
+   * @throws IOException
+   */
+  public void savePlanet(DataOutputStream dos) throws IOException {
+    // Coordinates
+    dos.writeInt(x);
+    dos.writeInt(y);
+    IOUtilities.writeString(dos, name);
+    dos.writeInt(OrderNumber);
+    dos.writeInt(radiationLevel);
+    dos.writeInt(groundSize);
+    dos.writeInt(amountMetalInGround);
+    dos.writeInt(metal);
+    dos.writeInt(prodResource);
+    dos.writeBoolean(gasGiant);
+    dos.writeInt(planetImageIndex);
+    dos.writeInt(planetType);
+    dos.writeInt(planetOwner);
+    dos.writeInt(extraFood);
+    dos.writeInt(tax);
+    dos.writeInt(culture);
+    for (int i=0;i<MAX_WORKER_TYPE;i++) {
+      dos.writeInt(workers[i]);
+    }
+    dos.writeInt(buildings.size());
+    for (int i=0;i<buildings.size();i++) {
+      IOUtilities.writeString(dos, buildings.get(i).getName());
+    }
+    if (underConstruction == null) {
+      // Write empty string
+      IOUtilities.writeString(dos, "");
+    } else {
+      IOUtilities.writeString(dos, underConstruction.getName());
+    }
   }
 
   /**
@@ -879,20 +915,6 @@ public class Planet {
   public void setPlanetOwner(int planetOwner, PlayerInfo info) {
     this.planetOwner = planetOwner;
     this.planetOwnerInfo = info;
-  }
-
-  /**
-   * @return the productionResource
-   */
-  public int getProductionResource() {
-    return productionResource;
-  }
-
-  /**
-   * @param productionResource the productionResource to set
-   */
-  public void setProductionResource(int productionResource) {
-    this.productionResource = productionResource;
   }
 
   /**

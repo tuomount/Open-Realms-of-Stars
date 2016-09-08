@@ -662,6 +662,13 @@ public class StarMap {
     if (info != null && !info.isHuman()) {
       // Handle research
       Research.handle(info);
+      ArrayList<Message> msgs = info.getMsgList().getFullList();
+      for (Message msg : msgs) {
+        if (msg.getType() ==MessageType.RESEARCH) {
+          Research.handleShipDesigns(info);
+          break;
+        }
+      }
       for (int j=0;j<planetList.size();j++) {
         // Handle planets
         Planet planet = planetList.get(j);

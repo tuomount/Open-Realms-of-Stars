@@ -1,6 +1,11 @@
 package org.openRealmOfStars.AI.Research;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.ship.ShipDesign;
+import org.openRealmOfStars.player.ship.ShipHullType;
+import org.openRealmOfStars.player.ship.ShipSize;
+import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechType;
 
@@ -28,6 +33,48 @@ import org.openRealmOfStars.player.tech.TechType;
  */
 
 public class Research {
+
+
+  /**
+   * Handle new ship designs for AI
+   * @param info PlayerInfo
+   */
+  public static void handleShipDesigns(PlayerInfo info) {
+    handleBattleShipDesign(info, ShipSize.SMALL);
+    handleBattleShipDesign(info, ShipSize.MEDIUM);
+    handleBattleShipDesign(info, ShipSize.LARGE);
+    handleBattleShipDesign(info, ShipSize.HUGE);
+  }
+  
+  /**
+   * Handle Battle ship design for AI for certain size
+   * @param info Player
+   * @param size ShipSize to handle
+   */
+  private static void handleBattleShipDesign(PlayerInfo info, ShipSize size) {
+    ShipDesign design = ShipGenerator.createBattleShip(info, size);
+    if (design != null) {
+      ShipStat[] stats = info.getShipStatList();
+      boolean notFound = true;
+      for (ShipStat stat : stats) {
+        if (stat.getDesign().getHull().getSize() == size 
+            && stat.getDesign().getHull().getHullType() == ShipHullType.NORMAL) {
+          notFound = false;
+          if (design.getTotalMilitaryPower() > stat.getDesign().getTotalMilitaryPower()) {
+            stat.setObsolete(true);
+            ShipStat ship = new ShipStat(design);
+            info.addShipStat(ship);
+            break;
+          }
+        }
+      }
+      if (notFound) {
+        ShipStat ship = new ShipStat(design);
+        info.addShipStat(ship);
+      }
+    }
+    
+  }
 
   /**
    * Handle research for AI player

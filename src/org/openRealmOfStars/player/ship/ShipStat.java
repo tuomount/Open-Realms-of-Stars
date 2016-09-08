@@ -62,6 +62,11 @@ public class ShipStat {
   private int numberOfInUse;
 
   /**
+   * Is ship obsolete and not showing in building list
+   */
+  private boolean obsolete;
+  
+  /**
    * Constructor
    * @param design Ship Design
    */
@@ -73,6 +78,7 @@ public class ShipStat {
     numberOfKills = 0;
     numberOfBuilt = 0;
     numberOfInUse = 0;
+    setObsolete(false);
   }
 
   public int getNumberOfCombats() {
@@ -146,6 +152,14 @@ public class ShipStat {
     sb.append(" Kills: ");
     sb.append(getNumberOfKills());
     return sb.toString();
+  }
+
+  public boolean isObsolete() {
+    return obsolete;
+  }
+
+  public void setObsolete(boolean obsolete) {
+    this.obsolete = obsolete;
   }
   
   

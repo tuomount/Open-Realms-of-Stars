@@ -756,7 +756,9 @@ public class Planet {
       if (this.hasSpacePort()) {
         ShipStat[] ships = planetOwnerInfo.getShipStatList();
         for (ShipStat stat : ships) {
-          result.add(new Ship(stat.getDesign()));
+          if (!stat.isObsolete()) {
+            result.add(new Ship(stat.getDesign()));
+          }
         }
       }
     }

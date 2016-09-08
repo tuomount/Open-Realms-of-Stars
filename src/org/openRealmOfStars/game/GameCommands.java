@@ -253,6 +253,11 @@ public class GameCommands {
   public static final String COMMAND_COPY_SHIP = "CopyShipDesign";
 
   /**
+   * Obsolete ship design
+   */
+  public static final String COMMAND_OBSOLETE_SHIP = "ObsoleteShipDesign";
+
+  /**
    * Start ship design with new ship
    */
   public static final String COMMAND_SHIPDESIGN = "ShipDesign";

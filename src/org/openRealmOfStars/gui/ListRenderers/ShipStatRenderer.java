@@ -49,10 +49,14 @@ public class ShipStatRenderer implements ListCellRenderer<ShipStat> {
     sb.append(value.getDesign().getName());
     sb.append(" - ");
     sb.append(value.getDesign().getHull().getSize());
-    sb.append(" Cost/Metal: ");
-    sb.append(value.getDesign().getCost());
-    sb.append("/");
-    sb.append(value.getDesign().getMetalCost());
+    if (value.isObsolete()) {
+      sb.append(" Obsoleted"); 
+    } else {
+      sb.append(" Cost/Metal: ");
+      sb.append(value.getDesign().getCost());
+      sb.append("/");
+      sb.append(value.getDesign().getMetalCost());
+    }
     renderer.setText(sb.toString());
     if (isSelected) {
       renderer.setForeground(GuiStatics.COLOR_GREEN_TEXT);

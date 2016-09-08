@@ -82,6 +82,11 @@ public class ShipView extends BlackPanel {
    */
   private boolean copyClicked;
 
+  /**
+   * Obsolete button for ship
+   */
+  private SpaceButton obsoleteBtn;
+  
   public ShipView(PlayerInfo player, ActionListener listener) {
     this.player = player;
     this.copyClicked = false;
@@ -98,6 +103,9 @@ public class ShipView extends BlackPanel {
     InvisiblePanel invis = new InvisiblePanel(base);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
     invis.add(scroll);
+    obsoleteBtn = new SpaceButton("Obsolete design", GameCommands.COMMAND_OBSOLETE_SHIP);
+    obsoleteBtn.addActionListener(listener);
+    invis.add(obsoleteBtn);
     SpaceButton btn = new SpaceButton("Copy design", GameCommands.COMMAND_COPY_SHIP);
     btn.addActionListener(listener);
     invis.add(btn);
@@ -146,6 +154,11 @@ public class ShipView extends BlackPanel {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
       if (shipList.getSelectedIndex() != -1) {
         ShipStat stat = shipList.getSelectedValue();
+        if (stat.isObsolete()) {
+          obsoleteBtn.setText("Activate");
+        } else {
+          obsoleteBtn.setText("Obsolete");
+        }
         infoText.setText(stat.toString());
         shipImage.setImage(stat.getDesign().getHull().getImage());
         this.repaint();
@@ -154,6 +167,16 @@ public class ShipView extends BlackPanel {
         this.repaint();
         shipImage.setImage(ShipImages.Humans().getShipImage(ShipImage.COLONY));
       }
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_OBSOLETE_SHIP)) {
+      if (shipList.getSelectedIndex() != -1) {
+        ShipStat stat = shipList.getSelectedValue();
+        if (!stat.isObsolete()) {
+          stat.setObsolete(true);
+        } else {
+          stat.setObsolete(false);
+        }
+      }      
     }
   }
   

@@ -2,12 +2,17 @@ package org.openRealmOfStars.player.ship;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
  * 
@@ -95,6 +100,60 @@ public class Ship extends Construction {
     setDescription(design.getDesignInfo());
     setColonist(0);
     setMetal(0);
+  }
+  
+  /**
+   * Read Ship from DataInputStream
+   * @param dis DataInputStream
+   * @throws IOException
+   */
+  public Ship(DataInputStream dis) throws IOException {
+    super("SHIP",Icons.getIconByName(Icons.ICON_HULL_TECH));
+    String name = IOUtilities.readString(dis);
+    setName(name);
+    prodCost = dis.readInt();
+    metalCost = dis.readInt();
+    setDescription(IOUtilities.readString(dis));
+    String hullName = IOUtilities.readString(dis);
+    int raceIndex = dis.readInt();
+    hull = ShipHullFactory.createByName(hullName, SpaceRace.getRaceByIndex(raceIndex));
+    image = ShipImage.scaleTo32x32(hull.getImage());
+    int count = dis.readInt();
+    components = new ArrayList<>();
+    hullPoints = new int[count];
+    for (int i=0;i<count;i++) {
+      ShipComponent comp = ShipComponentFactory.createByName(IOUtilities.readString(dis));
+      components.add(comp);
+      hullPoints[i] = dis.readInt();
+    }
+    setShield(dis.readInt());
+    setArmor(dis.readInt());
+    setColonist(dis.readInt());
+    setMetal(dis.readInt());
+  }
+  
+  /**
+   * Save ship to Data output Stream
+   * @param dos Data Output Stream
+   * @throws IOException
+   */
+  public void saveShip(DataOutputStream dos) throws IOException {
+    IOUtilities.writeString(dos, getName());
+    dos.writeInt(prodCost);
+    dos.writeInt(metalCost);
+    IOUtilities.writeString(dos, getDescription());
+    IOUtilities.writeString(dos, hull.getName());
+    dos.writeInt(hull.getRace().getIndex());
+    dos.writeInt(components.size());
+    for (int i=0;i<components.size();i++) {
+      IOUtilities.writeString(dos, components.get(i).getName());
+      dos.writeInt(hullPoints[i]);
+    }
+    dos.writeInt(getShield());
+    dos.writeInt(getArmor());
+    dos.writeInt(getColonist());
+    dos.writeInt(getMetal());
+
   }
   
   /**

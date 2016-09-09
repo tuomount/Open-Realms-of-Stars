@@ -1,5 +1,9 @@
 package org.openRealmOfStars.player.ship;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 /**
  * 
  * Open Realm of Stars game project
@@ -79,6 +83,38 @@ public class ShipStat {
     numberOfBuilt = 0;
     numberOfInUse = 0;
     setObsolete(false);
+  }
+  
+  /**
+   * Read ShipStat from DataInputStream
+   * @param dis Data Input Stream
+   * @throws IOException
+   */
+  public ShipStat(DataInputStream dis) throws IOException {
+    this.design = new ShipDesign(dis);
+    numberOfCombats = dis.readInt();
+    numberOfVictories = dis.readInt();
+    numberOfLoses = dis.readInt();
+    numberOfKills = dis.readInt();
+    numberOfBuilt = dis.readInt();
+    numberOfInUse = dis.readInt();
+    obsolete = dis.readBoolean();
+  }
+  
+  /**
+   * Save Ship Stat to Data Output Stream
+   * @param dos DataOutputStream
+   * @throws IOException
+   */
+  public void saveShipStat(DataOutputStream dos) throws IOException {
+    design.saveShipDesign(dos);
+    dos.writeInt(numberOfCombats);
+    dos.writeInt(numberOfVictories);
+    dos.writeInt(numberOfLoses);
+    dos.writeInt(numberOfKills);
+    dos.writeInt(numberOfBuilt);
+    dos.writeInt(numberOfInUse);
+    dos.writeBoolean(obsolete);
   }
 
   public int getNumberOfCombats() {

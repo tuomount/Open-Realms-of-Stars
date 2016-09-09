@@ -1,8 +1,12 @@
 package org.openRealmOfStars.player.ship;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
  * 
@@ -47,10 +51,49 @@ public class ShipDesign {
   private ArrayList<ShipComponent> components;
 
 
+  /**
+   * Constructor for Ship Design
+   * @param hull ShipHull for design
+   */
   public ShipDesign(ShipHull hull) {
     setHull(hull);
     components = new ArrayList<>();
     name = "Design";
+  }
+  
+  /**
+   * Read Ship Design from DataInputStream
+   * @param dis DataInputStream
+   * @throws IOException
+   */
+  public ShipDesign(DataInputStream dis) throws IOException {
+    name = IOUtilities.readString(dis);
+    String hullName = IOUtilities.readString(dis);
+    int raceIndex = dis.readInt();
+    setHull(ShipHullFactory.createByName(hullName, 
+        SpaceRace.getRaceByIndex(raceIndex)));
+    int count = dis.readInt();
+    components = new ArrayList<>();
+    for (int i=0;i<count;i++) {
+      String compName = IOUtilities.readString(dis);
+      ShipComponent comp = ShipComponentFactory.createByName(compName);
+      components.add(comp);
+    }
+  }
+  
+  /**
+   * Save Ship Design to DataOutputStream
+   * @param dos DataOutputStream
+   * @throws IOException
+   */
+  public void saveShipDesign(DataOutputStream dos) throws IOException {
+    IOUtilities.writeString(dos, name);
+    IOUtilities.writeString(dos, hull.getName());
+    dos.writeInt(hull.getRace().getIndex());
+    dos.writeInt(components.size());
+    for (int i=0;i<components.size();i++) {
+      IOUtilities.writeString(dos, components.get(i).getName());
+    }
   }
   
   /**

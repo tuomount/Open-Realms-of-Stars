@@ -276,6 +276,10 @@ public class PlayerInfo {
     dos.writeInt(totalCredits);
     techList.saveTechList(dos);
     msgList.saveMessageList(dos);
+    dos.writeInt(shipStatList.size());
+    for (int i=0;i<shipStatList.size();i++) {
+      shipStatList.get(i).saveShipStat(dos);
+    }
     //FIXME Not done yet
   }
   

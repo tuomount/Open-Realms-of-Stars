@@ -280,6 +280,7 @@ public class PlayerInfo {
     for (int i=0;i<shipStatList.size();i++) {
       shipStatList.get(i).saveShipStat(dos);
     }
+    fleets.saveFleetList(dos);
     //FIXME Not done yet
   }
   

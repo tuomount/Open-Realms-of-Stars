@@ -1,5 +1,8 @@
 package org.openRealmOfStars.player.fleet;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
@@ -7,6 +10,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.starMap.Route;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
  * 
@@ -64,7 +68,8 @@ public class Fleet {
   private Route route;
   
   /**
-   * AStar search for path finding
+   * AStar search for path finding, this will not be saved in to save game.
+   * This information must be something that can be recalculated.
    */
   private AStarSearch aStarSearch;
   
@@ -77,6 +82,42 @@ public class Fleet {
     setPos(x, y);
     setName("Fleet #-1");
     setRoute(null);
+  }
+  
+  /**
+   * Read Fleet from Data Input Stream
+   * @param dis DataInputStream
+   * @throws IOException
+   */
+  public Fleet(DataInputStream dis) throws IOException {
+    name = IOUtilities.readString(dis);
+    x = dis.readInt();
+    y = dis.readInt();
+    movesLeft = dis.readInt();
+    route = new Route(dis);
+    int count = dis.readInt();
+    ships = new ArrayList<>();
+    for (int i=0;i<count;i++) {
+      Ship ship = new Ship(dis);
+      ships.add(ship);
+    }
+  }
+  
+  /**
+   * Save Fleet to DataOutputStream
+   * @param dos DataOutputStream
+   * @throws IOException
+   */
+  public void saveFleet(DataOutputStream dos) throws IOException {
+    IOUtilities.writeString(dos, name);
+    dos.writeInt(x);
+    dos.writeInt(y);
+    dos.writeInt(movesLeft);
+    route.saveRoute(dos);
+    dos.writeInt(ships.size());
+    for (int i=0;i<ships.size();i++) {
+      ships.get(i).saveShip(dos);
+    }
   }
   
   /**

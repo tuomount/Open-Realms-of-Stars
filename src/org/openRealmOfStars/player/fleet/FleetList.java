@@ -1,5 +1,8 @@
 package org.openRealmOfStars.player.fleet;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -40,6 +43,33 @@ public class FleetList {
   public FleetList() {
     fleetList = new ArrayList<>();
     index = -1;
+  }
+  
+  /**
+   * Read FleetList from DataInputStream
+   * @param dis DataInputStream
+   * @throws IOException
+   */
+  public FleetList(DataInputStream dis) throws IOException {
+    int count = dis.readInt();
+    fleetList = new ArrayList<>();
+    for (int i=0;i<count;i++) {
+      Fleet fleet = new Fleet(dis);
+      fleetList.add(fleet);
+    }
+    index = 0;
+  }
+  
+  /**
+   * Save Fleet List to DataOutputStream
+   * @param dos DataOutputStream
+   * @throws IOException
+   */
+  public void saveFleetList(DataOutputStream dos) throws IOException {
+    dos.writeInt(fleetList.size());
+    for (int i=0;i<fleetList.size();i++) {
+      fleetList.get(i).saveFleet(dos);
+    }
   }
   
   /**

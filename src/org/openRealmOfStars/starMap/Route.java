@@ -1,6 +1,9 @@
 package org.openRealmOfStars.starMap;
 
 import java.awt.image.BufferedImage;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -92,6 +95,38 @@ public class Route {
       mx = 0;
       my = 0;
     }
+  }
+  
+  /**
+   * Read route from DataInputStream
+   * @param dis Data Input Stream
+   * @throws IOException
+   */
+  public Route(DataInputStream dis) throws IOException {
+    startX = dis.readDouble();
+    startY = dis.readDouble();
+    endX = dis.readDouble();
+    endY = dis.readDouble();
+    mx = dis.readDouble();
+    my = dis.readDouble();
+    ftlSpeed = dis.readInt();
+    distance = dis.readInt();
+  }
+  
+  /**
+   * Save Route to DataOutputStream
+   * @param dos DataOutputStream
+   * @throws IOException
+   */
+  public void saveRoute(DataOutputStream dos) throws IOException{
+    dos.writeDouble(startX);
+    dos.writeDouble(startY);
+    dos.writeDouble(endX);
+    dos.writeDouble(endY);
+    dos.writeDouble(mx);
+    dos.writeDouble(my);
+    dos.writeInt(ftlSpeed);
+    dos.writeInt(distance);
   }
   
   /**

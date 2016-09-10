@@ -94,7 +94,12 @@ public class Fleet {
     x = dis.readInt();
     y = dis.readInt();
     movesLeft = dis.readInt();
-    route = new Route(dis);
+    String str = IOUtilities.readString(dis);
+    if (str.equals("NOROUTE")) {
+      route = null; 
+    } else {
+      route = new Route(dis);
+    }
     int count = dis.readInt();
     ships = new ArrayList<>();
     for (int i=0;i<count;i++) {
@@ -113,7 +118,13 @@ public class Fleet {
     dos.writeInt(x);
     dos.writeInt(y);
     dos.writeInt(movesLeft);
-    route.saveRoute(dos);
+    if (route == null) {
+      IOUtilities.writeString(dos, "NOROUTE");
+    } else {
+      IOUtilities.writeString(dos, "ROUTE");
+      route.saveRoute(dos);
+    }
+    
     dos.writeInt(ships.size());
     for (int i=0;i<ships.size();i++) {
       ships.get(i).saveShip(dos);

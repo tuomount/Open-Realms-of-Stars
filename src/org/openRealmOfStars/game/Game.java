@@ -598,7 +598,7 @@ public class Game extends JFrame implements ActionListener {
         FileOutputStream os = new FileOutputStream(file);
         BufferedOutputStream bos = new BufferedOutputStream(os);
         DataOutputStream dos = new DataOutputStream(bos);
-        
+        starMap.saveGame(dos);
         dos.close();
       } catch (IOException e) {
         System.out.println(e.getMessage());

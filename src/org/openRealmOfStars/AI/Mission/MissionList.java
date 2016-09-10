@@ -1,5 +1,8 @@
 package org.openRealmOfStars.AI.Mission;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -34,6 +37,32 @@ public class MissionList {
 
   public MissionList() {
     missions = new ArrayList<>();
+  }
+  
+  /**
+   * Read MissionList from DataInputStream
+   * @param dis DataInputStream
+   * @throws IOException
+   */
+  public MissionList(DataInputStream dis) throws IOException {
+    missions = new ArrayList<>();
+    int count = dis.readInt();
+    for (int i=0;i<count;i++) {
+      Mission mission = new Mission(dis);
+      missions.add(mission);
+    }
+  }
+  
+  /**
+   * Save Mission list to DataOutputStream
+   * @param dos DataOutputStream
+   * @throws IOException
+   */
+  public void saveMissionList(DataOutputStream dos) throws IOException {
+    dos.writeInt(missions.size());
+    for (int i=0;i<missions.size();i++) {
+      missions.get(i).saveMission(dos);
+    }
   }
   
   /**

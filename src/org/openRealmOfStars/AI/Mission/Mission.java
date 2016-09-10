@@ -1,5 +1,11 @@
 package org.openRealmOfStars.AI.Mission;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
+import org.openRealmOfStars.utilities.IOUtilities;
+
 /**
  * 
  * Open Realm of Stars game project
@@ -69,6 +75,63 @@ public class Mission {
     this.type = type;
     this.phase = phase;
     setTarget(x,y);
+  }
+  
+  /**
+   * Read mission from DataInputStream
+   * @param dis DataInputStream
+   * @throws IOException
+   */
+  public Mission(DataInputStream dis) throws IOException {
+    type = MissionType.getType(dis.readInt());
+    phase = MissionPhase.getType(dis.readInt());
+    x = dis.readInt();
+    y = dis.readInt();
+    String str = IOUtilities.readString(dis);
+    if (str.isEmpty()) {
+      fleetName = null;
+    } else {
+      fleetName = str;
+    }
+    str = IOUtilities.readString(dis);
+    if (str.isEmpty()) {
+      planetBuilding = null;
+    } else {
+      planetBuilding = str;
+    }
+    str = IOUtilities.readString(dis);
+    if (str.isEmpty()) {
+      sunName = null;
+    } else {
+      sunName = str;
+    }
+  }
+  
+  /**
+   * Write mission data to DataOutputStream
+   * @param dos DataOutputStream
+   * @throws IOException
+   */
+  public void saveMission(DataOutputStream dos) throws IOException {
+    dos.writeInt(type.getIndex());
+    dos.writeInt(phase.getIndex());
+    dos.writeInt(x);
+    dos.writeInt(y);
+    if (fleetName != null) {
+      IOUtilities.writeString(dos, fleetName);
+    } else {
+      IOUtilities.writeString(dos, "");
+    }
+    if (planetBuilding != null) {
+      IOUtilities.writeString(dos, planetBuilding);
+    } else {
+      IOUtilities.writeString(dos, "");
+    }
+    if (sunName != null) {
+      IOUtilities.writeString(dos, sunName);
+    } else {
+      IOUtilities.writeString(dos, "");
+    }
   }
   
   public void setTarget(int x, int y) {

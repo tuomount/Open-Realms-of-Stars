@@ -1,5 +1,6 @@
 package org.openRealmOfStars.player;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,6 +51,20 @@ public class PlayerList {
   }
   
   /**
+   * Read PlayerList from DataInputStream
+   * @param dis DataInputStream
+   * @throws IOException
+   */
+  public PlayerList(DataInputStream dis) throws IOException {
+    currentPlayer = dis.readInt();
+    int count = dis.readInt();
+    list = new ArrayList<>();
+    for (int i=0;i<count;i++) {
+      list.add(new PlayerInfo(dis));
+    }
+  }
+  
+  /**
    * Save Player List to DataOutputStream
    * @param dos
    * @throws IOException
@@ -57,7 +72,9 @@ public class PlayerList {
   public void savePlayerList(DataOutputStream dos) throws IOException {
     dos.writeInt(currentPlayer);
     dos.writeInt(list.size());
-    //FIXME: Add actual player info saving
+    for (int i=0;i<list.size();i++) {
+      list.get(i).savePlayerInfo(dos);
+    }
   }
   
   /**

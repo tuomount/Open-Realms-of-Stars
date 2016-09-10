@@ -1,5 +1,6 @@
 package org.openRealmOfStars.player;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -270,6 +271,45 @@ public class PlayerInfo {
     
   }
   
+  /**
+   * Read PlayerInfo from DataInputStream 
+   * @param dis DataInputStream
+   * @throws IOException
+   */
+  public PlayerInfo(DataInputStream dis) throws IOException {
+    empireName = IOUtilities.readString(dis);
+    race = SpaceRace.getRaceByIndex(dis.readInt());
+    totalCredits = dis.readInt();
+    techList = new TechList(dis);
+    msgList = new MessageList(dis);
+    int count = dis.readInt();
+    shipStatList = new ArrayList<>();
+    for (int i=0;i<count;i++) {
+      ShipStat ship = new ShipStat(dis);
+      shipStatList.add(ship);
+    }
+    fleets = new FleetList(dis);
+    maxX = dis.readInt();
+    maxY = dis.readInt();
+    mapData = new byte[maxX][maxY];
+    mapCloakDetection = new int[maxX][maxY];
+    for (int y=0;y<maxY;y++) {
+      for (int x=0;x<maxX;x++) {
+        mapData[x][y] = dis.readByte();
+      }
+    }
+    human = dis.readBoolean();
+    if (!human) {
+      missions = new MissionList(dis);
+    }
+    
+  }
+  
+  /**
+   * Save Player Info to DataOutputStream
+   * @param dos DataOutputStream
+   * @throws IOException
+   */
   public void savePlayerInfo(DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, empireName);
     dos.writeInt(race.getIndex());
@@ -281,7 +321,20 @@ public class PlayerInfo {
       shipStatList.get(i).saveShipStat(dos);
     }
     fleets.saveFleetList(dos);
-    //FIXME Not done yet
+    dos.writeInt(maxX);
+    dos.writeInt(maxY);
+    if (mapData == null) {
+      throw new IOException("Map data is not initialized yet!");
+    }
+    for (int y=0;y<maxY;y++) {
+      for (int x=0;x<maxX;x++) {
+        dos.writeByte(mapData[x][y]);
+      }
+    }
+    dos.writeBoolean(human);
+    if (!human) {
+      missions.saveMissionList(dos);
+    }
   }
   
   /**

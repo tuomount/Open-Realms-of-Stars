@@ -1,6 +1,7 @@
 package org.openRealmOfStars.starMap.planet;
 
 import java.awt.image.BufferedImage;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
@@ -316,6 +318,59 @@ public class Planet {
     this.underConstruction = null;
     this.tax = 0;
     this.culture = 0;
+  }
+  
+  /**
+   * Read Planet information from DataInputStream. PlayerList must be
+   * read before since planet only save player index not full player info.
+   * @param dis DataInputStream
+   * @param players PlayerList
+   * @throws IOException
+   */
+  public Planet(DataInputStream dis, PlayerList players) throws IOException{
+    x = dis.readInt();
+    y = dis.readInt();
+    name = IOUtilities.readString(dis);
+    OrderNumber = dis.readInt();
+    radiationLevel = dis.readInt();
+    amountMetalInGround = dis.readInt();
+    metal = dis.readInt();
+    prodResource = dis.readInt();
+    gasGiant = dis.readBoolean();
+    planetImageIndex = dis.readInt();
+    planetType = dis.readInt();
+    planetOwner = dis.readInt();
+    if (planetOwner != -1) {
+      planetOwnerInfo = players.getPlayerInfoByIndex(planetOwner);
+    } else {
+      planetOwnerInfo = null;
+    }
+    extraFood = dis.readInt();
+    tax = dis.readInt();
+    culture = dis.readInt();
+    for (int i=0;i<MAX_WORKER_TYPE;i++) {
+      workers[i] = dis.readInt();
+    }
+    int count = dis.readInt();
+    this.buildings = new ArrayList<>();
+    for (int i=0;i<count;i++) {
+      String buildingName = IOUtilities.readString(dis);
+      Building building =  BuildingFactory.createByName(buildingName);
+      buildings.add(building);
+    }
+    String str = IOUtilities.readString(dis);
+    if (str.isEmpty()) {
+      setUnderConstruction(null);
+    } else {
+      Construction[] consts = getProductionList();
+      for (Construction cons : consts) {
+        if (cons.getName().equals(str)) {
+          setUnderConstruction(cons);
+          break;
+        }
+      }
+    }
+
   }
   
   /**

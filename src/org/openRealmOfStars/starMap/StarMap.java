@@ -1,5 +1,6 @@
 package org.openRealmOfStars.starMap;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -191,6 +192,46 @@ public class StarMap {
   }
   
   /**
+   * Initialize StarMap from DataInputStream
+   * @param dis DataInputStream
+   * @throws IOException
+   */
+  public StarMap(DataInputStream dis) throws IOException {
+    String str = IOUtilities.readString(dis);
+    if (str.equals(MAGIC_STRING)) {
+      turn = dis.readInt();
+      maxX = dis.readInt();
+      maxY = dis.readInt();
+      fleetTiles = new FleetTileInfo[maxX][maxY];
+      culture = new CulturePower[maxX][maxY];
+      sunList = new ArrayList<>();
+      planetList = new ArrayList<>();
+
+      // Map data itself
+      for (int x=0;x<maxX;x++) {
+        for (int y=0;y<maxY;y++) {
+          tiles[x][y] = dis.readInt();
+          tileInfo[x][y] = new SquareInfo(dis);
+        }
+      }
+      // Read suns
+      int count =dis.readInt();
+      for (int i=0;i<count;i++) {
+        sunList.add(new Sun(dis));
+      }
+      // Players first
+      players = new PlayerList(dis);
+      count = dis.readInt();      
+      for (int i=0;i<count;i++) {
+        Planet planet = new Planet(dis, players);
+        planetList.add(planet);
+      }
+    } else {
+      throw new IOException("Stream does not contain StarMap information!");
+    }
+  }
+  
+  /**
    * Save Game to DataOuputStream
    * @param dos DataOutputStream
    * @throws IOException
@@ -214,6 +255,12 @@ public class StarMap {
     for (int i=0;i<sunList.size();i++) {
       Sun sun = sunList.get(i);
       sun.saveSun(dos);
+    }
+    // Players first
+    players.savePlayerList(dos);
+    dos.writeInt(planetList.size());
+    for (int i=0;i<planetList.size();i++) {
+      planetList.get(i).savePlanet(dos);
     }
   }
 

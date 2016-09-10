@@ -219,6 +219,15 @@ public class CombatAnimation {
       if (count < 24) {
         if (hit) {
           showAnim = true;
+          if (count > 20 && target.getShip().getHullPoints()<=0) {
+            int parts = DiceGenerator.getRandom(15, 25);
+            int px = (int) Math.round(ex);
+            int py = (int) Math.round(ey);
+            for (int i=0;i<parts;i++) {
+              ParticleEffect particle = new ParticleEffect(ParticleEffectType.EXPLOSION_PARTICLE, px, py);
+              particles.add(particle);
+            }
+          }
         }
         if (animFrame < explosionAnim.getMaxFrames()) {
           animFrame++;
@@ -249,6 +258,15 @@ public class CombatAnimation {
         count--;
         if (hit) {
           showAnim = true;
+          if (count > 13 && target.getShip().getHullPoints()<=0) {
+            int parts = DiceGenerator.getRandom(15, 25);
+            int px = (int) Math.round(sx);
+            int py = (int) Math.round(sy);
+            for (int i=0;i<parts;i++) {
+              ParticleEffect particle = new ParticleEffect(ParticleEffectType.EXPLOSION_PARTICLE, px, py);
+              particles.add(particle);
+            }
+          }
         }
         if (animFrame < explosionAnim.getMaxFrames()) {
           animFrame++;
@@ -273,6 +291,15 @@ public class CombatAnimation {
         count--;
         if (hit) {
           showAnim = true;
+          if (count > 13 && target.getShip().getHullPoints()<=0) {
+            int parts = DiceGenerator.getRandom(15, 25);
+            int px = (int) Math.round(sx);
+            int py = (int) Math.round(sy);
+            for (int i=0;i<parts;i++) {
+              ParticleEffect particle = new ParticleEffect(ParticleEffectType.EXPLOSION_PARTICLE, px, py);
+              particles.add(particle);
+            }
+          }
         }
         if (animFrame < explosionAnim.getMaxFrames()) {
           animFrame++;
@@ -308,6 +335,15 @@ public class CombatAnimation {
         count--;
         if (hit) {
           showAnim = true;
+          if (count > 13 && target.getShip().getHullPoints()<=0) {
+            int parts = DiceGenerator.getRandom(15, 25);
+            int px = (int) Math.round(sx);
+            int py = (int) Math.round(sy);
+            for (int i=0;i<parts;i++) {
+              ParticleEffect particle = new ParticleEffect(ParticleEffectType.EXPLOSION_PARTICLE, px, py);
+              particles.add(particle);
+            }
+          }
         }
         if (animFrame < explosionAnim.getMaxFrames()) {
           animFrame++;

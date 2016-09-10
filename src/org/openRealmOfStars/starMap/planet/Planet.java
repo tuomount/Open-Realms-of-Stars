@@ -333,6 +333,7 @@ public class Planet {
     name = IOUtilities.readString(dis);
     OrderNumber = dis.readInt();
     radiationLevel = dis.readInt();
+    groundSize = dis.readInt();
     amountMetalInGround = dis.readInt();
     metal = dis.readInt();
     prodResource = dis.readInt();
@@ -348,6 +349,7 @@ public class Planet {
     extraFood = dis.readInt();
     tax = dis.readInt();
     culture = dis.readInt();
+    workers = new int[MAX_WORKER_TYPE];
     for (int i=0;i<MAX_WORKER_TYPE;i++) {
       workers[i] = dis.readInt();
     }
@@ -404,8 +406,7 @@ public class Planet {
       IOUtilities.writeString(dos, buildings.get(i).getName());
     }
     if (underConstruction == null) {
-      // Write empty string
-      IOUtilities.writeString(dos, "");
+      IOUtilities.writeString(dos, null);
     } else {
       IOUtilities.writeString(dos, underConstruction.getName());
     }

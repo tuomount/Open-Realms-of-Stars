@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -65,7 +66,14 @@ public class MainMenu extends BlackPanel {
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
     invis.add(Box.createRigidArea(new Dimension(500, 250)));
     
-    SpaceButton btn = new SpaceButton("New game", GameCommands.COMMAND_NEW_GAME);
+    SpaceButton btn = new SpaceButton("Continue game", GameCommands.COMMAND_CONTINUE_GAME);
+    btn.addActionListener(listener);
+    btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    File current = new File("saves/current.save");
+    if (current.exists()) {
+      invis.add(btn);
+    }
+    btn = new SpaceButton("New game", GameCommands.COMMAND_NEW_GAME);
     btn.addActionListener(listener);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(btn);

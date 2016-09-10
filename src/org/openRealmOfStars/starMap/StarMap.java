@@ -206,12 +206,15 @@ public class StarMap {
       culture = new CulturePower[maxX][maxY];
       sunList = new ArrayList<>();
       planetList = new ArrayList<>();
+      tiles = new int[maxX][maxY];
+      tileInfo = new SquareInfo[maxX][maxY];
 
       // Map data itself
       for (int x=0;x<maxX;x++) {
         for (int y=0;y<maxY;y++) {
           tiles[x][y] = dis.readInt();
           tileInfo[x][y] = new SquareInfo(dis);
+          culture[x][y] = new CulturePower();
         }
       }
       // Read suns
@@ -848,7 +851,33 @@ public class StarMap {
       }
     }
   }
-  
+
+  /**
+   * Update starmap when game has loaded
+   */
+  public void updateStarMapOnLoadGame() {
+    for (int i=0;i<players.getCurrentMaxPlayers();i++) {
+      PlayerInfo info = players.getPlayerInfoByIndex(i);
+      if (info != null) {
+        for (int j = 0;j<info.Fleets().getNumberOfFleets();j++) {
+          Fleet fleet = info.Fleets().getByIndex(j);
+          doFleetScanUpdate(info, fleet,null);
+        }
+      }
+    }
+    for (int i=0;i<planetList.size();i++) {
+      Planet planet = planetList.get(i);
+      if (planet.getPlanetPlayerInfo() != null) {        
+        PlayerInfo info = planet.getPlanetPlayerInfo();
+        int index =players.getIndex(info);
+        if (index > -1) {
+          calculateCulture(planet.getX(), planet.getY(), planet.getCulture(), index);
+        }
+        doFleetScanUpdate(info, null,planet);
+      }
+    }
+  }
+
   
   /**
    * Calculate culture on map
@@ -1223,6 +1252,10 @@ public class StarMap {
    */
   public PlayerInfo getPlayerByIndex(int index) {
     return players.getPlayerInfoByIndex(index);
+  }
+  
+  public PlayerList getPlayerList() {
+    return players;
   }
 
 }

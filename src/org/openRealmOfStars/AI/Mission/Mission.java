@@ -117,21 +117,9 @@ public class Mission {
     dos.writeInt(phase.getIndex());
     dos.writeInt(x);
     dos.writeInt(y);
-    if (fleetName != null) {
-      IOUtilities.writeString(dos, fleetName);
-    } else {
-      IOUtilities.writeString(dos, "");
-    }
-    if (planetBuilding != null) {
-      IOUtilities.writeString(dos, planetBuilding);
-    } else {
-      IOUtilities.writeString(dos, "");
-    }
-    if (sunName != null) {
-      IOUtilities.writeString(dos, sunName);
-    } else {
-      IOUtilities.writeString(dos, "");
-    }
+    IOUtilities.writeString(dos, fleetName);
+    IOUtilities.writeString(dos, planetBuilding);
+    IOUtilities.writeString(dos, sunName);
   }
   
   public void setTarget(int x, int y) {

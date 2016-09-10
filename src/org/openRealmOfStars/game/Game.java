@@ -3,9 +3,12 @@ package org.openRealmOfStars.game;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -324,6 +327,51 @@ public class Game extends JFrame implements ActionListener {
   }
 
   /**
+   * Save game for certain file name
+   * @param filename
+   */
+  public void saveGame(String filename) {
+    if (starMap != null) {
+      String folderName = "saves";
+      File folder = new File(folderName);
+      if (!folder.exists()) {
+        folder.mkdirs();
+      }
+      File file = new File(folderName+"/"+filename);
+      try {
+        FileOutputStream os = new FileOutputStream(file);
+        BufferedOutputStream bos = new BufferedOutputStream(os);
+        DataOutputStream dos = new DataOutputStream(bos);
+        starMap.saveGame(dos);
+        dos.close();
+      } catch (IOException e) {
+        System.out.println(e.getMessage());
+      }
+
+    }
+  }
+
+  /**
+   * Load game from certain file name
+   * @param filename
+   */
+  public void loadGame(String filename) {
+    String folderName = "saves";
+    File file = new File(folderName+"/"+filename);
+    try {
+      FileInputStream is = new FileInputStream(file);
+      BufferedInputStream bis = new BufferedInputStream(is);
+      DataInputStream dis = new DataInputStream(bis);
+      starMap = new StarMap(dis);
+      dis.close();
+      players = starMap.getPlayerList();
+      starMap.updateStarMapOnLoadGame();
+    } catch (IOException e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  /**
    * Show AI Turn view
    */
   public void showAITurnView() {
@@ -593,16 +641,12 @@ public class Game extends JFrame implements ActionListener {
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_BATTLE)) {
-      File file = new File("saves/game.dat");
-      try {
-        FileOutputStream os = new FileOutputStream(file);
-        BufferedOutputStream bos = new BufferedOutputStream(os);
-        DataOutputStream dos = new DataOutputStream(bos);
-        starMap.saveGame(dos);
-        dos.close();
-      } catch (IOException e) {
-        System.out.println(e.getMessage());
-      }
+      changeGameState(GameState.COMBAT);
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_CONTINUE_GAME)) {
+      loadGame("current.save");
+      changeGameState(GameState.STARMAP);
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_SHIPDESIGN_DONE)) {

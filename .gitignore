@@ -1,6 +1,8 @@
 *.class
 # Screen shots
 /screenshots/
+# Game saves
+/saves/
 
 # Backup files
 *~

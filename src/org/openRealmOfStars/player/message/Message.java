@@ -112,11 +112,7 @@ public class Message {
     dos.writeInt(x);
     dos.writeInt(y);
     IOUtilities.writeString(dos, message);
-    if (matchByString == null) {
-      IOUtilities.writeString(dos, "");
-    } else {
-      IOUtilities.writeString(dos, matchByString);
-    }
+    IOUtilities.writeString(dos, matchByString);
     IOUtilities.writeString(dos, icon.getName());
   }
   

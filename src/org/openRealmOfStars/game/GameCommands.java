@@ -198,6 +198,11 @@ public class GameCommands {
   public static final String COMMAND_NEW_GAME = "NewGame";
 
   /**
+   * Continue Game
+   */
+  public static final String COMMAND_CONTINUE_GAME = "ContinueGame";
+
+  /**
    * Show credits command
    */
   public static final String COMMAND_CREDITS = "Credits";

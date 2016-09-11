@@ -152,7 +152,7 @@ public class BattleView extends BlackPanel {
         Combat.MAX_Y*ShipImage.MAX_HEIGHT);
     mapPanel.drawBattleMap(combat, combat.getPlayer1(), this.map);
 
-    infoPanel = new BattleInfoPanel(combat.getCurrentShip(),listener);
+    infoPanel = new BattleInfoPanel(combat.getCurrentShip().getShip(),listener);
 
     combatMapMouseListener = new CombatMapMouseListener(combat, mapPanel, infoPanel);
     mapPanel.addMouseListener(combatMapMouseListener);
@@ -313,7 +313,7 @@ public class BattleView extends BlackPanel {
     combat.setComponentUse(-1);
     combatMapMouseListener.setComponentUse(-1);
     combat.nextShip();
-    infoPanel.showShip(combat.getCurrentShip());
+    infoPanel.showShip(combat.getCurrentShip().getShip());
     if (combat.isCombatOver()) {
       endButton.setText("End combat");
       combatEnded = true;

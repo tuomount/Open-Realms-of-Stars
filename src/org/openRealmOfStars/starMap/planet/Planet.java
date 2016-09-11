@@ -1224,7 +1224,18 @@ public class Planet {
     }
     return result;
   }
-  
+
+  public int getTurretLvl() {
+    int result = 0;
+    Building[] buildings = getBuildingList();
+    for (Building building : buildings) {
+      if (building.getDefenseDamage() > 0) {
+        result = result +building.getDefenseDamage();
+      }
+    }
+    return result;
+  }
+
   /**
    * Check if planet has Space port for building ships
    * @return True if planet has space port, otherwise false.

@@ -103,7 +103,7 @@ public class CombatMapMouseListener extends MouseAdapter implements
           mapPanel.getViewPointX(),mapPanel.getViewPointY(),true);
       if (!coord.isOutOfPanel()) {
         combat.setCursorPos(coord.getMapX(), coord.getMapY());
-        battleInfoPanel.showShip(combat.getCurrentShip());
+        battleInfoPanel.showShip(combat.getCurrentShip().getShip());
         activeShip =combat.getShipFromCoordinate(coord.getMapX(), coord.getMapY());
       }
   }

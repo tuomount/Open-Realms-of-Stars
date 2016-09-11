@@ -17,7 +17,7 @@ import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.mapTiles.Tile;
-import org.openRealmOfStars.player.combat.CombatShip;
+import org.openRealmOfStars.player.ship.Ship;
 
 /**
  * 
@@ -62,7 +62,7 @@ public class BattleInfoPanel extends InfoPanel {
   /**
    * Show info about the current ship
    */
-  private CombatShip ship;
+  private Ship ship;
   
   private static final int MAX_BTN = 12;
   
@@ -71,8 +71,8 @@ public class BattleInfoPanel extends InfoPanel {
    */
   private ComponentButton[] cBtn = new ComponentButton[MAX_BTN];
   
-  public BattleInfoPanel(CombatShip ship, ActionListener listener) {
-    this.add(Box.createRigidArea(new Dimension(130,50)));
+  public BattleInfoPanel(Ship ship, ActionListener listener) {
+    this.add(Box.createRigidArea(new Dimension(130,25)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH*2, Tile.MAX_HEIGHT*2,
         BufferedImage.TYPE_4BYTE_ABGR);
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -93,7 +93,7 @@ public class BattleInfoPanel extends InfoPanel {
     InvisiblePanel invis = new InvisiblePanel(this);
     invis.setLayout(new GridLayout(6, 2));
     for (int i=0;i<MAX_BTN;i++) {
-      cBtn[i] = new ComponentButton(ship.getShip(), i);
+      cBtn[i] = new ComponentButton(ship, i);
       cBtn[i].setActionCommand(GameCommands.COMMAND_COMPONENT_USE+i);
       cBtn[i].addActionListener(listener);
       invis.add(cBtn[i]);
@@ -106,10 +106,10 @@ public class BattleInfoPanel extends InfoPanel {
    * Show ship on info panel
    * @param ship
    */
-  public void showShip(CombatShip ship) {
+  public void showShip(Ship ship) {
     this.ship = ship;
     for (int i=0;i<MAX_BTN;i++) {
-      cBtn[i].setComponent(ship.getShip(), i);
+      cBtn[i].setComponent(ship, i);
     }
     updatePanel();
   }
@@ -124,8 +124,8 @@ public class BattleInfoPanel extends InfoPanel {
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
-      imageLabel.setImage(ship.getShip().getHull().getImage());
-      setTitle(ship.getShip().getName());
+      imageLabel.setImage(ship.getHull().getImage());
+      setTitle(ship.getName());
       textArea.setText(ship.getDescription());
       this.repaint();
     }else {

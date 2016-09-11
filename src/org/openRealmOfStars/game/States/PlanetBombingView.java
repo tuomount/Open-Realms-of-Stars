@@ -7,21 +7,19 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
-import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.ShipListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
@@ -63,7 +61,19 @@ public class PlanetBombingView extends BlackPanel {
 
   
   
+  /**
+   * Total number of population
+   */
   private IconLabel totalPeople;
+  /**
+   * Defense turret value
+   */
+  private IconLabel defenseTurret;
+  /**
+   * Planet owner's name
+   */
+  private TransparentLabel ownerLabel;
+
   /**
    * Planet to show
    */
@@ -74,22 +84,28 @@ public class PlanetBombingView extends BlackPanel {
    */
   private Fleet fleet;
 
-  /**
-   * Fleet's name Text
-   */
-  private JTextField fleetNameText;
 
   /**
    * Ships in fleet
    */
   private JList<Ship> shipsInFleet;
 
+  /**
+   * Background picture
+   */
+  private BigImagePanel imgBase;
+  
+  /**
+   * Infopanel on east side
+   */
+  private BattleInfoPanel infoPanel;
+
   
   public PlanetBombingView(Planet planet, Fleet fleet, ActionListener listener) {
     this.setPlanet(planet);
     this.fleet = fleet;
     // Background image
-    BigImagePanel imgBase = new BigImagePanel(planet, true,null);
+    imgBase = new BigImagePanel(planet, true,null);
     this.setLayout(new BorderLayout());
 
     // Top Panel
@@ -99,11 +115,27 @@ public class PlanetBombingView extends BlackPanel {
     topPanel.add(Box.createRigidArea(new Dimension(15,25)));
     InvisiblePanel invis = new InvisiblePanel(topPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    if (planet.getPlanetPlayerInfo() != null) {
+      ownerLabel = new TransparentLabel(invis, planet.getPlanetPlayerInfo().getEmpireName());
+    } else {
+      ownerLabel = new TransparentLabel(invis, "Uncolonized planet");
+    }
+    invis.add(ownerLabel);
+    topPanel.add(invis);
+    topPanel.add(Box.createRigidArea(new Dimension(15,25)));
+
+    invis = new InvisiblePanel(topPanel);
+    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
     totalPeople = new IconLabel(invis,Icons.getIconByName(Icons.ICON_PEOPLE), 
-        ": "+planet.getTotalPopulation());
+        "Population: "+planet.getTotalPopulation());
     totalPeople.setToolTipText("Total number of people on planet.");
     totalPeople.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(totalPeople);
+    defenseTurret = new IconLabel(invis,Icons.getIconByName(Icons.ICON_PLANETARY_TURRET), 
+        "Turrets: "+planet.getTurretLvl());
+    defenseTurret.setToolTipText("Total defense value of turrets.");
+    defenseTurret.setAlignmentX(Component.LEFT_ALIGNMENT);
+    invis.add(defenseTurret);
     topPanel.add(invis);
     topPanel.add(Box.createRigidArea(new Dimension(15,25)));
 
@@ -112,46 +144,21 @@ public class PlanetBombingView extends BlackPanel {
     // East panel
     InfoPanel eastPanel = new InfoPanel();
     eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
-    eastPanel.setTitle("Fleet info");
+    eastPanel.setTitle(fleet.getName());
     eastPanel.add(Box.createRigidArea(new Dimension(150,5)));
-    TransparentLabel label = new TransparentLabel(eastPanel, "Fleet name");
-    eastPanel.add(label);
-    eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
-    fleetNameText = new JTextField();
-    fleetNameText.setFont(GuiStatics.getFontCubellan());
-    fleetNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
-    fleetNameText.setBackground(Color.BLACK);
-    fleetNameText.setText(getFleet().getName());
-    fleetNameText.addKeyListener(new KeyListener() {
-      
-      @Override
-      public void keyTyped(KeyEvent e) {
-        // Nothing to  do here
-      }
-      
-      @Override
-      public void keyReleased(KeyEvent e) {
-        getFleet().setName(fleetNameText.getText());
-      }
-      
-      @Override
-      public void keyPressed(KeyEvent e) {
-        // Nothing to  do here
-      }
-    });
-    eastPanel.add(fleetNameText);
-    eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
-    label = new TransparentLabel(eastPanel, "Ships in fleet");
-    eastPanel.add(label);
-    eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
     shipsInFleet = new JList<>();
     shipsInFleet.setListData(fleet.getShips());
     shipsInFleet.setCellRenderer(new ShipListRenderer());
     shipsInFleet.setBackground(Color.BLACK);
-    shipsInFleet.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    shipsInFleet.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     JScrollPane scroll = new JScrollPane(shipsInFleet);
     eastPanel.add(scroll);
     eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
+
+    infoPanel = new BattleInfoPanel(fleet.getFirstShip(),listener);
+    infoPanel.showShip(fleet.getFirstShip());
+    infoPanel.setBorder(null);
+    eastPanel.add(infoPanel);
 
     
     // Bottom panel
@@ -188,7 +195,18 @@ public class PlanetBombingView extends BlackPanel {
    * Update Planet view panels
    */
   public void updatePanel() {
-    totalPeople.setText(": "+planet.getTotalPopulation());
+    totalPeople.setText("Population: "+planet.getTotalPopulation());
+    defenseTurret.setText("Turrets: "+planet.getTurretLvl());
+
+    /*
+     * Set the orbting ships
+     */
+    Ship[] ships = fleet.getShips();
+    BufferedImage[] imgs = new BufferedImage[ships.length];
+    for (int i = 0;i<ships.length;i++) {
+      imgs[i] = ships[i].getHull().getImage();
+    }
+    imgBase.setShipImage(imgs);
 
   }
 

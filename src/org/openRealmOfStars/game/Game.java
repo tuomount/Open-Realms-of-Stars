@@ -21,6 +21,7 @@ import org.openRealmOfStars.game.States.BattleView;
 import org.openRealmOfStars.game.States.CreditsView;
 import org.openRealmOfStars.game.States.FleetView;
 import org.openRealmOfStars.game.States.MainMenu;
+import org.openRealmOfStars.game.States.PlanetBombingView;
 import org.openRealmOfStars.game.States.PlanetView;
 import org.openRealmOfStars.game.States.ResearchView;
 import org.openRealmOfStars.game.States.ShipDesignView;
@@ -108,6 +109,11 @@ public class Game extends JFrame implements ActionListener {
    * Planet view Panel and handling planet
    */
   public PlanetView planetView;
+
+  /**
+   * Planet bombing view Panel
+   */
+  public PlanetBombingView planetBombingView;
 
   /**
    * Fleet view Panel and handling the fleet
@@ -231,6 +237,16 @@ public class Game extends JFrame implements ActionListener {
     planetView = new PlanetView(planet, this);
     this.getContentPane().removeAll();
     this.add(planetView);
+    this.validate();
+  }
+  /**
+   * Show planet bombing view panel
+   * @param planet Planet to show
+   */
+  public void showPlanetBombingView(Planet planet) {
+    planetBombingView = new PlanetBombingView(planet, this);
+    this.getContentPane().removeAll();
+    this.add(planetBombingView);
     this.validate();
   }
 
@@ -447,6 +463,13 @@ public class Game extends JFrame implements ActionListener {
       changeGameState(GameState.STARMAP);
       break;
     }
+    case PLANETBOMBINGVIEW: {
+      if (dataObject instanceof Planet) {
+        Planet planet = (Planet) dataObject;
+        showPlanetBombingView(planet);
+      }
+      break;
+    }
     case CREDITS: showCredits(); break;
     case STARMAP: showStarMap(); break;
     case COMBAT: {
@@ -642,6 +665,7 @@ public class Game extends JFrame implements ActionListener {
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_BATTLE)) {
       changeGameState(GameState.COMBAT);
+      //changeGameState(GameState.PLANETBOMBINGVIEW, starMap.getPlanetList().get(0));
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_CONTINUE_GAME)) {

@@ -305,6 +305,26 @@ public class GameCommands {
   public static final String COMMAND_COLONIZE = "ColonizeCommand";
 
   /**
+   * Conquer command
+   */
+  public static final String COMMAND_CONQUER = "ConquerCommand";
+
+  /**
+   * Bomb command
+   */
+  public static final String COMMAND_BOMB = "BombCommand";
+
+  /**
+   * Skip command
+   */
+  public static final String COMMAND_SKIP = "SkipCommand";
+
+  /**
+   * Launch ground attack command
+   */
+  public static final String COMMAND_LAUNCH_GROUND_ATTACK = "LaunchGroundAttackCommand";
+
+  /**
    * Split the fleet
    */
   public static final String COMMAND_SPLIT_THE_FLEET ="SplitTheFleet";
@@ -314,10 +334,6 @@ public class GameCommands {
    */
   public static final String COMMAND_MERGE_FLEETS ="MergeFleets";
 
-  /**
-   * Conquer command
-   */
-  public static final String COMMAND_CONQUER = "ConquerCommand";
 
   /**
    * Colonist plus command

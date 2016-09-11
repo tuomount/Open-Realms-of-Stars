@@ -522,6 +522,26 @@ public class Planet {
     }
     return result;
   }
+  
+  /**
+   * Get Troop power
+   * @return Get Total troop power where improvements are taken to count
+   */
+  public int getTroopPower() {
+    if (planetOwnerInfo != null) {
+      int result = getTotalPopulation()*planetOwnerInfo.getRace().getTrooperPower();
+      int multiply = 100;
+      Building[] buildings = getBuildingList();
+      for (Building building : buildings) {
+        if (building.getBattleBonus()>0) {
+          multiply = multiply + building.getBattleBonus();
+        }
+      }
+      result = result*multiply/100;
+      return result;
+    }
+    return 0;
+  }
 
   /**
    * Get total production from planetary improvements.

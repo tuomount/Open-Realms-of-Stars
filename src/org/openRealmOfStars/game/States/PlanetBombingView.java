@@ -68,6 +68,10 @@ public class PlanetBombingView extends BlackPanel {
    */
   private IconLabel totalPeople;
   /**
+   * Trooper's power
+   */
+  private IconLabel troopsPower;
+  /**
    * Defense turret value
    */
   private IconLabel defenseTurret;
@@ -159,6 +163,11 @@ public class PlanetBombingView extends BlackPanel {
 
     invis = new InvisiblePanel(topPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    troopsPower = new IconLabel(invis,Icons.getIconByName(Icons.ICON_TROOPS), 
+        "Troops power: "+planet.getTroopPower());
+    troopsPower.setToolTipText("Total power of defending troops.");
+    troopsPower.setAlignmentX(Component.LEFT_ALIGNMENT);
+    invis.add(troopsPower);
     totalBuildings = new IconLabel(invis,Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH), 
         "Buildings: "+planet.getNumberOfBuildings());
     totalBuildings.setToolTipText("Total number of buildings on planet.");
@@ -195,7 +204,7 @@ public class PlanetBombingView extends BlackPanel {
     invis.add(btn);
     invis.add(Box.createRigidArea(new Dimension(5,5)));
     btn = new SpaceButton("Abort conquest", 
-        GameCommands.COMMAND_ABORT_CONQUEST);
+        GameCommands.COMMAND_VIEW_STARMAP);
     btn.addActionListener(listener);
     invis.add(btn);
     eastPanel.add(invis);
@@ -205,10 +214,6 @@ public class PlanetBombingView extends BlackPanel {
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
     bottomPanel.setTitle(null);
-    btn = new SpaceButton("Back to star map", 
-        GameCommands.COMMAND_VIEW_STARMAP);
-    btn.addActionListener(listener);
-    bottomPanel.add(btn,BorderLayout.SOUTH);
     textArea = new InfoTextArea(10,30);
     textArea.setEditable(false);
     textArea.setLineWrap(true);
@@ -258,6 +263,7 @@ public class PlanetBombingView extends BlackPanel {
     totalPeople.setText("Population: "+planet.getTotalPopulation());
     defenseTurret.setText("Turrets: "+planet.getTurretLvl());
     totalBuildings.setText("Buildings: "+planet.getNumberOfBuildings());
+    troopsPower.setText("Troops power: "+planet.getTroopPower());
 
     StringBuilder sb = new StringBuilder();
     for (int i=textLog.length-1;i>=0;i--) {

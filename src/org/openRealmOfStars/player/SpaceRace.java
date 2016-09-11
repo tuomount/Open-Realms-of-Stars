@@ -130,8 +130,8 @@ public enum SpaceRace {
     case HUMAN: return 4;
     case MECHIONS: return 8;
     case SPORKS: return 5;
-    case GREYANS: return 3;
-    case CENTAURS: return 6;
+    case GREYANS: return 6;
+    case CENTAURS: return 3;
     }
     return -1;
   }
@@ -188,7 +188,22 @@ public enum SpaceRace {
     }
     return 0;
   }
+  /**
+   * Get Trooper power
+   * @return normal 10
+   */
+  public int getTrooperPower() {
+    switch (this) {
+    case HUMAN: return 10;
+    case MECHIONS: return 12;
+    case SPORKS: return 12;
+    case GREYANS: return 8;
+    case CENTAURS: return 14;
+    }
+    return 0;
+  }
 
+  
   /**
    * Get worker production speed
    * @return normal 100, half 50, double 200

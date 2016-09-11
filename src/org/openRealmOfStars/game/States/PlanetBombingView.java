@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
@@ -22,6 +23,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
+import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
@@ -70,6 +72,11 @@ public class PlanetBombingView extends BlackPanel {
    */
   private IconLabel defenseTurret;
   /**
+   * Total number of building
+   */
+  private IconLabel totalBuildings;
+
+  /**
    * Planet owner's name
    */
   private TransparentLabel ownerLabel;
@@ -99,6 +106,17 @@ public class PlanetBombingView extends BlackPanel {
    * Infopanel on east side
    */
   private BattleInfoPanel infoPanel;
+  
+  /**
+   * Text area containing info
+   */
+  private InfoTextArea textArea;
+
+  
+  /**
+   * Text log
+   */
+  private String[] textLog;
 
   
   public PlanetBombingView(Planet planet, Fleet fleet, ActionListener listener) {
@@ -139,6 +157,16 @@ public class PlanetBombingView extends BlackPanel {
     topPanel.add(invis);
     topPanel.add(Box.createRigidArea(new Dimension(15,25)));
 
+    invis = new InvisiblePanel(topPanel);
+    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    totalBuildings = new IconLabel(invis,Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH), 
+        "Buildings: "+planet.getNumberOfBuildings());
+    totalBuildings.setToolTipText("Total number of buildings on planet.");
+    totalBuildings.setAlignmentX(Component.LEFT_ALIGNMENT);
+    invis.add(totalBuildings);
+    topPanel.add(invis);
+    topPanel.add(Box.createRigidArea(new Dimension(15,25)));
+
     topPanel.setTitle(planet.getName());
     
     // East panel
@@ -153,32 +181,64 @@ public class PlanetBombingView extends BlackPanel {
     shipsInFleet.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     JScrollPane scroll = new JScrollPane(shipsInFleet);
     eastPanel.add(scroll);
-    eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
 
     infoPanel = new BattleInfoPanel(fleet.getFirstShip(),listener);
     infoPanel.showShip(fleet.getFirstShip());
     infoPanel.setBorder(null);
     eastPanel.add(infoPanel);
+    eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
+    invis = new InvisiblePanel(topPanel);
+    invis.setLayout(new BoxLayout(invis, BoxLayout.X_AXIS));
+    SpaceButton btn = new SpaceButton("Next ship", 
+        GameCommands.COMMAND_NEXT_TARGET);
+    btn.addActionListener(listener);
+    invis.add(btn);
+    invis.add(Box.createRigidArea(new Dimension(5,5)));
+    btn = new SpaceButton("Abort conquest", 
+        GameCommands.COMMAND_ABORT_CONQUEST);
+    btn.addActionListener(listener);
+    invis.add(btn);
+    eastPanel.add(invis);
 
     
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
     bottomPanel.setTitle(null);
-    SpaceButton btn = new SpaceButton("Back to star map", 
+    btn = new SpaceButton("Back to star map", 
         GameCommands.COMMAND_VIEW_STARMAP);
     btn.addActionListener(listener);
-    bottomPanel.add(btn,BorderLayout.CENTER);
+    bottomPanel.add(btn,BorderLayout.SOUTH);
+    textArea = new InfoTextArea(10,30);
+    textArea.setEditable(false);
+    textArea.setLineWrap(true);
+    bottomPanel.add(textArea,BorderLayout.CENTER);
+    textLog = new String[11];
+    textLog[0] = "1st Line";
+    textLog[1] = "2st Line";
+    textLog[2] = "3st Line";
+    textLog[3] = "4st Line";
+    textLog[4] = "5st Line";
+    textLog[5] = "6st Line";
+    textLog[6] = "7st Line";
+    textLog[7] = "8st Line";
+    textLog[8] = "9st Line";
+    textLog[9] = "10st Line";
+    textLog[10] = "11st Line";
+
     
     this.updatePanel();
     
     // Add panels to base
-    this.add(bottomPanel,BorderLayout.SOUTH);
-    this.add(imgBase,BorderLayout.CENTER);
-    this.add(eastPanel,BorderLayout.EAST);
+    JPanel centerPanel = new JPanel();
+    centerPanel.setLayout(new BorderLayout());
+    centerPanel.add(imgBase, BorderLayout.CENTER);
+    centerPanel.add(bottomPanel, BorderLayout.SOUTH);
     if (planet.getPlanetOwnerIndex() != -1) {
-      this.add(topPanel,BorderLayout.NORTH);
+      centerPanel.add(topPanel,BorderLayout.NORTH);
     }
+    this.add(centerPanel,BorderLayout.CENTER);
+    this.add(eastPanel,BorderLayout.EAST);
 
   }
   
@@ -197,7 +257,15 @@ public class PlanetBombingView extends BlackPanel {
   public void updatePanel() {
     totalPeople.setText("Population: "+planet.getTotalPopulation());
     defenseTurret.setText("Turrets: "+planet.getTurretLvl());
+    totalBuildings.setText("Buildings: "+planet.getNumberOfBuildings());
 
+    StringBuilder sb = new StringBuilder();
+    for (int i=textLog.length-1;i>=0;i--) {
+      sb.append(textLog[i]);
+      sb.append("\n");
+    }
+    textArea.setText(sb.toString());
+    
     /*
      * Set the orbting ships
      */

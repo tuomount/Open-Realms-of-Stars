@@ -147,7 +147,7 @@ public class FleetView extends BlackPanel {
       if (planet.getPlanetPlayerInfo() != null) {
         ownerLabel = new TransparentLabel(invis, planet.getPlanetPlayerInfo().getEmpireName());
         if (info != planet.getPlanetPlayerInfo()) {
-          conquerBtn = new SpaceButton("Conquer", GameCommands.COMMAND_CONQUER);
+          conquerBtn = new SpaceButton("Conquer", GameCommands.COMMAND_CONQUEST);
           conquerBtn.addActionListener(listener);
         }
       } else {

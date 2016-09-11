@@ -866,6 +866,14 @@ public class Planet {
   }
 
   /**
+   * Get the total number of buildings on planet
+   * @return number of buildings
+   */
+  public int getNumberOfBuildings() {
+    return buildings.size();
+  }
+
+  /**
    * Return how many buildings there are on planet
    * @return int
    */

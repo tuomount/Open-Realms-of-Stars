@@ -305,19 +305,15 @@ public class GameCommands {
   public static final String COMMAND_COLONIZE = "ColonizeCommand";
 
   /**
-   * Conquer command
+   * Conquest command
    */
-  public static final String COMMAND_CONQUER = "ConquerCommand";
+  public static final String COMMAND_CONQUEST = "ConquestCommand";
 
   /**
-   * Bomb command
+   * Abort conquest
    */
-  public static final String COMMAND_BOMB = "BombCommand";
+  public static final String COMMAND_ABORT_CONQUEST = "AbortConquestCommand";
 
-  /**
-   * Skip command
-   */
-  public static final String COMMAND_SKIP = "SkipCommand";
 
   /**
    * Launch ground attack command

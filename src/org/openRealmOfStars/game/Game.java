@@ -243,8 +243,8 @@ public class Game extends JFrame implements ActionListener {
    * Show planet bombing view panel
    * @param planet Planet to show
    */
-  public void showPlanetBombingView(Planet planet) {
-    planetBombingView = new PlanetBombingView(planet, this);
+  public void showPlanetBombingView(Planet planet,Fleet fleet) {
+    planetBombingView = new PlanetBombingView(planet, fleet, this);
     this.getContentPane().removeAll();
     this.add(planetBombingView);
     this.validate();
@@ -464,9 +464,17 @@ public class Game extends JFrame implements ActionListener {
       break;
     }
     case PLANETBOMBINGVIEW: {
+      boolean changed = false; 
       if (dataObject instanceof Planet) {
         Planet planet = (Planet) dataObject;
-        showPlanetBombingView(planet);
+        Fleet fleet = starMap.getFleetByCoordinate(planet.getX(), planet.getY());
+        if (fleet != null) {
+          showPlanetBombingView(planet,fleet);
+          changed = true;
+        }
+      }
+      if (!changed) {
+        changeGameState(GameState.STARMAP);
       }
       break;
     }

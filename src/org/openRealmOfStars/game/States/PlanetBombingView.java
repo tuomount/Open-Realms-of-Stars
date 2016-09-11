@@ -2,22 +2,34 @@ package org.openRealmOfStars.game.States;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.ListRenderers.ShipListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
+import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -56,9 +68,26 @@ public class PlanetBombingView extends BlackPanel {
    * Planet to show
    */
   private Planet planet;
+
+  /**
+   * Bombing fleet
+   */
+  private Fleet fleet;
+
+  /**
+   * Fleet's name Text
+   */
+  private JTextField fleetNameText;
+
+  /**
+   * Ships in fleet
+   */
+  private JList<Ship> shipsInFleet;
+
   
-  public PlanetBombingView(Planet planet,ActionListener listener) {
+  public PlanetBombingView(Planet planet, Fleet fleet, ActionListener listener) {
     this.setPlanet(planet);
+    this.fleet = fleet;
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true,null);
     this.setLayout(new BorderLayout());
@@ -80,6 +109,51 @@ public class PlanetBombingView extends BlackPanel {
 
     topPanel.setTitle(planet.getName());
     
+    // East panel
+    InfoPanel eastPanel = new InfoPanel();
+    eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
+    eastPanel.setTitle("Fleet info");
+    eastPanel.add(Box.createRigidArea(new Dimension(150,5)));
+    TransparentLabel label = new TransparentLabel(eastPanel, "Fleet name");
+    eastPanel.add(label);
+    eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
+    fleetNameText = new JTextField();
+    fleetNameText.setFont(GuiStatics.getFontCubellan());
+    fleetNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+    fleetNameText.setBackground(Color.BLACK);
+    fleetNameText.setText(getFleet().getName());
+    fleetNameText.addKeyListener(new KeyListener() {
+      
+      @Override
+      public void keyTyped(KeyEvent e) {
+        // Nothing to  do here
+      }
+      
+      @Override
+      public void keyReleased(KeyEvent e) {
+        getFleet().setName(fleetNameText.getText());
+      }
+      
+      @Override
+      public void keyPressed(KeyEvent e) {
+        // Nothing to  do here
+      }
+    });
+    eastPanel.add(fleetNameText);
+    eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
+    label = new TransparentLabel(eastPanel, "Ships in fleet");
+    eastPanel.add(label);
+    eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
+    shipsInFleet = new JList<>();
+    shipsInFleet.setListData(fleet.getShips());
+    shipsInFleet.setCellRenderer(new ShipListRenderer());
+    shipsInFleet.setBackground(Color.BLACK);
+    shipsInFleet.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    JScrollPane scroll = new JScrollPane(shipsInFleet);
+    eastPanel.add(scroll);
+    eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
+
+    
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
@@ -94,11 +168,21 @@ public class PlanetBombingView extends BlackPanel {
     // Add panels to base
     this.add(bottomPanel,BorderLayout.SOUTH);
     this.add(imgBase,BorderLayout.CENTER);
+    this.add(eastPanel,BorderLayout.EAST);
     if (planet.getPlanetOwnerIndex() != -1) {
       this.add(topPanel,BorderLayout.NORTH);
     }
 
   }
+  
+  public Fleet getFleet() {
+    return fleet;
+  }
+
+  public void setFleet(Fleet fleet) {
+    this.fleet = fleet;
+  }
+
   
   /**
    * Update Planet view panels

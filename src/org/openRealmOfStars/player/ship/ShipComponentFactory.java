@@ -432,6 +432,8 @@ public class ShipComponentFactory {
     if (index == 16) {
       tmp = new ShipComponent(index, "Planetary invasion module", 6, 8, ShipComponentType.PLANETARY_INVASION_MODULE);
       tmp.setEnergyRequirement(1);
+      tmp.setDamage(50); // 50% more better fighter
+
     }
     if (index == 19) {
       tmp = new ShipComponent(index, "Cloaking device Mk2", 3, 2, ShipComponentType.CLOAKING_DEVICE);
@@ -548,7 +550,7 @@ public class ShipComponentFactory {
     if (index == 91) {
       tmp = new ShipComponent(index, "Shock trooper module", 6, 8, ShipComponentType.PLANETARY_INVASION_MODULE);
       tmp.setEnergyRequirement(1);
-      //FIXME How to differentiate this from Planetary invasion module
+      tmp.setDamage(90); // 90% more better fighter
     }
     if (index == 92) {
       tmp = new ShipComponent(index, "Orbital nuke", 10, 10, ShipComponentType.ORBITAL_NUKE);

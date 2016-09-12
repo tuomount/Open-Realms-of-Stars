@@ -113,7 +113,6 @@ public class Ship extends Construction {
     setName(name);
     prodCost = dis.readInt();
     metalCost = dis.readInt();
-    setDescription(IOUtilities.readString(dis));
     String hullName = IOUtilities.readString(dis);
     int raceIndex = dis.readInt();
     hull = ShipHullFactory.createByName(hullName, SpaceRace.getRaceByIndex(raceIndex));
@@ -141,7 +140,6 @@ public class Ship extends Construction {
     IOUtilities.writeString(dos, getName());
     dos.writeInt(prodCost);
     dos.writeInt(metalCost);
-    IOUtilities.writeString(dos, getDescription());
     IOUtilities.writeString(dos, hull.getName());
     dos.writeInt(hull.getRace().getIndex());
     dos.writeInt(components.size());
@@ -156,6 +154,56 @@ public class Ship extends Construction {
 
   }
   
+  
+  
+  @Override
+  public String getDescription() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(getName());
+    sb.append(" - ");
+    sb.append(hull.getHullType().toString());
+    sb.append("\n");
+    sb.append("Energy: ");
+    sb.append(getTotalEnergy());
+    sb.append(" Init.: ");
+    sb.append(getInitiative());
+    sb.append("\n");
+    sb.append("Cost: ");
+    sb.append(getProdCost());
+    sb.append(" Metal: ");
+    sb.append(getMetalCost());
+    sb.append("\n");
+    sb.append("Shield: ");
+    sb.append(getTotalShield());
+    sb.append(" Armor: ");
+    sb.append(getTotalArmor());
+    sb.append(" Hull Points: ");
+    sb.append(hull.getSlotHull()*getNumberOfComponents());
+    if (getTotalMilitaryPower() > 0) {
+      sb.append("\n");
+      sb.append("Military power: ");
+      sb.append(getTotalMilitaryPower());
+    }
+    sb.append("\n");
+    sb.append("Slots: ");
+    sb.append(components.size());
+    sb.append("/");
+    sb.append(hull.getMaxSlot());
+    if (hull.getHullType() == ShipHullType.FREIGHTER) {
+      sb.append("\n");
+      sb.append("Cargo: ");
+      sb.append(getMetal());
+      sb.append(" Units:");
+      sb.append(getColonist());
+    }
+    if (isTrooperShip()) {
+      sb.append("\n");
+      sb.append("Troops power ");
+      sb.append(getTroopPower());
+    }
+    return sb.toString();
+  }
+
   /**
    * Get hull points for certain component
    * @param index Component index
@@ -565,6 +613,45 @@ public class Ship extends Construction {
     }
     return false;
   }
+
+  /**
+   * Is Ship trooper ship or not
+   * @return True if ship has functional planetary invasion module, otherwise false
+   */
+  public boolean isTrooperShip() {
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.PLANETARY_INVASION_MODULE
+          && hasComponentEnergy(i) && getColonist() > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  /**
+   * Get Troop power
+   * @return Get Total troop power where improvements are taken to count
+   */
+  public int getTroopPower() {
+    int result = getColonist()*hull.getRace().getTrooperPower();
+    int multiply = 100;
+    boolean found = false;
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.PLANETARY_INVASION_MODULE
+          && hasComponentEnergy(i) && getColonist() > 0 && comp.getDamage()>0) {
+        multiply = multiply + comp.getDamage();
+        found = true;
+      }
+    }
+    result = result*multiply/100;
+    if (!found) {
+      result = 0;
+    }
+    return result;
+  }
+
 
   /**
    * Is Ship has colony module

@@ -122,6 +122,15 @@ public class PlanetBombingView extends BlackPanel {
    */
   private String[] textLog;
 
+  /**
+   * Is component used or not
+   */
+  private boolean[] componentUsed;
+
+  /**
+   * Ship index from fleet
+   */
+  private int shipIndex=0;
   
   public PlanetBombingView(Planet planet, Fleet fleet, ActionListener listener) {
     this.setPlanet(planet);
@@ -219,18 +228,9 @@ public class PlanetBombingView extends BlackPanel {
     textArea.setLineWrap(true);
     bottomPanel.add(textArea,BorderLayout.CENTER);
     textLog = new String[11];
-    textLog[0] = "1st Line";
-    textLog[1] = "2st Line";
-    textLog[2] = "3st Line";
-    textLog[3] = "4st Line";
-    textLog[4] = "5st Line";
-    textLog[5] = "6st Line";
-    textLog[6] = "7st Line";
-    textLog[7] = "8st Line";
-    textLog[8] = "9st Line";
-    textLog[9] = "10st Line";
-    textLog[10] = "11st Line";
-
+    for (int i=0;i<textLog.length;i++) {
+      textLog[i] = "";
+    }
     
     this.updatePanel();
     
@@ -245,6 +245,16 @@ public class PlanetBombingView extends BlackPanel {
     this.add(centerPanel,BorderLayout.CENTER);
     this.add(eastPanel,BorderLayout.EAST);
 
+    componentUsed = new boolean[12];
+  }
+  
+  /**
+   * Reset ship's component usage
+   */
+  public void resetComponentUsage() {
+    for (int i=0;i<componentUsed.length;i++) {
+      componentUsed[i] = false;
+    }
   }
   
   public Fleet getFleet() {
@@ -273,7 +283,7 @@ public class PlanetBombingView extends BlackPanel {
     textArea.setText(sb.toString());
     
     /*
-     * Set the orbting ships
+     * Set the orbiting ships
      */
     Ship[] ships = fleet.getShips();
     BufferedImage[] imgs = new BufferedImage[ships.length];
@@ -306,6 +316,15 @@ public class PlanetBombingView extends BlackPanel {
   public void handleAction(ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
       // FIXME
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_TARGET)) {
+      shipIndex++;
+      if (shipIndex >= getFleet().getNumberOfShip()) {
+        shipIndex=0;
+      }
+      infoPanel.showShip(getFleet().getShipByIndex(shipIndex));
+      resetComponentUsage();
+      updatePanel();
     }
   }
 }

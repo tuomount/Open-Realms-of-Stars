@@ -30,6 +30,8 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -308,6 +310,32 @@ public class PlanetBombingView extends BlackPanel {
     this.planet = planet;
   }
   
+  /**
+   * Planet turret shoots bombing ship
+   */
+  public void planetTurretShoot() {
+    Ship ship = fleet.getShipByIndex(shipIndex);
+    int turret = planet.getTurretLvl();
+    if (turret > 0) {
+      if (ship.getShield() > turret) {
+        ship.setShield(ship.getShield()-1);
+      } else {
+        turret = turret - ship.getShield();
+        ship.setShield(ship.getShield()-1);
+        if (turret > 0) {
+          if (ship.getArmor() > turret) {
+            ship.setArmor(ship.getArmor()-1);
+          } else {
+            turret = turret - ship.getArmor();
+            ship.setShield(ship.getShield()-1);
+            while (turret > 0 && ship.getHullPoints() > 0) {
+              turret = ship.damageComponent(turret);
+            }
+          }
+        }
+      }
+    }
+  }
   
   /**
    * Handle actions for Planet view.
@@ -325,6 +353,26 @@ public class PlanetBombingView extends BlackPanel {
       infoPanel.showShip(getFleet().getShipByIndex(shipIndex));
       resetComponentUsage();
       updatePanel();
+    }
+    if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)) {
+      String number = arg0.getActionCommand().substring(GameCommands.COMMAND_COMPONENT_USE.length());
+      int index = Integer.valueOf(number);
+      Ship ship = fleet.getShipByIndex(shipIndex);
+      if (!componentUsed[index] && ship.componentIsWorking(index)) {
+        componentUsed[index] = true;
+        ShipComponent comp = ship.getComponent(index);
+        if (comp != null) {
+          if (comp.getType() == ShipComponentType.ORBITAL_BOMBS) {
+            planetTurretShoot();
+          }
+          if (comp.getType() == ShipComponentType.ORBITAL_NUKE) {
+            planetTurretShoot();
+          }
+          if (comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
+            planetTurretShoot();
+          }
+        }
+      } 
     }
   }
 }

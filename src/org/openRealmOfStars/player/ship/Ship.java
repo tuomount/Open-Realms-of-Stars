@@ -464,7 +464,7 @@ public class Ship extends Construction {
    * @param damage Amount damage to cause
    * @return amount damage left aka pierced the component
    */
-  private int damageComponent(int damage) {
+  public int damageComponent(int damage) {
     int[] componentPos = new int[components.size()];
     int positions = 0;
     for (int i=0;i<hullPoints.length;i++) {
@@ -804,6 +804,10 @@ public class Ship extends Construction {
     return shield;
   }
 
+  /**
+   * Shield value cannot be set under zero. Minimum value is set to zero.
+   * @param shield New shield value
+   */
   public void setShield(int shield) {
     if (shield >= 0) {
       this.shield = shield;
@@ -816,6 +820,10 @@ public class Ship extends Construction {
     return armor;
   }
 
+  /**
+   * Armor value cannot be set under zero. Minimum value is set to zero.
+   * @param armor New armor value
+   */
   public void setArmor(int armor) {
     if (armor >= 0) {
       this.armor = armor;

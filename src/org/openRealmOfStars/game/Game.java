@@ -619,6 +619,9 @@ public class Game extends JFrame implements ActionListener {
         combatView.handleActions(arg0);
       }
     }
+    if (gameState == GameState.PLANETBOMBINGVIEW && planetBombingView != null) {
+        planetBombingView.handleAction(arg0);
+    }
     if (gameState == GameState.AITURN && aiTurnView != null) {
       aiTurnView.handleActions(arg0);
     }

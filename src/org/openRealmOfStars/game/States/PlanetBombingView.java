@@ -280,9 +280,12 @@ public class PlanetBombingView extends BlackPanel {
     StringBuilder sb = new StringBuilder();
     for (int i=textLog.length-1;i>=0;i--) {
       sb.append(textLog[i]);
-      sb.append("\n");
+      if (i!=0) {
+        sb.append("\n");
+      }
     }
     textArea.setText(sb.toString());
+    textArea.repaint();
     
     /*
      * Set the orbiting ships
@@ -319,11 +322,13 @@ public class PlanetBombingView extends BlackPanel {
     if (turret > 0) {
       if (ship.getShield() > turret) {
         ship.setShield(ship.getShield()-1);
+        addLog("Planetary defense is deflected to ship's shield.");
       } else {
         turret = turret - ship.getShield();
         ship.setShield(ship.getShield()-1);
         if (turret > 0) {
           if (ship.getArmor() > turret) {
+            addLog("Planetary defense is deflected to ship's armor.");
             ship.setArmor(ship.getArmor()-1);
           } else {
             turret = turret - ship.getArmor();
@@ -331,10 +336,28 @@ public class PlanetBombingView extends BlackPanel {
             while (turret > 0 && ship.getHullPoints() > 0) {
               turret = ship.damageComponent(turret);
             }
+            if (ship.getHullPoints() <=0) {
+              addLog("Planetary defense damages "+ship.getName()+" and destroys it.");
+            } else {
+              addLog("Planetary defense damages "+ship.getName()+".");
+            }
           }
         }
       }
+    } else {
+      addLog("Planet does not have planetary turrets...");
     }
+  }
+  
+  /**
+   * Add new text log
+   * @param text Text to add
+   */
+  public void addLog(String text) {
+    for (int i=textLog.length-1;i>0;i--) {
+      textLog[i] = textLog[i-1];
+    }
+    textLog[0] = text;
   }
   
   /**
@@ -351,6 +374,7 @@ public class PlanetBombingView extends BlackPanel {
         shipIndex=0;
       }
       infoPanel.showShip(getFleet().getShipByIndex(shipIndex));
+      addLog("Changing to next ship in fleet...");
       resetComponentUsage();
       updatePanel();
     }

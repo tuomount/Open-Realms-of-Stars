@@ -25,6 +25,7 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
+import org.openRealmOfStars.gui.mapPanel.PlanetAnimation;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
@@ -367,6 +368,12 @@ public class PlanetBombingView extends BlackPanel {
   public void handleAction(ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
       // FIXME
+      if (imgBase.getAnimation() == null) {
+        imgBase.setAnimation(
+            new PlanetAnimation(PlanetAnimation.ANIMATION_TYPE_AIM, 0, 0, 1, 1));
+      } else {
+        imgBase.repaint();
+      }
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_TARGET)) {
       shipIndex++;

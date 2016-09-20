@@ -97,9 +97,15 @@ public class PlanetAnimation {
   private AnimatedImage explosionAnim;
 
   /**
-   * Animation type for turre fire
+   * Animation type for turret fire
    */
-  public final static int ANIMATION_TYPE_TURRET = 0;
+  public final static int ANIMATION_TYPE_TURRET = 1;
+
+  /**
+   * Animation type for turret aim
+   */
+  public final static int ANIMATION_TYPE_AIM = 0;
+
   
   /**
    * Animation type
@@ -138,8 +144,34 @@ public class PlanetAnimation {
     count = 40;
     this.setAnimationType(animationType);
   }
-  
 
+  /** 
+   * Set animation coordinates
+  * @param sx Where animation starts X coordinate
+  * @param sy Where animation starts Y coordinate
+  * @param ex Where animation ends X coordinate
+  * @param ey Where animation ends Y coordinate
+  */
+  public void setCoords(int sx, int sy, int ex, int ey) {
+    this.sx = sx;
+    this.sy = sy;
+    this.ex = ex;
+    this.ey = ey;
+    double dx = Math.abs(this.sx-this.ex);
+    double dy = Math.abs(this.sy-this.ey);
+    distance = (int) dy;
+    if (dx > dy) {
+      distance = (int) dx;
+    }
+    if (distance > 0) {
+      mx = (this.ex-this.sx)/distance;
+      my = (this.ey-this.sy)/distance;
+    } else {
+      mx = 0;
+      my = 0;
+    }
+  }
+  
   /**
    * Is animation ended
    * @return True if animation has finished

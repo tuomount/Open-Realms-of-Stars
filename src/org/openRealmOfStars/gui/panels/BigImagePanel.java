@@ -13,7 +13,9 @@ import javax.swing.JPanel;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.mapPanel.ParticleEffect;
 import org.openRealmOfStars.gui.mapPanel.PlanetAnimation;
+import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  * 
@@ -259,9 +261,12 @@ public class BigImagePanel extends JPanel {
             animation.getEy());
       }
       List<ParticleEffect> particles = animation.getParticles();
+      Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.
+          JOIN_BEVEL, 1, new float[]{1f}, 0);
+      g2d.setStroke(full);
       for (ParticleEffect part : particles) {
         g2d.setColor(part.getColor());
-        g2d.drawLine(part.getX(), part.getY(), part.getX(), part.getY());
+        g2d.drawLine(part.getX(), part.getY(), part.getX()+1, part.getY()+1);
       }
       animation.doAnimation();
       if (animation.isAnimationFinished()) {
@@ -270,6 +275,7 @@ public class BigImagePanel extends JPanel {
     }
     if (shipImages != null) {
       for (int i=0;i<shipImages.length;i++) {
+
         int offsetX = 332;
         int offsetY = 332;
         switch (i) {
@@ -294,6 +300,27 @@ public class BigImagePanel extends JPanel {
           offsetX=offsetX+70;
           break;
         }
+        }
+        if (animation != null &&
+            animation.getAnimationType()==PlanetAnimation.ANIMATION_TYPE_AIM 
+            && backgroundImg != null) {
+          int px = 280;
+          int py = 220;
+          int nx = DiceGenerator.getRandom(25);
+          int ny = DiceGenerator.getRandom(25);
+          if (DiceGenerator.getRandom(1)==0) {
+            nx = nx*-1;
+          }
+          if (DiceGenerator.getRandom(1)==0) {
+            ny = ny*-1;
+          }
+          px = px+nx;
+          py = py+ny;
+
+
+          animation.setCoords(px, py, offsetX+ShipImage.MAX_WIDTH/2,
+              offsetY+ShipImage.MAX_HEIGHT/2);
+          animation.setAnimationType(PlanetAnimation.ANIMATION_TYPE_TURRET);
         }
         if (i < 5) {
           g2d.drawImage(shipImages[i], offsetX, offsetY, null);

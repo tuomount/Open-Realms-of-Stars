@@ -95,16 +95,24 @@ public class PlanetAnimation {
   
 
   private AnimatedImage explosionAnim;
+
+  /**
+   * Animation type for turre fire
+   */
+  public final static int ANIMATION_TYPE_TURRET = 0;
   
   /**
-   * Combat Animation
-   * @param shooter Ship who shot
-   * @param target Ship who took the shot
-   * @param weapon Weapon which was used for shooting
-   * @param hit  1 Not even a dent
-   *             0 Armor or shield damaged
-   *            -1 Component damage
-   *            -2 Destoryed
+   * Animation type
+   */
+  private int animationType;
+  
+  /**
+   * Planet animation for turret fire, bombing etc.
+   * @param animationType See ANIMATION_TYPEs
+   * @param sx Where animation starts X coordinate
+   * @param sy Where animation starts Y coordinate
+   * @param ex Where animation ends X coordinate
+   * @param ey Where animation ends Y coordinate
    */
   public PlanetAnimation(int animationType, int sx, int sy, int ex, int ey) {
     this.sx = sx;
@@ -128,6 +136,7 @@ public class PlanetAnimation {
     showAnim = false;
     particles = new ArrayList<>();
     count = 40;
+    this.setAnimationType(animationType);
   }
   
 
@@ -212,6 +221,16 @@ public class PlanetAnimation {
 
   public int getEy() {
     return (int) Math.round(ey);
+  }
+
+
+  public int getAnimationType() {
+    return animationType;
+  }
+
+
+  public void setAnimationType(int animationType) {
+    this.animationType = animationType;
   }
 
 }

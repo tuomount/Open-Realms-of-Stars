@@ -1,13 +1,18 @@
 package org.openRealmOfStars.gui.panels;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import javax.swing.JPanel;
 
 import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.mapPanel.ParticleEffect;
+import org.openRealmOfStars.gui.mapPanel.PlanetAnimation;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -66,6 +71,11 @@ public class BigImagePanel extends JPanel {
   private String title;
   
   /**
+   * Planet animation
+   */
+  private PlanetAnimation animation;
+  
+  /**
    * Create BigImagePanel
    * @param planet Planet to draw on background
    * @param starField Use starfield or not
@@ -85,6 +95,7 @@ public class BigImagePanel extends JPanel {
     drawStarField = starField;
     this.title = title;
     this.shipImages = null;
+    this.setAnimation(null);
   }
   
   /**
@@ -238,6 +249,25 @@ public class BigImagePanel extends JPanel {
     } else {
       g2d.drawImage(GuiStatics.nebulaeImage,-sx,-sy,null);
     }
+    if (animation != null) {
+      if (animation.getAnimationType() == PlanetAnimation.ANIMATION_TYPE_TURRET) {
+        Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.
+            JOIN_BEVEL, 1, new float[]{1f}, 0);
+        g2d.setStroke(full);
+        g2d.setColor(animation.getBeamColor());
+        g2d.drawLine(animation.getSx(), animation.getSy(), animation.getEx(), 
+            animation.getEy());
+      }
+      List<ParticleEffect> particles = animation.getParticles();
+      for (ParticleEffect part : particles) {
+        g2d.setColor(part.getColor());
+        g2d.drawLine(part.getX(), part.getY(), part.getX(), part.getY());
+      }
+      animation.doAnimation();
+      if (animation.isAnimationFinished()) {
+        animation = null;
+      }
+    }
     if (shipImages != null) {
       for (int i=0;i<shipImages.length;i++) {
         int offsetX = 332;
@@ -273,6 +303,14 @@ public class BigImagePanel extends JPanel {
     
     drawTextArea(g);
     this.paintChildren(g2d);
+  }
+
+  public PlanetAnimation getAnimation() {
+    return animation;
+  }
+
+  public void setAnimation(PlanetAnimation animation) {
+    this.animation = animation;
   }
   
   

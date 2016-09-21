@@ -321,27 +321,42 @@ public class BigImagePanel extends JPanel {
           break;
         }
         }
-        if (animation != null &&
-            animation.getAnimationType()==PlanetAnimation.ANIMATION_TYPE_AIM 
-            && backgroundImg != null && (animation.getShipIndex() == i || 
+        if (animation != null) {
+          if (animation.getAnimationType()==PlanetAnimation.ANIMATION_TYPE_AIM 
+              && backgroundImg != null && (animation.getShipIndex() == i || 
                 animation.getShipIndex() > 8)) {
-          int px = 280;
-          int py = 220;
-          int nx = DiceGenerator.getRandom(25);
-          int ny = DiceGenerator.getRandom(25);
-          if (DiceGenerator.getRandom(1)==0) {
-            nx = nx*-1;
-          }
-          if (DiceGenerator.getRandom(1)==0) {
-            ny = ny*-1;
-          }
-          px = px+nx;
-          py = py+ny;
+            int px = 280;
+            int py = 220;
+            int nx = DiceGenerator.getRandom(25);
+            int ny = DiceGenerator.getRandom(25);
+            if (DiceGenerator.getRandom(1)==0) {
+              nx = nx*-1;
+            }
+            if (DiceGenerator.getRandom(1)==0) {
+              ny = ny*-1;
+            }
+            px = px+nx;
+            py = py+ny;
+  
 
+            animation.setCoords(px, py, offsetX+ShipImage.MAX_WIDTH/2,
+                offsetY+ShipImage.MAX_HEIGHT/2);
+            animation.setAnimationType(PlanetAnimation.ANIMATION_TYPE_TURRET);
+          }
+          if (animation.getAnimationType()==PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM 
+              && backgroundImg != null && (animation.getShipIndex() == i || 
+                animation.getShipIndex() > 8)) {
+            int px = 235;
+            int py = 235;
+            int nx = DiceGenerator.getRandom(backgroundImg.getWidth()/4);
+            int ny = DiceGenerator.getRandom(backgroundImg.getHeight()/4);
+            px = px+nx;
+            py = py+ny;
+  
 
-          animation.setCoords(px, py, offsetX+ShipImage.MAX_WIDTH/2,
-              offsetY+ShipImage.MAX_HEIGHT/2);
-          animation.setAnimationType(PlanetAnimation.ANIMATION_TYPE_TURRET);
+            animation.setCoords(px, py, px,py);
+            animation.setAnimationType(PlanetAnimation.ANIMATION_TYPE_BOMBING);
+          }
         }
         if (i < 9) {
           g2d.drawImage(shipImages[i], offsetX, offsetY, null);

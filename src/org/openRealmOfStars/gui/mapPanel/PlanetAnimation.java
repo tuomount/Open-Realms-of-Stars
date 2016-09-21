@@ -107,6 +107,16 @@ public class PlanetAnimation {
    */
   public final static int ANIMATION_TYPE_AIM = 0;
 
+  /**
+   * Animation type for bombing aim
+   */
+  public final static int ANIMATION_TYPE_BOMBING_AIM = 1;
+
+  /**
+   * Animation type for bombing
+   */
+  public final static int ANIMATION_TYPE_BOMBING = 2;
+
   
   /**
    * Animation type
@@ -148,8 +158,14 @@ public class PlanetAnimation {
     showAnim = false;
     particles = new ArrayList<>();
     shipIndex = 0;
-    count = 40;
-    explosionAnim = GuiStatics.EXPLOSION1;
+    if (animationType == ANIMATION_TYPE_AIM) {
+      count = 40;
+      explosionAnim = GuiStatics.EXPLOSION1;
+    }
+    if (animationType == ANIMATION_TYPE_BOMBING_AIM) {
+      explosionAnim = GuiStatics.EXPLOSION1;
+      count = explosionAnim.getMaxFrames();
+    }
     this.setAnimationType(animationType);
   }
 
@@ -205,29 +221,38 @@ public class PlanetAnimation {
       }
     }
     count--;
-    int parts = DiceGenerator.getRandom(5, 15);
-    for (int i=0;i<parts;i++) {
-      int dist = DiceGenerator.getRandom(distance);
-      int px = (int) Math.round(dist*mx+sx);
-      int py = (int) Math.round(dist*my+sy);
-      int nx = DiceGenerator.getRandom(5);
-      int ny = DiceGenerator.getRandom(5);
-      if (DiceGenerator.getRandom(1)==0) {
-        nx = nx*-1;
+    if (animationType == ANIMATION_TYPE_TURRET) {
+      int parts = DiceGenerator.getRandom(5, 15);
+      for (int i=0;i<parts;i++) {
+        int dist = DiceGenerator.getRandom(distance);
+        int px = (int) Math.round(dist*mx+sx);
+        int py = (int) Math.round(dist*my+sy);
+        int nx = DiceGenerator.getRandom(5);
+        int ny = DiceGenerator.getRandom(5);
+        if (DiceGenerator.getRandom(1)==0) {
+          nx = nx*-1;
+        }
+        if (DiceGenerator.getRandom(1)==0) {
+          ny = ny*-1;
+        }
+        px = px+nx;
+        py = py+ny;
+        ParticleEffect particle = new ParticleEffect(ParticleEffectType.LASER_PARTICLE, px, py);
+        particles.add(particle);
       }
-      if (DiceGenerator.getRandom(1)==0) {
-        ny = ny*-1;
+      if (count < explosionAnim.getMaxFrames()) {
+        showAnim = true;
+        animFrame++;
       }
-      px = px+nx;
-      py = py+ny;
-      ParticleEffect particle = new ParticleEffect(ParticleEffectType.LASER_PARTICLE, px, py);
-      particles.add(particle);
     }
-    if (count < explosionAnim.getMaxFrames()) {
-      showAnim = true;
-      animFrame++;
+    if (animationType == ANIMATION_TYPE_BOMBING) {
+      if (count < explosionAnim.getMaxFrames()) {
+        showAnim = true;
+        animFrame++;
+      }
     }
   }
+  
   
   /**
    * Get Animation frame if it should be shown. Otherwise it is null

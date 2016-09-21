@@ -675,8 +675,8 @@ public class Game extends JFrame implements ActionListener {
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_BATTLE)) {
-      changeGameState(GameState.COMBAT);
-      //changeGameState(GameState.PLANETBOMBINGVIEW, starMap.getPlanetList().get(0));
+      //changeGameState(GameState.COMBAT);
+      changeGameState(GameState.PLANETBOMBINGVIEW, starMap.getPlanetList().get(0));
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_CONTINUE_GAME)) {

@@ -371,6 +371,7 @@ public class PlanetBombingView extends BlackPanel {
       if (imgBase.getAnimation() == null) {
         imgBase.setAnimation(
             new PlanetAnimation(PlanetAnimation.ANIMATION_TYPE_AIM, 0, 0, 1, 1));
+        imgBase.getAnimation().setShipIndex(shipIndex);
       } else {
         imgBase.repaint();
       }

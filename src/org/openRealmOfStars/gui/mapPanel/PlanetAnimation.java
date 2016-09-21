@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.AnimatedImage;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -113,6 +114,11 @@ public class PlanetAnimation {
   private int animationType;
   
   /**
+   * Ship index in BigImagePanel
+   */
+  private int shipIndex;
+  
+  /**
    * Planet animation for turret fire, bombing etc.
    * @param animationType See ANIMATION_TYPEs
    * @param sx Where animation starts X coordinate
@@ -141,7 +147,9 @@ public class PlanetAnimation {
     animFrame = 0;
     showAnim = false;
     particles = new ArrayList<>();
+    shipIndex = 0;
     count = 40;
+    explosionAnim = GuiStatics.EXPLOSION1;
     this.setAnimationType(animationType);
   }
 
@@ -215,6 +223,10 @@ public class PlanetAnimation {
       ParticleEffect particle = new ParticleEffect(ParticleEffectType.LASER_PARTICLE, px, py);
       particles.add(particle);
     }
+    if (count < explosionAnim.getMaxFrames()) {
+      showAnim = true;
+      animFrame++;
+    }
   }
   
   /**
@@ -263,6 +275,14 @@ public class PlanetAnimation {
 
   public void setAnimationType(int animationType) {
     this.animationType = animationType;
+  }
+
+  public int getShipIndex() {
+    return shipIndex;
+  }
+
+  public void setShipIndex(int shipIndex) {
+    this.shipIndex = shipIndex;
   }
 
 }

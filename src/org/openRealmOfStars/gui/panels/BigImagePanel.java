@@ -300,10 +300,31 @@ public class BigImagePanel extends JPanel {
           offsetX=offsetX+70;
           break;
         }
+        case 5: { 
+          offsetY=offsetY+70;
+          offsetX=offsetX+10;
+          break;
+        }
+        case 6: { 
+          offsetY=offsetY-5;
+          offsetX=offsetX+140;
+          break;
+        }
+        case 7: { 
+          offsetY=offsetY+74;
+          offsetX=offsetX+75;
+          break;
+        }
+        case 8: { 
+          offsetY=offsetY+64;
+          offsetX=offsetX+140;
+          break;
+        }
         }
         if (animation != null &&
             animation.getAnimationType()==PlanetAnimation.ANIMATION_TYPE_AIM 
-            && backgroundImg != null) {
+            && backgroundImg != null && (animation.getShipIndex() == i || 
+                animation.getShipIndex() > 8)) {
           int px = 280;
           int py = 220;
           int nx = DiceGenerator.getRandom(25);
@@ -322,8 +343,13 @@ public class BigImagePanel extends JPanel {
               offsetY+ShipImage.MAX_HEIGHT/2);
           animation.setAnimationType(PlanetAnimation.ANIMATION_TYPE_TURRET);
         }
-        if (i < 5) {
+        if (i < 9) {
           g2d.drawImage(shipImages[i], offsetX, offsetY, null);
+        }
+        if (animation != null && animation.getAnimFrame() != null) {
+          BufferedImage img = animation.getAnimFrame();
+          g2d.drawImage(img, animation.getEx()-img.getWidth()/2, 
+              animation.getEy()-img.getHeight()/2, null);
         }
       }
     }

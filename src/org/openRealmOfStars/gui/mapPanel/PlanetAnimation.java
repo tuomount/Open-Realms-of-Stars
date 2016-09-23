@@ -117,6 +117,16 @@ public class PlanetAnimation {
    */
   public final static int ANIMATION_TYPE_BOMBING = 2;
 
+  /**
+   * Animation type for nuke aim
+   */
+  public final static int ANIMATION_TYPE_NUKE_AIM = 3;
+
+  /**
+   * Animation type for dropping nuke
+   */
+  public final static int ANIMATION_TYPE_NUKING = 4;
+
   
   /**
    * Animation type
@@ -165,6 +175,10 @@ public class PlanetAnimation {
     if (animationType == ANIMATION_TYPE_BOMBING_AIM) {
       explosionAnim = GuiStatics.EXPLOSION1;
       count = explosionAnim.getMaxFrames();
+    }
+    if (animationType == ANIMATION_TYPE_NUKE_AIM) {
+      explosionAnim = GuiStatics.EXPLOSION4;
+      count = explosionAnim.getMaxFrames()+10;
     }
     this.setAnimationType(animationType);
   }
@@ -251,6 +265,14 @@ public class PlanetAnimation {
         animFrame++;
       }
     }
+    if (animationType == ANIMATION_TYPE_NUKING) {
+      showAnim = true;
+      if (animFrame < explosionAnim.getMaxFrames()) {
+        animFrame++;
+      } else {
+        showAnim = false;
+      }
+    }
   }
   
   
@@ -259,7 +281,7 @@ public class PlanetAnimation {
    * @return BufferedImage
    */
   public BufferedImage getAnimFrame() {
-    if (showAnim) {
+    if (showAnim && animFrame < explosionAnim.getMaxFrames()) {
       return explosionAnim.getFrame(animFrame);
     }
     return null;
@@ -272,7 +294,17 @@ public class PlanetAnimation {
   public Color getBeamColor() {
     return new Color(255-2*(BEAM_ANIM_COUNT-count), 2*count, 2*count);
   }
-  
+
+  public Color getNukeColor() {
+    int max = explosionAnim.getMaxFrames();
+    int mult = 255/max;
+    int opaque = (max-animFrame)*mult;
+    if (opaque > 255) {
+      opaque = 255;
+    }
+    return new Color(255, 255,255,opaque);
+  }
+
   public int getSx() {
     return (int) Math.round(sx);
   }

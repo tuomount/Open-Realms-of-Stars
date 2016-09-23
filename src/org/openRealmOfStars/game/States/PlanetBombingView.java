@@ -370,7 +370,7 @@ public class PlanetBombingView extends BlackPanel {
       // FIXME
       if (imgBase.getAnimation() == null) {
         imgBase.setAnimation(
-            new PlanetAnimation(PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM, 0, 0, 1, 1));
+            new PlanetAnimation(PlanetAnimation.ANIMATION_TYPE_NUKE_AIM, 0, 0, 1, 1));
         imgBase.getAnimation().setShipIndex(shipIndex);
       } else {
         imgBase.repaint();

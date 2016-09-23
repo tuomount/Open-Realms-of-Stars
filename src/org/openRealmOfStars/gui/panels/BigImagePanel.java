@@ -343,9 +343,9 @@ public class BigImagePanel extends JPanel {
                 offsetY+ShipImage.MAX_HEIGHT/2);
             animation.setAnimationType(PlanetAnimation.ANIMATION_TYPE_TURRET);
           }
-          if (animation.getAnimationType()==PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM 
-              && backgroundImg != null && (animation.getShipIndex() == i || 
-                animation.getShipIndex() > 8)) {
+          if ((animation.getAnimationType()==PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM
+              || animation.getAnimationType()==PlanetAnimation.ANIMATION_TYPE_NUKE_AIM)
+              && (backgroundImg != null)) {
             int px = 235;
             int py = 235;
             int nx = DiceGenerator.getRandom(backgroundImg.getWidth()/4);
@@ -355,17 +355,26 @@ public class BigImagePanel extends JPanel {
   
 
             animation.setCoords(px, py, px,py);
-            animation.setAnimationType(PlanetAnimation.ANIMATION_TYPE_BOMBING);
+            if (animation.getAnimationType() == PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM) {
+              animation.setAnimationType(PlanetAnimation.ANIMATION_TYPE_BOMBING);
+            }
+            if (animation.getAnimationType() == PlanetAnimation.ANIMATION_TYPE_NUKE_AIM) {
+              animation.setAnimationType(PlanetAnimation.ANIMATION_TYPE_NUKING);
+            }
           }
         }
         if (i < 9) {
           g2d.drawImage(shipImages[i], offsetX, offsetY, null);
         }
-        if (animation != null && animation.getAnimFrame() != null) {
-          BufferedImage img = animation.getAnimFrame();
-          g2d.drawImage(img, animation.getEx()-img.getWidth()/2, 
-              animation.getEy()-img.getHeight()/2, null);
-        }
+      } // End of ship loop
+    }
+    if (animation != null && animation.getAnimFrame() != null) {
+      BufferedImage img = animation.getAnimFrame();
+      g2d.drawImage(img, animation.getEx()-img.getWidth()/2, 
+          animation.getEy()-img.getHeight()/2, null);
+      if (animation.getAnimationType() == PlanetAnimation.ANIMATION_TYPE_NUKING) {
+        g2d.setColor(animation.getNukeColor());
+        g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
       }
     }
     

@@ -245,7 +245,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showPlanetBombingView(Planet planet,Fleet fleet) {
     planetBombingView = new PlanetBombingView(planet, fleet,
-        starMap.getCurrentPlayerInfo(), this);
+        starMap.getCurrentPlayerInfo(), players.getCurrentPlayer(), this);
     this.getContentPane().removeAll();
     this.add(planetBombingView);
     this.validate();

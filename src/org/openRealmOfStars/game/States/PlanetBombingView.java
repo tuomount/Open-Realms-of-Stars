@@ -30,6 +30,7 @@ import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
@@ -150,10 +151,17 @@ public class PlanetBombingView extends BlackPanel {
    */
   private PlayerInfo attacker;
   
-  public PlanetBombingView(Planet planet, Fleet fleet, PlayerInfo attacker, ActionListener listener) {
+  /**
+   * Attack player index
+   */
+  private int attackPlayerIndex;
+  
+  public PlanetBombingView(Planet planet, Fleet fleet, PlayerInfo attacker,
+      int attackerPlayerIndex, ActionListener listener) {
     this.setPlanet(planet);
     this.fleet = fleet;
     this.attacker = attacker;
+    this.attackPlayerIndex = attackerPlayerIndex;
     // Background image
     imgBase = new BigImagePanel(planet, true,null);
     this.setLayout(new BorderLayout());
@@ -422,6 +430,32 @@ public class PlanetBombingView extends BlackPanel {
                   } else {
                     addLog(ship.getName()+" misses population and buildings...");
                   }
+                }
+              }
+              if (comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
+                int shipTroop = ship.getHull().getRace().getTrooperPower()*(100+comp.getDamage())/100;
+                int shipTroops = ship.getHull().getRace().getTrooperPower()*
+                    ship.getColonist()*(100+comp.getDamage())/100;
+                int planetTroops = planet.getTroopPower();
+                if (shipTroops> planetTroops) {
+                  planet.fightAgainstAttacker(shipTroops);
+                  int left = planetTroops-shipTroops;
+                  left = left / shipTroop;
+                  if (left <=0) {
+                    left = 1;
+                  }
+                  ship.setColonist(0);
+                  planet.setPlanetOwner(attackPlayerIndex, attacker);
+                  if (attacker.getRace() == SpaceRace.MECHIONS) {
+                    planet.setWorkers(Planet.PRODUCTION_WORKERS, left);
+                  } else {
+                    planet.setWorkers(Planet.PRODUCTION_FOOD, left);
+                  }
+                  addLog("Your troops colonize the planet!");
+                } else {
+                  planet.fightAgainstAttacker(shipTroops);
+                  ship.setColonist(0);
+                  addLog("Your troops are killed during the attack!");
                 }
               }
             }

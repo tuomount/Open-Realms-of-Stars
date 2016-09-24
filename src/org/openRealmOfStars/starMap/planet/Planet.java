@@ -544,6 +544,46 @@ public class Planet {
   }
 
   /**
+   * Get Troop power
+   * @return Get Total troop power where improvements are taken to count
+   */
+  public void fightAgainstAttacker(int attackTroops) {
+    if (planetOwnerInfo != null) {
+      int troop = planetOwnerInfo.getRace().getTrooperPower();
+      int multiply = 100;
+      Building[] buildings = getBuildingList();
+      for (Building building : buildings) {
+        if (building.getBattleBonus()>0) {
+          multiply = multiply + building.getBattleBonus();
+        }
+      }
+      troop = troop*multiply/100;
+      int total = getTotalPopulation()*troop;
+      if (attackTroops >= total) {
+        for (int i=0;i<workers.length;i++) {
+          workers[i] = 0;
+        }
+        planetOwnerInfo = null;
+        planetOwner = -1;
+        // Fighting on planet drops the culture
+        setCulture(getCulture()-getCulture()/10);
+      } else {
+        // Fighting on planet drops the culture
+        setCulture(getCulture()-getCulture()/10);
+        int left = total-attackTroops;
+        left = left / troop;
+        if (left <= 0) {
+          left = 1;
+        }
+        int dies = getTotalPopulation()-left;
+        for (int i=0;i<dies;i++) {
+          killOneWorker();
+        }
+      }
+    }
+  }
+
+  /**
    * Get total production from planetary improvements.
    * @param prod, Production to get: See all PRODUCTION_*
    * @return amount of production in one turn
@@ -1340,6 +1380,8 @@ public class Planet {
       if (index < buildings.size()) {
         // Bomb hit on building
         Building building = buildings.get(index);
+        // Destroying building affects on culture
+        setCulture(getCulture()-building.getCultBonus()*50-building.getProdCost());
         removeBuilding(building);
         return true;
       } 
@@ -1367,7 +1409,11 @@ public class Planet {
   }
   
   public void setCulture(int culture) {
-    this.culture = culture;
+    if (culture < 0) {
+     culture = 0; 
+    } else {
+      this.culture = culture;
+    }
   }
   
   @Override

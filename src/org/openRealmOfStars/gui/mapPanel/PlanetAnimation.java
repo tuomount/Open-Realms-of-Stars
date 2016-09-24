@@ -139,7 +139,8 @@ public class PlanetAnimation {
   private int shipIndex;
   
   /**
-   * Planet animation for turret fire, bombing etc.
+   * Planet animation for turret fire, bombing etc. If animation type is
+   * AIM then coordinates can be anything.
    * @param animationType See ANIMATION_TYPEs
    * @param sx Where animation starts X coordinate
    * @param sy Where animation starts Y coordinate

@@ -29,11 +29,14 @@ import org.openRealmOfStars.gui.mapPanel.PlanetAnimation;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
+import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  * 
@@ -135,9 +138,22 @@ public class PlanetBombingView extends BlackPanel {
    */
   private int shipIndex=0;
   
-  public PlanetBombingView(Planet planet, Fleet fleet, ActionListener listener) {
+  
+  
+  /**
+   * Which component was used to attack to planet
+   */
+  private int usedComponentIndex;
+  
+  /**
+   * Player who is attacking
+   */
+  private PlayerInfo attacker;
+  
+  public PlanetBombingView(Planet planet, Fleet fleet, PlayerInfo attacker, ActionListener listener) {
     this.setPlanet(planet);
     this.fleet = fleet;
+    this.attacker = attacker;
     // Background image
     imgBase = new BigImagePanel(planet, true,null);
     this.setLayout(new BorderLayout());
@@ -249,6 +265,7 @@ public class PlanetBombingView extends BlackPanel {
     this.add(eastPanel,BorderLayout.EAST);
 
     componentUsed = new boolean[12];
+    usedComponentIndex = -1;
   }
   
   /**
@@ -318,6 +335,8 @@ public class PlanetBombingView extends BlackPanel {
    * Planet turret shoots bombing ship
    */
   public void planetTurretShoot() {
+    imgBase.setAnimation(new PlanetAnimation(PlanetAnimation.ANIMATION_TYPE_AIM,
+        0, 0, 1, 1));
     Ship ship = fleet.getShipByIndex(shipIndex);
     int turret = planet.getTurretLvl();
     if (turret > 0) {
@@ -367,12 +386,47 @@ public class PlanetBombingView extends BlackPanel {
    */
   public void handleAction(ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
-      // FIXME
-      if (imgBase.getAnimation() == null) {
-        imgBase.setAnimation(
-            new PlanetAnimation(PlanetAnimation.ANIMATION_TYPE_NUKE_AIM, 0, 0, 1, 1));
-        imgBase.getAnimation().setShipIndex(shipIndex);
-      } else {
+      if (imgBase.getAnimation() != null) {
+        PlanetAnimation anim = imgBase.getAnimation();
+        if (anim.isAnimationFinished()) {
+          Ship ship = fleet.getShipByIndex(shipIndex);
+          if (ship.getHullPoints() <= 0) {
+            fleet.removeShip(ship);
+            ShipStat stat = attacker.getShipStatByName(ship.getName());
+            if (stat != null) {
+              stat.setNumberOfLoses(stat.getNumberOfLoses()+1);
+              stat.setNumberOfInUse(stat.getNumberOfInUse()-1);
+            }      
+          }
+        } else {
+          if (usedComponentIndex != -1) {
+            Ship ship = fleet.getShipByIndex(shipIndex);
+            ShipComponent comp = ship.getComponent(usedComponentIndex);
+            if (ship.componentIsWorking(usedComponentIndex)) {
+              if (comp.getType() == ShipComponentType.ORBITAL_NUKE) {
+                imgBase.setAnimation(new PlanetAnimation(
+                    PlanetAnimation.ANIMATION_TYPE_NUKE_AIM, 0, 0, 1, 1));
+                planet.nukem();
+                addLog(ship.getName()+" nukes the planet!");
+              }
+              if (comp.getType() == ShipComponentType.ORBITAL_BOMBS) {
+                imgBase.setAnimation(new PlanetAnimation(
+                    PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM, 0, 0, 1, 1));
+                int hit = DiceGenerator.getRandom(1,100);
+                if (hit <= comp.getDamage()) {
+                  planet.killOneWorker();
+                  addLog(ship.getName()+" bombs population!");
+                } else {
+                  if (planet.destroyOneBuilding()) {
+                    addLog(ship.getName()+" misses population but hits building!");
+                  } else {
+                    addLog(ship.getName()+" misses population and buildings...");
+                  }
+                }
+              }
+            }
+          }
+        }
         imgBase.repaint();
       }
     }
@@ -386,7 +440,8 @@ public class PlanetBombingView extends BlackPanel {
       resetComponentUsage();
       updatePanel();
     }
-    if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)) {
+    if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)
+        && imgBase.getAnimation() == null) {
       String number = arg0.getActionCommand().substring(GameCommands.COMMAND_COMPONENT_USE.length());
       int index = Integer.valueOf(number);
       Ship ship = fleet.getShipByIndex(shipIndex);
@@ -394,14 +449,11 @@ public class PlanetBombingView extends BlackPanel {
         componentUsed[index] = true;
         ShipComponent comp = ship.getComponent(index);
         if (comp != null) {
-          if (comp.getType() == ShipComponentType.ORBITAL_BOMBS) {
+          if (comp.getType() == ShipComponentType.ORBITAL_BOMBS ||
+              comp.getType() == ShipComponentType.ORBITAL_NUKE ||
+              comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
             planetTurretShoot();
-          }
-          if (comp.getType() == ShipComponentType.ORBITAL_NUKE) {
-            planetTurretShoot();
-          }
-          if (comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
-            planetTurretShoot();
+            usedComponentIndex =index;
           }
         }
       } 

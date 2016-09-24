@@ -1313,6 +1313,59 @@ public class Planet {
     return culture;
   }
 
+  /**
+   * Kill randomly one worker. This could be used for example on bombing.
+   */
+  public void killOneWorker() {
+    if (getTotalPopulation() > 0) {
+      ArrayList<Integer> list = new ArrayList<>();
+      for (int i=0;i<workers.length;i++) {
+        if (workers[i] > 0) {
+          list.add(new Integer(i));
+        }
+      }
+      int index = DiceGenerator.getRandom(list.size()-1);
+      workers[list.get(index)]--;
+    }
+  }
+  
+  /**
+   * Destroy randomly one building. This could be used for example on bombing.
+   * There is chance than bomb misses the building.
+   * @return true if building was hit
+   */
+  public boolean destroyOneBuilding() {
+    if (buildings.size() > 0) {
+      int index = DiceGenerator.getRandom(getGroundSize());
+      if (index < buildings.size()) {
+        // Bomb hit on building
+        Building building = buildings.get(index);
+        removeBuilding(building);
+        return true;
+      } 
+      // Bomb missed building
+      return false;
+    }
+    return false;
+  }
+  
+  /**
+   * Drop nuke on planet. Increased rad, kills all workers, makes planet 
+   * uncolonized. Culture drops to 1/10.
+   */
+  public void nukem() {
+    if (radiationLevel < 10) {
+      radiationLevel++;
+    }
+    for (int i=0;i<workers.length;i++) {
+      workers[i] = 0;
+    }
+    planetOwnerInfo = null;
+    planetOwner = -1;
+    // Dropping nukes on planet really drops the culture on planet
+    setCulture(getCulture()/10);
+  }
+  
   public void setCulture(int culture) {
     this.culture = culture;
   }

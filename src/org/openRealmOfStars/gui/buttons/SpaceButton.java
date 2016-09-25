@@ -60,9 +60,16 @@ public class SpaceButton extends JButton {
     this.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     this.setForeground(GuiStatics.COLOR_GOLD);
     this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+    String[] texts = text.split("\n");
+    int longest = 0; 
+    for (int i=0;i<texts.length;i++) {
+      if (texts[i].length() > texts[longest].length()) {
+        longest = i;
+      }
+    }
     Dimension size = this.getPreferredSize();    
-    size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)+20;
-    size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), text)+10;
+    size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), texts[longest])+20;
+    size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), texts[longest])*texts.length+10;
     this.setMinimumSize(size);
     this.setPreferredSize(size);
     this.setMaximumSize(size);
@@ -116,8 +123,6 @@ public class SpaceButton extends JButton {
     g2d.setPaint(gradient);    
     g2d.fillRect(sx, sy, width, height);
 
-    int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), getText());
-    int textHeight = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), getText());
     if (this.isEnabled()) {
       if (this.getModel().isRollover()) {
         g2d.setColor(GuiStatics.COLOR_DEEP_SPACE_BLUE);
@@ -127,7 +132,16 @@ public class SpaceButton extends JButton {
     } else {
       g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER);
     }
+    String[] texts = getText().split("\n");
     g.setFont(GuiStatics.getFontCubellan());
+    int longest = 0; 
+    for (int i=0;i<texts.length;i++) {
+      if (texts[i].length() > texts[longest].length()) {
+        longest = i;
+      }
+    }
+    int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), texts[longest]);
+    int textHeight = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), texts[longest]);
     int offsetX = width/2-textWidth/2+sx;
     if (icon != null) {
       offsetX=offsetX+16;
@@ -136,7 +150,11 @@ public class SpaceButton extends JButton {
     if (offsetX < 0) {
       offsetX = sx;
     }
-    g2d.drawString(getText(), offsetX, textHeight+sy);
+    for (int i=0;i<texts.length;i++) {
+      textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), texts[i]);
+      offsetX = width/2-textWidth/2+sx;
+      g2d.drawString(texts[i], offsetX, textHeight*(i+1)+sy);
+    }
     
   }
 

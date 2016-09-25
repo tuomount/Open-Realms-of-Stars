@@ -71,7 +71,7 @@ public class MapPanel extends JPanel {
   /**
    * Map drawing area size height
    */
-  private final static int HEIGHT = 672;
+  private final static int HEIGHT = 608;
   
   /**
    * How many tiles can be fitted on half of the panel

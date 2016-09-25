@@ -160,16 +160,12 @@ public class StarMapView extends BlackPanel {
             this.players.getCurrentPlayer()));
     invis.add(reseProd);
     bottomPanel.add(invis);
-    bottomPanel.add(Box.createRigidArea(new Dimension(10,5)));
+    bottomPanel.add(Box.createRigidArea(new Dimension(10,124)));
 
     InvisiblePanel bottomBtnPanel = new  InvisiblePanel(bottomPanel);
     bottomBtnPanel.setLayout(new GridLayout(3, 2));
     
     
-    endTurnButton = new SpaceButton("End Turn "+this.map.getTurn(), 
-        GameCommands.COMMAND_END_TURN);
-    endTurnButton.addActionListener(listener);
-    bottomBtnPanel.add(endTurnButton);
     bottomPanel.add(Box.createRigidArea(new Dimension(10,5)));
     
     viewResearchButton = new SpaceButton("Research",
@@ -195,7 +191,14 @@ public class StarMapView extends BlackPanel {
         players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
         players.getCurrentPlayerInfo().getMsgList().getMaxMsg(),listener);
     bottomPanel.add(msgPanel);
-    
+
+    bottomPanel.add(Box.createRigidArea(new Dimension(10,5)));
+
+    endTurnButton = new SpaceButton("\t\n\t\nEnd Turn \n"+this.map.getTurn()+"\t\n\t\n\t\n", 
+        GameCommands.COMMAND_END_TURN);
+    endTurnButton.addActionListener(listener);
+    bottomPanel.add(endTurnButton);
+
     base.setLayout(new BorderLayout());
     base.add(mapPanel,BorderLayout.CENTER);
     base.add(infoPanel, BorderLayout.EAST);

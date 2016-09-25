@@ -119,7 +119,7 @@ public class TechList {
     techList = new TechListForLevel[TechType.values().length][MAX_TECH_LEVEL];
     for (int i=0;i<MAX_TECH_TYPES;i++) {
       for (int j=0;j<MAX_TECH_LEVEL;j++) {
-        techList[i][j] = new TechListForLevel(j, TechType.values()[i], dis);
+        techList[i][j] = new TechListForLevel(j+1, TechType.values()[i], dis);
       }
     }
     for (int i=0;i<MAX_TECH_TYPES;i++) {

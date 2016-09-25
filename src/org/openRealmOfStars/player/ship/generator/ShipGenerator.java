@@ -232,7 +232,7 @@ public class ShipGenerator {
       }
       int[] componentScores = new int[components.size()]; 
       int safetyCount = 500;
-      while(result.getFreeSlots()>0 || safetyCount < 1) {
+      while(result.getFreeSlots()>0 && safetyCount > 0) {
         safetyCount--;
         componentScores = scoreComponents(result, player, components);
         int sum = 0;

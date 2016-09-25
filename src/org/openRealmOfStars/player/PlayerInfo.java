@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.openRealmOfStars.AI.Mission.MissionList;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
@@ -672,14 +673,26 @@ public class PlayerInfo {
     }
     return result;
   }
-/**
-   * Get Ship Stat list as a fixed array
-   * @return Ship Stat array
-   */
+  
+  /**
+  * Get Ship Stat list as a fixed array
+  * @return Ship Stat array
+  */
   public ShipStat[] getShipStatList() {
     return shipStatList.toArray(new ShipStat[shipStatList.size()]);
   }
-  
+
+  /**
+  * Get Ship Stat list as a fixed array but in alphabetical order
+  * @return Ship Stat array
+  */
+  public ShipStat[] getShipStatListInOrder() {
+    @SuppressWarnings("unchecked")
+    ArrayList<ShipStat> orderList = (ArrayList<ShipStat>) shipStatList.clone();
+    Collections.sort(orderList);
+    return orderList.toArray(new ShipStat[orderList.size()]);
+  }
+
   /**
    * Add Ship Stat to list
    * @param stat ShipStat to add

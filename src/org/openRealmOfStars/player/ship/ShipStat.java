@@ -28,7 +28,7 @@ import java.io.IOException;
  * 
  */
 
-public class ShipStat {
+public class ShipStat implements Comparable<ShipStat>{
 
   /**
    * Ship design to to keep stats
@@ -196,6 +196,17 @@ public class ShipStat {
 
   public void setObsolete(boolean obsolete) {
     this.obsolete = obsolete;
+  }
+
+  @Override
+  public int compareTo(ShipStat arg0) {
+    if (arg0.isObsolete() == this.obsolete) {
+      return design.getName().compareTo(arg0.getDesign().getName());
+    }
+    if (this.obsolete) {
+      return 1;
+    }
+    return -1;
   }
   
   

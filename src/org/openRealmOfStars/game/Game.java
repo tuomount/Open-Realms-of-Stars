@@ -615,6 +615,16 @@ public class Game extends JFrame implements ActionListener {
               changeGameState(GameState.FLEETVIEW);
             }
           }
+          if (!starMapView.getStarMapMouseListener().isDoubleClicked() 
+              && starMapView.getStarMapMouseListener().isMoveClicked()) {
+            if (starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+              starMapView.getStarMapMouseListener().setMoveClicked(false);
+              fleetMakeMove(players.getCurrentPlayerInfo(), 
+                  starMapView.getStarMapMouseListener().getLastClickedFleet(),
+                  starMapView.getStarMapMouseListener().getMoveX(), 
+                  starMapView.getStarMapMouseListener().getMoveY());
+            }
+          }
         }
         starMapView.handleActions(arg0);
         if (starMapView.isAutoFocus() && arg0.getActionCommand().equals(GameCommands.COMMAND_END_TURN)) {

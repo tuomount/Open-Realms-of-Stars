@@ -1,5 +1,6 @@
 package org.openRealmOfStars.starMap;
 
+import java.awt.MouseInfo;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -97,7 +98,27 @@ public class StarMapMouseListener extends MouseAdapter implements
    * Something has been double clicked
    */
   private boolean doubleClicked;
+
+  /**
+   * Move clicked
+   */
+  private boolean moveClicked;
+
+  /**
+   * Move point where clicked on map X coordinate
+   */
+  private int moveX;
+  /**
+   * Move point where clicked on map Y coordinate
+   */
+  private int moveY;
   
+  public int getMoveX() {
+    return moveX;
+  }
+  public int getMoveY() {
+    return moveY;
+  }
   /**
    * Update drawing coordinates if mouse cursor is on map border
    */
@@ -162,6 +183,7 @@ public class StarMapMouseListener extends MouseAdapter implements
   @Override
   public void mouseClicked(MouseEvent e) {
     setDoubleClicked(false);
+    setMoveClicked(false);
     coord= new PixelsToMapCoordinate(mapPanel.getLastDrawnX(),
         mapPanel.getLastDrawnY(),e.getX(),e.getY(),mapPanel.getOffsetX(),mapPanel.getOffsetY(),
         mapPanel.getViewPointX(),mapPanel.getViewPointY(),false);
@@ -172,19 +194,36 @@ public class StarMapMouseListener extends MouseAdapter implements
         routePlanning = false;
       }
       if (starMap.getCurrentPlayerInfo().getSectorVisibility(coord.getMapX(),
-              coord.getMapY())==PlayerInfo.VISIBLE) {
+              coord.getMapY())==PlayerInfo.VISIBLE
+              || e.getButton() == MouseEvent.BUTTON3) {
         Planet planet = starMap.getPlanetByCoordinate(coord.getMapX(),
                                                       coord.getMapY());
         Fleet fleet = starMap.getFleetByCoordinate(coord.getMapX(), coord.getMapY());
-        if (e.getClickCount() == 2) {
-          // Double click 
+        if (e.getClickCount() == 2 && e.getButton()==MouseEvent.BUTTON1) {
+          // Double click Button1
           setDoubleClicked(true);
           if (planet != null) {
             setLastClickedPlanet(planet);
+            setLastClickedFleet(null);
             mapInfoPanel.showPlanet(planet);
+          } else if (fleet != null) {
+            setLastClickedPlanet(null);
+            setLastClickedFleet(fleet);
+            mapInfoPanel.showFleet(fleet);
           }
-        } else {
-          // single click
+        } else if (e.getClickCount() == 1 && e.getButton() == MouseEvent.BUTTON3){
+          // single click right button
+          if (lastClickedFleet != null) {
+            moveX = coord.getMapX();
+            moveY = coord.getMapY();
+            double distance = StarMap.getDistance(lastClickedFleet.getX(), 
+              lastClickedFleet.getY(), moveX, moveY); 
+            if (distance <2 && distance > 0) {
+              moveClicked = true;
+            }
+          }
+        } else if (e.getClickCount() == 1 && e.getButton() == MouseEvent.BUTTON1){
+          // Single click on left button
           if (lastClickedPlanet == planet && fleet != null) {
             mapInfoPanel.showFleet(fleet);
             setLastClickedFleet(fleet);
@@ -256,6 +295,18 @@ public class StarMapMouseListener extends MouseAdapter implements
 
   public void setDoubleClicked(boolean doubleClicked) {
     this.doubleClicked = doubleClicked;
+  }
+
+
+
+  public boolean isMoveClicked() {
+    return moveClicked;
+  }
+
+
+
+  public void setMoveClicked(boolean moveClicked) {
+    this.moveClicked = moveClicked;
   }
 
   

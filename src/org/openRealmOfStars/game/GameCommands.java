@@ -283,6 +283,11 @@ public class GameCommands {
   public static final String COMMAND_SHIPDESIGN_COMPONENTSELECTED = "ShipComponentSelected";
 
   /**
+   * Ship Component filtered
+   */
+  public static final String COMMAND_SHIPDESIGN_COMPONENTFILTERED = "ShipComponentFiltered";
+
+  /**
    * Ship Component added
    */
   public static final String COMMAND_SHIPDESIGN_COMPONENTADDED = "ShipComponentAdded";

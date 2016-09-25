@@ -43,7 +43,11 @@ public class ShipComponentListRenderer implements ListCellRenderer<ShipComponent
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(list, value, index,
         isSelected, cellHasFocus);
     renderer.setFont(GuiStatics.getFontCubellan());
-    renderer.setText(value.getName()+" - "+value.getType().toString());
+    if (value != null) {
+      renderer.setText(value.getName()+" - "+value.getType().toString());
+    } else {
+      renderer.setText("None");
+    }
     if (isSelected) {
       renderer.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
       renderer.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);

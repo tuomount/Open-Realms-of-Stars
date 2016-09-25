@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -37,6 +38,7 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
+import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullFactory;
@@ -95,6 +97,11 @@ public class ShipDesignView extends BlackPanel {
    * ComboBox where to select component
    */
   private JComboBox<ShipComponent> componentSelect;
+
+  /**
+   * ComboBox where to filter components
+   */
+  private JComboBox<String> componentFilter;
 
   /**
    * Text is containing information about the ship hull
@@ -249,16 +256,6 @@ public class ShipDesignView extends BlackPanel {
     componentPanel.setLayout(new BoxLayout(componentPanel, BoxLayout.X_AXIS));
     componentPanel.setTitle("Ship's components");
     componentPanel.add(Box.createRigidArea(new Dimension(25,25)));
-    Tech[] allTech = this.player.getTechList().getList();
-    ArrayList<ShipComponent> components = new ArrayList<>();
-    for (int i = 0;i<allTech.length;i++) {
-      if (allTech[i].getComponent() != null) {
-        ShipComponent comp = ShipComponentFactory.createByName(allTech[i].getComponent());
-        if (comp != null) {
-          components.add(comp);
-        }
-      }
-    }
  
     invis = new InvisiblePanel(componentPanel);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
@@ -266,7 +263,23 @@ public class ShipDesignView extends BlackPanel {
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     invis.add(label);
     invis.add(Box.createRigidArea(new Dimension(5,5)));
-    componentSelect = new JComboBox<>(components.toArray(new ShipComponent[components.size()]));
+    ArrayList<String> componentTypes = new ArrayList<>();
+    componentTypes.add("All");
+    for (int i=0;i<ShipComponentType.values().length;i++) {
+      componentTypes.add(ShipComponentType.getTypeByIndex(i).toString());
+    }
+    componentFilter = new JComboBox<>(componentTypes.toArray(
+        new String[componentTypes.size()]));
+    componentFilter.setActionCommand(GameCommands.COMMAND_SHIPDESIGN_COMPONENTFILTERED);
+    componentFilter.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    componentFilter.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    componentFilter.setBorder(new SimpleBorder());
+    componentFilter.setFont(GuiStatics.getFontCubellan());
+    componentFilter.addActionListener(listener);
+    invis.add(componentFilter);
+    
+    invis.add(Box.createRigidArea(new Dimension(5,5)));
+    componentSelect = new JComboBox<>(filterComponents("All"));
     componentSelect.setActionCommand(GameCommands.COMMAND_SHIPDESIGN_COMPONENTSELECTED);
     componentSelect.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     componentSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
@@ -379,6 +392,29 @@ public class ShipDesignView extends BlackPanel {
     designInfoText.repaint();
     updatePanels();
   }
+
+  /**
+   * Filter component by component tech types. "All" is special filter
+   * and all techs are then added.
+   * @param filter as a String
+   * @return List of ship component
+   */
+  public ShipComponent[] filterComponents(String filter) {
+    Tech[] allTech = this.player.getTechList().getList();
+    ArrayList<ShipComponent> components = new ArrayList<>();
+    for (int i = 0;i<allTech.length;i++) {
+      if (allTech[i].getComponent() != null) {
+        ShipComponent comp = ShipComponentFactory.createByName(allTech[i].getComponent());
+        if (comp != null && filter.equalsIgnoreCase("All")) {
+          components.add(comp);
+        }
+        if (comp != null && filter.equalsIgnoreCase(comp.getType().toString())) {
+          components.add(comp);
+        }
+      }
+    }
+    return components.toArray(new ShipComponent[components.size()]);
+  }
   
   /**
    * Update visible panels
@@ -413,6 +449,13 @@ public class ShipDesignView extends BlackPanel {
   public void handleAction(ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_HULLSELECTED)) {
       updatePanels();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENTFILTERED)) {
+      String filter = (String) componentFilter.getSelectedItem();
+      if (filter != null) {    
+        componentSelect.setModel(new DefaultComboBoxModel<>(filterComponents(filter)));
+        updatePanels();
+      }
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENTSELECTED)) {
       updatePanels();

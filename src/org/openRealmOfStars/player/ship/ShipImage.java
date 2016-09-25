@@ -68,11 +68,20 @@ public class ShipImage {
   public static final int MEDIUM_STARBASE = 7;
   public static final int MEDIUM_FREIGHTER = 8;
   public static final int CRUISER = 9;
+  public static final int BATTLESHIP = 10;
+  public static final int PRIVATEER = 11;
+  public static final int PRIVATEER_LARGE = 12;
+  public static final int LARGE_FREIGHTER = 13;
+  public static final int LARGE_STARBASE = 14;
+  public static final int BATTLECRUISER = 15;
+  public static final int MASSIVE_FREIGHTER = 16;
+  public static final int MASSIVE_STARBASE = 17;
+  public static final int CAPITAL_SHIP = 18;
   
   /**
    * Must be one bigger than last ship
    */
-  private static final int NUMBER_OF_IMAGES = 10;
+  private static final int NUMBER_OF_IMAGES = 15;
   
   /**
    * Initialize ship images
@@ -103,6 +112,16 @@ public class ShipImage {
     smallShipImages[MEDIUM_FREIGHTER] = scaleTo32x32(shipImages[MEDIUM_FREIGHTER]);
     shipImages[CRUISER] = image64x64(image,4,1);
     smallShipImages[CRUISER] = scaleTo32x32(shipImages[CRUISER]);
+    shipImages[BATTLESHIP] = image64x64(image,0,2);
+    smallShipImages[BATTLESHIP] = scaleTo32x32(shipImages[BATTLESHIP]);
+    shipImages[PRIVATEER] = image64x64(image,1,2);
+    smallShipImages[PRIVATEER] = scaleTo32x32(shipImages[PRIVATEER]);
+    shipImages[PRIVATEER_LARGE] = image64x64(image,2,2);
+    smallShipImages[PRIVATEER_LARGE] = scaleTo32x32(shipImages[PRIVATEER_LARGE]);
+    shipImages[LARGE_FREIGHTER] = image64x64(image,3,2);
+    smallShipImages[LARGE_FREIGHTER] = scaleTo32x32(shipImages[LARGE_FREIGHTER]);
+    shipImages[LARGE_STARBASE] = image64x64(image,4,2);
+    smallShipImages[LARGE_STARBASE] = scaleTo32x32(shipImages[LARGE_STARBASE]);
   }
   
   private BufferedImage image64x64(BufferedImage image, int x, int y) throws

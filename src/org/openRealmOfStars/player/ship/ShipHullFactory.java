@@ -165,7 +165,7 @@ public class ShipHullFactory {
       return tmp;
     }
     if (index == 18) {
-      tmp = new ShipHull(index, "Battle cruiser Mk2", 9, 2, ShipHullType.NORMAL,
+      tmp = new ShipHull(index, "Battle cruiser Mk1", 9, 2, ShipHullType.NORMAL,
           ShipSize.LARGE,12,12,race);
       return tmp;
     }
@@ -213,7 +213,7 @@ public class ShipHullFactory {
       return tmp;
     }
     if (index == 27) {
-      tmp = new ShipHull(index, "Battle cruiser Mk3", 9, 3, ShipHullType.NORMAL,
+      tmp = new ShipHull(index, "Battle cruiser Mk2", 9, 3, ShipHullType.NORMAL,
           ShipSize.LARGE,18,18,race);
       return tmp;
     }

@@ -312,6 +312,7 @@ public class PlanetBombingView extends BlackPanel {
     }
     textArea.setText(sb.toString());
     textArea.repaint();
+    infoPanel.updatePanel();
     
     /*
      * Set the orbiting ships
@@ -433,6 +434,7 @@ public class PlanetBombingView extends BlackPanel {
                 }
               }
               if (comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
+                imgBase.setAnimation(null);
                 int shipTroop = ship.getHull().getRace().getTrooperPower()*(100+comp.getDamage())/100;
                 int shipTroops = ship.getHull().getRace().getTrooperPower()*
                     ship.getColonist()*(100+comp.getDamage())/100;
@@ -461,6 +463,7 @@ public class PlanetBombingView extends BlackPanel {
             }
           }
         }
+        updatePanel();
         imgBase.repaint();
       }
     }
@@ -484,10 +487,20 @@ public class PlanetBombingView extends BlackPanel {
         ShipComponent comp = ship.getComponent(index);
         if (comp != null) {
           if (comp.getType() == ShipComponentType.ORBITAL_BOMBS ||
-              comp.getType() == ShipComponentType.ORBITAL_NUKE ||
-              comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
+              comp.getType() == ShipComponentType.ORBITAL_NUKE) {
             planetTurretShoot();
+            updatePanel();
             usedComponentIndex =index;
+          }
+          if (comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
+            if (ship.getColonist() > 0) {
+              planetTurretShoot();
+              updatePanel();
+              usedComponentIndex =index;
+            } else {
+              addLog("No more troops on board!");
+            }
+            
           }
         }
       } 

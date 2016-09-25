@@ -758,6 +758,9 @@ public class Game extends JFrame implements ActionListener {
           changeGameState(GameState.PLANETVIEW);
         }
       }
+      if (arg0.getActionCommand().equals(GameCommands.COMMAND_CONQUEST)) {
+        changeGameState(GameState.PLANETBOMBINGVIEW, fleetView.getPlanet());
+      }
       fleetView.handleAction(arg0);
     }
     if (gameState == GameState.MAIN_MENU) {

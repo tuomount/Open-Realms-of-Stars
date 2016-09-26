@@ -1,10 +1,15 @@
 package org.openRealmOfStars.gui.panels;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.labels.IconLabel;
@@ -63,7 +68,12 @@ public class ResearchTechPanel extends InvisiblePanel {
    * upgrade button
    */
   private IconButton btnUpgrade;
-
+  
+  /**
+   * Slider for research panel
+   */
+  private JSlider slider;
+  
   /**
    * Create Research Tech panel with - and + buttons and up arrow to
    * upgrade tech level.
@@ -75,11 +85,13 @@ public class ResearchTechPanel extends InvisiblePanel {
    * @param toolTip Tool tip for label
    * @param text2 Text for tech level label
    * @param actionUpgrade ActionCommand for upgrade button
+   * @param sliderValue slider value
+   * @param sliderAction slider action command
    * @param listener Action Listener
    */
   public ResearchTechPanel(Component parent,String actionMinus, 
       String actionPlus,String iconName, String text, String toolTip, String text2,
-      String actionUpgrade, ActionListener listener) {
+      String actionUpgrade,int sliderValue,final String actionSlider, final ActionListener listener) {
     super(parent);
     this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
     btnMinus = new IconButton(Icons.getIconByName(Icons.ICON_MINUS), 
@@ -92,6 +104,28 @@ public class ResearchTechPanel extends InvisiblePanel {
     label = new IconLabel(this, Icons.getIconByName(iconName),text);
     label.setToolTipText(toolTip);
     invis.add(label);
+    slider = new JSlider(0, 100, sliderValue);
+    slider.setMinorTickSpacing(4);
+    slider.setMajorTickSpacing(20);
+    slider.setPaintTicks(true);
+    slider.setSnapToTicks(true);
+    slider.setBackground(GuiStatics.COLOR_GREYBLUE);
+    slider.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    slider.addChangeListener(new ChangeListener() {
+      
+      @Override
+      public void stateChanged(ChangeEvent e) {
+        if (e.getSource() instanceof JSlider) {
+          JSlider slide = (JSlider) e.getSource();
+          if (slide.getValueIsAdjusting()) {
+            if (slide.getValue() % 4 == 0) {
+              listener.actionPerformed(new ActionEvent(e, 0, actionSlider));
+            }
+          }
+        }
+      }
+    });
+    invis.add(slider);
     lvlLabel = new IconLabel(this, Icons.getIconByName(Icons.ICON_EMPTY),text2);
     invis.add(lvlLabel);
     
@@ -112,6 +146,18 @@ public class ResearchTechPanel extends InvisiblePanel {
     this.add(btnPlus);
   }
   
+  public void setSliderValue(int value) {
+    slider.setValue(value);
+  }
+
+  public int getSliderValue() {
+    return slider.getValue();
+  }
+  
+  public boolean isSliderChanged() {
+    return slider.getValueIsAdjusting();
+  }
+
   /**
    * Set label text
    * @param text to show

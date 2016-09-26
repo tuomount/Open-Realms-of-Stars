@@ -117,6 +117,10 @@ public class GameCommands {
    */
   public static final String COMMAND_PLUS_COMBAT_RESEARCH = "PlusCombatRese";
   /**
+   * Slider Combat research
+   */
+  public static final String COMMAND_SLIDER_COMBAT_RESEARCH = "SliderCombatRese";
+  /**
    * Minus Defense research
    */
   public static final String COMMAND_MINUS_DEFENSE_RESEARCH = "MinusDefenseRese";
@@ -124,6 +128,10 @@ public class GameCommands {
    * Plus Defense research
    */
   public static final String COMMAND_PLUS_DEFENSE_RESEARCH = "PlusDefenseRese";
+  /**
+   * Slider Defense research
+   */
+  public static final String COMMAND_SLIDER_DEFENSE_RESEARCH = "SliderDefenseRese";
   /**
    * Minus Hull research
    */
@@ -133,6 +141,10 @@ public class GameCommands {
    */
   public static final String COMMAND_PLUS_HULL_RESEARCH = "PlusHullRese";
   /**
+   * Slider Hull research
+   */
+  public static final String COMMAND_SLIDER_HULL_RESEARCH = "SliderHullRese";
+  /**
    * Minus Improvement research
    */
   public static final String COMMAND_MINUS_IMPROVEMENT_RESEARCH = "MinusImprovementRese";
@@ -140,6 +152,10 @@ public class GameCommands {
    * Plus Improvement research
    */
   public static final String COMMAND_PLUS_IMPROVEMENT_RESEARCH = "PlusImprovementRese";
+  /**
+   * Slider Improvement research
+   */
+  public static final String COMMAND_SLIDER_IMPROVEMENT_RESEARCH = "SliderImprovementRese";
   /**
    * Minus Propulsion research
    */
@@ -149,6 +165,10 @@ public class GameCommands {
    */
   public static final String COMMAND_PLUS_PROPULSION_RESEARCH = "PlusPropulsionRese";
   /**
+   * Slider Propulsion research
+   */
+  public static final String COMMAND_SLIDER_PROPULSION_RESEARCH = "SliderPropulsionRese";
+  /**
    * Minus Electronics research
    */
   public static final String COMMAND_MINUS_ELECTRONICS_RESEARCH = "MinusElectronicsRese";
@@ -156,6 +176,10 @@ public class GameCommands {
    * Plus Electronics research
    */
   public static final String COMMAND_PLUS_ELECTRONICS_RESEARCH = "PlusElectronicsRese";
+  /**
+   * Slider Electronics research
+   */
+  public static final String COMMAND_SLIDER_ELECTRONICS_RESEARCH = "SliderElectronicsRese";
 
   /**
    * Upgrade combat

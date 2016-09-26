@@ -127,7 +127,8 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_PLUS_COMBAT_RESEARCH, Icons.ICON_COMBAT_TECH,
         TechType.Combat.toString()+" 100% 1000 turns", 
         "Focus on combat technology","Level:10 (1/6)",
-        GameCommands.COMMAND_UPGRADE_COMBAT, listener);
+        GameCommands.COMMAND_UPGRADE_COMBAT,16,
+        GameCommands.COMMAND_SLIDER_COMBAT_RESEARCH, listener);
     combatRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(combatRese);
     invis.add(Box.createRigidArea(new Dimension(10,10)));
@@ -136,7 +137,8 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_PLUS_DEFENSE_RESEARCH, Icons.ICON_DEFENSE_TECH,
         TechType.Defense.toString()+" 100% 1000 turns", 
         "Focus on defense technology","Level:10 (1/6)",
-        GameCommands.COMMAND_UPGRADE_DEFENSE, listener);
+        GameCommands.COMMAND_UPGRADE_DEFENSE,16,
+        GameCommands.COMMAND_SLIDER_DEFENSE_RESEARCH,listener);
     defenseRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(defenseRese);
     invis.add(Box.createRigidArea(new Dimension(10,10)));
@@ -145,7 +147,8 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_PLUS_HULL_RESEARCH, Icons.ICON_HULL_TECH,
         TechType.Hulls.toString()+" 100% 1000 turns", 
         "Focus on hull technology", "Level:10 (1/6)",
-        GameCommands.COMMAND_UPGRADE_HULL, listener);
+        GameCommands.COMMAND_UPGRADE_HULL,16,
+        GameCommands.COMMAND_SLIDER_HULL_RESEARCH,listener);
     hullRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(hullRese);
     invis.add(Box.createRigidArea(new Dimension(10,10)));
@@ -154,7 +157,8 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_PLUS_IMPROVEMENT_RESEARCH, Icons.ICON_IMPROVEMENT_TECH,
         TechType.Improvements.toString()+" 100% 1000 turns", 
         "Focus on planetary improvement technology",
-        "Level:10 (1/6)",GameCommands.COMMAND_UPGRADE_IMPROVEMENT, listener);
+        "Level:10 (1/6)",GameCommands.COMMAND_UPGRADE_IMPROVEMENT,16,
+        GameCommands.COMMAND_SLIDER_IMPROVEMENT_RESEARCH,listener);
     improvementRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(improvementRese);
     invis.add(Box.createRigidArea(new Dimension(10,10)));
@@ -163,7 +167,8 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_PLUS_PROPULSION_RESEARCH, Icons.ICON_PROPULSION_TECH,
         TechType.Propulsion.toString()+" 100% 1000 turns", 
         "Focus on propulsion technology", "Level:10 (1/6)",
-        GameCommands.COMMAND_UPGRADE_PROPULSION, listener);
+        GameCommands.COMMAND_UPGRADE_PROPULSION,16,
+        GameCommands.COMMAND_SLIDER_PROPULSION_RESEARCH,listener);
     propulsionRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(propulsionRese);
     invis.add(Box.createRigidArea(new Dimension(10,10)));
@@ -172,7 +177,8 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_PLUS_ELECTRONICS_RESEARCH, Icons.ICON_ELECTRONICS_TECH,
         TechType.Electrics.toString()+" 100% 1000 turns", 
         "Focus on electronics technology", "Level:10 (1/6)",
-        GameCommands.COMMAND_UPGRADE_ELECTRONICS, listener);
+        GameCommands.COMMAND_UPGRADE_ELECTRONICS,16,
+        GameCommands.COMMAND_SLIDER_ELECTRONICS_RESEARCH,listener);
     electronicsRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     invis.add(electronicsRese);
     invis.add(Box.createRigidArea(new Dimension(10,10)));
@@ -233,6 +239,11 @@ public class ResearchView extends BlackPanel {
         infoText.setText("");
       }
     }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SLIDER_COMBAT_RESEARCH)) {
+      int value = combatRese.getSliderValue();
+      player.getTechList().setTechFocus(TechType.Combat, value);
+      updatePanel();
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PLUS_COMBAT_RESEARCH)) {
       int value = player.getTechList().getTechFocus(TechType.Combat);
       if (value <= 100-TechList.FINE_TUNE_VALUE) {
@@ -258,6 +269,11 @@ public class ResearchView extends BlackPanel {
       updatePanel();
     }
 
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SLIDER_DEFENSE_RESEARCH)) {
+      int value = defenseRese.getSliderValue();
+      player.getTechList().setTechFocus(TechType.Defense, value);
+      updatePanel();
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PLUS_DEFENSE_RESEARCH)) {
       int value = player.getTechList().getTechFocus(TechType.Defense);
       if (value <= 100-TechList.FINE_TUNE_VALUE) {
@@ -283,6 +299,11 @@ public class ResearchView extends BlackPanel {
       updatePanel();
     }
 
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SLIDER_HULL_RESEARCH)) {
+      int value = hullRese.getSliderValue();
+      player.getTechList().setTechFocus(TechType.Hulls, value);
+      updatePanel();
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PLUS_HULL_RESEARCH)) {
       int value = player.getTechList().getTechFocus(TechType.Hulls);
       if (value <= 100-TechList.FINE_TUNE_VALUE) {
@@ -308,6 +329,11 @@ public class ResearchView extends BlackPanel {
       updatePanel();
     }
     
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SLIDER_IMPROVEMENT_RESEARCH)) {
+      int value = improvementRese.getSliderValue();
+      player.getTechList().setTechFocus(TechType.Improvements, value);
+      updatePanel();
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PLUS_IMPROVEMENT_RESEARCH)) {
       int value = player.getTechList().getTechFocus(TechType.Improvements);
       if (value <= 100-TechList.FINE_TUNE_VALUE) {
@@ -333,6 +359,11 @@ public class ResearchView extends BlackPanel {
       updatePanel();
     }
 
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SLIDER_PROPULSION_RESEARCH)) {
+      int value = propulsionRese.getSliderValue();
+      player.getTechList().setTechFocus(TechType.Propulsion, value);
+      updatePanel();
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PLUS_PROPULSION_RESEARCH)) {
       int value = player.getTechList().getTechFocus(TechType.Propulsion);
       if (value <= 100-TechList.FINE_TUNE_VALUE) {
@@ -358,6 +389,11 @@ public class ResearchView extends BlackPanel {
       updatePanel();
     }
 
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SLIDER_ELECTRONICS_RESEARCH)) {
+      int value = electronicsRese.getSliderValue();
+      player.getTechList().setTechFocus(TechType.Electrics, value);
+      updatePanel();
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PLUS_ELECTRONICS_RESEARCH)) {
       int value = player.getTechList().getTechFocus(TechType.Electrics);
       if (value <= 100-TechList.FINE_TUNE_VALUE) {
@@ -398,6 +434,7 @@ public class ResearchView extends BlackPanel {
     if (turns > 10000) {
       turnsInStr = "never";
     }
+    combatRese.setSliderValue(focus);
     combatRese.setText(TechType.Combat.toString()+" "+focus+"% "+turnsInStr);
     combatRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
     if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
@@ -417,6 +454,7 @@ public class ResearchView extends BlackPanel {
     if (turns > 10000) {
       turnsInStr = "never";
     }
+    defenseRese.setSliderValue(focus);
     defenseRese.setText(TechType.Defense.toString()+" "+focus+"% "+turnsInStr);
     defenseRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
     if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
@@ -436,6 +474,7 @@ public class ResearchView extends BlackPanel {
     if (turns > 10000) {
       turnsInStr = "never";
     }
+    hullRese.setSliderValue(focus);
     hullRese.setText(TechType.Hulls.toString()+" "+focus+"% "+turnsInStr);
     hullRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
     if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
@@ -455,6 +494,7 @@ public class ResearchView extends BlackPanel {
     if (turns > 10000) {
       turnsInStr = "never";
     }
+    improvementRese.setSliderValue(focus);
     improvementRese.setText(TechType.Improvements.toString()+" "+focus+"% "+turnsInStr);
     improvementRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
     if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
@@ -474,6 +514,7 @@ public class ResearchView extends BlackPanel {
     if (turns > 10000) {
       turnsInStr = "never";
     }
+    propulsionRese.setSliderValue(focus);
     propulsionRese.setText(TechType.Propulsion.toString()+" "+focus+"% "+turnsInStr);
     propulsionRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
     if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
@@ -493,6 +534,7 @@ public class ResearchView extends BlackPanel {
     if (turns > 10000) {
       turnsInStr = "never";
     }
+    electronicsRese.setSliderValue(focus);
     electronicsRese.setText(TechType.Electrics.toString()+" "+focus+"% "+turnsInStr);
     electronicsRese.setUpgadeBtnText("Level:"+level+"("+subLevel+"/"+maxSubLevel+")");
     if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {

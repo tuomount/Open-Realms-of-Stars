@@ -265,6 +265,10 @@ public class ShipDesignView extends BlackPanel {
     invis.add(Box.createRigidArea(new Dimension(5,5)));
     ArrayList<String> componentTypes = new ArrayList<>();
     componentTypes.add("All");
+    componentTypes.add("Weapons");
+    componentTypes.add("Propulsion");
+    componentTypes.add("Defense");
+    componentTypes.add("Electronics");
     for (int i=0;i<ShipComponentType.values().length;i++) {
       componentTypes.add(ShipComponentType.getTypeByIndex(i).toString());
     }
@@ -407,9 +411,36 @@ public class ShipDesignView extends BlackPanel {
         ShipComponent comp = ShipComponentFactory.createByName(allTech[i].getComponent());
         if (comp != null && filter.equalsIgnoreCase("All")) {
           components.add(comp);
+          continue;
+        }
+        if (comp != null && filter.equalsIgnoreCase("Weapons") && comp.isWeapon()) {
+          components.add(comp);
+          continue;
+        }
+        if (comp != null && filter.equalsIgnoreCase("Defense") &&
+            (comp.getType() == ShipComponentType.ARMOR || 
+            comp.getType() == ShipComponentType.SHIELD)) {
+          components.add(comp);
+          continue;
+        }
+        if (comp != null && filter.equalsIgnoreCase("Propulsion") &&
+            (comp.getType() == ShipComponentType.ENGINE || 
+            comp.getType() == ShipComponentType.POWERSOURCE)) {
+          components.add(comp);
+          continue;
+        }
+        if (comp != null && filter.equalsIgnoreCase("Electronics") &&
+            (comp.getType() == ShipComponentType.CLOAKING_DEVICE || 
+            comp.getType() == ShipComponentType.JAMMER ||
+            comp.getType() == ShipComponentType.SCANNER ||
+            comp.getType() == ShipComponentType.SHIELD_GENERATOR ||
+            comp.getType() == ShipComponentType.TARGETING_COMPUTER)) {
+          components.add(comp);
+          continue;
         }
         if (comp != null && filter.equalsIgnoreCase(comp.getType().toString())) {
           components.add(comp);
+          continue;
         }
       }
     }

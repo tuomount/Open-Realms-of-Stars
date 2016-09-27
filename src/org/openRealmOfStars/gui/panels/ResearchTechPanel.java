@@ -111,16 +111,15 @@ public class ResearchTechPanel extends InvisiblePanel {
     slider.setSnapToTicks(true);
     slider.setBackground(GuiStatics.COLOR_GREYBLUE);
     slider.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    slider.addKeyListener(null);
     slider.addChangeListener(new ChangeListener() {
       
       @Override
       public void stateChanged(ChangeEvent e) {
         if (e.getSource() instanceof JSlider) {
           JSlider slide = (JSlider) e.getSource();
-          if (slide.getValueIsAdjusting()) {
-            if (slide.getValue() % 4 == 0) {
-              listener.actionPerformed(new ActionEvent(e, 0, actionSlider));
-            }
+          if (slide.getValue() % 4 == 0) {
+            listener.actionPerformed(new ActionEvent(e, 0, actionSlider));
           }
         }
       }

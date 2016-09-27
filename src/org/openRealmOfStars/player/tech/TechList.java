@@ -418,23 +418,17 @@ public class TechList {
       for (int i=0;i<TechType.values().length;i++) {
         if (i != type.getIndex() && redis > 0) {
           if (techFocus[i] < average) {
-            if (redis > FINE_TUNE_VALUE) {
+            if (redis >= FINE_TUNE_VALUE) {
               techFocus[i] = techFocus[i]+FINE_TUNE_VALUE;
               redis = redis -FINE_TUNE_VALUE;
-            } else {
-              techFocus[i] = techFocus[i]+redis;
-              redis = 0;
             }
           }          
         }
         if (i != type.getIndex() && redis < 0) {
           if (techFocus[i] > average && techFocus[i] >= FINE_TUNE_VALUE) {
-            if (redis < -FINE_TUNE_VALUE) {
+            if (redis <= -FINE_TUNE_VALUE) {
               techFocus[i] = techFocus[i]-FINE_TUNE_VALUE;
               redis = redis +FINE_TUNE_VALUE;
-            } else {
-              techFocus[i] = techFocus[i]+redis;
-              redis = 0;
             }
           }
         }
@@ -443,23 +437,17 @@ public class TechList {
       for (int i=0;i<TechType.values().length;i++) {
         if (i != type.getIndex() && redis > 0) {
           if (techFocus[i] == average) {
-            if (redis > FINE_TUNE_VALUE) {
+            if (redis >= FINE_TUNE_VALUE) {
               techFocus[i] = techFocus[i]+FINE_TUNE_VALUE;
               redis = redis -FINE_TUNE_VALUE;
-            } else {
-              techFocus[i] = techFocus[i]+redis;
-              redis = 0;
             }
           }          
         }
         if (i != type.getIndex() && redis < 0) {
           if (techFocus[i] == average) {
-            if (redis < -FINE_TUNE_VALUE && techFocus[i] >= FINE_TUNE_VALUE) {
+            if (redis <= -FINE_TUNE_VALUE && techFocus[i] >= FINE_TUNE_VALUE) {
               techFocus[i] = techFocus[i]-FINE_TUNE_VALUE;
               redis = redis +FINE_TUNE_VALUE;
-            } else {
-              techFocus[i] = techFocus[i]+redis;
-              redis = 0;
             }
           }
         }

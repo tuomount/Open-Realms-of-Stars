@@ -1089,7 +1089,7 @@ public class Planet {
         if (extraFood > 0 && extraFood >= require) {
           extraFood = extraFood -require;
           workers[FOOD_FARMERS] = workers[FOOD_FARMERS]+1;
-          msg = new Message(MessageType.POPULATION, getName()+" has population growth!\n"
+          msg = new Message(MessageType.POPULATION, getName()+" has population growth!"
               + "Population is now "+getTotalPopulation(), 
               Icons.getIconByName(Icons.ICON_PEOPLE));
           msg.setCoordinate(getX(), getY());

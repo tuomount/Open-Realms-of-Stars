@@ -75,7 +75,7 @@ public class Message {
    */
   public Message(MessageType type, String msg, Icon16x16 icon) {
     this.type = type;
-    this.message = msg;
+    setMessage(msg);
     this.icon = icon;
     this.x = -1;
     this.y = -1;
@@ -93,7 +93,7 @@ public class Message {
     this.index = dis.readInt();
     this.x = dis.readInt();
     this.y = dis.readInt();
-    this.message = IOUtilities.readString(dis);
+    setMessage(IOUtilities.readString(dis));
     this.matchByString = IOUtilities.readString(dis);
     if (this.matchByString.isEmpty()) {
       this.matchByString = null;
@@ -137,7 +137,22 @@ public class Message {
   }
 
   public void setMessage(String message) {
-    this.message = message;
+    StringBuilder sb = new StringBuilder(message.length()+5);
+    int split = 0;
+    for (int i=0;i<message.length();i++) {
+      if (message.charAt(i)==' ' && split > 69) {
+        sb.append("\n");
+        sb.append(message.charAt(i));
+        split = 0;
+      } else if (message.charAt(i)=='\n') {
+        sb.append(message.charAt(i));
+        split = 0;
+      } else {
+        sb.append(message.charAt(i));
+        split++;
+      }
+    }
+    this.message = sb.toString();
   }
 
   public Icon16x16 getIcon() {

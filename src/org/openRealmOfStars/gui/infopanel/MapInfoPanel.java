@@ -11,9 +11,9 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
-import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
@@ -85,9 +85,9 @@ public class MapInfoPanel extends InfoPanel {
     InvisiblePanel invis = new InvisiblePanel(this);
     invis.setLayout(new BoxLayout(invis, BoxLayout.X_AXIS));    
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    IconButton iBtn = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_LEFT),
-        Icons.getIconByName(Icons.ICON_SCROLL_LEFT_PRESSED), false, 
-        GameCommands.COMMAND_PREV_TARGET,this);
+    IconButton iBtn = new IconButton(GuiStatics.LEFT_ARROW,
+        GuiStatics.LEFT_ARROW_PRESSED,false,GameCommands.COMMAND_PREV_TARGET,
+        this);
     iBtn.addActionListener(listener);
     invis.add(iBtn);
     imageLabel = new ImageLabel(img, true);
@@ -97,9 +97,8 @@ public class MapInfoPanel extends InfoPanel {
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
     invis.add(imageLabel);
-    iBtn = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_RIGHT),
-        Icons.getIconByName(Icons.ICON_SCROLL_RIGHT_PRESSED), false, 
-        GameCommands.COMMAND_NEXT_TARGET,this);
+    iBtn = new IconButton(GuiStatics.RIGHT_ARROW,GuiStatics.RIGHT_ARROW_PRESSED,
+        false, GameCommands.COMMAND_NEXT_TARGET,this);
     iBtn.addActionListener(listener);
     invis.add(iBtn);
     this.add(invis);

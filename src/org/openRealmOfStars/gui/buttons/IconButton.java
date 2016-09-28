@@ -69,8 +69,8 @@ public class IconButton extends JButton {
   
   /**
    * Icon button which has only icon
-   * @param notPressedImage BufferedImage
-   * @param pressedImage BufferedImage
+   * @param notPressedImage Icon16x16
+   * @param pressedImage Icon16x16
    * @param border Booolean
    * @param actionCommand String
    */
@@ -84,6 +84,34 @@ public class IconButton extends JButton {
     this.setDisabledIcon(icon);
     this.setNotPressedImage(notPressedImage.getIcon());
     this.setPressedImage(pressedImage.getIcon());
+    this.setActionCommand(actionCommand);
+    this.setBorder(border);
+    this.parent = parent;
+    if (border) {
+      this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+    } else {
+      this.setBorder(BorderFactory.createEmptyBorder());
+
+    }
+  }
+
+  /**
+   * Icon button which has only icon
+   * @param notPressedImage BufferedImage
+   * @param pressedImage BufferedImage
+   * @param border Booolean
+   * @param actionCommand String
+   */
+  public IconButton(BufferedImage notPressedImage, 
+                    BufferedImage pressedImage, boolean border,
+                    String actionCommand,
+                    Component parent) {
+    super();
+    ImageIcon icon = new ImageIcon(notPressedImage, "");
+    this.setIcon(icon);
+    this.setDisabledIcon(icon);
+    this.setNotPressedImage(notPressedImage);
+    this.setPressedImage(pressedImage);
     this.setActionCommand(actionCommand);
     this.setBorder(border);
     this.parent = parent;

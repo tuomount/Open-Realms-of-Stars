@@ -1,7 +1,9 @@
 package org.openRealmOfStars.gui.panels;
 
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -96,23 +98,23 @@ public class MessagePanel extends JPanel {
     pane.setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
     pane.setBorder(new SimpleBorder());
     pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));
-    btnPrev = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_LEFT),
-        Icons.getIconByName(Icons.ICON_SCROLL_LEFT_PRESSED), false, 
-        prevCommand, pane);
+    btnPrev = new IconButton(GuiStatics.LEFT_ARROW,GuiStatics.LEFT_ARROW,
+        false, prevCommand, pane);
     btnPrev.addActionListener(listener);
+    pane.add(Box.createRigidArea(new Dimension(5,30)));
     pane.add(btnPrev);
     countLabel = new TransparentLabel(pane, "1000/1000");
     pane.add(countLabel);
     titleLabel = new IconLabel(pane, Icons.getIconByName(Icons.ICON_PEOPLE), MessageType.CONSTRUCTION.toString());
     pane.add(titleLabel);
-    btnNext = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_RIGHT),
-        Icons.getIconByName(Icons.ICON_SCROLL_RIGHT_PRESSED), false, 
-        nextCommand, pane);
+    btnNext = new IconButton(GuiStatics.RIGHT_ARROW,
+        GuiStatics.RIGHT_ARROW_PRESSED,false, nextCommand, pane);
     btnFocus = new SpaceButton("Focus", focusCommand);
     btnFocus.addActionListener(listener);
     pane.add(btnFocus);
     btnNext.addActionListener(listener);
     pane.add(btnNext);
+    pane.add(Box.createRigidArea(new Dimension(5,30)));
     this.add(pane);
     
     msgText = new BaseInfoTextArea(2,15);

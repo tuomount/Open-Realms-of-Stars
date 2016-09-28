@@ -380,6 +380,30 @@ public class GuiStatics {
       "/resources/images/explosion4.png");
 
   /**
+   * Left arrow
+   */
+  public final static BufferedImage LEFT_ARROW = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/left_arrow.png"));
+
+  /**
+   * Left arrow pressed
+   */
+  public final static BufferedImage LEFT_ARROW_PRESSED = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/left_arrow_pressed.png"));
+
+  /**
+   * Right arrow
+   */
+  public final static BufferedImage RIGHT_ARROW = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/right_arrow.png"));
+
+  /**
+   * Right arrow pressed
+   */
+  public final static BufferedImage RIGHT_ARROW_PRESSED = IOUtilities.
+      loadImage(Tiles.class.getResource("/resources/images/right_arrow_pressed.png"));
+
+  /**
    * Crosshair for combat
    */
   public final static BufferedImage CROSSHAIR = IOUtilities.

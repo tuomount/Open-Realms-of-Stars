@@ -45,6 +45,10 @@ public class GameCommands {
   public static final String COMMAND_END_BATTLE_ROUND = "EndBattleRound";
 
   /**
+   * Defend sector command
+   */
+  public static final String COMMAND_DEFEND_SECTOR = "DefendCommand";
+  /**
    * View planet command
    */
   public static final String COMMAND_VIEW_PLANET = "ViewPlanetCommand";

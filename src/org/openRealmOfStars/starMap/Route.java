@@ -143,6 +143,17 @@ public class Route {
   }
   
   /**
+   * Route just for defending.
+   * @return true if defending
+   */
+  public boolean isDefending() {
+    if (ftlSpeed == 0) {
+      return true;
+    }
+    return false;
+  }
+  
+  /**
    * Move a bit closed to end
    */
   public void makeNextMove() {
@@ -160,6 +171,10 @@ public class Route {
    * @return boolean
    */
   public boolean isEndReached() {
+    if (ftlSpeed == 0) {
+      // Ship is defending
+      return false;
+    }
     if (Math.round(endX) == Math.round(startX) && Math.round(endY) == Math.round(startY)) {
       return true;
     }

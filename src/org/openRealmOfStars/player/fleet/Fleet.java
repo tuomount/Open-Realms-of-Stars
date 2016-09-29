@@ -312,6 +312,13 @@ public class Fleet {
       sb.append(ship.getName());
       sb.append("\n");
     }
+    if (route != null) {
+      if (route.isDefending()) {
+        sb.append("\nDefending");
+      } else {
+        sb.append("\nEnroute");
+      }
+    }
     return sb.toString();
   }
 

@@ -23,6 +23,7 @@ import org.openRealmOfStars.gui.panels.MessagePanel;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -293,6 +294,15 @@ public class StarMapView extends BlackPanel {
           players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
           players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
     }
+    if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_DEFEND_SECTOR) &&
+        getStarMapMouseListener().getLastClickedFleet() != null) {
+      Fleet fleet = getStarMapMouseListener().getLastClickedFleet();
+      // Make fleet to defend
+      fleet.setRoute(new Route(fleet.getX(),fleet.getY(),fleet.getX(),fleet.getY(),0));
+      infoPanel.updatePanel();
+    }
+
 
   }
 

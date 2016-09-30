@@ -83,6 +83,11 @@ public class MapInfoPanel extends InfoPanel {
    */
   private SpaceButton defendBtn;
 
+  /**
+   * Route button for fleet
+   */
+  private SpaceButton routeBtn;
+
   public MapInfoPanel(ActionListener listener) {
     this.add(Box.createRigidArea(new Dimension(130,50)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH*2, Tile.MAX_HEIGHT*2,
@@ -112,6 +117,11 @@ public class MapInfoPanel extends InfoPanel {
     textArea.setEditable(false);
     textArea.setLineWrap(true);
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
+    routeBtn = new SpaceButton("Route", 
+        GameCommands.COMMAND_ROUTE_FLEET);
+    routeBtn.addActionListener(listener);
+    routeBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    routeBtn.setToolTipText("R - Route fleet with FTL");
     defendBtn = new SpaceButton("Defend", 
         GameCommands.COMMAND_DEFEND_SECTOR);
     defendBtn.addActionListener(listener);
@@ -122,6 +132,8 @@ public class MapInfoPanel extends InfoPanel {
     viewBtn.addActionListener(listener);
     this.add(textArea);
     viewBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    this.add(Box.createRigidArea(new Dimension(10,10)));
+    this.add(routeBtn);
     this.add(Box.createRigidArea(new Dimension(10,10)));
     this.add(defendBtn);
     this.add(Box.createRigidArea(new Dimension(10,10)));
@@ -139,6 +151,7 @@ public class MapInfoPanel extends InfoPanel {
     this.viewBtn.setText("View planet");
     this.viewBtn.setActionCommand(GameCommands.COMMAND_VIEW_PLANET);
     this.defendBtn.setEnabled(false);
+    this.routeBtn.setEnabled(false);
     updatePanel();
   }
 
@@ -153,6 +166,7 @@ public class MapInfoPanel extends InfoPanel {
     this.viewBtn.setText("View fleet");
     this.viewBtn.setActionCommand(GameCommands.COMMAND_VIEW_FLEET);
     this.defendBtn.setEnabled(true);
+    this.routeBtn.setEnabled(true);
     updatePanel();
   }
 
@@ -164,6 +178,7 @@ public class MapInfoPanel extends InfoPanel {
     this.fleet = null;
     this.viewBtn.setEnabled(false);
     this.defendBtn.setEnabled(false);
+    this.routeBtn.setEnabled(false);
     updatePanel();
   }
   

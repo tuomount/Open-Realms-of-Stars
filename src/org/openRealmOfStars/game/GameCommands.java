@@ -49,6 +49,10 @@ public class GameCommands {
    */
   public static final String COMMAND_DEFEND_SECTOR = "DefendCommand";
   /**
+   * Route fleet command
+   */
+  public static final String COMMAND_ROUTE_FLEET = "RouteFleetCommand";
+  /**
    * View planet command
    */
   public static final String COMMAND_VIEW_PLANET = "ViewPlanetCommand";

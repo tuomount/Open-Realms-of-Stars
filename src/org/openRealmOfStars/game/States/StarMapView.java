@@ -302,6 +302,11 @@ public class StarMapView extends BlackPanel {
       fleet.setRoute(new Route(fleet.getX(),fleet.getY(),fleet.getX(),fleet.getY(),0));
       infoPanel.updatePanel();
     }
+    if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_ROUTE_FLEET) &&
+        getStarMapMouseListener().getLastClickedFleet() != null) {
+      getStarMapMouseListener().setRoutePlanning(true);
+    }
 
 
   }

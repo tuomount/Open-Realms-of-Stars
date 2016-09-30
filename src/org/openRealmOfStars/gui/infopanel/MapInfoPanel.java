@@ -126,6 +126,7 @@ public class MapInfoPanel extends InfoPanel {
         GameCommands.COMMAND_DEFEND_SECTOR);
     defendBtn.addActionListener(listener);
     defendBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    defendBtn.setToolTipText("Defend sector, +5% accuracy");
     this.add(textArea);
     viewBtn = new SpaceButton("View planet", 
         GameCommands.COMMAND_VIEW_PLANET);

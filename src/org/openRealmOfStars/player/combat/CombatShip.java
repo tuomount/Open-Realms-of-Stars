@@ -68,6 +68,11 @@ public class CombatShip implements Comparable<CombatShip>{
    * Used only for AI to calculate how many times AI can shoot
    */
   private int aiShotsLeft;
+  
+  /**
+   * Bonus accuracy from defeding
+   */
+  private int bonusAccuracy;
     
   /**
    * Constructor for Combat ship
@@ -84,6 +89,7 @@ public class CombatShip implements Comparable<CombatShip>{
     this.player = player;
     this.flipY = flip;
     this.movesLeft = ship.getTacticSpeed();
+    this.setBonusAccuracy(0);
     reInitShipForRound();
   }
 
@@ -261,6 +267,14 @@ public class CombatShip implements Comparable<CombatShip>{
 
   public void setAiShotsLeft(int aiShotsLeft) {
     this.aiShotsLeft = aiShotsLeft;
+  }
+
+  public int getBonusAccuracy() {
+    return bonusAccuracy;
+  }
+
+  public void setBonusAccuracy(int bonusAccuracy) {
+    this.bonusAccuracy = bonusAccuracy;
   }
   
   

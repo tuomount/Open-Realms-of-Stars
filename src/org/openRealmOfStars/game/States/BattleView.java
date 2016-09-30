@@ -213,7 +213,7 @@ public class BattleView extends BlackPanel {
         combat.setComponentUse(i);
         if (weapon != null && weapon.isWeapon() && !ai.isComponentUsed(i) &&
             combat.isClearShot(ai, target) && ai.getShip().componentIsWorking(i)) {
-          int accuracy = ai.getShip().getHitChance(weapon);
+          int accuracy = ai.getShip().getHitChance(weapon)+ai.getBonusAccuracy();
           accuracy = accuracy-target.getShip().getDefenseValue();
           int value=1; // Not even a dent
           if (DiceGenerator.getRandom(1, 100)<=accuracy) {

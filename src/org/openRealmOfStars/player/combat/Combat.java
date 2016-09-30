@@ -111,6 +111,9 @@ public class Combat {
       }
       CombatShip combatShp = new CombatShip(ship, info1, 
           getStartPos(index, 0, true), getStartPos(index, 0, false),false);
+      if (fleet1.getRoute() != null && fleet1.getRoute().isDefending()) {
+        combatShp.setBonusAccuracy(5);
+      }
       shipList.add(combatShp);
       index++;
     }
@@ -123,6 +126,9 @@ public class Combat {
       }
       CombatShip combatShp = new CombatShip(ship, info2, 
           getStartPos(index, 1, true), getStartPos(index, 1, false),true);
+      if (fleet2.getRoute() != null && fleet2.getRoute().isDefending()) {
+        combatShp.setBonusAccuracy(5);
+      }
       shipList.add(combatShp);
       index++;
     }

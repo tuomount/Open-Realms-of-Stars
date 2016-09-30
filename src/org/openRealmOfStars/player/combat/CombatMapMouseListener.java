@@ -120,7 +120,7 @@ public class CombatMapMouseListener extends MouseAdapter implements
         if (weapon != null && weapon.isWeapon() && !ship.isComponentUsed(componentUse)) {
           CombatShip target = combat.getShipFromCoordinate(combat.getCursorX(), combat.getCursorY());
           if (target !=  null && combat.isClearShot(combat.getCurrentShip(), target)) {
-            int accuracy = ship.getShip().getHitChance(weapon);
+            int accuracy = ship.getShip().getHitChance(weapon)+ship.getBonusAccuracy();
             accuracy = accuracy-target.getShip().getDefenseValue();
             int value=1; // Not even a dent
             if (DiceGenerator.getRandom(1, 100)<=accuracy) {

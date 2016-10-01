@@ -279,5 +279,34 @@ public enum SpaceRace {
     return 0;
   }
 
+  /**
+   * Get how many turns to update defense
+   * @return int
+   */
+  public int getAIDefenseUpdate() {
+    switch (this) {
+    case HUMAN: return 15;
+    case MECHIONS: return 15;
+    case SPORKS: return 10;
+    case GREYANS: return 16;
+    case CENTAURS: return 18;
+    }
+    return 15;
+  }
+
+  /**
+   * Get how many turns to explore solarsystem
+   * @return int
+   */
+  public int getAIExploringAmount() {
+    switch (this) {
+    case HUMAN: return 30;
+    case MECHIONS: return 30;
+    case SPORKS: return 28;
+    case GREYANS: return 35;
+    case CENTAURS: return 30;
+    }
+    return 30;
+  }
 
 }

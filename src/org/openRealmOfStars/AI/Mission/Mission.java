@@ -63,6 +63,15 @@ public class Mission {
    * Solar system name where to go to explore
    */
   private String sunName;
+  
+  /**
+   * How many turns mission has been on some fleet.
+   * Usually this calculates execution time. It does not tell how many turns
+   * ago mission was created. Mission time can be used to decide when
+   * to upgrade defending fleet, when explorer should move to next solar system.
+   * Each mission will have their own way of calculating this one.
+   */
+  private int missionTime;
 
   /**
    * Create new mission for AI
@@ -74,6 +83,7 @@ public class Mission {
   public Mission(MissionType type, MissionPhase phase, int x, int y) {
     this.type = type;
     this.phase = phase;
+    setMissionTime(0);
     setTarget(x,y);
   }
   
@@ -87,6 +97,7 @@ public class Mission {
     phase = MissionPhase.getType(dis.readInt());
     x = dis.readInt();
     y = dis.readInt();
+    missionTime = dis.readInt();
     String str = IOUtilities.readString(dis);
     if (str.isEmpty()) {
       fleetName = null;
@@ -117,6 +128,7 @@ public class Mission {
     dos.writeInt(phase.getIndex());
     dos.writeInt(x);
     dos.writeInt(y);
+    dos.writeInt(missionTime);
     IOUtilities.writeString(dos, fleetName);
     IOUtilities.writeString(dos, planetBuilding);
     IOUtilities.writeString(dos, sunName);
@@ -188,6 +200,14 @@ public class Mission {
 
   public void setSunName(String sunName) {
     this.sunName = sunName;
+  }
+
+  public int getMissionTime() {
+    return missionTime;
+  }
+
+  public void setMissionTime(int missionTime) {
+    this.missionTime = missionTime;
   }
   
   

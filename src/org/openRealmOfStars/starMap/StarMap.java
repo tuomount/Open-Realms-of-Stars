@@ -133,7 +133,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public final static String MAGIC_STRING ="OROS-SAVE-GAME-0.0";
+  public final static String MAGIC_STRING ="OROS-SAVE-GAME-0.1";
 
   /**
    * Constructor for StarMap. Generates universum with default settings.

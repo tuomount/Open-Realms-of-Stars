@@ -1165,7 +1165,7 @@ public class Planet {
                 }                
                 if (mission.getType() == MissionType.DEFEND) {
                   // For now one ship is enough for defend
-                  mission.setPhase(MissionPhase.EXECUTING);
+                  mission.setPhase(MissionPhase.TREKKING);
                 } else if (mission.getType() == MissionType.COLONIZE) {
                   mission.setPhase(MissionPhase.LOADING);
                 } else {

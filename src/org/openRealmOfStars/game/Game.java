@@ -79,7 +79,7 @@ public class Game extends JFrame implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.0.2Alpha";
+  public static final String GAME_VERSION = "0.0.3Alpha";
 
   /**
    * Animation timer used for animation
@@ -371,12 +371,14 @@ public class Game extends JFrame implements ActionListener {
   /**
    * Load game from certain file name
    * @param filename
+   * @return true if successful
    */
-  public void loadGame(String filename) {
+  public boolean loadGame(String filename) {
     String folderName = "saves";
     File file = new File(folderName+"/"+filename);
+    FileInputStream is = null;
     try {
-      FileInputStream is = new FileInputStream(file);
+      is = new FileInputStream(file);
       BufferedInputStream bis = new BufferedInputStream(is);
       DataInputStream dis = new DataInputStream(bis);
       starMap = new StarMap(dis);
@@ -385,7 +387,17 @@ public class Game extends JFrame implements ActionListener {
       starMap.updateStarMapOnLoadGame();
     } catch (IOException e) {
       System.out.println(e.getMessage());
+      return false;
+    } finally {
+      if (is != null) {
+        try {
+          is.close();
+        } catch (IOException e) {
+          // Do nothing
+        }
+      }
     }
+    return true;
   }
 
   /**
@@ -701,11 +713,6 @@ public class Game extends JFrame implements ActionListener {
       changeGameState(GameState.PLANETBOMBINGVIEW, starMap.getPlanetList().get(0));
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_CONTINUE_GAME)) {
-      loadGame("current.save");
-      changeGameState(GameState.STARMAP);
-    }
-    if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_SHIPDESIGN_DONE)) {
       if (shipDesignView != null && shipDesignView.isDesignOK()) {
         shipDesignView.keepDesign();
@@ -765,6 +772,12 @@ public class Game extends JFrame implements ActionListener {
     }
     if (gameState == GameState.MAIN_MENU) {
       // Main menu
+      if (arg0.getActionCommand().equalsIgnoreCase(
+          GameCommands.COMMAND_CONTINUE_GAME)) {
+        if (loadGame("current.save")) {
+          changeGameState(GameState.STARMAP);
+        }
+      }
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEW_GAME)) {
         changeGameState(GameState.NEW_GAME);
       }

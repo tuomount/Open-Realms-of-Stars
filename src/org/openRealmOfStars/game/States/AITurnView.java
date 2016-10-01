@@ -210,6 +210,11 @@ public class AITurnView extends BlackPanel {
           }
         } 
         if (mission.getPhase() == MissionPhase.EXECUTING) {
+          mission.setMissionTime(mission.getMissionTime()+1);
+          if (mission.getMissionTime() >= info.getRace().getAIExploringAmount()) {
+            // Depending on race it decides enough is enough
+            fleet.setaStarSearch(null);
+          }
           if (fleet.getaStarSearch() == null) {
             Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(), fleet.getY(),info,fleet);
             if (!sun.getName().equals(mission.getSunName())) {
@@ -305,6 +310,36 @@ public class AITurnView extends BlackPanel {
           }
         } 
       } // End of colonize
+      if (mission.getType() == MissionType.DEFEND) {
+        if (mission.getPhase() == MissionPhase.TREKKING &&
+            fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
+          // Target acquired
+          mission.setPhase(MissionPhase.EXECUTING);
+          // Set defending route
+          fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(), fleet.getY(), 0));
+        } else if (mission.getPhase() ==  MissionPhase.EXECUTING) {
+          mission.setMissionTime(mission.getMissionTime()+1);
+          if (mission.getMissionTime() >= info.getRace().getAIDefenseUpdate()) {
+            // New defender is needed
+            mission.setMissionTime(0);
+            mission.setPhase(MissionPhase.PLANNING);
+          }
+        } else if (mission.getPhase() == MissionPhase.TREKKING &&
+            fleet.getRoute() == null) {
+          // Fleet has encounter obstacle, taking a detour round it
+          if (fleet.getaStarSearch() == null) {
+            // No A star search made yet, so let's do it
+            AStarSearch search = new AStarSearch(game.getStarMap(), 
+                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
+            search.doSearch();
+            search.doRoute();
+            fleet.setaStarSearch(search);
+            makeRerouteBeforeFTLMoves(fleet, info, mission);
+          } else {
+            makeRerouteBeforeFTLMoves(fleet,info,mission);
+          }
+        } 
+      }
     } else {
       // No mission for fleet yet
       if (fleet.isScoutFleet()) {

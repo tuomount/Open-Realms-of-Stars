@@ -376,12 +376,43 @@ public class PlanetHandling {
             } else if (mission.getPhase() == MissionPhase.BUILDING) {
               scores[i] = scores[i]+ship.getTotalMilitaryPower();
             }
+            mission = info.getMissions().
+                getMission(MissionType.ATTACK, MissionPhase.PLANNING);
+            if (mission != null) {
+              if (ship.hasBombs()) {
+                scores[i] = scores[i]+30;
+              }
+            }
+
+          } else {
+            mission = info.getMissions().
+              getMission(MissionType.ATTACK, MissionPhase.PLANNING);
+            if (mission != null) {
+              scores[i] = scores[i]+ship.getTotalMilitaryPower()*2;
+              if (ship.hasBombs()) {
+                scores[i] = scores[i]+30;
+              }
+            }
           }
+
         }
         if (ship.isColonyModule()) {
           // Colony ship should be built only on request
           Mission mission = info.getMissions().
               getMission(MissionType.COLONIZE, MissionPhase.PLANNING);
+          if (mission != null) {
+            Planet colonPlanet = map.getPlanetByCoordinate(mission.getX(), mission.getY());
+            int score = (colonPlanet.getGroundSize()-7)*3+colonPlanet.getAmountMetalInGround()/400;
+            score = score +info.getRace().getMaxRad()-colonPlanet.getRadiationLevel();
+            scores[i] = scores[i] +score;
+          } else {
+            scores[i] = -1;
+          }
+        }
+        if (ship.isTrooperModule()) {
+          // Trooper ship should be built only on request
+          Mission mission = info.getMissions().
+              getMission(MissionType.ATTACK, MissionPhase.PLANNING);
           if (mission != null) {
             Planet colonPlanet = map.getPlanetByCoordinate(mission.getX(), mission.getY());
             int score = (colonPlanet.getGroundSize()-7)*3+colonPlanet.getAmountMetalInGround()/400;

@@ -344,6 +344,23 @@ public class Ship extends Construction {
   }
 
   /**
+   * Are there any bombs left
+   * @return true if there are weapons left
+   */
+  public boolean hasBombs() {
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0 && hasComponentEnergy(i)) {
+        if (comp.getType() == ShipComponentType.ORBITAL_BOMBS ||
+            comp.getType() == ShipComponentType.ORBITAL_NUKE) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
    * Get FTL Speed depending on hullpoints and energy level
    * @return Speed
    */
@@ -654,13 +671,27 @@ public class Ship extends Construction {
 
 
   /**
-   * Is Ship has colony module
+   * Ship has colony module
    * @return True if ship has colony module, otherwise false
    */
   public boolean isColonyModule() {
     for (int i=0;i<components.size();i++) {
       ShipComponent comp = components.get(i);
       if (comp.getType()==ShipComponentType.COLONY_MODULE) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Ship has trooper module
+   * @return True if ship has trooper module, otherwise false
+   */
+  public boolean isTrooperModule() {
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType()==ShipComponentType.PLANETARY_INVASION_MODULE) {
         return true;
       }
     }

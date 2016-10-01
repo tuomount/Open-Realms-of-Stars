@@ -1172,8 +1172,20 @@ public class Planet {
                   mission.setPhase(MissionPhase.TREKKING);
                 }
               } else {
-                // No mission for planet, so just adding defender
-                if (ship.getTotalMilitaryPower() > 0) {
+                mission = planetOwnerInfo.getMissions().getMission(MissionType.ATTACK, MissionPhase.PLANNING);
+                if (mission != null) {
+                  Mission newMiss = new Mission(MissionType.ATTACK, 
+                      MissionPhase.TREKKING, mission.getX(), mission.getY());
+                  if (ship.isTrooperModule()) {
+                    newMiss.setPhase(MissionPhase.LOADING);
+                  }
+                  String fleetName = "Attacker";
+                  fleet.setName(fleetName+" #"+(planetOwnerInfo.Fleets().
+                      howManyFleetWithStartingNames(fleetName)+1));
+                  newMiss.setFleetName(fleet.getName());
+                  planetOwnerInfo.getMissions().add(newMiss);
+                } else if (ship.getTotalMilitaryPower() > 0) {
+                  // No mission for planet, so just adding defender
                   String fleetName = "Defender";
                   fleet.setName(fleetName+" #"+(planetOwnerInfo.Fleets().
                       howManyFleetWithStartingNames(fleetName)+1));

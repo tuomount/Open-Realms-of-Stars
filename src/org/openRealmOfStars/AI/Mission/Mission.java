@@ -58,7 +58,12 @@ public class Mission {
    * Planet name which is building the ship
    */
   private String planetBuilding;
-  
+
+  /**
+   * Planet name which is going to be conquered;
+   */
+  private String targetPlanet;
+
   /**
    * Solar system name where to go to explore
    */
@@ -85,6 +90,7 @@ public class Mission {
     this.phase = phase;
     setMissionTime(0);
     setTarget(x,y);
+    targetPlanet = null;
   }
   
   /**
@@ -116,6 +122,12 @@ public class Mission {
     } else {
       sunName = str;
     }
+    str = IOUtilities.readString(dis);
+    if (str.isEmpty()) {
+      targetPlanet = null;
+    } else {
+      targetPlanet = str;
+    }
   }
   
   /**
@@ -132,6 +144,7 @@ public class Mission {
     IOUtilities.writeString(dos, fleetName);
     IOUtilities.writeString(dos, planetBuilding);
     IOUtilities.writeString(dos, sunName);
+    IOUtilities.writeString(dos, targetPlanet);
   }
   
   public void setTarget(int x, int y) {
@@ -208,6 +221,14 @@ public class Mission {
 
   public void setMissionTime(int missionTime) {
     this.missionTime = missionTime;
+  }
+
+  public String getTargetPlanet() {
+    return targetPlanet;
+  }
+
+  public void setTargetPlanet(String targetPlanet) {
+    this.targetPlanet = targetPlanet;
   }
   
   

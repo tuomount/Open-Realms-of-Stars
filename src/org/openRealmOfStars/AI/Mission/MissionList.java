@@ -113,6 +113,23 @@ public class MissionList {
   }
 
   /**
+   * Find a Attack mission for certain planet
+   * @param name Planet where to attack
+   * @return Mission or null if not found
+   */
+  public Mission getAttackMission(String name) {
+    for (Mission mission : missions) {
+      if (mission.getTargetPlanet() != null 
+          && mission.getTargetPlanet().equals(name) &&
+          mission.getType() == MissionType.ATTACK) {
+        return mission;
+      }
+    }
+    return null;
+
+  }
+
+  /**
    * Get mission where type is certain and phase is certain
    * @param type Mission type
    * @param phase Mission phase

@@ -36,7 +36,11 @@ public enum MissionType {
   /**
    * Defend planet
    */
-  DEFEND;
+  DEFEND,
+  /**
+   * Attack the planet
+   */
+  ATTACK;
   
   
   /**
@@ -48,6 +52,7 @@ public enum MissionType {
     case EXPLORE: return 0;
     case COLONIZE: return 1;
     case DEFEND: return 2;
+    case ATTACK: return 3;
     }
     return 0;
   }
@@ -62,6 +67,7 @@ public enum MissionType {
     case 0: return MissionType.EXPLORE;
     case 1: return MissionType.COLONIZE;
     case 2: return MissionType.DEFEND;
+    case 3: return MissionType.ATTACK;
     }
     return MissionType.EXPLORE;
   }
@@ -72,6 +78,7 @@ public enum MissionType {
     case EXPLORE: return "Explore";
     case COLONIZE: return "Colonize";
     case DEFEND: return "Defend";
+    case ATTACK: return "Attack";
     }
     return "Unknown";
   }

@@ -78,6 +78,15 @@ public class AITurnView extends BlackPanel {
    * Text animation
    */
   private int textAnim; 
+  
+  /**
+   * Target coordinate for mission
+   */
+  private int cx;
+  /**
+   * Target coordinate for mission
+   */
+  private int cy;
 
   /**
    * Constructor for main menu
@@ -414,6 +423,41 @@ public class AITurnView extends BlackPanel {
 
 
   /**
+   * Calculate Attack rendevue sector coordinate
+   * @param info Player who is going to attack
+   * @param x Target planet x coordinate
+   * @param y Target planet y coordinate
+   */
+  public void calculateAttackRendevuezSector(PlayerInfo info,int x, int y) {
+    int amount = 1;
+    cx = x;
+    cy = y;
+    for (Planet planet :game.getStarMap().getPlanetList()) {
+      if (planet.getPlanetPlayerInfo() == info) {
+        cx = cx +planet.getX();
+        cy = cy +planet.getY();
+        amount++;
+      }
+    }
+    cx = cx /amount;
+    cy = cy /amount;
+    if (game.getStarMap().isBlocked(cx, cy)) {
+      int loop = 100;
+      while (loop>0) {
+        int ax = DiceGenerator.getRandom(-5, 5);
+        int ay = DiceGenerator.getRandom(-5, 5);
+        loop--;
+        if (!game.getStarMap().isBlocked(cx+ax, cy+ay)) {
+          loop = 0;
+          cx = cx +ax;
+          cy = cy +ay;
+        }
+        
+      }
+    }
+  }
+  
+  /**
    * Search newly found uncolonized planets
    */
   public void searchForColonizablePlanets() {
@@ -434,6 +478,22 @@ public class AITurnView extends BlackPanel {
           }
           
         }
+        if (planet.getRadiationLevel() <= info.getRace().getMaxRad()
+            && planet.getPlanetPlayerInfo() != info && !planet.isGasGiant()
+            && info.getSectorVisibility(planet.getX(), planet.getY())==PlayerInfo.VISIBLE) {
+          // New planet to conquer, adding it to mission list
+          Mission mission = new Mission(MissionType.ATTACK, 
+              MissionPhase.PLANNING, planet.getX(), planet.getY());
+          calculateAttackRendevuezSector(info, planet.getX(), planet.getY());
+          mission.setTarget(cx, cy);
+          mission.setTargetPlanet(planet.getName());
+          if (info.getMissions().getAttackMission(planet.getName())==null) {
+            // No colonize mission for this planet found, so adding it.
+            info.getMissions().add(mission);
+          }
+          
+        }
+
       }
     }
 

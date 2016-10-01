@@ -1,6 +1,7 @@
 package org.openRealmOfStars.AI.Research;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -44,6 +45,7 @@ public class Research {
     handleBattleShipDesign(info, ShipSize.MEDIUM);
     handleBattleShipDesign(info, ShipSize.LARGE);
     handleBattleShipDesign(info, ShipSize.HUGE);
+    handleTrooperShipDesign(info);
   }
   
   /**
@@ -61,6 +63,35 @@ public class Research {
             && stat.getDesign().getHull().getHullType() == ShipHullType.NORMAL) {
           notFound = false;
           if (design.getTotalMilitaryPower() > stat.getDesign().getTotalMilitaryPower()) {
+            stat.setObsolete(true);
+            ShipStat ship = new ShipStat(design);
+            info.addShipStat(ship);
+            break;
+          }
+        }
+      }
+      if (notFound) {
+        ShipStat ship = new ShipStat(design);
+        info.addShipStat(ship);
+      }
+    }
+    
+  }
+
+  /**
+   * Handle Trooper ship design for AI
+   * @param info Player
+   */
+  private static void handleTrooperShipDesign(PlayerInfo info) {
+    ShipDesign design = ShipGenerator.createColony(info, true);
+    if (design != null) {
+      ShipStat[] stats = info.getShipStatList();
+      boolean notFound = true;
+      for (ShipStat stat : stats) {
+        if (stat.getDesign().getHull().getHullType() == ShipHullType.FREIGHTER
+            && stat.getDesign().gotCertainType(ShipComponentType.PLANETARY_INVASION_MODULE)) {
+          notFound = false;
+          if (design.getTotalTrooperPower() > stat.getDesign().getTotalTrooperPower()) {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);

@@ -314,7 +314,7 @@ public class ShipDesign {
   public int getTotalMilitaryPower() {
     int power = 0;
     boolean militaryShip = false;
-    power = getHull().getSlotHull()*getHull().getMaxSlot();
+    power = getHull().getSlotHull()*components.size();
     for (int i=0;i<components.size();i++) {
       ShipComponent comp = components.get(i);
       if (comp.getType() == ShipComponentType.WEAPON_BEAM || 
@@ -347,7 +347,43 @@ public class ShipDesign {
     }
     return power;
   }
-  
+
+  /**
+   * Calculate Trooper power of design. Design needs to have at least single
+   * trooper module
+   * @return Trooper power
+   */
+  public int getTotalTrooperPower() {
+    int power = 0;
+    boolean trooperShip = false;
+    power = getHull().getSlotHull()*components.size();
+    for (int i=0;i<components.size();i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
+        trooperShip = true;
+        power = power+comp.getDamage();
+        int freeSlots =getHull().getMaxSlot()-components.size();
+        if (freeSlots == 0) {
+          // No room for troops
+          trooperShip = false;
+        } else {
+          power = power+freeSlots;
+        }
+      }
+      if (comp.getType() == ShipComponentType.ARMOR ||
+          comp.getType() == ShipComponentType.SHIELD) {
+        power = power+comp.getDefenseValue();
+      }
+      if (comp.getEnergyResource() > 0) {
+        power = power+2;
+      }
+    }
+    if (!trooperShip) {
+      power = 0;
+    }
+    return power;
+  }
+
   /**
    * Get ship component list in priority order
    * @return Ship component array

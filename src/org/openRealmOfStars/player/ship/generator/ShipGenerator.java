@@ -64,6 +64,58 @@ public class ShipGenerator {
         scores[i] = scores[i] +5; // No need for electricty
         break;
       }
+      case ORBITAL_BOMBS: {
+        if (!design.gotCertainType(ShipComponentType.ORBITAL_BOMBS) &&
+            !design.gotCertainType(ShipComponentType.ORBITAL_NUKE)) {
+          if (design.getHull().getSize() == ShipSize.MEDIUM) {
+            scores[i] = scores[i] +comp.getDamage()/10;
+          }
+          if (design.getHull().getSize() == ShipSize.LARGE) {
+            scores[i] = scores[i] +comp.getDamage()/5;
+          }
+          if (design.getHull().getSize() == ShipSize.HUGE) {
+            scores[i] = scores[i] +comp.getDamage()/3;
+          }
+          if (design.getHull().getSize() == ShipSize.SMALL) {
+            scores[i] = scores[i] +comp.getDamage()/20;
+          }
+        } else  {
+          scores[i] = -1;
+        }
+        break;
+      }
+      case ORBITAL_NUKE: {
+        if (!design.gotCertainType(ShipComponentType.ORBITAL_BOMBS) &&
+            !design.gotCertainType(ShipComponentType.ORBITAL_NUKE)) {
+          if (design.getHull().getSize() == ShipSize.MEDIUM) {
+            scores[i] = scores[i] +comp.getDamage()/10;
+          }
+          if (design.getHull().getSize() == ShipSize.LARGE) {
+            scores[i] = scores[i] +comp.getDamage()/5;
+          }
+          if (design.getHull().getSize() == ShipSize.HUGE) {
+            scores[i] = scores[i] +comp.getDamage()/3;
+          }
+          if (design.getHull().getSize() == ShipSize.SMALL) {
+            scores[i] = scores[i] +comp.getDamage()/20;
+          }
+          if (player.getRace() == SpaceRace.CENTAURS) {
+            // Centaurs do not like nukes
+            scores[i] = scores[i] -5;
+          }
+          if (player.getRace() == SpaceRace.MECHIONS) {
+            // Mechions use nukes more likely
+            scores[i] = scores[i] +5;
+          }
+          if (player.getRace() == SpaceRace.GREYANS) {
+            // Greyans use nukes more likely
+            scores[i] = scores[i] +2;
+          }
+        } else  {
+          scores[i] = -1;
+        }
+        break;
+      }
       case CLOAKING_DEVICE: {
         if (!design.gotCertainType(ShipComponentType.CLOAKING_DEVICE)) { 
           scores[i] = scores[i] +comp.getCloaking()/10;
@@ -162,6 +214,7 @@ public class ShipGenerator {
       
       Tech[] defenseTechs = player.getTechList().getListForType(TechType.Defense);
       Tech[] electricsTechs = player.getTechList().getListForType(TechType.Electrics);
+      Tech[] combatTechs = player.getTechList().getListForType(TechType.Combat);
       Tech shield = TechList.getBestTech(defenseTechs,"Shield");
       Tech armor = TechList.getBestTech(defenseTechs,"Armor plating");
       Tech shieldGen = TechList.getBestTech(electricsTechs,"Shield generator");
@@ -229,6 +282,17 @@ public class ShipGenerator {
       elecTech = TechList.getBestTech(electricsTechs,"LR scanner");
       if (elecTech != null) {
         components.add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      elecTech = TechList.getBestTech(combatTechs, "Orbital bombs");
+      weapTech = TechList.getBestTech(combatTechs, "Orbital smart bombs");
+      if (weapTech != null) {
+        components.add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      } else if (elecTech != null) {
+        components.add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      weapTech = TechList.getBestTech(combatTechs, "Orbital nuke");
+      if (weapTech != null) {
+        components.add(ShipComponentFactory.createByName(weapTech.getComponent()));
       }
       int[] componentScores = new int[components.size()]; 
       int safetyCount = 500;
@@ -324,6 +388,7 @@ public class ShipGenerator {
    * for human players in beginning and AI every time they design
    * new colony/troop ship.
    * @param player whom is designing the new ship
+   * @param troop Is ship going to be troop carrier
    * @return ShipDesign or null if fails
    */
   public static ShipDesign createColony(PlayerInfo player,boolean troop) {
@@ -360,6 +425,20 @@ public class ShipGenerator {
         ShipComponent colony = ShipComponentFactory.createByName("Colonization module");
         result.addComponent(colony);
         
+      } else {
+        Tech[] electricsTechs = player.getTechList().getListForType(TechType.Electrics);
+        Tech invasionModule = TechList.getBestTech(electricsTechs,"Planetary invasion module");
+        Tech shockModule = TechList.getBestTech(electricsTechs,"Shock trooper module");
+        if (shockModule != null) {
+          ShipComponent trooper = ShipComponentFactory.createByName(shockModule.getComponent());
+          result.addComponent(trooper);
+        } else if (invasionModule != null) {
+          ShipComponent trooper = ShipComponentFactory.createByName(invasionModule.getComponent());
+          result.addComponent(trooper);          
+        } else {
+          // Cannot build a trooper
+          return null;
+        }
       }
       if (result.getFreeSlots() > 2) {
         Tech armor = TechList.getBestTech(defenseTechs,"Armor plating");

@@ -11,10 +11,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 
 import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionHandling;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
-import org.openRealmOfStars.AI.PathFinding.AStarSearch;
-import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.GameState;
@@ -24,12 +23,10 @@ import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
-import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -90,6 +87,7 @@ public class AITurnView extends BlackPanel {
 
   /**
    * Constructor for main menu
+   * @param game Game used to get access starmap and planet lists
    * @param listener ActionListener
    */
   public AITurnView(Game game, ActionListener listener) {
@@ -139,56 +137,7 @@ public class AITurnView extends BlackPanel {
     }
   }
 
-  /**
-   * Make reroute moves while on mission
-   * @param fleet Fleet to move
-   * @param info PlayerInfo
-   * @param mission Which mission
-   */
-  private void makeRerouteBeforeFTLMoves(Fleet fleet, PlayerInfo info, Mission mission) {
-    AStarSearch search = fleet.getaStarSearch();
-    for (int mv = 0;mv<fleet.movesLeft;mv++) {
-      PathPoint point = search.getMove();
-      if (point != null && !game.getStarMap().isBlocked(point.getX(), point.getY())) {
-        //   Not blocked so fleet is moving
-        game.fleetMakeMove(info, fleet, point.getX(), point.getY());
-        search.nextMove();
-      }
-    }
-    fleet.movesLeft = 0;
-    if (search.isLastMove()) {
-      if (search.getTargetDistance() > 0) {
-        fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
-            mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
-      }
-      fleet.setaStarSearch(null);
-    }
-
-  }
   
-  /**
-   * Make Regular moves according A Star Search path finding
-   * @param fleet Fleet to move
-   * @param info Player who controls the fleet
-   */
-  private void makeRegularMoves(Fleet fleet, PlayerInfo info) {
-    AStarSearch search = fleet.getaStarSearch();
-    for (int mv = 0;mv<fleet.movesLeft;mv++) {
-      PathPoint point = search.getMove();
-      if (point != null) {
-        if (!game.getStarMap().isBlocked(point.getX(), point.getY())) {
-        //   Not blocked so fleet is moving
-          game.fleetMakeMove(info, fleet, point.getX(), point.getY());
-          search.nextMove();
-        }
-      }
-    }
-    fleet.movesLeft = 0;
-    if (search.isLastMove()) {
-      fleet.setaStarSearch(null);
-    }
-
-  }
   
   /**
    * Handle missions for AI player and single fleet
@@ -198,156 +147,11 @@ public class AITurnView extends BlackPanel {
   private void handleMissions(Fleet fleet, PlayerInfo info) {
     Mission mission = info.getMissions().getMissionForFleet(fleet.getName());
     if (mission != null) {
-      if (mission.getType() == MissionType.EXPLORE) {
-        if (mission.getPhase() == MissionPhase.TREKKING && fleet.getRoute() == null) {
-          // Fleet has encounter obstacle, taking a detour round it
-          Sun sun = game.getStarMap().locateSolarSystem(fleet.getX(), fleet.getY());
-          if (sun != null && sun.getName() == mission.getSunName()) {
-            // Fleet is in correct solar system, starting explore execution mode
-            mission.setPhase(MissionPhase.EXECUTING);
-            fleet.setaStarSearch(null);
-          } else if (fleet.getaStarSearch() == null) {
-            // No A star search made yet, so let's do it
-            AStarSearch search = new AStarSearch(game.getStarMap(), 
-                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
-            search.doSearch();
-            search.doRoute();
-            fleet.setaStarSearch(search);
-            makeRerouteBeforeFTLMoves(fleet, info, mission);
-          } else {
-            makeRerouteBeforeFTLMoves(fleet,info,mission);
-          }
-        } 
-        if (mission.getPhase() == MissionPhase.EXECUTING) {
-          mission.setMissionTime(mission.getMissionTime()+1);
-          if (mission.getMissionTime() >= info.getRace().getAIExploringAmount()) {
-            // Depending on race it decides enough is enough
-            fleet.setaStarSearch(null);
-          }
-          if (fleet.getaStarSearch() == null) {
-            Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(), fleet.getY(),info,fleet);
-            if (!sun.getName().equals(mission.getSunName())) {
-              mission.setTarget(sun.getCenterX(), sun.getCenterY());
-              fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 
-                  mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
-              mission.setSunName(sun.getName());
-              mission.setPhase(MissionPhase.TREKKING);
-              return;
-            }
-            PathPoint point = info.getUnchartedSector(sun, fleet);
-            if (point != null) {
-              mission.setTarget(point.getX(), point.getY());
-              AStarSearch search = new AStarSearch(game.getStarMap(), 
-                  fleet.getX(), fleet.getY(), mission.getX(), mission.getY());
-              search.doSearch();
-              search.doRoute();
-              fleet.setaStarSearch(search);
-              makeRegularMoves(fleet, info);
-            }
-          } else {
-            makeRegularMoves(fleet, info);
-          }
-        }
-      } // End Of Explore
-      if (mission.getType() == MissionType.COLONIZE) {
-        if (mission.getPhase() == MissionPhase.LOADING) {
-          // Loading colonist
-          Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(), fleet.getY());
-          if (planet.getPlanetPlayerInfo() == info) {
-            Ship[] ships = fleet.getShips();
-            int colony = 0; 
-            for (int i=0;i<ships.length;i++) {
-              if (ships[i].isColonyModule()) {
-                colony = i;
-                break;
-              }
-            }
-            if (planet.getTotalPopulation() > 2 && planet.takeColonist() && ships[colony].getFreeCargoColonists() > 0) {
-              // One colonist on board, ready to go trekking
-              ships[colony].setColonist(ships[colony].getColonist()+1);
-              mission.setPhase(MissionPhase.TREKKING);
-              Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
-                  mission.getY(), fleet.getFleetFtlSpeed());
-              fleet.setRoute(route);
-            }
-            if (planet.getTotalPopulation() > 3 && planet.takeColonist() && ships[colony].getFreeCargoColonists() > 0) {
-              ships[colony].setColonist(ships[colony].getColonist()+1);
-            }
-          }
-        }
-        if (mission.getPhase() == MissionPhase.TREKKING &&
-            fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
-          // Target acquired
-          mission.setPhase(MissionPhase.EXECUTING);
-          Ship ship = fleet.getColonyShip();
-          Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(), fleet.getY());
-          if (ship != null && planet != null &&
-              planet.getPlanetPlayerInfo() == null) {
-            // Make sure that ship is really colony and there is planet to colonize
-            planet.setPlanetOwner(game.getStarMap().getAiTurnNumber(), info);
-            if (info.getRace() == SpaceRace.MECHIONS) {
-              planet.setWorkers(Planet.PRODUCTION_WORKERS, ship.getColonist());
-            } else {
-              planet.setWorkers(Planet.PRODUCTION_FOOD, ship.getColonist());
-            }
-            // Remove the ship and AI just colonized planet
-            info.getMissions().remove(mission);
-            fleet.removeShip(ship);
-            if (fleet.getNumberOfShip() == 0) {
-              // Remove also empty fleet
-              info.Fleets().recalculateList();
-            }
-            ShipStat stat = game.getStarMap().getCurrentPlayerInfo()
-                .getShipStatByName(ship.getName());
-            stat.setNumberOfInUse(stat.getNumberOfInUse()-1);
-          }
-
-          
-        } else if (mission.getPhase() == MissionPhase.TREKKING &&
-            fleet.getRoute() == null) {
-          // Fleet has encounter obstacle, taking a detour round it
-          if (fleet.getaStarSearch() == null) {
-            // No A star search made yet, so let's do it
-            AStarSearch search = new AStarSearch(game.getStarMap(), 
-                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
-            search.doSearch();
-            search.doRoute();
-            fleet.setaStarSearch(search);
-            makeRerouteBeforeFTLMoves(fleet, info, mission);
-          } else {
-            makeRerouteBeforeFTLMoves(fleet,info,mission);
-          }
-        } 
-      } // End of colonize
-      if (mission.getType() == MissionType.DEFEND) {
-        if (mission.getPhase() == MissionPhase.TREKKING &&
-            fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
-          // Target acquired
-          mission.setPhase(MissionPhase.EXECUTING);
-          // Set defending route
-          fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(), fleet.getY(), 0));
-        } else if (mission.getPhase() ==  MissionPhase.EXECUTING) {
-          mission.setMissionTime(mission.getMissionTime()+1);
-          if (mission.getMissionTime() >= info.getRace().getAIDefenseUpdate()) {
-            // New defender is needed
-            mission.setMissionTime(0);
-            mission.setPhase(MissionPhase.PLANNING);
-          }
-        } else if (mission.getPhase() == MissionPhase.TREKKING &&
-            fleet.getRoute() == null) {
-          // Fleet has encounter obstacle, taking a detour round it
-          if (fleet.getaStarSearch() == null) {
-            // No A star search made yet, so let's do it
-            AStarSearch search = new AStarSearch(game.getStarMap(), 
-                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
-            search.doSearch();
-            search.doRoute();
-            fleet.setaStarSearch(search);
-            makeRerouteBeforeFTLMoves(fleet, info, mission);
-          } else {
-            makeRerouteBeforeFTLMoves(fleet,info,mission);
-          }
-        } 
+      switch (mission.getType()) {
+      case COLONIZE: MissionHandling.handleColonize(mission, fleet, info, game); break;
+      case EXPLORE: MissionHandling.handleExploring(mission, fleet, info, game); break;
+      case DEFEND: MissionHandling.handleDefend(mission, fleet, info, game); break;
+      case ATTACK: break;
       }
     } else {
       // No mission for fleet yet

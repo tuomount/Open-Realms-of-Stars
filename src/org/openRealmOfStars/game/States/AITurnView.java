@@ -199,31 +199,6 @@ public class AITurnView extends BlackPanel {
     
   }
 
-  /**
-   * Merge fleet with in same space and starting with same fleet names
-   * @param fleet Fleet where to merge
-   * @param info PlayerInfo for both fleets
-   */
-  private void mergeFleets(Fleet fleet, PlayerInfo info) {
-    // Merging fleets
-    String[] part = fleet.getName().split("#");          
-    for (int j=0;j<info.Fleets().getNumberOfFleets();j++) {
-      // Merge fleets in same space with same starting of fleet name
-      Fleet mergeFleet = info.Fleets().getByIndex(j);
-      if (mergeFleet != fleet && mergeFleet.getX() == fleet.getX() &&
-          mergeFleet.getY() == fleet.getY() && mergeFleet.getName()
-          .startsWith(part[0])) {
-        for (int k=0;k<mergeFleet.getNumberOfShip();k++) {
-          Ship ship = mergeFleet.getShipByIndex(k);
-          if (ship != null) {
-            fleet.addShip(ship);
-          }
-        }
-        info.Fleets().remove(j);
-        break;
-      }
-    }    
-  }
 
 
   /**
@@ -313,7 +288,7 @@ public class AITurnView extends BlackPanel {
     if (info != null && !info.isHuman() && game.getStarMap().getAIFleet() != null) {
       // Handle fleet
       
-      mergeFleets(game.getStarMap().getAIFleet(), info);
+      MissionHandling.mergeFleets(game.getStarMap().getAIFleet(), info);
       handleMissions(game.getStarMap().getAIFleet(), info);
       game.getStarMap().setAIFleet(info.Fleets().getNext());
       if (info.Fleets().getIndex()==0) {

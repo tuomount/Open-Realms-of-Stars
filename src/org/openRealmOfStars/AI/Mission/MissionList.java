@@ -130,6 +130,26 @@ public class MissionList {
   }
 
   /**
+   * Find a Attack mission for certain planet and only one attack
+   * @param x coordinate where is rendevouz x coordinate
+   * @param y coordinate where is rendevouz y coordinate
+   * @return true if only one attack mission found
+   */
+  public Boolean isAttackMissionLast(int x, int y) {
+    int count = 0;
+    for (Mission mission : missions) {
+      if (mission.getType() == MissionType.ATTACK && mission.getX() == x &&
+          mission.getY() == y) {
+        count++;
+      }
+    }
+    if (count == 1) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Get mission where type is certain and phase is certain
    * @param type Mission type
    * @param phase Mission phase

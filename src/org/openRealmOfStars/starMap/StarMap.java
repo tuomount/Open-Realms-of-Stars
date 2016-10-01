@@ -659,6 +659,20 @@ public class StarMap {
     }
     return null;
   }
+  
+  /**
+   * Find planet by name
+   * @param name Name to search
+   * @return Planet or null if not found
+   */
+  public Planet getPlanetByName(String name) {
+    for (Planet planet : planetList) {
+      if (planet.getName().equals(name)) {
+        return planet;
+      }
+    }
+    return null;
+  }
 
   /**
    * Get Fleet by coordinates. If not found then null is returned.

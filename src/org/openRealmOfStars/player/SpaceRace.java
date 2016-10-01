@@ -308,5 +308,34 @@ public enum SpaceRace {
     }
     return 30;
   }
+  /**
+   * What is the minimum number of attack ships
+   * @return int
+   */
+  public int getAIMinimumAttackShips() {
+    switch (this) {
+    case HUMAN: return 3;
+    case MECHIONS: return 3;
+    case SPORKS: return 4;
+    case GREYANS: return 3;
+    case CENTAURS: return 2;
+    }
+    return 3;
+  }
+  /**
+   * What is the minimum number of conquer ships aka bomber and
+   * troopers
+   * @return int
+   */
+  public int getAIMinimumConquerShips() {
+    switch (this) {
+    case HUMAN: return 1;
+    case MECHIONS: return 1;
+    case SPORKS: return 2;
+    case GREYANS: return 1;
+    case CENTAURS: return 1;
+    }
+    return 1;
+  }
 
 }

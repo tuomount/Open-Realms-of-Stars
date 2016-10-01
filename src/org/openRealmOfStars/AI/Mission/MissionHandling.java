@@ -186,6 +186,111 @@ public class MissionHandling {
   }
 
   /**
+   * Handle Colonize mission
+   * @param mission Colonize mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting starmap and planet
+   */
+  public static void handleAttack(Mission mission, Fleet fleet, 
+      PlayerInfo info, Game game) {
+    if (mission != null) {
+      if (mission.getType() == MissionType.ATTACK) {
+        if (mission.getPhase() == MissionPhase.PLANNING && mission.getTargetPlanet() != null) {
+          if (info.getMissions().isAttackMissionLast(mission.getX(), mission.getY())) {
+            int bombers = 0;
+            int trooper = 0;
+            int military = 0;
+            for (Ship ship : fleet.getShips()) {
+             if (ship.hasBombs()) {
+               bombers++;
+             }
+             if (ship.isTrooperShip()) {
+               trooper++;
+             }
+             if (ship.getTotalMilitaryPower()>0) {
+               military++;
+             }
+            }
+            if (military >= info.getRace().getAIMinimumAttackShips() 
+                && (bombers+trooper)>info.getRace().getAIMinimumConquerShips() ) {
+              mission.setPhase(MissionPhase.EXECUTING);
+              Planet planet = game.getStarMap().getPlanetByName(mission.getTargetPlanet());
+              if (planet != null) {
+                mission.setTarget(planet.getX(), planet.getY());
+              }
+            }
+          }
+        }
+        if (mission.getPhase() == MissionPhase.LOADING) {
+          // Loading Troops
+          Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(), fleet.getY());
+          if (planet.getPlanetPlayerInfo() == info) {
+            Ship[] ships = fleet.getShips();
+            int trooper = 0; 
+            for (int i=0;i<ships.length;i++) {
+              if (ships[i].isTrooperModule()) {
+                trooper = i;
+                break;
+              }
+            }
+            if (planet.getTotalPopulation() > 2 && planet.takeColonist() && ships[trooper].getFreeCargoColonists() > 0) {
+              // One Troops on board, ready to go trekking
+              ships[trooper].setColonist(ships[trooper].getColonist()+1);
+              mission.setPhase(MissionPhase.TREKKING);
+              Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
+                  mission.getY(), fleet.getFleetFtlSpeed());
+              fleet.setRoute(route);
+            }
+            while (planet.getTotalPopulation() > 3 && planet.takeColonist() && ships[trooper].getFreeCargoColonists() > 0) {
+              ships[trooper].setColonist(ships[trooper].getColonist()+1);
+            }
+          }
+        }
+        if (mission.getPhase() == MissionPhase.TREKKING && mission.getTargetPlanet() == null &&
+            fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
+          // Target acquired, merge fleet to bigger attack group
+          mergeFleets(fleet, info);
+          info.getMissions().remove(mission);
+        } else if (mission.getPhase() == MissionPhase.TREKKING &&
+            fleet.getRoute() == null) {
+          // Fleet has encounter obstacle, taking a detour round it
+          if (fleet.getaStarSearch() == null) {
+            // No A star search made yet, so let's do it
+            AStarSearch search = new AStarSearch(game.getStarMap(), 
+                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
+            search.doSearch();
+            search.doRoute();
+            fleet.setaStarSearch(search);
+            makeRerouteBeforeFTLMoves(game,fleet, info, mission);
+          } else {
+            makeRerouteBeforeFTLMoves(game,fleet,info,mission);
+          }
+        } 
+        if (mission.getPhase() == MissionPhase.EXECUTING &&
+            fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
+          // Target acquired, 
+        } else if (mission.getPhase() == MissionPhase.EXECUTING &&
+            fleet.getRoute() == null) {
+          // Fleet has encounter obstacle, taking a detour round it
+          if (fleet.getaStarSearch() == null) {
+            // No A star search made yet, so let's do it
+            AStarSearch search = new AStarSearch(game.getStarMap(), 
+                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
+            search.doSearch();
+            search.doRoute();
+            fleet.setaStarSearch(search);
+            makeRerouteBeforeFTLMoves(game,fleet, info, mission);
+          } else {
+            makeRerouteBeforeFTLMoves(game,fleet,info,mission);
+          }
+        } 
+      } // End of Attack
+
+    }
+  }
+
+  /**
    * Handle Defend mission
    * @param mission Defend mission, does nothing if type is wrong
    * @param fleet Fleet on mission
@@ -228,6 +333,33 @@ public class MissionHandling {
     }
   }
 
+  /**
+   * Merge fleet with in same space and starting with same fleet names
+   * @param fleet Fleet where to merge
+   * @param info PlayerInfo for both fleets
+   */
+  public static void mergeFleets(Fleet fleet, PlayerInfo info) {
+    // Merging fleets
+    String[] part = fleet.getName().split("#");          
+    for (int j=0;j<info.Fleets().getNumberOfFleets();j++) {
+      // Merge fleets in same space with same starting of fleet name
+      Fleet mergeFleet = info.Fleets().getByIndex(j);
+      if (mergeFleet != fleet && mergeFleet.getX() == fleet.getX() &&
+          mergeFleet.getY() == fleet.getY() && mergeFleet.getName()
+          .startsWith(part[0])) {
+        for (int k=0;k<mergeFleet.getNumberOfShip();k++) {
+          Ship ship = mergeFleet.getShipByIndex(k);
+          if (ship != null) {
+            fleet.addShip(ship);
+          }
+        }
+        info.Fleets().remove(j);
+        break;
+      }
+    }    
+  }
+
+  
   /**
    * Make Regular moves according A Star Search path finding
    * @param game Game used to get access starmap and planet lists

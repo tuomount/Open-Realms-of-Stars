@@ -117,7 +117,7 @@ public class BuildingFactory {
           Icons.getIconByName(Icons.ICON_PLANETARY_TURRET), BuildingType.MILITARY);
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
-      tmp.setDescription("Planetary defense turret");
+      tmp.setDescription("Big and powerful defense turret");
       tmp.setDefenseDamage(3);
       return tmp;
     }
@@ -126,7 +126,7 @@ public class BuildingFactory {
           Icons.getIconByName(Icons.ICON_PLANETARY_TURRET), BuildingType.MILITARY);
       tmp.setProdCost(50);
       tmp.setMetalCost(50);
-      tmp.setDescription("Planetary defense turret");
+      tmp.setDescription("Huge defense turret");
       tmp.setDefenseDamage(6);
       return tmp;
     }
@@ -135,7 +135,7 @@ public class BuildingFactory {
           Icons.getIconByName(Icons.ICON_PLANETARY_TURRET), BuildingType.MILITARY);
       tmp.setProdCost(70);
       tmp.setMetalCost(70);
-      tmp.setDescription("Planetary defense turret");
+      tmp.setDescription("Biggest and meanest defense turret");
       tmp.setDefenseDamage(9);
       return tmp;
     }

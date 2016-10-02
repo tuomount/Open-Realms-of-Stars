@@ -101,6 +101,37 @@ public class IOUtilities {
   }
   
   /**
+   * Wraps string into new lines
+   * @param input String to wrap
+   * @param lineWidth Maximum line width
+   * @return String with new line wraps
+   */
+  public static String stringWrapper(String input,int lineWidth) {
+    StringBuilder sb = new StringBuilder(input);
+    int lastSpace = -1;
+    int rowLen = 0;
+    for (int i=0;i<sb.length();i++) {
+      if (sb.charAt(i)==' ') {
+        lastSpace = i;
+      }
+      if (sb.charAt(i)=='\n') {
+        sb.setCharAt(i, ' ');
+        lastSpace = i;
+      } else {
+        rowLen++;
+      }
+      if (rowLen > lineWidth) {
+        if (lastSpace != -1) {
+          sb.setCharAt(lastSpace, '\n');
+          rowLen=i-lastSpace;
+          lastSpace = -1;
+        }
+      }
+    }
+    return sb.toString();
+  }
+  
+  /**
    * Writes string into DataOutputStream. First 4 octets tell string length
    * then each character is written with 2 octets
    * @param os

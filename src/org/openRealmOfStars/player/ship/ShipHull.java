@@ -3,6 +3,7 @@ package org.openRealmOfStars.player.ship;
 import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
  * 
@@ -212,7 +213,7 @@ public class ShipHull {
     sb.append("Size:");
     sb.append(getSize().toString());
     sb.append("\n");
-    sb.append(getHullType().getDescription());
+    sb.append(IOUtilities.stringWrapper(getHullType().getDescription(),39));
     
 
     return sb.toString();

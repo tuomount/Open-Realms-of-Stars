@@ -1,6 +1,7 @@
 package org.openRealmOfStars.starMap.planet.construction;
 
 import org.openRealmOfStars.gui.icons.Icon16x16;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
  * 
@@ -202,7 +203,7 @@ public class Building extends Construction {
       sb.append(" - one per planet");
     }
     sb.append("\n");
-    sb.append(getDescription());
+    sb.append(IOUtilities.stringWrapper(getDescription(),39));
     sb.append("\n");
     sb.append("Cost: Prod.:");
     sb.append(getProdCost());

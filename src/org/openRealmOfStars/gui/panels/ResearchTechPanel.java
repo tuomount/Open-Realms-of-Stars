@@ -1,9 +1,11 @@
 package org.openRealmOfStars.gui.panels;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
@@ -97,6 +99,7 @@ public class ResearchTechPanel extends InvisiblePanel {
     btnMinus = new IconButton(Icons.getIconByName(Icons.ICON_MINUS), 
         Icons.getIconByName(Icons.ICON_MINUS_PRESSED), false, actionMinus,this);
     btnMinus.addActionListener(listener);
+    this.add(Box.createRigidArea(new Dimension(5,5)));
     this.add(btnMinus);
     InvisiblePanel invis = new InvisiblePanel(this);
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
@@ -143,6 +146,7 @@ public class ResearchTechPanel extends InvisiblePanel {
         Icons.getIconByName(Icons.ICON_PLUS_PRESSED), false, actionPlus,this);
     btnPlus.addActionListener(listener);
     this.add(btnPlus);
+    this.add(Box.createRigidArea(new Dimension(5,5)));
   }
   
   public void setSliderValue(int value) {

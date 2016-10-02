@@ -181,18 +181,21 @@ public class Tech {
     ShipHull shipHull = null;
     if (improvement != null ){
       sb.append("Improvement: ");
+      sb.append("\n");
       sb.append(improvement);
       building = BuildingFactory.createByName(improvement);
       sb.append("\n");
     }
     if (hull != null ){
       sb.append("Ship design: ");
+      sb.append("\n");
       sb.append(hull);
       shipHull = ShipHullFactory.createByName(hull,race);
       sb.append("\n");
     }
     if (component != null ){
       sb.append("Ship component: ");
+      sb.append("\n");
       sb.append(component);
       comp = ShipComponentFactory.createByName(component);
       sb.append("\n");

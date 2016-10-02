@@ -19,7 +19,6 @@ import org.openRealmOfStars.gui.ListRenderers.TechListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
-import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
@@ -116,13 +115,11 @@ public class ResearchView extends BlackPanel {
     base.setTitle("Research");
     this.setLayout(new BorderLayout());
     base.setLayout(new BorderLayout());
-    InvisiblePanel invis = new InvisiblePanel(base);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    IconLabel label = new IconLabel(invis, null, "Reseach focus");
-    label.setAlignmentX(Component.CENTER_ALIGNMENT);
-    invis.add(label);
-    invis.add(Box.createRigidArea(new Dimension(10,15)));
-    combatRese = new ResearchTechPanel(invis, 
+    InfoPanel focusPanel = new InfoPanel();
+    focusPanel.setTitle("Research focus");
+    focusPanel.setLayout(new BoxLayout(focusPanel, BoxLayout.Y_AXIS));
+//    focusPanel.add(Box.createRigidArea(new Dimension(10,15)));
+    combatRese = new ResearchTechPanel(focusPanel, 
         GameCommands.COMMAND_MINUS_COMBAT_RESEARCH,
         GameCommands.COMMAND_PLUS_COMBAT_RESEARCH, Icons.ICON_COMBAT_TECH,
         TechType.Combat.toString()+" 100% 1000 turns", 
@@ -130,9 +127,9 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_UPGRADE_COMBAT,16,
         GameCommands.COMMAND_SLIDER_COMBAT_RESEARCH, listener);
     combatRese.setAlignmentX(Component.CENTER_ALIGNMENT);
-    invis.add(combatRese);
-    invis.add(Box.createRigidArea(new Dimension(10,10)));
-    defenseRese = new ResearchTechPanel(invis, 
+    focusPanel.add(combatRese);
+    focusPanel.add(Box.createRigidArea(new Dimension(10,10)));
+    defenseRese = new ResearchTechPanel(focusPanel, 
         GameCommands.COMMAND_MINUS_DEFENSE_RESEARCH,
         GameCommands.COMMAND_PLUS_DEFENSE_RESEARCH, Icons.ICON_DEFENSE_TECH,
         TechType.Defense.toString()+" 100% 1000 turns", 
@@ -140,9 +137,9 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_UPGRADE_DEFENSE,16,
         GameCommands.COMMAND_SLIDER_DEFENSE_RESEARCH,listener);
     defenseRese.setAlignmentX(Component.CENTER_ALIGNMENT);
-    invis.add(defenseRese);
-    invis.add(Box.createRigidArea(new Dimension(10,10)));
-    hullRese = new ResearchTechPanel(invis, 
+    focusPanel.add(defenseRese);
+    focusPanel.add(Box.createRigidArea(new Dimension(10,10)));
+    hullRese = new ResearchTechPanel(focusPanel, 
         GameCommands.COMMAND_MINUS_HULL_RESEARCH,
         GameCommands.COMMAND_PLUS_HULL_RESEARCH, Icons.ICON_HULL_TECH,
         TechType.Hulls.toString()+" 100% 1000 turns", 
@@ -150,9 +147,9 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_UPGRADE_HULL,16,
         GameCommands.COMMAND_SLIDER_HULL_RESEARCH,listener);
     hullRese.setAlignmentX(Component.CENTER_ALIGNMENT);
-    invis.add(hullRese);
-    invis.add(Box.createRigidArea(new Dimension(10,10)));
-    improvementRese = new ResearchTechPanel(invis, 
+    focusPanel.add(hullRese);
+    focusPanel.add(Box.createRigidArea(new Dimension(10,10)));
+    improvementRese = new ResearchTechPanel(focusPanel, 
         GameCommands.COMMAND_MINUS_IMPROVEMENT_RESEARCH,
         GameCommands.COMMAND_PLUS_IMPROVEMENT_RESEARCH, Icons.ICON_IMPROVEMENT_TECH,
         TechType.Improvements.toString()+" 100% 1000 turns", 
@@ -160,9 +157,9 @@ public class ResearchView extends BlackPanel {
         "Level:10 (1/6)",GameCommands.COMMAND_UPGRADE_IMPROVEMENT,16,
         GameCommands.COMMAND_SLIDER_IMPROVEMENT_RESEARCH,listener);
     improvementRese.setAlignmentX(Component.CENTER_ALIGNMENT);
-    invis.add(improvementRese);
-    invis.add(Box.createRigidArea(new Dimension(10,10)));
-    propulsionRese = new ResearchTechPanel(invis, 
+    focusPanel.add(improvementRese);
+    focusPanel.add(Box.createRigidArea(new Dimension(10,10)));
+    propulsionRese = new ResearchTechPanel(focusPanel, 
         GameCommands.COMMAND_MINUS_PROPULSION_RESEARCH,
         GameCommands.COMMAND_PLUS_PROPULSION_RESEARCH, Icons.ICON_PROPULSION_TECH,
         TechType.Propulsion.toString()+" 100% 1000 turns", 
@@ -170,9 +167,9 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_UPGRADE_PROPULSION,16,
         GameCommands.COMMAND_SLIDER_PROPULSION_RESEARCH,listener);
     propulsionRese.setAlignmentX(Component.CENTER_ALIGNMENT);
-    invis.add(propulsionRese);
-    invis.add(Box.createRigidArea(new Dimension(10,10)));
-    electronicsRese = new ResearchTechPanel(invis, 
+    focusPanel.add(propulsionRese);
+    focusPanel.add(Box.createRigidArea(new Dimension(10,10)));
+    electronicsRese = new ResearchTechPanel(focusPanel, 
         GameCommands.COMMAND_MINUS_ELECTRONICS_RESEARCH,
         GameCommands.COMMAND_PLUS_ELECTRONICS_RESEARCH, Icons.ICON_ELECTRONICS_TECH,
         TechType.Electrics.toString()+" 100% 1000 turns", 
@@ -180,11 +177,11 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_UPGRADE_ELECTRONICS,16,
         GameCommands.COMMAND_SLIDER_ELECTRONICS_RESEARCH,listener);
     electronicsRese.setAlignmentX(Component.CENTER_ALIGNMENT);
-    invis.add(electronicsRese);
-    invis.add(Box.createRigidArea(new Dimension(10,10)));
-    base.add(invis,BorderLayout.EAST);
+    focusPanel.add(electronicsRese);
+  //  focusPanel.add(Box.createRigidArea(new Dimension(10,10)));
+    base.add(focusPanel,BorderLayout.EAST);
     
-    invis = new InvisiblePanel(base);
+    InvisiblePanel invis = new InvisiblePanel(base);
     invis.setLayout(new BoxLayout(invis, BoxLayout.X_AXIS));
     Tech[] techs = player.getTechList().getList();
     techList = new JList<>(techs);

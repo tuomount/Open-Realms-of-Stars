@@ -317,31 +317,35 @@ public class AITurnView extends BlackPanel {
         for (int j = 0;j<info.Fleets().getNumberOfFleets();j++) {
           Fleet fleet = info.Fleets().getByIndex(j);
           if (fleet.getRoute() != null) {
-            fleet.getRoute().makeNextMove();
-            if (!game.getStarMap().isBlocked(fleet.getRoute().getX(), 
-                fleet.getRoute().getY())) {
-              // Not blocked so fleet is moving
-              game.fleetMakeMove(info, fleet, fleet.getRoute().getX(), fleet.getRoute().getY());
-              if (fleet.getRoute().isEndReached()) {
-                // End is reached giving a message
+            if (fleet.movesLeft > 0) {
+              // Make sure fleet can actually move
+              fleet.getRoute().makeNextMove();
+              if (!game.getStarMap().isBlocked(fleet.getRoute().getX(), 
+                  fleet.getRoute().getY())) {
+                // Not blocked so fleet is moving
+                game.fleetMakeMove(info, fleet, fleet.getRoute().getX(), fleet.getRoute().getY());
+                if (fleet.getRoute().isEndReached()) {
+                  // End is reached giving a message
+                  fleet.setRoute(null);
+                  Message msg = new Message(MessageType.FLEET,
+                    fleet.getName()+" has reached it's target and waiting for orders.",
+                    Icons.getIconByName(Icons.ICON_HULL_TECH));
+                  msg.setMatchByString(fleet.getName());
+                  msg.setCoordinate(fleet.getX(), fleet.getY());
+                  info.getMsgList().addNewMessage(msg);
+                }
+              } else {
+                // Movement was blocked, giving a message
                 fleet.setRoute(null);
                 Message msg = new Message(MessageType.FLEET,
-                  fleet.getName()+" has reached it's target and waiting for orders.",
+                  fleet.getName()+" has encouter obstacle and waiting for more orders.",
                   Icons.getIconByName(Icons.ICON_HULL_TECH));
                 msg.setMatchByString(fleet.getName());
                 msg.setCoordinate(fleet.getX(), fleet.getY());
                 info.getMsgList().addNewMessage(msg);
               }
-            } else {
-              // Movement was blocked, giving a message
-              fleet.setRoute(null);
-              Message msg = new Message(MessageType.FLEET,
-                fleet.getName()+" has encouter obstacle and waiting for more orders.",
-                Icons.getIconByName(Icons.ICON_HULL_TECH));
-              msg.setMatchByString(fleet.getName());
-              msg.setCoordinate(fleet.getX(), fleet.getY());
-              info.getMsgList().addNewMessage(msg);
             }
+            
           } else {
             Message msg = new Message(MessageType.FLEET,
                 fleet.getName()+" is waiting for orders.",

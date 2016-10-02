@@ -75,6 +75,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
        if (game.starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
          // Fleet move
          Fleet fleet = game.starMapView.getStarMapMouseListener().getLastClickedFleet();
+         fleet.setRoute(null);
          int nx = fleet.getX()-1;
          int ny = fleet.getY();
          game.fleetMakeMove(game.players.getCurrentPlayerInfo(),fleet,nx,ny);
@@ -92,6 +93,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
        if (game.starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
          // Fleet move
          Fleet fleet = game.starMapView.getStarMapMouseListener().getLastClickedFleet(); 
+         fleet.setRoute(null);
          int nx = fleet.getX()+1;
          int ny = fleet.getY();
          game.fleetMakeMove(game.players.getCurrentPlayerInfo(),fleet,nx,ny);
@@ -109,6 +111,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
        if (game.starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
          // Fleet move
          Fleet fleet = game.starMapView.getStarMapMouseListener().getLastClickedFleet(); 
+         fleet.setRoute(null);
          int nx = fleet.getX();
          int ny = fleet.getY()+1;
          game.fleetMakeMove(game.players.getCurrentPlayerInfo(),fleet,nx,ny);
@@ -126,6 +129,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
        if (game.starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
          // Fleet move
          Fleet fleet = game.starMapView.getStarMapMouseListener().getLastClickedFleet(); 
+         fleet.setRoute(null);
          int nx = fleet.getX();
          int ny = fleet.getY()-1;
          game.fleetMakeMove(game.players.getCurrentPlayerInfo(),fleet,nx,ny);

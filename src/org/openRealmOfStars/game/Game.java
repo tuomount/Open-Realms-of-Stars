@@ -630,6 +630,7 @@ public class Game extends JFrame implements ActionListener {
           if (!starMapView.getStarMapMouseListener().isDoubleClicked() 
               && starMapView.getStarMapMouseListener().isMoveClicked()) {
             if (starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+              starMapView.getStarMapMouseListener().getLastClickedFleet().setRoute(null);
               starMapView.getStarMapMouseListener().setMoveClicked(false);
               fleetMakeMove(players.getCurrentPlayerInfo(), 
                   starMapView.getStarMapMouseListener().getLastClickedFleet(),

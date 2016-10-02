@@ -51,7 +51,9 @@ import org.openRealmOfStars.utilities.DiceGenerator;
  * along with this program; if not, see http://www.gnu.org/licenses/
  * 
  * 
- * AI turn view for Open Realm of Stars
+ * AI turn view for Open Realm of Stars.
+ * This class also handles what to do before ending the turn.
+ * So all planet resources, scanning and research are done here.
  * 
  */
 public class AITurnView extends BlackPanel {
@@ -151,7 +153,7 @@ public class AITurnView extends BlackPanel {
       case COLONIZE: MissionHandling.handleColonize(mission, fleet, info, game); break;
       case EXPLORE: MissionHandling.handleExploring(mission, fleet, info, game); break;
       case DEFEND: MissionHandling.handleDefend(mission, fleet, info, game); break;
-      case ATTACK: break;
+      case ATTACK: MissionHandling.handleAttack(mission, fleet, info, game);break;
       }
     } else {
       // No mission for fleet yet
@@ -357,12 +359,15 @@ public class AITurnView extends BlackPanel {
       Planet planet = game.getStarMap().getPlanetList().get(i);
       if (planet.getPlanetPlayerInfo() != null) {
         PlayerInfo info = planet.getPlanetPlayerInfo();
+        // Update each planet one by one
         planet.updateOneTurn();
         int index =game.players.getIndex(info);
         if (index > -1) {
+          // Recalculate culture for the map for each player
           game.getStarMap().calculateCulture(planet.getX(), planet.getY(), 
               planet.getCulture(), index);
         }
+        // Fleets and planet do the scan
         game.getStarMap().doFleetScanUpdate(info, null,planet);
       }
     }
@@ -390,6 +395,7 @@ public class AITurnView extends BlackPanel {
       if (game.getStarMap().isAllAIsHandled()) {
         updateStarMapToNextTurn();
         for (int i=0;i<game.players.getCurrentMaxPlayers();i++) {
+          // Handle player research at end of turn
           PlayerInfo info = game.players.getPlayerInfoByIndex(i);
           info.getTechList().updateResearchPointByTurn(game.getStarMap().
              getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH, i),info);

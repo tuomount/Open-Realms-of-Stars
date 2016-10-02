@@ -122,19 +122,19 @@ public class TechFactory {
   public static final String[] PROPULSION_TECH_LEVEL3_NAMES = 
     {"Warp drive Mk1","Nuclear drive Mk2","Fusion source Mk2"};
   public static final String[] PROPULSION_TECH_LEVEL4_NAMES = 
-    {"Wrap drive Mk2","Hyper drive Mk2","Tachyon source Mk1"};
+    {"Warp drive Mk2","Hyper drive Mk2","Tachyon source Mk1"};
   public static final String[] PROPULSION_TECH_LEVEL5_NAMES = 
-    {"Wrap drive Mk3","Hyper drive Mk3","Tachyon source Mk2"};
+    {"Warp drive Mk3","Hyper drive Mk3","Tachyon source Mk2"};
   public static final String[] PROPULSION_TECH_LEVEL6_NAMES = 
-    {"Wrap drive Mk4","Hyper drive Mk4","Nuclear drive Mk3","Antimatter source Mk1"};
+    {"Warp drive Mk4","Hyper drive Mk4","Nuclear drive Mk3","Antimatter source Mk1"};
   public static final String[] PROPULSION_TECH_LEVEL7_NAMES = 
-    {"Wrap drive Mk5","Hyper drive Mk5","Impulse engine Mk1"};
+    {"Warp drive Mk5","Hyper drive Mk5","Impulse engine Mk1"};
   public static final String[] PROPULSION_TECH_LEVEL8_NAMES = 
-    {"Wrap drive Mk6","Hyper drive Mk6","Impulse engine Mk2","Antimatter source Mk2"};
+    {"Warp drive Mk6","Hyper drive Mk6","Impulse engine Mk2","Antimatter source Mk2"};
   public static final String[] PROPULSION_TECH_LEVEL9_NAMES = 
-    {"Wrap drive Mk7","Hyper drive Mk7","Impulse engine Mk3","Zero-point source Mk1"};
+    {"Warp drive Mk7","Hyper drive Mk7","Impulse engine Mk3","Zero-point source Mk1"};
   public static final String[] PROPULSION_TECH_LEVEL10_NAMES = 
-    {"Wrap drive Mk8","Hyper drive Mk8","Impulse engine Mk4","Zero-point source Mk2"};
+    {"Warp drive Mk8","Hyper drive Mk8","Impulse engine Mk4","Zero-point source Mk2"};
 
   public static final String[] ELECTRONICS_TECH_LEVEL1_NAMES = 
     {"Scanner Mk1","Planetary scanner Mk1","Cloaking device Mk1"};

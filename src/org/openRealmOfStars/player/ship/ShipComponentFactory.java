@@ -49,6 +49,7 @@ public class ShipComponentFactory {
         }
       }
     }
+    System.out.println("Could not find component called '"+name+"'");
     return null;
   }
 

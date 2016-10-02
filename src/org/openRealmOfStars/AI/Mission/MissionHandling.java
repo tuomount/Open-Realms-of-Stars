@@ -47,6 +47,7 @@ public class MissionHandling {
   public static void handleExploring(Mission mission, Fleet fleet, 
       PlayerInfo info, Game game) {
     if (mission != null) {
+      String ignoreSun = null;
       if (mission.getType() == MissionType.EXPLORE) {
         if (mission.getPhase() == MissionPhase.TREKKING && fleet.getRoute() == null) {
           // Fleet has encounter obstacle, taking a detour round it
@@ -64,9 +65,10 @@ public class MissionHandling {
           if (mission.getMissionTime() >= info.getRace().getAIExploringAmount()) {
             // Depending on race it decides enough is enough
             fleet.setaStarSearch(null);
+            ignoreSun = mission.getSunName();
           }
           if (fleet.getaStarSearch() == null) {
-            Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(), fleet.getY(),info,fleet);
+            Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(), fleet.getY(),info,fleet,ignoreSun);
             if (!sun.getName().equals(mission.getSunName())) {
               mission.setTarget(sun.getCenterX(), sun.getCenterY());
               fleet.setRoute(new Route(fleet.getX(), fleet.getY(), 

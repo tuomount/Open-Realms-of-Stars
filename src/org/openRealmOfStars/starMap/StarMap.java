@@ -507,15 +507,15 @@ public class StarMap {
    * @param fleet doing the search
    * @return Nearest sun
    */
-  public Sun getNearestSolarSystem(int x, int y, PlayerInfo info, Fleet fleet) {
+  public Sun getNearestSolarSystem(int x, int y, PlayerInfo info, Fleet fleet,
+      String ignoreSun) {
     double distance = 999999;
     Sun result = null;
     for (Sun sun:sunList) {
-      if (x >= sun.getCenterX()-SOLARSYSTEMWIDTH && x <= sun.getCenterX()+SOLARSYSTEMWIDTH
-          && y >= sun.getCenterY()-SOLARSYSTEMWIDTH && y <= sun.getCenterY()+SOLARSYSTEMWIDTH) {
-        return sun;
-      }
       double dist = getDistance(x, y, sun.getCenterX(), sun.getCenterY());
+      if (ignoreSun != null && sun.getName().equals(ignoreSun)) {
+        dist = 999999;
+      }
       if (dist < distance) {
         if (info.getUnchartedValueSystem(sun, fleet) > 50) {
           distance = dist;

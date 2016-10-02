@@ -202,10 +202,11 @@ public class ResearchView extends BlackPanel {
     }
     invis.add(scroll);
     invis.add(Box.createRigidArea(new Dimension(10,10)));
-    infoText = new InfoTextArea(25, 35);
+    infoText = new InfoTextArea(20, 35);
     infoText.setEditable(false);
     infoText.setFont(GuiStatics.getFontCubellanSmaller());
     invis.add(infoText);
+    invis.add(Box.createRigidArea(new Dimension(10,10)));
     
     base.add(invis,BorderLayout.WEST);
     

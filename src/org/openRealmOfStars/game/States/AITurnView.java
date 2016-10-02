@@ -160,7 +160,7 @@ public class AITurnView extends BlackPanel {
       if (fleet.isScoutFleet()) {
         // Scout fleet should go to explore
         Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(), 
-            fleet.getY(),info,fleet);
+            fleet.getY(),info,fleet,null);
         mission = new Mission(MissionType.EXPLORE, 
             MissionPhase.TREKKING, sun.getCenterX(), sun.getCenterY());
         mission.setFleetName(fleet.getName());
@@ -260,6 +260,7 @@ public class AITurnView extends BlackPanel {
           
         }
         if (planet.getRadiationLevel() <= info.getRace().getMaxRad()
+            && planet.getPlanetPlayerInfo() != null 
             && planet.getPlanetPlayerInfo() != info && !planet.isGasGiant()
             && info.getSectorVisibility(planet.getX(), planet.getY())==PlayerInfo.VISIBLE) {
           // New planet to conquer, adding it to mission list

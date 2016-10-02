@@ -55,16 +55,8 @@ public class MissionHandling {
             // Fleet is in correct solar system, starting explore execution mode
             mission.setPhase(MissionPhase.EXECUTING);
             fleet.setaStarSearch(null);
-          } else if (fleet.getaStarSearch() == null) {
-            // No A star search made yet, so let's do it
-            AStarSearch search = new AStarSearch(game.getStarMap(), 
-                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
-            search.doSearch();
-            search.doRoute();
-            fleet.setaStarSearch(search);
-            makeRerouteBeforeFTLMoves(game,fleet, info, mission);
           } else {
-            makeRerouteBeforeFTLMoves(game,fleet,info,mission);
+            makeReroute(game, fleet, info, mission);
           }
         } 
         if (mission.getPhase() == MissionPhase.EXECUTING) {
@@ -167,18 +159,7 @@ public class MissionHandling {
           
         } else if (mission.getPhase() == MissionPhase.TREKKING &&
             fleet.getRoute() == null) {
-          // Fleet has encounter obstacle, taking a detour round it
-          if (fleet.getaStarSearch() == null) {
-            // No A star search made yet, so let's do it
-            AStarSearch search = new AStarSearch(game.getStarMap(), 
-                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
-            search.doSearch();
-            search.doRoute();
-            fleet.setaStarSearch(search);
-            makeRerouteBeforeFTLMoves(game,fleet, info, mission);
-          } else {
-            makeRerouteBeforeFTLMoves(game,fleet,info,mission);
-          }
+          makeReroute(game, fleet, info, mission);
         } 
       } // End of colonize
 
@@ -218,6 +199,8 @@ public class MissionHandling {
               Planet planet = game.getStarMap().getPlanetByName(mission.getTargetPlanet());
               if (planet != null) {
                 mission.setTarget(planet.getX(), planet.getY());
+                fleet.setRoute(new Route(fleet.getX(),fleet.getY(),planet.getX(),
+                                         planet.getY(),fleet.getFleetFtlSpeed()));
               }
             }
           }
@@ -254,36 +237,14 @@ public class MissionHandling {
           info.getMissions().remove(mission);
         } else if (mission.getPhase() == MissionPhase.TREKKING &&
             fleet.getRoute() == null) {
-          // Fleet has encounter obstacle, taking a detour round it
-          if (fleet.getaStarSearch() == null) {
-            // No A star search made yet, so let's do it
-            AStarSearch search = new AStarSearch(game.getStarMap(), 
-                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
-            search.doSearch();
-            search.doRoute();
-            fleet.setaStarSearch(search);
-            makeRerouteBeforeFTLMoves(game,fleet, info, mission);
-          } else {
-            makeRerouteBeforeFTLMoves(game,fleet,info,mission);
-          }
+          makeReroute(game, fleet, info, mission);
         } 
         if (mission.getPhase() == MissionPhase.EXECUTING &&
             fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
           // Target acquired, 
         } else if (mission.getPhase() == MissionPhase.EXECUTING &&
             fleet.getRoute() == null) {
-          // Fleet has encounter obstacle, taking a detour round it
-          if (fleet.getaStarSearch() == null) {
-            // No A star search made yet, so let's do it
-            AStarSearch search = new AStarSearch(game.getStarMap(), 
-                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
-            search.doSearch();
-            search.doRoute();
-            fleet.setaStarSearch(search);
-            makeRerouteBeforeFTLMoves(game,fleet, info, mission);
-          } else {
-            makeRerouteBeforeFTLMoves(game,fleet,info,mission);
-          }
+          makeReroute(game, fleet, info, mission);
         } 
       } // End of Attack
 
@@ -316,18 +277,7 @@ public class MissionHandling {
           }
         } else if (mission.getPhase() == MissionPhase.TREKKING &&
             fleet.getRoute() == null) {
-          // Fleet has encounter obstacle, taking a detour round it
-          if (fleet.getaStarSearch() == null) {
-            // No A star search made yet, so let's do it
-            AStarSearch search = new AStarSearch(game.getStarMap(), 
-                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
-            search.doSearch();
-            search.doRoute();
-            fleet.setaStarSearch(search);
-            makeRerouteBeforeFTLMoves(game,fleet, info, mission);
-          } else {
-            makeRerouteBeforeFTLMoves(game,fleet,info,mission);
-          }
+          makeReroute(game, fleet, info, mission);
         } 
       }
     }
@@ -385,6 +335,30 @@ public class MissionHandling {
 
   }
 
+  /**
+   * Make Reroute before FTL
+   * @param game Game used to get access starmap and planet lists
+   * @param fleet Fleet to move
+   * @param info PlayerInfo
+   * @param mission Which mission
+   */
+  private static void makeReroute(Game game,Fleet fleet, 
+      PlayerInfo info, Mission mission) {
+    // Fleet has encounter obstacle, taking a detour round it
+    if (fleet.getaStarSearch() == null) {
+      // No A star search made yet, so let's do it
+      AStarSearch search = new AStarSearch(game.getStarMap(), 
+          fleet.getX(), fleet.getY(), mission.getX(), mission.getY(), 7);
+      search.doSearch();
+      search.doRoute();
+      fleet.setaStarSearch(search);
+      makeRerouteBeforeFTLMoves(game,fleet, info, mission);
+    } else {
+      makeRerouteBeforeFTLMoves(game,fleet,info,mission);
+    }    
+  }
+
+  
   /**
    * Make reroute moves while on mission
    * @param game Game used to get access starmap and planet lists

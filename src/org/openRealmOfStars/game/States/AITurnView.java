@@ -217,6 +217,11 @@ public class AITurnView extends BlackPanel {
       if (planet.getPlanetPlayerInfo() == info) {
         cx = cx +planet.getX();
         cy = cy +planet.getY();
+        if (planet.getHomeWorldIndex() != -1) {
+          // Double the effect of homeworld
+          cx = cx +planet.getX();
+          cy = cy +planet.getY();
+        }
         amount++;
       }
     }

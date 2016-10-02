@@ -133,7 +133,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public final static String MAGIC_STRING ="OROS-SAVE-GAME-0.1";
+  public final static String MAGIC_STRING ="OROS-SAVE-GAME-0.2";
 
   /**
    * Constructor for StarMap. Generates universum with default settings.
@@ -230,6 +230,10 @@ public class StarMap {
         planetList.add(planet);
       }
     } else {
+      if (str.startsWith("OROS-SAVE-GAME-")) {
+        throw new IOException("Stream does not contain correct StarMap information.\n"
+            + "Maybe saved game is for older version...");
+      }
       throw new IOException("Stream does not contain StarMap information!");
     }
   }
@@ -401,6 +405,7 @@ public class StarMap {
             planet.setGroundSize(12);
             planet.setAmountMetalInGround(8000);
             planet.addBuilding(BuildingFactory.createByName("Space port"));
+            planet.setHomeWorldIndex(playerInfo.getRace().getIndex());
             if (playerInfo.getRace() == SpaceRace.MECHIONS) {
               planet.setWorkers(Planet.FOOD_FARMERS, 0);
               planet.setWorkers(Planet.METAL_MINERS, 0);

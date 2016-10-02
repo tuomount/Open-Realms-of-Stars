@@ -122,6 +122,13 @@ public class Planet {
   private boolean gasGiant;
   
   /**
+   * Space race index which space race home world planet is.
+   * -1 means that is is not an home world.
+   * Home world needs generate 1 culture per turn.
+   */
+  private int homeWorldIndex;
+  
+  /**
    * Planet's x coordinate. On gas giant this left upper corner.
    */
   private int x;
@@ -318,6 +325,7 @@ public class Planet {
     this.underConstruction = null;
     this.tax = 0;
     this.culture = 0;
+    this.homeWorldIndex = -1;
   }
   
   /**
@@ -349,6 +357,7 @@ public class Planet {
     extraFood = dis.readInt();
     tax = dis.readInt();
     culture = dis.readInt();
+    homeWorldIndex = dis.readInt();
     workers = new int[MAX_WORKER_TYPE];
     for (int i=0;i<MAX_WORKER_TYPE;i++) {
       workers[i] = dis.readInt();
@@ -398,6 +407,7 @@ public class Planet {
     dos.writeInt(extraFood);
     dos.writeInt(tax);
     dos.writeInt(culture);
+    dos.writeInt(homeWorldIndex);
     for (int i=0;i<MAX_WORKER_TYPE;i++) {
       dos.writeInt(workers[i]);
     }
@@ -687,7 +697,12 @@ public class Planet {
     case PRODUCTION_CULTURE: { 
       mult = planetOwnerInfo.getRace().getCultureSpeed();
       //  Planet does not have culture bonus
-     result=workers[PRODUCTION_CULTURE]*mult/div+getTotalProductionFromBuildings(prod);break;}
+     result=workers[PRODUCTION_CULTURE]*mult/div+getTotalProductionFromBuildings(prod);
+     if (homeWorldIndex != -1) {
+       // Home worlds produce one extra culture
+       result++;
+     }
+     break;}
     case PRODUCTION_CREDITS: { 
       mult = 100;
       //  Planet does not have credit bonus
@@ -987,6 +1002,12 @@ public class Planet {
       sb.append("\n");
       sb.append("Metal: ");
       sb.append(getAmountMetalInGround());
+      if (homeWorldIndex != -1) {
+        sb.append("\n");
+        sb.append("Home world of ");
+        sb.append(SpaceRace.getRaceByIndex(homeWorldIndex).getName());
+        sb.append("\n");
+      }
       if (planetOwnerInfo != null) {
         sb.append("\n");
         sb.append(planetOwnerInfo.getEmpireName());
@@ -1443,6 +1464,14 @@ public class Planet {
       sb.append("Uncolonized");
     }
     return sb.toString();
+  }
+
+  public int getHomeWorldIndex() {
+    return homeWorldIndex;
+  }
+
+  public void setHomeWorldIndex(int homeWorldIndex) {
+    this.homeWorldIndex = homeWorldIndex;
   }
 
 

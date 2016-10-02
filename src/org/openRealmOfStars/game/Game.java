@@ -79,7 +79,7 @@ public class Game extends JFrame implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.0.3Alpha";
+  public static final String GAME_VERSION = "0.0.4Alpha";
 
   /**
    * Animation timer used for animation

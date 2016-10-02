@@ -14,6 +14,8 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.icons.Icon16x16;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
@@ -354,7 +356,17 @@ public class MapPanel extends JPanel {
             tile.draw(gr, pixelX, pixelY);
           }
         }
-        
+
+        // Draw home world marker
+        Planet planet = starMap.getPlanetByCoordinate(i+cx, j+cy);
+        if (planet != null && !planet.isGasGiant() && info != null && 
+            info.getSectorVisibility(i+cx, j+cy)!=PlayerInfo.UNCHARTED) {
+          if (planet.getHomeWorldIndex() != -1) {
+            Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
+            icon.draw(gr, pixelX+Icon16x16.MAX_WIDTH, pixelY+Icon16x16.MAX_HEIGHT);
+          }
+        }
+
         // Draw fleet
         if (info != null &&
             info.getSectorVisibility(i+cx, j+cy)==PlayerInfo.VISIBLE &&
@@ -364,7 +376,7 @@ public class MapPanel extends JPanel {
                   fleetMap[i+cx][j+cy].getImageIndex());
           gr.drawImage(img, pixelX, pixelY, null);
         }
-        
+
         // Draw fog of war and uncharted tiles
         if (info != null ) {
           switch (info.getSectorVisibility(i+cx, j+cy)) {
@@ -404,7 +416,6 @@ public class MapPanel extends JPanel {
         // Draw Gas giant text
         if ((tile.getName().equals(TileNames.GAS_GIANT_1_SE) && i > -viewPointX) ||
             (tile.getName().equals(TileNames.GAS_GIANT_2_SE) && i > -viewPointX )) {
-          Planet planet = starMap.getPlanetByCoordinate(i+cx, j+cy);
           if (planet != null && info != null &&
               info.getSectorVisibility(i+cx, j+cy)!=PlayerInfo.UNCHARTED) {
             int textWidth = (int) GuiStatics.getFontCubellanSC().getStringBounds(
@@ -424,7 +435,6 @@ public class MapPanel extends JPanel {
         }
         
         // Draw planet text
-        Planet planet = starMap.getPlanetByCoordinate(i+cx, j+cy);
         if (planet != null && !planet.isGasGiant() && info != null && 
             info.getSectorVisibility(i+cx, j+cy)!=PlayerInfo.UNCHARTED) {
           int textWidth = (int) GuiStatics.getFontCubellanSC().getStringBounds(
@@ -439,7 +449,6 @@ public class MapPanel extends JPanel {
             gr.setFont(GuiStatics.getFontCubellanSC());
             gr.drawString(RandomSystemNameGenerator.numberToRoman(planet.
                 getOrderNumber()), pixelX+Tile.MAX_WIDTH/2-textWidth/2, pixelY+Tile.MAX_HEIGHT/2);
-          
         }
         if (routeData != null) {
           if (routeData[i+cx][j+cy]==1) {

@@ -189,11 +189,13 @@ public class ShipHullFactory {
     if (index == 21) {
       tmp = new ShipHull(index, "Massive freighter", 12, 2, ShipHullType.FREIGHTER,
           ShipSize.HUGE,14,25,race);
+      tmp.setImageIndex(ShipImage.MASSIVE_FREIGHTER);
       return tmp;
     }
     if (index == 22) {
       tmp = new ShipHull(index, "Massive starbase", 10, 4, ShipHullType.STARBASE,
           ShipSize.HUGE,25,25,race);
+      tmp.setImageIndex(ShipImage.MASSIVE_STARBASE);
       return tmp;
     }
     if (index == 23) {

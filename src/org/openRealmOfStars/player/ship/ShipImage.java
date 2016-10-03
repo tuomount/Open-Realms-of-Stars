@@ -124,6 +124,10 @@ public class ShipImage {
     smallShipImages[LARGE_STARBASE] = scaleTo32x32(shipImages[LARGE_STARBASE]);
     shipImages[BATTLECRUISER] = image64x64(image,0,3);
     smallShipImages[BATTLECRUISER] = scaleTo32x32(shipImages[BATTLECRUISER]);
+    shipImages[MASSIVE_FREIGHTER] = image64x64(image,1,3);
+    smallShipImages[MASSIVE_FREIGHTER] = scaleTo32x32(shipImages[MASSIVE_FREIGHTER]);
+    shipImages[MASSIVE_STARBASE] = image64x64(image,2,3);
+    smallShipImages[MASSIVE_STARBASE] = scaleTo32x32(shipImages[MASSIVE_STARBASE]);
   }
   
   private BufferedImage image64x64(BufferedImage image, int x, int y) throws

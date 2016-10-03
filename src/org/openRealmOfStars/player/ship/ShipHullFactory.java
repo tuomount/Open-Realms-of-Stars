@@ -141,21 +141,25 @@ public class ShipHullFactory {
     if (index == 13) {
       tmp = new ShipHull(index, "Battleship Mk1", 10, 2, ShipHullType.NORMAL, 
           ShipSize.HUGE,20,20,race);
+      tmp.setImageIndex(ShipImage.BATTLESHIP);
       return tmp;
     }
     if (index == 14) {
       tmp = new ShipHull(index, "Privateer Mk1", 6, 2, ShipHullType.PRIVATEER,
           ShipSize.MEDIUM,8,8,race);
+      tmp.setImageIndex(ShipImage.PRIVATEER);
       return tmp;
     }
     if (index == 15) {
       tmp = new ShipHull(index, "Large freighter", 10, 2, ShipHullType.FREIGHTER,
           ShipSize.HUGE,12,20,race);
+      tmp.setImageIndex(ShipImage.LARGE_FREIGHTER);
       return tmp;
     }
     if (index == 16) {
       tmp = new ShipHull(index, "Large starbase", 8, 3, ShipHullType.STARBASE,
           ShipSize.LARGE,15,15,race);
+      tmp.setImageIndex(ShipImage.LARGE_STARBASE);
       return tmp;
     }
     if (index == 17) {
@@ -167,11 +171,13 @@ public class ShipHullFactory {
     if (index == 18) {
       tmp = new ShipHull(index, "Battle cruiser Mk1", 9, 2, ShipHullType.NORMAL,
           ShipSize.LARGE,12,12,race);
+      tmp.setImageIndex(ShipImage.BATTLECRUISER);
       return tmp;
     }
     if (index == 19) {
       tmp = new ShipHull(index, "Privateer Mk2", 8, 2, ShipHullType.PRIVATEER,
           ShipSize.LARGE,12,14,race);
+      tmp.setImageIndex(ShipImage.PRIVATEER_LARGE);
       return tmp;
     }
     if (index == 20) {
@@ -205,16 +211,19 @@ public class ShipHullFactory {
     if (index == 25) {
       tmp = new ShipHull(index, "Battleship Mk2", 10, 3, ShipHullType.NORMAL,
           ShipSize.HUGE,20,25,race);
+      tmp.setImageIndex(ShipImage.BATTLESHIP);
       return tmp;
     }
     if (index == 26) {
       tmp = new ShipHull(index, "Privateer Mk3", 8, 3, ShipHullType.PRIVATEER,
           ShipSize.LARGE,15,18,race);
+      tmp.setImageIndex(ShipImage.PRIVATEER_LARGE);
       return tmp;
     }
     if (index == 27) {
       tmp = new ShipHull(index, "Battle cruiser Mk2", 9, 3, ShipHullType.NORMAL,
           ShipSize.LARGE,18,18,race);
+      tmp.setImageIndex(ShipImage.BATTLECRUISER);
       return tmp;
     }
     if (index == 28) {

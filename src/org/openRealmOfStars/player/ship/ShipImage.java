@@ -81,7 +81,7 @@ public class ShipImage {
   /**
    * Must be one bigger than last ship
    */
-  private static final int NUMBER_OF_IMAGES = 15;
+  private static final int NUMBER_OF_IMAGES = 18;
   
   /**
    * Initialize ship images

@@ -20,6 +20,7 @@ import org.openRealmOfStars.game.States.AITurnView;
 import org.openRealmOfStars.game.States.BattleView;
 import org.openRealmOfStars.game.States.CreditsView;
 import org.openRealmOfStars.game.States.FleetView;
+import org.openRealmOfStars.game.States.GalaxyCreationView;
 import org.openRealmOfStars.game.States.MainMenu;
 import org.openRealmOfStars.game.States.PlanetBombingView;
 import org.openRealmOfStars.game.States.PlanetView;
@@ -124,6 +125,11 @@ public class Game extends JFrame implements ActionListener {
    * Main menu for the game
    */
   public MainMenu mainMenu;
+
+  /**
+   * Galaxy Creation view
+   */
+  public GalaxyCreationView galaxyCreationView;
 
   /**
    * AI Turn view
@@ -344,6 +350,16 @@ public class Game extends JFrame implements ActionListener {
   }
 
   /**
+   * Show main menu panel
+   */
+  public void showGalaxyCreation() {
+    galaxyCreationView = new GalaxyCreationView(this);
+    this.getContentPane().removeAll();
+    this.add(galaxyCreationView);
+    this.validate();
+  }
+
+  /**
    * Save game for certain file name
    * @param filename
    */
@@ -455,6 +471,7 @@ public class Game extends JFrame implements ActionListener {
     switch (gameState) {
     case AITURN: showAITurnView(); break;
     case MAIN_MENU: showMainMenu(); break;
+    case GALAXY_CREATION: showGalaxyCreation(); break;
     case NEW_GAME: { 
       players = new PlayerList();
       for (int i=0;i<PlayerList.MAX_PLAYERS;i++) {
@@ -771,6 +788,14 @@ public class Game extends JFrame implements ActionListener {
       }
       fleetView.handleAction(arg0);
     }
+    if (gameState == GameState.GALAXY_CREATION) {
+      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        changeGameState(GameState.MAIN_MENU);
+      }
+      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
+        changeGameState(GameState.NEW_GAME);
+      }
+    }
     if (gameState == GameState.MAIN_MENU) {
       // Main menu
       if (arg0.getActionCommand().equalsIgnoreCase(
@@ -780,7 +805,7 @@ public class Game extends JFrame implements ActionListener {
         }
       }
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEW_GAME)) {
-        changeGameState(GameState.NEW_GAME);
+        changeGameState(GameState.GALAXY_CREATION);
       }
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_CREDITS)) {
         changeGameState(GameState.CREDITS);

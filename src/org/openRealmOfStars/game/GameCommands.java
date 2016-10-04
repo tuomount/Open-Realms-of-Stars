@@ -243,7 +243,17 @@ public class GameCommands {
    * Quit Game command
    */
   public static final String COMMAND_QUIT_GAME = "QuitGame";
-  
+
+  /**
+   * Cancel command
+   */
+  public static final String COMMAND_CANCEL = "Cancel";
+
+  /**
+   * Next command
+   */
+  public static final String COMMAND_NEXT = "Next";
+
   /**
    * Prev Message command
    */

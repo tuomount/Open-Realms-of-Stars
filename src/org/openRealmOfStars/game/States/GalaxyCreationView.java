@@ -57,6 +57,16 @@ public class GalaxyCreationView extends BlackPanel {
   private JComboBox<String> comboGalaxySize;
 
   /**
+   * ComboBox on number of player
+   */
+  private JComboBox<String> comboPlayers;
+
+  /**
+   * ComboBox on player start positions
+   */
+  private JComboBox<String> comboPlayerPos;
+
+  /**
    * ComboBox on sun density
    */
   private JComboBox<String> comboSunDensity;
@@ -111,6 +121,43 @@ public class GalaxyCreationView extends BlackPanel {
     comboSunDensity.setBorder(new SimpleBorder());
     comboSunDensity.setFont(GuiStatics.getFontCubellan());
     info.add(comboSunDensity);
+    info.add(Box.createRigidArea(new Dimension(5,5)));
+    
+    xinvis.add(info);
+    xinvis.add(Box.createRigidArea(new Dimension(200,5)));
+    
+    info = new InfoPanel();
+    info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
+    info.setTitle("Player Setting");
+    label = new TransparentLabel(info, "Number of players:");
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5,5)));
+    String[] players = new String[7];
+    players[0] = "Two players";
+    players[1] = "Three players";
+    players[2] = "Four players";
+    players[3] = "Five players";
+    players[4] = "Six players";
+    players[5] = "Seven players";
+    players[6] = "Eight players";
+    comboPlayers = new JComboBox<>(players);
+    comboPlayers.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    comboPlayers.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    comboPlayers.setBorder(new SimpleBorder());
+    comboPlayers.setFont(GuiStatics.getFontCubellan());
+    info.add(comboPlayers);
+    info.add(Box.createRigidArea(new Dimension(5,5)));
+    label = new TransparentLabel(info, "Starting position:");
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5,5)));
+    String[] startPos = new String[1];
+    startPos[0] = "Border";
+    comboPlayerPos = new JComboBox<>(startPos);
+    comboPlayerPos.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    comboPlayerPos.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    comboPlayerPos.setBorder(new SimpleBorder());
+    comboPlayerPos.setFont(GuiStatics.getFontCubellan());
+    info.add(comboPlayerPos);
     info.add(Box.createRigidArea(new Dimension(5,5)));
     
     xinvis.add(info);

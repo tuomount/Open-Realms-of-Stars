@@ -87,9 +87,12 @@ public enum SpaceRace {
   /**
    * Get Space race by single name
    * @param name Race name in single format
-   * @return
+   * @return SpaceRace, if does not match then return null
    */
   public static SpaceRace getRaceByName(String name) {
+    if (name == null) {
+      return null;
+    }
     if (name.equals(HUMAN.nameSingle)) {
       return SpaceRace.HUMAN;
     }
@@ -105,7 +108,7 @@ public enum SpaceRace {
     if (name.equals(CENTAURS.nameSingle)) {
       return SpaceRace.CENTAURS;
     }
-    return SpaceRace.HUMAN;
+    return null;
   }
   
   /**

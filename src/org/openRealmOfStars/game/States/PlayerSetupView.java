@@ -18,6 +18,7 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -59,6 +60,8 @@ public class PlayerSetupView extends BlackPanel {
    * ComboBox on galaxy size
    */
   private JComboBox<String>[] comboRaceSelect;
+  
+  private RaceImagePanel[] raceImgs;
 
   private static final int MAX_PLAYERS = 8;
 
@@ -82,17 +85,18 @@ public class PlayerSetupView extends BlackPanel {
     
     InvisiblePanel invis = new InvisiblePanel(imgBase);    
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    invis.add(Box.createRigidArea(new Dimension(500, 250)));
+    invis.add(Box.createRigidArea(new Dimension(500, 150)));
 
     comboRaceSelect = (JComboBox[]) new JComboBox[MAX_PLAYERS];
+    raceImgs = new RaceImagePanel[MAX_PLAYERS];
     
     InvisiblePanel xinvis = new InvisiblePanel(invis);    
     xinvis.setLayout(new GridLayout(2, 4));
     for (int i=0;i<MAX_PLAYERS;i++) {
-      xinvis.add(createPlayerRaceSelection(i));
+      xinvis.add(createPlayerRaceSelection(xinvis,i));
     }
     invis.add(xinvis);
-    invis.add(Box.createRigidArea(new Dimension(200,300)));
+    invis.add(Box.createRigidArea(new Dimension(200,150)));
 
     imgBase.add(invis,BorderLayout.CENTER);
 
@@ -111,17 +115,30 @@ public class PlayerSetupView extends BlackPanel {
 
   }
   
-  private InfoPanel createPlayerRaceSelection(int index) {
+  private InvisiblePanel createPlayerRaceSelection(InvisiblePanel base, int index) {
+    InvisiblePanel xinvis = new InvisiblePanel(base);
+    xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
+    xinvis.add(Box.createRigidArea(new Dimension(25,25)));
+    
     InfoPanel info = new InfoPanel();
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
-    info.setTitle("Player "+(index+1));
+    if (index == 0) {
+      info.setTitle("Player "+(index+1));
+    } else {
+      info.setTitle("Player "+(index+1)+" (AI)");
+    }
+    raceImgs[index] = new RaceImagePanel();
+    info.add(raceImgs[index]);
+    info.add(Box.createRigidArea(new Dimension(5,5)));
     comboRaceSelect[index] = new JComboBox<>(RACE_SELECTION);
     comboRaceSelect[index].setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     comboRaceSelect[index].setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     comboRaceSelect[index].setBorder(new SimpleBorder());
     comboRaceSelect[index].setFont(GuiStatics.getFontCubellan());
     info.add(comboRaceSelect[index]);
-    return info;
+    xinvis.add(info);
+    xinvis.add(Box.createRigidArea(new Dimension(25,25)));
+    return xinvis;
   }
 
 

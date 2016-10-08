@@ -29,26 +29,26 @@ public enum SpaceRace {
   /**
    * Humans are about average in everything.
    */
-  HUMAN(0,"Humans","Humans are about average in everything."),
+  HUMAN(0,"Humans","Human","Humans are about average in everything."),
   /**
    * Mechanical beings whom do not eat food. Each now population must be built.
    */
-  MECHIONS(1,"Mechions","Mechanical beings whom do not eat food."
+  MECHIONS(1,"Mechions","Mechion","Mechanical beings whom do not eat food."
       + " Each now population must be built."),
   /**
    * Aggressive and warmongering spieces.
    */
-  SPORKS(2,"Sporks","Aggressive and warmongering spieces."),
+  SPORKS(2,"Sporks","Spork","Aggressive and warmongering spieces."),
   /**
    * Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers.
    */
-  GREYANS(3,"Greyans","Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers."),
+  GREYANS(3,"Greyans","Greyan","Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers."),
   /**
    * Bipedal humanoid creatures which are big, about 5 meters tall. Due their
      enormous size their space ships are must more rigid. Centaurs need more food to survive.
    */
-  CENTAURS(4,"Centaurs","Bipedal humanoid creatures which are big, about 5 meters tall. Due their"
-      + "enormous size their space ships are must more rigid. Centaurs need more food to survive.");
+  CENTAURS(4,"Centaurs","Centaur","Bipedal humanoid creatures which are big, about 5 meters tall. Due their"
+      + "enormous size their space ships are more rigid. Centaurs need more food to survive.");
     
   /**
    * Create space race
@@ -63,9 +63,10 @@ public enum SpaceRace {
    * @param foodRequire
    * @param diplomacy
    */
-  SpaceRace(int index, String name, String description) {
+  SpaceRace(int index, String name,String single,  String description) {
     this.index = index;
     this.name= name;
+    this.nameSingle = single;
     this.description = description;
     
   }
@@ -81,6 +82,30 @@ public enum SpaceRace {
     } else {
       return SpaceRace.HUMAN;
     }
+  }
+  
+  /**
+   * Get Space race by single name
+   * @param name Race name in single format
+   * @return
+   */
+  public static SpaceRace getRaceByName(String name) {
+    if (name.equals(HUMAN.nameSingle)) {
+      return SpaceRace.HUMAN;
+    }
+    if (name.equals(MECHIONS.nameSingle)) {
+      return SpaceRace.MECHIONS;
+    }
+    if (name.equals(SPORKS.nameSingle)) {
+      return SpaceRace.SPORKS;
+    }
+    if (name.equals(GREYANS.nameSingle)) {
+      return SpaceRace.GREYANS;
+    }
+    if (name.equals(CENTAURS.nameSingle)) {
+      return SpaceRace.CENTAURS;
+    }
+    return SpaceRace.HUMAN;
   }
   
   /**
@@ -101,6 +126,14 @@ public enum SpaceRace {
    */
   private String name;
 
+  /**
+   * Space race name in single 
+   */
+  private String nameSingle;
+
+  public String getNameSingle() {
+    return nameSingle;
+  }
   /**
    * Space race description
    */

@@ -24,6 +24,7 @@ import org.openRealmOfStars.game.States.GalaxyCreationView;
 import org.openRealmOfStars.game.States.MainMenu;
 import org.openRealmOfStars.game.States.PlanetBombingView;
 import org.openRealmOfStars.game.States.PlanetView;
+import org.openRealmOfStars.game.States.PlayerSetupView;
 import org.openRealmOfStars.game.States.ResearchView;
 import org.openRealmOfStars.game.States.ShipDesignView;
 import org.openRealmOfStars.game.States.ShipView;
@@ -130,6 +131,11 @@ public class Game extends JFrame implements ActionListener {
    * Galaxy Creation view
    */
   public GalaxyCreationView galaxyCreationView;
+
+  /**
+   * Player Setup view
+   */
+  public PlayerSetupView playerSetupView;
 
   /**
    * AI Turn view
@@ -350,12 +356,22 @@ public class Game extends JFrame implements ActionListener {
   }
 
   /**
-   * Show main menu panel
+   * Show Galaxy creation panel
    */
   public void showGalaxyCreation() {
     galaxyCreationView = new GalaxyCreationView(this);
     this.getContentPane().removeAll();
     this.add(galaxyCreationView);
+    this.validate();
+  }
+
+  /**
+   * Show Player setup panel
+   */
+  public void showPlayerSetup() {
+    playerSetupView = new PlayerSetupView(this);
+    this.getContentPane().removeAll();
+    this.add(playerSetupView);
     this.validate();
   }
 
@@ -472,6 +488,7 @@ public class Game extends JFrame implements ActionListener {
     case AITURN: showAITurnView(); break;
     case MAIN_MENU: showMainMenu(); break;
     case GALAXY_CREATION: showGalaxyCreation(); break;
+    case PLAYER_SETUP: showPlayerSetup(); break;
     case NEW_GAME: { 
       players = new PlayerList();
       for (int i=0;i<PlayerList.MAX_PLAYERS;i++) {
@@ -791,6 +808,13 @@ public class Game extends JFrame implements ActionListener {
     if (gameState == GameState.GALAXY_CREATION) {
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
         changeGameState(GameState.MAIN_MENU);
+      }
+      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
+        changeGameState(GameState.PLAYER_SETUP);
+      }
+    } else if (gameState == GameState.PLAYER_SETUP) {
+      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        changeGameState(GameState.GALAXY_CREATION);
       }
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
         changeGameState(GameState.NEW_GAME);

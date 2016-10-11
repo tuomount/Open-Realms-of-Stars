@@ -19,6 +19,7 @@ import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapStatics;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -391,8 +392,8 @@ public class PlayerInfo {
  public int getUnchartedValueSystem(Sun sun, Fleet fleet) {
    int unCharted = 0;
    int charted = 0;
-   for (int x=-StarMap.SOLARSYSTEMWIDTH-2; x <StarMap.SOLARSYSTEMWIDTH+3;x++) {
-     for (int y=-StarMap.SOLARSYSTEMWIDTH-2; y <StarMap.SOLARSYSTEMWIDTH+3;y++) {
+   for (int x=-StarMapStatics.SOLARSYSTEMWIDTH-2; x <StarMapStatics.SOLARSYSTEMWIDTH+3;x++) {
+     for (int y=-StarMapStatics.SOLARSYSTEMWIDTH-2; y <StarMapStatics.SOLARSYSTEMWIDTH+3;y++) {
        if (isValidCoordinate(sun.getCenterX()+x, sun.getCenterY()+y) && (x > 1 || x < -1 || y> 1 || y <-1) ) {
          if (mapData[sun.getCenterX()+x][sun.getCenterY()+y]==UNCHARTED) {
            unCharted++;
@@ -424,8 +425,8 @@ public class PlayerInfo {
       points[i] = null;
     }
     int sector=0;
-    for (int x=-StarMap.SOLARSYSTEMWIDTH-2; x <StarMap.SOLARSYSTEMWIDTH+3;x++) {
-      for (int y=-StarMap.SOLARSYSTEMWIDTH-2; y <StarMap.SOLARSYSTEMWIDTH+3;y++) {
+    for (int x=-StarMapStatics.SOLARSYSTEMWIDTH-2; x <StarMapStatics.SOLARSYSTEMWIDTH+3;x++) {
+      for (int y=-StarMapStatics.SOLARSYSTEMWIDTH-2; y <StarMapStatics.SOLARSYSTEMWIDTH+3;y++) {
         if (x<=0 && y<= 0) {
           sector = 0;
         } else if (x>0 && y<= 0) {
@@ -480,7 +481,7 @@ public class PlayerInfo {
         int ny = sun.getCenterY();
         nx = nx+mx;
         ny = ny+my;      
-        for (int i=0;i<StarMap.SOLARSYSTEMWIDTH+2;i++) {
+        for (int i=0;i<StarMapStatics.SOLARSYSTEMWIDTH+2;i++) {
           nx = nx+mx;
           ny = ny+my;
           double dist = StarMap.getDistance(fleet.getX(), fleet.getY(), nx, ny);

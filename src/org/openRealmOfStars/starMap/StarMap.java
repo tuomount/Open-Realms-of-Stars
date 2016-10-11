@@ -72,10 +72,6 @@ public class StarMap {
    */
   private CulturePower culture[][];
   
-  /**
-   * Solar system width
-   */
-  public final static int SOLARSYSTEMWIDTH = 7;
   
   /**
    * Cursor X coordinate
@@ -165,29 +161,29 @@ public class StarMap {
     aiTurnNumber = 0;
     aiFleet = null;
     // First starting Systems
-    int sx = SOLARSYSTEMWIDTH;
-    int sy = SOLARSYSTEMWIDTH;
+    int sx = StarMapStatics.SOLARSYSTEMWIDTH;
+    int sy = StarMapStatics.SOLARSYSTEMWIDTH;
     createSolarSystem(sx,sy,5,2,0);
     sx = maxX/2;
-    sy = SOLARSYSTEMWIDTH;
+    sy = StarMapStatics.SOLARSYSTEMWIDTH;
     createSolarSystem(sx,sy,3,0);
-    sx = maxX-SOLARSYSTEMWIDTH;
-    sy = SOLARSYSTEMWIDTH;
+    sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
+    sy = StarMapStatics.SOLARSYSTEMWIDTH;
     createSolarSystem(sx,sy,3,1,1);
-    sx = SOLARSYSTEMWIDTH;
+    sx = StarMapStatics.SOLARSYSTEMWIDTH;
     sy = maxY/2;
     createSolarSystem(sx,sy,3,0);
-    sx = maxX-SOLARSYSTEMWIDTH;
+    sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
     sy = maxY/2;
     createSolarSystem(sx,sy,3,0);
-    sx = SOLARSYSTEMWIDTH;
-    sy = maxY-SOLARSYSTEMWIDTH;
+    sx = StarMapStatics.SOLARSYSTEMWIDTH;
+    sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
     createSolarSystem(sx,sy,3,0,2);
     sx = maxX/2;
-    sy = maxY-SOLARSYSTEMWIDTH;
+    sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
     createSolarSystem(sx,sy,3,0);
-    sx = maxX-SOLARSYSTEMWIDTH;
-    sy = maxY-SOLARSYSTEMWIDTH;
+    sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
+    sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
     createSolarSystem(sx,sy,3,0,3);
   }
   
@@ -384,8 +380,10 @@ public class StarMap {
     tiles[sx+1][sy+1] = Tiles.getTileByName(TileNames.SUN_SE).getIndex();
     int planets = 0;
     while (planets < numberOfPlanets) {
-      int px = sx +DiceGenerator.getRandom(-SOLARSYSTEMWIDTH, SOLARSYSTEMWIDTH);
-      int py = sy +DiceGenerator.getRandom(-SOLARSYSTEMWIDTH, SOLARSYSTEMWIDTH);
+      int px = sx +DiceGenerator.getRandom(-StarMapStatics.SOLARSYSTEMWIDTH,
+          StarMapStatics.SOLARSYSTEMWIDTH);
+      int py = sy +DiceGenerator.getRandom(-StarMapStatics.SOLARSYSTEMWIDTH,
+          StarMapStatics.SOLARSYSTEMWIDTH);
       if (is9NeighboursEmpty(px, py)) {
         planets++;
         Planet planet = new Planet(px,py,sun.getName(),planets,false);
@@ -452,8 +450,10 @@ public class StarMap {
     }
     int gasGiants = 0;
     while (gasGiants < numberOfGasGiants) {
-      int px = sx +DiceGenerator.getRandom(-SOLARSYSTEMWIDTH, SOLARSYSTEMWIDTH);
-      int py = sy +DiceGenerator.getRandom(-SOLARSYSTEMWIDTH, SOLARSYSTEMWIDTH);
+      int px = sx +DiceGenerator.getRandom(-StarMapStatics.SOLARSYSTEMWIDTH, 
+          StarMapStatics.SOLARSYSTEMWIDTH);
+      int py = sy +DiceGenerator.getRandom(-StarMapStatics.SOLARSYSTEMWIDTH, 
+          StarMapStatics.SOLARSYSTEMWIDTH);
       if (is16NeighboursEmpty(px, py)) {
         gasGiants++;
         Planet planet = new Planet(px,py,sun.getName(),planets+gasGiants,true);
@@ -495,8 +495,10 @@ public class StarMap {
    */
   public Sun locateSolarSystem(int x, int y) {
     for (Sun sun:sunList) {
-      if (x >= sun.getCenterX()-SOLARSYSTEMWIDTH && x <= sun.getCenterX()+SOLARSYSTEMWIDTH
-          && y >= sun.getCenterY()-SOLARSYSTEMWIDTH && y <= sun.getCenterY()+SOLARSYSTEMWIDTH) {
+      if (x >= sun.getCenterX()-StarMapStatics.SOLARSYSTEMWIDTH &&
+          x <= sun.getCenterX()+StarMapStatics.SOLARSYSTEMWIDTH
+          && y >= sun.getCenterY()-StarMapStatics.SOLARSYSTEMWIDTH &&
+          y <= sun.getCenterY()+StarMapStatics.SOLARSYSTEMWIDTH) {
         return sun;
       }
     }

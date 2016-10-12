@@ -40,6 +40,7 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 
@@ -171,6 +172,11 @@ public class Game extends JFrame implements ActionListener {
    * Ship design view for the game
    */
   public ShipDesignView shipDesignView;
+  
+  /**
+   * Galaxy config for new game
+   */
+  public GalaxyConfig galaxyConfig;
   
   /**
    * Get Star map
@@ -359,7 +365,8 @@ public class Game extends JFrame implements ActionListener {
    * Show Galaxy creation panel
    */
   public void showGalaxyCreation() {
-    galaxyCreationView = new GalaxyCreationView(this);
+    galaxyCreationView = new GalaxyCreationView(galaxyConfig,this);
+    galaxyConfig = galaxyCreationView.getConfig();
     this.getContentPane().removeAll();
     this.add(galaxyCreationView);
     this.validate();
@@ -808,9 +815,10 @@ public class Game extends JFrame implements ActionListener {
     if (gameState == GameState.GALAXY_CREATION) {
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
         changeGameState(GameState.MAIN_MENU);
-      }
-      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
+      } else if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
         changeGameState(GameState.PLAYER_SETUP);
+      } else {
+        galaxyCreationView.handleActions(arg0);
       }
     } else if (gameState == GameState.PLAYER_SETUP) {
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {

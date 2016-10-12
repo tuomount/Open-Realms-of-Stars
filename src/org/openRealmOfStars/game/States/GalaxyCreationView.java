@@ -3,6 +3,7 @@ package org.openRealmOfStars.game.States;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Box;
@@ -18,6 +19,7 @@ import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -72,10 +74,20 @@ public class GalaxyCreationView extends BlackPanel {
   private JComboBox<String> comboSunDensity;
 
   /**
+   * Galaxy config
+   */
+  private GalaxyConfig config;
+  
+  /**
    * Constructor for main menu
    * @param listener ActionListener
    */
-  public GalaxyCreationView(ActionListener listener) {
+  public GalaxyCreationView(GalaxyConfig config, ActionListener listener) {
+    if (config == null) {
+      this.config = new GalaxyConfig();
+    } else {
+      this.config =  config;
+    }
     Planet planet = new Planet(1, 1, "Galaxy Creation Planet",1, false);
     if (DiceGenerator.getRandom(100)<10) {
       planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
@@ -108,6 +120,9 @@ public class GalaxyCreationView extends BlackPanel {
     comboGalaxySize.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     comboGalaxySize.setBorder(new SimpleBorder());
     comboGalaxySize.setFont(GuiStatics.getFontCubellan());
+    comboGalaxySize.setSelectedIndex(this.config.getGalaxySizeIndex());
+    comboGalaxySize.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboGalaxySize.addActionListener(listener);
     info.add(comboGalaxySize);
     info.add(Box.createRigidArea(new Dimension(5,5)));
     label = new TransparentLabel(info, "Sun density:");
@@ -120,6 +135,9 @@ public class GalaxyCreationView extends BlackPanel {
     comboSunDensity.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     comboSunDensity.setBorder(new SimpleBorder());
     comboSunDensity.setFont(GuiStatics.getFontCubellan());
+    comboSunDensity.setSelectedIndex(this.config.getSunDensityIndex());
+    comboSunDensity.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboSunDensity.addActionListener(listener);
     info.add(comboSunDensity);
     info.add(Box.createRigidArea(new Dimension(5,5)));
     
@@ -145,6 +163,9 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlayers.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     comboPlayers.setBorder(new SimpleBorder());
     comboPlayers.setFont(GuiStatics.getFontCubellan());
+    comboPlayers.setSelectedIndex(this.config.getMaxPlayers()-2);
+    comboPlayers.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboPlayers.addActionListener(listener);
     info.add(comboPlayers);
     info.add(Box.createRigidArea(new Dimension(5,5)));
     label = new TransparentLabel(info, "Starting position:");
@@ -157,6 +178,9 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlayerPos.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     comboPlayerPos.setBorder(new SimpleBorder());
     comboPlayerPos.setFont(GuiStatics.getFontCubellan());
+    comboPlayerPos.setSelectedIndex(this.config.getStartingPosition());
+    comboPlayerPos.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboPlayerPos.addActionListener(listener);
     info.add(comboPlayerPos);
     info.add(Box.createRigidArea(new Dimension(5,5)));
     
@@ -180,6 +204,40 @@ public class GalaxyCreationView extends BlackPanel {
     imgBase.add(invis,BorderLayout.SOUTH);
     this.add(imgBase,BorderLayout.CENTER);
 
+  }
+
+  public void handleActions(ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
+      config.setMaxPlayers(comboPlayers.getSelectedIndex()+2);
+      config.setStartingPosition(comboPlayerPos.getSelectedIndex());
+      switch (comboGalaxySize.getSelectedIndex()) {
+      case 0: {
+        //SMALL
+        config.setSize(75, 75, comboGalaxySize.getSelectedIndex());
+        break;
+      }
+      default: {
+        //SMALL
+        config.setSize(75, 75, comboGalaxySize.getSelectedIndex());
+        break;
+      }
+      }
+      switch (comboSunDensity.getSelectedIndex()) {
+      case 0: {
+        //SPARSE
+        config.setSolarSystemDistance(20, comboSunDensity.getSelectedIndex());
+        break;
+      }
+      default: {
+        //SPARSE
+        config.setSolarSystemDistance(20, comboSunDensity.getSelectedIndex());
+        break;
+      }
+      }
+    }
+  }
+  public GalaxyConfig getConfig() {
+    return config;
   }
 
 

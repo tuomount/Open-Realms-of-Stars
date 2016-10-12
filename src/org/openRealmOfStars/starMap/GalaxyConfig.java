@@ -36,6 +36,11 @@ public class GalaxyConfig {
   private int sizeY;
   
   /**
+   * Galaxy size index in UI
+   */
+  private int galaxySizeIndex;
+  
+  /**
    * How many players there are
    */
   private int maxPlayers;
@@ -44,6 +49,11 @@ public class GalaxyConfig {
    * How far away solar systems are from each others
    */
   private int solarSystemDistance;
+
+  /**
+   * Sun density index in UI
+   */
+  private int sunDensityIndex;
 
   /**
    * Players start from the map border
@@ -71,8 +81,9 @@ public class GalaxyConfig {
   public GalaxyConfig() {
     sizeX = 75;
     sizeY = 75;
+    this.galaxySizeIndex = 0;
     setMaxPlayers(4);
-    setSolarSystemDistance(20);
+    setSolarSystemDistance(20,0);
     playerRaces = new SpaceRace[StarMapStatics.MAX_PLAYERS];
     for (int i=0;i<StarMapStatics.MAX_PLAYERS;i++) {
       setRace(i,SpaceRace.HUMAN);
@@ -96,10 +107,12 @@ public class GalaxyConfig {
    * Set galaxy size
    * @param x X size
    * @param y Y Size
+   * @param galaxySize Galaxy size index in UI
    */
-  public void setSize(int x, int y) {
+  public void setSize(int x, int y, int galaxySize) {
     this.sizeX = x;
     this.sizeY = x;
+    this.galaxySizeIndex = galaxySize;
   }
   
   public int getSizeX() {
@@ -123,8 +136,14 @@ public class GalaxyConfig {
     return solarSystemDistance;
   }
 
-  public void setSolarSystemDistance(int solarSystemDistance) {
+  /**
+   * Set Solar system distance
+   * @param solarSystemDistance Actual distance betweeen solar system
+   * @param sunDensity Sun density setting in ui index
+   */
+  public void setSolarSystemDistance(int solarSystemDistance, int sunDensity) {
     this.solarSystemDistance = solarSystemDistance;
+    this.sunDensityIndex = sunDensity;
   }
 
   public int getStartingPosition() {
@@ -134,4 +153,14 @@ public class GalaxyConfig {
   public void setStartingPosition(int startingPosition) {
     this.startingPosition = startingPosition;
   }
+
+  public int getSunDensityIndex() {
+    return sunDensityIndex;
+  }
+
+
+  public int getGalaxySizeIndex() {
+    return galaxySizeIndex;
+  }
+
 }

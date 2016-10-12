@@ -245,6 +245,11 @@ public class GameCommands {
   public static final String COMMAND_QUIT_GAME = "QuitGame";
 
   /**
+   * Something has changed in Galaxy Setup
+   */
+  public static final String COMMAND_GALAXY_SETUP = "GalaxySetup";
+
+  /**
    * Cancel command
    */
   public static final String COMMAND_CANCEL = "Cancel";

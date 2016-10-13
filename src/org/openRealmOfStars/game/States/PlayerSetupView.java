@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.GuiStatics;
@@ -65,6 +66,11 @@ public class PlayerSetupView extends BlackPanel {
   private JComboBox<String>[] comboRaceSelect;
   
   /**
+   * Player name
+   */
+  private JTextField[] playerName;
+  
+  /**
    * Race Images
    */
   private RaceImagePanel[] raceImgs;
@@ -106,8 +112,9 @@ public class PlayerSetupView extends BlackPanel {
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
     invis.add(Box.createRigidArea(new Dimension(500, 150)));
 
-    comboRaceSelect = (JComboBox[]) new JComboBox[MAX_PLAYERS];
+    comboRaceSelect = new JComboBox[MAX_PLAYERS];
     raceImgs = new RaceImagePanel[MAX_PLAYERS];
+    playerName = new JTextField[MAX_PLAYERS];
     
     InvisiblePanel xinvis = new InvisiblePanel(invis);    
     xinvis.setLayout(new GridLayout(2, 4));
@@ -183,6 +190,15 @@ public class PlayerSetupView extends BlackPanel {
       comboRaceSelect[index].setEnabled(false);
     }
     info.add(comboRaceSelect[index]);
+    info.add(Box.createRigidArea(new Dimension(5,5)));
+    playerName[index] = new JTextField("Empire of "+config.getRace(index).getName());
+    playerName[index].setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    playerName[index].setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    playerName[index].setFont(GuiStatics.getFontCubellan());
+    if (config.getMaxPlayers()<(index+1)) {
+      playerName[index].setEnabled(false);
+    }
+    info.add(playerName[index]);
     xinvis.add(info);
     xinvis.add(Box.createRigidArea(new Dimension(25,25)));
     return xinvis;

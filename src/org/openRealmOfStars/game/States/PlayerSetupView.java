@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Box;
@@ -19,6 +20,8 @@ import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
+import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -61,8 +64,20 @@ public class PlayerSetupView extends BlackPanel {
    */
   private JComboBox<String>[] comboRaceSelect;
   
+  /**
+   * Race Images
+   */
   private RaceImagePanel[] raceImgs;
 
+  /**
+   * Galaxy config
+   */
+  private GalaxyConfig config;
+
+  
+  /**
+   * Maximum number of players
+   */
   private static final int MAX_PLAYERS = 8;
 
   /**
@@ -70,7 +85,11 @@ public class PlayerSetupView extends BlackPanel {
    * @param listener ActionListener
    */
   @SuppressWarnings("unchecked")
-  public PlayerSetupView(ActionListener listener) {
+  public PlayerSetupView(GalaxyConfig config, ActionListener listener) {
+    this.config = config;
+    if (this.config == null) {
+      this.config = new GalaxyConfig();
+    }
     Planet planet = new Planet(1, 1, "Galaxy Creation Planet",2, false);
     if (DiceGenerator.getRandom(100)<10) {
       planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
@@ -93,7 +112,7 @@ public class PlayerSetupView extends BlackPanel {
     InvisiblePanel xinvis = new InvisiblePanel(invis);    
     xinvis.setLayout(new GridLayout(2, 4));
     for (int i=0;i<MAX_PLAYERS;i++) {
-      xinvis.add(createPlayerRaceSelection(xinvis,i));
+      xinvis.add(createPlayerRaceSelection(xinvis,i,listener));
     }
     invis.add(xinvis);
     invis.add(Box.createRigidArea(new Dimension(200,150)));
@@ -115,7 +134,29 @@ public class PlayerSetupView extends BlackPanel {
 
   }
   
-  private InvisiblePanel createPlayerRaceSelection(InvisiblePanel base, int index) {
+  /**
+   * Handle actions for Player Setuo view
+   * @param arg0
+   */
+  public void handleActions(ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
+      for (int i=0;i<MAX_PLAYERS;i++) {
+        String raceStr = (String) comboRaceSelect[i].getSelectedItem();
+        SpaceRace race = SpaceRace.getRaceByName(raceStr);
+        config.setRace(i, race);
+        raceImgs[i].setRaceToShow(raceStr);
+      }      
+    }
+  }
+  
+  /**
+   * Create Player config for one player
+   * @param base
+   * @param index
+   * @return InvisiblePanel with configuration components
+   */
+  private InvisiblePanel createPlayerRaceSelection(InvisiblePanel base, 
+      int index, ActionListener listener) {
     InvisiblePanel xinvis = new InvisiblePanel(base);
     xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
     xinvis.add(Box.createRigidArea(new Dimension(25,25)));
@@ -128,6 +169,7 @@ public class PlayerSetupView extends BlackPanel {
       info.setTitle("Player "+(index+1)+" (AI)");
     }
     raceImgs[index] = new RaceImagePanel();
+    raceImgs[index].setRaceToShow(config.getRace(index).getNameSingle());
     info.add(raceImgs[index]);
     info.add(Box.createRigidArea(new Dimension(5,5)));
     comboRaceSelect[index] = new JComboBox<>(RACE_SELECTION);
@@ -135,11 +177,21 @@ public class PlayerSetupView extends BlackPanel {
     comboRaceSelect[index].setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     comboRaceSelect[index].setBorder(new SimpleBorder());
     comboRaceSelect[index].setFont(GuiStatics.getFontCubellan());
+    comboRaceSelect[index].addActionListener(listener);
+    comboRaceSelect[index].setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    if (config.getMaxPlayers()<(index+1)) {
+      comboRaceSelect[index].setEnabled(false);
+    }
     info.add(comboRaceSelect[index]);
     xinvis.add(info);
     xinvis.add(Box.createRigidArea(new Dimension(25,25)));
     return xinvis;
   }
+  
+  public GalaxyConfig getConfig() {
+    return config;
+  }
+
 
 
 

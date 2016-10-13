@@ -376,7 +376,7 @@ public class Game extends JFrame implements ActionListener {
    * Show Player setup panel
    */
   public void showPlayerSetup() {
-    playerSetupView = new PlayerSetupView(this);
+    playerSetupView = new PlayerSetupView(galaxyConfig,this);
     this.getContentPane().removeAll();
     this.add(playerSetupView);
     this.validate();

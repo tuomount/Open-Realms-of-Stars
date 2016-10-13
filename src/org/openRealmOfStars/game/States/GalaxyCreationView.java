@@ -206,6 +206,10 @@ public class GalaxyCreationView extends BlackPanel {
 
   }
 
+  /**
+   * Handle actions for Galaxy Creation view
+   * @param arg0
+   */
   public void handleActions(ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
       config.setMaxPlayers(comboPlayers.getSelectedIndex()+2);
@@ -236,6 +240,7 @@ public class GalaxyCreationView extends BlackPanel {
       }
     }
   }
+  
   public GalaxyConfig getConfig() {
     return config;
   }

@@ -48,7 +48,7 @@ public class RaceImagePanel extends JPanel {
    */
   private BufferedImage image;
   
-  private static final int MAXX = 100;
+  private static final int MAXX = 172;
   private static final int MAXY = 200;
   
 
@@ -83,6 +83,7 @@ public class RaceImagePanel extends JPanel {
   public void setRaceToShow(String raceToShow) {
     if (raceToShow != null) {
       this.raceToShow = raceToShow;
+      this.repaint();
     } else {
       this.raceToShow = "Not in use";
     }
@@ -109,7 +110,9 @@ public class RaceImagePanel extends JPanel {
       g2d.drawString(raceToShow, offsetX, this.getHeight()/2);
 
     } else {
-      g.drawImage(image, 0, 0, null);
+      image  = race.getRaceImage();
+      g.drawImage(image, this.getWidth()/2-image.getWidth()/2, 
+          this.getHeight()-image.getHeight(), null);
     }
   }
 

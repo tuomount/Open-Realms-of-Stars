@@ -1,5 +1,8 @@
 package org.openRealmOfStars.player;
 
+import java.awt.image.BufferedImage;
+
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -170,6 +173,21 @@ public enum SpaceRace {
     case CENTAURS: return 3;
     }
     return -1;
+  }
+
+  /**
+   * Get race image
+   * @return BufferedImage
+   */
+  public BufferedImage getRaceImage() {
+    switch (this) {
+    case HUMAN: return GuiStatics.IMAGE_CENTAUR_RACE;
+    case MECHIONS: return GuiStatics.IMAGE_MECHION_RACE;
+    case SPORKS: return GuiStatics.IMAGE_SPORK_RACE;
+    case GREYANS: return GuiStatics.IMAGE_GREYAN_RACE;
+    case CENTAURS: return GuiStatics.IMAGE_CENTAUR_RACE;
+    }
+    return GuiStatics.IMAGE_CENTAUR_RACE;
   }
 
   /**

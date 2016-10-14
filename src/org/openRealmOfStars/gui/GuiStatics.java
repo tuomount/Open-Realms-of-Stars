@@ -14,6 +14,7 @@ import org.openRealmOfStars.gui.icons.AnimatedImage;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.utilities.IOUtilities;
 
+
 /**
  * 
  * Open Realm of Stars game project
@@ -488,6 +489,28 @@ public class GuiStatics {
    */
   public final static BufferedImage IMAGE_SCROLL_BAR_THUMB2 = IOUtilities.
       loadImage(Tiles.class.getResource("/resources/images/thumb2.png"));
+
+  
+  /**
+   * Centaur race selection image
+   */
+  public final static BufferedImage IMAGE_CENTAUR_RACE = IOUtilities.loadImage(
+  GuiStatics.class.getResource("/resources/images/centaur_race.png"));
+  /**
+   * Greyan race selection image
+   */
+  public final static BufferedImage IMAGE_GREYAN_RACE = IOUtilities.loadImage(
+  GuiStatics.class.getResource("/resources/images/greyan_race.png"));
+  /**
+   * Mechion race selection image
+   */
+  public final static BufferedImage IMAGE_MECHION_RACE = IOUtilities.loadImage(
+  GuiStatics.class.getResource("/resources/images/mechion_race.png"));
+  /**
+   * Spork race selection image
+   */
+  public final static BufferedImage IMAGE_SPORK_RACE = IOUtilities.loadImage(
+  GuiStatics.class.getResource("/resources/images/spork_race.png"));
 
   /**
    * Get text width for certain font

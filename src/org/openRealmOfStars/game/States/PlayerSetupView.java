@@ -148,11 +148,13 @@ public class PlayerSetupView extends BlackPanel {
   public void handleActions(ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
       for (int i=0;i<MAX_PLAYERS;i++) {
-        String raceStr = (String) comboRaceSelect[i].getSelectedItem();
-        SpaceRace race = SpaceRace.getRaceByName(raceStr);
-        config.setRace(i, race);
-        raceImgs[i].setRaceToShow(raceStr);
-      }      
+        if (comboRaceSelect[i].isEnabled()) {
+          String raceStr = (String) comboRaceSelect[i].getSelectedItem();
+          SpaceRace race = SpaceRace.getRaceByName(raceStr);
+          config.setRace(i, race);
+          raceImgs[i].setRaceToShow(raceStr);
+        }
+      }
     }
   }
   
@@ -197,6 +199,7 @@ public class PlayerSetupView extends BlackPanel {
     playerName[index].setFont(GuiStatics.getFontCubellan());
     if (config.getMaxPlayers()<(index+1)) {
       playerName[index].setEnabled(false);
+      raceImgs[index].setRaceToShow(null);
     }
     info.add(playerName[index]);
     xinvis.add(info);

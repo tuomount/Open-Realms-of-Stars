@@ -823,9 +823,10 @@ public class Game extends JFrame implements ActionListener {
     } else if (gameState == GameState.PLAYER_SETUP) {
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
         changeGameState(GameState.GALAXY_CREATION);
-      }
-      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
+      } else if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
         changeGameState(GameState.NEW_GAME);
+      } else {
+        playerSetupView.handleActions(arg0);
       }
     }
     if (gameState == GameState.MAIN_MENU) {

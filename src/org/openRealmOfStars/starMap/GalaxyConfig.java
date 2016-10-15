@@ -76,6 +76,11 @@ public class GalaxyConfig {
   private SpaceRace[] playerRaces;
   
   /**
+   * Player name
+   */
+  private String[] playerName;
+  
+  /**
    * Constructor for galaxy config
    */
   public GalaxyConfig() {
@@ -85,6 +90,7 @@ public class GalaxyConfig {
     setMaxPlayers(4);
     setSolarSystemDistance(20,0);
     playerRaces = new SpaceRace[StarMapStatics.MAX_PLAYERS];
+    playerName = new String[StarMapStatics.MAX_PLAYERS];
     for (int i=0;i<StarMapStatics.MAX_PLAYERS;i++) {
       setRace(i,SpaceRace.HUMAN);
     }
@@ -99,6 +105,19 @@ public class GalaxyConfig {
   public SpaceRace getRace(int index) {
     if (index >= 0 && index < StarMapStatics.MAX_PLAYERS) {
       return playerRaces[index];
+    }
+    return null;
+  }
+  
+  public void setPlayerName(int index, String name) {
+    if (index >= 0 && index < StarMapStatics.MAX_PLAYERS) {
+      playerName[index] = name;
+    }
+  }
+  
+  public String getPlayerName(int index) {
+    if (index >= 0 && index < StarMapStatics.MAX_PLAYERS) {
+      return playerName[index];
     }
     return null;
   }

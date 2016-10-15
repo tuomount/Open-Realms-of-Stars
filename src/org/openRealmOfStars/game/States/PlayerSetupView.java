@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JTextField;
 
 import org.openRealmOfStars.game.GameCommands;
@@ -23,6 +24,7 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.starMap.GalaxyConfig;
+import org.openRealmOfStars.starMap.StarMapStatics;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -58,7 +60,8 @@ public class PlayerSetupView extends BlackPanel {
   /**
    * List of selectable races
    */
-  private static final String[] RACE_SELECTION = {"Human","Mechion","Spork","Greyan","Centaur"};
+  private static final String[] RACE_SELECTION = {"Human","Mechion","Spork",
+      "Greyan","Centaur"};
   
   /**
    * ComboBox on galaxy size
@@ -80,12 +83,11 @@ public class PlayerSetupView extends BlackPanel {
    */
   private GalaxyConfig config;
 
-  
   /**
-   * Maximum number of players
+   * Random name buttons
    */
-  private static final int MAX_PLAYERS = 8;
-
+  private SpaceButton[] randomNameBtn;
+  
   /**
    * Constructor for main menu
    * @param listener ActionListener
@@ -110,15 +112,16 @@ public class PlayerSetupView extends BlackPanel {
     
     InvisiblePanel invis = new InvisiblePanel(imgBase);    
     invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    invis.add(Box.createRigidArea(new Dimension(500, 150)));
+    invis.add(Box.createRigidArea(new Dimension(500, 100)));
 
-    comboRaceSelect = new JComboBox[MAX_PLAYERS];
-    raceImgs = new RaceImagePanel[MAX_PLAYERS];
-    playerName = new JTextField[MAX_PLAYERS];
+    comboRaceSelect = new JComboBox[StarMapStatics.MAX_PLAYERS];
+    raceImgs = new RaceImagePanel[StarMapStatics.MAX_PLAYERS];
+    playerName = new JTextField[StarMapStatics.MAX_PLAYERS];
+    randomNameBtn = new SpaceButton[StarMapStatics.MAX_PLAYERS];
     
     InvisiblePanel xinvis = new InvisiblePanel(invis);    
     xinvis.setLayout(new GridLayout(2, 4));
-    for (int i=0;i<MAX_PLAYERS;i++) {
+    for (int i=0;i<StarMapStatics.MAX_PLAYERS;i++) {
       xinvis.add(createPlayerRaceSelection(xinvis,i,listener));
     }
     invis.add(xinvis);
@@ -147,7 +150,7 @@ public class PlayerSetupView extends BlackPanel {
    */
   public void handleActions(ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
-      for (int i=0;i<MAX_PLAYERS;i++) {
+      for (int i=0;i<StarMapStatics.MAX_PLAYERS;i++) {
         if (comboRaceSelect[i].isEnabled()) {
           String raceStr = (String) comboRaceSelect[i].getSelectedItem();
           SpaceRace race = SpaceRace.getRaceByName(raceStr);
@@ -156,6 +159,16 @@ public class PlayerSetupView extends BlackPanel {
         }
       }
     }
+  }
+  
+  /**
+   * Get player name to game config
+   */
+  public void getNamesToConfig() {
+    for (int i=0;i<StarMapStatics.MAX_PLAYERS;i++) {
+      config.setPlayerName(i, playerName[i].getText());
+    }
+    
   }
   
   /**
@@ -202,6 +215,15 @@ public class PlayerSetupView extends BlackPanel {
       raceImgs[index].setRaceToShow(null);
     }
     info.add(playerName[index]);
+    info.add(Box.createRigidArea(new Dimension(5,5)));
+    randomNameBtn[index] = new SpaceButton("Random name",
+        GameCommands.COMMAND_RANDOM_NAME+index);
+    randomNameBtn[index].addActionListener(listener);
+    randomNameBtn[index].setAlignmentX(JComponent.CENTER_ALIGNMENT);
+    if (config.getMaxPlayers()<(index+1)) {
+      randomNameBtn[index].setEnabled(false);
+    }
+    info.add(randomNameBtn[index]);
     xinvis.add(info);
     xinvis.add(Box.createRigidArea(new Dimension(25,25)));
     return xinvis;

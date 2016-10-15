@@ -250,6 +250,11 @@ public class GameCommands {
   public static final String COMMAND_GALAXY_SETUP = "GalaxySetup";
 
   /**
+   * Random name button action
+   */
+  public static final String COMMAND_RANDOM_NAME = "RandomName";
+
+  /**
    * Cancel command
    */
   public static final String COMMAND_CANCEL = "Cancel";

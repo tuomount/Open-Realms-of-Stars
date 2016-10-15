@@ -213,6 +213,8 @@ public class PlayerSetupView extends BlackPanel {
     if (config.getMaxPlayers()<(index+1)) {
       playerName[index].setEnabled(false);
       raceImgs[index].setRaceToShow(null);
+    } else {
+      playerName[index].setText(config.getPlayerName(index));
     }
     info.add(playerName[index]);
     info.add(Box.createRigidArea(new Dimension(5,5)));

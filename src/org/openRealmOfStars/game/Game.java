@@ -499,14 +499,14 @@ public class Game extends JFrame implements ActionListener {
     case NEW_GAME: { 
       players = new PlayerList();
       for (int i=0;i<PlayerList.MAX_PLAYERS;i++) {
-        PlayerInfo info = new PlayerInfo(SpaceRace.getRandomRace());
-        info.setEmpireName("Empire of "+info.getRace().getName());
+        PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i));
+        info.setEmpireName(galaxyConfig.getPlayerName(i));
         if (i==0) {
           info.setHuman(true);
         }
         players.addPlayer(info);
       }
-      starMap = new StarMap(75, 75,players);
+      starMap = new StarMap(galaxyConfig.getSizeX(), galaxyConfig.getSizeY(),players);
       starMap.updateStarMapOnStartGame();
       players.setCurrentPlayer(0);
       starMapView = null;
@@ -822,6 +822,7 @@ public class Game extends JFrame implements ActionListener {
       }
     } else if (gameState == GameState.PLAYER_SETUP) {
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        playerSetupView.getNamesToConfig();
         changeGameState(GameState.GALAXY_CREATION);
       } else if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
         playerSetupView.getNamesToConfig();

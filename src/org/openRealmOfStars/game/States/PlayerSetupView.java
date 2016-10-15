@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JTextField;
 
 import org.openRealmOfStars.game.GameCommands;
@@ -82,11 +81,6 @@ public class PlayerSetupView extends BlackPanel {
    * Galaxy config
    */
   private GalaxyConfig config;
-
-  /**
-   * Random name buttons
-   */
-  private SpaceButton[] randomNameBtn;
   
   /**
    * Constructor for main menu
@@ -117,7 +111,6 @@ public class PlayerSetupView extends BlackPanel {
     comboRaceSelect = new JComboBox[StarMapStatics.MAX_PLAYERS];
     raceImgs = new RaceImagePanel[StarMapStatics.MAX_PLAYERS];
     playerName = new JTextField[StarMapStatics.MAX_PLAYERS];
-    randomNameBtn = new SpaceButton[StarMapStatics.MAX_PLAYERS];
     
     InvisiblePanel xinvis = new InvisiblePanel(invis);    
     xinvis.setLayout(new GridLayout(2, 4));
@@ -149,7 +142,7 @@ public class PlayerSetupView extends BlackPanel {
    * @param arg0
    */
   public void handleActions(ActionEvent arg0) {
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
+    if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_GALAXY_SETUP)) {
       for (int i=0;i<StarMapStatics.MAX_PLAYERS;i++) {
         if (comboRaceSelect[i].isEnabled()) {
           String raceStr = (String) comboRaceSelect[i].getSelectedItem();
@@ -158,6 +151,11 @@ public class PlayerSetupView extends BlackPanel {
           raceImgs[i].setRaceToShow(raceStr);
         }
       }
+      String tmp = arg0.getActionCommand().substring(
+          GameCommands.COMMAND_GALAXY_SETUP.length(), 
+          arg0.getActionCommand().length());
+      int index = Integer.parseInt(tmp);
+      playerName[index].setText(config.getRace(index).getRandomName());
     }
   }
   
@@ -200,7 +198,8 @@ public class PlayerSetupView extends BlackPanel {
     comboRaceSelect[index].setBorder(new SimpleBorder());
     comboRaceSelect[index].setFont(GuiStatics.getFontCubellan());
     comboRaceSelect[index].addActionListener(listener);
-    comboRaceSelect[index].setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboRaceSelect[index].setActionCommand(
+        GameCommands.COMMAND_GALAXY_SETUP+index);
     if (config.getMaxPlayers()<(index+1)) {
       comboRaceSelect[index].setEnabled(false);
     }
@@ -218,14 +217,6 @@ public class PlayerSetupView extends BlackPanel {
     }
     info.add(playerName[index]);
     info.add(Box.createRigidArea(new Dimension(5,5)));
-    randomNameBtn[index] = new SpaceButton("Random name",
-        GameCommands.COMMAND_RANDOM_NAME+index);
-    randomNameBtn[index].addActionListener(listener);
-    randomNameBtn[index].setAlignmentX(JComponent.CENTER_ALIGNMENT);
-    if (config.getMaxPlayers()<(index+1)) {
-      randomNameBtn[index].setEnabled(false);
-    }
-    info.add(randomNameBtn[index]);
     xinvis.add(info);
     xinvis.add(Box.createRigidArea(new Dimension(25,25)));
     return xinvis;

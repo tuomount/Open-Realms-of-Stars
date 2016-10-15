@@ -93,7 +93,7 @@ public class GalaxyConfig {
     playerName = new String[StarMapStatics.MAX_PLAYERS];
     for (int i=0;i<StarMapStatics.MAX_PLAYERS;i++) {
       setRace(i,SpaceRace.HUMAN);
-      setPlayerName(i, "Empire of "+getRace(i).getName());
+      setPlayerName(i, getRace(i).getRandomName());
     }
   }
   

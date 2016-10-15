@@ -122,6 +122,38 @@ public enum SpaceRace {
     int index = DiceGenerator.getRandom(SpaceRace.values().length-1);
     return getRaceByIndex(index);
   }
+  
+  /**
+   * Get random empire name for player
+   * @return player name
+   */
+  public String getRandomName() {
+    StringBuilder sb = new StringBuilder();
+    switch (DiceGenerator.getRandom(3)) {
+    case 0: sb.append("Empire of "); break;
+    case 1: sb.append("Federation of "); break;
+    case 2: sb.append("Republic of "); break;
+    case 3: sb.append("Alliance of "); break;
+    case 4: {
+      if (this == SPORKS || this == MECHIONS ) {
+        sb.append("Horde of "); 
+      } else {
+        sb.append("Kingdom of ");
+      }
+      break;
+    }
+    case 5: {
+      if (this == SPORKS) {
+       sb.append("Clan of "); 
+      } else {
+        sb.append("Hegemony of ");
+      }
+      break;
+    }
+    }
+    sb.append(this.getName());
+    return sb.toString();
+  }
   /**
    * Space race index
    */

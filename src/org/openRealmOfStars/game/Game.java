@@ -506,7 +506,7 @@ public class Game extends JFrame implements ActionListener {
         }
         players.addPlayer(info);
       }
-      starMap = new StarMap(galaxyConfig.getSizeX(), galaxyConfig.getSizeY(),players);
+      starMap = new StarMap(galaxyConfig,players);
       starMap.updateStarMapOnStartGame();
       players.setCurrentPlayer(0);
       starMapView = null;

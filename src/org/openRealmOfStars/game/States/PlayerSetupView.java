@@ -138,7 +138,7 @@ public class PlayerSetupView extends BlackPanel {
   }
   
   /**
-   * Handle actions for Player Setuo view
+   * Handle actions for Player Setup view
    * @param arg0
    */
   public void handleActions(ActionEvent arg0) {

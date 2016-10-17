@@ -65,6 +65,7 @@ public class StarMap {
    */
   private int tiles[][];
   
+  
   private SquareInfo tileInfo[][];
   
   /**
@@ -132,18 +133,20 @@ public class StarMap {
   public final static String MAGIC_STRING ="OROS-SAVE-GAME-0.2";
 
   /**
-   * Constructor for StarMap. Generates universum with default settings.
-   * @param maxXSize
-   * @param maxYSize
+   * Constructor for StarMap. Generates universum with galaxy config and
+   * players
+   * @param config Galaxy config
+   * @param players Players
    */
-  public StarMap(int maxXSize, int maxYSize,PlayerList players) {
-    maxX = maxXSize;
-    maxY = maxYSize;
+  public StarMap(GalaxyConfig config, PlayerList players) {
+    maxX = config.getSizeX();
+    maxY = config.getSizeY();
     this.players = players;
     this.players.initVisibilityMaps(maxX, maxY);
     drawX = 0;
     drawY = 0;
     tiles = new int[maxX][maxY];
+    int[][] solarSystem = new int[maxX][maxY];
     tileInfo = new SquareInfo[maxX][maxY];
     fleetTiles = new FleetTileInfo[maxX][maxY];
     culture = new CulturePower[maxX][maxY];
@@ -155,6 +158,7 @@ public class StarMap {
         tiles[i][j] = empty.getIndex();
         tileInfo[i][j] = SquareInfo.EMPTY_TILE;
         culture[i][j] = new CulturePower();
+        solarSystem[i][j] = 0;
       }
     }
     turn = 0;
@@ -163,28 +167,28 @@ public class StarMap {
     // First starting Systems
     int sx = StarMapStatics.SOLARSYSTEMWIDTH;
     int sy = StarMapStatics.SOLARSYSTEMWIDTH;
-    createSolarSystem(sx,sy,5,2,0);
+    createSolarSystem(solarSystem,sx,sy,5,2,0);
     sx = maxX/2;
     sy = StarMapStatics.SOLARSYSTEMWIDTH;
-    createSolarSystem(sx,sy,3,0);
+    createSolarSystem(solarSystem,sx,sy,3,0);
     sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
     sy = StarMapStatics.SOLARSYSTEMWIDTH;
-    createSolarSystem(sx,sy,3,1,1);
+    createSolarSystem(solarSystem,sx,sy,3,1,1);
     sx = StarMapStatics.SOLARSYSTEMWIDTH;
     sy = maxY/2;
-    createSolarSystem(sx,sy,3,0);
+    createSolarSystem(solarSystem,sx,sy,3,0);
     sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
     sy = maxY/2;
-    createSolarSystem(sx,sy,3,0);
+    createSolarSystem(solarSystem,sx,sy,3,0);
     sx = StarMapStatics.SOLARSYSTEMWIDTH;
     sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
-    createSolarSystem(sx,sy,3,0,2);
+    createSolarSystem(solarSystem,sx,sy,3,0,2);
     sx = maxX/2;
     sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
-    createSolarSystem(sx,sy,3,0);
+    createSolarSystem(solarSystem,sx,sy,3,0);
     sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
     sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
-    createSolarSystem(sx,sy,3,0,3);
+    createSolarSystem(solarSystem,sx,sy,3,0,3);
   }
   
   /**
@@ -324,20 +328,44 @@ public class StarMap {
 
 
   /**
+   * Check if there can be fitted solar system
+   * @param solarSystem where to check solar systems
+   * @param sx Center of sun X coordinate
+   * @param sy Center of sun Y coordinate
+   * @return How many solar system sectors found
+   */
+  public int isSolarSystem(int[][] solarSystem, int sx, int sy) {
+    int result = 0;
+    for (int y = -StarMapStatics.SOLARSYSTEMWIDTH; 
+        y < StarMapStatics.SOLARSYSTEMWIDTH;y++) {
+      for (int x = -StarMapStatics.SOLARSYSTEMWIDTH; 
+          x < StarMapStatics.SOLARSYSTEMWIDTH;x++) {
+        if (isValidCoordinate(sx+x, sy+y)) {
+          result = result + solarSystem[sx+x][sy+y];
+        }
+      }
+    }
+    return result;
+  }
+  
+  /**
    * Create Solar System
+   * @param solarSystem map of solar systems
    * @param sx Sun's about coordinates
    * @param sy Sun's about coordinates
    * @param numberOfPlanets Number of planets to Solar System
    * @param numberOfGasGiants Number of Gas Giants to Solar System
    */
-  private void createSolarSystem(int sx,int sy, int numberOfPlanets, 
-      int numberOfGasGiants) {
-    createSolarSystem(sx, sy, numberOfPlanets, numberOfGasGiants,-1);
+  private void createSolarSystem(int[][] solarSystem, int sx,int sy, 
+      int numberOfPlanets, int numberOfGasGiants) {
+    createSolarSystem(solarSystem, sx, sy, numberOfPlanets, 
+        numberOfGasGiants,-1);
   }
 
   
   /**
    * Create Solar System
+   * @param solarSystem map of solarsystems
    * @param sx Sun's about coordinates
    * @param sy Sun's about coordinates
    * @param numberOfPlanets Number of planets to Solar System
@@ -345,8 +373,8 @@ public class StarMap {
    * @param playerIndex if Player index is else than -1 then SolarSystem
    * is created as home system for that player index.
    */
-  private void createSolarSystem(int sx,int sy, int numberOfPlanets, 
-      int numberOfGasGiants,int playerIndex) {
+  private void createSolarSystem(int[][] solarSystem, int sx,int sy, 
+      int numberOfPlanets, int numberOfGasGiants,int playerIndex) {
     if (numberOfPlanets > 5) {
       numberOfPlanets = 5;
     }
@@ -356,6 +384,15 @@ public class StarMap {
     // The Sun
     sx = sx +DiceGenerator.getRandom(-1, 1);
     sy = sy +DiceGenerator.getRandom(-1, 1);
+    for (int y = -StarMapStatics.SOLARSYSTEMWIDTH; 
+        y < StarMapStatics.SOLARSYSTEMWIDTH;y++) {
+      for (int x = -StarMapStatics.SOLARSYSTEMWIDTH; 
+          x < StarMapStatics.SOLARSYSTEMWIDTH;x++) {
+        if (isValidCoordinate(sx+x, sy+y)) {
+          solarSystem[sx+x][sy+y] = 1;
+        }
+      }
+    }
     Sun sun = new Sun(sx, sy, null);
     sunList.add(sun);
     int sunNumber = sunList.size()-1;

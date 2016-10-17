@@ -513,6 +513,12 @@ public class GuiStatics {
   GuiStatics.class.getResource("/resources/images/spork_race.png"));
 
   /**
+   * Human race selection image
+   */
+  public final static BufferedImage IMAGE_HUMAN_RACE = IOUtilities.loadImage(
+  GuiStatics.class.getResource("/resources/images/human_race.png"));
+
+  /**
    * Get text width for certain font
    * @param font Font to use
    * @param text String

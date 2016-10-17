@@ -213,7 +213,7 @@ public enum SpaceRace {
    */
   public BufferedImage getRaceImage() {
     switch (this) {
-    case HUMAN: return GuiStatics.IMAGE_CENTAUR_RACE;
+    case HUMAN: return GuiStatics.IMAGE_HUMAN_RACE;
     case MECHIONS: return GuiStatics.IMAGE_MECHION_RACE;
     case SPORKS: return GuiStatics.IMAGE_SPORK_RACE;
     case GREYANS: return GuiStatics.IMAGE_GREYAN_RACE;

@@ -68,6 +68,7 @@ public class CreditsView extends BlackPanel {
         "Space ships are done with Surt's modular ships\n\n"+
         "Explosions by Csaba Felvegi aka Chabull\n\n"+
         "Alien pictures by Surt - http://opengameart.org/forumtopic/cc0-scraps\n\n"+
+        "Space Captain by Justin Nichol - http://opengameart.org/content/space-captain\n\n"+
         "Fonts are under SIL Open Font License, Version 1.1.\n"+
         "#Fonts by\n\n"+
         "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n";

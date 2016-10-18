@@ -215,7 +215,7 @@ public class StarMapMouseListener extends MouseAdapter implements
           if (lastClickedFleet != null) {
             moveX = coord.getMapX();
             moveY = coord.getMapY();
-            double distance = StarMap.getDistance(lastClickedFleet.getX(), 
+            double distance = StarMapUtilities.getDistance(lastClickedFleet.getX(), 
               lastClickedFleet.getY(), moveX, moveY); 
             if (distance <2 && distance > 0) {
               moveClicked = true;

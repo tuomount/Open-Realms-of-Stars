@@ -7,7 +7,7 @@ import java.awt.event.MouseMotionListener;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.player.ship.ShipComponent;
-import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
 
@@ -133,7 +133,7 @@ public class CombatMapMouseListener extends MouseAdapter implements
           }
         }
       } else {
-        int dist = (int) StarMap.getDistance(combat.getCurrentShip().getX(), 
+        int dist = (int) StarMapUtilities.getDistance(combat.getCurrentShip().getX(), 
             combat.getCurrentShip().getY(), coord.getMapX(), coord.getMapY());
         if (dist == 1 && !combat.isBlocked(coord.getMapX(), coord.getMapY()) &&
             combat.getCurrentShip().getMovesLeft() > 0) {

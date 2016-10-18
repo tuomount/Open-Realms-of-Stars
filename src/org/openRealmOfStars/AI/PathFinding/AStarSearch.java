@@ -6,6 +6,7 @@ import java.util.List;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 
 /**
  * 
@@ -113,7 +114,7 @@ public class AStarSearch {
     ty = target.getY();
     this.targetDistance = targetDistance;
     PathPoint point1 = new PathPoint(start.getX(), start.getY(), 
-        StarMap.getDistance(start.getX(), start.getY(), tx, ty));
+        StarMapUtilities.getDistance(start.getX(), start.getY(), tx, ty));
     points.add(point1);
     blockMap[point1.getX()][point1.getY()] = 0;
     targetPoint = null;
@@ -146,12 +147,12 @@ public class AStarSearch {
     points = new ArrayList<>();
     this.tx = tx;
     this.ty = ty;
-    this.targetDistance = (int) Math.round(StarMap.getDistance(sx, sy, tx, ty))-radius;
+    this.targetDistance = (int) Math.round(StarMapUtilities.getDistance(sx, sy, tx, ty))-radius;
     if (this.targetDistance < 0) {
       // Target is actually in reroute area
       this.targetDistance = 0;
     }
-    PathPoint point1 = new PathPoint(sx, sy, StarMap.getDistance(sx, sy, tx, ty));
+    PathPoint point1 = new PathPoint(sx, sy, StarMapUtilities.getDistance(sx, sy, tx, ty));
     points.add(point1);
     blockMap[point1.getX()][point1.getY()] = 0;
     targetPoint = null;
@@ -183,7 +184,7 @@ public class AStarSearch {
     this.tx = tx;
     this.ty = ty;
     this.targetDistance = 0;
-    PathPoint point1 = new PathPoint(sx, sy, StarMap.getDistance(sx, sy, tx, ty));
+    PathPoint point1 = new PathPoint(sx, sy, StarMapUtilities.getDistance(sx, sy, tx, ty));
     points.add(point1);
     blockMap[point1.getX()][point1.getY()] = 0;
     targetPoint = null;
@@ -228,7 +229,7 @@ public class AStarSearch {
             int my = y+point.getY();
             if (isValidPos(mx,my) && blockMap[mx][my] > count && blockMap[mx][my] != BLOCKED) {
               blockMap[mx][my] = count;
-              double dist = StarMap.getDistance(mx, my, tx, ty);
+              double dist = StarMapUtilities.getDistance(mx, my, tx, ty);
               PathPoint newPoint = new PathPoint(mx, my, dist);
               if (dist < point.getDistance()) {
                 if (points.size()>0) {
@@ -286,7 +287,7 @@ public class AStarSearch {
             }
             int mx = x+point.getX();
             int my = y+point.getY();
-            double dist = StarMap.getDistance(mx, my, tx, ty);
+            double dist = StarMapUtilities.getDistance(mx, my, tx, ty);
             if (isValidPos(mx,my) && blockMap[mx][my] < count &&
                 dist < bdist) {
               bx = mx;

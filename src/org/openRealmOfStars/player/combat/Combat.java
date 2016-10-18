@@ -8,7 +8,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipStat;
-import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 
 
 /**
@@ -270,7 +270,7 @@ public class Combat {
     CombatShip result=null;
     for (CombatShip ship : shipList) {
       if (ship.getPlayer() != info) {
-        double dist = StarMap.getDistance(center.getX(), center.getY(), ship.getX(),
+        double dist = StarMapUtilities.getDistance(center.getX(), center.getY(), ship.getX(),
             ship.getY());
         if (dist >maxDist) {
           result =ship;

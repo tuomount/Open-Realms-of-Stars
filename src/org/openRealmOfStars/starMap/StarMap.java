@@ -328,27 +328,6 @@ public class StarMap {
 
 
   /**
-   * Check if there can be fitted solar system
-   * @param solarSystem where to check solar systems
-   * @param sx Center of sun X coordinate
-   * @param sy Center of sun Y coordinate
-   * @return How many solar system sectors found
-   */
-  public int isSolarSystem(int[][] solarSystem, int sx, int sy) {
-    int result = 0;
-    for (int y = -StarMapStatics.SOLARSYSTEMWIDTH; 
-        y < StarMapStatics.SOLARSYSTEMWIDTH;y++) {
-      for (int x = -StarMapStatics.SOLARSYSTEMWIDTH; 
-          x < StarMapStatics.SOLARSYSTEMWIDTH;x++) {
-        if (isValidCoordinate(sx+x, sy+y)) {
-          result = result + solarSystem[sx+x][sy+y];
-        }
-      }
-    }
-    return result;
-  }
-  
-  /**
    * Create Solar System
    * @param solarSystem map of solar systems
    * @param sx Sun's about coordinates
@@ -384,15 +363,7 @@ public class StarMap {
     // The Sun
     sx = sx +DiceGenerator.getRandom(-1, 1);
     sy = sy +DiceGenerator.getRandom(-1, 1);
-    for (int y = -StarMapStatics.SOLARSYSTEMWIDTH; 
-        y < StarMapStatics.SOLARSYSTEMWIDTH;y++) {
-      for (int x = -StarMapStatics.SOLARSYSTEMWIDTH; 
-          x < StarMapStatics.SOLARSYSTEMWIDTH;x++) {
-        if (isValidCoordinate(sx+x, sy+y)) {
-          solarSystem[sx+x][sy+y] = 1;
-        }
-      }
-    }
+    StarMapUtilities.setSolarSystem(solarSystem, sx, sy, getMaxX(), getMaxY());
     Sun sun = new Sun(sx, sy, null);
     sunList.add(sun);
     int sunNumber = sunList.size()-1;
@@ -556,7 +527,7 @@ public class StarMap {
     double distance = 999999;
     Sun result = null;
     for (Sun sun:sunList) {
-      double dist = getDistance(x, y, sun.getCenterX(), sun.getCenterY());
+      double dist = StarMapUtilities.getDistance(x, y, sun.getCenterX(), sun.getCenterY());
       if (ignoreSun != null && sun.getName().equals(ignoreSun)) {
         dist = 999999;
       }
@@ -1169,7 +1140,7 @@ public class StarMap {
       startY = startY +my;
       int nx = (int) Math.round(startX);
       int ny = (int) Math.round(startY);
-      if (getDistance(sx, sy, nx, ny) > maxRad) {
+      if (StarMapUtilities.getDistance(sx, sy, nx, ny) > maxRad) {
         // We have moved to maximum radius
         break;
       }
@@ -1287,22 +1258,6 @@ public class StarMap {
     }
     return true;
   }
-  /**
-   * Calculate distance between two coordinates
-   * @param x1 first coordinate's X
-   * @param y1 first coordinate's Y
-   * @param x2 second coordinate's X
-   * @param y2 second coordinate's Y
-   * @return distance as double
-   */
-  public static double getDistance(int x1,int y1, int x2, int y2) {
-    double result = 0;
-    int mx = Math.abs(x2-x1);
-    int my = Math.abs(y2-y1);
-    result = Math.sqrt(mx*mx+my*my);
-    return result;
-  }
-  
   /**
    * Get Player info by index
    * @param index Player index

@@ -18,8 +18,8 @@ import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
-import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapStatics;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -441,7 +441,7 @@ public class PlayerInfo {
             unCharted[sector]++;
             PathPoint tempPoint = new PathPoint(sun.getCenterX()+x, 
                 sun.getCenterY()+y, 
-                StarMap.getDistance(fleet.getX(), fleet.getY(), 
+                StarMapUtilities.getDistance(fleet.getX(), fleet.getY(), 
                     sun.getCenterX()+x, sun.getCenterY()+y));
             int value =calculateUnchartedLine(fleet.getX(), fleet.getY(), sun.getCenterX()+x, sun.getCenterY()+y);
             if(points[sector] == null) {
@@ -484,7 +484,7 @@ public class PlayerInfo {
         for (int i=0;i<StarMapStatics.SOLARSYSTEMWIDTH+2;i++) {
           nx = nx+mx;
           ny = ny+my;
-          double dist = StarMap.getDistance(fleet.getX(), fleet.getY(), nx, ny);
+          double dist = StarMapUtilities.getDistance(fleet.getX(), fleet.getY(), nx, ny);
           if (isValidCoordinate(nx, ny) && i>=scan && dist > 1) {
             if (mapData[nx][ny]==UNCHARTED) {
               temp = new PathPoint(nx, ny, dist);
@@ -492,7 +492,7 @@ public class PlayerInfo {
               break;
             }
           }
-          dist = StarMap.getDistance(fleet.getX(), fleet.getY(), sun.getCenterX(), ny);
+          dist = StarMapUtilities.getDistance(fleet.getX(), fleet.getY(), sun.getCenterX(), ny);
           if (temp == null  && isValidCoordinate(sun.getCenterX(), ny) && i>=scan && dist > 1) {
             if (mapData[sun.getCenterX()][ny]==UNCHARTED) {
               temp = new PathPoint(sun.getCenterX(), ny, dist);
@@ -500,7 +500,7 @@ public class PlayerInfo {
               break;
             }
           }
-          dist = StarMap.getDistance(fleet.getX(), fleet.getY(), nx, sun.getCenterY());
+          dist = StarMapUtilities.getDistance(fleet.getX(), fleet.getY(), nx, sun.getCenterY());
           if (temp == null  && isValidCoordinate(nx, sun.getCenterY()) && i>=scan && dist > 1) {
             if (mapData[nx][sun.getCenterY()]==UNCHARTED) {
               temp = new PathPoint(nx, sun.getCenterY(), dist);

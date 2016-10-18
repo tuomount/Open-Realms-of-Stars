@@ -26,6 +26,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -244,7 +245,7 @@ public class BattleView extends BlackPanel {
       if (ai.getShip().getTotalMilitaryPower() > deadliest.getShip().getTotalMilitaryPower()) {
         range = ai.getShip().getMinWeaponRange();
       }
-      int distance = (int) Math.round(StarMap.getDistance(ai.getX(), ai.getY(), 
+      int distance = (int) Math.round(StarMapUtilities.getDistance(ai.getX(), ai.getY(), 
         deadliest.getX(), deadliest.getY()));
       if (range < distance-ai.getMovesLeft() && closest != null) {
         shot = handleAIShoot(ai, closest);

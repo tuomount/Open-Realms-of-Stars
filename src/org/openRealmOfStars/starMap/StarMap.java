@@ -164,33 +164,162 @@ public class StarMap {
     turn = 0;
     aiTurnNumber = 0;
     aiFleet = null;
+    if (config.getStartingPosition() == GalaxyConfig.START_POSITION_BORDER) {
+      createBorderStartingSystems(config, solarSystem);
+    }
+    if (config.getStartingPosition() == GalaxyConfig.START_POSITION_RANDOM) {
+      for (int i=0;i<config.getMaxPlayers();i++) {
+        while (true) {
+          int sx = DiceGenerator.getRandom(StarMapStatics.SOLARSYSTEMWIDTH,
+                     maxX-StarMapStatics.SOLARSYSTEMWIDTH);
+          int sy = DiceGenerator.getRandom(StarMapStatics.SOLARSYSTEMWIDTH,
+              maxX-StarMapStatics.SOLARSYSTEMWIDTH);
+          int planets = DiceGenerator.getRandom(3, 5);
+          int gasGiants = DiceGenerator.getRandom(2);
+          if (StarMapUtilities.isSolarSystem(solarSystem, sx, sy, maxX, maxY,
+              config.getSolarSystemDistance())==0) {
+            createSolarSystem(solarSystem,sx,sy,planets,gasGiants,i);
+            break;
+          }
+        }
+      }
+    }
+    // Random system
+    int loop = 0;
+    while (loop <1000) {
+      int sx = DiceGenerator.getRandom(StarMapStatics.SOLARSYSTEMWIDTH,
+          maxX-StarMapStatics.SOLARSYSTEMWIDTH);
+      int sy = DiceGenerator.getRandom(StarMapStatics.SOLARSYSTEMWIDTH,
+         maxX-StarMapStatics.SOLARSYSTEMWIDTH);
+      int planets = DiceGenerator.getRandom(1, 6);
+      int gasGiants = DiceGenerator.getRandom(3);
+      if (StarMapUtilities.isSolarSystem(solarSystem, sx, sy, maxX, maxY,
+          config.getSolarSystemDistance())==0) {
+       createSolarSystem(solarSystem,sx,sy,planets,gasGiants);
+       int full = StarMapUtilities.getSystemFullness(solarSystem, maxX, maxY);
+       System.out.println("Planet added, fullness:"+full+"%");
+       if (full > 60) {
+         System.out.println("Enough");
+         // Enough solar systems
+         break;
+       }
+      }
+    loop++;
+    }
+  }
+  
+  /**
+   * Create border starting solar system
+   * @param config Galaxy Config
+   * @param solarSystem Solar system map
+   */
+  private void createBorderStartingSystems(GalaxyConfig config, 
+     int[][] solarSystem) {
     // First starting Systems
     int sx = StarMapStatics.SOLARSYSTEMWIDTH;
     int sy = StarMapStatics.SOLARSYSTEMWIDTH;
-    createSolarSystem(solarSystem,sx,sy,5,2,0);
-    sx = maxX/2;
-    sy = StarMapStatics.SOLARSYSTEMWIDTH;
-    createSolarSystem(solarSystem,sx,sy,3,0);
-    sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
-    sy = StarMapStatics.SOLARSYSTEMWIDTH;
-    createSolarSystem(solarSystem,sx,sy,3,1,1);
-    sx = StarMapStatics.SOLARSYSTEMWIDTH;
-    sy = maxY/2;
-    createSolarSystem(solarSystem,sx,sy,3,0);
-    sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
-    sy = maxY/2;
-    createSolarSystem(solarSystem,sx,sy,3,0);
-    sx = StarMapStatics.SOLARSYSTEMWIDTH;
-    sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
-    createSolarSystem(solarSystem,sx,sy,3,0,2);
-    sx = maxX/2;
-    sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
-    createSolarSystem(solarSystem,sx,sy,3,0);
-    sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
-    sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
-    createSolarSystem(solarSystem,sx,sy,3,0,3);
+    int planets = DiceGenerator.getRandom(3, 5);
+    int gasGiants = DiceGenerator.getRandom(2);
+    if (config.getMaxPlayers() == 2) {
+      //First player
+      sx = maxX/2;
+      sy = StarMapStatics.SOLARSYSTEMWIDTH;
+      planets = DiceGenerator.getRandom(3, 5);
+      gasGiants = DiceGenerator.getRandom(2);
+      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,0);
+      
+      //Second player
+      sx = maxX/2;
+      sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
+      planets = DiceGenerator.getRandom(3, 5);
+      gasGiants = DiceGenerator.getRandom(2);
+      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,1);
+
+    } else if (config.getMaxPlayers() == 3) {
+      //First player
+      sx = StarMapStatics.SOLARSYSTEMWIDTH;
+      sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
+      planets = DiceGenerator.getRandom(3, 5);
+      gasGiants = DiceGenerator.getRandom(2);
+      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,0);
+      
+      //Second player
+      sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
+      sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
+      planets = DiceGenerator.getRandom(3, 5);
+      gasGiants = DiceGenerator.getRandom(2);
+      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,1);
+
+      //Third player
+      sx = maxX/2;
+      sy = StarMapStatics.SOLARSYSTEMWIDTH;
+      planets = DiceGenerator.getRandom(3, 5);
+      gasGiants = DiceGenerator.getRandom(2);
+      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,2);
+
+    } else if (config.getMaxPlayers() >= 4) {
+      //First player
+      sx = StarMapStatics.SOLARSYSTEMWIDTH;
+      sy = StarMapStatics.SOLARSYSTEMWIDTH;
+      planets = DiceGenerator.getRandom(3, 5);
+      gasGiants = DiceGenerator.getRandom(2);
+      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,0);
+      
+      //Second player
+      sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
+      sy = StarMapStatics.SOLARSYSTEMWIDTH;
+      planets = DiceGenerator.getRandom(3, 5);
+      gasGiants = DiceGenerator.getRandom(2);
+      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,1);
+
+      //Third player
+      sx = StarMapStatics.SOLARSYSTEMWIDTH;
+      sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
+      planets = DiceGenerator.getRandom(3, 5);
+      gasGiants = DiceGenerator.getRandom(2);
+      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,2);
+
+      //Fourth player
+      sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
+      sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
+      planets = DiceGenerator.getRandom(3, 5);
+      gasGiants = DiceGenerator.getRandom(2);
+      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,3);
+    }
+    
+    if (config.getMaxPlayers() >= 5) {
+      //Fifth player
+      sx = maxX/2;
+      sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
+      planets = DiceGenerator.getRandom(3, 5);
+      gasGiants = DiceGenerator.getRandom(2);
+      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,4);
+    }
+    if (config.getMaxPlayers() >= 6) {
+      //Sixth player
+      sx = maxX/2;
+      sy = StarMapStatics.SOLARSYSTEMWIDTH;
+      planets = DiceGenerator.getRandom(3, 5);
+      gasGiants = DiceGenerator.getRandom(2);
+      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,5);
+    }
+    if (config.getMaxPlayers() >= 7) {
+      //Seventh player
+      sx = StarMapStatics.SOLARSYSTEMWIDTH;
+      sy = maxY/2;
+      planets = DiceGenerator.getRandom(3, 5);
+      gasGiants = DiceGenerator.getRandom(2);
+      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,6);
+    }
+    if (config.getMaxPlayers() == 8) {
+      //Eight player
+      sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
+      sy = maxY/2;
+      planets = DiceGenerator.getRandom(3, 5);
+      gasGiants = DiceGenerator.getRandom(2);
+      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,7);
+    }
   }
-  
   /**
    * Initialize StarMap from DataInputStream
    * @param dis DataInputStream

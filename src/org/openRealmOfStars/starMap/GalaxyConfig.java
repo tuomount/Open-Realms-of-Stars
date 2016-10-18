@@ -86,9 +86,9 @@ public class GalaxyConfig {
   public GalaxyConfig() {
     sizeX = 75;
     sizeY = 75;
-    this.galaxySizeIndex = 0;
+    this.galaxySizeIndex = 1;
     setMaxPlayers(4);
-    setSolarSystemDistance(20,0);
+    setSolarSystemDistance(12,0);
     playerRaces = new SpaceRace[StarMapStatics.MAX_PLAYERS];
     playerName = new String[StarMapStatics.MAX_PLAYERS];
     for (int i=0;i<StarMapStatics.MAX_PLAYERS;i++) {

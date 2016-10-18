@@ -498,7 +498,7 @@ public class Game extends JFrame implements ActionListener {
     case PLAYER_SETUP: showPlayerSetup(); break;
     case NEW_GAME: { 
       players = new PlayerList();
-      for (int i=0;i<PlayerList.MAX_PLAYERS;i++) {
+      for (int i=0;i<galaxyConfig.getMaxPlayers();i++) {
         PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i));
         info.setEmpireName(galaxyConfig.getPlayerName(i));
         if (i==0) {

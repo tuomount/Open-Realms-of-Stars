@@ -113,8 +113,13 @@ public class GalaxyCreationView extends BlackPanel {
     TransparentLabel label = new TransparentLabel(info, "Galaxy size:");
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5,5)));
-    String[] galaxySizes = new String[1];
-    galaxySizes[0] = "Small";
+    String[] galaxySizes = new String[6];
+    galaxySizes[0] = "Tiny 50x50";
+    galaxySizes[1] = "Small 75x75";
+    galaxySizes[2] = "Medium 128x128";
+    galaxySizes[3] = "Large 160x160";
+    galaxySizes[4] = "Very large 200x200";
+    galaxySizes[5] = "Huge 256x256";
     comboGalaxySize = new JComboBox<>(galaxySizes);
     comboGalaxySize.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     comboGalaxySize.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
@@ -128,8 +133,11 @@ public class GalaxyCreationView extends BlackPanel {
     label = new TransparentLabel(info, "Sun density:");
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5,5)));
-    String[] sunDensity = new String[1];
+    String[] sunDensity = new String[4];
     sunDensity[0] = "Sparse";
+    sunDensity[1] = "Medium";
+    sunDensity[2] = "Dense";
+    sunDensity[3] = "Overlap";
     comboSunDensity = new JComboBox<>(sunDensity);
     comboSunDensity.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     comboSunDensity.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
@@ -171,8 +179,9 @@ public class GalaxyCreationView extends BlackPanel {
     label = new TransparentLabel(info, "Starting position:");
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5,5)));
-    String[] startPos = new String[1];
+    String[] startPos = new String[2];
     startPos[0] = "Border";
+    startPos[1] = "Random";
     comboPlayerPos = new JComboBox<>(startPos);
     comboPlayerPos.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     comboPlayerPos.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
@@ -216,8 +225,33 @@ public class GalaxyCreationView extends BlackPanel {
       config.setStartingPosition(comboPlayerPos.getSelectedIndex());
       switch (comboGalaxySize.getSelectedIndex()) {
       case 0: {
-        //SMALL
+        //Very small
+        config.setSize(50, 50, comboGalaxySize.getSelectedIndex());
+        break;
+      }
+      case 1: {
+        //Small
         config.setSize(75, 75, comboGalaxySize.getSelectedIndex());
+        break;
+      }
+      case 2: {
+        //Medium
+        config.setSize(128, 128, comboGalaxySize.getSelectedIndex());
+        break;
+      }
+      case 3: {
+        //Large
+        config.setSize(160, 160, comboGalaxySize.getSelectedIndex());
+        break;
+      }
+      case 4: {
+        //Very Large
+        config.setSize(200, 200, comboGalaxySize.getSelectedIndex());
+        break;
+      }
+      case 5: {
+        //Huge
+        config.setSize(256, 256, comboGalaxySize.getSelectedIndex());
         break;
       }
       default: {
@@ -229,12 +263,27 @@ public class GalaxyCreationView extends BlackPanel {
       switch (comboSunDensity.getSelectedIndex()) {
       case 0: {
         //SPARSE
-        config.setSolarSystemDistance(20, comboSunDensity.getSelectedIndex());
+        config.setSolarSystemDistance(12, comboSunDensity.getSelectedIndex());
+        break;
+      }
+      case 1: {
+        //Medium
+        config.setSolarSystemDistance(10, comboSunDensity.getSelectedIndex());
+        break;
+      }
+      case 2: {
+        //Dense
+        config.setSolarSystemDistance(7, comboSunDensity.getSelectedIndex());
+        break;
+      }
+      case 3: {
+        //Overlap
+        config.setSolarSystemDistance(6, comboSunDensity.getSelectedIndex());
         break;
       }
       default: {
         //SPARSE
-        config.setSolarSystemDistance(20, comboSunDensity.getSelectedIndex());
+        config.setSolarSystemDistance(10, comboSunDensity.getSelectedIndex());
         break;
       }
       }

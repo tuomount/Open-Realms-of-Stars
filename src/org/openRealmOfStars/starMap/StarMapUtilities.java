@@ -46,20 +46,42 @@ public class StarMapUtilities {
    * @param sy Center of sun Y coordinate
    * @param maxX maximum X coordinate
    * @param maxY maximum Y coordinate
+   * @param sunDistance distance between suns
    * @return How many solar system sectors found
    */
   public static int isSolarSystem(int[][] solarSystem, int sx, int sy, 
-      int maxX, int maxY) {
+      int maxX, int maxY, int sunDistance) {
     int result = 0;
-    for (int y = -StarMapStatics.SOLARSYSTEMWIDTH; 
-        y < StarMapStatics.SOLARSYSTEMWIDTH;y++) {
-      for (int x = -StarMapStatics.SOLARSYSTEMWIDTH; 
-          x < StarMapStatics.SOLARSYSTEMWIDTH;x++) {
+    for (int y = -sunDistance; 
+        y < sunDistance;y++) {
+      for (int x = -sunDistance; 
+          x < sunDistance;x++) {
         if (x+sx >= 0 && y+sy >= 0 && x+sx < maxX && y+sy<maxY ) {
           result = result + solarSystem[sx+x][sy+y];
         }
       }
     }
+    return result;
+  }
+  
+  /**
+   * Get how full universum is solar systems
+   * @param solarSystem Solar system map
+   * @param maxX Maximum size of X 
+   * @param maxY Maximum size of Y
+   * @return How many percent universum is full
+   */
+  public static int getSystemFullness(int[][] solarSystem, int maxX, int maxY) {
+    int result=0;
+    for (int y = 0;y<maxY;y++) {
+      for (int x = 0;x<maxX;x++) {
+        if (solarSystem[x][y] == 1) {
+          result++;
+        }
+      }
+    }
+    int total = (maxX -2*StarMapStatics.SOLARSYSTEMWIDTH)*(maxY-2*StarMapStatics.SOLARSYSTEMWIDTH);
+    result = result*100/total;
     return result;
   }
   

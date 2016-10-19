@@ -129,7 +129,7 @@ public enum SpaceRace {
    */
   public String getRandomName() {
     StringBuilder sb = new StringBuilder();
-    switch (DiceGenerator.getRandom(3)) {
+    switch (DiceGenerator.getRandom(7)) {
     case 0: sb.append("Empire of "); break;
     case 1: sb.append("Federation of "); break;
     case 2: sb.append("Republic of "); break;
@@ -150,6 +150,15 @@ public enum SpaceRace {
       }
       break;
     }
+    case 6: {
+      if (this == MECHIONS) {
+       sb.append("AI of "); 
+      } else {
+        sb.append("Democracy of");
+      }
+      break;
+    }
+    case 7: sb.append("Hiearchy of "); break;
     }
     sb.append(this.getName());
     return sb.toString();

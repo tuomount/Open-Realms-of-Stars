@@ -197,6 +197,7 @@ public class PlayerSetupView extends BlackPanel {
     comboRaceSelect[index].setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     comboRaceSelect[index].setBorder(new SimpleBorder());
     comboRaceSelect[index].setFont(GuiStatics.getFontCubellan());
+    comboRaceSelect[index].getModel().setSelectedItem(config.getRace(index).getNameSingle());
     comboRaceSelect[index].addActionListener(listener);
     comboRaceSelect[index].setActionCommand(
         GameCommands.COMMAND_GALAXY_SETUP+index);
@@ -208,7 +209,7 @@ public class PlayerSetupView extends BlackPanel {
     playerName[index] = new JTextField("Empire of "+config.getRace(index).getName());
     playerName[index].setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     playerName[index].setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-    playerName[index].setFont(GuiStatics.getFontCubellan());
+    playerName[index].setFont(GuiStatics.getFontCubellanSmaller());
     if (config.getMaxPlayers()<(index+1)) {
       playerName[index].setEnabled(false);
       raceImgs[index].setRaceToShow(null);

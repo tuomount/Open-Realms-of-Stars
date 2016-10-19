@@ -197,9 +197,7 @@ public class StarMap {
           config.getSolarSystemDistance())==0) {
        createSolarSystem(solarSystem,sx,sy,planets,gasGiants);
        int full = StarMapUtilities.getSystemFullness(solarSystem, maxX, maxY);
-       System.out.println("Planet added, fullness:"+full+"%");
        if (full > 60) {
-         System.out.println("Enough");
          // Enough solar systems
          break;
        }

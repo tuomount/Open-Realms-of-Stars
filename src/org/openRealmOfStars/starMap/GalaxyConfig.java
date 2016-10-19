@@ -92,9 +92,30 @@ public class GalaxyConfig {
     playerRaces = new SpaceRace[StarMapStatics.MAX_PLAYERS];
     playerName = new String[StarMapStatics.MAX_PLAYERS];
     for (int i=0;i<StarMapStatics.MAX_PLAYERS;i++) {
-      setRace(i,SpaceRace.HUMAN);
-      setPlayerName(i, getRace(i).getRandomName());
+      
+      setRace(i,SpaceRace.getRandomRace());
+      while (true) {
+        String tmp = getRace(i).getRandomName();
+        if (isUniqueName(tmp)) {
+          setPlayerName(i, getRace(i).getRandomName());
+          break;
+        }
+      }
     }
+  }
+  
+  /**
+   * Is player name unique
+   * @param name Unique name
+   * @return True if unique
+   */
+  public boolean isUniqueName(String name) {
+    for (int i=0;i<StarMapStatics.MAX_PLAYERS;i++) {
+      if (playerName[i] != null && name.equals(playerName[i])) {
+        return false;
+      }
+    }
+    return true;
   }
   
   public void setRace(int index,SpaceRace race) {

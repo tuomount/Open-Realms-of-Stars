@@ -129,38 +129,83 @@ public enum SpaceRace {
    */
   public String getRandomName() {
     StringBuilder sb = new StringBuilder();
-    switch (DiceGenerator.getRandom(7)) {
-    case 0: sb.append("Empire of "); break;
-    case 1: sb.append("Federation of "); break;
-    case 2: sb.append("Republic of "); break;
-    case 3: sb.append("Alliance of "); break;
-    case 4: {
-      if (this == SPORKS || this == MECHIONS ) {
-        sb.append("Horde of "); 
+    if (DiceGenerator.getRandom(1)== 0) {
+      if (this == HUMAN) {
+        if (DiceGenerator.getRandom(1)== 0) {
+          sb.append("Terran");
+        } else {
+          sb.append(this.getNameSingle());
+        }        
       } else {
-        sb.append("Kingdom of ");
+        sb.append(this.getNameSingle());
       }
-      break;
-    }
-    case 5: {
-      if (this == SPORKS) {
-       sb.append("Clan of "); 
-      } else {
-        sb.append("Hegemony of ");
+      sb.append(" ");
+      switch (DiceGenerator.getRandom(7)) {
+      case 0: sb.append("Empire"); break;
+      case 1: sb.append("Federation"); break;
+      case 2: sb.append("Republic"); break;
+      case 3: sb.append("Alliance"); break;
+      case 4: {
+        if (this == SPORKS || this == MECHIONS ) {
+          sb.append("Horde"); 
+        } else {
+          sb.append("Kingdom");
+        }
+        break;
       }
-      break;
-    }
-    case 6: {
-      if (this == MECHIONS) {
-       sb.append("AI of "); 
-      } else {
-        sb.append("Democracy of");
+      case 5: {
+        if (this == SPORKS) {
+         sb.append("Clan"); 
+        } else {
+          sb.append("Hegemony");
+        }
+        break;
       }
-      break;
+      case 6: {
+        if (this == MECHIONS) {
+         sb.append("AI"); 
+        } else {
+          sb.append("Democracy");
+        }
+        break;
+      }
+      case 7: sb.append("Hiearchy"); break;
+      }
+
+    } else {
+      switch (DiceGenerator.getRandom(7)) {
+      case 0: sb.append("Empire of "); break;
+      case 1: sb.append("Federation of "); break;
+      case 2: sb.append("Republic of "); break;
+      case 3: sb.append("Alliance of "); break;
+      case 4: {
+        if (this == SPORKS || this == MECHIONS ) {
+          sb.append("Horde of "); 
+        } else {
+          sb.append("Kingdom of ");
+        }
+        break;
+      }
+      case 5: {
+        if (this == SPORKS) {
+         sb.append("Clan of "); 
+        } else {
+          sb.append("Hegemony of ");
+        }
+        break;
+      }
+      case 6: {
+        if (this == MECHIONS) {
+         sb.append("AI of "); 
+        } else {
+          sb.append("Democracy of");
+        }
+        break;
+      }
+      case 7: sb.append("Hiearchy of "); break;
+      }
+      sb.append(this.getName());
     }
-    case 7: sb.append("Hiearchy of "); break;
-    }
-    sb.append(this.getName());
     return sb.toString();
   }
   /**

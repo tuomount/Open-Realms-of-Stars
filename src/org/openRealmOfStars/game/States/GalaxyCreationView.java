@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
 
 import org.openRealmOfStars.game.GameCommands;
@@ -111,6 +112,7 @@ public class GalaxyCreationView extends BlackPanel {
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
     info.setTitle("Galaxy Creation");
     TransparentLabel label = new TransparentLabel(info, "Galaxy size:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5,5)));
     String[] galaxySizes = new String[6];
@@ -127,10 +129,14 @@ public class GalaxyCreationView extends BlackPanel {
     comboGalaxySize.setFont(GuiStatics.getFontCubellan());
     comboGalaxySize.setSelectedIndex(this.config.getGalaxySizeIndex());
     comboGalaxySize.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+    comboGalaxySize.setRenderer(dlcr);
     comboGalaxySize.addActionListener(listener);
     info.add(comboGalaxySize);
     info.add(Box.createRigidArea(new Dimension(5,5)));
     label = new TransparentLabel(info, "Sun density:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5,5)));
     String[] sunDensity = new String[4];
@@ -145,6 +151,9 @@ public class GalaxyCreationView extends BlackPanel {
     comboSunDensity.setFont(GuiStatics.getFontCubellan());
     comboSunDensity.setSelectedIndex(this.config.getSunDensityIndex());
     comboSunDensity.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    dlcr = new DefaultListCellRenderer();
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+    comboSunDensity.setRenderer(dlcr);
     comboSunDensity.addActionListener(listener);
     info.add(comboSunDensity);
     info.add(Box.createRigidArea(new Dimension(5,5)));
@@ -156,6 +165,7 @@ public class GalaxyCreationView extends BlackPanel {
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
     info.setTitle("Player Setting");
     label = new TransparentLabel(info, "Number of players:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5,5)));
     String[] players = new String[7];
@@ -173,10 +183,14 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlayers.setFont(GuiStatics.getFontCubellan());
     comboPlayers.setSelectedIndex(this.config.getMaxPlayers()-2);
     comboPlayers.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    dlcr = new DefaultListCellRenderer();
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER); 
+    comboPlayers.setRenderer(dlcr);
     comboPlayers.addActionListener(listener);
     info.add(comboPlayers);
     info.add(Box.createRigidArea(new Dimension(5,5)));
     label = new TransparentLabel(info, "Starting position:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5,5)));
     String[] startPos = new String[2];
@@ -189,6 +203,9 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlayerPos.setFont(GuiStatics.getFontCubellan());
     comboPlayerPos.setSelectedIndex(this.config.getStartingPosition());
     comboPlayerPos.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    dlcr = new DefaultListCellRenderer();
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+    comboPlayerPos.setRenderer(dlcr);
     comboPlayerPos.addActionListener(listener);
     info.add(comboPlayerPos);
     info.add(Box.createRigidArea(new Dimension(5,5)));

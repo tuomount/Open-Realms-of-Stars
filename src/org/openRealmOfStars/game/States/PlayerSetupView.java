@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
@@ -198,6 +199,9 @@ public class PlayerSetupView extends BlackPanel {
     comboRaceSelect[index].setBorder(new SimpleBorder());
     comboRaceSelect[index].setFont(GuiStatics.getFontCubellan());
     comboRaceSelect[index].getModel().setSelectedItem(config.getRace(index).getNameSingle());
+    DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+    comboRaceSelect[index].setRenderer(dlcr);
     comboRaceSelect[index].addActionListener(listener);
     comboRaceSelect[index].setActionCommand(
         GameCommands.COMMAND_GALAXY_SETUP+index);

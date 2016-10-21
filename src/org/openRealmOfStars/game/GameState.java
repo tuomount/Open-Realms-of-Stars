@@ -37,4 +37,5 @@ public enum GameState {
   PLANETBOMBINGVIEW,
   GALAXY_CREATION,
   PLAYER_SETUP;
+  //LOAD_GAME;
 }

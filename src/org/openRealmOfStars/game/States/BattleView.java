@@ -132,11 +132,11 @@ public class BattleView extends BlackPanel {
    * @param player1 First player in combat
    * @param fleet2 Second fleet in combat
    * @param player2 Second player in combat
-   * @param StarMap star map
+   * @param map Star map
    * @param listener ActionListener
    */
   public BattleView(Fleet fleet1, PlayerInfo player1, Fleet fleet2,
-      PlayerInfo player2,StarMap map, ActionListener listener) {
+      PlayerInfo player2, StarMap map, ActionListener listener) {
     this.map = map;
     combat = new Combat(fleet1, fleet2, player1, player2);
     initBattleView(listener);

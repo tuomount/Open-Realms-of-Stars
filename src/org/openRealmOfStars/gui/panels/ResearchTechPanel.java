@@ -88,7 +88,7 @@ public class ResearchTechPanel extends InvisiblePanel {
    * @param text2 Text for tech level label
    * @param actionUpgrade ActionCommand for upgrade button
    * @param sliderValue slider value
-   * @param sliderAction slider action command
+   * @param actionSlider slider action command
    * @param listener Action Listener
    */
   public ResearchTechPanel(Component parent,String actionMinus, 

@@ -61,7 +61,7 @@ public class Tile {
    * @param x X-axel coordinate
    * @param y Y-axel coordinate
    * @param name Name for the tile
-   * @throws RasterFormatExcepition if tile is outside of tileset image.
+   * @throws RasterFormatException if tile is outside of tileset image.
    */
   public Tile(BufferedImage tilesetImage,int x, int y,String name) throws 
   RasterFormatException {

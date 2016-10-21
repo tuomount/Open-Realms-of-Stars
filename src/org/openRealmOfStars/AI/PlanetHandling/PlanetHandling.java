@@ -46,7 +46,7 @@ public class PlanetHandling {
   /**
    * AI player handling for a single planet, what to build
    * and how to set population work
-   * @param StarMap Star Map
+   * @param map Star Map
    * @param planet Planet to handle
    * @param index Player Index;
    */

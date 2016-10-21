@@ -57,7 +57,7 @@ public class DiceGenerator {
    * This generates random by combining Java RNG, MultiplyWithCarry
    * and XORShift. 
    * @param maxValue, inclusive
-   * @return
+   * @return A random number
    */
   public static int getRandom(int maxValue) {
     if (initialized == false) {
@@ -84,7 +84,7 @@ public class DiceGenerator {
    * and XORShift. 
    * @param minValue, inclusive
    * @param maxValue, inclusive
-   * @return
+   * @return A random number
    */
   public static int getRandom(int minValue, int maxValue) {
     if (initialized == false) {
@@ -128,7 +128,7 @@ public class DiceGenerator {
   /**
    * Get random with Multiply Carry
    * @param maxValue, exlusive
-   * @return
+   * @return A random number
    */
   private static int getRandomMultiplyWithCarry(int maxValue) {
     m_z = 36969 * (m_z & 65535) + (m_z >> 16);

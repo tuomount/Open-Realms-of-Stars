@@ -67,8 +67,8 @@ public class MissionList {
   
   /**
    * Get mission for fleet name
-   * @param fleetName
-   * @param MissionType
+   * @param fleetName The fleet name
+   * @param type MissionType
    * @return Mission or null if not found
    */
   public Mission getMissionForFleet(String fleetName, MissionType type) {
@@ -168,8 +168,8 @@ public class MissionList {
   
   /**
    * Get mission for planet
-   * @param planetName
-   * @param MissionType
+   * @param planetName The planet name
+   * @param type MissionType
    * @return Mission or null if not found
    */
   public Mission getMissionForPlanet(String planetName, MissionType type) {
@@ -185,8 +185,8 @@ public class MissionList {
 
   /**
    * Get mission for planet
-   * @param planetName
-   * @param MissionPhase
+   * @param planetName The planet name
+   * @param phase MissionPhase
    * @return Mission or null if not found
    */
   public Mission getMissionForPlanet(String planetName, MissionPhase phase) {

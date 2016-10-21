@@ -217,7 +217,7 @@ public class GalaxyCreationView extends BlackPanel {
 
   /**
    * Handle actions for Galaxy Creation view
-   * @param arg0
+   * @param arg0 The event to handle
    */
   public void handleActions(ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {

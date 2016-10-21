@@ -647,8 +647,8 @@ public class Combat {
 
   /**
    * Hand winner fleet stats
-   * @param fleet
-   * @param info
+   * @param fleet The winner fleet
+   * @param info The winner player info
    */
   private void handleWinner(Fleet fleet, PlayerInfo info) {
     for (Ship ship : fleet.getShips()) {

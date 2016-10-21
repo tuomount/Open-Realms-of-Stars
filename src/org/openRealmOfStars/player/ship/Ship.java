@@ -453,7 +453,7 @@ public class Ship extends Construction {
 
   /**
    * Get accuracy for certain weapon
-   * @param Weapon
+   * @param weapon ShipComponent
    * @return Accuracy
    */
   public int getHitChance(ShipComponent weapon) {
@@ -506,7 +506,7 @@ public class Ship extends Construction {
   
   /**
    * Get accuracy for certain weapon
-   * @param Weapon
+   * @param weapon ShipComponent
    * @return 1 No damage, not even dent
    *         0 No damage, but shield or armor got lower
    *         -1 Got damage

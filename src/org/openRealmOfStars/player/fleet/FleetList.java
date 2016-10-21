@@ -48,7 +48,7 @@ public class FleetList {
   /**
    * Read FleetList from DataInputStream
    * @param dis DataInputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public FleetList(DataInputStream dis) throws IOException {
     int count = dis.readInt();
@@ -63,7 +63,7 @@ public class FleetList {
   /**
    * Save Fleet List to DataOutputStream
    * @param dos DataOutputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveFleetList(DataOutputStream dos) throws IOException {
     dos.writeInt(fleetList.size());
@@ -99,7 +99,7 @@ public class FleetList {
   
   /**
    * How many fleet name with starting same name
-   * @param name
+   * @param name Fleet name
    * @return number of fleet containing same starting name
    */
   public int howManyFleetWithStartingNames(String name) {
@@ -184,19 +184,19 @@ public class FleetList {
 
   /**
    * Get by index fleet from the list
-   * @param index
+   * @param index Index
    * @return Fleet or null if list contains no fleets
    */
-  public Fleet getByIndex(int i) {
-    if (fleetList.size() > 0 && i >= 0 && i <fleetList.size()) {
-      return fleetList.get(i);
+  public Fleet getByIndex(int index) {
+    if (fleetList.size() > 0 && index >= 0 && index <fleetList.size()) {
+      return fleetList.get(index);
     }
     return null;
   }
 
   /**
    * Get by fleet name fleet from the list
-   * @param name
+   * @param name Fleet name
    * @return Fleet or null if list contains no fleets
    */
   public Fleet getByName(String name) {
@@ -212,7 +212,7 @@ public class FleetList {
 
   /**
    * Get by fleet name fleet index number
-   * @param name
+   * @param name Fleet name
    * @return index number or -1 if not found
    */
   public int getIndexByName(String name) {

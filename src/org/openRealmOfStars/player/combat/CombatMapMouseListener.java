@@ -65,8 +65,9 @@ public class CombatMapMouseListener extends MouseAdapter implements
 
   /**
    * Constructor for StarMap Mouse Listener
-   * @param starMap StarMap which to use.
+   * @param combat Combat
    * @param panel Map Panel where Star Map is being drawn.
+   * @param battleInfoPanel Battle Info Panel
    */
   public CombatMapMouseListener(Combat combat, MapPanel panel, BattleInfoPanel
       battleInfoPanel) {

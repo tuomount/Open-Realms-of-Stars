@@ -342,7 +342,7 @@ public class Game extends JFrame implements ActionListener {
 
   /**
    * Show Ship design panels
-   * @parm old design to copy to new one. Can be null.
+   * @param oldDesign to copy to new one. Can be null.
    */
   public void showShipDesignView(ShipDesign oldDesign) {
     shipDesignView = new ShipDesignView(players.getCurrentPlayerInfo(), oldDesign, this);
@@ -384,7 +384,7 @@ public class Game extends JFrame implements ActionListener {
 
   /**
    * Save game for certain file name
-   * @param filename
+   * @param filename File name
    */
   public void saveGame(String filename) {
     if (starMap != null) {
@@ -409,7 +409,7 @@ public class Game extends JFrame implements ActionListener {
 
   /**
    * Load game from certain file name
-   * @param filename
+   * @param filename File name
    * @return true if successful
    */
   public boolean loadGame(String filename) {

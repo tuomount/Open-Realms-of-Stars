@@ -104,7 +104,7 @@ public class BattleInfoPanel extends InfoPanel {
 
   /**
    * Show ship on info panel
-   * @param ship
+   * @param ship The ship to show on info panel
    */
   public void showShip(Ship ship) {
     this.ship = ship;

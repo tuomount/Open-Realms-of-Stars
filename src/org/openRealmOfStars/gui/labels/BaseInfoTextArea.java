@@ -68,7 +68,7 @@ public class BaseInfoTextArea extends JTextArea {
   
   /**
    * Construct BaseInfoTextArea with certain text.
-   * @param text
+   * @param text The text to be displayed, or null
    */
   public BaseInfoTextArea(String text){
     super(text);

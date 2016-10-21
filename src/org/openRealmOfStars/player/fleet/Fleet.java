@@ -87,7 +87,7 @@ public class Fleet {
   /**
    * Read Fleet from Data Input Stream
    * @param dis DataInputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with the DataInputStream
    */
   public Fleet(DataInputStream dis) throws IOException {
     name = IOUtilities.readString(dis);
@@ -111,7 +111,7 @@ public class Fleet {
   /**
    * Save Fleet to DataOutputStream
    * @param dos DataOutputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with the DataOutputStream
    */
   public void saveFleet(DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, name);
@@ -205,8 +205,8 @@ public class Fleet {
   
   /**
    * Set fleet's Coordinates
-   * @param x
-   * @param y
+   * @param x Fleet's X coordinate
+   * @param y Fleet's Y coordinate
    */
   public void setPos(int x, int y) {
     this.x = x;

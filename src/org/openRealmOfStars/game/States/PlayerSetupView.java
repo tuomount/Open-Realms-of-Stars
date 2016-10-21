@@ -84,7 +84,8 @@ public class PlayerSetupView extends BlackPanel {
   private GalaxyConfig config;
   
   /**
-   * Constructor for main menu
+   * Constructor for Player Setup view
+   * @param config Galaxy Configuration
    * @param listener ActionListener
    */
   @SuppressWarnings("unchecked")

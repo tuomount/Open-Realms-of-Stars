@@ -80,7 +80,8 @@ public class GalaxyCreationView extends BlackPanel {
   private GalaxyConfig config;
   
   /**
-   * Constructor for main menu
+   * Constructor for Galaxy Creation View
+   * @param config Galaxy Configuration
    * @param listener ActionListener
    */
   public GalaxyCreationView(GalaxyConfig config, ActionListener listener) {

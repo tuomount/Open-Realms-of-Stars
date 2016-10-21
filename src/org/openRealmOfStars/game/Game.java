@@ -632,6 +632,7 @@ public class Game extends JFrame implements ActionListener {
   public void actionPerformed(ActionEvent arg0) {
     if (gameState == GameState.STARMAP && starMapView != null) {
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
+        saveGame("autosave.save");
         changeGameState(GameState.AITURN);
       }else if (arg0.getActionCommand().equals(GameCommands.COMMAND_FOCUS_MSG)) {
         focusOnMessage(false);

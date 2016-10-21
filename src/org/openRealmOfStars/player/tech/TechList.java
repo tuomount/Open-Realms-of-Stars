@@ -490,7 +490,7 @@ public class TechList {
   /**
    * Update Research points by turn. This will also grant a new technology
    * @param totalResearchPoints player makes per turn
-   * @param playerInfo for message information
+   * @param info PlayerInfo for message information
    */
   public void updateResearchPointByTurn(int totalResearchPoints, PlayerInfo info) {
     for (int i=0;i<techFocus.length;i++) {

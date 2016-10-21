@@ -605,7 +605,7 @@ public class PlayerInfo {
    * Set sector cloaking detection value
    * @param x X coordinate
    * @param y Y coordinate
-   * @param cloaking detection value
+   * @param value cloaking detection value
    */
   public void setSectorCloakingDetection(int x, int y,int value) {
     try {

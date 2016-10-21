@@ -55,18 +55,12 @@ public enum SpaceRace {
     
   /**
    * Create space race
-   * @param index
-   * @param name
-   * @param description
-   * @param researchSpeed
-   * @param miningSpeed
-   * @param cultureSpeed
-   * @param productionSpeed
-   * @param growthSpeed
-   * @param foodRequire
-   * @param diplomacy
+   * @param index Space race index
+   * @param name Space race name in plural
+   * @param single Space race name in single format
+   * @param description Space race  description
    */
-  SpaceRace(int index, String name,String single,  String description) {
+  SpaceRace(int index, String name, String single, String description) {
     this.index = index;
     this.name= name;
     this.nameSingle = single;

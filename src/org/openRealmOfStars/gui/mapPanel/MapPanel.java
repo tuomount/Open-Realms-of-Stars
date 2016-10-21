@@ -464,7 +464,9 @@ public class MapPanel extends JPanel {
 
   /**
    * Draw battle map to Map panel
-   * @param Combat to draw on map panel
+   * @param combat to draw on map panel
+   * @param info PlayerInfo
+   * @param starMap StarMap
    */
   public void drawBattleMap(Combat combat, PlayerInfo info, StarMap starMap) {
     if (screen == null) {

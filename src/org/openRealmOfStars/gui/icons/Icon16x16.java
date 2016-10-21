@@ -64,7 +64,7 @@ public class Icon16x16 {
    * @param x X-axel coordinate
    * @param y Y-axel coordinate
    * @param name Name for the icon
-   * @throws RasterFormatExcepition if icon is outside of image.
+   * @throws RasterFormatException if icon is outside of image.
    */
   public Icon16x16(BufferedImage image,int x, int y,String name) throws 
   RasterFormatException {

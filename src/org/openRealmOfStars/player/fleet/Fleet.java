@@ -153,7 +153,7 @@ public class Fleet {
 
   /**
    * Is certain ship in fleet
-   * @param Certain ship is in fleet
+   * @param ship is in fleet
    */
   public boolean isShipInFleet(Ship ship) {
     return ships.contains(ship);

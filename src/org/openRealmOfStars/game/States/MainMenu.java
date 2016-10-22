@@ -16,6 +16,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.GenericFileFilter;
 
 /**
  * 
@@ -69,9 +70,12 @@ public class MainMenu extends BlackPanel {
     SpaceButton btn = new SpaceButton("Continue game", GameCommands.COMMAND_CONTINUE_GAME);
     btn.addActionListener(listener);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    File current = new File("saves/current.save");
-    if (current.exists()) {
-      invis.add(btn);
+    File folder = new File("saves");
+    if (folder.exists()) {
+      File[] files = folder.listFiles(new GenericFileFilter(".save"));
+      if (files.length > 0) {
+        invis.add(btn);
+      }
     }
     btn = new SpaceButton("New game", GameCommands.COMMAND_NEW_GAME);
     btn.addActionListener(listener);

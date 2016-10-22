@@ -5,6 +5,9 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.text.SimpleDateFormat;
 
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.starMap.StarMap;
@@ -54,6 +57,15 @@ public class SavedGame {
   private String filename;
 
   /**
+   * First player's empire name
+   */
+  private String empireName;
+  
+  /**
+   * File's creation time
+   */
+  private String creationTime;
+  /**
    * Load game from certain file name and get all information from saved
    * game
    * @param filename File name
@@ -62,6 +74,9 @@ public class SavedGame {
   public SavedGame(String filename) throws IOException {
     String folderName = "saves";
     File file = new File(folderName+"/"+filename);
+    BasicFileAttributes attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    creationTime = dateFormat.format(attr.creationTime().toMillis());
     FileInputStream is = null;
     try {
       is = new FileInputStream(file);
@@ -73,6 +88,7 @@ public class SavedGame {
       turnNumber = starMap.getTurn();
       galaxySize = starMap.getMaxX()+" X "+starMap.getMaxY();
       playerRace = starMap.getPlayerList().getPlayerInfoByIndex(0).getRace();
+      empireName = starMap.getPlayerList().getPlayerInfoByIndex(0).getEmpireName();
     } catch (IOException e) {
       System.out.println(e.getMessage());
       throw e;
@@ -103,5 +119,15 @@ public class SavedGame {
     return filename;
   }
   
+  public String getEmpireName() {
+    return empireName;
+  }
+  
+  /**
+   * Get save file's creation time
+   */
+  public String getTime() {
+    return creationTime;
+  }
   
 }

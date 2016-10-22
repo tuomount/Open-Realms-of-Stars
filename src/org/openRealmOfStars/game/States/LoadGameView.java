@@ -4,8 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.Box;
@@ -16,6 +16,7 @@ import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.SavedGame;
+import org.openRealmOfStars.gui.ListRenderers.SaveGameListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
@@ -23,6 +24,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.GenericFileFilter;
 
 /**
  * 
@@ -89,27 +91,29 @@ public class LoadGameView extends BlackPanel {
     info.setTitle("Saved games");
     info.add(Box.createRigidArea(new Dimension(5,5)));
     
-    //FIXME: Very ugly way of loading games, this needs to be dynamic
-    SavedGame[] games = new SavedGame[2];
-    try {
-      games[0] = new SavedGame("current.save");
-    } catch (IOException e) {
-      games[0] = null;
-    }
-    try {
-      games[1] = new SavedGame("autosave.save");
-    } catch (IOException e) {
-      games[1] = null;
+    File folder = new File("saves");
+    File[] files = folder.listFiles(new GenericFileFilter(".save"));
+    
+    SavedGame[] games = new SavedGame[files.length];
+    for (int i=0;i<files.length;i++) {
+      try {
+        games[i] = new SavedGame(files[i].getName());
+      } catch (IOException e) {
+        games[i] = null;
+      }
     }
     
     saveGamesList = new JList<>(games);
     
-    //saveGamesList.setCellRenderer(new TechListRenderer());
+    saveGamesList.setCellRenderer(new SaveGameListRenderer());
     JScrollPane scroll = new JScrollPane(saveGamesList);
     saveGamesList.setBackground(Color.BLACK);
     saveGamesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     info.add(scroll);
     info.add(Box.createRigidArea(new Dimension(10,10)));
+    xinvis.add(info);
+    xinvis.add(Box.createRigidArea(new Dimension(200,5)));
+    invis.add(xinvis);
 
     imgBase.add(invis,BorderLayout.CENTER);
 
@@ -129,12 +133,15 @@ public class LoadGameView extends BlackPanel {
   }
 
   /**
-   * Handle actions for Load Game view
-   * @param arg0 The event to handle
+   * Get Selected Save file name
+   * @return String as saved game file name or null if not selected.
    */
-  public void handleActions(ActionEvent arg0) {
+  public String getSelectedSaveFile() {
+    if (saveGamesList.getSelectedValue() != null) {
+      return saveGamesList.getSelectedValue().getFilename();
+    }
+    return null;
   }
-  
 
 
 

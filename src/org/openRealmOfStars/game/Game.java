@@ -21,6 +21,7 @@ import org.openRealmOfStars.game.States.BattleView;
 import org.openRealmOfStars.game.States.CreditsView;
 import org.openRealmOfStars.game.States.FleetView;
 import org.openRealmOfStars.game.States.GalaxyCreationView;
+import org.openRealmOfStars.game.States.LoadGameView;
 import org.openRealmOfStars.game.States.MainMenu;
 import org.openRealmOfStars.game.States.PlanetBombingView;
 import org.openRealmOfStars.game.States.PlanetView;
@@ -137,6 +138,11 @@ public class Game extends JFrame implements ActionListener {
    * Player Setup view
    */
   public PlayerSetupView playerSetupView;
+  
+  /**
+   * Load Game View
+   */
+  public LoadGameView loadGameView;
 
   /**
    * AI Turn view
@@ -383,6 +389,16 @@ public class Game extends JFrame implements ActionListener {
   }
 
   /**
+   * Show Load Gamve view panel
+   */
+  public void showLoadGame() {
+    loadGameView = new LoadGameView(this);
+    this.getContentPane().removeAll();
+    this.add(loadGameView);
+    this.validate();
+  }
+
+  /**
    * Save game for certain file name
    * @param filename File name
    */
@@ -496,6 +512,7 @@ public class Game extends JFrame implements ActionListener {
     case MAIN_MENU: showMainMenu(); break;
     case GALAXY_CREATION: showGalaxyCreation(); break;
     case PLAYER_SETUP: showPlayerSetup(); break;
+    case LOAD_GAME: showLoadGame(); break;
     case NEW_GAME: { 
       players = new PlayerList();
       for (int i=0;i<galaxyConfig.getMaxPlayers();i++) {
@@ -832,13 +849,23 @@ public class Game extends JFrame implements ActionListener {
         playerSetupView.handleActions(arg0);
       }
     }
+    if (gameState == GameState.LOAD_GAME && loadGameView != null) {
+      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        changeGameState(GameState.MAIN_MENU);
+      } else if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
+        if (loadGameView.getSelectedSaveFile() != null) {
+          if (loadGame(loadGameView.getSelectedSaveFile())) {
+            changeGameState(GameState.STARMAP);
+          }
+        }
+      }
+      
+    }
     if (gameState == GameState.MAIN_MENU) {
       // Main menu
       if (arg0.getActionCommand().equalsIgnoreCase(
           GameCommands.COMMAND_CONTINUE_GAME)) {
-        if (loadGame("current.save")) {
-          changeGameState(GameState.STARMAP);
-        }
+          changeGameState(GameState.LOAD_GAME);
       }
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEW_GAME)) {
         changeGameState(GameState.GALAXY_CREATION);

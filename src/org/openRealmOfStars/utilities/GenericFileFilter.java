@@ -1,4 +1,7 @@
-package org.openRealmOfStars.game;
+package org.openRealmOfStars.utilities;
+
+import java.io.File;
+import java.io.FileFilter;
 
 /**
  * 
@@ -19,23 +22,28 @@ package org.openRealmOfStars.game;
  * along with this program; if not, see http://www.gnu.org/licenses/
  * 
  * 
- * Game states in enum
+ * Generic file filter to filter out files by extension
  * 
  */
-public enum GameState {
-  MAIN_MENU,
-  NEW_GAME,
-  STARMAP,
-  PLANETVIEW,
-  FLEETVIEW,
-  RESEARCHVIEW,
-  VIEWSHIPS,
-  SHIPDESIGN,
-  COMBAT,
-  CREDITS,
-  AITURN,
-  PLANETBOMBINGVIEW,
-  GALAXY_CREATION,
-  PLAYER_SETUP,
-  LOAD_GAME;
+public class GenericFileFilter implements FileFilter {
+
+  
+  /**
+   * Extension to filter files
+   */
+  private String extension;
+  
+  /**
+   * Filter with file extension. Accept only file to matching extension
+   * @param extension File Extension
+   */
+  public GenericFileFilter(String extension) {
+    this.extension = extension;
+  }
+  
+  @Override
+  public boolean accept(File pathname) {
+    return pathname.getName().endsWith(extension);
+  }
+
 }

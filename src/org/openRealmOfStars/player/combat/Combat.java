@@ -91,10 +91,10 @@ public class Combat {
   
   /**
    * Build shipList in initiative order
-   * @param fleet1 Player1 fleet
-   * @param fleet2 Player2 fleet
-   * @param info1 Player1 info
-   * @param info2 Player2 Info
+   * @param fleet1 Attacking Player1 fleet
+   * @param fleet2 Defending Player2 fleet
+   * @param info1 Attacking Player1 info 
+   * @param info2 Defending Player2 Info 
    */
   public Combat(Fleet fleet1, Fleet fleet2, PlayerInfo info1, PlayerInfo info2) {
     this.fleet1 = fleet1;
@@ -673,7 +673,7 @@ public class Combat {
     }
     if (winner != null && info2 == winner) {
       handleWinner(fleet2, info2);
-      fleet2.setPos(fleet1.getX(), fleet1.getY());
+      // Defending player won't move
       int index =info1.Fleets().getIndexByName(fleet1.getName());
       if (index != -1) {
         info1.Fleets().remove(index);

@@ -633,8 +633,12 @@ public class MapPanel extends JPanel {
       }
       List<ParticleEffect> particles = anim.getParticles();
       for (ParticleEffect part : particles) {
-        screen.setRGB(part.getX()+viewPointOffsetX, part.getY()+viewPointOffsetY,
-            part.getColor().getRGB());
+        int px = part.getX()+viewPointOffsetX;
+        int py = part.getY()+viewPointOffsetY;
+        if (px >= 0 && py >= 0 && px < screen.getWidth() && py < screen.getHeight()) {
+          screen.setRGB(part.getX()+viewPointOffsetX, part.getY()+viewPointOffsetY,
+              part.getColor().getRGB());
+        }
       }
       anim.doAnimation();
       if (anim.isAnimationFinished()) {

@@ -501,6 +501,10 @@ public class Ship extends Construction {
       hullPoints[componentPos[target]] = 0;
     }
     damage = damage-hp;
+    if (hp == 0) {
+      // Ship has been destroyed by attack nothing to pierce...
+      damage = 0;
+    }
     return damage;    
   }
   

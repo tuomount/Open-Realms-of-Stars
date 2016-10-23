@@ -4,11 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
@@ -120,20 +120,26 @@ public class StarMapView extends BlackPanel {
   private boolean autoFocus;
   
   /**
+   * Main game
+   */
+  private Game game;
+  
+  /**
    * Star Map view
    * @param map Star map to view
    * @param players Player List
-   * @param listener Action Listener
+   * @param Game Action Listener and actual game
    */
-  public StarMapView(StarMap map, PlayerList players, ActionListener listener) {
+  public StarMapView(StarMap map, PlayerList players, Game game) {
     this.map = map;
     this.players = players;
+    this.game = game;
     setAutoFocus(false);
 
     BlackPanel base = new BlackPanel();
     mapPanel = new MapPanel(false);
     // Side panel
-    infoPanel = new MapInfoPanel(listener);
+    infoPanel = new MapInfoPanel(game);
     mapPanel.drawMap(this.map);
     starMapMouseListener = new StarMapMouseListener(this.map,mapPanel,infoPanel);
     Planet planet = this.map.getPlanetByCoordinate(this.map.getCursorX(), this.map.getCursorY());
@@ -171,17 +177,17 @@ public class StarMapView extends BlackPanel {
     
     viewResearchButton = new SpaceButton("Research",
         GameCommands.COMMAND_VIEW_RESEARCH);
-    viewResearchButton.addActionListener(listener);
+    viewResearchButton.addActionListener(game);
     bottomBtnPanel.add(viewResearchButton);
 
     viewSpaceShips = new SpaceButton("Ships",
         GameCommands.COMMAND_SHIPS);
-    viewSpaceShips.addActionListener(listener);
+    viewSpaceShips.addActionListener(game);
     bottomBtnPanel.add(viewSpaceShips);
 
     SpaceButton debugBattle = new SpaceButton("Battle",
         GameCommands.COMMAND_BATTLE);
-    debugBattle.addActionListener(listener);
+    debugBattle.addActionListener(game);
     bottomBtnPanel.add(debugBattle);
 
     bottomPanel.add(bottomBtnPanel);
@@ -190,14 +196,14 @@ public class StarMapView extends BlackPanel {
         GameCommands.COMMAND_NEXT_MSG, GameCommands.COMMAND_FOCUS_MSG,
         players.getCurrentPlayerInfo().getMsgList().getMsg(),
         players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
-        players.getCurrentPlayerInfo().getMsgList().getMaxMsg(),listener);
+        players.getCurrentPlayerInfo().getMsgList().getMaxMsg(),game);
     bottomPanel.add(msgPanel);
 
     bottomPanel.add(Box.createRigidArea(new Dimension(10,5)));
 
     endTurnButton = new SpaceButton("\t\n\t\nEnd Turn \n"+this.map.getTurn()+"\t\n\t\n\t\n", 
         GameCommands.COMMAND_END_TURN);
-    endTurnButton.addActionListener(listener);
+    endTurnButton.addActionListener(game);
     bottomPanel.add(endTurnButton);
 
     base.setLayout(new BorderLayout());
@@ -279,6 +285,7 @@ public class StarMapView extends BlackPanel {
       if (msg.getX() != -1 && msg.getY() != -1) {
         map.setCursorPos(msg.getX(), msg.getY());
         map.setDrawPos(msg.getX(), msg.getY());
+        game.focusOnMessage(true);
       }
       msgPanel.updatePanel(msg, 
           players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
@@ -289,6 +296,7 @@ public class StarMapView extends BlackPanel {
       if (msg.getX() != -1 && msg.getY() != -1) {
         map.setCursorPos(msg.getX(), msg.getY());
         map.setDrawPos(msg.getX(), msg.getY());
+        game.focusOnMessage(true);
       }
       msgPanel.updatePanel(msg, 
           players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),

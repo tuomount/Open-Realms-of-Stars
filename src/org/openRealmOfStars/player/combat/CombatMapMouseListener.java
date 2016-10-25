@@ -7,6 +7,7 @@ import java.awt.event.MouseMotionListener;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
@@ -123,11 +124,11 @@ public class CombatMapMouseListener extends MouseAdapter implements
           if (target !=  null && combat.isClearShot(combat.getCurrentShip(), target)) {
             int accuracy = ship.getShip().getHitChance(weapon)+ship.getBonusAccuracy();
             accuracy = accuracy-target.getShip().getDefenseValue();
-            int value=1; // Not even a dent
+            ShipDamage shipDamage = new ShipDamage(1, "Attack missed!");
             if (DiceGenerator.getRandom(1, 100)<=accuracy) {
-              value = target.getShip().damageBy(weapon);
+              shipDamage = target.getShip().damageBy(weapon);
             }
-            combat.setAnimation(new CombatAnimation(ship, target, weapon, value));
+            combat.setAnimation(new CombatAnimation(ship, target, weapon, shipDamage.getValue()));
             ship.useComponent(componentUse);
             componentUse = -1;
             combat.setComponentUse(-1);

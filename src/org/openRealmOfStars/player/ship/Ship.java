@@ -479,14 +479,17 @@ public class Ship extends Construction {
   /**
    * Damage component by randomly
    * @param damage Amount damage to cause
+   * @param shipDamage Ship Damage to more description infomation about damage
    * @return amount damage left aka pierced the component
    */
-  public int damageComponent(int damage) {
+  public int damageComponent(int damage,ShipDamage shipDamage) {
     int[] componentPos = new int[components.size()];
+    ShipComponent[] compList = new ShipComponent [components.size()];
     int positions = 0;
     for (int i=0;i<hullPoints.length;i++) {
       if (hullPoints[i] > 0) {
         componentPos[positions] = i;
+        compList[positions] = components.get(i);
         positions++;
       }
     }
@@ -499,6 +502,11 @@ public class Ship extends Construction {
     if (hullPoints[componentPos[target]]<0) {
       // No negative hull points to components
       hullPoints[componentPos[target]] = 0;
+    }
+    if (hullPoints[componentPos[target]]==0) {
+      shipDamage.addText(compList[target].getName()+" is destroyed!");
+    } else {
+      shipDamage.addText(compList[target].getName()+" damaged!");
     }
     damage = damage-hp;
     if (hp == 0) {
@@ -516,8 +524,7 @@ public class Ship extends Construction {
    *         -1 Got damage
    *         -2 Destroyed
    */
-  public int damageBy(ShipComponent weapon) {
-    int result = 1;
+  public ShipDamage damageBy(ShipComponent weapon) {
     int damage = 0;
     switch (weapon.getType()) {
     case WEAPON_BEAM: 
@@ -529,9 +536,9 @@ public class Ship extends Construction {
       } else {
         if (this.getShield()/2 < weapon.getDamage()) {
           this.setShield(this.getShield()-1);
-          return 0;
+          return new ShipDamage(0,"Attack hit the shield!");
         }
-        return 1;
+        return new ShipDamage(1,"Attacked missed!");
       }
       damage = damage-this.getArmor()/2;
       if (damage >= 0) {
@@ -540,7 +547,7 @@ public class Ship extends Construction {
         damage = damage+this.getArmor()/2;
         if (this.getArmor()/4 < damage) {
           this.setArmor(this.getArmor()-1);
-          return 0;
+          return new ShipDamage(0,"Attack hit the armor!");
         }
       }
       break;
@@ -554,9 +561,9 @@ public class Ship extends Construction {
       } else {
         if (this.getArmor()/2 < weapon.getDamage()) {
           this.setArmor(this.getArmor()-1);
-          return 0;
+          return new ShipDamage(0,"Attack hit the armor!");
         }
-        return 1;
+        return new ShipDamage(1,"Attacked missed!");
       }
       damage = damage-this.getShield()/2;
       if (damage >= 0) {
@@ -565,7 +572,7 @@ public class Ship extends Construction {
         damage = damage+this.getShield()/2;
         if (this.getShield()/4 < damage) {
           this.setShield(this.getShield()-1);
-          return 0;
+          return new ShipDamage(0,"Attack hit the shield!");
         }
       }
       break;
@@ -573,18 +580,19 @@ public class Ship extends Construction {
     case WEAPON_ECM_TORPEDO: {
       damage = weapon.getDamage();
       this.setShield(this.getShield()-damage);
-      return 1;
+      return new ShipDamage(1,"Attacked missed!");
     }
     default: /* Not a weapon */break;
     }    
+    ShipDamage shipDamage = new ShipDamage(-1,"Attack hit causing "+damage+" damage!");
     while (damage > 0) {
-      result = -1;
-      damage = damageComponent(damage);
+      damage = damageComponent(damage,shipDamage);
     }
     if (getHullPoints()==0) {
-      return -2;
+      shipDamage.setValue(-2);
+      shipDamage.addText(getName()+" is destroyed!");
     }    
-    return result;
+    return shipDamage;
   }
 
   /**

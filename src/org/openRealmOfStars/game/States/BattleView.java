@@ -24,6 +24,7 @@ import org.openRealmOfStars.player.combat.CombatMapMouseListener;
 import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
@@ -108,11 +109,20 @@ public class BattleView extends BlackPanel {
    */
   private InfoTextArea textArea;
 
+  /**
+   * Text area containing combat log
+   */
+  private InfoTextArea logArea;
   
   /**
    * Combat has ended
    */
   private boolean combatEnded;
+
+  /**
+   * Text log
+   */
+  private String[] textLog;
 
   /**
    * Battle view for space combat
@@ -153,7 +163,10 @@ public class BattleView extends BlackPanel {
         Combat.MAX_Y*ShipImage.MAX_HEIGHT);
     mapPanel.drawBattleMap(combat, combat.getPlayer1(), this.map);
 
-    infoPanel = new BattleInfoPanel(combat.getCurrentShip().getShip(),listener);
+    textArea = new InfoTextArea(10,30);
+    textArea.setEditable(false);
+    textArea.setLineWrap(true);
+    infoPanel = new BattleInfoPanel(combat.getCurrentShip().getShip(),textArea,listener);
 
     combatMapMouseListener = new CombatMapMouseListener(combat, mapPanel, infoPanel);
     mapPanel.addMouseListener(combatMapMouseListener);
@@ -167,10 +180,15 @@ public class BattleView extends BlackPanel {
     bottom.add(endButton);
     
     bottom.add(Box.createRigidArea(new Dimension(10,10)));
-    textArea = new InfoTextArea(10,30);
-    textArea.setEditable(false);
-    textArea.setLineWrap(true);
-    bottom.add(textArea);
+    logArea = new InfoTextArea(10,30);
+    logArea.setEditable(false);
+    logArea.setLineWrap(true);
+    bottom.add(logArea);
+    textLog = new String[11];
+    for (int i=0;i<textLog.length;i++) {
+      textLog[i] = "";
+    }
+    bottom.add(Box.createRigidArea(new Dimension(10,10)));
 
 
     
@@ -193,6 +211,14 @@ public class BattleView extends BlackPanel {
     } else {
       textArea.setText("");
     }
+    StringBuilder sb = new StringBuilder();
+    for (int i=textLog.length-1;i>=0;i--) {
+      sb.append(textLog[i]);
+      if (i!=0) {
+        sb.append("\n");
+      }
+    }
+    logArea.setText(sb.toString());
     this.repaint();
   }
   
@@ -216,11 +242,15 @@ public class BattleView extends BlackPanel {
             combat.isClearShot(ai, target) && ai.getShip().componentIsWorking(i)) {
           int accuracy = ai.getShip().getHitChance(weapon)+ai.getBonusAccuracy();
           accuracy = accuracy-target.getShip().getDefenseValue();
-          int value=1; // Not even a dent
+          ShipDamage shipDamage = new ShipDamage(1, "Attack missed!");
           if (DiceGenerator.getRandom(1, 100)<=accuracy) {
-            value = target.getShip().damageBy(weapon);
+            shipDamage = target.getShip().damageBy(weapon);
           }
-          combat.setAnimation(new CombatAnimation(ai, target, weapon, value));
+          String[] logs = shipDamage.getMessage().split("\n");
+          for (String log : logs) {
+            addLog(log);
+          }
+          combat.setAnimation(new CombatAnimation(ai, target, weapon, shipDamage.getValue()));
           ai.useComponent(i);
           ai.setAiShotsLeft(ai.getAiShotsLeft()-1);
           combat.setComponentUse(-1);
@@ -370,5 +400,17 @@ public class BattleView extends BlackPanel {
     }
 
   }
+  
+  /**
+   * Add new text log
+   * @param text Text to add
+   */
+  public void addLog(String text) {
+    for (int i=textLog.length-1;i>0;i--) {
+      textLog[i] = textLog[i-1];
+    }
+    textLog[0] = text;
+  }
+
 
 }

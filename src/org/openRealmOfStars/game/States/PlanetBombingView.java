@@ -35,6 +35,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
+import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -227,7 +228,7 @@ public class PlanetBombingView extends BlackPanel {
     JScrollPane scroll = new JScrollPane(shipsInFleet);
     eastPanel.add(scroll);
 
-    infoPanel = new BattleInfoPanel(fleet.getFirstShip(),listener);
+    infoPanel = new BattleInfoPanel(fleet.getFirstShip(),null,listener);
     infoPanel.showShip(fleet.getFirstShip());
     infoPanel.setBorder(null);
     eastPanel.add(infoPanel);
@@ -362,8 +363,10 @@ public class PlanetBombingView extends BlackPanel {
           } else {
             turret = turret - ship.getArmor();
             ship.setShield(ship.getShield()-1);
+            ShipDamage shipDamage = new ShipDamage(1, "NOT USED!");
             while (turret > 0 && ship.getHullPoints() > 0) {
-              turret = ship.damageComponent(turret);
+              // FIXME SHIPDAMAGE is not really used
+              turret = ship.damageComponent(turret,shipDamage);
             }
             if (ship.getHullPoints() <=0) {
               addLog("Planetary defense damages "+ship.getName()+" and destroys it.");

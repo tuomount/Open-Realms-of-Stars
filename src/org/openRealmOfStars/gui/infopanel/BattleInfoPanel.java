@@ -71,7 +71,7 @@ public class BattleInfoPanel extends InfoPanel {
    */
   private ComponentButton[] cBtn = new ComponentButton[MAX_BTN];
   
-  public BattleInfoPanel(Ship ship, ActionListener listener) {
+  public BattleInfoPanel(Ship ship,InfoTextArea shipInfo, ActionListener listener) {
     this.add(Box.createRigidArea(new Dimension(130,25)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH*2, Tile.MAX_HEIGHT*2,
         BufferedImage.TYPE_4BYTE_ABGR);
@@ -97,8 +97,12 @@ public class BattleInfoPanel extends InfoPanel {
       cBtn[i].setActionCommand(GameCommands.COMMAND_COMPONENT_USE+i);
       cBtn[i].addActionListener(listener);
       invis.add(cBtn[i]);
-    }
+    }    
     this.add(invis);
+    if (shipInfo != null) {
+      this.add(Box.createRigidArea(new Dimension(10,10)));
+      this.add(shipInfo);
+    }
   }
   
 

@@ -174,8 +174,12 @@ public class Ship extends Construction {
     sb.append(getMetalCost());
     sb.append("\n");
     sb.append("Shield: ");
+    sb.append(shield);
+    sb.append("/");
     sb.append(getTotalShield());
     sb.append(" Armor: ");
+    sb.append(armor);
+    sb.append("/");
     sb.append(getTotalArmor());
     sb.append(" Hull Points: ");
     sb.append(hull.getSlotHull()*getNumberOfComponents());
@@ -503,10 +507,12 @@ public class Ship extends Construction {
       // No negative hull points to components
       hullPoints[componentPos[target]] = 0;
     }
-    if (hullPoints[componentPos[target]]==0) {
-      shipDamage.addText(compList[target].getName()+" is destroyed!");
-    } else {
-      shipDamage.addText(compList[target].getName()+" damaged!");
+    if (compList[target] != null) {
+      if (hullPoints[componentPos[target]]==0) {
+        shipDamage.addText(compList[target].getName()+" is destroyed!");
+      } else {
+        shipDamage.addText(compList[target].getName()+" damaged!");
+      }
     }
     damage = damage-hp;
     if (hp == 0) {
@@ -538,7 +544,7 @@ public class Ship extends Construction {
           this.setShield(this.getShield()-1);
           return new ShipDamage(0,"Attack hit the shield!");
         }
-        return new ShipDamage(1,"Attacked missed!");
+        return new ShipDamage(1,"Attack missed!");
       }
       damage = damage-this.getArmor()/2;
       if (damage >= 0) {
@@ -563,7 +569,7 @@ public class Ship extends Construction {
           this.setArmor(this.getArmor()-1);
           return new ShipDamage(0,"Attack hit the armor!");
         }
-        return new ShipDamage(1,"Attacked missed!");
+        return new ShipDamage(1,"Attack missed!");
       }
       damage = damage-this.getShield()/2;
       if (damage >= 0) {
@@ -580,7 +586,7 @@ public class Ship extends Construction {
     case WEAPON_ECM_TORPEDO: {
       damage = weapon.getDamage();
       this.setShield(this.getShield()-damage);
-      return new ShipDamage(1,"Attacked missed!");
+      return new ShipDamage(1,"Attacked damage shield by "+damage+"!");
     }
     default: /* Not a weapon */break;
     }    

@@ -200,6 +200,7 @@ public class BattleView extends BlackPanel {
     aStar = null;
     delayCount = 0;
     combatEnded = false;
+    addLog("Combat started...");
   }
   
   /**
@@ -364,6 +365,15 @@ public class BattleView extends BlackPanel {
   public void handleActions(ActionEvent arg0) {
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_ANIMATION_TIMER) ) {
+      if (combatMapMouseListener.getShipDamage() != null &&
+          combatMapMouseListener.getShipDamage().isReady()) {
+        String[] logs = combatMapMouseListener.getShipDamage().getMessage()
+                                              .split("\n");
+        for (String log : logs) {
+          addLog(log);
+        }
+        combatMapMouseListener.getShipDamage().logged();
+      }
       if (combat.getAnimation() == null) {
         delayCount++;
         if (delayCount >= MAX_DELAY_COUNT) {

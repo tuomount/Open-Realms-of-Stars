@@ -23,10 +23,35 @@ package org.openRealmOfStars.player.ship;
  */
 public class ShipDamage {
 
+  /**
+   * Damage did not cause even a dent
+   */
   public static int NO_DAMAGE_NO_DENT = 1;
+  /**
+   * No damage
+   */
   public static int NO_DAMAGE = 0;
+  /**
+   * Damage some component
+   */
   public static int DAMAGED = -1;
+  /**
+   * Ship is destroyed
+   */
   public static int DESTROYED = -2;
+  
+  /**
+   * Ship Damage is not ready yet
+   */
+  public static int NOT_READY_YET = 0;
+  /**
+   * Ship damage is ready if loggin
+   */
+  public static int READY_FOR_LOGGING = 1;
+  /**
+   * Has been logged
+   */
+  public static int LOGGED = 2;
   
   /** 1 No damage, not even dent
   *   0 No damage, but shield or armor got lower
@@ -34,6 +59,14 @@ public class ShipDamage {
   *   -2 Destroyed
   */
   private int value;
+  
+  /**
+   * Status for ship damage
+   * 0 : Not ready yet
+   * 1 : Ready for logging
+   * 2 : Logged
+   */
+  private int status;
   
   /**
    * Textual description of damage(s)
@@ -53,8 +86,34 @@ public class ShipDamage {
   public ShipDamage(int value, String message) {
     this.value = value;
     this.message = message;
+    this.status = NOT_READY_YET;
   }
   
+  /**
+   * Is Ship Damage ready fo logging
+   * @return
+   */
+  public boolean isReady() {
+    if (status == READY_FOR_LOGGING) {
+      return true;
+    }
+    return false;
+  }
+  
+  /**
+   * Change ship damage status got logged
+   */
+  public void logged() {
+    status = LOGGED;
+  }
+
+  /**
+   * Change ship damage status got logged
+   */
+  public void ready() {
+    status = READY_FOR_LOGGING;
+  }
+
   /**
    * Add extra line to message
    * @param text As a string

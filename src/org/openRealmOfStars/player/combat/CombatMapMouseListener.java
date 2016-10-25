@@ -76,6 +76,7 @@ public class CombatMapMouseListener extends MouseAdapter implements
     this.mapPanel = panel;
     this.battleInfoPanel = battleInfoPanel;
     this.componentUse = -1;
+    this.shipDamage = null;
   }
   
   
@@ -90,6 +91,10 @@ public class CombatMapMouseListener extends MouseAdapter implements
   private CombatShip activeShip;
   
  
+  /**
+   * ShipDamage information
+   */
+  private ShipDamage shipDamage;
   
   @Override
   public void mouseExited(MouseEvent e) {
@@ -124,10 +129,11 @@ public class CombatMapMouseListener extends MouseAdapter implements
           if (target !=  null && combat.isClearShot(combat.getCurrentShip(), target)) {
             int accuracy = ship.getShip().getHitChance(weapon)+ship.getBonusAccuracy();
             accuracy = accuracy-target.getShip().getDefenseValue();
-            ShipDamage shipDamage = new ShipDamage(1, "Attack missed!");
+            shipDamage = new ShipDamage(1, "Attack missed!");
             if (DiceGenerator.getRandom(1, 100)<=accuracy) {
               shipDamage = target.getShip().damageBy(weapon);
             }
+            shipDamage.ready();
             combat.setAnimation(new CombatAnimation(ship, target, weapon, shipDamage.getValue()));
             ship.useComponent(componentUse);
             componentUse = -1;
@@ -182,6 +188,20 @@ public class CombatMapMouseListener extends MouseAdapter implements
 
   public void setActiveShip(CombatShip activeShip) {
     this.activeShip = activeShip;
+  }
+
+
+
+
+  public ShipDamage getShipDamage() {
+    return shipDamage;
+  }
+
+
+
+
+  public void setShipDamage(ShipDamage shipDamage) {
+    this.shipDamage = shipDamage;
   }
 
   

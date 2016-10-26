@@ -42,7 +42,7 @@ public class MissionList {
   /**
    * Read MissionList from DataInputStream
    * @param dis DataInputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public MissionList(DataInputStream dis) throws IOException {
     missions = new ArrayList<>();
@@ -56,7 +56,7 @@ public class MissionList {
   /**
    * Save Mission list to DataOutputStream
    * @param dos DataOutputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveMissionList(DataOutputStream dos) throws IOException {
     dos.writeInt(missions.size());
@@ -83,7 +83,7 @@ public class MissionList {
 
   /**
    * Get mission for fleet name
-   * @param fleetName
+   * @param fleetName The fleet name
    * @return Mission or null if not found
    */
   public Mission getMissionForFleet(String fleetName) {
@@ -209,8 +209,8 @@ public class MissionList {
   }
   
   /**
-   * Adde new mission into mission list;
-   * @param mission
+   * Add new mission into mission list;
+   * @param mission The mission to add to the list
    */
   public void add(Mission mission) {
     missions.add(mission);

@@ -143,7 +143,7 @@ public class ShipImage {
   
   /**
    * Get ship image by index. If index is out of bounds scout image is returned.
-   * @param index
+   * @param index The ship image index
    * @return BufferedImage
    */
   public BufferedImage getShipImage(int index) {
@@ -156,7 +156,7 @@ public class ShipImage {
   /**
    * Get small ship image by index. If index is out of bounds scout image is
    * returned.
-   * @param index
+   * @param index The ship image index
    * @return BufferedImage
    */
   public BufferedImage getSmallShipImage(int index) {

@@ -38,7 +38,7 @@ public class IOUtilities {
 
   /**
    * Load image with URL. Can be used to read images inside JAR file
-   * @param urlToImage
+   * @param urlToImage the url to the image file
    * @return BufferedImage if succeed null if fails
    */
   public static BufferedImage loadImage(URL urlToImage) {
@@ -54,7 +54,7 @@ public class IOUtilities {
    * Read file as text file return as US-ASCII string
    * @param is DataInputStream
    * @return String
-   * @throws IOException
+   * @throws IOException if there is any problem with the DataInputStream
    */
   public static String readTextFile(DataInputStream is) throws IOException {
     byte[] dataBuf = new byte[is.available()];
@@ -134,9 +134,9 @@ public class IOUtilities {
   /**
    * Writes string into DataOutputStream. First 4 octets tell string length
    * then each character is written with 2 octets
-   * @param os
-   * @param str
-   * @throws IOException
+   * @param os the output stream
+   * @param str the string that os gets
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public static void writeString(DataOutputStream os, String str) 
                                                throws IOException {

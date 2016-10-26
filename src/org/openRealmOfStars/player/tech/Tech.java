@@ -135,7 +135,7 @@ public class Tech {
   }
   /**
    * Get Hull that tech provides
-   * @return
+   * @return The hull
    */
   public String getHull() {
     return hull;

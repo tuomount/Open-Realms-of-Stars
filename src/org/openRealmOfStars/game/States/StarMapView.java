@@ -223,7 +223,7 @@ public class StarMapView extends BlackPanel {
 
   /**
    * Get Star Map mouse listener
-   * @return
+   * @return The map mouse listener
    */
   public StarMapMouseListener getStarMapMouseListener() {
     return starMapMouseListener;

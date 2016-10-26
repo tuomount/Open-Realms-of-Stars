@@ -321,7 +321,7 @@ public class StarMap {
   /**
    * Initialize StarMap from DataInputStream
    * @param dis DataInputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public StarMap(DataInputStream dis) throws IOException {
     String str = IOUtilities.readString(dis);
@@ -366,9 +366,9 @@ public class StarMap {
   }
   
   /**
-   * Save Game to DataOuputStream
+   * Save Game to DataOutputStream
    * @param dos DataOutputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, MAGIC_STRING);
@@ -878,7 +878,7 @@ public class StarMap {
   
   /**
    * Check if all AI players are handled
-   * @return
+   * @return are the AIs handled
    */
   public boolean isAllAIsHandled() {
     if (aiTurnNumber == players.getCurrentMaxPlayers()) {
@@ -934,7 +934,7 @@ public class StarMap {
   
   /**
    * Set AI Fleet
-   * @param fleet
+   * @param fleet The AI fleet
    */
   public void setAIFleet(Fleet fleet) {
     aiFleet = fleet;
@@ -1332,8 +1332,8 @@ public class StarMap {
 
   /**
    * Get tile info from coordinate
-   * @param x
-   * @param y
+   * @param x The X coordinate
+   * @param y The Y coordinate
    * @return TileInfo
    */
   public SquareInfo getTileInfo(int x, int y) {
@@ -1346,8 +1346,8 @@ public class StarMap {
 
   /**
    * Get culture power
-   * @param x
-   * @param y
+   * @param x The X coordinate
+   * @param y The Y coordinate
    * @return Culture power or null
    */
   public CulturePower getSectorCulture(int x, int y) {

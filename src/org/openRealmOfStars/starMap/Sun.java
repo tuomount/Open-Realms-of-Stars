@@ -65,7 +65,7 @@ public class Sun {
   /**
    * Create the sun from DataInputStream
    * @param dis DataInputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public Sun(DataInputStream dis) throws IOException {
     this.setCenterX(dis.readInt());
@@ -76,7 +76,7 @@ public class Sun {
   /**
    * Save Sun information to DataOutputStream
    * @param dos DataOutputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveSun(DataOutputStream dos) throws IOException {
     dos.writeInt(centerX);

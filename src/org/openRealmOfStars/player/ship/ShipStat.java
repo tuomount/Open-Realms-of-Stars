@@ -88,7 +88,7 @@ public class ShipStat implements Comparable<ShipStat>{
   /**
    * Read ShipStat from DataInputStream
    * @param dis Data Input Stream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public ShipStat(DataInputStream dis) throws IOException {
     this.design = new ShipDesign(dis);
@@ -104,7 +104,7 @@ public class ShipStat implements Comparable<ShipStat>{
   /**
    * Save Ship Stat to Data Output Stream
    * @param dos DataOutputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveShipStat(DataOutputStream dos) throws IOException {
     design.saveShipDesign(dos);

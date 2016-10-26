@@ -100,7 +100,7 @@ public class Route {
   /**
    * Read route from DataInputStream
    * @param dis Data Input Stream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public Route(DataInputStream dis) throws IOException {
     startX = dis.readDouble();
@@ -116,7 +116,7 @@ public class Route {
   /**
    * Save Route to DataOutputStream
    * @param dos DataOutputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveRoute(DataOutputStream dos) throws IOException{
     dos.writeDouble(startX);

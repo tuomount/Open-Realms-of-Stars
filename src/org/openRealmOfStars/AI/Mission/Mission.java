@@ -96,7 +96,7 @@ public class Mission {
   /**
    * Read mission from DataInputStream
    * @param dis DataInputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public Mission(DataInputStream dis) throws IOException {
     type = MissionType.getType(dis.readInt());
@@ -133,7 +133,7 @@ public class Mission {
   /**
    * Write mission data to DataOutputStream
    * @param dos DataOutputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveMission(DataOutputStream dos) throws IOException {
     dos.writeInt(type.getIndex());

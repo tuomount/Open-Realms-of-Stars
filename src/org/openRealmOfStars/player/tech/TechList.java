@@ -93,8 +93,8 @@ public class TechList {
   
   /**
    * Save Tech list for DataOutputStream
-   * @param dos
-   * @throws IOException
+   * @param dos Data output stream
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveTechList(DataOutputStream dos) throws IOException {
     for (int i=0;i<MAX_TECH_TYPES;i++) {
@@ -113,7 +113,7 @@ public class TechList {
   /**
    * Read TechList from DataInputStream
    * @param dis DataInputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public TechList(DataInputStream dis) throws IOException {
     techList = new TechListForLevel[TechType.values().length][MAX_TECH_LEVEL];
@@ -471,8 +471,8 @@ public class TechList {
   
   /**
    * Get Tech focus for certain type of tech.
-   * @param type
-   * @return
+   * @param type The tech type
+   * @return The tech focus
    */
   public int getTechFocus(TechType type) {
     return techFocus[type.getIndex()];

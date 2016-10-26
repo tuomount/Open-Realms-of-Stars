@@ -58,7 +58,7 @@ public class MessageList {
   /**
    * Read all the message from DataInputStream to list
    * @param dis DataInputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public MessageList(DataInputStream dis) throws IOException {
     list = new ArrayList<>();
@@ -72,7 +72,7 @@ public class MessageList {
   /**
    * Write all messages into DataOutputStream
    * @param dos DataOutputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveMessageList(DataOutputStream dos) throws IOException {
     dos.writeInt(list.size());
@@ -91,7 +91,7 @@ public class MessageList {
   
   /**
    * Add new message to list
-   * @param msg
+   * @param msg Message to add to the list
    */
   public void addNewMessage(Message msg) {
     list.add(msg);

@@ -86,7 +86,7 @@ public class Message {
   /**
    * Read Message from DataInputStream
    * @param dis DataInputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public Message(DataInputStream dis) throws IOException {
     this.type = MessageType.getTypeByIndex(dis.readInt());
@@ -104,7 +104,7 @@ public class Message {
   /**
    * Save message into DataOutputStream
    * @param dos DataOutputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveMessage(DataOutputStream dos) throws IOException {
     dos.writeInt(type.getIndex());

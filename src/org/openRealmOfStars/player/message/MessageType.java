@@ -69,7 +69,7 @@ public enum MessageType {
   
   /**
    * Return Message Type by index
-   * @param index 
+   * @param index The message type index
    * @return Tech Type
    */
   public static MessageType getTypeByIndex(int index) {

@@ -573,7 +573,7 @@ public class Ship extends Construction {
       }
       damage = damage-this.getShield()/2;
       if (damage >= 0) {
-        this.setArmor(this.getShield()-1);
+        this.setShield(this.getShield()-1);
       } else {
         damage = damage+this.getShield()/2;
         if (this.getShield()/4 < damage) {

@@ -472,15 +472,17 @@ public class StarMap {
   /**
    * Create Solar System
    * @param solarSystem map of solarsystems
-   * @param sx Sun's about coordinates
-   * @param sy Sun's about coordinates
-   * @param numberOfPlanets Number of planets to Solar System
-   * @param numberOfGasGiants Number of Gas Giants to Solar System
+   * @param sunx Sun's about coordinates
+   * @param suny Sun's about coordinates
+   * @param planetsToCreate Number of planets to Solar System
+   * @param gasGiantsToCreate Number of Gas Giants to Solar System
    * @param playerIndex if Player index is else than -1 then SolarSystem
    * is created as home system for that player index.
    */
-  private void createSolarSystem(int[][] solarSystem, int sx,int sy, 
-      int numberOfPlanets, int numberOfGasGiants,int playerIndex) {
+  private void createSolarSystem(int[][] solarSystem, int sunx,int suny, 
+      int planetsToCreate, int gasGiantsToCreate,int playerIndex) {
+    int numberOfPlanets = planetsToCreate;
+    int numberOfGasGiants = gasGiantsToCreate;
     if (numberOfPlanets > 5) {
       numberOfPlanets = 5;
     }
@@ -488,8 +490,8 @@ public class StarMap {
       numberOfGasGiants = 2;
     }
     // The Sun
-    sx = sx +DiceGenerator.getRandom(-1, 1);
-    sy = sy +DiceGenerator.getRandom(-1, 1);
+    int sx = sunx +DiceGenerator.getRandom(-1, 1);
+    int sy = suny +DiceGenerator.getRandom(-1, 1);
     StarMapUtilities.setSolarSystem(solarSystem, sx, sy, getMaxX(), getMaxY());
     Sun sun = new Sun(sx, sy, null);
     sunList.add(sun);
@@ -1197,6 +1199,23 @@ public class StarMap {
              /*5*/"....XXXXXXX....\n"+
              /*6*/"......XXX......\n"+
              /*7*/".......X.......\n";
+    } else {
+      //           765432101234567
+      mask = /*7*/"......XXX......\n"+
+             /*6*/".....XXXXX.....\n"+
+             /*5*/"...XXXXXXXXX...\n"+
+             /*4*/"...XXXXXXXXX...\n"+
+             /*3*/".XXXXXXXXXXXXX.\n"+
+             /*2*/".XXXXXXXXXXXXX.\n"+
+             /*1*/"XXXXXXXXXXXXXXX\n"+
+             /*0*/"XXXXXXXXXXXXXXX\n"+
+             /*1*/"XXXXXXXXXXXXXXX\n"+
+             /*2*/".XXXXXXXXXXXXX.\n"+
+             /*3*/".XXXXXXXXXXXXX.\n"+
+             /*4*/"...XXXXXXXXX...\n"+
+             /*5*/"...XXXXXXXXX...\n"+
+             /*6*/".....XXXXX.....\n"+
+             /*7*/"......XXX......\n";
     }
 
     
@@ -1312,9 +1331,8 @@ public class StarMap {
   public PlayerInfo getCurrentPlayerInfo() {
     if (players != null) {
       return players.getCurrentPlayerInfo();
-    } else {
-      return null;
     }
+    return null;
   }
   
   /**
@@ -1339,9 +1357,8 @@ public class StarMap {
   public SquareInfo getTileInfo(int x, int y) {
     if (isValidCoordinate(x, y)) {
       return tileInfo[x][y];
-    } else {
-      return null;
     }
+    return null;
   }
 
   /**
@@ -1353,9 +1370,8 @@ public class StarMap {
   public CulturePower getSectorCulture(int x, int y) {
     if (isValidCoordinate(x, y)) {
       return culture[x][y];
-    } else {
-      return null;
     }
+    return null;
   }
 
   /**

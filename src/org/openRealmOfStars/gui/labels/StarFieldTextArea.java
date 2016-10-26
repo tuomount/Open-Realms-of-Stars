@@ -318,9 +318,8 @@ public class StarFieldTextArea extends JTextArea {
     if (smoothScrollNextRow) {
       smoothScrollNextRow = false;
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
   
   private class CreditMouseListener extends MouseAdapter {

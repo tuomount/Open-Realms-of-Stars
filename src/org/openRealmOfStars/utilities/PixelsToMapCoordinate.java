@@ -140,9 +140,8 @@ public class PixelsToMapCoordinate {
   public int getMapX() {
     if (!isOutOfPanel()) {
       return centerMapX+relativeMapX;
-    } else {
-      return -1;
     }
+    return -1;
   }
 
   /**
@@ -152,9 +151,8 @@ public class PixelsToMapCoordinate {
   public int getMapY() {
     if (!isOutOfPanel()) {
       return centerMapY+relativeMapY;
-    } else {
-      return -1;
     }
+    return -1;
   }
   
   /**
@@ -164,10 +162,8 @@ public class PixelsToMapCoordinate {
   public int getRelativeX() {
     if (!isOutOfPanel()) {
       return relativeMapX;
-    } else {
-      return -1;
     }
-    
+    return -1;
   }
 
   /**
@@ -177,10 +173,8 @@ public class PixelsToMapCoordinate {
   public int getRelativeY() {
     if (!isOutOfPanel()) {
       return relativeMapY;
-    } else {
-      return -1;
-    }
-    
+    } 
+    return -1;
   }
   
   /**

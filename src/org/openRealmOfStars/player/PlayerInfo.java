@@ -541,12 +541,12 @@ public class PlayerInfo {
 
   /**
    * Init map visibility and cloaking detection maps
-   * @param maxX Map size in X axel
-   * @param maxY Map size in Y axel
+   * @param maximumX Map size in X axel
+   * @param maximumY Map size in Y axel
    */
-  public void initMapData(int maxX, int maxY) {
-    this.maxX = maxX;
-    this.maxY = maxY;
+  public void initMapData(int maximumX, int maximumY) {
+    this.maxX = maximumX;
+    this.maxY = maximumY;
     mapData = new byte[maxX][maxY];
     mapCloakDetection = new int[maxX][maxY];
   }

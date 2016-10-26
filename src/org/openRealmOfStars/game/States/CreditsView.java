@@ -74,21 +74,15 @@ public class CreditsView extends BlackPanel {
         "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n";
     InputStream is = CreditsView.class.getResourceAsStream("/resources/GPL2.txt");
     BufferedInputStream bis = new BufferedInputStream(is);
-    DataInputStream dis = new DataInputStream(bis);
     String gpl2License="";
-    try {
+    try (DataInputStream dis = new DataInputStream(bis)) {
       gpl2License = IOUtilities.readTextFile(dis);      
-    } finally {
-      dis.close();
     }
     is = CreditsView.class.getResourceAsStream("/resources/fonts/Cubellan_v_0_7/Cubellan_License_SIL_OFL.txt");
     bis = new BufferedInputStream(is);
-    dis = new DataInputStream(bis);
     String cubellanLicense="";
-    try {
+    try (DataInputStream dis = new DataInputStream(bis)) {
       cubellanLicense = IOUtilities.readTextFile(dis);
-    } finally {
-      dis.close();
     }
     creditsText = creditsText+"\n\n"+"#GNU GENERAL PUBLIC LICENSE Version 2, June 1991\n"+
         gpl2License+"\n\n"+"#SIL Open Font License, Version 1.1.\n\n"+cubellanLicense;

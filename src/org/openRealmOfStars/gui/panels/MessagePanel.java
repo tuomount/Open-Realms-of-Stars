@@ -132,8 +132,8 @@ public class MessagePanel extends JPanel {
    * @param max Maximum messages
    */
   public void updatePanel(Message msg, int index,int max) {
-    index = index +1;
-    countLabel.setText(index +"/"+max);
+    int msgIndex = index +1;
+    countLabel.setText(msgIndex +"/"+max);
     titleLabel.setText(msg.getType().toString());
     titleLabel.setLeftIcon(msg.getIcon());
     msgText.setText(msg.getMessage());

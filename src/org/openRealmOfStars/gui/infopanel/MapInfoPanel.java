@@ -143,10 +143,10 @@ public class MapInfoPanel extends InfoPanel {
   
   /**
    * Show planet on info panel
-   * @param planet The planet to show
+   * @param planetToShow The planet to show
    */
-  public void showPlanet(Planet planet) {
-    this.planet = planet;
+  public void showPlanet(Planet planetToShow) {
+    this.planet = planetToShow;
     this.fleet = null;
     this.viewBtn.setEnabled(true);
     this.viewBtn.setText("View planet");
@@ -158,11 +158,11 @@ public class MapInfoPanel extends InfoPanel {
 
   /**
    * Show fleet on info panel
-   * @param fleet The fleet to show
+   * @param fleetToShow The fleet to show
    */
-  public void showFleet(Fleet fleet) {
+  public void showFleet(Fleet fleetToShow) {
     this.planet = null;
-    this.fleet = fleet;
+    this.fleet = fleetToShow;
     this.viewBtn.setEnabled(true);
     this.viewBtn.setText("View fleet");
     this.viewBtn.setActionCommand(GameCommands.COMMAND_VIEW_FLEET);

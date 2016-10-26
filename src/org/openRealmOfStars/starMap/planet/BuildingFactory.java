@@ -217,7 +217,7 @@ public class BuildingFactory {
     if (index == 1) {
       tmp = new Building(index, "Basic farm", 
           Icons.getIconByName(Icons.ICON_FARM), BuildingType.FARM);
-      tmp.setFarmBonus(1);;
+      tmp.setFarmBonus(1);
       tmp.setProdCost(10);
       tmp.setMetalCost(4);
       tmp.setDescription("Automatic farm to produce food.");
@@ -226,7 +226,7 @@ public class BuildingFactory {
     if (index == 2) {
       tmp = new Building(index, "Basic factory", 
           Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
-      tmp.setFactBonus(1);;
+      tmp.setFactBonus(1);
       tmp.setProdCost(15);
       tmp.setMetalCost(5);
       tmp.setDescription("Single mass production line.");
@@ -235,7 +235,7 @@ public class BuildingFactory {
     if (index == 3) {
       tmp = new Building(index, "Basic lab", 
           Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
-      tmp.setReseBonus(1);;
+      tmp.setReseBonus(1);
       tmp.setProdCost(12);
       tmp.setMetalCost(4);
       tmp.setDescription("Basic laboratory for science.");
@@ -264,7 +264,7 @@ public class BuildingFactory {
     if (index == 9) {
       tmp = new Building(index, "Advanced factory", 
           Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
-      tmp.setFactBonus(2);;
+      tmp.setFactBonus(2);
       tmp.setProdCost(30);
       tmp.setMetalCost(10);
       tmp.setMaintenanceCost(0.25);

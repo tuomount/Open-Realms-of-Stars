@@ -357,13 +357,13 @@ public class TechList {
    * @return tech list as a tech array
    */
   public Tech[] getListForTypeAndLevel(TechType type, int level) {
-    level = level -1;
-    if (level >= 10 || level < 0) {
+    int levelIndex = level -1;
+    if (levelIndex >= 10 || levelIndex < 0) {
       return new Tech[0];
     }
     ArrayList<Tech> list = new ArrayList<>();
     int index = type.getIndex();
-    for (Tech tech : techList[index][level].getList()) {
+    for (Tech tech : techList[index][levelIndex].getList()) {
       list.add(tech);
     }
     return list.toArray(new Tech[list.size()]);

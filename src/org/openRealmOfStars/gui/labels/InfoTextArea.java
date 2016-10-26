@@ -305,9 +305,8 @@ public class InfoTextArea extends JTextArea {
     if (smoothScrollNextRow) {
       smoothScrollNextRow = false;
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
   
 

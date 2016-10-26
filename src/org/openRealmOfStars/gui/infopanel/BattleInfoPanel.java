@@ -108,12 +108,12 @@ public class BattleInfoPanel extends InfoPanel {
 
   /**
    * Show ship on info panel
-   * @param ship The ship to show on info panel
+   * @param shipToShow The ship to show on info panel
    */
-  public void showShip(Ship ship) {
-    this.ship = ship;
+  public void showShip(Ship shipToShow) {
+    this.ship = shipToShow;
     for (int i=0;i<MAX_BTN;i++) {
-      cBtn[i].setComponent(ship, i);
+      cBtn[i].setComponent(this.ship, i);
     }
     updatePanel();
   }

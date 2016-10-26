@@ -109,7 +109,7 @@ public class BigImagePanel extends JPanel {
    * @param y Y-coordinate
    * @param text Text to draw
    */
-  private void drawBoldText(Graphics g,Color border, Color center, int x, 
+  private static void drawBoldText(Graphics g,Color border, Color center, int x, 
       int y, String text) {
     g.setColor(Color.black);
     g.drawString(text, x+2, y);

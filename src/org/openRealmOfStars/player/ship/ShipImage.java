@@ -130,15 +130,14 @@ public class ShipImage {
     smallShipImages[MASSIVE_STARBASE] = scaleTo32x32(shipImages[MASSIVE_STARBASE]);
   }
   
-  private BufferedImage image64x64(BufferedImage image, int x, int y) throws
+  private static BufferedImage image64x64(BufferedImage image, int x, int y) throws
     RasterFormatException {
     
     if (x >= 0 && y >= 0 && x*MAX_WIDTH < image.getHeight() &&
         y*MAX_HEIGHT < image.getHeight()) {
       return image.getSubimage(x*MAX_WIDTH, y*MAX_HEIGHT, MAX_WIDTH, MAX_HEIGHT);
-    } else {
-      throw new RasterFormatException("Icon is outside of image.");
     }
+    throw new RasterFormatException("Icon is outside of image.");
   }
   
   /**

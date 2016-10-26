@@ -115,10 +115,10 @@ public class FleetList {
   
   /**
    * Remove fleet from the list by index
-   * @param index to remove
+   * @param indexToRemove to remove
    */
-  public void remove(int index) {
-    fleetList.remove(index);
+  public void remove(int indexToRemove) {
+    fleetList.remove(indexToRemove);
   }
   
   /**
@@ -187,9 +187,9 @@ public class FleetList {
    * @param index Index
    * @return Fleet or null if list contains no fleets
    */
-  public Fleet getByIndex(int index) {
-    if (fleetList.size() > 0 && index >= 0 && index <fleetList.size()) {
-      return fleetList.get(index);
+  public Fleet getByIndex(int fleetIndex) {
+    if (fleetList.size() > 0 && fleetIndex >= 0 && fleetIndex <fleetList.size()) {
+      return fleetList.get(fleetIndex);
     }
     return null;
   }

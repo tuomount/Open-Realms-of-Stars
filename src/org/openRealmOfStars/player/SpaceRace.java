@@ -76,9 +76,8 @@ public enum SpaceRace {
   public static SpaceRace getRaceByIndex(int index) {
     if (index > -1 && index < SpaceRace.values().length) {
       return SpaceRace.values()[index];
-    } else {
-      return SpaceRace.HUMAN;
-    }
+    } 
+    return SpaceRace.HUMAN;
   }
   
   /**

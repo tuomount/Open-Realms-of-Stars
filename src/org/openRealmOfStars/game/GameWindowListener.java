@@ -26,6 +26,7 @@ import java.awt.event.WindowEvent;
  */
 public class GameWindowListener extends WindowAdapter {
 
+  @Override
   public void windowClosing(WindowEvent arg0) {
     System.exit(0);
   }

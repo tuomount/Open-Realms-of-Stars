@@ -168,7 +168,7 @@ public class Combat {
       double sx = shooter.getX();
       double sy = shooter.getY();
       double endX = target.getX();
-      double endY = target.getY();;
+      double endY = target.getY();
       double mx;
       double my;
       double dx = Math.abs(sx-endX);
@@ -379,134 +379,116 @@ public class Combat {
    * @param x X coordinate or Y coordinate
    * @return Coordinate
    */
-  private int getStartPos(int index, int team, boolean x) {
+  private static int getStartPos(int index, int team, boolean x) {
     if (team == 0) {
       switch (index) {
       case 0: {
         if (x) {
           return 4;
-        } else {
-          return 7;
         }
+        return 7;
       }
       case 1: {
         if (x) {
           return 3;
-        } else {
-          return 7;
         }
+        return 7;
       }
       case 2: {
         if (x) {
           return 5;
-        } else {
-          return 7;
         }
+        return 7;
       }
       case 3: {
         if (x) {
           return 2;
-        } else {
-          return 7;
         }
+        return 7;
       }
       case 4: {
         if (x) {
           return 6;
-        } else {
-          return 7;
         }
+        return 7;
       }
       case 5: {
         if (x) {
           return 4;
-        } else {
-          return 8;
         }
+        return 8;
       }
       case 6: {
         if (x) {
           return 1;
-        } else {
-          return 7;
         }
+        return 7;
       }
       case 7: {
         if (x) {
           return 7;
-        } else {
-          return 7;
         }
+        return 7;
       }
       case 8: {
         if (x) {
           return 3;
-        } else {
-          return 8;
         }
+        return 8;
       }
       case 9: {
         if (x) {
           return 5;
-        } else {
-          return 8;
         }
+        return 8;
       }
       case 10: {
         if (x) {
           return 2;
-        } else {
-          return 8;
         }
+        return 8;
       }
       case 11: {
         if (x) {
           return 6;
-        } else {
-          return 8;
         }
+        return 8;
       }
       case 12: {
         if (x) {
           return 0;
-        } else {
-          return 7;
         }
+        return 7;
       }
       case 13: {
         if (x) {
           return 8;
-        } else {
-          return 7;
         }
+        return 7;
       }
       case 14: {
         if (x) {
           return 1;
-        } else {
-          return 8;
         }
+        return 8;
       }
       case 15: {
         if (x) {
           return 7;
-        } else {
-          return 8;
         }
+        return 8;
       }
       case 16: {
         if (x) {
           return 0;
-        } else {
-          return 8;
         }
+        return 8;
       }
       case 17: {
         if (x) {
           return 8;
-        } else {
-          return 8;
         }
+        return 8;
       }
       }
     } else {
@@ -515,128 +497,110 @@ public class Combat {
       case 0: {
         if (x) {
           return 4;
-        } else {
-          return 1;
         }
+        return 1;
       }
       case 1: {
         if (x) {
           return 3;
-        } else {
-          return 1;
         }
+        return 1;
       }
       case 2: {
         if (x) {
           return 5;
-        } else {
-          return 1;
         }
+        return 1;
       }
       case 3: {
         if (x) {
           return 2;
-        } else {
-          return 1;
         }
+        return 1;
       }
       case 4: {
         if (x) {
           return 6;
-        } else {
-          return 1;
         }
+        return 1;
       }
       case 5: {
         if (x) {
           return 4;
-        } else {
-          return 0;
         }
+        return 0;
       }
       case 6: {
         if (x) {
           return 1;
-        } else {
-          return 1;
         }
+        return 1;
       }
       case 7: {
         if (x) {
           return 7;
-        } else {
-          return 1;
         }
+        return 1;
       }
       case 8: {
         if (x) {
           return 3;
-        } else {
-          return 0;
         }
+        return 0;
       }
       case 9: {
         if (x) {
           return 5;
-        } else {
-          return 0;
         }
+        return 0;
       }
       case 10: {
         if (x) {
           return 2;
-        } else {
-          return 0;
         }
+        return 0;
       }
       case 11: {
         if (x) {
           return 6;
-        } else {
-          return 0;
         }
+        return 0;
       }
       case 12: {
         if (x) {
           return 0;
-        } else {
-          return 1;
         }
+        return 1;
       }
       case 13: {
         if (x) {
           return 8;
-        } else {
-          return 1;
         }
+        return 1;
       }
       case 14: {
         if (x) {
           return 1;
-        } else {
-          return 0;
         }
+        return 0;
       }
       case 15: {
         if (x) {
           return 7;
-        } else {
-          return 0;
         }
+        return 0;
       }
       case 16: {
         if (x) {
           return 0;
-        } else {
-          return 0;
         }
+        return 0;
       }
       case 17: {
         if (x) {
           return 8;
-        } else {
-          return 0;
         }
+        return 0;
       }
       }
       
@@ -650,7 +614,7 @@ public class Combat {
    * @param fleet The winner fleet
    * @param info The winner player info
    */
-  private void handleWinner(Fleet fleet, PlayerInfo info) {
+  private static void handleWinner(Fleet fleet, PlayerInfo info) {
     for (Ship ship : fleet.getShips()) {
       ShipStat stat = info.getShipStatByName(ship.getName());
       if (stat != null) {

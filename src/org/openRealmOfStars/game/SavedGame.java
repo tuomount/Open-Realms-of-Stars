@@ -77,13 +77,11 @@ public class SavedGame {
     BasicFileAttributes attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     creationTime = dateFormat.format(attr.creationTime().toMillis());
-    FileInputStream is = null;
-    try {
-      is = new FileInputStream(file);
+    try (FileInputStream is = new FileInputStream(file);){
+      
       BufferedInputStream bis = new BufferedInputStream(is);
       DataInputStream dis = new DataInputStream(bis);
       StarMap starMap = new StarMap(dis);
-      dis.close();
       this.filename = filename;
       turnNumber = starMap.getTurn();
       galaxySize = starMap.getMaxX()+" X "+starMap.getMaxY();
@@ -92,14 +90,6 @@ public class SavedGame {
     } catch (IOException e) {
       System.out.println(e.getMessage());
       throw e;
-    } finally {
-      if (is != null) {
-        try {
-          is.close();
-        } catch (IOException e) {
-          // Do nothing
-        }
-      }
     }
   }
   

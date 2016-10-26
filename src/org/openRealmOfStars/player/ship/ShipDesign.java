@@ -213,7 +213,7 @@ public class ShipDesign {
     for (int i=0;i<components.size();i++) {
       ShipComponent comp = components.get(i);
       if (comp.getType() == type) {
-        result = true;;
+        result = true;
       }
     }
     return result;

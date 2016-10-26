@@ -402,7 +402,8 @@ public class ShipGenerator {
         hullTech = tech;
         value = hull.getMaxSlot();
       }
-      if (!troop && hullTech.getName().equals("Medium freighter")) {
+      if (!troop && hullTech != null &&
+          hullTech.getName().equals("Medium freighter")) {
         break;
       }
     }

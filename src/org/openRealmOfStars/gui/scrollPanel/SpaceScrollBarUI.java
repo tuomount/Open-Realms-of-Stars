@@ -62,11 +62,10 @@ public class SpaceScrollBarUI extends BasicScrollBarUI{
       JButton result = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_UP),
           Icons.getIconByName(Icons.ICON_SCROLL_UP_PRESSED), false, "",null); 
       return result;
-    } else {
-      JButton result = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_LEFT),
-          Icons.getIconByName(Icons.ICON_SCROLL_LEFT_PRESSED), false, "",null); 
-        return result;
     }
+    JButton result = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_LEFT),
+        Icons.getIconByName(Icons.ICON_SCROLL_LEFT_PRESSED), false, "",null); 
+    return result;
   }
 
   @Override
@@ -75,11 +74,10 @@ public class SpaceScrollBarUI extends BasicScrollBarUI{
       JButton result = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_DOWN),
           Icons.getIconByName(Icons.ICON_SCROLL_DOWN_PRESSED), false, "",null); 
       return result;
-    } else {
-      JButton result = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_RIGHT),
-          Icons.getIconByName(Icons.ICON_SCROLL_RIGHT_PRESSED), false, "",null); 
-     return result;      
     }
+    JButton result = new IconButton(Icons.getIconByName(Icons.ICON_SCROLL_RIGHT),
+        Icons.getIconByName(Icons.ICON_SCROLL_RIGHT_PRESSED), false, "",null); 
+    return result;
   }
 
   @Override

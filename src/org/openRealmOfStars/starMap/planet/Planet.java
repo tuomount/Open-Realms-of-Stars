@@ -490,12 +490,11 @@ public class Planet {
     }
     if (prodTurn == -1 || metalTurn== -1) {
       return "Never";
-    } else {
-      if (prodTurn > metalTurn) {
-        return prodTurn+" turns";
-      }
-      return metalTurn+" turns";
+    } 
+    if (prodTurn > metalTurn) {
+      return prodTurn+" turns";
     }
+    return metalTurn+" turns";
   }
   
   /**
@@ -541,8 +540,8 @@ public class Planet {
     if (planetOwnerInfo != null) {
       int result = getTotalPopulation()*planetOwnerInfo.getRace().getTrooperPower();
       int multiply = 100;
-      Building[] buildings = getBuildingList();
-      for (Building building : buildings) {
+      Building[] buildingsArray = getBuildingList();
+      for (Building building : buildingsArray) {
         if (building.getBattleBonus()>0) {
           multiply = multiply + building.getBattleBonus();
         }
@@ -561,8 +560,8 @@ public class Planet {
     if (planetOwnerInfo != null) {
       int troop = planetOwnerInfo.getRace().getTrooperPower();
       int multiply = 100;
-      Building[] buildings = getBuildingList();
-      for (Building building : buildings) {
+      Building[] buildingsArray = getBuildingList();
+      for (Building building : buildingsArray) {
         if (building.getBattleBonus()>0) {
           multiply = multiply + building.getBattleBonus();
         }
@@ -888,9 +887,9 @@ public class Planet {
       }
     }
     if (planetOwnerInfo != null) {
-      String[] buildings = planetOwnerInfo.getTechList().getBuildingListFromTech();
-      for (int i=0;i<buildings.length;i++) {
-        tmp = BuildingFactory.createByName(buildings[i]);
+      String[] buildingsNames = planetOwnerInfo.getTechList().getBuildingListFromTech();
+      for (int i=0;i<buildingsNames.length;i++) {
+        tmp = BuildingFactory.createByName(buildingsNames[i]);
         if (getRadiationLevel() == 1 && (tmp.getName().equals("Radiation dampener") ||
             tmp.getName().equals("Radiation well"))) {
           // No need for radiation well or dampener on small radiation planets
@@ -1302,8 +1301,8 @@ public class Planet {
    */
   public int getRecycleBonus() {
     int result = 0;
-    Building[] buildings = getBuildingList();
-    for (Building building : buildings) {
+    Building[] buildingsArray = getBuildingList();
+    for (Building building : buildingsArray) {
       if (building.getRecycleBonus() > result) {
         result = building.getRecycleBonus();
       }
@@ -1317,8 +1316,8 @@ public class Planet {
    */
   public int getScannerLvl() {
     int result = 2;
-    Building[] buildings = getBuildingList();
-    for (Building building : buildings) {
+    Building[] buildingsArray = getBuildingList();
+    for (Building building : buildingsArray) {
       if (building.getScanRange() > 0 && result < building.getScanRange()) {
         result = building.getScanRange();
       }
@@ -1328,8 +1327,8 @@ public class Planet {
 
   public int getTurretLvl() {
     int result = 0;
-    Building[] buildings = getBuildingList();
-    for (Building building : buildings) {
+    Building[] buildingsArray = getBuildingList();
+    for (Building building : buildingsArray) {
       if (building.getDefenseDamage() > 0) {
         result = result +building.getDefenseDamage();
       }
@@ -1342,8 +1341,8 @@ public class Planet {
    * @return True if planet has space port, otherwise false.
    */
   public boolean hasSpacePort() {
-    Building[] buildings  = getBuildingList();
-    for (Building building : buildings) {
+    Building[] buildingsArray  = getBuildingList();
+    for (Building building : buildingsArray) {
       if (building.getName().equals("Space port")) {
         return true;
       }
@@ -1356,8 +1355,8 @@ public class Planet {
    */
   public int getCloakingDetectionLvl() {
     int result = 0;
-    Building[] buildings = getBuildingList();
-    for (Building building : buildings) {
+    Building[] buildingsArray = getBuildingList();
+    for (Building building : buildingsArray) {
       if (building.getScanCloakingDetection() > 0 && result < building.getScanCloakingDetection()) {
         result = building.getScanCloakingDetection();
       }
@@ -1368,14 +1367,14 @@ public class Planet {
   
   /**
    * How many buildings with same name planet has
-   * @param name Building name to search
+   * @param buildingName Building name to search
    * @return number of buildings with same name
    */
-  public int howManyBuildings(String name) {
+  public int howManyBuildings(String buildingName) {
     int result = 0;
-    Building[] buildings = getBuildingList();
-    for (Building building : buildings) {
-      if (building.getName().equals(name)) {
+    Building[] buildingsArray = getBuildingList();
+    for (Building building : buildingsArray) {
+      if (building.getName().equals(buildingName)) {
         result = result+1;
       }
     }
@@ -1443,7 +1442,7 @@ public class Planet {
   
   public void setCulture(int culture) {
     if (culture < 0) {
-     culture = 0; 
+     this.culture = 0; 
     } else {
       this.culture = culture;
     }

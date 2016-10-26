@@ -410,12 +410,10 @@ public class Game extends JFrame implements ActionListener {
         folder.mkdirs();
       }
       File file = new File(folderName+"/"+filename);
-      try {
-        FileOutputStream os = new FileOutputStream(file);
+      try (FileOutputStream os = new FileOutputStream(file)){
         BufferedOutputStream bos = new BufferedOutputStream(os);
         DataOutputStream dos = new DataOutputStream(bos);
         starMap.saveGame(dos);
-        dos.close();
       } catch (IOException e) {
         System.out.println(e.getMessage());
       }
@@ -431,26 +429,15 @@ public class Game extends JFrame implements ActionListener {
   public boolean loadGame(String filename) {
     String folderName = "saves";
     File file = new File(folderName+"/"+filename);
-    FileInputStream is = null;
-    try {
-      is = new FileInputStream(file);
+    try (FileInputStream is = new FileInputStream(file)){
       BufferedInputStream bis = new BufferedInputStream(is);
       DataInputStream dis = new DataInputStream(bis);
       starMap = new StarMap(dis);
-      dis.close();
       players = starMap.getPlayerList();
       starMap.updateStarMapOnLoadGame();
     } catch (IOException e) {
       System.out.println(e.getMessage());
       return false;
-    } finally {
-      if (is != null) {
-        try {
-          is.close();
-        } catch (IOException e) {
-          // Do nothing
-        }
-      }
     }
     return true;
   }

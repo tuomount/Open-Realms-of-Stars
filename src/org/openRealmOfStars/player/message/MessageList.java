@@ -161,9 +161,8 @@ public class MessageList {
   public int getMaxMsg() {
     if (list.size() > 0) {
       return list.size();
-    } else {
-      return 1;
     }
+    return 1;
   }
   
   @Override

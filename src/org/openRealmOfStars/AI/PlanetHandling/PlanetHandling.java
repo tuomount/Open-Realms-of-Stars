@@ -59,218 +59,218 @@ public class PlanetHandling {
       if (credit < 0) {
         planet.setTax(planet.getTax()+1);
       }
-    }
-    ArrayList<Message> msgs = info.getMsgList().getFullList();
-    boolean changeConstruction = false;
-    for (Message msg : msgs) {
-      if (msg.getType() == MessageType.CONSTRUCTION &&
-          msg.getMatchByString().equals(planet.getName())) {
-        changeConstruction = true;        
+      ArrayList<Message> msgs = info.getMsgList().getFullList();
+      boolean changeConstruction = false;
+      for (Message msg : msgs) {
+        if (msg.getType() == MessageType.CONSTRUCTION &&
+            msg.getMatchByString().equals(planet.getName())) {
+          changeConstruction = true;        
+        }
       }
-    }
-    if (changeConstruction || planet.getUnderConstruction() == null) {
-      Building[] buildings = planet.getBuildingList();
-      Construction[] constructions = planet.getProductionList();
-      boolean constructionSelected = false;
-      int gotFactory = gotBuildings(
-          new String[] {"Basic factory","Advanced factory"}, buildings);
-      int gotLabs = gotBuildings(
-          new String[] {"Basic lab","Advanced laboratory"}, buildings);
-      int gotFarms = gotBuildings(
-          new String[] {"Basic farm","Advanced farm"}, buildings);
-      int gotMines = gotBuildings(
-          new String[] {"Basic mine","Advanced mine"}, buildings);
-      int gotSpacePort = gotBuildings(
-          new String[] {"Space port"}, buildings);
-      if (gotFactory == -1) {
-        // No factories at all
-        int i = getConstruction("Advanced factory", constructions);
-        if (i != -1) {
-          planet.setUnderConstruction(constructions[i]);
-          constructionSelected = true;
-        } else {
-          i = getConstruction("Basic factory", constructions);
+      if (changeConstruction || planet.getUnderConstruction() == null) {
+        Building[] buildings = planet.getBuildingList();
+        Construction[] constructions = planet.getProductionList();
+        boolean constructionSelected = false;
+        int gotFactory = gotBuildings(
+            new String[] {"Basic factory","Advanced factory"}, buildings);
+        int gotLabs = gotBuildings(
+            new String[] {"Basic lab","Advanced laboratory"}, buildings);
+        int gotFarms = gotBuildings(
+            new String[] {"Basic farm","Advanced farm"}, buildings);
+        int gotMines = gotBuildings(
+            new String[] {"Basic mine","Advanced mine"}, buildings);
+        int gotSpacePort = gotBuildings(
+            new String[] {"Space port"}, buildings);
+        if (gotFactory == -1) {
+          // No factories at all
+          int i = getConstruction("Advanced factory", constructions);
           if (i != -1) {
             planet.setUnderConstruction(constructions[i]);
             constructionSelected = true;
-          }
-        }
-      }
-      if (gotLabs == -1 && !constructionSelected) {
-        // No labs at all
-        int i = getConstruction("Advanced laboratory", constructions);
-        if (i != -1) {
-          planet.setUnderConstruction(constructions[i]);
-          constructionSelected = true;
-        } else {
-          i = getConstruction("Basic lab", constructions);
-          if (i != -1) {
-            planet.setUnderConstruction(constructions[i]);
-            constructionSelected = true;
-          }
-        }
-      }
-      if (gotFarms == -1 && !constructionSelected &&
-          info.getRace() != SpaceRace.MECHIONS) {
-        // No farms at all
-        int i = getConstruction("Advanced farm", constructions);
-        if (i != -1) {
-          planet.setUnderConstruction(constructions[i]);
-          constructionSelected = true;
-        } else {
-          i = getConstruction("Basic farm", constructions);
-          if (i != -1) {
-            planet.setUnderConstruction(constructions[i]);
-            constructionSelected = true;
-          }
-        }
-      }
-      if (!constructionSelected && info.getRace() == SpaceRace.MECHIONS &&
-          planet.getTotalPopulation() < 5) {
-        int i = getConstruction(ConstructionFactory.MECHION_CITIZEN, constructions);
-        if (i != -1) {
-          planet.setUnderConstruction(constructions[i]);
-          constructionSelected = true;
-        }
-      }
-      if (gotMines == -1 && !constructionSelected) {
-        // No mines at all
-        int i = getConstruction("Advanced mine", constructions);
-        if (i != -1) {
-          planet.setUnderConstruction(constructions[i]);
-          constructionSelected = true;
-        } else {
-          i = getConstruction("Basic mine", constructions);
-          if (i != -1) {
-            planet.setUnderConstruction(constructions[i]);
-            constructionSelected = true;
-          }
-        }
-      }
-      if (gotSpacePort == -1 && !constructionSelected) {
-        // No space port
-        int i = getConstruction("Space port", constructions);
-        if (i != -1) {
-          planet.setUnderConstruction(constructions[i]);
-          constructionSelected = true;
-        }
-      }
-      if (map.getTurn() > 20 && !constructionSelected) {
-        Mission mission = info.getMissions().getMissionForPlanet(planet.getName(), MissionType.DEFEND);
-        if (mission == null) {
-          mission = new Mission(MissionType.DEFEND, MissionPhase.PLANNING, planet.getX(), planet.getY());
-          mission.setFleetName("Defender");
-          mission.setPlanetBuilding(planet.getName());
-          info.getMissions().add(mission);
-        }
-      }
-      if (!constructionSelected) {
-        int[] scores = scoreConstructions(constructions,planet, info,map);
-        int highest = -1;
-        int value = -1;
-        boolean over400=false;
-        int minimum = 0;
-        int freeSlot = planet.getGroundSize()-planet.getUsedPlanetSize();
-        switch (freeSlot) {
-        case 0: minimum = 1000; break;
-        case 1: minimum = 200; break;
-        case 2: minimum = 120; break;
-        case 3: minimum = 80; break;
-        case 4: minimum = 40; break;
-        case 5: minimum = 20; break;
-        case 6: minimum = 10; break;
-        default: minimum = 0; break;
-        }
-        for (int i=0;i<scores.length;i++) {
-          if (scores[i] > value) {
-            value = scores[i];
-            highest = i;
-          }
-          if (scores[i] > 399) {
-            over400 =true;
-          }
-        }
-        if (highest == value) {
-          if (highest != -1) {
-            planet.setUnderConstruction(constructions[highest]);
-            constructionSelected = true;
-          }
-        } else if (over400) {
-          ArrayList<Construction> list = new ArrayList<>();
-          for (int i=0;i<scores.length;i++) {
-            if (scores[i] > 399) {
-              list.add(constructions[i]);
+          } else {
+            i = getConstruction("Basic factory", constructions);
+            if (i != -1) {
+              planet.setUnderConstruction(constructions[i]);
+              constructionSelected = true;
             }
           }
-          int rand = DiceGenerator.getRandom(list.size()-1);
-          planet.setUnderConstruction(list.get(rand));
-          constructionSelected = true;
-        } else {
-          ArrayList<Construction> list = new ArrayList<>();
-          ArrayList<Integer> listScore = new ArrayList<>();
-          int sum = 0;
+        }
+        if (gotLabs == -1 && !constructionSelected) {
+          // No labs at all
+          int i = getConstruction("Advanced laboratory", constructions);
+          if (i != -1) {
+            planet.setUnderConstruction(constructions[i]);
+            constructionSelected = true;
+          } else {
+            i = getConstruction("Basic lab", constructions);
+            if (i != -1) {
+              planet.setUnderConstruction(constructions[i]);
+              constructionSelected = true;
+            }
+          }
+        }
+        if (gotFarms == -1 && !constructionSelected &&
+            info.getRace() != SpaceRace.MECHIONS) {
+          // No farms at all
+          int i = getConstruction("Advanced farm", constructions);
+          if (i != -1) {
+            planet.setUnderConstruction(constructions[i]);
+            constructionSelected = true;
+          } else {
+            i = getConstruction("Basic farm", constructions);
+            if (i != -1) {
+              planet.setUnderConstruction(constructions[i]);
+              constructionSelected = true;
+            }
+          }
+        }
+        if (!constructionSelected && info.getRace() == SpaceRace.MECHIONS &&
+            planet.getTotalPopulation() < 5) {
+          int i = getConstruction(ConstructionFactory.MECHION_CITIZEN, constructions);
+          if (i != -1) {
+            planet.setUnderConstruction(constructions[i]);
+            constructionSelected = true;
+          }
+        }
+        if (gotMines == -1 && !constructionSelected) {
+          // No mines at all
+          int i = getConstruction("Advanced mine", constructions);
+          if (i != -1) {
+            planet.setUnderConstruction(constructions[i]);
+            constructionSelected = true;
+          } else {
+            i = getConstruction("Basic mine", constructions);
+            if (i != -1) {
+              planet.setUnderConstruction(constructions[i]);
+              constructionSelected = true;
+            }
+          }
+        }
+        if (gotSpacePort == -1 && !constructionSelected) {
+          // No space port
+          int i = getConstruction("Space port", constructions);
+          if (i != -1) {
+            planet.setUnderConstruction(constructions[i]);
+            constructionSelected = true;
+          }
+        }
+        if (map.getTurn() > 20 && !constructionSelected) {
+          Mission mission = info.getMissions().getMissionForPlanet(planet.getName(), MissionType.DEFEND);
+          if (mission == null) {
+            mission = new Mission(MissionType.DEFEND, MissionPhase.PLANNING, planet.getX(), planet.getY());
+            mission.setFleetName("Defender");
+            mission.setPlanetBuilding(planet.getName());
+            info.getMissions().add(mission);
+          }
+        }
+        if (!constructionSelected) {
+          int[] scores = scoreConstructions(constructions,planet, info,map);
+          int highest = -1;
+          int value = -1;
+          boolean over400=false;
+          int minimum = 0;
+          int freeSlot = planet.getGroundSize()-planet.getUsedPlanetSize();
+          switch (freeSlot) {
+          case 0: minimum = 1000; break;
+          case 1: minimum = 200; break;
+          case 2: minimum = 120; break;
+          case 3: minimum = 80; break;
+          case 4: minimum = 40; break;
+          case 5: minimum = 20; break;
+          case 6: minimum = 10; break;
+          default: minimum = 0; break;
+          }
           for (int i=0;i<scores.length;i++) {
-            if (scores[i] >= minimum) {
-              list.add(constructions[i]);
-              listScore.add(Integer.valueOf(scores[i]));
-              sum = sum+scores[i];
-            } else {
-              if (constructions[i] instanceof Ship && freeSlot < 4) {
+            if (scores[i] > value) {
+              value = scores[i];
+              highest = i;
+            }
+            if (scores[i] > 399) {
+              over400 =true;
+            }
+          }
+          if (highest == value) {
+            if (highest != -1) {
+              planet.setUnderConstruction(constructions[highest]);
+              constructionSelected = true;
+            }
+          } else if (over400) {
+            ArrayList<Construction> list = new ArrayList<>();
+            for (int i=0;i<scores.length;i++) {
+              if (scores[i] > 399) {
                 list.add(constructions[i]);
-                listScore.add(Integer.valueOf(scores[i]));
-                sum = sum+scores[i];
-              } else if (constructions[i].getName().equals(ConstructionFactory.MECHION_CITIZEN)
-                  && freeSlot < 3 && planet.getTotalPopulation() <20) {
-                list.add(constructions[i]);
-                listScore.add(Integer.valueOf(scores[i]));
-                sum = sum+scores[i];
               }
             }
-          }
-          int rand = DiceGenerator.getRandom(sum);
-          int total = 0;
-          for (int i=0;i<listScore.size();i++) {
-            if (rand < total+listScore.get(i).intValue()) {
-              Construction cons = list.get(i);
-              planet.setUnderConstruction(cons);
-              constructionSelected = true;
-              if (cons instanceof Ship) {
-                Ship ship = (Ship) cons;
-                Mission mission = info.getMissions()
-                    .getMissionForPlanet(planet.getName(), MissionType.DEFEND);
-                if (mission != null && ship.getTotalMilitaryPower()>0) {
-                  if (mission.getPhase() == MissionPhase.PLANNING) {
+            int rand = DiceGenerator.getRandom(list.size()-1);
+            planet.setUnderConstruction(list.get(rand));
+            constructionSelected = true;
+          } else {
+            ArrayList<Construction> list = new ArrayList<>();
+            ArrayList<Integer> listScore = new ArrayList<>();
+            int sum = 0;
+            for (int i=0;i<scores.length;i++) {
+              if (scores[i] >= minimum) {
+                list.add(constructions[i]);
+                listScore.add(Integer.valueOf(scores[i]));
+                sum = sum+scores[i];
+              } else {
+                if (constructions[i] instanceof Ship && freeSlot < 4) {
+                  list.add(constructions[i]);
+                  listScore.add(Integer.valueOf(scores[i]));
+                  sum = sum+scores[i];
+                } else if (constructions[i].getName().equals(ConstructionFactory.MECHION_CITIZEN)
+                    && freeSlot < 3 && planet.getTotalPopulation() <20) {
+                  list.add(constructions[i]);
+                  listScore.add(Integer.valueOf(scores[i]));
+                  sum = sum+scores[i];
+                }
+              }
+            }
+            int rand = DiceGenerator.getRandom(sum);
+            int total = 0;
+            for (int i=0;i<listScore.size();i++) {
+              if (rand < total+listScore.get(i).intValue()) {
+                Construction cons = list.get(i);
+                planet.setUnderConstruction(cons);
+                constructionSelected = true;
+                if (cons instanceof Ship) {
+                  Ship ship = (Ship) cons;
+                  Mission mission = info.getMissions()
+                      .getMissionForPlanet(planet.getName(), MissionType.DEFEND);
+                  if (mission != null && ship.getTotalMilitaryPower()>0) {
+                    if (mission.getPhase() == MissionPhase.PLANNING) {
+                      mission.setPhase(MissionPhase.BUILDING);
+                    }
+                  }
+                  mission = info.getMissions().getMission(MissionType.COLONIZE, MissionPhase.PLANNING);
+                  if (mission != null && ship.isColonyModule()) {
                     mission.setPhase(MissionPhase.BUILDING);
+                    mission.setPlanetBuilding(planet.getName());
                   }
                 }
-                mission = info.getMissions().getMission(MissionType.COLONIZE, MissionPhase.PLANNING);
-                if (mission != null && ship.isColonyModule()) {
-                  mission.setPhase(MissionPhase.BUILDING);
-                  mission.setPlanetBuilding(planet.getName());
-                }
+                break;
               }
-              break;
+              total = total+listScore.get(i).intValue();
             }
-            total = total+listScore.get(i).intValue();
+  
           }
-
         }
-      }
-      if (!constructionSelected) {
-        // Nothing to select to let's select culture or credit
-        int i = getConstruction(ConstructionFactory.EXTRA_CREDIT, constructions);
-        int j = getConstruction(ConstructionFactory.EXTRA_CULTURE, constructions);
-        if (i != -1 && j != -1) {
-          if (DiceGenerator.getRandom(1)==0) {
+        if (!constructionSelected) {
+          // Nothing to select to let's select culture or credit
+          int i = getConstruction(ConstructionFactory.EXTRA_CREDIT, constructions);
+          int j = getConstruction(ConstructionFactory.EXTRA_CULTURE, constructions);
+          if (i != -1 && j != -1) {
+            if (DiceGenerator.getRandom(1)==0) {
+              planet.setUnderConstruction(constructions[i]);
+            } else {
+              planet.setUnderConstruction(constructions[j]);
+            }
+          } else if (i != -1) {
             planet.setUnderConstruction(constructions[i]);
-          } else {
+          } else if (j != -1) {
             planet.setUnderConstruction(constructions[j]);
-          }
-        } else if (i != -1) {
-          planet.setUnderConstruction(constructions[i]);
-        } else if (j != -1) {
-          planet.setUnderConstruction(constructions[j]);
-        }  
+          }  
+        }
       }
     }
   }

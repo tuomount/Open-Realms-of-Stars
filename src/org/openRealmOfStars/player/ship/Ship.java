@@ -109,8 +109,8 @@ public class Ship extends Construction {
    */
   public Ship(DataInputStream dis) throws IOException {
     super("SHIP",Icons.getIconByName(Icons.ICON_HULL_TECH));
-    String name = IOUtilities.readString(dis);
-    setName(name);
+    String tmpStr = IOUtilities.readString(dis);
+    setName(tmpStr);
     prodCost = dis.readInt();
     metalCost = dis.readInt();
     String hullName = IOUtilities.readString(dis);
@@ -514,12 +514,12 @@ public class Ship extends Construction {
         shipDamage.addText(compList[target].getName()+" damaged!");
       }
     }
-    damage = damage-hp;
+    int result = damage-hp;
     if (hp == 0) {
       // Ship has been destroyed by attack nothing to pierce...
-      damage = 0;
+      result = 0;
     }
-    return damage;    
+    return result;
   }
   
   /**
@@ -755,6 +755,7 @@ public class Ship extends Construction {
     return null;
   }
 
+  @Override
   public String getName() {
     return name;
   }
@@ -773,14 +774,14 @@ public class Ship extends Construction {
    * @return Maximum shield
    */
   public int getTotalShield() {
-    int shield = 0;
+    int shield1 = 0;
     for (int i=0;i<components.size();i++) {
       ShipComponent comp = components.get(i);
       if (comp.getDefenseValue() > 0 && comp.getType() == ShipComponentType.SHIELD) {
-        shield = shield +comp.getDefenseValue();
+        shield1 = shield1 +comp.getDefenseValue();
       }
     }
-    return shield;
+    return shield1;
   }
 
   /**
@@ -819,14 +820,14 @@ public class Ship extends Construction {
    * @return Maximum armor
    */
   public int getTotalArmor() {
-    int armor = 0;
+    int armor1 = 0;
     for (int i=0;i<components.size();i++) {
       ShipComponent comp = components.get(i);
       if (comp.getDefenseValue() > 0 && comp.getType() == ShipComponentType.ARMOR) {
-        armor = armor +comp.getDefenseValue();
+        armor1 = armor1 +comp.getDefenseValue();
       }
     }
-    return armor;
+    return armor1;
   }
 
   /**

@@ -241,8 +241,12 @@ public class Combat {
       if (stat != null) {
         stat.setNumberOfLoses(stat.getNumberOfLoses()+1);
         stat.setNumberOfInUse(stat.getNumberOfInUse()-1);
-      }      
+      }
+      int indexToDelete = shipList.indexOf(ship);
       shipList.remove(ship);
+      if (indexToDelete < shipIndex && shipIndex > 0) {
+        shipIndex--;
+      }
     } else if (fleet2.isShipInFleet(ship.getShip())) {
       fleet2.removeShip(ship.getShip());
       ShipStat stat = animation.getShooter().getPlayer()
@@ -255,7 +259,11 @@ public class Combat {
         stat.setNumberOfLoses(stat.getNumberOfLoses()+1);
         stat.setNumberOfInUse(stat.getNumberOfInUse()-1);
       }      
+      int indexToDelete = shipList.indexOf(ship);
       shipList.remove(ship);
+      if (indexToDelete < shipIndex && shipIndex > 0) {
+        shipIndex--;
+      }
     }
   }
   

@@ -44,10 +44,12 @@ public class SaveGameListRenderer implements ListCellRenderer<SavedGame> {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(list, value, index,
         isSelected, cellHasFocus);
     renderer.setFont(GuiStatics.getFontCubellan());
-    String text = value.getFilename()+" - "+value.getTime()+" Turn: "+
+    if (value != null) {
+      String text = value.getFilename()+" - "+value.getTime()+" Turn: "+
                   value.getTurnNumber()+" - "+ value.getEmpireName()+" "+
                   value.getGalaxySize();
-    renderer.setText(text);
+      renderer.setText(text);
+    }
     if (isSelected) {
       renderer.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
       renderer.setBackground(Color.BLACK);

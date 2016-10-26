@@ -105,7 +105,7 @@ public class Ship extends Construction {
   /**
    * Read Ship from DataInputStream
    * @param dis DataInputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public Ship(DataInputStream dis) throws IOException {
     super("SHIP",Icons.getIconByName(Icons.ICON_HULL_TECH));
@@ -134,7 +134,7 @@ public class Ship extends Construction {
   /**
    * Save ship to Data output Stream
    * @param dos Data Output Stream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveShip(DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, getName());

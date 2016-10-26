@@ -226,8 +226,8 @@ public enum SpaceRace {
   private String description;
   
   /**
-   * Get scientis research speed
-   * @return
+   * Get scientist research speed
+   * @return The research speed
    */
   public int getResearchSpeed() {
     switch (this) {
@@ -242,7 +242,7 @@ public enum SpaceRace {
   
   /**
    * Get race maximum Radiation
-   * @return
+   * @return The race maximum radiation
    */
   public int getMaxRad() {
     switch (this) {

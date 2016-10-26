@@ -277,10 +277,11 @@ public class PlanetHandling {
   
   /**
    * Calculate scores for each construction. Each score is between -1 and 1000
-   * @param constructions
-   * @param planet
-   * @param info
-   * @return
+   * @param constructions The constructions
+   * @param planet The planet
+   * @param info The planet info
+   * @param map The star map
+   * @return The calculate scores
    */
   private static int[] scoreConstructions(Construction[] constructions, 
       Planet planet, PlayerInfo info, StarMap map) {

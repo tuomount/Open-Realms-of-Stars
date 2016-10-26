@@ -59,7 +59,7 @@ public enum MissionType {
   
   /**
    * Get mission type by index
-   * @param index
+   * @param index The mission type index
    * @return Mission Type, never null
    */
   public static MissionType getType(int index) {

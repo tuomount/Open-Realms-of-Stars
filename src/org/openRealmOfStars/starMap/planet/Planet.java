@@ -333,7 +333,7 @@ public class Planet {
    * read before since planet only save player index not full player info.
    * @param dis DataInputStream
    * @param players PlayerList
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public Planet(DataInputStream dis, PlayerList players) throws IOException{
     x = dis.readInt();
@@ -387,7 +387,7 @@ public class Planet {
   /**
    * Save Planet data to DataOutputStream
    * @param dos DataOutputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void savePlanet(DataOutputStream dos) throws IOException {
     // Coordinates
@@ -463,8 +463,8 @@ public class Planet {
 
   /**
    * Get production time as String
-   * @param build
-   * @return
+   * @param build The construction
+   * @return The production time
    */
   public String getProductionTime(Construction build) {
     int metalReq = build.getMetalCost()-getMetal();
@@ -500,7 +500,7 @@ public class Planet {
   
   /**
    * Get amount of workers in certain type
-   * @param workerType
+   * @param workerType The worker type
    * @return Amount of workers
    */
   public int getWorkers(int workerType) {
@@ -512,7 +512,7 @@ public class Planet {
 
   /**
    * Set amount of workers in certain type
-   * @param workerType
+   * @param workerType The worker type
    * @param value how many workers in this production
    */
   public void setWorkers(int workerType,int value) {
@@ -555,7 +555,7 @@ public class Planet {
 
   /**
    * Get Troop power
-   * @return Get Total troop power where improvements are taken to count
+   * Get Total troop power where improvements are taken to count
    */
   public void fightAgainstAttacker(int attackTroops) {
     if (planetOwnerInfo != null) {
@@ -816,7 +816,7 @@ public class Planet {
 
   /**
    * Get Planet tile index
-   * @return
+   * @return The planet image index
    */
   public int getPlanetImageIndex() {
     return planetImageIndex;

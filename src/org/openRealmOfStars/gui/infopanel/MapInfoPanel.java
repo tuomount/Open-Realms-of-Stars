@@ -143,7 +143,7 @@ public class MapInfoPanel extends InfoPanel {
   
   /**
    * Show planet on info panel
-   * @param planet
+   * @param planet The planet to show
    */
   public void showPlanet(Planet planet) {
     this.planet = planet;
@@ -158,7 +158,7 @@ public class MapInfoPanel extends InfoPanel {
 
   /**
    * Show fleet on info panel
-   * @param fleet
+   * @param fleet The fleet to show
    */
   public void showFleet(Fleet fleet) {
     this.planet = null;

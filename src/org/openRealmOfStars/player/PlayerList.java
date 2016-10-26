@@ -53,7 +53,7 @@ public class PlayerList {
   /**
    * Read PlayerList from DataInputStream
    * @param dis DataInputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public PlayerList(DataInputStream dis) throws IOException {
     currentPlayer = dis.readInt();
@@ -66,8 +66,8 @@ public class PlayerList {
   
   /**
    * Save Player List to DataOutputStream
-   * @param dos
-   * @throws IOException
+   * @param dos The data output streem
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void savePlayerList(DataOutputStream dos) throws IOException {
     dos.writeInt(currentPlayer);
@@ -87,7 +87,7 @@ public class PlayerList {
   
   /**
    * Get PlayerInfo by index. If index is out of bounds then null is returned.
-   * @param index 
+   * @param index The player info index
    * @return PlayerInfo or null
    */
   public PlayerInfo getPlayerInfoByIndex(int index) {
@@ -99,7 +99,7 @@ public class PlayerList {
   
   /**
    * Get maximum players
-   * @return
+   * @return The number of players
    */
   public int getCurrentMaxPlayers() {
     return list.size();
@@ -117,7 +117,7 @@ public class PlayerList {
   
   /**
    * Get current player index
-   * @return
+   * @return The current player index
    */
   public int getCurrentPlayer() {
     return currentPlayer;

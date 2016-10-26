@@ -90,8 +90,8 @@ public class ShipDamage {
   }
   
   /**
-   * Is Ship Damage ready fo logging
-   * @return
+   * Is Ship Damage ready for logging
+   * @return is the status ready
    */
   public boolean isReady() {
     if (status == READY_FOR_LOGGING) {

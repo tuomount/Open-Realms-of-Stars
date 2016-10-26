@@ -515,8 +515,8 @@ public class TechFactory {
   
   /**
    * Get String list of tech by type and level
-   * @param type
-   * @param level
+   * @param type The tech type
+   * @param level The tech level
    * @return String array of tech or empty array
    */
   public static String[] getListByTechLevel(TechType type,int level) {

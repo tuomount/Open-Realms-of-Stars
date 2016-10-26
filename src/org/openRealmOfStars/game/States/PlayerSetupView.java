@@ -141,7 +141,7 @@ public class PlayerSetupView extends BlackPanel {
   
   /**
    * Handle actions for Player Setup view
-   * @param arg0
+   * @param arg0 The event
    */
   public void handleActions(ActionEvent arg0) {
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_GALAXY_SETUP)) {
@@ -173,8 +173,9 @@ public class PlayerSetupView extends BlackPanel {
   
   /**
    * Create Player config for one player
-   * @param base
-   * @param index
+   * @param base The panel
+   * @param index The player index
+   * @param listener The action listener
    * @return InvisiblePanel with configuration components
    */
   private InvisiblePanel createPlayerRaceSelection(InvisiblePanel base, 

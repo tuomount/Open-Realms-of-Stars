@@ -276,7 +276,7 @@ public class PlayerInfo {
   /**
    * Read PlayerInfo from DataInputStream 
    * @param dis DataInputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public PlayerInfo(DataInputStream dis) throws IOException {
     empireName = IOUtilities.readString(dis);
@@ -310,7 +310,7 @@ public class PlayerInfo {
   /**
    * Save Player Info to DataOutputStream
    * @param dos DataOutputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void savePlayerInfo(DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, empireName);

@@ -128,7 +128,7 @@ public class StarMapView extends BlackPanel {
    * Star Map view
    * @param map Star map to view
    * @param players Player List
-   * @param Game Action Listener and actual game
+   * @param game Action Listener and actual game
    */
   public StarMapView(StarMap map, PlayerList players, Game game) {
     this.map = map;
@@ -223,7 +223,7 @@ public class StarMapView extends BlackPanel {
 
   /**
    * Get Star Map mouse listener
-   * @return
+   * @return The map mouse listener
    */
   public StarMapMouseListener getStarMapMouseListener() {
     return starMapMouseListener;

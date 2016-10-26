@@ -120,7 +120,7 @@ public class InfoTextArea extends JTextArea {
   
   /**
    * Construct InfoTextArea with certain text.
-   * @param text
+   * @param text the text to be displayed, or null
    */
   public InfoTextArea(String text){
     super(text);
@@ -193,7 +193,7 @@ public class InfoTextArea extends JTextArea {
   private int customCharWidth = -1;
   /**
    * Set custom character width.
-   * @param width
+   * @param width the character width
    */
   public void setCharacterWidth(int width) {
     if (width < 1) {

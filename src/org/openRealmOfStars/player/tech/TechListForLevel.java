@@ -52,7 +52,7 @@ public class TechListForLevel {
   /**
    * Save Tech list for level
    * @param dos DataOutputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveTechListForLevel(DataOutputStream dos) throws IOException {
     dos.writeInt(techList.size());
@@ -66,7 +66,7 @@ public class TechListForLevel {
    * @param level Level
    * @param type Tech Type
    * @param dis DataInputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public TechListForLevel(int level, TechType type, DataInputStream dis) 
       throws IOException {

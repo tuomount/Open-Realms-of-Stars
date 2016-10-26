@@ -63,8 +63,8 @@ public class SquareInfo {
   
   /**
    * Create square info.
-   * @param type
-   * @param value
+   * @param type Square info type
+   * @param value Value
    */
   public SquareInfo(byte type, int value) {
     this.setType(type);
@@ -74,7 +74,7 @@ public class SquareInfo {
   /**
    * Write Square info to DataOutput stream
    * @param dos DataOutputStream to write
-   * @throws IOException
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void writeSquareInfo(DataOutputStream dos) throws IOException {
     dos.writeByte(type);
@@ -84,7 +84,7 @@ public class SquareInfo {
   /**
    * Read square info from DataInputStream
    * @param dis DataInputStream where to read
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public SquareInfo(DataInputStream dis) throws IOException {
     this.setType(dis.readByte());

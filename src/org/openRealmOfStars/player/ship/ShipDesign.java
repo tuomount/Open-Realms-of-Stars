@@ -64,7 +64,7 @@ public class ShipDesign {
   /**
    * Read Ship Design from DataInputStream
    * @param dis DataInputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataInputStream
    */
   public ShipDesign(DataInputStream dis) throws IOException {
     name = IOUtilities.readString(dis);
@@ -84,7 +84,7 @@ public class ShipDesign {
   /**
    * Save Ship Design to DataOutputStream
    * @param dos DataOutputStream
-   * @throws IOException
+   * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveShipDesign(DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, name);

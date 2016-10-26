@@ -64,7 +64,7 @@ public enum MissionPhase {
   
   /**
    * Get mission phase by index
-   * @param index
+   * @param index The mission phase index
    * @return Mission phase, never null
    */
   public static MissionPhase getType(int index) {

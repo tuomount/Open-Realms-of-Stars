@@ -193,6 +193,15 @@ public class CombatShip implements Comparable<CombatShip>{
     sb.append("Moves: ");
     sb.append(movesLeft);
     sb.append("\n");
+    sb.append("Shield: ");
+    sb.append(ship.getShield());
+    sb.append("/");
+    sb.append(ship.getTotalShield());
+    sb.append(" Armor: ");
+    sb.append(ship.getArmor());
+    sb.append("/");
+    sb.append(ship.getTotalArmor());
+    sb.append("\n");
     sb.append("Hull points: ");
     sb.append(ship.getHullPoints());
     sb.append("/");

@@ -291,14 +291,20 @@ public class PlayerInfo {
       shipStatList.add(ship);
     }
     fleets = new FleetList(dis);
-    maxX = dis.readInt();
-    maxY = dis.readInt();
-    mapData = new byte[maxX][maxY];
-    mapCloakDetection = new int[maxX][maxY];
-    for (int y=0;y<maxY;y++) {
-      for (int x=0;x<maxX;x++) {
-        mapData[x][y] = dis.readByte();
+    int xSize = dis.readInt();
+    int ySize = dis.readInt();
+    initMapData(xSize,ySize);
+    int mapOffset = 0;
+    try {
+      for (int y=0;y<maxY;y++) {
+        for (int x=0;x<maxX;x++) {
+          mapData[x][y] = dis.readByte();
+          mapOffset++;
+        }
       }
+    } catch (IOException e) {
+      throw new IOException("Reading failed at player mapdata! MapOffset:"+
+                             mapOffset+" "+e.getMessage());
     }
     human = dis.readBoolean();
     if (!human) {
@@ -545,8 +551,8 @@ public class PlayerInfo {
    * @param maximumY Map size in Y axel
    */
   public void initMapData(int maximumX, int maximumY) {
-    this.maxX = maximumX;
-    this.maxY = maximumY;
+    maxX = maximumX;
+    maxY = maximumY;
     mapData = new byte[maxX][maxY];
     mapCloakDetection = new int[maxX][maxY];
   }

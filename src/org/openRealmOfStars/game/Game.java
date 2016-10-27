@@ -9,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -410,12 +411,17 @@ public class Game extends JFrame implements ActionListener {
         folder.mkdirs();
       }
       File file = new File(folderName+"/"+filename);
-      try (FileOutputStream os = new FileOutputStream(file)){
+      try {
+        FileOutputStream os = new FileOutputStream(file);
         BufferedOutputStream bos = new BufferedOutputStream(os);
-        DataOutputStream dos = new DataOutputStream(bos);
-        starMap.saveGame(dos);
-      } catch (IOException e) {
-        System.out.println(e.getMessage());
+        try(DataOutputStream dos = new DataOutputStream(bos)) {
+          starMap.saveGame(dos);
+        } catch (IOException e) {
+          System.out.println(e.getMessage());
+        }
+      } catch (FileNotFoundException e) {
+        System.err.println("File could not be write: "+folderName+"/"+filename+
+                           "! "+e.getMessage());
       }
 
     }

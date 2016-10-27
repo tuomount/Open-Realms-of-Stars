@@ -937,14 +937,16 @@ public class Ship extends Construction {
     power = getHull().getSlotHull()*getHull().getMaxSlot();
     for (int i=0;i<components.size();i++) {
       ShipComponent comp = components.get(i);
-      if (comp.getType() == ShipComponentType.WEAPON_BEAM || 
+      if ((comp.getType() == ShipComponentType.WEAPON_BEAM || 
           comp.getType() == ShipComponentType.WEAPON_RAILGUN ||
           comp.getType() == ShipComponentType.WEAPON_HE_MISSILE || 
-          comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) {
+          comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) &&
+          componentIsWorking(i)){
         militaryShip = true;
         power = power+comp.getDamage();
       }
-      if (comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO) {
+      if (comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO 
+          && componentIsWorking(i)) {
         power = power+comp.getDamage()/2;
       }
       if (comp.getType() == ShipComponentType.ARMOR ||
@@ -952,13 +954,16 @@ public class Ship extends Construction {
         power = power+comp.getDefenseValue();
       }
       if (comp.getType() == ShipComponentType.ENGINE && 
-          getHull().getHullType() != ShipHullType.STARBASE) {
+          getHull().getHullType() != ShipHullType.STARBASE &&
+          componentIsWorking(i)) {
         power = power+comp.getTacticSpeed()-1;
       }
-      if (comp.getType() == ShipComponentType.TARGETING_COMPUTER) {
+      if (comp.getType() == ShipComponentType.TARGETING_COMPUTER &&
+          componentIsWorking(i)) {
         power = power+comp.getDamage()/10;
       }
-      if (comp.getType() == ShipComponentType.JAMMER) {
+      if (comp.getType() == ShipComponentType.JAMMER &&
+          componentIsWorking(i)) {
         power = power+comp.getDamage()/10;
       }
     }

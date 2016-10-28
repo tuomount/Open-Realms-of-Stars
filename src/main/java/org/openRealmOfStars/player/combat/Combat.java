@@ -274,13 +274,13 @@ public class Combat {
    * @return CombatShip or null
    */
   public CombatShip getClosestEnemyShip(PlayerInfo info, CombatShip center) {
-    double maxDist = 0;
+    double maxDist = 999;
     CombatShip result=null;
     for (CombatShip ship : shipList) {
       if (ship.getPlayer() != info) {
         double dist = StarMapUtilities.getDistance(center.getX(), center.getY(), ship.getX(),
             ship.getY());
-        if (dist >maxDist) {
+        if (dist <maxDist) {
           result =ship;
           maxDist = dist;
         }

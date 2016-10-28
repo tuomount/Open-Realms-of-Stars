@@ -324,6 +324,7 @@ public class BattleView extends BlackPanel {
         shot = handleAIShoot(ai, deadliest);
         if (!shot) {
           // Deadliest wasn't close enough, let's shoot the closest
+          closest = combat.getClosestEnemyShip(info, combat.getCurrentShip());
           shot = handleAIShoot(ai, closest);
           if (!shot) {
             // Even closest was too far away, ending the turn now

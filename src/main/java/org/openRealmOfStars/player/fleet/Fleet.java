@@ -315,6 +315,8 @@ public class Fleet {
     if (route != null) {
       if (route.isDefending()) {
         sb.append("\nDefending");
+      } else if (route.isFixing()) {
+        sb.append("\nFixing");
       } else {
         sb.append("\nEnroute");
       }
@@ -485,6 +487,29 @@ public class Fleet {
 
   public void setaStarSearch(AStarSearch aStarSearch) {
     this.aStarSearch = aStarSearch;
+  }
+  
+  /**
+   * Fix fleet's ships
+   * @param fullFix True to fully fix all ships in fleet
+   */
+  public void fixFleetShips(boolean fullFix) {
+    for (Ship ship : ships) {
+      ship.fixShip(fullFix);
+    }
+  }
+  /**
+   * Is all ships in fleet fixed or not
+   * @return True if all is fixed otherwise false
+   */
+  public boolean allFixed() {
+    boolean result = true;
+    for (Ship ship : ships) {
+      if (ship.getHullPoints() < ship.getMaxHullPoints()) {
+        result = false;
+      }
+    }
+    return result;
   }
 
 }

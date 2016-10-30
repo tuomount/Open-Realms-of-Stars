@@ -312,6 +312,15 @@ public class StarMapView extends BlackPanel {
       infoPanel.updatePanel();
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_FIX_FLEET) &&
+        getStarMapMouseListener().getLastClickedFleet() != null) {
+      Fleet fleet = getStarMapMouseListener().getLastClickedFleet();
+      // Make fleet to fix itself
+      fleet.setRoute(new Route(fleet.getX(),fleet.getY(),fleet.getX(),
+          fleet.getY(),Route.ROUTE_FIX));
+      infoPanel.updatePanel();
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_ROUTE_FLEET) &&
         getStarMapMouseListener().getLastClickedFleet() != null) {
       getStarMapMouseListener().setRoutePlanning(true);

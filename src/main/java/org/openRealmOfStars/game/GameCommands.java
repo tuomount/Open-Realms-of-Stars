@@ -49,6 +49,10 @@ public class GameCommands {
    */
   public static final String COMMAND_DEFEND_SECTOR = "DefendCommand";
   /**
+   * Fix fleet command
+   */
+  public static final String COMMAND_FIX_FLEET = "FixFleetCommand";
+  /**
    * Route fleet command
    */
   public static final String COMMAND_ROUTE_FLEET = "RouteFleetCommand";

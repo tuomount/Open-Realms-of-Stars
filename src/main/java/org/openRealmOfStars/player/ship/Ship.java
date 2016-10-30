@@ -523,6 +523,27 @@ public class Ship extends Construction {
   }
   
   /**
+   * Fix ship either one hull point or full repair
+   * @param fullFix True to fully repair the ship
+   */
+  public void fixShip(boolean fullFix) {
+    int maxHPperSlot = getHull().getSlotHull();
+    if (fullFix) {
+      for (int i=0;i<hullPoints.length;i++) {
+        hullPoints[i] = maxHPperSlot;
+      }
+    } else {
+      for (int i=0;i<hullPoints.length;i++) {
+        if (hullPoints[i] < maxHPperSlot) {
+          // Repair one point
+          hullPoints[i] = hullPoints[i]+1;
+          break;
+        }
+      }
+    }
+  }
+  
+  /**
    * Get accuracy for certain weapon
    * @param weapon ShipComponent
    * @return 1 No damage, not even dent

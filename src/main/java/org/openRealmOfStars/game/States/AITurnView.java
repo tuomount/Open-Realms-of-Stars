@@ -339,6 +339,28 @@ public class AITurnView extends BlackPanel {
                   msg.setMatchByString(fleet.getName());
                   msg.setCoordinate(fleet.getX(), fleet.getY());
                   info.getMsgList().addNewMessage(msg);
+                } else {
+                   if (fleet.getRoute().isFixing()) {
+                     Planet planet = game.getStarMap().
+                         getPlanetByCoordinate(fleet.getX(), fleet.getY());
+                     if (planet != null && planet.getPlanetPlayerInfo() == info &&
+                         planet.hasSpacePort()) {
+                       // Fully repair ships if planet has space port
+                       fleet.fixFleetShips(true);
+                     } else {
+                       fleet.fixFleetShips(false);
+                     }
+                     
+                     if (fleet.allFixed()) {
+                       fleet.setRoute(null);
+                       Message msg = new Message(MessageType.FLEET,
+                         fleet.getName()+" has been fixed and waiting for orders.",
+                         Icons.getIconByName(Icons.ICON_HULL_TECH));
+                       msg.setMatchByString(fleet.getName());
+                       msg.setCoordinate(fleet.getX(), fleet.getY());
+                       info.getMsgList().addNewMessage(msg);
+                     }
+                   }
                 }
               } else {
                 // Movement was blocked, giving a message

@@ -84,6 +84,11 @@ public class MapInfoPanel extends InfoPanel {
   private SpaceButton defendBtn;
 
   /**
+   * Fix fleet button for fleet
+   */
+  private SpaceButton fixFleetBtn;
+
+  /**
    * Route button for fleet
    */
   private SpaceButton routeBtn;
@@ -127,6 +132,11 @@ public class MapInfoPanel extends InfoPanel {
     defendBtn.addActionListener(listener);
     defendBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
     defendBtn.setToolTipText("Defend sector, +5% accuracy");
+    fixFleetBtn = new SpaceButton("Fix fleet", 
+        GameCommands.COMMAND_FIX_FLEET);
+    fixFleetBtn.addActionListener(listener);
+    fixFleetBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    fixFleetBtn.setToolTipText("Fix fleet on hull point per turn.");
     this.add(textArea);
     viewBtn = new SpaceButton("View planet", 
         GameCommands.COMMAND_VIEW_PLANET);
@@ -135,6 +145,8 @@ public class MapInfoPanel extends InfoPanel {
     viewBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
     this.add(Box.createRigidArea(new Dimension(10,10)));
     this.add(routeBtn);
+    this.add(Box.createRigidArea(new Dimension(10,10)));
+    this.add(fixFleetBtn);
     this.add(Box.createRigidArea(new Dimension(10,10)));
     this.add(defendBtn);
     this.add(Box.createRigidArea(new Dimension(10,10)));
@@ -152,6 +164,7 @@ public class MapInfoPanel extends InfoPanel {
     this.viewBtn.setText("View planet");
     this.viewBtn.setActionCommand(GameCommands.COMMAND_VIEW_PLANET);
     this.defendBtn.setEnabled(false);
+    this.fixFleetBtn.setEnabled(false);
     this.routeBtn.setEnabled(false);
     updatePanel();
   }
@@ -167,6 +180,7 @@ public class MapInfoPanel extends InfoPanel {
     this.viewBtn.setText("View fleet");
     this.viewBtn.setActionCommand(GameCommands.COMMAND_VIEW_FLEET);
     this.defendBtn.setEnabled(true);
+    this.fixFleetBtn.setEnabled(true);
     this.routeBtn.setEnabled(true);
     updatePanel();
   }
@@ -179,6 +193,7 @@ public class MapInfoPanel extends InfoPanel {
     this.fleet = null;
     this.viewBtn.setEnabled(false);
     this.defendBtn.setEnabled(false);
+    this.fixFleetBtn.setEnabled(false);
     this.routeBtn.setEnabled(false);
     updatePanel();
   }

@@ -192,8 +192,8 @@ public class Route {
    * @return boolean
    */
   public boolean isEndReached() {
-    if (ftlSpeed == 0) {
-      // Ship is defending
+    if (ftlSpeed < 1) {
+      // fleet has special route
       return false;
     }
     if (Math.round(endX) == Math.round(startX) && Math.round(endY) == Math.round(startY)) {

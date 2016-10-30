@@ -53,12 +53,11 @@ import org.openRealmOfStars.utilities.DiceGenerator;
  * 
  */
 public class BattleView extends BlackPanel {
-  
-  /**
-   * 
-   */
+
   private static final long serialVersionUID = 1L;
-  
+  static final int MAX_LOG_NUMBER = 11;
+  static final String INITIAL_LOG_MESSAGE = "Combat started...";
+
   /**
    * MapPanel for drawing the star map
    */
@@ -184,7 +183,7 @@ public class BattleView extends BlackPanel {
     logArea.setEditable(false);
     logArea.setLineWrap(true);
     bottom.add(logArea);
-    textLog = new String[11];
+    textLog = new String[MAX_LOG_NUMBER];
     for (int i=0;i<textLog.length;i++) {
       textLog[i] = "";
     }
@@ -200,7 +199,7 @@ public class BattleView extends BlackPanel {
     aStar = null;
     delayCount = 0;
     combatEnded = false;
-    addLog("Combat started...");
+    addLog(INITIAL_LOG_MESSAGE);
   }
   
   /**
@@ -424,5 +423,7 @@ public class BattleView extends BlackPanel {
     textLog[0] = text;
   }
 
-
+  public String[] getLogMessages() {
+    return textLog;
+  }
 }

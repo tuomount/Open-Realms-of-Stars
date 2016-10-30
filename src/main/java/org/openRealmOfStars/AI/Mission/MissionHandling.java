@@ -42,7 +42,7 @@ public class MissionHandling {
    * @param mission Exploring mission, does nothing if type is wrong
    * @param fleet Fleet on mission
    * @param info PlayerInfo
-   * @param game Game for getting starmap and planet
+   * @param game Game for getting star map and planet
    */
   public static void handleExploring(Mission mission, Fleet fleet, 
       PlayerInfo info, Game game) {
@@ -100,7 +100,7 @@ public class MissionHandling {
    * @param mission Colonize mission, does nothing if type is wrong
    * @param fleet Fleet on mission
    * @param info PlayerInfo
-   * @param game Game for getting starmap and planet
+   * @param game Game for getting star map and planet
    */
   public static void handleColonize(Mission mission, Fleet fleet, 
       PlayerInfo info, Game game) {
@@ -173,7 +173,7 @@ public class MissionHandling {
    * @param mission Colonize mission, does nothing if type is wrong
    * @param fleet Fleet on mission
    * @param info PlayerInfo
-   * @param game Game for getting starmap and planet
+   * @param game Game for getting star map and planet
    */
   public static void handleAttack(Mission mission, Fleet fleet, 
       PlayerInfo info, Game game) {
@@ -258,7 +258,7 @@ public class MissionHandling {
    * @param mission Defend mission, does nothing if type is wrong
    * @param fleet Fleet on mission
    * @param info PlayerInfo
-   * @param game Game for getting starmap and planet
+   * @param game Game for getting star map and planet
    */
   public static void handleDefend(Mission mission, Fleet fleet, 
       PlayerInfo info, Game game) {
@@ -314,7 +314,7 @@ public class MissionHandling {
   
   /**
    * Make Regular moves according A Star Search path finding
-   * @param game Game used to get access starmap and planet lists
+   * @param game Game used to get access star map and planet lists
    * @param fleet Fleet to move
    * @param info Player who controls the fleet
    */
@@ -339,7 +339,7 @@ public class MissionHandling {
 
   /**
    * Make Reroute before FTL
-   * @param game Game used to get access starmap and planet lists
+   * @param game Game used to get access star map and planet lists
    * @param fleet Fleet to move
    * @param info PlayerInfo
    * @param mission Which mission
@@ -363,7 +363,7 @@ public class MissionHandling {
   
   /**
    * Make reroute moves while on mission
-   * @param game Game used to get access starmap and planet lists
+   * @param game Game used to get access star map and planet lists
    * @param fleet Fleet to move
    * @param info PlayerInfo
    * @param mission Which mission

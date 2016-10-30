@@ -59,9 +59,9 @@ public class PlanetHandling {
       if (credit < 0) {
         planet.setTax(planet.getTax()+1);
       }
-      ArrayList<Message> msgs = info.getMsgList().getFullList();
+      ArrayList<Message> messages = info.getMsgList().getFullList();
       boolean changeConstruction = false;
-      for (Message msg : msgs) {
+      for (Message msg : messages) {
         if (msg.getType() == MessageType.CONSTRUCTION &&
             msg.getMatchByString().equals(planet.getName())) {
           changeConstruction = true;        

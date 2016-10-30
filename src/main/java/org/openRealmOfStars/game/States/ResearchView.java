@@ -181,8 +181,8 @@ public class ResearchView extends BlackPanel {
   //  focusPanel.add(Box.createRigidArea(new Dimension(10,10)));
     base.add(focusPanel,BorderLayout.EAST);
     
-    InvisiblePanel invis = new InvisiblePanel(base);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.X_AXIS));
+    InvisiblePanel invisible = new InvisiblePanel(base);
+    invisible.setLayout(new BoxLayout(invisible, BoxLayout.X_AXIS));
     Tech[] techs = player.getTechList().getList();
     techList = new JList<>(techs);
     techList.setCellRenderer(new TechListRenderer());
@@ -197,15 +197,15 @@ public class ResearchView extends BlackPanel {
         }
       }
     }
-    invis.add(scroll);
-    invis.add(Box.createRigidArea(new Dimension(10,10)));
+    invisible.add(scroll);
+    invisible.add(Box.createRigidArea(new Dimension(10,10)));
     infoText = new InfoTextArea(20, 35);
     infoText.setEditable(false);
     infoText.setFont(GuiStatics.getFontCubellanSmaller());
-    invis.add(infoText);
-    invis.add(Box.createRigidArea(new Dimension(10,10)));
+    invisible.add(infoText);
+    invisible.add(Box.createRigidArea(new Dimension(10,10)));
     
-    base.add(invis,BorderLayout.WEST);
+    base.add(invisible,BorderLayout.WEST);
     
     this.add(base, BorderLayout.CENTER);
     
@@ -225,7 +225,7 @@ public class ResearchView extends BlackPanel {
   }
   
   /**
-   * Handle actions for Reseach view.
+   * Handle actions for Research view.
    * @param arg0 ActionEvent command what player did
    */
   public void handleAction(ActionEvent arg0) {

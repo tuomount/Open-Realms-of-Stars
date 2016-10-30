@@ -45,7 +45,7 @@ public class ShipDamage {
    */
   public static int NOT_READY_YET = 0;
   /**
-   * Ship damage is ready if loggin
+   * Ship damage is ready if logging
    */
   public static int READY_FOR_LOGGING = 1;
   /**

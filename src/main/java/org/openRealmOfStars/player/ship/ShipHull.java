@@ -165,7 +165,7 @@ public class ShipHull {
 
   /**
    * Hull point per slot
-   * @return Hullpoints per slot aka "hitpoints"
+   * @return Hull points per slot aka "hit points"
    */
   public int getSlotHull() {
     return slotHull;

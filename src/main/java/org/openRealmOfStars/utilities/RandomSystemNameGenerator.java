@@ -84,7 +84,7 @@ public class RandomSystemNameGenerator {
   
   /**
    * Converts integer into Roman number. Integer can be between 1-10.
-   * @param i Integer to conver
+   * @param i Integer to convert
    * @return String with Roman number.
    */
   public static String numberToRoman(int i) {

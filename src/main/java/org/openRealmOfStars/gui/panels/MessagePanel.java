@@ -82,7 +82,7 @@ public class MessagePanel extends JPanel {
    * Constructor for message panel
    * @param prevCommand Prev button command
    * @param nextCommand Next button command
-   * @param focusCommand Focut button command
+   * @param focusCommand Focus button command
    * @param msg Message to shown
    * @param index for current message
    * @param maxIndex maximum index

@@ -55,7 +55,7 @@ public class Tiles {
   }
 
   /**
-   * Get tile by name. Initializes tiles if they are unitialized.
+   * Get tile by name. Initializes tiles if they are uninitialized.
    * @param name For search the tile
    * @return Always returns a tile if not found tile then first index is
    * returned.

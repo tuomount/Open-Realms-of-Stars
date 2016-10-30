@@ -65,11 +65,11 @@ public class StarMapUtilities {
   }
   
   /**
-   * Get how full universum is solar systems
+   * Get how full universe is solar systems
    * @param solarSystem Solar system map
    * @param maxX Maximum size of X 
    * @param maxY Maximum size of Y
-   * @return How many percent universum is full
+   * @return How many percent universe is full
    */
   public static int getSystemFullness(int[][] solarSystem, int maxX, int maxY) {
     int result=0;

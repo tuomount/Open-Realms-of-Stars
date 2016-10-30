@@ -275,7 +275,7 @@ public class Ship extends Construction {
   }
   
   /**
-   * Check if certain component has enery and hull points so it is functioning.
+   * Check if certain component has energy and hull points so it is functioning.
    * @param index Component index
    * @return True if component is functioning
    */
@@ -298,7 +298,7 @@ public class Ship extends Construction {
   }
   
   /**
-   * Get Speed depending on hullpoints and energy level
+   * Get Speed depending on hull points and energy level
    * @return Speed
    */
   public int getSpeed() {
@@ -313,7 +313,7 @@ public class Ship extends Construction {
   }
 
   /**
-   * Get tactic Speed depending on hullpoints and energy level
+   * Get tactic Speed depending on hull points and energy level
    * @return Speed
    */
   public int getTacticSpeed() {
@@ -365,7 +365,7 @@ public class Ship extends Construction {
   }
 
   /**
-   * Get FTL Speed depending on hullpoints and energy level
+   * Get FTL Speed depending on hull points and energy level
    * @return Speed
    */
   public int getFtlSpeed() {
@@ -483,7 +483,7 @@ public class Ship extends Construction {
   /**
    * Damage component by randomly
    * @param damage Amount damage to cause
-   * @param shipDamage Ship Damage to more description infomation about damage
+   * @param shipDamage Ship Damage to more description information about damage
    * @return amount damage left aka pierced the component
    */
   public int damageComponent(int damage,ShipDamage shipDamage) {

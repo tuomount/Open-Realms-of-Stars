@@ -194,7 +194,7 @@ public class Game extends JFrame implements ActionListener {
   }
 
   /**
-   * Contructor of Game class
+   * Constructor of Game class
    */
   public Game() {
     // Set look and feel match on CrossPlatform Look and feel
@@ -390,7 +390,7 @@ public class Game extends JFrame implements ActionListener {
   }
 
   /**
-   * Show Load Gamve view panel
+   * Show Load Game view panel
    */
   public void showLoadGame() {
     loadGameView = new LoadGameView(this);
@@ -493,7 +493,7 @@ public class Game extends JFrame implements ActionListener {
 
   /**
    * Change game state so that focus is also changed to target message.
-   * There is also possibility to give data object which depends on new gamestate.
+   * There is also possibility to give data object which depends on new game state.
    * @param newState Game State where to change
    * @param focusMessage Focused message, can be also null
    * @param dataObject Depends on which state is changed

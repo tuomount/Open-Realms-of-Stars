@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * along with this program; if not, see http://www.gnu.org/licenses/
  * 
  * 
- * List of PLayer infos
+ * List of PLayer info
  * 
  */
 public class PlayerList {
@@ -66,7 +66,7 @@ public class PlayerList {
   
   /**
    * Save Player List to DataOutputStream
-   * @param dos The data output streem
+   * @param dos The data output stream
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void savePlayerList(DataOutputStream dos) throws IOException {

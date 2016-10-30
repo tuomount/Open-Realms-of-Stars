@@ -89,7 +89,7 @@ public class AITurnView extends BlackPanel {
 
   /**
    * Constructor for main menu
-   * @param game Game used to get access starmap and planet lists
+   * @param game Game used to get access star map and planet lists
    * @param listener ActionListener
    */
   public AITurnView(Game game, ActionListener listener) {
@@ -105,15 +105,15 @@ public class AITurnView extends BlackPanel {
     BigImagePanel imgBase = new BigImagePanel(planet, true,"Enemy turn");
     this.setLayout(new BorderLayout());
     
-    InvisiblePanel invis = new InvisiblePanel(imgBase);    
-    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    invis.add(Box.createRigidArea(new Dimension(500, 500)));
+    InvisiblePanel invisible = new InvisiblePanel(imgBase);
+    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
+    invisible.add(Box.createRigidArea(new Dimension(500, 500)));
 
-    label = new TransparentLabel(invis, "Please wait.....");
+    label = new TransparentLabel(invisible, "Please wait.....");
     label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
-    invis.add(label);
-    imgBase.add(invis);
+    invisible.add(label);
+    imgBase.add(invisible);
     this.add(imgBase,BorderLayout.CENTER);
     textAnim = 0;
 
@@ -218,7 +218,7 @@ public class AITurnView extends BlackPanel {
         cx = cx +planet.getX();
         cy = cy +planet.getY();
         if (planet.getHomeWorldIndex() != -1) {
-          // Double the effect of homeworld
+          // Double the effect of home world
           cx = cx +planet.getX();
           cy = cy +planet.getY();
         }

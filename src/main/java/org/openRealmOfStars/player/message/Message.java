@@ -164,7 +164,7 @@ public class Message {
   }
 
   /**
-   * Set message coordiantes. Use (-1,-1) not to place coordinate for message
+   * Set message coordinates. Use (-1,-1) not to place coordinate for message
    * @param x X coordinate
    * @param y Y coordinate
    */

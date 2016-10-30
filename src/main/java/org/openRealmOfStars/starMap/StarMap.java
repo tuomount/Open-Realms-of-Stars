@@ -93,12 +93,12 @@ public class StarMap {
   private int drawY;
   
   /**
-   * List of suns in starmap
+   * List of suns in star map
    */
   private ArrayList<Sun> sunList;
 
   /**
-   * List of planets in starmap
+   * List of planets in star map
    */
   private ArrayList<Planet> planetList;
 
@@ -133,7 +133,7 @@ public class StarMap {
   public final static String MAGIC_STRING ="OROS-SAVE-GAME-0.2";
 
   /**
-   * Constructor for StarMap. Generates universum with galaxy config and
+   * Constructor for StarMap. Generates universe with galaxy config and
    * players
    * @param config Galaxy config
    * @param players Players
@@ -434,7 +434,7 @@ public class StarMap {
   /**
    * Checks if 4x4 area is empty around the coordinate.
    * Note this is not centered. This is more closer
-   * on leftupper corner but not in the corner.
+   * on left upper corner but not in the corner.
    * @param x X coordinate
    * @param y Y coordinate
    * @return true if all are empty false otherwise
@@ -471,7 +471,7 @@ public class StarMap {
   
   /**
    * Create Solar System
-   * @param solarSystem map of solarsystems
+   * @param solarSystem map of solar systems
    * @param sunx Sun's about coordinates
    * @param suny Sun's about coordinates
    * @param planetsToCreate Number of planets to Solar System
@@ -905,8 +905,8 @@ public class StarMap {
     if (info != null && !info.isHuman()) {
       // Handle research
       Research.handle(info);
-      ArrayList<Message> msgs = info.getMsgList().getFullList();
-      for (Message msg : msgs) {
+      ArrayList<Message> messages = info.getMsgList().getFullList();
+      for (Message msg : messages) {
         if (msg.getType() ==MessageType.RESEARCH) {
           Research.handleShipDesigns(info);
           break;
@@ -952,7 +952,7 @@ public class StarMap {
   
   
   /**
-   * Do Fleet/Planet scan Update for starmap. Fleet or planet can be null
+   * Do Fleet/Planet scan Update for star map. Fleet or planet can be null
    * but only one should be null.
    * @param info Player who controls the fleet
    * @param fleet Fleet which is doing the rescan
@@ -984,7 +984,7 @@ public class StarMap {
   }
   
   /**
-   * Update starmap when game starts
+   * Update star map when game starts
    */
   public void updateStarMapOnStartGame() {
     for (int i=0;i<players.getCurrentMaxPlayers();i++) {
@@ -1011,7 +1011,7 @@ public class StarMap {
   }
 
   /**
-   * Update starmap when game has loaded
+   * Update star map when game has loaded
    */
   public void updateStarMapOnLoadGame() {
     for (int i=0;i<players.getCurrentMaxPlayers();i++) {
@@ -1248,7 +1248,7 @@ public class StarMap {
    * Draw visibility line and set visibility info for one player
    * @param info PlayerInfo
    * @param sx Start X
-   * @param sy Stary Y
+   * @param sy Start Y
    * @param ex End X
    * @param ey End Y
    * @param cloakDetection Cloaking Detection level

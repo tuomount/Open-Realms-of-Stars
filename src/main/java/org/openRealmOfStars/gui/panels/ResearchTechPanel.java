@@ -101,12 +101,12 @@ public class ResearchTechPanel extends InvisiblePanel {
     btnMinus.addActionListener(listener);
     this.add(Box.createRigidArea(new Dimension(5,5)));
     this.add(btnMinus);
-    InvisiblePanel invis = new InvisiblePanel(this);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    InvisiblePanel invisible = new InvisiblePanel(this);
+    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
     
     label = new IconLabel(this, Icons.getIconByName(iconName),text);
     label.setToolTipText(toolTip);
-    invis.add(label);
+    invisible.add(label);
     slider = new JSlider(0, 100, sliderValue);
     slider.setMinorTickSpacing(4);
     slider.setMajorTickSpacing(20);
@@ -127,11 +127,11 @@ public class ResearchTechPanel extends InvisiblePanel {
         }
       }
     });
-    invis.add(slider);
+    invisible.add(slider);
     lvlLabel = new IconLabel(this, Icons.getIconByName(Icons.ICON_EMPTY),text2);
-    invis.add(lvlLabel);
+    invisible.add(lvlLabel);
     
-    this.add(invis);
+    this.add(invisible);
     
     btnUpgrade = new IconButton(Icons.getIconByName(Icons.ICON_ARROWUP),
         Icons.getIconByName(Icons.ICON_ARROWUP_PRESSED),false,actionUpgrade,this);

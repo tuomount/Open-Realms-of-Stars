@@ -478,7 +478,7 @@ public class MapPanel extends JPanel {
       }
     }
     Graphics2D gr = screen.createGraphics();
-    // Center coordinates, to match starmap background
+    // Center coordinates, to match star map background
     int cx = starMap.getDrawX();
     int cy = starMap.getDrawY();
 

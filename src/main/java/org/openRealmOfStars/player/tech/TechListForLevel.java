@@ -95,7 +95,7 @@ public class TechListForLevel {
   }
   /**
    * Check if certain tech is in tech list
-   * @param techName Techname to search
+   * @param techName Tech name to search
    * @return True if found, otherwise false
    */
   public boolean isTech(String techName) {

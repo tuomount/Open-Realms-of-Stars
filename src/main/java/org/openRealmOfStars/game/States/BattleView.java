@@ -75,7 +75,7 @@ public class BattleView extends BlackPanel {
   private StarMap map;
 
   /**
-   * Infopanel on east side
+   * Info panel on east side
    */
   private BattleInfoPanel infoPanel;
   

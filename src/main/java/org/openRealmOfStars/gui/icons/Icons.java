@@ -112,7 +112,7 @@ public class Icons {
   }
 
   /**
-   * Get icon by name. Initializes icons if they are unitialized.
+   * Get icon by name. Initializes icons if they are uninitialized.
    * @param name For search the icon
    * @return Always returns an icon if not found tile then first index is
    * returned.

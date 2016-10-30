@@ -46,11 +46,11 @@ public class StarFieldTextArea extends JTextArea {
   */
   private static final int Y_OFFSET = 18;
   /**
-   * Does text have autoscroll on
+   * Does text have auto scroll on
    */
   private boolean autoScroll = false;
   /**
-   * Arrays of string used when scorlling the text
+   * Arrays of string used when scrolling the text
    */
   private String[] scrollText;
   

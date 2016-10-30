@@ -70,7 +70,7 @@ public class CombatShip implements Comparable<CombatShip>{
   private int aiShotsLeft;
   
   /**
-   * Bonus accuracy from defeding
+   * Bonus accuracy from defending
    */
   private int bonusAccuracy;
     

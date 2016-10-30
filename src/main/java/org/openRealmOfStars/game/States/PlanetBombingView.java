@@ -115,7 +115,7 @@ public class PlanetBombingView extends BlackPanel {
   private BigImagePanel imgBase;
   
   /**
-   * Infopanel on east side
+   * Info panel on east side
    */
   private BattleInfoPanel infoPanel;
   
@@ -172,45 +172,45 @@ public class PlanetBombingView extends BlackPanel {
     topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
     
     topPanel.add(Box.createRigidArea(new Dimension(15,25)));
-    InvisiblePanel invis = new InvisiblePanel(topPanel);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    InvisiblePanel invisible = new InvisiblePanel(topPanel);
+    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
     if (planet.getPlanetPlayerInfo() != null) {
-      ownerLabel = new TransparentLabel(invis, planet.getPlanetPlayerInfo().getEmpireName());
+      ownerLabel = new TransparentLabel(invisible, planet.getPlanetPlayerInfo().getEmpireName());
     } else {
-      ownerLabel = new TransparentLabel(invis, "Uncolonized planet");
+      ownerLabel = new TransparentLabel(invisible, "Uncolonized planet");
     }
-    invis.add(ownerLabel);
-    topPanel.add(invis);
+    invisible.add(ownerLabel);
+    topPanel.add(invisible);
     topPanel.add(Box.createRigidArea(new Dimension(15,25)));
 
-    invis = new InvisiblePanel(topPanel);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    totalPeople = new IconLabel(invis,Icons.getIconByName(Icons.ICON_PEOPLE), 
+    invisible = new InvisiblePanel(topPanel);
+    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
+    totalPeople = new IconLabel(invisible,Icons.getIconByName(Icons.ICON_PEOPLE),
         "Population: "+planet.getTotalPopulation());
     totalPeople.setToolTipText("Total number of people on planet.");
     totalPeople.setAlignmentX(Component.LEFT_ALIGNMENT);
-    invis.add(totalPeople);
-    defenseTurret = new IconLabel(invis,Icons.getIconByName(Icons.ICON_PLANETARY_TURRET), 
+    invisible.add(totalPeople);
+    defenseTurret = new IconLabel(invisible,Icons.getIconByName(Icons.ICON_PLANETARY_TURRET),
         "Turrets: "+planet.getTurretLvl());
     defenseTurret.setToolTipText("Total defense value of turrets.");
     defenseTurret.setAlignmentX(Component.LEFT_ALIGNMENT);
-    invis.add(defenseTurret);
-    topPanel.add(invis);
+    invisible.add(defenseTurret);
+    topPanel.add(invisible);
     topPanel.add(Box.createRigidArea(new Dimension(15,25)));
 
-    invis = new InvisiblePanel(topPanel);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    troopsPower = new IconLabel(invis,Icons.getIconByName(Icons.ICON_TROOPS), 
+    invisible = new InvisiblePanel(topPanel);
+    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
+    troopsPower = new IconLabel(invisible,Icons.getIconByName(Icons.ICON_TROOPS),
         "Troops power: "+planet.getTroopPower());
     troopsPower.setToolTipText("Total power of defending troops.");
     troopsPower.setAlignmentX(Component.LEFT_ALIGNMENT);
-    invis.add(troopsPower);
-    totalBuildings = new IconLabel(invis,Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH), 
+    invisible.add(troopsPower);
+    totalBuildings = new IconLabel(invisible,Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
         "Buildings: "+planet.getNumberOfBuildings());
     totalBuildings.setToolTipText("Total number of buildings on planet.");
     totalBuildings.setAlignmentX(Component.LEFT_ALIGNMENT);
-    invis.add(totalBuildings);
-    topPanel.add(invis);
+    invisible.add(totalBuildings);
+    topPanel.add(invisible);
     topPanel.add(Box.createRigidArea(new Dimension(15,25)));
 
     topPanel.setTitle(planet.getName());
@@ -233,18 +233,18 @@ public class PlanetBombingView extends BlackPanel {
     infoPanel.setBorder(null);
     eastPanel.add(infoPanel);
     eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
-    invis = new InvisiblePanel(topPanel);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.X_AXIS));
+    invisible = new InvisiblePanel(topPanel);
+    invisible.setLayout(new BoxLayout(invisible, BoxLayout.X_AXIS));
     SpaceButton btn = new SpaceButton("Next ship", 
         GameCommands.COMMAND_NEXT_TARGET);
     btn.addActionListener(listener);
-    invis.add(btn);
-    invis.add(Box.createRigidArea(new Dimension(5,5)));
+    invisible.add(btn);
+    invisible.add(Box.createRigidArea(new Dimension(5,5)));
     btn = new SpaceButton("Abort conquest", 
         GameCommands.COMMAND_VIEW_STARMAP);
     btn.addActionListener(listener);
-    invis.add(btn);
-    eastPanel.add(invis);
+    invisible.add(btn);
+    eastPanel.add(invisible);
 
     
     // Bottom panel
@@ -319,11 +319,11 @@ public class PlanetBombingView extends BlackPanel {
      * Set the orbiting ships
      */
     Ship[] ships = fleet.getShips();
-    BufferedImage[] imgs = new BufferedImage[ships.length];
+    BufferedImage[] images = new BufferedImage[ships.length];
     for (int i = 0;i<ships.length;i++) {
-      imgs[i] = ships[i].getHull().getImage();
+      images[i] = ships[i].getHull().getImage();
     }
-    imgBase.setShipImage(imgs);
+    imgBase.setShipImage(images);
 
   }
 

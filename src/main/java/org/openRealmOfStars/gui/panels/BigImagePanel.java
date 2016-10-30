@@ -80,7 +80,7 @@ public class BigImagePanel extends JPanel {
   /**
    * Create BigImagePanel
    * @param planet Planet to draw on background
-   * @param starField Use starfield or not
+   * @param starField Use star field or not
    * @param title if this is not null then planet info is not shown.
    */
   public BigImagePanel(Planet planet, boolean starField,String title) {

@@ -25,12 +25,22 @@ public class Logger {
 
     private static final int DEFAULT_LOG_SIZE = 11;
 
-    String[] textLog;
+    /**
+     * Array texts in logger
+     */
+    private String[] textLog;
 
+    /**
+     * Build logger with Default log size
+     */
     public Logger() {
         this(DEFAULT_LOG_SIZE);
     }
 
+    /**
+     * Build logger with custom log size.
+     * @param logSize How many rows is available in logger
+     */
     public Logger(int logSize) {
         textLog = new String[logSize];
         for (int i = 0; i < logSize; i++) {

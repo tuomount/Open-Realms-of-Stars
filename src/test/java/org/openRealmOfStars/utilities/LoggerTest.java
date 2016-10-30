@@ -43,7 +43,7 @@ public class LoggerTest {
         logger.addLog(addMessage);
 
         actualResult = logger.getLogMessages();
-        assertEquals(expectedResult, actualResult);
+        assertArrayEquals(expectedResult, actualResult);
     }
 
     @Test

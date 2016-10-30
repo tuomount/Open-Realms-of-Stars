@@ -50,4 +50,12 @@ public class Logger {
     public String[] getLogMessages() {
         return textLog;
     }
+
+    public int size() {
+        return textLog.length;
+    }
+
+    public String getMessage(int index) {
+        return textLog[index];
+    }
 }

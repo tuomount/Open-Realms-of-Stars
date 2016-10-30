@@ -55,4 +55,32 @@ public class LoggerTest {
         logger.addLog("Message " + LOG_SIZE + 1);
     }
 
+    @Test
+    public void testSizeShouldReturnTheLoggerSize(){
+        assertEquals(LOG_SIZE, logger.size());
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testGetMessageShouldThrowExceptionWhereIndexLowerThanZero(){
+        logger.getMessage(-1);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testGetMessageShouldThrowExceptionWhereIndexGreaterThanLoggerSize(){
+        logger.getMessage(10);
+    }
+
+    @Test
+    public void testGetMessageShouldReturnTheMessageByIndex(){
+        logger.addLog("Message 1");
+        logger.addLog("Message 2");
+        logger.addLog("Message 3");
+        logger.addLog("Message 4");
+
+        assertEquals("Message 4", logger.getMessage(0));
+        assertEquals("Message 3", logger.getMessage(1));
+        assertEquals("Message 2", logger.getMessage(2));
+        assertEquals("Message 1", logger.getMessage(3));
+    }
+
 }

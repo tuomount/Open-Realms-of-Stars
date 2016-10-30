@@ -122,7 +122,7 @@ public class BattleInfoPanel extends InfoPanel {
 
   /**
    * Mark component as used
-   * @param index
+   * @param index The component index
    */
   public void useComponent(int index) {
     if (index >= 0 && index < MAX_BTN) {

@@ -211,8 +211,7 @@ public class TechList {
       if (buf.startsWith("Mk") && buf.length() > 2) {
         buf = buf.substring(2, buf.length());
         try {
-          int result = Integer.parseInt(buf);
-          return result;
+          return Integer.parseInt(buf);
         } catch (NumberFormatException e) {
           // Do nothing
         }

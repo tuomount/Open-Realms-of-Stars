@@ -39,7 +39,7 @@ public class ComponentButton extends JButton {
   private static final long serialVersionUID = 1L;
   
   /**
-   * Full ship, contains component and component hitpoints
+   * Full ship, contains component and component hit points
    */
   private Ship ship;
   

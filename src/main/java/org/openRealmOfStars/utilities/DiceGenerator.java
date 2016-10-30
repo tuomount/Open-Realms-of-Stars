@@ -22,7 +22,7 @@ import java.util.Random;
  * 
  * 
  * Class for getting random values. Contains actually three different
- * Pseudo random fuctions.
+ * Pseudo random functions.
  * 
  */
 public class DiceGenerator {
@@ -60,7 +60,7 @@ public class DiceGenerator {
    * @return A random number
    */
   public static int getRandom(int maxValue) {
-    if (initialized == false) {
+    if (!initialized) {
       generator1 = new Random(System.nanoTime());
       generator2 = new Random(generator1.nextLong());
       m_z =(int) System.nanoTime();
@@ -87,7 +87,7 @@ public class DiceGenerator {
    * @return A random number
    */
   public static int getRandom(int minValue, int maxValue) {
-    if (initialized == false) {
+    if (!initialized) {
       generator1 = new Random(System.nanoTime());
       generator2 = new Random(generator1.nextLong());
       m_z =(int) System.nanoTime();
@@ -127,7 +127,7 @@ public class DiceGenerator {
   
   /**
    * Get random with Multiply Carry
-   * @param maxValue, exlusive
+   * @param maxValue exclusive
    * @return A random number
    */
   private static int getRandomMultiplyWithCarry(int maxValue) {
@@ -140,7 +140,7 @@ public class DiceGenerator {
   
   /**
    * Get random with XORShift function
-   * @param maxValue, exclusive
+   * @param maxValue exclusive
    * @return int
    */
   private static int getRandomXORShift(int maxValue) {

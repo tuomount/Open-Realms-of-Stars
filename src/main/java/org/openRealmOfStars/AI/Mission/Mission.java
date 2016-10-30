@@ -194,17 +194,8 @@ public class Mission {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append(getType().toString());
-    sb.append(" - ");
-    sb.append(getPhase().toString());
-    sb.append("\nPlanet:");
-    sb.append(getPlanetBuilding());
-    sb.append("\nFleet:");
-    sb.append(getFleetName());
-    sb.append("\nSolar:");
-    sb.append(getSunName());
-    return sb.toString();
+    return getType().toString() + " - " + getPhase().toString() + "\nPlanet:" + getPlanetBuilding() +
+            "\nFleet:" + getFleetName() + "\nSolar:" + getSunName();
   }
 
   public String getSunName() {

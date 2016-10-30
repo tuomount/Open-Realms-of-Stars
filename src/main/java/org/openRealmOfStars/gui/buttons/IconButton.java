@@ -71,7 +71,7 @@ public class IconButton extends JButton {
    * Icon button which has only icon
    * @param notPressedImage Icon16x16
    * @param pressedImage Icon16x16
-   * @param border Booolean
+   * @param border Boolean
    * @param actionCommand String
    */
   public IconButton(Icon16x16 notPressedImage, 
@@ -99,7 +99,7 @@ public class IconButton extends JButton {
    * Icon button which has only icon
    * @param notPressedImage BufferedImage
    * @param pressedImage BufferedImage
-   * @param border Booolean
+   * @param border Boolean
    * @param actionCommand String
    */
   public IconButton(BufferedImage notPressedImage, 

@@ -164,7 +164,7 @@ public class Message {
   }
 
   /**
-   * Set message coordiantes. Use (-1,-1) not to place coordinate for message
+   * Set message coordinates. Use (-1,-1) not to place coordinate for message
    * @param x X coordinate
    * @param y Y coordinate
    */
@@ -191,11 +191,7 @@ public class Message {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append(type.toString());
-    sb.append(" - ");
-    sb.append(message);
-    return sb.toString();
+    return type.toString() + " - " + message;
   }
   
   

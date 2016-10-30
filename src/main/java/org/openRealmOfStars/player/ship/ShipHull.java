@@ -165,7 +165,7 @@ public class ShipHull {
 
   /**
    * Hull point per slot
-   * @return Hullpoints per slot aka "hitpoints"
+   * @return Hull points per slot aka "hit points"
    */
   public int getSlotHull() {
     return slotHull;
@@ -197,26 +197,11 @@ public class ShipHull {
   
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append(getName());
-    sb.append("\n");
-    sb.append("Cost: ");
-    sb.append(getCost());
-    sb.append(" Metal: ");
-    sb.append(getMetalCost());
-    sb.append("\n");
-    sb.append("Slots:");
-    sb.append(getMaxSlot());
-    sb.append(" Hull:");
-    sb.append(getMaxSlot()*getSlotHull());
-    sb.append("\n");
-    sb.append("Size:");
-    sb.append(getSize().toString());
-    sb.append("\n");
-    sb.append(IOUtilities.stringWrapper(getHullType().getDescription(),39));
-    
-
-    return sb.toString();
+    return getName() + "\n" +
+            "Cost: " + getCost() + " Metal: " + getMetalCost() + "\n" +
+            "Slots:" + getMaxSlot() + " Hull:" + getMaxSlot() * getSlotHull() + "\n" +
+            "Size:" + getSize().toString() + "\n" +
+            IOUtilities.stringWrapper(getHullType().getDescription(), 39);
   }
   
 }

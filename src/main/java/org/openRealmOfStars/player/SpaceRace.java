@@ -428,7 +428,7 @@ public enum SpaceRace {
   }
 
   /**
-   * Get how many turns to explore solarsystem
+   * Get how many turns to explore solar system
    * @return int
    */
   public int getAIExploringAmount() {

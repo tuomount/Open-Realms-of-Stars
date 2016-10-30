@@ -100,32 +100,32 @@ public class ShipView extends BlackPanel {
     shipList.setBackground(Color.BLACK);
     shipList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     JScrollPane scroll = new JScrollPane(shipList);
-    InvisiblePanel invis = new InvisiblePanel(base);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    invis.add(scroll);
+    InvisiblePanel invisible = new InvisiblePanel(base);
+    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
+    invisible.add(scroll);
     obsoleteBtn = new SpaceButton("Obsolete design", GameCommands.COMMAND_OBSOLETE_SHIP);
     obsoleteBtn.addActionListener(listener);
-    invis.add(obsoleteBtn);
+    invisible.add(obsoleteBtn);
     SpaceButton btn = new SpaceButton("Copy design", GameCommands.COMMAND_COPY_SHIP);
     btn.addActionListener(listener);
-    invis.add(btn);
+    invisible.add(btn);
     btn = new SpaceButton("New design", GameCommands.COMMAND_SHIPDESIGN);
     btn.addActionListener(listener);
-    invis.add(btn);
-    base.add(invis,BorderLayout.WEST);
+    invisible.add(btn);
+    base.add(invisible,BorderLayout.WEST);
 
-    invis = new InvisiblePanel(base);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    invisible = new InvisiblePanel(base);
+    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
     shipImage = new ImageLabel(ShipImages.Humans().getShipImage(ShipImage.SCOUT), true);
     shipImage.setFillColor(Color.BLACK);
-    invis.add(shipImage);
-    invis.add(Box.createRigidArea(new Dimension(5,5)));
+    invisible.add(shipImage);
+    invisible.add(Box.createRigidArea(new Dimension(5,5)));
     infoText = new BaseInfoTextArea(30, 30);
     infoText.setEditable(false);
     infoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(infoText);
-    invis.add(scroll);
-    base.add(invis,BorderLayout.CENTER);
+    invisible.add(scroll);
+    base.add(invisible,BorderLayout.CENTER);
 
     
     this.add(base, BorderLayout.CENTER);

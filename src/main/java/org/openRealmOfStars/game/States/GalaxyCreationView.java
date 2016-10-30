@@ -102,11 +102,11 @@ public class GalaxyCreationView extends BlackPanel {
     imgBase.setLayout(new BorderLayout());
     this.setLayout(new BorderLayout());
     
-    InvisiblePanel invis = new InvisiblePanel(imgBase);    
-    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    invis.add(Box.createRigidArea(new Dimension(500, 250)));
+    InvisiblePanel invisible = new InvisiblePanel(imgBase);
+    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
+    invisible.add(Box.createRigidArea(new Dimension(500, 250)));
 
-    InvisiblePanel xinvis = new InvisiblePanel(invis);    
+    InvisiblePanel xinvis = new InvisiblePanel(invisible);
     xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
     xinvis.add(Box.createRigidArea(new Dimension(200,5)));
     InfoPanel info = new InfoPanel();
@@ -213,22 +213,22 @@ public class GalaxyCreationView extends BlackPanel {
     
     xinvis.add(info);
     xinvis.add(Box.createRigidArea(new Dimension(200,5)));
-    invis.add(xinvis);
-    invis.add(Box.createRigidArea(new Dimension(200,300)));
+    invisible.add(xinvis);
+    invisible.add(Box.createRigidArea(new Dimension(200,300)));
 
-    imgBase.add(invis,BorderLayout.CENTER);
+    imgBase.add(invisible,BorderLayout.CENTER);
 
-    invis = new InvisiblePanel(imgBase);
-    invis.setLayout(new BorderLayout());
+    invisible = new InvisiblePanel(imgBase);
+    invisible.setLayout(new BorderLayout());
     SpaceButton btn = new SpaceButton("Cancel", GameCommands.COMMAND_CANCEL);
     btn.addActionListener(listener);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    invis.add(btn,BorderLayout.WEST);
+    invisible.add(btn,BorderLayout.WEST);
     btn = new SpaceButton("Next", GameCommands.COMMAND_NEXT);
     btn.addActionListener(listener);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    invis.add(btn,BorderLayout.EAST);
-    imgBase.add(invis,BorderLayout.SOUTH);
+    invisible.add(btn,BorderLayout.EAST);
+    imgBase.add(invisible,BorderLayout.SOUTH);
     this.add(imgBase,BorderLayout.CENTER);
 
   }

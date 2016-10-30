@@ -92,26 +92,26 @@ public class MapInfoPanel extends InfoPanel {
     this.add(Box.createRigidArea(new Dimension(130,50)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH*2, Tile.MAX_HEIGHT*2,
         BufferedImage.TYPE_4BYTE_ABGR);
-    InvisiblePanel invis = new InvisiblePanel(this);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.X_AXIS));    
+    InvisiblePanel invisible = new InvisiblePanel(this);
+    invisible.setLayout(new BoxLayout(invisible, BoxLayout.X_AXIS));
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     IconButton iBtn = new IconButton(GuiStatics.LEFT_ARROW,
         GuiStatics.LEFT_ARROW_PRESSED,false,GameCommands.COMMAND_PREV_TARGET,
         this);
     iBtn.addActionListener(listener);
-    invis.add(iBtn);
+    invisible.add(iBtn);
     imageLabel = new ImageLabel(img, true);
     imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
     imageLabel.setFillColor(Color.black);
     Graphics2D g2d = img.createGraphics();
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
-    invis.add(imageLabel);
+    invisible.add(imageLabel);
     iBtn = new IconButton(GuiStatics.RIGHT_ARROW,GuiStatics.RIGHT_ARROW_PRESSED,
         false, GameCommands.COMMAND_NEXT_TARGET,this);
     iBtn.addActionListener(listener);
-    invis.add(iBtn);
-    this.add(invis);
+    invisible.add(iBtn);
+    this.add(invisible);
     this.add(Box.createRigidArea(new Dimension(10,10)));
     textArea = new InfoTextArea();
     textArea.setEditable(false);

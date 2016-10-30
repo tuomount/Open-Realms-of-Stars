@@ -341,7 +341,7 @@ public class GuiStatics {
 
 
   /**
-   * Photon torpedeo
+   * Photon torpedo
    */
   public final static BufferedImage PHOTON_TORPEDO = IOUtilities.
       loadImage(Tiles.class.getResource("/resources/images/photon_torp.png"));
@@ -414,13 +414,13 @@ public class GuiStatics {
       loadImage(Tiles.class.getResource("/resources/images/rock1.png"));
 
   /**
-   * Big planet screen waterworld 1
+   * Big planet screen water world 1
    */
   public final static BufferedImage BIG_PLANET_WATERWORLD1 = IOUtilities.
       loadImage(Tiles.class.getResource("/resources/images/waterworld1.png"));
 
   /**
-   * Big planet screen waterworld 2
+   * Big planet screen water world 2
    */
   public final static BufferedImage BIG_PLANET_WATERWORLD2 = IOUtilities.
       loadImage(Tiles.class.getResource("/resources/images/waterworld2.png"));
@@ -438,13 +438,13 @@ public class GuiStatics {
       loadImage(Tiles.class.getResource("/resources/images/ironplanet2.png"));
 
   /**
-   * Big planet gasworld
+   * Big planet gas world
    */
   public final static BufferedImage BIG_GASWORLD1 = IOUtilities.
       loadImage(Tiles.class.getResource("/resources/images/gasworld1.png"));
 
   /**
-   * Big planet screen gasworld
+   * Big planet screen gas world
    */
   public final static BufferedImage BIG_GASWORLD2 = IOUtilities.
       loadImage(Tiles.class.getResource("/resources/images/gasworld2.png"));
@@ -469,7 +469,7 @@ public class GuiStatics {
       BufferedImage.TYPE_4BYTE_ABGR);
   
   /**
-   * Horizotal thumb
+   * Horizontal thumb
    */
   public final static BufferedImage IMAGE_SCROLL_BAR_THUMB = IOUtilities.
       loadImage(Tiles.class.getResource("/resources/images/thumb.png"));
@@ -517,9 +517,7 @@ public class GuiStatics {
   public static int getTextWidth(Font font, String text) {
     if (font != null && text != null) {
       Graphics2D g2d = tempImage.createGraphics();
-      int textWidth = (int) font.getStringBounds(text,
-        g2d.getFontRenderContext()).getWidth();
-      return textWidth;
+      return (int) font.getStringBounds(text, g2d.getFontRenderContext()).getWidth();
     }
     return 0;
   }
@@ -533,9 +531,7 @@ public class GuiStatics {
   public static int getTextHeight(Font font, String text) {
     if (font != null && text != null) {
       Graphics2D g2d = tempImage.createGraphics();
-      int textHeight = (int) font.getStringBounds(text,
-        g2d.getFontRenderContext()).getHeight();
-      return textHeight;
+      return (int) font.getStringBounds(text, g2d.getFontRenderContext()).getHeight();
     }
     return 0;
   }

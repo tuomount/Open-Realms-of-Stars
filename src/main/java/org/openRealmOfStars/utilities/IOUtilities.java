@@ -59,8 +59,7 @@ public class IOUtilities {
   public static String readTextFile(DataInputStream is) throws IOException {
     byte[] dataBuf = new byte[is.available()];
     is.readFully(dataBuf);
-    String str = new String(dataBuf,"US-ASCII");
-    return str;
+    return new String(dataBuf,"US-ASCII");
   }
   
   /**

@@ -21,7 +21,7 @@ import org.openRealmOfStars.player.SpaceRace;
  * along with this program; if not, see http://www.gnu.org/licenses/
  * 
  * 
- * Galaxy config for creating new starmap with player
+ * Galaxy config for creating new star map with player
  * 
  */
 public class GalaxyConfig {
@@ -179,7 +179,7 @@ public class GalaxyConfig {
 
   /**
    * Set Solar system distance
-   * @param solarSystemDistance Actual distance betweeen solar system
+   * @param solarSystemDistance Actual distance between solar system
    * @param sunDensity Sun density setting in ui index
    */
   public void setSolarSystemDistance(int solarSystemDistance, int sunDensity) {

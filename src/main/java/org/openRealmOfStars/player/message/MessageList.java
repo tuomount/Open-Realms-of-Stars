@@ -167,12 +167,7 @@ public class MessageList {
   
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("MessageList ");
-    sb.append(index);
-    sb.append(" / ");
-    sb.append(list.size());
-    return sb.toString();
+    return "MessageList " + index + " / " + list.size();
   }
 
 }

@@ -39,6 +39,7 @@ import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.Logger;
 
 /**
  * 
@@ -68,9 +69,9 @@ public class PlanetBombingView extends BlackPanel {
    * 
    */
   private static final long serialVersionUID = 1L;
+  static final int MAX_LOG_NUMBER = 11;
 
-  
-  
+
   /**
    * Total number of population
    */
@@ -115,7 +116,7 @@ public class PlanetBombingView extends BlackPanel {
   private BigImagePanel imgBase;
   
   /**
-   * Infopanel on east side
+   * Info panel on east side
    */
   private BattleInfoPanel infoPanel;
   
@@ -124,11 +125,8 @@ public class PlanetBombingView extends BlackPanel {
    */
   private InfoTextArea textArea;
 
-  
-  /**
-   * Text log
-   */
-  private String[] textLog;
+
+  private Logger textLogger;
 
   /**
    * Is component used or not
@@ -172,45 +170,45 @@ public class PlanetBombingView extends BlackPanel {
     topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
     
     topPanel.add(Box.createRigidArea(new Dimension(15,25)));
-    InvisiblePanel invis = new InvisiblePanel(topPanel);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+    InvisiblePanel invisible = new InvisiblePanel(topPanel);
+    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
     if (planet.getPlanetPlayerInfo() != null) {
-      ownerLabel = new TransparentLabel(invis, planet.getPlanetPlayerInfo().getEmpireName());
+      ownerLabel = new TransparentLabel(invisible, planet.getPlanetPlayerInfo().getEmpireName());
     } else {
-      ownerLabel = new TransparentLabel(invis, "Uncolonized planet");
+      ownerLabel = new TransparentLabel(invisible, "Uncolonized planet");
     }
-    invis.add(ownerLabel);
-    topPanel.add(invis);
+    invisible.add(ownerLabel);
+    topPanel.add(invisible);
     topPanel.add(Box.createRigidArea(new Dimension(15,25)));
 
-    invis = new InvisiblePanel(topPanel);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    totalPeople = new IconLabel(invis,Icons.getIconByName(Icons.ICON_PEOPLE), 
+    invisible = new InvisiblePanel(topPanel);
+    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
+    totalPeople = new IconLabel(invisible,Icons.getIconByName(Icons.ICON_PEOPLE),
         "Population: "+planet.getTotalPopulation());
     totalPeople.setToolTipText("Total number of people on planet.");
     totalPeople.setAlignmentX(Component.LEFT_ALIGNMENT);
-    invis.add(totalPeople);
-    defenseTurret = new IconLabel(invis,Icons.getIconByName(Icons.ICON_PLANETARY_TURRET), 
+    invisible.add(totalPeople);
+    defenseTurret = new IconLabel(invisible,Icons.getIconByName(Icons.ICON_PLANETARY_TURRET),
         "Turrets: "+planet.getTurretLvl());
     defenseTurret.setToolTipText("Total defense value of turrets.");
     defenseTurret.setAlignmentX(Component.LEFT_ALIGNMENT);
-    invis.add(defenseTurret);
-    topPanel.add(invis);
+    invisible.add(defenseTurret);
+    topPanel.add(invisible);
     topPanel.add(Box.createRigidArea(new Dimension(15,25)));
 
-    invis = new InvisiblePanel(topPanel);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    troopsPower = new IconLabel(invis,Icons.getIconByName(Icons.ICON_TROOPS), 
+    invisible = new InvisiblePanel(topPanel);
+    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
+    troopsPower = new IconLabel(invisible,Icons.getIconByName(Icons.ICON_TROOPS),
         "Troops power: "+planet.getTroopPower());
     troopsPower.setToolTipText("Total power of defending troops.");
     troopsPower.setAlignmentX(Component.LEFT_ALIGNMENT);
-    invis.add(troopsPower);
-    totalBuildings = new IconLabel(invis,Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH), 
+    invisible.add(troopsPower);
+    totalBuildings = new IconLabel(invisible,Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
         "Buildings: "+planet.getNumberOfBuildings());
     totalBuildings.setToolTipText("Total number of buildings on planet.");
     totalBuildings.setAlignmentX(Component.LEFT_ALIGNMENT);
-    invis.add(totalBuildings);
-    topPanel.add(invis);
+    invisible.add(totalBuildings);
+    topPanel.add(invisible);
     topPanel.add(Box.createRigidArea(new Dimension(15,25)));
 
     topPanel.setTitle(planet.getName());
@@ -233,18 +231,18 @@ public class PlanetBombingView extends BlackPanel {
     infoPanel.setBorder(null);
     eastPanel.add(infoPanel);
     eastPanel.add(Box.createRigidArea(new Dimension(5,5)));
-    invis = new InvisiblePanel(topPanel);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.X_AXIS));
+    invisible = new InvisiblePanel(topPanel);
+    invisible.setLayout(new BoxLayout(invisible, BoxLayout.X_AXIS));
     SpaceButton btn = new SpaceButton("Next ship", 
         GameCommands.COMMAND_NEXT_TARGET);
     btn.addActionListener(listener);
-    invis.add(btn);
-    invis.add(Box.createRigidArea(new Dimension(5,5)));
+    invisible.add(btn);
+    invisible.add(Box.createRigidArea(new Dimension(5,5)));
     btn = new SpaceButton("Abort conquest", 
         GameCommands.COMMAND_VIEW_STARMAP);
     btn.addActionListener(listener);
-    invis.add(btn);
-    eastPanel.add(invis);
+    invisible.add(btn);
+    eastPanel.add(invisible);
 
     
     // Bottom panel
@@ -255,11 +253,8 @@ public class PlanetBombingView extends BlackPanel {
     textArea.setEditable(false);
     textArea.setLineWrap(true);
     bottomPanel.add(textArea,BorderLayout.CENTER);
-    textLog = new String[11];
-    for (int i=0;i<textLog.length;i++) {
-      textLog[i] = "";
-    }
-    
+    textLogger = new Logger(MAX_LOG_NUMBER);
+
     this.updatePanel();
     
     // Add panels to base
@@ -305,8 +300,8 @@ public class PlanetBombingView extends BlackPanel {
     troopsPower.setText("Troops power: "+planet.getTroopPower());
 
     StringBuilder sb = new StringBuilder();
-    for (int i=textLog.length-1;i>=0;i--) {
-      sb.append(textLog[i]);
+    for (int i = textLogger.size()-1; i>=0; i--) {
+      sb.append(textLogger.getMessage(i));
       if (i!=0) {
         sb.append("\n");
       }
@@ -319,11 +314,11 @@ public class PlanetBombingView extends BlackPanel {
      * Set the orbiting ships
      */
     Ship[] ships = fleet.getShips();
-    BufferedImage[] imgs = new BufferedImage[ships.length];
+    BufferedImage[] images = new BufferedImage[ships.length];
     for (int i = 0;i<ships.length;i++) {
-      imgs[i] = ships[i].getHull().getImage();
+      images[i] = ships[i].getHull().getImage();
     }
-    imgBase.setShipImage(imgs);
+    imgBase.setShipImage(images);
 
   }
 
@@ -352,13 +347,13 @@ public class PlanetBombingView extends BlackPanel {
     if (turret > 0) {
       if (ship.getShield() > turret) {
         ship.setShield(ship.getShield()-1);
-        addLog("Planetary defense is deflected to ship's shield.");
+        textLogger.addLog("Planetary defense is deflected to ship's shield.");
       } else {
         turret = turret - ship.getShield();
         ship.setShield(ship.getShield()-1);
         if (turret > 0) {
           if (ship.getArmor() > turret) {
-            addLog("Planetary defense is deflected to ship's armor.");
+            textLogger.addLog("Planetary defense is deflected to ship's armor.");
             ship.setArmor(ship.getArmor()-1);
           } else {
             turret = turret - ship.getArmor();
@@ -369,27 +364,16 @@ public class PlanetBombingView extends BlackPanel {
               turret = ship.damageComponent(turret,shipDamage);
             }
             if (ship.getHullPoints() <=0) {
-              addLog("Planetary defense damages "+ship.getName()+" and destroys it.");
+              textLogger.addLog("Planetary defense damages "+ship.getName()+" and destroys it.");
             } else {
-              addLog("Planetary defense damages "+ship.getName()+".");
+              textLogger.addLog("Planetary defense damages "+ship.getName()+".");
             }
           }
         }
       }
     } else {
-      addLog("Planet does not have planetary turrets...");
+      textLogger.addLog("Planet does not have planetary turrets...");
     }
-  }
-  
-  /**
-   * Add new text log
-   * @param text Text to add
-   */
-  public void addLog(String text) {
-    for (int i=textLog.length-1;i>0;i--) {
-      textLog[i] = textLog[i-1];
-    }
-    textLog[0] = text;
   }
   
   /**
@@ -419,7 +403,7 @@ public class PlanetBombingView extends BlackPanel {
                 imgBase.setAnimation(new PlanetAnimation(
                     PlanetAnimation.ANIMATION_TYPE_NUKE_AIM, 0, 0, 1, 1));
                 planet.nukem();
-                addLog(ship.getName()+" nukes the planet!");
+                textLogger.addLog(ship.getName()+" nukes the planet!");
               }
               if (comp.getType() == ShipComponentType.ORBITAL_BOMBS) {
                 imgBase.setAnimation(new PlanetAnimation(
@@ -427,12 +411,12 @@ public class PlanetBombingView extends BlackPanel {
                 int hit = DiceGenerator.getRandom(1,100);
                 if (hit <= comp.getDamage()) {
                   planet.killOneWorker();
-                  addLog(ship.getName()+" bombs population!");
+                  textLogger.addLog(ship.getName()+" bombs population!");
                 } else {
                   if (planet.destroyOneBuilding()) {
-                    addLog(ship.getName()+" misses population but hits building!");
+                    textLogger.addLog(ship.getName()+" misses population but hits building!");
                   } else {
-                    addLog(ship.getName()+" misses population and buildings...");
+                    textLogger.addLog(ship.getName()+" misses population and buildings...");
                   }
                 }
               }
@@ -456,11 +440,11 @@ public class PlanetBombingView extends BlackPanel {
                   } else {
                     planet.setWorkers(Planet.PRODUCTION_FOOD, left);
                   }
-                  addLog("Your troops colonize the planet!");
+                  textLogger.addLog("Your troops colonize the planet!");
                 } else {
                   planet.fightAgainstAttacker(shipTroops);
                   ship.setColonist(0);
-                  addLog("Your troops are killed during the attack!");
+                  textLogger.addLog("Your troops are killed during the attack!");
                 }
               }
             }
@@ -476,7 +460,7 @@ public class PlanetBombingView extends BlackPanel {
         shipIndex=0;
       }
       infoPanel.showShip(getFleet().getShipByIndex(shipIndex));
-      addLog("Changing to next ship in fleet...");
+      textLogger.addLog("Changing to next ship in fleet...");
       resetComponentUsage();
       updatePanel();
     }
@@ -501,7 +485,7 @@ public class PlanetBombingView extends BlackPanel {
               updatePanel();
               usedComponentIndex =index;
             } else {
-              addLog("No more troops on board!");
+              textLogger.addLog("No more troops on board!");
             }
             
           }
@@ -509,4 +493,5 @@ public class PlanetBombingView extends BlackPanel {
       } 
     }
   }
+
 }

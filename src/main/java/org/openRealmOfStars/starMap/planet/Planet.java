@@ -143,7 +143,7 @@ public class Planet {
   private int planetImageIndex;
   
   /**
-   * Planet type: 0 Rock, 1 Waterworld
+   * Planet type: 0 Rock, 1 Water world
    */
   private int planetType;
   
@@ -159,7 +159,7 @@ public class Planet {
   private PlayerInfo planetOwnerInfo;
   
   /**
-   * Extra food, each +10 increases people by one and each -10 decreseases
+   * Extra food, each +10 increases people by one and each -10 decreases
    * people by one.
    */
   private int extraFood;
@@ -373,8 +373,8 @@ public class Planet {
     if (str.isEmpty()) {
       setUnderConstruction(null);
     } else {
-      Construction[] consts = getProductionList();
-      for (Construction cons : consts) {
+      Construction[] constructions = getProductionList();
+      for (Construction cons : constructions) {
         if (cons.getName().equals(str)) {
           setUnderConstruction(cons);
           break;

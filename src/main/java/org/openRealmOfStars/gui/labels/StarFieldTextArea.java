@@ -46,11 +46,11 @@ public class StarFieldTextArea extends JTextArea {
   */
   private static final int Y_OFFSET = 18;
   /**
-   * Does text have autoscroll on
+   * Does text have auto scroll on
    */
   private boolean autoScroll = false;
   /**
-   * Arrays of string used when scorlling the text
+   * Arrays of string used when scrolling the text
    */
   private String[] scrollText;
   
@@ -225,16 +225,16 @@ public class StarFieldTextArea extends JTextArea {
     g.setFont(GuiStatics.getFontCubellan());
     if (getText() != null ) {
       StringBuilder sb = new StringBuilder();
-      if (autoScroll == false) {
+      if (!autoScroll) {
         sb = new StringBuilder(this.getText());
       } else {
         for (int i=0;i<numberOfLines;i++) {
           if (i+currentLine<scrollText.length) {
-            sb.append(scrollText[i+currentLine]+"\n");
+            sb.append(scrollText[i + currentLine]).append("\n");
           }
         }
       }
-      if (this.getLineWrap()== true) {
+      if (this.getLineWrap()) {
         int lastSpace = -1;
         int rowLen = 0;
         int maxRowLen = width/6;

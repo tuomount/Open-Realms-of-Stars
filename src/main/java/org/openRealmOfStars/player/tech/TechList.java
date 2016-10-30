@@ -132,7 +132,7 @@ public class TechList {
   
   /**
    * Check if certain tech is in tech list
-   * @param techName Techname to search
+   * @param techName Tech name to search
    * @return True if found, otherwise false
    */
   public boolean isTech(String techName) {
@@ -211,8 +211,7 @@ public class TechList {
       if (buf.startsWith("Mk") && buf.length() > 2) {
         buf = buf.substring(2, buf.length());
         try {
-          int result = Integer.parseInt(buf);
-          return result;
+          return Integer.parseInt(buf);
         } catch (NumberFormatException e) {
           // Do nothing
         }
@@ -244,7 +243,7 @@ public class TechList {
 
   /**
    * Get best Energy source for current technology
-   * @return Best energysource tech or null if not found
+   * @return Best energy source tech or null if not found
    */
   public Tech getBestEnergySource() {
     Tech best = null;

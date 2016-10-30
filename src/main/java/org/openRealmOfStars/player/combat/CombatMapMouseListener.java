@@ -50,7 +50,7 @@ public class CombatMapMouseListener extends MouseAdapter implements
   private MapPanel mapPanel;
   
   /**
-   * Infopanel next to map panel
+   * Info panel next to map panel
    */
   private BattleInfoPanel battleInfoPanel;
   

@@ -63,9 +63,9 @@ public class MainMenu extends BlackPanel {
     BigImagePanel imgBase = new BigImagePanel(planet, true,"Open Realm of Stars");
     this.setLayout(new BorderLayout());
     
-    InvisiblePanel invis = new InvisiblePanel(imgBase);    
-    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    invis.add(Box.createRigidArea(new Dimension(500, 250)));
+    InvisiblePanel invisible = new InvisiblePanel(imgBase);
+    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
+    invisible.add(Box.createRigidArea(new Dimension(500, 250)));
     
     SpaceButton btn = new SpaceButton("Continue game", GameCommands.COMMAND_CONTINUE_GAME);
     btn.addActionListener(listener);
@@ -74,22 +74,22 @@ public class MainMenu extends BlackPanel {
     if (folder.exists()) {
       File[] files = folder.listFiles(new GenericFileFilter(".save"));
       if (files.length > 0) {
-        invis.add(btn);
+        invisible.add(btn);
       }
     }
     btn = new SpaceButton("New game", GameCommands.COMMAND_NEW_GAME);
     btn.addActionListener(listener);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    invis.add(btn);
+    invisible.add(btn);
     btn = new SpaceButton("Credits", GameCommands.COMMAND_CREDITS);
     btn.addActionListener(listener);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    invis.add(btn);
+    invisible.add(btn);
     btn = new SpaceButton("Quit", GameCommands.COMMAND_QUIT_GAME);
     btn.addActionListener(listener);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    invis.add(btn);
-    imgBase.add(invis);
+    invisible.add(btn);
+    imgBase.add(invisible);
     this.add(imgBase,BorderLayout.CENTER);
 
   }

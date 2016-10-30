@@ -91,15 +91,15 @@ public class BattleInfoPanel extends InfoPanel {
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
     this.add(textArea);
     this.add(Box.createRigidArea(new Dimension(10,10)));
-    InvisiblePanel invis = new InvisiblePanel(this);
-    invis.setLayout(new GridLayout(6, 2));
+    InvisiblePanel invisible = new InvisiblePanel(this);
+    invisible.setLayout(new GridLayout(6, 2));
     for (int i=0;i<MAX_BTN;i++) {
       cBtn[i] = new ComponentButton(ship, i);
       cBtn[i].setActionCommand(GameCommands.COMMAND_COMPONENT_USE+i);
       cBtn[i].addActionListener(listener);
-      invis.add(cBtn[i]);
+      invisible.add(cBtn[i]);
     }    
-    this.add(invis);
+    this.add(invisible);
     if (shipInfo != null) {
       this.add(Box.createRigidArea(new Dimension(10,10)));
       this.add(shipInfo);
@@ -122,7 +122,7 @@ public class BattleInfoPanel extends InfoPanel {
 
   /**
    * Mark component as used
-   * @param index
+   * @param index The component index
    */
   public void useComponent(int index) {
     if (index >= 0 && index < MAX_BTN) {

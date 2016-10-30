@@ -137,72 +137,72 @@ public class FleetView extends BlackPanel {
       topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
     
       topPanel.add(Box.createRigidArea(new Dimension(15,25)));
-      InvisiblePanel invis = new InvisiblePanel(topPanel);
-      invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+      InvisiblePanel invisible = new InvisiblePanel(topPanel);
+      invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
       SpaceButton conquerBtn = null;
       SpaceButton colonizeBtn = null;
       colonistSelection = null;
       metalSelection = null;
       
       if (planet.getPlanetPlayerInfo() != null) {
-        ownerLabel = new TransparentLabel(invis, planet.getPlanetPlayerInfo().getEmpireName());
+        ownerLabel = new TransparentLabel(invisible, planet.getPlanetPlayerInfo().getEmpireName());
         if (info != planet.getPlanetPlayerInfo()) {
           conquerBtn = new SpaceButton("Conquer", GameCommands.COMMAND_CONQUEST);
           conquerBtn.addActionListener(listener);
         }
       } else {
-        ownerLabel = new TransparentLabel(invis, "Uncolonized planet");
+        ownerLabel = new TransparentLabel(invisible, "Uncolonized planet");
         colonizeBtn = new SpaceButton("Colonize", GameCommands.COMMAND_COLONIZE);
         colonizeBtn.addActionListener(listener);
       }
-      invis.add(ownerLabel);
-      totalPeople = new IconLabel(invis,Icons.getIconByName(Icons.ICON_PEOPLE), 
+      invisible.add(ownerLabel);
+      totalPeople = new IconLabel(invisible,Icons.getIconByName(Icons.ICON_PEOPLE),
         ": "+planet.getTotalPopulation());
       totalPeople.setToolTipText("Total number of people on planet.");
       totalPeople.setAlignmentX(Component.LEFT_ALIGNMENT);
-      invis.add(totalPeople);
-      topPanel.add(invis);
+      invisible.add(totalPeople);
+      topPanel.add(invisible);
       topPanel.add(Box.createRigidArea(new Dimension(25,25)));
 
-      invis = new InvisiblePanel(topPanel);
-      invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-      metal = new IconLabel(invis,Icons.getIconByName(Icons.ICON_METAL), 
+      invisible = new InvisiblePanel(topPanel);
+      invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
+      metal = new IconLabel(invisible,Icons.getIconByName(Icons.ICON_METAL),
         ": "+planet.getMetal());
       metal.setToolTipText("Total metal on surface");
       metal.setAlignmentX(Component.LEFT_ALIGNMENT);
-      invis.add(metal);
-      topPanel.add(invis);
+      invisible.add(metal);
+      topPanel.add(invisible);
       topPanel.add(Box.createRigidArea(new Dimension(25,25)));
       topPanel.setTitle(planet.getName());
 
-      invis = new InvisiblePanel(topPanel);
-      invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
+      invisible = new InvisiblePanel(topPanel);
+      invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
       if (colonizeBtn != null) {
         if (planet.getRadiationLevel() > info.getRace().getMaxRad()) {
-          TransparentLabel radWarning = new TransparentLabel(invis, "Warning! High radiation!");
+          TransparentLabel radWarning = new TransparentLabel(invisible, "Warning! High radiation!");
           radWarning.setForeground(GuiStatics.COLOR_RED_TEXT);
-          invis.add(radWarning);
-          invis.add(Box.createRigidArea(new Dimension(5,5)));
+          invisible.add(radWarning);
+          invisible.add(Box.createRigidArea(new Dimension(5,5)));
         }
-        invis.add(colonizeBtn);
+        invisible.add(colonizeBtn);
       }
       if (conquerBtn != null) {
-        invis.add(conquerBtn);
+        invisible.add(conquerBtn);
       }
       if (planet.getPlanetPlayerInfo() != null &&
           info == planet.getPlanetPlayerInfo()) {
-        colonistSelection = new WorkerProductionPanel(invis, 
+        colonistSelection = new WorkerProductionPanel(invisible,
             GameCommands.COMMAND_COLONIST_MINUS, 
             GameCommands.COMMAND_COLONIST_PLUS, Icons.ICON_PEOPLE, 
             "Colonist: 10000", "How many colonist/troops is on board of fleet.", listener);
-        invis.add(colonistSelection);
-        metalSelection = new WorkerProductionPanel(invis, 
+        invisible.add(colonistSelection);
+        metalSelection = new WorkerProductionPanel(invisible,
             GameCommands.COMMAND_METAL_CARGO_MINUS, 
             GameCommands.COMMAND_METAL_CARGO_PLUS, Icons.ICON_METAL, 
             "Metal: 1000000", "How many metal cargo is on board of fleet.", listener);
-        invis.add(metalSelection);
+        invisible.add(metalSelection);
       }
-      topPanel.add(invis);
+      topPanel.add(invisible);
       topPanel.add(Box.createRigidArea(new Dimension(50,25)));
       topPanel.setTitle(planet.getName());
     }
@@ -331,11 +331,11 @@ public class FleetView extends BlackPanel {
      * Set the orbting ships
      */
     Ship[] ships = fleet.getShips();
-    BufferedImage[] imgs = new BufferedImage[ships.length];
+    BufferedImage[] images = new BufferedImage[ships.length];
     for (int i = 0;i<ships.length;i++) {
-      imgs[i] = ships[i].getHull().getImage();
+      images[i] = ships[i].getHull().getImage();
     }
-    imgBase.setShipImage(imgs);
+    imgBase.setShipImage(images);
 
   }
 

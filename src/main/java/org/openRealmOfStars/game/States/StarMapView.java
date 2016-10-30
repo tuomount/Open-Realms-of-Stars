@@ -71,7 +71,7 @@ public class StarMapView extends BlackPanel {
   private MapPanel mapPanel;
 
   /**
-   * Infopanel next to starMap
+   * Info panel next to starMap
    */
   private MapInfoPanel infoPanel;
 
@@ -279,7 +279,7 @@ public class StarMapView extends BlackPanel {
       mapPanel.repaint();
       readyToMove = true;
     }
-    // Starmap
+    // Star map
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_MSG)) {
       Message msg = players.getCurrentPlayerInfo().getMsgList().getPrevMessage();
       if (msg.getX() != -1 && msg.getY() != -1) {

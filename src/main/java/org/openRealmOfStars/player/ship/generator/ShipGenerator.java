@@ -61,7 +61,7 @@ public class ShipGenerator {
       switch (comp.getType()) {
       case ARMOR: {
         scores[i] = scores[i] +comp.getDefenseValue()*5;
-        scores[i] = scores[i] +5; // No need for electricty
+        scores[i] = scores[i] +5; // No need for electricity
         break;
       }
       case ORBITAL_BOMBS: {
@@ -369,7 +369,7 @@ public class ShipGenerator {
           armor.getComponent());
       }
       if (player.getRace() == SpaceRace.CENTAURS) {
-        // Centaurs could ignore defense since they got more hullpoints
+        // Centaurs could ignore defense since they got more hull points
         result.addComponent(weapon);
       } else {
         if (shieldComp != null && 

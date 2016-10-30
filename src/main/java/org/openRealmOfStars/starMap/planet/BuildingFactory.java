@@ -74,7 +74,7 @@ public class BuildingFactory {
     case 28: tmp = createProductionFacility(index); break; // Hydropodic farming center
     case 29: tmp = createProductionFacility(index); break; // Nanobot mining center
     case 30: tmp = createProductionFacility(index); break; // Nanobot manufacturing center
-    case 31: tmp = createProductionFacility(index); break; // Neural reserach center
+    case 31: tmp = createProductionFacility(index); break; // Neural research center
     case 32: tmp = createPlanetaryImprovement(index); break; // Super AI center
     case 33: tmp = createPlanetaryImprovement(index); break; // Replicator center
     case 34: tmp = createMilitaryFacility(index); break; // Planetary defense turret Mk1

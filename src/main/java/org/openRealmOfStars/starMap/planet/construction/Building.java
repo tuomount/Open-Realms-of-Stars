@@ -69,7 +69,7 @@ public class Building extends Construction {
   private double maintenanceCost;
   
   /**
-   * Only single bulding allowed per planet
+   * Only single building allowed per planet
    */
   private boolean singleAllowed;
   

@@ -184,7 +184,7 @@ public class FleetList {
 
   /**
    * Get by index fleet from the list
-   * @param index Index
+   * @param fleetIndex Index
    * @return Fleet or null if list contains no fleets
    */
   public Fleet getByIndex(int fleetIndex) {

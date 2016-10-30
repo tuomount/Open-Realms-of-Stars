@@ -110,13 +110,7 @@ public class Sun {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append(name);
-    sb.append(" X:");
-    sb.append(centerX);
-    sb.append(" Y:");
-    sb.append(centerY);
-    return sb.toString();
+    return name + " X:" + centerX + " Y:" + centerY;
   }
   
   

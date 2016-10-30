@@ -129,7 +129,7 @@ public class CombatAnimation {
    * @param hit  1 Not even a dent
    *             0 Armor or shield damaged
    *            -1 Component damage
-   *            -2 Destoryed
+   *            -2 Destroyed
    */
   public CombatAnimation(CombatShip shooter, CombatShip target, 
       ShipComponent weapon, int hit) {

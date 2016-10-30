@@ -39,6 +39,7 @@ import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.Logger;
 
 /**
  * 
@@ -124,11 +125,8 @@ public class PlanetBombingView extends BlackPanel {
    */
   private InfoTextArea textArea;
 
-  
-  /**
-   * Text log
-   */
-  private String[] textLog;
+
+  private Logger textLogger;
 
   /**
    * Is component used or not
@@ -255,11 +253,8 @@ public class PlanetBombingView extends BlackPanel {
     textArea.setEditable(false);
     textArea.setLineWrap(true);
     bottomPanel.add(textArea,BorderLayout.CENTER);
-    textLog = new String[MAX_LOG_NUMBER];
-    for (int i=0;i<textLog.length;i++) {
-      textLog[i] = "";
-    }
-    
+    textLogger = new Logger(MAX_LOG_NUMBER);
+
     this.updatePanel();
     
     // Add panels to base
@@ -305,7 +300,8 @@ public class PlanetBombingView extends BlackPanel {
     troopsPower.setText("Troops power: "+planet.getTroopPower());
 
     StringBuilder sb = new StringBuilder();
-    for (int i=textLog.length-1;i>=0;i--) {
+    String[] textLog = textLogger.getLogMessages();
+    for (int i = textLog.length-1; i>=0; i--) {
       sb.append(textLog[i]);
       if (i!=0) {
         sb.append("\n");
@@ -352,13 +348,13 @@ public class PlanetBombingView extends BlackPanel {
     if (turret > 0) {
       if (ship.getShield() > turret) {
         ship.setShield(ship.getShield()-1);
-        addLog("Planetary defense is deflected to ship's shield.");
+        textLogger.addLog("Planetary defense is deflected to ship's shield.");
       } else {
         turret = turret - ship.getShield();
         ship.setShield(ship.getShield()-1);
         if (turret > 0) {
           if (ship.getArmor() > turret) {
-            addLog("Planetary defense is deflected to ship's armor.");
+            textLogger.addLog("Planetary defense is deflected to ship's armor.");
             ship.setArmor(ship.getArmor()-1);
           } else {
             turret = turret - ship.getArmor();
@@ -369,25 +365,16 @@ public class PlanetBombingView extends BlackPanel {
               turret = ship.damageComponent(turret,shipDamage);
             }
             if (ship.getHullPoints() <=0) {
-              addLog("Planetary defense damages "+ship.getName()+" and destroys it.");
+              textLogger.addLog("Planetary defense damages "+ship.getName()+" and destroys it.");
             } else {
-              addLog("Planetary defense damages "+ship.getName()+".");
+              textLogger.addLog("Planetary defense damages "+ship.getName()+".");
             }
           }
         }
       }
     } else {
-      addLog("Planet does not have planetary turrets...");
+      textLogger.addLog("Planet does not have planetary turrets...");
     }
-  }
-  
-  /**
-   * Add new text log
-   * @param text Text to add
-   */
-  public void addLog(String text) {
-    System.arraycopy(textLog, 0, textLog, 1, textLog.length - 1);
-    textLog[0] = text;
   }
   
   /**
@@ -417,7 +404,7 @@ public class PlanetBombingView extends BlackPanel {
                 imgBase.setAnimation(new PlanetAnimation(
                     PlanetAnimation.ANIMATION_TYPE_NUKE_AIM, 0, 0, 1, 1));
                 planet.nukem();
-                addLog(ship.getName()+" nukes the planet!");
+                textLogger.addLog(ship.getName()+" nukes the planet!");
               }
               if (comp.getType() == ShipComponentType.ORBITAL_BOMBS) {
                 imgBase.setAnimation(new PlanetAnimation(
@@ -425,12 +412,12 @@ public class PlanetBombingView extends BlackPanel {
                 int hit = DiceGenerator.getRandom(1,100);
                 if (hit <= comp.getDamage()) {
                   planet.killOneWorker();
-                  addLog(ship.getName()+" bombs population!");
+                  textLogger.addLog(ship.getName()+" bombs population!");
                 } else {
                   if (planet.destroyOneBuilding()) {
-                    addLog(ship.getName()+" misses population but hits building!");
+                    textLogger.addLog(ship.getName()+" misses population but hits building!");
                   } else {
-                    addLog(ship.getName()+" misses population and buildings...");
+                    textLogger.addLog(ship.getName()+" misses population and buildings...");
                   }
                 }
               }
@@ -454,11 +441,11 @@ public class PlanetBombingView extends BlackPanel {
                   } else {
                     planet.setWorkers(Planet.PRODUCTION_FOOD, left);
                   }
-                  addLog("Your troops colonize the planet!");
+                  textLogger.addLog("Your troops colonize the planet!");
                 } else {
                   planet.fightAgainstAttacker(shipTroops);
                   ship.setColonist(0);
-                  addLog("Your troops are killed during the attack!");
+                  textLogger.addLog("Your troops are killed during the attack!");
                 }
               }
             }
@@ -474,7 +461,7 @@ public class PlanetBombingView extends BlackPanel {
         shipIndex=0;
       }
       infoPanel.showShip(getFleet().getShipByIndex(shipIndex));
-      addLog("Changing to next ship in fleet...");
+      textLogger.addLog("Changing to next ship in fleet...");
       resetComponentUsage();
       updatePanel();
     }
@@ -499,7 +486,7 @@ public class PlanetBombingView extends BlackPanel {
               updatePanel();
               usedComponentIndex =index;
             } else {
-              addLog("No more troops on board!");
+              textLogger.addLog("No more troops on board!");
             }
             
           }
@@ -508,7 +495,4 @@ public class PlanetBombingView extends BlackPanel {
     }
   }
 
-  public String[] getLogMessages() {
-    return textLog;
-  }
 }

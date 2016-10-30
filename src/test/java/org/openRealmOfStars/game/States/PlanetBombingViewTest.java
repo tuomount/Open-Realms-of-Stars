@@ -1,7 +1,6 @@
 package org.openRealmOfStars.game.States;
 
 import org.junit.Before;
-import org.junit.Test;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -10,8 +9,6 @@ import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 import java.awt.event.ActionListener;
-
-import static org.junit.Assert.*;
 
 public class PlanetBombingViewTest {
     private PlanetBombingView planetBombingView;
@@ -31,31 +28,6 @@ public class PlanetBombingViewTest {
         ActionListener listener = Mockito.mock(ActionListener.class);
 
         planetBombingView = new PlanetBombingView(planet, fleet, attackerPlayerInfo, attackerPlayerIndex, listener);
-    }
-
-    @Test
-    public void testAddLogShouldRotateMessagesAndPutNewMessageToTheBeginningOfTheArray() {
-        String[] actualResult;
-        String[] expectedResult = new String[PlanetBombingView.MAX_LOG_NUMBER];
-        String addMessage = "Message";
-        expectedResult[0] = addMessage;
-        for (int i = 1; i < PlanetBombingView.MAX_LOG_NUMBER; i++) {
-            expectedResult[i] = "";
-        }
-
-        planetBombingView.addLog(addMessage);
-
-        actualResult = planetBombingView.getLogMessages();
-        assertEquals(expectedResult, actualResult);
-    }
-
-    @Test
-    public void testAddLogShouldNotThrowExceptionWhenGetMoreLogMessages() {
-        for (int i = 1; i <= PlanetBombingView.MAX_LOG_NUMBER; i++) {
-            planetBombingView.addLog("Message " + i);
-        }
-
-        planetBombingView.addLog("Message " + PlanetBombingView.MAX_LOG_NUMBER + 1);
     }
 
 }

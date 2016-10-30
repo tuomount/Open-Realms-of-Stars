@@ -29,6 +29,6 @@ public enum BuildingType {
   RESEARCH,
   CULTURE,
   MILITARY,
-  CREDIT;
+  CREDIT
   
 }

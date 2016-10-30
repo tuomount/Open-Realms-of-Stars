@@ -77,7 +77,7 @@ public class SavedGame {
     BasicFileAttributes attr = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     creationTime = dateFormat.format(attr.creationTime().toMillis());
-    try (FileInputStream is = new FileInputStream(file);){
+    try (FileInputStream is = new FileInputStream(file)){
       
       BufferedInputStream bis = new BufferedInputStream(is);
       DataInputStream dis = new DataInputStream(bis);

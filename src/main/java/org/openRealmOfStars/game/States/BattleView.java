@@ -210,12 +210,8 @@ public class BattleView extends BlackPanel {
       textArea.setText("");
     }
     StringBuilder sb = new StringBuilder();
-    /*
-    Text log
-   */
-    String[] textLog = textLogger.getLogMessages();
-    for (int i = textLog.length-1; i>=0; i--) {
-      sb.append(textLog[i]);
+    for (int i = textLogger.size()-1; i>=0; i--) {
+      sb.append(textLogger.getMessage(i));
       if (i!=0) {
         sb.append("\n");
       }

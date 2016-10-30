@@ -300,9 +300,8 @@ public class PlanetBombingView extends BlackPanel {
     troopsPower.setText("Troops power: "+planet.getTroopPower());
 
     StringBuilder sb = new StringBuilder();
-    String[] textLog = textLogger.getLogMessages();
-    for (int i = textLog.length-1; i>=0; i--) {
-      sb.append(textLog[i]);
+    for (int i = textLogger.size()-1; i>=0; i--) {
+      sb.append(textLogger.getMessage(i));
       if (i!=0) {
         sb.append("\n");
       }

@@ -29,6 +29,7 @@ import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.Logger;
 
 /**
  * 
@@ -121,7 +122,7 @@ public class BattleView extends BlackPanel {
   /**
    * Text log
    */
-  private String[] textLog;
+  private Logger textLogger;
 
   /**
    * Battle view for space combat
@@ -183,10 +184,7 @@ public class BattleView extends BlackPanel {
     logArea.setEditable(false);
     logArea.setLineWrap(true);
     bottom.add(logArea);
-    textLog = new String[MAX_LOG_NUMBER];
-    for (int i=0;i<textLog.length;i++) {
-      textLog[i] = "";
-    }
+    textLogger = new Logger(MAX_LOG_NUMBER);
     bottom.add(Box.createRigidArea(new Dimension(10,10)));
 
 
@@ -199,7 +197,7 @@ public class BattleView extends BlackPanel {
     aStar = null;
     delayCount = 0;
     combatEnded = false;
-    addLog(INITIAL_LOG_MESSAGE);
+    textLogger.addLog(INITIAL_LOG_MESSAGE);
   }
   
   /**
@@ -212,7 +210,11 @@ public class BattleView extends BlackPanel {
       textArea.setText("");
     }
     StringBuilder sb = new StringBuilder();
-    for (int i=textLog.length-1;i>=0;i--) {
+    /*
+    Text log
+   */
+    String[] textLog = textLogger.getLogMessages();
+    for (int i = textLog.length-1; i>=0; i--) {
       sb.append(textLog[i]);
       if (i!=0) {
         sb.append("\n");
@@ -248,7 +250,7 @@ public class BattleView extends BlackPanel {
           }
           String[] logs = shipDamage.getMessage().split("\n");
           for (String log : logs) {
-            addLog(log);
+            textLogger.addLog(log);
           }
           combat.setAnimation(new CombatAnimation(ai, target, weapon, shipDamage.getValue()));
           ai.useComponent(i);
@@ -371,7 +373,7 @@ public class BattleView extends BlackPanel {
         String[] logs = combatMapMouseListener.getShipDamage().getMessage()
                                               .split("\n");
         for (String log : logs) {
-          addLog(log);
+          textLogger.addLog(log);
         }
         combatMapMouseListener.getShipDamage().logged();
       }
@@ -412,16 +414,4 @@ public class BattleView extends BlackPanel {
 
   }
   
-  /**
-   * Add new text log
-   * @param text Text to add
-   */
-  public void addLog(String text) {
-    System.arraycopy(textLog, 0, textLog, 1, textLog.length - 1);
-    textLog[0] = text;
-  }
-
-  public String[] getLogMessages() {
-    return textLog;
-  }
 }

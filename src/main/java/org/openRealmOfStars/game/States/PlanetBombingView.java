@@ -68,9 +68,9 @@ public class PlanetBombingView extends BlackPanel {
    * 
    */
   private static final long serialVersionUID = 1L;
+  static final int MAX_LOG_NUMBER = 11;
 
-  
-  
+
   /**
    * Total number of population
    */
@@ -255,7 +255,7 @@ public class PlanetBombingView extends BlackPanel {
     textArea.setEditable(false);
     textArea.setLineWrap(true);
     bottomPanel.add(textArea,BorderLayout.CENTER);
-    textLog = new String[11];
+    textLog = new String[MAX_LOG_NUMBER];
     for (int i=0;i<textLog.length;i++) {
       textLog[i] = "";
     }
@@ -508,5 +508,9 @@ public class PlanetBombingView extends BlackPanel {
         }
       } 
     }
+  }
+
+  public String[] getLogMessages() {
+    return textLog;
   }
 }

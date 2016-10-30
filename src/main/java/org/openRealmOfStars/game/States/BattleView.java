@@ -253,6 +253,7 @@ public class BattleView extends BlackPanel {
           }
           combat.setAnimation(new CombatAnimation(ai, target, weapon, shipDamage.getValue()));
           ai.useComponent(i);
+          infoPanel.useComponent(i);
           ai.setAiShotsLeft(ai.getAiShotsLeft()-1);
           combat.setComponentUse(-1);
           return true;

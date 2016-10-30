@@ -111,7 +111,7 @@ public class CombatMapMouseListener extends MouseAdapter implements
           mapPanel.getViewPointX(),mapPanel.getViewPointY(),true);
       if (!coord.isOutOfPanel()) {
         combat.setCursorPos(coord.getMapX(), coord.getMapY());
-        battleInfoPanel.showShip(combat.getCurrentShip().getShip());
+        //battleInfoPanel.showShip(combat.getCurrentShip().getShip());
         activeShip =combat.getShipFromCoordinate(coord.getMapX(), coord.getMapY());
       }
   }
@@ -137,6 +137,7 @@ public class CombatMapMouseListener extends MouseAdapter implements
             shipDamage.ready();
             combat.setAnimation(new CombatAnimation(ship, target, weapon, shipDamage.getValue()));
             ship.useComponent(componentUse);
+            battleInfoPanel.useComponent(componentUse);
             componentUse = -1;
             combat.setComponentUse(-1);
           }

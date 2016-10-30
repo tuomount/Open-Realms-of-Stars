@@ -71,6 +71,7 @@ public class BattleInfoPanel extends InfoPanel {
    */
   private ComponentButton[] cBtn = new ComponentButton[MAX_BTN];
   
+  
   public BattleInfoPanel(Ship ship,InfoTextArea shipInfo, ActionListener listener) {
     this.add(Box.createRigidArea(new Dimension(130,25)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH*2, Tile.MAX_HEIGHT*2,
@@ -114,10 +115,20 @@ public class BattleInfoPanel extends InfoPanel {
     this.ship = shipToShow;
     for (int i=0;i<MAX_BTN;i++) {
       cBtn[i].setComponent(this.ship, i);
+      cBtn[i].setUsed(false);
     }
     updatePanel();
   }
 
+  /**
+   * Mark component as used
+   * @param index
+   */
+  public void useComponent(int index) {
+    if (index >= 0 && index < MAX_BTN) {
+      cBtn[index].setUsed(true);
+    }
+  }
   
   /**
    * Update panels according set data

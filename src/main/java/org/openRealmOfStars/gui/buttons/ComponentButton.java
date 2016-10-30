@@ -48,7 +48,15 @@ public class ComponentButton extends JButton {
    */
   private int index;
   
+  /**
+   * Icon for button
+   */
   private ImageIcon icon;
+  
+  /**
+   * Is component used or not
+   */
+  private boolean used;
   
   /**
    * Construct component button
@@ -59,6 +67,7 @@ public class ComponentButton extends JButton {
     super();
     this.ship = ship;
     this.index = index;
+    setUsed(false);
     if (ship.getComponent(index) != null) {
       this.setText(ship.getComponent(index).getName());
       icon = new ImageIcon(Icons.getIconByName(ship.getComponent(index).getType().getIconName()).getIcon());
@@ -102,6 +111,10 @@ public class ComponentButton extends JButton {
         icon = new ImageIcon(Icons.getIconByName(comp.getType().getIconName()).getIcon());
         this.setIcon(icon);
       }
+      if (isUsed()) {
+        icon = new ImageIcon(Icons.getIconByName(Icons.ICON_OK).getIcon());
+        this.setIcon(icon);
+      }
       if (hp == 0) {
         this.setBackground(GuiStatics.COLOR_DESTROYED);
       } else {
@@ -124,5 +137,14 @@ public class ComponentButton extends JButton {
       this.setEnabled(false);
       this.setText("");
     }
+  }
+
+  public boolean isUsed() {
+    return used;
+  }
+
+  public void setUsed(boolean used) {
+    this.used = used;
+    updateButton();
   }
 }

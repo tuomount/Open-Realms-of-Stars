@@ -498,7 +498,7 @@ public class ShipDesign {
         && (hull.getHullType()==ShipHullType.FREIGHTER ||
             hull.getHullType()==ShipHullType.PROBE)) {
       designOk = false;
-      sb.append("No weapons allowed in "+hull.getHullType().toString()+"!\n");
+      sb.append("No weapons allowed in ").append(hull.getHullType().toString()).append("!\n");
     }
     for (int i = 0;i<getNumberOfComponents();i++) {
       ShipComponent comp = getComponent(i);

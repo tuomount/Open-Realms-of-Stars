@@ -70,16 +70,9 @@ public class Construction {
    * @return Full description of construct as a string
    */
   public String getFullDescription() {
-    StringBuilder sb = new StringBuilder();
-    sb.append(getName());
-    sb.append("\n");
-    sb.append(getDescription());
-    sb.append("\n");
-    sb.append("Cost: Prod.:");
-    sb.append(getProdCost());
-    sb.append(" Metal:");
-    sb.append(getMetalCost());
-    return sb.toString();
+    return getName() + "\n" +
+            getDescription() + "\n" +
+            "Cost: Prod.:" + getProdCost() + " Metal:" + getMetalCost();
   }
 
   @Override

@@ -227,7 +227,7 @@ public class InfoTextArea extends JTextArea {
       } else {
         for (int i=0;i<numberOfLines;i++) {
           if (i+currentLine<scrollText.length) {
-            sb.append(scrollText[i+currentLine]+"\n");
+            sb.append(scrollText[i + currentLine]).append("\n");
           }
         }
       }

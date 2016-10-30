@@ -77,14 +77,7 @@ public class PathPoint {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("X: ");
-    sb.append(x);
-    sb.append(" Y: ");
-    sb.append(y);
-    sb.append(" Dist: ");
-    sb.append(distance);
-    return sb.toString();
+    return "X: " + x + " Y: " + y + " Dist: " + distance;
   }
 
   @Override

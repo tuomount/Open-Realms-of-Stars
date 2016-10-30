@@ -191,11 +191,7 @@ public class Message {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append(type.toString());
-    sb.append(" - ");
-    sb.append(message);
-    return sb.toString();
+    return type.toString() + " - " + message;
   }
   
   

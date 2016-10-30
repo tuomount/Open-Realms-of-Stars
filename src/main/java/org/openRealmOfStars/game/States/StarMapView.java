@@ -307,7 +307,8 @@ public class StarMapView extends BlackPanel {
         getStarMapMouseListener().getLastClickedFleet() != null) {
       Fleet fleet = getStarMapMouseListener().getLastClickedFleet();
       // Make fleet to defend
-      fleet.setRoute(new Route(fleet.getX(),fleet.getY(),fleet.getX(),fleet.getY(),0));
+      fleet.setRoute(new Route(fleet.getX(),fleet.getY(),fleet.getX(),
+          fleet.getY(),Route.ROUTE_DEFEND));
       infoPanel.updatePanel();
     }
     if (arg0.getActionCommand().equalsIgnoreCase(

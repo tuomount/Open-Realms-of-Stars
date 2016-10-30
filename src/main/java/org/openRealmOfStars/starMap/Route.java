@@ -69,6 +69,16 @@ public class Route {
   private int distance;
 
   /**
+   * Use this as FTL speed to set fleet to defend
+   */
+  public static final int ROUTE_DEFEND = 0;
+
+  /**
+   * Use this as FTL speed to set fleet to fix itself
+   */
+  public static final int ROUTE_FIX = -1;
+
+  /**
    * Constructor for route
    * @param sx Start X coordinate
    * @param sy Start Y coordinate
@@ -147,12 +157,23 @@ public class Route {
    * @return true if defending
    */
   public boolean isDefending() {
-    if (ftlSpeed == 0) {
+    if (ftlSpeed == ROUTE_DEFEND) {
       return true;
     }
     return false;
   }
-  
+
+  /**
+   * Route just for fixing the fleet
+   * @return true if fixing the fleet
+   */
+  public boolean isFixing() {
+    if (ftlSpeed == ROUTE_FIX) {
+      return true;
+    }
+    return false;
+  }
+
   /**
    * Move a bit closed to end
    */

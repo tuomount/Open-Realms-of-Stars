@@ -125,5 +125,18 @@ public class RouteTest {
     assertEquals(true,route.isDefending());
     route = new Route(3, 3, 5, 5, 1);
     assertEquals(false,route.isDefending());
+    route = new Route(3, 3, 5, 5, Route.ROUTE_FIX);
+    assertEquals(false,route.isDefending());
+  }
+  /**
+   * Test fixing route
+   */
+  public void testIsFixing() {
+    Route route = new Route(3, 3, 5, 5, Route.ROUTE_FIX);
+    assertEquals(true,route.isFixing());
+    route = new Route(3, 3, 5, 5, 1);
+    assertEquals(false,route.isFixing());
+    route = new Route(3, 3, 5, 5, Route.ROUTE_DEFEND);
+    assertEquals(false,route.isFixing());
   }
 }

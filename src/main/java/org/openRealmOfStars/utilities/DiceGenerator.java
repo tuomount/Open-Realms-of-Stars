@@ -60,7 +60,7 @@ public class DiceGenerator {
    * @return A random number
    */
   public static int getRandom(int maxValue) {
-    if (initialized == false) {
+    if (!initialized) {
       generator1 = new Random(System.nanoTime());
       generator2 = new Random(generator1.nextLong());
       m_z =(int) System.nanoTime();
@@ -87,7 +87,7 @@ public class DiceGenerator {
    * @return A random number
    */
   public static int getRandom(int minValue, int maxValue) {
-    if (initialized == false) {
+    if (!initialized) {
       generator1 = new Random(System.nanoTime());
       generator2 = new Random(generator1.nextLong());
       m_z =(int) System.nanoTime();

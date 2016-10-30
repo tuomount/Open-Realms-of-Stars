@@ -225,7 +225,7 @@ public class StarFieldTextArea extends JTextArea {
     g.setFont(GuiStatics.getFontCubellan());
     if (getText() != null ) {
       StringBuilder sb = new StringBuilder();
-      if (autoScroll == false) {
+      if (!autoScroll) {
         sb = new StringBuilder(this.getText());
       } else {
         for (int i=0;i<numberOfLines;i++) {
@@ -234,7 +234,7 @@ public class StarFieldTextArea extends JTextArea {
           }
         }
       }
-      if (this.getLineWrap()== true) {
+      if (this.getLineWrap()) {
         int lastSpace = -1;
         int rowLen = 0;
         int maxRowLen = width/6;

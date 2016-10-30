@@ -417,9 +417,7 @@ public class BattleView extends BlackPanel {
    * @param text Text to add
    */
   public void addLog(String text) {
-    for (int i=textLog.length-1;i>0;i--) {
-      textLog[i] = textLog[i-1];
-    }
+    System.arraycopy(textLog, 0, textLog, 1, textLog.length - 1);
     textLog[0] = text;
   }
 

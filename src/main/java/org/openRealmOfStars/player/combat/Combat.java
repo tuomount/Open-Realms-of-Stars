@@ -231,42 +231,31 @@ public class Combat {
    */
   public void destroyShip(CombatShip ship) {
     if (fleet1.isShipInFleet(ship.getShip())) {
-      fleet1.removeShip(ship.getShip());
-      ShipStat stat = animation.getShooter().getPlayer()
-          .getShipStatByName(animation.getShooter().getShip().getName());
-      if (stat != null) {
-        stat.setNumberOfKills(stat.getNumberOfKills()+1);
-      }
-      stat = ship.getPlayer().getShipStatByName(ship.getShip().getName());
-      if (stat != null) {
-        stat.setNumberOfLoses(stat.getNumberOfLoses()+1);
-        stat.setNumberOfInUse(stat.getNumberOfInUse()-1);
-      }
-      int indexToDelete = shipList.indexOf(ship);
-      shipList.remove(ship);
-      if (indexToDelete < shipIndex && shipIndex > 0) {
-        shipIndex--;
-      }
+      destroyShipFromFleet(ship, fleet1);
     } else if (fleet2.isShipInFleet(ship.getShip())) {
-      fleet2.removeShip(ship.getShip());
-      ShipStat stat = animation.getShooter().getPlayer()
-          .getShipStatByName(animation.getShooter().getShip().getName());
-      if (stat != null) {
-        stat.setNumberOfKills(stat.getNumberOfKills()+1);
-      }
-      stat = ship.getPlayer().getShipStatByName(ship.getShip().getName());
-      if (stat != null) {
-        stat.setNumberOfLoses(stat.getNumberOfLoses()+1);
-        stat.setNumberOfInUse(stat.getNumberOfInUse()-1);
-      }      
-      int indexToDelete = shipList.indexOf(ship);
-      shipList.remove(ship);
-      if (indexToDelete < shipIndex && shipIndex > 0) {
-        shipIndex--;
-      }
+      destroyShipFromFleet(ship, fleet2);
     }
   }
-  
+
+  private void destroyShipFromFleet(CombatShip ship, Fleet fleet) {
+    fleet.removeShip(ship.getShip());
+    ShipStat stat = animation.getShooter().getPlayer()
+        .getShipStatByName(animation.getShooter().getShip().getName());
+    if (stat != null) {
+      stat.setNumberOfKills(stat.getNumberOfKills()+1);
+    }
+    stat = ship.getPlayer().getShipStatByName(ship.getShip().getName());
+    if (stat != null) {
+      stat.setNumberOfLoses(stat.getNumberOfLoses()+1);
+      stat.setNumberOfInUse(stat.getNumberOfInUse()-1);
+    }
+    int indexToDelete = shipList.indexOf(ship);
+    shipList.remove(ship);
+    if (indexToDelete < shipIndex && shipIndex > 0) {
+      shipIndex--;
+    }
+  }
+
   /**
    * Get the closest enemy ship
    * @param info Player info who is doing the comparison

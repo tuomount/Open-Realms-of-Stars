@@ -94,7 +94,7 @@ public class PathPoint {
   @Override
   public int hashCode() {
     int result = x;
-    result = 31 * result + y;
+    result = 9731 * result + y;
     return result;
   }
 }

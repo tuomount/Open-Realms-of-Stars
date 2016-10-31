@@ -322,16 +322,20 @@ public class CombatAnimation {
     } 
   }
 
-  /* @TODO: Rename this parameter. */
-  private void doAnimationHit(int param) {
+  /**
+   * Do hit animation with particle effect
+   * @param frameWhenAddParticleEffect Add particle after this frame number
+   */
+  private void doAnimationHit(int frameWhenAddParticleEffect) {
     if (hit) {
       showAnim = true;
-      if (count > param && target.getShip().getHullPoints()<=0) {
+      if (count > frameWhenAddParticleEffect && target.getShip().getHullPoints()<=0) {
         int parts = DiceGenerator.getRandom(15, 25);
         int px = (int) Math.round(ex);
         int py = (int) Math.round(ey);
         for (int i=0;i<parts;i++) {
-          ParticleEffect particle = new ParticleEffect(ParticleEffectType.EXPLOSION_PARTICLE, px, py);
+          ParticleEffect particle = new ParticleEffect(
+              ParticleEffectType.EXPLOSION_PARTICLE, px, py);
           particles.add(particle);
         }
       }

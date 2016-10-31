@@ -483,10 +483,18 @@ public class Planet {
     return metalTurn + " turns";
   }
 
+  /**
+  * Get production time in turn depending on production type.
+  * This method estimates how long construction production takes in turn.
+  * This can be used for both metal and production estimations.
+  * @param productionReq How much production is required
+  * @param productionType Either PRODUCTION_PRODUCTION or PRODUCTION_METAL
+  */
   private int getProductionTimeByProductionType(int productionReq, int productionType) {
     int productionTime = 0;
     if (getTotalProduction(productionType) > 0 && productionReq > 0) {
-      productionTime = (int) Math.ceil((double) productionReq / (double) getTotalProduction(productionType));
+      productionTime = (int) Math.ceil((double) productionReq /
+                       (double) getTotalProduction(productionType));
     } else if (getTotalProduction(productionType) == 0 && productionReq > 0) {
       productionTime = -1;
     } else if (productionReq <= 0) {

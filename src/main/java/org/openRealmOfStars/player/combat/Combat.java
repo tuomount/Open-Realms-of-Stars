@@ -237,6 +237,12 @@ public class Combat {
     }
   }
 
+
+  /**
+   * Destroy ship for fleet's list.
+   * @param ship ship to destroy from the fleet
+   * @param fleet containing the ship 
+   */
   private void destroyShipFromFleet(CombatShip ship, Fleet fleet) {
     fleet.removeShip(ship.getShip());
     ShipStat stat = animation.getShooter().getPlayer()

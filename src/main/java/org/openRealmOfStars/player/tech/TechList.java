@@ -13,6 +13,7 @@ import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.ErrorLogger;
 
 
 /**
@@ -213,7 +214,7 @@ public class TechList {
         try {
           return Integer.parseInt(buf);
         } catch (NumberFormatException e) {
-          // Do nothing
+          ErrorLogger.log(e);
         }
       }
     }

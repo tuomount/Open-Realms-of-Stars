@@ -657,7 +657,7 @@ public class StarMap {
     Sun result = null;
     for (Sun sun:sunList) {
       double dist = StarMapUtilities.getDistance(x, y, sun.getCenterX(), sun.getCenterY());
-      if (ignoreSun != null && sun.getName().equals(ignoreSun)) {
+      if (ignoreSun != null && ignoreSun.equals(sun.getName())) {
         dist = 999999;
       }
       if (dist < distance) {

@@ -21,6 +21,7 @@ import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.StarMapStatics;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -567,9 +568,8 @@ public class PlayerInfo {
     byte result = UNCHARTED;
     try {
       result = mapData[x][y];
-      
     } catch (ArrayIndexOutOfBoundsException e) {
-      // Do nothing
+      ErrorLogger.log(e);
     }
     return result;
   }
@@ -585,7 +585,7 @@ public class PlayerInfo {
       try {
         mapData[x][y] = visibility;
       } catch (ArrayIndexOutOfBoundsException e) {
-      // Do nothing
+        ErrorLogger.log(e);
       }
     }
   }
@@ -602,7 +602,7 @@ public class PlayerInfo {
       result = mapCloakDetection[x][y];
       
     } catch (ArrayIndexOutOfBoundsException e) {
-      // Do nothing
+      ErrorLogger.log(e);
     }
     return result;
   }
@@ -617,7 +617,7 @@ public class PlayerInfo {
     try {
       mapCloakDetection[x][y] = value;
     } catch (ArrayIndexOutOfBoundsException e) {
-    // Do nothing
+      ErrorLogger.log(e);
     }
   }
   

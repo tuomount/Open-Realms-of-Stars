@@ -467,36 +467,34 @@ public class Planet {
    * @return The production time
    */
   public String getProductionTime(Construction build) {
-    int metalReq = build.getMetalCost()-getMetal();
-    int prodReq = build.getProdCost()-getProdResource();
-    int metalTurn = 0;
-    int prodTurn = 0;
-    if (metalReq <= 0 &&prodReq <= 0) {
+    int metalReq = build.getMetalCost() - getMetal();
+    int prodReq = build.getProdCost() - getProdResource();
+    if (metalReq <= 0 && prodReq <= 0) {
       return "1 turn";
     }
-    if (getTotalProduction(PRODUCTION_METAL) > 0 && metalReq > 0) {
-      metalTurn = (int) Math.ceil((double) metalReq / (double) getTotalProduction(PRODUCTION_METAL));
-    } else if (getTotalProduction(PRODUCTION_METAL) == 0 && metalReq > 0) {
-      metalTurn = -1;
-    } else if (metalReq <= 0) {
-      metalTurn = 1;
-    }
-    if (getTotalProduction(PRODUCTION_PRODUCTION) > 0 && prodReq > 0) {
-      prodTurn = (int) Math.ceil((double) prodReq / (double) getTotalProduction(PRODUCTION_PRODUCTION));
-    } else if (getTotalProduction(PRODUCTION_PRODUCTION) == 0 && prodReq > 0) {
-      prodTurn = -1;
-    } else if (prodReq <= 0) {
-      prodTurn = 1;
-    }
-    if (prodTurn == -1 || metalTurn== -1) {
+    int metalTurn = getProductionTimeByProductionType(metalReq, PRODUCTION_METAL);
+    int prodTurn = getProductionTimeByProductionType(prodReq, PRODUCTION_PRODUCTION);
+    if (prodTurn == -1 || metalTurn == -1) {
       return "Never";
     } 
     if (prodTurn > metalTurn) {
-      return prodTurn+" turns";
+      return prodTurn + " turns";
     }
-    return metalTurn+" turns";
+    return metalTurn + " turns";
   }
-  
+
+  private int getProductionTimeByProductionType(int productionReq, int productionType) {
+    int productionTime = 0;
+    if (getTotalProduction(productionType) > 0 && productionReq > 0) {
+      productionTime = (int) Math.ceil((double) productionReq / (double) getTotalProduction(productionType));
+    } else if (getTotalProduction(productionType) == 0 && productionReq > 0) {
+      productionTime = -1;
+    } else if (productionReq <= 0) {
+      productionTime = 1;
+    }
+    return productionTime;
+  }
+
   /**
    * Get amount of workers in certain type
    * @param workerType The worker type

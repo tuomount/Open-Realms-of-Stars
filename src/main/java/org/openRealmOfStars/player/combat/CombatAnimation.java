@@ -217,18 +217,7 @@ public class CombatAnimation {
     if (weapon.getType() == ShipComponentType.WEAPON_BEAM) {
       count--;
       if (count < 24) {
-        if (hit) {
-          showAnim = true;
-          if (count > 20 && target.getShip().getHullPoints()<=0) {
-            int parts = DiceGenerator.getRandom(15, 25);
-            int px = (int) Math.round(ex);
-            int py = (int) Math.round(ey);
-            for (int i=0;i<parts;i++) {
-              ParticleEffect particle = new ParticleEffect(ParticleEffectType.EXPLOSION_PARTICLE, px, py);
-              particles.add(particle);
-            }
-          }
-        }
+        doAnimationHit(20);
         if (animFrame < explosionAnim.getMaxFrames()) {
           animFrame++;
         } else {
@@ -256,18 +245,7 @@ public class CombatAnimation {
     } else if (weapon.getType() == ShipComponentType.WEAPON_RAILGUN) {
       if (Math.round(sx) == Math.round(ex) && Math.round(sy)==Math.round(ey)) {
         count--;
-        if (hit) {
-          showAnim = true;
-          if (count > 13 && target.getShip().getHullPoints()<=0) {
-            int parts = DiceGenerator.getRandom(15, 25);
-            int px = (int) Math.round(sx);
-            int py = (int) Math.round(sy);
-            for (int i=0;i<parts;i++) {
-              ParticleEffect particle = new ParticleEffect(ParticleEffectType.EXPLOSION_PARTICLE, px, py);
-              particles.add(particle);
-            }
-          }
-        }
+        doAnimationHit(13);
         if (animFrame < explosionAnim.getMaxFrames()) {
           animFrame++;
         } else {
@@ -289,18 +267,7 @@ public class CombatAnimation {
     } else if (weapon.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) {
       if (Math.round(sx) == Math.round(ex) && Math.round(sy)==Math.round(ey)) {
         count--;
-        if (hit) {
-          showAnim = true;
-          if (count > 13 && target.getShip().getHullPoints()<=0) {
-            int parts = DiceGenerator.getRandom(15, 25);
-            int px = (int) Math.round(sx);
-            int py = (int) Math.round(sy);
-            for (int i=0;i<parts;i++) {
-              ParticleEffect particle = new ParticleEffect(ParticleEffectType.EXPLOSION_PARTICLE, px, py);
-              particles.add(particle);
-            }
-          }
-        }
+        doAnimationHit(13);
         if (animFrame < explosionAnim.getMaxFrames()) {
           animFrame++;
         } else {
@@ -333,18 +300,7 @@ public class CombatAnimation {
         weapon.getType() == ShipComponentType.WEAPON_HE_MISSILE) {
       if (Math.round(sx) == Math.round(ex) && Math.round(sy)==Math.round(ey)) {
         count--;
-        if (hit) {
-          showAnim = true;
-          if (count > 13 && target.getShip().getHullPoints()<=0) {
-            int parts = DiceGenerator.getRandom(15, 25);
-            int px = (int) Math.round(sx);
-            int py = (int) Math.round(sy);
-            for (int i=0;i<parts;i++) {
-              ParticleEffect particle = new ParticleEffect(ParticleEffectType.EXPLOSION_PARTICLE, px, py);
-              particles.add(particle);
-            }
-          }
-        }
+        doAnimationHit(13);
         if (animFrame < explosionAnim.getMaxFrames()) {
           animFrame++;
         } else {
@@ -365,7 +321,23 @@ public class CombatAnimation {
       }
     } 
   }
-  
+
+  /* @TODO: Rename this parameter. */
+  private void doAnimationHit(int param) {
+    if (hit) {
+      showAnim = true;
+      if (count > param && target.getShip().getHullPoints()<=0) {
+        int parts = DiceGenerator.getRandom(15, 25);
+        int px = (int) Math.round(ex);
+        int py = (int) Math.round(ey);
+        for (int i=0;i<parts;i++) {
+          ParticleEffect particle = new ParticleEffect(ParticleEffectType.EXPLOSION_PARTICLE, px, py);
+          particles.add(particle);
+        }
+      }
+    }
+  }
+
   /**
    * Get Animation frame if it should be shown. Otherwise it is null
    * @return BufferedImage

@@ -60,6 +60,11 @@ public class DiceGenerator {
    * @return A random number
    */
   public static int getRandom(int maxValue) {
+    initializeGenerators();
+    return getRandomResult(maxValue);
+  }
+
+  private static void initializeGenerators() {
     if (!initialized) {
       generator1 = new Random(System.nanoTime());
       generator2 = new Random(generator1.nextLong());
@@ -69,6 +74,9 @@ public class DiceGenerator {
       x = System.nanoTime();
       initialized = true;
     }
+  }
+
+  private static int getRandomResult(int maxValue) {
     int result = 0;
     switch (getRandomJava(3)) {
     case 0: result = getRandomJava(maxValue+1); break;
@@ -87,26 +95,13 @@ public class DiceGenerator {
    * @return A random number
    */
   public static int getRandom(int minValue, int maxValue) {
-    if (!initialized) {
-      generator1 = new Random(System.nanoTime());
-      generator2 = new Random(generator1.nextLong());
-      m_z =(int) System.nanoTime();
-      m_w = (int) System.currentTimeMillis();
-      m_w = m_w >> 8;
-      x = System.nanoTime();
-      initialized = true;
-    }
-    int sub=0;
-    int result=0;
+    initializeGenerators();
+    int sub = 0;
     if (maxValue >= minValue) {
-      sub = maxValue-minValue;
+      sub = maxValue - minValue;
     }
-    switch (getRandomJava(3)) {
-    case 0: result = getRandomJava(sub+1); break;
-    case 1: result = getRandomMultiplyWithCarry(sub+1); break;
-    case 2: result = getRandomXORShift(sub+1); break;
-    }
-    result = result +minValue;
+    int result = getRandomResult(sub + 1);
+    result = result + minValue;
     return result;
   }
 

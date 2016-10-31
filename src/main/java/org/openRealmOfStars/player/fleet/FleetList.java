@@ -1,5 +1,7 @@
 package org.openRealmOfStars.player.fleet;
 
+import org.openRealmOfStars.utilities.ErrorLogger;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -88,7 +90,7 @@ public class FleetList {
             fleetNum = num;
           }
         } catch (NumberFormatException e) {
-          // Just don't do anything
+          ErrorLogger.log(e);
         }
       }
     }

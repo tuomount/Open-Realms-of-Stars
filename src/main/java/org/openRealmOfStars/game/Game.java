@@ -452,7 +452,7 @@ public class Game extends JFrame implements ActionListener {
    * Show AI Turn view
    */
   public void showAITurnView() {
-    aiTurnView = new AITurnView(this, this);
+    aiTurnView = new AITurnView(this);
     this.getContentPane().removeAll();
     this.add(aiTurnView);
     this.validate();

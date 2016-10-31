@@ -3,7 +3,6 @@ package org.openRealmOfStars.game.States;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.Box;
@@ -90,9 +89,8 @@ public class AITurnView extends BlackPanel {
   /**
    * Constructor for main menu
    * @param game Game used to get access star map and planet lists
-   * @param listener ActionListener
    */
-  public AITurnView(Game game, ActionListener listener) {
+  public AITurnView(Game game) {
     this.game = game;
     Planet planet = new Planet(1, 1, "Random Planet",1, false);
     if (DiceGenerator.getRandom(100)<10) {

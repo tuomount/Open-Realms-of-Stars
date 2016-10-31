@@ -34,6 +34,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 public class ShipDesign {
 
   public static final String DESIGN_OK = "Design is OK!";
+  public static final String ENGINE_IS_MISSING = "Engine is missing!\n";
   
   /**
    * Ship Design name
@@ -482,7 +483,7 @@ public class ShipDesign {
     StringBuilder sb = new StringBuilder();
     if (!hasEngine()) {
       designOk = false;
-      sb.append("Engine is missing!\n");
+      sb.append(ENGINE_IS_MISSING);
     }
     if (getFreeSlots()<0) {
       designOk = false;

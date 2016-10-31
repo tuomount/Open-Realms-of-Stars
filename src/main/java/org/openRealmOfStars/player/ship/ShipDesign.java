@@ -35,6 +35,7 @@ public class ShipDesign {
 
   public static final String DESIGN_OK = "Design is OK!";
   public static final String ENGINE_IS_MISSING = "Engine is missing!\n";
+  public static final String NO_WEAPONS_ALLOWED = "No weapons allowed in ";
   
   /**
    * Ship Design name
@@ -499,7 +500,7 @@ public class ShipDesign {
         && (hull.getHullType()==ShipHullType.FREIGHTER ||
             hull.getHullType()==ShipHullType.PROBE)) {
       designOk = false;
-      sb.append("No weapons allowed in ").append(hull.getHullType().toString()).append("!\n");
+      sb.append(NO_WEAPONS_ALLOWED).append(hull.getHullType().toString()).append("!\n");
     }
     for (int i = 0;i<getNumberOfComponents();i++) {
       ShipComponent comp = getComponent(i);

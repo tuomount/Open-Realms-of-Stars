@@ -56,4 +56,27 @@ public class ShipDesignTest {
     assertEquals(true,ShipDesign.ENGINE_IS_MISSING.equals(design.getFlaws()));
   }
 
+  @Test
+  public void testColonyDesign() {
+    ShipHull hull = ShipHullFactory.createByName("Colony", SpaceRace.CENTAURS);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
+    ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+    ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+    ShipComponent module = ShipComponentFactory.createByName("Colony Module");
+    
+    
+    assertEquals(true,ShipDesign.ENGINE_IS_MISSING.equals(design.getFlaws()));
+    design.addComponent(weapon);
+    design.addComponent(engine);
+    design.addComponent(energy);
+    assertEquals(true,design.getFlaws().startsWith(ShipDesign.NO_WEAPONS_ALLOWED));
+    design.removeComponent(0);
+    design.addComponent(module);
+    assertEquals(true,ShipDesign.DESIGN_OK.equals(design.getFlaws()));
+    assertEquals(3,design.getNumberOfComponents());
+    assertEquals(0,design.getTotalMilitaryPower());
+    assertEquals(1,design.getFreeSlots());
+  }
+
 }

@@ -345,7 +345,7 @@ public class BigImagePanel extends JPanel {
           }
           if ((animation.getAnimationType()==PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM
               || animation.getAnimationType()==PlanetAnimation.ANIMATION_TYPE_NUKE_AIM)
-              && (backgroundImg != null)) {
+              && backgroundImg != null) {
             int px = 235;
             int py = 235;
             int nx = DiceGenerator.getRandom(backgroundImg.getWidth()/4);

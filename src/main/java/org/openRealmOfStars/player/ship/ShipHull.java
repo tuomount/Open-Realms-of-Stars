@@ -113,21 +113,12 @@ public class ShipHull {
     this.originalBuilder = race;
     // Default to Scout image
     this.imageIndex = ShipImage.SCOUT;
-    switch (race) {
-    case CENTAURS: {
-      // Centaur ships have extra hull point per slot
-      // but hulls are more expensive.
+    // Centaur ships have extra hull point per slot
+    // but hulls are more expensive.
+    if (race == SpaceRace.CENTAURS) {
       this.slotHull = this.slotHull+1;
       this.metalCost = this.metalCost*2;
       this.cost = this.cost*2/3;
-      break;
-    }
-    case GREYANS:
-    case HUMAN:
-    case MECHIONS:
-    case SPORKS:{
-      //Default do nothing special
-    }
     }
   }
 

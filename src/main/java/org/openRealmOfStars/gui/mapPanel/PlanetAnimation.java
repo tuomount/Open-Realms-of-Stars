@@ -260,11 +260,9 @@ public class PlanetAnimation {
         animFrame++;
       }
     }
-    if (animationType == ANIMATION_TYPE_BOMBING) {
-      if (count < explosionAnim.getMaxFrames()) {
-        showAnim = true;
-        animFrame++;
-      }
+    if (animationType == ANIMATION_TYPE_BOMBING && count < explosionAnim.getMaxFrames()) {
+      showAnim = true;
+      animFrame++;
     }
     if (animationType == ANIMATION_TYPE_NUKING) {
       showAnim = true;

@@ -155,11 +155,11 @@ public class MapPanel extends JPanel {
    */
   private void calculateViewPoints() {
     if (battle) {
-      viewPointX = ((this.getWidth()/ShipImage.MAX_WIDTH)-1)/2;
-      viewPointY = ((this.getHeight()/ShipImage.MAX_HEIGHT)-1)/2;
+      viewPointX = (this.getWidth() / ShipImage.MAX_WIDTH - 1) / 2;
+      viewPointY = (this.getHeight() / ShipImage.MAX_HEIGHT - 1) / 2;
     } else {
-      viewPointX = ((this.getWidth()/Tile.MAX_WIDTH)-1)/2;
-      viewPointY = ((this.getHeight()/Tile.MAX_HEIGHT)-1)/2;
+      viewPointX = (this.getWidth() / Tile.MAX_WIDTH - 1) / 2;
+      viewPointY = (this.getHeight() / Tile.MAX_HEIGHT - 1) / 2;
     }
     if (viewPointX < 1) {
       viewPointX = 1;
@@ -348,23 +348,20 @@ public class MapPanel extends JPanel {
           }
         }
         Tile tile = Tiles.getTileByIndex(map[i+cx][j+cy]);
-        // Draw tiles
-        if (!tile.getName().equals(TileNames.EMPTY)) {
-          // Draw only non empty tiles
-          if ((info != null && info.getSectorVisibility(i+cx, j+cy)!=PlayerInfo.UNCHARTED) ||
-              starMap.getTileInfo(i+cx, j+cy).getType() == SquareInfo.TYPE_SUN) {
-            tile.draw(gr, pixelX, pixelY);
-          }
+        // Draw only non empty tiles
+        if (info != null && !tile.getName().equals(TileNames.EMPTY)
+                && info.getSectorVisibility(i+cx, j+cy)!=PlayerInfo.UNCHARTED
+                || starMap.getTileInfo(i+cx, j+cy).getType() == SquareInfo.TYPE_SUN) {
+          tile.draw(gr, pixelX, pixelY);
         }
 
         // Draw home world marker
         Planet planet = starMap.getPlanetByCoordinate(i+cx, j+cy);
-        if (planet != null && !planet.isGasGiant() && info != null && 
-            info.getSectorVisibility(i+cx, j+cy)!=PlayerInfo.UNCHARTED) {
-          if (planet.getHomeWorldIndex() != -1) {
-            Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
-            icon.draw(gr, pixelX+Icon16x16.MAX_WIDTH, pixelY+Icon16x16.MAX_HEIGHT);
-          }
+        if (planet != null && !planet.isGasGiant() && info != null
+                && info.getSectorVisibility(i+cx, j+cy)!=PlayerInfo.UNCHARTED
+                && planet.getHomeWorldIndex() != -1) {
+          Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
+          icon.draw(gr, pixelX+Icon16x16.MAX_WIDTH, pixelY+Icon16x16.MAX_HEIGHT);
         }
 
         // Draw fleet
@@ -414,24 +411,21 @@ public class MapPanel extends JPanel {
         }
         
         // Draw Gas giant text
-        if ((tile.getName().equals(TileNames.GAS_GIANT_1_SE) && i > -viewPointX) ||
-            (tile.getName().equals(TileNames.GAS_GIANT_2_SE) && i > -viewPointX )) {
-          if (planet != null && info != null &&
-              info.getSectorVisibility(i+cx, j+cy)!=PlayerInfo.UNCHARTED) {
+        if (tile.getName().equals(TileNames.GAS_GIANT_1_SE) && i > -viewPointX
+                || tile.getName().equals(TileNames.GAS_GIANT_2_SE) && i > -viewPointX
+                && planet != null && info != null
+                && info.getSectorVisibility(i+cx, j+cy)!=PlayerInfo.UNCHARTED) {
             int textWidth = (int) GuiStatics.getFontCubellanSC().getStringBounds(
                 RandomSystemNameGenerator.numberToRoman(planet.getOrderNumber()),
                 gr.getFontRenderContext()).getWidth();
-              int offset = textWidth/2-2;
-              gr.setStroke(GuiStatics.TEXT_LINE);
-              gr.setColor(GuiStatics.COLOR_GREYBLUE);
-              gr.drawLine(pixelX-offset, pixelY-3,
-                pixelX+offset, pixelY-3);
-              gr.setColor(Color.BLACK);
-              gr.setFont(GuiStatics.getFontCubellanSC());
-              gr.drawString(RandomSystemNameGenerator.numberToRoman(planet.
-                  getOrderNumber()), pixelX-textWidth/2, pixelY);
-            
-          }
+            int offset = textWidth/2-2;
+            gr.setStroke(GuiStatics.TEXT_LINE);
+            gr.setColor(GuiStatics.COLOR_GREYBLUE);
+            gr.drawLine(pixelX-offset, pixelY-3, pixelX+offset, pixelY-3);
+            gr.setColor(Color.BLACK);
+            gr.setFont(GuiStatics.getFontCubellanSC());
+            gr.drawString(RandomSystemNameGenerator.numberToRoman(
+                planet.getOrderNumber()), pixelX-textWidth/2, pixelY);
         }
         
         // Draw planet text
@@ -450,10 +444,8 @@ public class MapPanel extends JPanel {
             gr.drawString(RandomSystemNameGenerator.numberToRoman(planet.
                 getOrderNumber()), pixelX+Tile.MAX_WIDTH/2-textWidth/2, pixelY+Tile.MAX_HEIGHT/2);
         }
-        if (routeData != null) {
-          if (routeData[i+cx][j+cy]==1) {
-            gr.drawImage(Route.getRouteDot(), pixelX, pixelY, null);
-          }
+        if (routeData != null && routeData[i+cx][j+cy]==1) {
+          gr.drawImage(Route.getRouteDot(), pixelX, pixelY, null);
         }
         pixelX=pixelX+Tile.MAX_WIDTH;
       }

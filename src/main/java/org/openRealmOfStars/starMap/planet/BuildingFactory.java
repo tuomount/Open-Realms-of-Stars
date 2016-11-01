@@ -98,7 +98,7 @@ public class BuildingFactory {
     Building tmp = null;
     for (int i=0;i<MAX_BUILDING;i++) {
       tmp = create(i);
-      if ((tmp != null) && (tmp.getName().equalsIgnoreCase(name))) {
+      if (tmp != null && tmp.getName().equalsIgnoreCase(name)) {
         return tmp;
       }
     }

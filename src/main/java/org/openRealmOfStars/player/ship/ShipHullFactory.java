@@ -44,7 +44,7 @@ public class ShipHullFactory {
     ShipHull tmp = null;
     for (int i=0;i<MAX_SHIPHULL;i++) {
       tmp = createShipHull(i,race);
-      if ((tmp != null) && (tmp.getName().equalsIgnoreCase(name))) {
+      if (tmp != null && tmp.getName().equalsIgnoreCase(name)) {
         return tmp;
       }
     }

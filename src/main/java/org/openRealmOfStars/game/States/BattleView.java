@@ -388,10 +388,9 @@ public class BattleView extends BlackPanel {
       mapPanel.repaint();
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_END_BATTLE_ROUND)) {
-      if (!combatEnded && combat.getCurrentShip().getPlayer().isHuman()) {
+        GameCommands.COMMAND_END_BATTLE_ROUND)
+        && !combatEnded && combat.getCurrentShip().getPlayer().isHuman()) {
         endRound();
-      }
     }
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)
         && combat.getCurrentShip().getPlayer().isHuman()) {

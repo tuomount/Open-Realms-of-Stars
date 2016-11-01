@@ -1152,111 +1152,110 @@ public class Planet {
   
       
       // Making building happens at the end
-      if (underConstruction != null) {
-        if (metal >= underConstruction.getMetalCost() &&
-            prodResource >= underConstruction.getProdCost()) {
-          if (underConstruction instanceof Building && groundSize > buildings.size()) {
-            metal = metal - underConstruction.getMetalCost();
-            prodResource = prodResource - underConstruction.getProdCost();
-            buildings.add((Building) underConstruction);
-            msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(), 
-                Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
-            msg.setCoordinate(getX(), getY());
-            msg.setMatchByString(getName());
-            planetOwnerInfo.getMsgList().addNewMessage(msg);
-          } else if (underConstruction instanceof Ship) {
-            metal = metal - underConstruction.getMetalCost();
-            prodResource = prodResource - underConstruction.getProdCost();
-            Ship ship = (Ship) underConstruction;
-            ShipStat stat = planetOwnerInfo.getShipStatByName(ship.getName());
-            stat.setNumberOfBuilt(stat.getNumberOfBuilt()+1);
-            stat.setNumberOfInUse(stat.getNumberOfInUse()+1);
-            if (stat.getDesign().getTotalMilitaryPower()>0) {
-              culture=culture+stat.getDesign().getTotalMilitaryPower()/4;
-            }
-            Fleet fleet = new Fleet(ship, getX(), getY());
-            planetOwnerInfo.Fleets().add(fleet);
-            if (planetOwnerInfo.getMissions() != null) {
-              Mission mission = planetOwnerInfo.getMissions().getMissionForPlanet(getName(), MissionPhase.BUILDING);
-              if (mission != null) {
-                if (mission.getFleetName() == null) {
-                  if (mission.getType() == MissionType.COLONIZE) {
-                    fleet.setName("Colony #"+(planetOwnerInfo.Fleets().
-                        howManyFleetWithStartingNames("Colony #")+1));
-                    mission.setFleetName(fleet.getName());
-                  }
-                } else {
-                  fleet.setName(mission.getFleetName()+" #"+(planetOwnerInfo.Fleets().
-                    howManyFleetWithStartingNames(mission.getFleetName())+1));
-                }                
-                if (mission.getType() == MissionType.DEFEND) {
-                  // For now one ship is enough for defend
-                  mission.setPhase(MissionPhase.TREKKING);
-                } else if (mission.getType() == MissionType.COLONIZE) {
-                  mission.setPhase(MissionPhase.LOADING);
-                } else {
-                  mission.setPhase(MissionPhase.TREKKING);
+      if (underConstruction != null
+              && metal >= underConstruction.getMetalCost()
+              && prodResource >= underConstruction.getProdCost()) {
+        if (underConstruction instanceof Building && groundSize > buildings.size()) {
+          metal = metal - underConstruction.getMetalCost();
+          prodResource = prodResource - underConstruction.getProdCost();
+          buildings.add((Building) underConstruction);
+          msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(),
+              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+          msg.setCoordinate(getX(), getY());
+          msg.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+        } else if (underConstruction instanceof Ship) {
+          metal = metal - underConstruction.getMetalCost();
+          prodResource = prodResource - underConstruction.getProdCost();
+          Ship ship = (Ship) underConstruction;
+          ShipStat stat = planetOwnerInfo.getShipStatByName(ship.getName());
+          stat.setNumberOfBuilt(stat.getNumberOfBuilt()+1);
+          stat.setNumberOfInUse(stat.getNumberOfInUse()+1);
+          if (stat.getDesign().getTotalMilitaryPower()>0) {
+            culture=culture+stat.getDesign().getTotalMilitaryPower()/4;
+          }
+          Fleet fleet = new Fleet(ship, getX(), getY());
+          planetOwnerInfo.Fleets().add(fleet);
+          if (planetOwnerInfo.getMissions() != null) {
+            Mission mission = planetOwnerInfo.getMissions().getMissionForPlanet(getName(), MissionPhase.BUILDING);
+            if (mission != null) {
+              if (mission.getFleetName() == null) {
+                if (mission.getType() == MissionType.COLONIZE) {
+                  fleet.setName("Colony #"+(planetOwnerInfo.Fleets().
+                      howManyFleetWithStartingNames("Colony #")+1));
+                  mission.setFleetName(fleet.getName());
                 }
               } else {
-                mission = planetOwnerInfo.getMissions().getMission(MissionType.ATTACK, MissionPhase.PLANNING);
-                if (mission != null) {
-                  Mission newMiss = new Mission(MissionType.ATTACK, 
-                      MissionPhase.TREKKING, mission.getX(), mission.getY());
-                  if (ship.isTrooperModule()) {
-                    newMiss.setPhase(MissionPhase.LOADING);
-                  }
-                  String fleetName = "Attacker";
-                  fleet.setName(fleetName+" #"+(planetOwnerInfo.Fleets().
-                      howManyFleetWithStartingNames(fleetName)+1));
-                  newMiss.setFleetName(fleet.getName());
-                  planetOwnerInfo.getMissions().add(newMiss);
-                } else if (ship.getTotalMilitaryPower() > 0) {
-                  // No mission for planet, so just adding defender
-                  String fleetName = "Defender";
-                  fleet.setName(fleetName+" #"+(planetOwnerInfo.Fleets().
-                      howManyFleetWithStartingNames(fleetName)+1));
-                }
+                fleet.setName(mission.getFleetName()+" #"+(planetOwnerInfo.Fleets().
+                  howManyFleetWithStartingNames(mission.getFleetName())+1));
+              }
+              if (mission.getType() == MissionType.DEFEND) {
+                // For now one ship is enough for defend
+                mission.setPhase(MissionPhase.TREKKING);
+              } else if (mission.getType() == MissionType.COLONIZE) {
+                mission.setPhase(MissionPhase.LOADING);
+              } else {
+                mission.setPhase(MissionPhase.TREKKING);
               }
             } else {
-              fleet.setName("Fleet #"+(planetOwnerInfo.Fleets().
-                  howManyFleetWithStartingNames("Fleet #")+1));
+              mission = planetOwnerInfo.getMissions().getMission(MissionType.ATTACK, MissionPhase.PLANNING);
+              if (mission != null) {
+                Mission newMiss = new Mission(MissionType.ATTACK,
+                    MissionPhase.TREKKING, mission.getX(), mission.getY());
+                if (ship.isTrooperModule()) {
+                  newMiss.setPhase(MissionPhase.LOADING);
+                }
+                String fleetName = "Attacker";
+                fleet.setName(fleetName+" #"+(planetOwnerInfo.Fleets().
+                    howManyFleetWithStartingNames(fleetName)+1));
+                newMiss.setFleetName(fleet.getName());
+                planetOwnerInfo.getMissions().add(newMiss);
+              } else if (ship.getTotalMilitaryPower() > 0) {
+                // No mission for planet, so just adding defender
+                String fleetName = "Defender";
+                fleet.setName(fleetName+" #"+(planetOwnerInfo.Fleets().
+                    howManyFleetWithStartingNames(fleetName)+1));
+              }
             }
-            msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(), 
-                Icons.getIconByName(Icons.ICON_HULL_TECH));
+          } else {
+            fleet.setName("Fleet #"+(planetOwnerInfo.Fleets().
+                howManyFleetWithStartingNames("Fleet #")+1));
+          }
+          msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(),
+              Icons.getIconByName(Icons.ICON_HULL_TECH));
+          msg.setCoordinate(getX(), getY());
+          msg.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+        } else {
+          if (underConstruction.getName().equals(ConstructionFactory.MECHION_CITIZEN)) {
+            metal = metal - underConstruction.getMetalCost();
+            prodResource = prodResource - underConstruction.getProdCost();
+            workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS]+1;
+            msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(),
+                Icons.getIconByName(Icons.ICON_PEOPLE));
             msg.setCoordinate(getX(), getY());
             msg.setMatchByString(getName());
             planetOwnerInfo.getMsgList().addNewMessage(msg);
-          } else {
-            if (underConstruction.getName().equals(ConstructionFactory.MECHION_CITIZEN)) {
-              metal = metal - underConstruction.getMetalCost();
-              prodResource = prodResource - underConstruction.getProdCost();
-              workers[PRODUCTION_WORKERS] = workers[PRODUCTION_WORKERS]+1;
-              msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(), 
-                  Icons.getIconByName(Icons.ICON_PEOPLE));
-              msg.setCoordinate(getX(), getY());
-              msg.setMatchByString(getName());
-              planetOwnerInfo.getMsgList().addNewMessage(msg);
-            }
-            if (underConstruction.getName().equals(ConstructionFactory.EXTRA_CULTURE)) {
-              metal = metal - underConstruction.getMetalCost();
-              prodResource = prodResource - underConstruction.getProdCost();
-              culture = culture +5;
-              msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(), 
-                  Icons.getIconByName(Icons.ICON_CULTURE));
-              msg.setCoordinate(getX(), getY());
-              msg.setMatchByString(getName());
-              planetOwnerInfo.getMsgList().addNewMessage(msg);
-            }
-            if (underConstruction.getName().equals(ConstructionFactory.EXTRA_CREDIT)) {
-              metal = metal - underConstruction.getMetalCost();
-              prodResource = prodResource - underConstruction.getProdCost();
-              planetOwnerInfo.setTotalCredits(planetOwnerInfo.getTotalCredits()+12);
-              msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(), 
-                  Icons.getIconByName(Icons.ICON_CREDIT));
-              msg.setCoordinate(getX(), getY());
-              msg.setMatchByString(getName());
-              planetOwnerInfo.getMsgList().addNewMessage(msg);
-            }
+          }
+          if (underConstruction.getName().equals(ConstructionFactory.EXTRA_CULTURE)) {
+            metal = metal - underConstruction.getMetalCost();
+            prodResource = prodResource - underConstruction.getProdCost();
+            culture = culture +5;
+            msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(),
+                Icons.getIconByName(Icons.ICON_CULTURE));
+            msg.setCoordinate(getX(), getY());
+            msg.setMatchByString(getName());
+            planetOwnerInfo.getMsgList().addNewMessage(msg);
+          }
+          if (underConstruction.getName().equals(ConstructionFactory.EXTRA_CREDIT)) {
+            metal = metal - underConstruction.getMetalCost();
+            prodResource = prodResource - underConstruction.getProdCost();
+            planetOwnerInfo.setTotalCredits(planetOwnerInfo.getTotalCredits()+12);
+            msg = new Message(MessageType.CONSTRUCTION, getName()+" built "+underConstruction.getName(),
+                Icons.getIconByName(Icons.ICON_CREDIT));
+            msg.setCoordinate(getX(), getY());
+            msg.setMatchByString(getName());
+            planetOwnerInfo.getMsgList().addNewMessage(msg);
           }
         }
       }

@@ -47,6 +47,8 @@
                     <execution>
                         <goals>
                             <goal>check</goal>
+                            <!-- Copy-Paste-Detection
+                            <goal>cpd-check</goal> -->
                         </goals>
                     </execution>
                 </executions>

@@ -237,10 +237,8 @@ public class PlanetHandling {
                   Ship ship = (Ship) cons;
                   Mission mission = info.getMissions()
                       .getMissionForPlanet(planet.getName(), MissionType.DEFEND);
-                  if (mission != null && ship.getTotalMilitaryPower()>0) {
-                    if (mission.getPhase() == MissionPhase.PLANNING) {
-                      mission.setPhase(MissionPhase.BUILDING);
-                    }
+                  if (mission != null && ship.getTotalMilitaryPower()>0 && mission.getPhase() == MissionPhase.PLANNING) {
+                    mission.setPhase(MissionPhase.BUILDING);
                   }
                   mission = info.getMissions().getMission(MissionType.COLONIZE, MissionPhase.PLANNING);
                   if (mission != null && ship.isColonyModule()) {
@@ -379,10 +377,8 @@ public class PlanetHandling {
             }
             mission = info.getMissions().
                 getMission(MissionType.ATTACK, MissionPhase.PLANNING);
-            if (mission != null) {
-              if (ship.hasBombs()) {
-                scores[i] = scores[i]+30;
-              }
+            if (mission != null && ship.hasBombs()) {
+              scores[i] = scores[i]+30;
             }
 
           } else {

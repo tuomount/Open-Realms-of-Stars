@@ -106,7 +106,7 @@ public class ScifiBorder extends AbstractBorder
     leftGap = 15;
     rightGap = 15;
     bottomGap = 9;
-    if ((title == null) || (title != null && title.isEmpty())) {
+    if (title == null || title != null && title.isEmpty()) {
       topGap = 9;
       this.title = null;
     } else {
@@ -222,8 +222,8 @@ public class ScifiBorder extends AbstractBorder
   @Override
   public Insets getBorderInsets(Component c)
   {
-      return (getBorderInsets(c, new Insets(topGap, leftGap, bottomGap, 
-          rightGap)));
+      return getBorderInsets(c, new Insets(topGap, leftGap, bottomGap,
+          rightGap));
   }
 
   @Override

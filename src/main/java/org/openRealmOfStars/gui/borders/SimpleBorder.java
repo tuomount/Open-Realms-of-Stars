@@ -62,7 +62,7 @@ public class SimpleBorder extends AbstractBorder {
   @Override
   public Insets getBorderInsets(Component c)
   {
-      return (getBorderInsets(c, new Insets(2, 2, 2, 2)));
+      return getBorderInsets(c, new Insets(2, 2, 2, 2));
   }
 
   @Override

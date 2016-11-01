@@ -381,10 +381,8 @@ public class PlayerInfo {
      startY = startY +my;
      int nx = (int) Math.round(startX);
      int ny = (int) Math.round(startY);
-     if (isValidCoordinate(nx, ny)) {
-       if (mapData[nx][ny] == UNCHARTED) {
-         result++;
-       }
+     if (isValidCoordinate(nx, ny) && mapData[nx][ny] == UNCHARTED) {
+       result++;
      }
    }
    return result;
@@ -492,28 +490,22 @@ public class PlayerInfo {
           nx = nx+mx;
           ny = ny+my;
           double dist = StarMapUtilities.getDistance(fleet.getX(), fleet.getY(), nx, ny);
-          if (isValidCoordinate(nx, ny) && i>=scan && dist > 1) {
-            if (mapData[nx][ny]==UNCHARTED) {
-              temp = new PathPoint(nx, ny, dist);
-              pathValue =calculateUnchartedLine(fleet.getX(), fleet.getY(), nx, ny);
-              break;
-            }
+          if (isValidCoordinate(nx, ny) && i>=scan && dist > 1 && mapData[nx][ny]==UNCHARTED) {
+            temp = new PathPoint(nx, ny, dist);
+            pathValue =calculateUnchartedLine(fleet.getX(), fleet.getY(), nx, ny);
+            break;
           }
           dist = StarMapUtilities.getDistance(fleet.getX(), fleet.getY(), sun.getCenterX(), ny);
-          if (temp == null  && isValidCoordinate(sun.getCenterX(), ny) && i>=scan && dist > 1) {
-            if (mapData[sun.getCenterX()][ny]==UNCHARTED) {
-              temp = new PathPoint(sun.getCenterX(), ny, dist);
-              pathValue =calculateUnchartedLine(fleet.getX(), fleet.getY(), sun.getCenterX(), ny);
-              break;
-            }
+          if (temp == null  && isValidCoordinate(sun.getCenterX(), ny) && i>=scan && dist > 1 && mapData[sun.getCenterX()][ny]==UNCHARTED) {
+            temp = new PathPoint(sun.getCenterX(), ny, dist);
+            pathValue =calculateUnchartedLine(fleet.getX(), fleet.getY(), sun.getCenterX(), ny);
+            break;
           }
           dist = StarMapUtilities.getDistance(fleet.getX(), fleet.getY(), nx, sun.getCenterY());
-          if (temp == null  && isValidCoordinate(nx, sun.getCenterY()) && i>=scan && dist > 1) {
-            if (mapData[nx][sun.getCenterY()]==UNCHARTED) {
-              temp = new PathPoint(nx, sun.getCenterY(), dist);
-              pathValue =calculateUnchartedLine(fleet.getX(), fleet.getY(), nx, sun.getCenterY());
-              break;
-            }
+          if (temp == null  && isValidCoordinate(nx, sun.getCenterY()) && i>=scan && dist > 1 && mapData[nx][sun.getCenterY()]==UNCHARTED) {
+            temp = new PathPoint(nx, sun.getCenterY(), dist);
+            pathValue =calculateUnchartedLine(fleet.getX(), fleet.getY(), nx, sun.getCenterY());
+            break;
           }
         }
       }

@@ -120,11 +120,11 @@ public class PixelsToMapCoordinate {
       pixelX = pixelX-startX;
       pixelY = pixelY-startY;
       if (combat) {
-        relativeMapX = (pixelX / ShipImage.MAX_WIDTH)-radX;
-        relativeMapY = (pixelY / ShipImage.MAX_HEIGHT)-radY;
+        relativeMapX = pixelX / ShipImage.MAX_WIDTH - radX;
+        relativeMapY = pixelY / ShipImage.MAX_HEIGHT - radY;
       } else {
-        relativeMapX = (pixelX / Tile.MAX_WIDTH)-radX;
-        relativeMapY = (pixelY / Tile.MAX_HEIGHT)-radY;
+        relativeMapX = pixelX / Tile.MAX_WIDTH - radX;
+        relativeMapY = pixelY / Tile.MAX_HEIGHT - radY;
       }
     } else {
       outOfPanel = true;

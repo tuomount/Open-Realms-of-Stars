@@ -168,16 +168,14 @@ public class ShipView extends BlackPanel {
         shipImage.setImage(ShipImages.Humans().getShipImage(ShipImage.COLONY));
       }
     }
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_OBSOLETE_SHIP)) {
-      if (shipList.getSelectedIndex() != -1) {
-        ShipStat stat = shipList.getSelectedValue();
-        if (!stat.isObsolete()) {
-          stat.setObsolete(true);
-        } else {
-          stat.setObsolete(false);
-        }
-        shipList.setListData(this.player.getShipStatListInOrder());
-      }      
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_OBSOLETE_SHIP) && shipList.getSelectedIndex() != -1) {
+      ShipStat stat = shipList.getSelectedValue();
+      if (!stat.isObsolete()) {
+        stat.setObsolete(true);
+      } else {
+        stat.setObsolete(false);
+      }
+      shipList.setListData(this.player.getShipStatListInOrder());
     }
   }
   

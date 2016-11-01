@@ -262,7 +262,7 @@ public class InfoTextArea extends JTextArea {
           }
         }
       }
-      if ((this.hasFocus()) && (this.isEditable())) {
+      if (this.hasFocus() && this.isEditable()) {
         if (blinking) {
           blinking = false; 
         } else {

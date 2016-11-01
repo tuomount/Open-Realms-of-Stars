@@ -112,7 +112,7 @@ public class DiceGenerator {
   private static int getRandomJava(int maxValue) {
     int result = generator2.nextInt(maxValue);
     int result2 = generator1.nextInt();
-    if ((result2 % 5)==0) {
+    if (result2 % 5 == 0) {
       generator1 = new Random(System.nanoTime());
       generator2 = new Random(generator1.nextLong());
     }
@@ -139,9 +139,9 @@ public class DiceGenerator {
    * @return int
    */
   private static int getRandomXORShift(int maxValue) {
-    x ^= (x << 21);
-    x ^= (x >>> 35);
-    x ^= (x << 4);
+    x ^= x << 21;
+    x ^= x >>> 35;
+    x ^= x << 4;
     int i = (int) x;
     i = Math.abs(i);
     i = i % maxValue;

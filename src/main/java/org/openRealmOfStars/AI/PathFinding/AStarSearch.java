@@ -321,10 +321,8 @@ public class AStarSearch {
   }
   
   public void nextMove() {
-    if (targetPoint != null && points.size() > 1 && routeIndex != -1)  {
-      if (routeIndex > 0) {
-        routeIndex--;
-      }
+    if (targetPoint != null && points.size() > 1 && routeIndex != -1 && routeIndex > 0) {
+      routeIndex--;
     }
   }
   

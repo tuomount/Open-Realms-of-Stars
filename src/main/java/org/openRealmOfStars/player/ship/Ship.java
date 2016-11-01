@@ -280,7 +280,7 @@ public class Ship extends Construction {
    * @return True if component is functioning
    */
   public boolean componentIsWorking(int index) {
-    return (hasComponentEnergy(index) && getHullPointForComponent(index) > 0);
+    return hasComponentEnergy(index) && getHullPointForComponent(index) > 0;
   }
   /**
    * Get total energy form current component status
@@ -334,14 +334,12 @@ public class Ship extends Construction {
   public boolean hasWeapons() {
     for (int i=0;i<components.size();i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && hasComponentEnergy(i)) {
-        if (comp.getType() == ShipComponentType.WEAPON_BEAM ||
+      if (hullPoints[i] > 0 && hasComponentEnergy(i) && (comp.getType() == ShipComponentType.WEAPON_BEAM ||
             comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO ||
             comp.getType() == ShipComponentType.WEAPON_HE_MISSILE ||
             comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO ||
-            comp.getType() == ShipComponentType.WEAPON_RAILGUN) {
-          return true;
-        }
+            comp.getType() == ShipComponentType.WEAPON_RAILGUN)) {
+        return true;
       }
     }
     return false;
@@ -354,11 +352,9 @@ public class Ship extends Construction {
   public boolean hasBombs() {
     for (int i=0;i<components.size();i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && hasComponentEnergy(i)) {
-        if (comp.getType() == ShipComponentType.ORBITAL_BOMBS ||
-            comp.getType() == ShipComponentType.ORBITAL_NUKE) {
-          return true;
-        }
+      if (hullPoints[i] > 0 && hasComponentEnergy(i) && (comp.getType() == ShipComponentType.ORBITAL_BOMBS ||
+            comp.getType() == ShipComponentType.ORBITAL_NUKE)) {
+        return true;
       }
     }
     return false;

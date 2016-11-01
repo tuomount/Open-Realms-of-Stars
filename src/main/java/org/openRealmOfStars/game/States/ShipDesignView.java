@@ -501,15 +501,14 @@ public class ShipDesignView extends BlackPanel {
       }
       updatePanels();
     }
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENTADDED)) {
-      if (componentSelect.getSelectedItem() != null 
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENTADDED)
+          && componentSelect.getSelectedItem() != null
           && design.getNumberOfComponents() < design.getHull().getMaxSlot()) {
-        design.addComponent((ShipComponent) componentSelect.getSelectedItem()); 
-        design.setName(designNameText.getText());
-        designInfoText.setText(design.getDesignInfo());
-        designInfoText.repaint();
-        updatePanels();
-      }
+      design.addComponent((ShipComponent) componentSelect.getSelectedItem());
+      design.setName(designNameText.getText());
+      designInfoText.setText(design.getDesignInfo());
+      designInfoText.repaint();
+      updatePanels();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENTREMOVED) 
         && componentList.getSelectedValue() != null) {

@@ -215,11 +215,9 @@ public class Combat {
     int power = 0;
     CombatShip result=null;
     for (CombatShip ship : shipList) {
-      if (ship.getPlayer() != info) {
-        if (ship.getShip().getTotalMilitaryPower()>power) {
-          result =ship;
-          power = result.getShip().getTotalMilitaryPower();
-        }
+      if (ship.getPlayer() != info && ship.getShip().getTotalMilitaryPower()>power) {
+        result =ship;
+        power = result.getShip().getTotalMilitaryPower();
       }
     }
     return result;

@@ -633,7 +633,7 @@ public class Game extends JFrame implements ActionListener {
       }
     }
     if ((msg.getType() == MessageType.CONSTRUCTION ||
-        msg.getType() == MessageType.POPULATION) && (!mapOnly)) {
+        msg.getType() == MessageType.POPULATION) && !mapOnly) {
       changeGameState(GameState.PLANETVIEW, msg);
     }
   }
@@ -680,15 +680,14 @@ public class Game extends JFrame implements ActionListener {
             }
           }
           if (!starMapView.getStarMapMouseListener().isDoubleClicked() 
-              && starMapView.getStarMapMouseListener().isMoveClicked()) {
-            if (starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+              && starMapView.getStarMapMouseListener().isMoveClicked()
+              && starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
               starMapView.getStarMapMouseListener().getLastClickedFleet().setRoute(null);
               starMapView.getStarMapMouseListener().setMoveClicked(false);
               fleetMakeMove(players.getCurrentPlayerInfo(), 
                   starMapView.getStarMapMouseListener().getLastClickedFleet(),
                   starMapView.getStarMapMouseListener().getMoveX(), 
                   starMapView.getStarMapMouseListener().getMoveY());
-            }
           }
         }
         starMapView.handleActions(arg0);
@@ -766,11 +765,11 @@ public class Game extends JFrame implements ActionListener {
       changeGameState(GameState.PLANETBOMBINGVIEW, starMap.getPlanetList().get(0));
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_SHIPDESIGN_DONE)) {
-      if (shipDesignView != null && shipDesignView.isDesignOK()) {
-        shipDesignView.keepDesign();
-        changeGameState(GameState.VIEWSHIPS);
-      }
+            GameCommands.COMMAND_SHIPDESIGN_DONE)
+            && shipDesignView != null
+            && shipDesignView.isDesignOK()) {
+      shipDesignView.keepDesign();
+      changeGameState(GameState.VIEWSHIPS);
     }
     if (arg0.getActionCommand().equalsIgnoreCase(
         GameCommands.COMMAND_COPY_SHIP)) {
@@ -845,12 +844,10 @@ public class Game extends JFrame implements ActionListener {
     if (gameState == GameState.LOAD_GAME && loadGameView != null) {
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
         changeGameState(GameState.MAIN_MENU);
-      } else if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
-        if (loadGameView.getSelectedSaveFile() != null) {
-          if (loadGame(loadGameView.getSelectedSaveFile())) {
-            changeGameState(GameState.STARMAP);
-          }
-        }
+      } else if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEXT)
+              && loadGameView.getSelectedSaveFile() != null
+              && loadGame(loadGameView.getSelectedSaveFile())) {
+          changeGameState(GameState.STARMAP);
       }
       
     }

@@ -526,8 +526,7 @@ public class StarMap {
         Planet planet = new Planet(px,py,sun.getName(),planets,false);
         planet.setPlanetType(DiceGenerator.
             getRandom(Planet.PLANET_IMAGE_INDEX.length-1));
-        if (planets == 1) {
-          if (playerIndex != -1) {
+        if (planets == 1 && playerIndex != -1) {
             PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
             Message msg = new Message(MessageType.PLANETARY,
                 playerInfo.getEmpireName()+" starts at "+planet.getName()+".",
@@ -576,7 +575,6 @@ public class StarMap {
               count++;
             }
             
-          }
         }
         planetList.add(planet);
         int planetNumber = planetList.size()-1;
@@ -660,11 +658,9 @@ public class StarMap {
       if (ignoreSun != null && ignoreSun.equals(sun.getName())) {
         dist = 999999;
       }
-      if (dist < distance) {
-        if (info.getUnchartedValueSystem(sun, fleet) > 50) {
-          distance = dist;
-          result = sun;
-        }
+      if (dist < distance && info.getUnchartedValueSystem(sun, fleet) > 50) {
+        distance = dist;
+        result = sun;
       }
     }
     return result;
@@ -825,12 +821,10 @@ public class StarMap {
    * @return Fleet or null
    */
   public Fleet getFleetByCoordinate(int x, int y) {
-    if (isValidCoordinate(x, y) && fleetTiles != null) {
-      if (fleetTiles[x][y] != null) {
-        int playerIndex = fleetTiles[x][y].getPlayerIndex();
-        int fleetIndex = fleetTiles[x][y].getFleetIndex();
-        return players.getPlayerInfoByIndex(playerIndex).Fleets().getByIndex(fleetIndex);
-      }
+    if (isValidCoordinate(x, y) && fleetTiles != null && fleetTiles[x][y] != null) {
+      int playerIndex = fleetTiles[x][y].getPlayerIndex();
+      int fleetIndex = fleetTiles[x][y].getFleetIndex();
+      return players.getPlayerInfoByIndex(playerIndex).Fleets().getByIndex(fleetIndex);
     }
     return null;
   }
@@ -846,16 +840,13 @@ public class StarMap {
    * @return Combat or null
    */
   public Combat fightWithFleet(int x, int y,Fleet fleet1, PlayerInfo info1) {
-    if (isValidCoordinate(x, y) && fleetTiles != null) {
-      if (fleetTiles[x][y] != null) {
-        int playerIndex = fleetTiles[x][y].getPlayerIndex();
-        int fleetIndex = fleetTiles[x][y].getFleetIndex();
-        PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
-        if (info1 != info2) {
-          Fleet fleet2 = info2.Fleets().getByIndex(fleetIndex);
-          return new Combat(fleet1, fleet2, info1, info2);
-        }
-        
+    if (isValidCoordinate(x, y) && fleetTiles != null && fleetTiles[x][y] != null) {
+      int playerIndex = fleetTiles[x][y].getPlayerIndex();
+      int fleetIndex = fleetTiles[x][y].getFleetIndex();
+      PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
+      if (info1 != info2) {
+        Fleet fleet2 = info2.Fleets().getByIndex(fleetIndex);
+        return new Combat(fleet1, fleet2, info1, info2);
       }
     }
     return null;

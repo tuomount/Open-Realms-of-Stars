@@ -416,40 +416,24 @@ public class TechList {
     int average = (100-value) / (TechType.values().length-1);
     while (redis != 0) {
       for (int i=0;i<TechType.values().length;i++) {
-        if (i != type.getIndex() && redis > 0) {
-          if (techFocus[i] < average) {
-            if (redis >= FINE_TUNE_VALUE) {
-              techFocus[i] = techFocus[i]+FINE_TUNE_VALUE;
-              redis = redis -FINE_TUNE_VALUE;
-            }
-          }          
+        if (i != type.getIndex() && redis > 0 && techFocus[i] < average && redis >= FINE_TUNE_VALUE) {
+            techFocus[i] = techFocus[i]+FINE_TUNE_VALUE;
+            redis = redis -FINE_TUNE_VALUE;
         }
-        if (i != type.getIndex() && redis < 0) {
-          if (techFocus[i] > average && techFocus[i] >= FINE_TUNE_VALUE) {
-            if (redis <= -FINE_TUNE_VALUE) {
-              techFocus[i] = techFocus[i]-FINE_TUNE_VALUE;
-              redis = redis +FINE_TUNE_VALUE;
-            }
-          }
+        if (i != type.getIndex() && redis < 0 && techFocus[i] > average && techFocus[i] >= FINE_TUNE_VALUE && redis <= -FINE_TUNE_VALUE) {
+          techFocus[i] = techFocus[i]-FINE_TUNE_VALUE;
+          redis = redis +FINE_TUNE_VALUE;
         }
 
       }
       for (int i=0;i<TechType.values().length;i++) {
-        if (i != type.getIndex() && redis > 0) {
-          if (techFocus[i] == average) {
-            if (redis >= FINE_TUNE_VALUE) {
-              techFocus[i] = techFocus[i]+FINE_TUNE_VALUE;
-              redis = redis -FINE_TUNE_VALUE;
-            }
-          }          
+        if (i != type.getIndex() && redis > 0 && techFocus[i] == average && redis >= FINE_TUNE_VALUE) {
+          techFocus[i] = techFocus[i]+FINE_TUNE_VALUE;
+          redis = redis -FINE_TUNE_VALUE;
         }
-        if (i != type.getIndex() && redis < 0) {
-          if (techFocus[i] == average) {
-            if (redis <= -FINE_TUNE_VALUE && techFocus[i] >= FINE_TUNE_VALUE) {
-              techFocus[i] = techFocus[i]-FINE_TUNE_VALUE;
-              redis = redis +FINE_TUNE_VALUE;
-            }
-          }
+        if (i != type.getIndex() && redis < 0 && techFocus[i] == average && redis <= -FINE_TUNE_VALUE && techFocus[i] >= FINE_TUNE_VALUE) {
+          techFocus[i] = techFocus[i]-FINE_TUNE_VALUE;
+          redis = redis +FINE_TUNE_VALUE;
         }
 
       }    

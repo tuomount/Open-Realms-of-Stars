@@ -359,12 +359,11 @@ public class FleetView extends BlackPanel {
    * @param arg0 ActionEvent command what player did
    */
   public void handleAction(ActionEvent arg0) {
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIST_PLUS) &&
-        fleet.getFreeSpaceForColonist() > 0 && planet != null) {
-      if (planet.takeColonist()) {
-        fleet.addColonist();
-        updatePanel();
-      }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIST_PLUS)
+        && fleet.getFreeSpaceForColonist() > 0 && planet != null
+        && planet.takeColonist()) {
+      fleet.addColonist();
+      updatePanel();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIST_MINUS) &&
       fleet.getTotalCargoColonist() > 0 && planet != null) {
@@ -378,12 +377,10 @@ public class FleetView extends BlackPanel {
       updatePanel();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_METAL_CARGO_PLUS) &&
-        fleet.getFreeSpaceForMetal() > 0 && planet != null) {
-      if (planet.getMetal() > 9) {
-        fleet.addMetal();
-        planet.setMetal(planet.getMetal()-10);
-        updatePanel();
-      }
+        fleet.getFreeSpaceForMetal() > 0 && planet != null && planet.getMetal() > 9) {
+      fleet.addMetal();
+      planet.setMetal(planet.getMetal()-10);
+      updatePanel();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_METAL_CARGO_MINUS) &&
       fleet.getTotalCargoMetal() > 9 && planet != null) {

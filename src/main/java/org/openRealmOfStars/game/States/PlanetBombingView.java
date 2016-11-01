@@ -381,78 +381,76 @@ public class PlanetBombingView extends BlackPanel {
    * @param arg0 ActionEvent command what player did
    */
   public void handleAction(ActionEvent arg0) {
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
-      if (imgBase.getAnimation() != null) {
-        PlanetAnimation anim = imgBase.getAnimation();
-        if (anim.isAnimationFinished()) {
-          Ship ship = fleet.getShipByIndex(shipIndex);
-          if (ship.getHullPoints() <= 0) {
-            fleet.removeShip(ship);
-            ShipStat stat = attacker.getShipStatByName(ship.getName());
-            if (stat != null) {
-              stat.setNumberOfLoses(stat.getNumberOfLoses()+1);
-              stat.setNumberOfInUse(stat.getNumberOfInUse()-1);
-            }      
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER) && imgBase.getAnimation() != null) {
+      PlanetAnimation anim = imgBase.getAnimation();
+      if (anim.isAnimationFinished()) {
+        Ship ship = fleet.getShipByIndex(shipIndex);
+        if (ship.getHullPoints() <= 0) {
+          fleet.removeShip(ship);
+          ShipStat stat = attacker.getShipStatByName(ship.getName());
+          if (stat != null) {
+            stat.setNumberOfLoses(stat.getNumberOfLoses()+1);
+            stat.setNumberOfInUse(stat.getNumberOfInUse()-1);
           }
-        } else {
-          if (usedComponentIndex != -1) {
-            Ship ship = fleet.getShipByIndex(shipIndex);
-            ShipComponent comp = ship.getComponent(usedComponentIndex);
-            if (ship.componentIsWorking(usedComponentIndex)) {
-              if (comp.getType() == ShipComponentType.ORBITAL_NUKE) {
-                imgBase.setAnimation(new PlanetAnimation(
-                    PlanetAnimation.ANIMATION_TYPE_NUKE_AIM, 0, 0, 1, 1));
-                planet.nukem();
-                textLogger.addLog(ship.getName()+" nukes the planet!");
-              }
-              if (comp.getType() == ShipComponentType.ORBITAL_BOMBS) {
-                imgBase.setAnimation(new PlanetAnimation(
-                    PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM, 0, 0, 1, 1));
-                int hit = DiceGenerator.getRandom(1,100);
-                if (hit <= comp.getDamage()) {
-                  planet.killOneWorker();
-                  textLogger.addLog(ship.getName()+" bombs population!");
+        }
+      } else {
+        if (usedComponentIndex != -1) {
+          Ship ship = fleet.getShipByIndex(shipIndex);
+          ShipComponent comp = ship.getComponent(usedComponentIndex);
+          if (ship.componentIsWorking(usedComponentIndex)) {
+            if (comp.getType() == ShipComponentType.ORBITAL_NUKE) {
+              imgBase.setAnimation(new PlanetAnimation(
+                  PlanetAnimation.ANIMATION_TYPE_NUKE_AIM, 0, 0, 1, 1));
+              planet.nukem();
+              textLogger.addLog(ship.getName()+" nukes the planet!");
+            }
+            if (comp.getType() == ShipComponentType.ORBITAL_BOMBS) {
+              imgBase.setAnimation(new PlanetAnimation(
+                  PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM, 0, 0, 1, 1));
+              int hit = DiceGenerator.getRandom(1,100);
+              if (hit <= comp.getDamage()) {
+                planet.killOneWorker();
+                textLogger.addLog(ship.getName()+" bombs population!");
+              } else {
+                if (planet.destroyOneBuilding()) {
+                  textLogger.addLog(ship.getName()+" misses population but hits building!");
                 } else {
-                  if (planet.destroyOneBuilding()) {
-                    textLogger.addLog(ship.getName()+" misses population but hits building!");
-                  } else {
-                    textLogger.addLog(ship.getName()+" misses population and buildings...");
-                  }
+                  textLogger.addLog(ship.getName()+" misses population and buildings...");
                 }
               }
-              if (comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
-                imgBase.setAnimation(null);
-                int shipTroop = ship.getHull().getRace().getTrooperPower()*(100+comp.getDamage())/100;
-                int shipTroops = ship.getHull().getRace().getTrooperPower()*
-                    ship.getColonist()*(100+comp.getDamage())/100;
-                int planetTroops = planet.getTroopPower();
-                if (shipTroops> planetTroops) {
-                  planet.fightAgainstAttacker(shipTroops);
-                  int left = planetTroops-shipTroops;
-                  left = left / shipTroop;
-                  if (left <=0) {
-                    left = 1;
-                  }
-                  ship.setColonist(0);
-                  planet.setPlanetOwner(attackPlayerIndex, attacker);
-                  if (attacker.getRace() == SpaceRace.MECHIONS) {
-                    planet.setWorkers(Planet.PRODUCTION_WORKERS, left);
-                  } else {
-                    planet.setWorkers(Planet.PRODUCTION_FOOD, left);
-                  }
-                  textLogger.addLog("Your troops colonize the planet!");
-                } else {
-                  planet.fightAgainstAttacker(shipTroops);
-                  ship.setColonist(0);
-                  textLogger.addLog("Your troops are killed during the attack!");
+            }
+            if (comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
+              imgBase.setAnimation(null);
+              int shipTroop = ship.getHull().getRace().getTrooperPower()*(100+comp.getDamage())/100;
+              int shipTroops = ship.getHull().getRace().getTrooperPower()*
+                  ship.getColonist()*(100+comp.getDamage())/100;
+              int planetTroops = planet.getTroopPower();
+              if (shipTroops> planetTroops) {
+                planet.fightAgainstAttacker(shipTroops);
+                int left = planetTroops-shipTroops;
+                left = left / shipTroop;
+                if (left <=0) {
+                  left = 1;
                 }
+                ship.setColonist(0);
+                planet.setPlanetOwner(attackPlayerIndex, attacker);
+                if (attacker.getRace() == SpaceRace.MECHIONS) {
+                  planet.setWorkers(Planet.PRODUCTION_WORKERS, left);
+                } else {
+                  planet.setWorkers(Planet.PRODUCTION_FOOD, left);
+                }
+                textLogger.addLog("Your troops colonize the planet!");
+              } else {
+                planet.fightAgainstAttacker(shipTroops);
+                ship.setColonist(0);
+                textLogger.addLog("Your troops are killed during the attack!");
               }
             }
           }
         }
-        updatePanel();
-        imgBase.repaint();
       }
+      updatePanel();
+      imgBase.repaint();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_TARGET)) {
       shipIndex++;

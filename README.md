@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/tuomount/Open-Realms-of-Stars.svg?branch=master)](https://travis-ci.org/tuomount/Open-Realms-of-Stars)
+
 # Open Realm of Stars
 
 Open Realm of Stars is Open source 4X strategy game in stars. It is developed 

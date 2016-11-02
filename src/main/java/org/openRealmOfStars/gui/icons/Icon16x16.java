@@ -7,9 +7,8 @@ import java.awt.image.RasterFormatException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -17,16 +16,16 @@ import javax.swing.ImageIcon;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Class for handling icons used in GUI components
  *
  */
@@ -46,17 +45,17 @@ public class Icon16x16 {
    * Graphical data for Icon
    */
   private BufferedImage img;
-  
+
   /**
    * Icon name
    */
   private String name;
-  
+
   /**
    * Icon index in list of icons
    */
-  private int Index=-1;
-  
+  private int Index = -1;
+
   /**
    * Get Icon from image, where x is number of icons in X axel and
    * y is number of icons in y axel.
@@ -66,12 +65,13 @@ public class Icon16x16 {
    * @param name Name for the icon
    * @throws RasterFormatException if icon is outside of image.
    */
-  public Icon16x16(BufferedImage image,int x, int y,String name) throws 
-  RasterFormatException {
-    if (x >= 0 && y >= 0 && x*MAX_WIDTH < image.getHeight() &&
-        y*MAX_HEIGHT < image.getHeight()) {
-      img = image.getSubimage(x*MAX_WIDTH, y*MAX_HEIGHT, MAX_WIDTH, MAX_HEIGHT);
-      this.name =name;
+  public Icon16x16(final BufferedImage image, final int x, final int y,
+      final String name) throws RasterFormatException {
+    if (x >= 0 && y >= 0 && x * MAX_WIDTH < image.getHeight()
+        && y * MAX_HEIGHT < image.getHeight()) {
+      img = image.getSubimage(x * MAX_WIDTH, y * MAX_HEIGHT, MAX_WIDTH,
+          MAX_HEIGHT);
+      this.name = name;
     } else {
       throw new RasterFormatException("Icon is outside of image.");
     }
@@ -83,7 +83,7 @@ public class Icon16x16 {
    * @param x Coordinates on x axel
    * @param y Coordinates on y axel
    */
-  public void draw(Graphics2D g,int x, int y) {
+  public void draw(final Graphics2D g, final int x, final int y) {
     g.drawImage(img, x, y, null);
   }
 
@@ -99,14 +99,14 @@ public class Icon16x16 {
     return Index;
   }
 
-  public void setIndex(int index) {
+  public void setIndex(final int index) {
     Index = index;
   }
-  
+
   public BufferedImage getIcon() {
     return img;
   }
-  
+
   /**
    * Get as Icon
    * @return Icon

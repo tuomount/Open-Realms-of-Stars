@@ -6,9 +6,8 @@ import java.util.HashMap;
 
 import org.openRealmOfStars.utilities.IOUtilities;
 
-
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -16,16 +15,16 @@ import org.openRealmOfStars.utilities.IOUtilities;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Class for handling Icons
  *
  */
@@ -85,7 +84,7 @@ public class Icons {
   public static final String ICON_OK = "IconOk";
   public static final String ICON_DELETE = "IconDelete";
   public static final String ICON_BATTERY = "IconBattery";
-  
+
   /**
    * List of Icon
    */
@@ -94,20 +93,19 @@ public class Icons {
    * Hash map with Icon name to Icon
    */
   private static HashMap<String, Icon16x16> hashOfIcons;
-  
+
   /**
    * Get Icon with index. Initializes icons if they are uninitialized
    * @param index for icon
-   * @return Icon Always returns a tile, If not found icon then first index is 
+   * @return Icon Always returns a tile, If not found icon then first index is
    * returned.
    */
-  public static Icon16x16 getIconByIndex(int index) {
+  public static Icon16x16 getIconByIndex(final int index) {
     if (listOfIcons == null) {
       initIcons();
     }
-    if (index > 0 && index < listOfIcons.size()) {
-      return listOfIcons.get(index);
-    }
+    if (index > 0
+        && index < listOfIcons.size()) { return listOfIcons.get(index); }
     return listOfIcons.get(0);
   }
 
@@ -117,17 +115,15 @@ public class Icons {
    * @return Always returns an icon if not found tile then first index is
    * returned.
    */
-  public static Icon16x16 getIconByName(String name) {
+  public static Icon16x16 getIconByName(final String name) {
     if (hashOfIcons == null) {
       initIcons();
     }
     Icon16x16 icon = hashOfIcons.get(name);
-    if (icon == null) {
-      return getIconByIndex(0);
-    } 
+    if (icon == null) { return getIconByIndex(0); }
     return icon;
   }
-  
+
   /**
    * Get Maximum count of icons
    * @return Maximum count of icons
@@ -138,132 +134,131 @@ public class Icons {
     }
     return listOfIcons.size();
   }
-  
+
   /**
    * Add new Icon to Icons list and map
    * @param Icon Icon to add
    */
-  public static void addIcon(Icon16x16 Icon) {
+  public static void addIcon(final Icon16x16 Icon) {
     listOfIcons.add(Icon);
-    Icon.setIndex(listOfIcons.size()-1);
+    Icon.setIndex(listOfIcons.size() - 1);
     hashOfIcons.put(Icon.getName(), Icon);
   }
-  
+
   /**
    * Init Icons
    */
   private static void initIcons() {
-    BufferedImage image = IOUtilities.loadImage(Icons.class.getResource(
-        "/resources/images/icons.png"));
+    BufferedImage image = IOUtilities
+        .loadImage(Icons.class.getResource("/resources/images/icons.png"));
     listOfIcons = new ArrayList<>();
     hashOfIcons = new HashMap<>();
-    Icon16x16 icon = new Icon16x16(image, 0, 0,ICON_MINE);
+    Icon16x16 icon = new Icon16x16(image, 0, 0, ICON_MINE);
     addIcon(icon);
-    icon = new Icon16x16(image, 1, 0,ICON_MINUS);
+    icon = new Icon16x16(image, 1, 0, ICON_MINUS);
     addIcon(icon);
-    icon = new Icon16x16(image, 1, 1,ICON_MINUS_PRESSED);
+    icon = new Icon16x16(image, 1, 1, ICON_MINUS_PRESSED);
     addIcon(icon);
-    icon = new Icon16x16(image, 2, 0,ICON_PLUS);
+    icon = new Icon16x16(image, 2, 0, ICON_PLUS);
     addIcon(icon);
-    icon = new Icon16x16(image, 2, 1,ICON_PLUS_PRESSED);
+    icon = new Icon16x16(image, 2, 1, ICON_PLUS_PRESSED);
     addIcon(icon);
-    icon = new Icon16x16(image, 3, 0,ICON_FACTORY);
+    icon = new Icon16x16(image, 3, 0, ICON_FACTORY);
     addIcon(icon);
-    icon = new Icon16x16(image, 4, 0,ICON_FARM);
+    icon = new Icon16x16(image, 4, 0, ICON_FARM);
     addIcon(icon);
-    icon = new Icon16x16(image, 5, 0,ICON_RESEARCH);
+    icon = new Icon16x16(image, 5, 0, ICON_RESEARCH);
     addIcon(icon);
-    icon = new Icon16x16(image, 6, 0,ICON_CULTURE);
+    icon = new Icon16x16(image, 6, 0, ICON_CULTURE);
     addIcon(icon);
-    icon = new Icon16x16(image, 7, 0,ICON_PEOPLE);
+    icon = new Icon16x16(image, 7, 0, ICON_PEOPLE);
     addIcon(icon);
-    icon = new Icon16x16(image, 7, 1,ICON_DEATH);
+    icon = new Icon16x16(image, 7, 1, ICON_DEATH);
     addIcon(icon);
-    icon = new Icon16x16(image, 0, 1,ICON_CREDIT);
+    icon = new Icon16x16(image, 0, 1, ICON_CREDIT);
     addIcon(icon);
-    icon = new Icon16x16(image, 3, 1,ICON_METAL);
+    icon = new Icon16x16(image, 3, 1, ICON_METAL);
     addIcon(icon);
-    icon = new Icon16x16(image, 4, 1,ICON_METAL_ORE);
+    icon = new Icon16x16(image, 4, 1, ICON_METAL_ORE);
     addIcon(icon);
-    icon = new Icon16x16(image, 5, 1,ICON_MAINTENANCE);
+    icon = new Icon16x16(image, 5, 1, ICON_MAINTENANCE);
     addIcon(icon);
-    icon = new Icon16x16(image, 6, 1,ICON_TAX);
+    icon = new Icon16x16(image, 6, 1, ICON_TAX);
     addIcon(icon);
-    icon = new Icon16x16(image, 0, 2,ICON_COMBAT_TECH);
+    icon = new Icon16x16(image, 0, 2, ICON_COMBAT_TECH);
     addIcon(icon);
-    icon = new Icon16x16(image, 1, 2,ICON_DEFENSE_TECH);
+    icon = new Icon16x16(image, 1, 2, ICON_DEFENSE_TECH);
     addIcon(icon);
-    icon = new Icon16x16(image, 2, 2,ICON_HULL_TECH);
+    icon = new Icon16x16(image, 2, 2, ICON_HULL_TECH);
     addIcon(icon);
-    icon = new Icon16x16(image, 3, 2,ICON_IMPROVEMENT_TECH);
+    icon = new Icon16x16(image, 3, 2, ICON_IMPROVEMENT_TECH);
     addIcon(icon);
-    icon = new Icon16x16(image, 4, 2,ICON_PROPULSION_TECH);
+    icon = new Icon16x16(image, 4, 2, ICON_PROPULSION_TECH);
     addIcon(icon);
-    icon = new Icon16x16(image, 5, 2,ICON_ELECTRONICS_TECH);
+    icon = new Icon16x16(image, 5, 2, ICON_ELECTRONICS_TECH);
     addIcon(icon);
-    icon = new Icon16x16(image, 6, 2,ICON_ARROWUP);
+    icon = new Icon16x16(image, 6, 2, ICON_ARROWUP);
     addIcon(icon);
-    icon = new Icon16x16(image, 7, 2,ICON_ARROWUP_PRESSED);
+    icon = new Icon16x16(image, 7, 2, ICON_ARROWUP_PRESSED);
     addIcon(icon);
-    icon = new Icon16x16(image, 0, 3,ICON_ARROWUP_DISABLED);
+    icon = new Icon16x16(image, 0, 3, ICON_ARROWUP_DISABLED);
     addIcon(icon);
-    icon = new Icon16x16(image, 1, 3,ICON_EMPTY);
+    icon = new Icon16x16(image, 1, 3, ICON_EMPTY);
     addIcon(icon);
-    icon = new Icon16x16(image, 2, 3,ICON_SCROLL_UP);
+    icon = new Icon16x16(image, 2, 3, ICON_SCROLL_UP);
     addIcon(icon);
-    icon = new Icon16x16(image, 3, 3,ICON_SCROLL_DOWN);
+    icon = new Icon16x16(image, 3, 3, ICON_SCROLL_DOWN);
     addIcon(icon);
-    icon = new Icon16x16(image, 4, 3,ICON_SCROLL_LEFT);
+    icon = new Icon16x16(image, 4, 3, ICON_SCROLL_LEFT);
     addIcon(icon);
-    icon = new Icon16x16(image, 5, 3,ICON_SCROLL_RIGHT);
+    icon = new Icon16x16(image, 5, 3, ICON_SCROLL_RIGHT);
     addIcon(icon);
-    icon = new Icon16x16(image, 2, 4,ICON_SCROLL_UP_PRESSED);
+    icon = new Icon16x16(image, 2, 4, ICON_SCROLL_UP_PRESSED);
     addIcon(icon);
-    icon = new Icon16x16(image, 3, 4,ICON_SCROLL_DOWN_PRESSED);
+    icon = new Icon16x16(image, 3, 4, ICON_SCROLL_DOWN_PRESSED);
     addIcon(icon);
-    icon = new Icon16x16(image, 4, 4,ICON_SCROLL_LEFT_PRESSED);
+    icon = new Icon16x16(image, 4, 4, ICON_SCROLL_LEFT_PRESSED);
     addIcon(icon);
-    icon = new Icon16x16(image, 5, 4,ICON_SCROLL_RIGHT_PRESSED);
+    icon = new Icon16x16(image, 5, 4, ICON_SCROLL_RIGHT_PRESSED);
     addIcon(icon);
-    icon = new Icon16x16(image, 6, 3,ICON_MISSILE);
+    icon = new Icon16x16(image, 6, 3, ICON_MISSILE);
     addIcon(icon);
-    icon = new Icon16x16(image, 7, 3,ICON_SCANNER);
+    icon = new Icon16x16(image, 7, 3, ICON_SCANNER);
     addIcon(icon);
-    icon = new Icon16x16(image, 0, 4,ICON_ARMOR);
+    icon = new Icon16x16(image, 0, 4, ICON_ARMOR);
     addIcon(icon);
-    icon = new Icon16x16(image, 1, 4,ICON_SHIELD);
+    icon = new Icon16x16(image, 1, 4, ICON_SHIELD);
     addIcon(icon);
-    icon = new Icon16x16(image, 6, 4,ICON_CLOACKING_DEVICE);
+    icon = new Icon16x16(image, 6, 4, ICON_CLOACKING_DEVICE);
     addIcon(icon);
-    icon = new Icon16x16(image, 7, 4,ICON_TROOPS);
+    icon = new Icon16x16(image, 7, 4, ICON_TROOPS);
     addIcon(icon);
-    icon = new Icon16x16(image, 0, 5,ICON_LASERGUN);
+    icon = new Icon16x16(image, 0, 5, ICON_LASERGUN);
     addIcon(icon);
-    icon = new Icon16x16(image, 1, 5,ICON_BOMB);
+    icon = new Icon16x16(image, 1, 5, ICON_BOMB);
     addIcon(icon);
-    icon = new Icon16x16(image, 2, 5,ICON_NUKE);
+    icon = new Icon16x16(image, 2, 5, ICON_NUKE);
     addIcon(icon);
-    icon = new Icon16x16(image, 3, 5,ICON_PLANETARY_TURRET);
+    icon = new Icon16x16(image, 3, 5, ICON_PLANETARY_TURRET);
     addIcon(icon);
-    icon = new Icon16x16(image, 4, 5,ICON_STARBASE);
+    icon = new Icon16x16(image, 4, 5, ICON_STARBASE);
     addIcon(icon);
-    icon = new Icon16x16(image, 5, 5,ICON_LR_SCANNER);
+    icon = new Icon16x16(image, 5, 5, ICON_LR_SCANNER);
     addIcon(icon);
-    icon = new Icon16x16(image, 6, 5,ICON_CIRCUIT_BOARD);
+    icon = new Icon16x16(image, 6, 5, ICON_CIRCUIT_BOARD);
     addIcon(icon);
-    icon = new Icon16x16(image, 7, 5,ICON_RADIATION);
+    icon = new Icon16x16(image, 7, 5, ICON_RADIATION);
     addIcon(icon);
-    icon = new Icon16x16(image, 0, 6,ICON_POWERSOURCE);
+    icon = new Icon16x16(image, 0, 6, ICON_POWERSOURCE);
     addIcon(icon);
-    icon = new Icon16x16(image, 1, 6,ICON_ARROWDOWN);
+    icon = new Icon16x16(image, 1, 6, ICON_ARROWDOWN);
     addIcon(icon);
-    icon = new Icon16x16(image, 2, 6,ICON_OK);
+    icon = new Icon16x16(image, 2, 6, ICON_OK);
     addIcon(icon);
-    icon = new Icon16x16(image, 3, 6,ICON_DELETE);
+    icon = new Icon16x16(image, 3, 6, ICON_DELETE);
     addIcon(icon);
-    icon = new Icon16x16(image, 4, 6,ICON_BATTERY);
+    icon = new Icon16x16(image, 4, 6, ICON_BATTERY);
     addIcon(icon);
   }
-  
 
 }

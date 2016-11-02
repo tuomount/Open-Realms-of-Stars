@@ -47,7 +47,7 @@ import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -55,24 +55,24 @@ import org.openRealmOfStars.starMap.planet.Planet;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Contains runnable main method which runs the Game class.
- * 
+ *
  */
 
 public class Game extends JFrame implements ActionListener {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 1L;
 
@@ -91,25 +91,21 @@ public class Game extends JFrame implements ActionListener {
    */
   private Timer animationTimer;
 
-  
   /**
    * Star map for the game
    */
   private StarMap starMap = null;
-  
+
   /**
    * List of players
    */
   public PlayerList players;
-  
-  
-  
+
   /**
    * Current Game state
    */
   public GameState gameState;
-  
-  
+
   /**
    * Planet view Panel and handling planet
    */
@@ -139,7 +135,7 @@ public class Game extends JFrame implements ActionListener {
    * Player Setup view
    */
   public PlayerSetupView playerSetupView;
-  
+
   /**
    * Load Game View
    */
@@ -179,12 +175,12 @@ public class Game extends JFrame implements ActionListener {
    * Ship design view for the game
    */
   public ShipDesignView shipDesignView;
-  
+
   /**
    * Galaxy config for new game
    */
   public GalaxyConfig galaxyConfig;
-  
+
   /**
    * Get Star map
    * @return StarMap
@@ -199,32 +195,33 @@ public class Game extends JFrame implements ActionListener {
   public Game() {
     // Set look and feel match on CrossPlatform Look and feel
     try {
-      UIManager.setLookAndFeel( UIManager.getCrossPlatformLookAndFeelClassName() );
+      UIManager
+          .setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
     } catch (Exception e) {
-              e.printStackTrace();
+      e.printStackTrace();
     }
     UIManager.put("ScrollBarUI", SpaceScrollBarUI.class.getName());
-    setTitle(GAME_TITLE+" "+GAME_VERSION);
-    setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);         
+    setTitle(GAME_TITLE + " " + GAME_VERSION);
+    setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     addWindowListener(new GameWindowListener());
     setSize(1024, 768);
-    setLocationRelativeTo(null)    ;
-    animationTimer = new Timer(75,this);
+    setLocationRelativeTo(null);
+    animationTimer = new Timer(75, this);
     animationTimer.setActionCommand(GameCommands.COMMAND_ANIMATION_TIMER);
     animationTimer.start();
 
     changeGameState(GameState.MAIN_MENU);
 
     // Add new KeyEventDispatcher
-    KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+    KeyboardFocusManager kfm = KeyboardFocusManager
+        .getCurrentKeyboardFocusManager();
     kfm.addKeyEventDispatcher(new GameKeyAdapter(this));
     setResizable(false);
 
     this.setVisible(true);
-    
 
   }
-  
+
   /**
    * Cause Fleet to make a move
    * @param info Player who owns the fleet
@@ -232,10 +229,11 @@ public class Game extends JFrame implements ActionListener {
    * @param nx New coordinate x axel
    * @param ny new coordinate y axel
    */
-  public void fleetMakeMove(PlayerInfo info, Fleet fleet, int nx, int ny) {
-    if (getStarMap().isValidCoordinate(nx, ny) && fleet.movesLeft > 0 
+  public void fleetMakeMove(final PlayerInfo info, final Fleet fleet,
+      final int nx, final int ny) {
+    if (getStarMap().isValidCoordinate(nx, ny) && fleet.movesLeft > 0
         && !getStarMap().isBlocked(nx, ny)) {
-      Combat combat = getStarMap().fightWithFleet(nx, ny, fleet,info);          
+      Combat combat = getStarMap().fightWithFleet(nx, ny, fleet, info);
       if (combat != null) {
         fleet.movesLeft--;
         starMapView.readyToMove = false;
@@ -243,32 +241,32 @@ public class Game extends JFrame implements ActionListener {
       } else {
         fleet.setPos(nx, ny);
         fleet.movesLeft--;
-        getStarMap().doFleetScanUpdate(info,fleet,null);
+        getStarMap().doFleetScanUpdate(info, fleet, null);
         starMapView.updatePanels();
         if (info.isHuman()) {
-          getStarMap().setDrawPos(fleet.getX(),fleet.getY());
+          getStarMap().setDrawPos(fleet.getX(), fleet.getY());
         }
         starMapView.readyToMove = false;
       }
     }
   }
 
-  
   /**
    * Show planet view panel
    * @param planet Planet to show
    */
-  public void showPlanetView(Planet planet) {
+  public void showPlanetView(final Planet planet) {
     planetView = new PlanetView(planet, this);
     this.getContentPane().removeAll();
     this.add(planetView);
     this.validate();
   }
+
   /**
    * Show planet bombing view panel
    * @param planet Planet to show
    */
-  public void showPlanetBombingView(Planet planet,Fleet fleet) {
+  public void showPlanetBombingView(final Planet planet, final Fleet fleet) {
     planetBombingView = new PlanetBombingView(planet, fleet,
         starMap.getCurrentPlayerInfo(), players.getCurrentPlayer(), this);
     this.getContentPane().removeAll();
@@ -280,9 +278,10 @@ public class Game extends JFrame implements ActionListener {
    * Show fleet view panel
    * @param planet Planet to show
    */
-  public void showFleetView(Planet planet,Fleet fleet) {
-    fleetView = new FleetView(planet,fleet,
-        players.getCurrentPlayerInfo().Fleets(),players.getCurrentPlayerInfo(), this);
+  public void showFleetView(final Planet planet, final Fleet fleet) {
+    fleetView = new FleetView(planet, fleet,
+        players.getCurrentPlayerInfo().Fleets(), players.getCurrentPlayerInfo(),
+        this);
     this.getContentPane().removeAll();
     this.add(fleetView);
     this.validate();
@@ -303,14 +302,14 @@ public class Game extends JFrame implements ActionListener {
   /**
    * Show Combat
    */
-  public void showCombat(Combat combat) {
+  public void showCombat(final Combat combat) {
     if (combat == null) {
       // This is fixed combat
       combatView = new BattleView(
-          players.getCurrentPlayerInfo().Fleets().getByIndex(0), 
-          players.getCurrentPlayerInfo(), 
-          players.getPlayerInfoByIndex(1).Fleets().getByIndex(0), 
-          players.getPlayerInfoByIndex(1),starMap, this);
+          players.getCurrentPlayerInfo().Fleets().getByIndex(0),
+          players.getCurrentPlayerInfo(),
+          players.getPlayerInfoByIndex(1).Fleets().getByIndex(0),
+          players.getPlayerInfoByIndex(1), starMap, this);
     } else {
       combatView = new BattleView(combat, starMap, this);
     }
@@ -323,15 +322,16 @@ public class Game extends JFrame implements ActionListener {
    * Show Research panels
    * @param focusMsg which tech should have focus on show up. Can be null.
    */
-  public void showResearch(Message focusMsg) {
+  public void showResearch(final Message focusMsg) {
     String focusTech = null;
-    if (focusMsg != null && focusMsg.getType() == MessageType.RESEARCH &&
-        focusMsg.getMatchByString() != null) {
+    if (focusMsg != null && focusMsg.getType() == MessageType.RESEARCH
+        && focusMsg.getMatchByString() != null) {
       focusTech = focusMsg.getMatchByString();
     }
     researchView = new ResearchView(players.getCurrentPlayerInfo(),
         starMap.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
-            players.getCurrentPlayer()),focusTech, this);
+            players.getCurrentPlayer()),
+        focusTech, this);
     this.getContentPane().removeAll();
     this.add(researchView);
     this.validate();
@@ -351,8 +351,9 @@ public class Game extends JFrame implements ActionListener {
    * Show Ship design panels
    * @param oldDesign to copy to new one. Can be null.
    */
-  public void showShipDesignView(ShipDesign oldDesign) {
-    shipDesignView = new ShipDesignView(players.getCurrentPlayerInfo(), oldDesign, this);
+  public void showShipDesignView(final ShipDesign oldDesign) {
+    shipDesignView = new ShipDesignView(players.getCurrentPlayerInfo(),
+        oldDesign, this);
     this.getContentPane().removeAll();
     this.add(shipDesignView);
     this.validate();
@@ -372,7 +373,7 @@ public class Game extends JFrame implements ActionListener {
    * Show Galaxy creation panel
    */
   public void showGalaxyCreation() {
-    galaxyCreationView = new GalaxyCreationView(galaxyConfig,this);
+    galaxyCreationView = new GalaxyCreationView(galaxyConfig, this);
     galaxyConfig = galaxyCreationView.getConfig();
     this.getContentPane().removeAll();
     this.add(galaxyCreationView);
@@ -383,7 +384,7 @@ public class Game extends JFrame implements ActionListener {
    * Show Player setup panel
    */
   public void showPlayerSetup() {
-    playerSetupView = new PlayerSetupView(galaxyConfig,this);
+    playerSetupView = new PlayerSetupView(galaxyConfig, this);
     this.getContentPane().removeAll();
     this.add(playerSetupView);
     this.validate();
@@ -403,25 +404,25 @@ public class Game extends JFrame implements ActionListener {
    * Save game for certain file name
    * @param filename File name
    */
-  public void saveGame(String filename) {
+  public void saveGame(final String filename) {
     if (starMap != null) {
       String folderName = "saves";
       File folder = new File(folderName);
       if (!folder.exists()) {
         folder.mkdirs();
       }
-      File file = new File(folderName+"/"+filename);
+      File file = new File(folderName + "/" + filename);
       try {
         FileOutputStream os = new FileOutputStream(file);
         BufferedOutputStream bos = new BufferedOutputStream(os);
-        try(DataOutputStream dos = new DataOutputStream(bos)) {
+        try (DataOutputStream dos = new DataOutputStream(bos)) {
           starMap.saveGame(dos);
         } catch (IOException e) {
           System.out.println(e.getMessage());
         }
       } catch (FileNotFoundException e) {
-        System.err.println("File could not be write: "+folderName+"/"+filename+
-                           "! "+e.getMessage());
+        System.err.println("File could not be write: " + folderName + "/"
+            + filename + "! " + e.getMessage());
       }
 
     }
@@ -432,10 +433,10 @@ public class Game extends JFrame implements ActionListener {
    * @param filename File name
    * @return true if successful
    */
-  public boolean loadGame(String filename) {
+  public boolean loadGame(final String filename) {
     String folderName = "saves";
-    File file = new File(folderName+"/"+filename);
-    try (FileInputStream is = new FileInputStream(file)){
+    File file = new File(folderName + "/" + filename);
+    try (FileInputStream is = new FileInputStream(file)) {
       BufferedInputStream bis = new BufferedInputStream(is);
       DataInputStream dis = new DataInputStream(bis);
       starMap = new StarMap(dis);
@@ -465,7 +466,7 @@ public class Game extends JFrame implements ActionListener {
     try {
       creditsView = new CreditsView(this, GAME_TITLE, GAME_VERSION);
     } catch (IOException e) {
-      System.out.println("Could not show credits: "+e.getMessage());
+      System.out.println("Could not show credits: " + e.getMessage());
       System.exit(0);
     }
     this.getContentPane().removeAll();
@@ -478,7 +479,8 @@ public class Game extends JFrame implements ActionListener {
    * @param newState Game State where to change
    * @param focusMessage Focused message, can be also null
    */
-  public void changeGameState(GameState newState, Message focusMessage) {
+  public void changeGameState(final GameState newState,
+      final Message focusMessage) {
     changeGameState(newState, focusMessage, null);
   }
 
@@ -487,7 +489,8 @@ public class Game extends JFrame implements ActionListener {
    * @param newState Game State where to change
    * @param dataObject Depends on which state is changed
    */
-  public void changeGameState(GameState newState, Object dataObject) {
+  public void changeGameState(final GameState newState,
+      final Object dataObject) {
     changeGameState(newState, null, dataObject);
   }
 
@@ -498,25 +501,36 @@ public class Game extends JFrame implements ActionListener {
    * @param focusMessage Focused message, can be also null
    * @param dataObject Depends on which state is changed
    */
-  private void changeGameState(GameState newState, Message focusMessage, Object dataObject) {
+  private void changeGameState(final GameState newState,
+      final Message focusMessage, final Object dataObject) {
     gameState = newState;
     switch (gameState) {
-    case AITURN: showAITurnView(); break;
-    case MAIN_MENU: showMainMenu(); break;
-    case GALAXY_CREATION: showGalaxyCreation(); break;
-    case PLAYER_SETUP: showPlayerSetup(); break;
-    case LOAD_GAME: showLoadGame(); break;
-    case NEW_GAME: { 
+    case AITURN:
+      showAITurnView();
+      break;
+    case MAIN_MENU:
+      showMainMenu();
+      break;
+    case GALAXY_CREATION:
+      showGalaxyCreation();
+      break;
+    case PLAYER_SETUP:
+      showPlayerSetup();
+      break;
+    case LOAD_GAME:
+      showLoadGame();
+      break;
+    case NEW_GAME: {
       players = new PlayerList();
-      for (int i=0;i<galaxyConfig.getMaxPlayers();i++) {
+      for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
         PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i));
         info.setEmpireName(galaxyConfig.getPlayerName(i));
-        if (i==0) {
+        if (i == 0) {
           info.setHuman(true);
         }
         players.addPlayer(info);
       }
-      starMap = new StarMap(galaxyConfig,players);
+      starMap = new StarMap(galaxyConfig, players);
       starMap.updateStarMapOnStartGame();
       players.setCurrentPlayer(0);
       starMapView = null;
@@ -528,12 +542,13 @@ public class Game extends JFrame implements ActionListener {
       break;
     }
     case PLANETBOMBINGVIEW: {
-      boolean changed = false; 
+      boolean changed = false;
       if (dataObject instanceof Planet) {
         Planet planet = (Planet) dataObject;
-        Fleet fleet = starMap.getFleetByCoordinate(planet.getX(), planet.getY());
+        Fleet fleet = starMap.getFleetByCoordinate(planet.getX(),
+            planet.getY());
         if (fleet != null) {
-          showPlanetBombingView(planet,fleet);
+          showPlanetBombingView(planet, fleet);
           changed = true;
         }
       }
@@ -542,63 +557,76 @@ public class Game extends JFrame implements ActionListener {
       }
       break;
     }
-    case CREDITS: showCredits(); break;
-    case STARMAP: showStarMap(); break;
+    case CREDITS:
+      showCredits();
+      break;
+    case STARMAP:
+      showStarMap();
+      break;
     case COMBAT: {
       if (dataObject instanceof Combat) {
-       showCombat((Combat) dataObject); 
+        showCombat((Combat) dataObject);
       } else {
         showCombat(null);
       }
       break;
     }
-    case RESEARCHVIEW: showResearch(focusMessage); break;
-    case VIEWSHIPS: showShipView(); break;
+    case RESEARCHVIEW:
+      showResearch(focusMessage);
+      break;
+    case VIEWSHIPS:
+      showShipView();
+      break;
     case SHIPDESIGN: {
-        if (shipView != null && shipView.isCopyClicked()) {
-         showShipDesignView(shipView.getSelectedShip());
-        } else {
-          showShipDesignView(null);
-        }
-       break;
+      if (shipView != null && shipView.isCopyClicked()) {
+        showShipDesignView(shipView.getSelectedShip());
+      } else {
+        showShipDesignView(null);
+      }
+      break;
     }
     case PLANETVIEW: {
       if (focusMessage != null) {
-        Planet planet = starMap.getPlanetByCoordinate(focusMessage.getX(), focusMessage.getY());
+        Planet planet = starMap.getPlanetByCoordinate(focusMessage.getX(),
+            focusMessage.getY());
         if (planet != null) {
           starMap.setCursorPos(focusMessage.getX(), focusMessage.getY());
           starMap.setDrawPos(focusMessage.getX(), focusMessage.getY());
           showPlanetView(planet);
         }
-      } else if (starMapView.getStarMapMouseListener().getLastClickedPlanet()!=null) {
-       showPlanetView(starMapView.getStarMapMouseListener().getLastClickedPlanet());
+      } else if (starMapView.getStarMapMouseListener()
+          .getLastClickedPlanet() != null) {
+        showPlanetView(
+            starMapView.getStarMapMouseListener().getLastClickedPlanet());
       }
       break;
     }
     case FLEETVIEW: {
-      if (starMapView.getStarMapMouseListener().getLastClickedFleet()!=null) {
-        Fleet fleet = starMapView.getStarMapMouseListener().getLastClickedFleet();
-        Planet planet = starMap.getPlanetByCoordinate(fleet.getX(), fleet.getY());
-        showFleetView(planet,fleet);
+      if (starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+        Fleet fleet = starMapView.getStarMapMouseListener()
+            .getLastClickedFleet();
+        Planet planet = starMap.getPlanetByCoordinate(fleet.getX(),
+            fleet.getY());
+        showFleetView(planet, fleet);
       }
       break;
     }
-    }    
+    }
   }
-  
+
   /**
    * Change game state and show new panel/screen
    * @param newState Game State where to change
    */
-  public void changeGameState(GameState newState) {
-    changeGameState(newState,null);
+  public void changeGameState(final GameState newState) {
+    changeGameState(newState, null);
   }
-  
+
   /**
    * Main method to run the game
    * @param args from Command line
    */
-  public static void main(String[] args) {
+  public static void main(final String[] args) {
     new Game();
 
   }
@@ -607,7 +635,7 @@ public class Game extends JFrame implements ActionListener {
    * Focus on active message
    * @param mapOnly focus only message which move map
    */
-  public void focusOnMessage(boolean mapOnly) {
+  public void focusOnMessage(final boolean mapOnly) {
     Message msg = players.getCurrentPlayerInfo().getMsgList().getMsg();
     if (msg.getType() == MessageType.RESEARCH && !mapOnly) {
       changeGameState(GameState.RESEARCHVIEW, msg);
@@ -624,30 +652,34 @@ public class Game extends JFrame implements ActionListener {
     if (msg.getType() == MessageType.FLEET) {
       starMap.setCursorPos(msg.getX(), msg.getY());
       starMap.setDrawPos(msg.getX(), msg.getY());
-      Fleet fleet = players.getCurrentPlayerInfo().Fleets().
-          getByName(msg.getMatchByString());
+      Fleet fleet = players.getCurrentPlayerInfo().Fleets()
+          .getByName(msg.getMatchByString());
       if (fleet != null) {
         starMapView.setShowFleet(fleet);
         starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
         starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
       }
     }
-    if ((msg.getType() == MessageType.CONSTRUCTION ||
-        msg.getType() == MessageType.POPULATION) && !mapOnly) {
+    if ((msg.getType() == MessageType.CONSTRUCTION
+        || msg.getType() == MessageType.POPULATION) && !mapOnly) {
       changeGameState(GameState.PLANETVIEW, msg);
     }
   }
-  
+
   @Override
-  public void actionPerformed(ActionEvent arg0) {
+  public void actionPerformed(final ActionEvent arg0) {
     if (gameState == GameState.STARMAP && starMapView != null) {
-      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
         saveGame("autosave.save");
         changeGameState(GameState.AITURN);
-      }else if (arg0.getActionCommand().equals(GameCommands.COMMAND_FOCUS_MSG)) {
+      } else if (arg0.getActionCommand()
+          .equals(GameCommands.COMMAND_FOCUS_MSG)) {
         focusOnMessage(false);
-      } else if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_TARGET)) {
-        if (starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+      } else if (arg0.getActionCommand()
+          .equals(GameCommands.COMMAND_PREV_TARGET)) {
+        if (starMapView.getStarMapMouseListener()
+            .getLastClickedFleet() != null) {
           Fleet fleet = players.getCurrentPlayerInfo().Fleets().getPrev();
           if (fleet != null) {
             starMap.setCursorPos(fleet.getX(), fleet.getY());
@@ -655,10 +687,12 @@ public class Game extends JFrame implements ActionListener {
             starMapView.setShowFleet(fleet);
             starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
             starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
-          }          
+          }
         }
-      } else if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_TARGET)) {
-        if (starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+      } else if (arg0.getActionCommand()
+          .equals(GameCommands.COMMAND_NEXT_TARGET)) {
+        if (starMapView.getStarMapMouseListener()
+            .getLastClickedFleet() != null) {
           Fleet fleet = players.getCurrentPlayerInfo().Fleets().getNext();
           if (fleet != null) {
             starMap.setCursorPos(fleet.getX(), fleet.getY());
@@ -666,75 +700,81 @@ public class Game extends JFrame implements ActionListener {
             starMapView.setShowFleet(fleet);
             starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
             starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
-          }          
+          }
         }
       } else {
-        if (arg0.getActionCommand().equalsIgnoreCase(
-            GameCommands.COMMAND_ANIMATION_TIMER) ) {
+        if (arg0.getActionCommand()
+            .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
           // Handle double click state changes
           if (starMapView.getStarMapMouseListener().isDoubleClicked()) {
-            if (starMapView.getStarMapMouseListener().getLastClickedPlanet() != null) {
+            if (starMapView.getStarMapMouseListener()
+                .getLastClickedPlanet() != null) {
               changeGameState(GameState.PLANETVIEW);
-            } else if (starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+            } else if (starMapView.getStarMapMouseListener()
+                .getLastClickedFleet() != null) {
               changeGameState(GameState.FLEETVIEW);
             }
           }
-          if (!starMapView.getStarMapMouseListener().isDoubleClicked() 
+          if (!starMapView.getStarMapMouseListener().isDoubleClicked()
               && starMapView.getStarMapMouseListener().isMoveClicked()
-              && starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
-              starMapView.getStarMapMouseListener().getLastClickedFleet().setRoute(null);
-              starMapView.getStarMapMouseListener().setMoveClicked(false);
-              fleetMakeMove(players.getCurrentPlayerInfo(), 
-                  starMapView.getStarMapMouseListener().getLastClickedFleet(),
-                  starMapView.getStarMapMouseListener().getMoveX(), 
-                  starMapView.getStarMapMouseListener().getMoveY());
+              && starMapView.getStarMapMouseListener()
+                  .getLastClickedFleet() != null) {
+            starMapView.getStarMapMouseListener().getLastClickedFleet()
+                .setRoute(null);
+            starMapView.getStarMapMouseListener().setMoveClicked(false);
+            fleetMakeMove(players.getCurrentPlayerInfo(),
+                starMapView.getStarMapMouseListener().getLastClickedFleet(),
+                starMapView.getStarMapMouseListener().getMoveX(),
+                starMapView.getStarMapMouseListener().getMoveY());
           }
         }
         starMapView.handleActions(arg0);
-        if (starMapView.isAutoFocus() && arg0.getActionCommand().equals(GameCommands.COMMAND_END_TURN)) {
+        if (starMapView.isAutoFocus()
+            && arg0.getActionCommand().equals(GameCommands.COMMAND_END_TURN)) {
           starMapView.setAutoFocus(false);
           focusOnMessage(true);
         }
       }
     }
     if (gameState == GameState.COMBAT && combatView != null) {
-      if (combatView.isCombatEnded() &&
-          arg0.getActionCommand().equals(GameCommands.COMMAND_END_BATTLE_ROUND)) {
+      if (combatView.isCombatEnded() && arg0.getActionCommand()
+          .equals(GameCommands.COMMAND_END_BATTLE_ROUND)) {
         changeGameState(GameState.STARMAP);
       } else {
         combatView.handleActions(arg0);
       }
     }
     if (gameState == GameState.PLANETBOMBINGVIEW && planetBombingView != null) {
-        planetBombingView.handleAction(arg0);
+      planetBombingView.handleAction(arg0);
     }
     if (gameState == GameState.AITURN && aiTurnView != null) {
       aiTurnView.handleActions(arg0);
     }
     if (gameState == GameState.CREDITS) {
-      if (arg0.getActionCommand().equalsIgnoreCase(
-          GameCommands.COMMAND_ANIMATION_TIMER)) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
         creditsView.updateTextArea();
       }
-      if (arg0.getActionCommand().equalsIgnoreCase(
-          GameCommands.COMMAND_OK)) {
+      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_OK)) {
         creditsView = null;
         changeGameState(GameState.MAIN_MENU);
       }
       return;
     }
-    if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_VIEW_PLANET) &&
-        starMapView.getStarMapMouseListener().getLastClickedPlanet() != null) {
+    if (arg0.getActionCommand()
+        .equalsIgnoreCase(GameCommands.COMMAND_VIEW_PLANET)
+        && starMapView.getStarMapMouseListener()
+            .getLastClickedPlanet() != null) {
       changeGameState(GameState.PLANETVIEW);
     }
-    if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_VIEW_FLEET) &&
-        starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+    if (arg0.getActionCommand()
+        .equalsIgnoreCase(GameCommands.COMMAND_VIEW_FLEET)
+        && starMapView.getStarMapMouseListener()
+            .getLastClickedFleet() != null) {
       changeGameState(GameState.FLEETVIEW);
     }
-    if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_VIEW_STARMAP)) {
+    if (arg0.getActionCommand()
+        .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
       if (gameState == GameState.PLANETVIEW) {
         planetView = null;
       }
@@ -746,33 +786,31 @@ public class Game extends JFrame implements ActionListener {
       }
       changeGameState(GameState.STARMAP);
     }
-    if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_VIEW_RESEARCH)) {
+    if (arg0.getActionCommand()
+        .equalsIgnoreCase(GameCommands.COMMAND_VIEW_RESEARCH)) {
       changeGameState(GameState.RESEARCHVIEW);
     }
-    if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_SHIPS)) {
+    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_SHIPS)) {
       changeGameState(GameState.VIEWSHIPS);
     }
-    if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_SHIPDESIGN)) {
+    if (arg0.getActionCommand()
+        .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN)) {
       shipView.setCopyClicked(false);
       changeGameState(GameState.SHIPDESIGN);
     }
-    if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_BATTLE)) {
-      //changeGameState(GameState.COMBAT);
-      changeGameState(GameState.PLANETBOMBINGVIEW, starMap.getPlanetList().get(0));
+    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_BATTLE)) {
+      // changeGameState(GameState.COMBAT);
+      changeGameState(GameState.PLANETBOMBINGVIEW,
+          starMap.getPlanetList().get(0));
     }
-    if (arg0.getActionCommand().equalsIgnoreCase(
-            GameCommands.COMMAND_SHIPDESIGN_DONE)
-            && shipDesignView != null
-            && shipDesignView.isDesignOK()) {
+    if (arg0.getActionCommand()
+        .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN_DONE)
+        && shipDesignView != null && shipDesignView.isDesignOK()) {
       shipDesignView.keepDesign();
       changeGameState(GameState.VIEWSHIPS);
     }
-    if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_COPY_SHIP)) {
+    if (arg0.getActionCommand()
+        .equalsIgnoreCase(GameCommands.COMMAND_COPY_SHIP)) {
       shipView.setCopyClicked(true);
       changeGameState(GameState.SHIPDESIGN);
     }
@@ -796,24 +834,28 @@ public class Game extends JFrame implements ActionListener {
       // Fleet view
       if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIZE)) {
         Ship ship = fleetView.getFleet().getColonyShip();
-        if (ship != null && fleetView.getPlanet() != null &&
-            fleetView.getPlanet().getPlanetPlayerInfo() == null) {
-          // Make sure that ship is really colony and there is planet to colonize
-          fleetView.getPlanet().setPlanetOwner(players.getCurrentPlayer(), 
+        if (ship != null && fleetView.getPlanet() != null
+            && fleetView.getPlanet().getPlanetPlayerInfo() == null) {
+          // Make sure that ship is really colony and there is planet to
+          // colonize
+          fleetView.getPlanet().setPlanetOwner(players.getCurrentPlayer(),
               players.getCurrentPlayerInfo());
           if (players.getCurrentPlayerInfo().getRace() == SpaceRace.MECHIONS) {
-            fleetView.getPlanet().setWorkers(Planet.PRODUCTION_WORKERS, ship.getColonist());
+            fleetView.getPlanet().setWorkers(Planet.PRODUCTION_WORKERS,
+                ship.getColonist());
           } else {
-            fleetView.getPlanet().setWorkers(Planet.PRODUCTION_FOOD, ship.getColonist());
+            fleetView.getPlanet().setWorkers(Planet.PRODUCTION_FOOD,
+                ship.getColonist());
           }
           // Remove the ship and show the planet view you just colonized
           fleetView.getFleet().removeShip(ship);
           ShipStat stat = starMap.getCurrentPlayerInfo()
               .getShipStatByName(ship.getName());
-          stat.setNumberOfInUse(stat.getNumberOfInUse()-1);
+          stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
           fleetView.getFleetList().recalculateList();
           starMapView.getStarMapMouseListener().setLastClickedFleet(null);
-          starMapView.getStarMapMouseListener().setLastClickedPlanet(fleetView.getPlanet());
+          starMapView.getStarMapMouseListener()
+              .setLastClickedPlanet(fleetView.getPlanet());
           changeGameState(GameState.PLANETVIEW);
         }
       }
@@ -823,18 +865,22 @@ public class Game extends JFrame implements ActionListener {
       fleetView.handleAction(arg0);
     }
     if (gameState == GameState.GALAXY_CREATION) {
-      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
         changeGameState(GameState.MAIN_MENU);
-      } else if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
+      } else if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
         changeGameState(GameState.PLAYER_SETUP);
       } else {
         galaxyCreationView.handleActions(arg0);
       }
     } else if (gameState == GameState.PLAYER_SETUP) {
-      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
         playerSetupView.getNamesToConfig();
         changeGameState(GameState.GALAXY_CREATION);
-      } else if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
+      } else if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
         playerSetupView.getNamesToConfig();
         changeGameState(GameState.NEW_GAME);
       } else {
@@ -842,28 +888,33 @@ public class Game extends JFrame implements ActionListener {
       }
     }
     if (gameState == GameState.LOAD_GAME && loadGameView != null) {
-      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
         changeGameState(GameState.MAIN_MENU);
-      } else if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEXT)
-              && loadGameView.getSelectedSaveFile() != null
-              && loadGame(loadGameView.getSelectedSaveFile())) {
-          changeGameState(GameState.STARMAP);
+      } else if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_NEXT)
+          && loadGameView.getSelectedSaveFile() != null
+          && loadGame(loadGameView.getSelectedSaveFile())) {
+        changeGameState(GameState.STARMAP);
       }
-      
+
     }
     if (gameState == GameState.MAIN_MENU) {
       // Main menu
-      if (arg0.getActionCommand().equalsIgnoreCase(
-          GameCommands.COMMAND_CONTINUE_GAME)) {
-          changeGameState(GameState.LOAD_GAME);
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CONTINUE_GAME)) {
+        changeGameState(GameState.LOAD_GAME);
       }
-      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEW_GAME)) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_NEW_GAME)) {
         changeGameState(GameState.GALAXY_CREATION);
       }
-      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_CREDITS)) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CREDITS)) {
         changeGameState(GameState.CREDITS);
       }
-      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_QUIT_GAME)) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_QUIT_GAME)) {
         System.exit(0);
       }
     }

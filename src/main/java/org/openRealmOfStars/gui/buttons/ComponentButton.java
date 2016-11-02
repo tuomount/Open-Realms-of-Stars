@@ -9,7 +9,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -17,60 +17,62 @@ import org.openRealmOfStars.player.ship.ShipComponent;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Class for creating ship's component button with current ship component status
- * 
+ *
  */
 
 public class ComponentButton extends JButton {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 1L;
-  
+
   /**
    * Full ship, contains component and component hit points
    */
   private Ship ship;
-  
+
   /**
    * Component index
    */
   private int index;
-  
+
   /**
    * Icon for button
    */
   private ImageIcon icon;
-  
+
   /**
    * Is component used or not
    */
   private boolean used;
-  
+
   /**
    * Construct component button
-   * @param ship Ship 
+   * @param ship Ship
    * @param index Component Index
    */
-  public ComponentButton(Ship ship, int index) {
+  public ComponentButton(final Ship ship, final int index) {
     super();
     this.ship = ship;
     this.index = index;
     setUsed(false);
     if (ship.getComponent(index) != null) {
       this.setText(ship.getComponent(index).getName());
-      icon = new ImageIcon(Icons.getIconByName(ship.getComponent(index).getType().getIconName()).getIcon());
+      icon = new ImageIcon(
+          Icons.getIconByName(ship.getComponent(index).getType().getIconName())
+              .getIcon());
       this.setIcon(icon);
     } else {
       this.setText("");
@@ -87,12 +89,12 @@ public class ComponentButton extends JButton {
    * @param ship Ship
    * @param index Component Index
    */
-  public void setComponent(Ship ship, int index) {
+  public void setComponent(final Ship ship, final int index) {
     this.ship = ship;
     this.index = index;
     updateButton();
   }
-  
+
   /**
    * Update button according the component
    */
@@ -108,7 +110,8 @@ public class ComponentButton extends JButton {
         icon = new ImageIcon(Icons.getIconByName(Icons.ICON_BATTERY).getIcon());
         this.setIcon(icon);
       } else {
-        icon = new ImageIcon(Icons.getIconByName(comp.getType().getIconName()).getIcon());
+        icon = new ImageIcon(
+            Icons.getIconByName(comp.getType().getIconName()).getIcon());
         this.setIcon(icon);
       }
       if (isUsed()) {
@@ -118,7 +121,7 @@ public class ComponentButton extends JButton {
       if (hp == 0) {
         this.setBackground(GuiStatics.COLOR_DESTROYED);
       } else {
-        int ratio = hp*100/maxHP;
+        int ratio = hp * 100 / maxHP;
         if (ratio == 100) {
           this.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
         } else if (ratio >= 75) {
@@ -131,7 +134,7 @@ public class ComponentButton extends JButton {
           this.setBackground(GuiStatics.COLOR_DAMAGE_ALMOST_DESTROYED);
         }
       }
-      
+
     } else {
       this.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
       this.setEnabled(false);
@@ -143,7 +146,7 @@ public class ComponentButton extends JButton {
     return used;
   }
 
-  public void setUsed(boolean used) {
+  public void setUsed(final boolean used) {
     this.used = used;
     updateButton();
   }

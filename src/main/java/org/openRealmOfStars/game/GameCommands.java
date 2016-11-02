@@ -1,7 +1,7 @@
 package org.openRealmOfStars.game;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -9,18 +9,18 @@ package org.openRealmOfStars.game;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Game commands
- * 
+ *
  */
 public class GameCommands {
 
@@ -119,7 +119,7 @@ public class GameCommands {
    * Plus Tax
    */
   public static final String COMMAND_PLUS_TAX = "PlusTax";
-  
+
   /**
    * Minus Combat research
    */
@@ -272,7 +272,7 @@ public class GameCommands {
    * Prev Message command
    */
   public static final String COMMAND_PREV_MSG = "PrevMessage";
-  
+
   /**
    * Next Message command
    */
@@ -282,7 +282,7 @@ public class GameCommands {
    * Prev planet/ship command
    */
   public static final String COMMAND_PREV_TARGET = "PrevPlanet/Ship";
-  
+
   /**
    * Next planet/ship command
    */
@@ -375,7 +375,6 @@ public class GameCommands {
    */
   public static final String COMMAND_ABORT_CONQUEST = "AbortConquestCommand";
 
-
   /**
    * Launch ground attack command
    */
@@ -384,13 +383,12 @@ public class GameCommands {
   /**
    * Split the fleet
    */
-  public static final String COMMAND_SPLIT_THE_FLEET ="SplitTheFleet";
+  public static final String COMMAND_SPLIT_THE_FLEET = "SplitTheFleet";
 
   /**
    * Merge fleets
    */
-  public static final String COMMAND_MERGE_FLEETS ="MergeFleets";
-
+  public static final String COMMAND_MERGE_FLEETS = "MergeFleets";
 
   /**
    * Colonist plus command

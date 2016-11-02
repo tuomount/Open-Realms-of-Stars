@@ -10,8 +10,9 @@ import javax.swing.JToolTip;
 
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icon16x16;
+
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -19,24 +20,24 @@ import org.openRealmOfStars.gui.icons.Icon16x16;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Handling Icon label which draws Icon and text to next it.
  * Icon and text are transparent so parent is required.
- * 
+ *
  */
 public class IconLabel extends JLabel {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 1L;
 
@@ -44,7 +45,7 @@ public class IconLabel extends JLabel {
    * Parent component
    */
   private Component parent;
-  
+
   /**
    * Icon to draw
    */
@@ -62,7 +63,7 @@ public class IconLabel extends JLabel {
    * Set icon on left side of Label
    * @param icon Icon to draw
    */
-  public void setLeftIcon(Icon16x16 icon) {
+  public void setLeftIcon(final Icon16x16 icon) {
     this.icon = icon;
   }
 
@@ -72,7 +73,8 @@ public class IconLabel extends JLabel {
    * @param icon Icon to draw, if null then not draw
    * @param text Text to show
    */
-  public IconLabel(Component parent, Icon16x16 icon, String text) {
+  public IconLabel(final Component parent, final Icon16x16 icon,
+      final String text) {
     super(text);
     this.parent = parent;
     this.icon = icon;
@@ -80,44 +82,48 @@ public class IconLabel extends JLabel {
     this.setFont(GuiStatics.getFontCubellan());
     Dimension size = this.getPreferredSize();
     if (icon != null) {
-      size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)+this.icon.getIcon().getWidth()+10;
-      size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), text);
-      if (size.height < this.icon.getIcon().getHeight()+2 ) {
-        size.height = this.icon.getIcon().getHeight()+2;
+      size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)
+          + this.icon.getIcon().getWidth() + 10;
+      size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
+          text);
+      if (size.height < this.icon.getIcon().getHeight() + 2) {
+        size.height = this.icon.getIcon().getHeight() + 2;
       }
     } else {
-      size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)+10;
-      size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), text);
+      size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)
+          + 10;
+      size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
+          text);
     }
     this.setMinimumSize(size);
     this.setPreferredSize(size);
     this.setMaximumSize(size);
   }
-  
+
   @Override
-  public JToolTip createToolTip()
-  {
-      JToolTip toolTip = super.createToolTip();
-      toolTip.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-      toolTip.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
-      toolTip.setBorder(BorderFactory.createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
-      return toolTip;
+  public JToolTip createToolTip() {
+    JToolTip toolTip = super.createToolTip();
+    toolTip.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    toolTip.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    toolTip.setBorder(BorderFactory
+        .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
+    return toolTip;
   }
-  
+
   @Override
-  protected void paintComponent(Graphics g) {
+  protected void paintComponent(final Graphics g) {
     parent.repaint();
     int x = 0;
     int y = 0;
     if (icon != null) {
-      g.drawImage(icon.getIcon(), x,y, null);
+      g.drawImage(icon.getIcon(), x, y, null);
     }
     g.setFont(this.getFont());
     g.setColor(this.getForeground());
     if (icon != null) {
-      g.drawString(this.getText(),x+icon.getIcon().getWidth()+5, y+10);
+      g.drawString(this.getText(), x + icon.getIcon().getWidth() + 5, y + 10);
     } else {
-      g.drawString(this.getText(),x+5, y+10);
+      g.drawString(this.getText(), x + 5, y + 10);
     }
   }
 

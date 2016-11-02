@@ -7,7 +7,7 @@ import java.io.IOException;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -15,18 +15,18 @@ import org.openRealmOfStars.utilities.IOUtilities;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Mission for AI
- * 
+ *
  */
 public final class Mission {
 
@@ -34,12 +34,12 @@ public final class Mission {
    * Mission type
    */
   private MissionType type;
-  
+
   /**
    * Mission phase
    */
   private MissionPhase phase;
-  
+
   /**
    * Target X coordinate
    */
@@ -48,12 +48,12 @@ public final class Mission {
    * Target Y coordinate
    */
   private int y;
-    
+
   /**
    * Fleet name which is on the mission
    */
   private String fleetName;
-  
+
   /**
    * Planet name which is building the ship
    */
@@ -68,7 +68,7 @@ public final class Mission {
    * Solar system name where to go to explore
    */
   private String sunName;
-  
+
   /**
    * How many turns mission has been on some fleet.
    * Usually this calculates execution time. It does not tell how many turns
@@ -85,9 +85,8 @@ public final class Mission {
    * @param tx Target X
    * @param ty Target Y
    */
-  public Mission(final MissionType missionType,
-                 final MissionPhase missionPhase, final int tx,
-                 final int ty) {
+  public Mission(final MissionType missionType, final MissionPhase missionPhase,
+      final int tx, final int ty) {
     this.type = missionType;
     this.phase = missionPhase;
     setMissionTime(0);
@@ -137,7 +136,7 @@ public final class Mission {
    * @param dos DataOutputStream
    * @throws IOException if there is any problem with DataOutputStream
    */
-  public void saveMission(DataOutputStream dos) throws IOException {
+  public void saveMission(final DataOutputStream dos) throws IOException {
     dos.writeInt(type.getIndex());
     dos.writeInt(phase.getIndex());
     dos.writeInt(x);
@@ -182,7 +181,7 @@ public final class Mission {
     return planetBuilding;
   }
 
-  public void setPlanetBuilding(String building) {
+  public void setPlanetBuilding(final String building) {
     this.planetBuilding = building;
   }
 
@@ -196,16 +195,16 @@ public final class Mission {
 
   @Override
   public String toString() {
-    return getType().toString() + " - " + getPhase().toString() + 
-            "\nPlanet:" + getPlanetBuilding() + "\nFleet:" + getFleetName() + 
-            "\nSolar:" + getSunName();
+    return getType().toString() + " - " + getPhase().toString() + "\nPlanet:"
+        + getPlanetBuilding() + "\nFleet:" + getFleetName() + "\nSolar:"
+        + getSunName();
   }
 
   public String getSunName() {
     return sunName;
   }
 
-  public void setSunName(String name) {
+  public void setSunName(final String name) {
     this.sunName = name;
   }
 
@@ -213,7 +212,7 @@ public final class Mission {
     return missionTime;
   }
 
-  public void setMissionTime(int time) {
+  public void setMissionTime(final int time) {
     this.missionTime = time;
   }
 
@@ -221,10 +220,8 @@ public final class Mission {
     return targetPlanet;
   }
 
-  public void setTargetPlanet(String target) {
+  public void setTargetPlanet(final String target) {
     this.targetPlanet = target;
   }
-  
-  
-  
+
 }

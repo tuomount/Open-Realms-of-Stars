@@ -5,7 +5,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -13,32 +13,32 @@ import org.openRealmOfStars.player.ship.ShipComponent;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Single ship in combat
- * 
+ *
  */
 
-public class CombatShip implements Comparable<CombatShip>{
+public class CombatShip implements Comparable<CombatShip> {
 
   /**
    * Ship information
    */
   private Ship ship;
-  
+
   /**
    * Is component used or not for this round
    */
   private boolean[] componentUsed;
-  
+
   /**
    * Ship's X coordinate in combat
    */
@@ -48,32 +48,32 @@ public class CombatShip implements Comparable<CombatShip>{
    * Ship's Y coordinate in combat
    */
   private int y;
-  
+
   /**
    * Player whom owns the ship
    */
   private PlayerInfo player;
-  
+
   /**
    * Flip Y axel on ship image
    */
   private boolean flipY;
-  
+
   /**
    * How many moves left for this round
    */
   private int movesLeft;
-  
+
   /**
    * Used only for AI to calculate how many times AI can shoot
    */
   private int aiShotsLeft;
-  
+
   /**
    * Bonus accuracy from defending
    */
   private int bonusAccuracy;
-    
+
   /**
    * Constructor for Combat ship
    * @param ship Ship to put in combat
@@ -82,7 +82,8 @@ public class CombatShip implements Comparable<CombatShip>{
    * @param y Ship's Y coordinate in combat map
    * @param flip Ship's image on Y axel
    */
-  public CombatShip(Ship ship, PlayerInfo player, int x, int y,boolean flip) {
+  public CombatShip(final Ship ship, final PlayerInfo player, final int x,
+      final int y, final boolean flip) {
     this.ship = ship;
     this.x = x;
     this.y = y;
@@ -97,7 +98,7 @@ public class CombatShip implements Comparable<CombatShip>{
     return ship;
   }
 
-  public void setShip(Ship ship) {
+  public void setShip(final Ship ship) {
     this.ship = ship;
   }
 
@@ -105,7 +106,7 @@ public class CombatShip implements Comparable<CombatShip>{
     return x;
   }
 
-  public void setX(int x) {
+  public void setX(final int x) {
     this.x = x;
   }
 
@@ -113,7 +114,7 @@ public class CombatShip implements Comparable<CombatShip>{
     return y;
   }
 
-  public void setY(int y) {
+  public void setY(final int y) {
     this.y = y;
   }
 
@@ -121,20 +122,20 @@ public class CombatShip implements Comparable<CombatShip>{
     return player;
   }
 
-  public void setPlayer(PlayerInfo player) {
+  public void setPlayer(final PlayerInfo player) {
     this.player = player;
   }
 
   @Override
-  public int compareTo(CombatShip o) {
-    return this.ship.getInitiative() -o.getShip().getInitiative();
+  public int compareTo(final CombatShip o) {
+    return this.ship.getInitiative() - o.getShip().getInitiative();
   }
 
   public boolean isFlipY() {
     return flipY;
   }
 
-  public void setFlipY(boolean flipY) {
+  public void setFlipY(final boolean flipY) {
     this.flipY = flipY;
   }
 
@@ -161,16 +162,16 @@ public class CombatShip implements Comparable<CombatShip>{
     sb.append("/");
     sb.append(ship.getMaxHullPoints());
     sb.append("\n");
-    if (ship.getTacticSpeed()==0) {
+    if (ship.getTacticSpeed() == 0) {
       sb.append("Immobilized\n");
     }
     if (!ship.hasWeapons()) {
       sb.append("No weapons\n");
     }
-    if (ship.getShield()==0 && ship.getTotalShield()>0) {
+    if (ship.getShield() == 0 && ship.getTotalShield() > 0) {
       sb.append("shields down\n");
     }
-    if (ship.getShield()==0 && ship.getTotalShield()==0) {
+    if (ship.getShield() == 0 && ship.getTotalShield() == 0) {
       sb.append("No shields\n");
     }
     return sb.toString();
@@ -207,16 +208,16 @@ public class CombatShip implements Comparable<CombatShip>{
     sb.append("/");
     sb.append(ship.getMaxHullPoints());
     sb.append("\n");
-    if (ship.getTacticSpeed()==0) {
+    if (ship.getTacticSpeed() == 0) {
       sb.append("Immobilized\n");
     }
     if (!ship.hasWeapons()) {
       sb.append("No weapons\n");
     }
-    if (ship.getShield()==0 && ship.getTotalShield()>0) {
+    if (ship.getShield() == 0 && ship.getTotalShield() > 0) {
       sb.append("shields down\n");
     }
-    if (ship.getShield()==0 && ship.getTotalShield()==0) {
+    if (ship.getShield() == 0 && ship.getTotalShield() == 0) {
       sb.append("No shields\n");
     }
     return sb.toString();
@@ -225,7 +226,7 @@ public class CombatShip implements Comparable<CombatShip>{
   public int getMovesLeft() {
     return movesLeft;
   }
-  
+
   /**
    * Reinitialize ship for next round
    */
@@ -233,7 +234,7 @@ public class CombatShip implements Comparable<CombatShip>{
     int weapons = 0;
     setMovesLeft(ship.getTacticSpeed());
     componentUsed = new boolean[ship.getNumberOfComponents()];
-    for (int i=0;i<componentUsed.length;i++) {
+    for (int i = 0; i < componentUsed.length; i++) {
       componentUsed[i] = false;
       ShipComponent comp = ship.getComponent(i);
       if (comp.isWeapon() && ship.componentIsWorking(i)) {
@@ -243,30 +244,29 @@ public class CombatShip implements Comparable<CombatShip>{
     setAiShotsLeft(weapons);
     ship.regenerateShield();
   }
-  
+
   /**
    * Is certain component used or not yet during this round
    * @param index Component index
    * @return true if component has been used
    */
-  public boolean isComponentUsed(int index) {
-    if(index >= 0 && index <componentUsed.length) {
-      return componentUsed[index];
-    }
+  public boolean isComponentUsed(final int index) {
+    if (index >= 0
+        && index < componentUsed.length) { return componentUsed[index]; }
     return true;
   }
-  
+
   /**
    * Use certain component for this round
    * @param index Component index
    */
-  public void useComponent(int index) {
-    if(index >= 0 && index <componentUsed.length) {
+  public void useComponent(final int index) {
+    if (index >= 0 && index < componentUsed.length) {
       componentUsed[index] = true;
-    }    
+    }
   }
 
-  public void setMovesLeft(int movesLeft) {
+  public void setMovesLeft(final int movesLeft) {
     this.movesLeft = movesLeft;
   }
 
@@ -274,7 +274,7 @@ public class CombatShip implements Comparable<CombatShip>{
     return aiShotsLeft;
   }
 
-  public void setAiShotsLeft(int aiShotsLeft) {
+  public void setAiShotsLeft(final int aiShotsLeft) {
     this.aiShotsLeft = aiShotsLeft;
   }
 
@@ -282,10 +282,8 @@ public class CombatShip implements Comparable<CombatShip>{
     return bonusAccuracy;
   }
 
-  public void setBonusAccuracy(int bonusAccuracy) {
+  public void setBonusAccuracy(final int bonusAccuracy) {
     this.bonusAccuracy = bonusAccuracy;
   }
-  
-  
-  
+
 }

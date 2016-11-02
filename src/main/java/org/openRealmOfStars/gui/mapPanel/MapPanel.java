@@ -305,9 +305,9 @@ public class MapPanel extends JPanel {
     for (int j = -viewPointY; j < viewPointY + 1; j++) {
       for (int i = -viewPointX; i < viewPointX + 1; i++) {
         Stroke dashed = new BasicStroke(1, BasicStroke.CAP_SQUARE,
-            BasicStroke.JOIN_BEVEL, 1, new float[] { 0.1f, 4.5f }, 0);
+            BasicStroke.JOIN_BEVEL, 1, new float[] {0.1f, 4.5f }, 0);
         Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE,
-            BasicStroke.JOIN_BEVEL, 1, new float[] { 1f }, 0);
+            BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
         if (i + cx == starMap.getCursorX() && j + cy == starMap.getCursorY()) {
           gr.setStroke(full);
           gr.setColor(colorFlickerBlue);
@@ -532,9 +532,9 @@ public class MapPanel extends JPanel {
     for (int j = 0; j < Combat.MAX_Y; j++) {
       for (int i = 0; i < Combat.MAX_X; i++) {
         Stroke dashed = new BasicStroke(1, BasicStroke.CAP_SQUARE,
-            BasicStroke.JOIN_BEVEL, 1, new float[] { 0.1f, 4.5f }, 0);
+            BasicStroke.JOIN_BEVEL, 1, new float[] {0.1f, 4.5f }, 0);
         Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE,
-            BasicStroke.JOIN_BEVEL, 1, new float[] { 1f }, 0);
+            BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
         if (i == combat.getCursorX() && j == combat.getCursorY()) {
           gr.setStroke(full);
           gr.setColor(colorFlickerBlue);
@@ -638,7 +638,7 @@ public class MapPanel extends JPanel {
       CombatAnimation anim = combat.getAnimation();
       if (anim.getWeapon().getType() == ShipComponentType.WEAPON_BEAM) {
         Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE,
-            BasicStroke.JOIN_BEVEL, 1, new float[] { 1f }, 0);
+            BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
         gr.setStroke(full);
         gr.setColor(anim.getBeamColor());
         gr.drawLine(anim.getSx() + viewPointOffsetX,
@@ -655,7 +655,7 @@ public class MapPanel extends JPanel {
       } else {
         gr.setColor(GuiStatics.COLOR_GREY_160);
         Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE,
-            BasicStroke.JOIN_BEVEL, 1, new float[] { 1f }, 0);
+            BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
         gr.setStroke(full);
         gr.drawLine(anim.getSx() + viewPointOffsetX,
             anim.getSy() + viewPointOffsetY,

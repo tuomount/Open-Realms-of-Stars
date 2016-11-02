@@ -4,9 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
 
-
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -14,16 +13,16 @@ import java.awt.image.RasterFormatException;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Class for handling star map tiles
  *
  */
@@ -43,17 +42,17 @@ public class Tile {
    * Graphical data for tile
    */
   private BufferedImage img;
-  
+
   /**
    * Tile name
    */
   private String name;
-  
+
   /**
    * Tile index in list of tiles
    */
-  private int Index=-1;
-  
+  private int Index = -1;
+
   /**
    * Get tile from tileset image, where x is number of tiles in X axel and
    * y is number of tiles in y axel.
@@ -63,12 +62,13 @@ public class Tile {
    * @param name Name for the tile
    * @throws RasterFormatException if tile is outside of tileset image.
    */
-  public Tile(BufferedImage tilesetImage,int x, int y,String name) throws 
-  RasterFormatException {
-    if (x >= 0 && y >= 0 && x*MAX_WIDTH < tilesetImage.getHeight() &&
-        y*MAX_HEIGHT < tilesetImage.getHeight()) {
-      img = tilesetImage.getSubimage(x*MAX_WIDTH, y*MAX_HEIGHT, MAX_WIDTH, MAX_HEIGHT);
-      this.name =name;
+  public Tile(final BufferedImage tilesetImage, final int x, final int y,
+      final String name) throws RasterFormatException {
+    if (x >= 0 && y >= 0 && x * MAX_WIDTH < tilesetImage.getHeight()
+        && y * MAX_HEIGHT < tilesetImage.getHeight()) {
+      img = tilesetImage.getSubimage(x * MAX_WIDTH, y * MAX_HEIGHT, MAX_WIDTH,
+          MAX_HEIGHT);
+      this.name = name;
     } else {
       throw new RasterFormatException("Tile is outside of tileset.");
     }
@@ -80,7 +80,7 @@ public class Tile {
    * @param x Coordinates on x axel
    * @param y Coordinates on y axel
    */
-  public void draw(Graphics2D g,int x, int y) {
+  public void draw(final Graphics2D g, final int x, final int y) {
     g.drawImage(img, x, y, null);
   }
 
@@ -96,7 +96,7 @@ public class Tile {
     return Index;
   }
 
-  public void setIndex(int index) {
+  public void setIndex(final int index) {
     Index = index;
   }
 

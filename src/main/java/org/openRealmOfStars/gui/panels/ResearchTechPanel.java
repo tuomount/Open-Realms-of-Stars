@@ -17,7 +17,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.labels.IconLabel;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -25,37 +25,37 @@ import org.openRealmOfStars.gui.labels.IconLabel;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Class for handling research tech
- * 
+ *
  */
 
 public class ResearchTechPanel extends InvisiblePanel {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 1L;
-  
+
   /**
    * Minus button
    */
   private IconButton btnMinus;
-  
+
   /**
    * Plus button
    */
   private IconButton btnPlus;
-  
+
   /**
    * Label to show tech focus
    */
@@ -70,12 +70,12 @@ public class ResearchTechPanel extends InvisiblePanel {
    * upgrade button
    */
   private IconButton btnUpgrade;
-  
+
   /**
    * Slider for research panel
    */
   private JSlider slider;
-  
+
   /**
    * Create Research Tech panel with - and + buttons and up arrow to
    * upgrade tech level.
@@ -91,20 +91,23 @@ public class ResearchTechPanel extends InvisiblePanel {
    * @param actionSlider slider action command
    * @param listener Action Listener
    */
-  public ResearchTechPanel(Component parent,String actionMinus, 
-      String actionPlus,String iconName, String text, String toolTip, String text2,
-      String actionUpgrade,int sliderValue,final String actionSlider, final ActionListener listener) {
+  public ResearchTechPanel(final Component parent, final String actionMinus,
+      final String actionPlus, final String iconName, final String text,
+      final String toolTip, final String text2, final String actionUpgrade,
+      final int sliderValue, final String actionSlider,
+      final ActionListener listener) {
     super(parent);
     this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-    btnMinus = new IconButton(Icons.getIconByName(Icons.ICON_MINUS), 
-        Icons.getIconByName(Icons.ICON_MINUS_PRESSED), false, actionMinus,this);
+    btnMinus = new IconButton(Icons.getIconByName(Icons.ICON_MINUS),
+        Icons.getIconByName(Icons.ICON_MINUS_PRESSED), false, actionMinus,
+        this);
     btnMinus.addActionListener(listener);
-    this.add(Box.createRigidArea(new Dimension(5,5)));
+    this.add(Box.createRigidArea(new Dimension(5, 5)));
     this.add(btnMinus);
     InvisiblePanel invisible = new InvisiblePanel(this);
     invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
-    
-    label = new IconLabel(this, Icons.getIconByName(iconName),text);
+
+    label = new IconLabel(this, Icons.getIconByName(iconName), text);
     label.setToolTipText(toolTip);
     invisible.add(label);
     slider = new JSlider(0, 100, sliderValue);
@@ -116,9 +119,9 @@ public class ResearchTechPanel extends InvisiblePanel {
     slider.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     slider.addKeyListener(null);
     slider.addChangeListener(new ChangeListener() {
-      
+
       @Override
-      public void stateChanged(ChangeEvent e) {
+      public void stateChanged(final ChangeEvent e) {
         if (e.getSource() instanceof JSlider) {
           JSlider slide = (JSlider) e.getSource();
           if (slide.getValue() % 4 == 0) {
@@ -128,35 +131,37 @@ public class ResearchTechPanel extends InvisiblePanel {
       }
     });
     invisible.add(slider);
-    lvlLabel = new IconLabel(this, Icons.getIconByName(Icons.ICON_EMPTY),text2);
+    lvlLabel = new IconLabel(this, Icons.getIconByName(Icons.ICON_EMPTY),
+        text2);
     invisible.add(lvlLabel);
-    
+
     this.add(invisible);
-    
+
     btnUpgrade = new IconButton(Icons.getIconByName(Icons.ICON_ARROWUP),
-        Icons.getIconByName(Icons.ICON_ARROWUP_PRESSED),false,actionUpgrade,this);
-    btnUpgrade.setDisabledImage(Icons.getIconByName(
-        Icons.ICON_ARROWUP_DISABLED).getIcon());
+        Icons.getIconByName(Icons.ICON_ARROWUP_PRESSED), false, actionUpgrade,
+        this);
+    btnUpgrade.setDisabledImage(
+        Icons.getIconByName(Icons.ICON_ARROWUP_DISABLED).getIcon());
     btnUpgrade.addActionListener(listener);
     btnUpgrade.setEnabled(false);
-    
+
     this.add(btnUpgrade);
-    
-    btnPlus = new IconButton(Icons.getIconByName(Icons.ICON_PLUS), 
-        Icons.getIconByName(Icons.ICON_PLUS_PRESSED), false, actionPlus,this);
+
+    btnPlus = new IconButton(Icons.getIconByName(Icons.ICON_PLUS),
+        Icons.getIconByName(Icons.ICON_PLUS_PRESSED), false, actionPlus, this);
     btnPlus.addActionListener(listener);
     this.add(btnPlus);
-    this.add(Box.createRigidArea(new Dimension(5,5)));
+    this.add(Box.createRigidArea(new Dimension(5, 5)));
   }
-  
-  public void setSliderValue(int value) {
+
+  public void setSliderValue(final int value) {
     slider.setValue(value);
   }
 
   public int getSliderValue() {
     return slider.getValue();
   }
-  
+
   public boolean isSliderChanged() {
     return slider.getValueIsAdjusting();
   }
@@ -165,15 +170,15 @@ public class ResearchTechPanel extends InvisiblePanel {
    * Set label text
    * @param text to show
    */
-  public void setText(String text) {
+  public void setText(final String text) {
     label.setText(text);
   }
-  
+
   /**
    * Set Minus button tool tip
    * @param text Tool tip to show
    */
-  public void setMinusToolTip(String text) {
+  public void setMinusToolTip(final String text) {
     btnMinus.setToolTipText(text);
   }
 
@@ -181,23 +186,23 @@ public class ResearchTechPanel extends InvisiblePanel {
    * Set Plus button tool tip
    * @param text Tool tip to show
    */
-  public void setPlusToolTip(String text) {
+  public void setPlusToolTip(final String text) {
     btnPlus.setToolTipText(text);
   }
-  
+
   /**
    * Enabled or disable upgrade button
    * @param value true to enable and false to disable
    */
-  public void setEnableUpgradeButton(boolean value) {
+  public void setEnableUpgradeButton(final boolean value) {
     btnUpgrade.setEnabled(value);
   }
-  
+
   /**
    * Set Upgrade button text to text
    * @param text Text for button
    */
-  public void setUpgadeBtnText(String text) {
+  public void setUpgadeBtnText(final String text) {
     lvlLabel.setText(text);
   }
 
@@ -205,7 +210,7 @@ public class ResearchTechPanel extends InvisiblePanel {
    * Set Upgrade button tool tip text
    * @param text Text for tool tip
    */
-  public void setUpgadeBtnToolTip(String text) {
+  public void setUpgadeBtnToolTip(final String text) {
     btnUpgrade.setToolTipText(text);
   }
 

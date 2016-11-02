@@ -13,7 +13,7 @@ import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -21,99 +21,99 @@ import org.openRealmOfStars.utilities.IOUtilities;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Fleet for handling list of ships
- * 
+ *
  */
 
 public class Fleet {
-  
+
   /**
    * List of ships in fleet
    */
-  private ArrayList<Ship> ships;  
-  
+  private ArrayList<Ship> ships;
+
   /**
    * Fleet's X coordinate
    */
   private int x;
-  
+
   /**
    * Fleet's y coordinate
    */
   private int y;
-  
+
   /**
    * Fleet name
    */
   private String name;
-  
+
   /**
    * How many moves fleet has left
    */
   public int movesLeft;
-  
+
   /**
    * Route for fleet to move with FLT speed
    */
   private Route route;
-  
+
   /**
    * AStar search for path finding, this will not be saved in to save game.
    * This information must be something that can be recalculated.
    */
   private AStarSearch aStarSearch;
-  
+
   /**
    * Constructor for fleet
    */
-  public Fleet(Ship firstShip,int x, int y) {
+  public Fleet(final Ship firstShip, final int x, final int y) {
     ships = new ArrayList<>();
     ships.add(firstShip);
     setPos(x, y);
     setName("Fleet #-1");
     setRoute(null);
   }
-  
+
   /**
    * Read Fleet from Data Input Stream
    * @param dis DataInputStream
    * @throws IOException if there is any problem with the DataInputStream
    */
-  public Fleet(DataInputStream dis) throws IOException {
+  public Fleet(final DataInputStream dis) throws IOException {
     name = IOUtilities.readString(dis);
     x = dis.readInt();
     y = dis.readInt();
     movesLeft = dis.readInt();
     String str = IOUtilities.readString(dis);
     if (str.equals("NOROUTE")) {
-      route = null; 
+      route = null;
     } else {
       route = new Route(dis);
     }
     int count = dis.readInt();
     ships = new ArrayList<>();
-    for (int i=0;i<count;i++) {
+    for (int i = 0; i < count; i++) {
       Ship ship = new Ship(dis);
       ships.add(ship);
     }
   }
-  
+
   /**
    * Save Fleet to DataOutputStream
    * @param dos DataOutputStream
    * @throws IOException if there is any problem with the DataOutputStream
    */
-  public void saveFleet(DataOutputStream dos) throws IOException {
+  public void saveFleet(final DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, name);
     dos.writeInt(x);
     dos.writeInt(y);
@@ -124,18 +124,18 @@ public class Fleet {
       IOUtilities.writeString(dos, "ROUTE");
       route.saveRoute(dos);
     }
-    
+
     dos.writeInt(ships.size());
-    for (int i=0;i<ships.size();i++) {
+    for (int i = 0; i < ships.size(); i++) {
       ships.get(i).saveShip(dos);
     }
   }
-  
+
   /**
    * Add new ship to list
    * @param ship to add
    */
-  public void addShip(Ship ship) {
+  public void addShip(final Ship ship) {
     if (ship != null) {
       ships.add(ship);
     }
@@ -145,7 +145,7 @@ public class Fleet {
    * Remove ship from list
    * @param ship to remove
    */
-  public void removeShip(Ship ship) {
+  public void removeShip(final Ship ship) {
     if (ship != null) {
       ships.remove(ship);
     }
@@ -155,7 +155,7 @@ public class Fleet {
    * Is certain ship in fleet
    * @param ship is in fleet
    */
-  public boolean isShipInFleet(Ship ship) {
+  public boolean isShipInFleet(final Ship ship) {
     return ships.contains(ship);
   }
 
@@ -166,16 +166,14 @@ public class Fleet {
   public int getNumberOfShip() {
     return ships.size();
   }
-  
+
   /**
    * Get ship by index or return null
    * @param index to find
    * @return Ship or null
    */
-  public Ship getShipByIndex(int index) {
-    if (index >= 0 && index < ships.size()) {
-      return ships.get(index);
-    } 
+  public Ship getShipByIndex(final int index) {
+    if (index >= 0 && index < ships.size()) { return ships.get(index); }
     return null;
   }
 
@@ -186,15 +184,15 @@ public class Fleet {
   public Ship[] getShips() {
     return ships.toArray(new Ship[ships.size()]);
   }
-  
+
   /**
    * Get fleet's X coordinate in star map
    * @return X coordinate
    */
   public int getX() {
-    return x;    
+    return x;
   }
-  
+
   /**
    * Get fleet's Y coordinate in star map
    * @return Y coordinate
@@ -202,13 +200,13 @@ public class Fleet {
   public int getY() {
     return y;
   }
-  
+
   /**
    * Set fleet's Coordinates
    * @param x Fleet's X coordinate
    * @param y Fleet's Y coordinate
    */
-  public void setPos(int x, int y) {
+  public void setPos(final int x, final int y) {
     this.x = x;
     this.y = y;
   }
@@ -225,10 +223,10 @@ public class Fleet {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
-  
+
   /**
    * Get Fleet speed
    * @return Speed
@@ -246,7 +244,7 @@ public class Fleet {
     }
     return speed;
   }
-  
+
   /**
    * Get Fleet FTL speed
    * @return Speed
@@ -328,10 +326,10 @@ public class Fleet {
     return route;
   }
 
-  public void setRoute(Route route) {
+  public void setRoute(final Route route) {
     this.route = route;
   }
-  
+
   /**
    * Get total amount of metal cargo
    * @return Metal cargo for fleet
@@ -339,7 +337,7 @@ public class Fleet {
   public int getTotalCargoMetal() {
     int result = 0;
     for (Ship ship : ships) {
-      result = result +ship.getMetal();
+      result = result + ship.getMetal();
     }
     return result;
   }
@@ -351,7 +349,7 @@ public class Fleet {
   public int getTotalCargoColonist() {
     int result = 0;
     for (Ship ship : ships) {
-      result = result +ship.getColonist();
+      result = result + ship.getColonist();
     }
     return result;
   }
@@ -363,7 +361,7 @@ public class Fleet {
   public int getFreeSpaceForMetal() {
     int result = 0;
     for (Ship ship : ships) {
-      result = result +ship.getFreeCargoMetal();
+      result = result + ship.getFreeCargoMetal();
     }
     return result;
   }
@@ -375,72 +373,70 @@ public class Fleet {
   public int getFreeSpaceForColonist() {
     int result = 0;
     for (Ship ship : ships) {
-      result = result +ship.getFreeCargoColonists();
+      result = result + ship.getFreeCargoColonists();
     }
     return result;
   }
-  
-  /** 
+
+  /**
    * Add single colonist for ship
    */
   public void addColonist() {
     for (Ship ship : ships) {
-      if (ship.getFreeCargoColonists()>0) {
-        ship.setColonist(ship.getColonist()+1);
+      if (ship.getFreeCargoColonists() > 0) {
+        ship.setColonist(ship.getColonist() + 1);
         return;
       }
     }
   }
 
-  /** 
+  /**
    * Add 10 metal for ship
    */
   public void addMetal() {
     for (Ship ship : ships) {
-      if (ship.getFreeCargoMetal()>9) {
-        ship.setMetal(ship.getMetal()+10);
+      if (ship.getFreeCargoMetal() > 9) {
+        ship.setMetal(ship.getMetal() + 10);
         return;
       }
     }
   }
 
-  /** 
+  /**
    * Remove single colonist for ship
    */
   public void removeColonist() {
     for (Ship ship : ships) {
       if (ship.getColonist() > 0) {
-        ship.setColonist(ship.getColonist()-1);
+        ship.setColonist(ship.getColonist() - 1);
         return;
       }
     }
   }
-  
+
   /**
    * Get first colony ship from the fleet
    * @return Colony ship or null
    */
   public Ship getColonyShip() {
     for (Ship ship : ships) {
-      if (ship.getColonist() > 0 && ship.isColonyShip()) {
-        return ship;
-      }
+      if (ship.getColonist() > 0 && ship.isColonyShip()) { return ship; }
     }
     return null;
   }
 
-  /** 
+  /**
    * Remove 10 metal for ship
    */
   public void removeMetal() {
     for (Ship ship : ships) {
-      if (ship.getMetal()>9) {
-        ship.setMetal(ship.getMetal()-10);
+      if (ship.getMetal() > 9) {
+        ship.setMetal(ship.getMetal() - 10);
         return;
       }
     }
   }
-  
+
   /**
    * Is Fleet scouting fleet. Scout fleet contains only one ship,
    * where hull type is probe or hull is small and contains no colony module
@@ -450,18 +446,12 @@ public class Fleet {
   public boolean isScoutFleet() {
     if (ships.size() == 1) {
       Ship ship = ships.get(0);
-      if (getName().startsWith("Defender")) {
-        return false;
-      }
-      if (ship.getHull().getHullType()==ShipHullType.PROBE) {
-        return true;
-      }
-      if (ship.getHull().getSize()==ShipSize.SMALL && !ship.isColonyModule()) {
-        return true;
-      }
-      if (ship.getName().contains("Scout") || ship.getName().contains("Explorer")) {
-        return true;
-      }
+      if (getName().startsWith("Defender")) { return false; }
+      if (ship.getHull().getHullType() == ShipHullType.PROBE) { return true; }
+      if (ship.getHull().getSize() == ShipSize.SMALL
+          && !ship.isColonyModule()) { return true; }
+      if (ship.getName().contains("Scout")
+          || ship.getName().contains("Explorer")) { return true; }
     }
     return false;
   }
@@ -474,9 +464,7 @@ public class Fleet {
   public boolean isColonyFleet() {
     if (ships.size() == 1) {
       Ship ship = ships.get(0);
-      if (ship.isColonyModule()) {
-        return true;
-      }
+      if (ship.isColonyModule()) { return true; }
     }
     return false;
   }
@@ -485,19 +473,20 @@ public class Fleet {
     return aStarSearch;
   }
 
-  public void setaStarSearch(AStarSearch aStarSearch) {
+  public void setaStarSearch(final AStarSearch aStarSearch) {
     this.aStarSearch = aStarSearch;
   }
-  
+
   /**
    * Fix fleet's ships
    * @param fullFix True to fully fix all ships in fleet
    */
-  public void fixFleetShips(boolean fullFix) {
+  public void fixFleetShips(final boolean fullFix) {
     for (Ship ship : ships) {
       ship.fixShip(fullFix);
     }
   }
+
   /**
    * Is all ships in fleet fixed or not
    * @return True if all is fixed otherwise false

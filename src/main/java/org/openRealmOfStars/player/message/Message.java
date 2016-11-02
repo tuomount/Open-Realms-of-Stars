@@ -9,7 +9,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -17,21 +17,22 @@ import org.openRealmOfStars.utilities.IOUtilities;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Message class for handling game information for player
- * 
+ *
  */
 
 public class Message {
+
   /**
    * X coordinate on star map
    */
@@ -40,28 +41,28 @@ public class Message {
    * Y coordinate on star map
    */
   private int y;
-  
+
   /**
    * Generic index, could point planet, sun, fleet, player etc. Depends
    * of message type
    */
   private int index;
-  
+
   /**
    * Message type, what kind message is about, research, construction, fleet etc.
    */
   private MessageType type;
-  
+
   /**
    * Message itself
    */
   private String message;
-  
+
   /**
    * Icon for message
    */
   private Icon16x16 icon;
-  
+
   /**
    * Certain messages need to find match with string.
    */
@@ -73,7 +74,8 @@ public class Message {
    * @param msg Message text
    * @param icon Icon for message
    */
-  public Message(MessageType type, String msg, Icon16x16 icon) {
+  public Message(final MessageType type, final String msg,
+      final Icon16x16 icon) {
     this.type = type;
     setMessage(msg);
     this.icon = icon;
@@ -82,13 +84,13 @@ public class Message {
     this.index = -1;
     this.matchByString = null;
   }
-  
+
   /**
    * Read Message from DataInputStream
    * @param dis DataInputStream
    * @throws IOException if there is any problem with DataInputStream
    */
-  public Message(DataInputStream dis) throws IOException {
+  public Message(final DataInputStream dis) throws IOException {
     this.type = MessageType.getTypeByIndex(dis.readInt());
     this.index = dis.readInt();
     this.x = dis.readInt();
@@ -100,13 +102,13 @@ public class Message {
     }
     this.icon = Icons.getIconByName(IOUtilities.readString(dis));
   }
-  
+
   /**
    * Save message into DataOutputStream
    * @param dos DataOutputStream
    * @throws IOException if there is any problem with DataOutputStream
    */
-  public void saveMessage(DataOutputStream dos) throws IOException {
+  public void saveMessage(final DataOutputStream dos) throws IOException {
     dos.writeInt(type.getIndex());
     dos.writeInt(index);
     dos.writeInt(x);
@@ -115,12 +117,12 @@ public class Message {
     IOUtilities.writeString(dos, matchByString);
     IOUtilities.writeString(dos, icon.getName());
   }
-  
+
   public int getIndex() {
     return index;
   }
 
-  public void setIndex(int index) {
+  public void setIndex(final int index) {
     this.index = index;
   }
 
@@ -128,7 +130,7 @@ public class Message {
     return type;
   }
 
-  public void setType(MessageType type) {
+  public void setType(final MessageType type) {
     this.type = type;
   }
 
@@ -136,15 +138,15 @@ public class Message {
     return message;
   }
 
-  public void setMessage(String message) {
-    StringBuilder sb = new StringBuilder(message.length()+5);
+  public void setMessage(final String message) {
+    StringBuilder sb = new StringBuilder(message.length() + 5);
     int split = 0;
-    for (int i=0;i<message.length();i++) {
-      if (message.charAt(i)==' ' && split > 69) {
+    for (int i = 0; i < message.length(); i++) {
+      if (message.charAt(i) == ' ' && split > 69) {
         sb.append("\n");
         sb.append(message.charAt(i));
         split = 0;
-      } else if (message.charAt(i)=='\n') {
+      } else if (message.charAt(i) == '\n') {
         sb.append(message.charAt(i));
         split = 0;
       } else {
@@ -159,7 +161,7 @@ public class Message {
     return icon;
   }
 
-  public void setIcon(Icon16x16 icon) {
+  public void setIcon(final Icon16x16 icon) {
     this.icon = icon;
   }
 
@@ -168,11 +170,11 @@ public class Message {
    * @param x X coordinate
    * @param y Y coordinate
    */
-  public void setCoordinate(int x, int y) {
+  public void setCoordinate(final int x, final int y) {
     this.x = x;
     this.y = y;
   }
-  
+
   public int getX() {
     return x;
   }
@@ -185,7 +187,7 @@ public class Message {
     return matchByString;
   }
 
-  public void setMatchByString(String matchByString) {
+  public void setMatchByString(final String matchByString) {
     this.matchByString = matchByString;
   }
 
@@ -193,8 +195,5 @@ public class Message {
   public String toString() {
     return type.toString() + " - " + message;
   }
-  
-  
-  
-  
+
 }

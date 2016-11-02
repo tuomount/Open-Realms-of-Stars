@@ -25,7 +25,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -33,27 +33,26 @@ import org.openRealmOfStars.utilities.DiceGenerator;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Galaxy creation view for Open Realm of Stars
- * 
+ *
  */
 public class GalaxyCreationView extends BlackPanel {
 
   /**
-   * 
+   *
    */
   private static final long serialVersionUID = 1L;
-  
-  
+
   /**
    * ComboBox on galaxy size
    */
@@ -78,44 +77,46 @@ public class GalaxyCreationView extends BlackPanel {
    * Galaxy config
    */
   private GalaxyConfig config;
-  
+
   /**
    * Constructor for Galaxy Creation View
    * @param config Galaxy Configuration
    * @param listener ActionListener
    */
-  public GalaxyCreationView(GalaxyConfig config, ActionListener listener) {
+  public GalaxyCreationView(final GalaxyConfig config,
+      final ActionListener listener) {
     if (config == null) {
       this.config = new GalaxyConfig();
     } else {
-      this.config =  config;
+      this.config = config;
     }
-    Planet planet = new Planet(1, 1, "Galaxy Creation Planet",1, false);
-    if (DiceGenerator.getRandom(100)<10) {
+    Planet planet = new Planet(1, 1, "Galaxy Creation Planet", 1, false);
+    if (DiceGenerator.getRandom(100) < 10) {
       planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
       planet.setGasGiant(true);
     } else {
-      planet.setPlanetType(DiceGenerator.getRandom(Planet.PLANET_IMAGE_INDEX.length-1));
+      planet.setPlanetType(
+          DiceGenerator.getRandom(Planet.PLANET_IMAGE_INDEX.length - 1));
     }
     // Background image
-    BigImagePanel imgBase = new BigImagePanel(planet, true,"Galaxy Creation");
+    BigImagePanel imgBase = new BigImagePanel(planet, true, "Galaxy Creation");
     imgBase.setLayout(new BorderLayout());
     this.setLayout(new BorderLayout());
-    
+
     InvisiblePanel invisible = new InvisiblePanel(imgBase);
     invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
     invisible.add(Box.createRigidArea(new Dimension(500, 250)));
 
     InvisiblePanel xinvis = new InvisiblePanel(invisible);
     xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
-    xinvis.add(Box.createRigidArea(new Dimension(200,5)));
+    xinvis.add(Box.createRigidArea(new Dimension(200, 5)));
     InfoPanel info = new InfoPanel();
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
     info.setTitle("Galaxy Creation");
     TransparentLabel label = new TransparentLabel(info, "Galaxy size:");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5,5)));
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
     String[] galaxySizes = new String[6];
     galaxySizes[0] = "Tiny 50x50";
     galaxySizes[1] = "Small 75x75";
@@ -135,11 +136,11 @@ public class GalaxyCreationView extends BlackPanel {
     comboGalaxySize.setRenderer(dlcr);
     comboGalaxySize.addActionListener(listener);
     info.add(comboGalaxySize);
-    info.add(Box.createRigidArea(new Dimension(5,5)));
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new TransparentLabel(info, "Sun density:");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5,5)));
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
     String[] sunDensity = new String[4];
     sunDensity[0] = "Sparse";
     sunDensity[1] = "Medium";
@@ -157,18 +158,18 @@ public class GalaxyCreationView extends BlackPanel {
     comboSunDensity.setRenderer(dlcr);
     comboSunDensity.addActionListener(listener);
     info.add(comboSunDensity);
-    info.add(Box.createRigidArea(new Dimension(5,5)));
-    
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+
     xinvis.add(info);
-    xinvis.add(Box.createRigidArea(new Dimension(200,5)));
-    
+    xinvis.add(Box.createRigidArea(new Dimension(200, 5)));
+
     info = new InfoPanel();
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
     info.setTitle("Player Setting");
     label = new TransparentLabel(info, "Number of players:");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5,5)));
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
     String[] players = new String[7];
     players[0] = "Two players";
     players[1] = "Three players";
@@ -182,18 +183,18 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlayers.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     comboPlayers.setBorder(new SimpleBorder());
     comboPlayers.setFont(GuiStatics.getFontCubellan());
-    comboPlayers.setSelectedIndex(this.config.getMaxPlayers()-2);
+    comboPlayers.setSelectedIndex(this.config.getMaxPlayers() - 2);
     comboPlayers.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     dlcr = new DefaultListCellRenderer();
-    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER); 
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
     comboPlayers.setRenderer(dlcr);
     comboPlayers.addActionListener(listener);
     info.add(comboPlayers);
-    info.add(Box.createRigidArea(new Dimension(5,5)));
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new TransparentLabel(info, "Starting position:");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5,5)));
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
     String[] startPos = new String[2];
     startPos[0] = "Border";
     startPos[1] = "Random";
@@ -209,27 +210,27 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlayerPos.setRenderer(dlcr);
     comboPlayerPos.addActionListener(listener);
     info.add(comboPlayerPos);
-    info.add(Box.createRigidArea(new Dimension(5,5)));
-    
-    xinvis.add(info);
-    xinvis.add(Box.createRigidArea(new Dimension(200,5)));
-    invisible.add(xinvis);
-    invisible.add(Box.createRigidArea(new Dimension(200,300)));
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
 
-    imgBase.add(invisible,BorderLayout.CENTER);
+    xinvis.add(info);
+    xinvis.add(Box.createRigidArea(new Dimension(200, 5)));
+    invisible.add(xinvis);
+    invisible.add(Box.createRigidArea(new Dimension(200, 300)));
+
+    imgBase.add(invisible, BorderLayout.CENTER);
 
     invisible = new InvisiblePanel(imgBase);
     invisible.setLayout(new BorderLayout());
     SpaceButton btn = new SpaceButton("Cancel", GameCommands.COMMAND_CANCEL);
     btn.addActionListener(listener);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    invisible.add(btn,BorderLayout.WEST);
+    invisible.add(btn, BorderLayout.WEST);
     btn = new SpaceButton("Next", GameCommands.COMMAND_NEXT);
     btn.addActionListener(listener);
     btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    invisible.add(btn,BorderLayout.EAST);
-    imgBase.add(invisible,BorderLayout.SOUTH);
-    this.add(imgBase,BorderLayout.CENTER);
+    invisible.add(btn, BorderLayout.EAST);
+    imgBase.add(invisible, BorderLayout.SOUTH);
+    this.add(imgBase, BorderLayout.CENTER);
 
   }
 
@@ -237,81 +238,79 @@ public class GalaxyCreationView extends BlackPanel {
    * Handle actions for Galaxy Creation view
    * @param arg0 The event to handle
    */
-  public void handleActions(ActionEvent arg0) {
+  public void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
-      config.setMaxPlayers(comboPlayers.getSelectedIndex()+2);
+      config.setMaxPlayers(comboPlayers.getSelectedIndex() + 2);
       config.setStartingPosition(comboPlayerPos.getSelectedIndex());
       switch (comboGalaxySize.getSelectedIndex()) {
       case 0: {
-        //Very small
+        // Very small
         config.setSize(50, 50, comboGalaxySize.getSelectedIndex());
         break;
       }
       case 1: {
-        //Small
+        // Small
         config.setSize(75, 75, comboGalaxySize.getSelectedIndex());
         break;
       }
       case 2: {
-        //Medium
+        // Medium
         config.setSize(128, 128, comboGalaxySize.getSelectedIndex());
         break;
       }
       case 3: {
-        //Large
+        // Large
         config.setSize(160, 160, comboGalaxySize.getSelectedIndex());
         break;
       }
       case 4: {
-        //Very Large
+        // Very Large
         config.setSize(200, 200, comboGalaxySize.getSelectedIndex());
         break;
       }
       case 5: {
-        //Huge
+        // Huge
         config.setSize(256, 256, comboGalaxySize.getSelectedIndex());
         break;
       }
       default: {
-        //SMALL
+        // SMALL
         config.setSize(75, 75, comboGalaxySize.getSelectedIndex());
         break;
       }
       }
       switch (comboSunDensity.getSelectedIndex()) {
       case 0: {
-        //SPARSE
+        // SPARSE
         config.setSolarSystemDistance(12, comboSunDensity.getSelectedIndex());
         break;
       }
       case 1: {
-        //Medium
+        // Medium
         config.setSolarSystemDistance(10, comboSunDensity.getSelectedIndex());
         break;
       }
       case 2: {
-        //Dense
+        // Dense
         config.setSolarSystemDistance(7, comboSunDensity.getSelectedIndex());
         break;
       }
       case 3: {
-        //Overlap
+        // Overlap
         config.setSolarSystemDistance(6, comboSunDensity.getSelectedIndex());
         break;
       }
       default: {
-        //SPARSE
+        // SPARSE
         config.setSolarSystemDistance(10, comboSunDensity.getSelectedIndex());
         break;
       }
       }
     }
   }
-  
+
   public GalaxyConfig getConfig() {
     return config;
   }
-
-
 
 }

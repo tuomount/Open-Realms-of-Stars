@@ -32,7 +32,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.Logger;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -40,18 +40,18 @@ import org.openRealmOfStars.utilities.Logger;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Battle view for handling space combat
- * 
+ *
  */
 public class BattleView extends BlackPanel {
 
@@ -68,7 +68,7 @@ public class BattleView extends BlackPanel {
    * Current combat
    */
   private Combat combat;
-  
+
   /**
    * Star map where combat happens
    */
@@ -78,12 +78,12 @@ public class BattleView extends BlackPanel {
    * Info panel on east side
    */
   private BattleInfoPanel infoPanel;
-  
+
   /**
    * Combat map mouse listener
    */
   private CombatMapMouseListener combatMapMouseListener;
-  
+
   /**
    * aStar search for AI
    */
@@ -93,17 +93,17 @@ public class BattleView extends BlackPanel {
    * Delay count for AI, since it's too fast for humans
    */
   private int delayCount;
-  
+
   /**
    * 2 Seconds with 75ms animation timer
    */
   private static final int MAX_DELAY_COUNT = 30;
-  
+
   /**
    * End button
    */
   private SpaceButton endButton;
-  
+
   /**
    * Text area containing info
    */
@@ -113,7 +113,7 @@ public class BattleView extends BlackPanel {
    * Text area containing combat log
    */
   private InfoTextArea logArea;
-  
+
   /**
    * Combat has ended
    */
@@ -130,12 +130,13 @@ public class BattleView extends BlackPanel {
    * @param map Star Map
    * @param listener ActionListener
    */
-  public BattleView(Combat combat, StarMap map, ActionListener listener) {
+  public BattleView(final Combat combat, final StarMap map,
+      final ActionListener listener) {
     this.combat = combat;
     this.map = map;
     initBattleView(listener);
   }
-  
+
   /**
    * Battle view for space combat
    * @param fleet1 First fleet in combat
@@ -145,8 +146,9 @@ public class BattleView extends BlackPanel {
    * @param map Star map
    * @param listener ActionListener
    */
-  public BattleView(Fleet fleet1, PlayerInfo player1, Fleet fleet2,
-      PlayerInfo player2, StarMap map, ActionListener listener) {
+  public BattleView(final Fleet fleet1, final PlayerInfo player1,
+      final Fleet fleet2, final PlayerInfo player2, final StarMap map,
+      final ActionListener listener) {
     this.map = map;
     combat = new Combat(fleet1, fleet2, player1, player2);
     initBattleView(listener);
@@ -156,50 +158,51 @@ public class BattleView extends BlackPanel {
    * Init Battle view
    * @param listener Action Listener
    */
-  private void initBattleView(ActionListener listener) {
+  private void initBattleView(final ActionListener listener) {
     BlackPanel base = new BlackPanel();
     mapPanel = new MapPanel(true);
-    mapPanel.setSize(Combat.MAX_X*ShipImage.MAX_WIDTH, 
-        Combat.MAX_Y*ShipImage.MAX_HEIGHT);
+    mapPanel.setSize(Combat.MAX_X * ShipImage.MAX_WIDTH,
+        Combat.MAX_Y * ShipImage.MAX_HEIGHT);
     mapPanel.drawBattleMap(combat, combat.getPlayer1(), this.map);
 
-    textArea = new InfoTextArea(10,30);
+    textArea = new InfoTextArea(10, 30);
     textArea.setEditable(false);
     textArea.setLineWrap(true);
-    infoPanel = new BattleInfoPanel(combat.getCurrentShip().getShip(),textArea,listener);
+    infoPanel = new BattleInfoPanel(combat.getCurrentShip().getShip(), textArea,
+        listener);
 
-    combatMapMouseListener = new CombatMapMouseListener(combat, mapPanel, infoPanel);
+    combatMapMouseListener = new CombatMapMouseListener(combat, mapPanel,
+        infoPanel);
     mapPanel.addMouseListener(combatMapMouseListener);
     mapPanel.addMouseMotionListener(combatMapMouseListener);
-    
+
     InfoPanel bottom = new InfoPanel();
     bottom.setTitle(null);
     bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
-    endButton = new SpaceButton("End round", GameCommands.COMMAND_END_BATTLE_ROUND);
+    endButton = new SpaceButton("End round",
+        GameCommands.COMMAND_END_BATTLE_ROUND);
     endButton.addActionListener(listener);
     bottom.add(endButton);
-    
-    bottom.add(Box.createRigidArea(new Dimension(10,10)));
-    logArea = new InfoTextArea(10,30);
+
+    bottom.add(Box.createRigidArea(new Dimension(10, 10)));
+    logArea = new InfoTextArea(10, 30);
     logArea.setEditable(false);
     logArea.setLineWrap(true);
     bottom.add(logArea);
     textLogger = new Logger(MAX_LOG_NUMBER);
-    bottom.add(Box.createRigidArea(new Dimension(10,10)));
+    bottom.add(Box.createRigidArea(new Dimension(10, 10)));
 
-
-    
     this.setLayout(new BorderLayout());
-    base.add(mapPanel,BorderLayout.CENTER);
-    this.add(base,BorderLayout.CENTER);
-    this.add(infoPanel,BorderLayout.EAST);
-    this.add(bottom,BorderLayout.SOUTH);
+    base.add(mapPanel, BorderLayout.CENTER);
+    this.add(base, BorderLayout.CENTER);
+    this.add(infoPanel, BorderLayout.EAST);
+    this.add(bottom, BorderLayout.SOUTH);
     aStar = null;
     delayCount = 0;
     combatEnded = false;
     textLogger.addLog(INITIAL_LOG_MESSAGE);
   }
-  
+
   /**
    * Update panels on BattleView
    */
@@ -210,16 +213,16 @@ public class BattleView extends BlackPanel {
       textArea.setText("");
     }
     StringBuilder sb = new StringBuilder();
-    for (int i = textLogger.size()-1; i>=0; i--) {
+    for (int i = textLogger.size() - 1; i >= 0; i--) {
       sb.append(textLogger.getMessage(i));
-      if (i!=0) {
+      if (i != 0) {
         sb.append("\n");
       }
     }
     logArea.setText(sb.toString());
     this.repaint();
   }
-  
+
   public InfoTextArea getBottomTextArea() {
     return textArea;
   }
@@ -230,28 +233,31 @@ public class BattleView extends BlackPanel {
    * @param target shooting target
    * @return true if shooting was actually done
    */
-  private boolean handleAIShoot(CombatShip ai, CombatShip target) {
-    if (target !=  null) {
+  private boolean handleAIShoot(final CombatShip ai, final CombatShip target) {
+    if (target != null) {
       int nComp = ai.getShip().getNumberOfComponents();
-      for (int i=0;i<nComp;i++) {
+      for (int i = 0; i < nComp; i++) {
         ShipComponent weapon = ai.getShip().getComponent(i);
         combat.setComponentUse(i);
-        if (weapon != null && weapon.isWeapon() && !ai.isComponentUsed(i) &&
-            combat.isClearShot(ai, target) && ai.getShip().componentIsWorking(i)) {
-          int accuracy = ai.getShip().getHitChance(weapon)+ai.getBonusAccuracy();
-          accuracy = accuracy-target.getShip().getDefenseValue();
+        if (weapon != null && weapon.isWeapon() && !ai.isComponentUsed(i)
+            && combat.isClearShot(ai, target)
+            && ai.getShip().componentIsWorking(i)) {
+          int accuracy = ai.getShip().getHitChance(weapon)
+              + ai.getBonusAccuracy();
+          accuracy = accuracy - target.getShip().getDefenseValue();
           ShipDamage shipDamage = new ShipDamage(1, "Attack missed!");
-          if (DiceGenerator.getRandom(1, 100)<=accuracy) {
+          if (DiceGenerator.getRandom(1, 100) <= accuracy) {
             shipDamage = target.getShip().damageBy(weapon);
           }
           String[] logs = shipDamage.getMessage().split("\n");
           for (String log : logs) {
             textLogger.addLog(log);
           }
-          combat.setAnimation(new CombatAnimation(ai, target, weapon, shipDamage.getValue()));
+          combat.setAnimation(
+              new CombatAnimation(ai, target, weapon, shipDamage.getValue()));
           ai.useComponent(i);
           infoPanel.useComponent(i);
-          ai.setAiShotsLeft(ai.getAiShotsLeft()-1);
+          ai.setAiShotsLeft(ai.getAiShotsLeft() - 1);
           combat.setComponentUse(-1);
           return true;
         }
@@ -259,24 +265,26 @@ public class BattleView extends BlackPanel {
     }
     return false;
   }
-  
+
   /**
    * Handle AI
    */
   private void handleAI() {
-       PlayerInfo info = combat.getCurrentShip().getPlayer();
+    PlayerInfo info = combat.getCurrentShip().getPlayer();
     CombatShip deadliest = combat.getMostPowerfulShip(info);
-    CombatShip closest = combat.getClosestEnemyShip(info, combat.getCurrentShip());
+    CombatShip closest = combat.getClosestEnemyShip(info,
+        combat.getCurrentShip());
     CombatShip ai = combat.getCurrentShip();
     boolean shot = false;
     int range = ai.getShip().getMaxWeaponRange();
-    if (deadliest != null ) {
-      if (ai.getShip().getTotalMilitaryPower() > deadliest.getShip().getTotalMilitaryPower()) {
+    if (deadliest != null) {
+      if (ai.getShip().getTotalMilitaryPower() > deadliest.getShip()
+          .getTotalMilitaryPower()) {
         range = ai.getShip().getMinWeaponRange();
       }
-      int distance = (int) Math.round(StarMapUtilities.getDistance(ai.getX(), ai.getY(), 
-        deadliest.getX(), deadliest.getY()));
-      if (range < distance-ai.getMovesLeft() && closest != null) {
+      int distance = (int) Math.round(StarMapUtilities.getDistance(ai.getX(),
+          ai.getY(), deadliest.getX(), deadliest.getY()));
+      if (range < distance - ai.getMovesLeft() && closest != null) {
         shot = handleAIShoot(ai, closest);
       }
     } else if (closest != null) {
@@ -284,11 +292,13 @@ public class BattleView extends BlackPanel {
     }
     if (aStar == null) {
       if (deadliest != null) {
-        aStar = new AStarSearch(combat, combat.getCurrentShip(),deadliest, range);
+        aStar = new AStarSearch(combat, combat.getCurrentShip(), deadliest,
+            range);
       }
       if (aStar == null && closest != null) {
-        aStar = new AStarSearch(combat, combat.getCurrentShip(),closest, range);
-      } 
+        aStar = new AStarSearch(combat, combat.getCurrentShip(), closest,
+            range);
+      }
       if (aStar != null && aStar.doSearch()) {
         aStar.doRoute();
       } else {
@@ -298,14 +308,15 @@ public class BattleView extends BlackPanel {
       }
     }
     PathPoint point = aStar.getMove();
-    if (ai.getShip().getTacticSpeed()==0) {
+    if (ai.getShip().getTacticSpeed() == 0) {
       shot = handleAIShoot(ai, deadliest);
     }
-    if (point != null && !combat.isBlocked(point.getX(), point.getY()) && ai.getMovesLeft() > 0) {
+    if (point != null && !combat.isBlocked(point.getX(), point.getY())
+        && ai.getMovesLeft() > 0) {
       shot = handleAIShoot(ai, deadliest);
       if (!shot) {
         // Not moving after shooting
-        ai.setMovesLeft(ai.getMovesLeft()-1);
+        ai.setMovesLeft(ai.getMovesLeft() - 1);
         ai.setX(point.getX());
         ai.setY(point.getY());
         aStar.nextMove();
@@ -315,8 +326,8 @@ public class BattleView extends BlackPanel {
       // Path is blocked
       ai.setMovesLeft(0);
     }
-    if ((ai.getMovesLeft() == 0 || aStar.isLastMove()) &&
-        combat.getAnimation() == null) {
+    if ((ai.getMovesLeft() == 0 || aStar.isLastMove())
+        && combat.getAnimation() == null) {
       if (ai.getAiShotsLeft() > 0) {
         // We still got more shots left, let's shoot the deadliest
         shot = handleAIShoot(ai, deadliest);
@@ -336,7 +347,7 @@ public class BattleView extends BlackPanel {
       }
     }
   }
-  
+
   /**
    * End battle round
    */
@@ -352,22 +363,22 @@ public class BattleView extends BlackPanel {
     }
     this.repaint();
   }
-  
+
   public boolean isCombatEnded() {
     return combatEnded;
   }
-  
+
   /**
    * Handle actions for battle view
    * @param arg0 Active Event
    */
-  public void handleActions(ActionEvent arg0) {
-    if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_ANIMATION_TIMER) ) {
-      if (combatMapMouseListener.getShipDamage() != null &&
-          combatMapMouseListener.getShipDamage().isReady()) {
+  public void handleActions(final ActionEvent arg0) {
+    if (arg0.getActionCommand()
+        .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
+      if (combatMapMouseListener.getShipDamage() != null
+          && combatMapMouseListener.getShipDamage().isReady()) {
         String[] logs = combatMapMouseListener.getShipDamage().getMessage()
-                                              .split("\n");
+            .split("\n");
         for (String log : logs) {
           textLogger.addLog(log);
         }
@@ -378,8 +389,8 @@ public class BattleView extends BlackPanel {
         if (delayCount >= MAX_DELAY_COUNT) {
           delayCount = 0;
         }
-        if (!combat.getCurrentShip().getPlayer().isHuman() && delayCount == 0 &&
-            !combatEnded) {
+        if (!combat.getCurrentShip().getPlayer().isHuman() && delayCount == 0
+            && !combatEnded) {
           handleAI();
         }
       }
@@ -387,18 +398,19 @@ public class BattleView extends BlackPanel {
       mapPanel.drawBattleMap(combat, map.getCurrentPlayerInfo(), map);
       mapPanel.repaint();
     }
-    if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_END_BATTLE_ROUND)
-        && !combatEnded && combat.getCurrentShip().getPlayer().isHuman()) {
-        endRound();
+    if (arg0.getActionCommand()
+        .equalsIgnoreCase(GameCommands.COMMAND_END_BATTLE_ROUND) && !combatEnded
+        && combat.getCurrentShip().getPlayer().isHuman()) {
+      endRound();
     }
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)
         && combat.getCurrentShip().getPlayer().isHuman()) {
-      String number = arg0.getActionCommand().substring(GameCommands.COMMAND_COMPONENT_USE.length());
+      String number = arg0.getActionCommand()
+          .substring(GameCommands.COMMAND_COMPONENT_USE.length());
       int index = Integer.valueOf(number);
-      
-      if (combat.getComponentUse() != index &&
-          combat.getCurrentShip().getShip().componentIsWorking(index)) {
+
+      if (combat.getComponentUse() != index
+          && combat.getCurrentShip().getShip().componentIsWorking(index)) {
         combatMapMouseListener.setComponentUse(index);
         combat.setComponentUse(index);
       } else {
@@ -408,5 +420,5 @@ public class BattleView extends BlackPanel {
     }
 
   }
-  
+
 }

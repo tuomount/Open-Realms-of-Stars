@@ -9,7 +9,7 @@ import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -17,23 +17,22 @@ import org.openRealmOfStars.starMap.StarMapUtilities;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * A Star path searching algorithm. This works with BattleMap and StarMap.
- * 
+ *
  */
 
 public class AStarSearch {
 
-  
   /**
    * Map X size
    */
@@ -42,27 +41,27 @@ public class AStarSearch {
    * Map Y Size
    */
   private int maxY;
-  
+
   /**
    * Map value for blocked
    */
   private static final int BLOCKED = Integer.MAX_VALUE;
-  
+
   /**
    * Map value for unblocked
    */
   private static final int UNBLOCKED = 200000;
-  
+
   /**
    * Map containing the block information
    */
   private int[][] blockMap;
-  
+
   /**
    * Points to still to check
    */
   private List<PathPoint> points;
-  
+
   /**
    * Target X coordinate
    */
@@ -71,22 +70,22 @@ public class AStarSearch {
    * Target Y Coordinate
    */
   private int ty;
-  
+
   /**
    * Target Distance where to stop
    */
   private int targetDistance;
-  
+
   /**
    * Found target point after search
    */
   private PathPoint targetPoint;
-  
+
   /**
    * Route Index
    */
   private int routeIndex;
-  
+
   /**
    * Initialize A Star Search for combat map.
    * @param combat Actual combat map
@@ -94,14 +93,14 @@ public class AStarSearch {
    * @param target Where to end
    * @param targetDistance How near is enough
    */
-  public AStarSearch(Combat combat,CombatShip start, CombatShip target, 
-      int targetDistance) {
+  public AStarSearch(final Combat combat, final CombatShip start,
+      final CombatShip target, final int targetDistance) {
     maxX = Combat.MAX_X;
     maxY = Combat.MAX_Y;
     blockMap = new int[maxX][maxY];
     this.targetDistance = targetDistance;
-    for (int y=0;y<maxY;y++) {
-      for (int x=0;x<maxX;x++) {
+    for (int y = 0; y < maxY; y++) {
+      for (int x = 0; x < maxX; x++) {
         if (combat.isBlocked(x, y)) {
           blockMap[x][y] = BLOCKED;
         } else {
@@ -113,14 +112,14 @@ public class AStarSearch {
     tx = target.getX();
     ty = target.getY();
     this.targetDistance = targetDistance;
-    PathPoint point1 = new PathPoint(start.getX(), start.getY(), 
+    PathPoint point1 = new PathPoint(start.getX(), start.getY(),
         StarMapUtilities.getDistance(start.getX(), start.getY(), tx, ty));
     points.add(point1);
     blockMap[point1.getX()][point1.getY()] = 0;
     targetPoint = null;
     routeIndex = -1;
   }
-  
+
   /**
    * Initialize A Star Search for star map to find a route over
    * some obstacle.
@@ -129,14 +128,15 @@ public class AStarSearch {
    * @param sy Starting point Y coordinate
    * @param tx Target X coordinate
    * @param ty Target Y coordinate
-   * @param radius What is the search radius 
+   * @param radius What is the search radius
    */
-  public AStarSearch(StarMap map, int sx, int sy, int tx, int ty, int radius) {
+  public AStarSearch(final StarMap map, final int sx, final int sy,
+      final int tx, final int ty, final int radius) {
     maxX = map.getMaxX();
     maxY = map.getMaxY();
     blockMap = new int[maxX][maxY];
-    for (int y=0;y<maxY;y++) {
-      for (int x=0;x<maxX;x++) {
+    for (int y = 0; y < maxY; y++) {
+      for (int x = 0; x < maxX; x++) {
         if (map.isBlocked(x, y)) {
           blockMap[x][y] = BLOCKED;
         } else {
@@ -147,12 +147,14 @@ public class AStarSearch {
     points = new ArrayList<>();
     this.tx = tx;
     this.ty = ty;
-    this.targetDistance = (int) Math.round(StarMapUtilities.getDistance(sx, sy, tx, ty))-radius;
+    this.targetDistance = (int) Math
+        .round(StarMapUtilities.getDistance(sx, sy, tx, ty)) - radius;
     if (this.targetDistance < 0) {
       // Target is actually in reroute area
       this.targetDistance = 0;
     }
-    PathPoint point1 = new PathPoint(sx, sy, StarMapUtilities.getDistance(sx, sy, tx, ty));
+    PathPoint point1 = new PathPoint(sx, sy,
+        StarMapUtilities.getDistance(sx, sy, tx, ty));
     points.add(point1);
     blockMap[point1.getX()][point1.getY()] = 0;
     targetPoint = null;
@@ -167,12 +169,13 @@ public class AStarSearch {
    * @param tx Target X coordinate
    * @param ty Target Y coordinate
    */
-  public AStarSearch(StarMap map, int sx, int sy, int tx, int ty) {
+  public AStarSearch(final StarMap map, final int sx, final int sy,
+      final int tx, final int ty) {
     maxX = map.getMaxX();
     maxY = map.getMaxY();
     blockMap = new int[maxX][maxY];
-    for (int y=0;y<maxY;y++) {
-      for (int x=0;x<maxX;x++) {
+    for (int y = 0; y < maxY; y++) {
+      for (int x = 0; x < maxX; x++) {
         if (map.isBlocked(x, y)) {
           blockMap[x][y] = BLOCKED;
         } else {
@@ -184,7 +187,8 @@ public class AStarSearch {
     this.tx = tx;
     this.ty = ty;
     this.targetDistance = 0;
-    PathPoint point1 = new PathPoint(sx, sy, StarMapUtilities.getDistance(sx, sy, tx, ty));
+    PathPoint point1 = new PathPoint(sx, sy,
+        StarMapUtilities.getDistance(sx, sy, tx, ty));
     points.add(point1);
     blockMap[point1.getX()][point1.getY()] = 0;
     targetPoint = null;
@@ -197,14 +201,11 @@ public class AStarSearch {
    * @param y Y Coordinate
    * @return true if valid otherwise false
    */
-  private boolean isValidPos(int x, int y) {
-    if (x >= 0 && y >= 0 && x < maxX && y < maxY) {
-      return true;
-    }
+  private boolean isValidPos(final int x, final int y) {
+    if (x >= 0 && y >= 0 && x < maxX && y < maxY) { return true; }
     return false;
   }
 
-  
   /**
    * Do actual A Star search with initialized values
    * @return True if successful and false if not
@@ -212,7 +213,7 @@ public class AStarSearch {
   public boolean doSearch() {
     boolean noMorePoints = false;
     int count = 0;
-    if (blockMap[tx][ty]==BLOCKED && targetDistance==0) {
+    if (blockMap[tx][ty] == BLOCKED && targetDistance == 0) {
       targetDistance = 1;
     }
     while (!noMorePoints) {
@@ -220,19 +221,20 @@ public class AStarSearch {
       if (points.size() > 0) {
         PathPoint point = points.get(0);
         points.remove(0);
-        for (int y = -1;y<2;y++) {
-          for (int x = -1;x<2;x++) {
-            if (y==0 && x== 0) {
+        for (int y = -1; y < 2; y++) {
+          for (int x = -1; x < 2; x++) {
+            if (y == 0 && x == 0) {
               continue;
             }
-            int mx = x+point.getX();
-            int my = y+point.getY();
-            if (isValidPos(mx,my) && blockMap[mx][my] > count && blockMap[mx][my] != BLOCKED) {
+            int mx = x + point.getX();
+            int my = y + point.getY();
+            if (isValidPos(mx, my) && blockMap[mx][my] > count
+                && blockMap[mx][my] != BLOCKED) {
               blockMap[mx][my] = count;
               double dist = StarMapUtilities.getDistance(mx, my, tx, ty);
               PathPoint newPoint = new PathPoint(mx, my, dist);
               if (dist < point.getDistance()) {
-                if (points.size()>0) {
+                if (points.size() > 0) {
                   PathPoint first = points.get(0);
                   if (first != null && dist < first.getDistance()) {
                     // Seems to be closer, so adding it to first one
@@ -265,7 +267,7 @@ public class AStarSearch {
     // Target is not found, no path available
     return false;
   }
-  
+
   /**
    * Calculate Route
    */
@@ -276,20 +278,20 @@ public class AStarSearch {
       points.add(targetPoint);
       int count = UNBLOCKED;
       while (!targetReached) {
-        PathPoint point = points.get(points.size()-1);
+        PathPoint point = points.get(points.size() - 1);
         int bx = 0;
         int by = 0;
         double bdist = 999999;
-        for (int y = -1;y<2;y++) {
-          for (int x = -1;x<2;x++) {
-            if (y==0 && x== 0) {
+        for (int y = -1; y < 2; y++) {
+          for (int x = -1; x < 2; x++) {
+            if (y == 0 && x == 0) {
               continue;
             }
-            int mx = x+point.getX();
-            int my = y+point.getY();
+            int mx = x + point.getX();
+            int my = y + point.getY();
             double dist = StarMapUtilities.getDistance(mx, my, tx, ty);
-            if (isValidPos(mx,my) && blockMap[mx][my] < count &&
-                dist < bdist) {
+            if (isValidPos(mx, my) && blockMap[mx][my] < count
+                && dist < bdist) {
               bx = mx;
               by = my;
               bdist = dist;
@@ -299,44 +301,42 @@ public class AStarSearch {
         count = blockMap[bx][by];
         PathPoint newPoint = new PathPoint(bx, by, bdist);
         if (blockMap[bx][by] != 0) {
-        points.add(newPoint);
+          points.add(newPoint);
         } else {
           targetReached = true;
         }
 
       }
-      routeIndex = points.size()-1;
+      routeIndex = points.size() - 1;
     }
   }
-  
+
   /**
    * Get next move by return PathPoint
    * @return PathPoint or null if cannot move
    */
   public PathPoint getMove() {
-    if (targetPoint != null && points.size() > 0 && routeIndex != -1)  {
-      return points.get(routeIndex);
-    }
+    if (targetPoint != null && points.size() > 0
+        && routeIndex != -1) { return points.get(routeIndex); }
     return null;
   }
-  
+
   public void nextMove() {
-    if (targetPoint != null && points.size() > 1 && routeIndex != -1 && routeIndex > 0) {
+    if (targetPoint != null && points.size() > 1 && routeIndex != -1
+        && routeIndex > 0) {
       routeIndex--;
     }
   }
-  
+
   /**
    * Is last move reached
    * @return True if last move reached or false if not
    */
   public boolean isLastMove() {
-    if (routeIndex == 0 || targetPoint == null) {
-      return true;
-    }
+    if (routeIndex == 0 || targetPoint == null) { return true; }
     return false;
   }
-  
+
   /**
    * Get target distance. Zero means that target is going to be reached.
    * @return target distance
@@ -345,4 +345,3 @@ public class AStarSearch {
     return targetDistance;
   }
 }
-

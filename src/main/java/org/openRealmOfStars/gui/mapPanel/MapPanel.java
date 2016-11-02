@@ -411,8 +411,8 @@ public class MapPanel extends JPanel {
         }
         
         // Draw Gas giant text
-        if (tile.getName().equals(TileNames.GAS_GIANT_1_SE) && i > -viewPointX
-                || tile.getName().equals(TileNames.GAS_GIANT_2_SE) && i > -viewPointX
+        if ((tile.getName().equals(TileNames.GAS_GIANT_1_SE) && i > -viewPointX
+                || tile.getName().equals(TileNames.GAS_GIANT_2_SE) && i > -viewPointX)
                 && planet != null && info != null
                 && info.getSectorVisibility(i+cx, j+cy)!=PlayerInfo.UNCHARTED) {
             int textWidth = (int) GuiStatics.getFontCubellanSC().getStringBounds(

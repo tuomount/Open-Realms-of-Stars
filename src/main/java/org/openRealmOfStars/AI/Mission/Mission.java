@@ -28,7 +28,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
  * Mission for AI
  * 
  */
-public class Mission {
+public final class Mission {
 
   /**
    * Mission type
@@ -80,25 +80,27 @@ public class Mission {
 
   /**
    * Create new mission for AI
-   * @param type MissionType
-   * @param phase Mission Phase
-   * @param x Target X
-   * @param y Target Y
+   * @param missionType MissionType
+   * @param missionPhase Mission Phase
+   * @param tx Target X
+   * @param ty Target Y
    */
-  public Mission(MissionType type, MissionPhase phase, int x, int y) {
-    this.type = type;
-    this.phase = phase;
+  public Mission(final MissionType missionType,
+                 final MissionPhase missionPhase, final int tx,
+                 final int ty) {
+    this.type = missionType;
+    this.phase = missionPhase;
     setMissionTime(0);
-    setTarget(x,y);
+    setTarget(tx, ty);
     targetPlanet = null;
   }
-  
+
   /**
    * Read mission from DataInputStream
    * @param dis DataInputStream
    * @throws IOException if there is any problem with DataInputStream
    */
-  public Mission(DataInputStream dis) throws IOException {
+  public Mission(final DataInputStream dis) throws IOException {
     type = MissionType.getType(dis.readInt());
     phase = MissionPhase.getType(dis.readInt());
     x = dis.readInt();
@@ -129,7 +131,7 @@ public class Mission {
       targetPlanet = str;
     }
   }
-  
+
   /**
    * Write mission data to DataOutputStream
    * @param dos DataOutputStream
@@ -146,42 +148,42 @@ public class Mission {
     IOUtilities.writeString(dos, sunName);
     IOUtilities.writeString(dos, targetPlanet);
   }
-  
-  public void setTarget(int x, int y) {
+
+  public void setTarget(final int x, final int y) {
     this.x = x;
     this.y = y;
   }
-  
+
   public MissionType getType() {
     return type;
   }
 
-  public void setType(MissionType type) {
-    this.type = type;
+  public void setType(final MissionType missionType) {
+    this.type = missionType;
   }
 
   public MissionPhase getPhase() {
     return phase;
   }
 
-  public void setPhase(MissionPhase phase) {
-    this.phase = phase;
+  public void setPhase(final MissionPhase missionPhase) {
+    this.phase = missionPhase;
   }
 
   public String getFleetName() {
     return fleetName;
   }
 
-  public void setFleetName(String fleetName) {
-    this.fleetName = fleetName;
+  public void setFleetName(final String name) {
+    this.fleetName = name;
   }
 
   public String getPlanetBuilding() {
     return planetBuilding;
   }
 
-  public void setPlanetBuilding(String planetBuilding) {
-    this.planetBuilding = planetBuilding;
+  public void setPlanetBuilding(String building) {
+    this.planetBuilding = building;
   }
 
   public int getX() {
@@ -194,32 +196,33 @@ public class Mission {
 
   @Override
   public String toString() {
-    return getType().toString() + " - " + getPhase().toString() + "\nPlanet:" + getPlanetBuilding() +
-            "\nFleet:" + getFleetName() + "\nSolar:" + getSunName();
+    return getType().toString() + " - " + getPhase().toString() + 
+            "\nPlanet:" + getPlanetBuilding() + "\nFleet:" + getFleetName() + 
+            "\nSolar:" + getSunName();
   }
 
   public String getSunName() {
     return sunName;
   }
 
-  public void setSunName(String sunName) {
-    this.sunName = sunName;
+  public void setSunName(String name) {
+    this.sunName = name;
   }
 
   public int getMissionTime() {
     return missionTime;
   }
 
-  public void setMissionTime(int missionTime) {
-    this.missionTime = missionTime;
+  public void setMissionTime(int time) {
+    this.missionTime = time;
   }
 
   public String getTargetPlanet() {
     return targetPlanet;
   }
 
-  public void setTargetPlanet(String targetPlanet) {
-    this.targetPlanet = targetPlanet;
+  public void setTargetPlanet(String target) {
+    this.targetPlanet = target;
   }
   
   

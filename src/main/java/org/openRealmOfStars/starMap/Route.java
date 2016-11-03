@@ -9,7 +9,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -17,18 +17,18 @@ import org.openRealmOfStars.utilities.IOUtilities;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Route handling routines
- * 
+ *
  */
 public class Route {
 
@@ -48,12 +48,12 @@ public class Route {
    * End Y coordinate
    */
   private double endY;
-  
+
   /**
    * FTL speed
    */
   private int ftlSpeed;
-  
+
   /**
    * Internal movement speed
    */
@@ -86,33 +86,34 @@ public class Route {
    * @param ey End Y coordinate
    * @param speed FTL Speed
    */
-  public Route(int sx, int sy, int ex, int ey, int speed) {
+  public Route(final int sx, final int sy, final int ex, final int ey,
+      final int speed) {
     this.startX = sx;
     this.startY = sy;
     this.endX = ex;
     this.endY = ey;
     this.ftlSpeed = speed;
-    double dx = Math.abs(startX-endX);
-    double dy = Math.abs(startY-endY);
+    double dx = Math.abs(startX - endX);
+    double dy = Math.abs(startY - endY);
     distance = (int) dy;
     if (dx > dy) {
       distance = (int) dx;
     }
     if (distance > 0) {
-      mx = (endX-startX)/distance;
-      my = (endY-startY)/distance;
+      mx = (endX - startX) / distance;
+      my = (endY - startY) / distance;
     } else {
       mx = 0;
       my = 0;
     }
   }
-  
+
   /**
    * Read route from DataInputStream
    * @param dis Data Input Stream
    * @throws IOException if there is any problem with DataInputStream
    */
-  public Route(DataInputStream dis) throws IOException {
+  public Route(final DataInputStream dis) throws IOException {
     startX = dis.readDouble();
     startY = dis.readDouble();
     endX = dis.readDouble();
@@ -122,13 +123,13 @@ public class Route {
     ftlSpeed = dis.readInt();
     distance = dis.readInt();
   }
-  
+
   /**
    * Save Route to DataOutputStream
    * @param dos DataOutputStream
    * @throws IOException if there is any problem with DataOutputStream
    */
-  public void saveRoute(DataOutputStream dos) throws IOException{
+  public void saveRoute(final DataOutputStream dos) throws IOException {
     dos.writeDouble(startX);
     dos.writeDouble(startY);
     dos.writeDouble(endX);
@@ -138,28 +139,24 @@ public class Route {
     dos.writeInt(ftlSpeed);
     dos.writeInt(distance);
   }
-  
+
   /**
    * Calculate estimate how long routing takes
    * @return Number of turns routing takes
    */
   public int timeEstimate() {
-    double dx = Math.abs(startX-endX);
-    double dy = Math.abs(startY-endY);
-    if (dx > dy) {
-      return (int) Math.ceil(dx / ftlSpeed);
-    }
+    double dx = Math.abs(startX - endX);
+    double dy = Math.abs(startY - endY);
+    if (dx > dy) { return (int) Math.ceil(dx / ftlSpeed); }
     return (int) Math.ceil(dy / ftlSpeed);
   }
-  
+
   /**
    * Route just for defending.
    * @return true if defending
    */
   public boolean isDefending() {
-    if (ftlSpeed == ROUTE_DEFEND) {
-      return true;
-    }
+    if (ftlSpeed == ROUTE_DEFEND) { return true; }
     return false;
   }
 
@@ -168,9 +165,7 @@ public class Route {
    * @return true if fixing the fleet
    */
   public boolean isFixing() {
-    if (ftlSpeed == ROUTE_FIX) {
-      return true;
-    }
+    if (ftlSpeed == ROUTE_FIX) { return true; }
     return false;
   }
 
@@ -178,15 +173,15 @@ public class Route {
    * Move a bit closed to end
    */
   public void makeNextMove() {
-    for (int i=0;i<ftlSpeed;i++) {
+    for (int i = 0; i < ftlSpeed; i++) {
       if (distance > 0) {
-        startX = startX +mx;
-        startY = startY +my;
+        startX = startX + mx;
+        startY = startY + my;
         distance--;
       }
     }
   }
-  
+
   /**
    * Is route's end reached?
    * @return boolean
@@ -196,12 +191,11 @@ public class Route {
       // fleet has special route
       return false;
     }
-    if (Math.round(endX) == Math.round(startX) && Math.round(endY) == Math.round(startY)) {
-      return true;
-    }
+    if (Math.round(endX) == Math.round(startX)
+        && Math.round(endY) == Math.round(startY)) { return true; }
     return false;
   }
-  
+
   /**
    * Get route on map. Returns byte array size of map. 1 where route dot should
    * be drawn
@@ -209,17 +203,17 @@ public class Route {
    * @param maxY Map Y size.
    * @return byte array
    */
-  public byte[][] getRouteOnMap(int maxX, int maxY) {
+  public byte[][] getRouteOnMap(final int maxX, final int maxY) {
     byte result[][] = new byte[maxX][maxY];
     double sx = startX;
     double sy = startY;
-    for (int i=0;i<distance+1;i++) {
+    for (int i = 0; i < distance + 1; i++) {
       if (sx >= 0 && sy >= 0 && sx < maxX && sy < maxY) {
-        result[(int)Math.round(sx)][(int)Math.round(sy)] = 1;
+        result[(int) Math.round(sx)][(int) Math.round(sy)] = 1;
       }
-      sx = sx +mx;
-      sy = sy +my;
-      
+      sx = sx + mx;
+      sy = sy + my;
+
     }
     return result;
   }
@@ -244,15 +238,15 @@ public class Route {
    * Route dot image
    */
   private static BufferedImage routeDot;
-  
+
   /**
    * Get route dot image
    * @return BufferedImage
    */
   public static BufferedImage getRouteDot() {
     if (routeDot == null) {
-      routeDot = IOUtilities.loadImage(Icons.class.getResource(
-          "/resources/images/routedot.png"));
+      routeDot = IOUtilities
+          .loadImage(Icons.class.getResource("/resources/images/routedot.png"));
     }
     return routeDot;
   }

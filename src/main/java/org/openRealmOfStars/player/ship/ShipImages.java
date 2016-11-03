@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.ship;
 import org.openRealmOfStars.player.SpaceRace;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -11,18 +11,18 @@ import org.openRealmOfStars.player.SpaceRace;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Static ship images for different races
- * 
+ *
  */
 
 public class ShipImages {
@@ -63,7 +63,7 @@ public class ShipImages {
     sporks = new ShipImage("humanships.png");
     greyans = new ShipImage("humanships.png");
   }
-  
+
   /**
    * Get Human ship images
    * @return Human ship images
@@ -74,6 +74,7 @@ public class ShipImages {
     }
     return humans;
   }
+
   /**
    * Get Mechions ship images
    * @return Mechions ship images
@@ -84,6 +85,7 @@ public class ShipImages {
     }
     return mechions;
   }
+
   /**
    * Get Sporks ship images
    * @return Sporks ship images
@@ -94,6 +96,7 @@ public class ShipImages {
     }
     return sporks;
   }
+
   /**
    * Get Greyans ship images
    * @return Greyans ship images
@@ -104,6 +107,7 @@ public class ShipImages {
     }
     return greyans;
   }
+
   /**
    * Get Centaurs ship images
    * @return Centaurs ship images
@@ -114,19 +118,24 @@ public class ShipImages {
     }
     return centaurs;
   }
-  
+
   /**
    * Get ship images for certain race
    * @param race Space race which images to get
    * @return ShipImage
    */
-  public static ShipImage getByRace(SpaceRace race) {
+  public static ShipImage getByRace(final SpaceRace race) {
     switch (race) {
-    case HUMAN: return Humans();
-    case MECHIONS: return Mechions();
-    case GREYANS: return Greyans();
-    case CENTAURS: return Centaurs();
-    case SPORKS: return Sporks();
+    case HUMAN:
+      return Humans();
+    case MECHIONS:
+      return Mechions();
+    case GREYANS:
+      return Greyans();
+    case CENTAURS:
+      return Centaurs();
+    case SPORKS:
+      return Sporks();
     }
     // Default images
     return Humans();

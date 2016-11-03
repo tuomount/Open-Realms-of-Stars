@@ -3,7 +3,7 @@ package org.openRealmOfStars.starMap;
 import org.openRealmOfStars.player.SpaceRace;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -11,18 +11,18 @@ import org.openRealmOfStars.player.SpaceRace;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Galaxy config for creating new star map with player
- * 
+ *
  */
 public class GalaxyConfig {
 
@@ -34,17 +34,17 @@ public class GalaxyConfig {
    * Galaxy size Y coordinates
    */
   private int sizeY;
-  
+
   /**
    * Galaxy size index in UI
    */
   private int galaxySizeIndex;
-  
+
   /**
    * How many players there are
    */
   private int maxPlayers;
-  
+
   /**
    * How far away solar systems are from each others
    */
@@ -69,17 +69,17 @@ public class GalaxyConfig {
    * Where players start
    */
   private int startingPosition;
-  
+
   /**
    * Player races
    */
   private SpaceRace[] playerRaces;
-  
+
   /**
    * Player name
    */
   private String[] playerName;
-  
+
   /**
    * Constructor for galaxy config
    */
@@ -88,12 +88,12 @@ public class GalaxyConfig {
     sizeY = 75;
     this.galaxySizeIndex = 1;
     setMaxPlayers(4);
-    setSolarSystemDistance(12,0);
+    setSolarSystemDistance(12, 0);
     playerRaces = new SpaceRace[StarMapStatics.MAX_PLAYERS];
     playerName = new String[StarMapStatics.MAX_PLAYERS];
-    for (int i=0;i<StarMapStatics.MAX_PLAYERS;i++) {
-      
-      setRace(i,SpaceRace.getRandomRace());
+    for (int i = 0; i < StarMapStatics.MAX_PLAYERS; i++) {
+
+      setRace(i, SpaceRace.getRandomRace());
       while (true) {
         String tmp = getRace(i).getRandomName();
         if (isUniqueName(tmp)) {
@@ -103,62 +103,59 @@ public class GalaxyConfig {
       }
     }
   }
-  
+
   /**
    * Is player name unique
    * @param name Unique name
    * @return True if unique
    */
-  public boolean isUniqueName(String name) {
-    for (int i=0;i<StarMapStatics.MAX_PLAYERS;i++) {
-      if (playerName[i] != null && name.equals(playerName[i])) {
-        return false;
-      }
+  public boolean isUniqueName(final String name) {
+    for (int i = 0; i < StarMapStatics.MAX_PLAYERS; i++) {
+      if (playerName[i] != null && name.equals(playerName[i])) { return false; }
     }
     return true;
   }
-  
-  public void setRace(int index,SpaceRace race) {
+
+  public void setRace(final int index, final SpaceRace race) {
     if (index >= 0 && index < StarMapStatics.MAX_PLAYERS) {
       playerRaces[index] = race;
     }
   }
-  
-  public SpaceRace getRace(int index) {
-    if (index >= 0 && index < StarMapStatics.MAX_PLAYERS) {
-      return playerRaces[index];
-    }
+
+  public SpaceRace getRace(final int index) {
+    if (index >= 0
+        && index < StarMapStatics.MAX_PLAYERS) { return playerRaces[index]; }
     return null;
   }
-  
-  public void setPlayerName(int index, String name) {
+
+  public void setPlayerName(final int index, final String name) {
     if (index >= 0 && index < StarMapStatics.MAX_PLAYERS) {
       playerName[index] = name;
     }
   }
-  
-  public String getPlayerName(int index) {
-    if (index >= 0 && index < StarMapStatics.MAX_PLAYERS) {
-      return playerName[index];
-    }
+
+  public String getPlayerName(final int index) {
+    if (index >= 0
+        && index < StarMapStatics.MAX_PLAYERS) { return playerName[index]; }
     return null;
   }
-  
+
   /**
    * Set galaxy size
    * @param x X size
    * @param y Y Size
    * @param galaxySize Galaxy size index in UI
    */
-  public void setSize(int x, int y, int galaxySize) {
+  public void setSize(final int x, final int y, final int galaxySize) {
     this.sizeX = x;
     this.sizeY = x;
     this.galaxySizeIndex = galaxySize;
   }
-  
+
   public int getSizeX() {
     return sizeX;
   }
+
   public int getSizeY() {
     return sizeY;
   }
@@ -167,7 +164,7 @@ public class GalaxyConfig {
     return maxPlayers;
   }
 
-  public void setMaxPlayers(int maxPlayers) {
+  public void setMaxPlayers(final int maxPlayers) {
     if (maxPlayers >= 2 && maxPlayers <= 8) {
       this.maxPlayers = maxPlayers;
     }
@@ -182,7 +179,8 @@ public class GalaxyConfig {
    * @param solarSystemDistance Actual distance between solar system
    * @param sunDensity Sun density setting in ui index
    */
-  public void setSolarSystemDistance(int solarSystemDistance, int sunDensity) {
+  public void setSolarSystemDistance(final int solarSystemDistance,
+      final int sunDensity) {
     this.solarSystemDistance = solarSystemDistance;
     this.sunDensityIndex = sunDensity;
   }
@@ -191,14 +189,13 @@ public class GalaxyConfig {
     return startingPosition;
   }
 
-  public void setStartingPosition(int startingPosition) {
+  public void setStartingPosition(final int startingPosition) {
     this.startingPosition = startingPosition;
   }
 
   public int getSunDensityIndex() {
     return sunDensityIndex;
   }
-
 
   public int getGalaxySizeIndex() {
     return galaxySizeIndex;

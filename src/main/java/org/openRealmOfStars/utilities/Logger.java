@@ -1,4 +1,5 @@
 package org.openRealmOfStars.utilities;
+
 /**
  *
  * Open Realm of Stars game project
@@ -23,49 +24,49 @@ package org.openRealmOfStars.utilities;
  */
 public class Logger {
 
-    private static final int DEFAULT_LOG_SIZE = 11;
+  private static final int DEFAULT_LOG_SIZE = 11;
 
-    /**
-     * Array texts in logger
-     */
-    private String[] textLog;
+  /**
+   * Array texts in logger
+   */
+  private String[] textLog;
 
-    /**
-     * Build logger with Default log size
-     */
-    public Logger() {
-        this(DEFAULT_LOG_SIZE);
+  /**
+   * Build logger with Default log size
+   */
+  public Logger() {
+    this(DEFAULT_LOG_SIZE);
+  }
+
+  /**
+   * Build logger with custom log size.
+   * @param logSize How many rows is available in logger
+   */
+  public Logger(final int logSize) {
+    textLog = new String[logSize];
+    for (int i = 0; i < logSize; i++) {
+      textLog[i] = "";
     }
+  }
 
-    /**
-     * Build logger with custom log size.
-     * @param logSize How many rows is available in logger
-     */
-    public Logger(int logSize) {
-        textLog = new String[logSize];
-        for (int i = 0; i < logSize; i++) {
-            textLog[i] = "";
-        }
-    }
+  /**
+   * Add new text log
+   * @param message Text to add
+   */
+  public void addLog(final String message) {
+    System.arraycopy(textLog, 0, textLog, 1, textLog.length - 1);
+    textLog[0] = message;
+  }
 
-    /**
-     * Add new text log
-     * @param message Text to add
-     */
-    public void addLog(String message) {
-        System.arraycopy(textLog, 0, textLog, 1, textLog.length - 1);
-        textLog[0] = message;
-    }
+  public String[] getLogMessages() {
+    return textLog;
+  }
 
-    public String[] getLogMessages() {
-        return textLog;
-    }
+  public int size() {
+    return textLog.length;
+  }
 
-    public int size() {
-        return textLog.length;
-    }
-
-    public String getMessage(int index) {
-        return textLog[index];
-    }
+  public String getMessage(final int index) {
+    return textLog[index];
+  }
 }

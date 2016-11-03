@@ -4,7 +4,7 @@ import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -12,21 +12,21 @@ import org.openRealmOfStars.utilities.IOUtilities;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Class for planetary building or improvement
- * 
+ *
  */
 public class Building extends Construction {
-  
+
   /**
    * Building type
    */
@@ -35,7 +35,7 @@ public class Building extends Construction {
    * Unique index for factories and saving the game
    */
   private int index;
-  
+
   /**
    * Bonus for farming
    */
@@ -56,23 +56,22 @@ public class Building extends Construction {
    * Bonus for research
    */
   private int reseBonus;
-  
+
   /**
    * Bonus for credits
    */
   private int credBonus;
-  
-  
+
   /**
    * Maintenance Cost
    */
   private double maintenanceCost;
-  
+
   /**
    * Only single building allowed per planet
    */
   private boolean singleAllowed;
-  
+
   /**
    * Building's battle bonus
    */
@@ -87,7 +86,7 @@ public class Building extends Construction {
    * Planetary defense damage
    */
   private int defenseDamage;
-  
+
   /**
    * Planetary scan range
    */
@@ -105,8 +104,9 @@ public class Building extends Construction {
    * @param icon Icon to use next to the building
    * @param type BuildingType
    */
-  public Building(int index,String name, Icon16x16 icon, BuildingType type) {
-    super(name,icon);
+  public Building(final int index, final String name, final Icon16x16 icon,
+      final BuildingType type) {
+    super(name, icon);
     this.index = index;
     this.type = type;
     this.farmBonus = 0;
@@ -126,13 +126,11 @@ public class Building extends Construction {
     this.scanCloakingDetection = 0;
   }
 
-
-
   public BuildingType getType() {
     return type;
   }
 
-  public void setType(BuildingType type) {
+  public void setType(final BuildingType type) {
     this.type = type;
   }
 
@@ -140,16 +138,15 @@ public class Building extends Construction {
     return index;
   }
 
-  public void setIndex(int index) {
+  public void setIndex(final int index) {
     this.index = index;
   }
-
 
   public int getFarmBonus() {
     return farmBonus;
   }
 
-  public void setFarmBonus(int farmBonus) {
+  public void setFarmBonus(final int farmBonus) {
     this.farmBonus = farmBonus;
   }
 
@@ -157,7 +154,7 @@ public class Building extends Construction {
     return mineBonus;
   }
 
-  public void setMineBonus(int mineBonus) {
+  public void setMineBonus(final int mineBonus) {
     this.mineBonus = mineBonus;
   }
 
@@ -165,7 +162,7 @@ public class Building extends Construction {
     return factBonus;
   }
 
-  public void setFactBonus(int factBonus) {
+  public void setFactBonus(final int factBonus) {
     this.factBonus = factBonus;
   }
 
@@ -173,7 +170,7 @@ public class Building extends Construction {
     return cultBonus;
   }
 
-  public void setCultBonus(int cultBonus) {
+  public void setCultBonus(final int cultBonus) {
     this.cultBonus = cultBonus;
   }
 
@@ -181,7 +178,7 @@ public class Building extends Construction {
     return reseBonus;
   }
 
-  public void setReseBonus(int reseBonus) {
+  public void setReseBonus(final int reseBonus) {
     this.reseBonus = reseBonus;
   }
 
@@ -189,11 +186,9 @@ public class Building extends Construction {
     return credBonus;
   }
 
-  public void setCredBonus(int credBonus) {
+  public void setCredBonus(final int credBonus) {
     this.credBonus = credBonus;
   }
-  
-  
 
   @Override
   public String getFullDescription() {
@@ -203,7 +198,7 @@ public class Building extends Construction {
       sb.append(" - one per planet");
     }
     sb.append("\n");
-    sb.append(IOUtilities.stringWrapper(getDescription(),39));
+    sb.append(IOUtilities.stringWrapper(getDescription(), 39));
     sb.append("\n");
     sb.append("Cost: Prod.:");
     sb.append(getProdCost());
@@ -316,7 +311,7 @@ public class Building extends Construction {
   /**
    * @param maintenanceCost the maintenanceCost to set
    */
-  public void setMaintenanceCost(double maintenanceCost) {
+  public void setMaintenanceCost(final double maintenanceCost) {
     this.maintenanceCost = maintenanceCost;
   }
 
@@ -324,7 +319,7 @@ public class Building extends Construction {
     return singleAllowed;
   }
 
-  public void setSingleAllowed(boolean singleAllowed) {
+  public void setSingleAllowed(final boolean singleAllowed) {
     this.singleAllowed = singleAllowed;
   }
 
@@ -332,7 +327,7 @@ public class Building extends Construction {
     return battleBonus;
   }
 
-  public void setBattleBonus(int battleBonus) {
+  public void setBattleBonus(final int battleBonus) {
     this.battleBonus = battleBonus;
   }
 
@@ -340,46 +335,32 @@ public class Building extends Construction {
     return recycleBonus;
   }
 
-  public void setRecycleBonus(int recycleBonus) {
+  public void setRecycleBonus(final int recycleBonus) {
     this.recycleBonus = recycleBonus;
   }
-
-
 
   public int getDefenseDamage() {
     return defenseDamage;
   }
 
-
-
-  public void setDefenseDamage(int defenseDamage) {
+  public void setDefenseDamage(final int defenseDamage) {
     this.defenseDamage = defenseDamage;
   }
-
-
 
   public int getScanRange() {
     return scanRange;
   }
 
-
-
-  public void setScanRange(int scanRange) {
+  public void setScanRange(final int scanRange) {
     this.scanRange = scanRange;
   }
-
-
 
   public int getScanCloakingDetection() {
     return scanCloakingDetection;
   }
 
-
-
-  public void setScanCloakingDetection(int scanCloakingDetection) {
+  public void setScanCloakingDetection(final int scanCloakingDetection) {
     this.scanCloakingDetection = scanCloakingDetection;
   }
-  
-  
-  
+
 }

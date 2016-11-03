@@ -1,7 +1,7 @@
 package org.openRealmOfStars.player.ship;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -9,18 +9,18 @@ package org.openRealmOfStars.player.ship;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Ship component for handling shields, armors, weapons, engines etc.
- * 
+ *
  */
 public class ShipComponent {
 
@@ -28,7 +28,7 @@ public class ShipComponent {
    * Index for saving information
    */
   private int index;
-  
+
   /**
    * Component type
    */
@@ -48,7 +48,7 @@ public class ShipComponent {
    * Component name must match one on techs
    */
   private String name;
-  
+
   /**
    * Component energy requirement
    */
@@ -57,7 +57,7 @@ public class ShipComponent {
    * Component energy resource
    */
   private int energyResource;
-  
+
   /**
    * Faster than light speed aka route speed
    */
@@ -72,12 +72,12 @@ public class ShipComponent {
    * Tactic speed in combat
    */
   private int tacticSpeed;
-  
+
   /**
    * Scanner range if component is scanner
    */
   private int scannerRange;
-  
+
   /**
    * Cloak detection in scanner
    */
@@ -92,7 +92,7 @@ public class ShipComponent {
    * defense value, could be either shield or armor
    */
   private int defenseValue;
-  
+
   /**
    * weapon damage
    */
@@ -102,21 +102,22 @@ public class ShipComponent {
    * Weapon range
    */
   private int weaponRange;
-  
+
   /**
    * Initiative boost for combat
    */
   private int initiativeBoost;
+
   /**
    * Constructor for ship component
    * @param index Index for saving component
-   * @param name Component name 
+   * @param name Component name
    * @param cost Production cost for single component
    * @param metalCost Metal cost for single component
    * @param type Component type
    */
-  public ShipComponent(int index, String name, int cost, int metalCost, 
-      ShipComponentType type) {
+  public ShipComponent(final int index, final String name, final int cost,
+      final int metalCost, final ShipComponentType type) {
     this.index = index;
     this.name = name;
     this.cost = cost;
@@ -141,16 +142,14 @@ public class ShipComponent {
    * @return True if weapon
    */
   public boolean isWeapon() {
-    if (type == ShipComponentType.WEAPON_BEAM ||
-        type == ShipComponentType.WEAPON_ECM_TORPEDO ||
-        type == ShipComponentType.WEAPON_HE_MISSILE ||
-        type == ShipComponentType.WEAPON_PHOTON_TORPEDO ||
-        type == ShipComponentType.WEAPON_RAILGUN) {
-      return true;
-    }
+    if (type == ShipComponentType.WEAPON_BEAM
+        || type == ShipComponentType.WEAPON_ECM_TORPEDO
+        || type == ShipComponentType.WEAPON_HE_MISSILE
+        || type == ShipComponentType.WEAPON_PHOTON_TORPEDO
+        || type == ShipComponentType.WEAPON_RAILGUN) { return true; }
     return false;
   }
-  
+
   public int getIndex() {
     return index;
   }
@@ -175,7 +174,7 @@ public class ShipComponent {
     return energyRequirement;
   }
 
-  public void setEnergyRequirement(int energyRequirement) {
+  public void setEnergyRequirement(final int energyRequirement) {
     this.energyRequirement = energyRequirement;
   }
 
@@ -183,7 +182,7 @@ public class ShipComponent {
     return energyResource;
   }
 
-  public void setEnergyResource(int energyResource) {
+  public void setEnergyResource(final int energyResource) {
     this.energyResource = energyResource;
   }
 
@@ -191,7 +190,7 @@ public class ShipComponent {
     return ftlSpeed;
   }
 
-  public void setFtlSpeed(int ftlSpeed) {
+  public void setFtlSpeed(final int ftlSpeed) {
     this.ftlSpeed = ftlSpeed;
   }
 
@@ -203,7 +202,7 @@ public class ShipComponent {
     return speed;
   }
 
-  public void setSpeed(int speed) {
+  public void setSpeed(final int speed) {
     this.speed = speed;
   }
 
@@ -215,7 +214,7 @@ public class ShipComponent {
     return tacticSpeed;
   }
 
-  public void setTacticSpeed(int tacticSpeed) {
+  public void setTacticSpeed(final int tacticSpeed) {
     this.tacticSpeed = tacticSpeed;
   }
 
@@ -223,7 +222,7 @@ public class ShipComponent {
     return scannerRange;
   }
 
-  public void setScannerRange(int scannerRange) {
+  public void setScannerRange(final int scannerRange) {
     this.scannerRange = scannerRange;
   }
 
@@ -231,7 +230,7 @@ public class ShipComponent {
     return cloakDetection;
   }
 
-  public void setCloakDetection(int cloakDetection) {
+  public void setCloakDetection(final int cloakDetection) {
     this.cloakDetection = cloakDetection;
   }
 
@@ -239,7 +238,7 @@ public class ShipComponent {
     return cloaking;
   }
 
-  public void setCloaking(int cloaking) {
+  public void setCloaking(final int cloaking) {
     this.cloaking = cloaking;
   }
 
@@ -247,7 +246,7 @@ public class ShipComponent {
     return defenseValue;
   }
 
-  public void setDefenseValue(int defenseValue) {
+  public void setDefenseValue(final int defenseValue) {
     this.defenseValue = defenseValue;
   }
 
@@ -255,7 +254,7 @@ public class ShipComponent {
     return damage;
   }
 
-  public void setDamage(int damage) {
+  public void setDamage(final int damage) {
     this.damage = damage;
   }
 
@@ -263,10 +262,10 @@ public class ShipComponent {
     return weaponRange;
   }
 
-  public void setWeaponRange(int weaponRange) {
+  public void setWeaponRange(final int weaponRange) {
     this.weaponRange = weaponRange;
   }
-  
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -281,35 +280,39 @@ public class ShipComponent {
       sb.append("Energy: ");
       sb.append(getEnergyRequirement());
       sb.append("\n");
-    } 
+    }
     if (getEnergyResource() > 0) {
       sb.append("Energy source: ");
       sb.append(getEnergyResource());
       sb.append("\n");
     }
     switch (getType()) {
-    case ARMOR: { 
+    case ARMOR: {
       sb.append("Armor value:");
-      sb.append(getDefenseValue()); 
+      sb.append(getDefenseValue());
       sb.append("\n");
-      break;}
-    case SHIELD: { 
+      break;
+    }
+    case SHIELD: {
       sb.append("Shield value:");
       sb.append(getDefenseValue());
       sb.append("\n");
-      break;}
-    case CLOAKING_DEVICE: { 
+      break;
+    }
+    case CLOAKING_DEVICE: {
       sb.append("Cloaking:");
       sb.append(getCloaking());
       sb.append("\n");
-      break;}
+      break;
+    }
     case COLONY_MODULE:
     case POWERSOURCE:
     case PRIVATEERING_MODULE:
-    case ORBITAL_NUKE:{ 
+    case ORBITAL_NUKE: {
       // Do nothing
-      break;}
-    case ENGINE: { 
+      break;
+    }
+    case ENGINE: {
       sb.append("Speed: ");
       sb.append(getSpeed());
       sb.append(" FTL:");
@@ -317,82 +320,94 @@ public class ShipComponent {
       sb.append(" Combat Speed:");
       sb.append(getTacticSpeed());
       sb.append("\n");
-      break;}
-    case WEAPON_BEAM: { 
+      break;
+    }
+    case WEAPON_BEAM: {
       sb.append("Damage: ");
       sb.append(getDamage());
       sb.append(" Range:");
       sb.append(getWeaponRange());
       sb.append("\nHit: 100%, 50% penetrates armor");
       sb.append("\n");
-      break;}
-    case WEAPON_ECM_TORPEDO: { 
+      break;
+    }
+    case WEAPON_ECM_TORPEDO: {
       sb.append("Shield damage: ");
       sb.append(getDamage());
       sb.append(" Range:");
       sb.append(getWeaponRange());
       sb.append("\nHit: 50%, damages only shields");
       sb.append("\n");
-      break;}
-    case WEAPON_HE_MISSILE: { 
+      break;
+    }
+    case WEAPON_HE_MISSILE: {
       sb.append("Damage: ");
       sb.append(getDamage());
       sb.append(" Range:");
       sb.append(getWeaponRange());
       sb.append("\nHit: 50%, 50% penetrates shields");
       sb.append("\n");
-      break;}
-    case WEAPON_PHOTON_TORPEDO: { 
+      break;
+    }
+    case WEAPON_PHOTON_TORPEDO: {
       sb.append("Damage: ");
       sb.append(getDamage());
       sb.append(" Range:");
       sb.append(getWeaponRange());
       sb.append("\nHit: 75%, 50% penetrates armor");
       sb.append("\n");
-      break;}
-    case WEAPON_RAILGUN: { 
+      break;
+    }
+    case WEAPON_RAILGUN: {
       sb.append("Damage: ");
       sb.append(getDamage());
       sb.append(" Range:");
       sb.append(getWeaponRange());
       sb.append("\nHit: 50%, 50% penetrates shields");
       sb.append("\n");
-      break;}
-    case JAMMER: { 
+      break;
+    }
+    case JAMMER: {
       sb.append("Jammer: -");
       sb.append(getDefenseValue());
       sb.append("%");
       sb.append("\n");
-      break;}
-    case ORBITAL_BOMBS: { 
+      break;
+    }
+    case ORBITAL_BOMBS: {
       sb.append("Orbital bombs: ");
       sb.append("\n");
-      break;}
-    case PLANETARY_INVASION_MODULE: { 
+      break;
+    }
+    case PLANETARY_INVASION_MODULE: {
       sb.append("Troop combat: ");
       sb.append(getDamage());
       sb.append("%");
       sb.append("\n");
-      break;}
-    case SCANNER: { 
+      break;
+    }
+    case SCANNER: {
       sb.append("Range: ");
       sb.append(getScannerRange());
       sb.append(" Cloak detection:");
       sb.append(getCloakDetection());
       sb.append(" %");
       sb.append("\n");
-      break;}
-    case SHIELD_GENERATOR: { 
+      break;
+    }
+    case SHIELD_GENERATOR: {
       sb.append("Shield generator: ");
       sb.append(getDefenseValue());
       sb.append("\n");
-      break;}
-    case TARGETING_COMPUTER: { 
+      break;
+    }
+    case TARGETING_COMPUTER: {
       sb.append("Targeting computer: +");
       sb.append(getDamage());
       sb.append("% to hit");
       sb.append("\n");
-      break;}
+      break;
+    }
     }
     return sb.toString();
   }
@@ -401,9 +416,8 @@ public class ShipComponent {
     return initiativeBoost;
   }
 
-  public void setInitiativeBoost(int initiativeBoost) {
+  public void setInitiativeBoost(final int initiativeBoost) {
     this.initiativeBoost = initiativeBoost;
   }
 
-  
 }

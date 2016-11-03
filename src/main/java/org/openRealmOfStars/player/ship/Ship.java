@@ -15,7 +15,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -23,43 +23,42 @@ import org.openRealmOfStars.utilities.IOUtilities;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Ship class for actual instance of a ship
- * 
+ *
  */
 
 public class Ship extends Construction {
 
-  
   /**
    * Ship's hull
    */
   private ShipHull hull;
-  
+
   /**
    * Ship's component list
    */
   private ArrayList<ShipComponent> components;
-  
+
   /**
    * Hit points per component
    */
   private int[] hullPoints;
-  
+
   /**
    * Current shield level
    */
   private int shield;
-  
+
   /**
    * Current armor level
    */
@@ -69,7 +68,7 @@ public class Ship extends Construction {
    * Ship's image
    */
   private BufferedImage image;
-  
+
   /**
    * Colonist cargo
    */
@@ -78,11 +77,12 @@ public class Ship extends Construction {
    * Metal cargo
    */
   private int metal;
+
   /**
    * Constructor for a ship
    * @param design from where actual ship is created
    */
-  public Ship(ShipDesign design) {
+  public Ship(final ShipDesign design) {
     super(design.getName(), Icons.getIconByName(Icons.ICON_HULL_TECH));
     prodCost = design.getCost();
     metalCost = design.getMetalCost();
@@ -90,7 +90,7 @@ public class Ship extends Construction {
     components = new ArrayList<>();
     ShipComponent[] designComponents = design.getComponentList();
     hullPoints = new int[designComponents.length];
-    for (int i=0;i<designComponents.length;i++) {
+    for (int i = 0; i < designComponents.length; i++) {
       components.add(designComponents[i]);
       hullPoints[i] = design.getHull().getSlotHull();
     }
@@ -101,27 +101,29 @@ public class Ship extends Construction {
     setColonist(0);
     setMetal(0);
   }
-  
+
   /**
    * Read Ship from DataInputStream
    * @param dis DataInputStream
    * @throws IOException if there is any problem with DataInputStream
    */
-  public Ship(DataInputStream dis) throws IOException {
-    super("SHIP",Icons.getIconByName(Icons.ICON_HULL_TECH));
+  public Ship(final DataInputStream dis) throws IOException {
+    super("SHIP", Icons.getIconByName(Icons.ICON_HULL_TECH));
     String tmpStr = IOUtilities.readString(dis);
     setName(tmpStr);
     prodCost = dis.readInt();
     metalCost = dis.readInt();
     String hullName = IOUtilities.readString(dis);
     int raceIndex = dis.readInt();
-    hull = ShipHullFactory.createByName(hullName, SpaceRace.getRaceByIndex(raceIndex));
+    hull = ShipHullFactory.createByName(hullName,
+        SpaceRace.getRaceByIndex(raceIndex));
     image = ShipImage.scaleTo32x32(hull.getImage());
     int count = dis.readInt();
     components = new ArrayList<>();
     hullPoints = new int[count];
-    for (int i=0;i<count;i++) {
-      ShipComponent comp = ShipComponentFactory.createByName(IOUtilities.readString(dis));
+    for (int i = 0; i < count; i++) {
+      ShipComponent comp = ShipComponentFactory
+          .createByName(IOUtilities.readString(dis));
       components.add(comp);
       hullPoints[i] = dis.readInt();
     }
@@ -130,20 +132,20 @@ public class Ship extends Construction {
     setColonist(dis.readInt());
     setMetal(dis.readInt());
   }
-  
+
   /**
    * Save ship to Data output Stream
    * @param dos Data Output Stream
    * @throws IOException if there is any problem with DataOutputStream
    */
-  public void saveShip(DataOutputStream dos) throws IOException {
+  public void saveShip(final DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, getName());
     dos.writeInt(prodCost);
     dos.writeInt(metalCost);
     IOUtilities.writeString(dos, hull.getName());
     dos.writeInt(hull.getRace().getIndex());
     dos.writeInt(components.size());
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       IOUtilities.writeString(dos, components.get(i).getName());
       dos.writeInt(hullPoints[i]);
     }
@@ -153,9 +155,7 @@ public class Ship extends Construction {
     dos.writeInt(getMetal());
 
   }
-  
-  
-  
+
   @Override
   public String getDescription() {
     StringBuilder sb = new StringBuilder();
@@ -182,7 +182,7 @@ public class Ship extends Construction {
     sb.append("/");
     sb.append(getTotalArmor());
     sb.append(" Hull Points: ");
-    sb.append(hull.getSlotHull()*getNumberOfComponents());
+    sb.append(hull.getSlotHull() * getNumberOfComponents());
     if (getTotalMilitaryPower() > 0) {
       sb.append("\n");
       sb.append("Military power: ");
@@ -213,10 +213,8 @@ public class Ship extends Construction {
    * @param index Component index
    * @return Hull points
    */
-  public int getHullPointForComponent(int index) {
-    if (index >= 0 && index < hullPoints.length) {
-      return hullPoints[index];
-    }
+  public int getHullPointForComponent(final int index) {
+    if (index >= 0 && index < hullPoints.length) { return hullPoints[index]; }
     return 0;
   }
 
@@ -227,87 +225,83 @@ public class Ship extends Construction {
     boolean workingShields = false;
     boolean shieldsUp = false;
     boolean generatorUp = false;
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (comp.getType()==ShipComponentType.SHIELD && componentIsWorking(i) &&
-          !shieldsUp){
+      if (comp.getType() == ShipComponentType.SHIELD && componentIsWorking(i)
+          && !shieldsUp) {
         workingShields = true;
         shieldsUp = true;
         if (shield < getTotalShield()) {
           shield++;
         }
       }
-      if (comp.getType()==ShipComponentType.SHIELD_GENERATOR && componentIsWorking(i) &&
-          !generatorUp){
+      if (comp.getType() == ShipComponentType.SHIELD_GENERATOR
+          && componentIsWorking(i) && !generatorUp) {
         generatorUp = true;
-        if (shield+comp.getDefenseValue() <= getTotalShield()) {
-          shield=shield+comp.getDefenseValue();
+        if (shield + comp.getDefenseValue() <= getTotalShield()) {
+          shield = shield + comp.getDefenseValue();
         }
-        
+
       }
     }
     if (!workingShields) {
       shield = 0;
     }
   }
-  
+
   /**
    * Check if certain component has energy or not. Returns true if component has
    * energy. This also checks that component is functional.
    * @param index Component index
    * @return true if has energy
    */
-  public boolean hasComponentEnergy(int index) {
+  public boolean hasComponentEnergy(final int index) {
     int energy = getTotalEnergy();
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getEnergyRequirement()>0) {
-        energy = energy -comp.getEnergyRequirement();
+      if (hullPoints[i] > 0 && comp.getEnergyRequirement() > 0) {
+        energy = energy - comp.getEnergyRequirement();
       }
-      if (index == i && (energy >= 0 || comp.getEnergyRequirement()==0)) {
-        return true;
-      }
-      if (index == i && energy < 0) {
-        return false;
-      }
-    }    
+      if (index == i
+          && (energy >= 0 || comp.getEnergyRequirement() == 0)) { return true; }
+      if (index == i && energy < 0) { return false; }
+    }
     return false;
   }
-  
+
   /**
    * Check if certain component has energy and hull points so it is functioning.
    * @param index Component index
    * @return True if component is functioning
    */
-  public boolean componentIsWorking(int index) {
+  public boolean componentIsWorking(final int index) {
     return hasComponentEnergy(index) && getHullPointForComponent(index) > 0;
   }
+
   /**
    * Get total energy form current component status
    * @return Total energy
    */
   public int getTotalEnergy() {
     int energy = 0;
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getEnergyResource()>0) {
-        energy = energy +comp.getEnergyResource();
+      if (hullPoints[i] > 0 && comp.getEnergyResource() > 0) {
+        energy = energy + comp.getEnergyResource();
       }
     }
     return energy;
   }
-  
+
   /**
    * Get Speed depending on hull points and energy level
    * @return Speed
    */
   public int getSpeed() {
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.ENGINE
-          && hasComponentEnergy(i)) {
-        return comp.getSpeed();
-      }
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
+          && hasComponentEnergy(i)) { return comp.getSpeed(); }
     }
     return 0;
   }
@@ -317,12 +311,10 @@ public class Ship extends Construction {
    * @return Speed
    */
   public int getTacticSpeed() {
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.ENGINE
-          && hasComponentEnergy(i)) {
-        return comp.getTacticSpeed();
-      }
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
+          && hasComponentEnergy(i)) { return comp.getTacticSpeed(); }
     }
     return 0;
   }
@@ -332,15 +324,14 @@ public class Ship extends Construction {
    * @return true if there are weapons left
    */
   public boolean hasWeapons() {
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && hasComponentEnergy(i) && (comp.getType() == ShipComponentType.WEAPON_BEAM ||
-            comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO ||
-            comp.getType() == ShipComponentType.WEAPON_HE_MISSILE ||
-            comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO ||
-            comp.getType() == ShipComponentType.WEAPON_RAILGUN)) {
-        return true;
-      }
+      if (hullPoints[i] > 0 && hasComponentEnergy(i) && (comp
+          .getType() == ShipComponentType.WEAPON_BEAM
+          || comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
+          || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
+          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO || comp
+              .getType() == ShipComponentType.WEAPON_RAILGUN)) { return true; }
     }
     return false;
   }
@@ -350,12 +341,11 @@ public class Ship extends Construction {
    * @return true if there are weapons left
    */
   public boolean hasBombs() {
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && hasComponentEnergy(i) && (comp.getType() == ShipComponentType.ORBITAL_BOMBS ||
-            comp.getType() == ShipComponentType.ORBITAL_NUKE)) {
-        return true;
-      }
+      if (hullPoints[i] > 0 && hasComponentEnergy(i)
+          && (comp.getType() == ShipComponentType.ORBITAL_BOMBS || comp
+              .getType() == ShipComponentType.ORBITAL_NUKE)) { return true; }
     }
     return false;
   }
@@ -365,12 +355,10 @@ public class Ship extends Construction {
    * @return Speed
    */
   public int getFtlSpeed() {
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.ENGINE
-          && hasComponentEnergy(i)) {
-        return comp.getFtlSpeed();
-      }
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
+          && hasComponentEnergy(i)) { return comp.getFtlSpeed(); }
     }
     return 0;
   }
@@ -382,39 +370,62 @@ public class Ship extends Construction {
   public int getInitiative() {
     int result = 0;
     switch (hull.getSize()) {
-    case SMALL:{ 
-      result = 12; break; }
-    case MEDIUM:{ 
-      result = 8; break; }
-    case LARGE:{ 
-      result = 4; break; }
-    case HUGE:{ 
-      result = 0; break; }
+    case SMALL: {
+      result = 12;
+      break;
     }
-    for (int i=0;i<components.size();i++) {
+    case MEDIUM: {
+      result = 8;
+      break;
+    }
+    case LARGE: {
+      result = 4;
+      break;
+    }
+    case HUGE: {
+      result = 0;
+      break;
+    }
+    }
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.ENGINE
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
           && hasComponentEnergy(i)) {
-        result = result +comp.getSpeed()+comp.getTacticSpeed();
+        result = result + comp.getSpeed() + comp.getTacticSpeed();
       }
-      if (hullPoints[i] > 0 && hasComponentEnergy(i) && comp.getInitiativeBoost()>0) {
-        result = result +comp.getInitiativeBoost();
+      if (hullPoints[i] > 0 && hasComponentEnergy(i)
+          && comp.getInitiativeBoost() > 0) {
+        result = result + comp.getInitiativeBoost();
       }
     }
-    int emptySpace = this.hull.getMaxSlot()-components.size();
+    int emptySpace = this.hull.getMaxSlot() - components.size();
     switch (emptySpace) {
-    case 1: 
-    case 0: {break;}
-    case 2: 
-    case 3: {result = result +1; break;}
-    case 4: {result = result +2; break;}
-    case 5: {result = result +3; break;}
+    case 1:
+    case 0: {
+      break;
+    }
+    case 2:
+    case 3: {
+      result = result + 1;
+      break;
+    }
+    case 4: {
+      result = result + 2;
+      break;
+    }
+    case 5: {
+      result = result + 3;
+      break;
+    }
     case 6:
     case 7:
     case 8:
     case 9:
     case 11:
-    case 10: {result = result +4; break;}
+    case 10: {
+      result = result + 4;
+      break;
+    }
     }
     return result;
   }
@@ -425,9 +436,9 @@ public class Ship extends Construction {
    */
   public int getScannerLvl() {
     int result = 0;
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.SCANNER
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.SCANNER
           && hasComponentEnergy(i) && comp.getScannerRange() > result) {
         result = comp.getScannerRange();
       }
@@ -437,13 +448,13 @@ public class Ship extends Construction {
 
   /**
    * Get Scanner cloak detection level
-   * @return scanner detection level 
+   * @return scanner detection level
    */
   public int getScannerDetectionLvl() {
     int result = 0;
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.SCANNER
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.SCANNER
           && hasComponentEnergy(i) && comp.getCloakDetection() > result) {
         result = comp.getCloakDetection();
       }
@@ -456,21 +467,28 @@ public class Ship extends Construction {
    * @param weapon ShipComponent
    * @return Accuracy
    */
-  public int getHitChance(ShipComponent weapon) {
+  public int getHitChance(final ShipComponent weapon) {
     int result = 0;
     switch (weapon.getType()) {
-    case WEAPON_BEAM: result = 100; break;
+    case WEAPON_BEAM:
+      result = 100;
+      break;
     case WEAPON_RAILGUN:
-    case WEAPON_PHOTON_TORPEDO: result = 75; break;
+    case WEAPON_PHOTON_TORPEDO:
+      result = 75;
+      break;
     case WEAPON_ECM_TORPEDO:
     case WEAPON_HE_MISSILE:
-    default: result = 50; break;
+    default:
+      result = 50;
+      break;
     }
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.TARGETING_COMPUTER
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.TARGETING_COMPUTER
           && hasComponentEnergy(i)) {
-        result = result+comp.getDamage();
+        result = result + comp.getDamage();
       }
     }
     return result;
@@ -482,11 +500,11 @@ public class Ship extends Construction {
    * @param shipDamage Ship Damage to more description information about damage
    * @return amount damage left aka pierced the component
    */
-  public int damageComponent(int damage,ShipDamage shipDamage) {
+  public int damageComponent(final int damage, final ShipDamage shipDamage) {
     int[] componentPos = new int[components.size()];
-    ShipComponent[] compList = new ShipComponent [components.size()];
+    ShipComponent[] compList = new ShipComponent[components.size()];
     int positions = 0;
-    for (int i=0;i<hullPoints.length;i++) {
+    for (int i = 0; i < hullPoints.length; i++) {
       if (hullPoints[i] > 0) {
         componentPos[positions] = i;
         compList[positions] = components.get(i);
@@ -495,50 +513,51 @@ public class Ship extends Construction {
     }
     int target = 0;
     if (positions > 1) {
-      target = DiceGenerator.getRandom(positions-1);
+      target = DiceGenerator.getRandom(positions - 1);
     }
     int hp = hullPoints[componentPos[target]];
-    hullPoints[componentPos[target]] = hullPoints[componentPos[target]]-damage;
-    if (hullPoints[componentPos[target]]<0) {
+    hullPoints[componentPos[target]] = hullPoints[componentPos[target]]
+        - damage;
+    if (hullPoints[componentPos[target]] < 0) {
       // No negative hull points to components
       hullPoints[componentPos[target]] = 0;
     }
     if (compList[target] != null) {
-      if (hullPoints[componentPos[target]]==0) {
-        shipDamage.addText(compList[target].getName()+" is destroyed!");
+      if (hullPoints[componentPos[target]] == 0) {
+        shipDamage.addText(compList[target].getName() + " is destroyed!");
       } else {
-        shipDamage.addText(compList[target].getName()+" damaged!");
+        shipDamage.addText(compList[target].getName() + " damaged!");
       }
     }
-    int result = damage-hp;
+    int result = damage - hp;
     if (hp == 0) {
       // Ship has been destroyed by attack nothing to pierce...
       result = 0;
     }
     return result;
   }
-  
+
   /**
    * Fix ship either one hull point or full repair
    * @param fullFix True to fully repair the ship
    */
-  public void fixShip(boolean fullFix) {
+  public void fixShip(final boolean fullFix) {
     int maxHPperSlot = getHull().getSlotHull();
     if (fullFix) {
-      for (int i=0;i<hullPoints.length;i++) {
+      for (int i = 0; i < hullPoints.length; i++) {
         hullPoints[i] = maxHPperSlot;
       }
     } else {
-      for (int i=0;i<hullPoints.length;i++) {
+      for (int i = 0; i < hullPoints.length; i++) {
         if (hullPoints[i] < maxHPperSlot) {
           // Repair one point
-          hullPoints[i] = hullPoints[i]+1;
+          hullPoints[i] = hullPoints[i] + 1;
           break;
         }
       }
     }
   }
-  
+
   /**
    * Get accuracy for certain weapon
    * @param weapon ShipComponent
@@ -547,74 +566,76 @@ public class Ship extends Construction {
    *         -1 Got damage
    *         -2 Destroyed
    */
-  public ShipDamage damageBy(ShipComponent weapon) {
+  public ShipDamage damageBy(final ShipComponent weapon) {
     int damage = 0;
     switch (weapon.getType()) {
-    case WEAPON_BEAM: 
-    case WEAPON_PHOTON_TORPEDO:{
+    case WEAPON_BEAM:
+    case WEAPON_PHOTON_TORPEDO: {
       damage = weapon.getDamage();
-      damage = damage -this.getShield();
+      damage = damage - this.getShield();
       if (damage > 0) {
-        this.setShield(this.getShield()-1);
+        this.setShield(this.getShield() - 1);
       } else {
-        if (this.getShield()/2 < weapon.getDamage()) {
-          this.setShield(this.getShield()-1);
-          return new ShipDamage(0,"Attack hit the shield!");
+        if (this.getShield() / 2 < weapon.getDamage()) {
+          this.setShield(this.getShield() - 1);
+          return new ShipDamage(0, "Attack hit the shield!");
         }
-        return new ShipDamage(1,"Attack missed!");
+        return new ShipDamage(1, "Attack missed!");
       }
-      damage = damage-this.getArmor()/2;
+      damage = damage - this.getArmor() / 2;
       if (damage >= 0) {
-        this.setArmor(this.getArmor()-1);
+        this.setArmor(this.getArmor() - 1);
       } else {
-        damage = damage+this.getArmor()/2;
-        if (this.getArmor()/4 < damage) {
-          this.setArmor(this.getArmor()-1);
-          return new ShipDamage(0,"Attack hit the armor!");
+        damage = damage + this.getArmor() / 2;
+        if (this.getArmor() / 4 < damage) {
+          this.setArmor(this.getArmor() - 1);
+          return new ShipDamage(0, "Attack hit the armor!");
         }
       }
       break;
     }
-    case WEAPON_RAILGUN: 
-    case WEAPON_HE_MISSILE:{
+    case WEAPON_RAILGUN:
+    case WEAPON_HE_MISSILE: {
       damage = weapon.getDamage();
-      damage = damage -this.getArmor();
+      damage = damage - this.getArmor();
       if (damage > 0) {
-        this.setArmor(this.getArmor()-1);
+        this.setArmor(this.getArmor() - 1);
       } else {
-        if (this.getArmor()/2 < weapon.getDamage()) {
-          this.setArmor(this.getArmor()-1);
-          return new ShipDamage(0,"Attack hit the armor!");
+        if (this.getArmor() / 2 < weapon.getDamage()) {
+          this.setArmor(this.getArmor() - 1);
+          return new ShipDamage(0, "Attack hit the armor!");
         }
-        return new ShipDamage(1,"Attack missed!");
+        return new ShipDamage(1, "Attack missed!");
       }
-      damage = damage-this.getShield()/2;
+      damage = damage - this.getShield() / 2;
       if (damage >= 0) {
-        this.setShield(this.getShield()-1);
+        this.setShield(this.getShield() - 1);
       } else {
-        damage = damage+this.getShield()/2;
-        if (this.getShield()/4 < damage) {
-          this.setShield(this.getShield()-1);
-          return new ShipDamage(0,"Attack hit the shield!");
+        damage = damage + this.getShield() / 2;
+        if (this.getShield() / 4 < damage) {
+          this.setShield(this.getShield() - 1);
+          return new ShipDamage(0, "Attack hit the shield!");
         }
       }
       break;
     }
     case WEAPON_ECM_TORPEDO: {
       damage = weapon.getDamage();
-      this.setShield(this.getShield()-damage);
-      return new ShipDamage(1,"Attacked damage shield by "+damage+"!");
+      this.setShield(this.getShield() - damage);
+      return new ShipDamage(1, "Attacked damage shield by " + damage + "!");
     }
-    default: /* Not a weapon */break;
-    }    
-    ShipDamage shipDamage = new ShipDamage(-1,"Attack hit causing "+damage+" damage!");
+    default:
+      /* Not a weapon */break;
+    }
+    ShipDamage shipDamage = new ShipDamage(-1,
+        "Attack hit causing " + damage + " damage!");
     while (damage > 0) {
-      damage = damageComponent(damage,shipDamage);
+      damage = damageComponent(damage, shipDamage);
     }
-    if (getHullPoints()==0) {
+    if (getHullPoints() == 0) {
       shipDamage.setValue(-2);
-      shipDamage.addText(getName()+" is destroyed!");
-    }    
+      shipDamage.addText(getName() + " is destroyed!");
+    }
     return shipDamage;
   }
 
@@ -625,20 +646,28 @@ public class Ship extends Construction {
   public int getDefenseValue() {
     int result = 0;
     switch (hull.getSize()) {
-    case SMALL: result = 10; break;
-    case MEDIUM: result = 5; break;
-    case LARGE: result = 0; break;
-    case HUGE: result = -5; break;
+    case SMALL:
+      result = 10;
+      break;
+    case MEDIUM:
+      result = 5;
+      break;
+    case LARGE:
+      result = 0;
+      break;
+    case HUGE:
+      result = -5;
+      break;
     }
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.JAMMER
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.JAMMER
           && hasComponentEnergy(i)) {
-        result = result+comp.getDefenseValue();
+        result = result + comp.getDefenseValue();
       }
     }
     if (getTacticSpeed() == 0) {
-      result = result -15;
+      result = result - 15;
     }
     return result;
   }
@@ -650,18 +679,16 @@ public class Ship extends Construction {
   public int getNumberOfComponents() {
     return components.size();
   }
-  
+
   /**
    * Is Ship colony ship or not
    * @return True if ship has functional colony module, otherwise false
    */
   public boolean isColonyShip() {
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.COLONY_MODULE
-          && hasComponentEnergy(i) && getColonist() > 0) {
-        return true;
-      }
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.COLONY_MODULE
+          && hasComponentEnergy(i) && getColonist() > 0) { return true; }
     }
     return false;
   }
@@ -671,50 +698,48 @@ public class Ship extends Construction {
    * @return True if ship has functional planetary invasion module, otherwise false
    */
   public boolean isTrooperShip() {
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.PLANETARY_INVASION_MODULE
-          && hasComponentEnergy(i) && getColonist() > 0) {
-        return true;
-      }
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE
+          && hasComponentEnergy(i) && getColonist() > 0) { return true; }
     }
     return false;
   }
-  
+
   /**
    * Get Troop power
    * @return Get Total troop power where improvements are taken to count
    */
   public int getTroopPower() {
-    int result = getColonist()*hull.getRace().getTrooperPower();
+    int result = getColonist() * hull.getRace().getTrooperPower();
     int multiply = 100;
     boolean found = false;
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getType()==ShipComponentType.PLANETARY_INVASION_MODULE
-          && hasComponentEnergy(i) && getColonist() > 0 && comp.getDamage()>0) {
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE
+          && hasComponentEnergy(i) && getColonist() > 0
+          && comp.getDamage() > 0) {
         multiply = multiply + comp.getDamage();
         found = true;
       }
     }
-    result = result*multiply/100;
+    result = result * multiply / 100;
     if (!found) {
       result = 0;
     }
     return result;
   }
 
-
   /**
    * Ship has colony module
    * @return True if ship has colony module, otherwise false
    */
   public boolean isColonyModule() {
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (comp.getType()==ShipComponentType.COLONY_MODULE) {
-        return true;
-      }
+      if (comp.getType() == ShipComponentType.COLONY_MODULE) { return true; }
     }
     return false;
   }
@@ -724,11 +749,10 @@ public class Ship extends Construction {
    * @return True if ship has trooper module, otherwise false
    */
   public boolean isTrooperModule() {
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (comp.getType()==ShipComponentType.PLANETARY_INVASION_MODULE) {
-        return true;
-      }
+      if (comp
+          .getType() == ShipComponentType.PLANETARY_INVASION_MODULE) { return true; }
     }
     return false;
   }
@@ -736,14 +760,15 @@ public class Ship extends Construction {
   /**
    * Get Ships damage level as color
    * @return one of these:
-   * GuiStatics.COLOR_GREEN_TEXT 
+   * GuiStatics.COLOR_GREEN_TEXT
    * GuiStatics.COLOR_YELLOW_TEXT
    * GuiStatics.COLOR_RED_TEXT
    */
   public Color getDamageColor() {
     int damageLvl = 0;
-    for (int i=0;i<hullPoints.length;i++) {
-      if (hullPoints[i] <hull.getSlotHull() && hullPoints[i] > 0 && damageLvl < 1) {
+    for (int i = 0; i < hullPoints.length; i++) {
+      if (hullPoints[i] < hull.getSlotHull() && hullPoints[i] > 0
+          && damageLvl < 1) {
         damageLvl = 1;
       }
       if (hullPoints[i] == 0 && damageLvl < 2) {
@@ -751,24 +776,26 @@ public class Ship extends Construction {
       }
     }
     switch (damageLvl) {
-    case 0: return GuiStatics.COLOR_GREEN_TEXT;
-    case 1: return GuiStatics.COLOR_YELLOW_TEXT;
-    case 2: return GuiStatics.COLOR_RED_TEXT;
-    default: return GuiStatics.COLOR_RED_TEXT;
+    case 0:
+      return GuiStatics.COLOR_GREEN_TEXT;
+    case 1:
+      return GuiStatics.COLOR_YELLOW_TEXT;
+    case 2:
+      return GuiStatics.COLOR_RED_TEXT;
+    default:
+      return GuiStatics.COLOR_RED_TEXT;
     }
 
   }
-  
-  
+
   /**
    * Get ship component by index. Can return null if index is out list.
    * @param index Component list index
    * @return ShipComponent or null
    */
-  public ShipComponent getComponent(int index) {
-    if (index >= 0 && index < components.size()) {
-      return components.get(index);
-    }
+  public ShipComponent getComponent(final int index) {
+    if (index >= 0
+        && index < components.size()) { return components.get(index); }
     return null;
   }
 
@@ -792,10 +819,11 @@ public class Ship extends Construction {
    */
   public int getTotalShield() {
     int shield1 = 0;
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (comp.getDefenseValue() > 0 && comp.getType() == ShipComponentType.SHIELD) {
-        shield1 = shield1 +comp.getDefenseValue();
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SHIELD) {
+        shield1 = shield1 + comp.getDefenseValue();
       }
     }
     return shield1;
@@ -807,7 +835,7 @@ public class Ship extends Construction {
    */
   public int getMinWeaponRange() {
     int range = 999;
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (comp.isWeapon() && comp.getWeaponRange() < range) {
         range = comp.getWeaponRange();
@@ -822,7 +850,7 @@ public class Ship extends Construction {
    */
   public int getMaxWeaponRange() {
     int range = 0;
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (comp.isWeapon() && comp.getWeaponRange() > range) {
         range = comp.getWeaponRange();
@@ -838,10 +866,11 @@ public class Ship extends Construction {
    */
   public int getTotalArmor() {
     int armor1 = 0;
-    for (int i=0;i<components.size();i++) {
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (comp.getDefenseValue() > 0 && comp.getType() == ShipComponentType.ARMOR) {
-        armor1 = armor1 +comp.getDefenseValue();
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.ARMOR) {
+        armor1 = armor1 + comp.getDefenseValue();
       }
     }
     return armor1;
@@ -852,7 +881,7 @@ public class Ship extends Construction {
    * @return Maximum hull points
    */
   public int getMaxHullPoints() {
-    return hull.getSlotHull()*hullPoints.length;
+    return hull.getSlotHull() * hullPoints.length;
   }
 
   /**
@@ -861,8 +890,8 @@ public class Ship extends Construction {
    */
   public int getHullPoints() {
     int value = 0;
-    for (int i=0;i<hullPoints.length;i++) {
-      value = value +hullPoints[i];
+    for (int i = 0; i < hullPoints.length; i++) {
+      value = value + hullPoints[i];
     }
     return value;
   }
@@ -875,7 +904,7 @@ public class Ship extends Construction {
    * Shield value cannot be set under zero. Minimum value is set to zero.
    * @param shield New shield value
    */
-  public void setShield(int shield) {
+  public void setShield(final int shield) {
     if (shield >= 0) {
       this.shield = shield;
     } else {
@@ -891,7 +920,7 @@ public class Ship extends Construction {
    * Armor value cannot be set under zero. Minimum value is set to zero.
    * @param armor New armor value
    */
-  public void setArmor(int armor) {
+  public void setArmor(final int armor) {
     if (armor >= 0) {
       this.armor = armor;
     } else {
@@ -903,7 +932,7 @@ public class Ship extends Construction {
     return colonist;
   }
 
-  public void setColonist(int colonist) {
+  public void setColonist(final int colonist) {
     this.colonist = colonist;
   }
 
@@ -911,7 +940,7 @@ public class Ship extends Construction {
     return metal;
   }
 
-  public void setMetal(int metal) {
+  public void setMetal(final int metal) {
     this.metal = metal;
   }
 
@@ -922,13 +951,13 @@ public class Ship extends Construction {
   public int getFreeCargoMetal() {
     int result = 0;
     if (hull.getHullType() == ShipHullType.FREIGHTER) {
-      result = hull.getMaxSlot()-getNumberOfComponents();
-      result = result -getColonist()/2-getMetal()/10-getColonist()%2;
-      result = result *10;
+      result = hull.getMaxSlot() - getNumberOfComponents();
+      result = result - getColonist() / 2 - getMetal() / 10 - getColonist() % 2;
+      result = result * 10;
     }
     return result;
   }
-  
+
   /**
    * How many colonists can be fit to cargo space
    * @return Cargo room for colonists
@@ -936,13 +965,13 @@ public class Ship extends Construction {
   public int getFreeCargoColonists() {
     int result = 0;
     if (hull.getHullType() == ShipHullType.FREIGHTER) {
-      result = hull.getMaxSlot()-getNumberOfComponents();
-      result = result -getColonist()/2-getMetal()/10;
-      result = result *2;
+      result = hull.getMaxSlot() - getNumberOfComponents();
+      result = result - getColonist() / 2 - getMetal() / 10;
+      result = result * 2;
     }
     return result;
   }
-  
+
   /**
    * Calculate military power of design. Design needs to have at least single
    * weapon to be a military ship
@@ -951,37 +980,36 @@ public class Ship extends Construction {
   public int getTotalMilitaryPower() {
     int power = 0;
     boolean militaryShip = false;
-    power = getHull().getSlotHull()*getHull().getMaxSlot();
-    for (int i=0;i<components.size();i++) {
+    power = getHull().getSlotHull() * getHull().getMaxSlot();
+    for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if ((comp.getType() == ShipComponentType.WEAPON_BEAM || 
-          comp.getType() == ShipComponentType.WEAPON_RAILGUN ||
-          comp.getType() == ShipComponentType.WEAPON_HE_MISSILE || 
-          comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) &&
-          componentIsWorking(i)){
-        militaryShip = true;
-        power = power+comp.getDamage();
-      }
-      if (comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO 
+      if ((comp.getType() == ShipComponentType.WEAPON_BEAM
+          || comp.getType() == ShipComponentType.WEAPON_RAILGUN
+          || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
+          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO)
           && componentIsWorking(i)) {
-        power = power+comp.getDamage()/2;
+        militaryShip = true;
+        power = power + comp.getDamage();
       }
-      if (comp.getType() == ShipComponentType.ARMOR ||
-          comp.getType() == ShipComponentType.SHIELD) {
-        power = power+comp.getDefenseValue();
+      if (comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
+          && componentIsWorking(i)) {
+        power = power + comp.getDamage() / 2;
       }
-      if (comp.getType() == ShipComponentType.ENGINE && 
-          getHull().getHullType() != ShipHullType.STARBASE &&
-          componentIsWorking(i)) {
-        power = power+comp.getTacticSpeed()-1;
+      if (comp.getType() == ShipComponentType.ARMOR
+          || comp.getType() == ShipComponentType.SHIELD) {
+        power = power + comp.getDefenseValue();
       }
-      if (comp.getType() == ShipComponentType.TARGETING_COMPUTER &&
-          componentIsWorking(i)) {
-        power = power+comp.getDamage()/10;
+      if (comp.getType() == ShipComponentType.ENGINE
+          && getHull().getHullType() != ShipHullType.STARBASE
+          && componentIsWorking(i)) {
+        power = power + comp.getTacticSpeed() - 1;
       }
-      if (comp.getType() == ShipComponentType.JAMMER &&
-          componentIsWorking(i)) {
-        power = power+comp.getDamage()/10;
+      if (comp.getType() == ShipComponentType.TARGETING_COMPUTER
+          && componentIsWorking(i)) {
+        power = power + comp.getDamage() / 10;
+      }
+      if (comp.getType() == ShipComponentType.JAMMER && componentIsWorking(i)) {
+        power = power + comp.getDamage() / 10;
       }
     }
     if (!militaryShip) {
@@ -989,6 +1017,5 @@ public class Ship extends Construction {
     }
     return power;
   }
-
 
 }

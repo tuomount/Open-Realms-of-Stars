@@ -1,8 +1,7 @@
 package org.openRealmOfStars.player.ship;
 
-
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -10,18 +9,18 @@ package org.openRealmOfStars.player.ship;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Ship hull Type
- * 
+ *
  */
 public enum ShipHullType {
   /**
@@ -44,34 +43,44 @@ public enum ShipHullType {
    * Weapons, cargo, colony/troop module allowed and privateering module too
    */
   PRIVATEER;
-  
+
   /**
    * Get ShipHullType index
    * @return int
    */
   public int getIndex() {
     switch (this) {
-    case NORMAL: return 0;
-    case FREIGHTER: return 1;
-    case PROBE: return 2;
-    case STARBASE: return 3;
-    case PRIVATEER: return 4;
+    case NORMAL:
+      return 0;
+    case FREIGHTER:
+      return 1;
+    case PROBE:
+      return 2;
+    case STARBASE:
+      return 3;
+    case PRIVATEER:
+      return 4;
     }
     return 0;
   }
-  
+
   /**
    * Return ShipHullType by index
    * @param index This must be between 0-4
    * @return Ship hull type
    */
-  public static ShipHullType getTypeByIndex(int index) {
+  public static ShipHullType getTypeByIndex(final int index) {
     switch (index) {
-    case 0: return ShipHullType.NORMAL;
-    case 1: return ShipHullType.FREIGHTER;
-    case 2: return ShipHullType.PROBE;
-    case 3: return ShipHullType.STARBASE;
-    case 4: return ShipHullType.PRIVATEER;
+    case 0:
+      return ShipHullType.NORMAL;
+    case 1:
+      return ShipHullType.FREIGHTER;
+    case 2:
+      return ShipHullType.PROBE;
+    case 3:
+      return ShipHullType.STARBASE;
+    case 4:
+      return ShipHullType.PRIVATEER;
     }
     return ShipHullType.NORMAL;
   }
@@ -79,11 +88,16 @@ public enum ShipHullType {
   @Override
   public String toString() {
     switch (this) {
-    case NORMAL: return "Normal";
-    case FREIGHTER: return "Freighter";
-    case PROBE: return "Probe";
-    case STARBASE: return "Starbase";
-    case PRIVATEER: return "Privateer";
+    case NORMAL:
+      return "Normal";
+    case FREIGHTER:
+      return "Freighter";
+    case PROBE:
+      return "Probe";
+    case STARBASE:
+      return "Starbase";
+    case PRIVATEER:
+      return "Privateer";
     }
     return "Error - Unknown";
 
@@ -95,11 +109,16 @@ public enum ShipHullType {
    */
   public String getDescription() {
     switch (this) {
-    case NORMAL: return toString()+", All weapons allowed. No cargo.";
-    case FREIGHTER: return toString()+", no weapons allowed. Cargo ship";
-    case PROBE: return toString()+", no weapons allowed. FTL speed faster.";
-    case STARBASE: return toString()+", No engine, Starbase components";
-    case PRIVATEER: return toString()+", Weapons, cargo and privateering.";
+    case NORMAL:
+      return toString() + ", All weapons allowed. No cargo.";
+    case FREIGHTER:
+      return toString() + ", no weapons allowed. Cargo ship";
+    case PROBE:
+      return toString() + ", no weapons allowed. FTL speed faster.";
+    case STARBASE:
+      return toString() + ", No engine, Starbase components";
+    case PRIVATEER:
+      return toString() + ", Weapons, cargo and privateering.";
     }
     return "Error - Unknown";
 

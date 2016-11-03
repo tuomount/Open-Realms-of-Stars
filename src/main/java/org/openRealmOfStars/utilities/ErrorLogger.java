@@ -1,4 +1,5 @@
 package org.openRealmOfStars.utilities;
+
 /**
  *
  * Open Realm of Stars game project
@@ -20,19 +21,19 @@ package org.openRealmOfStars.utilities;
  * Error logger class
  *
  */
- public class ErrorLogger {
+public class ErrorLogger {
 
-    /**
-     * Log the error message
-     */
-    public static void log(String message) {
-        System.err.println(message);
-    }
+  /**
+   * Log the error message
+   */
+  public static void log(final String message) {
+    System.err.println(message);
+  }
 
-    /**
-     * Log the exception
-     */
-    public static void log(Exception exception) {
-        ErrorLogger.log(exception.getMessage());
-    }
+  /**
+   * Log the exception
+   */
+  public static void log(final Exception exception) {
+    ErrorLogger.log(exception.getMessage());
+  }
 }

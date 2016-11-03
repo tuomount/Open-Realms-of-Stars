@@ -15,9 +15,8 @@ import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 
-
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -25,57 +24,57 @@ import org.openRealmOfStars.utilities.ErrorLogger;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Tech list for player
- * 
+ *
  */
 public class TechList {
-  
+
   /**
    * Maximum number of tech levels
    */
   public static final int MAX_TECH_LEVEL = 10;
-  
+
   /**
    * Maximum number of tech types
    */
   public static final int MAX_TECH_TYPES = TechType.values().length;
-  
+
   /**
    * List of researched techs, First are TechTypes, second is tech level
    */
   private TechListForLevel[][] techList;
-  
+
   /**
    * Tech Levels
    */
   private int[] techLevels = new int[TechType.values().length];
-  
+
   /**
    * Tech Focus levels. These must be between 0-100%. When all techs
    * are summed total must be 100%
    */
   private int[] techFocus = new int[TechType.values().length];
-  
+
   /**
    * Tech research points
    */
   private double[] techResearchPoint = new double[TechType.values().length];
-  
+
   public TechList() {
     techList = new TechListForLevel[TechType.values().length][MAX_TECH_LEVEL];
-    for (int i=0;i<MAX_TECH_TYPES;i++) {
-      for (int j=0;j<MAX_TECH_LEVEL;j++) {
-        techList[i][j] = new TechListForLevel(j+1);
+    for (int i = 0; i < MAX_TECH_TYPES; i++) {
+      for (int j = 0; j < MAX_TECH_LEVEL; j++) {
+        techList[i][j] = new TechListForLevel(j + 1);
       }
     }
     techLevels[TechType.Combat.getIndex()] = 1;
@@ -91,58 +90,56 @@ public class TechList {
     techFocus[TechType.Propulsion.getIndex()] = 16;
     techFocus[TechType.Electrics.getIndex()] = 16;
   }
-  
+
   /**
    * Save Tech list for DataOutputStream
    * @param dos Data output stream
    * @throws IOException if there is any problem with DataOutputStream
    */
-  public void saveTechList(DataOutputStream dos) throws IOException {
-    for (int i=0;i<MAX_TECH_TYPES;i++) {
-      for (int j=0;j<MAX_TECH_LEVEL;j++) {
+  public void saveTechList(final DataOutputStream dos) throws IOException {
+    for (int i = 0; i < MAX_TECH_TYPES; i++) {
+      for (int j = 0; j < MAX_TECH_LEVEL; j++) {
         techList[i][j].saveTechListForLevel(dos);
       }
     }
-    for (int i=0;i<MAX_TECH_TYPES;i++) {
+    for (int i = 0; i < MAX_TECH_TYPES; i++) {
       dos.writeInt(techLevels[i]);
       dos.writeInt(techFocus[i]);
       dos.writeDouble(techResearchPoint[i]);
     }
-    
+
   }
-  
+
   /**
    * Read TechList from DataInputStream
    * @param dis DataInputStream
    * @throws IOException if there is any problem with DataInputStream
    */
-  public TechList(DataInputStream dis) throws IOException {
+  public TechList(final DataInputStream dis) throws IOException {
     techList = new TechListForLevel[TechType.values().length][MAX_TECH_LEVEL];
-    for (int i=0;i<MAX_TECH_TYPES;i++) {
-      for (int j=0;j<MAX_TECH_LEVEL;j++) {
-        techList[i][j] = new TechListForLevel(j+1, TechType.values()[i], dis);
+    for (int i = 0; i < MAX_TECH_TYPES; i++) {
+      for (int j = 0; j < MAX_TECH_LEVEL; j++) {
+        techList[i][j] = new TechListForLevel(j + 1, TechType.values()[i], dis);
       }
     }
-    for (int i=0;i<MAX_TECH_TYPES;i++) {
+    for (int i = 0; i < MAX_TECH_TYPES; i++) {
       techLevels[i] = dis.readInt();
       techFocus[i] = dis.readInt();
       techResearchPoint[i] = dis.readDouble();
     }
 
   }
-  
+
   /**
    * Check if certain tech is in tech list
    * @param techName Tech name to search
    * @return True if found, otherwise false
    */
-  public boolean isTech(String techName) {
-    for (int i=0;i<MAX_TECH_TYPES;i++) {
-      for (int j=0;j<MAX_TECH_LEVEL;j++) {
+  public boolean isTech(final String techName) {
+    for (int i = 0; i < MAX_TECH_TYPES; i++) {
+      for (int j = 0; j < MAX_TECH_LEVEL; j++) {
         TechListForLevel tech = techList[i][j];
-        if (tech.isTech(techName)) {
-          return true;
-        }
+        if (tech.isTech(techName)) { return true; }
       }
     }
     return false;
@@ -152,61 +149,59 @@ public class TechList {
    * Add new tech to tech list if it is not in list yet.
    * @param tech Tech to add
    */
-  public void addTech(Tech tech) {
-    int index =tech.getType().getIndex();
-    int lvl = tech.getLevel()-1;
+  public void addTech(final Tech tech) {
+    int index = tech.getType().getIndex();
+    int lvl = tech.getLevel() - 1;
     if (!techList[index][lvl].isTech(tech.getName())) {
       techList[index][lvl].addTech(tech);
     }
   }
-  
+
   /**
    * Get Tech Level
    * @param type Tech type which level is going to be checked
    * @return Level 1-10
    */
-  public int getTechLevel(TechType type) {
+  public int getTechLevel(final TechType type) {
     int index = type.getIndex();
-    if (index >= 0 && index < techLevels.length) {
-      return techLevels[index];
-    }
+    if (index >= 0 && index < techLevels.length) { return techLevels[index]; }
     return -1;
   }
-  
+
   /**
    * Set Tech Level
    * @param type Tech type which is going to be set
    * @param level Level must be between 1-10
    */
-  public void setTechLevel(TechType type, int level) {
+  public void setTechLevel(final TechType type, final int level) {
     int index = type.getIndex();
     if (level >= 1 && level < 11 && index >= 0 && index < techLevels.length) {
       techLevels[index] = level;
     }
   }
-  
+
   /**
    * Get tech list for certain tech type
    * @param type Tech Type to get the list
    * @return tech list as a tech array
    */
-  public Tech[] getListForType(TechType type) {
+  public Tech[] getListForType(final TechType type) {
     ArrayList<Tech> list = new ArrayList<>();
     int index = type.getIndex();
-    for (int i=0;i<MAX_TECH_LEVEL;i++) {
+    for (int i = 0; i < MAX_TECH_LEVEL; i++) {
       for (Tech tech : techList[index][i].getList()) {
         list.add(tech);
       }
     }
     return list.toArray(new Tech[list.size()]);
   }
-  
+
   /**
    * Get Mark level from tech name and return it
    * @param techName where Mark(Mk) is searched
    * @return 0 if not found otherwise mark level.
    */
-  public static int getMarkLevel(String techName) {
+  public static int getMarkLevel(final String techName) {
     String[] temp = techName.split(" ");
     for (String buf : temp) {
       if (buf.startsWith("Mk") && buf.length() > 2) {
@@ -220,14 +215,14 @@ public class TechList {
     }
     return 0;
   }
-    
+
   /**
    * Search best tech with best mark level
-   * @param list Tech list where to search 
-   * @param techName name use for search 
+   * @param list Tech list where to search
+   * @param techName name use for search
    * @return Best tech if found or null if not found
    */
-  public static Tech getBestTech(Tech[] list, String techName) {
+  public static Tech getBestTech(final Tech[] list, final String techName) {
     Tech best = null;
     int bestLvl = -1;
     for (Tech tech : list) {
@@ -251,11 +246,12 @@ public class TechList {
     int bestValue = -1;
     Tech[] list = getListForType(TechType.Propulsion);
     for (Tech tech : list) {
-      ShipComponent comp = ShipComponentFactory.createByName(tech.getComponent());
+      ShipComponent comp = ShipComponentFactory
+          .createByName(tech.getComponent());
       if (comp.getEnergyResource() > bestValue) {
         best = tech;
         bestValue = comp.getEnergyResource();
-        
+
       }
     }
     return best;
@@ -271,15 +267,16 @@ public class TechList {
     int bestValue = -1;
     Tech[] list = getListForType(TechType.Propulsion);
     for (Tech tech : list) {
-      ShipComponent comp = ShipComponentFactory.createByName(tech.getComponent());
+      ShipComponent comp = ShipComponentFactory
+          .createByName(tech.getComponent());
       if (comp.getType() == ShipComponentType.ENGINE) {
         int compValue = -1;
-        if (comp.getFtlSpeed() > 1 && comp.getSpeed() == 1 
-            && comp.getTacticSpeed() ==1) {
-          compValue = comp.getFtlSpeed()-1;
+        if (comp.getFtlSpeed() > 1 && comp.getSpeed() == 1
+            && comp.getTacticSpeed() == 1) {
+          compValue = comp.getFtlSpeed() - 1;
         } else {
-          compValue = comp.getFtlSpeed()+(comp.getSpeed()-1)+
-              (comp.getTacticSpeed()-1)+comp.getEnergyResource();
+          compValue = comp.getFtlSpeed() + (comp.getSpeed() - 1)
+              + (comp.getTacticSpeed() - 1) + comp.getEnergyResource();
         }
         if (compValue > bestValue) {
           best = tech;
@@ -304,12 +301,13 @@ public class TechList {
     int bestValue = -1;
     Tech[] list = getListForType(TechType.Combat);
     for (Tech tech : list) {
-      ShipComponent comp = ShipComponentFactory.createByName(tech.getComponent());
+      ShipComponent comp = ShipComponentFactory
+          .createByName(tech.getComponent());
       int compValue = -1;
-      if (comp.getType() == ShipComponentType.WEAPON_BEAM ||
-          comp.getType() == ShipComponentType.WEAPON_HE_MISSILE ||
-          comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO ||
-          comp.getType() == ShipComponentType.WEAPON_RAILGUN)  {
+      if (comp.getType() == ShipComponentType.WEAPON_BEAM
+          || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
+          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
+          || comp.getType() == ShipComponentType.WEAPON_RAILGUN) {
         compValue = comp.getDamage();
       }
       if (compValue > bestValue) {
@@ -329,14 +327,15 @@ public class TechList {
    * @param type Weapon type for search
    * @return Best weapon tech or null if not found
    */
-  public Tech getBestWeapon(ShipComponentType type) {
+  public Tech getBestWeapon(final ShipComponentType type) {
     Tech best = null;
     int bestValue = -1;
     Tech[] list = getListForType(TechType.Combat);
     for (Tech tech : list) {
-      ShipComponent comp = ShipComponentFactory.createByName(tech.getComponent());
+      ShipComponent comp = ShipComponentFactory
+          .createByName(tech.getComponent());
       int compValue = -1;
-      if (comp.getType() == type)  {
+      if (comp.getType() == type) {
         compValue = comp.getDamage();
         if (compValue > bestValue) {
           best = tech;
@@ -345,7 +344,7 @@ public class TechList {
           best = tech;
           bestValue = compValue;
         }
-      } 
+      }
     }
     return best;
   }
@@ -356,11 +355,9 @@ public class TechList {
    * @param level Level of tech list 1-10
    * @return tech list as a tech array
    */
-  public Tech[] getListForTypeAndLevel(TechType type, int level) {
-    int levelIndex = level -1;
-    if (levelIndex >= 10 || levelIndex < 0) {
-      return new Tech[0];
-    }
+  public Tech[] getListForTypeAndLevel(final TechType type, final int level) {
+    int levelIndex = level - 1;
+    if (levelIndex >= 10 || levelIndex < 0) { return new Tech[0]; }
     ArrayList<Tech> list = new ArrayList<>();
     int index = type.getIndex();
     for (Tech tech : techList[index][levelIndex].getList()) {
@@ -368,29 +365,28 @@ public class TechList {
     }
     return list.toArray(new Tech[list.size()]);
   }
-  
+
   /**
    * Is Tech list for certain level full
    * @param type Tech Type
    * @param level Level
    * @return true if full or false if not
    */
-  public boolean isTechListForLevelFull(TechType type, int level) {
+  public boolean isTechListForLevelFull(final TechType type, final int level) {
     Tech[] list = getListForTypeAndLevel(type, level);
     String[] choices = TechFactory.getListByTechLevel(type, level);
-    if (list.length == choices.length) {
-      return true;
-    }
+    if (list.length == choices.length) { return true; }
     return false;
   }
+
   /**
    * Get Full Tech List
    * @return tech list as a tech array
    */
   public Tech[] getList() {
     ArrayList<Tech> list = new ArrayList<>();
-    for (int j=0;j<MAX_TECH_TYPES;j++) {
-      for (int i=0;i<MAX_TECH_LEVEL;i++) {
+    for (int j = 0; j < MAX_TECH_TYPES; j++) {
+      for (int i = 0; i < MAX_TECH_LEVEL; i++) {
         for (Tech tech : techList[j][i].getList()) {
           list.add(tech);
         }
@@ -398,92 +394,101 @@ public class TechList {
     }
     return list.toArray(new Tech[list.size()]);
   }
-  
+
   /**
    * Fine tune value for tech focus
    */
   public static final int FINE_TUNE_VALUE = 4;
+
   /**
    * Tries to settle so that tech focus about evenly distributed
    * @param type Tech type not used for in settling
    * @param value Value which tech focus was set
    */
-  private void settleTechFocus(TechType type, int value) {
+  private void settleTechFocus(final TechType type, final int value) {
     int redis = 100;
-    for (int i=0;i<TechType.values().length;i++) {
-      redis = redis -techFocus[i];
+    for (int i = 0; i < TechType.values().length; i++) {
+      redis = redis - techFocus[i];
     }
-    int average = (100-value) / (TechType.values().length-1);
+    int average = (100 - value) / (TechType.values().length - 1);
     while (redis != 0) {
-      for (int i=0;i<TechType.values().length;i++) {
-        if (i != type.getIndex() && redis > 0 && techFocus[i] < average && redis >= FINE_TUNE_VALUE) {
-            techFocus[i] = techFocus[i]+FINE_TUNE_VALUE;
-            redis = redis -FINE_TUNE_VALUE;
+      for (int i = 0; i < TechType.values().length; i++) {
+        if (i != type.getIndex() && redis > 0 && techFocus[i] < average
+            && redis >= FINE_TUNE_VALUE) {
+          techFocus[i] = techFocus[i] + FINE_TUNE_VALUE;
+          redis = redis - FINE_TUNE_VALUE;
         }
-        if (i != type.getIndex() && redis < 0 && techFocus[i] > average && techFocus[i] >= FINE_TUNE_VALUE && redis <= -FINE_TUNE_VALUE) {
-          techFocus[i] = techFocus[i]-FINE_TUNE_VALUE;
-          redis = redis +FINE_TUNE_VALUE;
+        if (i != type.getIndex() && redis < 0 && techFocus[i] > average
+            && techFocus[i] >= FINE_TUNE_VALUE && redis <= -FINE_TUNE_VALUE) {
+          techFocus[i] = techFocus[i] - FINE_TUNE_VALUE;
+          redis = redis + FINE_TUNE_VALUE;
         }
 
       }
-      for (int i=0;i<TechType.values().length;i++) {
-        if (i != type.getIndex() && redis > 0 && techFocus[i] == average && redis >= FINE_TUNE_VALUE) {
-          techFocus[i] = techFocus[i]+FINE_TUNE_VALUE;
-          redis = redis -FINE_TUNE_VALUE;
+      for (int i = 0; i < TechType.values().length; i++) {
+        if (i != type.getIndex() && redis > 0 && techFocus[i] == average
+            && redis >= FINE_TUNE_VALUE) {
+          techFocus[i] = techFocus[i] + FINE_TUNE_VALUE;
+          redis = redis - FINE_TUNE_VALUE;
         }
-        if (i != type.getIndex() && redis < 0 && techFocus[i] == average && redis <= -FINE_TUNE_VALUE && techFocus[i] >= FINE_TUNE_VALUE) {
-          techFocus[i] = techFocus[i]-FINE_TUNE_VALUE;
-          redis = redis +FINE_TUNE_VALUE;
+        if (i != type.getIndex() && redis < 0 && techFocus[i] == average
+            && redis <= -FINE_TUNE_VALUE && techFocus[i] >= FINE_TUNE_VALUE) {
+          techFocus[i] = techFocus[i] - FINE_TUNE_VALUE;
+          redis = redis + FINE_TUNE_VALUE;
         }
 
-      }    
+      }
     }
   }
-  
+
   /**
    * Set Tech Focus level for certain type with value.
    * Makes sure that total focus level is set to 100%
    * @param type Tech type
    * @param value Value to set for certain type. Must be between 0-100%
    */
-  public void setTechFocus(TechType type, int value) {
+  public void setTechFocus(final TechType type, final int value) {
     if (value >= 0 && value <= 100) {
       techFocus[type.getIndex()] = value;
-      settleTechFocus(type,value);
+      settleTechFocus(type, value);
     }
   }
-  
+
   /**
    * Get Tech focus for certain type of tech.
    * @param type The tech type
    * @return The tech focus
    */
-  public int getTechFocus(TechType type) {
+  public int getTechFocus(final TechType type) {
     return techFocus[type.getIndex()];
   }
-  
+
   /**
    * Get Tech research points for certain type of tech
    * @param type TechType
    * @return research points spent so far as double
    */
-  public double getTechResearchPoints(TechType type) {
+  public double getTechResearchPoints(final TechType type) {
     return techResearchPoint[type.getIndex()];
   }
-  
+
   /**
    * Update Research points by turn. This will also grant a new technology
    * @param totalResearchPoints player makes per turn
    * @param info PlayerInfo for message information
    */
-  public void updateResearchPointByTurn(int totalResearchPoints, PlayerInfo info) {
-    for (int i=0;i<techFocus.length;i++) {
-      techResearchPoint[i] = techResearchPoint[i] + techFocus[i]*totalResearchPoints/100.0;
+  public void updateResearchPointByTurn(final int totalResearchPoints,
+      final PlayerInfo info) {
+    for (int i = 0; i < techFocus.length; i++) {
+      techResearchPoint[i] = techResearchPoint[i]
+          + techFocus[i] * totalResearchPoints / 100.0;
       if (techResearchPoint[i] >= TechFactory.getTechCost(techLevels[i])) {
-        techResearchPoint[i] = techResearchPoint[i]-TechFactory.getTechCost(techLevels[i]);
+        techResearchPoint[i] = techResearchPoint[i]
+            - TechFactory.getTechCost(techLevels[i]);
         TechType type = TechType.getTypeByIndex(i);
         int lvl = techLevels[i];
-        Tech tech = TechFactory.createRandomTech(type, lvl,getListForTypeAndLevel(type, lvl));
+        Tech tech = TechFactory.createRandomTech(type, lvl,
+            getListForTypeAndLevel(type, lvl));
         addTech(tech);
         StringBuilder sb = new StringBuilder();
         sb.append(info.getEmpireName());
@@ -495,11 +500,11 @@ public class TechList {
         sb.append(lvl);
         sb.append(". ");
         if (isTechListForLevelFull(type, lvl)) {
-          techLevels[i] = lvl +1;
+          techLevels[i] = lvl + 1;
           sb.append(tech.getType().toString());
           sb.append(" has advenced to next level.");
         }
-        Message msg = new Message(MessageType.RESEARCH, sb.toString(), 
+        Message msg = new Message(MessageType.RESEARCH, sb.toString(),
             Icons.getIconByName(Icons.ICON_RESEARCH));
         msg.setMatchByString(tech.getName());
         info.getMsgList().addNewMessage(msg);
@@ -507,7 +512,7 @@ public class TechList {
     }
 
   }
-  
+
   /**
    * Get building list from researched technology
    * @return String array of building names

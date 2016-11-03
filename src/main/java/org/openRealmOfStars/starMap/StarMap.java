@@ -27,7 +27,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -35,22 +35,21 @@ import org.openRealmOfStars.utilities.IOUtilities;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Class planet
- * 
+ *
  */
 public class StarMap {
 
-  
   /**
    * Star map's maximum X coordinate
    */
@@ -59,21 +58,19 @@ public class StarMap {
    * Star map's maximum Y coordinate
    */
   private int maxY;
-  
+
   /**
    * Tiles to show. Contains only planets, suns, asteroids etc.
    */
   private int tiles[][];
-  
-  
+
   private SquareInfo tileInfo[][];
-  
+
   /**
    * Culture level for each sector
    */
   private CulturePower culture[][];
-  
-  
+
   /**
    * Cursor X coordinate
    */
@@ -82,7 +79,7 @@ public class StarMap {
    * Cursor Y coordinate
    */
   private int cursorY;
-  
+
   /**
    * Draw X coordinate
    */
@@ -91,7 +88,7 @@ public class StarMap {
    * Draw Y Coordinate
    */
   private int drawY;
-  
+
   /**
    * List of suns in star map
    */
@@ -106,31 +103,31 @@ public class StarMap {
    * List of players
    */
   private PlayerList players;
-  
+
   /**
    * Game turn
    */
   private int turn;
-  
+
   /**
    * Fleet tiles on map
    */
   private FleetTileInfo[][] fleetTiles;
-  
+
   /**
    * AI turn number
    */
   private int aiTurnNumber;
-  
+
   /**
    * AI fleet for current AI number
    */
   private Fleet aiFleet;
-  
+
   /**
    * Magic string to save game files
    */
-  public final static String MAGIC_STRING ="OROS-SAVE-GAME-0.2";
+  public final static String MAGIC_STRING = "OROS-SAVE-GAME-0.2";
 
   /**
    * Constructor for StarMap. Generates universe with galaxy config and
@@ -138,7 +135,7 @@ public class StarMap {
    * @param config Galaxy config
    * @param players Players
    */
-  public StarMap(GalaxyConfig config, PlayerList players) {
+  public StarMap(final GalaxyConfig config, final PlayerList players) {
     maxX = config.getSizeX();
     maxY = config.getSizeY();
     this.players = players;
@@ -153,8 +150,8 @@ public class StarMap {
     sunList = new ArrayList<>();
     planetList = new ArrayList<>();
     Tile empty = Tiles.getTileByName(TileNames.EMPTY);
-    for (int i=0;i<maxX;i++) {
-      for (int j=0;j<maxY;j++) {
+    for (int i = 0; i < maxX; i++) {
+      for (int j = 0; j < maxY; j++) {
         tiles[i][j] = empty.getIndex();
         tileInfo[i][j] = SquareInfo.EMPTY_TILE;
         culture[i][j] = new CulturePower();
@@ -168,17 +165,17 @@ public class StarMap {
       createBorderStartingSystems(config, solarSystem);
     }
     if (config.getStartingPosition() == GalaxyConfig.START_POSITION_RANDOM) {
-      for (int i=0;i<config.getMaxPlayers();i++) {
+      for (int i = 0; i < config.getMaxPlayers(); i++) {
         while (true) {
           int sx = DiceGenerator.getRandom(StarMapStatics.SOLARSYSTEMWIDTH,
-                     maxX-StarMapStatics.SOLARSYSTEMWIDTH);
+              maxX - StarMapStatics.SOLARSYSTEMWIDTH);
           int sy = DiceGenerator.getRandom(StarMapStatics.SOLARSYSTEMWIDTH,
-              maxX-StarMapStatics.SOLARSYSTEMWIDTH);
+              maxX - StarMapStatics.SOLARSYSTEMWIDTH);
           int planets = DiceGenerator.getRandom(3, 5);
           int gasGiants = DiceGenerator.getRandom(2);
           if (StarMapUtilities.isSolarSystem(solarSystem, sx, sy, maxX, maxY,
-              config.getSolarSystemDistance())==0) {
-            createSolarSystem(solarSystem,sx,sy,planets,gasGiants,i);
+              config.getSolarSystemDistance()) == 0) {
+            createSolarSystem(solarSystem, sx, sy, planets, gasGiants, i);
             break;
           }
         }
@@ -186,144 +183,145 @@ public class StarMap {
     }
     // Random system
     int loop = 0;
-    while (loop <1000) {
+    while (loop < 1000) {
       int sx = DiceGenerator.getRandom(StarMapStatics.SOLARSYSTEMWIDTH,
-          maxX-StarMapStatics.SOLARSYSTEMWIDTH);
+          maxX - StarMapStatics.SOLARSYSTEMWIDTH);
       int sy = DiceGenerator.getRandom(StarMapStatics.SOLARSYSTEMWIDTH,
-         maxX-StarMapStatics.SOLARSYSTEMWIDTH);
+          maxX - StarMapStatics.SOLARSYSTEMWIDTH);
       int planets = DiceGenerator.getRandom(1, 6);
       int gasGiants = DiceGenerator.getRandom(3);
       if (StarMapUtilities.isSolarSystem(solarSystem, sx, sy, maxX, maxY,
-          config.getSolarSystemDistance())==0) {
-       createSolarSystem(solarSystem,sx,sy,planets,gasGiants);
-       int full = StarMapUtilities.getSystemFullness(solarSystem, maxX, maxY);
-       if (full > 60) {
-         // Enough solar systems
-         break;
-       }
+          config.getSolarSystemDistance()) == 0) {
+        createSolarSystem(solarSystem, sx, sy, planets, gasGiants);
+        int full = StarMapUtilities.getSystemFullness(solarSystem, maxX, maxY);
+        if (full > 60) {
+          // Enough solar systems
+          break;
+        }
       }
-    loop++;
+      loop++;
     }
   }
-  
+
   /**
    * Create border starting solar system
    * @param config Galaxy Config
    * @param solarSystem Solar system map
    */
-  private void createBorderStartingSystems(GalaxyConfig config, 
-     int[][] solarSystem) {
+  private void createBorderStartingSystems(final GalaxyConfig config,
+      final int[][] solarSystem) {
     // First starting Systems
     int sx = StarMapStatics.SOLARSYSTEMWIDTH;
     int sy = StarMapStatics.SOLARSYSTEMWIDTH;
     int planets = DiceGenerator.getRandom(3, 5);
     int gasGiants = DiceGenerator.getRandom(2);
     if (config.getMaxPlayers() == 2) {
-      //First player
-      sx = maxX/2;
+      // First player
+      sx = maxX / 2;
       sy = StarMapStatics.SOLARSYSTEMWIDTH;
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
-      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,0);
-      
-      //Second player
-      sx = maxX/2;
-      sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
+      createSolarSystem(solarSystem, sx, sy, planets, gasGiants, 0);
+
+      // Second player
+      sx = maxX / 2;
+      sy = maxY - StarMapStatics.SOLARSYSTEMWIDTH;
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
-      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,1);
+      createSolarSystem(solarSystem, sx, sy, planets, gasGiants, 1);
 
     } else if (config.getMaxPlayers() == 3) {
-      //First player
+      // First player
       sx = StarMapStatics.SOLARSYSTEMWIDTH;
-      sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
+      sy = maxY - StarMapStatics.SOLARSYSTEMWIDTH;
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
-      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,0);
-      
-      //Second player
-      sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
-      sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
-      planets = DiceGenerator.getRandom(3, 5);
-      gasGiants = DiceGenerator.getRandom(2);
-      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,1);
+      createSolarSystem(solarSystem, sx, sy, planets, gasGiants, 0);
 
-      //Third player
-      sx = maxX/2;
+      // Second player
+      sx = maxX - StarMapStatics.SOLARSYSTEMWIDTH;
+      sy = maxY - StarMapStatics.SOLARSYSTEMWIDTH;
+      planets = DiceGenerator.getRandom(3, 5);
+      gasGiants = DiceGenerator.getRandom(2);
+      createSolarSystem(solarSystem, sx, sy, planets, gasGiants, 1);
+
+      // Third player
+      sx = maxX / 2;
       sy = StarMapStatics.SOLARSYSTEMWIDTH;
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
-      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,2);
+      createSolarSystem(solarSystem, sx, sy, planets, gasGiants, 2);
 
     } else if (config.getMaxPlayers() >= 4) {
-      //First player
+      // First player
       sx = StarMapStatics.SOLARSYSTEMWIDTH;
       sy = StarMapStatics.SOLARSYSTEMWIDTH;
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
-      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,0);
-      
-      //Second player
-      sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
+      createSolarSystem(solarSystem, sx, sy, planets, gasGiants, 0);
+
+      // Second player
+      sx = maxX - StarMapStatics.SOLARSYSTEMWIDTH;
       sy = StarMapStatics.SOLARSYSTEMWIDTH;
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
-      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,1);
+      createSolarSystem(solarSystem, sx, sy, planets, gasGiants, 1);
 
-      //Third player
+      // Third player
       sx = StarMapStatics.SOLARSYSTEMWIDTH;
-      sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
+      sy = maxY - StarMapStatics.SOLARSYSTEMWIDTH;
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
-      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,2);
+      createSolarSystem(solarSystem, sx, sy, planets, gasGiants, 2);
 
-      //Fourth player
-      sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
-      sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
+      // Fourth player
+      sx = maxX - StarMapStatics.SOLARSYSTEMWIDTH;
+      sy = maxY - StarMapStatics.SOLARSYSTEMWIDTH;
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
-      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,3);
+      createSolarSystem(solarSystem, sx, sy, planets, gasGiants, 3);
     }
-    
+
     if (config.getMaxPlayers() >= 5) {
-      //Fifth player
-      sx = maxX/2;
-      sy = maxY-StarMapStatics.SOLARSYSTEMWIDTH;
+      // Fifth player
+      sx = maxX / 2;
+      sy = maxY - StarMapStatics.SOLARSYSTEMWIDTH;
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
-      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,4);
+      createSolarSystem(solarSystem, sx, sy, planets, gasGiants, 4);
     }
     if (config.getMaxPlayers() >= 6) {
-      //Sixth player
-      sx = maxX/2;
+      // Sixth player
+      sx = maxX / 2;
       sy = StarMapStatics.SOLARSYSTEMWIDTH;
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
-      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,5);
+      createSolarSystem(solarSystem, sx, sy, planets, gasGiants, 5);
     }
     if (config.getMaxPlayers() >= 7) {
-      //Seventh player
+      // Seventh player
       sx = StarMapStatics.SOLARSYSTEMWIDTH;
-      sy = maxY/2;
+      sy = maxY / 2;
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
-      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,6);
+      createSolarSystem(solarSystem, sx, sy, planets, gasGiants, 6);
     }
     if (config.getMaxPlayers() == 8) {
-      //Eight player
-      sx = maxX-StarMapStatics.SOLARSYSTEMWIDTH;
-      sy = maxY/2;
+      // Eight player
+      sx = maxX - StarMapStatics.SOLARSYSTEMWIDTH;
+      sy = maxY / 2;
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
-      createSolarSystem(solarSystem,sx,sy,planets,gasGiants,7);
+      createSolarSystem(solarSystem, sx, sy, planets, gasGiants, 7);
     }
   }
+
   /**
    * Initialize StarMap from DataInputStream
    * @param dis DataInputStream
    * @throws IOException if there is any problem with DataInputStream
    */
-  public StarMap(DataInputStream dis) throws IOException {
+  public StarMap(final DataInputStream dis) throws IOException {
     String str = IOUtilities.readString(dis);
     if (str.equals(MAGIC_STRING)) {
       turn = dis.readInt();
@@ -337,40 +335,39 @@ public class StarMap {
       tileInfo = new SquareInfo[maxX][maxY];
 
       // Map data itself
-      for (int x=0;x<maxX;x++) {
-        for (int y=0;y<maxY;y++) {
+      for (int x = 0; x < maxX; x++) {
+        for (int y = 0; y < maxY; y++) {
           tiles[x][y] = dis.readInt();
           tileInfo[x][y] = new SquareInfo(dis);
           culture[x][y] = new CulturePower();
         }
       }
       // Read suns
-      int count =dis.readInt();
-      for (int i=0;i<count;i++) {
+      int count = dis.readInt();
+      for (int i = 0; i < count; i++) {
         sunList.add(new Sun(dis));
       }
       // Players first
       players = new PlayerList(dis);
-      count = dis.readInt();      
-      for (int i=0;i<count;i++) {
+      count = dis.readInt();
+      for (int i = 0; i < count; i++) {
         Planet planet = new Planet(dis, players);
         planetList.add(planet);
       }
     } else {
-      if (str.startsWith("OROS-SAVE-GAME-")) {
-        throw new IOException("Stream does not contain correct StarMap information.\n"
-            + "Maybe saved game is for older version...");
-      }
+      if (str.startsWith("OROS-SAVE-GAME-")) { throw new IOException(
+          "Stream does not contain correct StarMap information.\n"
+              + "Maybe saved game is for older version..."); }
       throw new IOException("Stream does not contain StarMap information!");
     }
   }
-  
+
   /**
    * Save Game to DataOutputStream
    * @param dos DataOutputStream
    * @throws IOException if there is any problem with DataOutputStream
    */
-  public void saveGame(DataOutputStream dos) throws IOException {
+  public void saveGame(final DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, MAGIC_STRING);
     // Turn number
     dos.writeInt(turn);
@@ -378,22 +375,22 @@ public class StarMap {
     dos.writeInt(maxX);
     dos.writeInt(maxY);
     // Map data itself
-    for (int x=0;x<maxX;x++) {
-      for (int y=0;y<maxY;y++) {
+    for (int x = 0; x < maxX; x++) {
+      for (int y = 0; y < maxY; y++) {
         dos.writeInt(tiles[x][y]);
         tileInfo[x][y].writeSquareInfo(dos);
       }
     }
     // Write suns
     dos.writeInt(sunList.size());
-    for (int i=0;i<sunList.size();i++) {
+    for (int i = 0; i < sunList.size(); i++) {
       Sun sun = sunList.get(i);
       sun.saveSun(dos);
     }
     // Players first
     players.savePlayerList(dos);
     dos.writeInt(planetList.size());
-    for (int i=0;i<planetList.size();i++) {
+    for (int i = 0; i < planetList.size(); i++) {
       planetList.get(i).savePlanet(dos);
     }
   }
@@ -404,24 +401,22 @@ public class StarMap {
    * @param y y coordinate
    * @return true if valid and false if invalid
    */
-  public boolean isValidCoordinate(int x, int y) {
-    if (x >= 0 && y >= 0 && x < maxX && y<maxY ) {
-      return true;
-    }
+  public boolean isValidCoordinate(final int x, final int y) {
+    if (x >= 0 && y >= 0 && x < maxX && y < maxY) { return true; }
     return false;
   }
-  
+
   /**
    * Checks if 3x3 area is empty around the coordinate
    * @param x X coordinate
    * @param y Y coordinate
    * @return true if all are empty false otherwise
    */
-  private boolean is9NeighboursEmpty(int x, int y) {
+  private boolean is9NeighboursEmpty(final int x, final int y) {
     boolean result = true;
-    for (int i=-1;i<2;i++) {
-      for (int j=-1;j<2;j++) {
-        if (isValidCoordinate(x+i, y+j) && tiles[x+i][y+j]==0) {
+    for (int i = -1; i < 2; i++) {
+      for (int j = -1; j < 2; j++) {
+        if (isValidCoordinate(x + i, y + j) && tiles[x + i][y + j] == 0) {
           result = true;
         } else {
           return false;
@@ -439,11 +434,11 @@ public class StarMap {
    * @param y Y coordinate
    * @return true if all are empty false otherwise
    */
-  private boolean is16NeighboursEmpty(int x, int y) {
+  private boolean is16NeighboursEmpty(final int x, final int y) {
     boolean result = true;
-    for (int i=-1;i<4;i++) {
-      for (int j=-1;j<4;j++) {
-        if (isValidCoordinate(x+i, y+j) && tiles[x+i][y+j]==0) {
+    for (int i = -1; i < 4; i++) {
+      for (int j = -1; j < 4; j++) {
+        if (isValidCoordinate(x + i, y + j) && tiles[x + i][y + j] == 0) {
           result = true;
         } else {
           return false;
@@ -453,7 +448,6 @@ public class StarMap {
     return result;
   }
 
-
   /**
    * Create Solar System
    * @param solarSystem map of solar systems
@@ -462,13 +456,12 @@ public class StarMap {
    * @param numberOfPlanets Number of planets to Solar System
    * @param numberOfGasGiants Number of Gas Giants to Solar System
    */
-  private void createSolarSystem(int[][] solarSystem, int sx,int sy, 
-      int numberOfPlanets, int numberOfGasGiants) {
-    createSolarSystem(solarSystem, sx, sy, numberOfPlanets, 
-        numberOfGasGiants,-1);
+  private void createSolarSystem(final int[][] solarSystem, final int sx,
+      final int sy, final int numberOfPlanets, final int numberOfGasGiants) {
+    createSolarSystem(solarSystem, sx, sy, numberOfPlanets, numberOfGasGiants,
+        -1);
   }
 
-  
   /**
    * Create Solar System
    * @param solarSystem map of solar systems
@@ -479,8 +472,9 @@ public class StarMap {
    * @param playerIndex if Player index is else than -1 then SolarSystem
    * is created as home system for that player index.
    */
-  private void createSolarSystem(int[][] solarSystem, int sunx,int suny, 
-      int planetsToCreate, int gasGiantsToCreate,int playerIndex) {
+  private void createSolarSystem(final int[][] solarSystem, final int sunx,
+      final int suny, final int planetsToCreate, final int gasGiantsToCreate,
+      final int playerIndex) {
     int numberOfPlanets = planetsToCreate;
     int numberOfGasGiants = gasGiantsToCreate;
     if (numberOfPlanets > 5) {
@@ -490,94 +484,95 @@ public class StarMap {
       numberOfGasGiants = 2;
     }
     // The Sun
-    int sx = sunx +DiceGenerator.getRandom(-1, 1);
-    int sy = suny +DiceGenerator.getRandom(-1, 1);
+    int sx = sunx + DiceGenerator.getRandom(-1, 1);
+    int sy = suny + DiceGenerator.getRandom(-1, 1);
     StarMapUtilities.setSolarSystem(solarSystem, sx, sy, getMaxX(), getMaxY());
     Sun sun = new Sun(sx, sy, null);
     sunList.add(sun);
-    int sunNumber = sunList.size()-1;
+    int sunNumber = sunList.size() - 1;
     SquareInfo info = new SquareInfo(SquareInfo.TYPE_SUN, sunNumber);
-    tileInfo[sx-1][sy-1] = info;
-    tileInfo[sx][sy-1] = info;
-    tileInfo[sx+1][sy-1] = info;
-    tileInfo[sx-1][sy] = info;
+    tileInfo[sx - 1][sy - 1] = info;
+    tileInfo[sx][sy - 1] = info;
+    tileInfo[sx + 1][sy - 1] = info;
+    tileInfo[sx - 1][sy] = info;
     tileInfo[sx][sy] = info;
-    tileInfo[sx+1][sy] = info;
-    tileInfo[sx-1][sy+1] = info;
-    tileInfo[sx][sy+1] = info;
-    tileInfo[sx+1][sy+1] = info;
+    tileInfo[sx + 1][sy] = info;
+    tileInfo[sx - 1][sy + 1] = info;
+    tileInfo[sx][sy + 1] = info;
+    tileInfo[sx + 1][sy + 1] = info;
     tiles[sx][sy] = Tiles.getTileByName(TileNames.SUN_C).getIndex();
-    tiles[sx-1][sy-1] = Tiles.getTileByName(TileNames.SUN_NW).getIndex();
-    tiles[sx][sy-1] = Tiles.getTileByName(TileNames.SUN_N).getIndex();
-    tiles[sx+1][sy-1] = Tiles.getTileByName(TileNames.SUN_NE).getIndex();
-    tiles[sx-1][sy] = Tiles.getTileByName(TileNames.SUN_W).getIndex();
-    tiles[sx+1][sy] = Tiles.getTileByName(TileNames.SUN_E).getIndex();
-    tiles[sx-1][sy+1] = Tiles.getTileByName(TileNames.SUN_SW).getIndex();
-    tiles[sx][sy+1] = Tiles.getTileByName(TileNames.SUN_S).getIndex();
-    tiles[sx+1][sy+1] = Tiles.getTileByName(TileNames.SUN_SE).getIndex();
+    tiles[sx - 1][sy - 1] = Tiles.getTileByName(TileNames.SUN_NW).getIndex();
+    tiles[sx][sy - 1] = Tiles.getTileByName(TileNames.SUN_N).getIndex();
+    tiles[sx + 1][sy - 1] = Tiles.getTileByName(TileNames.SUN_NE).getIndex();
+    tiles[sx - 1][sy] = Tiles.getTileByName(TileNames.SUN_W).getIndex();
+    tiles[sx + 1][sy] = Tiles.getTileByName(TileNames.SUN_E).getIndex();
+    tiles[sx - 1][sy + 1] = Tiles.getTileByName(TileNames.SUN_SW).getIndex();
+    tiles[sx][sy + 1] = Tiles.getTileByName(TileNames.SUN_S).getIndex();
+    tiles[sx + 1][sy + 1] = Tiles.getTileByName(TileNames.SUN_SE).getIndex();
     int planets = 0;
     while (planets < numberOfPlanets) {
-      int px = sx +DiceGenerator.getRandom(-StarMapStatics.SOLARSYSTEMWIDTH,
+      int px = sx + DiceGenerator.getRandom(-StarMapStatics.SOLARSYSTEMWIDTH,
           StarMapStatics.SOLARSYSTEMWIDTH);
-      int py = sy +DiceGenerator.getRandom(-StarMapStatics.SOLARSYSTEMWIDTH,
+      int py = sy + DiceGenerator.getRandom(-StarMapStatics.SOLARSYSTEMWIDTH,
           StarMapStatics.SOLARSYSTEMWIDTH);
       if (is9NeighboursEmpty(px, py)) {
         planets++;
-        Planet planet = new Planet(px,py,sun.getName(),planets,false);
-        planet.setPlanetType(DiceGenerator.
-            getRandom(Planet.PLANET_IMAGE_INDEX.length-1));
+        Planet planet = new Planet(px, py, sun.getName(), planets, false);
+        planet.setPlanetType(
+            DiceGenerator.getRandom(Planet.PLANET_IMAGE_INDEX.length - 1));
         if (planets == 1 && playerIndex != -1) {
-            PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
-            Message msg = new Message(MessageType.PLANETARY,
-                playerInfo.getEmpireName()+" starts at "+planet.getName()+".",
-                Icons.getIconByName(Icons.ICON_CULTURE));
-            msg.setCoordinate(planet.getX(),planet.getY());
-            msg.setMatchByString(planet.getName());
-            playerInfo.getMsgList().addNewMessage(msg);
-            planet.setPlanetOwner(playerIndex,playerInfo);
-            planet.setRadiationLevel(1);
-            planet.setGroundSize(12);
-            planet.setAmountMetalInGround(8000);
-            planet.addBuilding(BuildingFactory.createByName("Space port"));
-            planet.setHomeWorldIndex(playerInfo.getRace().getIndex());
-            if (playerInfo.getRace() == SpaceRace.MECHIONS) {
-              planet.setWorkers(Planet.FOOD_FARMERS, 0);
-              planet.setWorkers(Planet.METAL_MINERS, 0);
-              planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-              planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-              planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+          PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
+          Message msg = new Message(
+              MessageType.PLANETARY, playerInfo.getEmpireName() + " starts at "
+                  + planet.getName() + ".",
+              Icons.getIconByName(Icons.ICON_CULTURE));
+          msg.setCoordinate(planet.getX(), planet.getY());
+          msg.setMatchByString(planet.getName());
+          playerInfo.getMsgList().addNewMessage(msg);
+          planet.setPlanetOwner(playerIndex, playerInfo);
+          planet.setRadiationLevel(1);
+          planet.setGroundSize(12);
+          planet.setAmountMetalInGround(8000);
+          planet.addBuilding(BuildingFactory.createByName("Space port"));
+          planet.setHomeWorldIndex(playerInfo.getRace().getIndex());
+          if (playerInfo.getRace() == SpaceRace.MECHIONS) {
+            planet.setWorkers(Planet.FOOD_FARMERS, 0);
+            planet.setWorkers(Planet.METAL_MINERS, 0);
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+            planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+          } else {
+            planet.setWorkers(Planet.FOOD_FARMERS, 1);
+            planet.setWorkers(Planet.METAL_MINERS, 0);
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+            planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+          }
+          ShipStat[] stats = playerInfo.getShipStatList();
+          int count = 0;
+          for (ShipStat stat : stats) {
+            Ship ship = new Ship(stat.getDesign());
+            stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+            stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+            Fleet fleet = new Fleet(ship, planet.getX(), planet.getY());
+            playerInfo.Fleets().add(fleet);
+            if (ship.isColonyModule()) {
+              fleet.setName("Colony #" + count);
             } else {
-              planet.setWorkers(Planet.FOOD_FARMERS, 1);
-              planet.setWorkers(Planet.METAL_MINERS, 0);
-              planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-              planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
-              planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+              fleet.setName("Scout #" + count);
             }
-            ShipStat[] stats = playerInfo.getShipStatList();
-            int count=0;
-            for (ShipStat stat : stats) {
-              Ship ship = new Ship(stat.getDesign());
-              stat.setNumberOfBuilt(stat.getNumberOfBuilt()+1);
-              stat.setNumberOfInUse(stat.getNumberOfInUse()+1);
-              Fleet fleet = new Fleet(ship, planet.getX(), planet.getY());
-              playerInfo.Fleets().add(fleet);
-              if (ship.isColonyModule()) {
-                fleet.setName("Colony #"+count);
-              } else {
-                fleet.setName("Scout #"+count);
-              }
-              msg = new Message(MessageType.FLEET,
-                  fleet.getName()+" is waiting for orders.",
-                  Icons.getIconByName(Icons.ICON_HULL_TECH));
-              msg.setCoordinate(planet.getX(),planet.getY());
-              msg.setMatchByString(fleet.getName());
-              playerInfo.getMsgList().addNewMessage(msg);
-              count++;
-            }
-            
+            msg = new Message(MessageType.FLEET,
+                fleet.getName() + " is waiting for orders.",
+                Icons.getIconByName(Icons.ICON_HULL_TECH));
+            msg.setCoordinate(planet.getX(), planet.getY());
+            msg.setMatchByString(fleet.getName());
+            playerInfo.getMsgList().addNewMessage(msg);
+            count++;
+          }
+
         }
         planetList.add(planet);
-        int planetNumber = planetList.size()-1;
+        int planetNumber = planetList.size() - 1;
         info = new SquareInfo(SquareInfo.TYPE_PLANET, planetNumber);
         tileInfo[px][py] = info;
         tiles[px][py] = planet.getPlanetImageIndex();
@@ -585,38 +580,49 @@ public class StarMap {
     }
     int gasGiants = 0;
     while (gasGiants < numberOfGasGiants) {
-      int px = sx +DiceGenerator.getRandom(-StarMapStatics.SOLARSYSTEMWIDTH, 
+      int px = sx + DiceGenerator.getRandom(-StarMapStatics.SOLARSYSTEMWIDTH,
           StarMapStatics.SOLARSYSTEMWIDTH);
-      int py = sy +DiceGenerator.getRandom(-StarMapStatics.SOLARSYSTEMWIDTH, 
+      int py = sy + DiceGenerator.getRandom(-StarMapStatics.SOLARSYSTEMWIDTH,
           StarMapStatics.SOLARSYSTEMWIDTH);
       if (is16NeighboursEmpty(px, py)) {
         gasGiants++;
-        Planet planet = new Planet(px,py,sun.getName(),planets+gasGiants,true);
+        Planet planet = new Planet(px, py, sun.getName(), planets + gasGiants,
+            true);
         planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
-        planetList.add(planet);        
-        int planetNumber = planetList.size()-1;
+        planetList.add(planet);
+        int planetNumber = planetList.size() - 1;
         info = new SquareInfo(SquareInfo.TYPE_GAS_PLANET, planetNumber);
         switch (planet.getPlanetImageIndex()) {
         case 0: {
-          tiles[px][py] = Tiles.getTileByName(TileNames.GAS_GIANT_1_NW).getIndex();
-          tiles[px+1][py] = Tiles.getTileByName(TileNames.GAS_GIANT_1_NE).getIndex();
-          tiles[px][py+1] = Tiles.getTileByName(TileNames.GAS_GIANT_1_SW).getIndex();
-          tiles[px+1][py+1] = Tiles.getTileByName(TileNames.GAS_GIANT_1_SE).getIndex();
+          tiles[px][py] = Tiles.getTileByName(TileNames.GAS_GIANT_1_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.GAS_GIANT_1_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_1_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_1_SE)
+              .getIndex();
           tileInfo[px][py] = info;
-          tileInfo[px+1][py] = info;
-          tileInfo[px][py+1] = info;
-          tileInfo[px+1][py+1] = info;
-          break; } 
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
         case 1: {
-          tiles[px][py] = Tiles.getTileByName(TileNames.GAS_GIANT_2_NW).getIndex();
-          tiles[px+1][py] = Tiles.getTileByName(TileNames.GAS_GIANT_2_NE).getIndex();
-          tiles[px][py+1] = Tiles.getTileByName(TileNames.GAS_GIANT_2_SW).getIndex();
-          tiles[px+1][py+1] = Tiles.getTileByName(TileNames.GAS_GIANT_2_SE).getIndex();
+          tiles[px][py] = Tiles.getTileByName(TileNames.GAS_GIANT_2_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.GAS_GIANT_2_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_2_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_2_SE)
+              .getIndex();
           tileInfo[px][py] = info;
-          tileInfo[px+1][py] = info;
-          tileInfo[px][py+1] = info;
-          tileInfo[px+1][py+1] = info;
-          break; }
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
         }
       }
     }
@@ -628,18 +634,17 @@ public class StarMap {
    * @param y coordinate
    * @return Sun or null if not in any solar system
    */
-  public Sun locateSolarSystem(int x, int y) {
-    for (Sun sun:sunList) {
-      if (x >= sun.getCenterX()-StarMapStatics.SOLARSYSTEMWIDTH &&
-          x <= sun.getCenterX()+StarMapStatics.SOLARSYSTEMWIDTH
-          && y >= sun.getCenterY()-StarMapStatics.SOLARSYSTEMWIDTH &&
-          y <= sun.getCenterY()+StarMapStatics.SOLARSYSTEMWIDTH) {
-        return sun;
-      }
+  public Sun locateSolarSystem(final int x, final int y) {
+    for (Sun sun : sunList) {
+      if (x >= sun.getCenterX() - StarMapStatics.SOLARSYSTEMWIDTH
+          && x <= sun.getCenterX() + StarMapStatics.SOLARSYSTEMWIDTH
+          && y >= sun.getCenterY() - StarMapStatics.SOLARSYSTEMWIDTH
+          && y <= sun.getCenterY()
+              + StarMapStatics.SOLARSYSTEMWIDTH) { return sun; }
     }
     return null;
   }
-  
+
   /**
    * Get nearest uncharted Solar system for coordinate. This should never return null.
    * Unless there are no suns in galaxy.
@@ -649,12 +654,13 @@ public class StarMap {
    * @param fleet doing the search
    * @return Nearest sun
    */
-  public Sun getNearestSolarSystem(int x, int y, PlayerInfo info, Fleet fleet,
-      String ignoreSun) {
+  public Sun getNearestSolarSystem(final int x, final int y,
+      final PlayerInfo info, final Fleet fleet, final String ignoreSun) {
     double distance = 999999;
     Sun result = null;
-    for (Sun sun:sunList) {
-      double dist = StarMapUtilities.getDistance(x, y, sun.getCenterX(), sun.getCenterY());
+    for (Sun sun : sunList) {
+      double dist = StarMapUtilities.getDistance(x, y, sun.getCenterX(),
+          sun.getCenterY());
       if (ignoreSun != null && ignoreSun.equals(sun.getName())) {
         dist = 999999;
       }
@@ -666,12 +672,12 @@ public class StarMap {
     return result;
 
   }
-  
+
   public int getMaxX() {
     return maxX;
   }
 
-  public void setMaxX(int maxX) {
+  public void setMaxX(final int maxX) {
     this.maxX = maxX;
   }
 
@@ -679,7 +685,7 @@ public class StarMap {
     return maxY;
   }
 
-  public void setMaxY(int maxY) {
+  public void setMaxY(final int maxY) {
     this.maxY = maxY;
   }
 
@@ -693,24 +699,24 @@ public class StarMap {
    * @return FleetTiles
    */
   public FleetTileInfo[][] getFleetTiles() {
-    for (int x=0;x<maxX;x++) {
-      for (int y=0;y<maxY;y++) {
+    for (int x = 0; x < maxX; x++) {
+      for (int y = 0; y < maxY; y++) {
         fleetTiles[x][y] = null;
       }
     }
-    for (int i=0;i<players.getCurrentMaxPlayers();i++) {
+    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
       PlayerInfo player = players.getPlayerInfoByIndex(i);
-      for (int j=0;j<player.Fleets().getNumberOfFleets();j++) {
+      for (int j = 0; j < player.Fleets().getNumberOfFleets(); j++) {
         Fleet fleet = player.Fleets().getByIndex(j);
         FleetTileInfo info = new FleetTileInfo(
-            fleet.getFirstShip().getHull().getRace(), 
-            fleet.getFirstShip().getHull().getImageIndex(),i,j);
+            fleet.getFirstShip().getHull().getRace(),
+            fleet.getFirstShip().getHull().getImageIndex(), i, j);
         fleetTiles[fleet.getX()][fleet.getY()] = info;
       }
     }
     return fleetTiles;
   }
-  
+
   /**
    * Get cursor X coordinate
    * @return X coordinate
@@ -718,7 +724,7 @@ public class StarMap {
   public int getCursorX() {
     return cursorX;
   }
-  
+
   /**
    * Get cursor Y coordinate
    * @return Y coordinate
@@ -726,13 +732,13 @@ public class StarMap {
   public int getCursorY() {
     return cursorY;
   }
-  
+
   /**
    * Set cursor coordinates. Validates coordinate before sets it.
    * @param x X coordinate
    * @param y Y coordinate
    */
-  public void setCursorPos(int x, int y) {
+  public void setCursorPos(final int x, final int y) {
     if (isValidCoordinate(x, y)) {
       cursorX = x;
       cursorY = y;
@@ -754,62 +760,58 @@ public class StarMap {
   public int getDrawY() {
     return drawY;
   }
-  
+
   /**
    * Set draw coordinates. Validates coordinate before sets it.
    * @param x X coordinate
    * @param y Y coordinate
    */
-  public void setDrawPos(int x, int y) {
+  public void setDrawPos(final int x, final int y) {
     if (isValidCoordinate(x, y)) {
       drawX = x;
       drawY = y;
-    }    
+    }
   }
-  
+
   /**
    * Get Sun by coordinates. If not found then null is returned.
    * @param x X coordinate
    * @param y Y coordinate
    * @return Sun or null
    */
-  public Sun getSunByCoordinate(int x, int y) {
+  public Sun getSunByCoordinate(final int x, final int y) {
     if (isValidCoordinate(x, y)) {
       SquareInfo info = tileInfo[x][y];
-      if (info.getType() == SquareInfo.TYPE_SUN) {
-        return sunList.get(info.getValue());
-      }
+      if (info.getType() == SquareInfo.TYPE_SUN) { return sunList
+          .get(info.getValue()); }
     }
     return null;
   }
-  
+
   /**
    * Get Planet by coordinates. If not found then null is returned.
    * @param x X coordinate
    * @param y Y coordinate
    * @return Planet or null
    */
-  public Planet getPlanetByCoordinate(int x, int y) {
+  public Planet getPlanetByCoordinate(final int x, final int y) {
     if (isValidCoordinate(x, y)) {
       SquareInfo info = tileInfo[x][y];
-      if (info.getType() == SquareInfo.TYPE_PLANET || 
-          info.getType() == SquareInfo.TYPE_GAS_PLANET) {
-        return planetList.get(info.getValue());
-      }
+      if (info.getType() == SquareInfo.TYPE_PLANET
+          || info.getType() == SquareInfo.TYPE_GAS_PLANET) { return planetList
+              .get(info.getValue()); }
     }
     return null;
   }
-  
+
   /**
    * Find planet by name
    * @param name Name to search
    * @return Planet or null if not found
    */
-  public Planet getPlanetByName(String name) {
+  public Planet getPlanetByName(final String name) {
     for (Planet planet : planetList) {
-      if (planet.getName().equals(name)) {
-        return planet;
-      }
+      if (planet.getName().equals(name)) { return planet; }
     }
     return null;
   }
@@ -820,15 +822,17 @@ public class StarMap {
    * @param y Y coordinate
    * @return Fleet or null
    */
-  public Fleet getFleetByCoordinate(int x, int y) {
-    if (isValidCoordinate(x, y) && fleetTiles != null && fleetTiles[x][y] != null) {
+  public Fleet getFleetByCoordinate(final int x, final int y) {
+    if (isValidCoordinate(x, y) && fleetTiles != null
+        && fleetTiles[x][y] != null) {
       int playerIndex = fleetTiles[x][y].getPlayerIndex();
       int fleetIndex = fleetTiles[x][y].getFleetIndex();
-      return players.getPlayerInfoByIndex(playerIndex).Fleets().getByIndex(fleetIndex);
+      return players.getPlayerInfoByIndex(playerIndex).Fleets()
+          .getByIndex(fleetIndex);
     }
     return null;
   }
-  
+
   public ArrayList<Planet> getPlanetList() {
     return planetList;
   }
@@ -839,8 +843,10 @@ public class StarMap {
    * @param y Y coordinate
    * @return Combat or null
    */
-  public Combat fightWithFleet(int x, int y,Fleet fleet1, PlayerInfo info1) {
-    if (isValidCoordinate(x, y) && fleetTiles != null && fleetTiles[x][y] != null) {
+  public Combat fightWithFleet(final int x, final int y, final Fleet fleet1,
+      final PlayerInfo info1) {
+    if (isValidCoordinate(x, y) && fleetTiles != null
+        && fleetTiles[x][y] != null) {
       int playerIndex = fleetTiles[x][y].getPlayerIndex();
       int fleetIndex = fleetTiles[x][y].getFleetIndex();
       PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
@@ -863,23 +869,19 @@ public class StarMap {
   /**
    * @param turn the turn to set
    */
-  public void setTurn(int turn) {
+  public void setTurn(final int turn) {
     this.turn = turn;
   }
-  
 
-  
   /**
    * Check if all AI players are handled
    * @return are the AIs handled
    */
   public boolean isAllAIsHandled() {
-    if (aiTurnNumber == players.getCurrentMaxPlayers()) {
-      return true;
-    }
+    if (aiTurnNumber == players.getCurrentMaxPlayers()) { return true; }
     return false;
   }
-  
+
   /**
    * Reset AI Turn number and fleet
    */
@@ -887,7 +889,7 @@ public class StarMap {
     aiTurnNumber = 0;
     aiFleet = null;
   }
-  
+
   /**
    * Handle research and planets for single AI player
    */
@@ -898,12 +900,12 @@ public class StarMap {
       Research.handle(info);
       ArrayList<Message> messages = info.getMsgList().getFullList();
       for (Message msg : messages) {
-        if (msg.getType() ==MessageType.RESEARCH) {
+        if (msg.getType() == MessageType.RESEARCH) {
           Research.handleShipDesigns(info);
           break;
         }
       }
-      for (int j=0;j<planetList.size();j++) {
+      for (int j = 0; j < planetList.size(); j++) {
         // Handle planets
         Planet planet = planetList.get(j);
         if (planet.getPlanetPlayerInfo() == info) {
@@ -915,7 +917,7 @@ public class StarMap {
       aiTurnNumber++;
     }
   }
-  
+
   /**
    * Get AI Fleet. If non null then handleAIFleet can be called
    * otherwise HandleAIResearchAndPlanet should be called
@@ -924,24 +926,23 @@ public class StarMap {
   public Fleet getAIFleet() {
     return aiFleet;
   }
-  
+
   /**
    * Set AI Fleet
    * @param fleet The AI fleet
    */
-  public void setAIFleet(Fleet fleet) {
+  public void setAIFleet(final Fleet fleet) {
     aiFleet = fleet;
   }
-  
+
   public int getAiTurnNumber() {
     return aiTurnNumber;
   }
 
-  public void setAiTurnNumber(int aiTurnNumber) {
+  public void setAiTurnNumber(final int aiTurnNumber) {
     this.aiTurnNumber = aiTurnNumber;
   }
-  
-  
+
   /**
    * Do Fleet/Planet scan Update for star map. Fleet or planet can be null
    * but only one should be null.
@@ -949,11 +950,12 @@ public class StarMap {
    * @param fleet Fleet which is doing the rescan
    * @param planet Planet which is doing the rescan
    */
-  public void doFleetScanUpdate(PlayerInfo info, Fleet fleet,Planet planet) {
-    int scanRad=-1; 
-    int cloakDetection=0; 
-    int cx=0;
-    int cy=0;
+  public void doFleetScanUpdate(final PlayerInfo info, final Fleet fleet,
+      final Planet planet) {
+    int scanRad = -1;
+    int cloakDetection = 0;
+    int cx = 0;
+    int cy = 0;
     if (fleet != null) {
       scanRad = fleet.getFleetScannerLvl();
       cloakDetection = fleet.getFleetCloakDetection();
@@ -966,37 +968,39 @@ public class StarMap {
       cy = planet.getY();
     }
     if (scanRad != -1) {
-      for (int y=-scanRad;y<scanRad+1;y++) {
-        for (int x=-scanRad;x<scanRad+1;x++) {
-          drawVisibilityLine(info, cx, cy,cx+x, cy+y, cloakDetection, scanRad);
+      for (int y = -scanRad; y < scanRad + 1; y++) {
+        for (int x = -scanRad; x < scanRad + 1; x++) {
+          drawVisibilityLine(info, cx, cy, cx + x, cy + y, cloakDetection,
+              scanRad);
         }
       }
     }
   }
-  
+
   /**
    * Update star map when game starts
    */
   public void updateStarMapOnStartGame() {
-    for (int i=0;i<players.getCurrentMaxPlayers();i++) {
+    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null) {
-        for (int j = 0;j<info.Fleets().getNumberOfFleets();j++) {
+        for (int j = 0; j < info.Fleets().getNumberOfFleets(); j++) {
           Fleet fleet = info.Fleets().getByIndex(j);
           fleet.movesLeft = fleet.getFleetSpeed();
-          doFleetScanUpdate(info, fleet,null);
+          doFleetScanUpdate(info, fleet, null);
         }
       }
     }
-    for (int i=0;i<planetList.size();i++) {
+    for (int i = 0; i < planetList.size(); i++) {
       Planet planet = planetList.get(i);
-      if (planet.getPlanetPlayerInfo() != null) {        
+      if (planet.getPlanetPlayerInfo() != null) {
         PlayerInfo info = planet.getPlanetPlayerInfo();
-        int index =players.getIndex(info);
+        int index = players.getIndex(info);
         if (index > -1) {
-          calculateCulture(planet.getX(), planet.getY(), planet.getCulture(), index);
+          calculateCulture(planet.getX(), planet.getY(), planet.getCulture(),
+              index);
         }
-        doFleetScanUpdate(info, null,planet);
+        doFleetScanUpdate(info, null, planet);
       }
     }
   }
@@ -1005,29 +1009,29 @@ public class StarMap {
    * Update star map when game has loaded
    */
   public void updateStarMapOnLoadGame() {
-    for (int i=0;i<players.getCurrentMaxPlayers();i++) {
+    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null) {
-        for (int j = 0;j<info.Fleets().getNumberOfFleets();j++) {
+        for (int j = 0; j < info.Fleets().getNumberOfFleets(); j++) {
           Fleet fleet = info.Fleets().getByIndex(j);
-          doFleetScanUpdate(info, fleet,null);
+          doFleetScanUpdate(info, fleet, null);
         }
       }
     }
-    for (int i=0;i<planetList.size();i++) {
+    for (int i = 0; i < planetList.size(); i++) {
       Planet planet = planetList.get(i);
-      if (planet.getPlanetPlayerInfo() != null) {        
+      if (planet.getPlanetPlayerInfo() != null) {
         PlayerInfo info = planet.getPlanetPlayerInfo();
-        int index =players.getIndex(info);
+        int index = players.getIndex(info);
         if (index > -1) {
-          calculateCulture(planet.getX(), planet.getY(), planet.getCulture(), index);
+          calculateCulture(planet.getX(), planet.getY(), planet.getCulture(),
+              index);
         }
-        doFleetScanUpdate(info, null,planet);
+        doFleetScanUpdate(info, null, planet);
       }
     }
   }
 
-  
   /**
    * Calculate culture on map
    * @param cx Center of culture X coordinate
@@ -1035,188 +1039,188 @@ public class StarMap {
    * @param value Culture value
    * @param index Player index
    */
-  public void calculateCulture(int cx, int cy, int value, int index) {
+  public void calculateCulture(final int cx, final int cy, final int value,
+      final int index) {
     String mask = null;
     if (value < 5) {
-      //           765432101234567
-      mask = /*7*/"...............\n"+
-             /*6*/"...............\n"+
-             /*5*/"...............\n"+
-             /*4*/"...............\n"+
-             /*3*/"...............\n"+
-             /*2*/"...............\n"+
-             /*1*/".......X.......\n"+
-             /*0*/"......XXX......\n"+
-             /*1*/".......X.......\n"+
-             /*2*/"...............\n"+
-             /*3*/"...............\n"+
-             /*4*/"...............\n"+
-             /*5*/"...............\n"+
-             /*6*/"...............\n"+
-             /*7*/"...............\n";
+      // 765432101234567
+      mask = /* 7 */"...............\n" +
+      /* 6 */"...............\n" +
+      /* 5 */"...............\n" +
+      /* 4 */"...............\n" +
+      /* 3 */"...............\n" +
+      /* 2 */"...............\n" +
+      /* 1 */".......X.......\n" +
+      /* 0 */"......XXX......\n" +
+      /* 1 */".......X.......\n" +
+      /* 2 */"...............\n" +
+      /* 3 */"...............\n" +
+      /* 4 */"...............\n" +
+      /* 5 */"...............\n" +
+      /* 6 */"...............\n" +
+      /* 7 */"...............\n";
     } else if (value < 10) {
-      //           765432101234567
-      mask = /*7*/"...............\n"+
-             /*6*/"...............\n"+
-             /*5*/"...............\n"+
-             /*4*/"...............\n"+
-             /*3*/"...............\n"+
-             /*2*/"...............\n"+
-             /*1*/"......XXX......\n"+
-             /*0*/"......XXX......\n"+
-             /*1*/"......XXX......\n"+
-             /*2*/"...............\n"+
-             /*3*/"...............\n"+
-             /*4*/"...............\n"+
-             /*5*/"...............\n"+
-             /*6*/"...............\n"+
-             /*7*/"...............\n";
+      // 765432101234567
+      mask = /* 7 */"...............\n" +
+      /* 6 */"...............\n" +
+      /* 5 */"...............\n" +
+      /* 4 */"...............\n" +
+      /* 3 */"...............\n" +
+      /* 2 */"...............\n" +
+      /* 1 */"......XXX......\n" +
+      /* 0 */"......XXX......\n" +
+      /* 1 */"......XXX......\n" +
+      /* 2 */"...............\n" +
+      /* 3 */"...............\n" +
+      /* 4 */"...............\n" +
+      /* 5 */"...............\n" +
+      /* 6 */"...............\n" +
+      /* 7 */"...............\n";
     } else if (value < 20) {
-      //           765432101234567
-      mask = /*7*/"...............\n"+
-             /*6*/"...............\n"+
-             /*5*/"...............\n"+
-             /*4*/"...............\n"+
-             /*3*/"...............\n"+
-             /*2*/".......X.......\n"+
-             /*1*/"......XXX......\n"+
-             /*0*/".....XXXXX.....\n"+
-             /*1*/"......XXX......\n"+
-             /*2*/".......X.......\n"+
-             /*3*/"...............\n"+
-             /*4*/"...............\n"+
-             /*5*/"...............\n"+
-             /*6*/"...............\n"+
-             /*7*/"...............\n";
+      // 765432101234567
+      mask = /* 7 */"...............\n" +
+      /* 6 */"...............\n" +
+      /* 5 */"...............\n" +
+      /* 4 */"...............\n" +
+      /* 3 */"...............\n" +
+      /* 2 */".......X.......\n" +
+      /* 1 */"......XXX......\n" +
+      /* 0 */".....XXXXX.....\n" +
+      /* 1 */"......XXX......\n" +
+      /* 2 */".......X.......\n" +
+      /* 3 */"...............\n" +
+      /* 4 */"...............\n" +
+      /* 5 */"...............\n" +
+      /* 6 */"...............\n" +
+      /* 7 */"...............\n";
     } else if (value < 40) {
-      //           765432101234567
-      mask = /*7*/"...............\n"+
-             /*6*/"...............\n"+
-             /*5*/"...............\n"+
-             /*4*/"...............\n"+
-             /*3*/".......X.......\n"+
-             /*2*/"......XXX......\n"+
-             /*1*/".....XXXXX.....\n"+
-             /*0*/"....XXXXXXX....\n"+
-             /*1*/".....XXXXX.....\n"+
-             /*2*/"......XXX......\n"+
-             /*3*/".......X.......\n"+
-             /*4*/"...............\n"+
-             /*5*/"...............\n"+
-             /*6*/"...............\n"+
-             /*7*/"...............\n";
+      // 765432101234567
+      mask = /* 7 */"...............\n" +
+      /* 6 */"...............\n" +
+      /* 5 */"...............\n" +
+      /* 4 */"...............\n" +
+      /* 3 */".......X.......\n" +
+      /* 2 */"......XXX......\n" +
+      /* 1 */".....XXXXX.....\n" +
+      /* 0 */"....XXXXXXX....\n" +
+      /* 1 */".....XXXXX.....\n" +
+      /* 2 */"......XXX......\n" +
+      /* 3 */".......X.......\n" +
+      /* 4 */"...............\n" +
+      /* 5 */"...............\n" +
+      /* 6 */"...............\n" +
+      /* 7 */"...............\n";
     } else if (value < 80) {
-      //           765432101234567
-      mask = /*7*/"...............\n"+
-             /*6*/"...............\n"+
-             /*5*/"...............\n"+
-             /*4*/".......X.......\n"+
-             /*3*/"......XXX......\n"+
-             /*2*/".....XXXXX.....\n"+
-             /*1*/"....XXXXXXX....\n"+
-             /*0*/"...XXXXXXXXX...\n"+
-             /*1*/"....XXXXXXX....\n"+
-             /*2*/".....XXXXX.....\n"+
-             /*3*/"......XXX......\n"+
-             /*4*/".......X.......\n"+
-             /*5*/"...............\n"+
-             /*6*/"...............\n"+
-             /*7*/"...............\n";
+      // 765432101234567
+      mask = /* 7 */"...............\n" +
+      /* 6 */"...............\n" +
+      /* 5 */"...............\n" +
+      /* 4 */".......X.......\n" +
+      /* 3 */"......XXX......\n" +
+      /* 2 */".....XXXXX.....\n" +
+      /* 1 */"....XXXXXXX....\n" +
+      /* 0 */"...XXXXXXXXX...\n" +
+      /* 1 */"....XXXXXXX....\n" +
+      /* 2 */".....XXXXX.....\n" +
+      /* 3 */"......XXX......\n" +
+      /* 4 */".......X.......\n" +
+      /* 5 */"...............\n" +
+      /* 6 */"...............\n" +
+      /* 7 */"...............\n";
     } else if (value < 160) {
-      //           765432101234567
-      mask = /*7*/"...............\n"+
-             /*6*/"...............\n"+
-             /*5*/"...............\n"+
-             /*4*/"......XXX......\n"+
-             /*3*/".....XXXXX.....\n"+
-             /*2*/"....XXXXXXX....\n"+
-             /*1*/"...XXXXXXXXX...\n"+
-             /*0*/"...XXXXXXXXX...\n"+
-             /*1*/"...XXXXXXXXX...\n"+
-             /*2*/"....XXXXXXX....\n"+
-             /*3*/".....XXXXX.....\n"+
-             /*4*/"......XXX......\n"+
-             /*5*/"...............\n"+
-             /*6*/"...............\n"+
-             /*7*/"...............\n";
+      // 765432101234567
+      mask = /* 7 */"...............\n" +
+      /* 6 */"...............\n" +
+      /* 5 */"...............\n" +
+      /* 4 */"......XXX......\n" +
+      /* 3 */".....XXXXX.....\n" +
+      /* 2 */"....XXXXXXX....\n" +
+      /* 1 */"...XXXXXXXXX...\n" +
+      /* 0 */"...XXXXXXXXX...\n" +
+      /* 1 */"...XXXXXXXXX...\n" +
+      /* 2 */"....XXXXXXX....\n" +
+      /* 3 */".....XXXXX.....\n" +
+      /* 4 */"......XXX......\n" +
+      /* 5 */"...............\n" +
+      /* 6 */"...............\n" +
+      /* 7 */"...............\n";
     } else if (value < 320) {
-      //           765432101234567
-      mask = /*7*/"...............\n"+
-             /*6*/"...............\n"+
-             /*5*/"......XXX......\n"+
-             /*4*/".....XXXXX.....\n"+
-             /*3*/"....XXXXXXX....\n"+
-             /*2*/"...XXXXXXXXX...\n"+
-             /*1*/"..XXXXXXXXXXX..\n"+
-             /*0*/"..XXXXXXXXXXX..\n"+
-             /*1*/"..XXXXXXXXXXX..\n"+
-             /*2*/"...XXXXXXXXX...\n"+
-             /*3*/"....XXXXXXX....\n"+
-             /*4*/".....XXXXX.....\n"+
-             /*5*/"......XXX......\n"+
-             /*6*/"...............\n"+
-             /*7*/"...............\n";
+      // 765432101234567
+      mask = /* 7 */"...............\n" +
+      /* 6 */"...............\n" +
+      /* 5 */"......XXX......\n" +
+      /* 4 */".....XXXXX.....\n" +
+      /* 3 */"....XXXXXXX....\n" +
+      /* 2 */"...XXXXXXXXX...\n" +
+      /* 1 */"..XXXXXXXXXXX..\n" +
+      /* 0 */"..XXXXXXXXXXX..\n" +
+      /* 1 */"..XXXXXXXXXXX..\n" +
+      /* 2 */"...XXXXXXXXX...\n" +
+      /* 3 */"....XXXXXXX....\n" +
+      /* 4 */".....XXXXX.....\n" +
+      /* 5 */"......XXX......\n" +
+      /* 6 */"...............\n" +
+      /* 7 */"...............\n";
     } else if (value < 640) {
-      //           765432101234567
-      mask = /*7*/"...............\n"+
-             /*6*/"......XXX......\n"+
-             /*5*/".....XXXXX.....\n"+
-             /*4*/"....XXXXXXX....\n"+
-             /*3*/"...XXXXXXXXX...\n"+
-             /*2*/"..XXXXXXXXXXX..\n"+
-             /*1*/".XXXXXXXXXXXXX.\n"+
-             /*0*/".XXXXXXXXXXXXX.\n"+
-             /*1*/".XXXXXXXXXXXXX.\n"+
-             /*2*/"..XXXXXXXXXXX..\n"+
-             /*3*/"...XXXXXXXXX...\n"+
-             /*4*/"....XXXXXXX....\n"+
-             /*5*/".....XXXXX.....\n"+
-             /*6*/"......XXX......\n"+
-             /*7*/"...............\n";
+      // 765432101234567
+      mask = /* 7 */"...............\n" +
+      /* 6 */"......XXX......\n" +
+      /* 5 */".....XXXXX.....\n" +
+      /* 4 */"....XXXXXXX....\n" +
+      /* 3 */"...XXXXXXXXX...\n" +
+      /* 2 */"..XXXXXXXXXXX..\n" +
+      /* 1 */".XXXXXXXXXXXXX.\n" +
+      /* 0 */".XXXXXXXXXXXXX.\n" +
+      /* 1 */".XXXXXXXXXXXXX.\n" +
+      /* 2 */"..XXXXXXXXXXX..\n" +
+      /* 3 */"...XXXXXXXXX...\n" +
+      /* 4 */"....XXXXXXX....\n" +
+      /* 5 */".....XXXXX.....\n" +
+      /* 6 */"......XXX......\n" +
+      /* 7 */"...............\n";
     } else if (value < 1280) {
-      //           765432101234567
-      mask = /*7*/".......X.......\n"+
-             /*6*/"......XXX......\n"+
-             /*5*/"....XXXXXXX....\n"+
-             /*4*/"....XXXXXXX....\n"+
-             /*3*/"..XXXXXXXXXXX..\n"+
-             /*2*/"..XXXXXXXXXXX..\n"+
-             /*1*/".XXXXXXXXXXXXX.\n"+
-             /*0*/"XXXXXXXXXXXXXXX\n"+
-             /*1*/".XXXXXXXXXXXXX.\n"+
-             /*2*/"..XXXXXXXXXXX..\n"+
-             /*3*/"..XXXXXXXXXXX..\n"+
-             /*4*/"....XXXXXXX....\n"+
-             /*5*/"....XXXXXXX....\n"+
-             /*6*/"......XXX......\n"+
-             /*7*/".......X.......\n";
+      // 765432101234567
+      mask = /* 7 */".......X.......\n" +
+      /* 6 */"......XXX......\n" +
+      /* 5 */"....XXXXXXX....\n" +
+      /* 4 */"....XXXXXXX....\n" +
+      /* 3 */"..XXXXXXXXXXX..\n" +
+      /* 2 */"..XXXXXXXXXXX..\n" +
+      /* 1 */".XXXXXXXXXXXXX.\n" +
+      /* 0 */"XXXXXXXXXXXXXXX\n" +
+      /* 1 */".XXXXXXXXXXXXX.\n" +
+      /* 2 */"..XXXXXXXXXXX..\n" +
+      /* 3 */"..XXXXXXXXXXX..\n" +
+      /* 4 */"....XXXXXXX....\n" +
+      /* 5 */"....XXXXXXX....\n" +
+      /* 6 */"......XXX......\n" +
+      /* 7 */".......X.......\n";
     } else {
-      //           765432101234567
-      mask = /*7*/"......XXX......\n"+
-             /*6*/".....XXXXX.....\n"+
-             /*5*/"...XXXXXXXXX...\n"+
-             /*4*/"...XXXXXXXXX...\n"+
-             /*3*/".XXXXXXXXXXXXX.\n"+
-             /*2*/".XXXXXXXXXXXXX.\n"+
-             /*1*/"XXXXXXXXXXXXXXX\n"+
-             /*0*/"XXXXXXXXXXXXXXX\n"+
-             /*1*/"XXXXXXXXXXXXXXX\n"+
-             /*2*/".XXXXXXXXXXXXX.\n"+
-             /*3*/".XXXXXXXXXXXXX.\n"+
-             /*4*/"...XXXXXXXXX...\n"+
-             /*5*/"...XXXXXXXXX...\n"+
-             /*6*/".....XXXXX.....\n"+
-             /*7*/"......XXX......\n";
+      // 765432101234567
+      mask = /* 7 */"......XXX......\n" +
+      /* 6 */".....XXXXX.....\n" +
+      /* 5 */"...XXXXXXXXX...\n" +
+      /* 4 */"...XXXXXXXXX...\n" +
+      /* 3 */".XXXXXXXXXXXXX.\n" +
+      /* 2 */".XXXXXXXXXXXXX.\n" +
+      /* 1 */"XXXXXXXXXXXXXXX\n" +
+      /* 0 */"XXXXXXXXXXXXXXX\n" +
+      /* 1 */"XXXXXXXXXXXXXXX\n" +
+      /* 2 */".XXXXXXXXXXXXX.\n" +
+      /* 3 */".XXXXXXXXXXXXX.\n" +
+      /* 4 */"...XXXXXXXXX...\n" +
+      /* 5 */"...XXXXXXXXX...\n" +
+      /* 6 */".....XXXXX.....\n" +
+      /* 7 */"......XXX......\n";
     }
 
-    
     String[] lines = mask.split("\n");
     int x = -7;
     int y = -7;
-    for (int line = 0;line <lines.length;line++) {
-      for (int col=0;col<lines[line].length();col++) {
-        if (lines[line].charAt(col)=='X') {
-          addSectorCulture(cx+x, cy+y, index, value);
+    for (int line = 0; line < lines.length; line++) {
+      for (int col = 0; col < lines[line].length(); col++) {
+        if (lines[line].charAt(col) == 'X') {
+          addSectorCulture(cx + x, cy + y, index, value);
         }
         x++;
       }
@@ -1224,17 +1228,18 @@ public class StarMap {
       y++;
     }
   }
-  
+
   /**
    * Reset culture information for whole map
    */
   public void resetCulture() {
-    for (int i=0;i<maxX;i++) {
-      for (int j=0;j<maxY;j++) {
+    for (int i = 0; i < maxX; i++) {
+      for (int j = 0; j < maxY; j++) {
         culture[i][j].reset();
       }
     }
   }
+
   /**
    * Draw visibility line and set visibility info for one player
    * @param info PlayerInfo
@@ -1243,14 +1248,15 @@ public class StarMap {
    * @param ex End X
    * @param ey End Y
    * @param cloakDetection Cloaking Detection level
-   * @param maxRad maximum radius 
+   * @param maxRad maximum radius
    */
-  private void drawVisibilityLine(PlayerInfo info, int sx, int sy, int ex, 
-      int ey, int cloakDetection, int maxRad) {
+  private void drawVisibilityLine(final PlayerInfo info, final int sx,
+      final int sy, final int ex, final int ey, final int cloakDetection,
+      final int maxRad) {
     double startX = sx;
     double startY = sy;
-    double dx = Math.abs(startX-ex);
-    double dy = Math.abs(startY-ey);
+    double dx = Math.abs(startX - ex);
+    double dy = Math.abs(startY - ey);
     // Calculate distance to end
     int distance = (int) dy;
     if (dx > dy) {
@@ -1260,21 +1266,21 @@ public class StarMap {
     double my;
     // Calculate how much move each round
     if (distance > 0) {
-      mx = (ex-startX)/distance;
-      my = (ey-startY)/distance;
+      mx = (ex - startX) / distance;
+      my = (ey - startY) / distance;
     } else {
       mx = 0;
       my = 0;
     }
     int detectValue = cloakDetection;
     info.setSectorVisibility(sx, sy, PlayerInfo.VISIBLE);
-    if (detectValue > 0){
+    if (detectValue > 0) {
       info.setSectorCloakingDetection(sx, sy, detectValue);
     }
     // Moving loop
-    for (int i=0;i<distance;i++) {
-      startX = startX +mx;
-      startY = startY +my;
+    for (int i = 0; i < distance; i++) {
+      startX = startX + mx;
+      startY = startY + my;
       int nx = (int) Math.round(startX);
       int ny = (int) Math.round(startY);
       if (StarMapUtilities.getDistance(sx, sy, nx, ny) > maxRad) {
@@ -1283,7 +1289,7 @@ public class StarMap {
       }
       if (isValidCoordinate(nx, ny)) {
         info.setSectorVisibility(nx, ny, PlayerInfo.VISIBLE);
-        if (detectValue > 0){
+        if (detectValue > 0) {
           info.setSectorCloakingDetection(nx, ny, detectValue);
         }
         if (tileInfo[nx][ny].isVisibilityBlocked()) {
@@ -1291,50 +1297,49 @@ public class StarMap {
           break;
         }
         if (detectValue > 0) {
-          detectValue=detectValue-10;
+          detectValue = detectValue - 10;
         }
       }
     }
   }
-  
+
   /**
    * Get total production for one player per turn for certain production
    * @param production See Planet.PRODUCTION_*
    * @param playerIndex Player index to match
    * @return total production per turn
    */
-  public int getTotalProductionByPlayerPerTurn(int production, int playerIndex) {
-    int result =0;
-    for (int i=0;i<planetList.size();i++) {
+  public int getTotalProductionByPlayerPerTurn(final int production,
+      final int playerIndex) {
+    int result = 0;
+    for (int i = 0; i < planetList.size(); i++) {
       Planet planet = planetList.get(i);
-      if (planet.getPlanetPlayerInfo() != null &&
-          planet.getPlanetOwnerIndex()==playerIndex) {
-        result = result +planet.getTotalProduction(production);
+      if (planet.getPlanetPlayerInfo() != null
+          && planet.getPlanetOwnerIndex() == playerIndex) {
+        result = result + planet.getTotalProduction(production);
       }
     }
     return result;
   }
-  
+
   /**
    * Get current player info
    * @return PlayerInfo or null
    */
   public PlayerInfo getCurrentPlayerInfo() {
-    if (players != null) {
-      return players.getCurrentPlayerInfo();
-    }
+    if (players != null) { return players.getCurrentPlayerInfo(); }
     return null;
   }
-  
+
   /**
    * Change to next player
    */
   public void nextPlayer() {
     if (players != null) {
-      if (players.getCurrentPlayer()+1 == players.getCurrentMaxPlayers()) {
+      if (players.getCurrentPlayer() + 1 == players.getCurrentMaxPlayers()) {
         players.setCurrentPlayer(0);
       } else {
-        players.setCurrentPlayer(players.getCurrentPlayer()+1);
+        players.setCurrentPlayer(players.getCurrentPlayer() + 1);
       }
     }
   }
@@ -1345,10 +1350,8 @@ public class StarMap {
    * @param y The Y coordinate
    * @return TileInfo
    */
-  public SquareInfo getTileInfo(int x, int y) {
-    if (isValidCoordinate(x, y)) {
-      return tileInfo[x][y];
-    }
+  public SquareInfo getTileInfo(final int x, final int y) {
+    if (isValidCoordinate(x, y)) { return tileInfo[x][y]; }
     return null;
   }
 
@@ -1358,10 +1361,8 @@ public class StarMap {
    * @param y The Y coordinate
    * @return Culture power or null
    */
-  public CulturePower getSectorCulture(int x, int y) {
-    if (isValidCoordinate(x, y)) {
-      return culture[x][y];
-    }
+  public CulturePower getSectorCulture(final int x, final int y) {
+    if (isValidCoordinate(x, y)) { return culture[x][y]; }
     return null;
   }
 
@@ -1372,7 +1373,8 @@ public class StarMap {
    * @param index Player index from player list
    * @param value Culture value to add
    */
-  public void addSectorCulture(int x, int y,int index,int value) {
+  public void addSectorCulture(final int x, final int y, final int index,
+      final int value) {
     if (isValidCoordinate(x, y)) {
       culture[x][y].addCulture(index, value);
     }
@@ -1385,22 +1387,21 @@ public class StarMap {
    * @return true if tile is blocked otherwise false. Also if
    * coordinate is out of map then true is returned.
    */
-  public boolean isBlocked(int x, int y) {
+  public boolean isBlocked(final int x, final int y) {
     SquareInfo sector = getTileInfo(x, y);
-    if (sector != null) {
-      return sector.isBlocked();
-    }
+    if (sector != null) { return sector.isBlocked(); }
     return true;
   }
+
   /**
    * Get Player info by index
    * @param index Player index
    * @return PlayerInfo or null
    */
-  public PlayerInfo getPlayerByIndex(int index) {
+  public PlayerInfo getPlayerByIndex(final int index) {
     return players.getPlayerInfoByIndex(index);
   }
-  
+
   public PlayerList getPlayerList() {
     return players;
   }

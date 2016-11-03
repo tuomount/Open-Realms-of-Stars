@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 /**
- * 
+ *
  * Open Realm of Stars game project
  * Copyright (C) 2016  Tuomo Untinen
  *
@@ -13,33 +13,33 @@ import java.io.IOException;
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see http://www.gnu.org/licenses/
- * 
- * 
+ *
+ *
  * Ship Stat class is always connect to certain ship design. Class contains
  * statistical information about the certain ship
- * 
+ *
  */
 
-public class ShipStat implements Comparable<ShipStat>{
+public class ShipStat implements Comparable<ShipStat> {
 
   /**
    * Ship design to to keep stats
    */
   private ShipDesign design;
-  
+
   /**
    * In how many combats ship has taken a part
    */
   private int numberOfCombats;
-  
+
   /**
    * Number of victories ship
    */
@@ -69,12 +69,12 @@ public class ShipStat implements Comparable<ShipStat>{
    * Is ship obsolete and not showing in building list
    */
   private boolean obsolete;
-  
+
   /**
    * Constructor
    * @param design Ship Design
    */
-  public ShipStat(ShipDesign design) {
+  public ShipStat(final ShipDesign design) {
     this.design = design;
     numberOfCombats = 0;
     numberOfVictories = 0;
@@ -84,13 +84,13 @@ public class ShipStat implements Comparable<ShipStat>{
     numberOfInUse = 0;
     setObsolete(false);
   }
-  
+
   /**
    * Read ShipStat from DataInputStream
    * @param dis Data Input Stream
    * @throws IOException if there is any problem with DataInputStream
    */
-  public ShipStat(DataInputStream dis) throws IOException {
+  public ShipStat(final DataInputStream dis) throws IOException {
     this.design = new ShipDesign(dis);
     numberOfCombats = dis.readInt();
     numberOfVictories = dis.readInt();
@@ -100,13 +100,13 @@ public class ShipStat implements Comparable<ShipStat>{
     numberOfInUse = dis.readInt();
     obsolete = dis.readBoolean();
   }
-  
+
   /**
    * Save Ship Stat to Data Output Stream
    * @param dos DataOutputStream
    * @throws IOException if there is any problem with DataOutputStream
    */
-  public void saveShipStat(DataOutputStream dos) throws IOException {
+  public void saveShipStat(final DataOutputStream dos) throws IOException {
     design.saveShipDesign(dos);
     dos.writeInt(numberOfCombats);
     dos.writeInt(numberOfVictories);
@@ -121,7 +121,7 @@ public class ShipStat implements Comparable<ShipStat>{
     return numberOfCombats;
   }
 
-  public void setNumberOfCombats(int numberOfCombats) {
+  public void setNumberOfCombats(final int numberOfCombats) {
     this.numberOfCombats = numberOfCombats;
   }
 
@@ -129,7 +129,7 @@ public class ShipStat implements Comparable<ShipStat>{
     return numberOfVictories;
   }
 
-  public void setNumberOfVictories(int numberOfVictories) {
+  public void setNumberOfVictories(final int numberOfVictories) {
     this.numberOfVictories = numberOfVictories;
   }
 
@@ -137,7 +137,7 @@ public class ShipStat implements Comparable<ShipStat>{
     return numberOfLoses;
   }
 
-  public void setNumberOfLoses(int numberOfLoses) {
+  public void setNumberOfLoses(final int numberOfLoses) {
     this.numberOfLoses = numberOfLoses;
   }
 
@@ -145,7 +145,7 @@ public class ShipStat implements Comparable<ShipStat>{
     return numberOfKills;
   }
 
-  public void setNumberOfKills(int numberOfKills) {
+  public void setNumberOfKills(final int numberOfKills) {
     this.numberOfKills = numberOfKills;
   }
 
@@ -153,7 +153,7 @@ public class ShipStat implements Comparable<ShipStat>{
     return numberOfBuilt;
   }
 
-  public void setNumberOfBuilt(int numberOfBuilt) {
+  public void setNumberOfBuilt(final int numberOfBuilt) {
     this.numberOfBuilt = numberOfBuilt;
   }
 
@@ -161,7 +161,7 @@ public class ShipStat implements Comparable<ShipStat>{
     return numberOfInUse;
   }
 
-  public void setNumberOfInUse(int numberOfInUse) {
+  public void setNumberOfInUse(final int numberOfInUse) {
     this.numberOfInUse = numberOfInUse;
   }
 
@@ -171,30 +171,26 @@ public class ShipStat implements Comparable<ShipStat>{
 
   @Override
   public String toString() {
-    return design.toString() + "\n\nStats:\nShips built: " + getNumberOfBuilt() + " Ships in use: " +
-            getNumberOfInUse() + "\nCombats: " + getNumberOfCombats() + " Victories: " + getNumberOfVictories() +
-            " Lost: " + getNumberOfLoses() + " Kills: " + getNumberOfKills();
+    return design.toString() + "\n\nStats:\nShips built: " + getNumberOfBuilt()
+        + " Ships in use: " + getNumberOfInUse() + "\nCombats: "
+        + getNumberOfCombats() + " Victories: " + getNumberOfVictories()
+        + " Lost: " + getNumberOfLoses() + " Kills: " + getNumberOfKills();
   }
 
   public boolean isObsolete() {
     return obsolete;
   }
 
-  public void setObsolete(boolean obsolete) {
+  public void setObsolete(final boolean obsolete) {
     this.obsolete = obsolete;
   }
 
   @Override
-  public int compareTo(ShipStat arg0) {
-    if (arg0.isObsolete() == this.obsolete) {
-      return design.getName().compareTo(arg0.getDesign().getName());
-    }
-    if (this.obsolete) {
-      return 1;
-    }
+  public int compareTo(final ShipStat arg0) {
+    if (arg0.isObsolete() == this.obsolete) { return design.getName()
+        .compareTo(arg0.getDesign().getName()); }
+    if (this.obsolete) { return 1; }
     return -1;
   }
-  
-  
-  
+
 }

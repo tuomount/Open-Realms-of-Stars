@@ -8,6 +8,7 @@
     <artifactId>Open-Realms-of-Stars</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <url>https://tuomount.kapsi.fi</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -65,6 +66,11 @@
                     <configLocation>${basedir}/buildtools/checkstyle/ruleset.xml</configLocation>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.9</version>
+            </plugin>
         </plugins>
     </build>
 
@@ -79,6 +85,9 @@
                     <sourceEncoding>utf-8</sourceEncoding>
                     <minimumTokens>100</minimumTokens>
                     <targetJdk>1.7</targetJdk>
+                    <rulesets>
+                        <ruleset>${basedir}/buildtools/pmd/ruleset.xml</ruleset>
+                    </rulesets>
                     <excludes>
                         <exclude>**/*Bean.java</exclude>
                         <exclude>**/generated/*.java</exclude>
@@ -92,6 +101,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.17</version>
+                <configuration>
+                    <configLocation>${basedir}/buildtools/checkstyle/ruleset.xml</configLocation>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>2.5</version>
             </plugin>
         </plugins>
     </reporting>

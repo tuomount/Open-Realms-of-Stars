@@ -34,7 +34,14 @@ import org.openRealmOfStars.starMap.planet.Planet;
  * Mission handling for AI
  *
  */
-public class MissionHandling {
+public final class MissionHandling {
+
+  /**
+   * Just hiding MissionHandling constructor
+   */
+  private MissionHandling() {
+    // Hiding mission handling constructor
+  }
 
   /**
    * Handle exploring mission

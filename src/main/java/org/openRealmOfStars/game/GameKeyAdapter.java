@@ -174,6 +174,10 @@ public class GameKeyAdapter implements KeyEventDispatcher {
    */
   private Game game;
 
+  /**
+   * Initializes Keyboard adapter for Open Realm of Stars.
+   * @param game Game itself
+   */
   public GameKeyAdapter(final Game game) {
     super();
     this.game = game;

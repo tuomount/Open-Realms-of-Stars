@@ -29,6 +29,10 @@ public class EmptyInfoPanel extends InfoPanel {
    */
   private static final long serialVersionUID = 1L;
 
+  /**
+   * Constructor for Empty Info Panel.
+   * This does not place the title or layer for panel.
+   */
   public EmptyInfoPanel() {
 
   }

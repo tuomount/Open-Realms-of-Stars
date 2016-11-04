@@ -118,6 +118,8 @@ public class SavedGame {
 
   /**
    * Get save file's creation time
+   *
+   * @return save file's creation time
    */
   public String getTime() {
     return creationTime;

@@ -70,6 +70,7 @@ public class IconButton extends JButton {
    * @param pressedImage Icon16x16
    * @param border Boolean
    * @param actionCommand String
+   * @param parent Component
    */
   public IconButton(final Icon16x16 notPressedImage,
       final Icon16x16 pressedImage, final boolean border,
@@ -97,6 +98,7 @@ public class IconButton extends JButton {
    * @param pressedImage BufferedImage
    * @param border Boolean
    * @param actionCommand String
+   * @param parent Component
    */
   public IconButton(final BufferedImage notPressedImage,
       final BufferedImage pressedImage, final boolean border,

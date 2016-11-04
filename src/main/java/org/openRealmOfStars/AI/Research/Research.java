@@ -171,6 +171,9 @@ public class Research {
         info.getTechList().setTechFocus(TechType.Improvements, 16);
         break;
       }
+      default: {
+
+      }
       }
     }
   }

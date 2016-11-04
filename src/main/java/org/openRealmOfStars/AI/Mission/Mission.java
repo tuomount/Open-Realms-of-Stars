@@ -43,11 +43,11 @@ public final class Mission {
   /**
    * Target X coordinate
    */
-  private int x;
+  private int targetXCoordinate;
   /**
    * Target Y coordinate
    */
-  private int y;
+  private int targetYCoordinate;
 
   /**
    * Fleet name which is on the mission
@@ -102,8 +102,8 @@ public final class Mission {
   public Mission(final DataInputStream dis) throws IOException {
     type = MissionType.getType(dis.readInt());
     phase = MissionPhase.getType(dis.readInt());
-    x = dis.readInt();
-    y = dis.readInt();
+    targetXCoordinate = dis.readInt();
+    targetYCoordinate = dis.readInt();
     missionTime = dis.readInt();
     String str = IOUtilities.readString(dis);
     if (str.isEmpty()) {
@@ -139,8 +139,8 @@ public final class Mission {
   public void saveMission(final DataOutputStream dos) throws IOException {
     dos.writeInt(type.getIndex());
     dos.writeInt(phase.getIndex());
-    dos.writeInt(x);
-    dos.writeInt(y);
+    dos.writeInt(targetXCoordinate);
+    dos.writeInt(targetYCoordinate);
     dos.writeInt(missionTime);
     IOUtilities.writeString(dos, fleetName);
     IOUtilities.writeString(dos, planetBuilding);
@@ -148,15 +148,31 @@ public final class Mission {
     IOUtilities.writeString(dos, targetPlanet);
   }
 
+  /**
+   * Set the target's coordinate.
+   *
+   * @param x Target X coordinate
+   * @param y Target Y coordinate
+   */
   public void setTarget(final int x, final int y) {
-    this.x = x;
-    this.y = y;
+    this.targetXCoordinate = x;
+    this.targetYCoordinate = y;
   }
 
+  /**
+   * Return the mission type.
+   *
+   * @return the mission type
+   */
   public MissionType getType() {
     return type;
   }
 
+  /**
+   * Set the mission type.
+   *
+   * @param missionType the mission type to set
+   */
   public void setType(final MissionType missionType) {
     this.type = missionType;
   }
@@ -186,11 +202,11 @@ public final class Mission {
   }
 
   public int getX() {
-    return x;
+    return targetXCoordinate;
   }
 
   public int getY() {
-    return y;
+    return targetYCoordinate;
   }
 
   @Override

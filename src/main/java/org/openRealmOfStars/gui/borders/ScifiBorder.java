@@ -38,9 +38,6 @@ import org.openRealmOfStars.utilities.IOUtilities;
 
 public class ScifiBorder extends AbstractBorder {
 
-  /**
-  * 
-  */
   private static final long serialVersionUID = 1L;
 
   /**

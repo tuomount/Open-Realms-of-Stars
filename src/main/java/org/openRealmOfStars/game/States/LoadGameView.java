@@ -137,8 +137,9 @@ public class LoadGameView extends BlackPanel {
    * @return String as saved game file name or null if not selected.
    */
   public String getSelectedSaveFile() {
-    if (saveGamesList.getSelectedValue() != null) { return saveGamesList
-        .getSelectedValue().getFilename(); }
+    if (saveGamesList.getSelectedValue() != null) {
+      return saveGamesList.getSelectedValue().getFilename();
+    }
     return null;
   }
 

@@ -109,47 +109,47 @@ public class Game extends JFrame implements ActionListener {
   /**
    * Planet view Panel and handling planet
    */
-  public PlanetView planetView;
+  private PlanetView planetView;
 
   /**
    * Planet bombing view Panel
    */
-  public PlanetBombingView planetBombingView;
+  private PlanetBombingView planetBombingView;
 
   /**
    * Fleet view Panel and handling the fleet
    */
-  public FleetView fleetView;
+  private FleetView fleetView;
 
   /**
    * Main menu for the game
    */
-  public MainMenu mainMenu;
+  private MainMenu mainMenu;
 
   /**
    * Galaxy Creation view
    */
-  public GalaxyCreationView galaxyCreationView;
+  private GalaxyCreationView galaxyCreationView;
 
   /**
    * Player Setup view
    */
-  public PlayerSetupView playerSetupView;
+  private PlayerSetupView playerSetupView;
 
   /**
    * Load Game View
    */
-  public LoadGameView loadGameView;
+  private LoadGameView loadGameView;
 
   /**
    * AI Turn view
    */
-  public AITurnView aiTurnView;
+  private AITurnView aiTurnView;
 
   /**
    * Credits for the game
    */
-  public CreditsView creditsView;
+  private CreditsView creditsView;
 
   /**
    * StarMap view for the game
@@ -159,27 +159,27 @@ public class Game extends JFrame implements ActionListener {
   /**
    * Combat view for the game
    */
-  public BattleView combatView;
+  private BattleView combatView;
 
   /**
    * Research view for the game
    */
-  public ResearchView researchView;
+  private ResearchView researchView;
 
   /**
    * Ship view for the game
    */
-  public ShipView shipView;
+  private ShipView shipView;
 
   /**
    * Ship design view for the game
    */
-  public ShipDesignView shipDesignView;
+  private ShipDesignView shipDesignView;
 
   /**
    * Galaxy config for new game
    */
-  public GalaxyConfig galaxyConfig;
+  private GalaxyConfig galaxyConfig;
 
   /**
    * Get Star map
@@ -265,6 +265,7 @@ public class Game extends JFrame implements ActionListener {
   /**
    * Show planet bombing view panel
    * @param planet Planet to show
+   * @param fleet Fleet to show
    */
   public void showPlanetBombingView(final Planet planet, final Fleet fleet) {
     planetBombingView = new PlanetBombingView(planet, fleet,
@@ -277,6 +278,7 @@ public class Game extends JFrame implements ActionListener {
   /**
    * Show fleet view panel
    * @param planet Planet to show
+   * @param fleet Fleet to show
    */
   public void showFleetView(final Planet planet, final Fleet fleet) {
     fleetView = new FleetView(planet, fleet,
@@ -301,6 +303,7 @@ public class Game extends JFrame implements ActionListener {
 
   /**
    * Show Combat
+   * @param combat Combat to show
    */
   public void showCombat(final Combat combat) {
     if (combat == null) {
@@ -610,6 +613,8 @@ public class Game extends JFrame implements ActionListener {
         showFleetView(planet, fleet);
       }
       break;
+    }
+    default: {
     }
     }
   }

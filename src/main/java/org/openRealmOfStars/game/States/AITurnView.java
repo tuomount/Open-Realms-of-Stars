@@ -142,6 +142,8 @@ public class AITurnView extends BlackPanel {
     case 5:
       setText("Please wait....*");
       break;
+    default:
+      setText("Please wait.....");
     }
     textAnim++;
     if (textAnim > 5) {
@@ -170,6 +172,7 @@ public class AITurnView extends BlackPanel {
       case ATTACK:
         MissionHandling.handleAttack(mission, fleet, info, game);
         break;
+      default:
       }
     } else {
       // No mission for fleet yet

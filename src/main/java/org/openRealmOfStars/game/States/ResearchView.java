@@ -106,7 +106,7 @@ public class ResearchView extends BlackPanel {
    * Create new research for player
    * @param player whom clicked research button
    * @param totalResearch how much player is currently researching per turn
-   * @param focusTech, which tech will be focus on start, if null then none
+   * @param focusTech which tech will be focus on start, if null then none
    * @param listener ActionListener
    */
   public ResearchView(final PlayerInfo player, final int totalResearch,

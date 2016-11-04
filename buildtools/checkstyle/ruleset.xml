@@ -112,7 +112,10 @@
         <!-- Checks for Size Violations.                    -->
         <!-- See http://checkstyle.sf.net/config_sizes.html -->
         <module name="LineLength"/>
-        <module name="MethodLength"/>
+        <module name="MethodLength">
+            <property name="max" value="200"/>
+            <property name="countEmpty" value="false"/>
+        </module>
         <module name="ParameterNumber"/>
 
         <!-- Checks for whitespace                               -->
@@ -135,7 +138,9 @@
 
         <!-- Checks for blocks. You know, those {}'s         -->
         <!-- See http://checkstyle.sf.net/config_blocks.html -->
-        <module name="AvoidNestedBlocks"/>
+        <module name="AvoidNestedBlocks">
+            <property name="allowInSwitchCase" value="true"/>
+        </module>
         <module name="EmptyBlock"/>
         <module name="LeftCurly"/>
         <module name="NeedBraces"/>
@@ -157,7 +162,7 @@
             ARRAY_INIT, EXPR, UNARY_PLUS, UNARY_MINUS, TYPECAST, ELIST, 
             LITERAL_NEW, METHOD_CALL, STAR, DIV, PLUS, MINUS, CASE_GROUP"/>
             <property name="ignoreNumbers" value="-5, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 
-            9, 10, 20, 30, 40, 50, 100, 200, 300, 400, 500, 600 "/>
+            9, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 400, 500, 600 "/>
         </module>
         <module name="MissingSwitchDefault"/>
         <module name="SimplifyBooleanExpression"/>

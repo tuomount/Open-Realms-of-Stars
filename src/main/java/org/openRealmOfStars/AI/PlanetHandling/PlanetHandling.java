@@ -105,6 +105,10 @@ public final class PlanetHandling {
    */
   private static final int GREYAN_RESEARCH_VALUE_SCORE = 15;
 
+  /**
+   * Metal amount divider
+   */
+  private static final int METAL_AMOUNT_DIVIDER = 120;
 
   /**
    * AI player handling for a single planet, what to build
@@ -412,7 +416,8 @@ public final class PlanetHandling {
         // Production score
         scores[i] = scores[i] + building.getFactBonus() * 60;
         scores[i] = scores[i]
-            + building.getMineBonus() * planet.getAmountMetalInGround() / 120;
+            + building.getMineBonus() * planet.getAmountMetalInGround()
+            / METAL_AMOUNT_DIVIDER;
         if (info.getRace() == SpaceRace.CENTAURS) {
           scores[i] = scores[i] + building.getFarmBonus() * 50;
         } else if (info.getRace() != SpaceRace.MECHIONS) {
@@ -460,7 +465,7 @@ public final class PlanetHandling {
           if (building.getName().equals("Radiation dampener")
               || building.getName().equals("Radiation well")) {
             // Radiation level is high so these are in high priority
-            scores[i] = 1000;
+            scores[i] = MAX_SLOT_SCORE;
           }
         } else {
           if (building.getName().equals("Radiation dampener")
@@ -542,8 +547,8 @@ public final class PlanetHandling {
       }
 
       // Sanitize score
-      if (scores[i] > 1000) {
-        scores[i] = 1000;
+      if (scores[i] > MAX_SLOT_SCORE) {
+        scores[i] = MAX_SLOT_SCORE;
       }
       if (scores[i] < -1) {
         scores[i] = -1;

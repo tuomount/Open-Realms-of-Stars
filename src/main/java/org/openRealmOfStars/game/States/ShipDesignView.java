@@ -565,8 +565,9 @@ public class ShipDesignView extends BlackPanel {
    * @return True if design is ready false if not
    */
   public boolean isDesignOK() {
-    if (design != null
-        && design.getFlaws().equals(ShipDesign.DESIGN_OK)) { return true; }
+    if (design != null && design.getFlaws().equals(ShipDesign.DESIGN_OK)) {
+      return true;
+    }
     return false;
   }
 

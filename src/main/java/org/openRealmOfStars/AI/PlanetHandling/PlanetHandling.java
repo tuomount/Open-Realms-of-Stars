@@ -73,14 +73,14 @@ public class PlanetHandling {
         Construction[] constructions = planet.getProductionList();
         boolean constructionSelected = false;
         int gotFactory = gotBuildings(
-            new String[] { "Basic factory", "Advanced factory" }, buildings);
+            new String[] {"Basic factory", "Advanced factory"}, buildings);
         int gotLabs = gotBuildings(
-            new String[] { "Basic lab", "Advanced laboratory" }, buildings);
+            new String[] {"Basic lab", "Advanced laboratory"}, buildings);
         int gotFarms = gotBuildings(
-            new String[] { "Basic farm", "Advanced farm" }, buildings);
+            new String[] {"Basic farm", "Advanced farm"}, buildings);
         int gotMines = gotBuildings(
-            new String[] { "Basic mine", "Advanced mine" }, buildings);
-        int gotSpacePort = gotBuildings(new String[] { "Space port" },
+            new String[] {"Basic mine", "Advanced mine"}, buildings);
+        int gotSpacePort = gotBuildings(new String[] {"Space port"},
             buildings);
         if (gotFactory == -1) {
           // No factories at all
@@ -550,6 +550,9 @@ public class PlanetHandling {
           planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
           break;
         }
+        default: {
+          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+        }
         }
       }
     } else {
@@ -597,7 +600,9 @@ public class PlanetHandling {
   private static int getConstruction(final String name,
       final Construction[] list) {
     for (int i = 0; i < list.length; i++) {
-      if (list[i].getName().equals(name)) { return i; }
+      if (list[i].getName().equals(name)) {
+        return i;
+      }
     }
     return -1;
   }

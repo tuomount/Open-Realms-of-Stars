@@ -83,7 +83,9 @@ public class PathPoint {
   public boolean equals(final Object obj) {
     if (obj instanceof PathPoint) {
       PathPoint point = (PathPoint) obj;
-      if (this.x == point.getX() && this.y == point.getY()) { return true; }
+      if (this.x == point.getX() && this.y == point.getY()) {
+        return true;
+      }
     }
     return false;
   }

@@ -118,10 +118,17 @@ public class AITurnView extends BlackPanel {
 
   }
 
+  /**
+   * Set Text for AI Turn View
+   * @param text Text to set
+   */
   public void setText(final String text) {
     label.setText(text);
   }
 
+  /**
+   * Update animated text on AI Turn View
+   */
   public void updateText() {
     switch (textAnim) {
     case 0:
@@ -173,6 +180,7 @@ public class AITurnView extends BlackPanel {
         MissionHandling.handleAttack(mission, fleet, info, game);
         break;
       default:
+        throw new IllegalArgumentException("Unknown mission type for AI!");
       }
     } else {
       // No mission for fleet yet
@@ -440,7 +448,8 @@ public class AITurnView extends BlackPanel {
   /**
    * Handle actions for AI Turn view
    * Since AI Turn View can be null while handling the all the AI. AI handling
-   * variables are stored in StarMap. These variables are AIFleet and AITurnNumber.
+   * variables are stored in StarMap. These variables are AIFleet and
+   * AITurnNumber.
    * @param arg0 ActionEvent
    */
   public void handleActions(final ActionEvent arg0) {

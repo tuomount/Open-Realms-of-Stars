@@ -41,7 +41,70 @@ import org.openRealmOfStars.utilities.DiceGenerator;
  *
  */
 
-public class PlanetHandling {
+public final class PlanetHandling {
+
+  /**
+   * Just hiding the planetHandling constructor.
+   */
+  private PlanetHandling() {
+    // Nothing to do here
+  }
+
+  /**
+   * Maximum score for slots
+   */
+  private static final int MAX_SLOT_SCORE = 1000;
+
+  /**
+   * Score for one available slot
+   */
+  private static final int ONE_SLOT_SCORE = 200;
+
+  /**
+   * Score for two available slot
+   */
+  private static final int TWO_SLOT_SCORE = 120;
+
+  /**
+   * Score for three available slot
+   */
+  private static final int THREE_SLOT_SCORE = 80;
+
+  /**
+   * Score for four available slot
+   */
+  private static final int FOUR_SLOT_SCORE = 40;
+
+  /**
+   * Score for five available slot
+   */
+  private static final int FIVE_SLOT_SCORE = 20;
+
+  /**
+   * Score for six available slot
+   */
+  private static final int SIX_SLOT_SCORE = 10;
+
+  /**
+   * High value score for construction
+   */
+  private static final int HIGH_VALUE_SCORE = 400;
+
+  /**
+   * Turret defense value score
+   */
+  private static final int TURRET_DEFENSE_VALUE_SCORE = 15;
+
+  /**
+   * Spork military value score
+   */
+  private static final int SPORK_MILITARY_VALUE_SCORE = 15;
+
+  /**
+   * Greyan research value score
+   */
+  private static final int GREYAN_RESEARCH_VALUE_SCORE = 15;
+
 
   /**
    * AI player handling for a single planet, what to build
@@ -168,113 +231,8 @@ public class PlanetHandling {
           }
         }
         if (!constructionSelected) {
-          int[] scores = scoreConstructions(constructions, planet, info, map);
-          int highest = -1;
-          int value = -1;
-          boolean over400 = false;
-          int minimum = 0;
-          int freeSlot = planet.getGroundSize() - planet.getUsedPlanetSize();
-          switch (freeSlot) {
-          case 0:
-            minimum = 1000;
-            break;
-          case 1:
-            minimum = 200;
-            break;
-          case 2:
-            minimum = 120;
-            break;
-          case 3:
-            minimum = 80;
-            break;
-          case 4:
-            minimum = 40;
-            break;
-          case 5:
-            minimum = 20;
-            break;
-          case 6:
-            minimum = 10;
-            break;
-          default:
-            minimum = 0;
-            break;
-          }
-          for (int i = 0; i < scores.length; i++) {
-            if (scores[i] > value) {
-              value = scores[i];
-              highest = i;
-            }
-            if (scores[i] > 399) {
-              over400 = true;
-            }
-          }
-          if (highest == value) {
-            if (highest != -1) {
-              planet.setUnderConstruction(constructions[highest]);
-              constructionSelected = true;
-            }
-          } else if (over400) {
-            ArrayList<Construction> list = new ArrayList<>();
-            for (int i = 0; i < scores.length; i++) {
-              if (scores[i] > 399) {
-                list.add(constructions[i]);
-              }
-            }
-            int rand = DiceGenerator.getRandom(list.size() - 1);
-            planet.setUnderConstruction(list.get(rand));
-            constructionSelected = true;
-          } else {
-            ArrayList<Construction> list = new ArrayList<>();
-            ArrayList<Integer> listScore = new ArrayList<>();
-            int sum = 0;
-            for (int i = 0; i < scores.length; i++) {
-              if (scores[i] >= minimum) {
-                list.add(constructions[i]);
-                listScore.add(Integer.valueOf(scores[i]));
-                sum = sum + scores[i];
-              } else {
-                if (constructions[i] instanceof Ship && freeSlot < 4) {
-                  list.add(constructions[i]);
-                  listScore.add(Integer.valueOf(scores[i]));
-                  sum = sum + scores[i];
-                } else if (constructions[i].getName()
-                    .equals(ConstructionFactory.MECHION_CITIZEN) && freeSlot < 3
-                    && planet.getTotalPopulation() < 20) {
-                  list.add(constructions[i]);
-                  listScore.add(Integer.valueOf(scores[i]));
-                  sum = sum + scores[i];
-                }
-              }
-            }
-            int rand = DiceGenerator.getRandom(sum);
-            int total = 0;
-            for (int i = 0; i < listScore.size(); i++) {
-              if (rand < total + listScore.get(i).intValue()) {
-                Construction cons = list.get(i);
-                planet.setUnderConstruction(cons);
-                constructionSelected = true;
-                if (cons instanceof Ship) {
-                  Ship ship = (Ship) cons;
-                  Mission mission = info.getMissions().getMissionForPlanet(
-                      planet.getName(), MissionType.DEFEND);
-                  if (mission != null && ship.getTotalMilitaryPower() > 0
-                      && mission.getPhase() == MissionPhase.PLANNING) {
-                    mission.setPhase(MissionPhase.BUILDING);
-                  }
-                  mission = info.getMissions().getMission(MissionType.COLONIZE,
-                      MissionPhase.PLANNING);
-                  if (mission != null && ship.isColonyModule()) {
-                    mission.setPhase(MissionPhase.BUILDING);
-                    mission.setPlanetBuilding(planet.getName());
-                  }
-                }
-                break;
-              }
-              total = total + listScore.get(i).intValue();
-            }
-
-          }
+          constructionSelected = handleConstructions(constructions, planet,
+              info, map);
         }
         if (!constructionSelected) {
           // Nothing to select to let's select culture or credit
@@ -296,6 +254,126 @@ public class PlanetHandling {
         }
       }
     }
+  }
+
+  /**
+   * Handle construction by using scoring
+   * @param constructions The constructions
+   * @param planet The planet
+   * @param info The planet info
+   * @param map The star map
+   * @return boolean true if construction has been selected
+   */
+  private static boolean handleConstructions(final Construction[] constructions,
+      final Planet planet, final PlayerInfo info, final StarMap map) {
+    boolean constructionSelected = false;
+    int[] scores = scoreConstructions(constructions, planet, info, map);
+    int highest = -1;
+    int value = -1;
+    boolean over400 = false;
+    int minimum = 0;
+    int freeSlot = planet.getGroundSize() - planet.getUsedPlanetSize();
+    switch (freeSlot) {
+    case 0:
+      minimum = MAX_SLOT_SCORE;
+      break;
+    case 1:
+      minimum = ONE_SLOT_SCORE;
+      break;
+    case 2:
+      minimum = TWO_SLOT_SCORE;
+      break;
+    case 3:
+      minimum = THREE_SLOT_SCORE;
+      break;
+    case 4:
+      minimum = FOUR_SLOT_SCORE;
+      break;
+    case 5:
+      minimum = FIVE_SLOT_SCORE;
+      break;
+    case 6:
+      minimum = SIX_SLOT_SCORE;
+      break;
+    default:
+      minimum = 0;
+      break;
+    }
+    for (int i = 0; i < scores.length; i++) {
+      if (scores[i] > value) {
+        value = scores[i];
+        highest = i;
+      }
+      if (scores[i] >= HIGH_VALUE_SCORE) {
+        over400 = true;
+      }
+    }
+    if (highest == value) {
+      if (highest != -1) {
+        planet.setUnderConstruction(constructions[highest]);
+        constructionSelected = true;
+      }
+    } else if (over400) {
+      ArrayList<Construction> list = new ArrayList<>();
+      for (int i = 0; i < scores.length; i++) {
+        if (scores[i] >= HIGH_VALUE_SCORE) {
+          list.add(constructions[i]);
+        }
+      }
+      int rand = DiceGenerator.getRandom(list.size() - 1);
+      planet.setUnderConstruction(list.get(rand));
+      constructionSelected = true;
+    } else {
+      ArrayList<Construction> list = new ArrayList<>();
+      ArrayList<Integer> listScore = new ArrayList<>();
+      int sum = 0;
+      for (int i = 0; i < scores.length; i++) {
+        if (scores[i] >= minimum) {
+          list.add(constructions[i]);
+          listScore.add(Integer.valueOf(scores[i]));
+          sum = sum + scores[i];
+        } else {
+          if (constructions[i] instanceof Ship && freeSlot < 4) {
+            list.add(constructions[i]);
+            listScore.add(Integer.valueOf(scores[i]));
+            sum = sum + scores[i];
+          } else if (constructions[i].getName()
+              .equals(ConstructionFactory.MECHION_CITIZEN) && freeSlot < 3
+              && planet.getTotalPopulation() < 20) {
+            list.add(constructions[i]);
+            listScore.add(Integer.valueOf(scores[i]));
+            sum = sum + scores[i];
+          }
+        }
+      }
+      int rand = DiceGenerator.getRandom(sum);
+      int total = 0;
+      for (int i = 0; i < listScore.size(); i++) {
+        if (rand < total + listScore.get(i).intValue()) {
+          Construction cons = list.get(i);
+          planet.setUnderConstruction(cons);
+          constructionSelected = true;
+          if (cons instanceof Ship) {
+            Ship ship = (Ship) cons;
+            Mission mission = info.getMissions().getMissionForPlanet(
+                planet.getName(), MissionType.DEFEND);
+            if (mission != null && ship.getTotalMilitaryPower() > 0
+                && mission.getPhase() == MissionPhase.PLANNING) {
+              mission.setPhase(MissionPhase.BUILDING);
+            }
+            mission = info.getMissions().getMission(MissionType.COLONIZE,
+                MissionPhase.PLANNING);
+            if (mission != null && ship.isColonyModule()) {
+              mission.setPhase(MissionPhase.BUILDING);
+              mission.setPlanetBuilding(planet.getName());
+            }
+          }
+          break;
+        }
+        total = total + listScore.get(i).intValue();
+      }
+    }
+    return constructionSelected;
   }
 
   /**
@@ -323,12 +401,12 @@ public class PlanetHandling {
         Building building = (Building) constructions[i];
         // Military score
         scores[i] = building.getBattleBonus()
-            + building.getDefenseDamage() * 15;
+            + building.getDefenseDamage() * TURRET_DEFENSE_VALUE_SCORE;
         scores[i] = scores[i] + building.getScanRange() * 10
             + building.getScanCloakingDetection() / 4;
         if (info.getRace() == SpaceRace.SPORKS
             && building.getType() == BuildingType.MILITARY) {
-          scores[i] = scores[i] + 15;
+          scores[i] = scores[i] + SPORK_MILITARY_VALUE_SCORE;
         }
 
         // Production score
@@ -366,7 +444,7 @@ public class PlanetHandling {
 
         if (info.getRace() == SpaceRace.GREYANS
             && building.getType() == BuildingType.RESEARCH) {
-          scores[i] = scores[i] + 15;
+          scores[i] = scores[i] + GREYAN_RESEARCH_VALUE_SCORE;
         }
 
         if (info.getRace() == SpaceRace.MECHIONS
@@ -551,7 +629,10 @@ public class PlanetHandling {
           break;
         }
         default: {
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          // This happens only if there are no population or it is negative.
+          // There no works can be set.
+          throw new IllegalArgumentException("Planet(" + planet.getName()
+              + ") has no population but is still colonized!");
         }
         }
       }

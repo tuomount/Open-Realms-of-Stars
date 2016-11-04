@@ -62,8 +62,9 @@ public enum MissionPhase {
       return 3;
     case LOADING:
       return 4;
+    default:
+      return 0;
     }
-    return 0;
   }
 
   /**
@@ -83,8 +84,9 @@ public enum MissionPhase {
       return MissionPhase.PLANNING;
     case 4:
       return MissionPhase.LOADING;
+    default:
+      return MissionPhase.BUILDING;
     }
-    return MissionPhase.BUILDING;
   }
 
   @Override
@@ -100,8 +102,9 @@ public enum MissionPhase {
       return "Planning";
     case LOADING:
       return "Loading";
+    default:
+      return "Unknown";
     }
-    return "Unknown";
   }
 
 }

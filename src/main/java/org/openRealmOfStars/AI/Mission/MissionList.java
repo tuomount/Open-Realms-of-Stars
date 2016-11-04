@@ -75,7 +75,9 @@ public class MissionList {
       final MissionType type) {
     for (Mission mission : missions) {
       if (mission.getFleetName().equals(fleetName)
-          && mission.getType() == type) { return mission; }
+          && mission.getType() == type) {
+        return mission;
+      }
     }
     return null;
   }
@@ -88,7 +90,9 @@ public class MissionList {
   public Mission getMissionForFleet(final String fleetName) {
     for (Mission mission : missions) {
       if (mission.getFleetName() != null
-          && mission.getFleetName().equals(fleetName)) { return mission; }
+          && mission.getFleetName().equals(fleetName)) {
+        return mission;
+      }
     }
     return null;
   }
@@ -102,7 +106,9 @@ public class MissionList {
   public Mission getColonizeMission(final int x, final int y) {
     for (Mission mission : missions) {
       if (mission.getX() == x && mission.getY() == y
-          && mission.getType() == MissionType.COLONIZE) { return mission; }
+          && mission.getType() == MissionType.COLONIZE) {
+        return mission;
+      }
     }
     return null;
 
@@ -117,7 +123,9 @@ public class MissionList {
     for (Mission mission : missions) {
       if (mission.getTargetPlanet() != null
           && mission.getTargetPlanet().equals(name)
-          && mission.getType() == MissionType.ATTACK) { return mission; }
+          && mission.getType() == MissionType.ATTACK) {
+        return mission;
+      }
     }
     return null;
 
@@ -137,7 +145,9 @@ public class MissionList {
         count++;
       }
     }
-    if (count == 1) { return true; }
+    if (count == 1) {
+      return true;
+    }
     return false;
   }
 
@@ -150,7 +160,9 @@ public class MissionList {
   public Mission getMission(final MissionType type, final MissionPhase phase) {
     for (Mission mission : missions) {
       if (mission.getType() == type
-          && mission.getPhase() == phase) { return mission; }
+          && mission.getPhase() == phase) {
+        return mission;
+      }
     }
     return null;
 
@@ -167,7 +179,9 @@ public class MissionList {
     for (Mission mission : missions) {
       if (mission.getPlanetBuilding() != null
           && mission.getPlanetBuilding().equals(planetName)
-          && mission.getType() == type) { return mission; }
+          && mission.getType() == type) {
+        return mission;
+      }
     }
     return null;
   }
@@ -183,7 +197,9 @@ public class MissionList {
     for (Mission mission : missions) {
       if (mission.getPlanetBuilding() != null
           && mission.getPlanetBuilding().equals(planetName)
-          && mission.getPhase() == phase) { return mission; }
+          && mission.getPhase() == phase) {
+        return mission;
+      }
     }
     return null;
   }

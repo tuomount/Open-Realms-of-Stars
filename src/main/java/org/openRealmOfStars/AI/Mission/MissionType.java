@@ -57,8 +57,9 @@ public enum MissionType {
       return 2;
     case ATTACK:
       return 3;
+    default:
+      return 0;
     }
-    return 0;
   }
 
   /**
@@ -76,8 +77,9 @@ public enum MissionType {
       return MissionType.DEFEND;
     case 3:
       return MissionType.ATTACK;
+    default:
+      return MissionType.EXPLORE;
     }
-    return MissionType.EXPLORE;
   }
 
   @Override
@@ -91,8 +93,9 @@ public enum MissionType {
       return "Defend";
     case ATTACK:
       return "Attack";
+    default:
+      return "Unknown";
     }
-    return "Unknown";
   }
 
 }

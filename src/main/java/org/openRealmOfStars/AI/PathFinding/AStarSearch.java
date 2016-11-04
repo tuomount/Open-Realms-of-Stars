@@ -202,7 +202,9 @@ public class AStarSearch {
    * @return true if valid otherwise false
    */
   private boolean isValidPos(final int x, final int y) {
-    if (x >= 0 && y >= 0 && x < maxX && y < maxY) { return true; }
+    if (x >= 0 && y >= 0 && x < maxX && y < maxY) {
+      return true;
+    }
     return false;
   }
 
@@ -316,8 +318,9 @@ public class AStarSearch {
    * @return PathPoint or null if cannot move
    */
   public PathPoint getMove() {
-    if (targetPoint != null && points.size() > 0
-        && routeIndex != -1) { return points.get(routeIndex); }
+    if (targetPoint != null && points.size() > 0 && routeIndex != -1) {
+      return points.get(routeIndex);
+    }
     return null;
   }
 
@@ -333,7 +336,9 @@ public class AStarSearch {
    * @return True if last move reached or false if not
    */
   public boolean isLastMove() {
-    if (routeIndex == 0 || targetPoint == null) { return true; }
+    if (routeIndex == 0 || targetPoint == null) {
+      return true;
+    }
     return false;
   }
 

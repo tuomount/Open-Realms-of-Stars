@@ -551,7 +551,7 @@ public class PlanetHandling {
           break;
         }
         default: {
-
+          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
         }
         }
       }

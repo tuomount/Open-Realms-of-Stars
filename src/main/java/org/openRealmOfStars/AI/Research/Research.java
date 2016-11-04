@@ -172,7 +172,13 @@ public class Research {
         break;
       }
       default: {
-
+        //HUMAN
+        info.getTechList().setTechFocus(TechType.Combat, 20);
+        info.getTechList().setTechFocus(TechType.Defense, 16);
+        info.getTechList().setTechFocus(TechType.Hulls, 16);
+        info.getTechList().setTechFocus(TechType.Propulsion, 16);
+        info.getTechList().setTechFocus(TechType.Improvements, 16);
+        info.getTechList().setTechFocus(TechType.Electrics, 16);
       }
       }
     }

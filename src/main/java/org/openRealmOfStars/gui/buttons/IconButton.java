@@ -196,7 +196,9 @@ public class IconButton extends JButton {
   }
 
   public BufferedImage getDisabledImage() {
-    if (disabledImage == null) { return pressedImage; }
+    if (disabledImage == null) {
+      return pressedImage;
+    }
     return disabledImage;
   }
 

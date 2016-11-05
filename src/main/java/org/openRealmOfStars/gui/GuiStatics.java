@@ -41,11 +41,11 @@ public class GuiStatics {
   /**
    *  Monospace font size 10
    */
-  public final static Font FONT_SMALL = new Font("monospaced", Font.PLAIN, 10);
+  public static final Font FONT_SMALL = new Font("monospaced", Font.PLAIN, 10);
   /**
    *  Monospace font size 12
    */
-  public final static Font FONT_NORMAL = new Font("monospaced", Font.BOLD, 12);
+  public static final Font FONT_NORMAL = new Font("monospaced", Font.BOLD, 12);
 
   /**
    * Regular cubellan font
@@ -170,302 +170,302 @@ public class GuiStatics {
   /**
    * Line type for text background
    */
-  public final static Stroke TEXT_LINE = new BasicStroke(12,
+  public static final Stroke TEXT_LINE = new BasicStroke(12,
       BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 1, new float[] {1f }, 0);
 
   /**
    * Sun Line type for text background, opacity 230.
    */
-  public final static Color COLOR_GOLD_TRANS = new Color(210, 181, 44, 230);
+  public static final Color COLOR_GOLD_TRANS = new Color(210, 181, 44, 230);
 
   /**
    * Gold color
    */
-  public final static Color COLOR_GOLD = new Color(210, 181, 44);
+  public static final Color COLOR_GOLD = new Color(210, 181, 44);
 
   /**
    * Space yellow
    */
-  public final static Color COLOR_SPACE_YELLOW = new Color(251, 255, 51);
+  public static final Color COLOR_SPACE_YELLOW = new Color(251, 255, 51);
 
   /**
    * Dark space yellow
    */
-  public final static Color COLOR_SPACE_YELLOW_DARK = new Color(134, 134, 33);
+  public static final Color COLOR_SPACE_YELLOW_DARK = new Color(134, 134, 33);
 
   /**
    * Dark Gold color
    */
-  public final static Color COLOR_GOLD_DARK = new Color(155, 130, 13);
+  public static final Color COLOR_GOLD_DARK = new Color(155, 130, 13);
 
   /**
    * Planet Line type for text background, opacity 65.
    */
-  public final static Color COLOR_GREYBLUE = new Color(180, 180, 200, 65);
+  public static final Color COLOR_GREYBLUE = new Color(180, 180, 200, 65);
 
   /**
    * Panel background
    */
-  public final static Color COLOR_SPACE_GREY_BLUE = new Color(81, 87, 133, 255);
+  public static final Color COLOR_SPACE_GREY_BLUE = new Color(81, 87, 133, 255);
 
   /**
    * Green text dark one
    */
-  public final static Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 0, 255);
+  public static final Color COLOR_GREEN_TEXT_DARK = new Color(2, 102, 0, 255);
 
   /**
    * Green text
    */
-  public final static Color COLOR_GREEN_TEXT = new Color(4, 186, 0, 255);
+  public static final Color COLOR_GREEN_TEXT = new Color(4, 186, 0, 255);
 
   /**
    * Grey text dark one
    */
-  public final static Color COLOR_GREY_TEXT_DARK = new Color(90, 95, 90);
+  public static final Color COLOR_GREY_TEXT_DARK = new Color(90, 95, 90);
 
   /**
    * Grey text
    */
-  public final static Color COLOR_GREY_TEXT = new Color(160, 165, 160);
+  public static final Color COLOR_GREY_TEXT = new Color(160, 165, 160);
 
   /**
    * Green text
    */
-  public final static Color COLOR_RED_TEXT = new Color(186, 4, 0, 255);
+  public static final Color COLOR_RED_TEXT = new Color(186, 4, 0, 255);
 
   /**
    * Green text
    */
-  public final static Color COLOR_YELLOW_TEXT = new Color(220, 220, 4, 255);
+  public static final Color COLOR_YELLOW_TEXT = new Color(220, 220, 4, 255);
 
   /**
    * Damage 3/4
    */
-  public final static Color COLOR_DAMAGE_LITTLE = new Color(177, 255, 11, 255);
+  public static final Color COLOR_DAMAGE_LITTLE = new Color(177, 255, 11, 255);
 
   /**
    * Damage half
    */
-  public final static Color COLOR_DAMAGE_HALF = new Color(252, 255, 11, 255);
+  public static final Color COLOR_DAMAGE_HALF = new Color(252, 255, 11, 255);
 
   /**
    * Damage MUCH
    */
-  public final static Color COLOR_DAMAGE_MUCH = new Color(255, 189, 11, 255);
+  public static final Color COLOR_DAMAGE_MUCH = new Color(255, 189, 11, 255);
 
   /**
    * Damage almost destroyed
    */
-  public final static Color COLOR_DAMAGE_ALMOST_DESTROYED = new Color(255, 143,
+  public static final Color COLOR_DAMAGE_ALMOST_DESTROYED = new Color(255, 143,
       11, 255);
 
   /**
    * Damage destroyed
    */
-  public final static Color COLOR_DESTROYED = new Color(255, 28, 11, 255);
+  public static final Color COLOR_DESTROYED = new Color(255, 28, 11, 255);
 
   /**
    * Cool space blue
    */
-  public final static Color COLOR_COOL_SPACE_BLUE = new Color(88, 210, 255);
+  public static final Color COLOR_COOL_SPACE_BLUE = new Color(88, 210, 255);
 
   /**
    * Cool space blue dark
    */
-  public final static Color COLOR_COOL_SPACE_BLUE_DARK = new Color(25, 120,
+  public static final Color COLOR_COOL_SPACE_BLUE_DARK = new Color(25, 120,
       193);
 
   /**
    * Deep space purple dark
    */
-  public final static Color COLOR_DEEP_SPACE_PURPLE_DARK = new Color(25, 9, 61);
+  public static final Color COLOR_DEEP_SPACE_PURPLE_DARK = new Color(25, 9, 61);
 
   /**
    * Deep space purple
    */
-  public final static Color COLOR_DEEP_SPACE_PURPLE = new Color(47, 27, 92);
+  public static final Color COLOR_DEEP_SPACE_PURPLE = new Color(47, 27, 92);
 
   /**
    * Cool space blue darker
    */
-  public final static Color COLOR_COOL_SPACE_BLUE_DARKER = new Color(20, 110,
+  public static final Color COLOR_COOL_SPACE_BLUE_DARKER = new Color(20, 110,
       180);
 
   /**
    * Cool space blue, opacity 128
    */
-  public final static Color COLOR_COOL_SPACE_BLUE_TRANS = new Color(88, 210,
+  public static final Color COLOR_COOL_SPACE_BLUE_TRANS = new Color(88, 210,
       255, 128);
 
   /**
    * Cool space blue dark, opacity 128
    */
-  public final static Color COLOR_COOL_SPACE_BLUE_DARK_TRANS = new Color(25,
+  public static final Color COLOR_COOL_SPACE_BLUE_DARK_TRANS = new Color(25,
       120, 193, 128);
 
   /**
    * Deep Space Blue
    */
-  public final static Color COLOR_DEEP_SPACE_BLUE = new Color(33, 33, 208);
+  public static final Color COLOR_DEEP_SPACE_BLUE = new Color(33, 33, 208);
 
   /**
    * Grey 160
    */
-  public final static Color COLOR_GREY_160 = new Color(160, 160, 160);
+  public static final Color COLOR_GREY_160 = new Color(160, 160, 160);
 
   /**
    * Grey 80
    */
-  public final static Color COLOR_GREY_80 = new Color(80, 80, 80);
+  public static final Color COLOR_GREY_80 = new Color(80, 80, 80);
 
   /**
    * Grey 40
    */
-  public final static Color COLOR_GREY_40 = new Color(40, 40, 40);
+  public static final Color COLOR_GREY_40 = new Color(40, 40, 40);
 
-  private final static Color EXPLOSION_COLOR_1 = new Color(255, 196, 18);
-  private final static Color EXPLOSION_COLOR_2 = new Color(244, 101, 14);
-  private final static Color EXPLOSION_COLOR_3 = new Color(255, 218, 72);
-  private final static Color EXPLOSION_COLOR_4 = new Color(241, 223, 17);
-  private final static Color EXPLOSION_COLOR_5 = new Color(255, 133, 13);
+  private static final Color EXPLOSION_COLOR_1 = new Color(255, 196, 18);
+  private static final Color EXPLOSION_COLOR_2 = new Color(244, 101, 14);
+  private static final Color EXPLOSION_COLOR_3 = new Color(255, 218, 72);
+  private static final Color EXPLOSION_COLOR_4 = new Color(241, 223, 17);
+  private static final Color EXPLOSION_COLOR_5 = new Color(255, 133, 13);
 
   /**
    * Explosion color
    */
-  public final static Color[] EXPLOSION_COLORS = {EXPLOSION_COLOR_1,
+  public static final Color[] EXPLOSION_COLORS = {EXPLOSION_COLOR_1,
       EXPLOSION_COLOR_2, EXPLOSION_COLOR_3, EXPLOSION_COLOR_4,
       EXPLOSION_COLOR_5 };
 
-  private final static Color BEAM_COLOR_1 = new Color(255, 36, 0);
-  private final static Color BEAM_COLOR_2 = new Color(255, 96, 0);
-  private final static Color BEAM_COLOR_3 = new Color(255, 128, 0);
-  private final static Color BEAM_COLOR_4 = new Color(255, 18, 0);
-  private final static Color BEAM_COLOR_5 = new Color(255, 115, 77);
+  private static final Color BEAM_COLOR_1 = new Color(255, 36, 0);
+  private static final Color BEAM_COLOR_2 = new Color(255, 96, 0);
+  private static final Color BEAM_COLOR_3 = new Color(255, 128, 0);
+  private static final Color BEAM_COLOR_4 = new Color(255, 18, 0);
+  private static final Color BEAM_COLOR_5 = new Color(255, 115, 77);
 
   /**
    * Beam color
    */
-  public final static Color[] BEAM_COLORS = {BEAM_COLOR_1, BEAM_COLOR_2,
+  public static final Color[] BEAM_COLORS = {BEAM_COLOR_1, BEAM_COLOR_2,
       BEAM_COLOR_3, BEAM_COLOR_4, BEAM_COLOR_5, };
 
   /**
    * Photon torpedo
    */
-  public final static BufferedImage PHOTON_TORPEDO = IOUtilities
+  public static final BufferedImage PHOTON_TORPEDO = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/photon_torp.png"));
 
   /**
    * Explosion animation
    */
-  public final static AnimatedImage EXPLOSION1 = new AnimatedImage(64, 64,
+  public static final AnimatedImage EXPLOSION1 = new AnimatedImage(64, 64,
       "/resources/images/explosion1.png");
 
   /**
    * Blue explosion animation
    */
-  public final static AnimatedImage EXPLOSION2 = new AnimatedImage(64, 64,
+  public static final AnimatedImage EXPLOSION2 = new AnimatedImage(64, 64,
       "/resources/images/explosion2.png");
 
   /**
    * Small explosion animation
    */
-  public final static AnimatedImage EXPLOSION3 = new AnimatedImage(32, 32,
+  public static final AnimatedImage EXPLOSION3 = new AnimatedImage(32, 32,
       "/resources/images/explosion3.png");
 
   /**
    * Nuke animation
    */
-  public final static AnimatedImage EXPLOSION4 = new AnimatedImage(64, 64,
+  public static final AnimatedImage EXPLOSION4 = new AnimatedImage(64, 64,
       "/resources/images/explosion4.png");
 
   /**
    * Left arrow
    */
-  public final static BufferedImage LEFT_ARROW = IOUtilities
+  public static final BufferedImage LEFT_ARROW = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/left_arrow.png"));
 
   /**
    * Left arrow pressed
    */
-  public final static BufferedImage LEFT_ARROW_PRESSED = IOUtilities.loadImage(
+  public static final BufferedImage LEFT_ARROW_PRESSED = IOUtilities.loadImage(
       Tiles.class.getResource("/resources/images/left_arrow_pressed.png"));
 
   /**
    * Right arrow
    */
-  public final static BufferedImage RIGHT_ARROW = IOUtilities
+  public static final BufferedImage RIGHT_ARROW = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/right_arrow.png"));
 
   /**
    * Right arrow pressed
    */
-  public final static BufferedImage RIGHT_ARROW_PRESSED = IOUtilities.loadImage(
+  public static final BufferedImage RIGHT_ARROW_PRESSED = IOUtilities.loadImage(
       Tiles.class.getResource("/resources/images/right_arrow_pressed.png"));
 
   /**
    * Crosshair for combat
    */
-  public final static BufferedImage CROSSHAIR = IOUtilities
+  public static final BufferedImage CROSSHAIR = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/crosshair.png"));
 
   /**
    * Red Crosshair for combat
    */
-  public final static BufferedImage RED_CROSSHAIR = IOUtilities.loadImage(
+  public static final BufferedImage RED_CROSSHAIR = IOUtilities.loadImage(
       Tiles.class.getResource("/resources/images/red_crosshair.png"));
 
   /**
    * Big planet screen Rock 1
    */
-  public final static BufferedImage BIG_PLANET_ROCK1 = IOUtilities
+  public static final BufferedImage BIG_PLANET_ROCK1 = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/rock1.png"));
 
   /**
    * Big planet screen water world 1
    */
-  public final static BufferedImage BIG_PLANET_WATERWORLD1 = IOUtilities
+  public static final BufferedImage BIG_PLANET_WATERWORLD1 = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/waterworld1.png"));
 
   /**
    * Big planet screen water world 2
    */
-  public final static BufferedImage BIG_PLANET_WATERWORLD2 = IOUtilities
+  public static final BufferedImage BIG_PLANET_WATERWORLD2 = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/waterworld2.png"));
 
   /**
    * Big planet screen iron planet 1
    */
-  public final static BufferedImage BIG_PLANET_IRONPLANET1 = IOUtilities
+  public static final BufferedImage BIG_PLANET_IRONPLANET1 = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/ironplanet1.png"));
 
   /**
    * Big planet screen iron planet 2
    */
-  public final static BufferedImage BIG_PLANET_IRONPLANET2 = IOUtilities
+  public static final BufferedImage BIG_PLANET_IRONPLANET2 = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/ironplanet2.png"));
 
   /**
    * Big planet gas world
    */
-  public final static BufferedImage BIG_GASWORLD1 = IOUtilities
+  public static final BufferedImage BIG_GASWORLD1 = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/gasworld1.png"));
 
   /**
    * Big planet screen gas world
    */
-  public final static BufferedImage BIG_GASWORLD2 = IOUtilities
+  public static final BufferedImage BIG_GASWORLD2 = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/gasworld2.png"));
 
   /**
    * Star field image for parallax scrolling
    */
-  public final static BufferedImage starFieldImage = IOUtilities
+  public static final BufferedImage starFieldImage = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/starfield.png"));
 
   /**
    * Nebula image for parallax scrolling
    */
-  public final static BufferedImage nebulaeImage = IOUtilities
+  public static final BufferedImage nebulaeImage = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/nebulae.png"));
 
   /**
@@ -477,40 +477,40 @@ public class GuiStatics {
   /**
    * Horizontal thumb
    */
-  public final static BufferedImage IMAGE_SCROLL_BAR_THUMB = IOUtilities
+  public static final BufferedImage IMAGE_SCROLL_BAR_THUMB = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/thumb.png"));
 
   /**
    * Vertical thumb
    */
-  public final static BufferedImage IMAGE_SCROLL_BAR_THUMB2 = IOUtilities
+  public static final BufferedImage IMAGE_SCROLL_BAR_THUMB2 = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/thumb2.png"));
 
   /**
    * Centaur race selection image
    */
-  public final static BufferedImage IMAGE_CENTAUR_RACE = IOUtilities.loadImage(
+  public static final BufferedImage IMAGE_CENTAUR_RACE = IOUtilities.loadImage(
       GuiStatics.class.getResource("/resources/images/centaur_race.png"));
   /**
    * Greyan race selection image
    */
-  public final static BufferedImage IMAGE_GREYAN_RACE = IOUtilities.loadImage(
+  public static final BufferedImage IMAGE_GREYAN_RACE = IOUtilities.loadImage(
       GuiStatics.class.getResource("/resources/images/greyan_race.png"));
   /**
    * Mechion race selection image
    */
-  public final static BufferedImage IMAGE_MECHION_RACE = IOUtilities.loadImage(
+  public static final BufferedImage IMAGE_MECHION_RACE = IOUtilities.loadImage(
       GuiStatics.class.getResource("/resources/images/mechion_race.png"));
   /**
    * Spork race selection image
    */
-  public final static BufferedImage IMAGE_SPORK_RACE = IOUtilities.loadImage(
+  public static final BufferedImage IMAGE_SPORK_RACE = IOUtilities.loadImage(
       GuiStatics.class.getResource("/resources/images/spork_race.png"));
 
   /**
    * Human race selection image
    */
-  public final static BufferedImage IMAGE_HUMAN_RACE = IOUtilities.loadImage(
+  public static final BufferedImage IMAGE_HUMAN_RACE = IOUtilities.loadImage(
       GuiStatics.class.getResource("/resources/images/human_race.png"));
 
   /**

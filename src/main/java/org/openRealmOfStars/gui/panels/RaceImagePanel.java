@@ -48,7 +48,14 @@ public class RaceImagePanel extends JPanel {
    */
   private BufferedImage image;
 
+  /**
+   * Maximum width
+   */
   private static final int MAXX = 172;
+
+  /**
+   * Maximum height
+   */
   private static final int MAXY = 200;
 
   /**
@@ -69,10 +76,20 @@ public class RaceImagePanel extends JPanel {
     raceToShow = "Not in use";
   }
 
+  /**
+   * Get Race to show.
+   *
+   * @return Race to show
+   */
   public String getRaceToShow() {
     return raceToShow;
   }
 
+  /**
+   * Set Race to show.
+   *
+   * @param raceToShow Race to show
+   */
   public void setRaceToShow(final String raceToShow) {
     if (raceToShow != null) {
       this.raceToShow = raceToShow;

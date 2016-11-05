@@ -301,7 +301,9 @@ public class Combat {
    * @return true if valid otherwise false
    */
   public boolean isValidPos(final int x, final int y) {
-    if (x >= 0 && y >= 0 && x < MAX_X && y < MAX_Y) { return true; }
+    if (x >= 0 && y >= 0 && x < MAX_X && y < MAX_Y) {
+      return true;
+    }
     return false;
   }
 
@@ -313,7 +315,9 @@ public class Combat {
    */
   public boolean isBlocked(final int x, final int y) {
     for (CombatShip ship : shipList) {
-      if (x == ship.getX() && y == ship.getY()) { return true; }
+      if (x == ship.getX() && y == ship.getY()) {
+        return true;
+      }
     }
     return false;
   }
@@ -362,7 +366,9 @@ public class Combat {
    */
   public CombatShip getShipFromCoordinate(final int x, final int y) {
     for (CombatShip ship : shipList) {
-      if (ship.getX() == x && ship.getY() == y) { return ship; }
+      if (ship.getX() == x && ship.getY() == y) {
+        return ship;
+      }
     }
     return null;
   }
@@ -379,75 +385,111 @@ public class Combat {
     if (team == 0) {
       switch (index) {
       case 0: {
-        if (x) { return 4; }
+        if (x) {
+          return 4;
+        }
         return 7;
       }
       case 1: {
-        if (x) { return 3; }
+        if (x) {
+          return 3;
+        }
         return 7;
       }
       case 2: {
-        if (x) { return 5; }
+        if (x) {
+          return 5;
+        }
         return 7;
       }
       case 3: {
-        if (x) { return 2; }
+        if (x) {
+          return 2;
+        }
         return 7;
       }
       case 4: {
-        if (x) { return 6; }
+        if (x) {
+          return 6;
+        }
         return 7;
       }
       case 5: {
-        if (x) { return 4; }
+        if (x) {
+          return 4;
+        }
         return 8;
       }
       case 6: {
-        if (x) { return 1; }
+        if (x) {
+          return 1;
+        }
         return 7;
       }
       case 7: {
-        if (x) { return 7; }
+        if (x) {
+          return 7;
+        }
         return 7;
       }
       case 8: {
-        if (x) { return 3; }
+        if (x) {
+          return 3;
+        }
         return 8;
       }
       case 9: {
-        if (x) { return 5; }
+        if (x) {
+          return 5;
+        }
         return 8;
       }
       case 10: {
-        if (x) { return 2; }
+        if (x) {
+          return 2;
+        }
         return 8;
       }
       case 11: {
-        if (x) { return 6; }
+        if (x) {
+          return 6;
+        }
         return 8;
       }
       case 12: {
-        if (x) { return 0; }
+        if (x) {
+          return 0;
+        }
         return 7;
       }
       case 13: {
-        if (x) { return 8; }
+        if (x) {
+          return 8;
+        }
         return 7;
       }
       case 14: {
-        if (x) { return 1; }
+        if (x) {
+          return 1;
+        }
         return 8;
       }
       case 15: {
-        if (x) { return 7; }
+        if (x) {
+          return 7;
+        }
         return 8;
       }
       case 16: {
-        if (x) { return 0; }
+        if (x) {
+          return 0;
+        }
         return 8;
       }
       case 17: {
-        if (x) { return 8; }
+        if (x) {
+          return 8;
+        }
         return 8;
       }
       }
@@ -455,75 +497,111 @@ public class Combat {
       // Second team on top side
       switch (index) {
       case 0: {
-        if (x) { return 4; }
+        if (x) {
+          return 4;
+        }
         return 1;
       }
       case 1: {
-        if (x) { return 3; }
+        if (x) {
+          return 3;
+        }
         return 1;
       }
       case 2: {
-        if (x) { return 5; }
+        if (x) {
+          return 5;
+        }
         return 1;
       }
       case 3: {
-        if (x) { return 2; }
+        if (x) {
+          return 2;
+        }
         return 1;
       }
       case 4: {
-        if (x) { return 6; }
+        if (x) {
+          return 6;
+        }
         return 1;
       }
       case 5: {
-        if (x) { return 4; }
+        if (x) {
+          return 4;
+        }
         return 0;
       }
       case 6: {
-        if (x) { return 1; }
+        if (x) {
+          return 1;
+        }
         return 1;
       }
       case 7: {
-        if (x) { return 7; }
+        if (x) {
+          return 7;
+        }
         return 1;
       }
       case 8: {
-        if (x) { return 3; }
+        if (x) {
+          return 3;
+        }
         return 0;
       }
       case 9: {
-        if (x) { return 5; }
+        if (x) {
+          return 5;
+        }
         return 0;
       }
       case 10: {
-        if (x) { return 2; }
+        if (x) {
+          return 2;
+        }
         return 0;
       }
       case 11: {
-        if (x) { return 6; }
+        if (x) {
+          return 6;
+        }
         return 0;
       }
       case 12: {
-        if (x) { return 0; }
+        if (x) {
+          return 0;
+        }
         return 1;
       }
       case 13: {
-        if (x) { return 8; }
+        if (x) {
+          return 8;
+        }
         return 1;
       }
       case 14: {
-        if (x) { return 1; }
+        if (x) {
+          return 1;
+        }
         return 0;
       }
       case 15: {
-        if (x) { return 7; }
+        if (x) {
+          return 7;
+        }
         return 0;
       }
       case 16: {
-        if (x) { return 0; }
+        if (x) {
+          return 0;
+        }
         return 0;
       }
       case 17: {
-        if (x) { return 8; }
+        if (x) {
+          return 8;
+        }
         return 0;
       }
       }

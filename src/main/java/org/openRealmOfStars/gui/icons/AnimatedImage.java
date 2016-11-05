@@ -91,8 +91,9 @@ public class AnimatedImage {
    * @return Animation frame or if not found with index then frame 0 is returned
    */
   public BufferedImage getFrame(final int index) {
-    if (index >= 0
-        && index < animations.size()) { return animations.get(index); }
+    if (index >= 0 && index < animations.size()) {
+      return animations.get(index);
+    }
     return animations.get(0);
   }
 

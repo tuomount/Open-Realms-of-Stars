@@ -98,32 +98,32 @@ public class PlanetAnimation {
   /**
    * Animation type for turret fire
    */
-  public final static int ANIMATION_TYPE_TURRET = 1;
+  public static final int ANIMATION_TYPE_TURRET = 1;
 
   /**
    * Animation type for turret aim
    */
-  public final static int ANIMATION_TYPE_AIM = 0;
+  public static final int ANIMATION_TYPE_AIM = 0;
 
   /**
    * Animation type for bombing aim
    */
-  public final static int ANIMATION_TYPE_BOMBING_AIM = 1;
+  public static final int ANIMATION_TYPE_BOMBING_AIM = 1;
 
   /**
    * Animation type for bombing
    */
-  public final static int ANIMATION_TYPE_BOMBING = 2;
+  public static final int ANIMATION_TYPE_BOMBING = 2;
 
   /**
    * Animation type for nuke aim
    */
-  public final static int ANIMATION_TYPE_NUKE_AIM = 3;
+  public static final int ANIMATION_TYPE_NUKE_AIM = 3;
 
   /**
    * Animation type for dropping nuke
    */
-  public final static int ANIMATION_TYPE_NUKING = 4;
+  public static final int ANIMATION_TYPE_NUKING = 4;
 
   /**
    * Animation type
@@ -215,7 +215,9 @@ public class PlanetAnimation {
    * @return True if animation has finished
    */
   public boolean isAnimationFinished() {
-    if (count == 0) { return true; }
+    if (count == 0) {
+      return true;
+    }
     return false;
   }
 
@@ -278,8 +280,9 @@ public class PlanetAnimation {
    * @return BufferedImage
    */
   public BufferedImage getAnimFrame() {
-    if (showAnim && animFrame < explosionAnim
-        .getMaxFrames()) { return explosionAnim.getFrame(animFrame); }
+    if (showAnim && animFrame < explosionAnim.getMaxFrames()) {
+      return explosionAnim.getFrame(animFrame);
+    }
     return null;
   }
 

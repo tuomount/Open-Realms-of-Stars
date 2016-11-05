@@ -35,6 +35,9 @@ public class MissionList {
    */
   private ArrayList<Mission> missions;
 
+  /**
+   * Constructor for MissionList.
+   */
   public MissionList() {
     missions = new ArrayList<>();
   }

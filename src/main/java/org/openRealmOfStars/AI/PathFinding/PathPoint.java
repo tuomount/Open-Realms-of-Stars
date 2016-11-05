@@ -50,26 +50,50 @@ public class PathPoint {
     this.distance = distance;
   }
 
+  /**
+   * Get X coordinate for Path Point
+   * @return X coordinate
+   */
   public int getX() {
     return x;
   }
 
+  /**
+   * Set X coordinate for Path Point
+   * @param x X coordinate
+   */
   public void setX(final int x) {
     this.x = x;
   }
 
+  /**
+   * Get Y coordinate for Path Point
+   * @return Y coordinate
+   */
   public int getY() {
     return y;
   }
 
+  /**
+   * Set Y coordinate for Path Point
+   * @param y Y coordinate
+   */
   public void setY(final int y) {
     this.y = y;
   }
 
+  /**
+   * Get distance to target point
+   * @return Distance to target as a double
+   */
   public double getDistance() {
     return distance;
   }
 
+  /**
+   * Set distance to target
+   * @param distance to target
+   */
   public void setDistance(final double distance) {
     this.distance = distance;
   }
@@ -90,10 +114,15 @@ public class PathPoint {
     return false;
   }
 
+  /**
+   * Magic multiplier to get hash code
+   */
+  private static final int MULTIPLIER = 9731;
+
   @Override
   public int hashCode() {
     int result = x;
-    result = 9731 * result + y;
+    result = MULTIPLIER * result + y;
     return result;
   }
 }

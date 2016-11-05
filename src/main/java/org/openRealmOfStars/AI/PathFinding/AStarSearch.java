@@ -53,6 +53,12 @@ public class AStarSearch {
   private static final int UNBLOCKED = 200000;
 
   /**
+   * Start distance for PathPoint. This number just needs to bigger
+   * than it ever can be calculated from map.
+   */
+  private static final int START_DISTANCE = 999999;
+
+  /**
    * Map containing the block information
    */
   private int[][] blockMap;
@@ -283,7 +289,7 @@ public class AStarSearch {
         PathPoint point = points.get(points.size() - 1);
         int bx = 0;
         int by = 0;
-        double bdist = 999999;
+        double bdist = START_DISTANCE;
         for (int y = -1; y < 2; y++) {
           for (int x = -1; x < 2; x++) {
             if (y == 0 && x == 0) {
@@ -324,6 +330,9 @@ public class AStarSearch {
     return null;
   }
 
+  /**
+   * Move route index to next move point on found path.
+   */
   public void nextMove() {
     if (targetPoint != null && points.size() > 1 && routeIndex != -1
         && routeIndex > 0) {

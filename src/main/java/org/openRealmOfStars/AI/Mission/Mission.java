@@ -55,7 +55,7 @@ public final class Mission {
   private String fleetName;
 
   /**
-   * Planet name which is building the ship
+   * Planet name which is building the fleet
    */
   private String planetBuilding;
 
@@ -177,34 +177,66 @@ public final class Mission {
     this.type = missionType;
   }
 
+  /**
+   * Get the mission phase
+   * @return MissionPhase get mission phase
+   */
   public MissionPhase getPhase() {
     return phase;
   }
 
+  /**
+   * Set the mission phase
+   * @param missionPhase Set phase for mission
+   */
   public void setPhase(final MissionPhase missionPhase) {
     this.phase = missionPhase;
   }
 
+  /**
+   * Get fleet involved in this mission
+   * @return Fleet name as a string
+   */
   public String getFleetName() {
     return fleetName;
   }
 
+  /**
+   * Set fleet name which is involved and executing the mission.
+   * @param name Fleet name
+   */
   public void setFleetName(final String name) {
     this.fleetName = name;
   }
 
+  /**
+   * Get planet name which is building a fleet for this missing.
+   * @return  Planet name which is building the fleet for mission.
+   */
   public String getPlanetBuilding() {
     return planetBuilding;
   }
 
+  /**
+   * Set planet name which building fleet for the mission.
+   * @param building Planet name which is building the fleet
+   */
   public void setPlanetBuilding(final String building) {
     this.planetBuilding = building;
   }
 
+  /**
+   * Get mission's target X coordinate
+   * @return X coordinate
+   */
   public int getX() {
     return targetXCoordinate;
   }
 
+  /**
+   * Get mission's target Y coordinate
+   * @return Y coordinate
+   */
   public int getY() {
     return targetYCoordinate;
   }
@@ -216,26 +248,50 @@ public final class Mission {
         + getSunName();
   }
 
+  /**
+   * Get sun name involved for the mission
+   * @return Sun name as a String
+   */
   public String getSunName() {
     return sunName;
   }
 
+  /**
+   * Set sun name for the mission.
+   * @param name Sun Name
+   */
   public void setSunName(final String name) {
     this.sunName = name;
   }
 
+  /**
+   * How many turns mission has been on
+   * @return amount of turns mission has been active
+   */
   public int getMissionTime() {
     return missionTime;
   }
 
+  /**
+   * Set mission time in turns
+   * @param time in turns
+   */
   public void setMissionTime(final int time) {
     this.missionTime = time;
   }
 
+  /**
+   * Get mission's target planet name.
+   * @return Planet name as a string
+   */
   public String getTargetPlanet() {
     return targetPlanet;
   }
 
+  /**
+   * Set Mission's target planet name.
+   * @param target Planet name as a string.
+   */
   public void setTargetPlanet(final String target) {
     this.targetPlanet = target;
   }

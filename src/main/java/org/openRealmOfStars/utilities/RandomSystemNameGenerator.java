@@ -62,7 +62,7 @@ public class RandomSystemNameGenerator {
    * Generate random system name
    * @return Randomized System name
    */
-  public static String generate() {
+  public String generate() {
     StringBuilder sb = new StringBuilder();
     sb.append(
         GREEK_ALPHABET[DiceGenerator.getRandom(GREEK_ALPHABET.length - 1)]);

@@ -25,6 +25,8 @@ import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
+import org.openRealmOfStars.utilities.repository.SunRepository;
 
 /**
  *
@@ -345,7 +347,7 @@ public class StarMap {
       // Read suns
       int count = dis.readInt();
       for (int i = 0; i < count; i++) {
-        sunList.add(new Sun(dis));
+        sunList.add(new SunRepository().restoreSun(dis));
       }
       // Players first
       players = new PlayerList(dis);
@@ -385,7 +387,7 @@ public class StarMap {
     dos.writeInt(sunList.size());
     for (int i = 0; i < sunList.size(); i++) {
       Sun sun = sunList.get(i);
-      sun.saveSun(dos);
+      new SunRepository().saveSun(dos, sun);
     }
     // Players first
     players.savePlayerList(dos);
@@ -487,7 +489,7 @@ public class StarMap {
     int sx = sunx + DiceGenerator.getRandom(-1, 1);
     int sy = suny + DiceGenerator.getRandom(-1, 1);
     StarMapUtilities.setSolarSystem(solarSystem, sx, sy, getMaxX(), getMaxY());
-    Sun sun = new Sun(sx, sy, null);
+    Sun sun = new Sun(sx, sy, new RandomSystemNameGenerator());
     sunList.add(sun);
     int sunNumber = sunList.size() - 1;
     SquareInfo info = new SquareInfo(SquareInfo.TYPE_SUN, sunNumber);

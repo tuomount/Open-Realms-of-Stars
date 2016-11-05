@@ -1,9 +1,11 @@
 package org.openRealmOfStars.starMap;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
+import org.mockito.Mockito;
+import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
+
 /**
  * 
  * Open Realm of Stars game project
@@ -39,13 +41,20 @@ public class SunTest {
     }
 
     @Test
-    public void testCreateSunWhereNameIsNull(){
-        Sun sun = new Sun(10, 15, null);
+    public void testCreateSunWithNameGenerator(){
+        RandomSystemNameGenerator nameGenerator = Mockito.mock(RandomSystemNameGenerator.class);
+        Mockito.when(nameGenerator.generate()).thenReturn("Generated Solar System Sun name");
+        Sun sun = new Sun(10, 15, nameGenerator);
 
-        assertNotNull(sun.getName());
-        assertEquals(true, sun.getName().contains(" "));
+        assertEquals("Generated Solar System Sun name", sun.getName());
         assertEquals(10, sun.getCenterX());
         assertEquals(15, sun.getCenterY());
     }
 
+    @Test
+    public void testSunShouldBeConvertedIntoString(){
+        Sun sun = new Sun(10, 15, "Sun");
+
+        assertEquals("Sun X:10 Y:15", sun.toString());
+    }
 }

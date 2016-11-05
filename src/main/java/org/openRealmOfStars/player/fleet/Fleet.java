@@ -75,6 +75,9 @@ public class Fleet {
 
   /**
    * Constructor for fleet
+   * @param firstShip The first ship in the fleet
+   * @param x The fleet's X coordinate
+   * @param y The fleet's X coordinate
    */
   public Fleet(final Ship firstShip, final int x, final int y) {
     ships = new ArrayList<>();
@@ -154,6 +157,7 @@ public class Fleet {
   /**
    * Is certain ship in fleet
    * @param ship is in fleet
+   * @return Is certain ship in fleet
    */
   public boolean isShipInFleet(final Ship ship) {
     return ships.contains(ship);
@@ -173,7 +177,9 @@ public class Fleet {
    * @return Ship or null
    */
   public Ship getShipByIndex(final int index) {
-    if (index >= 0 && index < ships.size()) { return ships.get(index); }
+    if (index >= 0 && index < ships.size()) {
+      return ships.get(index);
+    }
     return null;
   }
 
@@ -420,7 +426,9 @@ public class Fleet {
    */
   public Ship getColonyShip() {
     for (Ship ship : ships) {
-      if (ship.getColonist() > 0 && ship.isColonyShip()) { return ship; }
+      if (ship.getColonist() > 0 && ship.isColonyShip()) {
+        return ship;
+      }
     }
     return null;
   }
@@ -446,12 +454,20 @@ public class Fleet {
   public boolean isScoutFleet() {
     if (ships.size() == 1) {
       Ship ship = ships.get(0);
-      if (getName().startsWith("Defender")) { return false; }
-      if (ship.getHull().getHullType() == ShipHullType.PROBE) { return true; }
+      if (getName().startsWith("Defender")) {
+        return false;
+      }
+      if (ship.getHull().getHullType() == ShipHullType.PROBE) {
+        return true;
+      }
       if (ship.getHull().getSize() == ShipSize.SMALL
-          && !ship.isColonyModule()) { return true; }
+          && !ship.isColonyModule()) {
+        return true;
+      }
       if (ship.getName().contains("Scout")
-          || ship.getName().contains("Explorer")) { return true; }
+          || ship.getName().contains("Explorer")) {
+        return true;
+      }
     }
     return false;
   }
@@ -464,7 +480,9 @@ public class Fleet {
   public boolean isColonyFleet() {
     if (ships.size() == 1) {
       Ship ship = ships.get(0);
-      if (ship.isColonyModule()) { return true; }
+      if (ship.isColonyModule()) {
+        return true;
+      }
     }
     return false;
   }

@@ -209,7 +209,9 @@ public class CombatAnimation {
    * @return True if animation has finished
    */
   public boolean isAnimationFinished() {
-    if (count == 0) { return true; }
+    if (count == 0) {
+      return true;
+    }
     return false;
   }
 
@@ -370,7 +372,9 @@ public class CombatAnimation {
    * @return BufferedImage
    */
   public BufferedImage getAnimFrame() {
-    if (showAnim) { return explosionAnim.getFrame(animFrame); }
+    if (showAnim) {
+      return explosionAnim.getFrame(animFrame);
+    }
     return null;
   }
 

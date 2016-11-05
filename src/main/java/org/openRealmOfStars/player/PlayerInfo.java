@@ -332,8 +332,9 @@ public class PlayerInfo {
     fleets.saveFleetList(dos);
     dos.writeInt(maxX);
     dos.writeInt(maxY);
-    if (mapData == null) { throw new IOException(
-        "Map data is not initialized yet!"); }
+    if (mapData == null) {
+      throw new IOException("Map data is not initialized yet!");
+    }
     for (int y = 0; y < maxY; y++) {
       for (int x = 0; x < maxX; x++) {
         dos.writeByte(mapData[x][y]);
@@ -475,7 +476,9 @@ public class PlayerInfo {
     }
     int unChartedValue = (sectors[0] + sectors[1] + sectors[2] + sectors[3])
         / 4;
-    if (unChartedValue < 20) { return null; }
+    if (unChartedValue < 20) {
+      return null;
+    }
     int pathValue = 0;
     int resultValue = 0;
     for (sector = 0; sector < 4; sector++) {
@@ -567,7 +570,9 @@ public class PlayerInfo {
    * @return true if valid and false if invalid
    */
   private boolean isValidCoordinate(final int x, final int y) {
-    if (x >= 0 && y >= 0 && x < maxX && y < maxY) { return true; }
+    if (x >= 0 && y >= 0 && x < maxX && y < maxY) {
+      return true;
+    }
     return false;
   }
 
@@ -673,8 +678,9 @@ public class PlayerInfo {
    * @return ShipStat or null
    */
   public ShipStat getShipStat(final int index) {
-    if (shipStatList.size() > 0 && index >= 0
-        && index < shipStatList.size()) { return shipStatList.get(index); }
+    if (shipStatList.size() > 0 && index >= 0 && index < shipStatList.size()) {
+      return shipStatList.get(index);
+    }
     return null;
   }
 
@@ -685,7 +691,9 @@ public class PlayerInfo {
    */
   public ShipStat getShipStatByName(final String name) {
     for (ShipStat stat : shipStatList) {
-      if (stat.getDesign().getName().equals(name)) { return stat; }
+      if (stat.getDesign().getName().equals(name)) {
+        return stat;
+      }
     }
     return null;
   }
@@ -786,6 +794,8 @@ public class PlayerInfo {
 
   /**
    * Get message list for one turn
+   *
+   * @return Message list for one turn
    */
   public MessageList getMsgList() {
     return msgList;

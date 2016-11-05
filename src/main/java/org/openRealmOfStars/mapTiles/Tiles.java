@@ -47,8 +47,9 @@ public class Tiles {
     if (listOfTiles == null) {
       initTiles();
     }
-    if (index > 0
-        && index < listOfTiles.size()) { return listOfTiles.get(index); }
+    if (index > 0 && index < listOfTiles.size()) {
+      return listOfTiles.get(index);
+    }
     return listOfTiles.get(0);
   }
 
@@ -63,7 +64,9 @@ public class Tiles {
       initTiles();
     }
     Tile tile = hashOfTiles.get(name);
-    if (tile == null) { return getTileByIndex(0); }
+    if (tile == null) {
+      return getTileByIndex(0);
+    }
     return tile;
   }
 

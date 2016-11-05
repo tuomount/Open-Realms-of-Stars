@@ -61,19 +61,16 @@ import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
 public class MapPanel extends JPanel {
 
-  /**
-   *
-   */
   private static final long serialVersionUID = 1L;
 
   /**
    * Map drawing area size width
    */
-  private final static int WIDTH = 864;
+  private static final int WIDTH = 864;
   /**
    * Map drawing area size height
    */
-  private final static int HEIGHT = 608;
+  private static final int HEIGHT = 608;
 
   /**
    * How many tiles can be fitted on half of the panel

@@ -111,7 +111,9 @@ public class MessageList {
    * @return Message, never null
    */
   public Message getNextMessage() {
-    if (list.size() == 0) { return NO_MESSAGE; }
+    if (list.size() == 0) {
+      return NO_MESSAGE;
+    }
     if (index < list.size() - 1) {
       index++;
     }
@@ -124,7 +126,9 @@ public class MessageList {
    * @return Message, never null
    */
   public Message getPrevMessage() {
-    if (list.size() == 0) { return NO_MESSAGE; }
+    if (list.size() == 0) {
+      return NO_MESSAGE;
+    }
     if (index > 0) {
       index--;
     }
@@ -144,7 +148,9 @@ public class MessageList {
    * @return Message, never null
    */
   public Message getMsg() {
-    if (list.size() == 0) { return NO_MESSAGE; }
+    if (list.size() == 0) {
+      return NO_MESSAGE;
+    }
     return list.get(index);
   }
 
@@ -153,7 +159,9 @@ public class MessageList {
    * @return Maximum number of messages
    */
   public int getMaxMsg() {
-    if (list.size() > 0) { return list.size(); }
+    if (list.size() > 0) {
+      return list.size();
+    }
     return 1;
   }
 

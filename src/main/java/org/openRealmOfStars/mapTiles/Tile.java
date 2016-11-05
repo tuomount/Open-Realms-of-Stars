@@ -51,7 +51,7 @@ public class Tile {
   /**
    * Tile index in list of tiles
    */
-  private int Index = -1;
+  private int tileIndex = -1;
 
   /**
    * Get tile from tileset image, where x is number of tiles in X axel and
@@ -93,11 +93,11 @@ public class Tile {
   }
 
   public int getIndex() {
-    return Index;
+    return tileIndex;
   }
 
   public void setIndex(final int index) {
-    Index = index;
+    tileIndex = index;
   }
 
 }

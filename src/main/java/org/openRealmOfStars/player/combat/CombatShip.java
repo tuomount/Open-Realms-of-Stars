@@ -251,8 +251,9 @@ public class CombatShip implements Comparable<CombatShip> {
    * @return true if component has been used
    */
   public boolean isComponentUsed(final int index) {
-    if (index >= 0
-        && index < componentUsed.length) { return componentUsed[index]; }
+    if (index >= 0 && index < componentUsed.length) {
+      return componentUsed[index];
+    }
     return true;
   }
 

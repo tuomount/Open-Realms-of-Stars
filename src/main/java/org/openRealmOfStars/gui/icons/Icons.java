@@ -104,8 +104,9 @@ public class Icons {
     if (listOfIcons == null) {
       initIcons();
     }
-    if (index > 0
-        && index < listOfIcons.size()) { return listOfIcons.get(index); }
+    if (index > 0 && index < listOfIcons.size()) {
+      return listOfIcons.get(index);
+    }
     return listOfIcons.get(0);
   }
 
@@ -120,7 +121,9 @@ public class Icons {
       initIcons();
     }
     Icon16x16 icon = hashOfIcons.get(name);
-    if (icon == null) { return getIconByIndex(0); }
+    if (icon == null) {
+      return getIconByIndex(0);
+    }
     return icon;
   }
 
@@ -137,12 +140,12 @@ public class Icons {
 
   /**
    * Add new Icon to Icons list and map
-   * @param Icon Icon to add
+   * @param icon Icon to add
    */
-  public static void addIcon(final Icon16x16 Icon) {
-    listOfIcons.add(Icon);
-    Icon.setIndex(listOfIcons.size() - 1);
-    hashOfIcons.put(Icon.getName(), Icon);
+  public static void addIcon(final Icon16x16 icon) {
+    listOfIcons.add(icon);
+    icon.setIndex(listOfIcons.size() - 1);
+    hashOfIcons.put(icon.getName(), icon);
   }
 
   /**

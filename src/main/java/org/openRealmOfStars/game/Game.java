@@ -3,14 +3,6 @@ package org.openRealmOfStars.game;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -45,6 +37,7 @@ import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
  *
@@ -404,52 +397,19 @@ public class Game extends JFrame implements ActionListener {
   }
 
   /**
-   * Save game for certain file name
-   * @param filename File name
-   */
-  public void saveGame(final String filename) {
-    if (starMap != null) {
-      String folderName = "saves";
-      File folder = new File(folderName);
-      if (!folder.exists()) {
-        folder.mkdirs();
-      }
-      File file = new File(folderName + "/" + filename);
-      try {
-        FileOutputStream os = new FileOutputStream(file);
-        BufferedOutputStream bos = new BufferedOutputStream(os);
-        try (DataOutputStream dos = new DataOutputStream(bos)) {
-          starMap.saveGame(dos);
-        } catch (IOException e) {
-          System.out.println(e.getMessage());
-        }
-      } catch (FileNotFoundException e) {
-        System.err.println("File could not be write: " + folderName + "/"
-            + filename + "! " + e.getMessage());
-      }
-
-    }
-  }
-
-  /**
    * Load game from certain file name
    * @param filename File name
    * @return true if successful
    */
-  public boolean loadGame(final String filename) {
-    String folderName = "saves";
-    File file = new File(folderName + "/" + filename);
-    try (FileInputStream is = new FileInputStream(file)) {
-      BufferedInputStream bis = new BufferedInputStream(is);
-      DataInputStream dis = new DataInputStream(bis);
-      starMap = new StarMap(dis);
+  public boolean loadSavedGame(final String filename) {
+    GameRepository repository = new GameRepository();
+    starMap = repository.loadGame(filename);
+    if (starMap != null) {
       players = starMap.getPlayerList();
       starMap.updateStarMapOnLoadGame();
-    } catch (IOException e) {
-      System.out.println(e.getMessage());
-      return false;
-    }
-    return true;
+      return true;
+    } 
+    return false;
   }
 
   /**
@@ -677,7 +637,7 @@ public class Game extends JFrame implements ActionListener {
     if (gameState == GameState.STARMAP && starMapView != null) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
-        saveGame("autosave.save");
+        new GameRepository().saveGame("autosave.save",starMap);
         changeGameState(GameState.AITURN);
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_FOCUS_MSG)) {
@@ -900,7 +860,7 @@ public class Game extends JFrame implements ActionListener {
       } else if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_NEXT)
           && loadGameView.getSelectedSaveFile() != null
-          && loadGame(loadGameView.getSelectedSaveFile())) {
+          && loadSavedGame(loadGameView.getSelectedSaveFile())) {
         changeGameState(GameState.STARMAP);
       }
 

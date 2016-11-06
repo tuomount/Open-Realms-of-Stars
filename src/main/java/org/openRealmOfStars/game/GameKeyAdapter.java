@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
  *
@@ -42,7 +43,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
       }
       if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
-        game.saveGame("current.save");
+        new GameRepository().saveGame("current.save",game.getStarMap());
         game.changeGameState(GameState.MAIN_MENU);
         return true;
       }

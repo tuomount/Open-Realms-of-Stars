@@ -1,11 +1,5 @@
 package org.openRealmOfStars.AI.Mission;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
-import org.openRealmOfStars.utilities.IOUtilities;
-
 /**
  *
  * Open Realm of Stars game project
@@ -92,60 +86,6 @@ public final class Mission {
     setMissionTime(0);
     setTarget(tx, ty);
     targetPlanet = null;
-  }
-
-  /**
-   * Read mission from DataInputStream
-   * @param dis DataInputStream
-   * @throws IOException if there is any problem with DataInputStream
-   */
-  public Mission(final DataInputStream dis) throws IOException {
-    type = MissionType.getType(dis.readInt());
-    phase = MissionPhase.getType(dis.readInt());
-    targetXCoordinate = dis.readInt();
-    targetYCoordinate = dis.readInt();
-    missionTime = dis.readInt();
-    String str = IOUtilities.readString(dis);
-    if (str.isEmpty()) {
-      fleetName = null;
-    } else {
-      fleetName = str;
-    }
-    str = IOUtilities.readString(dis);
-    if (str.isEmpty()) {
-      planetBuilding = null;
-    } else {
-      planetBuilding = str;
-    }
-    str = IOUtilities.readString(dis);
-    if (str.isEmpty()) {
-      sunName = null;
-    } else {
-      sunName = str;
-    }
-    str = IOUtilities.readString(dis);
-    if (str.isEmpty()) {
-      targetPlanet = null;
-    } else {
-      targetPlanet = str;
-    }
-  }
-
-  /**
-   * Write mission data to DataOutputStream
-   * @param dos DataOutputStream
-   * @throws IOException if there is any problem with DataOutputStream
-   */
-  public void saveMission(final DataOutputStream dos) throws IOException {
-    dos.writeInt(type.getIndex());
-    dos.writeInt(phase.getIndex());
-    dos.writeInt(targetXCoordinate);
-    dos.writeInt(targetYCoordinate);
-    dos.writeInt(missionTime);
-    IOUtilities.writeString(dos, fleetName);
-    IOUtilities.writeString(dos, planetBuilding);
-    IOUtilities.writeString(dos, sunName);
-    IOUtilities.writeString(dos, targetPlanet);
   }
 
   /**

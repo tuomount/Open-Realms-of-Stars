@@ -28,7 +28,14 @@ import static org.junit.Assert.*;
 public class LoggerTest {
 
     private static final int LOG_SIZE = 5;
+    private static final int DEFAULT_LOG_SIZE = 11;
     private Logger logger = new Logger(LOG_SIZE);
+
+    @Test
+    public void testCreateDefaultLogger(){
+        logger = new Logger();
+        assertEquals(DEFAULT_LOG_SIZE, logger.size());
+    }
 
     @Test
     public void testAddLogShouldRotateMessagesAndPutNewMessageToTheBeginningOfTheArray() {

@@ -36,6 +36,7 @@ public class CulturePower {
    * Constructor for culture power
    */
   public CulturePower() {
+    // @TODO: Remove PlayerList dependency (get the number of players as parameter)
     culture = new int[PlayerList.MAX_PLAYERS];
   }
 

@@ -1,5 +1,7 @@
 package org.openRealmOfStars.AI.Mission;
 
+import org.openRealmOfStars.utilities.repository.MissionRepository;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -51,7 +53,7 @@ public class MissionList {
     missions = new ArrayList<>();
     int count = dis.readInt();
     for (int i = 0; i < count; i++) {
-      Mission mission = new Mission(dis);
+      Mission mission = new MissionRepository().restoreMission(dis);
       missions.add(mission);
     }
   }
@@ -64,7 +66,7 @@ public class MissionList {
   public void saveMissionList(final DataOutputStream dos) throws IOException {
     dos.writeInt(missions.size());
     for (int i = 0; i < missions.size(); i++) {
-      missions.get(i).saveMission(dos);
+      new MissionRepository().saveMission(dos, missions.get(i));
     }
   }
 

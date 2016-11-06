@@ -1,10 +1,5 @@
 package org.openRealmOfStars.starMap;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
-import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
 /**
@@ -53,59 +48,31 @@ public class Sun {
    * @param name Sun name if null then random generator applied
    */
   public Sun(final int cx, final int cy, final String name) {
-    this.setCenterX(cx);
-    this.setCenterY(cy);
-    if (name == null) {
-      this.setName(RandomSystemNameGenerator.generate());
-    } else {
-      this.setName(name);
-    }
+    this.centerX = cx;
+    this.centerY = cy;
+    this.name = name;
   }
 
   /**
-   * Create the sun from DataInputStream
-   * @param dis DataInputStream
-   * @throws IOException if there is any problem with DataInputStream
+   * Create the Sun with name and center coordinates
+   * @param cx X coordinate
+   * @param cy Y coordinate
+   * @param nameGenerator random generator
    */
-  public Sun(final DataInputStream dis) throws IOException {
-    this.setCenterX(dis.readInt());
-    this.setCenterY(dis.readInt());
-    this.setName(IOUtilities.readString(dis));
-  }
-
-  /**
-   * Save Sun information to DataOutputStream
-   * @param dos DataOutputStream
-   * @throws IOException if there is any problem with DataOutputStream
-   */
-  public void saveSun(final DataOutputStream dos) throws IOException {
-    dos.writeInt(centerX);
-    dos.writeInt(centerY);
-    IOUtilities.writeString(dos, name);
+  public Sun(final int cx, final int cy, final RandomSystemNameGenerator nameGenerator){
+    this(cx, cy, nameGenerator.generate());
   }
 
   public String getName() {
     return name;
   }
 
-  public void setName(final String name) {
-    this.name = name;
-  }
-
   public int getCenterX() {
     return centerX;
   }
 
-  public void setCenterX(final int centerX) {
-    this.centerX = centerX;
-  }
-
   public int getCenterY() {
     return centerY;
-  }
-
-  public void setCenterY(final int centerY) {
-    this.centerY = centerY;
   }
 
   @Override

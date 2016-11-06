@@ -37,6 +37,25 @@ import org.openRealmOfStars.starMap.StarMap;
 public class GameRepository {
 
   /**
+   * Is GameRepository called for JUnit
+   */
+  private boolean runningJUnit;
+
+  /**
+   * Default constructor used in actual game
+   */
+  public GameRepository() {
+    runningJUnit = false;
+  }
+
+  /**
+   * Enable loading save files under JUnit folder
+   */
+  public void enableJUnit() {
+    runningJUnit = true;
+  }
+
+  /**
    * Save game for certain file name
    * @param filename File name
    * @param starMap StarMap to save to file
@@ -44,6 +63,9 @@ public class GameRepository {
   public void saveGame(final String filename, final StarMap starMap) {
     if (starMap != null) {
       String folderName = "saves";
+      if (runningJUnit) {
+        folderName = "src/test/resources";
+      }
       File folder = new File(folderName);
       if (!folder.exists()) {
         folder.mkdirs();
@@ -72,6 +94,9 @@ public class GameRepository {
    */
   public StarMap loadGame(final String filename) {
     String folderName = "saves";
+    if (runningJUnit) {
+      folderName = "src/test/resources";
+    }
     File file = new File(folderName + "/" + filename);
     StarMap starMap = null;
     try (FileInputStream is = new FileInputStream(file)) {
@@ -79,7 +104,6 @@ public class GameRepository {
       DataInputStream dis = new DataInputStream(bis);
       starMap = new StarMap(dis);
     } catch (IOException e) {
-      System.out.println("Working directory: "+System.getProperty("user.dir"));
       System.out.println(e.getMessage());
       return null;
     }

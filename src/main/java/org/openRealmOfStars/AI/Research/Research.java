@@ -33,7 +33,31 @@ import org.openRealmOfStars.player.tech.TechType;
  *
  */
 
-public class Research {
+public final class Research {
+
+  /**
+   * Hiding the default constructor
+   */
+  private Research() {
+    // Nothing to do
+  }
+
+  /**
+   * Default focus level when dividing focus evenly. Well one tech
+   * level gets then 20 but all others 16.
+   */
+  private static final int DEFAULT_FOCUS_LEVEL = 16;
+
+  /**
+   * Default focus level when dividing focus evenly. This is the
+   * higher default one.
+   */
+  private static final int HIGH_FOCUS_LEVEL = 20;
+
+  /**
+   * Default focus level when some races have more than one high focuses.
+   */
+  private static final int LOW_FOCUS_LEVEL = 12;
 
   /**
    * Handle new ship designs for AI
@@ -127,58 +151,75 @@ public class Research {
     } else {
       switch (info.getRace()) {
       case HUMAN: {
-        info.getTechList().setTechFocus(TechType.Combat, 20);
-        info.getTechList().setTechFocus(TechType.Defense, 16);
-        info.getTechList().setTechFocus(TechType.Hulls, 16);
-        info.getTechList().setTechFocus(TechType.Propulsion, 16);
-        info.getTechList().setTechFocus(TechType.Improvements, 16);
-        info.getTechList().setTechFocus(TechType.Electrics, 16);
+        info.getTechList().setTechFocus(TechType.Combat,
+            HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Defense, DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Hulls, DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Propulsion,
+            DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Improvements,
+            DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Electrics,
+            DEFAULT_FOCUS_LEVEL);
         break;
       }
       case CENTAURS: {
-        info.getTechList().setTechFocus(TechType.Combat, 16);
-        info.getTechList().setTechFocus(TechType.Defense, 16);
-        info.getTechList().setTechFocus(TechType.Hulls, 20);
-        info.getTechList().setTechFocus(TechType.Propulsion, 16);
-        info.getTechList().setTechFocus(TechType.Improvements, 16);
-        info.getTechList().setTechFocus(TechType.Electrics, 16);
+        info.getTechList().setTechFocus(TechType.Combat, DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Defense, DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Hulls, HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Propulsion,
+            DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Improvements,
+            DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Electrics,
+            DEFAULT_FOCUS_LEVEL);
         break;
       }
       case GREYANS: {
-        info.getTechList().setTechFocus(TechType.Combat, 16);
-        info.getTechList().setTechFocus(TechType.Defense, 16);
-        info.getTechList().setTechFocus(TechType.Hulls, 16);
-        info.getTechList().setTechFocus(TechType.Propulsion, 16);
-        info.getTechList().setTechFocus(TechType.Improvements, 20);
-        info.getTechList().setTechFocus(TechType.Electrics, 16);
+        info.getTechList().setTechFocus(TechType.Combat, DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Defense, DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Hulls, DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Propulsion,
+            DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Improvements,
+            HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Electrics,
+            DEFAULT_FOCUS_LEVEL);
         break;
       }
       case SPORKS: {
-        info.getTechList().setTechFocus(TechType.Electrics, 12);
-        info.getTechList().setTechFocus(TechType.Propulsion, 12);
-        info.getTechList().setTechFocus(TechType.Combat, 20);
-        info.getTechList().setTechFocus(TechType.Defense, 20);
-        info.getTechList().setTechFocus(TechType.Hulls, 20);
-        info.getTechList().setTechFocus(TechType.Improvements, 16);
+        info.getTechList().setTechFocus(TechType.Electrics, LOW_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Propulsion, LOW_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Combat, HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Defense, HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Hulls,  HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Improvements,
+            DEFAULT_FOCUS_LEVEL);
         break;
       }
       case MECHIONS: {
-        info.getTechList().setTechFocus(TechType.Electrics, 12);
-        info.getTechList().setTechFocus(TechType.Combat, 20);
-        info.getTechList().setTechFocus(TechType.Propulsion, 20);
-        info.getTechList().setTechFocus(TechType.Defense, 16);
-        info.getTechList().setTechFocus(TechType.Hulls, 16);
-        info.getTechList().setTechFocus(TechType.Improvements, 16);
+        info.getTechList().setTechFocus(TechType.Electrics, LOW_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Combat, HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Propulsion, HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Defense, DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Hulls, DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Improvements,
+            DEFAULT_FOCUS_LEVEL);
         break;
       }
       default: {
         //HUMAN
-        info.getTechList().setTechFocus(TechType.Combat, 20);
-        info.getTechList().setTechFocus(TechType.Defense, 16);
-        info.getTechList().setTechFocus(TechType.Hulls, 16);
-        info.getTechList().setTechFocus(TechType.Propulsion, 16);
-        info.getTechList().setTechFocus(TechType.Improvements, 16);
-        info.getTechList().setTechFocus(TechType.Electrics, 16);
+        info.getTechList().setTechFocus(TechType.Combat,
+            HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Defense, DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Hulls, DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Propulsion,
+            DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Improvements,
+            DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Electrics,
+            DEFAULT_FOCUS_LEVEL);
+        break;
       }
       }
     }

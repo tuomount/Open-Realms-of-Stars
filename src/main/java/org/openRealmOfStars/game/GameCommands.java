@@ -22,7 +22,14 @@ package org.openRealmOfStars.game;
  * Game commands
  *
  */
-public class GameCommands {
+public final class GameCommands {
+
+  /**
+   * Hiding the default constructor.
+   */
+  private GameCommands() {
+    // Nothing to do here
+  }
 
   /**
    * Animation timer command
@@ -131,11 +138,13 @@ public class GameCommands {
   /**
    * Slider Combat research
    */
-  public static final String COMMAND_SLIDER_COMBAT_RESEARCH = "SliderCombatRese";
+  public static final String COMMAND_SLIDER_COMBAT_RESEARCH =
+      "SliderCombatRese";
   /**
    * Minus Defense research
    */
-  public static final String COMMAND_MINUS_DEFENSE_RESEARCH = "MinusDefenseRese";
+  public static final String COMMAND_MINUS_DEFENSE_RESEARCH =
+      "MinusDefenseRese";
   /**
    * Plus Defense research
    */
@@ -143,7 +152,8 @@ public class GameCommands {
   /**
    * Slider Defense research
    */
-  public static final String COMMAND_SLIDER_DEFENSE_RESEARCH = "SliderDefenseRese";
+  public static final String COMMAND_SLIDER_DEFENSE_RESEARCH =
+      "SliderDefenseRese";
   /**
    * Minus Hull research
    */
@@ -159,39 +169,48 @@ public class GameCommands {
   /**
    * Minus Improvement research
    */
-  public static final String COMMAND_MINUS_IMPROVEMENT_RESEARCH = "MinusImprovementRese";
+  public static final String COMMAND_MINUS_IMPROVEMENT_RESEARCH =
+      "MinusImprovementRese";
   /**
    * Plus Improvement research
    */
-  public static final String COMMAND_PLUS_IMPROVEMENT_RESEARCH = "PlusImprovementRese";
+  public static final String COMMAND_PLUS_IMPROVEMENT_RESEARCH =
+      "PlusImprovementRese";
   /**
    * Slider Improvement research
    */
-  public static final String COMMAND_SLIDER_IMPROVEMENT_RESEARCH = "SliderImprovementRese";
+  public static final String COMMAND_SLIDER_IMPROVEMENT_RESEARCH =
+      "SliderImprovementRese";
   /**
    * Minus Propulsion research
    */
-  public static final String COMMAND_MINUS_PROPULSION_RESEARCH = "MinusPropulsionRese";
+  public static final String COMMAND_MINUS_PROPULSION_RESEARCH =
+      "MinusPropulsionRese";
   /**
    * Plus Propulsion research
    */
-  public static final String COMMAND_PLUS_PROPULSION_RESEARCH = "PlusPropulsionRese";
+  public static final String COMMAND_PLUS_PROPULSION_RESEARCH =
+      "PlusPropulsionRese";
   /**
    * Slider Propulsion research
    */
-  public static final String COMMAND_SLIDER_PROPULSION_RESEARCH = "SliderPropulsionRese";
+  public static final String COMMAND_SLIDER_PROPULSION_RESEARCH =
+      "SliderPropulsionRese";
   /**
    * Minus Electronics research
    */
-  public static final String COMMAND_MINUS_ELECTRONICS_RESEARCH = "MinusElectronicsRese";
+  public static final String COMMAND_MINUS_ELECTRONICS_RESEARCH =
+      "MinusElectronicsRese";
   /**
    * Plus Electronics research
    */
-  public static final String COMMAND_PLUS_ELECTRONICS_RESEARCH = "PlusElectronicsRese";
+  public static final String COMMAND_PLUS_ELECTRONICS_RESEARCH =
+      "PlusElectronicsRese";
   /**
    * Slider Electronics research
    */
-  public static final String COMMAND_SLIDER_ELECTRONICS_RESEARCH = "SliderElectronicsRese";
+  public static final String COMMAND_SLIDER_ELECTRONICS_RESEARCH =
+      "SliderElectronicsRese";
 
   /**
    * Upgrade combat
@@ -208,15 +227,18 @@ public class GameCommands {
   /**
    * Upgrade improvement
    */
-  public static final String COMMAND_UPGRADE_IMPROVEMENT = "UpgradeImprovement";
+  public static final String COMMAND_UPGRADE_IMPROVEMENT =
+      "UpgradeImprovement";
   /**
    * Upgrade propulsion
    */
-  public static final String COMMAND_UPGRADE_PROPULSION = "UpgradePropulsion";
+  public static final String COMMAND_UPGRADE_PROPULSION =
+      "UpgradePropulsion";
   /**
    * Upgrade electronics
    */
-  public static final String COMMAND_UPGRADE_ELECTRONICS = "UpgradeElectronics";
+  public static final String COMMAND_UPGRADE_ELECTRONICS =
+      "UpgradeElectronics";
 
   /**
    * Production list changed in planet
@@ -326,7 +348,8 @@ public class GameCommands {
   /**
    * Ship Hull Selected from the list
    */
-  public static final String COMMAND_SHIPDESIGN_HULLSELECTED = "ShipDesignHullSelected";
+  public static final String COMMAND_SHIPDESIGN_HULLSELECTED =
+      "ShipDesignHullSelected";
 
   /**
    * Change Hull button pressed
@@ -336,29 +359,35 @@ public class GameCommands {
   /**
    * Ship Component selected from the list
    */
-  public static final String COMMAND_SHIPDESIGN_COMPONENTSELECTED = "ShipComponentSelected";
+  public static final String COMMAND_SHIPDESIGN_COMPONENTSELECTED =
+      "ShipComponentSelected";
 
   /**
    * Ship Component filtered
    */
-  public static final String COMMAND_SHIPDESIGN_COMPONENTFILTERED = "ShipComponentFiltered";
+  public static final String COMMAND_SHIPDESIGN_COMPONENTFILTERED =
+      "ShipComponentFiltered";
 
   /**
    * Ship Component added
    */
-  public static final String COMMAND_SHIPDESIGN_COMPONENTADDED = "ShipComponentAdded";
+  public static final String COMMAND_SHIPDESIGN_COMPONENTADDED =
+      "ShipComponentAdded";
   /**
    * Ship Component Removed
    */
-  public static final String COMMAND_SHIPDESIGN_COMPONENTREMOVED = "ShipComponentRemoved";
+  public static final String COMMAND_SHIPDESIGN_COMPONENTREMOVED =
+      "ShipComponentRemoved";
   /**
    * Ship Component set higher priority
    */
-  public static final String COMMAND_SHIPDESIGN_COMPONENT_PRIORITYHI = "ShipComponentPriorityHi";
+  public static final String COMMAND_SHIPDESIGN_COMPONENT_PRIORITYHI =
+      "ShipComponentPriorityHi";
   /**
    * Ship Component set lower priority
    */
-  public static final String COMMAND_SHIPDESIGN_COMPONENT_PRIORITYLO = "ShipComponentPriorityLo";
+  public static final String COMMAND_SHIPDESIGN_COMPONENT_PRIORITYLO =
+      "ShipComponentPriorityLo";
 
   /**
    * Colonize command
@@ -378,7 +407,8 @@ public class GameCommands {
   /**
    * Launch ground attack command
    */
-  public static final String COMMAND_LAUNCH_GROUND_ATTACK = "LaunchGroundAttackCommand";
+  public static final String COMMAND_LAUNCH_GROUND_ATTACK =
+      "LaunchGroundAttackCommand";
 
   /**
    * Split the fleet

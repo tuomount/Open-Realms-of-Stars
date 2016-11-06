@@ -1,9 +1,6 @@
 package org.openRealmOfStars.game;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -11,6 +8,7 @@ import java.text.SimpleDateFormat;
 
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
  *
@@ -79,39 +77,76 @@ public class SavedGame {
         BasicFileAttributes.class);
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     creationTime = dateFormat.format(attr.creationTime().toMillis());
-    try (FileInputStream is = new FileInputStream(file)) {
-
-      BufferedInputStream bis = new BufferedInputStream(is);
-      DataInputStream dis = new DataInputStream(bis);
-      StarMap starMap = new StarMap(dis);
-      this.filename = filename;
-      turnNumber = starMap.getTurn();
-      galaxySize = starMap.getMaxX() + " X " + starMap.getMaxY();
-      playerRace = starMap.getPlayerList().getPlayerInfoByIndex(0).getRace();
-      empireName = starMap.getPlayerList().getPlayerInfoByIndex(0)
-          .getEmpireName();
-    } catch (IOException e) {
-      System.out.println(e.getMessage());
-      throw e;
-    }
+    initializeSavedGame(filename, new GameRepository());
   }
 
+  /**
+   * Load game from certain file name and get all information from saved
+   * game. Use this method only from JUnits.
+   * @param filename File name
+   * @param repository Game repository for loading
+   * @throws IOException if reading fails
+   */
+  public SavedGame(final String filename, final GameRepository repository)
+      throws IOException {
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    creationTime = dateFormat.format(System.currentTimeMillis());
+    initializeSavedGame(filename, repository);
+  }
+
+  /**
+   * Do the actual save game loading
+   * @param file Filename to load
+   * @param repository GameRepository for loading the game
+   * @throws IOException if reading fails
+   */
+  private void initializeSavedGame(final String file,
+      final GameRepository repository) throws IOException {
+    StarMap starMap = repository.loadGame(file);
+    this.filename = file;
+    turnNumber = starMap.getTurn();
+    galaxySize = starMap.getMaxX() + " X " + starMap.getMaxY();
+    playerRace = starMap.getPlayerList().getPlayerInfoByIndex(0).getRace();
+    empireName = starMap.getPlayerList().getPlayerInfoByIndex(0)
+        .getEmpireName();
+  }
+
+  /**
+   * Get first player's space race.
+   * @return Space race
+   */
   public SpaceRace getPlayerRace() {
     return playerRace;
   }
 
+  /**
+   * Get which turn number it was on saved game.
+   * @return Turn number
+   */
   public int getTurnNumber() {
     return turnNumber;
   }
 
+  /**
+   * Get galaxy size as a textual information.
+   * @return Galaxy size as a text
+   */
   public String getGalaxySize() {
     return galaxySize;
   }
 
+  /**
+   * Get save game file name
+   * @return File name as a String
+   */
   public String getFilename() {
     return filename;
   }
 
+  /**
+   * Get first player's empire name
+   * @return Empire name as a String.
+   */
   public String getEmpireName() {
     return empireName;
   }

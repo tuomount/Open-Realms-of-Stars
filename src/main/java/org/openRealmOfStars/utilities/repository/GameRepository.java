@@ -79,6 +79,7 @@ public class GameRepository {
       DataInputStream dis = new DataInputStream(bis);
       starMap = new StarMap(dis);
     } catch (IOException e) {
+      System.out.println("Working directory: "+System.getProperty("user.dir"));
       System.out.println(e.getMessage());
       return null;
     }

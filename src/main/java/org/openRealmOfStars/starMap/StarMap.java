@@ -64,14 +64,14 @@ public class StarMap {
   /**
    * Tiles to show. Contains only planets, suns, asteroids etc.
    */
-  private int tiles[][];
+  private int[][] tiles;
 
-  private SquareInfo tileInfo[][];
+  private SquareInfo[][] tileInfo;
 
   /**
    * Culture level for each sector
    */
-  private CulturePower culture[][];
+  private CulturePower[][] culture;
 
   /**
    * Cursor X coordinate
@@ -129,7 +129,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public final static String MAGIC_STRING = "OROS-SAVE-GAME-0.2";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.2";
 
   /**
    * Constructor for StarMap. Generates universe with galaxy config and
@@ -357,9 +357,11 @@ public class StarMap {
         planetList.add(planet);
       }
     } else {
-      if (str.startsWith("OROS-SAVE-GAME-")) { throw new IOException(
+      if (str.startsWith("OROS-SAVE-GAME-")) {
+        throw new IOException(
           "Stream does not contain correct StarMap information.\n"
-              + "Maybe saved game is for older version..."); }
+              + "Maybe saved game is for older version...");
+      }
       throw new IOException("Stream does not contain StarMap information!");
     }
   }
@@ -404,7 +406,9 @@ public class StarMap {
    * @return true if valid and false if invalid
    */
   public boolean isValidCoordinate(final int x, final int y) {
-    if (x >= 0 && y >= 0 && x < maxX && y < maxY) { return true; }
+    if (x >= 0 && y >= 0 && x < maxX && y < maxY) {
+      return true;
+    }
     return false;
   }
 
@@ -421,7 +425,7 @@ public class StarMap {
         if (isValidCoordinate(x + i, y + j) && tiles[x + i][y + j] == 0) {
           result = true;
         } else {
-          return false;
+          return false; //@TODO: It seems a bug (I guess it should be "result = true;") If not, this if could be inverted and keep only the else part because result is true by default. (After the change result will be always true, so the variable will be unneeded the last return can be "return true;"
         }
       }
     }
@@ -642,7 +646,9 @@ public class StarMap {
           && x <= sun.getCenterX() + StarMapStatics.SOLARSYSTEMWIDTH
           && y >= sun.getCenterY() - StarMapStatics.SOLARSYSTEMWIDTH
           && y <= sun.getCenterY()
-              + StarMapStatics.SOLARSYSTEMWIDTH) { return sun; }
+              + StarMapStatics.SOLARSYSTEMWIDTH) {
+        return sun;
+      }
     }
     return null;
   }
@@ -654,6 +660,7 @@ public class StarMap {
    * @param y coordinate
    * @param info Player who is doing the search
    * @param fleet doing the search
+   * @param ignoreSun Sun to ignore
    * @return Nearest sun
    */
   public Sun getNearestSolarSystem(final int x, final int y,
@@ -784,8 +791,9 @@ public class StarMap {
   public Sun getSunByCoordinate(final int x, final int y) {
     if (isValidCoordinate(x, y)) {
       SquareInfo info = tileInfo[x][y];
-      if (info.getType() == SquareInfo.TYPE_SUN) { return sunList
-          .get(info.getValue()); }
+      if (info.getType() == SquareInfo.TYPE_SUN) {
+        return sunList.get(info.getValue());
+      }
     }
     return null;
   }
@@ -800,8 +808,9 @@ public class StarMap {
     if (isValidCoordinate(x, y)) {
       SquareInfo info = tileInfo[x][y];
       if (info.getType() == SquareInfo.TYPE_PLANET
-          || info.getType() == SquareInfo.TYPE_GAS_PLANET) { return planetList
-              .get(info.getValue()); }
+          || info.getType() == SquareInfo.TYPE_GAS_PLANET) {
+        return planetList.get(info.getValue());
+      }
     }
     return null;
   }
@@ -813,7 +822,9 @@ public class StarMap {
    */
   public Planet getPlanetByName(final String name) {
     for (Planet planet : planetList) {
-      if (planet.getName().equals(name)) { return planet; }
+      if (planet.getName().equals(name)) {
+        return planet;
+      }
     }
     return null;
   }
@@ -843,6 +854,8 @@ public class StarMap {
    * Fight with two fleets
    * @param x X coordinate
    * @param y Y coordinate
+   * @param fleet1 Fleet
+   * @param info1 PlayerInfo
    * @return Combat or null
    */
   public Combat fightWithFleet(final int x, final int y, final Fleet fleet1,
@@ -880,7 +893,9 @@ public class StarMap {
    * @return are the AIs handled
    */
   public boolean isAllAIsHandled() {
-    if (aiTurnNumber == players.getCurrentMaxPlayers()) { return true; }
+    if (aiTurnNumber == players.getCurrentMaxPlayers()) {
+      return true;
+    }
     return false;
   }
 
@@ -1046,174 +1061,174 @@ public class StarMap {
     String mask = null;
     if (value < 5) {
       // 765432101234567
-      mask = /* 7 */"...............\n" +
-      /* 6 */"...............\n" +
-      /* 5 */"...............\n" +
-      /* 4 */"...............\n" +
-      /* 3 */"...............\n" +
-      /* 2 */"...............\n" +
-      /* 1 */".......X.......\n" +
-      /* 0 */"......XXX......\n" +
-      /* 1 */".......X.......\n" +
-      /* 2 */"...............\n" +
-      /* 3 */"...............\n" +
-      /* 4 */"...............\n" +
-      /* 5 */"...............\n" +
-      /* 6 */"...............\n" +
-      /* 7 */"...............\n";
+      mask = /* 7 */"...............\n"
+      + /* 6 */"...............\n"
+      + /* 5 */"...............\n"
+      + /* 4 */"...............\n"
+      + /* 3 */"...............\n"
+      + /* 2 */"...............\n"
+      + /* 1 */".......X.......\n"
+      + /* 0 */"......XXX......\n"
+      + /* 1 */".......X.......\n"
+      + /* 2 */"...............\n"
+      + /* 3 */"...............\n"
+      + /* 4 */"...............\n"
+      + /* 5 */"...............\n"
+      + /* 6 */"...............\n"
+      + /* 7 */"...............\n";
     } else if (value < 10) {
       // 765432101234567
-      mask = /* 7 */"...............\n" +
-      /* 6 */"...............\n" +
-      /* 5 */"...............\n" +
-      /* 4 */"...............\n" +
-      /* 3 */"...............\n" +
-      /* 2 */"...............\n" +
-      /* 1 */"......XXX......\n" +
-      /* 0 */"......XXX......\n" +
-      /* 1 */"......XXX......\n" +
-      /* 2 */"...............\n" +
-      /* 3 */"...............\n" +
-      /* 4 */"...............\n" +
-      /* 5 */"...............\n" +
-      /* 6 */"...............\n" +
-      /* 7 */"...............\n";
+      mask = /* 7 */"...............\n"
+      + /* 6 */"...............\n"
+      + /* 5 */"...............\n"
+      + /* 4 */"...............\n"
+      + /* 3 */"...............\n"
+      + /* 2 */"...............\n"
+      + /* 1 */"......XXX......\n"
+      + /* 0 */"......XXX......\n"
+      + /* 1 */"......XXX......\n"
+      + /* 2 */"...............\n"
+      + /* 3 */"...............\n"
+      + /* 4 */"...............\n"
+      + /* 5 */"...............\n"
+      + /* 6 */"...............\n"
+      + /* 7 */"...............\n";
     } else if (value < 20) {
       // 765432101234567
-      mask = /* 7 */"...............\n" +
-      /* 6 */"...............\n" +
-      /* 5 */"...............\n" +
-      /* 4 */"...............\n" +
-      /* 3 */"...............\n" +
-      /* 2 */".......X.......\n" +
-      /* 1 */"......XXX......\n" +
-      /* 0 */".....XXXXX.....\n" +
-      /* 1 */"......XXX......\n" +
-      /* 2 */".......X.......\n" +
-      /* 3 */"...............\n" +
-      /* 4 */"...............\n" +
-      /* 5 */"...............\n" +
-      /* 6 */"...............\n" +
-      /* 7 */"...............\n";
+      mask = /* 7 */"...............\n"
+      + /* 6 */"...............\n"
+      + /* 5 */"...............\n"
+      + /* 4 */"...............\n"
+      + /* 3 */"...............\n"
+      + /* 2 */".......X.......\n"
+      + /* 1 */"......XXX......\n"
+      + /* 0 */".....XXXXX.....\n"
+      + /* 1 */"......XXX......\n"
+      + /* 2 */".......X.......\n"
+      + /* 3 */"...............\n"
+      + /* 4 */"...............\n"
+      + /* 5 */"...............\n"
+      + /* 6 */"...............\n"
+      + /* 7 */"...............\n";
     } else if (value < 40) {
       // 765432101234567
-      mask = /* 7 */"...............\n" +
-      /* 6 */"...............\n" +
-      /* 5 */"...............\n" +
-      /* 4 */"...............\n" +
-      /* 3 */".......X.......\n" +
-      /* 2 */"......XXX......\n" +
-      /* 1 */".....XXXXX.....\n" +
-      /* 0 */"....XXXXXXX....\n" +
-      /* 1 */".....XXXXX.....\n" +
-      /* 2 */"......XXX......\n" +
-      /* 3 */".......X.......\n" +
-      /* 4 */"...............\n" +
-      /* 5 */"...............\n" +
-      /* 6 */"...............\n" +
-      /* 7 */"...............\n";
+      mask = /* 7 */"...............\n"
+      + /* 6 */"...............\n"
+      + /* 5 */"...............\n"
+      + /* 4 */"...............\n"
+      + /* 3 */".......X.......\n"
+      + /* 2 */"......XXX......\n"
+      + /* 1 */".....XXXXX.....\n"
+      + /* 0 */"....XXXXXXX....\n"
+      + /* 1 */".....XXXXX.....\n"
+      + /* 2 */"......XXX......\n"
+      + /* 3 */".......X.......\n"
+      + /* 4 */"...............\n"
+      + /* 5 */"...............\n"
+      + /* 6 */"...............\n"
+      + /* 7 */"...............\n";
     } else if (value < 80) {
       // 765432101234567
-      mask = /* 7 */"...............\n" +
-      /* 6 */"...............\n" +
-      /* 5 */"...............\n" +
-      /* 4 */".......X.......\n" +
-      /* 3 */"......XXX......\n" +
-      /* 2 */".....XXXXX.....\n" +
-      /* 1 */"....XXXXXXX....\n" +
-      /* 0 */"...XXXXXXXXX...\n" +
-      /* 1 */"....XXXXXXX....\n" +
-      /* 2 */".....XXXXX.....\n" +
-      /* 3 */"......XXX......\n" +
-      /* 4 */".......X.......\n" +
-      /* 5 */"...............\n" +
-      /* 6 */"...............\n" +
-      /* 7 */"...............\n";
+      mask = /* 7 */"...............\n"
+      + /* 6 */"...............\n"
+      + /* 5 */"...............\n"
+      + /* 4 */".......X.......\n"
+      + /* 3 */"......XXX......\n"
+      + /* 2 */".....XXXXX.....\n"
+      + /* 1 */"....XXXXXXX....\n"
+      + /* 0 */"...XXXXXXXXX...\n"
+      + /* 1 */"....XXXXXXX....\n"
+      + /* 2 */".....XXXXX.....\n"
+      + /* 3 */"......XXX......\n"
+      + /* 4 */".......X.......\n"
+      + /* 5 */"...............\n"
+      + /* 6 */"...............\n"
+      + /* 7 */"...............\n";
     } else if (value < 160) {
       // 765432101234567
-      mask = /* 7 */"...............\n" +
-      /* 6 */"...............\n" +
-      /* 5 */"...............\n" +
-      /* 4 */"......XXX......\n" +
-      /* 3 */".....XXXXX.....\n" +
-      /* 2 */"....XXXXXXX....\n" +
-      /* 1 */"...XXXXXXXXX...\n" +
-      /* 0 */"...XXXXXXXXX...\n" +
-      /* 1 */"...XXXXXXXXX...\n" +
-      /* 2 */"....XXXXXXX....\n" +
-      /* 3 */".....XXXXX.....\n" +
-      /* 4 */"......XXX......\n" +
-      /* 5 */"...............\n" +
-      /* 6 */"...............\n" +
-      /* 7 */"...............\n";
+      mask = /* 7 */"...............\n"
+      + /* 6 */"...............\n"
+      + /* 5 */"...............\n"
+      + /* 4 */"......XXX......\n"
+      + /* 3 */".....XXXXX.....\n"
+      + /* 2 */"....XXXXXXX....\n"
+      + /* 1 */"...XXXXXXXXX...\n"
+      + /* 0 */"...XXXXXXXXX...\n"
+      + /* 1 */"...XXXXXXXXX...\n"
+      + /* 2 */"....XXXXXXX....\n"
+      + /* 3 */".....XXXXX.....\n"
+      + /* 4 */"......XXX......\n"
+      + /* 5 */"...............\n"
+      + /* 6 */"...............\n"
+      + /* 7 */"...............\n";
     } else if (value < 320) {
       // 765432101234567
-      mask = /* 7 */"...............\n" +
-      /* 6 */"...............\n" +
-      /* 5 */"......XXX......\n" +
-      /* 4 */".....XXXXX.....\n" +
-      /* 3 */"....XXXXXXX....\n" +
-      /* 2 */"...XXXXXXXXX...\n" +
-      /* 1 */"..XXXXXXXXXXX..\n" +
-      /* 0 */"..XXXXXXXXXXX..\n" +
-      /* 1 */"..XXXXXXXXXXX..\n" +
-      /* 2 */"...XXXXXXXXX...\n" +
-      /* 3 */"....XXXXXXX....\n" +
-      /* 4 */".....XXXXX.....\n" +
-      /* 5 */"......XXX......\n" +
-      /* 6 */"...............\n" +
-      /* 7 */"...............\n";
+      mask = /* 7 */"...............\n"
+      + /* 6 */"...............\n"
+      + /* 5 */"......XXX......\n"
+      + /* 4 */".....XXXXX.....\n"
+      + /* 3 */"....XXXXXXX....\n"
+      + /* 2 */"...XXXXXXXXX...\n"
+      + /* 1 */"..XXXXXXXXXXX..\n"
+      + /* 0 */"..XXXXXXXXXXX..\n"
+      + /* 1 */"..XXXXXXXXXXX..\n"
+      + /* 2 */"...XXXXXXXXX...\n"
+      + /* 3 */"....XXXXXXX....\n"
+      + /* 4 */".....XXXXX.....\n"
+      + /* 5 */"......XXX......\n"
+      + /* 6 */"...............\n"
+      + /* 7 */"...............\n";
     } else if (value < 640) {
       // 765432101234567
-      mask = /* 7 */"...............\n" +
-      /* 6 */"......XXX......\n" +
-      /* 5 */".....XXXXX.....\n" +
-      /* 4 */"....XXXXXXX....\n" +
-      /* 3 */"...XXXXXXXXX...\n" +
-      /* 2 */"..XXXXXXXXXXX..\n" +
-      /* 1 */".XXXXXXXXXXXXX.\n" +
-      /* 0 */".XXXXXXXXXXXXX.\n" +
-      /* 1 */".XXXXXXXXXXXXX.\n" +
-      /* 2 */"..XXXXXXXXXXX..\n" +
-      /* 3 */"...XXXXXXXXX...\n" +
-      /* 4 */"....XXXXXXX....\n" +
-      /* 5 */".....XXXXX.....\n" +
-      /* 6 */"......XXX......\n" +
-      /* 7 */"...............\n";
+      mask = /* 7 */"...............\n"
+      + /* 6 */"......XXX......\n"
+      + /* 5 */".....XXXXX.....\n"
+      + /* 4 */"....XXXXXXX....\n"
+      + /* 3 */"...XXXXXXXXX...\n"
+      + /* 2 */"..XXXXXXXXXXX..\n"
+      + /* 1 */".XXXXXXXXXXXXX.\n"
+      + /* 0 */".XXXXXXXXXXXXX.\n"
+      + /* 1 */".XXXXXXXXXXXXX.\n"
+      + /* 2 */"..XXXXXXXXXXX..\n"
+      + /* 3 */"...XXXXXXXXX...\n"
+      + /* 4 */"....XXXXXXX....\n"
+      + /* 5 */".....XXXXX.....\n"
+      + /* 6 */"......XXX......\n"
+      + /* 7 */"...............\n";
     } else if (value < 1280) {
       // 765432101234567
-      mask = /* 7 */".......X.......\n" +
-      /* 6 */"......XXX......\n" +
-      /* 5 */"....XXXXXXX....\n" +
-      /* 4 */"....XXXXXXX....\n" +
-      /* 3 */"..XXXXXXXXXXX..\n" +
-      /* 2 */"..XXXXXXXXXXX..\n" +
-      /* 1 */".XXXXXXXXXXXXX.\n" +
-      /* 0 */"XXXXXXXXXXXXXXX\n" +
-      /* 1 */".XXXXXXXXXXXXX.\n" +
-      /* 2 */"..XXXXXXXXXXX..\n" +
-      /* 3 */"..XXXXXXXXXXX..\n" +
-      /* 4 */"....XXXXXXX....\n" +
-      /* 5 */"....XXXXXXX....\n" +
-      /* 6 */"......XXX......\n" +
-      /* 7 */".......X.......\n";
+      mask = /* 7 */".......X.......\n"
+      + /* 6 */"......XXX......\n"
+      + /* 5 */"....XXXXXXX....\n"
+      + /* 4 */"....XXXXXXX....\n"
+      + /* 3 */"..XXXXXXXXXXX..\n"
+      + /* 2 */"..XXXXXXXXXXX..\n"
+      + /* 1 */".XXXXXXXXXXXXX.\n"
+      + /* 0 */"XXXXXXXXXXXXXXX\n"
+      + /* 1 */".XXXXXXXXXXXXX.\n"
+      + /* 2 */"..XXXXXXXXXXX..\n"
+      + /* 3 */"..XXXXXXXXXXX..\n"
+      + /* 4 */"....XXXXXXX....\n"
+      + /* 5 */"....XXXXXXX....\n"
+      + /* 6 */"......XXX......\n"
+      + /* 7 */".......X.......\n";
     } else {
       // 765432101234567
-      mask = /* 7 */"......XXX......\n" +
-      /* 6 */".....XXXXX.....\n" +
-      /* 5 */"...XXXXXXXXX...\n" +
-      /* 4 */"...XXXXXXXXX...\n" +
-      /* 3 */".XXXXXXXXXXXXX.\n" +
-      /* 2 */".XXXXXXXXXXXXX.\n" +
-      /* 1 */"XXXXXXXXXXXXXXX\n" +
-      /* 0 */"XXXXXXXXXXXXXXX\n" +
-      /* 1 */"XXXXXXXXXXXXXXX\n" +
-      /* 2 */".XXXXXXXXXXXXX.\n" +
-      /* 3 */".XXXXXXXXXXXXX.\n" +
-      /* 4 */"...XXXXXXXXX...\n" +
-      /* 5 */"...XXXXXXXXX...\n" +
-      /* 6 */".....XXXXX.....\n" +
-      /* 7 */"......XXX......\n";
+      mask = /* 7 */"......XXX......\n"
+      + /* 6 */".....XXXXX.....\n"
+      + /* 5 */"...XXXXXXXXX...\n"
+      + /* 4 */"...XXXXXXXXX...\n"
+      + /* 3 */".XXXXXXXXXXXXX.\n"
+      + /* 2 */".XXXXXXXXXXXXX.\n"
+      + /* 1 */"XXXXXXXXXXXXXXX\n"
+      + /* 0 */"XXXXXXXXXXXXXXX\n"
+      + /* 1 */"XXXXXXXXXXXXXXX\n"
+      + /* 2 */".XXXXXXXXXXXXX.\n"
+      + /* 3 */".XXXXXXXXXXXXX.\n"
+      + /* 4 */"...XXXXXXXXX...\n"
+      + /* 5 */"...XXXXXXXXX...\n"
+      + /* 6 */".....XXXXX.....\n"
+      + /* 7 */"......XXX......\n";
     }
 
     String[] lines = mask.split("\n");
@@ -1329,7 +1344,9 @@ public class StarMap {
    * @return PlayerInfo or null
    */
   public PlayerInfo getCurrentPlayerInfo() {
-    if (players != null) { return players.getCurrentPlayerInfo(); }
+    if (players != null) {
+      return players.getCurrentPlayerInfo();
+    }
     return null;
   }
 
@@ -1353,7 +1370,9 @@ public class StarMap {
    * @return TileInfo
    */
   public SquareInfo getTileInfo(final int x, final int y) {
-    if (isValidCoordinate(x, y)) { return tileInfo[x][y]; }
+    if (isValidCoordinate(x, y)) {
+      return tileInfo[x][y];
+    }
     return null;
   }
 
@@ -1364,7 +1383,9 @@ public class StarMap {
    * @return Culture power or null
    */
   public CulturePower getSectorCulture(final int x, final int y) {
-    if (isValidCoordinate(x, y)) { return culture[x][y]; }
+    if (isValidCoordinate(x, y)) {
+      return culture[x][y];
+    }
     return null;
   }
 
@@ -1391,7 +1412,9 @@ public class StarMap {
    */
   public boolean isBlocked(final int x, final int y) {
     SquareInfo sector = getTileInfo(x, y);
-    if (sector != null) { return sector.isBlocked(); }
+    if (sector != null) {
+      return sector.isBlocked();
+    }
     return true;
   }
 

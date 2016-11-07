@@ -43,31 +43,31 @@ public class ScifiBorder extends AbstractBorder {
   /**
    * Corner piece for info panels
    */
-  protected final static BufferedImage cornerImage = IOUtilities
+  private static final BufferedImage CORNER_IMAGE = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/panel-corner.png"));
 
   /**
    * Smaller and square corner piece for info panels
    */
-  protected final static BufferedImage cornerSmallImage = IOUtilities.loadImage(
+  private static final BufferedImage CORNER_SMALL_IMAGE = IOUtilities.loadImage(
       Tiles.class.getResource("/resources/images/panel-corner-small.png"));
 
   /**
    * Title left piece
    */
-  protected final static BufferedImage titleLeftImage = IOUtilities.loadImage(
+  private static final BufferedImage TITLE_LEFT_IMAGE = IOUtilities.loadImage(
       Tiles.class.getResource("/resources/images/panel-title-left.png"));
 
   /**
    * Title center piece
    */
-  protected final static BufferedImage titleCenterImage = IOUtilities.loadImage(
+  private static final BufferedImage TITLE_CENTER_IMAGE = IOUtilities.loadImage(
       Tiles.class.getResource("/resources/images/panel-title-center.png"));
 
   /**
    * Title right piece
    */
-  protected final static BufferedImage titleRightImage = IOUtilities.loadImage(
+  private static final BufferedImage TITLE_RIGHT_IMAGE = IOUtilities.loadImage(
       Tiles.class.getResource("/resources/images/panel-title-right.png"));
 
   /**
@@ -161,27 +161,27 @@ public class ScifiBorder extends AbstractBorder {
     g2d.drawLine(x, y + height - 1, x + width, y + height - 1);
 
     // Corners
-    if (height >= cornerImage.getHeight() * 2 + 10) {
-      g2d.drawImage(cornerImage, x, y, null);
-      g2d.drawImage(cornerImage, x + width - cornerImage.getWidth(), y, null);
-      g2d.drawImage(cornerImage, x, y + height - cornerImage.getHeight(), null);
-      g2d.drawImage(cornerImage, x + width - cornerImage.getWidth(),
-          y + height - cornerImage.getHeight(), null);
+    if (height >= CORNER_IMAGE.getHeight() * 2 + 10) {
+      g2d.drawImage(CORNER_IMAGE, x, y, null);
+      g2d.drawImage(CORNER_IMAGE, x + width - CORNER_IMAGE.getWidth(), y, null);
+      g2d.drawImage(CORNER_IMAGE, x, y + height - CORNER_IMAGE.getHeight(), null);
+      g2d.drawImage(CORNER_IMAGE, x + width - CORNER_IMAGE.getWidth(),
+          y + height - CORNER_IMAGE.getHeight(), null);
     } else {
-      g2d.drawImage(cornerSmallImage, x, y, null);
-      g2d.drawImage(cornerSmallImage, x + width - cornerSmallImage.getWidth(),
+      g2d.drawImage(CORNER_SMALL_IMAGE, x, y, null);
+      g2d.drawImage(CORNER_SMALL_IMAGE, x + width - CORNER_SMALL_IMAGE.getWidth(),
           y, null);
-      g2d.drawImage(cornerSmallImage, x,
-          y + height - cornerSmallImage.getHeight(), null);
-      g2d.drawImage(cornerSmallImage, x + width - cornerSmallImage.getWidth(),
-          y + height - cornerSmallImage.getHeight(), null);
+      g2d.drawImage(CORNER_SMALL_IMAGE, x,
+          y + height - CORNER_SMALL_IMAGE.getHeight(), null);
+      g2d.drawImage(CORNER_SMALL_IMAGE, x + width - CORNER_SMALL_IMAGE.getWidth(),
+          y + height - CORNER_SMALL_IMAGE.getHeight(), null);
     }
 
     if (title != null && !title.isEmpty()) {
       int textWidth = (int) GuiStatics.getFontCubellanSC()
           .getStringBounds(title, g2d.getFontRenderContext()).getWidth();
       String text = title;
-      if (textWidth > width - 2 * cornerImage.getWidth()) {
+      if (textWidth > width - 2 * CORNER_IMAGE.getWidth()) {
         int newWidth = width * 3 / 4;
         int textLen = title.length() * newWidth / textWidth;
         textWidth = newWidth;
@@ -189,24 +189,24 @@ public class ScifiBorder extends AbstractBorder {
 
       }
       BufferedImage centerPiece = new BufferedImage(textWidth,
-          titleCenterImage.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
-      int repeats = textWidth / titleCenterImage.getWidth();
-      int lastPieceLen = textWidth % titleCenterImage.getWidth();
+          TITLE_CENTER_IMAGE.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+      int repeats = textWidth / TITLE_CENTER_IMAGE.getWidth();
+      int lastPieceLen = textWidth % TITLE_CENTER_IMAGE.getWidth();
       Graphics2D gr = centerPiece.createGraphics();
       for (int i = 0; i < repeats; i++) {
-        gr.drawImage(titleCenterImage, i * titleCenterImage.getWidth(), 0,
+        gr.drawImage(TITLE_CENTER_IMAGE, i * TITLE_CENTER_IMAGE.getWidth(), 0,
             null);
       }
       if (lastPieceLen > 0) {
         gr.drawImage(
-            titleCenterImage.getSubimage(0, 0, lastPieceLen,
-                titleCenterImage.getHeight()),
-            repeats * titleCenterImage.getWidth(), 0, null);
+            TITLE_CENTER_IMAGE.getSubimage(0, 0, lastPieceLen,
+                TITLE_CENTER_IMAGE.getHeight()),
+            repeats * TITLE_CENTER_IMAGE.getWidth(), 0, null);
       }
-      g2d.drawImage(titleLeftImage,
-          x + width / 2 - textWidth / 2 - titleLeftImage.getWidth(), y, null);
+      g2d.drawImage(TITLE_LEFT_IMAGE,
+          x + width / 2 - textWidth / 2 - TITLE_LEFT_IMAGE.getWidth(), y, null);
       g2d.drawImage(centerPiece, x + width / 2 - textWidth / 2, y, null);
-      g2d.drawImage(titleRightImage,
+      g2d.drawImage(TITLE_RIGHT_IMAGE,
           x + width / 2 - textWidth / 2 + centerPiece.getWidth(), y, null);
 
       g2d.setColor(GuiStatics.COLOR_GOLD_TRANS);

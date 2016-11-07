@@ -67,43 +67,19 @@ public class SavedGame {
   /**
    * Load game from certain file name and get all information from saved
    * game
+   * @param folderName Folder name where to load saved games
    * @param filename File name
    * @throws IOException if reading fails
    */
-  public SavedGame(final String filename) throws IOException {
-    String folderName = "saves";
+  public SavedGame(final String folderName, final String filename)
+      throws IOException {
     File file = new File(folderName + "/" + filename);
     BasicFileAttributes attr = Files.readAttributes(file.toPath(),
         BasicFileAttributes.class);
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     creationTime = dateFormat.format(attr.creationTime().toMillis());
-    initializeSavedGame(filename, new GameRepository());
-  }
-
-  /**
-   * Load game from certain file name and get all information from saved
-   * game. Use this method only from JUnits.
-   * @param filename File name
-   * @param repository Game repository for loading
-   * @throws IOException if reading fails
-   */
-  public SavedGame(final String filename, final GameRepository repository)
-      throws IOException {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    creationTime = dateFormat.format(System.currentTimeMillis());
-    initializeSavedGame(filename, repository);
-  }
-
-  /**
-   * Do the actual save game loading
-   * @param file Filename to load
-   * @param repository GameRepository for loading the game
-   * @throws IOException if reading fails
-   */
-  private void initializeSavedGame(final String file,
-      final GameRepository repository) throws IOException {
-    StarMap starMap = repository.loadGame(file);
-    this.filename = file;
+    StarMap starMap = new GameRepository().loadGame(folderName, filename);
+    this.filename = filename;
     turnNumber = starMap.getTurn();
     galaxySize = starMap.getMaxX() + " X " + starMap.getMaxY();
     playerRace = starMap.getPlayerList().getPlayerInfoByIndex(0).getRace();

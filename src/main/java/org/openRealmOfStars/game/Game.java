@@ -403,7 +403,8 @@ public class Game extends JFrame implements ActionListener {
    */
   public boolean loadSavedGame(final String filename) {
     GameRepository repository = new GameRepository();
-    starMap = repository.loadGame(filename);
+    starMap = repository.loadGame(GameRepository.DEFAULT_SAVE_FOLDER,
+                                  filename);
     if (starMap != null) {
       players = starMap.getPlayerList();
       starMap.updateStarMapOnLoadGame();
@@ -637,7 +638,8 @@ public class Game extends JFrame implements ActionListener {
     if (gameState == GameState.STARMAP && starMapView != null) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
-        new GameRepository().saveGame("autosave.save",starMap);
+        new GameRepository().saveGame(GameRepository.DEFAULT_SAVE_FOLDER,
+                                      "autosave.save",starMap);
         changeGameState(GameState.AITURN);
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_FOCUS_MSG)) {

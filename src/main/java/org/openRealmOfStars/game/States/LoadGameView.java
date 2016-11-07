@@ -25,6 +25,7 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.GenericFileFilter;
+import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
  *
@@ -97,7 +98,8 @@ public class LoadGameView extends BlackPanel {
     SavedGame[] games = new SavedGame[files.length];
     for (int i = 0; i < files.length; i++) {
       try {
-        games[i] = new SavedGame(files[i].getName());
+        games[i] = new SavedGame(GameRepository.DEFAULT_SAVE_FOLDER,
+                                 files[i].getName());
       } catch (IOException e) {
         games[i] = null;
       }

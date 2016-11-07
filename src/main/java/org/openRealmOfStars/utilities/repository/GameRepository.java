@@ -37,35 +37,19 @@ import org.openRealmOfStars.starMap.StarMap;
 public class GameRepository {
 
   /**
-   * Is GameRepository called for JUnit
+   * Default save game folder name
    */
-  private boolean runningJUnit;
-
-  /**
-   * Default constructor used in actual game
-   */
-  public GameRepository() {
-    runningJUnit = false;
-  }
-
-  /**
-   * Enable loading save files under JUnit folder
-   */
-  public void enableJUnit() {
-    runningJUnit = true;
-  }
+  public final static String DEFAULT_SAVE_FOLDER = "saves";
 
   /**
    * Save game for certain file name
+   * @param folderName Folder name where to save game
    * @param filename File name
    * @param starMap StarMap to save to file
    */
-  public void saveGame(final String filename, final StarMap starMap) {
+  public void saveGame(final String folderName, final String filename, 
+                        final StarMap starMap) {
     if (starMap != null) {
-      String folderName = "saves";
-      if (runningJUnit) {
-        folderName = "src/test/resources";
-      }
       File folder = new File(folderName);
       if (!folder.exists()) {
         folder.mkdirs();
@@ -83,20 +67,16 @@ public class GameRepository {
         System.err.println("File could not be write: " + folderName + "/"
             + filename + "! " + e.getMessage());
       }
-
     }
   }
 
   /**
    * Load game from certain file name
+   * @param folderName Folder name where to load saved games
    * @param filename File name
-   * @return StarMap if succesfull, null if loading failed
+   * @return StarMap if successful, null if loading failed
    */
-  public StarMap loadGame(final String filename) {
-    String folderName = "saves";
-    if (runningJUnit) {
-      folderName = "src/test/resources";
-    }
+  public StarMap loadGame(final String folderName, final String filename) {
     File file = new File(folderName + "/" + filename);
     StarMap starMap = null;
     try (FileInputStream is = new FileInputStream(file)) {

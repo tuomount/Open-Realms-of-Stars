@@ -421,9 +421,9 @@ public class StarMap {
   private boolean is9NeighboursEmpty(final int x, final int y) {
     for (int i = -1; i < 2; i++) {
       for (int j = -1; j < 2; j++) {
-        boolean validCoordinate = isValidCoordinate(x + i , y + j);
-        if (!validCoordinate ||
-           (validCoordinate && tiles[x + i][y + j] != 0)) {
+        boolean validCoordinate = isValidCoordinate(x + i, y + j);
+        if (!validCoordinate
+            || validCoordinate && tiles[x + i][y + j] != 0) {
           return false;
         }
       }

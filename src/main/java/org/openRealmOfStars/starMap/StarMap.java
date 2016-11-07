@@ -419,17 +419,16 @@ public class StarMap {
    * @return true if all are empty false otherwise
    */
   private boolean is9NeighboursEmpty(final int x, final int y) {
-    boolean result = true;
     for (int i = -1; i < 2; i++) {
       for (int j = -1; j < 2; j++) {
-        if (isValidCoordinate(x + i, y + j) && tiles[x + i][y + j] == 0) {
-          result = true;
-        } else {
-          return false; //@TODO: It seems a bug (I guess it should be "result = true;") If not, this if could be inverted and keep only the else part because result is true by default. (After the change result will be always true, so the variable will be unneeded the last return can be "return true;"
+        boolean validCoordinate = isValidCoordinate(x + i , y + j);
+        if (!validCoordinate ||
+           (validCoordinate && tiles[x + i][y + j] != 0)) {
+          return false;
         }
       }
     }
-    return result;
+    return true;
   }
 
   /**

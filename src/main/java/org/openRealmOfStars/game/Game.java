@@ -92,12 +92,12 @@ public class Game extends JFrame implements ActionListener {
   /**
    * List of players
    */
-  public PlayerList players;
+  private PlayerList players;
 
   /**
    * Current Game state
    */
-  public GameState gameState;
+  private GameState gameState;
 
   /**
    * Planet view Panel and handling planet
@@ -147,7 +147,7 @@ public class Game extends JFrame implements ActionListener {
   /**
    * StarMap view for the game
    */
-  public StarMapView starMapView;
+  private StarMapView starMapView;
 
   /**
    * Combat view for the game
@@ -408,7 +408,7 @@ public class Game extends JFrame implements ActionListener {
       players = starMap.getPlayerList();
       starMap.updateStarMapOnLoadGame();
       return true;
-    } 
+    }
     return false;
   }
 
@@ -459,7 +459,8 @@ public class Game extends JFrame implements ActionListener {
 
   /**
    * Change game state so that focus is also changed to target message.
-   * There is also possibility to give data object which depends on new game state.
+   * There is also possibility to give data object which depends on new game
+   * state.
    * @param newState Game State where to change
    * @param focusMessage Focused message, can be also null
    * @param dataObject Depends on which state is changed
@@ -637,7 +638,7 @@ public class Game extends JFrame implements ActionListener {
     if (gameState == GameState.STARMAP && starMapView != null) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
-        new GameRepository().saveGame("autosave.save",starMap);
+        new GameRepository().saveGame("autosave.save", starMap);
         changeGameState(GameState.AITURN);
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_FOCUS_MSG)) {
@@ -886,4 +887,27 @@ public class Game extends JFrame implements ActionListener {
     }
   }
 
+  /**
+   * Get the list of players
+   * @return the list of players
+   */
+  public PlayerList getPlayers() {
+    return players;
+  }
+
+  /**
+   * Get the current Game state
+   * @return the current Game state
+   */
+  public GameState getGameState() {
+    return gameState;
+  }
+
+  /**
+   * Get the StarMap view for the game
+   * @return the StarMap view for the game
+   */
+  public StarMapView getStarMapView() {
+    return starMapView;
+  }
 }

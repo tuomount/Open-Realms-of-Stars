@@ -277,7 +277,7 @@ public class AITurnView extends BlackPanel {
    * Search newly found uncolonized planets
    */
   public void searchForColonizablePlanets() {
-    PlayerInfo info = game.players
+    PlayerInfo info = game.getPlayers()
         .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
     if (info != null && !info.isHuman()) {
       ArrayList<Planet> planets = game.getStarMap().getPlanetList();
@@ -324,7 +324,7 @@ public class AITurnView extends BlackPanel {
    * and set aiFleet to null.
    */
   public void handleAIFleet() {
-    PlayerInfo info = game.players
+    PlayerInfo info = game.getPlayers()
         .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
     if (info != null && !info.isHuman()
         && game.getStarMap().getAIFleet() != null) {
@@ -350,8 +350,8 @@ public class AITurnView extends BlackPanel {
    */
   public void updateStarMapToNextTurn() {
     game.getStarMap().resetCulture();
-    for (int i = 0; i < game.players.getCurrentMaxPlayers(); i++) {
-      PlayerInfo info = game.players.getPlayerInfoByIndex(i);
+    for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
+      PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(i);
       if (info != null) {
         info.resetVisibilityDataAfterTurn();
         info.getMsgList().clearMessages();
@@ -432,7 +432,7 @@ public class AITurnView extends BlackPanel {
         PlayerInfo info = planet.getPlanetPlayerInfo();
         // Update each planet one by one
         planet.updateOneTurn();
-        int index = game.players.getIndex(info);
+        int index = game.getPlayers().getIndex(info);
         if (index > -1) {
           // Recalculate culture for the map for each player
           game.getStarMap().calculateCulture(planet.getX(), planet.getY(),
@@ -465,9 +465,9 @@ public class AITurnView extends BlackPanel {
       }
       if (game.getStarMap().isAllAIsHandled()) {
         updateStarMapToNextTurn();
-        for (int i = 0; i < game.players.getCurrentMaxPlayers(); i++) {
+        for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
           // Handle player research at end of turn
-          PlayerInfo info = game.players.getPlayerInfoByIndex(i);
+          PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(i);
           info.getTechList().updateResearchPointByTurn(game.getStarMap()
               .getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH, i),
               info);

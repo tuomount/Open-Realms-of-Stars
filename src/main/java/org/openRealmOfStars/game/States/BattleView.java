@@ -55,8 +55,19 @@ import org.openRealmOfStars.utilities.Logger;
  */
 public class BattleView extends BlackPanel {
 
+  /**
+   *
+   */
   private static final long serialVersionUID = 1L;
+
+  /**
+   * Maximum number of lines in logger
+   */
   static final int MAX_LOG_NUMBER = 11;
+
+  /**
+   * Initial message shown in logger.
+   */
   static final String INITIAL_LOG_MESSAGE = "Combat started...";
 
   /**
@@ -223,6 +234,10 @@ public class BattleView extends BlackPanel {
     this.repaint();
   }
 
+  /**
+   * Get Info Text Area on screen bottom
+   * @return InfoTextArea
+   */
   public InfoTextArea getBottomTextArea() {
     return textArea;
   }
@@ -364,6 +379,10 @@ public class BattleView extends BlackPanel {
     this.repaint();
   }
 
+  /**
+   * Is Combat ended or not. Return true if combat has ended.
+   * @return true if combat has ended
+   */
   public boolean isCombatEnded() {
     return combatEnded;
   }

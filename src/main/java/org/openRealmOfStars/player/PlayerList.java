@@ -44,6 +44,9 @@ public class PlayerList {
    */
   private int currentPlayer;
 
+  /**
+   * Create a new PlayerList
+   */
   public PlayerList() {
     list = new ArrayList<>();
     currentPlayer = 0;
@@ -90,7 +93,9 @@ public class PlayerList {
    * @return PlayerInfo or null
    */
   public PlayerInfo getPlayerInfoByIndex(final int index) {
-    if (index > -1 && index < list.size()) { return list.get(index); }
+    if (index > -1 && index < list.size()) {
+      return list.get(index);
+    }
     return null;
   }
 
@@ -137,7 +142,9 @@ public class PlayerList {
     for (int i = 0; i < list.size(); i++) {
       PlayerInfo info = list.get(i);
       if (info.hashCode() == toMatch.hashCode()
-          && info.getEmpireName().equals(toMatch.getEmpireName())) { return i; }
+          && info.getEmpireName().equals(toMatch.getEmpireName())) {
+        return i;
+      }
     }
     return -1;
   }

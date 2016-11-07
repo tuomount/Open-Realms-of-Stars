@@ -127,8 +127,9 @@ public class ShipDesign {
    * @return ShipComponent or null
    */
   public ShipComponent getComponent(final int index) {
-    if (index >= 0
-        && index < components.size()) { return components.get(index); }
+    if (index >= 0 && index < components.size()) {
+      return components.get(index);
+    }
     return null;
   }
 
@@ -248,7 +249,9 @@ public class ShipDesign {
           || comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO || comp
-              .getType() == ShipComponentType.WEAPON_RAILGUN) { return true; }
+              .getType() == ShipComponentType.WEAPON_RAILGUN) {
+        return true;
+      }
     }
     return false;
   }
@@ -260,7 +263,9 @@ public class ShipDesign {
   public boolean hasEngine() {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (comp.getType() == ShipComponentType.ENGINE) { return true; }
+      if (comp.getType() == ShipComponentType.ENGINE) {
+        return true;
+      }
     }
     return false;
   }
@@ -386,7 +391,7 @@ public class ShipDesign {
    * @return Ship component array
    */
   public ShipComponent[] getComponentList() {
-    ShipComponent result[] = new ShipComponent[getNumberOfComponents()];
+    ShipComponent[] result = new ShipComponent[getNumberOfComponents()];
     for (int i = 0; i < getNumberOfComponents(); i++) {
       result[i] = getComponent(i);
     }
@@ -401,7 +406,7 @@ public class ShipDesign {
    */
   public int changePriority(final int index, final boolean higher) {
     if (index >= 0 && index < getNumberOfComponents()) {
-      ShipComponent result[] = getComponentList();
+      ShipComponent[] result = getComponentList();
       ShipComponent temp = result[index];
       if (higher && index > 0) {
         int target = index - 1;

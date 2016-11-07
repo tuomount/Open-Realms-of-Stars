@@ -31,8 +31,9 @@ public class GameRepositoryTest {
   @Test
   public void testLoadingGame() {
     GameRepository repository = new GameRepository();
-    repository.enableJUnit();
+
     StarMap starMap = repository.loadGame("testGame.save");
+
     assertEquals("Terran Alliance",starMap.getPlayerByIndex(0).getEmpireName());
     assertEquals(128,starMap.getTurn());
     assertEquals(50,starMap.getMaxX());

@@ -37,22 +37,9 @@ import org.openRealmOfStars.starMap.StarMap;
 public class GameRepository {
 
   /**
-   * Is GameRepository called for JUnit
-   */
-  private boolean runningJUnit;
-
-  /**
    * Default constructor used in actual game
    */
   public GameRepository() {
-    runningJUnit = false;
-  }
-
-  /**
-   * Enable loading save files under JUnit folder
-   */
-  public void enableJUnit() {
-    runningJUnit = true;
   }
 
   /**
@@ -63,14 +50,12 @@ public class GameRepository {
   public void saveGame(final String filename, final StarMap starMap) {
     if (starMap != null) {
       String folderName = "saves";
-      if (runningJUnit) {
-        folderName = "src/test/resources";
-      }
-      File folder = new File(folderName);
+      ClassLoader classLoader = getClass().getClassLoader();
+      File folder = new File(classLoader.getResource(folderName).getFile());
       if (!folder.exists()) {
         folder.mkdirs();
       }
-      File file = new File(folderName + "/" + filename);
+      File file = new File(classLoader.getResource(folderName + "/" + filename).getFile());
       try {
         FileOutputStream os = new FileOutputStream(file);
         BufferedOutputStream bos = new BufferedOutputStream(os);
@@ -83,29 +68,25 @@ public class GameRepository {
         System.err.println("File could not be write: " + folderName + "/"
             + filename + "! " + e.getMessage());
       }
-
     }
   }
 
   /**
    * Load game from certain file name
    * @param filename File name
-   * @return StarMap if succesfull, null if loading failed
+   * @return StarMap if successful, null if loading failed
    */
   public StarMap loadGame(final String filename) {
+    ClassLoader classLoader = getClass().getClassLoader();
     String folderName = "saves";
-    if (runningJUnit) {
-      folderName = "src/test/resources";
-    }
-    File file = new File(folderName + "/" + filename);
+    File file = new File(classLoader.getResource(folderName + "/" + filename).getFile());
     StarMap starMap = null;
     try (FileInputStream is = new FileInputStream(file)) {
       BufferedInputStream bis = new BufferedInputStream(is);
       DataInputStream dis = new DataInputStream(bis);
       starMap = new StarMap(dis);
     } catch (IOException e) {
-      System.out.println(e.getMessage());
-      return null;
+      System.err.println(e.getMessage());
     }
     return starMap;
   }

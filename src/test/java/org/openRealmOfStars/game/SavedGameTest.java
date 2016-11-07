@@ -33,8 +33,9 @@ public class SavedGameTest {
   @Test
   public void testLoadingSavedGame() throws IOException {
     GameRepository repository = new GameRepository();
-    repository.enableJUnit();
+
     SavedGame game = new SavedGame("testGame.save", repository);
+
     assertEquals(128, game.getTurnNumber());
     assertEquals("Terran Alliance", game.getEmpireName());
     assertEquals("50 X 50", game.getGalaxySize());

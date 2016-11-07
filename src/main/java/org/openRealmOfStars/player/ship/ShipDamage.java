@@ -27,32 +27,32 @@ public class ShipDamage {
   /**
    * Damage did not cause even a dent
    */
-  public static int NO_DAMAGE_NO_DENT = 1;
+  public static final int NO_DAMAGE_NO_DENT = 1;
   /**
    * No damage
    */
-  public static int NO_DAMAGE = 0;
+  public static final int NO_DAMAGE = 0;
   /**
    * Damage some component
    */
-  public static int DAMAGED = -1;
+  public static final int DAMAGED = -1;
   /**
    * Ship is destroyed
    */
-  public static int DESTROYED = -2;
+  public static final int DESTROYED = -2;
 
   /**
    * Ship Damage is not ready yet
    */
-  public static int NOT_READY_YET = 0;
+  public static final int NOT_READY_YET = 0;
   /**
    * Ship damage is ready if logging
    */
-  public static int READY_FOR_LOGGING = 1;
+  public static final int READY_FOR_LOGGING = 1;
   /**
    * Has been logged
    */
-  public static int LOGGED = 2;
+  public static final int LOGGED = 2;
 
   /** 1 No damage, not even dent
   *   0 No damage, but shield or armor got lower
@@ -95,7 +95,9 @@ public class ShipDamage {
    * @return is the status ready
    */
   public boolean isReady() {
-    if (status == READY_FOR_LOGGING) { return true; }
+    if (status == READY_FOR_LOGGING) {
+      return true;
+    }
     return false;
   }
 

@@ -38,11 +38,11 @@ public class Combat {
   /**
    * Maximum combat map size
    */
-  public final static int MAX_X = 9;
+  public static final int MAX_X = 9;
   /**
    * Maximum, combat map size
    */
-  public final static int MAX_Y = 9;
+  public static final int MAX_Y = 9;
   /**
    * Ships in list in initiative order
    */

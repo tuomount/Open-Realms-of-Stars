@@ -229,7 +229,7 @@ public class Game extends JFrame implements ActionListener {
       Combat combat = getStarMap().fightWithFleet(nx, ny, fleet, info);
       if (combat != null) {
         fleet.movesLeft--;
-        starMapView.readyToMove = false;
+        starMapView.setReadyToMove(false);
         changeGameState(GameState.COMBAT, combat);
       } else {
         fleet.setPos(nx, ny);
@@ -239,7 +239,7 @@ public class Game extends JFrame implements ActionListener {
         if (info.isHuman()) {
           getStarMap().setDrawPos(fleet.getX(), fleet.getY());
         }
-        starMapView.readyToMove = false;
+        starMapView.setReadyToMove(false);
       }
     }
   }

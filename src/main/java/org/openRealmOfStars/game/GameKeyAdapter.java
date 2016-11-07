@@ -73,7 +73,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
       // FIXME: NUMPAD Move is missing
       if (arg0.getKeyCode() == KeyEvent.VK_LEFT
           && arg0.getID() == KeyEvent.KEY_PRESSED
-          && game.getStarMapView().readyToMove) {
+          && game.getStarMapView().getReadyToMove()) {
         if (game.getStarMapView().getStarMapMouseListener()
             .getLastClickedFleet() != null) {
           // Fleet move
@@ -88,13 +88,13 @@ public class GameKeyAdapter implements KeyEventDispatcher {
           // Map scrolling
           game.getStarMap().setDrawPos(game.getStarMap().getDrawX() - 1,
               game.getStarMap().getDrawY());
-          game.getStarMapView().readyToMove = false;
+          game.getStarMapView().setReadyToMove(false);
           return true;
         }
       }
       if (arg0.getKeyCode() == KeyEvent.VK_RIGHT
           && arg0.getID() == KeyEvent.KEY_PRESSED
-          && game.getStarMapView().readyToMove) {
+          && game.getStarMapView().getReadyToMove()) {
         if (game.getStarMapView().getStarMapMouseListener()
             .getLastClickedFleet() != null) {
           // Fleet move
@@ -109,13 +109,13 @@ public class GameKeyAdapter implements KeyEventDispatcher {
           // Map scrolling
           game.getStarMap().setDrawPos(game.getStarMap().getDrawX() + 1,
               game.getStarMap().getDrawY());
-          game.getStarMapView().readyToMove = false;
+          game.getStarMapView().setReadyToMove(false);
           return true;
         }
       }
       if (arg0.getKeyCode() == KeyEvent.VK_DOWN
           && arg0.getID() == KeyEvent.KEY_PRESSED
-          && game.getStarMapView().readyToMove) {
+          && game.getStarMapView().getReadyToMove()) {
         if (game.getStarMapView().getStarMapMouseListener()
             .getLastClickedFleet() != null) {
           // Fleet move
@@ -130,13 +130,13 @@ public class GameKeyAdapter implements KeyEventDispatcher {
           // Map scrolling
           game.getStarMap().setDrawPos(game.getStarMap().getDrawX(),
               game.getStarMap().getDrawY() + 1);
-          game.getStarMapView().readyToMove = false;
+          game.getStarMapView().setReadyToMove(false);
           return true;
         }
       }
       if (arg0.getKeyCode() == KeyEvent.VK_UP
           && arg0.getID() == KeyEvent.KEY_PRESSED
-          && game.getStarMapView().readyToMove) {
+          && game.getStarMapView().getReadyToMove()) {
         if (game.getStarMapView().getStarMapMouseListener()
             .getLastClickedFleet() != null) {
           // Fleet move
@@ -152,7 +152,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
           // Map scrolling
           game.getStarMap().setDrawPos(game.getStarMap().getDrawX(),
               game.getStarMap().getDrawY() - 1);
-          game.getStarMapView().readyToMove = false;
+          game.getStarMapView().setReadyToMove(false);
           return true;
         }
       }

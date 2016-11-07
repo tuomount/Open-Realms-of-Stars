@@ -107,7 +107,7 @@ public class StarMapView extends BlackPanel {
   /**
    * Is map ready to move with keys
    */
-  public boolean readyToMove;
+  private boolean readyToMove;
 
   /**
    * Message panel for showing messages
@@ -351,6 +351,14 @@ public class StarMapView extends BlackPanel {
 
   public IconLabel getReseProd() {
     return reseProd;
+  }
+
+  public boolean getReadyToMove() {
+    return readyToMove;
+  }
+
+  public void setReadyToMove(final boolean readyToMove) {
+    this.readyToMove = readyToMove;
   }
 
 }

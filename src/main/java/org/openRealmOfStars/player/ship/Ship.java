@@ -214,7 +214,9 @@ public class Ship extends Construction {
    * @return Hull points
    */
   public int getHullPointForComponent(final int index) {
-    if (index >= 0 && index < hullPoints.length) { return hullPoints[index]; }
+    if (index >= 0 && index < hullPoints.length) {
+      return hullPoints[index];
+    }
     return 0;
   }
 
@@ -262,9 +264,12 @@ public class Ship extends Construction {
       if (hullPoints[i] > 0 && comp.getEnergyRequirement() > 0) {
         energy = energy - comp.getEnergyRequirement();
       }
-      if (index == i
-          && (energy >= 0 || comp.getEnergyRequirement() == 0)) { return true; }
-      if (index == i && energy < 0) { return false; }
+      if (index == i && (energy >= 0 || comp.getEnergyRequirement() == 0)) {
+        return true;
+      }
+      if (index == i && energy < 0) {
+        return false;
+      }
     }
     return false;
   }
@@ -301,7 +306,9 @@ public class Ship extends Construction {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
-          && hasComponentEnergy(i)) { return comp.getSpeed(); }
+          && hasComponentEnergy(i)) {
+        return comp.getSpeed();
+      }
     }
     return 0;
   }
@@ -314,7 +321,9 @@ public class Ship extends Construction {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
-          && hasComponentEnergy(i)) { return comp.getTacticSpeed(); }
+          && hasComponentEnergy(i)) {
+        return comp.getTacticSpeed();
+      }
     }
     return 0;
   }
@@ -331,7 +340,9 @@ public class Ship extends Construction {
           || comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO || comp
-              .getType() == ShipComponentType.WEAPON_RAILGUN)) { return true; }
+              .getType() == ShipComponentType.WEAPON_RAILGUN)) {
+        return true;
+      }
     }
     return false;
   }
@@ -345,7 +356,9 @@ public class Ship extends Construction {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && hasComponentEnergy(i)
           && (comp.getType() == ShipComponentType.ORBITAL_BOMBS || comp
-              .getType() == ShipComponentType.ORBITAL_NUKE)) { return true; }
+              .getType() == ShipComponentType.ORBITAL_NUKE)) {
+        return true;
+      }
     }
     return false;
   }
@@ -358,7 +371,9 @@ public class Ship extends Construction {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
-          && hasComponentEnergy(i)) { return comp.getFtlSpeed(); }
+          && hasComponentEnergy(i)) {
+        return comp.getFtlSpeed();
+      }
     }
     return 0;
   }
@@ -688,7 +703,9 @@ public class Ship extends Construction {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.COLONY_MODULE
-          && hasComponentEnergy(i) && getColonist() > 0) { return true; }
+          && hasComponentEnergy(i) && getColonist() > 0) {
+        return true;
+      }
     }
     return false;
   }
@@ -702,7 +719,9 @@ public class Ship extends Construction {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0
           && comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE
-          && hasComponentEnergy(i) && getColonist() > 0) { return true; }
+          && hasComponentEnergy(i) && getColonist() > 0) {
+        return true;
+      }
     }
     return false;
   }
@@ -739,7 +758,9 @@ public class Ship extends Construction {
   public boolean isColonyModule() {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (comp.getType() == ShipComponentType.COLONY_MODULE) { return true; }
+      if (comp.getType() == ShipComponentType.COLONY_MODULE) {
+        return true;
+      }
     }
     return false;
   }
@@ -752,7 +773,9 @@ public class Ship extends Construction {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (comp
-          .getType() == ShipComponentType.PLANETARY_INVASION_MODULE) { return true; }
+          .getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
+        return true;
+      }
     }
     return false;
   }
@@ -794,8 +817,9 @@ public class Ship extends Construction {
    * @return ShipComponent or null
    */
   public ShipComponent getComponent(final int index) {
-    if (index >= 0
-        && index < components.size()) { return components.get(index); }
+    if (index >= 0 && index < components.size()) {
+      return components.get(index);
+    }
     return null;
   }
 

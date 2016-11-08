@@ -48,6 +48,17 @@ public class CreditsView extends BlackPanel {
    */
   private StarFieldTextArea textArea;
 
+  /**
+   * Number of lines to show in text area
+   */
+  private static final int NUMBER_OF_LINES = 45;
+  /**
+   * Constructor for Credits view
+   * @param listener Action Listener for command
+   * @param title Program Title
+   * @param version Program Version
+   * @throws IOException If error happens on reading license files.
+   */
   public CreditsView(final ActionListener listener, final String title,
       final String version) throws IOException {
     String creditsText = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
@@ -58,15 +69,19 @@ public class CreditsView extends BlackPanel {
         + "#Graphics by\n\n"
         + "Moons and planet made by Unnamed (Viktor.Hahn@web.de)\n"
         + "(http://opengameart.org/content/16-planet-sprites)\n\n"
-        + "SunRed by Priest865 (http://opengameart.org/content/space-assets)\n\n"
-        + "141 Military Icons Set by AngryMeteor.com - http://opengameart.org/content/140-military-icons-set-fixed\n\n"
+        + "SunRed by Priest865 "
+        + "(http://opengameart.org/content/space-assets)\n\n"
+        + "141 Military Icons Set by AngryMeteor.com - "
+        + "http://opengameart.org/content/140-military-icons-set-fixed\n\n"
         + "Nebulae, star field and space panel by Tuomo Untinen\n\n"
         + "Route dot by Tuomo Untinen\n\n"
         + "Photon torpedo by Tuomo Untinen\n\n"
         + "Space ships are done with Surt's modular ships\n\n"
         + "Explosions by Csaba Felvegi aka Chabull\n\n"
-        + "Alien pictures by Surt - http://opengameart.org/forumtopic/cc0-scraps\n\n"
-        + "Space Captain by Justin Nichol - http://opengameart.org/content/space-captain\n\n"
+        + "Alien pictures by Surt - "
+        + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
+        + "Space Captain by Justin Nichol - "
+        + "http://opengameart.org/content/space-captain\n\n"
         + "Fonts are under SIL Open Font License, Version 1.1.\n"
         + "#Fonts by\n\n"
         + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n";
@@ -86,10 +101,11 @@ public class CreditsView extends BlackPanel {
     }
     creditsText = creditsText + "\n\n"
         + "#GNU GENERAL PUBLIC LICENSE Version 2, June 1991\n" + gpl2License
-        + "\n\n" + "#SIL Open Font License, Version 1.1.\n\n" + cubellanLicense;
+        + "\n\n" + "#SIL Open Font License, Version 1.1.\n\n"
+        + cubellanLicense;
     this.setLayout(new BorderLayout());
     textArea = new StarFieldTextArea();
-    textArea.setScrollText(creditsText, 45);
+    textArea.setScrollText(creditsText, NUMBER_OF_LINES);
     textArea.setText(creditsText);
     textArea.setSmoothScroll(true);
     textArea.setEditable(false);

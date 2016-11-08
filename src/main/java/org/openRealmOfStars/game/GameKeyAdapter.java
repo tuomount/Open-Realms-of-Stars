@@ -35,7 +35,8 @@ public class GameKeyAdapter implements KeyEventDispatcher {
 
   @Override
   public boolean dispatchKeyEvent(final KeyEvent arg0) {
-    if (game.getGameState() == GameState.STARMAP && game.getStarMapView() != null) {
+    if (game.getGameState() == GameState.STARMAP
+        && game.getStarMapView() != null) {
       // Star Map Keys
       if (arg0.getKeyCode() == KeyEvent.VK_R
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
@@ -83,8 +84,8 @@ public class GameKeyAdapter implements KeyEventDispatcher {
           fleet.setRoute(null);
           int nx = fleet.getX() - 1;
           int ny = fleet.getY();
-          game.fleetMakeMove(game.getPlayers().getCurrentPlayerInfo(), fleet, nx,
-              ny);
+          game.fleetMakeMove(game.getPlayers().getCurrentPlayerInfo(),
+              fleet, nx, ny);
         } else {
           // Map scrolling
           game.getStarMap().setDrawPos(game.getStarMap().getDrawX() - 1,
@@ -104,8 +105,8 @@ public class GameKeyAdapter implements KeyEventDispatcher {
           fleet.setRoute(null);
           int nx = fleet.getX() + 1;
           int ny = fleet.getY();
-          game.fleetMakeMove(game.getPlayers().getCurrentPlayerInfo(), fleet, nx,
-              ny);
+          game.fleetMakeMove(game.getPlayers().getCurrentPlayerInfo(), fleet,
+              nx, ny);
         } else {
           // Map scrolling
           game.getStarMap().setDrawPos(game.getStarMap().getDrawX() + 1,
@@ -125,8 +126,8 @@ public class GameKeyAdapter implements KeyEventDispatcher {
           fleet.setRoute(null);
           int nx = fleet.getX();
           int ny = fleet.getY() + 1;
-          game.fleetMakeMove(game.getPlayers().getCurrentPlayerInfo(), fleet, nx,
-              ny);
+          game.fleetMakeMove(game.getPlayers().getCurrentPlayerInfo(), fleet,
+              nx, ny);
         } else {
           // Map scrolling
           game.getStarMap().setDrawPos(game.getStarMap().getDrawX(),
@@ -146,8 +147,8 @@ public class GameKeyAdapter implements KeyEventDispatcher {
           fleet.setRoute(null);
           int nx = fleet.getX();
           int ny = fleet.getY() - 1;
-          game.fleetMakeMove(game.getPlayers().getCurrentPlayerInfo(), fleet, nx,
-              ny);
+          game.fleetMakeMove(game.getPlayers().getCurrentPlayerInfo(), fleet,
+              nx, ny);
 
         } else {
           // Map scrolling

@@ -183,6 +183,22 @@ public class Game extends JFrame implements ActionListener {
   }
 
   /**
+   * Game window X size aka width
+   */
+  private static final int WINDOW_X_SIZE = 1024;
+
+  /**
+   * Game window Y size aka height
+   */
+  private static final int WINDOW_Y_SIZE = 768;
+
+  /**
+   * Animation timer delay in milli seconds.
+   */
+
+  private static final int ANIMATION_TIMER_DELAY = 75;
+
+  /**
    * Constructor of Game class
    */
   public Game() {
@@ -197,9 +213,9 @@ public class Game extends JFrame implements ActionListener {
     setTitle(GAME_TITLE + " " + GAME_VERSION);
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     addWindowListener(new GameWindowListener());
-    setSize(1024, 768);
+    setSize(WINDOW_X_SIZE, WINDOW_Y_SIZE);
     setLocationRelativeTo(null);
-    animationTimer = new Timer(75, this);
+    animationTimer = new Timer(ANIMATION_TIMER_DELAY, this);
     animationTimer.setActionCommand(GameCommands.COMMAND_ANIMATION_TIMER);
     animationTimer.start();
 
@@ -634,13 +650,88 @@ public class Game extends JFrame implements ActionListener {
     }
   }
 
+
+  /**
+   * Colonize Planet Action. This should be called when player colonized a
+   * planet.
+   */
+  private void colonizePlanetAction() {
+    Ship ship = fleetView.getFleet().getColonyShip();
+    if (ship != null && fleetView.getPlanet() != null
+        && fleetView.getPlanet().getPlanetPlayerInfo() == null) {
+      // Make sure that ship is really colony and there is planet to
+      // colonize
+      fleetView.getPlanet().setPlanetOwner(players.getCurrentPlayer(),
+          players.getCurrentPlayerInfo());
+      if (players.getCurrentPlayerInfo().getRace() == SpaceRace.MECHIONS) {
+        fleetView.getPlanet().setWorkers(Planet.PRODUCTION_WORKERS,
+            ship.getColonist());
+      } else {
+        fleetView.getPlanet().setWorkers(Planet.PRODUCTION_FOOD,
+            ship.getColonist());
+      }
+      // Remove the ship and show the planet view you just colonized
+      fleetView.getFleet().removeShip(ship);
+      ShipStat stat = starMap.getCurrentPlayerInfo()
+          .getShipStatByName(ship.getName());
+      stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
+      fleetView.getFleetList().recalculateList();
+      starMapView.getStarMapMouseListener().setLastClickedFleet(null);
+      starMapView.getStarMapMouseListener()
+          .setLastClickedPlanet(fleetView.getPlanet());
+      changeGameState(GameState.PLANETVIEW);
+    }
+  }
+
+  /**
+   * Change message focus for fleet
+   * @param fleet Where to focus
+   */
+  private void changeMessageForFleets(final Fleet fleet) {
+    if (fleet != null) {
+      starMap.setCursorPos(fleet.getX(), fleet.getY());
+      starMap.setDrawPos(fleet.getX(), fleet.getY());
+      starMapView.setShowFleet(fleet);
+      starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
+      starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
+    }
+  }
+
+  /**
+   * Handle state changes via double clicking on StarMap
+   */
+  private void handleDoubleClicksOnStarMap() {
+    // Handle double click state changes
+    if (starMapView.getStarMapMouseListener().isDoubleClicked()) {
+      if (starMapView.getStarMapMouseListener()
+          .getLastClickedPlanet() != null) {
+        changeGameState(GameState.PLANETVIEW);
+      } else if (starMapView.getStarMapMouseListener()
+          .getLastClickedFleet() != null) {
+        changeGameState(GameState.FLEETVIEW);
+      }
+    }
+    if (!starMapView.getStarMapMouseListener().isDoubleClicked()
+        && starMapView.getStarMapMouseListener().isMoveClicked()
+        && starMapView.getStarMapMouseListener()
+            .getLastClickedFleet() != null) {
+      starMapView.getStarMapMouseListener().getLastClickedFleet()
+          .setRoute(null);
+      starMapView.getStarMapMouseListener().setMoveClicked(false);
+      fleetMakeMove(players.getCurrentPlayerInfo(),
+          starMapView.getStarMapMouseListener().getLastClickedFleet(),
+          starMapView.getStarMapMouseListener().getMoveX(),
+          starMapView.getStarMapMouseListener().getMoveY());
+    }
+  }
+
   @Override
   public void actionPerformed(final ActionEvent arg0) {
     if (gameState == GameState.STARMAP && starMapView != null) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
         new GameRepository().saveGame(GameRepository.DEFAULT_SAVE_FOLDER,
-                                      "autosave.save",starMap);
+                                      "autosave.save", starMap);
         changeGameState(GameState.AITURN);
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_FOCUS_MSG)) {
@@ -650,52 +741,19 @@ public class Game extends JFrame implements ActionListener {
         if (starMapView.getStarMapMouseListener()
             .getLastClickedFleet() != null) {
           Fleet fleet = players.getCurrentPlayerInfo().Fleets().getPrev();
-          if (fleet != null) {
-            starMap.setCursorPos(fleet.getX(), fleet.getY());
-            starMap.setDrawPos(fleet.getX(), fleet.getY());
-            starMapView.setShowFleet(fleet);
-            starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
-            starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
-          }
+          changeMessageForFleets(fleet);
         }
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_NEXT_TARGET)) {
         if (starMapView.getStarMapMouseListener()
             .getLastClickedFleet() != null) {
           Fleet fleet = players.getCurrentPlayerInfo().Fleets().getNext();
-          if (fleet != null) {
-            starMap.setCursorPos(fleet.getX(), fleet.getY());
-            starMap.setDrawPos(fleet.getX(), fleet.getY());
-            starMapView.setShowFleet(fleet);
-            starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
-            starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
-          }
+          changeMessageForFleets(fleet);
         }
       } else {
         if (arg0.getActionCommand()
             .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
-          // Handle double click state changes
-          if (starMapView.getStarMapMouseListener().isDoubleClicked()) {
-            if (starMapView.getStarMapMouseListener()
-                .getLastClickedPlanet() != null) {
-              changeGameState(GameState.PLANETVIEW);
-            } else if (starMapView.getStarMapMouseListener()
-                .getLastClickedFleet() != null) {
-              changeGameState(GameState.FLEETVIEW);
-            }
-          }
-          if (!starMapView.getStarMapMouseListener().isDoubleClicked()
-              && starMapView.getStarMapMouseListener().isMoveClicked()
-              && starMapView.getStarMapMouseListener()
-                  .getLastClickedFleet() != null) {
-            starMapView.getStarMapMouseListener().getLastClickedFleet()
-                .setRoute(null);
-            starMapView.getStarMapMouseListener().setMoveClicked(false);
-            fleetMakeMove(players.getCurrentPlayerInfo(),
-                starMapView.getStarMapMouseListener().getLastClickedFleet(),
-                starMapView.getStarMapMouseListener().getMoveX(),
-                starMapView.getStarMapMouseListener().getMoveY());
-          }
+          handleDoubleClicksOnStarMap();
         }
         starMapView.handleActions(arg0);
         if (starMapView.isAutoFocus()
@@ -802,31 +860,7 @@ public class Game extends JFrame implements ActionListener {
     if (gameState == GameState.FLEETVIEW && fleetView != null) {
       // Fleet view
       if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIZE)) {
-        Ship ship = fleetView.getFleet().getColonyShip();
-        if (ship != null && fleetView.getPlanet() != null
-            && fleetView.getPlanet().getPlanetPlayerInfo() == null) {
-          // Make sure that ship is really colony and there is planet to
-          // colonize
-          fleetView.getPlanet().setPlanetOwner(players.getCurrentPlayer(),
-              players.getCurrentPlayerInfo());
-          if (players.getCurrentPlayerInfo().getRace() == SpaceRace.MECHIONS) {
-            fleetView.getPlanet().setWorkers(Planet.PRODUCTION_WORKERS,
-                ship.getColonist());
-          } else {
-            fleetView.getPlanet().setWorkers(Planet.PRODUCTION_FOOD,
-                ship.getColonist());
-          }
-          // Remove the ship and show the planet view you just colonized
-          fleetView.getFleet().removeShip(ship);
-          ShipStat stat = starMap.getCurrentPlayerInfo()
-              .getShipStatByName(ship.getName());
-          stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
-          fleetView.getFleetList().recalculateList();
-          starMapView.getStarMapMouseListener().setLastClickedFleet(null);
-          starMapView.getStarMapMouseListener()
-              .setLastClickedPlanet(fleetView.getPlanet());
-          changeGameState(GameState.PLANETVIEW);
-        }
+        colonizePlanetAction();
       }
       if (arg0.getActionCommand().equals(GameCommands.COMMAND_CONQUEST)) {
         changeGameState(GameState.PLANETBOMBINGVIEW, fleetView.getPlanet());

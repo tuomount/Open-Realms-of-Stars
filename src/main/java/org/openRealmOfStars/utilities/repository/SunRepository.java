@@ -34,9 +34,11 @@ public class SunRepository {
     /**
      * Save Sun information to DataOutputStream
      * @param dos DataOutputStream
+     * @param sun Sun to save
      * @throws IOException if there is any problem with DataOutputStream
      */
-    public void saveSun(final DataOutputStream dos, final Sun sun) throws IOException {
+    public void saveSun(final DataOutputStream dos, final Sun sun)
+        throws IOException {
         dos.writeInt(sun.getCenterX());
         dos.writeInt(sun.getCenterY());
         IOUtilities.writeString(dos, sun.getName());
@@ -45,9 +47,11 @@ public class SunRepository {
     /**
      * Create the sun from DataInputStream
      * @param dis DataInputStream
+     * @return Sun from DataInputStream
      * @throws IOException if there is any problem with DataInputStream
      */
-    public Sun restoreSun(DataInputStream dis) throws IOException {
-        return new Sun(dis.readInt(), dis.readInt(), IOUtilities.readString(dis));
+    public Sun restoreSun(final DataInputStream dis) throws IOException {
+        return new Sun(dis.readInt(), dis.readInt(),
+            IOUtilities.readString(dis));
     }
 }

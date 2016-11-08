@@ -39,7 +39,8 @@ public class MissionRepository {
    * @param mission Mission to save
    * @throws IOException if there is any problem with DataOutputStream
    */
-  public void saveMission(final DataOutputStream dos, Mission mission) throws IOException {
+  public void saveMission(final DataOutputStream dos, final Mission mission)
+      throws IOException {
     dos.writeInt(mission.getType().getIndex());
     dos.writeInt(mission.getPhase().getIndex());
     dos.writeInt(mission.getX());
@@ -54,6 +55,7 @@ public class MissionRepository {
   /**
    * Read mission from DataInputStream
    * @param dis DataInputStream
+   * @return mission from Data Input Stream
    * @throws IOException if there is any problem with DataInputStream
    */
   public Mission restoreMission(final DataInputStream dis) throws IOException {
@@ -62,7 +64,7 @@ public class MissionRepository {
     mission.setMissionTime(dis.readInt());
     String str = IOUtilities.readString(dis);
     if (!str.isEmpty()) {
-	  mission.setFleetName(str);
+      mission.setFleetName(str);
     }
     str = IOUtilities.readString(dis);
     if (!str.isEmpty()) {
@@ -76,7 +78,7 @@ public class MissionRepository {
     if (!str.isEmpty()) {
       mission.setTargetPlanet(str);
     }
-	return mission;
+    return mission;
   }
 
 }

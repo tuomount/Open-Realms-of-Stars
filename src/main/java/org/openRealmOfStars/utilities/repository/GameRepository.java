@@ -39,7 +39,7 @@ public class GameRepository {
   /**
    * Default save game folder name
    */
-  public final static String DEFAULT_SAVE_FOLDER = "saves";
+  public static final String DEFAULT_SAVE_FOLDER = "saves";
 
   /**
    * Save game for certain file name
@@ -47,7 +47,7 @@ public class GameRepository {
    * @param filename File name
    * @param starMap StarMap to save to file
    */
-  public void saveGame(final String folderName, final String filename, 
+  public void saveGame(final String folderName, final String filename,
                         final StarMap starMap) {
     if (starMap != null) {
       File folder = new File(folderName);

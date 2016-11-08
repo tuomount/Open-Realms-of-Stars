@@ -59,6 +59,11 @@ public class RandomSystemNameGenerator {
       "ri", "na", "nae", "alis", "chus", "rius" };
 
   /**
+   * How many letters are allowed in parts so that third part is not added.
+   */
+  private static final int LIMIT_FOR_TWO_PARTS = 12;
+
+  /**
    * Generate random system name
    * @return Randomized System name
    */
@@ -79,7 +84,7 @@ public class RandomSystemNameGenerator {
     if (parts > 1) {
       sb.append(SECOND_PART[DiceGenerator.getRandom(SECOND_PART.length - 1)]);
     }
-    if (parts > 2 && sb.toString().length() < 12) {
+    if (parts > 2 && sb.toString().length() < LIMIT_FOR_TWO_PARTS) {
       sb.append(THIRD_PART[DiceGenerator.getRandom(THIRD_PART.length - 1)]);
     }
     return sb.toString();

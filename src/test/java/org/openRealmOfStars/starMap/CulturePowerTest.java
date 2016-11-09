@@ -35,7 +35,7 @@ public class CulturePowerTest {
 
     @Before
     public void setUp() {
-        culturePower = new CulturePower();
+        culturePower = new CulturePower(MAX_PLAYERS);
     }
 
     @Test

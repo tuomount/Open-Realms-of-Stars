@@ -156,7 +156,7 @@ public class StarMap {
       for (int j = 0; j < maxY; j++) {
         tiles[i][j] = empty.getIndex();
         tileInfo[i][j] = SquareInfo.EMPTY_TILE;
-        culture[i][j] = new CulturePower();
+        culture[i][j] = new CulturePower(PlayerList.MAX_PLAYERS);
         solarSystem[i][j] = 0;
       }
     }
@@ -341,7 +341,7 @@ public class StarMap {
         for (int y = 0; y < maxY; y++) {
           tiles[x][y] = dis.readInt();
           tileInfo[x][y] = new SquareInfo(dis);
-          culture[x][y] = new CulturePower();
+          culture[x][y] = new CulturePower(PlayerList.MAX_PLAYERS);
         }
       }
       // Read suns

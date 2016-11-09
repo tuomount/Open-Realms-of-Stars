@@ -33,11 +33,11 @@ public class Sun {
   private String name;
 
   /**
-   * Sun's Center x coordinate
+   * Sun's Center X coordinate
    */
   private int centerX;
   /**
-   * Sun's Center y coordinate
+   * Sun's Center Y coordinate
    */
   private int centerY;
 
@@ -59,18 +59,31 @@ public class Sun {
    * @param cy Y coordinate
    * @param nameGenerator random generator
    */
-  public Sun(final int cx, final int cy, final RandomSystemNameGenerator nameGenerator){
+  public Sun(final int cx, final int cy,
+      final RandomSystemNameGenerator nameGenerator) {
     this(cx, cy, nameGenerator.generate());
   }
 
+  /**
+   * Get the Sun's name
+   * @return Sun's name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Get the Sun's Center X coordinate
+   * @return Sun's Center X coordinate
+   */
   public int getCenterX() {
     return centerX;
   }
 
+  /**
+   * Get the Sun's Center X coordinate
+   * @return Sun's Center X coordinate
+   */
   public int getCenterY() {
     return centerY;
   }

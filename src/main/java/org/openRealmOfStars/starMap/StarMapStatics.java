@@ -26,23 +26,28 @@ package org.openRealmOfStars.starMap;
 public class StarMapStatics {
 
   /**
+   * @TODO: Remove this class and move the constants to StarMap
+   */
+  private StarMapStatics() {
+  }
+  /**
    * Maximum number of player
    */
-  public final static int MAX_PLAYERS = 8;
+  public static final int MAX_PLAYERS = 8;
 
   /**
    * Maximum map size x
    */
-  public final static int MAX_MAP_SIZE_X = 256;
+  public static final int MAX_MAP_SIZE_X = 256;
 
   /**
    * Maximum map size y
    */
-  public final static int MAX_MAP_SIZE_Y = 256;
+  public static final int MAX_MAP_SIZE_Y = 256;
 
   /**
    * Solar system width
    */
-  public final static int SOLARSYSTEMWIDTH = 7;
+  public static final int SOLARSYSTEMWIDTH = 7;
 
 }

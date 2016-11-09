@@ -1,7 +1,5 @@
 package org.openRealmOfStars.starMap;
 
-import org.openRealmOfStars.player.PlayerList;
-
 /**
  *
  * Open Realm of Stars game project
@@ -34,17 +32,17 @@ public class CulturePower {
 
   /**
    * Constructor for culture power
+   * @param playersNumber The number of players
    */
-  public CulturePower() {
-    // @TODO: Remove PlayerList dependency (get the number of players as parameter)
-    culture = new int[PlayerList.MAX_PLAYERS];
+  public CulturePower(final int playersNumber) {
+    culture = new int[playersNumber];
   }
 
   /**
    * Reset culture for sector
    */
   public void reset() {
-    for (int i = 0; i < PlayerList.MAX_PLAYERS; i++) {
+    for (int i = 0; i < culture.length; i++) {
       culture[i] = 0;
     }
   }
@@ -55,7 +53,7 @@ public class CulturePower {
    * @param value Culture value
    */
   public void addCulture(final int playerIndex, final int value) {
-    if (playerIndex >= 0 && playerIndex < PlayerList.MAX_PLAYERS) {
+    if (playerIndex >= 0 && playerIndex < culture.length) {
       culture[playerIndex] = culture[playerIndex] + value;
     }
   }
@@ -67,7 +65,7 @@ public class CulturePower {
   public int getHighestCulture() {
     int value = 0;
     int index = -1;
-    for (int i = 0; i < PlayerList.MAX_PLAYERS; i++) {
+    for (int i = 0; i < culture.length; i++) {
       if (culture[i] > value) {
         index = i;
         value = culture[i];

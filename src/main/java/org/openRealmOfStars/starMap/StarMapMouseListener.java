@@ -61,6 +61,7 @@ public class StarMapMouseListener extends MouseAdapter
    * Constructor for StarMap Mouse Listener
    * @param starMap StarMap which to use.
    * @param panel Map Panel where Star Map is being drawn.
+   * @param mapInfoPanel Info panel next to map panel.
    */
   public StarMapMouseListener(final StarMap starMap, final MapPanel panel,
       final MapInfoPanel mapInfoPanel) {
@@ -104,18 +105,26 @@ public class StarMapMouseListener extends MouseAdapter
   private boolean moveClicked;
 
   /**
-   * Move point where clicked on map X coordinate
+   * Move point where clicked on map X coord
    */
   private int moveX;
   /**
-   * Move point where clicked on map Y coordinate
+   * Move point where clicked on map Y coord
    */
   private int moveY;
 
+  /**
+   * Get the move point where clicked on map X coord
+   * @return move point where clicked on map X coord
+   */
   public int getMoveX() {
     return moveX;
   }
 
+  /**
+   * Get the move point where clicked on map Y coord
+   * @return move point where clicked on map Y coord
+   */
   public int getMoveY() {
     return moveY;
   }
@@ -268,34 +277,58 @@ public class StarMapMouseListener extends MouseAdapter
     this.lastClickedPlanet = lastClickedPlanet;
   }
 
+  /**
+   * @return Last clicked fleet
+   */
   public Fleet getLastClickedFleet() {
     return lastClickedFleet;
   }
 
+  /**
+   * @param lastClickedFleet Last clicked fleet
+   */
   public void setLastClickedFleet(final Fleet lastClickedFleet) {
     this.lastClickedFleet = lastClickedFleet;
   }
 
+  /**
+   * @return Is route being planned
+   */
   public boolean isRoutePlanning() {
     return routePlanning;
   }
 
+  /**
+   * @param routePlanning Is route being planned
+   */
   public void setRoutePlanning(final boolean routePlanning) {
     this.routePlanning = routePlanning;
   }
 
+  /**
+   * @return Something has been double clicked
+   */
   public boolean isDoubleClicked() {
     return doubleClicked;
   }
 
+  /**
+   * @param doubleClicked Something has been double clicked
+   */
   public void setDoubleClicked(final boolean doubleClicked) {
     this.doubleClicked = doubleClicked;
   }
 
+  /**
+   * @return Move clicked
+   */
   public boolean isMoveClicked() {
     return moveClicked;
   }
 
+  /**
+   * @param moveClicked Move clicked
+   */
   public void setMoveClicked(final boolean moveClicked) {
     this.moveClicked = moveClicked;
   }

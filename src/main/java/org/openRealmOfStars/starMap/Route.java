@@ -147,7 +147,9 @@ public class Route {
   public int timeEstimate() {
     double dx = Math.abs(startX - endX);
     double dy = Math.abs(startY - endY);
-    if (dx > dy) { return (int) Math.ceil(dx / ftlSpeed); }
+    if (dx > dy) {
+      return (int) Math.ceil(dx / ftlSpeed);
+    }
     return (int) Math.ceil(dy / ftlSpeed);
   }
 
@@ -156,7 +158,9 @@ public class Route {
    * @return true if defending
    */
   public boolean isDefending() {
-    if (ftlSpeed == ROUTE_DEFEND) { return true; }
+    if (ftlSpeed == ROUTE_DEFEND) {
+      return true;
+    }
     return false;
   }
 
@@ -165,7 +169,9 @@ public class Route {
    * @return true if fixing the fleet
    */
   public boolean isFixing() {
-    if (ftlSpeed == ROUTE_FIX) { return true; }
+    if (ftlSpeed == ROUTE_FIX) {
+      return true;
+    }
     return false;
   }
 
@@ -192,7 +198,9 @@ public class Route {
       return false;
     }
     if (Math.round(endX) == Math.round(startX)
-        && Math.round(endY) == Math.round(startY)) { return true; }
+        && Math.round(endY) == Math.round(startY)) {
+      return true;
+    }
     return false;
   }
 
@@ -204,7 +212,7 @@ public class Route {
    * @return byte array
    */
   public byte[][] getRouteOnMap(final int maxX, final int maxY) {
-    byte result[][] = new byte[maxX][maxY];
+    byte[][] result = new byte[maxX][maxY];
     double sx = startX;
     double sy = startY;
     for (int i = 0; i < distance + 1; i++) {

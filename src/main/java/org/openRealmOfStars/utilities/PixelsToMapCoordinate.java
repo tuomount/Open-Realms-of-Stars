@@ -149,7 +149,7 @@ public class PixelsToMapCoordinate {
    * @return x coordinate or -1 if cannot be calculated
    */
   public int getMapY() {
-    if (!isOutOfPanel()) { 
+    if (!isOutOfPanel()) {
       return centerMapY + relativeMapY;
     }
     return -1;

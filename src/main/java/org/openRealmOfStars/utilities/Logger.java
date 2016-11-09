@@ -24,6 +24,9 @@ package org.openRealmOfStars.utilities;
  */
 public class Logger {
 
+  /**
+   * Default log size in rows
+   */
   private static final int DEFAULT_LOG_SIZE = 11;
 
   /**
@@ -58,14 +61,27 @@ public class Logger {
     textLog[0] = message;
   }
 
+  /**
+   * Get Logged messages as a String array
+   * @return String array
+   */
   public String[] getLogMessages() {
     return textLog;
   }
 
+  /**
+   * Get number of rows in logger
+   * @return Number of rows
+   */
   public int size() {
     return textLog.length;
   }
 
+  /**
+   * Get Logged message by index
+   * @param index to get log message
+   * @return Message as a String
+   */
   public String getMessage(final int index) {
     return textLog[index];
   }

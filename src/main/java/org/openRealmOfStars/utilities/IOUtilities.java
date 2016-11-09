@@ -32,8 +32,14 @@ import javax.imageio.ImageIO;
  * Generic IO Utilities
  *
  */
+public final class IOUtilities {
 
-public class IOUtilities {
+  /**
+   * Hiding the constructor for utility class.
+   */
+  private IOUtilities() {
+    // Nothing to do here
+  }
 
   /**
    * Load image with URL. Can be used to read images inside JAR file
@@ -63,6 +69,11 @@ public class IOUtilities {
   }
 
   /**
+   * Big number for placing after screenshot
+   */
+  private static final int BIG_NUMBER = 9999;
+
+  /**
    * Save Buffered Image into file under directory screenshots
    * @param image to save into screenshots directory.
    */
@@ -73,7 +84,7 @@ public class IOUtilities {
       dir.mkdir();
     }
     String filename = "Screenshot-" + cal.getTimeInMillis() + "-"
-        + DiceGenerator.getRandom(10000) + ".png";
+        + DiceGenerator.getRandom(BIG_NUMBER) + ".png";
     File file = new File("screenshots/" + filename);
     try {
       ImageIO.write(image, "png", file);

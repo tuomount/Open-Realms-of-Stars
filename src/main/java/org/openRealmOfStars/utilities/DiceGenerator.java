@@ -25,7 +25,14 @@ import java.util.Random;
  * Pseudo random functions.
  *
  */
-public class DiceGenerator {
+public final class DiceGenerator {
+
+  /**
+   * Hiding the constructor
+   */
+  private DiceGenerator() {
+    // Nothing to do
+  }
 
   /**
    * Is generator initialized or not
@@ -42,11 +49,11 @@ public class DiceGenerator {
   /**
    * Seed of MultiplyWithCarry generator
    */
-  private static int m_z;
+  private static int mz;
   /**
    * Second seed of MultiplyWithCarry generator
    */
-  private static int m_w;
+  private static int mw;
   /**
    * Seed of XORShift generator
    */
@@ -56,7 +63,7 @@ public class DiceGenerator {
    * Get random number between 0 and maxValue.
    * This generates random by combining Java RNG, MultiplyWithCarry
    * and XORShift.
-   * @param maxValue, inclusive
+   * @param maxValue inclusive
    * @return A random number
    */
   public static int getRandom(final int maxValue) {
@@ -64,18 +71,26 @@ public class DiceGenerator {
     return getRandomResult(maxValue);
   }
 
+  /**
+   * Initialize generator. This only needs to be called once.
+   */
   private static void initializeGenerators() {
     if (!initialized) {
       generator1 = new Random(System.nanoTime());
       generator2 = new Random(generator1.nextLong());
-      m_z = (int) System.nanoTime();
-      m_w = (int) System.currentTimeMillis();
-      m_w = m_w >> 8;
+      mz = (int) System.nanoTime();
+      mw = (int) System.currentTimeMillis();
+      mw = mw >> 8;
       x = System.nanoTime();
       initialized = true;
     }
   }
 
+  /**
+   * Get Random result from three different pseudo random functions
+   * @param maxValue inclusive
+   * @return Random value
+   */
   private static int getRandomResult(final int maxValue) {
     int result = 0;
     switch (getRandomJava(3)) {
@@ -88,6 +103,8 @@ public class DiceGenerator {
     case 2:
       result = getRandomXORShift(maxValue + 1);
       break;
+    default:
+      throw new IllegalArgumentException("Bad behaving PRF!");
     }
     return result;
   }
@@ -96,8 +113,8 @@ public class DiceGenerator {
    * Get random value between minValue and maxValue
    * This generates random by combining Java RNG, MultiplyWithCarry
    * and XORShift.
-   * @param minValue, inclusive
-   * @param maxValue, inclusive
+   * @param minValue inclusive
+   * @param maxValue inclusive
    * @return A random number
    */
   public static int getRandom(final int minValue, final int maxValue) {
@@ -112,7 +129,7 @@ public class DiceGenerator {
   }
 
   /** Get random with using java's random
-   * @param maxValue, exclusive
+   * @param maxValue exclusive
    * @return int
    */
   private static int getRandomJava(final int maxValue) {
@@ -127,26 +144,55 @@ public class DiceGenerator {
   }
 
   /**
+   * Multiply carry multiplier 1
+   */
+  private static final int MC_MULTIPLIER1 = 36969;
+
+  /**
+   * Multiply carry multiplier 2
+   */
+  private static final int MC_MULTIPLIER2 = 18000;
+
+  /**
+   * Mask for lower 16 bits.
+   */
+  private static final int MASK_FOR_LOWER_16BITS = 65535;
+
+  /**
+   * 16 bits
+   */
+  private static final int BIT16 = 16;
+
+  /**
    * Get random with Multiply Carry
    * @param maxValue exclusive
    * @return A random number
    */
   private static int getRandomMultiplyWithCarry(final int maxValue) {
-    m_z = 36969 * (m_z & 65535) + (m_z >> 16);
-    m_w = 18000 * (m_w & 65535) + (m_w >> 16);
-    int i = (m_z << 16) + m_w; /* 32-bit result */
+    mz = MC_MULTIPLIER1 * (mz & MASK_FOR_LOWER_16BITS) + (mz >> BIT16);
+    mw = MC_MULTIPLIER2 * (mw & MASK_FOR_LOWER_16BITS) + (mw >> BIT16);
+    int i = (mz << BIT16) + mw; /* 32-bit result */
     i = Math.abs(i);
     return i % maxValue;
   }
 
+  /**
+   * Magic number 1 for XOR shift
+   */
+  private static final int XOR_SHIFT_MAGIC1 = 21;
+
+  /**
+   * Magic number 2 for XOR shift
+   */
+  private static final int XOR_SHIFT_MAGIC2 = 35;
   /**
    * Get random with XORShift function
    * @param maxValue exclusive
    * @return int
    */
   private static int getRandomXORShift(final int maxValue) {
-    x ^= x << 21;
-    x ^= x >>> 35;
+    x ^= x << XOR_SHIFT_MAGIC1;
+    x ^= x >>> XOR_SHIFT_MAGIC2;
     x ^= x << 4;
     int i = (int) x;
     i = Math.abs(i);

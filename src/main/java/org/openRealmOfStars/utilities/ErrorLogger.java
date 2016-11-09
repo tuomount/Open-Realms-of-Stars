@@ -21,10 +21,18 @@ package org.openRealmOfStars.utilities;
  * Error logger class
  *
  */
-public class ErrorLogger {
+public final class ErrorLogger {
+
+  /**
+   * Hiding the constructor for utility class.
+   */
+  private ErrorLogger() {
+    // nothing to do here
+  }
 
   /**
    * Log the error message
+   * @param message Message the log into errors
    */
   public static void log(final String message) {
     System.err.println(message);
@@ -32,6 +40,7 @@ public class ErrorLogger {
 
   /**
    * Log the exception
+   * @param exception Exception to log
    */
   public static void log(final Exception exception) {
     ErrorLogger.log(exception.getMessage());

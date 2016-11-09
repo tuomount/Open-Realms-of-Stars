@@ -33,6 +33,677 @@ public class ShipComponentFactory {
   private static final int MAX_SHIPCOMPONENT = 134;
 
   /**
+   * Component Ion drive Mk1
+   */
+  public static final int COMPONENT_ION_DRIVE_MK1 = 0;
+
+  /**
+   * Component Laser Mk1
+   */
+  public static final int COMPONENT_LASER_MK1 = 1;
+
+  /**
+   * Component RailGun Mk1
+   */
+  public static final int COMPONENT_RAILGUN_MK1 = 2;
+
+  /**
+   * Component Photon torpedo Mk1
+   */
+  public static final int COMPONENT_PHOTON_TORPEDO_MK1 = 3;
+
+  /**
+   * Component Shield Mk1
+   */
+  public static final int COMPONENT_SHIELD_MK1 = 4;
+
+  /**
+   * Component Armor Mk1
+   */
+  public static final int COMPONENT_ARMOR_MK1 = 5;
+
+  /**
+   * Component Scanner Mk1
+   */
+  public static final int COMPONENT_SCANNER_MK1 = 6;
+
+  /**
+   * Component Cloaking device Mk1
+   */
+  public static final int COMPONENT_CLOAKING_DEVICE_MK1 = 7;
+
+  /**
+   * Component Colony module 
+   */
+  public static final int COMPONENT_COLONY_MODULE = 8;
+
+  /**
+   * Component Fission Source Mk1
+   */
+  public static final int COMPONENT_FISSION_SOURCE_MK1 = 9;
+
+  /**
+   * Component Fission Source Mk2
+   */
+  public static final int COMPONENT_FISSION_SOURCE_MK2 = 10;
+
+  /**
+   * Component Ion drive Mk2
+   */
+  public static final int COMPONENT_ION_DRIVE_MK2 = 11;
+
+  /**
+   * Component Nuclear drive Mk1
+   */
+  public static final int COMPONENT_NUCLEAR_DRIVE_MK1 = 12;
+
+  /**
+   * Component Laser Mk2
+   */
+  public static final int COMPONENT_LASER_MK2 = 13;
+
+  /**
+   * Component RailGun Mk2
+   */
+  public static final int COMPONENT_RAILGUN_MK2 = 14;
+
+  /**
+   * Component Photon torpedo Mk2
+   */
+  public static final int COMPONENT_PHOTON_TORPEDO_MK2 = 15;
+
+  /**
+   * Component Planetary invasion module
+   */
+  public static final int COMPONENT_PLANETARY_INVASION_MODULE = 16;
+
+  /**
+   * Component Shield Mk2
+   */
+  public static final int COMPONENT_SHIELD_MK2 = 17;
+
+  /**
+   * Component Armor Mk2
+   */
+  public static final int COMPONENT_ARMOR_MK2 = 18;
+
+  /**
+   * Component Cloaking device Mk2
+   */
+  public static final int COMPONENT_CLOAKING_DEVICE_MK2 = 19;
+
+  /**
+   * Component Targeting computer Mk1
+   */
+  public static final int COMPONENT_TARGETING_COMPUTER_MK1 = 20;
+
+  /**
+   * Component Ion drive Mk3
+   */
+  public static final int COMPONENT_ION_DRIVE_MK3 = 21;
+
+  /**
+   * Component Hyper drive Mk1
+   */
+  public static final int COMPONENT_HYPER_DRIVE_MK1 = 22;
+
+  /**
+   * Component Fusion source Mk1
+   */
+  public static final int COMPONENT_FUSION_SOURCE_MK1 = 23;
+
+  /**
+   * Component Laser Mk3
+   */
+  public static final int COMPONENT_LASER_MK3 = 24;
+
+  /**
+   * Component RailGun Mk3
+   */
+  public static final int COMPONENT_RAILGUN_MK3 = 25;
+
+  /**
+   * Component Photon torpedo Mk3
+   */
+  public static final int COMPONENT_PHOTON_TORPEDO_MK3 = 26;
+
+  /**
+   * Component ECM torpedo Mk1
+   */
+  public static final int COMPONENT_ECM_TORPEDO_MK1 = 27;
+
+  /**
+   * Component HE missile Mk1
+   */
+  public static final int COMPONENT_HE_MISSILE_MK1 = 28;
+
+  /**
+   * Component Shield Mk3
+   */
+  public static final int COMPONENT_SHIELD_MK3 = 29;
+
+  /**
+   * Component Armor Mk3
+   */
+  public static final int COMPONENT_ARMOR_MK3 = 30;
+
+  /**
+   * Component Scanner Mk2
+   */
+  public static final int COMPONENT_SCANNER_MK2 = 31;
+
+  /**
+   * Component Jammer Mk1
+   */
+  public static final int COMPONENT_JAMMER_MK1 = 32;
+
+  /**
+   * Component Warp drive Mk1
+   */
+  public static final int COMPONENT_WARP_DRIVE_MK1 = 33;
+
+  /**
+   * Component Nuclear drive Mk2
+   */
+  public static final int COMPONENT_NUCLEAR_DRIVE_MK2 = 34;
+
+  /**
+   * Component Fusion source Mk2
+   */
+  public static final int COMPONENT_FUSION_SOURCE_MK2 = 35;
+
+  /**
+   * Component Laser Mk4
+   */
+  public static final int COMPONENT_LASER_MK4 = 36;
+
+  /**
+   * Component RailGun Mk4
+   */
+  public static final int COMPONENT_RAILGUN_MK4 = 37;
+
+  /**
+   * Component Photon torpedo Mk4
+   */
+  public static final int COMPONENT_PHOTON_TORPEDO_MK4 = 38;
+
+  /**
+   * Component ECM torpedo Mk2
+   */
+  public static final int COMPONENT_ECM_TORPEDO_MK2 = 39;
+
+  /**
+   * Component HE missile Mk2
+   */
+  public static final int COMPONENT_HE_MISSILE_MK2 = 40;
+
+  /**
+   * Component Shield Mk4
+   */
+  public static final int COMPONENT_SHIELD_MK4 = 41;
+
+  /**
+   * Component Armor Mk4
+   */
+  public static final int COMPONENT_ARMOR_MK4 = 42;
+
+  /**
+   * Component Cloaking device Mk3
+   */
+  public static final int COMPONENT_CLOAKING_DEVICE_MK3 = 43;
+
+  /**
+   * Component Targeting computer Mk2
+   */
+  public static final int COMPONENT_TARGETING_COMPUTER_MK2 = 44;
+
+  /**
+   * Component LR Scanner Mk1
+   */
+  public static final int COMPONENT_LR_SCANNER_MK1 = 45;
+
+  /**
+   * Component Warp drive Mk2
+   */
+  public static final int COMPONENT_WARP_DRIVE_MK2 = 46;
+
+  /**
+   * Component Hyper drive Mk2
+   */
+  public static final int COMPONENT_HYPER_DRIVE_MK2 = 47;
+
+  /**
+   * Component Tachyon source Mk1
+   */
+  public static final int COMPONENT_TACHYON_SOURCE_MK1 = 48;
+
+  /**
+   * Component Colonization module
+   */
+  public static final int COMPONENT_COLONIZATION_MODULE = 49;
+
+  /**
+   * Component Orbital bombs Mk1
+   */
+  public static final int COMPONENT_ORBITAL_BOMBS_MK1 = 50;
+
+  /**
+   * Component Laser Mk5
+   */
+  public static final int COMPONENT_LASER_MK5 = 51;
+
+  /**
+   * Component RailGun Mk5
+   */
+  public static final int COMPONENT_RAILGUN_MK5 = 52;
+
+  /**
+   * Component Photon torpedo Mk5
+   */
+  public static final int COMPONENT_PHOTON_TORPEDO_MK5 = 53;
+
+  /**
+   * Component ECM torpedo Mk3
+   */
+  public static final int COMPONENT_ECM_TORPEDO_MK3 = 54;
+
+  /**
+   * Component HE missile Mk3
+   */
+  public static final int COMPONENT_HE_MISSILE_MK3 = 55;
+
+  /**
+   * Component Orbital bombs Mk2
+   */
+  public static final int COMPONENT_ORBITAL_BOMBS_MK2 = 56;
+
+  /**
+   * Component Shield generator Mk1
+   */
+  public static final int COMPONENT_SHIELD_GENERATOR_MK1 = 57;
+
+  /**
+   * Component Shield Mk5
+   */
+  public static final int COMPONENT_SHIELD_MK5 = 58;
+
+  /**
+   * Component Armor Mk5
+   */
+  public static final int COMPONENT_ARMOR_MK5 = 59;
+
+  /**
+   * Component Warp drive Mk3
+   */
+  public static final int COMPONENT_WARP_DRIVE_MK3 = 60;
+
+  /**
+   * Component Hyper drive Mk3
+   */
+  public static final int COMPONENT_HYPER_DRIVE_MK3 = 61;
+
+  /**
+   * Component Tachyon source Mk2
+   */
+  public static final int COMPONENT_TACHYON_SOURCE_MK2 = 62;
+
+  /**
+   * Component Scanner Mk3
+   */
+  public static final int COMPONENT_SCANNER_MK3 = 63;
+
+  /**
+   * Component Jammer Mk2
+   */
+  public static final int COMPONENT_JAMMER_MK2 = 64;
+
+  /**
+   * Component Phasors Mk1
+   */
+  public static final int COMPONENT_PHASORS_MK1 = 65;
+
+  /**
+   * Component Massdrive Mk1
+   */
+  public static final int COMPONENT_MASSDRIVE_MK1 = 66;
+
+  /**
+   * Component Photon torpedo Mk6
+   */
+  public static final int COMPONENT_PHOTON_TORPEDO_MK6 = 67;
+
+  /**
+   * Component ECM torpedo Mk4
+   */
+  public static final int COMPONENT_ECM_TORPEDO_MK4 = 68;
+
+  /**
+   * Component HE missile Mk4
+   */
+  public static final int COMPONENT_HE_MISSILE_MK4 = 69;
+
+  /**
+   * Component Shield Mk6
+   */
+  public static final int COMPONENT_SHIELD_MK6 = 70;
+
+  /**
+   * Component Armor Mk6
+   */
+  public static final int COMPONENT_ARMOR_MK6 = 71;
+
+  /**
+   * Component Warp drive Mk4
+   */
+  public static final int COMPONENT_WARP_DRIVE_MK4 = 72;
+
+  /**
+   * Component Hyper drive Mk4
+   */
+  public static final int COMPONENT_HYPER_DRIVE_MK4 = 73;
+
+  /**
+   * Component Nuclear drive Mk3
+   */
+  public static final int COMPONENT_NUCLEAR_DRIVE_MK3 = 74;
+
+  /**
+   * Component Antimatter source Mk1
+   */
+  public static final int COMPONENT_ANTIMATTER_SOURCE_MK1 = 75;
+
+  /**
+   * Component Cloaking device Mk4
+   */
+  public static final int COMPONENT_CLOAKING_DEVICE_MK4 = 76;
+
+  /**
+   * Component Targeting computer Mk3
+   */
+  public static final int COMPONENT_TARGETING_COMPUTER_MK3 = 77;
+
+  /**
+   * Component LR Scanner Mk2
+   */
+  public static final int COMPONENT_LR_SCANNER_MK2 = 78;
+
+  /**
+   * Component Phasors Mk2
+   */
+  public static final int COMPONENT_PHASORS_MK2 = 79;
+
+  /**
+   * Component Massdrive Mk2
+   */
+  public static final int COMPONENT_MASSDRIVE_MK2 = 80;
+
+  /**
+   * Component Photon torpedo Mk7
+   */
+  public static final int COMPONENT_PHOTON_TORPEDO_MK7 = 81;
+
+  /**
+   * Component ECM torpedo Mk5
+   */
+  public static final int COMPONENT_ECM_TORPEDO_MK5 = 82;
+
+  /**
+   * Component HE missile Mk5
+   */
+  public static final int COMPONENT_HE_MISSILE_MK5 = 83;
+
+  /**
+   * Component Shield Mk7
+   */
+  public static final int COMPONENT_SHIELD_MK7 = 84;
+
+  /**
+   * Component Armor Mk7
+   */
+  public static final int COMPONENT_ARMOR_MK7 = 85;
+
+  /**
+   * Component Warp drive Mk5
+   */
+  public static final int COMPONENT_WARP_DRIVE_MK5 = 86;
+
+  /**
+   * Component Hyper drive Mk5
+   */
+  public static final int COMPONENT_HYPER_DRIVE_MK5 = 87;
+
+  /**
+   * Component Impulse engine Mk1
+   */
+  public static final int COMPONENT_IMPULSE_ENGINE_MK1 = 88;
+
+  /**
+   * Component Scanner Mk4
+   */
+  public static final int COMPONENT_SCANNER_MK4 = 89;
+
+  /**
+   * Component Jammer Mk3
+   */
+  public static final int COMPONENT_JAMMER_MK3 = 90;
+
+  /**
+   * Component Shock trooper module
+   */
+  public static final int COMPONENT_SHOCK_TROOPER_MODULE = 91;
+
+  /**
+   * Component Orbital nuke
+   */
+  public static final int COMPONENT_ORBITAL_NUKE = 92;
+
+  /**
+   * Component Phasors Mk3
+   */
+  public static final int COMPONENT_PHASORS_MK3 = 93;
+
+  /**
+   * Component Massdrive Mk3
+   */
+  public static final int COMPONENT_MASSDRIVE_MK3 = 94;
+
+  /**
+   * Component Photon torpedo Mk8
+   */
+  public static final int COMPONENT_PHOTON_TORPEDO_MK8 = 95;
+
+  /**
+   * Component ECM torpedo Mk6
+   */
+  public static final int COMPONENT_ECM_TORPEDO_MK6 = 96;
+
+  /**
+   * Component HE missile Mk6
+   */
+  public static final int COMPONENT_HE_MISSILE_MK6 = 97;
+
+  /**
+   * Component Shield Mk8
+   */
+  public static final int COMPONENT_SHIELD_MK8 = 98;
+
+  /**
+   * Component Armor Mk8
+   */
+  public static final int COMPONENT_ARMOR_MK8 = 99;
+
+  /**
+   * Component Warp drive Mk6
+   */
+  public static final int COMPONENT_WARP_DRIVE_MK6 = 100;
+
+  /**
+   * Component Hyper drive Mk6
+   */
+  public static final int COMPONENT_HYPER_DRIVE_MK6 = 101;
+
+  /**
+   * Component Impulse engine Mk2
+   */
+  public static final int COMPONENT_IMPULSE_ENGINE_MK2 = 102;
+
+  /**
+   * Component Antimatter source Mk2
+   */
+  public static final int COMPONENT_ANTIMATTER_SOURCE_MK2 = 103;
+
+  /**
+   * Component Cloaking device Mk5
+   */
+  public static final int COMPONENT_CLOAKING_DEVICE_MK5 = 104;
+
+  /**
+   * Component LR Scanner Mk3
+   */
+  public static final int COMPONENT_LR_SCANNER_MK3 = 105;
+
+  /**
+   * Component Orbital smart bombs
+   */
+  public static final int COMPONENT_ORBITAL_SMART_BOMBS = 106;
+
+  /**
+   * Component Antimatter beam Mk1
+   */
+  public static final int COMPONENT_ANTIMATTER_BEAM_MK1 = 107;
+
+  /**
+   * Component Massdrive Mk4
+   */
+  public static final int COMPONENT_MASSDRIVE_MK4 = 108;
+
+  /**
+   * Component Photon torpedo Mk9
+   */
+  public static final int COMPONENT_PHOTON_TORPEDO_MK9 = 109;
+
+  /**
+   * Component ECM torpedo Mk7
+   */
+  public static final int COMPONENT_ECM_TORPEDO_MK7 = 110;
+
+  /**
+   * Component HE missile Mk7
+   */
+  public static final int COMPONENT_HE_MISSILE_MK7 = 111;
+
+  /**
+   * Component Shield generator Mk2
+   */
+  public static final int COMPONENT_SHIELD_GENERATOR_MK2 = 112;
+
+  /**
+   * Component Shield Mk9
+   */
+  public static final int COMPONENT_SHIELD_MK9 = 113;
+
+  /**
+   * Component Armor Mk9
+   */
+  public static final int COMPONENT_ARMOR_MK9 = 114;
+
+  /**
+   * Component Warp drive Mk7
+   */
+  public static final int COMPONENT_WARP_DRIVE_MK7 = 115;
+
+  /**
+   * Component Hyper drive Mk7
+   */
+  public static final int COMPONENT_HYPER_DRIVE_MK7 = 116;
+
+  /**
+   * Component Impulse engine Mk3
+   */
+  public static final int COMPONENT_IMPULSE_ENGINE_MK3 = 117;
+
+  /**
+   * Component Zero-point source Mk1
+   */
+  public static final int COMPONENT_ZEROPOINT_SOURCE_MK1 = 118;
+
+  /**
+   * Component Scanner Mk5
+   */
+  public static final int COMPONENT_SCANNER_MK5 = 119;
+
+  /**
+   * Component Targeting computer Mk4
+   */
+  public static final int COMPONENT_TARGETING_COMPUTER_MK4 = 120;
+
+  /**
+   * Component Antimatter beam Mk2
+   */
+  public static final int COMPONENT_ANTIMATTER_BEAM_MK2 = 121;
+
+  /**
+   * Component Massdrive Mk5
+   */
+  public static final int COMPONENT_MASSDRIVE_MK5 = 122;
+
+  /**
+   * Component Photon torpedo Mk10
+   */
+  public static final int COMPONENT_PHOTON_TORPEDO_MK10 = 123;
+
+  /**
+   * Component ECM torpedo Mk8
+   */
+  public static final int COMPONENT_ECM_TORPEDO_MK8 = 124;
+
+  /**
+   * Component HE missile Mk8
+   */
+  public static final int COMPONENT_HE_MISSILE_MK8 = 125;
+
+  /**
+   * Component Shield Mk10
+   */
+  public static final int COMPONENT_SHIELD_MK10 = 126;
+
+  /**
+   * Component Armor Mk10
+   */
+  public static final int COMPONENT_ARMOR_MK10 = 127;
+
+  /**
+   * Component Warp drive Mk8
+   */
+  public static final int COMPONENT_WARP_DRIVE_MK8 = 128;
+
+  /**
+   * Component Hyper drive Mk8
+   */
+  public static final int COMPONENT_HYPER_DRIVE_MK8 = 129;
+
+  /**
+   * Component Impulse engine Mk4
+   */
+  public static final int COMPONENT_IMPULSE_ENGINE_MK4 = 130;
+
+  /**
+   * Component Zero-point source Mk2
+   */
+  public static final int COMPONENT_ZEROPOINT_SOURCE_MK2 = 131;
+
+  /**
+   * Component Cloaking device Mk6
+   */
+  public static final int COMPONENT_CLOAKING_DEVICE_MK6 = 132;
+
+  /**
+   * Component Jammer Mk4
+   */
+  public static final int COMPONENT_JAMMER_MK4 = 133;
+
+
+  /**
    * Create ShipComponent with matching name
    * @param name Ship component name
    * @return ShipComponent or null if not found
@@ -57,412 +728,412 @@ public class ShipComponentFactory {
   public static ShipComponent create(final int index) {
     ShipComponent tmp = null;
     switch (index) {
-    case 0:
+    case COMPONENT_ION_DRIVE_MK1:
       tmp = createEngine(index);
       break; // Ion drive Mk1
-    case 1:
+    case COMPONENT_LASER_MK1:
       tmp = createWeapon(index);
       break; // Laser Mk1
-    case 2:
+    case COMPONENT_RAILGUN_MK1:
       tmp = createWeapon(index);
       break; // RailGun Mk1
-    case 3:
+    case COMPONENT_PHOTON_TORPEDO_MK1:
       tmp = createWeapon(index);
       break; // Photon torpedo Mk1
-    case 4:
+    case COMPONENT_SHIELD_MK1:
       tmp = createDefense(index);
       break; // Shield Mk1
-    case 5:
+    case COMPONENT_ARMOR_MK1:
       tmp = createDefense(index);
       break; // Armor Mk1
-    case 6:
+    case COMPONENT_SCANNER_MK1:
       tmp = createElectronics(index);
       break; // Scanner Mk1
-    case 7:
+    case COMPONENT_CLOAKING_DEVICE_MK1:
       tmp = createElectronics(index);
       break; // Cloaking device Mk1
-    case 8:
+    case COMPONENT_COLONY_MODULE:
       tmp = createElectronics(index);
       break; // Colony module
-    case 9:
+    case COMPONENT_FISSION_SOURCE_MK1:
       tmp = createElectronics(index);
       break; // Fission Source Mk1
-    case 10:
+    case COMPONENT_FISSION_SOURCE_MK2:
       tmp = createElectronics(index);
       break; // Fission Source Mk2
-    case 11:
+    case COMPONENT_ION_DRIVE_MK2:
       tmp = createEngine(index);
       break; // Ion drive Mk2
-    case 12:
+    case COMPONENT_NUCLEAR_DRIVE_MK1:
       tmp = createEngine(index);
       break; // Nuclear drive Mk1
-    case 13:
+    case COMPONENT_LASER_MK2:
       tmp = createWeapon(index);
       break; // Laser Mk2
-    case 14:
+    case COMPONENT_RAILGUN_MK2:
       tmp = createWeapon(index);
       break; // RailGun Mk2
-    case 15:
+    case COMPONENT_PHOTON_TORPEDO_MK2:
       tmp = createWeapon(index);
       break; // Photon torpedo Mk2
-    case 16:
+    case COMPONENT_PLANETARY_INVASION_MODULE:
       tmp = createElectronics(index);
       break; // Planetary invasion module
-    case 17:
+    case COMPONENT_SHIELD_MK2:
       tmp = createDefense(index);
       break; // Shield Mk2
-    case 18:
+    case COMPONENT_ARMOR_MK2:
       tmp = createDefense(index);
       break; // Armor Mk2
-    case 19:
+    case COMPONENT_CLOAKING_DEVICE_MK2:
       tmp = createElectronics(index);
       break; // Cloaking device Mk2
-    case 20:
+    case COMPONENT_TARGETING_COMPUTER_MK1:
       tmp = createElectronics(index);
       break; // Targeting computer Mk1
-    case 21:
+    case COMPONENT_ION_DRIVE_MK3:
       tmp = createEngine(index);
       break; // Ion drive Mk3
-    case 22:
+    case COMPONENT_HYPER_DRIVE_MK1:
       tmp = createEngine(index);
       break; // Hyper drive Mk1
-    case 23:
+    case COMPONENT_FUSION_SOURCE_MK1:
       tmp = createElectronics(index);
       break; // Fusion source Mk1
-    case 24:
+    case COMPONENT_LASER_MK3:
       tmp = createWeapon(index);
       break; // Laser Mk3
-    case 25:
+    case COMPONENT_RAILGUN_MK3:
       tmp = createWeapon(index);
       break; // RailGun Mk3
-    case 26:
+    case COMPONENT_PHOTON_TORPEDO_MK3:
       tmp = createWeapon(index);
       break; // Photon torpedo Mk3
-    case 27:
+    case COMPONENT_ECM_TORPEDO_MK1:
       tmp = createWeapon(index);
       break; // ECM torpedo Mk1
-    case 28:
+    case COMPONENT_HE_MISSILE_MK1:
       tmp = createWeapon(index);
       break; // HE missile Mk1
-    case 29:
+    case COMPONENT_SHIELD_MK3:
       tmp = createDefense(index);
       break; // Shield Mk3
-    case 30:
+    case COMPONENT_ARMOR_MK3:
       tmp = createDefense(index);
       break; // Armor Mk3
-    case 31:
+    case COMPONENT_SCANNER_MK2:
       tmp = createElectronics(index);
       break; // Scanner Mk2
-    case 32:
+    case COMPONENT_JAMMER_MK1:
       tmp = createElectronics(index);
       break; // Jammer Mk1
-    case 33:
+    case COMPONENT_WARP_DRIVE_MK1:
       tmp = createEngine(index);
       break; // Warp drive Mk1
-    case 34:
+    case COMPONENT_NUCLEAR_DRIVE_MK2:
       tmp = createEngine(index);
       break; // Nuclear drive Mk2
-    case 35:
+    case COMPONENT_FUSION_SOURCE_MK2:
       tmp = createElectronics(index);
       break; // Fusion source Mk2
-    case 36:
+    case COMPONENT_LASER_MK4:
       tmp = createWeapon(index);
       break; // Laser Mk4
-    case 37:
+    case COMPONENT_RAILGUN_MK4:
       tmp = createWeapon(index);
       break; // RailGun Mk4
-    case 38:
+    case COMPONENT_PHOTON_TORPEDO_MK4:
       tmp = createWeapon(index);
       break; // Photon torpedo Mk4
-    case 39:
+    case COMPONENT_ECM_TORPEDO_MK2:
       tmp = createWeapon(index);
       break; // ECM torpedo Mk2
-    case 40:
+    case COMPONENT_HE_MISSILE_MK2:
       tmp = createWeapon(index);
       break; // HE missile Mk2
-    case 41:
+    case COMPONENT_SHIELD_MK4:
       tmp = createDefense(index);
       break; // Shield Mk4
-    case 42:
+    case COMPONENT_ARMOR_MK4:
       tmp = createDefense(index);
       break; // Armor Mk4
-    case 43:
+    case COMPONENT_CLOAKING_DEVICE_MK3:
       tmp = createElectronics(index);
       break; // Cloaking device Mk3
-    case 44:
+    case COMPONENT_TARGETING_COMPUTER_MK2:
       tmp = createElectronics(index);
       break; // Targeting computer Mk2
-    case 45:
+    case COMPONENT_LR_SCANNER_MK1:
       tmp = createElectronics(index);
       break; // LR Scanner Mk1
-    case 46:
+    case COMPONENT_WARP_DRIVE_MK2:
       tmp = createEngine(index);
       break; // Warp drive Mk2
-    case 47:
+    case COMPONENT_HYPER_DRIVE_MK2:
       tmp = createEngine(index);
       break; // Hyper drive Mk2
-    case 48:
+    case COMPONENT_TACHYON_SOURCE_MK1:
       tmp = createElectronics(index);
       break; // Tachyon source Mk1
-    case 49:
+    case COMPONENT_COLONIZATION_MODULE:
       tmp = createElectronics(index);
       break; // Colonization module
-    case 50:
+    case COMPONENT_ORBITAL_BOMBS_MK1:
       tmp = createElectronics(index);
       break; // Orbital bombs Mk1
     // Level 4 techs done
-    case 51:
+    case COMPONENT_LASER_MK5:
       tmp = createWeapon(index);
       break; // Laser Mk5
-    case 52:
+    case COMPONENT_RAILGUN_MK5:
       tmp = createWeapon(index);
       break; // RailGun Mk5
-    case 53:
+    case COMPONENT_PHOTON_TORPEDO_MK5:
       tmp = createWeapon(index);
       break; // Photon torpedo Mk5
-    case 54:
+    case COMPONENT_ECM_TORPEDO_MK3:
       tmp = createWeapon(index);
       break; // ECM torpedo Mk3
-    case 55:
+    case COMPONENT_HE_MISSILE_MK3:
       tmp = createWeapon(index);
       break; // HE missile Mk3
-    case 56:
+    case COMPONENT_ORBITAL_BOMBS_MK2:
       tmp = createElectronics(index);
       break; // Orbital bombs Mk2
-    case 57:
+    case COMPONENT_SHIELD_GENERATOR_MK1:
       tmp = createDefense(index);
       break; // Shield generator Mk1
-    case 58:
+    case COMPONENT_SHIELD_MK5:
       tmp = createDefense(index);
       break; // Shield Mk5
-    case 59:
+    case COMPONENT_ARMOR_MK5:
       tmp = createDefense(index);
       break; // Armor Mk5
-    case 60:
+    case COMPONENT_WARP_DRIVE_MK3:
       tmp = createEngine(index);
       break; // Warp drive Mk3
-    case 61:
+    case COMPONENT_HYPER_DRIVE_MK3:
       tmp = createEngine(index);
       break; // Hyper drive Mk3
-    case 62:
+    case COMPONENT_TACHYON_SOURCE_MK2:
       tmp = createElectronics(index);
       break; // Tachyon source Mk2
-    case 63:
+    case COMPONENT_SCANNER_MK3:
       tmp = createElectronics(index);
       break; // Scanner Mk3
-    case 64:
+    case COMPONENT_JAMMER_MK2:
       tmp = createElectronics(index);
       break; // Jammer Mk2
     // Level 5 techs done
-    case 65:
+    case COMPONENT_PHASORS_MK1:
       tmp = createWeapon(index);
       break; // Phasors Mk1
-    case 66:
+    case COMPONENT_MASSDRIVE_MK1:
       tmp = createWeapon(index);
       break; // Massdrive Mk1
-    case 67:
+    case COMPONENT_PHOTON_TORPEDO_MK6:
       tmp = createWeapon(index);
       break; // Photon torpedo Mk6
-    case 68:
+    case COMPONENT_ECM_TORPEDO_MK4:
       tmp = createWeapon(index);
       break; // ECM torpedo Mk4
-    case 69:
+    case COMPONENT_HE_MISSILE_MK4:
       tmp = createWeapon(index);
       break; // HE missile Mk4
-    case 70:
+    case COMPONENT_SHIELD_MK6:
       tmp = createDefense(index);
       break; // Shield Mk6
-    case 71:
+    case COMPONENT_ARMOR_MK6:
       tmp = createDefense(index);
       break; // Armor Mk6
-    case 72:
+    case COMPONENT_WARP_DRIVE_MK4:
       tmp = createEngine(index);
       break; // Warp drive Mk4
-    case 73:
+    case COMPONENT_HYPER_DRIVE_MK4:
       tmp = createEngine(index);
       break; // Hyper drive Mk4
-    case 74:
+    case COMPONENT_NUCLEAR_DRIVE_MK3:
       tmp = createEngine(index);
       break; // Nuclear drive Mk3
-    case 75:
+    case COMPONENT_ANTIMATTER_SOURCE_MK1:
       tmp = createElectronics(index);
       break; // Antimatter source Mk1
-    case 76:
+    case COMPONENT_CLOAKING_DEVICE_MK4:
       tmp = createElectronics(index);
       break; // Cloaking device Mk4
-    case 77:
+    case COMPONENT_TARGETING_COMPUTER_MK3:
       tmp = createElectronics(index);
       break; // Targeting computer Mk3
-    case 78:
+    case COMPONENT_LR_SCANNER_MK2:
       tmp = createElectronics(index);
       break; // LR Scanner Mk2
     // Level 6 techs done
-    case 79:
+    case COMPONENT_PHASORS_MK2:
       tmp = createWeapon(index);
       break; // Phasors Mk2
-    case 80:
+    case COMPONENT_MASSDRIVE_MK2:
       tmp = createWeapon(index);
       break; // Massdrive Mk2
-    case 81:
+    case COMPONENT_PHOTON_TORPEDO_MK7:
       tmp = createWeapon(index);
       break; // Photon torpedo Mk7
-    case 82:
+    case COMPONENT_ECM_TORPEDO_MK5:
       tmp = createWeapon(index);
       break; // ECM torpedo Mk5
-    case 83:
+    case COMPONENT_HE_MISSILE_MK5:
       tmp = createWeapon(index);
       break; // HE missile Mk5
-    case 84:
+    case COMPONENT_SHIELD_MK7:
       tmp = createDefense(index);
       break; // Shield Mk7
-    case 85:
+    case COMPONENT_ARMOR_MK7:
       tmp = createDefense(index);
       break; // Armor Mk7
-    case 86:
+    case COMPONENT_WARP_DRIVE_MK5:
       tmp = createEngine(index);
       break; // Warp drive Mk5
-    case 87:
+    case COMPONENT_HYPER_DRIVE_MK5:
       tmp = createEngine(index);
       break; // Hyper drive Mk5
-    case 88:
+    case COMPONENT_IMPULSE_ENGINE_MK1:
       tmp = createEngine(index);
       break; // Impulse engine Mk1
-    case 89:
+    case COMPONENT_SCANNER_MK4:
       tmp = createElectronics(index);
       break; // Scanner Mk4
-    case 90:
+    case COMPONENT_JAMMER_MK3:
       tmp = createElectronics(index);
       break; // Jammer Mk3
-    case 91:
+    case COMPONENT_SHOCK_TROOPER_MODULE:
       tmp = createElectronics(index);
       break; // Shock trooper module
     // Level 7 techs done
-    case 92:
+    case COMPONENT_ORBITAL_NUKE:
       tmp = createElectronics(index);
       break; // Orbital nuke
-    case 93:
+    case COMPONENT_PHASORS_MK3:
       tmp = createWeapon(index);
       break; // Phasors Mk3
-    case 94:
+    case COMPONENT_MASSDRIVE_MK3:
       tmp = createWeapon(index);
       break; // Massdrive Mk3
-    case 95:
+    case COMPONENT_PHOTON_TORPEDO_MK8:
       tmp = createWeapon(index);
       break; // Photon torpedo Mk8
-    case 96:
+    case COMPONENT_ECM_TORPEDO_MK6:
       tmp = createWeapon(index);
       break; // ECM torpedo Mk6
-    case 97:
+    case COMPONENT_HE_MISSILE_MK6:
       tmp = createWeapon(index);
       break; // HE missile Mk6
-    case 98:
+    case COMPONENT_SHIELD_MK8:
       tmp = createDefense(index);
       break; // Shield Mk8
-    case 99:
+    case COMPONENT_ARMOR_MK8:
       tmp = createDefense(index);
       break; // Armor Mk8
-    case 100:
+    case COMPONENT_WARP_DRIVE_MK6:
       tmp = createEngine(index);
       break; // Warp drive Mk6
-    case 101:
+    case COMPONENT_HYPER_DRIVE_MK6:
       tmp = createEngine(index);
       break; // Hyper drive Mk6
-    case 102:
+    case COMPONENT_IMPULSE_ENGINE_MK2:
       tmp = createEngine(index);
       break; // Impulse engine Mk2
-    case 103:
+    case COMPONENT_ANTIMATTER_SOURCE_MK2:
       tmp = createElectronics(index);
       break; // Antimatter source Mk2
-    case 104:
+    case COMPONENT_CLOAKING_DEVICE_MK5:
       tmp = createElectronics(index);
       break; // Cloaking device Mk5
-    case 105:
+    case COMPONENT_LR_SCANNER_MK3:
       tmp = createElectronics(index);
       break; // LR Scanner Mk3
     // Level 8 techs done
-    case 106:
+    case COMPONENT_ORBITAL_SMART_BOMBS:
       tmp = createElectronics(index);
       break; // Orbital smart bombs
-    case 107:
+    case COMPONENT_ANTIMATTER_BEAM_MK1:
       tmp = createWeapon(index);
       break; // Antimatter beam Mk1
-    case 108:
+    case COMPONENT_MASSDRIVE_MK4:
       tmp = createWeapon(index);
       break; // Massdrive Mk4
-    case 109:
+    case COMPONENT_PHOTON_TORPEDO_MK9:
       tmp = createWeapon(index);
       break; // Photon torpedo Mk9
-    case 110:
+    case COMPONENT_ECM_TORPEDO_MK7:
       tmp = createWeapon(index);
       break; // ECM torpedo Mk7
-    case 111:
+    case COMPONENT_HE_MISSILE_MK7:
       tmp = createWeapon(index);
       break; // HE missile Mk7
-    case 112:
+    case COMPONENT_SHIELD_GENERATOR_MK2:
       tmp = createDefense(index);
       break; // Shield generator Mk2
-    case 113:
+    case COMPONENT_SHIELD_MK9:
       tmp = createDefense(index);
       break; // Shield Mk9
-    case 114:
+    case COMPONENT_ARMOR_MK9:
       tmp = createDefense(index);
       break; // Armor Mk9
-    case 115:
+    case COMPONENT_WARP_DRIVE_MK7:
       tmp = createEngine(index);
       break; // Warp drive Mk7
-    case 116:
+    case COMPONENT_HYPER_DRIVE_MK7:
       tmp = createEngine(index);
       break; // Hyper drive Mk7
-    case 117:
+    case COMPONENT_IMPULSE_ENGINE_MK3:
       tmp = createEngine(index);
       break; // Impulse engine Mk3
-    case 118:
+    case COMPONENT_ZEROPOINT_SOURCE_MK1:
       tmp = createElectronics(index);
       break; // Zero-point source Mk1
-    case 119:
+    case COMPONENT_SCANNER_MK5:
       tmp = createElectronics(index);
       break; // Scanner Mk5
-    case 120:
+    case COMPONENT_TARGETING_COMPUTER_MK4:
       tmp = createElectronics(index);
       break; // Targeting computer Mk4
     // Level 9 techs done
-    case 121:
+    case COMPONENT_ANTIMATTER_BEAM_MK2:
       tmp = createWeapon(index);
       break; // Antimatter beam Mk2
-    case 122:
+    case COMPONENT_MASSDRIVE_MK5:
       tmp = createWeapon(index);
       break; // Massdrive Mk5
-    case 123:
+    case COMPONENT_PHOTON_TORPEDO_MK10:
       tmp = createWeapon(index);
       break; // Photon torpedo Mk10
-    case 124:
+    case COMPONENT_ECM_TORPEDO_MK8:
       tmp = createWeapon(index);
       break; // ECM torpedo Mk8
-    case 125:
+    case COMPONENT_HE_MISSILE_MK8:
       tmp = createWeapon(index);
       break; // HE missile Mk8
-    case 126:
+    case COMPONENT_SHIELD_MK10:
       tmp = createDefense(index);
       break; // Shield Mk10
-    case 127:
+    case COMPONENT_ARMOR_MK10:
       tmp = createDefense(index);
       break; // Armor Mk10
-    case 128:
+    case COMPONENT_WARP_DRIVE_MK8:
       tmp = createEngine(index);
       break; // Warp drive Mk8
-    case 129:
+    case COMPONENT_HYPER_DRIVE_MK8:
       tmp = createEngine(index);
       break; // Hyper drive Mk8
-    case 130:
+    case COMPONENT_IMPULSE_ENGINE_MK4:
       tmp = createEngine(index);
       break; // Impulse engine Mk4
-    case 131:
+    case COMPONENT_ZEROPOINT_SOURCE_MK2:
       tmp = createElectronics(index);
       break; // Zero-point source Mk2
-    case 132:
+    case COMPONENT_CLOAKING_DEVICE_MK6:
       tmp = createElectronics(index);
       break; // Cloaking device Mk6
-    case 133:
+    case COMPONENT_JAMMER_MK4:
       tmp = createElectronics(index);
       break; // Jammer Mk4
 

@@ -1147,7 +1147,11 @@ public final class ShipComponentFactory {
     case COMPONENT_JAMMER_MK4:
       tmp = createElectronics(index);
       break; // Jammer Mk4
-
+    default: {
+      ErrorLogger.log("Unexpected component with index: " + index);
+      throw new IllegalArgumentException("Unexpected component index: "
+                                        + index + "!");
+    }
     }
     return tmp;
   }

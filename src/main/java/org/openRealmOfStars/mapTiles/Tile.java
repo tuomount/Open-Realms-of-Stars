@@ -92,10 +92,18 @@ public class Tile {
     return name;
   }
 
+  /**
+   * Get the tile index
+   * @return tile index
+   */
   public int getIndex() {
     return tileIndex;
   }
 
+  /**
+   * Set the tile index
+   * @param index tile index
+   */
   public void setIndex(final int index) {
     tileIndex = index;
   }

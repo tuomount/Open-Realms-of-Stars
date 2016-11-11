@@ -21,6 +21,7 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
@@ -127,13 +128,9 @@ public class Planet {
   private int homeWorldIndex;
 
   /**
-   * Planet's x coordinate. On gas giant this left upper corner.
+   * Planet's coordinate. On gas giant this left upper corner.
    */
-  private int x;
-  /**
-   * Planet's y coordinate. On gas giant this left upper corner.
-   */
-  private int y;
+  private Coordinate coordinate;
 
   /**
    * Planet Image Index for planet tile
@@ -301,11 +298,24 @@ public class Planet {
    * @param name Planet name
    * @param orderNumber as integer
    * @param gasGiant Is planet inhabitable gas giant
+   * @deprecated Replaced by {@link #Planet(Coordinate, String, int, boolean)}
    */
   public Planet(final int x, final int y, final String name,
       final int orderNumber, final boolean gasGiant) {
-    this.setX(x);
-    this.setY(y);
+    this(new Coordinate(x, y), name, orderNumber, gasGiant);
+  }
+
+  /**
+   * Create random planet with name + orderNumber with Roman numbers.
+   * Other planet attributes are randomized.
+   * @param coordinate Planet's coordinate
+   * @param name Planet name
+   * @param orderNumber as integer
+   * @param gasGiant Is planet inhabitable gas giant
+   */
+  public Planet(final Coordinate coordinate, final String name,
+    final int orderNumber, final boolean gasGiant) {
+    this.setCoordinate(coordinate);
     this.name = name + " "
         + RandomSystemNameGenerator.numberToRoman(orderNumber);
     this.setOrderNumber(orderNumber);
@@ -335,8 +345,7 @@ public class Planet {
    */
   public Planet(final DataInputStream dis, final PlayerList players)
       throws IOException {
-    x = dis.readInt();
-    y = dis.readInt();
+    coordinate = new Coordinate(dis.readInt(), dis.readInt());
     name = IOUtilities.readString(dis);
     OrderNumber = dis.readInt();
     radiationLevel = dis.readInt();
@@ -390,8 +399,8 @@ public class Planet {
    */
   public void savePlanet(final DataOutputStream dos) throws IOException {
     // Coordinates
-    dos.writeInt(x);
-    dos.writeInt(y);
+    dos.writeInt(coordinate.getX());
+    dos.writeInt(coordinate.getY());
     IOUtilities.writeString(dos, name);
     dos.writeInt(OrderNumber);
     dos.writeInt(radiationLevel);
@@ -822,19 +831,27 @@ public class Planet {
   }
 
   public int getX() {
-    return x;
+    return coordinate.getX();
   }
 
   public void setX(final int x) {
-    this.x = x;
+    coordinate.setX(x);
   }
 
   public int getY() {
-    return y;
+    return coordinate.getY();
   }
 
   public void setY(final int y) {
-    this.y = y;
+    coordinate.setY(y);
+  }
+
+  public Coordinate getCoordinate() {
+    return coordinate;
+  }
+
+  public void setCoordinate(Coordinate coordinate) {
+    this.coordinate = coordinate;
   }
 
   /**

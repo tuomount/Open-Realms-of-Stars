@@ -20,6 +20,7 @@ import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -90,7 +91,7 @@ public class GalaxyCreationView extends BlackPanel {
     } else {
       this.config = config;
     }
-    Planet planet = new Planet(1, 1, "Galaxy Creation Planet", 1, false);
+    Planet planet = new Planet(new Coordinate(1, 1), "Galaxy Creation Planet", 1, false);
     if (DiceGenerator.getRandom(100) < 10) {
       planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
       planet.setGasGiant(true);

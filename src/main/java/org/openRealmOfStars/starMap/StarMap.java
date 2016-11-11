@@ -542,7 +542,7 @@ public class StarMap {
               SOLAR_SYSTEM_WIDTH);
       if (is9NeighboursEmpty(px, py)) {
         planets++;
-        Planet planet = new Planet(px, py, sun.getName(), planets, false);
+        Planet planet = new Planet(new Coordinate(px, py), sun.getName(), planets, false);
         planet.setPlanetType(
             DiceGenerator.getRandom(Planet.PLANET_IMAGE_INDEX.length - 1));
         if (planets == 1 && playerIndex != -1) {
@@ -611,7 +611,7 @@ public class StarMap {
               SOLAR_SYSTEM_WIDTH);
       if (is16NeighboursEmpty(px, py)) {
         gasGiants++;
-        Planet planet = new Planet(px, py, sun.getName(), planets + gasGiants,
+        Planet planet = new Planet(new Coordinate(px, py), sun.getName(), planets + gasGiants,
             true);
         planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
         planetList.add(planet);

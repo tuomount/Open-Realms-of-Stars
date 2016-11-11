@@ -1263,7 +1263,7 @@ public class Planet {
                   .getMission(MissionType.ATTACK, MissionPhase.PLANNING);
               if (mission != null) {
                 Mission newMiss = new Mission(MissionType.ATTACK,
-                    MissionPhase.TREKKING, mission.getX(), mission.getY());
+                    MissionPhase.TREKKING, new Coordinate(mission.getX(), mission.getY()));
                 if (ship.isTrooperModule()) {
                   newMiss.setPhase(MissionPhase.LOADING);
                 }

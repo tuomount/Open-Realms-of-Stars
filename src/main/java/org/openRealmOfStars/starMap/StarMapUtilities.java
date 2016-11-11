@@ -32,21 +32,6 @@ public final class StarMapUtilities {
   }
 
   /**
-   * Calculate distance between two coordinates
-   * @param x1 first coordinate's X
-   * @param y1 first coordinate's Y
-   * @param x2 second coordinate's X
-   * @param y2 second coordinate's Y
-   * @return distance as double
-   */
-  public static double getDistance(final int x1, final int y1, final int x2,
-      final int y2) {
-    int mx = Math.abs(x2 - x1);
-    int my = Math.abs(y2 - y1);
-    return Math.sqrt(mx * mx + my * my);
-  }
-
-  /**
    * Check if there can be fitted solar system
    * @param solarSystem where to check solar systems
    * @param sx Center of sun X coordinate

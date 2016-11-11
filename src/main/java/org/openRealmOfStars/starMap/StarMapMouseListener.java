@@ -228,8 +228,9 @@ public class StarMapMouseListener extends MouseAdapter
           if (lastClickedFleet != null) {
             moveX = coord.getMapX();
             moveY = coord.getMapY();
-            double distance = StarMapUtilities.getDistance(
-                lastClickedFleet.getX(), lastClickedFleet.getY(), moveX, moveY);
+            Coordinate lastClickedFleetCoordinate = new Coordinate(lastClickedFleet.getX(), lastClickedFleet.getY());
+            Coordinate moveCoordinate = new Coordinate(moveX, moveY);
+            double distance = lastClickedFleetCoordinate.calculateDistance(moveCoordinate);
             if (distance < 2 && distance > 0) {
               moveClicked = true;
             }

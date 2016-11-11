@@ -8,7 +8,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipStat;
-import org.openRealmOfStars.starMap.StarMapUtilities;
+import org.openRealmOfStars.starMap.Coordinate;
 
 /**
  *
@@ -268,15 +268,16 @@ public class Combat {
    */
   public CombatShip getClosestEnemyShip(final PlayerInfo info,
       final CombatShip center) {
-    double maxDist = 999;
+    double maxDistance = 999;
     CombatShip result = null;
     for (CombatShip ship : shipList) {
       if (ship.getPlayer() != info) {
-        double dist = StarMapUtilities.getDistance(center.getX(), center.getY(),
-            ship.getX(), ship.getY());
-        if (dist < maxDist) {
+        Coordinate centerCoordinate = new Coordinate(center.getX(), center.getY());
+        Coordinate shipCoordinate = new Coordinate(ship.getX(), ship.getY());
+        double distance = centerCoordinate.calculateDistance(shipCoordinate);
+        if (distance < maxDistance) {
           result = ship;
-          maxDist = dist;
+          maxDistance = distance;
         }
       }
     }

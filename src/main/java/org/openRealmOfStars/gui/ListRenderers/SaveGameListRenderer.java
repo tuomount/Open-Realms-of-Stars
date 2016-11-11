@@ -35,7 +35,11 @@ import org.openRealmOfStars.gui.GuiStatics;
  */
 public class SaveGameListRenderer implements ListCellRenderer<SavedGame> {
 
-  protected DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
+  /**
+   * Default list cell renderer
+   */
+  private DefaultListCellRenderer defaultRenderer
+      = new DefaultListCellRenderer();
 
   @Override
   public Component getListCellRendererComponent(

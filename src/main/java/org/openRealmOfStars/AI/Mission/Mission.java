@@ -1,5 +1,7 @@
 package org.openRealmOfStars.AI.Mission;
 
+import org.openRealmOfStars.starMap.Coordinate;
+
 /**
  *
  * Open Realm of Stars game project
@@ -35,13 +37,9 @@ public final class Mission {
   private MissionPhase phase;
 
   /**
-   * Target X coordinate
+   * Target coordinate
    */
-  private int targetXCoordinate;
-  /**
-   * Target Y coordinate
-   */
-  private int targetYCoordinate;
+  private Coordinate targetCoordinate;
 
   /**
    * Fleet name which is on the mission
@@ -78,14 +76,27 @@ public final class Mission {
    * @param missionPhase Mission Phase
    * @param tx Target X
    * @param ty Target Y
+   * @deprecated Replaced by {@link #Mission(MissionType, MissionPhase, Coordinate)}
    */
   public Mission(final MissionType missionType, final MissionPhase missionPhase,
       final int tx, final int ty) {
+    this(missionType, missionPhase, new Coordinate(tx, ty));
+  }
+
+  /**
+   * Create new mission for AI
+   * @param missionType MissionType
+   * @param missionPhase Mission Phase
+   * @param coordinate Target coordinate
+   */
+  public Mission(final MissionType missionType, final MissionPhase missionPhase,
+                 final Coordinate coordinate) {
     this.type = missionType;
     this.phase = missionPhase;
     setMissionTime(0);
-    setTarget(tx, ty);
+    setTarget(coordinate);
     targetPlanet = null;
+
   }
 
   /**
@@ -93,10 +104,19 @@ public final class Mission {
    *
    * @param x Target X coordinate
    * @param y Target Y coordinate
+   * @deprecated Replaced by {@link #setTarget(Coordinate)}
    */
   public void setTarget(final int x, final int y) {
-    this.targetXCoordinate = x;
-    this.targetYCoordinate = y;
+    setTarget(new Coordinate(x, y));
+  }
+
+  /**
+   * Set the target's coordinate.
+   *
+   * @param coordinate Target coordinate
+   */
+  public void setTarget(final Coordinate coordinate) {
+    targetCoordinate = coordinate;
   }
 
   /**
@@ -170,7 +190,7 @@ public final class Mission {
    * @return X coordinate
    */
   public int getX() {
-    return targetXCoordinate;
+    return targetCoordinate.getX();
   }
 
   /**
@@ -178,7 +198,7 @@ public final class Mission {
    * @return Y coordinate
    */
   public int getY() {
-    return targetYCoordinate;
+    return targetCoordinate.getY();
   }
 
   @Override

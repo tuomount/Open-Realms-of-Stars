@@ -512,7 +512,7 @@ public class StarMap {
     int sx = sunx + DiceGenerator.getRandom(-1, 1);
     int sy = suny + DiceGenerator.getRandom(-1, 1);
     StarMapUtilities.setSolarSystem(solarSystem, sx, sy, getMaxX(), getMaxY());
-    Sun sun = new Sun(sx, sy, new RandomSystemNameGenerator());
+    Sun sun = new Sun(new Coordinate(sx, sy), new RandomSystemNameGenerator());
     sunList.add(sun);
     int sunNumber = sunList.size() - 1;
     SquareInfo info = new SquareInfo(SquareInfo.TYPE_SUN, sunNumber);
@@ -542,7 +542,7 @@ public class StarMap {
               SOLAR_SYSTEM_WIDTH);
       if (is9NeighboursEmpty(px, py)) {
         planets++;
-        Planet planet = new Planet(px, py, sun.getName(), planets, false);
+        Planet planet = new Planet(new Coordinate(px, py), sun.getName(), planets, false);
         planet.setPlanetType(
             DiceGenerator.getRandom(Planet.PLANET_IMAGE_INDEX.length - 1));
         if (planets == 1 && playerIndex != -1) {
@@ -611,7 +611,7 @@ public class StarMap {
               SOLAR_SYSTEM_WIDTH);
       if (is16NeighboursEmpty(px, py)) {
         gasGiants++;
-        Planet planet = new Planet(px, py, sun.getName(), planets + gasGiants,
+        Planet planet = new Planet(new Coordinate(px, py), sun.getName(), planets + gasGiants,
             true);
         planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
         planetList.add(planet);
@@ -686,8 +686,8 @@ public class StarMap {
     double distance = 999999;
     Sun result = null;
     for (Sun sun : sunList) {
-      double dist = StarMapUtilities.getDistance(x, y, sun.getCenterX(),
-          sun.getCenterY());
+      Coordinate coordinate = new Coordinate(x, y);
+      double dist = coordinate.calculateDistance(sun.getCenterCoordinate());
       if (ignoreSun != null && ignoreSun.equals(sun.getName())) {
         dist = 999999;
       }
@@ -1318,7 +1318,9 @@ public class StarMap {
       startY = startY + my;
       int nx = (int) Math.round(startX);
       int ny = (int) Math.round(startY);
-      if (StarMapUtilities.getDistance(sx, sy, nx, ny) > maxRad) {
+      Coordinate startCoordinate = new Coordinate(sx, sy);
+      Coordinate coordinate = new Coordinate(nx, ny);
+      if (startCoordinate.calculateDistance(coordinate) > maxRad) {
         // We have moved to maximum radius
         break;
       }

@@ -26,6 +26,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -92,7 +93,7 @@ public class AITurnView extends BlackPanel {
    */
   public AITurnView(final Game game) {
     this.game = game;
-    Planet planet = new Planet(1, 1, "Random Planet", 1, false);
+    Planet planet = new Planet(new Coordinate(1, 1), "Random Planet", 1, false);
     if (DiceGenerator.getRandom(100) < 10) {
       planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
       planet.setGasGiant(true);
@@ -189,7 +190,7 @@ public class AITurnView extends BlackPanel {
         Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
             fleet.getY(), info, fleet, null);
         mission = new Mission(MissionType.EXPLORE, MissionPhase.TREKKING,
-            sun.getCenterX(), sun.getCenterY());
+            sun.getCenterCoordinate());
         mission.setFleetName(fleet.getName());
         mission.setSunName(sun.getName());
         info.getMissions().add(mission);
@@ -288,7 +289,7 @@ public class AITurnView extends BlackPanel {
                 planet.getY()) == PlayerInfo.VISIBLE) {
           // New planet to colonize, adding it to mission list
           Mission mission = new Mission(MissionType.COLONIZE,
-              MissionPhase.PLANNING, planet.getX(), planet.getY());
+              MissionPhase.PLANNING, planet.getCoordinate());
           if (info.getMissions().getColonizeMission(mission.getX(),
               mission.getY()) == null) {
             // No colonize mission for this planet found, so adding it.
@@ -303,9 +304,9 @@ public class AITurnView extends BlackPanel {
                 planet.getY()) == PlayerInfo.VISIBLE) {
           // New planet to conquer, adding it to mission list
           Mission mission = new Mission(MissionType.ATTACK,
-              MissionPhase.PLANNING, planet.getX(), planet.getY());
+              MissionPhase.PLANNING, planet.getCoordinate());
           calculateAttackRendevuezSector(info, planet.getX(), planet.getY());
-          mission.setTarget(cx, cy);
+          mission.setTarget(new Coordinate(cx, cy));
           mission.setTargetPlanet(planet.getName());
           if (info.getMissions().getAttackMission(planet.getName()) == null) {
             // No colonize mission for this planet found, so adding it.

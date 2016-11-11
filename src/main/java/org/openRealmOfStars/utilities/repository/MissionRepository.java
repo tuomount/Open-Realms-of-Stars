@@ -3,6 +3,7 @@ package org.openRealmOfStars.utilities.repository;
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 import java.io.DataInputStream;
@@ -60,7 +61,7 @@ public class MissionRepository {
    */
   public Mission restoreMission(final DataInputStream dis) throws IOException {
     Mission mission = new Mission(MissionType.getType(dis.readInt()),
-        MissionPhase.getType(dis.readInt()), dis.readInt(), dis.readInt());
+        MissionPhase.getType(dis.readInt()), new Coordinate(dis.readInt(), dis.readInt()));
     mission.setMissionTime(dis.readInt());
     String str = IOUtilities.readString(dis);
     if (!str.isEmpty()) {

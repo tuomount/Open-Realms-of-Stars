@@ -33,23 +33,28 @@ public class Sun {
   private String name;
 
   /**
-   * Sun's Center X coordinate
+   * Sun's Center coordinate
    */
-  private int centerX;
-  /**
-   * Sun's Center Y coordinate
-   */
-  private int centerY;
+  private Coordinate centerCoordinate;
 
   /**
    * Create the Sun with name and center coordinates
    * @param cx X coordinate
    * @param cy Y coordinate
    * @param name Sun name if null then random generator applied
+   * @deprecated Replaced by {@link #Sun(Coordinate, String)}
    */
   public Sun(final int cx, final int cy, final String name) {
-    this.centerX = cx;
-    this.centerY = cy;
+    this(new Coordinate(cx, cy), name);
+  }
+
+  /**
+   * Create the Sun with name and center coordinates
+   * @param coordinate coordinate
+   * @param name Sun name if null then random generator applied
+   */
+  public Sun(final Coordinate coordinate, final String name) {
+    this.centerCoordinate = coordinate;
     this.name = name;
   }
 
@@ -58,10 +63,21 @@ public class Sun {
    * @param cx X coordinate
    * @param cy Y coordinate
    * @param nameGenerator random generator
+   * @deprecated Replaced by {@link #Sun(Coordinate, RandomSystemNameGenerator)}
    */
   public Sun(final int cx, final int cy,
       final RandomSystemNameGenerator nameGenerator) {
-    this(cx, cy, nameGenerator.generate());
+    this(new Coordinate(cx, cy), nameGenerator);
+  }
+
+  /**
+   * Create the Sun with name and center coordinates
+   * @param coordinate coordinate
+   * @param nameGenerator random generator
+   */
+  public Sun(final Coordinate coordinate,
+    final RandomSystemNameGenerator nameGenerator) {
+    this(coordinate, nameGenerator.generate());
   }
 
   /**
@@ -77,7 +93,7 @@ public class Sun {
    * @return Sun's Center X coordinate
    */
   public int getCenterX() {
-    return centerX;
+    return centerCoordinate.getX();
   }
 
   /**
@@ -85,12 +101,20 @@ public class Sun {
    * @return Sun's Center X coordinate
    */
   public int getCenterY() {
-    return centerY;
+    return centerCoordinate.getY();
+  }
+
+  /**
+   * Get the Sun's Center coordinate
+   * @return Sun's Center coordinate
+   */
+  public Coordinate getCenterCoordinate() {
+    return centerCoordinate;
   }
 
   @Override
   public String toString() {
-    return name + " X:" + centerX + " Y:" + centerY;
+    return name + " X:" + centerCoordinate.getX() + " Y:" + centerCoordinate.getY();
   }
 
 }

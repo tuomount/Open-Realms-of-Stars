@@ -8,6 +8,7 @@ import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -59,7 +60,7 @@ public final class MissionHandling {
         // Fleet has encounter obstacle, taking a detour round it
         Sun sun = game.getStarMap().locateSolarSystem(fleet.getX(),
             fleet.getY());
-        if (sun != null && sun.getName() == mission.getSunName()) {
+        if (sun != null && sun.getName().equals(mission.getSunName())) {
           // Fleet is in correct solar system, starting explore execution mode
           mission.setPhase(MissionPhase.EXECUTING);
           fleet.setaStarSearch(null);
@@ -78,7 +79,7 @@ public final class MissionHandling {
           Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
               fleet.getY(), info, fleet, ignoreSun);
           if (!sun.getName().equals(mission.getSunName())) {
-            mission.setTarget(sun.getCenterX(), sun.getCenterY());
+            mission.setTarget(sun.getCenterCoordinate());
             fleet.setRoute(new Route(fleet.getX(), fleet.getY(), mission.getX(),
                 mission.getY(), fleet.getFleetFtlSpeed()));
             mission.setSunName(sun.getName());
@@ -87,7 +88,7 @@ public final class MissionHandling {
           }
           PathPoint point = info.getUnchartedSector(sun, fleet);
           if (point != null) {
-            mission.setTarget(point.getX(), point.getY());
+            mission.setTarget(new Coordinate(point.getX(), point.getY()));
             AStarSearch search = new AStarSearch(game.getStarMap(),
                 fleet.getX(), fleet.getY(), mission.getX(), mission.getY());
             search.doSearch();
@@ -211,7 +212,7 @@ public final class MissionHandling {
           Planet planet = game.getStarMap()
               .getPlanetByName(mission.getTargetPlanet());
           if (planet != null) {
-            mission.setTarget(planet.getX(), planet.getY());
+            mission.setTarget(planet.getCoordinate());
             fleet.setRoute(new Route(fleet.getX(), fleet.getY(), planet.getX(),
                 planet.getY(), fleet.getFleetFtlSpeed()));
           }

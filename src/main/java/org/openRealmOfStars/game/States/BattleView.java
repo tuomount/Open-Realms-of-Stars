@@ -26,8 +26,8 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipImage;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
-import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.Logger;
 
@@ -297,8 +297,9 @@ public class BattleView extends BlackPanel {
           .getTotalMilitaryPower()) {
         range = ai.getShip().getMinWeaponRange();
       }
-      int distance = (int) Math.round(StarMapUtilities.getDistance(ai.getX(),
-          ai.getY(), deadliest.getX(), deadliest.getY()));
+      Coordinate aiCoordinate = new Coordinate(ai.getX(), ai.getY());
+      Coordinate deadliestCoordinate = new Coordinate(deadliest.getX(), deadliest.getY());
+      int distance = (int) Math.round(aiCoordinate.calculateDistance(deadliestCoordinate));
       if (range < distance - ai.getMovesLeft() && closest != null) {
         shot = handleAIShoot(ai, closest);
       }

@@ -1,5 +1,6 @@
 package org.openRealmOfStars.utilities.repository;
 
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -51,7 +52,7 @@ public class SunRepository {
      * @throws IOException if there is any problem with DataInputStream
      */
     public Sun restoreSun(final DataInputStream dis) throws IOException {
-        return new Sun(dis.readInt(), dis.readInt(),
+        return new Sun(new Coordinate(dis.readInt(), dis.readInt()),
             IOUtilities.readString(dis));
     }
 }

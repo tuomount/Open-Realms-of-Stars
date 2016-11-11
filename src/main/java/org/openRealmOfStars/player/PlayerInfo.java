@@ -18,8 +18,8 @@ import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
-import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -453,9 +453,11 @@ public class PlayerInfo {
           if (mapData[sun.getCenterX() + x][sun.getCenterY()
               + y] == UNCHARTED) {
             unCharted[sector]++;
+            Coordinate fleetCoordinate = new Coordinate(fleet.getX(), fleet.getY());
+            //@TODO: This code snippet is confusing. I am not sure why is this coordinate increased by x and y.
+            Coordinate sunCoordinate = new Coordinate(sun.getCenterX() + x, sun.getCenterY() + y);
             PathPoint tempPoint = new PathPoint(sun.getCenterX() + x,
-                sun.getCenterY() + y, StarMapUtilities.getDistance(fleet.getX(),
-                    fleet.getY(), sun.getCenterX() + x, sun.getCenterY() + y));
+                sun.getCenterY() + y, fleetCoordinate.calculateDistance(sunCoordinate));
             int value = calculateUnchartedLine(fleet.getX(), fleet.getY(),
                 sun.getCenterX() + x, sun.getCenterY() + y);
             if (points[sector] == null) {
@@ -515,31 +517,32 @@ public class PlayerInfo {
         for (int i = 0; i < StarMap.SOLAR_SYSTEM_WIDTH + 2; i++) {
           nx = nx + mx;
           ny = ny + my;
-          double dist = StarMapUtilities.getDistance(fleet.getX(), fleet.getY(),
-              nx, ny);
-          if (isValidCoordinate(nx, ny) && i >= scan && dist > 1
+          Coordinate fleetCoordinate = new Coordinate(fleet.getX(), fleet.getY());
+          Coordinate coordinate = new Coordinate(nx, ny);
+          double distance = fleetCoordinate.calculateDistance(coordinate);
+          if (isValidCoordinate(nx, ny) && i >= scan && distance > 1
               && mapData[nx][ny] == UNCHARTED) {
-            temp = new PathPoint(nx, ny, dist);
+            temp = new PathPoint(nx, ny, distance);
             pathValue = calculateUnchartedLine(fleet.getX(), fleet.getY(), nx,
                 ny);
             break;
           }
-          dist = StarMapUtilities.getDistance(fleet.getX(), fleet.getY(),
-              sun.getCenterX(), ny);
+          coordinate = new Coordinate(sun.getCenterX(), ny);
+          distance = fleetCoordinate.calculateDistance(coordinate);
           if (temp == null && isValidCoordinate(sun.getCenterX(), ny)
-              && i >= scan && dist > 1
+              && i >= scan && distance > 1
               && mapData[sun.getCenterX()][ny] == UNCHARTED) {
-            temp = new PathPoint(sun.getCenterX(), ny, dist);
+            temp = new PathPoint(sun.getCenterX(), ny, distance);
             pathValue = calculateUnchartedLine(fleet.getX(), fleet.getY(),
                 sun.getCenterX(), ny);
             break;
           }
-          dist = StarMapUtilities.getDistance(fleet.getX(), fleet.getY(), nx,
-              sun.getCenterY());
+          coordinate = new Coordinate(nx, sun.getCenterY());
+          distance = fleetCoordinate.calculateDistance(coordinate);
           if (temp == null && isValidCoordinate(nx, sun.getCenterY())
-              && i >= scan && dist > 1
+              && i >= scan && distance > 1
               && mapData[nx][sun.getCenterY()] == UNCHARTED) {
-            temp = new PathPoint(nx, sun.getCenterY(), dist);
+            temp = new PathPoint(nx, sun.getCenterY(), distance);
             pathValue = calculateUnchartedLine(fleet.getX(), fleet.getY(), nx,
                 sun.getCenterY());
             break;

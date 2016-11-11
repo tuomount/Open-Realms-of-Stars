@@ -667,8 +667,9 @@ public class StarMap {
     double distance = 999999;
     Sun result = null;
     for (Sun sun : sunList) {
-      double dist = StarMapUtilities.getDistance(x, y, sun.getCenterX(),
-          sun.getCenterY());
+      Coordinate coordinate = new Coordinate(x, y);
+      Coordinate sunCoordinate = new Coordinate(sun.getCenterX(), sun.getCenterY());
+      double dist = coordinate.calculateDistance(sunCoordinate);
       if (ignoreSun != null && ignoreSun.equals(sun.getName())) {
         dist = 999999;
       }
@@ -1299,7 +1300,9 @@ public class StarMap {
       startY = startY + my;
       int nx = (int) Math.round(startX);
       int ny = (int) Math.round(startY);
-      if (StarMapUtilities.getDistance(sx, sy, nx, ny) > maxRad) {
+      Coordinate startCoordinate = new Coordinate(sx, sy);
+      Coordinate coordinate = new Coordinate(nx, ny);
+      if (startCoordinate.calculateDistance(coordinate) > maxRad) {
         // We have moved to maximum radius
         break;
       }

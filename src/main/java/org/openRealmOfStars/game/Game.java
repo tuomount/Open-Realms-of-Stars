@@ -34,6 +34,7 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -248,7 +249,7 @@ public class Game extends JFrame implements ActionListener {
         starMapView.setReadyToMove(false);
         changeGameState(GameState.COMBAT, combat);
       } else {
-        fleet.setPos(nx, ny);
+        fleet.setPos(new Coordinate(nx, ny));
         fleet.movesLeft--;
         getStarMap().doFleetScanUpdate(info, fleet, null);
         starMapView.updatePanels();

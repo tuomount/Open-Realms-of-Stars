@@ -124,7 +124,7 @@ public class ShipView extends BlackPanel {
     invisible = new InvisiblePanel(base);
     invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
     shipImage = new ImageLabel(
-        ShipImages.Humans().getShipImage(ShipImage.SCOUT), true);
+        ShipImages.humans().getShipImage(ShipImage.SCOUT), true);
     shipImage.setFillColor(Color.BLACK);
     invisible.add(shipImage);
     invisible.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -171,7 +171,7 @@ public class ShipView extends BlackPanel {
       } else {
         infoText.setText("");
         this.repaint();
-        shipImage.setImage(ShipImages.Humans().getShipImage(ShipImage.COLONY));
+        shipImage.setImage(ShipImages.humans().getShipImage(ShipImage.COLONY));
       }
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_OBSOLETE_SHIP)

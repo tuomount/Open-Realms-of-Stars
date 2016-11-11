@@ -25,7 +25,7 @@ import org.openRealmOfStars.player.SpaceRace;
  *
  */
 
-public class ShipImages {
+public final class ShipImages {
 
   /**
    * Human ships
@@ -53,6 +53,13 @@ public class ShipImages {
   private static ShipImage centaurs;
 
   /**
+   * Hiding the constructor
+   */
+  private ShipImages() {
+    // Nothing to do
+  }
+
+  /**
    * Init all images
    */
   private static void initImages() {
@@ -68,7 +75,7 @@ public class ShipImages {
    * Get Human ship images
    * @return Human ship images
    */
-  public static ShipImage Humans() {
+  public static ShipImage humans() {
     if (humans == null) {
       initImages();
     }
@@ -79,7 +86,7 @@ public class ShipImages {
    * Get Mechions ship images
    * @return Mechions ship images
    */
-  public static ShipImage Mechions() {
+  public static ShipImage mechions() {
     if (mechions == null) {
       initImages();
     }
@@ -90,7 +97,7 @@ public class ShipImages {
    * Get Sporks ship images
    * @return Sporks ship images
    */
-  public static ShipImage Sporks() {
+  public static ShipImage sporks() {
     if (sporks == null) {
       initImages();
     }
@@ -101,7 +108,7 @@ public class ShipImages {
    * Get Greyans ship images
    * @return Greyans ship images
    */
-  public static ShipImage Greyans() {
+  public static ShipImage greyans() {
     if (greyans == null) {
       initImages();
     }
@@ -112,7 +119,7 @@ public class ShipImages {
    * Get Centaurs ship images
    * @return Centaurs ship images
    */
-  public static ShipImage Centaurs() {
+  public static ShipImage centaurs() {
     if (centaurs == null) {
       initImages();
     }
@@ -127,18 +134,18 @@ public class ShipImages {
   public static ShipImage getByRace(final SpaceRace race) {
     switch (race) {
     case HUMAN:
-      return Humans();
+      return humans();
     case MECHIONS:
-      return Mechions();
+      return mechions();
     case GREYANS:
-      return Greyans();
+      return greyans();
     case CENTAURS:
-      return Centaurs();
+      return centaurs();
     case SPORKS:
-      return Sporks();
+      return sporks();
+    default:
+      return humans();
     }
-    // Default images
-    return Humans();
   }
 
 }

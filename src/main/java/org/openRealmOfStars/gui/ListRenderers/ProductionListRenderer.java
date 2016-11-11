@@ -34,7 +34,11 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
  */
 public class ProductionListRenderer implements ListCellRenderer<Construction> {
 
-  protected DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
+  /**
+   * Default list cell renderer
+   */
+  private DefaultListCellRenderer defaultRenderer
+      = new DefaultListCellRenderer();
 
   @Override
   public Component getListCellRendererComponent(

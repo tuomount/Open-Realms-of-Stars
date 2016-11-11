@@ -87,6 +87,11 @@ public class ShipView extends BlackPanel {
    */
   private SpaceButton obsoleteBtn;
 
+  /**
+   * Create new ship view
+   * @param player Player Info
+   * @param listener Action Listener
+   */
   public ShipView(final PlayerInfo player, final ActionListener listener) {
     this.player = player;
     this.copyClicked = false;
@@ -193,10 +198,17 @@ public class ShipView extends BlackPanel {
     return null;
   }
 
+  /**
+   * @return Copy button was clicked
+   */
   public boolean isCopyClicked() {
     return copyClicked;
   }
 
+  /**
+   * Set the copy button was clicked
+   * @param copyClicked copy button was clicked
+   */
   public void setCopyClicked(final boolean copyClicked) {
     this.copyClicked = copyClicked;
   }

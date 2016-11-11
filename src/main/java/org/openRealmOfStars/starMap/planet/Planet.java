@@ -1528,9 +1528,9 @@ public class Planet {
     StringBuilder sb = new StringBuilder();
     sb.append(name);
     sb.append(" X: ");
-    sb.append(getX());
+    sb.append(coordinate.getX());
     sb.append(" Y: ");
-    sb.append(getY());
+    sb.append(coordinate.getY());
     sb.append(" - ");
     if (planetOwnerInfo != null) {
       sb.append(planetOwnerInfo.getEmpireName());

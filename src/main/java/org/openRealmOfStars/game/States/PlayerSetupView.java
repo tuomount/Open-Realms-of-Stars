@@ -23,6 +23,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMapStatics;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -95,7 +96,7 @@ public class PlayerSetupView extends BlackPanel {
     if (this.config == null) {
       this.config = new GalaxyConfig();
     }
-    Planet planet = new Planet(1, 1, "Galaxy Creation Planet", 2, false);
+    Planet planet = new Planet(new Coordinate(1, 1), "Galaxy Creation Planet", 2, false);
     if (DiceGenerator.getRandom(100) < 10) {
       planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
       planet.setGasGiant(true);

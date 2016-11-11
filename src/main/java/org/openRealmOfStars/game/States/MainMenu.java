@@ -14,6 +14,7 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.GenericFileFilter;
@@ -52,7 +53,7 @@ public class MainMenu extends BlackPanel {
    * @param listener ActionListener
    */
   public MainMenu(final ActionListener listener) {
-    Planet planet = new Planet(1, 1, "Main Menu Planet", 1, false);
+    Planet planet = new Planet(new Coordinate(1, 1), "Main Menu Planet", 1, false);
     if (DiceGenerator.getRandom(100) < 10) {
       planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
       planet.setGasGiant(true);

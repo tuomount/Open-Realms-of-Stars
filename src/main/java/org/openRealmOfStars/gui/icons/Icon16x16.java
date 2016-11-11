@@ -54,7 +54,7 @@ public class Icon16x16 {
   /**
    * Icon index in list of icons
    */
-  private int Index = -1;
+  private int index = -1;
 
   /**
    * Get Icon from image, where x is number of icons in X axel and
@@ -95,14 +95,26 @@ public class Icon16x16 {
     return name;
   }
 
+  /**
+   * Get the icon index
+   * @return Icon index
+   */
   public int getIndex() {
-    return Index;
+    return index;
   }
 
+  /**
+   * Set the icon index
+   * @param index Icon index
+   */
   public void setIndex(final int index) {
-    Index = index;
+    this.index = index;
   }
 
+  /**
+   * Get the graphical data for Icon
+   * @return Graphical data for Icon
+   */
   public BufferedImage getIcon() {
     return img;
   }

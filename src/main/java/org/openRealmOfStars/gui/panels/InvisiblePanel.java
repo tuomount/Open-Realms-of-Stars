@@ -39,6 +39,10 @@ public class InvisiblePanel extends JPanel {
    */
   private Component parent;
 
+  /**
+   * Create a new invisible panel
+   * @param parent Parent component
+   */
   public InvisiblePanel(final Component parent) {
     this.parent = parent;
   }

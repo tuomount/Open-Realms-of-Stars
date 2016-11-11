@@ -189,7 +189,7 @@ public class AITurnView extends BlackPanel {
         Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
             fleet.getY(), info, fleet, null);
         mission = new Mission(MissionType.EXPLORE, MissionPhase.TREKKING,
-            sun.getCenterX(), sun.getCenterY());
+            sun.getCenterCoordinate());
         mission.setFleetName(fleet.getName());
         mission.setSunName(sun.getName());
         info.getMissions().add(mission);

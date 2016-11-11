@@ -33,7 +33,7 @@ public class SunTest {
 
     @Test
     public void testCreateSunWithName(){
-        Sun sun = new Sun(10, 15, "Sun name");
+        Sun sun = new Sun(new Coordinate(10, 15), "Sun name");
 
         assertEquals("Sun name", sun.getName());
         assertEquals(10, sun.getCenterX());
@@ -44,7 +44,7 @@ public class SunTest {
     public void testCreateSunWithNameGenerator(){
         RandomSystemNameGenerator nameGenerator = Mockito.mock(RandomSystemNameGenerator.class);
         Mockito.when(nameGenerator.generate()).thenReturn("Generated Solar System Sun name");
-        Sun sun = new Sun(10, 15, nameGenerator);
+        Sun sun = new Sun(new Coordinate(10, 15), nameGenerator);
 
         assertEquals("Generated Solar System Sun name", sun.getName());
         assertEquals(10, sun.getCenterX());
@@ -53,7 +53,7 @@ public class SunTest {
 
     @Test
     public void testSunShouldBeConvertedIntoString(){
-        Sun sun = new Sun(10, 15, "Sun");
+        Sun sun = new Sun(new Coordinate(10, 15), "Sun");
 
         assertEquals("Sun X:10 Y:15", sun.toString());
     }

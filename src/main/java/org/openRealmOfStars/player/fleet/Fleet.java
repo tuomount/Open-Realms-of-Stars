@@ -9,6 +9,7 @@ import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -43,14 +44,9 @@ public class Fleet {
   private ArrayList<Ship> ships;
 
   /**
-   * Fleet's X coordinate
+   * Fleet's coordinate
    */
-  private int x;
-
-  /**
-   * Fleet's y coordinate
-   */
-  private int y;
+  private Coordinate coordinate;
 
   /**
    * Fleet name
@@ -94,8 +90,7 @@ public class Fleet {
    */
   public Fleet(final DataInputStream dis) throws IOException {
     name = IOUtilities.readString(dis);
-    x = dis.readInt();
-    y = dis.readInt();
+    coordinate = new Coordinate(dis.readInt(), dis.readInt());
     movesLeft = dis.readInt();
     String str = IOUtilities.readString(dis);
     if (str.equals("NOROUTE")) {
@@ -118,8 +113,8 @@ public class Fleet {
    */
   public void saveFleet(final DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, name);
-    dos.writeInt(x);
-    dos.writeInt(y);
+    dos.writeInt(coordinate.getX());
+    dos.writeInt(coordinate.getY());
     dos.writeInt(movesLeft);
     if (route == null) {
       IOUtilities.writeString(dos, "NOROUTE");
@@ -196,7 +191,7 @@ public class Fleet {
    * @return X coordinate
    */
   public int getX() {
-    return x;
+    return coordinate.getX();
   }
 
   /**
@@ -204,7 +199,7 @@ public class Fleet {
    * @return Y coordinate
    */
   public int getY() {
-    return y;
+    return coordinate.getY();
   }
 
   /**
@@ -213,8 +208,7 @@ public class Fleet {
    * @param y Fleet's Y coordinate
    */
   public void setPos(final int x, final int y) {
-    this.x = x;
-    this.y = y;
+    this.coordinate = new Coordinate(x, y);
   }
 
   /**

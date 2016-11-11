@@ -632,7 +632,7 @@ public class Combat {
   public void handleEndCombat() {
     if (winner != null && info1 == winner) {
       handleWinner(fleet1, info1);
-      fleet1.setPos(fleet2.getX(), fleet2.getY());
+      fleet1.setPos(fleet2.getCoordinate());
       int index = info2.Fleets().getIndexByName(fleet2.getName());
       if (index != -1) {
         info2.Fleets().remove(index);

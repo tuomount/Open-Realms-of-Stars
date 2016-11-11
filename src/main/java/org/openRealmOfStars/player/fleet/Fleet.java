@@ -78,7 +78,7 @@ public class Fleet {
   public Fleet(final Ship firstShip, final int x, final int y) {
     ships = new ArrayList<>();
     ships.add(firstShip);
-    setPos(x, y);
+    setPos(new Coordinate(x, y));
     setName("Fleet #-1");
     setRoute(null);
   }
@@ -204,11 +204,17 @@ public class Fleet {
 
   /**
    * Set fleet's Coordinates
-   * @param x Fleet's X coordinate
-   * @param y Fleet's Y coordinate
+   * @param pos Fleet's coordinate
    */
-  public void setPos(final int x, final int y) {
-    this.coordinate = new Coordinate(x, y);
+  public void setPos(final Coordinate pos) {
+    this.coordinate = pos;
+  }
+
+  /**
+   * Get fleet's coordinate
+   */
+  public Coordinate getCoordinate() {
+    return coordinate;
   }
 
   /**

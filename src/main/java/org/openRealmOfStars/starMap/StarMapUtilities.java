@@ -86,8 +86,8 @@ public final class StarMapUtilities {
         }
       }
     }
-    int total = (maxX - 2 * StarMapStatics.SOLARSYSTEMWIDTH)
-        * (maxY - 2 * StarMapStatics.SOLARSYSTEMWIDTH);
+    int total = (maxX - 2 * StarMap.SOLAR_SYSTEM_WIDTH)
+        * (maxY - 2 * StarMap.SOLAR_SYSTEM_WIDTH);
     result = result * 100 / total;
     return result;
   }
@@ -102,10 +102,10 @@ public final class StarMapUtilities {
    */
   public static void setSolarSystem(final int[][] solarSystem, final int sx,
       final int sy, final int maxX, final int maxY) {
-    for (int y = -StarMapStatics.SOLARSYSTEMWIDTH;
-        y < StarMapStatics.SOLARSYSTEMWIDTH; y++) {
-      for (int x = -StarMapStatics.SOLARSYSTEMWIDTH;
-          x < StarMapStatics.SOLARSYSTEMWIDTH; x++) {
+    for (int y = -StarMap.SOLAR_SYSTEM_WIDTH;
+         y < StarMap.SOLAR_SYSTEM_WIDTH; y++) {
+      for (int x = -StarMap.SOLAR_SYSTEM_WIDTH;
+           x < StarMap.SOLAR_SYSTEM_WIDTH; x++) {
         if (x + sx >= 0 && y + sy >= 0 && x + sx < maxX && y + sy < maxY) {
           solarSystem[sx + x][sy + y] = 1;
         }

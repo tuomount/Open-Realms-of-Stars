@@ -35,7 +35,11 @@ import org.openRealmOfStars.player.ship.ShipStat;
  */
 public class ShipStatRenderer implements ListCellRenderer<ShipStat> {
 
-  protected DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
+  /**
+   * Default list cell renderer
+   */
+  private DefaultListCellRenderer defaultRenderer
+      = new DefaultListCellRenderer();
 
   @Override
   public Component getListCellRendererComponent(

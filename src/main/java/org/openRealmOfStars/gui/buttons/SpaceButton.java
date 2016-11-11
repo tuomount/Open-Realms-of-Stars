@@ -79,10 +79,10 @@ public class SpaceButton extends JButton {
 
   /**
    * Set space Icon, Null to disable
-   * @param icon Icon16x16 icon
+   * @param spaceButtonIcon Icon16x16 icon
    */
-  public void setSpaceIcon(final Icon16x16 icon) {
-    this.icon = icon;
+  public void setSpaceIcon(final Icon16x16 spaceButtonIcon) {
+    this.icon = spaceButtonIcon;
     Dimension size = this.getPreferredSize();
     if (this.icon != null) {
       size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),

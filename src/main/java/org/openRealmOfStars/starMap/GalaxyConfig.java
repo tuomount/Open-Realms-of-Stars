@@ -89,9 +89,9 @@ public class GalaxyConfig {
     this.galaxySizeIndex = 1;
     setMaxPlayers(4);
     setSolarSystemDistance(12, 0);
-    playerRaces = new SpaceRace[StarMapStatics.MAX_PLAYERS];
-    playerName = new String[StarMapStatics.MAX_PLAYERS];
-    for (int i = 0; i < StarMapStatics.MAX_PLAYERS; i++) {
+    playerRaces = new SpaceRace[StarMap.MAX_PLAYERS];
+    playerName = new String[StarMap.MAX_PLAYERS];
+    for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
 
       setRace(i, SpaceRace.getRandomRace());
       while (true) {
@@ -110,33 +110,33 @@ public class GalaxyConfig {
    * @return True if unique
    */
   public boolean isUniqueName(final String name) {
-    for (int i = 0; i < StarMapStatics.MAX_PLAYERS; i++) {
+    for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
       if (playerName[i] != null && name.equals(playerName[i])) { return false; }
     }
     return true;
   }
 
   public void setRace(final int index, final SpaceRace race) {
-    if (index >= 0 && index < StarMapStatics.MAX_PLAYERS) {
+    if (index >= 0 && index < StarMap.MAX_PLAYERS) {
       playerRaces[index] = race;
     }
   }
 
   public SpaceRace getRace(final int index) {
     if (index >= 0
-        && index < StarMapStatics.MAX_PLAYERS) { return playerRaces[index]; }
+        && index < StarMap.MAX_PLAYERS) { return playerRaces[index]; }
     return null;
   }
 
   public void setPlayerName(final int index, final String name) {
-    if (index >= 0 && index < StarMapStatics.MAX_PLAYERS) {
+    if (index >= 0 && index < StarMap.MAX_PLAYERS) {
       playerName[index] = name;
     }
   }
 
   public String getPlayerName(final int index) {
     if (index >= 0
-        && index < StarMapStatics.MAX_PLAYERS) { return playerName[index]; }
+        && index < StarMap.MAX_PLAYERS) { return playerName[index]; }
     return null;
   }
 

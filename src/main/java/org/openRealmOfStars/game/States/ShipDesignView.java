@@ -234,7 +234,7 @@ public class ShipDesignView extends BlackPanel {
     invisible = new InvisiblePanel(hullPanel);
     invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
     hullImage = new ImageLabel(
-        ShipImages.Humans().getShipImage(ShipImage.COLONY), true);
+        ShipImages.humans().getShipImage(ShipImage.COLONY), true);
     hullImage.setFillColor(Color.BLACK);
     invisible.add(hullImage);
     invisible.add(Box.createRigidArea(new Dimension(5, 5)));

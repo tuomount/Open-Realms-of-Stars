@@ -61,10 +61,10 @@ public class IconLabel extends JLabel {
 
   /**
    * Set icon on left side of Label
-   * @param icon Icon to draw
+   * @param leftIcon Icon to draw
    */
-  public void setLeftIcon(final Icon16x16 icon) {
-    this.icon = icon;
+  public void setLeftIcon(final Icon16x16 leftIcon) {
+    this.icon = leftIcon;
   }
 
   /**

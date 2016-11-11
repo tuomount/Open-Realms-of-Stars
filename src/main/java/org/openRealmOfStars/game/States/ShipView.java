@@ -87,6 +87,11 @@ public class ShipView extends BlackPanel {
    */
   private SpaceButton obsoleteBtn;
 
+  /**
+   * Create new ship view
+   * @param player Player Info
+   * @param listener Action Listener
+   */
   public ShipView(final PlayerInfo player, final ActionListener listener) {
     this.player = player;
     this.copyClicked = false;
@@ -119,7 +124,7 @@ public class ShipView extends BlackPanel {
     invisible = new InvisiblePanel(base);
     invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
     shipImage = new ImageLabel(
-        ShipImages.Humans().getShipImage(ShipImage.SCOUT), true);
+        ShipImages.humans().getShipImage(ShipImage.SCOUT), true);
     shipImage.setFillColor(Color.BLACK);
     invisible.add(shipImage);
     invisible.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -166,7 +171,7 @@ public class ShipView extends BlackPanel {
       } else {
         infoText.setText("");
         this.repaint();
-        shipImage.setImage(ShipImages.Humans().getShipImage(ShipImage.COLONY));
+        shipImage.setImage(ShipImages.humans().getShipImage(ShipImage.COLONY));
       }
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_OBSOLETE_SHIP)
@@ -193,10 +198,17 @@ public class ShipView extends BlackPanel {
     return null;
   }
 
+  /**
+   * @return Copy button was clicked
+   */
   public boolean isCopyClicked() {
     return copyClicked;
   }
 
+  /**
+   * Set the copy button was clicked
+   * @param copyClicked copy button was clicked
+   */
   public void setCopyClicked(final boolean copyClicked) {
     this.copyClicked = copyClicked;
   }

@@ -24,7 +24,7 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.starMap.GalaxyConfig;
-import org.openRealmOfStars.starMap.StarMapStatics;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -112,13 +112,13 @@ public class PlayerSetupView extends BlackPanel {
     invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
     invisible.add(Box.createRigidArea(new Dimension(500, 100)));
 
-    comboRaceSelect = new JComboBox[StarMapStatics.MAX_PLAYERS];
-    raceImgs = new RaceImagePanel[StarMapStatics.MAX_PLAYERS];
-    playerName = new JTextField[StarMapStatics.MAX_PLAYERS];
+    comboRaceSelect = new JComboBox[StarMap.MAX_PLAYERS];
+    raceImgs = new RaceImagePanel[StarMap.MAX_PLAYERS];
+    playerName = new JTextField[StarMap.MAX_PLAYERS];
 
     InvisiblePanel xinvis = new InvisiblePanel(invisible);
     xinvis.setLayout(new GridLayout(2, 4));
-    for (int i = 0; i < StarMapStatics.MAX_PLAYERS; i++) {
+    for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
       xinvis.add(createPlayerRaceSelection(xinvis, i, listener));
     }
     invisible.add(xinvis);
@@ -147,7 +147,7 @@ public class PlayerSetupView extends BlackPanel {
    */
   public void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_GALAXY_SETUP)) {
-      for (int i = 0; i < StarMapStatics.MAX_PLAYERS; i++) {
+      for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
         if (comboRaceSelect[i].isEnabled()) {
           String raceStr = (String) comboRaceSelect[i].getSelectedItem();
           SpaceRace race = SpaceRace.getRaceByName(raceStr);
@@ -167,7 +167,7 @@ public class PlayerSetupView extends BlackPanel {
    * Get player name to game config
    */
   public void getNamesToConfig() {
-    for (int i = 0; i < StarMapStatics.MAX_PLAYERS; i++) {
+    for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
       config.setPlayerName(i, playerName[i].getText());
     }
 

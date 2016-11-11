@@ -35,7 +35,11 @@ import org.openRealmOfStars.player.tech.Tech;
  */
 public class TechListRenderer implements ListCellRenderer<Tech> {
 
-  protected DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
+  /**
+   * Default list cell renderer
+   */
+  private DefaultListCellRenderer defaultRenderer
+      = new DefaultListCellRenderer();
 
   @Override
   public Component getListCellRendererComponent(

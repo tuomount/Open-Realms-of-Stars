@@ -34,7 +34,11 @@ import org.openRealmOfStars.player.fleet.Fleet;
  */
 public class FleetListRenderer implements ListCellRenderer<Fleet> {
 
-  protected DefaultListCellRenderer defaultRenderer = new DefaultListCellRenderer();
+  /**
+   * Default list cell renderer
+   */
+  private DefaultListCellRenderer defaultRenderer
+      = new DefaultListCellRenderer();
 
   @Override
   public Component getListCellRendererComponent(

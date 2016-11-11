@@ -492,7 +492,7 @@ public class StarMap {
     int sx = sunx + DiceGenerator.getRandom(-1, 1);
     int sy = suny + DiceGenerator.getRandom(-1, 1);
     StarMapUtilities.setSolarSystem(solarSystem, sx, sy, getMaxX(), getMaxY());
-    Sun sun = new Sun(sx, sy, new RandomSystemNameGenerator());
+    Sun sun = new Sun(new Coordinate(sx, sy), new RandomSystemNameGenerator());
     sunList.add(sun);
     int sunNumber = sunList.size() - 1;
     SquareInfo info = new SquareInfo(SquareInfo.TYPE_SUN, sunNumber);
@@ -668,8 +668,7 @@ public class StarMap {
     Sun result = null;
     for (Sun sun : sunList) {
       Coordinate coordinate = new Coordinate(x, y);
-      Coordinate sunCoordinate = new Coordinate(sun.getCenterX(), sun.getCenterY());
-      double dist = coordinate.calculateDistance(sunCoordinate);
+      double dist = coordinate.calculateDistance(sun.getCenterCoordinate());
       if (ignoreSun != null && ignoreSun.equals(sun.getName())) {
         dist = 999999;
       }

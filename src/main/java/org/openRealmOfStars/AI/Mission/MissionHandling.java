@@ -79,7 +79,7 @@ public final class MissionHandling {
           Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
               fleet.getY(), info, fleet, ignoreSun);
           if (!sun.getName().equals(mission.getSunName())) {
-            mission.setTarget(sun.getCenterX(), sun.getCenterY());
+            mission.setTarget(sun.getCenterCoordinate());
             fleet.setRoute(new Route(fleet.getX(), fleet.getY(), mission.getX(),
                 mission.getY(), fleet.getFleetFtlSpeed()));
             mission.setSunName(sun.getName());

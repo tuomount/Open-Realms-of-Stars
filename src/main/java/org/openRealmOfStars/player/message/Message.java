@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -34,13 +35,9 @@ import org.openRealmOfStars.utilities.IOUtilities;
 public class Message {
 
   /**
-   * X coordinate on star map
+   * Coordinate on star map
    */
-  private int x;
-  /**
-   * Y coordinate on star map
-   */
-  private int y;
+  private Coordinate coordinate;
 
   /**
    * Generic index, could point planet, sun, fleet, player etc. Depends
@@ -79,8 +76,7 @@ public class Message {
     this.type = type;
     setMessage(msg);
     this.icon = icon;
-    this.x = -1;
-    this.y = -1;
+    this.coordinate = new Coordinate(-1, -1);
     this.index = -1;
     this.matchByString = null;
   }
@@ -93,8 +89,7 @@ public class Message {
   public Message(final DataInputStream dis) throws IOException {
     this.type = MessageType.getTypeByIndex(dis.readInt());
     this.index = dis.readInt();
-    this.x = dis.readInt();
-    this.y = dis.readInt();
+    this.coordinate = new Coordinate(dis.readInt(), dis.readInt());
     setMessage(IOUtilities.readString(dis));
     this.matchByString = IOUtilities.readString(dis);
     if (this.matchByString.isEmpty()) {
@@ -111,8 +106,8 @@ public class Message {
   public void saveMessage(final DataOutputStream dos) throws IOException {
     dos.writeInt(type.getIndex());
     dos.writeInt(index);
-    dos.writeInt(x);
-    dos.writeInt(y);
+    dos.writeInt(coordinate.getX());
+    dos.writeInt(coordinate.getY());
     IOUtilities.writeString(dos, message);
     IOUtilities.writeString(dos, matchByString);
     IOUtilities.writeString(dos, icon.getName());
@@ -171,16 +166,15 @@ public class Message {
    * @param y Y coordinate
    */
   public void setCoordinate(final int x, final int y) {
-    this.x = x;
-    this.y = y;
+    this.coordinate = new Coordinate(x, y);
   }
 
   public int getX() {
-    return x;
+    return coordinate.getX();
   }
 
   public int getY() {
-    return y;
+    return coordinate.getY();
   }
 
   public String getMatchByString() {

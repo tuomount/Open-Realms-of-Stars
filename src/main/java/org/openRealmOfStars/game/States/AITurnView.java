@@ -375,7 +375,7 @@ public class AITurnView extends BlackPanel {
                           + " has reached it's target and waiting for orders.",
                       Icons.getIconByName(Icons.ICON_HULL_TECH));
                   msg.setMatchByString(fleet.getName());
-                  msg.setCoordinate(fleet.getX(), fleet.getY());
+                  msg.setCoordinate(fleet.getCoordinate());
                   info.getMsgList().addNewMessage(msg);
                 } else {
                   if (fleet.getRoute().isFixing()) {
@@ -396,7 +396,7 @@ public class AITurnView extends BlackPanel {
                               + " has been fixed and waiting for orders.",
                           Icons.getIconByName(Icons.ICON_HULL_TECH));
                       msg.setMatchByString(fleet.getName());
-                      msg.setCoordinate(fleet.getX(), fleet.getY());
+                      msg.setCoordinate(fleet.getCoordinate());
                       info.getMsgList().addNewMessage(msg);
                     }
                   }
@@ -409,7 +409,7 @@ public class AITurnView extends BlackPanel {
                         + " has encouter obstacle and waiting for more orders.",
                     Icons.getIconByName(Icons.ICON_HULL_TECH));
                 msg.setMatchByString(fleet.getName());
-                msg.setCoordinate(fleet.getX(), fleet.getY());
+                msg.setCoordinate(fleet.getCoordinate());
                 info.getMsgList().addNewMessage(msg);
               }
             }
@@ -419,7 +419,7 @@ public class AITurnView extends BlackPanel {
                 fleet.getName() + " is waiting for orders.",
                 Icons.getIconByName(Icons.ICON_HULL_TECH));
             msg.setMatchByString(fleet.getName());
-            msg.setCoordinate(fleet.getX(), fleet.getY());
+            msg.setCoordinate(fleet.getCoordinate());
             info.getMsgList().addNewMessage(msg);
           }
           fleet.movesLeft = fleet.getFleetSpeed();

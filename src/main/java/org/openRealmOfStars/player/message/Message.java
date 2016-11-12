@@ -162,11 +162,10 @@ public class Message {
 
   /**
    * Set message coordinates. Use (-1,-1) not to place coordinate for message
-   * @param x X coordinate
-   * @param y Y coordinate
+   * @param coordinate coordinate
    */
-  public void setCoordinate(final int x, final int y) {
-    this.coordinate = new Coordinate(x, y);
+  public void setCoordinate(final Coordinate coordinate) {
+    this.coordinate = coordinate;
   }
 
   public int getX() {

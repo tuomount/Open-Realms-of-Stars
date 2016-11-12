@@ -1173,7 +1173,7 @@ public class Planet {
               getName() + " has population growth!" + "Population is now "
                   + getTotalPopulation(),
               Icons.getIconByName(Icons.ICON_PEOPLE));
-          msg.setCoordinate(getX(), getY());
+          msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
         }
@@ -1200,7 +1200,7 @@ public class Planet {
               getName() + " has " + workerName + " died!\n"
                   + "Population is now " + getTotalPopulation(),
               Icons.getIconByName(Icons.ICON_DEATH));
-          msg.setCoordinate(getX(), getY());
+          msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
         }
@@ -1217,7 +1217,7 @@ public class Planet {
           msg = new Message(MessageType.CONSTRUCTION,
               getName() + " built " + underConstruction.getName(),
               Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
-          msg.setCoordinate(getX(), getY());
+          msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
         } else if (underConstruction instanceof Ship) {
@@ -1286,7 +1286,7 @@ public class Planet {
           msg = new Message(MessageType.CONSTRUCTION,
               getName() + " built " + underConstruction.getName(),
               Icons.getIconByName(Icons.ICON_HULL_TECH));
-          msg.setCoordinate(getX(), getY());
+          msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
         } else {
@@ -1298,7 +1298,7 @@ public class Planet {
             msg = new Message(MessageType.CONSTRUCTION,
                 getName() + " built " + underConstruction.getName(),
                 Icons.getIconByName(Icons.ICON_PEOPLE));
-            msg.setCoordinate(getX(), getY());
+            msg.setCoordinate(getCoordinate());
             msg.setMatchByString(getName());
             planetOwnerInfo.getMsgList().addNewMessage(msg);
           }
@@ -1310,7 +1310,7 @@ public class Planet {
             msg = new Message(MessageType.CONSTRUCTION,
                 getName() + " built " + underConstruction.getName(),
                 Icons.getIconByName(Icons.ICON_CULTURE));
-            msg.setCoordinate(getX(), getY());
+            msg.setCoordinate(getCoordinate());
             msg.setMatchByString(getName());
             planetOwnerInfo.getMsgList().addNewMessage(msg);
           }
@@ -1323,7 +1323,7 @@ public class Planet {
             msg = new Message(MessageType.CONSTRUCTION,
                 getName() + " built " + underConstruction.getName(),
                 Icons.getIconByName(Icons.ICON_CREDIT));
-            msg.setCoordinate(getX(), getY());
+            msg.setCoordinate(getCoordinate());
             msg.setMatchByString(getName());
             planetOwnerInfo.getMsgList().addNewMessage(msg);
           }

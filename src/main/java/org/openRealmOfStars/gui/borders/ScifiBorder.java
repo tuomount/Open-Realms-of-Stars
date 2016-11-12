@@ -35,9 +35,11 @@ import org.openRealmOfStars.utilities.IOUtilities;
  * Scifi border with raster corners and raster title bar
  *
  */
-
 public class ScifiBorder extends AbstractBorder {
 
+  /**
+   *
+   */
   private static final long serialVersionUID = 1L;
 
   /**
@@ -93,21 +95,51 @@ public class ScifiBorder extends AbstractBorder {
    */
   private String title;
 
+  /**
+   * Color Medium blue
+   */
   private static final Color MEDIUM_BLUE = new Color(71, 73, 82);
+  /**
+   * Color Bright blue
+   */
   private static final Color BRIGHT_BLUE = new Color(185, 190, 220);
+  /**
+   * Color top light blue
+   */
   private static final Color TOP_LIGHT_BLUE = new Color(136, 140, 157);
+  /**
+   * Top light shadow blue
+   */
   private static final Color TOP_LIGHT_SHADOW_BLUE = new Color(123, 127, 142);
+  /**
+   * Top dark blue
+   */
   private static final Color TOP_DARK_BLUE = new Color(46, 47, 54);
 
+  /**
+   * Default side gap in pixels
+   */
+  private static final int DEFAULT_SIDE_GAP = 15;
+
+  /**
+   * Default bottom and top gap in pixels
+   */
+  private static final int DEFAULT_BOTTOP_GAP = 9;
+
+  /**
+   * Constructor for scifi border. Scifi border support optinal title text
+   * @param title Optional title text. Null to disable title.
+   */
   public ScifiBorder(final String title) {
-    leftGap = 15;
-    rightGap = 15;
-    bottomGap = 9;
-    if (title == null || title != null && title.isEmpty()) {
-      topGap = 9;
+    leftGap = DEFAULT_SIDE_GAP;
+    rightGap = DEFAULT_SIDE_GAP;
+    bottomGap = DEFAULT_BOTTOP_GAP;
+    if (title == null || title.isEmpty()) {
+      topGap = DEFAULT_BOTTOP_GAP;
       this.title = null;
     } else {
-      topGap = 24;
+      // Title is available making top gap bigger
+      topGap = DEFAULT_BOTTOP_GAP + DEFAULT_SIDE_GAP;
       this.title = title;
     }
   }
@@ -164,17 +196,19 @@ public class ScifiBorder extends AbstractBorder {
     if (height >= CORNER_IMAGE.getHeight() * 2 + 10) {
       g2d.drawImage(CORNER_IMAGE, x, y, null);
       g2d.drawImage(CORNER_IMAGE, x + width - CORNER_IMAGE.getWidth(), y, null);
-      g2d.drawImage(CORNER_IMAGE, x, y + height - CORNER_IMAGE.getHeight(), null);
+      g2d.drawImage(CORNER_IMAGE, x, y + height - CORNER_IMAGE.getHeight(),
+          null);
       g2d.drawImage(CORNER_IMAGE, x + width - CORNER_IMAGE.getWidth(),
           y + height - CORNER_IMAGE.getHeight(), null);
     } else {
       g2d.drawImage(CORNER_SMALL_IMAGE, x, y, null);
-      g2d.drawImage(CORNER_SMALL_IMAGE, x + width - CORNER_SMALL_IMAGE.getWidth(),
-          y, null);
+      g2d.drawImage(CORNER_SMALL_IMAGE, x + width
+          - CORNER_SMALL_IMAGE.getWidth(), y, null);
       g2d.drawImage(CORNER_SMALL_IMAGE, x,
           y + height - CORNER_SMALL_IMAGE.getHeight(), null);
-      g2d.drawImage(CORNER_SMALL_IMAGE, x + width - CORNER_SMALL_IMAGE.getWidth(),
-          y + height - CORNER_SMALL_IMAGE.getHeight(), null);
+      g2d.drawImage(CORNER_SMALL_IMAGE, x + width
+          - CORNER_SMALL_IMAGE.getWidth(), y + height
+          - CORNER_SMALL_IMAGE.getHeight(), null);
     }
 
     if (title != null && !title.isEmpty()) {

@@ -207,14 +207,14 @@ public class Fleet {
    * @param pos Fleet's coordinate
    */
   public void setPos(final Coordinate pos) {
-    this.coordinate = pos;
+    this.coordinate = new Coordinate(pos);
   }
 
   /**
    * Get fleet's coordinate
    */
   public Coordinate getCoordinate() {
-    return coordinate;
+    return new Coordinate(coordinate);
   }
 
   /**

@@ -62,37 +62,117 @@ public class PlanetView extends BlackPanel {
    */
   private static final long serialVersionUID = 1L;
 
+  /**
+   * Farm production panel for colonized planet.
+   */
   private WorkerProductionPanel farmPanel;
+  /**
+   * Metal production panel for colonized planet.
+   */
   private WorkerProductionPanel minePanel;
+  /**
+   * Production production panel for colonized planet.
+   */
   private WorkerProductionPanel factoryPanel;
+  /**
+   * Research production panel for colonized planet.
+   */
   private WorkerProductionPanel resePanel;
+  /**
+   * Tax production panel for colonized planet.
+   */
   private WorkerProductionPanel taxPanel;
 
+  /**
+   * Culture production panel for colonized planet.
+   */
   private IconLabel cultureLabel;
 
+  /**
+   * Label for total population for planet.
+   */
   private IconLabel totalPeople;
+  /**
+   * Label for population growth for planet.
+   */
   private IconLabel peopleGrowth;
+  /**
+   * Label for food production.
+   */
   private IconLabel farmProd;
+  /**
+   * Label for metal production.
+   */
   private IconLabel mineProd;
+  /**
+   * Label for production production.
+   */
   private IconLabel prodProd;
+  /**
+   * Label for research production.
+   */
   private IconLabel reseProd;
+  /**
+   * Label for culture production.
+   */
   private IconLabel cultProd;
+  /**
+   * Label for credits production.
+   */
   private IconLabel credProd;
+  /**
+   * Label for colonized planet maintenance costs
+   */
   private IconLabel maintenance;
+  /**
+   * Label for metal which has been mined from the planet and
+   * available for building.
+   */
   private IconLabel metal;
+  /**
+   * Label for amount ore in planet which is available for mining.
+   */
   private IconLabel metalOre;
+  /**
+   * JCombobox for selected construction for planet
+   */
   private JComboBox<Construction> constructionSelect;
+  /**
+   * How many buildings are on planet and maximum number of buildings on
+   * planet.
+   */
   private TransparentLabel buildingLabel;
+  /**
+   * Estimate how long it takes to build construction.
+   */
   private TransparentLabel buildingEstimate;
+  /**
+   * New construction information text.
+   */
   private InfoTextArea productionInfo;
+  /**
+   * Building information text.
+   */
   private InfoTextArea buildingInfo;
+  /**
+   * Buildings on planet in a list
+   */
   private JList<Building> buildingList;
+  /**
+   * Button for demolish buildings from planet. This same button
+   * can be used recycle buildings.
+   */
   private SpaceButton demolishBuildingBtn;
   /**
    * Planet to show
    */
   private Planet planet;
 
+  /**
+   * Planet view constructor. Planet view for viewing planet.
+   * @param planet Planet to view
+   * @param listener Action listener for commands
+   */
   public PlanetView(final Planet planet, final ActionListener listener) {
     this.setPlanet(planet);
     // Background image
@@ -275,40 +355,38 @@ public class PlanetView extends BlackPanel {
     topPanel.setTitle(planet.getName());
 
     InvisiblePanel eastPanel = new InvisiblePanel(imgBase);
-    if (planet != null) {
-      buildingLabel = new TransparentLabel(eastPanel, "Buildings("
-          + planet.getUsedPlanetSize() + "/" + planet.getGroundSize() + "):");
-      buildingLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-      eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
-      eastPanel.add(buildingLabel);
-      buildingList = new JList<>(planet.getBuildingList());
-      buildingList.setCellRenderer(new ProductionListRenderer());
-      buildingList.setAlignmentX(Component.LEFT_ALIGNMENT);
-      buildingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-      buildingList.setBackground(Color.BLACK);
-      JScrollPane scroll = new JScrollPane(buildingList);
-      scroll.setBackground(Color.BLACK);
-      scroll.setPreferredSize(new Dimension(200, 200));
-      eastPanel.add(scroll);
-      buildingInfo = new InfoTextArea(5, 35);
-      buildingInfo.setFont(GuiStatics.getFontCubellanSmaller());
-      buildingInfo.setEditable(false);
-      eastPanel.add(buildingInfo);
-      String demoBtnText = "Demolish";
-      if (planet.getRecycleBonus() > 0) {
-        demoBtnText = "Recycle";
-      }
-      demolishBuildingBtn = new SpaceButton(demoBtnText,
-          GameCommands.COMMAND_DEMOLISH_BUILDING);
-      demolishBuildingBtn
-          .setSpaceIcon(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
-      demolishBuildingBtn.addActionListener(listener);
-      eastPanel.add(demolishBuildingBtn);
+    buildingLabel = new TransparentLabel(eastPanel, "Buildings("
+        + planet.getUsedPlanetSize() + "/" + planet.getGroundSize() + "):");
+    buildingLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
+    eastPanel.add(buildingLabel);
+    buildingList = new JList<>(planet.getBuildingList());
+    buildingList.setCellRenderer(new ProductionListRenderer());
+    buildingList.setAlignmentX(Component.LEFT_ALIGNMENT);
+    buildingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    buildingList.setBackground(Color.BLACK);
+    JScrollPane scroll = new JScrollPane(buildingList);
+    scroll.setBackground(Color.BLACK);
+    scroll.setPreferredSize(new Dimension(200, 200));
+    eastPanel.add(scroll);
+    buildingInfo = new InfoTextArea(5, 35);
+    buildingInfo.setFont(GuiStatics.getFontCubellanSmaller());
+    buildingInfo.setEditable(false);
+    eastPanel.add(buildingInfo);
+    String demoBtnText = "Demolish";
+    if (planet.getRecycleBonus() > 0) {
+      demoBtnText = "Recycle";
+    }
+    demolishBuildingBtn = new SpaceButton(demoBtnText,
+        GameCommands.COMMAND_DEMOLISH_BUILDING);
+    demolishBuildingBtn
+        .setSpaceIcon(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+    demolishBuildingBtn.addActionListener(listener);
+    eastPanel.add(demolishBuildingBtn);
 
-      imgBase.setLayout(new BorderLayout());
-      if (planet.getPlanetOwnerIndex() != -1) {
-        imgBase.add(eastPanel, BorderLayout.EAST);
-      }
+    imgBase.setLayout(new BorderLayout());
+    if (planet.getPlanetOwnerIndex() != -1) {
+      imgBase.add(eastPanel, BorderLayout.EAST);
     }
 
     // Bottom panel

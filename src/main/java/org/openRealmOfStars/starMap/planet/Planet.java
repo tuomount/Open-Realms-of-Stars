@@ -293,21 +293,6 @@ public class Planet {
   /**
    * Create random planet with name + orderNumber with Roman numbers.
    * Other planet attributes are randomized.
-   * @param x Planet's X coordinate
-   * @param y Planet's Y coordinate
-   * @param name Planet name
-   * @param orderNumber as integer
-   * @param gasGiant Is planet inhabitable gas giant
-   * @deprecated Replaced by {@link #Planet(Coordinate, String, int, boolean)}
-   */
-  public Planet(final int x, final int y, final String name,
-      final int orderNumber, final boolean gasGiant) {
-    this(new Coordinate(x, y), name, orderNumber, gasGiant);
-  }
-
-  /**
-   * Create random planet with name + orderNumber with Roman numbers.
-   * Other planet attributes are randomized.
    * @param coordinate Planet's coordinate
    * @param name Planet name
    * @param orderNumber as integer
@@ -847,11 +832,11 @@ public class Planet {
   }
 
   public Coordinate getCoordinate() {
-    return coordinate;
+    return new Coordinate(coordinate);
   }
 
   public void setCoordinate(Coordinate coordinate) {
-    this.coordinate = coordinate;
+    this.coordinate = new Coordinate(coordinate);
   }
 
   /**
@@ -1173,7 +1158,7 @@ public class Planet {
               getName() + " has population growth!" + "Population is now "
                   + getTotalPopulation(),
               Icons.getIconByName(Icons.ICON_PEOPLE));
-          msg.setCoordinate(getX(), getY());
+          msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
         }
@@ -1200,7 +1185,7 @@ public class Planet {
               getName() + " has " + workerName + " died!\n"
                   + "Population is now " + getTotalPopulation(),
               Icons.getIconByName(Icons.ICON_DEATH));
-          msg.setCoordinate(getX(), getY());
+          msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
         }
@@ -1217,7 +1202,7 @@ public class Planet {
           msg = new Message(MessageType.CONSTRUCTION,
               getName() + " built " + underConstruction.getName(),
               Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
-          msg.setCoordinate(getX(), getY());
+          msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
         } else if (underConstruction instanceof Ship) {
@@ -1286,7 +1271,7 @@ public class Planet {
           msg = new Message(MessageType.CONSTRUCTION,
               getName() + " built " + underConstruction.getName(),
               Icons.getIconByName(Icons.ICON_HULL_TECH));
-          msg.setCoordinate(getX(), getY());
+          msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
         } else {
@@ -1298,7 +1283,7 @@ public class Planet {
             msg = new Message(MessageType.CONSTRUCTION,
                 getName() + " built " + underConstruction.getName(),
                 Icons.getIconByName(Icons.ICON_PEOPLE));
-            msg.setCoordinate(getX(), getY());
+            msg.setCoordinate(getCoordinate());
             msg.setMatchByString(getName());
             planetOwnerInfo.getMsgList().addNewMessage(msg);
           }
@@ -1310,7 +1295,7 @@ public class Planet {
             msg = new Message(MessageType.CONSTRUCTION,
                 getName() + " built " + underConstruction.getName(),
                 Icons.getIconByName(Icons.ICON_CULTURE));
-            msg.setCoordinate(getX(), getY());
+            msg.setCoordinate(getCoordinate());
             msg.setMatchByString(getName());
             planetOwnerInfo.getMsgList().addNewMessage(msg);
           }
@@ -1323,7 +1308,7 @@ public class Planet {
             msg = new Message(MessageType.CONSTRUCTION,
                 getName() + " built " + underConstruction.getName(),
                 Icons.getIconByName(Icons.ICON_CREDIT));
-            msg.setCoordinate(getX(), getY());
+            msg.setCoordinate(getCoordinate());
             msg.setMatchByString(getName());
             planetOwnerInfo.getMsgList().addNewMessage(msg);
           }

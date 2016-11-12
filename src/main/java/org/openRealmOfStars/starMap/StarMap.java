@@ -551,7 +551,7 @@ public class StarMap {
               MessageType.PLANETARY, playerInfo.getEmpireName() + " starts at "
                   + planet.getName() + ".",
               Icons.getIconByName(Icons.ICON_CULTURE));
-          msg.setCoordinate(planet.getX(), planet.getY());
+          msg.setCoordinate(planet.getCoordinate());
           msg.setMatchByString(planet.getName());
           playerInfo.getMsgList().addNewMessage(msg);
           planet.setPlanetOwner(playerIndex, playerInfo);
@@ -589,7 +589,7 @@ public class StarMap {
             msg = new Message(MessageType.FLEET,
                 fleet.getName() + " is waiting for orders.",
                 Icons.getIconByName(Icons.ICON_HULL_TECH));
-            msg.setCoordinate(planet.getX(), planet.getY());
+            msg.setCoordinate(planet.getCoordinate());
             msg.setMatchByString(fleet.getName());
             playerInfo.getMsgList().addNewMessage(msg);
             count++;

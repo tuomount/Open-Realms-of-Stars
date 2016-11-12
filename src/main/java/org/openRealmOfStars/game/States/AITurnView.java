@@ -285,8 +285,8 @@ public class AITurnView extends BlackPanel {
       for (Planet planet : planets) {
         if (planet.getRadiationLevel() <= info.getRace().getMaxRad()
             && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
-            && info.getSectorVisibility(planet.getX(),
-                planet.getY()) == PlayerInfo.VISIBLE) {
+            && info.getSectorVisibility(planet.getCoordinate())
+            == PlayerInfo.VISIBLE) {
           // New planet to colonize, adding it to mission list
           Mission mission = new Mission(MissionType.COLONIZE,
               MissionPhase.PLANNING, planet.getCoordinate());
@@ -300,8 +300,8 @@ public class AITurnView extends BlackPanel {
         if (planet.getRadiationLevel() <= info.getRace().getMaxRad()
             && planet.getPlanetPlayerInfo() != null
             && planet.getPlanetPlayerInfo() != info && !planet.isGasGiant()
-            && info.getSectorVisibility(planet.getX(),
-                planet.getY()) == PlayerInfo.VISIBLE) {
+            && info.getSectorVisibility(planet.getCoordinate())
+            == PlayerInfo.VISIBLE) {
           // New planet to conquer, adding it to mission list
           Mission mission = new Mission(MissionType.ATTACK,
               MissionPhase.PLANNING, planet.getCoordinate());
@@ -375,7 +375,7 @@ public class AITurnView extends BlackPanel {
                           + " has reached it's target and waiting for orders.",
                       Icons.getIconByName(Icons.ICON_HULL_TECH));
                   msg.setMatchByString(fleet.getName());
-                  msg.setCoordinate(fleet.getX(), fleet.getY());
+                  msg.setCoordinate(fleet.getCoordinate());
                   info.getMsgList().addNewMessage(msg);
                 } else {
                   if (fleet.getRoute().isFixing()) {
@@ -396,7 +396,7 @@ public class AITurnView extends BlackPanel {
                               + " has been fixed and waiting for orders.",
                           Icons.getIconByName(Icons.ICON_HULL_TECH));
                       msg.setMatchByString(fleet.getName());
-                      msg.setCoordinate(fleet.getX(), fleet.getY());
+                      msg.setCoordinate(fleet.getCoordinate());
                       info.getMsgList().addNewMessage(msg);
                     }
                   }
@@ -409,7 +409,7 @@ public class AITurnView extends BlackPanel {
                         + " has encouter obstacle and waiting for more orders.",
                     Icons.getIconByName(Icons.ICON_HULL_TECH));
                 msg.setMatchByString(fleet.getName());
-                msg.setCoordinate(fleet.getX(), fleet.getY());
+                msg.setCoordinate(fleet.getCoordinate());
                 info.getMsgList().addNewMessage(msg);
               }
             }
@@ -419,7 +419,7 @@ public class AITurnView extends BlackPanel {
                 fleet.getName() + " is waiting for orders.",
                 Icons.getIconByName(Icons.ICON_HULL_TECH));
             msg.setMatchByString(fleet.getName());
-            msg.setCoordinate(fleet.getX(), fleet.getY());
+            msg.setCoordinate(fleet.getCoordinate());
             info.getMsgList().addNewMessage(msg);
           }
           fleet.movesLeft = fleet.getFleetSpeed();

@@ -32,6 +32,10 @@ public class Coordinate {
         this.y = y;
     }
 
+    public Coordinate(Coordinate coordinate) {
+        this(coordinate.getX(), coordinate.getY());
+    }
+
     public int getX() {
         return x;
     }
@@ -57,6 +61,21 @@ public class Coordinate {
         int xDistance = Math.abs(otherCoordinate.getX() - getX());
         int yDistance = Math.abs(otherCoordinate.getY() - getY());
         return Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+    }
+
+    /**
+     * Check if coordinates are valid for this StarMap
+     * @param maxCoordinate Tha maximum coordinate
+     * @return true if valid and false if invalid
+     * @TODO: A bit confusing that maxCoordinate is not a valid coordinate
+     */
+    public boolean isValidCoordinate(Coordinate maxCoordinate) {
+        if (getX() >= 0 && getY() >= 0
+                && getX() < maxCoordinate.getX()
+                && getY() < maxCoordinate.getY()) {
+            return true;
+        }
+        return false;
     }
 
     @Override

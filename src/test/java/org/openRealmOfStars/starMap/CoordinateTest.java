@@ -1,11 +1,6 @@
 package org.openRealmOfStars.starMap;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
-import java.util.Arrays;
-import java.util.Collection;
 
 import static org.junit.Assert.*;
 
@@ -31,35 +26,37 @@ import static org.junit.Assert.*;
  * Test for Coordinate
  *
  */
-@RunWith(value = Parameterized.class)
 public class CoordinateTest {
 
-    private Coordinate firstCoordinate;
-    private Coordinate secondCoordinate;
-    private double expectedValue;
+    @Test
+    public void testCreateCoordinateFromXAndY() {
+        int x = 10;
+        int y = 15;
+        Coordinate coordinate = new Coordinate(x, y);
 
-    public CoordinateTest(Coordinate firstCoordinate, Coordinate secondCoordinate, double expectedValue) {
-        this.firstCoordinate = firstCoordinate;
-        this.secondCoordinate = secondCoordinate;
-        this.expectedValue = expectedValue;
-    }
-
-    @Parameterized.Parameters(name = "{index}: calculateDistance({0}, {1}) = {2}")
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {new Coordinate(0, 0), new Coordinate(0, 0), 0},
-                {new Coordinate(0, 0), new Coordinate(1, 0), 1},
-                {new Coordinate(0, 0), new Coordinate(0, 1), 1},
-                {new Coordinate(0, 0), new Coordinate(1, 1), 1.4142135623730951},
-                //@TODO: Add more test parameters to check the most critical part
-        });
+        assertEquals(x, coordinate.getX());
+        assertEquals(y, coordinate.getY());
     }
 
     @Test
-    public void testCalculateDistanceShouldReturnZeroWhenTheCoordinatesAreEquals() throws Exception {
-        double actualValue = firstCoordinate.calculateDistance(secondCoordinate);
+    public void testCreateCoordinateFromAnother() {
+        Coordinate originalCoordinate = new Coordinate(10, 15);
+        Coordinate coordinate = new Coordinate(originalCoordinate);
 
-        assertEquals(expectedValue, actualValue, 0);
+        assertEquals(originalCoordinate.getX(), coordinate.getX());
+        assertEquals(originalCoordinate.getY(), coordinate.getY());
+    }
+
+    @Test
+    public void testCreateCoordinateFromAnotherWithoutSideEffect() {
+        Coordinate originalCoordinate = new Coordinate(10, 15);
+        Coordinate coordinate = new Coordinate(originalCoordinate);
+
+        originalCoordinate.setX(5);
+        originalCoordinate.setY(10);
+
+        assertNotEquals(originalCoordinate.getX(), coordinate.getX());
+        assertNotEquals(originalCoordinate.getY(), coordinate.getY());
     }
 
 }

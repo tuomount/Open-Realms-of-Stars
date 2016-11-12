@@ -92,7 +92,7 @@ public final class Mission {
    * @param coordinate Target coordinate
    */
   public void setTarget(final Coordinate coordinate) {
-    targetCoordinate = coordinate;
+    targetCoordinate = new Coordinate(coordinate);
   }
 
   /**

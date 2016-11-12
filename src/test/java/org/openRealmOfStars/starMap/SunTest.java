@@ -1,6 +1,7 @@
 package org.openRealmOfStars.starMap;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -30,9 +31,8 @@ import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
  */
 public class SunTest {
 
-
     @Test
-    public void testCreateSunWithName(){
+    public void testCreateSunWithName() {
         Sun sun = new Sun(new Coordinate(10, 15), "Sun name");
 
         assertEquals("Sun name", sun.getName());
@@ -41,7 +41,7 @@ public class SunTest {
     }
 
     @Test
-    public void testCreateSunWithNameGenerator(){
+    public void testCreateSunWithNameGenerator() {
         RandomSystemNameGenerator nameGenerator = Mockito.mock(RandomSystemNameGenerator.class);
         Mockito.when(nameGenerator.generate()).thenReturn("Generated Solar System Sun name");
         Sun sun = new Sun(new Coordinate(10, 15), nameGenerator);
@@ -52,9 +52,26 @@ public class SunTest {
     }
 
     @Test
-    public void testSunShouldBeConvertedIntoString(){
+    public void testSunShouldBeConvertedIntoString() {
         Sun sun = new Sun(new Coordinate(10, 15), "Sun");
 
         assertEquals("Sun X:10 Y:15", sun.toString());
+    }
+
+    @Test
+    public void testSunCoordinateShouldChangeableWithSideEffect() {
+        Coordinate sunCoordinate = new Coordinate(10, 15);
+        Sun sun = new Sun(sunCoordinate, "Sun");
+
+        sunCoordinate.setX(5);
+        sunCoordinate.setY(10);
+
+        assertNotEquals(sun.getCenterCoordinate(), sunCoordinate);
+
+        Coordinate getSunCoordinate = sun.getCenterCoordinate();
+        getSunCoordinate.setX(5);
+        getSunCoordinate.setY(10);
+
+        assertNotEquals(sun.getCenterCoordinate(), getSunCoordinate);
     }
 }

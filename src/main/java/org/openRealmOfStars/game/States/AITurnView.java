@@ -285,8 +285,8 @@ public class AITurnView extends BlackPanel {
       for (Planet planet : planets) {
         if (planet.getRadiationLevel() <= info.getRace().getMaxRad()
             && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
-            && info.getSectorVisibility(planet.getX(),
-                planet.getY()) == PlayerInfo.VISIBLE) {
+            && info.getSectorVisibility(planet.getCoordinate())
+            == PlayerInfo.VISIBLE) {
           // New planet to colonize, adding it to mission list
           Mission mission = new Mission(MissionType.COLONIZE,
               MissionPhase.PLANNING, planet.getCoordinate());
@@ -300,8 +300,8 @@ public class AITurnView extends BlackPanel {
         if (planet.getRadiationLevel() <= info.getRace().getMaxRad()
             && planet.getPlanetPlayerInfo() != null
             && planet.getPlanetPlayerInfo() != info && !planet.isGasGiant()
-            && info.getSectorVisibility(planet.getX(),
-                planet.getY()) == PlayerInfo.VISIBLE) {
+            && info.getSectorVisibility(planet.getCoordinate())
+            == PlayerInfo.VISIBLE) {
           // New planet to conquer, adding it to mission list
           Mission mission = new Mission(MissionType.ATTACK,
               MissionPhase.PLANNING, planet.getCoordinate());

@@ -577,18 +577,28 @@ public class PlayerInfo {
 
   /**
    * Get sector visibility
-   * @param x X coordinate
-   * @param y Y coordinate
+   * @param coordinate coordinate
    * @return UNCHARTED, FOG_OF_WAR or VISIBLE
    */
-  public byte getSectorVisibility(final int x, final int y) {
+  public byte getSectorVisibility(final Coordinate coordinate) {
     byte result = UNCHARTED;
     try {
-      result = mapData[x][y];
+      result = mapData[coordinate.getX()][coordinate.getY()];
     } catch (ArrayIndexOutOfBoundsException e) {
       ErrorLogger.log(e);
     }
     return result;
+  }
+
+  /**
+   * Get sector visibility
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @return UNCHARTED, FOG_OF_WAR or VISIBLE
+   * @deprecated Replaced by {@link #getSectorVisibility(Coordinate)}
+   */
+  public byte getSectorVisibility(final int x, final int y) {
+    return getSectorVisibility(new Coordinate(x, y));
   }
 
   /**

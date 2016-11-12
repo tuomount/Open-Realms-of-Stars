@@ -54,7 +54,7 @@ public class Sun {
    * @param name Sun name if null then random generator applied
    */
   public Sun(final Coordinate coordinate, final String name) {
-    this.centerCoordinate = coordinate;
+    this.centerCoordinate = new Coordinate(coordinate);
     this.name = name;
   }
 
@@ -109,7 +109,7 @@ public class Sun {
    * @return Sun's Center coordinate
    */
   public Coordinate getCenterCoordinate() {
-    return centerCoordinate;
+    return new Coordinate(centerCoordinate);
   }
 
   @Override

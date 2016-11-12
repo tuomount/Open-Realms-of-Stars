@@ -99,13 +99,9 @@ public class PlayerInfo {
   private int[][] mapCloakDetection;
 
   /**
-   * Map X size
+   * Map size
    */
-  private int maxX;
-  /**
-   * Map Y size
-   */
-  private int maxY;
+  private Coordinate maxCoordinate;
 
   /**
    * Human player if true
@@ -297,8 +293,8 @@ public class PlayerInfo {
     initMapData(xSize, ySize);
     int mapOffset = 0;
     try {
-      for (int y = 0; y < maxY; y++) {
-        for (int x = 0; x < maxX; x++) {
+      for (int y = 0; y < maxCoordinate.getY(); y++) {
+        for (int x = 0; x < maxCoordinate.getX(); x++) {
           mapData[x][y] = dis.readByte();
           mapOffset++;
         }
@@ -330,13 +326,13 @@ public class PlayerInfo {
       shipStatList.get(i).saveShipStat(dos);
     }
     fleets.saveFleetList(dos);
-    dos.writeInt(maxX);
-    dos.writeInt(maxY);
+    dos.writeInt(maxCoordinate.getX());
+    dos.writeInt(maxCoordinate.getY());
     if (mapData == null) {
       throw new IOException("Map data is not initialized yet!");
     }
-    for (int y = 0; y < maxY; y++) {
-      for (int x = 0; x < maxX; x++) {
+    for (int y = 0; y < maxCoordinate.getY(); y++) {
+      for (int x = 0; x < maxCoordinate.getX(); x++) {
         dos.writeByte(mapData[x][y]);
       }
     }
@@ -382,7 +378,7 @@ public class PlayerInfo {
       startY = startY + my;
       int nx = (int) Math.round(startX);
       int ny = (int) Math.round(startY);
-      if (new Coordinate(nx, ny).isValidCoordinate(new Coordinate(maxX, maxY))
+      if (new Coordinate(nx, ny).isValidCoordinate(maxCoordinate)
           && mapData[nx][ny] == UNCHARTED) {
         result++;
       }
@@ -405,7 +401,7 @@ public class PlayerInfo {
           y < StarMap.SOLAR_SYSTEM_WIDTH + 3; y++) {
         Coordinate coordinate = new Coordinate(sun.getCenterX() + x,
             sun.getCenterY() + y);
-        if (coordinate.isValidCoordinate(new Coordinate(maxX, maxY))
+        if (coordinate.isValidCoordinate(maxCoordinate)
             && (x > 1 || x < -1 || y > 1 || y < -1)) {
           if (mapData[sun.getCenterX() + x][sun.getCenterY()
               + y] == UNCHARTED) {
@@ -452,7 +448,7 @@ public class PlayerInfo {
           sector = 3;
         }
         Coordinate sectorCoordinate = new Coordinate(sun.getCenterX() + x, sun.getCenterY() + y);
-        if (sectorCoordinate.isValidCoordinate(new Coordinate(maxX, maxY))
+        if (sectorCoordinate.isValidCoordinate(maxCoordinate)
             && (x > 1 || x < -1 || y > 1 || y < -1)) {
           if (mapData[sun.getCenterX() + x][sun.getCenterY()
               + y] == UNCHARTED) {
@@ -522,7 +518,7 @@ public class PlayerInfo {
           Coordinate fleetCoordinate = new Coordinate(fleet.getX(), fleet.getY());
           Coordinate coordinate = new Coordinate(nx, ny);
           double distance = fleetCoordinate.calculateDistance(coordinate);
-          if (coordinate.isValidCoordinate(new Coordinate(maxX, maxY)) && i >= scan && distance > 1
+          if (coordinate.isValidCoordinate(maxCoordinate) && i >= scan && distance > 1
               && mapData[nx][ny] == UNCHARTED) {
             temp = new PathPoint(nx, ny, distance);
             pathValue = calculateUnchartedLine(fleet.getX(), fleet.getY(), nx,
@@ -531,7 +527,7 @@ public class PlayerInfo {
           }
           coordinate = new Coordinate(sun.getCenterX(), ny);
           distance = fleetCoordinate.calculateDistance(coordinate);
-          if (temp == null && coordinate.isValidCoordinate(new Coordinate(maxX, maxY))
+          if (temp == null && coordinate.isValidCoordinate(maxCoordinate)
               && i >= scan && distance > 1
               && mapData[sun.getCenterX()][ny] == UNCHARTED) {
             temp = new PathPoint(sun.getCenterX(), ny, distance);
@@ -541,7 +537,7 @@ public class PlayerInfo {
           }
           coordinate = new Coordinate(nx, sun.getCenterY());
           distance = fleetCoordinate.calculateDistance(coordinate);
-          if (temp == null && coordinate.isValidCoordinate(new Coordinate(maxX, maxY))
+          if (temp == null && coordinate.isValidCoordinate(maxCoordinate)
               && i >= scan && distance > 1
               && mapData[nx][sun.getCenterY()] == UNCHARTED) {
             temp = new PathPoint(nx, sun.getCenterY(), distance);
@@ -574,10 +570,9 @@ public class PlayerInfo {
    * @param maximumY Map size in Y axel
    */
   public void initMapData(final int maximumX, final int maximumY) {
-    maxX = maximumX;
-    maxY = maximumY;
-    mapData = new byte[maxX][maxY];
-    mapCloakDetection = new int[maxX][maxY];
+    maxCoordinate = new Coordinate(maximumX, maximumY);
+    mapData = new byte[maximumX][maximumY];
+    mapCloakDetection = new int[maximumX][maximumY];
   }
 
   /**
@@ -646,8 +641,8 @@ public class PlayerInfo {
   }
 
   public void resetVisibilityDataAfterTurn() {
-    for (int y = 0; y < maxY; y++) {
-      for (int x = 0; x < maxX; x++) {
+    for (int y = 0; y < maxCoordinate.getY(); y++) {
+      for (int x = 0; x < maxCoordinate.getX(); x++) {
         mapCloakDetection[x][y] = 0;
         if (mapData[x][y] == VISIBLE) {
           mapData[x][y] = FOG_OF_WAR;

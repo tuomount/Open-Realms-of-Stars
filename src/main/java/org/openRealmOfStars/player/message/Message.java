@@ -165,7 +165,7 @@ public class Message {
    * @param coordinate coordinate
    */
   public void setCoordinate(final Coordinate coordinate) {
-    this.coordinate = coordinate;
+    this.coordinate = new Coordinate(coordinate);
   }
 
   public int getX() {

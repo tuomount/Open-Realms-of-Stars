@@ -847,11 +847,11 @@ public class Planet {
   }
 
   public Coordinate getCoordinate() {
-    return coordinate;
+    return new Coordinate(coordinate);
   }
 
   public void setCoordinate(Coordinate coordinate) {
-    this.coordinate = coordinate;
+    this.coordinate = new Coordinate(coordinate);
   }
 
   /**

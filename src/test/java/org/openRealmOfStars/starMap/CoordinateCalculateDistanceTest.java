@@ -28,17 +28,17 @@ import static org.junit.Assert.*;
  * along with this program; if not, see http://www.gnu.org/licenses/
  *
  *
- * Test for Coordinate
+ * Test for Coordinate.calculateDistance()
  *
  */
 @RunWith(value = Parameterized.class)
-public class CoordinateTest {
+public class CoordinateCalculateDistanceTest {
 
     private Coordinate firstCoordinate;
     private Coordinate secondCoordinate;
     private double expectedValue;
 
-    public CoordinateTest(Coordinate firstCoordinate, Coordinate secondCoordinate, double expectedValue) {
+    public CoordinateCalculateDistanceTest(Coordinate firstCoordinate, Coordinate secondCoordinate, double expectedValue) {
         this.firstCoordinate = firstCoordinate;
         this.secondCoordinate = secondCoordinate;
         this.expectedValue = expectedValue;

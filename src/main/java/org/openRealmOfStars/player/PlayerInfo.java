@@ -382,7 +382,7 @@ public class PlayerInfo {
       startY = startY + my;
       int nx = (int) Math.round(startX);
       int ny = (int) Math.round(startY);
-      if (isValidCoordinate(new Coordinate(nx, ny))
+      if (new Coordinate(nx, ny).isValidCoordinate(new Coordinate(maxX, maxY))
           && mapData[nx][ny] == UNCHARTED) {
         result++;
       }
@@ -405,7 +405,7 @@ public class PlayerInfo {
           y < StarMap.SOLAR_SYSTEM_WIDTH + 3; y++) {
         Coordinate coordinate = new Coordinate(sun.getCenterX() + x,
             sun.getCenterY() + y);
-        if (isValidCoordinate(coordinate)
+        if (coordinate.isValidCoordinate(new Coordinate(maxX, maxY))
             && (x > 1 || x < -1 || y > 1 || y < -1)) {
           if (mapData[sun.getCenterX() + x][sun.getCenterY()
               + y] == UNCHARTED) {
@@ -452,7 +452,7 @@ public class PlayerInfo {
           sector = 3;
         }
         Coordinate sectorCoordinate = new Coordinate(sun.getCenterX() + x, sun.getCenterY() + y);
-        if (isValidCoordinate(sectorCoordinate)
+        if (sectorCoordinate.isValidCoordinate(new Coordinate(maxX, maxY))
             && (x > 1 || x < -1 || y > 1 || y < -1)) {
           if (mapData[sun.getCenterX() + x][sun.getCenterY()
               + y] == UNCHARTED) {
@@ -522,7 +522,7 @@ public class PlayerInfo {
           Coordinate fleetCoordinate = new Coordinate(fleet.getX(), fleet.getY());
           Coordinate coordinate = new Coordinate(nx, ny);
           double distance = fleetCoordinate.calculateDistance(coordinate);
-          if (isValidCoordinate(coordinate) && i >= scan && distance > 1
+          if (coordinate.isValidCoordinate(new Coordinate(maxX, maxY)) && i >= scan && distance > 1
               && mapData[nx][ny] == UNCHARTED) {
             temp = new PathPoint(nx, ny, distance);
             pathValue = calculateUnchartedLine(fleet.getX(), fleet.getY(), nx,
@@ -531,7 +531,7 @@ public class PlayerInfo {
           }
           coordinate = new Coordinate(sun.getCenterX(), ny);
           distance = fleetCoordinate.calculateDistance(coordinate);
-          if (temp == null && isValidCoordinate(coordinate)
+          if (temp == null && coordinate.isValidCoordinate(new Coordinate(maxX, maxY))
               && i >= scan && distance > 1
               && mapData[sun.getCenterX()][ny] == UNCHARTED) {
             temp = new PathPoint(sun.getCenterX(), ny, distance);
@@ -541,7 +541,7 @@ public class PlayerInfo {
           }
           coordinate = new Coordinate(nx, sun.getCenterY());
           distance = fleetCoordinate.calculateDistance(coordinate);
-          if (temp == null && isValidCoordinate(coordinate)
+          if (temp == null && coordinate.isValidCoordinate(new Coordinate(maxX, maxY))
               && i >= scan && distance > 1
               && mapData[nx][sun.getCenterY()] == UNCHARTED) {
             temp = new PathPoint(nx, sun.getCenterY(), distance);
@@ -566,19 +566,6 @@ public class PlayerInfo {
       }
     }
     return result;
-  }
-
-  /**
-   * Check if coordinates are valid for this StarMap
-   * @param coordinate coordinate
-   * @return true if valid and false if invalid
-   */
-  private boolean isValidCoordinate(final Coordinate coordinate) {
-    if (coordinate.getX() >= 0 && coordinate.getY() >= 0
-        && coordinate.getX() < maxX && coordinate.getY() < maxY) {
-      return true;
-    }
-    return false;
   }
 
   /**

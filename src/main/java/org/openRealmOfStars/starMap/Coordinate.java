@@ -59,6 +59,21 @@ public class Coordinate {
         return Math.sqrt(xDistance * xDistance + yDistance * yDistance);
     }
 
+    /**
+     * Check if coordinates are valid for this StarMap
+     * @param maxCoordinate Tha maximum coordinate
+     * @return true if valid and false if invalid
+     * @TODO: A bit confusing that maxCoordinate is not a valid coordinate
+     */
+    public boolean isValidCoordinate(Coordinate maxCoordinate) {
+        if (getX() >= 0 && getY() >= 0
+                && getX() < maxCoordinate.getX()
+                && getY() < maxCoordinate.getY()) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "Coordinate(" + x + ", " + y + ")";

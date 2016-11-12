@@ -67,8 +67,18 @@ public class FleetView extends BlackPanel {
    */
   private static final long serialVersionUID = 1L;
 
+  /**
+   * Icon label showing for total amount of people on planet where
+   * fleet is orbiting.
+   */
   private IconLabel totalPeople;
+  /**
+   * Amount of metal on planet where fleet is orbiting.
+   */
   private IconLabel metal;
+  /**
+   * Planet owner's empire name if fleet is orbiting planet.
+   */
   private TransparentLabel ownerLabel;
 
   /**
@@ -118,6 +128,16 @@ public class FleetView extends BlackPanel {
    */
   private BigImagePanel imgBase;
 
+  /**
+   * Fleet view constructor. Fleet view is used when view fleet in deep space
+   * or fleet is orbiting a planet.
+   * @param planet Planet where fleet is orbiting. If planet is null
+   * then fleet is in deep space.
+   * @param fleet Fleet orbiting
+   * @param fleetList Player Fleet list
+   * @param playerInfo Player info who's fleet is being viewed
+   * @param listener Action listener for commands
+   */
   public FleetView(final Planet planet, final Fleet fleet,
       final FleetList fleetList, final PlayerInfo playerInfo,
       final ActionListener listener) {
@@ -434,26 +454,50 @@ public class FleetView extends BlackPanel {
     }
   }
 
+  /**
+   * Get fleet which orbiting
+   * @return Fleet
+   */
   public Fleet getFleet() {
     return fleet;
   }
 
+  /**
+   * Change fleet to view
+   * @param fleet New fleet to view
+   */
   public void setFleet(final Fleet fleet) {
     this.fleet = fleet;
   }
 
+  /**
+   * Get Fleet list for player
+   * @return FleetList
+   */
   public FleetList getFleetList() {
     return fleetList;
   }
 
+  /**
+   * Set Fleet list for view
+   * @param fleetList FleetList to change
+   */
   public void setFleetList(final FleetList fleetList) {
     this.fleetList = fleetList;
   }
 
+  /**
+   * Get PlayerInfo who owns fleet
+   * @return PlayerInfo
+   */
   public PlayerInfo getInfo() {
     return info;
   }
 
+  /**
+   * Set PlayerInfo for view
+   * @param info PlayerInfo
+   */
   public void setInfo(final PlayerInfo info) {
     this.info = info;
   }

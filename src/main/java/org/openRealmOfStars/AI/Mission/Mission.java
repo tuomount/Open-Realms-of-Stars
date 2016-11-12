@@ -74,19 +74,6 @@ public final class Mission {
    * Create new mission for AI
    * @param missionType MissionType
    * @param missionPhase Mission Phase
-   * @param tx Target X
-   * @param ty Target Y
-   * @deprecated Replaced by {@link #Mission(MissionType, MissionPhase, Coordinate)}
-   */
-  public Mission(final MissionType missionType, final MissionPhase missionPhase,
-      final int tx, final int ty) {
-    this(missionType, missionPhase, new Coordinate(tx, ty));
-  }
-
-  /**
-   * Create new mission for AI
-   * @param missionType MissionType
-   * @param missionPhase Mission Phase
    * @param coordinate Target coordinate
    */
   public Mission(final MissionType missionType, final MissionPhase missionPhase,
@@ -97,17 +84,6 @@ public final class Mission {
     setTarget(coordinate);
     targetPlanet = null;
 
-  }
-
-  /**
-   * Set the target's coordinate.
-   *
-   * @param x Target X coordinate
-   * @param y Target Y coordinate
-   * @deprecated Replaced by {@link #setTarget(Coordinate)}
-   */
-  public void setTarget(final int x, final int y) {
-    setTarget(new Coordinate(x, y));
   }
 
   /**

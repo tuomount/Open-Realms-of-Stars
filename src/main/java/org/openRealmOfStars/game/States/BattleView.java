@@ -298,8 +298,10 @@ public class BattleView extends BlackPanel {
         range = ai.getShip().getMinWeaponRange();
       }
       Coordinate aiCoordinate = new Coordinate(ai.getX(), ai.getY());
-      Coordinate deadliestCoordinate = new Coordinate(deadliest.getX(), deadliest.getY());
-      int distance = (int) Math.round(aiCoordinate.calculateDistance(deadliestCoordinate));
+      Coordinate deadliestCoordinate = new Coordinate(deadliest.getX(),
+          deadliest.getY());
+      int distance = (int) Math.round(aiCoordinate.calculateDistance(
+          deadliestCoordinate));
       if (range < distance - ai.getMovesLeft() && closest != null) {
         shot = handleAIShoot(ai, closest);
       }

@@ -32,6 +32,10 @@ public class Coordinate {
         this.y = y;
     }
 
+    public Coordinate(Coordinate coordinate) {
+        this(coordinate.getX(), coordinate.getY());
+    }
+
     public int getX() {
         return x;
     }

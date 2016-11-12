@@ -39,35 +39,12 @@ public class Sun {
 
   /**
    * Create the Sun with name and center coordinates
-   * @param cx X coordinate
-   * @param cy Y coordinate
-   * @param name Sun name if null then random generator applied
-   * @deprecated Replaced by {@link #Sun(Coordinate, String)}
-   */
-  public Sun(final int cx, final int cy, final String name) {
-    this(new Coordinate(cx, cy), name);
-  }
-
-  /**
-   * Create the Sun with name and center coordinates
    * @param coordinate coordinate
    * @param name Sun name if null then random generator applied
    */
   public Sun(final Coordinate coordinate, final String name) {
     this.centerCoordinate = new Coordinate(coordinate);
     this.name = name;
-  }
-
-  /**
-   * Create the Sun with name and center coordinates
-   * @param cx X coordinate
-   * @param cy Y coordinate
-   * @param nameGenerator random generator
-   * @deprecated Replaced by {@link #Sun(Coordinate, RandomSystemNameGenerator)}
-   */
-  public Sun(final int cx, final int cy,
-      final RandomSystemNameGenerator nameGenerator) {
-    this(new Coordinate(cx, cy), nameGenerator);
   }
 
   /**

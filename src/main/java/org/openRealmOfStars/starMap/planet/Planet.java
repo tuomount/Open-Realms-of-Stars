@@ -293,21 +293,6 @@ public class Planet {
   /**
    * Create random planet with name + orderNumber with Roman numbers.
    * Other planet attributes are randomized.
-   * @param x Planet's X coordinate
-   * @param y Planet's Y coordinate
-   * @param name Planet name
-   * @param orderNumber as integer
-   * @param gasGiant Is planet inhabitable gas giant
-   * @deprecated Replaced by {@link #Planet(Coordinate, String, int, boolean)}
-   */
-  public Planet(final int x, final int y, final String name,
-      final int orderNumber, final boolean gasGiant) {
-    this(new Coordinate(x, y), name, orderNumber, gasGiant);
-  }
-
-  /**
-   * Create random planet with name + orderNumber with Roman numbers.
-   * Other planet attributes are randomized.
    * @param coordinate Planet's coordinate
    * @param name Planet name
    * @param orderNumber as integer

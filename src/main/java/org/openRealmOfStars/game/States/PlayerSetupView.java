@@ -96,7 +96,8 @@ public class PlayerSetupView extends BlackPanel {
     if (this.config == null) {
       this.config = new GalaxyConfig();
     }
-    Planet planet = new Planet(new Coordinate(1, 1), "Galaxy Creation Planet", 2, false);
+    Planet planet = new Planet(new Coordinate(1, 1), "Galaxy Creation Planet",
+        2, false);
     if (DiceGenerator.getRandom(100) < 10) {
       planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
       planet.setGasGiant(true);
@@ -235,6 +236,10 @@ public class PlayerSetupView extends BlackPanel {
     return xinvis;
   }
 
+  /**
+   * Get galaxy and player for of player setup.
+   * @return Galaxy and player configuration
+   */
   public GalaxyConfig getConfig() {
     return config;
   }

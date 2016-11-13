@@ -23,14 +23,11 @@ import org.junit.Test;
  * 
  * 
  * Test for Route class
- * 
+ * @TODO: Mock dependencies
  */
 public class RouteTest {
 
   @Test
-  /**
-   * Test route calculations
-   */
   public void testRoute() {
     Route route = new Route(3, 3, 5, 5, 1);
     assertEquals(2, route.timeEstimate());
@@ -117,9 +114,6 @@ public class RouteTest {
   }
 
   @Test
-  /**
-   * Test defending route
-   */
   public void testIsDefending() {
     Route route = new Route(3, 3, 5, 5, 0);
     assertEquals(true,route.isDefending());
@@ -128,9 +122,8 @@ public class RouteTest {
     route = new Route(3, 3, 5, 5, Route.ROUTE_FIX);
     assertEquals(false,route.isDefending());
   }
-  /**
-   * Test fixing route
-   */
+
+  @Test
   public void testIsFixing() {
     Route route = new Route(3, 3, 5, 5, Route.ROUTE_FIX);
     assertEquals(true,route.isFixing());
@@ -139,4 +132,5 @@ public class RouteTest {
     route = new Route(3, 3, 5, 5, Route.ROUTE_DEFEND);
     assertEquals(false,route.isFixing());
   }
+
 }

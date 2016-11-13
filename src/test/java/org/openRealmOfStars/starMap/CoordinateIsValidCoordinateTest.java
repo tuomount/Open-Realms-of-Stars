@@ -47,11 +47,15 @@ public class CoordinateIsValidCoordinateTest {
     @Parameterized.Parameters(name = "{index}: {0}.isValidCoordinate({1}) = {2}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
+                {new Coordinate(-1, -1), new Coordinate(-1, -1), false},
                 {new Coordinate(-1, -1), new Coordinate(10, 10), false},
+                {new Coordinate(-1, 0), new Coordinate(10, 10), false},
+                {new Coordinate(0, -1), new Coordinate(10, 10), false},
                 {new Coordinate(0, 0), new Coordinate(10, 10), true},
                 {new Coordinate(9, 9), new Coordinate(10, 10), true},
+                {new Coordinate(9, 10), new Coordinate(10, 10), false},
+                {new Coordinate(10, 9), new Coordinate(10, 10), false},
                 {new Coordinate(10, 10), new Coordinate(10, 10), false},
-                //@TODO: Add more test parameters to check the most critical part
         });
     }
 

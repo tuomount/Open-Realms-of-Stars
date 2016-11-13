@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
  * 
  * 
  * Test for Ship Design class
- * 
+ * @TODO: Mock dependencies
  */
 public class ShipDesignTest {
 

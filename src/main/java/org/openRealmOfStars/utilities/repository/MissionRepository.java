@@ -61,7 +61,8 @@ public class MissionRepository {
    */
   public Mission restoreMission(final DataInputStream dis) throws IOException {
     Mission mission = new Mission(MissionType.getType(dis.readInt()),
-        MissionPhase.getType(dis.readInt()), new Coordinate(dis.readInt(), dis.readInt()));
+        MissionPhase.getType(dis.readInt()), new Coordinate(dis.readInt(),
+            dis.readInt()));
     mission.setMissionTime(dis.readInt());
     String str = IOUtilities.readString(dis);
     if (!str.isEmpty()) {

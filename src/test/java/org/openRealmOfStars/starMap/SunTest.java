@@ -33,7 +33,10 @@ public class SunTest {
 
     @Test
     public void testCreateSunWithName() {
-        Sun sun = new Sun(new Coordinate(10, 15), "Sun name");
+        Coordinate coordinate = Mockito.mock(Coordinate.class);
+        Mockito.when(coordinate.getX()).thenReturn(10);
+        Mockito.when(coordinate.getY()).thenReturn(15);
+        Sun sun = new Sun(coordinate, "Sun name");
 
         assertEquals("Sun name", sun.getName());
         assertEquals(10, sun.getCenterX());
@@ -43,8 +46,11 @@ public class SunTest {
     @Test
     public void testCreateSunWithNameGenerator() {
         RandomSystemNameGenerator nameGenerator = Mockito.mock(RandomSystemNameGenerator.class);
+        Coordinate coordinate = Mockito.mock(Coordinate.class);
         Mockito.when(nameGenerator.generate()).thenReturn("Generated Solar System Sun name");
-        Sun sun = new Sun(new Coordinate(10, 15), nameGenerator);
+        Mockito.when(coordinate.getX()).thenReturn(10);
+        Mockito.when(coordinate.getY()).thenReturn(15);
+        Sun sun = new Sun(coordinate, nameGenerator);
 
         assertEquals("Generated Solar System Sun name", sun.getName());
         assertEquals(10, sun.getCenterX());
@@ -53,10 +59,15 @@ public class SunTest {
 
     @Test
     public void testSunShouldBeConvertedIntoString() {
-        Sun sun = new Sun(new Coordinate(10, 15), "Sun");
+        Coordinate coordinate = Mockito.mock(Coordinate.class);
+        Mockito.when(coordinate.getX()).thenReturn(10);
+        Mockito.when(coordinate.getY()).thenReturn(15);
+        Sun sun = new Sun(coordinate, "Sun");
 
         assertEquals("Sun X:10 Y:15", sun.toString());
     }
+
+    /* -= Behaviour =- */
 
     @Test
     public void testSunCoordinateShouldChangeableWithSideEffect() {
@@ -74,4 +85,5 @@ public class SunTest {
 
         assertNotEquals(sun.getCenterCoordinate(), getSunCoordinate);
     }
+
 }

@@ -68,6 +68,9 @@ public class PlanetBombingView extends BlackPanel {
    *
    */
   private static final long serialVersionUID = 1L;
+  /**
+   * Maximum log rows
+   */
   static final int MAX_LOG_NUMBER = 11;
 
   /**
@@ -122,6 +125,9 @@ public class PlanetBombingView extends BlackPanel {
    */
   private InfoTextArea textArea;
 
+  /**
+   * Logger for handling logged message rows.
+   */
   private Logger textLogger;
 
   /**
@@ -149,6 +155,15 @@ public class PlanetBombingView extends BlackPanel {
    */
   private int attackPlayerIndex;
 
+  /**
+   * Constructor for PLanet bombing view. This view is used when
+   * player is conquering planet with bombs and/or troops.
+   * @param planet Planet to be conquered
+   * @param fleet Fleet conquering the planet
+   * @param attacker Player info who is attacking
+   * @param attackerPlayerIndex Player index who is attacking
+   * @param listener Action listener for commands
+   */
   public PlanetBombingView(final Planet planet, final Fleet fleet,
       final PlayerInfo attacker, final int attackerPlayerIndex,
       final ActionListener listener) {
@@ -279,10 +294,18 @@ public class PlanetBombingView extends BlackPanel {
     }
   }
 
+  /**
+   * Get attacking fleet
+   * @return Fleet
+   */
   public Fleet getFleet() {
     return fleet;
   }
 
+  /**
+   * Change attacking fleet
+   * @param fleet to change
+   */
   public void setFleet(final Fleet fleet) {
     this.fleet = fleet;
   }

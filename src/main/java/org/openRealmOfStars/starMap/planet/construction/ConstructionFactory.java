@@ -25,7 +25,14 @@ import org.openRealmOfStars.gui.icons.Icons;
  *
  */
 
-public class ConstructionFactory {
+public final class ConstructionFactory {
+
+  /**
+   * Hiding the constructor
+   */
+  private ConstructionFactory() {
+    // Nothing to do
+  }
 
   /**
    * Current maximum constructions for whole game.
@@ -35,6 +42,21 @@ public class ConstructionFactory {
   private static final int MAX_CONSTRUCTION = 3;
 
   /**
+   * Construction extra credit
+   */
+  private static final int CONSTRUCTION_EXTRA_CREDIT = 0;
+
+  /**
+   * Construction extra culture
+   */
+  private static final int CONSTRUCTION_EXTRA_CULTURE = 1;
+
+  /**
+   * Construction mechion citizen
+   */
+  private static final int CONSTRUCTION_MECHION_CITIZEN = 2;
+
+  /**
    * Create planetary construction with index
    * @param index For creating a new construction
    * @return Construction if index found otherwise null
@@ -42,22 +64,33 @@ public class ConstructionFactory {
   public static Construction create(final int index) {
     Construction tmp = null;
     switch (index) {
-    case 0:
+    case CONSTRUCTION_EXTRA_CREDIT:
       tmp = createConstruction(index);
       break; // Extra credit
-    case 1:
+    case CONSTRUCTION_EXTRA_CULTURE:
       tmp = createConstruction(index);
       break; // Extra culture
-    case 2:
+    case CONSTRUCTION_MECHION_CITIZEN:
       tmp = createConstruction(index);
       break; // Mechion citizen
+    default:
+      throw new IllegalArgumentException("Unknown construction: " + index);
     }
     return tmp;
   }
 
-  public final static String MECHION_CITIZEN = "Mechion citizen";
-  public final static String EXTRA_CREDIT = "Extra credit";
-  public final static String EXTRA_CULTURE = "Extra culture";
+  /**
+   * Mechion citizen construction
+   */
+  public static final String MECHION_CITIZEN = "Mechion citizen";
+  /**
+   * Extra credit construction
+   */
+  public static final String EXTRA_CREDIT = "Extra credit";
+  /**
+   * Extra culture construction
+   */
+  public static final String EXTRA_CULTURE = "Extra culture";
 
   /**
    * Create planetary construction with matching name
@@ -68,7 +101,9 @@ public class ConstructionFactory {
     Construction tmp = null;
     for (int i = 0; i < MAX_CONSTRUCTION; i++) {
       tmp = create(i);
-      if (tmp != null && tmp.getName().equalsIgnoreCase(name)) { return tmp; }
+      if (tmp != null && tmp.getName().equalsIgnoreCase(name)) {
+        return tmp;
+      }
     }
     return null;
   }
@@ -80,7 +115,7 @@ public class ConstructionFactory {
    */
   private static Construction createConstruction(final int index) {
     Construction tmp = null;
-    if (index == 0) {
+    if (index == CONSTRUCTION_EXTRA_CREDIT) {
       tmp = new Construction(EXTRA_CREDIT,
           Icons.getIconByName(Icons.ICON_CREDIT));
       tmp.setProdCost(10);
@@ -88,7 +123,7 @@ public class ConstructionFactory {
       tmp.setDescription("Build extra credits");
       return tmp;
     }
-    if (index == 1) {
+    if (index == CONSTRUCTION_EXTRA_CULTURE) {
       tmp = new Construction(EXTRA_CULTURE,
           Icons.getIconByName(Icons.ICON_CULTURE));
       tmp.setProdCost(10);
@@ -96,7 +131,7 @@ public class ConstructionFactory {
       tmp.setDescription("Build extra culture");
       return tmp;
     }
-    if (index == 2) {
+    if (index == CONSTRUCTION_MECHION_CITIZEN) {
       tmp = new Construction(MECHION_CITIZEN,
           Icons.getIconByName(Icons.ICON_PEOPLE));
       tmp.setProdCost(20);

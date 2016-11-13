@@ -91,7 +91,8 @@ public class GalaxyCreationView extends BlackPanel {
     } else {
       this.config = config;
     }
-    Planet planet = new Planet(new Coordinate(1, 1), "Galaxy Creation Planet", 1, false);
+    Planet planet = new Planet(new Coordinate(1, 1), "Galaxy Creation Planet",
+        1, false);
     if (DiceGenerator.getRandom(100) < 10) {
       planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
       planet.setGasGiant(true);
@@ -232,9 +233,33 @@ public class GalaxyCreationView extends BlackPanel {
     invisible.add(btn, BorderLayout.EAST);
     imgBase.add(invisible, BorderLayout.SOUTH);
     this.add(imgBase, BorderLayout.CENTER);
-
   }
 
+  /**
+   * Galaxy size configuration for very small galaxy
+   */
+  private static final int GALAXY_SIZE_VERY_SMALL = 50;
+
+  /**
+   * Galaxy size configuration for small galaxy
+   */
+  private static final int GALAXY_SIZE_SMALL = 75;
+  /**
+   * Galaxy size configuration for medium galaxy
+   */
+  private static final int GALAXY_SIZE_MEDIUM = 128;
+  /**
+   * Galaxy size configuration for large galaxy
+   */
+  private static final int GALAXY_SIZE_LARGE = 160;
+  /**
+   * Galaxy size configuration for very large galaxy
+   */
+  private static final int GALAXY_SIZE_VERY_LARGE = 200;
+  /**
+   * Galaxy size configuration for huge galaxy
+   */
+  private static final int GALAXY_SIZE_HUGE = 256;
   /**
    * Handle actions for Galaxy Creation view
    * @param arg0 The event to handle
@@ -246,37 +271,39 @@ public class GalaxyCreationView extends BlackPanel {
       switch (comboGalaxySize.getSelectedIndex()) {
       case 0: {
         // Very small
-        config.setSize(50, 50, comboGalaxySize.getSelectedIndex());
+        config.setSize(GALAXY_SIZE_VERY_SMALL,
+            comboGalaxySize.getSelectedIndex());
         break;
       }
       case 1: {
         // Small
-        config.setSize(75, 75, comboGalaxySize.getSelectedIndex());
+        config.setSize(GALAXY_SIZE_SMALL, comboGalaxySize.getSelectedIndex());
         break;
       }
       case 2: {
         // Medium
-        config.setSize(128, 128, comboGalaxySize.getSelectedIndex());
+        config.setSize(GALAXY_SIZE_MEDIUM, comboGalaxySize.getSelectedIndex());
         break;
       }
       case 3: {
         // Large
-        config.setSize(160, 160, comboGalaxySize.getSelectedIndex());
+        config.setSize(GALAXY_SIZE_LARGE, comboGalaxySize.getSelectedIndex());
         break;
       }
       case 4: {
         // Very Large
-        config.setSize(200, 200, comboGalaxySize.getSelectedIndex());
+        config.setSize(GALAXY_SIZE_VERY_LARGE,
+            comboGalaxySize.getSelectedIndex());
         break;
       }
       case 5: {
         // Huge
-        config.setSize(256, 256, comboGalaxySize.getSelectedIndex());
+        config.setSize(GALAXY_SIZE_HUGE, comboGalaxySize.getSelectedIndex());
         break;
       }
       default: {
         // SMALL
-        config.setSize(75, 75, comboGalaxySize.getSelectedIndex());
+        config.setSize(GALAXY_SIZE_SMALL, comboGalaxySize.getSelectedIndex());
         break;
       }
       }
@@ -310,6 +337,10 @@ public class GalaxyCreationView extends BlackPanel {
     }
   }
 
+  /**
+   * Get Galaxy configuration
+   * @return Galaxy configuration
+   */
   public GalaxyConfig getConfig() {
     return config;
   }

@@ -141,14 +141,13 @@ public class GalaxyConfig {
   }
 
   /**
-   * Set galaxy size
-   * @param x X size
-   * @param y Y Size
+   * Set galaxy size. Galaxy is set for square size
+   * @param size side length
    * @param galaxySize Galaxy size index in UI
    */
-  public void setSize(final int x, final int y, final int galaxySize) {
-    this.sizeX = x;
-    this.sizeY = x;
+  public void setSize(final int size, final int galaxySize) {
+    this.sizeX = size;
+    this.sizeY = size;
     this.galaxySizeIndex = galaxySize;
   }
 

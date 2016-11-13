@@ -125,6 +125,10 @@ public class StarMapView extends BlackPanel {
   private Game game;
 
   /**
+   * Amount space after research label in pixels.
+   */
+  private static final int SPACE_AFTER_RESEARCH_LABEL = 124;
+  /**
    * Star Map view
    * @param map Star map to view
    * @param players Player List
@@ -171,7 +175,8 @@ public class StarMapView extends BlackPanel {
             Planet.PRODUCTION_RESEARCH, this.players.getCurrentPlayer()));
     invis.add(reseProd);
     bottomPanel.add(invis);
-    bottomPanel.add(Box.createRigidArea(new Dimension(10, 124)));
+    bottomPanel.add(Box.createRigidArea(new Dimension(10,
+        SPACE_AFTER_RESEARCH_LABEL)));
 
     InvisiblePanel bottomBtnPanel = new InvisiblePanel(bottomPanel);
     bottomBtnPanel.setLayout(new GridLayout(3, 2));
@@ -333,30 +338,60 @@ public class StarMapView extends BlackPanel {
 
   }
 
+  /**
+   * Is auto focus enabled
+   * @return True if auto focus is enabled
+   */
   public boolean isAutoFocus() {
     return autoFocus;
   }
 
+  /**
+   * Set autofocus. If autofocus is enabled then messages will
+   * be automatically focused when changed.
+   * @param autoFocus true to enable auto focus
+   */
   public void setAutoFocus(final boolean autoFocus) {
     this.autoFocus = autoFocus;
   }
 
+  /**
+   * Get End Turn button
+   * @return SpaceButton
+   */
   public SpaceButton getEndTurnButton() {
     return endTurnButton;
   }
 
+  /**
+   * Get Credits production label
+   * @return IconLabel
+   */
   public IconLabel getCredProd() {
     return credProd;
   }
 
+  /**
+   * Get Research production label
+   * @return IconLabel
+   */
   public IconLabel getReseProd() {
     return reseProd;
   }
 
+  /**
+   * Is map ready to move with keys.
+   * @return True if map has already moved one sector on previous drawn
+   */
   public boolean getReadyToMove() {
     return readyToMove;
   }
 
+  /**
+   * Set Map Ready to move flag. This should be set only if map has been
+   * drawn after move.
+   * @param readyToMove true if map can move when pressing arrow keys.
+   */
   public void setReadyToMove(final boolean readyToMove) {
     this.readyToMove = readyToMove;
   }

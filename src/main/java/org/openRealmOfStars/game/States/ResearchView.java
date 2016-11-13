@@ -445,6 +445,14 @@ public class ResearchView extends BlackPanel {
 
   }
 
+  /**
+   * How many turns researching takes when marking it as it will never be
+   * finished on estimate
+   */
+  private static final int TIME_LIMIT_NEVER = 10000;
+  /**
+   * Update all component on research view panel.
+   */
   public void updatePanel() {
     int focus = player.getTechList().getTechFocus(TechType.Combat);
     int level = player.getTechList().getTechLevel(TechType.Combat);
@@ -457,7 +465,7 @@ public class ResearchView extends BlackPanel {
         (required - player.getTechList().getTechResearchPoints(TechType.Combat))
             / (focus * totalResearch / 100.0));
     String turnsInStr = turns + " turns";
-    if (turns > 10000) {
+    if (turns > TIME_LIMIT_NEVER) {
       turnsInStr = "never";
     }
     combatRese.setSliderValue(focus);
@@ -469,7 +477,8 @@ public class ResearchView extends BlackPanel {
       combatRese.setEnableUpgradeButton(true);
       combatRese.setUpgadeBtnToolTip("<html>Upgrade combat to " + (level + 1)
           + " level.<br>"
-          + " By upgrading you skip rest of technologies on your current level.</html>");
+          + " By upgrading you skip rest of technologies on your current level."
+          + "</html>");
     }
 
     focus = player.getTechList().getTechFocus(TechType.Defense);
@@ -483,7 +492,7 @@ public class ResearchView extends BlackPanel {
         - player.getTechList().getTechResearchPoints(TechType.Defense))
         / (focus * totalResearch / 100.0));
     turnsInStr = turns + " turns";
-    if (turns > 10000) {
+    if (turns > TIME_LIMIT_NEVER) {
       turnsInStr = "never";
     }
     defenseRese.setSliderValue(focus);
@@ -495,7 +504,8 @@ public class ResearchView extends BlackPanel {
       defenseRese.setEnableUpgradeButton(true);
       defenseRese.setUpgadeBtnToolTip("<html>Upgrade defense to " + (level + 1)
           + " level.<br>"
-          + " By upgrading you skip rest of technologies on your current level.</html>");
+          + " By upgrading you skip rest of technologies on your current level."
+          + "</html>");
     }
 
     focus = player.getTechList().getTechFocus(TechType.Hulls);
@@ -508,7 +518,7 @@ public class ResearchView extends BlackPanel {
         (required - player.getTechList().getTechResearchPoints(TechType.Hulls))
             / (focus * totalResearch / 100.0));
     turnsInStr = turns + " turns";
-    if (turns > 10000) {
+    if (turns > TIME_LIMIT_NEVER) {
       turnsInStr = "never";
     }
     hullRese.setSliderValue(focus);
@@ -520,7 +530,8 @@ public class ResearchView extends BlackPanel {
       hullRese.setEnableUpgradeButton(true);
       hullRese.setUpgadeBtnToolTip("<html>Upgrade hulls to " + (level + 1)
           + " level.<br>"
-          + " By upgrading you skip rest of technologies on your current level.</html>");
+          + " By upgrading you skip rest of technologies on your current level."
+          + "</html>");
     }
 
     focus = player.getTechList().getTechFocus(TechType.Improvements);
@@ -534,7 +545,7 @@ public class ResearchView extends BlackPanel {
         - player.getTechList().getTechResearchPoints(TechType.Improvements))
         / (focus * totalResearch / 100.0));
     turnsInStr = turns + " turns";
-    if (turns > 10000) {
+    if (turns > TIME_LIMIT_NEVER) {
       turnsInStr = "never";
     }
     improvementRese.setSliderValue(focus);
@@ -546,7 +557,8 @@ public class ResearchView extends BlackPanel {
       improvementRese.setEnableUpgradeButton(true);
       improvementRese.setUpgadeBtnToolTip("<html>Upgrade improvements to "
           + (level + 1) + " level.<br>"
-          + " By upgrading you skip rest of technologies on your current level.</html>");
+          + " By upgrading you skip rest of technologies on your current level."
+          + "</html>");
     }
 
     focus = player.getTechList().getTechFocus(TechType.Propulsion);
@@ -560,7 +572,7 @@ public class ResearchView extends BlackPanel {
         - player.getTechList().getTechResearchPoints(TechType.Propulsion))
         / (focus * totalResearch / 100.0));
     turnsInStr = turns + " turns";
-    if (turns > 10000) {
+    if (turns > TIME_LIMIT_NEVER) {
       turnsInStr = "never";
     }
     propulsionRese.setSliderValue(focus);
@@ -572,7 +584,8 @@ public class ResearchView extends BlackPanel {
       propulsionRese.setEnableUpgradeButton(true);
       propulsionRese.setUpgadeBtnToolTip("<html>Upgrade propulsion to "
           + (level + 1) + " level.<br>"
-          + " By upgrading you skip rest of technologies on your current level.</html>");
+          + " By upgrading you skip rest of technologies on your current level."
+          + "</html>");
     }
 
     focus = player.getTechList().getTechFocus(TechType.Electrics);
@@ -586,7 +599,7 @@ public class ResearchView extends BlackPanel {
         - player.getTechList().getTechResearchPoints(TechType.Electrics))
         / (focus * totalResearch / 100.0));
     turnsInStr = turns + " turns";
-    if (turns > 10000) {
+    if (turns > TIME_LIMIT_NEVER) {
       turnsInStr = "never";
     }
     electronicsRese.setSliderValue(focus);
@@ -598,7 +611,8 @@ public class ResearchView extends BlackPanel {
       electronicsRese.setEnableUpgradeButton(true);
       electronicsRese.setUpgadeBtnToolTip("<html>Upgrade electronics to "
           + (level + 1) + " level.<br>"
-          + " By upgrading you skip rest of technologies on your current level.</html>");
+          + " By upgrading you skip rest of technologies on your current level."
+          + "</html>");
     }
   }
 

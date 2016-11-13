@@ -68,7 +68,8 @@ public class LoadGameView extends BlackPanel {
    * @param listener ActionListener
    */
   public LoadGameView(final ActionListener listener) {
-    Planet planet = new Planet(new Coordinate(1, 1), "Load Game Planet", 1, false);
+    Planet planet = new Planet(new Coordinate(1, 1), "Load Game Planet", 1,
+        false);
     if (DiceGenerator.getRandom(100) < 10) {
       planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
       planet.setGasGiant(true);

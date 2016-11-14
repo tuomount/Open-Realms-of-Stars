@@ -157,9 +157,10 @@ public class StarMapMouseListener extends MouseAdapter
 
   @Override
   public void mouseMoved(final MouseEvent e) {
-    coord = new PixelsToMapCoordinate(mapPanel.getLastDrawnX(),
-        mapPanel.getLastDrawnY(), e.getX(), e.getY(), mapPanel.getOffsetX(),
-        mapPanel.getOffsetY(), mapPanel.getViewPointX(),
+    Coordinate center = new Coordinate(mapPanel.getLastDrawnX(),
+        mapPanel.getLastDrawnY());
+    coord = new PixelsToMapCoordinate(center, e.getX(), e.getY(),
+        mapPanel.getOffsetX(), mapPanel.getOffsetY(), mapPanel.getViewPointX(),
         mapPanel.getViewPointY(), false);
     if (!coord.isOutOfPanel()) {
       starMap.setCursorPos(coord.getMapX(), coord.getMapY());
@@ -193,9 +194,10 @@ public class StarMapMouseListener extends MouseAdapter
   public void mouseClicked(final MouseEvent e) {
     setDoubleClicked(false);
     setMoveClicked(false);
-    coord = new PixelsToMapCoordinate(mapPanel.getLastDrawnX(),
-        mapPanel.getLastDrawnY(), e.getX(), e.getY(), mapPanel.getOffsetX(),
-        mapPanel.getOffsetY(), mapPanel.getViewPointX(),
+    Coordinate center = new Coordinate(mapPanel.getLastDrawnX(),
+        mapPanel.getLastDrawnY());
+    coord = new PixelsToMapCoordinate(center, e.getX(), e.getY(),
+        mapPanel.getOffsetX(), mapPanel.getOffsetY(), mapPanel.getViewPointX(),
         mapPanel.getViewPointY(), false);
     if (!coord.isOutOfPanel()) {
       if (getLastClickedFleet() != null && mapPanel.getRoute() != null) {
@@ -203,8 +205,8 @@ public class StarMapMouseListener extends MouseAdapter
         mapPanel.setRoute(null);
         routePlanning = false;
       }
-      if (starMap.getCurrentPlayerInfo().getSectorVisibility(coord.getMapX(),
-          coord.getMapY()) == PlayerInfo.VISIBLE
+      if (starMap.getCurrentPlayerInfo().getSectorVisibility(
+          coord.getMapCoordinate()) == PlayerInfo.VISIBLE
           || e.getButton() == MouseEvent.BUTTON3) {
         Planet planet = starMap.getPlanetByCoordinate(coord.getMapX(),
             coord.getMapY());
@@ -228,9 +230,11 @@ public class StarMapMouseListener extends MouseAdapter
           if (lastClickedFleet != null) {
             moveX = coord.getMapX();
             moveY = coord.getMapY();
-            Coordinate lastClickedFleetCoordinate = new Coordinate(lastClickedFleet.getX(), lastClickedFleet.getY());
+            Coordinate lastClickedFleetCoordinate = new Coordinate(
+                lastClickedFleet.getX(), lastClickedFleet.getY());
             Coordinate moveCoordinate = new Coordinate(moveX, moveY);
-            double distance = lastClickedFleetCoordinate.calculateDistance(moveCoordinate);
+            double distance = lastClickedFleetCoordinate.calculateDistance(
+                moveCoordinate);
             if (distance < 2 && distance > 0) {
               moveClicked = true;
             }

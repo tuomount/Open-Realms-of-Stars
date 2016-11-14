@@ -591,17 +591,6 @@ public class PlayerInfo {
   }
 
   /**
-   * Get sector visibility
-   * @param x X coordinate
-   * @param y Y coordinate
-   * @return UNCHARTED, FOG_OF_WAR or VISIBLE
-   * @deprecated Replaced by {@link #getSectorVisibility(Coordinate)}
-   */
-  public byte getSectorVisibility(final int x, final int y) {
-    return getSectorVisibility(new Coordinate(x, y));
-  }
-
-  /**
    * Set sector visibility
    * @param x X coordinate
    * @param y Y coordinate

@@ -2,6 +2,7 @@ package org.openRealmOfStars.utilities;
 
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.player.ship.ShipImage;
+import org.openRealmOfStars.starMap.Coordinate;
 
 /**
  *
@@ -87,8 +88,7 @@ public class PixelsToMapCoordinate {
 
   /**
    * Convert pixel to map coordinate
-   * @param mx Center of map X
-   * @param my Center of map Y
+   * @param centerOfMap Center of map coordinates
    * @param px Pixel coordinate X
    * @param py Pixel coordinate Y
    * @param sx Start X pixel coordinate in panel
@@ -97,7 +97,7 @@ public class PixelsToMapCoordinate {
    * @param radY View port radius Y axel in star map
    * @param combat Is combat map or star map
    */
-  public PixelsToMapCoordinate(final int mx, final int my, final int px,
+  public PixelsToMapCoordinate(final Coordinate centerOfMap, final int px,
       final int py, final int sx, final int sy, final int radX, final int radY,
       final boolean combat) {
     startX = sx;
@@ -111,8 +111,8 @@ public class PixelsToMapCoordinate {
       endX = startX + numXTiles * Tile.MAX_WIDTH;
       endY = startY + numYTiles * Tile.MAX_HEIGHT;
     }
-    centerMapX = mx;
-    centerMapY = my;
+    centerMapX = centerOfMap.getX();
+    centerMapY = centerOfMap.getY();
     pixelX = px;
     pixelY = py;
     if (pixelX >= startX && pixelY >= startY && pixelX < endX
@@ -153,6 +153,19 @@ public class PixelsToMapCoordinate {
       return centerMapY + relativeMapY;
     }
     return -1;
+  }
+
+  /**
+   * Get map coordinates. Return coordinates(-1, -1) of coordinate cannot
+   * be calculated
+   * @return Coordinate
+   */
+  public Coordinate getMapCoordinate() {
+    if (!isOutOfPanel()) {
+      return new Coordinate(centerMapX + relativeMapX,
+          centerMapY + relativeMapY);
+    }
+    return new Coordinate(-1, -1);
   }
 
   /**

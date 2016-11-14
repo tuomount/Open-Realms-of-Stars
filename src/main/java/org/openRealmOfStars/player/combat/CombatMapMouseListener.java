@@ -100,9 +100,10 @@ public class CombatMapMouseListener extends MouseAdapter
 
   @Override
   public void mouseMoved(final MouseEvent e) {
-    coord = new PixelsToMapCoordinate(mapPanel.getLastDrawnX(),
-        mapPanel.getLastDrawnY(), e.getX(), e.getY(), mapPanel.getOffsetX(),
-        mapPanel.getOffsetY(), mapPanel.getViewPointX(),
+    Coordinate center = new Coordinate(mapPanel.getLastDrawnX(),
+        mapPanel.getLastDrawnY());
+    coord = new PixelsToMapCoordinate(center, e.getX(), e.getY(),
+        mapPanel.getOffsetX(), mapPanel.getOffsetY(), mapPanel.getViewPointX(),
         mapPanel.getViewPointY(), true);
     if (!coord.isOutOfPanel()) {
       combat.setCursorPos(coord.getMapX(), coord.getMapY());
@@ -114,9 +115,10 @@ public class CombatMapMouseListener extends MouseAdapter
 
   @Override
   public void mouseClicked(final MouseEvent e) {
-    coord = new PixelsToMapCoordinate(mapPanel.getLastDrawnX(),
-        mapPanel.getLastDrawnY(), e.getX(), e.getY(), mapPanel.getOffsetX(),
-        mapPanel.getOffsetY(), mapPanel.getViewPointX(),
+    Coordinate center = new Coordinate(mapPanel.getLastDrawnX(),
+        mapPanel.getLastDrawnY());
+    coord = new PixelsToMapCoordinate(center, e.getX(), e.getY(),
+        mapPanel.getOffsetX(), mapPanel.getOffsetY(), mapPanel.getViewPointX(),
         mapPanel.getViewPointY(), true);
     if (!coord.isOutOfPanel() && combat.getAnimation() == null) {
       if (componentUse != -1) {
@@ -145,10 +147,14 @@ public class CombatMapMouseListener extends MouseAdapter
           }
         }
       } else {
-        Coordinate currentShipCoordinate = new Coordinate(combat.getCurrentShip().getX(), combat.getCurrentShip().getY());
-        Coordinate coordinate = new Coordinate(coord.getMapX(), coord.getMapY());
-        int distance = (int) currentShipCoordinate.calculateDistance(coordinate);
-        if (distance == 1 && !combat.isBlocked(coord.getMapX(), coord.getMapY())
+        Coordinate currentShipCoordinate = new Coordinate(
+            combat.getCurrentShip().getX(), combat.getCurrentShip().getY());
+        Coordinate coordinate = new Coordinate(coord.getMapX(),
+            coord.getMapY());
+        int distance = (int) currentShipCoordinate.calculateDistance(
+            coordinate);
+        if (distance == 1 && !combat.isBlocked(coord.getMapX(),
+            coord.getMapY())
             && combat.getCurrentShip().getMovesLeft() > 0) {
           combat.getCurrentShip().setX(coord.getMapX());
           combat.getCurrentShip().setY(coord.getMapY());
@@ -160,34 +166,66 @@ public class CombatMapMouseListener extends MouseAdapter
 
   }
 
+  /**
+   * Is Route being planned
+   * @return True if route is being planned by player
+   */
   public boolean isRoutePlanning() {
     return routePlanning;
   }
 
+  /**
+   * Set route planning
+   * @param routePlanning boolean
+   */
   public void setRoutePlanning(final boolean routePlanning) {
     this.routePlanning = routePlanning;
   }
 
+  /**
+   * Which component was used.
+   * @return Component index or -1 if not used
+   */
   public int getComponentUse() {
     return componentUse;
   }
 
+  /**
+   * Set which component was used
+   * @param componentUse Component index or -1 if not used
+   */
   public void setComponentUse(final int componentUse) {
     this.componentUse = componentUse;
   }
 
+  /**
+   * Get currently active ship
+   * @return Combat Ship
+   */
   public CombatShip getActiveShip() {
     return activeShip;
   }
 
+  /**
+   * Set Active ship
+   * @param activeShip Combat ship
+   */
   public void setActiveShip(final CombatShip activeShip) {
     this.activeShip = activeShip;
   }
 
+  /**
+   * Get Ship damage
+   * @return ShipDamge
+   */
   public ShipDamage getShipDamage() {
     return shipDamage;
   }
 
+  /**
+   * Set ship damage
+   * @param shipDamage ShipDamage
+   */
   public void setShipDamage(final ShipDamage shipDamage) {
     this.shipDamage = shipDamage;
   }

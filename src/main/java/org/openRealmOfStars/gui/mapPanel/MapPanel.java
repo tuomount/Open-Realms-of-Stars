@@ -28,6 +28,7 @@ import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.SquareInfo;
@@ -334,8 +335,8 @@ public class MapPanel extends JPanel {
           gr.drawLine(pixelX, pixelY + Tile.MAX_HEIGHT - 1,
               pixelX + Tile.MAX_WIDTH - 1, pixelY + Tile.MAX_HEIGHT - 1);
         }
-        if (info != null && info.getSectorVisibility(i + cx,
-            j + cy) != PlayerInfo.UNCHARTED) {
+        if (info != null && info.getSectorVisibility(new Coordinate(i + cx,
+            j + cy)) != PlayerInfo.UNCHARTED) {
           CulturePower culture = starMap.getSectorCulture(i + cx, j + cy);
           if (culture != null) {
             int index = culture.getHighestCulture();
@@ -350,7 +351,8 @@ public class MapPanel extends JPanel {
         Tile tile = Tiles.getTileByIndex(map[i + cx][j + cy]);
         // Draw only non empty tiles
         if (info != null && !tile.getName().equals(TileNames.EMPTY)
-            && info.getSectorVisibility(i + cx, j + cy) != PlayerInfo.UNCHARTED
+            && info.getSectorVisibility(new Coordinate(i + cx,
+                j + cy)) != PlayerInfo.UNCHARTED
             || starMap.getTileInfo(i + cx, j + cy)
                 .getType() == SquareInfo.TYPE_SUN) {
           tile.draw(gr, pixelX, pixelY);
@@ -359,7 +361,8 @@ public class MapPanel extends JPanel {
         // Draw home world marker
         Planet planet = starMap.getPlanetByCoordinate(i + cx, j + cy);
         if (planet != null && !planet.isGasGiant() && info != null
-            && info.getSectorVisibility(i + cx, j + cy) != PlayerInfo.UNCHARTED
+            && info.getSectorVisibility(new Coordinate(i + cx,
+                j + cy)) != PlayerInfo.UNCHARTED
             && planet.getHomeWorldIndex() != -1) {
           Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
           icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
@@ -368,7 +371,8 @@ public class MapPanel extends JPanel {
 
         // Draw fleet
         if (info != null
-            && info.getSectorVisibility(i + cx, j + cy) == PlayerInfo.VISIBLE
+            && info.getSectorVisibility(new Coordinate(i + cx,
+                j + cy)) == PlayerInfo.VISIBLE
             && fleetMap[i + cx][j + cy] != null) {
           BufferedImage img = ShipImages
               .getByRace(fleetMap[i + cx][j + cy].getRace())
@@ -378,7 +382,8 @@ public class MapPanel extends JPanel {
 
         // Draw fog of war and uncharted tiles
         if (info != null) {
-          switch (info.getSectorVisibility(i + cx, j + cy)) {
+          switch (info.getSectorVisibility(new Coordinate(i + cx,
+              j + cy))) {
           case PlayerInfo.UNCHARTED: {
             if (starMap.getTileInfo(i + cx, j + cy)
                 .getType() != SquareInfo.TYPE_SUN) {
@@ -423,7 +428,8 @@ public class MapPanel extends JPanel {
             || tile.getName().equals(TileNames.GAS_GIANT_2_SE)
                 && i > -viewPointX)
             && planet != null && info != null && info
-                .getSectorVisibility(i + cx, j + cy) != PlayerInfo.UNCHARTED) {
+                .getSectorVisibility(new Coordinate(i + cx,
+                    j + cy)) != PlayerInfo.UNCHARTED) {
           int textWidth = (int) GuiStatics.getFontCubellanSC()
               .getStringBounds(RandomSystemNameGenerator.numberToRoman(
                   planet.getOrderNumber()), gr.getFontRenderContext())
@@ -441,7 +447,8 @@ public class MapPanel extends JPanel {
 
         // Draw planet text
         if (planet != null && !planet.isGasGiant() && info != null && info
-            .getSectorVisibility(i + cx, j + cy) != PlayerInfo.UNCHARTED) {
+            .getSectorVisibility(new Coordinate(i + cx,
+                j + cy)) != PlayerInfo.UNCHARTED) {
           int textWidth = (int) GuiStatics.getFontCubellanSC()
               .getStringBounds(RandomSystemNameGenerator.numberToRoman(
                   planet.getOrderNumber()), gr.getFontRenderContext())

@@ -36,7 +36,14 @@ import org.openRealmOfStars.utilities.IOUtilities;
  * Static GUI component like fonts and colors.
  *
  */
-public class GuiStatics {
+public final class GuiStatics {
+
+  /**
+   * Hiding the constructor for utility class
+   */
+  private GuiStatics() {
+    // Nothing to do
+  }
 
   /**
    *  Monospace font size 10
@@ -323,23 +330,53 @@ public class GuiStatics {
    */
   public static final Color COLOR_GREY_40 = new Color(40, 40, 40);
 
+  /**
+   * First color for explosion
+   */
   private static final Color EXPLOSION_COLOR_1 = new Color(255, 196, 18);
+  /**
+   * Second color for explosion
+   */
   private static final Color EXPLOSION_COLOR_2 = new Color(244, 101, 14);
+  /**
+   * Third color for explosion
+   */
   private static final Color EXPLOSION_COLOR_3 = new Color(255, 218, 72);
+  /**
+   * Fourth color for explosion
+   */
   private static final Color EXPLOSION_COLOR_4 = new Color(241, 223, 17);
+  /**
+   * Fifth color for explosion
+   */
   private static final Color EXPLOSION_COLOR_5 = new Color(255, 133, 13);
 
   /**
-   * Explosion color
+   * Explosion colors
    */
   public static final Color[] EXPLOSION_COLORS = {EXPLOSION_COLOR_1,
       EXPLOSION_COLOR_2, EXPLOSION_COLOR_3, EXPLOSION_COLOR_4,
       EXPLOSION_COLOR_5 };
 
+  /**
+   * First color for red beam
+   */
   private static final Color BEAM_COLOR_1 = new Color(255, 36, 0);
+  /**
+   * Second color for red beam
+   */
   private static final Color BEAM_COLOR_2 = new Color(255, 96, 0);
+  /**
+   * Third color for red beam
+   */
   private static final Color BEAM_COLOR_3 = new Color(255, 128, 0);
+  /**
+   * Fourth color for red beam
+   */
   private static final Color BEAM_COLOR_4 = new Color(255, 18, 0);
+  /**
+   * Fifth color for red beam
+   */
   private static final Color BEAM_COLOR_5 = new Color(255, 115, 77);
 
   /**
@@ -459,19 +496,19 @@ public class GuiStatics {
   /**
    * Star field image for parallax scrolling
    */
-  public static final BufferedImage starFieldImage = IOUtilities
+  public static final BufferedImage STAR_FIELD_IMAGE = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/starfield.png"));
 
   /**
    * Nebula image for parallax scrolling
    */
-  public static final BufferedImage nebulaeImage = IOUtilities
+  public static final BufferedImage NEBULAE_IMAGE = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/nebulae.png"));
 
   /**
    * Image used for calculation text width and heights.
    */
-  private static final BufferedImage tempImage = new BufferedImage(100, 100,
+  private static final BufferedImage TEMP_IMAGE = new BufferedImage(100, 100,
       BufferedImage.TYPE_4BYTE_ABGR);
 
   /**
@@ -521,7 +558,7 @@ public class GuiStatics {
    */
   public static int getTextWidth(final Font font, final String text) {
     if (font != null && text != null) {
-      Graphics2D g2d = tempImage.createGraphics();
+      Graphics2D g2d = TEMP_IMAGE.createGraphics();
       return (int) font.getStringBounds(text, g2d.getFontRenderContext())
           .getWidth();
     }
@@ -536,7 +573,7 @@ public class GuiStatics {
    */
   public static int getTextHeight(final Font font, final String text) {
     if (font != null && text != null) {
-      Graphics2D g2d = tempImage.createGraphics();
+      Graphics2D g2d = TEMP_IMAGE.createGraphics();
       return (int) font.getStringBounds(text, g2d.getFontRenderContext())
           .getHeight();
     }

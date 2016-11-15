@@ -258,18 +258,18 @@ public class MapPanel extends JPanel {
     }
     starMap.setDrawPos(cx, cy);
     // -20 for safety
-    int speedX = (GuiStatics.nebulaeImage.getWidth() - this.getWidth() - 20)
+    int speedX = (GuiStatics.NEBULAE_IMAGE.getWidth() - this.getWidth() - 20)
         / starMap.getMaxX();
-    int speedY = (GuiStatics.nebulaeImage.getHeight() - this.getHeight() - 20)
+    int speedY = (GuiStatics.NEBULAE_IMAGE.getHeight() - this.getHeight() - 20)
         / starMap.getMaxY();
-    int speedStarX = (GuiStatics.starFieldImage.getWidth() - this.getWidth()
+    int speedStarX = (GuiStatics.STAR_FIELD_IMAGE.getWidth() - this.getWidth()
         - 20) / starMap.getMaxX();
-    int speedStarY = (GuiStatics.starFieldImage.getHeight() - this.getHeight()
+    int speedStarY = (GuiStatics.STAR_FIELD_IMAGE.getHeight() - this.getHeight()
         - 20) / starMap.getMaxY();
     // Parallax Scrolling with just two lines!!!
-    gr.drawImage(GuiStatics.starFieldImage, -10 - cx * speedStarX,
+    gr.drawImage(GuiStatics.STAR_FIELD_IMAGE, -10 - cx * speedStarX,
         -10 - cy * speedStarY, null);
-    gr.drawImage(GuiStatics.nebulaeImage, -10 - cx * speedX, -10 - cy * speedY,
+    gr.drawImage(GuiStatics.NEBULAE_IMAGE, -10 - cx * speedX, -10 - cy * speedY,
         null);
 
     lastDrawnCenterX = cx;
@@ -499,11 +499,11 @@ public class MapPanel extends JPanel {
     int cy = starMap.getDrawY();
 
     // -20 for safety
-    int speedStarX = (GuiStatics.starFieldImage.getWidth() - this.getWidth()
+    int speedStarX = (GuiStatics.STAR_FIELD_IMAGE.getWidth() - this.getWidth()
         - 20) / starMap.getMaxX();
-    int speedStarY = (GuiStatics.starFieldImage.getHeight() - this.getHeight()
+    int speedStarY = (GuiStatics.STAR_FIELD_IMAGE.getHeight() - this.getHeight()
         - 20) / starMap.getMaxY();
-    gr.drawImage(GuiStatics.starFieldImage, -10 - cx * speedStarX,
+    gr.drawImage(GuiStatics.STAR_FIELD_IMAGE, -10 - cx * speedStarX,
         -10 - cy * speedStarY, null);
 
     int scaled = 16 * (flickerBlue - 128) / 256;

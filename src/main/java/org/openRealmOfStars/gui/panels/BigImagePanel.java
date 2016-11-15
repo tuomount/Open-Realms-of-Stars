@@ -228,7 +228,7 @@ public class BigImagePanel extends JPanel {
           + planet.getY();
     }
     if (drawStarField) {
-      g2d.drawImage(GuiStatics.starFieldImage, -sx, -sy, null);
+      g2d.drawImage(GuiStatics.STAR_FIELD_IMAGE, -sx, -sy, null);
     } else {
       this.setBackground(Color.black);
       g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
@@ -243,7 +243,7 @@ public class BigImagePanel extends JPanel {
         }
         g2d.drawImage(backgroundImg, offsetX, offsetY, null);
       } else {
-        g2d.drawImage(GuiStatics.nebulaeImage, -sx, -sy, null);
+        g2d.drawImage(GuiStatics.NEBULAE_IMAGE, -sx, -sy, null);
         int offsetX = (this.getWidth() - backgroundImg.getWidth()) / 2;
         int offsetY = (575 - backgroundImg.getHeight()) / 2;
         if (planet.isGasGiant()) {
@@ -253,7 +253,7 @@ public class BigImagePanel extends JPanel {
         g2d.drawImage(backgroundImg, offsetX, offsetY, null);
       }
     } else {
-      g2d.drawImage(GuiStatics.nebulaeImage, -sx, -sy, null);
+      g2d.drawImage(GuiStatics.NEBULAE_IMAGE, -sx, -sy, null);
     }
     if (animation != null) {
       if (animation

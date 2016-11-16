@@ -29,60 +29,225 @@ import org.openRealmOfStars.utilities.IOUtilities;
  *
  */
 
-public class Icons {
+public final class Icons {
 
+  /**
+   * Just hiding the constructor
+   */
+  private Icons() {
+    // Nothing to do
+  }
+  /**
+   * Mine icon
+   */
   public static final String ICON_MINE = "Mine";
+  /**
+   * Minus icon
+   */
   public static final String ICON_MINUS = "Minus";
+  /**
+   * Minus pressed icon
+   */
   public static final String ICON_MINUS_PRESSED = "Minus_Pressed";
+  /**
+   * Plus icon
+   */
   public static final String ICON_PLUS = "Plus";
+  /**
+   * Plus pressed icon
+   */
   public static final String ICON_PLUS_PRESSED = "Plus_Pressed";
+  /**
+   * Factory icon
+   */
   public static final String ICON_FACTORY = "Factory";
+  /**
+   * Farm icon
+   */
   public static final String ICON_FARM = "Farm";
+  /**
+   * Research icon
+   */
   public static final String ICON_RESEARCH = "Research";
+  /**
+   * Culture icon
+   */
   public static final String ICON_CULTURE = "Culture";
+  /**
+   * People icon
+   */
   public static final String ICON_PEOPLE = "People";
+  /**
+   * Death aka skull icon
+   */
   public static final String ICON_DEATH = "Death";
+  /**
+   * Credit or money icon
+   */
   public static final String ICON_CREDIT = "Credit";
+  /**
+   * Mined metal icon
+   */
   public static final String ICON_METAL = "Metal";
+  /**
+   * Metal ore icon
+   */
   public static final String ICON_METAL_ORE = "MetalOre";
+  /**
+   * Maintenance icon aka credit goes away
+   */
   public static final String ICON_MAINTENANCE = "Maintenance";
+  /**
+   * Tax icon aka credit goes in
+   */
   public static final String ICON_TAX = "Tax";
+  /**
+   * Combat tech icon aka big gun
+   */
   public static final String ICON_COMBAT_TECH = "CombatTech";
+  /**
+   * Defense tech icon aka bunker
+   */
   public static final String ICON_DEFENSE_TECH = "DefenseTech";
+  /**
+   * Hull tech icon aka space ship
+   */
   public static final String ICON_HULL_TECH = "HullTech";
+  /**
+   * Improvement tech icon aka construction tower
+   */
   public static final String ICON_IMPROVEMENT_TECH = "ImprovementTech";
+  /**
+   * Propulsion tech icon aka futuristic engine core
+   */
   public static final String ICON_PROPULSION_TECH = "PropulsionTech";
+  /**
+   * Electronics tech icon aka old computer
+   */
   public static final String ICON_ELECTRONICS_TECH = "ElectronicsTech";
+  /**
+   * Arrow up icon
+   */
   public static final String ICON_ARROWUP = "ArrowUp";
+  /**
+   * Arrow up icon pressed
+   */
   public static final String ICON_ARROWUP_PRESSED = "ArrowUp_Pressed";
+  /**
+   * Arrow up icon disabled
+   */
   public static final String ICON_ARROWUP_DISABLED = "ArrowUp_Disabled";
+  /**
+   * Empty icon so nothing to draw
+   */
   public static final String ICON_EMPTY = "Empty";
+  /**
+   * Scroll bar up arrow
+   */
   public static final String ICON_SCROLL_UP = "ScrollUp";
+  /**
+   * Scroll bar down arrow
+   */
   public static final String ICON_SCROLL_DOWN = "ScrollDown";
+  /**
+   * Scroll bar left arrow
+   */
   public static final String ICON_SCROLL_LEFT = "ScrollLeft";
+  /**
+   * Scroll bar right arrow
+   */
   public static final String ICON_SCROLL_RIGHT = "ScrollRight";
+  /**
+   * Scroll bar up arrow pressed
+   */
   public static final String ICON_SCROLL_UP_PRESSED = "ScrollUpPressed";
+  /**
+   * Scroll bar down arrow pressed
+   */
   public static final String ICON_SCROLL_DOWN_PRESSED = "ScrollDownPressed";
+  /**
+   * Scroll bar left arrow pressed
+   */
   public static final String ICON_SCROLL_LEFT_PRESSED = "ScrollLeftPressed";
+  /**
+   * Scroll bar right arrow pressed
+   */
   public static final String ICON_SCROLL_RIGHT_PRESSED = "ScrollRightPressed";
+  /**
+   * Missile icon
+   */
   public static final String ICON_MISSILE = "Missile";
+  /**
+   * Scanner icon
+   */
   public static final String ICON_SCANNER = "Scanner";
+  /**
+   * Armor icon
+   */
   public static final String ICON_ARMOR = "Armor";
+  /**
+   * Force field icon
+   */
   public static final String ICON_SHIELD = "Shield";
+  /**
+   * Cloaked ship icon
+   */
   public static final String ICON_CLOACKING_DEVICE = "CloackingDevice";
+  /**
+   * Troops icon
+   */
   public static final String ICON_TROOPS = "Troops";
+  /**
+   * Laser gun icon
+   */
   public static final String ICON_LASERGUN = "LaserGun";
+  /**
+   * Bomb icon
+   */
   public static final String ICON_BOMB = "Bomb";
+  /**
+   * Mushroom cloud icon
+   */
   public static final String ICON_NUKE = "Nuke";
+  /**
+   * Planetary turret icon
+   */
   public static final String ICON_PLANETARY_TURRET = "PlanetaryTurret";
+  /**
+   * Satellite icon
+   */
   public static final String ICON_STARBASE = "StarBase";
+  /**
+   * Radar beam icon
+   */
   public static final String ICON_LR_SCANNER = "LRScanner";
+  /**
+   * Circuit board icon
+   */
   public static final String ICON_CIRCUIT_BOARD = "CircuitBoard";
+  /**
+   * Radiation icon
+   */
   public static final String ICON_RADIATION = "Radiation";
+  /**
+   * Power core icon
+   */
   public static final String ICON_POWERSOURCE = "PowerSource";
+  /**
+   * Arrow down icon
+   */
   public static final String ICON_ARROWDOWN = "ArrowDown";
+  /**
+   * Green tick for OK icon
+   */
   public static final String ICON_OK = "IconOk";
+  /**
+   * Circle with line crossing it icon
+   */
   public static final String ICON_DELETE = "IconDelete";
+  /**
+   * Battery icon
+   */
   public static final String ICON_BATTERY = "IconBattery";
 
   /**

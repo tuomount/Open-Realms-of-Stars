@@ -86,7 +86,7 @@ public class Planet {
   /**
    * Planet order number in system
    */
-  private int OrderNumber;
+  private int orderNumber;
 
   /**
    * Planet's radiation level between 1-10.
@@ -138,7 +138,7 @@ public class Planet {
   private int planetImageIndex;
 
   /**
-   * Planet type: 0 Rock, 1 Water world
+   * Planet type see PLANET_IMAGE_INDEX
    */
   private int planetType;
 
@@ -291,6 +291,14 @@ public class Planet {
   public static final int PRODUCTION_POPULATION = 6;
 
   /**
+   * Minimum amount of ore on planets
+   */
+  private static final int MINIMUM_ORE = 2000;
+  /**
+   * Maximum amount of ore on planets
+   */
+  private static final int MAXIMUM_ORE = 10000;
+  /**
    * Create random planet with name + orderNumber with Roman numbers.
    * Other planet attributes are randomized.
    * @param coordinate Planet's coordinate
@@ -305,7 +313,8 @@ public class Planet {
         + RandomSystemNameGenerator.numberToRoman(orderNumber);
     this.setOrderNumber(orderNumber);
     this.setRadiationLevel(DiceGenerator.getRandom(1, 10));
-    this.setAmountMetalInGround(DiceGenerator.getRandom(2000, 10000));
+    this.setAmountMetalInGround(DiceGenerator.getRandom(MINIMUM_ORE,
+        MAXIMUM_ORE));
     this.setGroundSize(DiceGenerator.getRandom(7, 16));
     this.setMetal(0);
     this.gasGiant = gasGiant;
@@ -332,7 +341,7 @@ public class Planet {
       throws IOException {
     coordinate = new Coordinate(dis.readInt(), dis.readInt());
     name = IOUtilities.readString(dis);
-    OrderNumber = dis.readInt();
+    orderNumber = dis.readInt();
     radiationLevel = dis.readInt();
     groundSize = dis.readInt();
     amountMetalInGround = dis.readInt();
@@ -387,7 +396,7 @@ public class Planet {
     dos.writeInt(coordinate.getX());
     dos.writeInt(coordinate.getY());
     IOUtilities.writeString(dos, name);
-    dos.writeInt(OrderNumber);
+    dos.writeInt(orderNumber);
     dos.writeInt(radiationLevel);
     dos.writeInt(groundSize);
     dos.writeInt(amountMetalInGround);
@@ -462,13 +471,19 @@ public class Planet {
   public String getProductionTime(final Construction build) {
     int metalReq = build.getMetalCost() - getMetal();
     int prodReq = build.getProdCost() - getProdResource();
-    if (metalReq <= 0 && prodReq <= 0) { return "1 turn"; }
+    if (metalReq <= 0 && prodReq <= 0) {
+      return "1 turn";
+    }
     int metalTurn = getProductionTimeByProductionType(metalReq,
         PRODUCTION_METAL);
     int prodTurn = getProductionTimeByProductionType(prodReq,
         PRODUCTION_PRODUCTION);
-    if (prodTurn == -1 || metalTurn == -1) { return "Never"; }
-    if (prodTurn > metalTurn) { return prodTurn + " turns"; }
+    if (prodTurn == -1 || metalTurn == -1) {
+      return "Never";
+    }
+    if (prodTurn > metalTurn) {
+      return prodTurn + " turns";
+    }
     return metalTurn + " turns";
   }
 
@@ -478,6 +493,7 @@ public class Planet {
   * This can be used for both metal and production estimations.
   * @param productionReq How much production is required
   * @param productionType Either PRODUCTION_PRODUCTION or PRODUCTION_METAL
+  * @return Production time in turns
   */
   private int getProductionTimeByProductionType(final int productionReq,
       final int productionType) {
@@ -499,8 +515,9 @@ public class Planet {
    * @return Amount of workers
    */
   public int getWorkers(final int workerType) {
-    if (workerType >= 0
-        && workerType < MAX_WORKER_TYPE) { return workers[workerType]; }
+    if (workerType >= 0 && workerType < MAX_WORKER_TYPE) {
+      return workers[workerType];
+    }
     return 0;
   }
 
@@ -549,8 +566,11 @@ public class Planet {
   }
 
   /**
-   * Get Troop power
-   * Get Total troop power where improvements are taken to count
+   * Attack troops try to occupy planet by troops.
+   * This will cause planet colonist to be decreased according by attacking
+   * troops. If attacking troops win then left over must be calculated
+   * somewhere else.
+   * @param attackTroops Attacking troop power
    */
   public void fightAgainstAttacker(final int attackTroops) {
     if (planetOwnerInfo != null) {
@@ -590,12 +610,14 @@ public class Planet {
 
   /**
    * Get total production from planetary improvements.
-   * @param prod, Production to get: See all PRODUCTION_*
+   * @param prod Production to get: See all PRODUCTION_*
    * @return amount of production in one turn
    */
   private int getTotalProductionFromBuildings(final int prod) {
     int result = 0;
-    if (gasGiant || planetOwnerInfo == null) { return 0; }
+    if (gasGiant || planetOwnerInfo == null) {
+      return 0;
+    }
     switch (prod) {
     case PRODUCTION_FOOD: {
       for (Building build : getBuildingList()) {
@@ -637,6 +659,9 @@ public class Planet {
       result = 0;
       break;
     }
+    default: {
+      throw new IllegalArgumentException("Illegal production type!");
+    }
     }
     return result;
 
@@ -663,14 +688,16 @@ public class Planet {
   /**
    * Get total production from planet. This includes racial, worker, planetary
    * improvement bonus
-   * @param prod, Production to get: See all PRODUCTION_*
+   * @param prod Production to get: See all PRODUCTION_*
    * @return amount of production in one turn
    */
   public int getTotalProduction(final int prod) {
     int result = 0;
     int mult = 100;
     int div = 100;
-    if (gasGiant || planetOwnerInfo == null) { return 0; }
+    if (gasGiant || planetOwnerInfo == null) {
+      return 0;
+    }
     switch (prod) {
     case PRODUCTION_FOOD: {
       // Planet always produces +2 food
@@ -749,93 +776,177 @@ public class Planet {
       }
       break;
     }
+    default: {
+      throw new IllegalArgumentException("Illegal production type!");
+    }
     }
     return result;
   }
 
+  /**
+   * Get planet name
+   * @return Planet name as a String
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Set planet name
+   * @param name Planet name
+   */
   public void setName(final String name) {
     this.name = name;
   }
 
+  /**
+   * Get planet radiation level
+   * @return radiation level
+   */
   public int getRadiationLevel() {
     return radiationLevel;
   }
 
+  /**
+   * Set planet's radiation level
+   * @param radiationLevel Radiation level between 1 and 10
+   */
   public void setRadiationLevel(final int radiationLevel) {
     if (radiationLevel > 0 && radiationLevel < 11) {
       this.radiationLevel = radiationLevel;
     }
   }
 
+  /**
+   * How many buildings can be fitted on planet
+   * @return Maximum number of building can be fitted on planet
+   */
   public int getGroundSize() {
     return groundSize;
   }
 
+  /**
+   * Set ground size for planet
+   * @param groundSize Ground size is between 7 and 16
+   */
   public void setGroundSize(final int groundSize) {
     if (groundSize > 6 && groundSize < 17) {
       this.groundSize = groundSize;
     }
   }
 
+  /**
+   * How much ore is still available on planet
+   * @return amount ore in ground
+   */
   public int getAmountMetalInGround() {
     return amountMetalInGround;
   }
 
+  /**
+   * Change amount of ore
+   * @param amountMetalInGround New amount of metal on ground
+   */
   public void setAmountMetalInGround(final int amountMetalInGround) {
-    if (amountMetalInGround > 1999 && amountMetalInGround < 10001) {
+    if (amountMetalInGround >= MINIMUM_ORE
+        && amountMetalInGround <= MAXIMUM_ORE) {
       this.amountMetalInGround = amountMetalInGround;
     }
   }
 
+  /**
+   * How much of metal has been mined on planet and available for building.
+   * @return amount of metal available
+   */
   public int getMetal() {
     return metal;
   }
 
+  /**
+   * Set how much metal on planet
+   * @param metal How much metal available on planet
+   */
   public void setMetal(final int metal) {
     this.metal = metal;
   }
 
+  /**
+   * Planet order number in solar system
+   * @return Order number
+   */
   public int getOrderNumber() {
-    return OrderNumber;
+    return orderNumber;
   }
 
-  public void setOrderNumber(final int orderNumber) {
-    OrderNumber = orderNumber;
+  /**
+   * Set planet order number
+   * @param order Order number of planet in solar system
+   */
+  public void setOrderNumber(final int order) {
+    orderNumber = order;
   }
 
+  /**
+   * Is planet gas giant or not
+   * @return True if gas giant
+   */
   public boolean isGasGiant() {
     return gasGiant;
   }
 
+  /**
+   * Set gas giant flat
+   * @param gasGiant True if planet is gas giant
+   */
   public void setGasGiant(final boolean gasGiant) {
     this.gasGiant = gasGiant;
   }
 
+  /**
+   * Get planet's X coordinate
+   * @return X coordinate
+   */
   public int getX() {
     return coordinate.getX();
   }
 
+  /**
+   * Set planet's X coordinate
+   * @param x X coordinate
+   */
   public void setX(final int x) {
     coordinate.setX(x);
   }
 
+  /**
+   * Get planet's Y coordinate
+   * @return Y coordinate
+   */
   public int getY() {
     return coordinate.getY();
   }
 
+  /**
+   * Set planet's Y coordinate
+   * @param y Y coordinate
+   */
   public void setY(final int y) {
     coordinate.setY(y);
   }
 
+  /**
+   * Return planet's coordinates
+   * @return Coordinate
+   */
   public Coordinate getCoordinate() {
     return new Coordinate(coordinate);
   }
 
-  public void setCoordinate(Coordinate coordinate) {
+  /**
+   * Set planet's coordinate
+   * @param coordinate Planet's coordinate
+   */
+  public void setCoordinate(final Coordinate coordinate) {
     this.coordinate = new Coordinate(coordinate);
   }
 
@@ -987,6 +1098,10 @@ public class Planet {
     return buildings.size();
   }
 
+  /**
+   * Set planet image index
+   * @param planetImageIndex Image index of planet
+   */
   public void setPlanetImageIndex(final int planetImageIndex) {
     this.planetImageIndex = planetImageIndex;
   }
@@ -1065,6 +1180,7 @@ public class Planet {
   }
 
   /**
+   * Get Planet type
    * @return the planetType
    */
   public int getPlanetType() {
@@ -1072,6 +1188,7 @@ public class Planet {
   }
 
   /**
+   * Set Planet typ
    * @param planetType the planetType to set
    */
   public void setPlanetType(final int planetType) {
@@ -1082,6 +1199,7 @@ public class Planet {
   }
 
   /**
+   * Set planet owner index
    * @return the planetOwner
    */
   public int getPlanetOwnerIndex() {
@@ -1089,6 +1207,7 @@ public class Planet {
   }
 
   /**
+   * Get planet player info
    * @return the planet player info
    */
   public PlayerInfo getPlanetPlayerInfo() {
@@ -1097,10 +1216,11 @@ public class Planet {
 
   /**
    * Set Planet owner info and index. Use -1 and null for uncolonized.
-   * @param planetOwner the planetOwner to set
+   * @param ownerIndex the planetOwner to set
+   * @param info PlayerInfo for planet owner
    */
-  public void setPlanetOwner(final int planetOwner, final PlayerInfo info) {
-    this.planetOwner = planetOwner;
+  public void setPlanetOwner(final int ownerIndex, final PlayerInfo info) {
+    this.planetOwner = ownerIndex;
     this.planetOwnerInfo = info;
   }
 
@@ -1118,14 +1238,25 @@ public class Planet {
     this.prodResource = prodResource;
   }
 
+  /**
+   * Get the construction which is under construction
+   * @return Construction
+   */
   public Construction getUnderConstruction() {
     return underConstruction;
   }
 
+  /**
+   * Change construction to build
+   * @param underConstruction New construction to build
+   */
   public void setUnderConstruction(final Construction underConstruction) {
     this.underConstruction = underConstruction;
   }
 
+  /**
+   * Update planet for one turn
+   */
   public void updateOneTurn() {
     if (planetOwnerInfo != null) {
       int minedMetal = getTotalProduction(PRODUCTION_METAL);
@@ -1192,7 +1323,8 @@ public class Planet {
       }
 
       // Making building happens at the end
-      if (underConstruction != null && metal >= underConstruction.getMetalCost()
+      if (underConstruction != null
+          && metal >= underConstruction.getMetalCost()
           && prodResource >= underConstruction.getProdCost()) {
         if (underConstruction instanceof Building
             && groundSize > buildings.size()) {
@@ -1248,7 +1380,8 @@ public class Planet {
                   .getMission(MissionType.ATTACK, MissionPhase.PLANNING);
               if (mission != null) {
                 Mission newMiss = new Mission(MissionType.ATTACK,
-                    MissionPhase.TREKKING, new Coordinate(mission.getX(), mission.getY()));
+                    MissionPhase.TREKKING, new Coordinate(mission.getX(),
+                        mission.getY()));
                 if (ship.isTrooperModule()) {
                   newMiss.setPhase(MissionPhase.LOADING);
                 }
@@ -1385,6 +1518,10 @@ public class Planet {
     return result;
   }
 
+  /**
+   * Get planet's Turret level
+   * @return Turret Level
+   */
   public int getTurretLvl() {
     int result = 0;
     Building[] buildingsArray = getBuildingList();
@@ -1403,7 +1540,9 @@ public class Planet {
   public boolean hasSpacePort() {
     Building[] buildingsArray = getBuildingList();
     for (Building building : buildingsArray) {
-      if (building.getName().equals("Space port")) { return true; }
+      if (building.getName().equals("Space port")) {
+        return true;
+      }
     }
     return false;
   }
@@ -1440,6 +1579,10 @@ public class Planet {
     return result;
   }
 
+  /**
+   * Get planet's culture points
+   * @return culture points for planet
+   */
   public int getCulture() {
     return culture;
   }
@@ -1500,6 +1643,10 @@ public class Planet {
     setCulture(getCulture() / 10);
   }
 
+  /**
+   * Set Planet's culture value
+   * @param culture new culture value
+   */
   public void setCulture(final int culture) {
     if (culture < 0) {
       this.culture = 0;
@@ -1525,10 +1672,19 @@ public class Planet {
     return sb.toString();
   }
 
+  /**
+   * Get home world index. Index is matching for space race index who's
+   * home world planet is. -1 means that planet is now an home world.
+   * @return Space race index
+   */
   public int getHomeWorldIndex() {
     return homeWorldIndex;
   }
 
+  /**
+   * Set space race home world index.
+   * @param homeWorldIndex Space race index. -1 for non home world.
+   */
   public void setHomeWorldIndex(final int homeWorldIndex) {
     this.homeWorldIndex = homeWorldIndex;
   }

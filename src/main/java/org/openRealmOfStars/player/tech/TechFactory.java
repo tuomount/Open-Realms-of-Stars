@@ -27,143 +27,329 @@ import org.openRealmOfStars.utilities.DiceGenerator;
  * Tech factory for generating new techs for players
  *
  */
-public class TechFactory {
+public final class TechFactory {
 
+  /**
+   * Hiding the constructor
+   */
+  private TechFactory() {
+    // Nothing to do
+  }
+  /**
+   * Combat tech names for level 1
+   */
   public static final String[] COMBAT_TECH_LEVEL1_NAMES = {"Laser Mk1",
       "Railgun Mk1", "Photon torpedo Mk1" };
+  /**
+   * Combat tech names for level 2
+   */
   public static final String[] COMBAT_TECH_LEVEL2_NAMES = {"Laser Mk2",
       "Railgun Mk2", "Photon torpedo Mk2", "Planetary invasion module" };
+  /**
+   * Combat tech names for level 3
+   */
   public static final String[] COMBAT_TECH_LEVEL3_NAMES = {"Laser Mk3",
       "Railgun Mk3", "Photon torpedo Mk3", "ECM torpedo Mk1",
       "HE missile Mk1" };
+  /**
+   * Combat tech names for level 4
+   */
   public static final String[] COMBAT_TECH_LEVEL4_NAMES = {"Laser Mk4",
       "Railgun Mk4", "Photon torpedo Mk4", "ECM torpedo Mk2", "HE missile Mk2",
       "Orbital bombs Mk1" };
+  /**
+   * Combat tech names for level 5
+   */
   public static final String[] COMBAT_TECH_LEVEL5_NAMES = {"Laser Mk5",
       "Railgun Mk5", "Photon torpedo Mk5", "ECM torpedo Mk3", "HE missile Mk3",
       "Orbital bombs Mk2" };
+  /**
+   * Combat tech names for level 6
+   */
   public static final String[] COMBAT_TECH_LEVEL6_NAMES = {"Phasors Mk1",
       "Massdrive Mk1", "Photon torpedo Mk6", "ECM torpedo Mk4",
       "HE missile Mk4" };
+  /**
+   * Combat tech names for level 7
+   */
   public static final String[] COMBAT_TECH_LEVEL7_NAMES = {"Phasors Mk2",
       "Massdrive Mk2", "Photon torpedo Mk7", "ECM torpedo Mk5",
       "HE missile Mk5", "Shock trooper module" };
+  /**
+   * Combat tech names for level 8
+   */
   public static final String[] COMBAT_TECH_LEVEL8_NAMES = {"Phasors Mk3",
       "Massdrive Mk3", "Photon torpedo Mk8", "ECM torpedo Mk6",
       "HE missile Mk6", "Orbital nuke" };
+  /**
+   * Combat tech names for level 9
+   */
   public static final String[] COMBAT_TECH_LEVEL9_NAMES = {
       "Antimatter beam Mk1", "Massdrive Mk4", "Photon torpedo Mk9",
       "ECM torpedo Mk7", "HE missile Mk7", "Orbital smart bombs" };
+  /**
+   * Combat tech names for level 10
+   */
   public static final String[] COMBAT_TECH_LEVEL10_NAMES = {
       "Antimatter beam Mk1", "Massdrive Mk5", "Photon torpedo Mk10",
       "ECM torpedo Mk8", "HE missile Mk8" };
 
+  /**
+   * Defense tech names for level 1
+   */
   public static final String[] DEFENSE_TECH_LEVEL1_NAMES = {"Shield Mk1",
       "Armor plating Mk1" };
+  /**
+   * Defense tech names for level 2
+   */
   public static final String[] DEFENSE_TECH_LEVEL2_NAMES = {"Shield Mk2",
       "Armor plating Mk2", "Planetary defense turret Mk1" };
+  /**
+   * Defense tech names for level 3
+   */
   public static final String[] DEFENSE_TECH_LEVEL3_NAMES = {"Shield Mk3",
       "Armor plating Mk3" };
+  /**
+   * Defense tech names for level 4
+   */
   public static final String[] DEFENSE_TECH_LEVEL4_NAMES = {"Shield Mk4",
       "Armor plating Mk4", "Shield generator Mk1" };
+  /**
+   * Defense tech names for level 5
+   */
   public static final String[] DEFENSE_TECH_LEVEL5_NAMES = {"Shield Mk5",
       "Armor plating Mk5", "Planetary defense turret Mk2" };
+  /**
+   * Defense tech names for level 6
+   */
   public static final String[] DEFENSE_TECH_LEVEL6_NAMES = {"Shield Mk6",
       "Armor plating Mk6" };
+  /**
+   * Defense tech names for level 7
+   */
   public static final String[] DEFENSE_TECH_LEVEL7_NAMES = {"Shield Mk7",
       "Armor plating Mk7" };
+  /**
+   * Defense tech names for level 8
+   */
   public static final String[] DEFENSE_TECH_LEVEL8_NAMES = {"Shield Mk8",
       "Armor plating Mk8", "Planetary defense turret Mk3" };
+  /**
+   * Defense tech names for level 9
+   */
   public static final String[] DEFENSE_TECH_LEVEL9_NAMES = {"Shield Mk9",
       "Armor plating Mk9", "Shield generator Mk2" };
+  /**
+   * Defense tech names for level 10
+   */
   public static final String[] DEFENSE_TECH_LEVEL10_NAMES = {"Shield Mk10",
       "Armor plating Mk10" };
 
+  /**
+   * Hull tech names for level 1
+   */
   public static final String[] HULL_TECH_LEVEL1_NAMES = {"Scout Mk1",
       "Destroyer Mk1", "Colony" };
+  /**
+   * Hull tech names for level 2
+   */
   public static final String[] HULL_TECH_LEVEL2_NAMES = {"Probe",
       "Small freighter", "Small starbase Mk1" };
+  /**
+   * Hull tech names for level 3
+   */
   public static final String[] HULL_TECH_LEVEL3_NAMES = {"Destroyer Mk2",
       "Corvette Mk1", "Small starbase Mk2" };
+  /**
+   * Hull tech names for level 4
+   */
   public static final String[] HULL_TECH_LEVEL4_NAMES = {"Medium freighter",
       "Medium starbase", "Scout Mk2" };
+  /**
+   * Hull tech names for level 5
+   */
   public static final String[] HULL_TECH_LEVEL5_NAMES = {"Cruiser",
       "Battleship Mk1", "Privateer Mk1" };
+  /**
+   * Hull tech names for level 6
+   */
   public static final String[] HULL_TECH_LEVEL6_NAMES = {"Large freighter",
       "Large starbase", "Corvette Mk2" };
+  /**
+   * Hull tech names for level 7
+   */
   public static final String[] HULL_TECH_LEVEL7_NAMES = {"Battle cruiser Mk1",
       "Privateer Mk2", "Scout Mk3" };
+  /**
+   * Hull tech names for level 8
+   */
   public static final String[] HULL_TECH_LEVEL8_NAMES = {"Massive freighter",
       "Massive starbase", "Destroyer Mk3", "Corvette Mk3" };
+  /**
+   * Hull tech names for level 9
+   */
   public static final String[] HULL_TECH_LEVEL9_NAMES = {"Battleship Mk2",
       "Privateer Mk3", "Battle cruiser Mk2" };
+  /**
+   * Hull tech names for level 10
+   */
   public static final String[] HULL_TECH_LEVEL10_NAMES = {"Capital ship",
       "Destroyer Mk4", "Scout Mk4" };
 
+  /**
+   * Planetary Improvement tech names for level 1
+   */
   public static final String[] IMPROVEMENT_TECH_LEVEL1_NAMES = {"Basic lab",
       "Barracks", "Tax center" };
+  /**
+   * Planetary Improvement tech names for level 2
+   */
   public static final String[] IMPROVEMENT_TECH_LEVEL2_NAMES = {"Advanced farm",
       "Advanced mine", "Advanced factory" };
+  /**
+   * Planetary Improvement tech names for level 3
+   */
   public static final String[] IMPROVEMENT_TECH_LEVEL3_NAMES = {
       "Advanced laboratory", "Market center", "Culture center" };
+  /**
+   * Planetary Improvement tech names for level 4
+   */
   public static final String[] IMPROVEMENT_TECH_LEVEL4_NAMES = {"Trade center",
       "Extreme sports center", "Recycle center" };
+  /**
+   * Planetary Improvement tech names for level 5
+   */
   public static final String[] IMPROVEMENT_TECH_LEVEL5_NAMES = {
       "Farming center", "Mining center", "Manufacturing center",
       "Radiation dampener" };
+  /**
+   * Planetary Improvement tech names for level 6
+   */
   public static final String[] IMPROVEMENT_TECH_LEVEL6_NAMES = {
       "Research center", "Stock market", "Galactic sports center" };
+  /**
+   * Planetary Improvement tech names for level 7
+   */
   public static final String[] IMPROVEMENT_TECH_LEVEL7_NAMES = {
       "New technology center", "VR movie center", "Advanced recycle center" };
+  /**
+   * Planetary Improvement tech names for level 8
+   */
   public static final String[] IMPROVEMENT_TECH_LEVEL8_NAMES = {"Galactic bank",
       "Radiation well" };
+  /**
+   * Planetary Improvement tech names for level 9
+   */
   public static final String[] IMPROVEMENT_TECH_LEVEL9_NAMES = {
       "Hydropodic farming center", "Nanobot mining center",
       "Nanobot manufacturing center" };
+  /**
+   * Planetary Improvement tech names for level 10
+   */
   public static final String[] IMPROVEMENT_TECH_LEVEL10_NAMES = {
       "Neural research center", "Super AI Center", "Replicator center" };
 
+  /**
+   * Propulsion tech names for level 1
+   */
   public static final String[] PROPULSION_TECH_LEVEL1_NAMES = {"Ion drive Mk1",
       "Fission source Mk1", "Ion drive Mk2", "Nuclear drive Mk1",
       "Fission source Mk2" };
+  /**
+   * Propulsion tech names for level 2
+   */
   public static final String[] PROPULSION_TECH_LEVEL2_NAMES = {"Ion drive Mk3",
       "Hyper drive Mk1", "Fusion source Mk1" };
+  /**
+   * Propulsion tech names for level 3
+   */
   public static final String[] PROPULSION_TECH_LEVEL3_NAMES = {"Warp drive Mk1",
       "Nuclear drive Mk2", "Fusion source Mk2" };
+  /**
+   * Propulsion tech names for level 4
+   */
   public static final String[] PROPULSION_TECH_LEVEL4_NAMES = {"Warp drive Mk2",
       "Hyper drive Mk2", "Tachyon source Mk1" };
+  /**
+   * Propulsion tech names for level 5
+   */
   public static final String[] PROPULSION_TECH_LEVEL5_NAMES = {"Warp drive Mk3",
       "Hyper drive Mk3", "Tachyon source Mk2" };
+  /**
+   * Propulsion tech names for level 6
+   */
   public static final String[] PROPULSION_TECH_LEVEL6_NAMES = {"Warp drive Mk4",
       "Hyper drive Mk4", "Nuclear drive Mk3", "Antimatter source Mk1" };
+  /**
+   * Propulsion tech names for level 7
+   */
   public static final String[] PROPULSION_TECH_LEVEL7_NAMES = {"Warp drive Mk5",
       "Hyper drive Mk5", "Impulse engine Mk1" };
+  /**
+   * Propulsion tech names for level 8
+   */
   public static final String[] PROPULSION_TECH_LEVEL8_NAMES = {"Warp drive Mk6",
       "Hyper drive Mk6", "Impulse engine Mk2", "Antimatter source Mk2" };
+  /**
+   * Propulsion tech names for level 9
+   */
   public static final String[] PROPULSION_TECH_LEVEL9_NAMES = {"Warp drive Mk7",
       "Hyper drive Mk7", "Impulse engine Mk3", "Zero-point source Mk1" };
+  /**
+   * Propulsion tech names for level 10
+   */
   public static final String[] PROPULSION_TECH_LEVEL10_NAMES = {
       "Warp drive Mk8", "Hyper drive Mk8", "Impulse engine Mk4",
       "Zero-point source Mk2" };
 
+  /**
+   * Electronics tech names for level 1
+   */
   public static final String[] ELECTRONICS_TECH_LEVEL1_NAMES = {"Scanner Mk1",
       "Planetary scanner Mk1", "Cloaking device Mk1" };
+  /**
+   * Electronics tech names for level 2
+   */
   public static final String[] ELECTRONICS_TECH_LEVEL2_NAMES = {
       "Cloaking device Mk2", "Targeting computer Mk1" };
+  /**
+   * Electronics tech names for level 3
+   */
   public static final String[] ELECTRONICS_TECH_LEVEL3_NAMES = {"Scanner Mk2",
       "Planetary scanner Mk2", "Jammer Mk1" };
+  /**
+   * Electronics tech names for level 4
+   */
   public static final String[] ELECTRONICS_TECH_LEVEL4_NAMES = {
       "Cloaking device Mk3", "Targeting computer Mk2", "LR scanner Mk1" };
+  /**
+   * Electronics tech names for level 5
+   */
   public static final String[] ELECTRONICS_TECH_LEVEL5_NAMES = {"Scanner Mk3",
       "Planetary scanner Mk3", "Jammer Mk2" };
+  /**
+   * Electronics tech names for level 6
+   */
   public static final String[] ELECTRONICS_TECH_LEVEL6_NAMES = {
       "Cloaking device Mk4", "Targeting computer Mk3", "LR scanner Mk2" };
+  /**
+   * Electronics tech names for level 7
+   */
   public static final String[] ELECTRONICS_TECH_LEVEL7_NAMES = {"Scanner Mk4",
       "Jammer Mk3" };
+  /**
+   * Electronics tech names for level 8
+   */
   public static final String[] ELECTRONICS_TECH_LEVEL8_NAMES = {
       "Cloaking device Mk5", "Planetary scanner Mk4", "LR scanner Mk3" };
+  /**
+   * Electronics tech names for level 9
+   */
   public static final String[] ELECTRONICS_TECH_LEVEL9_NAMES = {"Scanner Mk5",
       "Targeting computer Mk4" };
+  /**
+   * Electronics tech names for level 10
+   */
   public static final String[] ELECTRONICS_TECH_LEVEL10_NAMES = {
       "Cloaking device Mk6", "Planetary scanner Mk5", "Jammer Mk4" };
 
@@ -593,7 +779,8 @@ public class TechFactory {
   /**
    * Create random tech by tech type and level, but not choose those tech
    * player already has
-   * @param type Tech Type: Combat, Defense, Hulls, Improvements, Propulsion and Electrics
+   * @param type Tech Type: Combat, Defense, Hulls, Improvements, Propulsion
+   *             and Electrics
    * @param level Tech Level 1-10
    * @param alreadyHas List of tech player has
    * @return Tech or null if cannot find new
@@ -633,10 +820,57 @@ public class TechFactory {
         return createPropulsionTech(choices.get(index), level);
       case Electrics:
         return createElectronicsTech(choices.get(index), level);
+      default:
+        return createCombatTech(choices.get(index), level);
       }
     }
     return null;
   }
+
+  /**
+   * Tech 1 Level cost
+   */
+  private static final int TECH_1_LEVEL_RP_COST = 5;
+  /**
+   * Tech 2 Level cost
+   */
+  private static final int TECH_2_LEVEL_RP_COST = 7;
+  /**
+   * Tech 3 Level cost
+   */
+  private static final int TECH_3_LEVEL_RP_COST = 10;
+  /**
+   * Tech 4 Level cost
+   */
+  private static final int TECH_4_LEVEL_RP_COST = 15;
+  /**
+   * Tech 5 Level cost
+   */
+  private static final int TECH_5_LEVEL_RP_COST = 22;
+  /**
+   * Tech 6 Level cost
+   */
+  private static final int TECH_6_LEVEL_RP_COST = 33;
+  /**
+   * Tech 7 Level cost
+   */
+  private static final int TECH_7_LEVEL_RP_COST = 50;
+  /**
+   * Tech 8 Level cost
+   */
+  private static final int TECH_8_LEVEL_RP_COST = 75;
+  /**
+   * Tech 9 Level cost
+   */
+  private static final int TECH_9_LEVEL_RP_COST = 112;
+  /**
+   * Tech 10 Level cost
+   */
+  private static final int TECH_10_LEVEL_RP_COST = 168;
+  /**
+   * Tech FUTURE Level cost
+   */
+  private static final int TECH_FUTURE_LEVEL_RP_COST = 200;
 
   /**
    * Get tech level cost as research points
@@ -646,34 +880,35 @@ public class TechFactory {
   public static int getTechCost(final int level) {
     switch (level) {
     case 1:
-      return 5;
+      return TECH_1_LEVEL_RP_COST;
     case 2:
-      return 7;
+      return TECH_2_LEVEL_RP_COST;
     case 3:
-      return 10;
+      return TECH_3_LEVEL_RP_COST;
     case 4:
-      return 15;
+      return TECH_4_LEVEL_RP_COST;
     case 5:
-      return 22;
+      return TECH_5_LEVEL_RP_COST;
     case 6:
-      return 33;
+      return TECH_6_LEVEL_RP_COST;
     case 7:
-      return 50;
+      return TECH_7_LEVEL_RP_COST;
     case 8:
-      return 75;
+      return TECH_8_LEVEL_RP_COST;
     case 9:
-      return 112;
+      return TECH_9_LEVEL_RP_COST;
     case 10:
-      return 168;
+      return TECH_10_LEVEL_RP_COST;
+    default:
+      return TECH_FUTURE_LEVEL_RP_COST;
     }
-    return 200;
   }
 
   /**
    * Get String list of tech by type and level
    * @param type The tech type
    * @param level The tech level
-   * @return String array of tech or empty array
+   * @return String array of tech
    */
   public static String[] getListByTechLevel(final TechType type,
       final int level) {
@@ -700,8 +935,9 @@ public class TechFactory {
         return COMBAT_TECH_LEVEL9_NAMES;
       case 10:
         return COMBAT_TECH_LEVEL10_NAMES;
+      default:
+        throw new IllegalArgumentException("Tech level is beyond 10!");
       }
-      break;
     case Defense:
       switch (level) {
       case 1:
@@ -724,8 +960,9 @@ public class TechFactory {
         return DEFENSE_TECH_LEVEL9_NAMES;
       case 10:
         return DEFENSE_TECH_LEVEL10_NAMES;
+      default:
+        throw new IllegalArgumentException("Tech level is beyond 10!");
       }
-      break;
     case Hulls:
       switch (level) {
       case 1:
@@ -748,8 +985,9 @@ public class TechFactory {
         return HULL_TECH_LEVEL9_NAMES;
       case 10:
         return HULL_TECH_LEVEL10_NAMES;
+      default:
+        throw new IllegalArgumentException("Tech level is beyond 10!");
       }
-      break;
     case Improvements:
       switch (level) {
       case 1:
@@ -772,8 +1010,9 @@ public class TechFactory {
         return IMPROVEMENT_TECH_LEVEL9_NAMES;
       case 10:
         return IMPROVEMENT_TECH_LEVEL10_NAMES;
+      default:
+        throw new IllegalArgumentException("Tech level is beyond 10!");
       }
-      break;
     case Propulsion:
       switch (level) {
       case 1:
@@ -796,8 +1035,9 @@ public class TechFactory {
         return PROPULSION_TECH_LEVEL9_NAMES;
       case 10:
         return PROPULSION_TECH_LEVEL10_NAMES;
+      default:
+        throw new IllegalArgumentException("Tech level is beyond 10!");
       }
-      break;
     case Electrics:
       switch (level) {
       case 1:
@@ -820,10 +1060,12 @@ public class TechFactory {
         return ELECTRONICS_TECH_LEVEL9_NAMES;
       case 10:
         return ELECTRONICS_TECH_LEVEL10_NAMES;
+      default:
+        throw new IllegalArgumentException("Tech level is beyond 10!");
       }
-      break;
+    default:
+      throw new IllegalArgumentException("Illegal tech type!");
     }
-    return new String[0];
   }
 
 }

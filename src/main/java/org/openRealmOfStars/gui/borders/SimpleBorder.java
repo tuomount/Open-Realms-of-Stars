@@ -38,7 +38,13 @@ public class SimpleBorder extends AbstractBorder {
    */
   private static final long serialVersionUID = 1L;
 
+  /**
+   * Color Bright blue
+   */
   private static final Color BRIGHT_BLUE = new Color(185, 190, 220);
+  /**
+   * Color Top Light blue
+   */
   private static final Color TOP_LIGHT_BLUE = new Color(136, 140, 157);
 
   @Override

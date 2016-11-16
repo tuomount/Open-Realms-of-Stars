@@ -60,13 +60,13 @@ public class ComponentButton extends JButton {
 
   /**
    * Construct component button
-   * @param ship Ship
-   * @param index Component Index
+   * @param shipToUse Ship where component is
+   * @param componentIndex Component Index
    */
-  public ComponentButton(final Ship ship, final int index) {
+  public ComponentButton(final Ship shipToUse, final int componentIndex) {
     super();
-    this.ship = ship;
-    this.index = index;
+    this.ship = shipToUse;
+    index = componentIndex;
     setUsed(false);
     if (ship.getComponent(index) != null) {
       this.setText(ship.getComponent(index).getName());
@@ -86,12 +86,12 @@ public class ComponentButton extends JButton {
 
   /**
    * Set Component to show
-   * @param ship Ship
-   * @param index Component Index
+   * @param shipToUse Ship
+   * @param componentIndex Component Index
    */
-  public void setComponent(final Ship ship, final int index) {
-    this.ship = ship;
-    this.index = index;
+  public void setComponent(final Ship shipToUse, final int componentIndex) {
+    ship = shipToUse;
+    index = componentIndex;
     updateButton();
   }
 
@@ -142,10 +142,18 @@ public class ComponentButton extends JButton {
     }
   }
 
+  /**
+   * Is component used for this round already
+   * @return true if component has been used
+   */
   public boolean isUsed() {
     return used;
   }
 
+  /**
+   * Set if component has been used or not for this round
+   * @param used True if component has been used
+   */
   public void setUsed(final boolean used) {
     this.used = used;
     updateButton();

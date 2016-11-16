@@ -62,6 +62,10 @@ public class IconButton extends JButton {
    */
   private boolean border;
 
+  /**
+   * Parent component where button is placed. If parent is given it will be
+   * redrawn when buttons is being redrawn.
+   */
   private Component parent;
 
   /**
@@ -171,30 +175,58 @@ public class IconButton extends JButton {
     return toolTip;
   }
 
+  /**
+   * Set Not Pressed Image which would be default one
+   * @param notPressedImage BufferedImage
+   */
   public void setNotPressedImage(final BufferedImage notPressedImage) {
     this.notPressedImage = notPressedImage;
   }
 
+  /**
+   * Get image when button is not pressed.
+   * @return BufferedImage
+   */
   public BufferedImage getNotPressedImage() {
     return notPressedImage;
   }
 
+  /**
+   * Set image which is shown when button is being pressed.
+   * @param pressedImage BufferedImage
+   */
   public void setPressedImage(final BufferedImage pressedImage) {
     this.pressedImage = pressedImage;
   }
 
+  /**
+   * Get image which is shown when button is being pressed.
+   * @return BufferedImage
+   */
   public BufferedImage getPressedImage() {
     return pressedImage;
   }
 
+  /**
+   * Set borders for the button.
+   * @param border True to set border.
+   */
   public void setBorder(final boolean border) {
     this.border = border;
   }
 
+  /**
+   * Does button have border
+   * @return True if border has been set.
+   */
   public boolean isBorder() {
     return border;
   }
 
+  /**
+   * Get image which is shown when button is disabled.
+   * @return BufferedImage
+   */
   public BufferedImage getDisabledImage() {
     if (disabledImage == null) {
       return pressedImage;
@@ -202,6 +234,10 @@ public class IconButton extends JButton {
     return disabledImage;
   }
 
+  /**
+   * Set image which is shown when button is disabled.
+   * @param disabledImage BufferedImage
+   */
   public void setDisabledImage(final BufferedImage disabledImage) {
     this.disabledImage = disabledImage;
   }

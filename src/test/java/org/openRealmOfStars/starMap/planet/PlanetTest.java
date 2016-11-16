@@ -1,9 +1,13 @@
 package org.openRealmOfStars.starMap.planet;
 
-import org.junit.Test;
-import org.openRealmOfStars.starMap.Coordinate;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.planet.construction.Building;
 
 /**
  *
@@ -47,6 +51,33 @@ public class PlanetTest {
         getPlanetCoordinate.setY(10);
 
         assertNotEquals(planet.getCoordinate(), getPlanetCoordinate);
+    }
+    
+    @Test
+    public void testPlanetPopulationGrowthAndBuilding() {
+      Coordinate planetCoordinate = new Coordinate(10, 15);
+      Planet planet = new Planet(planetCoordinate, "Earth", 1, false);
+      planet.setRadiationLevel(1);
+      PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+      planet.setPlanetOwner(0, info);
+      planet.setWorkers(Planet.FOOD_FARMERS, 1);
+      Building factory = BuildingFactory.createByName("Basic factory");
+      planet.setUnderConstruction(factory);
+      assertEquals(1,planet.getTotalPopulation());
+      assertEquals("15 turns",planet.getProductionTime(factory));
+      for (int i=0;i<5;i++) {
+        // 5 turns to grow one population
+        planet.updateOneTurn();
+      }
+      assertEquals(2,planet.getTotalPopulation());
+      for (int i=0;i<10;i++) {
+        // Total of 15 turns for basic factory
+        planet.updateOneTurn();
+      }
+      assertEquals(1,planet.getBuildingList().length);
+      assertEquals("Basic factory",planet.getBuildingList()[0].getName());
+      
+
     }
 
 }

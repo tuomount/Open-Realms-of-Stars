@@ -36,20 +36,26 @@ public enum SpaceRace {
   /**
    * Mechanical beings whom do not eat food. Each now population must be built.
    */
-  MECHIONS(1, "Mechions", "Mechion", "Mechanical beings whom do not eat food." + " Each now population must be built."),
+  MECHIONS(1, "Mechions", "Mechion", "Mechanical beings whom do not eat food."
+          + " Each now population must be built."),
   /**
    * Aggressive and warmongering spieces.
    */
   SPORKS(2, "Sporks", "Spork", "Aggressive and warmongering spieces."),
   /**
-   * Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers.
+   * Humanoid creatures with grey skin and big eyes.
+   * Greyan are excellent researchers.
    */
-  GREYANS(3, "Greyans", "Greyan", "Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers."),
+  GREYANS(3, "Greyans", "Greyan", "Humanoid creatures with grey skin and"
+          + " big eyes. Greyan are excellent researchers."),
   /**
    * Bipedal humanoid creatures which are big, about 5 meters tall. Due their
-     enormous size their space ships are must more rigid. Centaurs need more food to survive.
+   * enormous size their space ships are must more rigid. Centaurs need more
+   * food to survive.
    */
-  CENTAURS(4, "Centaurs", "Centaur", "Bipedal humanoid creatures which are big, about 5 meters tall. Due their" + "enormous size their space ships are more rigid. Centaurs need more food to survive.");
+  CENTAURS(4, "Centaurs", "Centaur", "Bipedal humanoid creatures which are"
+          + " big, about 5 meters tall. Due their enormous size their space"
+          + " ships are more rigid. Centaurs need more food to survive.");
 
   /**
    * Create space race
@@ -73,8 +79,9 @@ public enum SpaceRace {
    * @return SpaceRace, if index is out of bounds human is given
    */
   public static SpaceRace getRaceByIndex(final int index) {
-    if (index > -1 && index < SpaceRace.values().length) { return SpaceRace
-        .values()[index]; }
+    if (index > -1 && index < SpaceRace.values().length) {
+      return SpaceRace.values()[index];
+    }
     return SpaceRace.HUMAN;
   }
 
@@ -84,12 +91,24 @@ public enum SpaceRace {
    * @return SpaceRace, if does not match then return null
    */
   public static SpaceRace getRaceByName(final String name) {
-    if (name == null) { return null; }
-    if (name.equals(HUMAN.nameSingle)) { return SpaceRace.HUMAN; }
-    if (name.equals(MECHIONS.nameSingle)) { return SpaceRace.MECHIONS; }
-    if (name.equals(SPORKS.nameSingle)) { return SpaceRace.SPORKS; }
-    if (name.equals(GREYANS.nameSingle)) { return SpaceRace.GREYANS; }
-    if (name.equals(CENTAURS.nameSingle)) { return SpaceRace.CENTAURS; }
+    if (name == null) {
+      return null;
+    }
+    if (name.equals(HUMAN.nameSingle)) {
+      return SpaceRace.HUMAN;
+    }
+    if (name.equals(MECHIONS.nameSingle)) {
+      return SpaceRace.MECHIONS;
+    }
+    if (name.equals(SPORKS.nameSingle)) {
+      return SpaceRace.SPORKS;
+    }
+    if (name.equals(GREYANS.nameSingle)) {
+      return SpaceRace.GREYANS;
+    }
+    if (name.equals(CENTAURS.nameSingle)) {
+      return SpaceRace.CENTAURS;
+    }
     return null;
   }
 
@@ -159,6 +178,8 @@ public enum SpaceRace {
       case 7:
         sb.append("Hiearchy");
         break;
+      default:
+        sb.append("Empire");
       }
 
     } else {
@@ -202,6 +223,8 @@ public enum SpaceRace {
       case 7:
         sb.append("Hiearchy of ");
         break;
+      default:
+        sb.append("Empire of ");
       }
       sb.append(this.getName());
     }
@@ -248,8 +271,9 @@ public enum SpaceRace {
       return 150;
     case CENTAURS:
       return 100;
+    default:
+      return 0;
     }
-    return 0;
   }
 
   /**
@@ -268,8 +292,9 @@ public enum SpaceRace {
       return 6;
     case CENTAURS:
       return 3;
+    default:
+      return -1;
     }
-    return -1;
   }
 
   /**
@@ -288,8 +313,9 @@ public enum SpaceRace {
       return GuiStatics.IMAGE_GREYAN_RACE;
     case CENTAURS:
       return GuiStatics.IMAGE_CENTAUR_RACE;
+    default:
+      return GuiStatics.IMAGE_CENTAUR_RACE;
     }
-    return GuiStatics.IMAGE_CENTAUR_RACE;
   }
 
   /**
@@ -329,8 +355,9 @@ public enum SpaceRace {
       return 100;
     case CENTAURS:
       return 100;
+    default:
+      return 0;
     }
-    return 0;
   }
 
   /**
@@ -349,8 +376,9 @@ public enum SpaceRace {
       return 100;
     case CENTAURS:
       return 100;
+    default:
+      return 0;
     }
-    return 0;
   }
 
   /**
@@ -369,8 +397,9 @@ public enum SpaceRace {
       return 8;
     case CENTAURS:
       return 14;
+    default:
+      return 0;
     }
-    return 0;
   }
 
   /**
@@ -389,8 +418,9 @@ public enum SpaceRace {
       return 100;
     case CENTAURS:
       return 100;
+    default:
+      return 0;
     }
-    return 0;
   }
 
   /**
@@ -409,8 +439,9 @@ public enum SpaceRace {
       return 50;
     case CENTAURS:
       return 50;
+    default:
+      return 0;
     }
-    return 0;
   }
 
   /**
@@ -429,8 +460,9 @@ public enum SpaceRace {
       return 100;
     case CENTAURS:
       return 125;
+    default:
+      return 0;
     }
-    return 0;
   }
 
   /**
@@ -449,8 +481,9 @@ public enum SpaceRace {
       return 0;
     case CENTAURS:
       return -1;
+    default:
+      return 0;
     }
-    return 0;
   }
 
   /**
@@ -469,8 +502,9 @@ public enum SpaceRace {
       return 0;
     case CENTAURS:
       return 1;
+    default:
+      return 0;
     }
-    return 0;
   }
 
   /**
@@ -489,8 +523,9 @@ public enum SpaceRace {
       return 16;
     case CENTAURS:
       return 18;
+    default:
+      return 15;
     }
-    return 15;
   }
 
   /**
@@ -509,8 +544,9 @@ public enum SpaceRace {
       return 35;
     case CENTAURS:
       return 30;
+    default:
+      return 30;
     }
-    return 30;
   }
 
   /**
@@ -529,8 +565,9 @@ public enum SpaceRace {
       return 3;
     case CENTAURS:
       return 2;
+    default:
+      return 3;
     }
-    return 3;
   }
 
   /**
@@ -550,8 +587,9 @@ public enum SpaceRace {
       return 1;
     case CENTAURS:
       return 1;
+    default:
+      return 1;
     }
-    return 1;
   }
 
 }

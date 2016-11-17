@@ -292,8 +292,8 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showFleetView(final Planet planet, final Fleet fleet) {
     fleetView = new FleetView(planet, fleet,
-        players.getCurrentPlayerInfo().getFleets(), players.getCurrentPlayerInfo(),
-        this);
+        players.getCurrentPlayerInfo().getFleets(),
+        players.getCurrentPlayerInfo(), this);
     this.getContentPane().removeAll();
     this.add(fleetView);
     this.validate();

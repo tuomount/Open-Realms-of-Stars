@@ -74,18 +74,34 @@ public class ImageLabel extends JLabel {
 
   }
 
+  /**
+   * Set Image for label
+   * @param image BufferedImage
+   */
   public void setImage(final BufferedImage image) {
     this.image = image;
   }
 
+  /**
+   * Get image from label
+   * @return BufferedImage
+   */
   public BufferedImage getImage() {
     return image;
   }
 
+  /**
+   * Set if border is visible for label.
+   * @param border True to show border
+   */
   public void setBorder(final boolean border) {
     this.border = border;
   }
 
+  /**
+   * Is border visible
+   * @return True if border is visible
+   */
   public boolean isBorder() {
     return border;
   }
@@ -106,10 +122,18 @@ public class ImageLabel extends JLabel {
     }
   }
 
+  /**
+   * Get Image label background color
+   * @return Background fill color
+   */
   public Color getFillColor() {
     return fillColor;
   }
 
+  /**
+   * Set background color for filling the label
+   * @param fillColor Background color
+   */
   public void setFillColor(final Color fillColor) {
     this.fillColor = fillColor;
   }

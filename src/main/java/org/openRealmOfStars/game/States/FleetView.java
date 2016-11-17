@@ -99,7 +99,7 @@ public class FleetView extends BlackPanel {
   private Fleet fleet;
 
   /**
-   * List of players other getFleets
+   * List of players other fleets
    */
   private FleetList fleetList;
 
@@ -114,7 +114,7 @@ public class FleetView extends BlackPanel {
   private JList<Ship> shipsInFleet;
 
   /**
-   * Other getFleets in same space
+   * Other fleets in same space
    */
   private JList<Fleet> fleetsInSpace;
 
@@ -281,7 +281,7 @@ public class FleetView extends BlackPanel {
     btn.addActionListener(listener);
     eastPanel.add(btn);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new TransparentLabel(eastPanel, "Other getFleets");
+    label = new TransparentLabel(eastPanel, "Other fleets");
     eastPanel.add(label);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     ArrayList<Fleet> othFleets = new ArrayList<>();

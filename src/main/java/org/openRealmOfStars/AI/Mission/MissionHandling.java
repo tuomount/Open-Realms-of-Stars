@@ -301,13 +301,13 @@ public final class MissionHandling {
   /**
    * Merge fleet with in same space and starting with same fleet names
    * @param fleet Fleet where to merge
-   * @param info PlayerInfo for both getFleets
+   * @param info PlayerInfo for both fleets
    */
   public static void mergeFleets(final Fleet fleet, final PlayerInfo info) {
-    // Merging getFleets
+    // Merging fleets
     String[] part = fleet.getName().split("#");
     for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
-      // Merge getFleets in same space with same starting of fleet name
+      // Merge fleets in same space with same starting of fleet name
       Fleet mergeFleet = info.getFleets().getByIndex(j);
       if (mergeFleet != fleet && mergeFleet.getX() == fleet.getX()
           && mergeFleet.getY() == fleet.getY()

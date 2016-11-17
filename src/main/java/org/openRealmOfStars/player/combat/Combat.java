@@ -225,7 +225,7 @@ public class Combat {
   }
 
   /**
-   * Destroy one single ship from getFleets and combat
+   * Destroy one single ship from the fleet and combat
    * @param ship Combat ship
    */
   public void destroyShip(final CombatShip ship) {

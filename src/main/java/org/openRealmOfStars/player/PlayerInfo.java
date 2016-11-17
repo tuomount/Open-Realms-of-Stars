@@ -81,14 +81,14 @@ public class PlayerInfo {
   private ArrayList<ShipStat> shipStatList;
 
   /**
-   * Player getFleets
+   * Player fleets
    */
   private FleetList fleets;
 
   /**
    * Map Data
    * 0: Uncharted only suns are drawn
-   * 1: Fog of war, no getFleets are drawn
+   * 1: Fog of war, no fleets are drawn
    * 2: Visible everything is drawn
    */
   private byte[][] mapData;
@@ -118,7 +118,7 @@ public class PlayerInfo {
    */
   public static final byte UNCHARTED = 0;
   /**
-   * Fog of war, no getFleets are drawn
+   * Fog of war, no fleets are drawn
    */
   public static final byte FOG_OF_WAR = 1;
   /**
@@ -780,8 +780,8 @@ public class PlayerInfo {
   }
 
   /**
-   * Get the player getFleets
-   * @return getFleets never null
+   * Get the player fleets
+   * @return fleetList which is never null
    */
   public FleetList getFleets() {
     return fleets;

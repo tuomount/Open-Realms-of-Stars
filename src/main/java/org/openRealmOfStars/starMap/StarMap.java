@@ -869,7 +869,7 @@ public class StarMap {
   }
 
   /**
-   * Fight with two getFleets
+   * Fight with two fleets
    * @param x X coordinate
    * @param y Y coordinate
    * @param fleet1 Fleet

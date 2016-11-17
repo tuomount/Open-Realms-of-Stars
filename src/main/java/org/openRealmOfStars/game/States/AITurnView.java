@@ -335,7 +335,7 @@ public class AITurnView extends BlackPanel {
       handleMissions(game.getStarMap().getAIFleet(), info);
       game.getStarMap().setAIFleet(info.getFleets().getNext());
       if (info.getFleets().getIndex() == 0) {
-        // All getFleets have moved. Checking the new possible planet
+        // All fleets have moved. Checking the new possible planet
         searchForColonizablePlanets();
         game.getStarMap().setAIFleet(null);
         game.getStarMap()
@@ -439,7 +439,7 @@ public class AITurnView extends BlackPanel {
           game.getStarMap().calculateCulture(planet.getX(), planet.getY(),
               planet.getCulture(), index);
         }
-        // getFleets and planet do the scan
+        // Fleets and planets do the scan
         game.getStarMap().doFleetScanUpdate(info, null, planet);
       }
     }

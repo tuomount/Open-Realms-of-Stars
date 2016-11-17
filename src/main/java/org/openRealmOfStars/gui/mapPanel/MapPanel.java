@@ -62,6 +62,9 @@ import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
 public class MapPanel extends JPanel {
 
+  /**
+   *
+   */
   private static final long serialVersionUID = 1L;
 
   /**
@@ -72,6 +75,11 @@ public class MapPanel extends JPanel {
    * Map drawing area size height
    */
   private static final int HEIGHT = 608;
+
+  /**
+   * Battle Map view size. This size is both width and height
+   */
+  private static final int BATTLE_VIEW_SIZE = 576;
 
   /**
    * How many tiles can be fitted on half of the panel
@@ -128,13 +136,18 @@ public class MapPanel extends JPanel {
    */
   private boolean battle;
 
+  /**
+   * Constructor for Map Panel. This can be used for drawing star map
+   * or battle map
+   * @param battle True if drawing battle map.
+   */
   public MapPanel(final boolean battle) {
     this.battle = battle;
     int width = WIDTH;
     int height = HEIGHT;
     if (battle) {
-      width = 576;
-      height = 576;
+      width = BATTLE_VIEW_SIZE;
+      height = BATTLE_VIEW_SIZE;
     }
     screen = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     Dimension size = new Dimension(width, height);
@@ -399,6 +412,9 @@ public class MapPanel extends JPanel {
             }
             break;
           }
+          default:
+            // Do nothing
+            break;
           }
         }
 
@@ -696,34 +712,68 @@ public class MapPanel extends JPanel {
 
   }
 
+  /**
+   * Get Last Drawn X coordinate
+   * @return X coordinate
+   */
   public int getLastDrawnX() {
     return lastDrawnCenterX;
   }
 
+  /**
+   * Get Last Drawn Y coordinate
+   * @return Y coordinate
+   */
   public int getLastDrawnY() {
     return lastDrawnCenterY;
   }
 
+  /**
+   * Get offset for X axel in pixel
+   * @return Offset for x axel in pixel
+   */
   public int getOffsetX() {
     return viewPointOffsetX;
   }
 
+  /**
+   * Get offset for Y axel in pixel
+   * @return Offset for Y axel in pixel
+   */
   public int getOffsetY() {
     return viewPointOffsetY;
   }
 
+  /**
+   * Get view point size in X axel. View point is half of the total screen
+   * width in tiles.
+   * @return View point x size
+   */
   public int getViewPointX() {
     return viewPointX;
   }
 
+  /**
+   * Get view point size in Y axel. View point is half of the total screen
+   * width in tiles.
+   * @return View point y size
+   */
   public int getViewPointY() {
     return viewPointY;
   }
 
+  /**
+   * Is there route visible on map
+   * @return Route for drawing
+   */
   public Route getRoute() {
     return route;
   }
 
+  /**
+   * Set new route to draw on top of map
+   * @param route to draw
+   */
   public void setRoute(final Route route) {
     this.route = route;
   }

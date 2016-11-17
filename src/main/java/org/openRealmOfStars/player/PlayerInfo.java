@@ -81,14 +81,14 @@ public class PlayerInfo {
   private ArrayList<ShipStat> shipStatList;
 
   /**
-   * Player fleets
+   * Player getFleets
    */
   private FleetList fleets;
 
   /**
    * Map Data
    * 0: Uncharted only suns are drawn
-   * 1: Fog of war, no fleets are drawn
+   * 1: Fog of war, no getFleets are drawn
    * 2: Visible everything is drawn
    */
   private byte[][] mapData;
@@ -118,7 +118,7 @@ public class PlayerInfo {
    */
   public static final byte UNCHARTED = 0;
   /**
-   * Fog of war, no fleets are drawn
+   * Fog of war, no getFleets are drawn
    */
   public static final byte FOG_OF_WAR = 1;
   /**
@@ -266,6 +266,8 @@ public class PlayerInfo {
       addShipStat(stat);
       break;
     }
+    default:
+      ErrorLogger.log("Unexpected race:" + getRace());
     }
 
   }
@@ -447,15 +449,18 @@ public class PlayerInfo {
         } else if (x > 0 && y > 0) {
           sector = 3;
         }
-        Coordinate sectorCoordinate = new Coordinate(sun.getCenterX() + x, sun.getCenterY() + y);
+        Coordinate sectorCoordinate =
+            new Coordinate(sun.getCenterX() + x, sun.getCenterY() + y);
         if (sectorCoordinate.isValidCoordinate(maxCoordinate)
             && (x > 1 || x < -1 || y > 1 || y < -1)) {
           if (mapData[sun.getCenterX() + x][sun.getCenterY()
               + y] == UNCHARTED) {
             unCharted[sector]++;
-            Coordinate fleetCoordinate = new Coordinate(fleet.getX(), fleet.getY());
+            Coordinate fleetCoordinate =
+                new Coordinate(fleet.getX(), fleet.getY());
             PathPoint tempPoint = new PathPoint(sun.getCenterX() + x,
-                sun.getCenterY() + y, fleetCoordinate.calculateDistance(sectorCoordinate));
+                sun.getCenterY() + y,
+                fleetCoordinate.calculateDistance(sectorCoordinate));
             int value = calculateUnchartedLine(fleet.getX(), fleet.getY(),
                 sun.getCenterX() + x, sun.getCenterY() + y);
             if (points[sector] == null) {
@@ -505,6 +510,10 @@ public class PlayerInfo {
         my = 1;
         break;
       }
+      default: {
+        mx = -1;
+        my = -1;
+      }
       }
       PathPoint temp = null;
       if (sectors[sector] > 60) {
@@ -515,11 +524,11 @@ public class PlayerInfo {
         for (int i = 0; i < StarMap.SOLAR_SYSTEM_WIDTH + 2; i++) {
           nx = nx + mx;
           ny = ny + my;
-          Coordinate fleetCoordinate = new Coordinate(fleet.getX(), fleet.getY());
+          Coordinate fleetCoordinate = fleet.getCoordinate();
           Coordinate coordinate = new Coordinate(nx, ny);
           double distance = fleetCoordinate.calculateDistance(coordinate);
-          if (coordinate.isValidCoordinate(maxCoordinate) && i >= scan && distance > 1
-              && mapData[nx][ny] == UNCHARTED) {
+          if (coordinate.isValidCoordinate(maxCoordinate) && i >= scan
+              && distance > 1 && mapData[nx][ny] == UNCHARTED) {
             temp = new PathPoint(nx, ny, distance);
             pathValue = calculateUnchartedLine(fleet.getX(), fleet.getY(), nx,
                 ny);
@@ -771,10 +780,10 @@ public class PlayerInfo {
   }
 
   /**
-   * Get the player Fleets
-   * @return Fleets never null
+   * Get the player getFleets
+   * @return getFleets never null
    */
-  public FleetList Fleets() {
+  public FleetList getFleets() {
     return fleets;
   }
 

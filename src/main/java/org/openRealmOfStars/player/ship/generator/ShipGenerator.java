@@ -40,7 +40,14 @@ import org.openRealmOfStars.utilities.DiceGenerator;
  *
  */
 
-public class ShipGenerator {
+public final class ShipGenerator {
+
+  /**
+   * Hiding the constructor
+   */
+  private ShipGenerator() {
+    // Nothing to do
+  }
 
   /**
    * Score components for battle ship

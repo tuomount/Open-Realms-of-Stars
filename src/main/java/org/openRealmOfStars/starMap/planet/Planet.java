@@ -1348,21 +1348,21 @@ public class Planet {
             culture = culture + stat.getDesign().getTotalMilitaryPower() / 4;
           }
           Fleet fleet = new Fleet(ship, getX(), getY());
-          planetOwnerInfo.Fleets().add(fleet);
+          planetOwnerInfo.getFleets().add(fleet);
           if (planetOwnerInfo.getMissions() != null) {
             Mission mission = planetOwnerInfo.getMissions()
                 .getMissionForPlanet(getName(), MissionPhase.BUILDING);
             if (mission != null) {
               if (mission.getFleetName() == null) {
                 if (mission.getType() == MissionType.COLONIZE) {
-                  fleet.setName("Colony #" + (planetOwnerInfo.Fleets()
+                  fleet.setName("Colony #" + (planetOwnerInfo.getFleets()
                       .howManyFleetWithStartingNames("Colony #") + 1));
                   mission.setFleetName(fleet.getName());
                 }
               } else {
                 fleet
                     .setName(mission.getFleetName() + " #"
-                        + (planetOwnerInfo.Fleets()
+                        + (planetOwnerInfo.getFleets()
                             .howManyFleetWithStartingNames(
                                 mission.getFleetName())
                             + 1));
@@ -1386,19 +1386,19 @@ public class Planet {
                   newMiss.setPhase(MissionPhase.LOADING);
                 }
                 String fleetName = "Attacker";
-                fleet.setName(fleetName + " #" + (planetOwnerInfo.Fleets()
+                fleet.setName(fleetName + " #" + (planetOwnerInfo.getFleets()
                     .howManyFleetWithStartingNames(fleetName) + 1));
                 newMiss.setFleetName(fleet.getName());
                 planetOwnerInfo.getMissions().add(newMiss);
               } else if (ship.getTotalMilitaryPower() > 0) {
                 // No mission for planet, so just adding defender
                 String fleetName = "Defender";
-                fleet.setName(fleetName + " #" + (planetOwnerInfo.Fleets()
+                fleet.setName(fleetName + " #" + (planetOwnerInfo.getFleets()
                     .howManyFleetWithStartingNames(fleetName) + 1));
               }
             }
           } else {
-            fleet.setName("Fleet #" + (planetOwnerInfo.Fleets()
+            fleet.setName("Fleet #" + (planetOwnerInfo.getFleets()
                 .howManyFleetWithStartingNames("Fleet #") + 1));
           }
           msg = new Message(MessageType.CONSTRUCTION,

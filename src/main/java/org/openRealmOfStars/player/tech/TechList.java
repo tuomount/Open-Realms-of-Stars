@@ -70,6 +70,9 @@ public class TechList {
    */
   private double[] techResearchPoint = new double[TechType.values().length];
 
+  /**
+   * Constructor for TechList
+   */
   public TechList() {
     techList = new TechListForLevel[TechType.values().length][MAX_TECH_LEVEL];
     for (int i = 0; i < MAX_TECH_TYPES; i++) {
@@ -139,7 +142,9 @@ public class TechList {
     for (int i = 0; i < MAX_TECH_TYPES; i++) {
       for (int j = 0; j < MAX_TECH_LEVEL; j++) {
         TechListForLevel tech = techList[i][j];
-        if (tech.isTech(techName)) { return true; }
+        if (tech.isTech(techName)) {
+          return true;
+        }
       }
     }
     return false;
@@ -164,7 +169,9 @@ public class TechList {
    */
   public int getTechLevel(final TechType type) {
     int index = type.getIndex();
-    if (index >= 0 && index < techLevels.length) { return techLevels[index]; }
+    if (index >= 0 && index < techLevels.length) {
+      return techLevels[index];
+    }
     return -1;
   }
 
@@ -357,7 +364,9 @@ public class TechList {
    */
   public Tech[] getListForTypeAndLevel(final TechType type, final int level) {
     int levelIndex = level - 1;
-    if (levelIndex >= 10 || levelIndex < 0) { return new Tech[0]; }
+    if (levelIndex >= 10 || levelIndex < 0) {
+      return new Tech[0];
+    }
     ArrayList<Tech> list = new ArrayList<>();
     int index = type.getIndex();
     for (Tech tech : techList[index][levelIndex].getList()) {
@@ -375,7 +384,9 @@ public class TechList {
   public boolean isTechListForLevelFull(final TechType type, final int level) {
     Tech[] list = getListForTypeAndLevel(type, level);
     String[] choices = TechFactory.getListByTechLevel(type, level);
-    if (list.length == choices.length) { return true; }
+    if (list.length == choices.length) {
+      return true;
+    }
     return false;
   }
 

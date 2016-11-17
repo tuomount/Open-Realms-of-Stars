@@ -24,31 +24,58 @@ package org.openRealmOfStars.starMap;
  */
 public class Coordinate {
 
+    /** The X value ot the coordinate */
     private int x;
+    /** The Y value ot the coordinate */
     private int y;
 
-    public Coordinate(int x, int y) {
+    /**
+     * Constructor for Coordinate
+     * @param x The X value ot the coordinate
+     * @param y The Y value ot the coordinate
+     */
+    public Coordinate(final int x, final int y) {
         this.x = x;
         this.y = y;
     }
 
-    public Coordinate(Coordinate coordinate) {
+    /**
+     * Constructor for Coordinate
+     * @param coordinate The coordinate to copy it
+     */
+    public Coordinate(final Coordinate coordinate) {
         this(coordinate.getX(), coordinate.getY());
     }
 
+    /**
+     * Get the X value ot the coordinate
+     * @return the X value ot the coordinate
+     */
     public int getX() {
         return x;
     }
 
-    public void setX(int x) {
+    /**
+     * Set the X value of the coordinate
+     * @param x the X value of the coordinate
+     */
+    public void setX(final int x) {
         this.x = x;
     }
 
+    /**
+     * Get the Y value ot the coordinate
+     * @return the Y value ot the coordinate
+     */
     public int getY() {
         return y;
     }
 
-    public void setY(int y) {
+    /**
+     * Set the Y value of the coordinate
+     * @param y the Y value of the coordinate
+     */
+    public void setY(final int y) {
         this.y = y;
     }
 
@@ -57,7 +84,7 @@ public class Coordinate {
      * @param otherCoordinate The other coordinate
      * @return the distance
      */
-    public double calculateDistance(Coordinate otherCoordinate) {
+    public double calculateDistance(final Coordinate otherCoordinate) {
         int xDistance = Math.abs(otherCoordinate.getX() - getX());
         int yDistance = Math.abs(otherCoordinate.getY() - getY());
         return Math.sqrt(xDistance * xDistance + yDistance * yDistance);
@@ -69,7 +96,7 @@ public class Coordinate {
      * @return true if valid and false if invalid
      * @TODO: A bit confusing that maxCoordinate is not a valid coordinate
      */
-    public boolean isValidCoordinate(Coordinate maxCoordinate) {
+    public boolean isValidCoordinate(final Coordinate maxCoordinate) {
         if (getX() >= 0 && getY() >= 0
                 && getX() < maxCoordinate.getX()
                 && getY() < maxCoordinate.getY()) {

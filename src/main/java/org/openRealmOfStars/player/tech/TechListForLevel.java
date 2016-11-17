@@ -41,6 +41,10 @@ public class TechListForLevel {
    */
   private int level;
 
+  /**
+   * Constructor for TechListForLevel
+   * @param level Tech Level
+   */
   public TechListForLevel(final int level) {
     techList = new ArrayList<>();
     if (level >= 1 && level < 10) {
@@ -101,6 +105,8 @@ public class TechListForLevel {
       case Electrics:
         tech = TechFactory.createElectronicsTech(name, level);
         break;
+      default:
+        throw new IllegalArgumentException("Illegal tech type" + type + "!");
       }
       if (tech != null) {
         techList.add(tech);
@@ -116,7 +122,9 @@ public class TechListForLevel {
   public boolean isTech(final String techName) {
     for (int i = 0; i < techList.size(); i++) {
       Tech tech = techList.get(i);
-      if (tech.getName().equals(techName)) { return true; }
+      if (tech.getName().equals(techName)) {
+        return true;
+      }
     }
     return false;
   }

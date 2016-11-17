@@ -26,14 +26,230 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingType;
  * Building factory
  *
  */
-public class BuildingFactory {
+public final class BuildingFactory {
 
+  /**
+   * Hiding the constructor.
+   */
+  private BuildingFactory() {
+   // Nothing to do
+  }
   /**
    * Current maximum buildings for whole game.
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
   private static final int MAX_BUILDING = 42;
+
+  /**
+   * Component Basic mine
+   */
+  public static final int COMPONENT_BASIC_MINE = 0;
+
+  /**
+   * Component Basic farm
+   */
+  public static final int COMPONENT_BASIC_FARM = 1;
+
+  /**
+   * Component Basic factory
+   */
+  public static final int COMPONENT_BASIC_FACTORY = 2;
+
+  /**
+   * Component Basic lab
+   */
+  public static final int COMPONENT_BASIC_LAB = 3;
+
+  /**
+   * Component Space port
+   */
+  public static final int COMPONENT_SPACE_PORT = 4;
+
+  /**
+   * Component Barracks
+   */
+  public static final int COMPONENT_BARRACKS = 5;
+
+  /**
+   * Component Tax center
+   */
+  public static final int COMPONENT_TAX_CENTER = 6;
+
+  /**
+   * Component Advanced farm
+   */
+  public static final int COMPONENT_ADVANCED_FARM = 7;
+
+  /**
+   * Component Advanced mine
+   */
+  public static final int COMPONENT_ADVANCED_MINE = 8;
+
+  /**
+   * Component Advanced factory
+   */
+  public static final int COMPONENT_ADVANCED_FACTORY = 9;
+
+  /**
+   * Component Advanced laboratory
+   */
+  public static final int COMPONENT_ADVANCED_LABORATORY = 10;
+
+  /**
+   * Component Market center
+   */
+  public static final int COMPONENT_MARKET_CENTER = 11;
+
+  /**
+   * Component Culture center
+   */
+  public static final int COMPONENT_CULTURE_CENTER = 12;
+
+  /**
+   * Component Trade center
+   */
+  public static final int COMPONENT_TRADE_CENTER = 13;
+
+  /**
+   * Component Extreme sports center
+   */
+  public static final int COMPONENT_EXTREME_SPORTS_CENTER = 14;
+
+  /**
+   * Component Recycle center
+   */
+  public static final int COMPONENT_RECYCLE_CENTER = 15;
+
+  /**
+   * Component Farming center
+   */
+  public static final int COMPONENT_FARMING_CENTER = 16;
+
+  /**
+   * Component Mining center
+   */
+  public static final int COMPONENT_MINING_CENTER = 17;
+
+  /**
+   * Component Manufacturing center
+   */
+  public static final int COMPONENT_MANUFACTURING_CENTER = 18;
+
+  /**
+   * Component Radiation dampener
+   */
+  public static final int COMPONENT_RADIATION_DAMPENER = 19;
+
+  /**
+   * Component Research center
+   */
+  public static final int COMPONENT_RESEARCH_CENTER = 20;
+
+  /**
+   * Component Stock market
+   */
+  public static final int COMPONENT_STOCK_MARKET = 21;
+
+  /**
+   * Component Galactic sports center
+   */
+  public static final int COMPONENT_GALACTIC_SPORTS_CENTER = 22;
+
+  /**
+   * Component New technology center
+   */
+  public static final int COMPONENT_NEW_TECHNOLOGY_CENTER = 23;
+
+  /**
+   * Component VR movie center
+   */
+  public static final int COMPONENT_VR_MOVIE_CENTER = 24;
+
+  /**
+   * Component Advanced recycle center
+   */
+  public static final int COMPONENT_ADVANCED_RECYCLE_CENTER = 25;
+
+  /**
+   * Component Galactic bank
+   */
+  public static final int COMPONENT_GALACTIC_BANK = 26;
+
+  /**
+   * Component Radiation well
+   */
+  public static final int COMPONENT_RADIATION_WELL = 27;
+
+  /**
+   * Component Hydropodic farming center
+   */
+  public static final int COMPONENT_HYDROPODIC_FARMING_CENTER = 28;
+
+  /**
+   * Component Nanobot mining center
+   */
+  public static final int COMPONENT_NANOBOT_MINING_CENTER = 29;
+
+  /**
+   * Component Nanobot manufacturing center
+   */
+  public static final int COMPONENT_NANOBOT_MANUFACTURING_CENTER = 30;
+
+  /**
+   * Component Neural research center
+   */
+  public static final int COMPONENT_NEURAL_RESEARCH_CENTER = 31;
+
+  /**
+   * Component Super AI center
+   */
+  public static final int COMPONENT_SUPER_AI_CENTER = 32;
+
+  /**
+   * Component Replicator center
+   */
+  public static final int COMPONENT_REPLICATOR_CENTER = 33;
+
+  /**
+   * Component Planetary defense turret Mk1
+   */
+  public static final int COMPONENT_PLANETARY_DEFENSE_TURRET_MK1 = 34;
+
+  /**
+   * Component Planetary defense turret Mk2
+   */
+  public static final int COMPONENT_PLANETARY_DEFENSE_TURRET_MK2 = 35;
+
+  /**
+   * Component Planetary defense turret Mk3
+   */
+  public static final int COMPONENT_PLANETARY_DEFENSE_TURRET_MK3 = 36;
+
+  /**
+   * Component Planetary scanner Mk1
+   */
+  public static final int COMPONENT_PLANETARY_SCANNER_MK1 = 37;
+
+  /**
+   * Component Planetary scanner Mk2
+   */
+  public static final int COMPONENT_PLANETARY_SCANNER_MK2 = 38;
+
+  /**
+   * Component Planetary scanner Mk3
+   */
+  public static final int COMPONENT_PLANETARY_SCANNER_MK3 = 39;
+
+  /**
+   * Component Planetary scanner Mk4
+   */
+  public static final int COMPONENT_PLANETARY_SCANNER_MK4 = 40;
+
+  /**
+   * Component Planetary scanner Mk5
+   */
+  public static final int COMPONENT_PLANETARY_SCANNER_MK5 = 41;
 
   /**
    * Create planetary building with index
@@ -43,132 +259,135 @@ public class BuildingFactory {
   public static Building create(final int index) {
     Building tmp = null;
     switch (index) {
-    case 0:
+    case COMPONENT_BASIC_MINE:
       tmp = createProductionFacility(index);
       break; // Basic mine
-    case 1:
+    case COMPONENT_BASIC_FARM:
       tmp = createProductionFacility(index);
       break; // Basic farm
-    case 2:
+    case COMPONENT_BASIC_FACTORY:
       tmp = createProductionFacility(index);
       break; // Basic factory
-    case 3:
+    case COMPONENT_BASIC_LAB:
       tmp = createProductionFacility(index);
       break; // Basic lab
-    case 4:
+    case COMPONENT_SPACE_PORT:
       tmp = createPlanetaryImprovement(index);
       break; // Space port
-    case 5:
+    case COMPONENT_BARRACKS:
       tmp = createPlanetaryImprovement(index);
       break; // Barracks
-    case 6:
+    case COMPONENT_TAX_CENTER:
       tmp = createPlanetaryImprovement(index);
       break; // Tax center
-    case 7:
+    case COMPONENT_ADVANCED_FARM:
       tmp = createProductionFacility(index);
       break; // Advanced farm
-    case 8:
+    case COMPONENT_ADVANCED_MINE:
       tmp = createProductionFacility(index);
       break; // Advanced mine
-    case 9:
+    case COMPONENT_ADVANCED_FACTORY:
       tmp = createProductionFacility(index);
       break; // Advanced factory
-    case 10:
+    case COMPONENT_ADVANCED_LABORATORY:
       tmp = createProductionFacility(index);
       break; // Advanced laboratory
-    case 11:
+    case COMPONENT_MARKET_CENTER:
       tmp = createPlanetaryImprovement(index);
       break; // Market center
-    case 12:
+    case COMPONENT_CULTURE_CENTER:
       tmp = createPlanetaryImprovement(index);
       break; // Culture center
-    case 13:
+    case COMPONENT_TRADE_CENTER:
       tmp = createPlanetaryImprovement(index);
       break; // Trade center
-    case 14:
+    case COMPONENT_EXTREME_SPORTS_CENTER:
       tmp = createPlanetaryImprovement(index);
       break; // Extreme sports center
-    case 15:
+    case COMPONENT_RECYCLE_CENTER:
       tmp = createPlanetaryImprovement(index);
       break; // Recycle center
-    case 16:
+    case COMPONENT_FARMING_CENTER:
       tmp = createProductionFacility(index);
       break; // Farming center
-    case 17:
+    case COMPONENT_MINING_CENTER:
       tmp = createProductionFacility(index);
       break; // Mining center
-    case 18:
+    case COMPONENT_MANUFACTURING_CENTER:
       tmp = createProductionFacility(index);
       break; // Manufacturing center
-    case 19:
+    case COMPONENT_RADIATION_DAMPENER:
       tmp = createPlanetaryImprovement(index);
       break; // Radiation dampener
-    case 20:
+    case COMPONENT_RESEARCH_CENTER:
       tmp = createProductionFacility(index);
       break; // Research center
-    case 21:
+    case COMPONENT_STOCK_MARKET:
       tmp = createPlanetaryImprovement(index);
       break; // Stock market
-    case 22:
+    case COMPONENT_GALACTIC_SPORTS_CENTER:
       tmp = createPlanetaryImprovement(index);
       break; // Galactic sports center
-    case 23:
+    case COMPONENT_NEW_TECHNOLOGY_CENTER:
       tmp = createPlanetaryImprovement(index);
       break; // New technology center
-    case 24:
+    case COMPONENT_VR_MOVIE_CENTER:
       tmp = createPlanetaryImprovement(index);
       break; // VR movie center
-    case 25:
+    case COMPONENT_ADVANCED_RECYCLE_CENTER:
       tmp = createPlanetaryImprovement(index);
       break; // Advanced recycle center
-    case 26:
+    case COMPONENT_GALACTIC_BANK:
       tmp = createPlanetaryImprovement(index);
       break; // Galactic bank
-    case 27:
+    case COMPONENT_RADIATION_WELL:
       tmp = createPlanetaryImprovement(index);
       break; // Radiation well
-    case 28:
+    case COMPONENT_HYDROPODIC_FARMING_CENTER:
       tmp = createProductionFacility(index);
       break; // Hydropodic farming center
-    case 29:
+    case COMPONENT_NANOBOT_MINING_CENTER:
       tmp = createProductionFacility(index);
       break; // Nanobot mining center
-    case 30:
+    case COMPONENT_NANOBOT_MANUFACTURING_CENTER:
       tmp = createProductionFacility(index);
       break; // Nanobot manufacturing center
-    case 31:
+    case COMPONENT_NEURAL_RESEARCH_CENTER:
       tmp = createProductionFacility(index);
       break; // Neural research center
-    case 32:
+    case COMPONENT_SUPER_AI_CENTER:
       tmp = createPlanetaryImprovement(index);
       break; // Super AI center
-    case 33:
+    case COMPONENT_REPLICATOR_CENTER:
       tmp = createPlanetaryImprovement(index);
       break; // Replicator center
-    case 34:
+    case COMPONENT_PLANETARY_DEFENSE_TURRET_MK1:
       tmp = createMilitaryFacility(index);
       break; // Planetary defense turret Mk1
-    case 35:
+    case COMPONENT_PLANETARY_DEFENSE_TURRET_MK2:
       tmp = createMilitaryFacility(index);
       break; // Planetary defense turret Mk2
-    case 36:
+    case COMPONENT_PLANETARY_DEFENSE_TURRET_MK3:
       tmp = createMilitaryFacility(index);
       break; // Planetary defense turret Mk3
-    case 37:
+    case COMPONENT_PLANETARY_SCANNER_MK1:
       tmp = createMilitaryFacility(index);
       break; // Planetary scanner Mk1
-    case 38:
+    case COMPONENT_PLANETARY_SCANNER_MK2:
       tmp = createMilitaryFacility(index);
       break; // Planetary scanner Mk2
-    case 39:
+    case COMPONENT_PLANETARY_SCANNER_MK3:
       tmp = createMilitaryFacility(index);
       break; // Planetary scanner Mk3
-    case 40:
+    case COMPONENT_PLANETARY_SCANNER_MK4:
       tmp = createMilitaryFacility(index);
       break; // Planetary scanner Mk4
-    case 41:
+    case COMPONENT_PLANETARY_SCANNER_MK5:
       tmp = createMilitaryFacility(index);
       break; // Planetary scanner Mk5
+    default:
+      throw new IllegalArgumentException("No building found with index "
+      + index + "!");
     }
     return tmp;
   }
@@ -182,7 +401,9 @@ public class BuildingFactory {
     Building tmp = null;
     for (int i = 0; i < MAX_BUILDING; i++) {
       tmp = create(i);
-      if (tmp != null && tmp.getName().equalsIgnoreCase(name)) { return tmp; }
+      if (tmp != null && tmp.getName().equalsIgnoreCase(name)) {
+        return tmp;
+      }
     }
     return null;
   }
@@ -194,7 +415,7 @@ public class BuildingFactory {
    */
   private static Building createMilitaryFacility(final int index) {
     Building tmp = null;
-    if (index == 34) {
+    if (index == COMPONENT_PLANETARY_DEFENSE_TURRET_MK1) {
       tmp = new Building(index, "Planetary defense turret Mk1",
           Icons.getIconByName(Icons.ICON_PLANETARY_TURRET),
           BuildingType.MILITARY);
@@ -204,7 +425,7 @@ public class BuildingFactory {
       tmp.setDefenseDamage(3);
       return tmp;
     }
-    if (index == 35) {
+    if (index == COMPONENT_PLANETARY_DEFENSE_TURRET_MK2) {
       tmp = new Building(index, "Planetary defense turret Mk2",
           Icons.getIconByName(Icons.ICON_PLANETARY_TURRET),
           BuildingType.MILITARY);
@@ -214,7 +435,7 @@ public class BuildingFactory {
       tmp.setDefenseDamage(6);
       return tmp;
     }
-    if (index == 36) {
+    if (index == COMPONENT_PLANETARY_DEFENSE_TURRET_MK3) {
       tmp = new Building(index, "Planetary defense turret Mk3",
           Icons.getIconByName(Icons.ICON_PLANETARY_TURRET),
           BuildingType.MILITARY);
@@ -224,7 +445,7 @@ public class BuildingFactory {
       tmp.setDefenseDamage(9);
       return tmp;
     }
-    if (index == 37) {
+    if (index == COMPONENT_PLANETARY_SCANNER_MK1) {
       tmp = new Building(index, "Planetary scanner Mk1",
           Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
       tmp.setProdCost(16);
@@ -235,7 +456,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 38) {
+    if (index == COMPONENT_PLANETARY_SCANNER_MK2) {
       tmp = new Building(index, "Planetary scanner Mk2",
           Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
       tmp.setProdCost(24);
@@ -246,7 +467,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 39) {
+    if (index == COMPONENT_PLANETARY_SCANNER_MK3) {
       tmp = new Building(index, "Planetary scanner Mk3",
           Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
       tmp.setProdCost(40);
@@ -257,7 +478,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 40) {
+    if (index == COMPONENT_PLANETARY_SCANNER_MK4) {
       tmp = new Building(index, "Planetary scanner Mk4",
           Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
       tmp.setProdCost(60);
@@ -268,7 +489,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 41) {
+    if (index == COMPONENT_PLANETARY_SCANNER_MK5) {
       tmp = new Building(index, "Planetary scanner Mk5",
           Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.MILITARY);
       tmp.setProdCost(80);
@@ -289,7 +510,7 @@ public class BuildingFactory {
    */
   private static Building createProductionFacility(final int index) {
     Building tmp = null;
-    if (index == 0) {
+    if (index == COMPONENT_BASIC_MINE) {
       tmp = new Building(index, "Basic mine",
           Icons.getIconByName(Icons.ICON_MINE), BuildingType.MINE);
       tmp.setMineBonus(1);
@@ -298,7 +519,7 @@ public class BuildingFactory {
       tmp.setDescription("Small scale automatic mine");
       return tmp;
     }
-    if (index == 1) {
+    if (index == COMPONENT_BASIC_FARM) {
       tmp = new Building(index, "Basic farm",
           Icons.getIconByName(Icons.ICON_FARM), BuildingType.FARM);
       tmp.setFarmBonus(1);
@@ -307,7 +528,7 @@ public class BuildingFactory {
       tmp.setDescription("Automatic farm to produce food.");
       return tmp;
     }
-    if (index == 2) {
+    if (index == COMPONENT_BASIC_FACTORY) {
       tmp = new Building(index, "Basic factory",
           Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
       tmp.setFactBonus(1);
@@ -316,7 +537,7 @@ public class BuildingFactory {
       tmp.setDescription("Single mass production line.");
       return tmp;
     }
-    if (index == 3) {
+    if (index == COMPONENT_BASIC_LAB) {
       tmp = new Building(index, "Basic lab",
           Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
       tmp.setReseBonus(1);
@@ -325,7 +546,7 @@ public class BuildingFactory {
       tmp.setDescription("Basic laboratory for science.");
       return tmp;
     }
-    if (index == 7) {
+    if (index == COMPONENT_ADVANCED_FARM) {
       tmp = new Building(index, "Advanced farm",
           Icons.getIconByName(Icons.ICON_FARM), BuildingType.FARM);
       tmp.setFarmBonus(2);
@@ -335,7 +556,7 @@ public class BuildingFactory {
       tmp.setDescription("Advanced automation farm.");
       return tmp;
     }
-    if (index == 8) {
+    if (index == COMPONENT_ADVANCED_MINE) {
       tmp = new Building(index, "Advanced mine",
           Icons.getIconByName(Icons.ICON_MINE), BuildingType.MINE);
       tmp.setMineBonus(2);
@@ -345,7 +566,7 @@ public class BuildingFactory {
       tmp.setDescription("Advanced mine with robotic miners.");
       return tmp;
     }
-    if (index == 9) {
+    if (index == COMPONENT_ADVANCED_FACTORY) {
       tmp = new Building(index, "Advanced factory",
           Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
       tmp.setFactBonus(2);
@@ -355,7 +576,7 @@ public class BuildingFactory {
       tmp.setDescription("Advanced production line with robotics.");
       return tmp;
     }
-    if (index == 10) {
+    if (index == COMPONENT_ADVANCED_LABORATORY) {
       tmp = new Building(index, "Advanced laboratory",
           Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
       tmp.setReseBonus(2);
@@ -365,7 +586,7 @@ public class BuildingFactory {
       tmp.setDescription("Fully equiped science laboratory.");
       return tmp;
     }
-    if (index == 16) {
+    if (index == COMPONENT_FARMING_CENTER) {
       tmp = new Building(index, "Farming center",
           Icons.getIconByName(Icons.ICON_FARM), BuildingType.FARM);
       tmp.setFarmBonus(3);
@@ -376,7 +597,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 17) {
+    if (index == COMPONENT_MINING_CENTER) {
       tmp = new Building(index, "Mining center",
           Icons.getIconByName(Icons.ICON_MINE), BuildingType.MINE);
       tmp.setMineBonus(3);
@@ -387,7 +608,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 18) {
+    if (index == COMPONENT_MANUFACTURING_CENTER) {
       tmp = new Building(index, "Manufacturing center",
           Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
       tmp.setFactBonus(3);
@@ -398,7 +619,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 20) {
+    if (index == COMPONENT_RESEARCH_CENTER) {
       tmp = new Building(index, "Research center",
           Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
       tmp.setReseBonus(3);
@@ -409,7 +630,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 28) {
+    if (index == COMPONENT_HYDROPODIC_FARMING_CENTER) {
       tmp = new Building(index, "Hydropodic farming center",
           Icons.getIconByName(Icons.ICON_FARM), BuildingType.FARM);
       tmp.setFarmBonus(4);
@@ -420,7 +641,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 29) {
+    if (index == COMPONENT_NANOBOT_MINING_CENTER) {
       tmp = new Building(index, "Nanobot mining center",
           Icons.getIconByName(Icons.ICON_MINE), BuildingType.MINE);
       tmp.setMineBonus(4);
@@ -431,7 +652,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 30) {
+    if (index == COMPONENT_NANOBOT_MANUFACTURING_CENTER) {
       tmp = new Building(index, "Nanobot manufacturing center",
           Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
       tmp.setFactBonus(4);
@@ -442,7 +663,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 31) {
+    if (index == COMPONENT_NEURAL_RESEARCH_CENTER) {
       tmp = new Building(index, "Neural research center",
           Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
       tmp.setReseBonus(4);
@@ -463,7 +684,7 @@ public class BuildingFactory {
    */
   private static Building createPlanetaryImprovement(final int index) {
     Building tmp = null;
-    if (index == 4) {
+    if (index == COMPONENT_SPACE_PORT) {
       tmp = new Building(index, "Space port",
           Icons.getIconByName(Icons.ICON_STARBASE), BuildingType.MILITARY);
       tmp.setDescription("Allows building the space ships.");
@@ -473,7 +694,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 5) {
+    if (index == COMPONENT_BARRACKS) {
       tmp = new Building(index, "Barracks",
           Icons.getIconByName(Icons.ICON_TROOPS), BuildingType.MILITARY);
       tmp.setDescription("Population fights better against invaders.");
@@ -484,7 +705,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 6) {
+    if (index == COMPONENT_TAX_CENTER) {
       tmp = new Building(index, "Tax center",
           Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
       tmp.setDescription("Makes population to pay taxes.");
@@ -495,7 +716,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 11) {
+    if (index == COMPONENT_MARKET_CENTER) {
       tmp = new Building(index, "Market center",
           Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
       tmp.setDescription("All sort of goods are sold.");
@@ -506,7 +727,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 12) {
+    if (index == COMPONENT_CULTURE_CENTER) {
       tmp = new Building(index, "Culture center",
           Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
       tmp.setDescription("Music, Arts, poetry, movies and video games.");
@@ -517,7 +738,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 13) {
+    if (index == COMPONENT_TRADE_CENTER) {
       tmp = new Building(index, "Trade center",
           Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
       tmp.setDescription("Massive trade center for selling goods.");
@@ -528,7 +749,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 14) {
+    if (index == COMPONENT_EXTREME_SPORTS_CENTER) {
       tmp = new Building(index, "Extreme sports center",
           Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
       tmp.setDescription("Violent sports is a culture too.");
@@ -540,7 +761,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 15) {
+    if (index == COMPONENT_RECYCLE_CENTER) {
       tmp = new Building(index, "Recycle center",
           Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
           BuildingType.FACTORY);
@@ -553,7 +774,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 19) {
+    if (index == COMPONENT_RADIATION_DAMPENER) {
       tmp = new Building(index, "Radiation dampener",
           Icons.getIconByName(Icons.ICON_RADIATION), BuildingType.FACTORY);
       tmp.setDescription("Decrease planet radiation by one.");
@@ -563,7 +784,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 21) {
+    if (index == COMPONENT_STOCK_MARKET) {
       tmp = new Building(index, "Stock market",
           Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
       tmp.setDescription("Planetary stock market");
@@ -574,7 +795,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 22) {
+    if (index == COMPONENT_GALACTIC_SPORTS_CENTER) {
       tmp = new Building(index, "Galactic sports center",
           Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
       tmp.setDescription(
@@ -587,7 +808,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 23) {
+    if (index == COMPONENT_NEW_TECHNOLOGY_CENTER) {
       tmp = new Building(index, "New technology center",
           Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
       tmp.setDescription("New technology is studied and used in culture.");
@@ -599,7 +820,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 24) {
+    if (index == COMPONENT_VR_MOVIE_CENTER) {
       tmp = new Building(index, "VR movie center",
           Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
       tmp.setDescription("Galactic VR movie studio");
@@ -610,7 +831,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 25) {
+    if (index == COMPONENT_ADVANCED_RECYCLE_CENTER) {
       tmp = new Building(index, "Advanced recycle center",
           Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
           BuildingType.FACTORY);
@@ -623,7 +844,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 26) {
+    if (index == COMPONENT_GALACTIC_BANK) {
       tmp = new Building(index, "Galactic bank",
           Icons.getIconByName(Icons.ICON_CREDIT), BuildingType.CREDIT);
       tmp.setDescription("Galactic bank is good business.");
@@ -633,7 +854,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 27) {
+    if (index == COMPONENT_RADIATION_WELL) {
       tmp = new Building(index, "Radiation well",
           Icons.getIconByName(Icons.ICON_RADIATION), BuildingType.FACTORY);
       tmp.setDescription("Decrease planet radiation by one.");
@@ -643,7 +864,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 32) {
+    if (index == COMPONENT_SUPER_AI_CENTER) {
       tmp = new Building(index, "Super AI center",
           Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
       tmp.setDescription("Super AI making science and improving production.");
@@ -655,7 +876,7 @@ public class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
-    if (index == 33) {
+    if (index == COMPONENT_REPLICATOR_CENTER) {
       tmp = new Building(index, "Replicator center",
           Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
       tmp.setDescription("Replicated goods can sold with good profit.");

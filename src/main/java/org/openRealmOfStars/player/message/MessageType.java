@@ -67,8 +67,9 @@ public enum MessageType {
       return 4;
     case FLEET:
       return 5;
+    default:
+      return 0;
     }
-    return 0;
   }
 
   /**
@@ -90,8 +91,9 @@ public enum MessageType {
       return MessageType.PLANETARY;
     case 5:
       return MessageType.FLEET;
+    default:
+      return MessageType.RESEARCH;
     }
-    return MessageType.RESEARCH;
   }
 
   @Override
@@ -109,8 +111,9 @@ public enum MessageType {
       return "Planetary";
     case FLEET:
       return "Fleet";
+    default:
+      return "Error - Unknown";
     }
-    return "Error - Unknown";
 
   }
 

@@ -225,7 +225,7 @@ public class Combat {
   }
 
   /**
-   * Destroy one single ship from fleets and combat
+   * Destroy one single ship from getFleets and combat
    * @param ship Combat ship
    */
   public void destroyShip(final CombatShip ship) {
@@ -633,17 +633,17 @@ public class Combat {
     if (winner != null && info1 == winner) {
       handleWinner(fleet1, info1);
       fleet1.setPos(fleet2.getCoordinate());
-      int index = info2.Fleets().getIndexByName(fleet2.getName());
+      int index = info2.getFleets().getIndexByName(fleet2.getName());
       if (index != -1) {
-        info2.Fleets().remove(index);
+        info2.getFleets().remove(index);
       }
     }
     if (winner != null && info2 == winner) {
       handleWinner(fleet2, info2);
       // Defending player won't move
-      int index = info1.Fleets().getIndexByName(fleet1.getName());
+      int index = info1.getFleets().getIndexByName(fleet1.getName());
       if (index != -1) {
-        info1.Fleets().remove(index);
+        info1.getFleets().remove(index);
       }
     }
   }

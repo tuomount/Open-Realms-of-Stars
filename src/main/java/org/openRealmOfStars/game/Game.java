@@ -292,7 +292,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showFleetView(final Planet planet, final Fleet fleet) {
     fleetView = new FleetView(planet, fleet,
-        players.getCurrentPlayerInfo().Fleets(), players.getCurrentPlayerInfo(),
+        players.getCurrentPlayerInfo().getFleets(), players.getCurrentPlayerInfo(),
         this);
     this.getContentPane().removeAll();
     this.add(fleetView);
@@ -319,9 +319,9 @@ public class Game extends JFrame implements ActionListener {
     if (combat == null) {
       // This is fixed combat
       combatView = new BattleView(
-          players.getCurrentPlayerInfo().Fleets().getByIndex(0),
+          players.getCurrentPlayerInfo().getFleets().getByIndex(0),
           players.getCurrentPlayerInfo(),
-          players.getPlayerInfoByIndex(1).Fleets().getByIndex(0),
+          players.getPlayerInfoByIndex(1).getFleets().getByIndex(0),
           players.getPlayerInfoByIndex(1), starMap, this);
     } else {
       combatView = new BattleView(combat, starMap, this);
@@ -637,7 +637,7 @@ public class Game extends JFrame implements ActionListener {
     if (msg.getType() == MessageType.FLEET) {
       starMap.setCursorPos(msg.getX(), msg.getY());
       starMap.setDrawPos(msg.getX(), msg.getY());
-      Fleet fleet = players.getCurrentPlayerInfo().Fleets()
+      Fleet fleet = players.getCurrentPlayerInfo().getFleets()
           .getByName(msg.getMatchByString());
       if (fleet != null) {
         starMapView.setShowFleet(fleet);
@@ -741,14 +741,14 @@ public class Game extends JFrame implements ActionListener {
           .equals(GameCommands.COMMAND_PREV_TARGET)) {
         if (starMapView.getStarMapMouseListener()
             .getLastClickedFleet() != null) {
-          Fleet fleet = players.getCurrentPlayerInfo().Fleets().getPrev();
+          Fleet fleet = players.getCurrentPlayerInfo().getFleets().getPrev();
           changeMessageForFleets(fleet);
         }
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_NEXT_TARGET)) {
         if (starMapView.getStarMapMouseListener()
             .getLastClickedFleet() != null) {
-          Fleet fleet = players.getCurrentPlayerInfo().Fleets().getNext();
+          Fleet fleet = players.getCurrentPlayerInfo().getFleets().getNext();
           changeMessageForFleets(fleet);
         }
       } else {

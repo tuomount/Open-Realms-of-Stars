@@ -580,7 +580,7 @@ public class StarMap {
             stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
             stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
             Fleet fleet = new Fleet(ship, planet.getX(), planet.getY());
-            playerInfo.Fleets().add(fleet);
+            playerInfo.getFleets().add(fleet);
             if (ship.isColonyModule()) {
               fleet.setName("Colony #" + count);
             } else {
@@ -733,8 +733,8 @@ public class StarMap {
     }
     for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
       PlayerInfo player = players.getPlayerInfoByIndex(i);
-      for (int j = 0; j < player.Fleets().getNumberOfFleets(); j++) {
-        Fleet fleet = player.Fleets().getByIndex(j);
+      for (int j = 0; j < player.getFleets().getNumberOfFleets(); j++) {
+        Fleet fleet = player.getFleets().getByIndex(j);
         FleetTileInfo info = new FleetTileInfo(
             fleet.getFirstShip().getHull().getRace(),
             fleet.getFirstShip().getHull().getImageIndex(), i, j);
@@ -858,7 +858,7 @@ public class StarMap {
         && fleetTiles[x][y] != null) {
       int playerIndex = fleetTiles[x][y].getPlayerIndex();
       int fleetIndex = fleetTiles[x][y].getFleetIndex();
-      return players.getPlayerInfoByIndex(playerIndex).Fleets()
+      return players.getPlayerInfoByIndex(playerIndex).getFleets()
           .getByIndex(fleetIndex);
     }
     return null;
@@ -869,7 +869,7 @@ public class StarMap {
   }
 
   /**
-   * Fight with two fleets
+   * Fight with two getFleets
    * @param x X coordinate
    * @param y Y coordinate
    * @param fleet1 Fleet
@@ -884,7 +884,7 @@ public class StarMap {
       int fleetIndex = fleetTiles[x][y].getFleetIndex();
       PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
       if (info1 != info2) {
-        Fleet fleet2 = info2.Fleets().getByIndex(fleetIndex);
+        Fleet fleet2 = info2.getFleets().getByIndex(fleetIndex);
         return new Combat(fleet1, fleet2, info1, info2);
       }
     }
@@ -947,7 +947,7 @@ public class StarMap {
           PlanetHandling.handlePlanet(this, planet, aiTurnNumber);
         }
       }
-      aiFleet = info.Fleets().getFirst();
+      aiFleet = info.getFleets().getFirst();
     } else {
       aiTurnNumber++;
     }
@@ -1019,8 +1019,8 @@ public class StarMap {
     for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null) {
-        for (int j = 0; j < info.Fleets().getNumberOfFleets(); j++) {
-          Fleet fleet = info.Fleets().getByIndex(j);
+        for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
+          Fleet fleet = info.getFleets().getByIndex(j);
           fleet.movesLeft = fleet.getFleetSpeed();
           doFleetScanUpdate(info, fleet, null);
         }
@@ -1047,8 +1047,8 @@ public class StarMap {
     for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null) {
-        for (int j = 0; j < info.Fleets().getNumberOfFleets(); j++) {
-          Fleet fleet = info.Fleets().getByIndex(j);
+        for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
+          Fleet fleet = info.getFleets().getByIndex(j);
           doFleetScanUpdate(info, fleet, null);
         }
       }

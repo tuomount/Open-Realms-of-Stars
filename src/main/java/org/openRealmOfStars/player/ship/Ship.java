@@ -383,7 +383,7 @@ public class Ship extends Construction {
    * @return Initiative
    */
   public int getInitiative() {
-    int result = 0;
+    int result;
     switch (hull.getSize()) {
     case SMALL: {
       result = 12;
@@ -401,6 +401,8 @@ public class Ship extends Construction {
       result = 0;
       break;
     }
+    default:
+      result = 0;
     }
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
@@ -441,6 +443,8 @@ public class Ship extends Construction {
       result = result + 4;
       break;
     }
+    default:
+      result = 0;
     }
     return result;
   }
@@ -659,7 +663,7 @@ public class Ship extends Construction {
    * @return defense value for ship
    */
   public int getDefenseValue() {
-    int result = 0;
+    int result;
     switch (hull.getSize()) {
     case SMALL:
       result = 10;
@@ -673,6 +677,8 @@ public class Ship extends Construction {
     case HUGE:
       result = -5;
       break;
+    default:
+      result = 0;
     }
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
@@ -712,7 +718,8 @@ public class Ship extends Construction {
 
   /**
    * Is Ship trooper ship or not
-   * @return True if ship has functional planetary invasion module, otherwise false
+   * @return True if ship has functional planetary invasion module,
+   * otherwise false
    */
   public boolean isTrooperShip() {
     for (int i = 0; i < components.size(); i++) {

@@ -69,8 +69,8 @@ public class FleetList {
    */
   public void saveFleetList(final DataOutputStream dos) throws IOException {
     dos.writeInt(fleetList.size());
-    for (int i = 0; i < fleetList.size(); i++) {
-      fleetList.get(i).saveFleet(dos);
+    for (Fleet fleet: fleetList) {
+      fleet.saveFleet(dos);
     }
   }
 

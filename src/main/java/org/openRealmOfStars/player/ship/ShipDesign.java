@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -92,8 +93,8 @@ public class ShipDesign {
     IOUtilities.writeString(dos, hull.getName());
     dos.writeInt(hull.getRace().getIndex());
     dos.writeInt(components.size());
-    for (int i = 0; i < components.size(); i++) {
-      IOUtilities.writeString(dos, components.get(i).getName());
+    for (ShipComponent component : components) {
+      IOUtilities.writeString(dos, component.getName());
     }
   }
 
@@ -175,8 +176,7 @@ public class ShipDesign {
    */
   public int getFreeEnergy() {
     int energy = 0;
-    for (int i = 0; i < components.size(); i++) {
-      ShipComponent comp = components.get(i);
+    for (ShipComponent comp : components) {
       if (comp.getEnergyResource() > 0) {
         energy = energy + comp.getEnergyResource();
       }
@@ -194,8 +194,7 @@ public class ShipDesign {
    */
   public int getTotalShield() {
     int shield = 0;
-    for (int i = 0; i < components.size(); i++) {
-      ShipComponent comp = components.get(i);
+    for (ShipComponent comp : components) {
       if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.SHIELD) {
         shield = shield + comp.getDefenseValue();
@@ -211,8 +210,7 @@ public class ShipDesign {
    */
   public boolean gotCertainType(final ShipComponentType type) {
     boolean result = false;
-    for (int i = 0; i < components.size(); i++) {
-      ShipComponent comp = components.get(i);
+    for (ShipComponent comp : components) {
       if (comp.getType() == type) {
         result = true;
       }
@@ -227,8 +225,7 @@ public class ShipDesign {
    */
   public int getTotalArmor() {
     int armor = 0;
-    for (int i = 0; i < components.size(); i++) {
-      ShipComponent comp = components.get(i);
+    for (ShipComponent comp : components) {
       if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.ARMOR) {
         armor = armor + comp.getDefenseValue();
@@ -243,13 +240,12 @@ public class ShipDesign {
    */
 
   public boolean hasWeapons() {
-    for (int i = 0; i < components.size(); i++) {
-      ShipComponent comp = components.get(i);
+    for (ShipComponent comp : components) {
       if (comp.getType() == ShipComponentType.WEAPON_BEAM
           || comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
-          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO || comp
-              .getType() == ShipComponentType.WEAPON_RAILGUN) {
+          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
+          || comp.getType() == ShipComponentType.WEAPON_RAILGUN) {
         return true;
       }
     }
@@ -261,8 +257,7 @@ public class ShipDesign {
    * @return True if engine is found, otherwise false
    */
   public boolean hasEngine() {
-    for (int i = 0; i < components.size(); i++) {
-      ShipComponent comp = components.get(i);
+    for (ShipComponent comp : components) {
       if (comp.getType() == ShipComponentType.ENGINE) {
         return true;
       }
@@ -285,8 +280,7 @@ public class ShipDesign {
    */
   public int getCost() {
     int cost = 0;
-    for (int i = 0; i < components.size(); i++) {
-      ShipComponent comp = components.get(i);
+    for (ShipComponent comp : components) {
       cost = cost + comp.getCost();
     }
     cost = cost + hull.getCost();
@@ -300,8 +294,7 @@ public class ShipDesign {
    */
   public int getMetalCost() {
     int cost = 0;
-    for (int i = 0; i < components.size(); i++) {
-      ShipComponent comp = components.get(i);
+    for (ShipComponent comp : components) {
       cost = cost + comp.getMetalCost();
     }
     cost = cost + hull.getMetalCost();
@@ -317,8 +310,7 @@ public class ShipDesign {
     int power = 0;
     boolean militaryShip = false;
     power = getHull().getSlotHull() * components.size();
-    for (int i = 0; i < components.size(); i++) {
-      ShipComponent comp = components.get(i);
+    for (ShipComponent comp : components) {
       if (comp.getType() == ShipComponentType.WEAPON_BEAM
           || comp.getType() == ShipComponentType.WEAPON_RAILGUN
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
@@ -413,9 +405,7 @@ public class ShipDesign {
         result[index] = result[target];
         result[target] = temp;
         components.clear();
-        for (int i = 0; i < result.length; i++) {
-          components.add(result[i]);
-        }
+        Collections.addAll(components, result);
         return target;
       }
       if (!higher && index < result.length - 1) {
@@ -423,9 +413,7 @@ public class ShipDesign {
         result[index] = result[target];
         result[target] = temp;
         components.clear();
-        for (int i = 0; i < result.length; i++) {
-          components.add(result[i]);
-        }
+        Collections.addAll(components, result);
         return target;
       }
     }
@@ -521,7 +509,7 @@ public class ShipDesign {
   }
 
   /**
-   * Get ship' initiative for combat. Bigger value is better in combat
+   * Get ship's initiative for combat. Bigger value is better in combat
    * @return Initiative
    */
   private int getInitiative() {
@@ -543,9 +531,10 @@ public class ShipDesign {
       result = 0;
       break;
     }
+    default:
+      result = 0;
     }
-    for (int i = 0; i < components.size(); i++) {
-      ShipComponent comp = components.get(i);
+    for (ShipComponent comp : components) {
       if (comp.getType() == ShipComponentType.ENGINE) {
         result = result + comp.getSpeed() + comp.getTacticSpeed();
       }
@@ -581,6 +570,8 @@ public class ShipDesign {
       result = result + 4;
       break;
     }
+    default:
+      result = 0;
     }
     return result;
   }

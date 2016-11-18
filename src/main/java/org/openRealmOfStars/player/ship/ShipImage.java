@@ -58,24 +58,81 @@ public class ShipImage {
    */
   private BufferedImage[] smallShipImages;
 
+  /**
+   * Index for Scout
+   */
   public static final int SCOUT = 0;
+  /**
+   * Index for Colony
+   */
   public static final int COLONY = 1;
+  /**
+   * Index for Destroyer
+   */
   public static final int DESTROYER = 2;
+  /**
+   * Index for probe
+   */
   public static final int PROBE = 3;
+  /**
+   * Index for small freighter
+   */
   public static final int SMALL_FREIGHTER = 4;
+  /**
+   * Index for small starbase
+   */
   public static final int SMALL_STARBASE = 5;
+  /**
+   * Index for corvette
+   */
   public static final int CORVETTE = 6;
+  /**
+   * Index for medium starbase
+   */
   public static final int MEDIUM_STARBASE = 7;
+  /**
+   * Index for medium freighter
+   */
   public static final int MEDIUM_FREIGHTER = 8;
+  /**
+   * Index for cruiser
+   */
   public static final int CRUISER = 9;
+  /**
+   * Index for battleship
+   */
   public static final int BATTLESHIP = 10;
+  /**
+   * Index for privateer
+   */
   public static final int PRIVATEER = 11;
+  /**
+   * Index for large privateer
+   */
   public static final int PRIVATEER_LARGE = 12;
+  /**
+   * Index for large freighter
+   */
   public static final int LARGE_FREIGHTER = 13;
+  /**
+   * Index for large starbase
+   */
   public static final int LARGE_STARBASE = 14;
+  /**
+   * Index for battle cruiser
+   */
   public static final int BATTLECRUISER = 15;
+  /**
+   * Index for massive freighter
+   */
   public static final int MASSIVE_FREIGHTER = 16;
+  /**
+   * Index for massive starbase
+   */
   public static final int MASSIVE_STARBASE = 17;
+  /**
+   * Index for capital ship
+   */
   public static final int CAPITAL_SHIP = 18;
 
   /**
@@ -137,12 +194,22 @@ public class ShipImage {
         shipImages[MASSIVE_STARBASE]);
   }
 
+  /**
+   * Capture 64x64 image from bigger one
+   * @param image Image where to capture
+   * @param x Offset for X coordinate
+   * @param y Offset for X coordinate
+   * @return 64x64 pixels buffered image
+   * @throws RasterFormatException If trying to capture outside of image.
+   */
   private static BufferedImage image64x64(final BufferedImage image,
       final int x, final int y) throws RasterFormatException {
 
     if (x >= 0 && y >= 0 && x * MAX_WIDTH < image.getHeight()
-        && y * MAX_HEIGHT < image.getHeight()) { return image.getSubimage(
-            x * MAX_WIDTH, y * MAX_HEIGHT, MAX_WIDTH, MAX_HEIGHT); }
+        && y * MAX_HEIGHT < image.getHeight()) {
+      return image.getSubimage(x * MAX_WIDTH, y * MAX_HEIGHT, MAX_WIDTH,
+          MAX_HEIGHT);
+    }
     throw new RasterFormatException("Icon is outside of image.");
   }
 
@@ -152,7 +219,9 @@ public class ShipImage {
    * @return BufferedImage
    */
   public BufferedImage getShipImage(final int index) {
-    if (index >= 0 && index < NUMBER_OF_IMAGES) { return shipImages[index]; }
+    if (index >= 0 && index < NUMBER_OF_IMAGES) {
+      return shipImages[index];
+    }
     return shipImages[0];
   }
 
@@ -164,10 +233,17 @@ public class ShipImage {
    */
   public BufferedImage getSmallShipImage(final int index) {
     if (index >= 0
-        && index < NUMBER_OF_IMAGES) { return smallShipImages[index]; }
+        && index < NUMBER_OF_IMAGES) {
+      return smallShipImages[index];
+    }
     return smallShipImages[0];
   }
 
+  /**
+   * Scale 64x64 image to 32x32 image
+   * @param source Buffered image to scale
+   * @return Scaled buffered image
+   */
   public static BufferedImage scaleTo32x32(final BufferedImage source) {
     BufferedImage target = new BufferedImage(MIN_WIDTH, MIN_HEIGHT,
         BufferedImage.TYPE_4BYTE_ABGR);

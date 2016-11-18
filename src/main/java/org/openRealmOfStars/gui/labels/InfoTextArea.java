@@ -76,10 +76,18 @@ public class InfoTextArea extends JTextArea {
    */
   private boolean smoothScrollNextRow = false;
 
+  /**
+   * Is smooth scrolling enabled
+   * @return True if smooth scrolling enabled
+   */
   public boolean isSmoothScroll() {
     return smoothScroll;
   }
 
+  /**
+   * Set smooths crolling.
+   * @param smoothScroll True for smooth scrolling.
+   */
   public void setSmoothScroll(final boolean smoothScroll) {
     this.smoothScroll = smoothScroll;
   }
@@ -300,6 +308,10 @@ public class InfoTextArea extends JTextArea {
 
   }
 
+  /**
+   * Should scroll to next row
+   * @return True if enough smooth scrolling for one row.
+   */
   public boolean getSmoothScrollNextRow() {
     if (smoothScrollNextRow) {
       smoothScrollNextRow = false;

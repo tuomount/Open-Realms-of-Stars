@@ -86,6 +86,9 @@ public class StarMap {
    */
   private int[][] tiles;
 
+  /**
+   * Sector information if square contains planet, sun and is it visible or not
+   */
   private SquareInfo[][] tileInfo;
 
   /**
@@ -152,6 +155,10 @@ public class StarMap {
   public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.2";
 
   /**
+   * Maximum amount of looping when finding free solar system spot.
+   */
+  private static final int MAX_LOOPS = 10000;
+  /**
    * Constructor for StarMap. Generates universe with galaxy config and
    * players
    * @param config Galaxy config
@@ -205,7 +212,7 @@ public class StarMap {
     }
     // Random system
     int loop = 0;
-    while (loop < 1000) {
+    while (loop < MAX_LOOPS) {
       int sx = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
           maxX - SOLAR_SYSTEM_WIDTH);
       int sy = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
@@ -488,6 +495,11 @@ public class StarMap {
   }
 
   /**
+   * Default amount of metal in home worlds.
+   */
+  private static final int HOMEWORLD_METAL = 8000;
+
+  /**
    * Create Solar System
    * @param solarSystem map of solar systems
    * @param sunx Sun's about coordinates
@@ -542,7 +554,8 @@ public class StarMap {
               SOLAR_SYSTEM_WIDTH);
       if (is9NeighboursEmpty(px, py)) {
         planets++;
-        Planet planet = new Planet(new Coordinate(px, py), sun.getName(), planets, false);
+        Planet planet = new Planet(new Coordinate(px, py), sun.getName(),
+            planets, false);
         planet.setPlanetType(
             DiceGenerator.getRandom(Planet.PLANET_IMAGE_INDEX.length - 1));
         if (planets == 1 && playerIndex != -1) {
@@ -557,7 +570,7 @@ public class StarMap {
           planet.setPlanetOwner(playerIndex, playerInfo);
           planet.setRadiationLevel(1);
           planet.setGroundSize(12);
-          planet.setAmountMetalInGround(8000);
+          planet.setAmountMetalInGround(HOMEWORLD_METAL);
           planet.addBuilding(BuildingFactory.createByName("Space port"));
           planet.setHomeWorldIndex(playerInfo.getRace().getIndex());
           if (playerInfo.getRace() == SpaceRace.MECHIONS) {
@@ -611,8 +624,8 @@ public class StarMap {
               SOLAR_SYSTEM_WIDTH);
       if (is16NeighboursEmpty(px, py)) {
         gasGiants++;
-        Planet planet = new Planet(new Coordinate(px, py), sun.getName(), planets + gasGiants,
-            true);
+        Planet planet = new Planet(new Coordinate(px, py), sun.getName(),
+            planets + gasGiants, true);
         planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
         planetList.add(planet);
         int planetNumber = planetList.size() - 1;
@@ -648,6 +661,9 @@ public class StarMap {
           tileInfo[px + 1][py + 1] = info;
           break;
         }
+        default:
+          throw new IllegalArgumentException("Unexpected gas giant type:"
+             + planet.getPlanetImageIndex());
         }
       }
     }
@@ -672,8 +688,12 @@ public class StarMap {
   }
 
   /**
-   * Get nearest uncharted Solar system for coordinate. This should never return null.
-   * Unless there are no suns in galaxy.
+   * Longest distance that should never be possible to get in map.
+   */
+  private static final double LONGEST_DISTANCE = 999999;
+  /**
+   * Get nearest uncharted Solar system for coordinate. This should never
+   * return null. Unless there are no suns in galaxy.
    * @param x coordinate
    * @param y coordinate
    * @param info Player who is doing the search
@@ -683,13 +703,13 @@ public class StarMap {
    */
   public Sun getNearestSolarSystem(final int x, final int y,
       final PlayerInfo info, final Fleet fleet, final String ignoreSun) {
-    double distance = 999999;
+    double distance = LONGEST_DISTANCE;
     Sun result = null;
     for (Sun sun : sunList) {
       Coordinate coordinate = new Coordinate(x, y);
       double dist = coordinate.calculateDistance(sun.getCenterCoordinate());
       if (ignoreSun != null && ignoreSun.equals(sun.getName())) {
-        dist = 999999;
+        dist = LONGEST_DISTANCE;
       }
       if (dist < distance && info.getUnchartedValueSystem(sun, fleet) > 50) {
         distance = dist;
@@ -700,22 +720,26 @@ public class StarMap {
 
   }
 
+  /**
+   * Get starmap maximum X coordinate
+   * @return Maximum X coordinate, exclusive
+   */
   public int getMaxX() {
     return maxX;
   }
 
-  public void setMaxX(final int maxX) {
-    this.maxX = maxX;
-  }
-
+  /**
+   * Get starmap maximum Y coordinate
+   * @return Maximum Y coordinate, exclusive
+   */
   public int getMaxY() {
     return maxY;
   }
 
-  public void setMaxY(final int maxY) {
-    this.maxY = maxY;
-  }
-
+  /**
+   * Get tiles which to show
+   * @return Tiles array in array
+   */
   public int[][] getTiles() {
     return tiles;
   }
@@ -864,6 +888,10 @@ public class StarMap {
     return null;
   }
 
+  /**
+   * Get Array of Planets
+   * @return Planet list
+   */
   public ArrayList<Planet> getPlanetList() {
     return planetList;
   }
@@ -970,10 +998,18 @@ public class StarMap {
     aiFleet = fleet;
   }
 
+  /**
+   * Get current AI turn. This should be only used when handling AI
+   * @return AI player's index
+   */
   public int getAiTurnNumber() {
     return aiTurnNumber;
   }
 
+  /**
+   * Set new AI player's index.
+   * @param aiTurnNumber AI player index
+   */
   public void setAiTurnNumber(final int aiTurnNumber) {
     this.aiTurnNumber = aiTurnNumber;
   }
@@ -1068,6 +1104,47 @@ public class StarMap {
   }
 
   /**
+   * Culture level 1
+   */
+  private static final int CULTURE_LEVEL_1 = 5;
+  /**
+   * Culture level 2
+   */
+  private static final int CULTURE_LEVEL_2 = 10;
+  /**
+   * Culture level 3
+   */
+  private static final int CULTURE_LEVEL_3 = 20;
+  /**
+   * Culture level 4
+   */
+  private static final int CULTURE_LEVEL_4 = 40;
+  /**
+   * Culture level 5
+   */
+  private static final int CULTURE_LEVEL_5 = 80;
+  /**
+   * Culture level 6
+   */
+  private static final int CULTURE_LEVEL_6 = 160;
+  /**
+   * Culture level 7
+   */
+  private static final int CULTURE_LEVEL_7 = 320;
+  /**
+   * Culture level 8
+   */
+  private static final int CULTURE_LEVEL_8 = 640;
+  /**
+   * Culture level 9
+   */
+  private static final int CULTURE_LEVEL_9 = 1280;
+
+  /**
+   * Maximum culture radius
+   */
+  private static final int MAX_CULTURE_RADIUS = 7;
+  /**
    * Calculate culture on map
    * @param cx Center of culture X coordinate
    * @param cy Center of culture Y coordinate
@@ -1077,7 +1154,7 @@ public class StarMap {
   public void calculateCulture(final int cx, final int cy, final int value,
       final int index) {
     String mask = null;
-    if (value < 5) {
+    if (value < CULTURE_LEVEL_1) {
       // 765432101234567
       mask = /* 7 */"...............\n"
       + /* 6 */"...............\n"
@@ -1094,7 +1171,7 @@ public class StarMap {
       + /* 5 */"...............\n"
       + /* 6 */"...............\n"
       + /* 7 */"...............\n";
-    } else if (value < 10) {
+    } else if (value < CULTURE_LEVEL_2) {
       // 765432101234567
       mask = /* 7 */"...............\n"
       + /* 6 */"...............\n"
@@ -1111,7 +1188,7 @@ public class StarMap {
       + /* 5 */"...............\n"
       + /* 6 */"...............\n"
       + /* 7 */"...............\n";
-    } else if (value < 20) {
+    } else if (value < CULTURE_LEVEL_3) {
       // 765432101234567
       mask = /* 7 */"...............\n"
       + /* 6 */"...............\n"
@@ -1128,7 +1205,7 @@ public class StarMap {
       + /* 5 */"...............\n"
       + /* 6 */"...............\n"
       + /* 7 */"...............\n";
-    } else if (value < 40) {
+    } else if (value < CULTURE_LEVEL_4) {
       // 765432101234567
       mask = /* 7 */"...............\n"
       + /* 6 */"...............\n"
@@ -1145,7 +1222,7 @@ public class StarMap {
       + /* 5 */"...............\n"
       + /* 6 */"...............\n"
       + /* 7 */"...............\n";
-    } else if (value < 80) {
+    } else if (value < CULTURE_LEVEL_5) {
       // 765432101234567
       mask = /* 7 */"...............\n"
       + /* 6 */"...............\n"
@@ -1162,7 +1239,7 @@ public class StarMap {
       + /* 5 */"...............\n"
       + /* 6 */"...............\n"
       + /* 7 */"...............\n";
-    } else if (value < 160) {
+    } else if (value < CULTURE_LEVEL_6) {
       // 765432101234567
       mask = /* 7 */"...............\n"
       + /* 6 */"...............\n"
@@ -1179,7 +1256,7 @@ public class StarMap {
       + /* 5 */"...............\n"
       + /* 6 */"...............\n"
       + /* 7 */"...............\n";
-    } else if (value < 320) {
+    } else if (value < CULTURE_LEVEL_7) {
       // 765432101234567
       mask = /* 7 */"...............\n"
       + /* 6 */"...............\n"
@@ -1196,7 +1273,7 @@ public class StarMap {
       + /* 5 */"......XXX......\n"
       + /* 6 */"...............\n"
       + /* 7 */"...............\n";
-    } else if (value < 640) {
+    } else if (value < CULTURE_LEVEL_8) {
       // 765432101234567
       mask = /* 7 */"...............\n"
       + /* 6 */"......XXX......\n"
@@ -1213,7 +1290,7 @@ public class StarMap {
       + /* 5 */".....XXXXX.....\n"
       + /* 6 */"......XXX......\n"
       + /* 7 */"...............\n";
-    } else if (value < 1280) {
+    } else if (value < CULTURE_LEVEL_9) {
       // 765432101234567
       mask = /* 7 */".......X.......\n"
       + /* 6 */"......XXX......\n"
@@ -1250,8 +1327,8 @@ public class StarMap {
     }
 
     String[] lines = mask.split("\n");
-    int x = -7;
-    int y = -7;
+    int x = -MAX_CULTURE_RADIUS;
+    int y = -MAX_CULTURE_RADIUS;
     for (int line = 0; line < lines.length; line++) {
       for (int col = 0; col < lines[line].length(); col++) {
         if (lines[line].charAt(col) == 'X') {
@@ -1259,7 +1336,7 @@ public class StarMap {
         }
         x++;
       }
-      x = -7;
+      x = -MAX_CULTURE_RADIUS;
       y++;
     }
   }
@@ -1447,6 +1524,10 @@ public class StarMap {
     return players.getPlayerInfoByIndex(index);
   }
 
+  /**
+   * Get PlayerList
+   * @return PlayerList
+   */
   public PlayerList getPlayerList() {
     return players;
   }

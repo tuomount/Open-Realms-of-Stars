@@ -131,11 +131,45 @@ public class BigImagePanel extends JPanel {
 
   }
 
-  public void setShipImage(final BufferedImage[] shipImages) {
-    this.shipImages = shipImages;
+  /**
+   * BufferedImage array of ship image to draw
+   * @param images Images to draw
+   */
+  public void setShipImage(final BufferedImage[] images) {
+    this.shipImages = images;
     this.repaint();
   }
 
+  /**
+   * Background planet offset X coordinate
+   */
+  private static final int PLANET_X_OFFSET = 575;
+  /**
+   * Background planet offset Y coordinate
+   */
+  private static final int PLANET_Y_OFFSET = 575;
+
+  /**
+   * Planet animation offset X coordinate
+   */
+  private static final int ANIM_X_OFFSET = 280;
+  /**
+   * Planet animation offset Y coordinate
+   */
+  private static final int ANIM_Y_OFFSET = 220;
+  /**
+   * Planet bomb animation offset X coordinate
+   */
+  private static final int BOMB_X_OFFSET = 235;
+  /**
+   * Planet bomb animation offset Y coordinate
+   */
+  private static final int BOMB_Y_OFFSET = 235;
+
+  /**
+   * Draw planet text are about planet information
+   * @param g Graphics to use for drawing
+   */
   private void drawTextArea(final Graphics g) {
     g.setFont(GuiStatics.getFontCubellan());
     if (title == null && planet != null) {
@@ -166,11 +200,11 @@ public class BigImagePanel extends JPanel {
         }
       }
       String[] texts = sb.toString().split("\n");
-      int offsetX = (575 - backgroundImg.getWidth()) / 2
+      int offsetX = (PLANET_X_OFFSET - backgroundImg.getWidth()) / 2
           - GuiStatics.getTextWidth(GuiStatics.getFontCubellanBold(), texts[0])
               / 2
           + backgroundImg.getWidth() / 2;
-      int offsetY = (575 - backgroundImg.getHeight()) / 2;
+      int offsetY = (PLANET_Y_OFFSET - backgroundImg.getHeight()) / 2;
       if (planet.isGasGiant()) {
         offsetY = offsetY + 200;
       }
@@ -178,7 +212,7 @@ public class BigImagePanel extends JPanel {
       drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS,
           GuiStatics.COLOR_COOL_SPACE_BLUE_TRANS, offsetX, offsetY, texts[0]);
       if (planet.getPlanetPlayerInfo() != null) {
-        offsetX = (575 - backgroundImg.getWidth()) / 2
+        offsetX = (PLANET_X_OFFSET - backgroundImg.getWidth()) / 2
             - GuiStatics.getTextWidth(GuiStatics.getFontCubellanBold(),
                 planet.getPlanetPlayerInfo().getEmpireName()) / 2
             + backgroundImg.getWidth() / 2;
@@ -203,7 +237,7 @@ public class BigImagePanel extends JPanel {
         offsetX = (this.getWidth() - backgroundImg.getWidth()) / 2 - GuiStatics
             .getTextWidth(GuiStatics.getFontCubellanBoldBig(), title) / 2
             + backgroundImg.getWidth() / 2;
-        offsetY = (575 - backgroundImg.getHeight()) / 2;
+        offsetY = (PLANET_Y_OFFSET - backgroundImg.getHeight()) / 2;
         if (planet.isGasGiant()) {
           offsetY = offsetY + 100;
         }
@@ -214,6 +248,15 @@ public class BigImagePanel extends JPanel {
     }
 
   }
+
+  /**
+   * Ship's offset for x coordinate
+   */
+  private static final int SHIP_OFFSET_X = 332;
+  /**
+   * Ship's offset for y coordinate
+   */
+  private static final int SHIP_OFFSET_Y = 332;
 
   @Override
   public void paint(final Graphics g) {
@@ -235,8 +278,8 @@ public class BigImagePanel extends JPanel {
     }
     if (backgroundImg != null) {
       if (title == null) {
-        int offsetX = (575 - backgroundImg.getWidth()) / 2;
-        int offsetY = (575 - backgroundImg.getHeight()) / 2;
+        int offsetX = (PLANET_X_OFFSET - backgroundImg.getWidth()) / 2;
+        int offsetY = (PLANET_Y_OFFSET - backgroundImg.getHeight()) / 2;
         if (planet.isGasGiant()) {
           offsetY = offsetY + 200;
           offsetX = offsetX + 200;
@@ -245,7 +288,7 @@ public class BigImagePanel extends JPanel {
       } else {
         g2d.drawImage(GuiStatics.NEBULAE_IMAGE, -sx, -sy, null);
         int offsetX = (this.getWidth() - backgroundImg.getWidth()) / 2;
-        int offsetY = (575 - backgroundImg.getHeight()) / 2;
+        int offsetY = (PLANET_Y_OFFSET - backgroundImg.getHeight()) / 2;
         if (planet.isGasGiant()) {
           offsetY = offsetY + 100;
           offsetX = offsetX + 100;
@@ -282,58 +325,64 @@ public class BigImagePanel extends JPanel {
     if (shipImages != null) {
       for (int i = 0; i < shipImages.length; i++) {
 
-        int offsetX = 332;
-        int offsetY = 332;
+        int offsetX = SHIP_OFFSET_X;
+        int offsetY = SHIP_OFFSET_Y;
         switch (i) {
         case 0:
           break;
         case 1: {
-          offsetY = offsetY - 70;
-          offsetX = offsetX + 70;
+          offsetY = offsetY - ShipImage.MAX_HEIGHT - 14;
+          offsetX = offsetX + ShipImage.MAX_WIDTH + 14;
           break;
         }
         case 2: {
-          offsetY = offsetY + 32;
-          offsetX = offsetX - 70;
+          offsetY = offsetY + ShipImage.MAX_HEIGHT / 2;
+          offsetX = offsetX - ShipImage.MAX_WIDTH - 6;
           break;
         }
         case 3: {
-          offsetY = offsetY - 64;
-          offsetX = offsetX + 140;
+          offsetY = offsetY - ShipImage.MAX_HEIGHT;
+          offsetX = offsetX + (ShipImage.MAX_WIDTH + 6) * 2;
           break;
         }
         case 4: {
           offsetY = offsetY + 10;
-          offsetX = offsetX + 70;
+          offsetX = offsetX + ShipImage.MAX_WIDTH + 6;
           break;
         }
         case 5: {
-          offsetY = offsetY + 70;
+          offsetY = offsetY + ShipImage.MAX_HEIGHT + 6;
           offsetX = offsetX + 10;
           break;
         }
         case 6: {
-          offsetY = offsetY - 5;
-          offsetX = offsetX + 140;
+          offsetY = offsetY + 5;
+          offsetX = offsetX + (ShipImage.MAX_WIDTH + 6) * 2;
           break;
         }
         case 7: {
-          offsetY = offsetY + 74;
-          offsetX = offsetX + 75;
+          offsetY = offsetY + ShipImage.MAX_HEIGHT + 10;
+          offsetX = offsetX + ShipImage.MAX_WIDTH + 11;
           break;
         }
         case 8: {
-          offsetY = offsetY + 64;
-          offsetX = offsetX + 140;
+          offsetY = offsetY + ShipImage.MAX_HEIGHT;
+          offsetX = offsetX + (ShipImage.MAX_WIDTH + 6) * 2;
+          break;
+        }
+        default: {
+          offsetY = offsetY - ShipImage.MAX_HEIGHT - 14;
+          offsetX = offsetX + ShipImage.MAX_WIDTH + 14;
           break;
         }
         }
         if (animation != null) {
-          if (animation.getAnimationType() == PlanetAnimation.ANIMATION_TYPE_AIM
+          if (animation.getAnimationType() == PlanetAnimation
+              .ANIMATION_TYPE_AIM
               && backgroundImg != null && (animation.getShipIndex() == i
                   || animation.getShipIndex() > 8)) {
-            int px = 280;
-            int py = 220;
+            int px = ANIM_X_OFFSET;
+            int py = ANIM_Y_OFFSET;
             int nx = DiceGenerator.getRandom(25);
             int ny = DiceGenerator.getRandom(25);
             if (DiceGenerator.getRandom(1) == 0) {
@@ -349,27 +398,28 @@ public class BigImagePanel extends JPanel {
                 offsetY + ShipImage.MAX_HEIGHT / 2);
             animation.setAnimationType(PlanetAnimation.ANIMATION_TYPE_TURRET);
           }
-          if ((animation
-              .getAnimationType() == PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM
-              || animation
-                  .getAnimationType() == PlanetAnimation.ANIMATION_TYPE_NUKE_AIM)
+          if ((animation.getAnimationType()
+              == PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM
+              || animation.getAnimationType()
+              == PlanetAnimation.ANIMATION_TYPE_NUKE_AIM)
               && backgroundImg != null) {
-            int px = 235;
-            int py = 235;
+            int px = BOMB_X_OFFSET;
+            int py = BOMB_Y_OFFSET;
             int nx = DiceGenerator.getRandom(backgroundImg.getWidth() / 4);
             int ny = DiceGenerator.getRandom(backgroundImg.getHeight() / 4);
             px = px + nx;
             py = py + ny;
 
             animation.setCoords(px, py, px, py);
-            if (animation
-                .getAnimationType() == PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM) {
-              animation
-                  .setAnimationType(PlanetAnimation.ANIMATION_TYPE_BOMBING);
+            if (animation.getAnimationType()
+                == PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM) {
+              animation.setAnimationType(
+                  PlanetAnimation.ANIMATION_TYPE_BOMBING);
             }
-            if (animation
-                .getAnimationType() == PlanetAnimation.ANIMATION_TYPE_NUKE_AIM) {
-              animation.setAnimationType(PlanetAnimation.ANIMATION_TYPE_NUKING);
+            if (animation.getAnimationType()
+                == PlanetAnimation.ANIMATION_TYPE_NUKE_AIM) {
+              animation.setAnimationType(
+                  PlanetAnimation.ANIMATION_TYPE_NUKING);
             }
           }
         }
@@ -393,10 +443,18 @@ public class BigImagePanel extends JPanel {
     this.paintChildren(g2d);
   }
 
+  /**
+   * Get animation for planet. Usually bombing or nuking the planet
+   * @return Planet Animation
+   */
   public PlanetAnimation getAnimation() {
     return animation;
   }
 
+  /**
+   * Set new animation for planet
+   * @param animation Planet animation
+   */
   public void setAnimation(final PlanetAnimation animation) {
     this.animation = animation;
   }

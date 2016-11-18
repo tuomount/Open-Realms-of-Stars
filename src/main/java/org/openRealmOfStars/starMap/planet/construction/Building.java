@@ -126,69 +126,122 @@ public class Building extends Construction {
     this.scanCloakingDetection = 0;
   }
 
+  /**
+   * Get Building type enumeration
+   * @return BuildingType
+   */
   public BuildingType getType() {
     return type;
   }
 
-  public void setType(final BuildingType type) {
-    this.type = type;
-  }
-
+  /**
+   * Get building unique index
+   * @return unique index for building
+   */
   public int getIndex() {
     return index;
   }
 
-  public void setIndex(final int index) {
-    this.index = index;
-  }
-
+  /**
+   * Get building food produce bonus
+   * @return food production bonus
+   */
   public int getFarmBonus() {
     return farmBonus;
   }
 
+  /**
+   * Set food production bonus for building
+   * @param farmBonus Food production bonus
+   */
   public void setFarmBonus(final int farmBonus) {
     this.farmBonus = farmBonus;
   }
 
+  /**
+   * Get building mine production bonus
+   * @return Mine production bonus
+   */
   public int getMineBonus() {
     return mineBonus;
   }
 
+  /**
+   * Set building mine bonus
+   * @param mineBonus Mine production bonus
+   */
   public void setMineBonus(final int mineBonus) {
     this.mineBonus = mineBonus;
   }
 
+  /**
+   * Get building factory aka production bonus
+   * @return factory bonus
+   */
   public int getFactBonus() {
     return factBonus;
   }
 
+  /**
+   * Set building factory bonus
+   * @param factBonus factory aka production bonus
+   */
   public void setFactBonus(final int factBonus) {
     this.factBonus = factBonus;
   }
 
+  /**
+   * Get building culture bonus
+   * @return Culture bonus
+   */
   public int getCultBonus() {
     return cultBonus;
   }
 
+  /**
+   * Set building culture bonus
+   * @param cultBonus Culture bonus
+   */
   public void setCultBonus(final int cultBonus) {
     this.cultBonus = cultBonus;
   }
 
+  /**
+   * Get building research bonus
+   * @return Research bonus
+   */
   public int getReseBonus() {
     return reseBonus;
   }
 
+  /**
+   * Set building research bonus
+   * @param reseBonus Research bonus
+   */
   public void setReseBonus(final int reseBonus) {
     this.reseBonus = reseBonus;
   }
 
+  /**
+   * Get building credit aka money bonus
+   * @return credit bonus
+   */
   public int getCredBonus() {
     return credBonus;
   }
 
+  /**
+   * Set building credit aka money bonus
+   * @param credBonus Credit Bonus
+   */
   public void setCredBonus(final int credBonus) {
     this.credBonus = credBonus;
   }
+
+  /**
+   * Maximum building description line length
+   */
+  private static final int LINE_LENGTH = 39;
 
   @Override
   public String getFullDescription() {
@@ -198,7 +251,7 @@ public class Building extends Construction {
       sb.append(" - one per planet");
     }
     sb.append("\n");
-    sb.append(IOUtilities.stringWrapper(getDescription(), 39));
+    sb.append(IOUtilities.stringWrapper(getDescription(), LINE_LENGTH));
     sb.append("\n");
     sb.append("Cost: Prod.:");
     sb.append(getProdCost());
@@ -315,50 +368,99 @@ public class Building extends Construction {
     this.maintenanceCost = maintenanceCost;
   }
 
+  /**
+   * Is only single building allowed per planet
+   * @return True if only one building per planet
+   */
   public boolean isSingleAllowed() {
     return singleAllowed;
   }
 
+  /**
+   * Set if only single building allowed per planet
+   * @param singleAllowed Set true if only one per planet allowed
+   */
   public void setSingleAllowed(final boolean singleAllowed) {
     this.singleAllowed = singleAllowed;
   }
 
+  /**
+   * Get building battle bonus for defending troops
+   * @return Battle bonus
+   */
   public int getBattleBonus() {
     return battleBonus;
   }
 
+  /**
+   * Set building battle bonus for defending troops
+   * @param battleBonus Battle bonus for defending troops.
+   */
   public void setBattleBonus(final int battleBonus) {
     this.battleBonus = battleBonus;
   }
 
+  /**
+   * Get building recycle bonus. How much metal is recycled when
+   * building or ship is recycled on planet.
+   * @return Recycle bonus
+   */
   public int getRecycleBonus() {
     return recycleBonus;
   }
 
+  /**
+   * Set building recycle bonus.
+   * @param recycleBonus Recycle bonus
+   */
   public void setRecycleBonus(final int recycleBonus) {
     this.recycleBonus = recycleBonus;
   }
 
+  /**
+   * Get building defense damage aka turret power
+   * @return Defense Damage
+   */
   public int getDefenseDamage() {
     return defenseDamage;
   }
 
+  /**
+   * Set building defense damage
+   * @param defenseDamage Defense Damage
+   */
   public void setDefenseDamage(final int defenseDamage) {
     this.defenseDamage = defenseDamage;
   }
 
+  /**
+   * Get building scanner range
+   * @return Scanner ranger
+   */
   public int getScanRange() {
     return scanRange;
   }
 
+  /**
+   * Set scanner range
+   * @param scanRange Scanner Range in tiles
+   */
   public void setScanRange(final int scanRange) {
     this.scanRange = scanRange;
   }
 
+  /**
+   * Get cloaking detection power
+   * @return cloaking detection power
+   */
   public int getScanCloakingDetection() {
     return scanCloakingDetection;
   }
 
+  /**
+   * Set cloaking detection power
+   * @param scanCloakingDetection Scanner cloaking detection power
+   */
   public void setScanCloakingDetection(final int scanCloakingDetection) {
     this.scanCloakingDetection = scanCloakingDetection;
   }

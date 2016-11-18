@@ -4,18 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <repositories>
-      <repository>
-        <id>central</id>
-        <name>Maven Repository Switchboard</name>
-        <layout>default</layout>
-        <url>https://repo1.maven.org/maven2</url>
-        <snapshots>
-          <enabled>false</enabled>
-        </snapshots>
-      </repository>
-    </repositories>
-
     <groupId>org.openRealmOfStars</groupId>
     <artifactId>Open-Realms-of-Stars</artifactId>
     <version>0.0.5-SNAPSHOT</version>

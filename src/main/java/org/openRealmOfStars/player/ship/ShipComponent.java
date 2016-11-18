@@ -146,50 +146,97 @@ public class ShipComponent {
         || type == ShipComponentType.WEAPON_ECM_TORPEDO
         || type == ShipComponentType.WEAPON_HE_MISSILE
         || type == ShipComponentType.WEAPON_PHOTON_TORPEDO
-        || type == ShipComponentType.WEAPON_RAILGUN) { return true; }
+        || type == ShipComponentType.WEAPON_RAILGUN) {
+      return true;
+    }
     return false;
   }
 
+  /**
+   * Get ship component Index
+   * @return Component index
+   */
   public int getIndex() {
     return index;
   }
 
+  /**
+   * Get component type
+   * @return Ship component type
+   */
   public ShipComponentType getType() {
     return type;
   }
 
+  /**
+   * Get component production cost
+   * @return production cost
+   */
   public int getCost() {
     return cost;
   }
 
+  /**
+   * Get component metal cost
+   * @return metal cost
+   */
   public int getMetalCost() {
     return metalCost;
   }
 
+  /**
+   * Get component name
+   * @return name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Get component energy requirement
+   * @return Energy requirement
+   */
   public int getEnergyRequirement() {
     return energyRequirement;
   }
 
+  /**
+   * Set component energy requirement
+   * @param energyRequirement Energy required by component
+   */
   public void setEnergyRequirement(final int energyRequirement) {
     this.energyRequirement = energyRequirement;
   }
 
+  /**
+   * Get component energy resource. This is positive if component
+   * is producing energy.
+   * @return Energy production or zero
+   */
   public int getEnergyResource() {
     return energyResource;
   }
 
+  /**
+   * Set component energy source
+   * @param energyResource Amount energy component is producing
+   */
   public void setEnergyResource(final int energyResource) {
     this.energyResource = energyResource;
   }
 
+  /**
+   * Get engine's FTL speed
+   * @return FTL speed in tiles
+   */
   public int getFtlSpeed() {
     return ftlSpeed;
   }
 
+  /**
+   * Set engine's FTL speed
+   * @param ftlSpeed FTL speed in tiles
+   */
   public void setFtlSpeed(final int ftlSpeed) {
     this.ftlSpeed = ftlSpeed;
   }
@@ -202,6 +249,10 @@ public class ShipComponent {
     return speed;
   }
 
+  /**
+   * Set engine speed for normal moving
+   * @param speed normal movement speed
+   */
   public void setSpeed(final int speed) {
     this.speed = speed;
   }
@@ -214,54 +265,106 @@ public class ShipComponent {
     return tacticSpeed;
   }
 
+  /**
+   * Set speed in combat
+   * @param tacticSpeed Combat speed
+   */
   public void setTacticSpeed(final int tacticSpeed) {
     this.tacticSpeed = tacticSpeed;
   }
 
+  /**
+   * Get component scanner range
+   * @return range in tiles.
+   */
   public int getScannerRange() {
     return scannerRange;
   }
 
+  /**
+   * Set component scanner range.
+   * @param scannerRange Range in tiles.
+   */
   public void setScannerRange(final int scannerRange) {
     this.scannerRange = scannerRange;
   }
 
+  /**
+   * Get component cloak detection
+   * @return Cloak detection level
+   */
   public int getCloakDetection() {
     return cloakDetection;
   }
 
+  /**
+   * Set component cloak detection level.
+   * @param cloakDetection Cloak detection level
+   */
   public void setCloakDetection(final int cloakDetection) {
     this.cloakDetection = cloakDetection;
   }
 
+  /**
+   * Get component's cloaking value
+   * @return Cloaking value
+   */
   public int getCloaking() {
     return cloaking;
   }
 
+  /**
+   * Set cloaking value for component
+   * @param cloaking Cloaking value for component
+   */
   public void setCloaking(final int cloaking) {
     this.cloaking = cloaking;
   }
 
+  /**
+   * Get component defense value. This is used for both armor and shields.
+   * @return Defense value
+   */
   public int getDefenseValue() {
     return defenseValue;
   }
 
+  /**
+   * Set component defense value. This is used for both armor and shields.
+   * @param defenseValue Defense value
+   */
   public void setDefenseValue(final int defenseValue) {
     this.defenseValue = defenseValue;
   }
 
+  /**
+   * Get component damage. This is used for all weapons.
+   * @return Damage component causes when it hits
+   */
   public int getDamage() {
     return damage;
   }
 
+  /**
+   * Set how much component causes damage on hit.
+   * @param damage Damage on hit.
+   */
   public void setDamage(final int damage) {
     this.damage = damage;
   }
 
+  /**
+   * Get maximum range for weapon
+   * @return Range for weapon
+   */
   public int getWeaponRange() {
     return weaponRange;
   }
 
+  /**
+   * Set maximum range for weapon
+   * @param weaponRange Range in tiles.
+   */
   public void setWeaponRange(final int weaponRange) {
     this.weaponRange = weaponRange;
   }
@@ -408,14 +511,24 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    default:
+      // Do nothing
     }
     return sb.toString();
   }
 
+  /**
+   * Get component initiative boost for combat
+   * @return Initiative boost
+   */
   public int getInitiativeBoost() {
     return initiativeBoost;
   }
 
+  /**
+   * Set component initiative boost for combat.
+   * @param initiativeBoost for combat.
+   */
   public void setInitiativeBoost(final int initiativeBoost) {
     this.initiativeBoost = initiativeBoost;
   }

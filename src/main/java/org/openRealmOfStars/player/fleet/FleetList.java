@@ -33,7 +33,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 public class FleetList {
 
   /**
-   * Player's getFleets
+   * Player's fleets
    */
   private ArrayList<Fleet> fleetList;
 
@@ -69,8 +69,8 @@ public class FleetList {
    */
   public void saveFleetList(final DataOutputStream dos) throws IOException {
     dos.writeInt(fleetList.size());
-    for (int i = 0; i < fleetList.size(); i++) {
-      fleetList.get(i).saveFleet(dos);
+    for (Fleet fleet: fleetList) {
+      fleet.saveFleet(dos);
     }
   }
 
@@ -125,7 +125,7 @@ public class FleetList {
 
   /**
    * Get next fleet from the list
-   * @return Fleet or null if list contains no getFleets
+   * @return Fleet or null if list contains no fleets
    */
   public Fleet getNext() {
     if (fleetList.size() > 0) {
@@ -140,7 +140,7 @@ public class FleetList {
 
   /**
    * Get first fleet
-   * @return Fleet or null if no getFleets
+   * @return Fleet or null if no fleets
    */
   public Fleet getFirst() {
     if (fleetList.size() > 0) {
@@ -152,7 +152,7 @@ public class FleetList {
 
   /**
    * Get previous fleet from the list
-   * @return Fleet or null if list contains no getFleets
+   * @return Fleet or null if list contains no fleets
    */
   public Fleet getPrev() {
     if (fleetList.size() > 0) {
@@ -166,8 +166,8 @@ public class FleetList {
   }
 
   /**
-   * Get the number of getFleets
-   * @return number of getFleets
+   * Get the number of fleets
+   * @return number of fleets
    */
   public int getNumberOfFleets() {
     return fleetList.size();
@@ -175,7 +175,7 @@ public class FleetList {
 
   /**
    * Get current fleet from the list
-   * @return Fleet or null if list contains no getFleets
+   * @return Fleet or null if list contains no fleets
    */
   public Fleet getCurrent() {
     if (fleetList.size() > 0) {
@@ -187,7 +187,7 @@ public class FleetList {
   /**
    * Get by index fleet from the list
    * @param fleetIndex Index
-   * @return Fleet or null if list contains no getFleets
+   * @return Fleet or null if list contains no fleets
    */
   public Fleet getByIndex(final int fleetIndex) {
     if (fleetList.size() > 0 && fleetIndex >= 0
@@ -200,7 +200,7 @@ public class FleetList {
   /**
    * Get by fleet name fleet from the list
    * @param name Fleet name
-   * @return Fleet or null if list contains no getFleets
+   * @return Fleet or null if list contains no fleets
    */
   public Fleet getByName(final String name) {
     if (fleetList.size() > 0) {

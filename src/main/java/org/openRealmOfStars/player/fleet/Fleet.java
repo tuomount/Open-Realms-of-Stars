@@ -12,6 +12,7 @@ import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.repository.RouteRepository;
 
 /**
  *
@@ -96,7 +97,7 @@ public class Fleet {
     if (str.equals("NOROUTE")) {
       route = null;
     } else {
-      route = new Route(dis);
+      route = new RouteRepository().restoreRoute(dis);
     }
     int count = dis.readInt();
     ships = new ArrayList<>();
@@ -120,7 +121,7 @@ public class Fleet {
       IOUtilities.writeString(dos, "NOROUTE");
     } else {
       IOUtilities.writeString(dos, "ROUTE");
-      route.saveRoute(dos);
+      new RouteRepository().saveRoute(dos, route);
     }
 
     dos.writeInt(ships.size());

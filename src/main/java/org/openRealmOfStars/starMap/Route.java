@@ -1,9 +1,6 @@
 package org.openRealmOfStars.starMap;
 
 import java.awt.image.BufferedImage;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -106,38 +103,6 @@ public class Route {
       mx = 0;
       my = 0;
     }
-  }
-
-  /**
-   * Read route from DataInputStream
-   * @param dis Data Input Stream
-   * @throws IOException if there is any problem with DataInputStream
-   */
-  public Route(final DataInputStream dis) throws IOException {
-    startX = dis.readDouble();
-    startY = dis.readDouble();
-    endX = dis.readDouble();
-    endY = dis.readDouble();
-    mx = dis.readDouble();
-    my = dis.readDouble();
-    ftlSpeed = dis.readInt();
-    distance = dis.readInt();
-  }
-
-  /**
-   * Save Route to DataOutputStream
-   * @param dos DataOutputStream
-   * @throws IOException if there is any problem with DataOutputStream
-   */
-  public void saveRoute(final DataOutputStream dos) throws IOException {
-    dos.writeDouble(startX);
-    dos.writeDouble(startY);
-    dos.writeDouble(endX);
-    dos.writeDouble(endY);
-    dos.writeDouble(mx);
-    dos.writeDouble(my);
-    dos.writeInt(ftlSpeed);
-    dos.writeInt(distance);
   }
 
   /**
@@ -259,4 +224,133 @@ public class Route {
     return routeDot;
   }
 
+  /* Need for repository */
+
+  /**
+   * Get current position for X coordinate
+   * @return X coordinate
+   */
+  public double getStartX() {
+    return startX;
+  }
+
+  /**
+   * Set current position for X coordinate
+   * @param startX current position for X coordinate
+   */
+  public void setStartX(double startX) {
+    this.startX = startX;
+  }
+
+  /**
+   * Get current position for Y coordinate
+   * @return Y coordinate
+   */
+  public double getStartY() {
+    return startY;
+  }
+
+  /**
+   * Set current position for Y coordinate
+   * @param startY current position for Y coordinate
+   */
+  public void setStartY(double startY) {
+    this.startY = startY;
+  }
+
+  /**
+   * Get end X coordinate
+   * @return End X coordinate
+   */
+  public double getEndX() {
+    return endX;
+  }
+
+  /**
+   * Set end X coordinate
+   * @param endX End X coordinate
+   */
+  public void setEndX(double endX) {
+    this.endX = endX;
+  }
+
+  /**
+   * Get end Y coordinate
+   * @return End Y coordinate
+   */
+  public double getEndY() {
+    return endY;
+  }
+
+  /**
+   * Set end Y coordinate
+   * @param endY End Y coordinate
+   */
+  public void setEndY(double endY) {
+    this.endY = endY;
+  }
+
+  /**
+   * Get FTL speed
+   * @return FTL speed
+   */
+  public int getFtlSpeed() {
+    return ftlSpeed;
+  }
+
+  /**
+   * Set FTL speed
+   * @param ftlSpeed FTL speed
+   */
+  public void setFtlSpeed(int ftlSpeed) {
+    this.ftlSpeed = ftlSpeed;
+  }
+
+  /**
+   * Get internal movement speed
+   * @return internal movement speed
+   */
+  public double getMx() {
+    return mx;
+  }
+
+  /**
+   * Set internal movement speed
+   * @param mx internal movement speed
+   */
+  public void setMx(double mx) {
+    this.mx = mx;
+  }
+
+  /**
+   * Get internal movement speed
+   * @return internal movement speed
+   */
+  public double getMy() {
+    return my;
+  }
+
+  /**
+   * Set internal movement speed
+   * @param my internal movement speed
+   */
+  public void setMy(double my) {
+    this.my = my;
+  }
+
+  /**
+   * Get distance in coordinates
+   * @return distance in coordinates
+   */
+  public int getDistance() {
+    return distance;
+  }
+
+  /**
+   * Set distance in coordinates
+   * @param distance distance in coordinates
+   */
+  public void setDistance(int distance) {
+    this.distance = distance;
+  }
 }

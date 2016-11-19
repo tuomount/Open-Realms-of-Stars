@@ -59,23 +59,30 @@ public class PlanetTest {
       Planet planet = new Planet(planetCoordinate, "Earth", 1, false);
       planet.setRadiationLevel(1);
       PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+      info.setEmpireName("Alliance of Humans");
       planet.setPlanetOwner(0, info);
       planet.setWorkers(Planet.FOOD_FARMERS, 1);
       Building factory = BuildingFactory.createByName("Basic factory");
       planet.setUnderConstruction(factory);
+      System.out.print("Checking the population and production time...");
       assertEquals(1,planet.getTotalPopulation());
       assertEquals("15 turns",planet.getProductionTime(factory));
+      System.out.println("OK");
       for (int i=0;i<5;i++) {
         // 5 turns to grow one population
         planet.updateOneTurn();
       }
+      System.out.print("Checking the population growth...");
       assertEquals(2,planet.getTotalPopulation());
+      System.out.println("OK");
       for (int i=0;i<10;i++) {
         // Total of 15 turns for basic factory
         planet.updateOneTurn();
       }
+      System.out.print("Checking the factory building...");
       assertEquals(1,planet.getBuildingList().length);
       assertEquals("Basic factory",planet.getBuildingList()[0].getName());
+      System.out.println("OK");
       
 
     }

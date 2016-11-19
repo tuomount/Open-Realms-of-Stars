@@ -123,7 +123,7 @@ public final class DiceGenerator {
     if (maxValue >= minValue) {
       sub = maxValue - minValue;
     }
-    int result = getRandomResult(sub + 1);
+    int result = getRandomResult(sub);
     result = result + minValue;
     return result;
   }

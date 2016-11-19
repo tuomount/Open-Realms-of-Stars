@@ -26,6 +26,7 @@ import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
@@ -827,11 +828,13 @@ public class Planet {
 
   /**
    * Set ground size for planet
-   * @param groundSize Ground size is between 7 and 16
+   * @param freeGround Ground size is between 7 and 16
    */
-  public void setGroundSize(final int groundSize) {
-    if (groundSize > 6 && groundSize < 17) {
-      this.groundSize = groundSize;
+  public void setGroundSize(final int freeGround) {
+    if (freeGround > 6 && freeGround < 17) {
+      this.groundSize = freeGround;
+    } else {
+      ErrorLogger.log("Invalid Ground size: " + freeGround);
     }
   }
 

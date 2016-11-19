@@ -40,9 +40,11 @@ public class RouteRepository {
         dos.writeDouble(route.getStartY());
         dos.writeDouble(route.getEndX());
         dos.writeDouble(route.getEndY());
+        // @TODO: Mx and My should be removed, because they are calculated.
         dos.writeDouble(route.getMx());
         dos.writeDouble(route.getMy());
         dos.writeInt(route.getFtlSpeed());
+        // @TODO: Distance should be removed, because it is calculated.
         dos.writeInt(route.getDistance());
     }
 
@@ -57,10 +59,12 @@ public class RouteRepository {
         route.setStartY(dis.readDouble());
         route.setEndX(dis.readDouble());
         route.setEndY(dis.readDouble());
-        route.setMx(dis.readDouble());
-        route.setMy(dis.readDouble());
+        // @TODO: Mx and My should be removed, because they are calculated.
+        dis.readDouble();
+        dis.readDouble();
         route.setFtlSpeed(dis.readInt());
-        route.setDistance(dis.readInt());
+        // @TODO: Distance should be removed, because it is calculated.
+        dis.readInt();
         return route;
     }
 }

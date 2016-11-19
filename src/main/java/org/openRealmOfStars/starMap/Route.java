@@ -52,20 +52,6 @@ public class Route {
   private int ftlSpeed;
 
   /**
-   * Internal movement speed
-   */
-  private double mx;
-  /**
-   * Internal movement speed
-   */
-  private double my;
-
-  /**
-   * Distance in coordinates
-   */
-  private int distance;
-
-  /**
    * Use this as FTL speed to set fleet to defend
    */
   public static final int ROUTE_DEFEND = 0;
@@ -90,19 +76,6 @@ public class Route {
     this.endX = ex;
     this.endY = ey;
     this.ftlSpeed = speed;
-    double dx = Math.abs(startX - endX);
-    double dy = Math.abs(startY - endY);
-    distance = (int) dy;
-    if (dx > dy) {
-      distance = (int) dx;
-    }
-    if (distance > 0) {
-      mx = (endX - startX) / distance;
-      my = (endY - startY) / distance;
-    } else {
-      mx = 0;
-      my = 0;
-    }
   }
 
   /**
@@ -145,10 +118,9 @@ public class Route {
    */
   public void makeNextMove() {
     for (int i = 0; i < ftlSpeed; i++) {
-      if (distance > 0) {
-        startX = startX + mx;
-        startY = startY + my;
-        distance--;
+      if (getDistance() > 0) {
+        startX = startX + getMx();
+        startY = startY + getMy();
       }
     }
   }
@@ -158,7 +130,7 @@ public class Route {
    * @return boolean
    */
   public boolean isEndReached() {
-    if (ftlSpeed < 1) {
+    if (isDefending() || isFixing()) {
       // fleet has special route
       return false;
     }
@@ -180,12 +152,12 @@ public class Route {
     byte[][] result = new byte[maxX][maxY];
     double sx = startX;
     double sy = startY;
-    for (int i = 0; i < distance + 1; i++) {
+    for (int i = 0; i < getDistance() + 1; i++) {
       if (sx >= 0 && sy >= 0 && sx < maxX && sy < maxY) {
         result[(int) Math.round(sx)][(int) Math.round(sy)] = 1;
       }
-      sx = sx + mx;
-      sy = sy + my;
+      sx = sx + getMx();
+      sy = sy + getMy();
 
     }
     return result;
@@ -311,15 +283,14 @@ public class Route {
    * @return internal movement speed
    */
   public double getMx() {
+    int distance = getDistance();
+    double mx;
+    if (distance > 0) {
+      mx = (endX - startX) / distance;
+    } else {
+      mx = 0;
+    }
     return mx;
-  }
-
-  /**
-   * Set internal movement speed
-   * @param mx internal movement speed
-   */
-  public void setMx(double mx) {
-    this.mx = mx;
   }
 
   /**
@@ -327,15 +298,14 @@ public class Route {
    * @return internal movement speed
    */
   public double getMy() {
+    int distance = getDistance();
+    double my;
+    if (distance > 0) {
+      my = (endY - startY) / distance;
+    } else {
+      my = 0;
+    }
     return my;
-  }
-
-  /**
-   * Set internal movement speed
-   * @param my internal movement speed
-   */
-  public void setMy(double my) {
-    this.my = my;
   }
 
   /**
@@ -343,14 +313,14 @@ public class Route {
    * @return distance in coordinates
    */
   public int getDistance() {
+    int distance;
+    double dx = Math.abs(startX - endX);
+    double dy = Math.abs(startY - endY);
+    distance = (int) dy;
+    if (dx > dy) {
+      distance = (int) dx;
+    }
     return distance;
   }
 
-  /**
-   * Set distance in coordinates
-   * @param distance distance in coordinates
-   */
-  public void setDistance(int distance) {
-    this.distance = distance;
-  }
 }

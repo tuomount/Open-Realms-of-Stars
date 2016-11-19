@@ -32,7 +32,7 @@ public class RouteTest {
 
   @Before
   public void setUp() {
-    route = new Route(0, 0, 0, 0, 0);
+    route = new Route(0, 0, 0, 0, 1);
   }
 
   @Test
@@ -44,15 +44,13 @@ public class RouteTest {
     assertEquals(0, route.getStartY(), 0.1);
     assertEquals(0, route.getEndX(), 0.1);
     assertEquals(0, route.getEndY(), 0.1);
-    assertEquals(0, route.getFtlSpeed());
+    assertEquals(1, route.getFtlSpeed());
     assertEquals(0, route.getMx(), 0.1);
     assertEquals(0, route.getMy(), 0.1);
     assertEquals(0, route.getDistance());
-    assertTrue(route.isDefending());
+    assertFalse(route.isDefending());
     assertFalse(route.isFixing());
-
-    // @TODO: Bit confusing no distance but not reached the end. Why?
-    assertFalse(route.isEndReached());
+    assertTrue(route.isEndReached());
   }
 
   @Test
@@ -199,6 +197,37 @@ public class RouteTest {
 
     route.setFtlSpeed(Route.ROUTE_DEFEND);
     assertFalse("The route shouldn't be fixing when it is defending.", route.isFixing());
+  }
+
+
+  @Test
+  public void testIsEndReachedShouldBeTrueWhenStartAndEndCoordinatesAreEquals() {
+    assertTrue(route.isEndReached());
+
+    //@TODO: Why is not reached end when defending but Coordinates are equals?
+    route.setFtlSpeed(Route.ROUTE_DEFEND);
+    assertFalse(route.isEndReached());
+
+    //@TODO: Why is not reached end when fixing but Coordinates are equals?
+    route.setFtlSpeed(Route.ROUTE_FIX);
+    assertFalse(route.isEndReached());
+
+    route.setEndX(2);
+    route.setEndY(2);
+
+    assertFalse(route.isEndReached());
+
+    route.setFtlSpeed(Route.ROUTE_DEFEND);
+    assertFalse(route.isEndReached());
+
+    route.setFtlSpeed(Route.ROUTE_FIX);
+    assertFalse(route.isEndReached());
+  }
+
+  @Test(expected = ArithmeticException.class)
+  public void testTimeEstimateShouldThrowArithmeticException() {
+    route.setFtlSpeed(Route.ROUTE_DEFEND);
+    route.timeEstimate();
   }
 
 }

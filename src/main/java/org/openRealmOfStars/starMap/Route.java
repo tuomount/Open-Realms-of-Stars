@@ -83,12 +83,7 @@ public class Route {
    * @return Number of turns routing takes
    */
   public int timeEstimate() {
-    double dx = Math.abs(startX - endX);
-    double dy = Math.abs(startY - endY);
-    if (dx > dy) {
-      return (int) Math.ceil(dx / ftlSpeed);
-    }
-    return (int) Math.ceil(dy / ftlSpeed);
+    return (int) Math.ceil(getDistance() / ftlSpeed);
   }
 
   /**

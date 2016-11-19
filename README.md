@@ -8,10 +8,17 @@ available.
 
 ## Compiling the Project
 
-Git project contains Eclipse project which should automatically compile it.
+Open Realm of Stars can be compiled with Maven.
+Install maven and then run command:
+``maven install``
+
+Runnable Jar file can then located from target directory.
+
+Git project also contains Eclipse project which should automatically compile it.
 All java files under src folder needs to be compiled.
 
 ## Running the game
 
+Game can be run from Jar file or running compiled class.
 Main method is in src/org.openRealmOfStars.game.Game class. Currently this
 is the only main class in project.

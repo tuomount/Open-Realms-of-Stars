@@ -93,6 +93,9 @@ public class PlanetAnimation {
    */
   private int distance;
 
+  /**
+   * Explosion animation
+   */
   private AnimatedImage explosionAnim;
 
   /**
@@ -184,26 +187,26 @@ public class PlanetAnimation {
 
   /**
    * Set animation coordinates
-  * @param sx Where animation starts X coordinate
-  * @param sy Where animation starts Y coordinate
-  * @param ex Where animation ends X coordinate
-  * @param ey Where animation ends Y coordinate
+  * @param startX Where animation starts X coordinate
+  * @param startY Where animation starts Y coordinate
+  * @param endX Where animation ends X coordinate
+  * @param endY Where animation ends Y coordinate
   */
-  public void setCoords(final int sx, final int sy, final int ex,
-      final int ey) {
-    this.sx = sx;
-    this.sy = sy;
-    this.ex = ex;
-    this.ey = ey;
-    double dx = Math.abs(this.sx - this.ex);
-    double dy = Math.abs(this.sy - this.ey);
+  public void setCoords(final int startX, final int startY, final int endX,
+      final int endY) {
+    sx = startX;
+    sy = startY;
+    ex = endX;
+    ey = endY;
+    double dx = Math.abs(sx - ex);
+    double dy = Math.abs(sy - ey);
     distance = (int) dy;
     if (dx > dy) {
       distance = (int) dx;
     }
     if (distance > 0) {
-      mx = (this.ex - this.sx) / distance;
-      my = (this.ey - this.sy) / distance;
+      mx = (ex - sx) / distance;
+      my = (ey - sy) / distance;
     } else {
       mx = 0;
       my = 0;
@@ -286,52 +289,101 @@ public class PlanetAnimation {
     return null;
   }
 
+  /**
+   * Get list of particle effects
+   * @return List of particles
+   */
   public List<ParticleEffect> getParticles() {
     return particles;
   }
 
+  /**
+   * Color component maximum
+   */
+  private static final int COLOR_MAX = 255;
+  /**
+   * Get current beam clor
+   * @return Beam color
+   */
   public Color getBeamColor() {
-    return new Color(255 - 2 * (BEAM_ANIM_COUNT - count), 2 * count, 2 * count);
+    return new Color(COLOR_MAX - 2 * (BEAM_ANIM_COUNT - count), 2 * count,
+        2 * count);
   }
 
+  /**
+   * Get nuke color for painting whole frame
+   * @return nuke color
+   */
   public Color getNukeColor() {
     int max = explosionAnim.getMaxFrames();
-    int mult = 255 / max;
+    int mult = COLOR_MAX / max;
     int opaque = (max - animFrame) * mult;
-    if (opaque > 255) {
-      opaque = 255;
+    if (opaque > COLOR_MAX) {
+      opaque = COLOR_MAX;
     }
-    return new Color(255, 255, 255, opaque);
+    return new Color(COLOR_MAX, COLOR_MAX, COLOR_MAX, opaque);
   }
 
+  /**
+   * Get start X coordinate
+   * @return X coordinate
+   */
   public int getSx() {
     return (int) Math.round(sx);
   }
 
+  /**
+   * Get start Y coordinate
+   * @return Y coordinate
+   */
   public int getSy() {
     return (int) Math.round(sy);
   }
 
+  /**
+   * Get end X coordinate
+   * @return X coordinate
+   */
   public int getEx() {
     return (int) Math.round(ex);
   }
 
+  /**
+   * Get end Y coordinate
+   * @return Y coordinate
+   */
   public int getEy() {
     return (int) Math.round(ey);
   }
 
+  /**
+   * Get Animation type
+   * @return Animation type
+   */
   public int getAnimationType() {
     return animationType;
   }
 
+  /**
+   * Set animation type
+   * @param animationType as int
+   */
   public void setAnimationType(final int animationType) {
     this.animationType = animationType;
   }
 
+  /**
+   * Get ship index who is attacking or being shot by turret
+   * @return Ship index in fleet
+   */
   public int getShipIndex() {
     return shipIndex;
   }
 
+  /**
+   * Chnage ship index
+   * @param shipIndex in fleet
+   */
   public void setShipIndex(final int shipIndex) {
     this.shipIndex = shipIndex;
   }

@@ -108,9 +108,14 @@ public class MapPanel extends JPanel {
   private BufferedImage screen;
 
   /**
+   * Start value for flicker blue
+   */
+  private static final int START_VALUE_FOR_FLICKER_BLUE = 64;
+
+  /**
    * Value used to create flickering blue grid
    */
-  private int flickerBlue = 64;
+  private int flickerBlue = START_VALUE_FOR_FLICKER_BLUE;
 
   /**
    * Is flicker value moving up
@@ -235,6 +240,40 @@ public class MapPanel extends JPanel {
   }
 
   /**
+   * Safety offset for parallax scrolling components
+   */
+  private static final int SAFETY_OFFSET = 20;
+  /**
+   * Parallax offset drawing for actual scrolling components
+   */
+  private static final int PARALLAX_OFFSET = 10;
+
+  /**
+   * Flicker color green start
+   */
+  private static final int FLICKER_GREEN = 118;
+  /**
+   * Flicker color blue start
+   */
+  private static final int FLICKER_BLUE = 150;
+
+  /**
+   * Color component divider
+   */
+  private static final int COLOR_COMPONENT_DIVIDER = 256;
+  /**
+   * Single color component maximum value
+   */
+  private static final int COLOR_COMPONENT_MAX = 255;
+  /**
+   * Single color component half value
+   */
+  private static final int COLOR_COMPONENT_HALF = 128;
+  /**
+   * Flicker upper limit
+   */
+  private static final int FLICKER_UPPER_LIMIT = 384;
+  /**
    * Draw star map to Map panel
    * @param starMap Star map to draw
    */
@@ -271,40 +310,43 @@ public class MapPanel extends JPanel {
     }
     starMap.setDrawPos(cx, cy);
     // -20 for safety
-    int speedX = (GuiStatics.NEBULAE_IMAGE.getWidth() - this.getWidth() - 20)
-        / starMap.getMaxX();
-    int speedY = (GuiStatics.NEBULAE_IMAGE.getHeight() - this.getHeight() - 20)
-        / starMap.getMaxY();
+    int speedX = (GuiStatics.NEBULAE_IMAGE.getWidth() - this.getWidth()
+        - SAFETY_OFFSET) / starMap.getMaxX();
+    int speedY = (GuiStatics.NEBULAE_IMAGE.getHeight() - this.getHeight()
+        - SAFETY_OFFSET) / starMap.getMaxY();
     int speedStarX = (GuiStatics.STAR_FIELD_IMAGE.getWidth() - this.getWidth()
-        - 20) / starMap.getMaxX();
+        - SAFETY_OFFSET) / starMap.getMaxX();
     int speedStarY = (GuiStatics.STAR_FIELD_IMAGE.getHeight() - this.getHeight()
-        - 20) / starMap.getMaxY();
+        - SAFETY_OFFSET) / starMap.getMaxY();
     // Parallax Scrolling with just two lines!!!
-    gr.drawImage(GuiStatics.STAR_FIELD_IMAGE, -10 - cx * speedStarX,
-        -10 - cy * speedStarY, null);
-    gr.drawImage(GuiStatics.NEBULAE_IMAGE, -10 - cx * speedX, -10 - cy * speedY,
+    gr.drawImage(GuiStatics.STAR_FIELD_IMAGE,
+        -PARALLAX_OFFSET - cx * speedStarX, -PARALLAX_OFFSET - cy * speedStarY,
         null);
+    gr.drawImage(GuiStatics.NEBULAE_IMAGE, -PARALLAX_OFFSET - cx * speedX,
+        -PARALLAX_OFFSET - cy * speedY, null);
 
     lastDrawnCenterX = cx;
     lastDrawnCenterY = cy;
-    int scaled = 16 * (flickerBlue - 128) / 256;
-    Color colorDarkBlue = new Color(0, 118 + scaled, 150 + scaled);
+    int scaled = 16 * (flickerBlue - COLOR_COMPONENT_HALF)
+        / COLOR_COMPONENT_DIVIDER;
+    Color colorDarkBlue = new Color(0, FLICKER_GREEN + scaled,
+        FLICKER_BLUE + scaled);
     Color colorFlickerBlue = new Color(0, 0, 16);
-    if (flickerBlue < 256) {
+    if (flickerBlue < COLOR_COMPONENT_DIVIDER) {
       colorFlickerBlue = new Color(0, 0, flickerBlue);
     } else {
-      int above = flickerBlue - 256;
-      colorFlickerBlue = new Color(above, above, 255);
+      int above = flickerBlue - COLOR_COMPONENT_DIVIDER;
+      colorFlickerBlue = new Color(above, above, COLOR_COMPONENT_MAX);
     }
     if (flickerGoUp) {
       flickerBlue = flickerBlue + 16;
     } else {
       flickerBlue = flickerBlue - 16;
     }
-    if (flickerBlue > 384) {
+    if (flickerBlue > FLICKER_UPPER_LIMIT) {
       flickerGoUp = false;
     }
-    if (flickerBlue < 128) {
+    if (flickerBlue < COLOR_COMPONENT_HALF) {
       flickerGoUp = true;
     }
 
@@ -516,30 +558,32 @@ public class MapPanel extends JPanel {
 
     // -20 for safety
     int speedStarX = (GuiStatics.STAR_FIELD_IMAGE.getWidth() - this.getWidth()
-        - 20) / starMap.getMaxX();
-    int speedStarY = (GuiStatics.STAR_FIELD_IMAGE.getHeight() - this.getHeight()
-        - 20) / starMap.getMaxY();
-    gr.drawImage(GuiStatics.STAR_FIELD_IMAGE, -10 - cx * speedStarX,
-        -10 - cy * speedStarY, null);
+        - SAFETY_OFFSET) / starMap.getMaxX();
+    int speedStarY = (GuiStatics.STAR_FIELD_IMAGE.getHeight()
+        - this.getHeight() - SAFETY_OFFSET) / starMap.getMaxY();
+    gr.drawImage(GuiStatics.STAR_FIELD_IMAGE, -PARALLAX_OFFSET - cx
+        * speedStarX, -PARALLAX_OFFSET - cy * speedStarY, null);
 
-    int scaled = 16 * (flickerBlue - 128) / 256;
-    Color colorDarkBlue = new Color(0, 118 + scaled, 150 + scaled);
+    int scaled = 16 * (flickerBlue - COLOR_COMPONENT_HALF)
+        / COLOR_COMPONENT_MAX;
+    Color colorDarkBlue = new Color(0, FLICKER_GREEN + scaled,
+        FLICKER_BLUE + scaled);
     Color colorFlickerBlue = new Color(0, 0, 16);
-    if (flickerBlue < 256) {
+    if (flickerBlue < COLOR_COMPONENT_DIVIDER) {
       colorFlickerBlue = new Color(0, 0, flickerBlue);
     } else {
-      int above = flickerBlue - 256;
-      colorFlickerBlue = new Color(above, above, 255);
+      int above = flickerBlue - COLOR_COMPONENT_DIVIDER;
+      colorFlickerBlue = new Color(above, above, COLOR_COMPONENT_MAX);
     }
     if (flickerGoUp) {
       flickerBlue = flickerBlue + 16;
     } else {
       flickerBlue = flickerBlue - 16;
     }
-    if (flickerBlue > 384) {
+    if (flickerBlue > FLICKER_UPPER_LIMIT) {
       flickerGoUp = false;
     }
-    if (flickerBlue < 128) {
+    if (flickerBlue < COLOR_COMPONENT_HALF) {
       flickerGoUp = true;
     }
 
@@ -559,7 +603,8 @@ public class MapPanel extends JPanel {
           gr.setStroke(full);
           gr.setColor(colorFlickerBlue);
           // Top line
-          gr.drawLine(pixelX, pixelY, pixelX + ShipImage.MAX_WIDTH - 1, pixelY);
+          gr.drawLine(pixelX, pixelY, pixelX + ShipImage.MAX_WIDTH - 1,
+              pixelY);
           // Left line
           gr.drawLine(pixelX, pixelY, pixelX,
               pixelY + ShipImage.MAX_HEIGHT - 1);

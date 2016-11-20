@@ -12,6 +12,7 @@ import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.repository.RouteRepository;
 
 /**
  *
@@ -56,7 +57,7 @@ public class Fleet {
   /**
    * How many moves fleet has left
    */
-  public int movesLeft;
+  private int movesLeft;
 
   /**
    * Route for fleet to move with FLT speed
@@ -96,7 +97,7 @@ public class Fleet {
     if (str.equals("NOROUTE")) {
       route = null;
     } else {
-      route = new Route(dis);
+      route = new RouteRepository().restoreRoute(dis);
     }
     int count = dis.readInt();
     ships = new ArrayList<>();
@@ -120,7 +121,7 @@ public class Fleet {
       IOUtilities.writeString(dos, "NOROUTE");
     } else {
       IOUtilities.writeString(dos, "ROUTE");
-      route.saveRoute(dos);
+      new RouteRepository().saveRoute(dos, route);
     }
 
     dos.writeInt(ships.size());
@@ -212,6 +213,7 @@ public class Fleet {
 
   /**
    * Get fleet's coordinate
+   * @return fleet's coordinate
    */
   public Coordinate getCoordinate() {
     return new Coordinate(coordinate);
@@ -519,4 +521,26 @@ public class Fleet {
     return result;
   }
 
+  /**
+   * Get how many moves fleet has left
+   * @return how many moves fleet has left
+   */
+  public int getMovesLeft() {
+    return movesLeft;
+  }
+
+  /**
+   * Set how many moves fleet has left
+   * @param movesLeft how many moves fleet has left
+   */
+  public void setMovesLeft(final int movesLeft) {
+    this.movesLeft = movesLeft;
+  }
+
+  /**
+   * Decrease how many moves fleet has left
+   */
+  public void decMovesLeft() {
+    this.movesLeft--;
+  }
 }

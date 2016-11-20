@@ -1,9 +1,6 @@
 package org.openRealmOfStars.starMap;
 
 import java.awt.image.BufferedImage;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -55,20 +52,6 @@ public class Route {
   private int ftlSpeed;
 
   /**
-   * Internal movement speed
-   */
-  private double mx;
-  /**
-   * Internal movement speed
-   */
-  private double my;
-
-  /**
-   * Distance in coordinates
-   */
-  private int distance;
-
-  /**
    * Use this as FTL speed to set fleet to defend
    */
   public static final int ROUTE_DEFEND = 0;
@@ -93,51 +76,6 @@ public class Route {
     this.endX = ex;
     this.endY = ey;
     this.ftlSpeed = speed;
-    double dx = Math.abs(startX - endX);
-    double dy = Math.abs(startY - endY);
-    distance = (int) dy;
-    if (dx > dy) {
-      distance = (int) dx;
-    }
-    if (distance > 0) {
-      mx = (endX - startX) / distance;
-      my = (endY - startY) / distance;
-    } else {
-      mx = 0;
-      my = 0;
-    }
-  }
-
-  /**
-   * Read route from DataInputStream
-   * @param dis Data Input Stream
-   * @throws IOException if there is any problem with DataInputStream
-   */
-  public Route(final DataInputStream dis) throws IOException {
-    startX = dis.readDouble();
-    startY = dis.readDouble();
-    endX = dis.readDouble();
-    endY = dis.readDouble();
-    mx = dis.readDouble();
-    my = dis.readDouble();
-    ftlSpeed = dis.readInt();
-    distance = dis.readInt();
-  }
-
-  /**
-   * Save Route to DataOutputStream
-   * @param dos DataOutputStream
-   * @throws IOException if there is any problem with DataOutputStream
-   */
-  public void saveRoute(final DataOutputStream dos) throws IOException {
-    dos.writeDouble(startX);
-    dos.writeDouble(startY);
-    dos.writeDouble(endX);
-    dos.writeDouble(endY);
-    dos.writeDouble(mx);
-    dos.writeDouble(my);
-    dos.writeInt(ftlSpeed);
-    dos.writeInt(distance);
   }
 
   /**
@@ -145,12 +83,7 @@ public class Route {
    * @return Number of turns routing takes
    */
   public int timeEstimate() {
-    double dx = Math.abs(startX - endX);
-    double dy = Math.abs(startY - endY);
-    if (dx > dy) {
-      return (int) Math.ceil(dx / ftlSpeed);
-    }
-    return (int) Math.ceil(dy / ftlSpeed);
+    return (int) Math.ceil(getDistance() / ftlSpeed);
   }
 
   /**
@@ -180,10 +113,9 @@ public class Route {
    */
   public void makeNextMove() {
     for (int i = 0; i < ftlSpeed; i++) {
-      if (distance > 0) {
-        startX = startX + mx;
-        startY = startY + my;
-        distance--;
+      if (getDistance() > 0) {
+        startX = startX + getMx();
+        startY = startY + getMy();
       }
     }
   }
@@ -193,7 +125,7 @@ public class Route {
    * @return boolean
    */
   public boolean isEndReached() {
-    if (ftlSpeed < 1) {
+    if (isDefending() || isFixing()) {
       // fleet has special route
       return false;
     }
@@ -215,12 +147,12 @@ public class Route {
     byte[][] result = new byte[maxX][maxY];
     double sx = startX;
     double sy = startY;
-    for (int i = 0; i < distance + 1; i++) {
+    for (int i = 0; i < getDistance() + 1; i++) {
       if (sx >= 0 && sy >= 0 && sx < maxX && sy < maxY) {
         result[(int) Math.round(sx)][(int) Math.round(sy)] = 1;
       }
-      sx = sx + mx;
-      sy = sy + my;
+      sx = sx + getMx();
+      sy = sy + getMy();
 
     }
     return result;
@@ -257,6 +189,133 @@ public class Route {
           .loadImage(Icons.class.getResource("/resources/images/routedot.png"));
     }
     return routeDot;
+  }
+
+  /* Need for repository */
+
+  /**
+   * Get current position for X coordinate
+   * @return X coordinate
+   */
+  public double getStartX() {
+    return startX;
+  }
+
+  /**
+   * Set current position for X coordinate
+   * @param startX current position for X coordinate
+   */
+  public void setStartX(double startX) {
+    this.startX = startX;
+  }
+
+  /**
+   * Get current position for Y coordinate
+   * @return Y coordinate
+   */
+  public double getStartY() {
+    return startY;
+  }
+
+  /**
+   * Set current position for Y coordinate
+   * @param startY current position for Y coordinate
+   */
+  public void setStartY(double startY) {
+    this.startY = startY;
+  }
+
+  /**
+   * Get end X coordinate
+   * @return End X coordinate
+   */
+  public double getEndX() {
+    return endX;
+  }
+
+  /**
+   * Set end X coordinate
+   * @param endX End X coordinate
+   */
+  public void setEndX(double endX) {
+    this.endX = endX;
+  }
+
+  /**
+   * Get end Y coordinate
+   * @return End Y coordinate
+   */
+  public double getEndY() {
+    return endY;
+  }
+
+  /**
+   * Set end Y coordinate
+   * @param endY End Y coordinate
+   */
+  public void setEndY(double endY) {
+    this.endY = endY;
+  }
+
+  /**
+   * Get FTL speed
+   * @return FTL speed
+   */
+  public int getFtlSpeed() {
+    return ftlSpeed;
+  }
+
+  /**
+   * Set FTL speed
+   * @param ftlSpeed FTL speed
+   */
+  public void setFtlSpeed(int ftlSpeed) {
+    this.ftlSpeed = ftlSpeed;
+  }
+
+  /**
+   * Get internal movement speed
+   * @return internal movement speed
+   */
+  public double getMx() {
+    int distance = getDistance();
+    double mx;
+    if (distance > 0) {
+      mx = (endX - startX) / distance;
+    } else {
+      mx = 0;
+    }
+    return mx;
+  }
+
+  /**
+   * Get internal movement speed
+   * @return internal movement speed
+   */
+  public double getMy() {
+    int distance = getDistance();
+    double my;
+    if (distance > 0) {
+      my = (endY - startY) / distance;
+    } else {
+      my = 0;
+    }
+    return my;
+  }
+
+  /**
+   * Get distance in coordinates
+   * @return distance in coordinates
+   */
+  public int getDistance() {
+    int distance;
+    double dx = Math.abs(startX - endX);
+    double dy = Math.abs(startY - endY);
+    distance = (int) dy;
+    if (dx > dy) {
+      distance = (int) dx;
+    }
+    return distance;
   }
 
 }

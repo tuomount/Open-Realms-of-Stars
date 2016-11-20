@@ -333,7 +333,7 @@ public final class MissionHandling {
   private static void makeRegularMoves(final Game game, final Fleet fleet,
       final PlayerInfo info) {
     AStarSearch search = fleet.getaStarSearch();
-    for (int mv = 0; mv < fleet.movesLeft; mv++) {
+    for (int mv = 0; mv < fleet.getMovesLeft(); mv++) {
       PathPoint point = search.getMove();
       if (point != null
           && !game.getStarMap().isBlocked(point.getX(), point.getY())) {
@@ -342,7 +342,7 @@ public final class MissionHandling {
         search.nextMove();
       }
     }
-    fleet.movesLeft = 0;
+    fleet.setMovesLeft(0);
     if (search.isLastMove()) {
       fleet.setaStarSearch(null);
     }
@@ -381,7 +381,7 @@ public final class MissionHandling {
   private static void makeRerouteBeforeFTLMoves(final Game game,
       final Fleet fleet, final PlayerInfo info, final Mission mission) {
     AStarSearch search = fleet.getaStarSearch();
-    for (int mv = 0; mv < fleet.movesLeft; mv++) {
+    for (int mv = 0; mv < fleet.getMovesLeft(); mv++) {
       PathPoint point = search.getMove();
       if (point != null
           && !game.getStarMap().isBlocked(point.getX(), point.getY())) {
@@ -390,7 +390,7 @@ public final class MissionHandling {
         search.nextMove();
       }
     }
-    fleet.movesLeft = 0;
+    fleet.setMovesLeft(0);
     if (search.isLastMove()) {
       if (search.getTargetDistance() > 0) {
         fleet.setRoute(new Route(fleet.getX(), fleet.getY(), mission.getX(),

@@ -125,7 +125,7 @@ public final class PlanetHandling {
     if (info != null) {
       handlePlanetPopulation(planet, info);
       if (credit < 0) {
-        planet.setTax(planet.getTax() + 1);
+        planet.setTax(planet.getTax() + 1, false);
       }
       ArrayList<Message> messages = info.getMsgList().getFullList();
       boolean changeConstruction = false;

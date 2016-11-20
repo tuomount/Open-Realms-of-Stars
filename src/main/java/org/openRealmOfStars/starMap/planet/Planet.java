@@ -1,9 +1,6 @@
 package org.openRealmOfStars.starMap.planet;
 
 import java.awt.image.BufferedImage;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.AI.Mission.Mission;
@@ -14,7 +11,6 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
@@ -27,7 +23,6 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
-import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
 /**
@@ -329,100 +324,6 @@ public class Planet {
     this.tax = 0;
     this.culture = 0;
     this.homeWorldIndex = -1;
-  }
-
-  /**
-   * Read Planet information from DataInputStream. PlayerList must be
-   * read before since planet only save player index not full player info.
-   * @param dis DataInputStream
-   * @param players PlayerList
-   * @throws IOException if there is any problem with DataInputStream
-   */
-  public Planet(final DataInputStream dis, final PlayerList players)
-      throws IOException {
-    coordinate = new Coordinate(dis.readInt(), dis.readInt());
-    name = IOUtilities.readString(dis);
-    orderNumber = dis.readInt();
-    radiationLevel = dis.readInt();
-    groundSize = dis.readInt();
-    amountMetalInGround = dis.readInt();
-    metal = dis.readInt();
-    prodResource = dis.readInt();
-    gasGiant = dis.readBoolean();
-    planetImageIndex = dis.readInt();
-    planetType = dis.readInt();
-    planetOwner = dis.readInt();
-    if (planetOwner != -1) {
-      planetOwnerInfo = players.getPlayerInfoByIndex(planetOwner);
-    } else {
-      planetOwnerInfo = null;
-    }
-    extraFood = dis.readInt();
-    tax = dis.readInt();
-    culture = dis.readInt();
-    homeWorldIndex = dis.readInt();
-    workers = new int[MAX_WORKER_TYPE];
-    for (int i = 0; i < MAX_WORKER_TYPE; i++) {
-      workers[i] = dis.readInt();
-    }
-    int count = dis.readInt();
-    this.buildings = new ArrayList<>();
-    for (int i = 0; i < count; i++) {
-      String buildingName = IOUtilities.readString(dis);
-      Building building = BuildingFactory.createByName(buildingName);
-      buildings.add(building);
-    }
-    String str = IOUtilities.readString(dis);
-    if (str.isEmpty()) {
-      setUnderConstruction(null);
-    } else {
-      Construction[] constructions = getProductionList();
-      for (Construction cons : constructions) {
-        if (cons.getName().equals(str)) {
-          setUnderConstruction(cons);
-          break;
-        }
-      }
-    }
-
-  }
-
-  /**
-   * Save Planet data to DataOutputStream
-   * @param dos DataOutputStream
-   * @throws IOException if there is any problem with DataOutputStream
-   */
-  public void savePlanet(final DataOutputStream dos) throws IOException {
-    // Coordinates
-    dos.writeInt(coordinate.getX());
-    dos.writeInt(coordinate.getY());
-    IOUtilities.writeString(dos, name);
-    dos.writeInt(orderNumber);
-    dos.writeInt(radiationLevel);
-    dos.writeInt(groundSize);
-    dos.writeInt(amountMetalInGround);
-    dos.writeInt(metal);
-    dos.writeInt(prodResource);
-    dos.writeBoolean(gasGiant);
-    dos.writeInt(planetImageIndex);
-    dos.writeInt(planetType);
-    dos.writeInt(planetOwner);
-    dos.writeInt(extraFood);
-    dos.writeInt(tax);
-    dos.writeInt(culture);
-    dos.writeInt(homeWorldIndex);
-    for (int i = 0; i < MAX_WORKER_TYPE; i++) {
-      dos.writeInt(workers[i]);
-    }
-    dos.writeInt(buildings.size());
-    for (int i = 0; i < buildings.size(); i++) {
-      IOUtilities.writeString(dos, buildings.get(i).getName());
-    }
-    if (underConstruction == null) {
-      IOUtilities.writeString(dos, null);
-    } else {
-      IOUtilities.writeString(dos, underConstruction.getName());
-    }
   }
 
   /**
@@ -1480,14 +1381,19 @@ public class Planet {
    * Set tax cannot be bigger than maximum production
    * @param tax the tax to set
    */
-  public void setTax(final int tax) {
-    int max = getTotalProductionWithoutTax();
-    this.tax = tax;
-    if (this.tax > max) {
-      this.tax = max;
+  public void setTax(final int tax, final boolean force) {
+    if (force) {
+      this.tax = tax;
     }
-    if (this.tax < 0) {
-      this.tax = 0;
+    else {
+      int max = getTotalProductionWithoutTax();
+      this.tax = tax;
+      if (this.tax > max) {
+        this.tax = max;
+      }
+      if (this.tax < 0) {
+        this.tax = 0;
+      }
     }
   }
 
@@ -1692,4 +1598,19 @@ public class Planet {
     this.homeWorldIndex = homeWorldIndex;
   }
 
+  /**
+   * Get extra food
+   * @return extra food
+   */
+  public int getExtraFood() {
+    return extraFood;
+  }
+
+  /**
+   * Set extra food
+   * @param extraFood extra food
+   */
+  public void setExtraFood(final int extraFood) {
+    this.extraFood = extraFood;
+  }
 }

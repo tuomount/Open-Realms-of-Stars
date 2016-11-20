@@ -26,6 +26,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
+import org.openRealmOfStars.utilities.repository.PlanetRepository;
 import org.openRealmOfStars.utilities.repository.SunRepository;
 
 /**
@@ -380,7 +381,7 @@ public class StarMap {
       players = new PlayerList(dis);
       count = dis.readInt();
       for (int i = 0; i < count; i++) {
-        Planet planet = new Planet(dis, players);
+        Planet planet = new PlanetRepository().restorePlanet(dis, players);
         planetList.add(planet);
       }
     } else {
@@ -422,7 +423,7 @@ public class StarMap {
     players.savePlayerList(dos);
     dos.writeInt(planetList.size());
     for (int i = 0; i < planetList.size(); i++) {
-      planetList.get(i).savePlanet(dos);
+      new PlanetRepository().savePlanet(dos, planetList.get(i));
     }
   }
 

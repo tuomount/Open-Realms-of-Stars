@@ -575,12 +575,12 @@ public class PlanetView extends BlackPanel {
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_MINUS_TAX)) {
-      planet.setTax(planet.getTax() - 1);
+      planet.setTax(planet.getTax() - 1, false);
       updatePanel();
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_PLUS_TAX)) {
-      planet.setTax(planet.getTax() + 1);
+      planet.setTax(planet.getTax() + 1, false);
       updatePanel();
     }
     if (arg0.getActionCommand()

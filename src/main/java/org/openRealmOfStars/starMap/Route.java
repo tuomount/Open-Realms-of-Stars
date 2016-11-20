@@ -205,7 +205,7 @@ public class Route {
    * Set current position for X coordinate
    * @param startX current position for X coordinate
    */
-  public void setStartX(double startX) {
+  public void setStartX(final double startX) {
     this.startX = startX;
   }
 
@@ -221,7 +221,7 @@ public class Route {
    * Set current position for Y coordinate
    * @param startY current position for Y coordinate
    */
-  public void setStartY(double startY) {
+  public void setStartY(final double startY) {
     this.startY = startY;
   }
 
@@ -237,7 +237,7 @@ public class Route {
    * Set end X coordinate
    * @param endX End X coordinate
    */
-  public void setEndX(double endX) {
+  public void setEndX(final double endX) {
     this.endX = endX;
   }
 
@@ -253,7 +253,7 @@ public class Route {
    * Set end Y coordinate
    * @param endY End Y coordinate
    */
-  public void setEndY(double endY) {
+  public void setEndY(final double endY) {
     this.endY = endY;
   }
 
@@ -269,7 +269,7 @@ public class Route {
    * Set FTL speed
    * @param ftlSpeed FTL speed
    */
-  public void setFtlSpeed(int ftlSpeed) {
+  public void setFtlSpeed(final int ftlSpeed) {
     this.ftlSpeed = ftlSpeed;
   }
 

@@ -30,41 +30,44 @@ import java.io.IOException;
  */
 public class RouteRepository {
 
-    /**
-     * Save Route to DataOutputStream
-     * @param dos DataOutputStream
-     * @throws IOException if there is any problem with DataOutputStream
-     */
-    public void saveRoute(final DataOutputStream dos, final Route route) throws IOException {
-        dos.writeDouble(route.getStartX());
-        dos.writeDouble(route.getStartY());
-        dos.writeDouble(route.getEndX());
-        dos.writeDouble(route.getEndY());
-        // @TODO: Mx and My should be removed, because they are calculated.
-        dos.writeDouble(route.getMx());
-        dos.writeDouble(route.getMy());
-        dos.writeInt(route.getFtlSpeed());
-        // @TODO: Distance should be removed, because it is calculated.
-        dos.writeInt(route.getDistance());
-    }
+  /**
+   * Save Route to DataOutputStream
+   * @param dos DataOutputStream
+   * @param route Route to save
+   * @throws IOException if there is any problem with DataOutputStream
+   */
+  public void saveRoute(final DataOutputStream dos, final Route route)
+      throws IOException {
+    dos.writeDouble(route.getStartX());
+    dos.writeDouble(route.getStartY());
+    dos.writeDouble(route.getEndX());
+    dos.writeDouble(route.getEndY());
+    // @TODO: Mx and My should be removed, because they are calculated.
+    dos.writeDouble(route.getMx());
+    dos.writeDouble(route.getMy());
+    dos.writeInt(route.getFtlSpeed());
+    // @TODO: Distance should be removed, because it is calculated.
+    dos.writeInt(route.getDistance());
+  }
 
-    /**
-     * Read route from DataInputStream
-     * @param dis Data Input Stream
-     * @throws IOException if there is any problem with DataInputStream
-     */
-    public Route restoreRoute(final DataInputStream dis) throws IOException {
-        Route route = new Route(0, 0, 0, 0, 0);
-        route.setStartX(dis.readDouble());
-        route.setStartY(dis.readDouble());
-        route.setEndX(dis.readDouble());
-        route.setEndY(dis.readDouble());
-        // @TODO: Mx and My should be removed, because they are calculated.
-        dis.readDouble();
-        dis.readDouble();
-        route.setFtlSpeed(dis.readInt());
-        // @TODO: Distance should be removed, because it is calculated.
-        dis.readInt();
-        return route;
-    }
+  /**
+   * Read route from DataInputStream
+   * @param dis Data Input Stream
+   * @return Route loaded from DataInputStream
+   * @throws IOException if there is any problem with DataInputStream
+   */
+  public Route restoreRoute(final DataInputStream dis) throws IOException {
+    Route route = new Route(0, 0, 0, 0, 0);
+    route.setStartX(dis.readDouble());
+    route.setStartY(dis.readDouble());
+    route.setEndX(dis.readDouble());
+    route.setEndY(dis.readDouble());
+    // @TODO: Mx and My should be removed, because they are calculated.
+    dis.readDouble();
+    dis.readDouble();
+    route.setFtlSpeed(dis.readInt());
+    // @TODO: Distance should be removed, because it is calculated.
+    dis.readInt();
+    return route;
+  }
 }

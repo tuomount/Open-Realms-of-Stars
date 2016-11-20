@@ -37,7 +37,8 @@ public enum ShipComponentType {
    */
   WEAPON_RAILGUN,
   /**
-   * Photon torpedo, Torpede weapons, first damages shield, armor and finally hull
+   * Photon torpedo, Torpede weapons, first damages shield, armor and finally
+   * hull.
    * Armor only gives 50% defense
    */
   WEAPON_PHOTON_TORPEDO,
@@ -46,7 +47,8 @@ public enum ShipComponentType {
    */
   WEAPON_ECM_TORPEDO,
   /**
-   * High Explosive Missile causing first armor damage, shields and finally hull.
+   * High Explosive Missile causing first armor damage, shields and finally
+   * hull.
    * Shield only gives 50% defense
    */
   WEAPON_HE_MISSILE,
@@ -151,8 +153,9 @@ public enum ShipComponentType {
       return 17;
     case ORBITAL_NUKE:
       return 18;
+    default:
+      return 0;
     }
-    return 0;
   }
 
   /**
@@ -200,8 +203,9 @@ public enum ShipComponentType {
       return ShipComponentType.ORBITAL_BOMBS;
     case 18:
       return ShipComponentType.ORBITAL_NUKE;
+    default:
+      return ShipComponentType.WEAPON_BEAM;
     }
-    return ShipComponentType.WEAPON_BEAM;
   }
 
   @Override
@@ -245,9 +249,9 @@ public enum ShipComponentType {
       return "Orbital bombs";
     case ORBITAL_NUKE:
       return "Orbital nuke";
+    default:
+      return "Error - Unknown";
     }
-    return "Error - Unknown";
-
   }
 
   /**
@@ -294,9 +298,9 @@ public enum ShipComponentType {
       return Icons.ICON_BOMB;
     case ORBITAL_NUKE:
       return Icons.ICON_NUKE;
+    default:
+      return Icons.ICON_CIRCUIT_BOARD;
     }
-    return Icons.ICON_CIRCUIT_BOARD;
-
   }
 
 }

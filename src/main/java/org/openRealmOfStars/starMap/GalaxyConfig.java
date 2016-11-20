@@ -58,12 +58,12 @@ public class GalaxyConfig {
   /**
    * Players start from the map border
    */
-  public final static int START_POSITION_BORDER = 0;
+  public static final int START_POSITION_BORDER = 0;
 
   /**
    * Players start from random position
    */
-  public final static int START_POSITION_RANDOM = 1;
+  public static final int START_POSITION_RANDOM = 1;
 
   /**
    * Where players start
@@ -111,32 +111,57 @@ public class GalaxyConfig {
    */
   public boolean isUniqueName(final String name) {
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
-      if (playerName[i] != null && name.equals(playerName[i])) { return false; }
+      if (playerName[i] != null && name.equals(playerName[i])) {
+        return false;
+      }
     }
     return true;
   }
 
+  /**
+   * Set race for certain player
+   * @param index Player index
+   * @param race Space race to set
+   */
   public void setRace(final int index, final SpaceRace race) {
     if (index >= 0 && index < StarMap.MAX_PLAYERS) {
       playerRaces[index] = race;
     }
   }
 
+  /**
+   * Get Space race for certain player
+   * @param index Player index
+   * @return SpaceRace for player
+   */
   public SpaceRace getRace(final int index) {
     if (index >= 0
-        && index < StarMap.MAX_PLAYERS) { return playerRaces[index]; }
+        && index < StarMap.MAX_PLAYERS) {
+      return playerRaces[index];
+    }
     return null;
   }
 
+  /**
+   * Set Player empire name
+   * @param index Player Index
+   * @param name Empire name
+   */
   public void setPlayerName(final int index, final String name) {
     if (index >= 0 && index < StarMap.MAX_PLAYERS) {
       playerName[index] = name;
     }
   }
 
+  /**
+   * Get player empire name
+   * @param index Player index
+   * @return Empire name
+   */
   public String getPlayerName(final int index) {
-    if (index >= 0
-        && index < StarMap.MAX_PLAYERS) { return playerName[index]; }
+    if (index >= 0 && index < StarMap.MAX_PLAYERS) {
+      return playerName[index];
+    }
     return null;
   }
 
@@ -151,51 +176,89 @@ public class GalaxyConfig {
     this.galaxySizeIndex = galaxySize;
   }
 
+  /**
+   * Get galaxy X size
+   * @return Get galaxy X size
+   */
   public int getSizeX() {
     return sizeX;
   }
 
+  /**
+   * Get galaxy Y size
+   * @return Get galaxy Y size
+   */
   public int getSizeY() {
     return sizeY;
   }
 
+  /**
+   * Get maximum players
+   * @return Maximum players
+   */
   public int getMaxPlayers() {
     return maxPlayers;
   }
 
+  /**
+   * Set maximum amount of players for galaxy
+   * @param maxPlayers for one game
+   */
   public void setMaxPlayers(final int maxPlayers) {
     if (maxPlayers >= 2 && maxPlayers <= 8) {
       this.maxPlayers = maxPlayers;
     }
   }
 
+  /**
+   * Get solary system distance
+   * @return Minimum distance between solar systems
+   */
   public int getSolarSystemDistance() {
     return solarSystemDistance;
   }
 
   /**
    * Set Solar system distance
-   * @param solarSystemDistance Actual distance between solar system
+   * @param systemDistance Actual distance between solar system
    * @param sunDensity Sun density setting in ui index
    */
-  public void setSolarSystemDistance(final int solarSystemDistance,
+  public void setSolarSystemDistance(final int systemDistance,
       final int sunDensity) {
-    this.solarSystemDistance = solarSystemDistance;
+    this.solarSystemDistance = systemDistance;
     this.sunDensityIndex = sunDensity;
   }
 
+  /**
+   * get starting position information
+   * @return Starting position information
+   */
   public int getStartingPosition() {
     return startingPosition;
   }
 
+  /**
+   * Set starting position. There are two choices:
+   * Border and Random
+   * @param startingPosition see START_POSITION_BORDER and
+   *  START_POSITION_RANDOM
+   */
   public void setStartingPosition(final int startingPosition) {
     this.startingPosition = startingPosition;
   }
 
+  /**
+   * Which sun density is selected from UI
+   * @return Sun density index
+   */
   public int getSunDensityIndex() {
     return sunDensityIndex;
   }
 
+  /**
+   * Get Galaxy size inde from ui
+   * @return Galaxy size index
+   */
   public int getGalaxySizeIndex() {
     return galaxySizeIndex;
   }

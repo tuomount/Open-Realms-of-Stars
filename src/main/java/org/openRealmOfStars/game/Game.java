@@ -241,16 +241,16 @@ public class Game extends JFrame implements ActionListener {
    */
   public void fleetMakeMove(final PlayerInfo info, final Fleet fleet,
       final int nx, final int ny) {
-    if (getStarMap().isValidCoordinate(nx, ny) && fleet.movesLeft > 0
+    if (getStarMap().isValidCoordinate(nx, ny) && fleet.getMovesLeft() > 0
         && !getStarMap().isBlocked(nx, ny)) {
       Combat combat = getStarMap().fightWithFleet(nx, ny, fleet, info);
       if (combat != null) {
-        fleet.movesLeft--;
+        fleet.decMovesLeft();
         starMapView.setReadyToMove(false);
         changeGameState(GameState.COMBAT, combat);
       } else {
         fleet.setPos(new Coordinate(nx, ny));
-        fleet.movesLeft--;
+        fleet.decMovesLeft();
         getStarMap().doFleetScanUpdate(info, fleet, null);
         starMapView.updatePanels();
         if (info.isHuman()) {

@@ -1058,7 +1058,7 @@ public class StarMap {
       if (info != null) {
         for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
           Fleet fleet = info.getFleets().getByIndex(j);
-          fleet.movesLeft = fleet.getFleetSpeed();
+          fleet.setMovesLeft(fleet.getFleetSpeed());
           doFleetScanUpdate(info, fleet, null);
         }
       }

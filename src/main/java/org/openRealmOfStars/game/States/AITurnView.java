@@ -359,7 +359,7 @@ public class AITurnView extends BlackPanel {
         for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
           Fleet fleet = info.getFleets().getByIndex(j);
           if (fleet.getRoute() != null) {
-            if (fleet.movesLeft > 0) {
+            if (fleet.getMovesLeft() > 0) {
               // Make sure fleet can actually move
               fleet.getRoute().makeNextMove();
               if (!game.getStarMap().isBlocked(fleet.getRoute().getX(),
@@ -422,7 +422,7 @@ public class AITurnView extends BlackPanel {
             msg.setCoordinate(fleet.getCoordinate());
             info.getMsgList().addNewMessage(msg);
           }
-          fleet.movesLeft = fleet.getFleetSpeed();
+          fleet.setMovesLeft(fleet.getFleetSpeed());
           game.getStarMap().doFleetScanUpdate(info, fleet, null);
         }
       }

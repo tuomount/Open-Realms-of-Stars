@@ -57,7 +57,7 @@ public class Fleet {
   /**
    * How many moves fleet has left
    */
-  public int movesLeft;
+  private int movesLeft;
 
   /**
    * Route for fleet to move with FLT speed
@@ -213,6 +213,7 @@ public class Fleet {
 
   /**
    * Get fleet's coordinate
+   * @return fleet's coordinate
    */
   public Coordinate getCoordinate() {
     return new Coordinate(coordinate);
@@ -520,4 +521,26 @@ public class Fleet {
     return result;
   }
 
+  /**
+   * Get how many moves fleet has left
+   * @return how many moves fleet has left
+   */
+  public int getMovesLeft() {
+    return movesLeft;
+  }
+
+  /**
+   * Set how many moves fleet has left
+   * @param movesLeft how many moves fleet has left
+   */
+  public void setMovesLeft(final int movesLeft) {
+    this.movesLeft = movesLeft;
+  }
+
+  /**
+   * Decrease how many moves fleet has left
+   */
+  public void decMovesLeft() {
+    this.movesLeft--;
+  }
 }

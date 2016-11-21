@@ -65,6 +65,19 @@ public class ParticleEffect {
   private Color color;
 
   /**
+   * Maximum color component value for single channel
+   */
+  private static final int MAX_COLOR = 255;
+  /**
+   * Photon torpedeo red part
+   */
+  private static final int PHOTON_TORPEDO_RED = 132;
+  /**
+   * Railgun green max
+   */
+  private static final int RAIL_GUN_MAX_GREEN = 215;
+
+  /**
    * Create a new particle effect with default movement vectors
    * @param type Particle Effect Type
    * @param x X coordinate in pixels
@@ -101,7 +114,7 @@ public class ParticleEffect {
       break;
     }
     case PHOTON_TORP_PARTICILE: {
-      color = new Color(132, 255, 0);
+      color = new Color(PHOTON_TORPEDO_RED, MAX_COLOR, 0);
       mx = DiceGenerator.getRandom(5, 20);
       mx = mx / 10;
       my = DiceGenerator.getRandom(5, 20);
@@ -117,29 +130,33 @@ public class ParticleEffect {
     }
     case MISSILE_FIRE: {
       ttl = 15;
-      color = new Color(255, 255 - 6 * (15 - ttl), 0);
+      color = new Color(MAX_COLOR, MAX_COLOR - 6 * (15 - ttl), 0);
       mx = 0;
       my = 0;
       break;
     }
     case RAILGUN_TRAIL: {
       ttl = 5;
-      color = new Color(0, 215 - 20 * (5 - ttl), 255);
+      color = new Color(0, RAIL_GUN_MAX_GREEN - 20 * (5 - ttl), MAX_COLOR);
       mx = 0;
       my = 0;
       break;
     }
+    default: {
+      throw new IllegalArgumentException("Unexpected particle effect type!");
+    }
+
     }
   }
 
   /**
    * Set new movement vector
-   * @param mx X part of movement vector
-   * @param my Y part of movement vector
+   * @param mvx X part of movement vector
+   * @param mvy Y part of movement vector
    */
-  public void setMovementVector(final double mx, final double my) {
-    this.mx = mx;
-    this.my = my;
+  public void setMovementVector(final double mvx, final double mvy) {
+    this.mx = mvx;
+    this.my = mvy;
   }
 
   /**
@@ -167,30 +184,50 @@ public class ParticleEffect {
           }
         }
       } else {
-        color = new Color(255, 255 - 6 * (15 - ttl), 0);
+        color = new Color(MAX_COLOR, MAX_COLOR - 6 * (15 - ttl), 0);
       }
     }
     if (type == ParticleEffectType.RAILGUN_TRAIL) {
-      color = new Color(0, 215 - 20 * (5 - ttl), 255);
+      color = new Color(0, RAIL_GUN_MAX_GREEN - 20 * (5 - ttl), MAX_COLOR);
     }
   }
 
+  /**
+   * Get particle X coordinate
+   * @return X coordinate
+   */
   public int getX() {
     return (int) Math.round(x);
   }
 
+  /**
+   * Get particle Y coordinate
+   * @return Y coordinate
+   */
   public int getY() {
     return (int) Math.round(y);
   }
 
+  /**
+   * Get particle Time to live value
+   * @return Time to live in frames
+   */
   public int getTtl() {
     return ttl;
   }
 
+  /**
+   * Get particle type
+   * @return Particle effect type
+   */
   public ParticleEffectType getType() {
     return type;
   }
 
+  /**
+   * Get particle current color
+   * @return Current color for particle
+   */
   public Color getColor() {
     return color;
   }

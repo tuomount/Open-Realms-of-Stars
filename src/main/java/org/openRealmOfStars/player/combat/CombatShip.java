@@ -94,36 +94,52 @@ public class CombatShip implements Comparable<CombatShip> {
     reInitShipForRound();
   }
 
+  /**
+   * Get the actual ship
+   * @return get Ship
+   */
   public Ship getShip() {
     return ship;
   }
 
-  public void setShip(final Ship ship) {
-    this.ship = ship;
-  }
-
+  /**
+   * Get combat ship X coordinate in combat
+   * @return X coordinate
+   */
   public int getX() {
     return x;
   }
 
+  /**
+   * Set combat ship's X coordinate
+   * @param x X coordinate
+   */
   public void setX(final int x) {
     this.x = x;
   }
 
+  /**
+   * Get combat ship Y coordinate in combat
+   * @return Y coordinate
+   */
   public int getY() {
     return y;
   }
 
+  /**
+   * Set combat ship's Y coordinate
+   * @param y Y coordinate
+   */
   public void setY(final int y) {
     this.y = y;
   }
 
+  /**
+   * Get Player info for combat ship
+   * @return Player info for combat ship
+   */
   public PlayerInfo getPlayer() {
     return player;
-  }
-
-  public void setPlayer(final PlayerInfo player) {
-    this.player = player;
   }
 
   @Override
@@ -131,12 +147,12 @@ public class CombatShip implements Comparable<CombatShip> {
     return this.ship.getInitiative() - o.getShip().getInitiative();
   }
 
+  /**
+   * Does ship image needs to be fliped on Y axel
+   * @return True if image needs flipping on Y axel
+   */
   public boolean isFlipY() {
     return flipY;
-  }
-
-  public void setFlipY(final boolean flipY) {
-    this.flipY = flipY;
   }
 
   @Override
@@ -179,7 +195,7 @@ public class CombatShip implements Comparable<CombatShip> {
 
   /**
    * Get Combat ship description
-   * @return String
+   * @return String for description
    */
   public String getDescription() {
     StringBuilder sb = new StringBuilder();
@@ -223,6 +239,10 @@ public class CombatShip implements Comparable<CombatShip> {
     return sb.toString();
   }
 
+  /**
+   * How many moves left for this combat round
+   * @return Moves left
+   */
   public int getMovesLeft() {
     return movesLeft;
   }
@@ -267,22 +287,43 @@ public class CombatShip implements Comparable<CombatShip> {
     }
   }
 
+  /**
+   * Define how many moves combat ship has left for this round
+   * @param movesLeft For this round
+   */
   public void setMovesLeft(final int movesLeft) {
     this.movesLeft = movesLeft;
   }
 
+  /**
+   * Has AI shot with every weapon?
+   * @return How many shots is left for AI for current round
+   */
   public int getAiShotsLeft() {
     return aiShotsLeft;
   }
 
+  /**
+   * Change AI shots left for combat ship.
+   * @param aiShotsLeft AI shots left for current round
+   */
   public void setAiShotsLeft(final int aiShotsLeft) {
     this.aiShotsLeft = aiShotsLeft;
   }
 
+  /**
+   * Get bonus accuracy for combat ship. This bonus is granted if ship is
+   * defending.
+   * @return Bonus accuracy
+   */
   public int getBonusAccuracy() {
     return bonusAccuracy;
   }
 
+  /**
+   * Define bonus accuracy for combat ship.
+   * @param bonusAccuracy for combat ship
+   */
   public void setBonusAccuracy(final int bonusAccuracy) {
     this.bonusAccuracy = bonusAccuracy;
   }

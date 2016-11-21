@@ -117,54 +117,107 @@ public class ShipStat implements Comparable<ShipStat> {
     dos.writeBoolean(obsolete);
   }
 
+  /**
+   * Get number of combat ship has been
+   * @return Number of combats
+   */
   public int getNumberOfCombats() {
     return numberOfCombats;
   }
 
+  /**
+   * Change number of combat ship design has been.
+   * @param numberOfCombats Number of combat ship design has participated.
+   */
   public void setNumberOfCombats(final int numberOfCombats) {
     this.numberOfCombats = numberOfCombats;
   }
 
+  /**
+   * How many of combats were victorious.
+   * @return Number of victories
+   */
   public int getNumberOfVictories() {
     return numberOfVictories;
   }
 
+  /**
+   * Change number of victories for ship design
+   * @param numberOfVictories Number of victories
+   */
   public void setNumberOfVictories(final int numberOfVictories) {
     this.numberOfVictories = numberOfVictories;
   }
 
+  /**
+   * How many combat were lost by this ship design
+   * @return Number of loses
+   */
   public int getNumberOfLoses() {
     return numberOfLoses;
   }
 
+  /**
+   * Change number of loses for ship design
+   * @param numberOfLoses Number of loses
+   */
   public void setNumberOfLoses(final int numberOfLoses) {
     this.numberOfLoses = numberOfLoses;
   }
 
+  /**
+   * How many kills ship design has caused in combat. Killing blow
+   * is what counts.
+   * @return Number of kills
+   */
   public int getNumberOfKills() {
     return numberOfKills;
   }
 
+  /**
+   * Change number of kills by ship design
+   * @param numberOfKills Number of kills
+   */
   public void setNumberOfKills(final int numberOfKills) {
     this.numberOfKills = numberOfKills;
   }
 
+  /**
+   * How many of these ships is totally built
+   * @return Number of built
+   */
   public int getNumberOfBuilt() {
     return numberOfBuilt;
   }
 
+  /**
+   * Change the number of ships built
+   * @param numberOfBuilt Number of ships built
+   */
   public void setNumberOfBuilt(final int numberOfBuilt) {
     this.numberOfBuilt = numberOfBuilt;
   }
 
+  /**
+   * How many ships are still in use
+   * @return Number of in use
+   */
   public int getNumberOfInUse() {
     return numberOfInUse;
   }
 
+  /**
+   * Change number of ship in use
+   * @param numberOfInUse Number of ships in use
+   */
   public void setNumberOfInUse(final int numberOfInUse) {
     this.numberOfInUse = numberOfInUse;
   }
 
+  /**
+   * Get actual ship design for this ship stat
+   * @return Ship design
+   */
   public ShipDesign getDesign() {
     return design;
   }
@@ -177,19 +230,31 @@ public class ShipStat implements Comparable<ShipStat> {
         + " Lost: " + getNumberOfLoses() + " Kills: " + getNumberOfKills();
   }
 
+  /**
+   * Is ship design obsolete or not. Obsolete ship means
+   * that is is no longer visible in building list on planets.
+   * @return True if obsolete
+   */
   public boolean isObsolete() {
     return obsolete;
   }
 
+  /**
+   * Change if ship design is obsolete or not
+   * @param obsolete True for obsolete
+   */
   public void setObsolete(final boolean obsolete) {
     this.obsolete = obsolete;
   }
 
   @Override
   public int compareTo(final ShipStat arg0) {
-    if (arg0.isObsolete() == this.obsolete) { return design.getName()
-        .compareTo(arg0.getDesign().getName()); }
-    if (this.obsolete) { return 1; }
+    if (arg0.isObsolete() == this.obsolete) {
+      return design.getName().compareTo(arg0.getDesign().getName());
+    }
+    if (this.obsolete) {
+      return 1;
+    }
     return -1;
   }
 

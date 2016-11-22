@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/tuomount/Open-Realms-of-Stars.svg?branch=master)](https://travis-ci.org/tuomount/Open-Realms-of-Stars)
+[![Coverage Status](https://coveralls.io/repos/github/tuomount/Open-Realms-of-Stars/badge.svg?branch=master)](https://coveralls.io/github/tuomount/Open-Realms-of-Stars?branch=master)
 
 # Open Realm of Stars
 

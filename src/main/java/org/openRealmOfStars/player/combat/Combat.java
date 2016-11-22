@@ -81,10 +81,19 @@ public class Combat {
    */
   private Fleet fleet2;
 
+  /**
+   * Player Info for winner
+   */
   private PlayerInfo winner;
 
+  /**
+   * Player info for attacker
+   */
   private PlayerInfo info1;
 
+  /**
+   * Player Info for defender
+   */
   private PlayerInfo info2;
 
   /**
@@ -138,10 +147,18 @@ public class Combat {
     winner = null;
   }
 
+  /**
+   * Get first player's info which is the attacker
+   * @return Player Info
+   */
   public PlayerInfo getPlayer1() {
     return info1;
   }
 
+  /**
+   * Get second player's info which is the defender
+   * @return Player info
+   */
   public PlayerInfo getPlayer2() {
     return info2;
   }
@@ -261,6 +278,11 @@ public class Combat {
   }
 
   /**
+   * Maximum distance in combat which cannot be really reached.
+   */
+  private static final int MAX_DISTANCE = 999;
+
+  /**
    * Get the closest enemy ship
    * @param info Player info who is doing the comparison
    * @param center Where to start looking the closet one
@@ -268,11 +290,12 @@ public class Combat {
    */
   public CombatShip getClosestEnemyShip(final PlayerInfo info,
       final CombatShip center) {
-    double maxDistance = 999;
+    double maxDistance = MAX_DISTANCE;
     CombatShip result = null;
     for (CombatShip ship : shipList) {
       if (ship.getPlayer() != info) {
-        Coordinate centerCoordinate = new Coordinate(center.getX(), center.getY());
+        Coordinate centerCoordinate = new Coordinate(center.getX(),
+            center.getY());
         Coordinate shipCoordinate = new Coordinate(ship.getX(), ship.getY());
         double distance = centerCoordinate.calculateDistance(shipCoordinate);
         if (distance < maxDistance) {
@@ -350,6 +373,11 @@ public class Combat {
     return shipList.get(shipIndex);
   }
 
+  /**
+   * Get next ship is list. List contains both player's fleets
+   * in initiative order. After this ship can be fetched with
+   * getCurrentShip() method.
+   */
   public void nextShip() {
     shipIndex++;
     if (shipList.size() <= shipIndex) {
@@ -493,123 +521,124 @@ public class Combat {
         }
         return 8;
       }
+      default:
+        throw new IllegalArgumentException("Fleet contains too many ships!");
       }
-    } else {
-      // Second team on top side
-      switch (index) {
-      case 0: {
-        if (x) {
-          return 4;
-        }
-        return 1;
-      }
-      case 1: {
-        if (x) {
-          return 3;
-        }
-        return 1;
-      }
-      case 2: {
-        if (x) {
-          return 5;
-        }
-        return 1;
-      }
-      case 3: {
-        if (x) {
-          return 2;
-        }
-        return 1;
-      }
-      case 4: {
-        if (x) {
-          return 6;
-        }
-        return 1;
-      }
-      case 5: {
-        if (x) {
-          return 4;
-        }
-        return 0;
-      }
-      case 6: {
-        if (x) {
-          return 1;
-        }
-        return 1;
-      }
-      case 7: {
-        if (x) {
-          return 7;
-        }
-        return 1;
-      }
-      case 8: {
-        if (x) {
-          return 3;
-        }
-        return 0;
-      }
-      case 9: {
-        if (x) {
-          return 5;
-        }
-        return 0;
-      }
-      case 10: {
-        if (x) {
-          return 2;
-        }
-        return 0;
-      }
-      case 11: {
-        if (x) {
-          return 6;
-        }
-        return 0;
-      }
-      case 12: {
-        if (x) {
-          return 0;
-        }
-        return 1;
-      }
-      case 13: {
-        if (x) {
-          return 8;
-        }
-        return 1;
-      }
-      case 14: {
-        if (x) {
-          return 1;
-        }
-        return 0;
-      }
-      case 15: {
-        if (x) {
-          return 7;
-        }
-        return 0;
-      }
-      case 16: {
-        if (x) {
-          return 0;
-        }
-        return 0;
-      }
-      case 17: {
-        if (x) {
-          return 8;
-        }
-        return 0;
-      }
-      }
-
     }
-    // This should not happen
-    return 4;
+    // Second team on top side
+    switch (index) {
+    case 0: {
+      if (x) {
+        return 4;
+      }
+      return 1;
+    }
+    case 1: {
+      if (x) {
+        return 3;
+      }
+      return 1;
+    }
+    case 2: {
+      if (x) {
+        return 5;
+      }
+      return 1;
+    }
+    case 3: {
+      if (x) {
+        return 2;
+      }
+      return 1;
+    }
+    case 4: {
+      if (x) {
+        return 6;
+      }
+      return 1;
+    }
+    case 5: {
+      if (x) {
+        return 4;
+      }
+      return 0;
+    }
+    case 6: {
+      if (x) {
+        return 1;
+      }
+      return 1;
+    }
+    case 7: {
+      if (x) {
+        return 7;
+      }
+      return 1;
+    }
+    case 8: {
+      if (x) {
+        return 3;
+      }
+      return 0;
+    }
+    case 9: {
+      if (x) {
+        return 5;
+      }
+      return 0;
+    }
+    case 10: {
+      if (x) {
+        return 2;
+      }
+      return 0;
+    }
+    case 11: {
+      if (x) {
+        return 6;
+      }
+      return 0;
+    }
+    case 12: {
+      if (x) {
+        return 0;
+      }
+      return 1;
+    }
+    case 13: {
+      if (x) {
+        return 8;
+      }
+      return 1;
+    }
+    case 14: {
+      if (x) {
+        return 1;
+      }
+      return 0;
+    }
+    case 15: {
+      if (x) {
+        return 7;
+      }
+      return 0;
+    }
+    case 16: {
+      if (x) {
+        return 0;
+      }
+      return 0;
+    }
+    case 17: {
+      if (x) {
+        return 8;
+      }
+      return 0;
+    }
+    default:
+      throw new IllegalArgumentException("Fleet contains too many ships!");
+    }
+
   }
 
   /**
@@ -679,18 +708,34 @@ public class Combat {
     return false;
   }
 
+  /**
+   * Which component was used in current ship
+   * @return Component used index.
+   */
   public int getComponentUse() {
     return componentUse;
   }
 
+  /**
+   * Define which component was used in current ship
+   * @param componentUse Component index
+   */
   public void setComponentUse(final int componentUse) {
     this.componentUse = componentUse;
   }
 
+  /**
+   * Get combat animation
+   * @return Combat animation
+   */
   public CombatAnimation getAnimation() {
     return animation;
   }
 
+  /**
+   * Set combat animation
+   * @param animation Combat animamation
+   */
   public void setAnimation(final CombatAnimation animation) {
     this.animation = animation;
   }

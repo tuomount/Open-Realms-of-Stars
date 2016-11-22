@@ -46,7 +46,8 @@ public class Message {
   private int index;
 
   /**
-   * Message type, what kind message is about, research, construction, fleet etc.
+   * Message type, what kind message is about, research, construction,
+   * fleet etc.
    */
   private MessageType type;
 
@@ -113,31 +114,60 @@ public class Message {
     IOUtilities.writeString(dos, icon.getName());
   }
 
+  /**
+   * Get Message Index in list. -1 if not yet in list.
+   * @return Message Index
+   */
   public int getIndex() {
     return index;
   }
 
+  /**
+   * Set Message Index
+   * @param index Message index in list
+   */
   public void setIndex(final int index) {
     this.index = index;
   }
 
+  /**
+   * Get Message Type
+   * @return Message Type
+   */
   public MessageType getType() {
     return type;
   }
 
+  /**
+   * Set Message Type
+   * @param type Message Type
+   */
   public void setType(final MessageType type) {
     this.type = type;
   }
 
+  /**
+   * Get Message itself as a String
+   * @return Message
+   */
   public String getMessage() {
     return message;
   }
 
+  /**
+   * Maximum row length
+   */
+  private static final int MAX_ROW_LEN = 69;
+
+  /**
+   * Set Message. Method handles automatic line wrapping for message
+   * @param message as a String
+   */
   public void setMessage(final String message) {
     StringBuilder sb = new StringBuilder(message.length() + 5);
     int split = 0;
     for (int i = 0; i < message.length(); i++) {
-      if (message.charAt(i) == ' ' && split > 69) {
+      if (message.charAt(i) == ' ' && split > MAX_ROW_LEN) {
         sb.append("\n");
         sb.append(message.charAt(i));
         split = 0;
@@ -152,10 +182,18 @@ public class Message {
     this.message = sb.toString();
   }
 
+  /**
+   * Get Message Icon
+   * @return Message Icon
+   */
   public Icon16x16 getIcon() {
     return icon;
   }
 
+  /**
+   * Set Message Icon
+   * @param icon Message Icon
+   */
   public void setIcon(final Icon16x16 icon) {
     this.icon = icon;
   }
@@ -168,18 +206,35 @@ public class Message {
     this.coordinate = new Coordinate(coordinate);
   }
 
+  /**
+   * Get position on starmap where message happened
+   * @return X coordinate
+   */
   public int getX() {
     return coordinate.getX();
   }
 
+  /**
+   * Get position on starmap where message happened
+   * @return X coordinate
+   */
   public int getY() {
     return coordinate.getY();
   }
 
+  /**
+   * Get special string which can be used to match from lists to point
+   * correct object.
+   * @return Matching string
+   */
   public String getMatchByString() {
     return matchByString;
   }
 
+  /**
+   * Set matching by string
+   * @param matchByString Search string which needs to match an object.
+   */
   public void setMatchByString(final String matchByString) {
     this.matchByString = matchByString;
   }

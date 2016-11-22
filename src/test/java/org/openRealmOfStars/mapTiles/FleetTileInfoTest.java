@@ -34,8 +34,8 @@ public class FleetTileInfoTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCreateFleetTileInfo() {
     FleetTileInfo tileInfo = new FleetTileInfo(SpaceRace.CENTAURS, 0, 1, 2);
-    assertEquals("Space race was not Centaurs", SpaceRace.CENTAURS.getIndex(),
-        tileInfo.getRace().getIndex());
+    assertEquals("Space race was not Centaurs", SpaceRace.CENTAURS,
+        tileInfo.getRace());
     assertEquals("No matching image index", 0,tileInfo.getImageIndex());
     assertEquals("No matching player index", 1,tileInfo.getPlayerIndex());
     assertEquals("No matching fleet index", 2,tileInfo.getFleetIndex());
@@ -43,8 +43,8 @@ public class FleetTileInfoTest {
     tileInfo.setImageIndex(1);
     tileInfo.setPlayerIndex(2);
     tileInfo.setFleetIndex(3);
-    assertEquals("Space race was not Mechions", SpaceRace.MECHIONS.getIndex(),
-        tileInfo.getRace().getIndex());
+    assertEquals("Space race was not Mechions", SpaceRace.MECHIONS,
+        tileInfo.getRace());
     assertEquals("No matching image index", 1,tileInfo.getImageIndex());
     assertEquals("No matching player index", 2,tileInfo.getPlayerIndex());
     assertEquals("No matching fleet index", 3,tileInfo.getFleetIndex());

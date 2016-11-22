@@ -62,34 +62,66 @@ public class FleetTileInfo {
     this.setFleetIndex(fleetIndex);
   }
 
+  /**
+   * Get Space race for Fleet
+   * @return Space race
+   */
   public SpaceRace getRace() {
     return race;
   }
 
+  /**
+   * Set space race for fleet tile
+   * @param race Space Race
+   */
   public void setRace(final SpaceRace race) {
     this.race = race;
   }
 
+  /**
+   * Get Fleet Image index
+   * @return Image index
+   */
   public int getImageIndex() {
     return imageIndex;
   }
 
+  /**
+   * Set Fleet image index
+   * @param imageIndex Image index for fleet
+   */
   public void setImageIndex(final int imageIndex) {
     this.imageIndex = imageIndex;
   }
 
+  /**
+   * Get Player index from player list
+   * @return Player index
+   */
   public int getPlayerIndex() {
     return playerIndex;
   }
 
+  /**
+   * Set player index
+   * @param playerIndex in player list
+   */
   public void setPlayerIndex(final int playerIndex) {
     this.playerIndex = playerIndex;
   }
 
+  /**
+   * Get fleet index in player fleets
+   * @return Fleet index
+   */
   public int getFleetIndex() {
     return fleetIndex;
   }
 
+  /**
+   * Set fleet index in player fleets
+   * @param fleetIndex Fleet index
+   */
   public void setFleetIndex(final int fleetIndex) {
     this.fleetIndex = fleetIndex;
   }

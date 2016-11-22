@@ -1,6 +1,7 @@
 package org.openRealmOfStars.player.ship;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.player.SpaceRace;
 import static org.junit.Assert.*;
 
@@ -29,6 +30,7 @@ import static org.junit.Assert.*;
 public class ShipDesignTest {
 
   @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testScoutDesign() {
     ShipHull hull = ShipHullFactory.createByName("Scout Mk1", SpaceRace.CENTAURS);
     ShipDesign design = new ShipDesign(hull);
@@ -57,6 +59,7 @@ public class ShipDesignTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testColonyDesign() {
     ShipHull hull = ShipHullFactory.createByName("Colony", SpaceRace.CENTAURS);
     ShipDesign design = new ShipDesign(hull);

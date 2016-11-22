@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import org.openRealmOfStars.player.SpaceRace;
 
 /**
 *
@@ -30,14 +32,15 @@ import org.junit.Test;
 public class SavedGameTest {
 
   @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testLoadingSavedGame() throws IOException {
     SavedGame game = new SavedGame("src/test/resources/saves", 
                                    "testGame.save");
     assertEquals(128, game.getTurnNumber());
     assertEquals("Terran Alliance", game.getEmpireName());
     assertEquals("50 X 50", game.getGalaxySize());
-    assertEquals("Humans",game.getPlayerRace().getName());
-    assertEquals("testGame.save",game.getFilename());
+    assertEquals(SpaceRace.HUMAN, game.getPlayerRace());
+    assertEquals("testGame.save", game.getFilename());
   }
 
 }

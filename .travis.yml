@@ -3,3 +3,6 @@ sudo: false
 
 script:
   - mvn clean verify
+
+after_success:
+  - mvn site org.eluder.coveralls:coveralls-maven-plugin:report -P onlyUnitTests

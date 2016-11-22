@@ -1,4 +1,4 @@
-package org.openRealmOfStars.starMap;
+package org.openRealmOfStars.utilities;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -29,39 +29,40 @@ import static org.junit.Assert.*;
  * along with this program; if not, see http://www.gnu.org/licenses/
  *
  *
- * Test for Coordinate.calculateDistance()
+ * Test for RandomSystemNameGenerator.numberToRoman()
  *
  */
 @RunWith(value = Parameterized.class)
-public class CoordinateCalculateDistanceTest {
+public class RandomSystemNameGeneratorNumberToRomanTest {
 
-    private Coordinate firstCoordinate;
-    private Coordinate secondCoordinate;
-    private double expectedValue;
+    private Integer parameter;
+    private String expectedValue;
 
-    public CoordinateCalculateDistanceTest(Coordinate firstCoordinate, Coordinate secondCoordinate, double expectedValue) {
-        this.firstCoordinate = firstCoordinate;
-        this.secondCoordinate = secondCoordinate;
+    public RandomSystemNameGeneratorNumberToRomanTest(Integer parameter, String expectedValue) {
+        this.parameter = parameter;
         this.expectedValue = expectedValue;
     }
 
-    @Parameterized.Parameters(name = "{index}: calculateDistance({0}, {1}) = {2}")
+    @Parameterized.Parameters(name = "{index}: RandomSystemNameGenerator.numberToRoman({0}) = {1}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                {new Coordinate(0, 0), new Coordinate(0, 0), 0},
-                {new Coordinate(0, 0), new Coordinate(1, 0), 1},
-                {new Coordinate(0, 0), new Coordinate(0, 1), 1},
-                {new Coordinate(0, 0), new Coordinate(1, 1), 1.4142135623730951},
-                //@TODO: Add more test parameters to check the most critical part
+                {1, "I"},
+                {2, "II"},
+                {3, "III"},
+                {4, "IV"},
+                {5, "V"},
+                {6, "VI"},
+                {7, "VII"},
+                {8, "VIII"},
+                {9, "IX"},
+                {10, "X"},
         });
     }
 
+
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
-    public void testCalculateDistanceShouldReturnZeroWhenTheCoordinatesAreEquals() throws Exception {
-        double actualValue = firstCoordinate.calculateDistance(secondCoordinate);
-
-        assertEquals(expectedValue, actualValue, 0);
+    public void testA() {
+        assertEquals(expectedValue, RandomSystemNameGenerator.numberToRoman(parameter));
     }
-
 }

@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
 /**
  * 
  * Open Realm of Stars game project
@@ -36,6 +38,7 @@ public class RouteTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testRouteWhereNoDistance() {
     assertEquals(0, route.timeEstimate());
     assertEquals(0, route.getX());
@@ -54,6 +57,7 @@ public class RouteTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testRoute() {
     route.setStartX(3);
     route.setStartY(3);
@@ -110,6 +114,7 @@ public class RouteTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testRoute2() {
     route.setStartX(3);
     route.setStartY(4);
@@ -166,6 +171,7 @@ public class RouteTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testIsDefending() {
     route.setStartX(3);
     route.setStartY(3);
@@ -183,6 +189,7 @@ public class RouteTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testIsFixing() {
     route.setStartX(3);
     route.setStartY(3);
@@ -201,6 +208,7 @@ public class RouteTest {
 
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testIsEndReachedShouldBeTrueWhenStartAndEndCoordinatesAreEquals() {
     assertTrue(route.isEndReached());
 
@@ -225,6 +233,7 @@ public class RouteTest {
   }
 
   @Test(expected = ArithmeticException.class)
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testTimeEstimateShouldThrowArithmeticException() {
     route.setFtlSpeed(Route.ROUTE_DEFEND);
     route.timeEstimate();

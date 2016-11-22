@@ -1,6 +1,7 @@
 package org.openRealmOfStars.utilities;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.*;
 /**
@@ -32,12 +33,14 @@ public class LoggerTest {
     private Logger logger = new Logger(LOG_SIZE);
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testCreateDefaultLogger(){
         logger = new Logger();
         assertEquals(DEFAULT_LOG_SIZE, logger.size());
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testAddLogShouldRotateMessagesAndPutNewMessageToTheBeginningOfTheArray() {
         String[] actualResult;
         String[] expectedResult = new String[LOG_SIZE];
@@ -54,6 +57,7 @@ public class LoggerTest {
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testAddLogShouldNotThrowExceptionWhenGetMoreLogMessages() {
         for (int i = 1; i <= LOG_SIZE; i++) {
             logger.addLog("Message " + i);
@@ -63,21 +67,25 @@ public class LoggerTest {
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testSizeShouldReturnTheLoggerSize(){
         assertEquals(LOG_SIZE, logger.size());
     }
 
     @Test(expected = RuntimeException.class)
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testGetMessageShouldThrowExceptionWhereIndexLowerThanZero(){
         logger.getMessage(-1);
     }
 
     @Test(expected = RuntimeException.class)
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testGetMessageShouldThrowExceptionWhereIndexGreaterThanLoggerSize(){
         logger.getMessage(10);
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testGetMessageShouldReturnTheMessageByIndex(){
         logger.addLog("Message 1");
         logger.addLog("Message 2");

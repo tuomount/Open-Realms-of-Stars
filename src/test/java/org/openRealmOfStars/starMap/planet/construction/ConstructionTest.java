@@ -38,8 +38,7 @@ public class ConstructionTest {
     Mockito.when(icon.getName()).thenReturn("icon1");
     Icon16x16 icon2 = Mockito.mock(Icon16x16.class);
     Mockito.when(icon2.getName()).thenReturn("icon2");
-    Construction construction = new Construction("Test Thingy",
-        Icons.getIconByIndex(0));
+    Construction construction = new Construction("Test Thingy",icon);
     construction.setDescription("Here is description!");
     assertEquals("Here is description!",construction.getDescription());
     assertEquals("Test Thingy",construction.getName());

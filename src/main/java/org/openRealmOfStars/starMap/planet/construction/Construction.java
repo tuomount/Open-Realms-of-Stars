@@ -30,27 +30,27 @@ public class Construction {
   /**
    * Construction name
    */
-  protected String name;
+  private String name;
 
   /**
    * Icon for construction
    */
-  protected Icon16x16 icon;
+  private Icon16x16 icon;
 
   /**
    * Longer description about the construction
    */
-  protected String description;
+  private String description;
 
   /**
    * Production cost
    */
-  protected int prodCost;
+  private int prodCost;
 
   /**
    * Metal cost
    */
-  protected int metalCost;
+  private int metalCost;
 
   /**
    * Constructor for Construction
@@ -79,26 +79,50 @@ public class Construction {
     return getName();
   }
 
+  /**
+   * Get Construction name as a String.
+   * @return Construction name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Set construction name
+   * @param name Construction name
+   */
   public void setName(final String name) {
     this.name = name;
   }
 
+  /**
+   * Get icon 16x16 pixels
+   * @return Icon for construction
+   */
   public Icon16x16 getIcon() {
     return icon;
   }
 
+  /**
+   * Set icon for construction. 
+   * @param icon Icon16x16
+   */
   public void setIcon(final Icon16x16 icon) {
     this.icon = icon;
   }
 
+  /**
+   * Get Construction description.
+   * @return Description as a String
+   */
   public String getDescription() {
     return description;
   }
 
+  /**
+   * Set construction description. This is free text about the construction.
+   * @param description as a free text
+   */
   public void setDescription(final String description) {
     this.description = description;
   }

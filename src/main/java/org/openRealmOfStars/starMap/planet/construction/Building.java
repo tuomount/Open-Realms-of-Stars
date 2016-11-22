@@ -115,8 +115,8 @@ public class Building extends Construction {
     this.cultBonus = 0;
     this.credBonus = 0;
     this.reseBonus = 0;
-    this.prodCost = 1;
-    this.metalCost = 1;
+    this.setProdCost(1);
+    this.setMetalCost(1);
     this.maintenanceCost = 0;
     this.singleAllowed = false;
     this.battleBonus = 0;

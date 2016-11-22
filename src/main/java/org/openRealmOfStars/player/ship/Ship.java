@@ -84,8 +84,8 @@ public class Ship extends Construction {
    */
   public Ship(final ShipDesign design) {
     super(design.getName(), Icons.getIconByName(Icons.ICON_HULL_TECH));
-    prodCost = design.getCost();
-    metalCost = design.getMetalCost();
+    setProdCost(design.getCost());
+    setMetal(design.getMetalCost());
     hull = design.getHull();
     components = new ArrayList<>();
     ShipComponent[] designComponents = design.getComponentList();
@@ -111,8 +111,8 @@ public class Ship extends Construction {
     super("SHIP", Icons.getIconByName(Icons.ICON_HULL_TECH));
     String tmpStr = IOUtilities.readString(dis);
     setName(tmpStr);
-    prodCost = dis.readInt();
-    metalCost = dis.readInt();
+    setProdCost(dis.readInt());
+    setMetalCost(dis.readInt());
     String hullName = IOUtilities.readString(dis);
     int raceIndex = dis.readInt();
     hull = ShipHullFactory.createByName(hullName,
@@ -140,8 +140,8 @@ public class Ship extends Construction {
    */
   public void saveShip(final DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, getName());
-    dos.writeInt(prodCost);
-    dos.writeInt(metalCost);
+    dos.writeInt(getProdCost());
+    dos.writeInt(getMetalCost());
     IOUtilities.writeString(dos, hull.getName());
     dos.writeInt(hull.getRace().getIndex());
     dos.writeInt(components.size());
@@ -828,11 +828,6 @@ public class Ship extends Construction {
       return components.get(index);
     }
     return null;
-  }
-
-  @Override
-  public String getName() {
-    return name;
   }
 
   public ShipHull getHull() {

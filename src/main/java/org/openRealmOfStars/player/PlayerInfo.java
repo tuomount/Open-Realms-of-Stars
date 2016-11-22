@@ -126,6 +126,10 @@ public class PlayerInfo {
    */
   public static final byte VISIBLE = 2;
 
+  /**
+   * Constructor player info.
+   * @param race Space Race for player
+   */
   public PlayerInfo(final SpaceRace race) {
     setTechList(new TechList());
     this.msgList = new MessageList();
@@ -648,6 +652,10 @@ public class PlayerInfo {
     }
   }
 
+  /**
+   * Clear visibility data after turn. These needs to be recalculated for
+   * each turn.
+   */
   public void resetVisibilityDataAfterTurn() {
     for (int y = 0; y < maxCoordinate.getY(); y++) {
       for (int x = 0; x < maxCoordinate.getX(); x++) {
@@ -747,34 +755,66 @@ public class PlayerInfo {
     }
   }
 
+  /**
+   * Get space race for player
+   * @return Space Race
+   */
   public SpaceRace getRace() {
     return race;
   }
 
+  /**
+   * Set space race for player
+   * @param race Space Race
+   */
   public void setRace(final SpaceRace race) {
     this.race = race;
   }
 
+  /**
+   * Get empire name for player
+   * @return Empire name as a String
+   */
   public String getEmpireName() {
     return empireName;
   }
 
+  /**
+   * Set empire name for player
+   * @param empireName as a String
+   */
   public void setEmpireName(final String empireName) {
     this.empireName = empireName;
   }
 
+  /**
+   * Get total amount of credits player has
+   * @return Number of credits
+   */
   public int getTotalCredits() {
     return totalCredits;
   }
 
+  /**
+   * Set total amount of credits for player
+   * @param totalCredits Number of credits
+   */
   public void setTotalCredits(final int totalCredits) {
     this.totalCredits = totalCredits;
   }
 
+  /**
+   * Get tech list for player
+   * @return Tech list
+   */
   public TechList getTechList() {
     return techList;
   }
 
+  /**
+   * Set tech list for player
+   * @param techList Tech List
+   */
   public void setTechList(final TechList techList) {
     this.techList = techList;
   }
@@ -796,10 +836,18 @@ public class PlayerInfo {
     return msgList;
   }
 
+  /**
+   * Is player human controlled or AI
+   * @return True for human controlled
+   */
   public boolean isHuman() {
     return human;
   }
 
+  /**
+   * Set if player is human controlled or AI
+   * @param human True for human controlled
+   */
   public void setHuman(final boolean human) {
     this.human = human;
     if (this.human) {

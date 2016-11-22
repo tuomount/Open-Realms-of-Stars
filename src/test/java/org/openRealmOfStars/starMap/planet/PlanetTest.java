@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -29,14 +30,12 @@ import org.openRealmOfStars.starMap.planet.construction.Building;
  *
  *
  * Test for planet
- * @TODO: Mock dependencies (IOUtilities, DiceGenerator, Tile, Tiles,
- * AnimatedImage, GuiStatics)
+ *
  */
 public class PlanetTest {
 
-    /* -= Behaviour =- */
-
     @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlanetCoordinateShouldChangeableWithSideEffect() {
         Coordinate planetCoordinate = new Coordinate(10, 15);
         Planet planet = new Planet(planetCoordinate, "Earth", 1, false);
@@ -54,6 +53,7 @@ public class PlanetTest {
     }
     
     @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlanetPopulationGrowthAndBuilding() {
       Coordinate planetCoordinate = new Coordinate(10, 15);
       Planet planet = new Planet(planetCoordinate, "Earth", 1, false);

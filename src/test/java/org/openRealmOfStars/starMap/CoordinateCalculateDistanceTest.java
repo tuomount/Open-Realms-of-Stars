@@ -1,6 +1,7 @@
 package org.openRealmOfStars.starMap;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -56,6 +57,7 @@ public class CoordinateCalculateDistanceTest {
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testCalculateDistanceShouldReturnZeroWhenTheCoordinatesAreEquals() throws Exception {
         double actualValue = firstCoordinate.calculateDistance(secondCoordinate);
 

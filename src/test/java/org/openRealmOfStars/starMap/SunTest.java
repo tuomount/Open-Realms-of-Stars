@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
@@ -32,6 +33,7 @@ import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 public class SunTest {
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testCreateSunWithName() {
         Coordinate coordinate = Mockito.mock(Coordinate.class);
         Mockito.when(coordinate.getX()).thenReturn(10);
@@ -44,6 +46,7 @@ public class SunTest {
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testCreateSunWithNameGenerator() {
         RandomSystemNameGenerator nameGenerator = Mockito.mock(RandomSystemNameGenerator.class);
         Coordinate coordinate = Mockito.mock(Coordinate.class);
@@ -58,6 +61,7 @@ public class SunTest {
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testSunShouldBeConvertedIntoString() {
         Coordinate coordinate = Mockito.mock(Coordinate.class);
         Mockito.when(coordinate.getX()).thenReturn(10);
@@ -67,9 +71,8 @@ public class SunTest {
         assertEquals("Sun X:10 Y:15", sun.toString());
     }
 
-    /* -= Behaviour =- */
-
     @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testSunCoordinateShouldChangeableWithSideEffect() {
         Coordinate sunCoordinate = new Coordinate(10, 15);
         Sun sun = new Sun(sunCoordinate, "Sun");

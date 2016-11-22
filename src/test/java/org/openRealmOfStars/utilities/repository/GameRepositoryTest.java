@@ -1,6 +1,7 @@
 package org.openRealmOfStars.utilities.repository;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.starMap.StarMap;
 import static org.junit.Assert.*;
 
@@ -29,6 +30,7 @@ import static org.junit.Assert.*;
 public class GameRepositoryTest {
 
   @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testLoadingGame() {
     GameRepository repository = new GameRepository();
     StarMap starMap = repository.loadGame("src/test/resources/saves",

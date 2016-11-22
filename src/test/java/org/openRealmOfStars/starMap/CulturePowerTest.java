@@ -2,6 +2,7 @@ package org.openRealmOfStars.starMap;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.*;
 
@@ -39,11 +40,13 @@ public class CulturePowerTest {
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testGetHighestCultureShouldReturnsTheDefaultIndex() {
         assertEquals(DEFAULT_PLAYER_INDEX, culturePower.getHighestCulture());
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testAddCultureShouldAddCultureToPlayerByIndex() {
         int playerIndex = 1;
         int culturePowerValue = 10;
@@ -53,6 +56,7 @@ public class CulturePowerTest {
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testAddCultureShouldAddCultureToPlayerByIndex2() {
         int firstPlayerIndex = 1;
         int secondPlayerIndex = 2;
@@ -65,6 +69,7 @@ public class CulturePowerTest {
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testAddCultureShouldAddCultureToPlayerByIndex3() {
         int firstPlayerIndex = 1;
         int secondPlayerIndex = 2;
@@ -78,6 +83,7 @@ public class CulturePowerTest {
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testAddCultureShouldNotThrowExceptionWhenPlayerIndexIsOutOfRange() {
         int playerIndex = -1;
         int culturePowerValue = 10;
@@ -86,12 +92,14 @@ public class CulturePowerTest {
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testAddCultureShouldNotThrowExceptionWhenPlayerIndexIsOutOfRange2() {
         int culturePowerValue = 10;
         culturePower.addCulture(MAX_PLAYERS, culturePowerValue);
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testResetShouldResetTheCulturePowers() {
         int playerIndex = 1;
         int culturePowerValue = 10;

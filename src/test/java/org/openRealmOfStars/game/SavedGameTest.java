@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 /**
 *
@@ -30,6 +31,7 @@ import org.junit.Test;
 public class SavedGameTest {
 
   @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testLoadingSavedGame() throws IOException {
     SavedGame game = new SavedGame("src/test/resources/saves", 
                                    "testGame.save");

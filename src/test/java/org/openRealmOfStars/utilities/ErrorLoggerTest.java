@@ -1,6 +1,7 @@
 package org.openRealmOfStars.utilities;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
 import java.io.PrintStream;
@@ -30,6 +31,7 @@ import java.io.PrintStream;
 public class ErrorLoggerTest {
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testErrorLoggerShouldWriteToDefaultErrorOutput() {
         String errorMessage = "Error message";
         PrintStream err =  System.err;
@@ -42,6 +44,7 @@ public class ErrorLoggerTest {
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testErrorLoggerWhenLogGetException() {
         Exception exception = new Exception("Message");
         PrintStream err =  System.err;

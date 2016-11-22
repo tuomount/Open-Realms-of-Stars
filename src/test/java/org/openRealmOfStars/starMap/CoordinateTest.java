@@ -1,6 +1,7 @@
 package org.openRealmOfStars.starMap;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.*;
 
@@ -29,6 +30,7 @@ import static org.junit.Assert.*;
 public class CoordinateTest {
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testCreateCoordinateFromXAndY() {
         int x = 10;
         int y = 15;
@@ -39,6 +41,7 @@ public class CoordinateTest {
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testCreateCoordinateFromAnother() {
         Coordinate originalCoordinate = new Coordinate(10, 15);
         Coordinate coordinate = new Coordinate(originalCoordinate);
@@ -48,6 +51,7 @@ public class CoordinateTest {
     }
 
     @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testCreateCoordinateFromAnotherWithoutSideEffect() {
         Coordinate originalCoordinate = new Coordinate(10, 15);
         Coordinate coordinate = new Coordinate(originalCoordinate);

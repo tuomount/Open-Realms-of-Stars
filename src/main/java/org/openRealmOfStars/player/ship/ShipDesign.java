@@ -34,8 +34,17 @@ import org.openRealmOfStars.utilities.IOUtilities;
  */
 public class ShipDesign {
 
+  /**
+   * Message when ship design is good to go
+   */
   public static final String DESIGN_OK = "Design is OK!";
+  /**
+   * Message when ship is missing engine
+   */
   public static final String ENGINE_IS_MISSING = "Engine is missing!\n";
+  /**
+   * Message when ship contains weapons even hull does not allow them.
+   */
   public static final String NO_WEAPONS_ALLOWED = "No weapons allowed in ";
 
   /**
@@ -150,18 +159,34 @@ public class ShipDesign {
     components.remove(index);
   }
 
+  /**
+   * Get Ship design name
+   * @return Ship Design name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Set design name
+   * @param name Design Name
+   */
   public void setName(final String name) {
     this.name = name;
   }
 
+  /**
+   * Get ship hull
+   * @return Ship hull
+   */
   public ShipHull getHull() {
     return hull;
   }
 
+  /**
+   * Set ship hull
+   * @param hull Ship design's hull
+   */
   public void setHull(final ShipHull hull) {
     if (hull != null) {
       this.hull = hull;
@@ -467,6 +492,10 @@ public class ShipDesign {
     return sb.toString();
   }
 
+  /**
+   * Get ship design flaws as a string.
+   * @return Desing flaws in a string
+   */
   public String getFlaws() {
     boolean designOk = true;
     StringBuilder sb = new StringBuilder();

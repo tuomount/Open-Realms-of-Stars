@@ -24,11 +24,29 @@ package org.openRealmOfStars.player.tech;
  */
 
 public enum TechType {
+  /**
+   *  Combat tech including weapons, defense turret, bombs etc
+   */
   Combat,
+  /**
+   * Defense tech including armor, shields, shield generators
+   */
   Defense,
+  /**
+   * Hull tech including new ship hulls
+   */
   Hulls,
+  /**
+   * Improvement tech including planetary improvements
+   */
   Improvements,
+  /**
+   * Propulsion tech including engines and powersources
+   */
   Propulsion,
+  /**
+   * Electronics tech including scanners, jammer, cloaking devices etc.
+   */
   Electrics;
 
   /**
@@ -49,8 +67,9 @@ public enum TechType {
       return 4;
     case Electrics:
       return 5;
+    default:
+      throw new IllegalArgumentException("Unexpected Tech type!");
     }
-    return 0;
   }
 
   /**
@@ -72,8 +91,9 @@ public enum TechType {
       return TechType.Propulsion;
     case 5:
       return TechType.Electrics;
+    default:
+      throw new IllegalArgumentException("Unexpected Tech type!");
     }
-    return TechType.Combat;
   }
 
   @Override
@@ -91,9 +111,9 @@ public enum TechType {
       return "Propulsion";
     case Electrics:
       return "Electronics";
+    default:
+      return "Error - Unknown";
     }
-    return "Error - Unknown";
-
   }
 
 }

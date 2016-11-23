@@ -118,6 +118,9 @@ public class CombatAnimation {
    */
   private CombatShip shooter;
 
+  /**
+   * Explosion animation for combat animation
+   */
   private AnimatedImage explosionAnim;
 
   /**
@@ -196,10 +199,18 @@ public class CombatAnimation {
     }
   }
 
+  /**
+   * Get Target combat ship for animation
+   * @return Combat Ship
+   */
   public CombatShip getTarget() {
     return target;
   }
 
+  /**
+   * Get Shooting combat ship for animation
+   * @return Combat Ship
+   */
   public CombatShip getShooter() {
     return shooter;
   }
@@ -216,6 +227,13 @@ public class CombatAnimation {
   }
 
   /**
+   * When there are frames left below this limit animation
+   * should start showing the explosion animation. Limit needs to
+   * be big enough that whole animation can be shown.
+   */
+  private static final int FRAME_MARKER_WHEN_EXPLODE = 24;
+
+  /**
    * Do animation update
    */
   public void doAnimation() {
@@ -230,7 +248,7 @@ public class CombatAnimation {
     }
     if (weapon.getType() == ShipComponentType.WEAPON_BEAM) {
       count--;
-      if (count < 24) {
+      if (count < FRAME_MARKER_WHEN_EXPLODE) {
         doAnimationHit(20);
         if (animFrame < explosionAnim.getMaxFrames()) {
           animFrame++;
@@ -378,34 +396,67 @@ public class CombatAnimation {
     return null;
   }
 
+  /**
+   * Get List of Particle effects
+   * @return List of Particle Effects
+   */
   public List<ParticleEffect> getParticles() {
     return particles;
   }
 
+  /**
+   * Get Beam color
+   * @return Beam color
+   */
   public Color getBeamColor() {
-    return new Color(255 - 2 * (BEAM_ANIM_COUNT - count), 2 * count, 2 * count);
+    return new Color(255 - 2 * (BEAM_ANIM_COUNT - count), 2 * count,
+        2 * count);
   }
 
+  /**
+   * Get current Y coordinate in pixels
+   * @return Current X coordinate
+   */
   public int getSx() {
     return (int) Math.round(sx);
   }
 
+  /**
+   * Get current Y coordinate in pixels
+   * @return Current Y coordinate
+   */
   public int getSy() {
     return (int) Math.round(sy);
   }
 
+  /**
+   * End X coordinate in pixels
+   * @return End X coordinate
+   */
   public int getEx() {
     return (int) Math.round(ex);
   }
 
+  /**
+   * End Y coordinate in pixels
+   * @return End Y coordinate
+   */
   public int getEy() {
     return (int) Math.round(ey);
   }
 
+  /**
+   * Get shooters weapon as ship component
+   * @return Ship component
+   */
   public ShipComponent getWeapon() {
     return weapon;
   }
 
+  /**
+   * Was attack actual hit or not
+   * @return True if attack hit
+   */
   public boolean isHit() {
     return hit;
   }

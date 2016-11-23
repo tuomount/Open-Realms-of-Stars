@@ -74,10 +74,18 @@ public class ShipHull {
    */
   private int imageIndex;
 
+  /**
+   * Get Image Index
+   * @return Image index
+   */
   public int getImageIndex() {
     return imageIndex;
   }
 
+  /**
+   * Set image index for ship hull
+   * @param imageIndex for ship hull
+   */
   public void setImageIndex(final int imageIndex) {
     this.imageIndex = imageIndex;
   }
@@ -118,7 +126,7 @@ public class ShipHull {
     if (race == SpaceRace.CENTAURS) {
       this.slotHull = this.slotHull + 1;
       this.metalCost = this.metalCost * 2;
-      this.cost = this.cost * 2 / 3;
+      this.cost = this.cost * 3 / 2;
     }
   }
 
@@ -138,10 +146,18 @@ public class ShipHull {
     return ShipImages.getByRace(originalBuilder).getSmallShipImage(imageIndex);
   }
 
+  /**
+   * Get Ship Hull index for factory. This needs to be unique.
+   * @return Ship hull index for factory
+   */
   public int getIndex() {
     return index;
   }
 
+  /**
+   * Set ship hull index for factory. This needs to be unique.
+   * @return Ship hull index
+   */
   public String getName() {
     return name;
   }
@@ -162,18 +178,34 @@ public class ShipHull {
     return slotHull;
   }
 
+  /**
+   * Get Hull Type
+   * @return Hull Tyoe
+   */
   public ShipHullType getHullType() {
     return hullType;
   }
 
+  /**
+   * Get Ship size
+   * @return Ship Size enum
+   */
   public ShipSize getSize() {
     return size;
   }
 
+  /**
+   * Ship hull production cost
+   * @return Production cost
+   */
   public int getCost() {
     return cost;
   }
 
+  /**
+   * Ship hull metal cost
+   * @return metal cost
+   */
   public int getMetalCost() {
     return metalCost;
   }
@@ -186,12 +218,18 @@ public class ShipHull {
     return originalBuilder;
   }
 
+  /**
+   * Line length for ship hull type description
+   */
+  private static final int LINE_LENGTH = 39;
+
   @Override
   public String toString() {
     return getName() + "\n" + "Cost: " + getCost() + " Metal: " + getMetalCost()
         + "\n" + "Slots:" + getMaxSlot() + " Hull:"
         + getMaxSlot() * getSlotHull() + "\n" + "Size:" + getSize().toString()
-        + "\n" + IOUtilities.stringWrapper(getHullType().getDescription(), 39);
+        + "\n" + IOUtilities.stringWrapper(getHullType().getDescription(),
+        LINE_LENGTH);
   }
 
 }

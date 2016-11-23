@@ -578,6 +578,11 @@ public class Ship extends Construction {
   }
 
   /**
+   * Damage information for destroyed
+   */
+  private static final int DAMAGE_DESTROYED = -2;
+
+  /**
    * Get accuracy for certain weapon
    * @param weapon ShipComponent
    * @return 1 No damage, not even dent
@@ -652,7 +657,7 @@ public class Ship extends Construction {
       damage = damageComponent(damage, shipDamage);
     }
     if (getHullPoints() == 0) {
-      shipDamage.setValue(-2);
+      shipDamage.setValue(DAMAGE_DESTROYED);
       shipDamage.addText(getName() + " is destroyed!");
     }
     return shipDamage;
@@ -830,10 +835,18 @@ public class Ship extends Construction {
     return null;
   }
 
+  /**
+   * Get ship's hull
+   * @return Ship hull
+   */
   public ShipHull getHull() {
     return hull;
   }
 
+  /**
+   * Get ship's image
+   * @return Ship's image as buffered image
+   */
   public BufferedImage getImage() {
     return image;
   }
@@ -856,11 +869,16 @@ public class Ship extends Construction {
   }
 
   /**
+   * Maximum weapon range, theoritical, no weapon will have this range really
+   */
+  private static final int MAX_WEAPON_RANGE = 999;
+
+  /**
    * Get the smallest weapon range
    * @return range
    */
   public int getMinWeaponRange() {
-    int range = 999;
+    int range = MAX_WEAPON_RANGE;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (comp.isWeapon() && comp.getWeaponRange() < range) {
@@ -922,6 +940,10 @@ public class Ship extends Construction {
     return value;
   }
 
+  /**
+   * Get current shield level
+   * @return Current Shield level
+   */
   public int getShield() {
     return shield;
   }
@@ -938,6 +960,10 @@ public class Ship extends Construction {
     }
   }
 
+  /**
+   * Get current armor level
+   * @return current armor level
+   */
   public int getArmor() {
     return armor;
   }
@@ -954,18 +980,34 @@ public class Ship extends Construction {
     }
   }
 
+  /**
+   * Get number of colonist on board
+   * @return number of colonist
+   */
   public int getColonist() {
     return colonist;
   }
 
+  /**
+   * Set amount of colonist on board
+   * @param colonist on board
+   */
   public void setColonist(final int colonist) {
     this.colonist = colonist;
   }
 
+  /**
+   * Get amount metal in cargo bay
+   * @return Metal in cargo bay
+   */
   public int getMetal() {
     return metal;
   }
 
+  /**
+   * Set metal in cargo bay
+   * @param metal in cargo bay
+   */
   public void setMetal(final int metal) {
     this.metal = metal;
   }

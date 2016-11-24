@@ -89,6 +89,10 @@ public class Tech {
     return name;
   }
 
+  /**
+   * Set Tech name as a String
+   * @param name Tech Name
+   */
   public void setName(final String name) {
     this.name = name;
   }
@@ -113,6 +117,10 @@ public class Tech {
     return level;
   }
 
+  /**
+   * Set Tech level
+   * @param level between 1-10
+   */
   public void setLevel(final int level) {
     if (level >= 1 && level < 11) {
       this.level = level;
@@ -127,6 +135,10 @@ public class Tech {
     return component;
   }
 
+  /**
+   * Set ship component name that tech provides
+   * @param component Component name
+   */
   public void setComponent(final String component) {
     this.component = component;
   }
@@ -139,6 +151,10 @@ public class Tech {
     return improvement;
   }
 
+  /**
+   * Set improvement that tech provides
+   * @param improvement name as a String
+   */
   public void setImprovement(final String improvement) {
     this.improvement = improvement;
   }
@@ -151,6 +167,10 @@ public class Tech {
     return hull;
   }
 
+  /**
+   * Set hull that tech provides
+   * @param hull name that tech provides
+   */
   public void setHull(final String hull) {
     this.hull = hull;
   }

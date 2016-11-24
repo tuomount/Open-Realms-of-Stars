@@ -29,12 +29,22 @@ import org.openRealmOfStars.utilities.IOUtilities;
  *
  */
 
-public class Tiles {
+public final class Tiles {
+
+  /**
+   * Hiding the constructor
+   */
+  private Tiles() {
+    // Nothing to do
+  }
 
   /**
    * List of tiles
    */
   private static ArrayList<Tile> listOfTiles;
+  /**
+   * Hash map for tile
+   */
   private static HashMap<String, Tile> hashOfTiles;
 
   /**
@@ -91,6 +101,9 @@ public class Tiles {
     hashOfTiles.put(tile.getName(), tile);
   }
 
+  /**
+   * Initialize tiles
+   */
   private static void initTiles() {
     BufferedImage tilesImage = IOUtilities
         .loadImage(Tiles.class.getResource("/resources/images/maptiles.png"));

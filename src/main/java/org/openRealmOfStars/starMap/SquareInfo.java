@@ -59,6 +59,9 @@ public class SquareInfo {
    */
   private short value;
 
+  /**
+   * Fixed EMPTY_TILE square info
+   */
   public static final SquareInfo EMPTY_TILE = new SquareInfo(TYPE_EMPTY, 0);
 
   /**
@@ -91,21 +94,42 @@ public class SquareInfo {
     this.setValue(dis.readShort());
   }
 
+  /**
+   * Get type of Square, See TYPE_ like TYPE_EMPTY, TYPE_SUN, TYPE_PLANET etc
+   * @return Type info
+   */
   public byte getType() {
     return type;
   }
 
+  /**
+   * Set square type
+   * @param type Square typ
+   */
   public void setType(final byte type) {
     this.type = type;
   }
 
+  /**
+   * Get Value for square. This can be index for planet list
+   * if square is planet or index for sun list if square is sun.
+   * @return Square value
+   */
   public int getValue() {
     return value;
   }
 
+  /**
+   * Maximum value for square value
+   */
+  public static final int MAX_VALUE = 32767;
+  /**
+   * Set Square value
+   * @param value Square value
+   */
   public void setValue(final int value) {
-    if (value > 32767) {
-      this.value = 32767;
+    if (value > MAX_VALUE) {
+      this.value = MAX_VALUE;
     } else if (value < 0) {
       this.value = 0;
     } else {

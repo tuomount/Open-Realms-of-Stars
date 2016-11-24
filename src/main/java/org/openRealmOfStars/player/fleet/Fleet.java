@@ -227,27 +227,41 @@ public class Fleet {
     return ships.get(0);
   }
 
+  /**
+   * Get Fleet name
+   * @return Fleet name as a String
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Set fleet name
+   * @param name Fleet name
+   */
   public void setName(final String name) {
     this.name = name;
   }
+
+  /**
+   * Theoretical maximum for FTL speed. All components have smaller than
+   * this. This is same as unset FTL speed.
+   */
+  private static final int MAX_FTL_SPEED = 999;
 
   /**
    * Get Fleet speed
    * @return Speed
    */
   public int getFleetSpeed() {
-    int speed = 999;
+    int speed = MAX_FTL_SPEED;
     for (Ship ship : ships) {
       int shipSpeed = ship.getSpeed();
       if (shipSpeed < speed) {
         speed = shipSpeed;
       }
     }
-    if (speed == 999) {
+    if (speed == MAX_FTL_SPEED) {
       speed = 0;
     }
     return speed;
@@ -258,14 +272,14 @@ public class Fleet {
    * @return Speed
    */
   public int getFleetFtlSpeed() {
-    int speed = 999;
+    int speed = MAX_FTL_SPEED;
     for (Ship ship : ships) {
       int shipSpeed = ship.getFtlSpeed();
       if (shipSpeed < speed) {
         speed = shipSpeed;
       }
     }
-    if (speed == 999) {
+    if (speed == MAX_FTL_SPEED) {
       speed = 0;
     }
     return speed;
@@ -330,10 +344,18 @@ public class Fleet {
     return sb.toString();
   }
 
+  /**
+   * Get Fleet route
+   * @return Fleet route
+   */
   public Route getRoute() {
     return route;
   }
 
+  /**
+   * Set Fleet route
+   * @param route Fleet Route
+   */
   public void setRoute(final Route route) {
     this.route = route;
   }
@@ -489,10 +511,18 @@ public class Fleet {
     return false;
   }
 
+  /**
+   * Get A Star search for fleet
+   * @return A star search result
+   */
   public AStarSearch getaStarSearch() {
     return aStarSearch;
   }
 
+  /**
+   * Set A Star result saved for the fleet
+   * @param aStarSearch A Star search result
+   */
   public void setaStarSearch(final AStarSearch aStarSearch) {
     this.aStarSearch = aStarSearch;
   }

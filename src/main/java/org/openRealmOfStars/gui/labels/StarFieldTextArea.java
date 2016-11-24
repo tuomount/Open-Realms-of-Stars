@@ -75,10 +75,18 @@ public class StarFieldTextArea extends JTextArea {
    */
   private boolean smoothScrollNextRow = false;
 
+  /**
+   * Is smooth scrolling enabled
+   * @return True if smooth scrolling is enabled
+   */
   public boolean isSmoothScroll() {
     return smoothScroll;
   }
 
+  /**
+   * Enable or disable smooth scrolling
+   * @param smoothScroll Boolean
+   */
   public void setSmoothScroll(final boolean smoothScroll) {
     this.smoothScroll = smoothScroll;
   }
@@ -204,6 +212,11 @@ public class StarFieldTextArea extends JTextArea {
     super.paintImmediately(0, 0, getWidth(), getHeight());
   }
 
+  /**
+   * Star field offset
+   */
+  private static final int STAR_FIELD_OFFSET = -25;
+
   @Override
   protected void paintComponent(final Graphics g) {
     this.setCaretPosition(this.getDocument().getLength());
@@ -215,7 +228,8 @@ public class StarFieldTextArea extends JTextArea {
     int height = getHeight() - inset.top - inset.bottom;
     g.fillRect(sx, sx, width, height);
     Graphics2D g2d = (Graphics2D) g;
-    g2d.drawImage(GuiStatics.STAR_FIELD_IMAGE, -25, -25, null);
+    g2d.drawImage(GuiStatics.STAR_FIELD_IMAGE, STAR_FIELD_OFFSET,
+        STAR_FIELD_OFFSET, null);
 
     g.setFont(GuiStatics.getFontCubellan());
     if (getText() != null) {
@@ -313,6 +327,10 @@ public class StarFieldTextArea extends JTextArea {
 
   }
 
+  /**
+   * Enough scrolling with smoothly and scroll one row for real
+   * @return True if enough smooth scrolling has been done
+   */
   public boolean getSmoothScrollNextRow() {
     if (smoothScrollNextRow) {
       smoothScrollNextRow = false;
@@ -321,6 +339,12 @@ public class StarFieldTextArea extends JTextArea {
     return false;
   }
 
+  /**
+   * Credit Mouse listener. Purpose of this class is to make credits scroll
+   * faster when clicking the text area.
+   * @author tuomount
+   *
+   */
   private class CreditMouseListener extends MouseAdapter {
 
     @Override

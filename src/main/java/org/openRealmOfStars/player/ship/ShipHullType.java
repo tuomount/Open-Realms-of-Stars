@@ -28,7 +28,8 @@ public enum ShipHullType {
    */
   NORMAL,
   /**
-   * No weapons or privateering module allowed, but cargo or colony/troop module allowed
+   * No weapons or privateering module allowed, but cargo or colony/troop
+   * module allowed
    */
   FREIGHTER,
   /**
@@ -36,7 +37,8 @@ public enum ShipHullType {
    */
   PROBE,
   /**
-   * No engines, cargo or privateering module allowed but starbase modules are allowed
+   * No engines, cargo or privateering module allowed but starbase modules
+   * are allowed
    */
   STARBASE,
   /**
@@ -60,8 +62,9 @@ public enum ShipHullType {
       return 3;
     case PRIVATEER:
       return 4;
+    default:
+      throw new IllegalArgumentException("Unexpected ship hull type!");
     }
-    return 0;
   }
 
   /**
@@ -81,8 +84,9 @@ public enum ShipHullType {
       return ShipHullType.STARBASE;
     case 4:
       return ShipHullType.PRIVATEER;
+    default:
+      throw new IllegalArgumentException("Unexpected ship hull type!");
     }
-    return ShipHullType.NORMAL;
   }
 
   @Override
@@ -98,9 +102,9 @@ public enum ShipHullType {
       return "Starbase";
     case PRIVATEER:
       return "Privateer";
+    default:
+      throw new IllegalArgumentException("Unexpected ship hull type!");
     }
-    return "Error - Unknown";
-
   }
 
   /**
@@ -119,9 +123,9 @@ public enum ShipHullType {
       return toString() + ", No engine, Starbase components";
     case PRIVATEER:
       return toString() + ", Weapons, cargo and privateering.";
+    default:
+      throw new IllegalArgumentException("Unexpected ship hull type!");
     }
-    return "Error - Unknown";
-
   }
 
 }

@@ -23,12 +23,33 @@ package org.openRealmOfStars.starMap.planet.construction;
  *
  */
 public enum BuildingType {
+  /**
+   * Building that produces metal from planet
+   */
   MINE,
+  /**
+   * Building that produces food
+   */
   FARM,
+  /**
+   * Building that increases production
+   */
   FACTORY,
+  /**
+   * Building that produces research points
+   */
   RESEARCH,
+  /**
+   * Building that produces culture points
+   */
   CULTURE,
+  /**
+   * Building that improves planetary defense
+   */
   MILITARY,
+  /**
+   * Builing that produces credits
+   */
   CREDIT
 
 }

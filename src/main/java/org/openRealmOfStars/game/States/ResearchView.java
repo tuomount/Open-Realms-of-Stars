@@ -125,29 +125,29 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_MINUS_COMBAT_RESEARCH,
         GameCommands.COMMAND_PLUS_COMBAT_RESEARCH, Icons.ICON_COMBAT_TECH,
         TechType.Combat.toString() + " 100% 1000 turns",
-        "Focus on combat technology", "Level:10 (1/6)",
-        GameCommands.COMMAND_UPGRADE_COMBAT, 16,
+        "Level:10 (1/6)", GameCommands.COMMAND_UPGRADE_COMBAT, 16,
         GameCommands.COMMAND_SLIDER_COMBAT_RESEARCH, listener);
+    combatRese.setLabelToolTip("Focus on combat technology");
     combatRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     focusPanel.add(combatRese);
     focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     defenseRese = new ResearchTechPanel(focusPanel,
         GameCommands.COMMAND_MINUS_DEFENSE_RESEARCH,
         GameCommands.COMMAND_PLUS_DEFENSE_RESEARCH, Icons.ICON_DEFENSE_TECH,
-        TechType.Defense.toString() + " 100% 1000 turns",
-        "Focus on defense technology", "Level:10 (1/6)",
+        TechType.Defense.toString() + " 100% 1000 turns", "Level:10 (1/6)",
         GameCommands.COMMAND_UPGRADE_DEFENSE, 16,
         GameCommands.COMMAND_SLIDER_DEFENSE_RESEARCH, listener);
+    defenseRese.setLabelToolTip("Focus on defense technology");
     defenseRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     focusPanel.add(defenseRese);
     focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     hullRese = new ResearchTechPanel(focusPanel,
         GameCommands.COMMAND_MINUS_HULL_RESEARCH,
         GameCommands.COMMAND_PLUS_HULL_RESEARCH, Icons.ICON_HULL_TECH,
-        TechType.Hulls.toString() + " 100% 1000 turns",
-        "Focus on hull technology", "Level:10 (1/6)",
+        TechType.Hulls.toString() + " 100% 1000 turns", "Level:10 (1/6)",
         GameCommands.COMMAND_UPGRADE_HULL, 16,
         GameCommands.COMMAND_SLIDER_HULL_RESEARCH, listener);
+    hullRese.setLabelToolTip("Focus on hull technology");
     hullRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     focusPanel.add(hullRese);
     focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
@@ -156,9 +156,10 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_PLUS_IMPROVEMENT_RESEARCH,
         Icons.ICON_IMPROVEMENT_TECH,
         TechType.Improvements.toString() + " 100% 1000 turns",
-        "Focus on planetary improvement technology", "Level:10 (1/6)",
-        GameCommands.COMMAND_UPGRADE_IMPROVEMENT, 16,
+        "Level:10 (1/6)", GameCommands.COMMAND_UPGRADE_IMPROVEMENT, 16,
         GameCommands.COMMAND_SLIDER_IMPROVEMENT_RESEARCH, listener);
+    improvementRese.setLabelToolTip("Focus on planetary improvement "
+        + "technology");
     improvementRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     focusPanel.add(improvementRese);
     focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
@@ -166,10 +167,10 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_MINUS_PROPULSION_RESEARCH,
         GameCommands.COMMAND_PLUS_PROPULSION_RESEARCH,
         Icons.ICON_PROPULSION_TECH,
-        TechType.Propulsion.toString() + " 100% 1000 turns",
-        "Focus on propulsion technology", "Level:10 (1/6)",
+        TechType.Propulsion.toString() + " 100% 1000 turns", "Level:10 (1/6)",
         GameCommands.COMMAND_UPGRADE_PROPULSION, 16,
         GameCommands.COMMAND_SLIDER_PROPULSION_RESEARCH, listener);
+    propulsionRese.setLabelToolTip("Focus on propulsion technology");
     propulsionRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     focusPanel.add(propulsionRese);
     focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
@@ -177,10 +178,10 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_MINUS_ELECTRONICS_RESEARCH,
         GameCommands.COMMAND_PLUS_ELECTRONICS_RESEARCH,
         Icons.ICON_ELECTRONICS_TECH,
-        TechType.Electrics.toString() + " 100% 1000 turns",
-        "Focus on electronics technology", "Level:10 (1/6)",
+        TechType.Electrics.toString() + " 100% 1000 turns", "Level:10 (1/6)",
         GameCommands.COMMAND_UPGRADE_ELECTRONICS, 16,
         GameCommands.COMMAND_SLIDER_ELECTRONICS_RESEARCH, listener);
+    electronicsRese.setLabelToolTip("Focus on electronics technology");
     electronicsRese.setAlignmentX(Component.CENTER_ALIGNMENT);
     focusPanel.add(electronicsRese);
     // focusPanel.add(Box.createRigidArea(new Dimension(10,10)));

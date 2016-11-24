@@ -84,7 +84,6 @@ public class ResearchTechPanel extends InvisiblePanel {
    * @param actionPlus ActionCommand for plus button
    * @param iconName Icon name to show
    * @param text Text for tech focus label
-   * @param toolTip Tool tip for label
    * @param text2 Text for tech level label
    * @param actionUpgrade ActionCommand for upgrade button
    * @param sliderValue slider value
@@ -93,9 +92,8 @@ public class ResearchTechPanel extends InvisiblePanel {
    */
   public ResearchTechPanel(final Component parent, final String actionMinus,
       final String actionPlus, final String iconName, final String text,
-      final String toolTip, final String text2, final String actionUpgrade,
-      final int sliderValue, final String actionSlider,
-      final ActionListener listener) {
+      final String text2, final String actionUpgrade, final int sliderValue,
+      final String actionSlider, final ActionListener listener) {
     super(parent);
     this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
     btnMinus = new IconButton(Icons.getIconByName(Icons.ICON_MINUS),
@@ -108,7 +106,6 @@ public class ResearchTechPanel extends InvisiblePanel {
     invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
 
     label = new IconLabel(this, Icons.getIconByName(iconName), text);
-    label.setToolTipText(toolTip);
     invisible.add(label);
     slider = new JSlider(0, 100, sliderValue);
     slider.setMinorTickSpacing(4);
@@ -154,14 +151,26 @@ public class ResearchTechPanel extends InvisiblePanel {
     this.add(Box.createRigidArea(new Dimension(5, 5)));
   }
 
+  /**
+   * Set slider value 
+   * @param value Slider value to set
+   */
   public void setSliderValue(final int value) {
     slider.setValue(value);
   }
 
+  /**
+   * Get slider value
+   * @return Slider value
+   */
   public int getSliderValue() {
     return slider.getValue();
   }
 
+  /**
+   * Has user changed the slider value
+   * @return True if slider value has been changed
+   */
   public boolean isSliderChanged() {
     return slider.getValueIsAdjusting();
   }
@@ -172,6 +181,14 @@ public class ResearchTechPanel extends InvisiblePanel {
    */
   public void setText(final String text) {
     label.setText(text);
+  }
+
+  /**
+   * Set tool tip for label itself
+   * @param text Tool tip text
+   */
+  public void setLabelToolTip(final String text) {
+    label.setToolTipText(text);
   }
 
   /**

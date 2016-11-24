@@ -54,8 +54,9 @@ public enum ShipSize {
       return 2;
     case HUGE:
       return 3;
+    default:
+      return 0;
     }
-    return 0;
   }
 
   /**
@@ -73,8 +74,9 @@ public enum ShipSize {
       return ShipSize.LARGE;
     case 3:
       return ShipSize.HUGE;
+    default:
+      return ShipSize.SMALL;
     }
-    return ShipSize.SMALL;
   }
 
   @Override
@@ -88,8 +90,9 @@ public enum ShipSize {
       return "Large";
     case HUGE:
       return "Huge";
+    default:
+      return "Error - Unknown";
     }
-    return "Error - Unknown";
 
   }
 

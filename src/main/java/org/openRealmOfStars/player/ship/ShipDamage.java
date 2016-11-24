@@ -19,7 +19,7 @@ package org.openRealmOfStars.player.ship;
  * along with this program; if not, see http://www.gnu.org/licenses/
  *
  *
- * Ship damage containig how bad damage was and textual information
+ * Ship damage containing how bad damage was and textual information
  *
  */
 public class ShipDamage {
@@ -123,14 +123,34 @@ public class ShipDamage {
     message = message + "\n" + text;
   }
 
+  /**
+   * Set Ship Damage value four choices:
+   * NO_DAMAGE_NO_DENT
+   * NO_DAMAGE
+   * DAMAGED
+   * DESTROYED
+   * @param value Ship Damage value
+   */
   public void setValue(final int value) {
     this.value = value;
   }
 
+  /**
+   * Get ship damage value. There are four choices:
+   * NO_DAMAGE_NO_DENT
+   * NO_DAMAGE
+   * DAMAGED
+   * DESTROYED
+   * @return Ship Damage value
+   */
   public int getValue() {
     return value;
   }
 
+  /**
+   * Get Ship damage message
+   * @return Ship damage message
+   */
   public String getMessage() {
     return message;
   }

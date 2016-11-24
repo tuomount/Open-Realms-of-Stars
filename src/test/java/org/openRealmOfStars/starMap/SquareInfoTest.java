@@ -59,8 +59,8 @@ public class SquareInfoTest {
     SquareInfo square = new SquareInfo(SquareInfo.TYPE_GAS_PLANET, 1);
     assertEquals(SquareInfo.TYPE_GAS_PLANET, square.getType());
     assertEquals(1,square.getValue());
-    assertEquals("Blocked!",true,square.isBlocked());
-    assertEquals("Visibility blocked!",true,square.isVisibilityBlocked());
+    assertEquals("Unblocked!",true,square.isBlocked());
+    assertEquals("Visibility unblocked!",true,square.isVisibilityBlocked());
   }
 
   @Test
@@ -69,8 +69,18 @@ public class SquareInfoTest {
     SquareInfo square = new SquareInfo(SquareInfo.TYPE_SUN, 1);
     assertEquals(SquareInfo.TYPE_SUN, square.getType());
     assertEquals(1,square.getValue());
-    assertEquals("Blocked!",true,square.isBlocked());
-    assertEquals("Visibility blocked!",true,square.isVisibilityBlocked());
+    assertEquals("Unblocked!",true,square.isBlocked());
+    assertEquals("Visibility unblocked!",true,square.isVisibilityBlocked());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCreateSquareInfoUnknown() {
+    SquareInfo square = new SquareInfo((byte)127, 1);
+    assertEquals(127, square.getType());
+    assertEquals(1,square.getValue());
+    assertEquals("Blocked!",false,square.isBlocked());
+    assertEquals("Visibility blocked!",false,square.isVisibilityBlocked());
   }
 
 }

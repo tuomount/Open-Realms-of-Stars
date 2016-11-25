@@ -42,6 +42,9 @@ public class FleetList {
    */
   private int index;
 
+  /**
+   * Constructor for FleetList. Empty fleet list is created.
+   */
   public FleetList() {
     fleetList = new ArrayList<>();
     index = -1;
@@ -230,6 +233,10 @@ public class FleetList {
     return -1;
   }
 
+  /**
+   * Get current index for fleet list
+   * @return current index
+   */
   public int getIndex() {
     return index;
   }

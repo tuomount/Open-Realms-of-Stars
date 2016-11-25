@@ -104,7 +104,7 @@ public class Construction {
   }
 
   /**
-   * Set icon for construction. 
+   * Set icon for construction.
    * @param icon Icon16x16
    */
   public void setIcon(final Icon16x16 icon) {

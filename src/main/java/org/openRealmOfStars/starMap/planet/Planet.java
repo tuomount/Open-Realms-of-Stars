@@ -1379,15 +1379,15 @@ public class Planet {
 
   /**
    * Set tax cannot be bigger than maximum production
-   * @param tax the tax to set
+   * @param taxLevel the tax to set
+   * @param force if true taxLevel can be beyond the limits.
    */
-  public void setTax(final int tax, final boolean force) {
+  public void setTax(final int taxLevel, final boolean force) {
     if (force) {
-      this.tax = tax;
-    }
-    else {
+      this.tax = taxLevel;
+    } else {
       int max = getTotalProductionWithoutTax();
-      this.tax = tax;
+      this.tax = taxLevel;
       if (this.tax > max) {
         this.tax = max;
       }

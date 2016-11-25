@@ -18,6 +18,7 @@ import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipImage;
 
 /**
  *
@@ -64,6 +65,9 @@ public class BattleInfoPanel extends InfoPanel {
    */
   private Ship ship;
 
+  /**
+   * Maximum number of buttons on panel. These are the component buttons.
+   */
   private static final int MAX_BTN = 12;
 
   /**
@@ -71,9 +75,26 @@ public class BattleInfoPanel extends InfoPanel {
    */
   private ComponentButton[] cBtn = new ComponentButton[MAX_BTN];
 
+
+  /**
+   * Width of rigid box
+   */
+  private static final int RIGID_BOX_WIDTH = 130;
+  /**
+   * Height of rigid box
+   */
+  private static final int RIGID_BOX_HEIGHT = 25;
+  /**
+   * Constructor for battle info panel. This draws information for current
+   * combat ship
+   * @param ship CombatShip which information is shown
+   * @param shipInfo TextArea where longer description can be shown
+   * @param listener ActionListener for weapons and other components
+   */
   public BattleInfoPanel(final Ship ship, final InfoTextArea shipInfo,
       final ActionListener listener) {
-    this.add(Box.createRigidArea(new Dimension(130, 25)));
+    this.add(Box.createRigidArea(new Dimension(RIGID_BOX_WIDTH,
+        RIGID_BOX_HEIGHT)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH * 2,
         Tile.MAX_HEIGHT * 2, BufferedImage.TYPE_4BYTE_ABGR);
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -134,8 +155,8 @@ public class BattleInfoPanel extends InfoPanel {
    */
   public void updatePanel() {
     if (ship != null) {
-      BufferedImage img = new BufferedImage(64, 64,
-          BufferedImage.TYPE_4BYTE_ABGR);
+      BufferedImage img = new BufferedImage(ShipImage.MAX_WIDTH,
+          ShipImage.MAX_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
@@ -145,8 +166,8 @@ public class BattleInfoPanel extends InfoPanel {
       this.repaint();
     } else {
       setTitle("Battle info");
-      BufferedImage img = new BufferedImage(64, 64,
-          BufferedImage.TYPE_4BYTE_ABGR);
+      BufferedImage img = new BufferedImage(ShipImage.MAX_WIDTH,
+          ShipImage.MAX_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());

@@ -21,6 +21,7 @@ import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -93,8 +94,22 @@ public class MapInfoPanel extends InfoPanel {
    */
   private SpaceButton routeBtn;
 
+  /**
+   * Width of rigid box
+   */
+  private static final int RIGID_BOX_WIDTH = 130;
+  /**
+   * Height of rigid box
+   */
+  private static final int RIGID_BOX_HEIGHT = 50;
+
+  /**
+   * Constructor for MapInfoPanel
+   * @param listener ActionListener
+   */
   public MapInfoPanel(final ActionListener listener) {
-    this.add(Box.createRigidArea(new Dimension(130, 50)));
+    this.add(Box.createRigidArea(new Dimension(RIGID_BOX_WIDTH,
+        RIGID_BOX_HEIGHT)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH * 2,
         Tile.MAX_HEIGHT * 2, BufferedImage.TYPE_4BYTE_ABGR);
     InvisiblePanel invisible = new InvisiblePanel(this);
@@ -200,8 +215,8 @@ public class MapInfoPanel extends InfoPanel {
    */
   public void updatePanel() {
     if (planet != null) {
-      BufferedImage img = new BufferedImage(64, 64,
-          BufferedImage.TYPE_4BYTE_ABGR);
+      BufferedImage img = new BufferedImage(Tile.MAX_WIDTH * 2,
+          Tile.MAX_HEIGHT * 2, BufferedImage.TYPE_4BYTE_ABGR);
       Tile tile = Tiles.getTileByIndex(planet.getPlanetImageIndex());
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
@@ -241,8 +256,8 @@ public class MapInfoPanel extends InfoPanel {
       textArea.setText(planet.generateInfoText());
       this.repaint();
     } else if (fleet != null) {
-      BufferedImage img = new BufferedImage(64, 64,
-          BufferedImage.TYPE_4BYTE_ABGR);
+      BufferedImage img = new BufferedImage(ShipImage.MAX_WIDTH,
+          ShipImage.MAX_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
@@ -252,8 +267,8 @@ public class MapInfoPanel extends InfoPanel {
       this.repaint();
     } else {
       setTitle("Galactic info");
-      BufferedImage img = new BufferedImage(64, 64,
-          BufferedImage.TYPE_4BYTE_ABGR);
+      BufferedImage img = new BufferedImage(ShipImage.MAX_WIDTH,
+          ShipImage.MAX_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());

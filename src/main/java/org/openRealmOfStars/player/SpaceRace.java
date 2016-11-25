@@ -246,6 +246,10 @@ public enum SpaceRace {
    */
   private String nameSingle;
 
+  /**
+   * Get race name in single format
+   * @return Race single name
+   */
   public String getNameSingle() {
     return nameSingle;
   }

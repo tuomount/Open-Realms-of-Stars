@@ -105,6 +105,10 @@ public class Tech {
     return type;
   }
 
+  /**
+   * Set Tech type
+   * @param type TechType enum
+   */
   public void setType(final TechType type) {
     this.type = type;
   }

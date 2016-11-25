@@ -152,7 +152,7 @@ public class ResearchTechPanel extends InvisiblePanel {
   }
 
   /**
-   * Set slider value 
+   * Set slider value
    * @param value Slider value to set
    */
   public void setSliderValue(final int value) {

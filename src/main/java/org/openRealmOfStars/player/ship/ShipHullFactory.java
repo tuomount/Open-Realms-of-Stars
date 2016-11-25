@@ -24,8 +24,14 @@ import org.openRealmOfStars.player.SpaceRace;
  * Ship hull factory
  *
  */
-public class ShipHullFactory {
+public final class ShipHullFactory {
 
+  /**
+   * Hiding the constructor
+   */
+  private ShipHullFactory() {
+    // Nothing to do
+  }
   /**
    * Current maximum ShipHull for whole game.
    * Remember to increase this when new ship hull is added to game.
@@ -43,7 +49,9 @@ public class ShipHullFactory {
     ShipHull tmp = null;
     for (int i = 0; i < MAX_SHIPHULL; i++) {
       tmp = createShipHull(i, race);
-      if (tmp != null && tmp.getName().equalsIgnoreCase(name)) { return tmp; }
+      if (tmp != null && tmp.getName().equalsIgnoreCase(name)) {
+        return tmp;
+      }
     }
     return null;
   }

@@ -51,6 +51,9 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
     return new SpaceScrollBarUI();
   }
 
+  /**
+   * Constructor for new UI
+   */
   public SpaceScrollBarUI() {
     super();
   }
@@ -81,6 +84,10 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
     return result;
   }
 
+  /**
+   * How many single middle part width
+   */
+  private static final int BAR_LEN = 32;
   @Override
   protected void paintThumb(final Graphics g, final JComponent c,
       final Rectangle thumbBounds) {
@@ -95,10 +102,10 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
       int bars = 0;
       if (endHeight > picHeight / 2) {
         endHeight = thumbBounds.height / 3;
-        if (endHeight > 32) {
-          bars = thumbBounds.height / 32;
+        if (endHeight > BAR_LEN) {
+          bars = thumbBounds.height / BAR_LEN;
           bars = bars - 2;
-          endHeight = (thumbBounds.height - bars * 32) / 2;
+          endHeight = (thumbBounds.height - bars * BAR_LEN) / 2;
         } else {
           bars = 1;
         }
@@ -113,15 +120,15 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
           GuiStatics.IMAGE_SCROLL_BAR_THUMB.getHeight() - endHeight,
           GuiStatics.IMAGE_SCROLL_BAR_THUMB.getWidth(), endHeight);
       BufferedImage middle = GuiStatics.IMAGE_SCROLL_BAR_THUMB.getSubimage(0,
-          16, GuiStatics.IMAGE_SCROLL_BAR_THUMB.getWidth(), 32);
+          16, GuiStatics.IMAGE_SCROLL_BAR_THUMB.getWidth(), BAR_LEN);
       g.drawImage(top, 0, y, null);
       if (bars > 0) {
         for (int i = 0; i < bars; i++) {
-          g.drawImage(middle, 0, y + endHeight + i * 32, null);
+          g.drawImage(middle, 0, y + endHeight + i * BAR_LEN, null);
 
         }
       }
-      g.drawImage(bottom, 0, y + endHeight + bars * 32 - 1, null);
+      g.drawImage(bottom, 0, y + endHeight + bars * BAR_LEN - 1, null);
     } else {
       int x = incrButton.getWidth() + 1;
       int distance = scrollbar.getWidth() - incrButton.getWidth()
@@ -133,10 +140,10 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
       int bars = 0;
       if (endWidth > picWidth / 2) {
         endWidth = thumbBounds.width / 3;
-        if (endWidth > 32) {
-          bars = thumbBounds.width / 32;
+        if (endWidth > BAR_LEN) {
+          bars = thumbBounds.width / BAR_LEN;
           bars = bars - 2;
-          endWidth = (thumbBounds.width - bars * 32) / 2;
+          endWidth = (thumbBounds.width - bars * BAR_LEN) / 2;
         } else {
           bars = 1;
         }
@@ -151,15 +158,15 @@ public class SpaceScrollBarUI extends BasicScrollBarUI {
           GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getWidth() - endWidth, 0, endWidth,
           GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getHeight());
       BufferedImage middle = GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getSubimage(16,
-          0, 32, GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getHeight());
+          0, BAR_LEN, GuiStatics.IMAGE_SCROLL_BAR_THUMB2.getHeight());
       g.drawImage(left, x, 0, null);
       if (bars > 0) {
         for (int i = 0; i < bars; i++) {
-          g.drawImage(middle, x + endWidth + i * 32, 0, null);
+          g.drawImage(middle, x + endWidth + i * BAR_LEN, 0, null);
 
         }
       }
-      g.drawImage(right, x + endWidth + bars * 32 - 1, 0, null);
+      g.drawImage(right, x + endWidth + bars * BAR_LEN - 1, 0, null);
     }
   }
 

@@ -405,11 +405,16 @@ public class CombatAnimation {
   }
 
   /**
+   * Single color channel maximum value 
+   */
+  private static final int COLOR_MAX = 255;
+
+  /**
    * Get Beam color
    * @return Beam color
    */
   public Color getBeamColor() {
-    return new Color(255 - 2 * (BEAM_ANIM_COUNT - count), 2 * count,
+    return new Color(COLOR_MAX - 2 * (BEAM_ANIM_COUNT - count), 2 * count,
         2 * count);
   }
 

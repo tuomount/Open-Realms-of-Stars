@@ -165,6 +165,12 @@ public class AITurnView extends BlackPanel {
    * @param info PlayerInfo
    */
   private void handleMissions(final Fleet fleet, final PlayerInfo info) {
+    if (!fleet.allFixed()) {
+      // Make fleet to fix itself
+      fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
+          fleet.getY(), Route.ROUTE_FIX));
+      return;
+    }
     Mission mission = info.getMissions().getMissionForFleet(fleet.getName());
     if (mission != null) {
       switch (mission.getType()) {

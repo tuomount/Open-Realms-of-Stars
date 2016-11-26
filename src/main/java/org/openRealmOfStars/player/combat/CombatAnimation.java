@@ -405,7 +405,7 @@ public class CombatAnimation {
   }
 
   /**
-   * Single color channel maximum value 
+   * Single color channel maximum value
    */
   private static final int COLOR_MAX = 255;
 

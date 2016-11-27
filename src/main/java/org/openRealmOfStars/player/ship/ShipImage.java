@@ -138,7 +138,7 @@ public class ShipImage {
   /**
    * Must be one bigger than last ship
    */
-  private static final int NUMBER_OF_IMAGES = 18;
+  private static final int NUMBER_OF_IMAGES = 19;
 
   /**
    * Initialize ship images
@@ -192,6 +192,8 @@ public class ShipImage {
     shipImages[MASSIVE_STARBASE] = image64x64(image, 2, 3);
     smallShipImages[MASSIVE_STARBASE] = scaleTo32x32(
         shipImages[MASSIVE_STARBASE]);
+    shipImages[CAPITAL_SHIP] = image64x64(image, 3, 3);
+    smallShipImages[CAPITAL_SHIP] = scaleTo32x32(shipImages[CAPITAL_SHIP]);
   }
 
   /**

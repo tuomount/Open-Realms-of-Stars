@@ -24,6 +24,7 @@ import org.openRealmOfStars.game.States.ShipDesignView;
 import org.openRealmOfStars.game.States.ShipView;
 import org.openRealmOfStars.game.States.StarMapView;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
+import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace;
@@ -241,7 +242,13 @@ public class Game extends JFrame implements ActionListener {
    */
   public void fleetMakeMove(final PlayerInfo info, final Fleet fleet,
       final int nx, final int ny) {
-    if (getStarMap().isValidCoordinate(nx, ny) && fleet.getMovesLeft() > 0
+    // Getting fleet owner information
+    FleetTileInfo[][] fleetTiles = starMap.getFleetTiles();
+    FleetTileInfo fleetTile = fleetTiles[fleet.getX()][fleet.getY()];
+    int index = players.getIndex(info);
+    // And making sure that fleet owner is actually make the move
+    if (index == fleetTile.getPlayerIndex()
+        && getStarMap().isValidCoordinate(nx, ny) && fleet.getMovesLeft() > 0
         && !getStarMap().isBlocked(nx, ny)) {
       Combat combat = getStarMap().fightWithFleet(nx, ny, fleet, info);
       if (combat != null) {

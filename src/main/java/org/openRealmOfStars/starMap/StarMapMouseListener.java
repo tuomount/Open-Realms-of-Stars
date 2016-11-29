@@ -6,6 +6,7 @@ import java.awt.event.MouseMotionListener;
 
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
+import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -221,8 +222,11 @@ public class StarMapMouseListener extends MouseAdapter
             mapInfoPanel.showPlanet(planet);
           } else if (fleet != null) {
             setLastClickedPlanet(null);
+            FleetTileInfo[][] tiles = starMap.getFleetTiles();
+            PlayerInfo owner = starMap.getPlayerByIndex(
+                tiles[fleet.getX()][fleet.getY()].getPlayerIndex());
             setLastClickedFleet(fleet);
-            mapInfoPanel.showFleet(fleet);
+            mapInfoPanel.showFleet(fleet, owner);
           }
         } else if (e.getClickCount() == 1
             && e.getButton() == MouseEvent.BUTTON3) {
@@ -243,7 +247,10 @@ public class StarMapMouseListener extends MouseAdapter
             && e.getButton() == MouseEvent.BUTTON1) {
           // Single click on left button
           if (lastClickedPlanet == planet && fleet != null) {
-            mapInfoPanel.showFleet(fleet);
+            FleetTileInfo[][] tiles = starMap.getFleetTiles();
+            PlayerInfo owner = starMap.getPlayerByIndex(
+                tiles[fleet.getX()][fleet.getY()].getPlayerIndex());
+            mapInfoPanel.showFleet(fleet, owner);
             setLastClickedFleet(fleet);
             setLastClickedPlanet(null);
           } else if (planet != null) {
@@ -251,7 +258,10 @@ public class StarMapMouseListener extends MouseAdapter
             setLastClickedPlanet(planet);
             setLastClickedFleet(null);
           } else if (fleet != null) {
-            mapInfoPanel.showFleet(fleet);
+            FleetTileInfo[][] tiles = starMap.getFleetTiles();
+            PlayerInfo owner = starMap.getPlayerByIndex(
+                tiles[fleet.getX()][fleet.getY()].getPlayerIndex());
+            mapInfoPanel.showFleet(fleet, owner);
             setLastClickedFleet(fleet);
           } else {
             mapInfoPanel.showEmpty();

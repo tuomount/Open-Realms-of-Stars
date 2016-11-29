@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -315,11 +316,22 @@ public class Fleet {
     return lvl;
   }
 
-  @Override
-  public String toString() {
+
+  /**
+   * Get Fleet information as a text
+   * @param owner PlayerInfo who owns the fleet
+   * @return information as a String
+   */
+  public String getInfoAsText(final PlayerInfo owner) {
     StringBuilder sb = new StringBuilder();
     sb.append(name);
     sb.append("\n");
+    if (owner != null) {
+      // TODO: If fleet contains just privateering ships owner should not
+      // be visible
+      sb.append(owner.getEmpireName());
+      sb.append("\n");
+    }
     sb.append("Speed: ");
     sb.append(getFleetSpeed());
     sb.append(" FTL: ");
@@ -342,6 +354,11 @@ public class Fleet {
       }
     }
     return sb.toString();
+  }
+
+  @Override
+  public String toString() {
+    return getInfoAsText(null);
   }
 
   /**

@@ -20,6 +20,8 @@ import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.MessagePanel;
+import org.openRealmOfStars.mapTiles.FleetTileInfo;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
@@ -250,7 +252,10 @@ public class StarMapView extends BlackPanel {
    * @param fleet to show
    */
   public void setShowFleet(final Fleet fleet) {
-    infoPanel.showFleet(fleet);
+    FleetTileInfo[][] tiles = map.getFleetTiles();
+    PlayerInfo owner = players.getPlayerInfoByIndex(
+        tiles[fleet.getX()][fleet.getY()].getPlayerIndex());
+    infoPanel.showFleet(fleet, owner);
   }
 
   /**

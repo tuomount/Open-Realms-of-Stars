@@ -20,6 +20,7 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -73,6 +74,11 @@ public class MapInfoPanel extends InfoPanel {
    * Show info about the fleet
    */
   private Fleet fleet;
+
+  /**
+   * Fleet owner as PlayerInfo
+   */
+  private PlayerInfo fleetOwner;
 
   /**
    * View planet or fleet
@@ -184,10 +190,12 @@ public class MapInfoPanel extends InfoPanel {
   /**
    * Show fleet on info panel
    * @param fleetToShow The fleet to show
+   * @param owner The fleet owner
    */
-  public void showFleet(final Fleet fleetToShow) {
+  public void showFleet(final Fleet fleetToShow, final PlayerInfo owner) {
     this.planet = null;
     this.fleet = fleetToShow;
+    this.fleetOwner = owner;
     this.viewBtn.setEnabled(true);
     this.viewBtn.setText("View fleet");
     this.viewBtn.setActionCommand(GameCommands.COMMAND_VIEW_FLEET);
@@ -263,7 +271,7 @@ public class MapInfoPanel extends InfoPanel {
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
       imageLabel.setImage(fleet.getFirstShip().getHull().getImage());
       setTitle(fleet.getName());
-      textArea.setText(fleet.toString());
+      textArea.setText(fleet.getInfoAsText(fleetOwner));
       this.repaint();
     } else {
       setTitle("Galactic info");

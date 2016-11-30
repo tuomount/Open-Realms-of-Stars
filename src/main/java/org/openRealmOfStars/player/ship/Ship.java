@@ -722,6 +722,17 @@ public class Ship extends Construction {
   }
 
   /**
+   * Is ship privaatering ship or not
+   * @return True if ship hull is privateer
+   */
+  public boolean isPrivateeringShip() {
+    if (hull.getHullType() == ShipHullType.PRIVATEER) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Is Ship trooper ship or not
    * @return True if ship has functional planetary invasion module,
    * otherwise false

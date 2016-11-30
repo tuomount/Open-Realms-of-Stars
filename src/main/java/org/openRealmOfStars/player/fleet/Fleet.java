@@ -326,9 +326,9 @@ public class Fleet {
     StringBuilder sb = new StringBuilder();
     sb.append(name);
     sb.append("\n");
-    if (owner != null) {
-      // TODO: If fleet contains just privateering ships owner should not
-      // be visible
+    if (isPrivateerFleet()) {
+      sb.append("Privateer fleet\n");
+    } else if (owner != null) {
       sb.append(owner.getEmpireName());
       sb.append("\n");
     }
@@ -472,6 +472,19 @@ public class Fleet {
       }
     }
     return null;
+  }
+
+  /**
+   * Check if whole fleet is privateering fleet
+   * @return True if all ships in fleet are privateers
+   */
+  public boolean isPrivateerFleet() {
+    for (Ship ship : ships) {
+      if (!ship.isPrivateeringShip()) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**

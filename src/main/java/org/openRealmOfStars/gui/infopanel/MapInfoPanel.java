@@ -206,6 +206,14 @@ public class MapInfoPanel extends InfoPanel {
   }
 
   /**
+   * Get the fleet owner whose fleet is being shown
+   * @return PlayerInfo for fleet owner
+   */
+  public PlayerInfo getFleetOwner() {
+    return fleetOwner;
+  }
+
+  /**
    * Show empty planet
    */
   public void showEmpty() {

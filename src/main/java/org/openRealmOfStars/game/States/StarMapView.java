@@ -320,7 +320,8 @@ public class StarMapView extends BlackPanel {
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_DEFEND_SECTOR)
-        && getStarMapMouseListener().getLastClickedFleet() != null) {
+        && getStarMapMouseListener().getLastClickedFleet() != null
+        && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
       Fleet fleet = getStarMapMouseListener().getLastClickedFleet();
       // Make fleet to defend
       fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
@@ -328,7 +329,8 @@ public class StarMapView extends BlackPanel {
       infoPanel.updatePanel();
     }
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_FIX_FLEET)
-        && getStarMapMouseListener().getLastClickedFleet() != null) {
+        && getStarMapMouseListener().getLastClickedFleet() != null
+        && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
       Fleet fleet = getStarMapMouseListener().getLastClickedFleet();
       // Make fleet to fix itself
       fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
@@ -337,7 +339,8 @@ public class StarMapView extends BlackPanel {
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_ROUTE_FLEET)
-        && getStarMapMouseListener().getLastClickedFleet() != null) {
+        && getStarMapMouseListener().getLastClickedFleet() != null
+        && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
       getStarMapMouseListener().setRoutePlanning(true);
     }
 

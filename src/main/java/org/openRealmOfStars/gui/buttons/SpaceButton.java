@@ -9,6 +9,7 @@ import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JToolTip;
 import javax.swing.border.EtchedBorder;
 
 import org.openRealmOfStars.gui.GuiStatics;
@@ -75,6 +76,16 @@ public class SpaceButton extends JButton {
     this.setPreferredSize(size);
     this.setMaximumSize(size);
     icon = null;
+  }
+
+  @Override
+  public JToolTip createToolTip() {
+    JToolTip toolTip = super.createToolTip();
+    toolTip.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    toolTip.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    toolTip.setBorder(BorderFactory
+        .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
+    return toolTip;
   }
 
   /**

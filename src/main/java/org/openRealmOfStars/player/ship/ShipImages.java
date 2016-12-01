@@ -66,8 +66,7 @@ public final class ShipImages {
     humans = new ShipImage("humanships.png");
     mechions = new ShipImage("mechionships.png");
     centaurs = new ShipImage("centaurships.png");
-    // FIXME: Need to create ships for other races too
-    sporks = new ShipImage("humanships.png");
+    sporks = new ShipImage("sporkships.png");
     greyans = new ShipImage("greyanships.png");
   }
 

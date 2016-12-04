@@ -5,4 +5,4 @@ script:
   - mvn clean verify
 
 after_success:
-  - mvn site org.eluder.coveralls:coveralls-maven-plugin:report -P onlyUnitTests
+  - mvn site org.eluder.coveralls:coveralls-maven-plugin:report -P allTests

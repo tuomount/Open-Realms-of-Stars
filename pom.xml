@@ -100,7 +100,24 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>allTests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.19.1</version>
+                        <configuration>
+                            <groups>org.openRealmOfStars.UnitTest</groups>
+                            <groups>org.openRealmOfStars.BehaviourTest</groups>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
+
 
     <reporting>
         <plugins>

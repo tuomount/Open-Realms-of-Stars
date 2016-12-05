@@ -177,7 +177,7 @@ public final class SpaceRaceUtility {
         if (race == SpaceRace.MECHIONS) {
           sb.append("AI of ");
         } else {
-          sb.append("Democracy of");
+          sb.append("Democracy of ");
         }
         break;
       }

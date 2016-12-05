@@ -1,6 +1,6 @@
 package org.openRealmOfStars.player.ship;
 
-import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 
 /**
  *

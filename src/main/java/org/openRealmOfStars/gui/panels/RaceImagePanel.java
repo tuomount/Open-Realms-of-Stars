@@ -11,7 +11,8 @@ import javax.swing.JPanel;
 
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
-import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 
 /**
  *
@@ -109,7 +110,7 @@ public class RaceImagePanel extends JPanel {
 
     g2d.setPaint(gradient);
     g.fillRect(0, 0, this.getWidth(), this.getHeight());
-    SpaceRace race = SpaceRace.getRaceByName(raceToShow);
+    SpaceRace race = SpaceRaceUtility.getRaceByName(raceToShow);
     if (race == null) {
       g2d.setFont(GuiStatics.getFontCubellan());
       g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE);

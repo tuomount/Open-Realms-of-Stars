@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icons;
-import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -116,7 +116,7 @@ public class Ship extends Construction {
     String hullName = IOUtilities.readString(dis);
     int raceIndex = dis.readInt();
     hull = ShipHullFactory.createByName(hullName,
-        SpaceRace.getRaceByIndex(raceIndex));
+        SpaceRaceUtility.getRaceByIndex(raceIndex));
     image = ShipImage.scaleTo32x32(hull.getImage());
     int count = dis.readInt();
     components = new ArrayList<>();

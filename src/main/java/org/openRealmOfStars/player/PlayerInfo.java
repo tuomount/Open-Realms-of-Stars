@@ -8,6 +8,8 @@ import java.util.Collections;
 
 import org.openRealmOfStars.AI.Mission.MissionList;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.message.MessageList;
@@ -283,7 +285,7 @@ public class PlayerInfo {
    */
   public PlayerInfo(final DataInputStream dis) throws IOException {
     empireName = IOUtilities.readString(dis);
-    race = SpaceRace.getRaceByIndex(dis.readInt());
+    race = SpaceRaceUtility.getRaceByIndex(dis.readInt());
     totalCredits = dis.readInt();
     techList = new TechList(dis);
     msgList = new MessageList(dis);

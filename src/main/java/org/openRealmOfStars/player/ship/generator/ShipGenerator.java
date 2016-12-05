@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.ship.generator;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipComponentType;

@@ -67,28 +67,6 @@ public enum MissionPhase {
     }
   }
 
-  /**
-   * Get mission phase by index
-   * @param index The mission phase index
-   * @return Mission phase, never null
-   */
-  public static MissionPhase getType(final int index) {
-    switch (index) {
-    case 0:
-      return MissionPhase.BUILDING;
-    case 1:
-      return MissionPhase.TREKKING;
-    case 2:
-      return MissionPhase.EXECUTING;
-    case 3:
-      return MissionPhase.PLANNING;
-    case 4:
-      return MissionPhase.LOADING;
-    default:
-      return MissionPhase.BUILDING;
-    }
-  }
-
   @Override
   public String toString() {
     switch (this) {

@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -82,7 +83,7 @@ public class ShipDesign {
     String hullName = IOUtilities.readString(dis);
     int raceIndex = dis.readInt();
     setHull(ShipHullFactory.createByName(hullName,
-        SpaceRace.getRaceByIndex(raceIndex)));
+        SpaceRaceUtility.getRaceByIndex(raceIndex)));
     int count = dis.readInt();
     components = new ArrayList<>();
     for (int i = 0; i < count; i++) {

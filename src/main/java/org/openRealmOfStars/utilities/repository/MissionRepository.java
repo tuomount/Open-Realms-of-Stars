@@ -54,14 +54,56 @@ public class MissionRepository {
   }
 
   /**
+   * Get mission type by index
+   * @param index The mission type index
+   * @return Mission Type, never null
+   */
+  private static MissionType getTypeIndex(final int index) {
+    switch (index) {
+    case 0:
+      return MissionType.EXPLORE;
+    case 1:
+      return MissionType.COLONIZE;
+    case 2:
+      return MissionType.DEFEND;
+    case 3:
+      return MissionType.ATTACK;
+    default:
+      return MissionType.EXPLORE;
+    }
+  }
+
+  /**
+   * Get mission phase by index
+   * @param index The mission phase index
+   * @return Mission phase, never null
+   */
+  private static MissionPhase getPhaseIndex(final int index) {
+    switch (index) {
+    case 0:
+      return MissionPhase.BUILDING;
+    case 1:
+      return MissionPhase.TREKKING;
+    case 2:
+      return MissionPhase.EXECUTING;
+    case 3:
+      return MissionPhase.PLANNING;
+    case 4:
+      return MissionPhase.LOADING;
+    default:
+      return MissionPhase.BUILDING;
+    }
+  }
+
+  /**
    * Read mission from DataInputStream
    * @param dis DataInputStream
    * @return mission from Data Input Stream
    * @throws IOException if there is any problem with DataInputStream
    */
   public Mission restoreMission(final DataInputStream dis) throws IOException {
-    Mission mission = new Mission(MissionType.getType(dis.readInt()),
-        MissionPhase.getType(dis.readInt()), new Coordinate(dis.readInt(),
+    Mission mission = new Mission(getTypeIndex(dis.readInt()),
+        getPhaseIndex(dis.readInt()), new Coordinate(dis.readInt(),
             dis.readInt()));
     mission.setMissionTime(dis.readInt());
     String str = IOUtilities.readString(dis);

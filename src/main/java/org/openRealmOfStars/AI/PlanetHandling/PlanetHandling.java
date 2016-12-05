@@ -6,7 +6,7 @@ import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;

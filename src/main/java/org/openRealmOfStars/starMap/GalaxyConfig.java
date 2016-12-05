@@ -1,6 +1,7 @@
 package org.openRealmOfStars.starMap;
 
-import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 
 /**
  *
@@ -93,11 +94,11 @@ public class GalaxyConfig {
     playerName = new String[StarMap.MAX_PLAYERS];
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
 
-      setRace(i, SpaceRace.getRandomRace());
+      setRace(i, SpaceRaceUtility.getRandomRace());
       while (true) {
-        String tmp = getRace(i).getRandomName();
+        String tmp = SpaceRaceUtility.getRandomName(getRace(i));
         if (isUniqueName(tmp)) {
-          setPlayerName(i, getRace(i).getRandomName());
+          setPlayerName(i, tmp);
           break;
         }
       }

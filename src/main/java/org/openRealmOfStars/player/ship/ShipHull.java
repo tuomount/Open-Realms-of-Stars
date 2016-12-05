@@ -2,7 +2,7 @@ package org.openRealmOfStars.player.ship;
 
 import java.awt.image.BufferedImage;
 
-import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**

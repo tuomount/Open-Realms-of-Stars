@@ -27,7 +27,7 @@ import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
-import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;

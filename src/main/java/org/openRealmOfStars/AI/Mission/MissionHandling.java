@@ -4,7 +4,7 @@ import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;

@@ -11,7 +11,8 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
@@ -1066,7 +1067,7 @@ public class Planet {
       if (homeWorldIndex != -1) {
         sb.append("\n");
         sb.append("Home world of ");
-        sb.append(SpaceRace.getRaceByIndex(homeWorldIndex).getName());
+        sb.append(SpaceRaceUtility.getRaceByIndex(homeWorldIndex).getName());
         sb.append("\n");
       }
       if (planetOwnerInfo != null) {

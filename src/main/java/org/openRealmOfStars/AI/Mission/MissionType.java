@@ -62,26 +62,6 @@ public enum MissionType {
     }
   }
 
-  /**
-   * Get mission type by index
-   * @param index The mission type index
-   * @return Mission Type, never null
-   */
-  public static MissionType getType(final int index) {
-    switch (index) {
-    case 0:
-      return MissionType.EXPLORE;
-    case 1:
-      return MissionType.COLONIZE;
-    case 2:
-      return MissionType.DEFEND;
-    case 3:
-      return MissionType.ATTACK;
-    default:
-      return MissionType.EXPLORE;
-    }
-  }
-
   @Override
   public String toString() {
     switch (this) {

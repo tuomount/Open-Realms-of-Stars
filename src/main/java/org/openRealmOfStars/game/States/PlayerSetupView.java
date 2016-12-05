@@ -22,7 +22,8 @@ import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
-import org.openRealmOfStars.player.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
@@ -152,7 +153,7 @@ public class PlayerSetupView extends BlackPanel {
       for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
         if (comboRaceSelect[i].isEnabled()) {
           String raceStr = (String) comboRaceSelect[i].getSelectedItem();
-          SpaceRace race = SpaceRace.getRaceByName(raceStr);
+          SpaceRace race = SpaceRaceUtility.getRaceByName(raceStr);
           config.setRace(i, race);
           raceImgs[i].setRaceToShow(raceStr);
         }
@@ -161,7 +162,8 @@ public class PlayerSetupView extends BlackPanel {
           GameCommands.COMMAND_GALAXY_SETUP.length(),
           arg0.getActionCommand().length());
       int index = Integer.parseInt(tmp);
-      playerName[index].setText(config.getRace(index).getRandomName());
+      playerName[index].setText(SpaceRaceUtility.getRandomName(
+          config.getRace(index)));
     }
   }
 

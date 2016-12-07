@@ -261,6 +261,88 @@ public final class PlanetHandling {
   }
 
   /**
+   * Score Building on certain planet and playerinfo
+   * @param building Building to score
+   * @param planet Planet where building is placed or about to place
+   * @param info PlayerInfo who's building is about to score
+   * @return Score of building, bigger is better
+   */
+  public static int scoreBuilding(final Building building, final Planet planet,
+      final PlayerInfo info) {
+    // Military score
+    int score = building.getBattleBonus()
+        + building.getDefenseDamage() * TURRET_DEFENSE_VALUE_SCORE;
+    score = score + building.getScanRange() * 10
+        + building.getScanCloakingDetection() / 4;
+    if (info.getRace() == SpaceRace.SPORKS
+        && building.getType() == BuildingType.MILITARY) {
+      score = score + SPORK_MILITARY_VALUE_SCORE;
+    }
+
+    // Production score
+    score = score + building.getFactBonus() * 60;
+    score = score + building.getMineBonus() * planet.getAmountMetalInGround()
+        / METAL_AMOUNT_DIVIDER;
+    if (info.getRace() == SpaceRace.CENTAURS) {
+      score = score + building.getFarmBonus() * 50;
+    } else if (info.getRace() != SpaceRace.MECHIONS) {
+      score = score + building.getFarmBonus() * 40;
+    } else {
+      score = score - building.getFarmBonus() * 40;
+    }
+    if (info.getRace() == SpaceRace.MECHIONS) {
+      score = score + building.getReseBonus() * 80;
+      score = score + building.getCultBonus() * 60;
+    } else {
+      score = score + building.getReseBonus() * 60;
+      score = score + building.getCultBonus() * 40;
+    }
+    if (planet.getMaintenanceCost() >= planet
+        .getTotalProduction(Planet.PRODUCTION_CREDITS)) {
+      // Planet has much expenses so build credit production is important
+      score = score + building.getCredBonus() * 80;
+    } else {
+      score = score + building.getCredBonus() * 50;
+    }
+    score = score + building.getRecycleBonus();
+
+    score = score - (int) Math.round(building.getMaintenanceCost() * 10);
+    // High cost drops the value
+    score = score - building.getMetalCost() / 10;
+    score = score - building.getProdCost() / 10;
+
+    if (info.getRace() == SpaceRace.GREYANS
+        && building.getType() == BuildingType.RESEARCH) {
+      score = score + GREYAN_RESEARCH_VALUE_SCORE;
+    }
+
+    if (info.getRace() == SpaceRace.MECHIONS
+        && building.getType() == BuildingType.FARM) {
+      // Mechions do not build farms
+      score = -1;
+    }
+
+    score = score / (planet.howManyBuildings(building.getName()) + 1);
+
+    if (planet.exceedRadiation()) {
+      if (building.getName().equals("Radiation dampener")
+          || building.getName().equals("Radiation well")) {
+        // Radiation level is high so these are in high priority
+        score = MAX_SLOT_SCORE;
+      }
+    } else {
+      if (building.getName().equals("Radiation dampener")
+          || building.getName().equals("Radiation well")) {
+        // Radiation level is not high so never building these
+        score = -1;
+      }
+
+    }
+    return score;
+
+  }
+
+  /**
    * Handle construction by using scoring
    * @param constructions The constructions
    * @param planet The planet
@@ -403,79 +485,7 @@ public final class PlanetHandling {
       }
       if (constructions[i] instanceof Building) {
         Building building = (Building) constructions[i];
-        // Military score
-        scores[i] = building.getBattleBonus()
-            + building.getDefenseDamage() * TURRET_DEFENSE_VALUE_SCORE;
-        scores[i] = scores[i] + building.getScanRange() * 10
-            + building.getScanCloakingDetection() / 4;
-        if (info.getRace() == SpaceRace.SPORKS
-            && building.getType() == BuildingType.MILITARY) {
-          scores[i] = scores[i] + SPORK_MILITARY_VALUE_SCORE;
-        }
-
-        // Production score
-        scores[i] = scores[i] + building.getFactBonus() * 60;
-        scores[i] = scores[i]
-            + building.getMineBonus() * planet.getAmountMetalInGround()
-            / METAL_AMOUNT_DIVIDER;
-        if (info.getRace() == SpaceRace.CENTAURS) {
-          scores[i] = scores[i] + building.getFarmBonus() * 50;
-        } else if (info.getRace() != SpaceRace.MECHIONS) {
-          scores[i] = scores[i] + building.getFarmBonus() * 40;
-        } else {
-          scores[i] = scores[i] - building.getFarmBonus() * 40;
-        }
-        if (info.getRace() == SpaceRace.MECHIONS) {
-          scores[i] = scores[i] + building.getReseBonus() * 80;
-          scores[i] = scores[i] + building.getCultBonus() * 60;
-        } else {
-          scores[i] = scores[i] + building.getReseBonus() * 60;
-          scores[i] = scores[i] + building.getCultBonus() * 40;
-        }
-        if (planet.getMaintenanceCost() >= planet
-            .getTotalProduction(Planet.PRODUCTION_CREDITS)) {
-          // Planet has much expenses so build credit production is important
-          scores[i] = scores[i] + building.getCredBonus() * 80;
-        } else {
-          scores[i] = scores[i] + building.getCredBonus() * 50;
-        }
-        scores[i] = scores[i] + building.getRecycleBonus();
-
-        scores[i] = scores[i]
-            - (int) Math.round(building.getMaintenanceCost() * 10);
-        // High cost drops the value
-        scores[i] = scores[i] - building.getMetalCost() / 10;
-        scores[i] = scores[i] - building.getProdCost() / 10;
-
-        if (info.getRace() == SpaceRace.GREYANS
-            && building.getType() == BuildingType.RESEARCH) {
-          scores[i] = scores[i] + GREYAN_RESEARCH_VALUE_SCORE;
-        }
-
-        if (info.getRace() == SpaceRace.MECHIONS
-            && building.getType() == BuildingType.FARM) {
-          // Mechions do not build farms
-          scores[i] = -1;
-        }
-
-        scores[i] = scores[i]
-            / (planet.howManyBuildings(building.getName()) + 1);
-
-        if (planet.exceedRadiation()) {
-          if (building.getName().equals("Radiation dampener")
-              || building.getName().equals("Radiation well")) {
-            // Radiation level is high so these are in high priority
-            scores[i] = MAX_SLOT_SCORE;
-          }
-        } else {
-          if (building.getName().equals("Radiation dampener")
-              || building.getName().equals("Radiation well")) {
-            // Radiation level is not high so never building these
-            scores[i] = -1;
-          }
-
-        }
-
+        scores[i] = scoreBuilding(building, planet, info);
       }
       if (constructions[i] instanceof Ship) {
         Ship ship = (Ship) constructions[i];

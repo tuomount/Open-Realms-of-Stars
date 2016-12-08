@@ -56,9 +56,14 @@ public final class PlanetHandling {
   private static final int MAX_SLOT_SCORE = 1000;
 
   /**
+   * Score for zero available slot
+   */
+  private static final int ZERO_SLOT_SCORE = 180;
+
+  /**
    * Score for one available slot
    */
-  private static final int ONE_SLOT_SCORE = 200;
+  private static final int ONE_SLOT_SCORE = 150;
 
   /**
    * Score for two available slot
@@ -343,6 +348,26 @@ public final class PlanetHandling {
   }
 
   /**
+   * Get the planet's worst building
+   * @param planet Planet which to check
+   * @param info PlayerInfo who owns the planet
+   * @return worst building or null if no buildings
+   */
+  public static Building getWorstBuilding(final Planet planet,
+      final PlayerInfo info) {
+    int lowestScore = MAX_SLOT_SCORE;
+    Building lowBuilding = null;
+    Building[] buildings = planet.getBuildingList();
+    for (Building building : buildings) {
+      int score = scoreBuilding(building, planet, info);
+      if (score < lowestScore) {
+        lowestScore = score;
+        lowBuilding = building;
+      }
+    }
+    return lowBuilding;
+  }
+  /**
    * Handle construction by using scoring
    * @param constructions The constructions
    * @param planet The planet
@@ -357,11 +382,13 @@ public final class PlanetHandling {
     int highest = -1;
     int value = -1;
     boolean over400 = false;
+    boolean needToRemoveWorst = false;
     int minimum = 0;
     int freeSlot = planet.getGroundSize() - planet.getUsedPlanetSize();
     switch (freeSlot) {
     case 0:
-      minimum = MAX_SLOT_SCORE;
+      minimum = ZERO_SLOT_SCORE;
+      needToRemoveWorst = true;
       break;
     case 1:
       minimum = ONE_SLOT_SCORE;
@@ -439,6 +466,18 @@ public final class PlanetHandling {
           Construction cons = list.get(i);
           planet.setUnderConstruction(cons);
           constructionSelected = true;
+          if (cons instanceof Building && needToRemoveWorst) {
+            Building worst = getWorstBuilding(planet, info);
+            if  (worst != null) {
+              // Removing the worst building
+              planet.removeBuilding(worst);
+            } else {
+              // Could not remove the worst building so no selection can be
+              // made
+              planet.setUnderConstruction(null);
+              constructionSelected = false;
+            }
+          }
           if (cons instanceof Ship) {
             Ship ship = (Ship) cons;
             Mission mission = info.getMissions().getMissionForPlanet(

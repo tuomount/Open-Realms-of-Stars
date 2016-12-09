@@ -276,10 +276,24 @@ public class FleetView extends BlackPanel {
     JScrollPane scroll = new JScrollPane(shipsInFleet);
     eastPanel.add(scroll);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    InvisiblePanel fleetBtns = new InvisiblePanel(eastPanel);
+    fleetBtns.setLayout(new BoxLayout(fleetBtns, BoxLayout.X_AXIS));
     SpaceButton btn = new SpaceButton("Split",
         GameCommands.COMMAND_SPLIT_THE_FLEET);
     btn.addActionListener(listener);
-    eastPanel.add(btn);
+    fleetBtns.add(btn);
+    fleetBtns.add(Box.createRigidArea(new Dimension(5, 5)));
+    if (planet != null && planet.getRecycleBonus() > 0) {
+      btn = new SpaceButton("Recycle", GameCommands.COMMAND_DESTROY_THE_SHIP);
+      btn.setToolTipText("Destroy the ship, recycle some of the metal on ship");
+      btn.addActionListener(listener);
+    } else {
+      btn = new SpaceButton("Scrap", GameCommands.COMMAND_DESTROY_THE_SHIP);
+      btn.setToolTipText("Destroy the ship, lose the all metal on ship");
+      btn.addActionListener(listener);
+    }
+    fleetBtns.add(btn);
+    eastPanel.add(fleetBtns);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new TransparentLabel(eastPanel, "Other fleets");
     eastPanel.add(label);
@@ -450,6 +464,21 @@ public class FleetView extends BlackPanel {
         }
       }
 
+      updatePanel();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_DESTROY_THE_SHIP)
+        && shipsInFleet.getSelectedIndices().length > 0) {
+      for (int i = 0; i < shipsInFleet.getSelectedIndices().length; i++) {
+        Ship ship = shipsInFleet.getSelectedValuesList().get(i);
+        if (ship != null) {
+          fleet.removeShip(ship);
+          if (planet != null && planet.getRecycleBonus() > 0) {
+            int recycledMetal = ship.getMetalCost() * planet.getRecycleBonus()
+                / 100 + ship.getMetal();
+            planet.setMetal(planet.getMetal() + recycledMetal);
+          }
+        }
+      }
       updatePanel();
     }
   }

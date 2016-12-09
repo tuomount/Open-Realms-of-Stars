@@ -416,6 +416,11 @@ public final class GameCommands {
   public static final String COMMAND_SPLIT_THE_FLEET = "SplitTheFleet";
 
   /**
+   * Split the fleet
+   */
+  public static final String COMMAND_DESTROY_THE_SHIP = "DestroyTheShip";
+
+  /**
    * Merge fleets
    */
   public static final String COMMAND_MERGE_FLEETS = "MergeFleets";

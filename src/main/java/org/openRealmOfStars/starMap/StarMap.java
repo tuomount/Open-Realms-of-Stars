@@ -977,6 +977,9 @@ public class StarMap {
         }
       }
       aiFleet = info.getFleets().getFirst();
+      if (aiFleet == null) {
+        aiTurnNumber++;
+      }
     } else {
       aiTurnNumber++;
     }

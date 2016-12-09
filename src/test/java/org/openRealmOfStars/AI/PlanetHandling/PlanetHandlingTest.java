@@ -1,12 +1,13 @@
 package org.openRealmOfStars.AI.PlanetHandling;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
@@ -285,6 +286,18 @@ public class PlanetHandlingTest {
 
     Building building = PlanetHandling.getWorstBuilding(planet, info);
     assertEquals(farm,building);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testShipScoring() {
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(16);
+    Mockito.when(ship.getMetalCost()).thenReturn(14);
+    Mockito.when(ship.getProdCost()).thenReturn(22);
+    
+    int score = PlanetHandling.scoreShip(ship);
+    assertEquals(49, score);
   }
 
 }

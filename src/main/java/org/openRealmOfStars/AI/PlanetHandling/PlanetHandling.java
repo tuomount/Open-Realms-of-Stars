@@ -502,6 +502,22 @@ public final class PlanetHandling {
   }
 
   /**
+   * Score ship, scoring also depends on missions under planning
+   * @param ship Ship to score
+   * @return Ship score
+   */
+  public static int scoreShip(final Ship ship) {
+    int score;
+    // Does not take a planet space
+    score = 20;
+    score = score + ship.getTotalMilitaryPower() * 2;
+    // High cost drops the value
+    score = score - ship.getMetalCost() / 10;
+    score = score - ship.getProdCost() / 10;
+    return score;
+  }
+
+  /**
    * Calculate scores for each construction. Each score is between -1 and 1000
    * @param constructions The constructions
    * @param planet The planet
@@ -528,34 +544,29 @@ public final class PlanetHandling {
       }
       if (constructions[i] instanceof Ship) {
         Ship ship = (Ship) constructions[i];
-        // Does not take a planet space
-        scores[i] = 20;
-        scores[i] = scores[i] + ship.getTotalMilitaryPower() * 2;
-        // High cost drops the value
-        scores[i] = scores[i] - ship.getMetalCost() / 10;
-        scores[i] = scores[i] - ship.getProdCost() / 10;
+        int score = scoreShip(ship);
         if (ship.getTotalMilitaryPower() > 0) {
           Mission mission = info.getMissions()
               .getMissionForPlanet(planet.getName(), MissionType.DEFEND);
           if (mission != null) {
             if (mission.getPhase() == MissionPhase.PLANNING) {
-              scores[i] = scores[i] + ship.getTotalMilitaryPower() * 2;
+              score = score + ship.getTotalMilitaryPower() * 2;
             } else if (mission.getPhase() == MissionPhase.BUILDING) {
-              scores[i] = scores[i] + ship.getTotalMilitaryPower();
+              score = score + ship.getTotalMilitaryPower();
             }
             mission = info.getMissions().getMission(MissionType.ATTACK,
                 MissionPhase.PLANNING);
             if (mission != null && ship.hasBombs()) {
-              scores[i] = scores[i] + 30;
+              score = score + 30;
             }
 
           } else {
             mission = info.getMissions().getMission(MissionType.ATTACK,
                 MissionPhase.PLANNING);
             if (mission != null) {
-              scores[i] = scores[i] + ship.getTotalMilitaryPower() * 2;
+              score = score + ship.getTotalMilitaryPower() * 2;
               if (ship.hasBombs()) {
-                scores[i] = scores[i] + 30;
+                score = score + 30;
               }
             }
           }
@@ -568,13 +579,13 @@ public final class PlanetHandling {
           if (mission != null) {
             Planet colonPlanet = map.getPlanetByCoordinate(mission.getX(),
                 mission.getY());
-            int score = (colonPlanet.getGroundSize() - 7) * 3
+            int colonyScore = (colonPlanet.getGroundSize() - 7) * 3
                 + colonPlanet.getAmountMetalInGround() / 400;
             score = score + info.getRace().getMaxRad()
                 - colonPlanet.getRadiationLevel();
-            scores[i] = scores[i] + score;
+            score = score + colonyScore;
           } else {
-            scores[i] = -1;
+            score = -1;
           }
         }
         if (ship.isTrooperModule()) {
@@ -584,15 +595,16 @@ public final class PlanetHandling {
           if (mission != null) {
             Planet colonPlanet = map.getPlanetByCoordinate(mission.getX(),
                 mission.getY());
-            int score = (colonPlanet.getGroundSize() - 7) * 3
+            int planetScore = (colonPlanet.getGroundSize() - 7) * 3
                 + colonPlanet.getAmountMetalInGround() / 400;
-            score = score + info.getRace().getMaxRad()
+            planetScore = planetScore + info.getRace().getMaxRad()
                 - colonPlanet.getRadiationLevel();
-            scores[i] = scores[i] + score;
+            score = score + planetScore;
           } else {
-            scores[i] = -1;
+            score = -1;
           }
         }
+        scores[i] = score;
       }
 
       // Sanitize score

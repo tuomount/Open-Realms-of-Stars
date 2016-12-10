@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Calendar;
 
@@ -55,6 +56,36 @@ public final class IOUtilities {
     }
   }
 
+  /**
+   * Read all data from input stream
+   * @param is InputStream where to read
+   * @return Read data as a byte array
+   * @throws IOException if reading fails with IOException
+   */
+  public static byte[] readAll(final InputStream is) throws IOException {
+    int dataLength = 0;
+    int byteOffset = 0;
+    int blockSize = 8000;
+    byte[] buffer = null;
+    do {
+      byte[] tmpBuf = new byte[blockSize];
+      dataLength = is.read(tmpBuf, 0, tmpBuf.length);
+      if (dataLength != -1) {
+        byte[] targetBuf;
+        if (buffer == null) {
+          targetBuf = new byte[dataLength];
+          byteOffset = 0;
+        } else {
+          targetBuf = new byte[buffer.length + dataLength];
+          System.arraycopy(buffer, 0, targetBuf, 0, buffer.length);
+          byteOffset = buffer.length;
+        }
+        System.arraycopy(tmpBuf, 0, targetBuf, byteOffset, dataLength);
+        buffer = targetBuf;
+      }
+    } while (dataLength != -1);
+    return buffer;
+  }
   /**
    * Read file as text file return as US-ASCII string
    * @param is DataInputStream

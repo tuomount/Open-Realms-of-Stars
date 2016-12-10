@@ -31,7 +31,7 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingType;
  * along with this program; if not, see http://www.gnu.org/licenses/
  * 
  * 
- * Test for PathPoint class
+ * Test for PlanetHandling class
  */
 
 public class PlanetHandlingTest {

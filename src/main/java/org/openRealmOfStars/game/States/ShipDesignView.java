@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.ShipComponentListRenderer;
@@ -491,6 +492,7 @@ public class ShipDesignView extends BlackPanel {
   public void handleAction(final ActionEvent arg0) {
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SHIPDESIGN_HULLSELECTED)) {
+      SoundPlayer.playMenuSound();
       updatePanels();
     }
     if (arg0.getActionCommand()
@@ -499,11 +501,13 @@ public class ShipDesignView extends BlackPanel {
       if (filter != null) {
         componentSelect
             .setModel(new DefaultComboBoxModel<>(filterComponents(filter)));
+        SoundPlayer.playMenuSound();
         updatePanels();
       }
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SHIPDESIGN_COMPONENTSELECTED)) {
+      SoundPlayer.playMenuSound();
       updatePanels();
     }
     if (arg0.getActionCommand()
@@ -515,6 +519,7 @@ public class ShipDesignView extends BlackPanel {
         designInfoText.setText(design.getDesignInfo());
         designInfoText.repaint();
       }
+      SoundPlayer.playMenuSound();
       updatePanels();
     }
     if (arg0.getActionCommand()
@@ -525,6 +530,7 @@ public class ShipDesignView extends BlackPanel {
       design.setName(designNameText.getText());
       designInfoText.setText(design.getDesignInfo());
       designInfoText.repaint();
+      SoundPlayer.playMenuSound();
       updatePanels();
     }
     if (arg0.getActionCommand()
@@ -535,6 +541,7 @@ public class ShipDesignView extends BlackPanel {
       design.setName(designNameText.getText());
       designInfoText.setText(design.getDesignInfo());
       designInfoText.repaint();
+      SoundPlayer.playMenuSound();
       updatePanels();
     }
     if (arg0.getActionCommand()
@@ -545,6 +552,7 @@ public class ShipDesignView extends BlackPanel {
       int[] indices = new int[1];
       indices[0] = index;
       updatePanels();
+      SoundPlayer.playMenuSound();
       componentList.setSelectedIndices(indices);
     }
     if (arg0.getActionCommand()
@@ -555,6 +563,7 @@ public class ShipDesignView extends BlackPanel {
       int[] indices = new int[1];
       indices[0] = index;
       updatePanels();
+      SoundPlayer.playMenuSound();
       componentList.setSelectedIndices(indices);
     }
 

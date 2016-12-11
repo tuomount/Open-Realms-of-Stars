@@ -10,6 +10,7 @@ import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
@@ -423,6 +424,7 @@ public class BattleView extends BlackPanel {
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_END_BATTLE_ROUND) && !combatEnded
         && combat.getCurrentShip().getPlayer().isHuman()) {
+      SoundPlayer.playMenuSound();
       endRound();
     }
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)

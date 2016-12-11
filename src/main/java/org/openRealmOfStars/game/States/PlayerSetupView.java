@@ -13,6 +13,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
@@ -150,6 +151,7 @@ public class PlayerSetupView extends BlackPanel {
    */
   public void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_GALAXY_SETUP)) {
+      SoundPlayer.playMenuSound();
       for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
         if (comboRaceSelect[i].isEnabled()) {
           String raceStr = (String) comboRaceSelect[i].getSelectedItem();

@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.States.AITurnView;
 import org.openRealmOfStars.game.States.BattleView;
 import org.openRealmOfStars.game.States.CreditsView;
@@ -738,17 +739,20 @@ public class Game extends JFrame implements ActionListener {
     if (gameState == GameState.STARMAP && starMapView != null) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
+        SoundPlayer.playMenuSound();
         new GameRepository().saveGame(GameRepository.DEFAULT_SAVE_FOLDER,
                                       "autosave.save", starMap);
         changeGameState(GameState.AITURN);
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_FOCUS_MSG)) {
+        SoundPlayer.playMenuSound();
         focusOnMessage(false);
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_PREV_TARGET)) {
         if (starMapView.getStarMapMouseListener()
             .getLastClickedFleet() != null) {
           Fleet fleet = players.getCurrentPlayerInfo().getFleets().getPrev();
+          SoundPlayer.playMenuSound();
           changeMessageForFleets(fleet);
         }
       } else if (arg0.getActionCommand()
@@ -756,6 +760,7 @@ public class Game extends JFrame implements ActionListener {
         if (starMapView.getStarMapMouseListener()
             .getLastClickedFleet() != null) {
           Fleet fleet = players.getCurrentPlayerInfo().getFleets().getNext();
+          SoundPlayer.playMenuSound();
           changeMessageForFleets(fleet);
         }
       } else {
@@ -766,6 +771,7 @@ public class Game extends JFrame implements ActionListener {
         starMapView.handleActions(arg0);
         if (starMapView.isAutoFocus()
             && arg0.getActionCommand().equals(GameCommands.COMMAND_END_TURN)) {
+          SoundPlayer.playMenuSound();
           starMapView.setAutoFocus(false);
           focusOnMessage(true);
         }
@@ -774,6 +780,7 @@ public class Game extends JFrame implements ActionListener {
     if (gameState == GameState.COMBAT && combatView != null) {
       if (combatView.isCombatEnded() && arg0.getActionCommand()
           .equals(GameCommands.COMMAND_END_BATTLE_ROUND)) {
+        SoundPlayer.playMenuSound();
         changeGameState(GameState.STARMAP);
       } else {
         combatView.handleActions(arg0);
@@ -792,6 +799,7 @@ public class Game extends JFrame implements ActionListener {
       }
       if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_OK)) {
         creditsView = null;
+        SoundPlayer.playMenuSound();
         changeGameState(GameState.MAIN_MENU);
       }
       return;
@@ -800,16 +808,19 @@ public class Game extends JFrame implements ActionListener {
         .equalsIgnoreCase(GameCommands.COMMAND_VIEW_PLANET)
         && starMapView.getStarMapMouseListener()
             .getLastClickedPlanet() != null) {
+      SoundPlayer.playMenuSound();
       changeGameState(GameState.PLANETVIEW);
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_VIEW_FLEET)
         && starMapView.getStarMapMouseListener()
             .getLastClickedFleet() != null) {
+      SoundPlayer.playMenuSound();
       changeGameState(GameState.FLEETVIEW);
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+      SoundPlayer.playMenuSound();
       if (gameState == GameState.PLANETVIEW) {
         planetView = null;
       }
@@ -823,17 +834,21 @@ public class Game extends JFrame implements ActionListener {
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_VIEW_RESEARCH)) {
+      SoundPlayer.playMenuSound();
       changeGameState(GameState.RESEARCHVIEW);
     }
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_SHIPS)) {
+      SoundPlayer.playMenuSound();
       changeGameState(GameState.VIEWSHIPS);
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN)) {
       shipView.setCopyClicked(false);
+      SoundPlayer.playMenuSound();
       changeGameState(GameState.SHIPDESIGN);
     }
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_BATTLE)) {
+      SoundPlayer.playMenuSound();
       // changeGameState(GameState.COMBAT);
       changeGameState(GameState.PLANETBOMBINGVIEW,
           starMap.getPlanetList().get(0));
@@ -841,11 +856,13 @@ public class Game extends JFrame implements ActionListener {
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN_DONE)
         && shipDesignView != null && shipDesignView.isDesignOK()) {
+      SoundPlayer.playMenuSound();
       shipDesignView.keepDesign();
       changeGameState(GameState.VIEWSHIPS);
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_COPY_SHIP)) {
+      SoundPlayer.playMenuSound();
       shipView.setCopyClicked(true);
       changeGameState(GameState.SHIPDESIGN);
     }
@@ -868,19 +885,23 @@ public class Game extends JFrame implements ActionListener {
     if (gameState == GameState.FLEETVIEW && fleetView != null) {
       // Fleet view
       if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIZE)) {
+        SoundPlayer.playMenuSound();
         colonizePlanetAction();
       }
       if (arg0.getActionCommand().equals(GameCommands.COMMAND_CONQUEST)) {
         changeGameState(GameState.PLANETBOMBINGVIEW, fleetView.getPlanet());
+        SoundPlayer.playMenuSound();
       }
       fleetView.handleAction(arg0);
     }
     if (gameState == GameState.GALAXY_CREATION) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        SoundPlayer.playMenuSound();
         changeGameState(GameState.MAIN_MENU);
       } else if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
+        SoundPlayer.playMenuSound();
         changeGameState(GameState.PLAYER_SETUP);
       } else {
         galaxyCreationView.handleActions(arg0);
@@ -888,10 +909,12 @@ public class Game extends JFrame implements ActionListener {
     } else if (gameState == GameState.PLAYER_SETUP) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        SoundPlayer.playMenuSound();
         playerSetupView.getNamesToConfig();
         changeGameState(GameState.GALAXY_CREATION);
       } else if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
+        SoundPlayer.playMenuSound();
         playerSetupView.getNamesToConfig();
         changeGameState(GameState.NEW_GAME);
       } else {
@@ -901,11 +924,13 @@ public class Game extends JFrame implements ActionListener {
     if (gameState == GameState.LOAD_GAME && loadGameView != null) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        SoundPlayer.playMenuSound();
         changeGameState(GameState.MAIN_MENU);
       } else if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_NEXT)
           && loadGameView.getSelectedSaveFile() != null
           && loadSavedGame(loadGameView.getSelectedSaveFile())) {
+        SoundPlayer.playMenuSound();
         changeGameState(GameState.STARMAP);
       }
 
@@ -914,18 +939,22 @@ public class Game extends JFrame implements ActionListener {
       // Main menu
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_CONTINUE_GAME)) {
+        SoundPlayer.playMenuSound();
         changeGameState(GameState.LOAD_GAME);
       }
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_NEW_GAME)) {
+        SoundPlayer.playMenuSound();
         changeGameState(GameState.GALAXY_CREATION);
       }
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_CREDITS)) {
+        SoundPlayer.playMenuSound();
         changeGameState(GameState.CREDITS);
       }
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_QUIT_GAME)) {
+        SoundPlayer.playMenuSound();
         System.exit(0);
       }
     }

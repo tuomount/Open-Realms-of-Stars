@@ -93,6 +93,11 @@ public class CreditsView extends BlackPanel {
         + "Space combat explosions sounds by\n"
         + "Michel Baradari apollo-music.de\n"
         + "Licensed under CC BY 3.0 "
+        + "http://creativecommons.org/licenses/by/3.0/\n\n"
+        + "Menu click sounds by\n"
+        + "Tim Mortimer\n"
+        + "http://www.archive.org/details/TimMortimer\n"
+        + "Licensed under CC BY 3.0 "
         + "http://creativecommons.org/licenses/by/3.0/\n\n";
 
 

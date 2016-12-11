@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -302,6 +303,7 @@ public class StarMapView extends BlackPanel {
         map.setDrawPos(msg.getX(), msg.getY());
         game.focusOnMessage(true);
       }
+      SoundPlayer.playMenuSound();
       msgPanel.updatePanel(msg,
           players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
           players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
@@ -314,6 +316,7 @@ public class StarMapView extends BlackPanel {
         map.setDrawPos(msg.getX(), msg.getY());
         game.focusOnMessage(true);
       }
+      SoundPlayer.playMenuSound();
       msgPanel.updatePanel(msg,
           players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
           players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
@@ -322,6 +325,8 @@ public class StarMapView extends BlackPanel {
         .equalsIgnoreCase(GameCommands.COMMAND_DEFEND_SECTOR)
         && getStarMapMouseListener().getLastClickedFleet() != null
         && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
+      // TODO: Chaing menu sound later
+      SoundPlayer.playMenuSound();
       Fleet fleet = getStarMapMouseListener().getLastClickedFleet();
       // Make fleet to defend
       fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
@@ -331,6 +336,8 @@ public class StarMapView extends BlackPanel {
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_FIX_FLEET)
         && getStarMapMouseListener().getLastClickedFleet() != null
         && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
+      // TODO: Chaing menu sound later
+      SoundPlayer.playMenuSound();
       Fleet fleet = getStarMapMouseListener().getLastClickedFleet();
       // Make fleet to fix itself
       fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
@@ -341,6 +348,8 @@ public class StarMapView extends BlackPanel {
         .equalsIgnoreCase(GameCommands.COMMAND_ROUTE_FLEET)
         && getStarMapMouseListener().getLastClickedFleet() != null
         && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
+      // TODO: Chaing menu sound later
+      SoundPlayer.playMenuSound();
       getStarMapMouseListener().setRoutePlanning(true);
     }
 

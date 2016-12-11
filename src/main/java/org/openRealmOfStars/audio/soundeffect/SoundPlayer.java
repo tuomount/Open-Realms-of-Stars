@@ -2,6 +2,8 @@ package org.openRealmOfStars.audio.soundeffect;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.utilities.DiceGenerator;
+
 
 /**
 *
@@ -72,6 +74,25 @@ public final class SoundPlayer {
   public static final String EXPLOSION_SMALL = "/resources/sounds/rumble.wav";
 
   /**
+   * Sound effect for Menu clicks
+   */
+  public static final String MENU1 = "/resources/sounds/menu1.wav";
+
+  /**
+   * Sound effect for Menu clicks
+   */
+  public static final String MENU2 = "/resources/sounds/menu2.wav";
+  /**
+   * Sound effect for Menu clicks
+   */
+  public static final String MENU3 = "/resources/sounds/menu3.wav";
+
+  /**
+   * Sound effect for Menu clicks
+   */
+  public static final String MENU4 = "/resources/sounds/menu4.wav";
+
+  /**
    * Is Sound enabled
    * @return True if sound enabled
    */
@@ -140,6 +161,32 @@ public final class SoundPlayer {
       nextSounds.remove(0);
     }
     return result;
+  }
+
+  /**
+   * Play menu sound. This should be called when button is pressed.
+   */
+  public static void playMenuSound() {
+    int i = DiceGenerator.getRandom(3);
+    switch (i) {
+    case 0: {
+      playSound(MENU1);
+      break;
+    }
+    case 1: {
+      playSound(MENU2);
+      break;
+    }
+    case 2: {
+      playSound(MENU3);
+      break;
+    }
+    default:
+    case 3: {
+      playSound(MENU4);
+      break;
+    }
+    }
   }
 
   /**

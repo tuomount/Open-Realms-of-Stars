@@ -12,6 +12,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.ShipStatRenderer;
@@ -182,6 +183,7 @@ public class ShipView extends BlackPanel {
       } else {
         stat.setObsolete(false);
       }
+      SoundPlayer.playMenuSound();
       shipList.setListData(this.player.getShipStatListInOrder());
     }
   }

@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.ShipListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -488,6 +489,7 @@ public class PlanetBombingView extends BlackPanel {
       textLogger.addLog("Changing to next ship in fleet...");
       resetComponentUsage();
       updatePanel();
+      SoundPlayer.playMenuSound();
     }
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)
         && imgBase.getAnimation() == null) {

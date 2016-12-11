@@ -18,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.FleetListRenderer;
@@ -405,6 +406,7 @@ public class FleetView extends BlackPanel {
         && fleet.getFreeSpaceForColonist() > 0 && planet != null
         && planet.takeColonist()) {
       fleet.addColonist();
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIST_MINUS)
@@ -418,6 +420,7 @@ public class FleetView extends BlackPanel {
             planet.getWorkers(Planet.PRODUCTION_WORKERS) + 1);
         fleet.removeColonist();
       }
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_METAL_CARGO_PLUS)
@@ -425,12 +428,14 @@ public class FleetView extends BlackPanel {
         && planet.getMetal() > 9) {
       fleet.addMetal();
       planet.setMetal(planet.getMetal() - 10);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_METAL_CARGO_MINUS)
         && fleet.getTotalCargoMetal() > 9 && planet != null) {
       fleet.removeMetal();
       planet.setMetal(planet.getMetal() + 10);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SPLIT_THE_FLEET)
@@ -446,6 +451,7 @@ public class FleetView extends BlackPanel {
         fleet.removeShip(ship);
       }
       fleetList.add(newFleet);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_MERGE_FLEETS)
@@ -463,7 +469,7 @@ public class FleetView extends BlackPanel {
           fleetList.remove(index);
         }
       }
-
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_DESTROY_THE_SHIP)
@@ -479,6 +485,7 @@ public class FleetView extends BlackPanel {
           }
         }
       }
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
   }

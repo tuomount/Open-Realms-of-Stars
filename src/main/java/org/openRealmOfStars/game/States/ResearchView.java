@@ -13,6 +13,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.TechListRenderer;
@@ -247,6 +248,7 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_COMBAT_RESEARCH)) {
       int value = combatRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Combat, value);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -255,6 +257,7 @@ public class ResearchView extends BlackPanel {
       if (value <= 100 - TechList.FINE_TUNE_VALUE) {
         value = value + TechList.FINE_TUNE_VALUE;
         player.getTechList().setTechFocus(TechType.Combat, value);
+        SoundPlayer.playMenuSound();
         updatePanel();
       }
     }
@@ -264,6 +267,7 @@ public class ResearchView extends BlackPanel {
       if (value >= TechList.FINE_TUNE_VALUE) {
         value = value - TechList.FINE_TUNE_VALUE;
         player.getTechList().setTechFocus(TechType.Combat, value);
+        SoundPlayer.playMenuSound();
         updatePanel();
       }
     }
@@ -273,6 +277,7 @@ public class ResearchView extends BlackPanel {
       lvl = lvl + 1;
       player.getTechList().setTechLevel(TechType.Combat, lvl);
       combatRese.setEnableUpgradeButton(false);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
 
@@ -280,6 +285,7 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_DEFENSE_RESEARCH)) {
       int value = defenseRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Defense, value);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -288,6 +294,7 @@ public class ResearchView extends BlackPanel {
       if (value <= 100 - TechList.FINE_TUNE_VALUE) {
         value = value + TechList.FINE_TUNE_VALUE;
         player.getTechList().setTechFocus(TechType.Defense, value);
+        SoundPlayer.playMenuSound();
         updatePanel();
       }
     }
@@ -297,6 +304,7 @@ public class ResearchView extends BlackPanel {
       if (value >= TechList.FINE_TUNE_VALUE) {
         value = value - TechList.FINE_TUNE_VALUE;
         player.getTechList().setTechFocus(TechType.Defense, value);
+        SoundPlayer.playMenuSound();
         updatePanel();
       }
     }
@@ -306,6 +314,7 @@ public class ResearchView extends BlackPanel {
       lvl = lvl + 1;
       player.getTechList().setTechLevel(TechType.Defense, lvl);
       defenseRese.setEnableUpgradeButton(false);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
 
@@ -313,6 +322,7 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_HULL_RESEARCH)) {
       int value = hullRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Hulls, value);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -321,6 +331,7 @@ public class ResearchView extends BlackPanel {
       if (value <= 100 - TechList.FINE_TUNE_VALUE) {
         value = value + TechList.FINE_TUNE_VALUE;
         player.getTechList().setTechFocus(TechType.Hulls, value);
+        SoundPlayer.playMenuSound();
         updatePanel();
       }
     }
@@ -330,6 +341,7 @@ public class ResearchView extends BlackPanel {
       if (value >= TechList.FINE_TUNE_VALUE) {
         value = value - TechList.FINE_TUNE_VALUE;
         player.getTechList().setTechFocus(TechType.Hulls, value);
+        SoundPlayer.playMenuSound();
         updatePanel();
       }
     }
@@ -339,6 +351,7 @@ public class ResearchView extends BlackPanel {
       lvl = lvl + 1;
       player.getTechList().setTechLevel(TechType.Hulls, lvl);
       hullRese.setEnableUpgradeButton(false);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
 
@@ -346,6 +359,7 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_IMPROVEMENT_RESEARCH)) {
       int value = improvementRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Improvements, value);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -354,6 +368,7 @@ public class ResearchView extends BlackPanel {
       if (value <= 100 - TechList.FINE_TUNE_VALUE) {
         value = value + TechList.FINE_TUNE_VALUE;
         player.getTechList().setTechFocus(TechType.Improvements, value);
+        SoundPlayer.playMenuSound();
         updatePanel();
       }
     }
@@ -363,6 +378,7 @@ public class ResearchView extends BlackPanel {
       if (value >= TechList.FINE_TUNE_VALUE) {
         value = value - TechList.FINE_TUNE_VALUE;
         player.getTechList().setTechFocus(TechType.Improvements, value);
+        SoundPlayer.playMenuSound();
         updatePanel();
       }
     }
@@ -373,6 +389,7 @@ public class ResearchView extends BlackPanel {
       lvl = lvl + 1;
       player.getTechList().setTechLevel(TechType.Improvements, lvl);
       improvementRese.setEnableUpgradeButton(false);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
 
@@ -380,6 +397,7 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_PROPULSION_RESEARCH)) {
       int value = propulsionRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Propulsion, value);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -388,6 +406,7 @@ public class ResearchView extends BlackPanel {
       if (value <= 100 - TechList.FINE_TUNE_VALUE) {
         value = value + TechList.FINE_TUNE_VALUE;
         player.getTechList().setTechFocus(TechType.Propulsion, value);
+        SoundPlayer.playMenuSound();
         updatePanel();
       }
     }
@@ -397,6 +416,7 @@ public class ResearchView extends BlackPanel {
       if (value >= TechList.FINE_TUNE_VALUE) {
         value = value - TechList.FINE_TUNE_VALUE;
         player.getTechList().setTechFocus(TechType.Propulsion, value);
+        SoundPlayer.playMenuSound();
         updatePanel();
       }
     }
@@ -407,6 +427,7 @@ public class ResearchView extends BlackPanel {
       lvl = lvl + 1;
       player.getTechList().setTechLevel(TechType.Propulsion, lvl);
       propulsionRese.setEnableUpgradeButton(false);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
 
@@ -414,6 +435,7 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_ELECTRONICS_RESEARCH)) {
       int value = electronicsRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Electrics, value);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -422,6 +444,7 @@ public class ResearchView extends BlackPanel {
       if (value <= 100 - TechList.FINE_TUNE_VALUE) {
         value = value + TechList.FINE_TUNE_VALUE;
         player.getTechList().setTechFocus(TechType.Electrics, value);
+        SoundPlayer.playMenuSound();
         updatePanel();
       }
     }
@@ -431,6 +454,7 @@ public class ResearchView extends BlackPanel {
       if (value >= TechList.FINE_TUNE_VALUE) {
         value = value - TechList.FINE_TUNE_VALUE;
         player.getTechList().setTechFocus(TechType.Electrics, value);
+        SoundPlayer.playMenuSound();
         updatePanel();
       }
     }
@@ -441,6 +465,7 @@ public class ResearchView extends BlackPanel {
       lvl = lvl + 1;
       player.getTechList().setTechLevel(TechType.Electrics, lvl);
       electronicsRese.setEnableUpgradeButton(false);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
 

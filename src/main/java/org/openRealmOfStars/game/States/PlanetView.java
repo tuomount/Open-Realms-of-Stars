@@ -14,6 +14,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.ProductionListRenderer;
@@ -500,6 +501,8 @@ public class PlanetView extends BlackPanel {
       Building building = buildingList.getSelectedValue();
       if (building != null) {
         planet.removeBuilding(building);
+        //TODO change sound effect later for better one
+        SoundPlayer.playMenuSound();
         updatePanel();
       }
     }
@@ -510,6 +513,7 @@ public class PlanetView extends BlackPanel {
           planet.getWorkers(Planet.FOOD_FARMERS) - 1);
       planet.setWorkers(Planet.CULTURE_ARTIST,
           planet.getWorkers(Planet.CULTURE_ARTIST) + 1);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_PLUS_FARM)
@@ -518,6 +522,7 @@ public class PlanetView extends BlackPanel {
           planet.getWorkers(Planet.FOOD_FARMERS) + 1);
       planet.setWorkers(Planet.CULTURE_ARTIST,
           planet.getWorkers(Planet.CULTURE_ARTIST) - 1);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -527,6 +532,7 @@ public class PlanetView extends BlackPanel {
           planet.getWorkers(Planet.METAL_MINERS) - 1);
       planet.setWorkers(Planet.CULTURE_ARTIST,
           planet.getWorkers(Planet.CULTURE_ARTIST) + 1);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_PLUS_MINE)
@@ -535,6 +541,7 @@ public class PlanetView extends BlackPanel {
           planet.getWorkers(Planet.METAL_MINERS) + 1);
       planet.setWorkers(Planet.CULTURE_ARTIST,
           planet.getWorkers(Planet.CULTURE_ARTIST) - 1);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -544,6 +551,7 @@ public class PlanetView extends BlackPanel {
           planet.getWorkers(Planet.PRODUCTION_WORKERS) - 1);
       planet.setWorkers(Planet.CULTURE_ARTIST,
           planet.getWorkers(Planet.CULTURE_ARTIST) + 1);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -553,6 +561,7 @@ public class PlanetView extends BlackPanel {
           planet.getWorkers(Planet.PRODUCTION_WORKERS) + 1);
       planet.setWorkers(Planet.CULTURE_ARTIST,
           planet.getWorkers(Planet.CULTURE_ARTIST) - 1);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -562,6 +571,7 @@ public class PlanetView extends BlackPanel {
           planet.getWorkers(Planet.RESEARCH_SCIENTIST) - 1);
       planet.setWorkers(Planet.CULTURE_ARTIST,
           planet.getWorkers(Planet.CULTURE_ARTIST) + 1);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -571,22 +581,26 @@ public class PlanetView extends BlackPanel {
           planet.getWorkers(Planet.RESEARCH_SCIENTIST) + 1);
       planet.setWorkers(Planet.CULTURE_ARTIST,
           planet.getWorkers(Planet.CULTURE_ARTIST) - 1);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_MINUS_TAX)) {
       planet.setTax(planet.getTax() - 1, false);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_PLUS_TAX)) {
       planet.setTax(planet.getTax() + 1, false);
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_PRODUCTION_LIST)) {
       planet.setUnderConstruction(
           (Construction) constructionSelect.getSelectedItem());
+      SoundPlayer.playMenuSound();
       updatePanel();
     }
   }

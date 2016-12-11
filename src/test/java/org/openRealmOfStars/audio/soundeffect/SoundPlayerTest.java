@@ -41,7 +41,6 @@ public class SoundPlayerTest {
     assertEquals(false, SoundPlayer.isSoundEnabled());
     SoundPlayer.setSoundEnabled(true);
     assertEquals(true, SoundPlayer.isSoundEnabled());
-    assertEquals(null,SoundPlayer.getNextSoundName());
   }
 
 }

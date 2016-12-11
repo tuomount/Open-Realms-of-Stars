@@ -57,6 +57,21 @@ public final class SoundPlayer {
   public static final String WEAPON_TORPEDO = "/resources/sounds/torpedo.wav";
 
   /**
+   * Sound effect for Ship explode
+   */
+  public static final String SHIP_EXPLODE = "/resources/sounds/explode.wav";
+
+  /**
+   * Sound effect for explosion
+   */
+  public static final String EXPLOSION = "/resources/sounds/explodemini.wav";
+
+  /**
+   * Sound effect for minor explosion
+   */
+  public static final String EXPLOSION_SMALL = "/resources/sounds/rumble.wav";
+
+  /**
    * Is Sound enabled
    * @return True if sound enabled
    */

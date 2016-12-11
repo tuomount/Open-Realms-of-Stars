@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.AnimatedImage;
 import org.openRealmOfStars.gui.mapPanel.ParticleEffect;
@@ -129,6 +130,11 @@ public class CombatAnimation {
   private boolean firstDraw;
 
   /**
+   * Name for explosion sound effect
+   */
+  private String explosionSfx;
+
+  /**
    * Combat Animation
    * @param shooter Ship who shot
    * @param target Ship who took the shot
@@ -171,11 +177,19 @@ public class CombatAnimation {
     particles = new ArrayList<>();
     if (weapon.getType() == ShipComponentType.WEAPON_ECM_TORPEDO) {
       explosionAnim = GuiStatics.EXPLOSION2;
+      //TODO Wrong SFX for ECM
+      explosionSfx = SoundPlayer.EXPLOSION;
     } else {
       if (hit == 0) {
         explosionAnim = GuiStatics.EXPLOSION3;
+        explosionSfx = SoundPlayer.EXPLOSION_SMALL;
       } else {
         explosionAnim = GuiStatics.EXPLOSION1;
+        if (target.getShip().getHullPoints() <= 0) {
+          explosionSfx = SoundPlayer.SHIP_EXPLODE;
+        } else {
+          explosionSfx = SoundPlayer.EXPLOSION;
+        }
       }
     }
     switch (weapon.getType()) {
@@ -257,6 +271,9 @@ public class CombatAnimation {
       if (count < FRAME_MARKER_WHEN_EXPLODE) {
         doAnimationHit(20);
         if (animFrame < explosionAnim.getMaxFrames()) {
+          if (animFrame == 0 && hit) {
+              SoundPlayer.playSound(explosionSfx);
+          }
           animFrame++;
         } else {
           showAnim = false;
@@ -287,6 +304,9 @@ public class CombatAnimation {
         count--;
         doAnimationHit(13);
         if (animFrame < explosionAnim.getMaxFrames()) {
+          if (animFrame == 0 && hit) {
+            SoundPlayer.playSound(explosionSfx);
+          }
           animFrame++;
         } else {
           showAnim = false;
@@ -312,6 +332,9 @@ public class CombatAnimation {
         count--;
         doAnimationHit(13);
         if (animFrame < explosionAnim.getMaxFrames()) {
+          if (animFrame == 0 && hit) {
+            SoundPlayer.playSound(explosionSfx);
+          }
           animFrame++;
         } else {
           showAnim = false;
@@ -348,6 +371,9 @@ public class CombatAnimation {
         count--;
         doAnimationHit(13);
         if (animFrame < explosionAnim.getMaxFrames()) {
+          if (animFrame == 0 && hit) {
+            SoundPlayer.playSound(explosionSfx);
+          }
           animFrame++;
         } else {
           showAnim = false;

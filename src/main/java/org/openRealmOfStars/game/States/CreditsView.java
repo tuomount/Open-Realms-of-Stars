@@ -89,6 +89,10 @@ public class CreditsView extends BlackPanel {
         + "Space combat weapons sounds by\n"
         + "Michel Baradari apollo-music.de\n"
         + "Licensed under CC BY 3.0 "
+        + "http://creativecommons.org/licenses/by/3.0/\n\n"
+        + "Space combat explosions sounds by\n"
+        + "Michel Baradari apollo-music.de\n"
+        + "Licensed under CC BY 3.0 "
         + "http://creativecommons.org/licenses/by/3.0/\n\n";
 
 

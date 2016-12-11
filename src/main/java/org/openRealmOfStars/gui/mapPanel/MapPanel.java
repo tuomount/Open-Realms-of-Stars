@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
@@ -35,6 +36,7 @@ import org.openRealmOfStars.starMap.SquareInfo;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
 /**
@@ -701,6 +703,32 @@ public class MapPanel extends JPanel {
     }
     if (combat.getAnimation() != null) {
       CombatAnimation anim = combat.getAnimation();
+      if (anim.isFirstDraw()) {
+        anim.setFirstDraw(false);
+        switch (anim.getWeapon().getType()) {
+        case WEAPON_BEAM: {
+          SoundPlayer.playSound(SoundPlayer.WEAPON_BEAM);
+          break;
+          }
+        case WEAPON_PHOTON_TORPEDO: {
+          SoundPlayer.playSound(SoundPlayer.WEAPON_TORPEDO);
+          break;
+          }
+        case WEAPON_RAILGUN: {
+          SoundPlayer.playSound(SoundPlayer.WEAPON_RAILGUN);
+          break;
+          }
+        case WEAPON_ECM_TORPEDO:
+        case WEAPON_HE_MISSILE: {
+          SoundPlayer.playSound(SoundPlayer.WEAPON_MISSILE);
+          break;
+          }
+        default: {
+          ErrorLogger.log("Unexpected weapon type, sound effect is missing!");
+        }
+        }
+      }
+
       if (anim.getWeapon().getType() == ShipComponentType.WEAPON_BEAM) {
         Stroke full = new BasicStroke(2, BasicStroke.CAP_SQUARE,
             BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);

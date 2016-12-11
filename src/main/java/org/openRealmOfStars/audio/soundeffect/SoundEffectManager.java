@@ -52,10 +52,6 @@ public class SoundEffectManager extends Thread {
    */
   private Clip[] clips = new Clip[MAX_SOUNDS];
   /**
-   * Audio names which are loaded for the clips
-   */
-  private String[] audioNames = new String[MAX_SOUNDS];
-  /**
    * Sound index which clip is next one to use
    */
   private int soundIndex = 0;
@@ -123,7 +119,6 @@ public class SoundEffectManager extends Thread {
           // Do nothing
         }
         clips[soundIndex].start();
-        audioNames[soundIndex] = name;
         soundIndex++;
         if (soundIndex == MAX_SOUNDS) {
           soundIndex = 0;

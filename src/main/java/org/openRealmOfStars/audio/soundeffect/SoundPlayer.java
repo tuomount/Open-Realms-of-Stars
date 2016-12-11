@@ -35,6 +35,26 @@ public final class SoundPlayer {
   }
 
   /**
+   * Sound effect for Beam weapons
+   */
+  public static final String WEAPON_BEAM = "/resources/sounds/beam.wav";
+
+  /**
+   * Sound effect for Railguns
+   */
+  public static final String WEAPON_RAILGUN = "/resources/sounds/railgun.wav";
+
+  /**
+   * Sound effect for missiles
+   */
+  public static final String WEAPON_MISSILE = "/resources/sounds/missile.wav";
+
+  /**
+   * Sound effect for Photon torpedo
+   */
+  public static final String WEAPON_TORPEDO = "/resources/sounds/torpedo.wav";
+
+  /**
    * Is Sound enabled
    * @return True if sound enabled
    */

@@ -124,6 +124,11 @@ public class CombatAnimation {
   private AnimatedImage explosionAnim;
 
   /**
+   * Is combat animation drawing first time and sound needs to played
+   */
+  private boolean firstDraw;
+
+  /**
    * Combat Animation
    * @param shooter Ship who shot
    * @param target Ship who took the shot
@@ -136,6 +141,7 @@ public class CombatAnimation {
   public CombatAnimation(final CombatShip shooter, final CombatShip target,
       final ShipComponent weapon, final int hit) {
     this.weapon = weapon;
+    this.firstDraw = true;
     this.target = target;
     this.shooter = shooter;
     if (hit <= 0) {
@@ -464,6 +470,23 @@ public class CombatAnimation {
    */
   public boolean isHit() {
     return hit;
+  }
+
+  /**
+   * Is combat animation being drawn first time. This can be
+   * used to sync audio to screen.
+   * @return True if this if first drawn
+   */
+  public boolean isFirstDraw() {
+    return firstDraw;
+  }
+
+  /**
+   * Set first draw
+   * @param firstDraw False if first drawn has been drawn.
+   */
+  public void setFirstDraw(final boolean firstDraw) {
+    this.firstDraw = firstDraw;
   }
 
 }

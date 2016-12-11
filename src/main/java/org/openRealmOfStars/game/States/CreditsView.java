@@ -84,7 +84,14 @@ public class CreditsView extends BlackPanel {
         + "http://opengameart.org/content/space-captain\n\n"
         + "Fonts are under SIL Open Font License, Version 1.1.\n"
         + "#Fonts by\n\n"
-        + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n";
+        + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"
+        + "#Sounds by\n\n"
+        + "Space combat weapons sounds by\n"
+        + "Michel Baradari apollo-music.de\n"
+        + "Licensed under CC BY 3.0 "
+        + "http://creativecommons.org/licenses/by/3.0/\n\n";
+
+
     InputStream is = CreditsView.class
         .getResourceAsStream("/resources/GPL2.txt");
     BufferedInputStream bis = new BufferedInputStream(is);

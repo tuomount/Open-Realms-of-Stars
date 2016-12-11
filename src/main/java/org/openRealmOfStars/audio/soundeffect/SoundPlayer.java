@@ -22,7 +22,9 @@ import java.util.ArrayList;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 *
-* Class for playing sound effects
+* Class for playing sound effects.
+* This is static class so there is easy access to play sound effects when
+* needed.
 *
 */
 public final class SoundPlayer {
@@ -79,7 +81,7 @@ public final class SoundPlayer {
    * List of Sound effect names going to SoundEffectManager. These sounds
    * are going to play next
    */
-  private static ArrayList<String> nextSounds = null;
+  private static ArrayList<String> nextSounds = new ArrayList<>();
 
   /**
    * Thread for AudioManager

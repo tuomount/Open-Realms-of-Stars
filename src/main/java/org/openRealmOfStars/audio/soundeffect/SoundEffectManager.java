@@ -61,7 +61,7 @@ public class SoundEffectManager extends Thread {
    * @param name Sound effect name
    * @return SoundEffect or null
    */
-  public SoundEffect getSoundEffect(final String name) {
+  private SoundEffect getSoundEffect(final String name) {
     SoundEffect result = soundEffects.get(name);
     if (result == null) {
       SoundRepository repository = new SoundRepository();

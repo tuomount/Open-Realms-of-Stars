@@ -52,7 +52,9 @@ public class CombatAnimationTest {
     Mockito.when(target.getShip()).thenReturn(ship);
 
     CombatAnimation anim = new CombatAnimation(shooter, target, weapon, -2);
-    
+    assertEquals(true,anim.isFirstDraw());
+    anim.setFirstDraw(false);
+    assertEquals(false,anim.isFirstDraw());
     assertEquals(shooter,anim.getShooter());
     assertEquals(target,anim.getTarget());
     assertEquals(weapon,anim.getWeapon());

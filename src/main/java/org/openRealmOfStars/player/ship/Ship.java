@@ -597,21 +597,29 @@ public class Ship extends Construction {
     case WEAPON_PHOTON_TORPEDO: {
       damage = weapon.getDamage();
       damage = damage - this.getShield();
+      int chance = 5;
+      if (weapon.getType() == ShipComponentType.WEAPON_BEAM) {
+        // Beam weapons have biggest chance to penetrate shields
+        // and armor but they have shortest range.
+        chance = 10;
+      }
       if (damage > 0) {
         this.setShield(this.getShield() - 1);
       } else {
-        if (this.getShield() / 2 < weapon.getDamage()) {
+        if (this.getShield() / 2 <= weapon.getDamage()
+            || DiceGenerator.getRandom(99) < chance) {
           this.setShield(this.getShield() - 1);
           return new ShipDamage(0, "Attack hit the shield!");
         }
-        return new ShipDamage(1, "Attack missed!");
+        return new ShipDamage(1, "Attack deflected to shield!");
       }
       damage = damage - this.getArmor() / 2;
       if (damage >= 0) {
         this.setArmor(this.getArmor() - 1);
       } else {
         damage = damage + this.getArmor() / 2;
-        if (this.getArmor() / 4 < damage) {
+        if (this.getArmor() / 4 <= damage
+           || DiceGenerator.getRandom(99) < chance) {
           this.setArmor(this.getArmor() - 1);
           return new ShipDamage(0, "Attack hit the armor!");
         }
@@ -625,18 +633,20 @@ public class Ship extends Construction {
       if (damage > 0) {
         this.setArmor(this.getArmor() - 1);
       } else {
-        if (this.getArmor() / 2 < weapon.getDamage()) {
+        if (this.getArmor() / 2 <= weapon.getDamage()
+            || DiceGenerator.getRandom(99) < 5) {
           this.setArmor(this.getArmor() - 1);
           return new ShipDamage(0, "Attack hit the armor!");
         }
-        return new ShipDamage(1, "Attack missed!");
+        return new ShipDamage(1, "Attack deflected to armor!");
       }
       damage = damage - this.getShield() / 2;
       if (damage >= 0) {
         this.setShield(this.getShield() - 1);
       } else {
         damage = damage + this.getShield() / 2;
-        if (this.getShield() / 4 < damage) {
+        if (this.getShield() / 4 <= damage
+            || DiceGenerator.getRandom(99) < 5) {
           this.setShield(this.getShield() - 1);
           return new ShipDamage(0, "Attack hit the shield!");
         }

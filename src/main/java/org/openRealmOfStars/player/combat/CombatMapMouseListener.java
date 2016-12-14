@@ -4,6 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.player.ship.ShipComponent;
@@ -156,6 +157,7 @@ public class CombatMapMouseListener extends MouseAdapter
         if (distance == 1 && !combat.isBlocked(coord.getMapX(),
             coord.getMapY())
             && combat.getCurrentShip().getMovesLeft() > 0) {
+          SoundPlayer.playEngineSound();
           combat.getCurrentShip().setX(coord.getMapX());
           combat.getCurrentShip().setY(coord.getMapY());
           combat.getCurrentShip()

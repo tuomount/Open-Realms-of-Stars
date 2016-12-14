@@ -93,6 +93,21 @@ public final class SoundPlayer {
   public static final String MENU4 = "/resources/sounds/menu4.wav";
 
   /**
+   * Sound effect for space ship engine
+   */
+  public static final String ENGINE1 = "/resources/sounds/engine1.wav";
+
+  /**
+   * Sound effect for space ship engine
+   */
+  public static final String ENGINE2 = "/resources/sounds/engine2.wav";
+
+  /**
+   * Sound effect for space ship engine
+   */
+  public static final String ENGINE3 = "/resources/sounds/engine3.wav";
+
+  /**
    * Is Sound enabled
    * @return True if sound enabled
    */
@@ -184,6 +199,28 @@ public final class SoundPlayer {
     default:
     case 3: {
       playSound(MENU4);
+      break;
+    }
+    }
+  }
+
+  /**
+   * Play Engine sound for space ships
+   */
+  public static void playEngineSound() {
+    int i = DiceGenerator.getRandom(2);
+    switch (i) {
+    case 0: {
+      playSound(ENGINE1);
+      break;
+    }
+    case 1: {
+      playSound(ENGINE2);
+      break;
+    }
+    default:
+    case 2: {
+      playSound(ENGINE3);
       break;
     }
     }

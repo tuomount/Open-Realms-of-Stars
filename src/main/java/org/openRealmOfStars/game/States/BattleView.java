@@ -339,6 +339,7 @@ public class BattleView extends BlackPanel {
         ai.setX(point.getX());
         ai.setY(point.getY());
         aStar.nextMove();
+        SoundPlayer.playEngineSound();
       }
       handleAIShoot(ai, deadliest);
     } else {

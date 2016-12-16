@@ -61,8 +61,9 @@ public class FleetListTest {
     assertEquals(fleet1,fleets.getNext());
     assertEquals(fleet3,fleets.getPrev());
     assertEquals(fleet2,fleets.getPrev());
-    assertEquals(true,fleets.isUniqueName("No such"));
-    assertEquals(false,fleets.isUniqueName("fleet #2"));
+    assertEquals(true,fleets.isUniqueName("No such", null));
+    assertEquals(false,fleets.isUniqueName("fleet #2", null));
+    assertEquals(true,fleets.isUniqueName("fleet #2", fleet2));
     fleets.remove(0);
     assertEquals(2,fleets.getNumberOfFleets());
     assertEquals(fleet3,fleets.getPrev());

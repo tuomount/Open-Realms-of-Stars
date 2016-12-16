@@ -125,12 +125,18 @@ public class FleetList {
    * Is certain name unique for player's fleet. Check is done
    * without case sensitive.
    * @param name Fleet name to check
+   * @param toIgnore Fleet to ignore, if null then check each fleet
    * @return True if name is unique.
    */
-  public boolean isUniqueName(final String name) {
+  public boolean isUniqueName(final String name, final Fleet toIgnore) {
     boolean unique = true;
     for (Fleet ite : fleetList) {
-      if (ite.getName().equalsIgnoreCase(name)) {
+      if (toIgnore == null && ite.getName().equalsIgnoreCase(name)) {
+        unique = false;
+        break;
+      }
+      if (toIgnore != null && toIgnore != ite
+          && ite.getName().equalsIgnoreCase(name)) {
         unique = false;
         break;
       }

@@ -322,9 +322,17 @@ public class FleetView extends BlackPanel {
     scroll = new JScrollPane(fleetsInSpace);
     eastPanel.add(scroll);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    fleetBtns = new InvisiblePanel(eastPanel);
+    fleetBtns.setLayout(new BoxLayout(fleetBtns, BoxLayout.X_AXIS));
+
     btn = new SpaceButton("Merge", GameCommands.COMMAND_MERGE_FLEETS);
     btn.addActionListener(listener);
-    eastPanel.add(btn);
+    fleetBtns.add(btn);
+    fleetBtns.add(Box.createRigidArea(new Dimension(5, 5)));
+    btn = new SpaceButton("Switch", GameCommands.COMMAND_SWITCH_FLEETS);
+    btn.addActionListener(listener);
+    fleetBtns.add(btn);
+    eastPanel.add(fleetBtns);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 175)));
 
     // Bottom panel
@@ -474,6 +482,25 @@ public class FleetView extends BlackPanel {
           fleetList.remove(index);
         }
       }
+      SoundPlayer.playMenuSound();
+      updatePanel();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SWITCH_FLEETS)
+        && fleetsInSpace.getSelectedIndices().length == 1) {
+      Fleet switchFleet = fleetsInSpace.getSelectedValuesList().get(0);
+      shipsInFleet.setListData(switchFleet.getShips());
+      fleet = switchFleet;
+      ArrayList<Fleet> othFleets = new ArrayList<>();
+      for (int i = 0; i < fleetList.getNumberOfFleets(); i++) {
+        Fleet ite = fleetList.getByIndex(i);
+        if (ite.getX() == fleet.getX() && ite.getY() == fleet.getY()
+            && !ite.getName().equals(fleet.getName())) {
+          othFleets.add(ite);
+        }
+      }
+      Fleet[] otherFleets = othFleets.toArray(new Fleet[othFleets.size()]);
+      fleetsInSpace.setListData(otherFleets);
+      fleetNameText.setText(fleet.getName());
       SoundPlayer.playMenuSound();
       updatePanel();
     }

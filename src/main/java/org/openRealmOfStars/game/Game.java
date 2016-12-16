@@ -309,14 +309,24 @@ public class Game extends JFrame implements ActionListener {
 
   /**
    * Show Star Map panels
+   * @param object to show on map, Currently work only with fleet.
    */
-  public void showStarMap() {
+  public void showStarMap(final Object object) {
     starMapView = new StarMapView(starMap, players, this);
     this.getContentPane().removeAll();
     this.add(starMapView);
     this.validate();
     starMapView.setAutoFocus(false);
-    focusOnMessage(true);
+    if (object == null) {
+      focusOnMessage(true);
+    } else if (object instanceof Fleet) {
+      Fleet fleet = (Fleet) object;
+      if (fleet != null) {
+        starMapView.setShowFleet(fleet);
+        starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
+        starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
+      }
+    }
   }
 
   /**
@@ -551,7 +561,7 @@ public class Game extends JFrame implements ActionListener {
       showCredits();
       break;
     case STARMAP:
-      showStarMap();
+      showStarMap(dataObject);
       break;
     case COMBAT: {
       if (dataObject instanceof Combat) {
@@ -824,13 +834,16 @@ public class Game extends JFrame implements ActionListener {
       if (gameState == GameState.PLANETVIEW) {
         planetView = null;
       }
-      if (gameState == GameState.FLEETVIEW) {
-        fleetView = null;
-      }
       if (gameState == GameState.RESEARCHVIEW) {
         researchView = null;
       }
-      changeGameState(GameState.STARMAP);
+      if (gameState == GameState.FLEETVIEW) {
+        Fleet fleet = fleetView.getFleet();
+        fleetView = null;
+        changeGameState(GameState.STARMAP, fleet);
+      } else {
+        changeGameState(GameState.STARMAP);
+      }
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_VIEW_RESEARCH)) {

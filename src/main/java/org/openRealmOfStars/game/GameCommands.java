@@ -426,6 +426,11 @@ public final class GameCommands {
   public static final String COMMAND_MERGE_FLEETS = "MergeFleets";
 
   /**
+   * Switch to fleet
+   */
+  public static final String COMMAND_SWITCH_FLEETS = "SwitchFleets";
+
+  /**
    * Colonist plus command
    */
   public static final String COMMAND_COLONIST_PLUS = "ColonistPlus";

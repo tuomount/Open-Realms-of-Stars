@@ -30,9 +30,9 @@ import org.openRealmOfStars.starMap.Route;
  * along with this program; if not, see http://www.gnu.org/licenses/
  * 
  * 
- * Test for Fleet class
+ * Test for FleetList class
  */
-public class FleetTest {
+public class FleetListTest {
 
   /**
    * Create first ship
@@ -95,74 +95,42 @@ public class FleetTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testFleetWithOneShip() {
-    Route route = Mockito.mock(Route.class);
-    AStarSearch asearch = Mockito.mock(AStarSearch.class);
-    Ship ship = createShipOne();
-    Fleet fleet = new Fleet(ship, 2, 3);
-    assertEquals(2, fleet.getCoordinate().getX());
-    assertEquals(3, fleet.getCoordinate().getY());
-    assertEquals("Fleet #-1",fleet.getName());
-    fleet.setName("Test-Fleet");
-    assertEquals("Test-Fleet",fleet.getName());
-    assertEquals(ship,fleet.getFirstShip());
-    assertEquals(2, fleet.getFleetFtlSpeed());
-    assertEquals(40, fleet.getFleetCloakDetection());
-    assertEquals(2, fleet.getFleetScannerLvl());
-    assertEquals(1, fleet.getFleetSpeed());
-    assertEquals(1, fleet.getNumberOfShip());
-    assertEquals(0, fleet.getFreeSpaceForColonist());
-    assertEquals(0, fleet.getFreeSpaceForMetal());
-    assertEquals(true, fleet.allFixed());
-    fleet.setMovesLeft(2);
-    assertEquals(2, fleet.getMovesLeft());
-    fleet.decMovesLeft();
-    assertEquals(1, fleet.getMovesLeft());
-    fleet.setRoute(route);
-    assertEquals(route, fleet.getRoute());
-    fleet.setaStarSearch(asearch);
-    assertEquals(asearch,fleet.getaStarSearch());
-    assertEquals(false, fleet.isPrivateerFleet());
-    PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getEmpireName()).thenReturn("Terran alliance");
-    assertEquals("Test-Fleet\nTerran alliance\nSpeed: 1 FTL: 2\nMoves:1\nScout"
-        + "\n\nEnroute", fleet.getInfoAsText(info));
+  public void testFleetList() {
+    Fleet fleet1 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet1.getName()).thenReturn("Fleet #1");
+    Fleet fleet2 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet2.getName()).thenReturn("Fleet #2");
+    Fleet fleet3 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet3.getName()).thenReturn("Fleet #3");
+    FleetList fleets = new FleetList();
+    assertEquals(0,fleets.getNumberOfFleets());
+    assertEquals(null,fleets.getCurrent());
+    fleets.add(fleet1);
+    assertEquals(1,fleets.getNumberOfFleets());
+    assertEquals(fleet1,fleets.getCurrent());
+    assertEquals(fleet1,fleets.getNext());
+    assertEquals(fleet1,fleets.getPrev());
+    fleets.add(fleet2);
+    assertEquals(2,fleets.getNumberOfFleets());
+    assertEquals(fleet1,fleets.getCurrent());
+    assertEquals(fleet2,fleets.getNext());
+    assertEquals(fleet1,fleets.getPrev());
+    assertEquals(fleet2,fleets.getByIndex(1));
+    fleets.add(fleet3);
+    assertEquals(3,fleets.getNumberOfFleets());
+    assertEquals(fleet1,fleets.getCurrent());
+    assertEquals(fleet2,fleets.getNext());
+    assertEquals(fleet3,fleets.getNext());
+    assertEquals(fleet1,fleets.getNext());
+    assertEquals(fleet3,fleets.getPrev());
+    assertEquals(fleet2,fleets.getPrev());
+    fleets.remove(0);
+    assertEquals(2,fleets.getNumberOfFleets());
+    assertEquals(fleet3,fleets.getPrev());
+    assertEquals(fleet2,fleets.getNext());
+    assertEquals(fleet2,fleets.getByName("Fleet #2"));
+    assertEquals(2,fleets.howManyFleetWithStartingNames("Fleet #"));
   }
 
-  @Test
-  @Category(org.openRealmOfStars.UnitTest.class)
-  public void testFleetWithTwoShip() {
-    Ship ship = createShipOne();
-    Fleet fleet = new Fleet(ship, 2, 3);
-    Ship colony = createShipTwo();
-    fleet.addShip(colony);
-    assertEquals(ship,fleet.getFirstShip());
-    assertEquals(ship,fleet.getShipByIndex(0));
-    assertEquals(colony,fleet.getShipByIndex(1));
-    assertEquals(1, fleet.getFleetFtlSpeed());
-    assertEquals(40, fleet.getFleetCloakDetection());
-    assertEquals(2, fleet.getFleetScannerLvl());
-    assertEquals(1, fleet.getFleetSpeed());
-    assertEquals(2, fleet.getNumberOfShip());
-    assertEquals(4, fleet.getFreeSpaceForColonist());
-    assertEquals(20, fleet.getFreeSpaceForMetal());
-    assertEquals(true, fleet.allFixed());
-    assertEquals(false, fleet.isPrivateerFleet());
-    assertEquals("Fleet #-1\nSpeed: 1 FTL: 1\nMoves:0\nScout\nColony"
-        + "\n", fleet.getInfoAsText(null));
-  }
-
-  @Test
-  @Category(org.openRealmOfStars.UnitTest.class)
-  public void testFleetWithTwoPrivateer() {
-    Ship privateer = createPrivateerShipOne();
-    Fleet fleet = new Fleet(privateer, 2, 3);
-    fleet.addShip(privateer);
-    assertEquals(true, fleet.isPrivateerFleet());
-    PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    Mockito.when(info.getEmpireName()).thenReturn("Terran alliance");
-    assertEquals("Fleet #-1\nPrivateer fleet\nSpeed: 1 FTL: 2\nMoves:0"
-        + "\nPrivateer\nPrivateer\n", fleet.getInfoAsText(info));
-  }
 
 }

@@ -97,6 +97,9 @@ public class FleetList {
         }
       }
     }
+    if (fleetList.size() == 0) {
+      index = 0;
+    }
     fleetNum = fleetNum + 1;
     fleetList.add(fleet);
     fleet.setName("Fleet #" + fleetNum);
@@ -123,6 +126,12 @@ public class FleetList {
    * @param indexToRemove to remove
    */
   public void remove(final int indexToRemove) {
+    if (indexToRemove <= index) {
+      index--;
+      if (index < 0) {
+        index = 0;
+      }
+    }
     fleetList.remove(indexToRemove);
   }
 

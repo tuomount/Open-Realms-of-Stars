@@ -167,7 +167,7 @@ public class MessageList {
 
   @Override
   public String toString() {
-    return "MessageList " + index + " / " + list.size();
+    return "MessageList " + (index + 1) + " / " + list.size();
   }
 
 }

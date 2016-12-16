@@ -122,6 +122,23 @@ public class FleetList {
   }
 
   /**
+   * Is certain name unique for player's fleet. Check is done
+   * without case sensitive.
+   * @param name Fleet name to check
+   * @return True if name is unique.
+   */
+  public boolean isUniqueName(final String name) {
+    boolean unique = true;
+    for (Fleet ite : fleetList) {
+      if (ite.getName().equalsIgnoreCase(name)) {
+        unique = false;
+        break;
+      }
+    }
+    return unique;
+  }
+
+  /**
    * Remove fleet from the list by index
    * @param indexToRemove to remove
    */

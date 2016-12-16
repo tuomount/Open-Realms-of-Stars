@@ -6,10 +6,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
-import org.openRealmOfStars.AI.PathFinding.AStarSearch;
-import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.ship.Ship;
-import org.openRealmOfStars.starMap.Route;
 
 /**
  * 
@@ -33,65 +29,6 @@ import org.openRealmOfStars.starMap.Route;
  * Test for FleetList class
  */
 public class FleetListTest {
-
-  /**
-   * Create first ship
-   * @return First ship
-   */
-  private static Ship createShipOne() {
-    Ship ship = Mockito.mock(Ship.class);
-    Mockito.when(ship.getFtlSpeed()).thenReturn(2);
-    Mockito.when(ship.getScannerDetectionLvl()).thenReturn(40);
-    Mockito.when(ship.getScannerLvl()).thenReturn(2);
-    Mockito.when(ship.getSpeed()).thenReturn(1);
-    Mockito.when(ship.getFreeCargoColonists()).thenReturn(0);
-    Mockito.when(ship.getFreeCargoMetal()).thenReturn(0);
-    Mockito.when(ship.getHullPoints()).thenReturn(4);
-    Mockito.when(ship.getMaxHullPoints()).thenReturn(4);
-    Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
-    Mockito.when(ship.getName()).thenReturn("Scout");
-    return ship;
-  }
-
-  /**
-   * Create second ship, colony in this case
-   * @return Colony ship
-   */
-  private static Ship createShipTwo() {
-    Ship ship = Mockito.mock(Ship.class);
-    Mockito.when(ship.getFtlSpeed()).thenReturn(1);
-    Mockito.when(ship.getScannerDetectionLvl()).thenReturn(0);
-    Mockito.when(ship.getScannerLvl()).thenReturn(0);
-    Mockito.when(ship.getSpeed()).thenReturn(1);
-    Mockito.when(ship.getFreeCargoColonists()).thenReturn(4);
-    Mockito.when(ship.getFreeCargoMetal()).thenReturn(20);
-    Mockito.when(ship.getHullPoints()).thenReturn(6);
-    Mockito.when(ship.getMaxHullPoints()).thenReturn(6);
-    Mockito.when(ship.isColonyModule()).thenReturn(true);
-    Mockito.when(ship.isColonyShip()).thenReturn(true);
-    Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
-    Mockito.when(ship.getName()).thenReturn("Colony");
-    return ship;
-  }
-
-  /**
-   * Create privateer ship
-   * @return Privateer ship
-   */
-  private static Ship createPrivateerShipOne() {
-    Ship ship = Mockito.mock(Ship.class);
-    Mockito.when(ship.getFtlSpeed()).thenReturn(2);
-    Mockito.when(ship.getScannerDetectionLvl()).thenReturn(40);
-    Mockito.when(ship.getScannerLvl()).thenReturn(2);
-    Mockito.when(ship.getSpeed()).thenReturn(1);
-    Mockito.when(ship.getFreeCargoColonists()).thenReturn(2);
-    Mockito.when(ship.getFreeCargoMetal()).thenReturn(10);
-    Mockito.when(ship.getHullPoints()).thenReturn(4);
-    Mockito.when(ship.getMaxHullPoints()).thenReturn(4);
-    Mockito.when(ship.isPrivateeringShip()).thenReturn(true);
-    Mockito.when(ship.getName()).thenReturn("Privateer");
-    return ship;
-  }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
@@ -124,6 +61,8 @@ public class FleetListTest {
     assertEquals(fleet1,fleets.getNext());
     assertEquals(fleet3,fleets.getPrev());
     assertEquals(fleet2,fleets.getPrev());
+    assertEquals(true,fleets.isUniqueName("No such"));
+    assertEquals(false,fleets.isUniqueName("fleet #2"));
     fleets.remove(0);
     assertEquals(2,fleets.getNumberOfFleets());
     assertEquals(fleet3,fleets.getPrev());

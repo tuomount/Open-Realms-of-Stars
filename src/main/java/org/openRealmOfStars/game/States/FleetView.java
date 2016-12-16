@@ -255,7 +255,9 @@ public class FleetView extends BlackPanel {
 
       @Override
       public void keyReleased(final KeyEvent e) {
-        getFleet().setName(fleetNameText.getText());
+        if (fleetList.isUniqueName(fleetNameText.getText())) {
+          getFleet().setName(fleetNameText.getText());
+        }
       }
 
       @Override

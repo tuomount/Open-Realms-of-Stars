@@ -272,9 +272,10 @@ public class Game extends JFrame implements ActionListener {
   /**
    * Show planet view panel
    * @param planet Planet to show
+   * @param interactive Show planet view as interactive if true
    */
-  public void showPlanetView(final Planet planet) {
-    planetView = new PlanetView(planet, this);
+  public void showPlanetView(final Planet planet, final boolean interactive) {
+    planetView = new PlanetView(planet, interactive, this);
     this.getContentPane().removeAll();
     this.add(planetView);
     this.validate();
@@ -590,14 +591,23 @@ public class Game extends JFrame implements ActionListener {
         Planet planet = starMap.getPlanetByCoordinate(focusMessage.getX(),
             focusMessage.getY());
         if (planet != null) {
+          boolean interactive = false;
+          if (starMap.getCurrentPlayerInfo() == planet.getPlanetPlayerInfo()) {
+            interactive = true;
+          }
           starMap.setCursorPos(focusMessage.getX(), focusMessage.getY());
           starMap.setDrawPos(focusMessage.getX(), focusMessage.getY());
-          showPlanetView(planet);
+          showPlanetView(planet, interactive);
         }
       } else if (starMapView.getStarMapMouseListener()
           .getLastClickedPlanet() != null) {
-        showPlanetView(
-            starMapView.getStarMapMouseListener().getLastClickedPlanet());
+        boolean interactive = false;
+        Planet planet = starMapView.getStarMapMouseListener()
+            .getLastClickedPlanet();
+        if (starMap.getCurrentPlayerInfo() == planet.getPlanetPlayerInfo()) {
+          interactive = true;
+        }
+        showPlanetView(planet, interactive);
       }
       break;
     }

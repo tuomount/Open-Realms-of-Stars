@@ -172,9 +172,11 @@ public class PlanetView extends BlackPanel {
   /**
    * Planet view constructor. Planet view for viewing planet.
    * @param planet Planet to view
+   * @param interactive If true view contains full planet controls.
    * @param listener Action listener for commands
    */
-  public PlanetView(final Planet planet, final ActionListener listener) {
+  public PlanetView(final Planet planet, final boolean interactive,
+      final ActionListener listener) {
     this.setPlanet(planet);
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true, null);
@@ -198,12 +200,14 @@ public class PlanetView extends BlackPanel {
         Icons.ICON_FARM, ": " + planet.getWorkers(Planet.FOOD_FARMERS),
         "Number of people working as a farmers.", listener);
     farmPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    farmPanel.setInteractive(interactive);
     invisible.add(farmPanel);
     minePanel = new WorkerProductionPanel(invisible,
         GameCommands.COMMAND_MINUS_MINE, GameCommands.COMMAND_PLUS_MINE,
         Icons.ICON_MINE, ": " + planet.getWorkers(Planet.METAL_MINERS),
         "Number of people working as a miners.", listener);
     minePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    minePanel.setInteractive(interactive);
     invisible.add(minePanel);
     factoryPanel = new WorkerProductionPanel(invisible,
         GameCommands.COMMAND_MINUS_PRODUCTION,
@@ -211,6 +215,7 @@ public class PlanetView extends BlackPanel {
         ": " + planet.getWorkers(Planet.PRODUCTION_WORKERS),
         "Number of people working as a factory worker.", listener);
     factoryPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    factoryPanel.setInteractive(interactive);
     invisible.add(factoryPanel);
     resePanel = new WorkerProductionPanel(invisible,
         GameCommands.COMMAND_MINUS_RESEARCH, GameCommands.COMMAND_PLUS_RESEARCH,
@@ -218,6 +223,7 @@ public class PlanetView extends BlackPanel {
         ": " + planet.getWorkers(Planet.RESEARCH_SCIENTIST),
         "Number of people working as a scientist.", listener);
     resePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    resePanel.setInteractive(interactive);
     invisible.add(resePanel);
     cultureLabel = new IconLabel(invisible,
         Icons.getIconByName(Icons.ICON_CULTURE),
@@ -296,6 +302,7 @@ public class PlanetView extends BlackPanel {
         Icons.ICON_TAX, ": " + planet.getTax(),
         "How many productions are converted to credits", listener);
     taxPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    taxPanel.setInteractive(interactive);
     invisible.add(taxPanel);
 
     metal = new IconLabel(invisible, Icons.getIconByName(Icons.ICON_METAL),
@@ -336,6 +343,7 @@ public class PlanetView extends BlackPanel {
       }
     }
     constructionSelect.setEditable(false);
+    constructionSelect.setEnabled(interactive);
     constructionSelect.setAlignmentX(Component.RIGHT_ALIGNMENT);
     invisible.add(constructionSelect);
     invisible.add(Box.createRigidArea(new Dimension(60, 5)));
@@ -383,6 +391,7 @@ public class PlanetView extends BlackPanel {
     demolishBuildingBtn
         .setSpaceIcon(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
     demolishBuildingBtn.addActionListener(listener);
+    demolishBuildingBtn.setEnabled(interactive);
     eastPanel.add(demolishBuildingBtn);
 
     imgBase.setLayout(new BorderLayout());

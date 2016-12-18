@@ -88,6 +88,15 @@ public class WorkerProductionPanel extends InvisiblePanel {
   }
 
   /**
+   * Disable or enable buttons on worker production panel
+   * @param interactive True to enable buttons
+   */
+  public void setInteractive(final boolean interactive) {
+    btnMinus.setEnabled(interactive);
+    btnPlus.setEnabled(interactive);
+  }
+
+  /**
    * Set label text
    * @param text to show
    */

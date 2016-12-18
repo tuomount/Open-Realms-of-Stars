@@ -137,11 +137,12 @@ public class FleetView extends BlackPanel {
    * @param fleet Fleet orbiting
    * @param fleetList Player Fleet list
    * @param playerInfo Player info who's fleet is being viewed
+   * @param interactive Is Fleet view interactive for current player
    * @param listener Action listener for commands
    */
   public FleetView(final Planet planet, final Fleet fleet,
       final FleetList fleetList, final PlayerInfo playerInfo,
-      final ActionListener listener) {
+      final boolean interactive, final ActionListener listener) {
     this.setPlanet(planet);
     this.setFleet(fleet);
     this.setFleetList(fleetList);
@@ -171,12 +172,14 @@ public class FleetView extends BlackPanel {
           conquerBtn = new SpaceButton("Conquer",
               GameCommands.COMMAND_CONQUEST);
           conquerBtn.addActionListener(listener);
+          conquerBtn.setEnabled(interactive);
         }
       } else {
         ownerLabel = new TransparentLabel(invisible, "Uncolonized planet");
         colonizeBtn = new SpaceButton("Colonize",
             GameCommands.COMMAND_COLONIZE);
         colonizeBtn.addActionListener(listener);
+        colonizeBtn.setEnabled(interactive);
       }
       invisible.add(ownerLabel);
       totalPeople = new IconLabel(invisible,
@@ -268,6 +271,7 @@ public class FleetView extends BlackPanel {
         // Nothing to do here
       }
     });
+    fleetNameText.setEnabled(interactive);
     eastPanel.add(fleetNameText);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new TransparentLabel(eastPanel, "Ships in fleet");
@@ -287,6 +291,7 @@ public class FleetView extends BlackPanel {
     SpaceButton btn = new SpaceButton("Split",
         GameCommands.COMMAND_SPLIT_THE_FLEET);
     btn.addActionListener(listener);
+    btn.setEnabled(interactive);
     fleetBtns.add(btn);
     fleetBtns.add(Box.createRigidArea(new Dimension(5, 5)));
     if (planet != null && planet.getRecycleBonus() > 0) {
@@ -298,6 +303,7 @@ public class FleetView extends BlackPanel {
       btn.setToolTipText("Destroy the ship, lose the all metal on ship");
       btn.addActionListener(listener);
     }
+    btn.setEnabled(interactive);
     fleetBtns.add(btn);
     eastPanel.add(fleetBtns);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -327,10 +333,12 @@ public class FleetView extends BlackPanel {
 
     btn = new SpaceButton("Merge", GameCommands.COMMAND_MERGE_FLEETS);
     btn.addActionListener(listener);
+    btn.setEnabled(interactive);
     fleetBtns.add(btn);
     fleetBtns.add(Box.createRigidArea(new Dimension(5, 5)));
     btn = new SpaceButton("Switch", GameCommands.COMMAND_SWITCH_FLEETS);
     btn.addActionListener(listener);
+    btn.setEnabled(interactive);
     fleetBtns.add(btn);
     eastPanel.add(fleetBtns);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 175)));

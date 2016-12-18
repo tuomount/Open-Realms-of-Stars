@@ -890,6 +890,23 @@ public class StarMap {
   }
 
   /**
+   * Get Player info by fleet coordinates. If not found then null is returned.
+   * @param fleet Fleet to search
+   * @return PlayerInfo or null
+   */
+  public PlayerInfo getPlayerInfoByFleet(final Fleet fleet) {
+    if (fleet != null) {
+      int x = fleet.getX();
+      int y = fleet.getY();
+      if (isValidCoordinate(x, y) && fleetTiles != null
+          && fleetTiles[x][y] != null) {
+        int playerIndex = fleetTiles[x][y].getPlayerIndex();
+        return players.getPlayerInfoByIndex(playerIndex);
+      }
+    }
+    return null;
+  }
+  /**
    * Get Array of Planets
    * @return Planet list
    */

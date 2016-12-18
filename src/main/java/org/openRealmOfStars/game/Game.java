@@ -298,11 +298,13 @@ public class Game extends JFrame implements ActionListener {
    * Show fleet view panel
    * @param planet Planet to show
    * @param fleet Fleet to show
+   * @param interactive If true then player can edit the fleet
    */
-  public void showFleetView(final Planet planet, final Fleet fleet) {
+  public void showFleetView(final Planet planet, final Fleet fleet,
+      final boolean interactive) {
     fleetView = new FleetView(planet, fleet,
         players.getCurrentPlayerInfo().getFleets(),
-        players.getCurrentPlayerInfo(), this);
+        players.getCurrentPlayerInfo(), interactive, this);
     this.getContentPane().removeAll();
     this.add(fleetView);
     this.validate();
@@ -617,7 +619,12 @@ public class Game extends JFrame implements ActionListener {
             .getLastClickedFleet();
         Planet planet = starMap.getPlanetByCoordinate(fleet.getX(),
             fleet.getY());
-        showFleetView(planet, fleet);
+        boolean interactive = false;
+        if (starMap.getCurrentPlayerInfo() == starMap
+            .getPlayerInfoByFleet(fleet)) {
+          interactive = true;
+        }
+        showFleetView(planet, fleet, interactive);
       }
       break;
     }

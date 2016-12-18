@@ -2,7 +2,9 @@ package org.openRealmOfStars.mapTiles;
 
 import static org.junit.Assert.assertEquals;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.RasterFormatException;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -47,6 +49,22 @@ public class TileTest {
     assertEquals(-1,tile.getIndex());
     tile.setIndex(0);
     assertEquals(0,tile.getIndex());
+    Graphics2D g2d = Mockito.mock(Graphics2D.class);
+    tile.draw(g2d, 0, 0);
+  }
+
+  @Test(expected=RasterFormatException.class)
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTileFail() {
+    BufferedImage img = Mockito.mock(BufferedImage.class);
+    BufferedImage img2 = Mockito.mock(BufferedImage.class);
+    Mockito.when(img.getWidth()).thenReturn(16);
+    Mockito.when(img.getHeight()).thenReturn(16);
+    Mockito.when(img.getSubimage(2 * Tile.MAX_WIDTH, 2 * Tile.MAX_HEIGHT,
+        Tile.MAX_WIDTH, Tile.MAX_HEIGHT)).thenReturn(img2);
+    
+    Tile tile = new Tile(img, 2, 2, "Test");
+    tile.getName();
   }
 
 }

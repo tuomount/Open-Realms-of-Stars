@@ -85,7 +85,7 @@ public class Ship extends Construction {
   public Ship(final ShipDesign design) {
     super(design.getName(), Icons.getIconByName(Icons.ICON_HULL_TECH));
     setProdCost(design.getCost());
-    setMetal(design.getMetalCost());
+    setMetalCost(design.getMetalCost());
     hull = design.getHull();
     components = new ArrayList<>();
     ShipComponent[] designComponents = design.getComponentList();

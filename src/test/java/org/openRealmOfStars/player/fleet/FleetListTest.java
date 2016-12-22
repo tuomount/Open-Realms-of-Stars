@@ -6,6 +6,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipHull;
 
 /**
  * 
@@ -70,6 +72,29 @@ public class FleetListTest {
     assertEquals(fleet2,fleets.getNext());
     assertEquals(fleet2,fleets.getByName("Fleet #2"));
     assertEquals(2,fleets.howManyFleetWithStartingNames("Fleet #"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFleetListUniqueNameGeneration() {
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getName()).thenReturn("Test hull");
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getHull()).thenReturn(hull);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getFirstShip()).thenReturn(ship);
+    Fleet fleet1 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet1.getName()).thenReturn("Fleet #1");
+    Fleet fleet2 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet2.getName()).thenReturn("Fleet #2");
+    Fleet fleet3 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet3.getName()).thenReturn("Fleet #3");
+    FleetList fleets = new FleetList();
+    assertEquals("Fleet #0", fleets.generateUniqueName(fleet));
+    fleets.add(fleet1);
+    fleets.add(fleet2);
+    fleets.add(fleet3);
+    assertEquals("Fleet #4", fleets.generateUniqueName(fleet));
   }
 
 

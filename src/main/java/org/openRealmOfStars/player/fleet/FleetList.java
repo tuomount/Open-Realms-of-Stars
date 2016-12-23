@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.openRealmOfStars.utilities.ErrorLogger;
 
@@ -147,43 +146,15 @@ public class FleetList {
 
   /**
    * Generate unique name for fleet
-   * @param fleet Fleet for which name is trying find
    * @return new fleet name
    */
-  public String generateUniqueName(final Fleet fleet) {
+  public String generateUniqueName() {
     String result = null;
-    ArrayList<String> nameTryouts = new ArrayList<>();
-    nameTryouts.add("Fleet #" + fleetList.size());
-    nameTryouts.add("Fleet #" + (fleetList.size() - 1));
-    nameTryouts.add("Fleet #" + (fleetList.size() + 1));
-    int num = howManyFleetWithStartingNames(fleet.getFirstShip().getHull()
-        .getName() + " #");
-    nameTryouts.add(fleet.getFirstShip().getHull().getName() + " #" + num);
-    nameTryouts.add(fleet.getFirstShip().getHull().getName() + " #"
-      + (num + 1));
-    nameTryouts.add(fleet.getFirstShip().getHull().getName() + " #"
-      + (num - 1));
-    for (Fleet fleetWithName : fleetList) {
-      Iterator<String> iterator = nameTryouts.iterator();
-      while (iterator.hasNext()) {
-        String name = iterator.next();
-        if (fleetWithName.getName().equalsIgnoreCase(name)) {
-          iterator.remove();
-        }
-      }
-      if (nameTryouts.isEmpty()) {
+    for (int i = fleetList.size() + 1; i >= 0; i--) {
+      result = "Fleet #" + i;
+      if (isUniqueName(result, null)) {
         break;
       }
-    }
-    if (nameTryouts.isEmpty()) {
-      for (int i = 0; i < fleetList.size() + 1; i++) {
-        result = "Fleet #" + i;
-        if (isUniqueName(result, null)) {
-          break;
-        }
-      }
-    } else {
-      result = nameTryouts.get(0);
     }
     return result;
   }

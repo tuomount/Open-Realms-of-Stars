@@ -90,11 +90,14 @@ public class FleetListTest {
     Fleet fleet3 = Mockito.mock(Fleet.class);
     Mockito.when(fleet3.getName()).thenReturn("Fleet #3");
     FleetList fleets = new FleetList();
-    assertEquals("Fleet #0", fleets.generateUniqueName(fleet));
+    assertEquals("Fleet #1", fleets.generateUniqueName());
     fleets.add(fleet1);
     fleets.add(fleet2);
     fleets.add(fleet3);
-    assertEquals("Fleet #4", fleets.generateUniqueName(fleet));
+    assertEquals("Fleet #4", fleets.generateUniqueName());
+    fleets.add(fleet1);
+    fleets.add(fleet2);
+    assertEquals("Fleet #6", fleets.generateUniqueName());
   }
 
 

@@ -1302,9 +1302,6 @@ public class Planet {
                     .howManyFleetWithStartingNames(fleetName) + 1));
               }
             }
-          } else {
-            fleet.setName("Fleet #" + (planetOwnerInfo.getFleets()
-                .howManyFleetWithStartingNames("Fleet #") + 1));
           }
           msg = new Message(MessageType.CONSTRUCTION,
               getName() + " built " + underConstruction.getName(),

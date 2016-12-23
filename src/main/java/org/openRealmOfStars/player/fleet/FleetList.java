@@ -5,8 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.openRealmOfStars.utilities.ErrorLogger;
-
 /**
  *
  * Open Realm of Stars game project
@@ -78,31 +76,15 @@ public class FleetList {
   }
 
   /**
-   * Add new fleet to list
+   * Add new fleet to list. Add generate unique name for the fleet.
    * @param fleet Fleet to add to the list
    */
   public void add(final Fleet fleet) {
-    int fleetNum = -1;
-    for (Fleet ite : fleetList) {
-      // Gets the next fleet number
-      if (ite.getName().startsWith("Fleet #")) {
-        String fleetStrNum = ite.getName().substring(7);
-        try {
-          int num = Integer.valueOf(fleetStrNum);
-          if (num > fleetNum) {
-            fleetNum = num;
-          }
-        } catch (NumberFormatException e) {
-          ErrorLogger.log(e);
-        }
-      }
-    }
     if (fleetList.size() == 0) {
       index = 0;
     }
-    fleetNum = fleetNum + 1;
+    fleet.setName(generateUniqueName());
     fleetList.add(fleet);
-    fleet.setName("Fleet #" + fleetNum);
   }
 
   /**

@@ -88,5 +88,48 @@ public class ShipTest {
 
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTopPrivateeringShip() {
+    ShipHull hull = ShipHullFactory.createByName("Privateer Mk3", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent weapon = ShipComponentFactory.createByName("HE Missile Mk8");
+    ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
+    ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
+    ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk10");
+    ShipComponent shield = ShipComponentFactory.createByName("Shield Mk10");
+    ShipComponent scanner = ShipComponentFactory.createByName("Scanner Mk5");
+    ShipComponent cloak = ShipComponentFactory.createByName("Cloaking device Mk6");
+    design.addComponent(energy);
+    design.addComponent(engine);
+    design.addComponent(armor);
+    design.addComponent(weapon);
+    design.addComponent(shield);
+    design.addComponent(scanner);
+    design.addComponent(cloak);
+    Ship ship = new Ship(design);
+    
+    assertEquals(10,ship.getArmor());
+    assertEquals(10,ship.getShield());
+    assertEquals(7,ship.getFtlSpeed());
+    assertEquals(3,ship.getSpeed());
+    assertEquals(2,ship.getTacticSpeed());
+    assertEquals(0,ship.getColonist());
+    assertEquals(0,ship.getMetal());
+    assertEquals(3,ship.getHullPointForComponent(0));
+    assertEquals(0,ship.getHullPointForComponent(99));
+    assertEquals(true,ship.hasWeapons());
+    assertEquals(false,ship.hasBombs());
+    assertEquals(100, ship.getScannerDetectionLvl());
+    assertEquals(5, ship.getScannerLvl());
+    assertEquals(0, ship.getDefenseValue());
+    assertEquals(false, ship.isColonyShip());
+    assertEquals(true, ship.isPrivateeringShip());
+    assertEquals(false, ship.isTrooperShip());
+    assertEquals(false, ship.isColonyModule());
+    assertEquals(false, ship.isTrooperModule());
+    assertEquals(50, ship.getHitChance(weapon));
+
+  }
 
 }

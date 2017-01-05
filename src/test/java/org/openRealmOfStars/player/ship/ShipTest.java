@@ -59,6 +59,13 @@ public class ShipTest {
     assertEquals(false,ship.hasBombs());
     assertEquals(0, ship.getScannerDetectionLvl());
     assertEquals(0, ship.getScannerLvl());
+    assertEquals(10, ship.getDefenseValue());
+    assertEquals(false, ship.isColonyShip());
+    assertEquals(false, ship.isPrivateeringShip());
+    assertEquals(false, ship.isTrooperShip());
+    assertEquals(false, ship.isColonyModule());
+    assertEquals(false, ship.isTrooperModule());
+    assertEquals(100, ship.getHitChance(weapon));
     
     design = new ShipDesign(hull);
     design.addComponent(energy);
@@ -66,6 +73,7 @@ public class ShipTest {
     design.addComponent(shield);
     design.addComponent(weapon);
     ship = new Ship(design);
+    assertEquals(4, ship.getHullPoints());
     assertEquals(0,ship.getArmor());
     assertEquals(1,ship.getShield());
     ship.setShield(0);
@@ -73,6 +81,10 @@ public class ShipTest {
     ship.regenerateShield();
     assertEquals(1,ship.getShield());
     assertEquals(0,ship.damageComponent(1, new ShipDamage(-2, "Damaged!")));
+    assertEquals(3, ship.getHullPoints());
+    ship.fixShip(true);
+    assertEquals(4, ship.getHullPoints());
+    
 
   }
 

@@ -109,6 +109,9 @@ public class ShipTest {
     design.addComponent(cloak);
     Ship ship = new Ship(design);
     
+    assertEquals(0,ship.getExperience());
+    ship.setExperience(5);
+    assertEquals(5,ship.getExperience());
     assertEquals(10,ship.getArmor());
     assertEquals(10,ship.getShield());
     assertEquals(7,ship.getFtlSpeed());

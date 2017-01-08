@@ -79,6 +79,11 @@ public class Ship extends Construction {
   private int metal;
 
   /**
+   * Experience points for ship
+   */
+  private int experience;
+
+  /**
    * Constructor for a ship
    * @param design from where actual ship is created
    */
@@ -100,6 +105,7 @@ public class Ship extends Construction {
     setDescription(design.getDesignInfo());
     setColonist(0);
     setMetal(0);
+    setExperience(0);
   }
 
   /**
@@ -131,6 +137,7 @@ public class Ship extends Construction {
     setArmor(dis.readInt());
     setColonist(dis.readInt());
     setMetal(dis.readInt());
+    //TODO: Add experience read
   }
 
   /**
@@ -153,6 +160,7 @@ public class Ship extends Construction {
     dos.writeInt(getArmor());
     dos.writeInt(getColonist());
     dos.writeInt(getMetal());
+    //TODO: Add experience save
 
   }
 
@@ -1105,6 +1113,22 @@ public class Ship extends Construction {
       power = 0;
     }
     return power;
+  }
+
+  /**
+   * Get Ship's experience
+   * @return Experience value
+   */
+  public int getExperience() {
+    return experience;
+  }
+
+  /**
+   * Set Ship's experience
+   * @param experience to set
+   */
+  public void setExperience(final int experience) {
+    this.experience = experience;
   }
 
 }

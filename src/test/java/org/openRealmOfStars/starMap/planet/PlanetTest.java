@@ -78,6 +78,7 @@ public class PlanetTest {
       }
       assertEquals("Planet should have only one building.", 1, planet.getBuildingList().length);
       assertEquals("Planet should have a Basic factory.", "Basic factory", planet.getBuildingList()[0].getName());
+      assertEquals(false,planet.isFullOfPopulation());
     }
 
 }

@@ -1187,16 +1187,35 @@ public class Planet {
           // Clear extra food if radiation is exceeded
           extraFood = 0;
         }
-        if (extraFood > 0 && extraFood >= require) {
+        if (extraFood > 0 && extraFood >= require && !isFullOfPopulation()) {
           extraFood = extraFood - require;
           workers[FOOD_FARMERS] = workers[FOOD_FARMERS] + 1;
           msg = new Message(MessageType.POPULATION,
               getName() + " has population growth!" + "Population is now "
                   + getTotalPopulation(),
               Icons.getIconByName(Icons.ICON_PEOPLE));
+          if (isFullOfPopulation()) {
+            msg = new Message(MessageType.POPULATION,
+                getName() + " has population growth!" + "Population is now "
+                    + getTotalPopulation() + ". Population limit has reached!",
+                Icons.getIconByName(Icons.ICON_PEOPLE));
+          }
           msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
+        }
+        if (isFullOfPopulation()) {
+          if (extraFood > require) {
+            // Over populated no extra food more than maximum required.
+            extraFood = require;
+          }
+          if (getTotalPopulation() > groundSize) {
+            msg = new Message(MessageType.POPULATION,
+                getName() + " has population over the limit!",
+                Icons.getIconByName(Icons.ICON_DEATH));
+            // Over populated requires more food
+            extraFood--;
+          }
         }
         if (extraFood < 0 && extraFood <= require) {
           extraFood = 0;
@@ -1373,6 +1392,17 @@ public class Planet {
    */
   public int getTax() {
     return tax;
+  }
+
+  /**
+   * Is planet full of population or not
+   * @return True if planet is full of population
+   */
+  public boolean isFullOfPopulation() {
+    if (getTotalPopulation() >= getGroundSize()) {
+      return true;
+    }
+    return false;
   }
 
   /**

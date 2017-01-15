@@ -454,6 +454,11 @@ public class PlanetView extends BlackPanel {
       }
       peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
     }
+    if (planet.getTotalPopulation() >= planet.getGroundSize()) {
+      peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_NO_MORE_PEOPLE));
+      peopleGrowth.setToolTipText(
+          "Planet population is at maximum!");
+    }
     farmProd.setText(": " + planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     mineProd.setText(": " + planet.getTotalProduction(Planet.PRODUCTION_METAL));
     prodProd.setText(

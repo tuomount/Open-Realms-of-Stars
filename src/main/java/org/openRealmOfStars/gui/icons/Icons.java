@@ -78,6 +78,10 @@ public final class Icons {
    */
   public static final String ICON_PEOPLE = "People";
   /**
+   * No More People icon
+   */
+  public static final String ICON_NO_MORE_PEOPLE = "NoMorePeople";
+  /**
    * Death aka skull icon
    */
   public static final String ICON_DEATH = "Death";
@@ -426,6 +430,8 @@ public final class Icons {
     icon = new Icon16x16(image, 3, 6, ICON_DELETE);
     addIcon(icon);
     icon = new Icon16x16(image, 4, 6, ICON_BATTERY);
+    addIcon(icon);
+    icon = new Icon16x16(image, 5, 6, ICON_NO_MORE_PEOPLE);
     addIcon(icon);
   }
 

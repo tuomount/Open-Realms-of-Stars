@@ -898,7 +898,8 @@ public class Planet {
       result.add(tmp);
     }
     if (planetOwnerInfo != null
-        && planetOwnerInfo.getRace() == SpaceRace.MECHIONS) {
+        && planetOwnerInfo.getRace() == SpaceRace.MECHIONS
+        && getTotalPopulation() < getGroundSize()) {
       tmp2 = ConstructionFactory
           .createByName(ConstructionFactory.MECHION_CITIZEN);
       if (tmp2 != null && !exceedRadiation()) {

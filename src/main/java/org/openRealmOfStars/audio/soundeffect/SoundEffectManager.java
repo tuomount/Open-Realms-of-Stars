@@ -100,6 +100,8 @@ public class SoundEffectManager extends Thread {
           ErrorLogger.log("Your audio system does not support playing audio."
               + " Disabling it...");
           SoundPlayer.setSoundEnabled(false);
+          // No more to do here at playSound since it does not work.
+          return;
         }
         clips[soundIndex].open(effect.getFormat(), effect.getData(), 0,
             effect.getData().length);

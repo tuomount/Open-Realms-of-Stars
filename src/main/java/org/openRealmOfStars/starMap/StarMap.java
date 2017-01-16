@@ -191,12 +191,10 @@ public class StarMap {
     turn = 0;
     aiTurnNumber = 0;
     aiFleet = null;
-    if (config.getStartingPosition() == GalaxyConfig.START_POSITION_BORDER) {
-      createBorderStartingSystems(config, solarSystem);
-    }
+    int loop = 0;
     if (config.getStartingPosition() == GalaxyConfig.START_POSITION_RANDOM) {
       for (int i = 0; i < config.getMaxPlayers(); i++) {
-        while (true) {
+        while (loop < MAX_LOOPS) {
           int sx = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
               maxX - SOLAR_SYSTEM_WIDTH);
           int sy = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
@@ -208,11 +206,16 @@ public class StarMap {
             createSolarSystem(solarSystem, sx, sy, planets, gasGiants, i);
             break;
           }
+          loop++;
         }
       }
     }
+    if (config.getStartingPosition() == GalaxyConfig.START_POSITION_BORDER
+        || loop == MAX_LOOPS) {
+      createBorderStartingSystems(config, solarSystem);
+    }
     // Random system
-    int loop = 0;
+    loop = 0;
     while (loop < MAX_LOOPS) {
       int sx = DiceGenerator.getRandom(SOLAR_SYSTEM_WIDTH,
           maxX - SOLAR_SYSTEM_WIDTH);

@@ -93,7 +93,14 @@ public class SoundEffectManager extends Thread {
       SoundEffect effect = getSoundEffect(name);
       if (effect != null) {
         DataLine.Info info = new DataLine.Info(Clip.class, effect.getFormat());
-        clips[soundIndex] = (Clip) AudioSystem.getLine(info);
+        try {
+          clips[soundIndex] = (Clip) AudioSystem.getLine(info);
+        } catch (LineUnavailableException | IllegalArgumentException e) {
+          // System does not support playing sounds.
+          ErrorLogger.log("Your audio system does not support playing audio."
+              + " Disabling it...");
+          SoundPlayer.setSoundEnabled(false);
+        }
         clips[soundIndex].open(effect.getFormat(), effect.getData(), 0,
             effect.getData().length);
         //Volume set for SFX

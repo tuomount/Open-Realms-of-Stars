@@ -5,7 +5,11 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.message.MessageList;
+import org.openRealmOfStars.player.ship.ShipStat;
 
 /**
  *
@@ -54,14 +58,62 @@ public class StarMapTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testStarMapCreate2() {
+  public void testStarMapCreateWithPlayers() {
+    GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
+    Mockito.when(config.getSizeX()).thenReturn(50);
+    Mockito.when(config.getSizeY()).thenReturn(50);
+    Mockito.when(config.getMaxPlayers()).thenReturn(4);
+    Mockito.when(config.getStartingPosition()).thenReturn(
+        GalaxyConfig.START_POSITION_BORDER);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
+    MessageList msgList = Mockito.mock(MessageList.class);
+    Mockito.when(info.getMsgList()).thenReturn(msgList);
+    ShipStat[] stats = new ShipStat[0];
+    Mockito.when(info.getShipStatList()).thenReturn(stats);
+    
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info);
+
+    StarMap map = new StarMap(config, players);
+    assertEquals(50, map.getMaxX());
+    assertEquals(50, map.getMaxY());
+    assertEquals(true, map.isValidCoordinate(25, 25));
+    assertEquals(false, map.isValidCoordinate(-1, 25));
+    assertEquals(false, map.isValidCoordinate(25, -1));
+    assertEquals(false, map.isValidCoordinate(512, 25));
+    assertEquals(false, map.isValidCoordinate(252, 512));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStarMapCreateWithPlayers2() {
     GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
     Mockito.when(config.getSizeX()).thenReturn(75);
     Mockito.when(config.getSizeY()).thenReturn(75);
+    Mockito.when(config.getMaxPlayers()).thenReturn(4);
     Mockito.when(config.getStartingPosition()).thenReturn(
         GalaxyConfig.START_POSITION_RANDOM);
 
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
+    MessageList msgList = Mockito.mock(MessageList.class);
+    Mockito.when(info.getMsgList()).thenReturn(msgList);
+    ShipStat[] stats = new ShipStat[0];
+    Mockito.when(info.getShipStatList()).thenReturn(stats);
+    
     PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info);
+
 
     StarMap map = new StarMap(config, players);
     assertEquals(75, map.getMaxX());

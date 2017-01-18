@@ -84,6 +84,29 @@ public class Ship extends Construction {
   private int experience;
 
   /**
+   * Culture points for ship. Used for starbases and diplomatic ships
+   */
+  private int culture;
+
+  /**
+   * Special flags
+   */
+  private int specialFlags;
+
+  /**
+   * Starbase has been deployed
+   */
+  public static final int FLAG_STARBASE_DEPLOYED = 0x01;
+  /**
+   * Merchant ship has left from homeworld
+   */
+  public static final int FLAG_MERCHANT_LEFT_HOMEWORLD = 0x02;
+  /**
+   * Merchant ship has left from opponent world
+   */
+  public static final int FLAG_MERCHANT_LEFT_OPPONENWORLD = 0x04;
+
+  /**
    * Constructor for a ship
    * @param design from where actual ship is created
    */
@@ -106,6 +129,8 @@ public class Ship extends Construction {
     setColonist(0);
     setMetal(0);
     setExperience(0);
+    setCulture(0);
+    specialFlags = 0;
   }
 
   /**
@@ -138,6 +163,7 @@ public class Ship extends Construction {
     setColonist(dis.readInt());
     setMetal(dis.readInt());
     //TODO: Add experience read
+    //TODO: Add culture read
   }
 
   /**
@@ -161,6 +187,7 @@ public class Ship extends Construction {
     dos.writeInt(getColonist());
     dos.writeInt(getMetal());
     //TODO: Add experience save
+    //TODO: Add culture save
 
   }
 
@@ -1129,6 +1156,50 @@ public class Ship extends Construction {
    */
   public void setExperience(final int experience) {
     this.experience = experience;
+  }
+
+  /**
+   * Get ship's culture value.
+   * @return culture value
+   */
+  public int getCulture() {
+    return culture;
+  }
+
+  /**
+   * Set culture for ship
+   * @param culture value to set
+   */
+  public void setCulture(final int culture) {
+    this.culture = culture;
+  }
+
+  /**
+   * Set or disable flag
+   * @param flag Flat to set or disable
+   * @param value True to set and false to disable
+   */
+  public void setFlag(final int flag, final boolean value) {
+    if (value) {
+      int bitmask = flag;
+      specialFlags = specialFlags | bitmask;
+    } else {
+      int bitmask = ~flag;
+      specialFlags = specialFlags & bitmask;
+    }
+  }
+
+  /**
+   * Get flag
+   * @param flag Flat to get set or disable
+   * @return true if flag has been set and false if not
+   */
+  public boolean getFlag(final int flag) {
+    int value = specialFlags & flag;
+    if (value != 0) {
+      return true;
+    }
+    return false;
   }
 
 }

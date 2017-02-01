@@ -50,6 +50,7 @@ public class FleetTest {
     Mockito.when(ship.getMaxHullPoints()).thenReturn(4);
     Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
     Mockito.when(ship.getName()).thenReturn("Scout");
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(15);
     return ship;
   }
 
@@ -71,6 +72,7 @@ public class FleetTest {
     Mockito.when(ship.isColonyShip()).thenReturn(true);
     Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
     Mockito.when(ship.getName()).thenReturn("Colony");
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);
     return ship;
   }
 
@@ -90,6 +92,7 @@ public class FleetTest {
     Mockito.when(ship.getMaxHullPoints()).thenReturn(4);
     Mockito.when(ship.isPrivateeringShip()).thenReturn(true);
     Mockito.when(ship.getName()).thenReturn("Privateer");
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(20);
     return ship;
   }
 
@@ -163,6 +166,20 @@ public class FleetTest {
     Mockito.when(info.getEmpireName()).thenReturn("Terran alliance");
     assertEquals("Fleet #-1\nPrivateer fleet\nSpeed: 1 FTL: 2\nMoves:0"
         + "\nPrivateer\nPrivateer\n", fleet.getInfoAsText(info));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFleetWithThreeShips() {
+    Ship ship = createShipOne();
+    Ship privateer = createPrivateerShipOne();
+    Ship colony = createShipTwo();
+    Fleet fleet = new Fleet(ship, 2, 3);
+    assertEquals(15,fleet.getMilitaryValue());
+    fleet.addShip(privateer);
+    assertEquals(35,fleet.getMilitaryValue());
+    fleet.addShip(colony);
+    assertEquals(35,fleet.getMilitaryValue());
   }
 
 }

@@ -175,7 +175,6 @@ public class StarMap {
     tiles = new int[maxX][maxY];
     int[][] solarSystem = new int[maxX][maxY];
     tileInfo = new SquareInfo[maxX][maxY];
-    fleetTiles = new FleetTileInfo[maxX][maxY];
     culture = new CulturePower[maxX][maxY];
     sunList = new ArrayList<>();
     planetList = new ArrayList<>();
@@ -360,7 +359,6 @@ public class StarMap {
       turn = dis.readInt();
       maxX = dis.readInt();
       maxY = dis.readInt();
-      fleetTiles = new FleetTileInfo[maxX][maxY];
       culture = new CulturePower[maxX][maxY];
       sunList = new ArrayList<>();
       planetList = new ArrayList<>();
@@ -750,35 +748,57 @@ public class StarMap {
 
   /**
    * Get the fleet tiles from the map.
-   * These fleet positions are always calculated
+   * These fleet positions are always calculated.
+   * This method always refreshes fleet tiles
    * @return FleetTiles
    */
   public FleetTileInfo[][] getFleetTiles() {
-    for (int x = 0; x < maxX; x++) {
-      for (int y = 0; y < maxY; y++) {
-        fleetTiles[x][y] = null;
+    return getFleetTiles(true);
+  }
+
+  /**
+   * Clear fleet tiles and when next time received fleet tiles will
+   * be generated.
+   */
+  public void clearFleetTiles() {
+    fleetTiles = null;
+  }
+
+  /**
+   * Get the fleet tiles from the map.
+   * These fleet positions are always calculated
+   * @param refresh If true new fleet tiles are always generated
+   * @return FleetTiles
+   */
+  public FleetTileInfo[][] getFleetTiles(final boolean refresh) {
+    if (refresh || fleetTiles == null) {
+      fleetTiles = new FleetTileInfo[maxX][maxY];
+      for (int x = 0; x < maxX; x++) {
+        for (int y = 0; y < maxY; y++) {
+          fleetTiles[x][y] = null;
+        }
       }
-    }
-    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
-      PlayerInfo player = players.getPlayerInfoByIndex(i);
-      for (int j = 0; j < player.getFleets().getNumberOfFleets(); j++) {
-        Fleet fleet = player.getFleets().getByIndex(j);
-        if (fleetTiles[fleet.getX()][fleet.getY()] == null) {
-          FleetTileInfo info = new FleetTileInfo(
-              fleet.getFirstShip().getHull().getRace(),
-              fleet.getFirstShip().getHull().getImageIndex(), i, j);
-          fleetTiles[fleet.getX()][fleet.getY()] = info;
-        } else {
-          for (int k = 0; k < player.getFleets().getNumberOfFleets(); k++) {
-            if (j != k) {
-              Fleet fleet2 = player.getFleets().getByIndex(k);
-              if (fleet2.getX() == fleet.getX()
-                  && fleet2.getY() == fleet.getY()
-                  && fleet2.getMilitaryValue() > fleet.getMilitaryValue()) {
-                FleetTileInfo info = new FleetTileInfo(
-                    fleet2.getFirstShip().getHull().getRace(),
-                    fleet2.getFirstShip().getHull().getImageIndex(), i, k);
-                fleetTiles[fleet2.getX()][fleet2.getY()] = info;
+      for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
+        PlayerInfo player = players.getPlayerInfoByIndex(i);
+        for (int j = 0; j < player.getFleets().getNumberOfFleets(); j++) {
+          Fleet fleet = player.getFleets().getByIndex(j);
+          if (fleetTiles[fleet.getX()][fleet.getY()] == null) {
+            FleetTileInfo info = new FleetTileInfo(
+                fleet.getFirstShip().getHull().getRace(),
+                fleet.getFirstShip().getHull().getImageIndex(), i, j);
+            fleetTiles[fleet.getX()][fleet.getY()] = info;
+          } else {
+            for (int k = 0; k < player.getFleets().getNumberOfFleets(); k++) {
+              if (j != k) {
+                Fleet fleet2 = player.getFleets().getByIndex(k);
+                if (fleet2.getX() == fleet.getX()
+                    && fleet2.getY() == fleet.getY()
+                    && fleet2.getMilitaryValue() > fleet.getMilitaryValue()) {
+                  FleetTileInfo info = new FleetTileInfo(
+                      fleet2.getFirstShip().getHull().getRace(),
+                      fleet2.getFirstShip().getHull().getImageIndex(), i, k);
+                  fleetTiles[fleet2.getX()][fleet2.getY()] = info;
+                }
               }
             }
           }

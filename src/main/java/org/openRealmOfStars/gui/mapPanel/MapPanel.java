@@ -352,7 +352,7 @@ public class MapPanel extends JPanel {
       flickerGoUp = true;
     }
 
-    FleetTileInfo[][] fleetMap = starMap.getFleetTiles();
+    FleetTileInfo[][] fleetMap = starMap.getFleetTiles(false);
 
     int[][] map = starMap.getTiles();
     int pixelX = viewPointOffsetX;

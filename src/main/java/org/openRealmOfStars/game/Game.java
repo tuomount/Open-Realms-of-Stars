@@ -258,6 +258,7 @@ public class Game extends JFrame implements ActionListener {
         changeGameState(GameState.COMBAT, combat);
       } else {
         fleet.setPos(new Coordinate(nx, ny));
+        starMap.clearFleetTiles();
         fleet.decMovesLeft();
         getStarMap().doFleetScanUpdate(info, fleet, null);
         starMapView.updatePanels();

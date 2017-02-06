@@ -463,8 +463,6 @@ public class AITurnView extends BlackPanel {
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
       updateText();
-      // Just update fleet tiles.
-      game.getStarMap().getFleetTiles();
       if (game.getStarMap().getAIFleet() == null) {
         game.getStarMap().handleAIResearchAndPlanets();
       } else {

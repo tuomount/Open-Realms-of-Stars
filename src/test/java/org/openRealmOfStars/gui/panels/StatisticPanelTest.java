@@ -24,7 +24,7 @@ import org.junit.experimental.categories.Category;
  * along with this program; if not, see http://www.gnu.org/licenses/
  * 
  * 
- * Test for SquareInfo class
+ * Test for StatisticPanel class
  * 
  */
 public class StatisticPanelTest {

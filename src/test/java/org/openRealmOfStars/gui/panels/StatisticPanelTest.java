@@ -51,6 +51,7 @@ public class StatisticPanelTest {
     data[2][4] = 3;
     panel.setData(data);
     assertEquals(6, panel.getLargestY());
+    assertEquals(5, panel.getLargestX());
   }
 
   @Test(expected=IllegalArgumentException.class)

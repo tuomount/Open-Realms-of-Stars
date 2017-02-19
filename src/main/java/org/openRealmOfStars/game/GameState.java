@@ -90,5 +90,9 @@ public enum GameState {
   /**
    * State where player can select which saved game is about to be loaded.
    */
-  LOAD_GAME
+  LOAD_GAME,
+  /**
+   * View player stats info
+   */
+  VIEWSTATS
 }

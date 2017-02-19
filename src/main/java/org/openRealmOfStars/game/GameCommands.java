@@ -321,6 +321,11 @@ public final class GameCommands {
   public static final String COMMAND_SHIPS = "ViewShips";
 
   /**
+   * View player stats
+   */
+  public static final String COMMAND_VIEW_STATS = "ViewStats";
+
+  /**
    * Start combat for no reason. This is more like debug purposes
    */
   public static final String COMMAND_BATTLE = "ViewBattle";

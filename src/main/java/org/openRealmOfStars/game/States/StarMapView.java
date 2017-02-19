@@ -97,6 +97,11 @@ public class StarMapView extends BlackPanel {
    * View space ship stat and designs.
    */
   private SpaceButton viewSpaceShips;
+
+  /**
+   * View player stats
+   */
+  private SpaceButton viewStats;
   /**
    * Credit production
    */
@@ -194,6 +199,10 @@ public class StarMapView extends BlackPanel {
     viewSpaceShips = new SpaceButton("Ships", GameCommands.COMMAND_SHIPS);
     viewSpaceShips.addActionListener(game);
     bottomBtnPanel.add(viewSpaceShips);
+
+    viewStats = new SpaceButton("Stats", GameCommands.COMMAND_VIEW_STATS);
+    viewStats.addActionListener(game);
+    bottomBtnPanel.add(viewStats);
 
     SpaceButton debugBattle = new SpaceButton("Battle",
         GameCommands.COMMAND_BATTLE);

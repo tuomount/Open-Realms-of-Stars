@@ -24,6 +24,7 @@ import org.openRealmOfStars.game.States.ResearchView;
 import org.openRealmOfStars.game.States.ShipDesignView;
 import org.openRealmOfStars.game.States.ShipView;
 import org.openRealmOfStars.game.States.StarMapView;
+import org.openRealmOfStars.game.States.StatView;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -166,6 +167,11 @@ public class Game extends JFrame implements ActionListener {
    * Ship view for the game
    */
   private ShipView shipView;
+
+  /**
+   * Stat view for the game
+   */
+  private StatView statView;
 
   /**
    * Ship design view for the game
@@ -383,6 +389,16 @@ public class Game extends JFrame implements ActionListener {
   }
 
   /**
+   * Show Stat panels
+   */
+  public void showStatView() {
+    statView = new StatView(this);
+    this.getContentPane().removeAll();
+    this.add(statView);
+    this.validate();
+  }
+
+  /**
    * Show Ship design panels
    * @param oldDesign to copy to new one. Can be null.
    */
@@ -580,6 +596,9 @@ public class Game extends JFrame implements ActionListener {
       break;
     case VIEWSHIPS:
       showShipView();
+      break;
+    case VIEWSTATS:
+      showStatView();
       break;
     case SHIPDESIGN: {
       if (shipView != null && shipView.isCopyClicked()) {
@@ -872,6 +891,10 @@ public class Game extends JFrame implements ActionListener {
       SoundPlayer.playMenuSound();
       changeGameState(GameState.VIEWSHIPS);
     }
+    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_VIEW_STATS)) {
+      SoundPlayer.playMenuSound();
+      changeGameState(GameState.VIEWSTATS);
+    }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN)) {
       shipView.setCopyClicked(false);
@@ -905,9 +928,17 @@ public class Game extends JFrame implements ActionListener {
       // View Ship
       shipView.handleAction(arg0);
     }
+    if (gameState == GameState.VIEWSHIPS && shipView != null) {
+      // View Ship
+      shipView.handleAction(arg0);
+    }
     if (gameState == GameState.SHIPDESIGN && shipDesignView != null) {
       // Ship Design View
       shipDesignView.handleAction(arg0);
+    }
+    if (gameState == GameState.VIEWSTATS && statView != null) {
+      // Stat View
+      statView.handleAction(arg0);
     }
     if (gameState == GameState.PLANETVIEW && planetView != null) {
       // Planet view

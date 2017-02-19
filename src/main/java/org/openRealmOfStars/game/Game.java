@@ -891,7 +891,8 @@ public class Game extends JFrame implements ActionListener {
       SoundPlayer.playMenuSound();
       changeGameState(GameState.VIEWSHIPS);
     }
-    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_VIEW_STATS)) {
+    if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_VIEW_STATS)) {
       SoundPlayer.playMenuSound();
       changeGameState(GameState.VIEWSTATS);
     }

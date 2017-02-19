@@ -120,12 +120,19 @@ public class StatisticPanel extends JPanel {
     return largestX;
   }
 
+  /**
+   * Stat grid density, how long distance is about
+   * to draw new lines
+   */
+  private static final int GRID_DENSITY = 20;
   @Override
   public void paint(final Graphics arg0) {
     int offsetX = 10;
     int offsetY = 10;
-    int drawWidth = this.getWidth() - offsetX;
-    int drawHeigth = this.getHeight() - offsetY;
+    int topOffsetY = 10;
+    int rightOffsetX = 10;
+    int drawWidth = this.getWidth() - offsetX - rightOffsetX;
+    int drawHeigth = this.getHeight() - offsetY - topOffsetY;
 
     double scaleY = drawHeigth / largestY;
     double scaleX = drawWidth / largestX;
@@ -133,11 +140,40 @@ public class StatisticPanel extends JPanel {
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
 
+    //Draw the grid
+    g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    int amount = 1;
+    if (GRID_DENSITY / scaleX < 1) {
+      amount = largestX;
+    } else {
+      amount = (int) Math.round(drawWidth / (largestX / GRID_DENSITY));
+    }
+    for (int i = 0; i < amount; i++) {
+      if (i > 0) {
+        g2d.drawLine((int) Math.round(offsetX + i * scaleX), this.getHeight()
+            - offsetY, (int) Math.round(offsetX + i * scaleX), topOffsetY);
+      }
+    }
+    amount = 1;
+    if (GRID_DENSITY / scaleY < 1) {
+      amount = largestY;
+    } else {
+      amount = (int) Math.round(drawHeigth / (largestY / GRID_DENSITY));
+    }
+    for (int i = 0; i < amount; i++) {
+      if (i > 0) {
+        g2d.drawLine(offsetX,
+            (int) Math.round(this.getHeight() - offsetY - i * scaleY),
+            offsetX + drawWidth,
+            (int) Math.round(this.getHeight() - offsetY - i * scaleY));
+      }
+    }
+
     //Draw the axis
     g2d.setColor(GuiStatics.COLOR_SPACE_GREY_BLUE);
-    g2d.drawLine(offsetX, this.getHeight() - offsetY, this.getWidth(),
+    g2d.drawLine(offsetX, this.getHeight() - offsetY, offsetX + drawWidth,
         this.getHeight() - offsetY);
-    g2d.drawLine(offsetX, this.getHeight() - offsetY, offsetX, 0);
+    g2d.drawLine(offsetX, this.getHeight() - offsetY, offsetX, topOffsetY);
 
     //Draw the data
     for (int p = 0; p < data.length; p++) {
@@ -149,10 +185,10 @@ public class StatisticPanel extends JPanel {
                 data[p][0] * scaleY));
       } else {
         for (int i = 0; i < largestX - 1; i++) {
-          g2d.drawLine(drawWidth / 2 + offsetX + (int) Math.round(i * scaleX),
+          g2d.drawLine(offsetX + (int) Math.round(i * scaleX),
               this.getHeight() - offsetY - (int) Math.round(
                   data[p][i] * scaleY),
-              drawWidth / 2 + offsetX + (int) Math.round((i + 1) * scaleX),
+               offsetX + (int) Math.round((i + 1) * scaleX),
               this.getHeight() - offsetY - (int) Math.round(
                   data[p][i + 1] * scaleY));
         }

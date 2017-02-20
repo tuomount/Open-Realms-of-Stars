@@ -124,7 +124,7 @@ public class StatisticPanel extends JPanel {
    * Stat grid density, how long distance is about
    * to draw new lines
    */
-  private static final int GRID_DENSITY = 20;
+  private static final int GRID_DENSITY = 30;
   @Override
   public void paint(final Graphics arg0) {
     int offsetX = 10;
@@ -143,29 +143,33 @@ public class StatisticPanel extends JPanel {
     //Draw the grid
     g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
     int amount = 1;
+    int mult = 1;
     if (GRID_DENSITY / scaleX < 1) {
       amount = largestX;
     } else {
-      amount = (int) Math.round(drawWidth / (largestX / GRID_DENSITY));
+      mult = (int) Math.round(GRID_DENSITY / scaleX);
+      amount = (int) Math.round(drawWidth / (GRID_DENSITY - 1));
     }
     for (int i = 0; i < amount; i++) {
       if (i > 0) {
-        g2d.drawLine((int) Math.round(offsetX + i * scaleX), this.getHeight()
-            - offsetY, (int) Math.round(offsetX + i * scaleX), topOffsetY);
+        g2d.drawLine((int) Math.round(offsetX + i * scaleX * mult),
+            this.getHeight() - offsetY,
+            (int) Math.round(offsetX + i * scaleX * mult), topOffsetY);
       }
     }
     amount = 1;
     if (GRID_DENSITY / scaleY < 1) {
       amount = largestY;
     } else {
-      amount = (int) Math.round(drawHeigth / (largestY / GRID_DENSITY));
+      mult = (int) Math.round(GRID_DENSITY / scaleY);
+      amount = (int) Math.round(drawHeigth / (GRID_DENSITY - 1));
     }
     for (int i = 0; i < amount; i++) {
       if (i > 0) {
         g2d.drawLine(offsetX,
-            (int) Math.round(this.getHeight() - offsetY - i * scaleY),
+            (int) Math.round(this.getHeight() - offsetY - i * scaleY * mult),
             offsetX + drawWidth,
-            (int) Math.round(this.getHeight() - offsetY - i * scaleY));
+            (int) Math.round(this.getHeight() - offsetY - i * scaleY * mult));
       }
     }
 

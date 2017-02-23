@@ -54,6 +54,11 @@ public class StatisticPanel extends JPanel {
   private int largestX = 0;
 
   /**
+   * How many turn is between each X coordinate value. Default is 10.
+   */
+  private int turnDistance = 10;
+
+  /**
    * Construct Statistics Panel.
    */
   public StatisticPanel() {
@@ -121,6 +126,26 @@ public class StatisticPanel extends JPanel {
   }
 
   /**
+   * Set what is the value between two x coordinate value.
+   * X is always number of turns
+   * @param turnDist Turn distance between two X values
+   */
+  public void setTurnDistance(final int turnDist) {
+    if (turnDist > 0) {
+      turnDistance = turnDist;
+    }
+  }
+
+  /**
+   * This should be used only for JUnits. Returns
+   * turn distance which is value between to X values
+   * @return Turn distance between to X values
+   */
+  public int getTurnDistance() {
+    return turnDistance;
+  }
+
+  /**
    * Stat grid density, how long distance is about
    * to draw new lines
    */
@@ -128,9 +153,13 @@ public class StatisticPanel extends JPanel {
   @Override
   public void paint(final Graphics arg0) {
     int offsetX = 10;
-    int offsetY = 10;
+    int offsetY = 30;
     int topOffsetY = 10;
     int rightOffsetX = 10;
+    int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellanSC(),
+        String.valueOf(largestY));
+    textWidth = textWidth + 5;
+    offsetX = offsetX + textWidth;
     int drawWidth = this.getWidth() - offsetX - rightOffsetX;
     int drawHeigth = this.getHeight() - offsetY - topOffsetY;
 
@@ -140,8 +169,11 @@ public class StatisticPanel extends JPanel {
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
 
+    g2d.setFont(GuiStatics.getFontCubellanSC());
+    int textHeight = GuiStatics.getTextHeight(GuiStatics.getFontCubellanSC(),
+        "0");
+
     //Draw the grid
-    g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
     int amount = 1;
     int mult = 1;
     if (GRID_DENSITY / scaleX < 1) {
@@ -152,10 +184,15 @@ public class StatisticPanel extends JPanel {
     }
     for (int i = 0; i < amount; i++) {
       if (i > 0) {
+        g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
         g2d.drawLine((int) Math.round(offsetX + i * scaleX * mult),
             this.getHeight() - offsetY,
             (int) Math.round(offsetX + i * scaleX * mult), topOffsetY);
       }
+      g2d.setColor(GuiStatics.COLOR_GREEN_TEXT);
+      g2d.drawString(String.valueOf(i * turnDistance),
+          (int) Math.round(offsetX + i * scaleX * mult),
+          this.getHeight() - offsetY + textHeight);
     }
     amount = 1;
     if (GRID_DENSITY / scaleY < 1) {
@@ -166,11 +203,16 @@ public class StatisticPanel extends JPanel {
     }
     for (int i = 0; i < amount; i++) {
       if (i > 0) {
+        g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
         g2d.drawLine(offsetX,
             (int) Math.round(this.getHeight() - offsetY - i * scaleY * mult),
             offsetX + drawWidth,
             (int) Math.round(this.getHeight() - offsetY - i * scaleY * mult));
       }
+      g2d.setColor(GuiStatics.COLOR_GREEN_TEXT);
+      g2d.drawString(String.valueOf(i * mult), offsetX - textWidth,
+          (int) Math.round(this.getHeight() - offsetY - i * scaleY
+              * mult));
     }
 
     //Draw the axis

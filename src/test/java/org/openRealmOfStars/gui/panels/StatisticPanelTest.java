@@ -52,6 +52,13 @@ public class StatisticPanelTest {
     panel.setData(data);
     assertEquals(6, panel.getLargestY());
     assertEquals(5, panel.getLargestX());
+    assertEquals(10,panel.getTurnDistance());
+    panel.setTurnDistance(25);
+    assertEquals(25,panel.getTurnDistance());
+    panel.setTurnDistance(0);
+    assertEquals(25,panel.getTurnDistance());
+    panel.setTurnDistance(-1);
+    assertEquals(25,panel.getTurnDistance());
   }
 
   @Test(expected=IllegalArgumentException.class)

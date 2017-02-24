@@ -1,6 +1,6 @@
 package org.openRealmOfStars.gui.panels;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -64,13 +64,21 @@ public class StatisticPanelTest {
     names[1] = "Human Empire";
     names[2] = "Test";
     panel.setYDataNames(names);
-    assertEquals(89, panel.getWidestDataName());
+    int width = panel.getWidestDataName();
+    if (width < 80 || width > 90) {
+      // Seems that font width might vary on different systems
+      assertFalse("Width not between 80 and 90!", true);
+    }
     names = new String[3];
     names[0] = "Bar";
     names[1] = "Bazbaz";
     names[2] = "Moi";
     panel.setYDataNames(names);
-    assertEquals(47, panel.getWidestDataName());
+    width = panel.getWidestDataName();
+    if (width < 45 || width > 55) {
+      // Seems that font width might vary on different systems
+      assertFalse("Width not between 45 and 55!", true);
+    }
     panel.setYDataNames(null);
     assertEquals(0, panel.getWidestDataName());
   }

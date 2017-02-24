@@ -44,6 +44,11 @@ public class StatisticPanel extends JPanel {
   private int[][] data;
 
   /**
+   * Names for Y data
+   */
+  private String[] yDataNames;
+
+  /**
    * Largest value on Y axel on data
    */
   private int largestY = 0;
@@ -75,6 +80,32 @@ public class StatisticPanel extends JPanel {
       new Color(0, 255, 18), new Color(255, 255, 255), new Color(255, 162, 0),
       new Color(11, 255, 241), new Color(233, 44, 255), new Color(188, 0, 0),
       new Color(0, 71, 121)};
+
+  /**
+   * Set Y data names which should be equal to player names
+   * @param nameList Player name list
+   */
+  public void setYDataNames(final String[] nameList) {
+    yDataNames = nameList;
+  }
+
+  /**
+   * Get the widest Y data name AKA player name
+   * @return Largest player name width in pixels.
+   */
+  public int getWidestDataName() {
+    int largest = 0;
+    if (yDataNames != null) {
+      for (String name : yDataNames) {
+        int value = GuiStatics.getTextWidth(GuiStatics.getFontCubellanSC(),
+            name);
+        if (value > largest) {
+          largest = value;
+        }
+      }
+    }
+    return largest;
+  }
 
   /**
    * Set Data for panel.
@@ -159,7 +190,7 @@ public class StatisticPanel extends JPanel {
     int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellanSC(),
         String.valueOf(largestY));
     textWidth = textWidth + 5;
-    offsetX = offsetX + textWidth;
+    offsetX = offsetX + textWidth + getWidestDataName() + 5;
     int drawWidth = this.getWidth() - offsetX - rightOffsetX;
     int drawHeigth = this.getHeight() - offsetY - topOffsetY;
 
@@ -224,6 +255,14 @@ public class StatisticPanel extends JPanel {
     //Draw the data
     for (int p = 0; p < data.length; p++) {
       g2d.setColor(PLAYER_COLORS[p]);
+      if (yDataNames != null && yDataNames.length == data.length) {
+        int nameHeight = GuiStatics.getTextHeight(
+            GuiStatics.getFontCubellanSC(), yDataNames[p]);
+        int nameWidth = GuiStatics.getTextWidth(
+            GuiStatics.getFontCubellanSC(), yDataNames[p]);
+        g2d.drawString(yDataNames[p], offsetX / 2 - nameWidth / 2 - 10,
+            this.getHeight() / 2 - 4 * nameHeight + p * nameHeight);
+      }
       if (data[p].length == 1) {
         g2d.drawLine(drawWidth / 2 + offsetX + p * 5,
             this.getHeight() - offsetY, drawWidth / 2 + offsetX + p * 5,

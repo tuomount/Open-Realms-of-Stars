@@ -9,6 +9,7 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.StatisticPanel;
+import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 
 /**
  *
@@ -77,6 +78,12 @@ public class StatView extends BlackPanel {
     data[7][1] = 8;
     data[7][2] = 64;
     statPanel.setData(data);
+    String[] names = new String[8];
+    for (int i = 0; i < names.length; i++) {
+      names[i] = SpaceRaceUtility.getRandomName(
+          SpaceRaceUtility.getRandomRace());
+    }
+    statPanel.setYDataNames(names);
     base.add(statPanel, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
 

@@ -59,6 +59,20 @@ public class StatisticPanelTest {
     assertEquals(25,panel.getTurnDistance());
     panel.setTurnDistance(-1);
     assertEquals(25,panel.getTurnDistance());
+    String[] names = new String[3];
+    names[0] = "FooBar";
+    names[1] = "Human Empire";
+    names[2] = "Test";
+    panel.setYDataNames(names);
+    assertEquals(89, panel.getWidestDataName());
+    names = new String[3];
+    names[0] = "Bar";
+    names[1] = "Bazbaz";
+    names[2] = "Moi";
+    panel.setYDataNames(names);
+    assertEquals(47, panel.getWidestDataName());
+    panel.setYDataNames(null);
+    assertEquals(0, panel.getWidestDataName());
   }
 
   @Test(expected=IllegalArgumentException.class)

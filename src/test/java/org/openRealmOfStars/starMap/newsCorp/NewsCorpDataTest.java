@@ -2,8 +2,12 @@ package org.openRealmOfStars.starMap.newsCorp;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
 *
@@ -51,6 +55,41 @@ public class NewsCorpDataTest {
     if (data.getPopulation() == null) {
       fail("Population is null!");
     }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalaxyStatPlanets() {
+    NewsCorpData data = new NewsCorpData(3);
+    Planet unhabitated = Mockito.mock(Planet.class);
+    Mockito.when(unhabitated.getPlanetOwnerIndex()).thenReturn(-1);
+    Planet planet1 = Mockito.mock(Planet.class);
+    Mockito.when(planet1.getPlanetOwnerIndex()).thenReturn(0);
+    Planet planet2 = Mockito.mock(Planet.class);
+    Mockito.when(planet2.getPlanetOwnerIndex()).thenReturn(1);
+    Planet planet3 = Mockito.mock(Planet.class);
+    Mockito.when(planet3.getPlanetOwnerIndex()).thenReturn(2);
+
+    ArrayList<Planet> list = new ArrayList<>();
+    list.add(unhabitated);
+    list.add(unhabitated);
+    list.add(planet2);
+    list.add(planet1);
+    list.add(unhabitated);
+    list.add(planet3);
+    list.add(unhabitated);
+    list.add(planet2);
+    list.add(planet3);
+    list.add(unhabitated);
+    list.add(planet3);
+    list.add(planet2);
+    list.add(planet2);
+    list.add(unhabitated);
+    data.calculatePlanets(list);
+    int[][] value = data.getPlanets().getGalaxyData();
+    assertEquals(1,value[0][0]);
+    assertEquals(4,value[1][0]);
+    assertEquals(3,value[2][0]);
   }
 
   @Test(expected=IllegalArgumentException.class)

@@ -93,5 +93,13 @@ public class GalaxyStat {
     return galaxyStatisticsName;
   }
 
+  /**
+   * Get Max players for planet data
+   * @return Max players
+   */
+  public int getMaxPlayers() {
+    return maxPlayers;
+  }
+
 
 }

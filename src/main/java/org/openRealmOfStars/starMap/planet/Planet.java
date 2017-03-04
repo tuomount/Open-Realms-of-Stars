@@ -1105,7 +1105,8 @@ public class Planet {
   }
 
   /**
-   * Set planet owner index
+   * Set planet owner index. -1 means that
+   * planet is uncolonized.
    * @return the planetOwner
    */
   public int getPlanetOwnerIndex() {

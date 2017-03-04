@@ -34,6 +34,7 @@ public class GalaxyStatTest {
   public void testGalaxyStatValid() {
     GalaxyStat stat = new GalaxyStat(3, "Test stat");
     assertEquals("Test stat",stat.getGalaxyStatisticsName());
+    assertEquals(3,stat.getMaxPlayers());
     stat.addStat(0, 1);
     stat.addStat(0, 2);
     stat.addStat(0, 3);

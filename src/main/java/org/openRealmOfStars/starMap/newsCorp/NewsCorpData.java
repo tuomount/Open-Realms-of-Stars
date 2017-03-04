@@ -1,5 +1,9 @@
 package org.openRealmOfStars.starMap.newsCorp;
 
+import java.util.ArrayList;
+
+import org.openRealmOfStars.starMap.planet.Planet;
+
 /**
 *
 * Open Realm of Stars game project
@@ -141,4 +145,20 @@ public class NewsCorpData {
     return credit;
   }
 
+  /**
+   * Calculate how many planets players have
+   * @param planetList from StarMap
+   */
+  public void calculatePlanets(final ArrayList<Planet> planetList) {
+    int[] data = new int[planets.getMaxPlayers()];
+    for (Planet planet : planetList) {
+      int i = planet.getPlanetOwnerIndex();
+      if (i != -1 && i < planets.getMaxPlayers()) {
+        data[i] = data[i] + 1;
+      }
+    }
+    for (int i = 0; i < planets.getMaxPlayers(); i++) {
+      planets.addStat(i, data[i]);
+    }
+  }
 }

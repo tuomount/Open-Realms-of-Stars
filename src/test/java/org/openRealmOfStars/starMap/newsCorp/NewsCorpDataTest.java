@@ -92,6 +92,38 @@ public class NewsCorpDataTest {
     assertEquals(3,value[2][0]);
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalaxyStatPopulation() {
+    NewsCorpData data = new NewsCorpData(2);
+    Planet unhabitated = Mockito.mock(Planet.class);
+    Mockito.when(unhabitated.getPlanetOwnerIndex()).thenReturn(-1);
+    Planet planet1 = Mockito.mock(Planet.class);
+    Mockito.when(planet1.getPlanetOwnerIndex()).thenReturn(0);
+    Mockito.when(planet1.getTotalPopulation()).thenReturn(4);
+    Planet planet2 = Mockito.mock(Planet.class);
+    Mockito.when(planet2.getPlanetOwnerIndex()).thenReturn(1);
+    Mockito.when(planet2.getTotalPopulation()).thenReturn(3);
+    Planet planet3 = Mockito.mock(Planet.class);
+    Mockito.when(planet3.getPlanetOwnerIndex()).thenReturn(1);
+    Mockito.when(planet3.getTotalPopulation()).thenReturn(1);
+
+    ArrayList<Planet> list = new ArrayList<>();
+    list.add(unhabitated);
+    list.add(unhabitated);
+    list.add(planet1);
+    list.add(planet1);
+    list.add(unhabitated);
+    list.add(planet2);
+    list.add(unhabitated);
+    list.add(planet3);
+    list.add(unhabitated);
+    data.calculatePopulation(list);
+    int[][] value = data.getPlanets().getGalaxyData();
+    assertEquals(8,value[0][0]);
+    assertEquals(4,value[1][0]);
+  }
+
   @Test(expected=IllegalArgumentException.class)
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testGalaxyStatInValid() {

@@ -161,4 +161,22 @@ public class NewsCorpData {
       planets.addStat(i, data[i]);
     }
   }
+
+  /**
+   * Calculate how much population players have
+   * @param planetList from StarMap
+   */
+  public void calculatePopulation(final ArrayList<Planet> planetList) {
+    int[] data = new int[planets.getMaxPlayers()];
+    for (Planet planet : planetList) {
+      int i = planet.getPlanetOwnerIndex();
+      if (i != -1 && i < planets.getMaxPlayers()) {
+        data[i] = data[i] + planet.getTotalPopulation();
+      }
+    }
+    for (int i = 0; i < planets.getMaxPlayers(); i++) {
+      planets.addStat(i, data[i]);
+    }
+  }
+
 }

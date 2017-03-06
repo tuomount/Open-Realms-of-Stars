@@ -183,7 +183,7 @@ public class StarMap {
       for (int j = 0; j < maxY; j++) {
         tiles[i][j] = empty.getIndex();
         tileInfo[i][j] = SquareInfo.EMPTY_TILE;
-        culture[i][j] = new CulturePower(PlayerList.MAX_PLAYERS);
+        culture[i][j] = new CulturePower(players.getCurrentMaxPlayers());
         solarSystem[i][j] = 0;
       }
     }
@@ -370,7 +370,6 @@ public class StarMap {
         for (int y = 0; y < maxY; y++) {
           tiles[x][y] = dis.readInt();
           tileInfo[x][y] = new SquareInfo(dis);
-          culture[x][y] = new CulturePower(PlayerList.MAX_PLAYERS);
         }
       }
       // Read suns
@@ -380,6 +379,12 @@ public class StarMap {
       }
       // Players first
       players = new PlayerList(dis);
+      // Map data itself
+      for (int x = 0; x < maxX; x++) {
+        for (int y = 0; y < maxY; y++) {
+          culture[x][y] = new CulturePower(players.getCurrentMaxPlayers());
+        }
+      }
       count = dis.readInt();
       for (int i = 0; i < count; i++) {
         Planet planet = new PlanetRepository().restorePlanet(dis, players);

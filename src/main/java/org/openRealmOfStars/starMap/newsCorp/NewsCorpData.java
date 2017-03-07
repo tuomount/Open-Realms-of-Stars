@@ -2,6 +2,9 @@ package org.openRealmOfStars.starMap.newsCorp;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -167,15 +170,33 @@ public class NewsCorpData {
    * @param planetList from StarMap
    */
   public void calculatePopulation(final ArrayList<Planet> planetList) {
-    int[] data = new int[planets.getMaxPlayers()];
+    int[] data = new int[population.getMaxPlayers()];
     for (Planet planet : planetList) {
       int i = planet.getPlanetOwnerIndex();
-      if (i != -1 && i < planets.getMaxPlayers()) {
+      if (i != -1 && i < population.getMaxPlayers()) {
         data[i] = data[i] + planet.getTotalPopulation();
       }
     }
-    for (int i = 0; i < planets.getMaxPlayers(); i++) {
-      planets.addStat(i, data[i]);
+    for (int i = 0; i < population.getMaxPlayers(); i++) {
+      population.addStat(i, data[i]);
+    }
+  }
+
+  /**
+   * Calculate how much total military power players have
+   * @param playerList from StarMap
+   */
+  public void calculateMilitary(final PlayerList playerList) {
+    int[] data = new int[military.getMaxPlayers()];
+    for (int i = 0; i < playerList.getCurrentMaxPlayers(); i++) {
+      PlayerInfo player = playerList.getPlayerInfoByIndex(i);
+      for (int j = 0; j < player.getFleets().getNumberOfFleets(); j++) {
+        Fleet fleet = player.getFleets().getByIndex(j);
+        data[i] = data[i] + fleet.getMilitaryValue();
+      }
+    }
+    for (int i = 0; i < military.getMaxPlayers(); i++) {
+      military.addStat(i, data[i]);
     }
   }
 

@@ -1,12 +1,17 @@
 package org.openRealmOfStars.starMap.newsCorp;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -119,9 +124,44 @@ public class NewsCorpDataTest {
     list.add(planet3);
     list.add(unhabitated);
     data.calculatePopulation(list);
-    int[][] value = data.getPlanets().getGalaxyData();
+    int[][] value = data.getPopulation().getGalaxyData();
     assertEquals(8,value[0][0]);
     assertEquals(4,value[1][0]);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalaxyStatMilitary() {
+    NewsCorpData data = new NewsCorpData(2);
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Fleet militaryFleet = Mockito.mock(Fleet.class);
+    Mockito.when(militaryFleet.getMilitaryValue()).thenReturn(10);
+    Fleet colonFleet = Mockito.mock(Fleet.class);
+    Mockito.when(colonFleet.getMilitaryValue()).thenReturn(0);
+    FleetList fleetList1 = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList1.getNumberOfFleets()).thenReturn(3);
+    Mockito.when(fleetList1.getByIndex(0)).thenReturn(militaryFleet);
+    Mockito.when(fleetList1.getByIndex(1)).thenReturn(colonFleet);
+    Mockito.when(fleetList1.getByIndex(2)).thenReturn(militaryFleet);
+    PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info1.getFleets()).thenReturn(fleetList1);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info1);
+    FleetList fleetList2 = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList2.getNumberOfFleets()).thenReturn(5);
+    Mockito.when(fleetList2.getByIndex(0)).thenReturn(militaryFleet);
+    Mockito.when(fleetList2.getByIndex(1)).thenReturn(colonFleet);
+    Mockito.when(fleetList2.getByIndex(2)).thenReturn(militaryFleet);
+    Mockito.when(fleetList2.getByIndex(3)).thenReturn(colonFleet);
+    Mockito.when(fleetList2.getByIndex(4)).thenReturn(militaryFleet);
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info2.getFleets()).thenReturn(fleetList2);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
+    
+    data.calculateMilitary(players);;
+    int[][] value = data.getMilitary().getGalaxyData();
+    assertEquals(20,value[0][0]);
+    assertEquals(30,value[1][0]);
   }
 
   @Test(expected=IllegalArgumentException.class)

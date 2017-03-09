@@ -12,6 +12,8 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.tech.TechList;
+import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -193,6 +195,39 @@ public class NewsCorpDataTest {
     assertEquals(1,value[2][0]);
     assertEquals(123,value[3][0]);
     assertEquals(67,value[4][0]);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalaxyStatResearch() {
+    NewsCorpData data = new NewsCorpData(2);
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    TechList techs = Mockito.mock(TechList.class);
+    Mockito.when(techs.getTechLevel(TechType.Combat)).thenReturn(2);
+    Mockito.when(techs.getTechLevel(TechType.Defense)).thenReturn(1);
+    Mockito.when(techs.getTechLevel(TechType.Propulsion)).thenReturn(1);
+    Mockito.when(techs.getTechLevel(TechType.Improvements)).thenReturn(2);
+    Mockito.when(techs.getTechLevel(TechType.Electrics)).thenReturn(1);
+    Mockito.when(techs.getTechLevel(TechType.Hulls)).thenReturn(1);
+    PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info1.getTechList()).thenReturn(techs);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info1);
+    TechList techs2 = Mockito.mock(TechList.class);
+    Mockito.when(techs2.getTechLevel(TechType.Combat)).thenReturn(6);
+    Mockito.when(techs2.getTechLevel(TechType.Defense)).thenReturn(5);
+    Mockito.when(techs2.getTechLevel(TechType.Propulsion)).thenReturn(4);
+    Mockito.when(techs2.getTechLevel(TechType.Improvements)).thenReturn(3);
+    Mockito.when(techs2.getTechLevel(TechType.Electrics)).thenReturn(2);
+    Mockito.when(techs2.getTechLevel(TechType.Hulls)).thenReturn(1);
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info2.getTechList()).thenReturn(techs2);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
+    
+    data.calculateResearch(players);
+    int[][] value = data.getResearch().getGalaxyData();
+    assertEquals(13,value[0][0]);
+    assertEquals(35,value[1][0]);
   }
 
   @Test(expected=IllegalArgumentException.class)

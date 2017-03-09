@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -212,6 +213,29 @@ public class NewsCorpData {
     }
     for (int i = 0; i < credit.getMaxPlayers(); i++) {
       credit.addStat(i, data[i]);
+    }
+  }
+
+  /**
+   * Calculate how much research players have
+   * @param playerList from StarMap
+   */
+  public void calculateResearch(final PlayerList playerList) {
+    int[] data = new int[research.getMaxPlayers()];
+    for (int i = 0; i < playerList.getCurrentMaxPlayers(); i++) {
+      PlayerInfo player = playerList.getPlayerInfoByIndex(i);
+      int sum = 0;
+      sum = sum + player.getTechList().getTechLevel(TechType.Combat);
+      sum = sum + player.getTechList().getTechLevel(TechType.Defense);
+      sum = sum + player.getTechList().getTechLevel(TechType.Hulls);
+      sum = sum + player.getTechList().getTechLevel(TechType.Improvements);
+      sum = sum + player.getTechList().getTechLevel(TechType.Propulsion);
+      sum = sum + player.getTechList().getTechLevel(TechType.Electrics);
+      sum = sum * 10;
+      data[i] = Math.round(sum / 6);
+    }
+    for (int i = 0; i < research.getMaxPlayers(); i++) {
+      research.addStat(i, data[i]);
     }
   }
 

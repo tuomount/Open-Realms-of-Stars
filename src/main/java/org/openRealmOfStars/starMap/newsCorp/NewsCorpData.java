@@ -200,4 +200,19 @@ public class NewsCorpData {
     }
   }
 
+  /**
+   * Calculate how much credits players have
+   * @param playerList from StarMap
+   */
+  public void calculateCredit(final PlayerList playerList) {
+    int[] data = new int[credit.getMaxPlayers()];
+    for (int i = 0; i < playerList.getCurrentMaxPlayers(); i++) {
+      PlayerInfo player = playerList.getPlayerInfoByIndex(i);
+      data[i] = player.getTotalCredits();
+    }
+    for (int i = 0; i < credit.getMaxPlayers(); i++) {
+      credit.addStat(i, data[i]);
+    }
+  }
+
 }

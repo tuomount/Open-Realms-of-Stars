@@ -164,6 +164,37 @@ public class NewsCorpDataTest {
     assertEquals(30,value[1][0]);
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalaxyStatCredit() {
+    NewsCorpData data = new NewsCorpData(5);
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(5);
+    PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info1.getTotalCredits()).thenReturn(34);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info1);
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info2.getTotalCredits()).thenReturn(55);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
+    PlayerInfo info3 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info3.getTotalCredits()).thenReturn(1);
+    Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info3);
+    PlayerInfo info4 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info4.getTotalCredits()).thenReturn(123);
+    Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info4);
+    PlayerInfo info5 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info5.getTotalCredits()).thenReturn(67);
+    Mockito.when(players.getPlayerInfoByIndex(4)).thenReturn(info5);
+    
+    data.calculateCredit(players);
+    int[][] value = data.getCredit().getGalaxyData();
+    assertEquals(34,value[0][0]);
+    assertEquals(55,value[1][0]);
+    assertEquals(1,value[2][0]);
+    assertEquals(123,value[3][0]);
+    assertEquals(67,value[4][0]);
+  }
+
   @Test(expected=IllegalArgumentException.class)
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testGalaxyStatInValid() {

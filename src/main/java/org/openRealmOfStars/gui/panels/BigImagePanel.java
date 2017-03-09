@@ -90,8 +90,13 @@ public class BigImagePanel extends JPanel {
     if (this.planet != null && !this.planet.isGasGiant()) {
       backgroundImg = Planet.PLANET_BIG_IMAGES[this.planet.getPlanetType()];
     } else if (this.planet != null && this.planet.isGasGiant()) {
-      backgroundImg = Planet.GASWORLD_BIG_IMAGES[this.planet
+      int imageIndex = this.planet.getPlanetImageIndex();
+      if (imageIndex > Planet.GASWORLD_BIG_IMAGES.length - 1) {
+        backgroundImg = Planet.GASWORLD_BIG_IMAGES[0];
+      } else {
+        backgroundImg = Planet.GASWORLD_BIG_IMAGES[this.planet
           .getPlanetImageIndex()];
+      }
     } else {
       backgroundImg = null;
     }

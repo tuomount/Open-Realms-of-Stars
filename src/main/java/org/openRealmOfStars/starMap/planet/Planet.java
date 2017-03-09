@@ -1100,7 +1100,9 @@ public class Planet {
   public void setPlanetType(final int planetType) {
     if (planetType >= 0 && planetType < PLANET_IMAGE_INDEX.length) {
       this.planetType = planetType;
-      setPlanetImageIndex(PLANET_IMAGE_INDEX[planetType]);
+      if (!gasGiant) {
+        setPlanetImageIndex(PLANET_IMAGE_INDEX[planetType]);
+      }
     }
   }
 

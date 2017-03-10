@@ -124,7 +124,7 @@ public class StatisticPanel extends JPanel {
     for (int p = 0; p < data.length; p++) {
       if (p == 0) {
         sizeI = data[p].length;
-        largestX = sizeI;
+        largestX = sizeI - 1;
       } else {
         if (sizeI != data[p].length) {
           throw new IllegalArgumentException("Data arrays are not equal size");
@@ -135,6 +135,12 @@ public class StatisticPanel extends JPanel {
           largestY = data[p][i];
         }
       }
+    }
+    if (largestY == 0) {
+      largestY = 1;
+    }
+    if (largestX == 0) {
+      largestX = 1;
     }
   }
 
@@ -220,10 +226,12 @@ public class StatisticPanel extends JPanel {
             this.getHeight() - offsetY,
             (int) Math.round(offsetX + i * scaleX * mult), topOffsetY);
       }
-      g2d.setColor(GuiStatics.COLOR_GREEN_TEXT);
-      g2d.drawString(String.valueOf(i * turnDistance),
-          (int) Math.round(offsetX + i * scaleX * mult),
-          this.getHeight() - offsetY + textHeight);
+      if (i < amount) {
+        g2d.setColor(GuiStatics.COLOR_GREEN_TEXT);
+        g2d.drawString(String.valueOf(i * turnDistance),
+            (int) Math.round(offsetX + i * scaleX * mult),
+            this.getHeight() - offsetY + textHeight);
+      }
     }
     amount = 1;
     if (GRID_DENSITY / scaleY < 1) {

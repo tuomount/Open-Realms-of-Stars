@@ -51,7 +51,7 @@ public class StatisticPanelTest {
     data[2][4] = 3;
     panel.setData(data);
     assertEquals(6, panel.getLargestY());
-    assertEquals(5, panel.getLargestX());
+    assertEquals(4, panel.getLargestX());
     assertEquals(10,panel.getTurnDistance());
     panel.setTurnDistance(25);
     assertEquals(25,panel.getTurnDistance());
@@ -81,6 +81,31 @@ public class StatisticPanelTest {
     }
     panel.setYDataNames(null);
     assertEquals(0, panel.getWidestDataName());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStatisticPanelWithZeros() {
+    StatisticPanel panel = new StatisticPanel();
+    int[][] data = new int[3][5];
+    data[0][0] = 0; 
+    data[0][1] = 0; 
+    data[0][2] = 0; 
+    data[0][3] = 0; 
+    data[0][4] = 0; 
+    data[1][0] = 0; 
+    data[1][1] = 0; 
+    data[1][2] = 0; 
+    data[1][3] = 0; 
+    data[1][4] = 0; 
+    data[2][0] = 0; 
+    data[2][1] = 0; 
+    data[2][2] = 0; 
+    data[2][3] = 0; 
+    data[2][4] = 0;
+    panel.setData(data);
+    assertEquals(1, panel.getLargestY());
+    assertEquals(4, panel.getLargestX());
   }
 
   @Test(expected=IllegalArgumentException.class)

@@ -632,7 +632,12 @@ public class StarMap {
       }
     }
     int gasGiants = 0;
+    int loops = 0;
     while (gasGiants < numberOfGasGiants) {
+      loops++;
+      if (loops > 100) {
+        break;
+      }
       int px = sx + DiceGenerator.getRandom(-SOLAR_SYSTEM_WIDTH,
               SOLAR_SYSTEM_WIDTH);
       int py = sy + DiceGenerator.getRandom(-SOLAR_SYSTEM_WIDTH,

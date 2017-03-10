@@ -21,6 +21,7 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -151,6 +152,11 @@ public class StarMap {
   private Fleet aiFleet;
 
   /**
+   * News corporation data
+   */
+  private NewsCorpData newsCorpData;
+
+  /**
    * Magic string to save game files
    */
   public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.2";
@@ -187,6 +193,7 @@ public class StarMap {
         solarSystem[i][j] = 0;
       }
     }
+    newsCorpData = new NewsCorpData(players.getCurrentMaxPlayers());
     turn = 0;
     aiTurnNumber = 0;
     aiFleet = null;
@@ -379,6 +386,7 @@ public class StarMap {
       }
       // Players first
       players = new PlayerList(dis);
+      newsCorpData = new NewsCorpData(players.getCurrentMaxPlayers());
       // Map data itself
       for (int x = 0; x < maxX; x++) {
         for (int y = 0; y < maxY; y++) {
@@ -839,6 +847,14 @@ public class StarMap {
       cursorX = x;
       cursorY = y;
     }
+  }
+
+  /**
+   * Get News corporation data about the players
+   * @return the newsCorpData
+   */
+  public NewsCorpData getNewsCorpData() {
+    return newsCorpData;
   }
 
   /**

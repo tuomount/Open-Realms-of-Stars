@@ -45,6 +45,7 @@ public class StarMapTest {
         GalaxyConfig.START_POSITION_BORDER);
 
     PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
 
     StarMap map = new StarMap(config, players);
     assertEquals(50, map.getMaxX());
@@ -79,8 +80,15 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
 
     StarMap map = new StarMap(config, players);
+    assertEquals(4,map.getNewsCorpData().getCredit().getMaxPlayers());
+    assertEquals(4,map.getNewsCorpData().getMilitary().getMaxPlayers());
+    assertEquals(4,map.getNewsCorpData().getCultural().getMaxPlayers());
+    assertEquals(4,map.getNewsCorpData().getPlanets().getMaxPlayers());
+    assertEquals(4,map.getNewsCorpData().getPopulation().getMaxPlayers());
+    assertEquals(4,map.getNewsCorpData().getResearch().getMaxPlayers());
     assertEquals(50, map.getMaxX());
     assertEquals(50, map.getMaxY());
     assertEquals(true, map.isValidCoordinate(25, 25));
@@ -113,6 +121,7 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
 
 
     StarMap map = new StarMap(config, players);

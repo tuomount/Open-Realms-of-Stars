@@ -580,6 +580,18 @@ public class Fleet {
   }
 
   /**
+   * Calculate fleet's total cultural value
+   * @return Total cultural value for fleet
+   */
+  public int getCulturalValue() {
+    int result = 0;
+    for (Ship ship : ships) {
+      result = result + ship.getCulture();
+    }
+    return result;
+  }
+
+  /**
    * Is all ships in fleet fixed or not
    * @return True if all is fixed otherwise false
    */

@@ -392,7 +392,7 @@ public class Game extends JFrame implements ActionListener {
    * Show Stat panels
    */
   public void showStatView() {
-    statView = new StatView(this);
+    statView = new StatView(starMap, this);
     this.getContentPane().removeAll();
     this.add(statView);
     this.validate();
@@ -558,6 +558,13 @@ public class Game extends JFrame implements ActionListener {
       researchView = null;
       shipView = null;
       shipDesignView = null;
+      starMap.getNewsCorpData().calculateCredit(players);
+      starMap.getNewsCorpData().calculateCulture(starMap.getPlanetList(),
+          players);
+      starMap.getNewsCorpData().calculateMilitary(players);
+      starMap.getNewsCorpData().calculatePlanets(starMap.getPlanetList());
+      starMap.getNewsCorpData().calculatePopulation(starMap.getPlanetList());
+      starMap.getNewsCorpData().calculateResearch(players);
       changeGameState(GameState.STARMAP);
       break;
     }

@@ -9,7 +9,7 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.StatisticPanel;
-import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.starMap.StarMap;
 
 /**
  *
@@ -43,45 +43,20 @@ public class StatView extends BlackPanel {
 
   /**
    * Create new stat view
+   * @param map StarMap which contains players and planet lists.
    * @param listener Action Listener
    */
-  public StatView(final ActionListener listener) {
+  public StatView(final StarMap map, final ActionListener listener) {
     this.setLayout(new BorderLayout());
     InfoPanel base = new InfoPanel();
     base.setLayout(new BorderLayout());
     base.setTitle("Statistics");
 
     StatisticPanel statPanel = new StatisticPanel();
-    int[][] data = new int[8][3];
-    data[0][0] = 1;
-    data[0][1] = 2;
-    data[0][2] = 4;
-    data[1][0] = 3;
-    data[1][1] = 2;
-    data[1][2] = 5;
-    data[2][0] = 5;
-    data[2][1] = 6;
-    data[2][2] = 9;
-    data[3][0] = 7;
-    data[3][1] = 4;
-    data[3][2] = 1;
-    data[4][0] = 2;
-    data[4][1] = 4;
-    data[4][2] = 8;
-    data[5][0] = 9;
-    data[5][1] = 6;
-    data[5][2] = 3;
-    data[6][0] = 11;
-    data[6][1] = 10;
-    data[6][2] = 11;
-    data[7][0] = 4;
-    data[7][1] = 8;
-    data[7][2] = 64;
-    statPanel.setData(data);
-    String[] names = new String[8];
+    statPanel.setData(map.getNewsCorpData().getMilitary().getGalaxyData());
+    String[] names = new String[map.getPlayerList().getCurrentMaxPlayers()];
     for (int i = 0; i < names.length; i++) {
-      names[i] = SpaceRaceUtility.getRandomName(
-          SpaceRaceUtility.getRandomRace());
+      names[i] = map.getPlayerByIndex(i).getEmpireName();
     }
     statPanel.setYDataNames(names);
     base.add(statPanel, BorderLayout.CENTER);

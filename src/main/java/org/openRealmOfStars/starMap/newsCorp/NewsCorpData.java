@@ -63,6 +63,10 @@ public class NewsCorpData {
   private GalaxyStat credit;
 
   /**
+   * How many turns when new news is published
+   */
+  public static final int NEWS_PUBLISH_RATE = 20;
+  /**
    * String for planetary stat name
    */
   public static final String STAT_PLANETS = "Planets";

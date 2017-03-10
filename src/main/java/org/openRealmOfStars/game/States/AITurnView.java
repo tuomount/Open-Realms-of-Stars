@@ -29,6 +29,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -450,6 +451,16 @@ public class AITurnView extends BlackPanel {
       }
     }
     game.getStarMap().setTurn(game.getStarMap().getTurn() + 1);
+    if (game.getStarMap().getTurn() % NewsCorpData.NEWS_PUBLISH_RATE == 0) {
+      NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+      newsData.calculateCredit(game.getStarMap().getPlayerList());
+      newsData.calculateCulture(game.getStarMap().getPlanetList(),
+          game.getStarMap().getPlayerList());
+      newsData.calculateMilitary(game.getStarMap().getPlayerList());
+      newsData.calculateResearch(game.getStarMap().getPlayerList());
+      newsData.calculatePlanets(game.getStarMap().getPlanetList());
+      newsData.calculatePopulation(game.getStarMap().getPlanetList());
+    }
   }
 
   /**

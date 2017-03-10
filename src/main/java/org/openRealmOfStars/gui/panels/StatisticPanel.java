@@ -211,9 +211,9 @@ public class StatisticPanel extends JPanel {
       amount = largestX;
     } else {
       mult = (int) Math.round(GRID_DENSITY / scaleX);
-      amount = (int) Math.round(drawWidth / (GRID_DENSITY - 1));
+      amount = (int) Math.round(drawWidth / (GRID_DENSITY));
     }
-    for (int i = 0; i < amount; i++) {
+    for (int i = 0; i <= amount; i++) {
       if (i > 0) {
         g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
         g2d.drawLine((int) Math.round(offsetX + i * scaleX * mult),
@@ -230,9 +230,9 @@ public class StatisticPanel extends JPanel {
       amount = largestY;
     } else {
       mult = (int) Math.round(GRID_DENSITY / scaleY);
-      amount = (int) Math.round(drawHeigth / (GRID_DENSITY - 1));
+      amount = (int) Math.round(drawHeigth / (GRID_DENSITY));
     }
-    for (int i = 0; i < amount; i++) {
+    for (int i = 0; i <= amount; i++) {
       if (i > 0) {
         g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
         g2d.drawLine(offsetX,

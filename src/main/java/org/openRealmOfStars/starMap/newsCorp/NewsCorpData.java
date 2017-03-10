@@ -167,6 +167,32 @@ public class NewsCorpData {
   }
 
   /**
+   * Calculate how much culture players have
+   * @param planetList from StarMap
+   * @param playerList from StarMap
+   */
+  public void calculateCulture(final ArrayList<Planet> planetList,
+      final PlayerList playerList) {
+    int[] data = new int[cultural.getMaxPlayers()];
+    for (Planet planet : planetList) {
+      int i = planet.getPlanetOwnerIndex();
+      if (i != -1 && i < cultural.getMaxPlayers()) {
+        data[i] = data[i] + planet.getCulture();
+      }
+    }
+    for (int i = 0; i < playerList.getCurrentMaxPlayers(); i++) {
+      PlayerInfo player = playerList.getPlayerInfoByIndex(i);
+      for (int j = 0; j < player.getFleets().getNumberOfFleets(); j++) {
+        Fleet fleet = player.getFleets().getByIndex(j);
+        data[i] = data[i] + fleet.getCulturalValue();
+      }
+    }
+    for (int i = 0; i < cultural.getMaxPlayers(); i++) {
+      cultural.addStat(i, data[i]);
+    }
+  }
+
+  /**
    * Calculate how much population players have
    * @param planetList from StarMap
    */

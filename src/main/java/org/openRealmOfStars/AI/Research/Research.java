@@ -84,10 +84,11 @@ public final class Research {
       boolean notFound = true;
       for (ShipStat stat : stats) {
         if (stat.getDesign().getHull().getSize() == size && stat.getDesign()
-            .getHull().getHullType() == ShipHullType.NORMAL) {
+            .getHull().getHullType() == ShipHullType.NORMAL
+            && !stat.isObsolete()) {
           notFound = false;
           if (design.getTotalMilitaryPower() > stat.getDesign()
-              .getTotalMilitaryPower()) {
+              .getTotalMilitaryPower() && !stat.isObsolete()) {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);

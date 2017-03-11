@@ -277,7 +277,7 @@ public class StatisticPanel extends JPanel {
             this.getHeight() - offsetY - (int) Math.round(
                 data[p][0] * scaleY));
       } else {
-        for (int i = 0; i < largestX - 1; i++) {
+        for (int i = 0; i < largestX; i++) {
           g2d.drawLine(offsetX + (int) Math.round(i * scaleX),
               this.getHeight() - offsetY - (int) Math.round(
                   data[p][i] * scaleY),

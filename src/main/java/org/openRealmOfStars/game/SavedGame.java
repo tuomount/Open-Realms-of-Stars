@@ -79,6 +79,10 @@ public class SavedGame {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     creationTime = dateFormat.format(attr.creationTime().toMillis());
     StarMap starMap = new GameRepository().loadGame(folderName, filename);
+    if (starMap == null) {
+      throw new IOException("Error while reading the saved game: "
+          + folderName + "/" + filename);
+    }
     this.filename = filename;
     turnNumber = starMap.getTurn();
     galaxySize = starMap.getMaxX() + " X " + starMap.getMaxY();

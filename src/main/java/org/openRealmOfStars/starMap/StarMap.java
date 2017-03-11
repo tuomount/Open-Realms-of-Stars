@@ -27,6 +27,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
+import org.openRealmOfStars.utilities.repository.NewsCorpRepository;
 import org.openRealmOfStars.utilities.repository.PlanetRepository;
 import org.openRealmOfStars.utilities.repository.SunRepository;
 
@@ -159,7 +160,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.2";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.3";
 
   /**
    * Maximum amount of looping when finding free solar system spot.
@@ -386,7 +387,6 @@ public class StarMap {
       }
       // Players first
       players = new PlayerList(dis);
-      newsCorpData = new NewsCorpData(players.getCurrentMaxPlayers());
       // Map data itself
       for (int x = 0; x < maxX; x++) {
         for (int y = 0; y < maxY; y++) {
@@ -398,6 +398,9 @@ public class StarMap {
         Planet planet = new PlanetRepository().restorePlanet(dis, players);
         planetList.add(planet);
       }
+      NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
+      newsCorpData = newsCorpRepo.restoreNewsCorp(dis,
+          players.getCurrentMaxPlayers());
     } else {
       if (str.startsWith("OROS-SAVE-GAME-")) {
         throw new IOException(
@@ -414,7 +417,7 @@ public class StarMap {
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(final DataOutputStream dos) throws IOException {
-    IOUtilities.writeString(dos, MAGIC_STRING);
+    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.3");
     // Turn number
     dos.writeInt(turn);
     // Map size
@@ -439,6 +442,8 @@ public class StarMap {
     for (int i = 0; i < planetList.size(); i++) {
       new PlanetRepository().savePlanet(dos, planetList.get(i));
     }
+    NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
+    newsCorpRepo.saveNewsCorp(dos, newsCorpData);
   }
 
   /**

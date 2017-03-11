@@ -4,7 +4,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import org.openRealmOfStars.starMap.newsCorp.GalaxyStat;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
 *
@@ -38,7 +40,55 @@ public class NewsCorpRepository {
    */
   public void saveNewsCorp(final DataOutputStream dos,
       final NewsCorpData newsCorp) throws IOException {
-    //TODO make save
+    // How many galaxy stats to write, fixed number
+    dos.writeByte(6);
+    IOUtilities.writeString(dos, NewsCorpData.STAT_CREDIT);
+    saveGalaxyStat(dos, newsCorp.getCredit());
+    IOUtilities.writeString(dos, NewsCorpData.STAT_CULTURAL);
+    saveGalaxyStat(dos, newsCorp.getCultural());
+    IOUtilities.writeString(dos, NewsCorpData.STAT_MILITARY);
+    saveGalaxyStat(dos, newsCorp.getMilitary());
+    IOUtilities.writeString(dos, NewsCorpData.STAT_PLANETS);
+    saveGalaxyStat(dos, newsCorp.getPlanets());
+    IOUtilities.writeString(dos, NewsCorpData.STAT_POPULATION);
+    saveGalaxyStat(dos, newsCorp.getPopulation());
+    IOUtilities.writeString(dos, NewsCorpData.STAT_RESEARCH);
+    saveGalaxyStat(dos, newsCorp.getResearch());
+  }
+
+  /**
+   * Save Galaxy stat to DataOuputStream
+   * @param dos DataOutputStream
+   * @param stat GalaxyStat to save
+   * @throws IOException if there is any problem with DataOutputStream
+   */
+  private void saveGalaxyStat(final DataOutputStream dos,
+      final GalaxyStat stat) throws IOException {
+    int[][] data = stat.getGalaxyData();
+    int dataSize = data[0].length;
+    dos.writeByte(dataSize);
+    for (int i = 0; i < stat.getMaxPlayers(); i++) {
+      for (int j = 0; j < dataSize; j++) {
+        dos.writeInt(data[i][j]);
+      }
+    }
+  }
+
+  /**
+   * Load Galaxy stat from DataInputStream
+   * @param dis DataInputStream
+   * @param stat GalaxyStat to load
+   * @throws IOException if there is any problem with DataInputStream
+   */
+  private void loadGalaxyStat(final DataInputStream dis,
+      final GalaxyStat stat) throws IOException {
+    int dataSize = dis.read();
+    for (int i = 0; i < stat.getMaxPlayers(); i++) {
+      for (int j = 0; j < dataSize; j++) {
+        int value = dis.readInt();
+        stat.addStat(i, value);
+      }
+    }
   }
 
   /**
@@ -50,7 +100,28 @@ public class NewsCorpRepository {
    */
   public NewsCorpData restoreNewsCorp(final DataInputStream dis,
       final int numberOfPlayers) throws IOException {
-      return new NewsCorpData(numberOfPlayers);
+      NewsCorpData result =  new NewsCorpData(numberOfPlayers);
+      int numberOfStats = dis.read();
+      for (int i = 0; i < numberOfStats; i++) {
+        String name = IOUtilities.readString(dis);
+        if (name.equals(NewsCorpData.STAT_CREDIT)) {
+          loadGalaxyStat(dis, result.getCredit());
+        } else if (name.equals(NewsCorpData.STAT_CULTURAL)) {
+          loadGalaxyStat(dis, result.getCultural());
+        } else if (name.equals(NewsCorpData.STAT_MILITARY)) {
+          loadGalaxyStat(dis, result.getMilitary());
+        } else if (name.equals(NewsCorpData.STAT_PLANETS)) {
+          loadGalaxyStat(dis, result.getPlanets());
+        } else if (name.equals(NewsCorpData.STAT_POPULATION)) {
+          loadGalaxyStat(dis, result.getPopulation());
+        } else if (name.equals(NewsCorpData.STAT_RESEARCH)) {
+          loadGalaxyStat(dis, result.getResearch());
+        } else {
+          // Just reading unknown galaxy stat away
+          loadGalaxyStat(dis, new GalaxyStat(numberOfStats, "UNKNOWN"));
+        }
+      }
+      return result;
   }
 
 }

@@ -222,10 +222,14 @@ public class Fleet {
 
   /**
    * Get first ship from the fleet
-   * @return Ship
+   * @return Ship or null if new ships in fleet
    */
   public Ship getFirstShip() {
-    return ships.get(0);
+    if (ships.size() > 0) {
+      return ships.get(0);
+    } else {
+      return null;
+    }
   }
 
   /**

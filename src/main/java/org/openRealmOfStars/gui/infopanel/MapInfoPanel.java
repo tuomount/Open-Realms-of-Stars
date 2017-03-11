@@ -277,7 +277,11 @@ public class MapInfoPanel extends InfoPanel {
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
-      imageLabel.setImage(fleet.getFirstShip().getHull().getImage());
+      if (fleet.getFirstShip() != null) {
+        imageLabel.setImage(fleet.getFirstShip().getHull().getImage());
+      } else {
+        imageLabel.setImage(img);
+      }
       setTitle(fleet.getName());
       textArea.setText(fleet.getInfoAsText(fleetOwner));
       this.repaint();

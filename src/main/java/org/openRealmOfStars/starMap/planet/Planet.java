@@ -1297,7 +1297,7 @@ public class Planet {
               }
               if (mission.getType() == MissionType.DEFEND) {
                 // For now one ship is enough for defend
-                mission.setPhase(MissionPhase.TREKKING);
+                mission.setPhase(MissionPhase.EXECUTING);
               } else if (mission.getType() == MissionType.COLONIZE) {
                 mission.setPhase(MissionPhase.LOADING);
               } else {
@@ -1319,10 +1319,25 @@ public class Planet {
                 newMiss.setFleetName(fleet.getName());
                 planetOwnerInfo.getMissions().add(newMiss);
               } else if (ship.getTotalMilitaryPower() > 0) {
-                // No mission for planet, so just adding defender
-                String fleetName = "Defender";
-                fleet.setName(fleetName + " #" + (planetOwnerInfo.getFleets()
-                    .howManyFleetWithStartingNames(fleetName) + 1));
+                if (fleet.isScoutFleet()) {
+                  if (DiceGenerator.getRandom(3) == 0) {
+                    // Scout ship is for defending too
+                    String fleetName = "Defender";
+                    fleet.setName(fleetName + " #" + (planetOwnerInfo
+                        .getFleets().howManyFleetWithStartingNames(fleetName)
+                        + 1));
+                  } else {
+                    String fleetName = "Scout";
+                    fleet.setName(fleetName + " #" + (planetOwnerInfo
+                        .getFleets().howManyFleetWithStartingNames(fleetName)
+                        + 1));
+                  }
+                } else {
+                  // No mission for planet, so just adding defender
+                  String fleetName = "Defender";
+                  fleet.setName(fleetName + " #" + (planetOwnerInfo.getFleets()
+                      .howManyFleetWithStartingNames(fleetName) + 1));
+                }
               }
             }
           }

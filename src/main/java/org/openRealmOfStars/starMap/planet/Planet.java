@@ -951,6 +951,19 @@ public class Planet {
                 built = true;
                 break;
               }
+              if (tmp.getName().startsWith("Planetary scanner Mk")) {
+                int scannerLevel = Integer.valueOf(tmp.getName()
+                    .substring(20));
+                if (alreadyBuilt[j].getName().startsWith(
+                    "Planetary scanner Mk")) {
+                  int builtLvl = Integer.valueOf(alreadyBuilt[j].getName()
+                      .substring(20));
+                  if (builtLvl > scannerLevel) {
+                    built = true;
+                    break;
+                  }
+                }
+              }
             }
             if (!built && !exceedRadiation()) {
               result.add(tmp);

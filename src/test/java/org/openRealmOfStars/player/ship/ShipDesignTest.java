@@ -51,6 +51,9 @@ public class ShipDesignTest {
     assertEquals(1,design.getTotalArmor());
     assertEquals(0,design.getTotalShield());
     assertEquals(4,design.getNumberOfComponents());
+    assertEquals(2,design.getSpeed());
+    assertEquals(2,design.getFtlSpeed());
+    assertEquals(1,design.getTacticSpeed());
     design.removeComponent(3);
     assertEquals(true,ShipDesign.DESIGN_OK.equals(design.getFlaws()));
     assertEquals(3,design.getNumberOfComponents());
@@ -81,6 +84,29 @@ public class ShipDesignTest {
     assertEquals(3,design.getNumberOfComponents());
     assertEquals(0,design.getTotalMilitaryPower());
     assertEquals(1,design.getFreeSlots());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testProbeDesign() {
+    ShipHull hull = ShipHullFactory.createByName("Probe", SpaceRace.CENTAURS);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
+    ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+    
+    
+    assertEquals(true,ShipDesign.ENGINE_IS_MISSING.equals(design.getFlaws()));
+    design.addComponent(weapon);
+    design.addComponent(engine);
+    assertEquals(true,design.getFlaws().startsWith(ShipDesign.NO_WEAPONS_ALLOWED));
+    design.removeComponent(0);
+    assertEquals(true,ShipDesign.DESIGN_OK.equals(design.getFlaws()));
+    assertEquals(1,design.getNumberOfComponents());
+    assertEquals(0,design.getTotalMilitaryPower());
+    assertEquals(3,design.getFreeSlots());
+    assertEquals(3,design.getFtlSpeed());
+    assertEquals(2,design.getSpeed());
+    assertEquals(1,design.getTacticSpeed());
   }
 
 }

@@ -208,6 +208,13 @@ public class Ship extends Construction {
     sb.append(" Metal: ");
     sb.append(getMetalCost());
     sb.append("\n");
+    sb.append("Speed: ");
+    sb.append(getSpeed());
+    sb.append(" FTL: ");
+    sb.append(getFtlSpeed());
+    sb.append(" Tactic: ");
+    sb.append(getTacticSpeed());
+    sb.append("\n");
     sb.append("Shield: ");
     sb.append(shield);
     sb.append("/");

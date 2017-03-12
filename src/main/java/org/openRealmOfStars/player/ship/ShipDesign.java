@@ -230,6 +230,54 @@ public class ShipDesign {
   }
 
   /**
+   * Get Speed for design.
+   * @return Speed
+   */
+  public int getSpeed() {
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.ENGINE) {
+        return comp.getSpeed();
+      }
+    }
+    return 0;
+  }
+
+  /**
+   * Get tactic Speed for design.
+   * @return Speed
+   */
+  public int getTacticSpeed() {
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.ENGINE) {
+        return comp.getTacticSpeed();
+      }
+    }
+    return 0;
+  }
+
+  /**
+   * Get FTL Speed for design.
+   * @return Speed
+   */
+  public int getFtlSpeed() {
+    int result = 0;
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.ENGINE) {
+        result = comp.getFtlSpeed();
+        break;
+      }
+    }
+    if (hull.getHullType() == ShipHullType.PROBE) {
+      // Probes have faster FTL
+      result = result + 1;
+    }
+    return result;
+  }
+
+  /**
    * Has design certain type of component installed
    * @param type Component type for search
    * @return true if component type is in place
@@ -622,6 +670,13 @@ public class ShipDesign {
     sb.append(getCost());
     sb.append(" Metal: ");
     sb.append(getMetalCost());
+    sb.append("\n");
+    sb.append("Speed: ");
+    sb.append(getSpeed());
+    sb.append(" FTL: ");
+    sb.append(getFtlSpeed());
+    sb.append(" Tactic: ");
+    sb.append(getTacticSpeed());
     sb.append("\n");
     sb.append("Shield: ");
     sb.append(getTotalShield());

@@ -403,14 +403,20 @@ public class Ship extends Construction {
    * @return Speed
    */
   public int getFtlSpeed() {
+    int result = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
           && hasComponentEnergy(i)) {
-        return comp.getFtlSpeed();
+        result = comp.getFtlSpeed();
+        break;
       }
     }
-    return 0;
+    if (hull.getHullType() == ShipHullType.PROBE) {
+      // Probes have faster FTL
+      result = result + 1;
+    }
+    return result;
   }
 
   /**

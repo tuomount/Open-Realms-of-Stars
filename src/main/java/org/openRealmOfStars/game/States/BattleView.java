@@ -380,6 +380,7 @@ public class BattleView extends BlackPanel {
       endButton.setText("End combat");
       combatEnded = true;
       combat.handleEndCombat();
+      map.getFleetTiles(true);
     }
     this.repaint();
   }

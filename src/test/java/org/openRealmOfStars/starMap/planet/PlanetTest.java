@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 
@@ -79,6 +80,36 @@ public class PlanetTest {
       assertEquals("Planet should have only one building.", 1, planet.getBuildingList().length);
       assertEquals("Planet should have a Basic factory.", "Basic factory", planet.getBuildingList()[0].getName());
       assertEquals(false,planet.isFullOfPopulation());
+    }
+
+    @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
+    public void testPlanetTextGenerator() {
+        Coordinate planetCoordinate = new Coordinate(10, 15);
+        Planet planet = new Planet(planetCoordinate, "Earth", 1, false);
+        planet.setGroundSize(10);
+        planet.setAmountMetalInGround(6543);
+        planet.setRadiationLevel(1);
+        planet.setName("Earth");
+
+        String tmp = planet.generateInfoText(false);
+        assertEquals("Earth\nRadiation: 1\nSize: below average\n",tmp);
+        tmp = planet.generateInfoText(true);
+        assertEquals("Earth\nRadiation: 1\nSize: below average\nMetal: 6543\n",tmp);
+        planet.setHomeWorldIndex(1);
+        tmp = planet.generateInfoText(false);
+        assertEquals("Earth\nRadiation: 1\nSize: below average\nHome world of\nMechions\n",tmp);
+        tmp = planet.generateInfoText(true);
+        assertEquals("Earth\nRadiation: 1\nSize: below average\nMetal: 6543\nHome world of\nMechions\n",tmp);
+        PlayerInfo info = new PlayerInfo(SpaceRaceUtility.getRaceByName("Mechion"));
+        info.setEmpireName("Mechion Great Empire");
+        planet.setPlanetOwner(0, info);
+        planet.setWorkers(0, 1);
+        planet.setCulture(5);
+        tmp = planet.generateInfoText(true);
+        assertEquals("Earth\nRadiation: 1\nSize: below average\nMetal: 6543\n"
+            + "Home world of\nMechions\nMechion Great Empire\nPopulation"
+            + ": 1\nCulture: 5",tmp);
     }
 
 }

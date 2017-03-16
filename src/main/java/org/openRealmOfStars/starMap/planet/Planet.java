@@ -1058,9 +1058,10 @@ public class Planet {
 
   /**
    * Generate info text
+   * @param activeScanned If planet is scanned in one turn
    * @return String
    */
-  public String generateInfoText() {
+  public String generateInfoText(final boolean activeScanned) {
     StringBuilder sb = new StringBuilder();
     sb.append(this.getName());
     sb.append("\n");
@@ -1076,16 +1077,17 @@ public class Planet {
       sb.append("Size: ");
       sb.append(getSizeAsString());
       sb.append("\n");
-      sb.append("Metal: ");
-      sb.append(getAmountMetalInGround());
-      if (homeWorldIndex != -1) {
+      if (activeScanned) {
+        sb.append("Metal: ");
+        sb.append(getAmountMetalInGround());
         sb.append("\n");
-        sb.append("Home world of ");
+      }
+      if (homeWorldIndex != -1) {
+        sb.append("Home world of\n");
         sb.append(SpaceRaceUtility.getRaceByIndex(homeWorldIndex).getName());
         sb.append("\n");
       }
-      if (planetOwnerInfo != null) {
-        sb.append("\n");
+      if (planetOwnerInfo != null && activeScanned) {
         sb.append(planetOwnerInfo.getEmpireName());
         sb.append("\n");
         sb.append("Population: ");

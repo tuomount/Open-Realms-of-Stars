@@ -985,6 +985,14 @@ public class StarMap {
   }
 
   /**
+   * Use only in JUnits. This changes whole planet list on starmap.
+   * @param list New planet list
+   */
+  public void setPlanetList(final ArrayList<Planet> list) {
+    planetList = list;
+  }
+
+  /**
    * Fight with two fleets
    * @param x X coordinate
    * @param y Y coordinate
@@ -1623,4 +1631,50 @@ public class StarMap {
     return players;
   }
 
+  /**
+   * Get next planet for player which is owned by that player
+   * @param info Player who owns the planet
+   * @param currentPlanet Currently clicked planet, does not need to be
+   * owned by the player
+   * @param forward If true moves forward, on false moves backward
+   * @return Next player planet or same planet
+   */
+  public Planet getNextPlanetForPlayer(final PlayerInfo info,
+      final Planet currentPlanet, final boolean forward) {
+    int startIndex = 0;
+    for (int i = 0; i < planetList.size(); i++) {
+      Planet planet = planetList.get(i);
+      if (planet.getX() == currentPlanet.getX()
+          && planet.getY() == currentPlanet.getY()) {
+        startIndex = i;
+        break;
+      }
+    }
+    int i = startIndex;
+    boolean exitLoop = false;
+    while (!exitLoop) {
+      if (forward) {
+        i++;
+      } else {
+        i--;
+      }
+      if (i >= planetList.size()) {
+        i = 0;
+      }
+      if (i <= -1) {
+        i = planetList.size() - 1;
+      }
+      Planet planet = planetList.get(i);
+      if (planet.getPlanetPlayerInfo() != null
+          && planet.getPlanetPlayerInfo() == info) {
+        exitLoop = true;
+        return planet;
+      }
+      if (i == startIndex) {
+        exitLoop = true;
+      }
+    }
+    // Return same planet
+    return planetList.get(startIndex);
+  }
 }

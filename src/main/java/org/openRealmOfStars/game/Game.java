@@ -817,6 +817,9 @@ public class Game extends JFrame implements ActionListener {
           SoundPlayer.playMenuSound();
           changeMessageForFleets(fleet);
         }
+      /* else if (starMapView.getStarMapMouseListener().getLastClickedPlanet()
+            != null) {
+        }*/
       } else {
         if (arg0.getActionCommand()
             .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {

@@ -761,6 +761,20 @@ public class Game extends JFrame implements ActionListener {
   }
 
   /**
+   * Change message focus for Planet
+   * @param planet Where to focus
+   */
+  private void changeMessageForPlanet(final Planet planet) {
+    if (planet != null) {
+      starMap.setCursorPos(planet.getX(), planet.getY());
+      starMap.setDrawPos(planet.getX(), planet.getY());
+      starMapView.setShowPlanet(planet);
+      starMapView.getStarMapMouseListener().setLastClickedFleet(null);
+      starMapView.getStarMapMouseListener().setLastClickedPlanet(planet);
+    }
+  }
+
+  /**
    * Handle state changes via double clicking on StarMap
    */
   private void handleDoubleClicksOnStarMap() {
@@ -808,6 +822,13 @@ public class Game extends JFrame implements ActionListener {
           Fleet fleet = players.getCurrentPlayerInfo().getFleets().getPrev();
           SoundPlayer.playMenuSound();
           changeMessageForFleets(fleet);
+        } else if (starMapView.getStarMapMouseListener().getLastClickedPlanet()
+            != null) {
+          Planet planet = starMap.getNextPlanetForPlayer(starMap
+              .getCurrentPlayerInfo(), starMapView.getStarMapMouseListener()
+              .getLastClickedPlanet(), false);
+          SoundPlayer.playMenuSound();
+          changeMessageForPlanet(planet);
         }
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_NEXT_TARGET)) {
@@ -816,10 +837,14 @@ public class Game extends JFrame implements ActionListener {
           Fleet fleet = players.getCurrentPlayerInfo().getFleets().getNext();
           SoundPlayer.playMenuSound();
           changeMessageForFleets(fleet);
-        }
-      /* else if (starMapView.getStarMapMouseListener().getLastClickedPlanet()
+        } else if (starMapView.getStarMapMouseListener().getLastClickedPlanet()
             != null) {
-        }*/
+          Planet planet = starMap.getNextPlanetForPlayer(starMap
+              .getCurrentPlayerInfo(), starMapView.getStarMapMouseListener()
+              .getLastClickedPlanet(), true);
+          SoundPlayer.playMenuSound();
+          changeMessageForPlanet(planet);
+        }
       } else {
         if (arg0.getActionCommand()
             .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {

@@ -363,25 +363,8 @@ public class MapPanel extends JPanel {
             BasicStroke.JOIN_BEVEL, 1, new float[] {0.1f, 4.5f }, 0);
         Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE,
             BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
-        if (i + cx == starMap.getCursorX() && j + cy == starMap.getCursorY()) {
-          gr.setStroke(full);
-          gr.setColor(colorFlickerBlue);
-          // Top line
-          gr.drawLine(pixelX, pixelY, pixelX + Tile.MAX_WIDTH - 1, pixelY);
-          // Left line
-          gr.drawLine(pixelX, pixelY, pixelX, pixelY + Tile.MAX_HEIGHT - 1);
-          // Right line
-          gr.drawLine(pixelX + Tile.MAX_WIDTH - 1, pixelY,
-              pixelX + Tile.MAX_WIDTH - 1, pixelY + Tile.MAX_HEIGHT - 1);
-          // Bottom line
-          gr.drawLine(pixelX, pixelY + Tile.MAX_HEIGHT - 1,
-              pixelX + Tile.MAX_WIDTH - 1, pixelY + Tile.MAX_HEIGHT - 1);
-          gr.setStroke(dashed);
-          gr.setColor(colorDarkBlue);
-        } else {
-          gr.setStroke(dashed);
-          gr.setColor(colorDarkBlue);
-        }
+        gr.setStroke(dashed);
+        gr.setColor(colorDarkBlue);
         if (i != viewPointX) {
           // Right line
           gr.drawLine(pixelX + Tile.MAX_WIDTH - 1, pixelY,
@@ -462,6 +445,24 @@ public class MapPanel extends JPanel {
           }
         }
 
+        // Draw the map cursor
+        if (i + cx == starMap.getCursorX() && j + cy == starMap.getCursorY()) {
+          gr.setStroke(full);
+          gr.setColor(colorFlickerBlue);
+          // Top line
+          gr.drawLine(pixelX, pixelY, pixelX + Tile.MAX_WIDTH - 1, pixelY);
+          // Left line
+          gr.drawLine(pixelX, pixelY, pixelX, pixelY + Tile.MAX_HEIGHT - 1);
+          // Right line
+          gr.drawLine(pixelX + Tile.MAX_WIDTH - 1, pixelY,
+              pixelX + Tile.MAX_WIDTH - 1, pixelY + Tile.MAX_HEIGHT - 1);
+          // Bottom line
+          gr.drawLine(pixelX, pixelY + Tile.MAX_HEIGHT - 1,
+              pixelX + Tile.MAX_WIDTH - 1, pixelY + Tile.MAX_HEIGHT - 1);
+          gr.setStroke(dashed);
+          gr.setColor(colorDarkBlue);
+        }
+        
         // Draw sun's text
         if (tile.getName().equals(TileNames.SUN_E) && i > -viewPointX + 1) {
           Sun sun = starMap.getSunByCoordinate(i + cx, j + cy);

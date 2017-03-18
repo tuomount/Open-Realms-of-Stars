@@ -462,7 +462,7 @@ public class MapPanel extends JPanel {
           gr.setStroke(dashed);
           gr.setColor(colorDarkBlue);
         }
-        
+
         // Draw sun's text
         if (tile.getName().equals(TileNames.SUN_E) && i > -viewPointX + 1) {
           Sun sun = starMap.getSunByCoordinate(i + cx, j + cy);

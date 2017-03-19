@@ -405,7 +405,7 @@ public class AITurnView extends BlackPanel {
                   msg.setMatchByString(fleet.getName());
                   msg.setCoordinate(fleet.getCoordinate());
                   info.getMsgList().addNewMessage(msg);
-                } 
+                }
               } else {
                 // Movement was blocked, giving a message
                 fleet.setRoute(null);

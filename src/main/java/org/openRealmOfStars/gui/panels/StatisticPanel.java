@@ -200,8 +200,8 @@ public class StatisticPanel extends JPanel {
     int drawWidth = this.getWidth() - offsetX - rightOffsetX;
     int drawHeigth = this.getHeight() - offsetY - topOffsetY;
 
-    double scaleY = drawHeigth / largestY;
-    double scaleX = drawWidth / largestX;
+    double scaleY = (double) drawHeigth / (double) largestY;
+    double scaleX = (double) drawWidth / (double) largestX;
     Graphics2D g2d = (Graphics2D) arg0;
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
@@ -217,7 +217,7 @@ public class StatisticPanel extends JPanel {
       amount = largestX;
     } else {
       mult = (int) Math.round(GRID_DENSITY / scaleX);
-      amount = (int) Math.round(drawWidth / (GRID_DENSITY));
+      amount = (int) Math.ceil(drawWidth / (GRID_DENSITY));
     }
     for (int i = 0; i <= amount; i++) {
       if (i > 0) {
@@ -237,8 +237,14 @@ public class StatisticPanel extends JPanel {
     if (GRID_DENSITY / scaleY < 1) {
       amount = largestY;
     } else {
-      mult = (int) Math.round(GRID_DENSITY / scaleY);
-      amount = (int) Math.round(drawHeigth / (GRID_DENSITY));
+      mult = (int) Math.round(GRID_DENSITY / (Double) scaleY);
+      amount = (int) Math.ceil((double) drawHeigth / GRID_DENSITY);
+      if (mult * scaleY * amount < drawHeigth - GRID_DENSITY) {
+        amount++;
+      }
+      if (mult * scaleY * amount < drawHeigth - GRID_DENSITY) {
+        amount++;
+      }
     }
     for (int i = 0; i <= amount; i++) {
       if (i > 0) {

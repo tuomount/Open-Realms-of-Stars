@@ -109,4 +109,33 @@ public class ShipDesignTest {
     assertEquals(1,design.getTacticSpeed());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testBattleShipDesign() {
+    ShipHull hull = ShipHullFactory.createByName("Battleship Mk1", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
+    ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+    ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+    ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
+    ShipComponent comp = ShipComponentFactory.createByName("Targeting computer Mk1");
+    ShipComponent jammer = ShipComponentFactory.createByName("Jammer Mk1");
+    
+    
+    assertEquals(true,ShipDesign.ENGINE_IS_MISSING.equals(design.getFlaws()));
+    design.addComponent(weapon);
+    design.addComponent(engine);
+    design.addComponent(energy);
+    design.addComponent(armor);
+    assertEquals(true,ShipDesign.DESIGN_OK.equals(design.getFlaws()));
+    design.addComponent(jammer);
+    design.addComponent(comp);
+    assertEquals(true,ShipDesign.DESIGN_OK.equals(design.getFlaws()));
+    design.addComponent(jammer);
+    assertEquals(true,design.getFlaws().startsWith(ShipDesign.MANY_JAMMERS));
+    design.removeComponent(6);
+    design.addComponent(comp);
+    assertEquals(true,design.getFlaws().startsWith(ShipDesign.MANY_COMPUTERS));
+  }
+
 }

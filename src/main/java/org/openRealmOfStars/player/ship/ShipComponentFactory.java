@@ -1444,7 +1444,7 @@ public final class ShipComponentFactory {
     }
     if (index == COMPONENT_JAMMER_MK1) {
       tmp = new ShipComponent(index, "Jammer Mk1", 3, 1,
-          ShipComponentType.SCANNER);
+          ShipComponentType.JAMMER);
       tmp.setDefenseValue(5);
       tmp.setEnergyRequirement(1);
     }
@@ -1509,7 +1509,7 @@ public final class ShipComponentFactory {
     }
     if (index == COMPONENT_JAMMER_MK2) {
       tmp = new ShipComponent(index, "Jammer Mk2", 4, 1,
-          ShipComponentType.SCANNER);
+          ShipComponentType.JAMMER);
       tmp.setDefenseValue(10);
       tmp.setEnergyRequirement(1);
     }
@@ -1547,7 +1547,7 @@ public final class ShipComponentFactory {
     }
     if (index == COMPONENT_JAMMER_MK3) {
       tmp = new ShipComponent(index, "Jammer Mk3", 4, 1,
-          ShipComponentType.SCANNER);
+          ShipComponentType.JAMMER);
       tmp.setDefenseValue(15);
       tmp.setEnergyRequirement(1);
     }
@@ -1613,7 +1613,7 @@ public final class ShipComponentFactory {
     }
     if (index == COMPONENT_JAMMER_MK4) {
       tmp = new ShipComponent(index, "Jammer Mk4", 5, 1,
-          ShipComponentType.SCANNER);
+          ShipComponentType.JAMMER);
       tmp.setDefenseValue(20);
       tmp.setEnergyRequirement(1);
     }

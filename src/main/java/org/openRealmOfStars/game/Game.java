@@ -570,11 +570,13 @@ public class Game extends JFrame implements ActionListener {
     }
     case PLANETBOMBINGVIEW: {
       boolean changed = false;
-      if (dataObject instanceof Planet) {
-        Planet planet = (Planet) dataObject;
-        Fleet fleet = starMap.getFleetByCoordinate(planet.getX(),
-            planet.getY());
-        if (fleet != null) {
+      if (dataObject instanceof FleetView) {
+        FleetView view = (FleetView) dataObject;
+        Planet planet = view.getPlanet();
+        Fleet fleet = view.getFleet();
+        if (fleet != null && planet != null
+            && fleet.getX() == planet.getX()
+            && fleet.getY() == planet.getY()) {
           showPlanetBombingView(planet, fleet);
           changed = true;
         }
@@ -987,7 +989,7 @@ public class Game extends JFrame implements ActionListener {
         colonizePlanetAction();
       }
       if (arg0.getActionCommand().equals(GameCommands.COMMAND_CONQUEST)) {
-        changeGameState(GameState.PLANETBOMBINGVIEW, fleetView.getPlanet());
+        changeGameState(GameState.PLANETBOMBINGVIEW, fleetView);
         SoundPlayer.playMenuSound();
       }
       fleetView.handleAction(arg0);

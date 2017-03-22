@@ -967,8 +967,7 @@ public class Planet {
             }
             if (!built && !exceedRadiation()) {
               result.add(tmp);
-            }
-            if (!built && (tmp.getName().equals("Radiation dampener")
+            } else if (!built && (tmp.getName().equals("Radiation dampener")
                 || tmp.getName().equals("Radiation well"))) {
               // Radiation well and dampener can be built even planet has
               // radiation.

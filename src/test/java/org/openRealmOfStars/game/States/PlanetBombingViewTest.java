@@ -1,5 +1,8 @@
 package org.openRealmOfStars.game.States;
 
+import java.awt.event.ActionListener;
+
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -7,8 +10,6 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.starMap.planet.Planet;
-
-import java.awt.event.ActionListener;
 /**
  *
  * Open Realm of Stars game project
@@ -49,6 +50,16 @@ public class PlanetBombingViewTest {
         ActionListener listener = Mockito.mock(ActionListener.class);
 
         planetBombingView = new PlanetBombingView(planet, fleet, attackerPlayerInfo, attackerPlayerIndex, listener);
+        assertEquals(planet, planetBombingView.getPlanet());
+        Planet planet2 = Mockito.mock(Planet.class);
+        planetBombingView.setPlanet(planet2);
+        assertEquals(planet2, planetBombingView.getPlanet());
+        assertEquals(fleet, planetBombingView.getFleet());
+        Fleet fleet2 = Mockito.mock(Fleet.class);
+        planetBombingView.setFleet(fleet2);
+        assertEquals(fleet2, planetBombingView.getFleet());
+        // Just running void method
+        planetBombingView.resetComponentUsage();
     }
 
 }

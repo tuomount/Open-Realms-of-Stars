@@ -293,6 +293,7 @@ public class PlanetBombingView extends BlackPanel {
     for (int i = 0; i < componentUsed.length; i++) {
       componentUsed[i] = false;
     }
+    infoPanel.resetComponentUses();
   }
 
   /**
@@ -423,6 +424,7 @@ public class PlanetBombingView extends BlackPanel {
           Ship ship = fleet.getShipByIndex(shipIndex);
           ShipComponent comp = ship.getComponent(usedComponentIndex);
           if (ship.componentIsWorking(usedComponentIndex)) {
+            infoPanel.useComponent(usedComponentIndex);
             if (comp.getType() == ShipComponentType.ORBITAL_NUKE) {
               imgBase.setAnimation(new PlanetAnimation(
                   PlanetAnimation.ANIMATION_TYPE_NUKE_AIM, 0, 0, 1, 1));
@@ -475,6 +477,7 @@ public class PlanetBombingView extends BlackPanel {
               }
             }
           }
+          usedComponentIndex = -1;
         }
       }
       updatePanel();

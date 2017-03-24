@@ -151,6 +151,15 @@ public class BattleInfoPanel extends InfoPanel {
   }
 
   /**
+   * Reset Ship Component uses.
+   */
+  public void resetComponentUses() {
+    for (int i = 0; i < MAX_BTN; i++) {
+      cBtn[i].setUsed(false);
+    }
+  }
+
+  /**
    * Update panels according set data
    */
   public void updatePanel() {

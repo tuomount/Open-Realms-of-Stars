@@ -912,6 +912,20 @@ public class StarMap {
   }
 
   /**
+   * Get Sun by name. If not found then null is returned.
+   * @param sunName Sun's name
+   * @return Sun or null
+   */
+  public Sun getSunByName(final String sunName) {
+    for (Sun sun : sunList) {
+      if (sun.getName().equals(sunName)) {
+        return sun;
+      }
+    }
+    return null;
+  }
+
+  /**
    * Get Planet by coordinates. If not found then null is returned.
    * @param x X coordinate
    * @param y Y coordinate

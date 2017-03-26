@@ -70,21 +70,30 @@ public final class MissionHandling {
       }
       if (mission.getPhase() == MissionPhase.EXECUTING) {
         mission.setMissionTime(mission.getMissionTime() + 1);
+        boolean missionComplete = false;
         if (mission.getMissionTime() >= info.getRace().getAIExploringAmount()) {
           // Depending on race it decides enough is enough
           fleet.setaStarSearch(null);
           ignoreSun = mission.getSunName();
+          missionComplete = true;
         }
         if (fleet.getaStarSearch() == null) {
-          Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
-              fleet.getY(), info, fleet, ignoreSun);
-          if (!sun.getName().equals(mission.getSunName())) {
-            mission.setTarget(sun.getCenterCoordinate());
-            fleet.setRoute(new Route(fleet.getX(), fleet.getY(), mission.getX(),
-                mission.getY(), fleet.getFleetFtlSpeed()));
-            mission.setSunName(sun.getName());
-            mission.setPhase(MissionPhase.TREKKING);
-            return;
+          Sun sun = null;
+          if (missionComplete) {
+            sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
+                fleet.getY(), info, fleet, ignoreSun);
+            if (!sun.getName().equals(mission.getSunName())) {
+              mission.setTarget(sun.getCenterCoordinate());
+              fleet.setRoute(new Route(fleet.getX(), fleet.getY(),
+                  mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+              mission.setSunName(sun.getName());
+              mission.setPhase(MissionPhase.TREKKING);
+              // Starting the new exploring mission
+              mission.setMissionTime(0);
+              return;
+            }
+          } else {
+            sun = game.getStarMap().getSunByName(mission.getSunName());
           }
           PathPoint point = info.getUnchartedSector(sun, fleet);
           if (point != null) {

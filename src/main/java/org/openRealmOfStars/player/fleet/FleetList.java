@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.starMap.Coordinate;
+
 /**
  *
  * Open Realm of Stars game project
@@ -281,5 +283,19 @@ public class FleetList {
         break;
       }
     }
+  }
+
+  /**
+   * Get fleet by coordinate
+   * @param coordinate Which is being matched
+   * @return Fleet or null if no match
+   */
+  public Fleet getFleetByCoordinate(final Coordinate coordinate) {
+    for (Fleet fleet : fleetList) {
+      if (fleet.getCoordinate().sameAs(coordinate)) {
+        return fleet;
+      }
+    }
+    return null;
   }
 }

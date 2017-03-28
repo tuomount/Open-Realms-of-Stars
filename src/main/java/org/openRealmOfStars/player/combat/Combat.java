@@ -642,7 +642,7 @@ public class Combat {
   }
 
   /**
-   * Hand winner fleet stats
+   * Handle winner fleet stats
    * @param fleet The winner fleet
    * @param info The winner player info
    */

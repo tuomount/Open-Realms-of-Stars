@@ -109,4 +109,17 @@ public class Coordinate {
     public String toString() {
         return "Coordinate(" + x + ", " + y + ")";
     }
+
+    /**
+     * Check if two coordinate matches
+     * @param coordinate Which is being matched
+     * @return true if two coordinates are same, otherwise false
+     */
+    public boolean sameAs(final Coordinate coordinate) {
+      if (coordinate.getX() == this.getX()
+          && coordinate.getY() == this.getY()) {
+        return true;
+      }
+      return false;
+    }
 }

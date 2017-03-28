@@ -51,6 +51,18 @@ public class CoordinateTest {
     }
 
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
+    public void testCoordinateMatching() {
+        Coordinate originalCoordinate = new Coordinate(10, 15);
+        Coordinate coordinate = new Coordinate(10,15);
+        assertEquals(true, coordinate.sameAs(originalCoordinate));
+        assertEquals(true, originalCoordinate.sameAs(coordinate));
+        coordinate = new Coordinate(33,8);
+        assertEquals(false, coordinate.sameAs(originalCoordinate));
+        assertEquals(false, originalCoordinate.sameAs(coordinate));
+    }
+
+    @Test
     @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testCreateCoordinateFromAnotherWithoutSideEffect() {
         Coordinate originalCoordinate = new Coordinate(10, 15);

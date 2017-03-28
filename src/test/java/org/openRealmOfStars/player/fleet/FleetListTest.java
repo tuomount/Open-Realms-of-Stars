@@ -8,6 +8,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
+import org.openRealmOfStars.starMap.Coordinate;
 
 /**
  * 
@@ -72,6 +73,27 @@ public class FleetListTest {
     assertEquals(fleet2,fleets.getNext());
     assertEquals(fleet2,fleets.getByName("Fleet #2"));
     assertEquals(2,fleets.howManyFleetWithStartingNames("Fleet #"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testFleetByCoordinate() {
+    Coordinate coord1 = new Coordinate(3, 5);
+    Coordinate coord2 = new Coordinate(6, 7);
+    Fleet fleet1 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet1.getName()).thenReturn("Fleet #1");
+    Mockito.when(fleet1.getCoordinate()).thenReturn(coord1);
+    Fleet fleet2 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet2.getName()).thenReturn("Fleet #2");
+    Mockito.when(fleet2.getCoordinate()).thenReturn(coord1);
+    Fleet fleet3 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet3.getName()).thenReturn("Fleet #3");
+    Mockito.when(fleet3.getCoordinate()).thenReturn(coord2);
+    FleetList fleets = new FleetList();
+    fleets.add(fleet1);
+    fleets.add(fleet2);
+    fleets.add(fleet3);
+    assertEquals(fleet3,fleets.getFleetByCoordinate(coord2));
   }
 
   @Test

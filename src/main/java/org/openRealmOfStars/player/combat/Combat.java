@@ -661,11 +661,16 @@ public class Combat {
   public void handleEndCombat() {
     if (winner != null && info1 == winner) {
       handleWinner(fleet1, info1);
-      fleet1.setPos(fleet2.getCoordinate());
+      Coordinate loserPos = fleet2.getCoordinate();
       int index = info2.getFleets().getIndexByName(fleet2.getName());
       if (index != -1) {
         info2.getFleets().remove(index);
       }
+      if (info2.getFleets().getFleetByCoordinate(loserPos) == null) {
+        // No more defending fleets so moving to the coordinate
+        fleet1.setPos(fleet2.getCoordinate());
+      }
+
     }
     if (winner != null && info2 == winner) {
       handleWinner(fleet2, info2);

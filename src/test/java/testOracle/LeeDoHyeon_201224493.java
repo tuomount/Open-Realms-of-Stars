@@ -11,6 +11,8 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipComponentFactory;
+import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipImages;
@@ -27,30 +29,7 @@ public class LeeDoHyeon_201224493 {
 	final int SHIP_DESIGN_TOTALARMOR = 10; 
 	final int SHIP_IMAGE_INDEX = 0; 
 	final int SHIP_COMPONENT_INDEX = 0; 
-
-	ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
-	ShipHull shiphull = Mockito.mock(ShipHull.class);
-	ShipComponent weapon = Mockito.mock(ShipComponent.class);
-	ShipComponent engine = Mockito.mock(ShipComponent.class);
-	ShipComponent energy = Mockito.mock(ShipComponent.class);
-	ShipComponent armor = Mockito.mock(ShipComponent.class);
-	ShipComponent shield = Mockito.mock(ShipComponent.class);
-    ShipComponent[] shipcomponents = new ShipComponent[]{weapon,engine,energy,armor,shield};
-    
-	@Before
-	public void setUp() throws Exception {
-		Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
-		Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
-		Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
-		Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
-		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents);
-		Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
-		Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
-		Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
-		Mockito.when(shipdesign.getHull().getImage()).thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
-		Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
-	}
-
+	
 	/**
 	* Purpose: Make sure the constructor works correctly about the inherited arguments in Construction.class
 	* Input: ship = new Ship(final ShipDesign design) 
@@ -61,7 +40,30 @@ public class LeeDoHyeon_201224493 {
 	*/		
 	@Test
 	public void TestConstructorInheritedArgu(){
-	    Ship ship = new Ship(shipdesign);
+		ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+    	ShipHull shiphull = Mockito.mock(ShipHull.class);
+
+    	ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
+        ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+        ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+        ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
+        ShipComponent shield = ShipComponentFactory.createByName("Shield Mk9");
+        ShipComponent shieldgenerator = ShipComponentFactory.createByName("Shield generator Mk1");
+    	
+    	Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+		Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+		Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+		Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+		Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+		Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+		Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+		Mockito.when(shipdesign.getHull().getImage()).thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+		Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+			
+        ShipComponent[] shipcomponents = new ShipComponent[]{weapon,engine,energy,armor,shield, shieldgenerator};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents);
+		
+		Ship ship = new Ship(shipdesign);
 	    
 	    assertEquals(SHIP_DESIGN_NAME, ship.getName());
 	    assertEquals(SHIP_DESIGN_COST, ship.getProdCost());
@@ -79,7 +81,29 @@ public class LeeDoHyeon_201224493 {
 	*/
 	@Test
 	public void TestConstructorShipHullInDesignArgu(){
-	    Ship ship = new Ship(shipdesign);
+		ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+    	ShipHull shiphull = Mockito.mock(ShipHull.class);
+
+    	ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
+        ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+        ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+        ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
+        ShipComponent shield = ShipComponentFactory.createByName("Shield Mk9");
+        ShipComponent shieldgenerator = ShipComponentFactory.createByName("Shield generator Mk1");
+    	
+    	Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+		Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+		Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+		Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+		Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+		Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+		Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+		Mockito.when(shipdesign.getHull().getImage()).thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+		Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+			
+        ShipComponent[] shipcomponents = new ShipComponent[]{weapon,engine,energy,armor,shield, shieldgenerator};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents);
+		Ship ship = new Ship(shipdesign);
 	    
 	    assertEquals(shiphull, ship.getHull());
 	    assertEquals(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX), ship.getHull().getImage());
@@ -95,7 +119,30 @@ public class LeeDoHyeon_201224493 {
 	*/
 	@Test
 	public void TestConstructorDesignArgu(){
-	    Ship ship = new Ship(shipdesign);
+		ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+    	ShipHull shiphull = Mockito.mock(ShipHull.class);
+
+    	ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
+        ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+        ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+        ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
+        ShipComponent shield = ShipComponentFactory.createByName("Shield Mk9");
+        ShipComponent shieldgenerator = ShipComponentFactory.createByName("Shield generator Mk1");
+    	
+    	Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+		Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+		Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+		Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+		Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+		Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+		Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+		Mockito.when(shipdesign.getHull().getImage()).thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+		Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+			
+        ShipComponent[] shipcomponents = new ShipComponent[]{weapon,engine,energy,armor,shield, shieldgenerator};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents);
+		
+		Ship ship = new Ship(shipdesign);
 
 	    assertEquals(SHIP_DESIGN_TOTALSHIELD, ship.getShield());
 	    assertEquals(SHIP_DESIGN_TOTALARMOR, ship.getArmor());
@@ -112,7 +159,30 @@ public class LeeDoHyeon_201224493 {
 	*/
 	@Test
 	public void TestConstructorVariables(){
-	    Ship ship = new Ship(shipdesign);
+		ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+    	ShipHull shiphull = Mockito.mock(ShipHull.class);
+
+    	ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
+        ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+        ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+        ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
+        ShipComponent shield = ShipComponentFactory.createByName("Shield Mk9");
+        ShipComponent shieldgenerator = ShipComponentFactory.createByName("Shield generator Mk1");
+    	
+    	Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+		Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+		Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+		Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+		Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+		Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+		Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+		Mockito.when(shipdesign.getHull().getImage()).thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+		Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+			
+        ShipComponent[] shipcomponents = new ShipComponent[]{weapon,engine,energy,armor,shield, shieldgenerator};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents);
+		
+		Ship ship = new Ship(shipdesign);
 	    assertEquals(0, ship.getColonist());
 	    assertEquals(0, ship.getMetal());
 	    assertEquals(0, ship.getExperience());
@@ -122,34 +192,131 @@ public class LeeDoHyeon_201224493 {
 	/**
 	* Purpose: Confirm invalidIndex in getHullPointForComponent Method
 	* Input: index < 0, index >= hullPoints.length
-	* hullPoints.length = 5
 	* Expected: 
 	* 			return = 0
 	*/
 	@Test
 	public void TestGetHullPointForComponentWithInvalidIndex(){
+		ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+    	ShipHull shiphull = Mockito.mock(ShipHull.class);
+
+    	ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
+        ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+        ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+        ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
+        ShipComponent shield = ShipComponentFactory.createByName("Shield Mk9");
+        ShipComponent shieldgenerator = ShipComponentFactory.createByName("Shield generator Mk1");
+    	
+    	Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+		Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+		Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+		Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+		Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+		Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+		Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+		Mockito.when(shipdesign.getHull().getImage()).thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+		Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+			
+        ShipComponent[] shipcomponents = new ShipComponent[]{weapon,engine,energy,armor,shield, shieldgenerator};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents);
+		
 		Ship ship = new Ship(shipdesign);
 		
 		assertEquals(0, ship.getHullPointForComponent(-2));
 		assertEquals(0, ship.getHullPointForComponent(-1));
-		assertEquals(0, ship.getHullPointForComponent(5));
 		assertEquals(0, ship.getHullPointForComponent(6));
+		assertEquals(0, ship.getHullPointForComponent(7));
 	}
 	
 	/**
-	* Purpose: Confirm validIndex in getHullPointForComponent Method
-	* Input: index = 0, 2, 4
-	* hullPoints.length = 5
+	* Purpose: Confirm RegenerateShield
+	* Input: shield = 0  
+	*        shield generator Defense Value = 1
+	*        getTotalShield() = 9
 	* Expected: 
-	* 			return = hullPoints[index]
-	* 			hullPoints[index] = 5
+	* 			if(shield < getTotalShield()) shield = shield + 1
+	* 			if(shield < getTotalShield()) shield = shield + 1(Shield generator Mk1)
+	* 			else shield = getTotalShield()
 	*/
 	@Test
-	public void TestGetHullPointForComponentWithValidIndex(){
-		Ship ship = new Ship(shipdesign);
+	public void TestRegenerateShield(){
+		ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+    	ShipHull shiphull = Mockito.mock(ShipHull.class);
+
+    	ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
+        ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+        ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+        ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
+        ShipComponent shield = ShipComponentFactory.createByName("Shield Mk9");
+        ShipComponent shieldgenerator = ShipComponentFactory.createByName("Shield generator Mk1");
+    	
+    	Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+		Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+		Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+		Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+		Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+		Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+		Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+		Mockito.when(shipdesign.getHull().getImage()).thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+		Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+			
+        ShipComponent[] shipcomponents = new ShipComponent[]{weapon,engine,energy,armor,shield, shieldgenerator};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents);
 		
-		assertEquals(5, ship.getHullPointForComponent(0));
-		assertEquals(5, ship.getHullPointForComponent(2));
-		assertEquals(5, ship.getHullPointForComponent(4));
+		Ship ship = new Ship(shipdesign);
+
+		ship.setShield(0);
+		assertEquals(0,ship.getShield());
+		ship.regenerateShield();
+		assertEquals(2,ship.getShield());
+		ship.regenerateShield();
+		assertEquals(4,ship.getShield());
+		ship.regenerateShield();
+		assertEquals(6,ship.getShield());
+		ship.regenerateShield();
+		assertEquals(8,ship.getShield());
+		ship.regenerateShield();
+		assertEquals(9,ship.getShield());
+		ship.regenerateShield();
+		assertEquals(9,ship.getShield());
+
+	}
+
+	
+	/**
+	* Purpose: Confirm RegenerateShield Without ShieldComponent()
+	* Input: shield = 0
+	* 
+	* Expected: 
+	* 		shield = 0
+	*/
+	@Test
+	public void TestRegenerateShieldWithoutShieldComponent(){
+		ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+    	ShipHull shiphull = Mockito.mock(ShipHull.class);
+
+    	ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
+        ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+        ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+        ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
+        ShipComponent shield = ShipComponentFactory.createByName("Shield Mk9");
+        ShipComponent shieldgenerator = ShipComponentFactory.createByName("Shield generator Mk1");
+    	
+    	Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+		Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+		Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+		Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+		Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+		Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+		Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+		Mockito.when(shipdesign.getHull().getImage()).thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+		Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+			
+        ShipComponent[] shipcomponents = new ShipComponent[]{weapon,engine,energy,armor};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents);
+		
+		Ship ship = new Ship(shipdesign);
+		ship.regenerateShield();
+		assertEquals(0,ship.getShield());	
 	}
 }

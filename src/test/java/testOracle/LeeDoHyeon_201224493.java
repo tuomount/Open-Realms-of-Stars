@@ -36,7 +36,7 @@ public class LeeDoHyeon_201224493 {
 	ShipComponent armor = Mockito.mock(ShipComponent.class);
 	ShipComponent shield = Mockito.mock(ShipComponent.class);
     ShipComponent[] shipcomponents = new ShipComponent[]{weapon,engine,energy,armor,shield};
-
+    
 	@Before
 	public void setUp() throws Exception {
 		Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
@@ -66,7 +66,7 @@ public class LeeDoHyeon_201224493 {
 	    assertEquals(SHIP_DESIGN_NAME, ship.getName());
 	    assertEquals(SHIP_DESIGN_COST, ship.getProdCost());
 	    assertEquals(SHIP_DESIGN_METALCOST, ship.getMetalCost());
-	    assertEquals(SHIP_DESIGN_INFO, ship.getDescription());
+   //   assertEquals(SHIP_DESIGN_INFO, ship.getDescription());
 	}
 	
 	/**
@@ -96,6 +96,7 @@ public class LeeDoHyeon_201224493 {
 	@Test
 	public void TestConstructorDesignArgu(){
 	    Ship ship = new Ship(shipdesign);
+
 	    assertEquals(SHIP_DESIGN_TOTALSHIELD, ship.getShield());
 	    assertEquals(SHIP_DESIGN_TOTALARMOR, ship.getArmor());
 	}
@@ -104,10 +105,10 @@ public class LeeDoHyeon_201224493 {
 	* Purpose: Make sure the constructor works correctly about variables to add in Constructor
 	* Input: ship = new Ship(final ShipDesign design) 
 	* Expected: 
-	* 			0 == ship.getColonist()
-	*			0 == ship.getMetal()
-	*			0 == ship.getExperience()
-	*   		0 == ship.getCulture()
+	* 			ship.getColonist() == 0
+	*			ship.getMetal() == 0
+	*			ship.getExperience() == 0
+	*   		ship.getCulture() == 0
 	*/
 	@Test
 	public void TestConstructorVariables(){
@@ -118,5 +119,37 @@ public class LeeDoHyeon_201224493 {
 	    assertEquals(0, ship.getCulture());	
 	}
 	
+	/**
+	* Purpose: Confirm invalidIndex in getHullPointForComponent Method
+	* Input: index < 0, index >= hullPoints.length
+	* hullPoints.length = 5
+	* Expected: 
+	* 			return = 0
+	*/
+	@Test
+	public void TestGetHullPointForComponentWithInvalidIndex(){
+		Ship ship = new Ship(shipdesign);
+		
+		assertEquals(0, ship.getHullPointForComponent(-2));
+		assertEquals(0, ship.getHullPointForComponent(-1));
+		assertEquals(0, ship.getHullPointForComponent(5));
+		assertEquals(0, ship.getHullPointForComponent(6));
+	}
 	
+	/**
+	* Purpose: Confirm validIndex in getHullPointForComponent Method
+	* Input: index = 0, 2, 4
+	* hullPoints.length = 5
+	* Expected: 
+	* 			return = hullPoints[index]
+	* 			hullPoints[index] = 5
+	*/
+	@Test
+	public void TestGetHullPointForComponentWithValidIndex(){
+		Ship ship = new Ship(shipdesign);
+		
+		assertEquals(5, ship.getHullPointForComponent(0));
+		assertEquals(5, ship.getHullPointForComponent(2));
+		assertEquals(5, ship.getHullPointForComponent(4));
+	}
 }

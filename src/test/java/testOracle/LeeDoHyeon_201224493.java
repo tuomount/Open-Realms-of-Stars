@@ -18,6 +18,7 @@ import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullFactory;
+import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.player.ship.ShipSize;
 
@@ -1085,5 +1086,235 @@ public class LeeDoHyeon_201224493 {
 		assertEquals(12,ship.getTotalMilitaryPower());
 	}
 	
+	/**
+	* Purpose: Confirm TroopPower
+	* Input: ship.getTroopPower()
+	* 		 
+	* 		 ship.getColonist() = 5
+	* 		 shiphull.getRace().getTrooperPower() = 10
+	* 		 Planetary invasion module.getDamage() = 50		
+	* 
+	* Expected: 
+	*  		result = ship.getColonist()
+	*  			    * shiphull.getRace().getTrooperPower()
+	*  				* (100 + Planetary invasion module.getDamage())/100
+	*               = 75
+	*         
+	*/	
+	@Test
+	public void TestGetTroopPower(){
+		ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+    	ShipHull shiphull = Mockito.mock(ShipHull.class, Mockito.RETURNS_DEEP_STUBS);
+
+    	ShipComponent planetaryInvasion = ShipComponentFactory.createByName("Planetary invasion module");
+    	ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk2");
+    			
+    	Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+		Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+		Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+		Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+		Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+		Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+		Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+		Mockito.when(shipdesign.getHull().getImage()).thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+		Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+        
+		ShipComponent[] shipcomponents = new ShipComponent[]{planetaryInvasion,energy};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents);
+		
+		Ship ship = new Ship(shipdesign);
+		
+		ship.setColonist(5);
+		Mockito.when(shiphull.getRace()).thenReturn(SpaceRace.HUMAN);
+
+		assertEquals(75,ship.getTroopPower());
+	}
+
+	/**
+	* Purpose: Confirm TroopPower
+	* Input: ship.getTroopPower()
+	* 		 
+	* 		 ship.getColonist() = 5
+	* 		 shiphull.getRace().getTrooperPower() = 10
+	* 		 	
+	* 
+	* Expected: 
+	*  		result = 0
+	*         
+	*/	
+	@Test
+	public void TestGetTroopPowerWithoutPlanetaryInvasion(){
+		ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+    	ShipHull shiphull = Mockito.mock(ShipHull.class, Mockito.RETURNS_DEEP_STUBS);
+
+    	ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk2");
+    			
+    	Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+		Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+		Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+		Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+		Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+		Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+		Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+		Mockito.when(shipdesign.getHull().getImage()).thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+		Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+        
+		ShipComponent[] shipcomponents = new ShipComponent[]{energy};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents);
+		
+		Ship ship = new Ship(shipdesign);
+		
+		ship.setColonist(5);
+		Mockito.when(shiphull.getRace()).thenReturn(SpaceRace.HUMAN);
+
+		assertEquals(0,ship.getTroopPower());
+	}
+	
+	/**
+	* Purpose: Confirm Component Module
+	* Input: ship.isColonyModule()
+	* 		 Colonization module	
+	* 		 	
+	* Expected: 
+	*  		result = true
+	*         
+	*/	
+	@Test
+	public void TestIsColonyModule(){
+		ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+    	ShipHull shiphull = Mockito.mock(ShipHull.class, Mockito.RETURNS_DEEP_STUBS);
+
+    	ShipComponent colonizationmodule = ShipComponentFactory.createByName("Colonization module");
+    			
+    	Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+		Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+		Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+		Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+		Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+		Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+		Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+		Mockito.when(shipdesign.getHull().getImage()).thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+		Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+        
+		ShipComponent[] shipcomponents = new ShipComponent[]{colonizationmodule};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents);
+		Ship ship = new Ship(shipdesign);
+		assertTrue(ship.isColonyModule());
+		
+		ShipComponent[] shipcomponentWithoutModule = new ShipComponent[]{};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponentWithoutModule);
+		Ship ship2 = new Ship(shipdesign);
+		assertFalse(ship2.isColonyModule());
+	}
+	
+	/**
+	* Purpose: Confirm Component Module
+	* Input: ship.isTrooperModule()
+	* 		 Shock trooper module	
+	* 		 	
+	* Expected: 
+	*  		result = true
+	*         
+	*/	
+	@Test
+	public void TestIsTrooperModule(){
+		ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+    	ShipHull shiphull = Mockito.mock(ShipHull.class, Mockito.RETURNS_DEEP_STUBS);
+
+    	ShipComponent troopermodule = ShipComponentFactory.createByName("Shock trooper module");
+    			
+    	Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+		Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+		Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+		Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+		Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+		Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+		Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+		Mockito.when(shipdesign.getHull().getImage()).thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+		Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+        
+		ShipComponent[] shipcomponents = new ShipComponent[]{troopermodule};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents);
+		Ship ship = new Ship(shipdesign);
+		assertTrue(ship.isTrooperModule());
+		
+		ShipComponent[] shipcomponentWithoutModule = new ShipComponent[]{};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponentWithoutModule);
+		Ship ship2 = new Ship(shipdesign);
+		assertFalse(ship2.isTrooperModule());
+	}
+	
+	/**
+	* Purpose: Confirm Ship Type
+	* Input: 
+	* 		colonyShip = ship with ShipComponent that is the Colonization module
+	* 		trooperShip = ship with ShipComponent that is the Shock trooper module
+	* 		privateerShip = ship with ShipHull that is the ShipHullType.PRIVATEER
+	* 
+
+	* Expected: 
+	*  		colonyShip -> isColonyShip() return true
+	*       trooperShip -> isTrooperShip() return true
+	*       privateerShip -> isPrivateeringShip() return true  
+	*/	
+	@Test
+	public void TestIsTypeShip(){
+		ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+    	ShipHull shiphull = Mockito.mock(ShipHull.class, Mockito.RETURNS_DEEP_STUBS);
+	
+    	Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+		Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+		Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+		Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+		Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+		Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+		Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+		Mockito.when(shipdesign.getHull().getImage()).thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+		Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+        
+		ShipComponent colonizationmodule = ShipComponentFactory.createByName("Colonization module");
+		ShipComponent troppermodule = ShipComponentFactory.createByName("Shock trooper module");
+    	ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk2");
+		
+		ShipComponent[] shipcomponentWithColonyModule = new ShipComponent[]{colonizationmodule, energy};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponentWithColonyModule);
+		Ship colonyShip = new Ship(shipdesign);
+		colonyShip.setColonist(5);
+		assertTrue(colonyShip.isColonyShip());
+		
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponentWithColonyModule);
+		Ship colonyShipWithoutColonist = new Ship(shipdesign);
+		assertFalse(colonyShipWithoutColonist.isColonyShip());
+		
+		ShipComponent[] shipcomponentWithoutColonyModule = new ShipComponent[]{};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponentWithoutColonyModule);
+		Ship colonyShipWithoutModule = new Ship(shipdesign);
+		colonyShipWithoutModule.setColonist(5);
+		assertFalse(colonyShipWithoutModule.isColonyShip());
+		
+		ShipComponent[] shipcomponentsWithTropper = new ShipComponent[]{troppermodule, energy};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponentsWithTropper);
+		Ship tropperShip = new Ship(shipdesign);
+		tropperShip.setColonist(5);
+		assertTrue(tropperShip.isTrooperShip());
+		
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponentsWithTropper);
+		Ship tropperShipWithoutColonist = new Ship(shipdesign);
+		assertFalse(tropperShipWithoutColonist.isTrooperShip());
+		
+		ShipComponent[] shipcomponentWithoutModule = new ShipComponent[]{};
+		Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponentWithoutModule);
+		Ship tropperShipWithoutModule = new Ship(shipdesign);
+		tropperShipWithoutModule.setColonist(5);
+		assertFalse(tropperShipWithoutModule.isTrooperShip());
+		
+		Mockito.when(shiphull.getHullType()).thenReturn(ShipHullType.PRIVATEER);
+		Ship privateerShip = new Ship(shipdesign);
+	    assertTrue(privateerShip.isPrivateeringShip());
+		
+	    Mockito.when(shiphull.getHullType()).thenReturn(ShipHullType.NORMAL);
+		Ship normalShip = new Ship(shipdesign);
+	    assertFalse(normalShip.isPrivateeringShip());
+	}
 	
 }

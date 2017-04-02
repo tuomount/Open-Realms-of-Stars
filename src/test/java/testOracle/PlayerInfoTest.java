@@ -8,6 +8,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -48,6 +49,7 @@ public class PlayerInfoTest {
 	 * 			scout have random weapon, random armor, Scout Mk1 Hull, Ion drive Mk1, Fission source Mk1
 	 * 			colony have Colony Hull, Ion drive Mk1, Fission source Mk1
 	 * 			}  
+	 * purpose : test PlayerInfo constructor Human
 	 */
 	@Test
 	public void testPlayerInfoHuman() {
@@ -89,6 +91,7 @@ public class PlayerInfoTest {
 	 * 			scout have random weapon, random armor, Scout Mk1 Hull, Ion drive Mk1, Fission source Mk1
 	 * 			colony have Colony Hull, Ion drive Mk1, Fission source Mk1
 	 * 			}  
+	 * purpose : test PlayerInfo constructor Mechions
 	 */
 	@Test
 	public void testPlayerInfoMechions() {
@@ -131,6 +134,7 @@ public class PlayerInfoTest {
 	 * 			scout have random weapon, random armor, Scout Mk1 Hull, Ion drive Mk1, Fission source Mk1
 	 * 			colony have Colony Hull, Ion drive Mk1, Fission source Mk1
 	 * 			}  
+	 * purpose : test PlayerInfo constructor Centaurs
 	 */
 	@Test
 	public void testPlayerInfoCentaurs() {
@@ -173,6 +177,7 @@ public class PlayerInfoTest {
 	 * 			scout have random weapon in two weapons, random armor, Scout Mk1 Hull, Ion drive Mk1, Fission source Mk1
 	 * 			colony have Colony Hull, Ion drive Mk1, Fission source Mk1
 	 * 			}  
+	 * purpose : test PlayerInfo constructor Sporks
 	 */
 	@Test
 	public void testPlayerInfoSporks() {
@@ -220,6 +225,7 @@ public class PlayerInfoTest {
 	 * 			scout have random weapon, random armor, Scout Mk1 Hull, Ion drive Mk1, Fission source Mk1
 	 * 			colony have Colony Hull, Ion drive Mk1, Fission source Mk1
 	 * 			}  
+	 * purpose : test PlayerInfo constructor Greyans
 	 */
 	@Test
 	public void testPlayerInfoGreyans() {
@@ -252,53 +258,129 @@ public class PlayerInfoTest {
 		assertEquals(expectedStat.toString(),statList[1].toString());
 	}
 
+	/*
+	 * input : sun, fleet
+	 * output : unchartedSector percent
+	 * purpose : test getUnchatedValueSystem method 
+	 */
 	@Test
-	public void testgetUnchartedValueSystem(){
+	public void testGetUnchartedValueSystem(){
 		Sun sun = Mockito.mock(Sun.class);
 		Fleet fleet = Mockito.mock(Fleet.class);
 		Mockito.when(sun.getCenterX()).thenReturn(3);
 		Mockito.when(sun.getCenterY()).thenReturn(3);
+		int maxX = 256, maxY =256;
 		PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN);
-		player.initMapData(256, 256);
-		player.setSectorVisibility(7, 7, (byte)2);
+		player.initMapData(maxX,maxY);
 		int expect=0;
-		for (int x = -StarMap.SOLAR_SYSTEM_WIDTH - 2; x < StarMap.SOLAR_SYSTEM_WIDTH + 3; x++) {
-		      for (int y = -StarMap.SOLAR_SYSTEM_WIDTH - 2; y < StarMap.SOLAR_SYSTEM_WIDTH + 3; y++) {
-		    	  expect++;
-		      }
-		}
-		expect = (expect-1)*100/expect;
+		expect = 100;
 		int result = player.getUnchartedValueSystem(sun, fleet);
+		assertEquals(expect,result);
+		
+		player.setSectorVisibility(7, 7, FOG_OF_WAR);
+		expect = 99;
+		result = player.getUnchartedValueSystem(sun, fleet);
 		assertEquals(expect,result);
 	}
 	
+	/*
+	 * input : sun, fleet
+	 * output : pathPoint(5,1) when all sector uncharted
+	 * 			pathPoint(1,5) when only (5,1) sector visible
+	 * 			pathPoint(5,1) when (5,1),(3,1) sector visible
+	 * 			null when all sector visible
+	 * purpose : test getUnchartedSector method four case
+	 */
 	@Test
-	public void testgetUnchartedSector(){
+	public void testGetUnchartedSector(){
 		Sun sun = Mockito.mock(Sun.class);
 		Fleet fleet = Mockito.mock(Fleet.class);
-		Mockito.when(sun.getCenterX()).thenReturn(4);
-		Mockito.when(sun.getCenterY()).thenReturn(4);
+		Mockito.when(sun.getCenterX()).thenReturn(3);
+		Mockito.when(sun.getCenterY()).thenReturn(3);
+		Mockito.when(fleet.getX()).thenReturn(2);
+		Mockito.when(fleet.getY()).thenReturn(2);
 		Mockito.when(fleet.getCoordinate()).thenReturn(new Coordinate(2,2));
+		Mockito.when(fleet.getFleetScannerLvl()).thenReturn(0);
+		PathPoint result;
+		PathPoint expect;
+		int maxX = 10,maxY = 10;
 		PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN);
-		player.initMapData(65, 65);
-		player.getUnchartedSector(sun, fleet);
+		player.initMapData(maxX, maxY);
+		result = player.getUnchartedSector(sun, fleet);
+		assertEquals(5,result.getX());
+		assertEquals(1,result.getY());
+		player.setSectorVisibility(5, 1, VISIBLE);
+		result = player.getUnchartedSector(sun, fleet);
+		assertEquals(1,result.getX());
+		assertEquals(5,result.getY());
+		player.setSectorVisibility(3, 1, VISIBLE);
+		result=player.getUnchartedSector(sun, fleet);
+		assertEquals(5,result.getX());
+		assertEquals(3,result.getY());
+		for(int i=0; i <maxX;i++){
+			for(int j=0; j<maxY;j++){
+				player.setSectorVisibility(i, j, VISIBLE);
+			}
+		}
+		result = player.getUnchartedSector(sun, fleet);
+		assertEquals(null,result);
 	}
 	
-	
+	/*
+	 * input : Coordinate
+	 * output : VISIBLE
+	 * 			FOG_OF_WAR
+	 * 			UNCHARTED
+	 * purpose : test getSectorVisibility method 
+	 */
 	@Test
-	public void testgetUnchartedSector1(){
-		Sun sun = Mockito.mock(Sun.class);
-		Fleet fleet = Mockito.mock(Fleet.class);
-		Mockito.when(sun.getCenterX()).thenReturn(2);
-		Mockito.when(sun.getCenterY()).thenReturn(2);
-		Mockito.when(fleet.getCoordinate()).thenReturn(new Coordinate(2,2));
+	public void testGetSectorVisibility(){
+		Coordinate coord = Mockito.mock(Coordinate.class);
+		Mockito.when(coord.getX()).thenReturn(0);
+		Mockito.when(coord.getY()).thenReturn(0);
 		PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN);
-		player.initMapData(5,5);
-		for(int i=0;i <5; i++){
-			for(int j=0; j<5;j++){
-				player.setSectorVisibility(i, j, VISIBLE);
-			}	
-		}
-		player.getUnchartedSector(sun, fleet);
+		player.initMapData(10, 10);
+		player.setSectorVisibility(0, 0, VISIBLE);
+		byte result = player.getSectorVisibility(coord);
+		assertEquals(VISIBLE,result);
+		
+		player.setSectorVisibility(0, 0, FOG_OF_WAR);
+		result = player.getSectorVisibility(coord);
+		assertEquals(FOG_OF_WAR,result);
+		
+		player.setSectorVisibility(0, 0, UNCHARTED);
+		result = player.getSectorVisibility(coord);
+		assertEquals(UNCHARTED,result);
+	}
+	
+	/*
+	 * input : cloakingDetection level, VISIBLE state
+	 * output : cloakingDetection 0 setting
+	 * 			state change VISIBLE to FOG_OF_WAR
+	 * purpose : test resetVisibilityDataAfterTurn method 
+	 */
+	@Test
+	public void testResetVisibilityDataAfterTurn(){
+		Coordinate coord = Mockito.mock(Coordinate.class);
+		Mockito.when(coord.getX()).thenReturn(1);
+		Mockito.when(coord.getY()).thenReturn(1);
+		PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN);
+		player.initMapData(10, 10);
+		player.setSectorCloakingDetection(4, 4, 1);
+		player.setSectorCloakingDetection(5, 5, 1);
+		player.setSectorVisibility(1, 1, VISIBLE);
+		player.resetVisibilityDataAfterTurn();
+		int cloakResult;
+		cloakResult=player.getSectorCloakDetection(4, 4);
+		assertEquals(0,cloakResult);
+		cloakResult=player.getSectorCloakDetection(5, 5);
+		assertEquals(0,cloakResult);
+		byte stateResult;
+		stateResult=player.getSectorVisibility(coord);
+		assertEquals(FOG_OF_WAR,stateResult);
+		
+		
+		
+		
 	}
 }

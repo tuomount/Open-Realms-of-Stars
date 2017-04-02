@@ -2,22 +2,15 @@ package testOracle;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
-import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipHull;
-import org.openRealmOfStars.player.ship.ShipHullFactory;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -787,7 +780,6 @@ public class LeeDoHyeon_201224493 {
 	* 			
 	*			result(0) = damage(5) - hullpoint(5)
 	*			fixship =>  25->30 (true) 25->26 (false) 30->30 (false)
-	*		
 	*			hullpoints = count of ShipComponent(6) * hullpoint(5) = 30
 	*/		
 	@Test
@@ -1009,11 +1001,8 @@ public class LeeDoHyeon_201224493 {
 	*               + ARMOR.getDefenseValue()             10(Armor plating Mk10)
 	*               + SHIELD.getDefenseValue()            10(Shield Mk10)
 	*               + ENGINE.getTacticSpeed() - 1         1(Impulse engine Mk4)
-
 	* Expected: 
-	*  		power = 36
-	*         
-	*			
+	*  		power = 36			
 	*/	
 	@Test
 	public void TestTotalMilitaryPower(){
@@ -1048,15 +1037,14 @@ public class LeeDoHyeon_201224493 {
 	
 	/**
 	* Purpose: Confirm power 
-	* Input: ship 
-	* 				HE Missile Mk8.getDamage() = 10
-	* 				Targeting computer Mk2.getDamager() = 20
-	* 				//Jammer Mk4.setDefenseValue() = 20
+	* Input: 
+	* 		ship has nulcear weapon that has 10 damage
+	*       ship has targeting computer that has 20 damage
+	*       ship has jammer that has 20 defensevalue
+	*       ship has energy
 	* 				
 	* Expected: 
-	*  		power = 12
-	*         
-	*			
+	*  		power = 12			
 	*/	
 	@Test
 	public void TestTotalMilitaryPowerWithNuclearAndJammer(){
@@ -1088,18 +1076,14 @@ public class LeeDoHyeon_201224493 {
 	
 	/**
 	* Purpose: Confirm TroopPower
-	* Input: ship.getTroopPower()
-	* 		 
-	* 		 ship.getColonist() = 5
-	* 		 shiphull.getRace().getTrooperPower() = 10
-	* 		 Planetary invasion module.getDamage() = 50		
+	* Input: 
+	* 		 ship has 5 colonists
+	* 	     ship has shiphull that has 10 trooperpower
+	* 		 ship has Planetary invasion module that has 50 damage
+	* 		 ship has energy module named Fission source Mk2
 	* 
 	* Expected: 
-	*  		result = ship.getColonist()
-	*  			    * shiphull.getRace().getTrooperPower()
-	*  				* (100 + Planetary invasion module.getDamage())/100
-	*               = 75
-	*         
+	*  		result = 75
 	*/	
 	@Test
 	public void TestGetTroopPower(){
@@ -1132,15 +1116,12 @@ public class LeeDoHyeon_201224493 {
 
 	/**
 	* Purpose: Confirm TroopPower
-	* Input: ship.getTroopPower()
-	* 		 
-	* 		 ship.getColonist() = 5
-	* 		 shiphull.getRace().getTrooperPower() = 10
-	* 		 	
-	* 
+	* Input: ship has 5 colonists
+	* 	     ship has shiphull that has 10 trooperpower
+	* 		 ship doesn't have trooper planetaryInvasion module
+	* 		 ship has energy named Fission source Mk2
 	* Expected: 
 	*  		result = 0
-	*         
 	*/	
 	@Test
 	public void TestGetTroopPowerWithoutPlanetaryInvasion(){
@@ -1172,12 +1153,9 @@ public class LeeDoHyeon_201224493 {
 	
 	/**
 	* Purpose: Confirm Component Module
-	* Input: ship.isColonyModule()
-	* 		 Colonization module	
-	* 		 	
+	* Input: ship has Colonization module	
 	* Expected: 
 	*  		result = true
-	*         
 	*/	
 	@Test
 	public void TestIsColonyModule(){
@@ -1209,12 +1187,9 @@ public class LeeDoHyeon_201224493 {
 	
 	/**
 	* Purpose: Confirm Component Module
-	* Input: ship.isTrooperModule()
-	* 		 Shock trooper module	
-	* 		 	
+	* Input: ship has Shock trooper module	
 	* Expected: 
 	*  		result = true
-	*         
 	*/	
 	@Test
 	public void TestIsTrooperModule(){

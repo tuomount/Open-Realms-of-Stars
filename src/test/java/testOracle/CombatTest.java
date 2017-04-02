@@ -93,8 +93,6 @@ public class CombatTest {
 	
 	@Test
 	/**
-	 * 2.fleet1,2의 ship 갯수와 shipList의 사이즈가 일치하는지 확인.
-	 * 3.route는 존재하지 않는데 defending이  세팅되어있는 경우, 정확도가 추가되는지
 	 * 
 	 * Purpose: When Fleet class is attacking or depending, ensure that
 	 * 			the accuracyBonus of the CombatShip is set correctly
@@ -107,7 +105,6 @@ public class CombatTest {
 		attackerShips = new Ship[]{attackerShip};
 		dependerShips = new Ship[]{dependerShip,interruptShip};
 		Combat combatTestItem = new Combat(attackerFleet, dependerFleet, attackerInfo, dependerInfo);
-		//get으로 얻은 세 ship이 다른것이라는것을 보여야함.
 		assertNotNull(combatTestItem);
 		assertEquals(0,combatTestItem.getCurrentShip().getBonusAccuracy());
 		combatTestItem.nextShip();

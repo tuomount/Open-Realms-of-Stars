@@ -15,7 +15,7 @@ import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.player.ship.ShipSize;
 
-public class LeeDoHyeon_201224493 {
+public class ShipTest2 {
 	
 	final String SHIP_DESIGN_NAME = "shipDesignNo1";
 	final String SHIP_DESIGN_INFO = "DesignInfoNo1";

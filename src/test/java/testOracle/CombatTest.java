@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.player.combat.*;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -27,6 +28,8 @@ import java.util.List;
 public class CombatTest {
 	public static Fleet attackerFleet;
 	public static Fleet dependerFleet;
+	public static FleetList attackerFleetList;
+	public static FleetList dependerFleetList;
 	public static PlayerInfo attackerInfo;
 	public static PlayerInfo dependerInfo;
 	public static Ship attackerShip;
@@ -55,6 +58,8 @@ public class CombatTest {
 	public void setUp() throws Exception {
 		attackerFleet = mock(Fleet.class);
 		dependerFleet = mock(Fleet.class);
+		attackerFleetList = mock(FleetList.class);
+		dependerFleetList = mock(FleetList.class);
 		attackerInfo = mock(PlayerInfo.class);
 		dependerInfo = mock(PlayerInfo.class);
 		attackerShip = mock(Ship.class);
@@ -80,7 +85,10 @@ public class CombatTest {
 		when(dependerShip.getName()).thenReturn("depender");
 		when(interruptShip.getName()).thenReturn("interrupt");
 		when(attackerInfo.getShipStatByName(eq("attacker"))).thenReturn(attackerShipStat);
-		when(dependerInfo.getShipStatByName(eq("depender"))).thenReturn(attackerShipStat);
+		when(dependerInfo.getShipStatByName(eq("depender"))).thenReturn(dependerShipStat);
+		when(attackerInfo.getFleets()).thenReturn(attackerFleetList);
+		when(dependerInfo.getFleets()).thenReturn(dependerFleetList);
+		
 		
 		when(attackerFleetRoute.isDefending()).thenReturn(false);
 		when(dependerFleetRoute.isDefending()).thenReturn(true);
@@ -237,7 +245,7 @@ public class CombatTest {
 	@Test
 	/**
 	 * Purpose: test isBlocked
-	 * Input: isBlocked(4,2) set CombatShip (4,2)
+	 * Input: isBlocked(4,2) when CombatShip is set (4,2)
 	 * Expected: isClearShot == false
 	 */
 	public void testIsBlocked() {
@@ -261,6 +269,12 @@ public class CombatTest {
 	}
 	
 	@Test
+	/**
+	 * Purpose: When attackerShip call getMostPowerfulShip,
+	 * 			to see if the results are the same as expected
+	 * Input: getMostPowerfulShip(attackerInfo). dependerShipPower:4, interruptShipPower:2
+	 * Expected: mostPowerfulShip == dependerShip
+	 */
 	public void testGetMostPowerfulShip() {
 		attackerShips = new Ship[]{attackerShip};
 		dependerShips = new Ship[]{dependerShip,interruptShip};
@@ -272,24 +286,21 @@ public class CombatTest {
 		when(interruptShip.getTotalMilitaryPower()).thenReturn(2);
 		
 		CombatShip mostPowerfulShip = combatTestItem.getMostPowerfulShip(attackerInfo);
+		
 		assertEquals(mostPowerfulShip, combatTestItem.getShipFromCoordinate(4,1));
 		assertNotEquals(mostPowerfulShip, combatTestItem.getShipFromCoordinate(4,7));
 		assertNotEquals(mostPowerfulShip, combatTestItem.getShipFromCoordinate(3,1));
 	}
-
+	
 	
 	@Test
-	public void testDestroyShip() {
-		fail("Not yet implemented");
-	}
-
-
-	@Test
-	public void testSetCursorPos() {
-		fail("Not yet implemented");
-	}
-
-	@Test
+	/**
+	 * Purpose: When coordinate is bigger than maximum or lower than minimum
+	 * 			, to see isValidPos return false value
+	 * Input: isValidPos(x,y). (x,y) combinations are 5
+	 * Expected: 4 combinations[(10,3),(3,10),(-1,8),(8,-1)] are false
+	 * 			 1 combination(3,3) is true
+	 */
 	public void testIsValidPos() {
 		attackerShips = new Ship[]{attackerShip};
 		dependerShips = new Ship[]{dependerShip,interruptShip};
@@ -304,6 +315,12 @@ public class CombatTest {
 
 
 	@Test
+	/**
+	 * Purpose: When call getShipFromCoordinate(x, y),
+	 * 			to see if the actual CombatShip location and the result are same  
+	 * Input: getShipFromCoordinate(5,5) , currentCombatShip is set (5,5)
+	 * Expected: currentCombatShip == getShipFromCoordinate()
+	 */
 	public void testGetShipFromCoordinateIsVaild() {
 		attackerShips = new Ship[]{attackerShip};
 		dependerShips = new Ship[]{dependerShip,interruptShip};
@@ -318,6 +335,13 @@ public class CombatTest {
 	}
 	
 	@Test
+	/**
+	 * Purpose: When call getShipFromCoordinate(x, y),
+	 * 			to see if the actual CombatShip location and the result are same  
+	 * Input: getShipFromCoordinate(x,y). invalid inputs are 3 combination [(4,6), (6,4), (6,6)]
+	 * 		, currentCambatShip is set (4,5)
+	 * Expected: currentCombatShip != (all combination)getShipFromCoordinate()
+	 */
 	public void testGetShipFromCoordinateIsInvaild() {
 		attackerShips = new Ship[]{attackerShip};
 		dependerShips = new Ship[]{dependerShip,interruptShip};
@@ -337,6 +361,11 @@ public class CombatTest {
 	}
 
 	@Test
+	/**
+	 * Purpose: When there is only one player, to see isCombatOver is true
+	 * Input: isCombatOver(). Ship is only one.
+	 * Expected: isCombatOver() == true
+	 */
 	public void testOnePlayerCombatOver(){
 		attackerShips = new Ship[]{attackerShip};
 		dependerShips = new Ship[]{};
@@ -348,6 +377,11 @@ public class CombatTest {
 	}
 	
 	@Test
+	/**
+	 * Purpose: When there is no combatShip(e.g.if ship has no weapon), to see isCombatOver is true
+	 * Input: isCombatOver(). Ships are two. Both Ships have no weapon.
+	 * Expected: isCombatOver() == true
+	 */
 	public void testNoMilitaryCombatOver(){
 		attackerShips = new Ship[]{attackerShip};
 		dependerShips = new Ship[]{dependerShip};
@@ -360,6 +394,11 @@ public class CombatTest {
 	}
 
 	@Test
+	/**
+	 * Purpose: When there are two player, to see isCombatOver is false
+	 * Input: isCombatOver(). Ships are two.
+	 * Expected: isCombatOver() == false
+	 */
 	public void testIsNotCombatOver(){
 		attackerShips = new Ship[]{attackerShip};
 		dependerShips = new Ship[]{dependerShip};
@@ -372,6 +411,11 @@ public class CombatTest {
 	}
 	
 	@Test
+	/**
+	 * Purpose: When there are two player, to see isCombatOver is false
+	 * Input: isCombatOver(). Ships are two.
+	 * Expected: isCombatOver() == false
+	 */
 	public void testGetClosestEnemyShip(){
 		attackerShips = new Ship[]{attackerShip};
 		dependerShips = new Ship[]{dependerShip,interruptShip};
@@ -392,26 +436,86 @@ public class CombatTest {
 	
 	@Test
 	/**
-	 * not completed
+	 * Purpose: When there are only attackerShip, to make sure that handleEndCombat works well
+	 * Input: handleEndCombat(). there is only attackerShip.
+	 * Expected: Verify that the methods that make up handleEndCombat() are working.
+	 * 			attackerFleet.setPos is called once.
+	 * 			dependerFleetList.getIndexByName is called once.
+	 * 			dependerFleetList.remove is called once.
+	 * 
 	 */
-	public void testHandleWinner(){
-		
-	}
-	
-	@Test
-	/**
-	 * not completed
-	 */
-	public void testHandleEndCombat(){
+	public void testAttackerWinEndCombat(){
 		attackerShips = new Ship[]{attackerShip};
 		dependerShips = new Ship[]{};
 		when(attackerFleet.getShips()).thenReturn(attackerShips);
 		when(dependerFleet.getShips()).thenReturn(dependerShips);
-		when(attackerShip.getTotalMilitaryPower()).thenReturn(5);
 		Combat combatTestItem = new Combat(attackerFleet, dependerFleet, attackerInfo, dependerInfo);
-		
+		Coordinate dependerFleetCoordinate = mock(Coordinate.class);
+		when(dependerFleet.getCoordinate()).thenReturn(dependerFleetCoordinate);
+		doNothing().when(attackerFleet).setPos(dependerFleetCoordinate);
+		when(dependerFleetList.getIndexByName(anyString())).thenReturn(1);
+		when(attackerFleetList.getIndexByName(anyString())).thenReturn(1);
+		combatTestItem.isCombatOver();
+		combatTestItem.handleEndCombat();
+		verify(attackerFleet,times(1)).setPos(dependerFleetCoordinate);;
+		verify(dependerFleetList,times(1)).getIndexByName(anyString());
+		verify(dependerFleetList,times(1)).remove(anyInt());
+	}
+	@Test
+	/**
+	 * Purpose: When there are only dependerShip, to make sure that handleEndCombat works well
+	 * Input: handleEndCombat(). there is only dependerShip.
+	 * Expected: Verify that the methods that make up handleEndCombat() are working.
+	 * 			attackerFleet.setPos is never called.
+	 * 			attackerFleetList.getIndexByName is called once.
+	 * 			attackerFleetList.remove is called once.
+	 */
+	public void testDependerWinEndCombat(){
+		attackerShips = new Ship[]{};
+		dependerShips = new Ship[]{dependerShip};
+		when(attackerFleet.getShips()).thenReturn(attackerShips);
+		when(dependerFleet.getShips()).thenReturn(dependerShips);
+		Combat combatTestItem = new Combat(attackerFleet, dependerFleet, attackerInfo, dependerInfo);
+		Coordinate dependerFleetCoordinate = mock(Coordinate.class);
+		when(dependerFleet.getCoordinate()).thenReturn(dependerFleetCoordinate);
+		doNothing().when(attackerFleet).setPos(dependerFleetCoordinate);
+		when(dependerFleetList.getIndexByName(anyString())).thenReturn(1);
+		when(attackerFleetList.getIndexByName(anyString())).thenReturn(1);
+		combatTestItem.isCombatOver();
+		combatTestItem.handleEndCombat();
+		verify(attackerFleet,never()).setPos(dependerFleetCoordinate);;
+		verify(attackerFleetList,times(1)).getIndexByName(anyString());
+		verify(attackerFleetList,times(1)).remove(anyInt());
+	}
+	@Test
+	/**
+	 * Purpose: When there are two ships, to make sure that handleEndCombat works well
+	 * Input: handleEndCombat(). there are two Ships.
+	 * Expected: Verify that the methods that make up handleEndCombat() are working.
+	 * 			attackerFleet.setPos is never called.
+	 * 			attackerFleetList.getIndexByName is never called.
+	 * 			attackerFleetList.remove is never called.
+	 * 			dependerFleetList.getIndexByName is never called.
+	 * 			dependerFleetList.remove is never called.
+	 */
+	public void testNoWinerEndCombat(){
+		attackerShips = new Ship[]{attackerShip};
+		dependerShips = new Ship[]{dependerShip};
+		when(attackerFleet.getShips()).thenReturn(attackerShips);
+		when(dependerFleet.getShips()).thenReturn(dependerShips);
+		Combat combatTestItem = new Combat(attackerFleet, dependerFleet, attackerInfo, dependerInfo);
+		Coordinate dependerFleetCoordinate = mock(Coordinate.class);
+		when(dependerFleet.getCoordinate()).thenReturn(dependerFleetCoordinate);
+		doNothing().when(attackerFleet).setPos(dependerFleetCoordinate);
+		when(dependerFleetList.getIndexByName(anyString())).thenReturn(1);
+		when(attackerFleetList.getIndexByName(anyString())).thenReturn(1);
+		combatTestItem.isCombatOver();
 		combatTestItem.handleEndCombat();
 		
-		
+		verify(attackerFleet,never()).setPos(dependerFleetCoordinate);;
+		verify(dependerFleetList,never()).getIndexByName(anyString());
+		verify(dependerFleetList,never()).remove(anyInt());
+		verify(attackerFleetList,never()).getIndexByName(anyString());
+		verify(attackerFleetList,never()).remove(anyInt());
 	}
 }

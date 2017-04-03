@@ -1005,7 +1005,7 @@ public class ShipTest2 {
 	*  		power = 36			
 	*/	
 	@Test
-	public void TestTotalMilitaryPower(){
+	public void TestGetTotalMilitaryPower(){
 		ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
     	ShipHull shiphull = Mockito.mock(ShipHull.class);
 
@@ -1038,16 +1038,16 @@ public class ShipTest2 {
 	/**
 	* Purpose: Confirm power 
 	* Input: 
-	* 		ship has nulcear weapon that has 10 damage
-	*       ship has targeting computer that has 20 damage
-	*       ship has jammer that has 20 defensevalue
+	* 		ship has nulcear weapon that has 10 damage -> 10
+	*       ship has targeting computer that has 20 damage -> 2
+	*       ship has jammer that has 20 defensevalue -> 2
 	*       ship has energy
 	* 				
 	* Expected: 
-	*  		power = 12			
+	*  		power = 14			
 	*/	
 	@Test
-	public void TestTotalMilitaryPowerWithNuclearAndJammer(){
+	public void TestGetTotalMilitaryPowerWithNuclearAndJammer(){
 		ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
     	ShipHull shiphull = Mockito.mock(ShipHull.class);
 
@@ -1071,7 +1071,7 @@ public class ShipTest2 {
 		
 		Ship ship = new Ship(shipdesign);
 		
-		assertEquals(12,ship.getTotalMilitaryPower());
+		assertEquals(14,ship.getTotalMilitaryPower());
 	}
 	
 	/**

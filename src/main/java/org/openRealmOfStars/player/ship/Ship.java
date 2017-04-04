@@ -889,7 +889,6 @@ public class Ship extends Construction {
       default:
          return GuiStatics.COLOR_RED_TEXT;
       }
-
    }
 
    /**

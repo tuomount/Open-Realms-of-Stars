@@ -33,7 +33,16 @@ new bug check that there are no duplicates.
 
 If you want to add new code fork the project make the change. Run JUnits and 
 checkstyle before committing. These can be run with ``mvn verify``. After this make
-pull request back to me. I'll try to looking these as fast as I can. When
+pull request back to me.
+
+### Guide lines for making pull requests
+
+ * Pull request should contain single logical change. 
+ * Coding styling change should be on separate pull requests.
+ * Commit messages should be descriptive.
+ * Pull request should not contain merge commits from other branches.
+ 
+I'll try to looking these as fast as I can. When
 added new assets see paragram one below more instructions. 
 
 ### Contributing assets

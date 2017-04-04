@@ -352,7 +352,7 @@ public class PlayerInfoTest {
 		result = player.getSectorVisibility(coord);
 		assertEquals(UNCHARTED,result);
 	}
-	
+	 
 	/*
 	 * input : cloakingDetection level, VISIBLE state
 	 * output : cloakingDetection 0 setting
@@ -377,10 +377,7 @@ public class PlayerInfoTest {
 		assertEquals(0,cloakResult);
 		byte stateResult;
 		stateResult=player.getSectorVisibility(coord);
-		assertEquals(FOG_OF_WAR,stateResult);
-		
-		
-		
+		assertEquals(FOG_OF_WAR,stateResult);	
 		
 	}
 }

@@ -222,10 +222,14 @@ public class Fleet {
 
   /**
    * Get first ship from the fleet
-   * @return Ship
+   * @return Ship or null if new ships in fleet
    */
   public Ship getFirstShip() {
-    return ships.get(0);
+    if (ships.size() > 0) {
+      return ships.get(0);
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -575,6 +579,18 @@ public class Fleet {
     int result = 0;
     for (Ship ship : ships) {
       result = result + ship.getTotalMilitaryPower();
+    }
+    return result;
+  }
+
+  /**
+   * Calculate fleet's total cultural value
+   * @return Total cultural value for fleet
+   */
+  public int getCulturalValue() {
+    int result = 0;
+    for (Ship ship : ships) {
+      result = result + ship.getCulture();
     }
     return result;
   }

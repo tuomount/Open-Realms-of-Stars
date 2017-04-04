@@ -951,11 +951,23 @@ public class Planet {
                 built = true;
                 break;
               }
+              if (tmp.getName().startsWith("Planetary scanner Mk")) {
+                int scannerLevel = Integer.valueOf(tmp.getName()
+                    .substring(20));
+                if (alreadyBuilt[j].getName().startsWith(
+                    "Planetary scanner Mk")) {
+                  int builtLvl = Integer.valueOf(alreadyBuilt[j].getName()
+                      .substring(20));
+                  if (builtLvl > scannerLevel) {
+                    built = true;
+                    break;
+                  }
+                }
+              }
             }
             if (!built && !exceedRadiation()) {
               result.add(tmp);
-            }
-            if (!built && (tmp.getName().equals("Radiation dampener")
+            } else if (!built && (tmp.getName().equals("Radiation dampener")
                 || tmp.getName().equals("Radiation well"))) {
               // Radiation well and dampener can be built even planet has
               // radiation.
@@ -1045,9 +1057,10 @@ public class Planet {
 
   /**
    * Generate info text
+   * @param activeScanned If planet is scanned in one turn
    * @return String
    */
-  public String generateInfoText() {
+  public String generateInfoText(final boolean activeScanned) {
     StringBuilder sb = new StringBuilder();
     sb.append(this.getName());
     sb.append("\n");
@@ -1063,16 +1076,17 @@ public class Planet {
       sb.append("Size: ");
       sb.append(getSizeAsString());
       sb.append("\n");
-      sb.append("Metal: ");
-      sb.append(getAmountMetalInGround());
-      if (homeWorldIndex != -1) {
+      if (activeScanned) {
+        sb.append("Metal: ");
+        sb.append(getAmountMetalInGround());
         sb.append("\n");
-        sb.append("Home world of ");
+      }
+      if (homeWorldIndex != -1) {
+        sb.append("Home world of\n");
         sb.append(SpaceRaceUtility.getRaceByIndex(homeWorldIndex).getName());
         sb.append("\n");
       }
-      if (planetOwnerInfo != null) {
-        sb.append("\n");
+      if (planetOwnerInfo != null && activeScanned) {
         sb.append(planetOwnerInfo.getEmpireName());
         sb.append("\n");
         sb.append("Population: ");
@@ -1297,7 +1311,7 @@ public class Planet {
               }
               if (mission.getType() == MissionType.DEFEND) {
                 // For now one ship is enough for defend
-                mission.setPhase(MissionPhase.TREKKING);
+                mission.setPhase(MissionPhase.EXECUTING);
               } else if (mission.getType() == MissionType.COLONIZE) {
                 mission.setPhase(MissionPhase.LOADING);
               } else {
@@ -1319,10 +1333,25 @@ public class Planet {
                 newMiss.setFleetName(fleet.getName());
                 planetOwnerInfo.getMissions().add(newMiss);
               } else if (ship.getTotalMilitaryPower() > 0) {
-                // No mission for planet, so just adding defender
-                String fleetName = "Defender";
-                fleet.setName(fleetName + " #" + (planetOwnerInfo.getFleets()
-                    .howManyFleetWithStartingNames(fleetName) + 1));
+                if (fleet.isScoutFleet()) {
+                  if (DiceGenerator.getRandom(3) == 0) {
+                    // Scout ship is for defending too
+                    String fleetName = "Defender";
+                    fleet.setName(fleetName + " #" + (planetOwnerInfo
+                        .getFleets().howManyFleetWithStartingNames(fleetName)
+                        + 1));
+                  } else {
+                    String fleetName = "Scout";
+                    fleet.setName(fleetName + " #" + (planetOwnerInfo
+                        .getFleets().howManyFleetWithStartingNames(fleetName)
+                        + 1));
+                  }
+                } else {
+                  // No mission for planet, so just adding defender
+                  String fleetName = "Defender";
+                  fleet.setName(fleetName + " #" + (planetOwnerInfo.getFleets()
+                      .howManyFleetWithStartingNames(fleetName) + 1));
+                }
               }
             }
           }

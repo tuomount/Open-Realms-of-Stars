@@ -38,7 +38,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 
 public class Ship extends Construction {
 
-   /**
+  /**
     * Ship's hull
     */
    private ShipHull hull;

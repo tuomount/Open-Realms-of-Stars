@@ -84,6 +84,11 @@ public class ShipView extends BlackPanel {
   private boolean copyClicked;
 
   /**
+   * Last selected ship design index
+   */
+  private int lastSelectedIndex = -1;
+
+  /**
    * Obsolete button for ship
    */
   private SpaceButton obsoleteBtn;
@@ -160,16 +165,20 @@ public class ShipView extends BlackPanel {
   public void handleAction(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
       if (shipList.getSelectedIndex() != -1) {
-        ShipStat stat = shipList.getSelectedValue();
-        if (stat.isObsolete()) {
-          obsoleteBtn.setText("Activate");
-        } else {
-          obsoleteBtn.setText("Obsolete");
+        if (shipList.getSelectedIndex() != lastSelectedIndex) {
+          lastSelectedIndex = shipList.getSelectedIndex();
+          ShipStat stat = shipList.getSelectedValue();
+          if (stat.isObsolete()) {
+            obsoleteBtn.setText("Activate");
+          } else {
+            obsoleteBtn.setText("Obsolete");
+          }
+          infoText.setText(stat.toString());
+          shipImage.setImage(stat.getDesign().getHull().getImage());
+          this.repaint();
         }
-        infoText.setText(stat.toString());
-        shipImage.setImage(stat.getDesign().getHull().getImage());
-        this.repaint();
       } else {
+        lastSelectedIndex = -1;
         infoText.setText("");
         this.repaint();
         shipImage.setImage(ShipImages.humans().getShipImage(ShipImage.COLONY));

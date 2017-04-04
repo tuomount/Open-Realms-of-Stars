@@ -29,6 +29,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -365,7 +366,28 @@ public class AITurnView extends BlackPanel {
         for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
           Fleet fleet = info.getFleets().getByIndex(j);
           if (fleet.getRoute() != null) {
-            if (fleet.getMovesLeft() > 0) {
+            if (fleet.getRoute().isFixing()) {
+              Planet planet = game.getStarMap()
+                  .getPlanetByCoordinate(fleet.getX(), fleet.getY());
+              if (planet != null && planet.getPlanetPlayerInfo() == info
+                  && planet.hasSpacePort()) {
+                // Fully repair ships if planet has space port
+                fleet.fixFleetShips(true);
+              } else {
+                fleet.fixFleetShips(false);
+              }
+
+              if (fleet.allFixed()) {
+                fleet.setRoute(null);
+                Message msg = new Message(MessageType.FLEET,
+                    fleet.getName()
+                        + " has been fixed and waiting for orders.",
+                    Icons.getIconByName(Icons.ICON_HULL_TECH));
+                msg.setMatchByString(fleet.getName());
+                msg.setCoordinate(fleet.getCoordinate());
+                info.getMsgList().addNewMessage(msg);
+              }
+            } else if (fleet.getMovesLeft() > 0) {
               // Make sure fleet can actually move
               fleet.getRoute().makeNextMove();
               if (!game.getStarMap().isBlocked(fleet.getRoute().getX(),
@@ -383,29 +405,6 @@ public class AITurnView extends BlackPanel {
                   msg.setMatchByString(fleet.getName());
                   msg.setCoordinate(fleet.getCoordinate());
                   info.getMsgList().addNewMessage(msg);
-                } else {
-                  if (fleet.getRoute().isFixing()) {
-                    Planet planet = game.getStarMap()
-                        .getPlanetByCoordinate(fleet.getX(), fleet.getY());
-                    if (planet != null && planet.getPlanetPlayerInfo() == info
-                        && planet.hasSpacePort()) {
-                      // Fully repair ships if planet has space port
-                      fleet.fixFleetShips(true);
-                    } else {
-                      fleet.fixFleetShips(false);
-                    }
-
-                    if (fleet.allFixed()) {
-                      fleet.setRoute(null);
-                      Message msg = new Message(MessageType.FLEET,
-                          fleet.getName()
-                              + " has been fixed and waiting for orders.",
-                          Icons.getIconByName(Icons.ICON_HULL_TECH));
-                      msg.setMatchByString(fleet.getName());
-                      msg.setCoordinate(fleet.getCoordinate());
-                      info.getMsgList().addNewMessage(msg);
-                    }
-                  }
                 }
               } else {
                 // Movement was blocked, giving a message
@@ -450,6 +449,16 @@ public class AITurnView extends BlackPanel {
       }
     }
     game.getStarMap().setTurn(game.getStarMap().getTurn() + 1);
+    if (game.getStarMap().getTurn() % NewsCorpData.NEWS_PUBLISH_RATE == 0) {
+      NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+      newsData.calculateCredit(game.getStarMap().getPlayerList());
+      newsData.calculateCulture(game.getStarMap().getPlanetList(),
+          game.getStarMap().getPlayerList());
+      newsData.calculateMilitary(game.getStarMap().getPlayerList());
+      newsData.calculateResearch(game.getStarMap().getPlayerList());
+      newsData.calculatePlanets(game.getStarMap().getPlanetList());
+      newsData.calculatePopulation(game.getStarMap().getPlanetList());
+    }
   }
 
   /**

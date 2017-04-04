@@ -49,6 +49,16 @@ public class ShipDesign {
   public static final String NO_WEAPONS_ALLOWED = "No weapons allowed in ";
 
   /**
+   * Message when ship contains more than one jammer
+   */
+  public static final String MANY_JAMMERS = "Only one jammer is allowed!";
+  /**
+   * Message when ship contains more than one targeting computer
+   */
+  public static final String MANY_COMPUTERS = "Only one targeting computer"
+      + " is allowed!";
+
+  /**
    * Ship Design name
    */
   private String name;
@@ -227,6 +237,54 @@ public class ShipDesign {
       }
     }
     return shield;
+  }
+
+  /**
+   * Get Speed for design.
+   * @return Speed
+   */
+  public int getSpeed() {
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.ENGINE) {
+        return comp.getSpeed();
+      }
+    }
+    return 0;
+  }
+
+  /**
+   * Get tactic Speed for design.
+   * @return Speed
+   */
+  public int getTacticSpeed() {
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.ENGINE) {
+        return comp.getTacticSpeed();
+      }
+    }
+    return 0;
+  }
+
+  /**
+   * Get FTL Speed for design.
+   * @return Speed
+   */
+  public int getFtlSpeed() {
+    int result = 0;
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.ENGINE) {
+        result = comp.getFtlSpeed();
+        break;
+      }
+    }
+    if (hull.getHullType() == ShipHullType.PROBE) {
+      // Probes have faster FTL
+      result = result + 1;
+    }
+    return result;
   }
 
   /**
@@ -519,6 +577,8 @@ public class ShipDesign {
       sb.append(NO_WEAPONS_ALLOWED).append(hull.getHullType().toString())
           .append("!\n");
     }
+    boolean targetingComputer = false;
+    boolean jammer = false;
     for (int i = 0; i < getNumberOfComponents(); i++) {
       ShipComponent comp = getComponent(i);
       if (comp.getType() == ShipComponentType.COLONY_MODULE
@@ -526,6 +586,25 @@ public class ShipDesign {
         designOk = false;
         sb.append("Colonization module in non freighter hull.");
       }
+      if (comp.getType() == ShipComponentType.TARGETING_COMPUTER
+          && !targetingComputer) {
+        targetingComputer = true;
+      } else if (comp.getType() == ShipComponentType.TARGETING_COMPUTER
+          && targetingComputer) {
+        designOk = false;
+        sb.append(MANY_COMPUTERS);
+        sb.append("\n");
+      }
+      if (comp.getType() == ShipComponentType.JAMMER
+          && !jammer) {
+        jammer = true;
+      } else if (comp.getType() == ShipComponentType.JAMMER
+          && jammer) {
+        designOk = false;
+        sb.append(MANY_JAMMERS);
+        sb.append("\n");
+      }
+
     }
     if (getFreeEnergy() < 0) {
       designOk = false;
@@ -622,6 +701,13 @@ public class ShipDesign {
     sb.append(getCost());
     sb.append(" Metal: ");
     sb.append(getMetalCost());
+    sb.append("\n");
+    sb.append("Speed: ");
+    sb.append(getSpeed());
+    sb.append(" FTL: ");
+    sb.append(getFtlSpeed());
+    sb.append(" Tactic: ");
+    sb.append(getTacticSpeed());
     sb.append("\n");
     sb.append("Shield: ");
     sb.append(getTotalShield());

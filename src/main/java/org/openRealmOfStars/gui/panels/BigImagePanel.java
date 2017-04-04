@@ -178,7 +178,7 @@ public class BigImagePanel extends JPanel {
   private void drawTextArea(final Graphics g) {
     g.setFont(GuiStatics.getFontCubellan());
     if (title == null && planet != null) {
-      StringBuilder sb = new StringBuilder(planet.generateInfoText());
+      StringBuilder sb = new StringBuilder(planet.generateInfoText(true));
       int lastSpace = -1;
       int rowLen = 0;
       int maxRowLen = this.getWidth() / 12;

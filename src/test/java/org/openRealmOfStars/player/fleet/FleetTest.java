@@ -51,6 +51,7 @@ public class FleetTest {
     Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
     Mockito.when(ship.getName()).thenReturn("Scout");
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(15);
+    Mockito.when(ship.getCulture()).thenReturn(0);
     return ship;
   }
 
@@ -73,6 +74,7 @@ public class FleetTest {
     Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
     Mockito.when(ship.getName()).thenReturn("Colony");
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);
+    Mockito.when(ship.getCulture()).thenReturn(1);
     return ship;
   }
 
@@ -93,6 +95,7 @@ public class FleetTest {
     Mockito.when(ship.isPrivateeringShip()).thenReturn(true);
     Mockito.when(ship.getName()).thenReturn("Privateer");
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(20);
+    Mockito.when(ship.getCulture()).thenReturn(0);
     return ship;
   }
 
@@ -128,6 +131,7 @@ public class FleetTest {
     assertEquals(false, fleet.isPrivateerFleet());
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Terran alliance");
+    assertEquals(0, fleet.getCulturalValue());
     assertEquals("Test-Fleet\nTerran alliance\nSpeed: 1 FTL: 2\nMoves:1\nScout"
         + "\n\nEnroute", fleet.getInfoAsText(info));
   }
@@ -151,6 +155,7 @@ public class FleetTest {
     assertEquals(20, fleet.getFreeSpaceForMetal());
     assertEquals(true, fleet.allFixed());
     assertEquals(false, fleet.isPrivateerFleet());
+    assertEquals(1, fleet.getCulturalValue());
     assertEquals("Fleet #-1\nSpeed: 1 FTL: 1\nMoves:0\nScout\nColony"
         + "\n", fleet.getInfoAsText(null));
   }
@@ -164,6 +169,7 @@ public class FleetTest {
     assertEquals(true, fleet.isPrivateerFleet());
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Terran alliance");
+    assertEquals(0, fleet.getCulturalValue());
     assertEquals("Fleet #-1\nPrivateer fleet\nSpeed: 1 FTL: 2\nMoves:0"
         + "\nPrivateer\nPrivateer\n", fleet.getInfoAsText(info));
   }
@@ -175,10 +181,13 @@ public class FleetTest {
     Ship privateer = createPrivateerShipOne();
     Ship colony = createShipTwo();
     Fleet fleet = new Fleet(ship, 2, 3);
+    assertEquals(0, fleet.getCulturalValue());
     assertEquals(15,fleet.getMilitaryValue());
     fleet.addShip(privateer);
+    assertEquals(0, fleet.getCulturalValue());
     assertEquals(35,fleet.getMilitaryValue());
     fleet.addShip(colony);
+    assertEquals(1, fleet.getCulturalValue());
     assertEquals(35,fleet.getMilitaryValue());
   }
 

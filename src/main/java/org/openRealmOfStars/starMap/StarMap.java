@@ -21,11 +21,13 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
+import org.openRealmOfStars.utilities.repository.NewsCorpRepository;
 import org.openRealmOfStars.utilities.repository.PlanetRepository;
 import org.openRealmOfStars.utilities.repository.SunRepository;
 
@@ -151,9 +153,14 @@ public class StarMap {
   private Fleet aiFleet;
 
   /**
+   * News corporation data
+   */
+  private NewsCorpData newsCorpData;
+
+  /**
    * Magic string to save game files
    */
-  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.2";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.3";
 
   /**
    * Maximum amount of looping when finding free solar system spot.
@@ -187,6 +194,7 @@ public class StarMap {
         solarSystem[i][j] = 0;
       }
     }
+    newsCorpData = new NewsCorpData(players.getCurrentMaxPlayers());
     turn = 0;
     aiTurnNumber = 0;
     aiFleet = null;
@@ -390,6 +398,9 @@ public class StarMap {
         Planet planet = new PlanetRepository().restorePlanet(dis, players);
         planetList.add(planet);
       }
+      NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
+      newsCorpData = newsCorpRepo.restoreNewsCorp(dis,
+          players.getCurrentMaxPlayers());
     } else {
       if (str.startsWith("OROS-SAVE-GAME-")) {
         throw new IOException(
@@ -406,7 +417,7 @@ public class StarMap {
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(final DataOutputStream dos) throws IOException {
-    IOUtilities.writeString(dos, MAGIC_STRING);
+    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.3");
     // Turn number
     dos.writeInt(turn);
     // Map size
@@ -431,6 +442,8 @@ public class StarMap {
     for (int i = 0; i < planetList.size(); i++) {
       new PlanetRepository().savePlanet(dos, planetList.get(i));
     }
+    NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
+    newsCorpRepo.saveNewsCorp(dos, newsCorpData);
   }
 
   /**
@@ -624,7 +637,12 @@ public class StarMap {
       }
     }
     int gasGiants = 0;
+    int loops = 0;
     while (gasGiants < numberOfGasGiants) {
+      loops++;
+      if (loops > 100) {
+        break;
+      }
       int px = sx + DiceGenerator.getRandom(-SOLAR_SYSTEM_WIDTH,
               SOLAR_SYSTEM_WIDTH);
       int py = sy + DiceGenerator.getRandom(-SOLAR_SYSTEM_WIDTH,
@@ -842,6 +860,14 @@ public class StarMap {
   }
 
   /**
+   * Get News corporation data about the players
+   * @return the newsCorpData
+   */
+  public NewsCorpData getNewsCorpData() {
+    return newsCorpData;
+  }
+
+  /**
    * Get Draw X coordinate
    * @return x coordinate
    */
@@ -880,6 +906,20 @@ public class StarMap {
       SquareInfo info = tileInfo[x][y];
       if (info.getType() == SquareInfo.TYPE_SUN) {
         return sunList.get(info.getValue());
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Get Sun by name. If not found then null is returned.
+   * @param sunName Sun's name
+   * @return Sun or null
+   */
+  public Sun getSunByName(final String sunName) {
+    for (Sun sun : sunList) {
+      if (sun.getName().equals(sunName)) {
+        return sun;
       }
     }
     return null;
@@ -956,6 +996,14 @@ public class StarMap {
    */
   public ArrayList<Planet> getPlanetList() {
     return planetList;
+  }
+
+  /**
+   * Use only in JUnits. This changes whole planet list on starmap.
+   * @param list New planet list
+   */
+  public void setPlanetList(final ArrayList<Planet> list) {
+    planetList = list;
   }
 
   /**
@@ -1597,4 +1645,50 @@ public class StarMap {
     return players;
   }
 
+  /**
+   * Get next planet for player which is owned by that player
+   * @param info Player who owns the planet
+   * @param currentPlanet Currently clicked planet, does not need to be
+   * owned by the player
+   * @param forward If true moves forward, on false moves backward
+   * @return Next player planet or same planet
+   */
+  public Planet getNextPlanetForPlayer(final PlayerInfo info,
+      final Planet currentPlanet, final boolean forward) {
+    int startIndex = 0;
+    for (int i = 0; i < planetList.size(); i++) {
+      Planet planet = planetList.get(i);
+      if (planet.getX() == currentPlanet.getX()
+          && planet.getY() == currentPlanet.getY()) {
+        startIndex = i;
+        break;
+      }
+    }
+    int i = startIndex;
+    boolean exitLoop = false;
+    while (!exitLoop) {
+      if (forward) {
+        i++;
+      } else {
+        i--;
+      }
+      if (i >= planetList.size()) {
+        i = 0;
+      }
+      if (i <= -1) {
+        i = planetList.size() - 1;
+      }
+      Planet planet = planetList.get(i);
+      if (planet.getPlanetPlayerInfo() != null
+          && planet.getPlanetPlayerInfo() == info) {
+        exitLoop = true;
+        return planet;
+      }
+      if (i == startIndex) {
+        exitLoop = true;
+      }
+    }
+    // Return same planet
+    return planetList.get(startIndex);
+  }
 }

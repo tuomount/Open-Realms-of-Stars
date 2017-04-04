@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2017  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -48,6 +48,18 @@ public class CoordinateTest {
 
         assertEquals(originalCoordinate.getX(), coordinate.getX());
         assertEquals(originalCoordinate.getY(), coordinate.getY());
+    }
+
+    @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
+    public void testCoordinateMatching() {
+        Coordinate originalCoordinate = new Coordinate(10, 15);
+        Coordinate coordinate = new Coordinate(10,15);
+        assertEquals(true, coordinate.sameAs(originalCoordinate));
+        assertEquals(true, originalCoordinate.sameAs(coordinate));
+        coordinate = new Coordinate(33,8);
+        assertEquals(false, coordinate.sameAs(originalCoordinate));
+        assertEquals(false, originalCoordinate.sameAs(coordinate));
     }
 
     @Test

@@ -13,7 +13,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2017  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -642,7 +642,7 @@ public class Combat {
   }
 
   /**
-   * Hand winner fleet stats
+   * Handle winner fleet stats
    * @param fleet The winner fleet
    * @param info The winner player info
    */
@@ -661,11 +661,16 @@ public class Combat {
   public void handleEndCombat() {
     if (winner != null && info1 == winner) {
       handleWinner(fleet1, info1);
-      fleet1.setPos(fleet2.getCoordinate());
+      Coordinate loserPos = fleet2.getCoordinate();
       int index = info2.getFleets().getIndexByName(fleet2.getName());
       if (index != -1) {
         info2.getFleets().remove(index);
       }
+      if (info2.getFleets().getFleetByCoordinate(loserPos) == null) {
+        // No more defending fleets so moving to the coordinate
+        fleet1.setPos(fleet2.getCoordinate());
+      }
+
     }
     if (winner != null && info2 == winner) {
       handleWinner(fleet2, info2);

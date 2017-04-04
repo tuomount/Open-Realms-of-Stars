@@ -63,6 +63,10 @@ public class NewsCorpData {
   private GalaxyStat credit;
 
   /**
+   * How many turns when new news is published
+   */
+  public static final int NEWS_PUBLISH_RATE = 20;
+  /**
    * String for planetary stat name
    */
   public static final String STAT_PLANETS = "Planets";
@@ -163,6 +167,32 @@ public class NewsCorpData {
     }
     for (int i = 0; i < planets.getMaxPlayers(); i++) {
       planets.addStat(i, data[i]);
+    }
+  }
+
+  /**
+   * Calculate how much culture players have
+   * @param planetList from StarMap
+   * @param playerList from StarMap
+   */
+  public void calculateCulture(final ArrayList<Planet> planetList,
+      final PlayerList playerList) {
+    int[] data = new int[cultural.getMaxPlayers()];
+    for (Planet planet : planetList) {
+      int i = planet.getPlanetOwnerIndex();
+      if (i != -1 && i < cultural.getMaxPlayers()) {
+        data[i] = data[i] + planet.getCulture();
+      }
+    }
+    for (int i = 0; i < playerList.getCurrentMaxPlayers(); i++) {
+      PlayerInfo player = playerList.getPlayerInfoByIndex(i);
+      for (int j = 0; j < player.getFleets().getNumberOfFleets(); j++) {
+        Fleet fleet = player.getFleets().getByIndex(j);
+        data[i] = data[i] + fleet.getCulturalValue();
+      }
+    }
+    for (int i = 0; i < cultural.getMaxPlayers(); i++) {
+      cultural.addStat(i, data[i]);
     }
   }
 

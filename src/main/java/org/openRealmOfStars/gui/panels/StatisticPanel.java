@@ -124,7 +124,7 @@ public class StatisticPanel extends JPanel {
     for (int p = 0; p < data.length; p++) {
       if (p == 0) {
         sizeI = data[p].length;
-        largestX = sizeI;
+        largestX = sizeI - 1;
       } else {
         if (sizeI != data[p].length) {
           throw new IllegalArgumentException("Data arrays are not equal size");
@@ -135,6 +135,12 @@ public class StatisticPanel extends JPanel {
           largestY = data[p][i];
         }
       }
+    }
+    if (largestY == 0) {
+      largestY = 1;
+    }
+    if (largestX == 0) {
+      largestX = 1;
     }
   }
 
@@ -194,8 +200,8 @@ public class StatisticPanel extends JPanel {
     int drawWidth = this.getWidth() - offsetX - rightOffsetX;
     int drawHeigth = this.getHeight() - offsetY - topOffsetY;
 
-    double scaleY = drawHeigth / largestY;
-    double scaleX = drawWidth / largestX;
+    double scaleY = (double) drawHeigth / (double) largestY;
+    double scaleX = (double) drawWidth / (double) largestX;
     Graphics2D g2d = (Graphics2D) arg0;
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
@@ -211,28 +217,36 @@ public class StatisticPanel extends JPanel {
       amount = largestX;
     } else {
       mult = (int) Math.round(GRID_DENSITY / scaleX);
-      amount = (int) Math.round(drawWidth / (GRID_DENSITY - 1));
+      amount = (int) Math.ceil(drawWidth / (GRID_DENSITY));
     }
-    for (int i = 0; i < amount; i++) {
+    for (int i = 0; i <= amount; i++) {
       if (i > 0) {
         g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
         g2d.drawLine((int) Math.round(offsetX + i * scaleX * mult),
             this.getHeight() - offsetY,
             (int) Math.round(offsetX + i * scaleX * mult), topOffsetY);
       }
-      g2d.setColor(GuiStatics.COLOR_GREEN_TEXT);
-      g2d.drawString(String.valueOf(i * turnDistance),
-          (int) Math.round(offsetX + i * scaleX * mult),
-          this.getHeight() - offsetY + textHeight);
+      if (i < amount) {
+        g2d.setColor(GuiStatics.COLOR_GREEN_TEXT);
+        g2d.drawString(String.valueOf(i * turnDistance),
+            (int) Math.round(offsetX + i * scaleX * mult),
+            this.getHeight() - offsetY + textHeight);
+      }
     }
     amount = 1;
     if (GRID_DENSITY / scaleY < 1) {
       amount = largestY;
     } else {
-      mult = (int) Math.round(GRID_DENSITY / scaleY);
-      amount = (int) Math.round(drawHeigth / (GRID_DENSITY - 1));
+      mult = (int) Math.round(GRID_DENSITY / (Double) scaleY);
+      amount = (int) Math.ceil((double) drawHeigth / GRID_DENSITY);
+      if (mult * scaleY * amount < drawHeigth - GRID_DENSITY) {
+        amount++;
+      }
+      if (mult * scaleY * amount < drawHeigth - GRID_DENSITY) {
+        amount++;
+      }
     }
-    for (int i = 0; i < amount; i++) {
+    for (int i = 0; i <= amount; i++) {
       if (i > 0) {
         g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
         g2d.drawLine(offsetX,
@@ -269,7 +283,7 @@ public class StatisticPanel extends JPanel {
             this.getHeight() - offsetY - (int) Math.round(
                 data[p][0] * scaleY));
       } else {
-        for (int i = 0; i < largestX - 1; i++) {
+        for (int i = 0; i < largestX; i++) {
           g2d.drawLine(offsetX + (int) Math.round(i * scaleX),
               this.getHeight() - offsetY - (int) Math.round(
                   data[p][i] * scaleY),

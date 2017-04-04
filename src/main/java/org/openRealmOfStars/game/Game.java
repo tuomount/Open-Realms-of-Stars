@@ -392,7 +392,7 @@ public class Game extends JFrame implements ActionListener {
    * Show Stat panels
    */
   public void showStatView() {
-    statView = new StatView(this);
+    statView = new StatView(starMap, this);
     this.getContentPane().removeAll();
     this.add(statView);
     this.validate();
@@ -558,16 +558,25 @@ public class Game extends JFrame implements ActionListener {
       researchView = null;
       shipView = null;
       shipDesignView = null;
+      starMap.getNewsCorpData().calculateCredit(players);
+      starMap.getNewsCorpData().calculateCulture(starMap.getPlanetList(),
+          players);
+      starMap.getNewsCorpData().calculateMilitary(players);
+      starMap.getNewsCorpData().calculatePlanets(starMap.getPlanetList());
+      starMap.getNewsCorpData().calculatePopulation(starMap.getPlanetList());
+      starMap.getNewsCorpData().calculateResearch(players);
       changeGameState(GameState.STARMAP);
       break;
     }
     case PLANETBOMBINGVIEW: {
       boolean changed = false;
-      if (dataObject instanceof Planet) {
-        Planet planet = (Planet) dataObject;
-        Fleet fleet = starMap.getFleetByCoordinate(planet.getX(),
-            planet.getY());
-        if (fleet != null) {
+      if (dataObject instanceof FleetView) {
+        FleetView view = (FleetView) dataObject;
+        Planet planet = view.getPlanet();
+        Fleet fleet = view.getFleet();
+        if (fleet != null && planet != null
+            && fleet.getX() == planet.getX()
+            && fleet.getY() == planet.getY()) {
           showPlanetBombingView(planet, fleet);
           changed = true;
         }
@@ -754,6 +763,20 @@ public class Game extends JFrame implements ActionListener {
   }
 
   /**
+   * Change message focus for Planet
+   * @param planet Where to focus
+   */
+  private void changeMessageForPlanet(final Planet planet) {
+    if (planet != null) {
+      starMap.setCursorPos(planet.getX(), planet.getY());
+      starMap.setDrawPos(planet.getX(), planet.getY());
+      starMapView.setShowPlanet(planet);
+      starMapView.getStarMapMouseListener().setLastClickedFleet(null);
+      starMapView.getStarMapMouseListener().setLastClickedPlanet(planet);
+    }
+  }
+
+  /**
    * Handle state changes via double clicking on StarMap
    */
   private void handleDoubleClicksOnStarMap() {
@@ -801,6 +824,13 @@ public class Game extends JFrame implements ActionListener {
           Fleet fleet = players.getCurrentPlayerInfo().getFleets().getPrev();
           SoundPlayer.playMenuSound();
           changeMessageForFleets(fleet);
+        } else if (starMapView.getStarMapMouseListener().getLastClickedPlanet()
+            != null) {
+          Planet planet = starMap.getNextPlanetForPlayer(starMap
+              .getCurrentPlayerInfo(), starMapView.getStarMapMouseListener()
+              .getLastClickedPlanet(), false);
+          SoundPlayer.playMenuSound();
+          changeMessageForPlanet(planet);
         }
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_NEXT_TARGET)) {
@@ -809,6 +839,13 @@ public class Game extends JFrame implements ActionListener {
           Fleet fleet = players.getCurrentPlayerInfo().getFleets().getNext();
           SoundPlayer.playMenuSound();
           changeMessageForFleets(fleet);
+        } else if (starMapView.getStarMapMouseListener().getLastClickedPlanet()
+            != null) {
+          Planet planet = starMap.getNextPlanetForPlayer(starMap
+              .getCurrentPlayerInfo(), starMapView.getStarMapMouseListener()
+              .getLastClickedPlanet(), true);
+          SoundPlayer.playMenuSound();
+          changeMessageForPlanet(planet);
         }
       } else {
         if (arg0.getActionCommand()
@@ -952,7 +989,7 @@ public class Game extends JFrame implements ActionListener {
         colonizePlanetAction();
       }
       if (arg0.getActionCommand().equals(GameCommands.COMMAND_CONQUEST)) {
-        changeGameState(GameState.PLANETBOMBINGVIEW, fleetView.getPlanet());
+        changeGameState(GameState.PLANETBOMBINGVIEW, fleetView);
         SoundPlayer.playMenuSound();
       }
       fleetView.handleAction(arg0);

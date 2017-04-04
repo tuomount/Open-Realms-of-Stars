@@ -44,7 +44,7 @@ import org.openRealmOfStars.utilities.Logger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2017  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -293,6 +293,7 @@ public class PlanetBombingView extends BlackPanel {
     for (int i = 0; i < componentUsed.length; i++) {
       componentUsed[i] = false;
     }
+    infoPanel.resetComponentUses();
   }
 
   /**
@@ -423,6 +424,7 @@ public class PlanetBombingView extends BlackPanel {
           Ship ship = fleet.getShipByIndex(shipIndex);
           ShipComponent comp = ship.getComponent(usedComponentIndex);
           if (ship.componentIsWorking(usedComponentIndex)) {
+            infoPanel.useComponent(usedComponentIndex);
             if (comp.getType() == ShipComponentType.ORBITAL_NUKE) {
               imgBase.setAnimation(new PlanetAnimation(
                   PlanetAnimation.ANIMATION_TYPE_NUKE_AIM, 0, 0, 1, 1));
@@ -475,6 +477,7 @@ public class PlanetBombingView extends BlackPanel {
               }
             }
           }
+          usedComponentIndex = -1;
         }
       }
       updatePanel();

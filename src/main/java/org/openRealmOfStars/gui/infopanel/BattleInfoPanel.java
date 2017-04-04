@@ -23,7 +23,7 @@ import org.openRealmOfStars.player.ship.ShipImage;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2017 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -147,6 +147,15 @@ public class BattleInfoPanel extends InfoPanel {
   public void useComponent(final int index) {
     if (index >= 0 && index < MAX_BTN) {
       cBtn[index].setUsed(true);
+    }
+  }
+
+  /**
+   * Reset Ship Component uses.
+   */
+  public void resetComponentUses() {
+    for (int i = 0; i < MAX_BTN; i++) {
+      cBtn[i].setUsed(false);
     }
   }
 

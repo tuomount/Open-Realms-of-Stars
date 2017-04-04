@@ -3,7 +3,7 @@ package org.openRealmOfStars.starMap;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2017  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -108,5 +108,18 @@ public class Coordinate {
     @Override
     public String toString() {
         return "Coordinate(" + x + ", " + y + ")";
+    }
+
+    /**
+     * Check if two coordinate matches
+     * @param coordinate Which is being matched
+     * @return true if two coordinates are same, otherwise false
+     */
+    public boolean sameAs(final Coordinate coordinate) {
+      if (coordinate.getX() == this.getX()
+          && coordinate.getY() == this.getY()) {
+        return true;
+      }
+      return false;
     }
 }

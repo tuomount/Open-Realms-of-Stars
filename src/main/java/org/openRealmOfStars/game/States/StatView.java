@@ -4,12 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JTabbedPane;
+
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.StatisticPanel;
-import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 
 /**
  *
@@ -43,48 +47,81 @@ public class StatView extends BlackPanel {
 
   /**
    * Create new stat view
+   * @param map StarMap which contains players and planet lists.
    * @param listener Action Listener
    */
-  public StatView(final ActionListener listener) {
+  public StatView(final StarMap map, final ActionListener listener) {
     this.setLayout(new BorderLayout());
     InfoPanel base = new InfoPanel();
     base.setLayout(new BorderLayout());
     base.setTitle("Statistics");
 
+    JTabbedPane tabs = new JTabbedPane();
+    tabs.setFont(GuiStatics.getFontCubellanSmaller());
+    tabs.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER);
+    tabs.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+
     StatisticPanel statPanel = new StatisticPanel();
-    int[][] data = new int[8][3];
-    data[0][0] = 1;
-    data[0][1] = 2;
-    data[0][2] = 4;
-    data[1][0] = 3;
-    data[1][1] = 2;
-    data[1][2] = 5;
-    data[2][0] = 5;
-    data[2][1] = 6;
-    data[2][2] = 9;
-    data[3][0] = 7;
-    data[3][1] = 4;
-    data[3][2] = 1;
-    data[4][0] = 2;
-    data[4][1] = 4;
-    data[4][2] = 8;
-    data[5][0] = 9;
-    data[5][1] = 6;
-    data[5][2] = 3;
-    data[6][0] = 11;
-    data[6][1] = 10;
-    data[6][2] = 11;
-    data[7][0] = 4;
-    data[7][1] = 8;
-    data[7][2] = 64;
-    statPanel.setData(data);
-    String[] names = new String[8];
+    statPanel.setData(map.getNewsCorpData().getMilitary().getGalaxyData());
+    statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
+    String[] names = new String[map.getPlayerList().getCurrentMaxPlayers()];
     for (int i = 0; i < names.length; i++) {
-      names[i] = SpaceRaceUtility.getRandomName(
-          SpaceRaceUtility.getRandomRace());
+      names[i] = map.getPlayerByIndex(i).getEmpireName();
     }
     statPanel.setYDataNames(names);
-    base.add(statPanel, BorderLayout.CENTER);
+    tabs.add(NewsCorpData.STAT_MILITARY, statPanel);
+
+    statPanel = new StatisticPanel();
+    statPanel.setData(map.getNewsCorpData().getPlanets().getGalaxyData());
+    statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
+    names = new String[map.getPlayerList().getCurrentMaxPlayers()];
+    for (int i = 0; i < names.length; i++) {
+      names[i] = map.getPlayerByIndex(i).getEmpireName();
+    }
+    statPanel.setYDataNames(names);
+    tabs.add(NewsCorpData.STAT_PLANETS, statPanel);
+
+    statPanel = new StatisticPanel();
+    statPanel.setData(map.getNewsCorpData().getPopulation().getGalaxyData());
+    statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
+    names = new String[map.getPlayerList().getCurrentMaxPlayers()];
+    for (int i = 0; i < names.length; i++) {
+      names[i] = map.getPlayerByIndex(i).getEmpireName();
+    }
+    statPanel.setYDataNames(names);
+    tabs.add(NewsCorpData.STAT_POPULATION, statPanel);
+
+    statPanel = new StatisticPanel();
+    statPanel.setData(map.getNewsCorpData().getCultural().getGalaxyData());
+    statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
+    names = new String[map.getPlayerList().getCurrentMaxPlayers()];
+    for (int i = 0; i < names.length; i++) {
+      names[i] = map.getPlayerByIndex(i).getEmpireName();
+    }
+    statPanel.setYDataNames(names);
+    tabs.add(NewsCorpData.STAT_CULTURAL, statPanel);
+
+    statPanel = new StatisticPanel();
+    statPanel.setData(map.getNewsCorpData().getCredit().getGalaxyData());
+    statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
+    names = new String[map.getPlayerList().getCurrentMaxPlayers()];
+    for (int i = 0; i < names.length; i++) {
+      names[i] = map.getPlayerByIndex(i).getEmpireName();
+    }
+    statPanel.setYDataNames(names);
+    tabs.add(NewsCorpData.STAT_CREDIT, statPanel);
+
+    statPanel = new StatisticPanel();
+    statPanel.setData(map.getNewsCorpData().getResearch().getGalaxyData());
+    statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
+    names = new String[map.getPlayerList().getCurrentMaxPlayers()];
+    for (int i = 0; i < names.length; i++) {
+      names[i] = map.getPlayerByIndex(i).getEmpireName();
+    }
+    statPanel.setYDataNames(names);
+    tabs.add(NewsCorpData.STAT_RESEARCH, statPanel);
+
+    base.add(tabs, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
 
     // Bottom panel

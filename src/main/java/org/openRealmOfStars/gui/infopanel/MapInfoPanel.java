@@ -71,6 +71,11 @@ public class MapInfoPanel extends InfoPanel {
   private Planet planet;
 
   /**
+   * True if planet was actively scanned in one turn
+   */
+  private boolean activeScanned;
+
+  /**
    * Show info about the fleet
    */
   private Fleet fleet;
@@ -174,11 +179,13 @@ public class MapInfoPanel extends InfoPanel {
   /**
    * Show planet on info panel
    * @param planetToShow The planet to show
+   * @param activeScan Set true if planet is scanned in one turn
    */
-  public void showPlanet(final Planet planetToShow) {
+  public void showPlanet(final Planet planetToShow, final boolean activeScan) {
     this.planet = planetToShow;
     this.fleet = null;
-    this.viewBtn.setEnabled(true);
+    this.activeScanned = activeScan;
+    this.viewBtn.setEnabled(activeScan);
     this.viewBtn.setText("View planet");
     this.viewBtn.setActionCommand(GameCommands.COMMAND_VIEW_PLANET);
     this.defendBtn.setEnabled(false);
@@ -269,7 +276,7 @@ public class MapInfoPanel extends InfoPanel {
       }
       imageLabel.setImage(img);
       setTitle(planet.getName());
-      textArea.setText(planet.generateInfoText());
+      textArea.setText(planet.generateInfoText(this.activeScanned));
       this.repaint();
     } else if (fleet != null) {
       BufferedImage img = new BufferedImage(ShipImage.MAX_WIDTH,
@@ -277,7 +284,11 @@ public class MapInfoPanel extends InfoPanel {
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
-      imageLabel.setImage(fleet.getFirstShip().getHull().getImage());
+      if (fleet.getFirstShip() != null) {
+        imageLabel.setImage(fleet.getFirstShip().getHull().getImage());
+      } else {
+        imageLabel.setImage(img);
+      }
       setTitle(fleet.getName());
       textArea.setText(fleet.getInfoAsText(fleetOwner));
       this.repaint();

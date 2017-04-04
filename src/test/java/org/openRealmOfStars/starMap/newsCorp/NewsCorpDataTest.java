@@ -101,6 +101,80 @@ public class NewsCorpDataTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalaxyStatCultural() {
+    NewsCorpData data = new NewsCorpData(3);
+    Planet unhabitated = Mockito.mock(Planet.class);
+    Mockito.when(unhabitated.getPlanetOwnerIndex()).thenReturn(-1);
+    Planet planet1 = Mockito.mock(Planet.class);
+    Mockito.when(planet1.getPlanetOwnerIndex()).thenReturn(0);
+    Mockito.when(planet1.getCulture()).thenReturn(5);
+    Planet planet2 = Mockito.mock(Planet.class);
+    Mockito.when(planet2.getPlanetOwnerIndex()).thenReturn(1);
+    Mockito.when(planet2.getCulture()).thenReturn(7);
+    Planet planet3 = Mockito.mock(Planet.class);
+    Mockito.when(planet3.getPlanetOwnerIndex()).thenReturn(2);
+    Mockito.when(planet3.getCulture()).thenReturn(11);
+
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(3);
+    Fleet militaryFleet = Mockito.mock(Fleet.class);
+    Mockito.when(militaryFleet.getCulturalValue()).thenReturn(0);
+    Fleet colonFleet = Mockito.mock(Fleet.class);
+    Mockito.when(colonFleet.getCulturalValue()).thenReturn(1);
+    FleetList fleetList1 = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList1.getNumberOfFleets()).thenReturn(3);
+    Mockito.when(fleetList1.getByIndex(0)).thenReturn(militaryFleet);
+    Mockito.when(fleetList1.getByIndex(1)).thenReturn(colonFleet);
+    Mockito.when(fleetList1.getByIndex(2)).thenReturn(militaryFleet);
+    PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info1.getFleets()).thenReturn(fleetList1);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info1);
+    FleetList fleetList2 = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList2.getNumberOfFleets()).thenReturn(5);
+    Mockito.when(fleetList2.getByIndex(0)).thenReturn(militaryFleet);
+    Mockito.when(fleetList2.getByIndex(1)).thenReturn(colonFleet);
+    Mockito.when(fleetList2.getByIndex(2)).thenReturn(militaryFleet);
+    Mockito.when(fleetList2.getByIndex(3)).thenReturn(colonFleet);
+    Mockito.when(fleetList2.getByIndex(4)).thenReturn(militaryFleet);
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info2.getFleets()).thenReturn(fleetList2);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
+    FleetList fleetList3 = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList3.getNumberOfFleets()).thenReturn(5);
+    Mockito.when(fleetList3.getByIndex(0)).thenReturn(colonFleet);
+    Mockito.when(fleetList3.getByIndex(1)).thenReturn(colonFleet);
+    Mockito.when(fleetList3.getByIndex(2)).thenReturn(militaryFleet);
+    Mockito.when(fleetList3.getByIndex(3)).thenReturn(colonFleet);
+    Mockito.when(fleetList3.getByIndex(4)).thenReturn(colonFleet);
+    PlayerInfo info3 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info3.getFleets()).thenReturn(fleetList3);
+    Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info3);
+
+
+    ArrayList<Planet> list = new ArrayList<>();
+    list.add(unhabitated);
+    list.add(unhabitated);
+    list.add(planet2);
+    list.add(planet1);
+    list.add(unhabitated);
+    list.add(planet3);
+    list.add(unhabitated);
+    list.add(planet2);
+    list.add(planet3);
+    list.add(unhabitated);
+    list.add(planet3);
+    list.add(planet2);
+    list.add(planet2);
+    list.add(unhabitated);
+    data.calculateCulture(list, players);
+    int[][] value = data.getCultural().getGalaxyData();
+    assertEquals(6,value[0][0]);
+    assertEquals(30,value[1][0]);
+    assertEquals(37,value[2][0]);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testGalaxyStatPopulation() {
     NewsCorpData data = new NewsCorpData(2);
     Planet unhabitated = Mockito.mock(Planet.class);

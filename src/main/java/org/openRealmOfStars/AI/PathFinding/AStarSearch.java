@@ -227,7 +227,8 @@ public class AStarSearch {
   public boolean doSearch() {
     boolean noMorePoints = false;
     int count = 0;
-    if (blockMap[tx][ty] == BLOCKED && targetDistance == 0) {
+    if (isValidPos(tx, ty) && blockMap[tx][ty] == BLOCKED
+        && targetDistance == 0) {
       targetDistance = 1;
     }
     while (!noMorePoints) {

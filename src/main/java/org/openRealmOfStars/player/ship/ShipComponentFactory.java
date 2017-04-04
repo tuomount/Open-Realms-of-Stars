@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 134;
+  private static final int MAX_SHIPCOMPONENT = 135;
 
   /**
    * Component Ion drive Mk1
@@ -711,6 +711,11 @@ public final class ShipComponentFactory {
    */
   public static final int COMPONENT_JAMMER_MK4 = 133;
 
+  /**
+   * Privateer Module
+   */
+  public static final int COMPONENT_PRIVATEER_MODULE = 134;
+
 
   /**
    * Create ShipComponent with matching name
@@ -1147,6 +1152,9 @@ public final class ShipComponentFactory {
     case COMPONENT_JAMMER_MK4:
       tmp = createElectronics(index);
       break; // Jammer Mk4
+    case COMPONENT_PRIVATEER_MODULE:
+      tmp = createElectronics(index);
+      break; // Privateer Module
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -1444,7 +1452,7 @@ public final class ShipComponentFactory {
     }
     if (index == COMPONENT_JAMMER_MK1) {
       tmp = new ShipComponent(index, "Jammer Mk1", 3, 1,
-          ShipComponentType.SCANNER);
+          ShipComponentType.JAMMER);
       tmp.setDefenseValue(5);
       tmp.setEnergyRequirement(1);
     }
@@ -1509,7 +1517,7 @@ public final class ShipComponentFactory {
     }
     if (index == COMPONENT_JAMMER_MK2) {
       tmp = new ShipComponent(index, "Jammer Mk2", 4, 1,
-          ShipComponentType.SCANNER);
+          ShipComponentType.JAMMER);
       tmp.setDefenseValue(10);
       tmp.setEnergyRequirement(1);
     }
@@ -1547,7 +1555,7 @@ public final class ShipComponentFactory {
     }
     if (index == COMPONENT_JAMMER_MK3) {
       tmp = new ShipComponent(index, "Jammer Mk3", 4, 1,
-          ShipComponentType.SCANNER);
+          ShipComponentType.JAMMER);
       tmp.setDefenseValue(15);
       tmp.setEnergyRequirement(1);
     }
@@ -1613,8 +1621,13 @@ public final class ShipComponentFactory {
     }
     if (index == COMPONENT_JAMMER_MK4) {
       tmp = new ShipComponent(index, "Jammer Mk4", 5, 1,
-          ShipComponentType.SCANNER);
+          ShipComponentType.JAMMER);
       tmp.setDefenseValue(20);
+      tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_PRIVATEER_MODULE) {
+      tmp = new ShipComponent(index, "Privateer Module", 6, 4,
+          ShipComponentType.PRIVATEERING_MODULE);
       tmp.setEnergyRequirement(1);
     }
     return tmp;

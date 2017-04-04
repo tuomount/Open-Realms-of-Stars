@@ -1,4 +1,4 @@
-package testOracle;
+package org.openRealmOfStars.player.fleet;
 
 import static org.junit.Assert.*;
 
@@ -27,7 +27,7 @@ public class FleetListTest2 {
 	@Test
 	public void constructorTest() {
 		FleetList fleetlist = new FleetList();
-		assertEquals(0, fleetlist.getNumberOfFleets()); // »ý¼ºÀÚ test
+		assertEquals(0, fleetlist.getNumberOfFleets()); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ test
 		assertNull(fleetlist.getCurrent());
 	}
 
@@ -50,7 +50,7 @@ public class FleetListTest2 {
 	}
 
 	/**
-	 * index>=0 ÀÎ branch´Â ¸øÇÔ
+	 * index>=0 ï¿½ï¿½ branchï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	 */
 	@Test
 	public void removeTest() {
@@ -89,7 +89,7 @@ public class FleetListTest2 {
 
 		assertNull(fleetlist.getNext());
 		fleetlist.add(fleet1);
-		assertEquals(fleet1, fleetlist.getNext()); // index=0 test°¡´É
+		assertEquals(fleet1, fleetlist.getNext()); // index=0 testï¿½ï¿½ï¿½ï¿½
 
 		fleetlist.add(fleet2);
 		fleetlist.add(fleet3);

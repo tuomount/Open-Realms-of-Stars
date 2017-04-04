@@ -1,4 +1,4 @@
-package testOracle;
+package org.openRealmOfStars.player.ship;
 
 import static org.junit.Assert.*;
 
@@ -13,7 +13,7 @@ import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullFactory;
 import org.openRealmOfStars.player.ship.ShipSize;
 
-public class KimJinWoo_201224442 {
+public class ShipDesignTest2 {
 
 	/**
 	 * addComponentTest

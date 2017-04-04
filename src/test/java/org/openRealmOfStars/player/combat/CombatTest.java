@@ -1,4 +1,4 @@
-package testOracle;
+package org.openRealmOfStars.player.combat;
 
 import static org.junit.Assert.*;
 

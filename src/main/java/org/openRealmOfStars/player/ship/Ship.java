@@ -1115,7 +1115,7 @@ public class Ship extends Construction {
    * @return Military power
    */
   public int getTotalMilitaryPower() {
-    int power = 0;
+    double power = 0;
     boolean militaryShip = false;
     power = getHull().getSlotHull() * getHull().getMaxSlot();
     for (int i = 0; i < components.size(); i++) {
@@ -1130,7 +1130,7 @@ public class Ship extends Construction {
       }
       if (comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
           && componentIsWorking(i)) {
-        power = power + comp.getDamage() / 2;
+        power = power + comp.getDamage() / 2.0;
       }
       if (comp.getType() == ShipComponentType.ARMOR
           || comp.getType() == ShipComponentType.SHIELD) {
@@ -1143,16 +1143,16 @@ public class Ship extends Construction {
       }
       if (comp.getType() == ShipComponentType.TARGETING_COMPUTER
           && componentIsWorking(i)) {
-        power = power + comp.getDamage() / 10;
+        power = power + comp.getDamage() / 10.0;
       }
       if (comp.getType() == ShipComponentType.JAMMER && componentIsWorking(i)) {
-        power = power + comp.getDamage() / 10;
+        power = power + comp.getDefenseValue() / 10.0;
       }
     }
     if (!militaryShip) {
       power = 0;
     }
-    return power;
+    return (int) Math.round(power);
   }
 
   /**

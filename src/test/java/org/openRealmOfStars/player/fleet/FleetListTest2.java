@@ -54,7 +54,7 @@ public class FleetListTest2 {
 	@Test
 	public void constructorTest() {
 		FleetList fleetlist = new FleetList();
-		assertEquals(0, fleetlist.getNumberOfFleets()); // 생성자 test
+		assertEquals(0, fleetlist.getNumberOfFleets()); //  test
 		assertNull(fleetlist.getCurrent());
 	}
 	
@@ -128,7 +128,7 @@ public class FleetListTest2 {
 
 		assertNull(fleetlist.getNext());
 		fleetlist.add(fleet1);
-		assertEquals(fleet1, fleetlist.getNext()); // index=0 test가능
+		assertEquals(fleet1, fleetlist.getNext()); // index=0 test
 
 		fleetlist.add(fleet2);
 		fleetlist.add(fleet3);

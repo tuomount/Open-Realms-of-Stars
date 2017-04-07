@@ -1,4 +1,4 @@
-package testOracle;
+package org.openRealmOfStars.player.combat;
 
 import static org.junit.Assert.*;
 
@@ -46,7 +46,7 @@ import java.util.List;
 * Test for Combat. create by Diocto
 *
 */
-public class CombatTest {
+public class CombatTestByDiocto {
 	public static Fleet attackerFleet;
 	public static Fleet dependerFleet;
 	public static FleetList attackerFleetList;

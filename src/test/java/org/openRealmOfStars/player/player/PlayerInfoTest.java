@@ -197,11 +197,6 @@ public class PlayerInfoTest {
         assertEquals(1, tech[5].getLevel());
         assertEquals("Fission source Mk1", tech[6].getName());
         assertEquals(1, tech[6].getLevel());
-
-        ShipStat expectedStat = new ShipStat(ShipGenerator.createScout(human));
-        assertEquals(expectedStat.toString(), statList[0].toString());
-        expectedStat = new ShipStat(ShipGenerator.createColony(human, false));
-        assertEquals(expectedStat.toString(), statList[1].toString());
     }
 
     /*

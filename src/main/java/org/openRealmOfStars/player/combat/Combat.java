@@ -363,6 +363,15 @@ public class Combat {
   }
 
   /**
+   * Get starmap coordinate where combat happens. This is always
+   * at defender's coordinates
+   * @return Coordinate of combat
+   */
+  public Coordinate getCombatCoordinates() {
+    return new Coordinate(fleet2.getX(), fleet2.getY());
+  }
+
+  /**
    * Get Current Ship
    * @return CombatShip
    */

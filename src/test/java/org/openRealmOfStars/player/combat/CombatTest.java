@@ -115,6 +115,7 @@ public class CombatTest {
     Coordinate coord = new Coordinate(6,5);
     assertEquals(true,
         info2.getFleets().getFirst().getCoordinate().sameAs(coord));
+    assertEquals(true,combat.getCombatCoordinates().sameAs(coord));
   }
 
 }

@@ -260,6 +260,10 @@ public class Game extends JFrame implements ActionListener {
       Combat combat = getStarMap().fightWithFleet(nx, ny, fleet, info);
       if (combat != null) {
         fleet.decMovesLeft();
+        Coordinate combatCoord = combat.getCombatCoordinates();
+        Planet planet = starMap.getPlanetByCoordinate(combatCoord.getX(),
+            combatCoord.getY());
+        combat.setPlanet(planet);
         starMapView.setReadyToMove(false);
         changeGameState(GameState.COMBAT, combat);
       } else {

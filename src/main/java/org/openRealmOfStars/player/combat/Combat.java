@@ -9,6 +9,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
  *
@@ -97,6 +98,10 @@ public class Combat {
   private PlayerInfo info2;
 
   /**
+   * Planet orbit where combat happens. This can be null.
+   */
+  private Planet planet;
+  /**
    * Build shipList in initiative order
    * @param fleet1 Attacking Player1 fleet
    * @param fleet2 Defending Player2 fleet
@@ -145,6 +150,7 @@ public class Combat {
     componentUse = -1;
     animation = null;
     winner = null;
+    setPlanet(null);
   }
 
   /**
@@ -752,6 +758,28 @@ public class Combat {
    */
   public void setAnimation(final CombatAnimation animation) {
     this.animation = animation;
+  }
+
+  /**
+   * Get planet where combat happens. If combat is in deep space
+   * then null is returned.
+   * @return the planet or null.
+   */
+  public Planet getPlanet() {
+    return planet;
+  }
+
+  /**
+   * Set planet where combat happens. This must have same coordinates
+   * as defender.
+   * @param planetOrbitting the planet to set
+   */
+  public void setPlanet(final Planet planetOrbitting) {
+    if (planetOrbitting == null) {
+      this.planet = null;
+    } else if (planetOrbitting.getCoordinate().sameAs(getCombatCoordinates())) {
+      this.planet = planetOrbitting;
+    }
   }
 
 }

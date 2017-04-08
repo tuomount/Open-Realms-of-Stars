@@ -13,6 +13,7 @@ import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
 *
@@ -91,6 +92,10 @@ public class CombatTest {
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
     Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    assertEquals(null, combat.getPlanet());
+    Planet planet = new Planet(new Coordinate(6, 5), "Test", 1, false);
+    combat.setPlanet(planet);
+    assertEquals(planet, combat.getPlanet());
     CombatShip target = combat.getCurrentShip();
     combat.nextShip();
     CombatShip shooter = combat.getCurrentShip();

@@ -566,6 +566,12 @@ public class MapPanel extends JPanel {
         - this.getHeight() - SAFETY_OFFSET) / starMap.getMaxY();
     gr.drawImage(GuiStatics.STAR_FIELD_IMAGE, -PARALLAX_OFFSET - cx
         * speedStarX, -PARALLAX_OFFSET - cy * speedStarY, null);
+    if (combat.getPlanet() != null && !combat.getPlanet().isGasGiant()) {
+      BufferedImage backgroundImg =
+          Planet.PLANET_BIG_IMAGES[combat.getPlanet().getPlanetType()];
+      gr.drawImage(backgroundImg, 100 - backgroundImg.getWidth() / 25,
+          100 - backgroundImg.getHeight() / 25, null);
+    }
 
     int scaled = 16 * (flickerBlue - COLOR_COMPONENT_HALF)
         / COLOR_COMPONENT_MAX;

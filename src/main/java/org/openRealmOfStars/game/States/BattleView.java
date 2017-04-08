@@ -29,6 +29,7 @@ import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.Logger;
 
@@ -163,6 +164,10 @@ public class BattleView extends BlackPanel {
       final ActionListener listener) {
     this.map = map;
     combat = new Combat(fleet1, fleet2, player1, player2);
+    Coordinate combatCoord = combat.getCombatCoordinates();
+    Planet planet = map.getPlanetByCoordinate(combatCoord.getX(),
+        combatCoord.getY());
+    combat.setPlanet(planet);
     initBattleView(listener);
   }
 

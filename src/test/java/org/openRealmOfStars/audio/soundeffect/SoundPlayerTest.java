@@ -36,6 +36,7 @@ public class SoundPlayerTest {
     assertEquals(100, SoundPlayer.getSoundVolume());
     SoundPlayer.setSoundVolume(50);
     assertEquals(50, SoundPlayer.getSoundVolume());
+    SoundPlayer.setSoundEnabled(true);
     assertEquals(true, SoundPlayer.isSoundEnabled());
     SoundPlayer.setSoundEnabled(false);
     assertEquals(false, SoundPlayer.isSoundEnabled());

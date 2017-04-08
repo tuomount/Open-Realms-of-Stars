@@ -41,6 +41,7 @@ pull request back to me.
  * Coding styling change should be on separate pull requests.
  * Commit messages should be descriptive.
  * Pull request should not contain merge commits from other branches.
+ * Contributors retain their original copyrights. All code contributions must be under GPL2.0.
  
 I'll try to looking these as fast as I can. When
 added new assets see paragram one below more instructions. 

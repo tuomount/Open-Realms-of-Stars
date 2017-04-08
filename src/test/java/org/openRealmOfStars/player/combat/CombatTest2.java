@@ -27,7 +27,7 @@ import java.util.List;
 
 /**
  *
- * Open Realm of Stars game project Copyright (C) 2017 Tuomo Untinen
+ * Open Realm of Stars game project Copyright (C) 2017 Diocto
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -43,10 +43,10 @@ import java.util.List;
  * this program; if not, see http://www.gnu.org/licenses/
  *
  *
- * Test for Combat. create by Diocto
+ * Test for Combat
  *
  */
-public class CombatTestByDiocto {
+public class CombatTest2 {
     public static Fleet attackerFleet;
     public static Fleet dependerFleet;
     public static FleetList attackerFleetList;

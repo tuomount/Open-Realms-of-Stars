@@ -8,8 +8,6 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
-import org.openRealmOfStars.AI.PathFinding.AStarSearch;
-import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -20,17 +18,12 @@ import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
-import org.openRealmOfStars.player.combat.CombatAnimation;
 import org.openRealmOfStars.player.combat.CombatMapMouseListener;
-import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.player.fleet.Fleet;
-import org.openRealmOfStars.player.ship.ShipComponent;
-import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.Logger;
 
 /**
@@ -96,11 +89,6 @@ public class BattleView extends BlackPanel {
    * Combat map mouse listener
    */
   private CombatMapMouseListener combatMapMouseListener;
-
-  /**
-   * aStar search for AI
-   */
-  private AStarSearch aStar;
 
   /**
    * Delay count for AI, since it's too fast for humans
@@ -214,7 +202,6 @@ public class BattleView extends BlackPanel {
     this.add(base, BorderLayout.CENTER);
     this.add(infoPanel, BorderLayout.EAST);
     this.add(bottom, BorderLayout.SOUTH);
-    aStar = null;
     delayCount = 0;
     combatEnded = false;
     textLogger.addLog(INITIAL_LOG_MESSAGE);
@@ -249,142 +236,19 @@ public class BattleView extends BlackPanel {
   }
 
   /**
-   * Handle AI shooting
-   * @param ai AI which is shooting
-   * @param target shooting target
-   * @return true if shooting was actually done
-   */
-  private boolean handleAIShoot(final CombatShip ai, final CombatShip target) {
-    if (target != null) {
-      int nComp = ai.getShip().getNumberOfComponents();
-      for (int i = 0; i < nComp; i++) {
-        ShipComponent weapon = ai.getShip().getComponent(i);
-        combat.setComponentUse(i);
-        if (weapon != null && weapon.isWeapon() && !ai.isComponentUsed(i)
-            && combat.isClearShot(ai, target)
-            && ai.getShip().componentIsWorking(i)) {
-          int accuracy = ai.getShip().getHitChance(weapon)
-              + ai.getBonusAccuracy();
-          accuracy = accuracy - target.getShip().getDefenseValue();
-          ShipDamage shipDamage = new ShipDamage(1, "Attack missed!");
-          if (DiceGenerator.getRandom(1, 100) <= accuracy) {
-            shipDamage = target.getShip().damageBy(weapon);
-          }
-          String[] logs = shipDamage.getMessage().split("\n");
-          for (String log : logs) {
-            textLogger.addLog(log);
-          }
-          combat.setAnimation(
-              new CombatAnimation(ai, target, weapon, shipDamage.getValue()));
-          ai.useComponent(i);
-          infoPanel.useComponent(i);
-          ai.setAiShotsLeft(ai.getAiShotsLeft() - 1);
-          combat.setComponentUse(-1);
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  /**
    * Handle AI
    */
   private void handleAI() {
-    PlayerInfo info = combat.getCurrentShip().getPlayer();
-    CombatShip deadliest = combat.getMostPowerfulShip(info);
-    CombatShip closest = combat.getClosestEnemyShip(info,
-        combat.getCurrentShip());
-    CombatShip ai = combat.getCurrentShip();
-    boolean shot = false;
-    int range = ai.getShip().getMaxWeaponRange();
-    if (deadliest != null) {
-      if (ai.getShip().getTotalMilitaryPower() > deadliest.getShip()
-          .getTotalMilitaryPower()) {
-        range = ai.getShip().getMinWeaponRange();
-      }
-      Coordinate aiCoordinate = new Coordinate(ai.getX(), ai.getY());
-      Coordinate deadliestCoordinate = new Coordinate(deadliest.getX(),
-          deadliest.getY());
-      int distance = (int) Math.round(aiCoordinate.calculateDistance(
-          deadliestCoordinate));
-      if (range < distance - ai.getMovesLeft() && closest != null) {
-        shot = handleAIShoot(ai, closest);
-      }
-    } else if (closest != null) {
-      shot = handleAIShoot(ai, closest);
-    }
-    if (aStar == null) {
-      if (deadliest != null) {
-        aStar = new AStarSearch(combat, combat.getCurrentShip(), deadliest,
-            range);
-      }
-      if (aStar == null && closest != null) {
-        aStar = new AStarSearch(combat, combat.getCurrentShip(), closest,
-            range);
-      }
-      if (aStar != null && aStar.doSearch()) {
-        aStar.doRoute();
-      } else {
-        // Could not found route for deadliest or closest one
-        endRound();
-        return;
-      }
-    }
-    PathPoint point = aStar.getMove();
-    if (ai.getShip().getTacticSpeed() == 0) {
-      shot = handleAIShoot(ai, deadliest);
-    }
-    if (point != null && !combat.isBlocked(point.getX(), point.getY())
-        && ai.getMovesLeft() > 0) {
-      shot = handleAIShoot(ai, deadliest);
-      if (!shot) {
-        // Not moving after shooting
-        ai.setMovesLeft(ai.getMovesLeft() - 1);
-        ai.setX(point.getX());
-        ai.setY(point.getY());
-        aStar.nextMove();
-        SoundPlayer.playEngineSound();
-      }
-      handleAIShoot(ai, deadliest);
-    } else {
-      // Path is blocked
-      ai.setMovesLeft(0);
-    }
-    if ((ai.getMovesLeft() == 0 || aStar.isLastMove())
-        && combat.getAnimation() == null) {
-      if (ai.getAiShotsLeft() > 0) {
-        // We still got more shots left, let's shoot the deadliest
-        shot = handleAIShoot(ai, deadliest);
-        if (!shot) {
-          // Deadliest wasn't close enough, let's shoot the closest
-          closest = combat.getClosestEnemyShip(info, combat.getCurrentShip());
-          shot = handleAIShoot(ai, closest);
-          if (!shot) {
-            // Even closest was too far away, ending the turn now
-            aStar = null;
-            endRound();
-          }
-        }
-      } else {
-        aStar = null;
-        endRound();
-      }
-    }
+    combat.handleAI(textLogger, infoPanel, combatMapMouseListener);
   }
 
   /**
    * End battle round
    */
   private void endRound() {
-    combat.setComponentUse(-1);
-    combatMapMouseListener.setComponentUse(-1);
-    combat.nextShip();
-    infoPanel.showShip(combat.getCurrentShip().getShip());
-    if (combat.isCombatOver()) {
+    if (combat.endRound(infoPanel, combatMapMouseListener)) {
       endButton.setText("End combat");
       combatEnded = true;
-      combat.handleEndCombat();
       map.getFleetTiles(true);
     }
     this.repaint();

@@ -116,11 +116,6 @@ public class BattleView extends BlackPanel {
   private InfoTextArea logArea;
 
   /**
-   * Combat has ended
-   */
-  private boolean combatEnded;
-
-  /**
    * Text log
    */
   private Logger textLogger;
@@ -203,7 +198,6 @@ public class BattleView extends BlackPanel {
     this.add(infoPanel, BorderLayout.EAST);
     this.add(bottom, BorderLayout.SOUTH);
     delayCount = 0;
-    combatEnded = false;
     textLogger.addLog(INITIAL_LOG_MESSAGE);
   }
 
@@ -239,18 +233,23 @@ public class BattleView extends BlackPanel {
    * Handle AI
    */
   private void handleAI() {
-    combat.handleAI(textLogger, infoPanel, combatMapMouseListener);
+    if (combat.handleAI(textLogger, infoPanel)) {
+      combatMapMouseListener.setComponentUse(-1);
+      infoPanel.showShip(combat.getCurrentShip().getShip());
+
+    }
   }
 
   /**
    * End battle round
    */
   private void endRound() {
-    if (combat.endRound(infoPanel, combatMapMouseListener)) {
+    if (combat.endRound()) {
       endButton.setText("End combat");
-      combatEnded = true;
       map.getFleetTiles(true);
     }
+    combatMapMouseListener.setComponentUse(-1);
+    infoPanel.showShip(combat.getCurrentShip().getShip());
     this.repaint();
   }
 
@@ -259,7 +258,7 @@ public class BattleView extends BlackPanel {
    * @return true if combat has ended
    */
   public boolean isCombatEnded() {
-    return combatEnded;
+    return combat.isCombatOver();
   }
 
   /**
@@ -284,8 +283,12 @@ public class BattleView extends BlackPanel {
           delayCount = 0;
         }
         if (!combat.getCurrentShip().getPlayer().isHuman() && delayCount == 0
-            && !combatEnded) {
+            && !isCombatEnded()) {
           handleAI();
+          if (isCombatEnded()) {
+            endButton.setText("End combat");
+            map.getFleetTiles(true);
+          }
         }
       }
       updatePanels();
@@ -293,8 +296,8 @@ public class BattleView extends BlackPanel {
       mapPanel.repaint();
     }
     if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_END_BATTLE_ROUND) && !combatEnded
-        && combat.getCurrentShip().getPlayer().isHuman()) {
+        .equalsIgnoreCase(GameCommands.COMMAND_END_BATTLE_ROUND)
+        && !isCombatEnded() && combat.getCurrentShip().getPlayer().isHuman()) {
       SoundPlayer.playMenuSound();
       endRound();
     }

@@ -791,24 +791,14 @@ public class Combat {
 
   /**
    * End battle round
-   * @param infoPanel Infopanel where ship components are shown.
-   *        This can be null.
-   * @param mouseListener Mouselistener for BattleView. This can be null.
    * @return true if Combat is over, otherwise false.
    */
-  public boolean endRound(final BattleInfoPanel infoPanel,
-      final CombatMapMouseListener mouseListener) {
+  public boolean endRound() {
     setComponentUse(-1);
     nextShip();
     boolean over = isCombatOver();
     if (over) {
       handleEndCombat();
-    }
-    if (mouseListener != null) {
-      mouseListener.setComponentUse(-1);
-    }
-    if (infoPanel != null) {
-      infoPanel.showShip(getCurrentShip().getShip());
     }
     return over;
   }
@@ -864,11 +854,11 @@ public class Combat {
    * @param textLogger where logging is added if not null
    * @param infoPanel Infopanel where ship components are shown.
    *        This can be null too.
-   * @param mouseListener Mouselistener for BattleView. This can be null.
+   * @return true if end round has been activated and component use
+   *        should be cleared from UI. Otherwise false.
    */
-  public void handleAI(final Logger textLogger,
-      final BattleInfoPanel infoPanel,
-      final CombatMapMouseListener mouseListener) {
+  public boolean handleAI(final Logger textLogger,
+      final BattleInfoPanel infoPanel) {
     PlayerInfo info = getCurrentShip().getPlayer();
     CombatShip deadliest = getMostPowerfulShip(info);
     CombatShip closest = getClosestEnemyShip(info, getCurrentShip());
@@ -902,8 +892,8 @@ public class Combat {
       aStar.doRoute();
     } else {
       // Could not found route for deadliest or closest one
-      endRound(infoPanel, mouseListener);
-      return;
+      endRound();
+      return true;
     }
     PathPoint point = aStar.getMove();
     if (ai.getShip().getTacticSpeed() == 0) {
@@ -940,14 +930,17 @@ public class Combat {
           if (!shot) {
             // Even closest was too far away, ending the turn now
             aStar = null;
-            endRound(infoPanel, mouseListener);
+            endRound();
+            return true;
           }
         }
       } else {
         aStar = null;
-        endRound(infoPanel, mouseListener);
+        endRound();
+        return true;
       }
     }
+    return false;
   }
 
 

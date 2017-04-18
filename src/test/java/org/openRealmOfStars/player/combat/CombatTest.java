@@ -80,6 +80,23 @@ public class CombatTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRealCombat() {
+    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    ShipDesign design1 = ShipGenerator.createBattleShip(info1, ShipSize.SMALL);
+    ShipDesign design2 = ShipGenerator.createColony(info2, false);
+    Ship scout1 = new Ship(design1);
+    Ship colony = new Ship(design2);
+    Fleet fleet1 = new Fleet(scout1, 5, 5);
+    Fleet fleet2 = new Fleet(colony, 6, 5);
+    info1.getFleets().add(fleet1);
+    info2.getFleets().add(fleet2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    combat.doFastCombat();
+    assertEquals(info1, combat.getWinner());
+  }
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testSecondPlayerWin() {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);

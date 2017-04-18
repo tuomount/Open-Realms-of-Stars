@@ -736,6 +736,26 @@ public class Combat {
   }
 
   /**
+   * Do Fast combat without showing the actual combat.
+   * This should be used when two AIs fight against
+   * each others. If combat has ended this does not do
+   * anything.
+   */
+  public void doFastCombat() {
+    if (!isCombatOver()) {
+      while (!isCombatOver()) {
+        handleAI(null, null);
+        if (animation != null
+            && animation.getTarget().getShip().getHullPoints() <= 0) {
+          // Ship has no more hull points so destroying it
+          destroyShip(animation.getTarget());
+        }
+        setAnimation(null);
+      }
+    }
+  }
+
+  /**
    * Which component was used in current ship
    * @return Component used index.
    */

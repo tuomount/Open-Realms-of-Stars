@@ -264,8 +264,12 @@ public class Game extends JFrame implements ActionListener {
         Planet planet = starMap.getPlanetByCoordinate(combatCoord.getX(),
             combatCoord.getY());
         combat.setPlanet(planet);
-        starMapView.setReadyToMove(false);
-        changeGameState(GameState.COMBAT, combat);
+        if (combat.isHumanPlayer()) {
+          starMapView.setReadyToMove(false);
+          changeGameState(GameState.COMBAT, combat);
+        } else {
+          combat.doFastCombat();
+        }
       } else {
         fleet.setPos(new Coordinate(nx, ny));
         starMap.clearFleetTiles();

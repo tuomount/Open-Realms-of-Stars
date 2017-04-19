@@ -871,6 +871,16 @@ public class Combat {
   }
 
   /**
+   * Does combat involve human player or not
+   * @return True if human player is in combat otherwise false
+   */
+  public boolean isHumanPlayer() {
+    if (getPlayer1().isHuman() || getPlayer2().isHuman()) {
+      return true;
+    }
+    return false;
+  }
+  /**
    * @param textLogger where logging is added if not null
    * @param infoPanel Infopanel where ship components are shown.
    *        This can be null too.

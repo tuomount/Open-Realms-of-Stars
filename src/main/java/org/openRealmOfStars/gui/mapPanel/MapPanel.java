@@ -785,6 +785,9 @@ public class MapPanel extends JPanel {
         if (anim.getTarget().getShip().getHullPoints() <= 0) {
           // Ship has no more hull points so destroying it
           combat.destroyShip(anim.getTarget());
+          if (combat.isCombatOver()) {
+            combat.handleEndCombat();
+          }
         }
         combat.setAnimation(null);
       }

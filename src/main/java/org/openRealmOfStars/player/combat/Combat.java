@@ -932,8 +932,9 @@ public class Combat {
           // Play sound only if battle view is used
           SoundPlayer.playEngineSound();
         }
+      } else {
+        return false;
       }
-      handleAIShoot(ai, deadliest, textLogger, infoPanel);
     } else {
       // Path is blocked
       ai.setMovesLeft(0);
@@ -959,6 +960,10 @@ public class Combat {
         endRound();
         return true;
       }
+    }
+    if (getAnimation() == null && ai.getAiShotsLeft() == 0
+        && ai.getMovesLeft() == 0) {
+      endRound();
     }
     return false;
   }

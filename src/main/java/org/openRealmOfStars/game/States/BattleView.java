@@ -268,6 +268,10 @@ public class BattleView extends BlackPanel {
   public void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
+      if (isCombatEnded()) {
+        endButton.setText("End combat");
+        map.getFleetTiles(true);
+      }
       if (combatMapMouseListener.getShipDamage() != null
           && combatMapMouseListener.getShipDamage().isReady()) {
         String[] logs = combatMapMouseListener.getShipDamage().getMessage()
@@ -285,10 +289,6 @@ public class BattleView extends BlackPanel {
         if (!combat.getCurrentShip().getPlayer().isHuman() && delayCount == 0
             && !isCombatEnded()) {
           handleAI();
-          if (isCombatEnded()) {
-            endButton.setText("End combat");
-            map.getFleetTiles(true);
-          }
         }
       }
       updatePanels();

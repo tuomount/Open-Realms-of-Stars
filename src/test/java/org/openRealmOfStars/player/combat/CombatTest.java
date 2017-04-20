@@ -120,21 +120,22 @@ public class CombatTest {
     combat.setPlanet(planet);
     combat.doFastCombat();
     assertEquals(info1, combat.getWinner());
-/*    assertNotEquals(null, info2.getMissions().getMissionForPlanet("Test",
+    assertNotEquals(null, info2.getMissions().getMissionForPlanet("Test I",
         MissionPhase.PLANNING));
     
-    Mission mission = info2.getMissions().getMissionForPlanet("Test",
+    Mission mission = info2.getMissions().getMissionForPlanet("Test I",
         MissionPhase.PLANNING);
     mission.setPhase(MissionPhase.EXECUTING);
-    assertEquals(null, info2.getMissions().getMissionForPlanet("Test",
+    assertEquals(null, info2.getMissions().getMissionForPlanet("Test I",
         MissionPhase.PLANNING));
+    fleet2 = new Fleet(colony, 6, 5);
     info2.getFleets().add(fleet2);
     combat = new Combat(fleet1, fleet2, info1, info2);
     combat.setPlanet(planet);
     combat.doFastCombat();
     assertEquals(info1, combat.getWinner());
-    assertNotEquals(null, info2.getMissions().getMissionForPlanet("Test",
-        MissionPhase.PLANNING));*/
+    assertNotEquals(null, info2.getMissions().getMissionForPlanet("Test I",
+        MissionPhase.PLANNING));
   }
 
   @Test

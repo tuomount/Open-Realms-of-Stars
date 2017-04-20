@@ -111,6 +111,12 @@ public class Combat {
    * Planet orbit where combat happens. This can be null.
    */
   private Planet planet;
+
+  /**
+   * Is end combat handled or not
+   */
+  private boolean endCombatHandled = false;
+
   /**
    * Build shipList in initiative order
    * @param fleet1 Attacking Player1 fleet
@@ -161,6 +167,7 @@ public class Combat {
     animation = null;
     winner = null;
     setPlanet(null);
+    endCombatHandled = false;
   }
 
   /**
@@ -697,35 +704,39 @@ public class Combat {
         // Add new defending mission
         mission = new Mission(MissionType.DEFEND, MissionPhase.PLANNING,
             planet.getCoordinate());
+        mission.setPlanetBuilding(planet.getName());
         info.getMissions().add(mission);
       }
     }
   }
   /**
-   * Handle End combat
+   * Handle End combat. This can be safely called multiple times.
    */
   public void handleEndCombat() {
-    if (winner != null && info1 == winner) {
-      handleWinner(fleet1, info1);
-      handleLoser(info2);
-      Coordinate loserPos = fleet2.getCoordinate();
-      int index = info2.getFleets().getIndexByName(fleet2.getName());
-      if (index != -1) {
-        info2.getFleets().remove(index);
+    if (!endCombatHandled) {
+      if (winner != null && info1 == winner) {
+        endCombatHandled = true;
+        handleWinner(fleet1, info1);
+        handleLoser(info2);
+        Coordinate loserPos = fleet2.getCoordinate();
+        int index = info2.getFleets().getIndexByName(fleet2.getName());
+        if (index != -1) {
+          info2.getFleets().remove(index);
+        }
+        if (info2.getFleets().getFleetByCoordinate(loserPos) == null) {
+          // No more defending fleets so moving to the coordinate
+          fleet1.setPos(fleet2.getCoordinate());
+        }
       }
-      if (info2.getFleets().getFleetByCoordinate(loserPos) == null) {
-        // No more defending fleets so moving to the coordinate
-        fleet1.setPos(fleet2.getCoordinate());
-      }
-
-    }
-    if (winner != null && info2 == winner) {
-      handleWinner(fleet2, info2);
-      handleLoser(info1);
-      // Defending player won't move
-      int index = info1.getFleets().getIndexByName(fleet1.getName());
-      if (index != -1) {
-        info1.getFleets().remove(index);
+      if (winner != null && info2 == winner) {
+        endCombatHandled = true;
+        handleWinner(fleet2, info2);
+        handleLoser(info1);
+        // Defending player won't move
+        int index = info1.getFleets().getIndexByName(fleet1.getName());
+        if (index != -1) {
+          info1.getFleets().remove(index);
+        }
       }
     }
   }
@@ -735,6 +746,10 @@ public class Combat {
    * @return True if combat is over
    */
   public boolean isCombatOver() {
+    if (endCombatHandled) {
+      // All is done no need to check it anymore
+      return true;
+    }
     PlayerInfo first = null;
     boolean moreThanOnePlayer = false;
     boolean militaryPower = false;
@@ -778,6 +793,7 @@ public class Combat {
         }
         setAnimation(null);
       }
+      handleEndCombat();
     }
   }
 

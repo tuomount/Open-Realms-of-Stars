@@ -1,9 +1,13 @@
 package org.openRealmOfStars.player.combat;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
-import static org.junit.Assert.*;
+import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -96,6 +100,43 @@ public class CombatTest {
     combat.doFastCombat();
     assertEquals(info1, combat.getWinner());
   }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRealCombatOnPlanet() {
+    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    ShipDesign design1 = ShipGenerator.createBattleShip(info1, ShipSize.SMALL);
+    ShipDesign design2 = ShipGenerator.createColony(info2, false);
+    Ship scout1 = new Ship(design1);
+    Ship colony = new Ship(design2);
+    Fleet fleet1 = new Fleet(scout1, 5, 5);
+    Fleet fleet2 = new Fleet(colony, 6, 5);
+    info1.getFleets().add(fleet1);
+    info2.getFleets().add(fleet2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    Planet planet = new Planet(new Coordinate(6, 5), "Test", 1, false);
+    planet.setPlanetOwner(1, info2);
+    combat.setPlanet(planet);
+    combat.doFastCombat();
+    assertEquals(info1, combat.getWinner());
+    assertNotEquals(null, info2.getMissions().getMissionForPlanet("Test",
+        MissionPhase.PLANNING));
+    
+    Mission mission = info2.getMissions().getMissionForPlanet("Test",
+        MissionPhase.PLANNING);
+    mission.setPhase(MissionPhase.EXECUTING);
+    assertEquals(null, info2.getMissions().getMissionForPlanet("Test",
+        MissionPhase.PLANNING));
+    info2.getFleets().add(fleet2);
+    combat = new Combat(fleet1, fleet2, info1, info2);
+    combat.setPlanet(planet);
+    combat.doFastCombat();
+    assertEquals(info1, combat.getWinner());
+    assertNotEquals(null, info2.getMissions().getMissionForPlanet("Test",
+        MissionPhase.PLANNING));
+  }
+
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testSecondPlayerWin() {

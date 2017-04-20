@@ -3,6 +3,9 @@ package org.openRealmOfStars.player.combat;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionPhase;
+import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
@@ -678,11 +681,33 @@ public class Combat {
   }
 
   /**
+   * Handle loser mission. This will cause loser player to be
+   * more aggresive on defending
+   * @param info Player who losed
+   */
+  private void handleLoser(final PlayerInfo info) {
+    if (!info.isHuman() && planet != null
+        && planet.getPlanetPlayerInfo() == info) {
+      Mission mission = info.getMissions().getMissionForPlanet(
+          planet.getName(), MissionType.DEFEND);
+      if (mission != null) {
+        // Cause defend mission to build more defenders
+        mission.setPhase(MissionPhase.PLANNING);
+      } else {
+        // Add new defending mission
+        mission = new Mission(MissionType.DEFEND, MissionPhase.PLANNING,
+            planet.getCoordinate());
+        info.getMissions().add(mission);
+      }
+    }
+  }
+  /**
    * Handle End combat
    */
   public void handleEndCombat() {
     if (winner != null && info1 == winner) {
       handleWinner(fleet1, info1);
+      handleLoser(info2);
       Coordinate loserPos = fleet2.getCoordinate();
       int index = info2.getFleets().getIndexByName(fleet2.getName());
       if (index != -1) {
@@ -696,6 +721,7 @@ public class Combat {
     }
     if (winner != null && info2 == winner) {
       handleWinner(fleet2, info2);
+      handleLoser(info1);
       // Defending player won't move
       int index = info1.getFleets().getIndexByName(fleet1.getName());
       if (index != -1) {

@@ -46,18 +46,24 @@ public final class Research {
    * Default focus level when dividing focus evenly. Well one tech
    * level gets then 20 but all others 16.
    */
-  private static final int DEFAULT_FOCUS_LEVEL = 16;
+  public static final int DEFAULT_FOCUS_LEVEL = 16;
 
   /**
    * Default focus level when dividing focus evenly. This is the
    * higher default one.
    */
-  private static final int HIGH_FOCUS_LEVEL = 20;
+  public static final int HIGH_FOCUS_LEVEL = 20;
+
+  /**
+   * Default focus level when dividing focus evenly. This is the
+   * highest default one.
+   */
+  public static final int VERY_HIGH_FOCUS_LEVEL = 40;
 
   /**
    * Default focus level when some races have more than one high focuses.
    */
-  private static final int LOW_FOCUS_LEVEL = 12;
+  public static final int LOW_FOCUS_LEVEL = 12;
 
   /**
    * Handle new ship designs for AI
@@ -167,13 +173,13 @@ public final class Research {
       case CENTAURS: {
         info.getTechList().setTechFocus(TechType.Combat, DEFAULT_FOCUS_LEVEL);
         info.getTechList().setTechFocus(TechType.Defense, DEFAULT_FOCUS_LEVEL);
-        info.getTechList().setTechFocus(TechType.Hulls, HIGH_FOCUS_LEVEL);
         info.getTechList().setTechFocus(TechType.Propulsion,
             DEFAULT_FOCUS_LEVEL);
         info.getTechList().setTechFocus(TechType.Improvements,
             DEFAULT_FOCUS_LEVEL);
         info.getTechList().setTechFocus(TechType.Electrics,
             DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Hulls, HIGH_FOCUS_LEVEL);
         break;
       }
       case GREYANS: {
@@ -182,30 +188,30 @@ public final class Research {
         info.getTechList().setTechFocus(TechType.Hulls, DEFAULT_FOCUS_LEVEL);
         info.getTechList().setTechFocus(TechType.Propulsion,
             DEFAULT_FOCUS_LEVEL);
-        info.getTechList().setTechFocus(TechType.Improvements,
-            HIGH_FOCUS_LEVEL);
         info.getTechList().setTechFocus(TechType.Electrics,
             DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Improvements,
+            HIGH_FOCUS_LEVEL);
         break;
       }
       case SPORKS: {
-        info.getTechList().setTechFocus(TechType.Electrics, LOW_FOCUS_LEVEL);
-        info.getTechList().setTechFocus(TechType.Propulsion, LOW_FOCUS_LEVEL);
-        info.getTechList().setTechFocus(TechType.Combat, HIGH_FOCUS_LEVEL);
-        info.getTechList().setTechFocus(TechType.Defense, HIGH_FOCUS_LEVEL);
-        info.getTechList().setTechFocus(TechType.Hulls,  HIGH_FOCUS_LEVEL);
         info.getTechList().setTechFocus(TechType.Improvements,
             DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Electrics, LOW_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Propulsion, LOW_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Hulls,  HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Defense, HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Combat, HIGH_FOCUS_LEVEL);
         break;
       }
       case MECHIONS: {
-        info.getTechList().setTechFocus(TechType.Electrics, LOW_FOCUS_LEVEL);
-        info.getTechList().setTechFocus(TechType.Combat, HIGH_FOCUS_LEVEL);
-        info.getTechList().setTechFocus(TechType.Propulsion, HIGH_FOCUS_LEVEL);
         info.getTechList().setTechFocus(TechType.Defense, DEFAULT_FOCUS_LEVEL);
         info.getTechList().setTechFocus(TechType.Hulls, DEFAULT_FOCUS_LEVEL);
         info.getTechList().setTechFocus(TechType.Improvements,
             DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Electrics, LOW_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Propulsion, HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Combat, HIGH_FOCUS_LEVEL);
         break;
       }
       default: {

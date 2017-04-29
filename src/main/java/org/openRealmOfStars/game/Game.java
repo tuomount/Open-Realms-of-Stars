@@ -81,7 +81,7 @@ public class Game extends JFrame implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.0.5Alpha";
+  public static final String GAME_VERSION = "0.0.6Alpha";
 
   /**
    * Animation timer used for animation
@@ -339,11 +339,9 @@ public class Game extends JFrame implements ActionListener {
       focusOnMessage(true);
     } else if (object instanceof Fleet) {
       Fleet fleet = (Fleet) object;
-      if (fleet != null) {
-        starMapView.setShowFleet(fleet);
-        starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
-        starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
-      }
+      starMapView.setShowFleet(fleet);
+      starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
+      starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
     }
   }
 

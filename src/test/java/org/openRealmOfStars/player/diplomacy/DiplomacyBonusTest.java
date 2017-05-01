@@ -56,6 +56,12 @@ public class DiplomacyBonusTest {
           DiplomacyBonusType.getTypeByIndex(i), SpaceRace.HUMAN);
       assertEquals(bonusValues[i], bonus.getBonusValue());
       assertEquals(bonusLasting[i], bonus.getBonusLasting());
+      if (i == 0 || i == 2 || i == 3) {
+        assertEquals(true, bonus.isOnlyOne());
+      }
+      if (i == 5) {
+        assertEquals(false, bonus.isOnlyOne());
+      }
     }
   }
 

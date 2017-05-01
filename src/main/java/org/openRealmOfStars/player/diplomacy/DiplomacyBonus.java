@@ -34,6 +34,7 @@ public class DiplomacyBonus {
   public DiplomacyBonus(final DiplomacyBonusType bonusType,
       final SpaceRace race) {
    type = bonusType;
+   onlyOne = false;
    switch (type) {
      case BORDER_CROSSED: {
        if (race == SpaceRace.SPORKS) {
@@ -72,6 +73,7 @@ public class DiplomacyBonus {
        break;
      }
      case IN_ALLIANCE: {
+       onlyOne = true;
        if (race == SpaceRace.GREYANS) {
          bonusValue = 30;
          bonusLasting = 255;
@@ -82,6 +84,7 @@ public class DiplomacyBonus {
        break;
      }
      case IN_TRADE_ALLIANCE: {
+       onlyOne = true;
        if (race == SpaceRace.GREYANS) {
          bonusValue = 18;
          bonusLasting = 255;
@@ -92,6 +95,7 @@ public class DiplomacyBonus {
        break;
      }
      case LONG_PEACE: {
+       onlyOne = true;
        if (race == SpaceRace.SPORKS) {
          bonusValue = 3;
          bonusLasting = 10;
@@ -112,6 +116,7 @@ public class DiplomacyBonus {
        break;
      }
      case IN_WAR: {
+       onlyOne = true;
        if (race == SpaceRace.GREYANS) {
          bonusValue = -40;
          bonusLasting = 255;
@@ -142,6 +147,7 @@ public class DiplomacyBonus {
        break;
      }
      case SAME_RACE: {
+       onlyOne = true;
        if (race == SpaceRace.MECHIONS) {
          bonusValue = -3;
          bonusLasting = 255;
@@ -166,6 +172,11 @@ public class DiplomacyBonus {
   private DiplomacyBonusType type;
 
   /**
+   * Only one this kind of bonus allowed in list
+   */
+  private boolean onlyOne;
+
+  /**
    * Bonus value for diplomacy. This can be both negative or positive
    */
   private int bonusValue;
@@ -188,6 +199,13 @@ public class DiplomacyBonus {
     return 0;
   }
 
+  /**
+   * Only one of this kind of bonus is allowed in diplomacy bonus list.
+   * @return True if only one is allowed
+   */
+  public boolean isOnlyOne() {
+    return onlyOne;
+  }
   /**
    * Set Diplomacy Bonus value.
    * @param bonusValue to set

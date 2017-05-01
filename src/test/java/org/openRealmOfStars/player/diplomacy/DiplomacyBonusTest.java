@@ -71,11 +71,14 @@ public class DiplomacyBonusTest {
     //                 IN_WAR,WDEC,INTA,IN_A,DICA,BOCR,GVAL,DEMA,DTR,SRAC,LONG_PEACE 
     int[] bonusValues =  {-30,  -8,  12,  25,  -8,  -2,   2,  -5,  4,   5,  5};
     int[] bonusLasting = {255, 255, 255, 255, 200,  20,  50, 200, 80, 255, 10};
+    int[] bonusLasting2 = {255, 255, 255, 255, 199,  19,  49, 199, 79, 255, 11};
     for (int i = 0; i < DiplomacyBonusType.MAX_BONUS_TYPE; i++) {
       DiplomacyBonus bonus = new DiplomacyBonus(
           DiplomacyBonusType.getTypeByIndex(i), SpaceRace.CENTAURS);
       assertEquals(bonusValues[i], bonus.getBonusValue());
       assertEquals(bonusLasting[i], bonus.getBonusLasting());
+      bonus.handleBonusForTurn();
+      assertEquals(bonusLasting2[i], bonus.getBonusLasting());
     }
   }
 

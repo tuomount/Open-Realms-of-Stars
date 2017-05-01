@@ -165,6 +165,22 @@ public class DiplomacyBonus {
      }
    }
   }
+  
+  /**
+   * Handle bonus lasting for bonus. Bonus lasting
+   * can decrease or increase depending on bonus type.
+   * For example LONG_PEACE lasting will increase and most of the
+   * other it will decrease.
+   */
+  public void handleBonusForTurn() {
+    if (bonusLasting < 255 && bonusLasting > 0) {
+      if (type == DiplomacyBonusType.LONG_PEACE) {
+        setBonusLasting(getBonusLasting()+1);
+      } else {
+        setBonusLasting(getBonusLasting()-1);
+      }
+    }
+  }
 
   /**
    * Diplomacy Bonus type

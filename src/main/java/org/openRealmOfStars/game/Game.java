@@ -336,9 +336,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showStarMap(final Object object) {
     starMapView = new StarMapView(starMap, players, this);
-    this.getContentPane().removeAll();
-    this.add(starMapView);
-    this.validate();
+    this.updateDisplay(starMapView);
     starMapView.setAutoFocus(false);
     if (object == null) {
       focusOnMessage(true);

@@ -133,13 +133,16 @@ public class Combat {
     Ship[] ships = fleet1.getShips();
     int index = 0;
     shipList = new ArrayList<>();
+    CombatPositionList bottomList = new BottomPositionList();
+    CombatPositionList topList = new TopPositionList();
     for (Ship ship : ships) {
       ShipStat stat = info1.getShipStatByName(ship.getName());
       if (stat != null) {
         stat.setNumberOfCombats(stat.getNumberOfCombats() + 1);
       }
-      CombatShip combatShp = new CombatShip(ship, info1,
-          getStartPos(index, CombatTeam.BOTTOMTEAM, true), getStartPos(index, CombatTeam.BOTTOMTEAM, false), false);
+      int combatShipX = getStartPosX(index, bottomList);
+      int combatShipY = getStartPosY(index, bottomList);
+      CombatShip combatShp = new CombatShip(ship, info1, combatShipX, combatShipY, false);;
       if (fleet1.getRoute() != null && fleet1.getRoute().isDefending()) {
         combatShp.setBonusAccuracy(5);
       }
@@ -153,8 +156,9 @@ public class Combat {
       if (stat != null) {
         stat.setNumberOfCombats(stat.getNumberOfCombats() + 1);
       }
-      CombatShip combatShp = new CombatShip(ship, info2,
-          getStartPos(index, CombatTeam.TOPTEAM, true), getStartPos(index, CombatTeam.TOPTEAM, false), true);
+      int combatShipX = getStartPosX(index, topList);
+      int combatShipY = getStartPosY(index, topList);
+      CombatShip combatShp = new CombatShip(ship, info2, combatShipX, combatShipY, true);
       if (fleet2.getRoute() != null && fleet2.getRoute().isDefending()) {
         combatShp.setBonusAccuracy(5);
       }
@@ -434,243 +438,33 @@ public class Combat {
     return null;
   }
 
+
   /**
-   * Get starting position for ships
-   * @param index Ship Index in fleet
-   * @param team Which player it belong 0 on bottom, 1 on top
-   * @param x X coordinate or Y coordinate
-   * @return Coordinate
+   * Get starting position X for ships
+   * @param combatShipIndex Ship Index in fleet
+   * @param positionList starting position list
+   * @return Coordinate X
    */
-  private static int getStartPos(final int index, final CombatTeam team,
-      final boolean x) {
-    if (team == CombatTeam.BOTTOMTEAM) {
-      switch (index) {
-      case 0: {
-        if (x) {
-          return 4;
-        }
-        return 7;
-      }
-      case 1: {
-        if (x) {
-          return 3;
-        }
-        return 7;
-      }
-      case 2: {
-        if (x) {
-          return 5;
-        }
-        return 7;
-      }
-      case 3: {
-        if (x) {
-          return 2;
-        }
-        return 7;
-      }
-      case 4: {
-        if (x) {
-          return 6;
-        }
-        return 7;
-      }
-      case 5: {
-        if (x) {
-          return 4;
-        }
-        return 8;
-      }
-      case 6: {
-        if (x) {
-          return 1;
-        }
-        return 7;
-      }
-      case 7: {
-        if (x) {
-          return 7;
-        }
-        return 7;
-      }
-      case 8: {
-        if (x) {
-          return 3;
-        }
-        return 8;
-      }
-      case 9: {
-        if (x) {
-          return 5;
-        }
-        return 8;
-      }
-      case 10: {
-        if (x) {
-          return 2;
-        }
-        return 8;
-      }
-      case 11: {
-        if (x) {
-          return 6;
-        }
-        return 8;
-      }
-      case 12: {
-        if (x) {
-          return 0;
-        }
-        return 7;
-      }
-      case 13: {
-        if (x) {
-          return 8;
-        }
-        return 7;
-      }
-      case 14: {
-        if (x) {
-          return 1;
-        }
-        return 8;
-      }
-      case 15: {
-        if (x) {
-          return 7;
-        }
-        return 8;
-      }
-      case 16: {
-        if (x) {
-          return 0;
-        }
-        return 8;
-      }
-      case 17: {
-        if (x) {
-          return 8;
-        }
-        return 8;
-      }
-      default:
-        throw new IllegalArgumentException("Fleet contains too many ships!");
-      }
-    }
-    else {
-        switch (index) {
-        case 0: {
-          if (x) {
-            return 4;
-          }
-          return 1;
-        }
-        case 1: {
-          if (x) {
-            return 3;
-          }
-          return 1;
-        }
-        case 2: {
-          if (x) {
-            return 5;
-          }
-          return 1;
-        }
-        case 3: {
-          if (x) {
-            return 2;
-          }
-          return 1;
-        }
-        case 4: {
-          if (x) {
-            return 6;
-          }
-          return 1;
-        }
-        case 5: {
-          if (x) {
-            return 4;
-          }
-          return 0;
-        }
-        case 6: {
-          if (x) {
-            return 1;
-          }
-          return 1;
-        }
-        case 7: {
-          if (x) {
-            return 7;
-          }
-          return 1;
-        }
-        case 8: {
-          if (x) {
-            return 3;
-          }
-          return 0;
-        }
-        case 9: {
-          if (x) {
-            return 5;
-          }
-          return 0;
-        }
-        case 10: {
-          if (x) {
-            return 2;
-          }
-          return 0;
-        }
-        case 11: {
-          if (x) {
-            return 6;
-          }
-          return 0;
-        }
-        case 12: {
-          if (x) {
-            return 0;
-          }
-          return 1;
-        }
-        case 13: {
-          if (x) {
-            return 8;
-          }
-          return 1;
-        }
-        case 14: {
-          if (x) {
-            return 1;
-          }
-          return 0;
-        }
-        case 15: {
-          if (x) {
-            return 7;
-          }
-          return 0;
-        }
-        case 16: {
-          if (x) {
-            return 0;
-          }
-          return 0;
-        }
-        case 17: {
-          if (x) {
-            return 8;
-          }
-          return 0;
-        }
-        default:
-          throw new IllegalArgumentException("Fleet contains too many ships!");
-        }
-    }
+  private static int getStartPosX(final int combatShipIndex,
+          final CombatPositionList positionList) {
+      CombatCoordinate combatCoordinate =
+              positionList.getCoordinate(combatShipIndex);
+      int coordinateX = combatCoordinate.getX();
+      return coordinateX;
+  }
+  
+  /**
+   * Get starting position Y for ships
+   * @param combatShipIndex Ship Index in fleet
+   * @param positionList starting position list
+   * @return Coordinate Y
+   */
+  private static int getStartPosY(final int combatShipIndex,
+          final CombatPositionList positionList) {
+      CombatCoordinate combatCoordinate =
+              positionList.getCoordinate(combatShipIndex);
+      int coordinateY = combatCoordinate.getY();
+      return coordinateY;
   }
 
   /**

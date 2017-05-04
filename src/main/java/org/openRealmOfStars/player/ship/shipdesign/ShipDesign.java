@@ -634,35 +634,20 @@ public class ShipDesign {
       }
     }
     int emptySpace = this.hull.getMaxSlot() - components.size();
-    switch (emptySpace) {
-    case 1:
-    case 0: {
-      break;
+    if( emptySpace == 2 || emptySpace ==3 ){
+    	result = result + 1;
     }
-    case 2:
-    case 3: {
-      result = result + 1;
-      break;
+    else if( emptySpace == 4 ){
+    	result = result + 2;
     }
-    case 4: {
-      result = result + 2;
-      break;
+    else if( emptySpace == 5 ){
+    	result = result + 3;
     }
-    case 5: {
-      result = result + 3;
-      break;
+    else if( 6 <= emptySpace && emptySpace < 12 ){
+    	result = result + 4;
     }
-    case 6:
-    case 7:
-    case 8:
-    case 9:
-    case 11:
-    case 10: {
-      result = result + 4;
-      break;
-    }
-    default:
-      result = 0;
+    else{
+    	result = 0;
     }
     return result;
   }

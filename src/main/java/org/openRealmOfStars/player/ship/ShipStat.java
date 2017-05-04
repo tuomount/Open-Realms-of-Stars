@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
+
 /**
  *
  * Open Realm of Stars game project

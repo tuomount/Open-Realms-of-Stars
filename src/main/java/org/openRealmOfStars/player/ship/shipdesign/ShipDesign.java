@@ -1,4 +1,4 @@
-package org.openRealmOfStars.player.ship;
+package org.openRealmOfStars.player.ship.shipdesign;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -8,6 +8,12 @@ import java.util.Collections;
 
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipComponentFactory;
+import org.openRealmOfStars.player.ship.ShipComponentType;
+import org.openRealmOfStars.player.ship.ShipHull;
+import org.openRealmOfStars.player.ship.ShipHullFactory;
+import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -34,30 +40,6 @@ import org.openRealmOfStars.utilities.IOUtilities;
  *
  */
 public class ShipDesign {
-
-  /**
-   * Message when ship design is good to go
-   */
-  public static final String DESIGN_OK = "Design is OK!";
-  /**
-   * Message when ship is missing engine
-   */
-  public static final String ENGINE_IS_MISSING = "Engine is missing!\n";
-  /**
-   * Message when ship contains weapons even hull does not allow them.
-   */
-  public static final String NO_WEAPONS_ALLOWED = "No weapons allowed in ";
-
-  /**
-   * Message when ship contains more than one jammer
-   */
-  public static final String MANY_JAMMERS = "Only one jammer is allowed!";
-  /**
-   * Message when ship contains more than one targeting computer
-   */
-  public static final String MANY_COMPUTERS = "Only one targeting computer"
-      + " is allowed!";
-
   /**
    * Ship Design name
    */
@@ -560,7 +542,7 @@ public class ShipDesign {
     StringBuilder sb = new StringBuilder();
     if (!hasEngine()) {
       designOk = false;
-      sb.append(ENGINE_IS_MISSING);
+      sb.append(ShipDesignConsts.ENGINE_IS_MISSING);
     }
     if (getFreeSlots() < 0) {
       designOk = false;
@@ -574,7 +556,7 @@ public class ShipDesign {
     if (hasWeapons() && (hull.getHullType() == ShipHullType.FREIGHTER
         || hull.getHullType() == ShipHullType.PROBE)) {
       designOk = false;
-      sb.append(NO_WEAPONS_ALLOWED).append(hull.getHullType().toString())
+      sb.append(ShipDesignConsts.NO_WEAPONS_ALLOWED).append(hull.getHullType().toString())
           .append("!\n");
     }
     boolean targetingComputer = false;
@@ -592,7 +574,7 @@ public class ShipDesign {
       } else if (comp.getType() == ShipComponentType.TARGETING_COMPUTER
           && targetingComputer) {
         designOk = false;
-        sb.append(MANY_COMPUTERS);
+        sb.append(ShipDesignConsts.MANY_COMPUTERS);
         sb.append("\n");
       }
       if (comp.getType() == ShipComponentType.JAMMER
@@ -601,7 +583,7 @@ public class ShipDesign {
       } else if (comp.getType() == ShipComponentType.JAMMER
           && jammer) {
         designOk = false;
-        sb.append(MANY_JAMMERS);
+        sb.append(ShipDesignConsts.MANY_JAMMERS);
         sb.append("\n");
       }
 
@@ -612,7 +594,7 @@ public class ShipDesign {
     }
     if (designOk) {
       // Return OK text
-      sb.append(DESIGN_OK);
+      sb.append(ShipDesignConsts.DESIGN_OK);
     }
     return sb.toString();
   }

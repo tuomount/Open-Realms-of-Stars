@@ -145,7 +145,8 @@ public class Combat {
     endCombatHandled = false;
   }
 
-private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo, CombatPositionList positionList) {
+private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
+        CombatPositionList positionList) {
     Ship[] ships = fleet.getShips();
     int index = 0;
     for (Ship ship : ships) {
@@ -155,7 +156,8 @@ private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo, C
       }
       int combatShipX = getStartPosX(index, positionList);
       int combatShipY = getStartPosY(index, positionList);
-      CombatShip combatShp = new CombatShip(ship, playerInfo, combatShipX, combatShipY, false);;
+      CombatShip combatShp = new CombatShip(ship, playerInfo,
+              combatShipX, combatShipY, false);;
       if (fleet.getRoute() != null && fleet.getRoute().isDefending()) {
         combatShp.setBonusAccuracy(5);
       }

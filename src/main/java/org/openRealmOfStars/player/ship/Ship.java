@@ -280,6 +280,7 @@ private boolean isIndexValid(final int index) {
     boolean generatorUp = false;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
+
       if (comp.getType() == ShipComponentType.SHIELD && componentIsWorking(i)
           && !shieldsUp) {
         workingShields = true;
@@ -294,7 +295,6 @@ private boolean isIndexValid(final int index) {
         if (shield + comp.getDefenseValue() <= getTotalShield()) {
           shield = shield + comp.getDefenseValue();
         }
-
       }
     }
     if (!workingShields) {
@@ -309,21 +309,28 @@ private boolean isIndexValid(final int index) {
    * @return true if has energy
    */
   public boolean hasComponentEnergy(final int index) {
+      return (components.size() > 0
+              && (getRemainingEnergy(index) >= 0
+              || components.get(index).getEnergyRequirement() == 0));
+  }
+
+/**
+ * @param index Component index
+ * @return remaining energy
+ */
+private int getRemainingEnergy(final int index) {
     int energy = getTotalEnergy();
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getEnergyRequirement() > 0) {
         energy = energy - comp.getEnergyRequirement();
       }
-      if (index == i && (energy >= 0 || comp.getEnergyRequirement() == 0)) {
-        return true;
-      }
-      if (index == i && energy < 0) {
-        return false;
+      if (index == i) {
+          break;
       }
     }
-    return false;
-  }
+    return energy;
+}
 
   /**
    * Check if certain component has energy and hull points so it is functioning.

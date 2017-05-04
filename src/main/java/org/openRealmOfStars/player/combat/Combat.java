@@ -441,9 +441,9 @@ public class Combat {
    * @param x X coordinate or Y coordinate
    * @return Coordinate
    */
-  private static int getStartPos(final int index, final int team,
+  private static int getStartPos(final int index, final CombatTeam team,
       final boolean x) {
-    if (team == 0) {
+    if (team == CombatTeam.BOTTOMTEAM) {
       switch (index) {
       case 0: {
         if (x) {
@@ -557,120 +557,120 @@ public class Combat {
         throw new IllegalArgumentException("Fleet contains too many ships!");
       }
     }
-    // Second team on top side
-    switch (index) {
-    case 0: {
-      if (x) {
-        return 4;
-      }
-      return 1;
+    else {
+        switch (index) {
+        case 0: {
+          if (x) {
+            return 4;
+          }
+          return 1;
+        }
+        case 1: {
+          if (x) {
+            return 3;
+          }
+          return 1;
+        }
+        case 2: {
+          if (x) {
+            return 5;
+          }
+          return 1;
+        }
+        case 3: {
+          if (x) {
+            return 2;
+          }
+          return 1;
+        }
+        case 4: {
+          if (x) {
+            return 6;
+          }
+          return 1;
+        }
+        case 5: {
+          if (x) {
+            return 4;
+          }
+          return 0;
+        }
+        case 6: {
+          if (x) {
+            return 1;
+          }
+          return 1;
+        }
+        case 7: {
+          if (x) {
+            return 7;
+          }
+          return 1;
+        }
+        case 8: {
+          if (x) {
+            return 3;
+          }
+          return 0;
+        }
+        case 9: {
+          if (x) {
+            return 5;
+          }
+          return 0;
+        }
+        case 10: {
+          if (x) {
+            return 2;
+          }
+          return 0;
+        }
+        case 11: {
+          if (x) {
+            return 6;
+          }
+          return 0;
+        }
+        case 12: {
+          if (x) {
+            return 0;
+          }
+          return 1;
+        }
+        case 13: {
+          if (x) {
+            return 8;
+          }
+          return 1;
+        }
+        case 14: {
+          if (x) {
+            return 1;
+          }
+          return 0;
+        }
+        case 15: {
+          if (x) {
+            return 7;
+          }
+          return 0;
+        }
+        case 16: {
+          if (x) {
+            return 0;
+          }
+          return 0;
+        }
+        case 17: {
+          if (x) {
+            return 8;
+          }
+          return 0;
+        }
+        default:
+          throw new IllegalArgumentException("Fleet contains too many ships!");
+        }
     }
-    case 1: {
-      if (x) {
-        return 3;
-      }
-      return 1;
-    }
-    case 2: {
-      if (x) {
-        return 5;
-      }
-      return 1;
-    }
-    case 3: {
-      if (x) {
-        return 2;
-      }
-      return 1;
-    }
-    case 4: {
-      if (x) {
-        return 6;
-      }
-      return 1;
-    }
-    case 5: {
-      if (x) {
-        return 4;
-      }
-      return 0;
-    }
-    case 6: {
-      if (x) {
-        return 1;
-      }
-      return 1;
-    }
-    case 7: {
-      if (x) {
-        return 7;
-      }
-      return 1;
-    }
-    case 8: {
-      if (x) {
-        return 3;
-      }
-      return 0;
-    }
-    case 9: {
-      if (x) {
-        return 5;
-      }
-      return 0;
-    }
-    case 10: {
-      if (x) {
-        return 2;
-      }
-      return 0;
-    }
-    case 11: {
-      if (x) {
-        return 6;
-      }
-      return 0;
-    }
-    case 12: {
-      if (x) {
-        return 0;
-      }
-      return 1;
-    }
-    case 13: {
-      if (x) {
-        return 8;
-      }
-      return 1;
-    }
-    case 14: {
-      if (x) {
-        return 1;
-      }
-      return 0;
-    }
-    case 15: {
-      if (x) {
-        return 7;
-      }
-      return 0;
-    }
-    case 16: {
-      if (x) {
-        return 0;
-      }
-      return 0;
-    }
-    case 17: {
-      if (x) {
-        return 8;
-      }
-      return 0;
-    }
-    default:
-      throw new IllegalArgumentException("Fleet contains too many ships!");
-    }
-
   }
 
   /**

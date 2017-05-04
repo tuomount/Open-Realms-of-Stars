@@ -3,6 +3,8 @@ package org.openRealmOfStars.player.ship;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
+import org.openRealmOfStars.player.ship.shipdesign.ShipDesignConsts;
 
 import static org.junit.Assert.*;
 
@@ -41,12 +43,12 @@ public class ShipDesignTest {
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
     
     
-    assertEquals(true,ShipDesign.ENGINE_IS_MISSING.equals(design.getFlaws()));
+    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
     design.addComponent(weapon);
     design.addComponent(engine);
     design.addComponent(energy);
     design.addComponent(armor);
-    assertEquals(true,ShipDesign.DESIGN_OK.equals(design.getFlaws()));
+    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
     assertEquals(10,design.getTotalMilitaryPower());
     assertEquals(1,design.getTotalArmor());
     assertEquals(0,design.getTotalShield());
@@ -55,11 +57,11 @@ public class ShipDesignTest {
     assertEquals(2,design.getFtlSpeed());
     assertEquals(1,design.getTacticSpeed());
     design.removeComponent(3);
-    assertEquals(true,ShipDesign.DESIGN_OK.equals(design.getFlaws()));
+    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
     assertEquals(3,design.getNumberOfComponents());
     assertEquals(7,design.getTotalMilitaryPower());
     design.removeComponent(1);
-    assertEquals(true,ShipDesign.ENGINE_IS_MISSING.equals(design.getFlaws()));
+    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
   }
 
   @Test
@@ -73,14 +75,14 @@ public class ShipDesignTest {
     ShipComponent module = ShipComponentFactory.createByName("Colony Module");
     
     
-    assertEquals(true,ShipDesign.ENGINE_IS_MISSING.equals(design.getFlaws()));
+    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
     design.addComponent(weapon);
     design.addComponent(engine);
     design.addComponent(energy);
-    assertEquals(true,design.getFlaws().startsWith(ShipDesign.NO_WEAPONS_ALLOWED));
+    assertEquals(true,design.getFlaws().startsWith(ShipDesignConsts.NO_WEAPONS_ALLOWED));
     design.removeComponent(0);
     design.addComponent(module);
-    assertEquals(true,ShipDesign.DESIGN_OK.equals(design.getFlaws()));
+    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
     assertEquals(3,design.getNumberOfComponents());
     assertEquals(0,design.getTotalMilitaryPower());
     assertEquals(1,design.getFreeSlots());
@@ -95,12 +97,12 @@ public class ShipDesignTest {
     ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
     
     
-    assertEquals(true,ShipDesign.ENGINE_IS_MISSING.equals(design.getFlaws()));
+    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
     design.addComponent(weapon);
     design.addComponent(engine);
-    assertEquals(true,design.getFlaws().startsWith(ShipDesign.NO_WEAPONS_ALLOWED));
+    assertEquals(true,design.getFlaws().startsWith(ShipDesignConsts.NO_WEAPONS_ALLOWED));
     design.removeComponent(0);
-    assertEquals(true,ShipDesign.DESIGN_OK.equals(design.getFlaws()));
+    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
     assertEquals(1,design.getNumberOfComponents());
     assertEquals(0,design.getTotalMilitaryPower());
     assertEquals(3,design.getFreeSlots());
@@ -122,20 +124,20 @@ public class ShipDesignTest {
     ShipComponent jammer = ShipComponentFactory.createByName("Jammer Mk1");
     
     
-    assertEquals(true,ShipDesign.ENGINE_IS_MISSING.equals(design.getFlaws()));
+    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
     design.addComponent(weapon);
     design.addComponent(engine);
     design.addComponent(energy);
     design.addComponent(armor);
-    assertEquals(true,ShipDesign.DESIGN_OK.equals(design.getFlaws()));
+    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
     design.addComponent(jammer);
     design.addComponent(comp);
-    assertEquals(true,ShipDesign.DESIGN_OK.equals(design.getFlaws()));
+    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
     design.addComponent(jammer);
-    assertEquals(true,design.getFlaws().startsWith(ShipDesign.MANY_JAMMERS));
+    assertEquals(true,design.getFlaws().startsWith(ShipDesignConsts.MANY_JAMMERS));
     design.removeComponent(6);
     design.addComponent(comp);
-    assertEquals(true,design.getFlaws().startsWith(ShipDesign.MANY_COMPUTERS));
+    assertEquals(true,design.getFlaws().startsWith(ShipDesignConsts.MANY_COMPUTERS));
   }
 
 }

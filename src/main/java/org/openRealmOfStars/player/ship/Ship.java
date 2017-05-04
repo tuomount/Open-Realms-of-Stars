@@ -257,11 +257,19 @@ public class Ship extends Construction {
    * @return Hull points
    */
   public int getHullPointForComponent(final int index) {
-    if (index >= 0 && index < hullPoints.length) {
+    if (isIndexValid(index)) {
       return hullPoints[index];
     }
     return 0;
   }
+
+/**
+ * @param index Component index
+ * @return true if index is valid value
+ */
+private boolean isIndexValid(final int index) {
+    return index >= 0 && index < hullPoints.length;
+}
 
   /**
    * Generate shields according the shields and generator

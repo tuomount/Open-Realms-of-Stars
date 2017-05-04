@@ -19,13 +19,12 @@ package org.openRealmOfStars.player.combat;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 * Coordinate used only in combat
-* 
 */
 public class CombatCoordinate {
     private int x;
     private int y;
-    
-    CombatCoordinate(int x, int y){
+
+    CombatCoordinate(int x, int y) {
         this.x = x;
         this.y = y;
     }

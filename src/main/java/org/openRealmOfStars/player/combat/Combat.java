@@ -130,49 +130,39 @@ public class Combat {
     this.fleet2 = fleet2;
     this.info1 = info1;
     this.info2 = info2;
-    Ship[] ships = fleet1.getShips();
-    int index = 0;
     shipList = new ArrayList<>();
+
     CombatPositionList bottomList = new BottomPositionList();
     CombatPositionList topList = new TopPositionList();
-    for (Ship ship : ships) {
-      ShipStat stat = info1.getShipStatByName(ship.getName());
-      if (stat != null) {
-        stat.setNumberOfCombats(stat.getNumberOfCombats() + 1);
-      }
-      int combatShipX = getStartPosX(index, bottomList);
-      int combatShipY = getStartPosY(index, bottomList);
-      CombatShip combatShp = new CombatShip(ship, info1, combatShipX, combatShipY, false);;
-      if (fleet1.getRoute() != null && fleet1.getRoute().isDefending()) {
-        combatShp.setBonusAccuracy(5);
-      }
-      shipList.add(combatShp);
-      index++;
-    }
-    ships = fleet2.getShips();
-    index = 0;
-    for (Ship ship : ships) {
-      ShipStat stat = info2.getShipStatByName(ship.getName());
-      if (stat != null) {
-        stat.setNumberOfCombats(stat.getNumberOfCombats() + 1);
-      }
-      int combatShipX = getStartPosX(index, topList);
-      int combatShipY = getStartPosY(index, topList);
-      CombatShip combatShp = new CombatShip(ship, info2, combatShipX, combatShipY, true);
-      if (fleet2.getRoute() != null && fleet2.getRoute().isDefending()) {
-        combatShp.setBonusAccuracy(5);
-      }
-      shipList.add(combatShp);
-      index++;
-    }
+    addCombatShipList(fleet1, info1, bottomList);
+    addCombatShipList(fleet2, info2, topList);
+    
     Collections.sort(shipList, Collections.reverseOrder());
-    index = 0;
     componentUse = -1;
     animation = null;
     winner = null;
     setPlanet(null);
     endCombatHandled = false;
   }
+
+private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo, CombatPositionList positionList) {
+    Ship[] ships = fleet.getShips();
+    int index = 0;
+    for (Ship ship : ships) {
+      ShipStat stat = playerInfo.getShipStatByName(ship.getName());
+      if (stat != null) {
+        stat.setNumberOfCombats(stat.getNumberOfCombats() + 1);
+      }
+      int combatShipX = getStartPosX(index, positionList);
+      int combatShipY = getStartPosY(index, positionList);
+      CombatShip combatShp = new CombatShip(ship, playerInfo, combatShipX, combatShipY, false);;
+      if (fleet.getRoute() != null && fleet.getRoute().isDefending()) {
+        combatShp.setBonusAccuracy(5);
+      }
+      shipList.add(combatShp);
+      index++;
+    }
+}
 
   /**
    * Get first player's info which is the attacker

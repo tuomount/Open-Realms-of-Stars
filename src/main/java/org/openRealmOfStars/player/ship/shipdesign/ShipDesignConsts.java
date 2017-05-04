@@ -1,6 +1,6 @@
 package org.openRealmOfStars.player.ship.shipdesign;
 
-public class ShipDesignConsts {
+public final class ShipDesignConsts {
 
   /**
    * Message when ship design is good to go

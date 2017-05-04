@@ -97,11 +97,11 @@ public class DiplomacyBonus {
      case LONG_PEACE: {
        onlyOne = true;
        if (race == SpaceRace.SPORKS) {
-         bonusValue = 3;
-         bonusLasting = 10;
+         bonusValue = 1;
+         bonusLasting = 1;
        } else {
          bonusValue = 5;
-         bonusLasting = 10;
+         bonusLasting = 1;
        }
        break;
      }
@@ -209,11 +209,13 @@ public class DiplomacyBonus {
    * @return Bonus value
    */
   public int getBonusValue() {
-	  int bonusValueResult=0;
     if (bonusLasting > 0) {
-        bonusValueResult=bonusValue;
+      if (type == DiplomacyBonusType.LONG_PEACE) {
+        return bonusValue + bonusLasting / 10;
+      }
+      return bonusValue;
     }
-    return bonusValueResult;
+    return 0;
   }
 
   /**

@@ -253,11 +253,14 @@ public class Game extends JFrame implements ActionListener {
     // Getting fleet owner information
     FleetTileInfo[][] fleetTiles = starMap.getFleetTiles();
     FleetTileInfo fleetTile = fleetTiles[fleet.getX()][fleet.getY()];
-    int index = players.getIndex(info);
+
     // And making sure that fleet owner is actually make the move
-    if (index == fleetTile.getPlayerIndex()
-        && getStarMap().isValidCoordinate(nx, ny) && fleet.getMovesLeft() > 0
-        && !getStarMap().isBlocked(nx, ny)) {
+    final boolean isSamePlayer = players.getIndex(info) == fleetTile.getPlayerIndex();
+    final boolean isValidCoordinate = getStarMap().isValidCoordinate(nx, ny);
+    final boolean isMovesLeft = fleet.getMovesLeft() > 0;
+    final boolean isNotBlocked = !getStarMap().isBlocked(nx, ny);
+
+    if (isSamePlayer && isValidCoordinate && isMovesLeft && isNotBlocked) {
       Combat combat = getStarMap().fightWithFleet(nx, ny, fleet, info);
       if (combat != null) {
         fleet.decMovesLeft();
@@ -289,12 +292,12 @@ public class Game extends JFrame implements ActionListener {
    * Update View
    * @param BlackPanel View point to view
    */
-  private void updateDisplay(BlackPanel View){
-	  this.getContentPane().removeAll();
-	  this.add(View);
-	  this.validate();
+  private void updateDisplay(BlackPanel View) {
+      this.getContentPane().removeAll();
+      this.add(View);
+      this.validate();
   }
-  
+
   /**
    * Show planet view panel
    * @param planet Planet to show
@@ -442,7 +445,7 @@ public class Game extends JFrame implements ActionListener {
     this.updateDisplay(loadGameView);
   }
 
-  
+
   /**
    * Load game from certain file name
    * @param filename File name
@@ -618,8 +621,7 @@ public class Game extends JFrame implements ActionListener {
           starMap.setDrawPos(focusMessage.getX(), focusMessage.getY());
           showPlanetView(planet, interactive);
         }
-      } else if (starMapView.getStarMapMouseListener()
-          .getLastClickedPlanet() != null) {
+      } else if (starMapView.getStarMapMouseListener().getLastClickedPlanet() != null) {
         boolean interactive = false;
         Planet planet = starMapView.getStarMapMouseListener()
             .getLastClickedPlanet();
@@ -798,8 +800,7 @@ public class Game extends JFrame implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
         SoundPlayer.playMenuSound();
-        new GameRepository().saveGame(GameRepository.DEFAULT_SAVE_FOLDER,
-                                      "autosave.save", starMap);
+        new GameRepository().saveGame(GameRepository.DEFAULT_SAVE_FOLDER, "autosave.save", starMap);
         changeGameState(GameState.AITURN);
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_FOCUS_MSG)) {

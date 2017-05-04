@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 
 /**
 *
@@ -81,5 +82,31 @@ public class DiplomacyBonusList {
       result = result + bonus.getBonusValue();
     }
     return result;
+  }
+
+  /**
+   * Add Diplomacy bonus to list. If diplomacy is type which can
+   * be only one and there is already one in list, then nothing
+   * is done.
+   * @param type DiplomacyBonusType to add
+   * @param race Race who is adding the bonus
+   * @return True if bonus was really added, otherwise false
+   */
+  public boolean addBonus(final DiplomacyBonusType type, final SpaceRace race) {
+    DiplomacyBonus bonus = new DiplomacyBonus(type, race);
+    boolean found = false;
+    if (bonus.isOnlyOne()) {
+      for (DiplomacyBonus tmp : list) {
+        if (tmp.getType() == type) {
+          found = true;
+          break;
+        }
+      }
+    }
+    if (!found) {
+      list.add(bonus);
+      return true;
+    }
+    return false;
   }
 }

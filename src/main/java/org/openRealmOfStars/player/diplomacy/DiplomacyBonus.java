@@ -209,10 +209,11 @@ public class DiplomacyBonus {
    * @return Bonus value
    */
   public int getBonusValue() {
+	  int bonusValueResult=0;
     if (bonusLasting > 0) {
-      return bonusValue;
+        bonusValueResult=bonusValue;
     }
-    return 0;
+    return bonusValueResult;
   }
 
   /**

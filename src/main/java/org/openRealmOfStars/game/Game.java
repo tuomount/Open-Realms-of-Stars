@@ -25,6 +25,7 @@ import org.openRealmOfStars.game.States.ShipDesignView;
 import org.openRealmOfStars.game.States.ShipView;
 import org.openRealmOfStars.game.States.StarMapView;
 import org.openRealmOfStars.game.States.StatView;
+import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -284,6 +285,16 @@ public class Game extends JFrame implements ActionListener {
     }
   }
 
+  /*
+   * Update View
+   * @param BlackPanel View point to view
+   */
+  private void updateDisplay(BlackPanel View){
+	  this.getContentPane().removeAll();
+	  this.add(View);
+	  this.validate();
+  }
+  
   /**
    * Show planet view panel
    * @param planet Planet to show
@@ -291,9 +302,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showPlanetView(final Planet planet, final boolean interactive) {
     planetView = new PlanetView(planet, interactive, this);
-    this.getContentPane().removeAll();
-    this.add(planetView);
-    this.validate();
+    this.updateDisplay(planetView);
   }
 
   /**
@@ -304,9 +313,7 @@ public class Game extends JFrame implements ActionListener {
   public void showPlanetBombingView(final Planet planet, final Fleet fleet) {
     planetBombingView = new PlanetBombingView(planet, fleet,
         starMap.getCurrentPlayerInfo(), players.getCurrentPlayer(), this);
-    this.getContentPane().removeAll();
-    this.add(planetBombingView);
-    this.validate();
+    this.updateDisplay(planetBombingView);
   }
 
   /**
@@ -320,9 +327,7 @@ public class Game extends JFrame implements ActionListener {
     fleetView = new FleetView(planet, fleet,
         players.getCurrentPlayerInfo().getFleets(),
         players.getCurrentPlayerInfo(), interactive, this);
-    this.getContentPane().removeAll();
-    this.add(fleetView);
-    this.validate();
+    this.updateDisplay(fleetView);
   }
 
   /**
@@ -331,9 +336,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showStarMap(final Object object) {
     starMapView = new StarMapView(starMap, players, this);
-    this.getContentPane().removeAll();
-    this.add(starMapView);
-    this.validate();
+    this.updateDisplay(starMapView);
     starMapView.setAutoFocus(false);
     if (object == null) {
       focusOnMessage(true);
@@ -360,9 +363,7 @@ public class Game extends JFrame implements ActionListener {
     } else {
       combatView = new BattleView(combat, starMap, this);
     }
-    this.getContentPane().removeAll();
-    this.add(combatView);
-    this.validate();
+    this.updateDisplay(combatView);
   }
 
   /**
@@ -379,9 +380,7 @@ public class Game extends JFrame implements ActionListener {
         starMap.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
             players.getCurrentPlayer()),
         focusTech, this);
-    this.getContentPane().removeAll();
-    this.add(researchView);
-    this.validate();
+    this.updateDisplay(researchView);
   }
 
   /**
@@ -389,9 +388,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showShipView() {
     shipView = new ShipView(players.getCurrentPlayerInfo(), this);
-    this.getContentPane().removeAll();
-    this.add(shipView);
-    this.validate();
+    this.updateDisplay(shipView);
   }
 
   /**
@@ -399,9 +396,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showStatView() {
     statView = new StatView(starMap, this);
-    this.getContentPane().removeAll();
-    this.add(statView);
-    this.validate();
+    this.updateDisplay(statView);
   }
 
   /**
@@ -411,9 +406,7 @@ public class Game extends JFrame implements ActionListener {
   public void showShipDesignView(final ShipDesign oldDesign) {
     shipDesignView = new ShipDesignView(players.getCurrentPlayerInfo(),
         oldDesign, this);
-    this.getContentPane().removeAll();
-    this.add(shipDesignView);
-    this.validate();
+    this.updateDisplay(shipDesignView);
   }
 
   /**
@@ -421,9 +414,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showMainMenu() {
     mainMenu = new MainMenu(this);
-    this.getContentPane().removeAll();
-    this.add(mainMenu);
-    this.validate();
+    this.updateDisplay(mainMenu);
   }
 
   /**
@@ -432,9 +423,7 @@ public class Game extends JFrame implements ActionListener {
   public void showGalaxyCreation() {
     galaxyCreationView = new GalaxyCreationView(galaxyConfig, this);
     galaxyConfig = galaxyCreationView.getConfig();
-    this.getContentPane().removeAll();
-    this.add(galaxyCreationView);
-    this.validate();
+    this.updateDisplay(galaxyCreationView);
   }
 
   /**
@@ -442,9 +431,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showPlayerSetup() {
     playerSetupView = new PlayerSetupView(galaxyConfig, this);
-    this.getContentPane().removeAll();
-    this.add(playerSetupView);
-    this.validate();
+    this.updateDisplay(playerSetupView);
   }
 
   /**
@@ -452,11 +439,10 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showLoadGame() {
     loadGameView = new LoadGameView(this);
-    this.getContentPane().removeAll();
-    this.add(loadGameView);
-    this.validate();
+    this.updateDisplay(loadGameView);
   }
 
+  
   /**
    * Load game from certain file name
    * @param filename File name
@@ -479,9 +465,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showAITurnView() {
     aiTurnView = new AITurnView(this);
-    this.getContentPane().removeAll();
-    this.add(aiTurnView);
-    this.validate();
+    this.updateDisplay(aiTurnView);
   }
 
   /**
@@ -494,9 +478,7 @@ public class Game extends JFrame implements ActionListener {
       System.out.println("Could not show credits: " + e.getMessage());
       System.exit(0);
     }
-    this.getContentPane().removeAll();
-    this.add(creditsView);
-    this.validate();
+    this.updateDisplay(creditsView);
   }
 
   /**

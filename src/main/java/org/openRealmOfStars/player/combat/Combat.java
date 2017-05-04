@@ -139,7 +139,7 @@ public class Combat {
         stat.setNumberOfCombats(stat.getNumberOfCombats() + 1);
       }
       CombatShip combatShp = new CombatShip(ship, info1,
-          getStartPos(index, 0, true), getStartPos(index, 0, false), false);
+          getStartPos(index, CombatTeam.BOTTOMTEAM, true), getStartPos(index, CombatTeam.BOTTOMTEAM, false), false);
       if (fleet1.getRoute() != null && fleet1.getRoute().isDefending()) {
         combatShp.setBonusAccuracy(5);
       }
@@ -154,7 +154,7 @@ public class Combat {
         stat.setNumberOfCombats(stat.getNumberOfCombats() + 1);
       }
       CombatShip combatShp = new CombatShip(ship, info2,
-          getStartPos(index, 1, true), getStartPos(index, 1, false), true);
+          getStartPos(index, CombatTeam.TOPTEAM, true), getStartPos(index, CombatTeam.TOPTEAM, false), true);
       if (fleet2.getRoute() != null && fleet2.getRoute().isDefending()) {
         combatShp.setBonusAccuracy(5);
       }

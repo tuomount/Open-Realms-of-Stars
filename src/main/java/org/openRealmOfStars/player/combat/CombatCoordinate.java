@@ -19,26 +19,48 @@ package org.openRealmOfStars.player.combat;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 * Coordinate used only in combat
-* 
 */
 public class CombatCoordinate {
+    /**
+     * coordinate x for combat map
+     */
     private int x;
+    /**
+     * coordinate y for combat map
+     */
     private int y;
-    
-    CombatCoordinate(int x, int y){
+
+    /**
+     * CombatCoordinate Constructor
+     * @param x coordinate x for combat map
+     * @param y coordinate y for combat map
+     */
+    CombatCoordinate(final int x, final int y) {
         this.x = x;
         this.y = y;
     }
+    /**
+     * @return coordinate x for combat map
+     */
     public int getX() {
         return x;
     }
-    public void setX(int x) {
+    /**
+     * @param x coordinate x for combat map
+     */
+    public void setX(final int x) {
         this.x = x;
     }
+    /**
+     * @return coordinate y for combat map
+     */
     public int getY() {
         return y;
     }
-    public void setY(int y) {
+    /**
+     * @param y coordinate y for combat map
+     */
+    public void setY(final int y) {
         this.y = y;
     }
 }

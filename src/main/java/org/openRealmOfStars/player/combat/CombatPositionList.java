@@ -1,8 +1,5 @@
 package org.openRealmOfStars.player.combat;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
 *
 * Open Realm of Stars game project
@@ -22,12 +19,15 @@ import java.util.List;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 * abstract class for Combat starting position list
-* 
 */
 public abstract class CombatPositionList {
-
-    public CombatCoordinate getCoordinate(int combatShipIndex) {
+    /**
+     * constructor
+     * @param combatShipIndex index of combatShip
+     * @return CombatCoordinate
+     */
+    public CombatCoordinate getCoordinate(final int combatShipIndex) {
         return null;
     }
-    
+
 }

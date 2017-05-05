@@ -136,7 +136,7 @@ public class Combat {
     CombatPositionList topList = new TopPositionList();
     addCombatShipList(fleet1, info1, bottomList);
     addCombatShipList(fleet2, info2, topList);
-    
+
     Collections.sort(shipList, Collections.reverseOrder());
     componentUse = -1;
     animation = null;
@@ -145,8 +145,14 @@ public class Combat {
     endCombatHandled = false;
   }
 
+/**
+ * Add combatShip to combatShipList
+ * @param fleet Player's Fleet
+ * @param playerInfo Player's information
+ * @param positionList starting coordinate list
+ */
 private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
-        CombatPositionList positionList) {
+        final CombatPositionList positionList) {
     Ship[] ships = fleet.getShips();
     int index = 0;
     for (Ship ship : ships) {
@@ -157,7 +163,7 @@ private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
       int combatShipX = getStartPosX(index, positionList);
       int combatShipY = getStartPosY(index, positionList);
       CombatShip combatShp = new CombatShip(ship, playerInfo,
-              combatShipX, combatShipY, false);;
+              combatShipX, combatShipY, false);
       if (fleet.getRoute() != null && fleet.getRoute().isDefending()) {
         combatShp.setBonusAccuracy(5);
       }
@@ -444,7 +450,7 @@ private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
       int coordinateX = combatCoordinate.getX();
       return coordinateX;
   }
-  
+
   /**
    * Get starting position Y for ships
    * @param combatShipIndex Ship Index in fleet

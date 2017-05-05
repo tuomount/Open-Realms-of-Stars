@@ -174,7 +174,6 @@ public class PlayerInfoTest {
         PlayerInfo human = new PlayerInfo(race);
         TechList techList = human.getTechList();
         Tech[] tech = techList.getList();
-        ShipStat[] statList = human.getShipStatList();
 
         assertEquals(TechType.Combat, tech[0].getType());
         assertEquals(1, tech[0].getLevel());
@@ -275,7 +274,6 @@ public class PlayerInfoTest {
         Mockito.when(fleet.getCoordinate()).thenReturn(new Coordinate(2, 2));
         Mockito.when(fleet.getFleetScannerLvl()).thenReturn(0);
         PathPoint result;
-        PathPoint expect;
         int maxX = 10, maxY = 10;
         PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN);
         player.initMapData(maxX, maxY);

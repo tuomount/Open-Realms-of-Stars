@@ -33,8 +33,6 @@ import java.awt.event.ActionListener;
  */
 public class BattleViewTest {
 
-    private BattleView battleView;
-
     @Before
     public void setUp() {
         ShipHull shipHull = Mockito.mock(ShipHull.class);

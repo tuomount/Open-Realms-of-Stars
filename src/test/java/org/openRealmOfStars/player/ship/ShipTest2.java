@@ -740,7 +740,6 @@ public class ShipTest2 {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
         ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
-        ShipComponent targetingComputer = ShipComponentFactory.createByName("Targeting computer Mk1");
         ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
         
         Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);

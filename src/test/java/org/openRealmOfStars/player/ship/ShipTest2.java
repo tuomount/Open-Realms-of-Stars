@@ -642,7 +642,7 @@ public class ShipTest2 {
      * 
      */
     @Test
-    public void TestGetInitiative() {
+    public void TestGetInitiativeByShipHullSize() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
 
@@ -675,7 +675,126 @@ public class ShipTest2 {
         Ship ship4 = new Ship(shipdesign);
         assertEquals(0, ship4.getInitiative());
     }
+    
+    /**
+     * Purpose: Confirm getInitiative() 
+     * Input: Various Empty Space -> 0 2 4 5 6 11
+     * Expected: return appropriate various result -> 0 1 2 3 4 0
+     */
+    @Test
+    public void TestGetInitiativeByEmptySpace() {
+        ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+        ShipHull shiphull = Mockito.mock(ShipHull.class);
+        ShipComponent orbitalBomb = ShipComponentFactory.createByName("Orbital bombs Mk1");
+        ShipComponent orbitalNuke = ShipComponentFactory.createByName("Orbital nuke");
+        ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+        
+        Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+        Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+        Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+        Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+        Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+        Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+        Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+        Mockito.when(shipdesign.getHull().getImage())
+                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+        Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+        ShipComponent[] shipcomponents1 = new ShipComponent[] { orbitalBomb, orbitalNuke, energy };
+        Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
 
+        Mockito.when(shiphull.getSize()).thenReturn(ShipSize.HUGE);
+
+        Mockito.when(shiphull.getMaxSlot()).thenReturn(3);
+        Ship shipEmptySpaceIs0 = new Ship(shipdesign);
+        assertEquals(0, shipEmptySpaceIs0.getInitiative());
+
+        Mockito.when(shiphull.getMaxSlot()).thenReturn(5);
+        Ship shipEmptySpaceIs2 = new Ship(shipdesign);
+        assertEquals(1, shipEmptySpaceIs2.getInitiative());
+
+        Mockito.when(shiphull.getMaxSlot()).thenReturn(7);
+        Ship shipEmptySpaceIs4 = new Ship(shipdesign);
+        assertEquals(2, shipEmptySpaceIs4.getInitiative());
+ 
+        Mockito.when(shiphull.getMaxSlot()).thenReturn(8);
+        Ship shipEmptySpaceIs5 = new Ship(shipdesign);
+        assertEquals(3, shipEmptySpaceIs5.getInitiative());
+
+        Mockito.when(shiphull.getMaxSlot()).thenReturn(10);
+        Ship shipEmptySpaceIs6 = new Ship(shipdesign);
+        assertEquals(4, shipEmptySpaceIs6.getInitiative());
+        
+        Mockito.when(shiphull.getMaxSlot()).thenReturn(20);
+        Ship shipEmptySpaceIsDefault = new Ship(shipdesign);
+        assertEquals(0, shipEmptySpaceIsDefault.getInitiative());
+      
+    }
+    
+    /**
+     * Purpose: Confirm getInitiative() 
+     * Input: Nuclear Engine speed = 2, tactic speed = 1 
+     * Expected: 3
+     */
+    @Test
+    public void TestGetInitiativeByEngine() {
+        ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+        ShipHull shiphull = Mockito.mock(ShipHull.class);
+        ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+        ShipComponent targetingComputer = ShipComponentFactory.createByName("Targeting computer Mk1");
+        ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+        
+        Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+        Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+        Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+        Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+        Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+        Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+        Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+        Mockito.when(shipdesign.getHull().getImage())
+                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+        Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+        ShipComponent[] shipcomponents1 = new ShipComponent[] { engine, energy };
+        Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
+
+        Mockito.when(shiphull.getSize()).thenReturn(ShipSize.HUGE);
+
+        Mockito.when(shiphull.getMaxSlot()).thenReturn(2);
+        Ship shipHasNuclearEngine = new Ship(shipdesign);
+        assertEquals(3, shipHasNuclearEngine.getInitiative());
+    }
+    
+    /**
+     * Purpose: Confirm getInitiative() 
+     * Input: targetingComputer Mk1 initiativeBoost = 1
+     * Expected: 3
+     */
+    @Test
+    public void TestGetInitiativeByTargetingComputer() {
+        ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+        ShipHull shiphull = Mockito.mock(ShipHull.class);
+        ShipComponent targetingComputer = ShipComponentFactory.createByName("Targeting computer Mk1");
+        ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+        
+        Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+        Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+        Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+        Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+        Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+        Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+        Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+        Mockito.when(shipdesign.getHull().getImage())
+                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+        Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+        ShipComponent[] shipcomponents1 = new ShipComponent[] { targetingComputer, energy };
+        Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
+
+        Mockito.when(shiphull.getSize()).thenReturn(ShipSize.HUGE);
+
+        Mockito.when(shiphull.getMaxSlot()).thenReturn(2);
+        Ship shipHasTargetingComputer = new Ship(shipdesign);
+        assertEquals(1, shipHasTargetingComputer.getInitiative());
+    }
+    
     /**
      * Purpose: Confirm getHitChance Method Input: ship with various weapon
      * 

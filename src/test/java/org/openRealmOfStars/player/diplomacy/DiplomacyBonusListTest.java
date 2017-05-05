@@ -56,4 +56,18 @@ public class DiplomacyBonusListTest {
     assertEquals(-25, list.getDiplomacyBonus());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testHandleTurn() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    DiplomacyBonusList list = new DiplomacyBonusList(1, info);
+    boolean result = list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE, SpaceRace.HUMAN);
+    assertEquals(true, result);
+    for (int i = 0; i < 80; i++) {
+      assertEquals(5, list.getDiplomacyBonus());
+      list.handleForTurn();
+    }
+    assertEquals(0, list.getDiplomacyBonus());
+  }
+
 }

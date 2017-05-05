@@ -1,6 +1,7 @@
 package org.openRealmOfStars.player.diplomacy;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.openRealmOfStars.player.PlayerInfo;
@@ -108,5 +109,21 @@ public class DiplomacyBonusList {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Handle diplomacy bonus list for one turn.
+   * This will calculate bonus lasting and remove
+   * bonuses which lasting is zero.
+   */
+  public void handleForTurn() {
+    Iterator<DiplomacyBonus> iterator = list.iterator();
+    while (iterator.hasNext()) {
+      DiplomacyBonus bonus = iterator.next();
+      bonus.handleBonusForTurn();
+      if (bonus.getBonusLasting() == 0) {
+        iterator.remove();
+      }
+    }
   }
 }

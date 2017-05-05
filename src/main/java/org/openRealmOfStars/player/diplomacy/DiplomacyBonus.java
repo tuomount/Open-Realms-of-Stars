@@ -22,8 +22,8 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 *
 *
 * Diplomacy Bonus
-*
-*/
+* 
+*/ 
 public class DiplomacyBonus {
 
   /**

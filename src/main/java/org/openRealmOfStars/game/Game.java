@@ -25,6 +25,7 @@ import org.openRealmOfStars.game.States.ShipDesignView;
 import org.openRealmOfStars.game.States.ShipView;
 import org.openRealmOfStars.game.States.StarMapView;
 import org.openRealmOfStars.game.States.StatView;
+import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -35,8 +36,8 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
-import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
@@ -252,11 +253,14 @@ public class Game extends JFrame implements ActionListener {
     // Getting fleet owner information
     FleetTileInfo[][] fleetTiles = starMap.getFleetTiles();
     FleetTileInfo fleetTile = fleetTiles[fleet.getX()][fleet.getY()];
-    int index = players.getIndex(info);
+
     // And making sure that fleet owner is actually make the move
-    if (index == fleetTile.getPlayerIndex()
-        && getStarMap().isValidCoordinate(nx, ny) && fleet.getMovesLeft() > 0
-        && !getStarMap().isBlocked(nx, ny)) {
+    final boolean isSamePlayer = players.getIndex(info) == fleetTile.getPlayerIndex();
+    final boolean isValidCoordinate = getStarMap().isValidCoordinate(nx, ny);
+    final boolean isMovesLeft = fleet.getMovesLeft() > 0;
+    final boolean isNotBlocked = !getStarMap().isBlocked(nx, ny);
+
+    if (isSamePlayer && isValidCoordinate && isMovesLeft && isNotBlocked) {
       Combat combat = getStarMap().fightWithFleet(nx, ny, fleet, info);
       if (combat != null) {
         fleet.decMovesLeft();
@@ -284,6 +288,16 @@ public class Game extends JFrame implements ActionListener {
     }
   }
 
+  /*
+   * Update View
+   * @param BlackPanel View point to view
+   */
+  private void updateDisplay(BlackPanel View) {
+      this.getContentPane().removeAll();
+      this.add(View);
+      this.validate();
+  }
+
   /**
    * Show planet view panel
    * @param planet Planet to show
@@ -291,9 +305,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showPlanetView(final Planet planet, final boolean interactive) {
     planetView = new PlanetView(planet, interactive, this);
-    this.getContentPane().removeAll();
-    this.add(planetView);
-    this.validate();
+    this.updateDisplay(planetView);
   }
 
   /**
@@ -304,9 +316,7 @@ public class Game extends JFrame implements ActionListener {
   public void showPlanetBombingView(final Planet planet, final Fleet fleet) {
     planetBombingView = new PlanetBombingView(planet, fleet,
         starMap.getCurrentPlayerInfo(), players.getCurrentPlayer(), this);
-    this.getContentPane().removeAll();
-    this.add(planetBombingView);
-    this.validate();
+    this.updateDisplay(planetBombingView);
   }
 
   /**
@@ -320,9 +330,7 @@ public class Game extends JFrame implements ActionListener {
     fleetView = new FleetView(planet, fleet,
         players.getCurrentPlayerInfo().getFleets(),
         players.getCurrentPlayerInfo(), interactive, this);
-    this.getContentPane().removeAll();
-    this.add(fleetView);
-    this.validate();
+    this.updateDisplay(fleetView);
   }
 
   /**
@@ -331,9 +339,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showStarMap(final Object object) {
     starMapView = new StarMapView(starMap, players, this);
-    this.getContentPane().removeAll();
-    this.add(starMapView);
-    this.validate();
+    this.updateDisplay(starMapView);
     starMapView.setAutoFocus(false);
     if (object == null) {
       focusOnMessage(true);
@@ -360,9 +366,7 @@ public class Game extends JFrame implements ActionListener {
     } else {
       combatView = new BattleView(combat, starMap, this);
     }
-    this.getContentPane().removeAll();
-    this.add(combatView);
-    this.validate();
+    this.updateDisplay(combatView);
   }
 
   /**
@@ -379,9 +383,7 @@ public class Game extends JFrame implements ActionListener {
         starMap.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
             players.getCurrentPlayer()),
         focusTech, this);
-    this.getContentPane().removeAll();
-    this.add(researchView);
-    this.validate();
+    this.updateDisplay(researchView);
   }
 
   /**
@@ -389,9 +391,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showShipView() {
     shipView = new ShipView(players.getCurrentPlayerInfo(), this);
-    this.getContentPane().removeAll();
-    this.add(shipView);
-    this.validate();
+    this.updateDisplay(shipView);
   }
 
   /**
@@ -399,9 +399,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showStatView() {
     statView = new StatView(starMap, this);
-    this.getContentPane().removeAll();
-    this.add(statView);
-    this.validate();
+    this.updateDisplay(statView);
   }
 
   /**
@@ -411,9 +409,7 @@ public class Game extends JFrame implements ActionListener {
   public void showShipDesignView(final ShipDesign oldDesign) {
     shipDesignView = new ShipDesignView(players.getCurrentPlayerInfo(),
         oldDesign, this);
-    this.getContentPane().removeAll();
-    this.add(shipDesignView);
-    this.validate();
+    this.updateDisplay(shipDesignView);
   }
 
   /**
@@ -421,9 +417,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showMainMenu() {
     mainMenu = new MainMenu(this);
-    this.getContentPane().removeAll();
-    this.add(mainMenu);
-    this.validate();
+    this.updateDisplay(mainMenu);
   }
 
   /**
@@ -432,9 +426,7 @@ public class Game extends JFrame implements ActionListener {
   public void showGalaxyCreation() {
     galaxyCreationView = new GalaxyCreationView(galaxyConfig, this);
     galaxyConfig = galaxyCreationView.getConfig();
-    this.getContentPane().removeAll();
-    this.add(galaxyCreationView);
-    this.validate();
+    this.updateDisplay(galaxyCreationView);
   }
 
   /**
@@ -442,9 +434,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showPlayerSetup() {
     playerSetupView = new PlayerSetupView(galaxyConfig, this);
-    this.getContentPane().removeAll();
-    this.add(playerSetupView);
-    this.validate();
+    this.updateDisplay(playerSetupView);
   }
 
   /**
@@ -452,10 +442,9 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showLoadGame() {
     loadGameView = new LoadGameView(this);
-    this.getContentPane().removeAll();
-    this.add(loadGameView);
-    this.validate();
+    this.updateDisplay(loadGameView);
   }
+
 
   /**
    * Load game from certain file name
@@ -479,9 +468,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public void showAITurnView() {
     aiTurnView = new AITurnView(this);
-    this.getContentPane().removeAll();
-    this.add(aiTurnView);
-    this.validate();
+    this.updateDisplay(aiTurnView);
   }
 
   /**
@@ -494,9 +481,7 @@ public class Game extends JFrame implements ActionListener {
       System.out.println("Could not show credits: " + e.getMessage());
       System.exit(0);
     }
-    this.getContentPane().removeAll();
-    this.add(creditsView);
-    this.validate();
+    this.updateDisplay(creditsView);
   }
 
   /**
@@ -636,8 +621,7 @@ public class Game extends JFrame implements ActionListener {
           starMap.setDrawPos(focusMessage.getX(), focusMessage.getY());
           showPlanetView(planet, interactive);
         }
-      } else if (starMapView.getStarMapMouseListener()
-          .getLastClickedPlanet() != null) {
+      } else if (starMapView.getStarMapMouseListener().getLastClickedPlanet() != null) {
         boolean interactive = false;
         Planet planet = starMapView.getStarMapMouseListener()
             .getLastClickedPlanet();
@@ -816,8 +800,7 @@ public class Game extends JFrame implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
         SoundPlayer.playMenuSound();
-        new GameRepository().saveGame(GameRepository.DEFAULT_SAVE_FOLDER,
-                                      "autosave.save", starMap);
+        new GameRepository().saveGame(GameRepository.DEFAULT_SAVE_FOLDER, "autosave.save", starMap);
         changeGameState(GameState.AITURN);
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_FOCUS_MSG)) {

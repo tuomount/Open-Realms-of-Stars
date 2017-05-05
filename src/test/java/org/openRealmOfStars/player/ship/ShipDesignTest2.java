@@ -8,10 +8,10 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipComponentType;
-import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullFactory;
 import org.openRealmOfStars.player.ship.ShipSize;
+import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 
 /**
  *

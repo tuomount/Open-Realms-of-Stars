@@ -467,55 +467,82 @@ private int getRemainingEnergy(final int index) {
    * @return Initiative
    */
   public int getInitiative() {
-    int result;
-    switch (hull.getSize()) {
-    case SMALL: {
-      result = 12;
-      break;
-    }
-    case MEDIUM: {
-      result = 8;
-      break;
-    }
-    case LARGE: {
-      result = 4;
-      break;
-    }
-    case HUGE: {
-      result = 0;
-      break;
-    }
-    default:
-      result = 0;
-    }
+    int result = getInitivativeByHullSize();
+    result += increaseInitivativeByComponent();
+    result += increaseInitivativeByEmptySpace();
+    return result;
+  }
+
+/**
+ * @param result
+ * @return Increased initiative by component
+ */
+private int increaseInitivativeByComponent() {
+    int increased = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
           && hasComponentEnergy(i)) {
-        result = result + comp.getSpeed() + comp.getTacticSpeed();
+          increased = increased + comp.getSpeed() + comp.getTacticSpeed();
       }
       if (hullPoints[i] > 0 && hasComponentEnergy(i)
           && comp.getInitiativeBoost() > 0) {
-        result = result + comp.getInitiativeBoost();
+          increased = increased + comp.getInitiativeBoost();
       }
     }
-    int emptySpace = this.hull.getMaxSlot() - components.size();
-    switch (emptySpace) {
+    return increased;
+}
+
+  /**
+   * @return initiative associated ship hull size
+   */
+  private int getInitivativeByHullSize() {
+      int increased = 0;
+      switch (hull.getSize()) {
+      case SMALL: {
+          increased = 12;
+        break;
+      }
+      case MEDIUM: {
+          increased = 8;
+        break;
+      }
+      case LARGE: {
+          increased = 4;
+        break;
+      }
+      case HUGE: {
+          increased = 0;
+        break;
+      }
+      default:
+          increased = 0;
+      }
+      return increased;
+  }
+
+/**
+ * @return Increased initiative by empty space
+ */
+private int increaseInitivativeByEmptySpace() {
+    int initiative;
+    switch (this.hull.getMaxSlot() - components.size()) {
     case 1:
     case 0: {
+        initiative = 0;
       break;
     }
     case 2:
     case 3: {
-      result = result + 1;
+        initiative = 1;
       break;
     }
     case 4: {
-      result = result + 2;
+        initiative = 2;
       break;
     }
     case 5: {
-      result = result + 3;
+        initiative = 3;
       break;
     }
     case 6:
@@ -524,14 +551,15 @@ private int getRemainingEnergy(final int index) {
     case 9:
     case 11:
     case 10: {
-      result = result + 4;
+        initiative = 4;
       break;
     }
     default:
-      result = 0;
+        initiative = 0;
     }
-    return result;
-  }
+    return initiative;
+}
+
 
   /**
    * Get Scanner level

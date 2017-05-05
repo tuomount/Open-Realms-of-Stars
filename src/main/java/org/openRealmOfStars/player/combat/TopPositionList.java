@@ -22,7 +22,7 @@ package org.openRealmOfStars.player.combat;
 */
 public class TopPositionList extends CombatPositionList {
     @Override
-    public CombatCoordinate getCoordinate(int combatShipIndex) {
+    public CombatCoordinate getCoordinate(final int combatShipIndex) {
         switch (combatShipIndex) {
         case 0:
             return new CombatCoordinate(4, 1);

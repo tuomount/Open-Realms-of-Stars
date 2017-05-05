@@ -22,8 +22,8 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 *
 *
 * Diplomacy Bonus
-*
-*/
+* 
+*/ 
 public class DiplomacyBonus {
 
   /**
@@ -33,7 +33,7 @@ public class DiplomacyBonus {
    */
   public DiplomacyBonus(final DiplomacyBonusType bonusType,
       final SpaceRace race) {
-   type = bonusType;
+   type= bonusType ;
    onlyOne = false;
    switch (type) {
      case BORDER_CROSSED: {
@@ -209,6 +209,7 @@ public class DiplomacyBonus {
    * @return Bonus value
    */
   public int getBonusValue() {
+	  int bonusValueResult=0;
     if (bonusLasting > 0) {
       if (type == DiplomacyBonusType.LONG_PEACE) {
         return bonusValue + bonusLasting / 10;

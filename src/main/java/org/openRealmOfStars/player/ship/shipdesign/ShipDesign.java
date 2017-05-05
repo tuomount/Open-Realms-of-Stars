@@ -556,8 +556,9 @@ public class ShipDesign {
     if (hasWeapons() && (hull.getHullType() == ShipHullType.FREIGHTER
         || hull.getHullType() == ShipHullType.PROBE)) {
       designOk = false;
-      sb.append(ShipDesignConsts.NO_WEAPONS_ALLOWED).append(hull.getHullType().toString())
-          .append("!\n");
+      sb.append(ShipDesignConsts.NO_WEAPONS_ALLOWED)
+        .append(hull.getHullType().toString())
+        .append("!\n");
     }
     boolean targetingComputer = false;
     boolean jammer = false;
@@ -634,20 +635,20 @@ public class ShipDesign {
       }
     }
     int emptySpace = this.hull.getMaxSlot() - components.size();
-    if( emptySpace == 2 || emptySpace ==3 ){
-    	result = result + 1;
+    if (emptySpace == 2 || emptySpace == 3) {
+        result = result + 1;
     }
-    else if( emptySpace == 4 ){
-    	result = result + 2;
+    else if (emptySpace == 4) {
+        result = result + 2;
     }
-    else if( emptySpace == 5 ){
-    	result = result + 3;
+    else if (emptySpace == 5) {
+        result = result + 3;
     }
-    else if( 6 <= emptySpace && emptySpace < 12 ){
-    	result = result + 4;
+    else if (6 <= emptySpace && emptySpace < 12) {
+        result = result + 4;
     }
-    else{
-    	result = 0;
+    else {
+        result = 0;
     }
     return result;
   }

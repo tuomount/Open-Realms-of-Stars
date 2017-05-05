@@ -585,8 +585,10 @@ private int increaseInitivativeByEmptySpace() {
     int scannerDetectionLvl = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.SCANNER
-          && hasComponentEnergy(i) && comp.getCloakDetection() > scannerDetectionLvl) {
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.SCANNER
+          && hasComponentEnergy(i)
+          && comp.getCloakDetection() > scannerDetectionLvl) {
           scannerDetectionLvl = comp.getCloakDetection();
       }
     }
@@ -1153,7 +1155,9 @@ private int increaseInitivativeByEmptySpace() {
     int freeCargoMetal = 0;
     if (hull.getHullType() == ShipHullType.FREIGHTER) {
         freeCargoMetal = hull.getMaxSlot() - getNumberOfComponents();
-        freeCargoMetal = freeCargoMetal - getColonist() / 2 - getMetal() / 10 - getColonist() % 2;
+        freeCargoMetal = freeCargoMetal - getColonist() / 2
+                                        - getMetal() / 10
+                                        - getColonist() % 2;
         freeCargoMetal = freeCargoMetal * 10;
     }
     return freeCargoMetal;

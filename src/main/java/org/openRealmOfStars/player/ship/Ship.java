@@ -446,20 +446,20 @@ private int getRemainingEnergy(final int index) {
    * @return Speed
    */
   public int getFtlSpeed() {
-    int result = 0;
+    int ftlSpeed = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
           && hasComponentEnergy(i)) {
-        result = comp.getFtlSpeed();
+          ftlSpeed = comp.getFtlSpeed();
         break;
       }
     }
     if (hull.getHullType() == ShipHullType.PROBE) {
       // Probes have faster FTL
-      result = result + 1;
+        ftlSpeed = ftlSpeed + 1;
     }
-    return result;
+    return ftlSpeed;
   }
 
   /**
@@ -467,10 +467,10 @@ private int getRemainingEnergy(final int index) {
    * @return Initiative
    */
   public int getInitiative() {
-    int result = getInitivativeByHullSize();
-    result += increaseInitivativeByComponent();
-    result += increaseInitivativeByEmptySpace();
-    return result;
+    int initiative = getInitivativeByHullSize();
+    initiative += increaseInitivativeByComponent();
+    initiative += increaseInitivativeByEmptySpace();
+    return initiative;
   }
 
 /**
@@ -566,15 +566,15 @@ private int increaseInitivativeByEmptySpace() {
    * @return scanner Lvl
    */
   public int getScannerLvl() {
-    int result = 0;
+    int scannerLvl = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.SCANNER
-          && hasComponentEnergy(i) && comp.getScannerRange() > result) {
-        result = comp.getScannerRange();
+          && hasComponentEnergy(i) && comp.getScannerRange() > scannerLvl) {
+          scannerLvl = comp.getScannerRange();
       }
     }
-    return result;
+    return scannerLvl;
   }
 
   /**
@@ -582,15 +582,15 @@ private int increaseInitivativeByEmptySpace() {
    * @return scanner detection level
    */
   public int getScannerDetectionLvl() {
-    int result = 0;
+    int scannerDetectionLvl = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.SCANNER
-          && hasComponentEnergy(i) && comp.getCloakDetection() > result) {
-        result = comp.getCloakDetection();
+          && hasComponentEnergy(i) && comp.getCloakDetection() > scannerDetectionLvl) {
+          scannerDetectionLvl = comp.getCloakDetection();
       }
     }
-    return result;
+    return scannerDetectionLvl;
   }
 
   /**
@@ -599,19 +599,19 @@ private int increaseInitivativeByEmptySpace() {
    * @return Accuracy
    */
   public int getHitChance(final ShipComponent weapon) {
-    int result = 0;
+    int hitChance = 0;
     switch (weapon.getType()) {
     case WEAPON_BEAM:
-      result = 100;
+        hitChance = 100;
       break;
     case WEAPON_RAILGUN:
     case WEAPON_PHOTON_TORPEDO:
-      result = 75;
+        hitChance = 75;
       break;
     case WEAPON_ECM_TORPEDO:
     case WEAPON_HE_MISSILE:
     default:
-      result = 50;
+        hitChance = 50;
       break;
     }
     for (int i = 0; i < components.size(); i++) {
@@ -619,10 +619,10 @@ private int increaseInitivativeByEmptySpace() {
       if (hullPoints[i] > 0
           && comp.getType() == ShipComponentType.TARGETING_COMPUTER
           && hasComponentEnergy(i)) {
-        result = result + comp.getDamage();
+          hitChance = hitChance + comp.getDamage();
       }
     }
-    return result;
+    return hitChance;
   }
 
   /**
@@ -790,34 +790,34 @@ private int increaseInitivativeByEmptySpace() {
    * @return defense value for ship
    */
   public int getDefenseValue() {
-    int result;
+    int defenseValue;
     switch (hull.getSize()) {
     case SMALL:
-      result = 10;
+        defenseValue = 10;
       break;
     case MEDIUM:
-      result = 5;
+        defenseValue = 5;
       break;
     case LARGE:
-      result = 0;
+        defenseValue = 0;
       break;
     case HUGE:
-      result = -5;
+        defenseValue = -5;
       break;
     default:
-      result = 0;
+        defenseValue = 0;
     }
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.JAMMER
           && hasComponentEnergy(i)) {
-        result = result + comp.getDefenseValue();
+          defenseValue = defenseValue + comp.getDefenseValue();
       }
     }
     if (getTacticSpeed() == 0) {
-      result = result - 15;
+        defenseValue = defenseValue - 15;
     }
-    return result;
+    return defenseValue;
   }
 
   /**
@@ -876,7 +876,7 @@ private int increaseInitivativeByEmptySpace() {
    * @return Get Total troop power where improvements are taken to count
    */
   public int getTroopPower() {
-    int result = getColonist() * hull.getRace().getTrooperPower();
+    int troopPower = getColonist() * hull.getRace().getTrooperPower();
     int multiply = 100;
     boolean found = false;
     for (int i = 0; i < components.size(); i++) {
@@ -889,11 +889,11 @@ private int increaseInitivativeByEmptySpace() {
         found = true;
       }
     }
-    result = result * multiply / 100;
+    troopPower = troopPower * multiply / 100;
     if (!found) {
-      result = 0;
+        troopPower = 0;
     }
-    return result;
+    return troopPower;
   }
 
   /**
@@ -990,15 +990,15 @@ private int increaseInitivativeByEmptySpace() {
    * @return Maximum shield
    */
   public int getTotalShield() {
-    int shield1 = 0;
+    int totalShield = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.SHIELD) {
-        shield1 = shield1 + comp.getDefenseValue();
+          totalShield = totalShield + comp.getDefenseValue();
       }
     }
-    return shield1;
+    return totalShield;
   }
 
   /**
@@ -1042,15 +1042,15 @@ private int increaseInitivativeByEmptySpace() {
    * @return Maximum armor
    */
   public int getTotalArmor() {
-    int armor1 = 0;
+    int totalArmor = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.ARMOR) {
-        armor1 = armor1 + comp.getDefenseValue();
+          totalArmor = totalArmor + comp.getDefenseValue();
       }
     }
-    return armor1;
+    return totalArmor;
   }
 
   /**
@@ -1066,11 +1066,11 @@ private int increaseInitivativeByEmptySpace() {
    * @return hull points
    */
   public int getHullPoints() {
-    int value = 0;
+    int hullPoint = 0;
     for (int i = 0; i < hullPoints.length; i++) {
-      value = value + hullPoints[i];
+        hullPoint = hullPoint + hullPoints[i];
     }
-    return value;
+    return hullPoint;
   }
 
   /**
@@ -1150,13 +1150,13 @@ private int increaseInitivativeByEmptySpace() {
    * @return Cargo room for metal
    */
   public int getFreeCargoMetal() {
-    int result = 0;
+    int freeCargoMetal = 0;
     if (hull.getHullType() == ShipHullType.FREIGHTER) {
-      result = hull.getMaxSlot() - getNumberOfComponents();
-      result = result - getColonist() / 2 - getMetal() / 10 - getColonist() % 2;
-      result = result * 10;
+        freeCargoMetal = hull.getMaxSlot() - getNumberOfComponents();
+        freeCargoMetal = freeCargoMetal - getColonist() / 2 - getMetal() / 10 - getColonist() % 2;
+        freeCargoMetal = freeCargoMetal * 10;
     }
-    return result;
+    return freeCargoMetal;
   }
 
   /**
@@ -1164,13 +1164,13 @@ private int increaseInitivativeByEmptySpace() {
    * @return Cargo room for colonists
    */
   public int getFreeCargoColonists() {
-    int result = 0;
+    int freeCargoColonists = 0;
     if (hull.getHullType() == ShipHullType.FREIGHTER) {
-      result = hull.getMaxSlot() - getNumberOfComponents();
-      result = result - getColonist() / 2 - getMetal() / 10;
-      result = result * 2;
+        freeCargoColonists = hull.getMaxSlot() - getNumberOfComponents();
+        freeCargoColonists -= getColonist() / 2 - getMetal() / 10;
+        freeCargoColonists = freeCargoColonists * 2;
     }
-    return result;
+    return freeCargoColonists;
   }
 
   /**

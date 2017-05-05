@@ -209,6 +209,7 @@ public class DiplomacyBonus {
    * @return Bonus value
    */
   public int getBonusValue() {
+	  int bonusValueResult=0;
     if (bonusLasting > 0) {
       if (type == DiplomacyBonusType.LONG_PEACE) {
         return bonusValue + bonusLasting / 10;

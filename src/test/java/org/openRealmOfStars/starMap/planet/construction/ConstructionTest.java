@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.gui.icons.Icon16x16;
-import org.openRealmOfStars.gui.icons.Icons;
 
 /**
  *

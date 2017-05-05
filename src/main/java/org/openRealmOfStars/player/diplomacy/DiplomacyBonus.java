@@ -33,7 +33,7 @@ public class DiplomacyBonus {
    */
   public DiplomacyBonus(final DiplomacyBonusType bonusType,
       final SpaceRace race) {
-   type= bonusType;
+   type= bonusType ;
    onlyOne = false;
    switch (type) {
      case BORDER_CROSSED: {

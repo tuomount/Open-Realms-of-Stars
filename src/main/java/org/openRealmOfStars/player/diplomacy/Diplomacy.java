@@ -21,7 +21,9 @@ import org.openRealmOfStars.player.PlayerList;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 *
-* Diplomacy for player and handling of it
+* Diplomacy for player and handling of it.
+* Diplomacy creates Diplomacy Bonus lists for all players
+* except the one who is creating the Diplomacy.
 *
 */
 public class Diplomacy {

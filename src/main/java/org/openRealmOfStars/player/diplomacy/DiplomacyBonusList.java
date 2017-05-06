@@ -26,7 +26,8 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 *
-* Diplomacy Bonus List and handling of it
+* Diplomacy Bonus List and handling of it. This is list of diplomacy
+* bonus for certain player.
 *
 */
 public class DiplomacyBonusList {
@@ -47,7 +48,10 @@ public class DiplomacyBonusList {
   private List<DiplomacyBonus> list;
 
   /**
-   * Constructor for Diplomacy Bonus List
+   * Constructor for Diplomacy Bonus List. List contains
+   * diplomacy bonuses for certain player by some player.
+   * DiplomacyBonusList class does not define that player who
+   * creates the list only the player who list affects.
    * @param index Index for player info
    * @param player Player info with whom this diplomacy affects
    */

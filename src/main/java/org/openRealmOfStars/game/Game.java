@@ -532,7 +532,123 @@ public class Game extends JFrame implements ActionListener {
       showLoadGame();
       break;
     case NEW_GAME: {
-      players = new PlayerList();
+      makeNewGame();
+      break;
+    }
+    case PLANETBOMBINGVIEW: {
+      planetBombingView(dataObject);
+      break;
+    }
+    case CREDITS:
+      showCredits();
+      break;
+    case STARMAP:
+      showStarMap(dataObject);
+      break;
+    case COMBAT: {
+      combat(dataObject);
+      break;
+    }
+    case RESEARCHVIEW:
+      showResearch(focusMessage);
+      break;
+    case VIEWSHIPS:
+      showShipView();
+      break;
+    case VIEWSTATS:
+      showStatView();
+      break;
+    case SHIPDESIGN: {
+      shipDesign();
+      break;
+    }
+    case PLANETVIEW: {
+      planetView(focusMessage);
+      break;
+    }
+    case FLEETVIEW: {
+      fleetView();
+      break;
+    }
+    default: {
+        showMainMenu();
+    }
+    }
+  }
+
+private void fleetView() {
+	if (starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+        Fleet fleet = starMapView.getStarMapMouseListener().getLastClickedFleet();
+        Planet planet = starMap.getPlanetByCoordinate(fleet.getX(),
+            fleet.getY());
+        boolean interactive = false;
+        if (starMap.getCurrentPlayerInfo() == starMap.getPlayerInfoByFleet(fleet)) {
+          interactive = true;
+        }
+        showFleetView(planet, fleet, interactive);
+      }
+}
+
+private void planetView(final Message focusMessage) {
+	if (focusMessage != null) {
+        Planet planet = starMap.getPlanetByCoordinate(focusMessage.getX(),
+            focusMessage.getY());
+        if (planet != null) {
+          boolean interactive = false;
+          if (starMap.getCurrentPlayerInfo() == planet.getPlanetPlayerInfo()) {
+            interactive = true;
+          }
+          starMap.setCursorPos(focusMessage.getX(), focusMessage.getY());
+          starMap.setDrawPos(focusMessage.getX(), focusMessage.getY());
+          showPlanetView(planet, interactive);
+        }
+      } else if (starMapView.getStarMapMouseListener().getLastClickedPlanet() != null) {
+        boolean interactive = false;
+        Planet planet = starMapView.getStarMapMouseListener()
+            .getLastClickedPlanet();
+        if (starMap.getCurrentPlayerInfo() == planet.getPlanetPlayerInfo()) {
+          interactive = true;
+        }
+        showPlanetView(planet, interactive);
+      }
+}
+
+private void shipDesign() {
+	if (shipView != null && shipView.isCopyClicked()) {
+        showShipDesignView(shipView.getSelectedShip());
+      } else {
+        showShipDesignView(null);
+      }
+}
+
+private void combat(final Object dataObject) {
+	if (dataObject instanceof Combat) {
+        showCombat((Combat) dataObject);
+      } else {
+        showCombat(null);
+      }
+}
+
+private void planetBombingView(final Object dataObject) {
+	boolean changed = false;
+      if (dataObject instanceof FleetView) {
+        FleetView view = (FleetView) dataObject;
+        Planet planet = view.getPlanet();
+        Fleet fleet = view.getFleet();
+        if (fleet != null && planet != null
+            && fleet.getX() == planet.getX()
+            && fleet.getY() == planet.getY()) {
+          showPlanetBombingView(planet, fleet);
+          changed = true;
+        }
+      }
+      if (!changed) {
+        changeGameState(GameState.STARMAP);
+      }
+}
+
+private void makeNewGame() {
+	players = new PlayerList();
       for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
         PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i));
         info.setEmpireName(galaxyConfig.getPlayerName(i));
@@ -557,101 +673,7 @@ public class Game extends JFrame implements ActionListener {
       starMap.getNewsCorpData().calculatePopulation(starMap.getPlanetList());
       starMap.getNewsCorpData().calculateResearch(players);
       changeGameState(GameState.STARMAP);
-      break;
-    }
-    case PLANETBOMBINGVIEW: {
-      boolean changed = false;
-      if (dataObject instanceof FleetView) {
-        FleetView view = (FleetView) dataObject;
-        Planet planet = view.getPlanet();
-        Fleet fleet = view.getFleet();
-        if (fleet != null && planet != null
-            && fleet.getX() == planet.getX()
-            && fleet.getY() == planet.getY()) {
-          showPlanetBombingView(planet, fleet);
-          changed = true;
-        }
-      }
-      if (!changed) {
-        changeGameState(GameState.STARMAP);
-      }
-      break;
-    }
-    case CREDITS:
-      showCredits();
-      break;
-    case STARMAP:
-      showStarMap(dataObject);
-      break;
-    case COMBAT: {
-      if (dataObject instanceof Combat) {
-        showCombat((Combat) dataObject);
-      } else {
-        showCombat(null);
-      }
-      break;
-    }
-    case RESEARCHVIEW:
-      showResearch(focusMessage);
-      break;
-    case VIEWSHIPS:
-      showShipView();
-      break;
-    case VIEWSTATS:
-      showStatView();
-      break;
-    case SHIPDESIGN: {
-      if (shipView != null && shipView.isCopyClicked()) {
-        showShipDesignView(shipView.getSelectedShip());
-      } else {
-        showShipDesignView(null);
-      }
-      break;
-    }
-    case PLANETVIEW: {
-      if (focusMessage != null) {
-        Planet planet = starMap.getPlanetByCoordinate(focusMessage.getX(),
-            focusMessage.getY());
-        if (planet != null) {
-          boolean interactive = false;
-          if (starMap.getCurrentPlayerInfo() == planet.getPlanetPlayerInfo()) {
-            interactive = true;
-          }
-          starMap.setCursorPos(focusMessage.getX(), focusMessage.getY());
-          starMap.setDrawPos(focusMessage.getX(), focusMessage.getY());
-          showPlanetView(planet, interactive);
-        }
-      } else if (starMapView.getStarMapMouseListener().getLastClickedPlanet() != null) {
-        boolean interactive = false;
-        Planet planet = starMapView.getStarMapMouseListener()
-            .getLastClickedPlanet();
-        if (starMap.getCurrentPlayerInfo() == planet.getPlanetPlayerInfo()) {
-          interactive = true;
-        }
-        showPlanetView(planet, interactive);
-      }
-      break;
-    }
-    case FLEETVIEW: {
-      if (starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
-        Fleet fleet = starMapView.getStarMapMouseListener()
-            .getLastClickedFleet();
-        Planet planet = starMap.getPlanetByCoordinate(fleet.getX(),
-            fleet.getY());
-        boolean interactive = false;
-        if (starMap.getCurrentPlayerInfo() == starMap
-            .getPlayerInfoByFleet(fleet)) {
-          interactive = true;
-        }
-        showFleetView(planet, fleet, interactive);
-      }
-      break;
-    }
-    default: {
-        showMainMenu();
-    }
-    }
-  }
+}
 
   /**
    * Change game state and show new panel/screen

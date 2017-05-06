@@ -319,6 +319,38 @@ public class ShipDesign {
   }
 
   /**
+   * Does ship design have DefanseComponent? True if one DefanseComponent is in place.
+   * @return True if DefanseComponent is found, otherwise false
+   */
+
+  public boolean hasDefenseComponent() {
+    for (ShipComponent comp : components) {
+      if (comp.getType() == ShipComponentType.ARMOR
+          || comp.getType() == ShipComponentType.SHIELD) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  /**
+   * Does ship design for MilitaryShip? True if one weapon is in place.
+   * @return True if ship is MilitaryShip, otherwise false
+   * 
+   */
+  public boolean isMilitaryShip() {
+    for (ShipComponent comp : components) {
+      if (comp.getType() == ShipComponentType.WEAPON_BEAM
+          || comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
+          || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
+          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  /**
    * Does ship design have engine? True if engine is in place.
    * @return True if engine is found, otherwise false
    */

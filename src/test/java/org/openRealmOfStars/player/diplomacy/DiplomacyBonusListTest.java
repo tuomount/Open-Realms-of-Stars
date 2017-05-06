@@ -97,6 +97,10 @@ public class DiplomacyBonusListTest {
     assertEquals(false,list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE));
     assertEquals(false,list.isBonusType(DiplomacyBonusType.IN_ALLIANCE));
     assertEquals(true,list.isBonusType(DiplomacyBonusType.IN_WAR));
+    result = list.addBonus(DiplomacyBonusType.LONG_PEACE, SpaceRace.HUMAN);
+    assertEquals(true, result);
+    assertEquals(true,list.isBonusType(DiplomacyBonusType.LONG_PEACE));
+    assertEquals(false,list.isBonusType(DiplomacyBonusType.IN_WAR));
   }
 
 }

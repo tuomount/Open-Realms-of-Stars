@@ -458,8 +458,7 @@ public class ShipDesign {
           power = power + freeSlots;
         }
       }
-      if (comp.getType() == ShipComponentType.ARMOR
-          || comp.getType() == ShipComponentType.SHIELD) {
+      if (hasDefenseComponent()) {
         power = power + comp.getDefenseValue();
       }
       if (comp.getEnergyResource() > 0) {
@@ -494,22 +493,18 @@ public class ShipDesign {
     if (index >= 0 && index < getNumberOfComponents()) {
       ShipComponent[] result = getComponentList();
       ShipComponent temp = result[index];
+      int target = 0;
       if (higher && index > 0) {
-        int target = index - 1;
-        result[index] = result[target];
-        result[target] = temp;
-        components.clear();
-        Collections.addAll(components, result);
-        return target;
+        target = index - 1;
       }
-      if (!higher && index < result.length - 1) {
-        int target = index + 1;
-        result[index] = result[target];
-        result[target] = temp;
-        components.clear();
-        Collections.addAll(components, result);
-        return target;
+      else if (!higher && index < result.length - 1) {
+        target = index + 1;
       }
+      result[index] = result[target];
+      result[target] = temp;
+      components.clear();
+      Collections.addAll(components, result);
+      return target;
     }
     return index;
   }

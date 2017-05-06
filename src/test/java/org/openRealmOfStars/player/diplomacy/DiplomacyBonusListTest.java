@@ -70,4 +70,33 @@ public class DiplomacyBonusListTest {
     assertEquals(0, list.getDiplomacyBonus());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPeaceAndWar() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    DiplomacyBonusList list = new DiplomacyBonusList(1, info);
+    boolean result = list.addBonus(DiplomacyBonusType.LONG_PEACE, SpaceRace.HUMAN);
+    assertEquals(true, result);
+    assertEquals(5, list.getDiplomacyBonus());
+    assertEquals(true,list.isBonusType(DiplomacyBonusType.LONG_PEACE));
+    assertEquals(false,list.isBonusType(DiplomacyBonusType.IN_WAR));
+    result = list.addBonus(DiplomacyBonusType.IN_TRADE_ALLIANCE, SpaceRace.HUMAN);
+    assertEquals(true, result);
+    assertEquals(true,list.isBonusType(DiplomacyBonusType.LONG_PEACE));
+    assertEquals(true,list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE));
+    assertEquals(false,list.isBonusType(DiplomacyBonusType.IN_WAR));
+    result = list.addBonus(DiplomacyBonusType.IN_ALLIANCE, SpaceRace.HUMAN);
+    assertEquals(true, result);
+    assertEquals(true,list.isBonusType(DiplomacyBonusType.LONG_PEACE));
+    assertEquals(true,list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE));
+    assertEquals(true,list.isBonusType(DiplomacyBonusType.IN_ALLIANCE));
+    assertEquals(false,list.isBonusType(DiplomacyBonusType.IN_WAR));
+    result = list.addBonus(DiplomacyBonusType.IN_WAR, SpaceRace.HUMAN);
+    assertEquals(true, result);
+    assertEquals(false,list.isBonusType(DiplomacyBonusType.LONG_PEACE));
+    assertEquals(false,list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE));
+    assertEquals(false,list.isBonusType(DiplomacyBonusType.IN_ALLIANCE));
+    assertEquals(true,list.isBonusType(DiplomacyBonusType.IN_WAR));
+  }
+
 }

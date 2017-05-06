@@ -86,6 +86,49 @@ public class DiplomacyBonusList {
   }
 
   /**
+   * Make war so that Alliance, trade alliance and long peace
+   * are removed from the list
+   */
+  private void makeWar() {
+    Iterator<DiplomacyBonus> iterator = list.iterator();
+    while (iterator.hasNext()) {
+      DiplomacyBonus diplomacyBonus = iterator.next();
+      if (diplomacyBonus.getType() == DiplomacyBonusType.IN_ALLIANCE
+          || diplomacyBonus.getType() == DiplomacyBonusType.IN_TRADE_ALLIANCE
+          || diplomacyBonus.getType() == DiplomacyBonusType.LONG_PEACE) {
+        iterator.remove();
+      }
+    }
+  }
+
+  /**
+   * Make peace so that IN_WAR is removed from the list.
+   */
+  private void makePeace() {
+    Iterator<DiplomacyBonus> iterator = list.iterator();
+    while (iterator.hasNext()) {
+      DiplomacyBonus diplomacyBonus = iterator.next();
+      if (diplomacyBonus.getType() == DiplomacyBonusType.IN_WAR) {
+        iterator.remove();
+      }
+    }
+  }
+
+  /**
+   * Checks if diplomacy bonus list contains certain bonus type.
+   * Returns true if bonus type is found
+   * @param type DiplomacyBonusType to find
+   * @return True if type is found.
+   */
+  public boolean isBonusType(final DiplomacyBonusType type) {
+    for (DiplomacyBonus tmp : list) {
+      if (tmp.getType() == type) {
+        return true;
+      }
+    }
+    return false;
+  }
+  /**
    * Add Diplomacy bonus to list. If diplomacy is type which can
    * be only one and there is already one in list, then nothing
    * is done.
@@ -96,6 +139,7 @@ public class DiplomacyBonusList {
   public boolean addBonus(final DiplomacyBonusType type, final SpaceRace race) {
     DiplomacyBonus bonus = new DiplomacyBonus(type, race);
     boolean found = false;
+    boolean added = false;
     if (bonus.isOnlyOne()) {
       for (DiplomacyBonus tmp : list) {
         if (tmp.getType() == type) {
@@ -106,9 +150,15 @@ public class DiplomacyBonusList {
     }
     if (!found) {
       list.add(bonus);
-      return true;
+      added = true;
+      if (bonus.getType() == DiplomacyBonusType.IN_WAR) {
+        makeWar();
+      }
+      if (bonus.getType() == DiplomacyBonusType.LONG_PEACE) {
+        makePeace();
+      }
     }
-    return false;
+    return added;
   }
 
   /**

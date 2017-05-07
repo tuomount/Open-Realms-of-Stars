@@ -247,10 +247,29 @@ public class PlayerInfoTest {
     }
 
     /**
+     * Tests diplomacy fetching from player info.
+     */
+    @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
+    public void testDiplomacy() {
+      PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 8, 0);
+      assertEquals(null, info.getDiplomacy().getDiplomacyList(0));
+      assertNotEquals(null, info.getDiplomacy().getDiplomacyList(1));
+      assertNotEquals(null, info.getDiplomacy().getDiplomacyList(2));
+      assertNotEquals(null, info.getDiplomacy().getDiplomacyList(3));
+      assertNotEquals(null, info.getDiplomacy().getDiplomacyList(4));
+      assertNotEquals(null, info.getDiplomacy().getDiplomacyList(5));
+      assertNotEquals(null, info.getDiplomacy().getDiplomacyList(6));
+      assertNotEquals(null, info.getDiplomacy().getDiplomacyList(7));
+    }
+
+    
+    /**
      * input : sun, fleet output : unchartedSector percent purpose : test
      * getUnchatedValueSystem method
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testGetUnchartedValueSystem() {
         Sun sun = Mockito.mock(Sun.class);
         Fleet fleet = Mockito.mock(Fleet.class);

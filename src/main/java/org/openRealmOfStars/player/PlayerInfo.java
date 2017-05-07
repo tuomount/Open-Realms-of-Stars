@@ -10,6 +10,7 @@ import org.openRealmOfStars.AI.Mission.MissionList;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.message.MessageList;
@@ -116,6 +117,11 @@ public class PlayerInfo {
   private MissionList missions;
 
   /**
+   * Player's diplomacy relations to other players
+   */
+  private Diplomacy diplomacy;
+
+  /**
    * Uncharted map sector, only suns are visible
    */
   public static final byte UNCHARTED = 0;
@@ -131,14 +137,18 @@ public class PlayerInfo {
   /**
    * Constructor player info.
    * @param race Space Race for player
+   * @param maxPlayers Maximum number of players when game is created
+   * @param index Player's index in list when creating the player
    */
-  public PlayerInfo(final SpaceRace race) {
+  public PlayerInfo(final SpaceRace race, final int maxPlayers,
+      final int index) {
     setTechList(new TechList());
     this.msgList = new MessageList();
     shipStatList = new ArrayList<>();
     fleets = new FleetList();
     setHuman(false);
     setRace(race);
+    diplomacy = new Diplomacy(maxPlayers, index);
     switch (getRace()) {
     case HUMAN:
     case MECHIONS:
@@ -279,11 +289,25 @@ public class PlayerInfo {
   }
 
   /**
+   * Constructor player info.
+   * This constructor should be used only when
+   * creating temporary playerInfo without real
+   * diplomacy information. For example in JUnits.
+   * @param race Space Race for player
+   */
+  public PlayerInfo(final SpaceRace race) {
+    this(race, 4, 0);
+  }
+
+  /**
    * Read PlayerInfo from DataInputStream
    * @param dis DataInputStream
+   * @param maxPlayers Maximum players in list when game was created.
+   * @param index Current player index
    * @throws IOException if there is any problem with DataInputStream
    */
-  public PlayerInfo(final DataInputStream dis) throws IOException {
+  public PlayerInfo(final DataInputStream dis, final int maxPlayers,
+      final int index) throws IOException {
     empireName = IOUtilities.readString(dis);
     race = SpaceRaceUtility.getRaceByIndex(dis.readInt());
     totalCredits = dis.readInt();
@@ -315,7 +339,8 @@ public class PlayerInfo {
     if (!human) {
       missions = new MissionList(dis);
     }
-
+    // Still just creating the diplomacy not actually loading it
+    diplomacy = new Diplomacy(maxPlayers, index);
   }
 
   /**
@@ -350,6 +375,13 @@ public class PlayerInfo {
     }
   }
 
+  /**
+   * Get Player diplomatic relations to other players
+   * @return Diplomacy
+   */
+  public Diplomacy getDiplomacy() {
+    return diplomacy;
+  }
   /**
    * Calculate how many uncharted sectors is between start and end
    * @param sx Start X coordinate

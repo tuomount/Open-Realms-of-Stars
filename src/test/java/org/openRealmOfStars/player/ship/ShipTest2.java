@@ -659,19 +659,19 @@ public class ShipTest2 {
         ShipComponent[] shipcomponents1 = new ShipComponent[] {};
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
 
-        Mockito.when(shiphull.getSize()).thenReturn(ShipSize.SMALL);
+        Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.SMALL);
         Ship ship1 = new Ship(shipdesign);
         assertEquals(12, ship1.getInitiative());
 
-        Mockito.when(shiphull.getSize()).thenReturn(ShipSize.MEDIUM);
+        Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.MEDIUM);
         Ship ship2 = new Ship(shipdesign);
         assertEquals(8, ship2.getInitiative());
 
-        Mockito.when(shiphull.getSize()).thenReturn(ShipSize.LARGE);
+        Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.LARGE);
         Ship ship3 = new Ship(shipdesign);
         assertEquals(4, ship3.getInitiative());
 
-        Mockito.when(shiphull.getSize()).thenReturn(ShipSize.HUGE);
+        Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.HUGE);
         Ship ship4 = new Ship(shipdesign);
         assertEquals(0, ship4.getInitiative());
     }

@@ -497,14 +497,7 @@ private int increaseInitivativeByComponent() {
    * @return initiative associated ship hull size
    */
   private int getInitivativeByHullSize() {
-      return getInitivativeByHull();
-  }
-
-/**
- * @return int
- */
-private int getInitivativeByHull() {
-    int increased = 0;
+      int increased = 0;
       switch (hull.getSize()) {
       case SMALL: {
           increased = 12;
@@ -526,7 +519,7 @@ private int getInitivativeByHull() {
           increased = 0;
       }
     return increased;
-}
+  }
 
 /**
  * @return Increased initiative by empty space
@@ -608,31 +601,50 @@ private int increaseInitivativeByEmptySpace() {
    * @return Accuracy
    */
   public int getHitChance(final ShipComponent weapon) {
-    int hitChance = 0;
+    int accuracy = getHitChanceByWeaponType(weapon);
+    accuracy += increaseHitChanceByComponent();
+    return accuracy;
+  }
+
+/**
+ * @param weapon ShipComponent
+ * @return Accuracy by weapon type
+ */
+private int getHitChanceByWeaponType(final ShipComponent weapon) {
+    int accuracy = 0;
     switch (weapon.getType()) {
     case WEAPON_BEAM:
-        hitChance = 100;
+        accuracy = 100;
       break;
     case WEAPON_RAILGUN:
     case WEAPON_PHOTON_TORPEDO:
-        hitChance = 75;
+        accuracy = 75;
       break;
     case WEAPON_ECM_TORPEDO:
     case WEAPON_HE_MISSILE:
     default:
-        hitChance = 50;
+        accuracy = 50;
       break;
     }
+    return accuracy;
+}
+
+/**
+ * @param Null
+ * @return  accuracy
+ */
+private int increaseHitChanceByComponent() {
+    int accuracy = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0
           && comp.getType() == ShipComponentType.TARGETING_COMPUTER
           && hasComponentEnergy(i)) {
-          hitChance = hitChance + comp.getDamage();
+          accuracy = accuracy + comp.getDamage();
       }
     }
-    return hitChance;
-  }
+    return accuracy;
+}
 
   /**
    * Damage component by randomly

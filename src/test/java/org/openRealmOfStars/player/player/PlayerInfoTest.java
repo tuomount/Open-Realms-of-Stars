@@ -3,6 +3,7 @@ package org.openRealmOfStars.player.player;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
@@ -62,6 +63,7 @@ public class PlayerInfoTest {
      * PlayerInfo constructor Human
      */
     @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoHuman() {
         PlayerInfo human = new PlayerInfo(SpaceRace.HUMAN);
         TechList techList = human.getTechList();
@@ -99,6 +101,7 @@ public class PlayerInfoTest {
      * PlayerInfo constructor Mechions
      */
     @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoMechions() {
         SpaceRace race = SpaceRace.MECHIONS;
         PlayerInfo mechion = new PlayerInfo(race);
@@ -137,6 +140,7 @@ public class PlayerInfoTest {
      * PlayerInfo constructor Centaurs
      */
     @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoCentaurs() {
         SpaceRace race = SpaceRace.CENTAURS;
         PlayerInfo centaur = new PlayerInfo(race);
@@ -175,6 +179,7 @@ public class PlayerInfoTest {
      * constructor Sporks
      */
     @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoSporks() {
         SpaceRace race = SpaceRace.SPORKS;
         PlayerInfo spork = new PlayerInfo(race);
@@ -210,6 +215,7 @@ public class PlayerInfoTest {
      * test PlayerInfo constructor Greyans
      */
     @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoGreyans() {
         SpaceRace race = SpaceRace.GREYANS;
         PlayerInfo greyan = new PlayerInfo(race);
@@ -271,6 +277,7 @@ public class PlayerInfoTest {
      * getUnchartedSector method four case
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testGetUnchartedSector() {
         Sun sun = Mockito.mock(Sun.class);
         Fleet fleet = Mockito.mock(Fleet.class);
@@ -309,6 +316,7 @@ public class PlayerInfoTest {
      * getSectorVisibility method
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testGetSectorVisibility() {
         Coordinate coord = Mockito.mock(Coordinate.class);
         Mockito.when(coord.getX()).thenReturn(0);
@@ -334,6 +342,7 @@ public class PlayerInfoTest {
      * resetVisibilityDataAfterTurn method
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testResetVisibilityDataAfterTurn() {
         Coordinate coord = Mockito.mock(Coordinate.class);
         Mockito.when(coord.getX()).thenReturn(1);

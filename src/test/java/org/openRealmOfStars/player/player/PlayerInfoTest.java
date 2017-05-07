@@ -81,7 +81,8 @@ public class PlayerInfoTest {
         assertEquals("Fission source Mk1", tech[5].getName());
         assertEquals(1, tech[5].getLevel());
 
-        ShipStat expectedStat = new ShipStat(ShipGenerator.createScout(human));
+        ShipStat expectedStat = new ShipStat(ShipGenerator
+            .createScout(human));
         assertEquals(expectedStat.toString(), statList[0].toString());
         expectedStat = new ShipStat(ShipGenerator.createColony(human, false));
         assertEquals(expectedStat.toString(), statList[1].toString());
@@ -104,7 +105,8 @@ public class PlayerInfoTest {
         TechList techList = mechion.getTechList();
         Tech[] tech = techList.getList();
         ShipStat[] statList = mechion.getShipStatList();
-        ShipStat expectedStat = new ShipStat(ShipGenerator.createScout(mechion));
+        ShipStat expectedStat = new ShipStat(ShipGenerator
+            .createScout(mechion));
 
         assertEquals(TechType.Combat, tech[0].getType());
         assertEquals(1, tech[0].getLevel());
@@ -119,7 +121,8 @@ public class PlayerInfoTest {
         assertEquals("Fission source Mk1", tech[5].getName());
         assertEquals(1, tech[5].getLevel());
         assertEquals(expectedStat.toString(), statList[0].toString());
-        expectedStat = new ShipStat(ShipGenerator.createColony(mechion, false));
+        expectedStat = new ShipStat(ShipGenerator.createColony(mechion,
+            false));
         assertEquals(expectedStat.toString(), statList[1].toString());
     }
 
@@ -155,7 +158,8 @@ public class PlayerInfoTest {
         assertEquals("Fission source Mk1", tech[5].getName());
         assertEquals(1, tech[5].getLevel());
         assertEquals(expectedStat.toString(), statList[0].toString());
-        expectedStat = new ShipStat(ShipGenerator.createColony(centaur, false));
+        expectedStat = new ShipStat(ShipGenerator.createColony(centaur,
+            false));
         assertEquals(expectedStat.toString(), statList[1].toString());
     }
 
@@ -229,7 +233,8 @@ public class PlayerInfoTest {
         assertEquals(TechType.Electrics, tech[7].getType());
         assertEquals(1, tech[7].getLevel());
 
-        ShipStat expectedStat = new ShipStat(ShipGenerator.createScout(greyan));
+        ShipStat expectedStat = new ShipStat(ShipGenerator
+            .createScout(greyan));
         assertEquals(expectedStat.toString(), statList[0].toString());
         expectedStat = new ShipStat(ShipGenerator.createColony(greyan, false));
         assertEquals(expectedStat.toString(), statList[1].toString());

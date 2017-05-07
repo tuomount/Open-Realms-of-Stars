@@ -144,7 +144,6 @@ public class Combat {
     setPlanet(null);
     endCombatHandled = false;
   }
-
 /**
  * Add combatShip to combatShipList
  * @param fleet Player's Fleet
@@ -207,40 +206,19 @@ private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
     boolean result = false;
     ShipComponent weapon = shooter.getShip().getComponent(componentUse);
     if (weapon != null && weapon.isWeapon()) {
-      double sx = shooter.getX();
-      double sy = shooter.getY();
-      double endX = target.getX();
-      double endY = target.getY();
-      double mx;
-      double my;
-      double dx = Math.abs(sx - endX);
-      double dy = Math.abs(sy - endY);
+      CombatCoordinate shooterCoordinate =
+              new CombatCoordinate(shooter.getX(), shooter.getY());
+      CombatCoordinate targetCoordinate =
+              new CombatCoordinate(target.getX(), target.getY());
+      double dx = Math.abs(shooter.getX() - target.getX());
+      double dy = Math.abs(shooter.getY() - target.getY());
       int distance = (int) dy;
       if (dx > dy) {
         distance = (int) dx;
       }
-      if (distance > 0) {
-        mx = (endX - sx) / distance;
-        my = (endY - sy) / distance;
-      } else {
-        mx = 0;
-        my = 0;
-      }
       if (weapon.getWeaponRange() >= distance && distance > 0) {
-        for (int i = 0; i < distance + 1; i++) {
-          sx = sx + mx;
-          sy = sy + my;
-          int ix = (int) Math.round(sx);
-          int iy = (int) Math.round(sy);
-          if (ix == target.getX() && iy == target.getY()) {
-            result = true;
-            break;
-          }
-          if (isBlocked(ix, iy)) {
-            result = false;
-            break;
-          }
-        }
+          result = launchIntercept(distance,
+                  shooterCoordinate, targetCoordinate);
       }
 
     }
@@ -248,6 +226,41 @@ private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
     return result;
   }
 
+  /**
+ * @param distance distance between shooter and target
+ * @param shooter shooter coordinate
+ * @param target target coordinate
+ * @return boolean is hit or not
+ */
+public boolean launchIntercept(final int distance,
+          final CombatCoordinate shooter, final CombatCoordinate target) {
+      boolean isHit = false;
+      double sx = shooter.getX();
+      double sy = shooter.getY();
+      double mx, my;
+      if (distance > 0) {
+          mx = (target.getX() - shooter.getX()) / distance;
+          my = (target.getY() - shooter.getY()) / distance;
+      } else {
+          mx = 0;
+          my = 0;
+          }
+      for (int i = 0; i < distance + 1; i++) {
+          sx = sx + mx;
+          sy = sy + my;
+          int ix = (int) Math.round(sx);
+          int iy = (int) Math.round(sy);
+          if (ix == target.getX() && iy == target.getY()) {
+              isHit = true;
+            break;
+          }
+          if (isBlocked(ix, iy)) {
+              isHit = false;
+            break;
+          }
+      }
+      return isHit;
+  }
   /**
    * Get most powerful ship opponent has or null
    * @param info Player Info who is doing the comparison.

@@ -133,14 +133,14 @@ public class FleetList {
    * @return new fleet name
    */
   public String generateUniqueName() {
-    String result = null;
+    String resultUniqueName = null;
     for (int i = fleetList.size() + 1; i >= 0; i--) {
-      result = "Fleet #" + i;
-      if (isUniqueName(result, null)) {
+        resultUniqueName = "Fleet #" + i;
+      if (isUniqueName(resultUniqueName, null)) {
         break;
       }
     }
-    return result;
+    return resultUniqueName;
   }
 
   /**
@@ -242,14 +242,15 @@ public class FleetList {
    * @return Fleet or null if list contains no fleets
    */
   public Fleet getByName(final String name) {
+      Fleet getFleetByName = null;
     if (fleetList.size() > 0) {
       for (Fleet fleet : fleetList) {
         if (fleet.getName().equals(name)) {
-          return fleet;
+            getFleetByName = fleet;
         }
       }
     }
-    return null;
+    return getFleetByName;
   }
 
   /**
@@ -258,15 +259,16 @@ public class FleetList {
    * @return index number or -1 if not found
    */
   public int getIndexByName(final String name) {
+      int index = -1;
     if (fleetList.size() > 0) {
       for (int i = 0; i < fleetList.size(); i++) {
         Fleet fleet = fleetList.get(i);
         if (fleet.getName().equals(name)) {
-          return i;
+          index = i;
         }
       }
     }
-    return -1;
+    return index;
   }
 
   /**

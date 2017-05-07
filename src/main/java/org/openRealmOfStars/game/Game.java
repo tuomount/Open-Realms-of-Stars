@@ -49,7 +49,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
- *
+ * 
  * Open Realm of Stars game project
  * Copyright (C) 2016,2017  Tuomo Untinen
  *
@@ -192,6 +192,7 @@ public class Game extends JFrame implements ActionListener {
    * Change Message Fleet or Planet
    */
   private ChangeMessage changeMessage;
+  
   /**
    * Get Star map
    * @return StarMap
@@ -586,7 +587,10 @@ public class Game extends JFrame implements ActionListener {
     }
   }
 
-private void fleetView() {
+  /**
+   * Show fleet View
+   */
+  private void fleetView() {
     if (starMapView.getStarMapMouseListener()
              .getLastClickedFleet() != null) {
         Fleet fleet = starMapView.getStarMapMouseListener()
@@ -600,9 +604,14 @@ private void fleetView() {
         }
         showFleetView(planet, fleet, interactive);
       }
-}
+  }
 
-private void planetView(final Message focusMessage) {
+
+  /**
+   * Show planet View
+   * @param focusMessage Focused message, can be also null
+   */
+  private void planetView(final Message focusMessage) {
    if (focusMessage != null) {
         Planet planet = starMap.getPlanetByCoordinate(focusMessage.getX(),
             focusMessage.getY());
@@ -625,25 +634,41 @@ private void planetView(final Message focusMessage) {
         }
         showPlanetView(planet, interactive);
       }
-}
+  }
 
-private void shipDesign() {
+
+  /**
+   * Show ship design
+   */
+  private void shipDesign() {
    if (shipView != null && shipView.isCopyClicked()) {
         showShipDesignView(shipView.getSelectedShip());
       } else {
         showShipDesignView(null);
       }
-}
 
-private void combat(final Object dataObject) {
+  }
+
+
+  /**
+   * Show combat
+   * @param dataObject Depends on which state is changed
+   */
+  private void combat(final Object dataObject) {
     if (dataObject instanceof Combat) {
         showCombat((Combat) dataObject);
       } else {
         showCombat(null);
       }
-}
 
-private void planetBombingView(final Object dataObject) {
+  }
+
+
+  /**
+   * Show planetBombingView
+   * @param dataObject Depends on which state is changed
+   */
+  private void planetBombingView(final Object dataObject) {
    boolean changed = false;
       if (dataObject instanceof FleetView) {
         FleetView view = (FleetView) dataObject;
@@ -659,9 +684,14 @@ private void planetBombingView(final Object dataObject) {
       if (!changed) {
         changeGameState(GameState.STARMAP);
       }
-}
 
-private void makeNewGame() {
+  }
+
+
+  /**
+   * Make new Game State
+   */
+  private void makeNewGame() {
     setPlayerInfo();
       starMap = new StarMap(galaxyConfig, players);
       starMap.updateStarMapOnStartGame();
@@ -670,18 +700,29 @@ private void makeNewGame() {
       setNullView();
       calcuCorpData(corpData);
       changeGameState(GameState.STARMAP);
-}
 
-private void calcuCorpData(final NewsCorpData corpData) {
+  }
+
+
+  /**
+   * Calculate CorpData
+   * @param corpData various calculations
+   */
+  private void calcuCorpData(final NewsCorpData corpData) {
       corpData.calculateCredit(players);
       corpData.calculateCulture(starMap.getPlanetList(), players);
       corpData.calculateMilitary(players);
       corpData.calculatePlanets(starMap.getPlanetList());
       corpData.calculatePopulation(starMap.getPlanetList());
       corpData.calculateResearch(players);
-}
 
-private void setPlayerInfo() {
+  }
+
+
+  /**
+   * Set Player information when make new game
+   */
+  private void setPlayerInfo() {
    players = new PlayerList();
       for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
         PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i));
@@ -691,15 +732,21 @@ private void setPlayerInfo() {
         }
         players.addPlayer(info);
       }
-}
 
-private void setNullView() {
+  }
+
+
+  /**
+   * Set null in view when make new game
+   */
+  private void setNullView() {
       starMapView = null;
       combatView = null;
       researchView = null;
       shipView = null;
       shipDesignView = null;
-}
+
+  }
 
   /**
    * Change game state and show new panel/screen

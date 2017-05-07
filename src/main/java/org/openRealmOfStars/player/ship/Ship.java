@@ -811,6 +811,18 @@ private int increaseHitChanceByComponent() {
    * @return defense value for ship
    */
   public int getDefenseValue() {
+    int defenseValue = getDefenseValueByShipHullSize();
+    defenseValue += increaseDefenseValueWithJammer();
+    if (getTacticSpeed() == 0) {
+        defenseValue = defenseValue - 15;
+    }
+    return defenseValue;
+  }
+
+/**
+ * @return defenseValue by ship hull size
+ */
+private int getDefenseValueByShipHullSize() {
     int defenseValue;
     switch (hull.getSize()) {
     case SMALL:
@@ -828,6 +840,14 @@ private int increaseHitChanceByComponent() {
     default:
         defenseValue = 0;
     }
+    return defenseValue;
+}
+
+/**
+ * @return defenseValue
+ */
+private int increaseDefenseValueWithJammer() {
+    int defenseValue = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.JAMMER
@@ -835,11 +855,8 @@ private int increaseHitChanceByComponent() {
           defenseValue = defenseValue + comp.getDefenseValue();
       }
     }
-    if (getTacticSpeed() == 0) {
-        defenseValue = defenseValue - 15;
-    }
     return defenseValue;
-  }
+}
 
   /**
    * Get number of components in ship's component list

@@ -795,6 +795,134 @@ public class ShipTest2 {
     }
     
     /**
+     * Purpose: Confirm getDefenseValue() 
+     * Input: Various shipHull Size
+     * Expected:
+     * return appropriate various result
+     */
+    @Test
+    public void TestGetDefenseValueByShipHullSize() {
+        ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+        ShipHull shiphull = Mockito.mock(ShipHull.class);
+        ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+        ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+        
+        Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+        Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+        Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+        Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+        Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+        Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+        Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+        Mockito.when(shipdesign.getHull().getImage())
+                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+        Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+        ShipComponent[] shipcomponents1 = new ShipComponent[] {engine, energy};
+        Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
+        
+        Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.SMALL);
+        Ship ship1 = new Ship(shipdesign);
+        assertEquals(10, ship1.getDefenseValue());
+
+        Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.MEDIUM);
+        Ship ship2 = new Ship(shipdesign);
+        assertEquals(5, ship2.getDefenseValue());
+
+        Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.LARGE);
+        Ship ship3 = new Ship(shipdesign);
+        assertEquals(0, ship3.getDefenseValue());
+
+        Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.HUGE);
+        Ship ship4 = new Ship(shipdesign);
+        assertEquals(-5, ship4.getDefenseValue());
+    }
+    
+    /**
+     * Purpose: Confirm getDefenseValue() 
+     * Input: Various shipHull Size with jammer
+     * Expected:
+     * return appropriate various result
+     */
+    @Test
+    public void TestGetDefenseValueByShipHullSizeWithJammer() {
+        ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+        ShipHull shiphull = Mockito.mock(ShipHull.class);
+        ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+        ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+        ShipComponent jammer = ShipComponentFactory.createByName("Jammer Mk1");
+
+        Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+        Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+        Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+        Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+        Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+        Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+        Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+        Mockito.when(shipdesign.getHull().getImage())
+                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+        Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+        ShipComponent[] shipcomponents1 = new ShipComponent[] {engine, energy, jammer};
+        Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
+        
+        Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.SMALL);
+        Ship ship1 = new Ship(shipdesign);
+        assertEquals(15, ship1.getDefenseValue());
+
+        Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.MEDIUM);
+        Ship ship2 = new Ship(shipdesign);
+        assertEquals(10, ship2.getDefenseValue());
+
+        Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.LARGE);
+        Ship ship3 = new Ship(shipdesign);
+        assertEquals(5, ship3.getDefenseValue());
+
+        Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.HUGE);
+        Ship ship4 = new Ship(shipdesign);
+        assertEquals(0, ship4.getDefenseValue());
+    }
+    /**
+     * Purpose: Confirm getDefenseValue() 
+     * Input: Various shipHull Size with empty engine
+     * Expected:
+     * return appropriate various result
+     */
+    @Test
+    public void TestGetDefenseValueByShipHullSizeWithEmptyEngine() {
+        ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
+        ShipHull shiphull = Mockito.mock(ShipHull.class);
+        ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+        
+        Mockito.when(shipdesign.getName()).thenReturn(SHIP_DESIGN_NAME);
+        Mockito.when(shipdesign.getCost()).thenReturn(SHIP_DESIGN_COST);
+        Mockito.when(shipdesign.getMetalCost()).thenReturn(SHIP_DESIGN_METALCOST);
+        Mockito.when(shipdesign.getHull()).thenReturn(shiphull);
+        Mockito.when(shipdesign.getHull().getSlotHull()).thenReturn(SHIP_HULL_SLOT);
+        Mockito.when(shipdesign.getTotalShield()).thenReturn(SHIP_DESIGN_TOTALSHIELD);
+        Mockito.when(shipdesign.getTotalArmor()).thenReturn(SHIP_DESIGN_TOTALARMOR);
+        Mockito.when(shipdesign.getHull().getImage())
+                .thenReturn(ShipImages.getByRace(SpaceRace.HUMAN).getShipImage(SHIP_IMAGE_INDEX));
+        Mockito.when(shipdesign.getDesignInfo()).thenReturn(SHIP_DESIGN_INFO);
+        ShipComponent[] shipcomponents1 = new ShipComponent[] {energy};
+        Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponents1);
+        
+        Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.SMALL);
+        Ship ship1 = new Ship(shipdesign);
+        assertEquals(-5, ship1.getDefenseValue());
+
+        Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.MEDIUM);
+        Ship ship2 = new Ship(shipdesign);
+        assertEquals(-10, ship2.getDefenseValue());
+
+        Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.LARGE);
+        Ship ship3 = new Ship(shipdesign);
+        assertEquals(-15, ship3.getDefenseValue());
+
+        Mockito.when(shipdesign.getHull().getSize()).thenReturn(ShipSize.HUGE);
+        Ship ship4 = new Ship(shipdesign);
+        assertEquals(-20, ship4.getDefenseValue());
+    }
+    
+    /**
      * Purpose: Confirm getHitChance Method Input: ship with various weapon
      * 
      * Expected:

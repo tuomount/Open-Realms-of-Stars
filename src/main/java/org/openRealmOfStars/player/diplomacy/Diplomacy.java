@@ -1,7 +1,5 @@
 package org.openRealmOfStars.player.diplomacy;
 
-import org.openRealmOfStars.player.PlayerList;
-
 /**
 *
 * Open Realm of Stars game project
@@ -21,7 +19,9 @@ import org.openRealmOfStars.player.PlayerList;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 *
-* Diplomacy for player and handling of it
+* Diplomacy for player and handling of it.
+* Diplomacy creates Diplomacy Bonus lists for all players
+* except the one who is creating the Diplomacy.
 *
 */
 public class Diplomacy {
@@ -33,15 +33,14 @@ public class Diplomacy {
 
   /**
    * Constructor for Diplomacy for one player
-   * @param players All players in list
+   * @param maxPlayers Maximum number of players when game is created
    * @param playerIndex Which player is creating the list
    */
-  public Diplomacy(final PlayerList players, final int playerIndex) {
-    diplomacyList = new DiplomacyBonusList[players.getCurrentMaxPlayers()];
-    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
+  public Diplomacy(final int maxPlayers, final int playerIndex) {
+    diplomacyList = new DiplomacyBonusList[maxPlayers];
+    for (int i = 0; i < maxPlayers; i++) {
       if (i != playerIndex) {
-        diplomacyList[i] = new DiplomacyBonusList(i,
-            players.getPlayerInfoByIndex(i));
+        diplomacyList[i] = new DiplomacyBonusList(i);
       }
     }
   }

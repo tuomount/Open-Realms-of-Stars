@@ -1,9 +1,9 @@
 package org.openRealmOfStars.player.diplomacy;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 
 /**
@@ -25,15 +25,11 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 *
-* Diplomacy Bonus List and handling of it
+* Diplomacy Bonus List and handling of it. This is list of diplomacy
+* bonus for certain player.
 *
 */
 public class DiplomacyBonusList {
-
-  /**
-   * PlayerInfo with whom diplomacy is affecting
-   */
-  private PlayerInfo info;
 
   /**
    * This is for saving PlayerInfo index for saved game
@@ -46,22 +42,15 @@ public class DiplomacyBonusList {
   private List<DiplomacyBonus> list;
 
   /**
-   * Constructor for Diplomacy Bonus List
+   * Constructor for Diplomacy Bonus List. List contains
+   * diplomacy bonuses for certain player by some player.
+   * DiplomacyBonusList class does not define that player who
+   * creates the list only the player who list affects.
    * @param index Index for player info
-   * @param player Player info with whom this diplomacy affects
    */
-  public DiplomacyBonusList(final int index, final PlayerInfo player) {
-    this.info = player;
+  public DiplomacyBonusList(final int index) {
     this.playerIndex = index;
     list = new ArrayList<>();
-  }
-
-  /**
-   * Get Player Info with diplomacy affects
-   * @return PlayerInfo
-   */
-  public PlayerInfo getInfo() {
-    return info;
   }
 
   /**
@@ -85,6 +74,49 @@ public class DiplomacyBonusList {
   }
 
   /**
+   * Make war so that Alliance, trade alliance and long peace
+   * are removed from the list
+   */
+  private void makeWar() {
+    Iterator<DiplomacyBonus> iterator = list.iterator();
+    while (iterator.hasNext()) {
+      DiplomacyBonus diplomacyBonus = iterator.next();
+      if (diplomacyBonus.getType() == DiplomacyBonusType.IN_ALLIANCE
+          || diplomacyBonus.getType() == DiplomacyBonusType.IN_TRADE_ALLIANCE
+          || diplomacyBonus.getType() == DiplomacyBonusType.LONG_PEACE) {
+        iterator.remove();
+      }
+    }
+  }
+
+  /**
+   * Make peace so that IN_WAR is removed from the list.
+   */
+  private void makePeace() {
+    Iterator<DiplomacyBonus> iterator = list.iterator();
+    while (iterator.hasNext()) {
+      DiplomacyBonus diplomacyBonus = iterator.next();
+      if (diplomacyBonus.getType() == DiplomacyBonusType.IN_WAR) {
+        iterator.remove();
+      }
+    }
+  }
+
+  /**
+   * Checks if diplomacy bonus list contains certain bonus type.
+   * Returns true if bonus type is found
+   * @param type DiplomacyBonusType to find
+   * @return True if type is found.
+   */
+  public boolean isBonusType(final DiplomacyBonusType type) {
+    for (DiplomacyBonus tmp : list) {
+      if (tmp.getType() == type) {
+        return true;
+      }
+    }
+    return false;
+  }
+  /**
    * Add Diplomacy bonus to list. If diplomacy is type which can
    * be only one and there is already one in list, then nothing
    * is done.
@@ -95,6 +127,7 @@ public class DiplomacyBonusList {
   public boolean addBonus(final DiplomacyBonusType type, final SpaceRace race) {
     DiplomacyBonus bonus = new DiplomacyBonus(type, race);
     boolean found = false;
+    boolean added = false;
     if (bonus.isOnlyOne()) {
       for (DiplomacyBonus tmp : list) {
         if (tmp.getType() == type) {
@@ -105,8 +138,30 @@ public class DiplomacyBonusList {
     }
     if (!found) {
       list.add(bonus);
-      return true;
+      added = true;
+      if (bonus.getType() == DiplomacyBonusType.IN_WAR) {
+        makeWar();
+      }
+      if (bonus.getType() == DiplomacyBonusType.LONG_PEACE) {
+        makePeace();
+      }
     }
-    return false;
+    return added;
+  }
+
+  /**
+   * Handle diplomacy bonus list for one turn.
+   * This will calculate bonus lasting and remove
+   * bonuses which lasting is zero.
+   */
+  public void handleForTurn() {
+    Iterator<DiplomacyBonus> iterator = list.iterator();
+    while (iterator.hasNext()) {
+      DiplomacyBonus bonus = iterator.next();
+      bonus.handleBonusForTurn();
+      if (bonus.getBonusLasting() == 0) {
+        iterator.remove();
+      }
+    }
   }
 }

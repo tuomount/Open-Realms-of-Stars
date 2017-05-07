@@ -319,6 +319,38 @@ public class ShipDesign {
   }
 
   /**
+   * Does ship design have DefanseComponent?
+   * True if one DefanseComponent is in place.
+   * @return True if DefanseComponent is found, otherwise false
+   */
+
+  public boolean hasDefenseComponent() {
+    for (ShipComponent comp : components) {
+      if (comp.getType() == ShipComponentType.ARMOR
+          || comp.getType() == ShipComponentType.SHIELD) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Does ship design for MilitaryShip? True if one weapon is in place.
+   * @return True if ship is MilitaryShip, otherwise false
+   */
+  public boolean isMilitaryShip() {
+    for (ShipComponent comp : components) {
+      if (comp.getType() == ShipComponentType.WEAPON_BEAM
+          || comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
+          || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
+          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Does ship design have engine? True if engine is in place.
    * @return True if engine is found, otherwise false
    */
@@ -377,18 +409,14 @@ public class ShipDesign {
     boolean militaryShip = false;
     power = getHull().getSlotHull() * components.size();
     for (ShipComponent comp : components) {
-      if (comp.getType() == ShipComponentType.WEAPON_BEAM
-          || comp.getType() == ShipComponentType.WEAPON_RAILGUN
-          || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
-          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) {
+      if (isMilitaryShip()) {
         militaryShip = true;
         power = power + comp.getDamage();
       }
       if (comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO) {
         power = power + comp.getDamage() / 2;
       }
-      if (comp.getType() == ShipComponentType.ARMOR
-          || comp.getType() == ShipComponentType.SHIELD) {
+      if (hasDefenseComponent()) {
         power = power + comp.getDefenseValue();
       }
       if (comp.getType() == ShipComponentType.ENGINE
@@ -430,8 +458,7 @@ public class ShipDesign {
           power = power + freeSlots;
         }
       }
-      if (comp.getType() == ShipComponentType.ARMOR
-          || comp.getType() == ShipComponentType.SHIELD) {
+      if (hasDefenseComponent()) {
         power = power + comp.getDefenseValue();
       }
       if (comp.getEnergyResource() > 0) {
@@ -466,22 +493,17 @@ public class ShipDesign {
     if (index >= 0 && index < getNumberOfComponents()) {
       ShipComponent[] result = getComponentList();
       ShipComponent temp = result[index];
+      int target = 0;
       if (higher && index > 0) {
-        int target = index - 1;
-        result[index] = result[target];
-        result[target] = temp;
-        components.clear();
-        Collections.addAll(components, result);
-        return target;
+        target = index - 1;
+      } else if (!higher && index < result.length - 1) {
+        target = index + 1;
       }
-      if (!higher && index < result.length - 1) {
-        int target = index + 1;
-        result[index] = result[target];
-        result[target] = temp;
-        components.clear();
-        Collections.addAll(components, result);
-        return target;
-      }
+      result[index] = result[target];
+      result[target] = temp;
+      components.clear();
+      Collections.addAll(components, result);
+      return target;
     }
     return index;
   }
@@ -556,8 +578,9 @@ public class ShipDesign {
     if (hasWeapons() && (hull.getHullType() == ShipHullType.FREIGHTER
         || hull.getHullType() == ShipHullType.PROBE)) {
       designOk = false;
-      sb.append(ShipDesignConsts.NO_WEAPONS_ALLOWED).append(hull.getHullType().toString())
-          .append("!\n");
+      sb.append(ShipDesignConsts.NO_WEAPONS_ALLOWED)
+        .append(hull.getHullType().toString())
+        .append("!\n");
     }
     boolean targetingComputer = false;
     boolean jammer = false;
@@ -634,35 +657,16 @@ public class ShipDesign {
       }
     }
     int emptySpace = this.hull.getMaxSlot() - components.size();
-    switch (emptySpace) {
-    case 1:
-    case 0: {
-      break;
-    }
-    case 2:
-    case 3: {
-      result = result + 1;
-      break;
-    }
-    case 4: {
-      result = result + 2;
-      break;
-    }
-    case 5: {
-      result = result + 3;
-      break;
-    }
-    case 6:
-    case 7:
-    case 8:
-    case 9:
-    case 11:
-    case 10: {
-      result = result + 4;
-      break;
-    }
-    default:
-      result = 0;
+    if (emptySpace == 2 || emptySpace == 3) {
+        result = result + 1;
+    } else if (emptySpace == 4) {
+        result = result + 2;
+    } else if (emptySpace == 5) {
+        result = result + 3;
+    } else if (6 <= emptySpace && emptySpace < 12) {
+        result = result + 4;
+    } else {
+        result = 0;
     }
     return result;
   }

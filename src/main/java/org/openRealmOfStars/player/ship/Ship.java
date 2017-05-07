@@ -257,11 +257,19 @@ public class Ship extends Construction {
    * @return Hull points
    */
   public int getHullPointForComponent(final int index) {
-    if (index >= 0 && index < hullPoints.length) {
+    if (isIndexValid(index)) {
       return hullPoints[index];
     }
     return 0;
   }
+
+/**
+ * @param index Component index
+ * @return true if index is valid value
+ */
+private boolean isIndexValid(final int index) {
+    return index >= 0 && index < hullPoints.length;
+}
 
   /**
    * Generate shields according the shields and generator
@@ -272,6 +280,7 @@ public class Ship extends Construction {
     boolean generatorUp = false;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
+
       if (comp.getType() == ShipComponentType.SHIELD && componentIsWorking(i)
           && !shieldsUp) {
         workingShields = true;
@@ -286,7 +295,6 @@ public class Ship extends Construction {
         if (shield + comp.getDefenseValue() <= getTotalShield()) {
           shield = shield + comp.getDefenseValue();
         }
-
       }
     }
     if (!workingShields) {
@@ -301,21 +309,48 @@ public class Ship extends Construction {
    * @return true if has energy
    */
   public boolean hasComponentEnergy(final int index) {
+      return hasComponent()
+              && (hasRemainingEnergy(index)
+                      || !isComponentRequireEnergy(index));
+  }
+
+/**
+ * @return true if has component
+ */
+private boolean hasComponent() {
+    return components.size() > 0;
+}
+
+/**
+ * @param index Component index
+ * @return true if component require energy
+ */
+private boolean isComponentRequireEnergy(final int index) {
+    return components.get(index).getEnergyRequirement() > 0;
+}
+
+/**
+ * @param index Component index
+ * @return true if remaining energy >= 0
+ */
+private boolean hasRemainingEnergy(final int index) {
+    return getRemainingEnergy(index) >= 0;
+}
+
+/**
+ * @param index Component index
+ * @return remaining energy
+ */
+private int getRemainingEnergy(final int index) {
     int energy = getTotalEnergy();
-    for (int i = 0; i < components.size(); i++) {
+    for (int i = 0; i <= index; i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getEnergyRequirement() > 0) {
         energy = energy - comp.getEnergyRequirement();
       }
-      if (index == i && (energy >= 0 || comp.getEnergyRequirement() == 0)) {
-        return true;
-      }
-      if (index == i && energy < 0) {
-        return false;
-      }
     }
-    return false;
-  }
+    return energy;
+}
 
   /**
    * Check if certain component has energy and hull points so it is functioning.
@@ -411,20 +446,20 @@ public class Ship extends Construction {
    * @return Speed
    */
   public int getFtlSpeed() {
-    int result = 0;
+    int ftlSpeed = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
           && hasComponentEnergy(i)) {
-        result = comp.getFtlSpeed();
+          ftlSpeed = comp.getFtlSpeed();
         break;
       }
     }
     if (hull.getHullType() == ShipHullType.PROBE) {
       // Probes have faster FTL
-      result = result + 1;
+        ftlSpeed = ftlSpeed + 1;
     }
-    return result;
+    return ftlSpeed;
   }
 
   /**
@@ -432,55 +467,82 @@ public class Ship extends Construction {
    * @return Initiative
    */
   public int getInitiative() {
-    int result;
-    switch (hull.getSize()) {
-    case SMALL: {
-      result = 12;
-      break;
-    }
-    case MEDIUM: {
-      result = 8;
-      break;
-    }
-    case LARGE: {
-      result = 4;
-      break;
-    }
-    case HUGE: {
-      result = 0;
-      break;
-    }
-    default:
-      result = 0;
-    }
+    int initiative = getInitivativeByHullSize();
+    initiative += increaseInitivativeByComponent();
+    initiative += increaseInitivativeByEmptySpace();
+    return initiative;
+  }
+
+/**
+ * @param result
+ * @return Increased initiative by component
+ */
+private int increaseInitivativeByComponent() {
+    int increased = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
           && hasComponentEnergy(i)) {
-        result = result + comp.getSpeed() + comp.getTacticSpeed();
+          increased = increased + comp.getSpeed() + comp.getTacticSpeed();
       }
       if (hullPoints[i] > 0 && hasComponentEnergy(i)
           && comp.getInitiativeBoost() > 0) {
-        result = result + comp.getInitiativeBoost();
+          increased = increased + comp.getInitiativeBoost();
       }
     }
-    int emptySpace = this.hull.getMaxSlot() - components.size();
-    switch (emptySpace) {
+    return increased;
+}
+
+  /**
+   * @return initiative associated ship hull size
+   */
+  private int getInitivativeByHullSize() {
+      int increased = 0;
+      switch (hull.getSize()) {
+      case SMALL: {
+          increased = 12;
+        break;
+      }
+      case MEDIUM: {
+          increased = 8;
+        break;
+      }
+      case LARGE: {
+          increased = 4;
+        break;
+      }
+      case HUGE: {
+          increased = 0;
+        break;
+      }
+      default:
+          increased = 0;
+      }
+    return increased;
+  }
+
+/**
+ * @return Increased initiative by empty space
+ */
+private int increaseInitivativeByEmptySpace() {
+    int initiative;
+    switch (this.hull.getMaxSlot() - components.size()) {
     case 1:
     case 0: {
+        initiative = 0;
       break;
     }
     case 2:
     case 3: {
-      result = result + 1;
+        initiative = 1;
       break;
     }
     case 4: {
-      result = result + 2;
+        initiative = 2;
       break;
     }
     case 5: {
-      result = result + 3;
+        initiative = 3;
       break;
     }
     case 6:
@@ -489,29 +551,30 @@ public class Ship extends Construction {
     case 9:
     case 11:
     case 10: {
-      result = result + 4;
+        initiative = 4;
       break;
     }
     default:
-      result = 0;
+        initiative = 0;
     }
-    return result;
-  }
+    return initiative;
+}
+
 
   /**
    * Get Scanner level
    * @return scanner Lvl
    */
   public int getScannerLvl() {
-    int result = 0;
+    int scannerLvl = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.SCANNER
-          && hasComponentEnergy(i) && comp.getScannerRange() > result) {
-        result = comp.getScannerRange();
+          && hasComponentEnergy(i) && comp.getScannerRange() > scannerLvl) {
+          scannerLvl = comp.getScannerRange();
       }
     }
-    return result;
+    return scannerLvl;
   }
 
   /**
@@ -519,15 +582,17 @@ public class Ship extends Construction {
    * @return scanner detection level
    */
   public int getScannerDetectionLvl() {
-    int result = 0;
+    int scannerDetectionLvl = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.SCANNER
-          && hasComponentEnergy(i) && comp.getCloakDetection() > result) {
-        result = comp.getCloakDetection();
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.SCANNER
+          && hasComponentEnergy(i)
+          && comp.getCloakDetection() > scannerDetectionLvl) {
+          scannerDetectionLvl = comp.getCloakDetection();
       }
     }
-    return result;
+    return scannerDetectionLvl;
   }
 
   /**
@@ -536,31 +601,50 @@ public class Ship extends Construction {
    * @return Accuracy
    */
   public int getHitChance(final ShipComponent weapon) {
-    int result = 0;
+    int accuracy = getHitChanceByWeaponType(weapon);
+    accuracy += increaseHitChanceByComponent();
+    return accuracy;
+  }
+
+/**
+ * @param weapon ShipComponent
+ * @return Accuracy by weapon type
+ */
+private int getHitChanceByWeaponType(final ShipComponent weapon) {
+    int accuracy = 0;
     switch (weapon.getType()) {
     case WEAPON_BEAM:
-      result = 100;
+        accuracy = 100;
       break;
     case WEAPON_RAILGUN:
     case WEAPON_PHOTON_TORPEDO:
-      result = 75;
+        accuracy = 75;
       break;
     case WEAPON_ECM_TORPEDO:
     case WEAPON_HE_MISSILE:
     default:
-      result = 50;
+        accuracy = 50;
       break;
     }
+    return accuracy;
+}
+
+/**
+ * @param Null
+ * @return  accuracy
+ */
+private int increaseHitChanceByComponent() {
+    int accuracy = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0
           && comp.getType() == ShipComponentType.TARGETING_COMPUTER
           && hasComponentEnergy(i)) {
-        result = result + comp.getDamage();
+          accuracy = accuracy + comp.getDamage();
       }
     }
-    return result;
-  }
+    return accuracy;
+}
 
   /**
    * Damage component by randomly
@@ -727,35 +811,52 @@ public class Ship extends Construction {
    * @return defense value for ship
    */
   public int getDefenseValue() {
-    int result;
+    int defenseValue = getDefenseValueByShipHullSize();
+    defenseValue += increaseDefenseValueWithJammer();
+    if (getTacticSpeed() == 0) {
+        defenseValue = defenseValue - 15;
+    }
+    return defenseValue;
+  }
+
+/**
+ * @return defenseValue by ship hull size
+ */
+private int getDefenseValueByShipHullSize() {
+    int defenseValue;
     switch (hull.getSize()) {
     case SMALL:
-      result = 10;
+        defenseValue = 10;
       break;
     case MEDIUM:
-      result = 5;
+        defenseValue = 5;
       break;
     case LARGE:
-      result = 0;
+        defenseValue = 0;
       break;
     case HUGE:
-      result = -5;
+        defenseValue = -5;
       break;
     default:
-      result = 0;
+        defenseValue = 0;
     }
+    return defenseValue;
+}
+
+/**
+ * @return defenseValue
+ */
+private int increaseDefenseValueWithJammer() {
+    int defenseValue = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.JAMMER
           && hasComponentEnergy(i)) {
-        result = result + comp.getDefenseValue();
+          defenseValue = defenseValue + comp.getDefenseValue();
       }
     }
-    if (getTacticSpeed() == 0) {
-      result = result - 15;
-    }
-    return result;
-  }
+    return defenseValue;
+}
 
   /**
    * Get number of components in ship's component list
@@ -813,7 +914,7 @@ public class Ship extends Construction {
    * @return Get Total troop power where improvements are taken to count
    */
   public int getTroopPower() {
-    int result = getColonist() * hull.getRace().getTrooperPower();
+    int troopPower = getColonist() * hull.getRace().getTrooperPower();
     int multiply = 100;
     boolean found = false;
     for (int i = 0; i < components.size(); i++) {
@@ -826,11 +927,11 @@ public class Ship extends Construction {
         found = true;
       }
     }
-    result = result * multiply / 100;
+    troopPower = troopPower * multiply / 100;
     if (!found) {
-      result = 0;
+        troopPower = 0;
     }
-    return result;
+    return troopPower;
   }
 
   /**
@@ -927,15 +1028,15 @@ public class Ship extends Construction {
    * @return Maximum shield
    */
   public int getTotalShield() {
-    int shield1 = 0;
+    int totalShield = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.SHIELD) {
-        shield1 = shield1 + comp.getDefenseValue();
+          totalShield = totalShield + comp.getDefenseValue();
       }
     }
-    return shield1;
+    return totalShield;
   }
 
   /**
@@ -979,15 +1080,15 @@ public class Ship extends Construction {
    * @return Maximum armor
    */
   public int getTotalArmor() {
-    int armor1 = 0;
+    int totalArmor = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (comp.getDefenseValue() > 0
           && comp.getType() == ShipComponentType.ARMOR) {
-        armor1 = armor1 + comp.getDefenseValue();
+          totalArmor = totalArmor + comp.getDefenseValue();
       }
     }
-    return armor1;
+    return totalArmor;
   }
 
   /**
@@ -1003,11 +1104,11 @@ public class Ship extends Construction {
    * @return hull points
    */
   public int getHullPoints() {
-    int value = 0;
+    int hullPoint = 0;
     for (int i = 0; i < hullPoints.length; i++) {
-      value = value + hullPoints[i];
+        hullPoint = hullPoint + hullPoints[i];
     }
-    return value;
+    return hullPoint;
   }
 
   /**
@@ -1087,13 +1188,15 @@ public class Ship extends Construction {
    * @return Cargo room for metal
    */
   public int getFreeCargoMetal() {
-    int result = 0;
+    int freeCargoMetal = 0;
     if (hull.getHullType() == ShipHullType.FREIGHTER) {
-      result = hull.getMaxSlot() - getNumberOfComponents();
-      result = result - getColonist() / 2 - getMetal() / 10 - getColonist() % 2;
-      result = result * 10;
+        freeCargoMetal = hull.getMaxSlot() - getNumberOfComponents();
+        freeCargoMetal = freeCargoMetal - getColonist() / 2
+                                        - getMetal() / 10
+                                        - getColonist() % 2;
+        freeCargoMetal = freeCargoMetal * 10;
     }
-    return result;
+    return freeCargoMetal;
   }
 
   /**
@@ -1101,13 +1204,13 @@ public class Ship extends Construction {
    * @return Cargo room for colonists
    */
   public int getFreeCargoColonists() {
-    int result = 0;
+    int freeCargoColonists = 0;
     if (hull.getHullType() == ShipHullType.FREIGHTER) {
-      result = hull.getMaxSlot() - getNumberOfComponents();
-      result = result - getColonist() / 2 - getMetal() / 10;
-      result = result * 2;
+        freeCargoColonists = hull.getMaxSlot() - getNumberOfComponents();
+        freeCargoColonists -= getColonist() / 2 - getMetal() / 10;
+        freeCargoColonists = freeCargoColonists * 2;
     }
-    return result;
+    return freeCargoColonists;
   }
 
   /**

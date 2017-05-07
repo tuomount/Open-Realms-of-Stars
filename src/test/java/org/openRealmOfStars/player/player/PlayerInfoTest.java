@@ -3,6 +3,8 @@ package org.openRealmOfStars.player.player;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
@@ -18,7 +20,9 @@ import org.mockito.Mockito;
 
 /**
  * 
- * Open Realm of Stars game project Copyright (C) 2017 GodBeom
+ * Open Realm of Stars game project 
+ * Copyright (C) 2017 GodBeom
+ * Copyright (C) 2017 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -49,7 +53,7 @@ public class PlayerInfoTest {
      */
     private static final byte VISIBLE = 2;
 
-    /*
+    /**
      * input : SpaceRace.HUMAN output : PlayerInfo's techList ={ one random
      * weapon in Combat TechType level 1, one random shield or armor in Defense
      * Type level 1, Hulltech level 1 Colony, Hulltech level 1 Scout Mk1,
@@ -60,6 +64,7 @@ public class PlayerInfoTest {
      * PlayerInfo constructor Human
      */
     @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoHuman() {
         PlayerInfo human = new PlayerInfo(SpaceRace.HUMAN);
         TechList techList = human.getTechList();
@@ -79,13 +84,14 @@ public class PlayerInfoTest {
         assertEquals("Fission source Mk1", tech[5].getName());
         assertEquals(1, tech[5].getLevel());
 
-        ShipStat expectedStat = new ShipStat(ShipGenerator.createScout(human));
+        ShipStat expectedStat = new ShipStat(ShipGenerator
+            .createScout(human));
         assertEquals(expectedStat.toString(), statList[0].toString());
         expectedStat = new ShipStat(ShipGenerator.createColony(human, false));
         assertEquals(expectedStat.toString(), statList[1].toString());
     }
 
-    /*
+    /**
      * input : SpaceRace.MECHIONS output : PlayerInfo's techList ={ one random
      * weapon in Combat TechType level 1, one random shield or armor in Defense
      * Type level 1, Hulltech level 1 Colony, Hulltech level 1 Scout Mk1,
@@ -96,13 +102,15 @@ public class PlayerInfoTest {
      * PlayerInfo constructor Mechions
      */
     @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoMechions() {
         SpaceRace race = SpaceRace.MECHIONS;
-        PlayerInfo human = new PlayerInfo(race);
-        TechList techList = human.getTechList();
+        PlayerInfo mechion = new PlayerInfo(race);
+        TechList techList = mechion.getTechList();
         Tech[] tech = techList.getList();
-        ShipStat[] statList = human.getShipStatList();
-        ShipStat expectedStat = new ShipStat(ShipGenerator.createScout(human));
+        ShipStat[] statList = mechion.getShipStatList();
+        ShipStat expectedStat = new ShipStat(ShipGenerator
+            .createScout(mechion));
 
         assertEquals(TechType.Combat, tech[0].getType());
         assertEquals(1, tech[0].getLevel());
@@ -117,11 +125,12 @@ public class PlayerInfoTest {
         assertEquals("Fission source Mk1", tech[5].getName());
         assertEquals(1, tech[5].getLevel());
         assertEquals(expectedStat.toString(), statList[0].toString());
-        expectedStat = new ShipStat(ShipGenerator.createColony(human, false));
+        expectedStat = new ShipStat(ShipGenerator.createColony(mechion,
+            false));
         assertEquals(expectedStat.toString(), statList[1].toString());
     }
 
-    /*
+    /**
      * input : SpaceRace.CENTAURS output : PlayerInfo's techList ={ one random
      * weapon in Combat TechType level 1, one random shield or armor in Defense
      * Type level 1, Hulltech level 1 Colony, Hulltech level 1 Scout Mk1,
@@ -132,13 +141,14 @@ public class PlayerInfoTest {
      * PlayerInfo constructor Centaurs
      */
     @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoCentaurs() {
         SpaceRace race = SpaceRace.CENTAURS;
-        PlayerInfo human = new PlayerInfo(race);
-        TechList techList = human.getTechList();
+        PlayerInfo centaur = new PlayerInfo(race);
+        TechList techList = centaur.getTechList();
         Tech[] tech = techList.getList();
-        ShipStat[] statList = human.getShipStatList();
-        ShipStat expectedStat = new ShipStat(ShipGenerator.createScout(human));
+        ShipStat[] statList = centaur.getShipStatList();
+        ShipStat expectedStat = new ShipStat(ShipGenerator.createScout(centaur));
 
         assertEquals(TechType.Combat, tech[0].getType());
         assertEquals(1, tech[0].getLevel());
@@ -153,11 +163,12 @@ public class PlayerInfoTest {
         assertEquals("Fission source Mk1", tech[5].getName());
         assertEquals(1, tech[5].getLevel());
         assertEquals(expectedStat.toString(), statList[0].toString());
-        expectedStat = new ShipStat(ShipGenerator.createColony(human, false));
+        expectedStat = new ShipStat(ShipGenerator.createColony(centaur,
+            false));
         assertEquals(expectedStat.toString(), statList[1].toString());
     }
 
-    /*
+    /**
      * input : SpaceRace.SPORKS output : PlayerInfo's techList ={ one random
      * weapon in Combat TechType level 1, one random weapon in Combat TechType
      * level 1, one random shield or armor in Defense Type level 1, Hulltech
@@ -169,10 +180,11 @@ public class PlayerInfoTest {
      * constructor Sporks
      */
     @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoSporks() {
         SpaceRace race = SpaceRace.SPORKS;
-        PlayerInfo human = new PlayerInfo(race);
-        TechList techList = human.getTechList();
+        PlayerInfo spork = new PlayerInfo(race);
+        TechList techList = spork.getTechList();
         Tech[] tech = techList.getList();
 
         assertEquals(TechType.Combat, tech[0].getType());
@@ -191,7 +203,7 @@ public class PlayerInfoTest {
         assertEquals(1, tech[6].getLevel());
     }
 
-    /*
+    /**
      * input : SpaceRace.GREYANS output : PlayerInfo's techList ={ one random
      * weapon in Combat TechType level 1, one random shield or armor in Defense
      * Type level 1, Hulltech level 1 Colony, Hulltech level 1 Scout Mk1,
@@ -204,12 +216,13 @@ public class PlayerInfoTest {
      * test PlayerInfo constructor Greyans
      */
     @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoGreyans() {
         SpaceRace race = SpaceRace.GREYANS;
-        PlayerInfo human = new PlayerInfo(race);
-        TechList techList = human.getTechList();
+        PlayerInfo greyan = new PlayerInfo(race);
+        TechList techList = greyan.getTechList();
         Tech[] tech = techList.getList();
-        ShipStat[] statList = human.getShipStatList();
+        ShipStat[] statList = greyan.getShipStatList();
         assertEquals(TechType.Combat, tech[0].getType());
         assertEquals(1, tech[0].getLevel());
         assertEquals(TechType.Defense, tech[1].getType());
@@ -226,18 +239,37 @@ public class PlayerInfoTest {
         assertEquals(1, tech[6].getLevel());
         assertEquals(TechType.Electrics, tech[7].getType());
         assertEquals(1, tech[7].getLevel());
-
-        ShipStat expectedStat = new ShipStat(ShipGenerator.createScout(human));
+        ShipStat expectedStat = new ShipStat(ShipGenerator
+            .createScout(greyan));
         assertEquals(expectedStat.toString(), statList[0].toString());
-        expectedStat = new ShipStat(ShipGenerator.createColony(human, false));
+        expectedStat = new ShipStat(ShipGenerator.createColony(greyan, false));
         assertEquals(expectedStat.toString(), statList[1].toString());
     }
 
-    /*
+    /**
+     * Tests diplomacy fetching from player info.
+     */
+    @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
+    public void testDiplomacy() {
+      PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 8, 0);
+      assertEquals(null, info.getDiplomacy().getDiplomacyList(0));
+      assertNotEquals(null, info.getDiplomacy().getDiplomacyList(1));
+      assertNotEquals(null, info.getDiplomacy().getDiplomacyList(2));
+      assertNotEquals(null, info.getDiplomacy().getDiplomacyList(3));
+      assertNotEquals(null, info.getDiplomacy().getDiplomacyList(4));
+      assertNotEquals(null, info.getDiplomacy().getDiplomacyList(5));
+      assertNotEquals(null, info.getDiplomacy().getDiplomacyList(6));
+      assertNotEquals(null, info.getDiplomacy().getDiplomacyList(7));
+    }
+
+    
+    /**
      * input : sun, fleet output : unchartedSector percent purpose : test
      * getUnchatedValueSystem method
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testGetUnchartedValueSystem() {
         Sun sun = Mockito.mock(Sun.class);
         Fleet fleet = Mockito.mock(Fleet.class);
@@ -257,13 +289,14 @@ public class PlayerInfoTest {
         assertEquals(expect, result);
     }
 
-    /*
+    /**
      * input : sun, fleet output : pathPoint(5,1) when all sector uncharted
      * pathPoint(1,5) when only (5,1) sector visible pathPoint(5,1) when
      * (5,1),(3,1) sector visible null when all sector visible purpose : test
      * getUnchartedSector method four case
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testGetUnchartedSector() {
         Sun sun = Mockito.mock(Sun.class);
         Fleet fleet = Mockito.mock(Fleet.class);
@@ -297,11 +330,12 @@ public class PlayerInfoTest {
         assertEquals(null, result);
     }
 
-    /*
+    /**
      * input : Coordinate output : VISIBLE FOG_OF_WAR UNCHARTED purpose : test
      * getSectorVisibility method
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testGetSectorVisibility() {
         Coordinate coord = Mockito.mock(Coordinate.class);
         Mockito.when(coord.getX()).thenReturn(0);
@@ -321,12 +355,13 @@ public class PlayerInfoTest {
         assertEquals(UNCHARTED, result);
     }
 
-    /*
+    /**
      * input : cloakingDetection level, VISIBLE state output : cloakingDetection
      * 0 setting state change VISIBLE to FOG_OF_WAR purpose : test
      * resetVisibilityDataAfterTurn method
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testResetVisibilityDataAfterTurn() {
         Coordinate coord = Mockito.mock(Coordinate.class);
         Mockito.when(coord.getX()).thenReturn(1);

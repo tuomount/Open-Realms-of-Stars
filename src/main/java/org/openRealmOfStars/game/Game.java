@@ -542,6 +542,7 @@ public class Game extends JFrame implements ActionListener {
       break;
     case NEW_GAME: {
       makeNewGame();
+
       break;
     }
     case PLANETBOMBINGVIEW: {

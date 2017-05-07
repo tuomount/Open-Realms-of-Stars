@@ -192,7 +192,6 @@ public class Game extends JFrame implements ActionListener {
    * Change Message Fleet or Planet
    */
   private ChangeMessage changeMessage;
-  
   /**
    * Get Star map
    * @return StarMap
@@ -587,12 +586,15 @@ public class Game extends JFrame implements ActionListener {
   }
 
 private void fleetView() {
-	if (starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
-        Fleet fleet = starMapView.getStarMapMouseListener().getLastClickedFleet();
+    if (starMapView.getStarMapMouseListener()
+             .getLastClickedFleet() != null) {
+        Fleet fleet = starMapView.getStarMapMouseListener()
+                .getLastClickedFleet();
         Planet planet = starMap.getPlanetByCoordinate(fleet.getX(),
             fleet.getY());
         boolean interactive = false;
-        if (starMap.getCurrentPlayerInfo() == starMap.getPlayerInfoByFleet(fleet)) {
+        if (starMap.getCurrentPlayerInfo()
+                == starMap.getPlayerInfoByFleet(fleet)) {
           interactive = true;
         }
         showFleetView(planet, fleet, interactive);
@@ -600,7 +602,7 @@ private void fleetView() {
 }
 
 private void planetView(final Message focusMessage) {
-	if (focusMessage != null) {
+   if (focusMessage != null) {
         Planet planet = starMap.getPlanetByCoordinate(focusMessage.getX(),
             focusMessage.getY());
         if (planet != null) {
@@ -625,7 +627,7 @@ private void planetView(final Message focusMessage) {
 }
 
 private void shipDesign() {
-	if (shipView != null && shipView.isCopyClicked()) {
+   if (shipView != null && shipView.isCopyClicked()) {
         showShipDesignView(shipView.getSelectedShip());
       } else {
         showShipDesignView(null);
@@ -633,7 +635,7 @@ private void shipDesign() {
 }
 
 private void combat(final Object dataObject) {
-	if (dataObject instanceof Combat) {
+    if (dataObject instanceof Combat) {
         showCombat((Combat) dataObject);
       } else {
         showCombat(null);
@@ -641,7 +643,7 @@ private void combat(final Object dataObject) {
 }
 
 private void planetBombingView(final Object dataObject) {
-	boolean changed = false;
+   boolean changed = false;
       if (dataObject instanceof FleetView) {
         FleetView view = (FleetView) dataObject;
         Planet planet = view.getPlanet();
@@ -659,7 +661,7 @@ private void planetBombingView(final Object dataObject) {
 }
 
 private void makeNewGame() {
-	  setPlayerInfo();
+    setPlayerInfo();
       starMap = new StarMap(galaxyConfig, players);
       starMap.updateStarMapOnStartGame();
       NewsCorpData corpData = starMap.getNewsCorpData();
@@ -669,8 +671,8 @@ private void makeNewGame() {
       changeGameState(GameState.STARMAP);
 }
 
-private void calcuCorpData(NewsCorpData corpData) {
-	  corpData.calculateCredit(players);
+private void calcuCorpData(final NewsCorpData corpData) {
+      corpData.calculateCredit(players);
       corpData.calculateCulture(starMap.getPlanetList(), players);
       corpData.calculateMilitary(players);
       corpData.calculatePlanets(starMap.getPlanetList());
@@ -679,7 +681,7 @@ private void calcuCorpData(NewsCorpData corpData) {
 }
 
 private void setPlayerInfo() {
-	players = new PlayerList();
+   players = new PlayerList();
       for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
         PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i));
         info.setEmpireName(galaxyConfig.getPlayerName(i));
@@ -691,7 +693,7 @@ private void setPlayerInfo() {
 }
 
 private void setNullView() {
-	starMapView = null;
+      starMapView = null;
       combatView = null;
       researchView = null;
       shipView = null;
@@ -788,7 +790,7 @@ private void setNullView() {
    * @param fleet Where to focus
    */
   private void changeMessageForFleets(final Fleet fleet) {
-    changeMessage = new ChangeMessageFleet(starMap,starMapView);
+    changeMessage = new ChangeMessageFleet(starMap, starMapView);
     changeMessage.changeMessage(fleet);
   }
 
@@ -797,8 +799,8 @@ private void setNullView() {
    * @param planet Where to focus
    */
   private void changeMessageForPlanet(final Planet planet) {
-	changeMessage = new ChangeMessagePlanet(starMap,starMapView);
-	changeMessage.changeMessage(planet);
+    changeMessage = new ChangeMessagePlanet(starMap, starMapView);
+    changeMessage.changeMessage(planet);
   }
 
   /**
@@ -869,7 +871,7 @@ private void setNullView() {
           Planet planet = starMap.getNextPlanetForPlayer(starMap
               .getCurrentPlayerInfo(), starMapView.getStarMapMouseListener()
               .getLastClickedPlanet(), true);
-          
+
           changeMessageForPlanet(planet);
         }
       } else {
@@ -991,7 +993,7 @@ private void setNullView() {
       // View Ship
       shipView.handleAction(arg0);
     }
-    //delete duplication 
+    //delete duplication
     if (gameState == GameState.VIEWSHIPS && shipView != null) {
       // View Ship
       shipView.handleAction(arg0);

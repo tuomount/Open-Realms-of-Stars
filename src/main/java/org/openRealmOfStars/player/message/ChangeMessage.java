@@ -1,7 +1,8 @@
 package org.openRealmOfStars.player.message;
 
+import org.openRealmOfStars.game.States.StarMapView;
+import org.openRealmOfStars.starMap.StarMap;
 /**
- * 
  * Open Realm of Stars game project
  * Copyright (C) 2016,2017  God Beom
  *
@@ -22,33 +23,43 @@ package org.openRealmOfStars.player.message;
  * Contains runnable main method which runs the Game class.
  *
  */
-import org.openRealmOfStars.game.States.StarMapView;
-import org.openRealmOfStars.starMap.StarMap;
-
 public abstract class ChangeMessage {
-	/**
-	 * StarMap in game
-	 */
-    public StarMap starMap;
-    
     /**
-	 * StarMapView in game
-	 */
-    public StarMapView starMapView;
+     * StarMap in game
+     */
+    private StarMap starMap;
+    /**
+     * StarMapView in game
+     */
+    private StarMapView starMapView;
 
     /**
-	 * constructor ChangeMessage
-	 * @param starMap StarMap of game class
-	 * @param starMapView StarMapView of game class
-	 */
+     * constructor ChangeMessage
+     * @param starMap StarMap of game class
+     * @param starMapView StarMapView of game class
+     */
     public ChangeMessage(final StarMap starMap, final StarMapView starMapView) {
         this.starMap = starMap;
         this.starMapView = starMapView;
     }
-    
     /**
-	 * Inherited part to use Template Method Pattern
-	 * @param data depend on inherited class
-	 */
+     * Inherited part to use Template Method Pattern
+     * @param <T> This is the type parameter
+     * @param data depend on inherited class
+     */
     public abstract <T> void changeMessage(T data);
+    /**
+     * Inherited class use StarMap variable
+     * @return starMap
+     */
+    public StarMap getStarMap() {
+        return starMap;
+    }
+    /**
+     * Inherited class use StarMapView variable
+     * @return starMapView
+     */
+    public StarMapView getStarMapView() {
+        return starMapView;
+    }
 }

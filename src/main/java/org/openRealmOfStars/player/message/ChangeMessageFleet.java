@@ -5,7 +5,6 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.StarMap;
 
 /**
- * 
  * Open Realm of Stars game project
  * Copyright (C) 2016,2017  God Beom
  *
@@ -29,30 +28,30 @@ import org.openRealmOfStars.starMap.StarMap;
 
 public class ChangeMessageFleet extends ChangeMessage {
 
-	/**
-	 * constructor ChangeMessageFleet
-	 * @param starMap StarMap of game class
-	 * @param starMapView StarMapView of game class
-	 */
+    /**
+     * constructor ChangeMessageFleet
+     * @param starMap StarMap of game class
+     * @param starMapView StarMapView of game class
+     */
     public ChangeMessageFleet(final StarMap starMap,
             final StarMapView starMapView) {
           super(starMap, starMapView);
     }
 
     /**
-	 * constructor ChangeMessage
-	 * @param data is fleet
-	 */
+     * constructor ChangeMessage
+     * @param data is fleet
+     */
     @Override
     public <T> void changeMessage(final T data) {
         Fleet fleet = (Fleet) data;
         if (fleet != null) {
-            starMap.setCursorPos(fleet.getX(), fleet.getY());
-            starMap.setDrawPos(fleet.getX(), fleet.getY());
-            starMapView.setShowFleet(fleet);
-            starMapView.getStarMapMouseListener()
+            getStarMap().setCursorPos(fleet.getX(), fleet.getY());
+            getStarMap().setDrawPos(fleet.getX(), fleet.getY());
+            getStarMapView().setShowFleet(fleet);
+            getStarMapView().getStarMapMouseListener()
             .setLastClickedFleet(fleet);
-            starMapView.getStarMapMouseListener()
+            getStarMapView().getStarMapMouseListener()
             .setLastClickedPlanet(null);
         }
     }

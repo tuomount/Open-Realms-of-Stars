@@ -49,7 +49,6 @@ import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
- * 
  * Open Realm of Stars game project
  * Copyright (C) 2016,2017  Tuomo Untinen
  *
@@ -192,7 +191,7 @@ public class Game extends JFrame implements ActionListener {
    * Change Message Fleet or Planet
    */
   private ChangeMessage changeMessage;
-  
+
   /**
    * Get Star map
    * @return StarMap

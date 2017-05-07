@@ -319,6 +319,38 @@ public class ShipDesign {
   }
 
   /**
+   * Does ship design have DefanseComponent? True if one DefanseComponent is in place.
+   * @return True if DefanseComponent is found, otherwise false
+   */
+
+  public boolean hasDefenseComponent() {
+    for (ShipComponent comp : components) {
+      if (comp.getType() == ShipComponentType.ARMOR
+          || comp.getType() == ShipComponentType.SHIELD) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  /**
+   * Does ship design for MilitaryShip? True if one weapon is in place.
+   * @return True if ship is MilitaryShip, otherwise false
+   * 
+   */
+  public boolean isMilitaryShip() {
+    for (ShipComponent comp : components) {
+      if (comp.getType() == ShipComponentType.WEAPON_BEAM
+          || comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
+          || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
+          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  /**
    * Does ship design have engine? True if engine is in place.
    * @return True if engine is found, otherwise false
    */
@@ -377,18 +409,14 @@ public class ShipDesign {
     boolean militaryShip = false;
     power = getHull().getSlotHull() * components.size();
     for (ShipComponent comp : components) {
-      if (comp.getType() == ShipComponentType.WEAPON_BEAM
-          || comp.getType() == ShipComponentType.WEAPON_RAILGUN
-          || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
-          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) {
+      if (isMilitaryShip()) {
         militaryShip = true;
         power = power + comp.getDamage();
       }
       if (comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO) {
         power = power + comp.getDamage() / 2;
       }
-      if (comp.getType() == ShipComponentType.ARMOR
-          || comp.getType() == ShipComponentType.SHIELD) {
+      if (hasDefenseComponent()) {
         power = power + comp.getDefenseValue();
       }
       if (comp.getType() == ShipComponentType.ENGINE
@@ -430,8 +458,7 @@ public class ShipDesign {
           power = power + freeSlots;
         }
       }
-      if (comp.getType() == ShipComponentType.ARMOR
-          || comp.getType() == ShipComponentType.SHIELD) {
+      if (hasDefenseComponent()) {
         power = power + comp.getDefenseValue();
       }
       if (comp.getEnergyResource() > 0) {
@@ -466,22 +493,18 @@ public class ShipDesign {
     if (index >= 0 && index < getNumberOfComponents()) {
       ShipComponent[] result = getComponentList();
       ShipComponent temp = result[index];
+      int target = 0;
       if (higher && index > 0) {
-        int target = index - 1;
-        result[index] = result[target];
-        result[target] = temp;
-        components.clear();
-        Collections.addAll(components, result);
-        return target;
+        target = index - 1;
       }
-      if (!higher && index < result.length - 1) {
-        int target = index + 1;
-        result[index] = result[target];
-        result[target] = temp;
-        components.clear();
-        Collections.addAll(components, result);
-        return target;
+      else if (!higher && index < result.length - 1) {
+        target = index + 1;
       }
+      result[index] = result[target];
+      result[target] = temp;
+      components.clear();
+      Collections.addAll(components, result);
+      return target;
     }
     return index;
   }

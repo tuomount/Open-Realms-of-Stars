@@ -5,9 +5,6 @@ import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.mockito.Mockito;
-import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.PlayerList;
 
 /**
  * 
@@ -34,15 +31,7 @@ public class DiplomacyTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
-    PlayerList players = Mockito.mock(PlayerList.class);
-    PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
-    PlayerInfo infoSelf = Mockito.mock(PlayerInfo.class);
-    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
-    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info1);
-    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(infoSelf);
-    Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info1);
-    Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info1);
-    Diplomacy diplomacy = new Diplomacy(players, 1);
+    Diplomacy diplomacy = new Diplomacy(4, 1);
     assertNotEquals(null, diplomacy.getDiplomacyList(0));
     assertNotEquals(null, diplomacy.getDiplomacyList(2));
     assertNotEquals(null, diplomacy.getDiplomacyList(3));

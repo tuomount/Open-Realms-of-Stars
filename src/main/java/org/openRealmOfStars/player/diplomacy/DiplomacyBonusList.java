@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 
 /**
@@ -33,11 +32,6 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 public class DiplomacyBonusList {
 
   /**
-   * PlayerInfo with whom diplomacy is affecting
-   */
-  private PlayerInfo info;
-
-  /**
    * This is for saving PlayerInfo index for saved game
    */
   private int playerIndex;
@@ -53,20 +47,10 @@ public class DiplomacyBonusList {
    * DiplomacyBonusList class does not define that player who
    * creates the list only the player who list affects.
    * @param index Index for player info
-   * @param player Player info with whom this diplomacy affects
    */
-  public DiplomacyBonusList(final int index, final PlayerInfo player) {
-    this.info = player;
+  public DiplomacyBonusList(final int index) {
     this.playerIndex = index;
     list = new ArrayList<>();
-  }
-
-  /**
-   * Get Player Info with diplomacy affects
-   * @return PlayerInfo
-   */
-  public PlayerInfo getInfo() {
-    return info;
   }
 
   /**

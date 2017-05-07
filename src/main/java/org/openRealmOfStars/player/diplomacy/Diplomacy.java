@@ -42,8 +42,7 @@ public class Diplomacy {
     diplomacyList = new DiplomacyBonusList[players.getCurrentMaxPlayers()];
     for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
       if (i != playerIndex) {
-        diplomacyList[i] = new DiplomacyBonusList(i,
-            players.getPlayerInfoByIndex(i));
+        diplomacyList[i] = new DiplomacyBonusList(i);
       }
     }
   }

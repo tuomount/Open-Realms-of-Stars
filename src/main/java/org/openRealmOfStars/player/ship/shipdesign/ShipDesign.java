@@ -319,7 +319,8 @@ public class ShipDesign {
   }
 
   /**
-   * Does ship design have DefanseComponent? True if one DefanseComponent is in place.
+   * Does ship design have DefanseComponent?
+   * True if one DefanseComponent is in place.
    * @return True if DefanseComponent is found, otherwise false
    */
 
@@ -332,11 +333,10 @@ public class ShipDesign {
     }
     return false;
   }
-  
+
   /**
    * Does ship design for MilitaryShip? True if one weapon is in place.
    * @return True if ship is MilitaryShip, otherwise false
-   * 
    */
   public boolean isMilitaryShip() {
     for (ShipComponent comp : components) {
@@ -349,7 +349,7 @@ public class ShipDesign {
     }
     return false;
   }
-  
+
   /**
    * Does ship design have engine? True if engine is in place.
    * @return True if engine is found, otherwise false
@@ -496,8 +496,7 @@ public class ShipDesign {
       int target = 0;
       if (higher && index > 0) {
         target = index - 1;
-      }
-      else if (!higher && index < result.length - 1) {
+      } else if (!higher && index < result.length - 1) {
         target = index + 1;
       }
       result[index] = result[target];
@@ -660,17 +659,13 @@ public class ShipDesign {
     int emptySpace = this.hull.getMaxSlot() - components.size();
     if (emptySpace == 2 || emptySpace == 3) {
         result = result + 1;
-    }
-    else if (emptySpace == 4) {
+    } else if (emptySpace == 4) {
         result = result + 2;
-    }
-    else if (emptySpace == 5) {
+    } else if (emptySpace == 5) {
         result = result + 3;
-    }
-    else if (6 <= emptySpace && emptySpace < 12) {
+    } else if (6 <= emptySpace && emptySpace < 12) {
         result = result + 4;
-    }
-    else {
+    } else {
         result = 0;
     }
     return result;

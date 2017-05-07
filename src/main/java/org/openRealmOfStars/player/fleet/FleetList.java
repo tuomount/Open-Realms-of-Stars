@@ -259,16 +259,16 @@ public class FleetList {
    * @return index number or -1 if not found
    */
   public int getIndexByName(final String name) {
-      int index = -1;
+      int fleetIndex = -1;
     if (fleetList.size() > 0) {
       for (int i = 0; i < fleetList.size(); i++) {
         Fleet fleet = fleetList.get(i);
         if (fleet.getName().equals(name)) {
-          index = i;
+            fleetIndex = i;
         }
       }
     }
-    return index;
+    return fleetIndex;
   }
 
   /**

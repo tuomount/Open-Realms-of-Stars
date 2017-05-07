@@ -497,7 +497,14 @@ private int increaseInitivativeByComponent() {
    * @return initiative associated ship hull size
    */
   private int getInitivativeByHullSize() {
-      int increased = 0;
+      return getInitivativeByHull();
+  }
+
+/**
+ * @return int
+ */
+private int getInitivativeByHull() {
+    int increased = 0;
       switch (hull.getSize()) {
       case SMALL: {
           increased = 12;
@@ -518,8 +525,8 @@ private int increaseInitivativeByComponent() {
       default:
           increased = 0;
       }
-      return increased;
-  }
+    return increased;
+}
 
 /**
  * @return Increased initiative by empty space

@@ -33,6 +33,9 @@ import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.message.ChangeMessage;
+import org.openRealmOfStars.player.message.ChangeMessageFleet;
+import org.openRealmOfStars.player.message.ChangeMessagePlanet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -41,6 +44,7 @@ import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
@@ -184,6 +188,11 @@ public class Game extends JFrame implements ActionListener {
    */
   private GalaxyConfig galaxyConfig;
 
+  /**
+   * Change Message Fleet or Planet
+   */
+  private ChangeMessage changeMessage;
+  
   /**
    * Get Star map
    * @return StarMap
@@ -533,49 +542,11 @@ public class Game extends JFrame implements ActionListener {
       showLoadGame();
       break;
     case NEW_GAME: {
-      players = new PlayerList();
-      for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
-        PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i));
-        info.setEmpireName(galaxyConfig.getPlayerName(i));
-        if (i == 0) {
-          info.setHuman(true);
-        }
-        players.addPlayer(info);
-      }
-      starMap = new StarMap(galaxyConfig, players);
-      starMap.updateStarMapOnStartGame();
-      players.setCurrentPlayer(0);
-      starMapView = null;
-      combatView = null;
-      researchView = null;
-      shipView = null;
-      shipDesignView = null;
-      starMap.getNewsCorpData().calculateCredit(players);
-      starMap.getNewsCorpData().calculateCulture(starMap.getPlanetList(),
-          players);
-      starMap.getNewsCorpData().calculateMilitary(players);
-      starMap.getNewsCorpData().calculatePlanets(starMap.getPlanetList());
-      starMap.getNewsCorpData().calculatePopulation(starMap.getPlanetList());
-      starMap.getNewsCorpData().calculateResearch(players);
-      changeGameState(GameState.STARMAP);
+      makeNewGame();
       break;
     }
     case PLANETBOMBINGVIEW: {
-      boolean changed = false;
-      if (dataObject instanceof FleetView) {
-        FleetView view = (FleetView) dataObject;
-        Planet planet = view.getPlanet();
-        Fleet fleet = view.getFleet();
-        if (fleet != null && planet != null
-            && fleet.getX() == planet.getX()
-            && fleet.getY() == planet.getY()) {
-          showPlanetBombingView(planet, fleet);
-          changed = true;
-        }
-      }
-      if (!changed) {
-        changeGameState(GameState.STARMAP);
-      }
+      planetBombingView(dataObject);
       break;
     }
     case CREDITS:
@@ -585,11 +556,7 @@ public class Game extends JFrame implements ActionListener {
       showStarMap(dataObject);
       break;
     case COMBAT: {
-      if (dataObject instanceof Combat) {
-        showCombat((Combat) dataObject);
-      } else {
-        showCombat(null);
-      }
+      combat(dataObject);
       break;
     }
     case RESEARCHVIEW:
@@ -602,15 +569,38 @@ public class Game extends JFrame implements ActionListener {
       showStatView();
       break;
     case SHIPDESIGN: {
-      if (shipView != null && shipView.isCopyClicked()) {
-        showShipDesignView(shipView.getSelectedShip());
-      } else {
-        showShipDesignView(null);
-      }
+      shipDesign();
       break;
     }
     case PLANETVIEW: {
-      if (focusMessage != null) {
+      planetView(focusMessage);
+      break;
+    }
+    case FLEETVIEW: {
+      fleetView();
+      break;
+    }
+    default: {
+        showMainMenu();
+    }
+    }
+  }
+
+private void fleetView() {
+	if (starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
+        Fleet fleet = starMapView.getStarMapMouseListener().getLastClickedFleet();
+        Planet planet = starMap.getPlanetByCoordinate(fleet.getX(),
+            fleet.getY());
+        boolean interactive = false;
+        if (starMap.getCurrentPlayerInfo() == starMap.getPlayerInfoByFleet(fleet)) {
+          interactive = true;
+        }
+        showFleetView(planet, fleet, interactive);
+      }
+}
+
+private void planetView(final Message focusMessage) {
+	if (focusMessage != null) {
         Planet planet = starMap.getPlanetByCoordinate(focusMessage.getX(),
             focusMessage.getY());
         if (planet != null) {
@@ -632,28 +622,81 @@ public class Game extends JFrame implements ActionListener {
         }
         showPlanetView(planet, interactive);
       }
-      break;
-    }
-    case FLEETVIEW: {
-      if (starMapView.getStarMapMouseListener().getLastClickedFleet() != null) {
-        Fleet fleet = starMapView.getStarMapMouseListener()
-            .getLastClickedFleet();
-        Planet planet = starMap.getPlanetByCoordinate(fleet.getX(),
-            fleet.getY());
-        boolean interactive = false;
-        if (starMap.getCurrentPlayerInfo() == starMap
-            .getPlayerInfoByFleet(fleet)) {
-          interactive = true;
-        }
-        showFleetView(planet, fleet, interactive);
+}
+
+private void shipDesign() {
+	if (shipView != null && shipView.isCopyClicked()) {
+        showShipDesignView(shipView.getSelectedShip());
+      } else {
+        showShipDesignView(null);
       }
-      break;
-    }
-    default: {
-        showMainMenu();
-    }
-    }
-  }
+}
+
+private void combat(final Object dataObject) {
+	if (dataObject instanceof Combat) {
+        showCombat((Combat) dataObject);
+      } else {
+        showCombat(null);
+      }
+}
+
+private void planetBombingView(final Object dataObject) {
+	boolean changed = false;
+      if (dataObject instanceof FleetView) {
+        FleetView view = (FleetView) dataObject;
+        Planet planet = view.getPlanet();
+        Fleet fleet = view.getFleet();
+        if (fleet != null && planet != null
+            && fleet.getX() == planet.getX()
+            && fleet.getY() == planet.getY()) {
+          showPlanetBombingView(planet, fleet);
+          changed = true;
+        }
+      }
+      if (!changed) {
+        changeGameState(GameState.STARMAP);
+      }
+}
+
+private void makeNewGame() {
+	  setPlayerInfo();
+      starMap = new StarMap(galaxyConfig, players);
+      starMap.updateStarMapOnStartGame();
+      NewsCorpData corpData = starMap.getNewsCorpData();
+      players.setCurrentPlayer(0);
+      setNullView();
+      calcuCorpData(corpData);
+      changeGameState(GameState.STARMAP);
+}
+
+private void calcuCorpData(NewsCorpData corpData) {
+	  corpData.calculateCredit(players);
+      corpData.calculateCulture(starMap.getPlanetList(), players);
+      corpData.calculateMilitary(players);
+      corpData.calculatePlanets(starMap.getPlanetList());
+      corpData.calculatePopulation(starMap.getPlanetList());
+      corpData.calculateResearch(players);
+}
+
+private void setPlayerInfo() {
+	players = new PlayerList();
+      for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
+        PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i));
+        info.setEmpireName(galaxyConfig.getPlayerName(i));
+        if (i == 0) {
+          info.setHuman(true);
+        }
+        players.addPlayer(info);
+      }
+}
+
+private void setNullView() {
+	starMapView = null;
+      combatView = null;
+      researchView = null;
+      shipView = null;
+      shipDesignView = null;
+}
 
   /**
    * Change game state and show new panel/screen
@@ -745,13 +788,8 @@ public class Game extends JFrame implements ActionListener {
    * @param fleet Where to focus
    */
   private void changeMessageForFleets(final Fleet fleet) {
-    if (fleet != null) {
-      starMap.setCursorPos(fleet.getX(), fleet.getY());
-      starMap.setDrawPos(fleet.getX(), fleet.getY());
-      starMapView.setShowFleet(fleet);
-      starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
-      starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
-    }
+    changeMessage = new ChangeMessageFleet(starMap,starMapView);
+    changeMessage.changeMessage(fleet);
   }
 
   /**
@@ -759,13 +797,8 @@ public class Game extends JFrame implements ActionListener {
    * @param planet Where to focus
    */
   private void changeMessageForPlanet(final Planet planet) {
-    if (planet != null) {
-      starMap.setCursorPos(planet.getX(), planet.getY());
-      starMap.setDrawPos(planet.getX(), planet.getY());
-      starMapView.setShowPlanet(planet);
-      starMapView.getStarMapMouseListener().setLastClickedFleet(null);
-      starMapView.getStarMapMouseListener().setLastClickedPlanet(planet);
-    }
+	changeMessage = new ChangeMessagePlanet(starMap,starMapView);
+	changeMessage.changeMessage(planet);
   }
 
   /**
@@ -836,7 +869,7 @@ public class Game extends JFrame implements ActionListener {
           Planet planet = starMap.getNextPlanetForPlayer(starMap
               .getCurrentPlayerInfo(), starMapView.getStarMapMouseListener()
               .getLastClickedPlanet(), true);
-          SoundPlayer.playMenuSound();
+          
           changeMessageForPlanet(planet);
         }
       } else {
@@ -958,6 +991,7 @@ public class Game extends JFrame implements ActionListener {
       // View Ship
       shipView.handleAction(arg0);
     }
+    //delete duplication 
     if (gameState == GameState.VIEWSHIPS && shipView != null) {
       // View Ship
       shipView.handleAction(arg0);
@@ -1025,7 +1059,6 @@ public class Game extends JFrame implements ActionListener {
         SoundPlayer.playMenuSound();
         changeGameState(GameState.STARMAP);
       }
-
     }
     if (gameState == GameState.MAIN_MENU) {
       // Main menu

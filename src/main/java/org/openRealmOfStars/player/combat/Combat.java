@@ -212,9 +212,11 @@ private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
               new CombatCoordinate(target.getX(), target.getY());
       double dx = Math.abs(shooter.getX() - target.getX());
       double dy = Math.abs(shooter.getY() - target.getY());
-      int distance = (int) dy;
+      int distance;
       if (dx > dy) {
-        distance = (int) dx;
+          distance = (int) dx;
+      } else {
+          distance = (int) dy;
       }
       if (weapon.getWeaponRange() >= distance && distance > 0) {
           result = launchIntercept(distance,
@@ -516,36 +518,47 @@ public boolean launchIntercept(final int distance,
   }
   /**
    * Handle End combat. This can be safely called multiple times.
+   * When the defender is the winner, it does not move from its current
+   * position.
    */
   public void handleEndCombat() {
-    if (!endCombatHandled) {
-      if (winner != null && info1 == winner) {
-        endCombatHandled = true;
-        handleWinner(fleet1, info1);
-        handleLoser(info2);
-        Coordinate loserPos = fleet2.getCoordinate();
-        int index = info2.getFleets().getIndexByName(fleet2.getName());
-        if (index != -1) {
-          info2.getFleets().remove(index);
-        }
-        if (info2.getFleets().getFleetByCoordinate(loserPos) == null) {
-          // No more defending fleets so moving to the coordinate
-          fleet1.setPos(fleet2.getCoordinate());
-        }
+      PlayerInfo winnerPlayer;
+      PlayerInfo looserPlayer;
+      Fleet winnerFleet;
+      Fleet looserFleet;
+      boolean isWinnerAttacker;
+    if (!endCombatHandled && winner != null) {
+      if (info1 == winner) {
+          winnerPlayer = info1;
+          looserPlayer = info2;
+          winnerFleet = fleet1;
+          looserFleet = fleet2;
+          isWinnerAttacker = true;
+      } else {
+          winnerPlayer = info2;
+          looserPlayer = info1;
+          winnerFleet = fleet2;
+          looserFleet = fleet1;
+          isWinnerAttacker = false;
       }
-      if (winner != null && info2 == winner) {
         endCombatHandled = true;
-        handleWinner(fleet2, info2);
-        handleLoser(info1);
-        // Defending player won't move
-        int index = info1.getFleets().getIndexByName(fleet1.getName());
-        if (index != -1) {
-          info1.getFleets().remove(index);
+        handleWinner(winnerFleet, winnerPlayer);
+        handleLoser(looserPlayer);
+        int looserIndex = looserPlayer.getFleets().
+                getIndexByName(looserFleet.getName());
+        if (looserIndex != -1) {
+            looserPlayer.getFleets().remove(looserIndex);
         }
-      }
+        if (isWinnerAttacker) {
+            Coordinate loserPos = looserFleet.getCoordinate();
+            if (looserPlayer.getFleets().
+                    getFleetByCoordinate(loserPos) == null) {
+              // No more defending fleets so moving to the coordinate
+                winnerFleet.setPos(looserFleet.getCoordinate());
+            }
+        }
     }
   }
-
   /**
    * Is Combat over or not yet
    * @return True if combat is over

@@ -309,9 +309,9 @@ private boolean isIndexValid(final int index) {
    * @return true if has energy
    */
   public boolean hasComponentEnergy(final int index) {
-      return (hasComponent()
+      return hasComponent()
               && (hasRemainingEnergy(index)
-                      || !isComponentRequireEnergy(index)));
+                      || !isComponentRequireEnergy(index));
   }
 
 /**

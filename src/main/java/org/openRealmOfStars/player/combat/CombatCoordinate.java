@@ -63,4 +63,29 @@ public class CombatCoordinate {
     public void setY(final int y) {
         this.y = y;
     }
+    /**
+     * Calculate distance between two coordinates.
+     * @param otherCoordinate The other coordinate
+     * @return the distance
+     */
+    public double calculateDistance(final CombatCoordinate otherCoordinate) {
+        int xDistance = Math.abs(otherCoordinate.getX() - getX());
+        int yDistance = Math.abs(otherCoordinate.getY() - getY());
+        return Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+    }
+    /**
+     * Check if two coordinate matches
+     * @param coordinate Which is being matched
+     * @return true if two coordinates are same, otherwise false
+     */
+    public boolean sameAs(final CombatCoordinate coordinate) {
+        boolean isEqual;
+        if (coordinate.getX() == this.getX()
+            && coordinate.getY() == this.getY()) {
+            isEqual = true;
+        } else {
+            isEqual = false;
+        }
+        return isEqual;
+      }
 }

@@ -704,7 +704,7 @@ public class Ship extends Construction {
     case WEAPON_ECM_TORPEDO: {
       damage = weapon.getDamage();
       this.setShield(this.getShield() - damage);
-      return new ShipDamage(1, "Attacked damage shield by " + damage + "!");
+      return new ShipDamage(0, "Attacked damage shield by " + damage + "!");
     }
     default:
       /* Not a weapon */break;

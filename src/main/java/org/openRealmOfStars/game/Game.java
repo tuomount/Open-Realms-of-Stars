@@ -697,17 +697,17 @@ public class Game extends JFrame implements ActionListener {
       NewsCorpData corpData = starMap.getNewsCorpData();
       players.setCurrentPlayer(0);
       setNullView();
-      calcuCorpData(corpData);
+      calculateCorpData(corpData);
       changeGameState(GameState.STARMAP);
 
   }
 
 
   /**
-   * Calculate CorpData
+   * Calculate Corporation Data
    * @param corpData various calculations
    */
-  private void calcuCorpData(final NewsCorpData corpData) {
+  private void calculateCorpData(final NewsCorpData corpData) {
       corpData.calculateCredit(players);
       corpData.calculateCulture(starMap.getPlanetList(), players);
       corpData.calculateMilitary(players);
@@ -918,7 +918,7 @@ public class Game extends JFrame implements ActionListener {
           Planet planet = starMap.getNextPlanetForPlayer(starMap
               .getCurrentPlayerInfo(), starMapView.getStarMapMouseListener()
               .getLastClickedPlanet(), true);
-
+          SoundPlayer.playMenuSound();
           changeMessageForPlanet(planet);
         }
       } else {

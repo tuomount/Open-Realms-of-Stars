@@ -343,11 +343,15 @@ private boolean hasRemainingEnergy(final int index) {
  */
 private int getRemainingEnergy(final int index) {
     int energy = getTotalEnergy();
-    for (int i = 0; i <= index; i++) {
-      ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getEnergyRequirement() > 0) {
-        energy = energy - comp.getEnergyRequirement();
-      }
+    if (index < components.size()) {
+        for (int i = 0; i <= index; i++) {
+          ShipComponent comp = components.get(i);
+          if (hullPoints[i] > 0 && comp.getEnergyRequirement() > 0) {
+            energy = energy - comp.getEnergyRequirement();
+          }
+        }
+    } else {
+        energy = 0;
     }
     return energy;
 }
@@ -601,32 +605,17 @@ private int increaseInitivativeByEmptySpace() {
    * @return Accuracy
    */
   public int getHitChance(final ShipComponent weapon) {
-    int accuracy = getHitChanceByWeaponType(weapon);
+    int accuracy = getHitChanceByWeapon(weapon);
     accuracy += increaseHitChanceByComponent();
     return accuracy;
   }
 
 /**
  * @param weapon ShipComponent
- * @return Accuracy by weapon type
+ * @return Accuracy by weapon
  */
-private int getHitChanceByWeaponType(final ShipComponent weapon) {
-    int accuracy = 0;
-    switch (weapon.getType()) {
-    case WEAPON_BEAM:
-        accuracy = 100;
-      break;
-    case WEAPON_RAILGUN:
-    case WEAPON_PHOTON_TORPEDO:
-        accuracy = 75;
-      break;
-    case WEAPON_ECM_TORPEDO:
-    case WEAPON_HE_MISSILE:
-    default:
-        accuracy = 50;
-      break;
-    }
-    return accuracy;
+private int getHitChanceByWeapon(final ShipComponent weapon) {
+    return weapon.getHitChance();
 }
 
 /**

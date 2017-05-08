@@ -369,6 +369,14 @@ public class ShipComponent {
     this.weaponRange = weaponRange;
   }
 
+  /**
+   * Get hitChance by type
+   * @return hitChance
+   */
+  public int getHitChance() {
+      return type.getHitChance();
+  }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

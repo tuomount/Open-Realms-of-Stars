@@ -375,7 +375,7 @@ public class ShipComponent {
    */
   public int getHitChance() {
       int hitChance = 0;
-      switch (this.getType()) {
+      switch (type) {
       case WEAPON_BEAM:
           hitChance = 100;
         break;

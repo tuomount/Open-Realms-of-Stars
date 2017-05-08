@@ -6,7 +6,7 @@ import org.openRealmOfStars.starMap.StarMap;
 
 /**
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017  God Beom
+ * Copyright (C) 2017 God Beom
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -22,7 +22,7 @@ import org.openRealmOfStars.starMap.StarMap;
  * along with this program; if not, see http://www.gnu.org/licenses/
  *
  *
- * Contains runnable main method which runs the Game class.
+ * ChangeMessage class used to move focus to fleet
  *
  */
 
@@ -39,7 +39,7 @@ public class ChangeMessageFleet extends ChangeMessage {
     }
 
     /**
-     * constructor ChangeMessage
+     * Change Message method associated with a Fleet
      * @param data is fleet
      */
     @Override

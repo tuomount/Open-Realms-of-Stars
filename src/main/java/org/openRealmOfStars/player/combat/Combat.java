@@ -333,9 +333,11 @@ public boolean launchIntercept(final int distance,
     CombatShip enemyShip = null;
     for (CombatShip ship : combatShipList) {
       if (ship.getPlayer() != info) {
-        CombatCoordinate centerCoordinate = new CombatCoordinate(friendleyShip.getX(),
+        CombatCoordinate centerCoordinate =
+                new CombatCoordinate(friendleyShip.getX(),
             friendleyShip.getY());
-        CombatCoordinate shipCoordinate = new CombatCoordinate(ship.getX(), ship.getY());
+        CombatCoordinate shipCoordinate =
+                new CombatCoordinate(ship.getX(), ship.getY());
         double distance = centerCoordinate.calculateDistance(shipCoordinate);
         if (distance < maxDistance) {
           enemyShip = ship;

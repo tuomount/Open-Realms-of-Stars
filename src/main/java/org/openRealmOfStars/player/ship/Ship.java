@@ -605,32 +605,17 @@ private int increaseInitivativeByEmptySpace() {
    * @return Accuracy
    */
   public int getHitChance(final ShipComponent weapon) {
-    int accuracy = getHitChanceByWeaponType(weapon);
+    int accuracy = getHitChanceByWeapon(weapon);
     accuracy += increaseHitChanceByComponent();
     return accuracy;
   }
 
 /**
  * @param weapon ShipComponent
- * @return Accuracy by weapon type
+ * @return Accuracy by weapon
  */
-private int getHitChanceByWeaponType(final ShipComponent weapon) {
-    int accuracy = 0;
-    switch (weapon.getType()) {
-    case WEAPON_BEAM:
-        accuracy = 100;
-      break;
-    case WEAPON_RAILGUN:
-    case WEAPON_PHOTON_TORPEDO:
-        accuracy = 75;
-      break;
-    case WEAPON_ECM_TORPEDO:
-    case WEAPON_HE_MISSILE:
-    default:
-        accuracy = 50;
-      break;
-    }
-    return accuracy;
+private int getHitChanceByWeapon(final ShipComponent weapon) {
+    return weapon.getHitChance();
 }
 
 /**

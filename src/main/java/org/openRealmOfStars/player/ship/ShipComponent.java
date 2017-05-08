@@ -369,6 +369,29 @@ public class ShipComponent {
     this.weaponRange = weaponRange;
   }
 
+  /**
+   * Get hitChance for weapon
+   * @return hitChance for weapon
+   */
+  public int getHitChance() {
+      int hitChance = 0;
+      switch (this.getType()) {
+      case WEAPON_BEAM:
+          hitChance = 100;
+        break;
+      case WEAPON_RAILGUN:
+      case WEAPON_PHOTON_TORPEDO:
+          hitChance = 75;
+        break;
+      case WEAPON_ECM_TORPEDO:
+      case WEAPON_HE_MISSILE:
+      default:
+          hitChance = 50;
+        break;
+      }
+      return hitChance;
+  }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();

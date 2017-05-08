@@ -303,4 +303,21 @@ public enum ShipComponentType {
     }
   }
 
+  /**
+   * Get hitChance for weapon
+   * @return hitChance for weapon
+   */
+  public int getHitChance() {
+      switch (this) {
+      case WEAPON_BEAM:
+          return 100;
+      case WEAPON_RAILGUN:
+      case WEAPON_PHOTON_TORPEDO:
+          return 75;
+      case WEAPON_ECM_TORPEDO:
+      case WEAPON_HE_MISSILE:
+      default:
+          return 50;
+      }
+  }
 }

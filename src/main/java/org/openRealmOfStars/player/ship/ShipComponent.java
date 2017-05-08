@@ -370,26 +370,11 @@ public class ShipComponent {
   }
 
   /**
-   * Get hitChance for weapon
-   * @return hitChance for weapon
+   * Get hitChance by type
+   * @return hitChance
    */
   public int getHitChance() {
-      int hitChance = 0;
-      switch (type) {
-      case WEAPON_BEAM:
-          hitChance = 100;
-        break;
-      case WEAPON_RAILGUN:
-      case WEAPON_PHOTON_TORPEDO:
-          hitChance = 75;
-        break;
-      case WEAPON_ECM_TORPEDO:
-      case WEAPON_HE_MISSILE:
-      default:
-          hitChance = 50;
-        break;
-      }
-      return hitChance;
+      return type.getHitChance();
   }
 
   @Override

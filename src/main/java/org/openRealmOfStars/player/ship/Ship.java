@@ -343,11 +343,15 @@ private boolean hasRemainingEnergy(final int index) {
  */
 private int getRemainingEnergy(final int index) {
     int energy = getTotalEnergy();
-    for (int i = 0; i <= index; i++) {
-      ShipComponent comp = components.get(i);
-      if (hullPoints[i] > 0 && comp.getEnergyRequirement() > 0) {
-        energy = energy - comp.getEnergyRequirement();
-      }
+    if (index < components.size()) {
+        for (int i = 0; i <= index; i++) {
+          ShipComponent comp = components.get(i);
+          if (hullPoints[i] > 0 && comp.getEnergyRequirement() > 0) {
+            energy = energy - comp.getEnergyRequirement();
+          }
+        }
+    } else {
+        energy = 0;
     }
     return energy;
 }

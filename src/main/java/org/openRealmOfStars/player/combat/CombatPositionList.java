@@ -29,5 +29,25 @@ public abstract class CombatPositionList {
     public CombatCoordinate getCoordinate(final int combatShipIndex) {
         return null;
     }
+    /**
+     * Get starting position X for ships
+     * @param combatShipIndex Ship Index in fleet
+     * @return Coordinate X
+     */
+    public int getStartPosX(final int combatShipIndex) {
+        CombatCoordinate combatCoordinate = getCoordinate(combatShipIndex);
+        int coordinateX = combatCoordinate.getX();
+        return coordinateX;
+    }
 
+    /**
+     * Get starting position Y for ships
+     * @param combatShipIndex Ship Index in fleet
+     * @return Coordinate Y
+     */
+    public int getStartPosY(final int combatShipIndex) {
+        CombatCoordinate combatCoordinate = getCoordinate(combatShipIndex);
+        int coordinateY = combatCoordinate.getY();
+        return coordinateY;
+    }
 }

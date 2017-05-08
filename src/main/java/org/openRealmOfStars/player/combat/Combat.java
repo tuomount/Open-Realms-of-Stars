@@ -158,8 +158,8 @@ private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
       if (stat != null) {
         stat.setNumberOfCombats(stat.getNumberOfCombats() + 1);
       }
-      int combatShipX = getStartPosX(index, positionList);
-      int combatShipY = getStartPosY(index, positionList);
+      int combatShipX = positionList.getStartPosX(index);
+      int combatShipY = positionList.getStartPosY(index);
       CombatShip combatShp = new CombatShip(ship, playerInfo,
               combatShipX, combatShipY, false);
       if (fleet.getRoute() != null && fleet.getRoute().isDefending()) {
@@ -449,36 +449,6 @@ public boolean launchIntercept(final int distance,
     }
     return null;
   }
-
-
-  /**
-   * Get starting position X for ships
-   * @param combatShipIndex Ship Index in fleet
-   * @param positionList starting position list
-   * @return Coordinate X
-   */
-  private static int getStartPosX(final int combatShipIndex,
-          final CombatPositionList positionList) {
-      CombatCoordinate combatCoordinate =
-              positionList.getCoordinate(combatShipIndex);
-      int coordinateX = combatCoordinate.getX();
-      return coordinateX;
-  }
-
-  /**
-   * Get starting position Y for ships
-   * @param combatShipIndex Ship Index in fleet
-   * @param positionList starting position list
-   * @return Coordinate Y
-   */
-  private static int getStartPosY(final int combatShipIndex,
-          final CombatPositionList positionList) {
-      CombatCoordinate combatCoordinate =
-              positionList.getCoordinate(combatShipIndex);
-      int coordinateY = combatCoordinate.getY();
-      return coordinateY;
-  }
-
   /**
    * Handle winner fleet stats
    * @param fleet The winner fleet

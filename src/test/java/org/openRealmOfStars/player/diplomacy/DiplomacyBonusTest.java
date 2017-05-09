@@ -31,7 +31,7 @@ public class DiplomacyBonusTest {
   
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testBasic() {
+  public void testBasic() { 
     DiplomacyBonus bonus = new DiplomacyBonus(
         DiplomacyBonusType.getTypeByIndex(0), SpaceRace.HUMAN);
     bonus.setBonusLasting(9);
@@ -55,6 +55,7 @@ public class DiplomacyBonusTest {
       DiplomacyBonus bonus = new DiplomacyBonus(
           DiplomacyBonusType.getTypeByIndex(i), SpaceRace.HUMAN);
       assertEquals(bonusValues[i], bonus.getBonusValue());
+    
       assertEquals(bonusLasting[i], bonus.getBonusLasting());
       if (i == 0 || i == 2 || i == 3) {
         assertEquals(true, bonus.isOnlyOne());

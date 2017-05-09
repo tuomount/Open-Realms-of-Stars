@@ -57,8 +57,7 @@ public class Combat {
   /**
    * Ships in list in initiative order
    */
-  private ArrayList<CombatShip> shipList;
-
+  private ArrayList<CombatShip> combatShipList;
   /**
    * Current ship index
    */
@@ -86,11 +85,11 @@ public class Combat {
   /**
    * First player's fleet
    */
-  private Fleet fleet1;
+  private Fleet attackerFleet;
   /**
    * Second player's fleet
    */
-  private Fleet fleet2;
+  private Fleet defenderFleet;
 
   /**
    * Player Info for winner
@@ -100,12 +99,12 @@ public class Combat {
   /**
    * Player info for attacker
    */
-  private PlayerInfo info1;
+  private PlayerInfo attackerInfo;
 
   /**
    * Player Info for defender
    */
-  private PlayerInfo info2;
+  private PlayerInfo defenderInfo;
 
   /**
    * Planet orbit where combat happens. This can be null.
@@ -119,63 +118,64 @@ public class Combat {
 
   /**
    * Build shipList in initiative order
-   * @param fleet1 Attacking Player1 fleet
-   * @param fleet2 Defending Player2 fleet
-   * @param info1 Attacking Player1 info
-   * @param info2 Defending Player2 Info
+   * @param attackerFleet Attacking Player1 fleet
+   * @param defenderFleet Defending Player2 fleet
+   * @param attackerInfo Attacking Player1 info
+   * @param defenderInfo Defending Player2 Info
    */
-  public Combat(final Fleet fleet1, final Fleet fleet2, final PlayerInfo info1,
-      final PlayerInfo info2) {
-    this.fleet1 = fleet1;
-    this.fleet2 = fleet2;
-    this.info1 = info1;
-    this.info2 = info2;
-    Ship[] ships = fleet1.getShips();
-    int index = 0;
-    shipList = new ArrayList<>();
-    for (Ship ship : ships) {
-      ShipStat stat = info1.getShipStatByName(ship.getName());
-      if (stat != null) {
-        stat.setNumberOfCombats(stat.getNumberOfCombats() + 1);
-      }
-      CombatShip combatShp = new CombatShip(ship, info1,
-          getStartPos(index, 0, true), getStartPos(index, 0, false), false);
-      if (fleet1.getRoute() != null && fleet1.getRoute().isDefending()) {
-        combatShp.setBonusAccuracy(5);
-      }
-      shipList.add(combatShp);
-      index++;
-    }
-    ships = fleet2.getShips();
-    index = 0;
-    for (Ship ship : ships) {
-      ShipStat stat = info2.getShipStatByName(ship.getName());
-      if (stat != null) {
-        stat.setNumberOfCombats(stat.getNumberOfCombats() + 1);
-      }
-      CombatShip combatShp = new CombatShip(ship, info2,
-          getStartPos(index, 1, true), getStartPos(index, 1, false), true);
-      if (fleet2.getRoute() != null && fleet2.getRoute().isDefending()) {
-        combatShp.setBonusAccuracy(5);
-      }
-      shipList.add(combatShp);
-      index++;
-    }
-    Collections.sort(shipList, Collections.reverseOrder());
-    index = 0;
+  public Combat(final Fleet attackerFleet, final Fleet defenderFleet,
+          final PlayerInfo attackerInfo, final PlayerInfo defenderInfo) {
+    this.attackerFleet = attackerFleet;
+    this.defenderFleet = defenderFleet;
+    this.attackerInfo = attackerInfo;
+    this.defenderInfo = defenderInfo;
+    combatShipList = new ArrayList<>();
+
+    CombatPositionList bottomList = new BottomPositionList();
+    CombatPositionList topList = new TopPositionList();
+    addCombatShipList(attackerFleet, attackerInfo, bottomList);
+    addCombatShipList(defenderFleet, defenderInfo, topList);
+
+    Collections.sort(combatShipList, Collections.reverseOrder());
     componentUse = -1;
     animation = null;
     winner = null;
     setPlanet(null);
     endCombatHandled = false;
   }
+/**
+ * Add combatShip to combatShipList
+ * @param fleet Player's Fleet
+ * @param playerInfo Player's information
+ * @param positionList starting coordinate list
+ */
+private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
+        final CombatPositionList positionList) {
+    Ship[] ships = fleet.getShips();
+    int index = 0;
+    for (Ship ship : ships) {
+      ShipStat stat = playerInfo.getShipStatByName(ship.getName());
+      if (stat != null) {
+        stat.setNumberOfCombats(stat.getNumberOfCombats() + 1);
+      }
+      int combatShipX = positionList.getStartPosX(index);
+      int combatShipY = positionList.getStartPosY(index);
+      CombatShip combatShp = new CombatShip(ship, playerInfo,
+              combatShipX, combatShipY, false);
+      if (fleet.getRoute() != null && fleet.getRoute().isDefending()) {
+        combatShp.setBonusAccuracy(5);
+      }
+      combatShipList.add(combatShp);
+      index++;
+    }
+}
 
   /**
    * Get first player's info which is the attacker
    * @return Player Info
    */
   public PlayerInfo getPlayer1() {
-    return info1;
+    return attackerInfo;
   }
 
   /**
@@ -183,7 +183,7 @@ public class Combat {
    * @return Player info
    */
   public PlayerInfo getPlayer2() {
-    return info2;
+    return defenderInfo;
   }
 
   /**
@@ -205,40 +205,21 @@ public class Combat {
     boolean result = false;
     ShipComponent weapon = shooter.getShip().getComponent(componentUse);
     if (weapon != null && weapon.isWeapon()) {
-      double sx = shooter.getX();
-      double sy = shooter.getY();
-      double endX = target.getX();
-      double endY = target.getY();
-      double mx;
-      double my;
-      double dx = Math.abs(sx - endX);
-      double dy = Math.abs(sy - endY);
-      int distance = (int) dy;
-      if (dx > dy) {
-        distance = (int) dx;
-      }
-      if (distance > 0) {
-        mx = (endX - sx) / distance;
-        my = (endY - sy) / distance;
+      CombatCoordinate shooterCoordinate =
+              new CombatCoordinate(shooter.getX(), shooter.getY());
+      CombatCoordinate targetCoordinate =
+              new CombatCoordinate(target.getX(), target.getY());
+      double xAxisDistance = Math.abs(shooter.getX() - target.getX());
+      double yAxisDistance = Math.abs(shooter.getY() - target.getY());
+      int distance;
+      if (xAxisDistance > yAxisDistance) {
+          distance = (int) xAxisDistance;
       } else {
-        mx = 0;
-        my = 0;
+          distance = (int) yAxisDistance;
       }
       if (weapon.getWeaponRange() >= distance && distance > 0) {
-        for (int i = 0; i < distance + 1; i++) {
-          sx = sx + mx;
-          sy = sy + my;
-          int ix = (int) Math.round(sx);
-          int iy = (int) Math.round(sy);
-          if (ix == target.getX() && iy == target.getY()) {
-            result = true;
-            break;
-          }
-          if (isBlocked(ix, iy)) {
-            result = false;
-            break;
-          }
-        }
+          result = launchIntercept(distance,
+                  shooterCoordinate, targetCoordinate);
       }
 
     }
@@ -247,21 +228,56 @@ public class Combat {
   }
 
   /**
+ * @param distance distance between shooter and target
+ * @param shooter shooter coordinate
+ * @param target target coordinate
+ * @return boolean is hit or not
+ */
+public boolean launchIntercept(final int distance,
+          final CombatCoordinate shooter, final CombatCoordinate target) {
+      boolean isHit = false;
+      double interceptX = shooter.getX();
+      double interceptY = shooter.getY();
+      double dx, dy;
+      if (distance > 0) {
+          dx = (target.getX() - shooter.getX()) / distance;
+          dy = (target.getY() - shooter.getY()) / distance;
+      } else {
+          dx = 0;
+          dy = 0;
+          }
+      for (int i = 0; i < distance + 1; i++) {
+          interceptX = interceptX + dx;
+          interceptY = interceptY + dy;
+          int intX = (int) Math.round(interceptX);
+          int intY = (int) Math.round(interceptY);
+          if (intX == target.getX() && intY == target.getY()) {
+              isHit = true;
+              break;
+          }
+          if (isBlocked(intX, intY)) {
+              isHit = false;
+              break;
+          }
+      }
+      return isHit;
+  }
+  /**
    * Get most powerful ship opponent has or null
    * @param info Player Info who is doing the comparison.
    * @return CombatShip or null
    */
   public CombatShip getMostPowerfulShip(final PlayerInfo info) {
-    int power = 0;
-    CombatShip result = null;
-    for (CombatShip ship : shipList) {
+    int strongestPower = 0;
+    CombatShip strongestShip = null;
+    for (CombatShip ship : combatShipList) {
       if (ship.getPlayer() != info
-          && ship.getShip().getTotalMilitaryPower() > power) {
-        result = ship;
-        power = result.getShip().getTotalMilitaryPower();
+          && ship.getShip().getTotalMilitaryPower() > strongestPower) {
+        strongestShip = ship;
+        strongestPower = strongestShip.getShip().getTotalMilitaryPower();
       }
     }
-    return result;
+    return strongestShip;
   }
 
   /**
@@ -269,10 +285,10 @@ public class Combat {
    * @param ship Combat ship
    */
   public void destroyShip(final CombatShip ship) {
-    if (fleet1.isShipInFleet(ship.getShip())) {
-      destroyShipFromFleet(ship, fleet1);
-    } else if (fleet2.isShipInFleet(ship.getShip())) {
-      destroyShipFromFleet(ship, fleet2);
+    if (attackerFleet.isShipInFleet(ship.getShip())) {
+      destroyShipFromFleet(ship, attackerFleet);
+    } else if (defenderFleet.isShipInFleet(ship.getShip())) {
+      destroyShipFromFleet(ship, defenderFleet);
     }
   }
 
@@ -293,8 +309,8 @@ public class Combat {
       stat.setNumberOfLoses(stat.getNumberOfLoses() + 1);
       stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
     }
-    int indexToDelete = shipList.indexOf(ship);
-    shipList.remove(ship);
+    int indexToDelete = combatShipList.indexOf(ship);
+    combatShipList.remove(ship);
     if (indexToDelete < shipIndex && shipIndex > 0) {
       shipIndex--;
     }
@@ -308,26 +324,28 @@ public class Combat {
   /**
    * Get the closest enemy ship
    * @param info Player info who is doing the comparison
-   * @param center Where to start looking the closet one
+   * @param friendlyShip Where to start looking the closet one
    * @return CombatShip or null
    */
   public CombatShip getClosestEnemyShip(final PlayerInfo info,
-      final CombatShip center) {
+      final CombatShip friendlyShip) {
     double maxDistance = MAX_DISTANCE;
-    CombatShip result = null;
-    for (CombatShip ship : shipList) {
+    CombatShip enemyShip = null;
+    for (CombatShip ship : combatShipList) {
       if (ship.getPlayer() != info) {
-        Coordinate centerCoordinate = new Coordinate(center.getX(),
-            center.getY());
-        Coordinate shipCoordinate = new Coordinate(ship.getX(), ship.getY());
+        CombatCoordinate centerCoordinate =
+                new CombatCoordinate(friendlyShip.getX(),
+            friendlyShip.getY());
+        CombatCoordinate shipCoordinate =
+                new CombatCoordinate(ship.getX(), ship.getY());
         double distance = centerCoordinate.calculateDistance(shipCoordinate);
         if (distance < maxDistance) {
-          result = ship;
+          enemyShip = ship;
           maxDistance = distance;
         }
       }
     }
-    return result;
+    return enemyShip;
 
   }
 
@@ -361,7 +379,7 @@ public class Combat {
    * @return True if blocked false otherwise
    */
   public boolean isBlocked(final int x, final int y) {
-    for (CombatShip ship : shipList) {
+    for (CombatShip ship : combatShipList) {
       if (x == ship.getX() && y == ship.getY()) {
         return true;
       }
@@ -391,7 +409,7 @@ public class Combat {
    * @return Coordinate of combat
    */
   public Coordinate getCombatCoordinates() {
-    return new Coordinate(fleet2.getX(), fleet2.getY());
+    return new Coordinate(defenderFleet.getX(), defenderFleet.getY());
   }
 
   /**
@@ -399,10 +417,10 @@ public class Combat {
    * @return CombatShip
    */
   public CombatShip getCurrentShip() {
-    if (shipList.size() <= shipIndex) {
+    if (combatShipList.size() <= shipIndex) {
       shipIndex = 0;
     }
-    return shipList.get(shipIndex);
+    return combatShipList.get(shipIndex);
   }
 
   /**
@@ -412,7 +430,7 @@ public class Combat {
    */
   public void nextShip() {
     shipIndex++;
-    if (shipList.size() <= shipIndex) {
+    if (combatShipList.size() <= shipIndex) {
       shipIndex = 0;
     }
     CombatShip ship = getCurrentShip();
@@ -426,253 +444,13 @@ public class Combat {
    * @return CombatShip
    */
   public CombatShip getShipFromCoordinate(final int x, final int y) {
-    for (CombatShip ship : shipList) {
+    for (CombatShip ship : combatShipList) {
       if (ship.getX() == x && ship.getY() == y) {
         return ship;
       }
     }
     return null;
   }
-
-  /**
-   * Get starting position for ships
-   * @param index Ship Index in fleet
-   * @param team Which player it belong 0 on bottom, 1 on top
-   * @param x X coordinate or Y coordinate
-   * @return Coordinate
-   */
-  private static int getStartPos(final int index, final int team,
-      final boolean x) {
-    if (team == 0) {
-      switch (index) {
-      case 0: {
-        if (x) {
-          return 4;
-        }
-        return 7;
-      }
-      case 1: {
-        if (x) {
-          return 3;
-        }
-        return 7;
-      }
-      case 2: {
-        if (x) {
-          return 5;
-        }
-        return 7;
-      }
-      case 3: {
-        if (x) {
-          return 2;
-        }
-        return 7;
-      }
-      case 4: {
-        if (x) {
-          return 6;
-        }
-        return 7;
-      }
-      case 5: {
-        if (x) {
-          return 4;
-        }
-        return 8;
-      }
-      case 6: {
-        if (x) {
-          return 1;
-        }
-        return 7;
-      }
-      case 7: {
-        if (x) {
-          return 7;
-        }
-        return 7;
-      }
-      case 8: {
-        if (x) {
-          return 3;
-        }
-        return 8;
-      }
-      case 9: {
-        if (x) {
-          return 5;
-        }
-        return 8;
-      }
-      case 10: {
-        if (x) {
-          return 2;
-        }
-        return 8;
-      }
-      case 11: {
-        if (x) {
-          return 6;
-        }
-        return 8;
-      }
-      case 12: {
-        if (x) {
-          return 0;
-        }
-        return 7;
-      }
-      case 13: {
-        if (x) {
-          return 8;
-        }
-        return 7;
-      }
-      case 14: {
-        if (x) {
-          return 1;
-        }
-        return 8;
-      }
-      case 15: {
-        if (x) {
-          return 7;
-        }
-        return 8;
-      }
-      case 16: {
-        if (x) {
-          return 0;
-        }
-        return 8;
-      }
-      case 17: {
-        if (x) {
-          return 8;
-        }
-        return 8;
-      }
-      default:
-        throw new IllegalArgumentException("Fleet contains too many ships!");
-      }
-    }
-    // Second team on top side
-    switch (index) {
-    case 0: {
-      if (x) {
-        return 4;
-      }
-      return 1;
-    }
-    case 1: {
-      if (x) {
-        return 3;
-      }
-      return 1;
-    }
-    case 2: {
-      if (x) {
-        return 5;
-      }
-      return 1;
-    }
-    case 3: {
-      if (x) {
-        return 2;
-      }
-      return 1;
-    }
-    case 4: {
-      if (x) {
-        return 6;
-      }
-      return 1;
-    }
-    case 5: {
-      if (x) {
-        return 4;
-      }
-      return 0;
-    }
-    case 6: {
-      if (x) {
-        return 1;
-      }
-      return 1;
-    }
-    case 7: {
-      if (x) {
-        return 7;
-      }
-      return 1;
-    }
-    case 8: {
-      if (x) {
-        return 3;
-      }
-      return 0;
-    }
-    case 9: {
-      if (x) {
-        return 5;
-      }
-      return 0;
-    }
-    case 10: {
-      if (x) {
-        return 2;
-      }
-      return 0;
-    }
-    case 11: {
-      if (x) {
-        return 6;
-      }
-      return 0;
-    }
-    case 12: {
-      if (x) {
-        return 0;
-      }
-      return 1;
-    }
-    case 13: {
-      if (x) {
-        return 8;
-      }
-      return 1;
-    }
-    case 14: {
-      if (x) {
-        return 1;
-      }
-      return 0;
-    }
-    case 15: {
-      if (x) {
-        return 7;
-      }
-      return 0;
-    }
-    case 16: {
-      if (x) {
-        return 0;
-      }
-      return 0;
-    }
-    case 17: {
-      if (x) {
-        return 8;
-      }
-      return 0;
-    }
-    default:
-      throw new IllegalArgumentException("Fleet contains too many ships!");
-    }
-
-  }
-
   /**
    * Handle winner fleet stats
    * @param fleet The winner fleet
@@ -711,36 +489,47 @@ public class Combat {
   }
   /**
    * Handle End combat. This can be safely called multiple times.
+   * When the defender is the winner, it does not move from its current
+   * position.
    */
   public void handleEndCombat() {
-    if (!endCombatHandled) {
-      if (winner != null && info1 == winner) {
-        endCombatHandled = true;
-        handleWinner(fleet1, info1);
-        handleLoser(info2);
-        Coordinate loserPos = fleet2.getCoordinate();
-        int index = info2.getFleets().getIndexByName(fleet2.getName());
-        if (index != -1) {
-          info2.getFleets().remove(index);
-        }
-        if (info2.getFleets().getFleetByCoordinate(loserPos) == null) {
-          // No more defending fleets so moving to the coordinate
-          fleet1.setPos(fleet2.getCoordinate());
-        }
+      PlayerInfo winnerPlayer;
+      PlayerInfo looserPlayer;
+      Fleet winnerFleet;
+      Fleet looserFleet;
+      boolean isWinnerAttacker;
+    if (!endCombatHandled && winner != null) {
+      if (attackerInfo == winner) {
+          winnerPlayer = attackerInfo;
+          looserPlayer = defenderInfo;
+          winnerFleet = attackerFleet;
+          looserFleet = defenderFleet;
+          isWinnerAttacker = true;
+      } else {
+          winnerPlayer = defenderInfo;
+          looserPlayer = attackerInfo;
+          winnerFleet = defenderFleet;
+          looserFleet = attackerFleet;
+          isWinnerAttacker = false;
       }
-      if (winner != null && info2 == winner) {
         endCombatHandled = true;
-        handleWinner(fleet2, info2);
-        handleLoser(info1);
-        // Defending player won't move
-        int index = info1.getFleets().getIndexByName(fleet1.getName());
-        if (index != -1) {
-          info1.getFleets().remove(index);
+        handleWinner(winnerFleet, winnerPlayer);
+        handleLoser(looserPlayer);
+        int looserIndex = looserPlayer.getFleets().
+                getIndexByName(looserFleet.getName());
+        if (looserIndex != -1) {
+            looserPlayer.getFleets().remove(looserIndex);
         }
-      }
+        if (isWinnerAttacker) {
+            Coordinate loserPos = looserFleet.getCoordinate();
+            if (looserPlayer.getFleets().
+                    getFleetByCoordinate(loserPos) == null) {
+              // No more defending fleets so moving to the coordinate
+                winnerFleet.setPos(looserFleet.getCoordinate());
+            }
+        }
     }
   }
-
   /**
    * Is Combat over or not yet
    * @return True if combat is over
@@ -753,7 +542,7 @@ public class Combat {
     PlayerInfo first = null;
     boolean moreThanOnePlayer = false;
     boolean militaryPower = false;
-    for (CombatShip ship : shipList) {
+    for (CombatShip ship : combatShipList) {
       if (first == null) {
         first = ship.getPlayer();
       }

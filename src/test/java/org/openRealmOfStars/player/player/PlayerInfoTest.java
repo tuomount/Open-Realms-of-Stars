@@ -3,6 +3,7 @@ package org.openRealmOfStars.player.player;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
 import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -238,7 +239,6 @@ public class PlayerInfoTest {
         assertEquals(1, tech[6].getLevel());
         assertEquals(TechType.Electrics, tech[7].getType());
         assertEquals(1, tech[7].getLevel());
-
         ShipStat expectedStat = new ShipStat(ShipGenerator
             .createScout(greyan));
         assertEquals(expectedStat.toString(), statList[0].toString());

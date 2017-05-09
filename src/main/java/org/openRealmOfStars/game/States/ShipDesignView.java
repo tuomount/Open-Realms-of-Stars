@@ -40,12 +40,13 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipComponentType;
-import org.openRealmOfStars.player.ship.ShipDesign;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullFactory;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
+import org.openRealmOfStars.player.ship.shipdesign.ShipDesignConsts;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechType;
 
@@ -471,7 +472,7 @@ public class ShipDesignView extends BlackPanel {
     if (design != null) {
       designNameText.setText(design.getName());
       String flaws = design.getFlaws();
-      if (flaws.equals(ShipDesign.DESIGN_OK)) {
+      if (flaws.equals(ShipDesignConsts.DESIGN_OK)) {
         designFlawsText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
       } else {
         designFlawsText.setForeground(GuiStatics.COLOR_RED_TEXT);
@@ -574,7 +575,8 @@ public class ShipDesignView extends BlackPanel {
    * @return True if design is ready false if not
    */
   public boolean isDesignOK() {
-    if (design != null && design.getFlaws().equals(ShipDesign.DESIGN_OK)) {
+     if (design != null
+            && design.getFlaws().equals(ShipDesignConsts.DESIGN_OK)) {
       return true;
     }
     return false;

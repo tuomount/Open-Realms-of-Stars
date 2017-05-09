@@ -61,6 +61,58 @@ public class NegotiationOffer {
   }
 
   /**
+   * Get Amount of credit offered
+   * @return Get amount of credit offered in credit offer.
+   * This returns always zero if offer was something else than credit
+   */
+  public int getCreditValue() {
+    if (negotiationType == NegotiationType.CREDIT
+        && offerObject instanceof Integer) {
+      return ((Integer) offerObject).intValue();
+    }
+    return 0;
+  }
+
+  /**
+   * This returns null if offer type is not fleet.
+   * Otherwise returns fleet.
+   * @return Fleet or null.
+   */
+  public Fleet getFleet() {
+    if (negotiationType == NegotiationType.FLEET
+        && offerObject instanceof Fleet) {
+      return ((Fleet) offerObject);
+    }
+    return null;
+  }
+
+  /**
+   * This returns null if offer type is not planet.
+   * Otherwise returns planet.
+   * @return Planet or null
+   */
+  public Planet getPlanet() {
+    if (negotiationType == NegotiationType.PLANET
+        && offerObject instanceof Planet) {
+      return ((Planet) offerObject);
+    }
+    return null;
+  }
+
+  /**
+   * This returns null if offer type is not tech.
+   * Otherwise returns tech.
+   * @return Tech or null
+   */
+  public Tech getTech() {
+    if (negotiationType == NegotiationType.TECH
+        && offerObject instanceof Tech) {
+      return ((Tech) offerObject);
+    }
+    return null;
+  }
+
+  /**
    * Get Negotiation type
    * @return Negotiation type
    */

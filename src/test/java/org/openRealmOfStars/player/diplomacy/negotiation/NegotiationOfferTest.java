@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -37,20 +38,53 @@ public class NegotiationOfferTest {
     assertEquals(NegotiationType.ALLIANCE, offer.getNegotiationType());
     assertEquals(null, offer.getOfferObject());
 
+    offer = new NegotiationOffer(NegotiationType.TRADE_ALLIANCE, null);
+    assertEquals(NegotiationType.TRADE_ALLIANCE, offer.getNegotiationType());
+    assertEquals(null, offer.getOfferObject());
+
+    offer = new NegotiationOffer(NegotiationType.PEACE, null);
+    assertEquals(NegotiationType.PEACE, offer.getNegotiationType());
+    assertEquals(null, offer.getOfferObject());
+
+    offer = new NegotiationOffer(NegotiationType.MAP, null);
+    assertEquals(NegotiationType.MAP, offer.getNegotiationType());
+    assertEquals(null, offer.getOfferObject());
+
     Integer credit = new Integer(5);
     offer = new NegotiationOffer(NegotiationType.CREDIT, credit);
     assertEquals(NegotiationType.CREDIT, offer.getNegotiationType());
     assertEquals(credit, offer.getOfferObject());
+    assertEquals(5, offer.getCreditValue());
+    assertEquals(null, offer.getFleet());
+    assertEquals(null, offer.getPlanet());
+    assertEquals(null, offer.getTech());
 
     Fleet fleet = Mockito.mock(Fleet.class);
     offer = new NegotiationOffer(NegotiationType.FLEET, fleet);
     assertEquals(NegotiationType.FLEET, offer.getNegotiationType());
     assertEquals(fleet, offer.getOfferObject());
+    assertEquals(fleet, offer.getFleet());
+    assertEquals(0, offer.getCreditValue());
 
     Planet planet = Mockito.mock(Planet.class);
     offer = new NegotiationOffer(NegotiationType.PLANET, planet);
     assertEquals(NegotiationType.PLANET, offer.getNegotiationType());
     assertEquals(planet, offer.getOfferObject());
+    assertEquals(planet, offer.getPlanet());
+
+    Tech tech = Mockito.mock(Tech.class);
+    offer = new NegotiationOffer(NegotiationType.TECH, tech);
+    assertEquals(NegotiationType.TECH, offer.getNegotiationType());
+    assertEquals(tech, offer.getOfferObject());
+    assertEquals(tech, offer.getTech());
+  }
+
+  @Test(expected=IllegalArgumentException.class)
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testIllegalObject() {
+    Fleet fleet = Mockito.mock(Fleet.class);
+    NegotiationOffer offer = new NegotiationOffer(NegotiationType.PLANET, fleet);
+    assertEquals(null, offer.getOfferObject());
   }
 
 }

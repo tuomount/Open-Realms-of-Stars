@@ -324,18 +324,18 @@ public boolean launchIntercept(final int distance,
   /**
    * Get the closest enemy ship
    * @param info Player info who is doing the comparison
-   * @param friendleyShip Where to start looking the closet one
+   * @param friendlyShip Where to start looking the closet one
    * @return CombatShip or null
    */
   public CombatShip getClosestEnemyShip(final PlayerInfo info,
-      final CombatShip friendleyShip) {
+      final CombatShip friendlyShip) {
     double maxDistance = MAX_DISTANCE;
     CombatShip enemyShip = null;
     for (CombatShip ship : combatShipList) {
       if (ship.getPlayer() != info) {
         CombatCoordinate centerCoordinate =
-                new CombatCoordinate(friendleyShip.getX(),
-            friendleyShip.getY());
+                new CombatCoordinate(friendlyShip.getX(),
+            friendlyShip.getY());
         CombatCoordinate shipCoordinate =
                 new CombatCoordinate(ship.getX(), ship.getY());
         double distance = centerCoordinate.calculateDistance(shipCoordinate);

@@ -1,5 +1,6 @@
 package org.openRealmOfStars.player.diplomacy.negotiation;
 
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -46,7 +47,8 @@ public class NegotiationOffer {
     if (type == NegotiationType.ALLIANCE
         || type == NegotiationType.PEACE
         || type == NegotiationType.TRADE_ALLIANCE
-        || type == NegotiationType.MAP) {
+        || type == NegotiationType.MAP
+        || type == NegotiationType.DIPLOMAT) {
       negotiationType = type;
       offerObject = null;
     } else if (type == NegotiationType.CREDIT && offer instanceof Integer
@@ -58,6 +60,58 @@ public class NegotiationOffer {
     } else {
       throw new IllegalArgumentException("Offer type is wrong for offer!");
     }
+  }
+
+  /**
+   * Get the offer value. More valuable offer is better.
+   * @param race SpaceRace for valuing the offer. Mostly used for
+   *        Determine if planet is valuable for certain race
+   * @return offer value
+   */
+  public int getOfferValue(final SpaceRace race) {
+    int offerValue = 0;
+    switch (negotiationType) {
+    case ALLIANCE:
+      // Both sides get Alliance so it's value to zero.
+      offerValue = 0;
+      break;
+    case TRADE_ALLIANCE:
+      // Both sides get Trade Alliance so it's value to zero.
+      offerValue = 0;
+      break;
+    case CREDIT:
+      offerValue = getCreditValue();
+      break;
+    case FLEET:
+      offerValue = getFleet().getMilitaryValue() / 2;
+      break;
+    case PEACE:
+      // Both sides get Trade Alliance so it's value to zero.
+      offerValue = 0;
+      break;
+    case DIPLOMAT:
+      // Diplomat is valued for 5
+      offerValue = 5;
+      break;
+    case MAP:
+      offerValue = 10;
+      break;
+    case TECH:
+      offerValue = getTech().getLevel() * 2;
+      break;
+    case PLANET:
+      offerValue = getPlanet().getAmountMetalInGround() / 1000;
+      offerValue = offerValue + getPlanet().getTotalPopulation() / 3;
+      offerValue = offerValue + getPlanet().getGroundSize() - 7;
+      if (getPlanet().getRadiationLevel() > race.getMaxRad()) {
+        offerValue = 0;
+      }
+      break;
+    default:
+      offerValue = 0;
+      break;
+    }
+    return offerValue;
   }
 
   /**

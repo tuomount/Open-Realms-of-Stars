@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -46,6 +47,10 @@ public class NegotiationOfferTest {
     assertEquals(NegotiationType.PEACE, offer.getNegotiationType());
     assertEquals(null, offer.getOfferObject());
 
+    offer = new NegotiationOffer(NegotiationType.DIPLOMAT, null);
+    assertEquals(NegotiationType.DIPLOMAT, offer.getNegotiationType());
+    assertEquals(null, offer.getOfferObject());
+
     offer = new NegotiationOffer(NegotiationType.MAP, null);
     assertEquals(NegotiationType.MAP, offer.getNegotiationType());
     assertEquals(null, offer.getOfferObject());
@@ -85,6 +90,55 @@ public class NegotiationOfferTest {
     Fleet fleet = Mockito.mock(Fleet.class);
     NegotiationOffer offer = new NegotiationOffer(NegotiationType.PLANET, fleet);
     assertEquals(null, offer.getOfferObject());
+  }
+  
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testOfferValues() {
+    NegotiationOffer offer = new NegotiationOffer(NegotiationType.ALLIANCE, null);
+    assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
+
+    offer = new NegotiationOffer(NegotiationType.TRADE_ALLIANCE, null);
+    assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
+
+    offer = new NegotiationOffer(NegotiationType.PEACE, null);
+    assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
+
+    offer = new NegotiationOffer(NegotiationType.DIPLOMAT, null);
+    assertEquals(5, offer.getOfferValue(SpaceRace.HUMAN));
+
+    offer = new NegotiationOffer(NegotiationType.MAP, null);
+    assertEquals(10, offer.getOfferValue(SpaceRace.HUMAN));
+
+    Integer credit = new Integer(7);
+    offer = new NegotiationOffer(NegotiationType.CREDIT, credit);
+    assertEquals(7, offer.getOfferValue(SpaceRace.HUMAN));
+
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getMilitaryValue()).thenReturn(24);
+    offer = new NegotiationOffer(NegotiationType.FLEET, fleet);
+    assertEquals(12, offer.getOfferValue(SpaceRace.HUMAN));
+
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
+    Mockito.when(planet.getGroundSize()).thenReturn(13);
+    Mockito.when(planet.getTotalPopulation()).thenReturn(6);
+    Mockito.when(planet.getRadiationLevel()).thenReturn(2);
+    offer = new NegotiationOffer(NegotiationType.PLANET, planet);
+    assertEquals(13, offer.getOfferValue(SpaceRace.HUMAN));
+    planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
+    Mockito.when(planet.getGroundSize()).thenReturn(13);
+    Mockito.when(planet.getTotalPopulation()).thenReturn(6);
+    Mockito.when(planet.getRadiationLevel()).thenReturn(10);
+    offer = new NegotiationOffer(NegotiationType.PLANET, planet);
+    assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
+
+    Tech tech = Mockito.mock(Tech.class);
+    Mockito.when(tech.getLevel()).thenReturn(3);
+    offer = new NegotiationOffer(NegotiationType.TECH, tech);
+    assertEquals(6, offer.getOfferValue(SpaceRace.HUMAN));
+
   }
 
 }

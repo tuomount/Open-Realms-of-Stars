@@ -20,6 +20,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -944,6 +945,11 @@ public class Planet {
           tmp = null;
         }
         if (tmp != null) {
+          if (tmp.getType() == BuildingType.FARM
+              && planetOwnerInfo.getRace() == SpaceRace.MECHIONS) {
+            // No farming buildings for Mechions
+            continue;
+          }
           if (tmp.isSingleAllowed()) {
             boolean built = false;
             for (int j = 0; j < alreadyBuilt.length; j++) {

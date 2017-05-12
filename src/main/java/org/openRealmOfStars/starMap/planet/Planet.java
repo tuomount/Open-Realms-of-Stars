@@ -1100,6 +1100,7 @@ public class Planet {
         sb.append("\n");
         sb.append("Culture: ");
         sb.append(getCulture());
+        sb.append("\n");
       }
     }
     return sb.toString();

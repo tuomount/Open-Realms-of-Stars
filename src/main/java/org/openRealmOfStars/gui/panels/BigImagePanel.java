@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.mapPanel.ParticleEffect;
 import org.openRealmOfStars.gui.mapPanel.PlanetAnimation;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -75,6 +76,13 @@ public class BigImagePanel extends JPanel {
    * Planet animation
    */
   private PlanetAnimation animation;
+
+  /**
+   * Player who is currently playing the game.
+   * This attribute can be null. If this is not null
+   * then player is shown text if this planet can colonize this planet.
+   */
+  private PlayerInfo player;
 
   /**
    * Create BigImagePanel
@@ -179,6 +187,16 @@ public class BigImagePanel extends JPanel {
     g.setFont(GuiStatics.getFontCubellan());
     if (title == null && planet != null) {
       StringBuilder sb = new StringBuilder(planet.generateInfoText(true));
+      if (player != null && planet.getPlanetPlayerInfo() != player
+          && !planet.isGasGiant()) {
+        if (planet.getRadiationLevel() > player.getRace().getMaxRad()) {
+          sb.append("High radiation! Maximum radiation is ");
+          sb.append(player.getRace().getMaxRad());
+        } else {
+          sb.append(player.getRace().getName());
+          sb.append(" can colonize this planet.");
+        }
+      }
       int lastSpace = -1;
       int rowLen = 0;
       int maxRowLen = this.getWidth() / 12;
@@ -462,6 +480,26 @@ public class BigImagePanel extends JPanel {
    */
   public void setAnimation(final PlanetAnimation animation) {
     this.animation = animation;
+  }
+
+  /**
+   * Get the current player for BigImagePanel. This can be null.
+   * This is used for telling if planet can be colonized by certain
+   * race.
+   * @return the player
+   */
+  public PlayerInfo getPlayer() {
+    return player;
+  }
+
+  /**
+   * Set the current player for BigImagePanel. This can be null.
+   * This is used for telling if planet can be colonized by certain
+   * race.
+   * @param player the player to set
+   */
+  public void setPlayer(final PlayerInfo player) {
+    this.player = player;
   }
 
 }

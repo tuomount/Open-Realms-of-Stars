@@ -29,6 +29,7 @@ import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
@@ -173,13 +174,15 @@ public class PlanetView extends BlackPanel {
    * Planet view constructor. Planet view for viewing planet.
    * @param planet Planet to view
    * @param interactive If true view contains full planet controls.
+   * @param player Which player is currently playing
    * @param listener Action listener for commands
    */
   public PlanetView(final Planet planet, final boolean interactive,
-      final ActionListener listener) {
+      final PlayerInfo player, final ActionListener listener) {
     this.setPlanet(planet);
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true, null);
+    imgBase.setPlayer(player);
     this.setLayout(new BorderLayout());
 
     // Top Panel

@@ -109,7 +109,7 @@ public class PlanetTest {
         tmp = planet.generateInfoText(true);
         assertEquals("Earth\nRadiation: 1\nSize: below average\nMetal: 6543\n"
             + "Home world of\nMechions\nMechion Great Empire\nPopulation"
-            + ": 1\nCulture: 5",tmp);
+            + ": 1\nCulture: 5\n",tmp);
     }
 
 }

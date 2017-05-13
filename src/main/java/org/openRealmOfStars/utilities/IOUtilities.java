@@ -143,6 +143,42 @@ public final class IOUtilities {
   }
 
   /**
+   * Set or disable flag in bit mask.
+   * Bit mask is limited for 8 bits.
+   * @param value Original 8 bit value
+   * @param bit Bit number to set or disable
+   * @param set True to set and false to disable
+   * @return new value with flag set or disabled
+   */
+  public static byte setFlag(final byte value, final int bit,
+      final boolean set) {
+    byte result = value;
+    if (set) {
+      byte bitmask = (byte) (1 << bit);
+      result = (byte) (result | bitmask);
+    } else {
+      byte bitmask = (byte) ~((byte) (1 << bit));
+      result = (byte) (result & bitmask);
+    }
+    return result;
+  }
+
+  /**
+   * Get flag from a 8 bit value
+   * @param value Original 8 bit value
+   * @param bit Bit to get set or disable
+   * @return true if flag has been set and false if not
+   */
+  public static boolean getFlag(final byte value, final int bit) {
+    byte bitmask = (byte) (1 << bit);
+    int tmp = value & bitmask;
+    if (tmp != 0) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Wraps string into new lines
    * @param input String to wrap
    * @param lineWidth Maximum line width

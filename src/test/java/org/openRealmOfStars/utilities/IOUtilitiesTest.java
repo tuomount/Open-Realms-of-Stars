@@ -48,4 +48,18 @@ public class IOUtilitiesTest {
     }
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBits() throws IOException {
+    byte value = 0;
+    int k = 1;
+    for (int i = 0; i<8; i++) {
+      value = 0;
+      value = IOUtilities.setFlag(value, i, true);
+      assertEquals(k, (0xff)  & value);
+      k = k * 2; 
+      assertEquals(true, IOUtilities.getFlag(value, i));
+    }
+  }
+
 }

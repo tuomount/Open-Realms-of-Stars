@@ -164,8 +164,10 @@ public class Ship extends Construction {
     setArmor(dis.readInt());
     setColonist(dis.readInt());
     setMetal(dis.readInt());
+    //TODO: Add bit mask which extra features need to read from file
     //TODO: Add experience read
     //TODO: Add culture read
+    //TODO: Add special flags
   }
 
   /**
@@ -188,8 +190,10 @@ public class Ship extends Construction {
     dos.writeInt(getArmor());
     dos.writeInt(getColonist());
     dos.writeInt(getMetal());
+    //TODO: Add bit mask which extra features need to write to file
     //TODO: Add experience save
     //TODO: Add culture save
+    //TODO: Add special flags
 
   }
 
@@ -1283,7 +1287,7 @@ private int increaseDefenseValueWithJammer() {
 
   /**
    * Set or disable flag
-   * @param flag Flat to set or disable
+   * @param flag Flag to set or disable
    * @param value True to set and false to disable
    */
   public void setFlag(final int flag, final boolean value) {
@@ -1298,7 +1302,7 @@ private int increaseDefenseValueWithJammer() {
 
   /**
    * Get flag
-   * @param flag Flat to get set or disable
+   * @param flag Flag to get set or disable
    * @return true if flag has been set and false if not
    */
   public boolean getFlag(final int flag) {

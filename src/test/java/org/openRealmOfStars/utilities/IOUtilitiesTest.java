@@ -60,6 +60,16 @@ public class IOUtilitiesTest {
       k = k * 2; 
       assertEquals(true, IOUtilities.getFlag(value, i));
     }
+    k = 1;
+    int total = 0;
+    value = 0;
+    for (int i = 0; i<8; i++) {
+      total = total +k;
+      value = IOUtilities.setFlag(value, i, true);
+      assertEquals(total, (0xff)  & value);
+      k = k * 2; 
+      assertEquals(true, IOUtilities.getFlag(value, i));
+    }
   }
 
 }

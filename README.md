@@ -7,6 +7,12 @@ Open Realm of Stars is Open source 4X strategy game in stars. It is developed
 with Java language and it is should run almost every where Swing and Java 7 are 
 available.
 
+## Warning about saved games working on newer version
+
+Since game is under heavy development I cannot guarantee that
+saved games work always with newer version. Backwards compatible is
+broken when adding new features to the game.
+
 ## Compiling the Project
 
 Open Realm of Stars can be compiled with Maven.

@@ -109,6 +109,21 @@ public class Ship extends Construction {
   public static final int FLAG_MERCHANT_LEFT_OPPONENWORLD = 0x04;
 
   /**
+   * Bit mask for experience
+   */
+  private static final int BIT_MASK_EXPERIENCE = 0;
+
+  /**
+   * Bit mask for culture
+   */
+  private static final int BIT_MASK_CULTURE = 1;
+
+  /**
+   * Bit mask for flags
+   */
+  private static final int BIT_MASK_FLAGS = 2;
+
+  /**
    * Constructor for a ship
    * @param design from where actual ship is created
    */
@@ -164,10 +179,16 @@ public class Ship extends Construction {
     setArmor(dis.readInt());
     setColonist(dis.readInt());
     setMetal(dis.readInt());
-    //TODO: Add bit mask which extra features need to read from file
-    //TODO: Add experience read
-    //TODO: Add culture read
-    //TODO: Add special flags
+    byte bitMask = dis.readByte();
+    if (IOUtilities.getFlag(bitMask, BIT_MASK_EXPERIENCE)) {
+      setExperience(dis.readInt());
+    }
+    if (IOUtilities.getFlag(bitMask, BIT_MASK_CULTURE)) {
+      setCulture(dis.readInt());
+    }
+    if (IOUtilities.getFlag(bitMask, BIT_MASK_FLAGS)) {
+      specialFlags = dis.readInt();
+    }
   }
 
   /**
@@ -190,11 +211,26 @@ public class Ship extends Construction {
     dos.writeInt(getArmor());
     dos.writeInt(getColonist());
     dos.writeInt(getMetal());
-    //TODO: Add bit mask which extra features need to write to file
-    //TODO: Add experience save
-    //TODO: Add culture save
-    //TODO: Add special flags
-
+    byte bitMask = 0;
+    if (getExperience() > 0) {
+      bitMask = IOUtilities.setFlag(bitMask, BIT_MASK_EXPERIENCE, true);
+    }
+    if (getCulture() > 0) {
+      bitMask = IOUtilities.setFlag(bitMask, BIT_MASK_CULTURE, true);
+    }
+    if (specialFlags != 0) {
+      bitMask = IOUtilities.setFlag(bitMask, BIT_MASK_FLAGS, true);
+    }
+    dos.writeByte(bitMask);
+    if (IOUtilities.getFlag(bitMask, BIT_MASK_EXPERIENCE)) {
+      dos.writeInt(experience);
+    }
+    if (IOUtilities.getFlag(bitMask, BIT_MASK_CULTURE)) {
+      dos.writeInt(culture);
+    }
+    if (IOUtilities.getFlag(bitMask, BIT_MASK_FLAGS)) {
+      dos.writeInt(specialFlags);
+    }
   }
 
   @Override
@@ -724,7 +760,7 @@ private int increaseHitChanceByComponent() {
     case WEAPON_PHOTON_TORPEDO: {
       damage = weapon.getDamage();
       damage = damage - this.getShield();
-      int chance = 5;
+      int chance = 5 + getExperience();
       if (weapon.getType() == ShipComponentType.WEAPON_BEAM) {
         // Beam weapons have biggest chance to penetrate shields
         // and armor but they have shortest range.

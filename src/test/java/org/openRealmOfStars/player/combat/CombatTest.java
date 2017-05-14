@@ -59,6 +59,7 @@ public class CombatTest {
     Combat combat = new Combat(fleet1, fleet2, info1, info2);
     assertEquals(false, combat.isHumanPlayer());
     CombatShip shooter = combat.getCurrentShip();
+    assertEquals(0, shooter.getShip().getExperience());
     combat.nextShip();
     CombatShip target = combat.getCurrentShip();
     ShipComponent weapon = null;
@@ -78,6 +79,7 @@ public class CombatTest {
     combat.isCombatOver();
     assertEquals(info1, combat.getWinner());
     combat.handleEndCombat();
+    assertEquals(1, shooter.getShip().getExperience());
     Coordinate coord = new Coordinate(6,5);
     assertEquals(true,
         info1.getFleets().getFirst().getCoordinate().sameAs(coord));

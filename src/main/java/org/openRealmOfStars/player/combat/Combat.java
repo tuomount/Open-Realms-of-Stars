@@ -301,6 +301,10 @@ public boolean launchIntercept(final int distance,
     fleet.removeShip(ship.getShip());
     ShipStat stat = animation.getShooter().getPlayer()
         .getShipStatByName(animation.getShooter().getShip().getName());
+    Ship shooter = animation.getShooter().getShip();
+    if (shooter != null && shooter.getExperience() < 5) {
+      shooter.setExperience(shooter.getExperience() + 1);
+    }
     if (stat != null) {
       stat.setNumberOfKills(stat.getNumberOfKills() + 1);
     }

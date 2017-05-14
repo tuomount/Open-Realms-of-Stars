@@ -271,6 +271,10 @@ public class Ship extends Construction {
       sb.append("\n");
       sb.append("Military power: ");
       sb.append(getTotalMilitaryPower());
+      if (getExperience() > 0) {
+        sb.append(" Exp: ");
+        sb.append(getExperience());
+      }
     }
     sb.append("\n");
     sb.append("Slots: ");

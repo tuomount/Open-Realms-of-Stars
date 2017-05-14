@@ -105,7 +105,25 @@ public class ShipTest {
     ship.fixShip(true);
     assertEquals(4, ship.getHullPoints());
     
-
+    assertEquals(0, ship.getExperience());
+    String desc = "Design - Normal\n"
+        + "Energy: 5 Init.: 15\n"
+        + "Cost: 23 Metal: 16\n"
+        + "Speed: 2 FTL: 2 Tactic: 1\n"
+        + "Shield: 1/1 Armor: 0/0 Hull Points: 4\n"
+        + "Military power: 6\n"
+        + "Slots: 4/4";
+    assertEquals(desc, ship.getDescription());
+    ship.setExperience(3);
+    assertEquals(3, ship.getExperience());
+    desc = "Design - Normal\n"
+        + "Energy: 5 Init.: 15\n"
+        + "Cost: 23 Metal: 16\n"
+        + "Speed: 2 FTL: 2 Tactic: 1\n"
+        + "Shield: 1/1 Armor: 0/0 Hull Points: 4\n"
+        + "Military power: 6 Exp: 3\n"
+        + "Slots: 4/4";
+    assertEquals(desc, ship.getDescription());
   }
 
   @Test

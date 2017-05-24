@@ -1,5 +1,7 @@
 package org.openRealmOfStars.game.States;
 
+import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.combat.Combat;
@@ -50,6 +52,7 @@ public class BattleViewTest {
         ActionListener actionListener = Mockito.mock(ActionListener.class);
 
         battleView = new BattleView(combat, starMap, actionListener);
+        assertNotEquals(null, battleView);
     }
 
 }

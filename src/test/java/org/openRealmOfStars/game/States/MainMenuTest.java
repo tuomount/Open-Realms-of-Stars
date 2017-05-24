@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.awt.event.ActionListener;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
 /**
@@ -32,6 +33,7 @@ import org.mockito.Mockito;
 public class MainMenuTest {
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void test() {
     ActionListener listener = Mockito.mock(ActionListener.class);
     MainMenu menu = new MainMenu(listener);

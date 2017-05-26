@@ -53,6 +53,7 @@ public class DiplomacyTest {
     assertEquals(false, diplomacy.isTradeAlliance(0));
     assertEquals(false, diplomacy.isAlliance(0));
     assertEquals(-30, diplomacy.getDiplomacyList(0).getDiplomacyBonus());
+    assertEquals(false, diplomacy.isWar(256));
   }
 
   @Test
@@ -69,6 +70,7 @@ public class DiplomacyTest {
     assertEquals(false, diplomacy.isWar(0));
     assertEquals(false, diplomacy.isAlliance(0));
     assertEquals(12, diplomacy.getDiplomacyList(0).getDiplomacyBonus());
+    assertEquals(false, diplomacy.isTradeAlliance(256));
   }
 
   @Test
@@ -85,6 +87,7 @@ public class DiplomacyTest {
     assertEquals(true, diplomacy.isAlliance(0));
     assertEquals(false, diplomacy.isTradeAlliance(0));
     assertEquals(false, diplomacy.isWar(0));
+    assertEquals(false, diplomacy.isAlliance(256));
   }
 
 }

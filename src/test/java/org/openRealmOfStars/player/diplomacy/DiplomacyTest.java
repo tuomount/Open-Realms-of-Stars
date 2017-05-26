@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 
 /**
  * 
@@ -36,6 +37,54 @@ public class DiplomacyTest {
     assertNotEquals(null, diplomacy.getDiplomacyList(2));
     assertNotEquals(null, diplomacy.getDiplomacyList(3));
     assertEquals(null, diplomacy.getDiplomacyList(1));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testInWar() {
+    Diplomacy diplomacy = new Diplomacy(4, 1);
+    assertNotEquals(null, diplomacy.getDiplomacyList(0));
+    assertEquals(false, diplomacy.isWar(0));
+    assertEquals(false, diplomacy.isTradeAlliance(0));
+    assertEquals(false, diplomacy.isAlliance(0));
+    diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.IN_WAR,
+        SpaceRace.SPORKS);
+    assertEquals(true, diplomacy.isWar(0));
+    assertEquals(false, diplomacy.isTradeAlliance(0));
+    assertEquals(false, diplomacy.isAlliance(0));
+    assertEquals(-30, diplomacy.getDiplomacyList(0).getDiplomacyBonus());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testInTradeAlliance() {
+    Diplomacy diplomacy = new Diplomacy(4, 1);
+    assertNotEquals(null, diplomacy.getDiplomacyList(0));
+    assertEquals(false, diplomacy.isTradeAlliance(0));
+    assertEquals(false, diplomacy.isWar(0));
+    assertEquals(false, diplomacy.isAlliance(0));
+    diplomacy.getDiplomacyList(0).addBonus(
+        DiplomacyBonusType.IN_TRADE_ALLIANCE, SpaceRace.HUMAN);
+    assertEquals(true, diplomacy.isTradeAlliance(0));
+    assertEquals(false, diplomacy.isWar(0));
+    assertEquals(false, diplomacy.isAlliance(0));
+    assertEquals(12, diplomacy.getDiplomacyList(0).getDiplomacyBonus());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testInAlliance() {
+    Diplomacy diplomacy = new Diplomacy(4, 1);
+    assertNotEquals(null, diplomacy.getDiplomacyList(0));
+    assertEquals(false, diplomacy.isTradeAlliance(0));
+    assertEquals(false, diplomacy.isAlliance(0));
+    assertEquals(false, diplomacy.isWar(0));
+    diplomacy.getDiplomacyList(0).addBonus(
+        DiplomacyBonusType.IN_ALLIANCE, SpaceRace.CENTAURS);
+    assertEquals(25, diplomacy.getDiplomacyList(0).getDiplomacyBonus());
+    assertEquals(true, diplomacy.isAlliance(0));
+    assertEquals(false, diplomacy.isTradeAlliance(0));
+    assertEquals(false, diplomacy.isWar(0));
   }
 
 }

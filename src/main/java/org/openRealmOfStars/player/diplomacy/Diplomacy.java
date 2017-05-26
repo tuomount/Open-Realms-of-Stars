@@ -58,4 +58,42 @@ public class Diplomacy {
     }
     return null;
   }
+
+  /**
+   * Is certain player(index) with player who is asking in war?
+   * @param index Player index
+   * @return True if war is between two players
+   */
+  public boolean isWar(final int index) {
+    if (index > -1 && index < diplomacyList.length) {
+      return diplomacyList[index].isBonusType(DiplomacyBonusType.IN_WAR);
+    }
+    return false;
+  }
+
+  /**
+   * Is certain player(index) with player who is asking in trade alliance?
+   * @param index Player index
+   * @return True if trade alliance is between two players
+   */
+  public boolean isTradeAlliance(final int index) {
+    if (index > -1 && index < diplomacyList.length) {
+      return diplomacyList[index].isBonusType(
+          DiplomacyBonusType.IN_TRADE_ALLIANCE);
+    }
+    return false;
+  }
+
+  /**
+   * Is certain player(index) with player who is asking in alliance?
+   * @param index Player index
+   * @return True if alliance is between two players
+   */
+  public boolean isAlliance(final int index) {
+    if (index > -1 && index < diplomacyList.length) {
+      return diplomacyList[index].isBonusType(
+          DiplomacyBonusType.IN_ALLIANCE);
+    }
+    return false;
+  }
 }

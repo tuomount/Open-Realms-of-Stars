@@ -42,6 +42,11 @@ public class DiplomacyBonusList {
   private List<DiplomacyBonus> list;
 
   /**
+   * Number of diplomatic meetings
+   */
+  private int numberOfMeetings;
+
+  /**
    * Constructor for Diplomacy Bonus List. List contains
    * diplomacy bonuses for certain player by some player.
    * DiplomacyBonusList class does not define that player who
@@ -51,6 +56,7 @@ public class DiplomacyBonusList {
   public DiplomacyBonusList(final int index) {
     this.playerIndex = index;
     list = new ArrayList<>();
+    setNumberOfMeetings(0);
   }
 
   /**
@@ -163,5 +169,21 @@ public class DiplomacyBonusList {
         iterator.remove();
       }
     }
+  }
+
+  /**
+   * Get the number of meetings two players have had.
+   * @return the numberOfMeetings
+   */
+  public int getNumberOfMeetings() {
+    return numberOfMeetings;
+  }
+
+  /**
+   * Set the number of meetings two players have had.
+   * @param numberOfMeetings the numberOfMeetings to set
+   */
+  public void setNumberOfMeetings(final int numberOfMeetings) {
+    this.numberOfMeetings = numberOfMeetings;
   }
 }

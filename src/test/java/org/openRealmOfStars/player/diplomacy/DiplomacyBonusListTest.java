@@ -34,6 +34,11 @@ public class DiplomacyBonusListTest {
     DiplomacyBonusList list = new DiplomacyBonusList(1);
     assertEquals(1, list.getPlayerIndex());
     assertEquals(0, list.getDiplomacyBonus());
+    assertEquals(0, list.getNumberOfMeetings());
+    list.setNumberOfMeetings(list.getNumberOfMeetings()+1);
+    assertEquals(1, list.getNumberOfMeetings());
+    list.setNumberOfMeetings(list.getNumberOfMeetings()+1);
+    assertEquals(2, list.getNumberOfMeetings());
   }
 
   @Test

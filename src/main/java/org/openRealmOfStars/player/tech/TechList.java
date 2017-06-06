@@ -245,6 +245,28 @@ public class TechList {
   }
 
   /**
+   * Check which trade techs are missing from own tech list
+   * @param tradeTechs Tradeable techs from another player
+   * @param ownTechs Techs that player already has
+   * @return Tech list which are new techs for player
+   */
+  public static Tech[] getTechDifference(final Tech[] tradeTechs,
+      final Tech[] ownTechs) {
+    ArrayList<Tech> techList = new ArrayList<>();
+    for (Tech tech : tradeTechs) {
+      boolean found = false;
+      for (Tech ownTech : ownTechs) {
+        if (tech.getName().equals(ownTech.getName())) {
+          found = true;
+        }
+      }
+      if (!found) {
+        techList.add(tech);
+      }
+    }
+    return techList.toArray(new Tech[techList.size()]);
+  }
+  /**
    * Get best Energy source for current technology
    * @return Best energy source tech or null if not found
    */
@@ -378,7 +400,7 @@ public class TechList {
   /**
    * Is Tech list for certain level full
    * @param type Tech Type
-   * @param level Level
+   * @param level Level of tech list 1-10
    * @return true if full or false if not
    */
   public boolean isTechListForLevelFull(final TechType type, final int level) {

@@ -96,4 +96,5 @@ public class Diplomacy {
     }
     return false;
   }
+
 }

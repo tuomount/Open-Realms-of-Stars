@@ -3,6 +3,9 @@ package org.openRealmOfStars.player.diplomacy;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationList;
+import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
+import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
@@ -49,12 +52,24 @@ public class DiplomaticTrade {
   private int second;
 
   /**
-   * Tech List for first player
+   * First player is offering.
+   */
+  private NegotiationList firstOffer;
+
+  /**
+   * Second player is offering or what first player wants.
+   */
+  private NegotiationList secondOffer;
+
+  /**
+   * Tech List for first player. This list contains techs which first player
+   * is missing.
    */
   private ArrayList<Tech> techListForFirst;
 
   /**
-   * Tech List for second player
+   * Tech List for second player. This list contains techs which second player
+   * is missing.
    */
   private ArrayList<Tech> techListForSecond;
 
@@ -76,6 +91,44 @@ public class DiplomaticTrade {
     }
     if (second >= max || second < 0) {
       throw new IllegalArgumentException("Second player index out of bounds!");
+    }
+  }
+
+  /**
+   * Generate diplomatic trade offer between two players
+   */
+  public void generateOffer() {
+    PlayerInfo offerPlayer = starMap.getPlayerByIndex(first);
+    PlayerInfo agreePlayer = starMap.getPlayerByIndex(second);
+    if (techListForFirst == null || techListForSecond == null) {
+      generateTechList();
+    }
+    if (offerPlayer.getDiplomacy().getDiplomacyList(second)
+        .getNumberOfMeetings() == 0) {
+      // Change maps
+      firstOffer = new NegotiationList();
+      firstOffer.add(new NegotiationOffer(NegotiationType.MAP, null));
+      secondOffer = new NegotiationList();
+      secondOffer.add(new NegotiationOffer(NegotiationType.MAP, null));
+    } else {
+      if (techListForFirst.size() > 0) {
+        firstOffer = new NegotiationList();
+        firstOffer.add(new NegotiationOffer(NegotiationType.TECH,
+            techListForFirst.get(0)));
+        if (techListForSecond.size() > 0) {
+          secondOffer = new NegotiationList();
+          secondOffer.add(new NegotiationOffer(NegotiationType.TECH,
+              techListForSecond.get(0)));
+        } else {
+          int value = techListForFirst.get(0).getLevel() * 2;
+          if (agreePlayer.getTotalCredits() < value) {
+            value = agreePlayer.getTotalCredits();
+          }
+          secondOffer = new NegotiationList();
+          secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+              new Integer(value)));
+        }
+      }
     }
   }
 
@@ -157,6 +210,22 @@ public class DiplomaticTrade {
    */
   public int getSecondIndex() {
     return second;
+  }
+
+  /**
+   * Get offer list what First player would get.
+   * @return NegotiationList for first player
+   */
+  public NegotiationList getFirstOffer() {
+    return firstOffer;
+  }
+
+  /**
+   * Get offer list what Second player would get.
+   * @return NegotiationList for second player
+   */
+  public NegotiationList getSecondOffer() {
+    return secondOffer;
   }
 
 }

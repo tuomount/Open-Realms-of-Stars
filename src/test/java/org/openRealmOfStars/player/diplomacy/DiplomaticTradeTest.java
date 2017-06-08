@@ -150,6 +150,7 @@ public class DiplomaticTradeTest {
         .getNegotiationType());
     assertEquals(NegotiationType.MAP, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
+    assertEquals(true, trade.isOfferGoodForBoth());
   }
 
 }

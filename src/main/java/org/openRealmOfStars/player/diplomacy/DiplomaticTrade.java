@@ -133,6 +133,22 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Is offer good for both. This assumes that first one is making the offer
+   * and is okay with it. So it only checks that second one likes it.
+   * @return true if offer is good for both players.
+   */
+  public boolean isOfferGoodForBoth() {
+    int firstValue = firstOffer.getOfferValue(starMap.getPlayerByIndex(first)
+        .getRace());
+    int secondValue = secondOffer.getOfferValue(starMap.getPlayerByIndex(second)
+        .getRace());
+    int difference = firstValue - secondValue;
+    if (difference == 0) {
+      return true;
+    }
+    return false;
+  }
+  /**
    * Generate Tech list containing techs whichs are tradeable.
    */
   private void generateTechList() {

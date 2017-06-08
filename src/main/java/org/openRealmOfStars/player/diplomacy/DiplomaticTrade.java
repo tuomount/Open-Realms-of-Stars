@@ -143,7 +143,17 @@ public class DiplomaticTrade {
     int secondValue = secondOffer.getOfferValue(starMap.getPlayerByIndex(second)
         .getRace());
     int difference = firstValue - secondValue;
-    if (difference == 0) {
+    if (difference <= 0) {
+      return true;
+    }
+    // Maybe good diplomatic relations help to get trade through
+    int bonus = starMap.getPlayerByIndex(second).getDiplomacy()
+        .getDiplomacyList(first).getDiplomacyBonus();
+    if (bonus > 20) {
+      bonus = 20;
+    }
+    difference = difference - bonus;
+    if (difference <= 0) {
       return true;
     }
     return false;
@@ -229,11 +239,27 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Set offer list what First player would get.
+   * @param offer NegotiationList for first player
+   */
+  public void setFirstOffer(final NegotiationList offer) {
+    firstOffer = offer;
+  }
+
+  /**
    * Get offer list what First player would get.
    * @return NegotiationList for first player
    */
   public NegotiationList getFirstOffer() {
     return firstOffer;
+  }
+
+  /**
+   * Set offer list what Second player would get.
+   * @param offer NegotiationList for first player
+   */
+  public void setSecondOffer(final NegotiationList offer) {
+    secondOffer = offer;
   }
 
   /**

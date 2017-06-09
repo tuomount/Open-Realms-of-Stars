@@ -1691,4 +1691,27 @@ public class StarMap {
     // Return same planet
     return planetList.get(startIndex);
   }
+
+  /**
+   * Is player stroger to compared to another player.
+   * This method compares mostly military power
+   * @param index Player whos is making the compare
+   * @param compare Player index whom to compare
+   * @return True if index player is stronger than compare
+   */
+  public boolean isPlayerStrongerThan(final int index, final int compare) {
+    if (index >= 0 && index < getPlayerList().getCurrentMaxPlayers()
+        && compare >= 0 && compare < getPlayerList().getCurrentMaxPlayers()
+        && compare != index) {
+      int power = newsCorpData.getMilitary().getLatest(index);
+      int powerCompare = newsCorpData.getMilitary().getLatest(compare);
+      power = power + newsCorpData.getPlanets().getLatest(index) * 2;
+      powerCompare = powerCompare + newsCorpData.getPlanets()
+        .getLatest(compare) * 2;
+      if (power > powerCompare) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

@@ -217,4 +217,50 @@ public class StarMapTest {
     assertEquals(planet3, test);
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStarMapCreateWithMilitaryCompare() {
+    GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
+    Mockito.when(config.getSizeX()).thenReturn(50);
+    Mockito.when(config.getSizeY()).thenReturn(50);
+    Mockito.when(config.getMaxPlayers()).thenReturn(4);
+    Mockito.when(config.getStartingPosition()).thenReturn(
+        GalaxyConfig.START_POSITION_BORDER);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
+    MessageList msgList = Mockito.mock(MessageList.class);
+    Mockito.when(info.getMsgList()).thenReturn(msgList);
+    ShipStat[] stats = new ShipStat[0];
+    Mockito.when(info.getShipStatList()).thenReturn(stats);
+    
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
+
+    StarMap map = new StarMap(config, players);
+    assertEquals(0,map.getNewsCorpData().getMilitary().getLatest(0));
+    assertEquals(0,map.getNewsCorpData().getMilitary().getLatest(1));
+    assertEquals(0,map.getNewsCorpData().getMilitary().getLatest(2));
+    assertEquals(0,map.getNewsCorpData().getMilitary().getLatest(3));
+    map.getNewsCorpData().getMilitary().addStat(0, 15);
+    map.getNewsCorpData().getMilitary().addStat(1, 25);
+    map.getNewsCorpData().getMilitary().addStat(2, 5);
+    map.getNewsCorpData().getMilitary().addStat(3, 6);
+    map.getNewsCorpData().getPlanets().addStat(0, 1);
+    map.getNewsCorpData().getPlanets().addStat(1, 1);
+    map.getNewsCorpData().getPlanets().addStat(2, 2);
+    map.getNewsCorpData().getPlanets().addStat(3, 1);
+    assertEquals(false, map.isPlayerStrongerThan(0, 0));
+    assertEquals(false, map.isPlayerStrongerThan(0, 1));
+    assertEquals(true, map.isPlayerStrongerThan(1, 2));
+    assertEquals(true, map.isPlayerStrongerThan(2, 3));
+    assertEquals(false, map.isPlayerStrongerThan(3, 0));
+    assertEquals(false, map.isPlayerStrongerThan(3, 1));
+  }
+
 }

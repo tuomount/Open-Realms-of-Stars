@@ -86,6 +86,20 @@ public class GalaxyStat {
   }
 
   /**
+   * Get the latest value for Galaxy Stat for one player
+   * @param playerIndex Player index
+   * @return Latest value as int
+   */
+  public int getLatest(final int playerIndex) {
+    if (playerIndex > -1 && playerIndex < maxPlayers) {
+      int[] data = dataStat[playerIndex].getData();
+      if (data.length > 0) {
+        return data[data.length - 1];
+      }
+    }
+    return 0;
+  }
+  /**
    * Get Galaxy Statistics Data name
    * @return  Galaxy Statistics data name
    */

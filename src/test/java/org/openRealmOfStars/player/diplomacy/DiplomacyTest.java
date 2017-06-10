@@ -53,13 +53,25 @@ public class DiplomacyTest {
     assertEquals(false, diplomacy.isTradeAlliance(0));
     assertEquals(false, diplomacy.isAlliance(0));
     assertEquals(-30, diplomacy.getDiplomacyList(0).getDiplomacyBonus());
+    assertEquals(Diplomacy.HATE, diplomacy.getLiking(0));
     assertEquals(false, diplomacy.isWar(256));
+    diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.LONG_PEACE,
+        SpaceRace.SPORKS);
+    assertEquals(Diplomacy.NEUTRAL, diplomacy.getLiking(0));
+    diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.WAR_DECLARTION,
+        SpaceRace.SPORKS);
+    diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.DIPLOMAT_CAPTURED,
+        SpaceRace.SPORKS);
+    diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.DIPLOMAT_CAPTURED,
+        SpaceRace.SPORKS);
+    assertEquals(Diplomacy.DISLIKE, diplomacy.getLiking(0));
   }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testInTradeAlliance() {
     Diplomacy diplomacy = new Diplomacy(4, 1);
+    assertEquals(Diplomacy.NEUTRAL, diplomacy.getLiking(0));
     assertNotEquals(null, diplomacy.getDiplomacyList(0));
     assertEquals(false, diplomacy.isTradeAlliance(0));
     assertEquals(false, diplomacy.isWar(0));
@@ -70,6 +82,7 @@ public class DiplomacyTest {
     assertEquals(false, diplomacy.isWar(0));
     assertEquals(false, diplomacy.isAlliance(0));
     assertEquals(12, diplomacy.getDiplomacyList(0).getDiplomacyBonus());
+    assertEquals(Diplomacy.LIKE, diplomacy.getLiking(0));
     assertEquals(false, diplomacy.isTradeAlliance(256));
   }
 
@@ -84,6 +97,7 @@ public class DiplomacyTest {
     diplomacy.getDiplomacyList(0).addBonus(
         DiplomacyBonusType.IN_ALLIANCE, SpaceRace.CENTAURS);
     assertEquals(25, diplomacy.getDiplomacyList(0).getDiplomacyBonus());
+    assertEquals(Diplomacy.FRIENDS, diplomacy.getLiking(0));
     assertEquals(true, diplomacy.isAlliance(0));
     assertEquals(false, diplomacy.isTradeAlliance(0));
     assertEquals(false, diplomacy.isWar(0));

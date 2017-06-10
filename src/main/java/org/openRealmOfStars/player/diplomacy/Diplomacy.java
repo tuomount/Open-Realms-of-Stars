@@ -27,6 +27,31 @@ package org.openRealmOfStars.player.diplomacy;
 public class Diplomacy {
 
   /**
+   * How much player likes another one: Neutral
+   */
+  public static final int NEUTRAL = 0;
+
+  /**
+   * How much player likes another one: Like
+   */
+  public static final int LIKE = 1;
+
+  /**
+   * How much player likes another one: Friends
+   */
+  public static final int FRIENDS = 2;
+
+  /**
+   * How much player likes another one: Dislike
+   */
+  public static final int DISLIKE = -1;
+
+  /**
+   * How much player likes another one: Hate
+   */
+  public static final int HATE = -2;
+
+  /**
    * Diplomacy Bonus list for each player
    */
   private DiplomacyBonusList[] diplomacyList;
@@ -65,7 +90,8 @@ public class Diplomacy {
    * @return True if war is between two players
    */
   public boolean isWar(final int index) {
-    if (index > -1 && index < diplomacyList.length) {
+    if (index > -1 && index < diplomacyList.length
+        && diplomacyList[index] != null) {
       return diplomacyList[index].isBonusType(DiplomacyBonusType.IN_WAR);
     }
     return false;
@@ -77,7 +103,8 @@ public class Diplomacy {
    * @return True if trade alliance is between two players
    */
   public boolean isTradeAlliance(final int index) {
-    if (index > -1 && index < diplomacyList.length) {
+    if (index > -1 && index < diplomacyList.length
+        && diplomacyList[index] != null) {
       return diplomacyList[index].isBonusType(
           DiplomacyBonusType.IN_TRADE_ALLIANCE);
     }
@@ -85,12 +112,59 @@ public class Diplomacy {
   }
 
   /**
+   * Lowest value for neutral
+   */
+  private static final int LOW_NEUTRAL = -5;
+
+  /**
+   * High value for neutral
+   */
+  private static final int HIGH_NEUTRAL = 5;
+
+  /**
+   * Low value for dislike
+   */
+  private static final int LOW_DISLIKE = -15;
+
+  /**
+   * High value for like
+   */
+  private static final int HIGH_LIKE = 15;
+
+  /**
+   * Get numeric value how much player likes another player.
+   * There are five choices: HATE, DISLIKE, NEUTRAL, LIKE and FRIENDS
+   * @param playerIndex Whom to check
+   * @return liking value
+   */
+  public int getLiking(final int playerIndex) {
+    int result = NEUTRAL;
+    if (playerIndex > -1 && playerIndex < diplomacyList.length
+        && diplomacyList[playerIndex] != null) {
+      int value = diplomacyList[playerIndex].getDiplomacyBonus();
+      if (value < LOW_NEUTRAL) {
+        result = DISLIKE;
+      }
+      if (value < LOW_DISLIKE) {
+        result = HATE;
+      }
+      if (value > HIGH_NEUTRAL) {
+        result = LIKE;
+      }
+      if (value > HIGH_LIKE) {
+        result = FRIENDS;
+      }
+    }
+    return result;
+  }
+  /**
    * Is certain player(index) with player who is asking in alliance?
    * @param index Player index
    * @return True if alliance is between two players
    */
   public boolean isAlliance(final int index) {
-    if (index > -1 && index < diplomacyList.length) {
+    if (index > -1 && index < diplomacyList.length
+        && diplomacyList[index] != null) {
       return diplomacyList[index].isBonusType(
           DiplomacyBonusType.IN_ALLIANCE);
     }

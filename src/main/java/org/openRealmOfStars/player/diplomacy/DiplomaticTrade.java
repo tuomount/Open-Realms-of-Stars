@@ -52,7 +52,7 @@ public class DiplomaticTrade {
   private int second;
 
   /**
-   * First player is offering.
+   * First player is getting in offer.
    */
   private NegotiationList firstOffer;
 
@@ -95,6 +95,58 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Generate Tech trade between two players.
+   * @param agreePlayer Who is need to agree with trade
+   * @param buy first player is buy tech instead of trading
+   */
+  protected void generateTechTrade(final PlayerInfo agreePlayer,
+      final boolean buy) {
+    if (techListForFirst.size() > 0) {
+      firstOffer = new NegotiationList();
+      firstOffer.add(new NegotiationOffer(NegotiationType.TECH,
+          techListForFirst.get(0)));
+      if (!buy && techListForSecond.size() > 0) {
+        secondOffer = new NegotiationList();
+        secondOffer.add(new NegotiationOffer(NegotiationType.TECH,
+            techListForSecond.get(0)));
+      } else {
+        int value = techListForFirst.get(0).getLevel() * 2;
+        if (agreePlayer.getTotalCredits() < value) {
+          value = agreePlayer.getTotalCredits();
+        }
+        secondOffer = new NegotiationList();
+        secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+            new Integer(value)));
+      }
+    }
+  }
+  /**
+   * Generate Map trade between two players.
+   * @param agreePlayer Who is need to agree with trade
+   * @param buy first player is buy tech instead of trading
+   */
+  protected void generateMapTrade(final PlayerInfo agreePlayer,
+      final boolean buy) {
+    if (buy) {
+      int value = 15;
+      if (agreePlayer.getTotalCredits() < value) {
+        value = agreePlayer.getTotalCredits();
+      }
+      firstOffer = new NegotiationList();
+      firstOffer.add(new NegotiationOffer(NegotiationType.MAP, null));
+      secondOffer = new NegotiationList();
+      secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+          new Integer(value)));
+    } else {
+      firstOffer = new NegotiationList();
+      firstOffer.add(new NegotiationOffer(NegotiationType.MAP, null));
+      secondOffer = new NegotiationList();
+      secondOffer.add(new NegotiationOffer(NegotiationType.MAP, null));
+    }
+
+  }
+
+  /**
    * Generate diplomatic trade offer between two players
    */
   public void generateOffer() {
@@ -106,29 +158,13 @@ public class DiplomaticTrade {
     if (offerPlayer.getDiplomacy().getDiplomacyList(second)
         .getNumberOfMeetings() == 0) {
       // Change maps
-      firstOffer = new NegotiationList();
-      firstOffer.add(new NegotiationOffer(NegotiationType.MAP, null));
-      secondOffer = new NegotiationList();
-      secondOffer.add(new NegotiationOffer(NegotiationType.MAP, null));
+      generateMapTrade(agreePlayer, false);
     } else {
-      if (techListForFirst.size() > 0) {
-        firstOffer = new NegotiationList();
-        firstOffer.add(new NegotiationOffer(NegotiationType.TECH,
-            techListForFirst.get(0)));
-        if (techListForSecond.size() > 0) {
-          secondOffer = new NegotiationList();
-          secondOffer.add(new NegotiationOffer(NegotiationType.TECH,
-              techListForSecond.get(0)));
-        } else {
-          int value = techListForFirst.get(0).getLevel() * 2;
-          if (agreePlayer.getTotalCredits() < value) {
-            value = agreePlayer.getTotalCredits();
-          }
-          secondOffer = new NegotiationList();
-          secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-              new Integer(value)));
-        }
+      int liking = offerPlayer.getDiplomacy().getLiking(second);
+      if (liking == Diplomacy.FRIENDS) {
+        generateTechTrade(agreePlayer, false);
       }
+
     }
   }
 

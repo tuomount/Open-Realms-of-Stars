@@ -47,7 +47,37 @@ public class DiplomaticTradeTest {
     Mockito.when(map.getPlayerList()).thenReturn(players);
     return map;
   }
-  
+
+  private StarMap generateMapWithPlayer() {
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    PlayerInfo player1 = new PlayerInfo(SpaceRace.HUMAN);
+    TechList tech1 = player1.getTechList();
+    tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
+    tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
+    tech1.addTech(new Tech("MilTech3", TechType.Combat, 2));
+    tech1.addTech(new Tech("DefTech1", TechType.Defense, 1));
+    tech1.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
+    tech1.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
+    
+    PlayerInfo player2 = new PlayerInfo(SpaceRace.GREYANS);
+    TechList tech2 = player2.getTechList();
+    tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
+    tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
+    tech2.addTech(new Tech("EleTech1", TechType.Electrics, 1));
+    tech2.addTech(new Tech("DefTech1", TechType.Defense, 1));
+    tech2.addTech(new Tech("DefTech2", TechType.Defense, 1));
+    tech2.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
+    tech2.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(player1);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(player2);
+    Mockito.when(map.getPlayerList()).thenReturn(players);
+    Mockito.when(map.getPlayerByIndex(0)).thenReturn(player1);
+    Mockito.when(map.getPlayerByIndex(1)).thenReturn(player2);
+    return map;
+  }
+
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
@@ -203,7 +233,43 @@ public class DiplomaticTradeTest {
     // Just empty list
     trade.setSecondOffer(offer);
     assertEquals(true, trade.isOfferGoodForBoth());
-
   }
+  
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMapTrade() {
+    StarMap map = generateMapWithPlayer();
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    trade.generateMapTrade(map.getPlayerByIndex(1), false);
+    assertEquals(NegotiationType.MAP, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.MAP, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+    trade.generateMapTrade(map.getPlayerByIndex(1), true);
+    assertEquals(NegotiationType.MAP, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.CREDIT, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTechTrade() {
+    StarMap map = generateMapWithPlayer();
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    trade.getTradeableTechListForFirst();
+    trade.getTradeableTechListForSecond();
+    trade.generateTechTrade(map.getPlayerByIndex(1), false);
+    assertEquals(NegotiationType.TECH, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.TECH, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+    trade.generateTechTrade(map.getPlayerByIndex(1), true);
+    assertEquals(NegotiationType.TECH, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.CREDIT, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+  }
+
 
 }

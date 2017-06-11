@@ -8,7 +8,7 @@ import org.junit.experimental.categories.Category;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2017  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -152,6 +152,74 @@ public class SpaceRaceUtilityTest {
         assertEquals("of", parts[1]);
         assertEquals("Sporks", parts[2]);
       }
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFullDescriptions() {
+    String[] expectedResult = new String[SpaceRace.values().length];
+    expectedResult[0] = "Humans\n"+
+        "Humans are great diplomats but they are about average in everything else.\n"+
+        "* Max radiation: 4\n"+
+        "* Production: 100%\n"+
+        "* Mining: 100%\n"+
+        "* Research: 100%\n"+
+        "* Growth: 100%\n"+
+        "* Food require: 100%\n"+
+        "* Culture: 100%\n"+
+        "* Diplomacy bonus: 2\n"+
+        "* Special: None";
+    expectedResult[1] = "Mechions\n"+
+        "Mechanical beings whom do not eat food. Each now population must be built.\n"+
+        "* Max radiation: 8\n"+
+        "* Production: 100%\n"+
+        "* Mining: 150%\n"+
+        "* Research: 50%\n"+
+        "* Growth: 0%\n"+
+        "* Food require: 0%\n"+
+        "* Culture: 50%\n"+
+        "* Diplomacy bonus: -2\n"+
+        "* Special: Population needs to be built";
+    expectedResult[2] = "Sporks\n"+
+        "Aggressive and warmongering species.\n"+
+        "* Max radiation: 5\n"+
+        "* Production: 100%\n"+
+        "* Mining: 100%\n"+
+        "* Research: 100%\n"+
+        "* Growth: 100%\n"+
+        "* Food require: 100%\n"+
+        "* Culture: 100%\n"+
+        "* Diplomacy bonus: -3\n"+
+        "* Special: None";
+    expectedResult[3] = "Greyans\n"+
+        "Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers.\n"+
+        "* Max radiation: 6\n"+
+        "* Production: 100%\n"+
+        "* Mining: 100%\n"+
+        "* Research: 150%\n"+
+        "* Growth: 50%\n"+
+        "* Food require: 100%\n"+
+        "* Culture: 100%\n"+
+        "* Diplomacy bonus: 0\n"+
+        "* Special: None";
+    expectedResult[4] = "Centaurs\n"+
+        "Quadrupedal humanoid creatures which are big, about 5 meters tall."
+        + " Due their enormous size their space ships are more rigid."
+        + " Centaurs need more food to survive.\n"+
+        "* Max radiation: 3\n"+
+        "* Production: 100%\n"+
+        "* Mining: 100%\n"+
+        "* Research: 100%\n"+
+        "* Growth: 50%\n"+
+        "* Food require: 125%\n"+
+        "* Culture: 100%\n"+
+        "* Diplomacy bonus: -1\n"+
+        "* Special: Stronger ships";
+    for (int i = 0; i <  SpaceRace.values().length; i++) {
+      SpaceRace race = SpaceRaceUtility.getRaceByIndex(i);
+      assertEquals(expectedResult[i],race.getFullDescription());
+//      System.out.println(race.getFullDescription());
     }
   }
 

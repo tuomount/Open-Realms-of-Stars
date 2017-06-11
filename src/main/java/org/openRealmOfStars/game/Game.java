@@ -725,16 +725,16 @@ public class Game extends JFrame implements ActionListener {
    * Set Player information when make new game
    */
   private void setPlayerInfo() {
-   players = new PlayerList();
-      for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
-        PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i));
-        info.setEmpireName(galaxyConfig.getPlayerName(i));
-        if (i == 0) {
-          info.setHuman(true);
-        }
-        players.addPlayer(info);
+    players = new PlayerList();
+    for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
+      PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i),
+         galaxyConfig.getMaxPlayers(), i);
+      info.setEmpireName(galaxyConfig.getPlayerName(i));
+      if (i == 0) {
+        info.setHuman(true);
       }
-
+      players.addPlayer(info);
+    }
   }
 
 

@@ -55,7 +55,12 @@ public enum SpaceRace {
    */
   CENTAURS(4, "Centaurs", "Centaur", "Quadrupedal humanoid creatures which are"
           + " big, about 5 meters tall. Due their enormous size their space"
-          + " ships are more rigid. Centaurs need more food to survive.");
+          + " ships are more rigid. Centaurs need more food to survive."),
+  /**
+   * Mothoids are sentient insects with hivemind. They are fast breeding race.
+   */
+  MOTHOIDS(4, "Mothoids", "Mothoid", "Mothoids are sentient insects with"
+      + " hivemind. They are fast breeding race.");
 
   /**
    * Create space race
@@ -117,6 +122,8 @@ public enum SpaceRace {
       return 150;
     case CENTAURS:
       return 100;
+    case MOTHOIDS:
+      return 100;
     default:
       return 0;
     }
@@ -138,6 +145,8 @@ public enum SpaceRace {
       return 6;
     case CENTAURS:
       return 3;
+    case MOTHOIDS:
+      return 6;
     default:
       return -1;
     }
@@ -159,6 +168,8 @@ public enum SpaceRace {
       return GuiStatics.IMAGE_GREYAN_RACE;
     case CENTAURS:
       return GuiStatics.IMAGE_CENTAUR_RACE;
+    case MOTHOIDS:
+      return GuiStatics.IMAGE_MOTHOID_RACE;
     default:
       return GuiStatics.IMAGE_CENTAUR_RACE;
     }
@@ -201,6 +212,8 @@ public enum SpaceRace {
       return 100;
     case CENTAURS:
       return 100;
+    case MOTHOIDS:
+      return 75;
     default:
       return 0;
     }
@@ -222,6 +235,8 @@ public enum SpaceRace {
       return 100;
     case CENTAURS:
       return 100;
+    case MOTHOIDS:
+      return 75;
     default:
       return 0;
     }
@@ -243,6 +258,8 @@ public enum SpaceRace {
       return 8;
     case CENTAURS:
       return 14;
+    case MOTHOIDS:
+      return 9;
     default:
       return 0;
     }
@@ -263,6 +280,8 @@ public enum SpaceRace {
     case GREYANS:
       return 100;
     case CENTAURS:
+      return 100;
+    case MOTHOIDS:
       return 100;
     default:
       return 0;
@@ -285,6 +304,8 @@ public enum SpaceRace {
       return 50;
     case CENTAURS:
       return 50;
+    case MOTHOIDS:
+      return 150;
     default:
       return 0;
     }
@@ -306,6 +327,8 @@ public enum SpaceRace {
       return 100;
     case CENTAURS:
       return 125;
+    case MOTHOIDS:
+      return 100;
     default:
       return 0;
     }
@@ -327,6 +350,8 @@ public enum SpaceRace {
       return 0;
     case CENTAURS:
       return -1;
+    case MOTHOIDS:
+      return 0;
     default:
       return 0;
     }
@@ -348,6 +373,8 @@ public enum SpaceRace {
       return 0;
     case CENTAURS:
       return 1;
+    case MOTHOIDS:
+      return 0;
     default:
       return 0;
     }
@@ -369,6 +396,8 @@ public enum SpaceRace {
       return 16;
     case CENTAURS:
       return 18;
+    case MOTHOIDS:
+      return 12;
     default:
       return 15;
     }
@@ -390,6 +419,8 @@ public enum SpaceRace {
       return 35;
     case CENTAURS:
       return 30;
+    case MOTHOIDS:
+      return 32;
     default:
       return 30;
     }
@@ -411,6 +442,8 @@ public enum SpaceRace {
       return 3;
     case CENTAURS:
       return 2;
+    case MOTHOIDS:
+      return 3;
     default:
       return 3;
     }
@@ -433,6 +466,8 @@ public enum SpaceRace {
       return 1;
     case CENTAURS:
       return 1;
+    case MOTHOIDS:
+      return 2;
     default:
       return 1;
     }
@@ -450,6 +485,9 @@ public enum SpaceRace {
     sb.append("\n");
     sb.append("* Max radiation: ");
     sb.append(getMaxRad());
+    sb.append("\n");
+    sb.append("* Troop power: ");
+    sb.append(getTrooperPower());
     sb.append("\n");
     sb.append("* Production: ");
     sb.append(getProductionSpeed());

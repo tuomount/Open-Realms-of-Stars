@@ -5,7 +5,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2016  Tuomo Untinen
+* Copyright (C) 2016,2017  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -69,6 +69,9 @@ public final class SpaceRaceUtility {
     if (name.equals(SpaceRace.CENTAURS.getNameSingle())) {
       return SpaceRace.CENTAURS;
     }
+    if (name.equals(SpaceRace.MOTHOIDS.getNameSingle())) {
+      return SpaceRace.MOTHOIDS;
+    }
     return null;
   }
 
@@ -107,7 +110,11 @@ public final class SpaceRaceUtility {
         sb.append("Federation");
         break;
       case 2:
-        sb.append("Republic");
+        if (race == SpaceRace.MOTHOIDS) {
+          sb.append("Nest");
+        } else {
+          sb.append("Republic");
+        }
         break;
       case 3:
         sb.append("Alliance");
@@ -131,6 +138,8 @@ public final class SpaceRaceUtility {
       case 6: {
         if (race == SpaceRace.MECHIONS) {
           sb.append("AI");
+        } else if (race == SpaceRace.MOTHOIDS) {
+          sb.append("Hive");
         } else {
           sb.append("Democracy");
         }
@@ -152,7 +161,11 @@ public final class SpaceRaceUtility {
         sb.append("Federation of ");
         break;
       case 2:
-        sb.append("Republic of ");
+        if (race == SpaceRace.MOTHOIDS) {
+          sb.append("Nest of ");
+        } else {
+          sb.append("Republic of ");
+        }
         break;
       case 3:
         sb.append("Alliance of ");
@@ -176,6 +189,8 @@ public final class SpaceRaceUtility {
       case 6: {
         if (race == SpaceRace.MECHIONS) {
           sb.append("AI of ");
+        } else if (race == SpaceRace.MOTHOIDS) {
+          sb.append("Hive of ");
         } else {
           sb.append("Democracy of ");
         }

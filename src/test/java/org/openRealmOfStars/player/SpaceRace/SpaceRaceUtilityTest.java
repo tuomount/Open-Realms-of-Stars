@@ -157,11 +157,37 @@ public class SpaceRaceUtilityTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandomNameGeneratorMothoids() {
+    SpaceRace race = SpaceRace.MOTHOIDS;
+    for (int i=0;i<100;i++) {
+      String tmp = SpaceRaceUtility.getRandomName(race);
+      String[] parts = tmp.split(" ");
+      if (parts.length == 2) {
+        assertEquals("Mothoid", parts[0]);
+        assertFalse(!parts[1].equals("Empire") && !parts[1].equals("Federation")
+            && !parts[1].equals("Nest") && !parts[1].equals("Alliance")
+            && !parts[1].equals("Kingdom") && !parts[1].equals("Hive")
+            && !parts[1].equals("Hegemony") && !parts[1].equals("Hiearchy"));
+          
+      } else if (parts.length == 3) {
+        assertFalse(!parts[0].equals("Empire") && !parts[0].equals("Federation")
+            && !parts[0].equals("Nest") && !parts[0].equals("Alliance")
+            && !parts[0].equals("Kingdom") && !parts[0].equals("Hive")
+            && !parts[0].equals("Hegemony") && !parts[0].equals("Hiearchy"));
+        assertEquals("of", parts[1]);
+        assertEquals("Mothoids", parts[2]);
+      }
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testFullDescriptions() {
     String[] expectedResult = new String[SpaceRace.values().length];
     expectedResult[0] = "Humans\n"+
         "Humans are great diplomats but they are about average in everything else.\n"+
         "* Max radiation: 4\n"+
+        "* Troop power: 10\n"+
         "* Production: 100%\n"+
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
@@ -173,6 +199,7 @@ public class SpaceRaceUtilityTest {
     expectedResult[1] = "Mechions\n"+
         "Mechanical beings whom do not eat food. Each now population must be built.\n"+
         "* Max radiation: 8\n"+
+        "* Troop power: 12\n"+
         "* Production: 100%\n"+
         "* Mining: 150%\n"+
         "* Research: 50%\n"+
@@ -184,6 +211,7 @@ public class SpaceRaceUtilityTest {
     expectedResult[2] = "Sporks\n"+
         "Aggressive and warmongering species.\n"+
         "* Max radiation: 5\n"+
+        "* Troop power: 12\n"+
         "* Production: 100%\n"+
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
@@ -195,6 +223,7 @@ public class SpaceRaceUtilityTest {
     expectedResult[3] = "Greyans\n"+
         "Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers.\n"+
         "* Max radiation: 6\n"+
+        "* Troop power: 8\n"+
         "* Production: 100%\n"+
         "* Mining: 100%\n"+
         "* Research: 150%\n"+
@@ -208,6 +237,7 @@ public class SpaceRaceUtilityTest {
         + " Due their enormous size their space ships are more rigid."
         + " Centaurs need more food to survive.\n"+
         "* Max radiation: 3\n"+
+        "* Troop power: 14\n"+
         "* Production: 100%\n"+
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
@@ -216,6 +246,18 @@ public class SpaceRaceUtilityTest {
         "* Culture: 100%\n"+
         "* Diplomacy bonus: -1\n"+
         "* Special: Stronger ships";
+    expectedResult[5] = "Mothoids\n"+
+        "Mothoids are sentient insects with hivemind. They are fast breeding race.\n"+
+        "* Max radiation: 6\n"+
+        "* Troop power: 9\n"+
+        "* Production: 100%\n"+
+        "* Mining: 75%\n"+
+        "* Research: 100%\n"+
+        "* Growth: 150%\n"+
+        "* Food require: 100%\n"+
+        "* Culture: 75%\n"+
+        "* Diplomacy bonus: 0\n"+
+        "* Special: None";
     for (int i = 0; i <  SpaceRace.values().length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByIndex(i);
       assertEquals(expectedResult[i],race.getFullDescription());

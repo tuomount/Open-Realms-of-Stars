@@ -152,6 +152,7 @@ public class PlayerInfo {
     switch (getRace()) {
     case HUMAN:
     case MECHIONS:
+    case MOTHOIDS:
     case CENTAURS: {
       /*
        * Humans, Mechions and Centaurs get 1 Combat, 1 Defense, Scout and Colony

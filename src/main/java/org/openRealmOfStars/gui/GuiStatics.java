@@ -17,7 +17,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2017  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -523,6 +523,11 @@ public final class GuiStatics {
   public static final BufferedImage IMAGE_SCROLL_BAR_THUMB2 = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/thumb2.png"));
 
+  /**
+   * Mothoid race selection image
+   */
+  public static final BufferedImage IMAGE_MOTHOID_RACE = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/mothoid_race.png"));
   /**
    * Centaur race selection image
    */

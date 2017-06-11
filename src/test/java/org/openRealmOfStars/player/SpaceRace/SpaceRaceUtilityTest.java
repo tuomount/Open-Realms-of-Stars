@@ -191,7 +191,7 @@ public class SpaceRaceUtilityTest {
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: -3\n"+
-        "* Special: None";
+        "* Special: Extra scout ship at start";
     expectedResult[3] = "Greyans\n"+
         "Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers.\n"+
         "* Max radiation: 6\n"+

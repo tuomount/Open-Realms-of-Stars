@@ -477,6 +477,8 @@ public enum SpaceRace {
       sb.append("Stronger ships");
     } else if (this == MECHIONS) {
       sb.append("Population needs to be built");
+    } else if (this == SPORKS) {
+      sb.append("Extra scout ship at start");
     } else {
       sb.append("None");
     }

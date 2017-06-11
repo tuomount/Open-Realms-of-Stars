@@ -609,23 +609,30 @@ public class StarMap {
           ShipStat[] stats = playerInfo.getShipStatList();
           int count = 0;
           for (ShipStat stat : stats) {
-            Ship ship = new Ship(stat.getDesign());
-            stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
-            stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
-            Fleet fleet = new Fleet(ship, planet.getX(), planet.getY());
-            playerInfo.getFleets().add(fleet);
-            if (ship.isColonyModule()) {
-              fleet.setName("Colony #" + count);
-            } else {
-              fleet.setName("Scout #" + count);
+            int numShip = 1;
+            if (playerInfo.getRace() == SpaceRace.SPORKS 
+                && stat.getDesign().isMilitaryShip()) {
+              numShip = 2;
             }
-            msg = new Message(MessageType.FLEET,
-                fleet.getName() + " is waiting for orders.",
-                Icons.getIconByName(Icons.ICON_HULL_TECH));
-            msg.setCoordinate(planet.getCoordinate());
-            msg.setMatchByString(fleet.getName());
-            playerInfo.getMsgList().addNewMessage(msg);
-            count++;
+            for (int j = 0; j < numShip; j++) {
+              Ship ship = new Ship(stat.getDesign());
+              stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+              stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+              Fleet fleet = new Fleet(ship, planet.getX(), planet.getY());
+              playerInfo.getFleets().add(fleet);
+              if (ship.isColonyModule()) {
+                fleet.setName("Colony #" + count);
+              } else {
+                fleet.setName("Scout #" + count);
+              }
+              msg = new Message(MessageType.FLEET,
+                  fleet.getName() + " is waiting for orders.",
+                  Icons.getIconByName(Icons.ICON_HULL_TECH));
+              msg.setCoordinate(planet.getCoordinate());
+              msg.setMatchByString(fleet.getName());
+              playerInfo.getMsgList().addNewMessage(msg);
+              count++;
+            }
           }
 
         }

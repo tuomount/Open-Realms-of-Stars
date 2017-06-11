@@ -254,6 +254,33 @@ public class DiplomaticTradeTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEqualTrade() {
+    StarMap map = generateMapWithPlayer();
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    trade.generateEqualTrade(NegotiationType.ALLIANCE);
+    assertEquals(NegotiationType.ALLIANCE, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.ALLIANCE, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+    trade.generateEqualTrade(NegotiationType.PEACE);
+    assertEquals(NegotiationType.PEACE, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.PEACE, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+    trade.generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+    assertEquals(NegotiationType.TRADE_ALLIANCE, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.TRADE_ALLIANCE, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+    trade.generateEqualTrade(NegotiationType.WAR);
+    assertEquals(NegotiationType.WAR, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testTechTrade() {
     StarMap map = generateMapWithPlayer();
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);

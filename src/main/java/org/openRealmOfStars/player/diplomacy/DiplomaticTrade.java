@@ -143,7 +143,22 @@ public class DiplomaticTrade {
       secondOffer = new NegotiationList();
       secondOffer.add(new NegotiationOffer(NegotiationType.MAP, null));
     }
+  }
 
+  /**
+   * Generate equal trade between two players.
+   * @param type Negotiation type, can be ALLIANCE, TRADE_ALLIANCE, WAR or PEACE
+   */
+  protected void generateEqualTrade(final NegotiationType type) {
+    if (type == NegotiationType.ALLIANCE
+        || type == NegotiationType.TRADE_ALLIANCE
+        || type == NegotiationType.WAR
+        || type == NegotiationType.PEACE) {
+      firstOffer = new NegotiationList();
+      firstOffer.add(new NegotiationOffer(type, null));
+      secondOffer = new NegotiationList();
+      secondOffer.add(new NegotiationOffer(type, null));
+    }
   }
 
   /**

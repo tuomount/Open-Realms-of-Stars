@@ -58,5 +58,10 @@ public enum NegotiationType {
   /**
    * Captured diplomat offering
    */
-  DIPLOMAT
+  DIPLOMAT,
+  /**
+   * War offering or threat
+   */
+  WAR
+
 }

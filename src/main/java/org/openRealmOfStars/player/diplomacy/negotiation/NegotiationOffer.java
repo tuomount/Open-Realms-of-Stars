@@ -48,7 +48,8 @@ public class NegotiationOffer {
         || type == NegotiationType.PEACE
         || type == NegotiationType.TRADE_ALLIANCE
         || type == NegotiationType.MAP
-        || type == NegotiationType.DIPLOMAT) {
+        || type == NegotiationType.DIPLOMAT
+        || type == NegotiationType.WAR) {
       negotiationType = type;
       offerObject = null;
     } else if (type == NegotiationType.CREDIT && offer instanceof Integer

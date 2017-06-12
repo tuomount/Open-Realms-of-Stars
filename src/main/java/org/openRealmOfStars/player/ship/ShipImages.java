@@ -53,6 +53,11 @@ public final class ShipImages {
   private static ShipImage centaurs;
 
   /**
+   * Mothoids ships
+   */
+  private static ShipImage mothoids;
+
+  /**
    * Hiding the constructor
    */
   private ShipImages() {
@@ -68,6 +73,7 @@ public final class ShipImages {
     centaurs = new ShipImage("centaurships.png");
     sporks = new ShipImage("sporkships.png");
     greyans = new ShipImage("greyanships.png");
+    mothoids = new ShipImage("mothoidships.png");
   }
 
   /**
@@ -126,6 +132,17 @@ public final class ShipImages {
   }
 
   /**
+   * Get Mothoids ship images
+   * @return Mothoids ship images
+   */
+  public static ShipImage mothoids() {
+    if (mothoids == null) {
+      initImages();
+    }
+    return mothoids;
+  }
+
+  /**
    * Get ship images for certain race
    * @param race Space race which images to get
    * @return ShipImage
@@ -143,8 +160,7 @@ public final class ShipImages {
     case SPORKS:
       return sporks();
     case MOTHOIDS:
-      // TODO: FIX this to match mothoids ships where they are ready
-      return sporks();
+      return mothoids();
     default:
       return humans();
     }

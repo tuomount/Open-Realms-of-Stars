@@ -247,6 +247,43 @@ public class PlayerInfoTest {
     }
 
     /**
+     * input : SpaceRace.Mothoids output : PlayerInfo's techList ={ one random
+     * weapon in Combat TechType level 1, Hulltech level 1 Colony,
+     * Hulltech level 1 Scout Mk1, PropulsionTech level 1 Ion drive Mk1,
+     * PropulsionTech level 1 Fission source Mk1},
+     * PlayerInfo's ShipStatList = { scout have two weapon, Scout Mk1 Hull,
+     * Ion drive Mk1, Fission source Mk1, colony have Colony Hull,
+     * Ion drive Mk1, Fission source Mk1 } purpose :
+     * test PlayerInfo constructor Mothoids
+     */
+    @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
+    public void testPlayerInfoMothoids() {
+        SpaceRace race = SpaceRace.MOTHOIDS;
+        PlayerInfo mothoid = new PlayerInfo(race);
+        TechList techList = mothoid.getTechList();
+        Tech[] tech = techList.getList();
+        ShipStat[] statList = mothoid.getShipStatList();
+        assertEquals(TechType.Combat, tech[0].getType());
+        assertEquals(1, tech[0].getLevel());
+        assertEquals("Colony", tech[1].getName());
+        assertEquals(1, tech[1].getLevel());
+        assertEquals("Scout Mk1", tech[2].getName());
+        assertEquals(1, tech[2].getLevel());
+        assertEquals(TechType.Improvements, tech[3].getType());
+        assertEquals(1, tech[3].getLevel());
+        assertEquals("Ion drive Mk1", tech[4].getName());
+        assertEquals(1, tech[4].getLevel());
+        assertEquals("Fission source Mk1", tech[5].getName());
+        assertEquals(1, tech[5].getLevel());
+        ShipStat expectedStat = new ShipStat(ShipGenerator
+            .createScout(mothoid));
+        assertEquals(expectedStat.toString(), statList[0].toString());
+        expectedStat = new ShipStat(ShipGenerator.createColony(mothoid, false));
+        assertEquals(expectedStat.toString(), statList[1].toString());
+    }
+
+    /**
      * Tests diplomacy fetching from player info.
      */
     @Test

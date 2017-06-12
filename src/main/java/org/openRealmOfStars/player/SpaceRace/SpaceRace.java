@@ -60,7 +60,9 @@ public enum SpaceRace {
    * Mothoids are sentient insects with hivemind. They are fast breeding race.
    */
   MOTHOIDS(4, "Mothoids", "Mothoid", "Mothoids are sentient insects with"
-      + " hivemind. They are fast breeding race.");
+      + " hivemind. They are fast breeding race. Their song is hypnotic "
+      + "so cultural bonus is granted. Mothoids exo-skeleton is weak and "
+      + "therefore get negative bonus on mining and troop power.");
 
   /**
    * Create space race
@@ -213,7 +215,7 @@ public enum SpaceRace {
     case CENTAURS:
       return 100;
     case MOTHOIDS:
-      return 75;
+      return 50;
     default:
       return 0;
     }
@@ -236,7 +238,7 @@ public enum SpaceRace {
     case CENTAURS:
       return 100;
     case MOTHOIDS:
-      return 75;
+      return 150;
     default:
       return 0;
     }
@@ -516,7 +518,11 @@ public enum SpaceRace {
     } else if (this == MECHIONS) {
       sb.append("Population needs to be built");
     } else if (this == SPORKS) {
-      sb.append("Extra scout ship at start");
+      sb.append("Extra scout ship and higher combat tech at start");
+    } else if (this == GREYANS) {
+      sb.append("Electronics and propulsion tech is hight at start");
+    } else if (this == MOTHOIDS) {
+      sb.append("No defense tech but one Planetary improvement tech at start");
     } else {
       sb.append("None");
     }

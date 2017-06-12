@@ -152,7 +152,6 @@ public class PlayerInfo {
     switch (getRace()) {
     case HUMAN:
     case MECHIONS:
-    case MOTHOIDS:
     case CENTAURS: {
       /*
        * Humans, Mechions and Centaurs get 1 Combat, 1 Defense, Scout and Colony
@@ -168,6 +167,44 @@ public class PlayerInfo {
         techList.addTech(tech);
       }
       tech = TechFactory.createHullTech("Colony", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createHullTech("Scout Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      ShipDesign design = ShipGenerator.createScout(this);
+      ShipStat stat = new ShipStat(design);
+      addShipStat(stat);
+      design = ShipGenerator.createColony(this, false);
+      stat = new ShipStat(design);
+      addShipStat(stat);
+      break;
+    }
+    case MOTHOIDS: {
+      /*
+       * Mothoids get 1 Combat, 1 improvement, Scout and Colony
+       */
+      Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
+          techList.getListForTypeAndLevel(TechType.Combat, 1));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createHullTech("Colony", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createRandomTech(TechType.Improvements, 1,
+          techList.getListForTypeAndLevel(TechType.Improvements, 1));
       if (tech != null) {
         techList.addTech(tech);
       }

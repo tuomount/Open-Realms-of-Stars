@@ -219,7 +219,7 @@ public class SpaceRaceUtilityTest {
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: -3\n"+
-        "* Special: Extra scout ship at start";
+        "* Special: Extra scout ship and higher combat tech at start";
     expectedResult[3] = "Greyans\n"+
         "Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers.\n"+
         "* Max radiation: 6\n"+
@@ -231,7 +231,7 @@ public class SpaceRaceUtilityTest {
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: 0\n"+
-        "* Special: None";
+        "* Special: Electronics and propulsion tech is hight at start";
     expectedResult[4] = "Centaurs\n"+
         "Quadrupedal humanoid creatures which are big, about 5 meters tall."
         + " Due their enormous size their space ships are more rigid."
@@ -247,21 +247,24 @@ public class SpaceRaceUtilityTest {
         "* Diplomacy bonus: -1\n"+
         "* Special: Stronger ships";
     expectedResult[5] = "Mothoids\n"+
-        "Mothoids are sentient insects with hivemind. They are fast breeding race.\n"+
+        "Mothoids are sentient insects with hivemind. They are fast breeding "
+        + "race. Their song is hypnotic so cultural bonus is granted. "
+      + "Mothoids exo-skeleton is weak and therefore get negative bonus on "
+      + "mining and troop power.\n"+
         "* Max radiation: 6\n"+
         "* Troop power: 9\n"+
         "* Production: 100%\n"+
-        "* Mining: 75%\n"+
+        "* Mining: 50%\n"+
         "* Research: 100%\n"+
         "* Growth: 150%\n"+
         "* Food require: 100%\n"+
-        "* Culture: 75%\n"+
+        "* Culture: 150%\n"+
         "* Diplomacy bonus: 0\n"+
-        "* Special: None";
+        "* Special: No defense tech but one Planetary improvement tech at start";
     for (int i = 0; i <  SpaceRace.values().length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByIndex(i);
       assertEquals(expectedResult[i],race.getFullDescription());
-//      System.out.println(race.getFullDescription());
+      //System.out.println(race.getFullDescription());
     }
   }
 

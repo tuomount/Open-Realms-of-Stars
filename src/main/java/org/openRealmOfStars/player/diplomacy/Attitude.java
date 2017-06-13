@@ -21,7 +21,7 @@ package org.openRealmOfStars.player.diplomacy;
 * Attitude/personality types for AI
 *
 */
-public enum Attitudes {
+public enum Attitude {
 
   /**
    * Aggressive AI attacking often, making threats.
@@ -55,5 +55,43 @@ public enum Attitudes {
   /**
    * Peaceful tries to avoid conflict at any cost
    */
-  PEACEFUL
+  PEACEFUL;
+
+  /**
+   * Get Attitude index
+   * @return index for attitude
+   */
+  public int getIndex() {
+    switch (this) {
+      case AGGRESSIVE: return 0;
+      case DIPLOMATIC: return 1;
+      case SCIENTIFIC: return 2;
+      case MILITARISTIC: return 3;
+      case EXPANSIONIST: return 4;
+      case BACKSTABBING: return 5;
+      case MERCHANTICAL: return 6;
+      case PEACEFUL: return 7;
+      default: throw new IllegalArgumentException("No such Attitude!");
+    }
+  }
+
+  /**
+   * Return Attitude by index.
+   * @param index This must be between 0-7
+   * @return Attitude
+   */
+  public static Attitude getTypeByIndex(final int index) {
+    switch (index) {
+      case 0: return AGGRESSIVE;
+      case 1: return DIPLOMATIC;
+      case 2: return SCIENTIFIC;
+      case 3: return MILITARISTIC;
+      case 4: return EXPANSIONIST;
+      case 5: return BACKSTABBING;
+      case 6: return MERCHANTICAL;
+      case 7: return PEACEFUL;
+      default: throw new IllegalArgumentException("Unexpected attitude!");
+    }
+  }
+
 }

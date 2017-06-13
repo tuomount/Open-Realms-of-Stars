@@ -3,6 +3,7 @@ package org.openRealmOfStars.player.SpaceRace;
 import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 
 /**
  *
@@ -128,6 +129,31 @@ public enum SpaceRace {
       return 100;
     default:
       return 0;
+    }
+  }
+
+  /**
+   * Get attitude from space race. AI players have two attitudes:
+   * one from SpaceRace and one is random when game in
+   * being created.
+   * @return Attitude
+   */
+  public Attitude getAttitude() {
+    switch (this) {
+      case HUMAN:
+        return Attitude.DIPLOMATIC;
+      case MECHIONS:
+        return Attitude.MILITARISTIC;
+      case SPORKS:
+        return Attitude.AGGRESSIVE;
+      case GREYANS:
+        return Attitude.SCIENTIFIC;
+      case CENTAURS:
+        return Attitude.DIPLOMATIC;
+      case MOTHOIDS:
+        return Attitude.EXPANSIONIST;
+      default:
+        return Attitude.PEACEFUL;
     }
   }
 

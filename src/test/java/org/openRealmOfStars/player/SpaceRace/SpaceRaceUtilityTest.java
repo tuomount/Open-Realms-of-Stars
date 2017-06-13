@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 
 /**
  * 
@@ -33,6 +34,7 @@ public class SpaceRaceUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testRandomNameGeneratorHuman() {
     SpaceRace race = SpaceRace.HUMAN;
+    assertEquals(Attitude.DIPLOMATIC, race.getAttitude());
     for (int i=0;i<100;i++) {
       String tmp = SpaceRaceUtility.getRandomName(race);
       String[] parts = tmp.split(" ");
@@ -51,7 +53,6 @@ public class SpaceRaceUtilityTest {
         assertEquals("of", parts[1]);
         assertFalse(!parts[2].equals("Terran") && !parts[2].equals("Humans"));
       }
-
     }
   }
 
@@ -59,6 +60,7 @@ public class SpaceRaceUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testRandomNameGeneratorMechions() {
     SpaceRace race = SpaceRace.MECHIONS;
+    assertEquals(Attitude.MILITARISTIC, race.getAttitude());
     for (int i=0;i<100;i++) {
       String tmp = SpaceRaceUtility.getRandomName(race);
       String[] parts = tmp.split(" ");
@@ -84,6 +86,7 @@ public class SpaceRaceUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testRandomNameGeneratorCentaurs() {
     SpaceRace race = SpaceRace.CENTAURS;
+    assertEquals(Attitude.DIPLOMATIC, race.getAttitude());
     for (int i=0;i<100;i++) {
       String tmp = SpaceRaceUtility.getRandomName(race);
       String[] parts = tmp.split(" ");
@@ -109,6 +112,7 @@ public class SpaceRaceUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testRandomNameGeneratorGreyans() {
     SpaceRace race = SpaceRace.GREYANS;
+    assertEquals(Attitude.SCIENTIFIC, race.getAttitude());
     for (int i=0;i<100;i++) {
       String tmp = SpaceRaceUtility.getRandomName(race);
       String[] parts = tmp.split(" ");
@@ -134,6 +138,7 @@ public class SpaceRaceUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testRandomNameGeneratorSporks() {
     SpaceRace race = SpaceRace.SPORKS;
+    assertEquals(Attitude.AGGRESSIVE, race.getAttitude());
     for (int i=0;i<100;i++) {
       String tmp = SpaceRaceUtility.getRandomName(race);
       String[] parts = tmp.split(" ");
@@ -159,6 +164,7 @@ public class SpaceRaceUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testRandomNameGeneratorMothoids() {
     SpaceRace race = SpaceRace.MOTHOIDS;
+    assertEquals(Attitude.EXPANSIONIST, race.getAttitude());
     for (int i=0;i<100;i++) {
       String tmp = SpaceRaceUtility.getRandomName(race);
       String[] parts = tmp.split(" ");

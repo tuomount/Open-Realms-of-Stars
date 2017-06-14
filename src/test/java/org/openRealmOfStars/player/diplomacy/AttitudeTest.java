@@ -40,4 +40,14 @@ public class AttitudeTest {
      Attitude.getTypeByIndex(255).getIndex();
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandom() {
+    for (int i = 0;i < 100; i++) {
+      Attitude.getRandom();
+      // Throws illegal exeption if random fails
+    }
+  }
+
+
 }

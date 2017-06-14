@@ -1,4 +1,7 @@
 package org.openRealmOfStars.player.diplomacy;
+
+import org.openRealmOfStars.utilities.DiceGenerator;
+
 /**
 *
 * Open Realm of Stars game project
@@ -92,6 +95,15 @@ public enum Attitude {
       case 7: return PEACEFUL;
       default: throw new IllegalArgumentException("Unexpected attitude!");
     }
+  }
+
+  /**
+   * Get random AI attitude
+   * @return Attitude
+   */
+  public static Attitude getRandom() {
+    int amount = Attitude.values().length - 1;
+    return getTypeByIndex(DiceGenerator.getRandom(amount));
   }
 
 }

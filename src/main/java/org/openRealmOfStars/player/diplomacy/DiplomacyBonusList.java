@@ -122,6 +122,26 @@ public class DiplomacyBonusList {
     }
     return false;
   }
+
+  /**
+   * Get the number of diplomacy bonuses on the list
+   * @return Number of diplomacy bonuses on the list
+   */
+  public int getListSize() {
+    return list.size();
+  }
+
+  /**
+   * Get the single diplomacy bonus from the list
+   * @param index Diplomacy bonus index
+   * @return Diplomacy Bonus
+   */
+  public DiplomacyBonus get(final int index) {
+    if (index > -1 && index < getListSize()) {
+      return list.get(index);
+    }
+    return null;
+  }
   /**
    * Add Diplomacy bonus to list. If diplomacy is type which can
    * be only one and there is already one in list, then nothing

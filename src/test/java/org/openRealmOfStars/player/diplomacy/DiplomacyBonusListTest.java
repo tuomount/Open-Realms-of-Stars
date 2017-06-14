@@ -48,12 +48,28 @@ public class DiplomacyBonusListTest {
     boolean result = list.addBonus(DiplomacyBonusType.IN_WAR, SpaceRace.HUMAN);
     assertEquals(true, result);
     assertEquals(-30, list.getDiplomacyBonus());
+    DiplomacyBonus bonus = list.get(0);
+    assertEquals(DiplomacyBonusType.IN_WAR, bonus.getType());
     result = list.addBonus(DiplomacyBonusType.IN_WAR, SpaceRace.HUMAN);
     assertEquals(false, result);
     assertEquals(-30, list.getDiplomacyBonus());
     result = list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE, SpaceRace.HUMAN);
     assertEquals(true, result);
     assertEquals(-25, list.getDiplomacyBonus());
+    bonus = list.get(1);
+    assertEquals(DiplomacyBonusType.DIPLOMATIC_TRADE, bonus.getType());
+    result = list.addBonus(DiplomacyBonusType.GIVEN_VALUABLE_FREE, SpaceRace.HUMAN);
+    assertEquals(true, result);
+    bonus = list.get(2);
+    assertEquals(DiplomacyBonusType.GIVEN_VALUABLE_FREE, bonus.getType());
+    result = list.addBonus(DiplomacyBonusType.LONG_PEACE, SpaceRace.HUMAN);
+    assertEquals(true, result);
+    bonus = list.get(0);
+    assertEquals(DiplomacyBonusType.DIPLOMATIC_TRADE, bonus.getType());
+    bonus = list.get(1);
+    assertEquals(DiplomacyBonusType.GIVEN_VALUABLE_FREE, bonus.getType());
+    bonus = list.get(2);
+    assertEquals(DiplomacyBonusType.LONG_PEACE, bonus.getType());
   }
 
   @Test

@@ -416,6 +416,7 @@ public class PlayerInfo {
         dos.writeByte(mapData[x][y]);
       }
     }
+    // FIXME Save diplomacy
     dos.writeBoolean(human);
     if (!human) {
       missions.saveMissionList(dos);

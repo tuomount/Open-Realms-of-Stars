@@ -71,6 +71,13 @@ public class Diplomacy {
   }
 
   /**
+   * Get diplomacy size
+   * @return Diplomacy size
+   */
+  public int getDiplomacySize() {
+    return diplomacyList.length;
+  }
+  /**
    * Get diplomacy list for player index. This can return
    * null if player index is same as who's diplomacy object this is
    * being called or index is out of bounds.

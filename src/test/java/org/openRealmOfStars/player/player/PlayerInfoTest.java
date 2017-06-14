@@ -8,6 +8,7 @@ import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
@@ -290,6 +291,16 @@ public class PlayerInfoTest {
     @Category(org.openRealmOfStars.UnitTest.class)
     public void testDiplomacy() {
       PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 8, 0);
+      info.setAttitude(Attitude.AGGRESSIVE);
+      assertEquals(Attitude.AGGRESSIVE, info.getAttitude());
+      for (int i = 0; i < 10; i++) {
+        Attitude attitude = info.getAiAttitude();
+        if (attitude != Attitude.AGGRESSIVE
+            && attitude != Attitude.DIPLOMATIC) {
+          assertEquals(Attitude.DIPLOMATIC, attitude);
+          assertEquals(Attitude.AGGRESSIVE, attitude);
+        }
+      }
       assertEquals(null, info.getDiplomacy().getDiplomacyList(0));
       assertNotEquals(null, info.getDiplomacy().getDiplomacyList(1));
       assertNotEquals(null, info.getDiplomacy().getDiplomacyList(2));

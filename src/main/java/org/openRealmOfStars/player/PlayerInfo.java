@@ -10,6 +10,7 @@ import org.openRealmOfStars.AI.Mission.MissionList;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
@@ -24,6 +25,7 @@ import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -122,6 +124,11 @@ public class PlayerInfo {
   private Diplomacy diplomacy;
 
   /**
+   * Attitude for AI player to be randomized.
+   */
+  private Attitude attitude;
+
+  /**
    * Uncharted map sector, only suns are visible
    */
   public static final byte UNCHARTED = 0;
@@ -149,6 +156,7 @@ public class PlayerInfo {
     setHuman(false);
     setRace(race);
     diplomacy = new Diplomacy(maxPlayers, index);
+    attitude = Attitude.getRandom();
     switch (getRace()) {
     case HUMAN:
     case MECHIONS:
@@ -390,6 +398,7 @@ public class PlayerInfo {
     IOUtilities.writeString(dos, empireName);
     dos.writeInt(race.getIndex());
     dos.writeInt(totalCredits);
+    //FIXME Save randomized attitude
     techList.saveTechList(dos);
     msgList.saveMessageList(dos);
     dos.writeInt(shipStatList.size());
@@ -420,6 +429,35 @@ public class PlayerInfo {
   public Diplomacy getDiplomacy() {
     return diplomacy;
   }
+
+  /**
+   * Get AI Attitude which can be one from which is randomized
+   * and one which is from SpaceRace.
+   * @return Attitude
+   */
+  public Attitude getAiAttitude() {
+    int value = DiceGenerator.getRandom(1);
+    if (value == 0) {
+      return race.getAttitude();
+    }
+    return getAttitude();
+  }
+  /**
+   * Get AI player's attitude
+   * @return the attitude
+   */
+  public Attitude getAttitude() {
+    return attitude;
+  }
+
+  /**
+   * Set Attitude for AI
+   * @param attitude the attitude to set
+   */
+  public void setAttitude(final Attitude attitude) {
+    this.attitude = attitude;
+  }
+
   /**
    * Calculate how many uncharted sectors is between start and end
    * @param sx Start X coordinate

@@ -44,7 +44,7 @@ public class DiplomacyTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic2() {
     Diplomacy diplomacy = new Diplomacy(4);
-    assertNotEquals(4, diplomacy.getDiplomacySize());
+    assertEquals(4, diplomacy.getDiplomacySize());
     assertEquals(null, diplomacy.getDiplomacyList(0));
     assertEquals(null, diplomacy.getDiplomacyList(1));
     assertEquals(null, diplomacy.getDiplomacyList(2));

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 
 /**
@@ -37,6 +38,20 @@ public class DiplomacyTest {
     assertNotEquals(null, diplomacy.getDiplomacyList(2));
     assertNotEquals(null, diplomacy.getDiplomacyList(3));
     assertEquals(null, diplomacy.getDiplomacyList(1));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBasic2() {
+    Diplomacy diplomacy = new Diplomacy(4);
+    assertNotEquals(4, diplomacy.getDiplomacySize());
+    assertEquals(null, diplomacy.getDiplomacyList(0));
+    assertEquals(null, diplomacy.getDiplomacyList(1));
+    assertEquals(null, diplomacy.getDiplomacyList(2));
+    assertEquals(null, diplomacy.getDiplomacyList(3));
+    DiplomacyBonusList list = Mockito.mock(DiplomacyBonusList.class);
+    diplomacy.setList(list, 0);
+    assertEquals(list, diplomacy.getDiplomacyList(0));
   }
 
   @Test

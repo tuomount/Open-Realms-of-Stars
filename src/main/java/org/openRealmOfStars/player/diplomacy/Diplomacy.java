@@ -71,6 +71,24 @@ public class Diplomacy {
   }
 
   /**
+   * Constructs Diplomacy without initializing the list
+   * @param maxPlayers Number of players when game is created
+   */
+  public Diplomacy(final int maxPlayers) {
+    diplomacyList = new DiplomacyBonusList[maxPlayers];
+  }
+
+  /**
+   * Set Diplmacy List
+   * @param list List to set into diplomacy
+   * @param index Index where list is placed
+   */
+  public void setList(final DiplomacyBonusList list, final int index) {
+    if (index > -1 && index < diplomacyList.length) {
+      diplomacyList[index] = list;
+    }
+  }
+  /**
    * Get diplomacy size
    * @return Diplomacy size
    */

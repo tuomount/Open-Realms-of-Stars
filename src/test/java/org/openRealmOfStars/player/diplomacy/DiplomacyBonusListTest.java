@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 
 /**
@@ -70,6 +71,19 @@ public class DiplomacyBonusListTest {
     assertEquals(DiplomacyBonusType.GIVEN_VALUABLE_FREE, bonus.getType());
     bonus = list.get(2);
     assertEquals(DiplomacyBonusType.LONG_PEACE, bonus.getType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAdd2() {
+    DiplomacyBonusList list = new DiplomacyBonusList(1);
+    assertEquals(0, list.getListSize());
+    boolean result = list.addBonus(DiplomacyBonusType.IN_WAR, SpaceRace.HUMAN);
+    assertEquals(true, result);
+    assertEquals(1, list.getListSize());
+    DiplomacyBonus bonus = Mockito.mock(DiplomacyBonus.class);
+    list.addBonus(bonus);
+    assertEquals(2,list.getListSize());
   }
 
   @Test

@@ -176,6 +176,14 @@ public class DiplomacyBonusList {
   }
 
   /**
+   * Adds diplomacy into bonus list
+   * @param bonus to add into list
+   */
+  public void addBonus(final DiplomacyBonus bonus) {
+    list.add(bonus);
+  }
+
+  /**
    * Handle diplomacy bonus list for one turn.
    * This will calculate bonus lasting and remove
    * bonuses which lasting is zero.

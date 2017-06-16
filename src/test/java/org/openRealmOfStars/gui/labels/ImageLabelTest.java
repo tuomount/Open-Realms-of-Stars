@@ -47,4 +47,19 @@ public class ImageLabelTest {
     assertEquals(false, label.isBorder());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testDrawingImageLabel() {
+    BufferedImage image = new BufferedImage(400, 400,
+        BufferedImage.TYPE_4BYTE_ABGR);
+    BufferedImage back = new BufferedImage(800, 800,
+        BufferedImage.TYPE_4BYTE_ABGR);
+    ImageLabel label = new ImageLabel(image, true);
+    label.paint(back.getGraphics());
+    label.setFillColor(Color.BLUE);
+    label.paint(back.getGraphics());
+    label.setBorder(false);
+    label.paint(back.getGraphics());
+  }
+
 }

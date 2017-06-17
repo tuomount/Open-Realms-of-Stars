@@ -503,42 +503,74 @@ public enum SpaceRace {
 
   /**
    * Get full description about the race, including the stats.
+   * @param markDown if true then markDown is being used, otherwise HTML.
    * @return Full description
    */
-  public String getFullDescription() {
+  public String getFullDescription(final boolean markDown) {
+    String lf = "<br>";
+    String dot = "<li>";
+    if (markDown) {
+      lf = "\n";
+      dot = "*";
+    }
     StringBuilder sb = new StringBuilder(100);
+    if (!markDown) {
+      sb.append("<html>");
+    }
     sb.append(name);
-    sb.append("\n");
+    sb.append(lf);
+    if (!markDown) {
+      sb.append("<p>");
+    }
     sb.append(description);
-    sb.append("\n");
-    sb.append("* Max radiation: ");
+    if (!markDown) {
+      sb.append("</p>");
+    }
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Max radiation: ");
     sb.append(getMaxRad());
-    sb.append("\n");
-    sb.append("* Troop power: ");
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Troop power: ");
     sb.append(getTrooperPower());
-    sb.append("\n");
-    sb.append("* Production: ");
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Production: ");
     sb.append(getProductionSpeed());
-    sb.append("%\n");
-    sb.append("* Mining: ");
+    sb.append("%");
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Mining: ");
     sb.append(getMiningSpeed());
-    sb.append("%\n");
-    sb.append("* Research: ");
+    sb.append("%");
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Research: ");
     sb.append(getResearchSpeed());
-    sb.append("%\n");
-    sb.append("* Growth: ");
+    sb.append("%");
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Growth: ");
     sb.append(getGrowthSpeed());
-    sb.append("%\n");
-    sb.append("* Food require: ");
+    sb.append("%");
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Food require: ");
     sb.append(getFoodRequire());
-    sb.append("%\n");
-    sb.append("* Culture: ");
+    sb.append("%");
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Culture: ");
     sb.append(getCultureSpeed());
-    sb.append("%\n");
-    sb.append("* Diplomacy bonus: ");
+    sb.append("%");
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Diplomacy bonus: ");
     sb.append(getDiplomacyBonus());
-    sb.append("\n");
-    sb.append("* Special: ");
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Special: ");
     if (this == CENTAURS) {
       sb.append("Stronger ships");
     } else if (this == MECHIONS) {
@@ -552,8 +584,12 @@ public enum SpaceRace {
     } else {
       sb.append("None");
     }
-
+    if (!markDown) {
+      sb.append("</html>");
+    }
     return sb.toString();
   }
+
+
 
 }

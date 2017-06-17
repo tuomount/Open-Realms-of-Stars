@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
-import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
@@ -19,6 +18,7 @@ import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.SpaceComboBox;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
@@ -69,7 +69,7 @@ public class PlayerSetupView extends BlackPanel {
   /**
    * ComboBox on galaxy size
    */
-  private JComboBox<String>[] comboRaceSelect;
+  private SpaceComboBox<String>[] comboRaceSelect;
 
   /**
    * Player name
@@ -116,7 +116,7 @@ public class PlayerSetupView extends BlackPanel {
     invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
     invisible.add(Box.createRigidArea(new Dimension(500, 100)));
 
-    comboRaceSelect = new JComboBox[StarMap.MAX_PLAYERS];
+    comboRaceSelect = new SpaceComboBox[StarMap.MAX_PLAYERS];
     raceImgs = new RaceImagePanel[StarMap.MAX_PLAYERS];
     playerName = new JTextField[StarMap.MAX_PLAYERS];
 
@@ -156,6 +156,7 @@ public class PlayerSetupView extends BlackPanel {
         if (comboRaceSelect[i].isEnabled()) {
           String raceStr = (String) comboRaceSelect[i].getSelectedItem();
           SpaceRace race = SpaceRaceUtility.getRaceByName(raceStr);
+          comboRaceSelect[i].setToolTipText(race.getFullDescription(false));
           config.setRace(i, race);
           raceImgs[i].setRaceToShow(raceStr);
         }
@@ -203,7 +204,7 @@ public class PlayerSetupView extends BlackPanel {
     raceImgs[index].setRaceToShow(config.getRace(index).getNameSingle());
     info.add(raceImgs[index]);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    comboRaceSelect[index] = new JComboBox<>(RACE_SELECTION);
+    comboRaceSelect[index] = new SpaceComboBox<>(RACE_SELECTION);
     comboRaceSelect[index]
         .setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     comboRaceSelect[index].setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
@@ -220,6 +221,8 @@ public class PlayerSetupView extends BlackPanel {
     if (config.getMaxPlayers() < (index + 1)) {
       comboRaceSelect[index].setEnabled(false);
     }
+    comboRaceSelect[index].setToolTipText(config.getRace(index)
+        .getFullDescription(false));
     info.add(comboRaceSelect[index]);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     playerName[index] = new JTextField(
@@ -232,6 +235,8 @@ public class PlayerSetupView extends BlackPanel {
       raceImgs[index].setRaceToShow(null);
     } else {
       playerName[index].setText(config.getPlayerName(index));
+      comboRaceSelect[index].setToolTipText(config.getRace(index)
+          .getFullDescription(false));
     }
     info.add(playerName[index]);
     info.add(Box.createRigidArea(new Dimension(5, 5)));

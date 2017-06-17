@@ -269,7 +269,13 @@ public class SpaceRaceUtilityTest {
         "* Special: No defense tech but one Planetary improvement tech at start";
     for (int i = 0; i <  SpaceRace.values().length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByIndex(i);
-      assertEquals(expectedResult[i],race.getFullDescription());
+      assertEquals(expectedResult[i],race.getFullDescription(true));
+      if (i == 0) {
+        String result = race.getFullDescription(false);
+        if (!result.startsWith("<html>")) {
+          assertFalse(true);
+        }
+      }
       //System.out.println(race.getFullDescription());
     }
   }

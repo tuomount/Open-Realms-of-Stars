@@ -60,7 +60,7 @@ public enum SpaceRace {
   /**
    * Mothoids are sentient insects with hivemind. They are fast breeding race.
    */
-  MOTHOIDS(4, "Mothoids", "Mothoid", "Mothoids are sentient insects with"
+  MOTHOIDS(5, "Mothoids", "Mothoid", "Mothoids are sentient insects with"
       + " hivemind. They are fast breeding race. Their song is hypnotic "
       + "so cultural bonus is granted. Mothoids exo-skeleton is weak and "
       + "therefore get negative bonus on mining and troop power.");

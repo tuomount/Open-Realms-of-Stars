@@ -28,6 +28,7 @@ import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.repository.DiplomacyRepository;
 
 /**
  *
@@ -348,15 +349,13 @@ public class PlayerInfo {
   /**
    * Read PlayerInfo from DataInputStream
    * @param dis DataInputStream
-   * @param maxPlayers Maximum players in list when game was created.
-   * @param index Current player index
    * @throws IOException if there is any problem with DataInputStream
    */
-  public PlayerInfo(final DataInputStream dis, final int maxPlayers,
-      final int index) throws IOException {
+  public PlayerInfo(final DataInputStream dis) throws IOException {
     empireName = IOUtilities.readString(dis);
     race = SpaceRaceUtility.getRaceByIndex(dis.readInt());
     totalCredits = dis.readInt();
+    attitude = Attitude.getTypeByIndex(dis.readByte());
     techList = new TechList(dis);
     msgList = new MessageList(dis);
     int count = dis.readInt();
@@ -381,12 +380,11 @@ public class PlayerInfo {
       throw new IOException("Reading failed at player mapdata! MapOffset:"
           + mapOffset + " " + e.getMessage());
     }
+    diplomacy = DiplomacyRepository.loadDiplomacy(dis);
     human = dis.readBoolean();
     if (!human) {
       missions = new MissionList(dis);
     }
-    // Still just creating the diplomacy not actually loading it
-    diplomacy = new Diplomacy(maxPlayers, index);
   }
 
   /**
@@ -398,7 +396,7 @@ public class PlayerInfo {
     IOUtilities.writeString(dos, empireName);
     dos.writeInt(race.getIndex());
     dos.writeInt(totalCredits);
-    //FIXME Save randomized attitude
+    dos.writeByte(attitude.getIndex());
     techList.saveTechList(dos);
     msgList.saveMessageList(dos);
     dos.writeInt(shipStatList.size());
@@ -416,7 +414,7 @@ public class PlayerInfo {
         dos.writeByte(mapData[x][y]);
       }
     }
-    // FIXME Save diplomacy
+    DiplomacyRepository.saveDiplomacy(dos, diplomacy);
     dos.writeBoolean(human);
     if (!human) {
       missions.saveMissionList(dos);

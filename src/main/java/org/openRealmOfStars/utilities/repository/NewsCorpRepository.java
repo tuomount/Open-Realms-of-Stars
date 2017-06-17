@@ -54,6 +54,8 @@ public class NewsCorpRepository {
     saveGalaxyStat(dos, newsCorp.getPopulation());
     IOUtilities.writeString(dos, NewsCorpData.STAT_RESEARCH);
     saveGalaxyStat(dos, newsCorp.getResearch());
+    // This is reserved for future extension like News information
+    dos.writeByte(0);
   }
 
   /**
@@ -120,6 +122,10 @@ public class NewsCorpRepository {
           // Just reading unknown galaxy stat away
           loadGalaxyStat(dis, new GalaxyStat(numberOfStats, "UNKNOWN"));
         }
+      }
+      int reserved = dis.read();
+      if (reserved != 0) {
+        throw new IOException("Reserved field is not zero!");
       }
       return result;
   }

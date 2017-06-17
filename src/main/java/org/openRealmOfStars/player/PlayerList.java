@@ -57,7 +57,7 @@ public class PlayerList {
     int count = dis.readInt();
     list = new ArrayList<>();
     for (int i = 0; i < count; i++) {
-      list.add(new PlayerInfo(dis, count, i));
+      list.add(new PlayerInfo(dis));
     }
   }
 

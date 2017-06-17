@@ -63,11 +63,11 @@ public final class DiplomacyRepository {
    */
   public static DiplomacyBonus loadDiplomacyBonus(final DataInputStream dis)
       throws IOException {
-    int typeIndex = dis.readInt();
+    int typeIndex = dis.readByte();
     DiplomacyBonus bonus = new DiplomacyBonus(DiplomacyBonusType
         .getTypeByIndex(typeIndex), SpaceRace.HUMAN);
     bonus.setBonusValue(dis.readInt());
-    bonus.setBonusLasting(dis.readInt());
+    bonus.setBonusLasting(dis.readByte());
     return bonus;
   }
 
@@ -136,7 +136,7 @@ public final class DiplomacyRepository {
    */
   public static Diplomacy loadDiplomacy(final DataInputStream dis)
       throws IOException {
-    int size = dis.readInt();
+    int size = dis.readByte();
     Diplomacy diplomacy = new Diplomacy(size);
     for (int i = 0; i < size; i++) {
       DiplomacyBonusList list = loadDiplomacyBonusList(dis);

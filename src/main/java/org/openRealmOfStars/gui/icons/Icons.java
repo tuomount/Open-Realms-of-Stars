@@ -255,6 +255,15 @@ public final class Icons {
   public static final String ICON_BATTERY = "IconBattery";
 
   /**
+   * Checkbox icon
+   */
+  public static final String ICON_CHECKBOX = "IconCheckBox";
+  /**
+   * Checkbox tick icon
+   */
+  public static final String ICON_CHECKBOX_TICK = "IconCheckBoxTick";
+
+  /**
    * List of Icon
    */
   private static ArrayList<Icon16x16> listOfIcons;
@@ -432,6 +441,10 @@ public final class Icons {
     icon = new Icon16x16(image, 4, 6, ICON_BATTERY);
     addIcon(icon);
     icon = new Icon16x16(image, 5, 6, ICON_NO_MORE_PEOPLE);
+    addIcon(icon);
+    icon = new Icon16x16(image, 6, 6, ICON_CHECKBOX);
+    addIcon(icon);
+    icon = new Icon16x16(image, 7, 6, ICON_CHECKBOX_TICK);
     addIcon(icon);
   }
 

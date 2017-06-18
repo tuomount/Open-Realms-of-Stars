@@ -13,6 +13,7 @@ import javax.swing.ListSelectionModel;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.TechListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
@@ -78,6 +79,16 @@ public class DiplomacyView extends BlackPanel {
   private JList<Tech> aiTechListOffer;
 
   /**
+   * Human offering a map trade
+   */
+  private SpaceCheckBox humanMapOffer;
+
+  /**
+   * AI offering a map trade
+   */
+  private SpaceCheckBox aiMapOffer;
+
+  /**
    * Diplomacy View constructor
    * @param info1 Human player PlayerInfo
    * @param info2 AI player PlayerInfo
@@ -102,6 +113,8 @@ public class DiplomacyView extends BlackPanel {
     humanTechListOffer = createTechList(trade.getTradeableTechListForFirst());
     JScrollPane scroll = new JScrollPane(humanTechListOffer);
     humanOffer.add(scroll);
+    humanMapOffer = new SpaceCheckBox("Trade map");
+    humanOffer.add(humanMapOffer);
     center.add(humanOffer);
 
     RaceImagePanel aiImg = new RaceImagePanel();
@@ -113,6 +126,8 @@ public class DiplomacyView extends BlackPanel {
     aiTechListOffer = createTechList(trade.getTradeableTechListForSecond());
     scroll = new JScrollPane(aiTechListOffer);
     aiOffer.add(scroll);
+    aiMapOffer = new SpaceCheckBox("Trade map");
+    aiOffer.add(aiMapOffer);
     center.add(aiOffer);
 
     this.add(center);
@@ -140,21 +155,6 @@ public class DiplomacyView extends BlackPanel {
     techList.setBackground(Color.BLACK);
     techList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     return techList;
-  }
-  /**
-   * Get human playerinfo
-   * @return Human playerinfo
-   */
-  public PlayerInfo getHuman() {
-    return human;
-  }
-
-  /**
-   * Get starmap
-   * @return StarMap
-   */
-  public StarMap getStarMap() {
-    return starMap;
   }
   /**
    * Get Diplomatic trade

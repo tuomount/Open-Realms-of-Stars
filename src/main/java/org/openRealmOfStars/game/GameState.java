@@ -94,5 +94,9 @@ public enum GameState {
   /**
    * View player stats info
    */
-  VIEWSTATS
+  VIEWSTATS,
+  /**
+   * Diplomacy view
+   */
+  DIPLOMACY_VIEW
 }

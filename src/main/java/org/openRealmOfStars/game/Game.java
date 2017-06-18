@@ -13,6 +13,7 @@ import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.States.AITurnView;
 import org.openRealmOfStars.game.States.BattleView;
 import org.openRealmOfStars.game.States.CreditsView;
+import org.openRealmOfStars.game.States.DiplomacyView;
 import org.openRealmOfStars.game.States.FleetView;
 import org.openRealmOfStars.game.States.GalaxyCreationView;
 import org.openRealmOfStars.game.States.LoadGameView;
@@ -167,6 +168,11 @@ public class Game extends JFrame implements ActionListener {
    * Research view for the game
    */
   private ResearchView researchView;
+
+  /**
+   * Diplomacy view for the game
+   */
+  private DiplomacyView diplomacyView;
 
   /**
    * Ship view for the game
@@ -361,6 +367,15 @@ public class Game extends JFrame implements ActionListener {
       starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
       starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
     }
+  }
+
+  /**
+   * Show Diplomacy view
+   */
+  public void showDiplomacyView() {
+    diplomacyView = new DiplomacyView(starMap.getPlayerByIndex(0),
+        starMap.getPlayerByIndex(1), starMap, this);
+    this.updateDisplay(diplomacyView);
   }
 
   /**
@@ -581,6 +596,10 @@ public class Game extends JFrame implements ActionListener {
     }
     case FLEETVIEW: {
       fleetView();
+      break;
+    }
+    case DIPLOMACY_VIEW: {
+      showDiplomacyView();
       break;
     }
     default: {
@@ -1018,6 +1037,7 @@ public class Game extends JFrame implements ActionListener {
     }
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_BATTLE)) {
       SoundPlayer.playMenuSound();
+      changeGameState(GameState.DIPLOMACY_VIEW);
       //changeGameState(GameState.COMBAT);
       //changeGameState(GameState.PLANETBOMBINGVIEW,
       //    starMap.getPlanetList().get(0));

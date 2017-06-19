@@ -15,7 +15,9 @@ import org.openRealmOfStars.gui.ListRenderers.TechListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
@@ -89,6 +91,10 @@ public class DiplomacyView extends BlackPanel {
   private SpaceCheckBox aiMapOffer;
 
   /**
+   * Text area for AI talks
+   */
+  private InfoTextArea infoText;
+  /**
    * Diplomacy View constructor
    * @param info1 Human player PlayerInfo
    * @param info2 AI player PlayerInfo
@@ -110,20 +116,25 @@ public class DiplomacyView extends BlackPanel {
     InfoPanel humanOffer = new InfoPanel();
     humanOffer.setTitle("Your offer");
     humanOffer.setLayout(new BoxLayout(humanOffer, BoxLayout.Y_AXIS));
-    humanTechListOffer = createTechList(trade.getTradeableTechListForFirst());
+    humanTechListOffer = createTechList(trade.getTradeableTechListForSecond());
     JScrollPane scroll = new JScrollPane(humanTechListOffer);
     humanOffer.add(scroll);
     humanMapOffer = new SpaceCheckBox("Trade map");
     humanOffer.add(humanMapOffer);
     center.add(humanOffer);
 
+    InvisiblePanel panel = new InvisiblePanel(center);
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     RaceImagePanel aiImg = new RaceImagePanel();
     aiImg.setRaceToShow(ai.getRace().getNameSingle());
-    center.add(aiImg);
+    panel.add(aiImg);
+    infoText = new InfoTextArea();
+    panel.add(infoText);
+    center.add(panel);
 
     InfoPanel aiOffer = new InfoPanel();
     aiOffer.setTitle(ai.getEmpireName() + " offer");
-    aiTechListOffer = createTechList(trade.getTradeableTechListForSecond());
+    aiTechListOffer = createTechList(trade.getTradeableTechListForFirst());
     scroll = new JScrollPane(aiTechListOffer);
     aiOffer.add(scroll);
     aiMapOffer = new SpaceCheckBox("Trade map");

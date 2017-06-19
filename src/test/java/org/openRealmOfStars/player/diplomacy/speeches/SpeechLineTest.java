@@ -3,6 +3,7 @@ package org.openRealmOfStars.player.diplomacy.speeches;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 /**
 *
@@ -29,6 +30,7 @@ import org.junit.Test;
 public class SpeechLineTest {
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     SpeechLine line = new SpeechLine(SpeechType.TRADE, "You want trade?");
     assertEquals(SpeechType.TRADE, line.getType());
@@ -36,6 +38,7 @@ public class SpeechLineTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testToString() {
     SpeechLine line = new SpeechLine(SpeechType.TRADE, "You want trade?");
     assertEquals("Trade/You want trade?", line.toString());

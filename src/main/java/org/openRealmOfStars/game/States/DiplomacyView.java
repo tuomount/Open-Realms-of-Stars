@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.ListRenderers.SpeechLineRenderer;
 import org.openRealmOfStars.gui.ListRenderers.TechListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
@@ -21,6 +22,9 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
+import org.openRealmOfStars.player.diplomacy.speeches.SpeechFactory;
+import org.openRealmOfStars.player.diplomacy.speeches.SpeechLine;
+import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.StarMap;
 
@@ -81,6 +85,11 @@ public class DiplomacyView extends BlackPanel {
   private JList<Tech> aiTechListOffer;
 
   /**
+   * Human player lines
+   */
+  private JList<SpeechLine> humanLines;
+
+  /**
    * Human offering a map trade
    */
   private SpaceCheckBox humanMapOffer;
@@ -130,6 +139,15 @@ public class DiplomacyView extends BlackPanel {
     panel.add(aiImg);
     infoText = new InfoTextArea();
     panel.add(infoText);
+    SpeechLine[] lines = new SpeechLine[2];
+    lines[0] = SpeechFactory.createLine(SpeechType.TRADE, human.getRace());
+    lines[1] = SpeechFactory.createLine(SpeechType.MAKE_WAR, human.getRace());
+    humanLines = new JList<>(lines);
+    humanLines.setCellRenderer(new SpeechLineRenderer());
+    humanLines.setBackground(Color.BLACK);
+    humanLines.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    scroll = new JScrollPane(humanLines);
+    panel.add(scroll);
     center.add(panel);
 
     InfoPanel aiOffer = new InfoPanel();

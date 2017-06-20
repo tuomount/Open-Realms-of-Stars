@@ -6,6 +6,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationList;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
@@ -72,6 +73,18 @@ public class DiplomaticTrade {
    * is missing.
    */
   private ArrayList<Tech> techListForSecond;
+
+  /**
+   * Fleet list for first player. This list contain fleets which are actually
+   * second player's fleet.
+   */
+  private ArrayList<Fleet> fleetListForFirst;
+
+  /**
+   * Fleet list for second player. This list contain fleets which are actually
+   * first player's fleet.
+   */
+  private ArrayList<Fleet> fleetListForSecond;
 
   /**
    * Constructor for Diplomatic trade.
@@ -209,6 +222,26 @@ public class DiplomaticTrade {
     }
     return false;
   }
+
+  /**
+   * Generate Fleet list containg all fleets from both players.
+   */
+  private void generateFleetList() {
+    fleetListForFirst = new ArrayList<>();
+    fleetListForSecond = new ArrayList<>();
+    PlayerInfo info = starMap.getPlayerByIndex(first);
+    int size = info.getFleets().getNumberOfFleets();
+    for (int i = 0; i < size; i++) {
+      Fleet fleet = info.getFleets().getByIndex(i);
+      fleetListForFirst.add(fleet);
+    }
+    info = starMap.getPlayerByIndex(second);
+    size = info.getFleets().getNumberOfFleets();
+    for (int i = 0; i < size; i++) {
+      Fleet fleet = info.getFleets().getByIndex(i);
+      fleetListForSecond.add(fleet);
+    }
+  }
   /**
    * Generate Tech list containing techs whichs are tradeable.
    */
@@ -271,6 +304,30 @@ public class DiplomaticTrade {
       generateTechList();
     }
     return techListForSecond.toArray(new Tech[techListForSecond.size()]);
+  }
+
+  /**
+   * Get tradeable fleet list for player according the fleet second
+   * player has.
+   * @return Array of Fleet. Can be empty.
+   */
+  public Fleet[] getTradeableFleetListForFirst() {
+    if (fleetListForFirst == null) {
+      generateFleetList();
+    }
+    return fleetListForFirst.toArray(new Fleet[fleetListForFirst.size()]);
+  }
+
+  /**
+   * Get tradeable fleet list for player according the fleet first
+   * player has.
+   * @return Array of Fleet. Can be empty.
+   */
+  public Fleet[] getTradeableFleetListForSecond() {
+    if (fleetListForSecond == null) {
+      generateFleetList();
+    }
+    return fleetListForSecond.toArray(new Fleet[fleetListForSecond.size()]);
   }
 
   /**

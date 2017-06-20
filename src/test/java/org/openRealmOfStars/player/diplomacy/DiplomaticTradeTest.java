@@ -11,6 +11,11 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationList;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
+import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipSize;
+import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
@@ -234,7 +239,57 @@ public class DiplomaticTradeTest {
     trade.setSecondOffer(offer);
     assertEquals(true, trade.isOfferGoodForBoth());
   }
-  
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testFleetListGeneration() {
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    PlayerInfo player1 = Mockito.mock(PlayerInfo.class);
+    TechList tech1 = new TechList();
+    tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
+    tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
+    tech1.addTech(new Tech("MilTech3", TechType.Combat, 2));
+    tech1.addTech(new Tech("DefTech1", TechType.Defense, 1));
+    tech1.addTech(new Tech("Scout Mk1", TechType.Hulls, 1));
+    tech1.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
+    tech1.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
+    Mockito.when(player1.getTechList()).thenReturn(tech1);
+    PlayerInfo player2 = Mockito.mock(PlayerInfo.class);
+    TechList tech2 = new TechList();
+    tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
+    tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
+    tech2.addTech(new Tech("EleTech1", TechType.Electrics, 1));
+    tech2.addTech(new Tech("DefTech1", TechType.Defense, 1));
+    tech2.addTech(new Tech("Scout Mk1", TechType.Hulls, 1));
+    tech2.addTech(new Tech("DefTech2", TechType.Defense, 1));
+    tech2.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
+    tech2.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
+    Mockito.when(player2.getTechList()).thenReturn(tech2);
+    FleetList fleetList = new FleetList();
+    Ship scout = Mockito.mock(Ship.class);
+    Fleet fleet = new Fleet(scout, 5, 5);
+    fleetList.add(fleet);
+    Mockito.when(player1.getFleets()).thenReturn(fleetList);
+    fleetList = new FleetList();
+    fleet = new Fleet(scout, 6, 5);
+    fleetList.add(fleet);
+    Mockito.when(player2.getFleets()).thenReturn(fleetList);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(player1);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(player2);
+    Mockito.when(map.getPlayerList()).thenReturn(players);
+    Mockito.when(map.getPlayerByIndex(0)).thenReturn(player1);
+    Mockito.when(map.getPlayerByIndex(1)).thenReturn(player2);
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    Fleet[] fleets = trade.getTradeableFleetListForFirst();
+    assertEquals(1, fleets.length);
+    assertEquals(scout, fleets[0].getFirstShip());
+    fleets = trade.getTradeableFleetListForSecond();
+    assertEquals(1, fleets.length);
+    assertEquals(scout, fleets[0].getFirstShip());
+  }
+
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMapTrade() {

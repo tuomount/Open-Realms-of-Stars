@@ -44,6 +44,16 @@ public class SpeechFactoryTest {
       assertNotEquals(null, line);
       line = SpeechFactory.createLine(SpeechType.TRADE, race);
       assertNotEquals(null, line);
+      line = SpeechFactory.createLine(SpeechType.DECLINE, race);
+      assertNotEquals(null, line);
+      line = SpeechFactory.createLine(SpeechType.MAKE_WAR, race);
+      assertNotEquals(null, line);
+      line = SpeechFactory.createLine(SpeechType.DECLINE_ANGER, race);
+      assertNotEquals(null, line);
+      line = SpeechFactory.createLine(SpeechType.DECLINE_WAR, race);
+      assertNotEquals(null, line);
+      line = SpeechFactory.createLine(SpeechType.DEMAND, race);
+      assertNotEquals(null, line);
     }
   }
 

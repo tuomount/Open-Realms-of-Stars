@@ -46,6 +46,131 @@ public final class SpeechFactory {
       case TRADE: return createTradeLine(race);
       case ALLIANCE: return createAllianceLine(race);
       case TRADE_ALLIANCE: return createTradeAllianceLine(race);
+      case MAKE_WAR: return createMakeWarLine(race);
+      case DECLINE: return createDeclineLine(race);
+      case DECLINE_ANGER: return createDeclineAngerLine(race);
+      case DECLINE_WAR: return createDeclineWarLine(race);
+      case DEMAND: return createDemandLine(race);
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Demand SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createDemandLine(final SpaceRace race) {
+    SpeechType type = SpeechType.DEMAND;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "You accept this offer or be stomped!");
+      case GREYANS: return new SpeechLine(type,
+          "Accept this offer or be anhilated!");
+      case HUMAN: return new SpeechLine(type,
+          "This is take it or leave deal!");
+      case MECHIONS: return new SpeechLine(type,
+          "Negative! Initializing war protocol!");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We are now being insulted! We will kill all your kind!");
+      case SPORKS: return new SpeechLine(type,
+          "What is this? You want some war! You just got one!");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Decline War SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createDeclineWarLine(final SpaceRace race) {
+    SpeechType type = SpeechType.DEMAND;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "This is your last insult! Prepare to be stomped!");
+      case GREYANS: return new SpeechLine(type,
+          "Your offer insulted us final time! Prepare to be anhilated!");
+      case HUMAN: return new SpeechLine(type,
+          "This was your last insult! Die!");
+      case MECHIONS: return new SpeechLine(type,
+          "Trade OR war protocol!");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We offer you this and you accept it?");
+      case SPORKS: return new SpeechLine(type,
+          "You either take this with good or bad!");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Decline Anger SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createDeclineAngerLine(final SpaceRace race) {
+    SpeechType type = SpeechType.DECLINE_ANGER;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "Take your offer away!");
+      case GREYANS: return new SpeechLine(type,
+          "Your offer insults us!");
+      case HUMAN: return new SpeechLine(type,
+          "I'll take this as an insult!");
+      case MECHIONS: return new SpeechLine(type,
+          "Negative!");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We feel insulted about this!");
+      case SPORKS: return new SpeechLine(type,
+          "You call this a deal? Go away!");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Decline SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createDeclineLine(final SpaceRace race) {
+    SpeechType type = SpeechType.DECLINE;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "I cannot accept your offer.");
+      case GREYANS: return new SpeechLine(type,
+          "This offer is not good enough.");
+      case HUMAN: return new SpeechLine(type,
+          "I am sorry, I cannot accept this.");
+      case MECHIONS: return new SpeechLine(type,
+          "Negative!");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We cannot accept this!");
+      case SPORKS: return new SpeechLine(type,
+          "No deal!");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Make War SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createMakeWarLine(final SpaceRace race) {
+    SpeechType type = SpeechType.MAKE_WAR;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "You will be stomped and crushed!");
+      case GREYANS: return new SpeechLine(type,
+          "Prepare to be anhilated!");
+      case HUMAN: return new SpeechLine(type,
+          "This means war!");
+      case MECHIONS: return new SpeechLine(type,
+          "Initializing war protocol!");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We will kill all your kind!");
+      case SPORKS: return new SpeechLine(type,
+          "Shields up! Ready to fire!");
       default: return null;
     }
   }

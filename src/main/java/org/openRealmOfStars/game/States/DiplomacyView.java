@@ -18,6 +18,7 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
+import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
@@ -135,11 +136,16 @@ public class DiplomacyView extends BlackPanel {
     InfoPanel humanOffer = new InfoPanel();
     humanOffer.setTitle("Your offer");
     humanOffer.setLayout(new BoxLayout(humanOffer, BoxLayout.Y_AXIS));
+    TransparentLabel label = new TransparentLabel(humanOffer,
+        "Techs to trade:");
+    humanOffer.add(label);
     humanTechListOffer = createTechList(trade.getTradeableTechListForSecond());
     JScrollPane scroll = new JScrollPane(humanTechListOffer);
     humanOffer.add(scroll);
     humanMapOffer = new SpaceCheckBox("Trade map");
     humanOffer.add(humanMapOffer);
+    label = new TransparentLabel(humanOffer, "Fleets to trade:");
+    humanOffer.add(label);
     humanFleetListOffer = createFleetList(
         trade.getTradeableFleetListForFirst());
     scroll = new JScrollPane(humanFleetListOffer);
@@ -167,10 +173,14 @@ public class DiplomacyView extends BlackPanel {
     InfoPanel aiOffer = new InfoPanel();
     aiOffer.setTitle(ai.getEmpireName() + " offer");
     aiTechListOffer = createTechList(trade.getTradeableTechListForFirst());
+    label = new TransparentLabel(aiOffer, "Techs to trade:");
+    aiOffer.add(label);
     scroll = new JScrollPane(aiTechListOffer);
     aiOffer.add(scroll);
     aiMapOffer = new SpaceCheckBox("Trade map");
     aiOffer.add(aiMapOffer);
+    label = new TransparentLabel(aiOffer, "Fleets to trade:");
+    aiOffer.add(label);
     aiFleetListOffer = createFleetList(trade.getTradeableFleetListForSecond());
     scroll = new JScrollPane(aiFleetListOffer);
     aiOffer.add(scroll);

@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.ListRenderers.FleetListRenderer;
 import org.openRealmOfStars.gui.ListRenderers.SpeechLineRenderer;
 import org.openRealmOfStars.gui.ListRenderers.TechListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -25,6 +26,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechFactory;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechLine;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.StarMap;
 
@@ -83,6 +85,14 @@ public class DiplomacyView extends BlackPanel {
    * AI tech list offerings
    */
   private JList<Tech> aiTechListOffer;
+  /**
+   * Human fleet list offerings
+   */
+  private JList<Fleet> humanFleetListOffer;
+  /**
+   * AI fleet list offerings
+   */
+  private JList<Fleet> aiFleetListOffer;
 
   /**
    * Human player lines
@@ -130,6 +140,10 @@ public class DiplomacyView extends BlackPanel {
     humanOffer.add(scroll);
     humanMapOffer = new SpaceCheckBox("Trade map");
     humanOffer.add(humanMapOffer);
+    humanFleetListOffer = createFleetList(
+        trade.getTradeableFleetListForFirst());
+    scroll = new JScrollPane(humanFleetListOffer);
+    humanOffer.add(scroll);
     center.add(humanOffer);
 
     InvisiblePanel panel = new InvisiblePanel(center);
@@ -157,6 +171,9 @@ public class DiplomacyView extends BlackPanel {
     aiOffer.add(scroll);
     aiMapOffer = new SpaceCheckBox("Trade map");
     aiOffer.add(aiMapOffer);
+    aiFleetListOffer = createFleetList(trade.getTradeableFleetListForSecond());
+    scroll = new JScrollPane(aiFleetListOffer);
+    aiOffer.add(scroll);
     center.add(aiOffer);
 
     this.add(center);
@@ -184,6 +201,19 @@ public class DiplomacyView extends BlackPanel {
     techList.setBackground(Color.BLACK);
     techList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     return techList;
+  }
+
+  /**
+   * Create Fleet List from fleet array
+   * @param fleets Which are used for creating Fleet List
+   * @return JList full of fleets
+   */
+  private JList<Fleet> createFleetList(final Fleet[] fleets) {
+    JList<Fleet> fleetList = new JList<>(fleets);
+    fleetList.setCellRenderer(new FleetListRenderer());
+    fleetList.setBackground(Color.BLACK);
+    fleetList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    return fleetList;
   }
   /**
    * Get Diplomatic trade

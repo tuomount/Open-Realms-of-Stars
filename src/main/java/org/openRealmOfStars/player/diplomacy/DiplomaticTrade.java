@@ -11,6 +11,7 @@ import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
  *
@@ -76,15 +77,27 @@ public class DiplomaticTrade {
 
   /**
    * Fleet list for first player. This list contain fleets which are actually
-   * second player's fleet.
+   * first player's fleets.
    */
   private ArrayList<Fleet> fleetListForFirst;
 
   /**
    * Fleet list for second player. This list contain fleets which are actually
-   * first player's fleet.
+   * second player's fleet.
    */
   private ArrayList<Fleet> fleetListForSecond;
+
+  /**
+   * Planet list for first player. This list contain planets which are actually
+   * first player's.
+   */
+  private ArrayList<Planet> planetListForFirst;
+
+  /**
+   * Planet list for second player. This list contain planets which are actually
+   * second player's.
+   */
+  private ArrayList<Planet> planetListForSecond;
 
   /**
    * Constructor for Diplomatic trade.
@@ -283,6 +296,22 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Generate Planet list containing planets whichs are tradeable.
+   */
+  private void generatePlanetList() {
+    planetListForFirst = new ArrayList<>();
+    planetListForSecond = new ArrayList<>();
+    for (Planet planet : starMap.getPlanetList()) {
+      if (planet.getPlanetOwnerIndex() == first) {
+        planetListForFirst.add(planet);
+      }
+      if (planet.getPlanetOwnerIndex() == second) {
+        planetListForSecond.add(planet);
+      }
+    }
+  }
+
+  /**
    * Get tradeable tech list for player according the tech known
    * by the second player.
    * @return Array of Tech. Can be empty.
@@ -307,8 +336,7 @@ public class DiplomaticTrade {
   }
 
   /**
-   * Get tradeable fleet list for player according the fleet second
-   * player has.
+   * Get tradeable fleet list which first player has for trade.
    * @return Array of Fleet. Can be empty.
    */
   public Fleet[] getTradeableFleetListForFirst() {
@@ -319,8 +347,7 @@ public class DiplomaticTrade {
   }
 
   /**
-   * Get tradeable fleet list for player according the fleet first
-   * player has.
+   * Get tradeable fleet list which second player has for trade.
    * @return Array of Fleet. Can be empty.
    */
   public Fleet[] getTradeableFleetListForSecond() {
@@ -328,6 +355,28 @@ public class DiplomaticTrade {
       generateFleetList();
     }
     return fleetListForSecond.toArray(new Fleet[fleetListForSecond.size()]);
+  }
+
+  /**
+   * Get tradeable planet list which first player has for trade.
+   * @return Array of Planet. Can be empty.
+   */
+  public Planet[] getTradeablePlanetListForFirst() {
+    if (planetListForFirst == null) {
+      generatePlanetList();
+    }
+    return planetListForFirst.toArray(new Planet[planetListForFirst.size()]);
+  }
+
+  /**
+   * Get tradeable planet list which second player has for trade.
+   * @return Array of Planet. Can be empty.
+   */
+  public Planet[] getTradeablePlanetListForSecond() {
+    if (planetListForSecond == null) {
+      generatePlanetList();
+    }
+    return planetListForSecond.toArray(new Planet[planetListForSecond.size()]);
   }
 
   /**

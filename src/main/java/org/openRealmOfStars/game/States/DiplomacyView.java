@@ -12,6 +12,7 @@ import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.FleetListRenderer;
+import org.openRealmOfStars.gui.ListRenderers.PlanetListRenderer;
 import org.openRealmOfStars.gui.ListRenderers.SpeechLineRenderer;
 import org.openRealmOfStars.gui.ListRenderers.TechListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -30,6 +31,7 @@ import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
 *
@@ -94,6 +96,14 @@ public class DiplomacyView extends BlackPanel {
    * AI fleet list offerings
    */
   private JList<Fleet> aiFleetListOffer;
+  /**
+   * Human planet list offerings
+   */
+  private JList<Planet> humanPlanetListOffer;
+  /**
+   * AI planet list offerings
+   */
+  private JList<Planet> aiPlanetListOffer;
 
   /**
    * Human player lines
@@ -150,6 +160,12 @@ public class DiplomacyView extends BlackPanel {
         trade.getTradeableFleetListForFirst());
     scroll = new JScrollPane(humanFleetListOffer);
     humanOffer.add(scroll);
+    label = new TransparentLabel(humanOffer, "Planets to trade:");
+    humanOffer.add(label);
+    humanPlanetListOffer = createPlanetList(
+        trade.getTradeablePlanetListForFirst());
+    scroll = new JScrollPane(humanPlanetListOffer);
+    humanOffer.add(scroll);
     center.add(humanOffer);
 
     InvisiblePanel panel = new InvisiblePanel(center);
@@ -183,6 +199,12 @@ public class DiplomacyView extends BlackPanel {
     aiOffer.add(label);
     aiFleetListOffer = createFleetList(trade.getTradeableFleetListForSecond());
     scroll = new JScrollPane(aiFleetListOffer);
+    aiOffer.add(scroll);
+    label = new TransparentLabel(aiOffer, "Planets to trade:");
+    aiOffer.add(label);
+    aiPlanetListOffer = createPlanetList(
+        trade.getTradeablePlanetListForSecond());
+    scroll = new JScrollPane(aiPlanetListOffer);
     aiOffer.add(scroll);
     center.add(aiOffer);
 
@@ -224,6 +246,19 @@ public class DiplomacyView extends BlackPanel {
     fleetList.setBackground(Color.BLACK);
     fleetList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     return fleetList;
+  }
+
+  /**
+   * Create Planet List from planet array
+   * @param planets Which are used for creating planet List
+   * @return JList full of planets
+   */
+  private JList<Planet> createPlanetList(final Planet[] planets) {
+    JList<Planet> planetList = new JList<>(planets);
+    planetList.setCellRenderer(new PlanetListRenderer());
+    planetList.setBackground(Color.BLACK);
+    planetList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    return planetList;
   }
   /**
    * Get Diplomatic trade

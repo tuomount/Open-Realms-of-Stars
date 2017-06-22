@@ -3,6 +3,7 @@ package org.openRealmOfStars.game.States;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
@@ -108,13 +109,21 @@ public class DiplomacyView extends BlackPanel {
   private JList<Planet> aiPlanetListOffer;
 
   /**
-   * Human credit offering
+   * Human credit offering UI component
    */
   private WorkerProductionPanel humanCreditOffer;
   /**
-   * AI credit offering
+   * Actual human credit offering
+   */
+  private int humanCredits;
+  /**
+   * AI credit offering UI component
    */
   private WorkerProductionPanel aiCreditOffer;
+  /**
+   * Actual ai credit offering
+   */
+  private int aiCredits;
   /**
    * Human player lines
    */
@@ -147,6 +156,8 @@ public class DiplomacyView extends BlackPanel {
     human = info1;
     ai = info2;
     starMap = map;
+    humanCredits = 0;
+    aiCredits = 0;
     int humanIndex = starMap.getPlayerList().getIndex(human);
     int aiIndex = starMap.getPlayerList().getIndex(ai);
     trade = new DiplomaticTrade(starMap, humanIndex, aiIndex);
@@ -176,11 +187,10 @@ public class DiplomacyView extends BlackPanel {
         trade.getTradeablePlanetListForFirst());
     scroll = new JScrollPane(humanPlanetListOffer);
     humanOffer.add(scroll);
-    //TODO change commands
     humanCreditOffer = new WorkerProductionPanel(humanOffer,
-        GameCommands.COMMAND_MINUS_TAX, GameCommands.COMMAND_PLUS_TAX,
-        Icons.ICON_CREDIT, "0 Credits", "How much credits you are offering.",
-        listener);
+        GameCommands.COMMAND_MINUS_HUMAN_CREDIT,
+        GameCommands.COMMAND_PLUS_HUMAN_CREDIT, Icons.ICON_CREDIT, "0 Credits",
+        "How much credits you are offering.", listener);
     humanOffer.add(humanCreditOffer);
     center.add(humanOffer);
 
@@ -222,10 +232,9 @@ public class DiplomacyView extends BlackPanel {
         trade.getTradeablePlanetListForSecond());
     scroll = new JScrollPane(aiPlanetListOffer);
     aiOffer.add(scroll);
-    //TODO change commands
     aiCreditOffer = new WorkerProductionPanel(aiOffer,
-        GameCommands.COMMAND_MINUS_TAX, GameCommands.COMMAND_PLUS_TAX,
-        Icons.ICON_CREDIT, "0 Credits",
+        GameCommands.COMMAND_MINUS_AI_CREDIT,
+        GameCommands.COMMAND_PLUS_AI_CREDIT, Icons.ICON_CREDIT, "0 Credits",
         "How much credits " + ai.getEmpireName() + "is offering.", listener);
     aiOffer.add(aiCreditOffer);
     center.add(aiOffer);
@@ -288,5 +297,53 @@ public class DiplomacyView extends BlackPanel {
    */
   public DiplomaticTrade getTrade() {
     return trade;
+  }
+
+  /**
+   * Get currently trade offer about AI credits
+   * @return Ai credits on offer
+   */
+  public int getAiCredits() {
+    return aiCredits;
+  }
+  /**
+   * Get currently trade offer about Human credits
+   * @return Human credits on offer
+   */
+  public int getHumanCredits() {
+    return humanCredits;
+  }
+
+  /**
+   * Handle events for DiplomacyView.
+   * @param arg0 ActionEvent
+   */
+  public void handleAction(final ActionEvent arg0) {
+    if (GameCommands.COMMAND_MINUS_HUMAN_CREDIT.equals(
+        arg0.getActionCommand())) {
+      if (humanCredits > 0) {
+        humanCredits--;
+      }
+      humanCreditOffer.setText(humanCredits + " Credits");
+    }
+    if (GameCommands.COMMAND_PLUS_HUMAN_CREDIT.equals(
+        arg0.getActionCommand())) {
+      if (humanCredits < human.getTotalCredits()) {
+        humanCredits++;
+      }
+      humanCreditOffer.setText(humanCredits + " Credits");
+    }
+    if (GameCommands.COMMAND_MINUS_AI_CREDIT.equals(arg0.getActionCommand())) {
+      if (aiCredits > 0) {
+        aiCredits--;
+      }
+      aiCreditOffer.setText(aiCredits + " Credits");
+    }
+    if (GameCommands.COMMAND_PLUS_AI_CREDIT.equals(arg0.getActionCommand())) {
+      if (aiCredits < ai.getTotalCredits()) {
+        aiCredits++;
+      }
+      aiCreditOffer.setText(aiCredits + " Credits");
+    }
   }
 }

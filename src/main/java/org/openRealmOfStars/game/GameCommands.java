@@ -128,6 +128,23 @@ public final class GameCommands {
   public static final String COMMAND_PLUS_TAX = "PlusTax";
 
   /**
+   * Minus Human credit in diplomacy view
+   */
+  public static final String COMMAND_MINUS_HUMAN_CREDIT = "MinusCreditHuman";
+  /**
+   * Plus  Human credit in diplomacy view
+   */
+  public static final String COMMAND_PLUS_HUMAN_CREDIT = "PlusCreditHuman";
+  /**
+   * Minus AI credit in diplomacy view
+   */
+  public static final String COMMAND_MINUS_AI_CREDIT = "MinusCreditAi";
+  /**
+   * Plus AI credit in diplomacy view
+   */
+  public static final String COMMAND_PLUS_AI_CREDIT = "PlusCreditAi";
+
+  /**
    * Minus Combat research
    */
   public static final String COMMAND_MINUS_COMBAT_RESEARCH = "MinusCombatRese";

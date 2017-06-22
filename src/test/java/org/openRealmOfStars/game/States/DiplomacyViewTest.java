@@ -2,11 +2,13 @@ package org.openRealmOfStars.game.States;
 
 import static org.junit.Assert.*;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.utilities.repository.GameRepository;
@@ -45,9 +47,55 @@ public class DiplomacyViewTest {
                                           "testGame.save");
     PlayerInfo human = starMap.getPlayerByIndex(0);
     PlayerInfo ai = starMap.getPlayerByIndex(1);
-    DiplomacyView diplomacyView = new DiplomacyView(human, ai, starMap, listener);
+    DiplomacyView diplomacyView = new DiplomacyView(human, ai, starMap,
+        listener);
     assertNotEquals(null, diplomacyView);
     assertNotEquals(null, diplomacyView.getTrade());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testCreditsSettings() {
+    ActionListener listener = Mockito.mock(ActionListener.class);
+    GameRepository repository = new GameRepository();
+    StarMap starMap = repository.loadGame("src/test/resources/saves",
+                                          "testGame.save");
+    PlayerInfo human = starMap.getPlayerByIndex(0);
+    PlayerInfo ai = starMap.getPlayerByIndex(1);
+    DiplomacyView diplomacyView = new DiplomacyView(human, ai, starMap,
+        listener);
+    assertEquals(0, diplomacyView.getAiCredits());
+    assertEquals(0, diplomacyView.getHumanCredits());
+    ActionEvent action = Mockito.mock(ActionEvent.class);
+    Mockito.when(action.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_PLUS_AI_CREDIT);
+    diplomacyView.handleAction(action);
+    assertEquals(1, diplomacyView.getAiCredits());
+    diplomacyView.handleAction(action);
+    assertEquals(2, diplomacyView.getAiCredits());
+    action = Mockito.mock(ActionEvent.class);
+    Mockito.when(action.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_MINUS_AI_CREDIT);
+    diplomacyView.handleAction(action);
+    diplomacyView.handleAction(action);
+    assertEquals(0, diplomacyView.getAiCredits());
+    action = Mockito.mock(ActionEvent.class);
+    Mockito.when(action.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_MINUS_HUMAN_CREDIT);
+    diplomacyView.handleAction(action);
+    assertEquals(0, diplomacyView.getHumanCredits());
+    action = Mockito.mock(ActionEvent.class);
+    Mockito.when(action.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_PLUS_HUMAN_CREDIT);
+    diplomacyView.handleAction(action);
+    diplomacyView.handleAction(action);
+    assertEquals(2, diplomacyView.getHumanCredits());
+    action = Mockito.mock(ActionEvent.class);
+    Mockito.when(action.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_MINUS_HUMAN_CREDIT);
+    diplomacyView.handleAction(action);
+    diplomacyView.handleAction(action);
+    assertEquals(0, diplomacyView.getHumanCredits());
   }
 
 }

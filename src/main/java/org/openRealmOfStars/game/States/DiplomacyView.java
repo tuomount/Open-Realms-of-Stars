@@ -17,12 +17,14 @@ import org.openRealmOfStars.gui.ListRenderers.SpeechLineRenderer;
 import org.openRealmOfStars.gui.ListRenderers.TechListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
+import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechFactory;
@@ -106,6 +108,14 @@ public class DiplomacyView extends BlackPanel {
   private JList<Planet> aiPlanetListOffer;
 
   /**
+   * Human credit offering
+   */
+  private WorkerProductionPanel humanCreditOffer;
+  /**
+   * AI credit offering
+   */
+  private WorkerProductionPanel aiCreditOffer;
+  /**
    * Human player lines
    */
   private JList<SpeechLine> humanLines;
@@ -166,6 +176,12 @@ public class DiplomacyView extends BlackPanel {
         trade.getTradeablePlanetListForFirst());
     scroll = new JScrollPane(humanPlanetListOffer);
     humanOffer.add(scroll);
+    //TODO change commands
+    humanCreditOffer = new WorkerProductionPanel(humanOffer,
+        GameCommands.COMMAND_MINUS_TAX, GameCommands.COMMAND_PLUS_TAX,
+        Icons.ICON_CREDIT, "0 Credits", "How much credits you are offering.",
+        listener);
+    humanOffer.add(humanCreditOffer);
     center.add(humanOffer);
 
     InvisiblePanel panel = new InvisiblePanel(center);
@@ -206,6 +222,12 @@ public class DiplomacyView extends BlackPanel {
         trade.getTradeablePlanetListForSecond());
     scroll = new JScrollPane(aiPlanetListOffer);
     aiOffer.add(scroll);
+    //TODO change commands
+    aiCreditOffer = new WorkerProductionPanel(aiOffer,
+        GameCommands.COMMAND_MINUS_TAX, GameCommands.COMMAND_PLUS_TAX,
+        Icons.ICON_CREDIT, "0 Credits",
+        "How much credits " + ai.getEmpireName() + "is offering.", listener);
+    aiOffer.add(aiCreditOffer);
     center.add(aiOffer);
 
     this.add(center);

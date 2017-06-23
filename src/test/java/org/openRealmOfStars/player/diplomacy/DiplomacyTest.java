@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 
 /**
@@ -69,10 +70,14 @@ public class DiplomacyTest {
     assertEquals(false, diplomacy.isAlliance(0));
     assertEquals(-30, diplomacy.getDiplomacyList(0).getDiplomacyBonus());
     assertEquals(Diplomacy.HATE, diplomacy.getLiking(0));
+    assertEquals("Hate", diplomacy.getLikingAsString(0));
+    assertEquals(GuiStatics.COLOR_DESTROYED, diplomacy.getLikingAsColor(0));
     assertEquals(false, diplomacy.isWar(256));
     diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.LONG_PEACE,
         SpaceRace.SPORKS);
     assertEquals(Diplomacy.NEUTRAL, diplomacy.getLiking(0));
+    assertEquals("Neutral", diplomacy.getLikingAsString(0));
+    assertEquals(GuiStatics.COLOR_DAMAGE_HALF, diplomacy.getLikingAsColor(0));
     diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.WAR_DECLARTION,
         SpaceRace.SPORKS);
     diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.DIPLOMAT_CAPTURED,
@@ -80,6 +85,8 @@ public class DiplomacyTest {
     diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.DIPLOMAT_CAPTURED,
         SpaceRace.SPORKS);
     assertEquals(Diplomacy.DISLIKE, diplomacy.getLiking(0));
+    assertEquals("Dislike", diplomacy.getLikingAsString(0));
+    assertEquals(GuiStatics.COLOR_DAMAGE_MUCH, diplomacy.getLikingAsColor(0));
   }
 
   @Test
@@ -98,6 +105,8 @@ public class DiplomacyTest {
     assertEquals(false, diplomacy.isAlliance(0));
     assertEquals(12, diplomacy.getDiplomacyList(0).getDiplomacyBonus());
     assertEquals(Diplomacy.LIKE, diplomacy.getLiking(0));
+    assertEquals("Like", diplomacy.getLikingAsString(0));
+    assertEquals(GuiStatics.COLOR_DAMAGE_LITTLE, diplomacy.getLikingAsColor(0));
     assertEquals(false, diplomacy.isTradeAlliance(256));
   }
 
@@ -113,6 +122,8 @@ public class DiplomacyTest {
         DiplomacyBonusType.IN_ALLIANCE, SpaceRace.CENTAURS);
     assertEquals(25, diplomacy.getDiplomacyList(0).getDiplomacyBonus());
     assertEquals(Diplomacy.FRIENDS, diplomacy.getLiking(0));
+    assertEquals("Friends", diplomacy.getLikingAsString(0));
+    assertEquals(GuiStatics.COLOR_GREEN_TEXT, diplomacy.getLikingAsColor(0));
     assertEquals(true, diplomacy.isAlliance(0));
     assertEquals(false, diplomacy.isTradeAlliance(0));
     assertEquals(false, diplomacy.isWar(0));

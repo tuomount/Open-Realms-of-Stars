@@ -143,6 +143,12 @@ public class DiplomacyView extends BlackPanel {
    * Text area for AI talks
    */
   private InfoTextArea infoText;
+
+  /**
+   * Label indicating if AI player likeness value of human player.
+   */
+  private TransparentLabel likenessLabel;
+
   /**
    * Diplomacy View constructor
    * @param info1 Human player PlayerInfo
@@ -199,6 +205,10 @@ public class DiplomacyView extends BlackPanel {
     RaceImagePanel aiImg = new RaceImagePanel();
     aiImg.setRaceToShow(ai.getRace().getNameSingle());
     panel.add(aiImg);
+    likenessLabel = new TransparentLabel(panel, ai.getDiplomacy()
+        .getLikingAsString(humanIndex));
+    likenessLabel.setForeground(ai.getDiplomacy().getLikingAsColor(humanIndex));
+    panel.add(likenessLabel);
     infoText = new InfoTextArea();
     panel.add(infoText);
     SpeechLine[] lines = new SpeechLine[2];

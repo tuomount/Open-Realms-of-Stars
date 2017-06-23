@@ -1,5 +1,9 @@
 package org.openRealmOfStars.player.diplomacy;
 
+import java.awt.Color;
+
+import org.openRealmOfStars.gui.GuiStatics;
+
 /**
 *
 * Open Realm of Stars game project
@@ -182,6 +186,40 @@ public class Diplomacy {
     }
     return result;
   }
+
+  /**
+   * Get likess value as a String.
+   * @param playerIndex whom to check
+   * @return Likeness value as a string
+   */
+  public String getLikingAsString(final int playerIndex) {
+    switch (getLiking(playerIndex)) {
+    case NEUTRAL: return "Neutral";
+    case DISLIKE: return "Dislike";
+    case HATE: return "Hate";
+    case LIKE: return "Like";
+    case FRIENDS: return "Friends";
+    default:
+      return "Unknown";
+    }
+  }
+  /**
+   * Get likess value as a Color.
+   * @param playerIndex whom to check
+   * @return Likeness value as a Color
+   */
+  public Color getLikingAsColor(final int playerIndex) {
+    switch (getLiking(playerIndex)) {
+    case NEUTRAL: return GuiStatics.COLOR_DAMAGE_HALF;
+    case DISLIKE: return GuiStatics.COLOR_DAMAGE_MUCH;
+    case HATE: return GuiStatics.COLOR_DESTROYED;
+    case LIKE: return GuiStatics.COLOR_DAMAGE_LITTLE;
+    case FRIENDS: return GuiStatics.COLOR_GREEN_TEXT;
+    default:
+      return GuiStatics.COLOR_GREY_160;
+    }
+  }
+
   /**
    * Is certain player(index) with player who is asking in alliance?
    * @param index Player index

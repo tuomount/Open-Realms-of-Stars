@@ -58,12 +58,33 @@ public enum SpeechType {
   /**
    * Answer: Decline offer with war
    */
-  DECLINE_WAR;
+  DECLINE_WAR,
+  /**
+   * Neutral greeting
+   */
+  NEUTRAL_GREET,
+  /**
+   * Dislike greeting
+   */
+  DISLIKE_GREET,
+  /**
+   * Hate greeting
+   */
+  HATE_GREET,
+  /**
+   * Like greeting
+   */
+  LIKE_GREET,
+  /**
+   * Friends greeting
+   */
+  FRIENDS_GREET;
 
   /**
    * Get Speech Type as a string.
    * @return SpeechType as a String
    */
+  @Override
   public String toString() {
     switch (this) {
       case TRADE:          return "Trade";
@@ -75,6 +96,11 @@ public enum SpeechType {
       case DECLINE:        return "Decline";
       case DECLINE_ANGER:  return "Decline with Anger";
       case DECLINE_WAR:    return "Decline with War";
+      case NEUTRAL_GREET:  return "Neutral greet";
+      case DISLIKE_GREET:  return "Dislike greet";
+      case LIKE_GREET:     return "Like greet";
+      case HATE_GREET:     return "Hate greet";
+      case FRIENDS_GREET:  return "Friends greet";
       default: return "Unknown";
     }
   }

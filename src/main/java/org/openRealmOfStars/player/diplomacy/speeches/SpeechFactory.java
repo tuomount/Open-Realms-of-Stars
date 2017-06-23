@@ -51,6 +51,36 @@ public final class SpeechFactory {
       case DECLINE_ANGER: return createDeclineAngerLine(race);
       case DECLINE_WAR: return createDeclineWarLine(race);
       case DEMAND: return createDemandLine(race);
+      case NEUTRAL_GREET: return createNeutralGreetLine(race);
+      //TODO: Add another greet lines too
+      case DISLIKE_GREET: return createNeutralGreetLine(race);
+      case HATE_GREET: return createNeutralGreetLine(race);
+      case LIKE_GREET: return createNeutralGreetLine(race);
+      case FRIENDS_GREET: return createNeutralGreetLine(race);
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Neutral Greet SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createNeutralGreetLine(final SpaceRace race) {
+    SpeechType type = SpeechType.NEUTRAL_GREET;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "Don't be affaird of our big size.");
+      case GREYANS: return new SpeechLine(type,
+          "Interesting! Another sentient race!");
+      case HUMAN: return new SpeechLine(type,
+          "Good day! Let's get know each others!");
+      case MECHIONS: return new SpeechLine(type,
+          "Initiating neutral encounter protocol...");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We come in peace!");
+      case SPORKS: return new SpeechLine(type,
+          "Peace or war, it's up to you!");
       default: return null;
     }
   }

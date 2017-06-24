@@ -54,9 +54,8 @@ public final class SpeechFactory {
       case NEUTRAL_GREET: return createNeutralGreetLine(race);
       case DISLIKE_GREET: return createDislikeGreetLine(race);
       case HATE_GREET: return createHateGreetLine(race);
-      //TODO: Add another greet lines too
-      case LIKE_GREET: return createNeutralGreetLine(race);
-      case FRIENDS_GREET: return createNeutralGreetLine(race);
+      case LIKE_GREET: return createLikeGreetLine(race);
+      case FRIENDS_GREET: return createFriendsGreetLine(race);
       default: return null;
     }
   }
@@ -81,6 +80,54 @@ public final class SpeechFactory {
           "We come in peace!");
       case SPORKS: return new SpeechLine(type,
           "Peace or war, it's up to you!");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Friends Greet SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createFriendsGreetLine(final SpaceRace race) {
+    SpeechType type = SpeechType.FRIENDS_GREET;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "My friend let's do big trades today!");
+      case GREYANS: return new SpeechLine(type,
+          "Most interesting to meet with you my friend!");
+      case HUMAN: return new SpeechLine(type,
+          "Good day, friend! Let's sit down and talk a bit!");
+      case MECHIONS: return new SpeechLine(type,
+          "Peer encountered!");
+      case MOTHOIDS: return new SpeechLine(type,
+          "Our friend! We are ready to talk with you!");
+      case SPORKS: return new SpeechLine(type,
+          "Ah my trustful friend. Let's talk!");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Like Greet SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createLikeGreetLine(final SpaceRace race) {
+    SpeechType type = SpeechType.LIKE_GREET;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "Nice to meet you again!");
+      case GREYANS: return new SpeechLine(type,
+          "Interesting! Another sentient race that I like!");
+      case HUMAN: return new SpeechLine(type,
+          "Good day! I'll hope we can make business today.");
+      case MECHIONS: return new SpeechLine(type,
+          "Initiating liking encounter...");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We like to meet with you!");
+      case SPORKS: return new SpeechLine(type,
+          "Ah the one I like to do business.");
       default: return null;
     }
   }

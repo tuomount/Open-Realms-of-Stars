@@ -53,8 +53,8 @@ public final class SpeechFactory {
       case DEMAND: return createDemandLine(race);
       case NEUTRAL_GREET: return createNeutralGreetLine(race);
       case DISLIKE_GREET: return createDislikeGreetLine(race);
+      case HATE_GREET: return createHateGreetLine(race);
       //TODO: Add another greet lines too
-      case HATE_GREET: return createNeutralGreetLine(race);
       case LIKE_GREET: return createNeutralGreetLine(race);
       case FRIENDS_GREET: return createNeutralGreetLine(race);
       default: return null;
@@ -105,6 +105,30 @@ public final class SpeechFactory {
           "We are watching you carefully!");
       case SPORKS: return new SpeechLine(type,
           "Oh, it's you. Crew, be ready to rise shields!");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Hate Greet SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createHateGreetLine(final SpaceRace race) {
+    SpeechType type = SpeechType.HATE_GREET;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "Be careful what you say or you'll be stomped!");
+      case GREYANS: return new SpeechLine(type,
+          "Ah non-sentient spieces has learn how to speak...");
+      case HUMAN: return new SpeechLine(type,
+          "This meeting is something we both hate, but let's try it anyway!");
+      case MECHIONS: return new SpeechLine(type,
+          "Hate encounter...");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We hate meetings with you but let's see your offer!");
+      case SPORKS: return new SpeechLine(type,
+          "I am glad to see you when my targeting system is locked on you!");
       default: return null;
     }
   }

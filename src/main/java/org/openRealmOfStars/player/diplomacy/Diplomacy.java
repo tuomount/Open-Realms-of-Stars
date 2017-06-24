@@ -221,6 +221,24 @@ public class Diplomacy {
   }
 
   /**
+   * Get diplomatic relations between two players
+   * @param playerIndex PLayer index to check
+   * @return String choices: "", "War", "Trade alliance", "Alliance"
+   */
+  public String getDiplomaticRelation(final int playerIndex) {
+    String result = "";
+    if (isTradeAlliance(playerIndex)) {
+      result = "Trade alliance";
+    }
+    if (isAlliance(playerIndex)) {
+      result = "Alliance";
+    }
+    if (isWar(playerIndex)) {
+      result = "War";
+    }
+    return result;
+  }
+  /**
    * Is certain player(index) with player who is asking in alliance?
    * @param index Player index
    * @return True if alliance is between two players

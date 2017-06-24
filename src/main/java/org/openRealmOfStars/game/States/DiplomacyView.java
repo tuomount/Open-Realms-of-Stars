@@ -2,6 +2,7 @@ package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -208,6 +209,7 @@ public class DiplomacyView extends BlackPanel {
     likenessLabel = new TransparentLabel(panel, ai.getDiplomacy()
         .getLikingAsString(humanIndex));
     likenessLabel.setForeground(ai.getDiplomacy().getLikingAsColor(humanIndex));
+    likenessLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(likenessLabel);
     infoText = new InfoTextArea();
     panel.add(infoText);
@@ -261,6 +263,7 @@ public class DiplomacyView extends BlackPanel {
     bottomPanel.add(btn, BorderLayout.CENTER);
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
+    updatePanel();
   }
 
   /**
@@ -322,6 +325,20 @@ public class DiplomacyView extends BlackPanel {
    */
   public int getHumanCredits() {
     return humanCredits;
+  }
+
+  /**
+   * Update panel's texts
+   */
+  public void updatePanel() {
+    int humanIndex = starMap.getPlayerList().getIndex(human);
+    String text = ai.getDiplomacy().getLikingAsString(humanIndex);
+    String relation = ai.getDiplomacy().getDiplomaticRelation(humanIndex);
+    if (!relation.isEmpty()) {
+      text = text + " " + relation;
+    }
+    likenessLabel.setText(text);
+    likenessLabel.setForeground(ai.getDiplomacy().getLikingAsColor(humanIndex));
   }
 
   /**

@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JList;
@@ -28,6 +29,7 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechFactory;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechLine;
@@ -213,9 +215,7 @@ public class DiplomacyView extends BlackPanel {
     panel.add(likenessLabel);
     infoText = new InfoTextArea();
     panel.add(infoText);
-    SpeechLine[] lines = new SpeechLine[2];
-    lines[0] = SpeechFactory.createLine(SpeechType.TRADE, human.getRace());
-    lines[1] = SpeechFactory.createLine(SpeechType.MAKE_WAR, human.getRace());
+    SpeechLine[] lines = createOfferLines();
     humanLines = new JList<>(lines);
     humanLines.setCellRenderer(new SpeechLineRenderer());
     humanLines.setBackground(Color.BLACK);
@@ -266,6 +266,38 @@ public class DiplomacyView extends BlackPanel {
     updatePanel();
   }
 
+  /**
+   * Create regular offer lines according the current diplomacy relationship
+   * between AI and human player.
+   * @return SpeechLines for human players
+   */
+  private SpeechLine[] createOfferLines() {
+    int humanIndex = starMap.getPlayerList().getIndex(human);
+    ArrayList<SpeechLine> speechLines = new ArrayList<>();
+    speechLines.add(SpeechFactory.createLine(SpeechType.TRADE,
+        human.getRace()));
+    speechLines.add(SpeechFactory.createLine(SpeechType.DEMAND,
+        human.getRace()));
+    if (ai.getDiplomacy().isTradeAlliance(humanIndex)) {
+      speechLines.add(SpeechFactory.createLine(SpeechType.ALLIANCE,
+          human.getRace()));
+    } else if (ai.getDiplomacy().isAlliance(humanIndex)) {
+      speechLines.add(SpeechFactory.createLine(SpeechType.TRADE_ALLIANCE,
+          human.getRace()));
+    } else {
+      speechLines.add(SpeechFactory.createLine(SpeechType.TRADE_ALLIANCE,
+          human.getRace()));
+    }
+    if (!ai.getDiplomacy().isWar(humanIndex)) {
+      speechLines.add(SpeechFactory.createLine(SpeechType.MAKE_WAR,
+          human.getRace()));
+    }
+    SpeechLine[] lines = new SpeechLine[speechLines.size()];
+    for (int i = 0; i < lines.length; i++) {
+      lines[i] = speechLines.get(i);
+    }
+    return lines;
+  }
   /**
    * Create Tech List from tech
    * @param techs Which are used for creating Tech List
@@ -339,6 +371,17 @@ public class DiplomacyView extends BlackPanel {
     }
     likenessLabel.setText(text);
     likenessLabel.setForeground(ai.getDiplomacy().getLikingAsColor(humanIndex));
+    SpeechType type = SpeechType.NEUTRAL_GREET;
+    switch (ai.getDiplomacy().getLiking(humanIndex)) {
+    case Diplomacy.DISLIKE: type = SpeechType.DISLIKE_GREET; break;
+    case Diplomacy.LIKE: type = SpeechType.LIKE_GREET; break;
+    case Diplomacy.HATE: type = SpeechType.HATE_GREET; break;
+    case Diplomacy.FRIENDS: type = SpeechType.FRIENDS_GREET; break;
+    case Diplomacy.NEUTRAL: type = SpeechType.NEUTRAL_GREET; break;
+    default: type = SpeechType.NEUTRAL_GREET; break;
+    }
+    text = SpeechFactory.createLine(type, ai.getRace()).getLine();
+    infoText.setText(text);
   }
 
   /**

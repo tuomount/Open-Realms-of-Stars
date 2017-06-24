@@ -193,7 +193,7 @@ public final class SpeechFactory {
       case GREYANS: return new SpeechLine(type,
           "Accept this offer or be anhilated!");
       case HUMAN: return new SpeechLine(type,
-          "This is take it or leave deal!");
+          "This is take it or leave it deal!");
       case MECHIONS: return new SpeechLine(type,
           "Negative! Initializing war protocol!");
       case MOTHOIDS: return new SpeechLine(type,
@@ -210,7 +210,7 @@ public final class SpeechFactory {
    * @return SpeechLine or null if creating line fails
    */
   private static SpeechLine createDeclineWarLine(final SpaceRace race) {
-    SpeechType type = SpeechType.DEMAND;
+    SpeechType type = SpeechType.DECLINE_WAR;
     switch (race) {
       case CENTAURS: return new SpeechLine(type,
           "This is your last insult! Prepare to be stomped!");
@@ -309,17 +309,17 @@ public final class SpeechFactory {
     SpeechType type = SpeechType.TRADE_ALLIANCE;
     switch (race) {
       case CENTAURS: return new SpeechLine(type,
-          "We should allow trade between our people. What do you say?");
+          "We should start trading between!");
       case GREYANS: return new SpeechLine(type,
-          "We should start trade alliance. What do you think about it?");
+          "We should start trade alliance!");
       case HUMAN: return new SpeechLine(type,
-          "Let's build trade alliance together! What do you say?");
+          "Let's build trade alliance together!");
       case MECHIONS: return new SpeechLine(type,
           "Trade alliance?");
       case MOTHOIDS: return new SpeechLine(type,
-          "We offer you trade alliance! We wait your answer...");
+          "We offer you trade alliance!");
       case SPORKS: return new SpeechLine(type,
-          "Let's start non military alliance! What do you say?");
+          "Let's start non military alliance!");
       default: return null;
     }
   }
@@ -335,13 +335,13 @@ public final class SpeechFactory {
       case CENTAURS: return new SpeechLine(type,
           "We should join our forces. What do you say?");
       case GREYANS: return new SpeechLine(type,
-          "We should join our venture. What do you think about it?");
+          "We should join our venture. ");
       case HUMAN: return new SpeechLine(type,
-          "Let's build alliance together! What do you say?");
+          "Let's build alliance together!");
       case MECHIONS: return new SpeechLine(type,
           "Mutual alliance?");
       case MOTHOIDS: return new SpeechLine(type,
-          "Join your mind with ours! We wait your answer...");
+          "Join your mind with ours!");
       case SPORKS: return new SpeechLine(type,
           "Join my alliance! What do you say?");
       default: return null;

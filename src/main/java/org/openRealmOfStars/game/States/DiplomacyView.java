@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -178,35 +179,45 @@ public class DiplomacyView extends BlackPanel {
     humanOffer.setLayout(new BoxLayout(humanOffer, BoxLayout.Y_AXIS));
     TransparentLabel label = new TransparentLabel(humanOffer,
         "Techs to trade:");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(label);
     humanTechListOffer = createTechList(trade.getTradeableTechListForSecond());
     JScrollPane scroll = new JScrollPane(humanTechListOffer);
+    scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(scroll);
     humanMapOffer = new SpaceCheckBox("Trade map");
+    humanMapOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(humanMapOffer);
     label = new TransparentLabel(humanOffer, "Fleets to trade:");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(label);
     humanFleetListOffer = createFleetList(
         trade.getTradeableFleetListForFirst());
     scroll = new JScrollPane(humanFleetListOffer);
+    scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(scroll);
     label = new TransparentLabel(humanOffer, "Planets to trade:");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(label);
     humanPlanetListOffer = createPlanetList(
         trade.getTradeablePlanetListForFirst());
     scroll = new JScrollPane(humanPlanetListOffer);
+    scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(scroll);
     humanCreditOffer = new WorkerProductionPanel(humanOffer,
         GameCommands.COMMAND_MINUS_HUMAN_CREDIT,
         GameCommands.COMMAND_PLUS_HUMAN_CREDIT, Icons.ICON_CREDIT, "0 Credits",
         "How much credits you are offering.", listener);
+    humanCreditOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(humanCreditOffer);
     center.add(humanOffer);
 
     InvisiblePanel panel = new InvisiblePanel(center);
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    panel.setAlignmentX(JComponent.LEFT_ALIGNMENT);
     RaceImagePanel aiImg = new RaceImagePanel();
     aiImg.setRaceToShow(ai.getRace().getNameSingle());
+    aiImg.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(aiImg);
     likenessLabel = new TransparentLabel(panel, ai.getDiplomacy()
         .getLikingAsString(humanIndex));
@@ -214,6 +225,7 @@ public class DiplomacyView extends BlackPanel {
     likenessLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(likenessLabel);
     infoText = new InfoTextArea();
+    infoText.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(infoText);
     SpeechLine[] lines = createOfferLines();
     humanLines = new JList<>(lines);
@@ -221,33 +233,47 @@ public class DiplomacyView extends BlackPanel {
     humanLines.setBackground(Color.BLACK);
     humanLines.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     scroll = new JScrollPane(humanLines);
+    scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(scroll);
+    SpaceButton acceptButton = new SpaceButton("Make an offer",
+        GameCommands.COMMAND_OK);
+    acceptButton.addActionListener(listener);
+    acceptButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+    panel.add(acceptButton);
     center.add(panel);
 
     InfoPanel aiOffer = new InfoPanel();
     aiOffer.setTitle(ai.getEmpireName() + " offer");
     aiTechListOffer = createTechList(trade.getTradeableTechListForFirst());
     label = new TransparentLabel(aiOffer, "Techs to trade:");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(label);
     scroll = new JScrollPane(aiTechListOffer);
     aiOffer.add(scroll);
+    scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiMapOffer = new SpaceCheckBox("Trade map");
+    aiMapOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(aiMapOffer);
     label = new TransparentLabel(aiOffer, "Fleets to trade:");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(label);
     aiFleetListOffer = createFleetList(trade.getTradeableFleetListForSecond());
     scroll = new JScrollPane(aiFleetListOffer);
+    scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(scroll);
     label = new TransparentLabel(aiOffer, "Planets to trade:");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(label);
     aiPlanetListOffer = createPlanetList(
         trade.getTradeablePlanetListForSecond());
     scroll = new JScrollPane(aiPlanetListOffer);
+    scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(scroll);
     aiCreditOffer = new WorkerProductionPanel(aiOffer,
         GameCommands.COMMAND_MINUS_AI_CREDIT,
         GameCommands.COMMAND_PLUS_AI_CREDIT, Icons.ICON_CREDIT, "0 Credits",
         "How much credits " + ai.getEmpireName() + "is offering.", listener);
+    aiCreditOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(aiCreditOffer);
     center.add(aiOffer);
 

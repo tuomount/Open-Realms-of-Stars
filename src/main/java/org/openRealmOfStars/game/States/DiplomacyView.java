@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -32,6 +33,9 @@ import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
+import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationList;
+import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
+import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechFactory;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechLine;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
@@ -289,7 +293,7 @@ public class DiplomacyView extends BlackPanel {
     bottomPanel.add(btn, BorderLayout.CENTER);
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
-    updatePanel();
+    updatePanel(getGreetLine());
   }
 
   /**
@@ -386,17 +390,11 @@ public class DiplomacyView extends BlackPanel {
   }
 
   /**
-   * Update panel's texts
+   * Get Greet line type
+   * @return SpeechType for starting greet
    */
-  public void updatePanel() {
+  public SpeechType getGreetLine() {
     int humanIndex = starMap.getPlayerList().getIndex(human);
-    String text = ai.getDiplomacy().getLikingAsString(humanIndex);
-    String relation = ai.getDiplomacy().getDiplomaticRelation(humanIndex);
-    if (!relation.isEmpty()) {
-      text = text + " " + relation;
-    }
-    likenessLabel.setText(text);
-    likenessLabel.setForeground(ai.getDiplomacy().getLikingAsColor(humanIndex));
     SpeechType type = SpeechType.NEUTRAL_GREET;
     switch (ai.getDiplomacy().getLiking(humanIndex)) {
     case Diplomacy.DISLIKE: type = SpeechType.DISLIKE_GREET; break;
@@ -406,10 +404,68 @@ public class DiplomacyView extends BlackPanel {
     case Diplomacy.NEUTRAL: type = SpeechType.NEUTRAL_GREET; break;
     default: type = SpeechType.NEUTRAL_GREET; break;
     }
+    return type;
+  }
+  /**
+   * Update panel's texts
+   * @param type Speech Type
+   */
+  public void updatePanel(final SpeechType type) {
+    int humanIndex = starMap.getPlayerList().getIndex(human);
+    String text = ai.getDiplomacy().getLikingAsString(humanIndex);
+    String relation = ai.getDiplomacy().getDiplomaticRelation(humanIndex);
+    if (!relation.isEmpty()) {
+      text = text + " " + relation;
+    }
+    likenessLabel.setText(text);
+    likenessLabel.setForeground(ai.getDiplomacy().getLikingAsColor(humanIndex));
     text = SpeechFactory.createLine(type, ai.getRace()).getLine();
     infoText.setText(text);
   }
 
+  /**
+   * Get offering list from UI components
+   * @param playerTechList Human or AI list
+   * @param mapOffer Human or AI map offering
+   * @param playerFleetList Human or AI list
+   * @param playerPlanetList Human or AI list
+   * @param credits Human or AI credits
+   * @return Negotation list for that player
+   */
+  private NegotiationList getOfferingList(final JList<Tech> playerTechList,
+      final boolean mapOffer, final JList<Fleet> playerFleetList,
+      final JList<Planet> playerPlanetList, final int credits) {
+    NegotiationList list = new NegotiationList();
+    List<Tech> techList = playerTechList.getSelectedValuesList();
+    for (Tech tech : techList) {
+      NegotiationOffer offer = new NegotiationOffer(NegotiationType.TECH,
+          tech);
+      list.add(offer);
+    }
+    if (mapOffer) {
+      NegotiationOffer offer = new NegotiationOffer(NegotiationType.MAP,
+          null);
+      list.add(offer);
+    }
+    List<Fleet> fleetList = playerFleetList.getSelectedValuesList();
+    for (Fleet fleet : fleetList) {
+      NegotiationOffer offer = new NegotiationOffer(NegotiationType.FLEET,
+          fleet);
+      list.add(offer);
+    }
+    List<Planet> planetList = playerPlanetList.getSelectedValuesList();
+    for (Planet planet : planetList) {
+      NegotiationOffer offer = new NegotiationOffer(NegotiationType.PLANET,
+          planet);
+      list.add(offer);
+    }
+    if (credits > 0) {
+      NegotiationOffer offer = new NegotiationOffer(NegotiationType.CREDIT,
+          new Integer(credits));
+      list.add(offer);
+    }
+    return list;
+  }
   /**
    * Handle events for DiplomacyView.
    * @param arg0 ActionEvent
@@ -440,6 +496,25 @@ public class DiplomacyView extends BlackPanel {
         aiCredits++;
       }
       aiCreditOffer.setText(aiCredits + " Credits");
+    }
+    if (GameCommands.COMMAND_OK.equals(arg0.getActionCommand())) {
+      SpeechLine speechSelected = humanLines.getSelectedValue();
+      if (speechSelected != null
+          && speechSelected.getType() == SpeechType.TRADE) {
+        NegotiationList list1 = getOfferingList(humanTechListOffer,
+            humanMapOffer.isSelected(), humanFleetListOffer,
+            humanPlanetListOffer, humanCredits);
+        NegotiationList list2 = getOfferingList(aiTechListOffer,
+            aiMapOffer.isSelected(), aiFleetListOffer, aiPlanetListOffer,
+            aiCredits);
+        trade.setFirstOffer(list2);
+        trade.setSecondOffer(list1);
+        if (trade.isOfferGoodForBoth()) {
+          updatePanel(SpeechType.AGREE);
+        } else {
+          updatePanel(SpeechType.DECLINE);
+        }
+      }
     }
   }
 }

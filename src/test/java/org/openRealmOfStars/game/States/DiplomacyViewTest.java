@@ -10,6 +10,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
@@ -49,6 +50,7 @@ public class DiplomacyViewTest {
     PlayerInfo ai = starMap.getPlayerByIndex(1);
     DiplomacyView diplomacyView = new DiplomacyView(human, ai, starMap,
         listener);
+    assertEquals(SpeechType.NEUTRAL_GREET, diplomacyView.getGreetLine());
     assertNotEquals(null, diplomacyView);
     assertNotEquals(null, diplomacyView.getTrade());
   }

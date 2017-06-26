@@ -56,6 +56,7 @@ public final class SpeechFactory {
       case HATE_GREET: return createHateGreetLine(race);
       case LIKE_GREET: return createLikeGreetLine(race);
       case FRIENDS_GREET: return createFriendsGreetLine(race);
+      case PEACE_OFFER: return createPeaceOfferLine(race);
       default: return null;
     }
   }
@@ -392,6 +393,30 @@ public final class SpeechFactory {
           "We offer your kind this!");
       case SPORKS: return new SpeechLine(type,
           "What you say about this?");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Peace offer SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createPeaceOfferLine(final SpaceRace race) {
+    SpeechType type = SpeechType.PEACE_OFFER;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "Are ready to make a peace?");
+      case GREYANS: return new SpeechLine(type,
+          "Are interested about peace?");
+      case HUMAN: return new SpeechLine(type,
+          "How about peace?");
+      case MECHIONS: return new SpeechLine(type,
+          "Peace?");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We offer your kind peace!");
+      case SPORKS: return new SpeechLine(type,
+          "What you say about peace?");
       default: return null;
     }
   }

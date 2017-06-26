@@ -78,6 +78,9 @@ public class SpeechFactoryTest {
       line = SpeechFactory.createLine(SpeechType.FRIENDS_GREET, race);
       assertNotEquals(null, line);
       assertEquals(SpeechType.FRIENDS_GREET, line.getType());
+      line = SpeechFactory.createLine(SpeechType.PEACE_OFFER, race);
+      assertNotEquals(null, line);
+      assertEquals(SpeechType.PEACE_OFFER, line.getType());
     }
   }
 

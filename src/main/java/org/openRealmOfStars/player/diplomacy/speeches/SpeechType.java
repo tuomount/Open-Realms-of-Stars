@@ -78,7 +78,11 @@ public enum SpeechType {
   /**
    * Friends greeting
    */
-  FRIENDS_GREET;
+  FRIENDS_GREET,
+  /**
+   * Peace offer
+   */
+  PEACE_OFFER;
 
   /**
    * Get Speech Type as a string.

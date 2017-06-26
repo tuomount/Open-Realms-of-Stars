@@ -321,6 +321,9 @@ public class DiplomacyView extends BlackPanel {
     if (!ai.getDiplomacy().isWar(humanIndex)) {
       speechLines.add(SpeechFactory.createLine(SpeechType.MAKE_WAR,
           human.getRace()));
+    } else {
+      speechLines.add(SpeechFactory.createLine(SpeechType.PEACE_OFFER,
+          human.getRace()));
     }
     SpeechLine[] lines = new SpeechLine[speechLines.size()];
     for (int i = 0; i < lines.length; i++) {

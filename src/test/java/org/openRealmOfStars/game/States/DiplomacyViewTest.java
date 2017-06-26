@@ -53,6 +53,7 @@ public class DiplomacyViewTest {
     assertEquals(SpeechType.NEUTRAL_GREET, diplomacyView.getGreetLine());
     assertNotEquals(null, diplomacyView);
     assertNotEquals(null, diplomacyView.getTrade());
+    diplomacyView.resetChoices();
   }
 
   @Test

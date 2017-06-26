@@ -469,6 +469,31 @@ public class DiplomacyView extends BlackPanel {
     }
     return list;
   }
+
+  /**
+   * Reset trade choices. This should be called
+   * after trade has been done.
+   */
+  public void resetChoices() {
+    humanCredits = 0;
+    aiCredits = 0;
+    int humanIndex = starMap.getPlayerList().getIndex(human);
+    int aiIndex = starMap.getPlayerList().getIndex(ai);
+    trade = new DiplomaticTrade(starMap, humanIndex, aiIndex);
+    humanTechListOffer.setListData(trade.getTradeableTechListForSecond());
+    humanMapOffer.setSelected(false);
+    humanFleetListOffer.setListData(trade.getTradeableFleetListForFirst());
+    humanPlanetListOffer.setListData(trade.getTradeablePlanetListForFirst());
+    humanCreditOffer.setText("0 Credits");
+
+    humanLines.setListData(createOfferLines());
+
+    aiTechListOffer.setListData(trade.getTradeableTechListForFirst());
+    aiMapOffer.setSelected(false);
+    aiFleetListOffer.setListData(trade.getTradeableFleetListForSecond());
+    aiPlanetListOffer.setListData(trade.getTradeablePlanetListForSecond());
+    aiCreditOffer.setText("0 Credits");
+  }
   /**
    * Handle events for DiplomacyView.
    * @param arg0 ActionEvent
@@ -514,6 +539,8 @@ public class DiplomacyView extends BlackPanel {
         trade.setSecondOffer(list1);
         if (trade.isOfferGoodForBoth()) {
           updatePanel(SpeechType.AGREE);
+          trade.doTrades();
+          resetChoices();
         } else {
           updatePanel(SpeechType.DECLINE);
         }

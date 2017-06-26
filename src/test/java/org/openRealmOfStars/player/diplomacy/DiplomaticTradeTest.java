@@ -21,6 +21,7 @@ import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
  *
@@ -403,6 +404,24 @@ public class DiplomaticTradeTest {
         .getNegotiationType());
     assertEquals(NegotiationType.CREDIT, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testGivingOutValuable() {
+    GameRepository repository = new GameRepository();
+    StarMap map = repository.loadGame("src/test/resources/saves",
+                                          "testGame.save");
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    NegotiationList offerList1 = new NegotiationList();
+    offerList1.add(new NegotiationOffer(NegotiationType.CREDIT, new Integer(30)));
+    NegotiationList offerList2 = new NegotiationList();
+    trade.setFirstOffer(offerList1);
+    trade.setSecondOffer(offerList2);
+    trade.doTrades();
+    int bonus = map.getPlayerByIndex(0).getDiplomacy().getDiplomacyList(1)
+      .getDiplomacyBonus();
+    assertEquals(3, bonus);
   }
 
 

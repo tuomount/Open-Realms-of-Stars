@@ -59,7 +59,7 @@ public class DiplomaticTrade {
   private NegotiationList firstOffer;
 
   /**
-   * Second player is offering or what first player wants.
+   * Second player is getting in offer.
    */
   private NegotiationList secondOffer;
 
@@ -236,6 +236,102 @@ public class DiplomaticTrade {
     return false;
   }
 
+  /**
+   * Do trading for one player
+   * @param offerList Trade goods aka offering list
+   * @param info Player who is getting the stuff
+   * @param giver Player who is giving the stuff
+   * @return Total value of trade
+   */
+  private int doTrade(final NegotiationList offerList, final PlayerInfo info,
+      final PlayerInfo giver) {
+    int totalValue = 0;
+    for (int i = 0; i < offerList.getSize(); i++) {
+      NegotiationOffer offer = offerList.getByIndex(i);
+      totalValue = totalValue + offer.getOfferValue(info.getRace());
+      switch (offer.getNegotiationType()) {
+      case CREDIT: {
+        info.setTotalCredits(info.getTotalCredits() + offer.getCreditValue());
+        break;
+      }
+      case TECH: {
+        info.getTechList().addTech(offer.getTech());
+        break;
+      }
+      case FLEET: {
+        info.getFleets().add(offer.getFleet());
+        int index = giver.getFleets().getIndexByName(offer.getFleet()
+            .getName());
+        giver.getFleets().remove(index);
+        break;
+      }
+      case PLANET: {
+        Planet planet = starMap.getPlanetByName(offer.getPlanet().getName());
+        int index = starMap.getPlayerList().getIndex(info);
+        planet.setPlanetOwner(index, info);
+        break;
+      }
+      case MAP: {
+        //TODO Make map trade
+        break;
+      }
+      case DIPLOMAT: {
+        //TODO Make map trade
+        break;
+      }
+      case TRADE_ALLIANCE: {
+        int index = starMap.getPlayerList().getIndex(giver);
+        info.getDiplomacy().getDiplomacyList(index).addBonus(
+            DiplomacyBonusType.IN_TRADE_ALLIANCE, info.getRace());
+        break;
+      }
+      case ALLIANCE: {
+        int index = starMap.getPlayerList().getIndex(giver);
+        info.getDiplomacy().getDiplomacyList(index).addBonus(
+            DiplomacyBonusType.IN_ALLIANCE, info.getRace());
+        break;
+      }
+      case PEACE: {
+        int index = starMap.getPlayerList().getIndex(giver);
+        info.getDiplomacy().getDiplomacyList(index).addBonus(
+            DiplomacyBonusType.LONG_PEACE, info.getRace());
+        break;
+      }
+      case WAR: {
+        int index = starMap.getPlayerList().getIndex(giver);
+        info.getDiplomacy().getDiplomacyList(index).addBonus(
+            DiplomacyBonusType.IN_WAR, info.getRace());
+        //TODO Add news corp new that giver has made a war between info
+        break;
+      }
+      default:
+        //DO nothing
+        break;
+      }
+    }
+    return totalValue;
+  }
+
+  /**
+   * Do actual trades between two players
+   */
+  public void doTrades() {
+    PlayerInfo info = starMap.getPlayerByIndex(first);
+    PlayerInfo giver = starMap.getPlayerByIndex(second);
+    int value1 = doTrade(firstOffer, info, giver);
+    info = starMap.getPlayerByIndex(second);
+    giver = starMap.getPlayerByIndex(first);
+    int value2 = doTrade(secondOffer, info, giver);
+    if (value1 == 0 && value2 > 0) {
+      info = starMap.getPlayerByIndex(second);
+      info.getDiplomacy().getDiplomacyList(first).addBonus(
+          DiplomacyBonusType.GIVEN_VALUABLE_FREE, info.getRace());
+    } else if (value1 > 0 && value2 == 0) {
+      info = starMap.getPlayerByIndex(first);
+      info.getDiplomacy().getDiplomacyList(second).addBonus(
+          DiplomacyBonusType.GIVEN_VALUABLE_FREE, info.getRace());
+    }
+  }
   /**
    * Generate Fleet list containg all fleets from both players.
    */

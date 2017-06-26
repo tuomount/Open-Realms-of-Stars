@@ -32,6 +32,7 @@ import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationList;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
@@ -545,6 +546,18 @@ public class DiplomacyView extends BlackPanel {
           updatePanel(SpeechType.DECLINE);
         }
       }
+      if (speechSelected != null
+          && speechSelected.getType() == SpeechType.MAKE_WAR) {
+        int humanIndex = starMap.getPlayerList().getIndex(human);
+        int aiIndex = starMap.getPlayerList().getIndex(ai);
+        //TODO add news corp that human declared war on AI
+        ai.getDiplomacy().getDiplomacyList(humanIndex).addBonus(
+            DiplomacyBonusType.IN_WAR, ai.getRace());
+        human.getDiplomacy().getDiplomacyList(aiIndex).addBonus(
+            DiplomacyBonusType.IN_WAR, human.getRace());
+        updatePanel(SpeechType.MAKE_WAR);
+      }
+
     }
   }
 }

@@ -219,6 +219,14 @@ public class DiplomaticTrade {
         .getRace());
     int secondValue = secondOffer.getOfferValue(starMap.getPlayerByIndex(second)
         .getRace());
+    if (secondOffer.isPlanetInOffer() && !secondOffer.isPeaceInOffer()) {
+      // AI should never give up planet unless is peace is being offered
+      return false;
+    }
+    if (secondOffer.isFleetInOffer() && !secondOffer.isPeaceInOffer()) {
+      // AI should never give up fleets unless is peace is being offered
+      return false;
+    }
     int difference = firstValue - secondValue;
     if (difference <= 0) {
       return true;

@@ -91,4 +91,44 @@ public class NegotiationList {
     }
     return value;
   }
+
+  /**
+   * Is planet in Offer
+   * @return True if planet is being offered
+   */
+  public boolean isPlanetInOffer() {
+    for (NegotiationOffer offer : list) {
+      if (offer.getNegotiationType() == NegotiationType.PLANET) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Is peace in Offer
+   * @return True if peace is being offered
+   */
+  public boolean isPeaceInOffer() {
+    for (NegotiationOffer offer : list) {
+      if (offer.getNegotiationType() == NegotiationType.PEACE) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Is Fleet in Offer
+   * @return True if fleet is being offered
+   */
+  public boolean isFleetInOffer() {
+    for (NegotiationOffer offer : list) {
+      if (offer.getNegotiationType() == NegotiationType.FLEET) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 }

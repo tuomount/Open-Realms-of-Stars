@@ -55,4 +55,48 @@ public class NegotiationListTest {
     assertEquals(12, list.getOfferValue(SpaceRace.HUMAN));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPlanetsAndFleets() {
+    NegotiationOffer offer = Mockito.mock(NegotiationOffer.class);
+    Mockito.when(offer.getOfferValue(SpaceRace.HUMAN)).thenReturn(15);
+    Mockito.when(offer.getNegotiationType()).thenReturn(NegotiationType.PLANET);
+    NegotiationOffer offer2 = Mockito.mock(NegotiationOffer.class);
+    Mockito.when(offer2.getOfferValue(SpaceRace.HUMAN)).thenReturn(7);
+    Mockito.when(offer2.getNegotiationType()).thenReturn(NegotiationType.FLEET);
+    NegotiationOffer offer3 = Mockito.mock(NegotiationOffer.class);
+    Mockito.when(offer3.getOfferValue(SpaceRace.HUMAN)).thenReturn(25);
+    Mockito.when(offer3.getNegotiationType()).thenReturn(NegotiationType.PEACE);
+    
+    NegotiationList list = new NegotiationList();
+    assertEquals(false, list.isPlanetInOffer());
+    list.add(offer);
+    assertEquals(1, list.getSize());
+    assertEquals(offer, list.getByIndex(0));
+    assertEquals(15, list.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(true, list.isPlanetInOffer());
+    assertEquals(false, list.isFleetInOffer());
+    assertEquals(false, list.isPeaceInOffer());
+    list.add(offer2);
+    assertEquals(2, list.getSize());
+    assertEquals(offer, list.getByIndex(0));
+    assertEquals(offer2, list.getByIndex(1));
+    assertEquals(22, list.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(true, list.isPlanetInOffer());
+    assertEquals(true, list.isFleetInOffer());
+    assertEquals(false, list.isPeaceInOffer());
+    list.remove(0);
+    assertEquals(1, list.getSize());
+    assertEquals(offer2, list.getByIndex(0));
+    assertEquals(7, list.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(false, list.isPlanetInOffer());
+    assertEquals(true, list.isFleetInOffer());
+    assertEquals(false, list.isPeaceInOffer());
+    list.add(offer3);
+    assertEquals(32, list.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(false, list.isPlanetInOffer());
+    assertEquals(true, list.isFleetInOffer());
+    assertEquals(true, list.isPeaceInOffer());
+  }
+
 }

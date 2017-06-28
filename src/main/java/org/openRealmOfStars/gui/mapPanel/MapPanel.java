@@ -25,6 +25,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatAnimation;
 import org.openRealmOfStars.player.combat.CombatShip;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipImage;
@@ -414,10 +415,15 @@ public class MapPanel extends JPanel {
             && info.getSectorVisibility(new Coordinate(i + cx,
                 j + cy)) == PlayerInfo.VISIBLE
             && fleetMap[i + cx][j + cy] != null) {
-          BufferedImage img = ShipImages
-              .getByRace(fleetMap[i + cx][j + cy].getRace())
-              .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());
-          gr.drawImage(img, pixelX, pixelY, null);
+          Fleet fleet = starMap.getFleetByFleetTileInfo(fleetMap[i + cx]
+              [j + cy]);
+          if (info.getSectorCloakDetection(i + cx, j + cy)
+              >= fleet.getFleetCloackingValue()) {
+            BufferedImage img = ShipImages
+                .getByRace(fleetMap[i + cx][j + cy].getRace())
+                .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());
+            gr.drawImage(img, pixelX, pixelY, null);
+          }
         }
 
         // Draw fog of war and uncharted tiles

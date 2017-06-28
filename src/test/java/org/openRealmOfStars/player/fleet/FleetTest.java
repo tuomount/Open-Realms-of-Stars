@@ -9,6 +9,8 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipHull;
+import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.starMap.Route;
 
 /**
@@ -39,8 +41,11 @@ public class FleetTest {
    * @return First ship
    */
   private static Ship createShipOne() {
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getSize()).thenReturn(ShipSize.SMALL);
     Ship ship = Mockito.mock(Ship.class);
     Mockito.when(ship.getFtlSpeed()).thenReturn(2);
+    Mockito.when(ship.getHull()).thenReturn(hull);
     Mockito.when(ship.getScannerDetectionLvl()).thenReturn(40);
     Mockito.when(ship.getScannerLvl()).thenReturn(2);
     Mockito.when(ship.getSpeed()).thenReturn(1);
@@ -60,8 +65,11 @@ public class FleetTest {
    * @return Colony ship
    */
   private static Ship createShipTwo() {
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getSize()).thenReturn(ShipSize.MEDIUM);
     Ship ship = Mockito.mock(Ship.class);
     Mockito.when(ship.getFtlSpeed()).thenReturn(1);
+    Mockito.when(ship.getHull()).thenReturn(hull);
     Mockito.when(ship.getScannerDetectionLvl()).thenReturn(0);
     Mockito.when(ship.getScannerLvl()).thenReturn(0);
     Mockito.when(ship.getSpeed()).thenReturn(1);
@@ -83,10 +91,14 @@ public class FleetTest {
    * @return Privateer ship
    */
   private static Ship createPrivateerShipOne() {
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getSize()).thenReturn(ShipSize.LARGE);
     Ship ship = Mockito.mock(Ship.class);
     Mockito.when(ship.getFtlSpeed()).thenReturn(2);
+    Mockito.when(ship.getHull()).thenReturn(hull);
     Mockito.when(ship.getScannerDetectionLvl()).thenReturn(40);
     Mockito.when(ship.getScannerLvl()).thenReturn(2);
+    Mockito.when(ship.getCloakingValue()).thenReturn(40);
     Mockito.when(ship.getSpeed()).thenReturn(1);
     Mockito.when(ship.getFreeCargoColonists()).thenReturn(2);
     Mockito.when(ship.getFreeCargoMetal()).thenReturn(10);
@@ -120,6 +132,7 @@ public class FleetTest {
     assertEquals(0, fleet.getFreeSpaceForColonist());
     assertEquals(0, fleet.getFreeSpaceForMetal());
     assertEquals(true, fleet.allFixed());
+    assertEquals(0, fleet.getFleetCloackingValue());
     fleet.setMovesLeft(2);
     assertEquals(2, fleet.getMovesLeft());
     fleet.decMovesLeft();
@@ -153,6 +166,7 @@ public class FleetTest {
     assertEquals(2, fleet.getNumberOfShip());
     assertEquals(4, fleet.getFreeSpaceForColonist());
     assertEquals(20, fleet.getFreeSpaceForMetal());
+    assertEquals(0, fleet.getFleetCloackingValue());
     assertEquals(true, fleet.allFixed());
     assertEquals(false, fleet.isPrivateerFleet());
     assertEquals(1, fleet.getCulturalValue());
@@ -167,6 +181,7 @@ public class FleetTest {
     Fleet fleet = new Fleet(privateer, 2, 3);
     fleet.addShip(privateer);
     assertEquals(true, fleet.isPrivateerFleet());
+    assertEquals(40, fleet.getFleetCloackingValue());
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Terran alliance");
     assertEquals(0, fleet.getCulturalValue());
@@ -189,6 +204,7 @@ public class FleetTest {
     fleet.addShip(colony);
     assertEquals(1, fleet.getCulturalValue());
     assertEquals(35,fleet.getMilitaryValue());
+    assertEquals(22, fleet.getFleetCloackingValue());
   }
 
 }

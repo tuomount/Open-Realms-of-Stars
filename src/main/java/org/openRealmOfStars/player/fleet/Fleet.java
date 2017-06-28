@@ -320,6 +320,24 @@ public class Fleet {
     return lvl;
   }
 
+  /**
+   * Get Fleet Cloak Value. Ships with biggest masses
+   * will have biggest effect on clocking value.
+   * @return cloak Value
+   */
+  public int getFleetCloackingValue() {
+    int lvl = 0;
+    int totalMass = 0;
+    for (Ship ship : ships) {
+      int shipLvl = ship.getCloakingValue();
+      int mass = ship.getHull().getSize().getMass();
+      lvl = lvl + shipLvl * mass;
+      totalMass = totalMass + mass;
+    }
+    lvl = lvl / totalMass;
+    return lvl;
+  }
+
 
   /**
    * Get Fleet information as a text

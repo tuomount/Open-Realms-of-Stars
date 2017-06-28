@@ -645,6 +645,24 @@ private int increaseInitivativeByEmptySpace() {
   }
 
   /**
+   * Get cloaking value
+   * @return cloaking value
+   */
+  public int getCloakingValue() {
+    int cloak = 0;
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.SCANNER
+          && hasComponentEnergy(i)
+          && comp.getCloakDetection() > cloak) {
+          cloak = comp.getCloaking();
+      }
+    }
+    return cloak;
+  }
+
+  /**
    * Get accuracy for certain weapon
    * @param weapon ShipComponent
    * @return Accuracy

@@ -1014,6 +1014,16 @@ public class StarMap {
   }
 
   /**
+   * Get Fleet by fleetTile
+   * @param fleetTile to get the fleet
+   * @return Fleet by FleetTile
+   */
+  public Fleet getFleetByFleetTileInfo(final FleetTileInfo fleetTile) {
+    PlayerInfo info = getPlayerByIndex(fleetTile.getPlayerIndex());
+    Fleet fleet = info.getFleets().getByIndex(fleetTile.getFleetIndex());
+    return fleet;
+  }
+  /**
    * Fight with two fleets
    * @param x X coordinate
    * @param y Y coordinate
@@ -1523,7 +1533,8 @@ public class StarMap {
       }
       if (isValidCoordinate(nx, ny)) {
         info.setSectorVisibility(nx, ny, PlayerInfo.VISIBLE);
-        if (detectValue > 0) {
+        if (detectValue > 0
+            && info.getSectorCloakDetection(nx, ny) < detectValue) {
           info.setSectorCloakingDetection(nx, ny, detectValue);
         }
         if (tileInfo[nx][ny].isVisibilityBlocked()) {

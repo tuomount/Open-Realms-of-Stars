@@ -60,6 +60,30 @@ public enum ShipSize {
   }
 
   /**
+   * Get Mass by shipSize.
+   * This is relative mass, so small is eight times smaller than huge.
+   * Small: 1
+   * Medium: 2
+   * Large: 4
+   * Huge: 8
+   * @return int
+   */
+  public int getMass() {
+    switch (this) {
+    case SMALL:
+      return 1;
+    case MEDIUM:
+      return 2;
+    case LARGE:
+      return 4;
+    case HUGE:
+      return 8;
+    default:
+      return 1;
+    }
+  }
+
+  /**
    * Return ShipSize by index
    * @param index This must be between 0-3
    * @return Ship size

@@ -174,6 +174,7 @@ public class ShipTest {
     assertEquals(false, ship.isTrooperModule());
     assertEquals(50, ship.getHitChance(weapon));
     assertEquals(55, ship.getTotalMilitaryPower());
+    assertEquals(120, ship.getCloakingValue());
   }
 
   @Test

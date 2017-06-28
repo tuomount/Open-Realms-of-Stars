@@ -240,8 +240,8 @@ public boolean launchIntercept(final int distance,
       double interceptY = shooter.getY();
       double dx, dy;
       if (distance > 0) {
-          dx = (target.getX() - shooter.getX()) / distance;
-          dy = (target.getY() - shooter.getY()) / distance;
+          dx = (double) (target.getX() - shooter.getX()) / distance;
+          dy = (double) (target.getY() - shooter.getY()) / distance;
       } else {
           dx = 0;
           dy = 0;

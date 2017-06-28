@@ -48,7 +48,8 @@ public class ShipListRenderer implements ListCellRenderer<Ship> {
         list, value, index, isSelected, cellHasFocus);
     renderer.setFont(GuiStatics.getFontCubellan());
     renderer.setText(
-        value.getName() + " - " + value.getHull().getHullType().toString());
+        value.getName() + " - " + value.getHull().getHullType().toString()
+        + " - " + value.getTotalMilitaryPower());
     if (isSelected) {
       renderer.setForeground(value.getDamageColor());
       renderer.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);

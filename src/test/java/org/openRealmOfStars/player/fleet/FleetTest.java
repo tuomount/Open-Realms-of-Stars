@@ -145,7 +145,7 @@ public class FleetTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Terran alliance");
     assertEquals(0, fleet.getCulturalValue());
-    assertEquals("Test-Fleet\nTerran alliance\nSpeed: 1 FTL: 2\nMoves:1\nScout"
+    assertEquals("Test-Fleet\nTerran alliance\nSpeed: 1 FTL: 2\nMoves:1\nScout - 15"
         + "\n\nEnroute", fleet.getInfoAsText(info));
   }
 
@@ -170,7 +170,7 @@ public class FleetTest {
     assertEquals(true, fleet.allFixed());
     assertEquals(false, fleet.isPrivateerFleet());
     assertEquals(1, fleet.getCulturalValue());
-    assertEquals("Fleet #-1\nSpeed: 1 FTL: 1\nMoves:0\nScout\nColony"
+    assertEquals("Fleet #-1\nSpeed: 1 FTL: 1\nMoves:0\nScout - 15\nColony - 0"
         + "\n", fleet.getInfoAsText(null));
   }
 
@@ -186,7 +186,7 @@ public class FleetTest {
     Mockito.when(info.getEmpireName()).thenReturn("Terran alliance");
     assertEquals(0, fleet.getCulturalValue());
     assertEquals("Fleet #-1\nPrivateer fleet\nSpeed: 1 FTL: 2\nMoves:0"
-        + "\nPrivateer\nPrivateer\n", fleet.getInfoAsText(info));
+        + "\nPrivateer - 20\nPrivateer - 20\n", fleet.getInfoAsText(info));
   }
 
   @Test

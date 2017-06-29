@@ -417,7 +417,7 @@ public class MapPanel extends JPanel {
             && fleetMap[i + cx][j + cy] != null) {
           Fleet fleet = starMap.getFleetByFleetTileInfo(fleetMap[i + cx]
               [j + cy]);
-          if (info.getSectorCloakDetection(i + cx, j + cy)
+          if (fleet != null && info.getSectorCloakDetection(i + cx, j + cy)
               >= fleet.getFleetCloackingValue()) {
             BufferedImage img = ShipImages
                 .getByRace(fleetMap[i + cx][j + cy].getRace())

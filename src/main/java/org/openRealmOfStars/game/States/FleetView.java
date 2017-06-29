@@ -305,6 +305,12 @@ public class FleetView extends BlackPanel {
     }
     btn.setEnabled(interactive);
     fleetBtns.add(btn);
+    fleetBtns.add(Box.createRigidArea(new Dimension(5, 5)));
+    btn = new SpaceButton("Hail",
+        GameCommands.COMMAND_HAIL_FLEET_PLANET);
+    btn.addActionListener(listener);
+    btn.setEnabled(!interactive);
+    fleetBtns.add(btn);
     eastPanel.add(fleetBtns);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new TransparentLabel(eastPanel, "Other fleets");

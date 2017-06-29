@@ -438,6 +438,11 @@ public final class GameCommands {
   public static final String COMMAND_SPLIT_THE_FLEET = "SplitTheFleet";
 
   /**
+   * Hail the fleet/planet
+   */
+  public static final String COMMAND_HAIL_FLEET_PLANET = "HailFleetPlanet";
+
+  /**
    * Split the fleet
    */
   public static final String COMMAND_DESTROY_THE_SHIP = "DestroyTheShip";

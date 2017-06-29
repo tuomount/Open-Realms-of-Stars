@@ -112,6 +112,30 @@ public class Combat {
   private Planet planet;
 
   /**
+   * Get total number of combat rounds
+   * @return Number of combat rounds
+   */
+  public int getTotalRounds() {
+    return totalRounds;
+  }
+  /**
+   * Get number of rounds that no ship has been damaged
+   * @return Number of rounds that no ship has been damaged
+   */
+  public int getRoundsNoDamge() {
+    return roundsNoDamge;
+  }
+
+  /**
+   * Total amount of combat rounds
+   */
+  private int totalRounds = 0;
+  /**
+   * Amount of combat rounds that no ship is damaged
+   */
+  private int roundsNoDamge = 0;
+
+  /**
    * Is end combat handled or not
    */
   private boolean endCombatHandled = false;
@@ -436,6 +460,12 @@ public boolean launchIntercept(final int distance,
     shipIndex++;
     if (combatShipList.size() <= shipIndex) {
       shipIndex = 0;
+      totalRounds++;
+      if (!isDamageOnAnyShip()) {
+        roundsNoDamge++;
+      } else {
+        roundsNoDamge = 0;
+      }
     }
     CombatShip ship = getCurrentShip();
     ship.reInitShipForRound();
@@ -534,6 +564,19 @@ public boolean launchIntercept(final int distance,
         }
     }
   }
+
+  /**
+   * Is there damage on any ship
+   * @return True if at least one ship has damage
+   */
+  public boolean isDamageOnAnyShip() {
+    for (CombatShip ship : combatShipList) {
+      if (ship.isDamaged()) {
+        return true;
+      }
+    }
+    return false;
+  }
   /**
    * Is Combat over or not yet
    * @return True if combat is over
@@ -546,6 +589,7 @@ public boolean launchIntercept(final int distance,
     PlayerInfo first = null;
     boolean moreThanOnePlayer = false;
     boolean militaryPower = false;
+    boolean damaged = false;
     for (CombatShip ship : combatShipList) {
       if (first == null) {
         first = ship.getPlayer();
@@ -556,6 +600,14 @@ public boolean launchIntercept(final int distance,
       if (ship.getShip().getTotalMilitaryPower() > 0) {
         militaryPower = true;
       }
+      if (ship.isDamaged()) {
+        damaged = true;
+      }
+    }
+    if (roundsNoDamge >= 100 && !damaged) {
+      winner = null;
+      // Combat seems to be draw
+      return true;
     }
     if (!moreThanOnePlayer) {
       winner = first;
@@ -683,6 +735,9 @@ public boolean launchIntercept(final int distance,
           ShipDamage shipDamage = new ShipDamage(1, "Attack missed!");
           if (DiceGenerator.getRandom(1, 100) <= accuracy) {
             shipDamage = target.getShip().damageBy(weapon);
+            if (shipDamage.getValue() == ShipDamage.DAMAGED) {
+              target.setDamaged();
+            }
           }
           if (textLogger != null) {
             String[] logs = shipDamage.getMessage().split("\n");

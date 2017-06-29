@@ -75,6 +75,11 @@ public class CombatShip implements Comparable<CombatShip> {
   private int bonusAccuracy;
 
   /**
+   * Was ship damaged. Really damage not just some shield hit.
+   */
+  private boolean damaged;
+
+  /**
    * Constructor for Combat ship
    * @param ship Ship to put in combat
    * @param player Player who owns the ship
@@ -263,6 +268,7 @@ public class CombatShip implements Comparable<CombatShip> {
     }
     setAiShotsLeft(weapons);
     ship.regenerateShield();
+    damaged = false;
   }
 
   /**
@@ -326,6 +332,21 @@ public class CombatShip implements Comparable<CombatShip> {
    */
   public void setBonusAccuracy(final int bonusAccuracy) {
     this.bonusAccuracy = bonusAccuracy;
+  }
+
+  /**
+   * Was ship damaged during last round
+   * @return the damaged
+   */
+  public boolean isDamaged() {
+    return damaged;
+  }
+
+  /**
+   * Ship is damaged and being marked
+   */
+  public void setDamaged() {
+    damaged = true;
   }
 
 }

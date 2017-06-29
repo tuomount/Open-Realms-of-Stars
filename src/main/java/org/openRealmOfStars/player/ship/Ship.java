@@ -786,7 +786,7 @@ private int increaseHitChanceByComponent() {
       if (weapon.getType() == ShipComponentType.WEAPON_BEAM) {
         // Beam weapons have biggest chance to penetrate shields
         // and armor but they have shortest range.
-        chance = 10;
+        chance = 10 + getExperience();
       }
       if (damage > 0) {
         this.setShield(this.getShield() - 1);

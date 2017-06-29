@@ -16,6 +16,10 @@ import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
+import org.openRealmOfStars.player.tech.Tech;
+import org.openRealmOfStars.player.tech.TechFactory;
+import org.openRealmOfStars.player.tech.TechList;
+import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
 
@@ -101,6 +105,51 @@ public class CombatTest {
     Combat combat = new Combat(fleet1, fleet2, info1, info2);
     combat.doFastCombat();
     assertEquals(info1, combat.getWinner());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRealCombatDraw() {
+    TechList techList = new TechList();
+    Tech tech = TechFactory.createCombatTech("Laser Mk1", 1);
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createDefenseTech("Shield Mk1", 1);
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createHullTech("Colony", 1);
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createHullTech("Scout Mk1", 1);
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
+    if (tech != null) {
+      techList.addTech(tech);
+    }
+    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
+    info1.setTechList(techList);
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    info2.setTechList(techList);
+    ShipDesign design1 = ShipGenerator.createScout(info1);
+    ShipDesign design2 = ShipGenerator.createScout(info2);
+    Ship colony1 = new Ship(design1);
+    Ship colony2 = new Ship(design2);
+    Fleet fleet1 = new Fleet(colony1, 5, 5);
+    Fleet fleet2 = new Fleet(colony2, 6, 5);
+    info1.getFleets().add(fleet1);
+    info2.getFleets().add(fleet2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    combat.doFastCombat();
+    assertEquals(null, combat.getWinner());
   }
 
   @Test

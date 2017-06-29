@@ -424,5 +424,24 @@ public class DiplomaticTradeTest {
     assertEquals(3, bonus);
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testPlanetAndFleetNotGivingThemAway() {
+    GameRepository repository = new GameRepository();
+    StarMap map = repository.loadGame("src/test/resources/saves",
+                                          "testGame.save");
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    NegotiationList offerList1 = new NegotiationList();
+    offerList1.add(new NegotiationOffer(NegotiationType.PLANET, trade.getTradeablePlanetListForFirst()[0]));
+    NegotiationList offerList2 = new NegotiationList();
+    trade.setFirstOffer(offerList1);
+    trade.setSecondOffer(offerList2);
+    assertEquals(false, trade.isOfferGoodForBoth());
+    offerList1 = new NegotiationList();
+    offerList1.add(new NegotiationOffer(NegotiationType.FLEET, trade.getTradeableFleetListForFirst()[0]));
+    trade.setFirstOffer(offerList1);
+    assertEquals(false, trade.isOfferGoodForBoth());
+  }
+
 
 }

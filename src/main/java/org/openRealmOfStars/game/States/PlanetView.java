@@ -396,6 +396,13 @@ public class PlanetView extends BlackPanel {
     demolishBuildingBtn.addActionListener(listener);
     demolishBuildingBtn.setEnabled(interactive);
     eastPanel.add(demolishBuildingBtn);
+    if (!interactive) {
+      SpaceButton btn = new SpaceButton("Hail",
+          GameCommands.COMMAND_HAIL_FLEET_PLANET);
+      btn.addActionListener(listener);
+      btn.setEnabled(!interactive);
+      eastPanel.add(btn);
+    }
 
     imgBase.setLayout(new BorderLayout());
     if (planet.getPlanetOwnerIndex() != -1) {

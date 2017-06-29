@@ -1077,6 +1077,11 @@ public class Game extends JFrame implements ActionListener {
     }
     if (gameState == GameState.PLANETVIEW && planetView != null) {
       // Planet view
+      if (arg0.getActionCommand().equals(
+          GameCommands.COMMAND_HAIL_FLEET_PLANET)) {
+        changeGameState(GameState.DIPLOMACY_VIEW, fleetView);
+        SoundPlayer.playMenuSound();
+      }
       planetView.handleAction(arg0);
     }
     if (gameState == GameState.FLEETVIEW && fleetView != null) {

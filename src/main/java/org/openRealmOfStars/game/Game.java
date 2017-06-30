@@ -371,10 +371,25 @@ public class Game extends JFrame implements ActionListener {
 
   /**
    * Show Diplomacy view
+   * @param dataObject Object where PlayerInfo with whom diplomacy
+   * is going to be started is need to find
    */
-  public void showDiplomacyView() {
-    diplomacyView = new DiplomacyView(starMap.getPlayerByIndex(0),
-        starMap.getPlayerByIndex(1), starMap, this);
+  public void showDiplomacyView(final Object dataObject) {
+    PlayerInfo info = starMap.getPlayerByIndex(1);
+    if (dataObject != null) {
+      if (dataObject instanceof FleetView) {
+        FleetView view = (FleetView) dataObject;
+        info = starMap.getPlayerInfoByFleet(view.getFleet());
+      }
+      if (dataObject instanceof PlanetView) {
+        PlanetView view = (PlanetView) dataObject;
+        if (view.getPlanet().getPlanetPlayerInfo() != null) {
+          info = view.getPlanet().getPlanetPlayerInfo();
+        }
+      }
+    }
+    diplomacyView = new DiplomacyView(starMap.getPlayerByIndex(0), info,
+        starMap, this);
     this.updateDisplay(diplomacyView);
   }
 
@@ -599,7 +614,7 @@ public class Game extends JFrame implements ActionListener {
       break;
     }
     case DIPLOMACY_VIEW: {
-      showDiplomacyView();
+      showDiplomacyView(dataObject);
       break;
     }
     default: {
@@ -1079,7 +1094,7 @@ public class Game extends JFrame implements ActionListener {
       // Planet view
       if (arg0.getActionCommand().equals(
           GameCommands.COMMAND_HAIL_FLEET_PLANET)) {
-        changeGameState(GameState.DIPLOMACY_VIEW, fleetView);
+        changeGameState(GameState.DIPLOMACY_VIEW, planetView);
         SoundPlayer.playMenuSound();
       }
       planetView.handleAction(arg0);
@@ -1091,7 +1106,7 @@ public class Game extends JFrame implements ActionListener {
         colonizePlanetAction();
       }
       if (arg0.getActionCommand().equals(GameCommands.COMMAND_CONQUEST)) {
-        changeGameState(GameState.PLANETBOMBINGVIEW, fleetView);
+        changeGameState(GameState.PLANETBOMBINGVIEW, fleetView.getFleet());
         SoundPlayer.playMenuSound();
       }
       if (arg0.getActionCommand().equals(

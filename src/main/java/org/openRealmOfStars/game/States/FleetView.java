@@ -136,7 +136,7 @@ public class FleetView extends BlackPanel {
    * then fleet is in deep space.
    * @param fleet Fleet orbiting
    * @param fleetList Player Fleet list
-   * @param playerInfo Player info who's fleet is being viewed
+   * @param playerInfo Player info who is viewing the fleet
    * @param interactive Is Fleet view interactive for current player
    * @param listener Action listener for commands
    */
@@ -569,7 +569,7 @@ public class FleetView extends BlackPanel {
   }
 
   /**
-   * Get PlayerInfo who owns fleet
+   * Get PlayerInfo who is viewing the fleet
    * @return PlayerInfo
    */
   public PlayerInfo getInfo() {
@@ -577,7 +577,7 @@ public class FleetView extends BlackPanel {
   }
 
   /**
-   * Set PlayerInfo for view
+   * Set PlayerInfo for viewing the fleet
    * @param info PlayerInfo
    */
   public void setInfo(final PlayerInfo info) {

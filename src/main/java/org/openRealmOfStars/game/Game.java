@@ -110,6 +110,11 @@ public class Game extends JFrame implements ActionListener {
   private GameState gameState;
 
   /**
+   * Previous Game state
+   */
+  private GameState previousState;
+
+  /**
    * Planet view Panel and handling planet
    */
   private PlanetView planetView;
@@ -556,6 +561,7 @@ public class Game extends JFrame implements ActionListener {
    */
   private void changeGameState(final GameState newState,
       final Message focusMessage, final Object dataObject) {
+    previousState = gameState;
     gameState = newState;
     switch (gameState) {
     case AITURN:
@@ -976,7 +982,13 @@ public class Game extends JFrame implements ActionListener {
       if (combatView.isCombatEnded() && arg0.getActionCommand()
           .equals(GameCommands.COMMAND_END_BATTLE_ROUND)) {
         SoundPlayer.playMenuSound();
-        changeGameState(GameState.STARMAP);
+        if (previousState == GameState.AITURN) {
+          changeGameState(previousState);
+          return;
+        } else {
+          changeGameState(GameState.STARMAP);
+          return;
+        }
       } else {
         combatView.handleActions(arg0);
       }
@@ -1012,23 +1024,6 @@ public class Game extends JFrame implements ActionListener {
             .getLastClickedFleet() != null) {
       SoundPlayer.playMenuSound();
       changeGameState(GameState.FLEETVIEW);
-    }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
-      SoundPlayer.playMenuSound();
-      if (gameState == GameState.PLANETVIEW) {
-        planetView = null;
-      }
-      if (gameState == GameState.RESEARCHVIEW) {
-        researchView = null;
-      }
-      if (gameState == GameState.FLEETVIEW) {
-        Fleet fleet = fleetView.getFleet();
-        fleetView = null;
-        changeGameState(GameState.STARMAP, fleet);
-      } else {
-        changeGameState(GameState.STARMAP);
-      }
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_VIEW_RESEARCH)) {
@@ -1080,7 +1075,17 @@ public class Game extends JFrame implements ActionListener {
     }
     if (gameState == GameState.DIPLOMACY_VIEW && diplomacyView != null) {
       // Handle diplomacy view
-     diplomacyView.handleAction(arg0);
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        if (previousState == GameState.AITURN) {
+          changeGameState(previousState);
+          return;
+        } else {
+          changeGameState(GameState.STARMAP);
+          return;
+        }
+      }
+      diplomacyView.handleAction(arg0);
     }
     if (gameState == GameState.SHIPDESIGN && shipDesignView != null) {
       // Ship Design View
@@ -1179,6 +1184,26 @@ public class Game extends JFrame implements ActionListener {
         System.exit(0);
       }
     }
+    if (arg0.getActionCommand()
+        .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+      // This is default action in many view so there fore this
+      // very last in commands
+      SoundPlayer.playMenuSound();
+      if (gameState == GameState.PLANETVIEW) {
+        planetView = null;
+      }
+      if (gameState == GameState.RESEARCHVIEW) {
+        researchView = null;
+      }
+      if (gameState == GameState.FLEETVIEW) {
+        Fleet fleet = fleetView.getFleet();
+        fleetView = null;
+        changeGameState(GameState.STARMAP, fleet);
+      } else {
+        changeGameState(GameState.STARMAP);
+      }
+    }
+
   }
 
   /**

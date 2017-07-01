@@ -57,6 +57,11 @@ public class DiplomaticTradeTest {
   }
 
   private StarMap generateMapWithPlayer(final SpaceRace race) {
+    return generateMapWithPlayer(race, 0);
+  }
+
+  private StarMap generateMapWithPlayer(final SpaceRace race,
+      final int powerDifference) {
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
     PlayerInfo player1 = new PlayerInfo(race);
@@ -77,7 +82,9 @@ public class DiplomaticTradeTest {
     tech2.addTech(new Tech("DefTech2", TechType.Defense, 1));
     tech2.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech2.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
-    NewsCorpData newsData = new NewsCorpData(2);
+    NewsCorpData newsData = Mockito.mock(NewsCorpData.class);
+    Mockito.when(newsData.getMilitaryDifference(0, 1)).thenReturn(
+        powerDifference);
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(player1);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(player2);
@@ -483,6 +490,36 @@ public class DiplomaticTradeTest {
         .getNegotiationType());
     assertEquals(NegotiationType.PEACE, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testLogicalOffer() {
+    StarMap map = generateMapWithPlayer(SpaceRace.MECHIONS,600);
+    map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.LOGICAL);
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    trade.getTradeableTechListForFirst();
+    trade.getTradeableTechListForSecond();
+    trade.generateLogicalAttitudeOffer();
+    assertEquals(NegotiationType.WAR, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+    map = generateMapWithPlayer(SpaceRace.MECHIONS,0);
+    map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.LOGICAL);
+    trade = new DiplomaticTrade(map, 0, 1);
+    trade.getTradeableTechListForFirst();
+    trade.getTradeableTechListForSecond();
+    trade.generateLogicalAttitudeOffer();
+    NegotiationType type1 = trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType();
+    NegotiationType type2 = trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType();
+    if (type1 == type2 
+        && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH)) {
+      return;
+    }
+    assertFalse(true);
   }
 
 }

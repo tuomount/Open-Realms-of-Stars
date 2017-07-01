@@ -238,7 +238,7 @@ public class DiplomaticTrade {
    * Very basic offer by logical attitude.
    * This makes war only if power difference goes too big.
    */
-  private void generateLogicalAttitudeOffer() {
+  public void generateLogicalAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getNewsCorpData().getMilitaryDifference(first,

@@ -58,7 +58,11 @@ public enum Attitude {
   /**
    * Peaceful tries to avoid conflict at any cost
    */
-  PEACEFUL;
+  PEACEFUL,
+  /**
+   * Logical very basic AI that tries to do everything with simple logic.
+   */
+  LOGICAL;
 
   /**
    * Get Attitude index

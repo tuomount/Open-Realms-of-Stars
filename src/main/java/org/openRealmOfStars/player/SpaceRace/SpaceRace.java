@@ -143,7 +143,7 @@ public enum SpaceRace {
       case HUMAN:
         return Attitude.DIPLOMATIC;
       case MECHIONS:
-        return Attitude.MILITARISTIC;
+        return Attitude.LOGICAL;
       case SPORKS:
         return Attitude.AGGRESSIVE;
       case GREYANS:

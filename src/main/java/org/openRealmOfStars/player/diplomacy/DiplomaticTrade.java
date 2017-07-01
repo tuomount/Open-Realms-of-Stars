@@ -205,7 +205,6 @@ public class DiplomaticTrade {
       if (liking == Diplomacy.FRIENDS) {
         generateTechTrade(agreePlayer, false);
       }
-
     }
   }
 

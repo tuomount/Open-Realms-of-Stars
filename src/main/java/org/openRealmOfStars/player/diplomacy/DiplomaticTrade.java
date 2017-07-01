@@ -12,6 +12,7 @@ import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  *
@@ -188,22 +189,144 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Generate first offer depending on AI's attitude.
+   */
+  private void generateFirstOffer() {
+    PlayerInfo info = starMap.getPlayerByIndex(first);
+    Attitude attitude = info.getAiAttitude();
+    switch (attitude) {
+      case AGGRESSIVE: {
+        int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+            second);
+        if (power > 30) {
+          generateEqualTrade(NegotiationType.WAR);
+        } else {
+          generateEqualTrade(NegotiationType.PEACE);
+        }
+        break;
+      }
+      case MILITARISTIC: {
+        int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+            second);
+        if (power > 60) {
+          generateEqualTrade(NegotiationType.WAR);
+        } else {
+          generateEqualTrade(NegotiationType.PEACE);
+        }
+        break;
+      }
+      case EXPANSIONIST:
+      case MERCHANTICAL: {
+        generateEqualTrade(NegotiationType.PEACE);
+        firstOffer.add(new NegotiationOffer(NegotiationType.MAP, null));
+        secondOffer.add(new NegotiationOffer(NegotiationType.MAP, null));
+        break;
+      }
+      case BACKSTABBING:
+      case DIPLOMATIC:
+      case LOGICAL:
+      case PEACEFUL:
+      case SCIENTIFIC: {
+        generateEqualTrade(NegotiationType.PEACE);
+        break;
+      }
+    }
+  }
+
+  /**
+   * Very basic offer by logical attitude
+   */
+  private void generateLogicalAttitudeOffer() {
+    PlayerInfo info = starMap.getPlayerByIndex(first);
+    PlayerInfo agree = starMap.getPlayerByIndex(second);
+    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+        second);
+    if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second).isEmpty()) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (info.getDiplomacy().getLiking(second) == Diplomacy.LIKE) {
+      if (DiceGenerator.getRandom(100) < 25) {
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    } else if (info.getDiplomacy().getLiking(second) == Diplomacy.FRIENDS) {
+      int value = DiceGenerator.getRandom(100);
+      if (value < 25) {
+        if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals("Trade Alliance")) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    }
+    int value = DiceGenerator.getRandom(100);
+    if (value < 50) {
+      generateMapTrade(agree, false);
+    } else {
+      generateTechTrade(agree, false);
+    }
+  }
+  /**
    * Generate diplomatic trade offer between two players
    */
   public void generateOffer() {
     PlayerInfo offerPlayer = starMap.getPlayerByIndex(first);
-    PlayerInfo agreePlayer = starMap.getPlayerByIndex(second);
     if (techListForFirst == null || techListForSecond == null) {
       generateTechList();
     }
     if (offerPlayer.getDiplomacy().getDiplomacyList(second)
         .getNumberOfMeetings() == 0) {
-      // Change maps
-      generateMapTrade(agreePlayer, false);
+      generateFirstOffer();
     } else {
-      int liking = offerPlayer.getDiplomacy().getLiking(second);
-      if (liking == Diplomacy.FRIENDS) {
-        generateTechTrade(agreePlayer, false);
+      Attitude attitude = offerPlayer.getAiAttitude();
+      switch (attitude) {
+        case AGGRESSIVE: { 
+          // TODO fix correct offer
+          generateLogicalAttitudeOffer();
+          break;
+        }
+        case BACKSTABBING: { 
+          // TODO fix correct offer
+          generateLogicalAttitudeOffer();
+          break;
+        }
+        case DIPLOMATIC: { 
+          // TODO fix correct offer
+          generateLogicalAttitudeOffer();
+          break;
+        }
+        case EXPANSIONIST: { 
+          // TODO fix correct offer
+          generateLogicalAttitudeOffer();
+          break;
+        }
+        case LOGICAL: { 
+          generateLogicalAttitudeOffer();
+          break;
+        }
+        case MERCHANTICAL: { 
+          // TODO fix correct offer
+          generateLogicalAttitudeOffer();
+          break;
+        }
+        case MILITARISTIC: { 
+          // TODO fix correct offer
+          generateLogicalAttitudeOffer();
+          break;
+        }
+        case PEACEFUL: { 
+          // TODO fix correct offer
+          generateLogicalAttitudeOffer();
+          break;
+        }
+        case SCIENTIFIC: {
+          // TODO fix correct offer
+          generateLogicalAttitudeOffer();
+          break;
+        }
       }
     }
   }

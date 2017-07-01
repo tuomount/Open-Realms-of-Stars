@@ -185,9 +185,9 @@ public class DiplomaticTradeTest {
     assertEquals(null, trade.getFirstOffer());
     assertEquals(null, trade.getSecondOffer());
     trade.generateOffer();
-    assertEquals(NegotiationType.MAP, trade.getFirstOffer().getByIndex(0)
+    assertEquals(NegotiationType.PEACE, trade.getFirstOffer().getByIndex(0)
         .getNegotiationType());
-    assertEquals(NegotiationType.MAP, trade.getSecondOffer().getByIndex(0)
+    assertEquals(NegotiationType.PEACE, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
     assertEquals(true, trade.isOfferGoodForBoth());
   }

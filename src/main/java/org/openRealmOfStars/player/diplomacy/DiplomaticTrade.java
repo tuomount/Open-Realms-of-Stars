@@ -226,7 +226,8 @@ public class DiplomaticTrade {
       case DIPLOMATIC:
       case LOGICAL:
       case PEACEFUL:
-      case SCIENTIFIC: {
+      case SCIENTIFIC:
+      default: {
         generateEqualTrade(NegotiationType.PEACE);
         break;
       }
@@ -234,14 +235,25 @@ public class DiplomaticTrade {
   }
 
   /**
-   * Very basic offer by logical attitude
+   * Very basic offer by logical attitude.
+   * This makes war only if power difference goes too big.
    */
   private void generateLogicalAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
     PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getNewsCorpData().getMilitaryDifference(first,
         second);
-    if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second).isEmpty()) {
+    if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second)
+        .isEmpty()) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (power > 200 && info.getDiplomacy().getDiplomaticRelation(second)
+        .equals(Diplomacy.TRADE_ALLIANCE)) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (power > 400) {
       generateEqualTrade(NegotiationType.WAR);
       return;
     }
@@ -254,7 +266,7 @@ public class DiplomaticTrade {
       int value = DiceGenerator.getRandom(100);
       if (value < 25) {
         if (info.getDiplomacy().getDiplomaticRelation(second)
-            .equals("Trade Alliance")) {
+            .equals(Diplomacy.TRADE_ALLIANCE)) {
           generateEqualTrade(NegotiationType.ALLIANCE);
           return;
         }
@@ -283,47 +295,51 @@ public class DiplomaticTrade {
     } else {
       Attitude attitude = offerPlayer.getAiAttitude();
       switch (attitude) {
-        case AGGRESSIVE: { 
+        case AGGRESSIVE: {
           // TODO fix correct offer
           generateLogicalAttitudeOffer();
           break;
         }
-        case BACKSTABBING: { 
+        case BACKSTABBING: {
           // TODO fix correct offer
           generateLogicalAttitudeOffer();
           break;
         }
-        case DIPLOMATIC: { 
+        case DIPLOMATIC: {
           // TODO fix correct offer
           generateLogicalAttitudeOffer();
           break;
         }
-        case EXPANSIONIST: { 
+        case EXPANSIONIST: {
           // TODO fix correct offer
           generateLogicalAttitudeOffer();
           break;
         }
-        case LOGICAL: { 
+        case LOGICAL: {
           generateLogicalAttitudeOffer();
           break;
         }
-        case MERCHANTICAL: { 
+        case MERCHANTICAL: {
           // TODO fix correct offer
           generateLogicalAttitudeOffer();
           break;
         }
-        case MILITARISTIC: { 
+        case MILITARISTIC: {
           // TODO fix correct offer
           generateLogicalAttitudeOffer();
           break;
         }
-        case PEACEFUL: { 
+        case PEACEFUL: {
           // TODO fix correct offer
           generateLogicalAttitudeOffer();
           break;
         }
         case SCIENTIFIC: {
           // TODO fix correct offer
+          generateLogicalAttitudeOffer();
+          break;
+        }
+        default: {
           generateLogicalAttitudeOffer();
           break;
         }

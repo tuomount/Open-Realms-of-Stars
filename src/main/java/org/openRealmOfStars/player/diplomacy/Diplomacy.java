@@ -56,6 +56,21 @@ public class Diplomacy {
   public static final int HATE = -2;
 
   /**
+   * String for Trade Alliance.
+   */
+  public static final String TRADE_ALLIANCE = "Trade alliance";
+
+  /**
+   * String for Alliance.
+   */
+  public static final String ALLIANCE = "Alliance";
+
+  /**
+   * String for War.
+   */
+  public static final String WAR = "War";
+
+  /**
    * Diplomacy Bonus list for each player
    */
   private DiplomacyBonusList[] diplomacyList;
@@ -228,13 +243,13 @@ public class Diplomacy {
   public String getDiplomaticRelation(final int playerIndex) {
     String result = "";
     if (isTradeAlliance(playerIndex)) {
-      result = "Trade alliance";
+      result = TRADE_ALLIANCE;
     }
     if (isAlliance(playerIndex)) {
-      result = "Alliance";
+      result = ALLIANCE;
     }
     if (isWar(playerIndex)) {
-      result = "War";
+      result = WAR;
     }
     return result;
   }

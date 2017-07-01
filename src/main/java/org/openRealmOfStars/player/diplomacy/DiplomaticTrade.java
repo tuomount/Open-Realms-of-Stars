@@ -191,7 +191,7 @@ public class DiplomaticTrade {
   /**
    * Generate first offer depending on AI's attitude.
    */
-  private void generateFirstOffer() {
+  public void generateFirstOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
     Attitude attitude = info.getAiAttitude();
     switch (attitude) {

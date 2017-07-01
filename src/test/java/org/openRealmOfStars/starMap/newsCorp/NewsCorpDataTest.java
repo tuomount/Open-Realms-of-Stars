@@ -234,10 +234,11 @@ public class NewsCorpDataTest {
     Mockito.when(info2.getFleets()).thenReturn(fleetList2);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
     
-    data.calculateMilitary(players);;
+    data.calculateMilitary(players);
     int[][] value = data.getMilitary().getGalaxyData();
     assertEquals(20,value[0][0]);
     assertEquals(30,value[1][0]);
+    assertEquals(-10, data.getMilitaryDifference(0, 1));
   }
 
   @Test

@@ -269,4 +269,18 @@ public class NewsCorpData {
     }
   }
 
+  /**
+   * Get latest military difference between two players
+   * @param index1 First player index. This is where second one is compared.
+   * @param index2 Second player index.
+   * @return Positive number if first player has bigger military according
+   *         the news corp.
+   */
+  public int getMilitaryDifference(final int index1, final int index2) {
+    int first = military.getLatest(index1);
+    int second = military.getLatest(index2);
+    int difference = first - second;
+    return difference;
+  }
+
 }

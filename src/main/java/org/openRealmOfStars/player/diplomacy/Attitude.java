@@ -78,6 +78,7 @@ public enum Attitude {
       case BACKSTABBING: return 5;
       case MERCHANTICAL: return 6;
       case PEACEFUL: return 7;
+      case LOGICAL: return 8;
       default: throw new IllegalArgumentException("No such Attitude!");
     }
   }
@@ -97,6 +98,7 @@ public enum Attitude {
       case 5: return BACKSTABBING;
       case 6: return MERCHANTICAL;
       case 7: return PEACEFUL;
+      case 8: return LOGICAL;
       default: throw new IllegalArgumentException("Unexpected attitude!");
     }
   }

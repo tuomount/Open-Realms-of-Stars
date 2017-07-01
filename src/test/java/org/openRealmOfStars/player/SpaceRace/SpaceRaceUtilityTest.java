@@ -60,7 +60,7 @@ public class SpaceRaceUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testRandomNameGeneratorMechions() {
     SpaceRace race = SpaceRace.MECHIONS;
-    assertEquals(Attitude.MILITARISTIC, race.getAttitude());
+    assertEquals(Attitude.LOGICAL, race.getAttitude());
     for (int i=0;i<100;i++) {
       String tmp = SpaceRaceUtility.getRandomName(race);
       String[] parts = tmp.split(" ");

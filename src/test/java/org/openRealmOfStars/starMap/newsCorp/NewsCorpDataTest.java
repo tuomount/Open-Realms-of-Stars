@@ -243,6 +243,13 @@ public class NewsCorpDataTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalaxyStatMilitaryWithoutData() {
+    NewsCorpData data = new NewsCorpData(2);
+    assertEquals(0, data.getMilitaryDifference(0, 1));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testGalaxyStatCredit() {
     NewsCorpData data = new NewsCorpData(5);
     PlayerList players = Mockito.mock(PlayerList.class);

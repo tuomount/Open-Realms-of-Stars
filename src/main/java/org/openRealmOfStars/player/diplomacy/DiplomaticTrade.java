@@ -148,6 +148,26 @@ public class DiplomaticTrade {
     }
   }
   /**
+   * Generate tech demand or money demand
+   * @param agreePlayer Who is need to agree with trade
+   */
+  protected void generateTechDemand(final PlayerInfo agreePlayer) {
+    if (techListForFirst.size() > 0) {
+      firstOffer = new NegotiationList();
+      firstOffer.add(new NegotiationOffer(NegotiationType.TECH,
+          techListForFirst.get(0)));
+    } else {
+      int credit = agreePlayer.getTotalCredits();
+      if (credit > 10) {
+        credit = 10;
+      }
+      firstOffer = new NegotiationList();
+      firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+            new Integer(credit)));
+    }
+    secondOffer = new NegotiationList();
+  }
+  /**
    * Generate Map trade between two players.
    * @param agreePlayer Who is need to agree with trade
    * @param buy first player is buy tech instead of trading
@@ -235,6 +255,56 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Offer by aggressive attitude.
+   * This makes war quite easily and can make demands.
+   */
+  public void generateAggressiveAttitudeOffer() {
+    PlayerInfo info = starMap.getPlayerByIndex(first);
+    PlayerInfo agree = starMap.getPlayerByIndex(second);
+    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+        second);
+    if (power > 40 && info.getDiplomacy().getDiplomaticRelation(second)
+        .isEmpty()) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (power > 100 && info.getDiplomacy().getDiplomaticRelation(second)
+        .equals(Diplomacy.TRADE_ALLIANCE)) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (power > 200) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (info.getDiplomacy().getLiking(second) == Diplomacy.LIKE) {
+      if (DiceGenerator.getRandom(100) < 10) {
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    } else if (info.getDiplomacy().getLiking(second) == Diplomacy.FRIENDS) {
+      int value = DiceGenerator.getRandom(100);
+      if (value < 10) {
+        if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.TRADE_ALLIANCE)) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    }
+    int value = DiceGenerator.getRandom(100);
+    if (value < 25) {
+      generateMapTrade(agree, false);
+    } else if (value < 50) {
+      generateTechTrade(agree, false);
+    } else {
+      generateTechDemand(agree);
+    }
+  }
+
+  /**
    * Very basic offer by logical attitude.
    * This makes war only if power difference goes too big.
    */
@@ -296,8 +366,7 @@ public class DiplomaticTrade {
       Attitude attitude = offerPlayer.getAiAttitude();
       switch (attitude) {
         case AGGRESSIVE: {
-          // TODO fix correct offer
-          generateLogicalAttitudeOffer();
+          generateAggressiveAttitudeOffer();
           break;
         }
         case BACKSTABBING: {

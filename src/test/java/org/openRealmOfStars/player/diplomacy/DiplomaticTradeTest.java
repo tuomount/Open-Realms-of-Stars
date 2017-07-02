@@ -490,6 +490,16 @@ public class DiplomaticTradeTest {
         .getNegotiationType());
     assertEquals(NegotiationType.PEACE, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
+    map = generateMapWithPlayer(SpaceRace.TEUTHIDAES);
+    map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.MILITARISTIC);
+    trade = new DiplomaticTrade(map, 0, 1);
+    trade.getTradeableTechListForFirst();
+    trade.getTradeableTechListForSecond();
+    trade.generateFirstOffer();
+    assertEquals(NegotiationType.PEACE, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.PEACE, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
   }
 
   @Test
@@ -517,6 +527,34 @@ public class DiplomaticTradeTest {
         .getNegotiationType();
     if (type1 == type2 
         && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH)) {
+      return;
+    }
+    assertFalse(true);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAggressiveOffer() {
+    StarMap map = generateMapWithPlayer(SpaceRace.SPORKS,200);
+    map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    trade.getTradeableTechListForFirst();
+    trade.getTradeableTechListForSecond();
+    trade.generateLogicalAttitudeOffer();
+    assertEquals(NegotiationType.WAR, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+    map = generateMapWithPlayer(SpaceRace.SPORKS,0);
+    map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
+    trade = new DiplomaticTrade(map, 0, 1);
+    trade.getTradeableTechListForFirst();
+    trade.getTradeableTechListForSecond();
+    trade.generateLogicalAttitudeOffer();
+    NegotiationType type1 = trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType();
+    if (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
+        || type1 == NegotiationType.CREDIT) {
       return;
     }
     assertFalse(true);

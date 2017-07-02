@@ -98,6 +98,37 @@ public class FleetListTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFleetOnList() {
+    Fleet fleet1 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet1.getName()).thenReturn("Fleet #1");
+    Fleet fleet2 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet2.getName()).thenReturn("Fleet #2");
+    Fleet fleet3 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet3.getName()).thenReturn("Fleet #3");
+    FleetList fleets = new FleetList();
+    assertEquals(false, fleets.isFleetOnList(fleet1));
+    assertEquals(false, fleets.isFleetOnList(fleet2));
+    assertEquals(false, fleets.isFleetOnList(fleet3));
+    fleets.add(fleet1);
+    assertEquals(true, fleets.isFleetOnList(fleet1));
+    assertEquals(false, fleets.isFleetOnList(fleet2));
+    assertEquals(false, fleets.isFleetOnList(fleet3));
+    fleets.add(fleet2);
+    assertEquals(true, fleets.isFleetOnList(fleet1));
+    assertEquals(true, fleets.isFleetOnList(fleet2));
+    assertEquals(false, fleets.isFleetOnList(fleet3));
+    fleets.add(fleet3);
+    assertEquals(true, fleets.isFleetOnList(fleet1));
+    assertEquals(true, fleets.isFleetOnList(fleet2));
+    assertEquals(true, fleets.isFleetOnList(fleet3));
+    fleets.remove(1);
+    assertEquals(true, fleets.isFleetOnList(fleet1));
+    assertEquals(false, fleets.isFleetOnList(fleet2));
+    assertEquals(true, fleets.isFleetOnList(fleet3));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testFleetListUniqueNameGeneration() {
     ShipHull hull = Mockito.mock(ShipHull.class);
     Mockito.when(hull.getName()).thenReturn("Test hull");

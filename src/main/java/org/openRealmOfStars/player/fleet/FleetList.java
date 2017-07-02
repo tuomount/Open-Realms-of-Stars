@@ -305,4 +305,18 @@ public class FleetList {
     }
     return null;
   }
+
+  /**
+   * Method to check if certain fleet is in the list
+   * @param search Fleet to search
+   * @return True if fleet is found, otherwise false
+   */
+  public boolean isFleetOnList(final Fleet search) {
+    for (Fleet fleet : fleetList) {
+      if (fleet == search) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

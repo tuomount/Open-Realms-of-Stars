@@ -188,6 +188,32 @@ public class SpaceRaceUtilityTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandomNameGeneratorTechtidae() {
+    SpaceRace race = SpaceRace.TEUTHIDAES;
+    assertEquals(Attitude.MILITARISTIC, race.getAttitude());
+    for (int i=0;i<100;i++) {
+      String tmp = SpaceRaceUtility.getRandomName(race);
+      String[] parts = tmp.split(" ");
+      if (parts.length == 2) {
+        assertEquals("Teuthidae", parts[0]);
+        assertFalse(!parts[1].equals("Empire") && !parts[1].equals("Federation")
+            && !parts[1].equals("Republic") && !parts[1].equals("Alliance")
+            && !parts[1].equals("Horde") && !parts[1].equals("Democracy")
+            && !parts[1].equals("Hegemony") && !parts[1].equals("Hiearchy"));
+          
+      } else if (parts.length == 3) {
+        assertFalse(!parts[0].equals("Empire") && !parts[0].equals("Federation")
+            && !parts[0].equals("Republic") && !parts[0].equals("Alliance")
+            && !parts[0].equals("Horde") && !parts[0].equals("Democracy")
+            && !parts[0].equals("Hegemony") && !parts[0].equals("Hiearchy"));
+        assertEquals("of", parts[1]);
+        assertEquals("Teuthidaes", parts[2]);
+      }
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testFullDescriptions() {
     String[] expectedResult = new String[SpaceRace.values().length];
     expectedResult[0] = "Humans\n"+

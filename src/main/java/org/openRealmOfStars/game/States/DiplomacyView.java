@@ -74,6 +74,24 @@ public class DiplomacyView extends BlackPanel {
   */
   private static final long serialVersionUID = 1L;
   /**
+   * Human player starts diplomacy view in regular way
+   */
+  public static final int HUMAN_REGULAR = 0;
+  /**
+   * Human player starts diplomacy view so that AI's ship
+   * has crossed the border
+   */
+  public static final int HUMAN_BORDER_CROSS = 1;
+  /**
+   * AI player starts diplomacy view in regular way
+   */
+  public static final int AI_REGULAR = 2;
+  /**
+   * AI player starts diplomacy view so that Human's ship
+   * has crossed the border
+   */
+  public static final int AI_BORDER_CROSS = 3;
+  /**
    * Player Info for human
    */
   private PlayerInfo human;
@@ -163,10 +181,15 @@ public class DiplomacyView extends BlackPanel {
    * @param info1 Human player PlayerInfo
    * @param info2 AI player PlayerInfo
    * @param map StarMap
+   * @param startType There are four choices:
+   *        HUMAN_REGULAR
+   *        AI_REGULAR
+   *        HUMAN_BORDER_CROSS
+   *        AI_BORDER_CROSS
    * @param listener ActionListener
    */
   public DiplomacyView(final PlayerInfo info1, final PlayerInfo info2,
-      final StarMap map, final ActionListener listener) {
+      final StarMap map, final int startType, final ActionListener listener) {
     this.setLayout(new BorderLayout());
     human = info1;
     ai = info2;
@@ -232,7 +255,7 @@ public class DiplomacyView extends BlackPanel {
     infoText = new InfoTextArea();
     infoText.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(infoText);
-    SpeechLine[] lines = createOfferLines();
+    SpeechLine[] lines = createOfferLines(startType);
     humanLines = new JList<>(lines);
     humanLines.setCellRenderer(new SpeechLineRenderer());
     humanLines.setBackground(Color.BLACK);
@@ -300,31 +323,45 @@ public class DiplomacyView extends BlackPanel {
   /**
    * Create regular offer lines according the current diplomacy relationship
    * between AI and human player.
+   * @param startType There are four choices:
+   *        HUMAN_REGULAR
+   *        AI_REGULAR
+   *        HUMAN_BORDER_CROSS
+   *        AI_BORDER_CROSS
    * @return SpeechLines for human players
    */
-  private SpeechLine[] createOfferLines() {
+  private SpeechLine[] createOfferLines(final int startType) {
     int humanIndex = starMap.getPlayerList().getIndex(human);
     ArrayList<SpeechLine> speechLines = new ArrayList<>();
-    speechLines.add(SpeechFactory.createLine(SpeechType.TRADE,
-        human.getRace()));
-    speechLines.add(SpeechFactory.createLine(SpeechType.DEMAND,
-        human.getRace()));
-    if (ai.getDiplomacy().isTradeAlliance(humanIndex)) {
-      speechLines.add(SpeechFactory.createLine(SpeechType.ALLIANCE,
+    if (startType == AI_REGULAR) {
+      speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE,
           human.getRace()));
-    } else if (ai.getDiplomacy().isAlliance(humanIndex)) {
-      speechLines.add(SpeechFactory.createLine(SpeechType.TRADE_ALLIANCE,
+      speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_ANGER,
+          human.getRace()));
+      speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
           human.getRace()));
     } else {
-      speechLines.add(SpeechFactory.createLine(SpeechType.TRADE_ALLIANCE,
+      speechLines.add(SpeechFactory.createLine(SpeechType.TRADE,
           human.getRace()));
-    }
-    if (!ai.getDiplomacy().isWar(humanIndex)) {
-      speechLines.add(SpeechFactory.createLine(SpeechType.MAKE_WAR,
+      speechLines.add(SpeechFactory.createLine(SpeechType.DEMAND,
           human.getRace()));
-    } else {
-      speechLines.add(SpeechFactory.createLine(SpeechType.PEACE_OFFER,
-          human.getRace()));
+      if (ai.getDiplomacy().isTradeAlliance(humanIndex)) {
+        speechLines.add(SpeechFactory.createLine(SpeechType.ALLIANCE,
+            human.getRace()));
+      } else if (ai.getDiplomacy().isAlliance(humanIndex)) {
+        speechLines.add(SpeechFactory.createLine(SpeechType.TRADE_ALLIANCE,
+            human.getRace()));
+      } else {
+        speechLines.add(SpeechFactory.createLine(SpeechType.TRADE_ALLIANCE,
+            human.getRace()));
+      }
+      if (!ai.getDiplomacy().isWar(humanIndex)) {
+        speechLines.add(SpeechFactory.createLine(SpeechType.MAKE_WAR,
+            human.getRace()));
+      } else {
+        speechLines.add(SpeechFactory.createLine(SpeechType.PEACE_OFFER,
+            human.getRace()));
+      }
     }
     SpeechLine[] lines = new SpeechLine[speechLines.size()];
     for (int i = 0; i < lines.length; i++) {
@@ -487,7 +524,7 @@ public class DiplomacyView extends BlackPanel {
     humanPlanetListOffer.setListData(trade.getTradeablePlanetListForFirst());
     humanCreditOffer.setText("0 Credits");
 
-    humanLines.setListData(createOfferLines());
+    humanLines.setListData(createOfferLines(HUMAN_REGULAR));
 
     aiTechListOffer.setListData(trade.getTradeableTechListForFirst());
     aiMapOffer.setSelected(false);

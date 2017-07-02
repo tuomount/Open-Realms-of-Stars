@@ -179,7 +179,7 @@ public class BattleView extends BlackPanel {
     InfoPanel bottom = new InfoPanel();
     bottom.setTitle(null);
     bottom.setLayout(new BoxLayout(bottom, BoxLayout.X_AXIS));
-    endButton = new SpaceButton("End round",
+    endButton = new SpaceButton("End round 0  ",
         GameCommands.COMMAND_END_BATTLE_ROUND);
     endButton.addActionListener(listener);
     bottom.add(endButton);
@@ -218,6 +218,7 @@ public class BattleView extends BlackPanel {
       }
     }
     logArea.setText(sb.toString());
+    endButton.setText("End round " + combat.getTotalRounds());
     this.repaint();
   }
 

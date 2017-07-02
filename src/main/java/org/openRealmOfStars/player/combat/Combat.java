@@ -604,7 +604,7 @@ public boolean launchIntercept(final int distance,
         damaged = true;
       }
     }
-    if (roundsNoDamge >= 100 && !damaged) {
+    if (roundsNoDamge >= 15 && !damaged) {
       winner = null;
       // Combat seems to be draw
       return true;

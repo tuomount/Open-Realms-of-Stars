@@ -423,6 +423,56 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Offer by expansionist attitude.
+   * Tries to focus trading or buying the map
+   */
+  public void generateExpansionistAttitudeOffer() {
+    PlayerInfo info = starMap.getPlayerByIndex(first);
+    PlayerInfo agree = starMap.getPlayerByIndex(second);
+    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+        second);
+    if (power > 60 && info.getDiplomacy().getDiplomaticRelation(second)
+        .isEmpty()) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (power > 150 && info.getDiplomacy().getDiplomaticRelation(second)
+        .equals(Diplomacy.TRADE_ALLIANCE)) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (power > 300) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (info.getDiplomacy().getLiking(second) == Diplomacy.LIKE) {
+      if (DiceGenerator.getRandom(100) < 25) {
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    } else if (info.getDiplomacy().getLiking(second) == Diplomacy.FRIENDS) {
+      int value = DiceGenerator.getRandom(100);
+      if (value < 25) {
+        if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.TRADE_ALLIANCE)) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    }
+    int value = DiceGenerator.getRandom(100);
+    if (value < 40) {
+      generateMapTrade(agree, false);
+    } else if (value < 80) {
+      generateMapTrade(agree, true);
+    } else {
+      generateTechTrade(agree, false);
+    }
+  }
+
+  /**
    * Very basic offer by logical attitude.
    * This makes war only if power difference goes too big.
    */
@@ -492,13 +542,11 @@ public class DiplomaticTrade {
           break;
         }
         case DIPLOMATIC: {
-          // TODO fix correct offer
-          generateLogicalAttitudeOffer();
+          generateDiplomaticAttitudeOffer();
           break;
         }
         case EXPANSIONIST: {
-          // TODO fix correct offer
-          generateLogicalAttitudeOffer();
+          generateExpansionistAttitudeOffer();
           break;
         }
         case LOGICAL: {

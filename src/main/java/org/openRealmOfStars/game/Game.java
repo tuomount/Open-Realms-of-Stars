@@ -394,7 +394,7 @@ public class Game extends JFrame implements ActionListener {
       }
     }
     diplomacyView = new DiplomacyView(starMap.getPlayerByIndex(0), info,
-        starMap, DiplomacyView.HUMAN_REGULAR, this);
+        starMap, DiplomacyView.AI_REGULAR, this);
     this.updateDisplay(diplomacyView);
   }
 

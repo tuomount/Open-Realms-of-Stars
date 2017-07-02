@@ -97,12 +97,7 @@ public class NegotiationList {
    * @return True if planet is being offered
    */
   public boolean isPlanetInOffer() {
-    for (NegotiationOffer offer : list) {
-      if (offer.getNegotiationType() == NegotiationType.PLANET) {
-        return true;
-      }
-    }
-    return false;
+    return isTypeInOffer(NegotiationType.PLANET);
   }
 
   /**
@@ -110,8 +105,25 @@ public class NegotiationList {
    * @return True if peace is being offered
    */
   public boolean isPeaceInOffer() {
+    return isTypeInOffer(NegotiationType.PEACE);
+  }
+
+  /**
+   * Is war in Offer
+   * @return True if war is being offered
+   */
+  public boolean isWarInOffer() {
+    return isTypeInOffer(NegotiationType.WAR);
+  }
+
+  /**
+   * Is certain negotiation type in Offer
+   * @param type NegotiationType
+   * @return True if type is being offered
+   */
+  public boolean isTypeInOffer(final NegotiationType type) {
     for (NegotiationOffer offer : list) {
-      if (offer.getNegotiationType() == NegotiationType.PEACE) {
+      if (offer.getNegotiationType() == type) {
         return true;
       }
     }
@@ -123,12 +135,7 @@ public class NegotiationList {
    * @return True if fleet is being offered
    */
   public boolean isFleetInOffer() {
-    for (NegotiationOffer offer : list) {
-      if (offer.getNegotiationType() == NegotiationType.FLEET) {
-        return true;
-      }
-    }
-    return false;
+    return isTypeInOffer(NegotiationType.FLEET);
   }
 
 }

@@ -6,6 +6,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationList;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
+import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
@@ -119,6 +120,29 @@ public class DiplomaticTrade {
     if (second >= max || second < 0) {
       throw new IllegalArgumentException("Second player index out of bounds!");
     }
+  }
+
+  /**
+   * Gets the speechtype by current offer
+   * @return SpeechType
+   */
+  public SpeechType getSpeechTypeByOffer() {
+    if (firstOffer.isPeaceInOffer()) {
+      return SpeechType.PEACE_OFFER;
+    }
+    if (firstOffer.isWarInOffer()) {
+      return SpeechType.MAKE_WAR;
+    }
+    if (firstOffer.isTypeInOffer(NegotiationType.ALLIANCE)) {
+      return SpeechType.ALLIANCE;
+    }
+    if (firstOffer.isTypeInOffer(NegotiationType.TRADE_ALLIANCE)) {
+      return SpeechType.TRADE_ALLIANCE;
+    }
+    if (firstOffer.getSize() > 0 && secondOffer.getSize() == 0) {
+      return SpeechType.DEMAND;
+    }
+    return SpeechType.TRADE;
   }
 
   /**

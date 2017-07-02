@@ -67,6 +67,9 @@ public class NegotiationListTest {
     NegotiationOffer offer3 = Mockito.mock(NegotiationOffer.class);
     Mockito.when(offer3.getOfferValue(SpaceRace.HUMAN)).thenReturn(25);
     Mockito.when(offer3.getNegotiationType()).thenReturn(NegotiationType.PEACE);
+    NegotiationOffer offer4 = Mockito.mock(NegotiationOffer.class);
+    Mockito.when(offer4.getOfferValue(SpaceRace.HUMAN)).thenReturn(-30);
+    Mockito.when(offer4.getNegotiationType()).thenReturn(NegotiationType.WAR);
     
     NegotiationList list = new NegotiationList();
     assertEquals(false, list.isPlanetInOffer());
@@ -77,6 +80,7 @@ public class NegotiationListTest {
     assertEquals(true, list.isPlanetInOffer());
     assertEquals(false, list.isFleetInOffer());
     assertEquals(false, list.isPeaceInOffer());
+    assertEquals(false, list.isWarInOffer());
     list.add(offer2);
     assertEquals(2, list.getSize());
     assertEquals(offer, list.getByIndex(0));
@@ -85,6 +89,7 @@ public class NegotiationListTest {
     assertEquals(true, list.isPlanetInOffer());
     assertEquals(true, list.isFleetInOffer());
     assertEquals(false, list.isPeaceInOffer());
+    assertEquals(false, list.isWarInOffer());
     list.remove(0);
     assertEquals(1, list.getSize());
     assertEquals(offer2, list.getByIndex(0));
@@ -92,11 +97,19 @@ public class NegotiationListTest {
     assertEquals(false, list.isPlanetInOffer());
     assertEquals(true, list.isFleetInOffer());
     assertEquals(false, list.isPeaceInOffer());
+    assertEquals(false, list.isWarInOffer());
     list.add(offer3);
     assertEquals(32, list.getOfferValue(SpaceRace.HUMAN));
     assertEquals(false, list.isPlanetInOffer());
     assertEquals(true, list.isFleetInOffer());
     assertEquals(true, list.isPeaceInOffer());
+    assertEquals(false, list.isWarInOffer());
+    list.add(offer4);
+    assertEquals(2, list.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(false, list.isPlanetInOffer());
+    assertEquals(true, list.isFleetInOffer());
+    assertEquals(true, list.isPeaceInOffer());
+    assertEquals(true, list.isWarInOffer());
   }
 
 }

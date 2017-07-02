@@ -317,7 +317,12 @@ public class DiplomacyView extends BlackPanel {
     bottomPanel.add(btn, BorderLayout.CENTER);
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
-    updatePanel(getGreetLine());
+    if (startType == AI_REGULAR) {
+      trade.generateOffer();
+      updatePanel(trade.getSpeechTypeByOffer());
+    } else {
+      updatePanel(getGreetLine());
+    }
   }
 
   /**
@@ -334,6 +339,8 @@ public class DiplomacyView extends BlackPanel {
     int humanIndex = starMap.getPlayerList().getIndex(human);
     ArrayList<SpeechLine> speechLines = new ArrayList<>();
     if (startType == AI_REGULAR) {
+      speechLines.add(SpeechFactory.createLine(SpeechType.AGREE,
+          human.getRace()));
       speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE,
           human.getRace()));
       speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_ANGER,

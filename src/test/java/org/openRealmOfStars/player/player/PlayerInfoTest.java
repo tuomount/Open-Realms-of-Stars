@@ -285,6 +285,44 @@ public class PlayerInfoTest {
     }
 
     /**
+     * input : SpaceRace.TEUTHIDAE output : PlayerInfo's techList ={ one random
+     * weapon in Combat TechType level 1, one random shield or armor in Defense
+     * Type level 1, Hulltech level 1 Colony, Hulltech level 1 Scout Mk1,
+     * PropulsionTech level 1 Ion drive Mk1, PropulsionTech level 1 Fission
+     * source Mk1 }, PlayerInfo's ShipStatList = { scout have random weapon,
+     * random armor, Scout Mk1 Hull, Ion drive Mk1, Fission source Mk1 colony
+     * have Colony Hull, Ion drive Mk1, Fission source Mk1 } purpose : test
+     * PlayerInfo constructor TEUTHIDAE
+     */
+    @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
+    public void testPlayerInfoTeuthidae() {
+        PlayerInfo teuthidae = new PlayerInfo(SpaceRace.TEUTHIDAES);
+        TechList techList = teuthidae.getTechList();
+        Tech[] tech = techList.getList();
+        ShipStat[] statList = teuthidae.getShipStatList();
+
+        assertEquals(TechType.Combat, tech[0].getType());
+        assertEquals(1, tech[0].getLevel());
+        assertEquals(TechType.Defense, tech[1].getType());
+        assertEquals(1, tech[1].getLevel());
+        assertEquals("Colony", tech[2].getName());
+        assertEquals(1, tech[2].getLevel());
+        assertEquals("Scout Mk1", tech[3].getName());
+        assertEquals(1, tech[3].getLevel());
+        assertEquals("Ion drive Mk1", tech[4].getName());
+        assertEquals(1, tech[4].getLevel());
+        assertEquals("Fission source Mk1", tech[5].getName());
+        assertEquals(1, tech[5].getLevel());
+
+        ShipStat expectedStat = new ShipStat(ShipGenerator
+            .createScout(teuthidae));
+        assertEquals(expectedStat.toString(), statList[0].toString());
+        expectedStat = new ShipStat(ShipGenerator.createColony(teuthidae, false));
+        assertEquals(expectedStat.toString(), statList[1].toString());
+    }
+
+    /**
      * Tests diplomacy fetching from player info.
      */
     @Test

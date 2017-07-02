@@ -417,8 +417,9 @@ public class MapPanel extends JPanel {
             && fleetMap[i + cx][j + cy] != null) {
           Fleet fleet = starMap.getFleetByFleetTileInfo(fleetMap[i + cx]
               [j + cy]);
-          if (fleet != null && info.getSectorCloakDetection(i + cx, j + cy)
-              >= fleet.getFleetCloackingValue()) {
+          if (fleet != null && (info.getSectorCloakDetection(i + cx, j + cy)
+              >= fleet.getFleetCloackingValue() 
+              || info.getFleets().isFleetOnList(fleet))) {
             BufferedImage img = ShipImages
                 .getByRace(fleetMap[i + cx][j + cy].getRace())
                 .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());

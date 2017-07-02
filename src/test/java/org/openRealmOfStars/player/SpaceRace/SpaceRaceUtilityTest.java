@@ -316,7 +316,7 @@ public class SpaceRaceUtilityTest {
           assertFalse(true);
         }
       }
-      //System.out.println(race.getFullDescription(true));
+      System.out.println(race.getFullDescription(true));
     }
   }
 

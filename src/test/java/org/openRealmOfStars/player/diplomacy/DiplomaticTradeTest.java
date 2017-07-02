@@ -540,7 +540,7 @@ public class DiplomaticTradeTest {
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
     trade.getTradeableTechListForSecond();
-    trade.generateLogicalAttitudeOffer();
+    trade.generateAggressiveAttitudeOffer();
     assertEquals(NegotiationType.WAR, trade.getFirstOffer().getByIndex(0)
         .getNegotiationType());
     assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
@@ -550,7 +550,7 @@ public class DiplomaticTradeTest {
     trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
     trade.getTradeableTechListForSecond();
-    trade.generateLogicalAttitudeOffer();
+    trade.generateAggressiveAttitudeOffer();
     NegotiationType type1 = trade.getFirstOffer().getByIndex(0)
         .getNegotiationType();
     if (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
@@ -558,6 +558,43 @@ public class DiplomaticTradeTest {
       return;
     }
     assertFalse(true);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBackstabbingOffer() {
+    StarMap map = generateMapWithPlayer(SpaceRace.SPORKS,300);
+    map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    trade.getTradeableTechListForFirst();
+    trade.getTradeableTechListForSecond();
+    trade.generateBackstabbingAttitudeOffer();
+    assertEquals(NegotiationType.WAR, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+    map = generateMapWithPlayer(SpaceRace.SPORKS,0);
+    map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
+    trade = new DiplomaticTrade(map, 0, 1);
+    trade.getTradeableTechListForFirst();
+    trade.getTradeableTechListForSecond();
+    trade.generateBackstabbingAttitudeOffer();
+    NegotiationType type1 = trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType();
+    if (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH) {
+    } else {
+      assertFalse(true);
+    }
+    map.getPlayerList().getPlayerInfoByIndex(0).getDiplomacy()
+    .getDiplomacyList(1).addBonus(DiplomacyBonusType.IN_ALLIANCE,
+            SpaceRace.SPORKS);
+    if (type1 == NegotiationType.MAP
+        || type1 == NegotiationType.TECH
+        || type1 == NegotiationType.CREDIT
+        || type1 == NegotiationType.WAR) {
+    } else {
+      assertFalse(true);
+    }
   }
 
 }

@@ -305,6 +305,68 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Offer by backstabbing attitude.
+   * This makes war and demands now and then...
+   */
+  public void generateBackstabbingAttitudeOffer() {
+    PlayerInfo info = starMap.getPlayerByIndex(first);
+    PlayerInfo agree = starMap.getPlayerByIndex(second);
+    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+        second);
+    if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second)
+        .isEmpty()) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (power > 200 && info.getDiplomacy().getDiplomaticRelation(second)
+        .equals(Diplomacy.TRADE_ALLIANCE)) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (power > 300) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (info.getDiplomacy().getLiking(second) == Diplomacy.LIKE) {
+      if (DiceGenerator.getRandom(100) < 25) {
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    } else if (info.getDiplomacy().getLiking(second) == Diplomacy.FRIENDS) {
+      int value = DiceGenerator.getRandom(100);
+      if (value < 25) {
+        if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.TRADE_ALLIANCE)) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    }
+    if (info.getDiplomacy().getDiplomaticRelation(second)
+        .equals(Diplomacy.TRADE_ALLIANCE)
+        || info.getDiplomacy().getDiplomaticRelation(second)
+        .equals(Diplomacy.ALLIANCE)) {
+      int value = DiceGenerator.getRandom(100);
+      if (value < 5) {
+        generateEqualTrade(NegotiationType.WAR);
+      } else if (value < 10) {
+        generateTechDemand(agree);
+      }
+    }
+    int value = DiceGenerator.getRandom(100);
+    if (value < 40) {
+      generateMapTrade(agree, false);
+    } else {
+      generateTechTrade(agree, false);
+    }
+  }
+  /**
+   * Generate diplomatic trade offer between two players
+   */
+
+  /**
    * Very basic offer by logical attitude.
    * This makes war only if power difference goes too big.
    */
@@ -370,8 +432,7 @@ public class DiplomaticTrade {
           break;
         }
         case BACKSTABBING: {
-          // TODO fix correct offer
-          generateLogicalAttitudeOffer();
+          generateBackstabbingAttitudeOffer();
           break;
         }
         case DIPLOMATIC: {

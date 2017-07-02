@@ -148,6 +148,20 @@ public class DiplomaticTrade {
     }
   }
   /**
+   * Generate credit gift
+   * @param giver player who is giving the gift
+   */
+  protected void generateGift(final PlayerInfo giver) {
+    firstOffer = new NegotiationList();
+    int credit = giver.getTotalCredits();
+    if (credit > 15) {
+      credit = 15;
+    }
+    secondOffer = new NegotiationList();
+    secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+          new Integer(credit)));
+  }
+  /**
    * Generate tech demand or money demand
    * @param agreePlayer Who is need to agree with trade
    */
@@ -365,6 +379,48 @@ public class DiplomaticTrade {
   /**
    * Generate diplomatic trade offer between two players
    */
+
+  /**
+   * Offer by diplomatic attitude.
+   * This makes war only which it does not like. Might
+   * give a gift too sometimes.
+   */
+  public void generateDiplomaticAttitudeOffer() {
+    PlayerInfo info = starMap.getPlayerByIndex(first);
+    PlayerInfo agree = starMap.getPlayerByIndex(second);
+    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+        second);
+    if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second)
+        .isEmpty()) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (info.getDiplomacy().getLiking(second) == Diplomacy.LIKE) {
+      if (DiceGenerator.getRandom(100) < 50) {
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    } else if (info.getDiplomacy().getLiking(second) == Diplomacy.FRIENDS) {
+      int value = DiceGenerator.getRandom(100);
+      if (value < 50) {
+        if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.TRADE_ALLIANCE)) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    }
+    int value = DiceGenerator.getRandom(100);
+    if (value < 45) {
+      generateMapTrade(agree, false);
+    } else if (value < 90) {
+      generateTechTrade(agree, false);
+    } else {
+      generateGift(info);
+    }
+  }
 
   /**
    * Very basic offer by logical attitude.

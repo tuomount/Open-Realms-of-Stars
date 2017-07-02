@@ -60,7 +60,7 @@ public class NegotiationList {
   /**
    * Get single negotiation offer from the list
    * @param index for the list
-   * @return NegotiationOffer
+   * @return NegotiationOffer or null
    */
   public NegotiationOffer getByIndex(final int index) {
     if (index > -1 && index < list.size()) {

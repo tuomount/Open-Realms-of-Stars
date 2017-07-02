@@ -64,7 +64,7 @@ public class PlayerSetupView extends BlackPanel {
    * List of selectable races
    */
   private static final String[] RACE_SELECTION = {"Human", "Mechion", "Spork",
-      "Greyan", "Centaur", "Mothoid" };
+      "Greyan", "Centaur", "Mothoid", "Teuthidae" };
 
   /**
    * ComboBox on galaxy size

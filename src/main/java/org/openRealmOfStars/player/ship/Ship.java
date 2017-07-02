@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -658,6 +659,9 @@ private int increaseInitivativeByEmptySpace() {
           && comp.getCloaking() > cloak) {
           cloak = comp.getCloaking();
       }
+    }
+    if (hull.getRace() == SpaceRace.TEUTHIDAES) {
+      cloak = cloak + 10;
     }
     return cloak;
   }

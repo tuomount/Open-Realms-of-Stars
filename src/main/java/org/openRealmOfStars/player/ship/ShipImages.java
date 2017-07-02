@@ -58,6 +58,11 @@ public final class ShipImages {
   private static ShipImage mothoids;
 
   /**
+   * Teuthidaes ships
+   */
+  private static ShipImage teuthidaes;
+
+  /**
    * Hiding the constructor
    */
   private ShipImages() {
@@ -74,6 +79,7 @@ public final class ShipImages {
     sporks = new ShipImage("sporkships.png");
     greyans = new ShipImage("greyanships.png");
     mothoids = new ShipImage("mothoidships.png");
+    teuthidaes = new ShipImage("teuthidaeships.png");
   }
 
   /**
@@ -143,6 +149,17 @@ public final class ShipImages {
   }
 
   /**
+   * Get Teuthidaes ship images
+   * @return Teuthidaes ship images
+   */
+  public static ShipImage teuthidaes() {
+    if (teuthidaes == null) {
+      initImages();
+    }
+    return teuthidaes;
+  }
+
+  /**
    * Get ship images for certain race
    * @param race Space race which images to get
    * @return ShipImage
@@ -161,6 +178,8 @@ public final class ShipImages {
       return sporks();
     case MOTHOIDS:
       return mothoids();
+    case TEUTHIDAES:
+      return teuthidaes();
     default:
       return humans();
     }

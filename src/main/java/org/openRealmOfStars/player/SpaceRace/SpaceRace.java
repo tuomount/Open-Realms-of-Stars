@@ -50,9 +50,9 @@ public enum SpaceRace {
   GREYANS(3, "Greyans", "Greyan", "Humanoid creatures with grey skin and"
           + " big eyes. Greyan are excellent researchers."),
   /**
-   * Bipedal humanoid creatures which are big, about 5 meters tall. Due their
-   * enormous size their space ships are must more rigid. Centaurs need more
-   * food to survive.
+   * Quadrupedal humanoid creatures which are big, about 5 meters tall. Due
+   * their enormous size their space ships are must more rigid. Centaurs need
+   * more food to survive.
    */
   CENTAURS(4, "Centaurs", "Centaur", "Quadrupedal humanoid creatures which are"
           + " big, about 5 meters tall. Due their enormous size their space"
@@ -63,7 +63,16 @@ public enum SpaceRace {
   MOTHOIDS(5, "Mothoids", "Mothoid", "Mothoids are sentient insects with"
       + " hivemind. They are fast breeding race. Their song is hypnotic "
       + "so cultural bonus is granted. Mothoids exo-skeleton is weak and "
-      + "therefore get negative bonus on mining and troop power.");
+      + "therefore get negative bonus on mining and troop power."),
+  /**
+   * Teuthidaes are octopus like creatures.
+   * They are scientific and military focused race. Their ships have built-in
+   * cloaking devices.
+   */
+  TEUTHIDAES(6, "Teuthidaes", "Teuthidae", "Teuthidaes are octopus like "
+      + "creatures. They are scientific and military focused race. Their "
+      + "ships have built-in cloaking devices.");
+
 
   /**
    * Create space race
@@ -127,6 +136,8 @@ public enum SpaceRace {
       return 100;
     case MOTHOIDS:
       return 100;
+    case TEUTHIDAES:
+      return 150;
     default:
       return 0;
     }
@@ -152,6 +163,8 @@ public enum SpaceRace {
         return Attitude.DIPLOMATIC;
       case MOTHOIDS:
         return Attitude.EXPANSIONIST;
+      case TEUTHIDAES:
+        return Attitude.MILITARISTIC;
       default:
         return Attitude.PEACEFUL;
     }
@@ -175,6 +188,8 @@ public enum SpaceRace {
       return 3;
     case MOTHOIDS:
       return 6;
+    case TEUTHIDAES:
+      return 4;
     default:
       return -1;
     }
@@ -198,6 +213,8 @@ public enum SpaceRace {
       return GuiStatics.IMAGE_CENTAUR_RACE;
     case MOTHOIDS:
       return GuiStatics.IMAGE_MOTHOID_RACE;
+    case TEUTHIDAES:
+      return GuiStatics.IMAGE_TEUTHIDAE_RACE;
     default:
       return GuiStatics.IMAGE_CENTAUR_RACE;
     }
@@ -242,6 +259,8 @@ public enum SpaceRace {
       return 100;
     case MOTHOIDS:
       return 50;
+    case TEUTHIDAES:
+      return 100;
     default:
       return 0;
     }
@@ -265,6 +284,8 @@ public enum SpaceRace {
       return 100;
     case MOTHOIDS:
       return 150;
+    case TEUTHIDAES:
+      return 100;
     default:
       return 0;
     }
@@ -288,6 +309,8 @@ public enum SpaceRace {
       return 14;
     case MOTHOIDS:
       return 9;
+    case TEUTHIDAES:
+      return 10;
     default:
       return 0;
     }
@@ -310,6 +333,8 @@ public enum SpaceRace {
     case CENTAURS:
       return 100;
     case MOTHOIDS:
+      return 100;
+    case TEUTHIDAES:
       return 100;
     default:
       return 0;
@@ -334,6 +359,8 @@ public enum SpaceRace {
       return 50;
     case MOTHOIDS:
       return 150;
+    case TEUTHIDAES:
+      return 100;
     default:
       return 0;
     }
@@ -357,6 +384,8 @@ public enum SpaceRace {
       return 125;
     case MOTHOIDS:
       return 100;
+    case TEUTHIDAES:
+      return 125;
     default:
       return 0;
     }
@@ -380,6 +409,8 @@ public enum SpaceRace {
       return -1;
     case MOTHOIDS:
       return 0;
+    case TEUTHIDAES:
+      return -2;
     default:
       return 0;
     }
@@ -426,6 +457,8 @@ public enum SpaceRace {
       return 18;
     case MOTHOIDS:
       return 12;
+    case TEUTHIDAES:
+      return 13;
     default:
       return 15;
     }
@@ -449,6 +482,8 @@ public enum SpaceRace {
       return 30;
     case MOTHOIDS:
       return 32;
+    case TEUTHIDAES:
+      return 35;
     default:
       return 30;
     }
@@ -471,6 +506,8 @@ public enum SpaceRace {
     case CENTAURS:
       return 2;
     case MOTHOIDS:
+      return 3;
+    case TEUTHIDAES:
       return 3;
     default:
       return 3;
@@ -495,6 +532,8 @@ public enum SpaceRace {
     case CENTAURS:
       return 1;
     case MOTHOIDS:
+      return 2;
+    case TEUTHIDAES:
       return 2;
     default:
       return 1;
@@ -581,6 +620,8 @@ public enum SpaceRace {
       sb.append("Electronics and propulsion tech is hight at start");
     } else if (this == MOTHOIDS) {
       sb.append("No defense tech but one Planetary improvement tech at start");
+    } else if (this == SpaceRace.TEUTHIDAES) {
+      sb.append("Each ship has built-in cloaking device");
     } else {
       sb.append("None");
     }

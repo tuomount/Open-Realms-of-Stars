@@ -81,6 +81,8 @@ public final class SpeechFactory {
           "We come in peace!");
       case SPORKS: return new SpeechLine(type,
           "Peace or war, it's up to you!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "We appear on peace to you...");
       default: return null;
     }
   }
@@ -105,6 +107,8 @@ public final class SpeechFactory {
           "Our friend! We are ready to talk with you!");
       case SPORKS: return new SpeechLine(type,
           "Ah my trustful friend. Let's talk!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "My friend, let's shake tentacles!");
       default: return null;
     }
   }
@@ -129,6 +133,8 @@ public final class SpeechFactory {
           "We like to meet with you!");
       case SPORKS: return new SpeechLine(type,
           "Ah the one I like to do business.");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Nice to appear to you...");
       default: return null;
     }
   }
@@ -153,6 +159,8 @@ public final class SpeechFactory {
           "We are watching you carefully!");
       case SPORKS: return new SpeechLine(type,
           "Oh, it's you. Crew, be ready to rise shields!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Hmm, it's you mud dirt...");
       default: return null;
     }
   }
@@ -177,6 +185,8 @@ public final class SpeechFactory {
           "We hate meetings with you but let's see your offer!");
       case SPORKS: return new SpeechLine(type,
           "I am glad to see you when my targeting system is locked on you!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Ah my nemesis...");
       default: return null;
     }
   }
@@ -196,11 +206,13 @@ public final class SpeechFactory {
       case HUMAN: return new SpeechLine(type,
           "This is take it or leave it deal!");
       case MECHIONS: return new SpeechLine(type,
-          "Negative! Initializing war protocol!");
+          "Accept this OR initialize war!");
       case MOTHOIDS: return new SpeechLine(type,
-          "We are now being insulted! We will kill all your kind!");
+          "We demand you to accept this!");
       case SPORKS: return new SpeechLine(type,
-          "What is this? You want some war! You just got one!");
+          "You take this deal or it war!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Please take this deal or suffer!");
       default: return null;
     }
   }
@@ -225,6 +237,8 @@ public final class SpeechFactory {
           "We offer you this and you accept it?");
       case SPORKS: return new SpeechLine(type,
           "You either take this with good or bad!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "You will pay for your insults!");
       default: return null;
     }
   }
@@ -249,6 +263,8 @@ public final class SpeechFactory {
           "We feel insulted about this!");
       case SPORKS: return new SpeechLine(type,
           "You call this a deal? Go away!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Your offer repulses me.");
       default: return null;
     }
   }
@@ -273,6 +289,8 @@ public final class SpeechFactory {
           "We cannot accept this!");
       case SPORKS: return new SpeechLine(type,
           "No deal!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Offer does not please me.");
       default: return null;
     }
   }
@@ -297,6 +315,8 @@ public final class SpeechFactory {
           "We will kill all your kind!");
       case SPORKS: return new SpeechLine(type,
           "Shields up! Ready to fire!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Prepare to die!");
       default: return null;
     }
   }
@@ -321,6 +341,8 @@ public final class SpeechFactory {
           "We offer you trade alliance!");
       case SPORKS: return new SpeechLine(type,
           "Let's start non military alliance!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Let's start a trade union!");
       default: return null;
     }
   }
@@ -345,6 +367,8 @@ public final class SpeechFactory {
           "Join your mind with ours!");
       case SPORKS: return new SpeechLine(type,
           "Join my alliance! What do you say?");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Join my side to alliance!");
       default: return null;
     }
   }
@@ -369,6 +393,8 @@ public final class SpeechFactory {
           "We accept your offer!");
       case SPORKS: return new SpeechLine(type,
           "Deal!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Excellent!");
       default: return null;
     }
   }
@@ -393,6 +419,8 @@ public final class SpeechFactory {
           "We offer your kind this!");
       case SPORKS: return new SpeechLine(type,
           "What you say about this?");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "This is our fair trade?");
       default: return null;
     }
   }
@@ -417,6 +445,8 @@ public final class SpeechFactory {
           "We offer your kind peace!");
       case SPORKS: return new SpeechLine(type,
           "What you say about peace?");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Are you ready for peace?");
       default: return null;
     }
   }

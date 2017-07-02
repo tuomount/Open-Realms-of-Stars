@@ -524,6 +524,12 @@ public final class GuiStatics {
       .loadImage(Tiles.class.getResource("/resources/images/thumb2.png"));
 
   /**
+   * Teuthidae race selection image
+   */
+  public static final BufferedImage IMAGE_TEUTHIDAE_RACE = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/teuthidae_race.png"));
+  /**
    * Mothoid race selection image
    */
   public static final BufferedImage IMAGE_MOTHOID_RACE = IOUtilities.loadImage(

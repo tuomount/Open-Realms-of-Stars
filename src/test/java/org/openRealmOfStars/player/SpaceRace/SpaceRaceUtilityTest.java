@@ -267,6 +267,20 @@ public class SpaceRaceUtilityTest {
         "* Culture: 150%\n"+
         "* Diplomacy bonus: 0\n"+
         "* Special: No defense tech but one Planetary improvement tech at start";
+    expectedResult[6] = "Teuthidaes\n"
+        + "Teuthidaes are octopus like creatures. They are "
+        + "scientific and military focused race. Their ships have built-in "
+        + "cloaking devices.\n"
+        + "* Max radiation: 4\n"
+        + "* Troop power: 10\n"
+        + "* Production: 100%\n"
+        + "* Mining: 100%\n"
+        + "* Research: 150%\n"
+        + "* Growth: 100%\n"
+        + "* Food require: 125%\n"
+        + "* Culture: 100%\n"
+        + "* Diplomacy bonus: -2\n"
+        + "* Special: Each ship has built-in cloaking device";
     for (int i = 0; i <  SpaceRace.values().length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByIndex(i);
       assertEquals(expectedResult[i],race.getFullDescription(true));
@@ -276,7 +290,7 @@ public class SpaceRaceUtilityTest {
           assertFalse(true);
         }
       }
-      //System.out.println(race.getFullDescription());
+      //System.out.println(race.getFullDescription(true));
     }
   }
 

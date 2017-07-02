@@ -72,6 +72,9 @@ public final class SpaceRaceUtility {
     if (name.equals(SpaceRace.MOTHOIDS.getNameSingle())) {
       return SpaceRace.MOTHOIDS;
     }
+    if (name.equals(SpaceRace.TEUTHIDAES.getNameSingle())) {
+      return SpaceRace.TEUTHIDAES;
+    }
     return null;
   }
 
@@ -120,7 +123,8 @@ public final class SpaceRaceUtility {
         sb.append("Alliance");
         break;
       case 4: {
-        if (race == SpaceRace.SPORKS || race == SpaceRace.MECHIONS) {
+        if (race == SpaceRace.SPORKS || race == SpaceRace.MECHIONS
+            || race == SpaceRace.TEUTHIDAES) {
           sb.append("Horde");
         } else {
           sb.append("Kingdom");
@@ -171,7 +175,8 @@ public final class SpaceRaceUtility {
         sb.append("Alliance of ");
         break;
       case 4: {
-        if (race == SpaceRace.SPORKS || race == SpaceRace.MECHIONS) {
+        if (race == SpaceRace.SPORKS || race == SpaceRace.MECHIONS
+            || race == SpaceRace.TEUTHIDAES) {
           sb.append("Horde of ");
         } else {
           sb.append("Kingdom of ");

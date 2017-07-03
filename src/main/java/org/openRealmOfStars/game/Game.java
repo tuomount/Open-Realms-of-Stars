@@ -1077,6 +1077,7 @@ public class Game extends JFrame implements ActionListener {
       // Handle diplomacy view
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        diplomacyView.updateMeetingNumbers();
         if (previousState == GameState.AITURN) {
           changeGameState(previousState);
           return;

@@ -16,6 +16,8 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.combat.Combat;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
@@ -1646,6 +1648,40 @@ public class StarMap {
     return true;
   }
 
+  /**
+   * Check if there is fleet in coordinates. Return fleet owner's
+   * playerinfo
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @return PlayerInfo if found or null
+   */
+  public PlayerInfo isBlockedByFleet(final int x, final int y) {
+    if (fleetTiles == null) {
+      getFleetTiles();
+    }
+    if (isValidCoordinate(x, y) && fleetTiles[x][y] != null) {
+      int index = fleetTiles[x][y].getPlayerIndex();
+      return players.getPlayerInfoByIndex(index);
+    }
+    return null;
+  }
+
+  /**
+   * Check if two players in war
+   * @param first First playerinfo
+   * @param second Second playerinfo
+   * @return True if they are in war, otherwise false
+   */
+  public boolean isWarBetween(final PlayerInfo first,
+      final PlayerInfo second) {
+    int secondIndex = players.getIndex(second);
+    DiplomacyBonusList list = first.getDiplomacy().getDiplomacyList(
+        secondIndex);
+    if (list.isBonusType(DiplomacyBonusType.IN_WAR)) {
+      return true;
+    }
+    return false;
+  }
   /**
    * Get Player info by index
    * @param index Player index

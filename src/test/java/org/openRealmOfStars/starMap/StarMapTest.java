@@ -10,6 +10,9 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.diplomacy.Diplomacy;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -152,6 +155,12 @@ public class StarMapTest {
     Mockito.when(info.getMsgList()).thenReturn(msgList);
     ShipStat[] stats = new ShipStat[0];
     Mockito.when(info.getShipStatList()).thenReturn(stats);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    DiplomacyBonusList diplomacyList = Mockito.mock(DiplomacyBonusList.class);
+    Mockito.when(diplomacyList.isBonusType(DiplomacyBonusType.IN_WAR))
+        .thenReturn(false);
+    Mockito.when(diplomacy.getDiplomacyList(Mockito.anyInt())).thenReturn(diplomacyList);
+    Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
 
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info2.getRace()).thenReturn(SpaceRace.SPORKS);
@@ -215,6 +224,10 @@ public class StarMapTest {
     assertEquals(planet3, test);
     test = map.getNextPlanetForPlayer(info2, planet4, true);
     assertEquals(planet3, test);
+    assertEquals(false, map.isWarBetween(info, info2));
+    Mockito.when(diplomacyList.isBonusType(DiplomacyBonusType.IN_WAR))
+    .thenReturn(true);
+    assertEquals(true, map.isWarBetween(info, info2));
   }
 
   @Test

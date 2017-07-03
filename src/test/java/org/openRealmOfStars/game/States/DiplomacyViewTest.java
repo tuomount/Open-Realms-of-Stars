@@ -60,6 +60,19 @@ public class DiplomacyViewTest {
     assertNotEquals(null, diplomacyView);
     assertNotEquals(null, diplomacyView.getTrade());
     diplomacyView.resetChoices();
+    int humanIndex = starMap.getPlayerList().getIndex(human);
+    int aiIndex = starMap.getPlayerList().getIndex(ai);
+    int humanMeetings = human.getDiplomacy().getDiplomacyList(aiIndex)
+        .getNumberOfMeetings();
+    humanMeetings++;
+    int aiMeetings = ai.getDiplomacy().getDiplomacyList(humanIndex)
+        .getNumberOfMeetings();
+    aiMeetings++;
+    diplomacyView.updateMeetingNumbers();
+    assertEquals(humanMeetings, human.getDiplomacy().getDiplomacyList(aiIndex)
+        .getNumberOfMeetings());
+    assertEquals(aiMeetings, ai.getDiplomacy().getDiplomacyList(humanIndex)
+        .getNumberOfMeetings());
   }
 
   @Test

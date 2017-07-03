@@ -927,4 +927,17 @@ public class DiplomaticTrade {
     return secondOffer;
   }
 
+  /**
+   * Increase meeting numbers for both parties.
+   */
+  public void updateMeetingNumbers() {
+    PlayerInfo firstInfo = starMap.getPlayerByIndex(first);
+    PlayerInfo secondInfo = starMap.getPlayerByIndex(second);
+    DiplomacyBonusList diplomacyList = secondInfo.getDiplomacy()
+        .getDiplomacyList(first);
+    diplomacyList.setNumberOfMeetings(diplomacyList.getNumberOfMeetings() + 1);
+    diplomacyList = firstInfo.getDiplomacy().getDiplomacyList(second);
+    diplomacyList.setNumberOfMeetings(diplomacyList.getNumberOfMeetings() + 1);
+  }
+
 }

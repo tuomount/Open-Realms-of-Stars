@@ -32,7 +32,6 @@ import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
-import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationList;
@@ -610,12 +609,6 @@ public class DiplomacyView extends BlackPanel {
    * Increase meeting numbers for both parties.
    */
   public void updateMeetingNumbers() {
-    int humanIndex = starMap.getPlayerList().getIndex(human);
-    int aiIndex = starMap.getPlayerList().getIndex(ai);
-    DiplomacyBonusList diplomacyList = ai.getDiplomacy().getDiplomacyList(
-        humanIndex);
-    diplomacyList.setNumberOfMeetings(diplomacyList.getNumberOfMeetings() + 1);
-    diplomacyList = human.getDiplomacy().getDiplomacyList(aiIndex);
-    diplomacyList.setNumberOfMeetings(diplomacyList.getNumberOfMeetings() + 1);
+    trade.updateMeetingNumbers();
   }
 }

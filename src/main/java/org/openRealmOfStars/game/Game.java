@@ -418,6 +418,7 @@ public class Game implements ActionListener {
    */
   public void showDiplomacyView(final Object dataObject) {
     PlayerInfo info = starMap.getPlayerByIndex(1);
+    int type = DiplomacyView.HUMAN_REGULAR;
     if (dataObject != null) {
       if (dataObject instanceof FleetView) {
         FleetView view = (FleetView) dataObject;
@@ -429,9 +430,13 @@ public class Game implements ActionListener {
           info = view.getPlanet().getPlanetPlayerInfo();
         }
       }
+      if (dataObject instanceof PlayerInfo) {
+        info = (PlayerInfo) dataObject;
+        type = DiplomacyView.AI_REGULAR;
+      }
     }
     diplomacyView = new DiplomacyView(starMap.getPlayerByIndex(0), info,
-        starMap, DiplomacyView.AI_REGULAR, this);
+        starMap, type, this);
     this.updateDisplay(diplomacyView);
   }
 

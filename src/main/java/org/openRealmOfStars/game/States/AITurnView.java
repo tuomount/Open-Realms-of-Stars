@@ -22,6 +22,9 @@ import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
+import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
@@ -326,7 +329,30 @@ public class AITurnView extends BlackPanel {
             && planet.getPlanetPlayerInfo() != info && !planet.isGasGiant()
             && info.getSectorVisibility(planet.getCoordinate())
             == PlayerInfo.VISIBLE) {
-          addAttackMission(planet, info);
+          PlayerInfo owner = planet.getPlanetPlayerInfo();
+          int ownerIndex = game.getStarMap().getPlayerList().getIndex(owner);
+          DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
+              ownerIndex);
+          if (list.isBonusType(DiplomacyBonusType.IN_WAR)) {
+            addAttackMission(planet, info);
+          } else {
+            if (owner.isHuman()) {
+              // For human start diplomacy view
+              game.changeGameState(GameState.DIPLOMACY_VIEW, info);
+            } else {
+              // For Ai players make offer
+              int index = game.getStarMap().getPlayerList().getIndex(info);
+              DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(),
+                  index, ownerIndex);
+              trade.generateOffer();
+              if (trade.isOfferGoodForBoth()) {
+                // Another party accepts it
+                trade.doTrades();
+              }
+              //TODO: Handle declines in else branch
+              trade.updateMeetingNumbers();
+            }
+          }
         }
       }
     }

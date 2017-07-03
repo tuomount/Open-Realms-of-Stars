@@ -233,33 +233,33 @@ public class Game extends JFrame implements ActionListener {
    * @param visible Is game actually visible or not
    */
   public Game(final boolean visible) {
-    // Set look and feel match on CrossPlatform Look and feel
-    try {
+    if (visible) {
+      // Set look and feel match on CrossPlatform Look and feel
+      try {
       UIManager
-          .setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-    } catch (Exception e) {
-      e.printStackTrace();
+            .setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      UIManager.put("ScrollBarUI", SpaceScrollBarUI.class.getName());
+      setTitle(GAME_TITLE + " " + GAME_VERSION);
+      setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+      addWindowListener(new GameWindowListener());
+      setSize(WINDOW_X_SIZE, WINDOW_Y_SIZE);
+      setLocationRelativeTo(null);
+      animationTimer = new Timer(ANIMATION_TIMER_DELAY, this);
+      animationTimer.setActionCommand(GameCommands.COMMAND_ANIMATION_TIMER);
+      animationTimer.start();
+      setResizable(false);
+      this.setVisible(true);
+      // Add new KeyEventDispatcher
+      KeyboardFocusManager kfm = KeyboardFocusManager
+          .getCurrentKeyboardFocusManager();
+      kfm.addKeyEventDispatcher(new GameKeyAdapter(this));
+    } else {
+      this.setVisible(false);
     }
-    UIManager.put("ScrollBarUI", SpaceScrollBarUI.class.getName());
-    setTitle(GAME_TITLE + " " + GAME_VERSION);
-    setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-    addWindowListener(new GameWindowListener());
-    setSize(WINDOW_X_SIZE, WINDOW_Y_SIZE);
-    setLocationRelativeTo(null);
-    animationTimer = new Timer(ANIMATION_TIMER_DELAY, this);
-    animationTimer.setActionCommand(GameCommands.COMMAND_ANIMATION_TIMER);
-    animationTimer.start();
-
     changeGameState(GameState.MAIN_MENU);
-
-    // Add new KeyEventDispatcher
-    KeyboardFocusManager kfm = KeyboardFocusManager
-        .getCurrentKeyboardFocusManager();
-    kfm.addKeyEventDispatcher(new GameKeyAdapter(this));
-    setResizable(false);
-
-    this.setVisible(visible);
-
   }
 
   /**

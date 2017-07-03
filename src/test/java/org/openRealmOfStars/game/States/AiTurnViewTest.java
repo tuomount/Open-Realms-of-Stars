@@ -17,7 +17,7 @@ public class AiTurnViewTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testRunningNestRoundForAI() {
+  public void testRunningTestRoundForAI() {
     GameRepository repository = new GameRepository();
     StarMap starMap = repository.loadGame("src/test/resources/saves",
                                           "testGame.save");

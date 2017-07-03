@@ -1,5 +1,6 @@
 package org.openRealmOfStars.game;
 
+import java.awt.Graphics;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -72,12 +73,7 @@ import org.openRealmOfStars.utilities.repository.GameRepository;
  *
  */
 
-public class Game extends JFrame implements ActionListener {
-
-  /**
-   *
-   */
-  private static final long serialVersionUID = 1L;
+public class Game implements ActionListener {
 
   /**
    * Game Title show in various places
@@ -205,6 +201,11 @@ public class Game extends JFrame implements ActionListener {
   private ChangeMessage changeMessage;
 
   /**
+   * Separate game frame to support headless running of the game class.
+   */
+  private JFrame gameFrame;
+
+  /**
    * Get Star map
    * @return StarMap
    */
@@ -234,6 +235,7 @@ public class Game extends JFrame implements ActionListener {
    */
   public Game(final boolean visible) {
     if (visible) {
+      gameFrame = new JFrame();
       // Set look and feel match on CrossPlatform Look and feel
       try {
       UIManager
@@ -242,22 +244,20 @@ public class Game extends JFrame implements ActionListener {
         e.printStackTrace();
       }
       UIManager.put("ScrollBarUI", SpaceScrollBarUI.class.getName());
-      setTitle(GAME_TITLE + " " + GAME_VERSION);
-      setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-      addWindowListener(new GameWindowListener());
-      setSize(WINDOW_X_SIZE, WINDOW_Y_SIZE);
-      setLocationRelativeTo(null);
+      gameFrame.setTitle(GAME_TITLE + " " + GAME_VERSION);
+      gameFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+      gameFrame.addWindowListener(new GameWindowListener());
+      gameFrame.setSize(WINDOW_X_SIZE, WINDOW_Y_SIZE);
+      gameFrame.setLocationRelativeTo(null);
       animationTimer = new Timer(ANIMATION_TIMER_DELAY, this);
       animationTimer.setActionCommand(GameCommands.COMMAND_ANIMATION_TIMER);
       animationTimer.start();
-      setResizable(false);
-      this.setVisible(true);
+      gameFrame.setResizable(false);
+      gameFrame.setVisible(true);
       // Add new KeyEventDispatcher
       KeyboardFocusManager kfm = KeyboardFocusManager
           .getCurrentKeyboardFocusManager();
       kfm.addKeyEventDispatcher(new GameKeyAdapter(this));
-    } else {
-      this.setVisible(false);
     }
     changeGameState(GameState.MAIN_MENU);
   }
@@ -317,9 +317,43 @@ public class Game extends JFrame implements ActionListener {
    * @param view about BlackPanel
    */
   private void updateDisplay(final BlackPanel view) {
-      this.getContentPane().removeAll();
-      this.add(view);
-      this.validate();
+    if (gameFrame != null) {
+      gameFrame.getContentPane().removeAll();
+      gameFrame.add(view);
+      gameFrame.validate();
+    }
+  }
+
+  /**
+   * Get width of Game frame
+   * @return Width of game frame
+   */
+  public int getWidth() {
+    if (gameFrame != null) {
+      return gameFrame.getWidth();
+    }
+    return WINDOW_X_SIZE;
+  }
+
+  /**
+   * Get height of Game frame
+   * @return Width of game frame
+   */
+  public int getHeight() {
+    if (gameFrame != null) {
+      return gameFrame.getHeight();
+    }
+    return WINDOW_Y_SIZE;
+  }
+
+  /**
+   * Call paint for Game frame
+   * @param graphics Graphics
+   */
+  public void paint(final Graphics graphics) {
+    if (gameFrame != null) {
+      gameFrame.paint(graphics);
+    }
   }
 
   /**

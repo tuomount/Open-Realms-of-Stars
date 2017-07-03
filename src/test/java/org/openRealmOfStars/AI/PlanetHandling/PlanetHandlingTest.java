@@ -7,6 +7,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
@@ -161,6 +162,56 @@ public class PlanetHandlingTest {
     return building;
   }
 
+  /**
+   * Create culture building with mockito
+   * @return basic culture building
+   */
+  private static Building createBasicCulture() {
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getBattleBonus()).thenReturn(0);
+    Mockito.when(building.getDefenseDamage()).thenReturn(0);
+    Mockito.when(building.getScanRange()).thenReturn(0);
+    Mockito.when(building.getScanCloakingDetection()).thenReturn(0);
+    Mockito.when(building.getType()).thenReturn(BuildingType.CULTURE);
+    Mockito.when(building.getFactBonus()).thenReturn(0);
+    Mockito.when(building.getMineBonus()).thenReturn(0);
+    Mockito.when(building.getFarmBonus()).thenReturn(0);
+    Mockito.when(building.getReseBonus()).thenReturn(0);
+    Mockito.when(building.getCultBonus()).thenReturn(1);
+    Mockito.when(building.getCredBonus()).thenReturn(0);
+    Mockito.when(building.getRecycleBonus()).thenReturn(0);
+    Mockito.when(building.getMaintenanceCost()).thenReturn(0.0);
+    Mockito.when(building.getMetalCost()).thenReturn(7);
+    Mockito.when(building.getProdCost()).thenReturn(14);
+    Mockito.when(building.getName()).thenReturn("Culture building");
+    return building;
+  }
+
+  /**
+   * Create credit building with mockito
+   * @return basic credit building
+   */
+  private static Building createBasicCredit() {
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getBattleBonus()).thenReturn(0);
+    Mockito.when(building.getDefenseDamage()).thenReturn(0);
+    Mockito.when(building.getScanRange()).thenReturn(0);
+    Mockito.when(building.getScanCloakingDetection()).thenReturn(0);
+    Mockito.when(building.getType()).thenReturn(BuildingType.CREDIT);
+    Mockito.when(building.getFactBonus()).thenReturn(0);
+    Mockito.when(building.getMineBonus()).thenReturn(0);
+    Mockito.when(building.getFarmBonus()).thenReturn(0);
+    Mockito.when(building.getReseBonus()).thenReturn(0);
+    Mockito.when(building.getCultBonus()).thenReturn(0);
+    Mockito.when(building.getCredBonus()).thenReturn(1);
+    Mockito.when(building.getRecycleBonus()).thenReturn(0);
+    Mockito.when(building.getMaintenanceCost()).thenReturn(0.0);
+    Mockito.when(building.getMetalCost()).thenReturn(7);
+    Mockito.when(building.getProdCost()).thenReturn(14);
+    Mockito.when(building.getName()).thenReturn("Credit building");
+    return building;
+  }
+
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasicFarmBuildingScoring() {
@@ -174,15 +225,22 @@ public class PlanetHandlingTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info);
+    int score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL);
     assertEquals(39,score);
 
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.EXPANSIONIST);
+    assertEquals(49,score);
+
     Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
-    score = PlanetHandling.scoreBuilding(building, planet, info);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL);
     assertEquals(49,score);
 
     Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
-    score = PlanetHandling.scoreBuilding(building, planet, info);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL);
     assertEquals(-1,score);
 
   }
@@ -200,12 +258,20 @@ public class PlanetHandlingTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info);
+    int score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL);
     assertEquals(39,score);
 
     Mockito.when(info.getRace()).thenReturn(SpaceRace.SPORKS);
-    score = PlanetHandling.scoreBuilding(building, planet, info);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL);
     assertEquals(54,score);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.MILITARISTIC);
+    assertEquals(69,score);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.AGGRESSIVE);
+    assertEquals(64,score);
 
 
   }
@@ -223,7 +289,8 @@ public class PlanetHandlingTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info);
+    int score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL);
     assertEquals(59,score);
   }
 
@@ -240,11 +307,16 @@ public class PlanetHandlingTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info);
+    int score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL);
     assertEquals(59,score);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.SCIENTIFIC);
+    assertEquals(74,score);
     
     Mockito.when(info.getRace()).thenReturn(SpaceRace.GREYANS);
-    score = PlanetHandling.scoreBuilding(building, planet, info);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL);
     assertEquals(74,score);
 
   }
@@ -262,8 +334,51 @@ public class PlanetHandlingTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
 
-    int score = PlanetHandling.scoreBuilding(building, planet, info);
+    int score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL);
     assertEquals(40,score);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBasicCultureBuildingScoring() {
+    Building building = createBasicCulture();
+
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
+    Mockito.when(planet.howManyBuildings(building.getName())).thenReturn(0);
+    Mockito.when(planet.exceedRadiation()).thenReturn(false);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+
+    int score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL);
+    assertEquals(39,score);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.DIPLOMATIC);
+    assertEquals(54,score);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBasicCreditBuildingScoring() {
+    Building building = createBasicCredit();
+
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
+    Mockito.when(planet.howManyBuildings(building.getName())).thenReturn(0);
+    Mockito.when(planet.exceedRadiation()).thenReturn(false);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+
+    int score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL);
+    assertEquals(79,score);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.MERCHANTICAL);
+    assertEquals(94,score);
   }
 
   @Test
@@ -284,7 +399,8 @@ public class PlanetHandlingTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
 
-    Building building = PlanetHandling.getWorstBuilding(planet, info);
+    Building building = PlanetHandling.getWorstBuilding(planet, info,
+        Attitude.LOGICAL);
     assertEquals(farm,building);
   }
 

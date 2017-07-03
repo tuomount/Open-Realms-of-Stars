@@ -7,6 +7,7 @@ import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -128,6 +129,7 @@ public final class PlanetHandling {
         .getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_CREDITS, index);
     PlayerInfo info = map.getPlayerByIndex(index);
     if (info != null) {
+      Attitude attitude = info.getAiAttitude();
       handlePlanetPopulation(planet, info);
       if (credit < 0) {
         planet.setTax(planet.getTax() + 1, false);
@@ -241,7 +243,7 @@ public final class PlanetHandling {
         }
         if (!constructionSelected) {
           constructionSelected = handleConstructions(constructions, planet,
-              info, map);
+              info, map, attitude);
         }
         if (!constructionSelected) {
           // Nothing to select to let's select culture or credit
@@ -270,10 +272,11 @@ public final class PlanetHandling {
    * @param building Building to score
    * @param planet Planet where building is placed or about to place
    * @param info PlayerInfo who's building is about to score
+   * @param attitude AI's attitude
    * @return Score of building, bigger is better
    */
   public static int scoreBuilding(final Building building, final Planet planet,
-      final PlayerInfo info) {
+      final PlayerInfo info, final Attitude attitude) {
     // Military score
     int score = building.getBattleBonus()
         + building.getDefenseDamage() * TURRET_DEFENSE_VALUE_SCORE;
@@ -288,7 +291,11 @@ public final class PlanetHandling {
     score = score + building.getFactBonus() * 60;
     score = score + building.getMineBonus() * planet.getAmountMetalInGround()
         / METAL_AMOUNT_DIVIDER;
-    if (info.getRace() == SpaceRace.CENTAURS) {
+    if (info.getRace() == SpaceRace.MOTHOIDS) {
+      score = score + building.getMineBonus() * 30;
+    }
+    if (info.getRace() == SpaceRace.CENTAURS
+        || info.getRace() == SpaceRace.TEUTHIDAES) {
       score = score + building.getFarmBonus() * 50;
     } else if (info.getRace() != SpaceRace.MECHIONS) {
       score = score + building.getFarmBonus() * 40;
@@ -310,6 +317,31 @@ public final class PlanetHandling {
       score = score + building.getCredBonus() * 50;
     }
     score = score + building.getRecycleBonus();
+    if (attitude == Attitude.DIPLOMATIC) {
+      score = score + building.getCultBonus() * 15;
+    }
+    if (attitude == Attitude.SCIENTIFIC) {
+      score = score + building.getReseBonus() * 15;
+    }
+    if (attitude == Attitude.MERCHANTICAL) {
+      score = score + building.getCredBonus() * 15;
+    }
+    if (attitude == Attitude.MILITARISTIC
+        && building.getType() == BuildingType.MILITARY) {
+      score = score + 15;
+    }
+    if (attitude == Attitude.BACKSTABBING
+        && building.getScanCloakingDetection() > 0) {
+      score = score + 15;
+    }
+    if (attitude == Attitude.AGGRESSIVE
+        && building.getType() == BuildingType.MILITARY) {
+      score = score + 10;
+    }
+    if (attitude == Attitude.EXPANSIONIST
+        && building.getType() == BuildingType.FARM) {
+      score = score + 10;
+    }
 
     score = score - (int) Math.round(building.getMaintenanceCost() * 10);
     // High cost drops the value
@@ -351,15 +383,16 @@ public final class PlanetHandling {
    * Get the planet's worst building
    * @param planet Planet which to check
    * @param info PlayerInfo who owns the planet
+   * @param attitude AI's attitude
    * @return worst building or null if no buildings
    */
   public static Building getWorstBuilding(final Planet planet,
-      final PlayerInfo info) {
+      final PlayerInfo info, final Attitude attitude) {
     int lowestScore = MAX_SLOT_SCORE;
     Building lowBuilding = null;
     Building[] buildings = planet.getBuildingList();
     for (Building building : buildings) {
-      int score = scoreBuilding(building, planet, info);
+      int score = scoreBuilding(building, planet, info, attitude);
       if (score < lowestScore) {
         lowestScore = score;
         lowBuilding = building;
@@ -373,12 +406,15 @@ public final class PlanetHandling {
    * @param planet The planet
    * @param info The planet info
    * @param map The star map
+   * @param attitude AI's attitude
    * @return boolean true if construction has been selected
    */
   private static boolean handleConstructions(final Construction[] constructions,
-      final Planet planet, final PlayerInfo info, final StarMap map) {
+      final Planet planet, final PlayerInfo info, final StarMap map,
+      final Attitude attitude) {
     boolean constructionSelected = false;
-    int[] scores = scoreConstructions(constructions, planet, info, map);
+    int[] scores = scoreConstructions(constructions, planet, info, map,
+        attitude);
     int highest = -1;
     int value = -1;
     boolean over400 = false;
@@ -467,7 +503,7 @@ public final class PlanetHandling {
           planet.setUnderConstruction(cons);
           constructionSelected = true;
           if (cons instanceof Building && needToRemoveWorst) {
-            Building worst = getWorstBuilding(planet, info);
+            Building worst = getWorstBuilding(planet, info, attitude);
             if  (worst != null) {
               // Removing the worst building
               planet.removeBuilding(worst);
@@ -523,10 +559,12 @@ public final class PlanetHandling {
    * @param planet The planet
    * @param info The planet info
    * @param map The star map
+   * @param attitude AI's attitude
    * @return The calculate scores
    */
   private static int[] scoreConstructions(final Construction[] constructions,
-      final Planet planet, final PlayerInfo info, final StarMap map) {
+      final Planet planet, final PlayerInfo info, final StarMap map,
+      final Attitude attitude) {
     int[] scores = new int[constructions.length];
     for (int i = 0; i < constructions.length; i++) {
       scores[i] = -1;
@@ -540,7 +578,7 @@ public final class PlanetHandling {
       }
       if (constructions[i] instanceof Building) {
         Building building = (Building) constructions[i];
-        scores[i] = scoreBuilding(building, planet, info);
+        scores[i] = scoreBuilding(building, planet, info, attitude);
       }
       if (constructions[i] instanceof Ship) {
         Ship ship = (Ship) constructions[i];
@@ -551,8 +589,20 @@ public final class PlanetHandling {
           if (mission != null) {
             if (mission.getPhase() == MissionPhase.PLANNING) {
               score = score + ship.getTotalMilitaryPower() * 2;
+              if (attitude == Attitude.AGGRESSIVE
+                  || attitude == Attitude.MILITARISTIC) {
+                score = score + 20;
+              } else if (attitude == Attitude.PEACEFUL) {
+                score = score - 10;
+              }
             } else if (mission.getPhase() == MissionPhase.BUILDING) {
               score = score + ship.getTotalMilitaryPower();
+              if (attitude == Attitude.AGGRESSIVE
+                  || attitude == Attitude.MILITARISTIC) {
+                score = score + 20;
+              } else if (attitude == Attitude.PEACEFUL) {
+                score = score - 10;
+              }
             }
             mission = info.getMissions().getMission(MissionType.ATTACK,
                 MissionPhase.PLANNING);
@@ -565,6 +615,12 @@ public final class PlanetHandling {
                 MissionPhase.PLANNING);
             if (mission != null) {
               score = score + ship.getTotalMilitaryPower() * 2;
+              if (attitude == Attitude.AGGRESSIVE
+                  || attitude == Attitude.MILITARISTIC) {
+                score = score + 20;
+              } else if (attitude == Attitude.PEACEFUL) {
+                score = score - 10;
+              }
               if (ship.hasBombs()) {
                 score = score + 30;
               }
@@ -584,6 +640,9 @@ public final class PlanetHandling {
             score = score + info.getRace().getMaxRad()
                 - colonPlanet.getRadiationLevel();
             score = score + colonyScore;
+            if (attitude == Attitude.EXPANSIONIST) {
+              score = score + 20;
+            }
           } else {
             score = -1;
           }
@@ -600,6 +659,12 @@ public final class PlanetHandling {
             planetScore = planetScore + info.getRace().getMaxRad()
                 - colonPlanet.getRadiationLevel();
             score = score + planetScore;
+            if (attitude == Attitude.AGGRESSIVE
+                || attitude == Attitude.MILITARISTIC) {
+              score = score + 20;
+            } else if (attitude == Attitude.PEACEFUL) {
+              score = score - 10;
+            }
           } else {
             score = -1;
           }
@@ -710,7 +775,8 @@ public final class PlanetHandling {
       int foodReq = total * info.getRace().getFoodRequire() / 100;
       food = food - foodReq;
       if (food > 2) {
-        if (info.getRace() == SpaceRace.GREYANS) {
+        if (info.getRace() == SpaceRace.GREYANS
+            || info.getRace() == SpaceRace.TEUTHIDAES) {
           if (planet.getWorkers(Planet.RESEARCH_SCIENTIST) <= planet
               .getWorkers(Planet.PRODUCTION_WORKERS)) {
             planet.moveWorker(Planet.FOOD_FARMERS, Planet.RESEARCH_SCIENTIST);

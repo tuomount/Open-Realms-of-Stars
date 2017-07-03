@@ -230,8 +230,9 @@ public class Game extends JFrame implements ActionListener {
 
   /**
    * Constructor of Game class
+   * @param visible Is game actually visible or not
    */
-  public Game() {
+  public Game(final boolean visible) {
     // Set look and feel match on CrossPlatform Look and feel
     try {
       UIManager
@@ -257,7 +258,7 @@ public class Game extends JFrame implements ActionListener {
     kfm.addKeyEventDispatcher(new GameKeyAdapter(this));
     setResizable(false);
 
-    this.setVisible(true);
+    this.setVisible(visible);
 
   }
 
@@ -300,11 +301,13 @@ public class Game extends JFrame implements ActionListener {
         starMap.clearFleetTiles();
         fleet.decMovesLeft();
         getStarMap().doFleetScanUpdate(info, fleet, null);
-        starMapView.updatePanels();
-        if (info.isHuman()) {
-          getStarMap().setDrawPos(fleet.getX(), fleet.getY());
+        if (starMapView != null) {
+          starMapView.updatePanels();
+          if (info.isHuman()) {
+            getStarMap().setDrawPos(fleet.getX(), fleet.getY());
+          }
+          starMapView.setReadyToMove(false);
         }
-        starMapView.setReadyToMove(false);
       }
     }
   }
@@ -502,12 +505,7 @@ public class Game extends JFrame implements ActionListener {
     GameRepository repository = new GameRepository();
     starMap = repository.loadGame(GameRepository.DEFAULT_SAVE_FOLDER,
                                   filename);
-    if (starMap != null) {
-      players = starMap.getPlayerList();
-      starMap.updateStarMapOnLoadGame();
-      return true;
-    }
-    return false;
+    return setLoadedGame(starMap);
   }
 
   /**
@@ -803,7 +801,7 @@ public class Game extends JFrame implements ActionListener {
    * @param args from Command line
    */
   public static void main(final String[] args) {
-    new Game();
+    new Game(true);
 
   }
 
@@ -1229,5 +1227,20 @@ public class Game extends JFrame implements ActionListener {
    */
   public StarMapView getStarMapView() {
     return starMapView;
+  }
+
+  /**
+   * Set loaded starmap into game
+   * @param map Starmap to set game
+   * @return true if succesful false otherwise
+   */
+  public boolean setLoadedGame(final StarMap map) {
+    if (map != null) {
+      starMap = map;
+      players = starMap.getPlayerList();
+      starMap.updateStarMapOnLoadGame();
+      return true;
+    }
+    return false;
   }
 }

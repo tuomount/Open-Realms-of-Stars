@@ -282,6 +282,23 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
+   * Adding attack mission to mission list
+   * @param planet Planet where to attack
+   * @param info Player who is attacking
+   */
+  public void addAttackMission(final Planet planet, final PlayerInfo info) {
+    // New planet to conquer, adding it to mission list
+    Mission mission = new Mission(MissionType.ATTACK,
+        MissionPhase.PLANNING, planet.getCoordinate());
+    calculateAttackRendevuezSector(info, planet.getX(), planet.getY());
+    mission.setTarget(new Coordinate(cx, cy));
+    mission.setTargetPlanet(planet.getName());
+    if (info.getMissions().getAttackMission(planet.getName()) == null) {
+      // No colonize mission for this planet found, so adding it.
+      info.getMissions().add(mission);
+    }
+  }
+  /**
    * Search newly found uncolonized planets
    */
   public void searchForColonizablePlanets() {
@@ -309,19 +326,8 @@ public class AITurnView extends BlackPanel {
             && planet.getPlanetPlayerInfo() != info && !planet.isGasGiant()
             && info.getSectorVisibility(planet.getCoordinate())
             == PlayerInfo.VISIBLE) {
-          // New planet to conquer, adding it to mission list
-          Mission mission = new Mission(MissionType.ATTACK,
-              MissionPhase.PLANNING, planet.getCoordinate());
-          calculateAttackRendevuezSector(info, planet.getX(), planet.getY());
-          mission.setTarget(new Coordinate(cx, cy));
-          mission.setTargetPlanet(planet.getName());
-          if (info.getMissions().getAttackMission(planet.getName()) == null) {
-            // No colonize mission for this planet found, so adding it.
-            info.getMissions().add(mission);
-          }
-
+          addAttackMission(planet, info);
         }
-
       }
     }
 

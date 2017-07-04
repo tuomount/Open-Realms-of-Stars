@@ -185,12 +185,16 @@ public class DiplomaticTradeTest {
     tech2.addTech(new Tech("DefTech2", TechType.Defense, 1));
     tech2.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech2.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
+    NewsCorpData newsCorp = Mockito.mock(NewsCorpData.class);
+    Mockito.when(newsCorp.getMilitaryDifference(Mockito.anyInt(),
+        Mockito.anyInt())).thenReturn(0);
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(player1);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(player2);
     Mockito.when(map.getPlayerList()).thenReturn(players);
     Mockito.when(map.getPlayerByIndex(0)).thenReturn(player1);
     Mockito.when(map.getPlayerByIndex(1)).thenReturn(player2);
+    Mockito.when(map.getNewsCorpData()).thenReturn(newsCorp);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     assertEquals(null, trade.getFirstOffer());
     assertEquals(null, trade.getSecondOffer());

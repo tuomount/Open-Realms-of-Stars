@@ -3,13 +3,16 @@ package org.openRealmOfStars.AI.Mission;
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.game.Game;
+import org.openRealmOfStars.game.GameState;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
 
@@ -334,6 +337,64 @@ public final class MissionHandling {
   }
 
   /**
+   * Handle diplomacy between two AI players
+   * @param game Game class
+   * @param info First player as PlayerInfo
+   * @param secondIndex Second player as a index
+   */
+  public static void handleDiplomacyBetweenAis(final Game game,
+      final PlayerInfo info, final int secondIndex) {
+    // For Ai players make offer
+    int index = game.getStarMap().getPlayerList().getIndex(info);
+    DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(),
+        index, secondIndex);
+    trade.generateOffer();
+    if (trade.isOfferGoodForBoth()) {
+      // Another party accepts it
+      trade.doTrades();
+    }
+    //TODO: Handle declines in else branch
+    trade.updateMeetingNumbers();
+  }
+
+  /**
+   * Make fleet to move. This checks if there is a fleet in point where moving
+   * and checks if there is a war between these players. If not then AI
+   * will start diplomacy.
+   * @param game Game
+   * @param point Point where to move
+   * @param info PlayerInfo who is moving
+   * @param fleet Fleet which is moving
+   */
+  private static void makeFleetMove(final Game game, final PathPoint point,
+      final PlayerInfo info, final Fleet fleet) {
+    StarMap map = game.getStarMap();
+    AStarSearch search = fleet.getaStarSearch();
+    Fleet fleetAtTarget = map.getFleetByCoordinate(point.getX(), point
+        .getY());
+    boolean war = false;
+    if (fleetAtTarget != null) {
+      PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
+      war = map.isWarBetween(info, infoAtTarget);
+    }
+    if (war || fleetAtTarget != null) {
+      // Not blocked so fleet is moving
+      game.fleetMakeMove(info, fleet, point.getX(), point.getY());
+      search.nextMove();
+    } else {
+      fleet.setMovesLeft(0);
+      PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
+      if (infoAtTarget != null) {
+        if (infoAtTarget.isHuman()) {
+          game.changeGameState(GameState.DIPLOMACY_VIEW, info);
+        } else {
+          int index = map.getPlayerList().getIndex(infoAtTarget);
+          handleDiplomacyBetweenAis(game, info, index);
+        }
+      }
+    }
+  }
+  /**
    * Make Regular moves according A Star Search path finding
    * @param game Game used to get access star map and planet lists
    * @param fleet Fleet to move
@@ -346,9 +407,7 @@ public final class MissionHandling {
       PathPoint point = search.getMove();
       if (point != null
           && !game.getStarMap().isBlocked(point.getX(), point.getY())) {
-        // Not blocked so fleet is moving
-        game.fleetMakeMove(info, fleet, point.getX(), point.getY());
-        search.nextMove();
+        makeFleetMove(game, point, info, fleet);
       }
     }
     fleet.setMovesLeft(0);
@@ -394,9 +453,7 @@ public final class MissionHandling {
       PathPoint point = search.getMove();
       if (point != null
           && !game.getStarMap().isBlocked(point.getX(), point.getY())) {
-        // Not blocked so fleet is moving
-        game.fleetMakeMove(info, fleet, point.getX(), point.getY());
-        search.nextMove();
+        makeFleetMove(game, point, info, fleet);
       }
     }
     fleet.setMovesLeft(0);

@@ -24,7 +24,6 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
-import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
@@ -340,17 +339,7 @@ public class AITurnView extends BlackPanel {
               // For human start diplomacy view
               game.changeGameState(GameState.DIPLOMACY_VIEW, info);
             } else {
-              // For Ai players make offer
-              int index = game.getStarMap().getPlayerList().getIndex(info);
-              DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(),
-                  index, ownerIndex);
-              trade.generateOffer();
-              if (trade.isOfferGoodForBoth()) {
-                // Another party accepts it
-                trade.doTrades();
-              }
-              //TODO: Handle declines in else branch
-              trade.updateMeetingNumbers();
+              MissionHandling.handleDiplomacyBetweenAis(game, info, ownerIndex);
             }
           }
         }

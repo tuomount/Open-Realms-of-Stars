@@ -6,7 +6,10 @@ import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameState;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
+import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
+import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -15,6 +18,7 @@ import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  *
@@ -349,11 +353,23 @@ public final class MissionHandling {
     DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(),
         index, secondIndex);
     trade.generateOffer();
-    if (trade.isOfferGoodForBoth()) {
-      // Another party accepts it
+    if (trade.isOfferGoodForBoth()
+        || trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
+      // Another party accepts it or it is war
       trade.doTrades();
+    } else {
+      SpeechType type = trade.getSpeechTypeByOffer();
+      Attitude attitude = info.getAiAttitude();
+      int liking = info.getDiplomacy().getLiking(secondIndex);
+      int warChance = DiplomaticTrade.getWarChanceForDecline(type, attitude,
+          liking);
+      int value = DiceGenerator.getRandom(99);
+      if (value < warChance) {
+        trade.generateEqualTrade(NegotiationType.WAR);
+        trade.doTrades();
+        //TODO Add NewCorp about the war
+      }
     }
-    //TODO: Handle declines in else branch
     trade.updateMeetingNumbers();
   }
 

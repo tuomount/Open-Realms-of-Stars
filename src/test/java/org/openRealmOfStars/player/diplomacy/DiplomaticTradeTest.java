@@ -13,6 +13,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationList;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
+import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.ship.Ship;
@@ -167,7 +168,7 @@ public class DiplomaticTradeTest {
   public void testFirstTradeGeneration() {
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
-    PlayerInfo player1 = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo player1 = new PlayerInfo(SpaceRace.HUMAN,2,0);
     TechList tech1 = player1.getTechList();
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -176,7 +177,7 @@ public class DiplomaticTradeTest {
     tech1.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech1.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
     
-    PlayerInfo player2 = new PlayerInfo(SpaceRace.GREYANS);
+    PlayerInfo player2 = new PlayerInfo(SpaceRace.GREYANS,2,1);
     TechList tech2 = player2.getTechList();
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -399,6 +400,228 @@ public class DiplomaticTradeTest {
         .getNegotiationType());
     assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testWarChance() {
+    int[] results = {95, 85, 75, 65, 55};
+    int j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.DEMAND,
+          Attitude.AGGRESSIVE, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    results = new int[5];
+    results[0] = 85;
+    results[1] = 75;
+    results[2] = 65;
+    results[3] = 55;
+    results[4] = 45;
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.DEMAND,
+          Attitude.BACKSTABBING, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    results = new int[5];
+    results[0] = 65;
+    results[1] = 55;
+    results[2] = 45;
+    results[3] = 35;
+    results[4] = 25;
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.DEMAND,
+          Attitude.DIPLOMATIC, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    results = new int[5];
+    results[0] = 75;
+    results[1] = 65;
+    results[2] = 55;
+    results[3] = 45;
+    results[4] = 35;
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.DEMAND,
+          Attitude.EXPANSIONIST, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    results = new int[5];
+    results[0] = 70;
+    results[1] = 60;
+    results[2] = 50;
+    results[3] = 40;
+    results[4] = 30;
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.DEMAND,
+          Attitude.LOGICAL, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.DEMAND,
+          Attitude.SCIENTIFIC, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    results = new int[5];
+    results[0] = 60;
+    results[1] = 50;
+    results[2] = 40;
+    results[3] = 30;
+    results[4] = 20;
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.DEMAND,
+          Attitude.MERCHANTICAL, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    results = new int[5];
+    results[0] = 85;
+    results[1] = 75;
+    results[2] = 65;
+    results[3] = 55;
+    results[4] = 45;
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.DEMAND,
+          Attitude.MILITARISTIC, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    results = new int[5];
+    results[0] = 45;
+    results[1] = 35;
+    results[2] = 25;
+    results[3] = 15;
+    results[4] = 5;
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.DEMAND,
+          Attitude.PEACEFUL, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    results = new int[5];
+    results[0] = 30;
+    results[1] = 20;
+    results[2] = 10;
+    results[3] = 0;
+    results[4] = 0;
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.TRADE,
+          Attitude.AGGRESSIVE, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    results = new int[5];
+    results[0] = 25;
+    results[1] = 15;
+    results[2] = 5;
+    results[3] = 0;
+    results[4] = 0;
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.TRADE,
+          Attitude.BACKSTABBING, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    results = new int[5];
+    results[0] = 15;
+    results[1] = 5;
+    results[2] = 0;
+    results[3] = 0;
+    results[4] = 0;
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.TRADE,
+          Attitude.DIPLOMATIC, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    results = new int[5];
+    results[0] = 23;
+    results[1] = 13;
+    results[2] = 3;
+    results[3] = 0;
+    results[4] = 0;
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.TRADE,
+          Attitude.EXPANSIONIST, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    results = new int[5];
+    results[0] = 20;
+    results[1] = 10;
+    results[2] = 0;
+    results[3] = 0;
+    results[4] = 0;
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.TRADE,
+          Attitude.LOGICAL, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.TRADE,
+          Attitude.SCIENTIFIC, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    results = new int[5];
+    results[0] = 17;
+    results[1] = 7;
+    results[2] = 0;
+    results[3] = 0;
+    results[4] = 0;
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.TRADE,
+          Attitude.MERCHANTICAL, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    results = new int[5];
+    results[0] = 25;
+    results[1] = 15;
+    results[2] = 5;
+    results[3] = 0;
+    results[4] = 0;
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.TRADE,
+          Attitude.MILITARISTIC, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
+    results = new int[5];
+    results[0] = 10;
+    results[1] = 0;
+    results[2] = 0;
+    results[3] = 0;
+    results[4] = 0;
+    j = 0;
+    for (int i = -2; i < 3; i++) {
+      int warChance = DiplomaticTrade.getWarChanceForDecline(SpeechType.TRADE,
+          Attitude.PEACEFUL, i);
+      assertEquals(results[j], warChance);
+      j++;
+    }
   }
 
   @Test

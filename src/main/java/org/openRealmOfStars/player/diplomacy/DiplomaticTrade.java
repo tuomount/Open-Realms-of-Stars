@@ -102,6 +102,11 @@ public class DiplomaticTrade {
   private ArrayList<Planet> planetListForSecond;
 
   /**
+   * Difference between two parties which is considered as
+   * insult;
+   */
+  public static final int DECLINE_INSULT = 10000;
+  /**
    * Constructor for Diplomatic trade.
    * @param map Starmap
    * @param index1 First player index
@@ -234,7 +239,7 @@ public class DiplomaticTrade {
    * Generate equal trade between two players.
    * @param type Negotiation type, can be ALLIANCE, TRADE_ALLIANCE, WAR or PEACE
    */
-  protected void generateEqualTrade(final NegotiationType type) {
+  public void generateEqualTrade(final NegotiationType type) {
     if (type == NegotiationType.ALLIANCE
         || type == NegotiationType.TRADE_ALLIANCE
         || type == NegotiationType.WAR
@@ -608,36 +613,150 @@ public class DiplomaticTrade {
   /**
    * Is offer good for both. This assumes that first one is making the offer
    * and is okay with it. So it only checks that second one likes it.
-   * @return true if offer is good for both players.
+   * Difference is integer value. Positive means that deal is good for first
+   * player but bad for second player. Negative means that deal is good for
+   * second but bad for first player. Main idea is that first player has
+   * made the offer so that player is okay already with offer
+   * @return Difference value negative means that both parties agree it.
    */
-  public boolean isOfferGoodForBoth() {
+  public int getOfferDifferenceForBoth() {
     int firstValue = firstOffer.getOfferValue(starMap.getPlayerByIndex(first)
         .getRace());
     int secondValue = secondOffer.getOfferValue(starMap.getPlayerByIndex(second)
         .getRace());
     if (firstOffer.isPlanetInOffer() && !firstOffer.isPeaceInOffer()) {
       // AI should never give up planet unless is peace is being offered
-      return false;
+      return DECLINE_INSULT;
     }
     if (firstOffer.isFleetInOffer() && !firstOffer.isPeaceInOffer()) {
       // AI should never give up fleets unless is peace is being offered
-      return false;
+      return DECLINE_INSULT;
     }
     int difference = firstValue - secondValue;
-    if (difference <= 0) {
-      return true;
-    }
     // Maybe good diplomatic relations help to get trade through
-    int bonus = starMap.getPlayerByIndex(second).getDiplomacy()
-        .getDiplomacyList(first).getDiplomacyBonus();
+    PlayerInfo info = starMap.getPlayerByIndex(second);
+    int bonus = info.getDiplomacy().getDiplomacyList(first)
+        .getDiplomacyBonus();
     if (bonus > 20) {
       bonus = 20;
     }
     difference = difference - bonus;
+    return difference;
+  }
+  /**
+   * Is offer good for both. This assumes that first one is making the offer
+   * and is okay with it. So it only checks that second one likes it.
+   * @return true if offer is good for both players.
+   */
+  public boolean isOfferGoodForBoth() {
+    int difference = getOfferDifferenceForBoth();
     if (difference <= 0) {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Get war chance for getting decline for offer
+   * @param type What was the original SpeechType
+   * @param attitude AI's attitude who's offer was declined
+   * @param liking See fixed values from Diplomacy class.
+   *        There are five choices: HATE, DISLIKE, NEUTRAL, LIKE and FRIENDS
+   * @return Chance for war. Number between 0-100.
+   */
+  public static int getWarChanceForDecline(final SpeechType type,
+      final Attitude attitude, final int liking) {
+    int warChance = 0;
+    if (type == SpeechType.DEMAND) {
+      warChance = 50;
+      switch (attitude) {
+        case AGGRESSIVE: {
+          warChance = warChance + 25;
+          break;
+        }
+        case BACKSTABBING:
+        case MILITARISTIC: {
+          warChance = warChance + 15;
+          break;
+        }
+        case DIPLOMATIC: {
+          warChance = warChance - 5;
+          break;
+        }
+        case EXPANSIONIST: {
+          warChance = warChance + 5;
+          break;
+        }
+        case LOGICAL:
+        case SCIENTIFIC:
+        default: {
+          // No chance for warChance
+          break;
+        }
+        case MERCHANTICAL: {
+          warChance = warChance - 10;
+          break;
+        }
+        case PEACEFUL: {
+          warChance = warChance - 25;
+          break;
+        }
+      }
+    } else {
+      warChance = 0;
+      switch (attitude) {
+        case AGGRESSIVE: {
+          warChance = warChance + 10;
+          break;
+        }
+        case BACKSTABBING:
+        case MILITARISTIC: {
+          warChance = warChance + 5;
+          break;
+        }
+        case DIPLOMATIC: {
+          warChance = warChance - 5;
+          break;
+        }
+        case EXPANSIONIST: {
+          warChance = warChance + 3;
+          break;
+        }
+        case LOGICAL:
+        case SCIENTIFIC:
+        default: {
+          // No chance for warChance
+          break;
+        }
+        case MERCHANTICAL: {
+          warChance = warChance - 3;
+          break;
+        }
+        case PEACEFUL: {
+          warChance = warChance - 10;
+          break;
+        }
+      }
+    }
+    if (liking == Diplomacy.HATE) {
+      warChance = warChance + 20;
+    }
+    if (liking == Diplomacy.DISLIKE) {
+      warChance = warChance + 10;
+    }
+    if (liking == Diplomacy.LIKE) {
+      warChance = warChance - 10;
+    }
+    if (liking == Diplomacy.FRIENDS) {
+      warChance = warChance - 20;
+    }
+    if (warChance > 100) {
+      warChance = 100;
+    }
+    if (warChance < 0) {
+      warChance = 0;
+    }
+    return warChance;
   }
 
   /**

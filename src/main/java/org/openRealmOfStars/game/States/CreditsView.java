@@ -16,7 +16,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2017  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -75,6 +75,7 @@ public class CreditsView extends BlackPanel {
         + "http://opengameart.org/content/140-military-icons-set-fixed\n\n"
         + "Nebulae, star field and space panel by Tuomo Untinen\n\n"
         + "Route dot by Tuomo Untinen\n\n"
+        + "Relations icons by Tuomo Untinen\n\n"
         + "Photon torpedo by Tuomo Untinen\n\n"
         + "Space ships are done with Surt's modular ships\n\n"
         + "Explosions by Csaba Felvegi aka Chabull\n\n"

@@ -118,12 +118,20 @@ public class TransparentLabel extends JLabel {
     g.setColor(this.getForeground());
     if (wrap) {
       String[] texts = this.getText().split(" ");
+      int totalHeight = 0;
+      for (int i = 0; i < texts.length; i++) {
+        int textHeight = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
+            texts[i]);
+        totalHeight = totalHeight + textHeight;
+      }
       for (int i = 0; i < texts.length; i++) {
         int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
             texts[i]);
         int textHeight = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
             texts[i]);
-        g.drawString(texts[i], x + 5, y + 10 + i * textHeight);
+        x = this.getWidth() / 2 - textWidth / 2;
+        y = this.getHeight() / 2 - totalHeight / 2 + textHeight;
+        g.drawString(texts[i], x, y + i * textHeight);
       }
     } else {
       g.drawString(this.getText(), x + 5, y + 10);

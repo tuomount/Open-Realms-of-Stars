@@ -54,6 +54,11 @@ public class ImageLabel extends JLabel {
   private Color fillColor;
 
   /**
+   * Center image of component
+   */
+  private boolean center;
+
+  /**
    * Construct an ImageLabel.
    * @param image Image to show
    * @param border Boolean is there a border or not
@@ -115,10 +120,22 @@ public class ImageLabel extends JLabel {
     if (isBorder()) {
       this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
       if (getImage() != null) {
-        g.drawImage(getImage(), 2, 2, null);
+        int x = 0;
+        int y = 0;
+        if (isCenter()) {
+          x = this.getWidth() / 2 - getImage().getWidth() / 2;
+          y = this.getHeight() / 2 - getImage().getHeight() / 2;
+        }
+        g.drawImage(getImage(), x + 2, y + 2, null);
       }
     } else if (getImage() != null) {
-      g.drawImage(getImage(), 0, 0, null);
+      int x = 0;
+      int y = 0;
+      if (isCenter()) {
+        x = this.getWidth() / 2 - getImage().getWidth() / 2;
+        y = this.getHeight() / 2 - getImage().getHeight() / 2;
+      }
+      g.drawImage(getImage(), x, y, null);
     }
   }
 
@@ -136,6 +153,22 @@ public class ImageLabel extends JLabel {
    */
   public void setFillColor(final Color fillColor) {
     this.fillColor = fillColor;
+  }
+
+  /**
+   * Is image centered
+   * @return true if image is centered
+   */
+  public boolean isCenter() {
+    return center;
+  }
+
+  /**
+   * Set centered value
+   * @param center the center to set
+   */
+  public void setCenter(final boolean center) {
+    this.center = center;
   }
 
 }

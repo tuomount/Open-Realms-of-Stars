@@ -125,6 +125,34 @@ public class StatView extends BlackPanel {
     }
     statPanel.setYDataNames(names);
     tabs.add(NewsCorpData.STAT_RESEARCH, statPanel);
+
+    tabs.add("Relations", createRelationPanel(map, names));
+    base.add(tabs, BorderLayout.CENTER);
+    this.add(base, BorderLayout.CENTER);
+
+    // Bottom panel
+    InfoPanel bottomPanel = new InfoPanel();
+    bottomPanel.setLayout(new BorderLayout());
+    bottomPanel.setTitle(null);
+    SpaceButton btn = new SpaceButton("Back to star map",
+        GameCommands.COMMAND_VIEW_STARMAP);
+    btn.addActionListener(listener);
+    bottomPanel.add(btn, BorderLayout.CENTER);
+
+    // updatePanel();
+    // Add panels to base
+    this.add(bottomPanel, BorderLayout.SOUTH);
+
+  }
+
+  /**
+   * Create Relation panel
+   * @param map StarMap
+   * @param names Player empire names
+   * @return BlackPanel with relation information
+   */
+  public BlackPanel createRelationPanel(final StarMap map,
+      final String[] names) {
     BlackPanel panel = new BlackPanel();
     int rowsNCols = map.getPlayerList().getCurrentMaxPlayers() + 1;
     panel.setLayout(new GridLayout(rowsNCols, rowsNCols));
@@ -132,10 +160,12 @@ public class StatView extends BlackPanel {
     panel.add(label);
     for (int i = 0; i < names.length; i++) {
       label = new TransparentLabel(panel, names[i], true, true);
+      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
       panel.add(label);
     }
     for (int i = 0; i < names.length; i++) {
       label = new TransparentLabel(panel, names[i], true, true);
+      label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
       panel.add(label);
       for (int j = 0; j < names.length; j++) {
         PlayerInfo info = map.getPlayerByIndex(i);
@@ -158,27 +188,11 @@ public class StatView extends BlackPanel {
             && info.getDiplomacy().getDiplomacyList(j) != null) {
           img = new ImageLabel(GuiStatics.RELATION_UNKNOWN, true);
         }
+        img.setCenter(true);
         panel.add(img);
       }
     }
-
-    tabs.add("Relations", panel);
-    base.add(tabs, BorderLayout.CENTER);
-    this.add(base, BorderLayout.CENTER);
-
-    // Bottom panel
-    InfoPanel bottomPanel = new InfoPanel();
-    bottomPanel.setLayout(new BorderLayout());
-    bottomPanel.setTitle(null);
-    SpaceButton btn = new SpaceButton("Back to star map",
-        GameCommands.COMMAND_VIEW_STARMAP);
-    btn.addActionListener(listener);
-    bottomPanel.add(btn, BorderLayout.CENTER);
-
-    // updatePanel();
-    // Add panels to base
-    this.add(bottomPanel, BorderLayout.SOUTH);
-
+    return panel;
   }
 
   /**

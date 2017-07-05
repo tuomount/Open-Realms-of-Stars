@@ -66,7 +66,11 @@ public enum DiplomacyBonusType {
   /**
    * Players have had long peace time together.
    */
-  LONG_PEACE;
+  LONG_PEACE,
+  /**
+   * Another player has made an insult
+   */
+  INSULT;
 
   /**
    * Number of Bonus type. This should be one larger than actual bonus types.
@@ -90,6 +94,7 @@ public enum DiplomacyBonusType {
       case DIPLOMATIC_TRADE: return 8;
       case SAME_RACE: return 9;
       case LONG_PEACE: return 10;
+      case INSULT: return 11;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -124,6 +129,8 @@ public enum DiplomacyBonusType {
       return DiplomacyBonusType.SAME_RACE;
     case 10:
       return DiplomacyBonusType.LONG_PEACE;
+    case 11:
+      return DiplomacyBonusType.INSULT;
     default:
       throw new IllegalArgumentException("Unexpected diplomacy bonus type!");
     }

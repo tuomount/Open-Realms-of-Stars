@@ -75,7 +75,7 @@ public enum DiplomacyBonusType {
   /**
    * Number of Bonus type. This should be one larger than actual bonus types.
    */
-  public static final int MAX_BONUS_TYPE = 11;
+  public static final int MAX_BONUS_TYPE = 12;
 
   /**
    * Get ShipHullType index

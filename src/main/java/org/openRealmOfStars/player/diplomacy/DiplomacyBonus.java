@@ -98,6 +98,9 @@ public class DiplomacyBonus {
        if (race == SpaceRace.SPORKS) {
          bonusValue = 1;
          bonusLasting = 1;
+       } else if (race == SpaceRace.MOTHOIDS) {
+         bonusValue = 8;
+         bonusLasting = 1;
        } else {
          bonusValue = 5;
          bonusLasting = 1;
@@ -145,9 +148,22 @@ public class DiplomacyBonus {
        }
        break;
      }
+     case INSULT: {
+       if (race == SpaceRace.SPORKS) {
+         bonusValue = -2;
+         bonusLasting = 80;
+       } else if (race == SpaceRace.MECHIONS) {
+         bonusValue = -1;
+         bonusLasting = 40;
+       } else {
+         bonusValue = -3;
+         bonusLasting = 100;
+       }
+       break;
+     }
      case SAME_RACE: {
        onlyOne = true;
-       if (race == SpaceRace.MECHIONS) {
+       if (race == SpaceRace.MECHIONS || race == SpaceRace.TEUTHIDAES) {
          bonusValue = -3;
          bonusLasting = 255;
        } else if (race == SpaceRace.SPORKS) {

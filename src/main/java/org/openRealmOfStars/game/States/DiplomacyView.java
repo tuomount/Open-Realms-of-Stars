@@ -31,7 +31,9 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationList;
@@ -44,6 +46,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
 *
@@ -572,6 +575,45 @@ public class DiplomacyView extends BlackPanel {
     }
     if (GameCommands.COMMAND_OK.equals(arg0.getActionCommand())) {
       SpeechLine speechSelected = humanLines.getSelectedValue();
+      if (speechSelected != null
+          && speechSelected.getType() == SpeechType.AGREE) {
+        // TODO there should be another speech line when agreeing AI's
+        // offer
+        updatePanel(SpeechType.AGREE);
+        trade.doTrades();
+        resetChoices();
+      }
+      if (speechSelected != null
+          && (speechSelected.getType() == SpeechType.DECLINE
+          || speechSelected.getType() == SpeechType.DECLINE_ANGER
+          || speechSelected.getType() == SpeechType.DECLINE_WAR)) {
+        int humanIndex = starMap.getPlayerList().getIndex(human);
+        DiplomacyBonusList list = ai.getDiplomacy().getDiplomacyList(
+            humanIndex);
+        Attitude attitude = ai.getAiAttitude();
+        int liking = ai.getDiplomacy().getLiking(humanIndex);
+        if (speechSelected.getType() == SpeechType.DECLINE_ANGER) {
+          list.addBonus(DiplomacyBonusType.INSULT, ai.getRace());
+        }
+        int warChance = DiplomaticTrade.getWarChanceForDecline(
+            trade.getSpeechTypeByOffer(), attitude, liking);
+        if (speechSelected.getType() == SpeechType.DECLINE_WAR) {
+          warChance = 100;
+        }
+        int value = DiceGenerator.getRandom(99);
+        if (value < warChance) {
+          trade.generateEqualTrade(NegotiationType.WAR);
+          trade.doTrades();
+          updatePanel(SpeechType.MAKE_WAR);
+          resetChoices();
+          //TODO Add NewCorp about the war
+        } else {
+          // TODO there should be another speech line when decline AI's
+          // offer
+          updatePanel(SpeechType.AGREE);
+          resetChoices();
+        }
+      }
       if (speechSelected != null
           && speechSelected.getType() == SpeechType.TRADE) {
         NegotiationList list1 = getOfferingList(humanTechListOffer,

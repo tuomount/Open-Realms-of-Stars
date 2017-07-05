@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.openRealmOfStars.gui.icons.AnimatedImage;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -385,6 +386,32 @@ public final class GuiStatics {
   public static final Color[] BEAM_COLORS = {BEAM_COLOR_1, BEAM_COLOR_2,
       BEAM_COLOR_3, BEAM_COLOR_4, BEAM_COLOR_5, };
 
+
+  /**
+   * Relation unknown icon
+   */
+  public static final BufferedImage RELATION_UNKNOWN = Icons.loadBigIcon(
+      "/resources/images/bigicons.png", 0, 0, 32, 32);
+  /**
+   * Relation peace icon
+   */
+  public static final BufferedImage RELATION_PEACE = Icons.loadBigIcon(
+      "/resources/images/bigicons.png", 32, 0, 32, 32);
+  /**
+   * Relation war icon
+   */
+  public static final BufferedImage RELATION_WAR = Icons.loadBigIcon(
+      "/resources/images/bigicons.png", 64, 0, 32, 32);
+  /**
+   * Relation trade alliance icon
+   */
+  public static final BufferedImage RELATION_TRADE_ALLIANCE = Icons.loadBigIcon(
+      "/resources/images/bigicons.png", 96, 0, 32, 32);
+  /**
+   * Relation alliance icon
+   */
+  public static final BufferedImage RELATION_ALLIANCE = Icons.loadBigIcon(
+      "/resources/images/bigicons.png", 0, 32, 32, 32);
   /**
    * Photon torpedo
    */

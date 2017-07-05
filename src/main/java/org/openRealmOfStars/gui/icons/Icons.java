@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.icons;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.RasterFormatException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -326,6 +327,28 @@ public final class Icons {
     hashOfIcons.put(icon.getName(), icon);
   }
 
+  /**
+   * Load big icon from file
+   * @param imageFile File name where to load
+   * @param x X coordinate in image
+   * @param y Y coordiante in image
+   * @param width icon width
+   * @param height icon height
+   * @return BufferedImage as icon
+   * @throws RasterFormatException If loading icon fails
+   */
+  public static BufferedImage loadBigIcon(final String imageFile, final int x,
+      final int y, final int width, final int height)
+          throws RasterFormatException {
+    BufferedImage image = IOUtilities
+        .loadImage(Icons.class.getResource(imageFile));
+    if (x >= 0 && y >= 0 && x + width < image.getWidth() + 1
+        && y + height < image.getHeight() + 1) {
+      return image.getSubimage(x, y, width, height);
+    } else {
+      throw new RasterFormatException("Icon is outside of image.");
+    }
+  }
   /**
    * Init Icons
    */

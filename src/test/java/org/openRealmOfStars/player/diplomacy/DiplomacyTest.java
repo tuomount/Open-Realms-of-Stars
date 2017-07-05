@@ -63,6 +63,7 @@ public class DiplomacyTest {
     assertEquals(false, diplomacy.isWar(0));
     assertEquals(false, diplomacy.isTradeAlliance(0));
     assertEquals(false, diplomacy.isAlliance(0));
+    assertEquals("", diplomacy.getDiplomaticRelation(0));
     diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.IN_WAR,
         SpaceRace.SPORKS);
     assertEquals("War", diplomacy.getDiplomaticRelation(0));
@@ -77,7 +78,7 @@ public class DiplomacyTest {
     diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.LONG_PEACE,
         SpaceRace.SPORKS);
     assertEquals(Diplomacy.NEUTRAL, diplomacy.getLiking(0));
-    assertEquals("", diplomacy.getDiplomaticRelation(0));
+    assertEquals("Peace", diplomacy.getDiplomaticRelation(0));
     assertEquals("Neutral", diplomacy.getLikingAsString(0));
     assertEquals(GuiStatics.COLOR_DAMAGE_HALF, diplomacy.getLikingAsColor(0));
     diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.WAR_DECLARTION,

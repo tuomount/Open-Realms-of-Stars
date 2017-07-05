@@ -1,6 +1,7 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,8 +11,12 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.ImageLabel;
+import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.StatisticPanel;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 
@@ -120,7 +125,44 @@ public class StatView extends BlackPanel {
     }
     statPanel.setYDataNames(names);
     tabs.add(NewsCorpData.STAT_RESEARCH, statPanel);
+    BlackPanel panel = new BlackPanel();
+    int rowsNCols = map.getPlayerList().getCurrentMaxPlayers() + 1;
+    panel.setLayout(new GridLayout(rowsNCols, rowsNCols));
+    TransparentLabel label = new TransparentLabel(panel, "", false, true);
+    panel.add(label);
+    for (int i = 0; i < names.length; i++) {
+      label = new TransparentLabel(panel, names[i], true, true);
+      panel.add(label);
+    }
+    for (int i = 0; i < names.length; i++) {
+      label = new TransparentLabel(panel, names[i], true, true);
+      panel.add(label);
+      for (int j = 0; j < names.length; j++) {
+        PlayerInfo info = map.getPlayerByIndex(i);
+        String relation = info.getDiplomacy().getDiplomaticRelation(j);
+        ImageLabel img = new ImageLabel(GuiStatics.RELATION_ALLIANCE, true);
+        img.setImage(null);
+        if (relation.equals(Diplomacy.ALLIANCE)) {
+          img = new ImageLabel(GuiStatics.RELATION_ALLIANCE, true);
+        }
+        if (relation.equals(Diplomacy.TRADE_ALLIANCE)) {
+          img = new ImageLabel(GuiStatics.RELATION_TRADE_ALLIANCE, true);
+        }
+        if (relation.equals(Diplomacy.WAR)) {
+          img = new ImageLabel(GuiStatics.RELATION_WAR, true);
+        }
+        if (relation.equals(Diplomacy.PEACE)) {
+          img = new ImageLabel(GuiStatics.RELATION_PEACE, true);
+        }
+        if (relation.isEmpty()
+            && info.getDiplomacy().getDiplomacyList(j) != null) {
+          img = new ImageLabel(GuiStatics.RELATION_UNKNOWN, true);
+        }
+        panel.add(img);
+      }
+    }
 
+    tabs.add("Relations", panel);
     base.add(tabs, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
 

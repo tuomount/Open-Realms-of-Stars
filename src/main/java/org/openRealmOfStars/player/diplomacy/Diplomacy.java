@@ -61,6 +61,11 @@ public class Diplomacy {
   public static final String TRADE_ALLIANCE = "Trade alliance";
 
   /**
+   * String for Peace.
+   */
+  public static final String PEACE = "Peace";
+
+  /**
    * String for Alliance.
    */
   public static final String ALLIANCE = "Alliance";
@@ -137,6 +142,19 @@ public class Diplomacy {
     if (index > -1 && index < diplomacyList.length
         && diplomacyList[index] != null) {
       return diplomacyList[index].isBonusType(DiplomacyBonusType.IN_WAR);
+    }
+    return false;
+  }
+
+  /**
+   * Is certain player(index) with player who is asking in peace?
+   * @param index Player index
+   * @return True if peace is between two players
+   */
+  public boolean isPeace(final int index) {
+    if (index > -1 && index < diplomacyList.length
+        && diplomacyList[index] != null) {
+      return diplomacyList[index].isBonusType(DiplomacyBonusType.LONG_PEACE);
     }
     return false;
   }
@@ -242,6 +260,9 @@ public class Diplomacy {
    */
   public String getDiplomaticRelation(final int playerIndex) {
     String result = "";
+    if (isPeace(playerIndex)) {
+      result = PEACE;
+    }
     if (isTradeAlliance(playerIndex)) {
       result = TRADE_ALLIANCE;
     }

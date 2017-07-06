@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.message.MessageType;
 
 /**
 *
@@ -26,7 +29,7 @@ import org.junit.experimental.categories.Category;
 * TechList test
 *
 */
-public class TechListTests {
+public class TechListTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
@@ -117,6 +120,22 @@ public class TechListTests {
         assertEquals(i, list.getTechLevel(TechType.Combat));
       }
     }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTechResearch() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS, 2, 0);
+    info.getTechList().updateResearchPointByTurn(30, info);
+    assertEquals(1, info.getTechList().getTechLevel(TechType.Combat));
+    assertEquals(MessageType.RESEARCH, info.getMsgList().getMsg().getType());
+    info.getMsgList().clearMessages();
+    info.getTechList().updateResearchPointByTurn(30, info);
+    assertEquals(MessageType.RESEARCH, info.getMsgList().getMsg().getType());
+    String msg = info.getMsgList().getMsg().getMessage();
+    assertEquals(true, msg.contains(" has advenced"));
+    assertEquals(true, msg.contains("next level."));
+    assertEquals(2, info.getTechList().getTechLevel(TechType.Combat));
   }
 
 }

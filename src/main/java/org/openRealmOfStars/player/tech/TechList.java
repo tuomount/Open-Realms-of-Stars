@@ -542,7 +542,6 @@ public class TechList {
         sb.append(lvl);
         sb.append(". ");
         if (isTechListForLevelFull(type, lvl)) {
-          techLevels[i] = lvl + 1;
           sb.append(tech.getType().toString());
           sb.append(" has advenced to next level.");
         }

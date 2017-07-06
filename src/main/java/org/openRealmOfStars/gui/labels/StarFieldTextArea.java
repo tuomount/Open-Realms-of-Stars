@@ -288,9 +288,9 @@ public class StarFieldTextArea extends JTextArea {
           g.drawString(texts[i], sx + 2, sy + i * Y_OFFSET + Y_OFFSET);
         } else {
           String line = texts[i];
-          if (line.startsWith("#")) {
+          if (line.startsWith("# ")) {
             g.setFont(GuiStatics.getFontCubellanBold());
-            line = line.substring(1);
+            line = line.substring(2);
             bigFont = true;
           } else {
             g.setFont(GuiStatics.getFontCubellan());

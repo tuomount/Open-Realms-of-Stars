@@ -52,6 +52,56 @@ public class CreditsView extends BlackPanel {
    * Number of lines to show in text area
    */
   private static final int NUMBER_OF_LINES = 45;
+
+  /**
+   * Main Credits string
+   */
+  public static final String MAIN_CREDITS =
+      "#Programming and Design by\n\n"
+      + "Tuomo Untinen\n\n"
+      + "# Additional programming\n\n"
+      + "Dávid Szigecsán \"sigee\"\n"
+      + "Diocto\n"
+      + "dlahtl1004\n"
+      + "Krlucete\n"
+      + "wksdn18\n\n"
+      + "All graphics under CC-BY-SA 3.0 license.\n"
+      + "See http://creativecommons.org/licenses/by-sa/3.0/\n"
+      + "# Graphics by\n\n"
+      + "Moons and planet made by Unnamed (Viktor.Hahn@web.de)\n"
+      + "(http://opengameart.org/content/16-planet-sprites)\n\n"
+      + "SunRed by Priest865 "
+      + "(http://opengameart.org/content/space-assets)\n\n"
+      + "141 Military Icons Set by AngryMeteor.com - "
+      + "http://opengameart.org/content/140-military-icons-set-fixed\n\n"
+      + "Nebulae, star field and space panel by Tuomo Untinen\n\n"
+      + "Route dot by Tuomo Untinen\n\n"
+      + "Relations icons by Tuomo Untinen\n\n"
+      + "Photon torpedo by Tuomo Untinen\n\n"
+      + "Space ships are done with Surt's modular ships\n\n"
+      + "Explosions by Csaba Felvegi aka Chabull\n\n"
+      + "Alien pictures by Surt - "
+      + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
+      + "Space Captain by Justin Nichol - "
+      + "http://opengameart.org/content/space-captain\n\n"
+      + "Fonts are under SIL Open Font License, Version 1.1.\n"
+      + "# Fonts by\n\n"
+      + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"
+      + "# Sounds by\n\n"
+      + "Space combat weapons sounds by\n"
+      + "Michel Baradari apollo-music.de\n"
+      + "Licensed under CC BY 3.0 "
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Space combat explosions sounds by\n"
+      + "Michel Baradari apollo-music.de\n"
+      + "Licensed under CC BY 3.0 "
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Menu click sounds by\n"
+      + "Tim Mortimer\n"
+      + "http://www.archive.org/details/TimMortimer\n"
+      + "Licensed under CC BY 3.0 "
+      + "http://creativecommons.org/licenses/by/3.0/\n\n";
+
   /**
    * Constructor for Credits view
    * @param listener Action Listener for command
@@ -62,45 +112,9 @@ public class CreditsView extends BlackPanel {
   public CreditsView(final ActionListener listener, final String title,
       final String version) throws IOException {
     String creditsText = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-        + "\n\n\n\n\n\n\n\n\n\n\n" + "#" + title + " " + version + "\n\n"
-        + "#Credits\n\n" + "#Programming and Design by\n\n"
-        + "Tuomo Untinen\n\n" + "All graphics under CC-BY-SA 3.0 license.\n"
-        + "See http://creativecommons.org/licenses/by-sa/3.0/\n"
-        + "#Graphics by\n\n"
-        + "Moons and planet made by Unnamed (Viktor.Hahn@web.de)\n"
-        + "(http://opengameart.org/content/16-planet-sprites)\n\n"
-        + "SunRed by Priest865 "
-        + "(http://opengameart.org/content/space-assets)\n\n"
-        + "141 Military Icons Set by AngryMeteor.com - "
-        + "http://opengameart.org/content/140-military-icons-set-fixed\n\n"
-        + "Nebulae, star field and space panel by Tuomo Untinen\n\n"
-        + "Route dot by Tuomo Untinen\n\n"
-        + "Relations icons by Tuomo Untinen\n\n"
-        + "Photon torpedo by Tuomo Untinen\n\n"
-        + "Space ships are done with Surt's modular ships\n\n"
-        + "Explosions by Csaba Felvegi aka Chabull\n\n"
-        + "Alien pictures by Surt - "
-        + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
-        + "Space Captain by Justin Nichol - "
-        + "http://opengameart.org/content/space-captain\n\n"
-        + "Fonts are under SIL Open Font License, Version 1.1.\n"
-        + "#Fonts by\n\n"
-        + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"
-        + "#Sounds by\n\n"
-        + "Space combat weapons sounds by\n"
-        + "Michel Baradari apollo-music.de\n"
-        + "Licensed under CC BY 3.0 "
-        + "http://creativecommons.org/licenses/by/3.0/\n\n"
-        + "Space combat explosions sounds by\n"
-        + "Michel Baradari apollo-music.de\n"
-        + "Licensed under CC BY 3.0 "
-        + "http://creativecommons.org/licenses/by/3.0/\n\n"
-        + "Menu click sounds by\n"
-        + "Tim Mortimer\n"
-        + "http://www.archive.org/details/TimMortimer\n"
-        + "Licensed under CC BY 3.0 "
-        + "http://creativecommons.org/licenses/by/3.0/\n\n";
-
+        + "\n\n\n\n\n\n\n\n\n\n\n" + "# " + title + " " + version + "\n\n"
+        + "# Credits\n\n"
+        + MAIN_CREDITS;
 
     InputStream is = CreditsView.class
         .getResourceAsStream("/resources/GPL2.txt");

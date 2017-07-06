@@ -840,7 +840,12 @@ public class Game implements ActionListener {
    * @param args from Command line
    */
   public static void main(final String[] args) {
-    new Game(true);
+    if (args.length > 0 && args[0].equals("--credits")) {
+      System.out.println("# Authors of Open Reals Of Stars\n");
+      System.out.println(CreditsView.MAIN_CREDITS);
+    } else {
+      new Game(true);
+    }
 
   }
 

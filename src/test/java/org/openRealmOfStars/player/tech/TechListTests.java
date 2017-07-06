@@ -65,4 +65,58 @@ public class TechListTests {
     assertEquals(1, list.getTechLevel(TechType.Propulsion));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAddTech() {
+    TechList list = new TechList();
+    assertEquals(1, list.getTechLevel(TechType.Combat));
+    list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
+    list.addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
+    list.addTech(TechFactory.createCombatTech("Photon torpedo Mk1", 1));
+    assertEquals(2, list.getTechLevel(TechType.Combat));
+    list = new TechList();
+    assertEquals(1, list.getTechLevel(TechType.Combat));
+    list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
+    list.addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
+    assertEquals(1, list.getTechLevel(TechType.Combat));
+    list.addTech(TechFactory.createCombatTech("Laser Mk2", 2));
+    assertEquals(1, list.getTechLevel(TechType.Combat));
+    list.addTech(TechFactory.createCombatTech("Railgun Mk2", 2));
+    list.addTech(TechFactory.createCombatTech("Photon torpedo Mk2", 2));
+    list.addTech(TechFactory.createCombatTech("Planetary invasion module", 2));
+    assertEquals(3, list.getTechLevel(TechType.Combat));
+    list = new TechList();
+    assertEquals(1, list.getTechLevel(TechType.Combat));
+    list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
+    list.addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
+    assertEquals(1, list.getTechLevel(TechType.Combat));
+    list.addTech(TechFactory.createCombatTech("Laser Mk2", 2));
+    assertEquals(1, list.getTechLevel(TechType.Combat));
+    list.addTech(TechFactory.createCombatTech("Railgun Mk2", 2));
+    list.addTech(TechFactory.createCombatTech("Planetary invasion module", 2));
+    assertEquals(1, list.getTechLevel(TechType.Combat));
+    list.addTech(TechFactory.createCombatTech("Photon torpedo Mk1", 1));
+    assertEquals(2, list.getTechLevel(TechType.Combat));
+    list.addTech(TechFactory.createCombatTech("Photon torpedo Mk2", 2));
+    assertEquals(3, list.getTechLevel(TechType.Combat));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFullList() {
+    TechList list = new TechList();
+    for (int i = 1; i < 11; i++) {
+      String[] names = TechFactory.getListByTechLevel(TechType.Combat, i);
+      assertEquals(i, list.getTechLevel(TechType.Combat));
+      for (String name : names) {
+        list.addTech(TechFactory.createCombatTech(name, i));
+      }
+      if (i < 10) {
+        assertEquals(i+1, list.getTechLevel(TechType.Combat));
+      } else {
+        assertEquals(i, list.getTechLevel(TechType.Combat));
+      }
+    }
+  }
+
 }

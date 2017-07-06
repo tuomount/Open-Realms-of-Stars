@@ -393,7 +393,7 @@ public final class MissionHandling {
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
       war = map.isWarBetween(info, infoAtTarget);
     }
-    if (war || fleetAtTarget != null) {
+    if (war || fleetAtTarget == null) {
       // Not blocked so fleet is moving
       game.fleetMakeMove(info, fleet, point.getX(), point.getY());
       search.nextMove();
@@ -430,7 +430,7 @@ public final class MissionHandling {
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
       war = map.isWarBetween(info, infoAtTarget);
     }
-    if (war || fleetAtTarget != null) {
+    if (war || fleetAtTarget == null) {
       // Not blocked so fleet is moving
       game.fleetMakeMove(info, fleet, nx, ny);
     } else {

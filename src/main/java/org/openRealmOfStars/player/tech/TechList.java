@@ -155,10 +155,19 @@ public class TechList {
    * @param tech Tech to add
    */
   public void addTech(final Tech tech) {
-    int index = tech.getType().getIndex();
-    int lvl = tech.getLevel() - 1;
-    if (!techList[index][lvl].isTech(tech.getName())) {
-      techList[index][lvl].addTech(tech);
+    if (tech != null) {
+      int index = tech.getType().getIndex();
+      int lvl = tech.getLevel() - 1;
+      if (!techList[index][lvl].isTech(tech.getName())) {
+        techList[index][lvl].addTech(tech);
+        if (isTechListForLevelFull(tech.getType(), lvl + 1)
+            && lvl + 1 >= techLevels[index]) {
+          techLevels[index] = lvl + 2;
+          if (techLevels[index] > 10) {
+            techLevels[index] = 10;
+          }
+        }
+      }
     }
   }
 

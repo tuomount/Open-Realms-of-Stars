@@ -1,6 +1,6 @@
 # Authors of Open Reals Of Stars
 
-#Programming and Design by
+# Programming and Design by
 
 Tuomo Untinen
 

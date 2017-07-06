@@ -57,7 +57,7 @@ public class CreditsView extends BlackPanel {
    * Main Credits string
    */
   public static final String MAIN_CREDITS =
-      "#Programming and Design by\n\n"
+      "# Programming and Design by\n\n"
       + "Tuomo Untinen\n\n"
       + "# Additional programming\n\n"
       + "Dávid Szigecsán \"sigee\"\n"

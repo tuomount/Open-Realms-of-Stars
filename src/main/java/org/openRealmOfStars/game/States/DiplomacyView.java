@@ -351,25 +351,25 @@ public class DiplomacyView extends BlackPanel {
       speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
           human.getRace()));
     } else {
+      if (!ai.getDiplomacy().isPeace(humanIndex)) {
+        speechLines.add(SpeechFactory.createLine(SpeechType.PEACE_OFFER,
+            human.getRace()));
+      }
       speechLines.add(SpeechFactory.createLine(SpeechType.TRADE,
           human.getRace()));
       speechLines.add(SpeechFactory.createLine(SpeechType.DEMAND,
           human.getRace()));
-      if (ai.getDiplomacy().isTradeAlliance(humanIndex)) {
+      if (ai.getDiplomacy().isTradeAlliance(humanIndex)
+          && ai.getDiplomacy().isPeace(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.ALLIANCE,
             human.getRace()));
-      } else if (ai.getDiplomacy().isAlliance(humanIndex)) {
-        speechLines.add(SpeechFactory.createLine(SpeechType.TRADE_ALLIANCE,
-            human.getRace()));
-      } else {
+      } else if (ai.getDiplomacy().isAlliance(humanIndex)
+          && ai.getDiplomacy().isPeace(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.TRADE_ALLIANCE,
             human.getRace()));
       }
       if (!ai.getDiplomacy().isWar(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.MAKE_WAR,
-            human.getRace()));
-      } else {
-        speechLines.add(SpeechFactory.createLine(SpeechType.PEACE_OFFER,
             human.getRace()));
       }
     }
@@ -642,6 +642,27 @@ public class DiplomacyView extends BlackPanel {
         human.getDiplomacy().getDiplomacyList(aiIndex).addBonus(
             DiplomacyBonusType.IN_WAR, human.getRace());
         updatePanel(SpeechType.MAKE_WAR);
+      }
+      if (speechSelected != null
+          && speechSelected.getType() == SpeechType.PEACE_OFFER) {
+        NegotiationList list1 = getOfferingList(humanTechListOffer,
+            humanMapOffer.isSelected(), humanFleetListOffer,
+            humanPlanetListOffer, humanCredits);
+        list1.add(new NegotiationOffer(NegotiationType.PEACE, null));
+        NegotiationList list2 = getOfferingList(aiTechListOffer,
+            aiMapOffer.isSelected(), aiFleetListOffer, aiPlanetListOffer,
+            aiCredits);
+        list2.add(new NegotiationOffer(NegotiationType.PEACE, null));
+        trade.setFirstOffer(list2);
+        trade.setSecondOffer(list1);
+        if (trade.isOfferGoodForBoth()) {
+          updatePanel(SpeechType.AGREE);
+          trade.doTrades();
+          resetChoices();
+          //TODO add news corp that human made peace with AI
+        } else {
+          updatePanel(SpeechType.DECLINE);
+        }
       }
 
     }

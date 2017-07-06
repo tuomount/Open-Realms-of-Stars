@@ -624,23 +624,31 @@ public class DiplomaticTrade {
         .getRace());
     int secondValue = secondOffer.getOfferValue(starMap.getPlayerByIndex(second)
         .getRace());
-    if (firstOffer.isPlanetInOffer() && !firstOffer.isPeaceInOffer()) {
+    PlayerInfo info = starMap.getPlayerByIndex(second);
+    boolean isWar = info.getDiplomacy().isWar(first);
+    if (firstOffer.isPlanetInOffer() && !firstOffer.isPeaceInOffer()
+        && !isWar) {
       // AI should never give up planet unless is peace is being offered
       return DECLINE_INSULT;
     }
-    if (firstOffer.isFleetInOffer() && !firstOffer.isPeaceInOffer()) {
+    if (firstOffer.isFleetInOffer() && !firstOffer.isPeaceInOffer()
+        && !isWar) {
       // AI should never give up fleets unless is peace is being offered
       return DECLINE_INSULT;
     }
     int difference = firstValue - secondValue;
     // Maybe good diplomatic relations help to get trade through
-    PlayerInfo info = starMap.getPlayerByIndex(second);
     int bonus = info.getDiplomacy().getDiplomacyList(first)
         .getDiplomacyBonus();
     if (bonus > 20) {
       bonus = 20;
     }
     difference = difference - bonus;
+    if (info.getDiplomacy().isWar(first)) {
+      int militaryDifference = starMap.getNewsCorpData().getMilitaryDifference(
+          first, second);
+      difference = difference - militaryDifference / 4;
+    }
     return difference;
   }
   /**

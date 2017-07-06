@@ -341,7 +341,7 @@ public class ShipDesign {
   public boolean isMilitaryShip() {
     for (ShipComponent comp : components) {
       if (comp.getType() == ShipComponentType.WEAPON_BEAM
-          || comp.getType() == ShipComponentType.WEAPON_ECM_TORPEDO
+          || comp.getType() == ShipComponentType.WEAPON_RAILGUN
           || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
           || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO) {
         return true;

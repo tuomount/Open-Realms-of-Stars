@@ -391,6 +391,9 @@ public final class MissionHandling {
     boolean war = false;
     if (fleetAtTarget != null) {
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
+      if (info == infoAtTarget) {
+        fleetAtTarget = null;
+      }
       war = map.isWarBetween(info, infoAtTarget);
     }
     if (war || fleetAtTarget == null) {
@@ -428,6 +431,9 @@ public final class MissionHandling {
     boolean war = false;
     if (fleetAtTarget != null) {
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
+      if (info == infoAtTarget) {
+        fleetAtTarget = null;
+      }
       war = map.isWarBetween(info, infoAtTarget);
     }
     if (war || fleetAtTarget == null) {

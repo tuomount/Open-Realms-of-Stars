@@ -1677,7 +1677,7 @@ public class StarMap {
     int secondIndex = players.getIndex(second);
     DiplomacyBonusList list = first.getDiplomacy().getDiplomacyList(
         secondIndex);
-    if (list.isBonusType(DiplomacyBonusType.IN_WAR)) {
+    if (list != null && list.isBonusType(DiplomacyBonusType.IN_WAR)) {
       return true;
     }
     return false;

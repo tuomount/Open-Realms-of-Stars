@@ -410,6 +410,42 @@ public final class MissionHandling {
       }
     }
   }
+
+  /**
+   * Make fleet to move. This checks if there is a fleet in point where moving
+   * and checks if there is a war between these players. If not then AI
+   * will start diplomacy.
+   * @param game Game
+   * @param nx X-Coordinate where to move
+   * @param ny Y-Coordinate where to move
+   * @param info Playerinfo who owns the fleet
+   * @param fleet Fleet which is moving
+   */
+  public static void makeFleetMove(final Game game, final int nx, final int ny,
+      final PlayerInfo info, final Fleet fleet) {
+    StarMap map = game.getStarMap();
+    Fleet fleetAtTarget = map.getFleetByCoordinate(nx, ny);
+    boolean war = false;
+    if (fleetAtTarget != null) {
+      PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
+      war = map.isWarBetween(info, infoAtTarget);
+    }
+    if (war || fleetAtTarget != null) {
+      // Not blocked so fleet is moving
+      game.fleetMakeMove(info, fleet, nx, ny);
+    } else {
+      fleet.setMovesLeft(0);
+      PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
+      if (infoAtTarget != null) {
+        if (infoAtTarget.isHuman()) {
+          game.changeGameState(GameState.DIPLOMACY_VIEW, info);
+        } else {
+          int index = map.getPlayerList().getIndex(infoAtTarget);
+          handleDiplomacyBetweenAis(game, info, index);
+        }
+      }
+    }
+  }
   /**
    * Make Regular moves according A Star Search path finding
    * @param game Game used to get access star map and planet lists

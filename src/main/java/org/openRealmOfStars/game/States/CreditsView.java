@@ -100,6 +100,10 @@ public class CreditsView extends BlackPanel {
       + "Tim Mortimer\n"
       + "http://www.archive.org/details/TimMortimer\n"
       + "Licensed under CC BY 3.0 "
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Radio call sound by\n"
+      + "Tuomo Untinen\n"
+      + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n";
 
   /**

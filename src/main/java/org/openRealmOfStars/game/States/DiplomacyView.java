@@ -322,6 +322,7 @@ public class DiplomacyView extends BlackPanel {
     this.add(bottomPanel, BorderLayout.SOUTH);
     if (startType == AI_REGULAR) {
       trade.generateOffer();
+      setOfferingList();
       updatePanel(trade.getSpeechTypeByOffer());
     } else {
       updatePanel(getGreetLine());
@@ -518,6 +519,100 @@ public class DiplomacyView extends BlackPanel {
     return list;
   }
 
+  /**
+   * Set Offering list according the trade
+   */
+  public void setOfferingList() {
+    ArrayList<Fleet> fleetArray = new ArrayList<>();
+    ArrayList<Planet> planetArray = new ArrayList<>();
+    ArrayList<Tech> techArray = new ArrayList<>();
+    aiMapOffer.setSelected(false);
+    for (int i = 0; i < trade.getFirstOffer().getSize(); i++) {
+      NegotiationOffer offer = trade.getFirstOffer().getByIndex(i);
+      switch (offer.getNegotiationType()) {
+        case CREDIT: {
+          aiCredits = offer.getCreditValue();
+          aiCreditOffer.setText(aiCredits + " Credits");
+          break;
+        }
+        case FLEET: {
+          fleetArray.add(offer.getFleet());
+          break;
+        }
+        case MAP: {
+          aiMapOffer.setSelected(true);
+          break;
+        }
+        case PLANET: {
+          planetArray.add(offer.getPlanet());
+          break;
+        }
+        case TECH: {
+          techArray.add(offer.getTech());
+          break;
+        }
+        case ALLIANCE:
+        case TRADE_ALLIANCE:
+        case DIPLOMAT:
+        case PEACE:
+        case WAR:
+        default: {
+          // Nothing to set with these
+          break;
+        }
+      }
+    }
+    aiTechListOffer.setListData(techArray.toArray(new Tech[techArray.size()]));
+    aiPlanetListOffer.setListData(planetArray.toArray(
+        new Planet[planetArray.size()]));
+    aiFleetListOffer.setListData(fleetArray.toArray(
+        new Fleet[fleetArray.size()]));
+    fleetArray = new ArrayList<>();
+    planetArray = new ArrayList<>();
+    techArray = new ArrayList<>();
+    humanMapOffer.setSelected(false);
+    for (int i = 0; i < trade.getSecondOffer().getSize(); i++) {
+      NegotiationOffer offer = trade.getSecondOffer().getByIndex(i);
+      switch (offer.getNegotiationType()) {
+        case CREDIT: {
+          humanCredits = offer.getCreditValue();
+          humanCreditOffer.setText(aiCredits + " Credits");
+          break;
+        }
+        case FLEET: {
+          fleetArray.add(offer.getFleet());
+          break;
+        }
+        case MAP: {
+          humanMapOffer.setSelected(true);
+          break;
+        }
+        case PLANET: {
+          planetArray.add(offer.getPlanet());
+          break;
+        }
+        case TECH: {
+          techArray.add(offer.getTech());
+          break;
+        }
+        case ALLIANCE:
+        case TRADE_ALLIANCE:
+        case DIPLOMAT:
+        case PEACE:
+        case WAR:
+        default: {
+          // Nothing to set with these
+          break;
+        }
+      }
+    }
+    humanTechListOffer.setListData(techArray.toArray(
+        new Tech[techArray.size()]));
+    humanPlanetListOffer.setListData(planetArray.toArray(
+        new Planet[planetArray.size()]));
+    humanFleetListOffer.setListData(fleetArray.toArray(
+        new Fleet[fleetArray.size()]));
+  }
   /**
    * Reset trade choices. This should be called
    * after trade has been done.

@@ -92,7 +92,7 @@ public class DiplomacyBonusListTest {
     DiplomacyBonusList list = new DiplomacyBonusList(1);
     boolean result = list.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE, SpaceRace.HUMAN);
     assertEquals(true, result);
-    for (int i = 0; i < 80; i++) {
+    for (int i = 0; i < 110; i++) {
       assertEquals(5, list.getDiplomacyBonus());
       list.handleForTurn();
     }

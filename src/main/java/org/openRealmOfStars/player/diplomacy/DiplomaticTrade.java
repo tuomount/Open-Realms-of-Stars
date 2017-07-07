@@ -645,10 +645,46 @@ public class DiplomaticTrade {
       bonus = 20;
     }
     difference = difference - bonus;
-    if (info.getDiplomacy().isWar(first)) {
+    if (info.getDiplomacy().isWar(first)
+        || getSpeechTypeByOffer() == SpeechType.DEMAND) {
+      Attitude attitude = info.getAiAttitude();
+      int divider = 4;
+      int ownDivider = 4;
+      switch (attitude) {
+        case AGGRESSIVE:
+        case MILITARISTIC: {
+          divider = 6;
+          ownDivider = 2;
+          break;
+        }
+        case BACKSTABBING:
+        case EXPANSIONIST: {
+          divider = 5;
+          ownDivider = 3;
+          break;
+        }
+        case LOGICAL:
+        case DIPLOMATIC:
+        case SCIENTIFIC:
+        default: {
+          divider = 4;
+          ownDivider = 4;
+          break;
+        }
+        case MERCHANTICAL:
+        case PEACEFUL: {
+          divider = 3;
+          ownDivider = 5;
+          break;
+        }
+      }
       int militaryDifference = starMap.getNewsCorpData().getMilitaryDifference(
           first, second);
-      difference = difference - militaryDifference / 4;
+      if (militaryDifference > 0) {
+        difference = difference - militaryDifference / divider;
+      } else {
+        difference = difference - militaryDifference / ownDivider;
+      }
     }
     return difference;
   }
@@ -875,7 +911,8 @@ public class DiplomaticTrade {
     info = starMap.getPlayerByIndex(second);
     giver = starMap.getPlayerByIndex(first);
     int value2 = doTrade(secondOffer, info, giver);
-    if (Math.abs(value1 - value2) < 5) {
+    if (Math.abs(value1 - value2) < 5
+        && getSpeechTypeByOffer() == SpeechType.TRADE) {
       info = starMap.getPlayerByIndex(second);
       info.getDiplomacy().getDiplomacyList(first).addBonus(
           DiplomacyBonusType.DIPLOMATIC_TRADE, info.getRace());

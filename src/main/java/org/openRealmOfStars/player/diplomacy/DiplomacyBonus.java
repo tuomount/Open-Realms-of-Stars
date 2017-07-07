@@ -110,10 +110,10 @@ public class DiplomacyBonus {
      case DIPLOMATIC_TRADE: {
        if (race == SpaceRace.HUMAN) {
          bonusValue = 5;
-         bonusLasting = 80;
+         bonusLasting = 110;
        } else {
          bonusValue = 4;
-         bonusLasting = 80;
+         bonusLasting = 100;
        }
        break;
      }
@@ -140,24 +140,24 @@ public class DiplomacyBonus {
      }
      case MADE_DEMAND: {
        if (race == SpaceRace.SPORKS) {
-         bonusValue = -1;
-         bonusLasting = 128;
+         bonusValue = -10;
+         bonusLasting = 150;
        } else {
          bonusValue = -5;
-         bonusLasting = 200;
+         bonusLasting = 80;
        }
        break;
      }
      case INSULT: {
        if (race == SpaceRace.SPORKS) {
          bonusValue = -2;
-         bonusLasting = 80;
+         bonusLasting = 60;
        } else if (race == SpaceRace.MECHIONS) {
          bonusValue = -1;
-         bonusLasting = 40;
+         bonusLasting = 20;
        } else {
          bonusValue = -3;
-         bonusLasting = 100;
+         bonusLasting = 70;
        }
        break;
      }

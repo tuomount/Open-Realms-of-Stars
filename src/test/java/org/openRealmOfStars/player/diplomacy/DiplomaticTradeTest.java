@@ -230,12 +230,15 @@ public class DiplomaticTradeTest {
     tech2.addTech(new Tech("DefTech2", TechType.Defense, 1));
     tech2.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech2.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
+    NewsCorpData newsCorp = Mockito.mock(NewsCorpData.class);
+    Mockito.when(newsCorp.getMilitaryDifference(Mockito.anyInt(), Mockito.anyInt())).thenReturn(-100);
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(player1);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(player2);
     Mockito.when(map.getPlayerList()).thenReturn(players);
     Mockito.when(map.getPlayerByIndex(0)).thenReturn(player1);
     Mockito.when(map.getPlayerByIndex(1)).thenReturn(player2);
+    Mockito.when(map.getNewsCorpData()).thenReturn(newsCorp);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     NegotiationList offer = new NegotiationList();
     offer.add(new NegotiationOffer(NegotiationType.CREDIT, 80));
@@ -254,6 +257,18 @@ public class DiplomaticTradeTest {
     offer = new NegotiationList();
     // Just empty list
     trade.setSecondOffer(offer);
+    // Second player has greatly bigger army so not agreeing
+    assertEquals(false, trade.isOfferGoodForBoth());
+    
+    Mockito.when(newsCorp.getMilitaryDifference(Mockito.anyInt(), Mockito.anyInt())).thenReturn(50);
+    trade = new DiplomaticTrade(map, 0, 1);
+    offer = new NegotiationList();
+    offer.add(new NegotiationOffer(NegotiationType.CREDIT, 15));
+    trade.setFirstOffer(offer);
+    offer = new NegotiationList();
+    // Just empty list
+    trade.setSecondOffer(offer);
+    // First player has bigger army so now agreeing
     assertEquals(true, trade.isOfferGoodForBoth());
   }
 

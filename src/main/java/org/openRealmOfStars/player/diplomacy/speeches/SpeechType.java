@@ -105,6 +105,7 @@ public enum SpeechType {
       case LIKE_GREET:     return "Like greet";
       case HATE_GREET:     return "Hate greet";
       case FRIENDS_GREET:  return "Friends greet";
+      case PEACE_OFFER:    return "Peace offer";
       default: return "Unknown";
     }
   }

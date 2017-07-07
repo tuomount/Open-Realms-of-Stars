@@ -2,6 +2,7 @@ package org.openRealmOfStars.AI.Mission;
 
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameState;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -405,6 +406,7 @@ public final class MissionHandling {
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
       if (infoAtTarget != null) {
         if (infoAtTarget.isHuman()) {
+          SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
           game.changeGameState(GameState.DIPLOMACY_VIEW, info);
         } else {
           int index = map.getPlayerList().getIndex(infoAtTarget);
@@ -444,6 +446,7 @@ public final class MissionHandling {
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
       if (infoAtTarget != null) {
         if (infoAtTarget.isHuman()) {
+          SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
           game.changeGameState(GameState.DIPLOMACY_VIEW, info);
         } else {
           int index = map.getPlayerList().getIndex(infoAtTarget);

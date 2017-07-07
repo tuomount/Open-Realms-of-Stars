@@ -13,6 +13,7 @@ import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionHandling;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.GameState;
@@ -337,6 +338,7 @@ public class AITurnView extends BlackPanel {
           } else {
             if (owner.isHuman()) {
               // For human start diplomacy view
+              SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
               game.changeGameState(GameState.DIPLOMACY_VIEW, info);
             } else {
               MissionHandling.handleDiplomacyBetweenAis(game, info, ownerIndex);

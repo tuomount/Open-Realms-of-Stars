@@ -108,6 +108,11 @@ public final class SoundPlayer {
   public static final String ENGINE3 = "/resources/sounds/engine3.wav";
 
   /**
+   * Sound effect for hailing calls
+   */
+  public static final String RADIO_CALL = "/resources/sounds/radiocall.wav";
+
+  /**
    * Is Sound enabled
    * @return True if sound enabled
    */

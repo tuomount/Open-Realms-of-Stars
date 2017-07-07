@@ -1143,7 +1143,7 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand().equals(
           GameCommands.COMMAND_HAIL_FLEET_PLANET)) {
         changeGameState(GameState.DIPLOMACY_VIEW, planetView);
-        SoundPlayer.playMenuSound();
+        SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
       }
       planetView.handleAction(arg0);
     }
@@ -1160,7 +1160,7 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand().equals(
           GameCommands.COMMAND_HAIL_FLEET_PLANET)) {
         changeGameState(GameState.DIPLOMACY_VIEW, fleetView);
-        SoundPlayer.playMenuSound();
+        SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
       }
       fleetView.handleAction(arg0);
     }

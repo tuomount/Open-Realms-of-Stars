@@ -78,7 +78,7 @@ public class StatisticPanel extends JPanel {
    */
   public static final Color[] PLAYER_COLORS = {new Color(24, 0, 255),
       new Color(0, 255, 18), new Color(255, 255, 255), new Color(255, 162, 0),
-      new Color(11, 255, 241), new Color(233, 44, 255), new Color(188, 0, 0),
+      new Color(11, 255, 241), new Color(188, 0, 0), new Color(233, 44, 255),
       new Color(0, 71, 121)};
 
   /**

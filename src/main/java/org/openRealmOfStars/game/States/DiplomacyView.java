@@ -752,6 +752,39 @@ public class DiplomacyView extends BlackPanel {
         }
       }
       if (speechSelected != null
+          && speechSelected.getType() == SpeechType.DEMAND) {
+        NegotiationList list1 = new NegotiationList();
+        NegotiationList list2 = getOfferingList(aiTechListOffer,
+            aiMapOffer.isSelected(), aiFleetListOffer, aiPlanetListOffer,
+            aiCredits);
+        trade.setFirstOffer(list2);
+        trade.setSecondOffer(list1);
+        int humanIndex = starMap.getPlayerList().getIndex(human);
+        ai.getDiplomacy().getDiplomacyList(humanIndex).addBonus(
+            DiplomacyBonusType.MADE_DEMAND, ai.getRace());
+        if (trade.isOfferGoodForBoth()) {
+          trade.doTrades();
+          updatePanel(SpeechType.AGREE);
+          resetChoices();
+        } else {
+          Attitude attitude = ai.getAiAttitude();
+          int liking = ai.getDiplomacy().getLiking(humanIndex);
+          int warChance = DiplomaticTrade.getWarChanceForDecline(
+              SpeechType.DEMAND, attitude, liking);
+          int value = DiceGenerator.getRandom(99);
+          if (value < warChance) {
+            trade.generateEqualTrade(NegotiationType.WAR);
+            trade.doTrades();
+            //TODO Add NewCorp about the war
+            updatePanel(SpeechType.DECLINE_WAR);
+            resetChoices();
+          } else {
+            updatePanel(SpeechType.DECLINE_ANGER);
+            resetChoices();
+          }
+        }
+      }
+      if (speechSelected != null
           && speechSelected.getType() == SpeechType.TRADE) {
         NegotiationList list1 = getOfferingList(humanTechListOffer,
             humanMapOffer.isSelected(), humanFleetListOffer,

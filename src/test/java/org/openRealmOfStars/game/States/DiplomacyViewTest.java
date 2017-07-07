@@ -10,6 +10,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.utilities.repository.GameRepository;
@@ -148,6 +149,10 @@ public class DiplomacyViewTest {
     diplomacyView.getHumanLines().setSelectedIndex(2);
     diplomacyView.handleAction(action);
     assertEquals("War", human.getDiplomacy().getDiplomaticRelation(1));
+    diplomacyView.getHumanLines().setSelectedIndex(1);
+    diplomacyView.handleAction(action);
+    assertEquals(true, ai.getDiplomacy().getDiplomacyList(0)
+        .isBonusType(DiplomacyBonusType.MADE_DEMAND));
   }
 
 }

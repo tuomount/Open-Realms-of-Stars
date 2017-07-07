@@ -250,8 +250,7 @@ public class DiplomacyView extends BlackPanel {
     aiImg.setRaceToShow(ai.getRace().getNameSingle());
     aiImg.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(aiImg);
-    likenessLabel = new TransparentLabel(panel, ai.getDiplomacy()
-        .getLikingAsString(humanIndex));
+    likenessLabel = new TransparentLabel(panel, "Friends Trade Alliance");
     likenessLabel.setForeground(ai.getDiplomacy().getLikingAsColor(humanIndex));
     likenessLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(likenessLabel);
@@ -361,10 +360,11 @@ public class DiplomacyView extends BlackPanel {
       speechLines.add(SpeechFactory.createLine(SpeechType.DEMAND,
           human.getRace()));
       if (ai.getDiplomacy().isTradeAlliance(humanIndex)
-          && ai.getDiplomacy().isPeace(humanIndex)) {
+          && ai.getDiplomacy().isPeace(humanIndex)
+          && !ai.getDiplomacy().isAlliance(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.ALLIANCE,
             human.getRace()));
-      } else if (ai.getDiplomacy().isAlliance(humanIndex)
+      } else if (!ai.getDiplomacy().isAlliance(humanIndex)
           && ai.getDiplomacy().isPeace(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.TRADE_ALLIANCE,
             human.getRace()));
@@ -674,8 +674,8 @@ public class DiplomacyView extends BlackPanel {
           && speechSelected.getType() == SpeechType.AGREE) {
         // TODO there should be another speech line when agreeing AI's
         // offer
-        updatePanel(SpeechType.AGREE);
         trade.doTrades();
+        updatePanel(SpeechType.AGREE);
         resetChoices();
       }
       if (speechSelected != null
@@ -710,6 +710,48 @@ public class DiplomacyView extends BlackPanel {
         }
       }
       if (speechSelected != null
+          && speechSelected.getType() == SpeechType.TRADE_ALLIANCE) {
+        NegotiationList list1 = getOfferingList(humanTechListOffer,
+            humanMapOffer.isSelected(), humanFleetListOffer,
+            humanPlanetListOffer, humanCredits);
+        list1.add(new NegotiationOffer(NegotiationType.TRADE_ALLIANCE, null));
+        NegotiationList list2 = getOfferingList(aiTechListOffer,
+            aiMapOffer.isSelected(), aiFleetListOffer, aiPlanetListOffer,
+            aiCredits);
+        list2.add(new NegotiationOffer(NegotiationType.TRADE_ALLIANCE, null));
+        trade.setFirstOffer(list2);
+        trade.setSecondOffer(list1);
+        if (trade.isOfferGoodForBoth()) {
+          trade.doTrades();
+          updatePanel(SpeechType.AGREE);
+          resetChoices();
+          //TODO add news corp that human made trade alliance with AI
+        } else {
+          updatePanel(SpeechType.DECLINE);
+        }
+      }
+      if (speechSelected != null
+          && speechSelected.getType() == SpeechType.ALLIANCE) {
+        NegotiationList list1 = getOfferingList(humanTechListOffer,
+            humanMapOffer.isSelected(), humanFleetListOffer,
+            humanPlanetListOffer, humanCredits);
+        list1.add(new NegotiationOffer(NegotiationType.ALLIANCE, null));
+        NegotiationList list2 = getOfferingList(aiTechListOffer,
+            aiMapOffer.isSelected(), aiFleetListOffer, aiPlanetListOffer,
+            aiCredits);
+        list2.add(new NegotiationOffer(NegotiationType.ALLIANCE, null));
+        trade.setFirstOffer(list2);
+        trade.setSecondOffer(list1);
+        if (trade.isOfferGoodForBoth()) {
+          trade.doTrades();
+          updatePanel(SpeechType.AGREE);
+          resetChoices();
+          //TODO add news corp that human made trade alliance with AI
+        } else {
+          updatePanel(SpeechType.DECLINE);
+        }
+      }
+      if (speechSelected != null
           && speechSelected.getType() == SpeechType.TRADE) {
         NegotiationList list1 = getOfferingList(humanTechListOffer,
             humanMapOffer.isSelected(), humanFleetListOffer,
@@ -720,8 +762,8 @@ public class DiplomacyView extends BlackPanel {
         trade.setFirstOffer(list2);
         trade.setSecondOffer(list1);
         if (trade.isOfferGoodForBoth()) {
-          updatePanel(SpeechType.AGREE);
           trade.doTrades();
+          updatePanel(SpeechType.AGREE);
           resetChoices();
         } else {
           updatePanel(SpeechType.DECLINE);
@@ -751,8 +793,8 @@ public class DiplomacyView extends BlackPanel {
         trade.setFirstOffer(list2);
         trade.setSecondOffer(list1);
         if (trade.isOfferGoodForBoth()) {
-          updatePanel(SpeechType.AGREE);
           trade.doTrades();
+          updatePanel(SpeechType.AGREE);
           resetChoices();
           //TODO add news corp that human made peace with AI
         } else {
@@ -768,5 +810,13 @@ public class DiplomacyView extends BlackPanel {
    */
   public void updateMeetingNumbers() {
     trade.updateMeetingNumbers();
+  }
+
+  /**
+   * Get human lines component
+   * @return JList of human lines
+   */
+  public JList<SpeechLine> getHumanLines() {
+    return humanLines;
   }
 }

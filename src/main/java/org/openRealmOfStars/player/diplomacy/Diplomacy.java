@@ -256,7 +256,7 @@ public class Diplomacy {
   /**
    * Get diplomatic relations between two players
    * @param playerIndex PLayer index to check
-   * @return String choices: "", "War", "Trade alliance", "Alliance"
+   * @return String choices: "", "War", "Trade alliance", "Alliance", "Peace"
    */
   public String getDiplomaticRelation(final int playerIndex) {
     String result = "";

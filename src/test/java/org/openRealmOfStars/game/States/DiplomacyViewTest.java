@@ -120,4 +120,34 @@ public class DiplomacyViewTest {
     assertEquals(0, diplomacyView.getHumanCredits());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTradeOffer() {
+    ActionListener listener = Mockito.mock(ActionListener.class);
+    GameRepository repository = new GameRepository();
+    StarMap starMap = repository.loadGame("src/test/resources/saves",
+                                          "testGame.save");
+    PlayerInfo human = starMap.getPlayerByIndex(0);
+    PlayerInfo ai = starMap.getPlayerByIndex(1);
+    DiplomacyView diplomacyView = new DiplomacyView(human, ai, starMap,
+        DiplomacyView.HUMAN_REGULAR, listener);
+    assertEquals(0, diplomacyView.getAiCredits());
+    assertEquals(0, diplomacyView.getHumanCredits());
+    ActionEvent action = Mockito.mock(ActionEvent.class);
+    Mockito.when(action.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_OK);
+    diplomacyView.getHumanLines().setSelectedIndex(0);
+    diplomacyView.handleAction(action);
+    assertEquals("Peace", human.getDiplomacy().getDiplomaticRelation(1));
+    diplomacyView.getHumanLines().setSelectedIndex(2);
+    diplomacyView.handleAction(action);
+    assertEquals("Trade alliance", human.getDiplomacy().getDiplomaticRelation(1));
+    diplomacyView.getHumanLines().setSelectedIndex(2);
+    diplomacyView.handleAction(action);
+    assertEquals("Alliance", human.getDiplomacy().getDiplomaticRelation(1));
+    diplomacyView.getHumanLines().setSelectedIndex(2);
+    diplomacyView.handleAction(action);
+    assertEquals("War", human.getDiplomacy().getDiplomaticRelation(1));
+  }
+
 }

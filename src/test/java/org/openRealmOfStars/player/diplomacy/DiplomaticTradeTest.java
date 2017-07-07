@@ -663,6 +663,28 @@ public class DiplomaticTradeTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testActualMapTrade() {
+    GameRepository repository = new GameRepository();
+    StarMap map = repository.loadGame("src/test/resources/saves",
+                                          "testGame.save");
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    NegotiationList offerList1 = new NegotiationList();
+    offerList1.add(new NegotiationOffer(NegotiationType.MAP, null));
+    NegotiationList offerList2 = new NegotiationList();
+    offerList2.add(new NegotiationOffer(NegotiationType.MAP, null));
+    trade.setFirstOffer(offerList1);
+    trade.setSecondOffer(offerList2);
+    trade.doTrades();
+    int bonus = map.getPlayerByIndex(0).getDiplomacy().getDiplomacyList(1)
+      .getDiplomacyBonus();
+    assertEquals(5, bonus);
+    bonus = map.getPlayerByIndex(1).getDiplomacy().getDiplomacyList(0)
+        .getDiplomacyBonus();
+      assertEquals(4, bonus);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testPlanetAndFleetNotGivingThemAway() {
     GameRepository repository = new GameRepository();
     StarMap map = repository.loadGame("src/test/resources/saves",

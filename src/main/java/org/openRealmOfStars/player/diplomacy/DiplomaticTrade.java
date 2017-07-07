@@ -11,6 +11,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -768,6 +769,27 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Change map for one player
+   * @param mapReceiver Player who is receiving the map
+   * @param mapGiver Player who is giving the map
+   */
+  private void doMapTrade(final PlayerInfo mapReceiver,
+      final PlayerInfo mapGiver) {
+    for (int y = 0; y < starMap.getMaxY(); y++) {
+      for (int x = 0; x < starMap.getMaxX(); x++) {
+        Coordinate coord = new Coordinate(x, y);
+        byte visibility = mapGiver.getSectorVisibility(coord);
+        if (visibility == PlayerInfo.FOG_OF_WAR
+            || visibility == PlayerInfo.VISIBLE) {
+          byte origVisiblity = mapReceiver.getSectorVisibility(coord);
+          if (origVisiblity == PlayerInfo.UNCHARTED) {
+            mapReceiver.setSectorVisibility(x, y, PlayerInfo.FOG_OF_WAR);
+          }
+        }
+      }
+    }
+  }
+  /**
    * Do trading for one player
    * @param offerList Trade goods aka offering list
    * @param info Player who is getting the stuff
@@ -803,7 +825,7 @@ public class DiplomaticTrade {
         break;
       }
       case MAP: {
-        //TODO Make map trade
+        doMapTrade(info, giver);
         break;
       }
       case DIPLOMAT: {
@@ -853,7 +875,14 @@ public class DiplomaticTrade {
     info = starMap.getPlayerByIndex(second);
     giver = starMap.getPlayerByIndex(first);
     int value2 = doTrade(secondOffer, info, giver);
-    if (value1 == 0 && value2 > 0) {
+    if (Math.abs(value1 - value2) < 5) {
+      info = starMap.getPlayerByIndex(second);
+      info.getDiplomacy().getDiplomacyList(first).addBonus(
+          DiplomacyBonusType.DIPLOMATIC_TRADE, info.getRace());
+      info = starMap.getPlayerByIndex(first);
+      info.getDiplomacy().getDiplomacyList(second).addBonus(
+          DiplomacyBonusType.DIPLOMATIC_TRADE, info.getRace());
+    } else if (value1 == 0 && value2 > 0) {
       info = starMap.getPlayerByIndex(second);
       info.getDiplomacy().getDiplomacyList(first).addBonus(
           DiplomacyBonusType.GIVEN_VALUABLE_FREE, info.getRace());

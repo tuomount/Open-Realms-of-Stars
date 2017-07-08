@@ -599,6 +599,61 @@ public class DiplomaticTrade {
     }
   }
   /**
+   * Offer by Militaristic attitude.
+   * This makes war quite easily and can make demands if
+   * does not like another player
+   */
+  public void generateMilitaristicAttitudeOffer() {
+    PlayerInfo info = starMap.getPlayerByIndex(first);
+    PlayerInfo agree = starMap.getPlayerByIndex(second);
+    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+        second);
+    if (power > 50 && info.getDiplomacy().getDiplomaticRelation(second)
+        .isEmpty()) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (power > 120 && info.getDiplomacy().getDiplomaticRelation(second)
+        .equals(Diplomacy.TRADE_ALLIANCE)) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (power > 220) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (info.getDiplomacy().getLiking(second) == Diplomacy.LIKE) {
+      if (DiceGenerator.getRandom(100) < 25) {
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    } else if (info.getDiplomacy().getLiking(second) == Diplomacy.FRIENDS) {
+      int value = DiceGenerator.getRandom(100);
+      if (value < 25) {
+        if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.TRADE_ALLIANCE)) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    }
+    int value = DiceGenerator.getRandom(100);
+    if (value < 34) {
+      generateMapTrade(TRADE);
+    } else if (value < 67) {
+      generateTechTrade(TRADE);
+    } else {
+      if (!info.getDiplomacy().getDiplomaticRelation(second)
+          .equals(Diplomacy.ALLIANCE)) {
+        generateTechDemand(agree);
+      } else {
+        generateMapTrade(BUY);
+      }
+    }
+  }
+  /**
    * Very basic offer by logical attitude.
    * This makes war only if power difference goes too big.
    */
@@ -683,8 +738,7 @@ public class DiplomaticTrade {
           break;
         }
         case MILITARISTIC: {
-          // TODO fix correct offer
-          generateLogicalAttitudeOffer();
+          generateMilitaristicAttitudeOffer();
           break;
         }
         case PEACEFUL: {

@@ -537,6 +537,55 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Offer by scientific attitude.
+   * Tries to focus trading or buying the tech
+   */
+  public void generateScientificAttitudeOffer() {
+    PlayerInfo info = starMap.getPlayerByIndex(first);
+    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+        second);
+    if (power > 100 && info.getDiplomacy().getDiplomaticRelation(second)
+        .isEmpty()) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (power > 200 && info.getDiplomacy().getDiplomaticRelation(second)
+        .equals(Diplomacy.TRADE_ALLIANCE)) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (power > 400) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (info.getDiplomacy().getLiking(second) == Diplomacy.LIKE) {
+      if (DiceGenerator.getRandom(100) < 40) {
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    } else if (info.getDiplomacy().getLiking(second) == Diplomacy.FRIENDS) {
+      int value = DiceGenerator.getRandom(100);
+      if (value < 40) {
+        if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.TRADE_ALLIANCE)) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    }
+    int value = DiceGenerator.getRandom(100);
+    if (value < 40) {
+      generateTechTrade(TRADE);
+    } else if (value < 80) {
+      generateTechTrade(BUY);
+    } else {
+      generateMapTrade(TRADE);
+    }
+  }
+
+  /**
    * Offer by merchantical attitude.
    * This tries to buy and sell offerings
    */
@@ -792,8 +841,7 @@ public class DiplomaticTrade {
           break;
         }
         case SCIENTIFIC: {
-          // TODO fix correct offer
-          generateLogicalAttitudeOffer();
+          generateScientificAttitudeOffer();
           break;
         }
         default: {

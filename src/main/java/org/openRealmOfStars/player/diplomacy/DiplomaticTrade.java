@@ -700,6 +700,52 @@ public class DiplomaticTrade {
     }
   }
   /**
+   * Offer by peaceful attitude.
+   * This makes war only if power difference goes too big.
+   */
+  public void generatePeacefulAttitudeOffer() {
+    PlayerInfo info = starMap.getPlayerByIndex(first);
+    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+        second);
+    if (power > 200 && info.getDiplomacy().getDiplomaticRelation(second)
+        .isEmpty()) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (power > 400 && info.getDiplomacy().getDiplomaticRelation(second)
+        .equals(Diplomacy.TRADE_ALLIANCE)) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (power > 600) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (info.getDiplomacy().getLiking(second) == Diplomacy.LIKE) {
+      if (DiceGenerator.getRandom(100) < 50) {
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    } else if (info.getDiplomacy().getLiking(second) == Diplomacy.FRIENDS) {
+      int value = DiceGenerator.getRandom(100);
+      if (value < 50) {
+        if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.TRADE_ALLIANCE)) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    }
+    int value = DiceGenerator.getRandom(100);
+    if (value < 50) {
+      generateMapTrade(TRADE);
+    } else {
+      generateTechTrade(TRADE);
+    }
+  }
+  /**
    * Generate diplomatic trade offer between two players
    */
   public void generateOffer() {
@@ -742,8 +788,7 @@ public class DiplomaticTrade {
           break;
         }
         case PEACEFUL: {
-          // TODO fix correct offer
-          generateLogicalAttitudeOffer();
+          generatePeacefulAttitudeOffer();
           break;
         }
         case SCIENTIFIC: {

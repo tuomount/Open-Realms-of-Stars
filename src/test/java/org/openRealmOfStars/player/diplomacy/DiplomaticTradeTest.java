@@ -798,6 +798,36 @@ public class DiplomaticTradeTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPeacefulOffer() {
+    StarMap map = generateMapWithPlayer(SpaceRace.MECHIONS,600);
+    map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.LOGICAL);
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    trade.getTradeableTechListForFirst();
+    trade.getTradeableTechListForSecond();
+    trade.generatePeacefulAttitudeOffer();
+    assertEquals(NegotiationType.WAR, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+    map = generateMapWithPlayer(SpaceRace.MECHIONS,0);
+    map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.LOGICAL);
+    trade = new DiplomaticTrade(map, 0, 1);
+    trade.getTradeableTechListForFirst();
+    trade.getTradeableTechListForSecond();
+    trade.generatePeacefulAttitudeOffer();
+    NegotiationType type1 = trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType();
+    NegotiationType type2 = trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType();
+    if (type1 == type2 
+        && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH)) {
+      return;
+    }
+    assertFalse(true);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testExpansionistOffer() {
     StarMap map = generateMapWithPlayer(SpaceRace.MECHIONS,300);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.LOGICAL);

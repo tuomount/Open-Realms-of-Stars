@@ -58,6 +58,7 @@ public final class SpeechFactory {
       case FRIENDS_GREET: return createFriendsGreetLine(race);
       case PEACE_OFFER: return createPeaceOfferLine(race);
       case INSULT_RESPOND: return createInsultRespondLine(race);
+      case OFFER_REJECTED: return createOfferRejectedLine(race);
       default: return null;
     }
   }
@@ -318,6 +319,32 @@ public final class SpeechFactory {
           "No deal!");
       case TEUTHIDAES: return new SpeechLine(type,
           "Offer does not please me.");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Offer rejected SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createOfferRejectedLine(final SpaceRace race) {
+    SpeechType type = SpeechType.OFFER_REJECTED;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "So maybe next time then...");
+      case GREYANS: return new SpeechLine(type,
+          "Hmm, do you have counter offer?");
+      case HUMAN: return new SpeechLine(type,
+          "I am waiting your counter offer then.");
+      case MECHIONS: return new SpeechLine(type,
+          "Acknowledge! Offer?");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We are waiting your counter offer...");
+      case SPORKS: return new SpeechLine(type,
+          "So, do you have an offer?");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "I understand. Please do you have counter offer?");
       default: return null;
     }
   }

@@ -706,9 +706,7 @@ public class DiplomacyView extends BlackPanel {
           if (speechSelected.getType() == SpeechType.DECLINE_ANGER) {
             updatePanel(SpeechType.INSULT_RESPOND);
           } else {
-            // TODO there should be another speech line when decline AI's
-            // offer
-            updatePanel(SpeechType.AGREE);
+            updatePanel(SpeechType.OFFER_REJECTED);
           }
           resetChoices();
         }

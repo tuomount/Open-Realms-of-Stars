@@ -81,6 +81,15 @@ public class SpeechFactoryTest {
       line = SpeechFactory.createLine(SpeechType.PEACE_OFFER, race);
       assertNotEquals(null, line);
       assertEquals(SpeechType.PEACE_OFFER, line.getType());
+      line = SpeechFactory.createLine(SpeechType.INSULT_RESPOND, race);
+      assertNotEquals(null, line);
+      assertEquals(SpeechType.INSULT_RESPOND, line.getType());
+      line = SpeechFactory.createLine(SpeechType.OFFER_REJECTED, race);
+      assertNotEquals(null, line);
+      assertEquals(SpeechType.OFFER_REJECTED, line.getType());
+      line = SpeechFactory.createLine(SpeechType.OFFER_ACCEPTED, race);
+      assertNotEquals(null, line);
+      assertEquals(SpeechType.OFFER_ACCEPTED, line.getType());
     }
   }
 

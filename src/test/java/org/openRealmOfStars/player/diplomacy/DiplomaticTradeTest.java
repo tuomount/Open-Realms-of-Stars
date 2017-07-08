@@ -378,12 +378,12 @@ public class DiplomaticTradeTest {
   public void testMapTrade() {
     StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
-    trade.generateMapTrade(map.getPlayerByIndex(1), false);
+    trade.generateMapTrade(DiplomaticTrade.TRADE);
     assertEquals(NegotiationType.MAP, trade.getFirstOffer().getByIndex(0)
         .getNegotiationType());
     assertEquals(NegotiationType.MAP, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
-    trade.generateMapTrade(map.getPlayerByIndex(1), true);
+    trade.generateMapTrade(DiplomaticTrade.BUY);
     assertEquals(NegotiationType.MAP, trade.getFirstOffer().getByIndex(0)
         .getNegotiationType());
     assertEquals(NegotiationType.CREDIT, trade.getSecondOffer().getByIndex(0)
@@ -646,12 +646,12 @@ public class DiplomaticTradeTest {
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
     trade.getTradeableTechListForSecond();
-    trade.generateTechTrade(map.getPlayerByIndex(1), false);
+    trade.generateTechTrade(DiplomaticTrade.TRADE);
     assertEquals(NegotiationType.TECH, trade.getFirstOffer().getByIndex(0)
         .getNegotiationType());
     assertEquals(NegotiationType.TECH, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
-    trade.generateTechTrade(map.getPlayerByIndex(1), true);
+    trade.generateTechTrade(DiplomaticTrade.BUY);
     assertEquals(NegotiationType.TECH, trade.getFirstOffer().getByIndex(0)
         .getNegotiationType());
     assertEquals(NegotiationType.CREDIT, trade.getSecondOffer().getByIndex(0)
@@ -910,7 +910,7 @@ public class DiplomaticTradeTest {
     trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
     trade.getTradeableTechListForSecond();
-    trade.generateBackstabbingAttitudeOffer();
+    trade.generateDiplomaticAttitudeOffer();
     if (trade.getFirstOffer().getByIndex(0) != null) {
       NegotiationType type1 = trade.getFirstOffer().getByIndex(0)
           .getNegotiationType();
@@ -919,9 +919,36 @@ public class DiplomaticTradeTest {
       }
       assertFalse(true);
     } 
-    NegotiationType type2 = trade.getFirstOffer().getByIndex(1)
-        .getNegotiationType();
-    assertEquals(NegotiationType.CREDIT, type2);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMerchanticalOffer() {
+    StarMap map = generateMapWithPlayer(SpaceRace.SPORKS,300);
+    map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    trade.getTradeableTechListForFirst();
+    trade.getTradeableTechListForSecond();
+    trade.generateMerchanticalAttitudeOffer();
+    assertEquals(NegotiationType.WAR, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+    map = generateMapWithPlayer(SpaceRace.SPORKS,0);
+    map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);
+    trade = new DiplomaticTrade(map, 0, 1);
+    trade.getTradeableTechListForFirst();
+    trade.getTradeableTechListForSecond();
+    trade.generateMerchanticalAttitudeOffer();
+    if (trade.getFirstOffer().getByIndex(0) != null) {
+      NegotiationType type1 = trade.getFirstOffer().getByIndex(0)
+          .getNegotiationType();
+      if (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
+          || type1 == NegotiationType.CREDIT) {
+        return;
+      }
+      assertFalse(true);
+    } 
   }
 
 }

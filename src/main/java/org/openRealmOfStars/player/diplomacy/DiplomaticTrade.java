@@ -107,6 +107,19 @@ public class DiplomaticTrade {
    * insult;
    */
   public static final int DECLINE_INSULT = 10000;
+
+  /**
+   * Equal trade
+   */
+  public static final int TRADE = 0;
+  /**
+   * Buy trade
+   */
+  public static final int BUY = 1;
+  /**
+   * Sell trade
+   */
+  public static final int SELL = 2;
   /**
    * Constructor for Diplomatic trade.
    * @param map Starmap
@@ -153,28 +166,41 @@ public class DiplomaticTrade {
 
   /**
    * Generate Tech trade between two players.
-   * @param agreePlayer Who is need to agree with trade
-   * @param buy first player is buy tech instead of trading
+   * @param tradeType Choices are TRADE, BUY and SELL
    */
-  protected void generateTechTrade(final PlayerInfo agreePlayer,
-      final boolean buy) {
-    if (techListForFirst.size() > 0) {
+  protected void generateTechTrade(final int tradeType) {
+    PlayerInfo offerMaker = starMap.getPlayerByIndex(first);
+    PlayerInfo agree = starMap.getPlayerByIndex(second);
+    if (techListForFirst.size() > 0
+        && (tradeType == BUY || tradeType == TRADE)) {
       firstOffer = new NegotiationList();
       firstOffer.add(new NegotiationOffer(NegotiationType.TECH,
           techListForFirst.get(0)));
-      if (!buy && techListForSecond.size() > 0) {
+      if (tradeType == TRADE && techListForSecond.size() > 0) {
         secondOffer = new NegotiationList();
         secondOffer.add(new NegotiationOffer(NegotiationType.TECH,
             techListForSecond.get(0)));
       } else {
         int value = techListForFirst.get(0).getLevel() * 2;
-        if (agreePlayer.getTotalCredits() < value) {
-          value = agreePlayer.getTotalCredits();
+        if (offerMaker.getTotalCredits() < value) {
+          value = offerMaker.getTotalCredits();
         }
         secondOffer = new NegotiationList();
         secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
             new Integer(value)));
       }
+    }
+    if (tradeType == SELL && techListForSecond.size() > 0) {
+      int value = techListForSecond.get(0).getLevel() * 2;
+      if (agree.getTotalCredits() < value) {
+        value = agree.getTotalCredits();
+      }
+      firstOffer = new NegotiationList();
+      firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+          new Integer(value)));
+      secondOffer = new NegotiationList();
+      secondOffer.add(new NegotiationOffer(NegotiationType.TECH,
+          techListForSecond.get(0)));
     }
   }
   /**
@@ -213,24 +239,34 @@ public class DiplomaticTrade {
   }
   /**
    * Generate Map trade between two players.
-   * @param agreePlayer Who is need to agree with trade
-   * @param buy first player is buy tech instead of trading
+   * @param tradeType Choices are TRADE, BUY and SELL
    */
-  protected void generateMapTrade(final PlayerInfo agreePlayer,
-      final boolean buy) {
-    if (buy) {
+  protected void generateMapTrade(final int tradeType) {
+    PlayerInfo offerMaker = starMap.getPlayerByIndex(first);
+    PlayerInfo agree = starMap.getPlayerByIndex(second);
+    if (tradeType == BUY) {
       int value = 15;
-      if (agreePlayer.getTotalCredits() < value) {
-        value = agreePlayer.getTotalCredits();
+      if (offerMaker.getTotalCredits() < value) {
+        value = offerMaker.getTotalCredits();
       }
       firstOffer = new NegotiationList();
       firstOffer.add(new NegotiationOffer(NegotiationType.MAP, null));
       secondOffer = new NegotiationList();
       secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
           new Integer(value)));
-    } else {
+    } else if (tradeType == TRADE) {
       firstOffer = new NegotiationList();
       firstOffer.add(new NegotiationOffer(NegotiationType.MAP, null));
+      secondOffer = new NegotiationList();
+      secondOffer.add(new NegotiationOffer(NegotiationType.MAP, null));
+    } else {
+      int value = 15;
+      if (agree.getTotalCredits() < value) {
+        value = agree.getTotalCredits();
+      }
+      firstOffer = new NegotiationList();
+      firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+          new Integer(value)));
       secondOffer = new NegotiationList();
       secondOffer.add(new NegotiationOffer(NegotiationType.MAP, null));
     }
@@ -340,9 +376,9 @@ public class DiplomaticTrade {
     }
     int value = DiceGenerator.getRandom(100);
     if (value < 25) {
-      generateMapTrade(agree, false);
+      generateMapTrade(TRADE);
     } else if (value < 50) {
-      generateTechTrade(agree, false);
+      generateTechTrade(TRADE);
     } else {
       generateTechDemand(agree);
     }
@@ -401,9 +437,9 @@ public class DiplomaticTrade {
     }
     int value = DiceGenerator.getRandom(100);
     if (value < 40) {
-      generateMapTrade(agree, false);
+      generateMapTrade(TRADE);
     } else {
-      generateTechTrade(agree, false);
+      generateTechTrade(TRADE);
     }
   }
   /**
@@ -417,7 +453,6 @@ public class DiplomaticTrade {
    */
   public void generateDiplomaticAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
-    PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getNewsCorpData().getMilitaryDifference(first,
         second);
     if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second)
@@ -444,9 +479,9 @@ public class DiplomaticTrade {
     }
     int value = DiceGenerator.getRandom(100);
     if (value < 45) {
-      generateMapTrade(agree, false);
+      generateMapTrade(TRADE);
     } else if (value < 90) {
-      generateTechTrade(agree, false);
+      generateTechTrade(TRADE);
     } else {
       generateGift(info);
     }
@@ -458,7 +493,6 @@ public class DiplomaticTrade {
    */
   public void generateExpansionistAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
-    PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getNewsCorpData().getMilitaryDifference(first,
         second);
     if (power > 60 && info.getDiplomacy().getDiplomaticRelation(second)
@@ -494,21 +528,82 @@ public class DiplomaticTrade {
     }
     int value = DiceGenerator.getRandom(100);
     if (value < 40) {
-      generateMapTrade(agree, false);
+      generateMapTrade(TRADE);
     } else if (value < 80) {
-      generateMapTrade(agree, true);
+      generateMapTrade(BUY);
     } else {
-      generateTechTrade(agree, false);
+      generateTechTrade(TRADE);
     }
   }
 
+  /**
+   * Offer by merchantical attitude.
+   * This tries to buy and sell offerings
+   */
+  public void generateMerchanticalAttitudeOffer() {
+    PlayerInfo info = starMap.getPlayerByIndex(first);
+    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+        second);
+    if (power > 100 && info.getDiplomacy().getDiplomaticRelation(second)
+        .isEmpty()) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (power > 220 && info.getDiplomacy().getDiplomaticRelation(second)
+        .equals(Diplomacy.TRADE_ALLIANCE)) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (power > 440) {
+      generateEqualTrade(NegotiationType.WAR);
+      return;
+    }
+    if (info.getDiplomacy().getLiking(second) == Diplomacy.LIKE) {
+      if (DiceGenerator.getRandom(100) < 35) {
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    } else if (info.getDiplomacy().getLiking(second) == Diplomacy.FRIENDS) {
+      int value = DiceGenerator.getRandom(100);
+      if (value < 35) {
+        if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.TRADE_ALLIANCE)) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        generateEqualTrade(NegotiationType.TRADE_ALLIANCE);
+        return;
+      }
+    }
+    int value = DiceGenerator.getRandom(5);
+    switch (value) {
+      case 0:
+      default: {
+        generateMapTrade(TRADE); break;
+      }
+      case 1: {
+        generateMapTrade(BUY); break;
+      }
+      case 2: {
+        generateMapTrade(SELL); break;
+      }
+      case 3: {
+        generateTechTrade(TRADE); break;
+      }
+      case 4: {
+        generateTechTrade(BUY); break;
+      }
+      case 5: {
+        generateTechTrade(SELL); break;
+      }
+    }
+  }
   /**
    * Very basic offer by logical attitude.
    * This makes war only if power difference goes too big.
    */
   public void generateLogicalAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
-    PlayerInfo agree = starMap.getPlayerByIndex(second);
     int power = starMap.getNewsCorpData().getMilitaryDifference(first,
         second);
     if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second)
@@ -544,9 +639,9 @@ public class DiplomaticTrade {
     }
     int value = DiceGenerator.getRandom(100);
     if (value < 50) {
-      generateMapTrade(agree, false);
+      generateMapTrade(TRADE);
     } else {
-      generateTechTrade(agree, false);
+      generateTechTrade(TRADE);
     }
   }
   /**
@@ -584,8 +679,7 @@ public class DiplomaticTrade {
           break;
         }
         case MERCHANTICAL: {
-          // TODO fix correct offer
-          generateLogicalAttitudeOffer();
+          generateMerchanticalAttitudeOffer();
           break;
         }
         case MILITARISTIC: {

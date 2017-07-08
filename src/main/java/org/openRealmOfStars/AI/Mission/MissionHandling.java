@@ -323,6 +323,11 @@ public final class MissionHandling {
   public static void mergeFleets(final Fleet fleet, final PlayerInfo info) {
     // Merging fleets
     String[] part = fleet.getName().split("#");
+    if (part[0].contains("Scout")
+        || part[0].contains("Explorer")) {
+      // Do not merge scout fleets.
+      return;
+    }
     for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
       // Merge fleets in same space with same starting of fleet name
       Fleet mergeFleet = info.getFleets().getByIndex(j);

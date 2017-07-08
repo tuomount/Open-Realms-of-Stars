@@ -1016,6 +1016,27 @@ public class StarMap {
   }
 
   /**
+   * Get the closest home port for player
+   * @param info Player who is looking for closest home planet
+   * @param currentPos Current position in starmap
+   * @return Closest planet or null if no planet found
+   */
+  public Planet getClosestHomePort(final PlayerInfo info,
+      final Coordinate currentPos) {
+    double distance = 9999.0;
+    Planet result = null;
+    for (Planet planet : planetList) {
+      if (planet.getPlanetPlayerInfo() == info) {
+        double dist = currentPos.calculateDistance(planet.getCoordinate());
+        if (dist < distance) {
+          distance = dist;
+          result = planet;
+        }
+      }
+    }
+    return result;
+  }
+  /**
    * Get Fleet by fleetTile
    * @param fleetTile to get the fleet
    * @return Fleet by FleetTile

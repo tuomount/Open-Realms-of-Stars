@@ -41,7 +41,11 @@ public enum MissionType {
   /**
    * Attack the planet
    */
-  ATTACK;
+  ATTACK,
+  /**
+   * Move to target, simple mission just moving the fleet
+   */
+  MOVE;
 
   /**
    * Get Mission type with index
@@ -57,6 +61,8 @@ public enum MissionType {
       return 2;
     case ATTACK:
       return 3;
+    case MOVE:
+      return 4;
     default:
       return 0;
     }
@@ -73,6 +79,8 @@ public enum MissionType {
       return "Defend";
     case ATTACK:
       return "Attack";
+    case MOVE:
+      return "Move";
     default:
       return "Unknown";
     }

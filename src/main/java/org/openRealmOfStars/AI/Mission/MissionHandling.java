@@ -189,6 +189,49 @@ public final class MissionHandling {
 
       } else if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getRoute() == null) {
+        Coordinate coord = new Coordinate(mission.getX(), mission.getY());
+        if (info.getSectorVisibility(coord) == PlayerInfo.VISIBLE) {
+          Planet planet = game.getStarMap().getPlanetByCoordinate(coord.getX(),
+              coord.getY());
+          if (planet.getPlanetOwnerIndex() != -1) {
+            // Planet has been colonized so no longer colonization mission.
+            Planet homePort = game.getStarMap().getClosestHomePort(info,
+                fleet.getCoordinate());
+            mission.setTarget(homePort.getCoordinate());
+            mission.setTargetPlanet(homePort.getName());
+            mission.setMissionTime(0);
+            mission.setPhase(MissionPhase.PLANNING);
+            mission.setType(MissionType.MOVE);
+          }
+        }
+        makeReroute(game, fleet, info, mission);
+      }
+    } // End of colonize
+
+  }
+
+  /**
+   * Handle Colonize mission
+   * @param mission Colonize mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleMove(final Mission mission, final Fleet fleet,
+      final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.MOVE) {
+      if (mission.getPhase() != MissionPhase.TREKKING) {
+        Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
+            mission.getY(), fleet.getFleetFtlSpeed());
+        fleet.setRoute(route);
+        mission.setPhase(MissionPhase.TREKKING);
+      }
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
+        // Target acquired, mission complete
+        info.getMissions().remove(mission);
+      } else if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
         makeReroute(game, fleet, info, mission);
       }
     } // End of colonize

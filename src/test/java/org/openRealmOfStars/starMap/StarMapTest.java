@@ -232,6 +232,81 @@ public class StarMapTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStarMapClosestHomeWorld() {
+    GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
+    Mockito.when(config.getSizeX()).thenReturn(75);
+    Mockito.when(config.getSizeY()).thenReturn(75);
+    Mockito.when(config.getMaxPlayers()).thenReturn(2);
+    Mockito.when(config.getStartingPosition()).thenReturn(
+        GalaxyConfig.START_POSITION_RANDOM);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
+    MessageList msgList = Mockito.mock(MessageList.class);
+    Mockito.when(info.getMsgList()).thenReturn(msgList);
+    ShipStat[] stats = new ShipStat[0];
+    Mockito.when(info.getShipStatList()).thenReturn(stats);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    DiplomacyBonusList diplomacyList = Mockito.mock(DiplomacyBonusList.class);
+    Mockito.when(diplomacyList.isBonusType(DiplomacyBonusType.IN_WAR))
+        .thenReturn(false);
+    Mockito.when(diplomacy.getDiplomacyList(Mockito.anyInt())).thenReturn(diplomacyList);
+    Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
+
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRace.SPORKS);
+    Mockito.when(info2.getEmpireName()).thenReturn("Empire of Sporks");
+    msgList = Mockito.mock(MessageList.class);
+    Mockito.when(info2.getMsgList()).thenReturn(msgList);
+    stats = new ShipStat[0];
+    Mockito.when(info2.getShipStatList()).thenReturn(stats);
+
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+
+    Planet planet1 = Mockito.mock(Planet.class);
+    Mockito.when(planet1.getX()).thenReturn(5);
+    Mockito.when(planet1.getY()).thenReturn(7);
+    Mockito.when(planet1.getPlanetPlayerInfo()).thenReturn(info);
+    Planet planet2 = Mockito.mock(Planet.class);
+    Mockito.when(planet2.getX()).thenReturn(15);
+    Mockito.when(planet2.getY()).thenReturn(17);
+    Mockito.when(planet2.getPlanetPlayerInfo()).thenReturn(info);
+    Planet planet3 = Mockito.mock(Planet.class);
+    Mockito.when(planet3.getX()).thenReturn(25);
+    Mockito.when(planet3.getY()).thenReturn(27);
+    Mockito.when(planet3.getPlanetPlayerInfo()).thenReturn(info2);
+    Planet planet4 = Mockito.mock(Planet.class);
+    Mockito.when(planet4.getX()).thenReturn(35);
+    Mockito.when(planet4.getY()).thenReturn(37);
+    Mockito.when(planet4.getPlanetPlayerInfo()).thenReturn(info2);
+    Planet planetUnhabitated = Mockito.mock(Planet.class);
+    Mockito.when(planetUnhabitated.getX()).thenReturn(45);
+    Mockito.when(planetUnhabitated.getY()).thenReturn(47);
+    Mockito.when(planetUnhabitated.getPlanetPlayerInfo()).thenReturn(null);
+    ArrayList<Planet> list = new ArrayList<>();
+    list.add(planetUnhabitated);
+    list.add(planet1);
+    list.add(planet3);
+    list.add(planetUnhabitated);
+    list.add(planetUnhabitated);
+    list.add(planet4);
+    list.add(planetUnhabitated);
+    list.add(planet2);
+    list.add(planetUnhabitated);
+    list.add(planetUnhabitated);
+    StarMap map = new StarMap(config, players);
+    map.setPlanetList(list);
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mockito.when(coord.calculateDistance(Mockito.any(Coordinate.class))).thenReturn(3.2);
+    assertEquals(planet1, map.getClosestHomePort(info, coord));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testStarMapCreateWithMilitaryCompare() {
     GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
     Mockito.when(config.getSizeX()).thenReturn(50);

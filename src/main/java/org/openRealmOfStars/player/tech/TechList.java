@@ -531,6 +531,16 @@ public class TechList {
         int lvl = techLevels[i];
         Tech tech = TechFactory.createRandomTech(type, lvl,
             getListForTypeAndLevel(type, lvl));
+        if (tech == null) {
+          // Apparently tech level was already full,
+          // so let's increase level and try again later.
+          techResearchPoint[i] = techResearchPoint[i]
+              + TechFactory.getTechCost(techLevels[i]);
+          if (lvl < 10) {
+            techLevels[i] = techLevels[i] + 1;
+          }
+          return;
+        }
         addTech(tech);
         StringBuilder sb = new StringBuilder();
         sb.append(info.getEmpireName());

@@ -1,6 +1,7 @@
 package org.openRealmOfStars.player.diplomacy.speeches;
 
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
 *
@@ -59,6 +60,7 @@ public final class SpeechFactory {
       case PEACE_OFFER: return createPeaceOfferLine(race);
       case INSULT_RESPOND: return createInsultRespondLine(race);
       case OFFER_REJECTED: return createOfferRejectedLine(race);
+      case OFFER_ACCEPTED: return createOfferAcceptedLine(race);
       default: return null;
     }
   }
@@ -447,6 +449,39 @@ public final class SpeechFactory {
           "We accept your offer!");
       case SPORKS: return new SpeechLine(type,
           "Deal!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Excellent!");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Offer accepted SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createOfferAcceptedLine(final SpaceRace race) {
+    SpeechType type = SpeechType.OFFER_ACCEPTED;
+    switch (race) {
+      case CENTAURS: {
+        switch (DiceGenerator.getRandom(1)) {
+          default:
+          case 0: return new SpeechLine(type,
+              "This is a begin of friendship!");
+          case 1: return new SpeechLine(type,
+              "Magnificent trade!");
+        }
+      }
+      case GREYANS: return new SpeechLine(type,
+          "Fantastic!");
+      case HUMAN: return new SpeechLine(type,
+          "Glad to make business with you!");
+      case MECHIONS: return new SpeechLine(type,
+          "Acknowledge!");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We are happy to make trade with you!");
+      case SPORKS: return new SpeechLine(type,
+          "Happy to make business with you!");
       case TEUTHIDAES: return new SpeechLine(type,
           "Excellent!");
       default: return null;

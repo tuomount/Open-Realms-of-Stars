@@ -672,10 +672,8 @@ public class DiplomacyView extends BlackPanel {
       SpeechLine speechSelected = humanLines.getSelectedValue();
       if (speechSelected != null
           && speechSelected.getType() == SpeechType.AGREE) {
-        // TODO there should be another speech line when agreeing AI's
-        // offer
         trade.doTrades();
-        updatePanel(SpeechType.AGREE);
+        updatePanel(SpeechType.OFFER_ACCEPTED);
         resetChoices();
       }
       if (speechSelected != null

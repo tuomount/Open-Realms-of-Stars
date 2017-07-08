@@ -90,7 +90,11 @@ public enum SpeechType {
   /**
    * Offer has been rejected
    */
-  OFFER_REJECTED;
+  OFFER_REJECTED,
+  /**
+   * Offer has been accepted
+   */
+  OFFER_ACCEPTED;
 
   /**
    * Get Speech Type as a string.
@@ -116,6 +120,7 @@ public enum SpeechType {
       case PEACE_OFFER:    return "Peace offer";
       case INSULT_RESPOND: return "Insult respond";
       case OFFER_REJECTED: return "Offer rejected";
+      case OFFER_ACCEPTED: return "Offer accepted";
       default: return "Unknown";
     }
   }

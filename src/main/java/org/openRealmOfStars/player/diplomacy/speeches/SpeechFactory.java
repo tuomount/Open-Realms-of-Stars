@@ -57,6 +57,7 @@ public final class SpeechFactory {
       case LIKE_GREET: return createLikeGreetLine(race);
       case FRIENDS_GREET: return createFriendsGreetLine(race);
       case PEACE_OFFER: return createPeaceOfferLine(race);
+      case INSULT_RESPOND: return createInsultRespondLine(race);
       default: return null;
     }
   }
@@ -265,6 +266,32 @@ public final class SpeechFactory {
           "You call this a deal? Go away!");
       case TEUTHIDAES: return new SpeechLine(type,
           "Your offer repulses me.");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create respond for insult SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createInsultRespondLine(final SpaceRace race) {
+    SpeechType type = SpeechType.INSULT_RESPOND;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "You are rude, we should stomp on you!");
+      case GREYANS: return new SpeechLine(type,
+          "You do not seem sentient at all.");
+      case HUMAN: return new SpeechLine(type,
+          "Hmm, childish insulting...");
+      case MECHIONS: return new SpeechLine(type,
+          "Core dumped?");
+      case MOTHOIDS: return new SpeechLine(type,
+          "You are acting like a larvae!");
+      case SPORKS: return new SpeechLine(type,
+          "You are insulting me? How dare you!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "You are getting on my nerves!");
       default: return null;
     }
   }

@@ -82,7 +82,11 @@ public enum SpeechType {
   /**
    * Peace offer
    */
-  PEACE_OFFER;
+  PEACE_OFFER,
+  /**
+   * Respond for insult
+   */
+  INSULT_RESPOND;
 
   /**
    * Get Speech Type as a string.
@@ -106,6 +110,7 @@ public enum SpeechType {
       case HATE_GREET:     return "Hate greet";
       case FRIENDS_GREET:  return "Friends greet";
       case PEACE_OFFER:    return "Peace offer";
+      case INSULT_RESPOND: return "Insult respond";
       default: return "Unknown";
     }
   }

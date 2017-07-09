@@ -472,7 +472,12 @@ public class DiplomacyView extends BlackPanel {
     }
     likenessLabel.setText(text);
     likenessLabel.setForeground(ai.getDiplomacy().getLikingAsColor(humanIndex));
-    text = SpeechFactory.createLine(type, ai.getRace(), null).getLine();
+    if (type == SpeechType.NEUTRAL_GREET) {
+      text = SpeechFactory.createLine(type, ai.getRace(), human.getRace()
+          .getNameSingle()).getLine();
+    } else {
+      text = SpeechFactory.createLine(type, ai.getRace(), null).getLine();
+    }
     infoText.setText(text);
   }
 

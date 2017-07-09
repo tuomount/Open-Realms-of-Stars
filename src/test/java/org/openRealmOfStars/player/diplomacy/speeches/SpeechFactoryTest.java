@@ -63,9 +63,10 @@ public class SpeechFactoryTest {
       line = SpeechFactory.createLine(SpeechType.DEMAND, race, null);
       assertNotEquals(null, line);
       assertEquals(SpeechType.DEMAND, line.getType());
-      line = SpeechFactory.createLine(SpeechType.NEUTRAL_GREET, race, null);
+      line = SpeechFactory.createLine(SpeechType.NEUTRAL_GREET, race, "Spork");
       assertNotEquals(null, line);
       assertEquals(SpeechType.NEUTRAL_GREET, line.getType());
+      assertEquals(true, line.getLine().contains("Spork"));
       line = SpeechFactory.createLine(SpeechType.DISLIKE_GREET, race, null);
       assertNotEquals(null, line);
       assertEquals(SpeechType.DISLIKE_GREET, line.getType());
@@ -93,6 +94,11 @@ public class SpeechFactoryTest {
       line = SpeechFactory.createLine(SpeechType.ASK_MOVE_FLEET, race, "Fleet #1");
       assertNotEquals(null, line);
       assertEquals(SpeechType.ASK_MOVE_FLEET, line.getType());
+      assertEquals(true, line.getLine().contains("Fleet #1"));
+      line = SpeechFactory.createLine(SpeechType.MOVE_FLEET, race, null);
+      assertNotEquals(null, line);
+      assertEquals(SpeechType.MOVE_FLEET, line.getType());
+
     }
   }
 

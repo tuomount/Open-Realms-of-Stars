@@ -54,7 +54,7 @@ public final class SpeechFactory {
       case DECLINE_ANGER: return createDeclineAngerLine(race);
       case DECLINE_WAR: return createDeclineWarLine(race);
       case DEMAND: return createDemandLine(race);
-      case NEUTRAL_GREET: return createNeutralGreetLine(race);
+      case NEUTRAL_GREET: return createNeutralGreetLine(race, dynamicContent);
       case DISLIKE_GREET: return createDislikeGreetLine(race);
       case HATE_GREET: return createHateGreetLine(race);
       case LIKE_GREET: return createLikeGreetLine(race);
@@ -64,6 +64,7 @@ public final class SpeechFactory {
       case OFFER_REJECTED: return createOfferRejectedLine(race);
       case OFFER_ACCEPTED: return createOfferAcceptedLine(race);
       case ASK_MOVE_FLEET: return createAskMoveFleetLine(race, dynamicContent);
+      case MOVE_FLEET: return createMoveFleetLine(race);
       default: return null;
     }
   }
@@ -101,27 +102,55 @@ public final class SpeechFactory {
   }
 
   /**
-   * Create Neutral Greet SpeechLine according the race
+   * Create Move fleet SpeechLine according the race
    * @param race SpaceRace
    * @return SpeechLine or null if creating line fails
    */
-  private static SpeechLine createNeutralGreetLine(final SpaceRace race) {
+  private static SpeechLine createMoveFleetLine(final SpaceRace race) {
+    SpeechType type = SpeechType.MOVE_FLEET;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "I call my fleet back!");
+      case GREYANS: return new SpeechLine(type,
+          "My mistake, calling my fleet back!");
+      case HUMAN: return new SpeechLine(type,
+          "Sorry about the fleet. I'll call it back.");
+      case MECHIONS: return new SpeechLine(type,
+          "Fleet return to base!");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We'll call the fleet back!");
+      case SPORKS: return new SpeechLine(type,
+          "Fine I'll call the fleet back!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "I'll call the sp..am..ship back!");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Neutral Greet SpeechLine according the race
+   * @param race SpaceRace
+   * @param raceName Race name which they are meeting, not plural
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createNeutralGreetLine(final SpaceRace race,
+      final String raceName) {
     SpeechType type = SpeechType.NEUTRAL_GREET;
     switch (race) {
       case CENTAURS: return new SpeechLine(type,
-          "Don't be affaird of our big size.");
+          "Don't be affaird of our big size, " +  raceName + ".");
       case GREYANS: return new SpeechLine(type,
-          "Interesting! Another sentient race!");
+          "Interesting! " + raceName + " is sentient race!");
       case HUMAN: return new SpeechLine(type,
-          "Good day! Let's get know each others!");
+          "Good day! Let's get know each others, " + raceName +".");
       case MECHIONS: return new SpeechLine(type,
-          "Initiating neutral encounter protocol...");
+          "Initiating neutral encounter protocol with " + raceName + ".");
       case MOTHOIDS: return new SpeechLine(type,
-          "We come in peace!");
+          "We come in peace, " + raceName + "!");
       case SPORKS: return new SpeechLine(type,
-          "Peace or war, it's up to you!");
+          "Peace or war, it's up to you, "+ raceName + "!");
       case TEUTHIDAES: return new SpeechLine(type,
-          "We appear on peace to you...");
+          "We appear in peace to you..." +  raceName + "!");
       default: return null;
     }
   }

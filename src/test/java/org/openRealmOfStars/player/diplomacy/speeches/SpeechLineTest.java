@@ -58,6 +58,26 @@ public class SpeechLineTest {
     assertEquals("Demand/fubar?", line.toString());
     line = new SpeechLine(SpeechType.MAKE_WAR, "fubar?");
     assertEquals("Make War/fubar?", line.toString());
+    line = new SpeechLine(SpeechType.ASK_MOVE_FLEET, "fubar?");
+    assertEquals("Ask move fleet/fubar?", line.toString());
+    line = new SpeechLine(SpeechType.MOVE_FLEET, "fubar?");
+    assertEquals("Move fleet/fubar?", line.toString());
+    line = new SpeechLine(SpeechType.DISLIKE_GREET, "fubar?");
+    assertEquals("Dislike greet/fubar?", line.toString());
+    line = new SpeechLine(SpeechType.FRIENDS_GREET, "fubar?");
+    assertEquals("Friends greet/fubar?", line.toString());
+    line = new SpeechLine(SpeechType.HATE_GREET, "fubar?");
+    assertEquals("Hate greet/fubar?", line.toString());
+    line = new SpeechLine(SpeechType.INSULT_RESPOND, "fubar?");
+    assertEquals("Insult respond/fubar?", line.toString());
+    line = new SpeechLine(SpeechType.NEUTRAL_GREET, "fubar?");
+    assertEquals("Neutral greet/fubar?", line.toString());
+    line = new SpeechLine(SpeechType.OFFER_ACCEPTED, "fubar?");
+    assertEquals("Offer accepted/fubar?", line.toString());
+    line = new SpeechLine(SpeechType.OFFER_REJECTED, "fubar?");
+    assertEquals("Offer rejected/fubar?", line.toString());
+    line = new SpeechLine(SpeechType.PEACE_OFFER, "fubar?");
+    assertEquals("Peace offer/fubar?", line.toString());
   }
 
 }

@@ -94,7 +94,16 @@ public enum SpeechType {
   /**
    * Offer has been accepted
    */
-  OFFER_ACCEPTED;
+  OFFER_ACCEPTED,
+  /**
+   * Demand move fleet
+   */
+  ASK_MOVE_FLEET,
+  /**
+   * Agree to move fleet
+   */
+  MOVE_FLEET;
+
 
   /**
    * Get Speech Type as a string.
@@ -121,6 +130,8 @@ public enum SpeechType {
       case INSULT_RESPOND: return "Insult respond";
       case OFFER_REJECTED: return "Offer rejected";
       case OFFER_ACCEPTED: return "Offer accepted";
+      case ASK_MOVE_FLEET: return "Ask move fleet";
+      case MOVE_FLEET:     return "Move fleet";
       default: return "Unknown";
     }
   }

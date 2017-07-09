@@ -344,35 +344,35 @@ public class DiplomacyView extends BlackPanel {
     ArrayList<SpeechLine> speechLines = new ArrayList<>();
     if (startType == AI_REGULAR) {
       speechLines.add(SpeechFactory.createLine(SpeechType.AGREE,
-          human.getRace()));
+          human.getRace(), null));
       speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE,
-          human.getRace()));
+          human.getRace(), null));
       speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_ANGER,
-          human.getRace()));
+          human.getRace(), null));
       speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
-          human.getRace()));
+          human.getRace(), null));
     } else {
       if (!ai.getDiplomacy().isPeace(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.PEACE_OFFER,
-            human.getRace()));
+            human.getRace(), null));
       }
       speechLines.add(SpeechFactory.createLine(SpeechType.TRADE,
-          human.getRace()));
+          human.getRace(), null));
       speechLines.add(SpeechFactory.createLine(SpeechType.DEMAND,
-          human.getRace()));
+          human.getRace(), null));
       if (ai.getDiplomacy().isTradeAlliance(humanIndex)
           && ai.getDiplomacy().isPeace(humanIndex)
           && !ai.getDiplomacy().isAlliance(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.ALLIANCE,
-            human.getRace()));
+            human.getRace(), null));
       } else if (!ai.getDiplomacy().isAlliance(humanIndex)
           && ai.getDiplomacy().isPeace(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.TRADE_ALLIANCE,
-            human.getRace()));
+            human.getRace(), null));
       }
       if (!ai.getDiplomacy().isWar(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.MAKE_WAR,
-            human.getRace()));
+            human.getRace(), null));
       }
     }
     SpeechLine[] lines = new SpeechLine[speechLines.size()];
@@ -472,7 +472,7 @@ public class DiplomacyView extends BlackPanel {
     }
     likenessLabel.setText(text);
     likenessLabel.setForeground(ai.getDiplomacy().getLikingAsColor(humanIndex));
-    text = SpeechFactory.createLine(type, ai.getRace()).getLine();
+    text = SpeechFactory.createLine(type, ai.getRace(), null).getLine();
     infoText.setText(text);
   }
 

@@ -38,10 +38,12 @@ public final class SpeechFactory {
    * Create SpeechLine according the type and race
    * @param type SpeechType
    * @param race SpaceRace
+   * @param dynamicContent Dynamic content used in lines,
+   *        for example fleet name to move
    * @return SpeechLine or null if creating line fails
    */
   public static SpeechLine createLine(final SpeechType type,
-      final SpaceRace race) {
+      final SpaceRace race, final String dynamicContent) {
     switch (type) {
       case AGREE: return createAgreeLine(race);
       case TRADE: return createTradeLine(race);
@@ -61,6 +63,39 @@ public final class SpeechFactory {
       case INSULT_RESPOND: return createInsultRespondLine(race);
       case OFFER_REJECTED: return createOfferRejectedLine(race);
       case OFFER_ACCEPTED: return createOfferAcceptedLine(race);
+      case ASK_MOVE_FLEET: return createAskMoveFleetLine(race, dynamicContent);
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Ask move fleet SpeechLine according the race
+   * @param race SpaceRace
+   * @param fleetName Fleet which should be moved.
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createAskMoveFleetLine(final SpaceRace race,
+      final String fleetName) {
+    SpeechType type = SpeechType.ASK_MOVE_FLEET;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "Hey, your fleet called " + fleetName + "!");
+      case GREYANS: return new SpeechLine(type,
+          "Your fleet " + fleetName + " is on my sector!");
+      case HUMAN: return new SpeechLine(type,
+          "Your fleet " + fleetName
+          + " has crossed my sector. Please move it away!");
+      case MECHIONS: return new SpeechLine(type,
+          "Border crossed. Fleet " + fleetName + ". Move it!");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We have noticed your fleet " + fleetName
+          + " in our sector! Move it away immediately!");
+      case SPORKS: return new SpeechLine(type,
+          "Your ship has crossed our borders. Move fleet "
+          + fleetName + " now away!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "My scanners has detected your fleet "
+          + fleetName + " in our space. Move it away!");
       default: return null;
     }
   }

@@ -991,6 +991,9 @@ public class StarMap {
     if (fleet != null) {
       int x = fleet.getX();
       int y = fleet.getY();
+      if (fleetTiles == null) {
+        getFleetTiles();
+      }
       if (isValidCoordinate(x, y) && fleetTiles != null
           && fleetTiles[x][y] != null) {
         int playerIndex = fleetTiles[x][y].getPlayerIndex();
@@ -1130,7 +1133,9 @@ public class StarMap {
         aiTurnNumber++;
       }
     } else {
-      aiTurnNumber++;
+      if (info != null) {
+        aiTurnNumber++;
+      }
     }
   }
 

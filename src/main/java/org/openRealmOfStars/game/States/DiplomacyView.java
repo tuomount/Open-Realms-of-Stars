@@ -324,6 +324,10 @@ public class DiplomacyView extends BlackPanel {
       trade.generateOffer();
       setOfferingList();
       updatePanel(trade.getSpeechTypeByOffer());
+    } else if (startType == AI_BORDER_CROSS) {
+      trade.generateOffer();
+      setOfferingList();
+      updatePanel(trade.getSpeechTypeByOffer());
     } else {
       updatePanel(getGreetLine());
     }

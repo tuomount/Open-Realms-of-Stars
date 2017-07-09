@@ -30,6 +30,7 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
@@ -304,6 +305,41 @@ public class AITurnView extends BlackPanel {
   /**
    * Search newly found uncolonized planets
    */
+  public void searchForBorderCrossing() {
+    PlayerInfo info = game.getPlayers()
+        .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
+    if (info != null && !info.isHuman()) {
+      for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
+        PlayerInfo fleetOwner = game.getPlayers().getPlayerInfoByIndex(i);
+        if (fleetOwner != info) {
+          int numberOfFleets = fleetOwner.getFleets().getNumberOfFleets();
+          for (int j = 0; j < numberOfFleets; j++) {
+            Fleet fleet = fleetOwner.getFleets().getByIndex(j);
+            int detect = info.getSectorCloakDetection(fleet.getX(),
+                fleet.getY());
+            if (detect >= fleet.getFleetCloackingValue()) {
+              CulturePower culture = game.getStarMap().getSectorCulture(
+                  fleet.getX(), fleet.getY());
+              if (culture.getHighestCulture() == game.getStarMap()
+                  .getAiTurnNumber()) {
+                if (fleetOwner.isHuman()) {
+                  SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
+                  game.changeGameState(GameState.DIPLOMACY_VIEW, fleet);
+                  return;
+                } else {
+                  MissionHandling.handleDiplomacyBetweenAis(game, info, i);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Search newly found uncolonized planets
+   */
   public void searchForColonizablePlanets() {
     PlayerInfo info = game.getPlayers()
         .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
@@ -367,6 +403,8 @@ public class AITurnView extends BlackPanel {
       if (info.getFleets().getIndex() == 0) {
         // All fleets have moved. Checking the new possible planet
         searchForColonizablePlanets();
+        // Searching for fleet which has crossed the borders
+        searchForBorderCrossing();
         game.getStarMap().setAIFleet(null);
         game.getStarMap()
             .setAiTurnNumber(game.getStarMap().getAiTurnNumber() + 1);
@@ -499,6 +537,12 @@ public class AITurnView extends BlackPanel {
         game.getStarMap().handleAIResearchAndPlanets();
       } else {
         handleAIFleet();
+        if (game.getGameState() != GameState.AITURN) {
+          // If last player is calling diplomacy screen
+          // it is not run due the line 556. There fore
+          // we need to exit at this point!
+          return;
+        }
       }
       if (game.getStarMap().isAllAIsHandled()) {
         updateStarMapToNextTurn();

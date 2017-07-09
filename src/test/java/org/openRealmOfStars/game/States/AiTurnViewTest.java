@@ -42,7 +42,9 @@ public class AiTurnViewTest {
         assertFalse(true);
       }
       aiTurnView.handleActions(arg0);
-      if (game.getGameState() != GameState.AITURN) {
+      if (game.getGameState() == GameState.DIPLOMACY_VIEW) {
+        game.changeGameState(GameState.AITURN);
+      } else if (game.getGameState() != GameState.AITURN) {
         break;
       }
     }

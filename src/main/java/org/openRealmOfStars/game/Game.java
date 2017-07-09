@@ -44,6 +44,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
@@ -420,6 +421,20 @@ public class Game implements ActionListener {
     PlayerInfo info = starMap.getPlayerByIndex(1);
     int type = DiplomacyView.HUMAN_REGULAR;
     if (dataObject != null) {
+      if (dataObject instanceof Fleet) {
+        Fleet fleet = (Fleet) dataObject;
+        info = starMap.getPlayerInfoByFleet(fleet);
+        if (info.isHuman()) {
+          type = DiplomacyView.AI_BORDER_CROSS;
+          CulturePower culture = starMap.getSectorCulture(fleet.getX(),
+              fleet.getY());
+          if (culture.getHighestCulture() != -1) {
+            info = starMap.getPlayerByIndex(culture.getHighestCulture());
+          }
+        } else {
+          type = DiplomacyView.HUMAN_BORDER_CROSS;
+        }
+      }
       if (dataObject instanceof FleetView) {
         FleetView view = (FleetView) dataObject;
         info = starMap.getPlayerInfoByFleet(view.getFleet());
@@ -1159,8 +1174,16 @@ public class Game implements ActionListener {
       }
       if (arg0.getActionCommand().equals(
           GameCommands.COMMAND_HAIL_FLEET_PLANET)) {
-        changeGameState(GameState.DIPLOMACY_VIEW, fleetView);
+        Fleet fleet = fleetView.getFleet();
+        CulturePower power = starMap.getSectorCulture(fleet.getX(),
+            fleet.getY());
         SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
+        if (power.getHighestCulture() == starMap.getPlayerList()
+            .getCurrentPlayer()) {
+          changeGameState(GameState.DIPLOMACY_VIEW, fleet);
+        } else {
+          changeGameState(GameState.DIPLOMACY_VIEW, fleetView);
+        }
       }
       fleetView.handleAction(arg0);
     }

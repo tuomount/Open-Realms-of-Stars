@@ -7,7 +7,10 @@ import java.awt.image.BufferedImage;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JToolTip;
 import javax.swing.border.EtchedBorder;
+
+import org.openRealmOfStars.gui.GuiStatics;
 
 /**
  *
@@ -169,6 +172,16 @@ public class ImageLabel extends JLabel {
    */
   public void setCenter(final boolean center) {
     this.center = center;
+  }
+
+  @Override
+  public JToolTip createToolTip() {
+    JToolTip toolTip = super.createToolTip();
+    toolTip.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    toolTip.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    toolTip.setBorder(BorderFactory
+        .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
+    return toolTip;
   }
 
 }

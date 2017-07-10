@@ -174,19 +174,36 @@ public class StatView extends BlackPanel {
         img.setImage(null);
         if (relation.equals(Diplomacy.ALLIANCE)) {
           img = new ImageLabel(GuiStatics.RELATION_ALLIANCE, true);
+          img.setToolTipText(
+              "<html>Alliance allows all ships move on parties sectors.<br>"
+              + "This allows trading vessels to visit parties planets.</html>");
         }
         if (relation.equals(Diplomacy.TRADE_ALLIANCE)) {
           img = new ImageLabel(GuiStatics.RELATION_TRADE_ALLIANCE, true);
+          img.setToolTipText(
+              "<html>Trade alliance allows all non military<br>"
+              + "ships move on parties sectors.<br>"
+              + "This allows trading vessels to visit parties planets.</html>");
         }
         if (relation.equals(Diplomacy.WAR)) {
           img = new ImageLabel(GuiStatics.RELATION_WAR, true);
+          img.setToolTipText(
+              "<html>War allows freely to have combat between parties.<br>"
+              + "Declaring war gives negative diplomatic bonus towards<br>"
+              + "third party.</html>");
         }
         if (relation.equals(Diplomacy.PEACE)) {
           img = new ImageLabel(GuiStatics.RELATION_PEACE, true);
+          img.setToolTipText(
+              "<html>Two parties are in peace. This only allows diplomatic<br>"
+              + "freely travel on parties sector.</html>");
         }
         if (relation.isEmpty()
             && info.getDiplomacy().getDiplomacyList(j) != null) {
           img = new ImageLabel(GuiStatics.RELATION_UNKNOWN, true);
+          img.setToolTipText(
+              "<html>Two parties have not met yet<br>"
+              + " or made any official relation.</html>");
         }
         img.setCenter(true);
         panel.add(img);

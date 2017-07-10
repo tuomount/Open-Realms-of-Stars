@@ -394,14 +394,19 @@ public final class MissionHandling {
    * @param game Game class
    * @param info First player as PlayerInfo
    * @param secondIndex Second player as a index
+   * @param fleet Fleet which crossed then border
    */
   public static void handleDiplomacyBetweenAis(final Game game,
-      final PlayerInfo info, final int secondIndex) {
+      final PlayerInfo info, final int secondIndex, final Fleet fleet) {
     // For Ai players make offer
     int index = game.getStarMap().getPlayerList().getIndex(info);
     DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(),
         index, secondIndex);
-    trade.generateOffer();
+    if (fleet == null) {
+      trade.generateOffer();
+    } else {
+      trade.generateRecallFleetOffer(fleet);
+    }
     if (trade.isOfferGoodForBoth()
         || trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
       // Another party accepts it or it is war
@@ -458,7 +463,7 @@ public final class MissionHandling {
           game.changeGameState(GameState.DIPLOMACY_VIEW, info);
         } else {
           int index = map.getPlayerList().getIndex(infoAtTarget);
-          handleDiplomacyBetweenAis(game, info, index);
+          handleDiplomacyBetweenAis(game, info, index, null);
         }
       }
     }
@@ -498,7 +503,7 @@ public final class MissionHandling {
           game.changeGameState(GameState.DIPLOMACY_VIEW, info);
         } else {
           int index = map.getPlayerList().getIndex(infoAtTarget);
-          handleDiplomacyBetweenAis(game, info, index);
+          handleDiplomacyBetweenAis(game, info, index, null);
         }
       }
     }

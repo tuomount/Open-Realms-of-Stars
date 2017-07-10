@@ -327,7 +327,8 @@ public class AITurnView extends BlackPanel {
                   game.changeGameState(GameState.DIPLOMACY_VIEW, fleet);
                   return;
                 } else {
-                  MissionHandling.handleDiplomacyBetweenAis(game, info, i);
+                  MissionHandling.handleDiplomacyBetweenAis(game, info, i,
+                      fleet);
                 }
               }
             }
@@ -377,7 +378,8 @@ public class AITurnView extends BlackPanel {
               SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
               game.changeGameState(GameState.DIPLOMACY_VIEW, info);
             } else {
-              MissionHandling.handleDiplomacyBetweenAis(game, info, ownerIndex);
+              MissionHandling.handleDiplomacyBetweenAis(game, info, ownerIndex,
+                  null);
             }
           }
         }

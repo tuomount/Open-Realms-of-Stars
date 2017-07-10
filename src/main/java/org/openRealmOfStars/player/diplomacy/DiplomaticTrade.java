@@ -164,6 +164,10 @@ public class DiplomaticTrade {
     if (firstOffer.getSize() > 0 && secondOffer.getSize() == 0) {
       return SpeechType.DEMAND;
     }
+    if (firstOffer.getSize() == 0
+        && secondOffer.isTypeInOffer(NegotiationType.RECALL_FLEET)) {
+      return SpeechType.ASK_MOVE_FLEET;
+    }
     return SpeechType.TRADE;
   }
 
@@ -901,7 +905,9 @@ public class DiplomaticTrade {
     }
     difference = difference - bonus;
     if (info.getDiplomacy().isWar(first)
-        || getSpeechTypeByOffer() == SpeechType.DEMAND) {
+        || getSpeechTypeByOffer() == SpeechType.DEMAND
+        || getSpeechTypeByOffer() == SpeechType.ASK_MOVE_FLEET
+        && secondOffer.getByIndex(0).getFleet().getMilitaryValue() > 0) {
       Attitude attitude = info.getAiAttitude();
       int divider = 4;
       int ownDivider = 4;

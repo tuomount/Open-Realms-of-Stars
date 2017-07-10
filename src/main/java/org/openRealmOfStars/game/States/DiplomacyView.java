@@ -711,6 +711,11 @@ public class DiplomacyView extends BlackPanel {
         resetChoices();
       }
       if (speechSelected != null
+          && speechSelected.getType() == SpeechType.MOVE_FLEET) {
+        updatePanel(SpeechType.OFFER_ACCEPTED);
+        resetChoices();
+      }
+      if (speechSelected != null
           && (speechSelected.getType() == SpeechType.DECLINE
           || speechSelected.getType() == SpeechType.DECLINE_ANGER
           || speechSelected.getType() == SpeechType.DECLINE_WAR)) {
@@ -762,6 +767,22 @@ public class DiplomacyView extends BlackPanel {
           //TODO add news corp that human made trade alliance with AI
         } else {
           updatePanel(SpeechType.DECLINE);
+        }
+      }
+      if (speechSelected != null
+          && speechSelected.getType() == SpeechType.ASK_MOVE_FLEET) {
+        trade.generateRecallFleetOffer(borderCrossedFleet);
+        if (trade.isOfferGoodForBoth()) {
+          trade.doTrades();
+          updatePanel(SpeechType.MOVE_FLEET);
+          resetChoices();
+          //TODO add news corp that human made trade alliance with AI
+        } else {
+          trade.generateEqualTrade(NegotiationType.WAR);
+          trade.doTrades();
+          //TODO Add NewCorp about the war
+          updatePanel(SpeechType.DECLINE_WAR);
+          resetChoices();
         }
       }
       if (speechSelected != null

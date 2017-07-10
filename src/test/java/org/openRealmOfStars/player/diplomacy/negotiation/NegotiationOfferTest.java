@@ -71,6 +71,13 @@ public class NegotiationOfferTest {
     assertEquals(fleet, offer.getFleet());
     assertEquals(0, offer.getCreditValue());
 
+    fleet = Mockito.mock(Fleet.class);
+    offer = new NegotiationOffer(NegotiationType.RECALL_FLEET, fleet);
+    assertEquals(NegotiationType.RECALL_FLEET, offer.getNegotiationType());
+    assertEquals(fleet, offer.getOfferObject());
+    assertEquals(fleet, offer.getFleet());
+    assertEquals(0, offer.getCreditValue());
+
     Planet planet = Mockito.mock(Planet.class);
     offer = new NegotiationOffer(NegotiationType.PLANET, planet);
     assertEquals(NegotiationType.PLANET, offer.getNegotiationType());
@@ -118,6 +125,11 @@ public class NegotiationOfferTest {
     Mockito.when(fleet.getMilitaryValue()).thenReturn(24);
     offer = new NegotiationOffer(NegotiationType.FLEET, fleet);
     assertEquals(12, offer.getOfferValue(SpaceRace.HUMAN));
+
+    fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getMilitaryValue()).thenReturn(24);
+    offer = new NegotiationOffer(NegotiationType.RECALL_FLEET, fleet);
+    assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
 
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);

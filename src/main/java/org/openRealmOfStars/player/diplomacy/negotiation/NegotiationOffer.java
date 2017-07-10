@@ -54,6 +54,7 @@ public class NegotiationOffer {
       offerObject = null;
     } else if (type == NegotiationType.CREDIT && offer instanceof Integer
         || type == NegotiationType.FLEET && offer instanceof Fleet
+        || type == NegotiationType.RECALL_FLEET && offer instanceof Fleet
         || type == NegotiationType.PLANET && offer instanceof Planet
         || type == NegotiationType.TECH && offer instanceof Tech) {
       negotiationType = type;
@@ -74,6 +75,10 @@ public class NegotiationOffer {
     switch (negotiationType) {
     case ALLIANCE:
       // Both sides get Alliance so it's value to zero.
+      offerValue = 0;
+      break;
+    case RECALL_FLEET:
+      // Opponent either recalls the ship or it's war
       offerValue = 0;
       break;
     case TRADE_ALLIANCE:
@@ -129,12 +134,17 @@ public class NegotiationOffer {
   }
 
   /**
-   * This returns null if offer type is not fleet.
+   * This returns null if offer type is not fleet or
+   * recall fleet
    * Otherwise returns fleet.
    * @return Fleet or null.
    */
   public Fleet getFleet() {
     if (negotiationType == NegotiationType.FLEET
+        && offerObject instanceof Fleet) {
+      return ((Fleet) offerObject);
+    }
+    if (negotiationType == NegotiationType.RECALL_FLEET
         && offerObject instanceof Fleet) {
       return ((Fleet) offerObject);
     }

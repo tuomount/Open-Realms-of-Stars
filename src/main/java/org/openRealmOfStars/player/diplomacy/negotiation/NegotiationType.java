@@ -62,6 +62,10 @@ public enum NegotiationType {
   /**
    * War offering or threat
    */
-  WAR
+  WAR,
+  /**
+   * Recall fleet due border crossing
+   */
+  RECALL_FLEET
 
 }

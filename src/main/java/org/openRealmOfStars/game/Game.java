@@ -227,8 +227,12 @@ public class Game implements ActionListener {
   /**
    * Animation timer delay in milli seconds.
    */
-
   private static final int ANIMATION_TIMER_DELAY = 75;
+
+  /**
+   * Animation timer delay in milli seconds for credits
+   */
+  private static final int ANIMATION_DELAY_CREDITS = 30;
 
   /**
    * Constructor of Game class
@@ -643,6 +647,9 @@ public class Game implements ActionListener {
       final Message focusMessage, final Object dataObject) {
     previousState = gameState;
     gameState = newState;
+    if (animationTimer.getDelay() != ANIMATION_TIMER_DELAY) {
+      animationTimer.setDelay(ANIMATION_TIMER_DELAY);
+    }
     switch (gameState) {
     case AITURN:
       showAITurnView();
@@ -669,6 +676,7 @@ public class Game implements ActionListener {
       break;
     }
     case CREDITS:
+      animationTimer.setDelay(ANIMATION_DELAY_CREDITS);
       showCredits();
       break;
     case STARMAP:

@@ -647,7 +647,8 @@ public class Game implements ActionListener {
       final Message focusMessage, final Object dataObject) {
     previousState = gameState;
     gameState = newState;
-    if (animationTimer.getDelay() != ANIMATION_TIMER_DELAY) {
+    if (animationTimer != null
+        && animationTimer.getDelay() != ANIMATION_TIMER_DELAY) {
       animationTimer.setDelay(ANIMATION_TIMER_DELAY);
     }
     switch (gameState) {
@@ -676,7 +677,9 @@ public class Game implements ActionListener {
       break;
     }
     case CREDITS:
-      animationTimer.setDelay(ANIMATION_DELAY_CREDITS);
+      if (animationTimer != null) {
+        animationTimer.setDelay(ANIMATION_DELAY_CREDITS);
+      }
       showCredits();
       break;
     case STARMAP:

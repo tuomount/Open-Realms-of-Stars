@@ -191,6 +191,9 @@ public class AITurnView extends BlackPanel {
       case ATTACK:
         MissionHandling.handleAttack(mission, fleet, info, game);
         break;
+      case MOVE:
+        MissionHandling.handleMove(mission, fleet, info, game);
+        break;
       default:
         throw new IllegalArgumentException("Unknown mission type for AI!");
       }

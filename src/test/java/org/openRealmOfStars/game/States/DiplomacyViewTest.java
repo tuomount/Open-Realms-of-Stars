@@ -50,13 +50,13 @@ public class DiplomacyViewTest {
     PlayerInfo human = starMap.getPlayerByIndex(0);
     PlayerInfo ai = starMap.getPlayerByIndex(1);
     DiplomacyView diplomacyView = new DiplomacyView(human, ai, starMap,
-        DiplomacyView.HUMAN_REGULAR, listener);
+        DiplomacyView.HUMAN_REGULAR, null, listener);
     assertEquals(SpeechType.NEUTRAL_GREET, diplomacyView.getGreetLine());
     assertNotEquals(null, diplomacyView);
     assertNotEquals(null, diplomacyView.getTrade());
     diplomacyView.resetChoices();
     diplomacyView = new DiplomacyView(human, ai, starMap,
-        DiplomacyView.AI_REGULAR, listener);
+        DiplomacyView.AI_REGULAR,  null, listener);
     assertEquals(SpeechType.NEUTRAL_GREET, diplomacyView.getGreetLine());
     assertNotEquals(null, diplomacyView);
     assertNotEquals(null, diplomacyView.getTrade());
@@ -86,7 +86,7 @@ public class DiplomacyViewTest {
     PlayerInfo human = starMap.getPlayerByIndex(0);
     PlayerInfo ai = starMap.getPlayerByIndex(1);
     DiplomacyView diplomacyView = new DiplomacyView(human, ai, starMap,
-        DiplomacyView.HUMAN_REGULAR, listener);
+        DiplomacyView.HUMAN_REGULAR, null, listener);
     assertEquals(0, diplomacyView.getAiCredits());
     assertEquals(0, diplomacyView.getHumanCredits());
     ActionEvent action = Mockito.mock(ActionEvent.class);
@@ -131,7 +131,7 @@ public class DiplomacyViewTest {
     PlayerInfo human = starMap.getPlayerByIndex(0);
     PlayerInfo ai = starMap.getPlayerByIndex(1);
     DiplomacyView diplomacyView = new DiplomacyView(human, ai, starMap,
-        DiplomacyView.HUMAN_REGULAR, listener);
+        DiplomacyView.HUMAN_REGULAR, null, listener);
     assertEquals(0, diplomacyView.getAiCredits());
     assertEquals(0, diplomacyView.getHumanCredits());
     ActionEvent action = Mockito.mock(ActionEvent.class);

@@ -2,6 +2,9 @@ package org.openRealmOfStars.player.diplomacy;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionPhase;
+import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationList;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
@@ -286,6 +289,17 @@ public class DiplomaticTrade {
       secondOffer = new NegotiationList();
       secondOffer.add(new NegotiationOffer(type, null));
     }
+  }
+
+  /**
+   * Generate Recall fleet offer. Second player should
+   * recall his or her fleet.
+   * @param fleet Fleet which to recall
+   */
+  public void generateRecallFleetOffer(final Fleet fleet) {
+    firstOffer = new NegotiationList();
+    secondOffer = new NegotiationList();
+    secondOffer.add(new NegotiationOffer(NegotiationType.RECALL_FLEET, fleet));
   }
 
   /**
@@ -1083,6 +1097,20 @@ public class DiplomaticTrade {
       case CREDIT: {
         info.setTotalCredits(info.getTotalCredits() + offer.getCreditValue());
         break;
+      }
+      case RECALL_FLEET: {
+        if (!info.isHuman()) {
+          Mission mission = info.getMissions().getMissionForFleet(
+              offer.getFleet().getName());
+          mission.setType(MissionType.MOVE);
+          Planet planet = starMap.getClosestHomePort(info,
+              offer.getFleet().getCoordinate());
+          if (planet != null) {
+            mission.setTargetPlanet(planet.getName());
+            mission.setTarget(planet.getCoordinate());
+          }
+          mission.setPhase(MissionPhase.PLANNING);
+        }
       }
       case TECH: {
         info.getTechList().addTech(offer.getTech());

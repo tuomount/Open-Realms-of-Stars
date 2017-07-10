@@ -419,6 +419,20 @@ public class DiplomaticTradeTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRecallFleet() {
+    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    trade.generateRecallFleetOffer(fleet);
+    assertEquals(0, trade.getFirstOffer().getSize());
+    assertEquals(NegotiationType.RECALL_FLEET, trade.getSecondOffer()
+        .getByIndex(0).getNegotiationType());
+    assertEquals(fleet, trade.getSecondOffer()
+        .getByIndex(0).getFleet());
+  }
+  
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testWarChance() {
     int[] results = {95, 85, 75, 65, 55};
     int j = 0;

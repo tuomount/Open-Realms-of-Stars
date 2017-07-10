@@ -98,6 +98,11 @@ public class DiplomacyView extends BlackPanel {
    * Player Info for human
    */
   private PlayerInfo human;
+
+  /**
+   * Fleet which has crossed the border
+   */
+  private Fleet borderCrossedFleet;
   /**
    * Player Info for AI
    */
@@ -189,12 +194,15 @@ public class DiplomacyView extends BlackPanel {
    *        AI_REGULAR
    *        HUMAN_BORDER_CROSS
    *        AI_BORDER_CROSS
+   * @param fleet Fleet which has crossed the border. Can be null
    * @param listener ActionListener
    */
   public DiplomacyView(final PlayerInfo info1, final PlayerInfo info2,
-      final StarMap map, final int startType, final ActionListener listener) {
+      final StarMap map, final int startType, final Fleet fleet,
+      final ActionListener listener) {
     this.setLayout(new BorderLayout());
     human = info1;
+    borderCrossedFleet = fleet;
     ai = info2;
     starMap = map;
     humanCredits = 0;
@@ -327,7 +335,11 @@ public class DiplomacyView extends BlackPanel {
     } else if (startType == AI_BORDER_CROSS) {
       trade.generateOffer();
       setOfferingList();
-      updatePanel(trade.getSpeechTypeByOffer());
+      updatePanel(SpeechType.ASK_MOVE_FLEET);
+    } else if (startType == HUMAN_BORDER_CROSS) {
+      trade.generateOffer();
+      setOfferingList();
+      updatePanel(getGreetLine());
     } else {
       updatePanel(getGreetLine());
     }
@@ -355,10 +367,19 @@ public class DiplomacyView extends BlackPanel {
           human.getRace(), null));
       speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
           human.getRace(), null));
+    } else if (startType == AI_BORDER_CROSS) {
+      speechLines.add(SpeechFactory.createLine(SpeechType.MOVE_FLEET,
+          human.getRace(), null));
+      speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
+          human.getRace(), null));
     } else {
       if (!ai.getDiplomacy().isPeace(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.PEACE_OFFER,
             human.getRace(), null));
+      }
+      if (startType == HUMAN_BORDER_CROSS) {
+        speechLines.add(SpeechFactory.createLine(SpeechType.ASK_MOVE_FLEET,
+            human.getRace(), borderCrossedFleet.getName()));
       }
       speechLines.add(SpeechFactory.createLine(SpeechType.TRADE,
           human.getRace(), null));
@@ -479,6 +500,9 @@ public class DiplomacyView extends BlackPanel {
     if (type == SpeechType.NEUTRAL_GREET) {
       text = SpeechFactory.createLine(type, ai.getRace(), human.getRace()
           .getNameSingle()).getLine();
+    } else if (type == SpeechType.ASK_MOVE_FLEET) {
+      text = SpeechFactory.createLine(type, ai.getRace(),
+          borderCrossedFleet.getName()).getLine();
     } else {
       text = SpeechFactory.createLine(type, ai.getRace(), null).getLine();
     }

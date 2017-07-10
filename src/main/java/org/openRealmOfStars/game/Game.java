@@ -419,10 +419,11 @@ public class Game implements ActionListener {
    */
   public void showDiplomacyView(final Object dataObject) {
     PlayerInfo info = starMap.getPlayerByIndex(1);
+    Fleet fleet = null;
     int type = DiplomacyView.HUMAN_REGULAR;
     if (dataObject != null) {
       if (dataObject instanceof Fleet) {
-        Fleet fleet = (Fleet) dataObject;
+        fleet = (Fleet) dataObject;
         info = starMap.getPlayerInfoByFleet(fleet);
         if (info.isHuman()) {
           type = DiplomacyView.AI_BORDER_CROSS;
@@ -451,7 +452,7 @@ public class Game implements ActionListener {
       }
     }
     diplomacyView = new DiplomacyView(starMap.getPlayerByIndex(0), info,
-        starMap, type, this);
+        starMap, type, fleet, this);
     this.updateDisplay(diplomacyView);
   }
 

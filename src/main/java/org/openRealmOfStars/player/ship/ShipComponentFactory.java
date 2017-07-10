@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 135;
+  private static final int MAX_SHIPCOMPONENT = 136;
 
   /**
    * Component Ion drive Mk1
@@ -716,6 +716,11 @@ public final class ShipComponentFactory {
    */
   public static final int COMPONENT_PRIVATEER_MODULE = 134;
 
+  /**
+   * Component Nuclear drive Mk4
+   */
+  public static final int COMPONENT_NUCLEAR_DRIVE_MK4 = 135;
+
 
   /**
    * Create ShipComponent with matching name
@@ -971,6 +976,9 @@ public final class ShipComponentFactory {
     case COMPONENT_NUCLEAR_DRIVE_MK3:
       tmp = createEngine(index);
       break; // Nuclear drive Mk3
+    case COMPONENT_NUCLEAR_DRIVE_MK4:
+      tmp = createEngine(index);
+      break; // Nuclear drive Mk4
     case COMPONENT_ANTIMATTER_SOURCE_MK1:
       tmp = createElectronics(index);
       break; // Antimatter source Mk1
@@ -1225,7 +1233,7 @@ public final class ShipComponentFactory {
       tmp.setSpeed(2);
       tmp.setFtlSpeed(2);
       tmp.setTacticSpeed(2);
-      tmp.setEnergyResource(1);
+      tmp.setEnergyResource(2);
     }
     if (index == COMPONENT_WARP_DRIVE_MK2) {
       tmp = new ShipComponent(index, "Warp drive Mk2", 7, 2,
@@ -1281,7 +1289,7 @@ public final class ShipComponentFactory {
       tmp.setSpeed(3);
       tmp.setFtlSpeed(3);
       tmp.setTacticSpeed(3);
-      tmp.setEnergyResource(2);
+      tmp.setEnergyResource(3);
     }
     if (index == COMPONENT_WARP_DRIVE_MK5) {
       tmp = new ShipComponent(index, "Warp drive Mk5", 9, 4,
@@ -1330,6 +1338,14 @@ public final class ShipComponentFactory {
       tmp.setFtlSpeed(5);
       tmp.setTacticSpeed(2);
       tmp.setEnergyRequirement(2);
+    }
+    if (index == COMPONENT_NUCLEAR_DRIVE_MK4) {
+      tmp = new ShipComponent(index, "Nuclear drive Mk4", 7, 7,
+          ShipComponentType.ENGINE);
+      tmp.setSpeed(3);
+      tmp.setFtlSpeed(4);
+      tmp.setTacticSpeed(3);
+      tmp.setEnergyResource(4);
     }
     if (index == COMPONENT_WARP_DRIVE_MK7) {
       tmp = new ShipComponent(index, "Warp drive Mk7", 11, 4,

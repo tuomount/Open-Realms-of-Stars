@@ -289,7 +289,8 @@ public final class TechFactory {
    * Propulsion tech names for level 8
    */
   public static final String[] PROPULSION_TECH_LEVEL8_NAMES = {"Warp drive Mk6",
-      "Hyper drive Mk6", "Impulse engine Mk2", "Antimatter source Mk2" };
+      "Hyper drive Mk6", "Impulse engine Mk2", "Antimatter source Mk2",
+      "Nuclear drive Mk4" };
   /**
    * Propulsion tech names for level 9
    */

@@ -315,6 +315,7 @@ public class AITurnView extends BlackPanel {
           int numberOfFleets = fleetOwner.getFleets().getNumberOfFleets();
           for (int j = 0; j < numberOfFleets; j++) {
             Fleet fleet = fleetOwner.getFleets().getByIndex(j);
+            int military = fleet.getMilitaryValue();
             int detect = info.getSectorCloakDetection(fleet.getX(),
                 fleet.getY());
             if (detect >= fleet.getFleetCloackingValue()) {
@@ -322,6 +323,22 @@ public class AITurnView extends BlackPanel {
                   fleet.getX(), fleet.getY());
               if (culture.getHighestCulture() == game.getStarMap()
                   .getAiTurnNumber()) {
+                if (info.getDiplomacy().isTradeAlliance(0) && military == 0) {
+                  // Non military ship and trade alliance
+                  continue;
+                }
+                if (info.getDiplomacy().isAlliance(0) && military >= 0) {
+                  // (non)military ship and alliance
+                  continue;
+                }
+                if (info.getDiplomacy().isWar(0)) {
+                  // War no diplomacy screen then
+                  continue;
+                }
+                if (fleet.isPrivateerFleet()) {
+                  // TODO: Privateet should have a different diplomacy
+                  continue;
+                }
                 if (fleetOwner.isHuman()) {
                   SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
                   game.changeGameState(GameState.DIPLOMACY_VIEW, fleet);

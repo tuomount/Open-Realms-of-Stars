@@ -425,6 +425,7 @@ public class Game implements ActionListener {
       if (dataObject instanceof Fleet) {
         fleet = (Fleet) dataObject;
         info = starMap.getPlayerInfoByFleet(fleet);
+        int military = fleet.getMilitaryValue();
         if (info.isHuman()) {
           type = DiplomacyView.AI_BORDER_CROSS;
           CulturePower culture = starMap.getSectorCulture(fleet.getX(),
@@ -432,8 +433,34 @@ public class Game implements ActionListener {
           if (culture.getHighestCulture() != -1) {
             info = starMap.getPlayerByIndex(culture.getHighestCulture());
           }
+          if (info.getDiplomacy().isTradeAlliance(0) && military == 0) {
+            type = DiplomacyView.AI_REGULAR;
+          }
+          if (info.getDiplomacy().isAlliance(0) && military >= 0) {
+            type = DiplomacyView.AI_REGULAR;
+          }
+          if (info.getDiplomacy().isWar(0)) {
+            type = DiplomacyView.AI_REGULAR;
+          }
+          if (fleet.isPrivateerFleet()) {
+            // TODO there should be different diplomacy for privateering ships
+            type = DiplomacyView.AI_REGULAR;
+          }
         } else {
           type = DiplomacyView.HUMAN_BORDER_CROSS;
+          if (info.getDiplomacy().isTradeAlliance(0) && military == 0) {
+            type = DiplomacyView.HUMAN_REGULAR;
+          }
+          if (info.getDiplomacy().isAlliance(0) && military >= 0) {
+            type = DiplomacyView.HUMAN_REGULAR;
+          }
+          if (info.getDiplomacy().isWar(0)) {
+            type = DiplomacyView.HUMAN_REGULAR;
+          }
+          if (fleet.isPrivateerFleet()) {
+            // TODO there should be different diplomacy for privateering ships
+            type = DiplomacyView.HUMAN_REGULAR;
+          }
         }
       }
       if (dataObject instanceof FleetView) {

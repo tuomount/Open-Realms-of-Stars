@@ -300,7 +300,7 @@ public final class SpeechFactory {
       case HUMAN: return new SpeechLine(type,
           "This was your last insult! Die!");
       case MECHIONS: return new SpeechLine(type,
-          "Trade OR war protocol!");
+          "Initiating war protocol!");
       case MOTHOIDS: return new SpeechLine(type,
           "We offer you this and you accept it?");
       case SPORKS: return new SpeechLine(type,
@@ -325,8 +325,11 @@ public final class SpeechFactory {
           "Your offer insults us!");
       case HUMAN: return new SpeechLine(type,
           "I'll take this as an insult!");
-      case MECHIONS: return new SpeechLine(type,
-          "Negative!");
+      case MECHIONS: {
+        // Mechions do not know how to decline with anger
+        type = SpeechType.DECLINE;
+        return new SpeechLine(type, "Negative!");
+      }
       case MOTHOIDS: return new SpeechLine(type,
           "We feel insulted about this!");
       case SPORKS: return new SpeechLine(type,

@@ -31,6 +31,7 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
@@ -363,8 +364,10 @@ public class DiplomacyView extends BlackPanel {
           human.getRace(), null));
       speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE,
           human.getRace(), null));
-      speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_ANGER,
-          human.getRace(), null));
+      if (human.getRace() != SpaceRace.MECHIONS) {
+        speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_ANGER,
+            human.getRace(), null));
+      }
       speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
           human.getRace(), null));
     } else if (startType == AI_BORDER_CROSS) {

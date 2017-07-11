@@ -56,7 +56,11 @@ public class SpeechFactoryTest {
       assertEquals(SpeechType.MAKE_WAR, line.getType());
       line = SpeechFactory.createLine(SpeechType.DECLINE_ANGER, race, null);
       assertNotEquals(null, line);
-      assertEquals(SpeechType.DECLINE_ANGER, line.getType());
+      if (race != SpaceRace.MECHIONS) {
+        assertEquals(SpeechType.DECLINE_ANGER, line.getType());
+      } else {
+        assertEquals(SpeechType.DECLINE, line.getType());
+      }
       line = SpeechFactory.createLine(SpeechType.DECLINE_WAR, race, null);
       assertEquals(SpeechType.DECLINE_WAR, line.getType());
       assertNotEquals(null, line);

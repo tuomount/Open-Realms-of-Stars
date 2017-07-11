@@ -972,6 +972,9 @@ public class StarMap {
    * @return Fleet or null
    */
   public Fleet getFleetByCoordinate(final int x, final int y) {
+    if (fleetTiles == null) {
+      getFleetTiles();
+    }
     if (isValidCoordinate(x, y) && fleetTiles != null
         && fleetTiles[x][y] != null) {
       int playerIndex = fleetTiles[x][y].getPlayerIndex();

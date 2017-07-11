@@ -298,10 +298,12 @@ public class AITurnView extends BlackPanel {
     Mission mission = new Mission(MissionType.ATTACK,
         MissionPhase.PLANNING, planet.getCoordinate());
     calculateAttackRendevuezSector(info, planet.getX(), planet.getY());
-    mission.setTarget(new Coordinate(cx, cy));
+    Planet homeWorld = game.getStarMap().getClosestHomePort(info,
+        planet.getCoordinate());
+    mission.setTarget(homeWorld.getCoordinate());
     mission.setTargetPlanet(planet.getName());
     if (info.getMissions().getAttackMission(planet.getName()) == null) {
-      // No colonize mission for this planet found, so adding it.
+      // No attack mission for this planet found, so adding it.
       info.getMissions().add(mission);
     }
   }
@@ -359,7 +361,8 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
-   * Search newly found uncolonized planets
+   * Search newly found uncolonized planets and planets
+   * where to attack
    */
   public void searchForColonizablePlanets() {
     PlayerInfo info = game.getPlayers()
@@ -383,23 +386,37 @@ public class AITurnView extends BlackPanel {
         }
         if (planet.getRadiationLevel() <= info.getRace().getMaxRad()
             && planet.getPlanetPlayerInfo() != null
-            && planet.getPlanetPlayerInfo() != info && !planet.isGasGiant()
-            && info.getSectorVisibility(planet.getCoordinate())
+            && planet.getPlanetPlayerInfo() != info && !planet.isGasGiant()) {
+          if (info.getSectorVisibility(planet.getCoordinate())
             == PlayerInfo.VISIBLE) {
-          PlayerInfo owner = planet.getPlanetPlayerInfo();
-          int ownerIndex = game.getStarMap().getPlayerList().getIndex(owner);
-          DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
-              ownerIndex);
-          if (list.isBonusType(DiplomacyBonusType.IN_WAR)) {
-            addAttackMission(planet, info);
-          } else {
-            if (owner.isHuman()) {
-              // For human start diplomacy view
-              SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
-              game.changeGameState(GameState.DIPLOMACY_VIEW, info);
+            PlayerInfo owner = planet.getPlanetPlayerInfo();
+            int ownerIndex = game.getStarMap().getPlayerList().getIndex(owner);
+            DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
+                ownerIndex);
+            if (list.isBonusType(DiplomacyBonusType.IN_WAR)) {
+              addAttackMission(planet, info);
             } else {
-              MissionHandling.handleDiplomacyBetweenAis(game, info, ownerIndex,
-                  null);
+              if (owner.isHuman()) {
+                // For human start diplomacy view
+                SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
+                game.changeGameState(GameState.DIPLOMACY_VIEW, info);
+              } else {
+                MissionHandling.handleDiplomacyBetweenAis(game, info,
+                    ownerIndex, null);
+              }
+            }
+          }
+          if (info.getSectorVisibility(planet.getCoordinate())
+              == PlayerInfo.FOG_OF_WAR) {
+            PlayerInfo owner = planet.getPlanetPlayerInfo();
+            int ownerIndex = game.getStarMap().getPlayerList().getIndex(
+                owner);
+            DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
+                ownerIndex);
+            if (list.isBonusType(DiplomacyBonusType.IN_WAR)) {
+              // Got new map part maybe in trade and found planet owned by
+              // player which is being at war now.
+              addAttackMission(planet, info);
             }
           }
         }

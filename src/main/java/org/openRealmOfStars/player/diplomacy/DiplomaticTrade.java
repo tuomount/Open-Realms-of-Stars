@@ -183,19 +183,24 @@ public class DiplomaticTrade {
       firstOffer = new NegotiationList();
       firstOffer.add(new NegotiationOffer(NegotiationType.TECH,
           techListForFirst.get(0)));
-      if (tradeType == TRADE && techListForSecond.size() > 0) {
-        secondOffer = new NegotiationList();
-        secondOffer.add(new NegotiationOffer(NegotiationType.TECH,
-            techListForSecond.get(0)));
-      } else {
-        int value = techListForFirst.get(0).getLevel() * 2;
-        if (offerMaker.getTotalCredits() < value) {
-          value = offerMaker.getTotalCredits();
+      int i = 0;
+      secondOffer = new NegotiationList();
+      do {
+        if (tradeType == TRADE && techListForSecond.size() > i) {
+          secondOffer.add(new NegotiationOffer(NegotiationType.TECH,
+              techListForSecond.get(i)));
+        } else {
+          int value = firstOffer.getOfferValue(offerMaker.getRace());
+          if (offerMaker.getTotalCredits() < value) {
+            value = offerMaker.getTotalCredits();
+          }
+          secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+              new Integer(value)));
+          break;
         }
-        secondOffer = new NegotiationList();
-        secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-            new Integer(value)));
-      }
+        i++;
+      } while (firstOffer.getOfferValue(offerMaker.getRace())
+          < secondOffer.getOfferValue(offerMaker.getRace()));
     }
     if (tradeType == SELL && techListForSecond.size() > 0) {
       int value = techListForSecond.get(0).getLevel() * 2;

@@ -807,6 +807,9 @@ public class DiplomaticTradeTest {
         && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH)) {
       return;
     }
+    if (type1 == NegotiationType.TECH && type2 == NegotiationType.CREDIT) {
+      return;
+    }
     assertFalse(true);
   }
 

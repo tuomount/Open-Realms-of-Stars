@@ -333,6 +333,10 @@ public class DiplomacyView extends BlackPanel {
       trade.generateOffer();
       setOfferingList();
       updatePanel(trade.getSpeechTypeByOffer());
+      if (trade.getSpeechTypeByOffer() == SpeechType.NOTHING_TO_TRADE) {
+        // AI did not have anything to trade, maybe human has
+        resetChoices();
+      }
     } else if (startType == AI_BORDER_CROSS) {
       trade.generateOffer();
       setOfferingList();
@@ -564,38 +568,40 @@ public class DiplomacyView extends BlackPanel {
     ArrayList<Planet> planetArray = new ArrayList<>();
     ArrayList<Tech> techArray = new ArrayList<>();
     aiMapOffer.setSelected(false);
-    for (int i = 0; i < trade.getFirstOffer().getSize(); i++) {
-      NegotiationOffer offer = trade.getFirstOffer().getByIndex(i);
-      switch (offer.getNegotiationType()) {
-        case CREDIT: {
-          aiCredits = offer.getCreditValue();
-          aiCreditOffer.setText(aiCredits + " Credits");
-          break;
-        }
-        case FLEET: {
-          fleetArray.add(offer.getFleet());
-          break;
-        }
-        case MAP: {
-          aiMapOffer.setSelected(true);
-          break;
-        }
-        case PLANET: {
-          planetArray.add(offer.getPlanet());
-          break;
-        }
-        case TECH: {
-          techArray.add(offer.getTech());
-          break;
-        }
-        case ALLIANCE:
-        case TRADE_ALLIANCE:
-        case DIPLOMAT:
-        case PEACE:
-        case WAR:
-        default: {
-          // Nothing to set with these
-          break;
+    if (trade.getFirstOffer() != null) {
+      for (int i = 0; i < trade.getFirstOffer().getSize(); i++) {
+        NegotiationOffer offer = trade.getFirstOffer().getByIndex(i);
+        switch (offer.getNegotiationType()) {
+          case CREDIT: {
+            aiCredits = offer.getCreditValue();
+            aiCreditOffer.setText(aiCredits + " Credits");
+            break;
+          }
+          case FLEET: {
+            fleetArray.add(offer.getFleet());
+            break;
+          }
+          case MAP: {
+            aiMapOffer.setSelected(true);
+            break;
+          }
+          case PLANET: {
+            planetArray.add(offer.getPlanet());
+            break;
+          }
+          case TECH: {
+            techArray.add(offer.getTech());
+            break;
+          }
+          case ALLIANCE:
+          case TRADE_ALLIANCE:
+          case DIPLOMAT:
+          case PEACE:
+          case WAR:
+          default: {
+            // Nothing to set with these
+            break;
+          }
         }
       }
     }
@@ -608,38 +614,40 @@ public class DiplomacyView extends BlackPanel {
     planetArray = new ArrayList<>();
     techArray = new ArrayList<>();
     humanMapOffer.setSelected(false);
-    for (int i = 0; i < trade.getSecondOffer().getSize(); i++) {
-      NegotiationOffer offer = trade.getSecondOffer().getByIndex(i);
-      switch (offer.getNegotiationType()) {
-        case CREDIT: {
-          humanCredits = offer.getCreditValue();
-          humanCreditOffer.setText(aiCredits + " Credits");
-          break;
-        }
-        case FLEET: {
-          fleetArray.add(offer.getFleet());
-          break;
-        }
-        case MAP: {
-          humanMapOffer.setSelected(true);
-          break;
-        }
-        case PLANET: {
-          planetArray.add(offer.getPlanet());
-          break;
-        }
-        case TECH: {
-          techArray.add(offer.getTech());
-          break;
-        }
-        case ALLIANCE:
-        case TRADE_ALLIANCE:
-        case DIPLOMAT:
-        case PEACE:
-        case WAR:
-        default: {
-          // Nothing to set with these
-          break;
+    if (trade.getSecondOffer() != null) {
+      for (int i = 0; i < trade.getSecondOffer().getSize(); i++) {
+        NegotiationOffer offer = trade.getSecondOffer().getByIndex(i);
+        switch (offer.getNegotiationType()) {
+          case CREDIT: {
+            humanCredits = offer.getCreditValue();
+            humanCreditOffer.setText(humanCredits + " Credits");
+            break;
+          }
+          case FLEET: {
+            fleetArray.add(offer.getFleet());
+            break;
+          }
+          case MAP: {
+            humanMapOffer.setSelected(true);
+            break;
+          }
+          case PLANET: {
+            planetArray.add(offer.getPlanet());
+            break;
+          }
+          case TECH: {
+            techArray.add(offer.getTech());
+            break;
+          }
+          case ALLIANCE:
+          case TRADE_ALLIANCE:
+          case DIPLOMAT:
+          case PEACE:
+          case WAR:
+          default: {
+            // Nothing to set with these
+            break;
+          }
         }
       }
     }

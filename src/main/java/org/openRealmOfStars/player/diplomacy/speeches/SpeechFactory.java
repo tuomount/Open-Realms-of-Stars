@@ -65,6 +65,7 @@ public final class SpeechFactory {
       case OFFER_ACCEPTED: return createOfferAcceptedLine(race);
       case ASK_MOVE_FLEET: return createAskMoveFleetLine(race, dynamicContent);
       case MOVE_FLEET: return createMoveFleetLine(race);
+      case NOTHING_TO_TRADE: return createNothingToTradeLine(race);
       default: return null;
     }
   }
@@ -97,6 +98,33 @@ public final class SpeechFactory {
       case TEUTHIDAES: return new SpeechLine(type,
           "My scanners has detected your fleet "
           + fleetName + " in our space. Move it away!");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Nothing to trade SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createNothingToTradeLine(final SpaceRace race) {
+    SpeechType type = SpeechType.NOTHING_TO_TRADE;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "Sorry, you got nothing to trade with me.");
+      case GREYANS: return new SpeechLine(type,
+          "My mistake, you had nothing to trade.");
+      case HUMAN: return new SpeechLine(type,
+          "Sorry about this call. I thought you would have something to"
+          + " trade.");
+      case MECHIONS: return new SpeechLine(type,
+          "Nothing to trade!");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We found out that you had nothing we want.");
+      case SPORKS: return new SpeechLine(type,
+          "Hmm, You got zero tradable things...");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Let's talk later when you have something to trade.");
       default: return null;
     }
   }

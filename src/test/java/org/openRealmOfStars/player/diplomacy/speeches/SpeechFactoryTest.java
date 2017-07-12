@@ -102,7 +102,9 @@ public class SpeechFactoryTest {
       line = SpeechFactory.createLine(SpeechType.MOVE_FLEET, race, null);
       assertNotEquals(null, line);
       assertEquals(SpeechType.MOVE_FLEET, line.getType());
-
+      line = SpeechFactory.createLine(SpeechType.NOTHING_TO_TRADE, race, null);
+      assertNotEquals(null, line);
+      assertEquals(SpeechType.NOTHING_TO_TRADE, line.getType());
     }
   }
 

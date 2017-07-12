@@ -102,7 +102,11 @@ public enum SpeechType {
   /**
    * Agree to move fleet
    */
-  MOVE_FLEET;
+  MOVE_FLEET,
+  /**
+   * AI notices that there weren't really anything for trade.
+   */
+  NOTHING_TO_TRADE;
 
 
   /**
@@ -112,26 +116,27 @@ public enum SpeechType {
   @Override
   public String toString() {
     switch (this) {
-      case TRADE:          return "Trade";
-      case DEMAND:         return "Demand";
-      case MAKE_WAR:       return "Make War";
-      case TRADE_ALLIANCE: return "Trade Alliance";
-      case ALLIANCE:       return "Alliance";
-      case AGREE:          return "Agree";
-      case DECLINE:        return "Decline";
-      case DECLINE_ANGER:  return "Decline with Anger";
-      case DECLINE_WAR:    return "Decline with War";
-      case NEUTRAL_GREET:  return "Neutral greet";
-      case DISLIKE_GREET:  return "Dislike greet";
-      case LIKE_GREET:     return "Like greet";
-      case HATE_GREET:     return "Hate greet";
-      case FRIENDS_GREET:  return "Friends greet";
-      case PEACE_OFFER:    return "Peace offer";
-      case INSULT_RESPOND: return "Insult respond";
-      case OFFER_REJECTED: return "Offer rejected";
-      case OFFER_ACCEPTED: return "Offer accepted";
-      case ASK_MOVE_FLEET: return "Ask move fleet";
-      case MOVE_FLEET:     return "Move fleet";
+      case TRADE:            return "Trade";
+      case DEMAND:           return "Demand";
+      case MAKE_WAR:         return "Make War";
+      case TRADE_ALLIANCE:   return "Trade Alliance";
+      case ALLIANCE:         return "Alliance";
+      case AGREE:            return "Agree";
+      case DECLINE:          return "Decline";
+      case DECLINE_ANGER:    return "Decline with Anger";
+      case DECLINE_WAR:      return "Decline with War";
+      case NEUTRAL_GREET:    return "Neutral greet";
+      case DISLIKE_GREET:    return "Dislike greet";
+      case LIKE_GREET:       return "Like greet";
+      case HATE_GREET:       return "Hate greet";
+      case FRIENDS_GREET:    return "Friends greet";
+      case PEACE_OFFER:      return "Peace offer";
+      case INSULT_RESPOND:   return "Insult respond";
+      case OFFER_REJECTED:   return "Offer rejected";
+      case OFFER_ACCEPTED:   return "Offer accepted";
+      case ASK_MOVE_FLEET:   return "Ask move fleet";
+      case MOVE_FLEET:       return "Move fleet";
+      case NOTHING_TO_TRADE: return "Nothing to trade";
       default: return "Unknown";
     }
   }

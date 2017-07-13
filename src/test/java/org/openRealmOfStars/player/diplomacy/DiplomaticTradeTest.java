@@ -709,7 +709,16 @@ public class DiplomaticTradeTest {
     assertEquals(5, bonus);
     bonus = map.getPlayerByIndex(1).getDiplomacy().getDiplomacyList(0)
         .getDiplomacyBonus();
-      assertEquals(4, bonus);
+    assertEquals(4, bonus);
+    trade = new DiplomaticTrade(map, 0, 1);
+    trade.generateMapTrade(DiplomaticTrade.BUY);
+    PlayerInfo buyer = map.getPlayerByIndex(0);
+    PlayerInfo seller = map.getPlayerByIndex(1);
+    int oldSellerCreds = seller.getTotalCredits();
+    int oldBuyerCreds = buyer.getTotalCredits();
+    trade.doTrades();
+    assertEquals(oldSellerCreds + 15, seller.getTotalCredits());
+    assertEquals(oldBuyerCreds - 15, buyer.getTotalCredits());
   }
 
   @Test

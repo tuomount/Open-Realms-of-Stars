@@ -1113,6 +1113,7 @@ public class DiplomaticTrade {
       switch (offer.getNegotiationType()) {
       case CREDIT: {
         info.setTotalCredits(info.getTotalCredits() + offer.getCreditValue());
+        giver.setTotalCredits(giver.getTotalCredits() - offer.getCreditValue());
         break;
       }
       case RECALL_FLEET: {

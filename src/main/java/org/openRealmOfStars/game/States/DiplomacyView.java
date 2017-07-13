@@ -210,7 +210,11 @@ public class DiplomacyView extends BlackPanel {
     aiCredits = 0;
     int humanIndex = starMap.getPlayerList().getIndex(human);
     int aiIndex = starMap.getPlayerList().getIndex(ai);
-    trade = new DiplomaticTrade(starMap, humanIndex, aiIndex);
+    if (startType == AI_REGULAR || startType == AI_BORDER_CROSS) {
+      trade = new DiplomaticTrade(starMap, aiIndex, humanIndex);
+    } else {
+      trade = new DiplomaticTrade(starMap, humanIndex, aiIndex);
+    }
     InfoPanel center = new InfoPanel();
     center.setTitle("Diplomacy with " + ai.getEmpireName());
     center.setLayout(new GridLayout(0, 3));
@@ -331,7 +335,7 @@ public class DiplomacyView extends BlackPanel {
     this.add(bottomPanel, BorderLayout.SOUTH);
     if (startType == AI_REGULAR) {
       trade.generateOffer();
-      setOfferingList();
+      setOfferingList(startType);
       updatePanel(trade.getSpeechTypeByOffer());
       if (trade.getSpeechTypeByOffer() == SpeechType.NOTHING_TO_TRADE) {
         // AI did not have anything to trade, maybe human has
@@ -339,11 +343,11 @@ public class DiplomacyView extends BlackPanel {
       }
     } else if (startType == AI_BORDER_CROSS) {
       trade.generateOffer();
-      setOfferingList();
+      setOfferingList(startType);
       updatePanel(SpeechType.ASK_MOVE_FLEET);
     } else if (startType == HUMAN_BORDER_CROSS) {
       trade.generateOffer();
-      setOfferingList();
+      setOfferingList(startType);
       updatePanel(getGreetLine());
     } else {
       updatePanel(getGreetLine());
@@ -561,16 +565,17 @@ public class DiplomacyView extends BlackPanel {
   }
 
   /**
-   * Set Offering list according the trade
+   * Set Ai offering list according negotiationList
+   * @param offerList Negotiation list for ai
    */
-  public void setOfferingList() {
+  private void setAiOfferingList(final NegotiationList offerList) {
     ArrayList<Fleet> fleetArray = new ArrayList<>();
     ArrayList<Planet> planetArray = new ArrayList<>();
     ArrayList<Tech> techArray = new ArrayList<>();
     aiMapOffer.setSelected(false);
-    if (trade.getFirstOffer() != null) {
-      for (int i = 0; i < trade.getFirstOffer().getSize(); i++) {
-        NegotiationOffer offer = trade.getFirstOffer().getByIndex(i);
+    if (offerList != null) {
+      for (int i = 0; i < offerList.getSize(); i++) {
+        NegotiationOffer offer = offerList.getByIndex(i);
         switch (offer.getNegotiationType()) {
           case CREDIT: {
             aiCredits = offer.getCreditValue();
@@ -610,13 +615,20 @@ public class DiplomacyView extends BlackPanel {
         new Planet[planetArray.size()]));
     aiFleetListOffer.setListData(fleetArray.toArray(
         new Fleet[fleetArray.size()]));
-    fleetArray = new ArrayList<>();
-    planetArray = new ArrayList<>();
-    techArray = new ArrayList<>();
+  }
+
+  /**
+   * Set Human offering list according negotiationList
+   * @param offerList Negotiation list for human
+   */
+  private void setHumanOfferingList(final NegotiationList offerList) {
+    ArrayList<Fleet> fleetArray = new ArrayList<>();
+    ArrayList<Planet> planetArray = new ArrayList<>();
+    ArrayList<Tech> techArray = new ArrayList<>();
     humanMapOffer.setSelected(false);
-    if (trade.getSecondOffer() != null) {
-      for (int i = 0; i < trade.getSecondOffer().getSize(); i++) {
-        NegotiationOffer offer = trade.getSecondOffer().getByIndex(i);
+    if (offerList != null) {
+      for (int i = 0; i < offerList.getSize(); i++) {
+        NegotiationOffer offer = offerList.getByIndex(i);
         switch (offer.getNegotiationType()) {
           case CREDIT: {
             humanCredits = offer.getCreditValue();
@@ -657,6 +669,24 @@ public class DiplomacyView extends BlackPanel {
         new Planet[planetArray.size()]));
     humanFleetListOffer.setListData(fleetArray.toArray(
         new Fleet[fleetArray.size()]));
+  }
+  /**
+   * Set Offering list according the trade.
+   * @param startType How diplomacy screen was started.
+   *        There are four choices:
+   *        HUMAN_REGULAR
+   *        AI_REGULAR
+   *        HUMAN_BORDER_CROSS
+   *        AI_BORDER_CROSS
+   */
+  public void setOfferingList(final int startType) {
+    if (startType == AI_REGULAR || startType == AI_BORDER_CROSS) {
+      setAiOfferingList(trade.getFirstOffer());
+      setHumanOfferingList(trade.getSecondOffer());
+    } else {
+      setAiOfferingList(trade.getSecondOffer());
+      setHumanOfferingList(trade.getFirstOffer());
+    }
   }
   /**
    * Reset trade choices. This should be called

@@ -149,6 +149,9 @@ public class DiplomaticTrade {
    * @return SpeechType
    */
   public SpeechType getSpeechTypeByOffer() {
+    if (firstOffer == null && secondOffer == null) {
+      return SpeechType.NOTHING_TO_TRADE;
+    }
     if (firstOffer.getSize() == 0 && secondOffer.getSize() == 0) {
       return SpeechType.NOTHING_TO_TRADE;
     }

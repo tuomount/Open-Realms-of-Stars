@@ -409,7 +409,11 @@ public class ShipDesign {
     boolean militaryShip = false;
     power = getHull().getSlotHull() * components.size();
     for (ShipComponent comp : components) {
-      if (isMilitaryShip()) {
+      if (isMilitaryShip()
+          && (comp.getType() == ShipComponentType.WEAPON_BEAM
+          || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
+          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
+          || comp.getType() == ShipComponentType.WEAPON_RAILGUN)) {
         militaryShip = true;
         power = power + comp.getDamage();
       }

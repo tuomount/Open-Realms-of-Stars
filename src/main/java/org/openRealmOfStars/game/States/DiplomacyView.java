@@ -681,11 +681,11 @@ public class DiplomacyView extends BlackPanel {
    */
   public void setOfferingList(final int startType) {
     if (startType == AI_REGULAR || startType == AI_BORDER_CROSS) {
-      setAiOfferingList(trade.getFirstOffer());
-      setHumanOfferingList(trade.getSecondOffer());
-    } else {
-      setAiOfferingList(trade.getSecondOffer());
       setHumanOfferingList(trade.getFirstOffer());
+      setAiOfferingList(trade.getSecondOffer());
+    } else {
+      setHumanOfferingList(trade.getSecondOffer());
+      setAiOfferingList(trade.getFirstOffer());
     }
   }
   /**

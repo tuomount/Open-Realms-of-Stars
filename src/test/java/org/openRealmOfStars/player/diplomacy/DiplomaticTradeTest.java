@@ -65,7 +65,7 @@ public class DiplomaticTradeTest {
       final int powerDifference) {
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
-    PlayerInfo player1 = new PlayerInfo(race);
+    PlayerInfo player1 = new PlayerInfo(race,2,0);
     TechList tech1 = player1.getTechList();
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -74,7 +74,7 @@ public class DiplomaticTradeTest {
     tech1.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech1.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
     
-    PlayerInfo player2 = new PlayerInfo(SpaceRace.GREYANS);
+    PlayerInfo player2 = new PlayerInfo(SpaceRace.GREYANS, 2, 1);
     TechList tech2 = player2.getTechList();
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -672,6 +672,18 @@ public class DiplomaticTradeTest {
         .getNegotiationType());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testNullTrade() {
+    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    int value = trade.getOfferDifferenceForBoth();
+    assertEquals(0, value);
+    assertNotEquals(null, trade.getFirstOffer());
+    assertNotEquals(null, trade.getSecondOffer());
+  }
+
+  
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testGivingOutValuable() {

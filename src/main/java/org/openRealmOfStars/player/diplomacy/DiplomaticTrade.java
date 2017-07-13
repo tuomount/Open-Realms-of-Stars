@@ -891,9 +891,19 @@ public class DiplomaticTrade {
    * @return Difference value negative means that both parties agree it.
    */
   public int getOfferDifferenceForBoth() {
-    int firstValue = firstOffer.getOfferValue(starMap.getPlayerByIndex(first)
+    int firstValue = 0;
+    int secondValue = 0;
+    if (firstOffer == null) {
+      // Just creating empty list
+      firstOffer = new NegotiationList();
+    }
+    if (secondOffer == null) {
+      // Just creating empty list
+      secondOffer = new NegotiationList();
+    }
+    firstValue = firstOffer.getOfferValue(starMap.getPlayerByIndex(first)
         .getRace());
-    int secondValue = secondOffer.getOfferValue(starMap.getPlayerByIndex(second)
+    secondValue = secondOffer.getOfferValue(starMap.getPlayerByIndex(second)
         .getRace());
     PlayerInfo info = starMap.getPlayerByIndex(second);
     boolean isWar = info.getDiplomacy().isWar(first);

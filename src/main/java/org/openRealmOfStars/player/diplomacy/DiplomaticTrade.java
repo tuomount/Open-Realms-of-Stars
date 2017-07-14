@@ -1175,14 +1175,25 @@ public class DiplomaticTrade {
         if (!info.isHuman()) {
           Mission mission = info.getMissions().getMissionForFleet(
               offer.getFleet().getName());
-          mission.setType(MissionType.MOVE);
-          Planet planet = starMap.getClosestHomePort(info,
-              offer.getFleet().getCoordinate());
-          if (planet != null) {
-            mission.setTargetPlanet(planet.getName());
-            mission.setTarget(planet.getCoordinate());
+          if (mission != null) {
+            mission.setType(MissionType.MOVE);
+            Planet planet = starMap.getClosestHomePort(info,
+                offer.getFleet().getCoordinate());
+            if (planet != null) {
+              mission.setTargetPlanet(planet.getName());
+              mission.setTarget(planet.getCoordinate());
+            }
+            mission.setPhase(MissionPhase.PLANNING);
+          } else {
+            Planet planet = starMap.getClosestHomePort(info,
+                offer.getFleet().getCoordinate());
+            if (planet != null) {
+              mission = new Mission(MissionType.MOVE, MissionPhase.PLANNING,
+                  planet.getCoordinate());
+              info.getMissions().add(mission);
+            }
+
           }
-          mission.setPhase(MissionPhase.PLANNING);
         }
       }
       case TECH: {

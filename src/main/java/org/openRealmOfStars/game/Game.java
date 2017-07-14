@@ -1208,7 +1208,7 @@ public class Game implements ActionListener {
         colonizePlanetAction();
       }
       if (arg0.getActionCommand().equals(GameCommands.COMMAND_CONQUEST)) {
-        changeGameState(GameState.PLANETBOMBINGVIEW, fleetView.getFleet());
+        changeGameState(GameState.PLANETBOMBINGVIEW, fleetView);
         SoundPlayer.playMenuSound();
       }
       if (arg0.getActionCommand().equals(

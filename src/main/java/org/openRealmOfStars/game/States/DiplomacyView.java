@@ -186,6 +186,11 @@ public class DiplomacyView extends BlackPanel {
   private TransparentLabel likenessLabel;
 
   /**
+   * Button for exiting the diplomacy view.
+   */
+  private SpaceButton endBtn;
+
+  /**
    * Diplomacy View constructor
    * @param info1 Human player PlayerInfo
    * @param info2 AI player PlayerInfo
@@ -328,14 +333,15 @@ public class DiplomacyView extends BlackPanel {
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
     bottomPanel.setTitle(null);
-    SpaceButton btn = new SpaceButton("Back to star map",
+    endBtn = new SpaceButton("Back to star map",
         GameCommands.COMMAND_VIEW_STARMAP);
-    btn.addActionListener(listener);
-    bottomPanel.add(btn, BorderLayout.CENTER);
+    endBtn.addActionListener(listener);
+    bottomPanel.add(endBtn, BorderLayout.CENTER);
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
     if (startType == AI_REGULAR) {
       trade.generateOffer();
+      endBtn.setEnabled(false);
       setOfferingList(startType);
       updatePanel(trade.getSpeechTypeByOffer());
       if (trade.getSpeechTypeByOffer() == SpeechType.NOTHING_TO_TRADE) {
@@ -343,6 +349,7 @@ public class DiplomacyView extends BlackPanel {
         resetChoices();
       }
     } else if (startType == AI_BORDER_CROSS) {
+      endBtn.setEnabled(false);
       trade.generateOffer();
       setOfferingList(startType);
       updatePanel(SpeechType.ASK_MOVE_FLEET);
@@ -694,6 +701,7 @@ public class DiplomacyView extends BlackPanel {
    * after trade has been done.
    */
   public void resetChoices() {
+    endBtn.setEnabled(true);
     humanCredits = 0;
     aiCredits = 0;
     int humanIndex = starMap.getPlayerList().getIndex(human);

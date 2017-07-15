@@ -739,6 +739,8 @@ public class StarMap {
       final PlayerInfo info, final Fleet fleet, final String ignoreSun) {
     double distance = LONGEST_DISTANCE;
     Sun result = null;
+    int leastChartedValue = 100;
+    Sun leastCharted = null;
     for (Sun sun : sunList) {
       Coordinate coordinate = new Coordinate(x, y);
       double dist = coordinate.calculateDistance(sun.getCenterCoordinate());
@@ -749,8 +751,15 @@ public class StarMap {
         distance = dist;
         result = sun;
       }
+      if (info.getUnchartedValueSystem(sun, fleet) < leastChartedValue) {
+        leastCharted = sun;
+        leastChartedValue = info.getUnchartedValueSystem(sun, fleet);
+      }
     }
-    return result;
+    if (result != null) {
+      return result;
+    }
+    return leastCharted;
 
   }
 

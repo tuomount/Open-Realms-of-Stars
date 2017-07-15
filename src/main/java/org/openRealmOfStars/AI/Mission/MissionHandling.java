@@ -90,15 +90,28 @@ public final class MissionHandling {
           if (missionComplete) {
             sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
                 fleet.getY(), info, fleet, ignoreSun);
-            if (!sun.getName().equals(mission.getSunName())) {
-              mission.setTarget(sun.getCenterCoordinate());
-              fleet.setRoute(new Route(fleet.getX(), fleet.getY(),
-                  mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
-              mission.setSunName(sun.getName());
-              mission.setPhase(MissionPhase.TREKKING);
-              // Starting the new exploring mission
-              mission.setMissionTime(0);
-              return;
+            if (sun == null) {
+              Planet home = game.getStarMap().getClosestHomePort(info,
+                  fleet.getCoordinate());
+              if (home == null) {
+                info.getMissions().remove(mission);
+                return;
+              }
+              mission.setType(MissionType.MOVE);
+              mission.setTarget(home.getCoordinate());
+              mission.setPhase(MissionPhase.PLANNING);
+              mission.setTargetPlanet(home.getName());
+            } else {
+              if (!sun.getName().equals(mission.getSunName())) {
+                mission.setTarget(sun.getCenterCoordinate());
+                fleet.setRoute(new Route(fleet.getX(), fleet.getY(),
+                    mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+                mission.setSunName(sun.getName());
+                mission.setPhase(MissionPhase.TREKKING);
+                // Starting the new exploring mission
+                mission.setMissionTime(0);
+                return;
+              }
             }
           } else {
             sun = game.getStarMap().getSunByName(mission.getSunName());

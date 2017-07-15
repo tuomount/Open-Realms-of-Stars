@@ -524,6 +524,7 @@ public class FleetView extends BlackPanel {
         Ship ship = shipsInFleet.getSelectedValuesList().get(i);
         if (ship != null) {
           fleet.removeShip(ship);
+          fleetList.recalculateList();
           if (planet != null && planet.getRecycleBonus() > 0) {
             int recycledMetal = ship.getMetalCost() * planet.getRecycleBonus()
                 / 100 + ship.getMetal();
@@ -531,6 +532,7 @@ public class FleetView extends BlackPanel {
           }
         }
       }
+      // TODO Change should for something else
       SoundPlayer.playMenuSound();
       updatePanel();
     }

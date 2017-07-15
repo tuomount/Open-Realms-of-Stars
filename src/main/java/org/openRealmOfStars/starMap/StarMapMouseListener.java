@@ -247,22 +247,40 @@ public class StarMapMouseListener extends MouseAdapter
             && e.getButton() == MouseEvent.BUTTON1) {
           // Single click on left button
           if (lastClickedPlanet == planet && fleet != null) {
+            int detection = starMap.getCurrentPlayerInfo()
+                .getSectorCloakDetection(fleet.getX(), fleet.getY());
             FleetTileInfo[][] tiles = starMap.getFleetTiles();
             PlayerInfo owner = starMap.getPlayerByIndex(
                 tiles[fleet.getX()][fleet.getY()].getPlayerIndex());
-            mapInfoPanel.showFleet(fleet, owner);
-            setLastClickedFleet(fleet);
-            setLastClickedPlanet(null);
+            if (detection >= fleet.getFleetCloackingValue()
+                  || owner == starMap.getCurrentPlayerInfo()) {
+              mapInfoPanel.showFleet(fleet, owner);
+              setLastClickedFleet(fleet);
+              setLastClickedPlanet(null);
+            } else {
+              setLastClickedPlanet(null);
+              setLastClickedFleet(null);
+              mapInfoPanel.showEmpty();
+            }
           } else if (planet != null) {
             mapInfoPanel.showPlanet(planet, true);
             setLastClickedPlanet(planet);
             setLastClickedFleet(null);
           } else if (fleet != null) {
+            int detection = starMap.getCurrentPlayerInfo()
+                .getSectorCloakDetection(fleet.getX(), fleet.getY());
             FleetTileInfo[][] tiles = starMap.getFleetTiles();
             PlayerInfo owner = starMap.getPlayerByIndex(
                 tiles[fleet.getX()][fleet.getY()].getPlayerIndex());
-            mapInfoPanel.showFleet(fleet, owner);
-            setLastClickedFleet(fleet);
+            if (detection >= fleet.getFleetCloackingValue()
+                || owner == starMap.getCurrentPlayerInfo()) {
+              mapInfoPanel.showFleet(fleet, owner);
+              setLastClickedFleet(fleet);
+            } else {
+              mapInfoPanel.showEmpty();
+              setLastClickedPlanet(null);
+              setLastClickedFleet(null);
+            }
           } else {
             mapInfoPanel.showEmpty();
             setLastClickedPlanet(null);

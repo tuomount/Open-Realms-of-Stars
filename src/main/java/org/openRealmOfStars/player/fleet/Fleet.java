@@ -334,7 +334,10 @@ public class Fleet {
       lvl = lvl + shipLvl * mass;
       totalMass = totalMass + mass;
     }
-    lvl = lvl / totalMass;
+    if (totalMass == 0) {
+      return 0;
+    }
+   lvl = lvl / totalMass;
     return lvl;
   }
 

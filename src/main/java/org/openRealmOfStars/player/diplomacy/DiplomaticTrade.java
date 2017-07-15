@@ -952,14 +952,10 @@ public class DiplomaticTrade {
         .getRace());
     PlayerInfo info = starMap.getPlayerByIndex(second);
     boolean isWar = info.getDiplomacy().isWar(first);
-    if (firstOffer.isPlanetInOffer() && !firstOffer.isPeaceInOffer()
-        && !isWar) {
-      // AI should never give up planet unless is peace is being offered
-      return DECLINE_INSULT;
-    }
-    if (firstOffer.isFleetInOffer() && !firstOffer.isPeaceInOffer()
-        && !isWar) {
-      // AI should never give up fleets unless is peace is being offered
+    if ((firstOffer.isPlanetInOffer() || firstOffer.isFleetInOffer())
+        && (!isWar || !firstOffer.isPeaceInOffer())) {
+      // AI should never give up planet or fleet unless
+      // is peace is being offered
       return DECLINE_INSULT;
     }
     int difference = firstValue - secondValue;

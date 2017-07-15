@@ -350,7 +350,8 @@ public class PlanetView extends BlackPanel {
     constructionSelect.setAlignmentX(Component.RIGHT_ALIGNMENT);
     invisible.add(constructionSelect);
     invisible.add(Box.createRigidArea(new Dimension(60, 5)));
-    buildingEstimate = new TransparentLabel(topPanel, planet.getProductionTime(
+    buildingEstimate = new TransparentLabel(topPanel, "1000 turns");
+    buildingEstimate.setText(planet.getProductionTime(
         (Construction) constructionSelect.getSelectedItem()));
     buildingEstimate.setAlignmentX(Component.RIGHT_ALIGNMENT);
     invisible.add(buildingEstimate);

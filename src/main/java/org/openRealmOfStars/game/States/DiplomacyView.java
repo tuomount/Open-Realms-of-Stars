@@ -270,6 +270,7 @@ public class DiplomacyView extends BlackPanel {
     infoText = new InfoTextArea();
     infoText.setAlignmentX(Component.LEFT_ALIGNMENT);
     infoText.setLineWrap(true);
+    infoText.setCharacterWidth(8);
     panel.add(infoText);
     SpeechLine[] lines = createOfferLines(startType);
     humanLines = new JList<>(lines);

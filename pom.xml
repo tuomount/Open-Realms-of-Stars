@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.openRealmOfStars</groupId>
-    <artifactId>Open-Realms-of-Stars</artifactId>
-    <version>0.0.6-SNAPSHOT</version>
+    <artifactId>Open-Realm-of-Stars</artifactId>
+    <version>0.0.6</version>
     <packaging>jar</packaging>
-    <url>https://tuomount.kapsi.fi</url>
+    <url>https://github.com/tuomount/Open-Realms-of-Stars</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>

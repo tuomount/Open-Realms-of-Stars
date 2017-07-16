@@ -645,8 +645,10 @@ public class Game implements ActionListener {
    */
   private void changeGameState(final GameState newState,
       final Message focusMessage, final Object dataObject) {
-    previousState = gameState;
-    gameState = newState;
+    if (newState != gameState) {
+      previousState = gameState;
+      gameState = newState;
+    }
     if (animationTimer != null
         && animationTimer.getDelay() != ANIMATION_TIMER_DELAY) {
       animationTimer.setDelay(ANIMATION_TIMER_DELAY);

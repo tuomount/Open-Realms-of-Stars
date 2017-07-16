@@ -157,8 +157,8 @@ public class Combat {
 
     CombatPositionList bottomList = new BottomPositionList();
     CombatPositionList topList = new TopPositionList();
-    addCombatShipList(attackerFleet, attackerInfo, bottomList);
-    addCombatShipList(defenderFleet, defenderInfo, topList);
+    addCombatShipList(attackerFleet, attackerInfo, bottomList, false);
+    addCombatShipList(defenderFleet, defenderInfo, topList, true);
 
     Collections.sort(combatShipList, Collections.reverseOrder());
     componentUse = -1;
@@ -172,9 +172,10 @@ public class Combat {
  * @param fleet Player's Fleet
  * @param playerInfo Player's information
  * @param positionList starting coordinate list
+ * @param flipY Should ship's image have flipped Y axel.
  */
 private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
-        final CombatPositionList positionList) {
+        final CombatPositionList positionList, final boolean flipY) {
     Ship[] ships = fleet.getShips();
     int index = 0;
     for (Ship ship : ships) {
@@ -185,7 +186,7 @@ private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
       int combatShipX = positionList.getStartPosX(index);
       int combatShipY = positionList.getStartPosY(index);
       CombatShip combatShp = new CombatShip(ship, playerInfo,
-              combatShipX, combatShipY, false);
+              combatShipX, combatShipY, flipY);
       if (fleet.getRoute() != null && fleet.getRoute().isDefending()) {
         combatShp.setBonusAccuracy(5);
       }

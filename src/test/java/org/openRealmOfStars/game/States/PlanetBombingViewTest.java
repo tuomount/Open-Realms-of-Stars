@@ -8,9 +8,15 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipHull;
+import org.openRealmOfStars.player.ship.ShipSize;
+import org.openRealmOfStars.player.ship.generator.ShipGenerator;
+import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
+import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 /**
  *
@@ -40,30 +46,59 @@ public class PlanetBombingViewTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
-      Planet planet = Mockito.mock(Planet.class);
-      Fleet fleet = Mockito.mock(Fleet.class);
-      Ship firstShip = Mockito.mock(Ship.class);
-      ShipHull shipHull = Mockito.mock(ShipHull.class);
-      Mockito.when(firstShip.getHull()).thenReturn(shipHull);
-      Mockito.when(fleet.getFirstShip()).thenReturn(firstShip);
-      Mockito.when(fleet.getShips()).thenReturn(new Ship[]{firstShip});
+    Planet planet = Mockito.mock(Planet.class);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Ship firstShip = Mockito.mock(Ship.class);
+    ShipHull shipHull = Mockito.mock(ShipHull.class);
+    Mockito.when(firstShip.getHull()).thenReturn(shipHull);
+    Mockito.when(fleet.getFirstShip()).thenReturn(firstShip);
+    Mockito.when(fleet.getShips()).thenReturn(new Ship[]{firstShip});
 
-      PlayerInfo attackerPlayerInfo = Mockito.mock(PlayerInfo.class);
-      int attackerPlayerIndex = 0;
-      ActionListener listener = Mockito.mock(ActionListener.class);
+    PlayerInfo attackerPlayerInfo = Mockito.mock(PlayerInfo.class);
+    int attackerPlayerIndex = 0;
+    ActionListener listener = Mockito.mock(ActionListener.class);
 
-      planetBombingView = new PlanetBombingView(planet, fleet, 
-          attackerPlayerInfo, attackerPlayerIndex, listener);
-      assertEquals(planet, planetBombingView.getPlanet());
-      Planet planet2 = Mockito.mock(Planet.class);
-      planetBombingView.setPlanet(planet2);
-      assertEquals(planet2, planetBombingView.getPlanet());
-      assertEquals(fleet, planetBombingView.getFleet());
-      Fleet fleet2 = Mockito.mock(Fleet.class);
-      planetBombingView.setFleet(fleet2);
-      assertEquals(fleet2, planetBombingView.getFleet());
-      // Just running void method
-      planetBombingView.resetComponentUsage();
+    planetBombingView = new PlanetBombingView(planet, fleet, 
+        attackerPlayerInfo, attackerPlayerIndex, listener);
+    assertEquals(planet, planetBombingView.getPlanet());
+    Planet planet2 = Mockito.mock(Planet.class);
+    planetBombingView.setPlanet(planet2);
+    assertEquals(planet2, planetBombingView.getPlanet());
+    assertEquals(fleet, planetBombingView.getFleet());
+    Fleet fleet2 = Mockito.mock(Fleet.class);
+    planetBombingView.setFleet(fleet2);
+    assertEquals(fleet2, planetBombingView.getFleet());
+    // Just running void method
+    planetBombingView.resetComponentUsage();
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testBombing() {
+    Planet planet = Mockito.mock(Planet.class);
+
+    PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRace.SPORKS, 2, 1);
+    attackerPlayerInfo.getTechList().addTech(TechFactory.createCombatTech(
+        "Orbital bombs Mk1", 4));
+    attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
+        "Destroyer Mk1", 1));
+    Ship ship = null;
+    do {
+      ShipDesign design = ShipGenerator.createBattleShip(attackerPlayerInfo,
+          ShipSize.MEDIUM);
+      ship = new Ship(design);
+    } while (!ship.hasBombs());
+    Fleet fleet = new Fleet(ship, 5, 5);
+    int attackerPlayerIndex = 0;
+    ActionListener listener = Mockito.mock(ActionListener.class);
+
+    planetBombingView = new PlanetBombingView(planet, fleet, 
+        attackerPlayerInfo, attackerPlayerIndex, listener);
+    for (int i = 0; i < ship.getNumberOfComponents(); i++) {
+       planetBombingView.shipComponentUsage(i);
+    }
+    int index = planetBombingView.getUsedComponentIndex();
+    assertEquals(ShipComponentType.ORBITAL_BOMBS, ship.getComponent(index).getType());
   }
 
 }

@@ -598,4 +598,12 @@ public class PlanetBombingView extends BlackPanel {
     }
   }
 
+  /**
+   * Return used ship component index
+   * @return Component index
+   */
+  public int getUsedComponentIndex() {
+    return usedComponentIndex;
+  }
+
 }

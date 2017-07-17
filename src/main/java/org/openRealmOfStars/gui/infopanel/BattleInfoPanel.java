@@ -151,6 +151,16 @@ public class BattleInfoPanel extends InfoPanel {
   }
 
   /**
+   * Set component botton enabling or disable
+   * @param enabled True to enable buttons
+   */
+  public void setBtnEnabled(final boolean enabled) {
+    for (int i = 0; i < MAX_BTN; i++) {
+      cBtn[i].setEnabled(enabled);
+    }
+  }
+
+  /**
    * Reset Ship Component uses.
    */
   public void resetComponentUses() {

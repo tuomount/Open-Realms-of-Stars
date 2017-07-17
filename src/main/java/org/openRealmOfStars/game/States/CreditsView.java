@@ -153,6 +153,13 @@ public class CreditsView extends BlackPanel {
   }
 
   /**
+   * Get full credits as a String
+   * @return Full credits
+   */
+  public String getCreditsText() {
+    return textArea.getText();
+  }
+  /**
    * Update Text area
    */
   public void updateTextArea() {

@@ -571,6 +571,7 @@ public class PlanetBombingView extends BlackPanel {
 
   /**
    * Handle bombing/conquer when AI is attacking
+   * And all parties are Ai
    */
   public void handleAiToAiAttack() {
     boolean oneAttackFound = false;

@@ -502,8 +502,10 @@ public class PlanetBombingView extends BlackPanel {
   /**
    * Attack with bombs or troops. This handles killing/destroying
    * the buildings and animation.
+   * @return true if planet was conquered
    */
-  public void attackBombOrTroops() {
+  public boolean attackBombOrTroops() {
+    boolean conquered = false;
     if (usedComponentIndex != -1) {
       Ship ship = fleet.getShipByIndex(shipIndex);
       ShipComponent comp = ship.getComponent(usedComponentIndex);
@@ -548,6 +550,7 @@ public class PlanetBombingView extends BlackPanel {
             }
             ship.setColonist(0);
             planet.setPlanetOwner(attackPlayerIndex, attacker);
+            conquered = true;
             if (attacker.getRace() == SpaceRace.MECHIONS) {
               planet.setWorkers(Planet.PRODUCTION_WORKERS, left);
             } else {
@@ -563,6 +566,57 @@ public class PlanetBombingView extends BlackPanel {
       }
       usedComponentIndex = -1;
     }
+    return conquered;
+  }
+
+  /**
+   * Handle bombing/conquer when AI is attacking
+   */
+  public void handleAiToAiAttack() {
+    boolean oneAttackFound = false;
+    boolean exitLoop = false;
+    boolean troops = false;
+    do {
+      Ship ship = fleet.getShipByIndex(shipIndex);
+      for (int i = 0; i < ship.getNumberOfComponents(); i++) {
+        ShipComponent component = ship.getComponent(i);
+        if (component.getType() == ShipComponentType.ORBITAL_BOMBS
+            || component.getType() == ShipComponentType.ORBITAL_NUKE) {
+          // Always bombing
+          shipComponentUsage(i);
+        }
+        if (component.getType() == ShipComponentType
+            .PLANETARY_INVASION_MODULE) {
+          if (ship.getTroopPower() > planet.getTroopPower() || troops) {
+            // Using troops if only going to win
+            // Or there is at least two troop carriers
+            shipComponentUsage(i);
+          }
+          troops = true;
+        }
+        if (usedComponentIndex != -1) {
+          oneAttackFound = true;
+          if (attackBombOrTroops()) {
+            // Planet conquered
+            exitLoop = true;
+          }
+          removeDestroyedShip();
+          imgBase.setAnimation(null);
+        }
+      }
+      nextShip();
+      if (shipIndex == 0) {
+        if (!oneAttackFound) {
+          exitLoop = true;
+        }
+        if (planet.getTotalPopulation() == 0 && !troops) {
+          // No attack force exiting
+          exitLoop = true;
+        }
+        oneAttackFound = false;
+        troops = false;
+      }
+    } while (!exitLoop);
   }
   /**
    * Handle actions for Planet view.

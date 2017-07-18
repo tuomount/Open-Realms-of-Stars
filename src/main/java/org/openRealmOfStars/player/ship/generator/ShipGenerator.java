@@ -466,11 +466,11 @@ public final class ShipGenerator {
         result.addComponent(colony);
 
       } else {
-        Tech[] electricsTechs = player.getTechList()
-            .getListForType(TechType.Electrics);
-        Tech invasionModule = TechList.getBestTech(electricsTechs,
+        Tech[] combatTechs = player.getTechList()
+            .getListForType(TechType.Combat);
+        Tech invasionModule = TechList.getBestTech(combatTechs,
             "Planetary invasion module");
-        Tech shockModule = TechList.getBestTech(electricsTechs,
+        Tech shockModule = TechList.getBestTech(combatTechs,
             "Shock trooper module");
         if (shockModule != null) {
           ShipComponent trooper = ShipComponentFactory

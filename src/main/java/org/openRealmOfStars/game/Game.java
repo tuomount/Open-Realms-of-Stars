@@ -84,7 +84,7 @@ public class Game implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.0.7Alpha";
+  public static final String GAME_VERSION = "0.0.8Alpha";
 
   /**
    * Animation timer used for animation
@@ -1147,8 +1147,14 @@ public class Game implements ActionListener {
       SoundPlayer.playMenuSound();
       changeGameState(GameState.DIPLOMACY_VIEW);
       //changeGameState(GameState.COMBAT);
-      //changeGameState(GameState.PLANETBOMBINGVIEW,
-      //    starMap.getPlanetList().get(0));
+/*      Planet planet = starMap.getPlanetList().get(0);
+      players.getPlayerInfoByIndex(0).getFleets().getFirst()
+          .setPos(planet.getCoordinate());
+      fleetView = new FleetView(planet,
+          players.getPlayerInfoByIndex(0).getFleets().getFirst(),
+          players.getPlayerInfoByIndex(0).getFleets(),
+          players.getPlayerInfoByIndex(0), true, this);
+      changeGameState(GameState.PLANETBOMBINGVIEW, fleetView);*/
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN_DONE)

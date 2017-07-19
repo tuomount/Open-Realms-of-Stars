@@ -5,6 +5,8 @@ import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameState;
+import org.openRealmOfStars.game.States.FleetView;
+import org.openRealmOfStars.game.States.PlanetBombingView;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
@@ -333,6 +335,22 @@ public final class MissionHandling {
           && fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
         // Target acquired, mission completed!
         info.getMissions().remove(mission);
+        Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
+            fleet.getY());
+        if (planet == null) {
+          return;
+        }
+        if (planet.getPlanetPlayerInfo().isHuman()) {
+          // Bombing human planet
+          FleetView fleetView = new FleetView(planet, fleet, info.getFleets(),
+              info, false, game);
+          game.changeGameState(GameState.PLANETBOMBINGVIEW, fleetView);
+        } else {
+          // Bombing AI planet
+          PlanetBombingView bombingView = new PlanetBombingView(planet, fleet,
+              info, game.getStarMap().getPlayerList().getIndex(info), game);
+          bombingView.handleAiToAiAttack();
+        }
       } else if (mission.getPhase() == MissionPhase.EXECUTING
           && fleet.getRoute() == null) {
         makeReroute(game, fleet, info, mission);

@@ -1,5 +1,6 @@
 package org.openRealmOfStars.game.States;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import static org.junit.Assert.*;
@@ -7,6 +8,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -137,6 +139,57 @@ public class PlanetBombingViewTest {
         attackerPlayerInfo, attackerPlayerIndex, listener);
     assertEquals(defender, planet.getPlanetPlayerInfo());
     planetBombingView.handleAiToAiAttack();
+    assertEquals(attackerPlayerInfo, planet.getPlanetPlayerInfo());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testAiConqueringHuman() {
+    PlayerInfo defender = new PlayerInfo(SpaceRace.CENTAURS, 3, 0);
+    Planet planet = new Planet(new Coordinate(5, 5), "Testopia", 1, false);
+    planet.setPlanetOwner(2, defender);
+    planet.setWorkers(Planet.FOOD_FARMERS, 2);
+
+    PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRace.SPORKS, 3, 1);
+    attackerPlayerInfo.getTechList().addTech(TechFactory.createCombatTech(
+        "Orbital bombs Mk1", 4));
+    attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
+        "Destroyer Mk1", 1));
+    attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
+        "Small freighter", 2));
+    attackerPlayerInfo.getTechList().addTech(TechFactory.createCombatTech(
+        "Planetary invasion module", 2));
+    Ship ship = null;
+    do {
+      ShipDesign design = ShipGenerator.createBattleShip(attackerPlayerInfo,
+          ShipSize.MEDIUM);
+      ship = new Ship(design);
+    } while (!ship.hasBombs());
+    Fleet fleet = new Fleet(ship, 5, 5);
+    ShipDesign design = ShipGenerator.createColony(attackerPlayerInfo, true);
+    ship = new Ship(design);
+    ship.setColonist(2);
+    fleet.addShip(ship);
+    int attackerPlayerIndex = 0;
+    ActionListener listener = Mockito.mock(ActionListener.class);
+
+    planetBombingView = new PlanetBombingView(planet, fleet, 
+        attackerPlayerInfo, attackerPlayerIndex, listener);
+    assertEquals(defender, planet.getPlanetPlayerInfo());
+    ActionEvent action = Mockito.mock(ActionEvent.class);
+    Mockito.when(action.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_ANIMATION_TIMER);
+
+    int safetyCounter = 10000;
+    while (!planetBombingView.isAiDone()) {
+      planetBombingView.handleAction(action);
+      planetBombingView.handleAction(action);
+      planetBombingView.skipAnimation();
+      safetyCounter--;
+      if (safetyCounter <= 0) {
+        assertFalse(true);
+      }
+    }
     assertEquals(attackerPlayerInfo, planet.getPlanetPlayerInfo());
   }
 

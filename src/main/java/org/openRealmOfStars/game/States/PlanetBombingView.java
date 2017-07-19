@@ -172,6 +172,24 @@ public class PlanetBombingView extends BlackPanel {
   private SpaceButton endButton;
 
   /**
+   * AI has at least one attack
+   */
+  private boolean aiOneAttackFound = false;
+  /**
+   * AI has done all he or she wants to do
+   */
+  private boolean aiExitLoop = false;
+  /**
+   * AI has troops in the fleet
+   */
+  private boolean aiTroops = false;
+
+  /**
+   * AI index which component it is checking
+   */
+  private int aiComponentIndex = 0;
+
+  /**
    * Constructor for PLanet bombing view. This view is used when
    * player is conquering planet with bombs and/or troops.
    * @param planet Planet to be conquered
@@ -602,7 +620,7 @@ public class PlanetBombingView extends BlackPanel {
             exitLoop = true;
           }
           removeDestroyedShip();
-          imgBase.setAnimation(null);
+          skipAnimation();
         }
       }
       nextShip();
@@ -635,8 +653,48 @@ public class PlanetBombingView extends BlackPanel {
         updatePanel();
         imgBase.repaint();
       } else {
-        if (aiControlled) {
-          // FIXME make AI handling here
+        if (aiControlled && !aiExitLoop) {
+          Ship ship = fleet.getShipByIndex(shipIndex);
+          ShipComponent component = ship.getComponent(aiComponentIndex);
+          if (component.getType() == ShipComponentType.ORBITAL_BOMBS
+             || component.getType() == ShipComponentType.ORBITAL_NUKE) {
+            // Always bombing
+            shipComponentUsage(aiComponentIndex);
+          }
+          if (component.getType() == ShipComponentType
+             .PLANETARY_INVASION_MODULE) {
+            if (ship.getTroopPower() > planet.getTroopPower() || aiTroops) {
+              // Using troops if only going to win
+              // Or there is at least two troop carriers
+              shipComponentUsage(aiComponentIndex);
+            }
+            aiTroops = true;
+          }
+          if (usedComponentIndex != -1) {
+            aiOneAttackFound = true;
+            if (attackBombOrTroops()) {
+              // Planet conquered
+              aiExitLoop = true;
+            }
+          }
+          if (aiComponentIndex < ship.getNumberOfComponents() - 1) {
+            aiComponentIndex++;
+          } else {
+            aiComponentIndex = 0;
+            nextShip();
+            if (shipIndex == 0) {
+              if (!aiOneAttackFound) {
+                aiExitLoop = true;
+              }
+              if (planet.getTotalPopulation() == 0 && !aiTroops) {
+                // No attack force exiting
+                aiExitLoop = true;
+              }
+              aiOneAttackFound = false;
+              aiTroops = false;
+            }
+          }
+        } else {
           endButton.setEnabled(true);
         }
       }
@@ -661,4 +719,18 @@ public class PlanetBombingView extends BlackPanel {
     return usedComponentIndex;
   }
 
+  /**
+   * Tells if AI has done everything for conquering or not
+   * @return True if AI is ready
+   */
+  public boolean isAiDone() {
+    return aiExitLoop;
+  }
+
+  /**
+   * Quickly skip animation
+   */
+  public void skipAnimation() {
+    imgBase.setAnimation(null);
+  }
 }

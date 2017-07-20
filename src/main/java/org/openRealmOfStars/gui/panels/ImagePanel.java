@@ -53,12 +53,27 @@ public class ImagePanel extends JPanel {
   private String text;
 
   /**
-   * Create picture frame
+   * Create picture frame from image
    * @param picture to show
    */
   public ImagePanel(final BufferedImage picture) {
     super();
     image = picture;
+    text = null;
+    Dimension size = new Dimension(image.getWidth(), image.getHeight());
+    this.setMinimumSize(size);
+    this.setPreferredSize(size);
+    this.setBorder(new SimpleBorder());
+  }
+
+  /**
+   * Create picture frame from frame size
+   * @param width frame width
+   * @param height frame height
+   */
+  public ImagePanel(final int width, final int height) {
+    super();
+    image = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
     text = null;
     Dimension size = new Dimension(image.getWidth(), image.getHeight());
     this.setMinimumSize(size);

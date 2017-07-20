@@ -1,23 +1,12 @@
 package org.openRealmOfStars.gui.panels;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
-import javax.swing.JPanel;
-
-import org.openRealmOfStars.gui.GuiStatics;
-import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2017 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,17 +26,13 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
  *
  */
 
-public class RaceImagePanel extends JPanel {
+public class RaceImagePanel extends ImagePanel {
 
   /**
    *
    */
   private static final long serialVersionUID = 1L;
 
-  /**
-   * Race picture to draw
-   */
-  private BufferedImage image;
 
   /**
    * Maximum width
@@ -68,12 +53,7 @@ public class RaceImagePanel extends JPanel {
    * Create picture frame for player setup
    */
   public RaceImagePanel() {
-    super();
-    image = new BufferedImage(MAXX, MAXY, BufferedImage.TYPE_4BYTE_ABGR);
-    Dimension size = new Dimension(image.getWidth(), image.getHeight());
-    this.setMinimumSize(size);
-    this.setPreferredSize(size);
-    this.setBorder(new SimpleBorder());
+    super(MAXX, MAXY);
     raceToShow = "Not in use";
   }
 
@@ -89,40 +69,23 @@ public class RaceImagePanel extends JPanel {
   /**
    * Set Race to show.
    *
-   * @param raceToShow Race to show
+   * @param raceName Race to show
    */
-  public void setRaceToShow(final String raceToShow) {
-    if (raceToShow != null) {
-      this.raceToShow = raceToShow;
-      this.repaint();
+  public void setRaceToShow(final String raceName) {
+    if (raceName != null) {
+      raceToShow = raceName;
+      SpaceRace race = SpaceRaceUtility.getRaceByName(raceToShow);
+      if (race == null) {
+        setText(raceToShow);
+      } else {
+        setText(null);
+        setImage(race.getRaceImage());
+      }
+      repaint();
     } else {
-      this.raceToShow = "Not in use";
-    }
-  }
-
-  @Override
-  protected void paintComponent(final Graphics g) {
-    GradientPaint gradient = new GradientPaint(this.getWidth() / 2, 0,
-        Color.BLACK, this.getWidth() / 2, this.getHeight(),
-        GuiStatics.COLOR_GREY_40, true);
-
-    Graphics2D g2d = (Graphics2D) g;
-
-    g2d.setPaint(gradient);
-    g.fillRect(0, 0, this.getWidth(), this.getHeight());
-    SpaceRace race = SpaceRaceUtility.getRaceByName(raceToShow);
-    if (race == null) {
-      g2d.setFont(GuiStatics.getFontCubellan());
-      g2d.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE);
-      int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
-          raceToShow);
-      int offsetX = this.getWidth() / 2 - textWidth / 2;
-      g2d.drawString(raceToShow, offsetX, this.getHeight() / 2);
-
-    } else {
-      image = race.getRaceImage();
-      g.drawImage(image, this.getWidth() / 2 - image.getWidth() / 2,
-          this.getHeight() - image.getHeight(), null);
+      raceToShow = "Not in use";
+      setText("Not in use");
+      repaint();
     }
   }
 

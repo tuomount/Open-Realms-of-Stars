@@ -98,5 +98,9 @@ public enum GameState {
   /**
    * Diplomacy view
    */
-  DIPLOMACY_VIEW
+  DIPLOMACY_VIEW,
+  /**
+   * News corp view which will tell highlights of previous turn
+   */
+  NEWS_CORP_VIEW
 }

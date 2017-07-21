@@ -94,7 +94,6 @@ public class NewsCorpView extends BlackPanel {
     newsPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     newsPanel.add(invis);
     base.add(newsPanel, BorderLayout.CENTER);
-    
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());

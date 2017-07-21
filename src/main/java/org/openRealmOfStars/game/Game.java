@@ -19,6 +19,7 @@ import org.openRealmOfStars.game.States.FleetView;
 import org.openRealmOfStars.game.States.GalaxyCreationView;
 import org.openRealmOfStars.game.States.LoadGameView;
 import org.openRealmOfStars.game.States.MainMenu;
+import org.openRealmOfStars.game.States.NewsCorpView;
 import org.openRealmOfStars.game.States.PlanetBombingView;
 import org.openRealmOfStars.game.States.PlanetView;
 import org.openRealmOfStars.game.States.PlayerSetupView;
@@ -197,6 +198,11 @@ public class Game implements ActionListener {
   private GalaxyConfig galaxyConfig;
 
   /**
+   * News corporation view for the game
+   */
+  private NewsCorpView newsCorpView;
+
+  /**
    * Change Message Fleet or Planet
    */
   private ChangeMessage changeMessage;
@@ -371,6 +377,14 @@ public class Game implements ActionListener {
       final boolean interactive) {
     planetView = new PlanetView(planet, interactive, player, this);
     this.updateDisplay(planetView);
+  }
+
+  /**
+   * Show news corp view
+   */
+  public void showNewsCorpView() {
+    newsCorpView = new NewsCorpView(this);
+    this.updateDisplay(newsCorpView);
   }
 
   /**
@@ -671,7 +685,10 @@ public class Game implements ActionListener {
       break;
     case NEW_GAME: {
       makeNewGame();
-
+      break;
+    }
+    case NEWS_CORP_VIEW: {
+      showNewsCorpView();
       break;
     }
     case PLANETBOMBINGVIEW: {
@@ -1145,7 +1162,7 @@ public class Game implements ActionListener {
     }
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_BATTLE)) {
       SoundPlayer.playMenuSound();
-      changeGameState(GameState.DIPLOMACY_VIEW);
+      changeGameState(GameState.NEWS_CORP_VIEW);
       //changeGameState(GameState.COMBAT);
 /*      Planet planet = starMap.getPlanetList().get(0);
       players.getPlayerInfoByIndex(0).getFleets().getFirst()

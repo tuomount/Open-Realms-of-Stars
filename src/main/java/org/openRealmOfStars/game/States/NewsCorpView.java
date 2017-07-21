@@ -1,12 +1,19 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.panels.ImagePanel;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 
 /**
 *
@@ -38,6 +45,15 @@ public class NewsCorpView extends BlackPanel {
   private static final long serialVersionUID = 1L;
 
   /**
+   * News image
+   */
+  private ImagePanel newsImage;
+
+  /**
+   * News text
+   */
+  private InfoTextArea textArea;
+  /**
    * Construtor for News Corp View.
    * @param listener ActionListener
    */
@@ -45,7 +61,21 @@ public class NewsCorpView extends BlackPanel {
     this.setLayout(new BorderLayout());
     InfoPanel base = new InfoPanel();
     base.setLayout(new BorderLayout());
-    base.setTitle("Statistics");
+    base.setTitle("Galactic Broadcasting News Company");
+    // TODO: This image needs to be changed
+    ImagePanel imagePanel = new ImagePanel(SpaceRace.HUMAN.getRaceImage());
+    base.add(imagePanel, BorderLayout.WEST);
+    InfoPanel newsPanel = new InfoPanel();
+    newsPanel.setLayout(new BoxLayout(newsPanel, BoxLayout.Y_AXIS));
+    newsPanel.setTitle("News headline");
+    // TODO: This image needs to be changed
+    newsImage = new ImagePanel(SpaceRace.HUMAN.getRaceImage());
+    newsPanel.add(newsImage, BorderLayout.WEST);
+    newsPanel.add(Box.createRigidArea(new Dimension(15, 10)));
+    textArea = new InfoTextArea();
+    textArea.setCharacterWidth(10);
+    newsPanel.add(textArea);
+    base.add(newsPanel, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();

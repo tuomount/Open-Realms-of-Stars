@@ -8,11 +8,14 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ImagePanel;
+import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 
 /**
@@ -75,8 +78,23 @@ public class NewsCorpView extends BlackPanel {
     textArea = new InfoTextArea();
     textArea.setCharacterWidth(10);
     newsPanel.add(textArea);
-    base.add(newsPanel, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
+    InvisiblePanel invis = new InvisiblePanel(newsPanel);
+    invis.setLayout(new BoxLayout(invis, BoxLayout.X_AXIS));
+    IconButton iBtn = new IconButton(GuiStatics.LEFT_ARROW,
+        GuiStatics.LEFT_ARROW_PRESSED, false, GameCommands.COMMAND_PREV_TARGET,
+        this);
+    iBtn.addActionListener(listener);
+    invis.add(iBtn);
+    iBtn = new IconButton(GuiStatics.RIGHT_ARROW,
+        GuiStatics.RIGHT_ARROW_PRESSED, false, GameCommands.COMMAND_NEXT_TARGET,
+        this);
+    iBtn.addActionListener(listener);
+    invis.add(iBtn);
+    newsPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    newsPanel.add(invis);
+    base.add(newsPanel, BorderLayout.CENTER);
+    
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());

@@ -26,7 +26,23 @@ public class ImageInstruction {
   /**
    * Instructions for background
    */
-  public static final String BACKGROUND = "background";
+  private static final String BACKGROUND = "background";
+  /**
+   * Background stars
+   */
+  public static final String BACKGROUND_STARS = "stars";
+  /**
+   * Background nebulae
+   */
+  public static final String BACKGROUND_NEBULAE = "nebulae";
+  /**
+   * Background black
+   */
+  public static final String BACKGROUND_BLACK = "black";
+  /**
+   * Background grey gradient
+   */
+  public static final String BACKGROUND_GREY_GRADIENT = "grey gradient";
   /**
    * Instructions for texts
    */
@@ -58,17 +74,17 @@ public class ImageInstruction {
   /**
    * Character for starting parameters
    */
-  private static final String PARAM_START = "(";
+  private static final char PARAM_START = '(';
 
   /**
    * Character for ending parameters
    */
-  private static final String PARAM_END = ")";
+  private static final char PARAM_END = ')';
 
   /**
-   * Instruction delimeter
+   * Instruction delimiter
    */
-  private static final String INSTRUCTION_DELIM = "+";
+  private static final char INSTRUCTION_DELIM = '+';
 
   /**
    * Check if there is instruction delimiter if it is missing
@@ -79,16 +95,39 @@ public class ImageInstruction {
       sb.append(INSTRUCTION_DELIM);
     }
   }
+
   /**
-   * Add background to image instructions
-   * @param backgroundName Background name
+   * Sanitize parameters. Removes all delimiter from parameters
+   * @param parameter As a String
+   * @return Sanitized parameter
+   */
+  private String sanitizeParameters(final String parameter) {
+    StringBuilder paramBuilder = new StringBuilder();
+    for (int i = 0; i < parameter.length(); i++) {
+      if (parameter.charAt(i) != PARAM_END
+          && parameter.charAt(i) != PARAM_START
+          && parameter.charAt(i) != INSTRUCTION_DELIM) {
+        paramBuilder.append(parameter.charAt(i));
+      }
+    }
+    return paramBuilder.toString();
+  }
+  /**
+   * Add background to image instructions.
+   * If instruction is something unexpected then black is background
+   * is being drawn.
+   * @param backgroundName Background name:
+   *        BACKGROUND_STARS,
+   *        BACKGROUND_NEBULAE,
+   *        BACKGROUND_BLACK,
+   *        BACKGROUND_GREY_GRADIENT
    * @return ImageInstruction with background
    */
   public ImageInstruction addBackground(final String backgroundName) {
     checkDelim();
     sb.append(BACKGROUND);
     sb.append(PARAM_START);
-    sb.append(backgroundName);
+    sb.append(sanitizeParameters(backgroundName));
     sb.append(PARAM_END);
     return this;
   }

@@ -31,11 +31,24 @@ public class ImageInstructionTest {
   @Test
   public void testBackground() {
     ImageInstruction instruction = new ImageInstruction();
-    instruction.addBackground("gradient");
+    instruction.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
+    assertEquals("background(grey gradient)", instruction.toString());
+    assertEquals("background(grey gradient)", instruction.build());
+    instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    assertEquals("background(grey gradient)+background(black)", instruction.build());
+  }
+
+  @Test
+  public void testSanitize() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground("grad+ient");
     assertEquals("background(gradient)", instruction.toString());
-    assertEquals("background(gradient)", instruction.build());
-    instruction.addBackground("black");
-    assertEquals("background(gradient)+background(black)", instruction.build());
+    instruction = new ImageInstruction();
+    instruction.addBackground("grad(ient");
+    assertEquals("background(gradient)", instruction.toString());
+    instruction = new ImageInstruction();
+    instruction.addBackground("grad)ient");
+    assertEquals("background(gradient)", instruction.toString());
   }
 
 }

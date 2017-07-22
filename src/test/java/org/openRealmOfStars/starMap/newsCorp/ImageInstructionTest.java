@@ -39,6 +39,14 @@ public class ImageInstructionTest {
   }
 
   @Test
+  public void testBackgroundAndText() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instruction.addText("Test called background and(+) Text");
+    assertEquals("background(stars)+text(Test called background and Text)", instruction.build());
+  }
+
+  @Test
   public void testSanitize() {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground("grad+ient");

@@ -46,7 +46,7 @@ public class ImageInstruction {
   /**
    * Instructions for texts
    */
-  public static final String TEXT = "text";
+  private static final String TEXT = "text";
   /**
    * Instructions for planet
    */
@@ -128,6 +128,21 @@ public class ImageInstruction {
     sb.append(BACKGROUND);
     sb.append(PARAM_START);
     sb.append(sanitizeParameters(backgroundName));
+    sb.append(PARAM_END);
+    return this;
+  }
+
+  /**
+   * Add text to image instructions.
+   * These are added as a centered rows.
+   * @param paramText Text to show in image
+   * @return ImageInstruction with text
+   */
+  public ImageInstruction addText(final String paramText) {
+    checkDelim();
+    sb.append(TEXT);
+    sb.append(PARAM_START);
+    sb.append(sanitizeParameters(paramText));
     sb.append(PARAM_END);
     return this;
   }

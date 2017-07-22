@@ -47,6 +47,14 @@ public class ImageInstructionTest {
   }
 
   @Test
+  public void testBackgroundAndPlanet() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instruction.addPlanet(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_IRONWORLD1);
+    assertEquals("background(stars)+planet(position center,ironworld1)", instruction.build());
+  }
+
+  @Test
   public void testSanitize() {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground("grad+ient");
@@ -57,6 +65,8 @@ public class ImageInstructionTest {
     instruction = new ImageInstruction();
     instruction.addBackground("grad)ient");
     assertEquals("background(gradient)", instruction.toString());
+    instruction = new ImageInstruction();
+    instruction.addBackground("grad,ient");
   }
 
 }

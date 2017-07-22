@@ -50,7 +50,47 @@ public class ImageInstruction {
   /**
    * Instructions for planet
    */
-  public static final String PLANET = "planet";
+  private static final String PLANET = "planet";
+  /**
+   * Planet position in image: left
+   */
+  public static final String POSITION_LEFT = "position left";
+  /**
+   * Planet position in image: center
+   */
+  public static final String POSITION_CENTER = "position center";
+  /**
+   * Planet position in image: right
+   */
+  public static final String POSITION_RIGHT = "position right";
+  /**
+   * Planet type rock1
+   */
+  public static final String PLANET_ROCK1 = "rock1";
+  /**
+   * Planet type waterworld1
+   */
+  public static final String PLANET_WATERWORLD1 = "waterworld1";
+  /**
+   * Planet type waterworld2
+   */
+  public static final String PLANET_WATERWORLD2 = "waterworld2";
+  /**
+   * Planet type ironworld1
+   */
+  public static final String PLANET_IRONWORLD1 = "ironworld1";
+  /**
+   * Planet type ironworld2
+   */
+  public static final String PLANET_IRONWORLD2 = "ironworld2";
+  /**
+   * Planet type gas giant 1
+   */
+  public static final String PLANET_GASGIANT1 = "gasgiant1";
+  /**
+   * Planet type gas giant 2
+   */
+  public static final String PLANET_GASGIANT2 = "gasgiant2";
   /**
    * Instructions for Relation symbol between two text
    */
@@ -85,6 +125,10 @@ public class ImageInstruction {
    * Instruction delimiter
    */
   private static final char INSTRUCTION_DELIM = '+';
+  /**
+   * Parameter delimiter
+   */
+  private static final char PARAMETER_DELIM = ',';
 
   /**
    * Check if there is instruction delimiter if it is missing
@@ -106,7 +150,8 @@ public class ImageInstruction {
     for (int i = 0; i < parameter.length(); i++) {
       if (parameter.charAt(i) != PARAM_END
           && parameter.charAt(i) != PARAM_START
-          && parameter.charAt(i) != INSTRUCTION_DELIM) {
+          && parameter.charAt(i) != INSTRUCTION_DELIM
+          && parameter.charAt(i) != PARAMETER_DELIM) {
         paramBuilder.append(parameter.charAt(i));
       }
     }
@@ -143,6 +188,43 @@ public class ImageInstruction {
     sb.append(TEXT);
     sb.append(PARAM_START);
     sb.append(sanitizeParameters(paramText));
+    sb.append(PARAM_END);
+    return this;
+  }
+
+  /**
+   * Adds planet to the image.
+   * @param position Three choices: left, center and right
+   * @param planetType planet type. Choices are:
+   *        rock1, waterworld1, waterworld2,
+   *        ironworld1, ironworld2, gasgiant1,
+   *        gasgiant2
+   * @return ImageInstruction with text
+   * @throws IllegalArgumentException If position or planet type are illegal
+   */
+  public ImageInstruction addPlanet(final String position,
+      final String planetType) throws IllegalArgumentException {
+    if (!POSITION_CENTER.equals(position)
+        && !POSITION_LEFT.equals(position)
+        && !POSITION_RIGHT.equals(position)) {
+      throw new IllegalArgumentException("Illegal planet position: "
+        + position);
+    }
+    if (!PLANET_ROCK1.equals(planetType)
+        && !PLANET_WATERWORLD1.equals(planetType)
+        && !PLANET_WATERWORLD2.equals(planetType)
+        && !PLANET_IRONWORLD1.equals(planetType)
+        && !PLANET_IRONWORLD2.equals(planetType)
+        && !PLANET_GASGIANT1.equals(planetType)
+        && !PLANET_GASGIANT1.equals(planetType)) {
+      throw new IllegalArgumentException("Illegal planet type: " + planetType);
+    }
+    checkDelim();
+    sb.append(PLANET);
+    sb.append(PARAM_START);
+    sb.append(sanitizeParameters(position));
+    sb.append(PARAMETER_DELIM);
+    sb.append(sanitizeParameters(planetType));
     sb.append(PARAM_END);
     return this;
   }

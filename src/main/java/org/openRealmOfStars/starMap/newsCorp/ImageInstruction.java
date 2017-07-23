@@ -250,6 +250,40 @@ public class ImageInstruction {
   }
 
   /**
+   * Paint background
+   * @param workImage Image where to draw background
+   * @param backgroundType Background type
+   */
+  private static void paintBackground(final BufferedImage workImage,
+      final String backgroundType) {
+    if (BACKGROUND_BLACK.equals(backgroundType)) {
+      Graphics2D g = (Graphics2D) workImage.getGraphics();
+      g.setColor(Color.BLACK);
+      g.fillRect(0, 0, workImage.getWidth(), workImage.getHeight());
+    }
+    if (BACKGROUND_GREY_GRADIENT.equals(backgroundType)) {
+      Graphics2D g = (Graphics2D) workImage.getGraphics();
+      GradientPaint gradient = new GradientPaint(workImage.getWidth() / 2,
+          0, Color.BLACK, workImage.getWidth() / 2,
+          workImage.getHeight() - 1, GuiStatics.COLOR_GREY_40, true);
+      g.setPaint(gradient);
+      g.fillRect(0, 0, workImage.getWidth(), workImage.getHeight());
+    }
+    if (BACKGROUND_STARS.equals(backgroundType)) {
+      Graphics2D g = (Graphics2D) workImage.getGraphics();
+      g.setColor(Color.BLACK);
+      g.fillRect(0, 0, workImage.getWidth(), workImage.getHeight());
+      g.drawImage(GuiStatics.STAR_FIELD_IMAGE, 0, 0, null);
+    }
+    if (BACKGROUND_NEBULAE.equals(backgroundType)) {
+      Graphics2D g = (Graphics2D) workImage.getGraphics();
+      g.setColor(Color.BLACK);
+      g.fillRect(0, 0, workImage.getWidth(), workImage.getHeight());
+      g.drawImage(GuiStatics.STAR_FIELD_IMAGE, -50, -50, null);
+      g.drawImage(GuiStatics.NEBULAE_IMAGE, -25, -25, null);
+    }
+  }
+  /**
    * Parse Image instruction string and draw image
    * to given image.
    * @param image Image where to draw
@@ -272,32 +306,7 @@ public class ImageInstruction {
       String[] parameters = allParameters.split(",");
       if (BACKGROUND.equals(command)) {
         // Background has only one parameter
-        if (BACKGROUND_BLACK.equals(parameters[0])) {
-          Graphics2D g = (Graphics2D) workImage.getGraphics();
-          g.setColor(Color.BLACK);
-          g.fillRect(0, 0, workImage.getWidth(), workImage.getHeight());
-        }
-        if (BACKGROUND_GREY_GRADIENT.equals(parameters[0])) {
-          Graphics2D g = (Graphics2D) workImage.getGraphics();
-          GradientPaint gradient = new GradientPaint(workImage.getWidth() / 2,
-              0, Color.BLACK, workImage.getWidth() / 2,
-              workImage.getHeight() - 1, GuiStatics.COLOR_GREY_40, true);
-          g.setPaint(gradient);
-          g.fillRect(0, 0, workImage.getWidth(), workImage.getHeight());
-        }
-        if (BACKGROUND_STARS.equals(parameters[0])) {
-          Graphics2D g = (Graphics2D) workImage.getGraphics();
-          g.setColor(Color.BLACK);
-          g.fillRect(0, 0, workImage.getWidth(), workImage.getHeight());
-          g.drawImage(GuiStatics.STAR_FIELD_IMAGE, 0, 0, null);
-        }
-        if (BACKGROUND_NEBULAE.equals(parameters[0])) {
-          Graphics2D g = (Graphics2D) workImage.getGraphics();
-          g.setColor(Color.BLACK);
-          g.fillRect(0, 0, workImage.getWidth(), workImage.getHeight());
-          g.drawImage(GuiStatics.STAR_FIELD_IMAGE, -50, -50, null);
-          g.drawImage(GuiStatics.NEBULAE_IMAGE, -25, -25, null);
-        }
+        paintBackground(workImage, parameters[0]);
       }
     }
     return workImage;

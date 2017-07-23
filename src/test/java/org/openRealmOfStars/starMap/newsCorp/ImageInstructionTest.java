@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 /**

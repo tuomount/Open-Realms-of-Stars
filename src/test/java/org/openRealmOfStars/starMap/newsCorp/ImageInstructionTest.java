@@ -117,6 +117,81 @@ public class ImageInstructionTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTextPlanet() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instruction.addPlanet(ImageInstruction.POSITION_LEFT, ImageInstruction.PLANET_ROCK1);
+    BufferedImage image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(800, image.getWidth());
+    assertEquals(400, image.getHeight());
+    assertEquals(Color.BLACK.getRGB(), image.getRGB(700, 200));
+    assertNotEquals(Color.BLACK.getRGB(), image.getRGB(100, 200));
+
+    instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instruction.addPlanet(ImageInstruction.POSITION_LEFT, ImageInstruction.PLANET_GASGIANT1);
+    image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(800, image.getWidth());
+    assertEquals(400, image.getHeight());
+    assertEquals(Color.BLACK.getRGB(), image.getRGB(700, 200));
+    assertNotEquals(Color.BLACK.getRGB(), image.getRGB(100, 200));
+
+    instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instruction.addPlanet(ImageInstruction.POSITION_LEFT, ImageInstruction.PLANET_GASGIANT2);
+    image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(800, image.getWidth());
+    assertEquals(400, image.getHeight());
+    assertEquals(Color.BLACK.getRGB(), image.getRGB(700, 200));
+    assertNotEquals(Color.BLACK.getRGB(), image.getRGB(100, 200));
+
+    instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instruction.addPlanet(ImageInstruction.POSITION_RIGHT, ImageInstruction.PLANET_IRONWORLD1);
+    image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(800, image.getWidth());
+    assertEquals(400, image.getHeight());
+    assertEquals(Color.BLACK.getRGB(), image.getRGB(100, 200));
+    assertNotEquals(Color.BLACK.getRGB(), image.getRGB(700, 200));
+
+    instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instruction.addPlanet(ImageInstruction.POSITION_RIGHT, ImageInstruction.PLANET_IRONWORLD2);
+    image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(800, image.getWidth());
+    assertEquals(400, image.getHeight());
+    assertEquals(Color.BLACK.getRGB(), image.getRGB(100, 200));
+    assertNotEquals(Color.BLACK.getRGB(), image.getRGB(700, 200));
+
+    instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instruction.addPlanet(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_WATERWORLD1);
+    image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(800, image.getWidth());
+    assertEquals(400, image.getHeight());
+    assertEquals(Color.BLACK.getRGB(), image.getRGB(0, 0));
+    assertNotEquals(Color.BLACK.getRGB(), image.getRGB(400, 200));
+
+    instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instruction.addPlanet(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_WATERWORLD2);
+    image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(800, image.getWidth());
+    assertEquals(400, image.getHeight());
+    assertEquals(Color.BLACK.getRGB(), image.getRGB(0, 0));
+    assertNotEquals(Color.BLACK.getRGB(), image.getRGB(400, 200));
+
+  }
+
+  @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBackgroundAndPlanet() {
     ImageInstruction instruction = new ImageInstruction();

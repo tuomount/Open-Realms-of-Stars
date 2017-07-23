@@ -223,7 +223,7 @@ public class ImageInstruction {
         && !PLANET_IRONWORLD1.equals(planetType)
         && !PLANET_IRONWORLD2.equals(planetType)
         && !PLANET_GASGIANT1.equals(planetType)
-        && !PLANET_GASGIANT1.equals(planetType)) {
+        && !PLANET_GASGIANT2.equals(planetType)) {
       throw new IllegalArgumentException("Illegal planet type: " + planetType);
     }
     checkDelim();
@@ -283,6 +283,55 @@ public class ImageInstruction {
       g.drawImage(GuiStatics.NEBULAE_IMAGE, -25, -25, null);
     }
   }
+
+  /**
+   * Draw planet on image
+   * @param workImage Image where to draw
+   * @param planetType Planet type to draw
+   * @param position LEFT, CENTER or RIGHT
+   */
+  private static void paintPlanet(final BufferedImage workImage,
+      final String planetType, final String position) {
+    BufferedImage planetImg = GuiStatics.BIG_PLANET_ROCK1;
+    if (PLANET_ROCK1.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_ROCK1;
+    }
+    if (PLANET_WATERWORLD1.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_WATERWORLD1;
+    }
+    if (PLANET_WATERWORLD2.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_WATERWORLD2;
+    }
+    if (PLANET_IRONWORLD1.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_IRONPLANET1;
+    }
+    if (PLANET_IRONWORLD2.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_IRONPLANET2;
+    }
+    if (PLANET_GASGIANT1.equals(planetType)) {
+      planetImg = GuiStatics.BIG_GASWORLD1;
+    }
+    if (PLANET_GASGIANT2.equals(planetType)) {
+      planetImg = GuiStatics.BIG_GASWORLD2;
+    }
+    Graphics2D g = (Graphics2D) workImage.getGraphics();
+    if (POSITION_CENTER.equals(position)) {
+      g.drawImage(planetImg,
+          workImage.getWidth() / 2 - planetImg.getWidth() / 2,
+          workImage.getHeight() / 2 - planetImg.getHeight() / 2, null);
+    }
+    if (POSITION_LEFT.equals(position)) {
+      g.drawImage(planetImg,
+          workImage.getWidth() / 5 - planetImg.getWidth() / 2,
+          workImage.getHeight() / 2 - planetImg.getHeight() / 2, null);
+    }
+    if (POSITION_RIGHT.equals(position)) {
+      g.drawImage(planetImg,
+          (workImage.getWidth() - workImage.getWidth() / 5)
+          - planetImg.getWidth() / 2,
+          workImage.getHeight() / 2 - planetImg.getHeight() / 2, null);
+    }
+  }
   /**
    * Parse Image instruction string and draw image
    * to given image.
@@ -318,6 +367,9 @@ public class ImageInstruction {
         g.drawString(parameters[0], workImage.getWidth() / 2 - textWidth / 2,
             textY);
         textY = textY + height * 2;
+      }
+      if (PLANET.equals(command)) {
+        paintPlanet(workImage, parameters[1], parameters[0]);
       }
     }
     return workImage;

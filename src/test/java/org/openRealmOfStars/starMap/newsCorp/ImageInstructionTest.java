@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 
 /**
 *
@@ -107,6 +109,31 @@ public class ImageInstructionTest {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
     instruction.addPlanet(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_IRONWORLD1);
+    assertEquals("background(stars)+planet(position center,ironworld1)", instruction.build());
+  }
+
+  @Test(expected=IllegalArgumentException.class)
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBackgroundAndPlanetPositionWeird() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instruction.addPlanet("Weird", ImageInstruction.PLANET_IRONWORLD1);
+    assertEquals("background(stars)+planet(position center,ironworld1)", instruction.build());
+  }
+
+  @Test(expected=IllegalArgumentException.class)
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testParserWithNoParameters() {
+    BufferedImage image = Mockito.mock(BufferedImage.class);
+    ImageInstruction.parseImageInstructions(image, "command");
+  }
+
+  @Test(expected=IllegalArgumentException.class)
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBackgroundAndPlanetTypeWeird() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instruction.addPlanet(ImageInstruction.POSITION_RIGHT, "Weird");
     assertEquals("background(stars)+planet(position center,ironworld1)", instruction.build());
   }
 

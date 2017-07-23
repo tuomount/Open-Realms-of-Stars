@@ -250,7 +250,7 @@ public class ImageInstruction {
   }
 
   /**
-   * Parse Image instrcution string and draw image
+   * Parse Image instruction string and draw image
    * to given image.
    * @param image Image where to draw
    * @param instructions Instruction as a String

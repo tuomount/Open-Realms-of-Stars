@@ -285,6 +285,19 @@ public class ImageInstruction {
           g.setPaint(gradient);
           g.fillRect(0, 0, workImage.getWidth(), workImage.getHeight());
         }
+        if (BACKGROUND_STARS.equals(parameters[0])) {
+          Graphics2D g = (Graphics2D) workImage.getGraphics();
+          g.setColor(Color.BLACK);
+          g.fillRect(0, 0, workImage.getWidth(), workImage.getHeight());
+          g.drawImage(GuiStatics.STAR_FIELD_IMAGE, 0, 0, null);
+        }
+        if (BACKGROUND_NEBULAE.equals(parameters[0])) {
+          Graphics2D g = (Graphics2D) workImage.getGraphics();
+          g.setColor(Color.BLACK);
+          g.fillRect(0, 0, workImage.getWidth(), workImage.getHeight());
+          g.drawImage(GuiStatics.STAR_FIELD_IMAGE, -50, -50, null);
+          g.drawImage(GuiStatics.NEBULAE_IMAGE, -25, -25, null);
+        }
       }
     }
     return workImage;

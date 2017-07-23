@@ -57,6 +57,30 @@ public class ImageInstructionTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testBackgroundStarsDraw() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+    BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(100, image.getWidth());
+    assertEquals(100, image.getHeight());
+    assertEquals(-16579836, image.getRGB(5, 5));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testBackgroundNebulaeDraw() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
+    BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(100, image.getWidth());
+    assertEquals(100, image.getHeight());
+    assertEquals(-16377056, image.getRGB(5, 5));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testBackgroundGradientDraw() {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);

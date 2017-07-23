@@ -2,7 +2,11 @@ package org.openRealmOfStars.starMap.newsCorp;
 
 import static org.junit.Assert.*;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 /**
 *
@@ -29,6 +33,7 @@ import org.junit.Test;
 public class ImageInstructionTest {
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testBackground() {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
@@ -39,6 +44,32 @@ public class ImageInstructionTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testBackgroundBlackDraw() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(100, image.getWidth());
+    assertEquals(100, image.getHeight());
+    assertEquals(Color.BLACK.getRGB(), image.getRGB(5, 5));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testBackgroundGradientDraw() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
+    BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(100, image.getWidth());
+    assertEquals(100, image.getHeight());
+    assertEquals(Color.BLACK.getRGB(), image.getRGB(49, 0));
+    assertEquals(-14211289, image.getRGB(49, 99));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testBackgroundAndText() {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
@@ -47,6 +78,7 @@ public class ImageInstructionTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testBackgroundAndPlanet() {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
@@ -55,6 +87,7 @@ public class ImageInstructionTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testSanitize() {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground("grad+ient");

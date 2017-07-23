@@ -1,5 +1,12 @@
 package org.openRealmOfStars.starMap.newsCorp;
 
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
+import org.openRealmOfStars.gui.GuiStatics;
+
 /**
 *
 * Open Realm of Stars game project
@@ -240,5 +247,46 @@ public class ImageInstruction {
   @Override
   public String toString() {
     return sb.toString();
+  }
+
+  /**
+   * Parse Image instrcution string and draw image
+   * to given image.
+   * @param image Image where to draw
+   * @param instructions Instruction as a String
+   * @return BufferedImage with generated content
+   */
+  public static BufferedImage parseImageInstructions(final BufferedImage image,
+      final String instructions) {
+    BufferedImage workImage = image;
+    String[] lines = instructions.split("\\+");
+    for (String line : lines) {
+      String[] parts = line.split("\\(");
+      if (parts.length != 2) {
+        throw new IllegalArgumentException(
+            "Command does not contain command and parameters: " + line);
+      }
+      String command = parts[0];
+      String allParameters = parts[1];
+      allParameters = allParameters.substring(0, allParameters.length() - 1);
+      String[] parameters = allParameters.split(",");
+      if (BACKGROUND.equals(command)) {
+        // Background has only one parameter
+        if (BACKGROUND_BLACK.equals(parameters[0])) {
+          Graphics2D g = (Graphics2D) workImage.getGraphics();
+          g.setColor(Color.BLACK);
+          g.fillRect(0, 0, workImage.getWidth(), workImage.getHeight());
+        }
+        if (BACKGROUND_GREY_GRADIENT.equals(parameters[0])) {
+          Graphics2D g = (Graphics2D) workImage.getGraphics();
+          GradientPaint gradient = new GradientPaint(workImage.getWidth() / 2,
+              0, Color.BLACK, workImage.getWidth() / 2,
+              workImage.getHeight() - 1, GuiStatics.COLOR_GREY_40, true);
+          g.setPaint(gradient);
+          g.fillRect(0, 0, workImage.getWidth(), workImage.getHeight());
+        }
+      }
+    }
+    return workImage;
   }
 }

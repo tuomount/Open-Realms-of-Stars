@@ -103,6 +103,20 @@ public class ImageInstructionTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTextDraw() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instruction.addText("Liirum laarum leerum laarum");
+    BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(100, image.getWidth());
+    assertEquals(100, image.getHeight());
+    assertEquals(Color.BLACK.getRGB(), image.getRGB(49, 0));
+    assertEquals(-10956033, image.getRGB(50, 15));
+  }
+
+  @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBackgroundAndPlanet() {
     ImageInstruction instruction = new ImageInstruction();

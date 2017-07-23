@@ -292,6 +292,7 @@ public class ImageInstruction {
    */
   public static BufferedImage parseImageInstructions(final BufferedImage image,
       final String instructions) {
+    int textY = 30;
     BufferedImage workImage = image;
     String[] lines = instructions.split("\\+");
     for (String line : lines) {
@@ -307,6 +308,16 @@ public class ImageInstruction {
       if (BACKGROUND.equals(command)) {
         // Background has only one parameter
         paintBackground(workImage, parameters[0]);
+      }
+      if (TEXT.equals(command)) {
+        Graphics2D g = (Graphics2D) workImage.getGraphics();
+        g.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE);
+        g.setFont(GuiStatics.getFontCubellanBoldBig());
+        int textWidth = GuiStatics.getTextWidth(g.getFont(), parameters[0]);
+        int height = GuiStatics.getTextHeight(g.getFont(), parameters[0]);
+        g.drawString(parameters[0], workImage.getWidth() / 2 - textWidth / 2,
+            textY);
+        textY = textY + height * 2;
       }
     }
     return workImage;

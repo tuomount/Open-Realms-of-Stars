@@ -71,6 +71,14 @@ public class ImageInstruction {
    */
   public static final String POSITION_RIGHT = "position right";
   /**
+   * Size of the object, usually the planet. This is for full size.
+   */
+  public static final String SIZE_FULL = "full";
+  /**
+   * Size of the object, usually the planet. This is for half size.
+   */
+  public static final String SIZE_HALF = "half";
+  /**
    * Planet type rock1
    */
   public static final String PLANET_ROCK1 = "rock1";
@@ -206,11 +214,13 @@ public class ImageInstruction {
    *        rock1, waterworld1, waterworld2,
    *        ironworld1, ironworld2, gasgiant1,
    *        gasgiant2
+   * @param size Two choices half or full
    * @return ImageInstruction with text
    * @throws IllegalArgumentException If position or planet type are illegal
    */
   public ImageInstruction addPlanet(final String position,
-      final String planetType) throws IllegalArgumentException {
+      final String planetType, final String size)
+      throws IllegalArgumentException {
     if (!POSITION_CENTER.equals(position)
         && !POSITION_LEFT.equals(position)
         && !POSITION_RIGHT.equals(position)) {
@@ -226,12 +236,18 @@ public class ImageInstruction {
         && !PLANET_GASGIANT2.equals(planetType)) {
       throw new IllegalArgumentException("Illegal planet type: " + planetType);
     }
+    if (!SIZE_FULL.equals(size)
+        && !SIZE_HALF.equals(size)) {
+      throw new IllegalArgumentException("Illegal size: " + size);
+    }
     checkDelim();
     sb.append(PLANET);
     sb.append(PARAM_START);
     sb.append(sanitizeParameters(position));
     sb.append(PARAMETER_DELIM);
     sb.append(sanitizeParameters(planetType));
+    sb.append(PARAMETER_DELIM);
+    sb.append(sanitizeParameters(size));
     sb.append(PARAM_END);
     return this;
   }
@@ -289,9 +305,10 @@ public class ImageInstruction {
    * @param workImage Image where to draw
    * @param planetType Planet type to draw
    * @param position LEFT, CENTER or RIGHT
+   * @param size HALF or FULL
    */
   private static void paintPlanet(final BufferedImage workImage,
-      final String planetType, final String position) {
+      final String planetType, final String position, final String size) {
     BufferedImage planetImg = GuiStatics.BIG_PLANET_ROCK1;
     if (PLANET_ROCK1.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_ROCK1;
@@ -313,6 +330,9 @@ public class ImageInstruction {
     }
     if (PLANET_GASGIANT2.equals(planetType)) {
       planetImg = GuiStatics.BIG_GASWORLD2;
+    }
+    if (SIZE_HALF.equals(size)) {
+      planetImg = GuiStatics.scaleToHalf(planetImg);
     }
     Graphics2D g = (Graphics2D) workImage.getGraphics();
     if (POSITION_CENTER.equals(position)) {
@@ -369,7 +389,7 @@ public class ImageInstruction {
         textY = textY + height * 2;
       }
       if (PLANET.equals(command)) {
-        paintPlanet(workImage, parameters[1], parameters[0]);
+        paintPlanet(workImage, parameters[1], parameters[0], parameters[2]);
       }
     }
     return workImage;

@@ -121,7 +121,8 @@ public class ImageInstructionTest {
   public void testTextPlanet() {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
-    instruction.addPlanet(ImageInstruction.POSITION_LEFT, ImageInstruction.PLANET_ROCK1);
+    instruction.addPlanet(ImageInstruction.POSITION_LEFT, ImageInstruction.PLANET_ROCK1,
+        ImageInstruction.SIZE_FULL);
     BufferedImage image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
     image = ImageInstruction.parseImageInstructions(image, instruction.build());
     assertEquals(800, image.getWidth());
@@ -131,7 +132,8 @@ public class ImageInstructionTest {
 
     instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
-    instruction.addPlanet(ImageInstruction.POSITION_LEFT, ImageInstruction.PLANET_GASGIANT1);
+    instruction.addPlanet(ImageInstruction.POSITION_LEFT, ImageInstruction.PLANET_GASGIANT1,
+        ImageInstruction.SIZE_HALF);
     image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
     image = ImageInstruction.parseImageInstructions(image, instruction.build());
     assertEquals(800, image.getWidth());
@@ -141,7 +143,8 @@ public class ImageInstructionTest {
 
     instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
-    instruction.addPlanet(ImageInstruction.POSITION_LEFT, ImageInstruction.PLANET_GASGIANT2);
+    instruction.addPlanet(ImageInstruction.POSITION_LEFT, ImageInstruction.PLANET_GASGIANT2,
+        ImageInstruction.SIZE_HALF);
     image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
     image = ImageInstruction.parseImageInstructions(image, instruction.build());
     assertEquals(800, image.getWidth());
@@ -151,7 +154,8 @@ public class ImageInstructionTest {
 
     instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
-    instruction.addPlanet(ImageInstruction.POSITION_RIGHT, ImageInstruction.PLANET_IRONWORLD1);
+    instruction.addPlanet(ImageInstruction.POSITION_RIGHT, ImageInstruction.PLANET_IRONWORLD1,
+        ImageInstruction.SIZE_FULL);
     image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
     image = ImageInstruction.parseImageInstructions(image, instruction.build());
     assertEquals(800, image.getWidth());
@@ -161,7 +165,8 @@ public class ImageInstructionTest {
 
     instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
-    instruction.addPlanet(ImageInstruction.POSITION_RIGHT, ImageInstruction.PLANET_IRONWORLD2);
+    instruction.addPlanet(ImageInstruction.POSITION_RIGHT, ImageInstruction.PLANET_IRONWORLD2,
+        ImageInstruction.SIZE_FULL);
     image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
     image = ImageInstruction.parseImageInstructions(image, instruction.build());
     assertEquals(800, image.getWidth());
@@ -171,7 +176,8 @@ public class ImageInstructionTest {
 
     instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
-    instruction.addPlanet(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_WATERWORLD1);
+    instruction.addPlanet(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_WATERWORLD1,
+        ImageInstruction.SIZE_FULL);
     image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
     image = ImageInstruction.parseImageInstructions(image, instruction.build());
     assertEquals(800, image.getWidth());
@@ -181,7 +187,8 @@ public class ImageInstructionTest {
 
     instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
-    instruction.addPlanet(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_WATERWORLD2);
+    instruction.addPlanet(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_WATERWORLD2,
+        ImageInstruction.SIZE_FULL);
     image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
     image = ImageInstruction.parseImageInstructions(image, instruction.build());
     assertEquals(800, image.getWidth());
@@ -196,8 +203,9 @@ public class ImageInstructionTest {
   public void testBackgroundAndPlanet() {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
-    instruction.addPlanet(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_IRONWORLD1);
-    assertEquals("background(stars)+planet(position center,ironworld1)", instruction.build());
+    instruction.addPlanet(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_IRONWORLD1,
+        ImageInstruction.SIZE_HALF);
+    assertEquals("background(stars)+planet(position center,ironworld1,half)", instruction.build());
   }
 
   @Test(expected=IllegalArgumentException.class)
@@ -205,8 +213,9 @@ public class ImageInstructionTest {
   public void testBackgroundAndPlanetPositionWeird() {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
-    instruction.addPlanet("Weird", ImageInstruction.PLANET_IRONWORLD1);
-    assertEquals("background(stars)+planet(position center,ironworld1)", instruction.build());
+    instruction.addPlanet("Weird", ImageInstruction.PLANET_IRONWORLD1,
+        ImageInstruction.SIZE_HALF);
+    assertEquals("background(stars)+planet(position center,ironworld1,half)", instruction.build());
   }
 
   @Test(expected=IllegalArgumentException.class)
@@ -221,7 +230,17 @@ public class ImageInstructionTest {
   public void testBackgroundAndPlanetTypeWeird() {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
-    instruction.addPlanet(ImageInstruction.POSITION_RIGHT, "Weird");
+    instruction.addPlanet(ImageInstruction.POSITION_RIGHT, "Weird",
+        ImageInstruction.SIZE_HALF);
+    assertEquals("background(stars)+planet(position center,ironworld1)", instruction.build());
+  }
+  @Test(expected=IllegalArgumentException.class)
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBackgroundAndSizeWeird() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instruction.addPlanet(ImageInstruction.POSITION_RIGHT, ImageInstruction.PLANET_GASGIANT1,
+        "Weird");
     assertEquals("background(stars)+planet(position center,ironworld1)", instruction.build());
   }
 

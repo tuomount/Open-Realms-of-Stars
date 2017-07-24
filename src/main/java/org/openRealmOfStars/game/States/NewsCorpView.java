@@ -81,6 +81,8 @@ public class NewsCorpView extends BlackPanel {
     instruction.addPlanet(ImageInstruction.POSITION_LEFT,
         ImageInstruction.PLANET_ROCK1, ImageInstruction.SIZE_HALF);
     instruction.addText("Liirum Laarum Leerum Laarum");
+    instruction.addRelationSymbol(ImageInstruction.PEACE);
+    instruction.addText("Liirum Laarum Leerum Laarum");
     newsImage = new ImagePanel(ImageInstruction.parseImageInstructions(image,
         instruction.build()));
     newsPanel.add(newsImage, BorderLayout.WEST);

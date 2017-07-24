@@ -101,6 +101,26 @@ public class ImageInstructionTest {
     instruction.addText("Test called background and(+) Text");
     assertEquals("background(stars)+text(Test called background and Text)", instruction.build());
   }
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBackgroundAndRelationSymbol() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instruction.addRelationSymbol(ImageInstruction.PEACE);
+    assertEquals("background(stars)+relation_symbol(peace)", instruction.build());
+    instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instruction.addRelationSymbol(ImageInstruction.WAR);
+    assertEquals("background(stars)+relation_symbol(war)", instruction.build());
+    instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instruction.addRelationSymbol(ImageInstruction.TRADE_ALLIANCE);
+    assertEquals("background(stars)+relation_symbol(trade alliance)", instruction.build());
+    instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instruction.addRelationSymbol(ImageInstruction.ALLIANCE);
+    assertEquals("background(stars)+relation_symbol(alliance)", instruction.build());
+  }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
@@ -242,6 +262,14 @@ public class ImageInstructionTest {
     instruction.addPlanet(ImageInstruction.POSITION_RIGHT, ImageInstruction.PLANET_GASGIANT1,
         "Weird");
     assertEquals("background(stars)+planet(position center,ironworld1)", instruction.build());
+  }
+  @Test(expected=IllegalArgumentException.class)
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBackgroundAndWeirdSymbol() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instruction.addRelationSymbol("weird");
+    assertEquals("background(stars)+relation_symbol(weird)", instruction.build());
   }
 
   @Test

@@ -109,7 +109,23 @@ public class ImageInstruction {
   /**
    * Instructions for Relation symbol between two text
    */
-  public static final String RELATION_SYMBOL = "relation_symbol";
+  private static final String RELATION_SYMBOL = "relation_symbol";
+  /**
+   * Relation symbol peace
+   */
+  public static final String PEACE = "peace";
+  /**
+   * Relation symbol peace
+   */
+  public static final String WAR = "war";
+  /**
+   * Relation symbol trade alliance
+   */
+  public static final String TRADE_ALLIANCE = "trade alliance";
+  /**
+   * Relation symbol alliance
+   */
+  public static final String ALLIANCE = "alliance";
   /**
    * Instructions for ship
    */
@@ -203,6 +219,28 @@ public class ImageInstruction {
     sb.append(TEXT);
     sb.append(PARAM_START);
     sb.append(sanitizeParameters(paramText));
+    sb.append(PARAM_END);
+    return this;
+  }
+
+  /**
+   * Add relation symbol to image instructions.
+   * These are added as a centered rows.
+   * @param symbol Relation symbol to show
+   * @return ImageInstruction with text
+   */
+  public ImageInstruction addRelationSymbol(final String symbol) {
+    checkDelim();
+    if (!PEACE.equals(symbol)
+        && !WAR.equals(symbol)
+        && !TRADE_ALLIANCE.equals(symbol)
+        && !ALLIANCE.equals(symbol)) {
+      throw new IllegalArgumentException("Illegal relation symbol: "
+        + symbol);
+    }
+    sb.append(RELATION_SYMBOL);
+    sb.append(PARAM_START);
+    sb.append(sanitizeParameters(symbol));
     sb.append(PARAM_END);
     return this;
   }
@@ -390,6 +428,25 @@ public class ImageInstruction {
       }
       if (PLANET.equals(command)) {
         paintPlanet(workImage, parameters[1], parameters[0], parameters[2]);
+      }
+      if (RELATION_SYMBOL.equals(command)) {
+        Graphics2D g = (Graphics2D) workImage.getGraphics();
+        BufferedImage symbol = GuiStatics.RELATION_PEACE;
+        if (PEACE.equals(parameters[0])) {
+          symbol = GuiStatics.RELATION_PEACE;
+        }
+        if (WAR.equals(parameters[0])) {
+          symbol = GuiStatics.RELATION_WAR;
+        }
+        if (TRADE_ALLIANCE.equals(parameters[0])) {
+          symbol = GuiStatics.RELATION_TRADE_ALLIANCE;
+        }
+        if (ALLIANCE.equals(parameters[0])) {
+          symbol = GuiStatics.RELATION_ALLIANCE;
+        }
+        g.drawImage(symbol, workImage.getWidth() / 2 - symbol.getWidth() / 2,
+            textY - symbol.getHeight() / 2, null);
+        textY = textY + symbol.getHeight() * 2;
       }
     }
     return workImage;

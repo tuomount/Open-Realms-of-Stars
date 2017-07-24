@@ -3,6 +3,7 @@ package org.openRealmOfStars.game.States;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -17,6 +18,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ImagePanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 
 /**
 *
@@ -72,7 +74,15 @@ public class NewsCorpView extends BlackPanel {
     newsPanel.setLayout(new BoxLayout(newsPanel, BoxLayout.Y_AXIS));
     newsPanel.setTitle("News headline");
     // TODO: This image needs to be changed
-    newsImage = new ImagePanel(SpaceRace.HUMAN.getRaceImage());
+    BufferedImage image = new BufferedImage(800, 400,
+        BufferedImage.TYPE_4BYTE_ABGR);
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
+    instruction.addPlanet(ImageInstruction.POSITION_LEFT,
+        ImageInstruction.PLANET_ROCK1, ImageInstruction.SIZE_HALF);
+    instruction.addText("Liirum Laarum Leerum Laarum");
+    newsImage = new ImagePanel(ImageInstruction.parseImageInstructions(image,
+        instruction.build()));
     newsPanel.add(newsImage, BorderLayout.WEST);
     newsPanel.add(Box.createRigidArea(new Dimension(15, 10)));
     textArea = new InfoTextArea();

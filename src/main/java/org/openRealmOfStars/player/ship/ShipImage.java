@@ -3,6 +3,7 @@ package org.openRealmOfStars.player.ship;
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
 
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -39,15 +40,6 @@ public class ShipImage {
    * Ship image height
    */
   public static final int MAX_HEIGHT = 64;
-
-  /**
-   * Smaller Ship image width
-   */
-  private static final int MIN_WIDTH = 32;
-  /**
-   * Smaller Ship image height
-   */
-  private static final int MIN_HEIGHT = 32;
 
   /**
    * MAX size ship images
@@ -247,19 +239,7 @@ public class ShipImage {
    * @return Scaled buffered image
    */
   public static BufferedImage scaleTo32x32(final BufferedImage source) {
-    BufferedImage target = new BufferedImage(MIN_WIDTH, MIN_HEIGHT,
-        BufferedImage.TYPE_4BYTE_ABGR);
-    if (source.getHeight() == MAX_HEIGHT && source.getWidth() == MAX_WIDTH) {
-      int mx = MAX_WIDTH / MIN_WIDTH;
-      int my = MAX_HEIGHT / MIN_HEIGHT;
-      for (int y = 0; y < MIN_HEIGHT; y++) {
-        for (int x = 0; x < MIN_WIDTH; x++) {
-          int color = source.getRGB(x * mx, y * my);
-          target.setRGB(x, y, color);
-        }
-      }
-    }
-    return target;
+    return GuiStatics.scaleToHalf(source);
   }
 
 }

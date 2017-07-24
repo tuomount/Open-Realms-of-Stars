@@ -37,10 +37,10 @@ public class GuiStatisticsTest {
   public void testCubellanBold() {
     Font font = GuiStatics.getFontCubellanBold();
     assertNotEquals(GuiStatics.FONT_SMALL, font);
-    int height = GuiStatics.getTextHeight(font, "test text");
-    int width = GuiStatics.getTextWidth(font, "test text");
-    assertEquals(19, height);
-    assertEquals(110, width);
+    // Just calling these. Actual width and height vary between
+    // machines. TravisCI has different size than when run locally.
+    GuiStatics.getTextHeight(font, "test text");
+    GuiStatics.getTextWidth(font, "test text");
   }
 
   @Test
@@ -48,10 +48,6 @@ public class GuiStatisticsTest {
   public void testCubellanBoldBig() {
     Font font = GuiStatics.getFontCubellanBoldBig();
     assertNotEquals(GuiStatics.FONT_SMALL, font);
-    int height = GuiStatics.getTextHeight(font, "test text");
-    int width = GuiStatics.getTextWidth(font, "test text");
-    assertEquals(28, height);
-    assertEquals(160, width);
   }
 
   @Test
@@ -59,10 +55,6 @@ public class GuiStatisticsTest {
   public void testCubellanSC() {
     Font font = GuiStatics.getFontCubellanSC();
     assertNotEquals(GuiStatics.FONT_SMALL, font);
-    int height = GuiStatics.getTextHeight(font, "test text");
-    int width = GuiStatics.getTextWidth(font, "test text");
-    assertEquals(10, height);
-    assertEquals(59, width);
   }
 
   @Test
@@ -70,10 +62,6 @@ public class GuiStatisticsTest {
   public void testCubellanSmaller() {
     Font font = GuiStatics.getFontCubellanSmaller();
     assertNotEquals(GuiStatics.FONT_SMALL, font);
-    int height = GuiStatics.getTextHeight(font, "test text");
-    int width = GuiStatics.getTextWidth(font, "test text");
-    assertEquals(10, height);
-    assertEquals(59, width);
   }
 
   @Test
@@ -81,10 +69,6 @@ public class GuiStatisticsTest {
   public void testCubellan() {
     Font font = GuiStatics.getFontCubellan();
     assertNotEquals(GuiStatics.FONT_SMALL, font);
-    int height = GuiStatics.getTextHeight(font, "test text");
-    int width = GuiStatics.getTextWidth(font, "test text");
-    assertEquals(12, height);
-    assertEquals(72, width);
   }
 
   @Test

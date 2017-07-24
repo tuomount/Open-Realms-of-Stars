@@ -618,4 +618,30 @@ public final class GuiStatics {
     return 0;
   }
 
+  /**
+   * Scale Image to half size of the original size
+   * @param source Buffered image to scale
+   * @return Scaled buffered image
+   */
+  public static BufferedImage scaleToHalf(final BufferedImage source) {
+    int halfWidth = source.getWidth() / 2;
+    int halfHeight = source.getHeight() / 2;
+    int origWidth = source.getWidth();
+    int origHeight = source.getHeight();
+    BufferedImage target = new BufferedImage(halfWidth, halfHeight,
+        BufferedImage.TYPE_4BYTE_ABGR);
+    if (source.getHeight() == origHeight && source.getWidth() == origWidth) {
+      int mx = origWidth / halfWidth;
+      int my = origHeight / halfHeight;
+      for (int y = 0; y < halfHeight; y++) {
+        for (int x = 0; x < halfWidth; x++) {
+          int color = source.getRGB(x * mx, y * my);
+          target.setRGB(x, y, color);
+        }
+      }
+    }
+    return target;
+  }
+
+
 }

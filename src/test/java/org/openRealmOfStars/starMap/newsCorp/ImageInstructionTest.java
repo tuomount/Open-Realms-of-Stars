@@ -138,6 +138,62 @@ public class ImageInstructionTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTextRelationPeace() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instruction.addRelationSymbol(ImageInstruction.PEACE);
+    BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(100, image.getWidth());
+    assertEquals(100, image.getHeight());
+    assertEquals(Color.BLACK.getRGB(), image.getRGB(49, 49));
+    assertEquals(-8405247, image.getRGB(50, 15));
+  }
+  
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTextRelationWar() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instruction.addRelationSymbol(ImageInstruction.WAR);
+    BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(100, image.getWidth());
+    assertEquals(100, image.getHeight());
+    assertEquals(Color.BLACK.getRGB(), image.getRGB(49, 49));
+    assertEquals(-2432036, image.getRGB(50, 30));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTextRelationTradeAlliance() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instruction.addRelationSymbol(ImageInstruction.TRADE_ALLIANCE);
+    BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(100, image.getWidth());
+    assertEquals(100, image.getHeight());
+    assertEquals(Color.BLACK.getRGB(), image.getRGB(49, 49));
+    assertEquals(-8034783, image.getRGB(50, 30));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTextRelationAlliance() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instruction.addRelationSymbol(ImageInstruction.ALLIANCE);
+    BufferedImage image = new BufferedImage(100, 100, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(100, image.getWidth());
+    assertEquals(100, image.getHeight());
+    assertEquals(Color.BLACK.getRGB(), image.getRGB(49, 49));
+    assertEquals(-14935272, image.getRGB(49, 29));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTextPlanet() {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);

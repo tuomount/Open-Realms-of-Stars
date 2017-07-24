@@ -19,6 +19,7 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -69,6 +70,13 @@ public class Planet {
       GuiStatics.BIG_PLANET_ROCK1, GuiStatics.BIG_PLANET_WATERWORLD1,
       GuiStatics.BIG_PLANET_WATERWORLD2, GuiStatics.BIG_PLANET_IRONPLANET1,
       GuiStatics.BIG_PLANET_IRONPLANET2 };
+  /**
+   * List of planet image instructions used in news.
+   */
+  public static final String[] PLANET_NEWS_INSTRUCTIONS = {
+      ImageInstruction.PLANET_ROCK1, ImageInstruction.PLANET_WATERWORLD1,
+      ImageInstruction.PLANET_WATERWORLD2, ImageInstruction.PLANET_IRONWORLD1,
+      ImageInstruction.PLANET_IRONWORLD2};
 
   /**
    * List of big planet images

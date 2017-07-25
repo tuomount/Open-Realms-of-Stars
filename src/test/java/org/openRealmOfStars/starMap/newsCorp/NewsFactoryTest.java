@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
 *
@@ -43,6 +44,32 @@ public class NewsFactoryTest {
         aggressor.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(
         defender.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        aggressor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        defender.getEmpireName()));
+  }
+  
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testWarOnPlanet() {
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Planet I");
+    PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
+    PlayerInfo defender = Mockito.mock(PlayerInfo.class);
+    Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
+    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet);
+    assertEquals(true, news.getImageInstructions().contains(
+        aggressor.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains(
+        defender.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains("planet"));
+    assertEquals(true, news.getNewsText().contains(
+        aggressor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        defender.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(planet.getName()));
   }
 
 }

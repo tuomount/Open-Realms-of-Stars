@@ -74,6 +74,24 @@ public final class NewsFactory {
     instructions.addRelationSymbol(ImageInstruction.WAR);
     instructions.addText(defender.getEmpireName());
     news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(aggressor.getEmpireName());
+    sb.append(" declares war against ");
+    sb.append(defender.getEmpireName());
+    sb.append("! ");
+    if (meetingPlace instanceof Planet) {
+      Planet planet = (Planet) meetingPlace;
+      sb.append("This meeting happened in ");
+      sb.append(planet.getName());
+      if (planet.getPlanetPlayerInfo() != null) {
+        sb.append(", which is owned by ");
+        sb.append(planet.getPlanetPlayerInfo().getEmpireName());
+        sb.append(". ");
+      }
+    } else {
+      sb.append("This meeting happened in deep space.");
+    }
+    news.setNewsText(sb.toString());
     return news;
   }
 }

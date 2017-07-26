@@ -2,6 +2,8 @@ package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
@@ -17,7 +19,6 @@ import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ImagePanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 
@@ -56,9 +57,23 @@ public class NewsCorpView extends BlackPanel {
   private ImagePanel newsImage;
 
   /**
+   * Image of NewsReader
+   */
+  private BufferedImage newsReader;
+  /**
    * News text
    */
   private InfoTextArea textArea;
+
+  /**
+   * Animation framing
+   */
+  private int animation;
+
+  /**
+   * News reader image panel
+   */
+  private ImagePanel newsReaderPanel;
   /**
    * Construtor for News Corp View.
    * @param news News Data
@@ -70,8 +85,12 @@ public class NewsCorpView extends BlackPanel {
     base.setLayout(new BorderLayout());
     base.setTitle("Galactic Broadcasting News Company");
     // TODO: This image needs to be changed
-    ImagePanel imagePanel = new ImagePanel(SpaceRace.HUMAN.getRaceImage());
-    base.add(imagePanel, BorderLayout.WEST);
+    newsReaderPanel = new ImagePanel(GuiStatics.IMAGE_HUMAN_RACE);
+    newsReader = new BufferedImage(196, 700,
+        BufferedImage.TYPE_4BYTE_ABGR);
+    animation = 0;
+    newsReaderPanel.setImage(newsReader);
+    base.add(newsReaderPanel, BorderLayout.WEST);
     InfoPanel newsPanel = new InfoPanel();
     newsPanel.setLayout(new BoxLayout(newsPanel, BoxLayout.Y_AXIS));
     newsPanel.setTitle("News headline");
@@ -114,5 +133,43 @@ public class NewsCorpView extends BlackPanel {
     bottomPanel.add(btn, BorderLayout.CENTER);
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
+  }
+
+  /**
+   * Handle events for NewsCorpView.
+   * @param arg0 ActionEvent
+   */
+  public void handleAction(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)
+        && animation < 180) {
+      Graphics2D g = (Graphics2D) newsReader.getGraphics();
+      g.drawImage(GuiStatics.STAR_FIELD_IMAGE, -10 - animation,
+          -200 + animation, null);
+      if (animation < 64) {
+        g.drawImage(GuiStatics.IMAGE_GBNC,
+            newsReader.getWidth() / 2 - GuiStatics.IMAGE_GBNC.getWidth() / 2,
+            -16 + animation * 2, null);
+        animation++;
+      } else {
+        g.drawImage(GuiStatics.IMAGE_GBNC,
+            newsReader.getWidth() / 2 - GuiStatics.IMAGE_GBNC.getWidth() / 2,
+            -16 + 128, null);
+        if (animation < 162) {
+          g.drawImage(GuiStatics.IMAGE_ANDROID,
+              newsReader.getWidth() / 2
+              - GuiStatics.IMAGE_ANDROID.getWidth() / 2,
+              newsReader.getHeight() - (animation - 64) * 2, null);
+          animation++;
+        } else {
+          g.drawImage(GuiStatics.IMAGE_ANDROID,
+              newsReader.getWidth() / 2
+              - GuiStatics.IMAGE_ANDROID.getWidth() / 2,
+              newsReader.getHeight() - (162 - 64) * 2, null);
+          animation++;
+        }
+
+      }
+      newsReaderPanel.repaint();
+    }
   }
 }

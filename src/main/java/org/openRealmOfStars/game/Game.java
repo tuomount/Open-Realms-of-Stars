@@ -1217,6 +1217,10 @@ public class Game implements ActionListener {
       // Ship Design View
       shipDesignView.handleAction(arg0);
     }
+    if (gameState == GameState.NEWS_CORP_VIEW && newsCorpView != null) {
+      // News Corp view
+      newsCorpView.handleAction(arg0);
+    }
     if (gameState == GameState.VIEWSTATS && statView != null) {
       // Stat View
       statView.handleAction(arg0);

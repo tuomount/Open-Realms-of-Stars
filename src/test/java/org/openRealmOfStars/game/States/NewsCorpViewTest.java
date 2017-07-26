@@ -1,11 +1,14 @@
 package org.openRealmOfStars.game.States;
 
+import java.awt.event.ActionEvent;
+
 //import static org.junit.Assert.*;
 
 import java.awt.event.ActionListener;
 
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 
 /**
@@ -44,6 +47,26 @@ public class NewsCorpViewTest {
         + " declares war against Democracy of Defender! This meeting"
         + " happened in Planet I");
     new NewsCorpView(newsData, listener);
+  }
+
+  @Test
+  public void testRepaintNewsReader() {
+    ActionListener listener = Mockito.mock(ActionListener.class);
+    NewsData newsData = Mockito.mock(NewsData.class);
+    Mockito.when(newsData.getImageInstructions()).thenReturn(
+        "background(nebulae)+planet(position center,rock1,full)"
+        + "+text(WAR DECLARATION!)+text(Empire of Test)+relation_symbol(war)"
+        + "+text(Democracy of Defender)");
+    Mockito.when(newsData.getNewsText()).thenReturn("Empire of Test"
+        + " declares war against Democracy of Defender! This meeting"
+        + " happened in Planet I");
+    NewsCorpView view = new NewsCorpView(newsData, listener);
+    ActionEvent arg0 = Mockito.mock(ActionEvent.class);
+    Mockito.when(arg0.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_ANIMATION_TIMER);
+    for (int i = 0; i < 300; i++) {
+      view.handleAction(arg0);
+    }
   }
 
 }

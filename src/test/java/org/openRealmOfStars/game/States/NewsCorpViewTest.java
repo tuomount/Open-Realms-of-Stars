@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
 
 /**
 *
@@ -34,7 +35,15 @@ public class NewsCorpViewTest {
   @Test
   public void testBasic() {
     ActionListener listener = Mockito.mock(ActionListener.class);
-    new NewsCorpView(listener);
+    NewsData newsData = Mockito.mock(NewsData.class);
+    Mockito.when(newsData.getImageInstructions()).thenReturn(
+        "background(nebulae)+planet(position center,rock1,full)"
+        + "+text(WAR DECLARATION!)+text(Empire of Test)+relation_symbol(war)"
+        + "+text(Democracy of Defender)");
+    Mockito.when(newsData.getNewsText()).thenReturn("Empire of Test"
+        + " declares war against Democracy of Defender! This meeting"
+        + " happened in Planet I");
+    new NewsCorpView(newsData, listener);
   }
 
 }

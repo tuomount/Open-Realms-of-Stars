@@ -49,6 +49,8 @@ import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
+import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
@@ -383,7 +385,9 @@ public class Game implements ActionListener {
    * Show news corp view
    */
   public void showNewsCorpView() {
-    newsCorpView = new NewsCorpView(this);
+    NewsData news = NewsFactory.makeWarNews(players.getPlayerInfoByIndex(0),
+        players.getPlayerInfoByIndex(1), null);
+    newsCorpView = new NewsCorpView(news, this);
     this.updateDisplay(newsCorpView);
   }
 

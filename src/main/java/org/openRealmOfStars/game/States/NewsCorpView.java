@@ -19,6 +19,7 @@ import org.openRealmOfStars.gui.panels.ImagePanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
 
 /**
 *
@@ -60,9 +61,10 @@ public class NewsCorpView extends BlackPanel {
   private InfoTextArea textArea;
   /**
    * Construtor for News Corp View.
+   * @param news News Data
    * @param listener ActionListener
    */
-  public NewsCorpView(final ActionListener listener) {
+  public NewsCorpView(final NewsData news, final ActionListener listener) {
     this.setLayout(new BorderLayout());
     InfoPanel base = new InfoPanel();
     base.setLayout(new BorderLayout());
@@ -76,19 +78,14 @@ public class NewsCorpView extends BlackPanel {
     // TODO: This image needs to be changed
     BufferedImage image = new BufferedImage(800, 400,
         BufferedImage.TYPE_4BYTE_ABGR);
-    ImageInstruction instruction = new ImageInstruction();
-    instruction.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
-    instruction.addPlanet(ImageInstruction.POSITION_LEFT,
-        ImageInstruction.PLANET_ROCK1, ImageInstruction.SIZE_HALF);
-    instruction.addText("Liirum Laarum Leerum Laarum");
-    instruction.addRelationSymbol(ImageInstruction.PEACE);
-    instruction.addText("Liirum Laarum Leerum Laarum");
-    newsImage = new ImagePanel(ImageInstruction.parseImageInstructions(image,
-        instruction.build()));
+    image = ImageInstruction.parseImageInstructions(image,
+        news.getImageInstructions());
+    newsImage = new ImagePanel(image);
     newsPanel.add(newsImage, BorderLayout.WEST);
     newsPanel.add(Box.createRigidArea(new Dimension(15, 10)));
     textArea = new InfoTextArea();
     textArea.setCharacterWidth(10);
+    textArea.setText(news.getNewsText());
     newsPanel.add(textArea);
     this.add(base, BorderLayout.CENTER);
     InvisiblePanel invis = new InvisiblePanel(newsPanel);

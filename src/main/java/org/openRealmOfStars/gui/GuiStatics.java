@@ -589,6 +589,18 @@ public final class GuiStatics {
       GuiStatics.class.getResource("/resources/images/human_race.png"));
 
   /**
+   * Android image for GBNC
+   */
+  public static final BufferedImage IMAGE_ANDROID = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/android.png"));
+
+  /**
+   * GBNC logo
+   */
+  public static final BufferedImage IMAGE_GBNC = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/gbnc-logo.png"));
+
+  /**
    * Get text width for certain font
    * @param font Font to use
    * @param text String

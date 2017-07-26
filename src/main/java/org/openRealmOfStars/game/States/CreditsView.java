@@ -60,10 +60,10 @@ public class CreditsView extends BlackPanel {
       "# Programming and Design by\n\n"
       + "Tuomo Untinen\n\n"
       + "# Additional programming\n\n"
-      + "Dávid Szigecsán \"sigee\"\n"
-      + "Diocto\n"
-      + "dlahtl1004\n"
-      + "Krlucete\n"
+      + "Dávid Szigecsán \"sigee\"\n\n"
+      + "Diocto\n\n"
+      + "dlahtl1004\n\n"
+      + "Krlucete\n\n"
       + "wksdn18\n\n"
       + "All graphics under CC-BY-SA 3.0 license.\n"
       + "See http://creativecommons.org/licenses/by-sa/3.0/\n"
@@ -84,6 +84,9 @@ public class CreditsView extends BlackPanel {
       + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
       + "Space Captain by Justin Nichol - "
       + "http://opengameart.org/content/space-captain\n\n"
+      + "The Husk- Human Analog Android by Justin Nichol - "
+      + "https://opengameart.org/content/the-husk-human-analog-android\n\n"
+      + "GBNC logo by Tuomo Untinen\n\n"
       + "Fonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"
@@ -135,8 +138,8 @@ public class CreditsView extends BlackPanel {
       cubellanLicense = IOUtilities.readTextFile(dis);
     }
     creditsText = creditsText + "\n\n"
-        + "#GNU GENERAL PUBLIC LICENSE Version 2, June 1991\n" + gpl2License
-        + "\n\n" + "#SIL Open Font License, Version 1.1.\n\n"
+        + "# GNU GENERAL PUBLIC LICENSE Version 2, June 1991\n" + gpl2License
+        + "\n\n" + "# SIL Open Font License, Version 1.1.\n\n"
         + cubellanLicense;
     this.setLayout(new BorderLayout());
     textArea = new StarFieldTextArea();

@@ -7,9 +7,13 @@ Tuomo Untinen
 # Additional programming
 
 Dávid Szigecsán "sigee"
+
 Diocto
+
 dlahtl1004
+
 Krlucete
+
 wksdn18
 
 All graphics under CC-BY-SA 3.0 license.
@@ -38,6 +42,10 @@ Explosions by Csaba Felvegi aka Chabull
 Alien pictures by Surt - http://opengameart.org/forumtopic/cc0-scraps
 
 Space Captain by Justin Nichol - http://opengameart.org/content/space-captain
+
+The Husk- Human Analog Android by Justin Nichol - https://opengameart.org/content/the-husk-human-analog-android
+
+GBNC logo by Tuomo Untinen
 
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by

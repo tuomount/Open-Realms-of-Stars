@@ -86,6 +86,7 @@ public class NewsCorpView extends BlackPanel {
     textArea = new InfoTextArea();
     textArea.setCharacterWidth(10);
     textArea.setText(news.getNewsText());
+    textArea.setWrapStyleWord(true);
     newsPanel.add(textArea);
     this.add(base, BorderLayout.CENTER);
     InvisiblePanel invis = new InvisiblePanel(newsPanel);

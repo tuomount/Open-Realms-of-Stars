@@ -1,6 +1,7 @@
 package org.openRealmOfStars.starMap.newsCorp;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -90,6 +91,23 @@ public final class NewsFactory {
       }
     } else {
       sb.append("This meeting happened in deep space.");
+    }
+    if (aggressor.getAiAttitude() == Attitude.AGGRESSIVE) {
+      sb.append(aggressor.getEmpireName());
+      sb.append(" is known about their aggressive behaviour, so ");
+      sb.append("this war was just about to happen. ");
+    }
+    if (aggressor.getAiAttitude() == Attitude.MILITARISTIC) {
+      sb.append(aggressor.getEmpireName());
+      sb.append(" militaristic actions has lead to this war to burst out. ");
+    }
+    if (aggressor.getAiAttitude() == Attitude.PEACEFUL) {
+      sb.append(aggressor.getEmpireName());
+      sb.append(" is known about their peace loving. What horrible acts has ");
+      sb.append(defender.getEmpireName());
+      sb.append(" done to ");
+      sb.append(aggressor.getEmpireName());
+      sb.append("? ");
     }
     news.setNewsText(sb.toString());
     return news;

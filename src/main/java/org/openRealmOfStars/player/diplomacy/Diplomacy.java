@@ -288,4 +288,26 @@ public class Diplomacy {
     return false;
   }
 
+  /**
+   * Has certain player(index) multiple border crossing?
+   * @param index Player index
+   * @return True if there are multiple(more than 2) border crossing.
+   */
+  public boolean isMultipleBorderCrossong(final int index) {
+    if (index > -1 && index < diplomacyList.length
+        && diplomacyList[index] != null) {
+      int count = 0;
+      for (int i = 0; i < diplomacyList[index].getListSize(); i++) {
+        DiplomacyBonus bonus = diplomacyList[index].get(i);
+        if (bonus.getType() == DiplomacyBonusType.BORDER_CROSSED) {
+          count++;
+        }
+      }
+      if (count > 2) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 }

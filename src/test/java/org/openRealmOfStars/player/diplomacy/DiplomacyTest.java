@@ -57,6 +57,34 @@ public class DiplomacyTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testIsMultipleBorderCrossong() {
+    Diplomacy diplomacy = new Diplomacy(4);
+    assertEquals(4, diplomacy.getDiplomacySize());
+    assertEquals(null, diplomacy.getDiplomacyList(0));
+    assertEquals(null, diplomacy.getDiplomacyList(1));
+    assertEquals(null, diplomacy.getDiplomacyList(2));
+    assertEquals(null, diplomacy.getDiplomacyList(3));
+    DiplomacyBonusList list = Mockito.mock(DiplomacyBonusList.class);
+    DiplomacyBonus bonusBorderCross = Mockito.mock(DiplomacyBonus.class);
+    Mockito.when(bonusBorderCross.getType()).thenReturn(DiplomacyBonusType.BORDER_CROSSED);
+    DiplomacyBonus bonus = Mockito.mock(DiplomacyBonus.class);
+    Mockito.when(bonus.getType()).thenReturn(DiplomacyBonusType.DIPLOMATIC_TRADE);
+    Mockito.when(list.getListSize()).thenReturn(5);
+    Mockito.when(list.get(0)).thenReturn(bonus);
+    Mockito.when(list.get(1)).thenReturn(bonusBorderCross);
+    Mockito.when(list.get(2)).thenReturn(bonusBorderCross);
+    Mockito.when(list.get(3)).thenReturn(bonus);
+    Mockito.when(list.get(4)).thenReturn(bonusBorderCross);
+    diplomacy.setList(list, 0);
+    assertEquals(true, diplomacy.isMultipleBorderCrossong(0));
+    Mockito.when(list.get(1)).thenReturn(bonus);
+    Mockito.when(list.get(2)).thenReturn(bonus);
+    Mockito.when(list.get(4)).thenReturn(bonus);
+    assertEquals(false, diplomacy.isMultipleBorderCrossong(0));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testInWar() {
     Diplomacy diplomacy = new Diplomacy(4, 1);
     assertNotEquals(null, diplomacy.getDiplomacyList(0));

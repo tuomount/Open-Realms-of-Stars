@@ -76,11 +76,11 @@ public class DiplomacyTest {
     Mockito.when(list.get(3)).thenReturn(bonus);
     Mockito.when(list.get(4)).thenReturn(bonusBorderCross);
     diplomacy.setList(list, 0);
-    assertEquals(true, diplomacy.isMultipleBorderCrossong(0));
+    assertEquals(true, diplomacy.isMultipleBorderCrossing(0));
     Mockito.when(list.get(1)).thenReturn(bonus);
     Mockito.when(list.get(2)).thenReturn(bonus);
     Mockito.when(list.get(4)).thenReturn(bonus);
-    assertEquals(false, diplomacy.isMultipleBorderCrossong(0));
+    assertEquals(false, diplomacy.isMultipleBorderCrossing(0));
   }
 
   @Test

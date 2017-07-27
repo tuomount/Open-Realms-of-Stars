@@ -293,7 +293,7 @@ public class Diplomacy {
    * @param index Player index
    * @return True if there are multiple(more than 2) border crossing.
    */
-  public boolean isMultipleBorderCrossong(final int index) {
+  public boolean isMultipleBorderCrossing(final int index) {
     if (index > -1 && index < diplomacyList.length
         && diplomacyList[index] != null) {
       int count = 0;

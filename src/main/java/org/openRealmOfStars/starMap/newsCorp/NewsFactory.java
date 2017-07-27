@@ -2,6 +2,7 @@ package org.openRealmOfStars.starMap.newsCorp;
 
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -43,10 +44,12 @@ public final class NewsFactory {
    * @param aggressor Player who is declaring the war
    * @param defender Player who is defending
    * @param meetingPlace Where meeting happened, fleet or planet
+   * @param map StarMap of current game
    * @return NewsData
    */
   public static NewsData makeWarNews(final PlayerInfo aggressor,
-      final PlayerInfo defender, final Object meetingPlace) {
+      final PlayerInfo defender, final Object meetingPlace,
+      final StarMap map) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
@@ -108,6 +111,15 @@ public final class NewsFactory {
       sb.append(" done to ");
       sb.append(aggressor.getEmpireName());
       sb.append("? ");
+    }
+    if (map != null) {
+      int defenderIndex = map.getPlayerList().getIndex(defender);
+      if (aggressor.getDiplomacy().isMultipleBorderCrossing(defenderIndex)) {
+        sb.append("Maybe the reason for war is in multiple"
+            + " border crossing by ");
+        sb.append(defender.getEmpireName());
+        sb.append(" has done lately. ");
+      }
     }
     news.setNewsText(sb.toString());
     return news;

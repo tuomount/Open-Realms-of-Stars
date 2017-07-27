@@ -6,7 +6,10 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.diplomacy.Diplomacy;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -40,7 +43,7 @@ public class NewsFactoryTest {
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
-    NewsData news = NewsFactory.makeWarNews(aggressor, defender, null);
+    NewsData news = NewsFactory.makeWarNews(aggressor, defender, null, null);
     assertEquals(true, news.getImageInstructions().contains(
         aggressor.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(
@@ -60,7 +63,7 @@ public class NewsFactoryTest {
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
-    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet);
+    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet, null);
     assertEquals(true, news.getImageInstructions().contains(
         aggressor.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(
@@ -75,6 +78,48 @@ public class NewsFactoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBorderCrossing() {
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Planet I");
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(diplomacy.isMultipleBorderCrossing(1)).thenReturn(true);
+    PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(aggressor.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
+    PlayerInfo defender = Mockito.mock(PlayerInfo.class);
+    Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
+    StarMap map = Mockito.mock(StarMap.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(playerList.getIndex(defender)).thenReturn(1);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet, null);
+    assertEquals(true, news.getImageInstructions().contains(
+        aggressor.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains(
+        defender.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains("planet"));
+    assertEquals(true, news.getNewsText().contains(
+        aggressor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        defender.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(planet.getName()));
+    assertEquals(false, news.getNewsText().contains("border crossing"));
+    news = NewsFactory.makeWarNews(aggressor, defender, planet, map);
+    assertEquals(true, news.getImageInstructions().contains(
+        aggressor.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains(
+        defender.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains("planet"));
+    assertEquals(true, news.getNewsText().contains(
+        aggressor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        defender.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(planet.getName()));
+    assertEquals(true, news.getNewsText().contains("border crossing"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testWarWithAggressiveAggressor() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
@@ -83,7 +128,7 @@ public class NewsFactoryTest {
     Mockito.when(aggressor.getAiAttitude()).thenReturn(Attitude.AGGRESSIVE);
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
-    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet);
+    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet, null);
     assertEquals(true, news.getImageInstructions().contains(
         aggressor.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(
@@ -107,7 +152,7 @@ public class NewsFactoryTest {
     Mockito.when(aggressor.getAiAttitude()).thenReturn(Attitude.MILITARISTIC);
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
-    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet);
+    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet, null);
     assertEquals(true, news.getImageInstructions().contains(
         aggressor.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(
@@ -131,7 +176,7 @@ public class NewsFactoryTest {
     Mockito.when(aggressor.getAiAttitude()).thenReturn(Attitude.PEACEFUL);
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
-    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet);
+    NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet, null);
     assertEquals(true, news.getImageInstructions().contains(
         aggressor.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(

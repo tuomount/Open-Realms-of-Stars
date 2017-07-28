@@ -166,7 +166,7 @@ public final class NewsFactory {
     news.setImageInstructions(instructions.build());
     StringBuilder sb = new StringBuilder(100);
     sb.append(peaceMaker.getEmpireName());
-    sb.append(" make peace with ");
+    sb.append(" made peace with ");
     sb.append(acceptor.getEmpireName());
     sb.append("! ");
     if (meetingPlace instanceof Planet) {
@@ -244,7 +244,7 @@ public final class NewsFactory {
     news.setImageInstructions(instructions.build());
     StringBuilder sb = new StringBuilder(100);
     sb.append(offerer.getEmpireName());
-    sb.append(" make trade alliance with ");
+    sb.append(" made trade alliance with ");
     sb.append(acceptor.getEmpireName());
     sb.append("! ");
     if (meetingPlace instanceof Planet) {
@@ -263,6 +263,75 @@ public final class NewsFactory {
       sb.append(offerer.getEmpireName());
       sb.append(" is known about their interest to trade, so ");
       sb.append("this trade alliance was expected! ");
+    }
+    if (offerer.getAiAttitude() == Attitude.DIPLOMATIC) {
+      sb.append(offerer.getEmpireName());
+      sb.append(" diplomatic skills were surely effecting on "
+          + "this trade alliance! ");
+    }
+    if (offerer.getAiAttitude() == Attitude.PEACEFUL) {
+      sb.append(offerer.getEmpireName());
+      sb.append(" is known about their peace loving. So this was expected! ");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
+   * Make alliance news. Offerer makes alliance offer to acceptor.
+   * This diplomatic meeting happened in meeting place which
+   * can be planet or fleet.
+   * @param offerer Player who is make trade alliance
+   * @param acceptor Player who is accepting
+   * @param meetingPlace Where meeting happened, fleet or planet
+   * @return NewsData
+   */
+  public static NewsData makeAllianceNews(final PlayerInfo offerer,
+      final PlayerInfo acceptor, final Object meetingPlace) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
+    if (meetingPlace instanceof Planet) {
+      Planet planet = (Planet) meetingPlace;
+      instructions.addPlanet(ImageInstruction.POSITION_CENTER,
+          Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetImageIndex()],
+          ImageInstruction.SIZE_FULL);
+    }
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("NEW ALLIANCE!");
+        break;
+      }
+      case 1: {
+        instructions.addText("ALLIANCE!");
+        break;
+      }
+      case 2: {
+        instructions.addText("ALLIANCE IS CREATED!");
+        break;
+      }
+    }
+    instructions.addText(offerer.getEmpireName());
+    instructions.addRelationSymbol(ImageInstruction.ALLIANCE);
+    instructions.addText(acceptor.getEmpireName());
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(offerer.getEmpireName());
+    sb.append(" made alliance with ");
+    sb.append(acceptor.getEmpireName());
+    sb.append("! ");
+    if (meetingPlace instanceof Planet) {
+      Planet planet = (Planet) meetingPlace;
+      sb.append("This meeting happened in ");
+      sb.append(planet.getName());
+      if (planet.getPlanetPlayerInfo() != null) {
+        sb.append(", which is owned by ");
+        sb.append(planet.getPlanetPlayerInfo().getEmpireName());
+        sb.append(". ");
+      }
+    } else {
+      sb.append("This meeting happened in deep space. ");
     }
     if (offerer.getAiAttitude() == Attitude.DIPLOMATIC) {
       sb.append(offerer.getEmpireName());

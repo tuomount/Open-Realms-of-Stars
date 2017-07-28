@@ -280,4 +280,94 @@ public class NewsFactoryTest {
     assertEquals(true, news.getNewsText().contains("peace"));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTradeAlliance() {
+    PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
+    Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
+    PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
+    NewsData news = NewsFactory.makeTradeAllianceNews(peaceMaker, acceptor, null);
+    assertEquals(true, news.getImageInstructions().contains(
+        peaceMaker.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains(
+        acceptor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        peaceMaker.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        acceptor.getEmpireName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTradeAllianceWithMerchanticalMaker() {
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Planet I");
+    PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
+    Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(peaceMaker.getAiAttitude()).thenReturn(Attitude.MERCHANTICAL);
+    PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
+    NewsData news = NewsFactory.makeTradeAllianceNews(peaceMaker, acceptor, planet);
+    assertEquals(true, news.getImageInstructions().contains(
+        peaceMaker.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains(
+        acceptor.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains("planet"));
+    assertEquals(true, news.getNewsText().contains(
+        peaceMaker.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        acceptor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(planet.getName()));
+    assertEquals(true, news.getNewsText().contains("interest to trade"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTradeAllianceWithDiplomaticMaker() {
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Planet I");
+    PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
+    Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(peaceMaker.getAiAttitude()).thenReturn(Attitude.DIPLOMATIC);
+    PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
+    NewsData news = NewsFactory.makeTradeAllianceNews(peaceMaker, acceptor, planet);
+    assertEquals(true, news.getImageInstructions().contains(
+        peaceMaker.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains(
+        acceptor.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains("planet"));
+    assertEquals(true, news.getNewsText().contains(
+        peaceMaker.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        acceptor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(planet.getName()));
+    assertEquals(true, news.getNewsText().contains("diplomatic"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTradeAllianceWithPeacefulMaker() {
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Planet I");
+    PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
+    Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(peaceMaker.getAiAttitude()).thenReturn(Attitude.PEACEFUL);
+    PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
+    NewsData news = NewsFactory.makeTradeAllianceNews(peaceMaker, acceptor, planet);
+    assertEquals(true, news.getImageInstructions().contains(
+        peaceMaker.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains(
+        acceptor.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains("planet"));
+    assertEquals(true, news.getNewsText().contains(
+        peaceMaker.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        acceptor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(planet.getName()));
+    assertEquals(true, news.getNewsText().contains("peace"));
+  }
+
 }

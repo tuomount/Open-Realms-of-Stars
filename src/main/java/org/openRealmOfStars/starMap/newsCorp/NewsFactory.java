@@ -93,7 +93,7 @@ public final class NewsFactory {
         sb.append(". ");
       }
     } else {
-      sb.append("This meeting happened in deep space.");
+      sb.append("This meeting happened in deep space. ");
     }
     if (aggressor.getAiAttitude() == Attitude.AGGRESSIVE) {
       sb.append(aggressor.getEmpireName());
@@ -124,4 +124,83 @@ public final class NewsFactory {
     news.setNewsText(sb.toString());
     return news;
   }
+
+  /**
+   * Make Peace news. PeaceMaker makes peace offer to acceptor.
+   * This diplomatic meeting happened in meeting place which
+   * can be planet or fleet.
+   * @param peaceMaker Player who is declaring the war
+   * @param acceptor Player who is defending
+   * @param meetingPlace Where meeting happened, fleet or planet
+   * @return NewsData
+   */
+  public static NewsData makePeaceNews(final PlayerInfo peaceMaker,
+      final PlayerInfo acceptor, final Object meetingPlace) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
+    if (meetingPlace instanceof Planet) {
+      Planet planet = (Planet) meetingPlace;
+      instructions.addPlanet(ImageInstruction.POSITION_CENTER,
+          Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetImageIndex()],
+          ImageInstruction.SIZE_FULL);
+    }
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("PEACE OFFER ACCEPTED!");
+        break;
+      }
+      case 1: {
+        instructions.addText("PEACE!");
+        break;
+      }
+      case 2: {
+        instructions.addText("PEACE BEGINS!");
+        break;
+      }
+    }
+    instructions.addText(peaceMaker.getEmpireName());
+    instructions.addRelationSymbol(ImageInstruction.PEACE);
+    instructions.addText(acceptor.getEmpireName());
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(peaceMaker.getEmpireName());
+    sb.append(" make peace with ");
+    sb.append(acceptor.getEmpireName());
+    sb.append("! ");
+    if (meetingPlace instanceof Planet) {
+      Planet planet = (Planet) meetingPlace;
+      sb.append("This meeting happened in ");
+      sb.append(planet.getName());
+      if (planet.getPlanetPlayerInfo() != null) {
+        sb.append(", which is owned by ");
+        sb.append(planet.getPlanetPlayerInfo().getEmpireName());
+        sb.append(". ");
+      }
+    } else {
+      sb.append("This meeting happened in deep space. ");
+    }
+    if (peaceMaker.getAiAttitude() == Attitude.AGGRESSIVE) {
+      sb.append(peaceMaker.getEmpireName());
+      sb.append(" is known about their aggressive behaviour, so ");
+      sb.append("this peace off was a bit unexpected! ");
+      sb.append("What has ");
+      sb.append(acceptor.getEmpireName());
+      sb.append(" offered to ");
+      sb.append(peaceMaker.getEmpireName());
+      sb.append("? ");
+    }
+    if (peaceMaker.getAiAttitude() == Attitude.DIPLOMATIC) {
+      sb.append(peaceMaker.getEmpireName());
+      sb.append(" diplomatic skills were surely effecting on this peace! ");
+    }
+    if (peaceMaker.getAiAttitude() == Attitude.PEACEFUL) {
+      sb.append(peaceMaker.getEmpireName());
+      sb.append(" is known about their peace loving. So this was expected! ");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
 }

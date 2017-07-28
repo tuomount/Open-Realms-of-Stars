@@ -84,7 +84,6 @@ public class NewsCorpView extends BlackPanel {
     InfoPanel base = new InfoPanel();
     base.setLayout(new BorderLayout());
     base.setTitle("Galactic Broadcasting News Company");
-    // TODO: This image needs to be changed
     newsReaderPanel = new ImagePanel(GuiStatics.IMAGE_HUMAN_RACE);
     newsReader = new BufferedImage(196, 700,
         BufferedImage.TYPE_4BYTE_ABGR);
@@ -94,7 +93,6 @@ public class NewsCorpView extends BlackPanel {
     InfoPanel newsPanel = new InfoPanel();
     newsPanel.setLayout(new BoxLayout(newsPanel, BoxLayout.Y_AXIS));
     newsPanel.setTitle("News headline");
-    // TODO: This image needs to be changed
     BufferedImage image = new BufferedImage(800, 400,
         BufferedImage.TYPE_4BYTE_ABGR);
     image = ImageInstruction.parseImageInstructions(image,
@@ -103,9 +101,9 @@ public class NewsCorpView extends BlackPanel {
     newsPanel.add(newsImage, BorderLayout.WEST);
     newsPanel.add(Box.createRigidArea(new Dimension(15, 10)));
     textArea = new InfoTextArea();
-    textArea.setCharacterWidth(10);
+    textArea.setCharacterWidth(9);
     textArea.setText(news.getNewsText());
-    textArea.setWrapStyleWord(true);
+    textArea.setLineWrap(true);
     newsPanel.add(textArea);
     this.add(base, BorderLayout.CENTER);
     InvisiblePanel invis = new InvisiblePanel(newsPanel);

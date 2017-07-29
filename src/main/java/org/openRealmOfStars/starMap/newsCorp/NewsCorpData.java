@@ -283,4 +283,15 @@ public class NewsCorpData {
     return difference;
   }
 
+  /**
+   * Is First stats only done
+   * @return True if first stats is done
+   */
+  public boolean isFirstStats() {
+    if (military.getNumberStats() == 1) {
+      return true;
+    }
+    return false;
+  }
+
 }

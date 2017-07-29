@@ -337,6 +337,14 @@ public class ImageInstructionTest {
   }
   @Test(expected=IllegalArgumentException.class)
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBackgroundAndImageWeird() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instruction.addImage("Weird");
+    assertEquals("background(stars)+planet(position center,ironworld1)", instruction.build());
+  }
+  @Test(expected=IllegalArgumentException.class)
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testBackgroundAndSizeWeird() {
     ImageInstruction instruction = new ImageInstruction();
     instruction.addBackground(ImageInstruction.BACKGROUND_STARS);

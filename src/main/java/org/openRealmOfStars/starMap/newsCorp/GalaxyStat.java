@@ -74,6 +74,14 @@ public class GalaxyStat {
     }
     return result;
   }
+
+  /**
+   * Get number of stats
+   * @return Number of stats in array
+   */
+  public int getNumberStats() {
+    return dataStat[0].getSize();
+  }
   /**
    * Add single data value for single player
    * @param playerIndex Player Index which to add data.

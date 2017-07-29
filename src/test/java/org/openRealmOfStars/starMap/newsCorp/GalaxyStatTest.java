@@ -35,12 +35,16 @@ public class GalaxyStatTest {
     GalaxyStat stat = new GalaxyStat(3, "Test stat");
     assertEquals("Test stat",stat.getGalaxyStatisticsName());
     assertEquals(3,stat.getMaxPlayers());
+    assertEquals(0, stat.getNumberStats());
     assertEquals(0, stat.getLatest(0));
     stat.addStat(0, 1);
+    assertEquals(1, stat.getNumberStats());
     assertEquals(1, stat.getLatest(0));
     stat.addStat(0, 2);
+    assertEquals(2, stat.getNumberStats());
     assertEquals(2, stat.getLatest(0));
     stat.addStat(0, 3);
+    assertEquals(3, stat.getNumberStats());
     assertEquals(3, stat.getLatest(0));
     assertEquals(0, stat.getLatest(1));
     stat.addStat(1, 2);

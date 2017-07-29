@@ -7,6 +7,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.starMap.StarMap;
@@ -451,6 +452,75 @@ public class NewsFactoryTest {
         "FIRST STATISTICAL RESEARCH DONE!"));
     assertEquals(true, news.getNewsText().contains("GBNC has done first"
         + " statistical research about Realms in Stars."));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStatNewsAfterFirstOne() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
+    GalaxyStat stat = Mockito.mock(GalaxyStat.class);
+    Mockito.when(stat.getBiggest()).thenReturn(0);
+    NewsCorpData data = Mockito.mock(NewsCorpData.class);
+    Mockito.when(data.isFirstStats()).thenReturn(false);
+    Mockito.when(data.getMilitary()).thenReturn(stat);
+    Mockito.when(data.getCredit()).thenReturn(stat);
+    Mockito.when(data.getCultural()).thenReturn(stat);
+    Mockito.when(data.getPlanets()).thenReturn(stat);
+    Mockito.when(data.getPopulation()).thenReturn(stat);
+    Mockito.when(data.getResearch()).thenReturn(stat);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getNewsCorpData()).thenReturn(data);
+    Mockito.when(map.getPlayerByIndex(Mockito.anyInt())).thenReturn(info);
+    boolean[] newsText = new boolean[6];
+    int count = 10000;
+    do {
+      count--;
+      NewsData news = NewsFactory.makeStatNews(map);
+      if (news.getImageInstructions().contains("GREATEST MILITARY!")) {
+        newsText[0] = true;
+        assertEquals(true, news.getNewsText().contains(info.getEmpireName()));
+        assertEquals(true, news.getNewsText().contains("greatest military power"));
+      }
+      if (news.getImageInstructions().contains("WEALTHIEST REALM!")) {
+        newsText[1] = true;
+        assertEquals(true, news.getNewsText().contains(info.getEmpireName()));
+        assertEquals(true, news.getNewsText().contains("wealthiest realm"));
+      }
+      if (news.getImageInstructions().contains("MOST OF PLANETS!")) {
+        newsText[2] = true;
+        assertEquals(true, news.getNewsText().contains(info.getEmpireName()));
+        assertEquals(true, news.getNewsText().contains("most of the colonized planets"));
+      }
+      if (news.getImageInstructions().contains("MOST OF PEOPLE!")) {
+        newsText[3] = true;
+        assertEquals(true, news.getNewsText().contains(info.getEmpireName()));
+        assertEquals(true, news.getNewsText().contains("most of the people "));
+      }
+      if (news.getImageInstructions().contains("MOST CULTURAL POWER!")) {
+        newsText[4] = true;
+        assertEquals(true, news.getNewsText().contains(info.getEmpireName()));
+        assertEquals(true, news.getNewsText().contains("the biggest cultural"));
+      }
+      if (news.getImageInstructions().contains("MOST SCIENTIFIC REALM!")) {
+        newsText[5] = true;
+        assertEquals(true, news.getNewsText().contains(info.getEmpireName()));
+        assertEquals(true, news.getNewsText().contains("the biggest scientific"));
+      }
+      if (count == 0) {
+        // Check which text did not found
+        assertEquals(true, newsText[0]);
+        assertEquals(true, newsText[1]);
+        assertEquals(true, newsText[2]);
+        assertEquals(true, newsText[3]);
+        assertEquals(true, newsText[4]);
+        assertEquals(true, newsText[5]);
+        // This will always assert
+        assertFalse(true);
+      }
+    } while (!newsText[0] && !newsText[1] && !newsText[2]
+        && !newsText[3] && !newsText[4] && !newsText[5]);
   }
 
 }

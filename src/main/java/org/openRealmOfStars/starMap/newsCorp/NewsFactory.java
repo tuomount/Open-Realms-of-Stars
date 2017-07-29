@@ -377,7 +377,7 @@ public final class NewsFactory {
           instructions.addText(info.getEmpireName());
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
-          sb.append(" has greatest military power in whole galaxy!");
+          sb.append(" has greatest military power in whole galaxy! ");
           sb.append("See full report for Statiscis view.");
         }
       }
@@ -389,7 +389,7 @@ public final class NewsFactory {
           instructions.addText(info.getEmpireName());
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
-          sb.append(" is the wealthiest realm in whole galaxy!");
+          sb.append(" is the wealthiest realm in whole galaxy! ");
           sb.append("See full report for Statiscis view.");
         }
       }
@@ -401,7 +401,7 @@ public final class NewsFactory {
           instructions.addText(info.getEmpireName());
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
-          sb.append(" has most of the colonized planets in whole galaxy!");
+          sb.append(" has most of the colonized planets in whole galaxy! ");
           sb.append("See full report for Statiscis view.");
         }
       }
@@ -413,7 +413,7 @@ public final class NewsFactory {
           instructions.addText(info.getEmpireName());
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
-          sb.append(" has most of the people in whole galaxy!");
+          sb.append(" has most of the people in whole galaxy! ");
           sb.append("See full report for Statiscis view.");
         }
       }
@@ -425,7 +425,7 @@ public final class NewsFactory {
           instructions.addText(info.getEmpireName());
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
-          sb.append(" is the biggest cultural power in whole galaxy!");
+          sb.append(" is the biggest cultural power in whole galaxy! ");
           sb.append("See full report for Statiscis view.");
         }
       }
@@ -437,7 +437,7 @@ public final class NewsFactory {
           instructions.addText(info.getEmpireName());
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
-          sb.append(" is the biggest scientific power in whole galaxy!");
+          sb.append(" is the biggest scientific power in whole galaxy! ");
           sb.append("See full report for Statiscis view.");
         }
       }
@@ -450,6 +450,10 @@ public final class NewsFactory {
         instructions.addText("BY");
         news.setNewsText("GBNC has done " + numberAsString
             + " statistical research about Realms in Stars.");
+        news.setImageInstructions(instructions.build());
+      } else {
+        news.setImageInstructions(instructions.build());
+        news.setNewsText(sb.toString());
       }
     }
     return news;

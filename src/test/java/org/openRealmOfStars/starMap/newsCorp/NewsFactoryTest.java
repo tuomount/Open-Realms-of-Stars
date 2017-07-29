@@ -523,4 +523,43 @@ public class NewsFactoryTest {
         && !newsText[3] && !newsText[4] && !newsText[5]);
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testConquerPlanet() {
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Planet I");
+    PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
+    PlayerInfo defender = Mockito.mock(PlayerInfo.class);
+    Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
+    Mockito.when(defender.getRace()).thenReturn(SpaceRace.HUMAN);
+    NewsData news = NewsFactory.makePlanetConqueredNews(aggressor, defender, planet, false);
+    assertEquals(true, news.getNewsText().contains(
+        aggressor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        defender.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(planet.getName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testConquerPlanetWithNukes() {
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getRadiationLevel()).thenReturn(9);
+    PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
+    PlayerInfo defender = Mockito.mock(PlayerInfo.class);
+    Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
+    Mockito.when(defender.getRace()).thenReturn(SpaceRace.HUMAN);
+    NewsData news = NewsFactory.makePlanetConqueredNews(aggressor, defender, planet, true);
+    assertEquals(true, news.getNewsText().contains(
+        aggressor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        defender.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(planet.getName()));
+    assertEquals(true, news.getNewsText().contains("nuclear"));
+    assertEquals(true, news.getNewsText().contains("raised to 9"));
+  }
+
 }

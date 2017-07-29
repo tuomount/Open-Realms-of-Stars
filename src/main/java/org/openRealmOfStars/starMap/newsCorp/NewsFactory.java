@@ -459,4 +459,59 @@ public final class NewsFactory {
     return news;
   }
 
+  /**
+   * Attack conquers defender planet
+   * @param attacker Player who is conquering
+   * @param defender Player who is defending
+   * @param planet Which planet was conquered
+   * @param nuked Was planet nuked or not
+   * @return NewsData
+   */
+  public static NewsData makePlanetConqueredNews(final PlayerInfo attacker,
+      final PlayerInfo defender, final Planet planet, final boolean nuked) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instructions.addPlanet(ImageInstruction.POSITION_CENTER,
+        Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetImageIndex()],
+        ImageInstruction.SIZE_FULL);
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("PLANET CONQUERED!");
+        break;
+      }
+      case 1: {
+        instructions.addText("TRIUMPH ON " + planet.getName() + "!");
+        break;
+      }
+      case 2: {
+        instructions.addText(planet.getName() + " IS OVERTHROWN!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(attacker.getEmpireName());
+    sb.append(" made massive attack on ");
+    sb.append(planet.getName());
+    sb.append("Defender ");
+    sb.append(defender.getEmpireName());
+    sb.append(" was defeated eventually. ");
+    if (nuked) {
+      sb.append(" All the population was killed by massive usage of"
+          + " nuclear weapons. ");
+      sb.append(" Radiation levels on planet has been raised to "
+          + planet.getRadiationLevel() + ". ");
+    } else {
+      sb.append(" Last remains of ");
+      sb.append(defender.getRace().getNameSingle());
+      sb.append(" population was killed by ground troops of ");
+      sb.append(attacker.getEmpireName());
+      sb.append(". ");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
 }

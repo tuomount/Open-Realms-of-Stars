@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 
 /**
 *
@@ -272,6 +273,30 @@ public class ImageInstructionTest {
     assertEquals(Color.BLACK.getRGB(), image.getRGB(0, 0));
     assertNotEquals(Color.BLACK.getRGB(), image.getRGB(400, 200));
 
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTextImage() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instruction.addImage(SpaceRace.MECHIONS.getNameSingle());
+    BufferedImage image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(800, image.getWidth());
+    assertEquals(400, image.getHeight());
+    assertEquals(Color.BLACK.getRGB(), image.getRGB(0, 0));
+    assertNotEquals(Color.BLACK.getRGB(), image.getRGB(402, 200));
+
+    instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instruction.addImage(ImageInstruction.LOGO);
+    image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(800, image.getWidth());
+    assertEquals(400, image.getHeight());
+    assertEquals(Color.BLACK.getRGB(), image.getRGB(0, 0));
+    assertNotEquals(Color.BLACK.getRGB(), image.getRGB(405, 200));
   }
 
   @Test

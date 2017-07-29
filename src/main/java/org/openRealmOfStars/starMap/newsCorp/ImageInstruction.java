@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 
 /**
 *
@@ -127,9 +129,18 @@ public class ImageInstruction {
    */
   public static final String ALLIANCE = "alliance";
   /**
+   * GBNC Logo
+   */
+  public static final String LOGO = "logo";
+  /**
    * Instructions for ship
    */
   public static final String SHIP = "ship";
+
+  /**
+   * Instruction to draw image
+   */
+  private static final String IMAGE = "image";
 
   /**
    * String builder used to collect all the instructions
@@ -241,6 +252,32 @@ public class ImageInstruction {
     sb.append(RELATION_SYMBOL);
     sb.append(PARAM_START);
     sb.append(sanitizeParameters(symbol));
+    sb.append(PARAM_END);
+    return this;
+  }
+
+  /**
+   * Add another image to image instructions.
+   * Image is added into center of image
+   * @param image image name to place into image
+   * @return ImageInstruction with text
+   */
+  public ImageInstruction addImage(final String image) {
+    checkDelim();
+    if (!SpaceRace.CENTAURS.getNameSingle().equals(image)
+        && !SpaceRace.HUMAN.getNameSingle().equals(image)
+        && !SpaceRace.SPORKS.getNameSingle().equals(image)
+        && !SpaceRace.GREYANS.getNameSingle().equals(image)
+        && !SpaceRace.MOTHOIDS.getNameSingle().equals(image)
+        && !SpaceRace.TEUTHIDAES.getNameSingle().equals(image)
+        && !SpaceRace.MECHIONS.getNameSingle().equals(image)
+        && !LOGO.equals(image)) {
+      throw new IllegalArgumentException("Illegal image: "
+        + image);
+    }
+    sb.append(IMAGE);
+    sb.append(PARAM_START);
+    sb.append(sanitizeParameters(image));
     sb.append(PARAM_END);
     return this;
   }
@@ -391,6 +428,26 @@ public class ImageInstruction {
     }
   }
   /**
+   * Draw image on image
+   * @param workImage Image where to draw
+   * @param image image type to draw
+   */
+  private static void paintImage(final BufferedImage workImage,
+      final String image) {
+    BufferedImage drawImg = GuiStatics.BIG_PLANET_ROCK1;
+    SpaceRace race = SpaceRaceUtility.getRaceByName(image);
+    if (race != null) {
+      drawImg = race.getRaceImage();
+    }
+    if (LOGO.equals(image)) {
+      drawImg = GuiStatics.IMAGE_GBNC;
+    }
+    Graphics2D g = (Graphics2D) workImage.getGraphics();
+    g.drawImage(drawImg,
+        workImage.getWidth() / 2 - drawImg.getWidth() / 2,
+        workImage.getHeight() / 2 - drawImg.getHeight() / 2, null);
+  }
+  /**
    * Parse Image instruction string and draw image
    * to given image.
    * @param image Image where to draw
@@ -428,6 +485,9 @@ public class ImageInstruction {
       }
       if (PLANET.equals(command)) {
         paintPlanet(workImage, parameters[1], parameters[0], parameters[2]);
+      }
+      if (IMAGE.equals(command)) {
+        paintImage(workImage, parameters[0]);
       }
       if (RELATION_SYMBOL.equals(command)) {
         Graphics2D g = (Graphics2D) workImage.getGraphics();

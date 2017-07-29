@@ -436,4 +436,21 @@ public class NewsFactoryTest {
     assertEquals(true, news.getNewsText().contains("peace"));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStatNews() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
+    NewsCorpData data = Mockito.mock(NewsCorpData.class);
+    Mockito.when(data.isFirstStats()).thenReturn(true);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getNewsCorpData()).thenReturn(data);
+    
+    NewsData news = NewsFactory.makeStatNews(map);
+    assertEquals(true, news.getImageInstructions().contains(
+        "FIRST STATISTICAL RESEARCH DONE!"));
+    assertEquals(true, news.getNewsText().contains("GBNC has done first"
+        + " statistical research about Realms in Stars."));
+  }
+
 }

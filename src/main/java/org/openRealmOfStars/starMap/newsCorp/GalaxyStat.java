@@ -108,6 +108,21 @@ public class GalaxyStat {
     return 0;
   }
   /**
+   * Get the biggest player index for stat
+   * @return Biggest Player index for stat or -1 if all are zeros.
+   */
+  public int getBiggest() {
+    int biggest = 0;
+    int bigIndex = -1;
+    for (int i = 0; i < maxPlayers; i++) {
+      if (getLatest(i) > biggest) {
+        bigIndex = i;
+        biggest = getLatest(i);
+      }
+    }
+    return bigIndex;
+  }
+  /**
    * Get Galaxy Statistics Data name
    * @return  Galaxy Statistics data name
    */

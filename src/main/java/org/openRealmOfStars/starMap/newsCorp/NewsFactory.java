@@ -5,6 +5,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.TextUtilities;
 
 /**
 *
@@ -343,6 +344,114 @@ public final class NewsFactory {
       sb.append(" is known about their peace loving. So this was expected! ");
     }
     news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
+   * Make News when news corporation has finished new stats about players
+   * @param map StarMap contains NewsCorpData and playerlist
+   * @return NewsData
+   */
+  public static NewsData makeStatNews(final StarMap map) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    NewsCorpData data = map.getNewsCorpData();
+    news.setImageInstructions(instructions.build());
+    if (data.isFirstStats()) {
+      instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
+      instructions.addImage(ImageInstruction.LOGO);
+      instructions.addText("FIRST STATISTICAL RESEARCH DONE!");
+      instructions.addText("BY");
+      news.setNewsText("GBNC has done first statistical research about Realms"
+          + " in Stars.");
+      news.setImageInstructions(instructions.build());
+    } else {
+      instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+      StringBuilder sb = new StringBuilder();
+      int statIndex = DiceGenerator.getRandom(5);
+      if (statIndex == 0) {
+        int index = data.getMilitary().getBiggest();
+        if (index != -1) {
+          PlayerInfo info = map.getPlayerByIndex(index);
+          instructions.addText("GREATEST MILITARY!");
+          instructions.addText(info.getEmpireName());
+          instructions.addImage(info.getRace().getNameSingle());
+          sb.append(info.getEmpireName());
+          sb.append(" has greatest military power in whole galaxy!");
+          sb.append("See full report for Statiscis view.");
+        }
+      }
+      if (statIndex == 1) {
+        int index = data.getCredit().getBiggest();
+        if (index != -1) {
+          PlayerInfo info = map.getPlayerByIndex(index);
+          instructions.addText("WEALTHIEST REALM!");
+          instructions.addText(info.getEmpireName());
+          instructions.addImage(info.getRace().getNameSingle());
+          sb.append(info.getEmpireName());
+          sb.append(" is the wealthiest realm in whole galaxy!");
+          sb.append("See full report for Statiscis view.");
+        }
+      }
+      if (statIndex == 2) {
+        int index = data.getPlanets().getBiggest();
+        if (index != -1) {
+          PlayerInfo info = map.getPlayerByIndex(index);
+          instructions.addText("MOST OF PLANETS!");
+          instructions.addText(info.getEmpireName());
+          instructions.addImage(info.getRace().getNameSingle());
+          sb.append(info.getEmpireName());
+          sb.append(" has most of the colonized planets in whole galaxy!");
+          sb.append("See full report for Statiscis view.");
+        }
+      }
+      if (statIndex == 3) {
+        int index = data.getPopulation().getBiggest();
+        if (index != -1) {
+          PlayerInfo info = map.getPlayerByIndex(index);
+          instructions.addText("MOST OF PEOPLE!");
+          instructions.addText(info.getEmpireName());
+          instructions.addImage(info.getRace().getNameSingle());
+          sb.append(info.getEmpireName());
+          sb.append(" has most of the people in whole galaxy!");
+          sb.append("See full report for Statiscis view.");
+        }
+      }
+      if (statIndex == 4) {
+        int index = data.getCultural().getBiggest();
+        if (index != -1) {
+          PlayerInfo info = map.getPlayerByIndex(index);
+          instructions.addText("MOST CULTURAL POWER!");
+          instructions.addText(info.getEmpireName());
+          instructions.addImage(info.getRace().getNameSingle());
+          sb.append(info.getEmpireName());
+          sb.append(" is the biggest cultural power in whole galaxy!");
+          sb.append("See full report for Statiscis view.");
+        }
+      }
+      if (statIndex == 5) {
+        int index = data.getResearch().getBiggest();
+        if (index != -1) {
+          PlayerInfo info = map.getPlayerByIndex(index);
+          instructions.addText("MOST SCIENTIFIC REALM!");
+          instructions.addText(info.getEmpireName());
+          instructions.addImage(info.getRace().getNameSingle());
+          sb.append(info.getEmpireName());
+          sb.append(" is the biggest scientific power in whole galaxy!");
+          sb.append("See full report for Statiscis view.");
+        }
+      }
+      if (sb.toString().isEmpty()) {
+        instructions.addImage(ImageInstruction.LOGO);
+        int number = data.getStatNumbers();
+        String numberAsString = TextUtilities.getOrderNumberAsText(number);
+        instructions.addText(numberAsString.toUpperCase()
+            + " STATISTICAL RESEARCH DONE!");
+        instructions.addText("BY");
+        news.setNewsText("GBNC has done " + numberAsString
+            + " statistical research about Realms in Stars.");
+      }
+    }
     return news;
   }
 

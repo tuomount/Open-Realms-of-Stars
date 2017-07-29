@@ -293,5 +293,12 @@ public class NewsCorpData {
     }
     return false;
   }
+  /**
+   * How many stats has been done.
+   * @return Number of stats has been done
+   */
+  public int getStatNumbers() {
+    return military.getNumberStats();
+  }
 
 }

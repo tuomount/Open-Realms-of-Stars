@@ -324,4 +324,23 @@ public class NewsCorpDataTest {
     data.getCredit();
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testNewsData() {
+    NewsCorpData data = new NewsCorpData(8);
+    NewsData newsData = Mockito.mock(NewsData.class);
+    NewsData[] newsList = data.getNewsList();
+    assertEquals(0, newsList.length);
+    data.addNews(newsData);
+    newsList = data.getNewsList();
+    assertEquals(1, newsList.length);
+    data.addNews(newsData);
+    newsList = data.getNewsList();
+    assertEquals(2, newsList.length);
+    data.clearNewsList();
+    newsList = data.getNewsList();
+    assertEquals(0, newsList.length);
+    
+  }
+
 }

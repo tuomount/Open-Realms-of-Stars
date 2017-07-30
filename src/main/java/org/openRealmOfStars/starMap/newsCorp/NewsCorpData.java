@@ -63,6 +63,11 @@ public class NewsCorpData {
   private GalaxyStat credit;
 
   /**
+   * News data to show
+   */
+  private ArrayList<NewsData> newsData;
+
+  /**
    * How many turns when new news is published
    */
   public static final int NEWS_PUBLISH_RATE = 20;
@@ -103,6 +108,7 @@ public class NewsCorpData {
     cultural = new GalaxyStat(numberOfPlayers, STAT_CULTURAL);
     credit = new GalaxyStat(numberOfPlayers, STAT_CREDIT);
     research = new GalaxyStat(numberOfPlayers, STAT_RESEARCH);
+    newsData = new ArrayList<>();
   }
 
   /**
@@ -301,4 +307,26 @@ public class NewsCorpData {
     return military.getNumberStats();
   }
 
+  /**
+   * Add news into array
+   * @param news to add
+   */
+  public void addNews(final NewsData news) {
+    newsData.add(news);
+  }
+
+  /**
+   * Get the actual news array
+   * @return News array
+   */
+  public NewsData[] getNewsList() {
+    return newsData.toArray(new NewsData[newsData.size()]);
+  }
+
+  /**
+   * Clear list of news. This should be called after each turn.
+   */
+  public void clearNewsList() {
+    newsData.clear();
+  }
 }

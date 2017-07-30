@@ -332,9 +332,12 @@ public class NewsCorpDataTest {
     NewsData[] newsList = data.getNewsList();
     assertEquals(0, newsList.length);
     data.addNews(newsData);
+    data.clearNewsList();
     newsList = data.getNewsList();
     assertEquals(1, newsList.length);
     data.addNews(newsData);
+    data.addNews(newsData);
+    data.clearNewsList();
     newsList = data.getNewsList();
     assertEquals(2, newsList.length);
     data.clearNewsList();

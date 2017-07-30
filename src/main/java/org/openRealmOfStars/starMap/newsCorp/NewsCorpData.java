@@ -68,6 +68,11 @@ public class NewsCorpData {
   private ArrayList<NewsData> newsData;
 
   /**
+   * News data to show on next turn
+   */
+  private ArrayList<NewsData> upComingNewsData;
+
+  /**
    * How many turns when new news is published
    */
   public static final int NEWS_PUBLISH_RATE = 20;
@@ -109,6 +114,7 @@ public class NewsCorpData {
     credit = new GalaxyStat(numberOfPlayers, STAT_CREDIT);
     research = new GalaxyStat(numberOfPlayers, STAT_RESEARCH);
     newsData = new ArrayList<>();
+    upComingNewsData = new ArrayList<>();
   }
 
   /**
@@ -308,11 +314,11 @@ public class NewsCorpData {
   }
 
   /**
-   * Add news into array
+   * Add news into array up coming news array
    * @param news to add
    */
   public void addNews(final NewsData news) {
-    newsData.add(news);
+    upComingNewsData.add(news);
   }
 
   /**
@@ -324,9 +330,11 @@ public class NewsCorpData {
   }
 
   /**
-   * Clear list of news. This should be called after each turn.
+   * Puts upcoming news into current news list and clears the
+   * upcoming news list. This should be called just before new turn starts.
    */
   public void clearNewsList() {
-    newsData.clear();
+    newsData = upComingNewsData;
+    upComingNewsData = new ArrayList<>();
   }
 }

@@ -214,4 +214,13 @@ public class NewsCorpView extends BlackPanel {
       repaint();
     }
   }
+
+  /**
+   * Get current news index
+   * @return current news index
+   */
+  public int getNewsIndex() {
+    return newsIndex;
+  }
+
 }

@@ -1,5 +1,7 @@
 package org.openRealmOfStars.game.States;
 
+import static org.junit.Assert.*;
+
 import java.awt.event.ActionEvent;
 
 //import static org.junit.Assert.*;
@@ -69,6 +71,43 @@ public class NewsCorpViewTest {
     for (int i = 0; i < 300; i++) {
       view.handleAction(arg0);
     }
+  }
+
+  @Test
+  public void testTwoNews() {
+    ActionListener listener = Mockito.mock(ActionListener.class);
+    NewsData[] newsData = new NewsData[2];
+    newsData[0] = Mockito.mock(NewsData.class);
+    Mockito.when(newsData[0].getImageInstructions()).thenReturn(
+        "background(nebulae)+planet(position center,rock1,full)"
+        + "+text(WAR DECLARATION!)+text(Empire of Test)+relation_symbol(war)"
+        + "+text(Democracy of Defender)");
+    Mockito.when(newsData[0].getNewsText()).thenReturn("Empire of Test"
+        + " declares war against Democracy of Defender! This meeting"
+        + " happened in Planet I");
+    newsData[1] = Mockito.mock(NewsData.class);
+    Mockito.when(newsData[1].getImageInstructions()).thenReturn(
+        "background(nebulae)+planet(position center,rock1,full)"
+        + "+text(WAR DECLARATION!)+text(Empire of Test)+relation_symbol(war)"
+        + "+text(Democracy of Defender)");
+    Mockito.when(newsData[1].getNewsText()).thenReturn("Empire of Test"
+        + " declares war against Democracy of Defender! This meeting"
+        + " happened in Planet II");
+    NewsCorpView view = new NewsCorpView(newsData, listener);
+    assertEquals(0, view.getNewsIndex());
+    ActionEvent arg0 = Mockito.mock(ActionEvent.class);
+    Mockito.when(arg0.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_NEXT_TARGET);
+    view.handleAction(arg0);
+    assertEquals(1, view.getNewsIndex());
+    view.handleAction(arg0);
+    assertEquals(1, view.getNewsIndex());
+    Mockito.when(arg0.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_PREV_TARGET);
+    view.handleAction(arg0);
+    assertEquals(0, view.getNewsIndex());
+    view.handleAction(arg0);
+    assertEquals(0, view.getNewsIndex());
   }
 
 }

@@ -981,4 +981,12 @@ public class DiplomacyView extends BlackPanel {
   public JList<SpeechLine> getHumanLines() {
     return humanLines;
   }
+
+  /**
+   * Return meeting place.
+   * @return This can be null, Planet or Fleet
+   */
+  public Object getMeetingPlace() {
+    return meetingPlace;
+  }
 }

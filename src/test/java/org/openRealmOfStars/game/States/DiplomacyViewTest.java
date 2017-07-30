@@ -12,7 +12,9 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
@@ -153,6 +155,31 @@ public class DiplomacyViewTest {
     diplomacyView.handleAction(action);
     assertEquals(true, ai.getDiplomacy().getDiplomacyList(0)
         .isBonusType(DiplomacyBonusType.MADE_DEMAND));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testMeetingPlace() {
+    ActionListener listener = Mockito.mock(ActionListener.class);
+    GameRepository repository = new GameRepository();
+    StarMap starMap = repository.loadGame("src/test/resources/saves",
+                                          "testGame.save");
+    PlayerInfo human = starMap.getPlayerByIndex(0);
+    PlayerInfo ai = starMap.getPlayerByIndex(1);
+    Planet planet = Mockito.mock(Planet.class);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    DiplomacyView diplomacyView = new DiplomacyView(human, ai, starMap,
+        DiplomacyView.HUMAN_REGULAR, null, null, listener);
+    assertEquals(null, diplomacyView.getMeetingPlace());
+    diplomacyView = new DiplomacyView(human, ai, starMap,
+        DiplomacyView.HUMAN_REGULAR, fleet, null, listener);
+    assertEquals(fleet, diplomacyView.getMeetingPlace());
+    diplomacyView = new DiplomacyView(human, ai, starMap,
+        DiplomacyView.HUMAN_REGULAR, null, planet, listener);
+    assertEquals(planet, diplomacyView.getMeetingPlace());
+    diplomacyView = new DiplomacyView(human, ai, starMap,
+        DiplomacyView.HUMAN_REGULAR, fleet, planet, listener);
+    assertEquals(planet, diplomacyView.getMeetingPlace());
   }
 
 }

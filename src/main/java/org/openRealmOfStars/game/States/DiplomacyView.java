@@ -46,6 +46,7 @@ import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -191,6 +192,10 @@ public class DiplomacyView extends BlackPanel {
   private SpaceButton endBtn;
 
   /**
+   * Meeting place for news generator
+   */
+  private Object meetingPlace;
+  /**
    * Diplomacy View constructor
    * @param info1 Human player PlayerInfo
    * @param info2 AI player PlayerInfo
@@ -201,11 +206,12 @@ public class DiplomacyView extends BlackPanel {
    *        HUMAN_BORDER_CROSS
    *        AI_BORDER_CROSS
    * @param fleet Fleet which has crossed the border. Can be null
+   * @param planet Planet where meeting happended. Can be null
    * @param listener ActionListener
    */
   public DiplomacyView(final PlayerInfo info1, final PlayerInfo info2,
       final StarMap map, final int startType, final Fleet fleet,
-      final ActionListener listener) {
+      final Planet planet, final ActionListener listener) {
     this.setLayout(new BorderLayout());
     human = info1;
     borderCrossedFleet = fleet;
@@ -213,6 +219,13 @@ public class DiplomacyView extends BlackPanel {
     starMap = map;
     humanCredits = 0;
     aiCredits = 0;
+    meetingPlace = null;
+    if (fleet != null) {
+      meetingPlace = fleet;
+    }
+    if (planet != null) {
+      meetingPlace = planet;
+    }
     int humanIndex = starMap.getPlayerList().getIndex(human);
     int aiIndex = starMap.getPlayerList().getIndex(ai);
     if (startType == AI_REGULAR || startType == AI_BORDER_CROSS) {
@@ -788,7 +801,10 @@ public class DiplomacyView extends BlackPanel {
           trade.doTrades();
           updatePanel(SpeechType.MAKE_WAR);
           resetChoices();
-          //TODO Add NewCorp about the war
+          //TODO Add diplomacy bonus for attacker
+          starMap.getNewsCorpData().addNews(
+              NewsFactory.makeWarNews(ai, human, meetingPlace, starMap));
+
         } else {
           if (speechSelected.getType() == SpeechType.DECLINE_ANGER) {
             updatePanel(SpeechType.INSULT_RESPOND);
@@ -814,7 +830,8 @@ public class DiplomacyView extends BlackPanel {
           trade.doTrades();
           updatePanel(SpeechType.AGREE);
           resetChoices();
-          //TODO add news corp that human made trade alliance with AI
+          starMap.getNewsCorpData().addNews(
+              NewsFactory.makeTradeAllianceNews(human, ai, meetingPlace));
         } else {
           updatePanel(SpeechType.DECLINE);
         }
@@ -826,13 +843,14 @@ public class DiplomacyView extends BlackPanel {
           trade.doTrades();
           updatePanel(SpeechType.MOVE_FLEET);
           resetChoices();
-          //TODO add news corp that human made trade alliance with AI
         } else {
           trade.generateEqualTrade(NegotiationType.WAR);
           trade.doTrades();
-          //TODO Add NewCorp about the war
           updatePanel(SpeechType.DECLINE_WAR);
           resetChoices();
+          //TODO Add diplomacy bonus for attacker
+          starMap.getNewsCorpData().addNews(
+              NewsFactory.makeWarNews(ai, human, meetingPlace, starMap));
         }
       }
       if (speechSelected != null
@@ -851,7 +869,8 @@ public class DiplomacyView extends BlackPanel {
           trade.doTrades();
           updatePanel(SpeechType.AGREE);
           resetChoices();
-          //TODO add news corp that human made trade alliance with AI
+          starMap.getNewsCorpData().addNews(
+              NewsFactory.makeAllianceNews(human, ai, meetingPlace));
         } else {
           updatePanel(SpeechType.DECLINE);
         }
@@ -880,9 +899,11 @@ public class DiplomacyView extends BlackPanel {
           if (value < warChance) {
             trade.generateEqualTrade(NegotiationType.WAR);
             trade.doTrades();
-            //TODO Add NewCorp about the war
             updatePanel(SpeechType.DECLINE_WAR);
             resetChoices();
+            //TODO Add diplomacy bonus for attacker
+            starMap.getNewsCorpData().addNews(
+                NewsFactory.makeWarNews(ai, human, meetingPlace, starMap));
           } else {
             updatePanel(SpeechType.DECLINE_ANGER);
             resetChoices();
@@ -911,12 +932,14 @@ public class DiplomacyView extends BlackPanel {
           && speechSelected.getType() == SpeechType.MAKE_WAR) {
         int humanIndex = starMap.getPlayerList().getIndex(human);
         int aiIndex = starMap.getPlayerList().getIndex(ai);
-        //TODO add news corp that human declared war on AI
         ai.getDiplomacy().getDiplomacyList(humanIndex).addBonus(
             DiplomacyBonusType.IN_WAR, ai.getRace());
         human.getDiplomacy().getDiplomacyList(aiIndex).addBonus(
             DiplomacyBonusType.IN_WAR, human.getRace());
         updatePanel(SpeechType.MAKE_WAR);
+        //TODO Add diplomacy bonus for attacker
+        starMap.getNewsCorpData().addNews(
+            NewsFactory.makeWarNews(human, ai, meetingPlace, starMap));
       }
       if (speechSelected != null
           && speechSelected.getType() == SpeechType.PEACE_OFFER) {
@@ -934,7 +957,8 @@ public class DiplomacyView extends BlackPanel {
           trade.doTrades();
           updatePanel(SpeechType.AGREE);
           resetChoices();
-          //TODO add news corp that human made peace with AI
+          starMap.getNewsCorpData().addNews(
+              NewsFactory.makePeaceNews(human, ai, meetingPlace));
         } else {
           updatePanel(SpeechType.DECLINE);
         }

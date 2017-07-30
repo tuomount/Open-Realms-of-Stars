@@ -1239,7 +1239,6 @@ public class DiplomaticTrade {
         int index = starMap.getPlayerList().getIndex(giver);
         info.getDiplomacy().getDiplomacyList(index).addBonus(
             DiplomacyBonusType.IN_WAR, info.getRace());
-        //TODO Add news corp new that giver has made a war between info
         break;
       }
       default:

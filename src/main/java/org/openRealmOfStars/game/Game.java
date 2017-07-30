@@ -445,6 +445,7 @@ public class Game implements ActionListener {
   public void showDiplomacyView(final Object dataObject) {
     PlayerInfo info = starMap.getPlayerByIndex(1);
     Fleet fleet = null;
+    Planet planet = null;
     int type = DiplomacyView.HUMAN_REGULAR;
     if (dataObject != null) {
       if (dataObject instanceof Fleet) {
@@ -496,6 +497,7 @@ public class Game implements ActionListener {
         PlanetView view = (PlanetView) dataObject;
         if (view.getPlanet().getPlanetPlayerInfo() != null) {
           info = view.getPlanet().getPlanetPlayerInfo();
+          planet = view.getPlanet();
         }
       }
       if (dataObject instanceof PlayerInfo) {
@@ -504,7 +506,7 @@ public class Game implements ActionListener {
       }
     }
     diplomacyView = new DiplomacyView(starMap.getPlayerByIndex(0), info,
-        starMap, type, fleet, this);
+        starMap, type, fleet, planet, this);
     this.updateDisplay(diplomacyView);
   }
 

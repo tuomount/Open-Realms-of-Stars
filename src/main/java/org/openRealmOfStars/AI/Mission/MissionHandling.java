@@ -20,6 +20,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -442,6 +443,12 @@ public final class MissionHandling {
         || trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
       // Another party accepts it or it is war
       trade.doTrades();
+      if (trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
+        //TODO Add reputation loss for info
+        PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
+        game.getStarMap().getNewsCorpData().addNews(
+            NewsFactory.makeWarNews(info, defender, fleet, game.getStarMap()));
+      }
     } else {
       SpeechType type = trade.getSpeechTypeByOffer();
       Attitude attitude = info.getAiAttitude();
@@ -452,7 +459,10 @@ public final class MissionHandling {
       if (value < warChance) {
         trade.generateEqualTrade(NegotiationType.WAR);
         trade.doTrades();
-        //TODO Add NewCorp about the war
+        //TODO Add reputation loss for info
+        PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
+        game.getStarMap().getNewsCorpData().addNews(
+            NewsFactory.makeWarNews(info, defender, fleet, game.getStarMap()));
       }
     }
     trade.updateMeetingNumbers();

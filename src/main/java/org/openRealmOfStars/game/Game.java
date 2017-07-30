@@ -49,8 +49,6 @@ import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
-import org.openRealmOfStars.starMap.newsCorp.NewsData;
-import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
@@ -385,12 +383,8 @@ public class Game implements ActionListener {
    * Show news corp view
    */
   public void showNewsCorpView() {
-    NewsData[] news = new NewsData[2];
-    news[0] = NewsFactory.makePeaceNews(players.getPlayerInfoByIndex(0),
-        players.getPlayerInfoByIndex(1), null);
-    news[1] = NewsFactory.makeWarNews(players.getPlayerInfoByIndex(1),
-        players.getPlayerInfoByIndex(0), null, starMap);
-    newsCorpView = new NewsCorpView(news, this);
+    newsCorpView = new NewsCorpView(starMap.getNewsCorpData().getNewsList(),
+        this);
     this.updateDisplay(newsCorpView);
   }
 
@@ -1169,18 +1163,9 @@ public class Game implements ActionListener {
       SoundPlayer.playMenuSound();
       changeGameState(GameState.SHIPDESIGN);
     }
-    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_BATTLE)) {
+    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEWS)) {
       SoundPlayer.playMenuSound();
       changeGameState(GameState.NEWS_CORP_VIEW);
-      //changeGameState(GameState.COMBAT);
-/*      Planet planet = starMap.getPlanetList().get(0);
-      players.getPlayerInfoByIndex(0).getFleets().getFirst()
-          .setPos(planet.getCoordinate());
-      fleetView = new FleetView(planet,
-          players.getPlayerInfoByIndex(0).getFleets().getFirst(),
-          players.getPlayerInfoByIndex(0).getFleets(),
-          players.getPlayerInfoByIndex(0), true, this);
-      changeGameState(GameState.PLANETBOMBINGVIEW, fleetView);*/
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN_DONE)

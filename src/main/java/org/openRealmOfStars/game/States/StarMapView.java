@@ -102,6 +102,11 @@ public class StarMapView extends BlackPanel {
    * View player stats
    */
   private SpaceButton viewStats;
+
+  /**
+   * View news button
+   */
+  private SpaceButton viewNews;
   /**
    * Credit production
    */
@@ -204,10 +209,12 @@ public class StarMapView extends BlackPanel {
     viewStats.addActionListener(game);
     bottomBtnPanel.add(viewStats);
 
-    SpaceButton debugBattle = new SpaceButton("Battle",
-        GameCommands.COMMAND_BATTLE);
-    debugBattle.addActionListener(game);
-    bottomBtnPanel.add(debugBattle);
+    viewNews = new SpaceButton("News", GameCommands.COMMAND_NEWS);
+    viewNews.addActionListener(game);
+    bottomBtnPanel.add(viewNews);
+    if (map.getNewsCorpData().getNewsList().length == 0) {
+      viewNews.setEnabled(false);
+    }
 
     bottomPanel.add(bottomBtnPanel);
 

@@ -34,6 +34,7 @@ import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
+import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -562,7 +563,9 @@ public class AITurnView extends BlackPanel {
       newsData.calculateResearch(game.getStarMap().getPlayerList());
       newsData.calculatePlanets(game.getStarMap().getPlanetList());
       newsData.calculatePopulation(game.getStarMap().getPlanetList());
+      newsData.addNews(NewsFactory.makeStatNews(game.getStarMap()));
     }
+    game.getStarMap().getNewsCorpData().clearNewsList();
   }
 
   /**
@@ -597,8 +600,11 @@ public class AITurnView extends BlackPanel {
               info);
         }
         game.getStarMap().clearAITurn();
-        game.changeGameState(GameState.STARMAP);
-
+        if (game.getStarMap().getNewsCorpData().isNewsToShow()) {
+          game.changeGameState(GameState.NEWS_CORP_VIEW);
+        } else {
+          game.changeGameState(GameState.STARMAP);
+        }
       }
     }
 

@@ -234,13 +234,17 @@ public class NewsCorpDataTest {
     Mockito.when(info2.getFleets()).thenReturn(fleetList2);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
     
+    // Actual game has one stats created at start.
     assertEquals(false, data.isFirstStats());
-    assertEquals(0, data.getStatNumbers());
+    assertEquals(-1, data.getStatNumbers());
     data.calculateMilitary(players);
     int[][] value = data.getMilitary().getGalaxyData();
     assertEquals(20,value[0][0]);
     assertEquals(30,value[1][0]);
     assertEquals(-10, data.getMilitaryDifference(0, 1));
+    assertEquals(false, data.isFirstStats());
+    assertEquals(0, data.getStatNumbers());
+    data.calculateMilitary(players);
     assertEquals(true, data.isFirstStats());
     assertEquals(1, data.getStatNumbers());
   }
@@ -330,17 +334,22 @@ public class NewsCorpDataTest {
     NewsCorpData data = new NewsCorpData(8);
     NewsData newsData = Mockito.mock(NewsData.class);
     NewsData[] newsList = data.getNewsList();
+    assertEquals(false, data.isNewsToShow());
     assertEquals(0, newsList.length);
     data.addNews(newsData);
+    assertEquals(false, data.isNewsToShow());
     data.clearNewsList();
+    assertEquals(true, data.isNewsToShow());
     newsList = data.getNewsList();
     assertEquals(1, newsList.length);
     data.addNews(newsData);
     data.addNews(newsData);
     data.clearNewsList();
+    assertEquals(true, data.isNewsToShow());
     newsList = data.getNewsList();
     assertEquals(2, newsList.length);
     data.clearNewsList();
+    assertEquals(false, data.isNewsToShow());
     newsList = data.getNewsList();
     assertEquals(0, newsList.length);
     

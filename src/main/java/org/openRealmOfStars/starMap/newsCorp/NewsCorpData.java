@@ -296,11 +296,13 @@ public class NewsCorpData {
   }
 
   /**
-   * Is First stats only done
+   * Is First stats only done. This means that there are two
+   * stats in list. First one is always created when game is
+   * started.
    * @return True if first stats is done
    */
   public boolean isFirstStats() {
-    if (military.getNumberStats() == 1) {
+    if (military.getNumberStats() == 2) {
       return true;
     }
     return false;
@@ -310,7 +312,8 @@ public class NewsCorpData {
    * @return Number of stats has been done
    */
   public int getStatNumbers() {
-    return military.getNumberStats();
+    // Substract one, since one is create at beginning of game.
+    return military.getNumberStats() - 1;
   }
 
   /**
@@ -336,5 +339,16 @@ public class NewsCorpData {
   public void clearNewsList() {
     newsData = upComingNewsData;
     upComingNewsData = new ArrayList<>();
+  }
+
+  /**
+   * Are there news to show?
+   * @return True if are, false otherwise
+   */
+  public boolean isNewsToShow() {
+    if (newsData.size() > 0) {
+      return true;
+    }
+    return false;
   }
 }

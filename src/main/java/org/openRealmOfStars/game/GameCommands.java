@@ -348,6 +348,11 @@ public final class GameCommands {
   public static final String COMMAND_BATTLE = "ViewBattle";
 
   /**
+   * View news
+   */
+  public static final String COMMAND_NEWS = "ViewNews";
+
+  /**
    * Ship Design is done and ready
    */
   public static final String COMMAND_SHIPDESIGN_DONE = "ShipDesignIsReady";

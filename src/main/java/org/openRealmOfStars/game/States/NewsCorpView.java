@@ -16,6 +16,7 @@ import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
+import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ImagePanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
@@ -83,6 +84,11 @@ public class NewsCorpView extends BlackPanel {
    * Current news index
    */
   private int newsIndex = 0;
+
+  /**
+   * News list label
+   */
+  private TransparentLabel newsLabel;
   /**
    * Construtor for News Corp View.
    * @param news News Data
@@ -123,6 +129,10 @@ public class NewsCorpView extends BlackPanel {
         this);
     iBtn.addActionListener(listener);
     invis.add(iBtn);
+    invis.add(Box.createRigidArea(new Dimension(10, 5)));
+    newsLabel = new TransparentLabel(invis, "100/100");
+    newsLabel.setText("1/" + newsList.length);
+    invis.add(newsLabel);
     iBtn = new IconButton(GuiStatics.RIGHT_ARROW,
         GuiStatics.RIGHT_ARROW_PRESSED, false, GameCommands.COMMAND_NEXT_TARGET,
         this);
@@ -188,6 +198,7 @@ public class NewsCorpView extends BlackPanel {
           newsList[newsIndex].getImageInstructions());
       newsImage.setImage(image);
       textArea.setText(newsList[newsIndex].getNewsText());
+      newsLabel.setText(newsIndex + 1 + "/" + newsList.length);
       repaint();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_TARGET)
@@ -199,6 +210,7 @@ public class NewsCorpView extends BlackPanel {
           newsList[newsIndex].getImageInstructions());
       newsImage.setImage(image);
       textArea.setText(newsList[newsIndex].getNewsText());
+      newsLabel.setText(newsIndex + 1 + "/" + newsList.length);
       repaint();
     }
   }

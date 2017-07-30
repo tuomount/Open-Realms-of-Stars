@@ -378,7 +378,7 @@ public final class NewsFactory {
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
           sb.append(" has greatest military power in whole galaxy! ");
-          sb.append("See full report for Statiscis view.");
+          sb.append("See full report from Statiscis view.");
         }
       }
       if (statIndex == 1) {
@@ -402,7 +402,7 @@ public final class NewsFactory {
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
           sb.append(" has most of the colonized planets in whole galaxy! ");
-          sb.append("See full report for Statiscis view.");
+          sb.append("See full report from Statiscis view.");
         }
       }
       if (statIndex == 3) {
@@ -414,7 +414,7 @@ public final class NewsFactory {
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
           sb.append(" has most of the people in whole galaxy! ");
-          sb.append("See full report for Statiscis view.");
+          sb.append("See full report from Statiscis view.");
         }
       }
       if (statIndex == 4) {
@@ -426,7 +426,7 @@ public final class NewsFactory {
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
           sb.append(" is the biggest cultural power in whole galaxy! ");
-          sb.append("See full report for Statiscis view.");
+          sb.append("See full report from Statiscis view.");
         }
       }
       if (statIndex == 5) {
@@ -438,7 +438,7 @@ public final class NewsFactory {
           instructions.addImage(info.getRace().getNameSingle());
           sb.append(info.getEmpireName());
           sb.append(" is the biggest scientific power in whole galaxy! ");
-          sb.append("See full report for Statiscis view.");
+          sb.append("See full report from Statiscis view.");
         }
       }
       if (sb.toString().isEmpty()) {

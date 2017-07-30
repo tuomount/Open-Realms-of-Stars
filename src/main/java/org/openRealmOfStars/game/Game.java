@@ -385,8 +385,10 @@ public class Game implements ActionListener {
    * Show news corp view
    */
   public void showNewsCorpView() {
-    NewsData news = NewsFactory.makePeaceNews(players.getPlayerInfoByIndex(0),
+    NewsData[] news = new NewsData[2];
+    news[0] = NewsFactory.makePeaceNews(players.getPlayerInfoByIndex(0),
         players.getPlayerInfoByIndex(1), null);
+    news[1] = NewsFactory.makeStatNews(starMap);
     newsCorpView = new NewsCorpView(news, this);
     this.updateDisplay(newsCorpView);
   }

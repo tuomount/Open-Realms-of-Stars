@@ -74,13 +74,23 @@ public class NewsCorpView extends BlackPanel {
    * News reader image panel
    */
   private ImagePanel newsReaderPanel;
+
+  /**
+   * List of news
+   */
+  private NewsData[] newsList;
+  /**
+   * Current news index
+   */
+  private int newsIndex = 0;
   /**
    * Construtor for News Corp View.
    * @param news News Data
    * @param listener ActionListener
    */
-  public NewsCorpView(final NewsData news, final ActionListener listener) {
+  public NewsCorpView(final NewsData[] news, final ActionListener listener) {
     this.setLayout(new BorderLayout());
+    newsList = news;
     InfoPanel base = new InfoPanel();
     base.setLayout(new BorderLayout());
     base.setTitle("Galactic Broadcasting News Company");
@@ -96,13 +106,13 @@ public class NewsCorpView extends BlackPanel {
     BufferedImage image = new BufferedImage(800, 400,
         BufferedImage.TYPE_4BYTE_ABGR);
     image = ImageInstruction.parseImageInstructions(image,
-        news.getImageInstructions());
+        news[0].getImageInstructions());
     newsImage = new ImagePanel(image);
     newsPanel.add(newsImage, BorderLayout.WEST);
     newsPanel.add(Box.createRigidArea(new Dimension(15, 10)));
     textArea = new InfoTextArea();
     textArea.setCharacterWidth(9);
-    textArea.setText(news.getNewsText());
+    textArea.setText(news[0].getNewsText());
     textArea.setLineWrap(true);
     newsPanel.add(textArea);
     this.add(base, BorderLayout.CENTER);
@@ -168,6 +178,28 @@ public class NewsCorpView extends BlackPanel {
 
       }
       newsReaderPanel.repaint();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_TARGET)
+        && newsIndex < newsList.length - 1) {
+      newsIndex++;
+      BufferedImage image = new BufferedImage(800, 400,
+          BufferedImage.TYPE_4BYTE_ABGR);
+      image = ImageInstruction.parseImageInstructions(image,
+          newsList[newsIndex].getImageInstructions());
+      newsImage.setImage(image);
+      textArea.setText(newsList[newsIndex].getNewsText());
+      repaint();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_TARGET)
+        && newsIndex > 0) {
+      newsIndex--;
+      BufferedImage image = new BufferedImage(800, 400,
+          BufferedImage.TYPE_4BYTE_ABGR);
+      image = ImageInstruction.parseImageInstructions(image,
+          newsList[newsIndex].getImageInstructions());
+      newsImage.setImage(image);
+      textArea.setText(newsList[newsIndex].getNewsText());
+      repaint();
     }
   }
 }

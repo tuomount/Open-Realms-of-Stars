@@ -38,12 +38,13 @@ public class NewsCorpViewTest {
   @Test
   public void testBasic() {
     ActionListener listener = Mockito.mock(ActionListener.class);
-    NewsData newsData = Mockito.mock(NewsData.class);
-    Mockito.when(newsData.getImageInstructions()).thenReturn(
+    NewsData[] newsData = new NewsData[1];
+    newsData[0] = Mockito.mock(NewsData.class);
+    Mockito.when(newsData[0].getImageInstructions()).thenReturn(
         "background(nebulae)+planet(position center,rock1,full)"
         + "+text(WAR DECLARATION!)+text(Empire of Test)+relation_symbol(war)"
         + "+text(Democracy of Defender)");
-    Mockito.when(newsData.getNewsText()).thenReturn("Empire of Test"
+    Mockito.when(newsData[0].getNewsText()).thenReturn("Empire of Test"
         + " declares war against Democracy of Defender! This meeting"
         + " happened in Planet I");
     new NewsCorpView(newsData, listener);
@@ -52,12 +53,13 @@ public class NewsCorpViewTest {
   @Test
   public void testRepaintNewsReader() {
     ActionListener listener = Mockito.mock(ActionListener.class);
-    NewsData newsData = Mockito.mock(NewsData.class);
-    Mockito.when(newsData.getImageInstructions()).thenReturn(
+    NewsData[] newsData = new NewsData[1];
+    newsData[0] = Mockito.mock(NewsData.class);
+    Mockito.when(newsData[0].getImageInstructions()).thenReturn(
         "background(nebulae)+planet(position center,rock1,full)"
         + "+text(WAR DECLARATION!)+text(Empire of Test)+relation_symbol(war)"
         + "+text(Democracy of Defender)");
-    Mockito.when(newsData.getNewsText()).thenReturn("Empire of Test"
+    Mockito.when(newsData[0].getNewsText()).thenReturn("Empire of Test"
         + " declares war against Democracy of Defender! This meeting"
         + " happened in Planet I");
     NewsCorpView view = new NewsCorpView(newsData, listener);

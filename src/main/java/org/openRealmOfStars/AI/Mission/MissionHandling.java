@@ -19,6 +19,7 @@ import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -445,7 +446,7 @@ public final class MissionHandling {
       // Another party accepts it or it is war
       trade.doTrades();
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
-        //TODO Add reputation loss for info
+        StarMapUtilities.addWarDeclatingRepuation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         game.getStarMap().getNewsCorpData().addNews(
             NewsFactory.makeWarNews(info, defender, fleet, game.getStarMap()));
@@ -460,7 +461,7 @@ public final class MissionHandling {
       if (value < warChance) {
         trade.generateEqualTrade(NegotiationType.WAR);
         trade.doTrades();
-        //TODO Add reputation loss for info
+        StarMapUtilities.addWarDeclatingRepuation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         game.getStarMap().getNewsCorpData().addNews(
             NewsFactory.makeWarNews(info, defender, fleet, game.getStarMap()));

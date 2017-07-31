@@ -46,6 +46,7 @@ import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -801,7 +802,7 @@ public class DiplomacyView extends BlackPanel {
           trade.doTrades();
           updatePanel(SpeechType.MAKE_WAR);
           resetChoices();
-          //TODO Add diplomacy bonus for attacker
+          StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
           starMap.getNewsCorpData().addNews(
               NewsFactory.makeWarNews(ai, human, meetingPlace, starMap));
 
@@ -848,7 +849,7 @@ public class DiplomacyView extends BlackPanel {
           trade.doTrades();
           updatePanel(SpeechType.DECLINE_WAR);
           resetChoices();
-          //TODO Add diplomacy bonus for attacker
+          StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
           starMap.getNewsCorpData().addNews(
               NewsFactory.makeWarNews(ai, human, meetingPlace, starMap));
         }
@@ -901,7 +902,7 @@ public class DiplomacyView extends BlackPanel {
             trade.doTrades();
             updatePanel(SpeechType.DECLINE_WAR);
             resetChoices();
-            //TODO Add diplomacy bonus for attacker
+            StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
             starMap.getNewsCorpData().addNews(
                 NewsFactory.makeWarNews(ai, human, meetingPlace, starMap));
           } else {
@@ -937,7 +938,7 @@ public class DiplomacyView extends BlackPanel {
         human.getDiplomacy().getDiplomacyList(aiIndex).addBonus(
             DiplomacyBonusType.IN_WAR, human.getRace());
         updatePanel(SpeechType.MAKE_WAR);
-        //TODO Add diplomacy bonus for attacker
+        StarMapUtilities.addWarDeclatingRepuation(starMap, human);
         starMap.getNewsCorpData().addNews(
             NewsFactory.makeWarNews(human, ai, meetingPlace, starMap));
       }

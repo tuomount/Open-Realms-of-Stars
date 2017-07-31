@@ -1,5 +1,9 @@
 package org.openRealmOfStars.starMap;
 
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
+
 /**
  *
  * Open Realm of Stars game project
@@ -96,7 +100,45 @@ public final class StarMapUtilities {
         }
       }
     }
+  }
 
+  /**
+   * Add player's repuation that he or she has dropped nuclear bombs
+   * @param starMap StarMap containing all the diplomacies
+   * @param nuker PlayerInfo who is nuking.
+   */
+  public static void addNukeRepuation(final StarMap starMap,
+      final PlayerInfo nuker) {
+    addRepuation(starMap, nuker, DiplomacyBonusType.NUKED);
+  }
+
+  /**
+   * Add player's repuation that he or she has declared a war
+   * @param starMap StarMap containing all the diplomacies
+   * @param attacker PlayerInfo who is attacking.
+   */
+  public static void addWarDeclatingRepuation(final StarMap starMap,
+      final PlayerInfo attacker) {
+    addRepuation(starMap, attacker, DiplomacyBonusType.WAR_DECLARTION);
+  }
+
+  /**
+   * Add player's repuation that he or she has done something, usually bad.
+   * @param starMap StarMap containing all the diplomacies
+   * @param actor PlayerInfo who is acting.
+   * @param bonusType Diplomacy Bonus which is being added to all players
+   */
+  private static void addRepuation(final StarMap starMap,
+      final PlayerInfo actor, final DiplomacyBonusType bonusType) {
+    int index = starMap.getPlayerList().getIndex(actor);
+    for (int i = 0; i < starMap.getPlayerList().getCurrentMaxPlayers(); i++) {
+      PlayerInfo player = starMap.getPlayerByIndex(i);
+      if (i != index) {
+        DiplomacyBonusList list = player.getDiplomacy()
+            .getDiplomacyList(index);
+        list.addBonus(bonusType, player.getRace());
+      }
+    }
   }
 
 }

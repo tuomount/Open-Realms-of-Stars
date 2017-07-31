@@ -197,6 +197,11 @@ public class PlanetBombingView extends BlackPanel {
   private StarMap starMap;
 
   /**
+   * Has nukes launched or not
+   */
+  private boolean nuked;
+
+  /**
    * Constructor for PLanet bombing view. This view is used when
    * player is conquering planet with bombs and/or troops.
    * @param planet Planet to be conquered
@@ -214,6 +219,7 @@ public class PlanetBombingView extends BlackPanel {
     this.attackPlayerIndex = attackerPlayerIndex;
     aiControlled = false;
     allAi = false;
+    nuked = false;
     // Background image
     imgBase = new BigImagePanel(planet, true, null);
     this.setLayout(new BorderLayout());
@@ -548,6 +554,7 @@ public class PlanetBombingView extends BlackPanel {
               PlanetAnimation.ANIMATION_TYPE_NUKE_AIM, 0, 0, 1, 1));
           planet.nukem();
           textLogger.addLog(ship.getName() + " nukes the planet!");
+          nuked = true;
         }
         if (comp.getType() == ShipComponentType.ORBITAL_BOMBS) {
           imgBase.setAnimation(new PlanetAnimation(
@@ -636,7 +643,7 @@ public class PlanetBombingView extends BlackPanel {
             if (starMap != null) {
               starMap.getNewsCorpData().addNews(
                   NewsFactory.makePlanetConqueredNews(attacker, defender,
-                      planet, false));
+                      planet, nuked));
             }
           }
           removeDestroyedShip();
@@ -672,7 +679,7 @@ public class PlanetBombingView extends BlackPanel {
           if (attackBombOrTroops() && starMap != null) {
             starMap.getNewsCorpData().addNews(
                 NewsFactory.makePlanetConqueredNews(attacker, defender,
-                    planet, false));
+                    planet, nuked));
           }
         }
         updatePanel();
@@ -704,7 +711,7 @@ public class PlanetBombingView extends BlackPanel {
               if (starMap != null) {
                 starMap.getNewsCorpData().addNews(
                     NewsFactory.makePlanetConqueredNews(attacker, defender,
-                        planet, false));
+                        planet, nuked));
               }
             }
           }

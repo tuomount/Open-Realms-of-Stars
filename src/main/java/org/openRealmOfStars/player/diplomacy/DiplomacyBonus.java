@@ -175,6 +175,25 @@ public class DiplomacyBonus {
        }
        break;
      }
+     case NUKED: {
+       if (race == SpaceRace.CENTAURS) {
+         bonusValue = -8;
+         bonusLasting = 120;
+       } else if (race == SpaceRace.HUMAN || race == SpaceRace.TEUTHIDAES) {
+         bonusValue = -6;
+         bonusLasting = 120;
+       } else if (race == SpaceRace.SPORKS) {
+         bonusValue = -4;
+         bonusLasting = 100;
+       } else if (race == SpaceRace.MECHIONS) {
+         bonusValue = -3;
+         bonusLasting = 80;
+       } else {
+         bonusValue = -5;
+         bonusLasting = 100;
+       }
+       break;
+     }
      default: {
        throw new IllegalArgumentException("Unknown bonus type!!");
      }

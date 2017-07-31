@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import org.openRealmOfStars.starMap.newsCorp.GalaxyStat;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -55,7 +56,23 @@ public class NewsCorpRepository {
     IOUtilities.writeString(dos, NewsCorpData.STAT_RESEARCH);
     saveGalaxyStat(dos, newsCorp.getResearch());
     // This is reserved for future extension like News information
-    dos.writeByte(0);
+    if (newsCorp.isNewsInformation()) {
+      dos.writeByte(1);
+      NewsData[] newsList = newsCorp.getNewsList();
+      dos.writeInt(newsList.length);
+      for (int i = 0; i < newsList.length; i++) {
+        IOUtilities.writeString(dos, newsList[i].getImageInstructions());
+        IOUtilities.writeString(dos, newsList[i].getNewsText());
+      }
+      newsList = newsCorp.getUpcomingNews();
+      dos.writeInt(newsList.length);
+      for (int i = 0; i < newsList.length; i++) {
+        IOUtilities.writeString(dos, newsList[i].getImageInstructions());
+        IOUtilities.writeString(dos, newsList[i].getNewsText());
+      }
+    } else {
+      dos.writeByte(0);
+    }
   }
 
   /**
@@ -123,9 +140,29 @@ public class NewsCorpRepository {
           loadGalaxyStat(dis, new GalaxyStat(numberOfStats, "UNKNOWN"));
         }
       }
-      int reserved = dis.read();
-      if (reserved != 0) {
-        throw new IOException("Reserved field is not zero!");
+      int newInformation = dis.read();
+      if (newInformation == 1) {
+        int number = dis.readInt();
+        for (int i = 0; i < number; i++) {
+          String instruction = IOUtilities.readString(dis);
+          String text = IOUtilities.readString(dis);
+          NewsData data = new NewsData();
+          data.setImageInstructions(instruction);
+          data.setNewsText(text);
+          result.addNews(data);
+        }
+        result.clearNewsList();
+        number = dis.readInt();
+        for (int i = 0; i < number; i++) {
+          String instruction = IOUtilities.readString(dis);
+          String text = IOUtilities.readString(dis);
+          NewsData data = new NewsData();
+          data.setImageInstructions(instruction);
+          data.setNewsText(text);
+          result.addNews(data);
+        }
+      } else if (newInformation != 0) {
+        throw new IOException("NewsInformation field is not zero or one!");
       }
       return result;
   }

@@ -350,6 +350,7 @@ public final class MissionHandling {
           // Bombing AI planet
           PlanetBombingView bombingView = new PlanetBombingView(planet, fleet,
               info, game.getStarMap().getPlayerList().getIndex(info), game);
+          bombingView.setStarMap(game.getStarMap());
           bombingView.handleAiToAiAttack();
         }
       } else if (mission.getPhase() == MissionPhase.EXECUTING

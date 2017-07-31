@@ -37,6 +37,8 @@ import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.Logger;
@@ -190,6 +192,11 @@ public class PlanetBombingView extends BlackPanel {
   private int aiComponentIndex = 0;
 
   /**
+   * StarMap
+   */
+  private StarMap starMap;
+
+  /**
    * Constructor for PLanet bombing view. This view is used when
    * player is conquering planet with bombs and/or troops.
    * @param planet Planet to be conquered
@@ -334,6 +341,13 @@ public class PlanetBombingView extends BlackPanel {
     usedComponentIndex = -1;
   }
 
+  /**
+   * Set star map for news generator
+   * @param map StarMap
+   */
+  public void setStarMap(final StarMap map) {
+    starMap = map;
+  }
   /**
    * Reset ship's component usage
    */
@@ -615,9 +629,15 @@ public class PlanetBombingView extends BlackPanel {
         }
         if (usedComponentIndex != -1) {
           oneAttackFound = true;
+          PlayerInfo defender = planet.getPlanetPlayerInfo();
           if (attackBombOrTroops()) {
             // Planet conquered
             exitLoop = true;
+            if (starMap != null) {
+              starMap.getNewsCorpData().addNews(
+                  NewsFactory.makePlanetConqueredNews(attacker, defender,
+                      planet, false));
+            }
           }
           removeDestroyedShip();
           skipAnimation();
@@ -648,7 +668,12 @@ public class PlanetBombingView extends BlackPanel {
         if (anim.isAnimationFinished()) {
           removeDestroyedShip();
         } else {
-          attackBombOrTroops();
+          PlayerInfo defender = planet.getPlanetPlayerInfo();
+          if (attackBombOrTroops() && starMap != null) {
+            starMap.getNewsCorpData().addNews(
+                NewsFactory.makePlanetConqueredNews(attacker, defender,
+                    planet, false));
+          }
         }
         updatePanel();
         imgBase.repaint();
@@ -672,9 +697,15 @@ public class PlanetBombingView extends BlackPanel {
           }
           if (usedComponentIndex != -1) {
             aiOneAttackFound = true;
+            PlayerInfo defender = planet.getPlanetPlayerInfo();
             if (attackBombOrTroops()) {
               // Planet conquered
               aiExitLoop = true;
+              if (starMap != null) {
+                starMap.getNewsCorpData().addNews(
+                    NewsFactory.makePlanetConqueredNews(attacker, defender,
+                        planet, false));
+              }
             }
           }
           if (aiComponentIndex < ship.getNumberOfComponents() - 1) {

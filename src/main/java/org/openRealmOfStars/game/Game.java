@@ -396,6 +396,7 @@ public class Game implements ActionListener {
   public void showPlanetBombingView(final Planet planet, final Fleet fleet) {
     planetBombingView = new PlanetBombingView(planet, fleet,
         starMap.getCurrentPlayerInfo(), players.getCurrentPlayer(), this);
+    planetBombingView.setStarMap(starMap);
     this.updateDisplay(planetBombingView);
   }
 

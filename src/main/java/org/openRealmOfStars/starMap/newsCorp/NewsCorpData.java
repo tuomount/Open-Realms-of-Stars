@@ -351,4 +351,22 @@ public class NewsCorpData {
     }
     return false;
   }
+
+  /**
+   * Get the upcoming news array
+   * @return News array
+   */
+  public NewsData[] getUpcomingNews() {
+    return upComingNewsData.toArray(new NewsData[upComingNewsData.size()]);
+  }
+  /**
+   * Is news information available. Either upcoming or current
+   * @return Boolean if news information is available.
+   */
+  public boolean isNewsInformation() {
+    if (newsData.size() > 0 || upComingNewsData.size() > 0) {
+      return true;
+    }
+    return false;
+  }
 }

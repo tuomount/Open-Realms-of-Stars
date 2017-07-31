@@ -334,10 +334,14 @@ public class NewsCorpDataTest {
     NewsCorpData data = new NewsCorpData(8);
     NewsData newsData = Mockito.mock(NewsData.class);
     NewsData[] newsList = data.getNewsList();
+    NewsData[] upComingnewsList = data.getUpcomingNews();
     assertEquals(false, data.isNewsInformation());
     assertEquals(false, data.isNewsToShow());
     assertEquals(0, newsList.length);
+    assertEquals(0, upComingnewsList.length);
     data.addNews(newsData);
+    upComingnewsList = data.getUpcomingNews();
+    assertEquals(1, upComingnewsList.length);
     assertEquals(true, data.isNewsInformation());
     assertEquals(false, data.isNewsToShow());
     data.clearNewsList();

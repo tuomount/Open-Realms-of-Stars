@@ -44,6 +44,8 @@ import org.openRealmOfStars.player.diplomacy.speeches.SpeechFactory;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechLine;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
@@ -777,6 +779,9 @@ public class DiplomacyView extends BlackPanel {
       if (speechSelected != null
           && speechSelected.getType() == SpeechType.MOVE_FLEET) {
         updatePanel(SpeechType.OFFER_ACCEPTED);
+        human.getMsgList().addUpcomingMessage(new Message(MessageType.FLEET,
+            "Your fleet has crossed the borders! You have promised to move"
+            + " it away.", Icons.getIconByName(Icons.ICON_HULL_TECH)));
         resetChoices();
       }
       if (speechSelected != null

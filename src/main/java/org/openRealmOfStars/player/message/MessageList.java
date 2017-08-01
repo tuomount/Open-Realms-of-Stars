@@ -41,7 +41,7 @@ public class MessageList {
    * List of messages
    */
   private ArrayList<Message> list;
-  
+
   /**
    * List of message which are done in previous turn but
    * will be shown during next turn. These are not needed

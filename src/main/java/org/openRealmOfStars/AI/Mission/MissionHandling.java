@@ -457,6 +457,12 @@ public final class MissionHandling {
         game.getStarMap().getNewsCorpData().addNews(
             NewsFactory.makeAllianceNews(info, defender, fleet));
       }
+      if (trade.getFirstOffer().isTypeInOffer(NegotiationType.TRADE_ALLIANCE)) {
+        StarMapUtilities.addWarDeclatingRepuation(game.getStarMap(), info);
+        PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
+        game.getStarMap().getNewsCorpData().addNews(
+            NewsFactory.makeTradeAllianceNews(info, defender, fleet));
+      }
     } else {
       SpeechType type = trade.getSpeechTypeByOffer();
       Attitude attitude = info.getAiAttitude();

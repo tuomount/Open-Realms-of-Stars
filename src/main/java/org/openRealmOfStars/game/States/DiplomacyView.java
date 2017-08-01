@@ -779,9 +779,15 @@ public class DiplomacyView extends BlackPanel {
       if (speechSelected != null
           && speechSelected.getType() == SpeechType.MOVE_FLEET) {
         updatePanel(SpeechType.OFFER_ACCEPTED);
-        human.getMsgList().addUpcomingMessage(new Message(MessageType.FLEET,
+        Message msg = new Message(MessageType.FLEET,
             "Your fleet has crossed the borders! You have promised to move"
-            + " it away.", Icons.getIconByName(Icons.ICON_HULL_TECH)));
+            + " it away.", Icons.getIconByName(Icons.ICON_HULL_TECH));
+        if (meetingPlace != null && meetingPlace instanceof Fleet) {
+          Fleet fleet = (Fleet) meetingPlace;
+          msg.setCoordinate(fleet.getCoordinate());
+          msg.setMatchByString(fleet.getName());
+        }
+        human.getMsgList().addUpcomingMessage(msg);
         resetChoices();
       }
       if (speechSelected != null

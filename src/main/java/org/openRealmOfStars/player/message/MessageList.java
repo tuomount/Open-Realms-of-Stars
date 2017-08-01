@@ -41,6 +41,13 @@ public class MessageList {
    * List of messages
    */
   private ArrayList<Message> list;
+  
+  /**
+   * List of message which are done in previous turn but
+   * will be shown during next turn. These are not needed
+   * to be saved.
+   */
+  private ArrayList<Message> upComingList;
 
   /**
    * Current message index;
@@ -52,6 +59,7 @@ public class MessageList {
    */
   public MessageList() {
     list = new ArrayList<>();
+    upComingList = new ArrayList<>();
     index = 0;
   }
 
@@ -62,6 +70,7 @@ public class MessageList {
    */
   public MessageList(final DataInputStream dis) throws IOException {
     list = new ArrayList<>();
+    upComingList = new ArrayList<>();
     index = 0;
     int count = dis.readInt();
     for (int i = 0; i < count; i++) {
@@ -85,7 +94,8 @@ public class MessageList {
    * Clear all messages from the list
    */
   public void clearMessages() {
-    list = new ArrayList<>();
+    list = upComingList;
+    upComingList = new ArrayList<>();
     index = 0;
   }
 
@@ -95,6 +105,14 @@ public class MessageList {
    */
   public void addNewMessage(final Message msg) {
     list.add(msg);
+  }
+
+  /**
+   * Add upcoming new message to list
+   * @param msg Message to add to the list
+   */
+  public void addUpcomingMessage(final Message msg) {
+    upComingList.add(msg);
   }
 
   /**

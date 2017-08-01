@@ -53,5 +53,31 @@ public class MessageListTest {
     assertEquals("MessageList 1 / 2", list.toString());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUpcomingMessageList() {
+    Message msg1 = Mockito.mock(Message.class);
+    Message msg2 = Mockito.mock(Message.class);
+    MessageList list = new MessageList();
+    assertEquals(0, list.getCurrentMsgIndex());
+    assertEquals(1, list.getMaxMsg());
+    list.addUpcomingMessage(msg1);
+    assertEquals(0, list.getCurrentMsgIndex());
+    assertEquals(1, list.getMaxMsg());
+    list.addUpcomingMessage(msg2);
+    assertEquals(0, list.getCurrentMsgIndex());
+    assertEquals(1, list.getMaxMsg());
+    list.clearMessages();
+    assertEquals(0, list.getCurrentMsgIndex());
+    assertEquals(2, list.getMaxMsg());
+    assertEquals(msg2, list.getNextMessage());
+    assertEquals(msg2, list.getMsg());
+    assertEquals(msg2, list.getNextMessage());
+    assertEquals(msg1, list.getPrevMessage());
+    assertEquals(msg1, list.getPrevMessage());
+    assertEquals(msg1, list.getMsg());
+    assertEquals("MessageList 1 / 2", list.toString());
+  }
+
 
 }

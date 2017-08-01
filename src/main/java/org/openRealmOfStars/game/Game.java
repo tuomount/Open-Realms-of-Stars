@@ -1360,6 +1360,14 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Set the StarMap view for the game.
+   * @param view StarMapView to set
+   */
+  public void setStarMapView(final StarMapView view) {
+    starMapView = view;
+  }
+
+  /**
    * Set loaded starmap into game
    * @param map Starmap to set game
    * @return true if succesful false otherwise

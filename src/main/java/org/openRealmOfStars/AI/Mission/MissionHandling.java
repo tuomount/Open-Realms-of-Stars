@@ -452,19 +452,16 @@ public final class MissionHandling {
             NewsFactory.makeWarNews(info, defender, fleet, game.getStarMap()));
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.ALLIANCE)) {
-        StarMapUtilities.addWarDeclatingRepuation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         game.getStarMap().getNewsCorpData().addNews(
             NewsFactory.makeAllianceNews(info, defender, fleet));
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.TRADE_ALLIANCE)) {
-        StarMapUtilities.addWarDeclatingRepuation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         game.getStarMap().getNewsCorpData().addNews(
             NewsFactory.makeTradeAllianceNews(info, defender, fleet));
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.PEACE)) {
-        StarMapUtilities.addWarDeclatingRepuation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         game.getStarMap().getNewsCorpData().addNews(
             NewsFactory.makePeaceNews(info, defender, fleet));

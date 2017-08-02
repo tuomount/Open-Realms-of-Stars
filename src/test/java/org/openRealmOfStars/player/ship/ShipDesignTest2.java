@@ -11,7 +11,9 @@ import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 
 /**
  *
- * Open Realm of Stars game project Copyright (C) 2017 wksdn18
+ * Open Realm of Stars game project
+ * Copyright (C) 2017 wksdn18
+ * Copyright (C) 2017 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -473,7 +475,10 @@ public class ShipDesignTest2 {
         design.addComponent(shield);
         design.addComponent(armor);
 
-        assertEquals(testResult, design.getComponentList());
+        assertEquals(testResult.length, design.getComponentList().length);
+        for (int i = 0; i < testResult.length; i++) {
+          assertEquals(testResult[i], design.getComponent(i));
+        }
     }
 
     /**

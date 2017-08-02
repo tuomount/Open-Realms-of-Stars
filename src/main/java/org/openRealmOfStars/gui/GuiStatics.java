@@ -443,6 +443,11 @@ public final class GuiStatics {
       "/resources/images/explosion4.png");
 
   /**
+   * Wormhole animation
+   */
+  public static final AnimatedImage WORMHOLE = new AnimatedImage(64, 64,
+      "/resources/images/wormhole.png");
+  /**
    * Left arrow
    */
   public static final BufferedImage LEFT_ARROW = IOUtilities

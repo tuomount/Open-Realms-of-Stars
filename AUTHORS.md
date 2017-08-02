@@ -47,6 +47,8 @@ The Husk- Human Analog Android by Justin Nichol - https://opengameart.org/conten
 
 GBNC logo by Tuomo Untinen
 
+Worm hole by Tuomo Untinen
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

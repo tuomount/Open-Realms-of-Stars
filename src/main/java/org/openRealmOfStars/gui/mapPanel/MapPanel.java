@@ -37,6 +37,7 @@ import org.openRealmOfStars.starMap.SquareInfo;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
@@ -145,6 +146,16 @@ public class MapPanel extends JPanel {
   private boolean battle;
 
   /**
+   * Worm hole animation frame
+   */
+  private int wormHoleAnimation = 0;
+
+  /**
+   * WormHoleCoordinate
+   */
+  private Coordinate wormHoleCoordinate;
+
+  /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
    * @param battle True if drawing battle map.
@@ -166,6 +177,10 @@ public class MapPanel extends JPanel {
     calculateViewPoints();
     this.setBackground(Color.black);
     setRoute(null);
+    wormHoleAnimation = 0;
+    wormHoleCoordinate = new Coordinate(
+        DiceGenerator.getRandom(Combat.MAX_X - 1),
+        DiceGenerator.getRandom(Combat.MAX_Y - 1));
   }
 
   /**
@@ -552,6 +567,10 @@ public class MapPanel extends JPanel {
    */
   public void drawBattleMap(final Combat combat, final PlayerInfo info,
       final StarMap starMap) {
+    wormHoleAnimation++;
+    if (wormHoleAnimation > GuiStatics.WORMHOLE.getMaxFrames() - 1) {
+      wormHoleAnimation = 0;
+    }
     if (screen == null) {
       calculateViewPoints();
       if (this.getWidth() > 0 && this.getHeight() > 0) {
@@ -676,6 +695,12 @@ public class MapPanel extends JPanel {
         gr.drawLine(pixelX, pixelY + ShipImage.MAX_HEIGHT - 1,
             pixelX + ShipImage.MAX_WIDTH - 1,
             pixelY + ShipImage.MAX_HEIGHT - 1);
+        // Worm hole
+        if (i == wormHoleCoordinate.getX() && j == wormHoleCoordinate.getY()) {
+          BufferedImage wormHole = GuiStatics.WORMHOLE.getFrame(
+              wormHoleAnimation);
+          gr.drawImage(wormHole, pixelX, pixelY, null);
+        }
         // Draw fleet
         CombatShip ship = combat.getShipFromCoordinate(i, j);
         if (ship != null) {

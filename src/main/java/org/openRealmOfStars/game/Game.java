@@ -1168,6 +1168,11 @@ public class Game implements ActionListener {
       SoundPlayer.playMenuSound();
       changeGameState(GameState.NEWS_CORP_VIEW);
     }
+    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_BATTLE)) {
+      // Debugging purposes
+      SoundPlayer.playMenuSound();
+      changeGameState(GameState.COMBAT);
+    }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN_DONE)
         && shipDesignView != null && shipDesignView.isDesignOK()) {

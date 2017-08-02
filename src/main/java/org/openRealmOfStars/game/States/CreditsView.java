@@ -87,6 +87,7 @@ public class CreditsView extends BlackPanel {
       + "The Husk- Human Analog Android by Justin Nichol - "
       + "https://opengameart.org/content/the-husk-human-analog-android\n\n"
       + "GBNC logo by Tuomo Untinen\n\n"
+      + "Worm hole by Tuomo Untinen\n\n"
       + "Fonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

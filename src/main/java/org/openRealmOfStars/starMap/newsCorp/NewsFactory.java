@@ -57,7 +57,7 @@ public final class NewsFactory {
     if (meetingPlace instanceof Planet) {
       Planet planet = (Planet) meetingPlace;
       instructions.addPlanet(ImageInstruction.POSITION_CENTER,
-          Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetImageIndex()],
+          Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetType()],
           ImageInstruction.SIZE_FULL);
     }
     switch (DiceGenerator.getRandom(2)) {
@@ -143,7 +143,7 @@ public final class NewsFactory {
     if (meetingPlace instanceof Planet) {
       Planet planet = (Planet) meetingPlace;
       instructions.addPlanet(ImageInstruction.POSITION_CENTER,
-          Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetImageIndex()],
+          Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetType()],
           ImageInstruction.SIZE_FULL);
     }
     switch (DiceGenerator.getRandom(2)) {
@@ -221,7 +221,7 @@ public final class NewsFactory {
     if (meetingPlace instanceof Planet) {
       Planet planet = (Planet) meetingPlace;
       instructions.addPlanet(ImageInstruction.POSITION_CENTER,
-          Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetImageIndex()],
+          Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetType()],
           ImageInstruction.SIZE_FULL);
     }
     switch (DiceGenerator.getRandom(2)) {
@@ -295,7 +295,7 @@ public final class NewsFactory {
     if (meetingPlace instanceof Planet) {
       Planet planet = (Planet) meetingPlace;
       instructions.addPlanet(ImageInstruction.POSITION_CENTER,
-          Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetImageIndex()],
+          Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetType()],
           ImageInstruction.SIZE_FULL);
     }
     switch (DiceGenerator.getRandom(2)) {
@@ -473,7 +473,7 @@ public final class NewsFactory {
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
     instructions.addPlanet(ImageInstruction.POSITION_CENTER,
-        Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetImageIndex()],
+        Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetType()],
         ImageInstruction.SIZE_FULL);
     switch (DiceGenerator.getRandom(2)) {
       case 0:

@@ -139,12 +139,13 @@ public class Planet {
   private Coordinate coordinate;
 
   /**
-   * Planet Image Index for planet tile
+   * Planet Image Index for planet tile. This is not for
+   * the big planet image. Planet Type is for big planet image.
    */
   private int planetImageIndex;
 
   /**
-   * Planet type see PLANET_IMAGE_INDEX
+   * Planet type. This is index for big planet image. see PLANET_IMAGE_INDEX
    */
   private int planetType;
 
@@ -1031,7 +1032,7 @@ public class Planet {
   }
 
   /**
-   * Set planet image index
+   * Set planet image index. This is actually small planet tile.
    * @param planetImageIndex Image index of planet
    */
   public void setPlanetImageIndex(final int planetImageIndex) {
@@ -1115,15 +1116,15 @@ public class Planet {
   }
 
   /**
-   * Get Planet type
-   * @return the planetType
+   * Get Planet type. This is index for big planet images.
+   * @return the planetType aka index for big images.
    */
   public int getPlanetType() {
     return planetType;
   }
 
   /**
-   * Set Planet typ
+   * Set Planet type which is the index for big planet images.
    * @param planetType the planetType to set
    */
   public void setPlanetType(final int planetType) {

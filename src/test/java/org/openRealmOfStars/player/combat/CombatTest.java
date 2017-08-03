@@ -90,6 +90,25 @@ public class CombatTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testWormHole() {
+    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    ShipDesign design1 = ShipGenerator.createBattleShip(info1, ShipSize.SMALL);
+    ShipDesign design2 = ShipGenerator.createBattleShip(info2, ShipSize.SMALL);
+    Ship scout1 = new Ship(design1);
+    Ship scout2 = new Ship(design2);
+    Fleet fleet1 = new Fleet(scout1, 5, 5);
+    Fleet fleet2 = new Fleet(scout2, 6, 5);
+    info1.getFleets().add(fleet1);
+    info2.getFleets().add(fleet2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    assertEquals(null, combat.getWormHoleCoordinate());
+    combat.createWormHole();
+    assertNotEquals(null, combat.getWormHoleCoordinate());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRealCombat() {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);

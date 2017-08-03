@@ -37,7 +37,6 @@ import org.openRealmOfStars.starMap.SquareInfo;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 
@@ -151,11 +150,6 @@ public class MapPanel extends JPanel {
   private int wormHoleAnimation = 0;
 
   /**
-   * WormHoleCoordinate
-   */
-  private Coordinate wormHoleCoordinate;
-
-  /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
    * @param battle True if drawing battle map.
@@ -178,9 +172,6 @@ public class MapPanel extends JPanel {
     this.setBackground(Color.black);
     setRoute(null);
     wormHoleAnimation = 0;
-    wormHoleCoordinate = new Coordinate(
-        DiceGenerator.getRandom(Combat.MAX_X - 1),
-        DiceGenerator.getRandom(Combat.MAX_Y - 1));
   }
 
   /**
@@ -696,7 +687,10 @@ public class MapPanel extends JPanel {
             pixelX + ShipImage.MAX_WIDTH - 1,
             pixelY + ShipImage.MAX_HEIGHT - 1);
         // Worm hole
-        if (i == wormHoleCoordinate.getX() && j == wormHoleCoordinate.getY()) {
+        Coordinate wormHoleCoordinate = combat.getWormHoleCoordinate();
+        if (wormHoleCoordinate != null
+            && i == wormHoleCoordinate.getX()
+            && j == wormHoleCoordinate.getY()) {
           BufferedImage wormHole = GuiStatics.WORMHOLE.getFrame(
               wormHoleAnimation);
           gr.drawImage(wormHole, pixelX, pixelY, null);

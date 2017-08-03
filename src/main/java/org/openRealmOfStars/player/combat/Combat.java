@@ -141,6 +141,11 @@ public class Combat {
   private boolean endCombatHandled = false;
 
   /**
+   * Worm hole aka exit from combat
+   */
+  private Coordinate wormHole;
+
+  /**
    * Build shipList in initiative order
    * @param attackerFleet Attacking Player1 fleet
    * @param defenderFleet Defending Player2 fleet
@@ -166,6 +171,7 @@ public class Combat {
     winner = null;
     setPlanet(null);
     endCombatHandled = false;
+    wormHole = null;
   }
 /**
  * Add combatShip to combatShipList
@@ -761,6 +767,45 @@ public boolean launchIntercept(final int distance,
     return false;
   }
 
+  /**
+   * Is sector free of ship
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @return True if free, false otherwise
+   */
+  private boolean isSectorFree(final int x, final int y) {
+    for (CombatShip ship : combatShipList) {
+      if (ship.getX() == x && ship.getY() == y) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Create worm hole coordinates
+   */
+  public void createWormHole() {
+    int x;
+    int y;
+    for (int i = 0; i < 10; i++) {
+      x = DiceGenerator.getRandom(MAX_X - 1);
+      y = DiceGenerator.getRandom(3, 5);
+      if (isSectorFree(x, y)) {
+        wormHole = new Coordinate(x, y);
+        return;
+      }
+    }
+  }
+
+  /**
+   * Return wormhole coordinates if wormhole has appeared.
+   * Otherwise this returns null.
+   * @return Coordinate or null
+   */
+  public Coordinate getWormHoleCoordinate() {
+    return wormHole;
+  }
   /**
    * Does combat involve human player or not
    * @return True if human player is in combat otherwise false

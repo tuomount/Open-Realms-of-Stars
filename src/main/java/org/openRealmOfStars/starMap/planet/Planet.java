@@ -1298,8 +1298,10 @@ public class Planet {
         } else if (underConstruction instanceof Ship) {
           metal = metal - underConstruction.getMetalCost();
           prodResource = prodResource - underConstruction.getProdCost();
-          Ship ship = (Ship) underConstruction;
-          ShipStat stat = planetOwnerInfo.getShipStatByName(ship.getName());
+          ShipStat stat = planetOwnerInfo.getShipStatByName(
+              underConstruction.getName());
+          // We need to create here a new instance
+          Ship ship = new Ship(stat.getDesign());
           stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
           stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
           if (stat.getDesign().getTotalMilitaryPower() > 0) {

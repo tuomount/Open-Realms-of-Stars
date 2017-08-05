@@ -554,7 +554,7 @@ public class Fleet {
   /**
    * Is Fleet colony fleet. Colony fleet contains only one ship,
    * where ship contains colony module
-   * @return true if scouting fleet.
+   * @return true if colony fleet.
    */
   public boolean isColonyFleet() {
     if (ships.size() == 1) {

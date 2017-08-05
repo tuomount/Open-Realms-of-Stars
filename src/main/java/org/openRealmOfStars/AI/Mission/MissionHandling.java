@@ -299,7 +299,18 @@ public final class MissionHandling {
         // Loading Troops
         Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
             fleet.getY());
-        if (planet.getPlanetPlayerInfo() == info) {
+        if (planet == null) {
+          if (fleet.getTotalCargoColonist() > 0) {
+            mission.setPhase(MissionPhase.TREKKING);
+          } else {
+            Planet homePort = game.getStarMap().getClosestHomePort(info,
+                fleet.getCoordinate());
+            if (homePort != null) {
+              mission.setType(MissionType.MOVE);
+              mission.setTarget(homePort.getCoordinate());
+            }
+          }
+        } else if (planet.getPlanetPlayerInfo() == info) {
           Ship[] ships = fleet.getShips();
           int trooper = 0;
           for (int i = 0; i < ships.length; i++) {

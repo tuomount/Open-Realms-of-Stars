@@ -146,6 +146,12 @@ public class Combat {
   private Coordinate wormHole;
 
   /**
+   * Timer when worm hole will appear.
+   * This will depend on number of ships.
+   */
+  private int timerForWormHole;
+
+  /**
    * Build shipList in initiative order
    * @param attackerFleet Attacking Player1 fleet
    * @param defenderFleet Defending Player2 fleet
@@ -172,6 +178,7 @@ public class Combat {
     setPlanet(null);
     endCombatHandled = false;
     wormHole = null;
+    timerForWormHole = combatShipList.size() * DiceGenerator.getRandom(1, 3);
   }
 /**
  * Add combatShip to combatShipList
@@ -708,6 +715,11 @@ public boolean launchIntercept(final int distance,
    * @return true if Combat is over, otherwise false.
    */
   public boolean endRound() {
+    if (timerForWormHole > 0) {
+      timerForWormHole--;
+    } else if (wormHole == null) {
+      createWormHole();
+    }
     setComponentUse(-1);
     nextShip();
     boolean over = isCombatOver();
@@ -815,6 +827,13 @@ public boolean launchIntercept(final int distance,
       return true;
     }
     return false;
+  }
+  /**
+   * Get how many turns to worm hole to appear
+   * @return number of rounds for worm hole
+   */
+  public int getTimerForWormHole() {
+    return timerForWormHole;
   }
   /**
    * @param textLogger where logging is added if not null

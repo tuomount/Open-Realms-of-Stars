@@ -448,6 +448,28 @@ public boolean launchIntercept(final int distance,
   }
 
   /**
+   * Calculate farest position from a ship
+   * @param enemyShip Enemy ship
+   * @return Coordinate which are as far away as possible
+   */
+  public Coordinate getFarestFormEnemy(final CombatShip enemyShip) {
+    Coordinate coord = new Coordinate(0, 0);
+    Coordinate enemy = new Coordinate(enemyShip.getX(), enemyShip.getY());
+    double minDistance = 0;
+    for (int y = 0; y < MAX_Y; y++) {
+      for (int x = 0; x < MAX_X; x++) {
+        Coordinate coordinate = new Coordinate(x, y);
+        double distance = coordinate.calculateDistance(enemy);
+        if (distance > minDistance) {
+          minDistance = distance;
+          coord = coordinate;
+        }
+      }
+    }
+    return coord;
+  }
+
+  /**
    * Set cursor position
    * @param x X coordinate
    * @param y Y coordinate
@@ -957,19 +979,21 @@ public boolean launchIntercept(final int distance,
   public boolean attackerHasEscaped() {
     return attackerEscaped;
   }
+
   /**
+   * AI handling for pure military ships.
    * @param textLogger where logging is added if not null
    * @param infoPanel Infopanel where ship components are shown.
    *        This can be null too.
    * @return true if end round has been activated and component use
    *        should be cleared from UI. Otherwise false.
    */
-  public boolean handleAI(final Logger textLogger,
+  private boolean handleAiMilitaryShip(final Logger textLogger,
       final BattleInfoPanel infoPanel) {
+    CombatShip ai = getCurrentShip();
     PlayerInfo info = getCurrentShip().getPlayer();
     CombatShip deadliest = getMostPowerfulShip(info);
     CombatShip closest = getClosestEnemyShip(info, getCurrentShip());
-    CombatShip ai = getCurrentShip();
     boolean shot = false;
     int range = ai.getShip().getMaxWeaponRange();
     if (deadliest != null) {
@@ -1053,6 +1077,82 @@ public boolean launchIntercept(final int distance,
       endRound();
     }
     return false;
+  }
+
+  /**
+   * AI handling for non military ships.
+   * @param textLogger where logging is added if not null
+   * @param infoPanel Infopanel where ship components are shown.
+   *        This can be null too.
+   * @return true if end round has been activated and component use
+   *        should be cleared from UI. Otherwise false.
+   */
+  private boolean handleAiNonMilitaryShip(final Logger textLogger,
+      final BattleInfoPanel infoPanel) {
+    CombatShip ai = getCurrentShip();
+    PlayerInfo info = getCurrentShip().getPlayer();
+    CombatShip closest = getClosestEnemyShip(info, getCurrentShip());
+    AStarSearch aStar = null;
+    if (wormHole != null) {
+      aStar = new AStarSearch(this, getCurrentShip(), wormHole, 0);
+    } else {
+      Coordinate farAway = getFarestFormEnemy(closest);
+      aStar = new AStarSearch(this, getCurrentShip(), farAway, 0);
+    }
+    if (aStar != null && aStar.doSearch()) {
+      aStar.doRoute();
+    } else {
+      // Could not found route for faraway or wormhole
+      endRound();
+      return true;
+    }
+    PathPoint point = aStar.getMove();
+    if (point != null && !isBlocked(point.getX(), point.getY())
+        && ai.getMovesLeft() > 0) {
+      // Not moving after shooting
+      ai.setMovesLeft(ai.getMovesLeft() - 1);
+      ai.setX(point.getX());
+      ai.setY(point.getY());
+      aStar.nextMove();
+      if (wormHole != null && ai.getX() == wormHole.getX()
+          && ai.getY() == wormHole.getY()) {
+        // FIXME Add sound for wormhole
+        escapeShip(ai);
+      }
+      if (textLogger != null && infoPanel != null) {
+        // Play sound only if battle view is used
+        SoundPlayer.playEngineSound();
+      }
+    } else {
+      // Path is blocked
+      ai.setMovesLeft(0);
+    }
+    if ((ai.getMovesLeft() == 0 || aStar.isLastMove())
+        && getAnimation() == null) {
+      aStar = null;
+      endRound();
+      return true;
+    }
+    if (getAnimation() == null && ai.getMovesLeft() == 0) {
+      endRound();
+    }
+    return false;
+  }
+
+  /**
+   * @param textLogger where logging is added if not null
+   * @param infoPanel Infopanel where ship components are shown.
+   *        This can be null too.
+   * @return true if end round has been activated and component use
+   *        should be cleared from UI. Otherwise false.
+   */
+  public boolean handleAI(final Logger textLogger,
+      final BattleInfoPanel infoPanel) {
+    CombatShip ai = getCurrentShip();
+    if (ai.getShip().getTotalMilitaryPower() > 0) {
+      return handleAiMilitaryShip(textLogger, infoPanel);
+    }
+    return handleAiNonMilitaryShip(textLogger, infoPanel);
   }
 
 

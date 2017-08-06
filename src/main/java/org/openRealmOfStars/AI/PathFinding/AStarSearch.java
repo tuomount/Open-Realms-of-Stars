@@ -129,6 +129,47 @@ public class AStarSearch {
   }
 
   /**
+   * Initialize A Star Search for combat map.
+   * @param combat Actual combat map
+   * @param start Where to start looking the path
+   * @param target Where to end
+   * @param targetDistance How near is enough
+   */
+  public AStarSearch(final Combat combat, final CombatShip start,
+      final Coordinate target, final int targetDistance) {
+    maxX = Combat.MAX_X;
+    maxY = Combat.MAX_Y;
+    blockMap = new int[maxX][maxY];
+    this.targetDistance = targetDistance;
+    for (int y = 0; y < maxY; y++) {
+      for (int x = 0; x < maxX; x++) {
+        if (combat.isBlocked(x, y, true)) {
+          blockMap[x][y] = BLOCKED;
+        } else {
+          blockMap[x][y] = UNBLOCKED;
+        }
+        if (combat.getWormHoleCoordinate() != null
+            && combat.getWormHoleCoordinate().sameAs(target)
+            && x == target.getX() && y == target.getY()) {
+          blockMap[x][y] = UNBLOCKED;
+        }
+      }
+    }
+    points = new ArrayList<>();
+    tx = target.getX();
+    ty = target.getY();
+    this.targetDistance = targetDistance;
+    Coordinate startCoordinate = new Coordinate(start.getX(), start.getY());
+    Coordinate targetCoordinate = new Coordinate(target.getX(), target.getY());
+    PathPoint point1 = new PathPoint(start.getX(), start.getY(),
+            startCoordinate.calculateDistance(targetCoordinate));
+    points.add(point1);
+    blockMap[point1.getX()][point1.getY()] = 0;
+    targetPoint = null;
+    routeIndex = -1;
+  }
+
+  /**
    * Initialize A Star Search for star map to find a route over
    * some obstacle.
    * @param map StarMap

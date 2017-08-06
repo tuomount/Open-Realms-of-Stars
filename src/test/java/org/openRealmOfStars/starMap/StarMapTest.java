@@ -374,6 +374,46 @@ public class StarMapTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testEscapePosition() {
+    Coordinate defender = new Coordinate(8,8);
+    Coordinate attack = new Coordinate(7,7);
+    Coordinate pos = StarMapUtilities.getEscapeCoordinates(defender, attack);
+    assertEquals(9, pos.getX());
+    assertEquals(9, pos.getY());
+    attack = new Coordinate(8,7);
+    pos = StarMapUtilities.getEscapeCoordinates(defender, attack);
+    assertEquals(8, pos.getX());
+    assertEquals(9, pos.getY());
+    attack = new Coordinate(9,7);
+    pos = StarMapUtilities.getEscapeCoordinates(defender, attack);
+    assertEquals(7, pos.getX());
+    assertEquals(9, pos.getY());
+    attack = new Coordinate(7,8);
+    pos = StarMapUtilities.getEscapeCoordinates(defender, attack);
+    assertEquals(9, pos.getX());
+    assertEquals(8, pos.getY());
+    attack = new Coordinate(9,8);
+    pos = StarMapUtilities.getEscapeCoordinates(defender, attack);
+    assertEquals(7, pos.getX());
+    assertEquals(8, pos.getY());
+    attack = new Coordinate(7,9);
+    pos = StarMapUtilities.getEscapeCoordinates(defender, attack);
+    assertEquals(9, pos.getX());
+    assertEquals(7, pos.getY());
+    attack = new Coordinate(8,9);
+    pos = StarMapUtilities.getEscapeCoordinates(defender, attack);
+    assertEquals(8, pos.getX());
+    assertEquals(7, pos.getY());
+    attack = new Coordinate(9,9);
+    pos = StarMapUtilities.getEscapeCoordinates(defender, attack);
+    assertEquals(7, pos.getX());
+    assertEquals(7, pos.getY());
+    attack = new Coordinate(19,19);
+    pos = StarMapUtilities.getEscapeCoordinates(defender, attack);
+    assertEquals(null, pos);
+  }
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testNukedReputation() {
     GameRepository repository = new GameRepository();
     StarMap starMap = repository.loadGame("src/test/resources/saves",

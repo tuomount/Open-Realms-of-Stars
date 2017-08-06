@@ -141,4 +141,20 @@ public final class StarMapUtilities {
     }
   }
 
+  /**
+   * Calculates escape coordinates for combat if defender escapes.
+   * @param defender Defender's coordinate
+   * @param attacker Attacker's coordinate
+   * @return Coordinate or null if attacking is too far away
+   */
+  public static Coordinate getEscapeCoordinates(final Coordinate defender,
+      final Coordinate attacker) {
+    int mx = defender.getX() - attacker.getX();
+    int my = defender.getY() - attacker.getY();
+    if (mx >= -1 && mx <= 1 && my >= -1 && my <= 1) {
+      return new Coordinate(defender.getX() + mx, defender.getY() + my);
+    }
+    return null;
+  }
+
 }

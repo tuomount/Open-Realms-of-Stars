@@ -9,9 +9,12 @@ import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipDamage;
@@ -152,6 +155,19 @@ public class Combat {
   private int timerForWormHole;
 
   /**
+   * At least one ship got away from worm hole
+   */
+  private boolean defenderEscaped;
+  /**
+   * At least one ship got away from worm hole
+   */
+  private boolean attackerEscaped;
+
+  /**
+   * Escape position for defender.
+   */
+  private Coordinate escapePosition;
+  /**
    * Build shipList in initiative order
    * @param attackerFleet Attacking Player1 fleet
    * @param defenderFleet Defending Player2 fleet
@@ -160,6 +176,20 @@ public class Combat {
    */
   public Combat(final Fleet attackerFleet, final Fleet defenderFleet,
           final PlayerInfo attackerInfo, final PlayerInfo defenderInfo) {
+    this(attackerFleet, defenderFleet, attackerInfo, defenderInfo, null);
+  }
+
+  /**
+   * Build shipList in initiative order
+   * @param attackerFleet Attacking Player1 fleet
+   * @param defenderFleet Defending Player2 fleet
+   * @param attackerInfo Attacking Player1 info
+   * @param defenderInfo Defending Player2 Info
+   * @param escapePos Escape position for defender
+   */
+  public Combat(final Fleet attackerFleet, final Fleet defenderFleet,
+          final PlayerInfo attackerInfo, final PlayerInfo defenderInfo,
+          final Coordinate escapePos) {
     this.attackerFleet = attackerFleet;
     this.defenderFleet = defenderFleet;
     this.attackerInfo = attackerInfo;
@@ -179,7 +209,11 @@ public class Combat {
     endCombatHandled = false;
     wormHole = null;
     timerForWormHole = combatShipList.size() * DiceGenerator.getRandom(1, 3);
+    defenderEscaped = false;
+    attackerEscaped = false;
+    escapePosition = escapePos;
   }
+
 /**
  * Add combatShip to combatShipList
  * @param fleet Player's Fleet
@@ -331,6 +365,32 @@ public boolean launchIntercept(final int distance,
   }
 
   /**
+   * Escape one single ship from the combat
+   * @param ship Combat ship to escape
+   */
+  public void escapeShip(final CombatShip ship) {
+    if (attackerFleet.isShipInFleet(ship.getShip())) {
+      removeShipFromCombatList(ship);
+      attackerEscaped = true;
+    } else if (defenderFleet.isShipInFleet(ship.getShip())) {
+      removeShipFromCombatList(ship);
+      defenderEscaped = true;
+    }
+  }
+
+  /**
+   * Remove ship from combat list. Ship can be either
+   * destroyed or escaped.
+   * @param ship Combat ship to remove.
+   */
+  private void removeShipFromCombatList(final CombatShip ship) {
+    int indexToDelete = combatShipList.indexOf(ship);
+    combatShipList.remove(ship);
+    if (indexToDelete < shipIndex && shipIndex > 0) {
+      shipIndex--;
+    }
+  }
+  /**
    * Destroy ship for fleet's list.
    * @param ship ship to destroy from the fleet
    * @param fleet containing the ship
@@ -351,11 +411,7 @@ public boolean launchIntercept(final int distance,
       stat.setNumberOfLoses(stat.getNumberOfLoses() + 1);
       stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
     }
-    int indexToDelete = combatShipList.indexOf(ship);
-    combatShipList.remove(ship);
-    if (indexToDelete < shipIndex && shipIndex > 0) {
-      shipIndex--;
-    }
+    removeShipFromCombatList(ship);
   }
 
   /**
@@ -546,18 +602,21 @@ public boolean launchIntercept(final int distance,
       Fleet winnerFleet;
       Fleet looserFleet;
       boolean isWinnerAttacker;
+      boolean loserEscaped = false;
     if (!endCombatHandled && winner != null) {
       if (attackerInfo == winner) {
           winnerPlayer = attackerInfo;
           looserPlayer = defenderInfo;
           winnerFleet = attackerFleet;
           looserFleet = defenderFleet;
+          loserEscaped = defenderHasEscaped();
           isWinnerAttacker = true;
       } else {
           winnerPlayer = defenderInfo;
           looserPlayer = attackerInfo;
           winnerFleet = defenderFleet;
           looserFleet = attackerFleet;
+          loserEscaped = attackerHasEscaped();
           isWinnerAttacker = false;
       }
         endCombatHandled = true;
@@ -565,8 +624,36 @@ public boolean launchIntercept(final int distance,
         handleLoser(looserPlayer);
         int looserIndex = looserPlayer.getFleets().
                 getIndexByName(looserFleet.getName());
-        if (looserIndex != -1) {
+        if (looserIndex != -1 && !loserEscaped) {
             looserPlayer.getFleets().remove(looserIndex);
+        }
+        if (loserEscaped && isWinnerAttacker) {
+          if (escapePosition != null) {
+            // Fleet escaped!!
+            Message msg = new Message(MessageType.FLEET,
+                looserFleet.getName() + " escaped from combat!",
+                    Icons.getIconByName(Icons.ICON_HULL_TECH));
+            msg.setCoordinate(looserFleet.getCoordinate());
+            looserPlayer.getMsgList().addUpcomingMessage(msg);
+            looserFleet.setPos(escapePosition);
+          } else {
+            // There is no position to defender escape so fleet is going
+            // to be destroyed
+            Message msg = new Message(MessageType.FLEET,
+                looserFleet.getName() + " tried to escape but failed."
+                    + " Fleet was destroyed!",
+                    Icons.getIconByName(Icons.ICON_DEATH));
+            msg.setCoordinate(looserFleet.getCoordinate());
+            looserPlayer.getMsgList().addUpcomingMessage(msg);
+            for (Ship ship : looserFleet.getShips()) {
+              ShipStat stat = looserPlayer.getShipStatByName(ship.getName());
+              if (stat != null) {
+                stat.setNumberOfLoses(stat.getNumberOfLoses() + 1);
+                stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
+              }
+            }
+            looserPlayer.getFleets().remove(looserIndex);
+          }
         }
         if (isWinnerAttacker) {
             Coordinate loserPos = looserFleet.getCoordinate();
@@ -834,6 +921,20 @@ public boolean launchIntercept(final int distance,
    */
   public int getTimerForWormHole() {
     return timerForWormHole;
+  }
+  /**
+   * Has defender ship escaped from battle.
+   * @return True if at least one ship has escaped.
+   */
+  public boolean defenderHasEscaped() {
+    return defenderEscaped;
+  }
+  /**
+   * Has attacker ship escaped from battle.
+   * @return True if at least one ship has escaped.
+   */
+  public boolean attackerHasEscaped() {
+    return attackerEscaped;
   }
   /**
    * @param textLogger where logging is added if not null

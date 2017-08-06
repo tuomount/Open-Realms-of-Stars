@@ -149,7 +149,8 @@ public class BattleView extends BlackPanel {
     this.map = map;
     Coordinate escapePosition = StarMapUtilities.getEscapeCoordinates(
         fleet2.getCoordinate(), fleet1.getCoordinate());
-    if (!map.isBlocked(escapePosition.getX(), escapePosition.getY())) {
+    if (escapePosition != null
+        && !map.isBlocked(escapePosition.getX(), escapePosition.getY())) {
       PlayerInfo info = map.isBlockedByFleet(escapePosition.getX(),
           escapePosition.getY());
       if (info != null && info != player2) {

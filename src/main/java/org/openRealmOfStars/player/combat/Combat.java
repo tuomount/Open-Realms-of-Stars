@@ -486,6 +486,27 @@ public boolean launchIntercept(final int distance,
   }
 
   /**
+   * Is coordinate blocked or not
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @param avoidWormHole True set worm hole coordinate blocked
+   * @return True if blocked false otherwise
+   */
+  public boolean isBlocked(final int x, final int y,
+      final boolean avoidWormHole) {
+    for (CombatShip ship : combatShipList) {
+      if (x == ship.getX() && y == ship.getY()) {
+        return true;
+      }
+    }
+    if (avoidWormHole && wormHole != null
+        && x == wormHole.getX() && y == wormHole.getY()) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Get Cursor X coordinate
    * @return X coordinate
    */

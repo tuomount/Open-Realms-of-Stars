@@ -107,7 +107,7 @@ public class AStarSearch {
     this.targetDistance = targetDistance;
     for (int y = 0; y < maxY; y++) {
       for (int x = 0; x < maxX; x++) {
-        if (combat.isBlocked(x, y)) {
+        if (combat.isBlocked(x, y, true)) {
           blockMap[x][y] = BLOCKED;
         } else {
           blockMap[x][y] = UNBLOCKED;

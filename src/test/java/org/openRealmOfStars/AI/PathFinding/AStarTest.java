@@ -72,11 +72,11 @@ public class AStarTest {
     for (int y = 0; y < 9; y++) {
       for (int x = 0; x <9; x++) {
         if (x == 4 && y == 1 || y == 7) {
-          Mockito.when(combat.isBlocked(x, y)).thenReturn(true);
+          Mockito.when(combat.isBlocked(x, y, true)).thenReturn(true);
         } if (y == 4) {
-          Mockito.when(combat.isBlocked(x, y)).thenReturn(true);
+          Mockito.when(combat.isBlocked(x, y, true)).thenReturn(true);
         } else {
-          Mockito.when(combat.isBlocked(x, y)).thenReturn(false);
+          Mockito.when(combat.isBlocked(x, y, true)).thenReturn(false);
         }
         
       }

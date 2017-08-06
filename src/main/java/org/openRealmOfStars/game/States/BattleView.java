@@ -23,6 +23,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.Logger;
 
@@ -146,7 +147,18 @@ public class BattleView extends BlackPanel {
       final Fleet fleet2, final PlayerInfo player2, final StarMap map,
       final ActionListener listener) {
     this.map = map;
-    combat = new Combat(fleet1, fleet2, player1, player2);
+    Coordinate escapePosition = StarMapUtilities.getEscapeCoordinates(
+        fleet2.getCoordinate(), fleet1.getCoordinate());
+    if (!map.isBlocked(escapePosition.getX(), escapePosition.getY())) {
+      PlayerInfo info = map.isBlockedByFleet(escapePosition.getX(),
+          escapePosition.getY());
+      if (info != null && info != player2) {
+        escapePosition = null;
+      }
+    } else {
+      escapePosition = null;
+    }
+    combat = new Combat(fleet1, fleet2, player1, player2, escapePosition);
     Coordinate combatCoord = combat.getCombatCoordinates();
     Planet planet = map.getPlanetByCoordinate(combatCoord.getX(),
         combatCoord.getY());

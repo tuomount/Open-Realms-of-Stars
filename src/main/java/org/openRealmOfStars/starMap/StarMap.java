@@ -1078,7 +1078,18 @@ public class StarMap {
       PlayerInfo info2 = players.getPlayerInfoByIndex(playerIndex);
       if (info1 != info2) {
         Fleet fleet2 = info2.getFleets().getByIndex(fleetIndex);
-        return new Combat(fleet1, fleet2, info1, info2);
+        Coordinate escapePosition = StarMapUtilities.getEscapeCoordinates(
+            fleet2.getCoordinate(), fleet1.getCoordinate());
+        if (!isBlocked(escapePosition.getX(), escapePosition.getY())) {
+          PlayerInfo info = isBlockedByFleet(escapePosition.getX(),
+              escapePosition.getY());
+          if (info != null && info != info2) {
+            escapePosition = null;
+          }
+        } else {
+          escapePosition = null;
+        }
+        return new Combat(fleet1, fleet2, info1, info2, escapePosition);
       }
     }
     return null;

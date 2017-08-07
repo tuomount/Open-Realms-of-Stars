@@ -410,7 +410,8 @@ public class StarMapTest {
     assertEquals(7, pos.getY());
     attack = new Coordinate(19,19);
     pos = StarMapUtilities.getEscapeCoordinates(defender, attack);
-    assertEquals(null, pos);
+    assertEquals(7, pos.getX());
+    assertEquals(7, pos.getY());
   }
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)

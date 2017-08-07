@@ -151,10 +151,19 @@ public final class StarMapUtilities {
       final Coordinate attacker) {
     int mx = defender.getX() - attacker.getX();
     int my = defender.getY() - attacker.getY();
-    if (mx >= -1 && mx <= 1 && my >= -1 && my <= 1) {
-      return new Coordinate(defender.getX() + mx, defender.getY() + my);
+    if (mx > 1) {
+      mx = 1;
     }
-    return null;
+    if (my > 1) {
+      my = 1;
+    }
+    if (mx < -1) {
+      mx = -1;
+    }
+    if (my < -1) {
+      my = -1;
+    }
+    return new Coordinate(defender.getX() + mx, defender.getY() + my);
   }
 
 }

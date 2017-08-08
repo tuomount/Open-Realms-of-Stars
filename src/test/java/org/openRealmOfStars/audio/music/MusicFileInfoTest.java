@@ -24,23 +24,19 @@ import org.junit.experimental.categories.Category;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 *
-* Music Player Test
+* Music File Info
 *
 */
-public class MusicPlayerTest {
+public class MusicFileInfoTest {
 
   @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testMusicPlayerByPlayingOgg() throws InterruptedException {
-    MusicPlayer.stop();
-    Thread.sleep(1000);
-    assertEquals(false, MusicPlayer.isPlaying());
-    MusicPlayer.play("/resources/musics/ObservingTheStar.ogg");
-    Thread.sleep(3000);
-    assertEquals(true, MusicPlayer.isPlaying());
-    MusicPlayer.stop();
-    Thread.sleep(1000);
-    assertEquals(false, MusicPlayer.isPlaying());
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBaisc() {
+    MusicFileInfo info = new MusicFileInfo("test name", "The Star",
+        "/resources/music/testname.ogg");
+    assertEquals("test name", info.getName());
+    assertEquals("The Star", info.getAuthor());
+    assertEquals("/resources/music/testname.ogg", info.getFilename());
   }
 
 }

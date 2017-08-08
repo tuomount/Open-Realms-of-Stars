@@ -108,7 +108,10 @@ public class CreditsView extends BlackPanel {
       + "Radio call sound by\n"
       + "Tuomo Untinen\n"
       + "Licensed under CC BY 3.0 "
-      + "http://creativecommons.org/licenses/by/3.0/\n\n";
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "# Musics By\n\n"
+      + "Observing The Star by\n"
+      + "YD (CC0)\n\n";
 
   /**
    * Constructor for Credits view

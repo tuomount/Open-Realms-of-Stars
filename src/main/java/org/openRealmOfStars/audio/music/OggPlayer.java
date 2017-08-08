@@ -164,24 +164,22 @@ public class OggPlayer {
    * Open Audio Output line with number of channels and sampling rate
    * @param channels Number of channels in audio line
    * @param rate SampleRate for audio line
-   * @return SourceDataLine If audio line is available
-   * @throws IOException if fails
+   * @return SourceDataLine If audio line is available, otherwise null
    */
-  private SourceDataLine getOutputLine(final int channels, final int rate)
-      throws IOException {
+  private SourceDataLine getOutputLine(final int channels, final int rate) {
     AudioFormat audioFormat = new AudioFormat((float) rate, 16, channels,
         true, false);
     DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat,
         AudioSystem.NOT_SPECIFIED);
     if (!AudioSystem.isLineSupported(info)) {
-      throw new IOException("Audio line is not supported!");
+      return null;
     }
     SourceDataLine outputLine;
     try {
       outputLine = (SourceDataLine) AudioSystem.getLine(info);
       outputLine.open(audioFormat);
     } catch (LineUnavailableException | IllegalArgumentException ex) {
-      throw new IOException("Audio line cannot be opened: " + ex.getMessage());
+      return null;
     }
     outputLine.start();
     return outputLine;
@@ -292,22 +290,24 @@ public class OggPlayer {
       int[] channelIndexes = new int[jorbisInfo.channels];
       SourceDataLine outputLine = getOutputLine(jorbisInfo.channels,
                                                 jorbisInfo.rate);
-      // Volume set for OGG
       FloatControl gainControl = null;
-      try {
-        gainControl = (FloatControl) outputLine.getControl(
-            FloatControl.Type.VOLUME);
-        gainControl.setValue(gainControl.getMaximum() * getOggVolume() / 100);
-      } catch (IllegalArgumentException e) {
-        // Sound system does not support volume, let's try master gain then
+      if (outputLine != null) {
+        // Volume set for OGG
         try {
           gainControl = (FloatControl) outputLine.getControl(
-              FloatControl.Type.MASTER_GAIN);
-          gainControl.setValue(
-              gainControl.getMinimum() * ((100 - getOggVolume()) / 100));
-        } catch (IllegalArgumentException e2) {
-          System.out.println("Your audio system does not support VOLUME or"
-              + " MASTER_GAIN control...Playing default volume");
+              FloatControl.Type.VOLUME);
+          gainControl.setValue(gainControl.getMaximum() * getOggVolume() / 100);
+        } catch (IllegalArgumentException e) {
+          // Sound system does not support volume, let's try master gain then
+          try {
+            gainControl = (FloatControl) outputLine.getControl(
+                FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(
+                gainControl.getMinimum() * ((100 - getOggVolume()) / 100));
+          } catch (IllegalArgumentException e2) {
+            System.out.println("Your audio system does not support VOLUME or"
+                + " MASTER_GAIN control...Playing default volume");
+          }
         }
       }
       while (!endOfStream) {
@@ -372,8 +372,10 @@ public class OggPlayer {
                     gainControl.setValue(
                         gainControl.getMaximum() * getOggVolume() / 100);
                   }
-                  outputLine.write(
-                      conversionBuffer, 0, 2 * jorbisInfo.channels * limit);
+                  if (outputLine != null) {
+                    outputLine.write(
+                        conversionBuffer, 0, 2 * jorbisInfo.channels * limit);
+                  }
                   jorbisDspState.synthesis_read(limit);
                 }
               }
@@ -401,7 +403,9 @@ public class OggPlayer {
           }
         }
       }
-      outputLine.close();
+      if (outputLine != null) {
+        outputLine.close();
+      }
       joggStreamState.clear();
       jorbisBlock.clear();
       jorbisDspState.clear();

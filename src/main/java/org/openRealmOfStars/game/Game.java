@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
+import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.States.AITurnView;
 import org.openRealmOfStars.game.States.BattleView;
@@ -676,6 +677,7 @@ public class Game implements ActionListener {
       showAITurnView();
       break;
     case MAIN_MENU:
+      MusicPlayer.play("/resources/musics/ObservingTheStar.ogg");
       showMainMenu();
       break;
     case GALAXY_CREATION:

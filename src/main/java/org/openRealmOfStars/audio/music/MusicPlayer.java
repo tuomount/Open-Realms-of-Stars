@@ -108,7 +108,9 @@ public final class MusicPlayer {
    * Make music player stop
    */
   public static void stop() {
-    player.stop();
+    if (player != null) {
+      player.stop();
+    }
   }
 
   /**

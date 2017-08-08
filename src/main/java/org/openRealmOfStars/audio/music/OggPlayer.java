@@ -174,6 +174,8 @@ public class OggPlayer {
     DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat,
         AudioSystem.NOT_SPECIFIED);
     if (!AudioSystem.isLineSupported(info)) {
+      ErrorLogger.log("Your audio system does not support playing audio."
+          + " Disabling it...");
       return null;
     }
     SourceDataLine outputLine;
@@ -181,6 +183,8 @@ public class OggPlayer {
       outputLine = (SourceDataLine) AudioSystem.getLine(info);
       outputLine.open(audioFormat);
     } catch (LineUnavailableException | IllegalArgumentException ex) {
+      ErrorLogger.log("Your audio system does not support playing audio."
+          + " Disabling it...");
       return null;
     }
     outputLine.start();

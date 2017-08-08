@@ -4,6 +4,8 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.openRealmOfStars.utilities.ErrorLogger;
+
 /**
 *
 * Open Realm of Stars game project
@@ -74,9 +76,9 @@ public final class MusicPlayer {
           player = new OggPlayer(stream);
         }
       } catch (IOException | InterruptedException e) {
-        System.err.println("Problem while playing OGG file ("
+        ErrorLogger.log("Problem while playing OGG file ("
              + musicFile + "):");
-        System.err.println(e);
+        ErrorLogger.log(e);
         return;
       }
       // run in new thread to play in background
@@ -87,8 +89,7 @@ public final class MusicPlayer {
             player.play();
             playing = false;
           } catch (Exception e) {
-            System.err.println(e);
-            e.printStackTrace();
+            ErrorLogger.log(e);
           }
         }
       }.start();

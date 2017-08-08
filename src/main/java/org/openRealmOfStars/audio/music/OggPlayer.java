@@ -11,6 +11,8 @@ import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
+import org.openRealmOfStars.utilities.ErrorLogger;
+
 import com.jcraft.jogg.Packet;
 import com.jcraft.jogg.Page;
 import com.jcraft.jogg.StreamState;
@@ -305,7 +307,7 @@ public class OggPlayer {
             gainControl.setValue(
                 gainControl.getMinimum() * ((100 - getOggVolume()) / 100));
           } catch (IllegalArgumentException e2) {
-            System.out.println("Your audio system does not support VOLUME or"
+            ErrorLogger.log("Your audio system does not support VOLUME or"
                 + " MASTER_GAIN control...Playing default volume");
           }
         }

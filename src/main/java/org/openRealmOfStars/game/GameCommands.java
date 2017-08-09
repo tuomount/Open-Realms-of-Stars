@@ -37,6 +37,11 @@ public final class GameCommands {
   public static final String COMMAND_ANIMATION_TIMER = "AnimationTimerCommand";
 
   /**
+   * Music timer command
+   */
+  public static final String COMMAND_MUSIC_TIMER = "MusicTimerCommand";
+
+  /**
    * OK command
    */
   public static final String COMMAND_OK = "OK";

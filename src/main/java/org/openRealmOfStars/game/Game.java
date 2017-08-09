@@ -94,6 +94,11 @@ public class Game implements ActionListener {
   private Timer animationTimer;
 
   /**
+   * Animation timer used for animation
+   */
+  private Timer musicTimer;
+
+  /**
    * Star map for the game
    */
   private StarMap starMap = null;
@@ -237,6 +242,12 @@ public class Game implements ActionListener {
   private static final int ANIMATION_TIMER_DELAY = 75;
 
   /**
+   * Music timer delay in milli seconds. How often music playing is about
+   * to check.
+   */
+  private static final int MUSIC_TIMER_DELAY = 500;
+
+  /**
    * Animation timer delay in milli seconds for credits
    */
   private static final int ANIMATION_DELAY_CREDITS = 30;
@@ -264,6 +275,9 @@ public class Game implements ActionListener {
       animationTimer = new Timer(ANIMATION_TIMER_DELAY, this);
       animationTimer.setActionCommand(GameCommands.COMMAND_ANIMATION_TIMER);
       animationTimer.start();
+      musicTimer = new Timer(MUSIC_TIMER_DELAY, this);
+      musicTimer.setActionCommand(GameCommands.COMMAND_MUSIC_TIMER);
+      musicTimer.start();
       gameFrame.setResizable(false);
       gameFrame.setVisible(true);
       // Add new KeyEventDispatcher
@@ -1044,6 +1058,10 @@ public class Game implements ActionListener {
 
   @Override
   public void actionPerformed(final ActionEvent arg0) {
+    if (arg0.getActionCommand() == GameCommands.COMMAND_MUSIC_TIMER) {
+      MusicPlayer.handleMusic(gameState);
+      return;
+    }
     if (gameState == GameState.STARMAP && starMapView != null) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {

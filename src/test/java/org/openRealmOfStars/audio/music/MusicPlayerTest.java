@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openRealmOfStars.game.GameState;
 
 /**
 *
@@ -35,12 +36,30 @@ public class MusicPlayerTest {
     MusicPlayer.stop();
     Thread.sleep(1000);
     assertEquals(false, MusicPlayer.isPlaying());
-    MusicPlayer.play("/resources/musics/ObservingTheStar.ogg");
+    MusicPlayer.play(MusicPlayer.YD_OBSERVING_STAR);
     Thread.sleep(3000);
     assertEquals(true, MusicPlayer.isPlaying());
+    assertEquals(MusicPlayer.YD_OBSERVING_STAR, MusicPlayer.getNowPlaying());
     MusicPlayer.stop();
     Thread.sleep(1000);
     assertEquals(false, MusicPlayer.isPlaying());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testMusicPlayerGameStates() throws InterruptedException {
+    MusicPlayer.setMusicEnabled(false);
+    MusicPlayer.handleMusic(GameState.COMBAT);
+    assertEquals(MusicPlayer.YD_OBSERVING_STAR, MusicPlayer.getNowPlaying());
+    MusicPlayer.handleMusic(GameState.MAIN_MENU);
+    assertEquals(MusicPlayer.YD_OBSERVING_STAR, MusicPlayer.getNowPlaying());
+    MusicPlayer.handleMusic(GameState.DIPLOMACY_VIEW);
+    assertEquals(MusicPlayer.YD_OBSERVING_STAR, MusicPlayer.getNowPlaying());
+    MusicPlayer.handleMusic(GameState.NEWS_CORP_VIEW);
+    assertEquals(MusicPlayer.YD_OBSERVING_STAR, MusicPlayer.getNowPlaying());
+    MusicPlayer.handleMusic(GameState.STARMAP);
+    assertEquals(MusicPlayer.YD_OBSERVING_STAR, MusicPlayer.getNowPlaying());
+    MusicPlayer.setMusicEnabled(true);
   }
 
 }

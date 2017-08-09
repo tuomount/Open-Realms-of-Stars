@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.openRealmOfStars.game.GameState;
 import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
@@ -35,10 +36,10 @@ public final class MusicPlayer {
    * Hiding the constructor
    */
   private MusicPlayer() {
-    // Just hiding the construcot
+    // Just hiding the construct
   }
   /**
-   * Is music player at the momont flag
+   * Is music player at the moment flag
    */
   private static boolean playing = false;
   /**
@@ -49,6 +50,34 @@ public final class MusicPlayer {
    * OggPlayer class, doing the actual Ogg parsing and playing
    */
   private static OggPlayer player;
+
+  /**
+   * Observing The Star By YD License CC0
+   */
+  public static final MusicFileInfo YD_OBSERVING_STAR = new MusicFileInfo(
+      "Observing The Star", "YD", "/resources/musics/ObservingTheStar.ogg");
+
+  /**
+   * What music file is currently playing
+   */
+  private static MusicFileInfo nowPlaying;
+
+  /**
+   * Play the MusicFile to the sound card
+   * @param musicFile Music File Info
+   */
+  public static void play(final MusicFileInfo musicFile) {
+    nowPlaying = musicFile;
+    play(nowPlaying.getFilename());
+  }
+
+  /**
+   * Get what is now being played.
+   * @return Music Info what is now being played.
+   */
+  public static MusicFileInfo getNowPlaying() {
+    return nowPlaying;
+  }
   /**
    * Play the OGG file to the sound card
    * @param musicFile String
@@ -132,5 +161,40 @@ public final class MusicPlayer {
    */
   public static boolean isMusicEnabled() {
     return musicEnabled;
+  }
+
+  /**
+   * Handle music if song playing stops.
+   * This will restart new music
+   * @param state GameState
+   */
+  public static void handleMusic(final GameState state) {
+    if (!isPlaying()) {
+      if (state == GameState.COMBAT) {
+        // Combat music
+        // FIXME Make actual combat music list
+        play(YD_OBSERVING_STAR);
+      } else if (state == GameState.DIPLOMACY_VIEW) {
+        // Keep playing the same song
+        play(nowPlaying);
+      } else if (state == GameState.MAIN_MENU
+          || state == GameState.CREDITS
+          || state == GameState.LOAD_GAME
+          || state == GameState.NEW_GAME
+          || state == GameState.GALAXY_CREATION
+          || state == GameState.PLAYER_SETUP) {
+        // Main menu song
+        // FIXME Change to main menu song later
+        play(YD_OBSERVING_STAR);
+      } else if (state == GameState.NEWS_CORP_VIEW) {
+        // News corp song
+        // FIXME Change to news corp song later
+        play(YD_OBSERVING_STAR);
+      } else {
+        // Game music
+        // FIXME Make actual game music list
+        play(YD_OBSERVING_STAR);
+      }
+    }
   }
 }

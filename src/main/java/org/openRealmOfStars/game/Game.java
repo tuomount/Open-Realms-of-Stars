@@ -937,6 +937,10 @@ public class Game implements ActionListener {
       System.out.println("# Authors of Open Reals Of Stars\n");
       System.out.println(CreditsView.MAIN_CREDITS);
     } else {
+      if (args.length > 0 && args[0].equals("--no-music")) {
+        System.out.println("Disabling the music...");
+        MusicPlayer.setMusicEnabled(false);
+      }
       new Game(true);
     }
 

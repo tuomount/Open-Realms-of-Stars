@@ -284,6 +284,7 @@ public class Game implements ActionListener {
       KeyboardFocusManager kfm = KeyboardFocusManager
           .getCurrentKeyboardFocusManager();
       kfm.addKeyEventDispatcher(new GameKeyAdapter(this));
+      MusicPlayer.play(MusicPlayer.YD_OBSERVING_STAR);
     }
     changeGameState(GameState.MAIN_MENU);
   }
@@ -691,7 +692,6 @@ public class Game implements ActionListener {
       showAITurnView();
       break;
     case MAIN_MENU:
-      MusicPlayer.play("/resources/musics/ObservingTheStar.ogg");
       showMainMenu();
       break;
     case GALAXY_CREATION:

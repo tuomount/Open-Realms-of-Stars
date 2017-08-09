@@ -495,7 +495,7 @@ public final class NewsFactory {
     sb.append(attacker.getEmpireName());
     sb.append(" made massive attack on ");
     sb.append(planet.getName());
-    sb.append("Defender ");
+    sb.append(". Defender ");
     sb.append(defender.getEmpireName());
     sb.append(" was defeated eventually. ");
     if (nuked) {

@@ -823,7 +823,8 @@ public class StarMap {
         PlayerInfo player = players.getPlayerInfoByIndex(i);
         for (int j = 0; j < player.getFleets().getNumberOfFleets(); j++) {
           Fleet fleet = player.getFleets().getByIndex(j);
-          if (fleetTiles[fleet.getX()][fleet.getY()] == null) {
+          if (fleetTiles[fleet.getX()][fleet.getY()] == null
+              && fleet != null && fleet.getFirstShip() != null) {
             FleetTileInfo info = new FleetTileInfo(
                 fleet.getFirstShip().getHull().getRace(),
                 fleet.getFirstShip().getHull().getImageIndex(), i, j);

@@ -49,13 +49,45 @@ public class MissionTest {
     assertEquals("Test Fleet",mission.getFleetName());
     assertEquals(1,mission.getMissionTime());
     assertEquals("Test building",mission.getPlanetBuilding());
-    assertEquals("Test Sun",mission.getSunName());
+    assertEquals("",mission.getSunName());
     mission.setPhase(MissionPhase.TREKKING);
     assertEquals(MissionPhase.TREKKING,mission.getPhase());
     mission.setTargetPlanet("Test target");
     assertEquals("Test target", mission.getTargetPlanet());
     mission.setType(MissionType.COLONIZE);
     assertEquals(MissionType.COLONIZE,mission.getType());
+    assertEquals(3,mission.getX());
+    assertEquals(5,mission.getY());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMission2() {
+    Coordinate coordinate = Mockito.mock(Coordinate.class);
+    Mockito.when(coordinate.getX()).thenReturn(3);
+    Mockito.when(coordinate.getY()).thenReturn(5);
+    Mission mission = new Mission(MissionType.EXPLORE, MissionPhase.PLANNING,
+        coordinate); 
+    assertEquals(MissionType.EXPLORE, mission.getType());
+    assertEquals(MissionPhase.PLANNING, mission.getPhase());
+    assertEquals(0,mission.getMissionTime());
+    mission.setFleetName("Test Fleet");
+    mission.setMissionTime(1);
+    mission.setPlanetBuilding("Test building");
+    mission.setSunName("Test Sun");
+    assertEquals("Test Fleet",mission.getFleetName());
+    assertEquals(1,mission.getMissionTime());
+    assertEquals("Test building",mission.getPlanetBuilding());
+    assertEquals("Test Sun",mission.getSunName());
+    mission.setPhase(MissionPhase.TREKKING);
+    assertEquals(MissionPhase.TREKKING,mission.getPhase());
+    mission.setTargetPlanet("Test target");
+    assertEquals("Test target", mission.getTargetPlanet());
+    mission.setType(MissionType.GATHER);
+    assertEquals(MissionType.GATHER, mission.getType());
+    assertEquals("", mission.getSunName());
+    mission.setShipType("TestShip");
+    assertEquals("TestShip", mission.getShipType());
     assertEquals(3,mission.getX());
     assertEquals(5,mission.getY());
   }

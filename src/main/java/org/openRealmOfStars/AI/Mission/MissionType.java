@@ -45,7 +45,11 @@ public enum MissionType {
   /**
    * Move to target, simple mission just moving the fleet
    */
-  MOVE;
+  MOVE,
+  /**
+   * Gather specific type of ship for attack
+   */
+  GATHER;
 
   /**
    * Get Mission type with index
@@ -63,6 +67,8 @@ public enum MissionType {
       return 3;
     case MOVE:
       return 4;
+    case GATHER:
+      return 5;
     default:
       return 0;
     }
@@ -81,6 +87,8 @@ public enum MissionType {
       return "Attack";
     case MOVE:
       return "Move";
+    case GATHER:
+      return "Gather";
     default:
       return "Unknown";
     }

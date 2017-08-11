@@ -57,9 +57,11 @@ public final class Mission {
   private String targetPlanet;
 
   /**
-   * Solar system name where to go to explore
+   * Mission textual parameter. In Explore mission this should
+   * solar system name. Gathering mission this will tell what kind of
+   * ship mission is searching.
    */
-  private String sunName;
+  private String parameter;
 
   /**
    * How many turns mission has been on some fleet.
@@ -69,6 +71,21 @@ public final class Mission {
    * Each mission will have their own way of calculating this one.
    */
   private int missionTime;
+
+  /**
+   * Ship type trooper
+   */
+  public static final String TROOPER_TYPE = "Trooper";
+
+  /**
+   * Ship type bomber
+   */
+  public static final String BOMBER_TYPE = "Bomber";
+
+  /**
+   * Ship type assault
+   */
+  public static final String ASSAULT_TYPE = "Assult";
 
   /**
    * Create new mission for AI
@@ -185,19 +202,45 @@ public final class Mission {
   }
 
   /**
-   * Get sun name involved for the mission
+   * Get sun name involved for the explore mission
    * @return Sun name as a String
    */
   public String getSunName() {
-    return sunName;
+    if (type == MissionType.EXPLORE) {
+      return parameter;
+    }
+    return "";
   }
 
   /**
-   * Set sun name for the mission.
+   * Set sun name for the explore mission.
    * @param name Sun Name
    */
   public void setSunName(final String name) {
-    this.sunName = name;
+    if (type == MissionType.EXPLORE) {
+      this.parameter = name;
+    }
+  }
+
+  /**
+   * Set ship type for the gather mission.
+   * @param shipType Sun Name
+   */
+  public void setShipType(final String shipType) {
+    if (type == MissionType.GATHER) {
+      this.parameter = shipType;
+    }
+  }
+
+  /**
+   * Get ship type involved for the explore mission
+   * @return Sun ShipType
+   */
+  public String getShipType() {
+    if (type == MissionType.GATHER) {
+      return parameter;
+    }
+    return "";
   }
 
   /**

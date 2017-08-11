@@ -8,7 +8,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2017  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -110,14 +110,26 @@ public class Route {
 
   /**
    * Move a bit closed to end
+   * @param starMap to check if sector is block or not. If this is null
+   *        then blocked check is not done
+   * @return true if move was possible and false if not
    */
-  public void makeNextMove() {
+  public boolean makeNextMove(final StarMap starMap) {
     for (int i = 0; i < ftlSpeed; i++) {
       if (getDistance() > 0) {
-        startX = startX + getMx();
-        startY = startY + getMy();
+        if (starMap == null) {
+          startX = startX + getMx();
+          startY = startY + getMy();
+        } else if (!starMap.isBlocked((int) (startX + getMx()), (int) (startY
+                + getMy()))) {
+          startX = startX + getMx();
+          startY = startY + getMy();
+        } else {
+          return false;
+        }
       }
     }
+    return true;
   }
 
   /**

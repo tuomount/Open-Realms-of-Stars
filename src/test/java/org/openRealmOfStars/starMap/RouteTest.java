@@ -5,11 +5,12 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
 
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2017  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -80,7 +81,7 @@ public class RouteTest {
     assertFalse("The route shouldn't be fixing.", route.isFixing());
     assertFalse("The end shouldn't be reached.", route.isEndReached());
 
-    route.makeNextMove();
+    route.makeNextMove(null);
 
     assertEquals("The X coordinate should be 4 after the first step.", 4, route.getX());
     assertEquals("The Y coordinate should be 4 after the first step.", 4, route.getY());
@@ -96,7 +97,7 @@ public class RouteTest {
     assertFalse("The route shouldn't be fixing.", route.isFixing());
     assertFalse("The end shouldn't be reached.", route.isEndReached());
 
-    route.makeNextMove();
+    route.makeNextMove(null);
 
     assertEquals("The X coordinate should be 5 after the second step.", 5, route.getX());
     assertEquals("The Y coordinate should be 5 after the second step.", 5, route.getY());
@@ -137,7 +138,7 @@ public class RouteTest {
     assertFalse("The route shouldn't be fixing.", route.isFixing());
     assertFalse("The end shouldn't be reached.", route.isEndReached());
 
-    route.makeNextMove();
+    route.makeNextMove(null);
 
     assertEquals("The X coordinate should be 5 after the second step.", 4, route.getX());
     assertEquals("The Y coordinate should be 5 after the second step.", 5, route.getY());
@@ -153,7 +154,7 @@ public class RouteTest {
     assertFalse("The route shouldn't be fixing.", route.isFixing());
     assertFalse("The end shouldn't be reached.", route.isEndReached());
 
-    route.makeNextMove();
+    route.makeNextMove(null);
 
     assertEquals("The X coordinate should be 5 after the second step.", 5, route.getX());
     assertEquals("The Y coordinate should be 5 after the second step.", 5, route.getY());
@@ -168,6 +169,30 @@ public class RouteTest {
     assertFalse("The route shouldn't be defending.", route.isDefending());
     assertFalse("The route shouldn't be fixing.", route.isFixing());
     assertTrue("The end should be reached.", route.isEndReached());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRoute3() {
+    route.setStartX(3);
+    route.setStartY(3);
+    route.setEndX(3);
+    route.setEndY(6);
+    route.setFtlSpeed(3);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.isBlocked(3, 3)).thenReturn(false);
+    Mockito.when(map.isBlocked(3, 4)).thenReturn(false);
+    Mockito.when(map.isBlocked(3, 5)).thenReturn(true);
+    Mockito.when(map.isBlocked(3, 6)).thenReturn(false);
+    Mockito.when(map.isBlocked(3, 7)).thenReturn(false);
+    assertEquals(false, route.makeNextMove(map));
+    route.setStartX(3);
+    route.setStartY(3);
+    route.setEndX(3);
+    route.setEndY(6);
+    route.setFtlSpeed(3);
+    Mockito.when(map.isBlocked(3, 5)).thenReturn(false);
+    assertEquals(true, route.makeNextMove(map));
   }
 
   @Test

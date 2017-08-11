@@ -494,8 +494,8 @@ public class AITurnView extends BlackPanel {
               }
             } else if (fleet.getMovesLeft() > 0) {
               // Make sure fleet can actually move
-              fleet.getRoute().makeNextMove();
-              if (!game.getStarMap().isBlocked(fleet.getRoute().getX(),
+              if (fleet.getRoute().makeNextMove(game.getStarMap())
+                  && !game.getStarMap().isBlocked(fleet.getRoute().getX(),
                   fleet.getRoute().getY())) {
                 // Not blocked so fleet is moving
                 MissionHandling.makeFleetMove(game, fleet.getRoute().getX(),

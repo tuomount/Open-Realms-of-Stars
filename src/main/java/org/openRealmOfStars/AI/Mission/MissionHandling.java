@@ -413,49 +413,45 @@ public final class MissionHandling {
     if (!mission.getShipType().isEmpty()) {
       for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
         Fleet fleet = info.getFleets().getByIndex(j);
-        if (info.getMissions().getMissionForFleet(fleet.getName()) != null) {
+        if (info.getMissions().getMissionForFleet(fleet.getName()) == null) {
           for (Ship ship : fleet.getShips()) {
+            Fleet newFleet = null;
             if (mission.getShipType().equals(Mission.ASSAULT_TYPE)
                 && ship.getTotalMilitaryPower() > 0) {
-              fleet.removeShip(ship);
-              Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
-              String fleetName;
-              for (int k = 0; k < info.getFleets().getNumberOfFleets(); k++) {
-                fleetName = "Gather " + mission.getShipType() + "#" + k;
-                if (info.getFleets().isUniqueName(fleetName, newFleet)) {
-                  newFleet.setName(fleetName);
-                  mission.setFleetName(fleetName);
-                  mission.setPhase(MissionPhase.TREKKING);
-                  return;
-                }
+              if (fleet.getNumberOfShip() > 1) {
+                fleet.removeShip(ship);
+                newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+              } else {
+                newFleet = fleet;
               }
             }
             if (mission.getShipType().equals(Mission.BOMBER_TYPE)
                 && ship.hasBombs()) {
-              fleet.removeShip(ship);
-              Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
-              String fleetName;
-              for (int k = 0; k < info.getFleets().getNumberOfFleets(); k++) {
-                fleetName = "Gather " + mission.getShipType() + "#" + k;
-                if (info.getFleets().isUniqueName(fleetName, newFleet)) {
-                  newFleet.setName(fleetName);
-                  mission.setFleetName(fleetName);
-                  mission.setPhase(MissionPhase.TREKKING);
-                  return;
-                }
+              if (fleet.getNumberOfShip() > 1) {
+                fleet.removeShip(ship);
+                newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+              } else {
+                newFleet = fleet;
               }
             }
             if (mission.getShipType().equals(Mission.TROOPER_TYPE)
                 && ship.isTrooperShip()) {
-              fleet.removeShip(ship);
-              Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+              if (fleet.getNumberOfShip() > 1) {
+                fleet.removeShip(ship);
+                newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+              } else {
+                newFleet = fleet;
+              }
+            }
+            if (newFleet != null) {
               String fleetName;
               for (int k = 0; k < info.getFleets().getNumberOfFleets(); k++) {
-                fleetName = "Gather " + mission.getShipType() + "#" + k;
+                fleetName = "Gather " + mission.getShipType() + " #" + k;
                 if (info.getFleets().isUniqueName(fleetName, newFleet)) {
                   newFleet.setName(fleetName);
                   mission.setFleetName(fleetName);
                   mission.setPhase(MissionPhase.TREKKING);
+                  // Found correct ship from fleet
                   return;
                 }
               }

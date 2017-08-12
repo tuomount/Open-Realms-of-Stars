@@ -404,6 +404,69 @@ public final class MissionHandling {
   }
 
   /**
+   * Find ship for gathering mission
+   * @param mission Gathering mission
+   * @param info Player whose fleets are searched
+   */
+  public static void findGatheringShip(final Mission mission,
+      final PlayerInfo info) {
+    if (!mission.getShipType().isEmpty()) {
+      for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
+        Fleet fleet = info.getFleets().getByIndex(j);
+        if (info.getMissions().getMissionForFleet(fleet.getName()) != null) {
+          for (Ship ship : fleet.getShips()) {
+            if (mission.getShipType().equals(Mission.ASSAULT_TYPE)
+                && ship.getTotalMilitaryPower() > 0) {
+              fleet.removeShip(ship);
+              Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+              String fleetName;
+              for (int k = 0; k < info.getFleets().getNumberOfFleets(); k++) {
+                fleetName = "Gather " + mission.getShipType() + "#" + k;
+                if (info.getFleets().isUniqueName(fleetName, newFleet)) {
+                  newFleet.setName(fleetName);
+                  mission.setFleetName(fleetName);
+                  mission.setPhase(MissionPhase.TREKKING);
+                  return;
+                }
+              }
+            }
+            if (mission.getShipType().equals(Mission.BOMBER_TYPE)
+                && ship.hasBombs()) {
+              fleet.removeShip(ship);
+              Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+              String fleetName;
+              for (int k = 0; k < info.getFleets().getNumberOfFleets(); k++) {
+                fleetName = "Gather " + mission.getShipType() + "#" + k;
+                if (info.getFleets().isUniqueName(fleetName, newFleet)) {
+                  newFleet.setName(fleetName);
+                  mission.setFleetName(fleetName);
+                  mission.setPhase(MissionPhase.TREKKING);
+                  return;
+                }
+              }
+            }
+            if (mission.getShipType().equals(Mission.TROOPER_TYPE)
+                && ship.isTrooperShip()) {
+              fleet.removeShip(ship);
+              Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+              String fleetName;
+              for (int k = 0; k < info.getFleets().getNumberOfFleets(); k++) {
+                fleetName = "Gather " + mission.getShipType() + "#" + k;
+                if (info.getFleets().isUniqueName(fleetName, newFleet)) {
+                  newFleet.setName(fleetName);
+                  mission.setFleetName(fleetName);
+                  mission.setPhase(MissionPhase.TREKKING);
+                  return;
+                }
+              }
+            }
+
+          }
+        }
+      }
+    }
+  }
+  /**
    * Merge fleet with in same space and starting with same fleet names
    * @param fleet Fleet where to merge
    * @param info PlayerInfo for both fleets

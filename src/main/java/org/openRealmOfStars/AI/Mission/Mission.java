@@ -85,7 +85,7 @@ public final class Mission {
   /**
    * Ship type assault
    */
-  public static final String ASSAULT_TYPE = "Assult";
+  public static final String ASSAULT_TYPE = "Assault";
 
   /**
    * Create new mission for AI

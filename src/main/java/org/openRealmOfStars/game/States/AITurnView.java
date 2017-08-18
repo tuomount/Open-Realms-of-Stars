@@ -23,6 +23,7 @@ import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -290,6 +291,84 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
+   * Create gather mission for attack mission
+   * @param mission Attack mission
+   * @param coord Coordinate where to gather attackers
+   * @param shipType Ship type to gather
+   * @return Gather mission
+   */
+  private static Mission createGatherMission(final Mission mission,
+      final Coordinate coord, final String shipType) {
+    Mission gatherMission = new Mission(MissionType.GATHER,
+        MissionPhase.PLANNING, coord);
+    gatherMission.setPlanetBuilding(mission.getPlanetBuilding());
+    gatherMission.setShipType(shipType);
+    return gatherMission;
+  }
+
+  /**
+   * Add gathering mission for attack
+   * @param info Player whom is attacking
+   * @param mission Attack mission
+   */
+  public static  void addGatherMission(final PlayerInfo info,
+      final Mission mission) {
+    Coordinate coord = new Coordinate(mission.getX(), mission.getY());
+    info.getMissions().add(createGatherMission(mission, coord,
+        Mission.ASSAULT_TYPE));
+    info.getMissions().add(createGatherMission(mission, coord,
+        Mission.ASSAULT_TYPE));
+    info.getMissions().add(createGatherMission(mission, coord,
+        Mission.BOMBER_TYPE));
+    info.getMissions().add(createGatherMission(mission, coord,
+        Mission.TROOPER_TYPE));
+    if (info.getAiAttitude() == Attitude.AGGRESSIVE) {
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.ASSAULT_TYPE));
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.ASSAULT_TYPE));
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.ASSAULT_TYPE));
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.TROOPER_TYPE));
+    } else if (info.getAiAttitude() == Attitude.MILITARISTIC) {
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.ASSAULT_TYPE));
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.ASSAULT_TYPE));
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.ASSAULT_TYPE));
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.BOMBER_TYPE));
+    } else if (info.getAiAttitude() == Attitude.EXPANSIONIST) {
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.ASSAULT_TYPE));
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.ASSAULT_TYPE));
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.TROOPER_TYPE));
+    } else if (info.getAiAttitude() == Attitude.BACKSTABBING) {
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.ASSAULT_TYPE));
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.ASSAULT_TYPE));
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.BOMBER_TYPE));
+    } else if (info.getAiAttitude() == Attitude.LOGICAL) {
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.ASSAULT_TYPE));
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.TROOPER_TYPE));
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.BOMBER_TYPE));
+    } else {
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.ASSAULT_TYPE));
+      info.getMissions().add(createGatherMission(mission, coord,
+          Mission.ASSAULT_TYPE));
+    }
+  }
+  /**
    * Adding attack mission to mission list
    * @param planet Planet where to attack
    * @param info Player who is attacking
@@ -303,9 +382,12 @@ public class AITurnView extends BlackPanel {
         planet.getCoordinate());
     if (homeWorld == null) {
       mission.setTarget(new Coordinate(cx, cy));
+      mission.setTargetPlanet(planet.getName());
+      mission.setPlanetBuilding("Deep space " + cx + "," + cy);
     } else {
       mission.setTarget(homeWorld.getCoordinate());
       mission.setTargetPlanet(planet.getName());
+      mission.setPlanetBuilding(homeWorld.getName());
     }
     if (info.getMissions().getAttackMission(planet.getName()) == null) {
       // No attack mission for this planet found, so adding it.

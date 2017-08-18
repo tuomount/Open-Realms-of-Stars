@@ -224,4 +224,24 @@ public class MissionList {
   public void add(final Mission mission) {
     missions.add(mission);
   }
+
+  /**
+   * Get number of missions
+   * @return Number of missions
+   */
+  public int getSize() {
+    return missions.size();
+  }
+
+  /**
+   * Get mission by index
+   * @param index Index to get mission
+   * @return Mission or null if bad index
+   */
+  public Mission getMissionByIndex(final int index) {
+    if (index >= 0 && index < missions.size()) {
+      return missions.get(index);
+    }
+    return null;
+  }
 }

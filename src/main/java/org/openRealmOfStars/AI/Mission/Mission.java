@@ -24,7 +24,7 @@ import org.openRealmOfStars.starMap.Coordinate;
  * Mission for AI
  *
  */
-public final class Mission {
+public class Mission {
 
   /**
    * Mission type

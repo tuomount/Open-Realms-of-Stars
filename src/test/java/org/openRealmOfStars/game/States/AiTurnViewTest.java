@@ -8,12 +8,14 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionList;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.GameState;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.repository.GameRepository;
@@ -69,6 +71,61 @@ public class AiTurnViewTest {
     mission = info.getMissions().getMission(MissionType.ATTACK,
         MissionPhase.PLANNING);
     assertNotEquals(null, mission);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAddGatherMission() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mission mission = Mockito.mock(Mission.class);
+    MissionList list = new MissionList();
+    Mockito.when(info.getMissions()).thenReturn(list);
+    Mockito.when(info.getAiAttitude()).thenReturn(Attitude.AGGRESSIVE);
+    AITurnView.addGatherMission(info, mission);
+    Mission listMission = list.getMissionByIndex(0);
+    assertEquals(MissionType.GATHER, listMission.getType());
+    assertEquals(Mission.ASSAULT_TYPE, listMission.getShipType());
+    assertEquals(8, list.getSize());
+    Mockito.when(info.getAiAttitude()).thenReturn(Attitude.MILITARISTIC);
+    list = new MissionList();
+    Mockito.when(info.getMissions()).thenReturn(list);
+    AITurnView.addGatherMission(info, mission);
+    listMission = list.getMissionByIndex(7);
+    assertEquals(MissionType.GATHER, listMission.getType());
+    assertEquals(Mission.BOMBER_TYPE, listMission.getShipType());
+    assertEquals(8, list.getSize());
+    Mockito.when(info.getAiAttitude()).thenReturn(Attitude.EXPANSIONIST);
+    list = new MissionList();
+    Mockito.when(info.getMissions()).thenReturn(list);
+    AITurnView.addGatherMission(info, mission);
+    listMission = list.getMissionByIndex(6);
+    assertEquals(MissionType.GATHER, listMission.getType());
+    assertEquals(Mission.TROOPER_TYPE, listMission.getShipType());
+    assertEquals(7, list.getSize());
+    Mockito.when(info.getAiAttitude()).thenReturn(Attitude.BACKSTABBING);
+    list = new MissionList();
+    Mockito.when(info.getMissions()).thenReturn(list);
+    AITurnView.addGatherMission(info, mission);
+    listMission = list.getMissionByIndex(6);
+    assertEquals(MissionType.GATHER, listMission.getType());
+    assertEquals(Mission.BOMBER_TYPE, listMission.getShipType());
+    assertEquals(7, list.getSize());
+    Mockito.when(info.getAiAttitude()).thenReturn(Attitude.LOGICAL);
+    list = new MissionList();
+    Mockito.when(info.getMissions()).thenReturn(list);
+    AITurnView.addGatherMission(info, mission);
+    listMission = list.getMissionByIndex(6);
+    assertEquals(MissionType.GATHER, listMission.getType());
+    assertEquals(Mission.BOMBER_TYPE, listMission.getShipType());
+    assertEquals(7, list.getSize());
+    Mockito.when(info.getAiAttitude()).thenReturn(Attitude.DIPLOMATIC);
+    list = new MissionList();
+    Mockito.when(info.getMissions()).thenReturn(list);
+    AITurnView.addGatherMission(info, mission);
+    listMission = list.getMissionByIndex(5);
+    assertEquals(MissionType.GATHER, listMission.getType());
+    assertEquals(Mission.ASSAULT_TYPE, listMission.getShipType());
+    assertEquals(6, list.getSize());
   }
 
 }

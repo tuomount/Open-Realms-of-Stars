@@ -1332,6 +1332,11 @@ public class Planet {
                 mission.setPhase(MissionPhase.EXECUTING);
               } else if (mission.getType() == MissionType.COLONIZE) {
                 mission.setPhase(MissionPhase.LOADING);
+              } else if (mission.getType() == MissionType.GATHER) {
+                mission.setPhase(MissionPhase.TREKKING);
+                fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
+                    "Gather"));
+                mission.setFleetName(fleet.getName());
               } else {
                 mission.setPhase(MissionPhase.TREKKING);
               }

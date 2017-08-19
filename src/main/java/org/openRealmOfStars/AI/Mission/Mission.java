@@ -52,6 +52,11 @@ public class Mission {
   private String planetBuilding;
 
   /**
+   * Planet where to gather attacking shops
+   */
+  private String planetGathering;
+
+  /**
    * Planet name which is going to be conquered;
    */
   private String targetPlanet;
@@ -273,6 +278,25 @@ public class Mission {
    */
   public void setTargetPlanet(final String target) {
     this.targetPlanet = target;
+  }
+
+  /**
+   * Planet where attacking ships gather
+   * @return the planetGathering
+   */
+  public String getPlanetGathering() {
+    if (type == MissionType.GATHER) {
+      return planetGathering;
+    }
+    return null;
+  }
+
+  /**
+   * Set gathering planet
+   * @param planetGathering the planetGathering to set
+   */
+  public void setPlanetGathering(final String planetGathering) {
+    this.planetGathering = planetGathering;
   }
 
 }

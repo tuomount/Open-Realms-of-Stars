@@ -75,6 +75,8 @@ public class MissionTest {
     mission.setMissionTime(1);
     mission.setPlanetBuilding("Test building");
     mission.setSunName("Test Sun");
+    mission.setPlanetGathering("Gather Test");
+    assertEquals(null, mission.getPlanetGathering());
     assertEquals("Test Fleet",mission.getFleetName());
     assertEquals(1,mission.getMissionTime());
     assertEquals("Test building",mission.getPlanetBuilding());
@@ -90,6 +92,8 @@ public class MissionTest {
     assertEquals("TestShip", mission.getShipType());
     assertEquals(3,mission.getX());
     assertEquals(5,mission.getY());
+    mission.setPlanetGathering("Gather Test");
+    assertEquals("Gather Test", mission.getPlanetGathering());
   }
 
 }

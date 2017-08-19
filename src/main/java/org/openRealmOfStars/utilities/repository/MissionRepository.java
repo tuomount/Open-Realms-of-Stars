@@ -51,6 +51,11 @@ public class MissionRepository {
     IOUtilities.writeString(dos, mission.getPlanetBuilding());
     IOUtilities.writeString(dos, mission.getSunName());
     IOUtilities.writeString(dos, mission.getTargetPlanet());
+    // Mission specific data
+    if (mission.getType() == MissionType.GATHER) {
+      IOUtilities.writeString(dos, mission.getPlanetGathering());
+      IOUtilities.writeString(dos, mission.getShipType());
+    }
   }
 
   /**
@@ -68,6 +73,10 @@ public class MissionRepository {
       return MissionType.DEFEND;
     case 3:
       return MissionType.ATTACK;
+    case 4:
+      return MissionType.MOVE;
+    case 5:
+      return MissionType.GATHER;
     default:
       return MissionType.EXPLORE;
     }
@@ -121,6 +130,17 @@ public class MissionRepository {
     str = IOUtilities.readString(dis);
     if (!str.isEmpty()) {
       mission.setTargetPlanet(str);
+    }
+    // Mission specific data
+    if (mission.getType() == MissionType.GATHER) {
+      str = IOUtilities.readString(dis);
+      if (!str.isEmpty()) {
+        mission.setPlanetGathering(str);
+      }
+      str = IOUtilities.readString(dis);
+      if (!str.isEmpty()) {
+        mission.setShipType(str);
+      }
     }
     return mission;
   }

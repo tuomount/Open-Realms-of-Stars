@@ -528,6 +528,22 @@ public final class PlanetHandling {
               mission.setPhase(MissionPhase.BUILDING);
               mission.setPlanetBuilding(planet.getName());
             }
+            if (ship.isTrooperModule()
+                && info.getMissions().getGatherMission(Mission.TROOPER_TYPE)
+                != null) {
+              mission.setPlanetBuilding(planet.getName());
+              mission.setPhase(MissionPhase.BUILDING);
+            } else if (ship.hasBombs()
+                && info.getMissions().getGatherMission(Mission.BOMBER_TYPE)
+                != null) {
+              mission.setPlanetBuilding(planet.getName());
+              mission.setPhase(MissionPhase.BUILDING);
+            } else if (ship.getTotalMilitaryPower() > 0
+                && info.getMissions().getGatherMission(Mission.ASSAULT_TYPE)
+                != null) {
+              mission.setPlanetBuilding(planet.getName());
+              mission.setPhase(MissionPhase.BUILDING);
+            }
           }
           break;
         }
@@ -611,7 +627,7 @@ public final class PlanetHandling {
             }
 
           } else {
-            mission = info.getMissions().getMission(MissionType.ATTACK,
+            mission = info.getMissions().getMission(MissionType.GATHER,
                 MissionPhase.PLANNING);
             if (mission != null) {
               score = score + ship.getTotalMilitaryPower() * 2;
@@ -621,7 +637,8 @@ public final class PlanetHandling {
               } else if (attitude == Attitude.PEACEFUL) {
                 score = score - 10;
               }
-              if (ship.hasBombs()) {
+              if (ship.hasBombs() && info.getMissions().getGatherMission(
+                     Mission.BOMBER_TYPE) != null) {
                 score = score + 30;
               }
             }
@@ -649,8 +666,8 @@ public final class PlanetHandling {
         }
         if (ship.isTrooperModule()) {
           // Trooper ship should be built only on request
-          Mission mission = info.getMissions().getMission(MissionType.ATTACK,
-              MissionPhase.PLANNING);
+          Mission mission = info.getMissions().getGatherMission(
+              Mission.TROOPER_TYPE);
           if (mission != null) {
             Planet colonPlanet = map.getPlanetByCoordinate(mission.getX(),
                 mission.getY());

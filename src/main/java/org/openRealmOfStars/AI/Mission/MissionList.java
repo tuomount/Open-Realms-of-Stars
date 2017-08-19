@@ -169,7 +169,22 @@ public class MissionList {
       }
     }
     return null;
+  }
 
+  /**
+   * Get Gather mission for certain ship type and which is under planning
+   * @param shipType Ship type
+   * @return Gather mission or null
+   */
+  public Mission getGatherMission(final String shipType) {
+    for (Mission mission : missions) {
+      if (mission.getType() == MissionType.GATHER
+          && mission.getPhase() == MissionPhase.PLANNING
+          && mission.getShipType().equals(shipType)) {
+        return mission;
+      }
+    }
+    return null;
   }
 
   /**

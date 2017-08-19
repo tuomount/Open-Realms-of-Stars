@@ -196,6 +196,9 @@ public class AITurnView extends BlackPanel {
       case MOVE:
         MissionHandling.handleMove(mission, fleet, info, game);
         break;
+      case GATHER:
+        MissionHandling.handleGather(mission, fleet, info, game);
+        break;
       default:
         throw new IllegalArgumentException("Unknown mission type for AI!");
       }
@@ -301,7 +304,7 @@ public class AITurnView extends BlackPanel {
       final Coordinate coord, final String shipType) {
     Mission gatherMission = new Mission(MissionType.GATHER,
         MissionPhase.PLANNING, coord);
-    gatherMission.setPlanetBuilding(mission.getPlanetBuilding());
+    gatherMission.setPlanetGathering(mission.getPlanetBuilding());
     gatherMission.setShipType(shipType);
     return gatherMission;
   }

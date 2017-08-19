@@ -5,6 +5,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionHandling;
+import org.openRealmOfStars.AI.Mission.MissionPhase;
+import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.AI.PlanetHandling.PlanetHandling;
 import org.openRealmOfStars.AI.Research.Research;
 import org.openRealmOfStars.gui.icons.Icons;
@@ -1136,6 +1140,14 @@ public class StarMap {
   public void handleAIResearchAndPlanets() {
     PlayerInfo info = players.getPlayerInfoByIndex(aiTurnNumber);
     if (info != null && !info.isHuman()) {
+      // Try to locate ships for gather missions
+      for (int i = 0; i < info.getMissions().getSize(); i++) {
+        Mission mission = info.getMissions().getMissionByIndex(i);
+        if (mission.getType() == MissionType.GATHER
+            && mission.getPhase() == MissionPhase.PLANNING) {
+          MissionHandling.findGatheringShip(mission, info);
+        }
+      }
       // Handle research
       Research.handle(info);
       ArrayList<Message> messages = info.getMsgList().getFullList();

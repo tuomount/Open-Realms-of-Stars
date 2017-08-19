@@ -228,8 +228,8 @@ public final class MissionHandling {
   }
 
   /**
-   * Handle Colonize mission
-   * @param mission Colonize mission, does nothing if type is wrong
+   * Handle Move mission
+   * @param mission Move mission, does nothing if type is wrong
    * @param fleet Fleet on mission
    * @param info PlayerInfo
    * @param game Game for getting star map and planet
@@ -252,8 +252,51 @@ public final class MissionHandling {
         makeReroute(game, fleet, info, mission);
       }
     } // End of colonize
+  }
+
+  /**
+   * Handle Gather mission
+   * @param mission Gather mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleGather(final Mission mission, final Fleet fleet,
+      final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.GATHER) {
+      if (mission.getPhase() != MissionPhase.TREKKING) {
+        Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
+            mission.getY(), fleet.getFleetFtlSpeed());
+        fleet.setRoute(route);
+        mission.setPhase(MissionPhase.TREKKING);
+      }
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getX() == mission.getX()
+          && fleet.getY() == mission.getY()) {
+        // Target acquired, mission complete
+        String attackFleetName = "Attaker of " +  mission.getTargetPlanet();
+        Fleet attackFleet = info.getFleets().getByName(attackFleetName);
+        if (attackFleet == null) {
+          if (info.getFleets().isUniqueName(attackFleetName, fleet)) {
+            fleet.setName("Attacker of " + mission.getTargetPlanet());
+          } else {
+            fleet.setName(info.getFleets().generateUniqueName(
+                attackFleetName));
+          }
+        } else {
+          fleet.setName(info.getFleets().generateUniqueName(
+              attackFleetName));
+          mergeFleets(attackFleet, info);
+        }
+        info.getMissions().remove(mission);
+      } else if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+        makeReroute(game, fleet, info, mission);
+      }
+    } // End of colonize
 
   }
+
 
   /**
    * Handle Colonize mission
@@ -267,7 +310,7 @@ public final class MissionHandling {
     if (mission != null && mission.getType() == MissionType.ATTACK) {
       if (mission.getPhase() == MissionPhase.PLANNING
           && mission.getTargetPlanet() != null && info.getMissions()
-              .isAttackMissionLast(mission.getX(), mission.getY())) {
+              .isAttackMissionLast(mission.getTargetPlanet())) {
         int bombers = 0;
         int trooper = 0;
         int military = 0;

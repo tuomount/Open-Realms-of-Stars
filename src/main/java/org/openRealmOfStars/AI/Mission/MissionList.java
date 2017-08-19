@@ -137,20 +137,19 @@ public class MissionList {
   }
 
   /**
-   * Find a Attack mission for certain planet and only one attack
-   * @param x coordinate where is rendevouz x coordinate
-   * @param y coordinate where is rendevouz y coordinate
+   * Find a Gather missions for certain planet and only one attack
+   * @param planetName Planet where to attack
    * @return true if only one attack mission found
    */
-  public Boolean isAttackMissionLast(final int x, final int y) {
+  public boolean isAttackMissionLast(final String planetName) {
     int count = 0;
     for (Mission mission : missions) {
-      if (mission.getType() == MissionType.ATTACK && mission.getX() == x
-          && mission.getY() == y) {
+      if (mission.getType() == MissionType.GATHER
+          && mission.getTargetPlanet().equals(planetName)) {
         count++;
       }
     }
-    if (count == 1) {
+    if (count == 0) {
       return true;
     }
     return false;

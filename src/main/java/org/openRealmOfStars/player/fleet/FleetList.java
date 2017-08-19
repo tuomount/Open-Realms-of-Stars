@@ -133,9 +133,19 @@ public class FleetList {
    * @return new fleet name
    */
   public String generateUniqueName() {
+    return generateUniqueName("Fleet");
+  }
+
+  /**
+   * Generate unique name for fleet
+   * @param startWith fleet name starts with this name
+   *        and appends with " #" + number
+   * @return new fleet name
+   */
+  public String generateUniqueName(final String startWith) {
     String resultUniqueName = null;
     for (int i = fleetList.size() + 1; i >= 0; i--) {
-        resultUniqueName = "Fleet #" + i;
+        resultUniqueName = startWith + " #" + i;
       if (isUniqueName(resultUniqueName, null)) {
         break;
       }

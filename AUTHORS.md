@@ -78,4 +78,8 @@ Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 Observing The Star by
 YD (CC0)
 
+A million light years between us by
+Alexander Zhelanov
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
 

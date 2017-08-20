@@ -75,4 +75,9 @@ public class MusicFileInfo {
     return fileName;
   }
 
+  @Override
+  public String toString() {
+    return songName + " by " + author;
+  }
+
 }

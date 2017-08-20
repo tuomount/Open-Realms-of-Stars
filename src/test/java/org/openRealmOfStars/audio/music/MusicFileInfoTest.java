@@ -37,6 +37,7 @@ public class MusicFileInfoTest {
     assertEquals("test name", info.getName());
     assertEquals("The Star", info.getAuthor());
     assertEquals("/resources/music/testname.ogg", info.getFilename());
+    assertEquals("test name by The Star", info.toString());
   }
 
 }

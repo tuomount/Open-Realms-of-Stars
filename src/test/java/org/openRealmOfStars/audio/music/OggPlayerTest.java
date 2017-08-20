@@ -44,6 +44,9 @@ public class OggPlayerTest {
     assertEquals(50, OggPlayer.getOggVolume());
     OggPlayer.setOggVolume(75);
     assertEquals(75, OggPlayer.getOggVolume());
+    assertEquals(true, player.isLoop());
+    player.setLoop(false);
+    assertEquals(false, player.isLoop());
   }
   
 }

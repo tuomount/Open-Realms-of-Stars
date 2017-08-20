@@ -284,7 +284,8 @@ public class Game implements ActionListener {
       KeyboardFocusManager kfm = KeyboardFocusManager
           .getCurrentKeyboardFocusManager();
       kfm.addKeyEventDispatcher(new GameKeyAdapter(this));
-      MusicPlayer.play(MusicPlayer.YD_OBSERVING_STAR);
+      MusicPlayer.play(MusicPlayer.MILLION_LIGHT_YEARS);
+      MusicPlayer.setLoop(false);
     }
     changeGameState(GameState.MAIN_MENU);
   }

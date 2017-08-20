@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.openRealmOfStars.game.GameState;
+import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
@@ -58,9 +59,26 @@ public final class MusicPlayer {
       "Observing The Star", "YD", "/resources/musics/ObservingTheStar.ogg");
 
   /**
+   * A million light years between us By Alexander Zhelanov CC-BY 3.0
+   */
+  public static final MusicFileInfo MILLION_LIGHT_YEARS = new MusicFileInfo(
+      "A million light years between us", "Alexander Zhelanov",
+      "/resources/musics/A million light years between us.ogg");
+
+  /**
+   * List of music to played while playing
+   */
+  private static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,
+      MILLION_LIGHT_YEARS};
+  /**
    * What music file is currently playing
    */
   private static MusicFileInfo nowPlaying;
+
+  /**
+   * Flag to make music player loop
+   */
+  private static boolean playerLoop = true;
 
   /**
    * Play the MusicFile to the sound card
@@ -110,6 +128,7 @@ public final class MusicPlayer {
         ErrorLogger.log(e);
         return;
       }
+      player.setLoop(playerLoop);
       // run in new thread to play in background
       new Thread() {
         public void run() {
@@ -131,6 +150,25 @@ public final class MusicPlayer {
    */
   public static boolean isPlaying() {
     return playing;
+  }
+
+  /**
+   * Is player looping or not
+   * @return True if looping
+   */
+  public static boolean isLoop() {
+    return playerLoop;
+  }
+
+  /**
+   * Make music player loop or disable loop
+   * @param loop True to enable loop
+   */
+  public static void setLoop(final boolean loop) {
+    playerLoop = loop;
+    if (player != null) {
+      player.setLoop(loop);
+    }
   }
 
   /**
@@ -185,15 +223,15 @@ public final class MusicPlayer {
           || state == GameState.PLAYER_SETUP) {
         // Main menu song
         // FIXME Change to main menu song later
-        play(YD_OBSERVING_STAR);
+        play(MILLION_LIGHT_YEARS);
       } else if (state == GameState.NEWS_CORP_VIEW) {
         // News corp song
         // FIXME Change to news corp song later
         play(YD_OBSERVING_STAR);
       } else {
         // Game music
-        // FIXME Make actual game music list
-        play(YD_OBSERVING_STAR);
+        int index = DiceGenerator.getRandom(GAME_MUSIC_LIST.length - 1);
+        play(GAME_MUSIC_LIST[index]);
       }
     }
   }

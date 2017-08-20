@@ -111,6 +111,11 @@ public class OggPlayer {
   private boolean stopPlay = false;
 
   /**
+   * Flag to make music player loop
+   */
+  private boolean loop = true;
+
+  /**
    * Ogg volume, default is 50%
    */
   private static int oggVolume = 50;
@@ -419,7 +424,11 @@ public class OggPlayer {
       if (stopPlay) {
         break;
       } else {
-        oggStream.reset();
+        if (isLoop()) {
+          oggStream.reset();
+        } else {
+          break;
+        }
       }
     }
     joggSyncState.clear();
@@ -431,6 +440,22 @@ public class OggPlayer {
     } catch (Exception e) {
       oggStream = null;
     }
+  }
+
+  /**
+   * Is loop enabled
+   * @return True if looping is enabled
+   */
+  public boolean isLoop() {
+    return loop;
+  }
+
+  /**
+   * Set looping
+   * @param loop the loop to set
+   */
+  public void setLoop(final boolean loop) {
+    this.loop = loop;
   }
 
 }

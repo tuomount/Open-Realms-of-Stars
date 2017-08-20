@@ -81,7 +81,7 @@ public final class SpeechFactory {
     SpeechType type = SpeechType.ASK_MOVE_FLEET;
     switch (race) {
       case CENTAURS: return new SpeechLine(type,
-          "Hey, your fleet called " + fleetName + "!");
+          "Hey, your fleet called " + fleetName + " is in our sector!");
       case GREYANS: return new SpeechLine(type,
           "Your fleet " + fleetName + " is on my sector!");
       case HUMAN: return new SpeechLine(type,

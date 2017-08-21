@@ -252,6 +252,16 @@ public class Game implements ActionListener {
   private static final int WINDOW_Y_SIZE = 768;
 
   /**
+   * Y coordinate when showing music text at top of screen
+   */
+  private static final int MUSIC_TEXT_TOP = 25;
+
+  /**
+   * Y coordinate when showing music text at bottom of screen
+   */
+  private static final int MUSIC_TEXT_BOTTOM = 500;
+
+  /**
    * Animation timer delay in milli seconds.
    */
   private static final int ANIMATION_TIMER_DELAY = 75;
@@ -367,16 +377,25 @@ public class Game implements ActionListener {
       layeredPane.setLayer(view, JLayeredPane.DEFAULT_LAYER);
       layeredPane.add(view);
       layeredPane.setBounds(0, 0, WINDOW_X_SIZE, WINDOW_Y_SIZE);
+      int y = MUSIC_TEXT_TOP;
+      if (view instanceof MainMenu || view instanceof ResearchView
+          || view instanceof ShipView || view instanceof GalaxyCreationView
+          || view instanceof PlayerSetupView) {
+        y = MUSIC_TEXT_BOTTOM;
+      }
       songText = new JLabel("Test");
-      songText.setBounds(650, 25, 350, 100);
+      songText.setBounds(650, y, 350, 100);
       songText.setFont(GuiStatics.getFontCubellanBold());
       songText.setForeground(Color.white);
       MusicFileInfo info = MusicPlayer.getNowPlaying();
-      String text = "<html>" + info.getName() + " by " + info.getAuthor()
-          + "</html>";
+      String text = "<html>Now playing: " + info.getName() + " by "
+          + info.getAuthor() + "</html>";
       songText.setText(text);
       layeredPane.setLayer(songText, JLayeredPane.POPUP_LAYER);
       layeredPane.add(songText);
+      if (MusicPlayer.isTextDisplayedEnough()) {
+        songText.setVisible(false);
+      }
       gameFrame.add(layeredPane);
       gameFrame.validate();
     }
@@ -1094,8 +1113,16 @@ public class Game implements ActionListener {
   @Override
   public void actionPerformed(final ActionEvent arg0) {
     if (arg0.getActionCommand() == GameCommands.COMMAND_MUSIC_TIMER) {
-      if (MusicPlayer.isTextDisplayedEnough()) {
-        songText.setVisible(false);
+      if (songText != null) {
+        if (MusicPlayer.isTextDisplayedEnough()) {
+          songText.setVisible(false);
+        } else {
+          MusicFileInfo info = MusicPlayer.getNowPlaying();
+          String text = "<html>Now playing:<br>" + info.getName() + "<br> by "
+              + info.getAuthor() + "</html>";
+          songText.setText(text);
+          songText.setVisible(true);
+        }
       }
       MusicPlayer.handleMusic(gameState);
       return;

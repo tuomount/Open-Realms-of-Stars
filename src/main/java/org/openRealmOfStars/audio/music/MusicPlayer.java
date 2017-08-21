@@ -81,14 +81,31 @@ public final class MusicPlayer {
   private static boolean playerLoop = true;
 
   /**
+   * How many times text has been displayed
+   */
+  private static int textDisplayed = 0;
+
+  /**
    * Play the MusicFile to the sound card
    * @param musicFile Music File Info
    */
   public static void play(final MusicFileInfo musicFile) {
     nowPlaying = musicFile;
+    textDisplayed = 0;
     play(nowPlaying.getFilename());
   }
 
+  /**
+   * Is text displayed enough
+   * @return True if text can be removed
+   */
+  public static boolean isTextDisplayedEnough() {
+    if (textDisplayed < 20) {
+      textDisplayed++;
+      return false;
+    }
+    return true;
+  }
   /**
    * Get what is now being played.
    * @return Music Info what is now being played.

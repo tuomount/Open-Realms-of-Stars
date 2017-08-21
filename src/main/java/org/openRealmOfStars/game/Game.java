@@ -1,5 +1,6 @@
 package org.openRealmOfStars.game;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
@@ -7,9 +8,12 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
+import org.openRealmOfStars.audio.music.MusicFileInfo;
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.States.AITurnView;
@@ -29,6 +33,7 @@ import org.openRealmOfStars.game.States.ShipDesignView;
 import org.openRealmOfStars.game.States.ShipView;
 import org.openRealmOfStars.game.States.StarMapView;
 import org.openRealmOfStars.game.States.StatView;
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
@@ -219,6 +224,16 @@ public class Game implements ActionListener {
   private JFrame gameFrame;
 
   /**
+   * Layered Panel for view
+   */
+  private JLayeredPane layeredPane;
+
+  /**
+   * Song information to draw
+   */
+  private JLabel songText;
+
+  /**
    * Get Star map
    * @return StarMap
    */
@@ -347,7 +362,22 @@ public class Game implements ActionListener {
   private void updateDisplay(final BlackPanel view) {
     if (gameFrame != null) {
       gameFrame.getContentPane().removeAll();
-      gameFrame.add(view);
+      layeredPane = new JLayeredPane();
+      view.setBounds(0, 0, WINDOW_X_SIZE, WINDOW_Y_SIZE);
+      layeredPane.setLayer(view, JLayeredPane.DEFAULT_LAYER);
+      layeredPane.add(view);
+      layeredPane.setBounds(0, 0, WINDOW_X_SIZE, WINDOW_Y_SIZE);
+      songText = new JLabel("Test");
+      songText.setBounds(650, 25, 350, 100);
+      songText.setFont(GuiStatics.getFontCubellanBold());
+      songText.setForeground(Color.white);
+      MusicFileInfo info = MusicPlayer.getNowPlaying();
+      String text = "<html>" + info.getName() + " by " + info.getAuthor()
+          + "</html>";
+      songText.setText(text);
+      layeredPane.setLayer(songText, JLayeredPane.POPUP_LAYER);
+      layeredPane.add(songText);
+      gameFrame.add(layeredPane);
       gameFrame.validate();
     }
   }
@@ -1064,6 +1094,9 @@ public class Game implements ActionListener {
   @Override
   public void actionPerformed(final ActionEvent arg0) {
     if (arg0.getActionCommand() == GameCommands.COMMAND_MUSIC_TIMER) {
+      if (MusicPlayer.isTextDisplayedEnough()) {
+        songText.setVisible(false);
+      }
       MusicPlayer.handleMusic(gameState);
       return;
     }

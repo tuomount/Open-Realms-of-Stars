@@ -227,9 +227,8 @@ public class Fleet {
   public Ship getFirstShip() {
     if (ships.size() > 0) {
       return ships.get(0);
-    } else {
-      return null;
     }
+    return null;
   }
 
   /**

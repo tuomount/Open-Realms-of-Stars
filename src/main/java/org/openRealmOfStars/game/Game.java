@@ -1189,13 +1189,11 @@ public class Game implements ActionListener {
         if (previousState == GameState.AITURN) {
           changeGameState(previousState);
           return;
-        } else {
-          changeGameState(GameState.STARMAP);
-          return;
         }
-      } else {
-        combatView.handleActions(arg0);
+        changeGameState(GameState.STARMAP);
+        return;
       }
+      combatView.handleActions(arg0);
     }
     if (gameState == GameState.PLANETBOMBINGVIEW && planetBombingView != null) {
       planetBombingView.handleAction(arg0);
@@ -1287,10 +1285,9 @@ public class Game implements ActionListener {
         if (previousState == GameState.AITURN) {
           changeGameState(previousState);
           return;
-        } else {
-          changeGameState(GameState.STARMAP);
-          return;
         }
+        changeGameState(GameState.STARMAP);
+        return;
       }
       diplomacyView.handleAction(arg0);
     }

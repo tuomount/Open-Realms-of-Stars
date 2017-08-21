@@ -68,6 +68,7 @@ public class ShipTest {
     assertEquals(false, ship.isColonyModule());
     assertEquals(false, ship.isTrooperModule());
     assertEquals(100, ship.getHitChance(weapon));
+    assertEquals(false, ship.isStarBase());
     
     design = new ShipDesign(hull);
     design.addComponent(energy);
@@ -218,4 +219,41 @@ public class ShipTest {
 
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testStarBase() {
+    ShipHull hull = ShipHullFactory.createByName("Small starbase Mk1", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
+    ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+    ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+    ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
+    design.addComponent(energy);
+    design.addComponent(engine);
+    design.addComponent(armor);
+    design.addComponent(weapon);
+    Ship ship = new Ship(design);
+    assertEquals(1,ship.getArmor());
+    assertEquals(0,ship.getShield());
+    assertEquals(2,ship.getFtlSpeed());
+    assertEquals(2,ship.getSpeed());
+    assertEquals(1,ship.getTacticSpeed());
+    assertEquals(0,ship.getColonist());
+    assertEquals(0,ship.getMetal());
+    assertEquals(1,ship.getHullPointForComponent(0));
+    assertEquals(0,ship.getHullPointForComponent(99));
+    assertEquals(true,ship.hasWeapons());
+    assertEquals(false,ship.hasBombs());
+    assertEquals(0, ship.getScannerDetectionLvl());
+    assertEquals(0, ship.getScannerLvl());
+    assertEquals(10, ship.getDefenseValue());
+    assertEquals(6, ship.getTotalMilitaryPower());
+    assertEquals(false, ship.isColonyShip());
+    assertEquals(false, ship.isPrivateeringShip());
+    assertEquals(false, ship.isTrooperShip());
+    assertEquals(false, ship.isColonyModule());
+    assertEquals(false, ship.isTrooperModule());
+    assertEquals(100, ship.getHitChance(weapon));
+    assertEquals(true, ship.isStarBase());
+  }
 }

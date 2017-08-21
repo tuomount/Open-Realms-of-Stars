@@ -69,6 +69,10 @@ public final class GameCommands {
    */
   public static final String COMMAND_ROUTE_FLEET = "RouteFleetCommand";
   /**
+   * Deploy starbase command
+   */
+  public static final String COMMAND_DEPLOY_STARBASE = "DeployStarbaseCommand";
+  /**
    * View planet command
    */
   public static final String COMMAND_VIEW_PLANET = "ViewPlanetCommand";

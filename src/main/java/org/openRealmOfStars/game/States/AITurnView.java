@@ -576,7 +576,8 @@ public class AITurnView extends BlackPanel {
                 msg.setCoordinate(fleet.getCoordinate());
                 info.getMsgList().addNewMessage(msg);
               }
-            } else if (fleet.getMovesLeft() > 0) {
+            } else if (fleet.getMovesLeft() > 0
+                && !fleet.isStarBaseDeployed()) {
               // Make sure fleet can actually move
               if (fleet.getRoute().makeNextMove(game.getStarMap())
                   && !game.getStarMap().isBlocked(fleet.getRoute().getX(),
@@ -616,7 +617,12 @@ public class AITurnView extends BlackPanel {
             msg.setCoordinate(fleet.getCoordinate());
             info.getMsgList().addNewMessage(msg);
           }
-          fleet.setMovesLeft(fleet.getFleetSpeed());
+          if (fleet.isStarBaseDeployed()) {
+            fleet.setMovesLeft(0);
+            // TODO handle starbase specific components
+          } else {
+            fleet.setMovesLeft(fleet.getFleetSpeed());
+          }
           game.getStarMap().doFleetScanUpdate(info, fleet, null);
         }
       }

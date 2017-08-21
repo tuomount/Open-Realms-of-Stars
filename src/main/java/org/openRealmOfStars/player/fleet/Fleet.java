@@ -651,4 +651,18 @@ public class Fleet {
   public void decMovesLeft() {
     this.movesLeft--;
   }
+
+  /**
+   * Is starbase deployed or not
+   * @return True if starbase is deployed
+   */
+  public boolean isStarBaseDeployed() {
+    if (ships.size() == 1) {
+      Ship ship = ships.get(0);
+      if (ship.isStarBase() && ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

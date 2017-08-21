@@ -1375,4 +1375,12 @@ private int increaseDefenseValueWithJammer() {
     return false;
   }
 
+  /**
+   * Is ship starbase or not
+   * @return True if ship is actually starbase
+   */
+  public boolean isStarBase() {
+    return hull.getHullType() == ShipHullType.STARBASE;
+  }
+
 }

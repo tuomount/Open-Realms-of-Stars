@@ -37,6 +37,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -311,6 +312,13 @@ public class FleetView extends BlackPanel {
     btn.addActionListener(listener);
     btn.setEnabled(!interactive);
     fleetBtns.add(btn);
+    fleetBtns.add(Box.createRigidArea(new Dimension(5, 5)));
+    btn = new SpaceButton("Deploy", GameCommands.COMMAND_DEPLOY_STARBASE);
+    btn.addActionListener(listener);
+    btn.setToolTipText("Deploy starbase");
+    btn.setEnabled(interactive);
+    fleetBtns.add(btn);
+
     eastPanel.add(fleetBtns);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new TransparentLabel(eastPanel, "Other fleets");
@@ -535,6 +543,17 @@ public class FleetView extends BlackPanel {
       // TODO Change should for something else
       SoundPlayer.playMenuSound();
       updatePanel();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_DEPLOY_STARBASE)) {
+      for (Ship ship : fleet.getShips()) {
+        if (ship.getHull().getHullType() == ShipHullType.STARBASE) {
+          fleet.removeShip(ship);
+          Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+          newFleet.setName(fleetList.generateUniqueName("Deep Space"));
+          ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+          fleetList.add(newFleet);
+        }
+      }
     }
   }
 

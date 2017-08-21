@@ -1099,7 +1099,7 @@ public boolean launchIntercept(final int distance,
       Coordinate farAway = getFarestFormEnemy(closest);
       aStar = new AStarSearch(this, getCurrentShip(), farAway, 0);
     }
-    if (aStar != null && aStar.doSearch()) {
+    if (aStar.doSearch()) {
       aStar.doRoute();
     } else {
       // Could not found route for faraway or wormhole

@@ -345,9 +345,8 @@ public final class Icons {
     if (x >= 0 && y >= 0 && x + width < image.getWidth() + 1
         && y + height < image.getHeight() + 1) {
       return image.getSubimage(x, y, width, height);
-    } else {
-      throw new RasterFormatException("Icon is outside of image.");
     }
+    throw new RasterFormatException("Icon is outside of image.");
   }
   /**
    * Init Icons

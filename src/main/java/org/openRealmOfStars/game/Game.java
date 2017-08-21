@@ -1186,6 +1186,7 @@ public class Game implements ActionListener {
       if (combatView.isCombatEnded() && arg0.getActionCommand()
           .equals(GameCommands.COMMAND_END_BATTLE_ROUND)) {
         SoundPlayer.playMenuSound();
+        MusicPlayer.playGameMusic();
         if (previousState == GameState.AITURN) {
           changeGameState(previousState);
           return;

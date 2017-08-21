@@ -113,7 +113,11 @@ public class CreditsView extends BlackPanel {
       + "Observing The Star by\n"
       + "YD (CC0)\n\n"
       + "A million light years between us by\n"
-      + "Alexander Zhelanov\n"
+      + "Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov\n"
+      + "Licensed under CC BY 3.0 "
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Neon Transit by\n"
+      + "Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov\n"
       + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n";
 

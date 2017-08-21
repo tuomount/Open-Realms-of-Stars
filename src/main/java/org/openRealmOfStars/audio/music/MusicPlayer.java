@@ -62,14 +62,25 @@ public final class MusicPlayer {
    * A million light years between us By Alexander Zhelanov CC-BY 3.0
    */
   public static final MusicFileInfo MILLION_LIGHT_YEARS = new MusicFileInfo(
-      "A million light years between us", "Alexander Zhelanov",
+      "A million light years between us", "Alexandr Zhelanov",
       "/resources/musics/A million light years between us.ogg");
+
+  /**
+   * Neon Transit By Alexandr Zhelanov CC-BY 3.0
+   */
+  public static final MusicFileInfo NEON_TRANSIT = new MusicFileInfo(
+      "Neon Transit", "Alexandr Zhelanov",
+      "/resources/musics/Neon Transit.ogg");
 
   /**
    * List of music to played while playing
    */
   private static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,
       MILLION_LIGHT_YEARS};
+  /**
+   * List of music to played while combat
+   */
+  private static final MusicFileInfo[] COMBAT_MUSIC_LIST = {NEON_TRANSIT};
   /**
    * What music file is currently playing
    */
@@ -221,6 +232,20 @@ public final class MusicPlayer {
   }
 
   /**
+   * Play Combat music
+   */
+  public static void playCombatMusic() {
+    int index = DiceGenerator.getRandom(COMBAT_MUSIC_LIST.length - 1);
+    play(COMBAT_MUSIC_LIST[index]);
+  }
+  /**
+   * Play Combat music
+   */
+  public static void playGameMusic() {
+    int index = DiceGenerator.getRandom(GAME_MUSIC_LIST.length - 1);
+    play(GAME_MUSIC_LIST[index]);
+  }
+  /**
    * Handle music if song playing stops.
    * This will restart new music
    * @param state GameState
@@ -229,8 +254,7 @@ public final class MusicPlayer {
     if (!isPlaying()) {
       if (state == GameState.COMBAT) {
         // Combat music
-        // FIXME Make actual combat music list
-        play(YD_OBSERVING_STAR);
+        playCombatMusic();
       } else if (state == GameState.DIPLOMACY_VIEW) {
         // Keep playing the same song
         play(nowPlaying);
@@ -249,8 +273,7 @@ public final class MusicPlayer {
         play(YD_OBSERVING_STAR);
       } else {
         // Game music
-        int index = DiceGenerator.getRandom(GAME_MUSIC_LIST.length - 1);
-        play(GAME_MUSIC_LIST[index]);
+        playGameMusic();
       }
     }
   }

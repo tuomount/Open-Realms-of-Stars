@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
+import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -146,6 +147,7 @@ public class BattleView extends BlackPanel {
   public BattleView(final Fleet fleet1, final PlayerInfo player1,
       final Fleet fleet2, final PlayerInfo player2, final StarMap map,
       final ActionListener listener) {
+    MusicPlayer.playCombatMusic();
     this.map = map;
     Coordinate escapePosition = StarMapUtilities.getEscapeCoordinates(
         fleet2.getCoordinate(), fleet1.getCoordinate());

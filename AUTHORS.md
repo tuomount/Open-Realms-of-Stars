@@ -79,7 +79,11 @@ Observing The Star by
 YD (CC0)
 
 A million light years between us by
-Alexander Zhelanov
+Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
+Neon Transit by
+Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
 

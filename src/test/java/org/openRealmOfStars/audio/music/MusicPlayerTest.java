@@ -43,7 +43,7 @@ public class MusicPlayerTest {
 
     MusicPlayer.setMusicEnabled(false);
     MusicPlayer.handleMusic(GameState.COMBAT);
-    assertEquals(MusicPlayer.YD_OBSERVING_STAR, MusicPlayer.getNowPlaying());
+    assertEquals(MusicPlayer.NEON_TRANSIT, MusicPlayer.getNowPlaying());
     MusicPlayer.handleMusic(GameState.MAIN_MENU);
     assertEquals(MusicPlayer.MILLION_LIGHT_YEARS, MusicPlayer.getNowPlaying());
     MusicPlayer.handleMusic(GameState.DIPLOMACY_VIEW);

@@ -174,7 +174,7 @@ public class OggPlayer {
    * @return SourceDataLine If audio line is available, otherwise null
    */
   private SourceDataLine getOutputLine(final int channels, final int rate) {
-    AudioFormat audioFormat = new AudioFormat((float) rate, 16, channels,
+    AudioFormat audioFormat = new AudioFormat(rate, 16, channels,
         true, false);
     DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat,
         AudioSystem.NOT_SPECIFIED);
@@ -218,6 +218,7 @@ public class OggPlayer {
    * Play the OGG from opened InputStream
    * @throws IOException if something fails unexpectedly while playing.
    */
+  @SuppressWarnings("resource")
   public void play() throws IOException {
     oggStream.reset();
     initializeJOrbis();
@@ -241,9 +242,8 @@ public class OggPlayer {
         if (joggSyncState.pageout(joggPage) != 1) {
           if (bytes < BUFFER_SIZE) {
             break;
-          } else {
-            throw new IOException("Not and OGG stream!");
           }
+          throw new IOException("Not and OGG stream!");
         }
       }
       joggStreamState.init(joggPage.serialno());
@@ -423,12 +423,11 @@ public class OggPlayer {
       jorbisInfo.clear();
       if (stopPlay) {
         break;
+      }
+      if (isLoop()) {
+        oggStream.reset();
       } else {
-        if (isLoop()) {
-          oggStream.reset();
-        } else {
-          break;
-        }
+        break;
       }
     }
     joggSyncState.clear();

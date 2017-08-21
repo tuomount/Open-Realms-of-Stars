@@ -438,10 +438,9 @@ public class AITurnView extends BlackPanel {
                   SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
                   game.changeGameState(GameState.DIPLOMACY_VIEW, fleet);
                   return;
-                } else {
-                  MissionHandling.handleDiplomacyBetweenAis(game, info, i,
-                      fleet);
                 }
+                MissionHandling.handleDiplomacyBetweenAis(game, info, i,
+                   fleet);
               }
             }
           }

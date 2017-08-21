@@ -117,6 +117,7 @@ public final class MusicPlayer {
    * Play the OGG file to the sound card
    * @param musicFile String
    */
+  @SuppressWarnings("resource")
   public static synchronized void play(final String musicFile) {
     if (musicEnabled) {
       if (playing) {
@@ -148,6 +149,7 @@ public final class MusicPlayer {
       player.setLoop(playerLoop);
       // run in new thread to play in background
       new Thread() {
+        @Override
         public void run() {
           try {
             playing = true;

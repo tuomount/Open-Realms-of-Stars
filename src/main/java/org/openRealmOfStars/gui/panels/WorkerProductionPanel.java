@@ -55,6 +55,7 @@ public class WorkerProductionPanel extends InvisiblePanel {
    */
   private IconLabel label;
 
+
   /**
    * Create Worker Production panel with - and + buttons.
    * @param parent Parent component to draw opaque
@@ -94,6 +95,7 @@ public class WorkerProductionPanel extends InvisiblePanel {
   public void setInteractive(final boolean interactive) {
     btnMinus.setEnabled(interactive);
     btnPlus.setEnabled(interactive);
+    setDirty();
   }
 
   /**
@@ -102,6 +104,7 @@ public class WorkerProductionPanel extends InvisiblePanel {
    */
   public void setText(final String text) {
     label.setText(text);
+    setDirty();
   }
 
   /**

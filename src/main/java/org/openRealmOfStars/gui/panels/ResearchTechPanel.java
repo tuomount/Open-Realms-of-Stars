@@ -157,6 +157,7 @@ public class ResearchTechPanel extends InvisiblePanel {
    */
   public void setSliderValue(final int value) {
     slider.setValue(value);
+    setDirty();
   }
 
   /**
@@ -181,6 +182,7 @@ public class ResearchTechPanel extends InvisiblePanel {
    */
   public void setText(final String text) {
     label.setText(text);
+    setDirty();
   }
 
   /**
@@ -213,6 +215,7 @@ public class ResearchTechPanel extends InvisiblePanel {
    */
   public void setEnableUpgradeButton(final boolean value) {
     btnUpgrade.setEnabled(value);
+    setDirty();
   }
 
   /**
@@ -221,6 +224,7 @@ public class ResearchTechPanel extends InvisiblePanel {
    */
   public void setUpgadeBtnText(final String text) {
     lvlLabel.setText(text);
+    setDirty();
   }
 
   /**

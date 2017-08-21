@@ -40,6 +40,11 @@ public class InvisiblePanel extends JPanel {
   private Component parent;
 
   /**
+   * Components are dirty need to repaint background
+   */
+  private boolean dirty;
+
+  /**
    * Create a new invisible panel
    * @param parent Parent component
    */
@@ -49,8 +54,18 @@ public class InvisiblePanel extends JPanel {
 
   @Override
   public void paintComponent(final Graphics g) {
-    parent.repaint();
+    if (dirty) {
+      parent.repaint();
+      dirty = false;
+    }
     // Invisible panel does not paint anything
+  }
+
+  /**
+   * Components are dirty need repainting.
+   */
+  public void setDirty() {
+    dirty = true;
   }
 
 }

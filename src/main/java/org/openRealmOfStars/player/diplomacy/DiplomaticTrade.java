@@ -1191,6 +1191,7 @@ public class DiplomaticTrade {
 
           }
         }
+        break;
       }
       case TECH: {
         info.getTechList().addTech(offer.getTech());

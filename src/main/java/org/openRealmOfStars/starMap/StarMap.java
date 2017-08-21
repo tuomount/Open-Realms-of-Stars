@@ -827,8 +827,8 @@ public class StarMap {
         PlayerInfo player = players.getPlayerInfoByIndex(i);
         for (int j = 0; j < player.getFleets().getNumberOfFleets(); j++) {
           Fleet fleet = player.getFleets().getByIndex(j);
-          if (fleetTiles[fleet.getX()][fleet.getY()] == null
-              && fleet != null && fleet.getFirstShip() != null) {
+          if (fleet != null && fleetTiles[fleet.getX()][fleet.getY()] == null
+              && fleet.getFirstShip() != null) {
             FleetTileInfo info = new FleetTileInfo(
                 fleet.getFirstShip().getHull().getRace(),
                 fleet.getFirstShip().getHull().getImageIndex(), i, j);
@@ -837,7 +837,8 @@ public class StarMap {
             for (int k = 0; k < player.getFleets().getNumberOfFleets(); k++) {
               if (j != k) {
                 Fleet fleet2 = player.getFleets().getByIndex(k);
-                if (fleet2.getX() == fleet.getX()
+                if (fleet2 != null &&  fleet != null
+                    && fleet2.getX() == fleet.getX()
                     && fleet2.getY() == fleet.getY()
                     && fleet2.getMilitaryValue() > fleet.getMilitaryValue()) {
                   FleetTileInfo info = new FleetTileInfo(

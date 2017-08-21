@@ -237,7 +237,7 @@ public class StatisticPanel extends JPanel {
     if (GRID_DENSITY / scaleY < 1) {
       amount = largestY;
     } else {
-      mult = (int) Math.round(GRID_DENSITY / (Double) scaleY);
+      mult = (int) Math.round(GRID_DENSITY / scaleY);
       amount = (int) Math.ceil((double) drawHeigth / GRID_DENSITY);
       if (mult * scaleY * amount < drawHeigth - GRID_DENSITY) {
         amount++;

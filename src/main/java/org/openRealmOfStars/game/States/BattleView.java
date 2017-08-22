@@ -21,6 +21,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatMapMouseListener;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
@@ -319,6 +320,7 @@ public class BattleView extends BlackPanel {
     }
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)
         && combat.getCurrentShip().getPlayer().isHuman()) {
+      SoundPlayer.playMenuSound();
       String number = arg0.getActionCommand()
           .substring(GameCommands.COMMAND_COMPONENT_USE.length());
       int index = Integer.valueOf(number);
@@ -327,6 +329,13 @@ public class BattleView extends BlackPanel {
           && combat.getCurrentShip().getShip().componentIsWorking(index)) {
         combatMapMouseListener.setComponentUse(index);
         combat.setComponentUse(index);
+        if (combat.getCurrentShip().getShip().isStarBase()
+            && combat.getCurrentShip().getShip().getFlag(
+                Ship.FLAG_STARBASE_DEPLOYED)) {
+          textLogger.addLog("Undeployed Starbase cannot use weapons!");
+          combatMapMouseListener.setComponentUse(-1);
+          combat.setComponentUse(-1);
+        }
       } else {
         combatMapMouseListener.setComponentUse(-1);
         combat.setComponentUse(-1);

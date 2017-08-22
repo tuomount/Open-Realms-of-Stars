@@ -7,6 +7,7 @@ import java.awt.event.MouseMotionListener;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -125,6 +126,11 @@ public class CombatMapMouseListener extends MouseAdapter
       if (componentUse != -1) {
         CombatShip ship = combat.getCurrentShip();
         ShipComponent weapon = ship.getShip().getComponent(componentUse);
+        if (ship.getShip().isStarBase()
+            && !ship.getShip().getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
+          // Starbase cannot use weapons if not deployed
+          weapon = null;
+        }
         if (weapon != null && weapon.isWeapon()
             && !ship.isComponentUsed(componentUse)) {
           CombatShip target = combat.getShipFromCoordinate(combat.getCursorX(),

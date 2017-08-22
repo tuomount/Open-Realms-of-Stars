@@ -1150,7 +1150,15 @@ public boolean launchIntercept(final int distance,
       final BattleInfoPanel infoPanel) {
     CombatShip ai = getCurrentShip();
     if (ai.getShip().getTotalMilitaryPower() > 0) {
-      return handleAiMilitaryShip(textLogger, infoPanel);
+      if (ai.getShip().isStarBase()
+          && ai.getShip().getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
+        return handleAiMilitaryShip(textLogger, infoPanel);
+      }
+      if (!ai.getShip().isStarBase()) {
+        return handleAiMilitaryShip(textLogger, infoPanel);
+      }
+      // Starbase not deployed so it cannot shoot
+      return handleAiNonMilitaryShip(textLogger, infoPanel);
     }
     return handleAiNonMilitaryShip(textLogger, infoPanel);
   }

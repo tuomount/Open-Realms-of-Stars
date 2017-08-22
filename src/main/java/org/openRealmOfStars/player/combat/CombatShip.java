@@ -257,7 +257,11 @@ public class CombatShip implements Comparable<CombatShip> {
    */
   public void reInitShipForRound() {
     int weapons = 0;
-    setMovesLeft(ship.getTacticSpeed());
+    if (ship.isStarBase() && ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
+      setMovesLeft(0);
+    } else {
+      setMovesLeft(ship.getTacticSpeed());
+    }
     componentUsed = new boolean[ship.getNumberOfComponents()];
     for (int i = 0; i < componentUsed.length; i++) {
       componentUsed[i] = false;
@@ -266,7 +270,11 @@ public class CombatShip implements Comparable<CombatShip> {
         weapons++;
       }
     }
-    setAiShotsLeft(weapons);
+    if (ship.isStarBase() && !ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
+      setAiShotsLeft(0);
+    } else {
+      setAiShotsLeft(weapons);
+    }
     ship.regenerateShield();
     damaged = false;
   }

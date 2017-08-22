@@ -189,12 +189,12 @@ public final class TechFactory {
    * Hull tech names for level 9
    */
   public static final String[] HULL_TECH_LEVEL9_NAMES = {"Battleship Mk2",
-      "Privateer Mk3", "Battle cruiser Mk2" };
+      "Privateer Mk3", "Battle cruiser Mk2", "Scout Mk4" };
   /**
    * Hull tech names for level 10
    */
   public static final String[] HULL_TECH_LEVEL10_NAMES = {"Capital ship",
-      "Destroyer Mk4", "Scout Mk4" };
+      "Destroyer Mk4", "Corvette Mk4" };
 
   /**
    * Planetary Improvement tech names for level 1

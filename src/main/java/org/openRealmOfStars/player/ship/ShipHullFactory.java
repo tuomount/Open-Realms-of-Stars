@@ -37,7 +37,7 @@ public final class ShipHullFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPHULL = 31;
+  private static final int MAX_SHIPHULL = 32;
 
   /**
    * Create ShipHull with matching name
@@ -210,6 +210,11 @@ public final class ShipHullFactory {
    * Hull for Capital ship
    */
   public static final int HULL_CAPITAL_SHIP = 30;
+
+  /**
+   * Hull for Corvette Mk4
+   */
+  public static final int HULL_CORVETTE_MK4 = 31;
 
   /**
    * Create ship hull with index
@@ -389,7 +394,7 @@ public final class ShipHullFactory {
     }
     if (index == HULL_SCOUT_MK4) {
       tmp = new ShipHull(index, "Scout Mk4", 4, 4, ShipHullType.NORMAL,
-          ShipSize.SMALL, 10, 10, race);
+          ShipSize.SMALL, 9, 10, race);
       tmp.setImageIndex(ShipImage.SCOUT);
       return tmp;
     }
@@ -402,6 +407,12 @@ public final class ShipHullFactory {
     if (index == HULL_CAPITAL_SHIP) {
       tmp = new ShipHull(index, "Capital ship", 10, 4, ShipHullType.NORMAL,
           ShipSize.HUGE, 30, 30, race);
+      return tmp;
+    }
+    if (index == HULL_CORVETTE_MK4) {
+      tmp = new ShipHull(index, "Corvette Mk4", 5, 4, ShipHullType.NORMAL,
+          ShipSize.SMALL, 10, 10, race);
+      tmp.setImageIndex(ShipImage.CORVETTE);
       return tmp;
     }
 

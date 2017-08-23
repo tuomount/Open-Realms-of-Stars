@@ -109,6 +109,21 @@ public class ShipComponent {
   private int initiativeBoost;
 
   /**
+   * Culture bonus from starbase component
+   */
+  private int cultureBonus;
+
+  /**
+   * Credit bonus from starbase component
+   */
+  private int creditBonus;
+
+  /**
+   * Research bonus from starbase component
+   */
+  private int researchBonus;
+
+  /**
    * Constructor for ship component
    * @param index Index for saving component
    * @param name Component name
@@ -135,6 +150,9 @@ public class ShipComponent {
     this.damage = 0;
     this.initiativeBoost = 0;
     this.setWeaponRange(0);
+    this.researchBonus = 0;
+    this.creditBonus = 0;
+    this.cultureBonus = 0;
   }
 
   /**
@@ -539,6 +557,54 @@ public class ShipComponent {
    */
   public void setInitiativeBoost(final int initiativeBoost) {
     this.initiativeBoost = initiativeBoost;
+  }
+
+  /**
+   * Culture bonus from starbase component
+   * @return Culture bonus
+   */
+  public int getCultureBonus() {
+    return cultureBonus;
+  }
+
+  /**
+   * Set culture bonus for starbase component
+   * @param cultureBonus Culture bonus
+   */
+  public void setCultureBonus(final int cultureBonus) {
+    this.cultureBonus = cultureBonus;
+  }
+
+  /**
+   * Get credit bonus from starbase component
+   * @return Credit bonus
+   */
+  public int getCreditBonus() {
+    return creditBonus;
+  }
+
+  /**
+   * Set credit bonus for starbase component
+   * @param creditBonus Credit bonus
+   */
+  public void setCreditBonus(final int creditBonus) {
+    this.creditBonus = creditBonus;
+  }
+
+  /**
+   * Get research bonus
+   * @return Research bonus
+   */
+  public int getResearchBonus() {
+    return researchBonus;
+  }
+
+  /**
+   * Set research bonus for starbase component
+   * @param researchBonus Research bonus
+   */
+  public void setResearchBonus(final int researchBonus) {
+    this.researchBonus = researchBonus;
   }
 
 }

@@ -107,7 +107,11 @@ public enum ShipComponentType {
   /**
    * Orbital Nuke
    */
-  ORBITAL_NUKE;
+  ORBITAL_NUKE,
+  /**
+   * Component for starbases only
+   */
+  STARBASE_COMPONENT;
 
   /**
    * Get ShipComponentType index

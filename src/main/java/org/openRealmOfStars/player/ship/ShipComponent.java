@@ -505,6 +505,8 @@ public class ShipComponent {
     }
     case ORBITAL_BOMBS: {
       sb.append("Orbital bombs: ");
+      sb.append(getDamage());
+      sb.append("% hit chance");
       sb.append("\n");
       break;
     }
@@ -534,6 +536,9 @@ public class ShipComponent {
       sb.append("Targeting computer: +");
       sb.append(getDamage());
       sb.append("% to hit");
+      sb.append("\n");
+      sb.append("Initiative boost: +");
+      sb.append(getInitiativeBoost());
       sb.append("\n");
       break;
     }

@@ -222,4 +222,20 @@ public class ShipComponentTest {
     assertEquals(3, component.getCultureBonus());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testShipCompentTypeIndex() {
+    String[] expected = {"Beam weapon", "Railgun", "Photon torpedo",
+        "ECM torpedo", "HE missile", "Scanner", "Shield", "Armor",
+        "Shield generator", "Engine", "Powersource", "Cloaking device",
+        "Jammer", "Targeting computer", "Planetary invasion module",
+        "Colony module", "Privateering module", "Orbital bombs",
+        "Oribital nuke"};
+    for (int i = 0; i < 18; i++) {
+      ShipComponentType type = ShipComponentType.getTypeByIndex(i);
+      assertNotEquals(null, type);
+      assertEquals(expected[i], type.toString());
+    }
+  }
+
 }

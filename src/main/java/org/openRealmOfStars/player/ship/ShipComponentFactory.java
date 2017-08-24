@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 136;
+  private static final int MAX_SHIPCOMPONENT = 142;
 
   /**
    * Component Ion drive Mk1
@@ -721,7 +721,35 @@ public final class ShipComponentFactory {
    */
   public static final int COMPONENT_NUCLEAR_DRIVE_MK4 = 135;
 
+  /**
+   * Component Starbase music hall
+   */
+  public static final int COMPONENT_STARBASE_MUSIC_HALL = 136;
 
+  /**
+   * Component Starbase market
+   */
+  public static final int COMPONENT_STARBASE_MARKET = 137;
+
+  /**
+   * Component Starbase lab
+   */
+  public static final int COMPONENT_STARBASE_LAB = 138;
+
+  /**
+   * Component Starbase sports hall
+   */
+  public static final int COMPONENT_STARBASE_SPORTS_HALL = 139;
+
+  /**
+   * Component Starbase nano lab
+   */
+  public static final int COMPONENT_STARBASE_NANO_LAB = 140;
+
+  /**
+   * Component Starbase bank
+   */
+  public static final int COMPONENT_STARBASE_BANK = 141;
   /**
    * Create ShipComponent with matching name
    * @param name Ship component name
@@ -1163,6 +1191,24 @@ public final class ShipComponentFactory {
     case COMPONENT_PRIVATEER_MODULE:
       tmp = createElectronics(index);
       break; // Privateer Module
+    case COMPONENT_STARBASE_MUSIC_HALL:
+      tmp = createStarbaseModule(index);
+      break; // Starbase music hall
+    case COMPONENT_STARBASE_MARKET:
+      tmp = createStarbaseModule(index);
+      break; // Starbase market
+    case COMPONENT_STARBASE_LAB:
+      tmp = createStarbaseModule(index);
+      break; // Starbase lab
+    case COMPONENT_STARBASE_SPORTS_HALL:
+      tmp = createStarbaseModule(index);
+      break; // Starbase sports hall
+    case COMPONENT_STARBASE_NANO_LAB:
+      tmp = createStarbaseModule(index);
+      break; // Starbase nano labb
+    case COMPONENT_STARBASE_BANK:
+      tmp = createStarbaseModule(index);
+      break; // Starbase bank
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -1399,6 +1445,51 @@ public final class ShipComponentFactory {
 
   }
 
+  /**
+   * Create starbase module with index
+   * @param index Index to create
+   * @return ShipComponent or null if index is not found
+   */
+  private static ShipComponent createStarbaseModule(final int index) {
+    ShipComponent tmp = null;
+    if (index == COMPONENT_STARBASE_MUSIC_HALL) {
+      tmp = new ShipComponent(index, "Starbase music hall", 18, 4,
+          ShipComponentType.STARBASE_COMPONENT);
+      tmp.setCultureBonus(1);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == COMPONENT_STARBASE_MARKET) {
+      tmp = new ShipComponent(index, "Starbase market", 12, 6,
+          ShipComponentType.STARBASE_COMPONENT);
+      tmp.setCreditBonus(1);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == COMPONENT_STARBASE_LAB) {
+      tmp = new ShipComponent(index, "Starbase lab", 12, 4,
+          ShipComponentType.STARBASE_COMPONENT);
+      tmp.setResearchBonus(1);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == COMPONENT_STARBASE_SPORTS_HALL) {
+      tmp = new ShipComponent(index, "Starbase sports hall", 30, 22,
+          ShipComponentType.STARBASE_COMPONENT);
+      tmp.setCultureBonus(2);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == COMPONENT_STARBASE_NANO_LAB) {
+      tmp = new ShipComponent(index, "Starbase nano lab", 24, 8,
+          ShipComponentType.STARBASE_COMPONENT);
+      tmp.setResearchBonus(2);
+      tmp.setEnergyRequirement(2);
+    }
+    if (index == COMPONENT_STARBASE_BANK) {
+      tmp = new ShipComponent(index, "Starbase bank", 24, 12,
+          ShipComponentType.STARBASE_COMPONENT);
+      tmp.setCreditBonus(2);
+      tmp.setEnergyRequirement(2);
+    }
+    return tmp;
+  }
   /**
    * Create Engine component with index
    * @param index Index to create

@@ -70,4 +70,18 @@ public class ShipComponentFactoryTest {
     assertEquals(3, electronics.getMetalCost());
   }
 
+  @Test
+  public void testStarbaseModules() {
+    ShipComponent module = ShipComponentFactory.createByName("Starbase bank");
+    assertEquals(2, module.getCreditBonus());
+    assertEquals(2, module.getEnergyRequirement());
+    assertEquals(24, module.getCost());
+    assertEquals(12, module.getMetalCost());
+    module = ShipComponentFactory.createByName("Starbase lab");
+    assertEquals(1, module.getResearchBonus());
+    assertEquals(2, module.getEnergyRequirement());
+    assertEquals(12, module.getCost());
+    assertEquals(4, module.getMetalCost());
+  }
+
 }

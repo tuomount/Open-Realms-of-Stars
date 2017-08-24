@@ -205,17 +205,18 @@ public final class TechFactory {
    * Planetary Improvement tech names for level 2
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL2_NAMES = {"Advanced farm",
-      "Advanced mine", "Advanced factory" };
+      "Advanced mine", "Advanced factory", "Starbase music hall" };
   /**
    * Planetary Improvement tech names for level 3
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL3_NAMES = {
-      "Advanced laboratory", "Market center", "Culture center" };
+      "Advanced laboratory", "Market center", "Culture center",
+      "Starbase market" };
   /**
    * Planetary Improvement tech names for level 4
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL4_NAMES = {"Trade center",
-      "Extreme sports center", "Recycle center" };
+      "Extreme sports center", "Recycle center", "Starbase lab" };
   /**
    * Planetary Improvement tech names for level 5
    */
@@ -226,17 +227,19 @@ public final class TechFactory {
    * Planetary Improvement tech names for level 6
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL6_NAMES = {
-      "Research center", "Stock market", "Galactic sports center" };
+      "Research center", "Stock market", "Galactic sports center",
+      "Starbase sports hall"};
   /**
    * Planetary Improvement tech names for level 7
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL7_NAMES = {
-      "New technology center", "VR movie center", "Advanced recycle center" };
+      "New technology center", "VR movie center", "Advanced recycle center",
+      "Starbase nano lab"};
   /**
    * Planetary Improvement tech names for level 8
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL8_NAMES = {"Galactic bank",
-      "Radiation well" };
+      "Radiation well", "Starbase bank" };
   /**
    * Planetary Improvement tech names for level 9
    */

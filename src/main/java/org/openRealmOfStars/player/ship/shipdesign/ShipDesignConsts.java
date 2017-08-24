@@ -4,6 +4,7 @@ package org.openRealmOfStars.player.ship.shipdesign;
 *
 * Open Realm of Stars game project
 * Copyright (C) 2017 wksdn18
+* Copyright (C) 2017 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -47,6 +48,11 @@ public final class ShipDesignConsts {
    */
   public static final String MANY_COMPUTERS = "Only one targeting computer"
    + " is allowed!";
+  /**
+   * Message when ship contains starbase modules
+   */
+  public static final String STARBASE_MODULE_IN_NOT_STARBASE = "No starbase"
+      + " modules allowed in regular ships!";
   /**
    * The caller references the constants using <tt>Consts.EMPTY_STRING</tt>,
    * and so on. Thus, the caller should be prevented from constructing objects

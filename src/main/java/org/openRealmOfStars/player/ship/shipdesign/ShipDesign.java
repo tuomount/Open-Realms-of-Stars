@@ -595,6 +595,12 @@ public class ShipDesign {
         designOk = false;
         sb.append("Colonization module in non freighter hull.");
       }
+      if (comp.getType() == ShipComponentType.STARBASE_COMPONENT
+          && hull.getHullType() != ShipHullType.STARBASE) {
+        designOk = false;
+        sb.append(ShipDesignConsts.STARBASE_MODULE_IN_NOT_STARBASE);
+        sb.append("\n");
+      }
       if (comp.getType() == ShipComponentType.TARGETING_COMPUTER
           && !targetingComputer) {
         targetingComputer = true;

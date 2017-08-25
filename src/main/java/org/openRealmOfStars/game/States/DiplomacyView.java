@@ -27,8 +27,8 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
-import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
+import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
@@ -277,7 +277,7 @@ public class DiplomacyView extends BlackPanel {
     humanOffer.add(humanCreditOffer);
     center.add(humanOffer);
 
-    InvisiblePanel panel = new InvisiblePanel(center);
+    SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.setAlignmentX(JComponent.LEFT_ALIGNMENT);
     RaceImagePanel aiImg = new RaceImagePanel();
@@ -542,6 +542,7 @@ public class DiplomacyView extends BlackPanel {
       text = SpeechFactory.createLine(type, ai.getRace(), null).getLine();
     }
     infoText.setText(text);
+    this.repaint();
   }
 
   /**

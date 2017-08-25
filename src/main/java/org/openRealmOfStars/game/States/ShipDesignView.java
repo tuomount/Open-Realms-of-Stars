@@ -35,7 +35,7 @@ import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
-import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
@@ -186,12 +186,12 @@ public class ShipDesignView extends BlackPanel {
     hullSelect.setBorder(new SimpleBorder());
     hullSelect.setFont(GuiStatics.getFontCubellan());
     hullSelect.setRenderer(new ShipHullListRenderer());
-    InvisiblePanel invisible = new InvisiblePanel(hullPanel);
-    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
-    TransparentLabel label = new TransparentLabel(invisible, "Design's Name: ");
+    SpaceGreyPanel greyPanel = new SpaceGreyPanel();
+    greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
+    TransparentLabel label = new TransparentLabel(greyPanel, "Design's Name: ");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
-    invisible.add(label);
-    invisible.add(Box.createRigidArea(new Dimension(5, 5)));
+    greyPanel.add(label);
+    greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     designNameText = new JTextField();
     designNameText.setFont(GuiStatics.getFontCubellan());
     designNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
@@ -215,15 +215,14 @@ public class ShipDesignView extends BlackPanel {
         // Nothing to do here
       }
     });
-    invisible.add(designNameText);
-    invisible.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new TransparentLabel(invisible, "Ship's hull: ");
-    // label.setAlignmentX(Component.);
-    invisible.add(label);
-    invisible.add(Box.createRigidArea(new Dimension(5, 5)));
-    invisible.add(hullSelect);
-    invisible.add(Box.createRigidArea(new Dimension(25, 25)));
-    hullPanel.add(invisible);
+    greyPanel.add(designNameText);
+    greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    label = new TransparentLabel(greyPanel, "Ship's hull: ");
+    greyPanel.add(label);
+    greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    greyPanel.add(hullSelect);
+    greyPanel.add(Box.createRigidArea(new Dimension(25, 25)));
+    hullPanel.add(greyPanel);
 
     hullInfoText = new InfoTextArea(10, 30);
     hullInfoText.setEditable(false);
@@ -233,23 +232,23 @@ public class ShipDesignView extends BlackPanel {
     hullPanel.add(scroll);
     hullPanel.add(Box.createRigidArea(new Dimension(25, 25)));
 
-    invisible = new InvisiblePanel(hullPanel);
-    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
+    greyPanel = new SpaceGreyPanel();
+    greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
     hullImage = new ImageLabel(
         ShipImages.humans().getShipImage(ShipImage.COLONY), true);
     hullImage.setFillColor(Color.BLACK);
-    invisible.add(hullImage);
-    invisible.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new TransparentLabel(invisible, "Confirm hull change: ");
+    greyPanel.add(hullImage);
+    greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    label = new TransparentLabel(greyPanel, "Confirm hull change: ");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
-    invisible.add(label);
-    invisible.add(Box.createRigidArea(new Dimension(5, 5)));
+    greyPanel.add(label);
+    greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     SpaceButton btn = new SpaceButton("Change hull",
         GameCommands.COMMAND_SHIPDESIGN_CHANGEHULL);
     btn.addActionListener(listener);
-    invisible.add(btn);
-    invisible.add(Box.createRigidArea(new Dimension(25, 40)));
-    hullPanel.add(invisible);
+    greyPanel.add(btn);
+    greyPanel.add(Box.createRigidArea(new Dimension(25, 40)));
+    hullPanel.add(greyPanel);
 
     base.add(hullPanel, BorderLayout.NORTH);
 
@@ -262,12 +261,12 @@ public class ShipDesignView extends BlackPanel {
     componentPanel.setTitle("Ship's components");
     componentPanel.add(Box.createRigidArea(new Dimension(25, 25)));
 
-    invisible = new InvisiblePanel(componentPanel);
-    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
-    label = new TransparentLabel(invisible, "Add components: ");
+    greyPanel = new SpaceGreyPanel();
+    greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
+    label = new TransparentLabel(greyPanel, "Add components: ");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
-    invisible.add(label);
-    invisible.add(Box.createRigidArea(new Dimension(5, 5)));
+    greyPanel.add(label);
+    greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     ArrayList<String> componentTypes = new ArrayList<>();
     componentTypes.add("All");
     componentTypes.add("Weapons");
@@ -286,9 +285,9 @@ public class ShipDesignView extends BlackPanel {
     componentFilter.setBorder(new SimpleBorder());
     componentFilter.setFont(GuiStatics.getFontCubellan());
     componentFilter.addActionListener(listener);
-    invisible.add(componentFilter);
+    greyPanel.add(componentFilter);
 
-    invisible.add(Box.createRigidArea(new Dimension(5, 5)));
+    greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     componentSelect = new JComboBox<>(filterComponents("All"));
     componentSelect
         .setActionCommand(GameCommands.COMMAND_SHIPDESIGN_COMPONENTSELECTED);
@@ -298,84 +297,84 @@ public class ShipDesignView extends BlackPanel {
     componentSelect.setFont(GuiStatics.getFontCubellan());
     componentSelect.setRenderer(new ShipComponentListRenderer());
     componentSelect.addActionListener(listener);
-    invisible.add(componentSelect);
-    invisible.add(Box.createRigidArea(new Dimension(5, 5)));
+    greyPanel.add(componentSelect);
+    greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     componentInfoText = new InfoTextArea(10, 30);
     componentInfoText.setEditable(false);
     componentInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(componentInfoText);
-    invisible.add(scroll);
-    invisible.add(Box.createRigidArea(new Dimension(5, 5)));
+    greyPanel.add(scroll);
+    greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     btn = new SpaceButton("Add component",
         GameCommands.COMMAND_SHIPDESIGN_COMPONENTADDED);
     btn.addActionListener(listener);
     btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_OK));
-    invisible.add(btn);
-    componentPanel.add(invisible);
+    greyPanel.add(btn);
+    componentPanel.add(greyPanel);
     componentPanel.add(Box.createRigidArea(new Dimension(5, 5)));
 
-    invisible = new InvisiblePanel(componentPanel);
-    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
-    label = new TransparentLabel(invisible, "Component's energy priority: ");
+    greyPanel = new SpaceGreyPanel();
+    greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
+    label = new TransparentLabel(greyPanel, "Component's energy priority: ");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
-    invisible.add(label);
-    invisible.add(Box.createRigidArea(new Dimension(5, 5)));
+    greyPanel.add(label);
+    greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     componentList = new JList<>(design.getComponentList());
     componentList.setCellRenderer(new ShipComponentListRenderer());
     componentList.setBackground(Color.BLACK);
     componentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     scroll = new JScrollPane(componentList);
-    invisible.add(scroll);
-    invisible.add(Box.createRigidArea(new Dimension(5, 5)));
+    greyPanel.add(scroll);
+    greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     btn = new SpaceButton("Higher priority",
         GameCommands.COMMAND_SHIPDESIGN_COMPONENT_PRIORITYHI);
     btn.addActionListener(listener);
     btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_ARROWUP));
-    invisible.add(btn);
-    invisible.add(Box.createRigidArea(new Dimension(5, 5)));
+    greyPanel.add(btn);
+    greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     btn = new SpaceButton("Lower priority",
         GameCommands.COMMAND_SHIPDESIGN_COMPONENT_PRIORITYLO);
     btn.addActionListener(listener);
     btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_ARROWDOWN));
-    invisible.add(btn);
-    invisible.add(Box.createRigidArea(new Dimension(5, 5)));
+    greyPanel.add(btn);
+    greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     btn = new SpaceButton("Remove component",
         GameCommands.COMMAND_SHIPDESIGN_COMPONENTREMOVED);
     btn.addActionListener(listener);
     btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_DELETE));
-    invisible.add(btn);
-    componentPanel.add(invisible);
+    greyPanel.add(btn);
+    componentPanel.add(greyPanel);
     componentPanel.add(Box.createRigidArea(new Dimension(25, 5)));
 
     // Design Panel
     InfoPanel designPanel = new InfoPanel();
     designPanel.setLayout(new BoxLayout(designPanel, BoxLayout.X_AXIS));
     designPanel.setTitle("Design information");
-    invisible = new InvisiblePanel(designPanel);
-    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
+    greyPanel = new SpaceGreyPanel();
+    greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
     designInfoText = new BaseInfoTextArea(10, 30);
     designInfoText.setEditable(false);
     designInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(designInfoText);
-    label = new TransparentLabel(invisible, "Design info:");
+    label = new TransparentLabel(greyPanel, "Design info:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
-    invisible.add(label);
-    invisible.add(scroll);
+    greyPanel.add(label);
+    greyPanel.add(scroll);
     designPanel.add(Box.createRigidArea(new Dimension(15, 5)));
-    designPanel.add(invisible);
+    designPanel.add(greyPanel);
     designPanel.add(Box.createRigidArea(new Dimension(15, 5)));
 
-    invisible = new InvisiblePanel(designPanel);
-    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
+    greyPanel = new SpaceGreyPanel();
+    greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
     designFlawsText = new BaseInfoTextArea(10, 30);
     designFlawsText.setEditable(false);
     designFlawsText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(designFlawsText);
-    label = new TransparentLabel(invisible, "Design flaws:");
+    label = new TransparentLabel(greyPanel, "Design flaws:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
-    invisible.add(label);
-    invisible.add(scroll);
-    designPanel.add(invisible);
+    greyPanel.add(label);
+    greyPanel.add(scroll);
+    designPanel.add(greyPanel);
     designPanel.add(Box.createRigidArea(new Dimension(15, 5)));
 
     back.add(componentPanel);

@@ -22,8 +22,8 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.BlackPanel;
-import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.ResearchTechPanel;
+import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
@@ -188,8 +188,8 @@ public class ResearchView extends BlackPanel {
     // focusPanel.add(Box.createRigidArea(new Dimension(10,10)));
     base.add(focusPanel, BorderLayout.EAST);
 
-    InvisiblePanel invisible = new InvisiblePanel(base);
-    invisible.setLayout(new BoxLayout(invisible, BoxLayout.X_AXIS));
+    SpaceGreyPanel greyPanel = new SpaceGreyPanel();
+    greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.X_AXIS));
     Tech[] techs = player.getTechList().getList();
     techList = new JList<>(techs);
     techList.setCellRenderer(new TechListRenderer());
@@ -204,15 +204,15 @@ public class ResearchView extends BlackPanel {
         }
       }
     }
-    invisible.add(scroll);
-    invisible.add(Box.createRigidArea(new Dimension(10, 10)));
+    greyPanel.add(scroll);
+    greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     infoText = new InfoTextArea(20, 35);
     infoText.setEditable(false);
     infoText.setFont(GuiStatics.getFontCubellanSmaller());
-    invisible.add(infoText);
-    invisible.add(Box.createRigidArea(new Dimension(10, 10)));
+    greyPanel.add(infoText);
+    greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
 
-    base.add(invisible, BorderLayout.WEST);
+    base.add(greyPanel, BorderLayout.WEST);
 
     this.add(base, BorderLayout.CENTER);
 
@@ -240,6 +240,7 @@ public class ResearchView extends BlackPanel {
       if (techList.getSelectedIndex() != -1) {
         Tech tech = techList.getSelectedValue();
         infoText.setText(tech.getTechInfo(player.getRace()));
+        infoText.repaint();
       } else {
         infoText.setText("");
       }

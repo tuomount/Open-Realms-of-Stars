@@ -230,16 +230,12 @@ public class ShipComponentTest {
         "Shield generator", "Engine", "Powersource", "Cloaking device",
         "Jammer", "Targeting computer", "Planetary invasion module",
         "Colony module", "Privateering module", "Orbital bombs",
-        "Orbital nuke", "Beam weapon"};
+        "Orbital nuke", "Starbase module"};
     for (int i = 0; i < 20; i++) {
       ShipComponentType type = ShipComponentType.getTypeByIndex(i);
       assertNotEquals(null, type);
       assertEquals(expected[i], type.toString());
-      if (i == 19) {
-        assertEquals(0, type.getIndex());
-      } else {
-        assertEquals(i, type.getIndex());
-      }
+      assertEquals(i, type.getIndex());
     }
   }
 

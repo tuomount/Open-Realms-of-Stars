@@ -157,6 +157,8 @@ public enum ShipComponentType {
       return 17;
     case ORBITAL_NUKE:
       return 18;
+    case STARBASE_COMPONENT:
+      return 19;
     default:
       return 0;
     }
@@ -207,6 +209,8 @@ public enum ShipComponentType {
       return ShipComponentType.ORBITAL_BOMBS;
     case 18:
       return ShipComponentType.ORBITAL_NUKE;
+    case 19:
+      return ShipComponentType.STARBASE_COMPONENT;
     default:
       return ShipComponentType.WEAPON_BEAM;
     }
@@ -253,6 +257,8 @@ public enum ShipComponentType {
       return "Orbital bombs";
     case ORBITAL_NUKE:
       return "Orbital nuke";
+    case STARBASE_COMPONENT:
+      return "Starbase module";
     default:
       return "Error - Unknown";
     }
@@ -302,6 +308,8 @@ public enum ShipComponentType {
       return Icons.ICON_BOMB;
     case ORBITAL_NUKE:
       return Icons.ICON_NUKE;
+    case STARBASE_COMPONENT:
+      return Icons.ICON_STARBASE;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }

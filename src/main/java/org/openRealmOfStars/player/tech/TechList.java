@@ -410,12 +410,12 @@ public class TechList {
    * Get Tech list for certain tech type and level which are missing
    * @param type Tech Type to get the list
    * @param level Level of tech list 1-10
-   * @return List of tech names which are missing
+   * @return List of techs which are missing
    */
-  public String[] getListMissingTech(final TechType type, final int level) {
+  public Tech[] getListMissingTech(final TechType type, final int level) {
     int levelIndex = level - 1;
     if (levelIndex >= 10 || levelIndex < 0) {
-      return new String[0];
+      return new Tech[0];
     }
     Tech[] techGot = getListForTypeAndLevel(type, level);
     String[] choices = TechFactory.getListByTechLevel(type, level);
@@ -431,7 +431,12 @@ public class TechList {
         list.add(choice);
       }
     }
-    return list.toArray(new String[list.size()]);
+    Tech[] techMissing = new Tech[list.size()];
+    for (int i = 0; i < list.size(); i++) {
+      Tech tech = TechFactory.createTech(type, level, list.get(i));
+      techMissing[i] = tech;
+    }
+    return techMissing;
   }
 
   /**

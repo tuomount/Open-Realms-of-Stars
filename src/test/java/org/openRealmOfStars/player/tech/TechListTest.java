@@ -70,13 +70,71 @@ public class TechListTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testMissingTech() {
+  public void testMissingTechCombat() {
     TechList list = new TechList();
     list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
-    String[] missing = list.getListMissingTech(TechType.Combat, 1);
+    Tech[] missing = list.getListMissingTech(TechType.Combat, 1);
     assertEquals(1, missing.length);
-    assertEquals("Photon torpedo Mk1", missing[0]);
+    assertEquals("Photon torpedo Mk1", missing[0].getName());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMissingTechDefense() {
+    TechList list = new TechList();
+    Tech[] missing = list.getListMissingTech(TechType.Defense, 5);
+    assertEquals(3, missing.length);
+    assertEquals("Shield Mk5", missing[0].getName());
+    assertEquals("Armor plating Mk5", missing[1].getName());
+    assertEquals("Planetary defense turret Mk2", missing[2].getName());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMissingTechHull() {
+    TechList list = new TechList();
+    list.addTech(TechFactory.createHullTech("Large freighter", 6));
+    Tech[] missing = list.getListMissingTech(TechType.Hulls, 6);
+    assertEquals(2, missing.length);
+    assertEquals("Large starbase", missing[0].getName());
+    assertEquals("Corvette Mk2", missing[1].getName());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMissingTechImprovement() {
+    TechList list = new TechList();
+    list.addTech(TechFactory.createImprovementTech("VR movie center", 7));
+    Tech[] missing = list.getListMissingTech(TechType.Improvements, 7);
+    assertEquals(3, missing.length);
+    assertEquals("New technology center", missing[0].getName());
+    assertEquals("Advanced recycle center", missing[1].getName());
+    assertEquals("Starbase nano lab", missing[2].getName());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMissingTechPropulsion() {
+    TechList list = new TechList();
+    list.addTech(TechFactory.createPropulsionTech("Antimatter source Mk2", 8));
+    Tech[] missing = list.getListMissingTech(TechType.Propulsion, 8);
+    assertEquals(4, missing.length);
+    assertEquals("Warp drive Mk6", missing[0].getName());
+    assertEquals("Hyper drive Mk6", missing[1].getName());
+    assertEquals("Impulse engine Mk2", missing[2].getName());
+    assertEquals("Nuclear drive Mk4", missing[3].getName());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMissingTechElectronics() {
+    TechList list = new TechList();
+    list.addTech(TechFactory.createElectronicsTech("Planetary scanner Mk4", 8));
+    Tech[] missing = list.getListMissingTech(TechType.Electrics, 8);
+    assertEquals(2, missing.length);
+    assertEquals("Cloaking device Mk5", missing[0].getName());
+    assertEquals("LR scanner Mk3", missing[1].getName());
   }
 
   @Test

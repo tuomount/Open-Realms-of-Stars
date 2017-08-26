@@ -781,6 +781,32 @@ public final class TechFactory {
   }
 
   /**
+   * Create Tech for certain techtype, level and name
+   * @param type TechType to create
+   * @param level Level 1 - 10
+   * @param techName Tech name to create
+   * @return Tech or null
+   */
+  public static Tech createTech(final TechType type, final int level,
+      final String techName) {
+    switch (type) {
+    case Combat:
+      return createCombatTech(techName, level);
+    case Defense:
+      return createDefenseTech(techName, level);
+    case Hulls:
+      return createHullTech(techName, level);
+    case Improvements:
+      return createImprovementTech(techName, level);
+    case Propulsion:
+      return createPropulsionTech(techName, level);
+    case Electrics:
+      return createElectronicsTech(techName, level);
+    default:
+      return null;
+    }
+  }
+  /**
    * Create random tech by tech type and level, but not choose those tech
    * player already has
    * @param type Tech Type: Combat, Defense, Hulls, Improvements, Propulsion

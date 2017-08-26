@@ -70,6 +70,17 @@ public class TechListTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMissingTech() {
+    TechList list = new TechList();
+    list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
+    list.addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
+    String[] missing = list.getListMissingTech(TechType.Combat, 1);
+    assertEquals(1, missing.length);
+    assertEquals("Photon torpedo Mk1", missing[0]);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testAddTech() {
     TechList list = new TechList();
     assertEquals(1, list.getTechLevel(TechType.Combat));

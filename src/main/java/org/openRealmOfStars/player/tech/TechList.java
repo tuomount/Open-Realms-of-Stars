@@ -407,6 +407,34 @@ public class TechList {
   }
 
   /**
+   * Get Tech list for certain tech type and level which are missing
+   * @param type Tech Type to get the list
+   * @param level Level of tech list 1-10
+   * @return List of tech names which are missing
+   */
+  public String[] getListMissingTech(final TechType type, final int level) {
+    int levelIndex = level - 1;
+    if (levelIndex >= 10 || levelIndex < 0) {
+      return new String[0];
+    }
+    Tech[] techGot = getListForTypeAndLevel(type, level);
+    String[] choices = TechFactory.getListByTechLevel(type, level);
+    ArrayList<String> list = new ArrayList<>();
+    for (String choice : choices) {
+      boolean found = false;
+      for (Tech tech : techGot) {
+        if (tech.getName().equals(choice)) {
+          found = true;
+        }
+      }
+      if (!found) {
+        list.add(choice);
+      }
+    }
+    return list.toArray(new String[list.size()]);
+  }
+
+  /**
    * Is Tech list for certain level full
    * @param type Tech Type
    * @param level Level of tech list 1-10

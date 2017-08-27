@@ -51,4 +51,15 @@ public class TechTypeTest {
     assertEquals("Electronics",TechType.Electrics.toString());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testDescription() {
+    assertEquals(true, TechType.Combat.getDescription().contains("Combat"));
+    assertEquals(true, TechType.Defense.getDescription().contains("Defense"));
+    assertEquals(true, TechType.Hulls.getDescription().contains("Hull"));
+    assertEquals(true, TechType.Improvements.getDescription().contains("Improvement"));
+    assertEquals(true, TechType.Propulsion.getDescription().contains("Propulsion"));
+    assertEquals(true, TechType.Electrics.getDescription().contains("Electronics"));
+  }
+
 }

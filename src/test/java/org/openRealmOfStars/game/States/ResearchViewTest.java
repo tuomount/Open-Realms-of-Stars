@@ -1,10 +1,12 @@
 package org.openRealmOfStars.game.States;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.tech.TechList;
 
@@ -45,6 +47,25 @@ public class ResearchViewTest {
     ResearchView view = new ResearchView(info, totalResearch, focusTech,
         listener);
     view.updatePanel();
+    ActionEvent event = Mockito.mock(ActionEvent.class);
+    Mockito.when(event.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_COMBAT_INFO);
+    view.handleAction(event);
+    Mockito.when(event.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_DEFENSE_INFO);
+    view.handleAction(event);
+    Mockito.when(event.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_HULL_INFO);
+    view.handleAction(event);
+    Mockito.when(event.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_IMPROVEMENT_INFO);
+    view.handleAction(event);
+    Mockito.when(event.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_PROPULSION_INFO);
+    view.handleAction(event);
+    Mockito.when(event.getActionCommand()).thenReturn(
+        GameCommands.COMMAND_ELECTRONICS_INFO);
+    view.handleAction(event);
   }
 
 }

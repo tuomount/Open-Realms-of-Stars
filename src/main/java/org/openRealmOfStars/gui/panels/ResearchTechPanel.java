@@ -1,6 +1,5 @@
 package org.openRealmOfStars.gui.panels;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,7 +38,7 @@ import org.openRealmOfStars.gui.labels.IconLabel;
  *
  */
 
-public class ResearchTechPanel extends InvisiblePanel {
+public class ResearchTechPanel extends SpaceGreyPanel {
 
   /**
    *
@@ -79,7 +78,6 @@ public class ResearchTechPanel extends InvisiblePanel {
   /**
    * Create Research Tech panel with - and + buttons and up arrow to
    * upgrade tech level.
-   * @param parent Parent component to draw opaque
    * @param actionMinus ActionCommand for minus button
    * @param actionPlus ActionCommand for plus button
    * @param iconName Icon name to show
@@ -90,11 +88,11 @@ public class ResearchTechPanel extends InvisiblePanel {
    * @param actionSlider slider action command
    * @param listener Action Listener
    */
-  public ResearchTechPanel(final Component parent, final String actionMinus,
+  public ResearchTechPanel(final String actionMinus,
       final String actionPlus, final String iconName, final String text,
       final String text2, final String actionUpgrade, final int sliderValue,
       final String actionSlider, final ActionListener listener) {
-    super(parent);
+    super();
     this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
     btnMinus = new IconButton(Icons.getIconByName(Icons.ICON_MINUS),
         Icons.getIconByName(Icons.ICON_MINUS_PRESSED), false, actionMinus,
@@ -157,7 +155,6 @@ public class ResearchTechPanel extends InvisiblePanel {
    */
   public void setSliderValue(final int value) {
     slider.setValue(value);
-    setDirty();
   }
 
   /**
@@ -182,7 +179,6 @@ public class ResearchTechPanel extends InvisiblePanel {
    */
   public void setText(final String text) {
     label.setText(text);
-    setDirty();
   }
 
   /**
@@ -215,7 +211,6 @@ public class ResearchTechPanel extends InvisiblePanel {
    */
   public void setEnableUpgradeButton(final boolean value) {
     btnUpgrade.setEnabled(value);
-    setDirty();
   }
 
   /**
@@ -224,7 +219,6 @@ public class ResearchTechPanel extends InvisiblePanel {
    */
   public void setUpgadeBtnText(final String text) {
     lvlLabel.setText(text);
-    setDirty();
   }
 
   /**

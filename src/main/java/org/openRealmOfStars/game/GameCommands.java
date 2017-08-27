@@ -239,6 +239,42 @@ public final class GameCommands {
       "SliderElectronicsRese";
 
   /**
+   * Command for showing combat tech info
+   */
+  public static final String COMMAND_COMBAT_INFO =
+      "CombatInfo";
+
+  /**
+   * Command for showing defense tech info
+   */
+  public static final String COMMAND_DEFENSE_INFO =
+      "DefenseInfo";
+
+  /**
+   * Command for showing hull tech info
+   */
+  public static final String COMMAND_HULL_INFO =
+      "HullInfo";
+
+  /**
+   * Command for showing improvement tech info
+   */
+  public static final String COMMAND_IMPROVEMENT_INFO =
+      "ImprovementInfo";
+
+  /**
+   * Command for showing propulsion tech info
+   */
+  public static final String COMMAND_PROPULSION_INFO =
+      "PropulsionInfo";
+
+  /**
+   * Command for showing electronics tech info
+   */
+  public static final String COMMAND_ELECTRONICS_INFO =
+      "ElectronicsInfo";
+
+  /**
    * Upgrade combat
    */
   public static final String COMMAND_UPGRADE_COMBAT = "UpgradeCombat";

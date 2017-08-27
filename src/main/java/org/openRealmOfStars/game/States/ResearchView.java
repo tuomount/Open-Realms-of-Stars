@@ -17,6 +17,7 @@ import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.TechListRenderer;
+import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
@@ -122,7 +123,7 @@ public class ResearchView extends BlackPanel {
     focusPanel.setTitle("Research focus");
     focusPanel.setLayout(new BoxLayout(focusPanel, BoxLayout.Y_AXIS));
     // focusPanel.add(Box.createRigidArea(new Dimension(10,15)));
-    combatRese = new ResearchTechPanel(focusPanel,
+    combatRese = new ResearchTechPanel(
         GameCommands.COMMAND_MINUS_COMBAT_RESEARCH,
         GameCommands.COMMAND_PLUS_COMBAT_RESEARCH, Icons.ICON_COMBAT_TECH,
         TechType.Combat.toString() + " 100% 1000 turns",
@@ -130,9 +131,19 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_SLIDER_COMBAT_RESEARCH, listener);
     combatRese.setLabelToolTip("Focus on combat technology");
     combatRese.setAlignmentX(Component.CENTER_ALIGNMENT);
-    focusPanel.add(combatRese);
+    SpaceGreyPanel techPane = new SpaceGreyPanel();
+    techPane.setLayout(new BoxLayout(techPane, BoxLayout.X_AXIS));
+    IconButton iBtn = new IconButton(
+        Icons.getIconByName(Icons.ICON_COMBAT_TECH),
+        Icons.getIconByName(Icons.ICON_COMBAT_TECH), false,
+        GameCommands.COMMAND_COMBAT_INFO, null);
+    iBtn.addActionListener(listener);
+    iBtn.setToolTipText("Show information about combat technology");
+    techPane.add(iBtn);
+    techPane.add(combatRese);
+    focusPanel.add(techPane);
     focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    defenseRese = new ResearchTechPanel(focusPanel,
+    defenseRese = new ResearchTechPanel(
         GameCommands.COMMAND_MINUS_DEFENSE_RESEARCH,
         GameCommands.COMMAND_PLUS_DEFENSE_RESEARCH, Icons.ICON_DEFENSE_TECH,
         TechType.Defense.toString() + " 100% 1000 turns", "Level:10 (1/6)",
@@ -140,9 +151,19 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_SLIDER_DEFENSE_RESEARCH, listener);
     defenseRese.setLabelToolTip("Focus on defense technology");
     defenseRese.setAlignmentX(Component.CENTER_ALIGNMENT);
-    focusPanel.add(defenseRese);
+    techPane = new SpaceGreyPanel();
+    techPane.setLayout(new BoxLayout(techPane, BoxLayout.X_AXIS));
+    iBtn = new IconButton(
+        Icons.getIconByName(Icons.ICON_DEFENSE_TECH),
+        Icons.getIconByName(Icons.ICON_DEFENSE_TECH), false,
+        GameCommands.COMMAND_DEFENSE_INFO, null);
+    iBtn.addActionListener(listener);
+    iBtn.setToolTipText("Show information about defense technology");
+    techPane.add(iBtn);
+    techPane.add(defenseRese);
+    focusPanel.add(techPane);
     focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    hullRese = new ResearchTechPanel(focusPanel,
+    hullRese = new ResearchTechPanel(
         GameCommands.COMMAND_MINUS_HULL_RESEARCH,
         GameCommands.COMMAND_PLUS_HULL_RESEARCH, Icons.ICON_HULL_TECH,
         TechType.Hulls.toString() + " 100% 1000 turns", "Level:10 (1/6)",
@@ -150,9 +171,19 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_SLIDER_HULL_RESEARCH, listener);
     hullRese.setLabelToolTip("Focus on hull technology");
     hullRese.setAlignmentX(Component.CENTER_ALIGNMENT);
-    focusPanel.add(hullRese);
+    techPane = new SpaceGreyPanel();
+    techPane.setLayout(new BoxLayout(techPane, BoxLayout.X_AXIS));
+    iBtn = new IconButton(
+        Icons.getIconByName(Icons.ICON_HULL_TECH),
+        Icons.getIconByName(Icons.ICON_HULL_TECH), false,
+        GameCommands.COMMAND_HULL_INFO, null);
+    iBtn.setToolTipText("Show information about hull technology");
+    iBtn.addActionListener(listener);
+    techPane.add(iBtn);
+    techPane.add(hullRese);
+    focusPanel.add(techPane);
     focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    improvementRese = new ResearchTechPanel(focusPanel,
+    improvementRese = new ResearchTechPanel(
         GameCommands.COMMAND_MINUS_IMPROVEMENT_RESEARCH,
         GameCommands.COMMAND_PLUS_IMPROVEMENT_RESEARCH,
         Icons.ICON_IMPROVEMENT_TECH,
@@ -162,9 +193,20 @@ public class ResearchView extends BlackPanel {
     improvementRese.setLabelToolTip("Focus on planetary improvement "
         + "technology");
     improvementRese.setAlignmentX(Component.CENTER_ALIGNMENT);
-    focusPanel.add(improvementRese);
+    techPane = new SpaceGreyPanel();
+    techPane.setLayout(new BoxLayout(techPane, BoxLayout.X_AXIS));
+    iBtn = new IconButton(
+        Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
+        Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH), false,
+        GameCommands.COMMAND_IMPROVEMENT_INFO, null);
+    iBtn.addActionListener(listener);
+    iBtn.setToolTipText("Show information about planetary improvement "
+        + "technology");
+    techPane.add(iBtn);
+    techPane.add(improvementRese);
+    focusPanel.add(techPane);
     focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    propulsionRese = new ResearchTechPanel(focusPanel,
+    propulsionRese = new ResearchTechPanel(
         GameCommands.COMMAND_MINUS_PROPULSION_RESEARCH,
         GameCommands.COMMAND_PLUS_PROPULSION_RESEARCH,
         Icons.ICON_PROPULSION_TECH,
@@ -173,9 +215,19 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_SLIDER_PROPULSION_RESEARCH, listener);
     propulsionRese.setLabelToolTip("Focus on propulsion technology");
     propulsionRese.setAlignmentX(Component.CENTER_ALIGNMENT);
-    focusPanel.add(propulsionRese);
+    techPane = new SpaceGreyPanel();
+    techPane.setLayout(new BoxLayout(techPane, BoxLayout.X_AXIS));
+    iBtn = new IconButton(
+        Icons.getIconByName(Icons.ICON_PROPULSION_TECH),
+        Icons.getIconByName(Icons.ICON_PROPULSION_TECH), false,
+        GameCommands.COMMAND_PROPULSION_INFO, null);
+    iBtn.addActionListener(listener);
+    iBtn.setToolTipText("Show information about propulsion technology");
+    techPane.add(iBtn);
+    techPane.add(propulsionRese);
+    focusPanel.add(techPane);
     focusPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    electronicsRese = new ResearchTechPanel(focusPanel,
+    electronicsRese = new ResearchTechPanel(
         GameCommands.COMMAND_MINUS_ELECTRONICS_RESEARCH,
         GameCommands.COMMAND_PLUS_ELECTRONICS_RESEARCH,
         Icons.ICON_ELECTRONICS_TECH,
@@ -184,7 +236,17 @@ public class ResearchView extends BlackPanel {
         GameCommands.COMMAND_SLIDER_ELECTRONICS_RESEARCH, listener);
     electronicsRese.setLabelToolTip("Focus on electronics technology");
     electronicsRese.setAlignmentX(Component.CENTER_ALIGNMENT);
-    focusPanel.add(electronicsRese);
+    techPane = new SpaceGreyPanel();
+    techPane.setLayout(new BoxLayout(techPane, BoxLayout.X_AXIS));
+    iBtn = new IconButton(
+        Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH),
+        Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH), false,
+        GameCommands.COMMAND_ELECTRONICS_INFO, null);
+    iBtn.addActionListener(listener);
+    iBtn.setToolTipText("Show information about electronics technology");
+    techPane.add(iBtn);
+    techPane.add(electronicsRese);
+    focusPanel.add(techPane);
     // focusPanel.add(Box.createRigidArea(new Dimension(10,10)));
     base.add(focusPanel, BorderLayout.EAST);
 
@@ -212,7 +274,7 @@ public class ResearchView extends BlackPanel {
     greyPanel.add(infoText);
     greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
 
-    base.add(greyPanel, BorderLayout.WEST);
+    base.add(greyPanel, BorderLayout.CENTER);
 
     this.add(base, BorderLayout.CENTER);
 
@@ -247,7 +309,6 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_COMBAT_RESEARCH)) {
       int value = combatRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Combat, value);
-      updateTechInfo(TechType.Combat);
       SoundPlayer.playMenuSound();
       updatePanel();
     }
@@ -288,7 +349,6 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_DEFENSE_RESEARCH)) {
       int value = defenseRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Defense, value);
-      updateTechInfo(TechType.Defense);
       SoundPlayer.playMenuSound();
       updatePanel();
     }
@@ -309,7 +369,6 @@ public class ResearchView extends BlackPanel {
       if (value >= TechList.FINE_TUNE_VALUE) {
         value = value - TechList.FINE_TUNE_VALUE;
         player.getTechList().setTechFocus(TechType.Defense, value);
-        updateTechInfo(TechType.Defense);
         SoundPlayer.playMenuSound();
         updatePanel();
       }
@@ -329,7 +388,6 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_HULL_RESEARCH)) {
       int value = hullRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Hulls, value);
-      updateTechInfo(TechType.Hulls);
       SoundPlayer.playMenuSound();
       updatePanel();
     }
@@ -370,7 +428,6 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_IMPROVEMENT_RESEARCH)) {
       int value = improvementRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Improvements, value);
-      updateTechInfo(TechType.Improvements);
       SoundPlayer.playMenuSound();
       updatePanel();
     }
@@ -412,7 +469,6 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_PROPULSION_RESEARCH)) {
       int value = propulsionRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Propulsion, value);
-      updateTechInfo(TechType.Propulsion);
       SoundPlayer.playMenuSound();
       updatePanel();
     }
@@ -454,7 +510,6 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_ELECTRONICS_RESEARCH)) {
       int value = electronicsRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Electrics, value);
-      updateTechInfo(TechType.Electrics);
       SoundPlayer.playMenuSound();
       updatePanel();
     }
@@ -490,6 +545,24 @@ public class ResearchView extends BlackPanel {
       updateTechInfo(TechType.Electrics);
       SoundPlayer.playMenuSound();
       updatePanel();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_COMBAT_INFO)) {
+      updateTechInfo(TechType.Combat);
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_DEFENSE_INFO)) {
+      updateTechInfo(TechType.Defense);
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_HULL_INFO)) {
+      updateTechInfo(TechType.Hulls);
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_IMPROVEMENT_INFO)) {
+      updateTechInfo(TechType.Improvements);
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_PROPULSION_INFO)) {
+      updateTechInfo(TechType.Propulsion);
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ELECTRONICS_INFO)) {
+      updateTechInfo(TechType.Electrics);
     }
 
   }

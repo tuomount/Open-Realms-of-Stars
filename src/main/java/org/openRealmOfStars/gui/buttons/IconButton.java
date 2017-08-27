@@ -1,5 +1,6 @@
 package org.openRealmOfStars.gui.buttons;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -88,6 +89,7 @@ public class IconButton extends JButton {
     this.setActionCommand(actionCommand);
     this.setBorder(border);
     this.parent = parent;
+    this.setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
     if (border) {
       this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     } else {
@@ -116,6 +118,7 @@ public class IconButton extends JButton {
     this.setActionCommand(actionCommand);
     this.setBorder(border);
     this.parent = parent;
+    this.setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
     if (border) {
       this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
     } else {
@@ -141,6 +144,10 @@ public class IconButton extends JButton {
           g.drawImage(getPressedImage(), x + 2, y + 2, null);
         } else {
           g.drawImage(getPressedImage(), x, y, null);
+          if (pressedImage == notPressedImage) {
+            g.setColor(new Color(0, 0, 0, 128));
+            g.fillRect(0, 0, getWidth(), getHeight());
+          }
         }
       } else {
         x = x - getNotPressedImage().getWidth() / 2;
@@ -149,6 +156,10 @@ public class IconButton extends JButton {
           this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
           g.drawImage(getNotPressedImage(), x + 2, y + 2, null);
         } else {
+          if (pressedImage == notPressedImage) {
+            g.setColor(getBackground());
+            g.fillRect(0, 0, getWidth(), getHeight());
+          }
           g.drawImage(getNotPressedImage(), x, y, null);
         }
       }

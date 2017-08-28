@@ -611,4 +611,20 @@ public class TechList {
     }
     return buildings.toArray(new String[buildings.size()]);
   }
+
+  /**
+   * Is certain tech type to upgradeable to next level. Which
+   * means that over half of that level's tech has been researched.
+   * @param type Tech Type
+   * @return True if upgradeable otherwise false
+   */
+  public boolean isUpgradeable(final TechType type) {
+    int level = getTechLevel(type);
+    int subLevel = getListForTypeAndLevel(type, level).length;
+    int maxSubLevel = TechFactory.getListByTechLevel(type, level).length;
+    if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < MAX_TECH_LEVEL) {
+      return true;
+    }
+    return false;
+  }
 }

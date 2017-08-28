@@ -72,11 +72,13 @@ public class TechListTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMissingTechCombat() {
     TechList list = new TechList();
+    assertEquals(false, list.isUpgradeable(TechType.Combat));
     list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
     list.addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
     Tech[] missing = list.getListMissingTech(TechType.Combat, 1);
     assertEquals(1, missing.length);
     assertEquals("Photon torpedo Mk1", missing[0].getName());
+    assertEquals(true, list.isUpgradeable(TechType.Combat));
   }
 
   @Test

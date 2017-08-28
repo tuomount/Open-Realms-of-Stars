@@ -595,7 +595,7 @@ public class ResearchView extends BlackPanel {
         .setText(TechType.Combat.toString() + " " + focus + "% " + turnsInStr);
     combatRese.setUpgadeBtnText(
         "Level:" + level + "(" + subLevel + "/" + maxSubLevel + ")");
-    if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
+    if (player.getTechList().isUpgradeable(TechType.Combat)) {
       combatRese.setEnableUpgradeButton(true);
       combatRese.setUpgadeBtnToolTip("<html>Upgrade combat to " + (level + 1)
           + " level.<br>"
@@ -622,7 +622,7 @@ public class ResearchView extends BlackPanel {
         .setText(TechType.Defense.toString() + " " + focus + "% " + turnsInStr);
     defenseRese.setUpgadeBtnText(
         "Level:" + level + "(" + subLevel + "/" + maxSubLevel + ")");
-    if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
+    if (player.getTechList().isUpgradeable(TechType.Defense)) {
       defenseRese.setEnableUpgradeButton(true);
       defenseRese.setUpgadeBtnToolTip("<html>Upgrade defense to " + (level + 1)
           + " level.<br>"
@@ -648,7 +648,7 @@ public class ResearchView extends BlackPanel {
         .setText(TechType.Hulls.toString() + " " + focus + "% " + turnsInStr);
     hullRese.setUpgadeBtnText(
         "Level:" + level + "(" + subLevel + "/" + maxSubLevel + ")");
-    if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
+    if (player.getTechList().isUpgradeable(TechType.Hulls)) {
       hullRese.setEnableUpgradeButton(true);
       hullRese.setUpgadeBtnToolTip("<html>Upgrade hulls to " + (level + 1)
           + " level.<br>"
@@ -675,7 +675,7 @@ public class ResearchView extends BlackPanel {
         TechType.Improvements.toString() + " " + focus + "% " + turnsInStr);
     improvementRese.setUpgadeBtnText(
         "Level:" + level + "(" + subLevel + "/" + maxSubLevel + ")");
-    if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
+    if (player.getTechList().isUpgradeable(TechType.Improvements)) {
       improvementRese.setEnableUpgradeButton(true);
       improvementRese.setUpgadeBtnToolTip("<html>Upgrade improvements to "
           + (level + 1) + " level.<br>"
@@ -702,7 +702,7 @@ public class ResearchView extends BlackPanel {
         TechType.Propulsion.toString() + " " + focus + "% " + turnsInStr);
     propulsionRese.setUpgadeBtnText(
         "Level:" + level + "(" + subLevel + "/" + maxSubLevel + ")");
-    if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
+    if (player.getTechList().isUpgradeable(TechType.Propulsion)) {
       propulsionRese.setEnableUpgradeButton(true);
       propulsionRese.setUpgadeBtnToolTip("<html>Upgrade propulsion to "
           + (level + 1) + " level.<br>"
@@ -729,7 +729,7 @@ public class ResearchView extends BlackPanel {
         TechType.Electrics.toString() + " " + focus + "% " + turnsInStr);
     electronicsRese.setUpgadeBtnText(
         "Level:" + level + "(" + subLevel + "/" + maxSubLevel + ")");
-    if (subLevel >= Math.ceil(maxSubLevel / 2.0) && level < 10) {
+    if (player.getTechList().isUpgradeable(TechType.Electrics)) {
       electronicsRese.setEnableUpgradeButton(true);
       electronicsRese.setUpgadeBtnToolTip("<html>Upgrade electronics to "
           + (level + 1) + " level.<br>"

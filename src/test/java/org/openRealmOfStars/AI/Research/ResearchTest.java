@@ -5,9 +5,12 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.tech.TechFactory;
+import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
 /**
  * 
@@ -145,5 +148,24 @@ public class ResearchTest {
     assertEquals(Research.LOW_FOCUS_LEVEL, 
         info.getTechList().getTechFocus(TechType.Electrics));
   }
-
+  
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUpdateCombatTech() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList list = new TechList();
+    Mockito.when(info.getTechList()).thenReturn(list);
+    list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
+    list.addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
+    assertEquals(1, list.getTechLevel(TechType.Combat));
+    Research.checkUpdateCombat(info, Attitude.MILITARISTIC);
+    assertEquals(2, list.getTechLevel(TechType.Combat));
+    list = new TechList();
+    Mockito.when(info.getTechList()).thenReturn(list);
+    list.addTech(TechFactory.createCombatTech("Laser Mk1", 1));
+    list.addTech(TechFactory.createCombatTech("Photon torpedo Mk1", 1));
+    assertEquals(1, list.getTechLevel(TechType.Combat));
+    Research.checkUpdateCombat(info, Attitude.AGGRESSIVE);
+    assertEquals(2, list.getTechLevel(TechType.Combat));
+  }
 }

@@ -1,6 +1,7 @@
 package org.openRealmOfStars.AI.Research;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -9,6 +10,7 @@ import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  *
@@ -142,6 +144,44 @@ public final class Research {
   }
 
   /**
+   * Check Update combat tech
+   * @param info PlayerInfo
+   * @param attitude Player's attitude
+   */
+  protected static void checkUpdateCombat(final PlayerInfo info,
+      final Attitude attitude) {
+    int level = info.getTechList().getTechLevel(TechType.Combat);
+    Tech[] missingTechs = info.getTechList().getListMissingTech(TechType.Combat,
+        level);
+    boolean mustHaveTech = false;
+    boolean missileTech = false;
+    for (Tech missingTech : missingTechs) {
+      if (missingTech.getName().contains("module")
+          || missingTech.getName().contains("Orbital")) {
+        mustHaveTech = true;
+      }
+      if (missingTech.getName().contains("missile")) {
+        missileTech = true;
+      }
+    }
+    if (!mustHaveTech) {
+      if (attitude == Attitude.AGGRESSIVE && missingTechs.length == 1) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Combat, level);
+      } else if (attitude == Attitude.MILITARISTIC && !missileTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Combat, level);
+      } else if (attitude == Attitude.SCIENTIFIC
+          && DiceGenerator.getRandom(99) < 20) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Combat, level);
+      } else if (DiceGenerator.getRandom(99) < 30) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Combat, level);
+      }
+    }
+  }
+  /**
    * Handle research for AI player
    * @param info PlayerInfo
    */
@@ -228,6 +268,10 @@ public final class Research {
             DEFAULT_FOCUS_LEVEL);
         break;
       }
+      }
+      Attitude attitude = info.getAiAttitude();
+      if (info.getTechList().isUpgradeable(TechType.Combat)) {
+        checkUpdateCombat(info, attitude);
       }
     }
   }

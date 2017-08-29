@@ -182,6 +182,49 @@ public final class Research {
     }
   }
   /**
+   * Check Update defense tech
+   * @param info PlayerInfo
+   * @param attitude Player's attitude
+   */
+  protected static void checkUpdateDefense(final PlayerInfo info,
+      final Attitude attitude) {
+    int level = info.getTechList().getTechLevel(TechType.Defense);
+    Tech[] missingTechs = info.getTechList().getListMissingTech(
+        TechType.Defense, level);
+    boolean turretTech = false;
+    boolean generatorTech = false;
+    boolean armorTech = false;
+    for (Tech missingTech : missingTechs) {
+      if (missingTech.getName().contains("turret")) {
+        turretTech = true;
+      }
+      if (missingTech.getName().contains("generator")) {
+        generatorTech = true;
+      }
+      if (missingTech.getName().contains("Armor")) {
+        armorTech = true;
+      }
+    }
+    if (attitude == Attitude.AGGRESSIVE && missingTechs.length == 1) {
+      level = level + 1;
+      info.getTechList().setTechLevel(TechType.Defense, level);
+    } else if (attitude == Attitude.MILITARISTIC && !generatorTech
+        && !armorTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Defense, level);
+    } else if (attitude == Attitude.PEACEFUL && !turretTech) {
+      level = level + 1;
+      info.getTechList().setTechLevel(TechType.Defense, level);
+    } else if (attitude == Attitude.SCIENTIFIC
+        && DiceGenerator.getRandom(99) < 20) {
+      level = level + 1;
+      info.getTechList().setTechLevel(TechType.Defense, level);
+    } else if (DiceGenerator.getRandom(99) < 30) {
+      level = level + 1;
+      info.getTechList().setTechLevel(TechType.Defense, level);
+    }
+  }
+  /**
    * Handle research for AI player
    * @param info PlayerInfo
    */
@@ -272,6 +315,9 @@ public final class Research {
       Attitude attitude = info.getAiAttitude();
       if (info.getTechList().isUpgradeable(TechType.Combat)) {
         checkUpdateCombat(info, attitude);
+      }
+      if (info.getTechList().isUpgradeable(TechType.Defense)) {
+        checkUpdateDefense(info, attitude);
       }
     }
   }

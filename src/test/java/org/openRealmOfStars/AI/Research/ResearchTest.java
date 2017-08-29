@@ -168,4 +168,36 @@ public class ResearchTest {
     Research.checkUpdateCombat(info, Attitude.AGGRESSIVE);
     assertEquals(2, list.getTechLevel(TechType.Combat));
   }
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUpdateDefenseTech() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList list = new TechList();
+    Mockito.when(info.getTechList()).thenReturn(list);
+    list.addTech(TechFactory.createDefenseTech("Shield Mk1", 1));
+    list.addTech(TechFactory.createDefenseTech("Armor plating Mk1", 1));
+    assertEquals(2, list.getTechLevel(TechType.Defense));
+    list.addTech(TechFactory.createDefenseTech("Shield Mk2", 2));
+    list.addTech(TechFactory.createDefenseTech("Armor plating Mk2", 2));
+    Research.checkUpdateDefense(info, Attitude.MILITARISTIC);
+    assertEquals(3, list.getTechLevel(TechType.Defense));
+    list = new TechList();
+    Mockito.when(info.getTechList()).thenReturn(list);
+    list.addTech(TechFactory.createDefenseTech("Shield Mk1", 1));
+    list.addTech(TechFactory.createDefenseTech("Armor plating Mk1", 1));
+    list.addTech(TechFactory.createDefenseTech("Shield Mk2", 2));
+    list.addTech(TechFactory.createDefenseTech("Armor plating Mk2", 2));
+    Research.checkUpdateDefense(info, Attitude.AGGRESSIVE);
+    assertEquals(3, list.getTechLevel(TechType.Defense));
+    list = new TechList();
+    Mockito.when(info.getTechList()).thenReturn(list);
+    list.addTech(TechFactory.createDefenseTech("Shield Mk1", 1));
+    list.addTech(TechFactory.createDefenseTech("Armor plating Mk1", 1));
+    list.addTech(TechFactory.createDefenseTech("Shield Mk2", 2));
+    list.addTech(TechFactory.createDefenseTech("Planetary defense turret Mk1",
+        2));
+    assertEquals(2, list.getTechLevel(TechType.Defense));
+    Research.checkUpdateDefense(info, Attitude.PEACEFUL);
+    assertEquals(3, list.getTechLevel(TechType.Defense));
+  }
 }

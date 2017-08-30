@@ -165,16 +165,21 @@ public final class Research {
       }
     }
     if (!mustHaveTech) {
-      if (attitude == Attitude.AGGRESSIVE && missingTechs.length == 1) {
-        level = level + 1;
-        info.getTechList().setTechLevel(TechType.Combat, level);
-      } else if (attitude == Attitude.MILITARISTIC && !missileTech) {
-        level = level + 1;
-        info.getTechList().setTechLevel(TechType.Combat, level);
-      } else if (attitude == Attitude.SCIENTIFIC
-          && DiceGenerator.getRandom(99) < 20) {
-        level = level + 1;
-        info.getTechList().setTechLevel(TechType.Combat, level);
+      if (attitude == Attitude.AGGRESSIVE) {
+        if (missingTechs.length == 1) {
+          level = level + 1;
+          info.getTechList().setTechLevel(TechType.Combat, level);
+        }
+      } else if (attitude == Attitude.MILITARISTIC) {
+        if (!missileTech) {
+          level = level + 1;
+          info.getTechList().setTechLevel(TechType.Combat, level);
+        }
+      } else if (attitude == Attitude.SCIENTIFIC) {
+        if (DiceGenerator.getRandom(99) < 20) {
+          level = level + 1;
+          info.getTechList().setTechLevel(TechType.Combat, level);
+        }
       } else if (DiceGenerator.getRandom(99) < 30) {
         level = level + 1;
         info.getTechList().setTechLevel(TechType.Combat, level);
@@ -205,23 +210,101 @@ public final class Research {
         armorTech = true;
       }
     }
-    if (attitude == Attitude.AGGRESSIVE && missingTechs.length == 1) {
-      level = level + 1;
-      info.getTechList().setTechLevel(TechType.Defense, level);
-    } else if (attitude == Attitude.MILITARISTIC && !generatorTech
-        && !armorTech) {
+    if (attitude == Attitude.AGGRESSIVE) {
+      if (missingTechs.length == 1) {
         level = level + 1;
         info.getTechList().setTechLevel(TechType.Defense, level);
-    } else if (attitude == Attitude.PEACEFUL && !turretTech) {
-      level = level + 1;
-      info.getTechList().setTechLevel(TechType.Defense, level);
-    } else if (attitude == Attitude.SCIENTIFIC
-        && DiceGenerator.getRandom(99) < 20) {
-      level = level + 1;
-      info.getTechList().setTechLevel(TechType.Defense, level);
+      }
+    } else if (attitude == Attitude.MILITARISTIC) {
+      if (!generatorTech && !armorTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Defense, level);
+      }
+    } else if (attitude == Attitude.PEACEFUL) {
+      if (!turretTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Defense, level);
+      }
+    } else if (attitude == Attitude.SCIENTIFIC) {
+      if (DiceGenerator.getRandom(99) < 20) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Defense, level);
+      }
     } else if (DiceGenerator.getRandom(99) < 30) {
       level = level + 1;
       info.getTechList().setTechLevel(TechType.Defense, level);
+    }
+  }
+  /**
+   * Check Update hull tech
+   * @param info PlayerInfo
+   * @param attitude Player's attitude
+   */
+  protected static void checkUpdateHull(final PlayerInfo info,
+      final Attitude attitude) {
+    int level = info.getTechList().getTechLevel(TechType.Hulls);
+    Tech[] missingTechs = info.getTechList().getListMissingTech(
+        TechType.Hulls, level);
+    boolean freighterTech = false;
+    boolean starbaseTech = false;
+    boolean privateerTech = false;
+    boolean probeTech = false;
+    boolean battleTech = false;
+    for (Tech missingTech : missingTechs) {
+      if (missingTech.getName().contains("freighter")) {
+        freighterTech = true;
+      }
+      if (missingTech.getName().contains("starbase")) {
+        starbaseTech = true;
+      }
+      if (missingTech.getName().contains("Privateer")) {
+        privateerTech = true;
+      }
+      if (missingTech.getName().contains("Probe")) {
+        probeTech = true;
+      }
+      if (missingTech.getName().contains("Battle")) {
+        battleTech = true;
+      }
+    }
+    if (attitude == Attitude.AGGRESSIVE) {
+      if (!freighterTech && level > 1) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Hulls, level);
+      }
+    } else if (attitude == Attitude.MILITARISTIC) {
+      if (!battleTech && !freighterTech && level > 1) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Hulls, level);
+      }
+    } else if (attitude == Attitude.MERCHANTICAL) {
+      if (!freighterTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Hulls, level);
+      }
+    } else if (attitude == Attitude.EXPANSIONIST) {
+      if (!probeTech && !freighterTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Hulls, level);
+      }
+    } else if (attitude == Attitude.BACKSTABBING) {
+      if (!privateerTech && level > 1) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Hulls, level);
+      }
+    } else if (attitude == Attitude.DIPLOMATIC) {
+      if (!starbaseTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Hulls, level);
+      }
+    } else if (attitude == Attitude.SCIENTIFIC) {
+      if (DiceGenerator.getRandom(99) < 20) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Hulls, level);
+      }
+    } else if (DiceGenerator.getRandom(99) < 30) {
+      level = level + 1;
+      info.getTechList().setTechLevel(TechType.Hulls, level);
     }
   }
   /**

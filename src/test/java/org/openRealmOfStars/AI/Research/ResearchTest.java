@@ -200,4 +200,56 @@ public class ResearchTest {
     Research.checkUpdateDefense(info, Attitude.PEACEFUL);
     assertEquals(3, list.getTechLevel(TechType.Defense));
   }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUpdateHullTech() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList list = new TechList();
+    Mockito.when(info.getTechList()).thenReturn(list);
+    list.addTech(TechFactory.createHullTech("Scout Mk1", 1));
+    list.addTech(TechFactory.createHullTech("Colony", 1));
+    assertEquals(1, list.getTechLevel(TechType.Hulls));
+    Research.checkUpdateHull(info, Attitude.MILITARISTIC);
+    assertEquals(1, list.getTechLevel(TechType.Hulls));
+    Research.checkUpdateHull(info, Attitude.MERCHANTICAL);
+    assertEquals(2, list.getTechLevel(TechType.Hulls));
+    list.addTech(TechFactory.createHullTech("Probe", 2));
+    list.addTech(TechFactory.createHullTech("Small starbase Mk1", 2));
+    Research.checkUpdateHull(info, Attitude.MERCHANTICAL);
+    assertEquals(2, list.getTechLevel(TechType.Hulls));
+    Research.checkUpdateHull(info, Attitude.DIPLOMATIC);
+    assertEquals(3, list.getTechLevel(TechType.Hulls));
+    list = new TechList();
+    Mockito.when(info.getTechList()).thenReturn(list);
+    list.addTech(TechFactory.createHullTech("Scout Mk1", 1));
+    list.addTech(TechFactory.createHullTech("Colony", 1));
+    Research.checkUpdateHull(info, Attitude.EXPANSIONIST);
+    assertEquals(2, list.getTechLevel(TechType.Hulls));
+    list.addTech(TechFactory.createHullTech("Small freighter", 2));
+    list.addTech(TechFactory.createHullTech("Small starbase Mk1", 2));
+    Research.checkUpdateHull(info, Attitude.MILITARISTIC);
+    assertEquals(3, list.getTechLevel(TechType.Hulls));
+    list = new TechList();
+    Mockito.when(info.getTechList()).thenReturn(list);
+    list.addTech(TechFactory.createHullTech("Scout Mk1", 1));
+    list.addTech(TechFactory.createHullTech("Colony", 1));
+    Research.checkUpdateHull(info, Attitude.EXPANSIONIST);
+    assertEquals(2, list.getTechLevel(TechType.Hulls));
+    list.addTech(TechFactory.createHullTech("Small freighter", 2));
+    list.addTech(TechFactory.createHullTech("Small starbase Mk1", 2));
+    Research.checkUpdateHull(info, Attitude.AGGRESSIVE);
+    assertEquals(3, list.getTechLevel(TechType.Hulls));
+    list = new TechList();
+    Mockito.when(info.getTechList()).thenReturn(list);
+    list.addTech(TechFactory.createHullTech("Scout Mk1", 1));
+    list.addTech(TechFactory.createHullTech("Colony", 1));
+    Research.checkUpdateHull(info, Attitude.EXPANSIONIST);
+    assertEquals(2, list.getTechLevel(TechType.Hulls));
+    list.addTech(TechFactory.createHullTech("Small freighter", 2));
+    list.addTech(TechFactory.createHullTech("Small starbase Mk1", 2));
+    Research.checkUpdateHull(info, Attitude.BACKSTABBING);
+    assertEquals(3, list.getTechLevel(TechType.Hulls));
+  }
+
 }

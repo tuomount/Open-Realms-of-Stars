@@ -402,6 +402,9 @@ public final class Research {
       if (info.getTechList().isUpgradeable(TechType.Defense)) {
         checkUpdateDefense(info, attitude);
       }
+      if (info.getTechList().isUpgradeable(TechType.Hulls)) {
+        checkUpdateHull(info, attitude);
+      }
     }
   }
 }

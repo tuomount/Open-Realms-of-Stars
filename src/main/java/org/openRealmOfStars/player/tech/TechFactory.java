@@ -610,42 +610,47 @@ public final class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Improvements, level);
-        tech.setImprovement(techName);
-        if (techName.startsWith("Barracks")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_TROOPS));
-        } else if (techName.startsWith("Basic lab")
-            || techName.startsWith("Advanced laboratory")
-            || techName.startsWith("Research center")
-            || techName.startsWith("New technology center")
-            || techName.startsWith("Neural research center")
-            || techName.startsWith("Super AI Center")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
-        } else if (techName.startsWith("Tax center")
-            || techName.startsWith("Market center")
-            || techName.startsWith("Trade center")
-            || techName.startsWith("Stock market")
-            || techName.startsWith("Galactic bank")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_CREDIT));
-        } else if (techName.startsWith("Advanced farm")
-            || techName.startsWith("Farming center")
-            || techName.startsWith("Hydropodic farming center")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
-        } else if (techName.startsWith("Advanced mine")
-            || techName.startsWith("Mining center")
-            || techName.startsWith("Nanobot mining center")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_MINE));
-        } else if (techName.startsWith("Advanced factory")
-            || techName.startsWith("Manufacturing center")
-            || techName.startsWith("Nanobot manufacturing center")
-            || techName.startsWith("Replicator center")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_FACTORY));
-        } else if (techName.startsWith("Culture center")
-            || techName.startsWith("Extreme sports center")
-            || techName.startsWith("Galactic sports center")
-            || techName.startsWith("VR movie center")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_CULTURE));
+        if (techName.startsWith("Starbase")) {
+          tech.setComponent(techName);
+          tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
         } else {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+          tech.setImprovement(techName);
+          if (techName.startsWith("Barracks")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_TROOPS));
+          } else if (techName.startsWith("Basic lab")
+              || techName.startsWith("Advanced laboratory")
+              || techName.startsWith("Research center")
+              || techName.startsWith("New technology center")
+              || techName.startsWith("Neural research center")
+              || techName.startsWith("Super AI Center")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
+          } else if (techName.startsWith("Tax center")
+              || techName.startsWith("Market center")
+              || techName.startsWith("Trade center")
+              || techName.startsWith("Stock market")
+              || techName.startsWith("Galactic bank")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_CREDIT));
+          } else if (techName.startsWith("Advanced farm")
+              || techName.startsWith("Farming center")
+              || techName.startsWith("Hydropodic farming center")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_FARM));
+          } else if (techName.startsWith("Advanced mine")
+              || techName.startsWith("Mining center")
+              || techName.startsWith("Nanobot mining center")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_MINE));
+          } else if (techName.startsWith("Advanced factory")
+              || techName.startsWith("Manufacturing center")
+              || techName.startsWith("Nanobot manufacturing center")
+              || techName.startsWith("Replicator center")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_FACTORY));
+          } else if (techName.startsWith("Culture center")
+              || techName.startsWith("Extreme sports center")
+              || techName.startsWith("Galactic sports center")
+              || techName.startsWith("VR movie center")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_CULTURE));
+          } else {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+          }
         }
         return tech;
       }

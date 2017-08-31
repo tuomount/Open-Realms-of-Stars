@@ -1696,6 +1696,12 @@ public final class ShipComponentFactory {
       tmp.setCloakDetection(60);
       tmp.setEnergyRequirement(1);
     }
+    if (index == COMPONENT_ORBITAL_SMART_BOMBS) {
+      tmp = new ShipComponent(index, "Orbital smart bombs", 12, 4,
+          ShipComponentType.ORBITAL_BOMBS);
+      tmp.setEnergyRequirement(0);
+      tmp.setDamage(90);
+    }
     if (index == COMPONENT_ZEROPOINT_SOURCE_MK1) {
       tmp = new ShipComponent(index, "Zero-point source Mk1", 20, 2,
           ShipComponentType.POWERSOURCE);
@@ -2049,8 +2055,8 @@ public final class ShipComponentFactory {
       tmp.setWeaponRange(4);
       tmp.setEnergyRequirement(4);
     }
-    if (index == COMPONENT_PHOTON_TORPEDO_MK9) {
-      tmp = new ShipComponent(index, "Photon torpedo Mk9", 12, 5,
+    if (index == COMPONENT_PHOTON_TORPEDO_MK10) {
+      tmp = new ShipComponent(index, "Photon torpedo Mk10", 12, 5,
           ShipComponentType.WEAPON_PHOTON_TORPEDO);
       tmp.setDamage(10);
       tmp.setWeaponRange(4);

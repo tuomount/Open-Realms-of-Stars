@@ -252,4 +252,55 @@ public class ResearchTest {
     assertEquals(3, list.getTechLevel(TechType.Hulls));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUpdateImprovementTech() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList list = new TechList();
+    Mockito.when(info.getTechList()).thenReturn(list);
+    list.addTech(TechFactory.createImprovementTech("Barracks", 1));
+    list.addTech(TechFactory.createImprovementTech("Tax center", 1));
+    assertEquals(1, list.getTechLevel(TechType.Improvements));
+    Research.checkUpdateImprovement(info, Attitude.MILITARISTIC);
+    assertEquals(1, list.getTechLevel(TechType.Improvements));
+    list.addTech(TechFactory.createImprovementTech("Basic lab", 1));
+    assertEquals(2, list.getTechLevel(TechType.Improvements));
+    list.addTech(TechFactory.createImprovementTech("Advanced farm", 2));
+    list.addTech(TechFactory.createImprovementTech("Advanced mine", 2));
+    list.addTech(TechFactory.createImprovementTech("Advanced factory", 2));
+    Research.checkUpdateImprovement(info, Attitude.DIPLOMATIC);
+    assertEquals(2, list.getTechLevel(TechType.Improvements));
+    Research.checkUpdateImprovement(info, Attitude.PEACEFUL);
+    assertEquals(3, list.getTechLevel(TechType.Improvements));
+    list = new TechList();
+    Mockito.when(info.getTechList()).thenReturn(list);
+    list.addTech(TechFactory.createImprovementTech("Barracks", 1));
+    list.addTech(TechFactory.createImprovementTech("Basic lab", 1));
+    assertEquals(1, list.getTechLevel(TechType.Improvements));
+    Research.checkUpdateImprovement(info, Attitude.MILITARISTIC);
+    assertEquals(2, list.getTechLevel(TechType.Improvements));
+    list.addTech(TechFactory.createImprovementTech("Advanced mine", 2));
+    list.addTech(TechFactory.createImprovementTech("Advanced factory", 2));
+    list.addTech(TechFactory.createImprovementTech("Starbase music hall", 2));
+    Research.checkUpdateImprovement(info, Attitude.DIPLOMATIC);
+    assertEquals(3, list.getTechLevel(TechType.Improvements));
+    list = new TechList();
+    Mockito.when(info.getTechList()).thenReturn(list);
+    list.addTech(TechFactory.createImprovementTech("Barracks", 1));
+    list.addTech(TechFactory.createImprovementTech("Basic lab", 1));
+    Research.checkUpdateImprovement(info, Attitude.SCIENTIFIC);
+    assertEquals(2, list.getTechLevel(TechType.Improvements));
+    list.addTech(TechFactory.createImprovementTech("Advanced mine", 2));
+    list.addTech(TechFactory.createImprovementTech("Advanced factory", 2));
+    list.addTech(TechFactory.createImprovementTech("Starbase music hall", 2));
+    Research.checkUpdateImprovement(info, Attitude.MERCHANTICAL);
+    assertEquals(3, list.getTechLevel(TechType.Improvements));
+    list = new TechList();
+    Mockito.when(info.getTechList()).thenReturn(list);
+    list.addTech(TechFactory.createImprovementTech("Barracks", 1));
+    list.addTech(TechFactory.createImprovementTech("Basic lab", 1));
+    Research.checkUpdateImprovement(info, Attitude.EXPANSIONIST);
+    assertEquals(2, list.getTechLevel(TechType.Improvements));
+  }
+
 }

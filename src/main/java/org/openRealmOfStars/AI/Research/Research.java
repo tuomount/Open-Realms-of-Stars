@@ -1,6 +1,7 @@
 package org.openRealmOfStars.AI.Research;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -10,6 +11,8 @@ import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.starMap.planet.BuildingFactory;
+import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -308,6 +311,93 @@ public final class Research {
     }
   }
   /**
+   * Check Update planetary improvemnt tech
+   * @param info PlayerInfo
+   * @param attitude Player's attitude
+   */
+  protected static void checkUpdateImprovement(final PlayerInfo info,
+      final Attitude attitude) {
+    int level = info.getTechList().getTechLevel(TechType.Improvements);
+    Tech[] missingTechs = info.getTechList().getListMissingTech(
+        TechType.Improvements, level);
+    boolean labTech = false;
+    boolean farmTech = false;
+    boolean mineTech = false;
+    boolean cultTech = false;
+    boolean credTech = false;
+    boolean prodTech = false;
+    boolean starbaseTech = false;
+    for (Tech missingTech : missingTechs) {
+      Building build = BuildingFactory.createByName(
+          missingTech.getImprovement());
+      if (build != null) {
+        if (build.getFarmBonus() > 0) {
+          farmTech = true;
+          if (info.getRace() == SpaceRace.MECHIONS) {
+            // Mechions do not care about farm tech
+            farmTech = false;
+          }
+        }
+        if (build.getReseBonus() > 0) {
+          labTech = true;
+        }
+        if (build.getCultBonus() > 0) {
+          cultTech = true;
+        }
+        if (build.getCredBonus() > 0) {
+          credTech = true;
+        }
+        if (build.getMineBonus() > 0) {
+          mineTech = true;
+        }
+        if (build.getFactBonus() > 0) {
+          prodTech = true;
+        }
+      }
+      if (missingTech.getName().contains("Starbase")) {
+        starbaseTech = true;
+      }
+      if (missingTech.getName().contains("Basic lab")) {
+        // No need to update if basic lab is missing
+        return;
+      }
+    }
+    if (attitude == Attitude.MILITARISTIC) {
+      if (!prodTech && !mineTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Improvements, level);
+      }
+    } else if (attitude == Attitude.DIPLOMATIC) {
+      if (!cultTech && !credTech && !starbaseTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Improvements, level);
+      }
+    } else if (attitude == Attitude.PEACEFUL) {
+      if (!cultTech && !farmTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Improvements, level);
+      }
+    } else if (attitude == Attitude.EXPANSIONIST) {
+      if (!prodTech && !farmTech && !mineTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Improvements, level);
+      }
+    } else if (attitude == Attitude.MERCHANTICAL) {
+      if (!credTech && !labTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Improvements, level);
+      }
+    } else if (attitude == Attitude.SCIENTIFIC) {
+      if (!labTech && !starbaseTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Improvements, level);
+      }
+    } else if (DiceGenerator.getRandom(99) < 30) {
+      level = level + 1;
+      info.getTechList().setTechLevel(TechType.Improvements, level);
+    }
+  }
+  /**
    * Handle research for AI player
    * @param info PlayerInfo
    */
@@ -404,6 +494,9 @@ public final class Research {
       }
       if (info.getTechList().isUpgradeable(TechType.Hulls)) {
         checkUpdateHull(info, attitude);
+      }
+      if (info.getTechList().isUpgradeable(TechType.Improvements)) {
+        checkUpdateImprovement(info, attitude);
       }
     }
   }

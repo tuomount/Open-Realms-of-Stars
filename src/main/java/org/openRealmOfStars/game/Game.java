@@ -48,14 +48,23 @@ import org.openRealmOfStars.player.message.ChangeMessagePlanet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipComponentFactory;
+import org.openRealmOfStars.player.ship.ShipHull;
+import org.openRealmOfStars.player.ship.ShipHullFactory;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
+import org.openRealmOfStars.player.tech.Tech;
+import org.openRealmOfStars.player.tech.TechFactory;
+import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
+import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
@@ -979,6 +988,185 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Print Tech into a markdown format
+   * @param techNames Technames to print
+   * @param type Tech type
+   * @param level Which tech level
+   * @return String of tech info in markdown format
+   */
+  public static String printTech(final String[] techNames,
+      final TechType type, final int level) {
+    StringBuilder sb = new StringBuilder();
+    sb.append("### " + type.toString() + " - " + level + "\n");
+    for (int i = 0; i < techNames.length; i++) {
+      Tech tech = TechFactory.createTech(type, level, techNames[i]);
+      boolean noPrint = true;
+      if (tech.getComponent() != null) {
+        ShipComponent comp = ShipComponentFactory.createByName(
+            tech.getComponent());
+        sb.append(i + 1);
+        sb.append(". ");
+        sb.append(comp.toString());
+        noPrint = false;
+      }
+      if (tech.getImprovement() != null) {
+        Building build = BuildingFactory.createByName(tech.getImprovement());
+        sb.append(i + 1);
+        sb.append(". ");
+        sb.append(build.getFullDescription());
+        noPrint = false;
+      }
+      if (tech.getHull() != null) {
+        ShipHull hull = ShipHullFactory.createByName(tech.getHull(),
+            SpaceRace.HUMAN);
+        sb.append(i + 1);
+        sb.append(". ");
+        sb.append(hull.toString() + "\n");
+        noPrint = false;
+      }
+      if (noPrint) {
+        throw new IllegalArgumentException("Tech with not actually used: "
+           + tech.getName());
+      }
+    }
+    return sb.toString();
+  }
+  /**
+   * Print whole research wiki page contain all information about tech
+   * @return Research wiki page as a String
+   */
+  public static String printTechWiki() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("## Combat technology\n");
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL1_NAMES,
+        TechType.Combat, 1));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL2_NAMES,
+        TechType.Combat, 2));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL3_NAMES,
+        TechType.Combat, 3));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL4_NAMES,
+        TechType.Combat, 4));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL5_NAMES,
+        TechType.Combat, 5));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL6_NAMES,
+        TechType.Combat, 6));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL7_NAMES,
+        TechType.Combat, 7));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL8_NAMES,
+        TechType.Combat, 8));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL9_NAMES,
+        TechType.Combat, 9));
+    sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL10_NAMES,
+        TechType.Combat, 10));
+    sb.append("## Defense technology\n");
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL1_NAMES,
+        TechType.Defense, 1));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL2_NAMES,
+        TechType.Defense, 2));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL3_NAMES,
+        TechType.Defense, 3));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL4_NAMES,
+        TechType.Defense, 4));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL5_NAMES,
+        TechType.Defense, 5));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL6_NAMES,
+        TechType.Defense, 6));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL7_NAMES,
+        TechType.Defense, 7));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL8_NAMES,
+        TechType.Defense, 8));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL9_NAMES,
+        TechType.Defense, 9));
+    sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL10_NAMES,
+        TechType.Defense, 10));
+    sb.append("## Hull technology\n");
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL1_NAMES,
+        TechType.Hulls, 1));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL2_NAMES,
+        TechType.Hulls, 2));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL3_NAMES,
+        TechType.Hulls, 3));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL4_NAMES,
+        TechType.Hulls, 4));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL5_NAMES,
+        TechType.Hulls, 5));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL6_NAMES,
+        TechType.Hulls, 6));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL7_NAMES,
+        TechType.Hulls, 7));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL8_NAMES,
+        TechType.Hulls, 8));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL9_NAMES,
+        TechType.Hulls, 9));
+    sb.append(printTech(TechFactory.HULL_TECH_LEVEL10_NAMES,
+        TechType.Hulls, 10));
+    sb.append("## Planetary Improvement technology\n");
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL1_NAMES,
+        TechType.Improvements, 1));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL2_NAMES,
+        TechType.Improvements, 2));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL3_NAMES,
+        TechType.Improvements, 3));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL4_NAMES,
+        TechType.Improvements, 4));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL5_NAMES,
+        TechType.Improvements, 5));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL6_NAMES,
+        TechType.Improvements, 6));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL7_NAMES,
+        TechType.Improvements, 7));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL8_NAMES,
+        TechType.Improvements, 8));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL9_NAMES,
+        TechType.Improvements, 9));
+    sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL10_NAMES,
+        TechType.Improvements, 10));
+    sb.append("## Propulsion technology\n");
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL1_NAMES,
+        TechType.Propulsion, 1));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL2_NAMES,
+        TechType.Propulsion, 2));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL3_NAMES,
+        TechType.Propulsion, 3));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL4_NAMES,
+        TechType.Propulsion, 4));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL5_NAMES,
+        TechType.Propulsion, 5));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL6_NAMES,
+        TechType.Propulsion, 6));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL7_NAMES,
+        TechType.Propulsion, 7));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL8_NAMES,
+        TechType.Propulsion, 8));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL9_NAMES,
+        TechType.Propulsion, 9));
+    sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL10_NAMES,
+        TechType.Propulsion, 10));
+    sb.append("## Electronics technology\n");
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL1_NAMES,
+        TechType.Electrics, 1));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL2_NAMES,
+        TechType.Electrics, 2));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL3_NAMES,
+        TechType.Electrics, 3));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL4_NAMES,
+        TechType.Electrics, 4));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL5_NAMES,
+        TechType.Electrics, 5));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL6_NAMES,
+        TechType.Electrics, 6));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL7_NAMES,
+        TechType.Electrics, 7));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL8_NAMES,
+        TechType.Electrics, 8));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL9_NAMES,
+        TechType.Electrics, 9));
+    sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL10_NAMES,
+        TechType.Electrics, 10));
+    return sb.toString();
+  }
+
+  /**
    * Main method to run the game
    * @param args from Command line
    */
@@ -986,6 +1174,8 @@ public class Game implements ActionListener {
     if (args.length > 0 && args[0].equals("--credits")) {
       System.out.println("# Authors of Open Reals Of Stars\n");
       System.out.println(CreditsView.MAIN_CREDITS);
+    } else if (args.length > 0 && args[0].equals("--wiki-research")) {
+      System.out.println(printTechWiki());
     } else {
       if (args.length > 0 && args[0].equals("--no-music")) {
         System.out.println("Disabling the music...");

@@ -877,35 +877,35 @@ public final class TechFactory {
   /**
    * Tech 4 Level cost
    */
-  private static final int TECH_4_LEVEL_RP_COST = 15;
+  private static final int TECH_4_LEVEL_RP_COST = 18;
   /**
    * Tech 5 Level cost
    */
-  private static final int TECH_5_LEVEL_RP_COST = 22;
+  private static final int TECH_5_LEVEL_RP_COST = 25;
   /**
    * Tech 6 Level cost
    */
-  private static final int TECH_6_LEVEL_RP_COST = 33;
+  private static final int TECH_6_LEVEL_RP_COST = 40;
   /**
    * Tech 7 Level cost
    */
-  private static final int TECH_7_LEVEL_RP_COST = 50;
+  private static final int TECH_7_LEVEL_RP_COST = 60;
   /**
    * Tech 8 Level cost
    */
-  private static final int TECH_8_LEVEL_RP_COST = 75;
+  private static final int TECH_8_LEVEL_RP_COST = 84;
   /**
    * Tech 9 Level cost
    */
-  private static final int TECH_9_LEVEL_RP_COST = 112;
+  private static final int TECH_9_LEVEL_RP_COST = 104;
   /**
    * Tech 10 Level cost
    */
-  private static final int TECH_10_LEVEL_RP_COST = 168;
+  private static final int TECH_10_LEVEL_RP_COST = 130;
   /**
    * Tech FUTURE Level cost
    */
-  private static final int TECH_FUTURE_LEVEL_RP_COST = 200;
+  private static final int TECH_FUTURE_LEVEL_RP_COST = 168;
 
   /**
    * Get tech level cost as research points

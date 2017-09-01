@@ -398,6 +398,69 @@ public final class Research {
     }
   }
   /**
+   * Check Update propulsion tech
+   * @param info PlayerInfo
+   * @param attitude Player's attitude
+   */
+  protected static void checkUpdatePropulsion(final PlayerInfo info,
+      final Attitude attitude) {
+    int level = info.getTechList().getTechLevel(TechType.Propulsion);
+    Tech[] missingTechs = info.getTechList().getListMissingTech(
+        TechType.Propulsion, level);
+    boolean nuclearTech = false;
+    boolean warpTech = false;
+    boolean hyperTech = false;
+    boolean impulseTech = false;
+    for (Tech missingTech : missingTechs) {
+      if (missingTech.getName().contains("Nuclear")) {
+        nuclearTech = true;
+      }
+      if (missingTech.getName().contains("Warp")) {
+        warpTech = true;
+      }
+      if (missingTech.getName().contains("Hyper")) {
+        hyperTech = true;
+      }
+      if (missingTech.getName().contains("Impulse")) {
+        impulseTech = true;
+      }
+    }
+    if (attitude == Attitude.AGGRESSIVE) {
+      if (missingTechs.length == 1) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Propulsion, level);
+      }
+    } else if (attitude == Attitude.MILITARISTIC) {
+      if (!nuclearTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Propulsion, level);
+      }
+    } else if (attitude == Attitude.MERCHANTICAL) {
+      if (!warpTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Propulsion, level);
+      }
+    } else if (attitude == Attitude.LOGICAL) {
+      if (!hyperTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Propulsion, level);
+      }
+    } else if (attitude == Attitude.EXPANSIONIST) {
+      if (!warpTech && !impulseTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Propulsion, level);
+      }
+    } else if (attitude == Attitude.SCIENTIFIC) {
+      if (DiceGenerator.getRandom(99) < 20) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Propulsion, level);
+      }
+    } else if (DiceGenerator.getRandom(99) < 30) {
+      level = level + 1;
+      info.getTechList().setTechLevel(TechType.Propulsion, level);
+    }
+  }
+  /**
    * Handle research for AI player
    * @param info PlayerInfo
    */
@@ -497,6 +560,9 @@ public final class Research {
       }
       if (info.getTechList().isUpgradeable(TechType.Improvements)) {
         checkUpdateImprovement(info, attitude);
+      }
+      if (info.getTechList().isUpgradeable(TechType.Propulsion)) {
+        checkUpdatePropulsion(info, attitude);
       }
     }
   }

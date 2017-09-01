@@ -303,4 +303,30 @@ public class ResearchTest {
     assertEquals(2, list.getTechLevel(TechType.Improvements));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUpdatePropulsionTech() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList list = new TechList();
+    Mockito.when(info.getTechList()).thenReturn(list);
+    list.addTech(TechFactory.createPropulsionTech("Ion drive Mk1", 1));
+    list.addTech(TechFactory.createPropulsionTech("Fission source Mk1", 1));
+    list.addTech(TechFactory.createPropulsionTech("Nuclear drive Mk1", 1));
+    assertEquals(1, list.getTechLevel(TechType.Propulsion));
+    Research.checkUpdatePropulsion(info, Attitude.MILITARISTIC);
+    assertEquals(2, list.getTechLevel(TechType.Propulsion));
+    list.addTech(TechFactory.createPropulsionTech("Ion drive Mk3", 2));
+    list.addTech(TechFactory.createPropulsionTech("Hyper drive Mk1", 2));
+    Research.checkUpdatePropulsion(info, Attitude.LOGICAL);
+    assertEquals(3, list.getTechLevel(TechType.Propulsion));
+    list.addTech(TechFactory.createPropulsionTech("Warp drive Mk1", 3));
+    list.addTech(TechFactory.createPropulsionTech("Nuclear drive Mk2", 3));
+    Research.checkUpdatePropulsion(info, Attitude.MERCHANTICAL);
+    assertEquals(4, list.getTechLevel(TechType.Propulsion));
+    list.addTech(TechFactory.createPropulsionTech("Warp drive Mk2", 4));
+    list.addTech(TechFactory.createPropulsionTech("Tachyon source Mk1", 4));
+    Research.checkUpdatePropulsion(info, Attitude.EXPANSIONIST);
+    assertEquals(5, list.getTechLevel(TechType.Propulsion));
+  }
+
 }

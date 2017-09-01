@@ -329,4 +329,34 @@ public class ResearchTest {
     assertEquals(5, list.getTechLevel(TechType.Propulsion));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUpdateElectronicsTech() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList list = new TechList();
+    Mockito.when(info.getTechList()).thenReturn(list);
+    list.addTech(TechFactory.createElectronicsTech("Scanner Mk1", 1));
+    list.addTech(TechFactory.createElectronicsTech("Cloaking device Mk1", 1));
+    assertEquals(1, list.getTechLevel(TechType.Electrics));
+    Research.checkUpdateElectronics(info, Attitude.AGGRESSIVE);
+    assertEquals(2, list.getTechLevel(TechType.Electrics));
+    list.addTech(TechFactory.createElectronicsTech("Cloaking device Mk2", 2));
+    Research.checkUpdateElectronics(info, Attitude.MILITARISTIC);
+    assertEquals(2, list.getTechLevel(TechType.Electrics));
+    Research.checkUpdateElectronics(info, Attitude.BACKSTABBING);
+    assertEquals(3, list.getTechLevel(TechType.Electrics));
+    list.addTech(TechFactory.createElectronicsTech("Jammer Mk1", 3));
+    list.addTech(TechFactory.createElectronicsTech("Planetary scanner Mk2", 3));
+    Research.checkUpdateElectronics(info, Attitude.MILITARISTIC);
+    assertEquals(4, list.getTechLevel(TechType.Electrics));
+    list.addTech(TechFactory.createElectronicsTech("LR scanner Mk1", 4));
+    list.addTech(TechFactory.createElectronicsTech("Cloaking device Mk3", 4));
+    Research.checkUpdateElectronics(info, Attitude.EXPANSIONIST);
+    assertEquals(5, list.getTechLevel(TechType.Electrics));
+    list.addTech(TechFactory.createElectronicsTech("Planetary scanner Mk3", 5));
+    list.addTech(TechFactory.createElectronicsTech("Scanner Mk3", 5));
+    Research.checkUpdateElectronics(info, Attitude.LOGICAL);
+    assertEquals(6, list.getTechLevel(TechType.Electrics));
+  }
+
 }

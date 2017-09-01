@@ -461,6 +461,77 @@ public final class Research {
     }
   }
   /**
+   * Check Update electronics tech
+   * @param info PlayerInfo
+   * @param attitude Player's attitude
+   */
+  protected static void checkUpdateElectronics(final PlayerInfo info,
+      final Attitude attitude) {
+    int level = info.getTechList().getTechLevel(TechType.Electrics);
+    Tech[] missingTechs = info.getTechList().getListMissingTech(
+        TechType.Electrics, level);
+    boolean cloakTech = false;
+    boolean scannerTech = false;
+    boolean longScannerTech = false;
+    boolean planetaryScannerTech = false;
+    boolean targetingComputerTech = false;
+    boolean jammerTech = false;
+    for (Tech missingTech : missingTechs) {
+      if (missingTech.getName().contains("Cloaking")) {
+        cloakTech = true;
+      }
+      if (missingTech.getName().contains("Scanner")) {
+        scannerTech = true;
+      }
+      if (missingTech.getName().contains("LR scanner")) {
+        longScannerTech = true;
+      }
+      if (missingTech.getName().contains("Planetary scanner")) {
+        planetaryScannerTech = true;
+      }
+      if (missingTech.getName().contains("Targeting computer")) {
+        targetingComputerTech = true;
+      }
+      if (missingTech.getName().contains("Jammer")) {
+        jammerTech = true;
+      }
+    }
+    if (attitude == Attitude.AGGRESSIVE) {
+      if (missingTechs.length == 1) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Electrics, level);
+      }
+    } else if (attitude == Attitude.MILITARISTIC) {
+      if (!targetingComputerTech && !jammerTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Electrics, level);
+      }
+    } else if (attitude == Attitude.BACKSTABBING) {
+      if (!cloakTech && !scannerTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Electrics, level);
+      }
+    } else if (attitude == Attitude.LOGICAL) {
+      if (!planetaryScannerTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Electrics, level);
+      }
+    } else if (attitude == Attitude.EXPANSIONIST) {
+      if (!longScannerTech) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Electrics, level);
+      }
+    } else if (attitude == Attitude.SCIENTIFIC) {
+      if (DiceGenerator.getRandom(99) < 20) {
+        level = level + 1;
+        info.getTechList().setTechLevel(TechType.Electrics, level);
+      }
+    } else if (DiceGenerator.getRandom(99) < 30) {
+      level = level + 1;
+      info.getTechList().setTechLevel(TechType.Electrics, level);
+    }
+  }
+  /**
    * Handle research for AI player
    * @param info PlayerInfo
    */
@@ -563,6 +634,9 @@ public final class Research {
       }
       if (info.getTechList().isUpgradeable(TechType.Propulsion)) {
         checkUpdatePropulsion(info, attitude);
+      }
+      if (info.getTechList().isUpgradeable(TechType.Electrics)) {
+        checkUpdateElectronics(info, attitude);
       }
     }
   }

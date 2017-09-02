@@ -2,8 +2,11 @@ package org.openRealmOfStars.player.ship;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
+import org.openRealmOfStars.player.tech.TechFactory;
 
 import static org.junit.Assert.*;
 
@@ -256,4 +259,29 @@ public class ShipTest {
     assertEquals(100, ship.getHitChance(weapon));
     assertEquals(true, ship.isStarBase());
   }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testStarBase2() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    info.getTechList().addTech(TechFactory.createHullTech("Small starbase Mk1", 2));
+    info.getTechList().addTech(TechFactory.createHullTech("Medium starbase", 4));
+    info.getTechList().addTech(TechFactory.createHullTech("Large starbase", 6));
+    info.getTechList().addTech(TechFactory.createHullTech("Massive starbase", 8));
+    info.getTechList().addTech(TechFactory.createCombatTech("Laser Mk1", 1));
+    info.getTechList().addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
+    info.getTechList().addTech(TechFactory.createCombatTech("Armor Mk1", 1));
+    info.getTechList().addTech(TechFactory.createCombatTech("Shield Mk1", 1));
+    info.getTechList().addTech(TechFactory.createCombatTech("Starbase lab", 4));
+    ShipDesign design = ShipGenerator.createStarbase(info, ShipSize.MEDIUM);
+    assertNotEquals(null, design);
+    Ship ship = new Ship(design);
+    assertNotEquals(null, ship);
+    design = ShipGenerator.createStarbase(info, ShipSize.LARGE);
+    assertNotEquals(null, design);
+    ship = new Ship(design);
+    assertNotEquals(null, ship);
+    assertEquals(true,ship.getTotalMilitaryPower() > 0);
+  }
+
 }

@@ -163,11 +163,17 @@ public final class ShipGenerator {
         }
         break;
       }
+      case STARBASE_COMPONENT: {
+        scores[i] = scores[i] + comp.getCreditBonus() * 5;
+        scores[i] = scores[i] + comp.getCultureBonus() * 5;
+        scores[i] = scores[i] + comp.getResearchBonus() * 5;
+        break;
+      }
       case TARGETING_COMPUTER: {
         if (!design.gotCertainType(ShipComponentType.TARGETING_COMPUTER)) {
           scores[i] = scores[i] + comp.getDamage();
         } else {
-          scores[i] = -1; // No shield
+          scores[i] = -1; // This would be second targeting computer
         }
         break;
       }
@@ -503,6 +509,205 @@ public final class ShipGenerator {
           }
         }
       }
+    }
+    return result;
+  }
+
+  /**
+   * Design new Starbase for certain size
+   * @param player Player doing the design
+   * @param size Ship Size
+   * @return ShipDesign if doable. Null if not doable for that size.
+   */
+  public static ShipDesign createStarbase(final PlayerInfo player,
+      final ShipSize size) {
+    ShipDesign result = null;
+    Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
+    ShipHull hull = null;
+    int value = 0;
+    for (Tech tech : hullTechs) {
+      ShipHull tempHull = ShipHullFactory.createByName(tech.getHull(),
+          player.getRace());
+      if (tempHull.getHullType() == ShipHullType.STARBASE
+          && tempHull.getSize() == size) {
+        int tempValue = tempHull.getMaxSlot() * tempHull.getSlotHull();
+        if (tempValue > value) {
+          value = tempValue;
+          hull = tempHull;
+        }
+      }
+    }
+    if (hull != null) {
+      result = new ShipDesign(hull);
+      String[] part = hull.getName().split("Mk");
+      result.setName(
+          part[0].trim() + " Mk" + (player.getShipStatStartsWith(part[0]) + 1));
+      ShipComponent engine = ShipComponentFactory
+          .createByName(player.getTechList().getBestEngine().getComponent());
+      result.addComponent(engine);
+      ShipComponent power = ShipComponentFactory.createByName(
+          player.getTechList().getBestEnergySource().getComponent());
+      result.addComponent(power);
+      if (hull.getSize() != ShipSize.SMALL) {
+        ShipComponent weapon = ShipComponentFactory
+            .createByName(player.getTechList().getBestWeapon().getComponent());
+        result.addComponent(weapon);
+      }
+
+      Tech[] defenseTechs = player.getTechList()
+          .getListForType(TechType.Defense);
+      Tech[] electricsTechs = player.getTechList()
+          .getListForType(TechType.Electrics);
+      Tech[] combatTechs = player.getTechList().getListForType(TechType.Combat);
+      Tech shield = TechList.getBestTech(defenseTechs, "Shield");
+      Tech armor = TechList.getBestTech(defenseTechs, "Armor plating");
+      Tech shieldGen = TechList.getBestTech(electricsTechs, "Shield generator");
+      Tech starbaseLab = player.getTechList().getBestStarbaseLab();
+      Tech starbaseCult = player.getTechList().getBestStarbaseCulture();
+      Tech starbaseCred = player.getTechList().getBestStarbaseCredit();
+      ShipComponent shieldComp = null;
+      ShipComponent shieldGenComp = null;
+      ShipComponent armorComp = null;
+      ArrayList<ShipComponent> components = new ArrayList<>();
+      if (shield != null) {
+        shieldComp = ShipComponentFactory.createByName(shield.getComponent());
+        components.add(shieldComp);
+      }
+      if (shieldGen != null) {
+        shieldGenComp = ShipComponentFactory
+            .createByName(shieldGen.getComponent());
+        components.add(shieldGenComp);
+      }
+      if (armor != null) {
+        armorComp = ShipComponentFactory.createByName(armor.getComponent());
+        components.add(armorComp);
+      }
+      if (shieldComp != null
+          && result.getFreeEnergy() >= shieldComp.getEnergyRequirement()) {
+        result.addComponent(shieldComp);
+      } else if (armorComp != null) {
+        result.addComponent(armorComp);
+      }
+      ShipComponent credComp = null;
+      if (starbaseCred != null) {
+        credComp = ShipComponentFactory
+            .createByName(starbaseCred.getComponent());
+        components.add(credComp);
+      }
+      ShipComponent cultComp = null;
+      if (starbaseCred != null) {
+        cultComp = ShipComponentFactory
+            .createByName(starbaseCult.getComponent());
+        components.add(cultComp);
+      }
+      ShipComponent labComp = null;
+      if (starbaseCred != null) {
+        labComp = ShipComponentFactory
+            .createByName(starbaseLab.getComponent());
+        components.add(labComp);
+      }
+      Tech weapTech = player.getTechList()
+          .getBestWeapon(ShipComponentType.WEAPON_BEAM);
+      if (weapTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      weapTech = player.getTechList()
+          .getBestWeapon(ShipComponentType.WEAPON_ECM_TORPEDO);
+      if (weapTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      weapTech = player.getTechList()
+          .getBestWeapon(ShipComponentType.WEAPON_HE_MISSILE);
+      if (weapTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      weapTech = player.getTechList()
+          .getBestWeapon(ShipComponentType.WEAPON_PHOTON_TORPEDO);
+      if (weapTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      weapTech = player.getTechList()
+          .getBestWeapon(ShipComponentType.WEAPON_RAILGUN);
+      if (weapTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      Tech elecTech = TechList.getBestTech(electricsTechs, "Jammer");
+      if (elecTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      elecTech = TechList.getBestTech(electricsTechs, "Targeting computer");
+      if (elecTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      elecTech = TechList.getBestTech(electricsTechs, "Scanner");
+      if (elecTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      elecTech = TechList.getBestTech(electricsTechs, "Cloaking device");
+      if (elecTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      elecTech = TechList.getBestTech(electricsTechs, "LR scanner");
+      if (elecTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      elecTech = TechList.getBestTech(combatTechs, "Orbital bombs");
+      weapTech = TechList.getBestTech(combatTechs, "Orbital smart bombs");
+      if (weapTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      } else if (elecTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      weapTech = TechList.getBestTech(combatTechs, "Orbital nuke");
+      if (weapTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      int[] componentScores = new int[components.size()];
+      int safetyCount = 500;
+      while (result.getFreeSlots() > 0 && safetyCount > 0) {
+        safetyCount--;
+        componentScores = scoreComponents(result, player, components);
+        int sum = 0;
+        for (int i = 0; i < componentScores.length; i++) {
+          if (componentScores[i] > 0) {
+            sum = sum + componentScores[i];
+          }
+        }
+        int choice = DiceGenerator.getRandom(sum);
+        int total = 0;
+        for (int i = 0; i < componentScores.length; i++) {
+          if (componentScores[i] > 0) {
+            if (choice < total + componentScores[i]) {
+              if (result.getFreeEnergy() >= components.get(i)
+                  .getEnergyRequirement()) {
+                result.addComponent(components.get(i));
+              } else if (result.getFreeSlots() > 1 && power.getEnergyResource()
+                  + result.getFreeEnergy() >= components.get(i)
+                      .getEnergyRequirement()) {
+                result.addComponent(components.get(i));
+                result.addComponent(power);
+              }
+              break;
+            }
+            total = total + componentScores[i];
+          }
+        }
+
+      }
+
     }
     return result;
   }

@@ -194,6 +194,24 @@ public class TechListTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStarbaseTech() {
+    TechList list = new TechList();
+    list.addTech(TechFactory.createImprovementTech("Starbase music hall", 2));
+    list.addTech(TechFactory.createImprovementTech("Starbase market", 3));
+    list.addTech(TechFactory.createImprovementTech("Starbase lab", 4));
+    list.addTech(TechFactory.createImprovementTech("Starbase sports hall", 6));
+    list.addTech(TechFactory.createImprovementTech("Starbase nano lab", 7));
+    list.addTech(TechFactory.createImprovementTech("Starbase bank", 8));
+    Tech tech = list.getBestStarbaseLab();
+    assertEquals("Starbase nano lab", tech.getName());
+    tech = list.getBestStarbaseCredit();
+    assertEquals("Starbase bank", tech.getName());
+    tech = list.getBestStarbaseCulture();
+    assertEquals("Starbase sports hall", tech.getName());
+  }
+
+  @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTechResearch() {
     PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS, 2, 0);

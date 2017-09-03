@@ -270,6 +270,25 @@ public class StarMap {
       }
       loop++;
     }
+    // Create random deep space anchors
+    loop = 0;
+
+    for (int i = 0; i < config.getMaxPlayers() * 3; i++) {
+      while (loop < MAX_LOOPS) {
+        int sx = DiceGenerator.getRandom(1,
+            maxX - 2);
+        int sy = DiceGenerator.getRandom(1,
+            maxX - 2);
+        if (Tiles.getTileByIndex(tiles[sx][sy]) == empty
+            && getPlanetByCoordinate(sx, sy) == null) {
+          Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
+          tiles[sx][sy] = anchor.getIndex();
+          break;
+        }
+        loop++;
+      }
+    }
+
   }
 
   /**
@@ -833,6 +852,31 @@ public class StarMap {
    */
   public int[][] getTiles() {
     return tiles;
+  }
+
+  /**
+   * Get tile for coordinate
+   * @param x Coordinate X
+   * @param y Coordinate Y
+   * @return Tile from coordinate or null if invalid coordinate
+   */
+  public Tile getTile(final int x, final int y) {
+    if (isValidCoordinate(x, y)) {
+      return Tiles.getTileByIndex(tiles[x][y]);
+    }
+    return null;
+  }
+
+  /**
+   * Set tile for coordinate
+   * @param x Coordinate X
+   * @param y Coordinate Y
+   * @param tile Tile to set
+   */
+  public void setTile(final int x, final int y, final Tile tile) {
+    if (isValidCoordinate(x, y)) {
+      tiles[x][y] = tile.getIndex();
+    }
   }
 
   /**

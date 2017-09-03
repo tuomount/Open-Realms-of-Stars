@@ -7,7 +7,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2017  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -88,8 +88,9 @@ public final class StarMapUtilities {
    * @param sy Center of sun Y coordinate
    * @param maxX maximum X coordinate
    * @param maxY maximum Y coordinate
+   * @return return update solarsystem map
    */
-  public static void setSolarSystem(final int[][] solarSystem, final int sx,
+  public static int[][] setSolarSystem(final int[][] solarSystem, final int sx,
       final int sy, final int maxX, final int maxY) {
     for (int y = -StarMap.SOLAR_SYSTEM_WIDTH;
          y < StarMap.SOLAR_SYSTEM_WIDTH; y++) {
@@ -100,6 +101,7 @@ public final class StarMapUtilities {
         }
       }
     }
+    return solarSystem;
   }
 
   /**

@@ -48,6 +48,15 @@ public class PlayerList {
   }
 
   /**
+   * Call reInit for all players
+   */
+  public void reInit() {
+    for (PlayerInfo info : list) {
+      info.reInit();
+    }
+  }
+
+  /**
    * Read PlayerList from DataInputStream
    * @param dis DataInputStream
    * @throws IOException if there is any problem with DataInputStream

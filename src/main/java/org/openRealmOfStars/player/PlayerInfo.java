@@ -990,4 +990,12 @@ public class PlayerInfo {
     return sb.toString();
   }
 
+  /**
+   * Reinit playerinfo when creating starmap and random positions do not fit.
+   */
+  public void reInit() {
+    msgList.clearMessages();
+    fleets = new FleetList();
+  }
+
 }

@@ -189,10 +189,11 @@ public final class Tiles {
     addTile(tile);
     // next index
     tile.setAnimationIndex(listOfTiles.size());
-    tile = new Tile(tilesImage, 11, 0, TileNames.DEEP_SPACE_ANCHOR2);
-    // Previous animation index
-    tile.setAnimationIndex(listOfTiles.size() - 2);
+    tile = new Tile(tilesImage, 8, 1, TileNames.DEEP_SPACE_ANCHOR2);
     addTile(tile);
+    // Previous tile index as animation index
+    tile.setAnimationIndex(getTileByName(
+        TileNames.DEEP_SPACE_ANCHOR1).getIndex());
   }
 
 }

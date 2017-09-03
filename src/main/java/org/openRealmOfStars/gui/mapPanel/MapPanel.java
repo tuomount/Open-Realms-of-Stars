@@ -361,7 +361,6 @@ public class MapPanel extends JPanel {
 
     FleetTileInfo[][] fleetMap = starMap.getFleetTiles(false);
 
-    int[][] map = starMap.getTiles();
     int pixelX = viewPointOffsetX;
     int pixelY = viewPointOffsetY;
     for (int j = -viewPointY; j < viewPointY + 1; j++) {
@@ -395,7 +394,15 @@ public class MapPanel extends JPanel {
             }
           }
         }
-        Tile tile = Tiles.getTileByIndex(map[i + cx][j + cy]);
+        Tile tile = starMap.getTile(i + cx, j + cy);
+        if (tile == null) {
+          continue;
+        }
+        if (tile.getAnimationIndex() != tile.getIndex()) {
+          // Change map tile for next drawing
+          starMap.setTile(i + cx, j + cy,
+              Tiles.getTileByIndex(tile.getAnimationIndex()));
+        }
         // Draw only non empty tiles
         if (info != null && !tile.getName().equals(TileNames.EMPTY)
             && info.getSectorVisibility(new Coordinate(i + cx,
@@ -412,6 +419,16 @@ public class MapPanel extends JPanel {
                 j + cy)) != PlayerInfo.UNCHARTED
             && planet.getHomeWorldIndex() != -1) {
           Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
+          icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+              pixelY + Icon16x16.MAX_HEIGHT);
+        }
+
+        // Draw deep space anchor marker
+        if ((tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
+            || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2))
+            && info.getSectorVisibility(new Coordinate(i + cx,
+                j + cy)) != PlayerInfo.UNCHARTED) {
+          Icon16x16 icon = Icons.getIconByName(Icons.ICON_STARBASE);
           icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
               pixelY + Icon16x16.MAX_HEIGHT);
         }

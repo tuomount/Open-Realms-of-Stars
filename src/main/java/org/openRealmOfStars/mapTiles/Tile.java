@@ -52,6 +52,10 @@ public class Tile {
    * Tile index in list of tiles
    */
   private int tileIndex = -1;
+  /**
+   * Next anim index
+   */
+  private int nextAnimIndex = -1;
 
   /**
    * Get tile from tileset image, where x is number of tiles in X axel and
@@ -101,11 +105,33 @@ public class Tile {
   }
 
   /**
-   * Set the tile index
+   * Set the tile index, disables the animation when set.
    * @param index tile index
    */
   public void setIndex(final int index) {
     tileIndex = index;
+    nextAnimIndex = index;
+  }
+
+  /**
+   * Get the tile animation index
+   * @return tile animation index
+   */
+  public int getAnimationIndex() {
+    return nextAnimIndex;
+  }
+
+  /**
+   * Set the tile animation index
+   * @param index tile animation index
+   */
+  public void setAnimationIndex(final int index) {
+    nextAnimIndex = index;
+  }
+
+  @Override
+  public String toString() {
+    return name + " (" + tileIndex + ")";
   }
 
 }

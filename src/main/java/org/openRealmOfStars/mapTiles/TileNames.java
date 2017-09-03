@@ -3,7 +3,7 @@ package org.openRealmOfStars.mapTiles;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2017  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -127,6 +127,15 @@ public final class TileNames {
    * Planet 5 Iron world 2
    */
   public static final String IRONPLANET2 = "IRONPLANET2";
+
+  /**
+   * Deep space anchor 1, place where starbase can be deploy
+   */
+  public static final String DEEP_SPACE_ANCHOR1 = "DEEPSPACEANCHOR1";
+  /**
+   * Deep space anchor 2, place where starbase can be deploy
+   */
+  public static final String DEEP_SPACE_ANCHOR2 = "DEEPSPACEANCHOR2";
 
   /**
    * Fog of war tile (Overlay)

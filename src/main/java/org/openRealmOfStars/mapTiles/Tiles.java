@@ -184,6 +184,15 @@ public final class Tiles {
     addTile(tile);
     tile = new Tile(tilesImage, 13, 0, TileNames.IRONPLANET2);
     addTile(tile);
+    // Reading the deep space anchors
+    tile = new Tile(tilesImage, 7, 1, TileNames.DEEP_SPACE_ANCHOR1);
+    addTile(tile);
+    // next index
+    tile.setAnimationIndex(listOfTiles.size());
+    tile = new Tile(tilesImage, 11, 0, TileNames.DEEP_SPACE_ANCHOR2);
+    // Previous animation index
+    tile.setAnimationIndex(listOfTiles.size() - 2);
+    addTile(tile);
   }
 
 }

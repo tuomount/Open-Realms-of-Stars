@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2017  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -46,9 +46,16 @@ public class TileTest {
     
     Tile tile = new Tile(img, 0, 0, "Test");
     assertEquals("Test",tile.getName());
+    assertEquals("Test (-1)",tile.toString());
     assertEquals(-1,tile.getIndex());
+    assertEquals(-1,tile.getAnimationIndex());
     tile.setIndex(0);
+    assertEquals("Test (0)",tile.toString());
     assertEquals(0,tile.getIndex());
+    assertEquals(0,tile.getAnimationIndex());
+    tile.setAnimationIndex(1);
+    assertEquals(0,tile.getIndex());
+    assertEquals(1,tile.getAnimationIndex());
     Graphics2D g2d = Mockito.mock(Graphics2D.class);
     tile.draw(g2d, 0, 0);
   }

@@ -32,12 +32,15 @@ import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
+import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -129,6 +132,11 @@ public class FleetView extends BlackPanel {
    * Background image
    */
   private BigImagePanel imgBase;
+
+  /**
+   * Starmap, needed for deploying the starbase
+   */
+  private StarMap starMap;
 
   /**
    * Fleet view constructor. Fleet view is used when view fleet in deep space
@@ -544,14 +552,19 @@ public class FleetView extends BlackPanel {
       SoundPlayer.playMenuSound();
       updatePanel();
     }
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_DEPLOY_STARBASE)) {
-      for (Ship ship : fleet.getShips()) {
-        if (ship.getHull().getHullType() == ShipHullType.STARBASE) {
-          fleet.removeShip(ship);
-          Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
-          newFleet.setName(fleetList.generateUniqueName("Deep Space"));
-          ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
-          fleetList.add(newFleet);
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_DEPLOY_STARBASE)
+        && starMap != null) {
+      Tile tile = starMap.getTile(fleet.getX(), fleet.getY());
+      if (tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
+        || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2)) {
+        for (Ship ship : fleet.getShips()) {
+          if (ship.getHull().getHullType() == ShipHullType.STARBASE) {
+            fleet.removeShip(ship);
+            Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+            newFleet.setName(fleetList.generateUniqueName("Deep Space"));
+            ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+            fleetList.add(newFleet);
+          }
         }
       }
     }
@@ -603,5 +616,20 @@ public class FleetView extends BlackPanel {
    */
   public void setInfo(final PlayerInfo info) {
     this.info = info;
+  }
+
+  /**
+   * Set starmap for view. Needed for deploying the starbase.
+   * @param map StarMap
+   */
+  public void setStarmap(final StarMap map) {
+    starMap = map;
+    if (starMap !=  null) {
+      Tile tile = starMap.getTile(fleet.getX(), fleet.getY());
+      if (tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
+        || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2)) {
+        imgBase.setTitle("In Deep Space Anchor...");
+      }
+    }
   }
 }

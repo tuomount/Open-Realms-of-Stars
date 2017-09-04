@@ -502,4 +502,11 @@ public class BigImagePanel extends JPanel {
     this.player = player;
   }
 
+  /**
+   * Set Title text
+   * @param text Title as a String
+   */
+  public void setTitle(final String text) {
+    title = text;
+  }
 }

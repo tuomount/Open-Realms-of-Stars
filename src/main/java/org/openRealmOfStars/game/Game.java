@@ -486,6 +486,7 @@ public class Game implements ActionListener {
     fleetView = new FleetView(planet, fleet,
         players.getCurrentPlayerInfo().getFleets(),
         players.getCurrentPlayerInfo(), interactive, this);
+    fleetView.setStarmap(getStarMap());
     this.updateDisplay(fleetView);
   }
 

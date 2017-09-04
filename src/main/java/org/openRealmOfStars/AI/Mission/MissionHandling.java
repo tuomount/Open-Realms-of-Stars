@@ -5,7 +5,6 @@ import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameState;
-import org.openRealmOfStars.game.States.FleetView;
 import org.openRealmOfStars.game.States.PlanetBombingView;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
@@ -398,9 +397,10 @@ public final class MissionHandling {
         }
         if (planet.getPlanetPlayerInfo().isHuman()) {
           // Bombing human planet
-          FleetView fleetView = new FleetView(planet, fleet, info.getFleets(),
-              info, false, game);
-          game.changeGameState(GameState.PLANETBOMBINGVIEW, fleetView);
+          int attackerIndex = game.getStarMap().getPlayerList().getIndex(info);
+          PlanetBombingView bombView = new PlanetBombingView(planet, fleet,
+              info, attackerIndex, game);
+          game.changeGameState(GameState.PLANETBOMBINGVIEW, bombView);
         } else {
           // Bombing AI planet
           PlanetBombingView bombingView = new PlanetBombingView(planet, fleet,

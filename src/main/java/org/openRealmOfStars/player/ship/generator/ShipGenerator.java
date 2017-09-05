@@ -144,6 +144,10 @@ public final class ShipGenerator {
         if (!design.gotCertainType(ShipComponentType.CLOAKING_DEVICE)) {
           scores[i] = scores[i] + comp.getScannerRange() * 2;
           scores[i] = scores[i] + comp.getCloakDetection() / 10;
+          if (design.getHull().getHullType() == ShipHullType.STARBASE) {
+            // Starbases are useful deep space scanners
+            scores[i] = scores[i] + 10;
+          }
         } else {
           scores[i] = -1;
         }

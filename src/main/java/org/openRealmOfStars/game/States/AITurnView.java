@@ -498,14 +498,28 @@ public class AITurnView extends BlackPanel {
           if (info.getSectorVisibility(planet.getCoordinate())
               == PlayerInfo.FOG_OF_WAR) {
             PlayerInfo owner = planet.getPlanetPlayerInfo();
-            int ownerIndex = game.getStarMap().getPlayerList().getIndex(
-                owner);
-            DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
-                ownerIndex);
-            if (list.isBonusType(DiplomacyBonusType.IN_WAR)) {
-              // Got new map part maybe in trade and found planet owned by
-              // player which is being at war now.
-              addAttackMission(planet, info);
+            if (owner != null) {
+              int ownerIndex = game.getStarMap().getPlayerList().getIndex(
+                  owner);
+              DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
+                  ownerIndex);
+              if (list.isBonusType(DiplomacyBonusType.IN_WAR)) {
+                // Got new map part maybe in trade and found planet owned by
+                // player which is being at war now.
+                addAttackMission(planet, info);
+              }
+            } else {
+              if (planet.getRadiationLevel() <= info.getRace().getMaxRad()
+                  && !planet.isGasGiant()) {
+                // New planet to colonize, adding it to mission list
+                Mission mission = new Mission(MissionType.COLONIZE,
+                    MissionPhase.PLANNING, planet.getCoordinate());
+                if (info.getMissions().getColonizeMission(mission.getX(),
+                    mission.getY()) == null) {
+                  // No colonize mission for this planet found, so adding it.
+                  info.getMissions().add(mission);
+                }
+              }
             }
           }
         }

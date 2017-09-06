@@ -641,6 +641,11 @@ public class AITurnView extends BlackPanel {
             fleet.setMovesLeft(fleet.getFleetSpeed());
           }
           game.getStarMap().doFleetScanUpdate(info, fleet, null);
+          if (fleet.getCulturalValue() > 0 && fleet.isStarBaseDeployed()) {
+         // Recalculate culture for the map for each player
+            game.getStarMap().calculateCulture(fleet.getX(), fleet.getY(),
+                fleet.getCulturalValue(), i);
+          }
         }
       }
     }

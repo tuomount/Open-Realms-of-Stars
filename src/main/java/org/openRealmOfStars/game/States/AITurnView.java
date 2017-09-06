@@ -199,6 +199,9 @@ public class AITurnView extends BlackPanel {
       case GATHER:
         MissionHandling.handleGather(mission, fleet, info, game);
         break;
+      case DEPLOY_STARBASE:
+        MissionHandling.handleDeployStarbase(mission, fleet, info, game);
+        break;
       default:
         throw new IllegalArgumentException("Unknown mission type for AI!");
       }

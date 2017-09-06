@@ -49,7 +49,11 @@ public enum MissionType {
   /**
    * Gather specific type of ship for attack
    */
-  GATHER;
+  GATHER,
+  /**
+   * Build and deploy starbase
+   */
+  DEPLOY_STARBASE;
 
   /**
    * Get Mission type with index
@@ -69,6 +73,8 @@ public enum MissionType {
       return 4;
     case GATHER:
       return 5;
+    case DEPLOY_STARBASE:
+      return 6;
     default:
       return 0;
     }
@@ -89,6 +95,8 @@ public enum MissionType {
       return "Move";
     case GATHER:
       return "Gather";
+    case DEPLOY_STARBASE:
+      return "Deploy starbase";
     default:
       return "Unknown";
     }

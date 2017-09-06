@@ -5,13 +5,17 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.game.Game;
+import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
-import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.ship.Ship;
-import org.openRealmOfStars.player.ship.generator.ShipGenerator;
+import org.openRealmOfStars.player.ship.ShipHull;
+import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.StarMap;
 
 /**
 *
@@ -134,6 +138,35 @@ public class MissionHandlingTest {
     fleetList.add(fleet);
     MissionHandling.findGatheringShip(mission, info);
     assertEquals("Gather Bomber #0", mission.getFleetName());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testDeployStarbase() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mission mission = new Mission(MissionType.DEPLOY_STARBASE, MissionPhase.LOADING,
+        new Coordinate(5, 5));
+    MissionList missionList = Mockito.mock(MissionList.class);
+    Mockito.when(missionList.getMissionForFleet(Mockito.anyString()))
+        .thenReturn(null);
+    Mockito.when(info.getMissions()).thenReturn(missionList);
+    Ship starbase = Mockito.mock(Ship.class);
+    Mockito.when(starbase.getTotalMilitaryPower()).thenReturn(20);
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getHullType()).thenReturn(ShipHullType.STARBASE);
+    Mockito.when(starbase.getHull()).thenReturn(hull);
+    Fleet fleet = new Fleet(starbase, 5, 5);
+    FleetList fleetList = new FleetList();
+    fleetList.add(fleet);
+    Mockito.when(info.getFleets()).thenReturn(fleetList);
+    Game game = Mockito.mock(Game.class);
+    Tile tile = Mockito.mock(Tile.class);
+    Mockito.when(tile.getName()).thenReturn(TileNames.DEEP_SPACE_ANCHOR2);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getTile(Mockito.anyInt(), Mockito.anyInt())).thenReturn(tile);
+    Mockito.when(game.getStarMap()).thenReturn(map);
+    MissionHandling.handleDeployStarbase(mission, fleet, info, game);
+    assertEquals(MissionPhase.EXECUTING, mission.getPhase());
   }
 
 }

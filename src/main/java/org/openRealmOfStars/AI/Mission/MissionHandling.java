@@ -6,6 +6,8 @@ import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameState;
 import org.openRealmOfStars.game.States.PlanetBombingView;
+import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
@@ -13,7 +15,9 @@ import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
@@ -223,6 +227,66 @@ public final class MissionHandling {
         makeReroute(game, fleet, info, mission);
       }
     } // End of colonize
+
+  }
+
+  /**
+   * Handle Colonize mission
+   * @param mission Colonize mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleDeployStarbase(final Mission mission,
+      final Fleet fleet, final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.DEPLOY_STARBASE) {
+      if (mission.getPhase() == MissionPhase.LOADING) {
+        mission.setPhase(MissionPhase.TREKKING);
+      }
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
+        // Target acquired
+        mission.setPhase(MissionPhase.EXECUTING);
+        Tile tile = game.getStarMap().getTile(fleet.getX(), fleet.getY());
+        if (tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
+            || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2)) {
+          for (Ship ship : fleet.getShips()) {
+            if (ship.getHull().getHullType() == ShipHullType.STARBASE) {
+              fleet.removeShip(ship);
+              Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+              FleetList fleetList = info.getFleets();
+              newFleet.setName(fleetList.generateUniqueName("Deep Space"));
+              ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+              fleetList.add(newFleet);
+            }
+          }
+          // Remove the ship and AI just colonized planet
+          info.getMissions().remove(mission);
+          if (fleet.getNumberOfShip() == 0) {
+            // Remove also empty fleet
+            info.getFleets().recalculateList();
+          }
+        }
+      } else if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+        Coordinate coord = new Coordinate(mission.getX(), mission.getY());
+        if (info.getSectorVisibility(coord) == PlayerInfo.VISIBLE) {
+          Fleet anotherFleet = game.getStarMap().getFleetByCoordinate(
+              mission.getX(), mission.getY());
+          if (anotherFleet != null) {
+            // Anchor has been taken, no more deploy starbase mission
+            Planet homePort = game.getStarMap().getClosestHomePort(info,
+                fleet.getCoordinate());
+            mission.setTarget(homePort.getCoordinate());
+            mission.setTargetPlanet(homePort.getName());
+            mission.setMissionTime(0);
+            mission.setPhase(MissionPhase.PLANNING);
+            mission.setType(MissionType.MOVE);
+          }
+        }
+        makeReroute(game, fleet, info, mission);
+      }
+    } // End of Deploy starbase
 
   }
 

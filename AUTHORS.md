@@ -86,4 +86,8 @@ Neon Transit by
 Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
+Thrust Sequence by
+Matthew Pablo http://www.matthewpablo.com
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
 

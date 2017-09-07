@@ -119,7 +119,12 @@ public class CreditsView extends BlackPanel {
       + "Neon Transit by\n"
       + "Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov\n"
       + "Licensed under CC BY 3.0 "
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Thrust Sequence by\n"
+      + "Matthew Pablo http://www.matthewpablo.com\n"
+      + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n";
+;
 
   /**
    * Constructor for Credits view

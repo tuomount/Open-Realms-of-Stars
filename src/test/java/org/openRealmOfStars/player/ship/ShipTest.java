@@ -312,6 +312,7 @@ public class ShipTest {
     design.addComponent(cult);
     design.addComponent(market);
     assertNotEquals(null, design);
+    assertEquals(3, design.getStarbaseValue());
     Ship ship = new Ship(design);
     assertNotEquals(null, ship);
     assertEquals(1, ship.getTotalCreditBonus());

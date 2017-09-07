@@ -351,6 +351,19 @@ public class ShipDesign {
   }
 
   /**
+   * Get total value of starbase component bonus
+   * @return Starbase component bonus value
+   */
+  public int getStarbaseValue() {
+    int result = 0;
+    for (ShipComponent comp : components) {
+      result = result + comp.getResearchBonus();
+      result = result + comp.getCreditBonus();
+      result = result + comp.getCultureBonus();
+    }
+    return result;
+  }
+  /**
    * Does ship design have engine? True if engine is in place.
    * @return True if engine is found, otherwise false
    */

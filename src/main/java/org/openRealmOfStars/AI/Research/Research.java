@@ -79,6 +79,10 @@ public final class Research {
     handleBattleShipDesign(info, ShipSize.MEDIUM);
     handleBattleShipDesign(info, ShipSize.LARGE);
     handleBattleShipDesign(info, ShipSize.HUGE);
+    handleStarbaseDesign(info, ShipSize.SMALL);
+    handleStarbaseDesign(info, ShipSize.MEDIUM);
+    handleStarbaseDesign(info, ShipSize.LARGE);
+    handleStarbaseDesign(info, ShipSize.HUGE);
     handleTrooperShipDesign(info);
   }
 
@@ -131,6 +135,56 @@ public final class Research {
           notFound = false;
           if (design.getTotalTrooperPower() > stat.getDesign()
               .getTotalTrooperPower()) {
+            stat.setObsolete(true);
+            ShipStat ship = new ShipStat(design);
+            info.addShipStat(ship);
+            break;
+          }
+        }
+      }
+      if (notFound) {
+        ShipStat ship = new ShipStat(design);
+        info.addShipStat(ship);
+      }
+    }
+
+  }
+
+  /**
+   * Handle Starbase design for AI for certain size
+   * @param info Player
+   * @param size ShipSize to handle
+   */
+  private static void handleStarbaseDesign(final PlayerInfo info,
+      final ShipSize size) {
+    ShipDesign design = ShipGenerator.createStarbase(info, size);
+    if (design != null) {
+      ShipStat[] stats = info.getShipStatList();
+      boolean notFound = true;
+      for (ShipStat stat : stats) {
+        if (stat.getDesign().getHull().getSize() == size && stat.getDesign()
+            .getHull().getHullType() == ShipHullType.STARBASE
+            && !stat.isObsolete()) {
+          notFound = false;
+          if (design.getTotalMilitaryPower() > stat.getDesign()
+              .getTotalMilitaryPower() && design.getStarbaseValue() == stat
+              .getDesign().getStarbaseValue() && !stat.isObsolete()) {
+            stat.setObsolete(true);
+            ShipStat ship = new ShipStat(design);
+            info.addShipStat(ship);
+            break;
+          }
+          if (design.getTotalMilitaryPower() == stat.getDesign()
+              .getTotalMilitaryPower() && design.getStarbaseValue() > stat
+              .getDesign().getStarbaseValue() && !stat.isObsolete()) {
+            stat.setObsolete(true);
+            ShipStat ship = new ShipStat(design);
+            info.addShipStat(ship);
+            break;
+          }
+          if (stat.getDesign().getHull().getSize() == ShipSize.SMALL
+              && design.getStarbaseValue() > stat.getDesign()
+              .getStarbaseValue() && !stat.isObsolete()) {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);

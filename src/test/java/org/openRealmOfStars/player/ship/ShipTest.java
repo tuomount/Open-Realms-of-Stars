@@ -270,9 +270,9 @@ public class ShipTest {
     info.getTechList().addTech(TechFactory.createHullTech("Massive starbase", 8));
     info.getTechList().addTech(TechFactory.createCombatTech("Laser Mk1", 1));
     info.getTechList().addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
-    info.getTechList().addTech(TechFactory.createCombatTech("Armor Mk1", 1));
-    info.getTechList().addTech(TechFactory.createCombatTech("Shield Mk1", 1));
-    info.getTechList().addTech(TechFactory.createCombatTech("Starbase lab", 4));
+    info.getTechList().addTech(TechFactory.createDefenseTech("Armor Mk1", 1));
+    info.getTechList().addTech(TechFactory.createDefenseTech("Shield Mk1", 1));
+    info.getTechList().addTech(TechFactory.createImprovementTech("Starbase lab", 4));
     ShipDesign design = ShipGenerator.createStarbase(info, ShipSize.MEDIUM);
     assertNotEquals(null, design);
     Ship ship = new Ship(design);
@@ -286,6 +286,37 @@ public class ShipTest {
     assertEquals(0, ship.getTotalCultureBonus());
     // Starbase lab is in component list so there might be a lab
     assertEquals(true, ship.getTotalResearchBonus() >= 0);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testStarBase3() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    info.getTechList().addTech(TechFactory.createHullTech("Large starbase", 6));
+    info.getTechList().addTech(TechFactory.createCombatTech("Laser Mk1", 1));
+    info.getTechList().addTech(TechFactory.createCombatTech("Railgun Mk1", 1));
+    info.getTechList().addTech(TechFactory.createDefenseTech("Armor Mk1", 1));
+    info.getTechList().addTech(TechFactory.createDefenseTech("Shield Mk1", 1));
+    info.getTechList().addTech(TechFactory.createImprovementTech("Starbase lab", 4));
+    info.getTechList().addTech(TechFactory.createImprovementTech("Starbase market", 3));
+    info.getTechList().addTech(TechFactory.createImprovementTech("Starbase music hall", 2));
+    info.getTechList().addTech(TechFactory.createPropulsionTech("Zero-point source Mk2", 10));
+    ShipHull hull = ShipHullFactory.createByName("Large starbase", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
+    ShipComponent lab = ShipComponentFactory.createByName("Starbase lab");
+    ShipComponent cult = ShipComponentFactory.createByName("Starbase music hall");
+    ShipComponent market = ShipComponentFactory.createByName("Starbase market");
+    design.addComponent(energy);
+    design.addComponent(lab);
+    design.addComponent(cult);
+    design.addComponent(market);
+    assertNotEquals(null, design);
+    Ship ship = new Ship(design);
+    assertNotEquals(null, ship);
+    assertEquals(1, ship.getTotalCreditBonus());
+    assertEquals(1, ship.getTotalCultureBonus());
+    assertEquals(1, ship.getTotalResearchBonus());
   }
 
   

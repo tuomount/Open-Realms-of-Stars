@@ -1393,7 +1393,7 @@ private int increaseDefenseValueWithJammer() {
       ShipComponent comp = getComponent(k);
       if (comp != null
           && comp.getType() == ShipComponentType.STARBASE_COMPONENT
-          && componentIsWorking(k) && comp.getCreditBonus() > 0) {
+          && componentIsWorking(k) && comp.getResearchBonus() > 0) {
         result = result + comp.getResearchBonus();
       }
     }
@@ -1427,7 +1427,7 @@ private int increaseDefenseValueWithJammer() {
       ShipComponent comp = getComponent(k);
       if (comp != null
           && comp.getType() == ShipComponentType.STARBASE_COMPONENT
-          && componentIsWorking(k) && comp.getCreditBonus() > 0) {
+          && componentIsWorking(k) && comp.getCultureBonus() > 0) {
         result = result + comp.getCultureBonus();
       }
     }

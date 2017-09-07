@@ -43,7 +43,14 @@ public class MusicPlayerTest {
 
     MusicPlayer.setMusicEnabled(false);
     MusicPlayer.handleMusic(GameState.COMBAT);
-    assertEquals(MusicPlayer.NEON_TRANSIT, MusicPlayer.getNowPlaying());
+    MusicFileInfo info = MusicPlayer.getNowPlaying();
+    boolean found = false;
+    for (MusicFileInfo match : MusicPlayer.COMBAT_MUSIC_LIST) {
+      if (match == info) {
+        found = true;
+      }
+    }
+    assertEquals(true, found);
     MusicPlayer.handleMusic(GameState.MAIN_MENU);
     assertEquals(MusicPlayer.MILLION_LIGHT_YEARS, MusicPlayer.getNowPlaying());
     MusicPlayer.handleMusic(GameState.DIPLOMACY_VIEW);
@@ -51,6 +58,14 @@ public class MusicPlayerTest {
     MusicPlayer.handleMusic(GameState.NEWS_CORP_VIEW);
     assertEquals(MusicPlayer.YD_OBSERVING_STAR, MusicPlayer.getNowPlaying());
     MusicPlayer.handleMusic(GameState.STARMAP);
+    info = MusicPlayer.getNowPlaying();
+    found = false;
+    for (MusicFileInfo match : MusicPlayer.GAME_MUSIC_LIST) {
+      if (match == info) {
+        found = true;
+      }
+    }
+    assertEquals(true, found);
     MusicPlayer.setMusicEnabled(true);
 
   }

@@ -82,12 +82,13 @@ public final class MusicPlayer {
   /**
    * List of music to played while playing
    */
-  private static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,
+  protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,
       MILLION_LIGHT_YEARS};
   /**
    * List of music to played while combat
    */
-  private static final MusicFileInfo[] COMBAT_MUSIC_LIST = {NEON_TRANSIT, THRUST_SEQUENCE};
+  protected static final MusicFileInfo[] COMBAT_MUSIC_LIST = {NEON_TRANSIT,
+      THRUST_SEQUENCE};
   /**
    * What music file is currently playing
    */

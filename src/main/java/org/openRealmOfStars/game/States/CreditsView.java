@@ -124,7 +124,7 @@ public class CreditsView extends BlackPanel {
       + "Matthew Pablo http://www.matthewpablo.com\n"
       + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n";
-;
+
 
   /**
    * Constructor for Credits view

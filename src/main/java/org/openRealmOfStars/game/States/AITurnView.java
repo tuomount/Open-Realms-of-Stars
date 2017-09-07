@@ -637,6 +637,13 @@ public class AITurnView extends BlackPanel {
           if (fleet.isStarBaseDeployed()) {
             fleet.setMovesLeft(0);
             // TODO handle starbase specific components
+            for (Ship ship : fleet.getShips()) {
+               info.setTotalCredits(info.getTotalCredits()
+                   + ship.getTotalCreditBonus());
+               ship.setCulture(ship.getCulture()
+                   + ship.getTotalCultureBonus());
+               // FIXME Research is done in starmap see row 1720
+            }
           } else {
             fleet.setMovesLeft(fleet.getFleetSpeed());
           }

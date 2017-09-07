@@ -282,6 +282,11 @@ public class ShipTest {
     ship = new Ship(design);
     assertNotEquals(null, ship);
     assertEquals(true,ship.getTotalMilitaryPower() > 0);
+    assertEquals(0, ship.getTotalCreditBonus());
+    assertEquals(0, ship.getTotalCultureBonus());
+    // Starbase lab is in component list so there might be a lab
+    assertEquals(true, ship.getTotalResearchBonus() >= 0);
   }
 
+  
 }

@@ -1383,4 +1383,55 @@ private int increaseDefenseValueWithJammer() {
     return hull.getHullType() == ShipHullType.STARBASE;
   }
 
+  /**
+   * Get total research bonus, does not check if starbase is deployed
+   * @return Research bonus
+   */
+  public int getTotalResearchBonus() {
+    int result = 0;
+    for (int k = 0; k < getNumberOfComponents(); k++) {
+      ShipComponent comp = getComponent(k);
+      if (comp != null
+          && comp.getType() == ShipComponentType.STARBASE_COMPONENT
+          && componentIsWorking(k) && comp.getCreditBonus() > 0) {
+        result = result + comp.getResearchBonus();
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Get total credit bonus, does not check if starbase is deployed
+   * @return Credit bonus
+   */
+  public int getTotalCreditBonus() {
+    int result = 0;
+    for (int k = 0; k < getNumberOfComponents(); k++) {
+      ShipComponent comp = getComponent(k);
+      if (comp != null
+          && comp.getType() == ShipComponentType.STARBASE_COMPONENT
+          && componentIsWorking(k) && comp.getCreditBonus() > 0) {
+        result = result + comp.getCreditBonus();
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Get total culture bonus, does not check if starbase is deployed
+   * @return Culture bonus
+   */
+  public int getTotalCultureBonus() {
+    int result = 0;
+    for (int k = 0; k < getNumberOfComponents(); k++) {
+      ShipComponent comp = getComponent(k);
+      if (comp != null
+          && comp.getType() == ShipComponentType.STARBASE_COMPONENT
+          && componentIsWorking(k) && comp.getCreditBonus() > 0) {
+        result = result + comp.getCultureBonus();
+      }
+    }
+    return result;
+  }
+
 }

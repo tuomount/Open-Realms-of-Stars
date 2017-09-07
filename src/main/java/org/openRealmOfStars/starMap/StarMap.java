@@ -1717,6 +1717,7 @@ public class StarMap {
         result = result + planet.getTotalProduction(production);
       }
     }
+    // FIXME Add here starbase research production
     return result;
   }
 

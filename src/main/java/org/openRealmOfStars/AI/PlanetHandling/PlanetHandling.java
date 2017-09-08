@@ -11,6 +11,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
@@ -544,6 +545,13 @@ public final class PlanetHandling {
               mission.setPlanetBuilding(planet.getName());
               mission.setPhase(MissionPhase.BUILDING);
             }
+            mission = info.getMissions().getMission(MissionType.DEPLOY_STARBASE,
+                MissionPhase.PLANNING);
+            if (mission != null
+                && ship.getHull().getHullType() == ShipHullType.STARBASE) {
+              mission.setPhase(MissionPhase.BUILDING);
+              mission.setPlanetBuilding(planet.getName());
+            }
           }
           break;
         }
@@ -642,6 +650,32 @@ public final class PlanetHandling {
                 score = score + 30;
               }
             }
+            mission = info.getMissions().getMission(MissionType.DEPLOY_STARBASE,
+                MissionPhase.PLANNING);
+            if (mission == null
+                && ship.getHull().getHullType() == ShipHullType.STARBASE) {
+              score = 0;
+            }
+            if (mission != null
+                && ship.getHull().getHullType() == ShipHullType.STARBASE) {
+              if (attitude == Attitude.SCIENTIFIC) {
+                score = score + ship.getTotalResearchBonus() * 5;
+              } else {
+                score = score + ship.getTotalResearchBonus() * 3;
+              }
+              if (attitude == Attitude.DIPLOMATIC
+                  || attitude == Attitude.PEACEFUL) {
+                score = score + ship.getTotalCultureBonus() * 5;
+              } else {
+                score = score + ship.getTotalCultureBonus() * 3;
+              }
+              if (attitude == Attitude.MERCHANTICAL) {
+                score = score + ship.getTotalCreditBonus() * 5;
+              } else {
+                score = score + ship.getTotalCreditBonus() * 3;
+              }
+            }
+
           }
 
         }

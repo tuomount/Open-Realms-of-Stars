@@ -665,4 +665,18 @@ public class Fleet {
     }
     return false;
   }
+
+  /**
+   * Get total research bonus
+   * @return Total research bonus from starbase components
+   */
+  public int getTotalReseachBonus() {
+    int result = 0;
+    if (isStarBaseDeployed()) {
+      for (Ship ship : ships) {
+        result = result + ship.getTotalResearchBonus();
+      }
+    }
+    return result;
+  }
 }

@@ -1717,6 +1717,11 @@ public class StarMap {
         result = result + planet.getTotalProduction(production);
       }
     }
+    PlayerInfo info = getPlayerByIndex(playerIndex);
+    for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
+      Fleet fleet = info.getFleets().getByIndex(i);
+      result = result + fleet.getTotalReseachBonus();
+    }
     // FIXME Add here starbase research production
     return result;
   }

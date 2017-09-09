@@ -179,4 +179,19 @@ public final class TileNames {
    */
   public static final String PLAYER_7 = "Player_7";
 
+  /**
+   * Description about deep space anchor
+   */
+  public static final String DEEP_SPACE_ANCHOR_DESCRIPTION = "Deep space anchor"
+      + " is special place in space and time where big space constructions can"
+      + " be safely build. This ideal place for Deep Space Stations.";
+
+  /**
+   * Description about star
+   */
+  public static final String STAR_DESCRIPTION = "Stars are massive stellar "
+      + "objects which radiants energy into outer space. Energy is genereated"
+      + " from thermonuclear fusion of hydrogen and helium in "
+      + "core of the star.";
+
 }

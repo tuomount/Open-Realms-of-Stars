@@ -113,22 +113,31 @@ public final class Tiles {
     addTile(tile);
     // Reading the sun 3x3
     tile = new Tile(tilesImage, 0, 0, TileNames.SUN_NW);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
     addTile(tile);
     tile = new Tile(tilesImage, 1, 0, TileNames.SUN_N);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
     addTile(tile);
     tile = new Tile(tilesImage, 2, 0, TileNames.SUN_NE);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
     addTile(tile);
     tile = new Tile(tilesImage, 0, 1, TileNames.SUN_W);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
     addTile(tile);
     tile = new Tile(tilesImage, 1, 1, TileNames.SUN_C);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
     addTile(tile);
     tile = new Tile(tilesImage, 2, 1, TileNames.SUN_E);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
     addTile(tile);
     tile = new Tile(tilesImage, 0, 2, TileNames.SUN_SW);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
     addTile(tile);
     tile = new Tile(tilesImage, 1, 2, TileNames.SUN_S);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
     addTile(tile);
     tile = new Tile(tilesImage, 2, 2, TileNames.SUN_SE);
+    tile.setDescription(TileNames.STAR_DESCRIPTION);
     addTile(tile);
     // Reading the gas planet 2x2
     tile = new Tile(tilesImage, 3, 0, TileNames.GAS_GIANT_1_NW);
@@ -187,10 +196,12 @@ public final class Tiles {
     // Reading the deep space anchors
     tile = new Tile(tilesImage, 7, 1, TileNames.DEEP_SPACE_ANCHOR1);
     addTile(tile);
+    tile.setDescription(TileNames.DEEP_SPACE_ANCHOR_DESCRIPTION);
     // next index
     tile.setAnimationIndex(listOfTiles.size());
     tile = new Tile(tilesImage, 8, 1, TileNames.DEEP_SPACE_ANCHOR2);
     addTile(tile);
+    tile.setDescription(TileNames.DEEP_SPACE_ANCHOR_DESCRIPTION);
     // Previous tile index as animation index
     tile.setAnimationIndex(getTileByName(
         TileNames.DEEP_SPACE_ANCHOR1).getIndex());

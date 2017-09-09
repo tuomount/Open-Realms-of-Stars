@@ -78,4 +78,19 @@ public class TileTest {
     tile.getName();
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testReadyTiles() {
+    Tile tile = Tiles.getTileByName(TileNames.SUN_C);
+    assertEquals(TileNames.STAR_DESCRIPTION, tile.getDescription());
+    tile = Tiles.getTileByName(TileNames.IRONPLANET1);
+    assertEquals("", tile.getDescription());
+    tile = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
+    assertEquals(TileNames.DEEP_SPACE_ANCHOR_DESCRIPTION,
+        tile.getDescription());
+    tile = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR2);
+    assertEquals(TileNames.DEEP_SPACE_ANCHOR_DESCRIPTION,
+        tile.getDescription());
+  }
+
 }

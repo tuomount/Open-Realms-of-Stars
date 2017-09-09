@@ -83,7 +83,9 @@ public class TileTest {
   public void testReadyTiles() {
     Tile tile = Tiles.getTileByName(TileNames.SUN_C);
     assertEquals(TileNames.STAR_DESCRIPTION, tile.getDescription());
+    assertEquals(true, tile.isStarTile());
     tile = Tiles.getTileByName(TileNames.IRONPLANET1);
+    assertEquals(false, tile.isStarTile());
     assertEquals("", tile.getDescription());
     tile = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
     assertEquals(TileNames.DEEP_SPACE_ANCHOR_DESCRIPTION,

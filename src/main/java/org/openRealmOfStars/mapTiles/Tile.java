@@ -150,6 +150,24 @@ public class Tile {
   public void setDescription(final String description) {
     tileDescription = description;
   }
+  /**
+   * Is tile a star tile
+   * @return True if tile is star tile
+   */
+  public boolean isStarTile() {
+    if (name.equals(TileNames.SUN_C)
+        || name.equals(TileNames.SUN_E)
+        || name.equals(TileNames.SUN_W)
+        || name.equals(TileNames.SUN_N)
+        || name.equals(TileNames.SUN_S)
+        || name.equals(TileNames.SUN_NE)
+        || name.equals(TileNames.SUN_SE)
+        || name.equals(TileNames.SUN_NW)
+        || name.equals(TileNames.SUN_SW)) {
+      return true;
+    }
+    return false;
+  }
   @Override
   public String toString() {
     return name + " (" + tileIndex + ")";

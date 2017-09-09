@@ -14,6 +14,8 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.icons.Icon16x16;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
@@ -79,6 +81,11 @@ public class MapInfoPanel extends InfoPanel {
    * Show info about the fleet
    */
   private Fleet fleet;
+
+  /**
+   * Show info about the tile
+   */
+  private Tile tile;
 
   /**
    * Fleet owner as PlayerInfo
@@ -149,6 +156,7 @@ public class MapInfoPanel extends InfoPanel {
     textArea.setEditable(false);
     textArea.setLineWrap(true);
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
+    textArea.setCharacterWidth(7);
     routeBtn = new SpaceButton("Route", GameCommands.COMMAND_ROUTE_FLEET);
     routeBtn.addActionListener(listener);
     routeBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -164,7 +172,6 @@ public class MapInfoPanel extends InfoPanel {
     this.add(textArea);
     viewBtn = new SpaceButton("View planet", GameCommands.COMMAND_VIEW_PLANET);
     viewBtn.addActionListener(listener);
-    this.add(textArea);
     viewBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
     this.add(Box.createRigidArea(new Dimension(10, 10)));
     this.add(routeBtn);
@@ -188,6 +195,25 @@ public class MapInfoPanel extends InfoPanel {
     this.viewBtn.setEnabled(activeScan);
     this.viewBtn.setText("View planet");
     this.viewBtn.setActionCommand(GameCommands.COMMAND_VIEW_PLANET);
+    this.defendBtn.setEnabled(false);
+    this.fixFleetBtn.setEnabled(false);
+    this.routeBtn.setEnabled(false);
+    updatePanel();
+  }
+
+  /**
+   * Show tile on info panel, if tile has description.
+   * @param tileToShow Tile to show
+   */
+  public void showTile(final Tile tileToShow) {
+    this.planet = null;
+    this.fleet = null;
+    if (!tileToShow.getDescription().isEmpty()) {
+      tile = tileToShow;
+    } else {
+      tile = null;
+    }
+    this.viewBtn.setEnabled(false);
     this.defendBtn.setEnabled(false);
     this.fixFleetBtn.setEnabled(false);
     this.routeBtn.setEnabled(false);
@@ -226,6 +252,7 @@ public class MapInfoPanel extends InfoPanel {
   public void showEmpty() {
     this.planet = null;
     this.fleet = null;
+    this.tile = null;
     this.viewBtn.setEnabled(false);
     this.defendBtn.setEnabled(false);
     this.fixFleetBtn.setEnabled(false);
@@ -240,36 +267,36 @@ public class MapInfoPanel extends InfoPanel {
     if (planet != null) {
       BufferedImage img = new BufferedImage(Tile.MAX_WIDTH * 2,
           Tile.MAX_HEIGHT * 2, BufferedImage.TYPE_4BYTE_ABGR);
-      Tile tile = Tiles.getTileByIndex(planet.getPlanetImageIndex());
+      Tile tmpTile = Tiles.getTileByIndex(planet.getPlanetImageIndex());
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
       if (!planet.isGasGiant()) {
-        tile.draw(g2d, Tile.MAX_WIDTH / 2, Tile.MAX_HEIGHT / 2);
+        tmpTile.draw(g2d, Tile.MAX_WIDTH / 2, Tile.MAX_HEIGHT / 2);
       } else {
         switch (planet.getPlanetImageIndex()) {
         default:
         case 0: {
-          tile = Tiles.getTileByName(TileNames.GAS_GIANT_1_NW);
-          tile.draw(g2d, 0, 0);
-          tile = Tiles.getTileByName(TileNames.GAS_GIANT_1_NE);
-          tile.draw(g2d, Tile.MAX_WIDTH, 0);
-          tile = Tiles.getTileByName(TileNames.GAS_GIANT_1_SW);
-          tile.draw(g2d, 0, Tile.MAX_HEIGHT);
-          tile = Tiles.getTileByName(TileNames.GAS_GIANT_1_SE);
-          tile.draw(g2d, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+          tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_1_NW);
+          tmpTile.draw(g2d, 0, 0);
+          tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_1_NE);
+          tmpTile.draw(g2d, Tile.MAX_WIDTH, 0);
+          tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_1_SW);
+          tmpTile.draw(g2d, 0, Tile.MAX_HEIGHT);
+          tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_1_SE);
+          tmpTile.draw(g2d, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
 
           break;
         }
         case 1: {
-          tile = Tiles.getTileByName(TileNames.GAS_GIANT_2_NW);
-          tile.draw(g2d, 0, 0);
-          tile = Tiles.getTileByName(TileNames.GAS_GIANT_2_NE);
-          tile.draw(g2d, Tile.MAX_WIDTH, 0);
-          tile = Tiles.getTileByName(TileNames.GAS_GIANT_2_SW);
-          tile.draw(g2d, 0, Tile.MAX_HEIGHT);
-          tile = Tiles.getTileByName(TileNames.GAS_GIANT_2_SE);
-          tile.draw(g2d, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+          tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_2_NW);
+          tmpTile.draw(g2d, 0, 0);
+          tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_2_NE);
+          tmpTile.draw(g2d, Tile.MAX_WIDTH, 0);
+          tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_2_SW);
+          tmpTile.draw(g2d, 0, Tile.MAX_HEIGHT);
+          tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_2_SE);
+          tmpTile.draw(g2d, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
           break;
         }
         }
@@ -291,6 +318,33 @@ public class MapInfoPanel extends InfoPanel {
       }
       setTitle(fleet.getName());
       textArea.setText(fleet.getInfoAsText(fleetOwner));
+      this.repaint();
+    } else if (tile != null) {
+      BufferedImage img = new BufferedImage(ShipImage.MAX_WIDTH,
+          ShipImage.MAX_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
+      Graphics2D g2d = img.createGraphics();
+      g2d.setColor(Color.black);
+      g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
+      if (tile.isStarTile()) {
+        Tile star1 = Tiles.getTileByName(TileNames.SUN_NW);
+        Tile star2 = Tiles.getTileByName(TileNames.SUN_NE);
+        Tile star3 = Tiles.getTileByName(TileNames.SUN_SE);
+        Tile star4 = Tiles.getTileByName(TileNames.SUN_SW);
+        star1.draw(g2d, 0, 0);
+        star2.draw(g2d, 32, 0);
+        star3.draw(g2d, 32, 32);
+        star4.draw(g2d, 0, 32);
+      } else {
+        tile.draw(g2d, 16, 16);
+      }
+      if (tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
+          || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2)) {
+        Icon16x16 icon = Icons.getIconByName(Icons.ICON_STARBASE);
+        icon.draw(g2d, 32, 32);
+      }
+      imageLabel.setImage(img);
+      setTitle("Galatic info");
+      textArea.setText(tile.getDescription());
       this.repaint();
     } else {
       setTitle("Galactic info");

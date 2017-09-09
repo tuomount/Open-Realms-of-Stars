@@ -7,6 +7,7 @@ import java.awt.event.MouseMotionListener;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
+import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -213,6 +214,7 @@ public class StarMapMouseListener extends MouseAdapter
             coord.getMapY());
         Fleet fleet = starMap.getFleetByCoordinate(coord.getMapX(),
             coord.getMapY());
+        Tile tile = starMap.getTile(coord.getMapX(), coord.getMapY());
         if (e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
           // Double click Button1
           setDoubleClicked(true);
@@ -260,7 +262,11 @@ public class StarMapMouseListener extends MouseAdapter
             } else {
               setLastClickedPlanet(null);
               setLastClickedFleet(null);
-              mapInfoPanel.showEmpty();
+              if (!tile.getDescription().isEmpty()) {
+                mapInfoPanel.showTile(tile);
+              } else {
+                mapInfoPanel.showEmpty();
+              }
             }
           } else if (planet != null) {
             mapInfoPanel.showPlanet(planet, true);
@@ -277,12 +283,20 @@ public class StarMapMouseListener extends MouseAdapter
               mapInfoPanel.showFleet(fleet, owner);
               setLastClickedFleet(fleet);
             } else {
-              mapInfoPanel.showEmpty();
+              if (!tile.getDescription().isEmpty()) {
+                mapInfoPanel.showTile(tile);
+              } else {
+                mapInfoPanel.showEmpty();
+              }
               setLastClickedPlanet(null);
               setLastClickedFleet(null);
             }
           } else {
-            mapInfoPanel.showEmpty();
+            if (!tile.getDescription().isEmpty()) {
+              mapInfoPanel.showTile(tile);
+            } else {
+              mapInfoPanel.showEmpty();
+            }
             setLastClickedPlanet(null);
             setLastClickedFleet(null);
           }
@@ -298,7 +312,12 @@ public class StarMapMouseListener extends MouseAdapter
           mapInfoPanel.showPlanet(planet, false);
         }
       } else {
-        mapInfoPanel.showEmpty();
+        Tile tile = starMap.getTile(coord.getMapX(), coord.getMapY());
+        if (!tile.getDescription().isEmpty()) {
+          mapInfoPanel.showTile(tile);
+        } else {
+          mapInfoPanel.showEmpty();
+        }
         setLastClickedPlanet(null);
         setLastClickedFleet(null);
       }

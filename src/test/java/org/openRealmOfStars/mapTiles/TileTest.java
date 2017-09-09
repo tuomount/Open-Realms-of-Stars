@@ -45,6 +45,7 @@ public class TileTest {
         Tile.MAX_WIDTH, Tile.MAX_HEIGHT)).thenReturn(img2);
     
     Tile tile = new Tile(img, 0, 0, "Test");
+    assertEquals("", tile.getDescription());
     assertEquals("Test",tile.getName());
     assertEquals("Test (-1)",tile.toString());
     assertEquals(-1,tile.getIndex());
@@ -58,6 +59,9 @@ public class TileTest {
     assertEquals(1,tile.getAnimationIndex());
     Graphics2D g2d = Mockito.mock(Graphics2D.class);
     tile.draw(g2d, 0, 0);
+    tile.setDescription("Test description");
+    assertEquals("Test description", tile.getDescription());
+
   }
 
   @Test(expected=RasterFormatException.class)

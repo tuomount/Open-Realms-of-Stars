@@ -7,7 +7,7 @@ import java.awt.image.RasterFormatException;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2017 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -58,6 +58,11 @@ public class Tile {
   private int nextAnimIndex = -1;
 
   /**
+   * Special tile descriptio
+   */
+  private String tileDescription;
+
+  /**
    * Get tile from tileset image, where x is number of tiles in X axel and
    * y is number of tiles in y axel.
    * @param tilesetImage BufferedImage
@@ -73,6 +78,7 @@ public class Tile {
       img = tilesetImage.getSubimage(x * MAX_WIDTH, y * MAX_HEIGHT, MAX_WIDTH,
           MAX_HEIGHT);
       this.name = name;
+      this.tileDescription = "";
     } else {
       throw new RasterFormatException("Tile is outside of tileset.");
     }
@@ -129,6 +135,21 @@ public class Tile {
     nextAnimIndex = index;
   }
 
+  /**
+   * Get get tile description
+   * @return Tile Description
+   */
+  public String getDescription() {
+    return tileDescription;
+  }
+
+  /**
+   * Set the tile description
+   * @param description Tile description as string
+   */
+  public void setDescription(final String description) {
+    tileDescription = description;
+  }
   @Override
   public String toString() {
     return name + " (" + tileIndex + ")";

@@ -393,7 +393,7 @@ public class Game implements ActionListener {
         y = MUSIC_TEXT_BOTTOM;
       }
       songText = new JLabel("Test");
-      songText.setBounds(650, y, 350, 100);
+      songText.setBounds(650, y, 350, 150);
       songText.setFont(GuiStatics.getFontCubellanBold());
       songText.setForeground(Color.white);
       MusicFileInfo info = MusicPlayer.getNowPlaying();

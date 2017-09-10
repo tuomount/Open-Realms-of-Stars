@@ -33,7 +33,7 @@ import org.openRealmOfStars.gui.labels.IconLabel;
  *
  */
 
-public class WorkerProductionPanel extends InvisiblePanel {
+public class WorkerProductionPanel extends SpaceGreyPanel {
 
   /**
    *
@@ -58,7 +58,6 @@ public class WorkerProductionPanel extends InvisiblePanel {
 
   /**
    * Create Worker Production panel with - and + buttons.
-   * @param parent Parent component to draw opaque
    * @param actionMinus ActionCommand for minus button
    * @param actionPlus ActionCommand for plus button
    * @param iconName Icon name to show
@@ -66,10 +65,10 @@ public class WorkerProductionPanel extends InvisiblePanel {
    * @param toolTip Tool tip for label
    * @param listener Action Listener
    */
-  public WorkerProductionPanel(final Component parent, final String actionMinus,
+  public WorkerProductionPanel(final String actionMinus,
       final String actionPlus, final String iconName, final String text,
       final String toolTip, final ActionListener listener) {
-    super(parent);
+    super();
     this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
     btnMinus = new IconButton(Icons.getIconByName(Icons.ICON_MINUS),
         Icons.getIconByName(Icons.ICON_MINUS_PRESSED), false, actionMinus,
@@ -95,7 +94,6 @@ public class WorkerProductionPanel extends InvisiblePanel {
   public void setInteractive(final boolean interactive) {
     btnMinus.setEnabled(interactive);
     btnPlus.setEnabled(interactive);
-    setDirty();
   }
 
   /**
@@ -104,7 +102,6 @@ public class WorkerProductionPanel extends InvisiblePanel {
    */
   public void setText(final String text) {
     label.setText(text);
-    setDirty();
   }
 
   /**

@@ -269,7 +269,7 @@ public class DiplomacyView extends BlackPanel {
     scroll = new JScrollPane(humanPlanetListOffer);
     scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(scroll);
-    humanCreditOffer = new WorkerProductionPanel(humanOffer,
+    humanCreditOffer = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_HUMAN_CREDIT,
         GameCommands.COMMAND_PLUS_HUMAN_CREDIT, Icons.ICON_CREDIT, "0 Credits",
         "How much credits you are offering.", listener);
@@ -335,7 +335,7 @@ public class DiplomacyView extends BlackPanel {
     scroll = new JScrollPane(aiPlanetListOffer);
     scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(scroll);
-    aiCreditOffer = new WorkerProductionPanel(aiOffer,
+    aiCreditOffer = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_AI_CREDIT,
         GameCommands.COMMAND_PLUS_AI_CREDIT, Icons.ICON_CREDIT, "0 Credits",
         "How much credits " + ai.getEmpireName() + "is offering.", listener);

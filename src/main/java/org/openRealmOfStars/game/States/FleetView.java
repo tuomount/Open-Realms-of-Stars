@@ -228,13 +228,13 @@ public class FleetView extends BlackPanel {
       }
       if (planet.getPlanetPlayerInfo() != null
           && info == planet.getPlanetPlayerInfo()) {
-        colonistSelection = new WorkerProductionPanel(invisible,
+        colonistSelection = new WorkerProductionPanel(
             GameCommands.COMMAND_COLONIST_MINUS,
             GameCommands.COMMAND_COLONIST_PLUS, Icons.ICON_PEOPLE,
             "Colonist: 10000", "How many colonist/troops is on board of fleet.",
             listener);
         invisible.add(colonistSelection);
-        metalSelection = new WorkerProductionPanel(invisible,
+        metalSelection = new WorkerProductionPanel(
             GameCommands.COMMAND_METAL_CARGO_MINUS,
             GameCommands.COMMAND_METAL_CARGO_PLUS, Icons.ICON_METAL,
             "Metal: 1000000", "How many metal cargo is on board of fleet.",

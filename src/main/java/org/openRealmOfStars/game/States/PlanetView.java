@@ -198,21 +198,21 @@ public class PlanetView extends BlackPanel {
     totalPeople.setToolTipText("Total number of people on planet.");
     totalPeople.setAlignmentX(Component.LEFT_ALIGNMENT);
     invisible.add(totalPeople);
-    farmPanel = new WorkerProductionPanel(invisible,
+    farmPanel = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_FARM, GameCommands.COMMAND_PLUS_FARM,
         Icons.ICON_FARM, ": " + planet.getWorkers(Planet.FOOD_FARMERS),
         "Number of people working as a farmers.", listener);
     farmPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     farmPanel.setInteractive(interactive);
     invisible.add(farmPanel);
-    minePanel = new WorkerProductionPanel(invisible,
+    minePanel = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_MINE, GameCommands.COMMAND_PLUS_MINE,
         Icons.ICON_MINE, ": " + planet.getWorkers(Planet.METAL_MINERS),
         "Number of people working as a miners.", listener);
     minePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     minePanel.setInteractive(interactive);
     invisible.add(minePanel);
-    factoryPanel = new WorkerProductionPanel(invisible,
+    factoryPanel = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_PRODUCTION,
         GameCommands.COMMAND_PLUS_PRODUCTION, Icons.ICON_FACTORY,
         ": " + planet.getWorkers(Planet.PRODUCTION_WORKERS),
@@ -220,7 +220,7 @@ public class PlanetView extends BlackPanel {
     factoryPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     factoryPanel.setInteractive(interactive);
     invisible.add(factoryPanel);
-    resePanel = new WorkerProductionPanel(invisible,
+    resePanel = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_RESEARCH, GameCommands.COMMAND_PLUS_RESEARCH,
         Icons.ICON_RESEARCH,
         ": " + planet.getWorkers(Planet.RESEARCH_SCIENTIST),
@@ -300,7 +300,7 @@ public class PlanetView extends BlackPanel {
     maintenance.setAlignmentX(Component.LEFT_ALIGNMENT);
     invisible.add(maintenance);
 
-    taxPanel = new WorkerProductionPanel(invisible,
+    taxPanel = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_TAX, GameCommands.COMMAND_PLUS_TAX,
         Icons.ICON_TAX, ": " + planet.getTax(),
         "How many productions are converted to credits", listener);

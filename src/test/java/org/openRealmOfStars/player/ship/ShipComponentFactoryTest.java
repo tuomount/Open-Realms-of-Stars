@@ -3,10 +3,12 @@ package org.openRealmOfStars.player.ship;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 public class ShipComponentFactoryTest {
 
   @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testEngines() {
     ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk4");
     assertEquals(3, engine.getSpeed());
@@ -27,6 +29,7 @@ public class ShipComponentFactoryTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testWeapons() {
     ShipComponent weapon = ShipComponentFactory.createByName("HE missile Mk2");
     assertEquals(4, weapon.getDamage());
@@ -43,6 +46,7 @@ public class ShipComponentFactoryTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testDefense() {
     ShipComponent defense = ShipComponentFactory.createByName("Shield Mk8");
     assertEquals(8, defense.getDefenseValue());
@@ -57,6 +61,7 @@ public class ShipComponentFactoryTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testElectronics() {
     ShipComponent electronics = ShipComponentFactory.createByName("Cloaking device Mk3");
     assertEquals(60, electronics.getCloaking());
@@ -71,6 +76,7 @@ public class ShipComponentFactoryTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testStarbaseModules() {
     ShipComponent module = ShipComponentFactory.createByName("Starbase bank");
     assertEquals(2, module.getCreditBonus());
@@ -82,6 +88,20 @@ public class ShipComponentFactoryTest {
     assertEquals(2, module.getEnergyRequirement());
     assertEquals(12, module.getCost());
     assertEquals(4, module.getMetalCost());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testNull() {
+    ShipComponent module = ShipComponentFactory.createByName(null);
+    assertEquals(null, module);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testNoSuchModule() {
+    ShipComponent module = ShipComponentFactory.createByName("No such module");
+    assertEquals(null, module);
   }
 
 }

@@ -757,12 +757,13 @@ public final class ShipComponentFactory {
    */
   public static ShipComponent createByName(final String name) {
     ShipComponent tmp = null;
-    if (name != null) {
-      for (int i = 0; i < MAX_SHIPCOMPONENT; i++) {
-        tmp = create(i);
-        if (tmp != null && tmp.getName().equalsIgnoreCase(name)) {
-          return tmp;
-        }
+    if (name == null) {
+      return null;
+    }
+    for (int i = 0; i < MAX_SHIPCOMPONENT; i++) {
+      tmp = create(i);
+      if (tmp != null && tmp.getName().equalsIgnoreCase(name)) {
+        return tmp;
       }
     }
     ErrorLogger.log("Could not find component called '" + name + "'");

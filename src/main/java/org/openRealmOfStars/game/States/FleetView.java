@@ -122,6 +122,11 @@ public class FleetView extends BlackPanel {
    * Other fleets in same space
    */
   private JList<Fleet> fleetsInSpace;
+  
+  /**
+   * Starbase fleet
+   */
+  private Fleet starbaseFleet;
 
   /**
    * PlayerInfo
@@ -332,17 +337,8 @@ public class FleetView extends BlackPanel {
     label = new TransparentLabel(eastPanel, "Other fleets");
     eastPanel.add(label);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-    ArrayList<Fleet> othFleets = new ArrayList<>();
-    for (int i = 0; i < fleetList.getNumberOfFleets(); i++) {
-      Fleet ite = fleetList.getByIndex(i);
-      if (ite.getX() == fleet.getX() && ite.getY() == fleet.getY()
-          && !ite.getName().equals(fleet.getName())) {
-        othFleets.add(ite);
-      }
-    }
-    Fleet[] otherFleets = othFleets.toArray(new Fleet[othFleets.size()]);
     fleetsInSpace = new JList<>();
-    fleetsInSpace.setListData(otherFleets);
+    updateOtherFleet();
     fleetsInSpace.setCellRenderer(new FleetListRenderer());
     fleetsInSpace.setBackground(Color.BLACK);
     fleetsInSpace
@@ -386,6 +382,22 @@ public class FleetView extends BlackPanel {
 
   }
 
+  private void updateOtherFleet() {
+    ArrayList<Fleet> othFleets = new ArrayList<>();
+    for (int i = 0; i < fleetList.getNumberOfFleets(); i++) {
+      Fleet ite = fleetList.getByIndex(i);
+      if (ite.isStarBaseDeployed()) {
+        starbaseFleet = ite;
+      }
+      if (ite.getX() == fleet.getX() && ite.getY() == fleet.getY()
+          && !ite.getName().equals(fleet.getName())) {
+        othFleets.add(ite);
+      }
+    }
+    Fleet[] otherFleets = othFleets.toArray(new Fleet[othFleets.size()]);
+    fleetsInSpace.setListData(otherFleets);
+  }
+  
   /**
    * Update Planet view panels
    */
@@ -403,16 +415,7 @@ public class FleetView extends BlackPanel {
           + fleet.getFreeSpaceForMetal());
     }
     shipsInFleet.setListData(fleet.getShips());
-    ArrayList<Fleet> othFleets = new ArrayList<>();
-    for (int i = 0; i < fleetList.getNumberOfFleets(); i++) {
-      Fleet ite = fleetList.getByIndex(i);
-      if (ite.getX() == fleet.getX() && ite.getY() == fleet.getY()
-          && !ite.getName().equals(fleet.getName())) {
-        othFleets.add(ite);
-      }
-    }
-    Fleet[] otherFleets = othFleets.toArray(new Fleet[othFleets.size()]);
-    fleetsInSpace.setListData(otherFleets);
+    updateOtherFleet();
 
     /*
      * Set the orbting ships
@@ -561,10 +564,14 @@ public class FleetView extends BlackPanel {
           if (ship.getHull().getHullType() == ShipHullType.STARBASE
               && !ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
             fleet.removeShip(ship);
-            Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
-            newFleet.setName(fleetList.generateUniqueName("Deep Space"));
             ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
-            fleetList.add(newFleet);
+            if (starbaseFleet == null) {
+               starbaseFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+               starbaseFleet.setName(fleetList.generateUniqueName("Deep Space"));
+               fleetList.add(starbaseFleet);
+            } else {
+              starbaseFleet.addShip(ship);
+            }
             // TODO Change should for something else
             SoundPlayer.playMenuSound();
             updatePanel();

@@ -85,7 +85,9 @@ public class FleetList {
     if (fleetList.size() == 0) {
       index = 0;
     }
-    fleet.setName(generateUniqueName());
+    if (!isUniqueName(fleet.getName(), fleet)) {
+      fleet.setName(generateUniqueName());
+    }
     fleetList.add(fleet);
   }
 

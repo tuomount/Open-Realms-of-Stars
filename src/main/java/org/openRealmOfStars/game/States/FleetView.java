@@ -558,12 +558,16 @@ public class FleetView extends BlackPanel {
       if (tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
         || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2)) {
         for (Ship ship : fleet.getShips()) {
-          if (ship.getHull().getHullType() == ShipHullType.STARBASE) {
+          if (ship.getHull().getHullType() == ShipHullType.STARBASE
+              && !ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
             fleet.removeShip(ship);
             Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
             newFleet.setName(fleetList.generateUniqueName("Deep Space"));
             ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
             fleetList.add(newFleet);
+            // TODO Change should for something else
+            SoundPlayer.playMenuSound();
+            updatePanel();
           }
         }
       }

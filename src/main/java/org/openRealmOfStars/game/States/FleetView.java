@@ -122,7 +122,7 @@ public class FleetView extends BlackPanel {
    * Other fleets in same space
    */
   private JList<Fleet> fleetsInSpace;
-  
+
   /**
    * Starbase fleet
    */
@@ -382,6 +382,9 @@ public class FleetView extends BlackPanel {
 
   }
 
+  /**
+   * Update other fleet list
+   */
   private void updateOtherFleet() {
     ArrayList<Fleet> othFleets = new ArrayList<>();
     for (int i = 0; i < fleetList.getNumberOfFleets(); i++) {
@@ -397,7 +400,7 @@ public class FleetView extends BlackPanel {
     Fleet[] otherFleets = othFleets.toArray(new Fleet[othFleets.size()]);
     fleetsInSpace.setListData(otherFleets);
   }
-  
+
   /**
    * Update Planet view panels
    */
@@ -567,7 +570,8 @@ public class FleetView extends BlackPanel {
             ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
             if (starbaseFleet == null) {
                starbaseFleet = new Fleet(ship, fleet.getX(), fleet.getY());
-               starbaseFleet.setName(fleetList.generateUniqueName("Deep Space"));
+               starbaseFleet.setName(fleetList.generateUniqueName(
+                   "Deep Space"));
                fleetList.add(starbaseFleet);
             } else {
               starbaseFleet.addShip(ship);

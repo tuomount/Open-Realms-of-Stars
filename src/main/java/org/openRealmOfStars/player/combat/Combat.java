@@ -13,6 +13,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -93,6 +94,11 @@ public class Combat {
    * Second player's fleet
    */
   private Fleet defenderFleet;
+
+  /**
+   * Starbase fleet
+   */
+  private Fleet starbaseFleet;
 
   /**
    * Player Info for winner
@@ -194,12 +200,25 @@ public class Combat {
     this.defenderFleet = defenderFleet;
     this.attackerInfo = attackerInfo;
     this.defenderInfo = defenderInfo;
+    starbaseFleet = null;
+    FleetList fleetList = defenderInfo.getFleets();
+    for (int i = 0; i < fleetList.getNumberOfFleets(); i++) {
+      Fleet ite = fleetList.getByIndex(i);
+      if (ite.isStarBaseDeployed()
+          && ite.getCoordinate().sameAs(defenderFleet.getCoordinate())) {
+        starbaseFleet = ite;
+      }
+    }
     combatShipList = new ArrayList<>();
 
     CombatPositionList bottomList = new BottomPositionList();
     CombatPositionList topList = new TopPositionList();
     addCombatShipList(attackerFleet, attackerInfo, bottomList, false);
     addCombatShipList(defenderFleet, defenderInfo, topList, true);
+    if (starbaseFleet != null) {
+      CombatPositionList starbaseList = new TopPositionList();
+      addCombatShipList(starbaseFleet, defenderInfo, starbaseList, true);
+    }
 
     Collections.sort(combatShipList, Collections.reverseOrder());
     componentUse = -1;

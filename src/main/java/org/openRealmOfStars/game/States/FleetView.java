@@ -504,18 +504,21 @@ public class FleetView extends BlackPanel {
       updatePanel();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_MERGE_FLEETS)
-        && fleetsInSpace.getSelectedIndices().length > 0) {
+        && fleetsInSpace.getSelectedIndices().length > 0
+        && fleet != starbaseFleet) {
       for (int i = 0; i < fleetsInSpace.getSelectedIndices().length; i++) {
         Fleet mergeFleet = fleetsInSpace.getSelectedValuesList().get(i);
-        for (int j = 0; j < mergeFleet.getNumberOfShip(); j++) {
-          Ship ship = mergeFleet.getShipByIndex(j);
-          if (ship != null) {
-            fleet.addShip(ship);
+        if (mergeFleet != starbaseFleet) {
+          for (int j = 0; j < mergeFleet.getNumberOfShip(); j++) {
+            Ship ship = mergeFleet.getShipByIndex(j);
+            if (ship != null) {
+              fleet.addShip(ship);
+            }
           }
-        }
-        int index = fleetList.getIndexByName(mergeFleet.getName());
-        if (index > -1) {
-          fleetList.remove(index);
+          int index = fleetList.getIndexByName(mergeFleet.getName());
+          if (index > -1) {
+            fleetList.remove(index);
+          }
         }
       }
       SoundPlayer.playMenuSound();

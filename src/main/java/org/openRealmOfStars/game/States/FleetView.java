@@ -566,15 +566,17 @@ public class FleetView extends BlackPanel {
         for (Ship ship : fleet.getShips()) {
           if (ship.getHull().getHullType() == ShipHullType.STARBASE
               && !ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
-            fleet.removeShip(ship);
-            ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
             if (starbaseFleet == null) {
                starbaseFleet = new Fleet(ship, fleet.getX(), fleet.getY());
                starbaseFleet.setName(fleetList.generateUniqueName(
                    "Deep Space"));
                fleetList.add(starbaseFleet);
-            } else {
+               fleet.removeShip(ship);
+               ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+            } else if (starbaseFleet.getNumberOfShip() < 7) {
               starbaseFleet.addShip(ship);
+              fleet.removeShip(ship);
+              ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
             }
             // TODO Change should for something else
             SoundPlayer.playMenuSound();

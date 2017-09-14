@@ -389,7 +389,8 @@ public class FleetView extends BlackPanel {
     ArrayList<Fleet> othFleets = new ArrayList<>();
     for (int i = 0; i < fleetList.getNumberOfFleets(); i++) {
       Fleet ite = fleetList.getByIndex(i);
-      if (ite.isStarBaseDeployed()) {
+      if (ite.isStarBaseDeployed()
+          && ite.getX() == fleet.getX() && ite.getY() == fleet.getY()) {
         starbaseFleet = ite;
       }
       if (ite.getX() == fleet.getX() && ite.getY() == fleet.getY()

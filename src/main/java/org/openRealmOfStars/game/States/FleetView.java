@@ -576,10 +576,12 @@ public class FleetView extends BlackPanel {
                fleetList.add(starbaseFleet);
                fleet.removeShip(ship);
                ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+               fleetList.recalculateList();
             } else if (starbaseFleet.getNumberOfShip() < 7) {
               starbaseFleet.addShip(ship);
               fleet.removeShip(ship);
               ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+              fleetList.recalculateList();
             }
             // TODO Change should for something else
             SoundPlayer.playMenuSound();

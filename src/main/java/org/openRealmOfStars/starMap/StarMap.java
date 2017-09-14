@@ -1369,6 +1369,12 @@ public class StarMap {
         for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
           Fleet fleet = info.getFleets().getByIndex(j);
           doFleetScanUpdate(info, fleet, null);
+          if (fleet.getCulturalValue() > 0 && fleet.isStarBaseDeployed()) {
+            // Recalculate culture for the map for each player
+            calculateCulture(fleet.getX(), fleet.getY(),
+                fleet.getCulturalValue(), i);
+          }
+
         }
       }
     }

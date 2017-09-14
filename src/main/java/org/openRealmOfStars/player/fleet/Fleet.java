@@ -657,7 +657,7 @@ public class Fleet {
    * @return True if starbase is deployed
    */
   public boolean isStarBaseDeployed() {
-    if (ships.size() == 1) {
+    if (ships.size() <= 7) {
       Ship ship = ships.get(0);
       if (ship.isStarBase() && ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
         return true;

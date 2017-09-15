@@ -10,6 +10,7 @@ import javax.swing.JToolTip;
 
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icon16x16;
+import org.openRealmOfStars.gui.panels.InvisiblePanel;
 
 /**
  *
@@ -108,6 +109,15 @@ public class IconLabel extends JLabel {
     toolTip.setBorder(BorderFactory
         .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
     return toolTip;
+  }
+
+  @Override
+  public void setText(final String text) {
+    super.setText(text);
+    if (parent instanceof InvisiblePanel) {
+      InvisiblePanel invis = (InvisiblePanel) parent;
+      invis.setDirty();
+    }
   }
 
   @Override

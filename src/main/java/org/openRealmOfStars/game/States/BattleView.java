@@ -131,6 +131,7 @@ public class BattleView extends BlackPanel {
    */
   public BattleView(final Combat combat, final StarMap map,
       final ActionListener listener) {
+    MusicPlayer.playCombatMusic();
     this.combat = combat;
     this.map = map;
     initBattleView(listener);

@@ -734,8 +734,11 @@ public final class MissionHandling {
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
       if (infoAtTarget != null) {
         if (infoAtTarget.isHuman()) {
-          SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
-          game.changeGameState(GameState.DIPLOMACY_VIEW, info);
+          if (fleet.getRoute() == null) {
+            // No diplomacy with players if FTL travelling
+            SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
+            game.changeGameState(GameState.DIPLOMACY_VIEW, info);
+          }
         } else {
           int index = map.getPlayerList().getIndex(infoAtTarget);
           handleDiplomacyBetweenAis(game, info, index, null);

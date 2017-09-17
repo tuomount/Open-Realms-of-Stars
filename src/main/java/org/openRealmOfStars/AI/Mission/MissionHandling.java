@@ -255,9 +255,9 @@ public final class MissionHandling {
               fleet.removeShip(ship);
               Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
               FleetList fleetList = info.getFleets();
-              newFleet.setName(fleetList.generateUniqueName("Deep Space"));
               ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
               fleetList.add(newFleet);
+              newFleet.setName(fleetList.generateUniqueName("Deep Space"));
             }
           }
           // Remove the ship and AI just colonized planet

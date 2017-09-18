@@ -22,6 +22,9 @@ import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.mapTiles.FleetTileInfo;
+import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
@@ -33,6 +36,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.Route;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
@@ -400,6 +404,38 @@ public class AITurnView extends BlackPanel {
       info.getMissions().add(mission);
     }
   }
+
+  /**
+   * Search deep space anchors
+   */
+  public void searchDeepSpaceAnchors() {
+    StarMap map = game.getStarMap();
+    FleetTileInfo[][] fleetTiles = map.getFleetTiles();
+    for (int y = 0; y < map.getMaxY(); y++) {
+      for (int x = 0; x < map.getMaxX(); x++) {
+        Tile tile = map.getTile(x, y);
+        if ((tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
+            || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2))
+            && fleetTiles[x][y] != null) {
+          PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(
+              fleetTiles[x][y].getPlayerIndex());
+          Fleet fleet = info.getFleets().getByIndex(
+              fleetTiles[x][y].getFleetIndex());
+          if (!fleet.isStarBaseDeployed()
+              && info.getSectorVisibility(new Coordinate(x, y))
+              == PlayerInfo.VISIBLE) {
+            Mission mission = new Mission(MissionType.DEPLOY_STARBASE,
+                MissionPhase.PLANNING, new Coordinate(x, y));
+            if (info.getMissions().getDeployStarbaseMission(x, y) == null) {
+              // No colonize mission for this planet found, so adding it.
+              info.getMissions().add(mission);
+            }
+          }
+        }
+      }
+    }
+  }
+
   /**
    * Search newly found uncolonized planets
    */
@@ -550,6 +586,7 @@ public class AITurnView extends BlackPanel {
         searchForColonizablePlanets();
         // Searching for fleet which has crossed the borders
         searchForBorderCrossing();
+        searchDeepSpaceAnchors();
         game.getStarMap().setAIFleet(null);
         game.getStarMap()
             .setAiTurnNumber(game.getStarMap().getAiTurnNumber() + 1);

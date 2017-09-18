@@ -934,6 +934,15 @@ public class StarMap {
                       fleet2.getFirstShip().getHull().getImageIndex(), i, k);
                   fleetTiles[fleet2.getX()][fleet2.getY()] = info;
                 }
+                if (fleet2 != null &&  fleet != null
+                    && fleet2.getX() == fleet.getX()
+                    && fleet2.getY() == fleet.getY()
+                    && fleet2.isStarBaseDeployed()) {
+                  FleetTileInfo info = new FleetTileInfo(
+                      fleet2.getFirstShip().getHull().getRace(),
+                      fleet2.getFirstShip().getHull().getImageIndex(), i, k);
+                  fleetTiles[fleet2.getX()][fleet2.getY()] = info;
+                }
               }
             }
           }

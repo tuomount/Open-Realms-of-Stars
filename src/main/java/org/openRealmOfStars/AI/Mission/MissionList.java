@@ -120,6 +120,22 @@ public class MissionList {
   }
 
   /**
+   * Find a deploy starbase mission for coordinate
+   * @param x Planet X coordinate
+   * @param y Planet Y coordinate
+   * @return Mission or null if not found
+   */
+  public Mission getDeployStarbaseMission(final int x, final int y) {
+    for (Mission mission : missions) {
+      if (mission.getX() == x && mission.getY() == y
+          && mission.getType() == MissionType.DEPLOY_STARBASE) {
+        return mission;
+      }
+    }
+    return null;
+  }
+
+  /**
    * Find a Attack mission for certain planet
    * @param name Planet where to attack
    * @return Mission or null if not found

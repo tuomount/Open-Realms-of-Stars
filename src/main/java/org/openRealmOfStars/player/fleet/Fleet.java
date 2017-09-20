@@ -539,7 +539,7 @@ public class Fleet {
         return true;
       }
       if (ship.getHull().getSize() == ShipSize.SMALL
-          && !ship.isColonyModule()) {
+          && !ship.isColonyModule() && !ship.isStarBase()) {
         return true;
       }
       if (ship.getName().contains("Scout")

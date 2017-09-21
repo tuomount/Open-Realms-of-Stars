@@ -598,7 +598,9 @@ public class Fleet {
   public int getMilitaryValue() {
     int result = 0;
     for (Ship ship : ships) {
-      result = result + ship.getTotalMilitaryPower();
+      if (!ship.isStarBase() || ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
+        result = result + ship.getTotalMilitaryPower();
+      }
     }
     return result;
   }

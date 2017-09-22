@@ -168,7 +168,7 @@ public final class Research {
           notFound = false;
           if (design.getTotalMilitaryPower() > stat.getDesign()
               .getTotalMilitaryPower() && design.getStarbaseValue() == stat
-              .getDesign().getStarbaseValue() && !stat.isObsolete()) {
+              .getDesign().getStarbaseValue()) {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);
@@ -176,15 +176,7 @@ public final class Research {
           }
           if (design.getTotalMilitaryPower() == stat.getDesign()
               .getTotalMilitaryPower() && design.getStarbaseValue() > stat
-              .getDesign().getStarbaseValue() && !stat.isObsolete()) {
-            stat.setObsolete(true);
-            ShipStat ship = new ShipStat(design);
-            info.addShipStat(ship);
-            break;
-          }
-          if (stat.getDesign().getHull().getSize() == ShipSize.SMALL
-              && design.getStarbaseValue() > stat.getDesign()
-              .getStarbaseValue() && !stat.isObsolete()) {
+              .getDesign().getStarbaseValue()) {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);

@@ -131,7 +131,8 @@ public final class Research {
       for (ShipStat stat : stats) {
         if (stat.getDesign().getHull().getHullType() == ShipHullType.FREIGHTER
             && stat.getDesign()
-                .gotCertainType(ShipComponentType.PLANETARY_INVASION_MODULE)) {
+                .gotCertainType(ShipComponentType.PLANETARY_INVASION_MODULE)
+            && !stat.isObsolete()) {
           notFound = false;
           if (design.getTotalTrooperPower() > stat.getDesign()
               .getTotalTrooperPower()) {

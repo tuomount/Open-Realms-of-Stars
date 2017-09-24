@@ -89,6 +89,8 @@ public class PlayerInfoTest {
             .createScout(human));
         assertEquals(expectedStat.toString(), statList[0].toString());
         expectedStat = new ShipStat(ShipGenerator.createColony(human, false));
+        // Change name back to Mk1
+        expectedStat.getDesign().setName("Colony Mk1");
         assertEquals(expectedStat.toString(), statList[1].toString());
     }
 
@@ -128,6 +130,8 @@ public class PlayerInfoTest {
         assertEquals(expectedStat.toString(), statList[0].toString());
         expectedStat = new ShipStat(ShipGenerator.createColony(mechion,
             false));
+        // Change name back to Mk1
+        expectedStat.getDesign().setName("Colony Mk1");
         assertEquals(expectedStat.toString(), statList[1].toString());
     }
 
@@ -166,6 +170,8 @@ public class PlayerInfoTest {
         assertEquals(expectedStat.toString(), statList[0].toString());
         expectedStat = new ShipStat(ShipGenerator.createColony(centaur,
             false));
+        // Change name back to Mk1
+        expectedStat.getDesign().setName("Colony Mk1");
         assertEquals(expectedStat.toString(), statList[1].toString());
     }
 
@@ -244,6 +250,8 @@ public class PlayerInfoTest {
             .createScout(greyan));
         assertEquals(expectedStat.toString(), statList[0].toString());
         expectedStat = new ShipStat(ShipGenerator.createColony(greyan, false));
+        // Change name back to Mk1
+        expectedStat.getDesign().setName("Colony Mk1");
         assertEquals(expectedStat.toString(), statList[1].toString());
     }
 
@@ -281,6 +289,8 @@ public class PlayerInfoTest {
             .createScout(mothoid));
         assertEquals(expectedStat.toString(), statList[0].toString());
         expectedStat = new ShipStat(ShipGenerator.createColony(mothoid, false));
+        // Change name back to Mk1
+        expectedStat.getDesign().setName("Colony Mk1");
         assertEquals(expectedStat.toString(), statList[1].toString());
     }
 
@@ -319,6 +329,8 @@ public class PlayerInfoTest {
             .createScout(teuthidae));
         assertEquals(expectedStat.toString(), statList[0].toString());
         expectedStat = new ShipStat(ShipGenerator.createColony(teuthidae, false));
+        // Change name back to Mk1
+        expectedStat.getDesign().setName("Colony Mk1");
         assertEquals(expectedStat.toString(), statList[1].toString());
     }
 

@@ -460,9 +460,11 @@ public final class ShipGenerator {
           player.getRace());
       result = new ShipDesign(hull);
       if (!troop) {
-        result.setName("Colony");
+        result.setName("Colony Mk"
+            + (player.getShipStatStartsWith("Colony Mk") + 1));
       } else {
-        result.setName("Trooper");
+        result.setName("Trooper Mk"
+            + (player.getShipStatStartsWith("Trooper Mk") + 1));
       }
       ShipComponent engine = ShipComponentFactory
           .createByName(player.getTechList().getBestEngine().getComponent());

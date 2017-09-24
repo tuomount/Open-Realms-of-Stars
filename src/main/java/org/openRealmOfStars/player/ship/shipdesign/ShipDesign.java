@@ -513,9 +513,6 @@ public class ShipDesign {
       if (hasDefenseComponent()) {
         power = power + comp.getDefenseValue();
       }
-      if (comp.getEnergyResource() > 0) {
-        power = power + 2;
-      }
       if (comp.getCloaking() > 0) {
         power = power + comp.getCloaking() / 10;
       }

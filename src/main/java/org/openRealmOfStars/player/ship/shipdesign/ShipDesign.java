@@ -519,7 +519,7 @@ public class ShipDesign {
       if (comp.getCloaking() > 0) {
         power = power + comp.getCloaking() / 10;
       }
-    }    
+    }
     if (!colonyShip) {
       power = 0;
     }

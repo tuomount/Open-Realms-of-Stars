@@ -84,6 +84,7 @@ public final class Research {
     handleStarbaseDesign(info, ShipSize.LARGE);
     handleStarbaseDesign(info, ShipSize.HUGE);
     handleTrooperShipDesign(info);
+    handleColonyShipDesign(info);
   }
 
   /**
@@ -136,6 +137,38 @@ public final class Research {
           notFound = false;
           if (design.getTotalTrooperPower() > stat.getDesign()
               .getTotalTrooperPower()) {
+            stat.setObsolete(true);
+            ShipStat ship = new ShipStat(design);
+            info.addShipStat(ship);
+            break;
+          }
+        }
+      }
+      if (notFound) {
+        ShipStat ship = new ShipStat(design);
+        info.addShipStat(ship);
+      }
+    }
+
+  }
+
+  /**
+   * Handle Trooper ship design for AI
+   * @param info Player
+   */
+  private static void handleColonyShipDesign(final PlayerInfo info) {
+    ShipDesign design = ShipGenerator.createColony(info, false);
+    if (design != null) {
+      ShipStat[] stats = info.getShipStatList();
+      boolean notFound = true;
+      for (ShipStat stat : stats) {
+        if (stat.getDesign().getHull().getHullType() == ShipHullType.FREIGHTER
+            && stat.getDesign()
+                .gotCertainType(ShipComponentType.COLONY_MODULE)
+            && !stat.isObsolete()) {
+          notFound = false;
+          if (design.getTotalColonyPower() > stat.getDesign()
+              .getTotalColonyPower()) {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);

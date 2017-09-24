@@ -86,6 +86,7 @@ public class ShipDesignTest {
     assertEquals(3,design.getNumberOfComponents());
     assertEquals(0,design.getTotalMilitaryPower());
     assertEquals(1,design.getFreeSlots());
+    assertEquals(13, design.getTotalColonyPower());
   }
 
   @Test

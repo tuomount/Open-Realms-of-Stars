@@ -59,6 +59,20 @@ public class ResearchTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testShipDesignHandlingHuman() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    assertEquals(2, info.getShipStatList().length);
+    Research.handleShipDesigns(info);
+    assertEquals(2, info.getShipStatList().length);
+    info.getTechList().addTech(TechFactory.createHullTech("Small freighter", 2));
+    info.getTechList().addTech(TechFactory.createHullTech("Small starbase Mk1", 2));
+    info.getTechList().addTech(TechFactory.createCombatTech("Planetary invasion module", 2));
+    Research.handleShipDesigns(info);
+    assertEquals(5, info.getShipStatList().length);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testResearchHandlingCentaurs() {
     PlayerInfo info = new PlayerInfo(SpaceRace.CENTAURS);
     Research.handle(info);

@@ -489,6 +489,44 @@ public class ShipDesign {
   }
 
   /**
+   * Calculate Colony power of design. Design needs to have at least single
+   * colony module
+   * @return Trooper power
+   */
+  public int getTotalColonyPower() {
+    int power = 0;
+    boolean colonyShip = false;
+    power = getHull().getSlotHull() * components.size();
+    power = power + getFtlSpeed();
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.COLONY_MODULE) {
+        colonyShip = true;
+        int freeSlots = getHull().getMaxSlot() - components.size();
+        if (freeSlots == 0) {
+          // No room for colonists
+          colonyShip = false;
+        } else {
+          power = power + freeSlots;
+        }
+      }
+      if (hasDefenseComponent()) {
+        power = power + comp.getDefenseValue();
+      }
+      if (comp.getEnergyResource() > 0) {
+        power = power + 2;
+      }
+      if (comp.getCloaking() > 0) {
+        power = power + comp.getCloaking() / 10;
+      }
+    }    
+    if (!colonyShip) {
+      power = 0;
+    }
+    return power;
+  }
+
+  /**
    * Get ship component list in priority order
    * @return Ship component array
    */

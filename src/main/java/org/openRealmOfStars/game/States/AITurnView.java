@@ -410,6 +410,8 @@ public class AITurnView extends BlackPanel {
    */
   public void searchDeepSpaceAnchors() {
     StarMap map = game.getStarMap();
+    PlayerInfo info = game.getPlayers()
+        .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
     FleetTileInfo[][] fleetTiles = map.getFleetTiles();
     for (int y = 0; y < map.getMaxY(); y++) {
       for (int x = 0; x < map.getMaxX(); x++) {
@@ -417,13 +419,13 @@ public class AITurnView extends BlackPanel {
         if ((tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
             || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2))
             && fleetTiles[x][y] != null) {
-          PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(
+          PlayerInfo infoAt = game.getPlayers().getPlayerInfoByIndex(
               fleetTiles[x][y].getPlayerIndex());
-          Fleet fleet = info.getFleets().getByIndex(
+          Fleet fleet = infoAt.getFleets().getByIndex(
               fleetTiles[x][y].getFleetIndex());
           if (!fleet.isStarBaseDeployed()
               && info.getSectorVisibility(new Coordinate(x, y))
-              == PlayerInfo.VISIBLE) {
+              == PlayerInfo.VISIBLE && infoAt != info) {
             Mission mission = new Mission(MissionType.DEPLOY_STARBASE,
                 MissionPhase.PLANNING, new Coordinate(x, y));
             if (info.getMissions().getDeployStarbaseMission(x, y) == null) {

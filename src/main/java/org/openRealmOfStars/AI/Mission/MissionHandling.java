@@ -204,7 +204,9 @@ public final class MissionHandling {
           }
           ShipStat stat = game.getStarMap().getCurrentPlayerInfo()
               .getShipStatByName(ship.getName());
-          stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
+          if (stat != null) {
+            stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
+          }
         }
 
       } else if (mission.getPhase() == MissionPhase.TREKKING

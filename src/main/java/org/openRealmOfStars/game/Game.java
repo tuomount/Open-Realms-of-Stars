@@ -1246,7 +1246,9 @@ public class Game implements ActionListener {
       fleetView.getFleet().removeShip(ship);
       ShipStat stat = starMap.getCurrentPlayerInfo()
           .getShipStatByName(ship.getName());
-      stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
+      if (stat != null) {
+        stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
+      }
       fleetView.getFleetList().recalculateList();
       starMapView.getStarMapMouseListener().setLastClickedFleet(null);
       starMapView.getStarMapMouseListener()

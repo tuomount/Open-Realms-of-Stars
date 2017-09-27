@@ -613,6 +613,10 @@ public final class PlanetHandling {
           if (mission != null) {
             if (mission.getPhase() == MissionPhase.PLANNING) {
               score = score + ship.getTotalMilitaryPower() * 2;
+              if (ship.isStarBase()) {
+                // No starbase for defending
+                score = 0;
+              }
               if (attitude == Attitude.AGGRESSIVE
                   || attitude == Attitude.MILITARISTIC) {
                 score = score + 20;
@@ -638,6 +642,10 @@ public final class PlanetHandling {
             mission = info.getMissions().getMission(MissionType.GATHER,
                 MissionPhase.PLANNING);
             if (mission != null) {
+              if (ship.isStarBase()) {
+                // No starbase for Gathering
+                score = 0;
+              }
               score = score + ship.getTotalMilitaryPower() * 2;
               if (attitude == Attitude.AGGRESSIVE
                   || attitude == Attitude.MILITARISTIC) {

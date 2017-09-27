@@ -486,12 +486,39 @@ public class Fleet {
   }
 
   /**
-   * Get first colony ship from the fleet
+   * Get first colony ship from the fleet which contains colonists.
    * @return Colony ship or null
    */
   public Ship getColonyShip() {
+    return getColonyShip(true);
+  }
+
+  /**
+   * Get first colony ship from the fleet
+   * @param hasColonist True if colony ship must have colonists.
+   * @return Colony ship or null
+   */
+  public Ship getColonyShip(final boolean hasColonist) {
     for (Ship ship : ships) {
-      if (ship.getColonist() > 0 && ship.isColonyShip()) {
+      if (ship.isColonyShip()) {
+        if (hasColonist && ship.getColonist() > 0) {
+          return ship;
+        }
+        if (!hasColonist) {
+          return ship;
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Get first starbase ship from the fleet
+   * @return Starbase or null
+   */
+  public Ship getStarbaseShip() {
+    for (Ship ship : ships) {
+      if (ship.isStarBase() && !ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
         return ship;
       }
     }

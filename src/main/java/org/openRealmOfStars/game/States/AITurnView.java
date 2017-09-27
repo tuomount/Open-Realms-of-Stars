@@ -429,7 +429,7 @@ public class AITurnView extends BlackPanel {
             Mission mission = new Mission(MissionType.DEPLOY_STARBASE,
                 MissionPhase.PLANNING, new Coordinate(x, y));
             if (info.getMissions().getDeployStarbaseMission(x, y) == null) {
-              // No colonize mission for this planet found, so adding it.
+              // No deploy starbase mission for this planet found, so adding it.
               info.getMissions().add(mission);
             }
           }
@@ -580,8 +580,39 @@ public class AITurnView extends BlackPanel {
         && game.getStarMap().getAIFleet() != null) {
       // Handle fleet
 
-      MissionHandling.mergeFleets(game.getStarMap().getAIFleet(), info);
-      handleMissions(game.getStarMap().getAIFleet(), info);
+      Fleet fleet = game.getStarMap().getAIFleet();
+      if (fleet != null) {
+        MissionHandling.mergeFleets(fleet, info);
+        Mission mission = info.getMissions().getMission(MissionType.COLONIZE,
+            MissionPhase.PLANNING);
+        if (mission != null & fleet.getColonyShip() != null) {
+          Ship ship = fleet.getColonyShip();
+          Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+          fleet.removeShip(ship);
+          info.getFleets().add(newFleet);
+          fleet = newFleet;
+          fleet.setName(info.getFleets().generateUniqueName("Colony"));
+          info.getFleets().recalculateList();
+          mission.setPhase(MissionPhase.LOADING);
+          mission.setFleetName(fleet.getName());
+        }
+        mission = info.getMissions().getMission(MissionType.DEPLOY_STARBASE,
+            MissionPhase.PLANNING);
+        if (mission != null & fleet.getStarbaseShip() != null) {
+          Ship ship = fleet.getStarbaseShip();
+          Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+          fleet.removeShip(ship);
+          info.getFleets().add(newFleet);
+          fleet = newFleet;
+          fleet.setName(info.getFleets().generateUniqueName("Deep space"));
+          info.getFleets().recalculateList();
+          mission.setPhase(MissionPhase.TREKKING);
+          mission.setFleetName(fleet.getName());
+        }
+        if (!fleet.isStarBaseDeployed()) {
+          handleMissions(fleet, info);
+        }
+      }
       game.getStarMap().setAIFleet(info.getFleets().getNext());
       if (info.getFleets().getIndex() == 0) {
         // All fleets have moved. Checking the new possible planet

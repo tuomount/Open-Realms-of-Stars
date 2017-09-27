@@ -79,6 +79,7 @@ public class FleetTest {
     Mockito.when(ship.getMaxHullPoints()).thenReturn(6);
     Mockito.when(ship.isColonyModule()).thenReturn(true);
     Mockito.when(ship.isColonyShip()).thenReturn(true);
+    Mockito.when(ship.getColonist()).thenReturn(0);
     Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
     Mockito.when(ship.getName()).thenReturn("Colony");
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);
@@ -157,6 +158,10 @@ public class FleetTest {
     Ship colony = createShipTwo();
     fleet.addShip(colony);
     assertEquals(ship,fleet.getFirstShip());
+    assertEquals(null, fleet.getColonyShip());
+    assertEquals(colony, fleet.getColonyShip(false));
+    Mockito.when(colony.getColonist()).thenReturn(2);
+    assertEquals(colony, fleet.getColonyShip());
     assertEquals(ship,fleet.getShipByIndex(0));
     assertEquals(colony,fleet.getShipByIndex(1));
     assertEquals(1, fleet.getFleetFtlSpeed());

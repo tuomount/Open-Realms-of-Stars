@@ -287,6 +287,11 @@ public class Game implements ActionListener {
   private static final int ANIMATION_DELAY_CREDITS = 30;
 
   /**
+   * Animation timer delay in milli seconds for combat
+   */
+  private static final int ANIMATION_DELAY_COMBAT = 60;
+
+  /**
    * Constructor of Game class
    * @param visible Is game actually visible or not
    */
@@ -785,6 +790,9 @@ public class Game implements ActionListener {
       showStarMap(dataObject);
       break;
     case COMBAT: {
+      if (animationTimer != null) {
+        animationTimer.setDelay(ANIMATION_DELAY_COMBAT);
+      }
       combat(dataObject);
       break;
     }

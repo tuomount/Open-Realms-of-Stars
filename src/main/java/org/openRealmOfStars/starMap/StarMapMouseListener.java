@@ -320,7 +320,10 @@ public class StarMapMouseListener extends MouseAdapter
         }
       } else {
         Tile tile = starMap.getTile(coord.getMapX(), coord.getMapY());
-        if (!tile.getDescription().isEmpty()) {
+        if (!tile.getDescription().isEmpty()
+            && starMap.getCurrentPlayerInfo().getSectorVisibility(
+                coord.getMapCoordinate()) == PlayerInfo.FOG_OF_WAR
+            || tile.isStarTile()) {
           mapInfoPanel.showTile(tile);
         } else {
           mapInfoPanel.showEmpty();

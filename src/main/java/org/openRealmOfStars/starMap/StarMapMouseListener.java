@@ -310,6 +310,13 @@ public class StarMapMouseListener extends MouseAdapter
           setLastClickedPlanet(planet);
           setLastClickedFleet(null);
           mapInfoPanel.showPlanet(planet, false);
+        } else {
+          Tile tile = starMap.getTile(coord.getMapX(), coord.getMapY());
+          if (!tile.getDescription().isEmpty()) {
+            mapInfoPanel.showTile(tile);
+          } else {
+            mapInfoPanel.showEmpty();
+          }
         }
       } else {
         Tile tile = starMap.getTile(coord.getMapX(), coord.getMapY());

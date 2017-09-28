@@ -154,7 +154,10 @@ public final class MissionHandling {
         // Loading colonist
         Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
             fleet.getY());
-        if (planet.getPlanetPlayerInfo() == info) {
+        if (planet == null) {
+          mission.setPhase(MissionPhase.TREKKING);
+        }
+        if (planet != null && planet.getPlanetPlayerInfo() == info) {
           Ship[] ships = fleet.getShips();
           int colony = 0;
           for (int i = 0; i < ships.length; i++) {

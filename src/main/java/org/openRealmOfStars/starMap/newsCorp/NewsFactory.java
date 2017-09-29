@@ -96,16 +96,17 @@ public final class NewsFactory {
     } else {
       sb.append("This meeting happened in deep space. ");
     }
-    if (aggressor.getAiAttitude() == Attitude.AGGRESSIVE) {
+    Attitude attitude = aggressor.getAiAttitude();
+    if (attitude == Attitude.AGGRESSIVE) {
       sb.append(aggressor.getEmpireName());
       sb.append(" is known about their aggressive behaviour, so ");
       sb.append("this war was just about to happen. ");
     }
-    if (aggressor.getAiAttitude() == Attitude.MILITARISTIC) {
+    if (attitude == Attitude.MILITARISTIC) {
       sb.append(aggressor.getEmpireName());
       sb.append(" militaristic actions has lead to this war to burst out. ");
     }
-    if (aggressor.getAiAttitude() == Attitude.PEACEFUL) {
+    if (attitude == Attitude.PEACEFUL) {
       sb.append(aggressor.getEmpireName());
       sb.append(" is known about their peace loving. What horrible acts has ");
       sb.append(defender.getEmpireName());
@@ -182,7 +183,8 @@ public final class NewsFactory {
     } else {
       sb.append("This meeting happened in deep space. ");
     }
-    if (peaceMaker.getAiAttitude() == Attitude.AGGRESSIVE) {
+    Attitude attitude = peaceMaker.getAiAttitude();
+    if (attitude == Attitude.AGGRESSIVE) {
       sb.append(peaceMaker.getEmpireName());
       sb.append(" is known about their aggressive behaviour, so ");
       sb.append("this peace offer was a bit unexpected! ");
@@ -192,11 +194,11 @@ public final class NewsFactory {
       sb.append(peaceMaker.getEmpireName());
       sb.append("? ");
     }
-    if (peaceMaker.getAiAttitude() == Attitude.DIPLOMATIC) {
+    if (attitude == Attitude.DIPLOMATIC) {
       sb.append(peaceMaker.getEmpireName());
       sb.append(" diplomatic skills were surely effecting on this peace! ");
     }
-    if (peaceMaker.getAiAttitude() == Attitude.PEACEFUL) {
+    if (attitude == Attitude.PEACEFUL) {
       sb.append(peaceMaker.getEmpireName());
       sb.append(" is known about their peace loving. So this was expected! ");
     }
@@ -260,17 +262,18 @@ public final class NewsFactory {
     } else {
       sb.append("This meeting happened in deep space. ");
     }
-    if (offerer.getAiAttitude() == Attitude.MERCHANTICAL) {
+    Attitude attitude = offerer.getAiAttitude();
+    if (attitude == Attitude.MERCHANTICAL) {
       sb.append(offerer.getEmpireName());
       sb.append(" is known about their interest to trade, so ");
       sb.append("this trade alliance was expected! ");
     }
-    if (offerer.getAiAttitude() == Attitude.DIPLOMATIC) {
+    if (attitude == Attitude.DIPLOMATIC) {
       sb.append(offerer.getEmpireName());
       sb.append(" diplomatic skills were surely effecting on "
           + "this trade alliance! ");
     }
-    if (offerer.getAiAttitude() == Attitude.PEACEFUL) {
+    if (attitude == Attitude.PEACEFUL) {
       sb.append(offerer.getEmpireName());
       sb.append(" is known about their peace loving. So this was expected! ");
     }
@@ -334,12 +337,13 @@ public final class NewsFactory {
     } else {
       sb.append("This meeting happened in deep space. ");
     }
-    if (offerer.getAiAttitude() == Attitude.DIPLOMATIC) {
+    Attitude attitude = offerer.getAiAttitude();
+    if (attitude == Attitude.DIPLOMATIC) {
       sb.append(offerer.getEmpireName());
       sb.append(" diplomatic skills were surely effecting on "
           + "this trade alliance! ");
     }
-    if (offerer.getAiAttitude() == Attitude.PEACEFUL) {
+    if (attitude == Attitude.PEACEFUL) {
       sb.append(offerer.getEmpireName());
       sb.append(" is known about their peace loving. So this was expected! ");
     }

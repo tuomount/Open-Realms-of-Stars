@@ -2,9 +2,12 @@ package org.openRealmOfStars.player.ship;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesignConsts;
+import org.openRealmOfStars.player.tech.TechFactory;
 
 import static org.junit.Assert.*;
 
@@ -87,6 +90,23 @@ public class ShipDesignTest {
     assertEquals(0,design.getTotalMilitaryPower());
     assertEquals(1,design.getFreeSlots());
     assertEquals(9, design.getTotalColonyPower());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testColonyDesignByGenerator() {
+    PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    player.getTechList().addTech(TechFactory.createHullTech("Small freighter", 2));
+    player.getTechList().addTech(TechFactory.createHullTech("Medium freighter", 4));
+    player.getTechList().addTech(TechFactory.createHullTech("Large freighter", 6));
+    player.getTechList().addTech(TechFactory.createHullTech("Massive freighter", 8));
+    ShipDesign design = ShipGenerator.createColony(player, false);
+    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
+    assertEquals(ShipSize.MEDIUM, design.getHull().getSize());
+    assertEquals(4,design.getNumberOfComponents());
+    assertEquals(0,design.getTotalMilitaryPower());
+    assertEquals(2,design.getFreeSlots());
+    assertEquals(10, design.getTotalColonyPower());
   }
 
   @Test

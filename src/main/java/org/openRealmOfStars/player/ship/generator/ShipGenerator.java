@@ -444,14 +444,15 @@ public final class ShipGenerator {
     for (Tech tech : hullTechs) {
       ShipHull hull = ShipHullFactory.createByName(tech.getHull(),
           player.getRace());
+      if (!troop && hull.getSize() == ShipSize.LARGE
+          || hull.getSize() == ShipSize.HUGE) {
+        // Large and huge are too large for colony ships
+        continue;
+      }
       if (hull.getMaxSlot() > value
           && hull.getHullType() == ShipHullType.FREIGHTER) {
         hullTech = tech;
         value = hull.getMaxSlot();
-      }
-      if (!troop && hullTech != null
-          && hullTech.getName().equals("Medium freighter")) {
-        break;
       }
     }
     Tech[] defenseTechs = player.getTechList().getListForType(TechType.Defense);

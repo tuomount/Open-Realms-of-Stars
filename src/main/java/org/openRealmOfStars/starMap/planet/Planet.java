@@ -1319,6 +1319,11 @@ public class Planet {
                       .howManyFleetWithStartingNames("Colony #") + 1));
                   mission.setFleetName(fleet.getName());
                 }
+                if (mission.getType() == MissionType.DEPLOY_STARBASE) {
+                  fleet.setName("Space Station #" + (planetOwnerInfo.getFleets()
+                      .howManyFleetWithStartingNames("Space Station #") + 1));
+                  mission.setFleetName(fleet.getName());
+                }
               } else {
                 fleet
                     .setName(mission.getFleetName() + " #"

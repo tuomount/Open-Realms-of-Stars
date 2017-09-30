@@ -662,7 +662,7 @@ public final class PlanetHandling {
                 MissionPhase.PLANNING);
             if (mission == null
                 && ship.getHull().getHullType() == ShipHullType.STARBASE) {
-              score = 0;
+              score = -1;
             }
             if (mission != null
                 && ship.getHull().getHullType() == ShipHullType.STARBASE) {

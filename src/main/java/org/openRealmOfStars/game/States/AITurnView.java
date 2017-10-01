@@ -418,20 +418,33 @@ public class AITurnView extends BlackPanel {
         Tile tile = map.getTile(x, y);
         if ((tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
             || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2))
-            && fleetTiles[x][y] != null) {
-          PlayerInfo infoAt = game.getPlayers().getPlayerInfoByIndex(
-              fleetTiles[x][y].getPlayerIndex());
-          Fleet fleet = infoAt.getFleets().getByIndex(
-              fleetTiles[x][y].getFleetIndex());
-          if (!fleet.isStarBaseDeployed()
-              && info.getSectorVisibility(new Coordinate(x, y))
-              == PlayerInfo.VISIBLE && infoAt != info) {
+            && info.getSectorVisibility(new Coordinate(x, y))
+            > PlayerInfo.UNCHARTED) {
+          if (fleetTiles[x][y] == null) {
             Mission mission = new Mission(MissionType.DEPLOY_STARBASE,
                 MissionPhase.PLANNING, new Coordinate(x, y));
             if (info.getMissions().getDeployStarbaseMission(x, y) == null) {
               // No deploy starbase mission for this planet found, so adding it.
               info.getMissions().add(mission);
             }
+          } else {
+            // There is fleet already in the tile
+            PlayerInfo infoAt = game.getPlayers().getPlayerInfoByIndex(
+                fleetTiles[x][y].getPlayerIndex());
+            Fleet fleet = infoAt.getFleets().getByIndex(
+                fleetTiles[x][y].getFleetIndex());
+            if (!fleet.isStarBaseDeployed()
+                && info.getSectorVisibility(new Coordinate(x, y))
+                == PlayerInfo.VISIBLE && infoAt != info) {
+              Mission mission = new Mission(MissionType.DEPLOY_STARBASE,
+                  MissionPhase.PLANNING, new Coordinate(x, y));
+              if (info.getMissions().getDeployStarbaseMission(x, y) == null) {
+                // No deploy starbase mission for this planet found,
+                // so adding it.
+                info.getMissions().add(mission);
+              }
+            }
+            // TODO: If war againt infoAT then add starbase destroy mission.
           }
         }
       }

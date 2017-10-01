@@ -395,6 +395,9 @@ public boolean launchIntercept(final int distance,
       removeShipFromCombatList(ship);
       defenderEscaped = true;
     }
+    if (isCombatOver()) {
+      handleEndCombat();
+    }
   }
 
   /**

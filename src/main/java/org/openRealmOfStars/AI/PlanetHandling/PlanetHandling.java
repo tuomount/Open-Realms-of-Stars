@@ -613,10 +613,6 @@ public final class PlanetHandling {
           if (mission != null) {
             if (mission.getPhase() == MissionPhase.PLANNING) {
               score = score + ship.getTotalMilitaryPower() * 2;
-              if (ship.isStarBase()) {
-                // No starbase for defending
-                score = 0;
-              }
               if (attitude == Attitude.AGGRESSIVE
                   || attitude == Attitude.MILITARISTIC) {
                 score = score + 20;
@@ -642,10 +638,6 @@ public final class PlanetHandling {
             mission = info.getMissions().getMission(MissionType.GATHER,
                 MissionPhase.PLANNING);
             if (mission != null) {
-              if (ship.isStarBase()) {
-                // No starbase for Gathering
-                score = 0;
-              }
               score = score + ship.getTotalMilitaryPower() * 2;
               if (attitude == Attitude.AGGRESSIVE
                   || attitude == Attitude.MILITARISTIC) {
@@ -658,32 +650,6 @@ public final class PlanetHandling {
                 score = score + 30;
               }
             }
-            mission = info.getMissions().getMission(MissionType.DEPLOY_STARBASE,
-                MissionPhase.PLANNING);
-            if (mission == null
-                && ship.getHull().getHullType() == ShipHullType.STARBASE) {
-              score = -1;
-            }
-            if (mission != null
-                && ship.getHull().getHullType() == ShipHullType.STARBASE) {
-              if (attitude == Attitude.SCIENTIFIC) {
-                score = score + ship.getTotalResearchBonus() * 5;
-              } else {
-                score = score + ship.getTotalResearchBonus() * 3;
-              }
-              if (attitude == Attitude.DIPLOMATIC
-                  || attitude == Attitude.PEACEFUL) {
-                score = score + ship.getTotalCultureBonus() * 5;
-              } else {
-                score = score + ship.getTotalCultureBonus() * 3;
-              }
-              if (attitude == Attitude.MERCHANTICAL) {
-                score = score + ship.getTotalCreditBonus() * 5;
-              } else {
-                score = score + ship.getTotalCreditBonus() * 3;
-              }
-            }
-
           }
 
         }
@@ -723,6 +689,30 @@ public final class PlanetHandling {
               score = score + 20;
             } else if (attitude == Attitude.PEACEFUL) {
               score = score - 10;
+            }
+          } else {
+            score = -1;
+          }
+        }
+        if (ship.isStarBase()) {
+          Mission mission = info.getMissions().getMission(
+              MissionType.DEPLOY_STARBASE, MissionPhase.PLANNING);
+          if (mission != null) {
+            if (attitude == Attitude.SCIENTIFIC) {
+              score = score + ship.getTotalResearchBonus() * 5;
+            } else {
+              score = score + ship.getTotalResearchBonus() * 3;
+            }
+            if (attitude == Attitude.DIPLOMATIC
+                || attitude == Attitude.PEACEFUL) {
+              score = score + ship.getTotalCultureBonus() * 5;
+            } else {
+              score = score + ship.getTotalCultureBonus() * 3;
+            }
+            if (attitude == Attitude.MERCHANTICAL) {
+              score = score + ship.getTotalCreditBonus() * 5;
+            } else {
+              score = score + ship.getTotalCreditBonus() * 3;
             }
           } else {
             score = -1;

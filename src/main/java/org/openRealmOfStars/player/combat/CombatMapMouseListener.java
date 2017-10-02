@@ -125,6 +125,9 @@ public class CombatMapMouseListener extends MouseAdapter
     if (!coord.isOutOfPanel() && combat.getAnimation() == null) {
       if (componentUse != -1) {
         CombatShip ship = combat.getCurrentShip();
+        if (ship == null) {
+          return;
+        }
         ShipComponent weapon = ship.getShip().getComponent(componentUse);
         if (ship.getShip().isStarBase()
             && !ship.getShip().getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
@@ -157,6 +160,9 @@ public class CombatMapMouseListener extends MouseAdapter
           }
         }
       } else {
+        if (combat.getCurrentShip() == null) {
+          return;
+        }
         Coordinate currentShipCoordinate = new Coordinate(
             combat.getCurrentShip().getX(), combat.getCurrentShip().getY());
         Coordinate coordinate = new Coordinate(coord.getMapX(),

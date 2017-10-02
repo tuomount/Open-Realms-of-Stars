@@ -253,8 +253,9 @@ public class BattleView extends BlackPanel {
   private void handleAI() {
     if (combat.handleAI(textLogger, infoPanel)) {
       combatMapMouseListener.setComponentUse(-1);
-      infoPanel.showShip(combat.getCurrentShip().getShip());
-
+      if (combat.getCurrentShip() != null) {
+        infoPanel.showShip(combat.getCurrentShip().getShip());
+      }
     }
   }
 
@@ -267,7 +268,9 @@ public class BattleView extends BlackPanel {
       map.getFleetTiles(true);
     }
     combatMapMouseListener.setComponentUse(-1);
-    infoPanel.showShip(combat.getCurrentShip().getShip());
+    if (combat.getCurrentShip() != null) {
+      infoPanel.showShip(combat.getCurrentShip().getShip());
+    }
     this.repaint();
   }
 
@@ -304,7 +307,8 @@ public class BattleView extends BlackPanel {
         if (delayCount >= MAX_DELAY_COUNT) {
           delayCount = 0;
         }
-        if (!combat.getCurrentShip().getPlayer().isHuman() && delayCount == 0
+        if (combat.getCurrentShip() != null
+            && !combat.getCurrentShip().getPlayer().isHuman() && delayCount == 0
             && !isCombatEnded()) {
           handleAI();
         }

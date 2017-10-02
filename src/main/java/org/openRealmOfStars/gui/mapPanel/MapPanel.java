@@ -662,7 +662,8 @@ public class MapPanel extends JPanel {
           gr.setStroke(dashed);
           gr.setColor(colorDarkBlue);
         }
-        if (i == combat.getCurrentShip().getX()
+        if (combat.getCurrentShip() != null
+            && i == combat.getCurrentShip().getX()
             && j == combat.getCurrentShip().getY()) {
           gr.setStroke(full);
           gr.setColor(GuiStatics.COLOR_GREEN_TEXT);
@@ -730,7 +731,8 @@ public class MapPanel extends JPanel {
           }
         }
 
-        if (i == combat.getCursorX() && j == combat.getCursorY()) {
+        if (i == combat.getCursorX() && j == combat.getCursorY()
+            && combat.getCurrentShip() != null) {
           ShipComponent weapon = combat.getCurrentShip().getShip()
               .getComponent(combat.getComponentUse());
           if (combat.getComponentUse() != -1 && weapon != null

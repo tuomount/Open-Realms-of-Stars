@@ -577,13 +577,16 @@ public boolean launchIntercept(final int distance,
 
   /**
    * Get Current Ship
-   * @return CombatShip
+   * @return CombatShip or null if no ships available
    */
   public CombatShip getCurrentShip() {
     if (combatShipList.size() <= shipIndex) {
       shipIndex = 0;
     }
-    return combatShipList.get(shipIndex);
+    if (combatShipList.size() > 0 && shipIndex > -1) {
+      return combatShipList.get(shipIndex);
+    }
+    return null;
   }
 
   /**
@@ -603,7 +606,9 @@ public boolean launchIntercept(final int distance,
       }
     }
     CombatShip ship = getCurrentShip();
-    ship.reInitShipForRound();
+    if (ship != null) {
+      ship.reInitShipForRound();
+    }
   }
 
   /**
@@ -1013,6 +1018,9 @@ public boolean launchIntercept(final int distance,
   private boolean handleAiMilitaryShip(final Logger textLogger,
       final BattleInfoPanel infoPanel) {
     CombatShip ai = getCurrentShip();
+    if (ai == null) {
+      return true;
+    }
     PlayerInfo info = getCurrentShip().getPlayer();
     CombatShip deadliest = getMostPowerfulShip(info);
     CombatShip closest = getClosestEnemyShip(info, getCurrentShip());
@@ -1112,6 +1120,9 @@ public boolean launchIntercept(final int distance,
   private boolean handleAiNonMilitaryShip(final Logger textLogger,
       final BattleInfoPanel infoPanel) {
     CombatShip ai = getCurrentShip();
+    if (ai == null) {
+      return true;
+    }
     PlayerInfo info = getCurrentShip().getPlayer();
     CombatShip closest = getClosestEnemyShip(info, getCurrentShip());
     AStarSearch aStar = null;
@@ -1171,7 +1182,7 @@ public boolean launchIntercept(final int distance,
   public boolean handleAI(final Logger textLogger,
       final BattleInfoPanel infoPanel) {
     CombatShip ai = getCurrentShip();
-    if (ai.getShip().getTotalMilitaryPower() > 0) {
+    if (ai != null && ai.getShip().getTotalMilitaryPower() > 0) {
       if (ai.getShip().isStarBase()
           && ai.getShip().getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
         return handleAiMilitaryShip(textLogger, infoPanel);

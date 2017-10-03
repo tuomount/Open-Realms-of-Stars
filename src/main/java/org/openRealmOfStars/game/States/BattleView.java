@@ -319,11 +319,13 @@ public class BattleView extends BlackPanel {
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_END_BATTLE_ROUND)
-        && !isCombatEnded() && combat.getCurrentShip().getPlayer().isHuman()) {
+        && !isCombatEnded() && combat.getCurrentShip() != null
+        &&  combat.getCurrentShip().getPlayer().isHuman()) {
       SoundPlayer.playMenuSound();
       endRound();
     }
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_COMPONENT_USE)
+        && combat.getCurrentShip() != null
         && combat.getCurrentShip().getPlayer().isHuman()) {
       SoundPlayer.playMenuSound();
       String number = arg0.getActionCommand()

@@ -13,7 +13,7 @@ pull request back to me.
 
  * Pull request should contain single logical change. 
  * Coding styling change should be on separate pull requests.
- * Commit messages should be descriptive.
+ * Commit messages should be descriptive. If you are fixing an issue start commit line with #ISSUENUMBER.
  * Pull request should not contain merge commits from other branches.
  * Contributors retain their original copyrights. All code contributions must be under GPL2.0.
  

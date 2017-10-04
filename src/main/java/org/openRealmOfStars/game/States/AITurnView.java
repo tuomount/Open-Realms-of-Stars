@@ -467,7 +467,9 @@ public class AITurnView extends BlackPanel {
             int military = fleet.getMilitaryValue();
             int detect = info.getSectorCloakDetection(fleet.getX(),
                 fleet.getY());
-            if (detect >= fleet.getFleetCloackingValue()) {
+            byte visibility = info.getSectorVisibility(fleet.getCoordinate());
+            if (detect >= fleet.getFleetCloackingValue()
+                && visibility == PlayerInfo.VISIBLE) {
               CulturePower culture = game.getStarMap().getSectorCulture(
                   fleet.getX(), fleet.getY());
               if (culture.getHighestCulture() == game.getStarMap()

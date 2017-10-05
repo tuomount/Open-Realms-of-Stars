@@ -308,9 +308,10 @@ private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
       } else {
           distance = (int) yAxisDistance;
       }
-      if (weapon.getWeaponRange() >= distance && distance > 0) {
-          result = launchIntercept(distance,
-                  shooterCoordinate, targetCoordinate);
+      if (shooter.getShip().getWeaponRange(weapon) >= distance
+          && distance > 0) {
+        result = launchIntercept(distance,
+            shooterCoordinate, targetCoordinate);
       }
 
     }

@@ -49,7 +49,7 @@ public class ShipTest {
     design.addComponent(weapon);
     Ship ship = new Ship(design);
     
-    
+    assertEquals(1, ship.getWeaponRange(weapon));
     assertEquals(1,ship.getArmor());
     assertEquals(0,ship.getShield());
     assertEquals(2,ship.getFtlSpeed());
@@ -236,6 +236,7 @@ public class ShipTest {
     design.addComponent(armor);
     design.addComponent(weapon);
     Ship ship = new Ship(design);
+    assertEquals(0, ship.getWeaponRange(weapon));
     assertEquals(1,ship.getArmor());
     assertEquals(0,ship.getShield());
     assertEquals(2,ship.getFtlSpeed());
@@ -258,6 +259,8 @@ public class ShipTest {
     assertEquals(false, ship.isTrooperModule());
     assertEquals(100, ship.getHitChance(weapon));
     assertEquals(true, ship.isStarBase());
+    ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+    assertEquals(2, ship.getWeaponRange(weapon));
   }
 
   @Test

@@ -1101,15 +1101,58 @@ private int increaseDefenseValueWithJammer() {
   private static final int MAX_WEAPON_RANGE = 999;
 
   /**
+   * Get Weapon range for component index
+   * @param componentIndex Ship's component index
+   * @return Weapon range for component
+   */
+  private int getWeaponRange(final int componentIndex) {
+    if (componentIndex >= 0 && componentIndex < components.size()) {
+      ShipComponent comp = components.get(componentIndex);
+      if (comp.isWeapon()) {
+        int range = comp.getWeaponRange();
+        if (isStarBase()) {
+          if (getFlag(FLAG_STARBASE_DEPLOYED)) {
+            range++;
+          } else {
+            range = 0;
+          }
+        }
+      return range;
+      }
+    }
+    return 0;
+  }
+
+  /**
+   * Get Weapon range for component
+   * @param weapon Ship's weapon component
+   * @return Weapon range for component
+   */
+  public int getWeaponRange(final ShipComponent weapon) {
+    if (weapon.isWeapon()) {
+      int range = weapon.getWeaponRange();
+      if (isStarBase()) {
+        if (getFlag(FLAG_STARBASE_DEPLOYED)) {
+          range++;
+        } else {
+          range = 0;
+        }
+      }
+      return range;
+    }
+    return 0;
+  }
+
+  /**
    * Get the smallest weapon range
    * @return range
    */
   public int getMinWeaponRange() {
     int range = MAX_WEAPON_RANGE;
     for (int i = 0; i < components.size(); i++) {
-      ShipComponent comp = components.get(i);
-      if (comp.isWeapon() && comp.getWeaponRange() < range) {
-        range = comp.getWeaponRange();
+      int componentRange = getWeaponRange(i);
+      if (componentRange < range) {
+        range = componentRange;
       }
     }
     return range;
@@ -1122,9 +1165,9 @@ private int increaseDefenseValueWithJammer() {
   public int getMaxWeaponRange() {
     int range = 0;
     for (int i = 0; i < components.size(); i++) {
-      ShipComponent comp = components.get(i);
-      if (comp.isWeapon() && comp.getWeaponRange() > range) {
-        range = comp.getWeaponRange();
+      int componentRange = getWeaponRange(i);
+      if (componentRange > range) {
+        range = componentRange;
       }
     }
     return range;

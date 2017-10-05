@@ -41,6 +41,9 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.combat.Combat;
+import org.openRealmOfStars.player.diplomacy.Diplomacy;
+import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
+import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.ChangeMessage;
 import org.openRealmOfStars.player.message.ChangeMessageFleet;
@@ -61,7 +64,9 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
+import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
@@ -357,6 +362,20 @@ public class Game implements ActionListener {
         Planet planet = starMap.getPlanetByCoordinate(combatCoord.getX(),
             combatCoord.getY());
         combat.setPlanet(planet);
+        int defenderIndex = starMap.getPlayerList().getIndex(
+            combat.getPlayer2());
+        int attackerIndex = starMap.getPlayerList().getIndex(
+            combat.getPlayer1());
+        if (!info.getDiplomacy().getDiplomaticRelation(defenderIndex).equals(
+            Diplomacy.WAR)) {
+          // Moving on towards another player's fleet is war declaration
+          DiplomaticTrade trade = new DiplomaticTrade(starMap, attackerIndex,
+              defenderIndex);
+          trade.generateEqualTrade(NegotiationType.WAR);
+          StarMapUtilities.addWarDeclatingRepuation(starMap, info);
+          starMap.getNewsCorpData().addNews(NewsFactory.makeWarNews(info,
+              combat.getPlayer2(), planet, starMap));
+        }
         if (combat.isHumanPlayer()) {
           starMapView.setReadyToMove(false);
           changeGameState(GameState.COMBAT, combat);

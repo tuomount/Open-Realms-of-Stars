@@ -215,7 +215,7 @@ public class Combat {
     CombatPositionList topList = new TopPositionList();
     addCombatShipList(attackerFleet, attackerInfo, bottomList, false);
     addCombatShipList(defenderFleet, defenderInfo, topList, true);
-    if (starbaseFleet != null) {
+    if (starbaseFleet != null && starbaseFleet != this.defenderFleet) {
       CombatPositionList starbaseList = new TopPositionList();
       addCombatShipList(starbaseFleet, defenderInfo, starbaseList, true);
     }

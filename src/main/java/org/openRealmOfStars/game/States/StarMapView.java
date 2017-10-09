@@ -275,14 +275,14 @@ public class StarMapView extends BlackPanel {
     FleetTileInfo[][] tiles = map.getFleetTiles();
     PlayerInfo owner = players.getPlayerInfoByIndex(
         tiles[fleet.getX()][fleet.getY()].getPlayerIndex());
-    infoPanel.showFleet(fleet, owner);
+    infoPanel.showFleet(fleet, owner, map.isDebug());
   }
 
   /**
    * Update panels on StarMapView
    */
   public void updatePanels() {
-    infoPanel.updatePanel();
+    infoPanel.updatePanel(map.isDebug());
   }
 
   /**
@@ -350,7 +350,7 @@ public class StarMapView extends BlackPanel {
       // Make fleet to defend
       fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
           fleet.getY(), Route.ROUTE_DEFEND));
-      infoPanel.updatePanel();
+      infoPanel.updatePanel(map.isDebug());
     }
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_FIX_FLEET)
         && getStarMapMouseListener().getLastClickedFleet() != null
@@ -361,7 +361,7 @@ public class StarMapView extends BlackPanel {
       // Make fleet to fix itself
       fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
           fleet.getY(), Route.ROUTE_FIX));
-      infoPanel.updatePanel();
+      infoPanel.updatePanel(map.isDebug());
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_ROUTE_FLEET)

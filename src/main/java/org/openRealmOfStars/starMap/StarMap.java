@@ -164,6 +164,11 @@ public class StarMap {
   private NewsCorpData newsCorpData;
 
   /**
+   * Special debug mode on
+   */
+  private boolean debug;
+
+  /**
    * Magic string to save game files
    */
   public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.5";
@@ -179,6 +184,7 @@ public class StarMap {
    * @param players Players
    */
   public StarMap(final GalaxyConfig config, final PlayerList players) {
+    setDebug(false);
     maxX = config.getSizeX();
     maxY = config.getSizeY();
     this.players = players;
@@ -426,6 +432,7 @@ public class StarMap {
    * @throws IOException if there is any problem with DataInputStream
    */
   public StarMap(final DataInputStream dis) throws IOException {
+    setDebug(false);
     String str = IOUtilities.readString(dis);
     if (str.equals(MAGIC_STRING)) {
       turn = dis.readInt();
@@ -1759,8 +1766,10 @@ public class StarMap {
     if (players != null) {
       if (players.getCurrentPlayer() + 1 == players.getCurrentMaxPlayers()) {
         players.setCurrentPlayer(0);
+        setDebug(false);
       } else {
         players.setCurrentPlayer(players.getCurrentPlayer() + 1);
+        setDebug(true);
       }
     }
   }
@@ -1939,5 +1948,21 @@ public class StarMap {
       }
     }
     return false;
+  }
+
+  /**
+   * Check if in debug mode
+   * @return the debug
+   */
+  public boolean isDebug() {
+    return debug;
+  }
+
+  /**
+   * Set debug mode
+   * @param debug the debug to set
+   */
+  public void setDebug(final boolean debug) {
+    this.debug = debug;
   }
 }

@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.Ship;
@@ -347,6 +348,16 @@ public class Fleet {
    * @return information as a String
    */
   public String getInfoAsText(final PlayerInfo owner) {
+    return getInfoAsText(owner, false);
+  }
+
+  /**
+   * Get Fleet information as a text
+   * @param owner PlayerInfo who owns the fleet
+   * @param debug Show fleet's debug information
+   * @return information as a String
+   */
+  public String getInfoAsText(final PlayerInfo owner, final boolean debug) {
     StringBuilder sb = new StringBuilder();
     sb.append(name);
     sb.append("\n");
@@ -375,6 +386,13 @@ public class Fleet {
         sb.append("\nFixing");
       } else {
         sb.append("\nEnroute");
+      }
+    }
+    if (owner != null && !owner.isHuman() && debug) {
+      Mission mission = owner.getMissions().getMissionForFleet(name);
+      if (mission != null) {
+        sb.append("\n");
+        sb.append(mission.toString());
       }
     }
     return sb.toString();

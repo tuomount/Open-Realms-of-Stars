@@ -228,7 +228,7 @@ public class StarMapMouseListener extends MouseAdapter
             PlayerInfo owner = starMap.getPlayerByIndex(
                 tiles[fleet.getX()][fleet.getY()].getPlayerIndex());
             setLastClickedFleet(fleet);
-            mapInfoPanel.showFleet(fleet, owner);
+            mapInfoPanel.showFleet(fleet, owner, starMap.isDebug());
           }
         } else if (e.getClickCount() == 1
             && e.getButton() == MouseEvent.BUTTON3) {
@@ -256,7 +256,7 @@ public class StarMapMouseListener extends MouseAdapter
                 tiles[fleet.getX()][fleet.getY()].getPlayerIndex());
             if (detection >= fleet.getFleetCloackingValue()
                   || owner == starMap.getCurrentPlayerInfo()) {
-              mapInfoPanel.showFleet(fleet, owner);
+              mapInfoPanel.showFleet(fleet, owner, starMap.isDebug());
               setLastClickedFleet(fleet);
               setLastClickedPlanet(null);
             } else {
@@ -280,7 +280,7 @@ public class StarMapMouseListener extends MouseAdapter
                 tiles[fleet.getX()][fleet.getY()].getPlayerIndex());
             if (detection >= fleet.getFleetCloackingValue()
                 || owner == starMap.getCurrentPlayerInfo()) {
-              mapInfoPanel.showFleet(fleet, owner);
+              mapInfoPanel.showFleet(fleet, owner, starMap.isDebug());
               setLastClickedFleet(fleet);
             } else {
               if (!tile.getDescription().isEmpty()) {

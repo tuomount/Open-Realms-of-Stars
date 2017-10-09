@@ -198,7 +198,7 @@ public class MapInfoPanel extends InfoPanel {
     this.defendBtn.setEnabled(false);
     this.fixFleetBtn.setEnabled(false);
     this.routeBtn.setEnabled(false);
-    updatePanel();
+    updatePanel(false);
   }
 
   /**
@@ -217,15 +217,17 @@ public class MapInfoPanel extends InfoPanel {
     this.defendBtn.setEnabled(false);
     this.fixFleetBtn.setEnabled(false);
     this.routeBtn.setEnabled(false);
-    updatePanel();
+    updatePanel(false);
   }
 
   /**
    * Show fleet on info panel
    * @param fleetToShow The fleet to show
    * @param owner The fleet owner
+   * @param debug Show debug information
    */
-  public void showFleet(final Fleet fleetToShow, final PlayerInfo owner) {
+  public void showFleet(final Fleet fleetToShow, final PlayerInfo owner,
+      final boolean debug) {
     this.planet = null;
     this.fleet = fleetToShow;
     this.fleetOwner = owner;
@@ -235,7 +237,7 @@ public class MapInfoPanel extends InfoPanel {
     this.defendBtn.setEnabled(true);
     this.fixFleetBtn.setEnabled(true);
     this.routeBtn.setEnabled(true);
-    updatePanel();
+    updatePanel(debug);
   }
 
   /**
@@ -257,13 +259,14 @@ public class MapInfoPanel extends InfoPanel {
     this.defendBtn.setEnabled(false);
     this.fixFleetBtn.setEnabled(false);
     this.routeBtn.setEnabled(false);
-    updatePanel();
+    updatePanel(false);
   }
 
   /**
    * Update panels according set data
+   * @param debug Show debug information on true
    */
-  public void updatePanel() {
+  public void updatePanel(final boolean debug) {
     if (planet != null) {
       BufferedImage img = new BufferedImage(Tile.MAX_WIDTH * 2,
           Tile.MAX_HEIGHT * 2, BufferedImage.TYPE_4BYTE_ABGR);
@@ -317,7 +320,7 @@ public class MapInfoPanel extends InfoPanel {
         imageLabel.setImage(img);
       }
       setTitle(fleet.getName());
-      textArea.setText(fleet.getInfoAsText(fleetOwner));
+      textArea.setText(fleet.getInfoAsText(fleetOwner, debug));
       this.repaint();
     } else if (tile != null) {
       BufferedImage img = new BufferedImage(ShipImage.MAX_WIDTH,

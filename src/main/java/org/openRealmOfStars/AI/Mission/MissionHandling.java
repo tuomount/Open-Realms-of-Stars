@@ -11,6 +11,7 @@ import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
@@ -698,11 +699,15 @@ public final class MissionHandling {
       fleet.setMovesLeft(0);
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
       if (infoAtTarget != null) {
+        int index = map.getPlayerList().getIndex(infoAtTarget);
+        boolean nothingToTrade = info.getDiplomacy().getDiplomacyList(index)
+            .isBonusType(DiplomacyBonusType.NOTHING_TO_TRADE);
         if (infoAtTarget.isHuman()) {
-          SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
-          game.changeGameState(GameState.DIPLOMACY_VIEW, info);
+          if (!nothingToTrade) {
+            SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
+            game.changeGameState(GameState.DIPLOMACY_VIEW, info);
+          }
         } else {
-          int index = map.getPlayerList().getIndex(infoAtTarget);
           handleDiplomacyBetweenAis(game, info, index, null);
         }
       }
@@ -738,14 +743,16 @@ public final class MissionHandling {
       fleet.setMovesLeft(0);
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
       if (infoAtTarget != null) {
+        int index = map.getPlayerList().getIndex(infoAtTarget);
+        boolean nothingToTrade = info.getDiplomacy().getDiplomacyList(index)
+            .isBonusType(DiplomacyBonusType.NOTHING_TO_TRADE);
         if (infoAtTarget.isHuman()) {
-          if (fleet.getRoute() == null) {
+          if (fleet.getRoute() == null && !nothingToTrade) {
             // No diplomacy with players if FTL travelling
             SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
             game.changeGameState(GameState.DIPLOMACY_VIEW, info);
           }
         } else {
-          int index = map.getPlayerList().getIndex(infoAtTarget);
           handleDiplomacyBetweenAis(game, info, index, null);
         }
       }

@@ -76,6 +76,10 @@ public class DiplomacyViewTest {
         .getNumberOfMeetings());
     assertEquals(aiMeetings, ai.getDiplomacy().getDiplomacyList(humanIndex)
         .getNumberOfMeetings());
+    assertEquals(false, diplomacyView.didTradeHappen());
+    diplomacyView.addNothingToTrade();
+    assertEquals(true, ai.getDiplomacy().getDiplomacyList(0).isBonusType(
+        DiplomacyBonusType.NOTHING_TO_TRADE));
   }
 
   @Test

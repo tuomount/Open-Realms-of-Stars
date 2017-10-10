@@ -542,9 +542,14 @@ public class AITurnView extends BlackPanel {
               addAttackMission(planet, info);
             } else {
               if (owner.isHuman()) {
-                // For human start diplomacy view
-                SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
-                game.changeGameState(GameState.DIPLOMACY_VIEW, info);
+                boolean nothingToTrade = info.getDiplomacy()
+                    .getDiplomacyList(ownerIndex).isBonusType(
+                        DiplomacyBonusType.NOTHING_TO_TRADE);
+                if (!nothingToTrade) {
+                  // For human start diplomacy view
+                  SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
+                  game.changeGameState(GameState.DIPLOMACY_VIEW, info);
+                }
               } else {
                 MissionHandling.handleDiplomacyBetweenAis(game, info,
                     ownerIndex, null);

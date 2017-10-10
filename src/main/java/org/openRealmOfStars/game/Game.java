@@ -105,7 +105,7 @@ public class Game implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.2.4Alpha";
+  public static final String GAME_VERSION = "0.2.5Alpha";
 
   /**
    * Animation timer used for animation
@@ -1503,6 +1503,11 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
         diplomacyView.updateMeetingNumbers();
+        if (!diplomacyView.didTradeHappen()) {
+          // Human and AI player had nothing to trade, so
+          // adding nothing to trade bonus
+          diplomacyView.addNothingToTrade();
+        }
         if (previousState == GameState.AITURN) {
           changeGameState(previousState);
           return;

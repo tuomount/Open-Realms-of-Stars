@@ -198,6 +198,11 @@ public class DiplomacyView extends BlackPanel {
    * Meeting place for news generator
    */
   private Object meetingPlace;
+
+  /**
+   * Trade actually happened
+   */
+  private boolean tradeHappened;
   /**
    * Diplomacy View constructor
    * @param info1 Human player PlayerInfo
@@ -218,6 +223,7 @@ public class DiplomacyView extends BlackPanel {
     this.setLayout(new BorderLayout());
     human = info1;
     borderCrossedFleet = fleet;
+    tradeHappened = false;
     ai = info2;
     starMap = map;
     humanCredits = 0;
@@ -792,6 +798,7 @@ public class DiplomacyView extends BlackPanel {
               NewsFactory.makePeaceNews(ai, human, meetingPlace));
         }
         trade.doTrades();
+        tradeHappened = true;
         updatePanel(SpeechType.OFFER_ACCEPTED);
         resetChoices();
       }
@@ -830,6 +837,7 @@ public class DiplomacyView extends BlackPanel {
         if (value < warChance) {
           trade.generateEqualTrade(NegotiationType.WAR);
           trade.doTrades();
+          tradeHappened = true;
           updatePanel(SpeechType.MAKE_WAR);
           resetChoices();
           StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
@@ -859,6 +867,7 @@ public class DiplomacyView extends BlackPanel {
         trade.setSecondOffer(list1);
         if (trade.isOfferGoodForBoth()) {
           trade.doTrades();
+          tradeHappened = true;
           updatePanel(SpeechType.AGREE);
           resetChoices();
           starMap.getNewsCorpData().addNews(
@@ -872,11 +881,13 @@ public class DiplomacyView extends BlackPanel {
         trade.generateRecallFleetOffer(borderCrossedFleet);
         if (trade.isOfferGoodForBoth()) {
           trade.doTrades();
+          tradeHappened = true;
           updatePanel(SpeechType.MOVE_FLEET);
           resetChoices();
         } else {
           trade.generateEqualTrade(NegotiationType.WAR);
           trade.doTrades();
+          tradeHappened = true;
           updatePanel(SpeechType.DECLINE_WAR);
           resetChoices();
           StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
@@ -898,6 +909,7 @@ public class DiplomacyView extends BlackPanel {
         trade.setSecondOffer(list1);
         if (trade.isOfferGoodForBoth()) {
           trade.doTrades();
+          tradeHappened = true;
           updatePanel(SpeechType.AGREE);
           resetChoices();
           starMap.getNewsCorpData().addNews(
@@ -919,6 +931,7 @@ public class DiplomacyView extends BlackPanel {
             DiplomacyBonusType.MADE_DEMAND, ai.getRace());
         if (trade.isOfferGoodForBoth()) {
           trade.doTrades();
+          tradeHappened = true;
           updatePanel(SpeechType.AGREE);
           resetChoices();
         } else {
@@ -930,6 +943,7 @@ public class DiplomacyView extends BlackPanel {
           if (value < warChance) {
             trade.generateEqualTrade(NegotiationType.WAR);
             trade.doTrades();
+            tradeHappened = true;
             updatePanel(SpeechType.DECLINE_WAR);
             resetChoices();
             StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
@@ -953,6 +967,7 @@ public class DiplomacyView extends BlackPanel {
         trade.setSecondOffer(list1);
         if (trade.isOfferGoodForBoth()) {
           trade.doTrades();
+          tradeHappened = true;
           updatePanel(SpeechType.AGREE);
           resetChoices();
         } else {
@@ -986,6 +1001,7 @@ public class DiplomacyView extends BlackPanel {
         trade.setSecondOffer(list1);
         if (trade.isOfferGoodForBoth()) {
           trade.doTrades();
+          tradeHappened = true;
           updatePanel(SpeechType.AGREE);
           resetChoices();
           starMap.getNewsCorpData().addNews(
@@ -1019,5 +1035,25 @@ public class DiplomacyView extends BlackPanel {
    */
   public Object getMeetingPlace() {
     return meetingPlace;
+  }
+
+  /**
+   * Did trade happen
+   * @return True if trade happened between AI and Human
+   */
+  public boolean didTradeHappen() {
+    return tradeHappened;
+  }
+
+  /**
+   * Add nothing to trade to AI's diplomacy list
+   */
+  public void addNothingToTrade() {
+    int humanIndex = starMap.getPlayerList().getIndex(human);
+    if (ai.getDiplomacy() != null
+        && ai.getDiplomacy().getDiplomacyList(humanIndex) != null) {
+      DiplomacyBonusList list = ai.getDiplomacy().getDiplomacyList(humanIndex);
+      list.addBonus(DiplomacyBonusType.NOTHING_TO_TRADE, ai.getRace());
+    }
   }
 }

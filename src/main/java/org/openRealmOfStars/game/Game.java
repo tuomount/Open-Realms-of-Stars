@@ -1503,6 +1503,11 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
         diplomacyView.updateMeetingNumbers();
+        if (!diplomacyView.didTradeHappen()) {
+          // Human and AI player had nothing to trade, so
+          // adding nothing to trade bonus
+          diplomacyView.addNothingToTrade();
+        }
         if (previousState == GameState.AITURN) {
           changeGameState(previousState);
           return;

@@ -74,12 +74,17 @@ public enum DiplomacyBonusType {
   /**
    * Another player has nuked a planet
    */
-  NUKED;
+  NUKED,
+  /**
+   * Last time player did not have nothing to trade so giving it
+   * a cool down time
+   */
+  NOTHING_TO_TRADE;
 
   /**
    * Number of Bonus type. This should be one larger than actual bonus types.
    */
-  public static final int MAX_BONUS_TYPE = 13;
+  public static final int MAX_BONUS_TYPE = 14;
 
   /**
    * Get ShipHullType index
@@ -100,6 +105,7 @@ public enum DiplomacyBonusType {
       case LONG_PEACE: return 10;
       case INSULT: return 11;
       case NUKED: return 12;
+      case NOTHING_TO_TRADE: return 13;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -138,6 +144,8 @@ public enum DiplomacyBonusType {
       return DiplomacyBonusType.INSULT;
     case 12:
       return DiplomacyBonusType.NUKED;
+    case 13:
+      return DiplomacyBonusType.NOTHING_TO_TRADE;
     default:
       throw new IllegalArgumentException("Unexpected diplomacy bonus type!");
     }

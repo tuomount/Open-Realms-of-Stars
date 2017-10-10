@@ -194,6 +194,12 @@ public class DiplomacyBonus {
        }
        break;
      }
+     case NOTHING_TO_TRADE: {
+       onlyOne = true;
+       bonusValue = 0;
+       bonusLasting = 10;
+       break;
+     }
      default: {
        throw new IllegalArgumentException("Unknown bonus type!!");
      }

@@ -86,10 +86,14 @@ public class PlanetBombingViewTest {
     attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
         "Destroyer Mk1", 1));
     Ship ship = null;
+    int loop = 0;
     do {
       ShipDesign design = ShipGenerator.createBattleShip(attackerPlayerInfo,
-          ShipSize.MEDIUM);
+          ShipSize.MEDIUM, true);
       ship = new Ship(design);
+      loop++;
+      // There should be a bomber on first try
+      assertEquals(1, loop);
     } while (!ship.hasBombs());
     Fleet fleet = new Fleet(ship, 5, 5);
     int attackerPlayerIndex = 0;
@@ -124,7 +128,7 @@ public class PlanetBombingViewTest {
     Ship ship = null;
     do {
       ShipDesign design = ShipGenerator.createBattleShip(attackerPlayerInfo,
-          ShipSize.MEDIUM);
+          ShipSize.MEDIUM, true);
       ship = new Ship(design);
     } while (!ship.hasBombs());
     Fleet fleet = new Fleet(ship, 5, 5);
@@ -162,7 +166,7 @@ public class PlanetBombingViewTest {
     Ship ship = null;
     do {
       ShipDesign design = ShipGenerator.createBattleShip(attackerPlayerInfo,
-          ShipSize.MEDIUM);
+          ShipSize.MEDIUM, true);
       ship = new Ship(design);
     } while (!ship.hasBombs());
     Fleet fleet = new Fleet(ship, 5, 5);

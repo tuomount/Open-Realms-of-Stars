@@ -75,10 +75,13 @@ public final class Research {
    * @param info PlayerInfo
    */
   public static void handleShipDesigns(final PlayerInfo info) {
-    handleBattleShipDesign(info, ShipSize.SMALL);
-    handleBattleShipDesign(info, ShipSize.MEDIUM);
-    handleBattleShipDesign(info, ShipSize.LARGE);
-    handleBattleShipDesign(info, ShipSize.HUGE);
+    handleBattleShipDesign(info, ShipSize.SMALL, false);
+    handleBattleShipDesign(info, ShipSize.MEDIUM, false);
+    handleBattleShipDesign(info, ShipSize.LARGE, false);
+    handleBattleShipDesign(info, ShipSize.HUGE, false);
+    handleBattleShipDesign(info, ShipSize.MEDIUM, true);
+    handleBattleShipDesign(info, ShipSize.LARGE, true);
+    handleBattleShipDesign(info, ShipSize.HUGE, true);
     handleStarbaseDesign(info, ShipSize.SMALL);
     handleStarbaseDesign(info, ShipSize.MEDIUM);
     handleStarbaseDesign(info, ShipSize.LARGE);
@@ -91,10 +94,11 @@ public final class Research {
    * Handle Battle ship design for AI for certain size
    * @param info Player
    * @param size ShipSize to handle
+   * @param bomber Force bomber ship design
    */
   private static void handleBattleShipDesign(final PlayerInfo info,
-      final ShipSize size) {
-    ShipDesign design = ShipGenerator.createBattleShip(info, size, false);
+      final ShipSize size, final boolean bomber) {
+    ShipDesign design = ShipGenerator.createBattleShip(info, size, bomber);
     if (design != null) {
       ShipStat[] stats = info.getShipStatList();
       boolean notFound = true;

@@ -252,6 +252,9 @@ public final class ShipGenerator {
         } else if (bombTech != null) {
           result.addComponent(ShipComponentFactory.createByName(
               bombTech.getComponent()));
+        } else {
+          // Bomber was requested but could not deliver one
+          return null;
         }
       }
 

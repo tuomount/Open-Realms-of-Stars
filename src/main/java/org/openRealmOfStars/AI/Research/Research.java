@@ -94,7 +94,7 @@ public final class Research {
    */
   private static void handleBattleShipDesign(final PlayerInfo info,
       final ShipSize size) {
-    ShipDesign design = ShipGenerator.createBattleShip(info, size);
+    ShipDesign design = ShipGenerator.createBattleShip(info, size, false);
     if (design != null) {
       ShipStat[] stats = info.getShipStatList();
       boolean notFound = true;

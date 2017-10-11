@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.mockito.Mockito;
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -52,8 +51,10 @@ public class CombatTest {
   public void testNoCombatShips() {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
-    ShipDesign design1 = ShipGenerator.createBattleShip(info1, ShipSize.SMALL);
-    ShipDesign design2 = ShipGenerator.createBattleShip(info2, ShipSize.SMALL);
+    ShipDesign design1 = ShipGenerator.createBattleShip(
+        info1, ShipSize.SMALL, false);
+    ShipDesign design2 = ShipGenerator.createBattleShip(
+        info2, ShipSize.SMALL, false);
     Ship scout1 = new Ship(design1);
     Ship scout2 = new Ship(design2);
     Fleet fleet1 = new Fleet(scout1, 5, 5);
@@ -73,8 +74,10 @@ public class CombatTest {
   public void testFirstPlayerWin() {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
-    ShipDesign design1 = ShipGenerator.createBattleShip(info1, ShipSize.SMALL);
-    ShipDesign design2 = ShipGenerator.createBattleShip(info2, ShipSize.SMALL);
+    ShipDesign design1 = ShipGenerator.createBattleShip(
+        info1, ShipSize.SMALL, false);
+    ShipDesign design2 = ShipGenerator.createBattleShip(
+        info2, ShipSize.SMALL, false);
     Ship scout1 = new Ship(design1);
     Ship scout2 = new Ship(design2);
     Fleet fleet1 = new Fleet(scout1, 5, 5);
@@ -115,8 +118,10 @@ public class CombatTest {
   public void testWormHole() {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
-    ShipDesign design1 = ShipGenerator.createBattleShip(info1, ShipSize.SMALL);
-    ShipDesign design2 = ShipGenerator.createBattleShip(info2, ShipSize.SMALL);
+    ShipDesign design1 = ShipGenerator.createBattleShip(
+        info1, ShipSize.SMALL, false);
+    ShipDesign design2 = ShipGenerator.createBattleShip(
+        info2, ShipSize.SMALL, false);
     Ship scout1 = new Ship(design1);
     Ship scout2 = new Ship(design2);
     Fleet fleet1 = new Fleet(scout1, 5, 5);
@@ -134,8 +139,10 @@ public class CombatTest {
   public void testWormHole2() {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
-    ShipDesign design1 = ShipGenerator.createBattleShip(info1, ShipSize.SMALL);
-    ShipDesign design2 = ShipGenerator.createBattleShip(info2, ShipSize.SMALL);
+    ShipDesign design1 = ShipGenerator.createBattleShip(
+        info1, ShipSize.SMALL, false);
+    ShipDesign design2 = ShipGenerator.createBattleShip(
+        info2, ShipSize.SMALL, false);
     Ship scout1 = new Ship(design1);
     Ship scout2 = new Ship(design2);
     Fleet fleet1 = new Fleet(scout1, 5, 5);
@@ -157,7 +164,8 @@ public class CombatTest {
   public void testRealCombat() {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
-    ShipDesign design1 = ShipGenerator.createBattleShip(info1, ShipSize.SMALL);
+    ShipDesign design1 = ShipGenerator.createBattleShip(
+        info1, ShipSize.SMALL, false);
     ShipDesign design2 = ShipGenerator.createColony(info2, false);
     Ship scout1 = new Ship(design1);
     Ship colony = new Ship(design2);
@@ -175,7 +183,8 @@ public class CombatTest {
   public void testRealCombat2() {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
-    ShipDesign design1 = ShipGenerator.createBattleShip(info1, ShipSize.SMALL);
+    ShipDesign design1 = ShipGenerator.createBattleShip(
+        info1, ShipSize.SMALL, false);
     ShipDesign design2 = ShipGenerator.createColony(info2, false);
     Ship scout1 = new Ship(design1);
     Ship colony = new Ship(design2);
@@ -239,7 +248,7 @@ public class CombatTest {
   public void testRealCombatOnPlanet() {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
-    ShipDesign design1 = ShipGenerator.createBattleShip(info1, ShipSize.SMALL);
+    ShipDesign design1 = ShipGenerator.createBattleShip(info1, ShipSize.SMALL, false);
     ShipDesign design2 = ShipGenerator.createColony(info2, false);
     Ship scout1 = new Ship(design1);
     Ship colony = new Ship(design2);
@@ -276,8 +285,10 @@ public class CombatTest {
   public void testSecondPlayerWin() {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
-    ShipDesign design1 = ShipGenerator.createBattleShip(info1, ShipSize.SMALL);
-    ShipDesign design2 = ShipGenerator.createBattleShip(info2, ShipSize.SMALL);
+    ShipDesign design1 = ShipGenerator.createBattleShip(
+        info1, ShipSize.SMALL, false);
+    ShipDesign design2 = ShipGenerator.createBattleShip(
+        info2, ShipSize.SMALL, false);
     Ship scout1 = new Ship(design1);
     Ship scout2 = new Ship(design2);
     Fleet fleet1 = new Fleet(scout1, 5, 5);
@@ -322,8 +333,10 @@ public class CombatTest {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     info1.setHuman(true);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
-    ShipDesign design1 = ShipGenerator.createBattleShip(info1, ShipSize.SMALL);
-    ShipDesign design2 = ShipGenerator.createBattleShip(info2, ShipSize.SMALL);
+    ShipDesign design1 = ShipGenerator.createBattleShip(
+        info1, ShipSize.SMALL, false);
+    ShipDesign design2 = ShipGenerator.createBattleShip(
+        info2, ShipSize.SMALL, false);
     Ship scout1 = new Ship(design1);
     Ship scout2 = new Ship(design2);
     Fleet fleet1 = new Fleet(scout1, 5, 5);

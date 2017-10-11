@@ -201,10 +201,11 @@ public final class ShipGenerator {
    * Design new battle ship for certain size
    * @param player Player doing the design
    * @param size Ship Size
+   * @param bomber Create bomber battle ship
    * @return ShipDesign if doable. Null if not doable for that size.
    */
   public static ShipDesign createBattleShip(final PlayerInfo player,
-      final ShipSize size) {
+      final ShipSize size, final boolean bomber) {
     ShipDesign result = null;
     Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
     ShipHull hull = null;
@@ -235,6 +236,24 @@ public final class ShipGenerator {
       ShipComponent weapon = ShipComponentFactory
           .createByName(player.getTechList().getBestWeapon().getComponent());
       result.addComponent(weapon);
+      if (result.getFreeSlots() > 1 && bomber) {
+        Tech[] combatTechs = player.getTechList()
+            .getListForType(TechType.Combat);
+        Tech bombTech = TechList.getBestTech(combatTechs, "Orbital bombs");
+        Tech  smartTech = TechList.getBestTech(combatTechs,
+            "Orbital smart bombs");
+        Tech nukeTech = TechList.getBestTech(combatTechs, "Orbital nuke");
+        if (smartTech != null) {
+          result.addComponent(ShipComponentFactory.createByName(
+                  smartTech.getComponent()));
+        } else if (nukeTech != null) {
+          result.addComponent(ShipComponentFactory.createByName(
+              nukeTech.getComponent()));
+        } else if (bombTech != null) {
+          result.addComponent(ShipComponentFactory.createByName(
+              bombTech.getComponent()));
+        }
+      }
 
       Tech[] defenseTechs = player.getTechList()
           .getListForType(TechType.Defense);
@@ -514,6 +533,24 @@ public final class ShipGenerator {
           if (shieldComp.getEnergyRequirement() <= result.getFreeEnergy()) {
             result.addComponent(shieldComp);
           }
+        }
+      }
+      if (result.getFreeSlots() > 2) {
+        Tech[] combatTechs = player.getTechList()
+            .getListForType(TechType.Combat);
+        Tech bombTech = TechList.getBestTech(combatTechs, "Orbital bombs");
+        Tech  smartTech = TechList.getBestTech(combatTechs,
+            "Orbital smart bombs");
+        Tech nukeTech = TechList.getBestTech(combatTechs, "Orbital nuke");
+        if (smartTech != null) {
+          result.addComponent(ShipComponentFactory.createByName(
+                  smartTech.getComponent()));
+        } else if (nukeTech != null) {
+          result.addComponent(ShipComponentFactory.createByName(
+              nukeTech.getComponent()));
+        } else if (bombTech != null) {
+          result.addComponent(ShipComponentFactory.createByName(
+              bombTech.getComponent()));
         }
       }
     }

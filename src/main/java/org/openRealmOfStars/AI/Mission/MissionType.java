@@ -53,7 +53,15 @@ public enum MissionType {
   /**
    * Build and deploy starbase
    */
-  DEPLOY_STARBASE;
+  DEPLOY_STARBASE,
+  /**
+   * Destroy enemy starbase
+   */
+  DESTROY_STARBASE,
+  /**
+   * Fleet contains trade ship which travel between trade alliance planets
+   */
+  TRADE_FLEET;
 
   /**
    * Get Mission type with index
@@ -75,6 +83,10 @@ public enum MissionType {
       return 5;
     case DEPLOY_STARBASE:
       return 6;
+    case DESTROY_STARBASE:
+      return 7;
+    case TRADE_FLEET:
+      return 8;
     default:
       return 0;
     }
@@ -97,6 +109,10 @@ public enum MissionType {
       return "Gather";
     case DEPLOY_STARBASE:
       return "Deploy starbase";
+    case DESTROY_STARBASE:
+      return "Destroy starbase";
+    case TRADE_FLEET:
+      return "Trade fleet";
     default:
       return "Unknown";
     }

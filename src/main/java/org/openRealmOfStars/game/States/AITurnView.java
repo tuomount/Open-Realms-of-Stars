@@ -206,6 +206,12 @@ public class AITurnView extends BlackPanel {
       case DEPLOY_STARBASE:
         MissionHandling.handleDeployStarbase(mission, fleet, info, game);
         break;
+      case DESTROY_STARBASE:
+        // FIXME implement starbase destroying
+        break;
+      case TRADE_FLEET:
+        // FIXME implement trade fleet
+        break;
       default:
         throw new IllegalArgumentException("Unknown mission type for AI!");
       }

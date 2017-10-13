@@ -323,5 +323,5 @@ public class ShipTest {
     assertEquals(1, ship.getTotalResearchBonus());
   }
 
-  
+
 }

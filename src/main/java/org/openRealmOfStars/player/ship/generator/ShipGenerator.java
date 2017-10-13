@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentFactory;
 import org.openRealmOfStars.player.ship.ShipComponentType;
@@ -556,6 +557,88 @@ public final class ShipGenerator {
               bombTech.getComponent()));
         }
       }
+    }
+    return result;
+  }
+
+  /**
+   * Create freighter ship with best possible technology. This is used
+   * for  AI every time they design new freighter ship.
+   * @param player whom is designing the new ship
+   * @return ShipDesign or null if fails
+   */
+  public static ShipDesign createFreighter(final PlayerInfo player) {
+    ShipDesign result = null;
+    Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
+    int value = -1;
+    Tech hullTech = null;
+    for (Tech tech : hullTechs) {
+      ShipHull hull = ShipHullFactory.createByName(tech.getHull(),
+          player.getRace());
+      if (hull.getMaxSlot() > value
+          && hull.getHullType() == ShipHullType.FREIGHTER) {
+        hullTech = tech;
+        value = hull.getMaxSlot();
+      }
+    }
+    Tech[] defenseTechs = player.getTechList().getListForType(TechType.Defense);
+    if (hullTech != null) {
+      ShipHull hull = ShipHullFactory.createByName(hullTech.getHull(),
+          player.getRace());
+      result = new ShipDesign(hull);
+      result.setName("Freighter Mk"
+            + (player.getShipStatStartsWith("Freighter Mk") + 1));
+      ShipComponent engine = ShipComponentFactory
+          .createByName(player.getTechList().getBestEngine().getComponent());
+      result.addComponent(engine);
+      ShipComponent power = ShipComponentFactory.createByName(
+          player.getTechList().getBestEnergySource().getComponent());
+      result.addComponent(power);
+      Attitude attitude = player.getAiAttitude();
+      if (attitude == Attitude.AGGRESSIVE
+          || attitude == Attitude.MILITARISTIC) {
+        if (result.getFreeSlots() > 3) {
+          Tech armor = TechList.getBestTech(defenseTechs, "Armor plating");
+          ShipComponent armorComp = null;
+          if (armor != null) {
+            armorComp = ShipComponentFactory.createByName(armor.getComponent());
+            result.addComponent(armorComp);
+          }
+        }
+        if (result.getFreeSlots() > 3) {
+          Tech shield = TechList.getBestTech(defenseTechs, "Shield");
+          ShipComponent shieldComp = null;
+          if (shield != null) {
+            shieldComp = ShipComponentFactory.createByName(
+                shield.getComponent());
+            if (shieldComp.getEnergyRequirement() <= result.getFreeEnergy()) {
+              result.addComponent(shieldComp);
+            }
+          }
+        }
+      } else if (attitude == Attitude.SCIENTIFIC) {
+        Tech[] electricsTechs = player.getTechList()
+            .getListForType(TechType.Electrics);
+        Tech elecTech = TechList.getBestTech(electricsTechs, "Scanner");
+        if (elecTech != null) {
+          ShipComponent scanner = ShipComponentFactory.createByName(
+              elecTech.getComponent());
+          if (scanner.getEnergyRequirement() <= result.getFreeEnergy()) {
+            result.addComponent(scanner);
+          }
+        }
+      } else if (attitude == Attitude.BACKSTABBING) {
+        Tech[] electricsTechs = player.getTechList()
+            .getListForType(TechType.Electrics);
+        Tech elecTech = TechList.getBestTech(electricsTechs, "Cloaking device");
+        if (elecTech != null) {
+          ShipComponent cloack = ShipComponentFactory.createByName(
+              elecTech.getComponent());
+          if (cloack.getEnergyRequirement() <= result.getFreeEnergy()) {
+            result.addComponent(cloack);
+          }
+        }
+      } // Every one else is keeping freighter as empty as possible
     }
     return result;
   }

@@ -161,4 +161,29 @@ public class ShipDesignTest {
     assertEquals(true,design.getFlaws().startsWith(ShipDesignConsts.MANY_COMPUTERS));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testFreighter() {
+    for (int i = 0; i < 10; i++) {
+      PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+      ShipDesign design = ShipGenerator.createFreighter(info);
+      assertEquals(ShipHullType.FREIGHTER, design.getHull().getHullType());
+      assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
+      info = new PlayerInfo(SpaceRace.SPORKS, 2, 0);
+      design = ShipGenerator.createFreighter(info);
+      assertEquals(ShipHullType.FREIGHTER, design.getHull().getHullType());
+      assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
+      info = new PlayerInfo(SpaceRace.GREYANS, 2, 0);
+      design = ShipGenerator.createFreighter(info);
+      assertEquals(ShipHullType.FREIGHTER, design.getHull().getHullType());
+      assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
+      info = new PlayerInfo(SpaceRace.TEUTHIDAES, 2, 0);
+      design = ShipGenerator.createFreighter(info);
+      assertEquals(ShipHullType.FREIGHTER, design.getHull().getHullType());
+      assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
+    }
+  }
+
+
+
 }

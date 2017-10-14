@@ -115,6 +115,7 @@ public class AiTurnViewTest {
     MissionList list = new MissionList();
     Mockito.when(info.getMissions()).thenReturn(list);
     Mockito.when(info.getAiAttitude()).thenReturn(Attitude.AGGRESSIVE);
+    Mockito.when(mission.getType()).thenReturn(MissionType.ATTACK);
     AITurnView.addGatherMission(info, mission);
     Mission listMission = list.getMissionByIndex(0);
     assertEquals(MissionType.GATHER, listMission.getType());
@@ -160,6 +161,29 @@ public class AiTurnViewTest {
     assertEquals(MissionType.GATHER, listMission.getType());
     assertEquals(Mission.ASSAULT_TYPE, listMission.getShipType());
     assertEquals(6, list.getSize());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAddGatherMission2() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mission mission = Mockito.mock(Mission.class);
+    MissionList list = new MissionList();
+    Mockito.when(info.getMissions()).thenReturn(list);
+    Mockito.when(info.getAiAttitude()).thenReturn(Attitude.AGGRESSIVE);
+    Mockito.when(mission.getType()).thenReturn(MissionType.DESTROY_STARBASE);
+    AITurnView.addGatherMission(info, mission);
+    Mission listMission = list.getMissionByIndex(0);
+    assertEquals(MissionType.GATHER, listMission.getType());
+    assertEquals(Mission.ASSAULT_SB_TYPE, listMission.getShipType());
+    assertEquals(3, list.getSize());
+    Mockito.when(info.getAiAttitude()).thenReturn(Attitude.LOGICAL);
+    list.remove(listMission);
+    AITurnView.addGatherMission(info, mission);
+    listMission = list.getMissionByIndex(0);
+    assertEquals(MissionType.GATHER, listMission.getType());
+    assertEquals(Mission.ASSAULT_SB_TYPE, listMission.getShipType());
+    assertEquals(4, list.getSize());
   }
 
 }

@@ -398,7 +398,8 @@ public class AITurnView extends BlackPanel {
       info.getMissions().add(createGatherMission(mission, coord,
           Mission.ASSAULT_SB_TYPE));
       Attitude attitude = info.getAiAttitude();
-      if (attitude == Attitude.AGGRESSIVE || attitude == Attitude.MILITARISTIC) {
+      if (attitude == Attitude.AGGRESSIVE
+          || attitude == Attitude.MILITARISTIC) {
         info.getMissions().add(createGatherMission(mission, coord,
             Mission.ASSAULT_SB_TYPE));
         info.getMissions().add(createGatherMission(mission, coord,

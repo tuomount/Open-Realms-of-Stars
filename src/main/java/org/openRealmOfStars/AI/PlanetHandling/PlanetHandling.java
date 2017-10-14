@@ -529,19 +529,22 @@ public final class PlanetHandling {
               mission.setPhase(MissionPhase.BUILDING);
               mission.setPlanetBuilding(planet.getName());
             }
-            if (ship.isTrooperModule()
-                && info.getMissions().getGatherMission(Mission.TROOPER_TYPE)
-                != null) {
+            mission = info.getMissions().getGatherMission(Mission.TROOPER_TYPE);
+            if (ship.isTrooperModule() && mission != null) {
               mission.setPlanetBuilding(planet.getName());
               mission.setPhase(MissionPhase.BUILDING);
             } else if (ship.hasBombs()
                 && info.getMissions().getGatherMission(Mission.BOMBER_TYPE)
                 != null) {
+              mission = info.getMissions().getGatherMission(
+                  Mission.BOMBER_TYPE);
               mission.setPlanetBuilding(planet.getName());
               mission.setPhase(MissionPhase.BUILDING);
             } else if (ship.getTotalMilitaryPower() > 0
                 && info.getMissions().getGatherMission(Mission.ASSAULT_TYPE)
                 != null) {
+              mission = info.getMissions().getGatherMission(
+                  Mission.ASSAULT_TYPE);
               mission.setPlanetBuilding(planet.getName());
               mission.setPhase(MissionPhase.BUILDING);
             }

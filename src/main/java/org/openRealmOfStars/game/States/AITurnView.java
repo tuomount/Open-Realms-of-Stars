@@ -408,6 +408,7 @@ public class AITurnView extends BlackPanel {
     if (info.getMissions().getAttackMission(planet.getName()) == null) {
       // No attack mission for this planet found, so adding it.
       info.getMissions().add(mission);
+      addGatherMission(info, mission);
     }
   }
 

@@ -520,7 +520,6 @@ public class AITurnView extends BlackPanel {
                 }
               }
             }
-            // TODO: If war againt infoAT then add starbase destroy mission.
           }
         }
       }

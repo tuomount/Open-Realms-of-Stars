@@ -315,6 +315,13 @@ public class AITurnView extends BlackPanel {
    */
   private static Mission createGatherMission(final Mission mission,
       final Coordinate coord, final String shipType) {
+    if (mission.getType() == MissionType.DESTROY_STARBASE) {
+      Mission gatherMission = new Mission(MissionType.GATHER,
+          MissionPhase.PLANNING, coord);
+      gatherMission.setPlanetGathering(mission.getPlanetBuilding());
+      gatherMission.setShipType(Mission.ASSAULT_SB_TYPE);
+      return gatherMission;
+    }
     Mission gatherMission = new Mission(MissionType.GATHER,
         MissionPhase.PLANNING, coord);
     gatherMission.setPlanetGathering(mission.getPlanetBuilding());
@@ -329,59 +336,82 @@ public class AITurnView extends BlackPanel {
    */
   public static  void addGatherMission(final PlayerInfo info,
       final Mission mission) {
-    Coordinate coord = new Coordinate(mission.getX(), mission.getY());
-    info.getMissions().add(createGatherMission(mission, coord,
-        Mission.ASSAULT_TYPE));
-    info.getMissions().add(createGatherMission(mission, coord,
-        Mission.ASSAULT_TYPE));
-    info.getMissions().add(createGatherMission(mission, coord,
-        Mission.BOMBER_TYPE));
-    info.getMissions().add(createGatherMission(mission, coord,
-        Mission.TROOPER_TYPE));
-    if (info.getAiAttitude() == Attitude.AGGRESSIVE) {
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.ASSAULT_TYPE));
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.ASSAULT_TYPE));
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.ASSAULT_TYPE));
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.TROOPER_TYPE));
-    } else if (info.getAiAttitude() == Attitude.MILITARISTIC) {
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.ASSAULT_TYPE));
+    if (mission.getType() == MissionType.ATTACK) {
+      Coordinate coord = new Coordinate(mission.getX(), mission.getY());
       info.getMissions().add(createGatherMission(mission, coord,
           Mission.ASSAULT_TYPE));
       info.getMissions().add(createGatherMission(mission, coord,
           Mission.ASSAULT_TYPE));
       info.getMissions().add(createGatherMission(mission, coord,
           Mission.BOMBER_TYPE));
-    } else if (info.getAiAttitude() == Attitude.EXPANSIONIST) {
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.ASSAULT_TYPE));
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.ASSAULT_TYPE));
       info.getMissions().add(createGatherMission(mission, coord,
           Mission.TROOPER_TYPE));
-    } else if (info.getAiAttitude() == Attitude.BACKSTABBING) {
+      Attitude attitude = info.getAiAttitude();
+      if (attitude == Attitude.AGGRESSIVE) {
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE));
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE));
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE));
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.TROOPER_TYPE));
+      } else if (attitude == Attitude.MILITARISTIC) {
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE));
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE));
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE));
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.BOMBER_TYPE));
+      } else if (attitude == Attitude.EXPANSIONIST) {
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE));
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE));
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.TROOPER_TYPE));
+      } else if (attitude == Attitude.BACKSTABBING) {
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE));
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE));
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.BOMBER_TYPE));
+      } else if (attitude == Attitude.LOGICAL) {
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE));
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.TROOPER_TYPE));
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.BOMBER_TYPE));
+      } else {
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE));
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE));
+      }
+    }
+    if (mission.getType() == MissionType.DESTROY_STARBASE) {
+      Coordinate coord = new Coordinate(mission.getX(), mission.getY());
       info.getMissions().add(createGatherMission(mission, coord,
-          Mission.ASSAULT_TYPE));
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.ASSAULT_TYPE));
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.BOMBER_TYPE));
-    } else if (info.getAiAttitude() == Attitude.LOGICAL) {
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.ASSAULT_TYPE));
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.TROOPER_TYPE));
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.BOMBER_TYPE));
-    } else {
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.ASSAULT_TYPE));
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.ASSAULT_TYPE));
+          Mission.ASSAULT_SB_TYPE));
+      Attitude attitude = info.getAiAttitude();
+      if (attitude == Attitude.AGGRESSIVE || attitude == Attitude.MILITARISTIC) {
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.ASSAULT_SB_TYPE));
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.ASSAULT_SB_TYPE));
+      } else if (attitude == Attitude.LOGICAL) {
+        info.getMissions().add(createGatherMission(mission, coord,
+            Mission.ASSAULT_SB_TYPE));
+      } else {
+        if (DiceGenerator.getRandom(1) == 0) {
+          info.getMissions().add(createGatherMission(mission, coord,
+              Mission.ASSAULT_SB_TYPE));
+        }
+      }
     }
   }
   /**

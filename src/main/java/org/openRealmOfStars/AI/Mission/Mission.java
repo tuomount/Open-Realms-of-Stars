@@ -93,6 +93,11 @@ public class Mission {
   public static final String ASSAULT_TYPE = "Assault";
 
   /**
+   * Ship type assault for Starbase destroying
+   */
+  public static final String ASSAULT_SB_TYPE = "Assault_SB";
+
+  /**
    * Create new mission for AI
    * @param missionType MissionType
    * @param missionPhase Mission Phase

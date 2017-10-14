@@ -547,6 +547,13 @@ public final class PlanetHandling {
                   Mission.ASSAULT_TYPE);
               mission.setPlanetBuilding(planet.getName());
               mission.setPhase(MissionPhase.BUILDING);
+            }  else if (ship.getTotalMilitaryPower() > 0
+                && info.getMissions().getGatherMission(Mission.ASSAULT_SB_TYPE)
+                != null) {
+              mission = info.getMissions().getGatherMission(
+                  Mission.ASSAULT_SB_TYPE);
+              mission.setPlanetBuilding(planet.getName());
+              mission.setPhase(MissionPhase.BUILDING);
             }
             mission = info.getMissions().getMission(MissionType.DEPLOY_STARBASE,
                 MissionPhase.PLANNING);

@@ -153,6 +153,24 @@ public class MissionList {
   }
 
   /**
+   * Find a Destroy starbase mission for starbase.
+   * Destory Starbase mission are recognized by coordinates
+   * @param name Destroy Starbase coordinates
+   * @return Mission or null if not found
+   */
+  public Mission getDestroyStarbaseMission(final String name) {
+    for (Mission mission : missions) {
+      if (mission.getTargetPlanet() != null
+          && mission.getTargetPlanet().equals(name)
+          && mission.getType() == MissionType.DESTROY_STARBASE) {
+        return mission;
+      }
+    }
+    return null;
+
+  }
+
+  /**
    * Find a Gather missions for certain planet and only one attack
    * @param planetName Planet where to attack
    * @return true if only one attack mission found

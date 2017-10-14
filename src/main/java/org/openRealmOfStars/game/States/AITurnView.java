@@ -444,6 +444,35 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
+   * Adding Destroy Starbase mission to mission list
+   * @param coordinate coordinate where to attack
+   * @param info Player who is attacking
+   */
+  public void addDestroyStarbaseMission(final Coordinate coordinate,
+      final PlayerInfo info) {
+    // Starbase to destory
+    Mission mission = new Mission(MissionType.DESTROY_STARBASE,
+        MissionPhase.PLANNING, coordinate);
+    calculateAttackRendevuezSector(info, coordinate.getX(), coordinate.getY());
+    Planet homeWorld = game.getStarMap().getClosestHomePort(info, coordinate);
+    if (homeWorld == null) {
+      mission.setTarget(new Coordinate(cx, cy));
+      mission.setTargetPlanet("Starbase " + coordinate.toString());
+      mission.setPlanetBuilding("Deep space " + cx + "," + cy);
+    } else {
+      mission.setTarget(homeWorld.getCoordinate());
+      mission.setTargetPlanet("Starbase " + coordinate.toString());
+      mission.setPlanetBuilding(homeWorld.getName());
+    }
+    if (info.getMissions().getAttackMission(
+        "Starbase " + coordinate.toString()) == null) {
+      // No Destroy starbase mission for this starbase found, so adding it.
+      info.getMissions().add(mission);
+      addGatherMission(info, mission);
+    }
+  }
+
+  /**
    * Search deep space anchors
    */
   public void searchDeepSpaceAnchors() {
@@ -480,6 +509,15 @@ public class AITurnView extends BlackPanel {
                 // No deploy starbase mission for this planet found,
                 // so adding it.
                 info.getMissions().add(mission);
+              } else if (fleet.isStarBaseDeployed()
+                  && info.getSectorVisibility(new Coordinate(x, y))
+                  == PlayerInfo.VISIBLE && infoAt != info) {
+                int index = fleetTiles[x][y].getPlayerIndex();
+                DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
+                    index);
+                if (list.isBonusType(DiplomacyBonusType.IN_WAR)) {
+                  addDestroyStarbaseMission(new Coordinate(x, y), info);
+                }
               }
             }
             // TODO: If war againt infoAT then add starbase destroy mission.

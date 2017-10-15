@@ -112,7 +112,7 @@ public class ShipView extends BlackPanel {
     base.setTitle("Ships");
     shipList = new JList<>();
     shipList.setCellRenderer(new ShipStatRenderer());
-    shipList.setListData(this.player.getShipStatListInOrder());
+    updateList();
     shipList.setBackground(Color.BLACK);
     shipList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     JScrollPane scroll = new JScrollPane(shipList);
@@ -207,8 +207,35 @@ public class ShipView extends BlackPanel {
         deleteBtn.setEnabled(false);
       }
       SoundPlayer.playMenuSound();
-      shipList.setListData(this.player.getShipStatListInOrder());
+      updateList();
     }
+  }
+
+  /**
+   * Update ship list
+   */
+  public void updateList() {
+    shipList.setListData(this.player.getShipStatListInOrder());
+  }
+
+  /**
+   * Get PlayerInfo using ship View.
+   * @return PlayerInfo
+   */
+  public PlayerInfo getPlayerInfo() {
+    return player;
+  }
+
+  /**
+   * Get Selected Stat.
+   * @return Ship stat or null if no stat selected
+   */
+  public ShipStat getSelectedStat() {
+    if (shipList.getSelectedIndex() != -1) {
+      ShipStat stat = shipList.getSelectedValue();
+      return stat;
+    }
+    return null;
   }
 
   /**

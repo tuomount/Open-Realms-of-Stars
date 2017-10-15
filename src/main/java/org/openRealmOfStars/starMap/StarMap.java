@@ -27,6 +27,7 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -1964,5 +1965,17 @@ public class StarMap {
    */
   public void setDebug(final boolean debug) {
     this.debug = debug;
+  }
+
+  /**
+   * Check is design is being built.
+   * @param design Ship design
+   * @param builder Player who is builing
+   * @return True if design is being built
+   */
+  public boolean isDesignBeingBuilt(final ShipDesign design,
+      final PlayerInfo builder) {
+    // TODO
+    return true;
   }
 }

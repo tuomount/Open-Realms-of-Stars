@@ -31,7 +31,7 @@ import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2017 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -94,6 +94,11 @@ public class ShipView extends BlackPanel {
   private SpaceButton obsoleteBtn;
 
   /**
+   * Delete button for ship
+   */
+  private SpaceButton deleteBtn;
+
+  /**
    * Create new ship view
    * @param player Player Info
    * @param listener Action Listener
@@ -118,6 +123,11 @@ public class ShipView extends BlackPanel {
         GameCommands.COMMAND_OBSOLETE_SHIP);
     obsoleteBtn.addActionListener(listener);
     invisible.add(obsoleteBtn);
+    deleteBtn = new SpaceButton("Delete design",
+        GameCommands.COMMAND_DELETE_SHIP);
+    deleteBtn.addActionListener(listener);
+    deleteBtn.setEnabled(false);
+    invisible.add(deleteBtn);
     SpaceButton btn = new SpaceButton("Copy design",
         GameCommands.COMMAND_COPY_SHIP);
     btn.addActionListener(listener);
@@ -189,8 +199,12 @@ public class ShipView extends BlackPanel {
       ShipStat stat = shipList.getSelectedValue();
       if (!stat.isObsolete()) {
         stat.setObsolete(true);
+        if (stat.getNumberOfBuilt() == 0) {
+          deleteBtn.setEnabled(true);
+        }
       } else {
         stat.setObsolete(false);
+        deleteBtn.setEnabled(false);
       }
       SoundPlayer.playMenuSound();
       shipList.setListData(this.player.getShipStatListInOrder());

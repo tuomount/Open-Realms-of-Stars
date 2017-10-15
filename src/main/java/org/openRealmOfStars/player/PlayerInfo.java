@@ -872,7 +872,7 @@ public class PlayerInfo {
   public void removeShipStat(final ShipStat toDelete) {
     int i = 0;
     for (ShipStat stat : shipStatList) {
-      if (stat.getDesign().getName() == toDelete.getDesign().getName()) {
+      if (stat.getDesign().getName().equals(toDelete.getDesign().getName())) {
         break;
       }
       i++;

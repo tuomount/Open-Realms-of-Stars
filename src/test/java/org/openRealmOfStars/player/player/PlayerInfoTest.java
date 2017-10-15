@@ -92,6 +92,9 @@ public class PlayerInfoTest {
         // Change name back to Mk1
         expectedStat.getDesign().setName("Colony Mk1");
         assertEquals(expectedStat.toString(), statList[1].toString());
+        human.removeShipStat(expectedStat);
+        statList = human.getShipStatList();
+        assertEquals(1, statList.length);
     }
 
     /**

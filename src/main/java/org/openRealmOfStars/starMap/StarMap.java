@@ -1976,8 +1976,9 @@ public class StarMap {
       final PlayerInfo builder) {
     for (Planet planet : planetList) {
       if (planet.getPlanetPlayerInfo() == builder
-          && planet.getUnderConstruction().getName() == stat.getDesign()
-              .getName()) {
+          && planet.getUnderConstruction() != null
+          && planet.getUnderConstruction().getName().equals(stat.getDesign()
+              .getName())) {
         return true;
       }
     }

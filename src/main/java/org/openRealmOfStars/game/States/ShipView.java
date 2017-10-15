@@ -180,8 +180,14 @@ public class ShipView extends BlackPanel {
           ShipStat stat = shipList.getSelectedValue();
           if (stat.isObsolete()) {
             obsoleteBtn.setText("Activate");
+            if (stat.getNumberOfBuilt() == 0) {
+              deleteBtn.setEnabled(true);
+            } else {
+              deleteBtn.setEnabled(false);
+            }
           } else {
             obsoleteBtn.setText("Obsolete");
+            deleteBtn.setEnabled(false);
           }
           infoText.setText(stat.toString());
           shipImage.setImage(stat.getDesign().getHull().getImage());

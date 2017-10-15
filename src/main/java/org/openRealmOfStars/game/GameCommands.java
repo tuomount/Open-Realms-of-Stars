@@ -413,6 +413,11 @@ public final class GameCommands {
   public static final String COMMAND_OBSOLETE_SHIP = "ObsoleteShipDesign";
 
   /**
+   * Delete ship design
+   */
+  public static final String COMMAND_DELETE_SHIP = "DeleteShipDesign";
+
+  /**
    * Start ship design with new ship
    */
   public static final String COMMAND_SHIPDESIGN = "ShipDesign";

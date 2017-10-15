@@ -1965,4 +1965,23 @@ public class StarMap {
   public void setDebug(final boolean debug) {
     this.debug = debug;
   }
+
+  /**
+   * Check is ShipStat is being built.
+   * @param stat Ship stat
+   * @param builder Player who is building
+   * @return True if design is being built
+   */
+  public boolean isShipStatBeingBuilt(final ShipStat stat,
+      final PlayerInfo builder) {
+    for (Planet planet : planetList) {
+      if (planet.getPlanetPlayerInfo() == builder
+          && planet.getUnderConstruction() != null
+          && planet.getUnderConstruction().getName().equals(stat.getDesign()
+              .getName())) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

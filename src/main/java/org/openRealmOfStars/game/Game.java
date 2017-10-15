@@ -105,7 +105,7 @@ public class Game implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.2.9Alpha";
+  public static final String GAME_VERSION = "0.2.10Alpha";
 
   /**
    * Animation timer used for animation
@@ -1495,8 +1495,19 @@ public class Game implements ActionListener {
       researchView.handleAction(arg0);
     }
     if (gameState == GameState.VIEWSHIPS && shipView != null) {
-      // Handle View Ship
-      shipView.handleAction(arg0);
+      if (arg0.getActionCommand().equalsIgnoreCase(
+          GameCommands.COMMAND_DELETE_SHIP)) {
+        ShipStat stat = shipView.getSelectedStat();
+        PlayerInfo builder = shipView.getPlayerInfo();
+        if (!starMap.isShipStatBeingBuilt(stat, builder)) {
+          builder.removeShipStat(stat);
+          SoundPlayer.playMenuSound();
+          shipView.updateList();
+        }
+      } else {
+        // Handle View Ship
+        shipView.handleAction(arg0);
+      }
     }
     if (gameState == GameState.DIPLOMACY_VIEW && diplomacyView != null) {
       // Handle diplomacy view

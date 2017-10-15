@@ -866,6 +866,23 @@ public class PlayerInfo {
   }
 
   /**
+   * Remove ship stat from list.
+   * @param toDelete ShipStat to delete
+   */
+  public void removeShipStat(final ShipStat toDelete) {
+    int i = 0;
+    for (ShipStat stat : shipStatList) {
+      if (stat.getDesign().getName().equals(toDelete.getDesign().getName())) {
+        break;
+      }
+      i++;
+    }
+    if (shipStatList.size() > 0) {
+      removeShipStat(i);
+    }
+  }
+
+  /**
    * Get space race for player
    * @return Space Race
    */

@@ -11,6 +11,7 @@ import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -88,6 +89,26 @@ public final class Research {
     handleStarbaseDesign(info, ShipSize.HUGE);
     handleTrooperShipDesign(info);
     handleColonyShipDesign(info);
+  }
+
+  /**
+   * Remove Unused and obsolete ship design. Ship design must be one
+   * which is being obsoleted and hasn't been built single time.
+   * This delete is lazy. It only deletes one design at time, but it
+   * should be enough since not every turn there is a new design done.
+   * @param info Player information
+   * @param map Starmap for checking that ship design isn't being
+   *            built anywhere.
+   */
+  public static void removeUnusedAndObsoleteDesigns(final PlayerInfo info,
+      final StarMap map) {
+    for (ShipStat stat : info.getShipStatList()) {
+      if (stat.isObsolete() && stat.getNumberOfBuilt() == 0
+          && !map.isShipStatBeingBuilt(stat, info)) {
+        info.removeShipStat(stat);
+        break;
+      }
+    }
   }
 
   /**

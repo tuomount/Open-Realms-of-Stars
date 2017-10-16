@@ -1255,6 +1255,7 @@ public class StarMap {
       }
       // Handle research
       Research.handle(info);
+      Research.removeUnusedAndObsoleteDesigns(info, this);
       ArrayList<Message> messages = info.getMsgList().getFullList();
       for (Message msg : messages) {
         if (msg.getType() == MessageType.RESEARCH) {

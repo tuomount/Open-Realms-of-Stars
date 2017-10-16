@@ -7,11 +7,18 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.ship.ShipSize;
+import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.ship.generator.ShipGenerator;
+import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.starMap.GalaxyConfig;
+import org.openRealmOfStars.starMap.StarMap;
 /**
  * 
  * Open Realm of Stars game project
@@ -69,6 +76,30 @@ public class ResearchTest {
     info.getTechList().addTech(TechFactory.createCombatTech("Planetary invasion module", 2));
     Research.handleShipDesigns(info);
     assertEquals(5, info.getShipStatList().length);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRemoveObsoleteDesigns() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS, 2, 1);
+    GalaxyConfig config = new GalaxyConfig();
+    config.setMaxPlayers(2);
+    PlayerList list = new PlayerList();
+    list.addPlayer(info);
+    list.addPlayer(info2);
+    StarMap map = new StarMap(config, list);
+    assertEquals(2, info.getShipStatList().length);
+    Research.handleShipDesigns(info);
+    assertEquals(2, info.getShipStatList().length);
+    ShipDesign design = ShipGenerator.createBattleShip(info, ShipSize.SMALL,
+        false);
+    ShipStat stat = new ShipStat(design);
+    info.addShipStat(stat);
+    assertEquals(3, info.getShipStatList().length);
+    stat.setObsolete(true);
+    Research.removeUnusedAndObsoleteDesigns(info, map);
+    assertEquals(2, info.getShipStatList().length);
   }
 
   @Test

@@ -688,7 +688,6 @@ public final class ShipGenerator {
           .getListForType(TechType.Defense);
       Tech[] electricsTechs = player.getTechList()
           .getListForType(TechType.Electrics);
-      Tech[] combatTechs = player.getTechList().getListForType(TechType.Combat);
       Tech shield = TechList.getBestTech(defenseTechs, "Shield");
       Tech armor = TechList.getBestTech(defenseTechs, "Armor plating");
       Tech shieldGen = TechList.getBestTech(electricsTechs, "Shield generator");
@@ -790,20 +789,6 @@ public final class ShipGenerator {
       if (elecTech != null) {
         components
             .add(ShipComponentFactory.createByName(elecTech.getComponent()));
-      }
-      elecTech = TechList.getBestTech(combatTechs, "Orbital bombs");
-      weapTech = TechList.getBestTech(combatTechs, "Orbital smart bombs");
-      if (weapTech != null) {
-        components
-            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
-      } else if (elecTech != null) {
-        components
-            .add(ShipComponentFactory.createByName(elecTech.getComponent()));
-      }
-      weapTech = TechList.getBestTech(combatTechs, "Orbital nuke");
-      if (weapTech != null) {
-        components
-            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
       }
       int[] componentScores = new int[components.size()];
       int safetyCount = 500;

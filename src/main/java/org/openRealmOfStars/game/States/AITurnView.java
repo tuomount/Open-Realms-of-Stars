@@ -207,7 +207,7 @@ public class AITurnView extends BlackPanel {
         MissionHandling.handleDeployStarbase(mission, fleet, info, game);
         break;
       case DESTROY_STARBASE:
-        // FIXME implement starbase destroying
+        MissionHandling.handleDestroyStarbase(mission, fleet, info, game);
         break;
       case TRADE_FLEET:
         // FIXME implement trade fleet

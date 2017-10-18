@@ -368,8 +368,8 @@ public final class MissionHandling {
 
 
   /**
-   * Handle Colonize mission
-   * @param mission Colonize mission, does nothing if type is wrong
+   * Handle Attack mission
+   * @param mission Attack mission, does nothing if type is wrong
    * @param fleet Fleet on mission
    * @param info PlayerInfo
    * @param game Game for getting star map and planet
@@ -483,6 +483,39 @@ public final class MissionHandling {
         makeReroute(game, fleet, info, mission);
       }
     } // End of Attack
+  }
+
+  /**
+   * Handle Destroy starbase mission
+   * @param mission Destroy starbase mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleDestroyStarbase(final Mission mission,
+      final Fleet fleet, final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.DESTROY_STARBASE) {
+      if (mission.getPhase() == MissionPhase.PLANNING
+          && mission.getTargetPlanet() != null && info.getMissions()
+              .isAttackMissionLast(mission.getTargetPlanet())) {
+          mission.setPhase(MissionPhase.TREKKING);
+      }
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getX() == mission.getX()
+          && fleet.getY() == mission.getY()) {
+        // Target acquired, merge fleet to bigger attack group
+        mission.setPhase(MissionPhase.EXECUTING);
+      } else if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+        makeReroute(game, fleet, info, mission);
+      }
+      if (mission.getPhase() == MissionPhase.EXECUTING
+          && fleet.getX() == mission.getX()
+          && fleet.getY() == mission.getY()) {
+        // Target acquired, mission completed!
+        info.getMissions().remove(mission);
+      }
+    } // End of destroy starbase
   }
 
   /**

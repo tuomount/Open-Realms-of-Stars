@@ -339,6 +339,50 @@ public final class MissionHandling {
         fleet.setRoute(route);
         mission.setPhase(MissionPhase.TREKKING);
       }
+      if (mission.getPhase() == MissionPhase.LOADING) {
+        // Loading Troops
+        Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
+            fleet.getY());
+        Ship[] ships = fleet.getShips();
+        int trooper = -1;
+        for (int i = 0; i < ships.length; i++) {
+          if (ships[i].isTrooperModule()) {
+            trooper = i;
+            break;
+          }
+        }
+        if (trooper < 0) {
+          // Not a trooper so, moving just next phase
+          mission.setPhase(MissionPhase.TREKKING);
+        }
+        if (planet == null && trooper >= 0) {
+          if (fleet.getTotalCargoColonist() > 0) {
+            mission.setPhase(MissionPhase.TREKKING);
+          } else {
+            Planet homePort = game.getStarMap().getClosestHomePort(info,
+                fleet.getCoordinate());
+            if (homePort != null) {
+              mission.setType(MissionType.MOVE);
+              mission.setTarget(homePort.getCoordinate());
+            }
+          }
+        } else if (planet.getPlanetPlayerInfo() == info  && trooper >= 0) {
+          if (planet.getTotalPopulation() > 2 && planet.takeColonist()
+              && ships[trooper].getFreeCargoColonists() > 0) {
+            // One Troops on board, ready to go trekking
+            ships[trooper].setColonist(ships[trooper].getColonist() + 1);
+            mission.setPhase(MissionPhase.TREKKING);
+            Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
+                mission.getY(), fleet.getFleetFtlSpeed());
+            fleet.setRoute(route);
+          }
+          while (planet.getTotalPopulation() > 3 && planet.takeColonist()
+              && ships[trooper].getFreeCargoColonists() > 0) {
+            ships[trooper].setColonist(ships[trooper].getColonist() + 1);
+          }
+        }
+      }
+
       if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getX() == mission.getX()
           && fleet.getY() == mission.getY()) {
@@ -397,13 +441,21 @@ public final class MissionHandling {
         if (military >= info.getRace().getAIMinimumAttackShips()
             && (bombers + trooper) > info.getRace()
                 .getAIMinimumConquerShips()) {
-          mission.setPhase(MissionPhase.EXECUTING);
+          mission.setPhase(MissionPhase.TREKKING);
           Planet planet = game.getStarMap()
               .getPlanetByName(mission.getTargetPlanet());
           if (planet != null) {
             mission.setTarget(planet.getCoordinate());
             fleet.setRoute(new Route(fleet.getX(), fleet.getY(), planet.getX(),
                 planet.getY(), fleet.getFleetFtlSpeed()));
+          }
+          Ship[] ships = fleet.getShips();
+          for (int i = 0; i < ships.length; i++) {
+            if (ships[i].isTrooperModule() && ships[i].getColonist() == 0) {
+                // Empty trooper found so we need to load it first
+                mission.setPhase(MissionPhase.LOADING);
+                break;
+            }
           }
         }
       }
@@ -447,11 +499,10 @@ public final class MissionHandling {
         }
       }
       if (mission.getPhase() == MissionPhase.TREKKING
-          && mission.getTargetPlanet() == null && fleet.getX() == mission.getX()
+          && fleet.getX() == mission.getX()
           && fleet.getY() == mission.getY()) {
-        // Target acquired, merge fleet to bigger attack group
-        mergeFleets(fleet, info);
-        info.getMissions().remove(mission);
+        // Target acquired, initiating attack
+        mission.setPhase(MissionPhase.EXECUTING);
       } else if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getRoute() == null) {
         makeReroute(game, fleet, info, mission);

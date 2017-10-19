@@ -1338,7 +1338,12 @@ public class Planet {
               } else if (mission.getType() == MissionType.COLONIZE) {
                 mission.setPhase(MissionPhase.LOADING);
               } else if (mission.getType() == MissionType.GATHER) {
-                mission.setPhase(MissionPhase.TREKKING);
+                if (ship.isTrooperModule()) {
+                  // Loads trooper first
+                  mission.setPhase(MissionPhase.LOADING);
+                } else {
+                  mission.setPhase(MissionPhase.TREKKING);
+                }
                 fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
                     "Gather"));
                 mission.setFleetName(fleet.getName());
@@ -1347,19 +1352,12 @@ public class Planet {
               }
             } else {
               mission = planetOwnerInfo.getMissions()
-                  .getMission(MissionType.ATTACK, MissionPhase.PLANNING);
+                  .getMission(MissionType.GATHER, MissionPhase.PLANNING);
               if (mission != null) {
-                Mission newMiss = new Mission(MissionType.ATTACK,
-                    MissionPhase.TREKKING, new Coordinate(mission.getX(),
-                        mission.getY()));
-                if (ship.isTrooperModule()) {
-                  newMiss.setPhase(MissionPhase.LOADING);
-                }
-                String fleetName = "Attacker";
-                fleet.setName(fleetName + " #" + (planetOwnerInfo.getFleets()
-                    .howManyFleetWithStartingNames(fleetName) + 1));
-                newMiss.setFleetName(fleet.getName());
-                planetOwnerInfo.getMissions().add(newMiss);
+                mission.setPhase(MissionPhase.LOADING);
+                fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
+                    "Gather"));
+                mission.setFleetName(fleet.getName());
               } else if (ship.getTotalMilitaryPower() > 0) {
                 if (fleet.isScoutFleet()) {
                   if (DiceGenerator.getRandom(3) == 0) {

@@ -1338,7 +1338,12 @@ public class Planet {
               } else if (mission.getType() == MissionType.COLONIZE) {
                 mission.setPhase(MissionPhase.LOADING);
               } else if (mission.getType() == MissionType.GATHER) {
-                mission.setPhase(MissionPhase.TREKKING);
+                if (ship.isTrooperModule()) {
+                  // Loads trooper first
+                  mission.setPhase(MissionPhase.LOADING);
+                } else {
+                  mission.setPhase(MissionPhase.TREKKING);
+                }
                 fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
                     "Gather"));
                 mission.setFleetName(fleet.getName());
@@ -1347,7 +1352,8 @@ public class Planet {
               }
             } else {
               mission = planetOwnerInfo.getMissions()
-                  .getMission(MissionType.ATTACK, MissionPhase.PLANNING);
+                  .getMission(MissionType.GATHER, MissionPhase.PLANNING);
+              //TODO
               if (mission != null) {
                 Mission newMiss = new Mission(MissionType.ATTACK,
                     MissionPhase.TREKKING, new Coordinate(mission.getX(),

@@ -1355,17 +1355,10 @@ public class Planet {
                   .getMission(MissionType.GATHER, MissionPhase.PLANNING);
               //TODO
               if (mission != null) {
-                Mission newMiss = new Mission(MissionType.ATTACK,
-                    MissionPhase.TREKKING, new Coordinate(mission.getX(),
-                        mission.getY()));
-                if (ship.isTrooperModule()) {
-                  newMiss.setPhase(MissionPhase.LOADING);
-                }
-                String fleetName = "Attacker";
-                fleet.setName(fleetName + " #" + (planetOwnerInfo.getFleets()
-                    .howManyFleetWithStartingNames(fleetName) + 1));
-                newMiss.setFleetName(fleet.getName());
-                planetOwnerInfo.getMissions().add(newMiss);
+                mission.setPhase(MissionPhase.LOADING);
+                fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
+                    "Gather"));
+                mission.setFleetName(fleet.getName());
               } else if (ship.getTotalMilitaryPower() > 0) {
                 if (fleet.isScoutFleet()) {
                   if (DiceGenerator.getRandom(3) == 0) {

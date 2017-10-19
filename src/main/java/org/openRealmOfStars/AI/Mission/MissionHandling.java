@@ -343,7 +343,19 @@ public final class MissionHandling {
         // Loading Troops
         Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
             fleet.getY());
-        if (planet == null) {
+        Ship[] ships = fleet.getShips();
+        int trooper = -1;
+        for (int i = 0; i < ships.length; i++) {
+          if (ships[i].isTrooperModule()) {
+            trooper = i;
+            break;
+          }
+        }
+        if (trooper < 0) {
+          // Not a trooper so, moving just next phase
+          mission.setPhase(MissionPhase.TREKKING);
+        }
+        if (planet == null && trooper >= 0) {
           if (fleet.getTotalCargoColonist() > 0) {
             mission.setPhase(MissionPhase.TREKKING);
           } else {
@@ -354,15 +366,7 @@ public final class MissionHandling {
               mission.setTarget(homePort.getCoordinate());
             }
           }
-        } else if (planet.getPlanetPlayerInfo() == info) {
-          Ship[] ships = fleet.getShips();
-          int trooper = 0;
-          for (int i = 0; i < ships.length; i++) {
-            if (ships[i].isTrooperModule()) {
-              trooper = i;
-              break;
-            }
-          }
+        } else if (planet.getPlanetPlayerInfo() == info  && trooper >= 0) {
           if (planet.getTotalPopulation() > 2 && planet.takeColonist()
               && ships[trooper].getFreeCargoColonists() > 0) {
             // One Troops on board, ready to go trekking

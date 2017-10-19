@@ -1353,7 +1353,6 @@ public class Planet {
             } else {
               mission = planetOwnerInfo.getMissions()
                   .getMission(MissionType.GATHER, MissionPhase.PLANNING);
-              //TODO
               if (mission != null) {
                 mission.setPhase(MissionPhase.LOADING);
                 fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(

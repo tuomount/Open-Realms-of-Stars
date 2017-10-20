@@ -12,6 +12,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -97,6 +98,11 @@ public class Ship extends Construction {
   private int specialFlags;
 
   /**
+   * Previous trade coordinate
+   */
+  private Coordinate tradeCoordinates;
+
+  /**
    * Starbase has been deployed
    */
   public static final int FLAG_STARBASE_DEPLOYED = 0x01;
@@ -125,6 +131,11 @@ public class Ship extends Construction {
   private static final int BIT_MASK_FLAGS = 2;
 
   /**
+   * Bit mask for trade coordinate
+   */
+  private static final int BIT_MASK_TRADE_COORDINATE = 4;
+
+  /**
    * Constructor for a ship
    * @param design from where actual ship is created
    */
@@ -149,6 +160,7 @@ public class Ship extends Construction {
     setExperience(0);
     setCulture(0);
     specialFlags = 0;
+    tradeCoordinates = null;
   }
 
   /**
@@ -190,6 +202,13 @@ public class Ship extends Construction {
     if (IOUtilities.getFlag(bitMask, BIT_MASK_FLAGS)) {
       specialFlags = dis.readInt();
     }
+    if (IOUtilities.getFlag(bitMask, BIT_MASK_TRADE_COORDINATE)) {
+      int x = dis.readInt();
+      int y = dis.readInt();
+      tradeCoordinates = new Coordinate(x, y);
+    } else {
+      tradeCoordinates = null;
+    }
   }
 
   /**
@@ -222,6 +241,9 @@ public class Ship extends Construction {
     if (specialFlags != 0) {
       bitMask = IOUtilities.setFlag(bitMask, BIT_MASK_FLAGS, true);
     }
+    if (tradeCoordinates != null) {
+      bitMask = IOUtilities.setFlag(bitMask, BIT_MASK_TRADE_COORDINATE, true);
+    }
     dos.writeByte(bitMask);
     if (IOUtilities.getFlag(bitMask, BIT_MASK_EXPERIENCE)) {
       dos.writeInt(experience);
@@ -231,6 +253,10 @@ public class Ship extends Construction {
     }
     if (IOUtilities.getFlag(bitMask, BIT_MASK_FLAGS)) {
       dos.writeInt(specialFlags);
+    }
+    if (IOUtilities.getFlag(bitMask, BIT_MASK_TRADE_COORDINATE)) {
+      dos.writeInt(tradeCoordinates.getX());
+      dos.writeInt(tradeCoordinates.getY());
     }
   }
 
@@ -1475,6 +1501,22 @@ private int increaseDefenseValueWithJammer() {
       }
     }
     return result;
+  }
+
+  /**
+   * Get previous trade coordinate
+   * @return Trade coordinates or null
+   */
+  public Coordinate getTradeCoordinate() {
+    return tradeCoordinates;
+  }
+
+  /**
+   * Set trade coordinate for ship
+   * @param coordinate new trade coordinate
+   */
+  public void setTradeDistance(final Coordinate coordinate) {
+    tradeCoordinates = coordinate;
   }
 
 }

@@ -7,6 +7,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.tech.TechFactory;
+import org.openRealmOfStars.starMap.Coordinate;
 
 import static org.junit.Assert.*;
 
@@ -203,6 +204,33 @@ public class ShipTest {
     Ship ship = new Ship(design);
     
     assertEquals(58, ship.getTotalMilitaryPower());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTtradeShip() {
+    ShipHull hull = ShipHullFactory.createByName("Medium freighter", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
+    ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
+    design.addComponent(energy);
+    design.addComponent(engine);
+    Ship ship = new Ship(design);
+    
+    assertEquals(0,ship.getExperience());
+    assertEquals(null, ship.getTradeCoordinate());
+    Coordinate coord = new Coordinate(5, 6);
+    ship.setTradeDistance(coord);
+    assertEquals(5, ship.getTradeCoordinate().getX());
+    assertEquals(6, ship.getTradeCoordinate().getY());
+    ship.setFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD, true);
+    assertEquals(true, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD));
+    ship.setFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD, true);
+    assertEquals(true, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD));
+    ship.setFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD, false);
+    assertEquals(false, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD));
+    ship.setFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD, false);
+    assertEquals(false, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD));
   }
 
   @Test

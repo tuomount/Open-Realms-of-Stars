@@ -2,12 +2,14 @@ package org.openRealmOfStars.player.ship;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 import static org.junit.Assert.*;
 
@@ -231,6 +233,28 @@ public class ShipTest {
     assertEquals(false, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD));
     ship.setFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD, false);
     assertEquals(false, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTtradeShip2() {
+    ShipHull hull = ShipHullFactory.createByName("Medium freighter", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
+    ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
+    design.addComponent(energy);
+    design.addComponent(engine);
+    Ship ship = new Ship(design);
+    ship.setTradeDistance(new Coordinate(5, 5));
+    ship.setFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD, true);
+    Planet planet = Mockito.mock(Planet.class);
+    Coordinate coordinate = new Coordinate(30, 30);
+    Mockito.when(planet.getCoordinate()).thenReturn(coordinate);
+    PlayerInfo planetOwner = Mockito.mock(PlayerInfo.class);
+    Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(planetOwner);
+    PlayerInfo trader = Mockito.mock(PlayerInfo.class);
+    int result = ship.doTrade(planet, trader);
+    assertEquals(3, result);
   }
 
   @Test

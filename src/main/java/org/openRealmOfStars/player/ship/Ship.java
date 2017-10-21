@@ -9,10 +9,12 @@ import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -1519,4 +1521,43 @@ private int increaseDefenseValueWithJammer() {
     tradeCoordinates = coordinate;
   }
 
+  /**
+   * Do trade with planet if trade ship.
+   * Not this does not check diplomatic relationships.
+   * @param planet Planet to do trade
+   * @param trader Player who is making a trade
+   * @return Amount of credits gained.
+   */
+  public int doTrade(final Planet planet, final PlayerInfo trader) {
+    int credit = 0;
+    if (getHull().getHullType() == ShipHullType.FREIGHTER
+        && !isColonyModule() && !isTrooperModule()
+        && planet.getPlanetPlayerInfo() != null
+        && tradeCoordinates != null) {
+      int distance = 0;
+      if (getFlag(FLAG_MERCHANT_LEFT_HOMEWORLD)
+          && trader != planet.getPlanetPlayerInfo()) {
+        distance = (int) Math.round(tradeCoordinates.calculateDistance(
+            planet.getCoordinate()));
+        setFlag(FLAG_MERCHANT_LEFT_OPPONENWORLD, true);
+        setFlag(FLAG_MERCHANT_LEFT_HOMEWORLD, false);
+        tradeCoordinates = planet.getCoordinate();
+      } else if (getFlag(FLAG_MERCHANT_LEFT_OPPONENWORLD)
+          && trader == planet.getPlanetPlayerInfo()) {
+        distance = (int) Math.round(tradeCoordinates.calculateDistance(
+            planet.getCoordinate()));
+        setFlag(FLAG_MERCHANT_LEFT_OPPONENWORLD, false);
+        setFlag(FLAG_MERCHANT_LEFT_HOMEWORLD, true);
+        tradeCoordinates = planet.getCoordinate();
+      }
+      credit = distance / 10;
+      if (credit < 1) {
+        credit = 1;
+      }
+      if (credit > 20) {
+        credit = 20;
+      }
+    }
+    return credit;
+  }
 }

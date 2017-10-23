@@ -89,6 +89,7 @@ public final class Research {
     handleStarbaseDesign(info, ShipSize.HUGE);
     handleTrooperShipDesign(info);
     handleColonyShipDesign(info);
+    handleFreighterShipDesign(info);
   }
 
   /**
@@ -194,6 +195,39 @@ public final class Research {
           notFound = false;
           if (design.getTotalColonyPower() > stat.getDesign()
               .getTotalColonyPower()) {
+            stat.setObsolete(true);
+            ShipStat ship = new ShipStat(design);
+            info.addShipStat(ship);
+            break;
+          }
+        }
+      }
+      if (notFound) {
+        ShipStat ship = new ShipStat(design);
+        info.addShipStat(ship);
+      }
+    }
+
+  }
+
+  /**
+   * Handle Freighter ship design for AI
+   * @param info Player
+   */
+  private static void handleFreighterShipDesign(final PlayerInfo info) {
+    ShipDesign design = ShipGenerator.createFreighter(info);
+    if (design != null) {
+      ShipStat[] stats = info.getShipStatList();
+      boolean notFound = true;
+      for (ShipStat stat : stats) {
+        if (stat.getDesign().getHull().getHullType() == ShipHullType.FREIGHTER
+            && !stat.getDesign()
+                .gotCertainType(ShipComponentType.COLONY_MODULE)
+            && !stat.getDesign()
+               .gotCertainType(ShipComponentType.PLANETARY_INVASION_MODULE)
+            && !stat.isObsolete()) {
+          notFound = false;
+          if (design.getFreeSlots() > stat.getDesign().getFreeSlots()) {
             stat.setObsolete(true);
             ShipStat ship = new ShipStat(design);
             info.addShipStat(ship);

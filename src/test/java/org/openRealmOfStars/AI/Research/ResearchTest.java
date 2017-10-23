@@ -70,12 +70,12 @@ public class ResearchTest {
     PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
     assertEquals(2, info.getShipStatList().length);
     Research.handleShipDesigns(info);
-    assertEquals(2, info.getShipStatList().length);
+    assertEquals(3, info.getShipStatList().length);
     info.getTechList().addTech(TechFactory.createHullTech("Small freighter", 2));
     info.getTechList().addTech(TechFactory.createHullTech("Small starbase Mk1", 2));
     info.getTechList().addTech(TechFactory.createCombatTech("Planetary invasion module", 2));
     Research.handleShipDesigns(info);
-    assertEquals(5, info.getShipStatList().length);
+    assertEquals(7, info.getShipStatList().length);
   }
 
   @Test
@@ -91,15 +91,15 @@ public class ResearchTest {
     StarMap map = new StarMap(config, list);
     assertEquals(2, info.getShipStatList().length);
     Research.handleShipDesigns(info);
-    assertEquals(2, info.getShipStatList().length);
+    assertEquals(3, info.getShipStatList().length);
     ShipDesign design = ShipGenerator.createBattleShip(info, ShipSize.SMALL,
         false);
     ShipStat stat = new ShipStat(design);
     info.addShipStat(stat);
-    assertEquals(3, info.getShipStatList().length);
+    assertEquals(4, info.getShipStatList().length);
     stat.setObsolete(true);
     Research.removeUnusedAndObsoleteDesigns(info, map);
-    assertEquals(2, info.getShipStatList().length);
+    assertEquals(3, info.getShipStatList().length);
   }
 
   @Test

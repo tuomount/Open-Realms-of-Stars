@@ -111,6 +111,22 @@ public class ShipDesignTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testFreighterDesignByGenerator() {
+    PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    player.getTechList().addTech(TechFactory.createHullTech("Small freighter", 2));
+    player.getTechList().addTech(TechFactory.createHullTech("Medium freighter", 4));
+    player.getTechList().addTech(TechFactory.createHullTech("Large freighter", 6));
+    player.getTechList().addTech(TechFactory.createHullTech("Massive freighter", 8));
+    ShipDesign design = ShipGenerator.createFreighter(player);
+    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
+    assertEquals(ShipSize.HUGE, design.getHull().getSize());
+    assertEquals(2,design.getNumberOfComponents());
+    assertEquals(0,design.getTotalMilitaryPower());
+    assertEquals(10,design.getFreeSlots());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testProbeDesign() {
     ShipHull hull = ShipHullFactory.createByName("Probe", SpaceRace.CENTAURS);
     ShipDesign design = new ShipDesign(hull);

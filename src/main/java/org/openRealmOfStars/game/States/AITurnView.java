@@ -581,10 +581,11 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
-   * Search newly found uncolonized planets and planets
-   * where to attack
+   * Search newly found planets for different missions.
+   * This methods locates colonizable planets, attackable planets
+   * and planets with to trade.
    */
-  public void searchForColonizablePlanets() {
+  public void searchPlanetsForMissions() {
     PlayerInfo info = game.getPlayers()
         .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
     if (info != null && !info.isHuman()) {
@@ -639,7 +640,8 @@ public class AITurnView extends BlackPanel {
                   owner);
               DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
                   ownerIndex);
-              if (list.isBonusType(DiplomacyBonusType.IN_WAR)) {
+              if (list != null
+                  && list.isBonusType(DiplomacyBonusType.IN_WAR)) {
                 // Got new map part maybe in trade and found planet owned by
                 // player which is being at war now.
                 addAttackMission(planet, info);
@@ -711,7 +713,7 @@ public class AITurnView extends BlackPanel {
       game.getStarMap().setAIFleet(info.getFleets().getNext());
       if (info.getFleets().getIndex() == 0) {
         // All fleets have moved. Checking the new possible planet
-        searchForColonizablePlanets();
+        searchPlanetsForMissions();
         // Searching for fleet which has crossed the borders
         searchForBorderCrossing();
         searchDeepSpaceAnchors();

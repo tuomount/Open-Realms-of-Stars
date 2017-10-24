@@ -320,7 +320,51 @@ public final class MissionHandling {
           && fleet.getRoute() == null) {
         makeReroute(game, fleet, info, mission);
       }
-    } // End of colonize
+    } // End of move
+  }
+
+  /**
+   * Handle Trade mission
+   * @param mission Trade mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleTrade(final Mission mission, final Fleet fleet,
+      final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.TRADE_FLEET) {
+      if (mission.getPhase() == MissionPhase.LOADING) {
+        Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
+            mission.getY(), fleet.getFleetFtlSpeed());
+        fleet.setRoute(route);
+        mission.setPhase(MissionPhase.TREKKING);
+      }
+      Coordinate targetCoord = new Coordinate(mission.getX(), mission.getY());
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getCoordinate().calculateDistance(targetCoord) <= 1) {
+        // Target acquired, let's do trade
+        mission.setPhase(MissionPhase.EXECUTING);
+      } else if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+        makeReroute(game, fleet, info, mission);
+      }
+      if (mission.getPhase() == MissionPhase.EXECUTING) {
+        //TODO: Do trade here
+        Planet previousTarget = game.getStarMap()
+            .getPlanetByCoordinate(mission.getX(), mission.getY());
+        if (mission.getTargetPlanet().equals(previousTarget.getName())) {
+          Planet homePlanet = game.getStarMap().getPlanetByName(
+              mission.getPlanetBuilding());
+          mission.setTarget(homePlanet.getCoordinate());
+        } else if (mission.getPlanetBuilding().equals(
+            previousTarget.getName())) {
+          Planet targetPlanet = game.getStarMap().getPlanetByName(
+              mission.getTargetPlanet());
+          mission.setTarget(targetPlanet.getCoordinate());
+        }
+        mission.setPhase(MissionPhase.LOADING);
+      }
+    } // End of trade
   }
 
   /**

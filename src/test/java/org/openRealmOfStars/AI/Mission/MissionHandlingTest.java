@@ -16,6 +16,7 @@ import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
 *
@@ -195,6 +196,47 @@ public class MissionHandlingTest {
     Game game = Mockito.mock(Game.class);
     MissionHandling.handleDestroyStarbase(mission, fleet, info, game);
     assertEquals(MissionPhase.EXECUTING, mission.getPhase());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTrade() {
+    StarMap map = Mockito.mock(StarMap.class);
+    Planet planetTrader = Mockito.mock(Planet.class);
+    Mockito.when(planetTrader.getName()).thenReturn("Trader I");
+    Mockito.when(planetTrader.getCoordinate()).thenReturn(new Coordinate(6, 5));
+    Planet planetHome = Mockito.mock(Planet.class);
+    Mockito.when(planetHome.getName()).thenReturn("Homeworld I");
+    Mockito.when(planetHome.getCoordinate()).thenReturn(new Coordinate(10, 10));
+    Mockito.when(map.getPlanetByCoordinate(Mockito.anyInt(),
+        Mockito.anyInt())).thenReturn(planetTrader);
+    Mockito.when(map.getPlanetByName("Trader I")).thenReturn(planetTrader);
+    Mockito.when(map.getPlanetByName("Homeworld I")).thenReturn(planetHome);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mission mission = new Mission(MissionType.TRADE_FLEET, MissionPhase.LOADING,
+        new Coordinate(6, 5));
+    mission.setTargetPlanet("Trader I");
+    mission.setPlanetBuilding("Homeworld I");
+    MissionList missionList = Mockito.mock(MissionList.class);
+    Mockito.when(missionList.getMissionForFleet(Mockito.anyString()))
+        .thenReturn(null);
+    Mockito.when(missionList.isAttackMissionLast(Mockito.anyString()))
+    .thenReturn(true);
+    Mockito.when(info.getMissions()).thenReturn(missionList);
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(20);
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getHullType()).thenReturn(ShipHullType.NORMAL);
+    Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(20);
+    Fleet fleet = new Fleet(ship, 5, 5);
+    FleetList fleetList = new FleetList();
+    fleetList.add(fleet);
+    Mockito.when(info.getFleets()).thenReturn(fleetList);
+    Game game = Mockito.mock(Game.class);
+    Mockito.when(game.getStarMap()).thenReturn(map);
+    MissionHandling.handleTrade(mission, fleet, info, game);
+    assertEquals(MissionPhase.LOADING, mission.getPhase());
   }
 
 }

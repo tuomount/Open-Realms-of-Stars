@@ -120,9 +120,13 @@ public class ShipDesignTest {
     ShipDesign design = ShipGenerator.createFreighter(player);
     assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
     assertEquals(ShipSize.HUGE, design.getHull().getSize());
-    assertEquals(2,design.getNumberOfComponents());
+    if (design.getNumberOfComponents() != 2 && design.getNumberOfComponents() != 3) {
+      assertFalse(true);
+    }
     assertEquals(0,design.getTotalMilitaryPower());
-    assertEquals(10,design.getFreeSlots());
+    if (design.getFreeSlots() != 10 && design.getFreeSlots() != 9) {
+      assertFalse(true);
+    }
   }
 
   @Test

@@ -13,6 +13,7 @@ import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
+import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.repository.RouteRepository;
 
@@ -726,4 +727,20 @@ public class Fleet {
     }
     return result;
   }
+
+  /**
+   * Do trade with planet if fleet has trade ship(s).
+   * Not this does not check diplomatic relationships.
+   * @param planet Planet to do trade
+   * @param trader Player who is making a trade
+   * @return Amount of credits gained.
+   */
+  public int doTrade(final Planet planet, final PlayerInfo trader) {
+    int result = 0;
+    for (Ship ship : ships) {
+      result = result + ship.doTrade(planet, trader);
+    }
+    return result;
+  }
+
 }

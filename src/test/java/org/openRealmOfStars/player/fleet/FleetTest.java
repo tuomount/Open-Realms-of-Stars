@@ -12,6 +12,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.starMap.Route;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
  * 
@@ -88,6 +89,33 @@ public class FleetTest {
   }
 
   /**
+   * Create Trade ship
+   * @return Trade ship
+   */
+  private static Ship createTradeShip() {
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getSize()).thenReturn(ShipSize.MEDIUM);
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getFtlSpeed()).thenReturn(1);
+    Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getScannerDetectionLvl()).thenReturn(0);
+    Mockito.when(ship.getScannerLvl()).thenReturn(0);
+    Mockito.when(ship.getSpeed()).thenReturn(1);
+    Mockito.when(ship.getFreeCargoColonists()).thenReturn(4);
+    Mockito.when(ship.getFreeCargoMetal()).thenReturn(20);
+    Mockito.when(ship.getHullPoints()).thenReturn(6);
+    Mockito.when(ship.getMaxHullPoints()).thenReturn(6);
+    Mockito.when(ship.isColonyModule()).thenReturn(false);
+    Mockito.when(ship.isColonyShip()).thenReturn(false);
+    Mockito.when(ship.getColonist()).thenReturn(0);
+    Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
+    Mockito.when(ship.getName()).thenReturn("Trader");
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);
+    Mockito.when(ship.getCulture()).thenReturn(0);
+    return ship;
+  }
+
+  /**
    * Create privateer ship
    * @return Privateer ship
    */
@@ -148,6 +176,45 @@ public class FleetTest {
     assertEquals(0, fleet.getCulturalValue());
     assertEquals("Test-Fleet\nTerran alliance\nSpeed: 1 FTL: 2\nMoves:1\nScout - 15"
         + "\n\nEnroute", fleet.getInfoAsText(info));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFleetWithTradeShip() {
+    Route route = Mockito.mock(Route.class);
+    AStarSearch asearch = Mockito.mock(AStarSearch.class);
+    Ship ship = createTradeShip();
+    Fleet fleet = new Fleet(ship, 2, 3);
+    assertEquals(2, fleet.getCoordinate().getX());
+    assertEquals(3, fleet.getCoordinate().getY());
+    assertEquals("Fleet #-1",fleet.getName());
+    fleet.setName("Trader");
+    assertEquals("Trader",fleet.getName());
+    assertEquals(ship,fleet.getFirstShip());
+    assertEquals(1, fleet.getFleetFtlSpeed());
+    assertEquals(0, fleet.getFleetCloakDetection());
+    assertEquals(1, fleet.getFleetScannerLvl());
+    assertEquals(1, fleet.getFleetSpeed());
+    assertEquals(1, fleet.getNumberOfShip());
+    assertEquals(4, fleet.getFreeSpaceForColonist());
+    assertEquals(20, fleet.getFreeSpaceForMetal());
+    assertEquals(true, fleet.allFixed());
+    assertEquals(0, fleet.getFleetCloackingValue());
+    fleet.setMovesLeft(2);
+    assertEquals(2, fleet.getMovesLeft());
+    fleet.decMovesLeft();
+    assertEquals(1, fleet.getMovesLeft());
+    fleet.setRoute(route);
+    assertEquals(route, fleet.getRoute());
+    fleet.setaStarSearch(asearch);
+    assertEquals(asearch,fleet.getaStarSearch());
+    assertEquals(false, fleet.isPrivateerFleet());
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Terran alliance");
+    assertEquals(0, fleet.getCulturalValue());
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(ship.doTrade(planet, info)).thenReturn(2);
+    assertEquals(2, fleet.doTrade(planet, info));
   }
 
   @Test

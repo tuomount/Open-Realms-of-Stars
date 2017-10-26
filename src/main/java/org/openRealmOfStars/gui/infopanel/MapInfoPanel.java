@@ -103,9 +103,9 @@ public class MapInfoPanel extends InfoPanel {
   private SpaceButton defendBtn;
 
   /**
-   * Fix fleet button for fleet
+   * Fix/Trade fleet button for fleet
    */
-  private SpaceButton fixFleetBtn;
+  private SpaceButton fixTradeFleetBtn;
 
   /**
    * Route button for fleet
@@ -165,10 +165,12 @@ public class MapInfoPanel extends InfoPanel {
     defendBtn.addActionListener(listener);
     defendBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
     defendBtn.setToolTipText("Defend sector, +5% accuracy");
-    fixFleetBtn = new SpaceButton("Fix fleet", GameCommands.COMMAND_FIX_FLEET);
-    fixFleetBtn.addActionListener(listener);
-    fixFleetBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    fixFleetBtn.setToolTipText("Fix fleet on hull point per turn.");
+    fixTradeFleetBtn = new SpaceButton("Fix fleet",
+        GameCommands.COMMAND_FIX_FLEET);
+    fixTradeFleetBtn.addActionListener(listener);
+    fixTradeFleetBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    fixTradeFleetBtn.setToolTipText("Fix fleet on hull point per turn.");
+    fixTradeFleetBtn.setEnabled(true);
     this.add(textArea);
     viewBtn = new SpaceButton("View planet", GameCommands.COMMAND_VIEW_PLANET);
     viewBtn.addActionListener(listener);
@@ -176,7 +178,7 @@ public class MapInfoPanel extends InfoPanel {
     this.add(Box.createRigidArea(new Dimension(10, 10)));
     this.add(routeBtn);
     this.add(Box.createRigidArea(new Dimension(10, 10)));
-    this.add(fixFleetBtn);
+    this.add(fixTradeFleetBtn);
     this.add(Box.createRigidArea(new Dimension(10, 10)));
     this.add(defendBtn);
     this.add(Box.createRigidArea(new Dimension(10, 10)));
@@ -196,7 +198,7 @@ public class MapInfoPanel extends InfoPanel {
     this.viewBtn.setText("View planet");
     this.viewBtn.setActionCommand(GameCommands.COMMAND_VIEW_PLANET);
     this.defendBtn.setEnabled(false);
-    this.fixFleetBtn.setEnabled(false);
+    this.fixTradeFleetBtn.setEnabled(false);
     this.routeBtn.setEnabled(false);
     updatePanel(false);
   }
@@ -215,7 +217,7 @@ public class MapInfoPanel extends InfoPanel {
     }
     this.viewBtn.setEnabled(false);
     this.defendBtn.setEnabled(false);
-    this.fixFleetBtn.setEnabled(false);
+    this.fixTradeFleetBtn.setEnabled(false);
     this.routeBtn.setEnabled(false);
     updatePanel(false);
   }
@@ -235,7 +237,7 @@ public class MapInfoPanel extends InfoPanel {
     this.viewBtn.setText("View fleet");
     this.viewBtn.setActionCommand(GameCommands.COMMAND_VIEW_FLEET);
     this.defendBtn.setEnabled(true);
-    this.fixFleetBtn.setEnabled(true);
+    this.fixTradeFleetBtn.setEnabled(true);
     this.routeBtn.setEnabled(true);
     updatePanel(debug);
   }
@@ -257,7 +259,7 @@ public class MapInfoPanel extends InfoPanel {
     this.tile = null;
     this.viewBtn.setEnabled(false);
     this.defendBtn.setEnabled(false);
-    this.fixFleetBtn.setEnabled(false);
+    this.fixTradeFleetBtn.setEnabled(false);
     this.routeBtn.setEnabled(false);
     updatePanel(false);
   }
@@ -360,5 +362,40 @@ public class MapInfoPanel extends InfoPanel {
       textArea.setText("");
       this.repaint();
     }
+  }
+
+  /**
+   * Set Fix button. Button is always enabled after this.
+   */
+  public void setFixBtn() {
+    fixTradeFleetBtn.setText("Fix fleet");
+    fixTradeFleetBtn.setActionCommand(GameCommands.COMMAND_FIX_FLEET);
+    fixTradeFleetBtn.setToolTipText("Fix fleet on hull point per turn.");
+    fixTradeFleetBtn.setEnabled(true);
+  }
+
+  /**
+   * Set Trade button. Button is always enabled after this.
+   */
+  public void setTradeBtn() {
+    fixTradeFleetBtn.setText("Trade");
+    fixTradeFleetBtn.setActionCommand(GameCommands.COMMAND_TRADE_FLEET);
+    fixTradeFleetBtn.setToolTipText("Trade with nearby planet");
+    fixTradeFleetBtn.setEnabled(true);
+  }
+
+  /**
+   * Disable Fix/Trade button.
+   */
+  public void disableFixTradeBtn() {
+    fixTradeFleetBtn.setEnabled(false);
+  }
+
+  /**
+   * Get Fix/Trade button
+   * @return Fix/Trade button
+   */
+  protected SpaceButton getFixTradeBtn() {
+    return fixTradeFleetBtn;
   }
 }

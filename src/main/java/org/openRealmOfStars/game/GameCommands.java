@@ -65,6 +65,10 @@ public final class GameCommands {
    */
   public static final String COMMAND_FIX_FLEET = "FixFleetCommand";
   /**
+   * Trade fleet command
+   */
+  public static final String COMMAND_TRADE_FLEET = "TradeFleetCommand";
+  /**
    * Route fleet command
    */
   public static final String COMMAND_ROUTE_FLEET = "RouteFleetCommand";

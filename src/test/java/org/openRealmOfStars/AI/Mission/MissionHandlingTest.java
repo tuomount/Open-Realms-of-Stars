@@ -9,8 +9,12 @@ import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.Diplomacy;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;
@@ -205,6 +209,10 @@ public class MissionHandlingTest {
     Planet planetTrader = Mockito.mock(Planet.class);
     Mockito.when(planetTrader.getName()).thenReturn("Trader I");
     Mockito.when(planetTrader.getCoordinate()).thenReturn(new Coordinate(6, 5));
+    PlayerInfo owner = Mockito.mock(PlayerInfo.class);
+    MessageList msgList = Mockito.mock(MessageList.class);
+    Mockito.when(owner.getMsgList()).thenReturn(msgList);
+    Mockito.when(planetTrader.getPlanetPlayerInfo()).thenReturn(owner);
     Planet planetHome = Mockito.mock(Planet.class);
     Mockito.when(planetHome.getName()).thenReturn("Homeworld I");
     Mockito.when(planetHome.getCoordinate()).thenReturn(new Coordinate(10, 10));
@@ -212,7 +220,13 @@ public class MissionHandlingTest {
         Mockito.anyInt())).thenReturn(planetTrader);
     Mockito.when(map.getPlanetByName("Trader I")).thenReturn(planetTrader);
     Mockito.when(map.getPlanetByName("Homeworld I")).thenReturn(planetHome);
+    DiplomacyBonusList diplomacyList = Mockito.mock(DiplomacyBonusList.class);
+    Mockito.when(diplomacyList.isBonusType(DiplomacyBonusType.IN_ALLIANCE)).thenReturn(true);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(diplomacy.getDiplomacyList(Mockito.anyInt())).thenReturn(diplomacyList);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(info.getMsgList()).thenReturn(msgList);
     Mission mission = new Mission(MissionType.TRADE_FLEET, MissionPhase.LOADING,
         new Coordinate(6, 5));
     mission.setTargetPlanet("Trader I");
@@ -229,12 +243,19 @@ public class MissionHandlingTest {
     Mockito.when(hull.getHullType()).thenReturn(ShipHullType.NORMAL);
     Mockito.when(ship.getHull()).thenReturn(hull);
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(20);
+    Mockito.when(ship.doTrade(planetTrader, info)).thenReturn(10);
     Fleet fleet = new Fleet(ship, 5, 5);
     FleetList fleetList = new FleetList();
     fleetList.add(fleet);
     Mockito.when(info.getFleets()).thenReturn(fleetList);
     Game game = Mockito.mock(Game.class);
     Mockito.when(game.getStarMap()).thenReturn(map);
+    MissionHandling.handleTrade(mission, fleet, info, game);
+    assertEquals(MissionPhase.LOADING, mission.getPhase());
+    Mockito.when(diplomacy.getDiplomacyList(Mockito.anyInt())).thenReturn(null);
+    MissionHandling.handleTrade(mission, fleet, info, game);
+    assertEquals(MissionPhase.TREKKING, mission.getPhase());
+    fleet.setPos(new Coordinate(10, 10));
     MissionHandling.handleTrade(mission, fleet, info, game);
     assertEquals(MissionPhase.LOADING, mission.getPhase());
   }

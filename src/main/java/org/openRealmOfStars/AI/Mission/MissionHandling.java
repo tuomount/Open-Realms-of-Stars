@@ -6,17 +6,21 @@ import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameState;
 import org.openRealmOfStars.game.States.PlanetBombingView;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -349,9 +353,41 @@ public final class MissionHandling {
         makeReroute(game, fleet, info, mission);
       }
       if (mission.getPhase() == MissionPhase.EXECUTING) {
-        //TODO: Do trade here
         Planet previousTarget = game.getStarMap()
             .getPlanetByCoordinate(mission.getX(), mission.getY());
+        int playerIndex = previousTarget.getPlanetOwnerIndex();
+        DiplomacyBonusList diplomacy = info.getDiplomacy().getDiplomacyList(
+            playerIndex);
+        if (diplomacy != null
+          && (diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)
+          || diplomacy.isBonusType(DiplomacyBonusType.IN_ALLIANCE))) {
+          int credits = fleet.doTrade(previousTarget, info) / 2;
+          if (credits > 0) {
+            info.setTotalCredits(info.getTotalCredits() + credits);
+            previousTarget.getPlanetPlayerInfo().setTotalCredits(
+                previousTarget.getPlanetPlayerInfo().getTotalCredits()
+                + credits);
+            Message msg = new Message(MessageType.PLANETARY,
+                fleet.getName() + " made trade with " + previousTarget.getName()
+                + ". Each party gained " + credits + " credits.",
+                Icons.getIconByName(Icons.ICON_CREDIT));
+            msg.setCoordinate(previousTarget.getCoordinate());
+            info.getMsgList().addNewMessage(msg);
+            previousTarget.getPlanetPlayerInfo().getMsgList()
+                .addUpcomingMessage(msg);
+          }
+        } else {
+          int credits = fleet.doTrade(previousTarget, info);
+          if (credits > 0) {
+            info.setTotalCredits(info.getTotalCredits() + credits);
+            Message msg = new Message(MessageType.PLANETARY,
+                fleet.getName() + " come back to homeworld "
+                + previousTarget.getName() + " with " + credits + " credits.",
+                Icons.getIconByName(Icons.ICON_CREDIT));
+            msg.setCoordinate(previousTarget.getCoordinate());
+            info.getMsgList().addNewMessage(msg);
+          }
+        }
         if (mission.getTargetPlanet().equals(previousTarget.getName())) {
           Planet homePlanet = game.getStarMap().getPlanetByName(
               mission.getPlanetBuilding());

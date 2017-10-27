@@ -597,6 +597,18 @@ public class Fleet {
   }
 
   /**
+   * Trade fleet check. Fleet needs to contain one trade ship.
+   * @return True if fleet has one trade ship.
+   */
+  public boolean isTradeFleet() {
+    for (Ship ship : ships) {
+      if (ship.isTradeShip()) {
+        return true;
+      }
+    }
+    return false;
+  }
+  /**
    * Is Fleet colony fleet. Colony fleet contains only one ship,
    * where ship contains colony module
    * @return true if colony fleet.

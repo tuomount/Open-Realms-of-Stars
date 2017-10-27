@@ -1985,4 +1985,28 @@ public class StarMap {
     }
     return false;
   }
+
+  /**
+   * Get Planet next to a coordinate. Checks current coordinate
+   * and orthogonal sectors.
+   * @param coord Coordinate to check
+   * @return Planet or null
+   */
+  public Planet getPlanetNextToCoordinate(final Coordinate coord) {
+    Planet result = null;
+    result = getPlanetByCoordinate(coord.getX(), coord.getY());
+    if (result == null) {
+      result = getPlanetByCoordinate(coord.getX(), coord.getY() - 1);
+    }
+    if (result == null) {
+      result = getPlanetByCoordinate(coord.getX() + 1, coord.getY());
+    }
+    if (result == null) {
+      result = getPlanetByCoordinate(coord.getX(), coord.getY() + 1);
+    }
+    if (result == null) {
+      result = getPlanetByCoordinate(coord.getX() - 1, coord.getY());
+    }
+    return result;
+  }
 }

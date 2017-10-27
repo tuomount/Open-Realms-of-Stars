@@ -192,6 +192,32 @@ public class StarMapMouseListener extends MouseAdapter
     }
   }
 
+  /**
+   * Handle fix/trade button in mapinfo panel
+   * @param fleet Fleet which was just clicked
+   * @param owner Owner of the fleet
+   */
+  private void handleFixTradeButton(final Fleet fleet,
+      final PlayerInfo owner) {
+    if (!fleet.allFixed()) {
+      mapInfoPanel.setFixBtn();
+    } else if (fleet.isTradeFleet()) {
+      Planet nearByPlanet = starMap.getPlanetNextToCoordinate(
+          fleet.getCoordinate());
+      if (nearByPlanet != null
+          && nearByPlanet.getPlanetPlayerInfo() != null) {
+        mapInfoPanel.setTradeBtn();
+      } else {
+        mapInfoPanel.disableFixTradeBtn();
+      }
+    } else {
+      mapInfoPanel.disableFixTradeBtn();
+    }
+    if (!owner.isHuman()) {
+      mapInfoPanel.disableFixTradeBtn();
+    }
+  }
+
   @Override
   public void mouseClicked(final MouseEvent e) {
     setDoubleClicked(false);
@@ -229,6 +255,7 @@ public class StarMapMouseListener extends MouseAdapter
                 tiles[fleet.getX()][fleet.getY()].getPlayerIndex());
             setLastClickedFleet(fleet);
             mapInfoPanel.showFleet(fleet, owner, starMap.isDebug());
+            handleFixTradeButton(fleet, owner);
           }
         } else if (e.getClickCount() == 1
             && e.getButton() == MouseEvent.BUTTON3) {
@@ -257,6 +284,7 @@ public class StarMapMouseListener extends MouseAdapter
             if (detection >= fleet.getFleetCloackingValue()
                   || owner == starMap.getCurrentPlayerInfo()) {
               mapInfoPanel.showFleet(fleet, owner, starMap.isDebug());
+              handleFixTradeButton(fleet, owner);
               setLastClickedFleet(fleet);
               setLastClickedPlanet(null);
             } else {
@@ -281,6 +309,7 @@ public class StarMapMouseListener extends MouseAdapter
             if (detection >= fleet.getFleetCloackingValue()
                 || owner == starMap.getCurrentPlayerInfo()) {
               mapInfoPanel.showFleet(fleet, owner, starMap.isDebug());
+              handleFixTradeButton(fleet, owner);
               setLastClickedFleet(fleet);
             } else {
               if (!tile.getDescription().isEmpty()) {

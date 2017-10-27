@@ -1522,6 +1522,17 @@ private int increaseDefenseValueWithJammer() {
   }
 
   /**
+   * Is Trade ship? Colony and trooper is not trade ship.
+   * @return True for trade ship otherwise false.
+   */
+  public boolean isTradeShip() {
+    if (getHull().getHullType() == ShipHullType.FREIGHTER
+        && !isColonyModule() && !isTrooperModule()) {
+      return true;
+    }
+    return false;
+  }
+  /**
    * Do trade with planet if trade ship.
    * Not this does not check diplomatic relationships.
    * @param planet Planet to do trade
@@ -1530,9 +1541,7 @@ private int increaseDefenseValueWithJammer() {
    */
   public int doTrade(final Planet planet, final PlayerInfo trader) {
     int credit = 0;
-    if (getHull().getHullType() == ShipHullType.FREIGHTER
-        && !isColonyModule() && !isTrooperModule()
-        && planet.getPlanetPlayerInfo() != null) {
+    if (isTradeShip() && planet.getPlanetPlayerInfo() != null) {
       if (tradeCoordinates != null
           && !tradeCoordinates.sameAs(planet.getCoordinate())) {
         int distance = 0;

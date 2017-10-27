@@ -112,6 +112,7 @@ public class FleetTest {
     Mockito.when(ship.getName()).thenReturn("Trader");
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);
     Mockito.when(ship.getCulture()).thenReturn(0);
+    Mockito.when(ship.isTradeShip()).thenReturn(true);
     return ship;
   }
 
@@ -215,6 +216,7 @@ public class FleetTest {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(ship.doTrade(planet, info)).thenReturn(2);
     assertEquals(2, fleet.doTrade(planet, info));
+    assertEquals(true, fleet.isTradeFleet());
   }
 
   @Test
@@ -277,6 +279,7 @@ public class FleetTest {
     assertEquals(1, fleet.getCulturalValue());
     assertEquals(35,fleet.getMilitaryValue());
     assertEquals(22, fleet.getFleetCloackingValue());
+    assertEquals(false, fleet.isTradeFleet());
   }
 
 }

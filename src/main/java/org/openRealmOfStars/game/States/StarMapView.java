@@ -364,6 +364,16 @@ public class StarMapView extends BlackPanel {
           fleet.getY(), Route.ROUTE_FIX));
       infoPanel.updatePanel(map.isDebug());
     }
+    if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_TRADE_FLEET)
+        && getStarMapMouseListener().getLastClickedFleet() != null
+        && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
+      Fleet fleet = getStarMapMouseListener().getLastClickedFleet();
+      Planet planet = map.getPlanetNextToCoordinate(fleet.getCoordinate());
+      fleet.doTrade(planet, infoPanel.getFleetOwner());
+      // TODO: Chaing menu sound later
+      SoundPlayer.playMenuSound();
+    }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_ROUTE_FLEET)
         && getStarMapMouseListener().getLastClickedFleet() != null

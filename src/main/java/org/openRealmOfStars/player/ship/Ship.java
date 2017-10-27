@@ -1561,7 +1561,7 @@ private int increaseDefenseValueWithJammer() {
           tradeCoordinates = planet.getCoordinate();
         }
         credit = distance / 10;
-        if (credit < 1) {
+        if (credit < 1 && distance > 1) {
           credit = 1;
         }
         if (credit > 20) {

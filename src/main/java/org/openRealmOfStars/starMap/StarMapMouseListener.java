@@ -9,6 +9,8 @@ import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
@@ -197,7 +199,7 @@ public class StarMapMouseListener extends MouseAdapter
    * @param fleet Fleet which was just clicked
    * @param owner Owner of the fleet
    */
-  private void handleFixTradeButton(final Fleet fleet,
+  public void handleFixTradeButton(final Fleet fleet,
       final PlayerInfo owner) {
     if (!fleet.allFixed()) {
       mapInfoPanel.setFixBtn();
@@ -207,6 +209,12 @@ public class StarMapMouseListener extends MouseAdapter
       if (nearByPlanet != null
           && nearByPlanet.getPlanetPlayerInfo() != null) {
         mapInfoPanel.setTradeBtn();
+        int index = nearByPlanet.getPlanetOwnerIndex();
+        DiplomacyBonusList list = owner.getDiplomacy().getDiplomacyList(index);
+        if (!list.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
+            && !list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)) {
+          mapInfoPanel.disableFixTradeBtn();
+        }
       } else {
         mapInfoPanel.disableFixTradeBtn();
       }

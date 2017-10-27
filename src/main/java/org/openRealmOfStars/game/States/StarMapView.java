@@ -276,23 +276,7 @@ public class StarMapView extends BlackPanel {
     PlayerInfo owner = players.getPlayerInfoByIndex(
         tiles[fleet.getX()][fleet.getY()].getPlayerIndex());
     infoPanel.showFleet(fleet, owner, map.isDebug());
-    if (!fleet.allFixed()) {
-      infoPanel.setFixBtn();
-    } else if (fleet.isTradeFleet()) {
-      Planet nearByPlanet = map.getPlanetNextToCoordinate(
-          fleet.getCoordinate());
-      if (nearByPlanet != null
-          && nearByPlanet.getPlanetPlayerInfo() != null) {
-        infoPanel.setTradeBtn();
-      } else {
-        infoPanel.disableFixTradeBtn();
-      }
-    } else {
-      infoPanel.disableFixTradeBtn();
-    }
-    if (!owner.isHuman()) {
-      infoPanel.disableFixTradeBtn();
-    }
+    starMapMouseListener.handleFixTradeButton(fleet, owner);
   }
 
   /**

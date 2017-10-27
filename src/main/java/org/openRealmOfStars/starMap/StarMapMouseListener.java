@@ -211,7 +211,7 @@ public class StarMapMouseListener extends MouseAdapter
         mapInfoPanel.setTradeBtn();
         int index = nearByPlanet.getPlanetOwnerIndex();
         DiplomacyBonusList list = owner.getDiplomacy().getDiplomacyList(index);
-        if (!list.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
+        if (list != null && !list.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
             && !list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)) {
           mapInfoPanel.disableFixTradeBtn();
         }

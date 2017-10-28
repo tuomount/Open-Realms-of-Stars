@@ -206,9 +206,25 @@ public class Mission {
 
   @Override
   public String toString() {
-    return getType().toString() + " - " + getPhase().toString() + "\nPlanet:"
-        + getPlanetBuilding() + "\nFleet:" + getFleetName() + "\nSolar:"
-        + getSunName();
+    StringBuilder sb = new StringBuilder();
+    sb.append(getType().toString());
+    sb.append(" - ");
+    sb.append(getPhase().toString());
+    sb.append("\nPlanet:");
+    sb.append(getPlanetBuilding());
+    sb.append("\nFleet:");
+    sb.append(getFleetName());
+    if (type == MissionType.EXPLORE) {
+      sb.append("\nSolar:");
+      sb.append(getSunName());
+    }
+    if (type == MissionType.GATHER) {
+      sb.append("\nGather planet:");
+      sb.append(getPlanetGathering());
+      sb.append("\nShiptype:");
+      sb.append(getShipType());
+    }
+    return sb.toString();
   }
 
   /**

@@ -4,6 +4,8 @@ import java.awt.KeyEventDispatcher;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
+import org.openRealmOfStars.AI.Mission.MissionList;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -97,6 +99,16 @@ public class GameKeyAdapter implements KeyEventDispatcher {
       if (arg0.getKeyCode() == KeyEvent.VK_P
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
         game.getStarMap().nextPlayer();
+        return true;
+      }
+      if (arg0.getKeyCode() == KeyEvent.VK_M
+          && arg0.getID() == KeyEvent.KEY_PRESSED) {
+        PlayerInfo info = game.getStarMap().getCurrentPlayerInfo();
+        MissionList list = info.getMissions();
+        if (list != null) {
+          System.out.println(info.getEmpireName() + " missions\n");
+          System.out.println(list.toString());
+        }
         return true;
       }
       if (arg0.getKeyCode() == KeyEvent.VK_NUMPAD7

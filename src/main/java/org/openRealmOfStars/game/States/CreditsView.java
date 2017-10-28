@@ -125,7 +125,12 @@ public class CreditsView extends BlackPanel {
       + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n"
       + "Nautilus by\n"
-      + "poinl (CC0)\n\n";
+      + "poinl (CC0)\n\n"
+      + "Brave Space Explorers by\n"
+      + "Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov\n"
+      + "Licensed under CC BY 4.0 "
+      + "http://creativecommons.org/licenses/by/4.0/\n\n";
+
 
 
   /**

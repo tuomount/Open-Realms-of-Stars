@@ -80,6 +80,13 @@ public final class MusicPlayer {
       "/resources/musics/Neon Transit.ogg");
 
   /**
+   * Brave Space Explorers By Alexandr Zhelanov CC-BY 3.0
+   */
+  public static final MusicFileInfo BRAVE_SPACE_EXPLORERS = new MusicFileInfo(
+      "Brave Space Explorers", "Alexandr Zhelanov",
+      "/resources/musics/Brave Space Explorers.ogg");
+
+  /**
    * Thrust Sequence By Matthew Pablo CC-BY 3.0
    */
   public static final MusicFileInfo THRUST_SEQUENCE = new MusicFileInfo(
@@ -90,7 +97,7 @@ public final class MusicPlayer {
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,
-      MILLION_LIGHT_YEARS, NAUTILUS};
+      MILLION_LIGHT_YEARS, NAUTILUS, BRAVE_SPACE_EXPLORERS};
   /**
    * List of music to played while combat
    */

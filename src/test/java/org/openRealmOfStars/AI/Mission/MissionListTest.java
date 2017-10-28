@@ -48,6 +48,28 @@ public class MissionListTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testDestroyStarbaseMission() {
+    MissionList list = new MissionList();
+    Mission mission = Mockito.mock(Mission.class);
+    Mockito.when(mission.getType()).thenReturn(MissionType.DESTROY_STARBASE);
+    Mockito.when(mission.getTargetPlanet()).thenReturn("Target I");
+    list.add(mission);
+    assertEquals(mission, list.getDestroyStarbaseMission("Target I"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAttackMission() {
+    MissionList list = new MissionList();
+    Mission mission = Mockito.mock(Mission.class);
+    Mockito.when(mission.getType()).thenReturn(MissionType.ATTACK);
+    Mockito.when(mission.getTargetPlanet()).thenReturn("Target I");
+    list.add(mission);
+    assertEquals(mission, list.getAttackMission("Target I"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testGatherMissions() {
     MissionList list = new MissionList();
     Mission mission = Mockito.mock(Mission.class);

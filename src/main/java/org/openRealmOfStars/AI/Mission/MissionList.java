@@ -153,6 +153,23 @@ public class MissionList {
   }
 
   /**
+   * Find a treade mission for certain planet
+   * @param name Planet where to trade
+   * @return Mission or null if not found
+   */
+  public Mission getTradeMission(final String name) {
+    for (Mission mission : missions) {
+      if (mission.getTargetPlanet() != null
+          && mission.getTargetPlanet().equals(name)
+          && mission.getType() == MissionType.TRADE_FLEET) {
+        return mission;
+      }
+    }
+    return null;
+
+  }
+
+  /**
    * Find a Destroy starbase mission for starbase.
    * Destory Starbase mission are recognized by coordinates
    * @param name Destroy Starbase coordinates
@@ -222,7 +239,7 @@ public class MissionList {
   }
 
   /**
-   * Get mission for planet
+   * Get mission for planet building ship
    * @param planetName The planet name
    * @param type MissionType
    * @return Mission or null if not found

@@ -529,6 +529,12 @@ public final class PlanetHandling {
               mission.setPhase(MissionPhase.BUILDING);
               mission.setPlanetBuilding(planet.getName());
             }
+            mission = info.getMissions().getMission(MissionType.TRADE_FLEET,
+                MissionPhase.PLANNING);
+            if (mission != null && ship.isTradeShip()) {
+              mission.setPhase(MissionPhase.BUILDING);
+              mission.setPlanetBuilding(planet.getName());
+            }
             mission = info.getMissions().getGatherMission(Mission.TROOPER_TYPE);
             if (ship.isTrooperModule() && mission != null) {
               mission.setPlanetBuilding(planet.getName());

@@ -70,6 +70,17 @@ public class MissionListTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTradeMission() {
+    MissionList list = new MissionList();
+    Mission mission = Mockito.mock(Mission.class);
+    Mockito.when(mission.getType()).thenReturn(MissionType.TRADE_FLEET);
+    Mockito.when(mission.getTargetPlanet()).thenReturn("Target I");
+    list.add(mission);
+    assertEquals(mission, list.getTradeMission("Target I"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testGatherMissions() {
     MissionList list = new MissionList();
     Mission mission = Mockito.mock(Mission.class);

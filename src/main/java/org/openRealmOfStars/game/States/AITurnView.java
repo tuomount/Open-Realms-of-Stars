@@ -444,6 +444,22 @@ public class AITurnView extends BlackPanel {
       addGatherMission(info, mission);
     }
   }
+  /**
+   * Adding trade mission to mission list
+   * @param planet Planet where to trade
+   * @param info Player who is trading
+   */
+  public void addTradeMission(final Planet planet, final PlayerInfo info) {
+    // New planet to trade, adding it to mission list
+    Mission mission = new Mission(MissionType.TRADE_FLEET,
+        MissionPhase.PLANNING, planet.getCoordinate());
+      mission.setTarget(planet.getCoordinate());
+      mission.setTargetPlanet(planet.getName());
+    if (info.getMissions().getTradeMission(planet.getName()) == null) {
+      // No trade mission for this planet found, so adding it.
+      info.getMissions().add(mission);
+    }
+  }
 
   /**
    * Adding Destroy Starbase mission to mission list
@@ -632,6 +648,13 @@ public class AITurnView extends BlackPanel {
                 MissionHandling.handleDiplomacyBetweenAis(game, info,
                     ownerIndex, null);
               }
+              if (list != null
+                  && (list.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
+                  || list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE))) {
+                // Got new map part maybe in trade and found planet owned by
+                // player which is being in alliance
+                addTradeMission(planet, info);
+              }
             }
           }
           if (info.getSectorVisibility(planet.getCoordinate())
@@ -647,6 +670,13 @@ public class AITurnView extends BlackPanel {
                 // Got new map part maybe in trade and found planet owned by
                 // player which is being at war now.
                 addAttackMission(planet, info);
+              }
+              if (list != null
+                  && (list.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
+                  || list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE))) {
+                // Got new map part maybe in trade and found planet owned by
+                // player which is being in alliance
+                addTradeMission(planet, info);
               }
             } else {
               if (planet.getRadiationLevel() <= info.getRace().getMaxRad()

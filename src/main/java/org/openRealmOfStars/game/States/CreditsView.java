@@ -123,7 +123,9 @@ public class CreditsView extends BlackPanel {
       + "Thrust Sequence by\n"
       + "Matthew Pablo http://www.matthewpablo.com\n"
       + "Licensed under CC BY 3.0 "
-      + "http://creativecommons.org/licenses/by/3.0/\n\n";
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Nautilus by\n"
+      + "poinl (CC0)\n\n";
 
 
   /**

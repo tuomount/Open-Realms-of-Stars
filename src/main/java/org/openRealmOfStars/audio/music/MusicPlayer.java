@@ -66,6 +66,13 @@ public final class MusicPlayer {
       "/resources/musics/A million light years between us.ogg");
 
   /**
+   * Nautilus By poinl CC0
+   */
+  public static final MusicFileInfo NAUTILUS = new MusicFileInfo(
+      "Nautilus", "poinl",
+      "/resources/musics/ambient2_Nautilus.ogg");
+
+  /**
    * Neon Transit By Alexandr Zhelanov CC-BY 3.0
    */
   public static final MusicFileInfo NEON_TRANSIT = new MusicFileInfo(
@@ -83,7 +90,7 @@ public final class MusicPlayer {
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,
-      MILLION_LIGHT_YEARS};
+      MILLION_LIGHT_YEARS, NAUTILUS};
   /**
    * List of music to played while combat
    */

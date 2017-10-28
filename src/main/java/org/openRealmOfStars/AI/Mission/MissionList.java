@@ -292,4 +292,19 @@ public class MissionList {
     }
     return null;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    int i = 0;
+    for (Mission mission : missions) {
+      sb.append("Mission ");
+      sb.append(i);
+      sb.append(":\n");
+      sb.append(mission.toString());
+      sb.append("\n\n");
+      i++;
+    }
+    return sb.toString();
+  }
 }

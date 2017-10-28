@@ -171,11 +171,11 @@ public class MissionList {
   }
 
   /**
-   * Find a Gather missions for certain planet and only one attack
+   * Find a Gather missions for certain planet.
    * @param planetName Planet where to attack
-   * @return true if only one attack mission found
+   * @return true if no gather mission found
    */
-  public boolean isAttackMissionLast(final String planetName) {
+  public boolean noMoreGatherMissions(final String planetName) {
     int count = 0;
     for (Mission mission : missions) {
       if (mission.getType() == MissionType.GATHER

@@ -184,7 +184,7 @@ public class MissionHandlingTest {
     MissionList missionList = Mockito.mock(MissionList.class);
     Mockito.when(missionList.getMissionForFleet(Mockito.anyString()))
         .thenReturn(null);
-    Mockito.when(missionList.isAttackMissionLast(Mockito.anyString()))
+    Mockito.when(missionList.noMoreGatherMissions(Mockito.anyString()))
     .thenReturn(true);
     Mockito.when(info.getMissions()).thenReturn(missionList);
     Ship ship = Mockito.mock(Ship.class);
@@ -234,7 +234,7 @@ public class MissionHandlingTest {
     MissionList missionList = Mockito.mock(MissionList.class);
     Mockito.when(missionList.getMissionForFleet(Mockito.anyString()))
         .thenReturn(null);
-    Mockito.when(missionList.isAttackMissionLast(Mockito.anyString()))
+    Mockito.when(missionList.noMoreGatherMissions(Mockito.anyString()))
     .thenReturn(true);
     Mockito.when(info.getMissions()).thenReturn(missionList);
     Ship ship = Mockito.mock(Ship.class);

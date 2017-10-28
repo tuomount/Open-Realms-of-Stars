@@ -503,7 +503,7 @@ public final class MissionHandling {
     if (mission != null && mission.getType() == MissionType.ATTACK) {
       if (mission.getPhase() == MissionPhase.PLANNING
           && mission.getTargetPlanet() != null && info.getMissions()
-              .isAttackMissionLast(mission.getTargetPlanet())) {
+              .noMoreGatherMissions(mission.getTargetPlanet())) {
         int bombers = 0;
         int trooper = 0;
         int military = 0;
@@ -628,7 +628,7 @@ public final class MissionHandling {
     if (mission != null && mission.getType() == MissionType.DESTROY_STARBASE) {
       if (mission.getPhase() == MissionPhase.PLANNING
           && mission.getTargetPlanet() != null && info.getMissions()
-              .isAttackMissionLast(mission.getTargetPlanet())) {
+              .noMoreGatherMissions(mission.getTargetPlanet())) {
           mission.setPhase(MissionPhase.TREKKING);
       }
       if (mission.getPhase() == MissionPhase.TREKKING

@@ -210,13 +210,21 @@ public class Mission {
     sb.append(getType().toString());
     sb.append(" - ");
     sb.append(getPhase().toString());
-    sb.append("\nPlanet:");
+    sb.append("\nBuilding Planet:");
     sb.append(getPlanetBuilding());
     sb.append("\nFleet:");
     sb.append(getFleetName());
     if (type == MissionType.EXPLORE) {
       sb.append("\nSolar:");
       sb.append(getSunName());
+    }
+    if (type == MissionType.ATTACK) {
+      sb.append("\nTarget planet:");
+      sb.append(getTargetPlanet());
+    }
+    if (type == MissionType.TRADE_FLEET) {
+      sb.append("\nTarget planet:");
+      sb.append(getTargetPlanet());
     }
     if (type == MissionType.GATHER) {
       sb.append("\nGather planet:");

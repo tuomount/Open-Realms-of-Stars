@@ -46,16 +46,17 @@ public class MissionTest {
     mission.setMissionTime(1);
     mission.setPlanetBuilding("Test building");
     mission.setSunName("Test Sun");
+    mission.setTargetPlanet("Test target");
     assertEquals("Attack - Planning\n"
-        + "Planet:Test building\n"
-        + "Fleet:Test Fleet", mission.toString());
+        + "Building Planet:Test building\n"
+        + "Fleet:Test Fleet\n"
+        + "Target planet:Test target", mission.toString());
     assertEquals("Test Fleet",mission.getFleetName());
     assertEquals(1,mission.getMissionTime());
     assertEquals("Test building",mission.getPlanetBuilding());
     assertEquals("",mission.getSunName());
     mission.setPhase(MissionPhase.TREKKING);
     assertEquals(MissionPhase.TREKKING,mission.getPhase());
-    mission.setTargetPlanet("Test target");
     assertEquals("Test target", mission.getTargetPlanet());
     mission.setType(MissionType.COLONIZE);
     assertEquals(MissionType.COLONIZE,mission.getType());
@@ -80,7 +81,7 @@ public class MissionTest {
     mission.setSunName("Test Sun");
     mission.setPlanetGathering("Gather Test");
     assertEquals("Explore - Planning\n"
-        + "Planet:Test building\n"
+        + "Building Planet:Test building\n"
         + "Fleet:Test Fleet\n"
         + "Solar:Test Sun", mission.toString());
     assertEquals(null, mission.getPlanetGathering());
@@ -102,10 +103,31 @@ public class MissionTest {
     mission.setPlanetGathering("Gather Test");
     assertEquals("Gather Test", mission.getPlanetGathering());
     assertEquals("Gather - Traveling\n"
-        + "Planet:Test building\n"
+        + "Building Planet:Test building\n"
         + "Fleet:Test Fleet\n"
         + "Gather planet:Gather Test\n"
         + "Shiptype:TestShip", mission.toString());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTradeMission() {
+    Coordinate coordinate = Mockito.mock(Coordinate.class);
+    Mockito.when(coordinate.getX()).thenReturn(3);
+    Mockito.when(coordinate.getY()).thenReturn(5);
+    Mission mission = new Mission(MissionType.TRADE_FLEET, MissionPhase.PLANNING,
+        coordinate); 
+    assertEquals(MissionType.TRADE_FLEET, mission.getType());
+    assertEquals(MissionPhase.PLANNING, mission.getPhase());
+    assertEquals(0,mission.getMissionTime());
+    mission.setFleetName("Test Fleet");
+    mission.setMissionTime(1);
+    mission.setPlanetBuilding("Test building");
+    mission.setTargetPlanet("Target I");
+    assertEquals("Trade fleet - Planning\n"
+        + "Building Planet:Test building\n"
+        + "Fleet:Test Fleet\n"
+        + "Target planet:Target I", mission.toString());
   }
 
 }

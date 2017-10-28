@@ -320,12 +320,14 @@ public class AITurnView extends BlackPanel {
           MissionPhase.PLANNING, coord);
       gatherMission.setPlanetGathering(mission.getPlanetBuilding());
       gatherMission.setShipType(Mission.ASSAULT_SB_TYPE);
+      gatherMission.setTargetPlanet(mission.getTargetPlanet());
       return gatherMission;
     }
     Mission gatherMission = new Mission(MissionType.GATHER,
         MissionPhase.PLANNING, coord);
     gatherMission.setPlanetGathering(mission.getPlanetBuilding());
     gatherMission.setShipType(shipType);
+    gatherMission.setTargetPlanet(mission.getTargetPlanet());
     return gatherMission;
   }
 

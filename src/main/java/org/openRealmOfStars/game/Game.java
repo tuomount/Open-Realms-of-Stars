@@ -375,6 +375,7 @@ public class Game implements ActionListener {
           StarMapUtilities.addWarDeclatingRepuation(starMap, info);
           starMap.getNewsCorpData().addNews(NewsFactory.makeWarNews(info,
               combat.getPlayer2(), planet, starMap));
+          trade.doTrades();
         }
         if (combat.isHumanPlayer()) {
           starMapView.setReadyToMove(false);

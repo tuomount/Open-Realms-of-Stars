@@ -60,14 +60,29 @@ public final class NewsFactory {
           Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetType()],
           ImageInstruction.SIZE_FULL);
     }
+    boolean surpriseAttack = false;
+    if (map != null) {
+      int defenderIndex = map.getPlayerList().getIndex(defender);
+      if (!aggressor.getDiplomacy().isWar(defenderIndex)) {
+        surpriseAttack = true;
+      }
+    }
     switch (DiceGenerator.getRandom(2)) {
       case 0:
       default: {
-        instructions.addText("WAR DECLARATION!");
+        if (surpriseAttack) {
+          instructions.addText("SUPRPISE ATTACK!");
+        } else {
+          instructions.addText("WAR DECLARATION!");
+        }
         break;
       }
       case 1: {
-        instructions.addText("WAR!");
+        if (surpriseAttack) {
+          instructions.addText("MILITARY ACTIONS!");
+        } else {
+          instructions.addText("WAR!");
+        }
         break;
       }
       case 2: {
@@ -86,7 +101,11 @@ public final class NewsFactory {
     sb.append("! ");
     if (meetingPlace instanceof Planet) {
       Planet planet = (Planet) meetingPlace;
-      sb.append("This meeting happened in ");
+      if (surpriseAttack) {
+        sb.append("This attack happened in ");
+      } else {
+        sb.append("This meeting happened in ");
+      }
       sb.append(planet.getName());
       if (planet.getPlanetPlayerInfo() != null) {
         sb.append(", which is owned by ");
@@ -94,7 +113,11 @@ public final class NewsFactory {
         sb.append(". ");
       }
     } else {
-      sb.append("This meeting happened in deep space. ");
+      if (surpriseAttack) {
+        sb.append("This attack happened in deep space. ");
+      } else {
+        sb.append("This meeting happened in deep space. ");
+      }
     }
     Attitude attitude = aggressor.getAiAttitude();
     if (attitude == Attitude.AGGRESSIVE) {

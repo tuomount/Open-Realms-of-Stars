@@ -779,6 +779,8 @@ public class DiplomacyView extends BlackPanel {
       SpeechLine speechSelected = humanLines.getSelectedValue();
       if (speechSelected != null
           && speechSelected.getType() == SpeechType.AGREE) {
+        trade.doTrades();
+        tradeHappened = true;
         if (trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
           StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
           starMap.getNewsCorpData().addNews(
@@ -797,8 +799,6 @@ public class DiplomacyView extends BlackPanel {
           starMap.getNewsCorpData().addNews(
               NewsFactory.makePeaceNews(ai, human, meetingPlace));
         }
-        trade.doTrades();
-        tradeHappened = true;
         updatePanel(SpeechType.OFFER_ACCEPTED);
         resetChoices();
       }

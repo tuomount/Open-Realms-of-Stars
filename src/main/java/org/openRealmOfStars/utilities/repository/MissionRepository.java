@@ -63,7 +63,7 @@ public class MissionRepository {
    * @param index The mission type index
    * @return Mission Type, never null
    */
-  private static MissionType getTypeIndex(final int index) {
+  protected static MissionType getTypeIndex(final int index) {
     switch (index) {
     case 0:
       return MissionType.EXPLORE;
@@ -95,7 +95,7 @@ public class MissionRepository {
    * @param index The mission phase index
    * @return Mission phase, never null
    */
-  private static MissionPhase getPhaseIndex(final int index) {
+  protected static MissionPhase getPhaseIndex(final int index) {
     switch (index) {
     case 0:
       return MissionPhase.BUILDING;

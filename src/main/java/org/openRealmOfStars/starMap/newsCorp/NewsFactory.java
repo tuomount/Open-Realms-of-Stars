@@ -41,7 +41,8 @@ public final class NewsFactory {
   /**
    * Make War news. Aggressor makes war declaration to defender.
    * This diplomatic meeting happened in meeting place which
-   * can be planet or fleet.
+   * can be planet or fleet. Attack is consider surprise attack if
+   * there is no war between two parties when makeWarNews is called.
    * @param aggressor Player who is declaring the war
    * @param defender Player who is defending
    * @param meetingPlace Where meeting happened, fleet or planet

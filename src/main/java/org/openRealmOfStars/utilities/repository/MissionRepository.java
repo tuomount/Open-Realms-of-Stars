@@ -77,7 +77,15 @@ public class MissionRepository {
       return MissionType.MOVE;
     case 5:
       return MissionType.GATHER;
+    case 6:
+      return MissionType.DEPLOY_STARBASE;
+    case 7:
+      return MissionType.DESTROY_STARBASE;
+    case 8:
+      return MissionType.TRADE_FLEET;
     default:
+      System.err.println("Warning: Unknown mission type: " + index
+          + ". Defaulting to explore.");
       return MissionType.EXPLORE;
     }
   }
@@ -100,6 +108,8 @@ public class MissionRepository {
     case 4:
       return MissionPhase.LOADING;
     default:
+      System.err.println("Warning: Unknown mission phase: " + index
+          + ". Defaulting to building.");
       return MissionPhase.BUILDING;
     }
   }

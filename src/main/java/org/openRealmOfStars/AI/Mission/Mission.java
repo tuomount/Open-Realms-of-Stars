@@ -210,10 +210,16 @@ public class Mission {
     sb.append(getType().toString());
     sb.append(" - ");
     sb.append(getPhase().toString());
+    sb.append("\nCoordinate:");
+    sb.append(targetCoordinate.getX());
+    sb.append(",");
+    sb.append(targetCoordinate.getY());
     sb.append("\nBuilding Planet:");
     sb.append(getPlanetBuilding());
     sb.append("\nFleet:");
     sb.append(getFleetName());
+    sb.append("\nTime:");
+    sb.append(getMissionTime());
     if (type == MissionType.EXPLORE) {
       sb.append("\nSolar:");
       sb.append(getSunName());

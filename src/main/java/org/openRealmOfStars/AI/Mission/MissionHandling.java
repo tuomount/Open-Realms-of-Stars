@@ -916,8 +916,14 @@ public final class MissionHandling {
             SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
             game.changeGameState(GameState.DIPLOMACY_VIEW, info);
           }
-        } else {
+        } else if (!info.isHuman()) {
           handleDiplomacyBetweenAis(game, info, index, null);
+        } else {
+          Message msg = new Message(MessageType.FLEET,
+              "Fleet encounter another fleet while moving in FTL!",
+              Icons.getIconByName(Icons.ICON_HULL_TECH));
+          msg.setCoordinate(fleet.getCoordinate());
+          info.getMsgList().addUpcomingMessage(msg);
         }
       }
     }

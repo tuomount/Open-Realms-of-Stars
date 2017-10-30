@@ -129,7 +129,12 @@ public class CreditsView extends BlackPanel {
       + "Brave Space Explorers by\n"
       + "Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov\n"
       + "Licensed under CC BY 4.0 "
-      + "http://creativecommons.org/licenses/by/4.0/\n\n";
+      + "http://creativecommons.org/licenses/by/4.0/\n\n"
+      + "Lost Signal by\n"
+      + "PetterTheSturgeon\n"
+      + "Licensed under CC BY 3.0 "
+      + "http://creativecommons.org/licenses/by/3.0/\n\n";
+
 
 
 

@@ -97,4 +97,8 @@ Brave Space Explorers by
 Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov
 Licensed under CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
 
+Lost Signal by
+PetterTheSturgeon
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
 

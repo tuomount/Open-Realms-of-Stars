@@ -73,6 +73,13 @@ public final class MusicPlayer {
       "/resources/musics/ambient2_Nautilus.ogg");
 
   /**
+   * Lost Signal By PetterTheSturgeon CC-BY 3.0
+   */
+  public static final MusicFileInfo LOST_SIGNAL = new MusicFileInfo(
+      "Lost SIgnal", "PetterTheSturgeon",
+      "/resources/musics/Lost signal main theme.ogg");
+
+  /**
    * Neon Transit By Alexandr Zhelanov CC-BY 3.0
    */
   public static final MusicFileInfo NEON_TRANSIT = new MusicFileInfo(
@@ -97,7 +104,7 @@ public final class MusicPlayer {
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,
-      MILLION_LIGHT_YEARS, NAUTILUS, BRAVE_SPACE_EXPLORERS};
+      MILLION_LIGHT_YEARS, NAUTILUS, BRAVE_SPACE_EXPLORERS, LOST_SIGNAL};
   /**
    * List of music to played while combat
    */

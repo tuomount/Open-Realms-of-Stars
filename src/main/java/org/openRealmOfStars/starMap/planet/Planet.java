@@ -1606,7 +1606,7 @@ public class Planet {
    */
   public boolean destroyOneBuilding() {
     if (buildings.size() > 0) {
-      int index = DiceGenerator.getRandom(getGroundSize());
+      int index = DiceGenerator.getRandom(getGroundSize() - 1);
       if (index < buildings.size()) {
         // Bomb hit on building
         Building building = buildings.get(index);

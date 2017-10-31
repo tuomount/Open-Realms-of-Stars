@@ -73,6 +73,21 @@ Radio call sound by
 Tuomo Untinen
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
+Starbase deploy sound
+Adaptation by Tuomo Untinen, original sounds by
+Lee Barkovich and Michel Baradari
+http://www.archive.org/details/Berklee44Barkovich http://www.lbarkovich.com/
+https://opengameart.org/content/robotic-mechanic-step-sounds
+https://opengameart.org/content/9-sci-fi-computer-sounds-and-beeps
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
+Ship repair sound
+Adaptation by Tuomo Untinen, original sounds by
+Lee Barkovich
+http://www.archive.org/details/Berklee44Barkovich http://www.lbarkovich.com/
+https://opengameart.org/content/robotic-mechanic-step-sounds
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
 # Musics By
 
 Observing The Star by

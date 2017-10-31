@@ -356,8 +356,7 @@ public class StarMapView extends BlackPanel {
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_FIX_FLEET)
         && getStarMapMouseListener().getLastClickedFleet() != null
         && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
-      // TODO: Chaing menu sound later
-      SoundPlayer.playMenuSound();
+      SoundPlayer.playSound(SoundPlayer.REPAIR);
       Fleet fleet = getStarMapMouseListener().getLastClickedFleet();
       // Make fleet to fix itself
       fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),

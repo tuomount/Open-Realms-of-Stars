@@ -584,8 +584,7 @@ public class FleetView extends BlackPanel {
               ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
               fleetList.recalculateList();
             }
-            // TODO Change should for something else
-            SoundPlayer.playMenuSound();
+            SoundPlayer.playSound(SoundPlayer.STARBASE);
             updatePanel();
           }
         }

@@ -113,6 +113,16 @@ public final class SoundPlayer {
   public static final String RADIO_CALL = "/resources/sounds/radiocall.wav";
 
   /**
+   * Sound effect for deploying starbase
+   */
+  public static final String STARBASE = "/resources/sounds/starbase.wav";
+
+  /**
+   * Sound effect for repairing fleets
+   */
+  public static final String REPAIR = "/resources/sounds/repair.wav";
+
+  /**
    * Is Sound enabled
    * @return True if sound enabled
    */

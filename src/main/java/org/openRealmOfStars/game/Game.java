@@ -105,7 +105,7 @@ public class Game implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.2.25Alpha";
+  public static final String GAME_VERSION = "0.2.26Alpha";
 
   /**
    * Animation timer used for animation
@@ -348,6 +348,7 @@ public class Game implements ActionListener {
     FleetTileInfo fleetTile = fleetTiles[fleet.getX()][fleet.getY()];
 
     // And making sure that fleet owner is actually make the move
+    //TODO possible NPE!!
     final boolean isSamePlayer =
             players.getIndex(info) == fleetTile.getPlayerIndex();
     final boolean isValidCoordinate = getStarMap().isValidCoordinate(nx, ny);

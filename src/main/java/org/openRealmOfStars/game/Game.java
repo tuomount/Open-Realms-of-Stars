@@ -349,8 +349,10 @@ public class Game implements ActionListener {
 
     // And making sure that fleet owner is actually make the move
     //TODO possible NPE!!
-    final boolean isSamePlayer =
-            players.getIndex(info) == fleetTile.getPlayerIndex();
+    boolean isSamePlayer = false;
+    if (fleetTile != null) {
+      isSamePlayer = players.getIndex(info) == fleetTile.getPlayerIndex();
+    }
     final boolean isValidCoordinate = getStarMap().isValidCoordinate(nx, ny);
     final boolean isMovesLeft = fleet.getMovesLeft() > 0;
     final boolean isNotBlocked = !getStarMap().isBlocked(nx, ny);

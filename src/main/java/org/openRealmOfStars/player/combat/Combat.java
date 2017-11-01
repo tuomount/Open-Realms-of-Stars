@@ -379,8 +379,10 @@ public boolean launchIntercept(final int distance,
   public void destroyShip(final CombatShip ship) {
     if (attackerFleet.isShipInFleet(ship.getShip())) {
       destroyShipFromFleet(ship, attackerFleet);
+      attackerInfo.getFleets().recalculateList();
     } else if (defenderFleet.isShipInFleet(ship.getShip())) {
       destroyShipFromFleet(ship, defenderFleet);
+      defenderInfo.getFleets().recalculateList();
     }
   }
 
@@ -668,72 +670,71 @@ public boolean launchIntercept(final int distance,
    * position.
    */
   public void handleEndCombat() {
-      PlayerInfo winnerPlayer;
-      PlayerInfo looserPlayer;
-      Fleet winnerFleet;
-      Fleet looserFleet;
-      boolean isWinnerAttacker;
-      boolean loserEscaped = false;
+    PlayerInfo winnerPlayer;
+    PlayerInfo looserPlayer;
+    Fleet winnerFleet;
+    Fleet looserFleet;
+    boolean isWinnerAttacker;
+    boolean loserEscaped = false;
     if (!endCombatHandled && winner != null) {
       if (attackerInfo == winner) {
-          winnerPlayer = attackerInfo;
-          looserPlayer = defenderInfo;
-          winnerFleet = attackerFleet;
-          looserFleet = defenderFleet;
-          loserEscaped = defenderHasEscaped();
-          isWinnerAttacker = true;
+        winnerPlayer = attackerInfo;
+        looserPlayer = defenderInfo;
+        winnerFleet = attackerFleet;
+        looserFleet = defenderFleet;
+        loserEscaped = defenderHasEscaped();
+        isWinnerAttacker = true;
       } else {
-          winnerPlayer = defenderInfo;
-          looserPlayer = attackerInfo;
-          winnerFleet = defenderFleet;
-          looserFleet = attackerFleet;
-          loserEscaped = attackerHasEscaped();
-          isWinnerAttacker = false;
+        winnerPlayer = defenderInfo;
+        looserPlayer = attackerInfo;
+        winnerFleet = defenderFleet;
+        looserFleet = attackerFleet;
+        loserEscaped = attackerHasEscaped();
+        isWinnerAttacker = false;
       }
-        endCombatHandled = true;
-        handleWinner(winnerFleet, winnerPlayer);
-        handleLoser(looserPlayer);
-        int looserIndex = looserPlayer.getFleets().
-                getIndexByName(looserFleet.getName());
-        if (looserIndex != -1 && !loserEscaped) {
-            looserPlayer.getFleets().remove(looserIndex);
-        }
-        if (loserEscaped && isWinnerAttacker) {
-          if (escapePosition != null) {
-            // Fleet escaped!!
-            Message msg = new Message(MessageType.FLEET,
-                looserFleet.getName() + " escaped from combat!",
-                    Icons.getIconByName(Icons.ICON_HULL_TECH));
-            msg.setCoordinate(looserFleet.getCoordinate());
-            looserPlayer.getMsgList().addUpcomingMessage(msg);
-            looserFleet.setPos(escapePosition);
-          } else {
-            // There is no position to defender escape so fleet is going
-            // to be destroyed
-            Message msg = new Message(MessageType.FLEET,
-                looserFleet.getName() + " tried to escape but failed."
-                    + " Fleet was destroyed!",
-                    Icons.getIconByName(Icons.ICON_DEATH));
-            msg.setCoordinate(looserFleet.getCoordinate());
-            looserPlayer.getMsgList().addUpcomingMessage(msg);
-            for (Ship ship : looserFleet.getShips()) {
-              ShipStat stat = looserPlayer.getShipStatByName(ship.getName());
-              if (stat != null) {
-                stat.setNumberOfLoses(stat.getNumberOfLoses() + 1);
-                stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
-              }
+      endCombatHandled = true;
+      handleWinner(winnerFleet, winnerPlayer);
+      handleLoser(looserPlayer);
+      int looserIndex = looserPlayer.getFleets().
+          getIndexByName(looserFleet.getName());
+      if (looserIndex != -1 && !loserEscaped) {
+        looserPlayer.getFleets().remove(looserIndex);
+      }
+      if (loserEscaped && isWinnerAttacker) {
+        if (escapePosition != null) {
+          // Fleet escaped!!
+          Message msg = new Message(MessageType.FLEET,
+              looserFleet.getName() + " escaped from combat!",
+              Icons.getIconByName(Icons.ICON_HULL_TECH));
+          msg.setCoordinate(looserFleet.getCoordinate());
+          looserPlayer.getMsgList().addUpcomingMessage(msg);
+          looserFleet.setPos(escapePosition);
+        } else {
+          // There is no position to defender escape so fleet is going
+          // to be destroyed
+          Message msg = new Message(MessageType.FLEET,
+              looserFleet.getName() + " tried to escape but failed."
+              + " Fleet was destroyed!",
+              Icons.getIconByName(Icons.ICON_DEATH));
+          msg.setCoordinate(looserFleet.getCoordinate());
+          looserPlayer.getMsgList().addUpcomingMessage(msg);
+          for (Ship ship : looserFleet.getShips()) {
+            ShipStat stat = looserPlayer.getShipStatByName(ship.getName());
+            if (stat != null) {
+              stat.setNumberOfLoses(stat.getNumberOfLoses() + 1);
+              stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
             }
-            looserPlayer.getFleets().remove(looserIndex);
           }
+          looserPlayer.getFleets().remove(looserIndex);
         }
-        if (isWinnerAttacker) {
-            Coordinate loserPos = looserFleet.getCoordinate();
-            if (looserPlayer.getFleets().
-                    getFleetByCoordinate(loserPos) == null) {
-              // No more defending fleets so moving to the coordinate
-                winnerFleet.setPos(looserFleet.getCoordinate());
-            }
+      }
+      if (isWinnerAttacker) {
+        Coordinate loserPos = looserFleet.getCoordinate();
+        if (looserPlayer.getFleets().getFleetByCoordinate(loserPos) == null) {
+          // No more defending fleets so moving to the coordinate
+          winnerFleet.setPos(looserFleet.getCoordinate());
         }
+      }
     }
   }
 

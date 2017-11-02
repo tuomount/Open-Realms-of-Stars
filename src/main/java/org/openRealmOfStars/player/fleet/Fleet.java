@@ -83,7 +83,7 @@ public class Fleet {
     ships = new ArrayList<>();
     ships.add(firstShip);
     setPos(new Coordinate(x, y));
-    setName("Fleet #-1");
+    setName("Fleet #0");
     setRoute(null);
   }
 

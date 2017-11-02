@@ -150,7 +150,7 @@ public class FleetTest {
     Fleet fleet = new Fleet(ship, 2, 3);
     assertEquals(2, fleet.getCoordinate().getX());
     assertEquals(3, fleet.getCoordinate().getY());
-    assertEquals("Fleet #-1",fleet.getName());
+    assertEquals("Fleet #0",fleet.getName());
     fleet.setName("Test-Fleet");
     assertEquals("Test-Fleet",fleet.getName());
     assertEquals(ship,fleet.getFirstShip());
@@ -188,7 +188,7 @@ public class FleetTest {
     Fleet fleet = new Fleet(ship, 2, 3);
     assertEquals(2, fleet.getCoordinate().getX());
     assertEquals(3, fleet.getCoordinate().getY());
-    assertEquals("Fleet #-1",fleet.getName());
+    assertEquals("Fleet #0",fleet.getName());
     fleet.setName("Trader");
     assertEquals("Trader",fleet.getName());
     assertEquals(ship,fleet.getFirstShip());
@@ -244,7 +244,7 @@ public class FleetTest {
     assertEquals(true, fleet.allFixed());
     assertEquals(false, fleet.isPrivateerFleet());
     assertEquals(1, fleet.getCulturalValue());
-    assertEquals("Fleet #-1\nSpeed: 1 FTL: 1\nMoves:0\nScout - 15\nColony - 0"
+    assertEquals("Fleet #0\nSpeed: 1 FTL: 1\nMoves:0\nScout - 15\nColony - 0"
         + "\n", fleet.getInfoAsText(null));
   }
 
@@ -259,7 +259,7 @@ public class FleetTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Terran alliance");
     assertEquals(0, fleet.getCulturalValue());
-    assertEquals("Fleet #-1\nPrivateer fleet\nSpeed: 1 FTL: 2\nMoves:0"
+    assertEquals("Fleet #0\nPrivateer fleet\nSpeed: 1 FTL: 2\nMoves:0"
         + "\nPrivateer - 20\nPrivateer - 20\n", fleet.getInfoAsText(info));
   }
 

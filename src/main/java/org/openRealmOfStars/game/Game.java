@@ -348,7 +348,6 @@ public class Game implements ActionListener {
     FleetTileInfo fleetTile = fleetTiles[fleet.getX()][fleet.getY()];
 
     // And making sure that fleet owner is actually make the move
-    //TODO possible NPE!!
     boolean isSamePlayer = false;
     if (fleetTile != null) {
       isSamePlayer = players.getIndex(info) == fleetTile.getPlayerIndex();

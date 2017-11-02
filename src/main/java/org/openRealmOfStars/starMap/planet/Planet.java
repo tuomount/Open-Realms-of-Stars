@@ -1362,21 +1362,16 @@ public class Planet {
                 if (fleet.isScoutFleet()) {
                   if (DiceGenerator.getRandom(3) == 0) {
                     // Scout ship is for defending too
-                    String fleetName = "Defender";
-                    fleet.setName(fleetName + " #" + (planetOwnerInfo
-                        .getFleets().howManyFleetWithStartingNames(fleetName)
-                        + 1));
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName("Defender"));
                   } else {
-                    String fleetName = "Scout";
-                    fleet.setName(fleetName + " #" + (planetOwnerInfo
-                        .getFleets().howManyFleetWithStartingNames(fleetName)
-                        + 1));
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName("Scout"));
                   }
                 } else {
                   // No mission for planet, so just adding defender
-                  String fleetName = "Defender";
-                  fleet.setName(fleetName + " #" + (planetOwnerInfo.getFleets()
-                      .howManyFleetWithStartingNames(fleetName) + 1));
+                  fleet.setName(planetOwnerInfo.getFleets()
+                      .generateUniqueName("Defender"));
                 }
               }
             }

@@ -734,6 +734,33 @@ public final class PlanetHandling {
             score = -1;
           }
         }
+        if (ship.isTradeShip()) {
+          // Trooper ship should be built only on request
+          Mission mission = info.getMissions().getMission(
+              MissionType.TRADE_FLEET, MissionPhase.PLANNING);
+          if (mission != null) {
+            Planet tradePlanet = map.getPlanetByName(mission.getTargetPlanet());
+            if (tradePlanet != null) {
+              double distance = tradePlanet.getCoordinate().calculateDistance(
+                planet.getCoordinate());
+              score = score + (int) Math.round(distance / 25);
+            }
+            if (attitude == Attitude.MERCHANTICAL) {
+              score = score + 20;
+            } else if (attitude == Attitude.DIPLOMATIC) {
+              score = score + 15;
+            } else if (attitude == Attitude.PEACEFUL) {
+              score = score + 10;
+            } else if (attitude == Attitude.SCIENTIFIC) {
+              score = score + 5;
+            } else if (attitude == Attitude.MILITARISTIC
+                || attitude == Attitude.AGGRESSIVE) {
+              score = score - 10;
+            }
+          } else {
+            score = -1;
+          }
+        }
         scores[i] = score;
       }
 

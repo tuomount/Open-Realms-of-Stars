@@ -5,10 +5,15 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionList;
+import org.openRealmOfStars.AI.Mission.MissionPhase;
+import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
@@ -414,6 +419,45 @@ public class PlanetHandlingTest {
     
     int score = PlanetHandling.scoreShip(ship);
     assertEquals(49, score);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTradeShipScoring() {
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(16);
+    Mockito.when(ship.isTradeShip()).thenReturn(true);
+    Mockito.when(ship.getMetalCost()).thenReturn(14);
+    Mockito.when(ship.getProdCost()).thenReturn(22);
+    Planet planet = Mockito.mock(Planet.class);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    MissionList missionList = Mockito.mock(MissionList.class);
+    Mission mission = Mockito.mock(Mission.class);
+    Mockito.when(missionList.getMission(MissionType.TRADE_FLEET,
+        MissionPhase.PLANNING)).thenReturn(mission);
+    Mockito.when(info.getMissions()).thenReturn(missionList);
+    StarMap map = Mockito.mock(StarMap.class);
+    
+    int score = PlanetHandling.scoreTradeShip(20, ship, planet, info, map,
+        Attitude.MERCHANTICAL);
+    assertEquals(40, score);
+    score = PlanetHandling.scoreTradeShip(20, ship, planet, info, map,
+        Attitude.DIPLOMATIC);
+    assertEquals(35, score);
+    score = PlanetHandling.scoreTradeShip(20, ship, planet, info, map,
+        Attitude.PEACEFUL);
+    assertEquals(30, score);
+    score = PlanetHandling.scoreTradeShip(20, ship, planet, info, map,
+        Attitude.SCIENTIFIC);
+    assertEquals(25, score);
+    score = PlanetHandling.scoreTradeShip(20, ship, planet, info, map,
+        Attitude.AGGRESSIVE);
+    assertEquals(10, score);
+    Mockito.when(missionList.getMission(MissionType.TRADE_FLEET,
+        MissionPhase.PLANNING)).thenReturn(null);
+    score = PlanetHandling.scoreTradeShip(20, ship, planet, info, map,
+        Attitude.MERCHANTICAL);
+    assertEquals(-1, score);
   }
 
 }

@@ -88,6 +88,11 @@ http://www.archive.org/details/Berklee44Barkovich http://www.lbarkovich.com/
 https://opengameart.org/content/robotic-mechanic-step-sounds
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
+Laser_07 as EMP explosion by
+Little Robot Sound Factory
+www.littlerobotsoundfactory.com
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
 # Musics By
 
 Observing The Star by

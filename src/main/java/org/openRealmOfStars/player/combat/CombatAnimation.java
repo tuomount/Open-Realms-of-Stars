@@ -177,8 +177,7 @@ public class CombatAnimation {
     particles = new ArrayList<>();
     if (weapon.getType() == ShipComponentType.WEAPON_ECM_TORPEDO) {
       explosionAnim = GuiStatics.EXPLOSION2;
-      //TODO Wrong SFX for ECM
-      explosionSfx = SoundPlayer.EXPLOSION;
+      explosionSfx = SoundPlayer.EXPLOSION_EMP;
     } else {
       if (hit == 0) {
         explosionAnim = GuiStatics.EXPLOSION3;

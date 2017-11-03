@@ -74,6 +74,12 @@ public final class SoundPlayer {
   public static final String EXPLOSION_SMALL = "/resources/sounds/rumble.wav";
 
   /**
+   * Sound effect for emp explosion
+   */
+  public static final String EXPLOSION_EMP = "/resources/sounds/"
+      + "emp_explode.wav";
+
+  /**
    * Sound effect for Menu clicks
    */
   public static final String MENU1 = "/resources/sounds/menu1.wav";

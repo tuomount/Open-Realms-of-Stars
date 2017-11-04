@@ -181,7 +181,7 @@ public class CombatMapMouseListener extends MouseAdapter
           if (wormHole != null
               && combat.getCurrentShip().getX() == wormHole.getX()
               && combat.getCurrentShip().getY() == wormHole.getY()) {
-            // FIXME Add sound for wormhole
+            SoundPlayer.playSound(SoundPlayer.TELEPORT);
             combat.escapeShip(combat.getCurrentShip());
           }
         }

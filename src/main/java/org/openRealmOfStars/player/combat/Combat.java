@@ -1151,7 +1151,7 @@ public boolean launchIntercept(final int distance,
       aStar.nextMove();
       if (wormHole != null && ai.getX() == wormHole.getX()
           && ai.getY() == wormHole.getY()) {
-        // FIXME Add sound for wormhole
+        SoundPlayer.playSound(SoundPlayer.TELEPORT);
         escapeShip(ai);
       }
       if (textLogger != null && infoPanel != null) {

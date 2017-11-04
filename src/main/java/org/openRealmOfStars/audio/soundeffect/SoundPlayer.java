@@ -129,6 +129,11 @@ public final class SoundPlayer {
   public static final String REPAIR = "/resources/sounds/repair.wav";
 
   /**
+   * Sound effect for escaping via blackhole
+   */
+  public static final String TELEPORT = "/resources/sounds/teleport.wav";
+
+  /**
    * Is Sound enabled
    * @return True if sound enabled
    */

@@ -134,6 +134,11 @@ public final class SoundPlayer {
   public static final String TELEPORT = "/resources/sounds/teleport.wav";
 
   /**
+   * Sound effect for blackhole showing up
+   */
+  public static final String WORMHOLE = "/resources/sounds/wormhole.wav";
+
+  /**
    * Is Sound enabled
    * @return True if sound enabled
    */

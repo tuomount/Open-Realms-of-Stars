@@ -101,6 +101,12 @@ Teleport sound by
 Michel Baradari
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
+Wormhole sound
+Adaptation by Tuomo Untinen, original sounds by
+Écrivain
+https://opengameart.org/content/4-space-portal-sounds
+Licensed under CC0
+
 # Musics By
 
 Observing The Star by

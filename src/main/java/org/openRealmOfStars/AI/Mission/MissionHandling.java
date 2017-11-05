@@ -504,38 +504,20 @@ public final class MissionHandling {
       if (mission.getPhase() == MissionPhase.PLANNING
           && mission.getTargetPlanet() != null && info.getMissions()
               .noMoreGatherMissions(mission.getTargetPlanet())) {
-        int bombers = 0;
-        int trooper = 0;
-        int military = 0;
-        for (Ship ship : fleet.getShips()) {
-          if (ship.hasBombs()) {
-            bombers++;
-          }
-          if (ship.isTrooperShip()) {
-            trooper++;
-          }
-          if (ship.getTotalMilitaryPower() > 0) {
-            military++;
-          }
+        mission.setPhase(MissionPhase.TREKKING);
+        Planet planet = game.getStarMap()
+            .getPlanetByName(mission.getTargetPlanet());
+        if (planet != null) {
+          mission.setTarget(planet.getCoordinate());
+          fleet.setRoute(new Route(fleet.getX(), fleet.getY(), planet.getX(),
+              planet.getY(), fleet.getFleetFtlSpeed()));
         }
-        if (military >= info.getRace().getAIMinimumAttackShips()
-            && (bombers + trooper) > info.getRace()
-                .getAIMinimumConquerShips()) {
-          mission.setPhase(MissionPhase.TREKKING);
-          Planet planet = game.getStarMap()
-              .getPlanetByName(mission.getTargetPlanet());
-          if (planet != null) {
-            mission.setTarget(planet.getCoordinate());
-            fleet.setRoute(new Route(fleet.getX(), fleet.getY(), planet.getX(),
-                planet.getY(), fleet.getFleetFtlSpeed()));
-          }
-          Ship[] ships = fleet.getShips();
-          for (int i = 0; i < ships.length; i++) {
-            if (ships[i].isTrooperModule() && ships[i].getColonist() == 0) {
-                // Empty trooper found so we need to load it first
-                mission.setPhase(MissionPhase.LOADING);
-                break;
-            }
+        Ship[] ships = fleet.getShips();
+        for (int i = 0; i < ships.length; i++) {
+          if (ships[i].isTrooperModule() && ships[i].getColonist() == 0) {
+            // Empty trooper found so we need to load it first
+            mission.setPhase(MissionPhase.LOADING);
+            break;
           }
         }
       }

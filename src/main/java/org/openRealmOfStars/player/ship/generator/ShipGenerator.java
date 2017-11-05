@@ -467,8 +467,8 @@ public final class ShipGenerator {
     for (Tech tech : hullTechs) {
       ShipHull hull = ShipHullFactory.createByName(tech.getHull(),
           player.getRace());
-      if (!troop && hull.getSize() == ShipSize.LARGE
-          || hull.getSize() == ShipSize.HUGE) {
+      if (!troop && (hull.getSize() == ShipSize.LARGE
+          || hull.getSize() == ShipSize.HUGE)) {
         // Large and huge are too large for colony ships
         continue;
       }

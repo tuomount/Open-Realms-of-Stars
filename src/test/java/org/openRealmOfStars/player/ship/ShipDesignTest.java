@@ -131,6 +131,23 @@ public class ShipDesignTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTrooperDesignByGenerator() {
+    PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    player.getTechList().addTech(TechFactory.createHullTech("Small freighter", 2));
+    player.getTechList().addTech(TechFactory.createHullTech("Medium freighter", 4));
+    player.getTechList().addTech(TechFactory.createHullTech("Large freighter", 6));
+    player.getTechList().addTech(TechFactory.createHullTech("Massive freighter", 8));
+    player.getTechList().addTech(TechFactory.createCombatTech("Planetary invasion module", 2));
+    ShipDesign design = ShipGenerator.createColony(player, true);
+    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
+    assertEquals(ShipSize.HUGE, design.getHull().getSize());
+    assertEquals(false, design.isBomberShip());
+    assertEquals(true, design.isTrooperShip());
+    assertEquals(0,design.getTotalMilitaryPower());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testProbeDesign() {
     ShipHull hull = ShipHullFactory.createByName("Probe", SpaceRace.CENTAURS);
     ShipDesign design = new ShipDesign(hull);
@@ -163,8 +180,6 @@ public class ShipDesignTest {
     ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
     ShipComponent comp = ShipComponentFactory.createByName("Targeting computer Mk1");
     ShipComponent jammer = ShipComponentFactory.createByName("Jammer Mk1");
-    
-    
     assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
     design.addComponent(weapon);
     design.addComponent(engine);
@@ -179,6 +194,32 @@ public class ShipDesignTest {
     design.removeComponent(6);
     design.addComponent(comp);
     assertEquals(true,design.getFlaws().startsWith(ShipDesignConsts.MANY_COMPUTERS));
+    assertEquals(false, design.isBomberShip());
+    assertEquals(false, design.isTrooperShip());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testBomberShipDesign() {
+    ShipHull hull = ShipHullFactory.createByName("Battleship Mk1", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
+    ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+    ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+    ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
+    ShipComponent comp = ShipComponentFactory.createByName("Targeting computer Mk1");
+    ShipComponent bomb = ShipComponentFactory.createByName("Orbital Bombs Mk1");
+    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
+    design.addComponent(weapon);
+    design.addComponent(engine);
+    design.addComponent(energy);
+    design.addComponent(armor);
+    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
+    design.addComponent(bomb);
+    design.addComponent(comp);
+    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
+    assertEquals(true, design.isBomberShip());
+    assertEquals(false, design.isTrooperShip());
   }
 
   @Test
@@ -201,6 +242,8 @@ public class ShipDesignTest {
       design = ShipGenerator.createFreighter(info);
       assertEquals(ShipHullType.FREIGHTER, design.getHull().getHullType());
       assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
+      assertEquals(false, design.isBomberShip());
+      assertEquals(false, design.isTrooperShip());
     }
   }
 

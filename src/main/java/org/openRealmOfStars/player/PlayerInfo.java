@@ -812,6 +812,33 @@ public class PlayerInfo {
   }
 
   /**
+   * Does player have one bomber ship available?
+   * @return True if player has bomber ships
+   */
+  public boolean bombersAvailable() {
+    for (ShipStat stat : shipStatList) {
+      if (!stat.isObsolete() && stat.getDesign().isBomberShip()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Does player have one bomber/trooper ship available?
+   * @return True if player has bomber ship with trooper functionality.
+   */
+  public boolean bomberTrooperAvailable() {
+    for (ShipStat stat : shipStatList) {
+      if (!stat.isObsolete() && stat.getDesign().isBomberShip()
+          && stat.getDesign().isTrooperShip()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Get count of Ship stats name starts with
    * @param name for search
    * @return Number of ship stats which start with that

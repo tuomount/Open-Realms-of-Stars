@@ -351,6 +351,33 @@ public class ShipDesign {
   }
 
   /**
+   * Is design bomber ship? True if one orbital bomb or nuke is place.
+   * @return True if ship is BomberShip, otherwise false
+   */
+  public boolean isBomberShip() {
+    for (ShipComponent comp : components) {
+      if (comp.getType() == ShipComponentType.ORBITAL_BOMBS
+          || comp.getType() == ShipComponentType.ORBITAL_NUKE) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Is design trooper ship? True if one planetary invasion module is place.
+   * @return True if ship is trooper ship, otherwise false
+   */
+  public boolean isTrooperShip() {
+    for (ShipComponent comp : components) {
+      if (comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Get total value of starbase component bonus
    * @return Starbase component bonus value
    */

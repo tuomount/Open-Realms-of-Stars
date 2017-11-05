@@ -676,7 +676,7 @@ public final class MissionHandling {
           for (Ship ship : fleet.getShips()) {
             Fleet newFleet = null;
             if (mission.getShipType().equals(Mission.ASSAULT_TYPE)
-                && ship.getTotalMilitaryPower() > 0) {
+                && ship.getTotalMilitaryPower() > 0 && !ship.isStarBase()) {
               if (fleet.getNumberOfShip() > 1) {
                 fleet.removeShip(ship);
                 newFleet = new Fleet(ship, fleet.getX(), fleet.getY());

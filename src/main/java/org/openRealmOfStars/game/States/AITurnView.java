@@ -443,6 +443,7 @@ public class AITurnView extends BlackPanel {
     calculateAttackRendevuezSector(info, planet.getX(), planet.getY());
     Planet homeWorld = game.getStarMap().getClosestHomePort(info,
         planet.getCoordinate());
+    mission.setFleetName("Attacker of " + planet.getName());
     if (homeWorld == null) {
       mission.setTarget(new Coordinate(cx, cy));
       mission.setTargetPlanet(planet.getName());

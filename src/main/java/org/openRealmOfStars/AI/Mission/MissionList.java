@@ -1,5 +1,9 @@
 package org.openRealmOfStars.AI.Mission;
 
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.repository.MissionRepository;
 
 import java.io.DataInputStream;
@@ -280,6 +284,41 @@ public class MissionList {
    */
   public void remove(final Mission mission) {
     missions.remove(mission);
+  }
+
+  /**
+   * Remove attacks mission against player
+   * @param info PlayerInfo whom not to attack
+   * @param map Starmap
+   */
+  public void removeAttackAgainstPlayer(final PlayerInfo info,
+      final StarMap map) {
+    Mission[] listMissions = missions.toArray(new Mission[missions.size()]);
+    for (Mission mission : listMissions) {
+      if (mission.getType() == MissionType.ATTACK
+          || mission.getType() == MissionType.GATHER) {
+        Planet planet = map.getPlanetByName(mission.getTargetPlanet());
+        if (planet != null && planet.getPlanetPlayerInfo() == info) {
+          remove(mission);
+          continue;
+        }
+      }
+      if (mission.getType() == MissionType.DESTROY_STARBASE) {
+        Fleet fleet = map.getFleetByCoordinate(mission.getX(), mission.getY());
+        if (fleet != null && map.getPlayerInfoByFleet(fleet) == info
+            && fleet.isStarBaseDeployed()) {
+          for (Mission gatherMission : listMissions) {
+            if (gatherMission.getType() == MissionType.GATHER
+                && gatherMission.getShipType() == Mission.ASSAULT_SB_TYPE
+                && gatherMission.getTargetPlanet().equals(
+                    mission.getTargetPlanet())) {
+              remove(mission);
+              continue;
+            }
+          }
+        }
+      }
+    }
   }
 
   /**

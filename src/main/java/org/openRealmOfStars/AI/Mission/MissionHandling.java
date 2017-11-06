@@ -794,6 +794,10 @@ public final class MissionHandling {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         game.getStarMap().getNewsCorpData().addNews(
             NewsFactory.makePeaceNews(info, defender, fleet));
+        info.getMissions().removeAttackAgainstPlayer(defender,
+            game.getStarMap());
+        defender.getMissions().removeAttackAgainstPlayer(info,
+            game.getStarMap());
       }
     } else {
       SpeechType type = trade.getSpeechTypeByOffer();

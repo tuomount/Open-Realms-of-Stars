@@ -312,10 +312,11 @@ public class MissionList {
                 && gatherMission.getShipType() == Mission.ASSAULT_SB_TYPE
                 && gatherMission.getTargetPlanet().equals(
                     mission.getTargetPlanet())) {
-              remove(mission);
+              remove(gatherMission);
               continue;
             }
           }
+          remove(mission);
         }
       }
     }

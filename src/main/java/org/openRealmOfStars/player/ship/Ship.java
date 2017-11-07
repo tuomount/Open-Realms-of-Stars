@@ -551,11 +551,11 @@ private int getRemainingEnergy(final int index) {
     return initiative;
   }
 
-/**
- * @param result
- * @return Increased initiative by component
- */
-private int increaseInitivativeByComponent() {
+  /**
+   * Get initiative bonus from working ship components.
+   * @return Increased initiative by component
+   */
+  private int increaseInitivativeByComponent() {
     int increased = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
@@ -569,9 +569,10 @@ private int increaseInitivativeByComponent() {
       }
     }
     return increased;
-}
+  }
 
   /**
+   * Get initiative according the ship hull size.
    * @return initiative associated ship hull size
    */
   private int getInitivativeByHullSize() {
@@ -599,10 +600,11 @@ private int increaseInitivativeByComponent() {
     return increased;
   }
 
-/**
- * @return Increased initiative by empty space
- */
-private int increaseInitivativeByEmptySpace() {
+  /**
+   * Increase initiative value by empty space in ship.
+   * @return Increased initiative by empty space
+   */
+  private int increaseInitivativeByEmptySpace() {
     int initiative;
     switch (this.hull.getMaxSlot() - components.size()) {
     case 1:
@@ -636,7 +638,7 @@ private int increaseInitivativeByEmptySpace() {
         initiative = 0;
     }
     return initiative;
-}
+  }
 
 
   /**

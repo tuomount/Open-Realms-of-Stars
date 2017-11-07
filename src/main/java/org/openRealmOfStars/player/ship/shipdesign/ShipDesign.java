@@ -711,7 +711,7 @@ public class ShipDesign {
    * Get ship's initiative for combat. Bigger value is better in combat
    * @return Initiative
    */
-  private int getInitiative() {
+  public int getInitiative() {
     int result = 0;
     switch (hull.getSize()) {
     case SMALL: {
@@ -750,8 +750,6 @@ public class ShipDesign {
         result = result + 3;
     } else if (6 <= emptySpace && emptySpace < 12) {
         result = result + 4;
-    } else {
-        result = 0;
     }
     return result;
   }

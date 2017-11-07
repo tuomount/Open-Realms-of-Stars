@@ -59,6 +59,7 @@ public class ShipDesignTest {
     assertEquals(2,design.getSpeed());
     assertEquals(2,design.getFtlSpeed());
     assertEquals(1,design.getTacticSpeed());
+    assertEquals(15, design.getInitiative());
     design.removeComponent(3);
     assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
     assertEquals(3,design.getNumberOfComponents());
@@ -90,6 +91,8 @@ public class ShipDesignTest {
     assertEquals(0,design.getTotalMilitaryPower());
     assertEquals(1,design.getFreeSlots());
     assertEquals(9, design.getTotalColonyPower());
+    assertEquals(11, design.getInitiative());
+
   }
 
   @Test
@@ -107,6 +110,7 @@ public class ShipDesignTest {
     assertEquals(0,design.getTotalMilitaryPower());
     assertEquals(2,design.getFreeSlots());
     assertEquals(10, design.getTotalColonyPower());
+    assertEquals(11, design.getInitiative());
   }
 
   @Test
@@ -120,6 +124,7 @@ public class ShipDesignTest {
     ShipDesign design = ShipGenerator.createFreighter(player);
     assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
     assertEquals(ShipSize.HUGE, design.getHull().getSize());
+    assertEquals(6, design.getInitiative());
     if (design.getNumberOfComponents() != 2 && design.getNumberOfComponents() != 3) {
       assertFalse(true);
     }

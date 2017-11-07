@@ -964,7 +964,9 @@ public boolean launchIntercept(final int distance,
       y = DiceGenerator.getRandom(3, 5);
       if (isSectorFree(x, y)) {
         wormHole = new Coordinate(x, y);
-        SoundPlayer.playSound(SoundPlayer.WORMHOLE);
+        if (isHumanPlayer()) {
+          SoundPlayer.playSound(SoundPlayer.WORMHOLE);
+        }
         return;
       }
     }

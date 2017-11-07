@@ -1315,27 +1315,34 @@ public class Planet {
             if (mission != null) {
               if (mission.getFleetName() == null) {
                 if (mission.getType() == MissionType.COLONIZE) {
-                  fleet.setName("Colony #" + (planetOwnerInfo.getFleets()
-                      .howManyFleetWithStartingNames("Colony #") + 1));
+                  fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
+                      "Colony"));
                   mission.setFleetName(fleet.getName());
                 }
                 if (mission.getType() == MissionType.DEPLOY_STARBASE) {
-                  fleet.setName("Space Station #" + (planetOwnerInfo.getFleets()
-                      .howManyFleetWithStartingNames("Space Station #") + 1));
+                  fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
+                      "Space Station"));
+                  mission.setFleetName(fleet.getName());
+                }
+                if (mission.getType() == MissionType.TRADE_FLEET) {
+                  String nameFleet = "Trader";
+                  if (DiceGenerator.getRandom(1) == 0) {
+                    nameFleet = "Merchant";
+                  }
+                  fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
+                      nameFleet));
                   mission.setFleetName(fleet.getName());
                 }
               } else {
-                fleet
-                    .setName(mission.getFleetName() + " #"
-                        + (planetOwnerInfo.getFleets()
-                            .howManyFleetWithStartingNames(
-                                mission.getFleetName())
-                            + 1));
+                fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
+                    mission.getFleetName()));
               }
               if (mission.getType() == MissionType.DEFEND) {
                 // For now one ship is enough for defend
                 mission.setPhase(MissionPhase.EXECUTING);
               } else if (mission.getType() == MissionType.COLONIZE) {
+                mission.setPhase(MissionPhase.LOADING);
+              } else if (mission.getType() == MissionType.TRADE_FLEET) {
                 mission.setPhase(MissionPhase.LOADING);
               } else if (mission.getType() == MissionType.GATHER) {
                 if (ship.isTrooperModule()) {

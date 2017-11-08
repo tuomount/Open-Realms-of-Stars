@@ -741,6 +741,34 @@ public class Fleet {
   }
 
   /**
+   * Get total credits bonus
+   * @return Total credits bonus from starbase components
+   */
+  public int getTotalCreditsBonus() {
+    int result = 0;
+    if (isStarBaseDeployed()) {
+      for (Ship ship : ships) {
+        result = result + ship.getTotalCreditBonus();
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Get total culture bonus
+   * @return Total culture bonus from starbase components
+   */
+  public int getTotalCultureBonus() {
+    int result = 0;
+    if (isStarBaseDeployed()) {
+      for (Ship ship : ships) {
+        result = result + ship.getTotalCultureBonus();
+      }
+    }
+    return result;
+  }
+
+  /**
    * Do trade with planet if fleet has trade ship(s).
    * Not this does not check diplomatic relationships.
    * @param planet Planet to do trade

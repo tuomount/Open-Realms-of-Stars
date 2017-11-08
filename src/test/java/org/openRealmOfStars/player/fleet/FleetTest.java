@@ -89,6 +89,38 @@ public class FleetTest {
   }
 
   /**
+   * Create starbase
+   * @return Starbase
+   */
+  private static Ship createStarbase() {
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getSize()).thenReturn(ShipSize.MEDIUM);
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getFtlSpeed()).thenReturn(0);
+    Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getScannerDetectionLvl()).thenReturn(0);
+    Mockito.when(ship.getScannerLvl()).thenReturn(0);
+    Mockito.when(ship.getSpeed()).thenReturn(1);
+    Mockito.when(ship.getFreeCargoColonists()).thenReturn(0);
+    Mockito.when(ship.getFreeCargoMetal()).thenReturn(0);
+    Mockito.when(ship.getHullPoints()).thenReturn(6);
+    Mockito.when(ship.getMaxHullPoints()).thenReturn(6);
+    Mockito.when(ship.isColonyModule()).thenReturn(false);
+    Mockito.when(ship.isColonyShip()).thenReturn(false);
+    Mockito.when(ship.getColonist()).thenReturn(0);
+    Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
+    Mockito.when(ship.getName()).thenReturn("Starbase");
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(5);
+    Mockito.when(ship.getCulture()).thenReturn(0);
+    Mockito.when(ship.getTotalCreditBonus()).thenReturn(1);
+    Mockito.when(ship.getTotalResearchBonus()).thenReturn(2);
+    Mockito.when(ship.getTotalCultureBonus()).thenReturn(3);
+    Mockito.when(ship.isStarBase()).thenReturn(true);
+    Mockito.when(ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)).thenReturn(true);
+    return ship;
+  }
+
+  /**
    * Create Trade ship
    * @return Trade ship
    */
@@ -280,6 +312,20 @@ public class FleetTest {
     assertEquals(35,fleet.getMilitaryValue());
     assertEquals(22, fleet.getFleetCloackingValue());
     assertEquals(false, fleet.isTradeFleet());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFleetWithDeployedStarbase() {
+    Ship ship = createStarbase();
+    Fleet fleet = new Fleet(ship, 2, 3);
+    assertEquals(0, fleet.getCulturalValue());
+    assertEquals(5,fleet.getMilitaryValue());
+    assertEquals(false, fleet.isTradeFleet());
+    assertEquals(true, fleet.isStarBaseDeployed());
+    assertEquals(1, fleet.getTotalCreditsBonus());
+    assertEquals(2, fleet.getTotalReseachBonus());
+    assertEquals(3, fleet.getTotalCultureBonus());
   }
 
 }

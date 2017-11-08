@@ -1154,7 +1154,10 @@ public boolean launchIntercept(final int distance,
       aStar.nextMove();
       if (wormHole != null && ai.getX() == wormHole.getX()
           && ai.getY() == wormHole.getY()) {
-        SoundPlayer.playSound(SoundPlayer.TELEPORT);
+        if (textLogger != null && infoPanel != null) {
+          // Play sound only if battle view is used
+          SoundPlayer.playSound(SoundPlayer.TELEPORT);
+        }
         escapeShip(ai);
       }
       if (textLogger != null && infoPanel != null) {

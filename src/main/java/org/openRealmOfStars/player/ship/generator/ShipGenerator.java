@@ -227,7 +227,8 @@ public final class ShipGenerator {
       result = new ShipDesign(hull);
       String[] part = hull.getName().split("Mk");
       result.setName(
-          part[0].trim() + " Mk" + (player.getShipStatStartsWith(part[0]) + 1));
+          part[0].trim() + " Mk" + (player.getShipStatHighestNumber(
+              part[0]) + 1));
       ShipComponent engine = ShipComponentFactory
           .createByName(player.getTechList().getBestEngine().getComponent());
       result.addComponent(engine);
@@ -412,7 +413,7 @@ public final class ShipGenerator {
       ShipHull hull = ShipHullFactory.createByName(hullTech.getHull(),
           player.getRace());
       result = new ShipDesign(hull);
-      result.setName("Scout");
+      result.setName("Scout Mk1");
       ShipComponent engine = ShipComponentFactory
           .createByName(player.getTechList().getBestEngine().getComponent());
       result.addComponent(engine);
@@ -485,10 +486,10 @@ public final class ShipGenerator {
       result = new ShipDesign(hull);
       if (!troop) {
         result.setName("Colony Mk"
-            + (player.getShipStatStartsWith("Colony Mk") + 1));
+            + (player.getShipStatHighestNumber("Colony Mk") + 1));
       } else {
         result.setName("Trooper Mk"
-            + (player.getShipStatStartsWith("Trooper Mk") + 1));
+            + (player.getShipStatHighestNumber("Trooper Mk") + 1));
       }
       ShipComponent engine = ShipComponentFactory
           .createByName(player.getTechList().getBestEngine().getComponent());
@@ -587,7 +588,7 @@ public final class ShipGenerator {
           player.getRace());
       result = new ShipDesign(hull);
       result.setName("Freighter Mk"
-            + (player.getShipStatStartsWith("Freighter Mk") + 1));
+            + (player.getShipStatHighestNumber("Freighter Mk") + 1));
       ShipComponent engine = ShipComponentFactory
           .createByName(player.getTechList().getBestEngine().getComponent());
       result.addComponent(engine);
@@ -671,7 +672,8 @@ public final class ShipGenerator {
       result = new ShipDesign(hull);
       String[] part = hull.getName().split("Mk");
       result.setName(
-          part[0].trim() + " Mk" + (player.getShipStatStartsWith(part[0]) + 1));
+          part[0].trim() + " Mk" + (player.getShipStatHighestNumber(
+              part[0]) + 1));
       ShipComponent engine = ShipComponentFactory
           .createByName(player.getTechList().getBestEngine().getComponent());
       result.addComponent(engine);

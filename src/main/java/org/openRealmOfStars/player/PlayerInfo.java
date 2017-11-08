@@ -854,6 +854,30 @@ public class PlayerInfo {
   }
 
   /**
+   * Get highest number after ships starting with name.
+   * @param name for search
+   * @return Highest number after " Mk".
+   */
+  public int getShipStatHighestNumber(final String name) {
+    int result = 0;
+    for (ShipStat stat : shipStatList) {
+      if (stat.getDesign().getName().startsWith(name)) {
+        String[] parts = stat.getDesign().getName().split(" Mk");
+        if (parts.length == 2) {
+          try {
+            result = Integer.valueOf(parts[1]);
+          } catch (NumberFormatException e) {
+            // Just ignore this one
+            System.err.println("Not an number after Mk in design name:"
+               + stat.getDesign().getName());
+          }
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
   * Get Ship Stat list as a fixed array
   * @return Ship Stat array
   */

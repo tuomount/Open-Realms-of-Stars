@@ -40,7 +40,8 @@ public class RandomSystemNameGenerator {
       "Can", "Leo", "Tau", "Ly", "And", "Vir", "Aqua", "Cyg", "Cor", "Cep",
       "Grus", "Dra", "Cap", "Per", "Pe", "Au", "Ge", "Co", "Cra", "Sag", "Or",
       "Hy", "Pis", "Lynx", "Aqu", "Ser", "Pho", "Le", "Boo", "Ce", "Ar", "Ca",
-      "Op", "Del", "Her", "Vul", "Pa", "Lib", "Cen", "Bo" };
+      "Op", "Del", "Her", "Vul", "Pa", "Lib", "Cen", "Bo", "Ur", "La", "Li",
+      "Qu", "Hel", "Rig", "Sna", "Zoo", "Fer", "Oxy", "Pol", "Hes"};
 
   /**
    * Second parts of name list
@@ -49,7 +50,7 @@ public class RandomSystemNameGenerator {
       "rus", "ra", "rome", "go", "rius", "nus", "vus", "heus", "co", "ri",
       "tau", "re", "seus", "ga", "mi", "lum", "ter", "itta", "ion", "dra",
       "ces", "ila", "pens", "enix", "pus", "tes", "tus", "ies", "rina", "hiu",
-      "phi", "cu", "pe", "vo", "ra" };
+      "phi", "cu", "pe", "vo", "ra", "sa", "ser", "el", "rium" };
 
   /**
    * Third parts of name list

@@ -381,7 +381,7 @@ public final class MissionHandling {
           if (credits > 0) {
             info.setTotalCredits(info.getTotalCredits() + credits);
             Message msg = new Message(MessageType.PLANETARY,
-                fleet.getName() + " come back to homeworld "
+                fleet.getName() + " came back to homeworld "
                 + previousTarget.getName() + " with " + credits + " credits.",
                 Icons.getIconByName(Icons.ICON_CREDIT));
             msg.setCoordinate(previousTarget.getCoordinate());

@@ -24,8 +24,11 @@ import org.openRealmOfStars.gui.panels.MessagePanel;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
@@ -368,10 +371,49 @@ public class StarMapView extends BlackPanel {
         && getStarMapMouseListener().getLastClickedFleet() != null
         && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
       Fleet fleet = getStarMapMouseListener().getLastClickedFleet();
+      PlayerInfo info = infoPanel.getFleetOwner();
       Planet planet = map.getPlanetNextToCoordinate(fleet.getCoordinate());
-      fleet.doTrade(planet, infoPanel.getFleetOwner());
+      int playerIndex = planet.getPlanetOwnerIndex();
+      DiplomacyBonusList diplomacy = info.getDiplomacy().getDiplomacyList(
+          playerIndex);
+      if (diplomacy != null
+          && (diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)
+          || diplomacy.isBonusType(DiplomacyBonusType.IN_ALLIANCE))) {
+        int credits = fleet.doTrade(planet, info) / 2;
+        if (credits > 0) {
+          info.setTotalCredits(info.getTotalCredits() + credits);
+          planet.getPlanetPlayerInfo().setTotalCredits(
+              planet.getPlanetPlayerInfo().getTotalCredits()
+              + credits);
+          Message msg = new Message(MessageType.PLANETARY,
+              fleet.getName() + " made trade with " + planet.getName()
+              + ". Each party gained " + credits + " credits.",
+              Icons.getIconByName(Icons.ICON_CREDIT));
+          msg.setCoordinate(planet.getCoordinate());
+          info.getMsgList().addUpcomingMessage(msg);
+          planet.getPlanetPlayerInfo().getMsgList()
+              .addUpcomingMessage(msg);
+        }
+      } else if (diplomacy == null) {
+        int credits = fleet.doTrade(planet, info);
+        if (credits > 0) {
+          info.setTotalCredits(info.getTotalCredits() + credits);
+          Message msg = new Message(MessageType.PLANETARY,
+              fleet.getName() + " came back to homeworld "
+              + planet.getName() + " with " + credits + " credits.",
+              Icons.getIconByName(Icons.ICON_CREDIT));
+          msg.setCoordinate(planet.getCoordinate());
+          info.getMsgList().addUpcomingMessage(msg);
+        }
+      }
+      credProd.setText(
+          ": " + this.players.getCurrentPlayerInfo().getTotalCredits() + "("
+          + this.map.getTotalProductionByPlayerPerTurn(
+              Planet.PRODUCTION_CREDITS, this.players.getCurrentPlayer())
+          + ")");
       // TODO: Chaing menu sound later
       SoundPlayer.playMenuSound();
+      infoPanel.disableFixTradeBtn();
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_ROUTE_FLEET)

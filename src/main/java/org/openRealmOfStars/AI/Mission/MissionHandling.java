@@ -372,11 +372,11 @@ public final class MissionHandling {
                 + ". Each party gained " + credits + " credits.",
                 Icons.getIconByName(Icons.ICON_CREDIT));
             msg.setCoordinate(previousTarget.getCoordinate());
-            info.getMsgList().addNewMessage(msg);
+            info.getMsgList().addUpcomingMessage(msg);
             previousTarget.getPlanetPlayerInfo().getMsgList()
                 .addUpcomingMessage(msg);
           }
-        } else {
+        } else if (diplomacy == null) {
           int credits = fleet.doTrade(previousTarget, info);
           if (credits > 0) {
             info.setTotalCredits(info.getTotalCredits() + credits);
@@ -385,7 +385,7 @@ public final class MissionHandling {
                 + previousTarget.getName() + " with " + credits + " credits.",
                 Icons.getIconByName(Icons.ICON_CREDIT));
             msg.setCoordinate(previousTarget.getCoordinate());
-            info.getMsgList().addNewMessage(msg);
+            info.getMsgList().addUpcomingMessage(msg);
           }
         }
         if (mission.getTargetPlanet().equals(previousTarget.getName())) {

@@ -1,8 +1,13 @@
 package org.openRealmOfStars.starMap;
 
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
+import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
  *
@@ -168,4 +173,49 @@ public final class StarMapUtilities {
     return new Coordinate(defender.getX() + mx, defender.getY() + my);
   }
 
+  /**
+   * Make trade with ships. This gives credits for players involving in trade.
+   * @param diplomacy Diplomacy for player trading with planet.
+   *                  This can be null. It just then means that ship is
+   *                  returning to home world.
+   * @param fleet Fleet involved in trade
+   * @param planet Planet where trade happens
+   * @param info Player who is doing the trade.
+   */
+  public static void doTradeWithShips(final DiplomacyBonusList diplomacy,
+      final Fleet fleet, final Planet planet, final PlayerInfo info) {
+    if (diplomacy != null
+        && (diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)
+        || diplomacy.isBonusType(DiplomacyBonusType.IN_ALLIANCE))) {
+      int credits = fleet.doTrade(planet, info);
+      if (credits > 1) {
+        credits = credits / 2;
+      }
+      if (credits > 0) {
+        info.setTotalCredits(info.getTotalCredits() + credits);
+        planet.getPlanetPlayerInfo().setTotalCredits(
+            planet.getPlanetPlayerInfo().getTotalCredits()
+            + credits);
+        Message msg = new Message(MessageType.PLANETARY,
+            fleet.getName() + " made trade with " + planet.getName()
+            + ". Each party gained " + credits + " credits.",
+            Icons.getIconByName(Icons.ICON_CREDIT));
+        msg.setCoordinate(planet.getCoordinate());
+        info.getMsgList().addUpcomingMessage(msg);
+        planet.getPlanetPlayerInfo().getMsgList()
+            .addUpcomingMessage(msg);
+      }
+    } else if (diplomacy == null) {
+      int credits = fleet.doTrade(planet, info);
+      if (credits > 0) {
+        info.setTotalCredits(info.getTotalCredits() + credits);
+        Message msg = new Message(MessageType.PLANETARY,
+            fleet.getName() + " came back to homeworld "
+            + planet.getName() + " with " + credits + " credits.",
+            Icons.getIconByName(Icons.ICON_CREDIT));
+        msg.setCoordinate(planet.getCoordinate());
+        info.getMsgList().addUpcomingMessage(msg);
+      }
+    }
+  }
 }

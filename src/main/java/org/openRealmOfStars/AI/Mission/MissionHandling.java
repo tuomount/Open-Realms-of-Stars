@@ -358,36 +358,8 @@ public final class MissionHandling {
         int playerIndex = previousTarget.getPlanetOwnerIndex();
         DiplomacyBonusList diplomacy = info.getDiplomacy().getDiplomacyList(
             playerIndex);
-        if (diplomacy != null
-          && (diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)
-          || diplomacy.isBonusType(DiplomacyBonusType.IN_ALLIANCE))) {
-          int credits = fleet.doTrade(previousTarget, info) / 2;
-          if (credits > 0) {
-            info.setTotalCredits(info.getTotalCredits() + credits);
-            previousTarget.getPlanetPlayerInfo().setTotalCredits(
-                previousTarget.getPlanetPlayerInfo().getTotalCredits()
-                + credits);
-            Message msg = new Message(MessageType.PLANETARY,
-                fleet.getName() + " made trade with " + previousTarget.getName()
-                + ". Each party gained " + credits + " credits.",
-                Icons.getIconByName(Icons.ICON_CREDIT));
-            msg.setCoordinate(previousTarget.getCoordinate());
-            info.getMsgList().addUpcomingMessage(msg);
-            previousTarget.getPlanetPlayerInfo().getMsgList()
-                .addUpcomingMessage(msg);
-          }
-        } else if (diplomacy == null) {
-          int credits = fleet.doTrade(previousTarget, info);
-          if (credits > 0) {
-            info.setTotalCredits(info.getTotalCredits() + credits);
-            Message msg = new Message(MessageType.PLANETARY,
-                fleet.getName() + " came back to homeworld "
-                + previousTarget.getName() + " with " + credits + " credits.",
-                Icons.getIconByName(Icons.ICON_CREDIT));
-            msg.setCoordinate(previousTarget.getCoordinate());
-            info.getMsgList().addUpcomingMessage(msg);
-          }
-        }
+        StarMapUtilities.doTradeWithShips(diplomacy, fleet, previousTarget,
+            info);
         if (mission.getTargetPlanet().equals(previousTarget.getName())) {
           Planet homePlanet = game.getStarMap().getPlanetByName(
               mission.getPlanetBuilding());

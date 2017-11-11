@@ -1566,8 +1566,13 @@ private int increaseDefenseValueWithJammer() {
         if (credit < 1 && distance > 1) {
           credit = 1;
         }
-        if (credit > 20) {
-          credit = 20;
+        if (credit > 5) {
+          credit = 5;
+        }
+        int freeCargo = hull.getMaxSlot() - getNumberOfComponents();
+        credit = credit * freeCargo;
+        if (credit > 25) {
+          credit = 25;
         }
       } else {
         tradeCoordinates = new Coordinate(planet.getCoordinate());

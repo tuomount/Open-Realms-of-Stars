@@ -254,7 +254,7 @@ public class ShipTest {
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(planetOwner);
     PlayerInfo trader = Mockito.mock(PlayerInfo.class);
     int result = ship.doTrade(planet, trader);
-    assertEquals(3, result);
+    assertEquals(18, result);
   }
 
   @Test
@@ -282,7 +282,7 @@ public class ShipTest {
     Mockito.when(planet.getCoordinate()).thenReturn(planetCoord);
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(planetOwner);
     result = ship.doTrade(planet, trader);
-    assertEquals(3, result);
+    assertEquals(18, result);
     assertEquals(false, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD));
     assertEquals(true, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD));
     result = ship.doTrade(planet, trader);
@@ -316,7 +316,7 @@ public class ShipTest {
     Mockito.when(planet.getCoordinate()).thenReturn(planetCoord);
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(trader);
     result = ship.doTrade(planet, trader);
-    assertEquals(3, result);
+    assertEquals(18, result);
     assertEquals(true, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD));
     assertEquals(false, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD));
     result = ship.doTrade(planet, trader);
@@ -358,7 +358,7 @@ public class ShipTest {
     Mockito.when(planet.getCoordinate()).thenReturn(planetCoord);
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(planetOwner);
     result = ship.doTrade(planet, trader);
-    assertEquals(3, result);
+    assertEquals(18, result);
     assertEquals(false, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD));
     assertEquals(true, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD));
     result = ship.doTrade(planet, trader);
@@ -369,7 +369,7 @@ public class ShipTest {
     Mockito.when(planet.getCoordinate()).thenReturn(planetCoord);
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(trader);
     result = ship.doTrade(planet, trader);
-    assertEquals(3, result);
+    assertEquals(18, result);
     assertEquals(true, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD));
     assertEquals(false, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD));
   }

@@ -327,6 +327,55 @@ public class ShipTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTtradeShip5() {
+    ShipHull hull = ShipHullFactory.createByName("Medium freighter", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
+    ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
+    design.addComponent(energy);
+    design.addComponent(engine);
+    Ship ship = new Ship(design);
+    Planet planet = Mockito.mock(Planet.class);
+    Coordinate coordinate = new Coordinate(5, 5);
+    Mockito.when(planet.getCoordinate()).thenReturn(coordinate);
+    PlayerInfo trader = Mockito.mock(PlayerInfo.class);
+    PlayerInfo planetOwner = Mockito.mock(PlayerInfo.class);
+    Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(trader);
+    int result = ship.doTrade(planet, trader);
+    assertEquals(0, result);
+    assertEquals(true, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD));
+    assertEquals(false, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD));
+    result = ship.doTrade(planet, trader);
+    assertEquals(0, result);
+    assertEquals(true, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD));
+    assertEquals(false, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD));
+    result = ship.doTrade(planet, trader);
+    assertEquals(0, result);
+    assertEquals(true, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD));
+    assertEquals(false, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD));
+    planet = Mockito.mock(Planet.class);
+    Coordinate planetCoord = new Coordinate(30, 30);
+    Mockito.when(planet.getCoordinate()).thenReturn(planetCoord);
+    Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(planetOwner);
+    result = ship.doTrade(planet, trader);
+    assertEquals(3, result);
+    assertEquals(false, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD));
+    assertEquals(true, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD));
+    result = ship.doTrade(planet, trader);
+    assertEquals(0, result);
+    assertEquals(false, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD));
+    assertEquals(true, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD));
+    planetCoord = new Coordinate(5, 5);
+    Mockito.when(planet.getCoordinate()).thenReturn(planetCoord);
+    Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(trader);
+    result = ship.doTrade(planet, trader);
+    assertEquals(3, result);
+    assertEquals(true, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD));
+    assertEquals(false, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testProbeFTLSpeedp() {
     ShipHull hull = ShipHullFactory.createByName("Probe", SpaceRace.HUMAN);
     ShipDesign design = new ShipDesign(hull);

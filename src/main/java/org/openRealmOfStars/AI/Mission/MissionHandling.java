@@ -343,7 +343,9 @@ public final class MissionHandling {
         fleet.setRoute(route);
         Planet homePlanet = game.getStarMap().getPlanetByCoordinate(
             fleet.getX(), fleet.getY());
-        fleet.doTrade(homePlanet, info);
+        if (homePlanet != null && homePlanet.getPlanetPlayerInfo() == info) {
+          fleet.doTrade(homePlanet, info);
+        }
         mission.setPhase(MissionPhase.TREKKING);
       }
       Coordinate targetCoord = new Coordinate(mission.getX(), mission.getY());

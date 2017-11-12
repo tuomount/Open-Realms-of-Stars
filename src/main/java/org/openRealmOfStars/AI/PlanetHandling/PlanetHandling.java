@@ -721,27 +721,39 @@ public final class PlanetHandling {
                 score = score - 10;
               }
             }
-            mission = info.getMissions().getMission(MissionType.ATTACK,
-                MissionPhase.PLANNING);
-            if (mission != null && ship.hasBombs()) {
-              score = score + 30;
-            }
-
           } else {
             mission = info.getMissions().getMission(MissionType.GATHER,
                 MissionPhase.PLANNING);
             if (mission != null) {
-              score = score + ship.getTotalMilitaryPower() * 2;
+              score = score + ship.getTotalMilitaryPower() * 3;
               if (attitude == Attitude.AGGRESSIVE
                   || attitude == Attitude.MILITARISTIC) {
+                score = score + 30;
+              } else if (attitude == Attitude.BACKSTABBING) {
                 score = score + 20;
+              } else if (attitude == Attitude.LOGICAL) {
+                score = score + 10;
               } else if (attitude == Attitude.PEACEFUL) {
                 score = score - 10;
+              }
+              if (ship.getTotalMilitaryPower() > 0
+                  && info.getMissions().getGatherMission(
+                      Mission.ASSAULT_TYPE) != null) {
+                score = score + 30;
+              }
+              if (ship.getTotalMilitaryPower() > 0
+                  && info.getMissions().getGatherMission(
+                      Mission.ASSAULT_SB_TYPE) != null) {
+                score = score + 30;
               }
               if (ship.hasBombs() && info.getMissions().getGatherMission(
                      Mission.BOMBER_TYPE) != null) {
                 score = score + 30;
               }
+              if (ship.isTrooperModule() && info.getMissions().getGatherMission(
+                  Mission.TROOPER_TYPE) != null) {
+             score = score + 30;
+           }
             }
           }
 
@@ -754,21 +766,7 @@ public final class PlanetHandling {
           // Trooper ship should be built only on request
           Mission mission = info.getMissions().getGatherMission(
               Mission.TROOPER_TYPE);
-          if (mission != null) {
-            Planet colonPlanet = map.getPlanetByCoordinate(mission.getX(),
-                mission.getY());
-            int planetScore = (colonPlanet.getGroundSize() - 7) * 3
-                + colonPlanet.getAmountMetalInGround() / 400;
-            planetScore = planetScore + info.getRace().getMaxRad()
-                - colonPlanet.getRadiationLevel();
-            score = score + planetScore;
-            if (attitude == Attitude.AGGRESSIVE
-                || attitude == Attitude.MILITARISTIC) {
-              score = score + 20;
-            } else if (attitude == Attitude.PEACEFUL) {
-              score = score - 10;
-            }
-          } else {
+          if (mission == null) {
             score = -1;
           }
         }

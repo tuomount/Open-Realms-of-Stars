@@ -460,4 +460,39 @@ public class PlanetHandlingTest {
     assertEquals(-1, score);
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testColonyShipScoring() {
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);
+    Mockito.when(ship.isTradeShip()).thenReturn(false);
+    Mockito.when(ship.isColonyModule()).thenReturn(true);
+    Mockito.when(ship.getMetalCost()).thenReturn(14);
+    Mockito.when(ship.getProdCost()).thenReturn(22);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getGroundSize()).thenReturn(12);
+    Mockito.when(planet.getRadiationLevel()).thenReturn(2);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    MissionList missionList = Mockito.mock(MissionList.class);
+    Mission mission = Mockito.mock(Mission.class);
+    Mockito.when(missionList.getMission(MissionType.COLONIZE,
+        MissionPhase.PLANNING)).thenReturn(mission);
+    Mockito.when(info.getMissions()).thenReturn(missionList);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getPlanetByCoordinate(Mockito.anyInt(),
+        Mockito.anyInt())).thenReturn(planet);
+    int score = PlanetHandling.scoreColonyShip(20, ship, info, map,
+        Attitude.EXPANSIONIST);
+    assertEquals(57, score);
+    score = PlanetHandling.scoreColonyShip(20, ship, info, map,
+        Attitude.MERCHANTICAL);
+    assertEquals(37, score);
+    Mockito.when(missionList.getMission(MissionType.COLONIZE,
+        MissionPhase.PLANNING)).thenReturn(null);
+    score = PlanetHandling.scoreColonyShip(20, ship, info, map,
+        Attitude.AGGRESSIVE);
+    assertEquals(-1, score);
+  }
+
 }

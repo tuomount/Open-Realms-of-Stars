@@ -636,6 +636,40 @@ public final class PlanetHandling {
     }
     return score;
   }
+
+  /**
+   * Score colony ship.
+   * @param preScore Prescore from regular ship scoring
+   * @param ship Ship to score
+   * @param info Player who is about to build ship.
+   * @param map Starmp
+   * @param attitude Player attitude
+   * @return Score of the colony ship.
+   */
+  protected static int scoreColonyShip(final int preScore, final Ship ship,
+      final PlayerInfo info, final StarMap map, final Attitude attitude) {
+    int score = preScore;
+    if (ship.isColonyModule()) {
+      // Colony ship should be built only on request
+      Mission mission = info.getMissions().getMission(MissionType.COLONIZE,
+          MissionPhase.PLANNING);
+      if (mission != null) {
+        Planet colonPlanet = map.getPlanetByCoordinate(mission.getX(),
+            mission.getY());
+        int colonyScore = (colonPlanet.getGroundSize() - 7) * 3
+            + colonPlanet.getAmountMetalInGround() / 400;
+        score = score + info.getRace().getMaxRad()
+            - colonPlanet.getRadiationLevel();
+        score = score + colonyScore;
+        if (attitude == Attitude.EXPANSIONIST) {
+          score = score + 20;
+        }
+      } else {
+        score = -1;
+      }
+    }
+    return score;
+  }
   /**
    * Calculate scores for each construction. Each score is between -1 and 1000
    * @param constructions The constructions
@@ -714,22 +748,7 @@ public final class PlanetHandling {
         }
         if (ship.isColonyModule()) {
           // Colony ship should be built only on request
-          Mission mission = info.getMissions().getMission(MissionType.COLONIZE,
-              MissionPhase.PLANNING);
-          if (mission != null) {
-            Planet colonPlanet = map.getPlanetByCoordinate(mission.getX(),
-                mission.getY());
-            int colonyScore = (colonPlanet.getGroundSize() - 7) * 3
-                + colonPlanet.getAmountMetalInGround() / 400;
-            score = score + info.getRace().getMaxRad()
-                - colonPlanet.getRadiationLevel();
-            score = score + colonyScore;
-            if (attitude == Attitude.EXPANSIONIST) {
-              score = score + 20;
-            }
-          } else {
-            score = -1;
-          }
+          score = scoreColonyShip(score, ship, info, map, attitude);
         }
         if (ship.isTrooperModule()) {
           // Trooper ship should be built only on request

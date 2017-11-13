@@ -750,14 +750,6 @@ public final class PlanetHandling {
                       Mission.ASSAULT_SB_TYPE) != null) {
                 score = score + 30;
               }
-              if (ship.hasBombs() && info.getMissions().getGatherMission(
-                     Mission.BOMBER_TYPE) != null) {
-                score = score + 50;
-              }
-              if (ship.isTrooperModule() && info.getMissions().getGatherMission(
-                  Mission.TROOPER_TYPE) != null) {
-             score = score + 50;
-           }
             }
           }
 
@@ -766,12 +758,38 @@ public final class PlanetHandling {
           // Colony ship should be built only on request
           score = scoreColonyShip(score, ship, info, map, attitude);
         }
+        if (ship.hasBombs() && info.getMissions().getGatherMission(
+            Mission.BOMBER_TYPE) != null) {
+          score = score + 50;
+          if (attitude == Attitude.AGGRESSIVE
+              || attitude == Attitude.MILITARISTIC) {
+            score = score + 30;
+          } else if (attitude == Attitude.BACKSTABBING) {
+            score = score + 20;
+          } else if (attitude == Attitude.LOGICAL) {
+            score = score + 10;
+          } else if (attitude == Attitude.PEACEFUL) {
+            score = score - 10;
+          }
+        }
         if (ship.isTrooperModule()) {
           // Trooper ship should be built only on request
           Mission mission = info.getMissions().getGatherMission(
               Mission.TROOPER_TYPE);
           if (mission == null) {
             score = -1;
+          } else {
+            score = score + 50;
+            if (attitude == Attitude.AGGRESSIVE
+                || attitude == Attitude.MILITARISTIC) {
+              score = score + 30;
+            } else if (attitude == Attitude.BACKSTABBING) {
+              score = score + 20;
+            } else if (attitude == Attitude.LOGICAL) {
+              score = score + 10;
+            } else if (attitude == Attitude.PEACEFUL) {
+              score = score - 10;
+            }
           }
         }
         if (ship.isStarBase()) {

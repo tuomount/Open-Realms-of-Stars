@@ -132,8 +132,12 @@ public final class PlanetHandling {
     if (info != null) {
       Attitude attitude = info.getAiAttitude();
       handlePlanetPopulation(planet, info);
-      if (credit < 0) {
+      if (credit < 0
+          && planet.getTax() < planet.getTotalProduction(
+              Planet.PRODUCTION_PRODUCTION) + 2) {
         planet.setTax(planet.getTax() + 1, false);
+      } else if (credit > 0 && planet.getTax() > 0) {
+        planet.setTax(planet.getTax() - 1, false);
       }
       ArrayList<Message> messages = info.getMsgList().getFullList();
       boolean changeConstruction = false;
@@ -748,11 +752,11 @@ public final class PlanetHandling {
               }
               if (ship.hasBombs() && info.getMissions().getGatherMission(
                      Mission.BOMBER_TYPE) != null) {
-                score = score + 30;
+                score = score + 50;
               }
               if (ship.isTrooperModule() && info.getMissions().getGatherMission(
                   Mission.TROOPER_TYPE) != null) {
-             score = score + 30;
+             score = score + 50;
            }
             }
           }

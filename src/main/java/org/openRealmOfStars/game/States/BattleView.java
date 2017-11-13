@@ -337,7 +337,7 @@ public class BattleView extends BlackPanel {
         combatMapMouseListener.setComponentUse(index);
         combat.setComponentUse(index);
         if (combat.getCurrentShip().getShip().isStarBase()
-            && combat.getCurrentShip().getShip().getFlag(
+            && !combat.getCurrentShip().getShip().getFlag(
                 Ship.FLAG_STARBASE_DEPLOYED)) {
           textLogger.addLog("Undeployed Starbase cannot use weapons!");
           combatMapMouseListener.setComponentUse(-1);

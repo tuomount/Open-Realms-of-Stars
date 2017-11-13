@@ -532,8 +532,8 @@ public class Fleet {
   }
 
   /**
-   * Get first starbase ship from the fleet
-   * @return Starbase or null
+   * Get first starbase ship from the fleet which isn't deployed.
+   * @return Undeployed Starbase or null
    */
   public Ship getStarbaseShip() {
     for (Ship ship : ships) {

@@ -1420,6 +1420,16 @@ public class Game implements ActionListener {
       combatView.handleActions(arg0);
     }
     if (gameState == GameState.PLANETBOMBINGVIEW && planetBombingView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        SoundPlayer.playMenuSound();
+        if (previousState == GameState.AITURN) {
+          changeGameState(previousState);
+          return;
+        }
+        changeGameState(GameState.STARMAP);
+        return;
+      }
       planetBombingView.handleAction(arg0);
     }
     if (gameState == GameState.AITURN && aiTurnView != null) {

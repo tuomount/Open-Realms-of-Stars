@@ -503,6 +503,16 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Show planet bombing view panel
+   * @param view PlanetBombingView to show
+   */
+  public void showPlanetBombingView(final PlanetBombingView view) {
+    planetBombingView = view;
+    planetBombingView.setStarMap(starMap);
+    this.updateDisplay(planetBombingView);
+  }
+
+  /**
    * Show fleet view panel
    * @param planet Planet to show
    * @param fleet Fleet to show
@@ -931,21 +941,25 @@ public class Game implements ActionListener {
    * @param dataObject Depends on which state is changed
    */
   private void planetBombingView(final Object dataObject) {
-   boolean changed = false;
-      if (dataObject instanceof FleetView) {
-        FleetView view = (FleetView) dataObject;
-        Planet planet = view.getPlanet();
-        Fleet fleet = view.getFleet();
-        if (fleet != null && planet != null
-            && fleet.getX() == planet.getX()
-            && fleet.getY() == planet.getY()) {
-          showPlanetBombingView(planet, fleet);
-          changed = true;
-        }
+    boolean changed = false;
+    if (dataObject instanceof FleetView) {
+      FleetView view = (FleetView) dataObject;
+      Planet planet = view.getPlanet();
+      Fleet fleet = view.getFleet();
+      if (fleet != null && planet != null
+          && fleet.getX() == planet.getX()
+          && fleet.getY() == planet.getY()) {
+        showPlanetBombingView(planet, fleet);
+        changed = true;
       }
-      if (!changed) {
-        changeGameState(GameState.STARMAP);
-      }
+    }
+    if (dataObject instanceof PlanetBombingView) {
+      showPlanetBombingView((PlanetBombingView) dataObject);
+      changed = true;
+    }
+    if (!changed) {
+      changeGameState(GameState.STARMAP);
+    }
 
   }
 

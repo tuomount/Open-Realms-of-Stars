@@ -377,6 +377,31 @@ private boolean isIndexValid(final int index) {
   }
 
   /**
+   * Initialize value for armor and shield according the working
+   * components. This should be called after combat, after fixing
+   * and before combat.
+   */
+  public void initializeShieldAndArmor() {
+    int totalArmor = 0;
+    int totalShield = 0;
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.ARMOR
+          && componentIsWorking(i)) {
+          totalArmor = totalArmor + comp.getDefenseValue();
+      }
+      if (comp.getDefenseValue() > 0
+          && comp.getType() == ShipComponentType.SHIELD
+          && componentIsWorking(i)) {
+          totalShield = totalShield + comp.getDefenseValue();
+      }
+    }
+    setArmor(totalArmor);
+    setShield(totalShield);
+  }
+
+  /**
    * Check if certain component has energy or not. Returns true if component has
    * energy. This also checks that component is functional.
    * @param index Component index
@@ -794,6 +819,7 @@ private int increaseHitChanceByComponent() {
         }
       }
     }
+    initializeShieldAndArmor();
   }
 
   /**

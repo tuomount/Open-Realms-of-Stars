@@ -221,6 +221,9 @@ public class Combat {
     }
 
     Collections.sort(combatShipList, Collections.reverseOrder());
+    for (CombatShip combatShip : combatShipList) {
+      combatShip.getShip().initializeShieldAndArmor();
+    }
     componentUse = -1;
     animation = null;
     winner = null;
@@ -676,6 +679,9 @@ public boolean launchIntercept(final int distance,
     Fleet looserFleet;
     boolean isWinnerAttacker;
     boolean loserEscaped = false;
+    for (CombatShip combatShip : combatShipList) {
+      combatShip.getShip().initializeShieldAndArmor();
+    }
     if (!endCombatHandled && winner != null) {
       if (attackerInfo == winner) {
         winnerPlayer = attackerInfo;

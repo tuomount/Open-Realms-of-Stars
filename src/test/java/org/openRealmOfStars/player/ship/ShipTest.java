@@ -75,6 +75,9 @@ public class ShipTest {
     assertEquals(false, ship.isTrooperModule());
     assertEquals(100, ship.getHitChance(weapon));
     assertEquals(false, ship.isStarBase());
+    ship.setArmor(0);
+    ship.initializeShieldAndArmor();
+    assertEquals(1, ship.getArmor());
     
     design = new ShipDesign(hull);
     design.addComponent(energy);
@@ -82,6 +85,10 @@ public class ShipTest {
     design.addComponent(shield);
     design.addComponent(weapon);
     ship = new Ship(design);
+    ship.setShield(0);
+    ship.initializeShieldAndArmor();
+    assertEquals(1, ship.getShield());
+
     assertEquals(false,ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED));
     assertEquals(false,ship.getFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD));
     assertEquals(false,ship.getFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD));

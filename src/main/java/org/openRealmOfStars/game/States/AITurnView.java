@@ -542,7 +542,8 @@ public class AITurnView extends BlackPanel {
                 // No deploy starbase mission for this planet found,
                 // so adding it.
                 info.getMissions().add(mission);
-              } else if (fleet.isStarBaseDeployed()
+              }
+            } else if (fleet.isStarBaseDeployed()
                   && info.getSectorVisibility(new Coordinate(x, y))
                   == PlayerInfo.VISIBLE && infoAt != info) {
                 int index = fleetTiles[x][y].getPlayerIndex();
@@ -551,7 +552,6 @@ public class AITurnView extends BlackPanel {
                 if (list.isBonusType(DiplomacyBonusType.IN_WAR)) {
                   addDestroyStarbaseMission(new Coordinate(x, y), info);
                 }
-              }
             }
           }
         }

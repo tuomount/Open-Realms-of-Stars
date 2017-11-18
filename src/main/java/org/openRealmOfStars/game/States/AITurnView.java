@@ -497,7 +497,7 @@ public class AITurnView extends BlackPanel {
       mission.setTargetPlanet("Starbase " + coordinate.toString());
       mission.setPlanetBuilding(homeWorld.getName());
     }
-    if (info.getMissions().getAttackMission(
+    if (info.getMissions().getDestroyStarbaseMission(
         "Starbase " + coordinate.toString()) == null) {
       // No Destroy starbase mission for this starbase found, so adding it.
       info.getMissions().add(mission);

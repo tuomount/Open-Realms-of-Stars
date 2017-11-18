@@ -261,7 +261,47 @@ public class AITurnView extends BlackPanel {
           }
         }
       }
-      //TODO add better gather handling
+      mission = info.getMissions().getGatherMission(Mission.BOMBER_TYPE);
+      Ship ship = fleet.getBomberShip();
+      if (mission != null && ship != null) {
+        fleet.removeShip(ship);
+        Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+        newFleet.setName(info.getFleets().generateUniqueName("Gather"));
+        mission.setFleetName(newFleet.getName());
+        mission.setPhase(MissionPhase.LOADING);
+        info.getFleets().add(newFleet);
+      }
+      mission = info.getMissions().getGatherMission(Mission.TROOPER_TYPE);
+      ship = fleet.getTrooperShip();
+      if (mission != null && ship != null) {
+        fleet.removeShip(ship);
+        Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+        newFleet.setName(info.getFleets().generateUniqueName("Gather"));
+        mission.setFleetName(newFleet.getName());
+        mission.setPhase(MissionPhase.LOADING);
+        info.getFleets().add(newFleet);
+      }
+      mission = info.getMissions().getGatherMission(Mission.ASSAULT_TYPE);
+      ship = fleet.getAssaultShip();
+      if (mission != null && ship != null) {
+        fleet.removeShip(ship);
+        Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+        newFleet.setName(info.getFleets().generateUniqueName("Gather"));
+        mission.setFleetName(newFleet.getName());
+        mission.setPhase(MissionPhase.TREKKING);
+        info.getFleets().add(newFleet);
+      }
+      mission = info.getMissions().getGatherMission(Mission.ASSAULT_SB_TYPE);
+      ship = fleet.getAssaultShip();
+      if (mission != null && ship != null) {
+        fleet.removeShip(ship);
+        Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+        newFleet.setName(info.getFleets().generateUniqueName("Gather"));
+        mission.setFleetName(newFleet.getName());
+        mission.setPhase(MissionPhase.TREKKING);
+        info.getFleets().add(newFleet);
+      }
+      info.getFleets().recalculateList();
     }
 
   }

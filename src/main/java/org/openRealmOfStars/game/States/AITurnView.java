@@ -261,6 +261,7 @@ public class AITurnView extends BlackPanel {
           }
         }
       }
+      //TODO add better gather handling
     }
 
   }

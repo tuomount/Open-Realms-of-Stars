@@ -513,6 +513,43 @@ public class Fleet {
   }
 
   /**
+   * Get first trooper ship from the fleet.
+   * @return Trooper ship or null
+   */
+  public Ship getTrooperShip() {
+    for (Ship ship : ships) {
+      if (ship.isTrooperModule()) {
+          return ship;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Get first bomber ship from the fleet.
+   * @return Bomber ship or null
+   */
+  public Ship getBomberShip() {
+    for (Ship ship : ships) {
+      if (ship.hasBombs()) {
+          return ship;
+      }
+    }
+    return null;
+  }
+  /**
+   * Get first bomber ship from the fleet.
+   * @return Assault ship or null
+   */
+  public Ship getAssaultShip() {
+    for (Ship ship : ships) {
+      if (ship.getTotalMilitaryPower() > 0) {
+          return ship;
+      }
+    }
+    return null;
+  }
+  /**
    * Get first colony ship from the fleet
    * @param hasColonist True if colony ship must have colonists.
    * @return Colony ship or null

@@ -57,6 +57,8 @@ public class FleetTest {
     Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
     Mockito.when(ship.getName()).thenReturn("Scout");
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(15);
+    Mockito.when(ship.isTrooperModule()).thenReturn(false);
+    Mockito.when(ship.hasBombs()).thenReturn(false);
     Mockito.when(ship.getCulture()).thenReturn(0);
     return ship;
   }
@@ -83,8 +85,68 @@ public class FleetTest {
     Mockito.when(ship.getColonist()).thenReturn(0);
     Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
     Mockito.when(ship.getName()).thenReturn("Colony");
+    Mockito.when(ship.isTrooperModule()).thenReturn(false);
+    Mockito.when(ship.hasBombs()).thenReturn(false);
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);
     Mockito.when(ship.getCulture()).thenReturn(1);
+    return ship;
+  }
+
+  /**
+   * Create trooper ship
+   * @return Trooper ship
+   */
+  private static Ship createTrooper() {
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getSize()).thenReturn(ShipSize.MEDIUM);
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getFtlSpeed()).thenReturn(1);
+    Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getScannerDetectionLvl()).thenReturn(0);
+    Mockito.when(ship.getScannerLvl()).thenReturn(0);
+    Mockito.when(ship.getSpeed()).thenReturn(1);
+    Mockito.when(ship.getFreeCargoColonists()).thenReturn(4);
+    Mockito.when(ship.getFreeCargoMetal()).thenReturn(20);
+    Mockito.when(ship.getHullPoints()).thenReturn(6);
+    Mockito.when(ship.getMaxHullPoints()).thenReturn(6);
+    Mockito.when(ship.isColonyModule()).thenReturn(false);
+    Mockito.when(ship.isColonyShip()).thenReturn(false);
+    Mockito.when(ship.getColonist()).thenReturn(0);
+    Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
+    Mockito.when(ship.getName()).thenReturn("Trooper");
+    Mockito.when(ship.isTrooperModule()).thenReturn(true);
+    Mockito.when(ship.hasBombs()).thenReturn(false);
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);
+    Mockito.when(ship.getCulture()).thenReturn(0);
+    return ship;
+  }
+
+  /**
+   * Create trooper ship
+   * @return Trooper ship
+   */
+  private static Ship createBomber() {
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getSize()).thenReturn(ShipSize.MEDIUM);
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getFtlSpeed()).thenReturn(1);
+    Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getScannerDetectionLvl()).thenReturn(0);
+    Mockito.when(ship.getScannerLvl()).thenReturn(0);
+    Mockito.when(ship.getSpeed()).thenReturn(1);
+    Mockito.when(ship.getFreeCargoColonists()).thenReturn(4);
+    Mockito.when(ship.getFreeCargoMetal()).thenReturn(20);
+    Mockito.when(ship.getHullPoints()).thenReturn(6);
+    Mockito.when(ship.getMaxHullPoints()).thenReturn(6);
+    Mockito.when(ship.isColonyModule()).thenReturn(false);
+    Mockito.when(ship.isColonyShip()).thenReturn(false);
+    Mockito.when(ship.getColonist()).thenReturn(0);
+    Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
+    Mockito.when(ship.getName()).thenReturn("Bomber");
+    Mockito.when(ship.isTrooperModule()).thenReturn(true);
+    Mockito.when(ship.hasBombs()).thenReturn(true);
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);
+    Mockito.when(ship.getCulture()).thenReturn(0);
     return ship;
   }
 
@@ -144,6 +206,8 @@ public class FleetTest {
     Mockito.when(ship.getName()).thenReturn("Trader");
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);
     Mockito.when(ship.getCulture()).thenReturn(0);
+    Mockito.when(ship.isTrooperModule()).thenReturn(false);
+    Mockito.when(ship.hasBombs()).thenReturn(false);
     Mockito.when(ship.isTradeShip()).thenReturn(true);
     return ship;
   }
@@ -169,6 +233,8 @@ public class FleetTest {
     Mockito.when(ship.isPrivateeringShip()).thenReturn(true);
     Mockito.when(ship.getName()).thenReturn("Privateer");
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(20);
+    Mockito.when(ship.isTrooperModule()).thenReturn(false);
+    Mockito.when(ship.hasBombs()).thenReturn(false);
     Mockito.when(ship.getCulture()).thenReturn(0);
     return ship;
   }
@@ -312,6 +378,28 @@ public class FleetTest {
     assertEquals(35,fleet.getMilitaryValue());
     assertEquals(22, fleet.getFleetCloackingValue());
     assertEquals(false, fleet.isTradeFleet());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFleetWithAttackMission() {
+    Ship ship = createShipOne();
+    Ship trooper = createTrooper();
+    Ship bomber = createBomber();
+    Fleet fleet = new Fleet(ship, 2, 3);
+    assertEquals(0, fleet.getCulturalValue());
+    assertEquals(15,fleet.getMilitaryValue());
+    fleet.addShip(trooper);
+    assertEquals(0, fleet.getCulturalValue());
+    assertEquals(15,fleet.getMilitaryValue());
+    fleet.addShip(bomber);
+    assertEquals(0, fleet.getCulturalValue());
+    assertEquals(15,fleet.getMilitaryValue());
+    assertEquals(0, fleet.getFleetCloackingValue());
+    assertEquals(false, fleet.isTradeFleet());
+    assertEquals(ship, fleet.getAssaultShip());
+    assertEquals(trooper, fleet.getTrooperShip());
+    assertEquals(bomber, fleet.getBomberShip());
   }
 
   @Test

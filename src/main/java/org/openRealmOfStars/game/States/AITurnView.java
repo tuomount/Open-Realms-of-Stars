@@ -228,6 +228,8 @@ public class AITurnView extends BlackPanel {
         info.getMissions().add(mission);
         fleet.setRoute(new Route(fleet.getX(), fleet.getY(), mission.getX(),
             mission.getY(), fleet.getFleetFtlSpeed()));
+        // Mission assigned continue...
+        return;
       }
       if (fleet.isColonyFleet()) {
         mission = info.getMissions().getMission(MissionType.COLONIZE,
@@ -259,6 +261,8 @@ public class AITurnView extends BlackPanel {
               ships[colony].setColonist(ships[colony].getColonist() + 1);
             }
           }
+          // Mission assigned continue...
+          return;
         }
       }
       mission = info.getMissions().getGatherMission(Mission.BOMBER_TYPE);
@@ -270,6 +274,7 @@ public class AITurnView extends BlackPanel {
         mission.setFleetName(newFleet.getName());
         mission.setPhase(MissionPhase.LOADING);
         info.getFleets().add(newFleet);
+        // Created a new fleet with new mission, old one still might exists
       }
       mission = info.getMissions().getGatherMission(Mission.TROOPER_TYPE);
       ship = fleet.getTrooperShip();
@@ -280,6 +285,7 @@ public class AITurnView extends BlackPanel {
         mission.setFleetName(newFleet.getName());
         mission.setPhase(MissionPhase.LOADING);
         info.getFleets().add(newFleet);
+        // Created a new fleet with new mission, old one still might exists
       }
       mission = info.getMissions().getGatherMission(Mission.ASSAULT_TYPE);
       ship = fleet.getAssaultShip();
@@ -290,6 +296,7 @@ public class AITurnView extends BlackPanel {
         mission.setFleetName(newFleet.getName());
         mission.setPhase(MissionPhase.TREKKING);
         info.getFleets().add(newFleet);
+        // Created a new fleet with new mission, old one still might exists
       }
       mission = info.getMissions().getGatherMission(Mission.ASSAULT_SB_TYPE);
       ship = fleet.getAssaultShip();
@@ -300,7 +307,9 @@ public class AITurnView extends BlackPanel {
         mission.setFleetName(newFleet.getName());
         mission.setPhase(MissionPhase.TREKKING);
         info.getFleets().add(newFleet);
+        // Created a new fleet with new mission, old one still might exists
       }
+      // Just cleaning the old if needed
       info.getFleets().recalculateList();
     }
 

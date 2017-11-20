@@ -78,6 +78,7 @@ public class CombatMapMouseListener extends MouseAdapter
     this.battleInfoPanel = battleInfoPanel;
     this.componentUse = -1;
     this.shipDamage = null;
+    this.escaped = false;
   }
 
   /**
@@ -94,6 +95,11 @@ public class CombatMapMouseListener extends MouseAdapter
    * ShipDamage information
    */
   private ShipDamage shipDamage;
+
+  /**
+   * Ship has escaped from combat
+   */
+  private boolean escaped;
 
   @Override
   public void mouseExited(final MouseEvent e) {
@@ -183,6 +189,7 @@ public class CombatMapMouseListener extends MouseAdapter
               && combat.getCurrentShip().getY() == wormHole.getY()) {
             SoundPlayer.playSound(SoundPlayer.TELEPORT);
             combat.escapeShip(combat.getCurrentShip());
+            escaped = true;
           }
         }
       }
@@ -252,6 +259,22 @@ public class CombatMapMouseListener extends MouseAdapter
    */
   public void setShipDamage(final ShipDamage shipDamage) {
     this.shipDamage = shipDamage;
+  }
+
+  /**
+   * Has ship escaped from combat?
+   * @return the escaped True if escaped
+   */
+  public boolean isEscaped() {
+    return escaped;
+  }
+
+  /**
+   * Set escape flag.
+   * @param escaped the escaped to set
+   */
+  public void setEscaped(final boolean escaped) {
+    this.escaped = escaped;
   }
 
 }

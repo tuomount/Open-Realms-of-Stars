@@ -51,6 +51,11 @@ public class CombatMapMouseListenerTest {
     ShipDamage damage = Mockito.mock(ShipDamage.class);
     listener.setShipDamage(damage);
     assertEquals(damage, listener.getShipDamage());
+    assertEquals(false, listener.isEscaped());
+    listener.setEscaped(true);
+    assertEquals(true, listener.isEscaped());
+    listener.setEscaped(false);
+    assertEquals(false, listener.isEscaped());
   }
 
 }

@@ -401,6 +401,9 @@ public boolean launchIntercept(final int distance,
       removeShipFromCombatList(ship);
       defenderEscaped = true;
     }
+    if (getCurrentShip() != null) {
+      getCurrentShip().reInitShipForRound();
+    }
     if (isCombatOver()) {
       handleEndCombat();
     }

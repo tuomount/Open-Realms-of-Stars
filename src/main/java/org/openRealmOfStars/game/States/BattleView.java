@@ -289,6 +289,14 @@ public class BattleView extends BlackPanel {
   public void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
+      if (combatMapMouseListener.isEscaped()) {
+        combatMapMouseListener.setComponentUse(-1);
+        if (combat.getCurrentShip() != null) {
+          infoPanel.showShip(combat.getCurrentShip().getShip());
+        }
+        this.repaint();
+        combatMapMouseListener.setEscaped(false);
+      }
       if (isCombatEnded()) {
         endButton.setText("End combat");
         map.getFleetTiles(true);

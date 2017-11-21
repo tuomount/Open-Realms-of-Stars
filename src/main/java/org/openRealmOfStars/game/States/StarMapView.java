@@ -19,8 +19,8 @@ import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
-import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.gui.panels.MessagePanel;
+import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
@@ -177,23 +177,23 @@ public class StarMapView extends BlackPanel {
     bottomPanel.setTitle(players.getCurrentPlayerInfo().getEmpireName());
     bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
     bottomPanel.add(Box.createRigidArea(new Dimension(15, 25)));
-    InvisiblePanel invis = new InvisiblePanel(bottomPanel);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.Y_AXIS));
-    credProd = new IconLabel(invis, Icons.getIconByName(Icons.ICON_CREDIT),
+    SpaceGreyPanel panel = new SpaceGreyPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    credProd = new IconLabel(panel, Icons.getIconByName(Icons.ICON_CREDIT),
         ": " + this.players.getCurrentPlayerInfo().getTotalCredits() + "("
             + this.map.getTotalProductionByPlayerPerTurn(
                 Planet.PRODUCTION_CREDITS, this.players.getCurrentPlayer())
             + ")");
-    invis.add(credProd);
-    reseProd = new IconLabel(invis, Icons.getIconByName(Icons.ICON_RESEARCH),
+    panel.add(credProd);
+    reseProd = new IconLabel(panel, Icons.getIconByName(Icons.ICON_RESEARCH),
         ": " + this.map.getTotalProductionByPlayerPerTurn(
             Planet.PRODUCTION_RESEARCH, this.players.getCurrentPlayer()));
-    invis.add(reseProd);
-    bottomPanel.add(invis);
+    panel.add(reseProd);
+    bottomPanel.add(panel);
     bottomPanel.add(Box.createRigidArea(new Dimension(10,
         SPACE_AFTER_RESEARCH_LABEL)));
 
-    InvisiblePanel bottomBtnPanel = new InvisiblePanel(bottomPanel);
+    SpaceGreyPanel bottomBtnPanel = new SpaceGreyPanel();
     bottomBtnPanel.setLayout(new GridLayout(3, 2));
 
     bottomPanel.add(Box.createRigidArea(new Dimension(10, 5)));

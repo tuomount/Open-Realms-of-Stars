@@ -15,7 +15,7 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.ComponentButton;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
-import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipImage;
@@ -112,15 +112,15 @@ public class BattleInfoPanel extends InfoPanel {
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
     this.add(textArea);
     this.add(Box.createRigidArea(new Dimension(10, 10)));
-    InvisiblePanel invisible = new InvisiblePanel(this);
-    invisible.setLayout(new GridLayout(6, 2));
+    SpaceGreyPanel panel = new SpaceGreyPanel();
+    panel.setLayout(new GridLayout(6, 2));
     for (int i = 0; i < MAX_BTN; i++) {
       cBtn[i] = new ComponentButton(ship, i);
       cBtn[i].setActionCommand(GameCommands.COMMAND_COMPONENT_USE + i);
       cBtn[i].addActionListener(listener);
-      invisible.add(cBtn[i]);
+      panel.add(cBtn[i]);
     }
-    this.add(invisible);
+    this.add(panel);
     if (shipInfo != null) {
       this.add(Box.createRigidArea(new Dimension(10, 10)));
       this.add(shipInfo);

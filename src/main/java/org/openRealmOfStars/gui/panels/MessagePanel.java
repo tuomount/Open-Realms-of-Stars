@@ -98,8 +98,8 @@ public class MessagePanel extends JPanel {
     pane.setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
     pane.setBorder(new SimpleBorder());
     pane.setLayout(new BoxLayout(pane, BoxLayout.X_AXIS));
-    btnPrev = new IconButton(GuiStatics.LEFT_ARROW, GuiStatics.LEFT_ARROW,
-        false, prevCommand, pane);
+    btnPrev = new IconButton(GuiStatics.LEFT_ARROW,
+        GuiStatics.LEFT_ARROW_PRESSED, false, prevCommand, pane);
     btnPrev.addActionListener(listener);
     pane.add(Box.createRigidArea(new Dimension(5, 30)));
     pane.add(btnPrev);

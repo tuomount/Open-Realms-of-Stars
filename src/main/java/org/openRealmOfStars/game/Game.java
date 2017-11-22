@@ -457,7 +457,7 @@ public class Game implements ActionListener {
    */
   public int getWidth() {
     if (gameFrame != null) {
-      return gameFrame.getWidth();
+      return gameFrame.getContentPane().getWidth();
     }
     return WINDOW_X_SIZE;
   }
@@ -468,7 +468,7 @@ public class Game implements ActionListener {
    */
   public int getHeight() {
     if (gameFrame != null) {
-      return gameFrame.getHeight();
+      return gameFrame.getContentPane().getHeight();
     }
     return WINDOW_Y_SIZE;
   }
@@ -479,7 +479,7 @@ public class Game implements ActionListener {
    */
   public void paint(final Graphics graphics) {
     if (gameFrame != null) {
-      gameFrame.paint(graphics);
+      gameFrame.getContentPane().paint(graphics);
     }
   }
 

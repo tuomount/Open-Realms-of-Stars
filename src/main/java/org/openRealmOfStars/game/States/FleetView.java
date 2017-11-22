@@ -30,7 +30,7 @@ import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
-import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
@@ -46,7 +46,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2017  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -172,15 +172,15 @@ public class FleetView extends BlackPanel {
       topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
       topPanel.add(Box.createRigidArea(new Dimension(15, 25)));
-      InvisiblePanel invisible = new InvisiblePanel(topPanel);
-      invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
+      SpaceGreyPanel panel = new SpaceGreyPanel();
+      panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
       SpaceButton conquerBtn = null;
       SpaceButton colonizeBtn = null;
       colonistSelection = null;
       metalSelection = null;
 
       if (planet.getPlanetPlayerInfo() != null) {
-        ownerLabel = new TransparentLabel(invisible,
+        ownerLabel = new TransparentLabel(panel,
             planet.getPlanetPlayerInfo().getEmpireName());
         if (info != planet.getPlanetPlayerInfo()) {
           conquerBtn = new SpaceButton("Conquer",
@@ -189,47 +189,47 @@ public class FleetView extends BlackPanel {
           conquerBtn.setEnabled(interactive);
         }
       } else {
-        ownerLabel = new TransparentLabel(invisible, "Uncolonized planet");
+        ownerLabel = new TransparentLabel(panel, "Uncolonized planet");
         colonizeBtn = new SpaceButton("Colonize",
             GameCommands.COMMAND_COLONIZE);
         colonizeBtn.addActionListener(listener);
         colonizeBtn.setEnabled(interactive);
       }
-      invisible.add(ownerLabel);
-      totalPeople = new IconLabel(invisible,
+      panel.add(ownerLabel);
+      totalPeople = new IconLabel(panel,
           Icons.getIconByName(Icons.ICON_PEOPLE),
           ": " + planet.getTotalPopulation());
       totalPeople.setToolTipText("Total number of people on planet.");
       totalPeople.setAlignmentX(Component.LEFT_ALIGNMENT);
-      invisible.add(totalPeople);
-      topPanel.add(invisible);
+      panel.add(totalPeople);
+      topPanel.add(panel);
       topPanel.add(Box.createRigidArea(new Dimension(25, 25)));
 
-      invisible = new InvisiblePanel(topPanel);
-      invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
-      metal = new IconLabel(invisible, Icons.getIconByName(Icons.ICON_METAL),
+      panel = new SpaceGreyPanel();
+      panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+      metal = new IconLabel(panel, Icons.getIconByName(Icons.ICON_METAL),
           ": " + planet.getMetal());
       metal.setToolTipText("Total metal on surface");
       metal.setAlignmentX(Component.LEFT_ALIGNMENT);
-      invisible.add(metal);
-      topPanel.add(invisible);
+      panel.add(metal);
+      topPanel.add(panel);
       topPanel.add(Box.createRigidArea(new Dimension(25, 25)));
       topPanel.setTitle(planet.getName());
 
-      invisible = new InvisiblePanel(topPanel);
-      invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
+      panel = new SpaceGreyPanel();
+      panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
       if (colonizeBtn != null) {
         if (planet.getRadiationLevel() > info.getRace().getMaxRad()) {
-          TransparentLabel radWarning = new TransparentLabel(invisible,
+          TransparentLabel radWarning = new TransparentLabel(panel,
               "Warning! High radiation!");
           radWarning.setForeground(GuiStatics.COLOR_RED_TEXT);
-          invisible.add(radWarning);
-          invisible.add(Box.createRigidArea(new Dimension(5, 5)));
+          panel.add(radWarning);
+          panel.add(Box.createRigidArea(new Dimension(5, 5)));
         }
-        invisible.add(colonizeBtn);
+        panel.add(colonizeBtn);
       }
       if (conquerBtn != null) {
-        invisible.add(conquerBtn);
+        panel.add(conquerBtn);
       }
       if (planet.getPlanetPlayerInfo() != null
           && info == planet.getPlanetPlayerInfo()) {
@@ -238,15 +238,15 @@ public class FleetView extends BlackPanel {
             GameCommands.COMMAND_COLONIST_PLUS, Icons.ICON_PEOPLE,
             "Colonist: 10000", "How many colonist/troops is on board of fleet.",
             listener);
-        invisible.add(colonistSelection);
+        panel.add(colonistSelection);
         metalSelection = new WorkerProductionPanel(
             GameCommands.COMMAND_METAL_CARGO_MINUS,
             GameCommands.COMMAND_METAL_CARGO_PLUS, Icons.ICON_METAL,
             "Metal: 1000000", "How many metal cargo is on board of fleet.",
             listener);
-        invisible.add(metalSelection);
+        panel.add(metalSelection);
       }
-      topPanel.add(invisible);
+      topPanel.add(panel);
       topPanel.add(Box.createRigidArea(new Dimension(50, 25)));
       topPanel.setTitle(planet.getName());
     }
@@ -300,7 +300,7 @@ public class FleetView extends BlackPanel {
     JScrollPane scroll = new JScrollPane(shipsInFleet);
     eastPanel.add(scroll);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-    InvisiblePanel fleetBtns = new InvisiblePanel(eastPanel);
+    SpaceGreyPanel fleetBtns = new SpaceGreyPanel();
     fleetBtns.setLayout(new BoxLayout(fleetBtns, BoxLayout.X_AXIS));
     SpaceButton btn = new SpaceButton("Split",
         GameCommands.COMMAND_SPLIT_THE_FLEET);
@@ -346,7 +346,7 @@ public class FleetView extends BlackPanel {
     scroll = new JScrollPane(fleetsInSpace);
     eastPanel.add(scroll);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-    fleetBtns = new InvisiblePanel(eastPanel);
+    fleetBtns = new SpaceGreyPanel();
     fleetBtns.setLayout(new BoxLayout(fleetBtns, BoxLayout.X_AXIS));
 
     btn = new SpaceButton("Merge", GameCommands.COMMAND_MERGE_FLEETS);

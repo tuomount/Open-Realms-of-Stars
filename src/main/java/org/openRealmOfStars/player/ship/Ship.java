@@ -1362,7 +1362,8 @@ private int increaseDefenseValueWithJammer() {
     int freeCargoColonists = 0;
     if (hull.getHullType() == ShipHullType.FREIGHTER) {
         freeCargoColonists = hull.getMaxSlot() - getNumberOfComponents();
-        freeCargoColonists -= getColonist() / 2 - getMetal() / 10;
+        freeCargoColonists = freeCargoColonists - (getColonist() / 2)
+            - (getMetal() / 10);
         freeCargoColonists = freeCargoColonists * 2;
     }
     return freeCargoColonists;

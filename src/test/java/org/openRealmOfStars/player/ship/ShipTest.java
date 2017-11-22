@@ -217,7 +217,7 @@ public class ShipTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testTtradeShip() {
+  public void testTradeShip() {
     ShipHull hull = ShipHullFactory.createByName("Medium freighter", SpaceRace.HUMAN);
     ShipDesign design = new ShipDesign(hull);
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
@@ -225,7 +225,14 @@ public class ShipTest {
     design.addComponent(energy);
     design.addComponent(engine);
     Ship ship = new Ship(design);
-    
+    assertEquals(12, ship.getFreeCargoColonists());
+    assertEquals(60, ship.getFreeCargoMetal());
+    ship.setColonist(1);
+    assertEquals(12, ship.getFreeCargoColonists());
+    assertEquals(50, ship.getFreeCargoMetal());
+    ship.setMetal(10);
+    assertEquals(10, ship.getFreeCargoColonists());
+    assertEquals(40, ship.getFreeCargoMetal());
     assertEquals(0,ship.getExperience());
     assertEquals(null, ship.getTradeCoordinate());
     Coordinate coord = new Coordinate(5, 6);
@@ -244,7 +251,7 @@ public class ShipTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testTtradeShip2() {
+  public void testTradeShip2() {
     ShipHull hull = ShipHullFactory.createByName("Medium freighter", SpaceRace.HUMAN);
     ShipDesign design = new ShipDesign(hull);
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
@@ -266,7 +273,7 @@ public class ShipTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testTtradeShip3() {
+  public void testTradeShip3() {
     ShipHull hull = ShipHullFactory.createByName("Medium freighter", SpaceRace.HUMAN);
     ShipDesign design = new ShipDesign(hull);
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
@@ -300,7 +307,7 @@ public class ShipTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testTtradeShip4() {
+  public void testTradeShip4() {
     ShipHull hull = ShipHullFactory.createByName("Medium freighter", SpaceRace.HUMAN);
     ShipDesign design = new ShipDesign(hull);
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
@@ -334,7 +341,7 @@ public class ShipTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testTtradeShip5() {
+  public void testTradeShip5() {
     ShipHull hull = ShipHullFactory.createByName("Medium freighter", SpaceRace.HUMAN);
     ShipDesign design = new ShipDesign(hull);
     ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");

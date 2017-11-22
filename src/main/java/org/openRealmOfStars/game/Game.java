@@ -70,6 +70,7 @@ import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
@@ -324,6 +325,19 @@ public class Game implements ActionListener {
       musicTimer.start();
       gameFrame.setResizable(false);
       gameFrame.setVisible(true);
+      // Adjusting JFrame size. Some OS take UI component space
+      // from JFrame. This happens at least with Windows 7/10 and Java8.
+      int sizeX = gameFrame.getWidth() - gameFrame.getContentPane().getWidth();
+      int sizeY = gameFrame.getHeight()
+          - gameFrame.getContentPane().getHeight();
+      if (sizeX > 0 || sizeY > 0) {
+        ErrorLogger.log("Adjust frame, since OS's UI component require"
+            + " their own space from JFrame.");
+        ErrorLogger.log("Adjusting X: " + sizeX + " Adjusting Y: " + sizeY);
+        gameFrame.setVisible(false);
+        gameFrame.setSize(WINDOW_X_SIZE + sizeX, WINDOW_Y_SIZE + sizeY);
+        gameFrame.setVisible(true);
+      }
       // Add new KeyEventDispatcher
       KeyboardFocusManager kfm = KeyboardFocusManager
           .getCurrentKeyboardFocusManager();

@@ -19,7 +19,7 @@ import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.TransparentLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ImagePanel;
-import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 
@@ -123,24 +123,24 @@ public class NewsCorpView extends BlackPanel {
     textArea.setEditable(false);
     newsPanel.add(textArea);
     this.add(base, BorderLayout.CENTER);
-    InvisiblePanel invis = new InvisiblePanel(newsPanel);
-    invis.setLayout(new BoxLayout(invis, BoxLayout.X_AXIS));
+    SpaceGreyPanel panel = new SpaceGreyPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
     IconButton iBtn = new IconButton(GuiStatics.LEFT_ARROW,
         GuiStatics.LEFT_ARROW_PRESSED, false, GameCommands.COMMAND_PREV_TARGET,
         this);
     iBtn.addActionListener(listener);
-    invis.add(iBtn);
-    invis.add(Box.createRigidArea(new Dimension(10, 5)));
-    newsLabel = new TransparentLabel(invis, "100/100");
+    panel.add(iBtn);
+    panel.add(Box.createRigidArea(new Dimension(10, 5)));
+    newsLabel = new TransparentLabel(panel, "100/100");
     newsLabel.setText("1/" + newsList.length);
-    invis.add(newsLabel);
+    panel.add(newsLabel);
     iBtn = new IconButton(GuiStatics.RIGHT_ARROW,
         GuiStatics.RIGHT_ARROW_PRESSED, false, GameCommands.COMMAND_NEXT_TARGET,
         this);
     iBtn.addActionListener(listener);
-    invis.add(iBtn);
+    panel.add(iBtn);
     newsPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-    newsPanel.add(invis);
+    newsPanel.add(panel);
     base.add(newsPanel, BorderLayout.CENTER);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();

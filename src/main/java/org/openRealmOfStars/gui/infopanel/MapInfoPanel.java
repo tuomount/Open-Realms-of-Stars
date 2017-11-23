@@ -18,7 +18,7 @@ import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
-import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
@@ -30,7 +30,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2017  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -130,27 +130,27 @@ public class MapInfoPanel extends InfoPanel {
         RIGID_BOX_HEIGHT)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH * 2,
         Tile.MAX_HEIGHT * 2, BufferedImage.TYPE_4BYTE_ABGR);
-    InvisiblePanel invisible = new InvisiblePanel(this);
-    invisible.setLayout(new BoxLayout(invisible, BoxLayout.X_AXIS));
+    SpaceGreyPanel panel = new SpaceGreyPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     IconButton iBtn = new IconButton(GuiStatics.LEFT_ARROW,
         GuiStatics.LEFT_ARROW_PRESSED, false, GameCommands.COMMAND_PREV_TARGET,
         this);
     iBtn.addActionListener(listener);
-    invisible.add(iBtn);
+    panel.add(iBtn);
     imageLabel = new ImageLabel(img, true);
     imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
     imageLabel.setFillColor(Color.black);
     Graphics2D g2d = img.createGraphics();
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
-    invisible.add(imageLabel);
+    panel.add(imageLabel);
     iBtn = new IconButton(GuiStatics.RIGHT_ARROW,
         GuiStatics.RIGHT_ARROW_PRESSED, false, GameCommands.COMMAND_NEXT_TARGET,
         this);
     iBtn.addActionListener(listener);
-    invisible.add(iBtn);
-    this.add(invisible);
+    panel.add(iBtn);
+    this.add(panel);
     this.add(Box.createRigidArea(new Dimension(10, 10)));
     textArea = new InfoTextArea();
     textArea.setEditable(false);

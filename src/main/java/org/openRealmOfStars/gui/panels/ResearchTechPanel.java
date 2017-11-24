@@ -100,11 +100,11 @@ public class ResearchTechPanel extends SpaceGreyPanel {
     btnMinus.addActionListener(listener);
     this.add(Box.createRigidArea(new Dimension(5, 5)));
     this.add(btnMinus);
-    InvisiblePanel invisible = new InvisiblePanel(this);
-    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
+    SpaceGreyPanel panel = new SpaceGreyPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
     label = new IconLabel(this, Icons.getIconByName(iconName), text);
-    invisible.add(label);
+    panel.add(label);
     slider = new JSlider(0, 100, sliderValue);
     slider.setMinorTickSpacing(4);
     slider.setMajorTickSpacing(20);
@@ -125,12 +125,12 @@ public class ResearchTechPanel extends SpaceGreyPanel {
         }
       }
     });
-    invisible.add(slider);
+    panel.add(slider);
     lvlLabel = new IconLabel(this, Icons.getIconByName(Icons.ICON_EMPTY),
         text2);
-    invisible.add(lvlLabel);
+    panel.add(lvlLabel);
 
-    this.add(invisible);
+    this.add(panel);
 
     btnUpgrade = new IconButton(Icons.getIconByName(Icons.ICON_ARROWUP),
         Icons.getIconByName(Icons.ICON_ARROWUP_PRESSED), false, actionUpgrade,

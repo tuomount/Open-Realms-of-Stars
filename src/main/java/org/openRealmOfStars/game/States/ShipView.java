@@ -21,7 +21,7 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
-import org.openRealmOfStars.gui.panels.InvisiblePanel;
+import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.player.ship.ShipImages;
@@ -116,40 +116,40 @@ public class ShipView extends BlackPanel {
     shipList.setBackground(Color.BLACK);
     shipList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     JScrollPane scroll = new JScrollPane(shipList);
-    InvisiblePanel invisible = new InvisiblePanel(base);
-    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
-    invisible.add(scroll);
+    SpaceGreyPanel panel = new SpaceGreyPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    panel.add(scroll);
     obsoleteBtn = new SpaceButton("Obsolete design",
         GameCommands.COMMAND_OBSOLETE_SHIP);
     obsoleteBtn.addActionListener(listener);
-    invisible.add(obsoleteBtn);
+    panel.add(obsoleteBtn);
     deleteBtn = new SpaceButton("Delete design",
         GameCommands.COMMAND_DELETE_SHIP);
     deleteBtn.addActionListener(listener);
     deleteBtn.setEnabled(false);
-    invisible.add(deleteBtn);
+    panel.add(deleteBtn);
     SpaceButton btn = new SpaceButton("Copy design",
         GameCommands.COMMAND_COPY_SHIP);
     btn.addActionListener(listener);
-    invisible.add(btn);
+    panel.add(btn);
     btn = new SpaceButton("New design", GameCommands.COMMAND_SHIPDESIGN);
     btn.addActionListener(listener);
-    invisible.add(btn);
-    base.add(invisible, BorderLayout.WEST);
+    panel.add(btn);
+    base.add(panel, BorderLayout.WEST);
 
-    invisible = new InvisiblePanel(base);
-    invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
+    panel = new SpaceGreyPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     shipImage = new ImageLabel(
         ShipImages.humans().getShipImage(ShipImage.SCOUT), true);
     shipImage.setFillColor(Color.BLACK);
-    invisible.add(shipImage);
-    invisible.add(Box.createRigidArea(new Dimension(5, 5)));
+    panel.add(shipImage);
+    panel.add(Box.createRigidArea(new Dimension(5, 5)));
     infoText = new BaseInfoTextArea(30, 30);
     infoText.setEditable(false);
     infoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(infoText);
-    invisible.add(scroll);
-    base.add(invisible, BorderLayout.CENTER);
+    panel.add(scroll);
+    base.add(panel, BorderLayout.CENTER);
 
     this.add(base, BorderLayout.CENTER);
 

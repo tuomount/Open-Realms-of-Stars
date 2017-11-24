@@ -307,6 +307,20 @@ public class SpaceRaceUtilityTest {
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: -2\n"
         + "* Special: Each ship has built-in cloaking device";
+    expectedResult[7] = "Scaurians\n"
+        + "Scaurians are small but wide humanoid. They are "
+        + "merchantical race. They focus make better trades with other "
+        + "and gain more credits.\n"
+        + "* Max radiation: 5\n"
+        + "* Troop power: 12\n"
+        + "* Production: 100%\n"
+        + "* Mining: 50%\n"
+        + "* Research: 100%\n"
+        + "* Growth: 50%\n"
+        + "* Food require: 100%\n"
+        + "* Culture: 100%\n"
+        + "* Diplomacy bonus: 1\n"
+        + "* Special: Trade fleet 50% credits and better trade buildings.";
     for (int i = 0; i <  SpaceRace.values().length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByIndex(i);
       assertEquals(expectedResult[i],race.getFullDescription(true));

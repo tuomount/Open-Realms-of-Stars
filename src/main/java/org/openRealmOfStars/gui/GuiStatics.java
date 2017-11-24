@@ -562,6 +562,12 @@ public final class GuiStatics {
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/teuthidae_race.png"));
   /**
+   * Scaurian race selection image
+   */
+  public static final BufferedImage IMAGE_SCAURIAN_RACE = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/scaurian_race.png"));
+  /**
    * Mothoid race selection image
    */
   public static final BufferedImage IMAGE_MOTHOID_RACE = IOUtilities.loadImage(

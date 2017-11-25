@@ -169,7 +169,12 @@ public class PlanetTest {
     Mockito.when(building.getProdCost()).thenReturn(10);
     Mockito.when(building.getCredBonus()).thenReturn(1);
     planet.addBuilding(building);
-    assertEquals(1, planet.getNumberOfBuildings());
+    Building building2 = Mockito.mock(Building.class);
+    Mockito.when(building2.getName()).thenReturn("Radiation well");
+    Mockito.when(building2.getProdCost()).thenReturn(10);
+    Mockito.when(building2.getCredBonus()).thenReturn(0);
+    planet.addBuilding(building2);
+    assertEquals(2, planet.getNumberOfBuildings());
     planet.setRadiationLevel(5);
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
     Mockito.when(info.getRace()).thenReturn(SpaceRace.SCAURIANS);

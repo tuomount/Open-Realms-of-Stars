@@ -216,7 +216,7 @@ public final class SpeechFactory {
       case TEUTHIDAES: return new SpeechLine(type,
           "My friend, let's shake tentacles!");
       case SCAURIANS: return new SpeechLine(type,
-          "My friend, I have my pockets full of credits!");
+          "My friend, I have my pockets full of credits! Let's do business.");
       default: return null;
     }
   }

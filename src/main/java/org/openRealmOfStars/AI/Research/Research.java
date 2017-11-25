@@ -743,6 +743,36 @@ public final class Research {
         info.getTechList().setTechFocus(TechType.Combat, HIGH_FOCUS_LEVEL);
         break;
       }
+      case MOTHOIDS: {
+        info.getTechList().setTechFocus(TechType.Defense, DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Hulls, HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Improvements,
+            DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Electrics, LOW_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Propulsion, HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Combat, DEFAULT_FOCUS_LEVEL);
+        break;
+      }
+      case TEUTHIDAES: {
+        info.getTechList().setTechFocus(TechType.Defense, DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Hulls, DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Improvements,
+            DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Electrics, HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Propulsion, LOW_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Combat, HIGH_FOCUS_LEVEL);
+        break;
+      }
+      case SCAURIANS: {
+        info.getTechList().setTechFocus(TechType.Improvements,
+            HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Defense, DEFAULT_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Electrics, LOW_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Propulsion, HIGH_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Combat, LOW_FOCUS_LEVEL);
+        info.getTechList().setTechFocus(TechType.Hulls, HIGH_FOCUS_LEVEL);
+        break;
+      }
       default: {
         //HUMAN
         info.getTechList().setTechFocus(TechType.Combat,

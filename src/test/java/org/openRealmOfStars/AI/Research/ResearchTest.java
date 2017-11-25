@@ -193,7 +193,75 @@ public class ResearchTest {
     assertEquals(Research.LOW_FOCUS_LEVEL, 
         info.getTechList().getTechFocus(TechType.Electrics));
   }
-  
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testResearchHandlingMothoids() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS);
+    // Skipping the regular basic lab check since Mothoids might
+    // get it at start
+    info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
+    Research.handle(info);
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Combat));
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Defense));
+    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Hulls));
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Improvements));
+    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Propulsion));
+    assertEquals(Research.LOW_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Electrics));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testResearchHandlingTeuthidaes() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.TEUTHIDAES);
+    Research.handle(info);
+    assertEquals(Research.VERY_HIGH_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Improvements));
+    info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
+    Research.handle(info);
+    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Combat));
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Defense));
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Hulls));
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Improvements));
+    assertEquals(Research.LOW_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Propulsion));
+    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Electrics));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testResearchHandlingScaurians() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS);
+    Research.handle(info);
+    assertEquals(Research.VERY_HIGH_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Improvements));
+    info.getTechList().addTech(TechFactory.createImprovementTech("Basic lab", 1));
+    Research.handle(info);
+    assertEquals(Research.LOW_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Combat));
+    assertEquals(Research.DEFAULT_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Defense));
+    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Hulls));
+    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Improvements));
+    assertEquals(Research.HIGH_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Propulsion));
+    assertEquals(Research.LOW_FOCUS_LEVEL, 
+        info.getTechList().getTechFocus(TechType.Electrics));
+  }
+
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testUpdateCombatTech() {

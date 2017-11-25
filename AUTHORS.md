@@ -16,7 +16,7 @@ Krlucete
 
 wksdn18
 
-All graphics under CC-BY-SA 3.0 license.
+All graphics under CC-BY-SA 3.0 license. Unless otherwise noted.
 See http://creativecommons.org/licenses/by-sa/3.0/
 # Graphics by
 
@@ -37,9 +37,15 @@ Photon torpedo by Tuomo Untinen
 
 Space ships are done with Surt's modular ships
 
+Scaurian ships are done with BizmasterStudios's SpaceShip Building Kit
+Licensed under CC BY 4.0
+https://creativecommons.org/licenses/by/4.0/
+
 Explosions by Csaba Felvegi aka Chabull
 
 Alien pictures by Surt - http://opengameart.org/forumtopic/cc0-scraps
+
+Scaurian trader picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
 
 Space Captain by Justin Nichol - http://opengameart.org/content/space-captain
 

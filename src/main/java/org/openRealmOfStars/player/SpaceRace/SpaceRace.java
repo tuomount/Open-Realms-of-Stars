@@ -71,7 +71,16 @@ public enum SpaceRace {
    */
   TEUTHIDAES(6, "Teuthidaes", "Teuthidae", "Teuthidaes are octopus like "
       + "creatures. They are scientific and military focused race. Their "
-      + "ships have built-in cloaking devices.");
+      + "ships have built-in cloaking devices."),
+  /**
+   * Scaurians are small but wide humanoid.
+   * They are merchantical race. They focus make better trades with other and
+   * gain more credits.
+   */
+  SCAURIANS(7, "Scaurians", "Scaurian", "Scaurians are small but wide"
+      + " humanoid. They are merchantical race. They focus make better"
+      + " trades with other and gain more credits.");
+
 
 
   /**
@@ -138,6 +147,8 @@ public enum SpaceRace {
       return 100;
     case TEUTHIDAES:
       return 150;
+    case SCAURIANS:
+      return 100;
     default:
       return 0;
     }
@@ -165,6 +176,8 @@ public enum SpaceRace {
         return Attitude.EXPANSIONIST;
       case TEUTHIDAES:
         return Attitude.MILITARISTIC;
+      case SCAURIANS:
+        return Attitude.MERCHANTICAL;
       default:
         return Attitude.PEACEFUL;
     }
@@ -190,6 +203,8 @@ public enum SpaceRace {
       return 6;
     case TEUTHIDAES:
       return 4;
+    case SCAURIANS:
+      return 5;
     default:
       return -1;
     }
@@ -215,6 +230,8 @@ public enum SpaceRace {
       return GuiStatics.IMAGE_MOTHOID_RACE;
     case TEUTHIDAES:
       return GuiStatics.IMAGE_TEUTHIDAE_RACE;
+    case SCAURIANS:
+      return GuiStatics.IMAGE_SCAURIAN_RACE;
     default:
       return GuiStatics.IMAGE_CENTAUR_RACE;
     }
@@ -261,6 +278,8 @@ public enum SpaceRace {
       return 50;
     case TEUTHIDAES:
       return 100;
+    case SCAURIANS:
+      return 50;
     default:
       return 0;
     }
@@ -285,6 +304,8 @@ public enum SpaceRace {
     case MOTHOIDS:
       return 150;
     case TEUTHIDAES:
+      return 100;
+    case SCAURIANS:
       return 100;
     default:
       return 0;
@@ -311,6 +332,8 @@ public enum SpaceRace {
       return 9;
     case TEUTHIDAES:
       return 10;
+    case SCAURIANS:
+      return 12;
     default:
       return 0;
     }
@@ -335,6 +358,8 @@ public enum SpaceRace {
     case MOTHOIDS:
       return 100;
     case TEUTHIDAES:
+      return 100;
+    case SCAURIANS:
       return 100;
     default:
       return 0;
@@ -361,6 +386,8 @@ public enum SpaceRace {
       return 150;
     case TEUTHIDAES:
       return 100;
+    case SCAURIANS:
+      return 50;
     default:
       return 0;
     }
@@ -386,6 +413,8 @@ public enum SpaceRace {
       return 100;
     case TEUTHIDAES:
       return 125;
+    case SCAURIANS:
+      return 100;
     default:
       return 0;
     }
@@ -411,6 +440,8 @@ public enum SpaceRace {
       return 0;
     case TEUTHIDAES:
       return -2;
+    case SCAURIANS:
+      return 1;
     default:
       return 0;
     }
@@ -433,6 +464,10 @@ public enum SpaceRace {
     case CENTAURS:
       return 1;
     case MOTHOIDS:
+      return 0;
+    case TEUTHIDAES:
+      return 0;
+    case SCAURIANS:
       return 0;
     default:
       return 0;
@@ -459,6 +494,8 @@ public enum SpaceRace {
       return 12;
     case TEUTHIDAES:
       return 13;
+    case SCAURIANS:
+      return 15;
     default:
       return 15;
     }
@@ -484,6 +521,8 @@ public enum SpaceRace {
       return 32;
     case TEUTHIDAES:
       return 35;
+    case SCAURIANS:
+      return 35;
     default:
       return 30;
     }
@@ -508,6 +547,8 @@ public enum SpaceRace {
     case MOTHOIDS:
       return 3;
     case TEUTHIDAES:
+      return 3;
+    case SCAURIANS:
       return 3;
     default:
       return 3;
@@ -535,6 +576,8 @@ public enum SpaceRace {
       return 2;
     case TEUTHIDAES:
       return 2;
+    case SCAURIANS:
+      return 1;
     default:
       return 1;
     }
@@ -622,6 +665,8 @@ public enum SpaceRace {
       sb.append("No defense tech but one Planetary improvement tech at start");
     } else if (this == SpaceRace.TEUTHIDAES) {
       sb.append("Each ship has built-in cloaking device");
+    } else if (this == SpaceRace.SCAURIANS) {
+      sb.append("Trade fleet 50% credits and better trade buildings.");
     } else {
       sb.append("None");
     }

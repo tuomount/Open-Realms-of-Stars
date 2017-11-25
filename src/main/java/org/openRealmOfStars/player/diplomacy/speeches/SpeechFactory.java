@@ -98,6 +98,9 @@ public final class SpeechFactory {
       case TEUTHIDAES: return new SpeechLine(type,
           "My scanners has detected your fleet "
           + fleetName + " in our space. Move it away!");
+      case SCAURIANS: return new SpeechLine(type,
+          "Your fleet has crossed my borders."
+          + " Move " + fleetName + " away now!");
       default: return null;
     }
   }
@@ -125,6 +128,9 @@ public final class SpeechFactory {
           "Hmm, You got zero tradable things...");
       case TEUTHIDAES: return new SpeechLine(type,
           "Let's talk later when you have something to trade.");
+      case SCAURIANS: return new SpeechLine(type,
+          "You should find something to trade! "
+          + "I have excellent deals just for you.");
       default: return null;
     }
   }
@@ -151,6 +157,8 @@ public final class SpeechFactory {
           "Fine I'll call the fleet back!");
       case TEUTHIDAES: return new SpeechLine(type,
           "I'll call the sp..am..ship back!");
+      case SCAURIANS: return new SpeechLine(type,
+          "I will call the fleet back!");
       default: return null;
     }
   }
@@ -179,6 +187,8 @@ public final class SpeechFactory {
           "Peace or war, it's up to you, " + raceName + "!");
       case TEUTHIDAES: return new SpeechLine(type,
           "We appear in peace to you..." +  raceName + "!");
+      case SCAURIANS: return new SpeechLine(type,
+          "Let's do some trading " +  raceName + "!");
       default: return null;
     }
   }
@@ -205,6 +215,8 @@ public final class SpeechFactory {
           "Ah my trustful friend. Let's talk!");
       case TEUTHIDAES: return new SpeechLine(type,
           "My friend, let's shake tentacles!");
+      case SCAURIANS: return new SpeechLine(type,
+          "My friend, I have my pockets full of credits! Let's do business.");
       default: return null;
     }
   }
@@ -231,6 +243,8 @@ public final class SpeechFactory {
           "Ah the one I like to do business.");
       case TEUTHIDAES: return new SpeechLine(type,
           "Nice to appear to you...");
+      case SCAURIANS: return new SpeechLine(type,
+          "Fellow trade companion, nice to meet again!");
       default: return null;
     }
   }
@@ -257,6 +271,8 @@ public final class SpeechFactory {
           "Oh, it's you. Crew, be ready to rise shields!");
       case TEUTHIDAES: return new SpeechLine(type,
           "Hmm, it's you mud dirt...");
+      case SCAURIANS: return new SpeechLine(type,
+          "Hmph, the one with no credits...");
       default: return null;
     }
   }
@@ -283,6 +299,8 @@ public final class SpeechFactory {
           "I am glad to see you when my targeting system is locked on you!");
       case TEUTHIDAES: return new SpeechLine(type,
           "Ah my nemesis...");
+      case SCAURIANS: return new SpeechLine(type,
+          "This is going to be a fight, but...");
       default: return null;
     }
   }
@@ -309,6 +327,8 @@ public final class SpeechFactory {
           "You take this deal or it war!");
       case TEUTHIDAES: return new SpeechLine(type,
           "Please take this deal or suffer!");
+      case SCAURIANS: return new SpeechLine(type,
+          "You better accept this deal or suffer!");
       default: return null;
     }
   }
@@ -335,6 +355,8 @@ public final class SpeechFactory {
           "You either take this with good or bad!");
       case TEUTHIDAES: return new SpeechLine(type,
           "You will pay for your insults!");
+      case SCAURIANS: return new SpeechLine(type,
+          "I will take last credits from your cold body!");
       default: return null;
     }
   }
@@ -364,6 +386,8 @@ public final class SpeechFactory {
           "You call this a deal? Go away!");
       case TEUTHIDAES: return new SpeechLine(type,
           "Your offer repulses me.");
+      case SCAURIANS: return new SpeechLine(type,
+          "Your offer insults me!");
       default: return null;
     }
   }
@@ -390,6 +414,8 @@ public final class SpeechFactory {
           "You are insulting me? How dare you!");
       case TEUTHIDAES: return new SpeechLine(type,
           "You are getting on my nerves!");
+      case SCAURIANS: return new SpeechLine(type,
+          "Insults do not help here!");
       default: return null;
     }
   }
@@ -416,6 +442,8 @@ public final class SpeechFactory {
           "No deal!");
       case TEUTHIDAES: return new SpeechLine(type,
           "Offer does not please me.");
+      case SCAURIANS: return new SpeechLine(type,
+          "Your offer isn't good enough!");
       default: return null;
     }
   }
@@ -442,6 +470,8 @@ public final class SpeechFactory {
           "So, do you have an offer?");
       case TEUTHIDAES: return new SpeechLine(type,
           "I understand. Please do you have counter offer?");
+      case SCAURIANS: return new SpeechLine(type,
+          "Do you have counter offer?");
       default: return null;
     }
   }
@@ -468,6 +498,8 @@ public final class SpeechFactory {
           "Shields up! Ready to fire!");
       case TEUTHIDAES: return new SpeechLine(type,
           "Prepare to die!");
+      case SCAURIANS: return new SpeechLine(type,
+          "Time to die!");
       default: return null;
     }
   }
@@ -494,6 +526,8 @@ public final class SpeechFactory {
           "Let's start non military alliance!");
       case TEUTHIDAES: return new SpeechLine(type,
           "Let's start a trade union!");
+      case SCAURIANS: return new SpeechLine(type,
+          "Let's build magnificent trade alliance!");
       default: return null;
     }
   }
@@ -520,6 +554,8 @@ public final class SpeechFactory {
           "Join my alliance! What do you say?");
       case TEUTHIDAES: return new SpeechLine(type,
           "Join my side to alliance!");
+      case SCAURIANS: return new SpeechLine(type,
+          "Let's build awesome alliance!");
       default: return null;
     }
   }
@@ -546,6 +582,8 @@ public final class SpeechFactory {
           "Deal!");
       case TEUTHIDAES: return new SpeechLine(type,
           "Excellent!");
+      case SCAURIANS: return new SpeechLine(type,
+          "Agreed!");
       default: return null;
     }
   }
@@ -579,6 +617,15 @@ public final class SpeechFactory {
           "Happy to make business with you!");
       case TEUTHIDAES: return new SpeechLine(type,
           "Excellent!");
+      case SCAURIANS: {
+        switch (DiceGenerator.getRandom(1)) {
+          default:
+          case 0: return new SpeechLine(type,
+              "Agreed and happy to make business with you!");
+          case 1: return new SpeechLine(type,
+              "I am happy to make business with you!");
+        }
+      }
       default: return null;
     }
   }
@@ -605,6 +652,8 @@ public final class SpeechFactory {
           "What you say about this?");
       case TEUTHIDAES: return new SpeechLine(type,
           "This is our fair trade?");
+      case SCAURIANS: return new SpeechLine(type,
+          "What do you say about my offer?");
       default: return null;
     }
   }
@@ -631,6 +680,8 @@ public final class SpeechFactory {
           "What you say about peace?");
       case TEUTHIDAES: return new SpeechLine(type,
           "Are you ready for peace?");
+      case SCAURIANS: return new SpeechLine(type,
+          "Let's sign a peace contract?");
       default: return null;
     }
   }

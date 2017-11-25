@@ -36,7 +36,7 @@ public class DiplomacyBonus {
    onlyOne = false;
    switch (type) {
      case BORDER_CROSSED: {
-       if (race == SpaceRace.SPORKS) {
+       if (race == SpaceRace.SPORKS || race == SpaceRace.SCAURIANS) {
          bonusValue = -1;
          bonusLasting = 10;
        } else if (race == SpaceRace.MECHIONS) {
@@ -62,7 +62,7 @@ public class DiplomacyBonus {
        break;
      }
      case GIVEN_VALUABLE_FREE: {
-       if (race == SpaceRace.HUMAN) {
+       if (race == SpaceRace.HUMAN || race == SpaceRace.SCAURIANS) {
          bonusValue = 3;
          bonusLasting = 50;
        } else {
@@ -84,7 +84,7 @@ public class DiplomacyBonus {
      }
      case IN_TRADE_ALLIANCE: {
        onlyOne = true;
-       if (race == SpaceRace.GREYANS) {
+       if (race == SpaceRace.GREYANS || race == SpaceRace.SCAURIANS) {
          bonusValue = 18;
          bonusLasting = 255;
        } else {
@@ -101,6 +101,9 @@ public class DiplomacyBonus {
        } else if (race == SpaceRace.MOTHOIDS) {
          bonusValue = 8;
          bonusLasting = 1;
+       } else if (race == SpaceRace.SCAURIANS) {
+         bonusValue = 6;
+         bonusLasting = 1;
        } else {
          bonusValue = 5;
          bonusLasting = 1;
@@ -108,7 +111,7 @@ public class DiplomacyBonus {
        break;
      }
      case DIPLOMATIC_TRADE: {
-       if (race == SpaceRace.HUMAN) {
+       if (race == SpaceRace.HUMAN || race == SpaceRace.SCAURIANS) {
          bonusValue = 5;
          bonusLasting = 110;
        } else {
@@ -182,7 +185,7 @@ public class DiplomacyBonus {
        } else if (race == SpaceRace.HUMAN || race == SpaceRace.TEUTHIDAES) {
          bonusValue = -6;
          bonusLasting = 120;
-       } else if (race == SpaceRace.SPORKS) {
+       } else if (race == SpaceRace.SPORKS || race == SpaceRace.SCAURIANS) {
          bonusValue = -4;
          bonusLasting = 100;
        } else if (race == SpaceRace.MECHIONS) {

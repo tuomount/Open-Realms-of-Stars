@@ -75,6 +75,9 @@ public final class SpaceRaceUtility {
     if (name.equals(SpaceRace.TEUTHIDAES.getNameSingle())) {
       return SpaceRace.TEUTHIDAES;
     }
+    if (name.equals(SpaceRace.SCAURIANS.getNameSingle())) {
+      return SpaceRace.SCAURIANS;
+    }
     return null;
   }
 
@@ -134,6 +137,8 @@ public final class SpaceRaceUtility {
       case 5: {
         if (race == SpaceRace.SPORKS) {
           sb.append("Clan");
+        } else if (race == SpaceRace.SCAURIANS) {
+          sb.append("Guild");
         } else {
           sb.append("Hegemony");
         }
@@ -150,7 +155,11 @@ public final class SpaceRaceUtility {
         break;
       }
       case 7:
-        sb.append("Hiearchy");
+        if (race == SpaceRace.SCAURIANS) {
+          sb.append("Enterprise");
+        } else {
+          sb.append("Hiearchy");
+        }
         break;
       default:
         sb.append("Empire");
@@ -186,6 +195,8 @@ public final class SpaceRaceUtility {
       case 5: {
         if (race == SpaceRace.SPORKS) {
           sb.append("Clan of ");
+        } else if (race == SpaceRace.SCAURIANS) {
+          sb.append("Guild of ");
         } else {
           sb.append("Hegemony of ");
         }
@@ -202,7 +213,11 @@ public final class SpaceRaceUtility {
         break;
       }
       case 7:
-        sb.append("Hiearchy of ");
+        if (race == SpaceRace.SCAURIANS) {
+          sb.append("Enterprise of ");
+        } else {
+          sb.append("Hiearchy of ");
+        }
         break;
       default:
         sb.append("Empire of ");

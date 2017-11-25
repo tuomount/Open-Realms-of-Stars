@@ -57,4 +57,25 @@ public class StarMapUtilitiesTest {
     assertEquals(5, info2.getTotalCredits());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTrade2() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS, 2, 0);
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.GREYANS, 2, 1);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getCoordinate()).thenReturn(new Coordinate(5, 5));
+    Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info2);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.doTrade(planet, info)).thenReturn(10);
+    DiplomacyBonusList diplomacy = Mockito.mock(DiplomacyBonusList.class);
+    Mockito.when(diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE))
+        .thenReturn(true);
+    StarMapUtilities.doTradeWithShips(diplomacy, fleet, planet, info);
+    assertEquals(7, info.getTotalCredits());
+    assertEquals(7, info2.getTotalCredits());
+    StarMapUtilities.doTradeWithShips(null, fleet, planet, info);
+    assertEquals(22, info.getTotalCredits());
+    assertEquals(7, info2.getTotalCredits());
+  }
+
 }

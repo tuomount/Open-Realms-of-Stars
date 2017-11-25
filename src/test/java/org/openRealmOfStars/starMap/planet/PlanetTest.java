@@ -156,4 +156,24 @@ public class PlanetTest {
     assertEquals(30, planet.getCulture());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCreditProduction() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    planet.setPlanetOwner(0, info);
+    assertEquals(0, planet.getNumberOfBuildings());
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getName()).thenReturn("Tax center");
+    Mockito.when(building.getProdCost()).thenReturn(10);
+    Mockito.when(building.getCredBonus()).thenReturn(1);
+    planet.addBuilding(building);
+    assertEquals(1, planet.getNumberOfBuildings());
+    planet.setRadiationLevel(5);
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+  }
+
 }

@@ -2,6 +2,7 @@ package org.openRealmOfStars.starMap;
 
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -192,6 +193,9 @@ public final class StarMapUtilities {
         credits = credits / 2;
       }
       if (credits > 0) {
+        if (info.getRace() == SpaceRace.SCAURIANS) {
+          credits = credits * 3 / 2;
+        }
         info.setTotalCredits(info.getTotalCredits() + credits);
         planet.getPlanetPlayerInfo().setTotalCredits(
             planet.getPlanetPlayerInfo().getTotalCredits()
@@ -208,6 +212,9 @@ public final class StarMapUtilities {
     } else if (diplomacy == null) {
       int credits = fleet.doTrade(planet, info);
       if (credits > 0) {
+        if (info.getRace() == SpaceRace.SCAURIANS) {
+          credits = credits * 3 / 2;
+        }
         info.setTotalCredits(info.getTotalCredits() + credits);
         Message msg = new Message(MessageType.PLANETARY,
             fleet.getName() + " came back to homeworld "

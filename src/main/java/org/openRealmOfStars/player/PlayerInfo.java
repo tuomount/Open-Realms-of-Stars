@@ -330,6 +330,48 @@ public class PlayerInfo {
       addShipStat(stat);
       break;
     }
+    case SCAURIANS: {
+      /*
+       * Scaurians get 1 Combat, 1 Defense, Scout, Colony and Tax center
+       */
+      Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
+          techList.getListForTypeAndLevel(TechType.Combat, 1));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createRandomTech(TechType.Defense, 1,
+          techList.getListForTypeAndLevel(TechType.Defense, 1));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createHullTech("Colony", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createHullTech("Scout Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createImprovementTech("Tax center", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      ShipDesign design = ShipGenerator.createScout(this);
+      ShipStat stat = new ShipStat(design);
+      addShipStat(stat);
+      design = ShipGenerator.createColony(this, false);
+      stat = new ShipStat(design);
+      addShipStat(stat);
+      break;
+    }
     default:
       ErrorLogger.log("Unexpected race:" + getRace());
     }

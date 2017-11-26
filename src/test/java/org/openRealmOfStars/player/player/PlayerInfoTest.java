@@ -12,6 +12,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
+import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
@@ -481,6 +482,27 @@ public class PlayerInfoTest {
         byte stateResult;
         stateResult = player.getSectorVisibility(coord);
         assertEquals(FOG_OF_WAR, stateResult);
-
     }
+    
+    /**
+     */
+    @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
+    public void testCheckDuplicateShipDesign() {
+      PlayerInfo player = new PlayerInfo(SpaceRace.SCAURIANS, 2, 0);
+      ShipDesign design1 = Mockito.mock(ShipDesign.class);
+      Mockito.when(design1.getName()).thenReturn("Ship 1");
+      ShipStat stat1 = Mockito.mock(ShipStat.class);
+      Mockito.when(stat1.getDesign()).thenReturn(design1);
+      ShipDesign design2 = Mockito.mock(ShipDesign.class);
+      Mockito.when(design2.getName()).thenReturn("Ship 2");
+      ShipStat stat2 = Mockito.mock(ShipStat.class);
+      Mockito.when(stat2.getDesign()).thenReturn(design2);
+      player.addShipStat(stat1);
+      player.addShipStat(stat2);
+      assertEquals(true, player.duplicateShipDesignName("Ship 1"));
+      assertEquals(true, player.duplicateShipDesignName("Ship 2"));
+      assertEquals(false, player.duplicateShipDesignName("Ship 3"));
+    }
+
 }

@@ -203,16 +203,15 @@ public class ShipDesignView extends BlackPanel {
     designNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
     designNameText.setBackground(Color.BLACK);
     designNameText.addFocusListener(new FocusListener() {
-      
+
       @Override
-      public void focusLost(FocusEvent e) {
+      public void focusLost(final FocusEvent e) {
         updatePanels();
       }
-      
+
       @Override
-      public void focusGained(FocusEvent e) {
+      public void focusGained(final FocusEvent e) {
         // TODO Auto-generated method stub
-        
       }
     });
     designNameText.addKeyListener(new KeyListener() {

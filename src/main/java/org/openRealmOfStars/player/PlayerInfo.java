@@ -1108,4 +1108,18 @@ public class PlayerInfo {
     fleets = new FleetList();
   }
 
+  /**
+   * Check if Ship design has duplicate name.
+   * @param name to check
+   * @return True if duplicate found, otherwise false
+   */
+  public boolean duplicateShipDesignName(final String name) {
+    for (ShipStat stat : shipStatList) {
+      if (stat.getDesign().getName().equals(name)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 }

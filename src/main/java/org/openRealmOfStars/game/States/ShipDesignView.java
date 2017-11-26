@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -141,6 +143,10 @@ public class ShipDesignView extends BlackPanel {
   private ImageLabel hullImage;
 
   /**
+   * Is design name illegal or not?
+   */
+  private boolean illegalName;
+  /**
    * Constructor for ShipDesignView
    * @param player Player whom is design the new ship design
    * @param oldDesign Possible old design which is being copied
@@ -196,6 +202,19 @@ public class ShipDesignView extends BlackPanel {
     designNameText.setFont(GuiStatics.getFontCubellan());
     designNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
     designNameText.setBackground(Color.BLACK);
+    designNameText.addFocusListener(new FocusListener() {
+      
+      @Override
+      public void focusLost(FocusEvent e) {
+        updatePanels();
+      }
+      
+      @Override
+      public void focusGained(FocusEvent e) {
+        // TODO Auto-generated method stub
+        
+      }
+    });
     designNameText.addKeyListener(new KeyListener() {
 
       @Override
@@ -471,6 +490,16 @@ public class ShipDesignView extends BlackPanel {
     if (design != null) {
       designNameText.setText(design.getName());
       String flaws = design.getFlaws();
+      boolean duplicate = player.duplicateShipDesignName(design.getName());
+      if (duplicate) {
+        illegalName = true;
+        designNameText.setForeground(GuiStatics.COLOR_RED_TEXT);
+        flaws = flaws + " Ship design with name " + design.getName()
+            + " already exists!";
+      } else {
+        illegalName = false;
+        designNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
+      }
       if (flaws.equals(ShipDesignConsts.DESIGN_OK)) {
         designFlawsText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
       } else {
@@ -574,8 +603,10 @@ public class ShipDesignView extends BlackPanel {
    * @return True if design is ready false if not
    */
   public boolean isDesignOK() {
+    updatePanels();
      if (design != null
-            && design.getFlaws().equals(ShipDesignConsts.DESIGN_OK)) {
+            && design.getFlaws().equals(ShipDesignConsts.DESIGN_OK)
+            && !illegalName) {
       return true;
     }
     return false;

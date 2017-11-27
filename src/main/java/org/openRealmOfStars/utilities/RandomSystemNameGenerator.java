@@ -1,5 +1,7 @@
 package org.openRealmOfStars.utilities;
 
+import java.util.ArrayList;
+
 /**
  *
  * Open Realm of Stars game project
@@ -65,10 +67,48 @@ public class RandomSystemNameGenerator {
   private static final int LIMIT_FOR_TWO_PARTS = 12;
 
   /**
-   * Generate random system name
+   * System names already used
+   */
+  private ArrayList<String> usedNames;
+
+  /**
+   * Constructor for Random SystemNameGenerator.
+   */
+  public RandomSystemNameGenerator() {
+    usedNames = new ArrayList<>();
+  }
+
+  /**
+   * Check if system name has previously generated.
+   * @param name Name to check
+   * @return True if name is already taken, otherwise false
+   */
+  private boolean previusMatch(final String name) {
+    for (String oldName : usedNames) {
+      if (oldName.equals(name)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  /**
+   * Generate random system name which is unique inside same generator.
    * @return Randomized System name
    */
   public String generate() {
+    String name;
+    do {
+      name = generateRandomName();
+    } while (previusMatch(name));
+    usedNames.add(name);
+    return name;
+  }
+
+  /**
+   * Generate random name from using fixed syllable tables.
+   * @return Randomized system name
+   */
+  private String generateRandomName() {
     StringBuilder sb = new StringBuilder();
     sb.append(
         GREEK_ALPHABET[DiceGenerator.getRandom(GREEK_ALPHABET.length - 1)]);
@@ -90,7 +130,6 @@ public class RandomSystemNameGenerator {
     }
     return sb.toString();
   }
-
   /**
    * Converts integer into Roman number. Integer can be between 1-10.
    * @param i Integer to convert

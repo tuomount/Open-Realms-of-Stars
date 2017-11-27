@@ -169,6 +169,11 @@ public class StarMap {
   private boolean debug;
 
   /**
+   * System name generator.
+   */
+  private RandomSystemNameGenerator nameGenerator;
+
+  /**
    * Magic string to save game files
    */
   public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.5";
@@ -185,6 +190,7 @@ public class StarMap {
    */
   public StarMap(final GalaxyConfig config, final PlayerList players) {
     setDebug(false);
+    nameGenerator = new RandomSystemNameGenerator();
     maxX = config.getSizeX();
     maxY = config.getSizeY();
     this.players = players;
@@ -294,7 +300,8 @@ public class StarMap {
         loop++;
       }
     }
-
+    // No need to have generator after creation
+    nameGenerator = null;
   }
 
   /**
@@ -619,7 +626,7 @@ public class StarMap {
     int sy = suny + DiceGenerator.getRandom(-1, 1);
     mapOfSolar = StarMapUtilities.setSolarSystem(solarSystem, sx, sy, getMaxX(),
         getMaxY());
-    Sun sun = new Sun(new Coordinate(sx, sy), new RandomSystemNameGenerator());
+    Sun sun = new Sun(new Coordinate(sx, sy), nameGenerator);
     sunList.add(sun);
     int sunNumber = sunList.size() - 1;
     SquareInfo info = new SquareInfo(SquareInfo.TYPE_SUN, sunNumber);

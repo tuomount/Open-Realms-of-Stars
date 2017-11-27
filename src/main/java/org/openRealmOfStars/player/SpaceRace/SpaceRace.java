@@ -238,6 +238,34 @@ public enum SpaceRace {
   }
 
   /**
+   * Get race picture to wiki page with correct path
+   * @return Path to image in master
+   */
+  private String getRaceImagePathToWiki() {
+    String start = "https://github.com/tuomount/Open-Realms-of-Stars/blob"
+        + "/master/src/main/resources/";
+    switch (this) {
+      case HUMAN:
+        return start + "resources/images/human_race.png";
+      case MECHIONS:
+        return start + "resources/images/mechion_race.png";
+      case SPORKS:
+        return start + "resources/images/spork_race.png";
+      case GREYANS:
+        return start + "resources/images/greyan_race.png";
+      case CENTAURS:
+        return start + "resources/images/centaur_race.png";
+      case MOTHOIDS:
+        return start + "resources/images/mothoid_race.png";
+      case TEUTHIDAES:
+        return start + "resources/images/teuthidae_race.png";
+      case SCAURIANS:
+        return start + "resources/images/scaurian_race.png";
+      default:
+        return start + "resources/images/centaur_race.png";
+    }
+  }
+  /**
    * @return the index
    */
   public int getIndex() {
@@ -586,9 +614,11 @@ public enum SpaceRace {
   /**
    * Get full description about the race, including the stats.
    * @param markDown if true then markDown is being used, otherwise HTML.
+   * @param image Add image to wiki page if true
    * @return Full description
    */
-  public String getFullDescription(final boolean markDown) {
+  public String getFullDescription(final boolean markDown,
+      final boolean image) {
     String lf = "<br>";
     String dot = "<li>";
     if (markDown) {
@@ -598,9 +628,19 @@ public enum SpaceRace {
     StringBuilder sb = new StringBuilder(100);
     if (!markDown) {
       sb.append("<html>");
+    } else {
+      sb.append("### ");
     }
     sb.append(name);
     sb.append(lf);
+    if (markDown && image) {
+      sb.append(lf);
+      sb.append("![](");
+      sb.append(getRaceImagePathToWiki());
+      sb.append(")");
+      sb.append(lf);
+      sb.append(lf);
+    }
     if (!markDown) {
       sb.append("<p>");
     }
@@ -666,7 +706,8 @@ public enum SpaceRace {
     } else if (this == SpaceRace.TEUTHIDAES) {
       sb.append("Each ship has built-in cloaking device");
     } else if (this == SpaceRace.SCAURIANS) {
-      sb.append("Trade fleet 50% credits and better trade buildings.");
+      sb.append("Trade fleet gain 50% more credits and better trade"
+          + " buildings.");
     } else {
       sb.append("None");
     }

@@ -156,7 +156,8 @@ public class PlayerSetupView extends BlackPanel {
         if (comboRaceSelect[i].isEnabled()) {
           String raceStr = (String) comboRaceSelect[i].getSelectedItem();
           SpaceRace race = SpaceRaceUtility.getRaceByName(raceStr);
-          comboRaceSelect[i].setToolTipText(race.getFullDescription(false));
+          comboRaceSelect[i].setToolTipText(race.getFullDescription(false,
+              false));
           config.setRace(i, race);
           raceImgs[i].setRaceToShow(raceStr);
         }
@@ -222,7 +223,7 @@ public class PlayerSetupView extends BlackPanel {
       comboRaceSelect[index].setEnabled(false);
     }
     comboRaceSelect[index].setToolTipText(config.getRace(index)
-        .getFullDescription(false));
+        .getFullDescription(false, false));
     info.add(comboRaceSelect[index]);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     playerName[index] = new JTextField(
@@ -236,7 +237,7 @@ public class PlayerSetupView extends BlackPanel {
     } else {
       playerName[index].setText(config.getPlayerName(index));
       comboRaceSelect[index].setToolTipText(config.getRace(index)
-          .getFullDescription(false));
+          .getFullDescription(false, false));
     }
     info.add(playerName[index]);
     info.add(Box.createRigidArea(new Dimension(5, 5)));

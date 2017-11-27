@@ -216,7 +216,7 @@ public class SpaceRaceUtilityTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testFullDescriptions() {
     String[] expectedResult = new String[SpaceRace.values().length];
-    expectedResult[0] = "Humans\n"+
+    expectedResult[0] = "### Humans\n"+
         "Humans are great diplomats but they are about average in everything else.\n"+
         "* Max radiation: 4\n"+
         "* Troop power: 10\n"+
@@ -228,7 +228,7 @@ public class SpaceRaceUtilityTest {
         "* Culture: 100%\n"+
         "* Diplomacy bonus: 2\n"+
         "* Special: None";
-    expectedResult[1] = "Mechions\n"+
+    expectedResult[1] = "### Mechions\n"+
         "Mechanical beings whom do not eat food. Each now population must be built.\n"+
         "* Max radiation: 8\n"+
         "* Troop power: 12\n"+
@@ -240,7 +240,7 @@ public class SpaceRaceUtilityTest {
         "* Culture: 50%\n"+
         "* Diplomacy bonus: -2\n"+
         "* Special: Population needs to be built";
-    expectedResult[2] = "Sporks\n"+
+    expectedResult[2] = "### Sporks\n"+
         "Aggressive and warmongering species.\n"+
         "* Max radiation: 5\n"+
         "* Troop power: 12\n"+
@@ -252,7 +252,7 @@ public class SpaceRaceUtilityTest {
         "* Culture: 100%\n"+
         "* Diplomacy bonus: -3\n"+
         "* Special: Extra scout ship and higher combat tech at start";
-    expectedResult[3] = "Greyans\n"+
+    expectedResult[3] = "### Greyans\n"+
         "Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers.\n"+
         "* Max radiation: 6\n"+
         "* Troop power: 8\n"+
@@ -264,7 +264,7 @@ public class SpaceRaceUtilityTest {
         "* Culture: 100%\n"+
         "* Diplomacy bonus: 0\n"+
         "* Special: Electronics and propulsion tech is hight at start";
-    expectedResult[4] = "Centaurs\n"+
+    expectedResult[4] = "### Centaurs\n"+
         "Quadrupedal humanoid creatures which are big, about 5 meters tall."
         + " Due their enormous size their space ships are more rigid."
         + " Centaurs need more food to survive.\n"+
@@ -278,7 +278,7 @@ public class SpaceRaceUtilityTest {
         "* Culture: 100%\n"+
         "* Diplomacy bonus: -1\n"+
         "* Special: Stronger ships";
-    expectedResult[5] = "Mothoids\n"+
+    expectedResult[5] = "### Mothoids\n"+
         "Mothoids are sentient insects with hivemind. They are fast breeding "
         + "race. Their song is hypnotic so cultural bonus is granted. "
       + "Mothoids exo-skeleton is weak and therefore get negative bonus on "
@@ -293,7 +293,7 @@ public class SpaceRaceUtilityTest {
         "* Culture: 150%\n"+
         "* Diplomacy bonus: 0\n"+
         "* Special: No defense tech but one Planetary improvement tech at start";
-    expectedResult[6] = "Teuthidaes\n"
+    expectedResult[6] = "### Teuthidaes\n"
         + "Teuthidaes are octopus like creatures. They are "
         + "scientific and military focused race. Their ships have built-in "
         + "cloaking devices.\n"
@@ -307,7 +307,7 @@ public class SpaceRaceUtilityTest {
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: -2\n"
         + "* Special: Each ship has built-in cloaking device";
-    expectedResult[7] = "Scaurians\n"
+    expectedResult[7] = "### Scaurians\n"
         + "Scaurians are small but wide humanoid. They are "
         + "merchantical race. They focus make better trades with other "
         + "and gain more credits.\n"
@@ -320,17 +320,17 @@ public class SpaceRaceUtilityTest {
         + "* Food require: 100%\n"
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: 1\n"
-        + "* Special: Trade fleet 50% credits and better trade buildings.";
+        + "* Special: Trade fleet gain 50% more credits and better trade buildings.";
     for (int i = 0; i <  SpaceRace.values().length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByIndex(i);
-      assertEquals(expectedResult[i],race.getFullDescription(true));
+      assertEquals(expectedResult[i],race.getFullDescription(true, false));
       if (i == 0) {
-        String result = race.getFullDescription(false);
+        String result = race.getFullDescription(false, false);
         if (!result.startsWith("<html>")) {
           assertFalse(true);
         }
       }
-      //System.out.println(race.getFullDescription(true));
+      //System.out.println(race.getFullDescription(true, true));
     }
   }
 

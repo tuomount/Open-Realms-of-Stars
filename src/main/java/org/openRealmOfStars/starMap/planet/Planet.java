@@ -1201,8 +1201,10 @@ public class Planet {
 
   /**
    * Update planet for one turn
+   * @param enemyOrbiting if true it means that other player,
+   *        has fleet orbiting on planet.
    */
-  public void updateOneTurn() {
+  public void updateOneTurn(final boolean enemyOrbiting) {
     if (planetOwnerInfo != null) {
       int minedMetal = getTotalProduction(PRODUCTION_METAL);
       if (minedMetal <= amountMetalInGround) {
@@ -1301,7 +1303,7 @@ public class Planet {
           msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
-        } else if (underConstruction instanceof Ship) {
+        } else if (underConstruction instanceof Ship && !enemyOrbiting) {
           metal = metal - underConstruction.getMetalCost();
           prodResource = prodResource - underConstruction.getProdCost();
           ShipStat stat = planetOwnerInfo.getShipStatByName(
@@ -1391,6 +1393,14 @@ public class Planet {
           }
           msg = new Message(MessageType.CONSTRUCTION,
               getName() + " built " + underConstruction.getName(),
+              Icons.getIconByName(Icons.ICON_HULL_TECH));
+          msg.setCoordinate(getCoordinate());
+          msg.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+        } else if (underConstruction instanceof Ship && enemyOrbiting) {
+          msg = new Message(MessageType.PLANETARY, getName()
+              + " has another Realm's fleet orbiting so ship construction of "
+              + underConstruction.getName() + " cannot be complete!",
               Icons.getIconByName(Icons.ICON_HULL_TECH));
           msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());

@@ -924,8 +924,18 @@ public class AITurnView extends BlackPanel {
       Planet planet = game.getStarMap().getPlanetList().get(i);
       if (planet.getPlanetPlayerInfo() != null) {
         PlayerInfo info = planet.getPlanetPlayerInfo();
+        boolean enemyOrbiting = false;
+        Fleet fleetOrbiting = game.getStarMap().getFleetByCoordinate(
+            planet.getX(), planet.getY());
+        if (fleetOrbiting != null) {
+          PlayerInfo enemy = game.getStarMap().getPlayerInfoByFleet(
+              fleetOrbiting);
+          if (enemy != info) {
+            enemyOrbiting = true;
+          }
+        }
         // Update each planet one by one
-        planet.updateOneTurn();
+        planet.updateOneTurn(enemyOrbiting);
         int index = game.getPlayers().getIndex(info);
         if (index > -1) {
           // Recalculate culture for the map for each player

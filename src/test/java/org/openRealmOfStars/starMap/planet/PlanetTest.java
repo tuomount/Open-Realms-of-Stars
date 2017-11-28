@@ -71,12 +71,12 @@ public class PlanetTest {
     assertEquals("The production time should be 15 turns.", "15 turns", planet.getProductionTime(factory));
     for (int i=0;i<5;i++) {
       // 5 turns to grow one population
-      planet.updateOneTurn();
+      planet.updateOneTurn(false);
     }
     assertEquals("The population of the planet should be two.", 2, planet.getTotalPopulation());
     for (int i=0;i<10;i++) {
       // Total of 15 turns for basic factory
-      planet.updateOneTurn();
+      planet.updateOneTurn(false);
     }
     assertEquals("Planet should have only one building.", 1, planet.getBuildingList().length);
     assertEquals("Planet should have a Basic factory.", "Basic factory", planet.getBuildingList()[0].getName());

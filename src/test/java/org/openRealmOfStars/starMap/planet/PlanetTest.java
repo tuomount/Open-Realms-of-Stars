@@ -11,6 +11,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.planet.construction.Construction;
 
 /**
  *
@@ -81,6 +82,40 @@ public class PlanetTest {
     assertEquals("Planet should have only one building.", 1, planet.getBuildingList().length);
     assertEquals("Planet should have a Basic factory.", "Basic factory", planet.getBuildingList()[0].getName());
     assertEquals(false,planet.isFullOfPopulation());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testPlanetShipBuilding() {
+    Coordinate planetCoordinate = new Coordinate(10, 15);
+    Planet planet = new Planet(planetCoordinate, "Earth", 1, false);
+    planet.setRadiationLevel(1);
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    info.setEmpireName("Alliance of Humans");
+    planet.setPlanetOwner(0, info);
+    Building spacePort = BuildingFactory.createByName("Space port");
+    planet.addBuilding(spacePort);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+    Construction[] list = planet.getProductionList();
+    Construction shipConst = list[list.length - 1];
+    planet.setUnderConstruction(shipConst);
+    assertEquals(0, info.getFleets().getNumberOfFleets());
+    assertEquals("The population of the planet should be one.", 1, planet.getTotalPopulation());
+    assertEquals("The production time should be 15 turns.", "15 turns", planet.getProductionTime(shipConst));
+    for (int i=0;i<15;i++) {
+      // 5 turns to grow one population
+      planet.updateOneTurn(false);
+    }
+    list = planet.getProductionList();
+    shipConst = list[list.length - 1];
+    planet.setUnderConstruction(shipConst);
+    assertEquals(1, info.getFleets().getNumberOfFleets());
+    assertEquals("The production time should be 15 turns.", "15 turns", planet.getProductionTime(shipConst));
+    for (int i=0;i<15;i++) {
+      // 5 turns to grow one population
+      planet.updateOneTurn(true);
+    }
+    assertEquals(1, info.getFleets().getNumberOfFleets());
   }
 
   @Test

@@ -433,4 +433,119 @@ public class StarMapTest {
         DiplomacyBonusType.NUKED));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCulture() {
+    GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
+    Mockito.when(config.getSizeX()).thenReturn(50);
+    Mockito.when(config.getSizeY()).thenReturn(50);
+    Mockito.when(config.getMaxPlayers()).thenReturn(4);
+    Mockito.when(config.getStartingPosition()).thenReturn(
+        GalaxyConfig.START_POSITION_BORDER);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
+    MessageList msgList = Mockito.mock(MessageList.class);
+    Mockito.when(info.getMsgList()).thenReturn(msgList);
+    ShipStat[] stats = new ShipStat[0];
+    Mockito.when(info.getShipStatList()).thenReturn(stats);
+    
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
+    StarMap map = new StarMap(config, players);
+    map.resetCulture();
+    map.calculateCulture(5, 5, 4, 0);
+    assertEquals(0, map.getSectorCulture(5, 5).getHighestCulture());
+    map.calculateCulture(10, 5, 9, 1);
+    assertEquals(1, map.getSectorCulture(10, 5).getHighestCulture());
+    map.calculateCulture(15, 5, 19, 2);
+    assertEquals(2, map.getSectorCulture(15, 5).getHighestCulture());
+    map.calculateCulture(20, 5, 39, 3);
+    assertEquals(3, map.getSectorCulture(20, 5).getHighestCulture());
+    map.calculateCulture(25, 5, 79, 0);
+    assertEquals(0, map.getSectorCulture(25, 5).getHighestCulture());
+    map.calculateCulture(30, 5, 159, 1);
+    assertEquals(1, map.getSectorCulture(30, 5).getHighestCulture());
+    map.calculateCulture(35, 5, 319, 2);
+    assertEquals(2, map.getSectorCulture(35, 5).getHighestCulture());
+    map.calculateCulture(40, 5, 639, 3);
+    assertEquals(3, map.getSectorCulture(40, 5).getHighestCulture());
+    map.calculateCulture(5, 10, 1279, 0);
+    assertEquals(0, map.getSectorCulture(5, 10).getHighestCulture());
+    map.calculateCulture(10, 10, 1281, 1);
+    assertEquals(1, map.getSectorCulture(10, 10).getHighestCulture());
+    map.calculateCulture(32, 7, 159, 1);
+    map.calculateCulture(33, 8, 159, 1);
+    map.calculateCulture(25, 15, 80, 2);
+    map.calculateCulture(29, 15, 60, 0);
+    StringBuilder sb = new StringBuilder();
+    for (int y = 0; y < 50; y++) {
+      for (int x = 0; x < 50; x++) {
+        int value = map.getSectorCulture(x, y).getHighestCulture();
+        if (value != -1) {
+          sb.append(value);
+        } else {
+          sb.append(".");
+        }
+      }
+      sb.append("\n");
+    }
+    String expected = "..................................222.33333.......\n" + 
+        ".........................0...111.22223333333......\n" + 
+        "....................3...000.11112222233333333.....\n" + 
+        ".....0...111...2...333.00001111112223333333333....\n" + 
+        "....000.11111.222.33330000011111122333333333333...\n" + 
+        "..000001111111122333300000111111113333333333333...\n" + 
+        "..000000111111122.33330000011111111333333333333...\n" + 
+        "00000001111111111..333.00001111111223333333333....\n" + 
+        "00000001111111111...3...000.11111122233333333.....\n" + 
+        "000000111111111111.......0...111111223333333......\n" + 
+        "000001111111111111............1111122.33333.......\n" + 
+        "000000111111111111......222..0.11111...333........\n" + 
+        "00000001111111111......22222000.111...............\n" + 
+        "00000001111111111.....2222220000..................\n" + 
+        "..0000001111111......222222200000.................\n" + 
+        "..0000011111111......2222222200000................\n" + 
+        "....000.11111........222222200000.................\n" + 
+        ".....0...111..........2222220000..................\n" + 
+        ".......................22222000...................\n" + 
+        "........................222..0....................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n" + 
+        "..................................................\n";
+    assertEquals(expected, sb.toString());
+  }
+
 }

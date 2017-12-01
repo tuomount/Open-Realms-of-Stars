@@ -284,6 +284,9 @@ public final class MusicPlayer {
       if (state == GameState.COMBAT) {
         // Combat music
         playCombatMusic();
+      } else if (state == GameState.PLANETBOMBINGVIEW) {
+        // Combat music also for bombing
+        playCombatMusic();
       } else if (state == GameState.DIPLOMACY_VIEW) {
         // Keep playing the same song
         play(nowPlaying);

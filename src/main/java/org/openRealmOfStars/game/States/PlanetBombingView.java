@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.ShipListRenderer;
@@ -217,6 +218,7 @@ public class PlanetBombingView extends BlackPanel {
     this.fleet = fleet;
     this.attacker = attacker;
     this.attackPlayerIndex = attackerPlayerIndex;
+    MusicPlayer.playCombatMusic();
     aiControlled = false;
     allAi = false;
     nuked = false;

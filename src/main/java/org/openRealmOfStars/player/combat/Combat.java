@@ -323,6 +323,31 @@ private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
   }
 
   /**
+   * Can ship do privateering towards target
+   * @param privateer Privateer's combat ship
+   * @param target Target's combat Ship
+   * @return True if privateering is possible
+   */
+  public boolean canPrivateer(final CombatShip privateer,
+      final CombatShip target) {
+    ShipComponent weapon = privateer.getShip().getComponent(componentUse);
+    if (weapon != null && weapon.isPrivateer()) {
+      double xAxisDistance = Math.abs(privateer.getX() - target.getX());
+      double yAxisDistance = Math.abs(privateer.getY() - target.getY());
+      int distance;
+      if (xAxisDistance > yAxisDistance) {
+          distance = (int) xAxisDistance;
+      } else {
+          distance = (int) yAxisDistance;
+      }
+      if (distance == 1) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
  * @param distance distance between shooter and target
  * @param shooter shooter coordinate
  * @param target target coordinate

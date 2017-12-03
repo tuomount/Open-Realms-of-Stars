@@ -82,6 +82,17 @@ public class ShipComponentTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPrivateerModule() {
+    ShipComponent component = new ShipComponent(0, "Laser Mk2", 3, 3,
+        ShipComponentType.WEAPON_BEAM);
+    assertEquals(false, component.isPrivateer());
+    component = new ShipComponent(0, "Privateer Module", 3, 3,
+        ShipComponentType.PRIVATEERING_MODULE);
+    assertEquals(true, component.isPrivateer());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testEcm() {
     ShipComponent component = new ShipComponent(0, "ECM", 3, 3,
         ShipComponentType.WEAPON_ECM_TORPEDO);

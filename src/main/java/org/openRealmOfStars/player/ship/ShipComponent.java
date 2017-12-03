@@ -171,6 +171,17 @@ public class ShipComponent {
   }
 
   /**
+   * Is privateer module
+   * @return True if privateer module
+   */
+  public boolean isPrivateer() {
+    if (type == ShipComponentType.PRIVATEERING_MODULE) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Get ship component Index
    * @return Component index
    */

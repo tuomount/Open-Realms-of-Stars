@@ -80,6 +80,12 @@ public class CombatShip implements Comparable<CombatShip> {
   private boolean damaged;
 
   /**
+   * Number of credits ship has privateered
+   */
+  private int privateeredCredits;
+
+
+  /**
    * Constructor for Combat ship
    * @param ship Ship to put in combat
    * @param player Player who owns the ship
@@ -96,6 +102,7 @@ public class CombatShip implements Comparable<CombatShip> {
     this.flipY = flip;
     this.movesLeft = ship.getTacticSpeed();
     this.setBonusAccuracy(0);
+    this.setPrivateeredCredits(0);
     reInitShipForRound();
   }
 
@@ -355,6 +362,22 @@ public class CombatShip implements Comparable<CombatShip> {
    */
   public void setDamaged() {
     damaged = true;
+  }
+
+  /**
+   * Get how many credits ship has stole in this combat.
+   * @return the privateeredCredits
+   */
+  public int getPrivateeredCredits() {
+    return privateeredCredits;
+  }
+
+  /**
+   * Set how many credits ship has stole in this combat.
+   * @param privateeredCredits the privateeredCredits to set
+   */
+  public void setPrivateeredCredits(final int privateeredCredits) {
+    this.privateeredCredits = privateeredCredits;
   }
 
 }

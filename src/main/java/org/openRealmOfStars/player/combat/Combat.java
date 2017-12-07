@@ -419,6 +419,10 @@ public boolean launchIntercept(final int distance,
    * @param ship Combat ship to escape
    */
   public void escapeShip(final CombatShip ship) {
+    if (ship.getPrivateeredCredits() > 0) {
+      ship.getPlayer().setTotalCredits(ship.getPlayer().getTotalCredits()
+          + ship.getPrivateeredCredits());
+    }
     if (attackerFleet.isShipInFleet(ship.getShip())) {
       removeShipFromCombatList(ship);
       attackerEscaped = true;
@@ -729,6 +733,12 @@ public boolean launchIntercept(final int distance,
       endCombatHandled = true;
       handleWinner(winnerFleet, winnerPlayer);
       handleLoser(looserPlayer);
+      for (CombatShip ship : combatShipList) {
+        if (ship.getPrivateeredCredits() > 0) {
+          ship.getPlayer().setTotalCredits(ship.getPlayer().getTotalCredits()
+              + ship.getPrivateeredCredits());
+        }
+      }
       int looserIndex = looserPlayer.getFleets().
           getIndexByName(looserFleet.getName());
       if (looserIndex != -1 && !loserEscaped) {

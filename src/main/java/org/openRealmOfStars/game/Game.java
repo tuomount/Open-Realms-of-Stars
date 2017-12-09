@@ -106,7 +106,7 @@ public class Game implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.3.16Alpha";
+  public static final String GAME_VERSION = "0.3.17Alpha";
 
   /**
    * Animation timer used for animation

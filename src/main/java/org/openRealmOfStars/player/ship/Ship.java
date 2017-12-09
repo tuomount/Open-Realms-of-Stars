@@ -138,6 +138,23 @@ public class Ship extends Construction {
   private static final int BIT_MASK_TRADE_COORDINATE = 4;
 
   /**
+   * Cargo type no cargo
+   */
+  public static final int CARGO_TYPE_NO_CARGO = 0;
+  /**
+   * Cargo type trade goods aka credits
+   */
+  public static final int CARGO_TYPE_TRADE_GOODS = 1;
+  /**
+   * Cargo type population
+   */
+  public static final int CARGO_TYPE_POPULATION = 2;
+  /**
+   * Cargo type metal
+   */
+  public static final int CARGO_TYPE_METAL = 3;
+
+  /**
    * Constructor for a ship
    * @param design from where actual ship is created
    */
@@ -1560,6 +1577,24 @@ private int increaseDefenseValueWithJammer() {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Get Cargo Type
+   * @return CARGO_TYPE
+   */
+  public int getCargoType() {
+    if (isTradeShip() && (getFlag(FLAG_MERCHANT_LEFT_HOMEWORLD)
+        || getFlag(FLAG_MERCHANT_LEFT_OPPONENWORLD))) {
+      return CARGO_TYPE_TRADE_GOODS;
+    }
+    if (getColonist() > 0 && !isTrooperModule()) {
+      return CARGO_TYPE_POPULATION;
+    }
+    if (getMetal() > 0) {
+      return CARGO_TYPE_METAL;
+    }
+    return CARGO_TYPE_NO_CARGO;
   }
   /**
    * Do trade with planet if trade ship.

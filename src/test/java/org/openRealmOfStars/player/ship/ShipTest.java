@@ -225,9 +225,11 @@ public class ShipTest {
     design.addComponent(energy);
     design.addComponent(engine);
     Ship ship = new Ship(design);
+    assertEquals(Ship.CARGO_TYPE_NO_CARGO, ship.getCargoType());
     assertEquals(12, ship.getFreeCargoColonists());
     assertEquals(60, ship.getFreeCargoMetal());
     ship.setColonist(1);
+    assertEquals(Ship.CARGO_TYPE_POPULATION, ship.getCargoType());
     assertEquals(12, ship.getFreeCargoColonists());
     assertEquals(50, ship.getFreeCargoMetal());
     ship.setMetal(10);
@@ -240,6 +242,7 @@ public class ShipTest {
     assertEquals(5, ship.getTradeCoordinate().getX());
     assertEquals(6, ship.getTradeCoordinate().getY());
     ship.setFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD, true);
+    assertEquals(Ship.CARGO_TYPE_TRADE_GOODS, ship.getCargoType());
     assertEquals(true, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD));
     ship.setFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD, true);
     assertEquals(true, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD));
@@ -386,6 +389,25 @@ public class ShipTest {
     assertEquals(18, result);
     assertEquals(true, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD));
     assertEquals(false, ship.getFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTradeShip6() {
+    ShipHull hull = ShipHullFactory.createByName("Medium freighter", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
+    ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
+    design.addComponent(energy);
+    design.addComponent(engine);
+    Ship ship = new Ship(design);
+    assertEquals(Ship.CARGO_TYPE_NO_CARGO, ship.getCargoType());
+    assertEquals(12, ship.getFreeCargoColonists());
+    assertEquals(60, ship.getFreeCargoMetal());
+    ship.setMetal(10);
+    assertEquals(10, ship.getFreeCargoColonists());
+    assertEquals(50, ship.getFreeCargoMetal());
+    assertEquals(Ship.CARGO_TYPE_METAL, ship.getCargoType());
   }
 
   @Test

@@ -1564,7 +1564,7 @@ private int increaseDefenseValueWithJammer() {
   }
 
   /**
-   * Set trade coordinate for ship
+   * Set trade coordinate for ship. Set null to clear trade coordinates.
    * @param coordinate new trade coordinate
    */
   public void setTradeDistance(final Coordinate coordinate) {

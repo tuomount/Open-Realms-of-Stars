@@ -1248,5 +1248,66 @@ public boolean launchIntercept(final int distance,
     return handleAiNonMilitaryShip(textLogger, infoPanel);
   }
 
+  /**
+   * Do privateering with certain combat ship and player against
+   * another combat ship and player.
+   * @param privateer PlayerInfo who is being privateer
+   * @param pirateShip Pirate space ship
+   * @param targetPlayer Victim player
+   * @param targetShip Victim ship
+   * @return ShipDamage if privateering was succesful
+   */
+  public ShipDamage doPrivateering(final PlayerInfo privateer,
+      final CombatShip pirateShip, final PlayerInfo targetPlayer,
+      final CombatShip targetShip) {
+    ShipDamage result = null;
+    if (pirateShip.getShip().isPrivateeringShip()) {
+      int cargoType = targetShip.getShip().getCargoType();
+      if (cargoType == Ship.CARGO_TYPE_TRADE_GOODS) {
+        targetShip.getShip().setFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD, false);
+        targetShip.getShip().setFlag(Ship.FLAG_MERCHANT_LEFT_OPPONENWORLD,
+            false);
+        targetShip.getShip().setTradeDistance(null);
+        pirateShip.setPrivateeredCredits(
+            pirateShip.getPrivateeredCredits() + 3);
+        result = new ShipDamage(1, "Privateered trade goods from trade ship!");
+      }
+      if (cargoType == Ship.CARGO_TYPE_POPULATION) {
+        targetShip.getShip().setColonist(0);
+        pirateShip.setPrivateeredCredits(
+            pirateShip.getPrivateeredCredits() + 1);
+        result = new ShipDamage(1, "Murderered colonist and stole valuables!");
+      }
+      if (cargoType == Ship.CARGO_TYPE_TROOPS) {
+        result = new ShipDamage(1, "Ship is full of troops and cannot be"
+            + " raided!");
+      }
+      if (cargoType == Ship.CARGO_TYPE_NO_CARGO) {
+        result = new ShipDamage(1, "Ship has no cargo!");
+      }
+      if (cargoType == Ship.CARGO_TYPE_METAL) {
+        if (pirateShip.getShip().getFreeCargoMetal() > 0) {
+          if (pirateShip.getShip().getFreeCargoMetal()
+              >= targetShip.getShip().getMetal()) {
+            pirateShip.getShip().setMetal(pirateShip.getShip().getMetal()
+                + targetShip.getShip().getMetal());
+            targetShip.getShip().setMetal(0);
+            result = new ShipDamage(1, "All valuable metal has been stolen!");
+          } else {
+            int stolen = pirateShip.getShip().getFreeCargoMetal();
+            pirateShip.getShip().setMetal(pirateShip.getShip().getMetal()
+                + stolen);
+            targetShip.getShip().setMetal(targetShip.getShip().getMetal()
+                - stolen);
+            result = new ShipDamage(1, "You raided " + stolen
+                + " units of metal!");
+          }
+        } else {
+          result = new ShipDamage(1, "Cargo cannot be fitted in your ship!");
+        }
+      }
+    }
+    return result;
+  }
 
 }

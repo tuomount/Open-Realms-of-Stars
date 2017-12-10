@@ -412,6 +412,31 @@ public class ShipTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTrooper() {
+    ShipHull hull = ShipHullFactory.createByName("Medium freighter", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
+    ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
+    ShipComponent trooper = ShipComponentFactory.createByName("Planetary invasion module");
+    design.addComponent(energy);
+    design.addComponent(engine);
+    design.addComponent(trooper);
+    Ship ship = new Ship(design);
+    assertEquals(Ship.CARGO_TYPE_NO_CARGO, ship.getCargoType());
+    assertEquals(10, ship.getFreeCargoColonists());
+    assertEquals(50, ship.getFreeCargoMetal());
+    ship.setMetal(10);
+    assertEquals(8, ship.getFreeCargoColonists());
+    assertEquals(40, ship.getFreeCargoMetal());
+    assertEquals(Ship.CARGO_TYPE_METAL, ship.getCargoType());
+    ship.setColonist(2);
+    assertEquals(6, ship.getFreeCargoColonists());
+    assertEquals(30, ship.getFreeCargoMetal());
+    assertEquals(Ship.CARGO_TYPE_TROOPS, ship.getCargoType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testProbeFTLSpeedp() {
     ShipHull hull = ShipHullFactory.createByName("Probe", SpaceRace.HUMAN);
     ShipDesign design = new ShipDesign(hull);

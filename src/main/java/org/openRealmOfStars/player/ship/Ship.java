@@ -153,6 +153,10 @@ public class Ship extends Construction {
    * Cargo type metal
    */
   public static final int CARGO_TYPE_METAL = 3;
+  /**
+   * Cargo type troops
+   */
+  public static final int CARGO_TYPE_TROOPS = 4;
 
   /**
    * Constructor for a ship
@@ -1584,6 +1588,9 @@ private int increaseDefenseValueWithJammer() {
    * @return CARGO_TYPE
    */
   public int getCargoType() {
+    if (getColonist() > 0 && isTrooperModule()) {
+      return CARGO_TYPE_TROOPS;
+    }
     if (isTradeShip() && (getFlag(FLAG_MERCHANT_LEFT_HOMEWORLD)
         || getFlag(FLAG_MERCHANT_LEFT_OPPONENWORLD))) {
       return CARGO_TYPE_TRADE_GOODS;

@@ -1276,7 +1276,7 @@ public boolean launchIntercept(final int distance,
         targetShip.getShip().setColonist(0);
         pirateShip.setPrivateeredCredits(
             pirateShip.getPrivateeredCredits() + 1);
-        result = new ShipDamage(1, "Murderered colonist and stole valuables!");
+        result = new ShipDamage(1, "Murderered colonists and stole valuables!");
       }
       if (cargoType == Ship.CARGO_TYPE_TROOPS) {
         result = new ShipDamage(1, "Ship is full of troops and cannot be"

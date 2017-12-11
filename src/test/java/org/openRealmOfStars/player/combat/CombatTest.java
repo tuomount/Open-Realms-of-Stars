@@ -6,13 +6,16 @@ import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
@@ -345,6 +348,58 @@ public class CombatTest {
     info2.getFleets().add(fleet2);
     Combat combat = new Combat(fleet1, fleet2, info1, info2);
     assertEquals(true, combat.isHumanPlayer());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPrivateering() {
+    PlayerInfo privateer = Mockito.mock(PlayerInfo.class);
+    PlayerInfo target = Mockito.mock(PlayerInfo.class);
+    FleetList list = Mockito.mock(FleetList.class);
+    Mockito.when(target.getFleets()).thenReturn(list);
+
+    Ship privateerShip = Mockito.mock(Ship.class);
+    Mockito.when(privateerShip.isPrivateeringShip()).thenReturn(true);
+    Ship targetShip = Mockito.mock(Ship.class);
+
+    CombatShip combatPirate = Mockito.mock(CombatShip.class);
+    Mockito.when(combatPirate.getShip()).thenReturn(privateerShip);
+    CombatShip combatTarget = Mockito.mock(CombatShip.class);
+    Mockito.when(combatTarget.getShip()).thenReturn(targetShip);
+
+    Fleet attackerFleet = new Fleet(privateerShip, 5, 5);
+    Fleet defenderFleet = new Fleet(targetShip, 6, 6);
+    Combat combat = new Combat(attackerFleet, defenderFleet, privateer, target);
+    ShipDamage damage = combat.doPrivateering(privateer, combatPirate, target,
+        combatTarget);
+    assertEquals("Ship has no cargo!", damage.getMessage());
+    Mockito.when(targetShip.getCargoType()).thenReturn(Ship.CARGO_TYPE_POPULATION);
+    damage = combat.doPrivateering(privateer, combatPirate, target,
+        combatTarget);
+    assertEquals("Murderered colonists and stole valuables!", damage.getMessage());
+    Mockito.when(targetShip.getCargoType()).thenReturn(Ship.CARGO_TYPE_TRADE_GOODS);
+    damage = combat.doPrivateering(privateer, combatPirate, target,
+        combatTarget);
+    assertEquals("Privateered trade goods from trade ship!", damage.getMessage());
+    Mockito.when(targetShip.getCargoType()).thenReturn(Ship.CARGO_TYPE_TROOPS);
+    damage = combat.doPrivateering(privateer, combatPirate, target,
+        combatTarget);
+    assertEquals("Ship is full of troops and cannot be raided!", damage.getMessage());
+    Mockito.when(targetShip.getCargoType()).thenReturn(Ship.CARGO_TYPE_METAL);
+    Mockito.when(privateerShip.getFreeCargoMetal()).thenReturn(0);
+    damage = combat.doPrivateering(privateer, combatPirate, target,
+        combatTarget);
+    assertEquals("Cargo cannot be fitted in your ship!", damage.getMessage());
+    Mockito.when(privateerShip.getFreeCargoMetal()).thenReturn(5);
+    Mockito.when(targetShip.getMetal()).thenReturn(3);
+    damage = combat.doPrivateering(privateer, combatPirate, target,
+        combatTarget);
+    assertEquals("All valuable metal has been stolen!", damage.getMessage());
+    Mockito.when(privateerShip.getFreeCargoMetal()).thenReturn(3);
+    Mockito.when(targetShip.getMetal()).thenReturn(5);
+    damage = combat.doPrivateering(privateer, combatPirate, target,
+        combatTarget);
+    assertEquals("You raided 3 units of metal!", damage.getMessage());
   }
 
 }

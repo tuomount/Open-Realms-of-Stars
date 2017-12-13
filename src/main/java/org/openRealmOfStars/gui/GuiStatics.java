@@ -443,6 +443,12 @@ public final class GuiStatics {
       "/resources/images/explosion4.png");
 
   /**
+   * Privateering animation
+   */
+  public static final AnimatedImage PRIVATEER = new AnimatedImage(64, 64,
+      "/resources/images/privateer.png");
+
+  /**
    * Wormhole animation
    */
   public static final AnimatedImage WORMHOLE = new AnimatedImage(64, 64,

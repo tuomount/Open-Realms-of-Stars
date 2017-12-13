@@ -55,6 +55,8 @@ GBNC logo by Tuomo Untinen
 
 Worm hole by Tuomo Untinen
 
+Privateering effect in combat by Tuomo Untinen
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

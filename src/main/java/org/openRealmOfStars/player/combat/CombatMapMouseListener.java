@@ -172,7 +172,12 @@ public class CombatMapMouseListener extends MouseAdapter
           CombatShip target = combat.getShipFromCoordinate(combat.getCursorX(),
               combat.getCursorY());
           if (target != null && combat.canPrivateer(ship, target)) {
-            // TODO: do privateer here
+            shipDamage = combat.doPrivateering(ship.getPlayer(), ship,
+                target.getPlayer(), target);
+            shipDamage.ready();
+            combat.setAnimation(new CombatAnimation(ship, target, weapon,
+                shipDamage.getValue()));
+            ship.useComponent(componentUse);
             SoundPlayer.playMenuSound();
           }
         }

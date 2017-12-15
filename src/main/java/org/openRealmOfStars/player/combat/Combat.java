@@ -508,6 +508,41 @@ public boolean launchIntercept(final int distance,
   }
 
   /**
+   * Get the closest enemy trader ship
+   * @param info Player info who is doing the comparison
+   * @param friendlyShip Where to start looking the closet one
+   * @return CombatShip or null
+   */
+  public CombatShip getClosestTraderShip(final PlayerInfo info,
+      final CombatShip friendlyShip) {
+    double maxDistance = MAX_DISTANCE;
+    CombatShip enemyShip = null;
+    for (CombatShip ship : combatShipList) {
+      if (ship.getPlayer() != info) {
+        CombatCoordinate centerCoordinate =
+                new CombatCoordinate(friendlyShip.getX(),
+            friendlyShip.getY());
+        CombatCoordinate shipCoordinate =
+                new CombatCoordinate(ship.getX(), ship.getY());
+        double distance = centerCoordinate.calculateDistance(shipCoordinate);
+        int cargo = ship.getShip().getCargoType();
+        boolean cargoToSteal = false;
+        if (cargo == Ship.CARGO_TYPE_METAL
+            || cargo == Ship.CARGO_TYPE_POPULATION
+            || cargo == Ship.CARGO_TYPE_TRADE_GOODS) {
+          cargoToSteal = true;
+        }
+        if (distance < maxDistance && cargoToSteal) {
+          enemyShip = ship;
+          maxDistance = distance;
+        }
+      }
+    }
+    return enemyShip;
+
+  }
+
+  /**
    * Calculate farest position from a ship
    * @param enemyShip Enemy ship
    * @return Coordinate which are as far away as possible
@@ -1057,6 +1092,53 @@ public boolean launchIntercept(final int distance,
   }
 
   /**
+   * Handle privateering against trader. This method assumes that privaateer
+   * is next to trader. This method does not move privateer ship.
+   * @param textLogger where logging is added if not null
+   * @param infoPanel Infopanel where ship components are shown.
+   *        This can be null too.
+   * @param trader Trading ship to be privateer.
+   * @return true if end round has been activated and component use
+   *        should be cleared from UI. Otherwise false.
+   */
+  private boolean handlePrivateerShip(final Logger textLogger,
+      final BattleInfoPanel infoPanel, final CombatShip trader) {
+    CombatShip ai = getCurrentShip();
+    Coordinate aiCoordinate = new Coordinate(ai.getX(), ai.getY());
+    Coordinate traderCoordinate = new Coordinate(trader.getX(),
+        trader.getY());
+    int distance = (int) Math.round(aiCoordinate.calculateDistance(
+        traderCoordinate));
+    if (distance == 1) {
+      int nComp = ai.getShip().getNumberOfComponents();
+      for (int i = 0; i < nComp; i++) {
+        ShipComponent weapon = ai.getShip().getComponent(i);
+        setComponentUse(i);
+        if (weapon != null && weapon.isPrivateer() && !ai.isComponentUsed(i)
+            && ai.getShip().componentIsWorking(i) && canPrivateer(ai, trader)) {
+          ShipDamage shipDamage = doPrivateering(ai.getPlayer(), ai,
+              trader.getPlayer(), trader);
+          shipDamage.ready();
+          setAnimation(new CombatAnimation(ai, trader, weapon,
+              shipDamage.getValue()));
+          ai.useComponent(componentUse);
+          if (textLogger != null) {
+            String[] logs = shipDamage.getMessage().split("\n");
+            for (String log : logs) {
+              textLogger.addLog(log);
+            }
+          }
+          if (infoPanel != null) {
+            infoPanel.useComponent(i);
+          }
+          setComponentUse(-1);
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  /**
    * AI handling for pure military ships.
    * @param textLogger where logging is added if not null
    * @param infoPanel Infopanel where ship components are shown.
@@ -1070,9 +1152,26 @@ public boolean launchIntercept(final int distance,
     if (ai == null) {
       return true;
     }
+    boolean privateer = ai.getShip().isPrivateeringShip();
     PlayerInfo info = getCurrentShip().getPlayer();
     CombatShip deadliest = getMostPowerfulShip(info);
     CombatShip closest = getClosestEnemyShip(info, getCurrentShip());
+    CombatShip trader = null;
+    if (privateer) {
+      trader = getClosestTraderShip(info, ai);
+      if (trader != null) {
+        boolean privateered = handlePrivateerShip(textLogger, infoPanel,
+            trader);
+        if (privateered) {
+          return true;
+        }
+        if (deadliest == null) {
+          // There is no deadliest but there is trader,
+          // so taking that as a target
+          deadliest = trader;
+        }
+      }
+    }
     boolean shot = false;
     int range = ai.getShip().getMaxWeaponRange();
     if (deadliest != null) {

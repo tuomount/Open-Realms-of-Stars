@@ -51,6 +51,19 @@ public final class ShipGenerator {
   }
 
   /**
+   * Ship type for regular military ship
+   */
+  private static final int SHIP_TYPE_REGULAR = 0;
+  /**
+   * Ship type for bomber
+   */
+  private static final int SHIP_TYPE_BOMBER = 1;
+  /**
+   * Ship type for privateer
+   */
+  private static final int SHIP_TYPE_PRIVATEER = 2;
+
+  /**
    * Score components for battle ship
    * @param design Design for ship
    * @param player Player doing the ship
@@ -202,20 +215,27 @@ public final class ShipGenerator {
    * Design new battle ship for certain size
    * @param player Player doing the design
    * @param size Ship Size
-   * @param bomber Create bomber battle ship
+   * @param shipType SHIP_TYPE_REGULAR, SHIP_TYPE_BOMBER
+   *        or SHIP_TYPE_PRIVATEER}
    * @return ShipDesign if doable. Null if not doable for that size.
    */
-  public static ShipDesign createBattleShip(final PlayerInfo player,
-      final ShipSize size, final boolean bomber) {
+  private static ShipDesign createMilitaryShip(final PlayerInfo player,
+      final ShipSize size, final int shipType) {
     ShipDesign result = null;
     Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
     ShipHull hull = null;
+    boolean bomber = false;
+    ShipHullType hullType = ShipHullType.NORMAL;
+    if (shipType == SHIP_TYPE_PRIVATEER) {
+      hullType = ShipHullType.PRIVATEER;
+    } else if (shipType == SHIP_TYPE_BOMBER) {
+      bomber = true;
+    }
     int value = 0;
     for (Tech tech : hullTechs) {
       ShipHull tempHull = ShipHullFactory.createByName(tech.getHull(),
           player.getRace());
-      if (tempHull.getHullType() == ShipHullType.NORMAL
-          && tempHull.getSize() == size) {
+      if (tempHull.getHullType() == hullType && tempHull.getSize() == size) {
         int tempValue = tempHull.getMaxSlot() * tempHull.getSlotHull();
         if (tempValue > value) {
           value = tempValue;
@@ -258,6 +278,10 @@ public final class ShipGenerator {
           // Bomber was requested but could not deliver one
           return null;
         }
+      }
+      if (result.getFreeSlots() >= 1 && hullType == ShipHullType.PRIVATEER) {
+          result.addComponent(ShipComponentFactory.createByName(
+              "Privateer module"));
       }
 
       Tech[] defenseTechs = player.getTechList()
@@ -395,6 +419,33 @@ public final class ShipGenerator {
 
     }
     return result;
+  }
+
+  /**
+   * Design new battle ship for certain size
+   * @param player Player doing the design
+   * @param size Ship Size
+   * @param bomber Create bomber battle ship
+   * @return ShipDesign if doable. Null if not doable for that size.
+   */
+  public static ShipDesign createBattleShip(final PlayerInfo player,
+      final ShipSize size, final boolean bomber) {
+    if (bomber) {
+      return createMilitaryShip(player, size, SHIP_TYPE_BOMBER);
+    } else {
+      return createMilitaryShip(player, size, SHIP_TYPE_REGULAR);
+    }
+  }
+
+  /**
+   * Design new privateer ship for certain size
+   * @param player Player doing the design
+   * @param size Ship Size
+   * @return ShipDesign if doable. Null if not doable for that size.
+   */
+  public static ShipDesign createPrivateerShip(final PlayerInfo player,
+      final ShipSize size) {
+    return createMilitaryShip(player, size, SHIP_TYPE_PRIVATEER);
   }
 
   /**

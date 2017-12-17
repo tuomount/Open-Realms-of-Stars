@@ -310,7 +310,7 @@ public class CombatTest {
     info2.getFleets().add(fleet2);
     Combat combat = new Combat(fleet1, fleet2, info1, info2);
     assertEquals(0, info1.getTotalCredits());
-    combat.doFastCombat();
+    combat.doFastCombat(false);
     assertEquals(info1, combat.getWinner());
     assertEquals(3, info1.getTotalCredits());
   }

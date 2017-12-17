@@ -880,9 +880,38 @@ public boolean launchIntercept(final int distance,
    * anything.
    */
   public void doFastCombat() {
+    doFastCombat(false);
+  }
+
+  /**
+   * Do Fast combat without showing the actual combat.
+   * This should be used when two AIs fight against
+   * each others. If combat has ended this does not do
+   * anything.
+   * @param debug True to enable debug logging
+   */
+  public void doFastCombat(final boolean debug) {
+    Logger logger = null;
     if (!isCombatOver()) {
       while (!isCombatOver()) {
-        handleAI(null, null);
+        if (debug) {
+          logger = new Logger();
+          logger.addLog("Turn starts...");
+          logger.addLog(getCurrentShip().getShip().getName() + " X:"
+              + getCurrentShip().getX() + " Y:" + getCurrentShip().getY());
+        }
+        boolean endRound = handleAI(logger, null);
+        if (logger != null) {
+          if (endRound && debug) {
+            logger.addLog("Round ended...");
+          }
+          for (int i = logger.size() - 1; i >= 0; i--) {
+            String msg = logger.getMessage(i);
+            if (!msg.isEmpty()) {
+              System.out.println(msg);
+            }
+          }
+        }
         if (animation != null
             && animation.getTarget().getShip().getHullPoints() <= 0) {
           // Ship has no more hull points so destroying it
@@ -1149,6 +1178,7 @@ public boolean launchIntercept(final int distance,
   private boolean handleAiMilitaryShip(final Logger textLogger,
       final BattleInfoPanel infoPanel) {
     CombatShip ai = getCurrentShip();
+    boolean shootDeadliest = true;
     if (ai == null) {
       return true;
     }
@@ -1157,6 +1187,7 @@ public boolean launchIntercept(final int distance,
     CombatShip deadliest = getMostPowerfulShip(info);
     CombatShip closest = getClosestEnemyShip(info, getCurrentShip());
     CombatShip trader = null;
+    int range = ai.getShip().getMaxWeaponRange();
     if (privateer) {
       trader = getClosestTraderShip(info, ai);
       if (trader != null) {
@@ -1169,11 +1200,19 @@ public boolean launchIntercept(final int distance,
           // There is no deadliest but there is trader,
           // so taking that as a target
           deadliest = trader;
+          if (deadliest.getShip().getCargoType() == Ship.CARGO_TYPE_TRADE_GOODS
+              || deadliest.getShip().getCargoType()
+              == Ship.CARGO_TYPE_POPULATION) {
+            shootDeadliest = false;
+            range = 1;
+          }
+          if (closest == deadliest) {
+            closest = null;
+          }
         }
       }
     }
     boolean shot = false;
-    int range = ai.getShip().getMaxWeaponRange();
     if (deadliest != null) {
       if (ai.getShip().getTotalMilitaryPower() > deadliest.getShip()
           .getTotalMilitaryPower()) {
@@ -1210,7 +1249,9 @@ public boolean launchIntercept(final int distance,
     }
     if (point != null && !isBlocked(point.getX(), point.getY())
         && ai.getMovesLeft() > 0) {
-      shot = handleAIShoot(ai, deadliest, textLogger, infoPanel);
+      if (shootDeadliest) {
+        shot = handleAIShoot(ai, deadliest, textLogger, infoPanel);
+      }
       if (!shot) {
         // Not moving after shooting
         ai.setMovesLeft(ai.getMovesLeft() - 1);
@@ -1231,12 +1272,28 @@ public boolean launchIntercept(final int distance,
     if ((ai.getMovesLeft() == 0 || aStar.isLastMove())
         && getAnimation() == null) {
       if (ai.getAiShotsLeft() > 0) {
-        // We still got more shots left, let's shoot the deadliest
-        shot = handleAIShoot(ai, deadliest, textLogger, infoPanel);
+        shot = false;
+        if (shootDeadliest) {
+          // We still got more shots left, let's shoot the deadliest
+          shot = handleAIShoot(ai, deadliest, textLogger, infoPanel);
+        } else {
+          if (privateer) {
+            trader = getClosestTraderShip(info, ai);
+            if (trader != null) {
+              boolean privateered = handlePrivateerShip(textLogger, infoPanel,
+                  trader);
+              if (privateered) {
+                return true;
+              }
+            }
+          }
+        }
         if (!shot) {
           // Deadliest wasn't close enough, let's shoot the closest
           closest = getClosestEnemyShip(info, getCurrentShip());
-          shot = handleAIShoot(ai, closest, textLogger, infoPanel);
+          if (closest != deadliest) {
+            shot = handleAIShoot(ai, closest, textLogger, infoPanel);
+          }
           if (!shot) {
             // Even closest was too far away, ending the turn now
             aStar = null;
@@ -1300,6 +1357,9 @@ public boolean launchIntercept(final int distance,
         if (textLogger != null && infoPanel != null) {
           // Play sound only if battle view is used
           SoundPlayer.playSound(SoundPlayer.TELEPORT);
+        }
+        if (textLogger != null) {
+          textLogger.addLog(ai.getShip().getName() + " escapes from combat!");
         }
         escapeShip(ai);
       }

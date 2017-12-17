@@ -85,4 +85,16 @@ public class Logger {
   public String getMessage(final int index) {
     return textLog[index];
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    for (int i = size() - 1; i >= 0; i--) {
+      sb.append("\"");
+      sb.append(getMessage(i));
+      sb.append("\"\n");
+    }
+    return sb.toString();
+  }
+
 }

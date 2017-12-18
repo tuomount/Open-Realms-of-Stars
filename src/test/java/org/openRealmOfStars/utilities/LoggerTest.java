@@ -98,4 +98,19 @@ public class LoggerTest {
         assertEquals("Message 1", logger.getMessage(3));
     }
 
+    @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
+    public void testToString(){
+        logger.addLog("Message 1");
+        logger.addLog("Message 2");
+        logger.addLog("Message 3");
+        logger.addLog("Message 4");
+
+        assertEquals("\"\"\n"
+            + "\"Message 1\"\n"
+            + "\"Message 2\"\n"
+            + "\"Message 3\"\n"
+            + "\"Message 4\"\n", logger.toString());
+    }
+
 }

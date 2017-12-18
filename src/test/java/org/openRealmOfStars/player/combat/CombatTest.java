@@ -300,12 +300,46 @@ public class CombatTest {
         info1, ShipSize.MEDIUM);
     ShipDesign design2 = ShipGenerator.createFreighter(info2);
     Ship privateer1 = new Ship(design1);
-    Ship privateer2 = new Ship(design1);
     Ship colony = new Ship(design2);
     colony.setFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD, true);
     Fleet fleet1 = new Fleet(privateer1, 5, 5);
-    //fleet1.addShip(privateer2);
     Fleet fleet2 = new Fleet(colony, 6, 5);
+    info1.getFleets().add(fleet1);
+    info2.getFleets().add(fleet2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    assertEquals(0, info1.getTotalCredits());
+    combat.doFastCombat(false);
+    assertEquals(info1, combat.getWinner());
+    assertEquals(3, info1.getTotalCredits());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRealCombatWithPrivateers() {
+    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    info1.getTechList().addTech(TechFactory.createHullTech(
+        TechFactory.HULL_TECH_LEVEL5_NAMES[2], 5));
+    info1.getTechList().addTech(TechFactory.createDefenseTech(
+        "Shield Mk3", 3));
+    info1.getTechList().addTech(TechFactory.createCombatTech(
+        "Photon torpedo Mk2", 2));
+    info1.getTechList().addTech(TechFactory.createPropulsionTech(
+        "Nuclear drive Mk2", 3));
+    ShipDesign design1 = ShipGenerator.createPrivateerShip(
+        info1, ShipSize.MEDIUM);
+    ShipDesign design2 = ShipGenerator.createFreighter(info2);
+    ShipDesign design3 = ShipGenerator.createBattleShip(
+        info2, ShipSize.SMALL, false);
+    Ship privateer1 = new Ship(design1);
+    Ship privateer2 = new Ship(design1);
+    Ship colony = new Ship(design2);
+    Ship scout = new Ship(design3);
+    colony.setFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD, true);
+    Fleet fleet1 = new Fleet(privateer1, 5, 5);
+    fleet1.addShip(privateer2);
+    Fleet fleet2 = new Fleet(colony, 6, 5);
+    fleet2.addShip(scout);
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
     Combat combat = new Combat(fleet1, fleet2, info1, info2);

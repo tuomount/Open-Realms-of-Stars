@@ -212,6 +212,10 @@ public class AITurnView extends BlackPanel {
       case TRADE_FLEET:
         MissionHandling.handleTrade(mission, fleet, info, game);
         break;
+      case PRIVATEER:
+        //TODO change this to correct when implemented
+        MissionHandling.handleExploring(mission, fleet, info, game);
+        break;
       default:
         throw new IllegalArgumentException("Unknown mission type for AI!");
       }
@@ -222,6 +226,20 @@ public class AITurnView extends BlackPanel {
         Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
             fleet.getY(), info, fleet, null);
         mission = new Mission(MissionType.EXPLORE, MissionPhase.TREKKING,
+            sun.getCenterCoordinate());
+        mission.setFleetName(fleet.getName());
+        mission.setSunName(sun.getName());
+        info.getMissions().add(mission);
+        fleet.setRoute(new Route(fleet.getX(), fleet.getY(), mission.getX(),
+            mission.getY(), fleet.getFleetFtlSpeed()));
+        // Mission assigned continue...
+        return;
+      }
+      if (fleet.isPrivateerFleet()) {
+        // Privateer fleet should go to explore and rob trade ships
+        Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
+            fleet.getY(), info, fleet, null);
+        mission = new Mission(MissionType.PRIVATEER, MissionPhase.TREKKING,
             sun.getCenterCoordinate());
         mission.setFleetName(fleet.getName());
         mission.setSunName(sun.getName());

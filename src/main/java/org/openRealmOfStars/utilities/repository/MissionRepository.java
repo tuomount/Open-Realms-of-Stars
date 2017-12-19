@@ -83,6 +83,8 @@ public class MissionRepository {
       return MissionType.DESTROY_STARBASE;
     case 8:
       return MissionType.TRADE_FLEET;
+    case 9:
+      return MissionType.PRIVATEER;
     default:
       System.err.println("Warning: Unknown mission type: " + index
           + ". Defaulting to explore.");

@@ -61,7 +61,12 @@ public enum MissionType {
   /**
    * Fleet contains trade ship which travel between trade alliance planets
    */
-  TRADE_FLEET;
+  TRADE_FLEET,
+  /**
+   * Fleet mostly moving quite randomly exploring the galaxy, tries to
+   * rob trade ships
+   */
+  PRIVATEER;
 
   /**
    * Get Mission type with index
@@ -87,6 +92,8 @@ public enum MissionType {
       return 7;
     case TRADE_FLEET:
       return 8;
+    case PRIVATEER:
+      return 9;
     default:
       return 0;
     }
@@ -113,6 +120,8 @@ public enum MissionType {
       return "Destroy starbase";
     case TRADE_FLEET:
       return "Trade fleet";
+    case PRIVATEER:
+      return "Privateer";
     default:
       return "Unknown";
     }

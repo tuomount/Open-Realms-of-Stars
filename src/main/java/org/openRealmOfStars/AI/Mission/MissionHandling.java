@@ -65,6 +65,47 @@ public final class MissionHandling {
   }
 
   /**
+   * Search for nearby fleet owned by other player. Search is
+   * done inside the distance. Fleet must have less military power
+   * than the fleet which is doing the search.
+   * @param info Player who is doing the search
+   * @param game Game
+   * @param fleet Fleet whos is searching
+   * @param distance Maximum search distance
+   * @return Found nearby fleet or null
+   */
+  public static Fleet getNearByFleet(final PlayerInfo info,
+      final Game game, final Fleet fleet, final int distance) {
+    StarMap starMap = game.getStarMap();
+    Coordinate center = fleet.getCoordinate();
+    Fleet targetFleet = null;
+    for (int y = -distance; y <= distance; y++) {
+      for (int x = -distance; x <= distance; x++) {
+        if (x == 0 && y == 0) {
+          continue;
+        }
+        Fleet tmpFleet = starMap.getFleetByCoordinate(center.getX() + x,
+            center.getY() + y);
+        if (tmpFleet != null
+            && info != starMap.getPlayerInfoByFleet(tmpFleet)
+            && tmpFleet.getMilitaryValue() < fleet.getMilitaryValue()) {
+          if (targetFleet == null) {
+            targetFleet = tmpFleet;
+          } else {
+            double tmpDist = center.calculateDistance(
+                tmpFleet.getCoordinate());
+            double targetDist = center.calculateDistance(
+                targetFleet.getCoordinate());
+            if (tmpDist < targetDist) {
+              targetFleet = tmpFleet;
+            }
+          }
+        }
+      }
+    }
+    return targetFleet;
+  }
+  /**
    * Handle exploring mission
    * @param mission Exploring mission, does nothing if type is wrong
    * @param fleet Fleet on mission

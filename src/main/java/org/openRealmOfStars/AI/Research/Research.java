@@ -90,6 +90,7 @@ public final class Research {
     handleTrooperShipDesign(info);
     handleColonyShipDesign(info);
     handleFreighterShipDesign(info);
+    handlePrivateerShipDesign(info);
   }
 
   /**
@@ -127,6 +128,45 @@ public final class Research {
       for (ShipStat stat : stats) {
         if (stat.getDesign().getHull().getSize() == size && stat.getDesign()
             .getHull().getHullType() == ShipHullType.NORMAL
+            && !stat.isObsolete()) {
+          notFound = false;
+          if (design.getTotalMilitaryPower() > stat.getDesign()
+              .getTotalMilitaryPower() && !stat.isObsolete()) {
+            stat.setObsolete(true);
+            ShipStat ship = new ShipStat(design);
+            info.addShipStat(ship);
+            break;
+          }
+        }
+      }
+      if (notFound) {
+        ShipStat ship = new ShipStat(design);
+        info.addShipStat(ship);
+      }
+    }
+
+  }
+
+  /**
+   * Handle Privateer ship design for AI
+   * @param info Player
+   */
+  private static void handlePrivateerShipDesign(final PlayerInfo info) {
+    ShipDesign designMedium = ShipGenerator.createPrivateerShip(info,
+        ShipSize.MEDIUM);
+    ShipDesign designLarge = ShipGenerator.createPrivateerShip(info,
+        ShipSize.LARGE);
+    ShipDesign design = null;
+    if (designLarge != null) {
+      design = designLarge;
+    } else {
+      design = designMedium;
+    }
+    if (design != null) {
+      ShipStat[] stats = info.getShipStatList();
+      boolean notFound = true;
+      for (ShipStat stat : stats) {
+        if (stat.getDesign().getHull().getHullType() == ShipHullType.PRIVATEER
             && !stat.isObsolete()) {
           notFound = false;
           if (design.getTotalMilitaryPower() > stat.getDesign()

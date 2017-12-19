@@ -80,6 +80,18 @@ public class ResearchTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testShipDesignHandlingScaurians() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS);
+    assertEquals(2, info.getShipStatList().length);
+    Research.handleShipDesigns(info);
+    assertEquals(3, info.getShipStatList().length);
+    info.getTechList().addTech(TechFactory.createHullTech("Privateer Mk1", 5));
+    Research.handleShipDesigns(info);
+    assertEquals(4, info.getShipStatList().length);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRemoveObsoleteDesigns() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS, 2, 1);

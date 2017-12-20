@@ -259,5 +259,31 @@ public class MissionHandlingTest {
     MissionHandling.handleTrade(mission, fleet, info, game);
     assertEquals(MissionPhase.LOADING, mission.getPhase());
   }
+  
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testNearByFleet() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Game game = Mockito.mock(Game.class);
+    StarMap map = Mockito.mock(StarMap.class);
+    Fleet fleet2 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet2.getMilitaryValue()).thenReturn(6);
+    Mockito.when(fleet2.getCoordinate()).thenReturn(new Coordinate(6, 7));
+    Mockito.when(map.getFleetByCoordinate(6, 7)).thenReturn(fleet2);
+    Mockito.when(game.getStarMap()).thenReturn(map);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Coordinate fleetCoord = new Coordinate(5, 7);
+    Mockito.when(fleet.getCoordinate()).thenReturn(fleetCoord);
+    Mockito.when(fleet.getMilitaryValue()).thenReturn(10);
+    Fleet targetFleet = MissionHandling.getNearByFleet(info, game, fleet, 1);
+    assertEquals(fleet2, targetFleet);
+    Fleet fleet3 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet3.getMilitaryValue()).thenReturn(7);
+    Mockito.when(fleet3.getCoordinate()).thenReturn(new Coordinate(4, 6));
+    Mockito.when(map.getFleetByCoordinate(4, 6)).thenReturn(fleet3);
+    targetFleet = MissionHandling.getNearByFleet(info, game, fleet, 1);
+    assertEquals(fleet2, targetFleet);
+  }
+
 
 }

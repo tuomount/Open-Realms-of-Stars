@@ -1043,15 +1043,17 @@ public final class MissionHandling {
   private static void makeRegularMoves(final Game game, final Fleet fleet,
       final PlayerInfo info) {
     AStarSearch search = fleet.getaStarSearch();
-    for (int mv = 0; mv < fleet.getMovesLeft(); mv++) {
-      PathPoint point = search.getMove();
-      if (point != null
-          && !game.getStarMap().isBlocked(point.getX(), point.getY())) {
-        makeFleetMove(game, point, info, fleet);
+    if (search != null) {
+      for (int mv = 0; mv < fleet.getMovesLeft(); mv++) {
+        PathPoint point = search.getMove();
+        if (point != null
+            && !game.getStarMap().isBlocked(point.getX(), point.getY())) {
+          makeFleetMove(game, point, info, fleet);
+        }
       }
     }
     fleet.setMovesLeft(0);
-    if (search.isLastMove()) {
+    if (search == null || search.isLastMove()) {
       fleet.setaStarSearch(null);
     }
   }

@@ -5,10 +5,12 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
@@ -283,6 +285,35 @@ public class MissionHandlingTest {
     Mockito.when(map.getFleetByCoordinate(4, 6)).thenReturn(fleet3);
     targetFleet = MissionHandling.getNearByFleet(info, game, fleet, 1);
     assertEquals(fleet2, targetFleet);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPrivateering() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mission mission = new Mission(MissionType.PRIVATEER, MissionPhase.TREKKING,
+        new Coordinate(2, 2));
+    Game game = Mockito.mock(Game.class);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getMaxX()).thenReturn(50);
+    Mockito.when(map.getMaxY()).thenReturn(50);
+    Fleet fleet2 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet2.getMilitaryValue()).thenReturn(6);
+    Mockito.when(fleet2.getCoordinate()).thenReturn(new Coordinate(6, 7));
+    Mockito.when(map.getFleetByCoordinate(6, 7)).thenReturn(fleet2);
+    Mockito.when(game.getStarMap()).thenReturn(map);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Coordinate fleetCoord = new Coordinate(5, 7);
+    Mockito.when(fleet.getCoordinate()).thenReturn(fleetCoord);
+    Mockito.when(fleet.getX()).thenReturn(5);
+    Mockito.when(fleet.getY()).thenReturn(7);
+    Mockito.when(fleet.getMilitaryValue()).thenReturn(10);
+    Mockito.when(fleet.getMovesLeft()).thenReturn(1);
+    Fleet targetFleet = MissionHandling.getNearByFleet(info, game, fleet, 1);
+    assertEquals(fleet2, targetFleet);
+    MissionHandling.handlePrivateering(mission, fleet, info, game);
+    assertEquals(MissionPhase.EXECUTING, mission.getPhase());
   }
 
 

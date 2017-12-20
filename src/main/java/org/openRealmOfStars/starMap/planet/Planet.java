@@ -1366,6 +1366,8 @@ public class Planet {
                 mission.setPhase(MissionPhase.TREKKING);
               }
             } else {
+              //TODO This looks like a bug. Why any ship would be fine
+              // for any gather mission? Need to investigate this.
               mission = planetOwnerInfo.getMissions()
                   .getMission(MissionType.GATHER, MissionPhase.PLANNING);
               if (mission != null) {
@@ -1383,6 +1385,9 @@ public class Planet {
                     fleet.setName(planetOwnerInfo.getFleets()
                         .generateUniqueName("Scout"));
                   }
+                } else if (fleet.isPrivateerFleet()) {
+                  fleet.setName(planetOwnerInfo.getFleets()
+                      .generateUniqueName("Privateer"));
                 } else {
                   // No mission for planet, so just adding defender
                   fleet.setName(planetOwnerInfo.getFleets()

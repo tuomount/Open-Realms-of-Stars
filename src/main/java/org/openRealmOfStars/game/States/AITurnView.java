@@ -213,8 +213,7 @@ public class AITurnView extends BlackPanel {
         MissionHandling.handleTrade(mission, fleet, info, game);
         break;
       case PRIVATEER:
-        //TODO change this to correct when implemented
-        MissionHandling.handleExploring(mission, fleet, info, game);
+        MissionHandling.handlePrivateering(mission, fleet, info, game);
         break;
       default:
         throw new IllegalArgumentException("Unknown mission type for AI!");

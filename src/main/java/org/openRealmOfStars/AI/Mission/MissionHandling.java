@@ -106,6 +106,99 @@ public final class MissionHandling {
     return targetFleet;
   }
   /**
+   * Handle privateering mission
+   * @param mission Privateering mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handlePrivateering(final Mission mission,
+      final Fleet fleet, final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.PRIVATEER) {
+      Fleet targetFleet = getNearByFleet(info, game, fleet,
+          fleet.getMovesLeft());
+      if (targetFleet != null) {
+        mission.setPhase(MissionPhase.EXECUTING);
+        fleet.setRoute(null);
+      }
+      String ignoreSun = null;
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+        // Fleet has encounter obstacle, taking a detour round it
+        Sun sun = game.getStarMap().locateSolarSystem(fleet.getX(),
+            fleet.getY());
+        if (sun != null && sun.getName().equals(mission.getSunName())) {
+          // Fleet is in correct solar system, starting explore execution mode
+          mission.setPhase(MissionPhase.EXECUTING);
+          fleet.setaStarSearch(null);
+        } else {
+          makeReroute(game, fleet, info, mission);
+        }
+      }
+      if (mission.getPhase() == MissionPhase.EXECUTING) {
+        mission.setMissionTime(mission.getMissionTime() + 1);
+        boolean missionComplete = false;
+        if (mission.getMissionTime()
+            >= info.getRace().getAIExploringAmount() * 2) {
+          // Depending on race it decides enough is enough
+          fleet.setaStarSearch(null);
+          ignoreSun = mission.getSunName();
+          missionComplete = true;
+        }
+        if (fleet.getaStarSearch() == null) {
+          Sun sun = null;
+          if (missionComplete) {
+            sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
+                fleet.getY(), info, fleet, ignoreSun);
+            if (sun == null) {
+              Planet home = game.getStarMap().getClosestHomePort(info,
+                  fleet.getCoordinate());
+              if (home == null) {
+                info.getMissions().remove(mission);
+                return;
+              }
+              mission.setType(MissionType.MOVE);
+              mission.setTarget(home.getCoordinate());
+              mission.setPhase(MissionPhase.PLANNING);
+              mission.setTargetPlanet(home.getName());
+            } else {
+              if (!sun.getName().equals(mission.getSunName())) {
+                mission.setTarget(sun.getCenterCoordinate());
+                fleet.setRoute(new Route(fleet.getX(), fleet.getY(),
+                    mission.getX(), mission.getY(), fleet.getFleetFtlSpeed()));
+                mission.setSunName(sun.getName());
+                mission.setPhase(MissionPhase.TREKKING);
+                // Starting the new exploring mission
+                mission.setMissionTime(0);
+                return;
+              }
+            }
+          } else {
+            sun = game.getStarMap().getSunByName(mission.getSunName());
+          }
+          PathPoint point = info.getUnchartedSector(sun, fleet);
+          if (targetFleet != null) {
+            point = new PathPoint(targetFleet.getX(), targetFleet.getY(),
+                fleet.getCoordinate().calculateDistance(
+                    targetFleet.getCoordinate()));
+          }
+          if (point != null) {
+            mission.setTarget(new Coordinate(point.getX(), point.getY()));
+            AStarSearch search = new AStarSearch(game.getStarMap(),
+                fleet.getX(), fleet.getY(), mission.getX(), mission.getY());
+            search.doSearch();
+            search.doRoute();
+            fleet.setaStarSearch(search);
+            makeRegularMoves(game, fleet, info);
+          }
+        } else {
+          makeRegularMoves(game, fleet, info);
+        }
+      }
+    } // End Of Privateering
+  }
+
+  /**
    * Handle exploring mission
    * @param mission Exploring mission, does nothing if type is wrong
    * @param fleet Fleet on mission
@@ -858,6 +951,9 @@ public final class MissionHandling {
         fleetAtTarget = null;
       }
       war = map.isWarBetween(info, infoAtTarget);
+      if (fleet.isPrivateerFleet()) {
+        war = true;
+      }
     }
     if (war || fleetAtTarget == null) {
       // Not blocked so fleet is moving

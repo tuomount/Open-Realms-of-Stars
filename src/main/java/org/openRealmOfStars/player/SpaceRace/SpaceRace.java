@@ -2,6 +2,8 @@ package org.openRealmOfStars.player.SpaceRace;
 
 import java.awt.image.BufferedImage;
 
+import org.openRealmOfStars.audio.music.MusicFileInfo;
+import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 
@@ -611,6 +613,39 @@ public enum SpaceRace {
     }
   }
 
+  /**
+   * Get race specific diplomacy music
+   * @return MusicFileInfo
+   */
+  public MusicFileInfo getDiplomacyMusic() {
+    switch (this) {
+    case HUMAN:
+      return MusicPlayer.WALKING_WITH_POSEIDON;
+    case MECHIONS:
+      //TODO change diplomacy music
+      return MusicPlayer.MILLION_LIGHT_YEARS;
+    case SPORKS:
+      //TODO change diplomacy music
+      return MusicPlayer.MILLION_LIGHT_YEARS;
+    case GREYANS:
+      //TODO change diplomacy music
+      return MusicPlayer.MILLION_LIGHT_YEARS;
+    case CENTAURS:
+      //TODO change diplomacy music
+      return MusicPlayer.MILLION_LIGHT_YEARS;
+    case MOTHOIDS:
+      //TODO change diplomacy music
+      return MusicPlayer.MILLION_LIGHT_YEARS;
+    case TEUTHIDAES:
+      //TODO change diplomacy music
+      return MusicPlayer.MILLION_LIGHT_YEARS;
+    case SCAURIANS:
+      //TODO change diplomacy music
+      return MusicPlayer.MILLION_LIGHT_YEARS;
+    default:
+      return MusicPlayer.MILLION_LIGHT_YEARS;
+    }
+  }
   /**
    * Get full description about the race, including the stats.
    * @param markDown if true then markDown is being used, otherwise HTML.

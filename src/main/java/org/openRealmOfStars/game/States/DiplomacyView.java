@@ -15,6 +15,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.FleetListRenderer;
 import org.openRealmOfStars.gui.ListRenderers.PlanetListRenderer;
@@ -225,6 +226,7 @@ public class DiplomacyView extends BlackPanel {
     borderCrossedFleet = fleet;
     tradeHappened = false;
     ai = info2;
+    MusicPlayer.play(ai.getRace().getDiplomacyMusic());
     starMap = map;
     humanCredits = 0;
     aiCredits = 0;

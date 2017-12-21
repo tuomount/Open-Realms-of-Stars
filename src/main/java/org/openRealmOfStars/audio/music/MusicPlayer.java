@@ -101,6 +101,13 @@ public final class MusicPlayer {
       "/resources/musics/Thrust Sequence.ogg");
 
   /**
+   * Walking with Poseidon By mvrasseli CC-BY 3.0
+   */
+  public static final MusicFileInfo WALKING_WITH_POSEIDON = new MusicFileInfo(
+      "Walking with Poseidon", "mvrasseli",
+      "/resources/musics/Walking with poseidon.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,

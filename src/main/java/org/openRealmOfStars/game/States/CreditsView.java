@@ -175,7 +175,12 @@ public class CreditsView extends BlackPanel {
       + "Lost Signal by\n"
       + "PetterTheSturgeon\n"
       + "Licensed under CC BY 3.0 "
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Walking with Poseidon by\n"
+      + "mvrasseli\n"
+      + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n";
+;
 
 
 

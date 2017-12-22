@@ -179,7 +179,12 @@ public class CreditsView extends BlackPanel {
       + "Walking with Poseidon by\n"
       + "mvrasseli\n"
       + "Licensed under CC BY 3.0 "
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Conquerors by\n"
+      + "Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov\n"
+      + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n";
+
 
 
   /**

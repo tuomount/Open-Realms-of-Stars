@@ -87,7 +87,7 @@ public final class MusicPlayer {
       "/resources/musics/Neon Transit.ogg");
 
   /**
-   * Brave Space Explorers By Alexandr Zhelanov CC-BY 3.0
+   * Brave Space Explorers By Alexandr Zhelanov CC-BY 4.0
    */
   public static final MusicFileInfo BRAVE_SPACE_EXPLORERS = new MusicFileInfo(
       "Brave Space Explorers", "Alexandr Zhelanov",
@@ -106,6 +106,13 @@ public final class MusicPlayer {
   public static final MusicFileInfo WALKING_WITH_POSEIDON = new MusicFileInfo(
       "Walking with Poseidon", "mvrasseli",
       "/resources/musics/Walking with poseidon.ogg");
+
+  /**
+   * Conquerors By Alexandr Zhelanov CC-BY 3.0
+   */
+  public static final MusicFileInfo CONQUERORS = new MusicFileInfo(
+      "Conquerors", "Alexandr Zhelanov",
+      "/resources/musics/Conquerors.ogg");
 
   /**
    * List of music to played while playing

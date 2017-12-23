@@ -60,6 +60,7 @@ public class MapInfoPanelTest {
   public void testNulls() {
     ActionListener listener = Mockito.mock(ActionListener.class);
     MapInfoPanel panel = new MapInfoPanel(listener);
+    assertEquals(null, panel.getFleetShowing());
     Tile tile = Mockito.mock(Tile.class);
     Mockito.when(tile.getDescription()).thenReturn("");
     panel.showTile(tile);

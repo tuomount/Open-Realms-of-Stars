@@ -243,6 +243,13 @@ public class MapInfoPanel extends InfoPanel {
   }
 
   /**
+   * Get Fleet currently showing. Can be null if not showing the fleet.
+   * @return Fleet or null
+   */
+  public Fleet getFleetShowing() {
+    return fleet;
+  }
+  /**
    * Get the fleet owner whose fleet is being shown
    * @return PlayerInfo for fleet owner
    */

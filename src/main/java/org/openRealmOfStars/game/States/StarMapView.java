@@ -312,6 +312,10 @@ public class StarMapView extends BlackPanel {
       if (starMapMouseListener != null) {
         starMapMouseListener.updateScrollingIfOnBorder();
       }
+      if (mapPanel.getRoute() == null && infoPanel.getFleetShowing() != null
+          && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
+        mapPanel.setRoute(infoPanel.getFleetShowing().getRoute());
+      }
       mapPanel.drawMap(this.map);
       mapPanel.repaint();
       readyToMove = true;

@@ -183,8 +183,11 @@ public class CreditsView extends BlackPanel {
       + "Conquerors by\n"
       + "Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov\n"
       + "Licensed under CC BY 3.0 "
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Diplomacy by\n"
+      + "Ove Melaa\n"
+      + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n";
-
 
 
   /**

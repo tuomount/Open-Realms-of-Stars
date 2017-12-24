@@ -115,6 +115,13 @@ public final class MusicPlayer {
       "/resources/musics/Conquerors.ogg");
 
   /**
+   * Diplomacy By Ove Melaa CC-BY 3.0
+   */
+  public static final MusicFileInfo OVE_MELAA_DIPLOMACY = new MusicFileInfo(
+      "Diplomacy", "Ove Melaa",
+      "/resources/musics/Ove Melaa - Diplomacy.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,

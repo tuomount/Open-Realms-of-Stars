@@ -187,7 +187,9 @@ public class CreditsView extends BlackPanel {
       + "Diplomacy by\n"
       + "Ove Melaa\n"
       + "Licensed under CC BY 3.0 "
-      + "http://creativecommons.org/licenses/by/3.0/\n\n";
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Pressure by\n"
+      + "YD (CC0)\n\n";
 
 
   /**

@@ -122,6 +122,12 @@ public final class MusicPlayer {
       "/resources/musics/Ove Melaa - Diplomacy.ogg");
 
   /**
+   * Pressure By YD License CC0
+   */
+  public static final MusicFileInfo PRESSURE = new MusicFileInfo(
+      "Pressure", "YD", "/resources/musics/Pressure.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,

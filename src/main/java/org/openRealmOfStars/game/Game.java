@@ -430,7 +430,8 @@ public class Game implements ActionListener {
       int y = MUSIC_TEXT_TOP;
       if (view instanceof MainMenu || view instanceof ResearchView
           || view instanceof ShipView || view instanceof GalaxyCreationView
-          || view instanceof PlayerSetupView) {
+          || view instanceof PlayerSetupView
+          || view instanceof DiplomacyView) {
         y = MUSIC_TEXT_BOTTOM;
       }
       songText = new JLabel("Test");

@@ -714,7 +714,7 @@ public class AITurnView extends BlackPanel {
             int ownerIndex = game.getStarMap().getPlayerList().getIndex(owner);
             DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
                 ownerIndex);
-            if (list.isBonusType(DiplomacyBonusType.IN_WAR)) {
+            if (list != null && list.isBonusType(DiplomacyBonusType.IN_WAR)) {
               addAttackMission(planet, info);
             } else {
               if (owner.isHuman()) {

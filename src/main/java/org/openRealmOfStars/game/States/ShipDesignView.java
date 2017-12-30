@@ -510,7 +510,9 @@ public class ShipDesignView extends BlackPanel {
     if (component != null) {
       componentInfoText.setText(component.toString());
     }
-    componentList.setListData(design.getComponentList());
+    if (design != null) {
+      componentList.setListData(design.getComponentList());
+    }
   }
 
   /**

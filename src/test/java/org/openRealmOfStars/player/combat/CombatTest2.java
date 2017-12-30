@@ -20,7 +20,9 @@ import static org.mockito.Mockito.*;
 
 /**
  *
- * Open Realm of Stars game project Copyright (C) 2017 Diocto
+ * Open Realm of Stars game project 
+ * Copyright (C) 2017 Diocto
+ * Copyright (C) 2017 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -40,22 +42,22 @@ import static org.mockito.Mockito.*;
  *
  */
 public class CombatTest2 {
-    public static Fleet attackerFleet;
-    public static Fleet dependerFleet;
-    public static FleetList attackerFleetList;
-    public static FleetList dependerFleetList;
-    public static PlayerInfo attackerInfo;
-    public static PlayerInfo dependerInfo;
-    public static Ship attackerShip;
-    public static Ship dependerShip;
-    public static Ship interruptShip;
-    public static ShipStat attackerShipStat;
-    public static ShipStat dependerShipStat;
-    public static ShipStat interruptShipStat;
-    public static Route attackerFleetRoute;
-    public static Route dependerFleetRoute;
-    public static Ship[] attackerShips;
-    public static Ship[] dependerShips;
+    private Fleet attackerFleet;
+    private Fleet dependerFleet;
+    private FleetList attackerFleetList;
+    private FleetList dependerFleetList;
+    private PlayerInfo attackerInfo;
+    private PlayerInfo dependerInfo;
+    private Ship attackerShip;
+    private Ship dependerShip;
+    private Ship interruptShip;
+    private ShipStat attackerShipStat;
+    private ShipStat dependerShipStat;
+    private ShipStat interruptShipStat;
+    private Route attackerFleetRoute;
+    private Route dependerFleetRoute;
+    private Ship[] attackerShips;
+    private Ship[] dependerShips;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {

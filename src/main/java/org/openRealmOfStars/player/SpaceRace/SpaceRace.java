@@ -632,8 +632,7 @@ public enum SpaceRace {
     case CENTAURS:
       return MusicPlayer.OVE_MELAA_DIPLOMACY;
     case MOTHOIDS:
-      //TODO change diplomacy music
-      return MusicPlayer.MILLION_LIGHT_YEARS;
+      return MusicPlayer.FANTASY_CHOIR_2;
     case TEUTHIDAES:
       return MusicPlayer.PRESSURE;
     case SCAURIANS:

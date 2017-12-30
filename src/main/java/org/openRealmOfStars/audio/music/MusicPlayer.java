@@ -128,6 +128,13 @@ public final class MusicPlayer {
       "Pressure", "YD", "/resources/musics/Pressure.ogg");
 
   /**
+   * Fantasy Choir 2 By César da Rocha aka www.punchytap.com License CC0
+   */
+  public static final MusicFileInfo FANTASY_CHOIR_2 = new MusicFileInfo(
+      "Fantasy Choir 2", "www.punchytap.com",
+      "/resources/musics/Fantasy Choir 2.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,

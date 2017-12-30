@@ -189,7 +189,9 @@ public class CreditsView extends BlackPanel {
       + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n"
       + "Pressure by\n"
-      + "YD (CC0)\n\n";
+      + "YD (CC0)\n\n"
+      + "Fantasy choir 2 by\n"
+      + "www.punchytap.com (CC0)\n\n";
 
 
   /**

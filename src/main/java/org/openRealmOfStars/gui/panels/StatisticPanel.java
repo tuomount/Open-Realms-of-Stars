@@ -217,7 +217,7 @@ public class StatisticPanel extends JPanel {
       amount = largestX;
     } else {
       mult = (int) Math.round(GRID_DENSITY / scaleX);
-      amount = (int) Math.ceil(drawWidth / (GRID_DENSITY));
+      amount = drawWidth / (GRID_DENSITY);
     }
     for (int i = 0; i <= amount; i++) {
       if (i > 0) {

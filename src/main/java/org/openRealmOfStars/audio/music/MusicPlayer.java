@@ -135,6 +135,13 @@ public final class MusicPlayer {
       "/resources/musics/Fantasy Choir 2.ogg");
 
   /**
+   * Space Theme By Joshya Stephen Kartes License CC-BY 3.0
+   */
+  public static final MusicFileInfo SPACE_THEME = new MusicFileInfo(
+      "Space Theme", "Joshua Stephen Kartes",
+      "/resources/musics/spacetheme.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,
@@ -335,8 +342,7 @@ public final class MusicPlayer {
         play(MILLION_LIGHT_YEARS);
       } else if (state == GameState.NEWS_CORP_VIEW) {
         // News corp song
-        // FIXME Change to news corp song later
-        play(YD_OBSERVING_STAR);
+        play(SPACE_THEME);
       } else {
         // Game music
         playGameMusic();

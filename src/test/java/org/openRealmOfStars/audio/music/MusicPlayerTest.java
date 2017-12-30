@@ -56,7 +56,7 @@ public class MusicPlayerTest {
     MusicPlayer.handleMusic(GameState.DIPLOMACY_VIEW);
     assertEquals(MusicPlayer.MILLION_LIGHT_YEARS, MusicPlayer.getNowPlaying());
     MusicPlayer.handleMusic(GameState.NEWS_CORP_VIEW);
-    assertEquals(MusicPlayer.YD_OBSERVING_STAR, MusicPlayer.getNowPlaying());
+    assertEquals(MusicPlayer.SPACE_THEME, MusicPlayer.getNowPlaying());
     MusicPlayer.handleMusic(GameState.STARMAP);
     info = MusicPlayer.getNowPlaying();
     found = false;

@@ -99,7 +99,9 @@ public class NewsCorpView extends BlackPanel {
     this.setLayout(new BorderLayout());
     newsList = news;
     InfoPanel base = new InfoPanel();
-    MusicPlayer.play(MusicPlayer.SPACE_THEME);
+    if (MusicPlayer.getNowPlaying() != MusicPlayer.SPACE_THEME) {
+      MusicPlayer.play(MusicPlayer.SPACE_THEME);
+    }
     base.setLayout(new BorderLayout());
     base.setTitle("Galactic Broadcasting News Company");
     newsReaderPanel = new ImagePanel(GuiStatics.IMAGE_HUMAN_RACE);

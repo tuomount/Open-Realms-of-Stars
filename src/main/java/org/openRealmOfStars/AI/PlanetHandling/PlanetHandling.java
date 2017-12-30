@@ -864,7 +864,7 @@ public final class PlanetHandling {
         }
         planet.setWorkers(Planet.METAL_MINERS, quarter + metalAdd);
         planet.setWorkers(Planet.PRODUCTION_WORKERS, quarter + prodAdd);
-        if (quarter % 2 == 1) {
+        if (quarter % 2 != 0) {
           reseAdd = 1;
           cultAdd = -1;
         }

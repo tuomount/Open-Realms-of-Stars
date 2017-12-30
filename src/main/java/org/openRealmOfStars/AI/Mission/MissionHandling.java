@@ -557,7 +557,8 @@ public final class MissionHandling {
               mission.setTarget(homePort.getCoordinate());
             }
           }
-        } else if (planet.getPlanetPlayerInfo() == info  && trooper >= 0) {
+        } else if (planet != null && planet.getPlanetPlayerInfo() == info
+            && trooper >= 0) {
           if (planet.getTotalPopulation() > 2 && planet.takeColonist()
               && ships[trooper].getFreeCargoColonists() > 0) {
             // One Troops on board, ready to go trekking

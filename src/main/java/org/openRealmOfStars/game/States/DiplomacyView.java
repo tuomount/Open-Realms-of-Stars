@@ -226,7 +226,9 @@ public class DiplomacyView extends BlackPanel {
     borderCrossedFleet = fleet;
     tradeHappened = false;
     ai = info2;
-    MusicPlayer.play(ai.getRace().getDiplomacyMusic());
+    if (MusicPlayer.getNowPlaying() != ai.getRace().getDiplomacyMusic()) {
+      MusicPlayer.play(ai.getRace().getDiplomacyMusic());
+    }
     starMap = map;
     humanCredits = 0;
     aiCredits = 0;

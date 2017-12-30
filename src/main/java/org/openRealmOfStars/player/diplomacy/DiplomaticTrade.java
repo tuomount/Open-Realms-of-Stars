@@ -152,7 +152,11 @@ public class DiplomaticTrade {
     if (firstOffer == null && secondOffer == null) {
       return SpeechType.NOTHING_TO_TRADE;
     }
-    if (firstOffer.getSize() == 0 && secondOffer.getSize() == 0) {
+    if (firstOffer == null) {
+      return SpeechType.NOTHING_TO_TRADE;
+    }
+    if (firstOffer.getSize() == 0
+        && (secondOffer == null || secondOffer.getSize() == 0)) {
       return SpeechType.NOTHING_TO_TRADE;
     }
     if (firstOffer.isPeaceInOffer()) {
@@ -167,10 +171,12 @@ public class DiplomaticTrade {
     if (firstOffer.isTypeInOffer(NegotiationType.TRADE_ALLIANCE)) {
       return SpeechType.TRADE_ALLIANCE;
     }
-    if (firstOffer.getSize() > 0 && secondOffer.getSize() == 0) {
+    if (firstOffer.getSize() > 0
+        && (secondOffer == null || secondOffer.getSize() == 0)) {
       return SpeechType.DEMAND;
     }
     if (firstOffer.getSize() == 0
+        && secondOffer != null
         && secondOffer.isTypeInOffer(NegotiationType.RECALL_FLEET)) {
       return SpeechType.ASK_MOVE_FLEET;
     }

@@ -180,13 +180,13 @@ public final class Tiles {
     addTile(tile);
     tile = new Tile(tilesImage, 6, 2, TileNames.PLAYER_3);
     addTile(tile);
-    tile = new Tile(tilesImage, 6, 3, TileNames.PLAYER_4);
+    tile = new Tile(tilesImage, 3, 3, TileNames.PLAYER_4);
     addTile(tile);
     tile = new Tile(tilesImage, 5, 3, TileNames.PLAYER_5);
     addTile(tile);
     tile = new Tile(tilesImage, 4, 3, TileNames.PLAYER_6);
     addTile(tile);
-    tile = new Tile(tilesImage, 3, 3, TileNames.PLAYER_7);
+    tile = new Tile(tilesImage, 6, 3, TileNames.PLAYER_7);
     addTile(tile);
     // Reading the iron planet
     tile = new Tile(tilesImage, 12, 0, TileNames.IRONPLANET1);

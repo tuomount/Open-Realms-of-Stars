@@ -274,7 +274,7 @@ public class NewsCorpData {
       sum = sum + player.getTechList().getTechLevel(TechType.Propulsion);
       sum = sum + player.getTechList().getTechLevel(TechType.Electrics);
       sum = sum * 10;
-      data[i] = Math.round(sum / 6);
+      data[i] = sum / 6;
     }
     for (int i = 0; i < research.getMaxPlayers(); i++) {
       research.addStat(i, data[i]);

@@ -31,7 +31,7 @@ import org.openRealmOfStars.utilities.repository.GameRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2017  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -96,6 +96,9 @@ public class LoadGameView extends BlackPanel {
 
     File folder = new File("saves");
     File[] files = folder.listFiles(new GenericFileFilter(".save"));
+    if (files == null) {
+      files = new File[0];
+    }
 
     SavedGame[] games = new SavedGame[files.length];
     for (int i = 0; i < files.length; i++) {

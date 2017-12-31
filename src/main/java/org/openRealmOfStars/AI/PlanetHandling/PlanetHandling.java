@@ -521,6 +521,10 @@ public final class PlanetHandling {
           }
           if (cons instanceof Ship) {
             Ship ship = (Ship) cons;
+            if (ship.isPrivateeringShip()) {
+              // Privateering ship show not assign any planned missions
+              break;
+            }
             Mission mission = info.getMissions().getMissionForPlanet(
                 planet.getName(), MissionType.DEFEND);
             if (mission != null && ship.getTotalMilitaryPower() > 0

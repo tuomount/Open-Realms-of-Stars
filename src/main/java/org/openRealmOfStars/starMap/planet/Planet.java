@@ -1327,7 +1327,8 @@ public class Planet {
                       "Colony"));
                   mission.setFleetName(fleet.getName());
                 }
-                if (mission.getType() == MissionType.DEPLOY_STARBASE) {
+                if (mission.getType() == MissionType.DEPLOY_STARBASE
+                    && fleet.getStarbaseShip() != null) {
                   fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
                       "Space Station"));
                   mission.setFleetName(fleet.getName());
@@ -1366,16 +1367,7 @@ public class Planet {
                 mission.setPhase(MissionPhase.TREKKING);
               }
             } else {
-              //TODO This looks like a bug. Why any ship would be fine
-              // for any gather mission? Need to investigate this.
-              mission = planetOwnerInfo.getMissions()
-                  .getMission(MissionType.GATHER, MissionPhase.PLANNING);
-              if (mission != null) {
-                mission.setPhase(MissionPhase.LOADING);
-                fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
-                    "Gather"));
-                mission.setFleetName(fleet.getName());
-              } else if (ship.getTotalMilitaryPower() > 0) {
+              if (ship.getTotalMilitaryPower() > 0) {
                 if (fleet.isScoutFleet()) {
                   if (DiceGenerator.getRandom(3) == 0) {
                     // Scout ship is for defending too

@@ -1394,6 +1394,15 @@ public class Planet {
           msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
+        } else  if (underConstruction instanceof Building
+            && groundSize <= buildings.size()) {
+          msg = new Message(MessageType.PLANETARY, getName()
+              + " is already full of buildings! "
+              + underConstruction.getName() + " cannot be complete!",
+              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+          msg.setCoordinate(getCoordinate());
+          msg.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
         } else if (underConstruction instanceof Ship && enemyOrbiting) {
           msg = new Message(MessageType.PLANETARY, getName()
               + " has another Realm's fleet orbiting so ship construction of "

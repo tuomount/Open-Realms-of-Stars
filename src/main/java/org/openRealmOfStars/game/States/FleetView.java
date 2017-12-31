@@ -144,6 +144,11 @@ public class FleetView extends BlackPanel {
   private StarMap starMap;
 
   /**
+   * Conquer button for staring planet conquer
+   */
+  private SpaceButton conquerBtn;
+
+  /**
    * Fleet view constructor. Fleet view is used when view fleet in deep space
    * or fleet is orbiting a planet.
    * @param planet Planet where fleet is orbiting. If planet is null
@@ -174,7 +179,7 @@ public class FleetView extends BlackPanel {
       topPanel.add(Box.createRigidArea(new Dimension(15, 25)));
       SpaceGreyPanel panel = new SpaceGreyPanel();
       panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-      SpaceButton conquerBtn = null;
+      conquerBtn = null;
       SpaceButton colonizeBtn = null;
       colonistSelection = null;
       metalSelection = null;
@@ -409,6 +414,14 @@ public class FleetView extends BlackPanel {
     if (planet != null) {
       totalPeople.setText(": " + planet.getTotalPopulation());
       metal.setText(": " + planet.getMetal());
+      if (conquerBtn != null) {
+        if (fleet.getTrooperShip() != null
+          || fleet.getBomberShip() != null) {
+          conquerBtn.setEnabled(true);
+        } else {
+          conquerBtn.setEnabled(false);
+        }
+      }
     }
     if (colonistSelection != null) {
       colonistSelection.setText("Colonist: " + fleet.getTotalCargoColonist()
@@ -422,7 +435,7 @@ public class FleetView extends BlackPanel {
     updateOtherFleet();
 
     /*
-     * Set the orbting ships
+     * Set the orbiting ships
      */
     Ship[] ships = fleet.getShips();
     BufferedImage[] images = new BufferedImage[ships.length];

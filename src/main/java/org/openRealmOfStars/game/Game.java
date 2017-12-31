@@ -506,11 +506,27 @@ public class Game implements ActionListener {
   }
 
   /**
-   * Show planet bombing view panel
+   * Show planet bombing view panel. Also
+   * declares war against player who's planet is being
+   * conquered if there is now war between these two players.
    * @param planet Planet to show
    * @param fleet Fleet to show
    */
   public void showPlanetBombingView(final Planet planet, final Fleet fleet) {
+    if (!starMap.getCurrentPlayerInfo().getDiplomacy().isWar(
+        planet.getPlanetOwnerIndex())) {
+      // No war between these two players, trying to conquer another player's
+      // planet is act of war.
+      DiplomaticTrade trade = new DiplomaticTrade(starMap,
+          players.getCurrentPlayer(), planet.getPlanetOwnerIndex());
+      trade.generateEqualTrade(NegotiationType.WAR);
+      trade.doTrades();
+      StarMapUtilities.addWarDeclatingRepuation(starMap,
+          starMap.getCurrentPlayerInfo());
+        starMap.getNewsCorpData().addNews(
+            NewsFactory.makeWarNews(starMap.getCurrentPlayerInfo(),
+                planet.getPlanetPlayerInfo(), planet, starMap));
+    }
     planetBombingView = new PlanetBombingView(planet, fleet,
         starMap.getCurrentPlayerInfo(), players.getCurrentPlayer(), this);
     planetBombingView.setStarMap(starMap);

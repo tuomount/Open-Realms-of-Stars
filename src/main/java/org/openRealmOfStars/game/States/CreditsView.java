@@ -16,7 +16,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -151,6 +151,7 @@ public class CreditsView extends BlackPanel {
       + "Écrivain\n"
       + "https://opengameart.org/content/4-space-portal-sounds\n"
       + "Licensed under CC0\n\n"
+      + "Muffled Distant Explosion by NenadSimic (CC0)\n\n"
       + "# Musics By\n\n"
       + "Observing The Star by\n"
       + "YD (CC0)\n\n"

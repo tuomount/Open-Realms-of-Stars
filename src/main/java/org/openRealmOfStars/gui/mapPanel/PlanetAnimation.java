@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.AnimatedImage;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -13,7 +14,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -239,6 +240,10 @@ public class PlanetAnimation {
     }
     count--;
     if (animationType == ANIMATION_TYPE_TURRET) {
+      if (count == 39 && animFrame == 0) {
+        // Make sound for turret shooting
+        SoundPlayer.playSound(SoundPlayer.WEAPON_BEAM);
+      }
       int parts = DiceGenerator.getRandom(5, 15);
       for (int i = 0; i < parts; i++) {
         int dist = DiceGenerator.getRandom(distance);
@@ -260,16 +265,23 @@ public class PlanetAnimation {
       }
       if (count < explosionAnim.getMaxFrames()) {
         showAnim = true;
+        if (animFrame == 0) {
+          SoundPlayer.playSound(SoundPlayer.EXPLOSION);
+        }
         animFrame++;
       }
     }
     if (animationType == ANIMATION_TYPE_BOMBING
         && count < explosionAnim.getMaxFrames()) {
+      if (animFrame == 0) {
+        SoundPlayer.playSound(SoundPlayer.BOMB);
+      }
       showAnim = true;
       animFrame++;
     }
     if (animationType == ANIMATION_TYPE_NUKING) {
       showAnim = true;
+      // TODO add nuke sound here
       if (animFrame < explosionAnim.getMaxFrames()) {
         animFrame++;
       } else {

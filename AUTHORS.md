@@ -115,6 +115,8 @@ Adaptation by Tuomo Untinen, original sounds by
 https://opengameart.org/content/4-space-portal-sounds
 Licensed under CC0
 
+Muffled Distant Explosion by NenadSimic (CC0)
+
 # Musics By
 
 Observing The Star by

@@ -8,7 +8,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2016  Tuomo Untinen
+* Copyright (C) 2016-2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -78,6 +78,11 @@ public final class SoundPlayer {
    */
   public static final String EXPLOSION_EMP = "/resources/sounds/"
       + "emp_explode.wav";
+
+  /**
+   * Sound effect for bomb
+   */
+  public static final String BOMB = "/resources/sounds/bomb.wav";
 
   /**
    * Sound effect for Menu clicks

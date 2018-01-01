@@ -281,7 +281,9 @@ public class PlanetAnimation {
     }
     if (animationType == ANIMATION_TYPE_NUKING) {
       showAnim = true;
-      // TODO add nuke sound here
+      if (animFrame == 0) {
+        SoundPlayer.playSound(SoundPlayer.NUKE);
+      }
       if (animFrame < explosionAnim.getMaxFrames()) {
         animFrame++;
       } else {

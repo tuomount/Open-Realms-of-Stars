@@ -117,6 +117,10 @@ Licensed under CC0
 
 Muffled Distant Explosion by NenadSimic (CC0)
 
+Nuke Sound
+Adaptation by Tuomo Untinen, from
+Chunky Explosion by Joth(CC0)
+
 # Musics By
 
 Observing The Star by

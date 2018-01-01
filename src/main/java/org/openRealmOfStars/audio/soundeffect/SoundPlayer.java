@@ -85,6 +85,11 @@ public final class SoundPlayer {
   public static final String BOMB = "/resources/sounds/bomb.wav";
 
   /**
+   * Sound effect for nuke
+   */
+  public static final String NUKE = "/resources/sounds/nuke.wav";
+
+  /**
    * Sound effect for Menu clicks
    */
   public static final String MENU1 = "/resources/sounds/menu1.wav";

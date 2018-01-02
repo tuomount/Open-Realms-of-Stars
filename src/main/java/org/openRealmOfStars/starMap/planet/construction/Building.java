@@ -1,12 +1,13 @@
 package org.openRealmOfStars.starMap.planet.construction;
 
 import org.openRealmOfStars.gui.icons.Icon16x16;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -243,8 +244,13 @@ public class Building extends Construction {
    */
   private static final int LINE_LENGTH = 39;
 
-  @Override
-  public String getFullDescription() {
+  /**
+   * Get full description of Building. This can be modified by space race.
+   * Some buildings might have some variants according the race.
+   * @param race SpaceRace can be null
+   * @return Description as a String.
+   */
+  public String getFullDescription(final SpaceRace race) {
     StringBuilder sb = new StringBuilder();
     sb.append(getName());
     if (isSingleAllowed()) {
@@ -305,7 +311,11 @@ public class Building extends Construction {
         sb.append(" ");
       }
       sb.append("Cred.: +");
-      sb.append(getCredBonus());
+      int value = getCredBonus();
+      if (race != null && race == SpaceRace.SCAURIANS) {
+        value = value + 1;
+      }
+      sb.append(value);
       space = true;
     }
     if (getBattleBonus() > 0) {
@@ -352,6 +362,11 @@ public class Building extends Construction {
       space = true;
     }
     return sb.toString();
+  }
+
+  @Override
+  public String getFullDescription() {
+    return getFullDescription(null);
   }
 
   /**

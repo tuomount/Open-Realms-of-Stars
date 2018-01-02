@@ -492,7 +492,16 @@ public class PlanetView extends BlackPanel {
     Construction building = (Construction) constructionSelect.getSelectedItem();
     buildingEstimate.setText(planet.getProductionTime(building));
 
-    productionInfo.setText(building.getFullDescription());
+    SpaceRace race = null;
+    if (planet.getPlanetPlayerInfo() != null) {
+      race = planet.getPlanetPlayerInfo().getRace();
+    }
+    if (building instanceof Building) {
+      Building newBuilding = (Building) building;
+      productionInfo.setText(newBuilding.getFullDescription(race));
+    } else {
+      productionInfo.setText(building.getFullDescription());
+    }
     buildingList.setListData(planet.getBuildingList());
 
   }
@@ -519,7 +528,11 @@ public class PlanetView extends BlackPanel {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
       Building building = buildingList.getSelectedValue();
       if (building != null) {
-        buildingInfo.setText(building.getFullDescription());
+        SpaceRace race = null;
+        if (planet.getPlanetPlayerInfo() != null) {
+          race = planet.getPlanetPlayerInfo().getRace();
+        }
+        buildingInfo.setText(building.getFullDescription(race));
       }
     }
     if (arg0.getActionCommand()

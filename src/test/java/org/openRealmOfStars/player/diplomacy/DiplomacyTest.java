@@ -12,7 +12,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2017, 2018 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -161,6 +161,38 @@ public class DiplomacyTest {
     assertEquals(false, diplomacy.isTradeAlliance(0));
     assertEquals(false, diplomacy.isWar(0));
     assertEquals(false, diplomacy.isAlliance(256));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testLeastLiking() {
+    Diplomacy diplomacy = new Diplomacy(4, 1);
+    DiplomacyBonusList list0 = Mockito.mock(DiplomacyBonusList.class);
+    Mockito.when(list0.getDiplomacyBonus()).thenReturn(5);
+    DiplomacyBonusList list2 = Mockito.mock(DiplomacyBonusList.class);
+    Mockito.when(list2.getDiplomacyBonus()).thenReturn(-7);
+    DiplomacyBonusList list3 = Mockito.mock(DiplomacyBonusList.class);
+    Mockito.when(list3.getDiplomacyBonus()).thenReturn(10);
+    diplomacy.setList(list0, 0);
+    diplomacy.setList(list2, 2);
+    diplomacy.setList(list3, 3);
+    assertEquals(2, diplomacy.getLeastLiking());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testLeastLikingAllAboveCharts() {
+    Diplomacy diplomacy = new Diplomacy(4, 0);
+    DiplomacyBonusList list1 = Mockito.mock(DiplomacyBonusList.class);
+    Mockito.when(list1.getDiplomacyBonus()).thenReturn(10000);
+    DiplomacyBonusList list2 = Mockito.mock(DiplomacyBonusList.class);
+    Mockito.when(list2.getDiplomacyBonus()).thenReturn(10000);
+    DiplomacyBonusList list3 = Mockito.mock(DiplomacyBonusList.class);
+    Mockito.when(list3.getDiplomacyBonus()).thenReturn(10000);
+    diplomacy.setList(list1, 1);
+    diplomacy.setList(list2, 2);
+    diplomacy.setList(list3, 3);
+    assertEquals(1, diplomacy.getLeastLiking());
   }
 
 }

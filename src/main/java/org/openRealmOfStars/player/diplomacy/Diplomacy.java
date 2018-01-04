@@ -7,7 +7,7 @@ import org.openRealmOfStars.gui.GuiStatics;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017, 2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -194,6 +194,11 @@ public class Diplomacy {
   private static final int HIGH_LIKE = 15;
 
   /**
+   * Very High value for looking least liking
+   */
+  private static final int VERY_HIGH_LIKE = 9999;
+
+  /**
    * Get numeric value how much player likes another player.
    * There are five choices: HATE, DISLIKE, NEUTRAL, LIKE and FRIENDS
    * @param playerIndex Whom to check
@@ -218,6 +223,29 @@ public class Diplomacy {
       }
     }
     return result;
+  }
+
+  /**
+   * Get least liked player index.
+   * @return Least liked player index
+   */
+  public int getLeastLiking() {
+    int index = -1;
+    int likingForIndex = VERY_HIGH_LIKE;
+    for (int i = 0; i < diplomacyList.length; i++) {
+      if (diplomacyList[i] != null) {
+        int liking = getLiking(i);
+        if (liking < likingForIndex) {
+          index = i;
+          likingForIndex = liking;
+        }
+        if (index == -1) {
+          index = i;
+          likingForIndex = liking;
+        }
+      }
+    }
+    return index;
   }
 
   /**

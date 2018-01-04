@@ -2,11 +2,15 @@ package org.openRealmOfStars.AI.Mission;
 
 import static org.junit.Assert.*;
 
+import java.awt.event.ActionEvent;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
-import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.game.Game;
+import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.game.GameState;
+import org.openRealmOfStars.game.States.AITurnView;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -23,11 +27,12 @@ import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017 Tuomo Untinen
+* Copyright (C) 2017,2018 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -316,5 +321,35 @@ public class MissionHandlingTest {
     assertEquals(MissionPhase.EXECUTING, mission.getPhase());
   }
 
+  @Test(expected=NullPointerException.class)
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testPrivateeringNoMoreSunToExplore() {
+    GameRepository repository = new GameRepository();
+    StarMap starMap = repository.loadGame("src/test/resources/saves",
+                                          "npePrivateer.save");
+    Game game = new Game(false);
+    game.setLoadedGame(starMap);
+    AITurnView aiTurnView = new AITurnView(game);
+    ActionEvent arg0 = Mockito.mock(ActionEvent.class);
+    Mockito.when(arg0.getActionCommand()).thenReturn(GameCommands.COMMAND_ANIMATION_TIMER);
+    game.changeGameState(GameState.AITURN);
+    int turnNumber = starMap.getTurn();
+    turnNumber++;
+    // Safety measure to end running the AI loop
+    int loopCount = 10000;
+    while (true) {
+      loopCount--;
+      if (loopCount == 0) {
+        assertFalse(true);
+      }
+      aiTurnView.handleActions(arg0);
+      if (game.getGameState() == GameState.DIPLOMACY_VIEW) {
+        game.changeGameState(GameState.AITURN);
+      } else if (game.getGameState() != GameState.AITURN) {
+        break;
+      }
+    }
+    assertEquals(turnNumber, starMap.getTurn());
+  }
 
 }

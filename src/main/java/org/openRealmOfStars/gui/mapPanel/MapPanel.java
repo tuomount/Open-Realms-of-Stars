@@ -43,7 +43,7 @@ import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -736,11 +736,12 @@ public class MapPanel extends JPanel {
           ShipComponent weapon = combat.getCurrentShip().getShip()
               .getComponent(combat.getComponentUse());
           if (combat.getComponentUse() != -1 && weapon != null
-              && weapon.isWeapon()) {
+              && (weapon.isWeapon() || weapon.isPrivateer())) {
             CombatShip target = combat.getShipFromCoordinate(
                 combat.getCursorX(), combat.getCursorY());
             if (target != null && combat.getCurrentShip().getPlayer().isHuman()
-                && combat.isClearShot(combat.getCurrentShip(), target)) {
+                && (combat.isClearShot(combat.getCurrentShip(), target)
+                   || combat.canPrivateer(combat.getCurrentShip(), target))) {
               gr.drawImage(GuiStatics.CROSSHAIR, pixelX, pixelY, null);
             } else {
               gr.drawImage(GuiStatics.RED_CROSSHAIR, pixelX, pixelY, null);
@@ -773,6 +774,11 @@ public class MapPanel extends JPanel {
         case WEAPON_ECM_TORPEDO:
         case WEAPON_HE_MISSILE: {
           SoundPlayer.playSound(SoundPlayer.WEAPON_MISSILE);
+          break;
+          }
+        case PRIVATEERING_MODULE: {
+          //FIXME Change better privateer sound
+          SoundPlayer.playSound(SoundPlayer.REPAIR);
           break;
           }
         default: {

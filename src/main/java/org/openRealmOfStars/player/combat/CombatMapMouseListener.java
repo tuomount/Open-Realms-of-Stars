@@ -18,7 +18,7 @@ import org.openRealmOfStars.utilities.PixelsToMapCoordinate;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -178,7 +178,9 @@ public class CombatMapMouseListener extends MouseAdapter
             combat.setAnimation(new CombatAnimation(ship, target, weapon,
                 shipDamage.getValue()));
             ship.useComponent(componentUse);
-            SoundPlayer.playMenuSound();
+            battleInfoPanel.useComponent(componentUse);
+            componentUse = -1;
+            combat.setComponentUse(-1);
           }
         }
       } else {

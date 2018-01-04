@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.GameState;
@@ -315,13 +316,15 @@ public class MissionHandlingTest {
     Mockito.when(fleet.getY()).thenReturn(7);
     Mockito.when(fleet.getMilitaryValue()).thenReturn(10);
     Mockito.when(fleet.getMovesLeft()).thenReturn(1);
+    AStarSearch search = Mockito.mock(AStarSearch.class);
+    Mockito.when(fleet.getaStarSearch()).thenReturn(search);
     Fleet targetFleet = MissionHandling.getNearByFleet(info, game, fleet, 1);
     assertEquals(fleet2, targetFleet);
     MissionHandling.handlePrivateering(mission, fleet, info, game);
     assertEquals(MissionPhase.EXECUTING, mission.getPhase());
   }
 
-  @Test(expected=NullPointerException.class)
+  @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testPrivateeringNoMoreSunToExplore() {
     GameRepository repository = new GameRepository();

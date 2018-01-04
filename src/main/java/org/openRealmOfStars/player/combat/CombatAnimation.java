@@ -19,7 +19,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -181,7 +181,7 @@ public class CombatAnimation {
     } else if (weapon.getType() == ShipComponentType.PRIVATEERING_MODULE) {
       explosionAnim = GuiStatics.PRIVATEER;
       // TODO Change better sound effect for privateering
-      explosionSfx = SoundPlayer.EXPLOSION_EMP;
+      explosionSfx = SoundPlayer.REPAIR;
     } else {
       if (hit == 0) {
         explosionAnim = GuiStatics.EXPLOSION3;
@@ -401,7 +401,9 @@ public class CombatAnimation {
         }
       }
     } else if (weapon.getType() == ShipComponentType.PRIVATEERING_MODULE) {
+      count--;
       if (animFrame < explosionAnim.getMaxFrames()) {
+        showAnim = true;
         if (animFrame == 0 && hit) {
           SoundPlayer.playSound(explosionSfx);
         }

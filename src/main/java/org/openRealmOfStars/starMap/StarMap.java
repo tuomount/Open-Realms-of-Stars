@@ -40,7 +40,7 @@ import org.openRealmOfStars.utilities.repository.SunRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -842,6 +842,44 @@ public class StarMap {
     }
     return leastCharted;
 
+  }
+
+  /**
+   * Get nearest Solar system for least liked player.
+   * Searches nearest planet owned by least liked and
+   * selects that solar system. If not found then
+   * current solarsystem is returned or finally random
+   * solar system if current location is outside of solar systems.
+   * @param x X coordinate
+   * @param y Y Coordinate
+   * @param info Player doing the search
+   * @param leastLiked Least liked player index
+   * @return Sun
+   */
+  public Sun getNearestSolarSystemForLeastLiked(final int x, final int y,
+      final PlayerInfo info, final int leastLiked) {
+    double distance = LONGEST_DISTANCE;
+    Planet targetPlanet = null;
+    for (Planet planet : planetList) {
+      Coordinate coordinate = new Coordinate(x, y);
+      if (info.getSectorVisibility(planet.getCoordinate()) > 0
+          && planet.getPlanetOwnerIndex() == leastLiked) {
+        double dist = coordinate.calculateDistance(planet.getCoordinate());
+        if (dist < distance) {
+          distance = dist;
+          targetPlanet = planet;
+        }
+      }
+    }
+    if (targetPlanet != null) {
+      return locateSolarSystem(targetPlanet.getX(), targetPlanet.getY());
+    }
+    Sun result = locateSolarSystem(x, y);
+    if (result == null) {
+      int i = DiceGenerator.getRandom(sunList.size() - 1);
+      result = sunList.get(i);
+    }
+    return result;
   }
 
   /**

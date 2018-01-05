@@ -1030,7 +1030,8 @@ public final class MissionHandling {
       final PlayerInfo info) {
     AStarSearch search = fleet.getaStarSearch();
     if (search != null) {
-      for (int mv = 0; mv < fleet.getMovesLeft(); mv++) {
+      int movesLeft = fleet.getMovesLeft();
+      for (int mv = 0; mv < movesLeft; mv++) {
         PathPoint point = search.getMove();
         if (point != null
             && !game.getStarMap().isBlocked(point.getX(), point.getY())) {

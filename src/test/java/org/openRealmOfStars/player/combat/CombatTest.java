@@ -28,7 +28,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017, 2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -323,7 +323,7 @@ public class CombatTest {
     info1.getTechList().addTech(TechFactory.createDefenseTech(
         "Shield Mk3", 3));
     info1.getTechList().addTech(TechFactory.createCombatTech(
-        "Photon torpedo Mk2", 2));
+        "Photon torpedo Mk3", 3));
     info1.getTechList().addTech(TechFactory.createPropulsionTech(
         "Nuclear drive Mk2", 3));
     ShipDesign design1 = ShipGenerator.createPrivateerShip(
@@ -333,16 +333,21 @@ public class CombatTest {
         info2, ShipSize.SMALL, false);
     Ship privateer1 = new Ship(design1);
     Ship privateer2 = new Ship(design1);
+    Ship privateer3 = new Ship(design1);
     Ship colony = new Ship(design2);
     Ship scout = new Ship(design3);
     colony.setFlag(Ship.FLAG_MERCHANT_LEFT_HOMEWORLD, true);
     Fleet fleet1 = new Fleet(privateer1, 5, 5);
     fleet1.addShip(privateer2);
+    fleet1.addShip(privateer3);
     Fleet fleet2 = new Fleet(colony, 6, 5);
     fleet2.addShip(scout);
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
     Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    // Setting long time for wormhole appear
+    // Making sure that colony cannot escape
+    combat.setTimerForWormHole(200);
     assertEquals(0, info1.getTotalCredits());
     combat.doFastCombat(false);
     assertEquals(info1, combat.getWinner());

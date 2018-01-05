@@ -28,7 +28,7 @@ import org.openRealmOfStars.utilities.Logger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1104,6 +1104,13 @@ public boolean launchIntercept(final int distance,
    */
   public int getTimerForWormHole() {
     return timerForWormHole;
+  }
+  /**
+   * Set how many turns to worm hole to appear
+   * @param timer Set timer for wormhole to appear in combat.
+   */
+  public void setTimerForWormHole(final int timer) {
+    timerForWormHole = timer;
   }
   /**
    * Has defender ship escaped from battle.

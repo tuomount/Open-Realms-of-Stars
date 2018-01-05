@@ -335,6 +335,7 @@ public class MissionHandlingTest {
     AITurnView aiTurnView = new AITurnView(game);
     ActionEvent arg0 = Mockito.mock(ActionEvent.class);
     Mockito.when(arg0.getActionCommand()).thenReturn(GameCommands.COMMAND_ANIMATION_TIMER);
+    game.changeGameState(GameState.STARMAP);
     game.changeGameState(GameState.AITURN);
     int turnNumber = starMap.getTurn();
     turnNumber++;
@@ -348,11 +349,13 @@ public class MissionHandlingTest {
       aiTurnView.handleActions(arg0);
       if (game.getGameState() == GameState.DIPLOMACY_VIEW) {
         game.changeGameState(GameState.AITURN);
-      } else if (game.getGameState() != GameState.AITURN) {
+      } else if (game.getGameState() == GameState.COMBAT) {
         break;
+      } else if (game.getGameState() != GameState.AITURN) {
+        assertEquals(turnNumber, starMap.getTurn());
       }
     }
-    assertEquals(turnNumber, starMap.getTurn());
+    assertEquals(GameState.COMBAT, game.getGameState());
   }
 
 }

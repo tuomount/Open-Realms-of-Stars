@@ -7,11 +7,12 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatShip;
+import org.openRealmOfStars.starMap.StarMap;
 
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -90,6 +91,34 @@ public class AStarTest {
     AStarSearch test = new AStarSearch(combat, source, target, 1);
     assertEquals(false, test.doSearch());
     
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAStarInStarMapCloseUp() {
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getMaxX()).thenReturn(50);
+    Mockito.when(map.getMaxY()).thenReturn(50);
+    Mockito.when(map.isBlocked(Mockito.anyInt(), Mockito.anyInt())).thenReturn(false);
+    AStarSearch search = new AStarSearch(map, 10, 10, 12, 10, 5);
+    assertEquals(true, search.doSearch());
+    search.doRoute();
+    int steps = 1;
+    while (!search.isLastMove()) {
+      assertNotEquals(null, search.getMove());
+      if (steps == 1) {
+        assertEquals(11, search.getMove().getX());
+        assertEquals(9, search.getMove().getY());
+      }
+      search.nextMove();
+      steps++;
+    }
+    if (steps == 2) {
+      assertEquals(12, search.getMove().getX());
+      assertEquals(10, search.getMove().getY());
+    }
+    assertEquals(0,search.getTargetDistance());
+    assertEquals(2,steps);
   }
 
 }

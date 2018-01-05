@@ -11,7 +11,7 @@ import org.openRealmOfStars.starMap.StarMap;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -351,14 +351,14 @@ public class AStarSearch {
             Coordinate targetCoordinate = new Coordinate(tx, ty);
             double distance = coordinate.calculateDistance(targetCoordinate);
             if (isValidPos(mx, my) && blockMap[mx][my] < count
-                && distance < bestDistance) {
+                && distance <= bestDistance) {
               bx = mx;
               by = my;
               bestDistance = distance;
+              count = blockMap[bx][by];
             }
           }
         }
-        count = blockMap[bx][by];
         PathPoint newPoint = new PathPoint(bx, by, bestDistance);
         if (blockMap[bx][by] != 0) {
           points.add(newPoint);

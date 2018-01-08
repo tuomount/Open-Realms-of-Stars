@@ -11,7 +11,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017, 2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -163,6 +163,27 @@ public class NewsCorpData {
    */
   public GalaxyStat getCredit() {
     return credit;
+  }
+
+  /**
+   * Generate player scores as a table.
+   * @return Player scores as GalaxyStat table.
+   */
+  public GalaxyStat generateScores() {
+    GalaxyStat result = new GalaxyStat(planets.getMaxPlayers(), "Score");
+    for (int player = 0; player < planets.getMaxPlayers(); player++) {
+      for (int i = 0; i < planets.getMaxIndex(); i++) {
+        int score = 0;
+        score = score + military.getValue(player, i);
+        score = score + planets.getValue(player, i) * 10;
+        score = score + population.getValue(player, i) * 4;
+        score = score + cultural.getValue(player, i);
+        score = score + credit.getValue(player, i);
+        score = score + research.getValue(player, i) * 2;
+        result.addStat(player, score);
+      }
+    }
+    return result;
   }
 
   /**

@@ -19,7 +19,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017, 2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -361,7 +361,91 @@ public class NewsCorpDataTest {
     assertEquals(false, data.isNewsToShow());
     newsList = data.getNewsList();
     assertEquals(0, newsList.length);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testNewsDataScores() {
+    NewsCorpData data = new NewsCorpData(2);
+    Planet unhabitated = Mockito.mock(Planet.class);
+    Mockito.when(unhabitated.getPlanetOwnerIndex()).thenReturn(-1);
+    Mockito.when(unhabitated.getCulture()).thenReturn(0);
+    Planet planet1 = Mockito.mock(Planet.class);
+    Mockito.when(planet1.getPlanetOwnerIndex()).thenReturn(0);
+    Mockito.when(planet1.getCulture()).thenReturn(40);
+    Mockito.when(planet1.getTotalPopulation()).thenReturn(6);
+    Planet planet2 = Mockito.mock(Planet.class);
+    Mockito.when(planet2.getPlanetOwnerIndex()).thenReturn(1);
+    Mockito.when(planet2.getCulture()).thenReturn(10);
+    Mockito.when(planet1.getTotalPopulation()).thenReturn(3);
+
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Fleet militaryFleet = Mockito.mock(Fleet.class);
+    Mockito.when(militaryFleet.getMilitaryValue()).thenReturn(10);
+    Mockito.when(militaryFleet.getCulturalValue()).thenReturn(0);
+    Fleet colonFleet = Mockito.mock(Fleet.class);
+    Mockito.when(colonFleet.getMilitaryValue()).thenReturn(0);
+    Mockito.when(colonFleet.getCulturalValue()).thenReturn(0);
+    FleetList fleetList1 = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList1.getNumberOfFleets()).thenReturn(3);
+    Mockito.when(fleetList1.getByIndex(0)).thenReturn(militaryFleet);
+    Mockito.when(fleetList1.getByIndex(1)).thenReturn(colonFleet);
+    Mockito.when(fleetList1.getByIndex(2)).thenReturn(militaryFleet);
+    PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info1.getFleets()).thenReturn(fleetList1);
+    Mockito.when(info1.getTotalCredits()).thenReturn(34);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info1);
+    FleetList fleetList2 = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList2.getNumberOfFleets()).thenReturn(5);
+    Mockito.when(fleetList2.getByIndex(0)).thenReturn(militaryFleet);
+    Mockito.when(fleetList2.getByIndex(1)).thenReturn(colonFleet);
+    Mockito.when(fleetList2.getByIndex(2)).thenReturn(militaryFleet);
+    Mockito.when(fleetList2.getByIndex(3)).thenReturn(colonFleet);
+    Mockito.when(fleetList2.getByIndex(4)).thenReturn(militaryFleet);
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info2.getFleets()).thenReturn(fleetList2);
+    Mockito.when(info2.getTotalCredits()).thenReturn(15);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
+
+    TechList techs = Mockito.mock(TechList.class);
+    Mockito.when(techs.getTechLevel(TechType.Combat)).thenReturn(2);
+    Mockito.when(techs.getTechLevel(TechType.Defense)).thenReturn(1);
+    Mockito.when(techs.getTechLevel(TechType.Propulsion)).thenReturn(1);
+    Mockito.when(techs.getTechLevel(TechType.Improvements)).thenReturn(2);
+    Mockito.when(techs.getTechLevel(TechType.Electrics)).thenReturn(1);
+    Mockito.when(techs.getTechLevel(TechType.Hulls)).thenReturn(1);
+    Mockito.when(info1.getTechList()).thenReturn(techs);
+    TechList techs2 = Mockito.mock(TechList.class);
+    Mockito.when(techs2.getTechLevel(TechType.Combat)).thenReturn(6);
+    Mockito.when(techs2.getTechLevel(TechType.Defense)).thenReturn(5);
+    Mockito.when(techs2.getTechLevel(TechType.Propulsion)).thenReturn(4);
+    Mockito.when(techs2.getTechLevel(TechType.Improvements)).thenReturn(3);
+    Mockito.when(techs2.getTechLevel(TechType.Electrics)).thenReturn(2);
+    Mockito.when(techs2.getTechLevel(TechType.Hulls)).thenReturn(1);
+    Mockito.when(info2.getTechList()).thenReturn(techs2);
+
     
+    ArrayList<Planet> list = new ArrayList<>();
+    list.add(unhabitated);
+    list.add(unhabitated);
+    list.add(planet2);
+    list.add(planet1);
+    list.add(unhabitated);
+    list.add(unhabitated);
+    list.add(planet2);
+    list.add(unhabitated);
+    list.add(planet2);
+    list.add(unhabitated);
+    data.calculatePlanets(list);
+    data.calculateCulture(list, players);
+    data.calculatePopulation(list);
+    data.calculateMilitary(players);
+    data.calculateCredit(players);
+    data.calculateResearch(players);
+    GalaxyStat stat = data.generateScores();
+    assertEquals(142, stat.getValue(0, 0));
+    assertEquals(175, stat.getValue(1, 0));
   }
 
 }

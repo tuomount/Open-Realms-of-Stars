@@ -8,7 +8,7 @@ import org.junit.experimental.categories.Category;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -70,6 +70,16 @@ public class GalaxyStatTest {
     assertEquals(9,data[2][0]);
     assertEquals(3,data[2][1]);
     assertEquals(0,data[2][2]);
+    assertEquals(3, stat.getMaxIndex());
+    assertEquals(1, stat.getValue(0, 0));
+    assertEquals(2, stat.getValue(0, 1));
+    assertEquals(3, stat.getValue(0, 2));
+    assertEquals(2, stat.getValue(1, 0));
+    assertEquals(4, stat.getValue(1, 1));
+    assertEquals(8, stat.getValue(1, 2));
+    assertEquals(9, stat.getValue(2, 0));
+    assertEquals(3, stat.getValue(2, 1));
+    assertEquals(0, stat.getValue(2, 2));
   }
 
   @Test(expected=IllegalArgumentException.class)

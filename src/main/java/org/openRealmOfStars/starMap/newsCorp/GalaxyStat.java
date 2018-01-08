@@ -5,7 +5,7 @@ import org.openRealmOfStars.starMap.StarMap;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -75,6 +75,27 @@ public class GalaxyStat {
     return result;
   }
 
+  /**
+   * Get maximum index for data
+   * @return Size of the data
+   */
+  public int getMaxIndex() {
+    return dataStat[0].getSize();
+  }
+
+  /**
+   * Get Value for single data
+   * @param player Player Index
+   * @param index Data index
+   * @return Data value or -1
+   */
+  public int getValue(final int player, final int index) {
+    if (player >= 0 && player < maxPlayers && index >= 0
+        && index < getMaxIndex()) {
+      return dataStat[player].getData()[index];
+    }
+    return -1;
+  }
   /**
    * Get number of stats
    * @return Number of stats in array

@@ -100,6 +100,10 @@ public class NewsCorpData {
    * String for research stat name
    */
   public static final String STAT_RESEARCH = "Research";
+  /**
+   * String for scores stat name
+   */
+  public static final String STAT_SCORE = "Score";
 
   /**
    * Create new NewsCorpData. This will initialize all

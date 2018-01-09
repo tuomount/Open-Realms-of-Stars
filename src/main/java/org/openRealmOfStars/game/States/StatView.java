@@ -126,6 +126,16 @@ public class StatView extends BlackPanel {
     statPanel.setYDataNames(names);
     tabs.add(NewsCorpData.STAT_RESEARCH, statPanel);
 
+    statPanel = new StatisticPanel();
+    statPanel.setData(map.getNewsCorpData().generateScores().getGalaxyData());
+    statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
+    names = new String[map.getPlayerList().getCurrentMaxPlayers()];
+    for (int i = 0; i < names.length; i++) {
+      names[i] = map.getPlayerByIndex(i).getEmpireName();
+    }
+    statPanel.setYDataNames(names);
+    tabs.add(NewsCorpData.STAT_SCORE, statPanel);
+
     tabs.add("Relations", createRelationPanel(map, names));
     base.add(tabs, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);

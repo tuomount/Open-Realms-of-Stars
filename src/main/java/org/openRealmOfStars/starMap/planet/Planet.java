@@ -31,7 +31,7 @@ import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -620,7 +620,7 @@ public class Planet {
     switch (prod) {
     case PRODUCTION_FOOD: {
       // Planet always produces +2 food
-      mult = 100;
+      mult = planetOwnerInfo.getRace().getFoodSpeed();
       result = workers[FOOD_FARMERS] * mult / div + 2
           + getTotalProductionFromBuildings(prod);
       break;

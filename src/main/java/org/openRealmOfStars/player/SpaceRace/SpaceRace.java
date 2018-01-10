@@ -10,7 +10,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -420,6 +420,33 @@ public enum SpaceRace {
       return 50;
     default:
       return 0;
+    }
+  }
+
+  /**
+   * Get Food growth speed
+   * @return normal 100, half 50, double 200
+   */
+  public int getFoodSpeed() {
+    switch (this) {
+    case HUMAN:
+      return 100;
+    case MECHIONS:
+      return 0;
+    case SPORKS:
+      return 100;
+    case GREYANS:
+      return 100;
+    case CENTAURS:
+      return 100;
+    case MOTHOIDS:
+      return 100;
+    case TEUTHIDAES:
+      return 100;
+    case SCAURIANS:
+      return 100;
+    default:
+      return 100;
     }
   }
 

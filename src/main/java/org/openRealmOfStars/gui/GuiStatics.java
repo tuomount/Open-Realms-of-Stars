@@ -574,6 +574,12 @@ public final class GuiStatics {
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/scaurian_race.png"));
   /**
+   * Homarian race selection image
+   */
+  public static final BufferedImage IMAGE_HOMARIAN_RACE = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/homarian_race.png"));
+  /**
    * Mothoid race selection image
    */
   public static final BufferedImage IMAGE_MOTHOID_RACE = IOUtilities.loadImage(

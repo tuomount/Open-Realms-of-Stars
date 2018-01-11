@@ -9,7 +9,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017  Tuomo Untinen
+ * Copyright (C) 2016-2018 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -130,6 +130,32 @@ public class SpaceRaceUtilityTest {
             && !parts[0].equals("Hegemony") && !parts[0].equals("Hiearchy"));
         assertEquals("of", parts[1]);
         assertEquals("Greyans", parts[2]);
+      }
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandomNameGeneratorHomarians() {
+    SpaceRace race = SpaceRace.HOMARIANS;
+    assertEquals(Attitude.PEACEFUL, race.getAttitude());
+    for (int i=0;i<100;i++) {
+      String tmp = SpaceRaceUtility.getRandomName(race);
+      String[] parts = tmp.split(" ");
+      if (parts.length == 2) {
+        assertEquals("Homarian", parts[0]);
+        assertFalse(!parts[1].equals("Empire") && !parts[1].equals("Federation")
+            && !parts[1].equals("Republic") && !parts[1].equals("Alliance")
+            && !parts[1].equals("Kingdom") && !parts[1].equals("Democracy")
+            && !parts[1].equals("Nest") && !parts[1].equals("Hiearchy"));
+          
+      } else if (parts.length == 3) {
+        assertFalse(!parts[0].equals("Empire") && !parts[0].equals("Federation")
+            && !parts[0].equals("Republic") && !parts[0].equals("Alliance")
+            && !parts[0].equals("Kingdom") && !parts[0].equals("Democracy")
+            && !parts[0].equals("Nest") && !parts[0].equals("Hiearchy"));
+        assertEquals("of", parts[1]);
+        assertEquals("Homarians", parts[2]);
       }
     }
   }
@@ -329,6 +355,22 @@ public class SpaceRaceUtilityTest {
         + "* Diplomacy bonus: 1\n"
         + "* Rush: Credit\n"
         + "* Special: Trade fleet gain 50% more credits and better trade buildings.";
+    expectedResult[8] = "### Homarians\n"
+        + "Homarians are very strong creatures. "
+        + "They have humanoid from but they have very thick and "
+        + "hard exoskeleton. Due their strength they are good in "
+        + "physical tasks.\n"
+        + "* Max radiation: 3\n"
+        + "* Troop power: 11\n"
+        + "* Production: 150%\n"
+        + "* Mining: 150%\n"
+        + "* Research: 50%\n"
+        + "* Growth: 100%\n"
+        + "* Food require: 100%\n"
+        + "* Culture: 50%\n"
+        + "* Diplomacy bonus: 1\n"
+        + "* Rush: Population\n"
+        + "* Special: None";
     for (int i = 0; i <  SpaceRace.values().length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByIndex(i);
       assertEquals(expectedResult[i],race.getFullDescription(true, false));

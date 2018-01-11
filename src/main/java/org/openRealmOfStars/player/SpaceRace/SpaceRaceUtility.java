@@ -5,7 +5,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2016,2017  Tuomo Untinen
+* Copyright (C) 2016-2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -78,6 +78,9 @@ public final class SpaceRaceUtility {
     if (name.equals(SpaceRace.SCAURIANS.getNameSingle())) {
       return SpaceRace.SCAURIANS;
     }
+    if (name.equals(SpaceRace.HOMARIANS.getNameSingle())) {
+      return SpaceRace.HOMARIANS;
+    }
     return null;
   }
 
@@ -139,6 +142,8 @@ public final class SpaceRaceUtility {
           sb.append("Clan");
         } else if (race == SpaceRace.SCAURIANS) {
           sb.append("Guild");
+        } else if (race == SpaceRace.HOMARIANS) {
+          sb.append("Nest");
         } else {
           sb.append("Hegemony");
         }
@@ -197,6 +202,8 @@ public final class SpaceRaceUtility {
           sb.append("Clan of ");
         } else if (race == SpaceRace.SCAURIANS) {
           sb.append("Guild of ");
+        } else if (race == SpaceRace.HOMARIANS) {
+          sb.append("Nest of ");
         } else {
           sb.append("Hegemony of ");
         }

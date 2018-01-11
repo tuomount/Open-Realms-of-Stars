@@ -227,6 +227,7 @@ public class SpaceRaceUtilityTest {
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: 2\n"+
+        "* Rush: Credit\n"+
         "* Special: None";
     expectedResult[1] = "### Mechions\n"+
         "Mechanical beings whom do not eat food. Each now population must be built.\n"+
@@ -239,6 +240,7 @@ public class SpaceRaceUtilityTest {
         "* Food require: 0%\n"+
         "* Culture: 50%\n"+
         "* Diplomacy bonus: -2\n"+
+        "* Rush: Population\n"+
         "* Special: Population needs to be built";
     expectedResult[2] = "### Sporks\n"+
         "Aggressive and warmongering species.\n"+
@@ -251,6 +253,7 @@ public class SpaceRaceUtilityTest {
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: -3\n"+
+        "* Rush: Credit and population\n"+
         "* Special: Extra scout ship and higher combat tech at start";
     expectedResult[3] = "### Greyans\n"+
         "Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers.\n"+
@@ -263,6 +266,7 @@ public class SpaceRaceUtilityTest {
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: 0\n"+
+        "* Rush: Credit\n"+
         "* Special: Electronics and propulsion tech is hight at start";
     expectedResult[4] = "### Centaurs\n"+
         "Quadrupedal humanoid creatures which are big, about 5 meters tall."
@@ -277,6 +281,7 @@ public class SpaceRaceUtilityTest {
         "* Food require: 125%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: -1\n"+
+        "* Rush: Credit\n"+
         "* Special: Stronger ships";
     expectedResult[5] = "### Mothoids\n"+
         "Mothoids are sentient insects with hivemind. They are fast breeding "
@@ -292,6 +297,7 @@ public class SpaceRaceUtilityTest {
         "* Food require: 100%\n"+
         "* Culture: 150%\n"+
         "* Diplomacy bonus: 0\n"+
+        "* Rush: Population\n"+
         "* Special: No defense tech but one Planetary improvement tech at start";
     expectedResult[6] = "### Teuthidaes\n"
         + "Teuthidaes are octopus like creatures. They are "
@@ -306,6 +312,7 @@ public class SpaceRaceUtilityTest {
         + "* Food require: 125%\n"
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: -2\n"
+        + "* Rush: Credit\n"
         + "* Special: Each ship has built-in cloaking device";
     expectedResult[7] = "### Scaurians\n"
         + "Scaurians are small but wide humanoid. They are "
@@ -320,6 +327,7 @@ public class SpaceRaceUtilityTest {
         + "* Food require: 100%\n"
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: 1\n"
+        + "* Rush: Credit\n"
         + "* Special: Trade fleet gain 50% more credits and better trade buildings.";
     for (int i = 0; i <  SpaceRace.values().length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByIndex(i);

@@ -670,6 +670,74 @@ public enum SpaceRace {
     }
   }
   /**
+   * Has space race option to rush production with credits.
+   * @return True if credit rush is possible
+   */
+  public boolean hasCreditRush() {
+    switch (this) {
+    case HUMAN:
+      return true;
+    case MECHIONS:
+      return false;
+    case SPORKS:
+      return true;
+    case GREYANS:
+      return true;
+    case CENTAURS:
+      return true;
+    case MOTHOIDS:
+      return false;
+    case TEUTHIDAES:
+      return true;
+    case SCAURIANS:
+      return true;
+    default:
+      return true;
+    }
+  }
+  /**
+   * Has space race option to rush production with population.
+   * @return True if credit rush is possible
+   */
+  public boolean hasPopulationRush() {
+    switch (this) {
+    case HUMAN:
+      return false;
+    case MECHIONS:
+      return true;
+    case SPORKS:
+      return true;
+    case GREYANS:
+      return false;
+    case CENTAURS:
+      return false;
+    case MOTHOIDS:
+      return true;
+    case TEUTHIDAES:
+      return false;
+    case SCAURIANS:
+      return false;
+    default:
+      return false;
+    }
+  }
+  /**
+   * Get rush option as a String
+   * @return String
+   */
+  private String getRushOption() {
+    if (hasCreditRush() && hasPopulationRush()) {
+      return "Credit and population";
+    }
+    if (hasCreditRush() && !hasPopulationRush()) {
+      return "Credit";
+    }
+    if (!hasCreditRush() && hasPopulationRush()) {
+      return "Population";
+    }
+    return "None";
+  }
+  /**
    * Get full description about the race, including the stats.
    * @param markDown if true then markDown is being used, otherwise HTML.
    * @param image Add image to wiki page if true
@@ -748,6 +816,10 @@ public enum SpaceRace {
     sb.append(dot);
     sb.append(" Diplomacy bonus: ");
     sb.append(getDiplomacyBonus());
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Rush: ");
+    sb.append(getRushOption());
     sb.append(lf);
     sb.append(dot);
     sb.append(" Special: ");

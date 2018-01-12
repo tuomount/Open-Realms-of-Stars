@@ -475,7 +475,7 @@ public enum SpaceRace {
     case SCAURIANS:
       return 100;
     case HOMARIANS:
-      return 150;
+      return 200;
     default:
       return 100;
     }

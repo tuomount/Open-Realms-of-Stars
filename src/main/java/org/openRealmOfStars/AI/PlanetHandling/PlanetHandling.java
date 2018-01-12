@@ -23,7 +23,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -878,41 +878,144 @@ public final class PlanetHandling {
         switch (total) {
         case 1: {
           planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          planet.setWorkers(Planet.METAL_MINERS, 0);
+          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
           break;
         }
         case 2: {
           planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
           planet.setWorkers(Planet.METAL_MINERS, 1);
+          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
           break;
         }
         case 3: {
           planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
           planet.setWorkers(Planet.METAL_MINERS, 1);
           planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
           break;
         }
         case 4: {
           planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
           planet.setWorkers(Planet.METAL_MINERS, 1);
           planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
           break;
         }
         case 5: {
           planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
           planet.setWorkers(Planet.METAL_MINERS, 2);
           planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
           break;
         }
         case 6: {
           planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
           planet.setWorkers(Planet.METAL_MINERS, 2);
           planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
           break;
         }
         case 7: {
           planet.setWorkers(Planet.PRODUCTION_WORKERS, 3);
           planet.setWorkers(Planet.METAL_MINERS, 2);
           planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+          break;
+        }
+        default: {
+          // This happens only if there are no population or it is negative.
+          // There no works can be set.
+          throw new IllegalArgumentException("Planet(" + planet.getName()
+              + ") has no population but is still colonized!");
+        }
+        }
+      }
+    } else if (info.getRace() == SpaceRace.HOMARIANS) {
+      int total = planet.getTotalPopulation();
+      if (total > 5) {
+        int food = planet.getTotalProduction(Planet.PRODUCTION_FOOD);
+        int foodReq = total * info.getRace().getFoodRequire() / 100;
+        food = food - foodReq;
+        if (food > 2) {
+          planet.moveWorker(Planet.FOOD_FARMERS, Planet.PRODUCTION_WORKERS);
+        } else if (food < 0) {
+          planet.moveWorker(Planet.METAL_MINERS, Planet.FOOD_FARMERS);
+          food = planet.getTotalProduction(Planet.PRODUCTION_FOOD);
+          foodReq = total * info.getRace().getFoodRequire() / 100;
+          food = food - foodReq;
+          if (food < 0) {
+            planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.FOOD_FARMERS);
+            food = planet.getTotalProduction(Planet.PRODUCTION_FOOD);
+            foodReq = total * info.getRace().getFoodRequire() / 100;
+            food = food - foodReq;
+            if (food < 0) {
+              planet.moveWorker(Planet.RESEARCH_SCIENTIST, Planet.FOOD_FARMERS);
+            }
+          }
+        }
+        if (planet.getTotalProductionFromBuildings(
+            Planet.PRODUCTION_RESEARCH) == 0) {
+          planet.moveWorker(Planet.PRODUCTION_WORKERS,
+              Planet.RESEARCH_SCIENTIST);
+          planet.moveWorker(Planet.METAL_MINERS, Planet.RESEARCH_SCIENTIST);
+        }
+        if (planet.getTotalProduction(Planet.PRODUCTION_METAL)
+            < planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)) {
+          planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.METAL_MINERS);
+        }
+      } else {
+        // Fixed amount of population 5 or less
+        planet.setWorkers(Planet.FOOD_FARMERS, 0);
+        planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+        planet.setWorkers(Planet.METAL_MINERS, 0);
+        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+        switch (total) {
+        case 1: {
+          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          break;
+        }
+        case 2: {
+          planet.setWorkers(Planet.FOOD_FARMERS, 1);
+          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          break;
+        }
+        case 3: {
+          if (planet.getTotalProductionFromBuildings(
+              Planet.PRODUCTION_RESEARCH) > 0) {
+            planet.setWorkers(Planet.FOOD_FARMERS, 1);
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+            planet.setWorkers(Planet.METAL_MINERS, 1);
+          } else {
+            planet.setWorkers(Planet.FOOD_FARMERS, 1);
+            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+          }
+          break;
+        }
+        case 4: {
+          planet.setWorkers(Planet.FOOD_FARMERS, 2);
+          if (planet.getTotalProductionFromBuildings(
+              Planet.PRODUCTION_RESEARCH) > 0) {
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+            planet.setWorkers(Planet.METAL_MINERS, 1);
+          } else {
+            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+          }
+          break;
+        }
+        case 5: {
+          planet.setWorkers(Planet.PRODUCTION_FOOD, 2);
+          if (planet.getTotalProductionFromBuildings(
+              Planet.PRODUCTION_RESEARCH) > 0) {
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
+            planet.setWorkers(Planet.METAL_MINERS, 1);
+          } else {
+            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          }
           break;
         }
         default: {
@@ -924,7 +1027,7 @@ public final class PlanetHandling {
         }
       }
     } else {
-      // Handle races whom need something to eat
+      // Handle races whom need something to eat and have regular research
       int food = planet.getTotalProduction(Planet.PRODUCTION_FOOD);
       int total = planet.getTotalPopulation();
       int foodReq = total * info.getRace().getFoodRequire() / 100;

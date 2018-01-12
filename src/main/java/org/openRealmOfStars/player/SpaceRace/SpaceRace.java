@@ -851,6 +851,11 @@ public enum SpaceRace {
     sb.append("%");
     sb.append(lf);
     sb.append(dot);
+    sb.append(" Food production: ");
+    sb.append(getFoodSpeed());
+    sb.append("%");
+    sb.append(lf);
+    sb.append(dot);
     sb.append(" Growth: ");
     sb.append(getGrowthSpeed());
     sb.append("%");
@@ -882,7 +887,7 @@ public enum SpaceRace {
     } else if (this == SPORKS) {
       sb.append("Extra scout ship and higher combat tech at start");
     } else if (this == GREYANS) {
-      sb.append("Electronics and propulsion tech is hight at start");
+      sb.append("Electronics and propulsion techs are higher at start");
     } else if (this == MOTHOIDS) {
       sb.append("No defense tech but one Planetary improvement tech at start");
     } else if (this == SpaceRace.TEUTHIDAES) {
@@ -890,6 +895,8 @@ public enum SpaceRace {
     } else if (this == SpaceRace.SCAURIANS) {
       sb.append("Trade fleet gain 50% more credits and better trade"
           + " buildings.");
+    } else if (this == SpaceRace.HOMARIANS) {
+      sb.append("Starts with 5 population");
     } else {
       sb.append("None");
     }

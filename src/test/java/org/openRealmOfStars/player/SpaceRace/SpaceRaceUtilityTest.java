@@ -249,6 +249,7 @@ public class SpaceRaceUtilityTest {
         "* Production: 100%\n"+
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
+        "* Food production: 100%\n"+
         "* Growth: 100%\n"+
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
@@ -262,6 +263,7 @@ public class SpaceRaceUtilityTest {
         "* Production: 100%\n"+
         "* Mining: 150%\n"+
         "* Research: 50%\n"+
+        "* Food production: 0%\n"+
         "* Growth: 0%\n"+
         "* Food require: 0%\n"+
         "* Culture: 50%\n"+
@@ -275,6 +277,7 @@ public class SpaceRaceUtilityTest {
         "* Production: 100%\n"+
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
+        "* Food production: 100%\n"+
         "* Growth: 100%\n"+
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
@@ -288,12 +291,13 @@ public class SpaceRaceUtilityTest {
         "* Production: 100%\n"+
         "* Mining: 100%\n"+
         "* Research: 150%\n"+
+        "* Food production: 100%\n"+
         "* Growth: 50%\n"+
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: 0\n"+
         "* Rush: Credit\n"+
-        "* Special: Electronics and propulsion tech is hight at start";
+        "* Special: Electronics and propulsion techs are higher at start";
     expectedResult[4] = "### Centaurs\n"+
         "Quadrupedal humanoid creatures which are big, about 5 meters tall."
         + " Due their enormous size their space ships are more rigid."
@@ -303,6 +307,7 @@ public class SpaceRaceUtilityTest {
         "* Production: 100%\n"+
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
+        "* Food production: 100%\n"+
         "* Growth: 50%\n"+
         "* Food require: 125%\n"+
         "* Culture: 100%\n"+
@@ -319,6 +324,7 @@ public class SpaceRaceUtilityTest {
         "* Production: 100%\n"+
         "* Mining: 50%\n"+
         "* Research: 100%\n"+
+        "* Food production: 100%\n"+
         "* Growth: 150%\n"+
         "* Food require: 100%\n"+
         "* Culture: 150%\n"+
@@ -334,6 +340,7 @@ public class SpaceRaceUtilityTest {
         + "* Production: 100%\n"
         + "* Mining: 100%\n"
         + "* Research: 150%\n"
+        + "* Food production: 100%\n"
         + "* Growth: 100%\n"
         + "* Food require: 125%\n"
         + "* Culture: 100%\n"
@@ -349,6 +356,7 @@ public class SpaceRaceUtilityTest {
         + "* Production: 100%\n"
         + "* Mining: 50%\n"
         + "* Research: 100%\n"
+        + "* Food production: 100%\n"
         + "* Growth: 50%\n"
         + "* Food require: 100%\n"
         + "* Culture: 100%\n"
@@ -365,12 +373,13 @@ public class SpaceRaceUtilityTest {
         + "* Production: 150%\n"
         + "* Mining: 150%\n"
         + "* Research: 50%\n"
+        + "* Food production: 200%\n"
         + "* Growth: 100%\n"
         + "* Food require: 100%\n"
         + "* Culture: 50%\n"
         + "* Diplomacy bonus: 1\n"
         + "* Rush: Population\n"
-        + "* Special: None";
+        + "* Special: Starts with 5 population";
     for (int i = 0; i <  SpaceRace.values().length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByIndex(i);
       assertEquals(expectedResult[i],race.getFullDescription(true, false));

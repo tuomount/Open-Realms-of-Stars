@@ -5,7 +5,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -68,6 +68,11 @@ public final class ShipImages {
   private static ShipImage scaurians;
 
   /**
+   * Homarian ships
+   */
+  private static ShipImage homarians;
+
+  /**
    * Hiding the constructor
    */
   private ShipImages() {
@@ -86,6 +91,7 @@ public final class ShipImages {
     mothoids = new ShipImage("mothoidships.png");
     teuthidaes = new ShipImage("teuthidaeships.png");
     scaurians = new ShipImage("scaurianships.png");
+    homarians = new ShipImage("homarianships.png");
   }
 
   /**
@@ -177,6 +183,17 @@ public final class ShipImages {
   }
 
   /**
+   * Get homarians ship images
+   * @return homarians ship images
+   */
+  public static ShipImage homarians() {
+    if (homarians == null) {
+      initImages();
+    }
+    return homarians;
+  }
+
+  /**
    * Get ship images for certain race
    * @param race Space race which images to get
    * @return ShipImage
@@ -199,6 +216,8 @@ public final class ShipImages {
       return teuthidaes();
     case SCAURIANS:
       return scaurians();
+    case HOMARIANS:
+      return homarians();
     default:
       return humans();
     }

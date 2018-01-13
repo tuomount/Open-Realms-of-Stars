@@ -81,7 +81,16 @@ public enum SpaceRace {
    */
   SCAURIANS(7, "Scaurians", "Scaurian", "Scaurians are small but wide"
       + " humanoid. They are merchantical race. They focus make better"
-      + " trades with other and gain more credits.");
+      + " trades with other and gain more credits."),
+  /**
+   * Homarians are very strong creatures. They have humanoid from but
+   * they have very thick and hard exoskeleton.
+   */
+  HOMARIANS(8, "Homarians", "Homarian", "Homarians are very strong creatures. "
+      + "They have humanoid from but they have very thick and "
+      + "hard exoskeleton. Due their strength they are good in "
+      + "physical tasks.");
+
 
 
 
@@ -151,6 +160,8 @@ public enum SpaceRace {
       return 150;
     case SCAURIANS:
       return 100;
+    case HOMARIANS:
+      return 50;
     default:
       return 0;
     }
@@ -180,6 +191,8 @@ public enum SpaceRace {
         return Attitude.MILITARISTIC;
       case SCAURIANS:
         return Attitude.MERCHANTICAL;
+      case HOMARIANS:
+        return Attitude.PEACEFUL;
       default:
         return Attitude.PEACEFUL;
     }
@@ -207,6 +220,8 @@ public enum SpaceRace {
       return 4;
     case SCAURIANS:
       return 5;
+    case HOMARIANS:
+      return 3;
     default:
       return -1;
     }
@@ -234,6 +249,8 @@ public enum SpaceRace {
       return GuiStatics.IMAGE_TEUTHIDAE_RACE;
     case SCAURIANS:
       return GuiStatics.IMAGE_SCAURIAN_RACE;
+    case HOMARIANS:
+      return GuiStatics.IMAGE_HOMARIAN_RACE;
     default:
       return GuiStatics.IMAGE_CENTAUR_RACE;
     }
@@ -263,6 +280,8 @@ public enum SpaceRace {
         return start + "resources/images/teuthidae_race.png";
       case SCAURIANS:
         return start + "resources/images/scaurian_race.png";
+      case HOMARIANS:
+        return start + "resources/images/homarian_race.png";
       default:
         return start + "resources/images/centaur_race.png";
     }
@@ -310,6 +329,8 @@ public enum SpaceRace {
       return 100;
     case SCAURIANS:
       return 50;
+    case HOMARIANS:
+      return 150;
     default:
       return 0;
     }
@@ -337,6 +358,8 @@ public enum SpaceRace {
       return 100;
     case SCAURIANS:
       return 100;
+    case HOMARIANS:
+      return 50;
     default:
       return 0;
     }
@@ -364,6 +387,8 @@ public enum SpaceRace {
       return 10;
     case SCAURIANS:
       return 12;
+    case HOMARIANS:
+      return 11;
     default:
       return 0;
     }
@@ -391,6 +416,8 @@ public enum SpaceRace {
       return 100;
     case SCAURIANS:
       return 100;
+    case HOMARIANS:
+      return 150;
     default:
       return 0;
     }
@@ -418,6 +445,8 @@ public enum SpaceRace {
       return 100;
     case SCAURIANS:
       return 50;
+    case HOMARIANS:
+      return 100;
     default:
       return 0;
     }
@@ -445,6 +474,8 @@ public enum SpaceRace {
       return 100;
     case SCAURIANS:
       return 100;
+    case HOMARIANS:
+      return 200;
     default:
       return 100;
     }
@@ -471,6 +502,8 @@ public enum SpaceRace {
     case TEUTHIDAES:
       return 125;
     case SCAURIANS:
+      return 100;
+    case HOMARIANS:
       return 100;
     default:
       return 0;
@@ -499,6 +532,8 @@ public enum SpaceRace {
       return -2;
     case SCAURIANS:
       return 1;
+    case HOMARIANS:
+      return 1;
     default:
       return 0;
     }
@@ -525,6 +560,8 @@ public enum SpaceRace {
     case TEUTHIDAES:
       return 0;
     case SCAURIANS:
+      return 0;
+    case HOMARIANS:
       return 0;
     default:
       return 0;
@@ -553,6 +590,8 @@ public enum SpaceRace {
       return 13;
     case SCAURIANS:
       return 15;
+    case HOMARIANS:
+      return 16;
     default:
       return 15;
     }
@@ -579,6 +618,8 @@ public enum SpaceRace {
     case TEUTHIDAES:
       return 35;
     case SCAURIANS:
+      return 35;
+    case HOMARIANS:
       return 35;
     default:
       return 30;
@@ -607,6 +648,8 @@ public enum SpaceRace {
       return 3;
     case SCAURIANS:
       return 3;
+    case HOMARIANS:
+      return 3;
     default:
       return 3;
     }
@@ -634,6 +677,8 @@ public enum SpaceRace {
     case TEUTHIDAES:
       return 2;
     case SCAURIANS:
+      return 1;
+    case HOMARIANS:
       return 1;
     default:
       return 1;
@@ -665,6 +710,9 @@ public enum SpaceRace {
     case SCAURIANS:
       //TODO change diplomacy music
       return MusicPlayer.MILLION_LIGHT_YEARS;
+    case HOMARIANS:
+      //TODO change diplomacy music
+      return MusicPlayer.MILLION_LIGHT_YEARS;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
     }
@@ -691,6 +739,8 @@ public enum SpaceRace {
       return true;
     case SCAURIANS:
       return true;
+    case HOMARIANS:
+      return false;
     default:
       return true;
     }
@@ -717,6 +767,8 @@ public enum SpaceRace {
       return false;
     case SCAURIANS:
       return false;
+    case HOMARIANS:
+      return true;
     default:
       return false;
     }
@@ -799,6 +851,11 @@ public enum SpaceRace {
     sb.append("%");
     sb.append(lf);
     sb.append(dot);
+    sb.append(" Food production: ");
+    sb.append(getFoodSpeed());
+    sb.append("%");
+    sb.append(lf);
+    sb.append(dot);
     sb.append(" Growth: ");
     sb.append(getGrowthSpeed());
     sb.append("%");
@@ -830,7 +887,7 @@ public enum SpaceRace {
     } else if (this == SPORKS) {
       sb.append("Extra scout ship and higher combat tech at start");
     } else if (this == GREYANS) {
-      sb.append("Electronics and propulsion tech is hight at start");
+      sb.append("Electronics and propulsion techs are higher at start");
     } else if (this == MOTHOIDS) {
       sb.append("No defense tech but one Planetary improvement tech at start");
     } else if (this == SpaceRace.TEUTHIDAES) {
@@ -838,6 +895,8 @@ public enum SpaceRace {
     } else if (this == SpaceRace.SCAURIANS) {
       sb.append("Trade fleet gain 50% more credits and better trade"
           + " buildings.");
+    } else if (this == SpaceRace.HOMARIANS) {
+      sb.append("Starts with 5 population");
     } else {
       sb.append("None");
     }

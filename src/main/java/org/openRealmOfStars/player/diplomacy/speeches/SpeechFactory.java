@@ -6,7 +6,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -101,6 +101,9 @@ public final class SpeechFactory {
       case SCAURIANS: return new SpeechLine(type,
           "Your fleet has crossed my borders."
           + " Move " + fleetName + " away now!");
+      case HOMARIANS: return new SpeechLine(type,
+          "Your fleet has enter on my sector."
+          + " Move " + fleetName + " it away, please!");
       default: return null;
     }
   }
@@ -131,6 +134,8 @@ public final class SpeechFactory {
       case SCAURIANS: return new SpeechLine(type,
           "You should find something to trade! "
           + "I have excellent deals just for you.");
+      case HOMARIANS: return new SpeechLine(type,
+          "I am sorry, but I couldn't find anything to trade with you.");
       default: return null;
     }
   }
@@ -159,6 +164,8 @@ public final class SpeechFactory {
           "I'll call the sp..am..ship back!");
       case SCAURIANS: return new SpeechLine(type,
           "I will call the fleet back!");
+      case HOMARIANS: return new SpeechLine(type,
+          "I am calling the fleet back!");
       default: return null;
     }
   }
@@ -189,6 +196,8 @@ public final class SpeechFactory {
           "We appear in peace to you..." +  raceName + "!");
       case SCAURIANS: return new SpeechLine(type,
           "Let's do some trading " +  raceName + "!");
+      case HOMARIANS: return new SpeechLine(type,
+          "Let's do excellent deals today " +  raceName + "!");
       default: return null;
     }
   }
@@ -217,6 +226,8 @@ public final class SpeechFactory {
           "My friend, let's shake tentacles!");
       case SCAURIANS: return new SpeechLine(type,
           "My friend, I have my pockets full of credits! Let's do business.");
+      case HOMARIANS: return new SpeechLine(type,
+          "My fellow, let's shake chelae!");
       default: return null;
     }
   }
@@ -245,6 +256,8 @@ public final class SpeechFactory {
           "Nice to appear to you...");
       case SCAURIANS: return new SpeechLine(type,
           "Fellow trade companion, nice to meet again!");
+      case HOMARIANS: return new SpeechLine(type,
+          "Nice to meet you again, my fellow!");
       default: return null;
     }
   }
@@ -273,6 +286,8 @@ public final class SpeechFactory {
           "Hmm, it's you mud dirt...");
       case SCAURIANS: return new SpeechLine(type,
           "Hmph, the one with no credits...");
+      case HOMARIANS: return new SpeechLine(type,
+          "Just be quick and tell your thing...");
       default: return null;
     }
   }
@@ -301,6 +316,8 @@ public final class SpeechFactory {
           "Ah my nemesis...");
       case SCAURIANS: return new SpeechLine(type,
           "This is going to be a fight, but...");
+      case HOMARIANS: return new SpeechLine(type,
+          "I really hate these meeting with you...");
       default: return null;
     }
   }
@@ -329,6 +346,8 @@ public final class SpeechFactory {
           "Please take this deal or suffer!");
       case SCAURIANS: return new SpeechLine(type,
           "You better accept this deal or suffer!");
+      case HOMARIANS: return new SpeechLine(type,
+          "Accept this deal or prepare to be boiled!");
       default: return null;
     }
   }
@@ -357,6 +376,8 @@ public final class SpeechFactory {
           "You will pay for your insults!");
       case SCAURIANS: return new SpeechLine(type,
           "I will take last credits from your cold body!");
+      case HOMARIANS: return new SpeechLine(type,
+          "Prepare to be sliced!");
       default: return null;
     }
   }
@@ -388,6 +409,8 @@ public final class SpeechFactory {
           "Your offer repulses me.");
       case SCAURIANS: return new SpeechLine(type,
           "Your offer insults me!");
+      case HOMARIANS: return new SpeechLine(type,
+          "Your offer stinks ancient mold!");
       default: return null;
     }
   }
@@ -416,6 +439,8 @@ public final class SpeechFactory {
           "You are getting on my nerves!");
       case SCAURIANS: return new SpeechLine(type,
           "Insults do not help here!");
+      case HOMARIANS: return new SpeechLine(type,
+          "You are making fool of yourself with your insults!");
       default: return null;
     }
   }
@@ -444,6 +469,8 @@ public final class SpeechFactory {
           "Offer does not please me.");
       case SCAURIANS: return new SpeechLine(type,
           "Your offer isn't good enough!");
+      case HOMARIANS: return new SpeechLine(type,
+          "I have to turn down this offer.");
       default: return null;
     }
   }
@@ -472,6 +499,8 @@ public final class SpeechFactory {
           "I understand. Please do you have counter offer?");
       case SCAURIANS: return new SpeechLine(type,
           "Do you have counter offer?");
+      case HOMARIANS: return new SpeechLine(type,
+          "Any counter offers then?");
       default: return null;
     }
   }
@@ -500,6 +529,8 @@ public final class SpeechFactory {
           "Prepare to die!");
       case SCAURIANS: return new SpeechLine(type,
           "Time to die!");
+      case HOMARIANS: return new SpeechLine(type,
+          "Time to get sliced and boiled!");
       default: return null;
     }
   }
@@ -528,6 +559,8 @@ public final class SpeechFactory {
           "Let's start a trade union!");
       case SCAURIANS: return new SpeechLine(type,
           "Let's build magnificent trade alliance!");
+      case HOMARIANS: return new SpeechLine(type,
+          "Are you insterested in trade alliance?");
       default: return null;
     }
   }
@@ -556,6 +589,8 @@ public final class SpeechFactory {
           "Join my side to alliance!");
       case SCAURIANS: return new SpeechLine(type,
           "Let's build awesome alliance!");
+      case HOMARIANS: return new SpeechLine(type,
+          "Are you insterested in alliance?");
       default: return null;
     }
   }
@@ -584,6 +619,8 @@ public final class SpeechFactory {
           "Excellent!");
       case SCAURIANS: return new SpeechLine(type,
           "Agreed!");
+      case HOMARIANS: return new SpeechLine(type,
+          "Let's shake chelae for this!");
       default: return null;
     }
   }
@@ -626,6 +663,8 @@ public final class SpeechFactory {
               "I am happy to make business with you!");
         }
       }
+      case HOMARIANS: return new SpeechLine(type,
+          "I glad to shake chelae with you!");
       default: return null;
     }
   }
@@ -654,6 +693,8 @@ public final class SpeechFactory {
           "This is our fair trade?");
       case SCAURIANS: return new SpeechLine(type,
           "What do you say about my offer?");
+      case HOMARIANS: return new SpeechLine(type,
+          "What do you think about my offer?");
       default: return null;
     }
   }
@@ -682,6 +723,8 @@ public final class SpeechFactory {
           "Are you ready for peace?");
       case SCAURIANS: return new SpeechLine(type,
           "Let's sign a peace contract?");
+      case HOMARIANS: return new SpeechLine(type,
+          "Interested to sign peace with me?");
       default: return null;
     }
   }

@@ -526,7 +526,7 @@ public class Planet {
    * @param prod Production to get: See all PRODUCTION_*
    * @return amount of production in one turn
    */
-  private int getTotalProductionFromBuildings(final int prod) {
+  public int getTotalProductionFromBuildings(final int prod) {
     int result = 0;
     if (gasGiant || planetOwnerInfo == null) {
       return 0;

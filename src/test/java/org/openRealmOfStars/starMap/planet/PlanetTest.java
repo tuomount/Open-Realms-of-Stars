@@ -54,7 +54,7 @@ public class PlanetTest {
 
       assertNotEquals(planet.getCoordinate(), getPlanetCoordinate);
   }
-  
+
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testPlanetPopulationGrowthAndBuilding() {
@@ -67,6 +67,7 @@ public class PlanetTest {
     planet.setWorkers(Planet.FOOD_FARMERS, 1);
     Building factory = BuildingFactory.createByName("Basic factory");
     planet.setUnderConstruction(factory);
+    assertEquals(35, planet.getRushingCost(factory));
 
     assertEquals("The population of the planet should be one.", 1, planet.getTotalPopulation());
     assertEquals("The production time should be 15 turns.", "15 turns", planet.getProductionTime(factory));

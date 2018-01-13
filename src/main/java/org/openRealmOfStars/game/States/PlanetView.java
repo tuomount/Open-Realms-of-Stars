@@ -167,10 +167,28 @@ public class PlanetView extends BlackPanel {
    */
   private SpaceButton demolishBuildingBtn;
   /**
+   * Button for rushing buildings with credits.
+   */
+  private SpaceButton rushWithCreditsBtn;
+  /**
+   * Button for rushing buildings with population.
+   */
+  private SpaceButton rushWithPopulationBtn;
+
+  /**
    * Planet to show
    */
   private Planet planet;
 
+  /**
+   * Allow player to handle planet via UI
+   */
+  private boolean allowHandling;
+
+  /**
+   * Player trying to interact with planet
+   */
+  private PlayerInfo info;
   /**
    * Planet view constructor. Planet view for viewing planet.
    * @param planet Planet to view
@@ -184,6 +202,8 @@ public class PlanetView extends BlackPanel {
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true, null);
     imgBase.setPlayer(player);
+    allowHandling = interactive;
+    info = player;
     this.setLayout(new BorderLayout());
 
     // Top Panel
@@ -327,7 +347,7 @@ public class PlanetView extends BlackPanel {
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     IconLabel label = new IconLabel(panel,
         Icons.getIconByName(Icons.ICON_FACTORY), "Next project:");
-    label.setAlignmentX(Component.RIGHT_ALIGNMENT);
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(label);
     constructionSelect = new JComboBox<>(this.planet.getProductionList());
     constructionSelect.addActionListener(listener);
@@ -348,15 +368,34 @@ public class PlanetView extends BlackPanel {
     }
     constructionSelect.setEditable(false);
     constructionSelect.setEnabled(interactive);
-    constructionSelect.setAlignmentX(Component.RIGHT_ALIGNMENT);
+    constructionSelect.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(constructionSelect);
     panel.add(Box.createRigidArea(new Dimension(60, 5)));
     buildingEstimate = new TransparentLabel(topPanel, "1000 turns");
     buildingEstimate.setText(planet.getProductionTime(
         (Construction) constructionSelect.getSelectedItem()));
-    buildingEstimate.setAlignmentX(Component.RIGHT_ALIGNMENT);
+    buildingEstimate.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(buildingEstimate);
-    panel.add(Box.createRigidArea(new Dimension(50, 25)));
+    SpaceGreyPanel panelX = new SpaceGreyPanel();
+    panelX.setLayout(new BoxLayout(panelX, BoxLayout.X_AXIS));
+    panelX.setAlignmentX(Component.LEFT_ALIGNMENT);
+    label = new IconLabel(panel,
+        Icons.getIconByName(Icons.ICON_CREDIT), "Rushing:");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    panel.add(label);
+    rushWithCreditsBtn = new SpaceButton("Credits",
+        GameCommands.COMMAND_RUSH_WITH_CREDITS);
+    rushWithCreditsBtn.addActionListener(listener);
+    rushWithCreditsBtn.setEnabled(false);
+    panelX.add(rushWithCreditsBtn);
+    panelX.add(Box.createRigidArea(new Dimension(5, 5)));
+    rushWithPopulationBtn = new SpaceButton("Population",
+        GameCommands.COMMAND_RUSH_WITH_POPULATION);
+    rushWithPopulationBtn.addActionListener(listener);
+    rushWithPopulationBtn.setEnabled(false);
+    panelX.add(rushWithPopulationBtn);
+    panel.add(panelX);
+    panel.add(Box.createRigidArea(new Dimension(5, 5)));
     topPanel.add(panel);
 
     topPanel.add(Box.createRigidArea(new Dimension(10, 25)));
@@ -491,6 +530,31 @@ public class PlanetView extends BlackPanel {
 
     Construction building = (Construction) constructionSelect.getSelectedItem();
     buildingEstimate.setText(planet.getProductionTime(building));
+    int rushCost = planet.getRushingCost(building);
+    if (rushCost > 0 && allowHandling) {
+      if (info.getRace().hasCreditRush()
+          && rushCost >= info.getTotalCredits()) {
+        rushWithCreditsBtn.setEnabled(true);
+        rushWithCreditsBtn.setToolTipText("Rush construction with " + rushCost
+            + " credits!");
+      }
+      if (info.getRace().hasPopulationRush()) {
+        int populationCost = rushCost / Planet.POPULATION_RUSH_COST;
+        if (populationCost == 0) {
+          populationCost = 1;
+        }
+        if (planet.getTotalPopulation() > populationCost) {
+          rushWithPopulationBtn.setEnabled(true);
+          rushWithPopulationBtn.setToolTipText("Rush construction with "
+              + populationCost + " population!");
+        }
+      }
+    } else {
+      rushWithCreditsBtn.setEnabled(false);
+      rushWithPopulationBtn.setEnabled(false);
+      rushWithCreditsBtn.setToolTipText(null);
+      rushWithPopulationBtn.setToolTipText(null);
+    }
 
     SpaceRace race = null;
     if (planet.getPlanetPlayerInfo() != null) {
@@ -544,6 +608,20 @@ public class PlanetView extends BlackPanel {
         SoundPlayer.playMenuSound();
         updatePanel();
       }
+    }
+    if (arg0.getActionCommand()
+        .equals(GameCommands.COMMAND_RUSH_WITH_CREDITS)) {
+      planet.doRush(true, info);
+      //TODO change sound effect later for better one
+      SoundPlayer.playMenuSound();
+      updatePanel();
+    }
+    if (arg0.getActionCommand()
+        .equals(GameCommands.COMMAND_RUSH_WITH_POPULATION)) {
+      planet.doRush(false, info);
+      //TODO change sound effect later for better one
+      SoundPlayer.playMenuSound();
+      updatePanel();
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_MINUS_FARM)

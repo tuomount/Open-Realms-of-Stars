@@ -85,6 +85,10 @@ public class Planet {
       GuiStatics.BIG_GASWORLD1, GuiStatics.BIG_GASWORLD2 };
 
   /**
+   * Number of credits one population is worth when rushing.
+   */
+  public static final int POPULATION_RUSH_COST = 80;
+  /**
    * Planet name
    */
   private String name;
@@ -400,6 +404,58 @@ public class Planet {
     return metalTurn + " turns";
   }
 
+  /**
+   * Get production rushing cost in credits
+   * @param build The construction
+   * @return The rushing cost
+   */
+  public int getRushingCost(final Construction build) {
+    int metalReq = build.getMetalCost() - getMetal();
+    int prodReq = build.getProdCost() - getProdResource();
+    if (metalReq <= 0 && prodReq <= 0) {
+      return 0;
+    }
+    if (getAmountMetalInGround() < metalReq) {
+      return 0;
+    }
+    return metalReq + prodReq * 2;
+  }
+
+  /**
+   * Do construction rushing. This adds missing metal and production to planet.
+   * Construction is then ready on next turn.
+   * @param creditRush Do rushing with credit. Otherwise with population
+   * @param info PlayerInfo who is doing the rushing.
+   */
+  public void doRush(final boolean creditRush, final PlayerInfo info) {
+    int rushCost = getRushingCost(underConstruction);
+    int metalReq = underConstruction.getMetalCost() - getMetal();
+    int prodReq = underConstruction.getProdCost() - getProdResource();
+    if (metalReq < 0) {
+      metalReq = 0;
+    }
+    if (prodReq < 0) {
+      prodReq = 0;
+    }
+    int populationCost = rushCost / Planet.POPULATION_RUSH_COST;
+    if (populationCost == 0) {
+      populationCost = 1;
+    }
+    if (rushCost > 0 && creditRush && info.getRace().hasCreditRush()
+          && rushCost >= info.getTotalCredits()) {
+      info.setTotalCredits(info.getTotalCredits() - rushCost);
+      prodResource = prodResource + prodReq;
+      metal = metal + metalReq;
+    }
+    if (rushCost > 0 && !creditRush && info.getRace().hasPopulationRush()
+          && populationCost < getTotalPopulation()) {
+      for (int i = 0; i < populationCost; i++) {
+        killOneWorker();
+      }
+      prodResource = prodResource + prodReq;
+      metal = metal + metalReq;
+    }
+  }
   /**
   * Get production time in turn depending on production type.
   * This method estimates how long construction production takes in turn.

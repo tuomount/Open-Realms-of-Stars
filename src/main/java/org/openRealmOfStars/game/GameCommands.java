@@ -3,7 +3,7 @@ package org.openRealmOfStars.game;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2018 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -538,5 +538,15 @@ public final class GameCommands {
    * Command for using components in battle
    */
   public static final String COMMAND_COMPONENT_USE = "UseComponent";
+
+  /**
+   * Command for rushing with credits
+   */
+  public static final String COMMAND_RUSH_WITH_CREDITS = "RushCredits";
+
+  /**
+   * Command for rushing with population
+   */
+  public static final String COMMAND_RUSH_WITH_POPULATION = "RushPopulation";
 
 }

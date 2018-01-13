@@ -844,7 +844,7 @@ public final class PlanetHandling {
    * @param planet Planet to handle
    * @param info Player who owns the planet
    */
-  private static void handlePlanetPopulation(final Planet planet,
+  protected static void handlePlanetPopulation(final Planet planet,
       final PlayerInfo info) {
     if (info.getRace() == SpaceRace.MECHIONS) {
       int total = planet.getTotalPopulation();
@@ -941,7 +941,7 @@ public final class PlanetHandling {
         food = food - foodReq;
         if (food > 2) {
           planet.moveWorker(Planet.FOOD_FARMERS, Planet.PRODUCTION_WORKERS);
-        } else if (food < 0) {
+        } else if (food <= 0) {
           planet.moveWorker(Planet.METAL_MINERS, Planet.FOOD_FARMERS);
           food = planet.getTotalProduction(Planet.PRODUCTION_FOOD);
           foodReq = total * info.getRace().getFoodRequire() / 100;
@@ -957,7 +957,8 @@ public final class PlanetHandling {
           }
         }
         if (planet.getTotalProductionFromBuildings(
-            Planet.PRODUCTION_RESEARCH) == 0) {
+            Planet.PRODUCTION_RESEARCH) == 0
+            && planet.getWorkers(Planet.RESEARCH_SCIENTIST) == 0) {
           planet.moveWorker(Planet.PRODUCTION_WORKERS,
               Planet.RESEARCH_SCIENTIST);
           planet.moveWorker(Planet.METAL_MINERS, Planet.RESEARCH_SCIENTIST);

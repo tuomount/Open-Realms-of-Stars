@@ -2,6 +2,8 @@ package org.openRealmOfStars.AI.PlanetHandling;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
@@ -12,6 +14,8 @@ import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
@@ -22,7 +26,7 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -494,6 +498,72 @@ public class PlanetHandlingTest {
     score = PlanetHandling.scoreColonyShip(20, ship, info, map,
         Attitude.AGGRESSIVE);
     assertEquals(-1, score);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCreditRushing() {
+    Building building = createBasicFarm();
+    MessageList list = Mockito.mock(MessageList.class);
+    ArrayList<Message> fullList = new ArrayList<>();
+    Mockito.when(list.getFullList()).thenReturn(fullList);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getTotalCredits()).thenReturn(500);
+    Mockito.when(info.getMsgList()).thenReturn(list);
+    MissionList missionList = Mockito.mock(MissionList.class);
+    Mockito.when(info.getMissions()).thenReturn(missionList);
+    Planet planet = new Planet(new Coordinate(6, 6), "Test planet", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.setUnderConstruction(building);
+    boolean rushed = false;
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getPlayerByIndex(1)).thenReturn(info);
+    int loop = 10000;
+    while (loop > 0) {
+      loop--;
+      PlanetHandling.handlePlanet(map, planet, 1);
+      int buildingTime = planet.getProductionTime(building);
+      if (buildingTime == 1) {
+        rushed = true;
+        loop = 0;
+      }
+    }
+    assertEquals(true, rushed);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPopulationRushing() {
+    Building building = createBasicFarm();
+    MessageList list = Mockito.mock(MessageList.class);
+    ArrayList<Message> fullList = new ArrayList<>();
+    Mockito.when(list.getFullList()).thenReturn(fullList);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
+    Mockito.when(info.getTotalCredits()).thenReturn(500);
+    Mockito.when(info.getMsgList()).thenReturn(list);
+    MissionList missionList = Mockito.mock(MissionList.class);
+    Mockito.when(info.getMissions()).thenReturn(missionList);
+    Planet planet = new Planet(new Coordinate(6, 6), "Test planet", 1, false);
+    planet.setGroundSize(8);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, planet.getGroundSize());
+    planet.setPlanetOwner(1, info);
+    planet.setUnderConstruction(building);
+    boolean rushed = false;
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getPlayerByIndex(1)).thenReturn(info);
+    int loop = 10000;
+    while (loop > 0) {
+      loop--;
+      PlanetHandling.handlePlanet(map, planet, 1);
+      int buildingTime = planet.getProductionTime(building);
+      if (buildingTime == 1) {
+        rushed = true;
+        loop = 0;
+      }
+    }
+    assertEquals(true, rushed);
   }
 
   @Test

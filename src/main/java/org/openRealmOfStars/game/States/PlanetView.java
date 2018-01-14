@@ -372,7 +372,7 @@ public class PlanetView extends BlackPanel {
     panel.add(constructionSelect);
     panel.add(Box.createRigidArea(new Dimension(60, 5)));
     buildingEstimate = new TransparentLabel(topPanel, "1000 turns");
-    buildingEstimate.setText(planet.getProductionTime(
+    buildingEstimate.setText(planet.getProductionTimeAsString(
         (Construction) constructionSelect.getSelectedItem()));
     buildingEstimate.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(buildingEstimate);
@@ -529,7 +529,7 @@ public class PlanetView extends BlackPanel {
         + planet.getGroundSize() + "):");
 
     Construction building = (Construction) constructionSelect.getSelectedItem();
-    buildingEstimate.setText(planet.getProductionTime(building));
+    buildingEstimate.setText(planet.getProductionTimeAsString(building));
     int rushCost = planet.getRushingCost(building);
     if (rushCost > 0 && allowHandling) {
       if (info.getRace().hasCreditRush()
@@ -539,10 +539,7 @@ public class PlanetView extends BlackPanel {
             + " credits!");
       }
       if (info.getRace().hasPopulationRush()) {
-        int populationCost = rushCost / Planet.POPULATION_RUSH_COST;
-        if (populationCost == 0) {
-          populationCost = 1;
-        }
+        int populationCost = rushCost / Planet.POPULATION_RUSH_COST + 1;
         if (planet.getTotalPopulation() > populationCost) {
           rushWithPopulationBtn.setEnabled(true);
           rushWithPopulationBtn.setToolTipText("Rush construction with "

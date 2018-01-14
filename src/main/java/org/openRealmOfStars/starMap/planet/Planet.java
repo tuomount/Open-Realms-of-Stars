@@ -379,29 +379,43 @@ public class Planet {
     }
 
   }
-
   /**
-   * Get production time as String
+   * Get production time as in turns
    * @param build The construction
-   * @return The production time
+   * @return The production time in turns.
+   *  -1 mean construction will never complete.
    */
-  public String getProductionTime(final Construction build) {
+  public int getProductionTime(final Construction build) {
     int metalReq = build.getMetalCost() - getMetal();
     int prodReq = build.getProdCost() - getProdResource();
     if (metalReq <= 0 && prodReq <= 0) {
-      return "1 turn";
+      return 1;
     }
     int metalTurn = getProductionTimeByProductionType(metalReq,
         PRODUCTION_METAL);
     int prodTurn = getProductionTimeByProductionType(prodReq,
         PRODUCTION_PRODUCTION);
     if (prodTurn == -1 || metalTurn == -1) {
-      return "Never";
+      return -1;
     }
     if (prodTurn > metalTurn) {
-      return prodTurn + " turns";
+      return prodTurn;
     }
-    return metalTurn + " turns";
+    return metalTurn;
+  }
+  /**
+   * Get production time as String
+   * @param build The construction
+   * @return The production time
+   */
+  public String getProductionTimeAsString(final Construction build) {
+    int time = getProductionTime(build);
+    if (time == -1) {
+      return "Never";
+    } else if (time == 1) {
+      return "1 turn";
+    }
+    return time + " turns";
   }
 
   /**
@@ -437,12 +451,9 @@ public class Planet {
     if (prodReq < 0) {
       prodReq = 0;
     }
-    int populationCost = rushCost / Planet.POPULATION_RUSH_COST;
-    if (populationCost == 0) {
-      populationCost = 1;
-    }
+    int populationCost = rushCost / Planet.POPULATION_RUSH_COST + 1;
     if (rushCost > 0 && creditRush && info.getRace().hasCreditRush()
-          && rushCost >= info.getTotalCredits()) {
+          && rushCost <= info.getTotalCredits()) {
       info.setTotalCredits(info.getTotalCredits() - rushCost);
       prodResource = prodResource + prodReq;
       metal = metal + metalReq;

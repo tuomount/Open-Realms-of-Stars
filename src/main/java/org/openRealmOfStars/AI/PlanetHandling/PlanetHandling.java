@@ -268,6 +268,69 @@ public final class PlanetHandling {
             planet.setUnderConstruction(constructions[j]);
           }
         }
+      } else {
+        // Let's check rushing
+        int rushCost = planet.getRushingCost(planet.getUnderConstruction());
+        int rushPopulation = rushCost / Planet.POPULATION_RUSH_COST + 1;
+        int buildingTime = planet.getProductionTime(
+            planet.getUnderConstruction());
+        int rushChange = 0;
+        boolean creditRush = true;
+        if (info.getRace().hasCreditRush()
+            && rushCost < info.getTotalCredits() && buildingTime > 1) {
+          Mission mission = info.getMissions().getMissionForPlanet(
+              planet.getName(), MissionPhase.BUILDING);
+          if (mission != null) {
+            // Planet on mission for building something
+            rushChange = rushChange + 10;
+          }
+          int rushPerCredit =  info.getTotalCredits() / rushCost;
+          if (rushPerCredit == 2) {
+            rushChange = rushChange + 5;
+          } else if (rushPerCredit == 3) {
+            rushChange = rushChange + 7;
+          } else if (rushPerCredit == 4) {
+            rushChange = rushChange + 10;
+          }  else if (rushPerCredit == 5) {
+            rushChange = rushChange + 12;
+          }  else if (rushPerCredit == 6) {
+            rushChange = rushChange + 14;
+          }  else if (rushPerCredit == 7) {
+            rushChange = rushChange + 15;
+          }  else if (rushPerCredit == 8) {
+            rushChange = rushChange + 17;
+          }  else if (rushPerCredit == 9) {
+            rushChange = rushChange + 18;
+          }  else if (rushPerCredit >= 10) {
+            rushChange = rushChange + 20;
+          }
+          if (planet.getUnderConstruction() instanceof Ship) {
+            rushChange = rushChange + 5;
+          }
+        }
+        if (info.getRace().hasPopulationRush()
+            && rushPopulation < planet.getTotalPopulation() && buildingTime > 1
+            && rushChange == 0) {
+          creditRush = false;
+          Mission mission = info.getMissions().getMissionForPlanet(
+              planet.getName(), MissionPhase.BUILDING);
+          if (mission != null) {
+            // Planet on mission for building something
+            rushChange = rushChange + 5;
+          }
+          if (planet.isFullOfPopulation()) {
+            rushChange = rushChange + 5;
+          }
+          if (planet.getUnderConstruction() instanceof Ship) {
+            rushChange = rushChange + 3;
+          }
+        }
+        if (rushChange > 0) {
+          int random = DiceGenerator.getRandom(99) + 1;
+          if (random < rushChange) {
+            planet.doRush(creditRush, info);
+          }
+        }
       }
     }
   }

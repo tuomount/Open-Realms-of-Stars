@@ -61,7 +61,13 @@ public class Planet {
       Tiles.getTileByName(TileNames.WATERWORLD1).getIndex(),
       Tiles.getTileByName(TileNames.WATERWORLD2).getIndex(),
       Tiles.getTileByName(TileNames.IRONPLANET1).getIndex(),
-      Tiles.getTileByName(TileNames.IRONPLANET2).getIndex() };
+      Tiles.getTileByName(TileNames.IRONPLANET2).getIndex(),
+      Tiles.getTileByName(TileNames.WATERWORLD3).getIndex(),
+      Tiles.getTileByName(TileNames.WATERWORLD4).getIndex(),
+      Tiles.getTileByName(TileNames.ICEWORLD1).getIndex(),
+      Tiles.getTileByName(TileNames.ICEWORLD2).getIndex(),
+      Tiles.getTileByName(TileNames.IRONPLANET3).getIndex(),
+      Tiles.getTileByName(TileNames.CARBONWORLD1).getIndex()};
 
   /**
    * List of big planet images
@@ -69,14 +75,20 @@ public class Planet {
   public static final BufferedImage[] PLANET_BIG_IMAGES = {
       GuiStatics.BIG_PLANET_ROCK1, GuiStatics.BIG_PLANET_WATERWORLD1,
       GuiStatics.BIG_PLANET_WATERWORLD2, GuiStatics.BIG_PLANET_IRONPLANET1,
-      GuiStatics.BIG_PLANET_IRONPLANET2 };
+      GuiStatics.BIG_PLANET_IRONPLANET2,
+      GuiStatics.BIG_PLANET_WATERWORLD3, GuiStatics.BIG_PLANET_WATERWORLD4,
+      GuiStatics.BIG_PLANET_ICEWORLD1, GuiStatics.BIG_PLANET_ICEWORLD2,
+      GuiStatics.BIG_PLANET_IRONPLANET3, GuiStatics.BIG_PLANET_CARBONWORLD1};
   /**
    * List of planet image instructions used in news.
    */
   public static final String[] PLANET_NEWS_INSTRUCTIONS = {
       ImageInstruction.PLANET_ROCK1, ImageInstruction.PLANET_WATERWORLD1,
       ImageInstruction.PLANET_WATERWORLD2, ImageInstruction.PLANET_IRONWORLD1,
-      ImageInstruction.PLANET_IRONWORLD2};
+      ImageInstruction.PLANET_IRONWORLD2, ImageInstruction.PLANET_WATERWORLD3,
+      ImageInstruction.PLANET_WATERWORLD4, ImageInstruction.PLANET_ICEWORLD1,
+      ImageInstruction.PLANET_ICEWORLD2, ImageInstruction.PLANET_IRONWORLD3,
+      ImageInstruction.PLANET_CARBONWORLD1};
 
   /**
    * List of big planet images

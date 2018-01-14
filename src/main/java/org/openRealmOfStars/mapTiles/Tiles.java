@@ -9,7 +9,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -205,6 +205,19 @@ public final class Tiles {
     // Previous tile index as animation index
     tile.setAnimationIndex(getTileByName(
         TileNames.DEEP_SPACE_ANCHOR1).getIndex());
+    // Readon more planets
+    tile = new Tile(tilesImage, 14, 0, TileNames.WATERWORLD3);
+    addTile(tile);
+    tile = new Tile(tilesImage, 15, 0, TileNames.WATERWORLD4);
+    addTile(tile);
+    tile = new Tile(tilesImage, 16, 0, TileNames.ICEWORLD1);
+    addTile(tile);
+    tile = new Tile(tilesImage, 17, 0, TileNames.ICEWORLD2);
+    addTile(tile);
+    tile = new Tile(tilesImage, 18, 0, TileNames.IRONPLANET3);
+    addTile(tile);
+    tile = new Tile(tilesImage, 19, 0, TileNames.CARBONWORLD1);
+    addTile(tile);
   }
 
 }

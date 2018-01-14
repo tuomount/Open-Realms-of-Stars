@@ -18,7 +18,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -508,6 +508,36 @@ public final class GuiStatics {
       .loadImage(Tiles.class.getResource("/resources/images/waterworld2.png"));
 
   /**
+   * Big planet screen water world 3
+   */
+  public static final BufferedImage BIG_PLANET_WATERWORLD3 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/waterworld3.png"));
+
+  /**
+   * Big planet screen water world 4
+   */
+  public static final BufferedImage BIG_PLANET_WATERWORLD4 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/waterworld4.png"));
+
+  /**
+   * Big planet screen ice world 1
+   */
+  public static final BufferedImage BIG_PLANET_ICEWORLD1 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/iceworld1.png"));
+
+  /**
+   * Big planet screen ice world 2
+   */
+  public static final BufferedImage BIG_PLANET_ICEWORLD2 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/iceworld2.png"));
+
+  /**
+   * Big planet screen carbon world 1
+   */
+  public static final BufferedImage BIG_PLANET_CARBONWORLD1 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/carbonworld1.png"));
+
+  /**
    * Big planet screen iron planet 1
    */
   public static final BufferedImage BIG_PLANET_IRONPLANET1 = IOUtilities
@@ -518,6 +548,12 @@ public final class GuiStatics {
    */
   public static final BufferedImage BIG_PLANET_IRONPLANET2 = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/ironplanet2.png"));
+
+  /**
+   * Big planet screen iron planet 3
+   */
+  public static final BufferedImage BIG_PLANET_IRONPLANET3 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/ironplanet3.png"));
 
   /**
    * Big planet gas world

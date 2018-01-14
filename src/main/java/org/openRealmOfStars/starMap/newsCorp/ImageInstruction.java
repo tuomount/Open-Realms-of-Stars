@@ -12,7 +12,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -93,6 +93,14 @@ public class ImageInstruction {
    */
   public static final String PLANET_WATERWORLD2 = "waterworld2";
   /**
+   * Planet type waterworld3
+   */
+  public static final String PLANET_WATERWORLD3 = "waterworld3";
+  /**
+   * Planet type waterworld4
+   */
+  public static final String PLANET_WATERWORLD4 = "waterworld3";
+  /**
    * Planet type ironworld1
    */
   public static final String PLANET_IRONWORLD1 = "ironworld1";
@@ -100,6 +108,22 @@ public class ImageInstruction {
    * Planet type ironworld2
    */
   public static final String PLANET_IRONWORLD2 = "ironworld2";
+  /**
+   * Planet type ironworld3
+   */
+  public static final String PLANET_IRONWORLD3 = "ironworld3";
+  /**
+   * Planet type iceworld1
+   */
+  public static final String PLANET_ICEWORLD1 = "iceworld1";
+  /**
+   * Planet type iceworld2
+   */
+  public static final String PLANET_ICEWORLD2 = "iceworld2";
+  /**
+   * Planet type carbon world 1
+   */
+  public static final String PLANET_CARBONWORLD1 = "carbonworld1";
   /**
    * Planet type gas giant 1
    */
@@ -395,11 +419,29 @@ public class ImageInstruction {
     if (PLANET_WATERWORLD2.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_WATERWORLD2;
     }
+    if (PLANET_WATERWORLD3.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_WATERWORLD3;
+    }
+    if (PLANET_WATERWORLD4.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_WATERWORLD4;
+    }
+    if (PLANET_ICEWORLD1.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_ICEWORLD1;
+    }
+    if (PLANET_ICEWORLD2.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_ICEWORLD2;
+    }
+    if (PLANET_CARBONWORLD1.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_CARBONWORLD1;
+    }
     if (PLANET_IRONWORLD1.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_IRONPLANET1;
     }
     if (PLANET_IRONWORLD2.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_IRONPLANET2;
+    }
+    if (PLANET_IRONWORLD3.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_IRONPLANET3;
     }
     if (PLANET_GASGIANT1.equals(planetType)) {
       planetImg = GuiStatics.BIG_GASWORLD1;

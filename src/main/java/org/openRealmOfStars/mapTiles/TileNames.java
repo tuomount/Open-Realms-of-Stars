@@ -3,7 +3,7 @@ package org.openRealmOfStars.mapTiles;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -127,6 +127,35 @@ public final class TileNames {
    * Planet 5 Iron world 2
    */
   public static final String IRONPLANET2 = "IRONPLANET2";
+
+  /**
+   * Planet 6 Water world 3
+   */
+  public static final String WATERWORLD3 = "WATERWORLD3";
+
+  /**
+   * Planet 7 Water world 4
+   */
+  public static final String WATERWORLD4 = "WATERWORLD4";
+
+  /**
+   * Planet 8 Ice world 1
+   */
+  public static final String ICEWORLD1 = "ICEWORLD1";
+
+  /**
+   * Planet 9 Ice world 2
+   */
+  public static final String ICEWORLD2 = "ICEWORLD2";
+
+  /**
+   * Planet 10 iron world 3
+   */
+  public static final String IRONPLANET3 = "IRONPLANET3";
+  /**
+   * Planet 11 carbon world 1
+   */
+  public static final String CARBONWORLD1 = "CARBONWORLD1";
 
   /**
    * Deep space anchor 1, place where starbase can be deploy

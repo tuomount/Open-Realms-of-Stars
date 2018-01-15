@@ -96,7 +96,7 @@ public class BigImagePanel extends JPanel {
     this.setBackground(Color.black);
     this.planet = planet;
     if (this.planet != null && !this.planet.isGasGiant()) {
-      backgroundImg = Planet.PLANET_BIG_IMAGES[this.planet.getPlanetType()];
+      backgroundImg = planet.getBigImage();
     } else if (this.planet != null && this.planet.isGasGiant()) {
       int imageIndex = this.planet.getPlanetImageIndex();
       if (imageIndex > Planet.GASWORLD_BIG_IMAGES.length - 1) {

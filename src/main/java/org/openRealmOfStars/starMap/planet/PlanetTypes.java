@@ -171,4 +171,64 @@ public enum PlanetTypes {
   public String getImageInstructions() {
     return instructions;
   }
+
+  /**
+   * Get planet type to index
+   * @return Planet type index
+   */
+  public int getPlanetTypeIndex() {
+    switch (this) {
+      case SILICONWORLD1: return 0;
+      case WATERWORLD1: return 1;
+      case WATERWORLD2: return 2;
+      case IRONWORLD1: return 3;
+      case IRONWORLD2: return 4;
+      case WATERWORLD3: return 5;
+      case WATERWORLD4: return 6;
+      case ICEWORLD1: return 7;
+      case ICEWORLD2: return 8;
+      case IRONWORLD3: return 9;
+      case CARBONWORLD1: return 10;
+      default:
+        throw new IllegalArgumentException("Unknown planet index!!");
+    }
+  }
+
+  /**
+   * Get planet type to index
+   * @param index World Type index
+   * @return Planet type index
+   */
+  public static PlanetTypes getPlanetType(final int index) {
+    switch (index) {
+      case  0: return SILICONWORLD1;
+      case  1: return WATERWORLD1;
+      case  2: return WATERWORLD2;
+      case  3: return IRONWORLD1;
+      case  4: return IRONWORLD2;
+      case  5: return WATERWORLD3;
+      case  6: return WATERWORLD4;
+      case  7: return ICEWORLD1;
+      case  8: return ICEWORLD2;
+      case  9: return IRONWORLD3;
+      case 10: return CARBONWORLD1;
+      default:
+        throw new IllegalArgumentException("No planet type available "
+            + "for this index!!");
+    }
+  }
+
+  /**
+   * Verify that image instruction is valid for planet
+   * @param instruction Image Instruction
+   * @return True if valid
+   */
+  public static boolean verifyInstruction(final String instruction) {
+    for (PlanetTypes type : PlanetTypes.values()) {
+      if (type.getImageInstructions().equals(instruction)) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

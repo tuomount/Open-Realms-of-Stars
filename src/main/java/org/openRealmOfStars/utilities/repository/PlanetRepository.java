@@ -5,6 +5,7 @@ import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -64,7 +65,9 @@ public class PlanetRepository {
     planet.setMetal(metal);
     planet.setProdResource(prodResource);
     planet.setPlanetImageIndex(dis.readInt());
-    planet.setPlanetType(dis.readInt());
+    int value = dis.readInt();
+    planet.setType(PlanetTypes.getPlanetType(value));
+    planet.setPlanetType(value);
     int planetOwner = dis.readInt();
     PlayerInfo planetOwnerInfo = null;
     if (planetOwner != -1) {
@@ -119,7 +122,7 @@ public class PlanetRepository {
     dos.writeInt(planet.getProdResource());
     dos.writeBoolean(planet.isGasGiant());
     dos.writeInt(planet.getPlanetImageIndex());
-    dos.writeInt(planet.getPlanetType());
+    dos.writeInt(planet.getType().getPlanetTypeIndex());
     dos.writeInt(planet.getPlanetOwnerIndex());
     dos.writeInt(planet.getExtraFood());
     dos.writeInt(planet.getTax());

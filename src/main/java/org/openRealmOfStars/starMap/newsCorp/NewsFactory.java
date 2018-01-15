@@ -10,7 +10,7 @@ import org.openRealmOfStars.utilities.TextUtilities;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -58,7 +58,7 @@ public final class NewsFactory {
     if (meetingPlace instanceof Planet) {
       Planet planet = (Planet) meetingPlace;
       instructions.addPlanet(ImageInstruction.POSITION_CENTER,
-          Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetType()],
+          planet.getImageInstructions(),
           ImageInstruction.SIZE_FULL);
     }
     boolean surpriseAttack = false;
@@ -168,7 +168,7 @@ public final class NewsFactory {
     if (meetingPlace instanceof Planet) {
       Planet planet = (Planet) meetingPlace;
       instructions.addPlanet(ImageInstruction.POSITION_CENTER,
-          Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetType()],
+          planet.getImageInstructions(),
           ImageInstruction.SIZE_FULL);
     }
     switch (DiceGenerator.getRandom(2)) {
@@ -247,7 +247,7 @@ public final class NewsFactory {
     if (meetingPlace instanceof Planet) {
       Planet planet = (Planet) meetingPlace;
       instructions.addPlanet(ImageInstruction.POSITION_CENTER,
-          Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetType()],
+          planet.getImageInstructions(),
           ImageInstruction.SIZE_FULL);
     }
     switch (DiceGenerator.getRandom(2)) {
@@ -322,7 +322,7 @@ public final class NewsFactory {
     if (meetingPlace instanceof Planet) {
       Planet planet = (Planet) meetingPlace;
       instructions.addPlanet(ImageInstruction.POSITION_CENTER,
-          Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetType()],
+          planet.getImageInstructions(),
           ImageInstruction.SIZE_FULL);
     }
     switch (DiceGenerator.getRandom(2)) {
@@ -501,7 +501,7 @@ public final class NewsFactory {
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
     instructions.addPlanet(ImageInstruction.POSITION_CENTER,
-        Planet.PLANET_NEWS_INSTRUCTIONS[planet.getPlanetType()],
+        planet.getImageInstructions(),
         ImageInstruction.SIZE_FULL);
     switch (DiceGenerator.getRandom(2)) {
       case 0:

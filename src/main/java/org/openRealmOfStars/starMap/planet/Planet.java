@@ -155,6 +155,10 @@ public class Planet {
   private Coordinate coordinate;
 
   /**
+   * Planet type. Constain world type, images and image instruction.
+   */
+  private PlanetTypes type;
+  /**
    * Planet Image Index for planet tile. This is not for
    * the big planet image. Planet Type is for big planet image.
    */
@@ -351,6 +355,7 @@ public class Planet {
     this.tax = 0;
     this.culture = 0;
     this.homeWorldIndex = -1;
+    this.type = PlanetTypes.CARBONWORLD1;
   }
 
   /**
@@ -1802,5 +1807,37 @@ public class Planet {
    */
   public void setExtraFood(final int extraFood) {
     this.extraFood = extraFood;
+  }
+
+  /**
+   * Get planet type
+   * @return the type
+   */
+  public PlanetTypes getType() {
+    return type;
+  }
+
+  /**
+   * Set planet type
+   * @param newType the type to set
+   */
+  public void setType(final PlanetTypes newType) {
+    this.type = newType;
+  }
+
+  /**
+   * Get big planet image
+   * @return BufferedImage
+   */
+  public BufferedImage getBigImage() {
+    return type.getImage();
+  }
+
+  /**
+   * Get image instructions
+   * @return Image instructions as a string
+   */
+  public String getImageInstructions() {
+    return type.getImageInstructions();
   }
 }

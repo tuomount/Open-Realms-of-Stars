@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -84,6 +84,24 @@ public final class DiceGenerator {
       x = System.nanoTime();
       initialized = true;
     }
+  }
+
+  /**
+   * Initialize random seed with fixed values.
+   * Initialized multiple generator. Some generators require long
+   * for seed and some for integer.
+   * @param seed Long seed
+   * @param shortSeed seed for integer generators.
+   */
+  public static void initializeGenerators(final long seed,
+      final int shortSeed) {
+    generator1 = new Random(seed);
+    generator2 = new Random(seed + 1);
+    mz = shortSeed;
+    mw = shortSeed + 1;
+    mw = mw >> 8;
+    x = seed;
+    initialized = true;
   }
 
   /**

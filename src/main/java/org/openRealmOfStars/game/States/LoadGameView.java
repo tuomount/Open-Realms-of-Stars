@@ -24,6 +24,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.GenericFileFilter;
 import org.openRealmOfStars.utilities.repository.GameRepository;
@@ -75,7 +76,7 @@ public class LoadGameView extends BlackPanel {
       planet.setGasGiant(true);
     } else {
       planet.setPlanetType(
-          DiceGenerator.getRandom(Planet.PLANET_IMAGE_INDEX.length - 1));
+          DiceGenerator.getRandom(PlanetTypes.numberOfPlanetTypes() - 1));
     }
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true, "Load game");

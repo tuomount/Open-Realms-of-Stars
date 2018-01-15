@@ -1213,7 +1213,7 @@ public class Planet {
    * @param planetType the planetType to set
    */
   public void setPlanetType(final int planetType) {
-    if (planetType >= 0 && planetType < PLANET_IMAGE_INDEX.length) {
+    if (planetType >= 0 && planetType < PlanetTypes.numberOfPlanetTypes()) {
       this.planetType = planetType;
       if (!gasGiant) {
         setPlanetImageIndex(PLANET_IMAGE_INDEX[planetType]);

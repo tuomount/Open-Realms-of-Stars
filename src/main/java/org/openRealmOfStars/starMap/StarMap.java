@@ -30,6 +30,7 @@ import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
@@ -659,7 +660,7 @@ public class StarMap {
         Planet planet = new Planet(new Coordinate(px, py), sun.getName(),
             planets, false);
         planet.setPlanetType(
-            DiceGenerator.getRandom(Planet.PLANET_IMAGE_INDEX.length - 1));
+            DiceGenerator.getRandom(PlanetTypes.numberOfPlanetTypes() - 1));
         if (planets == 1 && playerIndex != -1) {
           PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
           Message msg = new Message(

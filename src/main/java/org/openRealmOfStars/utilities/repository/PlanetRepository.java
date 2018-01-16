@@ -17,7 +17,7 @@ import java.io.IOException;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -64,10 +64,13 @@ public class PlanetRepository {
     planet.setAmountMetalInGround(amountMetalInGround);
     planet.setMetal(metal);
     planet.setProdResource(prodResource);
-    planet.setPlanetImageIndex(dis.readInt());
+    int gasGiantIndex = dis.readInt();
     int value = dis.readInt();
-    planet.setType(PlanetTypes.getPlanetType(value));
-    planet.setPlanetType(value);
+    if (!gasGiant) {
+      planet.setPlanetType(PlanetTypes.getPlanetType(value, gasGiant));
+    } else {
+      planet.setPlanetType(PlanetTypes.getPlanetType(gasGiantIndex, gasGiant));
+    }
     int planetOwner = dis.readInt();
     PlayerInfo planetOwnerInfo = null;
     if (planetOwner != -1) {
@@ -121,8 +124,8 @@ public class PlanetRepository {
     dos.writeInt(planet.getMetal());
     dos.writeInt(planet.getProdResource());
     dos.writeBoolean(planet.isGasGiant());
-    dos.writeInt(planet.getPlanetImageIndex());
-    dos.writeInt(planet.getType().getPlanetTypeIndex());
+    dos.writeInt(planet.getPlanetTypeIndex());
+    dos.writeInt(planet.getPlanetType().getPlanetTypeIndex());
     dos.writeInt(planet.getPlanetOwnerIndex());
     dos.writeInt(planet.getExtraFood());
     dos.writeInt(planet.getTax());

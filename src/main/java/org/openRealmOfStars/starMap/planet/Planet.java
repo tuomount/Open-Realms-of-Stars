@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
-import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
@@ -49,12 +48,6 @@ import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
  */
 
 public class Planet {
-
-  /**
-   * List of big planet images
-   */
-  public static final BufferedImage[] GASWORLD_BIG_IMAGES = {
-      GuiStatics.BIG_GASWORLD1, GuiStatics.BIG_GASWORLD2 };
 
   /**
    * Number of credits one population is worth when rushing.
@@ -118,12 +111,6 @@ public class Planet {
    * Planet type. Constain world type, images and image instruction.
    */
   private PlanetTypes planetType;
-  /**
-   * Planet Image Index for planet tile. This is not for
-   * the big planet image. This is used for Gas giant indexes.
-   * Only reason why this is required is the gas giants.
-   */
-  private int planetImageIndex;
 
   /**
    * Planet Owner info, this is index to player index, -1 means
@@ -301,7 +288,6 @@ public class Planet {
     this.setGroundSize(DiceGenerator.getRandom(7, 16));
     this.setMetal(0);
     this.gasGiant = gasGiant;
-    this.planetImageIndex = 0;
     this.planetOwner = -1;
     this.workers = new int[MAX_WORKER_TYPE];
     this.extraFood = 0;
@@ -311,7 +297,11 @@ public class Planet {
     this.tax = 0;
     this.culture = 0;
     this.homeWorldIndex = -1;
-    this.planetType = PlanetTypes.CARBONWORLD1;
+    if (this.gasGiant) {
+      this.planetType = PlanetTypes.GASGIANT1;
+    } else {
+      this.planetType = PlanetTypes.CARBONWORLD1;
+    }
   }
 
   /**
@@ -912,14 +902,6 @@ public class Planet {
   }
 
   /**
-   * Get Planet tile index
-   * @return The planet image index
-   */
-  public int getPlanetImageIndex() {
-    return planetImageIndex;
-  }
-
-  /**
    * Check if planet radiation exceeds current owner's max radiation level.
    * @return True if planet radiation is higher and false if not
    */
@@ -1078,14 +1060,6 @@ public class Planet {
   }
 
   /**
-   * Set planet image index. This is actually small planet tile.
-   * @param planetImageIndex Image index of planet
-   */
-  public void setPlanetImageIndex(final int planetImageIndex) {
-    this.planetImageIndex = planetImageIndex;
-  }
-
-  /**
    * Planet size as string. Size varies from small to huge.
    * @return String
    */
@@ -1159,18 +1133,6 @@ public class Planet {
       }
     }
     return sb.toString();
-  }
-
-  /**
-   * Set Planet type which is the index for big planet images.
-   * @param planetType the planetType to set
-   */
-  public void setPlanetType(final int planetType) {
-    if (planetType >= 0 && planetType < PlanetTypes.numberOfPlanetTypes()
-        && !gasGiant) {
-      setType(PlanetTypes.getPlanetType(planetType));
-      setPlanetImageIndex(getType().getTileIndex());
-    }
   }
 
   /**
@@ -1760,15 +1722,23 @@ public class Planet {
    * Get planet type
    * @return the type
    */
-  public PlanetTypes getType() {
+  public PlanetTypes getPlanetType() {
     return planetType;
   }
 
   /**
+   * Get planet type index. Separate list for gas giant
+   * and regular planets.
+   * @return Index
+   */
+  public int getPlanetTypeIndex() {
+    return planetType.getPlanetTypeIndex();
+  }
+  /**
    * Set planet type
    * @param newType the type to set
    */
-  public void setType(final PlanetTypes newType) {
+  public void setPlanetType(final PlanetTypes newType) {
     this.planetType = newType;
   }
 

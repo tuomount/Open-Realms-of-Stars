@@ -21,7 +21,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -95,16 +95,8 @@ public class BigImagePanel extends JPanel {
     super();
     this.setBackground(Color.black);
     this.planet = planet;
-    if (this.planet != null && !this.planet.isGasGiant()) {
+    if (this.planet != null) {
       backgroundImg = planet.getBigImage();
-    } else if (this.planet != null && this.planet.isGasGiant()) {
-      int imageIndex = this.planet.getPlanetImageIndex();
-      if (imageIndex > Planet.GASWORLD_BIG_IMAGES.length - 1) {
-        backgroundImg = Planet.GASWORLD_BIG_IMAGES[0];
-      } else {
-        backgroundImg = Planet.GASWORLD_BIG_IMAGES[this.planet
-          .getPlanetImageIndex()];
-      }
     } else {
       backgroundImg = null;
     }

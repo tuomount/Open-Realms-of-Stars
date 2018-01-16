@@ -1,11 +1,13 @@
 package org.openRealmOfStars.starMap.planet;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
 *
@@ -35,67 +37,79 @@ public enum PlanetTypes {
    */
   SILICONWORLD1(Tiles.getTileByName(TileNames.ROCK1).getIndex(),
       GuiStatics.BIG_PLANET_ROCK1, WorldType.SILICONWORLD,
-      ImageInstruction.PLANET_ROCK1),
+      ImageInstruction.PLANET_ROCK1, false),
   /**
    * First water world images
    */
   WATERWORLD1(Tiles.getTileByName(TileNames.WATERWORLD1).getIndex(),
       GuiStatics.BIG_PLANET_WATERWORLD1, WorldType.WATERWORLD,
-      ImageInstruction.PLANET_WATERWORLD1),
+      ImageInstruction.PLANET_WATERWORLD1, false),
   /**
    * Second water world images
    */
   WATERWORLD2(Tiles.getTileByName(TileNames.WATERWORLD2).getIndex(),
       GuiStatics.BIG_PLANET_WATERWORLD2, WorldType.WATERWORLD,
-      ImageInstruction.PLANET_WATERWORLD2),
+      ImageInstruction.PLANET_WATERWORLD2, false),
   /**
    * First iron world images
    */
   IRONWORLD1(Tiles.getTileByName(TileNames.IRONPLANET1).getIndex(),
       GuiStatics.BIG_PLANET_IRONPLANET1, WorldType.IRONWORLD,
-      ImageInstruction.PLANET_IRONWORLD1),
+      ImageInstruction.PLANET_IRONWORLD1, false),
+  /**
+   * Gas giant 1
+   */
+  GASGIANT1(Tiles.getTileByName(TileNames.GAS_GIANT_1_NE).getIndex(),
+      GuiStatics.BIG_GASWORLD1, WorldType.GASWORLD,
+      ImageInstruction.PLANET_GASGIANT1, true),
   /**
    * Second iron world images
    */
   IRONWORLD2(Tiles.getTileByName(TileNames.IRONPLANET2).getIndex(),
       GuiStatics.BIG_PLANET_IRONPLANET2, WorldType.IRONWORLD,
-      ImageInstruction.PLANET_IRONWORLD2),
+      ImageInstruction.PLANET_IRONWORLD2, false),
   /**
    * Third water world images
    */
   WATERWORLD3(Tiles.getTileByName(TileNames.WATERWORLD3).getIndex(),
       GuiStatics.BIG_PLANET_WATERWORLD3, WorldType.WATERWORLD,
-      ImageInstruction.PLANET_WATERWORLD3),
+      ImageInstruction.PLANET_WATERWORLD3, false),
   /**
    * Fourth water world images
    */
   WATERWORLD4(Tiles.getTileByName(TileNames.WATERWORLD4).getIndex(),
       GuiStatics.BIG_PLANET_WATERWORLD4, WorldType.WATERWORLD,
-      ImageInstruction.PLANET_WATERWORLD4),
+      ImageInstruction.PLANET_WATERWORLD4, false),
+  /**
+   * Gas giant 2
+   */
+  GASGIANT2(Tiles.getTileByName(TileNames.GAS_GIANT_2_NE).getIndex(),
+      GuiStatics.BIG_GASWORLD2, WorldType.GASWORLD,
+      ImageInstruction.PLANET_GASGIANT2, true),
   /**
    * First ice world images
    */
   ICEWORLD1(Tiles.getTileByName(TileNames.ICEWORLD1).getIndex(),
       GuiStatics.BIG_PLANET_ICEWORLD1, WorldType.ICEWORLD,
-      ImageInstruction.PLANET_ICEWORLD1),
+      ImageInstruction.PLANET_ICEWORLD1, false),
   /**
    * Second ice world images
    */
   ICEWORLD2(Tiles.getTileByName(TileNames.ICEWORLD2).getIndex(),
       GuiStatics.BIG_PLANET_ICEWORLD2, WorldType.ICEWORLD,
-      ImageInstruction.PLANET_ICEWORLD2),
+      ImageInstruction.PLANET_ICEWORLD2, false),
   /**
    * Third iron world images
    */
   IRONWORLD3(Tiles.getTileByName(TileNames.IRONPLANET3).getIndex(),
       GuiStatics.BIG_PLANET_IRONPLANET3, WorldType.IRONWORLD,
-      ImageInstruction.PLANET_IRONWORLD3),
+      ImageInstruction.PLANET_IRONWORLD3, false),
   /**
    * First carbon world images
    */
   CARBONWORLD1(Tiles.getTileByName(TileNames.CARBONWORLD1).getIndex(),
       GuiStatics.BIG_PLANET_CARBONWORLD1, WorldType.CARBONWORLD,
-      ImageInstruction.PLANET_CARBONWORLD1);
+      ImageInstruction.PLANET_CARBONWORLD1, false);
 
 
   /**
@@ -105,11 +119,31 @@ public enum PlanetTypes {
   public static int numberOfPlanetTypes() {
     return PlanetTypes.values().length;
   }
+
+  /**
+   * Get random planet type.
+   * @param gasGiant True for Gas giant
+   * @return PlanetTypes
+   */
+  public static PlanetTypes getRandomPlanetType(final boolean gasGiant) {
+    ArrayList<PlanetTypes> list = new ArrayList<>();
+    for (PlanetTypes type : PlanetTypes.values()) {
+      if (type.gasGiant == gasGiant) {
+        list.add(type);
+      }
+    }
+    int index = DiceGenerator.getRandom(0, list.size() - 1);
+    return list.get(index);
+  }
   /**
    * Tile index
    */
   private int tile;
 
+  /**
+   * Gas giant or not. True for gas giants
+   */
+  private boolean gasGiant;
   /**
    * Big image for show full size planet
    */
@@ -131,13 +165,16 @@ public enum PlanetTypes {
    * @param bigImage Buffered Image for full size planet
    * @param type WorldType
    * @param imageInstruction Image instructions for news
+   * @param isGasGiant True for gas giants
    */
   PlanetTypes(final int tileIndex, final BufferedImage bigImage,
-      final WorldType type, final String imageInstruction) {
+      final WorldType type, final String imageInstruction,
+      final boolean isGasGiant) {
     tile = tileIndex;
     image = bigImage;
     worldType = type;
     instructions = imageInstruction;
+    gasGiant = isGasGiant;
   }
 
   /**
@@ -178,6 +215,8 @@ public enum PlanetTypes {
    */
   public int getPlanetTypeIndex() {
     switch (this) {
+      case GASGIANT1: return 0;
+      case GASGIANT2: return 1;
       case SILICONWORLD1: return 0;
       case WATERWORLD1: return 1;
       case WATERWORLD2: return 2;
@@ -195,11 +234,23 @@ public enum PlanetTypes {
   }
 
   /**
-   * Get planet type to index
+   * Get planet type to index. There are two list:
+   * One for regular planet and one for gas giants.
    * @param index World Type index
+   * @param gasGiant Set True for gas giant.
    * @return Planet type index
    */
-  public static PlanetTypes getPlanetType(final int index) {
+  public static PlanetTypes getPlanetType(final int index,
+      final boolean gasGiant) {
+    if (gasGiant) {
+      switch (index) {
+        case  0: return GASGIANT1;
+        case  1: return GASGIANT2;
+        default:
+          throw new IllegalArgumentException("No planet type available "
+              + "for this index!!");
+      }
+    }
     switch (index) {
       case  0: return SILICONWORLD1;
       case  1: return WATERWORLD1;

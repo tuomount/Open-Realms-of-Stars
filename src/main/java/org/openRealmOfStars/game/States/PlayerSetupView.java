@@ -102,11 +102,10 @@ public class PlayerSetupView extends BlackPanel {
     Planet planet = new Planet(new Coordinate(1, 1), "Galaxy Creation Planet",
         2, false);
     if (DiceGenerator.getRandom(100) < 10) {
-      planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
+      planet.setPlanetType(PlanetTypes.getRandomPlanetType(true));
       planet.setGasGiant(true);
     } else {
-      planet.setPlanetType(
-          DiceGenerator.getRandom(PlanetTypes.numberOfPlanetTypes() - 1));
+      planet.setPlanetType(PlanetTypes.getRandomPlanetType(false));
     }
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true, "Player Setup");

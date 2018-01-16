@@ -42,5 +42,9 @@ public enum WorldType {
   /**
    * Carbon world
    */
-  CARBONWORLD;
+  CARBONWORLD,
+  /**
+   * Inhabitable gas world
+   */
+  GASWORLD;
 }

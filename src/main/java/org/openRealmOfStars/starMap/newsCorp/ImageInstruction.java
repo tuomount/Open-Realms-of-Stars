@@ -328,9 +328,7 @@ public class ImageInstruction {
       throw new IllegalArgumentException("Illegal planet position: "
         + position);
     }
-    if (!PlanetTypes.verifyInstruction(planetType)
-        && !PLANET_GASGIANT1.equals(planetType)
-        && !PLANET_GASGIANT2.equals(planetType)) {
+    if (!PlanetTypes.verifyInstruction(planetType)) {
       throw new IllegalArgumentException("Illegal planet type: " + planetType);
     }
     if (!SIZE_FULL.equals(size)

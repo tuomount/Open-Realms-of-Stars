@@ -279,14 +279,15 @@ public class MapInfoPanel extends InfoPanel {
     if (planet != null) {
       BufferedImage img = new BufferedImage(Tile.MAX_WIDTH * 2,
           Tile.MAX_HEIGHT * 2, BufferedImage.TYPE_4BYTE_ABGR);
-      Tile tmpTile = Tiles.getTileByIndex(planet.getPlanetImageIndex());
+      Tile tmpTile = Tiles.getTileByIndex(planet.getPlanetType()
+          .getTileIndex());
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
       if (!planet.isGasGiant()) {
         tmpTile.draw(g2d, Tile.MAX_WIDTH / 2, Tile.MAX_HEIGHT / 2);
       } else {
-        switch (planet.getPlanetImageIndex()) {
+        switch (planet.getPlanetTypeIndex()) {
         default:
         case 0: {
           tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_1_NW);

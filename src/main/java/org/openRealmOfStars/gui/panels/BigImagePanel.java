@@ -152,7 +152,7 @@ public class BigImagePanel extends JPanel {
   /**
    * Background planet offset Y coordinate
    */
-  private static final int PLANET_Y_OFFSET = 575;
+  private static final int PLANET_Y_OFFSET = 600;
 
   /**
    * Planet animation offset X coordinate
@@ -255,6 +255,9 @@ public class BigImagePanel extends JPanel {
         offsetY = (PLANET_Y_OFFSET - backgroundImg.getHeight()) / 2;
         if (planet.isGasGiant()) {
           offsetY = offsetY + 100;
+        }
+        if (offsetY < 25) {
+          offsetY = 25;
         }
       }
       drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK,

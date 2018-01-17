@@ -297,6 +297,7 @@ public class ImageInstruction {
         && !SpaceRace.TEUTHIDAES.getNameSingle().equals(image)
         && !SpaceRace.MECHIONS.getNameSingle().equals(image)
         && !SpaceRace.SCAURIANS.getNameSingle().equals(image)
+        && !SpaceRace.HOMARIANS.getNameSingle().equals(image)
         && !LOGO.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);

@@ -395,6 +395,12 @@ public class Planet {
     if (getAmountMetalInGround() < metalReq) {
       return 0;
     }
+    if (metalReq < 0) {
+      metalReq = 0;
+    }
+    if (prodReq < 0) {
+      prodReq = 0;
+    }
     return metalReq + prodReq * 2;
   }
 

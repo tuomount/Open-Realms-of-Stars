@@ -21,7 +21,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -95,16 +95,8 @@ public class BigImagePanel extends JPanel {
     super();
     this.setBackground(Color.black);
     this.planet = planet;
-    if (this.planet != null && !this.planet.isGasGiant()) {
-      backgroundImg = Planet.PLANET_BIG_IMAGES[this.planet.getPlanetType()];
-    } else if (this.planet != null && this.planet.isGasGiant()) {
-      int imageIndex = this.planet.getPlanetImageIndex();
-      if (imageIndex > Planet.GASWORLD_BIG_IMAGES.length - 1) {
-        backgroundImg = Planet.GASWORLD_BIG_IMAGES[0];
-      } else {
-        backgroundImg = Planet.GASWORLD_BIG_IMAGES[this.planet
-          .getPlanetImageIndex()];
-      }
+    if (this.planet != null) {
+      backgroundImg = planet.getBigImage();
     } else {
       backgroundImg = null;
     }
@@ -160,7 +152,7 @@ public class BigImagePanel extends JPanel {
   /**
    * Background planet offset Y coordinate
    */
-  private static final int PLANET_Y_OFFSET = 575;
+  private static final int PLANET_Y_OFFSET = 600;
 
   /**
    * Planet animation offset X coordinate
@@ -263,6 +255,9 @@ public class BigImagePanel extends JPanel {
         offsetY = (PLANET_Y_OFFSET - backgroundImg.getHeight()) / 2;
         if (planet.isGasGiant()) {
           offsetY = offsetY + 100;
+        }
+        if (offsetY < 25) {
+          offsetY = 25;
         }
       }
       drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK,

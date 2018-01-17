@@ -24,6 +24,7 @@ import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
 *
@@ -286,6 +287,7 @@ public class CombatTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRealCombatWithPrivateer() {
+    DiceGenerator.initializeGenerators(5L, 1234);
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
     info1.getTechList().addTech(TechFactory.createHullTech(

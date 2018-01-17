@@ -12,11 +12,12 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.PlanetTypes;
 
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -60,6 +61,8 @@ public class NewsFactoryTest {
   public void testWarOnPlanet() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.WATERWORLD3.getImageInstructions());
     PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
@@ -82,6 +85,8 @@ public class NewsFactoryTest {
   public void testBorderCrossing() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.WATERWORLD3.getImageInstructions());
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(diplomacy.isMultipleBorderCrossing(1)).thenReturn(true);
     PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
@@ -124,6 +129,8 @@ public class NewsFactoryTest {
   public void testWarWithAggressiveAggressor() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.IRONWORLD3.getImageInstructions());
     PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     Mockito.when(aggressor.getAiAttitude()).thenReturn(Attitude.AGGRESSIVE);
@@ -148,6 +155,8 @@ public class NewsFactoryTest {
   public void testWarWithMilitaristicAggressor() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.WATERWORLD3.getImageInstructions());
     PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     Mockito.when(aggressor.getAiAttitude()).thenReturn(Attitude.MILITARISTIC);
@@ -172,6 +181,8 @@ public class NewsFactoryTest {
   public void testWarWithPeacefulAggressor() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.IRONWORLD2.getImageInstructions());
     PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     Mockito.when(aggressor.getAiAttitude()).thenReturn(Attitude.PEACEFUL);
@@ -213,6 +224,8 @@ public class NewsFactoryTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testPeaceWithAggressiveMaker() {
     Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.WATERWORLD3.getImageInstructions());
     Mockito.when(planet.getName()).thenReturn("Planet I");
     PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
     Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
@@ -243,6 +256,8 @@ public class NewsFactoryTest {
     Mockito.when(peaceMaker.getAiAttitude()).thenReturn(Attitude.DIPLOMATIC);
     PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
     Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.ICEWORLD1.getImageInstructions());
     NewsData news = NewsFactory.makePeaceNews(peaceMaker, acceptor, planet);
     assertEquals(true, news.getImageInstructions().contains(
         peaceMaker.getEmpireName()));
@@ -262,6 +277,8 @@ public class NewsFactoryTest {
   public void testPeaceWithPeacefulMaker() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.WATERWORLD3.getImageInstructions());
     PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
     Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
     Mockito.when(peaceMaker.getAiAttitude()).thenReturn(Attitude.PEACEFUL);
@@ -303,6 +320,8 @@ public class NewsFactoryTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testTradeAllianceWithMerchanticalMaker() {
     Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.WATERWORLD3.getImageInstructions());
     Mockito.when(planet.getName()).thenReturn("Planet I");
     PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
     Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
@@ -328,6 +347,8 @@ public class NewsFactoryTest {
   public void testTradeAllianceWithDiplomaticMaker() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.WATERWORLD2.getImageInstructions());
     PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
     Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
     Mockito.when(peaceMaker.getAiAttitude()).thenReturn(Attitude.DIPLOMATIC);
@@ -352,6 +373,8 @@ public class NewsFactoryTest {
   public void testTradeAllianceWithPeacefulMaker() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.IRONWORLD1.getImageInstructions());
     PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
     Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
     Mockito.when(peaceMaker.getAiAttitude()).thenReturn(Attitude.PEACEFUL);
@@ -394,6 +417,8 @@ public class NewsFactoryTest {
   public void testAllianceWithDiplomaticMaker() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.WATERWORLD4.getImageInstructions());
     PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
     Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
     Mockito.when(peaceMaker.getAiAttitude()).thenReturn(Attitude.DIPLOMATIC);
@@ -418,6 +443,8 @@ public class NewsFactoryTest {
   public void testAllianceWithPeacefulMaker() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.WATERWORLD1.getImageInstructions());
     PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
     Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
     Mockito.when(peaceMaker.getAiAttitude()).thenReturn(Attitude.PEACEFUL);
@@ -533,6 +560,8 @@ public class NewsFactoryTest {
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
     Mockito.when(defender.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.CARBONWORLD1.getImageInstructions());
     NewsData news = NewsFactory.makePlanetConqueredNews(aggressor, defender, planet, false);
     assertEquals(true, news.getNewsText().contains(
         aggressor.getEmpireName()));
@@ -545,6 +574,8 @@ public class NewsFactoryTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testConquerPlanetWithNukes() {
     Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.SILICONWORLD1.getImageInstructions());
     Mockito.when(planet.getName()).thenReturn("Planet I");
     Mockito.when(planet.getRadiationLevel()).thenReturn(9);
     PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);

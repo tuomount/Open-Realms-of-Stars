@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.starMap.planet.PlanetTypes;
 
 /**
 *
@@ -327,13 +328,7 @@ public class ImageInstruction {
       throw new IllegalArgumentException("Illegal planet position: "
         + position);
     }
-    if (!PLANET_ROCK1.equals(planetType)
-        && !PLANET_WATERWORLD1.equals(planetType)
-        && !PLANET_WATERWORLD2.equals(planetType)
-        && !PLANET_IRONWORLD1.equals(planetType)
-        && !PLANET_IRONWORLD2.equals(planetType)
-        && !PLANET_GASGIANT1.equals(planetType)
-        && !PLANET_GASGIANT2.equals(planetType)) {
+    if (!PlanetTypes.verifyInstruction(planetType)) {
       throw new IllegalArgumentException("Illegal planet type: " + planetType);
     }
     if (!SIZE_FULL.equals(size)

@@ -601,8 +601,7 @@ public class MapPanel extends JPanel {
     gr.drawImage(GuiStatics.STAR_FIELD_IMAGE, -PARALLAX_OFFSET - cx
         * speedStarX, -PARALLAX_OFFSET - cy * speedStarY, null);
     if (combat.getPlanet() != null && !combat.getPlanet().isGasGiant()) {
-      BufferedImage backgroundImg =
-          Planet.PLANET_BIG_IMAGES[combat.getPlanet().getPlanetType()];
+      BufferedImage backgroundImg = combat.getPlanet().getBigImage();
       gr.drawImage(backgroundImg, 100 - backgroundImg.getWidth() / 25,
           100 - backgroundImg.getHeight() / 25, null);
     }

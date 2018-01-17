@@ -24,12 +24,13 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -95,11 +96,10 @@ public class GalaxyCreationView extends BlackPanel {
     Planet planet = new Planet(new Coordinate(1, 1), "Galaxy Creation Planet",
         1, false);
     if (DiceGenerator.getRandom(100) < 10) {
-      planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
+      planet.setPlanetType(PlanetTypes.getRandomPlanetType(true));
       planet.setGasGiant(true);
     } else {
-      planet.setPlanetType(
-          DiceGenerator.getRandom(Planet.PLANET_IMAGE_INDEX.length - 1));
+      planet.setPlanetType(PlanetTypes.getRandomPlanetType(false));
     }
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true, "Galaxy Creation");

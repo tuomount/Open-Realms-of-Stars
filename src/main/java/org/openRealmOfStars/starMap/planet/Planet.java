@@ -6,10 +6,7 @@ import java.util.ArrayList;
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
-import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icons;
-import org.openRealmOfStars.mapTiles.TileNames;
-import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
@@ -19,7 +16,6 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
-import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -52,49 +48,6 @@ import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
  */
 
 public class Planet {
-
-  /**
-   * List of Planet tile names for regular planets
-   */
-  public static final int[] PLANET_IMAGE_INDEX = {
-      Tiles.getTileByName(TileNames.ROCK1).getIndex(),
-      Tiles.getTileByName(TileNames.WATERWORLD1).getIndex(),
-      Tiles.getTileByName(TileNames.WATERWORLD2).getIndex(),
-      Tiles.getTileByName(TileNames.IRONPLANET1).getIndex(),
-      Tiles.getTileByName(TileNames.IRONPLANET2).getIndex(),
-      Tiles.getTileByName(TileNames.WATERWORLD3).getIndex(),
-      Tiles.getTileByName(TileNames.WATERWORLD4).getIndex(),
-      Tiles.getTileByName(TileNames.ICEWORLD1).getIndex(),
-      Tiles.getTileByName(TileNames.ICEWORLD2).getIndex(),
-      Tiles.getTileByName(TileNames.IRONPLANET3).getIndex(),
-      Tiles.getTileByName(TileNames.CARBONWORLD1).getIndex()};
-
-  /**
-   * List of big planet images
-   */
-  public static final BufferedImage[] PLANET_BIG_IMAGES = {
-      GuiStatics.BIG_PLANET_ROCK1, GuiStatics.BIG_PLANET_WATERWORLD1,
-      GuiStatics.BIG_PLANET_WATERWORLD2, GuiStatics.BIG_PLANET_IRONPLANET1,
-      GuiStatics.BIG_PLANET_IRONPLANET2,
-      GuiStatics.BIG_PLANET_WATERWORLD3, GuiStatics.BIG_PLANET_WATERWORLD4,
-      GuiStatics.BIG_PLANET_ICEWORLD1, GuiStatics.BIG_PLANET_ICEWORLD2,
-      GuiStatics.BIG_PLANET_IRONPLANET3, GuiStatics.BIG_PLANET_CARBONWORLD1};
-  /**
-   * List of planet image instructions used in news.
-   */
-  public static final String[] PLANET_NEWS_INSTRUCTIONS = {
-      ImageInstruction.PLANET_ROCK1, ImageInstruction.PLANET_WATERWORLD1,
-      ImageInstruction.PLANET_WATERWORLD2, ImageInstruction.PLANET_IRONWORLD1,
-      ImageInstruction.PLANET_IRONWORLD2, ImageInstruction.PLANET_WATERWORLD3,
-      ImageInstruction.PLANET_WATERWORLD4, ImageInstruction.PLANET_ICEWORLD1,
-      ImageInstruction.PLANET_ICEWORLD2, ImageInstruction.PLANET_IRONWORLD3,
-      ImageInstruction.PLANET_CARBONWORLD1};
-
-  /**
-   * List of big planet images
-   */
-  public static final BufferedImage[] GASWORLD_BIG_IMAGES = {
-      GuiStatics.BIG_GASWORLD1, GuiStatics.BIG_GASWORLD2 };
 
   /**
    * Number of credits one population is worth when rushing.
@@ -155,15 +108,9 @@ public class Planet {
   private Coordinate coordinate;
 
   /**
-   * Planet Image Index for planet tile. This is not for
-   * the big planet image. Planet Type is for big planet image.
+   * Planet type. Constain world type, images and image instruction.
    */
-  private int planetImageIndex;
-
-  /**
-   * Planet type. This is index for big planet image. see PLANET_IMAGE_INDEX
-   */
-  private int planetType;
+  private PlanetTypes planetType;
 
   /**
    * Planet Owner info, this is index to player index, -1 means
@@ -341,7 +288,6 @@ public class Planet {
     this.setGroundSize(DiceGenerator.getRandom(7, 16));
     this.setMetal(0);
     this.gasGiant = gasGiant;
-    this.planetImageIndex = 0;
     this.planetOwner = -1;
     this.workers = new int[MAX_WORKER_TYPE];
     this.extraFood = 0;
@@ -351,6 +297,11 @@ public class Planet {
     this.tax = 0;
     this.culture = 0;
     this.homeWorldIndex = -1;
+    if (this.gasGiant) {
+      this.planetType = PlanetTypes.GASGIANT1;
+    } else {
+      this.planetType = PlanetTypes.CARBONWORLD1;
+    }
   }
 
   /**
@@ -951,14 +902,6 @@ public class Planet {
   }
 
   /**
-   * Get Planet tile index
-   * @return The planet image index
-   */
-  public int getPlanetImageIndex() {
-    return planetImageIndex;
-  }
-
-  /**
    * Check if planet radiation exceeds current owner's max radiation level.
    * @return True if planet radiation is higher and false if not
    */
@@ -1117,14 +1060,6 @@ public class Planet {
   }
 
   /**
-   * Set planet image index. This is actually small planet tile.
-   * @param planetImageIndex Image index of planet
-   */
-  public void setPlanetImageIndex(final int planetImageIndex) {
-    this.planetImageIndex = planetImageIndex;
-  }
-
-  /**
    * Planet size as string. Size varies from small to huge.
    * @return String
    */
@@ -1198,27 +1133,6 @@ public class Planet {
       }
     }
     return sb.toString();
-  }
-
-  /**
-   * Get Planet type. This is index for big planet images.
-   * @return the planetType aka index for big images.
-   */
-  public int getPlanetType() {
-    return planetType;
-  }
-
-  /**
-   * Set Planet type which is the index for big planet images.
-   * @param planetType the planetType to set
-   */
-  public void setPlanetType(final int planetType) {
-    if (planetType >= 0 && planetType < PLANET_IMAGE_INDEX.length) {
-      this.planetType = planetType;
-      if (!gasGiant) {
-        setPlanetImageIndex(PLANET_IMAGE_INDEX[planetType]);
-      }
-    }
   }
 
   /**
@@ -1802,5 +1716,45 @@ public class Planet {
    */
   public void setExtraFood(final int extraFood) {
     this.extraFood = extraFood;
+  }
+
+  /**
+   * Get planet type
+   * @return the type
+   */
+  public PlanetTypes getPlanetType() {
+    return planetType;
+  }
+
+  /**
+   * Get planet type index. Separate list for gas giant
+   * and regular planets.
+   * @return Index
+   */
+  public int getPlanetTypeIndex() {
+    return planetType.getPlanetTypeIndex();
+  }
+  /**
+   * Set planet type
+   * @param newType the type to set
+   */
+  public void setPlanetType(final PlanetTypes newType) {
+    this.planetType = newType;
+  }
+
+  /**
+   * Get big planet image
+   * @return BufferedImage
+   */
+  public BufferedImage getBigImage() {
+    return planetType.getImage();
+  }
+
+  /**
+   * Get image instructions
+   * @return Image instructions as a string
+   */
+  public String getImageInstructions() {
+    return planetType.getImageInstructions();
   }
 }

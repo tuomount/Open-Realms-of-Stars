@@ -30,6 +30,7 @@ import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
@@ -658,8 +659,7 @@ public class StarMap {
         planets++;
         Planet planet = new Planet(new Coordinate(px, py), sun.getName(),
             planets, false);
-        planet.setPlanetType(
-            DiceGenerator.getRandom(Planet.PLANET_IMAGE_INDEX.length - 1));
+        planet.setPlanetType(PlanetTypes.getRandomPlanetType(false));
         if (planets == 1 && playerIndex != -1) {
           PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
           Message msg = new Message(
@@ -728,7 +728,7 @@ public class StarMap {
         int planetNumber = planetList.size() - 1;
         info = new SquareInfo(SquareInfo.TYPE_PLANET, planetNumber);
         tileInfo[px][py] = info;
-        tiles[px][py] = planet.getPlanetImageIndex();
+        tiles[px][py] = planet.getPlanetType().getTileIndex();
       }
     }
     int gasGiants = 0;
@@ -746,11 +746,11 @@ public class StarMap {
         gasGiants++;
         Planet planet = new Planet(new Coordinate(px, py), sun.getName(),
             planets + gasGiants, true);
-        planet.setPlanetImageIndex(DiceGenerator.getRandom(1));
+        planet.setPlanetType(PlanetTypes.getRandomPlanetType(true));
         planetList.add(planet);
         int planetNumber = planetList.size() - 1;
         info = new SquareInfo(SquareInfo.TYPE_GAS_PLANET, planetNumber);
-        switch (planet.getPlanetImageIndex()) {
+        switch (planet.getPlanetTypeIndex()) {
         case 0: {
           tiles[px][py] = Tiles.getTileByName(TileNames.GAS_GIANT_1_NW)
               .getIndex();
@@ -783,7 +783,7 @@ public class StarMap {
         }
         default:
           throw new IllegalArgumentException("Unexpected gas giant type:"
-             + planet.getPlanetImageIndex());
+             + planet.getPlanetTypeIndex());
         }
       }
     }

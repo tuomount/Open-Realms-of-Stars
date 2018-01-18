@@ -7,7 +7,7 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ public final class BuildingFactory {
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 42;
+  private static final int MAX_BUILDING = 45;
 
   /**
    * Component Basic mine
@@ -252,6 +252,21 @@ public final class BuildingFactory {
   public static final int COMPONENT_PLANETARY_SCANNER_MK5 = 41;
 
   /**
+   * Component Ancient lab
+   */
+  public static final int COMPONENT_ANCIENT_LAB = 42;
+
+  /**
+   * Component Ancient factory
+   */
+  public static final int COMPONENT_ANCIENT_FACTORY = 43;
+
+  /**
+   * Component Ancient temple
+   */
+  public static final int COMPONENT_ANCIENT_TEMPLE = 44;
+
+  /**
    * Create planetary building with index
    * @param index For creating a  new building
    * @return Building if index found otherwise null
@@ -385,6 +400,15 @@ public final class BuildingFactory {
     case COMPONENT_PLANETARY_SCANNER_MK5:
       tmp = createMilitaryFacility(index);
       break; // Planetary scanner Mk5
+    case COMPONENT_ANCIENT_LAB:
+      tmp = createProductionFacility(index);
+      break; // Ancient lab
+    case COMPONENT_ANCIENT_FACTORY:
+      tmp = createProductionFacility(index);
+      break; // Ancient factory
+    case COMPONENT_ANCIENT_TEMPLE:
+      tmp = createProductionFacility(index);
+      break; // Ancient temple
     default:
       throw new IllegalArgumentException("No building found with index "
       + index + "!");
@@ -674,6 +698,34 @@ public final class BuildingFactory {
       tmp.setSingleAllowed(true);
       return tmp;
     }
+    if (index == COMPONENT_ANCIENT_LAB) {
+      tmp = new Building(index, "Ancient lab",
+          Icons.getIconByName(Icons.ICON_RESEARCH), BuildingType.RESEARCH);
+      tmp.setReseBonus(1);
+      tmp.setProdCost(8);
+      tmp.setMetalCost(3);
+      tmp.setDescription("Ancient laboratory for science.");
+      return tmp;
+    }
+    if (index == COMPONENT_ANCIENT_FACTORY) {
+      tmp = new Building(index, "Ancient factory",
+          Icons.getIconByName(Icons.ICON_FACTORY), BuildingType.FACTORY);
+      tmp.setFactBonus(1);
+      tmp.setProdCost(8);
+      tmp.setMetalCost(3);
+      tmp.setDescription("Ancient production line.");
+      return tmp;
+    }
+    if (index == COMPONENT_ANCIENT_TEMPLE) {
+      tmp = new Building(index, "Ancient temple",
+          Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
+      tmp.setCultBonus(1);
+      tmp.setProdCost(6);
+      tmp.setMetalCost(2);
+      tmp.setDescription("Ancient temple for creating culture.");
+      return tmp;
+    }
+
     return tmp;
   }
 

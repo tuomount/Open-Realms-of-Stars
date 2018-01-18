@@ -7,6 +7,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.starMap.planet.BuildingFactory;
 
 /**
 *
@@ -49,6 +50,46 @@ public class BuildingTest {
     assertEquals(true, generic.contains("Food: +1"));
     assertEquals(false, scaurian.contains("Cred.: +2"));
     assertEquals(true, scaurian.contains("Food: +1"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAncientLab() {
+    Building building = BuildingFactory.createByName("Ancient lab");
+    assertEquals("Ancient lab", building.getName());
+    assertEquals(1, building.getReseBonus());
+    assertEquals(0, building.getCredBonus());
+    assertEquals(0, building.getCultBonus());
+    assertEquals(0, building.getMineBonus());
+    assertEquals(0, building.getFactBonus());
+    assertEquals(0, building.getFarmBonus());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAncientFactory() {
+    Building building = BuildingFactory.createByName("Ancient factory");
+    assertEquals("Ancient factory", building.getName());
+    assertEquals(0, building.getReseBonus());
+    assertEquals(0, building.getCredBonus());
+    assertEquals(0, building.getCultBonus());
+    assertEquals(0, building.getMineBonus());
+    assertEquals(1, building.getFactBonus());
+    assertEquals(0, building.getFarmBonus());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAncientTemple() {
+    Building building = BuildingFactory.createByName("Ancient temple");
+    assertEquals("Ancient temple", building.getName());
+    assertEquals(0, building.getReseBonus());
+    assertEquals(0, building.getCredBonus());
+    assertEquals(1, building.getCultBonus());
+    assertEquals(0, building.getMineBonus());
+    assertEquals(0, building.getFactBonus());
+    assertEquals(0, building.getFactBonus());
+    assertEquals(0, building.getFarmBonus());
   }
 
 }

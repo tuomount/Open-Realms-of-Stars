@@ -309,6 +309,7 @@ public class CombatTest {
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
     Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    combat.setTimerForWormHole(10000);
     assertEquals(0, info1.getTotalCredits());
     combat.doFastCombat(false);
     assertEquals(info1, combat.getWinner());

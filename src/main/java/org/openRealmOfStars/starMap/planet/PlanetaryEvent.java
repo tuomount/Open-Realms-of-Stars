@@ -1,6 +1,7 @@
 package org.openRealmOfStars.starMap.planet;
 
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
 *
@@ -150,6 +151,95 @@ public enum PlanetaryEvent {
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
+  }
+
+  /**
+   * Get Random event for planet type
+   * @param type Planet type
+   * @param chance Chance for random event.
+   * @return PlanetaryEvent
+   */
+  public static PlanetaryEvent getRandomEvent(final PlanetTypes type,
+      final int chance) {
+    int value = DiceGenerator.getRandom(99);
+    if (value < chance) {
+      switch (type) {
+        case CARBONWORLD1:
+          value = DiceGenerator.getRandom(99);
+          if (value < 33) {
+            return LUSH_VEGETATION;
+          } else if (value < 66) {
+            return PlanetaryEvent.METAL_RICH_SURFACE;
+          } else if (value < 78) {
+            return PlanetaryEvent.ANCIENT_LAB;
+          } else if (value < 89) {
+            return PlanetaryEvent.ANCIENT_FACTORY;
+          } else if (value < 100) {
+            return PlanetaryEvent.ANCIENT_TEMPLE;
+          }
+          break;
+        case SILICONWORLD1:
+          value = DiceGenerator.getRandom(99);
+          if (value < 25) {
+            return PlanetaryEvent.METAL_RICH_SURFACE;
+          } else if (value < 50) {
+            return PlanetaryEvent.ANCIENT_LAB;
+          } else if (value < 75) {
+            return PlanetaryEvent.ANCIENT_FACTORY;
+          } else if (value < 100) {
+            return PlanetaryEvent.ANCIENT_TEMPLE;
+          }
+          break;
+        case ICEWORLD1:
+        case ICEWORLD2:
+          value = DiceGenerator.getRandom(99);
+          if (value < 25) {
+            return PlanetaryEvent.METAL_RICH_SURFACE;
+          } else if (value < 50) {
+            return PlanetaryEvent.ANCIENT_LAB;
+          } else if (value < 75) {
+            return PlanetaryEvent.ANCIENT_FACTORY;
+          } else if (value < 100) {
+            return PlanetaryEvent.ANCIENT_TEMPLE;
+          }
+          break;
+        case IRONWORLD1:
+        case IRONWORLD2:
+        case IRONWORLD3:
+          value = DiceGenerator.getRandom(99);
+          if (value < 34) {
+            return PlanetaryEvent.METAL_RICH_SURFACE;
+          } else if (value < 67) {
+            return PlanetaryEvent.ANCIENT_LAB;
+          } else if (value < 100) {
+            return PlanetaryEvent.ANCIENT_FACTORY;
+          }
+          break;
+        case WATERWORLD1:
+        case WATERWORLD2:
+        case WATERWORLD3:
+        case WATERWORLD4:
+          value = DiceGenerator.getRandom(99);
+          if (value < 16) {
+            return LUSH_VEGETATION;
+          } else if (value < 33) {
+            return PlanetaryEvent.PARADISE;
+          } else if (value < 49) {
+            return PlanetaryEvent.METAL_RICH_SURFACE;
+          } else if (value < 66) {
+            return PlanetaryEvent.ANCIENT_LAB;
+          } else if (value < 82) {
+            return PlanetaryEvent.ANCIENT_FACTORY;
+          } else if (value < 100) {
+            return PlanetaryEvent.ANCIENT_TEMPLE;
+          }
+          break;
+
+        default:
+          break;
+      }
+    }
+    return PlanetaryEvent.NONE;
   }
 
 }

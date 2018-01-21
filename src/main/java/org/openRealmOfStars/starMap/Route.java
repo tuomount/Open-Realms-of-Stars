@@ -203,6 +203,40 @@ public class Route {
     return routeDot;
   }
 
+  /**
+   * Route repair image
+   */
+  private static BufferedImage repairDot;
+
+  /**
+   * Get repair image
+   * @return BufferedImage
+   */
+  public static BufferedImage getRepairDot() {
+    if (repairDot == null) {
+      repairDot = IOUtilities
+          .loadImage(Icons.class.getResource("/resources/images/repair.png"));
+    }
+    return repairDot;
+  }
+
+  /**
+   * Get Defense image
+   * @return BufferedImage
+   */
+  public static BufferedImage getDefenseDot() {
+    if (defenseDot == null) {
+      defenseDot = IOUtilities
+          .loadImage(Icons.class.getResource("/resources/images/defense.png"));
+    }
+    return defenseDot;
+  }
+
+  /**
+   * Route defense image
+   */
+  private static BufferedImage defenseDot;
+
   /* Need for repository */
 
   /**

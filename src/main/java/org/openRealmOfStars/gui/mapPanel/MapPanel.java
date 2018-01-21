@@ -558,7 +558,13 @@ public class MapPanel extends JPanel {
               pixelY + Tile.MAX_HEIGHT / 2);
         }
         if (routeData != null && routeData[i + cx][j + cy] == 1) {
-          gr.drawImage(Route.getRouteDot(), pixelX, pixelY, null);
+          if (route.isDefending()) {
+            gr.drawImage(Route.getDefenseDot(), pixelX, pixelY, null);
+          } else if (route.isFixing()) {
+            gr.drawImage(Route.getRepairDot(), pixelX, pixelY, null);
+          } else {
+            gr.drawImage(Route.getRouteDot(), pixelX, pixelY, null);
+          }
         }
         pixelX = pixelX + Tile.MAX_WIDTH;
       }

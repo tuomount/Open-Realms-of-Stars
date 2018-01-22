@@ -218,6 +218,23 @@ public final class Tiles {
     addTile(tile);
     tile = new Tile(tilesImage, 19, 0, TileNames.CARBONWORLD1);
     addTile(tile);
+    // Reading the ship color tiles
+    tile = new Tile(tilesImage, 7, 2, TileNames.PLAYER_SHIP_0);
+    addTile(tile);
+    tile = new Tile(tilesImage, 8, 2, TileNames.PLAYER_SHIP_1);
+    addTile(tile);
+    tile = new Tile(tilesImage, 9, 2, TileNames.PLAYER_SHIP_2);
+    addTile(tile);
+    tile = new Tile(tilesImage, 10, 2, TileNames.PLAYER_SHIP_3);
+    addTile(tile);
+    tile = new Tile(tilesImage, 7, 3, TileNames.PLAYER_SHIP_4);
+    addTile(tile);
+    tile = new Tile(tilesImage, 9, 3, TileNames.PLAYER_SHIP_5);
+    addTile(tile);
+    tile = new Tile(tilesImage, 8, 3, TileNames.PLAYER_SHIP_6);
+    addTile(tile);
+    tile = new Tile(tilesImage, 10, 3, TileNames.PLAYER_SHIP_7);
+    addTile(tile);
   }
 
 }

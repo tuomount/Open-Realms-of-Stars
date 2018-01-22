@@ -443,6 +443,16 @@ public class MapPanel extends JPanel {
           if (fleet != null && (info.getSectorCloakDetection(i + cx, j + cy)
               >= fleet.getFleetCloackingValue()
               || info.getFleets().isFleetOnList(fleet))) {
+            if (!fleet.isPrivateerFleet()) {
+              PlayerInfo fleetOwner = starMap.getPlayerInfoByFleet(fleet);
+              int index = starMap.getPlayerList().getIndex(fleetOwner);
+              if (index != -1) {
+                Tile fleetColor = Tiles.getTileByName("Player_Ship_" + index);
+                if (fleetColor != null) {
+                  fleetColor.draw(gr, pixelX, pixelY);
+                }
+              }
+            }
             BufferedImage img = ShipImages
                 .getByRace(fleetMap[i + cx][j + cy].getRace())
                 .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());

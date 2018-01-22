@@ -209,6 +209,39 @@ public final class TileNames {
   public static final String PLAYER_7 = "Player_7";
 
   /**
+   * Ship color tile for player 0 (Overlay)
+   */
+  public static final String PLAYER_SHIP_0 = "Player_Ship_0";
+  /**
+   * Ship color tile for player 1 (Overlay)
+   */
+  public static final String PLAYER_SHIP_1 = "Player_Ship_1";
+  /**
+   * Ship color tile for player 2 (Overlay)
+   */
+  public static final String PLAYER_SHIP_2 = "Player_Ship_2";
+  /**
+   * Ship color tile for player 3 (Overlay)
+   */
+  public static final String PLAYER_SHIP_3 = "Player_Ship_3";
+  /**
+   * Ship color tile for player 4 (Overlay)
+   */
+  public static final String PLAYER_SHIP_4 = "Player_Ship_4";
+  /**
+   * Ship color tile for player 5 (Overlay)
+   */
+  public static final String PLAYER_SHIP_5 = "Player_Ship_5";
+  /**
+   * Ship color tile for player 6 (Overlay)
+   */
+  public static final String PLAYER_SHIP_6 = "Player_Ship_6";
+  /**
+   * Ship color tile for player 7 (Overlay)
+   */
+  public static final String PLAYER_SHIP_7 = "Player_Ship_7";
+
+  /**
    * Description about deep space anchor
    */
   public static final String DEEP_SPACE_ANCHOR_DESCRIPTION = "Deep space anchor"

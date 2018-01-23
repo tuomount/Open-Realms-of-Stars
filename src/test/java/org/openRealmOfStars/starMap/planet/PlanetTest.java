@@ -218,4 +218,16 @@ public class PlanetTest {
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPlanetEvent() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    assertEquals(PlanetaryEvent.NONE, planet.getPlanetaryEvent());
+    assertEquals(true, planet.isEventActivated());
+    planet.setEventActivation(false);
+    planet.setPlanetaryEvent(PlanetaryEvent.METAL_RICH_SURFACE);
+    assertEquals(PlanetaryEvent.METAL_RICH_SURFACE, planet.getPlanetaryEvent());
+    assertEquals(false, planet.isEventActivated());
+  }
+
 }

@@ -140,6 +140,16 @@ public class Planet {
   private int culture;
 
   /**
+   * Planetary event when colonizing the planet
+   */
+  private PlanetaryEvent event;
+
+  /**
+   * Event found AKA planet has been colonized
+   */
+  private boolean eventFound;
+
+  /**
    * Maximum number of different works
    */
   public static final int MAX_WORKER_TYPE = 5;
@@ -302,6 +312,8 @@ public class Planet {
     } else {
       this.planetType = PlanetTypes.CARBONWORLD1;
     }
+    this.event = PlanetaryEvent.NONE;
+    this.eventFound = true;
   }
 
   /**
@@ -1765,4 +1777,34 @@ public class Planet {
   public String getImageInstructions() {
     return planetType.getImageInstructions();
   }
+
+  /**
+   * Set planetary event
+   * @param planetaryEvent Event to set
+   */
+  public void setPlanetaryEvent(final PlanetaryEvent planetaryEvent) {
+    event = planetaryEvent;
+  }
+  /**
+   * Get planetary event
+   * @return Planetary event
+   */
+  public PlanetaryEvent getPlanetaryEvent() {
+    return event;
+  }
+  /**
+   * Has planetary event been activated by colonization
+   * @return True or false
+   */
+  public boolean isEventActivated() {
+    return eventFound;
+  }
+  /**
+   * Set planetary event activation
+   * @param activation True for activate event.
+   */
+  public void setEventActivation(final boolean activation) {
+    eventFound = activation;
+  }
+
 }

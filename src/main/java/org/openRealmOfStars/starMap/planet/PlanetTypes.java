@@ -270,6 +270,30 @@ public enum PlanetTypes {
   }
 
   /**
+   * Get planet type as String. This combines all same types
+   * into one. So all water worlds are now water worlds.
+   * @return Planet type as string
+   */
+  public String getTypeAsString() {
+    switch (this) {
+      case GASGIANT1:
+      case GASGIANT2: return "Gas giant";
+      case SILICONWORLD1: return "Silicon world";
+      case WATERWORLD1:
+      case WATERWORLD2:
+      case WATERWORLD3:
+      case WATERWORLD4: return "Water world";
+      case IRONWORLD1:
+      case IRONWORLD2:
+      case IRONWORLD3: return "Iron world";
+      case ICEWORLD1: return "Ice world";
+      case ICEWORLD2: return "Ice world";
+      case CARBONWORLD1: return "Carbon world";
+      default:
+        throw new IllegalArgumentException("Unknown planet type!!");
+    }
+  }
+  /**
    * Verify that image instruction is valid for planet
    * @param instruction Image Instruction
    * @return True if valid

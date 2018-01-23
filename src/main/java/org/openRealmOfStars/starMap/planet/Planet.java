@@ -1111,6 +1111,8 @@ public class Planet {
       sb.append("\n");
       sb.append("Planet is inhabitable, but planet can block scanners.");
     } else {
+      sb.append(planetType.getTypeAsString());
+      sb.append("\n");
       sb.append("Radiation: ");
       sb.append(getRadiationLevel());
       sb.append("\n");

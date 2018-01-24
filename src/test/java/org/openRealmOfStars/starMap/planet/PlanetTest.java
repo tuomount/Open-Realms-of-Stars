@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
@@ -228,6 +229,117 @@ public class PlanetTest {
     planet.setPlanetaryEvent(PlanetaryEvent.METAL_RICH_SURFACE);
     assertEquals(PlanetaryEvent.METAL_RICH_SURFACE, planet.getPlanetaryEvent());
     assertEquals(false, planet.isEventActivated());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testPlanetEventActivationMetalRichSurface() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    planet.setPlanetOwner(0, info);
+    planet.setEventActivation(false);
+    planet.setPlanetaryEvent(PlanetaryEvent.METAL_RICH_SURFACE);
+    assertEquals(PlanetaryEvent.METAL_RICH_SURFACE, planet.getPlanetaryEvent());
+    assertEquals(false, planet.isEventActivated());
+    planet.eventActivation();
+    assertEquals(true, planet.isEventActivated());
+    info.getMsgList().clearMessages();
+    assertEquals(Icons.getIconByName(Icons.ICON_METAL_ORE),
+        info.getMsgList().getMsg().getIcon());
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testPlanetEventActivationLushVegetation() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    planet.setPlanetOwner(0, info);
+    planet.setEventActivation(false);
+    planet.setPlanetaryEvent(PlanetaryEvent.LUSH_VEGETATION);
+    assertEquals(PlanetaryEvent.LUSH_VEGETATION, planet.getPlanetaryEvent());
+    assertEquals(false, planet.isEventActivated());
+    planet.eventActivation();
+    assertEquals(true, planet.isEventActivated());
+    info.getMsgList().clearMessages();
+    assertEquals(Icons.getIconByName(Icons.ICON_FARM),
+        info.getMsgList().getMsg().getIcon());
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testPlanetEventActivationParadise() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    planet.setPlanetOwner(0, info);
+    planet.setEventActivation(false);
+    planet.setPlanetaryEvent(PlanetaryEvent.PARADISE);
+    assertEquals(PlanetaryEvent.PARADISE, planet.getPlanetaryEvent());
+    assertEquals(false, planet.isEventActivated());
+    planet.eventActivation();
+    assertEquals(true, planet.isEventActivated());
+    info.getMsgList().clearMessages();
+    assertEquals(Icons.getIconByName(Icons.ICON_FARM),
+        info.getMsgList().getMsg().getIcon());
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testPlanetEventActivationAncientLab() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    planet.setPlanetOwner(0, info);
+    planet.setEventActivation(false);
+    planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_LAB);
+    assertEquals(PlanetaryEvent.ANCIENT_LAB, planet.getPlanetaryEvent());
+    assertEquals(false, planet.isEventActivated());
+    planet.eventActivation();
+    assertEquals(true, planet.isEventActivated());
+    info.getMsgList().clearMessages();
+    assertEquals(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
+        info.getMsgList().getMsg().getIcon());
+    assertEquals("Ancient lab", planet.getBuildingList()[0].getName());
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testPlanetEventActivationAncientFactory() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    planet.setPlanetOwner(0, info);
+    planet.setEventActivation(false);
+    planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_FACTORY);
+    assertEquals(PlanetaryEvent.ANCIENT_FACTORY, planet.getPlanetaryEvent());
+    assertEquals(false, planet.isEventActivated());
+    planet.eventActivation();
+    assertEquals(true, planet.isEventActivated());
+    info.getMsgList().clearMessages();
+    assertEquals(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
+        info.getMsgList().getMsg().getIcon());
+    assertEquals("Ancient factory", planet.getBuildingList()[0].getName());
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testPlanetEventActivationAncientTemple() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    planet.setPlanetOwner(0, info);
+    planet.setEventActivation(false);
+    planet.setPlanetaryEvent(PlanetaryEvent.ANCIENT_TEMPLE);
+    assertEquals(PlanetaryEvent.ANCIENT_TEMPLE, planet.getPlanetaryEvent());
+    assertEquals(false, planet.isEventActivated());
+    planet.eventActivation();
+    assertEquals(true, planet.isEventActivated());
+    info.getMsgList().clearMessages();
+    assertEquals(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
+        info.getMsgList().getMsg().getIcon());
+    assertEquals("Ancient temple", planet.getBuildingList()[0].getName());
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
   }
 
 }

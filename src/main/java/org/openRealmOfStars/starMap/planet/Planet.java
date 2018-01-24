@@ -671,6 +671,12 @@ public class Planet {
       mult = planetOwnerInfo.getRace().getFoodSpeed();
       result = workers[FOOD_FARMERS] * mult / div + 2
           + getTotalProductionFromBuildings(prod);
+      if (eventFound && event == PlanetaryEvent.LUSH_VEGETATION) {
+        result = result + 1;
+      }
+      if (eventFound && event == PlanetaryEvent.PARADISE) {
+        result = result + 2;
+      }
       break;
     }
     case PRODUCTION_METAL: {
@@ -678,6 +684,9 @@ public class Planet {
       // Planet always produces +1 metal
       result = workers[METAL_MINERS] * mult / div + 1
           + getTotalProductionFromBuildings(prod);
+      if (eventFound && event == PlanetaryEvent.METAL_RICH_SURFACE) {
+        result = result + 1;
+      }
       if (result > getAmountMetalInGround()) {
         result = getAmountMetalInGround();
       }
@@ -1805,6 +1814,53 @@ public class Planet {
    */
   public void setEventActivation(final boolean activation) {
     eventFound = activation;
+  }
+
+  /**
+   * Event activation
+   */
+  public void eventActivation() {
+    if (planetOwnerInfo != null && !eventFound) {
+      StringBuilder msgText = new StringBuilder();
+      msgText.append("When colonizating ");
+      msgText.append(getName());
+      msgText.append(" colonist found");
+      eventFound = true;
+      if (event.oneTimeOnly()) {
+        Building building = event.getBuilding();
+        addBuilding(building);
+        event = PlanetaryEvent.NONE;
+        msgText.append(building.getName());
+        msgText.append(". It has been take in used now.");
+        Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+            Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+        msg.setCoordinate(getCoordinate());
+        planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+      } else {
+        if (event == PlanetaryEvent.LUSH_VEGETATION) {
+          msgText.append(" that planet has lot's of edible vegetation. ");
+          msgText.append("This gives one extra food per turn.");
+          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+              Icons.getIconByName(Icons.ICON_FARM));
+          msg.setCoordinate(getCoordinate());
+          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+        } else if (event == PlanetaryEvent.PARADISE) {
+          msgText.append(" that planet is true paradise. ");
+          msgText.append("This gives two extra food per turn.");
+          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+              Icons.getIconByName(Icons.ICON_FARM));
+          msg.setCoordinate(getCoordinate());
+          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+        } else if (event == PlanetaryEvent.METAL_RICH_SURFACE) {
+          msgText.append(" that planet's surface is full of metal ore. ");
+          msgText.append("This gives one extra metal per turn.");
+          Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
+              Icons.getIconByName(Icons.ICON_METAL_ORE));
+          msg.setCoordinate(getCoordinate());
+          planetOwnerInfo.getMsgList().addUpcomingMessage(msg);
+        }
+      }
+    }
   }
 
 }

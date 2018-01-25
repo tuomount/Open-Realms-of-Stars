@@ -34,6 +34,13 @@ public class GalaxyConfigTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testGalaxyConfig() {
     GalaxyConfig config = new GalaxyConfig();
+    assertEquals(10, config.getChanceForPlanetaryEvent());
+    config.setChanceForPlanetaryEvent(-5);
+    assertEquals(0, config.getChanceForPlanetaryEvent());
+    config.setChanceForPlanetaryEvent(120);
+    assertEquals(99, config.getChanceForPlanetaryEvent());
+    config.setChanceForPlanetaryEvent(20);
+    assertEquals(20, config.getChanceForPlanetaryEvent());
     assertEquals(75, config.getSizeX());
     assertEquals(75, config.getSizeY());
     assertEquals(4, config.getMaxPlayers());

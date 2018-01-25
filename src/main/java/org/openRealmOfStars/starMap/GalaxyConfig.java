@@ -82,12 +82,18 @@ public class GalaxyConfig {
   private String[] playerName;
 
   /**
+   * Chance for planetary event
+   */
+  private int chanceForPlanetaryEvent;
+
+  /**
    * Constructor for galaxy config
    */
   public GalaxyConfig() {
     sizeX = 75;
     sizeY = 75;
     this.galaxySizeIndex = 1;
+    setChanceForPlanetaryEvent(10);
     setMaxPlayers(4);
     setSolarSystemDistance(12, 0);
     playerRaces = new SpaceRace[StarMap.MAX_PLAYERS];
@@ -262,6 +268,30 @@ public class GalaxyConfig {
    */
   public int getGalaxySizeIndex() {
     return galaxySizeIndex;
+  }
+
+  /**
+   * Get the chance for planetary event. Default value is 10.
+   * @return the chance For PlanetaryEvent
+   */
+  public int getChanceForPlanetaryEvent() {
+    return chanceForPlanetaryEvent;
+  }
+
+  /**
+   * Set chance for planetary event. If chance 0 then
+   * there won't be any planetary events. If given value is not in
+   * range then it its truncated to the range.
+   * @param chance Chance for planetary event between 0-100%
+   */
+  public void setChanceForPlanetaryEvent(final int chance) {
+    if (chance < 0) {
+      chanceForPlanetaryEvent = 0;
+    } else if (chance > 99) {
+      chanceForPlanetaryEvent = 99;
+    } else {
+      chanceForPlanetaryEvent = chance;
+    }
   }
 
 }

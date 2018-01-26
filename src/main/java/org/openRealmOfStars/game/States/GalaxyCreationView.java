@@ -77,6 +77,11 @@ public class GalaxyCreationView extends BlackPanel {
   private JComboBox<String> comboSunDensity;
 
   /**
+   * ComboBox on planetary event
+   */
+  private JComboBox<String> comboPlanetaryEvent;
+
+  /**
    * Galaxy config
    */
   private GalaxyConfig config;
@@ -161,6 +166,36 @@ public class GalaxyCreationView extends BlackPanel {
     comboSunDensity.setRenderer(dlcr);
     comboSunDensity.addActionListener(listener);
     info.add(comboSunDensity);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    label = new TransparentLabel(info, "Planetary events:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    String[] events = new String[5];
+    events[0] = "No events (0%)";
+    events[1] = "Very rare (5%)";
+    events[2] = "Rare (10%)";
+    events[3] = "Common (20%)";
+    events[4] = "Very common (40%)";
+    comboPlanetaryEvent = new JComboBox<>(events);
+    comboPlanetaryEvent.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    comboPlanetaryEvent.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    comboPlanetaryEvent.setBorder(new SimpleBorder());
+    comboPlanetaryEvent.setFont(GuiStatics.getFontCubellan());
+    switch (this.config.getChanceForPlanetaryEvent()) {
+      case 0: comboPlanetaryEvent.setSelectedIndex(0); break; 
+      case 5: comboPlanetaryEvent.setSelectedIndex(1); break; 
+      case 10: comboPlanetaryEvent.setSelectedIndex(2); break; 
+      case 20: comboPlanetaryEvent.setSelectedIndex(3); break; 
+      case 40: comboPlanetaryEvent.setSelectedIndex(4); break;
+      default: comboPlanetaryEvent.setSelectedIndex(2); break;
+    }
+    comboPlanetaryEvent.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    dlcr = new DefaultListCellRenderer();
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+    comboPlanetaryEvent.setRenderer(dlcr);
+    comboPlanetaryEvent.addActionListener(listener);
+    info.add(comboPlanetaryEvent);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
 
     xinvis.add(info);
@@ -336,7 +371,33 @@ public class GalaxyCreationView extends BlackPanel {
         break;
       }
       }
-    }
+      switch (comboPlanetaryEvent.getSelectedIndex()) {
+      case 0: {
+        // None
+        config.setChanceForPlanetaryEvent(0);
+        break;
+      }
+      case 1: {
+        // Very rare
+        config.setChanceForPlanetaryEvent(5);
+        break;
+      }
+      case 2: {
+        // Rare
+        config.setChanceForPlanetaryEvent(10);
+        break;
+      }
+      case 3: {
+        // Common
+        config.setChanceForPlanetaryEvent(20);
+        break;
+      }
+      default: {
+        // Very common
+        config.setChanceForPlanetaryEvent(0);
+        break;
+      }
+      }    }
   }
 
   /**

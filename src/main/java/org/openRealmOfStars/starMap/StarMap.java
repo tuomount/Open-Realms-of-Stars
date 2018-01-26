@@ -31,6 +31,7 @@ import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
@@ -170,6 +171,11 @@ public class StarMap {
   private boolean debug;
 
   /**
+   * Chance for Planetary event
+   */
+  private int chanceForPlanetaryEvent;
+
+  /**
    * System name generator.
    */
   private RandomSystemNameGenerator nameGenerator;
@@ -177,7 +183,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.5";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.6";
 
   /**
    * Maximum amount of looping when finding free solar system spot.
@@ -194,6 +200,7 @@ public class StarMap {
     nameGenerator = new RandomSystemNameGenerator();
     maxX = config.getSizeX();
     maxY = config.getSizeY();
+    chanceForPlanetaryEvent = config.getChanceForPlanetaryEvent();
     this.players = players;
     this.players.initVisibilityMaps(maxX, maxY);
     drawX = 0;
@@ -496,7 +503,7 @@ public class StarMap {
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(final DataOutputStream dos) throws IOException {
-    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.5");
+    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.6");
     // Turn number
     dos.writeInt(turn);
     // Map size
@@ -723,6 +730,9 @@ public class StarMap {
             }
           }
 
+        } else {
+            planet.setPlanetaryEvent(PlanetaryEvent.getRandomEvent(
+                planet.getPlanetType(), chanceForPlanetaryEvent));
         }
         planetList.add(planet);
         int planetNumber = planetList.size() - 1;

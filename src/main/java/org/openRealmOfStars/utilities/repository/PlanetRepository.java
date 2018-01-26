@@ -6,6 +6,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -81,6 +82,8 @@ public class PlanetRepository {
     planet.setTax(dis.readInt(), true);
     planet.setCulture(dis.readInt());
     planet.setHomeWorldIndex(dis.readInt());
+    planet.setPlanetaryEvent(PlanetaryEvent.getByIndex(dis.read()));
+    planet.setEventActivation(dis.readBoolean());
     for (int i = 0; i < Planet.MAX_WORKER_TYPE; i++) {
       planet.setWorkers(i, dis.readInt());
     }
@@ -131,6 +134,8 @@ public class PlanetRepository {
     dos.writeInt(planet.getTax());
     dos.writeInt(planet.getCulture());
     dos.writeInt(planet.getHomeWorldIndex());
+    dos.writeByte(planet.getPlanetaryEvent().getIndex());
+    dos.writeBoolean(planet.isEventActivated());
     for (int i = 0; i < Planet.MAX_WORKER_TYPE; i++) {
       dos.writeInt(planet.getWorkers(i));
     }

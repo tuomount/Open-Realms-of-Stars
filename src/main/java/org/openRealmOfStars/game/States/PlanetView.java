@@ -533,7 +533,7 @@ public class PlanetView extends BlackPanel {
     int rushCost = planet.getRushingCost(building);
     if (rushCost > 0 && allowHandling) {
       if (info.getRace().hasCreditRush()
-          && rushCost >= info.getTotalCredits()) {
+          && rushCost <= info.getTotalCredits()) {
         rushWithCreditsBtn.setEnabled(true);
         rushWithCreditsBtn.setToolTipText("Rush construction with " + rushCost
             + " credits!");

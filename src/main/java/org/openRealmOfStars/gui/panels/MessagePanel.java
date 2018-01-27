@@ -105,7 +105,7 @@ public class MessagePanel extends JPanel {
     pane.add(btnPrev);
     countLabel = new SpaceLabel("1000/1000");
     pane.add(countLabel);
-    titleLabel = new IconLabel(pane, Icons.getIconByName(Icons.ICON_PEOPLE),
+    titleLabel = new IconLabel(null, Icons.getIconByName(Icons.ICON_PEOPLE),
         MessageType.CONSTRUCTION.toString());
     pane.add(titleLabel);
     btnNext = new IconButton(GuiStatics.RIGHT_ARROW,

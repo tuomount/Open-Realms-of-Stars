@@ -70,7 +70,7 @@ public class IconLabel extends JLabel {
 
   /**
    * Create Icon label with transparency
-   * @param parent Parent component
+   * @param parent Parent component can be null
    * @param icon Icon to draw, if null then not draw
    * @param text Text to show
    */
@@ -114,7 +114,7 @@ public class IconLabel extends JLabel {
   @Override
   public void setText(final String text) {
     super.setText(text);
-    if (parent instanceof InvisiblePanel) {
+    if (parent != null && parent instanceof InvisiblePanel) {
       InvisiblePanel invis = (InvisiblePanel) parent;
       invis.setDirty();
     }
@@ -122,7 +122,9 @@ public class IconLabel extends JLabel {
 
   @Override
   protected void paintComponent(final Graphics g) {
-    parent.repaint();
+    if (parent != null) {
+      parent.repaint();
+    }
     int x = 0;
     int y = 0;
     if (icon != null) {

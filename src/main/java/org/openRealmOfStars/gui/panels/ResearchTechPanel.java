@@ -18,7 +18,7 @@ import org.openRealmOfStars.gui.labels.IconLabel;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -103,7 +103,7 @@ public class ResearchTechPanel extends SpaceGreyPanel {
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-    label = new IconLabel(this, Icons.getIconByName(iconName), text);
+    label = new IconLabel(null, Icons.getIconByName(iconName), text);
     panel.add(label);
     slider = new JSlider(0, 100, sliderValue);
     slider.setMinorTickSpacing(4);
@@ -126,7 +126,7 @@ public class ResearchTechPanel extends SpaceGreyPanel {
       }
     });
     panel.add(slider);
-    lvlLabel = new IconLabel(this, Icons.getIconByName(Icons.ICON_EMPTY),
+    lvlLabel = new IconLabel(null, Icons.getIconByName(Icons.ICON_EMPTY),
         text2);
     panel.add(lvlLabel);
 

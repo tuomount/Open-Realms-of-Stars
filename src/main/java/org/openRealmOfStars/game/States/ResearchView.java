@@ -301,9 +301,12 @@ public class ResearchView extends BlackPanel {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)
         && techList.getSelectedIndex() != -1) {
       Tech tech = techList.getSelectedValue();
-      infoText.setLineWrap(false);
-      infoText.setText(tech.getTechInfo(player.getRace()));
-      infoText.repaint();
+      String strTmp = tech.getTechInfo(player.getRace());
+      if (!strTmp.equals(infoText.getText())) {
+        infoText.setLineWrap(false);
+        infoText.setText(strTmp);
+        infoText.repaint();
+      }
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SLIDER_COMBAT_RESEARCH)) {

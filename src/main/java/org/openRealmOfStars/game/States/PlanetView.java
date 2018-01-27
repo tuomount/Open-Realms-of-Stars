@@ -213,7 +213,7 @@ public class PlanetView extends BlackPanel {
     topPanel.add(Box.createRigidArea(new Dimension(15, 25)));
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    totalPeople = new IconLabel(panel,
+    totalPeople = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_PEOPLE),
         ": " + planet.getTotalPopulation());
     totalPeople.setToolTipText("Total number of people on planet.");
@@ -249,7 +249,7 @@ public class PlanetView extends BlackPanel {
     resePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     resePanel.setInteractive(interactive);
     panel.add(resePanel);
-    cultureLabel = new IconLabel(panel,
+    cultureLabel = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_CULTURE),
         ": " + planet.getWorkers(Planet.CULTURE_ARTIST));
     cultureLabel.setToolTipText("Number of people producing culture.");
@@ -260,7 +260,7 @@ public class PlanetView extends BlackPanel {
 
     panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    peopleGrowth = new IconLabel(panel,
+    peopleGrowth = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_PEOPLE), "1000 turns");
     int peopleGrow = planet.getTotalProduction(Planet.PRODUCTION_POPULATION);
     if (peopleGrow > 0) {
@@ -277,28 +277,28 @@ public class PlanetView extends BlackPanel {
     peopleGrowth.setToolTipText("How many turns to population growth.");
     peopleGrowth.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(peopleGrowth);
-    farmProd = new IconLabel(panel, Icons.getIconByName(Icons.ICON_FARM),
+    farmProd = new IconLabel(null, Icons.getIconByName(Icons.ICON_FARM),
         ": " + planet.getTotalProduction(Planet.PRODUCTION_FOOD));
     farmProd.setToolTipText("Total production of food");
     farmProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(farmProd);
-    mineProd = new IconLabel(panel, Icons.getIconByName(Icons.ICON_MINE),
+    mineProd = new IconLabel(null, Icons.getIconByName(Icons.ICON_MINE),
         ": " + planet.getTotalProduction(Planet.PRODUCTION_METAL));
     mineProd.setToolTipText("Total production of metal");
     mineProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(mineProd);
-    prodProd = new IconLabel(panel, Icons.getIconByName(Icons.ICON_FACTORY),
+    prodProd = new IconLabel(null, Icons.getIconByName(Icons.ICON_FACTORY),
         ": " + planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     prodProd.setToolTipText("Total production of production");
     prodProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(prodProd);
-    reseProd = new IconLabel(panel,
+    reseProd = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_RESEARCH),
         ": " + planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     reseProd.setToolTipText("Total production of research");
     reseProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(reseProd);
-    cultProd = new IconLabel(panel, Icons.getIconByName(Icons.ICON_CULTURE),
+    cultProd = new IconLabel(null, Icons.getIconByName(Icons.ICON_CULTURE),
         ": " + planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
     cultProd.setToolTipText("Total production of culture");
     cultProd.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -308,13 +308,13 @@ public class PlanetView extends BlackPanel {
 
     panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    credProd = new IconLabel(panel, Icons.getIconByName(Icons.ICON_CREDIT),
+    credProd = new IconLabel(null, Icons.getIconByName(Icons.ICON_CREDIT),
         ": " + planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
     credProd.setToolTipText("Total production of credits");
     credProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(credProd);
 
-    maintenance = new IconLabel(panel,
+    maintenance = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_MAINTENANCE),
         ": " + planet.getMaintenanceCost());
     maintenance.setToolTipText("Maintenance cost of planet");
@@ -329,12 +329,12 @@ public class PlanetView extends BlackPanel {
     taxPanel.setInteractive(interactive);
     panel.add(taxPanel);
 
-    metal = new IconLabel(panel, Icons.getIconByName(Icons.ICON_METAL),
+    metal = new IconLabel(null, Icons.getIconByName(Icons.ICON_METAL),
         ": " + planet.getMetal());
     metal.setToolTipText("Total metal on surface");
     metal.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(metal);
-    metalOre = new IconLabel(panel,
+    metalOre = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_METAL_ORE),
         ": " + planet.getAmountMetalInGround());
     metalOre.setToolTipText("Total metal ore to mine.");
@@ -345,7 +345,7 @@ public class PlanetView extends BlackPanel {
 
     panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    IconLabel label = new IconLabel(panel,
+    IconLabel label = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_FACTORY), "Next project:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(label);
@@ -379,7 +379,7 @@ public class PlanetView extends BlackPanel {
     SpaceGreyPanel panelX = new SpaceGreyPanel();
     panelX.setLayout(new BoxLayout(panelX, BoxLayout.X_AXIS));
     panelX.setAlignmentX(Component.LEFT_ALIGNMENT);
-    label = new IconLabel(panel,
+    label = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_CREDIT), "Rushing:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(label);
@@ -564,7 +564,7 @@ public class PlanetView extends BlackPanel {
       productionInfo.setText(building.getFullDescription());
     }
     buildingList.setListData(planet.getBuildingList());
-
+    this.repaint();
   }
 
   /**
@@ -593,7 +593,11 @@ public class PlanetView extends BlackPanel {
         if (planet.getPlanetPlayerInfo() != null) {
           race = planet.getPlanetPlayerInfo().getRace();
         }
-        buildingInfo.setText(building.getFullDescription(race));
+        String tmp = building.getFullDescription(race);
+        if (!tmp.equals(buildingInfo.getText())) {
+          buildingInfo.setText(tmp);
+          this.repaint();
+        }
       }
     }
     if (arg0.getActionCommand()

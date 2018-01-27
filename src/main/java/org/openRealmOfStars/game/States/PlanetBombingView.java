@@ -245,13 +245,13 @@ public class PlanetBombingView extends BlackPanel {
 
     panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    totalPeople = new IconLabel(panel,
+    totalPeople = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_PEOPLE),
         "Population: " + planet.getTotalPopulation());
     totalPeople.setToolTipText("Total number of people on planet.");
     totalPeople.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(totalPeople);
-    defenseTurret = new IconLabel(panel,
+    defenseTurret = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_PLANETARY_TURRET),
         "Turrets: " + planet.getTurretLvl());
     defenseTurret.setToolTipText("Total defense value of turrets.");
@@ -262,13 +262,13 @@ public class PlanetBombingView extends BlackPanel {
 
     panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    troopsPower = new IconLabel(panel,
+    troopsPower = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_TROOPS),
         "Troops power: " + planet.getTroopPower());
     troopsPower.setToolTipText("Total power of defending troops.");
     troopsPower.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(troopsPower);
-    totalBuildings = new IconLabel(panel,
+    totalBuildings = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH),
         "Buildings: " + planet.getNumberOfBuildings());
     totalBuildings.setToolTipText("Total number of buildings on planet.");

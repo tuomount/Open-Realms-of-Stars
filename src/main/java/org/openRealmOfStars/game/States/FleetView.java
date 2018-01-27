@@ -201,7 +201,7 @@ public class FleetView extends BlackPanel {
         colonizeBtn.setEnabled(interactive);
       }
       panel.add(ownerLabel);
-      totalPeople = new IconLabel(panel,
+      totalPeople = new IconLabel(null,
           Icons.getIconByName(Icons.ICON_PEOPLE),
           ": " + planet.getTotalPopulation());
       totalPeople.setToolTipText("Total number of people on planet.");
@@ -212,7 +212,7 @@ public class FleetView extends BlackPanel {
 
       panel = new SpaceGreyPanel();
       panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-      metal = new IconLabel(panel, Icons.getIconByName(Icons.ICON_METAL),
+      metal = new IconLabel(null, Icons.getIconByName(Icons.ICON_METAL),
           ": " + planet.getMetal());
       metal.setToolTipText("Total metal on surface");
       metal.setAlignmentX(Component.LEFT_ALIGNMENT);

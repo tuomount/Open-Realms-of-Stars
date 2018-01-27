@@ -232,7 +232,7 @@ public class GalaxyCreationView extends BlackPanel {
     label = new SpaceLabel("Starting position:");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
-    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    info.add(Box.createRigidArea(new Dimension(5, 8)));
     String[] startPos = new String[2];
     startPos[0] = "Border";
     startPos[1] = "Random";

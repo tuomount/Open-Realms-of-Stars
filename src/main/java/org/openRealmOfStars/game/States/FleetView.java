@@ -260,6 +260,7 @@ public class FleetView extends BlackPanel {
     eastPanel.setTitle("Fleet info");
     eastPanel.add(Box.createRigidArea(new Dimension(150, 5)));
     SpaceLabel label = new SpaceLabel("Fleet name");
+    label.setAlignmentX(CENTER_ALIGNMENT);
     eastPanel.add(label);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     fleetNameText = new JTextField();
@@ -293,6 +294,7 @@ public class FleetView extends BlackPanel {
     eastPanel.add(fleetNameText);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new SpaceLabel("Ships in fleet");
+    label.setAlignmentX(CENTER_ALIGNMENT);
     eastPanel.add(label);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     shipsInFleet = new JList<>();
@@ -339,6 +341,7 @@ public class FleetView extends BlackPanel {
     eastPanel.add(fleetBtns);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new SpaceLabel("Other fleets");
+    label.setAlignmentX(CENTER_ALIGNMENT);
     eastPanel.add(label);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     fleetsInSpace = new JList<>();

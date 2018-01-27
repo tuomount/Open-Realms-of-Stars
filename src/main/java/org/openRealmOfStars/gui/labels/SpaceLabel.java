@@ -48,7 +48,8 @@ public class SpaceLabel extends JLabel {
    Dimension size = this.getPreferredSize();
    size.width = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(), text)
        + 10;
-   size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), text);
+   size.height = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(), text)
+       + 4;
    this.setMinimumSize(size);
    this.setPreferredSize(size);
    this.setMaximumSize(size);

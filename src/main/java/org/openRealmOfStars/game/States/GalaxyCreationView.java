@@ -17,7 +17,7 @@ import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
-import org.openRealmOfStars.gui.labels.TransparentLabel;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
@@ -121,7 +121,7 @@ public class GalaxyCreationView extends BlackPanel {
     InfoPanel info = new InfoPanel();
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
     info.setTitle("Galaxy Creation");
-    TransparentLabel label = new TransparentLabel(info, "Galaxy size:");
+    SpaceLabel label = new SpaceLabel("Galaxy size:");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -145,7 +145,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboGalaxySize.addActionListener(listener);
     info.add(comboGalaxySize);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new TransparentLabel(info, "Sun density:");
+    label = new SpaceLabel("Sun density:");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -167,7 +167,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboSunDensity.addActionListener(listener);
     info.add(comboSunDensity);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new TransparentLabel(info, "Planetary events:");
+    label = new SpaceLabel("Planetary events:");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -183,10 +183,10 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlanetaryEvent.setBorder(new SimpleBorder());
     comboPlanetaryEvent.setFont(GuiStatics.getFontCubellan());
     switch (this.config.getChanceForPlanetaryEvent()) {
-      case 0: comboPlanetaryEvent.setSelectedIndex(0); break; 
-      case 5: comboPlanetaryEvent.setSelectedIndex(1); break; 
-      case 10: comboPlanetaryEvent.setSelectedIndex(2); break; 
-      case 20: comboPlanetaryEvent.setSelectedIndex(3); break; 
+      case 0: comboPlanetaryEvent.setSelectedIndex(0); break;
+      case 5: comboPlanetaryEvent.setSelectedIndex(1); break;
+      case 10: comboPlanetaryEvent.setSelectedIndex(2); break;
+      case 20: comboPlanetaryEvent.setSelectedIndex(3); break;
       case 40: comboPlanetaryEvent.setSelectedIndex(4); break;
       default: comboPlanetaryEvent.setSelectedIndex(2); break;
     }
@@ -204,7 +204,7 @@ public class GalaxyCreationView extends BlackPanel {
     info = new InfoPanel();
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
     info.setTitle("Player Setting");
-    label = new TransparentLabel(info, "Number of players:");
+    label = new SpaceLabel("Number of players:");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -229,7 +229,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlayers.addActionListener(listener);
     info.add(comboPlayers);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new TransparentLabel(info, "Starting position:");
+    label = new SpaceLabel("Starting position:");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));

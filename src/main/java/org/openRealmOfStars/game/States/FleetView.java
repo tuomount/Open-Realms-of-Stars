@@ -27,7 +27,7 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
-import org.openRealmOfStars.gui.labels.TransparentLabel;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
@@ -46,7 +46,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -84,7 +84,7 @@ public class FleetView extends BlackPanel {
   /**
    * Planet owner's empire name if fleet is orbiting planet.
    */
-  private TransparentLabel ownerLabel;
+  private SpaceLabel ownerLabel;
 
   /**
    * How much colonist has moved to fleet
@@ -185,8 +185,8 @@ public class FleetView extends BlackPanel {
       metalSelection = null;
 
       if (planet.getPlanetPlayerInfo() != null) {
-        ownerLabel = new TransparentLabel(panel,
-            planet.getPlanetPlayerInfo().getEmpireName());
+        ownerLabel = new SpaceLabel(planet.getPlanetPlayerInfo()
+            .getEmpireName());
         if (info != planet.getPlanetPlayerInfo()) {
           conquerBtn = new SpaceButton("Conquer",
               GameCommands.COMMAND_CONQUEST);
@@ -194,7 +194,7 @@ public class FleetView extends BlackPanel {
           conquerBtn.setEnabled(interactive);
         }
       } else {
-        ownerLabel = new TransparentLabel(panel, "Uncolonized planet");
+        ownerLabel = new SpaceLabel("Uncolonized planet");
         colonizeBtn = new SpaceButton("Colonize",
             GameCommands.COMMAND_COLONIZE);
         colonizeBtn.addActionListener(listener);
@@ -225,8 +225,7 @@ public class FleetView extends BlackPanel {
       panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
       if (colonizeBtn != null) {
         if (planet.getRadiationLevel() > info.getRace().getMaxRad()) {
-          TransparentLabel radWarning = new TransparentLabel(panel,
-              "Warning! High radiation!");
+          SpaceLabel radWarning = new SpaceLabel("Warning! High radiation!");
           radWarning.setForeground(GuiStatics.COLOR_RED_TEXT);
           panel.add(radWarning);
           panel.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -260,7 +259,7 @@ public class FleetView extends BlackPanel {
     eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
     eastPanel.setTitle("Fleet info");
     eastPanel.add(Box.createRigidArea(new Dimension(150, 5)));
-    TransparentLabel label = new TransparentLabel(eastPanel, "Fleet name");
+    SpaceLabel label = new SpaceLabel("Fleet name");
     eastPanel.add(label);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     fleetNameText = new JTextField();
@@ -293,7 +292,7 @@ public class FleetView extends BlackPanel {
     fleetNameText.setEnabled(interactive);
     eastPanel.add(fleetNameText);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new TransparentLabel(eastPanel, "Ships in fleet");
+    label = new SpaceLabel("Ships in fleet");
     eastPanel.add(label);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     shipsInFleet = new JList<>();
@@ -339,7 +338,7 @@ public class FleetView extends BlackPanel {
 
     eastPanel.add(fleetBtns);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new TransparentLabel(eastPanel, "Other fleets");
+    label = new SpaceLabel("Other fleets");
     eastPanel.add(label);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     fleetsInSpace = new JList<>();

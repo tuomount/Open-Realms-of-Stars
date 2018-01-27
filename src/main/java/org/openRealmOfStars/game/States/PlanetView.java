@@ -24,7 +24,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
-import org.openRealmOfStars.gui.labels.TransparentLabel;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
@@ -39,7 +39,7 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -144,11 +144,11 @@ public class PlanetView extends BlackPanel {
    * How many buildings are on planet and maximum number of buildings on
    * planet.
    */
-  private TransparentLabel buildingLabel;
+  private SpaceLabel buildingLabel;
   /**
    * Estimate how long it takes to build construction.
    */
-  private TransparentLabel buildingEstimate;
+  private SpaceLabel buildingEstimate;
   /**
    * New construction information text.
    */
@@ -371,7 +371,7 @@ public class PlanetView extends BlackPanel {
     constructionSelect.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(constructionSelect);
     panel.add(Box.createRigidArea(new Dimension(60, 5)));
-    buildingEstimate = new TransparentLabel(topPanel, "1000 turns");
+    buildingEstimate = new SpaceLabel("1000 turns");
     buildingEstimate.setText(planet.getProductionTimeAsString(
         (Construction) constructionSelect.getSelectedItem()));
     buildingEstimate.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -408,7 +408,7 @@ public class PlanetView extends BlackPanel {
     topPanel.setTitle(planet.getName());
 
     InvisiblePanel eastPanel = new InvisiblePanel(imgBase);
-    buildingLabel = new TransparentLabel(eastPanel, "Buildings("
+    buildingLabel = new SpaceLabel("Buildings("
         + planet.getUsedPlanetSize() + "/" + planet.getGroundSize() + "):");
     buildingLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
     eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));

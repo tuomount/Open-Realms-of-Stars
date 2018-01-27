@@ -166,15 +166,15 @@ public class StatView extends BlackPanel {
     BlackPanel panel = new BlackPanel();
     int rowsNCols = map.getPlayerList().getCurrentMaxPlayers() + 1;
     panel.setLayout(new GridLayout(rowsNCols, rowsNCols));
-    TransparentLabel label = new TransparentLabel(panel, "", false, true);
+    TransparentLabel label = new TransparentLabel(null, "", false, true);
     panel.add(label);
     for (int i = 0; i < names.length; i++) {
-      label = new TransparentLabel(panel, names[i], true, true);
+      label = new TransparentLabel(null, names[i], true, true);
       label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
       panel.add(label);
     }
     for (int i = 0; i < names.length; i++) {
-      label = new TransparentLabel(panel, names[i], true, true);
+      label = new TransparentLabel(null, names[i], true, true);
       label.setForeground(StatisticPanel.PLAYER_COLORS[i]);
       panel.add(label);
       for (int j = 0; j < names.length; j++) {

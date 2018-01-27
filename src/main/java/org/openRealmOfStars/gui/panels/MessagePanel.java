@@ -15,14 +15,14 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
 import org.openRealmOfStars.gui.labels.IconLabel;
-import org.openRealmOfStars.gui.labels.TransparentLabel;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -67,7 +67,7 @@ public class MessagePanel extends JPanel {
   /**
    * Message count label
    */
-  private TransparentLabel countLabel;
+  private SpaceLabel countLabel;
 
   /**
    * Title label
@@ -103,7 +103,7 @@ public class MessagePanel extends JPanel {
     btnPrev.addActionListener(listener);
     pane.add(Box.createRigidArea(new Dimension(5, 30)));
     pane.add(btnPrev);
-    countLabel = new TransparentLabel(pane, "1000/1000");
+    countLabel = new SpaceLabel("1000/1000");
     pane.add(countLabel);
     titleLabel = new IconLabel(pane, Icons.getIconByName(Icons.ICON_PEOPLE),
         MessageType.CONSTRUCTION.toString());

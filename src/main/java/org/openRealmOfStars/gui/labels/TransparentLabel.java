@@ -15,7 +15,7 @@ import org.openRealmOfStars.gui.panels.InvisiblePanel;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -57,10 +57,11 @@ public class TransparentLabel extends JLabel {
 
   /**
    * Create label with transparency without borders or auto wrap.
-   * @param parent Parent component
+   * @param parent Parent component, if null then parent isn't redraw
    * @param text Text to show
    */
   public TransparentLabel(final Component parent, final String text) {
+    super(text);
     this.parent = parent;
     this.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     this.setFont(GuiStatics.getFontCubellan());
@@ -75,7 +76,7 @@ public class TransparentLabel extends JLabel {
 
   /**
    * Create label with transparency
-   * @param parent Parent component
+   * @param parent Parent component, if null then parent isn't redraw
    * @param text Text to show
    * @param border Add border
    * @param autoWrap Wrap words from space
@@ -110,7 +111,7 @@ public class TransparentLabel extends JLabel {
   @Override
   public void setText(final String text) {
     super.setText(text);
-    if (parent instanceof InvisiblePanel) {
+    if (parent != null && parent instanceof InvisiblePanel) {
       InvisiblePanel invis = (InvisiblePanel) parent;
       invis.setDirty();
     }
@@ -118,7 +119,9 @@ public class TransparentLabel extends JLabel {
 
   @Override
   protected void paintComponent(final Graphics g) {
-    parent.repaint();
+    if (parent != null) {
+      parent.repaint();
+    }
     int x = 0;
     int y = 0;
     if (border) {

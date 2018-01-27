@@ -26,7 +26,7 @@ import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
-import org.openRealmOfStars.gui.labels.TransparentLabel;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
@@ -57,7 +57,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -188,7 +188,7 @@ public class DiplomacyView extends BlackPanel {
   /**
    * Label indicating if AI player likeness value of human player.
    */
-  private TransparentLabel likenessLabel;
+  private SpaceLabel likenessLabel;
 
   /**
    * Button for exiting the diplomacy view.
@@ -252,8 +252,7 @@ public class DiplomacyView extends BlackPanel {
     InfoPanel humanOffer = new InfoPanel();
     humanOffer.setTitle("Your offer");
     humanOffer.setLayout(new BoxLayout(humanOffer, BoxLayout.Y_AXIS));
-    TransparentLabel label = new TransparentLabel(humanOffer,
-        "Techs to trade:");
+    SpaceLabel label = new SpaceLabel("Techs to trade:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(label);
     humanTechListOffer = createTechList(trade.getTradeableTechListForSecond());
@@ -263,7 +262,7 @@ public class DiplomacyView extends BlackPanel {
     humanMapOffer = new SpaceCheckBox("Trade map");
     humanMapOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(humanMapOffer);
-    label = new TransparentLabel(humanOffer, "Fleets to trade:");
+    label = new SpaceLabel("Fleets to trade:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(label);
     humanFleetListOffer = createFleetList(
@@ -271,7 +270,7 @@ public class DiplomacyView extends BlackPanel {
     scroll = new JScrollPane(humanFleetListOffer);
     scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(scroll);
-    label = new TransparentLabel(humanOffer, "Planets to trade:");
+    label = new SpaceLabel("Planets to trade:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(label);
     humanPlanetListOffer = createPlanetList(
@@ -294,7 +293,7 @@ public class DiplomacyView extends BlackPanel {
     aiImg.setRaceToShow(ai.getRace().getNameSingle());
     aiImg.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(aiImg);
-    likenessLabel = new TransparentLabel(panel, "Friends Trade Alliance");
+    likenessLabel = new SpaceLabel("Friends Trade Alliance");
     likenessLabel.setForeground(ai.getDiplomacy().getLikingAsColor(humanIndex));
     likenessLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(likenessLabel);
@@ -321,7 +320,7 @@ public class DiplomacyView extends BlackPanel {
     InfoPanel aiOffer = new InfoPanel();
     aiOffer.setTitle(ai.getEmpireName() + " offer");
     aiTechListOffer = createTechList(trade.getTradeableTechListForFirst());
-    label = new TransparentLabel(aiOffer, "Techs to trade:");
+    label = new SpaceLabel("Techs to trade:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(label);
     scroll = new JScrollPane(aiTechListOffer);
@@ -330,14 +329,14 @@ public class DiplomacyView extends BlackPanel {
     aiMapOffer = new SpaceCheckBox("Trade map");
     aiMapOffer.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(aiMapOffer);
-    label = new TransparentLabel(aiOffer, "Fleets to trade:");
+    label = new SpaceLabel("Fleets to trade:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(label);
     aiFleetListOffer = createFleetList(trade.getTradeableFleetListForSecond());
     scroll = new JScrollPane(aiFleetListOffer);
     scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(scroll);
-    label = new TransparentLabel(aiOffer, "Planets to trade:");
+    label = new SpaceLabel("Planets to trade:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(label);
     aiPlanetListOffer = createPlanetList(

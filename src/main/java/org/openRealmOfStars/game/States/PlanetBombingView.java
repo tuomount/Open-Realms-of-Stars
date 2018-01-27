@@ -25,7 +25,7 @@ import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
-import org.openRealmOfStars.gui.labels.TransparentLabel;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.mapPanel.PlanetAnimation;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
@@ -47,7 +47,7 @@ import org.openRealmOfStars.utilities.Logger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -97,7 +97,7 @@ public class PlanetBombingView extends BlackPanel {
   /**
    * Planet owner's name
    */
-  private TransparentLabel ownerLabel;
+  private SpaceLabel ownerLabel;
 
   /**
    * Planet to show
@@ -234,10 +234,10 @@ public class PlanetBombingView extends BlackPanel {
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     if (planet.getPlanetPlayerInfo() != null) {
-      ownerLabel = new TransparentLabel(panel,
-          planet.getPlanetPlayerInfo().getEmpireName());
+      ownerLabel = new SpaceLabel(planet.getPlanetPlayerInfo()
+          .getEmpireName());
     } else {
-      ownerLabel = new TransparentLabel(panel, "Uncolonized planet");
+      ownerLabel = new SpaceLabel("Uncolonized planet");
     }
     panel.add(ownerLabel);
     topPanel.add(panel);

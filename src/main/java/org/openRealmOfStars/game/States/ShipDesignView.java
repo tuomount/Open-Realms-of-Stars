@@ -35,7 +35,7 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
 import org.openRealmOfStars.gui.labels.ImageLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
-import org.openRealmOfStars.gui.labels.TransparentLabel;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -55,7 +55,7 @@ import org.openRealmOfStars.player.tech.TechType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -194,7 +194,7 @@ public class ShipDesignView extends BlackPanel {
     hullSelect.setRenderer(new ShipHullListRenderer());
     SpaceGreyPanel greyPanel = new SpaceGreyPanel();
     greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
-    TransparentLabel label = new TransparentLabel(greyPanel, "Design's Name: ");
+    SpaceLabel label = new SpaceLabel("Design's Name: ");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     greyPanel.add(label);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -235,7 +235,7 @@ public class ShipDesignView extends BlackPanel {
     });
     greyPanel.add(designNameText);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new TransparentLabel(greyPanel, "Ship's hull: ");
+    label = new SpaceLabel("Ship's hull: ");
     greyPanel.add(label);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     greyPanel.add(hullSelect);
@@ -257,7 +257,7 @@ public class ShipDesignView extends BlackPanel {
     hullImage.setFillColor(Color.BLACK);
     greyPanel.add(hullImage);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new TransparentLabel(greyPanel, "Confirm hull change: ");
+    label = new SpaceLabel("Confirm hull change: ");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     greyPanel.add(label);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -281,7 +281,7 @@ public class ShipDesignView extends BlackPanel {
 
     greyPanel = new SpaceGreyPanel();
     greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
-    label = new TransparentLabel(greyPanel, "Add components: ");
+    label = new SpaceLabel("Add components: ");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     greyPanel.add(label);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -333,7 +333,7 @@ public class ShipDesignView extends BlackPanel {
 
     greyPanel = new SpaceGreyPanel();
     greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
-    label = new TransparentLabel(greyPanel, "Component's energy priority: ");
+    label = new SpaceLabel("Component's energy priority: ");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     greyPanel.add(label);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -374,7 +374,7 @@ public class ShipDesignView extends BlackPanel {
     designInfoText.setEditable(false);
     designInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(designInfoText);
-    label = new TransparentLabel(greyPanel, "Design info:");
+    label = new SpaceLabel("Design info:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     greyPanel.add(label);
     greyPanel.add(scroll);
@@ -388,7 +388,7 @@ public class ShipDesignView extends BlackPanel {
     designFlawsText.setEditable(false);
     designFlawsText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(designFlawsText);
-    label = new TransparentLabel(greyPanel, "Design flaws:");
+    label = new SpaceLabel("Design flaws:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     greyPanel.add(label);
     greyPanel.add(scroll);

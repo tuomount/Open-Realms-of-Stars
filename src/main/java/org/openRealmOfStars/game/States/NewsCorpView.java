@@ -17,7 +17,7 @@ import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
-import org.openRealmOfStars.gui.labels.TransparentLabel;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.ImagePanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
@@ -27,7 +27,7 @@ import org.openRealmOfStars.starMap.newsCorp.NewsData;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -89,7 +89,7 @@ public class NewsCorpView extends BlackPanel {
   /**
    * News list label
    */
-  private TransparentLabel newsLabel;
+  private SpaceLabel newsLabel;
   /**
    * Construtor for News Corp View.
    * @param news News Data
@@ -135,7 +135,7 @@ public class NewsCorpView extends BlackPanel {
     iBtn.addActionListener(listener);
     panel.add(iBtn);
     panel.add(Box.createRigidArea(new Dimension(10, 5)));
-    newsLabel = new TransparentLabel(panel, "100/100");
+    newsLabel = new SpaceLabel("100/100");
     newsLabel.setText("1/" + newsList.length);
     panel.add(newsLabel);
     iBtn = new IconButton(GuiStatics.RIGHT_ARROW,

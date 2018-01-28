@@ -334,6 +334,7 @@ public final class MissionHandling {
           if (stat != null) {
             stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
           }
+          planet.eventActivation();
         }
 
       } else if (mission.getPhase() == MissionPhase.TREKKING

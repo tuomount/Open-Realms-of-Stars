@@ -1328,6 +1328,7 @@ public class Game implements ActionListener {
       starMapView.getStarMapMouseListener().setLastClickedFleet(null);
       starMapView.getStarMapMouseListener()
           .setLastClickedPlanet(fleetView.getPlanet());
+      fleetView.getPlanet().eventActivation();
       changeGameState(GameState.PLANETVIEW);
     }
   }

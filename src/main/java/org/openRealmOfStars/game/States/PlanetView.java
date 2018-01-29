@@ -530,8 +530,9 @@ public class PlanetView extends BlackPanel {
 
     Construction building = (Construction) constructionSelect.getSelectedItem();
     buildingEstimate.setText(planet.getProductionTimeAsString(building));
+    int productionTime = planet.getProductionTime(building);
     int rushCost = planet.getRushingCost(building);
-    if (rushCost > 0 && allowHandling) {
+    if (rushCost > 0 && allowHandling && productionTime > 1) {
       if (info.getRace().hasCreditRush()
           && rushCost <= info.getTotalCredits()) {
         rushWithCreditsBtn.setEnabled(true);

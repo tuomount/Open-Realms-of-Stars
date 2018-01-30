@@ -392,8 +392,13 @@ public class GalaxyCreationView extends BlackPanel {
         config.setChanceForPlanetaryEvent(20);
         break;
       }
+      case 4: {
+        // Very Common
+        config.setChanceForPlanetaryEvent(40);
+        break;
+      }
       default: {
-        // Very common
+        // Default
         config.setChanceForPlanetaryEvent(0);
         break;
       }

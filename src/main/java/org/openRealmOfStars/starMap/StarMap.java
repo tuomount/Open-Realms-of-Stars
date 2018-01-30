@@ -733,6 +733,7 @@ public class StarMap {
         } else {
             planet.setPlanetaryEvent(PlanetaryEvent.getRandomEvent(
                 planet.getPlanetType(), chanceForPlanetaryEvent));
+            planet.setEventActivation(false);
         }
         planetList.add(planet);
         int planetNumber = planetList.size() - 1;

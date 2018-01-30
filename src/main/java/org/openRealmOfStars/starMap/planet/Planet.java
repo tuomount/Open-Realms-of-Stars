@@ -1824,7 +1824,7 @@ public class Planet {
       StringBuilder msgText = new StringBuilder();
       msgText.append("When colonizating ");
       msgText.append(getName());
-      msgText.append(" colonist found");
+      msgText.append(" colonist found ");
       eventFound = true;
       if (event.oneTimeOnly()) {
         Building building = event.getBuilding();

@@ -288,6 +288,21 @@ private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
     return winner;
   }
 
+
+  /**
+   * Get winnder fleet. Can return null
+   * @return Winner fleet or null
+   */
+  public Fleet getWinnerFleet() {
+    if (winner != null) {
+      if (attackerInfo == winner) {
+        return attackerFleet;
+      }
+      return defenderFleet;
+    }
+    return null;
+  }
+
   /**
    * Is clear shot from shooter to target with used weapon
    * @param shooter Shooter's combat ship

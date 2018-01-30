@@ -1461,6 +1461,11 @@ public class Game implements ActionListener {
           return;
         }
         changeGameState(GameState.STARMAP);
+        Combat combat = combatView.getCombat();
+        if (combat.getWinnerFleet() != null) {
+          getStarMap().doFleetScanUpdate(combat.getWinner(),
+              combat.getWinnerFleet(), null);
+        }
         return;
       }
       combatView.handleActions(arg0);

@@ -268,10 +268,9 @@ public class TechList {
       if (ownComponent != null) {
         ShipComponent component = ShipComponentFactory.createByName(
             tech.getComponent());
-        if (component.getType() == ownComponent.getType()) {
-          if (ownTech.getLevel() > tech.getLevel()) {
-            return true;
-          }
+        if (component.getType() == ownComponent.getType()
+            && ownTech.getLevel() > tech.getLevel()) {
+          return true;
         }
       }
     }
@@ -290,21 +289,22 @@ public class TechList {
     if (ownTech.getHull() != null && tech.getHull() != null) {
       String[] ownHull = ownTech.getHull().split("Mk");
       String[] hull = tech.getHull().split("Mk");
-      int ownHullMk = 0;
-      int hullMk = 0;
-      try {
-        ownHullMk = Integer.valueOf(ownHull[1]);
-      } catch (NumberFormatException e) {
-        ownHullMk = 0;
-      }
-      try {
-        hullMk = Integer.valueOf(hull[1]);
-      } catch (NumberFormatException e) {
-        hullMk = 0;
-      }
-      if (ownHull.length == 2 && hull.length == 2 
-          && ownHull[0].equals(hull[0]) && ownHullMk > hullMk) {
-        return true;
+      if (ownHull.length == 2 && hull.length == 2) {
+        int ownHullMk = 0;
+        int hullMk = 0;
+        try {
+          ownHullMk = Integer.valueOf(ownHull[1]);
+        } catch (NumberFormatException e) {
+          ownHullMk = 0;
+        }
+        try {
+          hullMk = Integer.valueOf(hull[1]);
+        } catch (NumberFormatException e) {
+          hullMk = 0;
+        }
+        if (ownHull[0].equals(hull[0]) && ownHullMk > hullMk) {
+          return true;
+        }
       }
     }
     return false;

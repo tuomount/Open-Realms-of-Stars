@@ -18,7 +18,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -254,6 +254,63 @@ public class TechList {
   }
 
   /**
+   * Get component difference in techs
+   * @param tech Tech that other one owns
+   * @param ownTech Tech we own
+   * @return True if we got better component
+   */
+  protected static boolean getComponentDifference(final Tech tech,
+      final Tech ownTech) {
+    if (ownTech.getComponent() != null && tech.getComponent() != null) {
+      // Check if we already have better component
+      ShipComponent ownComponent = ShipComponentFactory.createByName(
+          tech.getComponent());
+      if (ownComponent != null) {
+        ShipComponent component = ShipComponentFactory.createByName(
+            tech.getComponent());
+        if (component.getType() == ownComponent.getType()) {
+          if (ownTech.getLevel() > tech.getLevel()) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Get hull difference. Checks if we have better hull tech than other player.
+   * @param tech Tech that other one owns
+   * @param ownTech Tech we own
+   * @return True if we got better hull
+   */
+  protected static boolean getHullDifference(final Tech tech,
+      final Tech ownTech) {
+    // Check if we already have better hull
+    if (ownTech.getHull() != null && tech.getHull() != null) {
+      String[] ownHull = ownTech.getHull().split("Mk");
+      String[] hull = tech.getHull().split("Mk");
+      int ownHullMk = 0;
+      int hullMk = 0;
+      try {
+        ownHullMk = Integer.valueOf(ownHull[1]);
+      } catch (NumberFormatException e) {
+        ownHullMk = 0;
+      }
+      try {
+        hullMk = Integer.valueOf(hull[1]);
+      } catch (NumberFormatException e) {
+        hullMk = 0;
+      }
+      if (ownHull.length == 2 && hull.length == 2 
+          && ownHull[0].equals(hull[0]) && ownHullMk > hullMk) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Check which trade techs are missing from own tech list
    * @param tradeTechs Tradeable techs from another player
    * @param ownTechs Techs that player already has
@@ -266,6 +323,14 @@ public class TechList {
       boolean found = false;
       for (Tech ownTech : ownTechs) {
         if (tech.getName().equals(ownTech.getName())) {
+          found = true;
+        }
+        // Check if we already have better component
+        if (getComponentDifference(tech, ownTech)) {
+          found = true;
+        }
+        // Check if we already have better hull
+        if (getHullDifference(tech, ownTech)) {
           found = true;
         }
       }

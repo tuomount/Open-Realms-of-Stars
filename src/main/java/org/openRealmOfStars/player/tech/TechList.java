@@ -264,7 +264,7 @@ public class TechList {
     if (ownTech.getComponent() != null && tech.getComponent() != null) {
       // Check if we already have better component
       ShipComponent ownComponent = ShipComponentFactory.createByName(
-          tech.getComponent());
+          ownTech.getComponent());
       if (ownComponent != null) {
         ShipComponent component = ShipComponentFactory.createByName(
             tech.getComponent());

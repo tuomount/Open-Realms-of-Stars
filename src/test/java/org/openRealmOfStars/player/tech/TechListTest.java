@@ -68,6 +68,27 @@ public class TechListTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTradeWeaponsTechs2() {
+    Tech[] ownTechs = new Tech[3];
+    Tech[] tradeTechs = new Tech[2];
+    ownTechs[0] = TechFactory.createCombatTech("Laser Mk1", 1);
+    ownTechs[1] = TechFactory.createCombatTech("Laser Mk2", 2);
+    ownTechs[2] = TechFactory.createCombatTech("Railgun Mk3", 3);
+    tradeTechs[0] = TechFactory.createCombatTech("Photon torpedo Mk1", 1);
+    tradeTechs[1] = TechFactory.createCombatTech("Photon torpedo Mk2", 2);
+    Tech[] techs = TechList.getTechDifference(tradeTechs, ownTechs);
+    assertEquals(2, techs.length);
+    assertEquals("Photon torpedo Mk1", techs[0].getName());
+    assertEquals("Photon torpedo Mk2", techs[1].getName());
+    techs = TechList.getTechDifference(ownTechs, tradeTechs);
+    assertEquals(3, techs.length);
+    assertEquals("Laser Mk1", techs[0].getName());
+    assertEquals("Laser Mk2", techs[1].getName());
+    assertEquals("Railgun Mk3", techs[2].getName());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testTradeHullTechs() {
     Tech[] ownTechs = new Tech[2];
     Tech[] tradeTechs = new Tech[2];
@@ -80,6 +101,20 @@ public class TechListTest {
     techs = TechList.getTechDifference(ownTechs, tradeTechs);
     assertEquals(1, techs.length);
     assertEquals("Scout Mk3", techs[0].getName());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTradeHullTechs2() {
+    Tech[] ownTechs = new Tech[1];
+    Tech[] tradeTechs = new Tech[1];
+    ownTechs[0] = TechFactory.createHullTech("Destroyer Mk1", 1);
+    tradeTechs[0] = TechFactory.createHullTech("Destroyer Mk2", 3);
+    Tech[] techs = TechList.getTechDifference(tradeTechs, ownTechs);
+    assertEquals(1 , techs.length);
+    assertEquals("Destroyer Mk2", techs[0].getName());
+    techs = TechList.getTechDifference(ownTechs, tradeTechs);
+    assertEquals(0, techs.length);
   }
 
   @Test

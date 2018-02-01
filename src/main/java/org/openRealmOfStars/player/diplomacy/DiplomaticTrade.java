@@ -1310,35 +1310,25 @@ public class DiplomaticTrade {
     techListForFirst = new ArrayList<>();
     techListForSecond = new ArrayList<>();
     for (int type = 0; type < 6; type++) {
-      for (int lvl = 1; lvl < 11; lvl++) {
-        PlayerInfo info = starMap.getPlayerByIndex(first);
-        if (!info.getTechList()
-            .isTechListForLevelFull(TechType.getTypeByIndex(type), lvl)) {
-              Tech[] tradeTechs = starMap.getPlayerByIndex(second)
-                  .getTechList().getListForTypeAndLevel(TechType
-                      .getTypeByIndex(type), lvl);
-              Tech[] ownTechs = starMap.getPlayerByIndex(first)
-                  .getTechList().getListForTypeAndLevel(TechType
-                      .getTypeByIndex(type), lvl);
-              Tech[] techs = TechList.getTechDifference(tradeTechs, ownTechs);
-              for (Tech tech : techs) {
-                techListForFirst.add(tech);
-              }
-        }
-        info = starMap.getPlayerByIndex(second);
-        if (!info.getTechList()
-            .isTechListForLevelFull(TechType.getTypeByIndex(type), lvl)) {
-              Tech[] tradeTechs = starMap.getPlayerByIndex(first)
-                  .getTechList().getListForTypeAndLevel(TechType
-                      .getTypeByIndex(type), lvl);
-              Tech[] ownTechs = starMap.getPlayerByIndex(second)
-                  .getTechList().getListForTypeAndLevel(TechType
-                      .getTypeByIndex(type), lvl);
-              Tech[] techs = TechList.getTechDifference(tradeTechs, ownTechs);
-              for (Tech tech : techs) {
-                techListForSecond.add(tech);
-              }
-            }
+      Tech[] tradeTechs = starMap.getPlayerByIndex(second)
+          .getTechList().getListForType(TechType
+              .getTypeByIndex(type));
+      Tech[] ownTechs = starMap.getPlayerByIndex(first)
+          .getTechList().getListForType(TechType
+              .getTypeByIndex(type));
+      Tech[] techs = TechList.getTechDifference(tradeTechs, ownTechs);
+      for (Tech tech : techs) {
+        techListForFirst.add(tech);
+      }
+      tradeTechs = starMap.getPlayerByIndex(first)
+          .getTechList().getListForType(TechType
+              .getTypeByIndex(type));
+      ownTechs = starMap.getPlayerByIndex(second)
+          .getTechList().getListForType(TechType
+              .getTypeByIndex(type));
+      techs = TechList.getTechDifference(tradeTechs, ownTechs);
+      for (Tech tech : techs) {
+        techListForSecond.add(tech);
       }
     }
   }

@@ -396,7 +396,45 @@ public class GalaxyCreationView extends BlackPanel {
         config.setChanceForPlanetaryEvent(0);
         break;
       }
-      }    }
+      }
+      switch (comboScoringVictory.getSelectedIndex()) {
+      case 0: {
+        // 200 turns
+        config.setScoringVictoryTurns(200);
+        break;
+      }
+      case 1: {
+        // 300 turns
+        config.setScoringVictoryTurns(300);
+        break;
+      }
+      case 2: {
+        // 400 turns
+        config.setScoringVictoryTurns(400);
+        break;
+      }
+      case 3: {
+        // 600 turns
+        config.setScoringVictoryTurns(600);
+        break;
+      }
+      case 4: {
+        // 800 turns
+        config.setScoringVictoryTurns(800);
+        break;
+      }
+      case 5: {
+        // 1000 turns
+        config.setScoringVictoryTurns(1000);
+        break;
+      }
+      default: {
+        // Default
+        config.setChanceForPlanetaryEvent(400);
+        break;
+      }
+      }
+    }
   }
 
   /**

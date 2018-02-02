@@ -21,7 +21,7 @@ import org.openRealmOfStars.utilities.repository.GameRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017 Tuomo Untinen
+ * Copyright (C) 2016-2018 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -50,11 +50,13 @@ public class StarMapTest {
     Mockito.when(config.getSizeY()).thenReturn(50);
     Mockito.when(config.getStartingPosition()).thenReturn(
         GalaxyConfig.START_POSITION_BORDER);
+    Mockito.when(config.getScoringVictoryTurns()).thenReturn(400);
 
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
 
     StarMap map = new StarMap(config, players);
+    assertEquals(400, map.getScoreVictoryTurn());
     assertEquals(50, map.getMaxX());
     assertEquals(50, map.getMaxY());
     assertEquals(true, map.isValidCoordinate(25, 25));
@@ -62,6 +64,12 @@ public class StarMapTest {
     assertEquals(false, map.isValidCoordinate(25, -1));
     assertEquals(false, map.isValidCoordinate(512, 25));
     assertEquals(false, map.isValidCoordinate(252, 512));
+    map.setScoreVictoryTurn(0);
+    assertEquals(200, map.getScoreVictoryTurn());
+    map.setScoreVictoryTurn(1999);
+    assertEquals(1000, map.getScoreVictoryTurn());
+    map.setScoreVictoryTurn(600);
+    assertEquals(600, map.getScoreVictoryTurn());
   }
 
   @Test

@@ -176,6 +176,11 @@ public class StarMap {
   private int chanceForPlanetaryEvent;
 
   /**
+   * Last turn for score victory
+   */
+  private int scoreVictoryTurn;
+
+  /**
    * System name generator.
    */
   private RandomSystemNameGenerator nameGenerator;
@@ -183,7 +188,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.6";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.7";
 
   /**
    * Maximum amount of looping when finding free solar system spot.
@@ -198,6 +203,7 @@ public class StarMap {
   public StarMap(final GalaxyConfig config, final PlayerList players) {
     setDebug(false);
     nameGenerator = new RandomSystemNameGenerator();
+    setScoreVictoryTurn(config.getScoringVictoryTurns());
     maxX = config.getSizeX();
     maxY = config.getSizeY();
     chanceForPlanetaryEvent = config.getChanceForPlanetaryEvent();
@@ -451,6 +457,8 @@ public class StarMap {
     String str = IOUtilities.readString(dis);
     if (str.equals(MAGIC_STRING)) {
       turn = dis.readInt();
+      // Victory conditions
+      setScoreVictoryTurn(dis.readInt());
       maxX = dis.readInt();
       maxY = dis.readInt();
       culture = new CulturePower[maxX][maxY];
@@ -503,9 +511,11 @@ public class StarMap {
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(final DataOutputStream dos) throws IOException {
-    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.6");
+    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.7");
     // Turn number
     dos.writeInt(turn);
+    // Victory conditions
+    dos.writeInt(getScoreVictoryTurn());
     // Map size
     dos.writeInt(maxX);
     dos.writeInt(maxY);
@@ -2087,5 +2097,28 @@ public class StarMap {
       result = getPlanetByCoordinate(coord.getX() - 1, coord.getY());
     }
     return result;
+  }
+
+  /**
+   * Get the turn number where scoring victory happens.
+   * @return the scoreVictoryTurn
+   */
+  public int getScoreVictoryTurn() {
+    return scoreVictoryTurn;
+  }
+
+  /**
+   * Set the turn number where scoring victory happens.
+   * Minimum is 200 and maximum is 1000 turns.
+   * @param scoreVictoryTurn the scoreVictoryTurn to set
+   */
+  public void setScoreVictoryTurn(final int scoreVictoryTurn) {
+    if (scoreVictoryTurn > 1000) {
+      this.scoreVictoryTurn = 1000;
+    } else if (scoreVictoryTurn < 200) {
+      this.scoreVictoryTurn = 200;
+    } else {
+      this.scoreVictoryTurn = scoreVictoryTurn;
+    }
   }
 }

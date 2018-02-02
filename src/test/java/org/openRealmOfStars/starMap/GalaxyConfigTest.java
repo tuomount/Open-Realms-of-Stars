@@ -45,6 +45,13 @@ public class GalaxyConfigTest {
     assertEquals(75, config.getSizeY());
     assertEquals(4, config.getMaxPlayers());
     assertEquals(12, config.getSolarSystemDistance());
+    assertEquals(400, config.getScoringVictoryTurns());
+    config.setScoringVictoryTurns(0);
+    assertEquals(200, config.getScoringVictoryTurns());
+    config.setScoringVictoryTurns(2000);
+    assertEquals(1000, config.getScoringVictoryTurns());
+    config.setScoringVictoryTurns(800);
+    assertEquals(800, config.getScoringVictoryTurns());
     config.setRace(0, SpaceRace.HUMAN);
     assertEquals(SpaceRace.HUMAN, config.getRace(0));
     assertEquals(true,config.isUniqueName("Test of Human"));

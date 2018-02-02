@@ -8,14 +8,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.JComboBox;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
-import org.openRealmOfStars.gui.GuiStatics;
-import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.buttons.SpaceCombo;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
@@ -59,27 +56,32 @@ public class GalaxyCreationView extends BlackPanel {
   /**
    * ComboBox on galaxy size
    */
-  private JComboBox<String> comboGalaxySize;
+  private SpaceCombo<String> comboGalaxySize;
 
   /**
    * ComboBox on number of player
    */
-  private JComboBox<String> comboPlayers;
+  private SpaceCombo<String> comboPlayers;
 
   /**
    * ComboBox on player start positions
    */
-  private JComboBox<String> comboPlayerPos;
+  private SpaceCombo<String> comboPlayerPos;
 
   /**
    * ComboBox on sun density
    */
-  private JComboBox<String> comboSunDensity;
+  private SpaceCombo<String> comboSunDensity;
 
   /**
    * ComboBox on planetary event
    */
-  private JComboBox<String> comboPlanetaryEvent;
+  private SpaceCombo<String> comboPlanetaryEvent;
+
+  /**
+   * ComboBox on scoring victory
+   */
+  private SpaceCombo<String> comboScoringVictory;
 
   /**
    * Galaxy config
@@ -132,16 +134,9 @@ public class GalaxyCreationView extends BlackPanel {
     galaxySizes[3] = "Large 160x160";
     galaxySizes[4] = "Very large 200x200";
     galaxySizes[5] = "Huge 256x256";
-    comboGalaxySize = new JComboBox<>(galaxySizes);
-    comboGalaxySize.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    comboGalaxySize.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-    comboGalaxySize.setBorder(new SimpleBorder());
-    comboGalaxySize.setFont(GuiStatics.getFontCubellan());
+    comboGalaxySize = new SpaceCombo<>(galaxySizes);
     comboGalaxySize.setSelectedIndex(this.config.getGalaxySizeIndex());
     comboGalaxySize.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
-    DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
-    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
-    comboGalaxySize.setRenderer(dlcr);
     comboGalaxySize.addActionListener(listener);
     info.add(comboGalaxySize);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -154,16 +149,9 @@ public class GalaxyCreationView extends BlackPanel {
     sunDensity[1] = "Medium";
     sunDensity[2] = "Dense";
     sunDensity[3] = "Overlap";
-    comboSunDensity = new JComboBox<>(sunDensity);
-    comboSunDensity.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    comboSunDensity.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-    comboSunDensity.setBorder(new SimpleBorder());
-    comboSunDensity.setFont(GuiStatics.getFontCubellan());
+    comboSunDensity = new SpaceCombo<>(sunDensity);
     comboSunDensity.setSelectedIndex(this.config.getSunDensityIndex());
     comboSunDensity.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
-    dlcr = new DefaultListCellRenderer();
-    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
-    comboSunDensity.setRenderer(dlcr);
     comboSunDensity.addActionListener(listener);
     info.add(comboSunDensity);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -177,11 +165,7 @@ public class GalaxyCreationView extends BlackPanel {
     events[2] = "Rare (10%)";
     events[3] = "Common (20%)";
     events[4] = "Very common (40%)";
-    comboPlanetaryEvent = new JComboBox<>(events);
-    comboPlanetaryEvent.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    comboPlanetaryEvent.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-    comboPlanetaryEvent.setBorder(new SimpleBorder());
-    comboPlanetaryEvent.setFont(GuiStatics.getFontCubellan());
+    comboPlanetaryEvent = new SpaceCombo<>(events);
     switch (this.config.getChanceForPlanetaryEvent()) {
       case 0: comboPlanetaryEvent.setSelectedIndex(0); break;
       case 5: comboPlanetaryEvent.setSelectedIndex(1); break;
@@ -191,9 +175,6 @@ public class GalaxyCreationView extends BlackPanel {
       default: comboPlanetaryEvent.setSelectedIndex(2); break;
     }
     comboPlanetaryEvent.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
-    dlcr = new DefaultListCellRenderer();
-    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
-    comboPlanetaryEvent.setRenderer(dlcr);
     comboPlanetaryEvent.addActionListener(listener);
     info.add(comboPlanetaryEvent);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -216,16 +197,9 @@ public class GalaxyCreationView extends BlackPanel {
     players[4] = "Six players";
     players[5] = "Seven players";
     players[6] = "Eight players";
-    comboPlayers = new JComboBox<>(players);
-    comboPlayers.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    comboPlayers.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-    comboPlayers.setBorder(new SimpleBorder());
-    comboPlayers.setFont(GuiStatics.getFontCubellan());
+    comboPlayers = new SpaceCombo<>(players);
     comboPlayers.setSelectedIndex(this.config.getMaxPlayers() - 2);
     comboPlayers.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
-    dlcr = new DefaultListCellRenderer();
-    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
-    comboPlayers.setRenderer(dlcr);
     comboPlayers.addActionListener(listener);
     info.add(comboPlayers);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -236,18 +210,38 @@ public class GalaxyCreationView extends BlackPanel {
     String[] startPos = new String[2];
     startPos[0] = "Border";
     startPos[1] = "Random";
-    comboPlayerPos = new JComboBox<>(startPos);
-    comboPlayerPos.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    comboPlayerPos.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
-    comboPlayerPos.setBorder(new SimpleBorder());
-    comboPlayerPos.setFont(GuiStatics.getFontCubellan());
+    comboPlayerPos = new SpaceCombo<>(startPos);
     comboPlayerPos.setSelectedIndex(this.config.getStartingPosition());
     comboPlayerPos.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
-    dlcr = new DefaultListCellRenderer();
-    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
-    comboPlayerPos.setRenderer(dlcr);
     comboPlayerPos.addActionListener(listener);
     info.add(comboPlayerPos);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    label = new SpaceLabel("Victory by score:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    String[] scoringVictory = new String[6];
+    scoringVictory [0] = "Very short (200 turns)";
+    scoringVictory [1] = "Short (300 turns)";
+    scoringVictory [2] = "Medium (400 turns)";
+    scoringVictory [3] = "Long (600 turns)";
+    scoringVictory [4] = "Very long (800 turns)";
+    scoringVictory [5] = "Massive (1000 turns)";
+    comboScoringVictory = new SpaceCombo<>(scoringVictory);
+    comboScoringVictory.setToolTipText("How many turns game is played before"
+        + " winner is decided by game score");
+    switch (this.config.getScoringVictoryTurns()) {
+      case 200: comboScoringVictory.setSelectedIndex(0); break;
+      case 300: comboScoringVictory.setSelectedIndex(1); break;
+      case 400: comboScoringVictory.setSelectedIndex(2); break;
+      case 600: comboScoringVictory.setSelectedIndex(3); break;
+      case 800: comboScoringVictory.setSelectedIndex(4); break;
+      case 1000: comboScoringVictory.setSelectedIndex(5); break;
+      default: comboScoringVictory.setSelectedIndex(2); break;
+    }
+    comboScoringVictory.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboScoringVictory.addActionListener(listener);
+    info.add(comboScoringVictory);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
 
     xinvis.add(info);

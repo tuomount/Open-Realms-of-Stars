@@ -87,6 +87,10 @@ public class GalaxyConfig {
   private int chanceForPlanetaryEvent;
 
   /**
+   * How many turns to get scoring victory
+   */
+  private int scoringVictoryTurns;
+  /**
    * Constructor for galaxy config
    */
   public GalaxyConfig() {
@@ -94,6 +98,7 @@ public class GalaxyConfig {
     sizeY = 75;
     this.galaxySizeIndex = 1;
     setChanceForPlanetaryEvent(10);
+    setScoringVictoryTurns(400);
     setMaxPlayers(4);
     setSolarSystemDistance(12, 0);
     playerRaces = new SpaceRace[StarMap.MAX_PLAYERS];
@@ -291,6 +296,31 @@ public class GalaxyConfig {
       chanceForPlanetaryEvent = 99;
     } else {
       chanceForPlanetaryEvent = chance;
+    }
+  }
+
+  /**
+   * Get game playing time before scoring is done
+   * for victory
+   * @return the scoringVictoryTurns
+   */
+  public int getScoringVictoryTurns() {
+    return scoringVictoryTurns;
+  }
+
+  /**
+   * Set game playing time in turns. After last turn
+   * scoring is done. Maximum playing time is 1000 turns and
+   * minimum is 200 turns.
+   * @param scoringVictoryTurns the scoringVictoryTurns to set
+   */
+  public void setScoringVictoryTurns(final int scoringVictoryTurns) {
+    if (scoringVictoryTurns > 1000) {
+      this.scoringVictoryTurns = 1000;
+    } else if (scoringVictoryTurns < 200) {
+      this.scoringVictoryTurns = 200;
+    } else {
+      this.scoringVictoryTurns = scoringVictoryTurns;
     }
   }
 

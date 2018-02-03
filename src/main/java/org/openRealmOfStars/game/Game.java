@@ -1599,6 +1599,17 @@ public class Game implements ActionListener {
     if (gameState == GameState.NEWS_CORP_VIEW && newsCorpView != null) {
       // News Corp view
       newsCorpView.handleAction(arg0);
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        if (starMap.getTurn() == starMap.getScoreVictoryTurn()) {
+          // TODO: Quick and ugly ending needs to be better
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.MAIN_MENU);
+        } else {
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.STARMAP);
+        }
+      }
     }
     if (gameState == GameState.VIEWSTATS && statView != null) {
       // Stat View

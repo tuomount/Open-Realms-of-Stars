@@ -483,6 +483,105 @@ public class NewsFactoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStatNewsHalfway() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info2.getEmpireName()).thenReturn("Alliance of Test");
+    Mockito.when(info2.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    GalaxyStat stat = Mockito.mock(GalaxyStat.class);
+    Mockito.when(stat.getBiggest()).thenReturn(0);
+    Mockito.when(stat.getSecond()).thenReturn(1);
+    NewsCorpData data = Mockito.mock(NewsCorpData.class);
+    Mockito.when(data.isFirstStats()).thenReturn(false);
+    Mockito.when(data.getMilitary()).thenReturn(stat);
+    Mockito.when(data.getCredit()).thenReturn(stat);
+    Mockito.when(data.getCultural()).thenReturn(stat);
+    Mockito.when(data.getPlanets()).thenReturn(stat);
+    Mockito.when(data.getPopulation()).thenReturn(stat);
+    Mockito.when(data.getResearch()).thenReturn(stat);
+    Mockito.when(data.generateScores()).thenReturn(stat);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getNewsCorpData()).thenReturn(data);
+    Mockito.when(map.getPlayerByIndex(0)).thenReturn(info);
+    Mockito.when(map.getPlayerByIndex(1)).thenReturn(info2);
+    NewsData news = NewsFactory.makeScoreNewsHalf(map);
+    assertEquals(true, news.getImageInstructions().contains(
+        "RACE FOR GREATEST REALM IN HALFWAY!"));
+    assertEquals(true, news.getNewsText().contains(
+        "Empire of Test is the greatest realm in whole galaxy at the moment!"
+        + " Second greatest realm is Alliance of Test"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStatNewsLastQuarter() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info2.getEmpireName()).thenReturn("Alliance of Test");
+    Mockito.when(info2.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    GalaxyStat stat = Mockito.mock(GalaxyStat.class);
+    Mockito.when(stat.getBiggest()).thenReturn(0);
+    Mockito.when(stat.getSecond()).thenReturn(1);
+    NewsCorpData data = Mockito.mock(NewsCorpData.class);
+    Mockito.when(data.isFirstStats()).thenReturn(false);
+    Mockito.when(data.getMilitary()).thenReturn(stat);
+    Mockito.when(data.getCredit()).thenReturn(stat);
+    Mockito.when(data.getCultural()).thenReturn(stat);
+    Mockito.when(data.getPlanets()).thenReturn(stat);
+    Mockito.when(data.getPopulation()).thenReturn(stat);
+    Mockito.when(data.getResearch()).thenReturn(stat);
+    Mockito.when(data.generateScores()).thenReturn(stat);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getNewsCorpData()).thenReturn(data);
+    Mockito.when(map.getPlayerByIndex(0)).thenReturn(info);
+    Mockito.when(map.getPlayerByIndex(1)).thenReturn(info2);
+    NewsData news = NewsFactory.makeScoreNewsLastQuarter(map);
+    assertEquals(true, news.getImageInstructions().contains(
+        "RACE FOR GREATEST REALM TURNS INTO LAST QUARTER!"));
+    assertEquals(true, news.getNewsText().contains(
+        "Empire of Test is the greatest realm in whole galaxy at the moment!"
+        + " Second greatest realm is Alliance of Test"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStatNewsEnd() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info2.getEmpireName()).thenReturn("Alliance of Test");
+    Mockito.when(info2.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    GalaxyStat stat = Mockito.mock(GalaxyStat.class);
+    Mockito.when(stat.getBiggest()).thenReturn(0);
+    Mockito.when(stat.getSecond()).thenReturn(1);
+    NewsCorpData data = Mockito.mock(NewsCorpData.class);
+    Mockito.when(data.isFirstStats()).thenReturn(false);
+    Mockito.when(data.getMilitary()).thenReturn(stat);
+    Mockito.when(data.getCredit()).thenReturn(stat);
+    Mockito.when(data.getCultural()).thenReturn(stat);
+    Mockito.when(data.getPlanets()).thenReturn(stat);
+    Mockito.when(data.getPopulation()).thenReturn(stat);
+    Mockito.when(data.getResearch()).thenReturn(stat);
+    Mockito.when(data.generateScores()).thenReturn(stat);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getNewsCorpData()).thenReturn(data);
+    Mockito.when(map.getPlayerByIndex(0)).thenReturn(info);
+    Mockito.when(map.getPlayerByIndex(1)).thenReturn(info2);
+    NewsData news = NewsFactory.makeScoreNewsAtEnd(map);
+    assertEquals(true, news.getImageInstructions().contains(
+        "THE GREATEST REALM ALL TIME!"));
+    assertEquals(true, news.getNewsText().contains(
+        "Empire of Test is the greatest realm in whole galaxy!"
+        + " Second greatest realm is Alliance of Test !"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testStatNewsAfterFirstOne() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");

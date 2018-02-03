@@ -396,7 +396,7 @@ public final class NewsFactory {
     } else {
       instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
       StringBuilder sb = new StringBuilder();
-      int statIndex = DiceGenerator.getRandom(5);
+      int statIndex = DiceGenerator.getRandom(6);
       if (statIndex == 0) {
         int index = data.getMilitary().getBiggest();
         if (index != -1) {
@@ -469,6 +469,18 @@ public final class NewsFactory {
           sb.append("See full report from Statiscis view.");
         }
       }
+      if (statIndex == 6) {
+        int index = data.generateScores().getBiggest();
+        if (index != -1) {
+          PlayerInfo info = map.getPlayerByIndex(index);
+          instructions.addText("GREATEST REALM!");
+          instructions.addText(info.getEmpireName());
+          instructions.addImage(info.getRace().getNameSingle());
+          sb.append(info.getEmpireName());
+          sb.append(" is the greatest realm in whole galaxy! ");
+          sb.append("See full report from Statiscis view.");
+        }
+      }
       if (sb.toString().isEmpty()) {
         instructions.addImage(ImageInstruction.LOGO);
         int number = data.getStatNumbers();
@@ -538,6 +550,107 @@ public final class NewsFactory {
       sb.append(attacker.getEmpireName());
       sb.append(". ");
     }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
+   * Make News when game is in halfway
+   * @param map StarMap contains NewsCorpData and playerlist
+   * @return NewsData
+   */
+  public static NewsData makeScoreNewsHalf(final StarMap map) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    NewsCorpData data = map.getNewsCorpData();
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder();
+    int index = data.generateScores().getBiggest();
+    if (index != -1) {
+      PlayerInfo info = map.getPlayerByIndex(index);
+      instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+      instructions.addText("RACE FOR GREATEST REALM IN HALFWAY!");
+      instructions.addText(info.getEmpireName());
+      instructions.addImage(info.getRace().getNameSingle());
+      sb.append(info.getEmpireName());
+      sb.append(" is the greatest realm in whole galaxy at the moment! ");
+      index = data.generateScores().getSecond();
+      if (index != -1) {
+        info = map.getPlayerByIndex(index);
+        sb.append("Second greatest realm is ");
+        sb.append(info.getEmpireName());
+        sb.append(" ! ");
+      }
+      sb.append("See full scoring situation from Statiscis view.");
+    }
+    news.setImageInstructions(instructions.build());
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
+   * Make News when game is in last quarter
+   * @param map StarMap contains NewsCorpData and playerlist
+   * @return NewsData
+   */
+  public static NewsData makeScoreNewsLastQuarter(final StarMap map) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    NewsCorpData data = map.getNewsCorpData();
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder();
+    int index = data.generateScores().getBiggest();
+    if (index != -1) {
+      PlayerInfo info = map.getPlayerByIndex(index);
+      instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+      instructions.addText("RACE FOR GREATEST REALM TURNS INTO LAST QUARTER!");
+      instructions.addText(info.getEmpireName());
+      instructions.addImage(info.getRace().getNameSingle());
+      sb.append(info.getEmpireName());
+      sb.append(" is the greatest realm in whole galaxy at the moment! ");
+      index = data.generateScores().getSecond();
+      if (index != -1) {
+        info = map.getPlayerByIndex(index);
+        sb.append("Second greatest realm is ");
+        sb.append(info.getEmpireName());
+        sb.append(" ! ");
+      }
+      sb.append("See full scoring situation from Statiscis view.");
+    }
+    news.setImageInstructions(instructions.build());
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
+   * Make News when game is in the end turn
+   * @param map StarMap contains NewsCorpData and playerlist
+   * @return NewsData
+   */
+  public static NewsData makeScoreNewsAtEnd(final StarMap map) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    NewsCorpData data = map.getNewsCorpData();
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder();
+    int index = data.generateScores().getBiggest();
+    if (index != -1) {
+      PlayerInfo info = map.getPlayerByIndex(index);
+      instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+      instructions.addText("THE GREATEST REALM ALL TIME!");
+      instructions.addText(info.getEmpireName());
+      instructions.addImage(info.getRace().getNameSingle());
+      sb.append(info.getEmpireName());
+      sb.append(" is the greatest realm in whole galaxy! ");
+      index = data.generateScores().getSecond();
+      if (index != -1) {
+        info = map.getPlayerByIndex(index);
+        sb.append("Second greatest realm is ");
+        sb.append(info.getEmpireName());
+        sb.append(" !");
+      }
+    }
+    news.setImageInstructions(instructions.build());
     news.setNewsText(sb.toString());
     return news;
   }

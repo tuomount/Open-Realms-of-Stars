@@ -975,6 +975,26 @@ public class AITurnView extends BlackPanel {
       newsData.calculatePopulation(game.getStarMap().getPlanetList());
       newsData.addNews(NewsFactory.makeStatNews(game.getStarMap()));
     }
+    if (game.getStarMap().getTurn() == game.getStarMap()
+        .getScoreVictoryTurn() / 2) {
+      // Game is in halfway
+      NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+      newsData.addNews(NewsFactory.makeScoreNewsHalf(
+          game.getStarMap()));
+    }
+    if (game.getStarMap().getTurn() == game.getStarMap()
+        .getScoreVictoryTurn() * 3 / 4) {
+      // Game is in last quarter
+      NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+      newsData.addNews(NewsFactory.makeScoreNewsLastQuarter(
+          game.getStarMap()));
+    }
+    if (game.getStarMap().getTurn() == game.getStarMap()
+        .getScoreVictoryTurn()) {
+      // Game is in the end
+      NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+      newsData.addNews(NewsFactory.makeScoreNewsAtEnd(game.getStarMap()));
+    }
     game.getStarMap().getNewsCorpData().clearNewsList();
   }
 

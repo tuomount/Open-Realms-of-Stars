@@ -90,4 +90,40 @@ public class GalaxyStatTest {
     assertEquals("Test stat",stat.getGalaxyStatisticsName());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalaxyStatBiggestAndSecond() {
+    GalaxyStat stat = new GalaxyStat(8, "Test stat");
+    assertEquals("Test stat",stat.getGalaxyStatisticsName());
+    assertEquals(8,stat.getMaxPlayers());
+    stat.addStat(0, 10);
+    stat.addStat(1, 20);
+    stat.addStat(2, 30);
+    stat.addStat(3, 25);
+    stat.addStat(4, 27);
+    stat.addStat(5, 15);
+    stat.addStat(6, 18);
+    stat.addStat(7, 12);
+    assertEquals(2, stat.getBiggest());
+    assertEquals(4, stat.getSecond());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalaxyStatBiggestAndSecond2() {
+    GalaxyStat stat = new GalaxyStat(8, "Test stat");
+    assertEquals("Test stat",stat.getGalaxyStatisticsName());
+    assertEquals(8,stat.getMaxPlayers());
+    stat.addStat(0, 40);
+    stat.addStat(1, 70);
+    stat.addStat(2, 60);
+    stat.addStat(3, 55);
+    stat.addStat(4, 47);
+    stat.addStat(5, 35);
+    stat.addStat(6, 78);
+    stat.addStat(7, 12);
+    assertEquals(6, stat.getBiggest());
+    assertEquals(1, stat.getSecond());
+  }
+
 }

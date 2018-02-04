@@ -135,6 +135,24 @@ public enum PlanetaryEvent {
   }
 
   /**
+   * Get planetary event explanation as String
+   * @return String never null
+   */
+  public String getExplanation() {
+    switch (this) {
+      case NONE: return "";
+      case LUSH_VEGETATION: return "Lush vegetation +1 Food";
+      case PARADISE: return "Paradise +2 Food";
+      case METAL_RICH_SURFACE: return "Metal rich surface +1 Metal";
+      case ANCIENT_LAB: return "Ancient lab building";
+      case ANCIENT_FACTORY: return "Ancient factory building";
+      case ANCIENT_TEMPLE: return "Ancient temple building";
+      default:
+        throw new IllegalArgumentException("Unknown planetary event!!");
+    }
+  }
+
+  /**
    * Get planetary event by index
    * @param index Index to fetch planetary event
    * @return PlanetaryEvent

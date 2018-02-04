@@ -1134,6 +1134,10 @@ public class Planet {
     } else {
       sb.append(planetType.getTypeAsString());
       sb.append("\n");
+      if (activeScanned && event != PlanetaryEvent.NONE && eventFound) {
+        sb.append(event.getExplanation());
+        sb.append("\n");
+      }
       sb.append("Radiation: ");
       sb.append(getRadiationLevel());
       sb.append("\n");

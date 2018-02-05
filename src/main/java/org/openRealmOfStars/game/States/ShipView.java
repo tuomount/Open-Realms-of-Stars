@@ -31,7 +31,7 @@ import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017 Tuomo Untinen
+ * Copyright (C) 2016-2018 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -116,6 +116,7 @@ public class ShipView extends BlackPanel {
     shipList.setBackground(Color.BLACK);
     shipList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     JScrollPane scroll = new JScrollPane(shipList);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.add(scroll);
@@ -148,6 +149,7 @@ public class ShipView extends BlackPanel {
     infoText.setEditable(false);
     infoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(infoText);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     panel.add(scroll);
     base.add(panel, BorderLayout.CENTER);
 

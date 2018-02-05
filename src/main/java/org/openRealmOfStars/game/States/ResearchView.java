@@ -34,7 +34,7 @@ import org.openRealmOfStars.player.tech.TechType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -256,6 +256,7 @@ public class ResearchView extends BlackPanel {
     techList = new JList<>(techs);
     techList.setCellRenderer(new TechListRenderer());
     JScrollPane scroll = new JScrollPane(techList);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     techList.setBackground(Color.BLACK);
     techList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     if (focusTech != null) {

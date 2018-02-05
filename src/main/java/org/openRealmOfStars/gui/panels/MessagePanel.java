@@ -121,6 +121,7 @@ public class MessagePanel extends JPanel {
     msgText = new BaseInfoTextArea(2, 15);
     msgText.setEditable(false);
     JScrollPane scroll = new JScrollPane(msgText);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     this.add(scroll);
 
     updatePanel(msg, index, maxIndex);

@@ -247,6 +247,7 @@ public class ShipDesignView extends BlackPanel {
     hullInfoText.setEditable(false);
     hullInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     JScrollPane scroll = new JScrollPane(hullInfoText);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     hullPanel.add(Box.createRigidArea(new Dimension(25, 25)));
     hullPanel.add(scroll);
     hullPanel.add(Box.createRigidArea(new Dimension(25, 25)));
@@ -322,6 +323,7 @@ public class ShipDesignView extends BlackPanel {
     componentInfoText.setEditable(false);
     componentInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(componentInfoText);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     greyPanel.add(scroll);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     btn = new SpaceButton("Add component",
@@ -343,6 +345,7 @@ public class ShipDesignView extends BlackPanel {
     componentList.setBackground(Color.BLACK);
     componentList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     scroll = new JScrollPane(componentList);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     greyPanel.add(scroll);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     btn = new SpaceButton("Higher priority",
@@ -375,6 +378,7 @@ public class ShipDesignView extends BlackPanel {
     designInfoText.setEditable(false);
     designInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(designInfoText);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     label = new SpaceLabel("Design info:");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     greyPanel.add(label);
@@ -389,6 +393,7 @@ public class ShipDesignView extends BlackPanel {
     designFlawsText.setEditable(false);
     designFlawsText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(designFlawsText);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     label = new SpaceLabel("Design flaws:");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     greyPanel.add(label);

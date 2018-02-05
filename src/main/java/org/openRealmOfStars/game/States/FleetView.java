@@ -304,6 +304,7 @@ public class FleetView extends BlackPanel {
     shipsInFleet
         .setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     JScrollPane scroll = new JScrollPane(shipsInFleet);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     eastPanel.add(scroll);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     SpaceGreyPanel fleetBtns = new SpaceGreyPanel();
@@ -351,6 +352,7 @@ public class FleetView extends BlackPanel {
     fleetsInSpace
         .setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     scroll = new JScrollPane(fleetsInSpace);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     eastPanel.add(scroll);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     fleetBtns = new SpaceGreyPanel();

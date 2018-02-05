@@ -16,6 +16,7 @@ import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.SavedGame;
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.SaveGameListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
@@ -114,6 +115,7 @@ public class LoadGameView extends BlackPanel {
 
     saveGamesList.setCellRenderer(new SaveGameListRenderer());
     JScrollPane scroll = new JScrollPane(saveGamesList);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     saveGamesList.setBackground(Color.BLACK);
     saveGamesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     info.add(scroll);

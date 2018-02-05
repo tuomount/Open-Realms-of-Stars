@@ -419,6 +419,7 @@ public class PlanetView extends BlackPanel {
     buildingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     buildingList.setBackground(Color.BLACK);
     JScrollPane scroll = new JScrollPane(buildingList);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     scroll.setBackground(Color.BLACK);
     scroll.setPreferredSize(new Dimension(200, 200));
     eastPanel.add(scroll);

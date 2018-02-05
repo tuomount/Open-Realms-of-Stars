@@ -18,6 +18,7 @@ import javax.swing.ListSelectionModel;
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.ShipListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
@@ -290,6 +291,7 @@ public class PlanetBombingView extends BlackPanel {
     shipsInFleet.setBackground(Color.BLACK);
     shipsInFleet.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     JScrollPane scroll = new JScrollPane(shipsInFleet);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     eastPanel.add(scroll);
 
     infoPanel = new BattleInfoPanel(fleet.getFirstShip(), null, listener);

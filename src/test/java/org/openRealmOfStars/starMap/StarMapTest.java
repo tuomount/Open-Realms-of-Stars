@@ -15,6 +15,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
@@ -70,6 +71,7 @@ public class StarMapTest {
     assertEquals(1000, map.getScoreVictoryTurn());
     map.setScoreVictoryTurn(600);
     assertEquals(600, map.getScoreVictoryTurn());
+    assertEquals(GameLengthState.START_GAME, map.getGameLengthState());
   }
 
   @Test

@@ -29,6 +29,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
+import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
@@ -2120,5 +2121,17 @@ public class StarMap {
     } else {
       this.scoreVictoryTurn = scoreVictoryTurn;
     }
+  }
+
+  /**
+   * Get Game length state. This checks current turn and
+   * compares it score victory turn. Game is divided into
+   * five different states: START_GAME, EARLY_GAME, MIDDLE_GAME,
+   * LATE_GAME and END_GAME
+   * @return GameLengthState enumeration
+   */
+  public GameLengthState getGameLengthState() {
+    return GameLengthState.getGameLengthState(getTurn(),
+        getScoreVictoryTurn());
   }
 }

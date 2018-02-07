@@ -54,6 +54,16 @@ public final class ShipDesignConsts {
   public static final String STARBASE_MODULE_IN_NOT_STARBASE = "No starbase"
       + " modules allowed in regular ships!";
   /**
+   * Message when ship contains privateer modules
+   */
+  public static final String PRIVATEER_MODULE_IN_NOT_PRIVATEER = "No privateer"
+      + " modules allowed in regular ships!";
+  /**
+   * Message when privateer ship contains no privateer module
+   */
+  public static final String PRIVATEER_MODULE_MISSING = "No privateer"
+      + " module in privateer ship!";
+  /**
    * The caller references the constants using <tt>Consts.EMPTY_STRING</tt>,
    * and so on. Thus, the caller should be prevented from constructing objects
    * of this class, by declaring this private constructor.

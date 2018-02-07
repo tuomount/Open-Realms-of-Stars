@@ -205,6 +205,29 @@ public class ShipDesignTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testPrivateerDesign() {
+    ShipHull hull = ShipHullFactory.createByName("Privateer Mk1", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
+    ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+    ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+    ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
+    ShipComponent module = ShipComponentFactory.createByName("Privateer Module");
+    String tmp = design.getFlaws();
+    assertEquals(true, tmp.contains(ShipDesignConsts.ENGINE_IS_MISSING));
+    assertEquals(true, tmp.contains(ShipDesignConsts.PRIVATEER_MODULE_MISSING));
+    design.addComponent(weapon);
+    design.addComponent(engine);
+    design.addComponent(energy);
+    design.addComponent(armor);
+    tmp = design.getFlaws();
+    assertEquals(true, tmp.contains(ShipDesignConsts.PRIVATEER_MODULE_MISSING));
+    design.addComponent(module);
+    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testBomberShipDesign() {
     ShipHull hull = ShipHullFactory.createByName("Battleship Mk1", SpaceRace.HUMAN);
     ShipDesign design = new ShipDesign(hull);

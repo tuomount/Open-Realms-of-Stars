@@ -662,6 +662,7 @@ public class ShipDesign {
     }
     boolean targetingComputer = false;
     boolean jammer = false;
+    boolean privateerModule = false;
     for (int i = 0; i < getNumberOfComponents(); i++) {
       ShipComponent comp = getComponent(i);
       if (comp.getType() == ShipComponentType.COLONY_MODULE
@@ -674,6 +675,14 @@ public class ShipDesign {
         designOk = false;
         sb.append(ShipDesignConsts.STARBASE_MODULE_IN_NOT_STARBASE);
         sb.append("\n");
+      }
+      if (comp.getType() == ShipComponentType.PRIVATEERING_MODULE) {
+        privateerModule = true;
+        if (hull.getHullType() != ShipHullType.PRIVATEER) {
+          designOk = false;
+          sb.append(ShipDesignConsts.PRIVATEER_MODULE_IN_NOT_PRIVATEER);
+          sb.append("\n");
+        }
       }
       if (comp.getType() == ShipComponentType.TARGETING_COMPUTER
           && !targetingComputer) {
@@ -693,7 +702,11 @@ public class ShipDesign {
         sb.append(ShipDesignConsts.MANY_JAMMERS);
         sb.append("\n");
       }
-
+    }
+    if (hull.getHullType() == ShipHullType.PRIVATEER && !privateerModule) {
+      designOk = false;
+      sb.append(ShipDesignConsts.PRIVATEER_MODULE_MISSING);
+      sb.append("\n");
     }
     if (getFreeEnergy() < 0) {
       designOk = false;

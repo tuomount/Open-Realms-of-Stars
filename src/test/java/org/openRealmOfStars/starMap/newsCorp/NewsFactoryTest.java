@@ -541,7 +541,7 @@ public class NewsFactoryTest {
     Mockito.when(map.getPlayerByIndex(1)).thenReturn(info2);
     NewsData news = NewsFactory.makeScoreNewsLastQuarter(map);
     assertEquals(true, news.getImageInstructions().contains(
-        "RACE FOR GREATEST REALM TURNS INTO LAST QUARTER!"));
+        "RACE FOR GREATEST REALM!"));
     assertEquals(true, news.getNewsText().contains(
         "Empire of Test is the greatest realm in whole galaxy at the moment!"
         + " Second greatest realm is Alliance of Test"));
@@ -596,6 +596,7 @@ public class NewsFactoryTest {
     Mockito.when(data.getPlanets()).thenReturn(stat);
     Mockito.when(data.getPopulation()).thenReturn(stat);
     Mockito.when(data.getResearch()).thenReturn(stat);
+    Mockito.when(data.generateScores()).thenReturn(stat);
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(map.getNewsCorpData()).thenReturn(data);
     Mockito.when(map.getPlayerByIndex(Mockito.anyInt())).thenReturn(info);

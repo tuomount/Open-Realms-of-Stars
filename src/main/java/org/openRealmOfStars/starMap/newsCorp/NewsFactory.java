@@ -603,7 +603,7 @@ public final class NewsFactory {
     if (index != -1) {
       PlayerInfo info = map.getPlayerByIndex(index);
       instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
-      instructions.addText("RACE FOR GREATEST REALM TURNS INTO LAST QUARTER!");
+      instructions.addText("RACE FOR GREATEST REALM!");
       instructions.addText(info.getEmpireName());
       instructions.addImage(info.getRace().getNameSingle());
       sb.append(info.getEmpireName());
@@ -615,6 +615,7 @@ public final class NewsFactory {
         sb.append(info.getEmpireName());
         sb.append(" ! ");
       }
+      sb.append("Race is now on last quarter! ");
       sb.append("See full scoring situation from Statiscis view.");
     }
     news.setImageInstructions(instructions.build());

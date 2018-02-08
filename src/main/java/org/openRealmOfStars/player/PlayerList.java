@@ -143,11 +143,13 @@ public class PlayerList {
    * @return Index or -1 if no match
    */
   public int getIndex(final PlayerInfo toMatch) {
-    for (int i = 0; i < list.size(); i++) {
-      PlayerInfo info = list.get(i);
-      if (info.hashCode() == toMatch.hashCode()
-          && info.getEmpireName().equals(toMatch.getEmpireName())) {
-        return i;
+    if (toMatch != null) {
+      for (int i = 0; i < list.size(); i++) {
+        PlayerInfo info = list.get(i);
+        if (info.hashCode() == toMatch.hashCode()
+            && info.getEmpireName().equals(toMatch.getEmpireName())) {
+          return i;
+        }
       }
     }
     return -1;

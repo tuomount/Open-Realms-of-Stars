@@ -275,10 +275,15 @@ public class StarMapView extends BlackPanel {
    */
   public void setShowFleet(final Fleet fleet) {
     FleetTileInfo[][] tiles = map.getFleetTiles();
-    PlayerInfo owner = players.getPlayerInfoByIndex(
-        tiles[fleet.getX()][fleet.getY()].getPlayerIndex());
-    infoPanel.showFleet(fleet, owner, map.isDebug());
-    starMapMouseListener.handleFixTradeButton(fleet, owner);
+    FleetTileInfo tileInfo = tiles[fleet.getX()][fleet.getY()];
+    if (tileInfo != null) {
+      PlayerInfo owner = players.getPlayerInfoByIndex(
+          tileInfo.getPlayerIndex());
+      infoPanel.showFleet(fleet, owner, map.isDebug());
+      starMapMouseListener.handleFixTradeButton(fleet, owner);
+    } else {
+      infoPanel.showEmpty();
+    }
   }
 
   /**

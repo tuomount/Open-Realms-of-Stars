@@ -38,10 +38,7 @@ public class SpaceScrollBarUiTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testButtons() {
     ComponentUI componentUi = SpaceScrollBarUI.createUI(null);
-    SpaceScrollBarUI ui = null;
-    if (componentUi instanceof SpaceScrollBarUI) {
-      ui = (SpaceScrollBarUI) componentUi;
-    }
+    SpaceScrollBarUI ui = (SpaceScrollBarUI) componentUi;
     JButton btn = ui.createDecreaseButton(SwingConstants.NORTH);
     if (btn instanceof IconButton) {
       IconButton iBtn = (IconButton) btn;

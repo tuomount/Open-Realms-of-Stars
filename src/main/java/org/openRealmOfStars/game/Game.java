@@ -1605,6 +1605,7 @@ public class Game implements ActionListener {
           // TODO: Quick and ugly ending needs to be better
           SoundPlayer.playMenuSound();
           changeGameState(GameState.MAIN_MENU);
+          return;
         } else {
           SoundPlayer.playMenuSound();
           changeGameState(GameState.STARMAP);

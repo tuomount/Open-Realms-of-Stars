@@ -149,6 +149,14 @@ public class FleetView extends BlackPanel {
   private SpaceButton conquerBtn;
 
   /**
+   * Hail button for calling other fleet
+   */
+  private SpaceButton hailBtn;
+  /**
+   * Is view interactive or not
+   */
+  private boolean interactiveView;
+  /**
    * Fleet view constructor. Fleet view is used when view fleet in deep space
    * or fleet is orbiting a planet.
    * @param planet Planet where fleet is orbiting. If planet is null
@@ -162,6 +170,7 @@ public class FleetView extends BlackPanel {
   public FleetView(final Planet planet, final Fleet fleet,
       final FleetList fleetList, final PlayerInfo playerInfo,
       final boolean interactive, final ActionListener listener) {
+    interactiveView = interactive;
     this.setPlanet(planet);
     this.setFleet(fleet);
     this.setFleetList(fleetList);
@@ -327,11 +336,18 @@ public class FleetView extends BlackPanel {
     btn.setEnabled(interactive);
     fleetBtns.add(btn);
     fleetBtns.add(Box.createRigidArea(new Dimension(5, 5)));
-    btn = new SpaceButton("Hail",
+    hailBtn = new SpaceButton("Hail",
         GameCommands.COMMAND_HAIL_FLEET_PLANET);
-    btn.addActionListener(listener);
-    btn.setEnabled(!interactive);
-    fleetBtns.add(btn);
+    hailBtn.addActionListener(listener);
+    hailBtn.setEnabled(!interactive);
+    if (!interactiveView && this.fleet != null) {
+      if (this.fleet.isPrivateerFleet()) {
+        hailBtn.setEnabled(false);
+      } else {
+        hailBtn.setEnabled(true);
+      }
+    }
+    fleetBtns.add(hailBtn);
     fleetBtns.add(Box.createRigidArea(new Dimension(5, 5)));
     btn = new SpaceButton("Deploy", GameCommands.COMMAND_DEPLOY_STARBASE);
     btn.addActionListener(listener);
@@ -425,6 +441,13 @@ public class FleetView extends BlackPanel {
         } else {
           conquerBtn.setEnabled(false);
         }
+      }
+    }
+    if (!interactiveView && fleet != null) {
+      if (fleet.isPrivateerFleet()) {
+        hailBtn.setEnabled(false);
+      } else {
+        hailBtn.setEnabled(true);
       }
     }
     if (colonistSelection != null) {

@@ -125,4 +125,14 @@ public class ShipComponentFactoryTest {
     assertEquals(null, module);
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testEspionage() {
+    ShipComponent electronics = ShipComponentFactory.createByName("Espionage module Mk1");
+    assertEquals(1, electronics.getEspionageBonus());
+    assertEquals(1, electronics.getEnergyRequirement());
+    assertEquals(3, electronics.getCost());
+    assertEquals(1, electronics.getMetalCost());
+  }
+
 }

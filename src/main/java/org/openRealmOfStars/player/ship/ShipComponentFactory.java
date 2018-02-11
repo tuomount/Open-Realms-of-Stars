@@ -5,7 +5,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 142;
+  private static final int MAX_SHIPCOMPONENT = 143;
 
   /**
    * Component Ion drive Mk1
@@ -750,7 +750,12 @@ public final class ShipComponentFactory {
    * Component Starbase bank
    */
   public static final int COMPONENT_STARBASE_BANK = 141;
+
   /**
+   * Component Espionage module Mk1
+   */
+  public static final int COMPONENT_ESPIONAGE_MODULE_MK1 = 142;
+/**
    * Create ShipComponent with matching name
    * @param name Ship component name
    * @return ShipComponent or null if not found
@@ -1210,6 +1215,9 @@ public final class ShipComponentFactory {
     case COMPONENT_STARBASE_BANK:
       tmp = createStarbaseModule(index);
       break; // Starbase bank
+    case COMPONENT_ESPIONAGE_MODULE_MK1:
+      tmp = createElectronics(index);
+      break; // Espionage Module Mk1
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -1743,6 +1751,12 @@ public final class ShipComponentFactory {
       tmp = new ShipComponent(index, "Privateer Module", 6, 4,
           ShipComponentType.PRIVATEERING_MODULE);
       tmp.setEnergyRequirement(1);
+    }
+    if (index == COMPONENT_ESPIONAGE_MODULE_MK1) {
+      tmp = new ShipComponent(index, "Espionage module Mk1", 3, 1,
+          ShipComponentType.ESPIONAGE_MODULE);
+      tmp.setEnergyRequirement(1);
+      tmp.setEspionageBonus(1);
     }
     return tmp;
 

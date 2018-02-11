@@ -153,10 +153,11 @@ public class TechListTest {
   public void testMissingTechDefense() {
     TechList list = new TechList();
     Tech[] missing = list.getListMissingTech(TechType.Defense, 5);
-    assertEquals(3, missing.length);
+    assertEquals(4, missing.length);
     assertEquals("Shield Mk5", missing[0].getName());
     assertEquals("Armor plating Mk5", missing[1].getName());
     assertEquals("Planetary defense turret Mk2", missing[2].getName());
+    assertEquals("Jammer Mk2", missing[3].getName());
   }
 
   @Test

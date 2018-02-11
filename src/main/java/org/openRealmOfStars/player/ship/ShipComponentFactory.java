@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 143;
+  private static final int MAX_SHIPCOMPONENT = 147;
 
   /**
    * Component Ion drive Mk1
@@ -755,6 +755,27 @@ public final class ShipComponentFactory {
    * Component Espionage module Mk1
    */
   public static final int COMPONENT_ESPIONAGE_MODULE_MK1 = 142;
+
+  /**
+   * Component Espionage module Mk2
+   */
+  public static final int COMPONENT_ESPIONAGE_MODULE_MK2 = 143;
+
+  /**
+   * Component Espionage module Mk3
+   */
+  public static final int COMPONENT_ESPIONAGE_MODULE_MK3 = 144;
+
+  /**
+   * Component Espionage module Mk4
+   */
+  public static final int COMPONENT_ESPIONAGE_MODULE_MK4 = 145;
+
+  /**
+   * Component Espionage module Mk5
+   */
+  public static final int COMPONENT_ESPIONAGE_MODULE_MK5 = 146;
+
 /**
    * Create ShipComponent with matching name
    * @param name Ship component name
@@ -1218,6 +1239,18 @@ public final class ShipComponentFactory {
     case COMPONENT_ESPIONAGE_MODULE_MK1:
       tmp = createElectronics(index);
       break; // Espionage Module Mk1
+    case COMPONENT_ESPIONAGE_MODULE_MK2:
+      tmp = createElectronics(index);
+      break; // Espionage Module Mk2
+    case COMPONENT_ESPIONAGE_MODULE_MK3:
+      tmp = createElectronics(index);
+      break; // Espionage Module Mk3
+    case COMPONENT_ESPIONAGE_MODULE_MK4:
+      tmp = createElectronics(index);
+      break; // Espionage Module Mk4
+    case COMPONENT_ESPIONAGE_MODULE_MK5:
+      tmp = createElectronics(index);
+      break; // Espionage Module Mk5
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -1757,6 +1790,30 @@ public final class ShipComponentFactory {
           ShipComponentType.ESPIONAGE_MODULE);
       tmp.setEnergyRequirement(1);
       tmp.setEspionageBonus(1);
+    }
+    if (index == COMPONENT_ESPIONAGE_MODULE_MK2) {
+      tmp = new ShipComponent(index, "Espionage module Mk2", 3, 1,
+          ShipComponentType.ESPIONAGE_MODULE);
+      tmp.setEnergyRequirement(1);
+      tmp.setEspionageBonus(2);
+    }
+    if (index == COMPONENT_ESPIONAGE_MODULE_MK3) {
+      tmp = new ShipComponent(index, "Espionage module Mk3", 4, 1,
+          ShipComponentType.ESPIONAGE_MODULE);
+      tmp.setEnergyRequirement(1);
+      tmp.setEspionageBonus(3);
+    }
+    if (index == COMPONENT_ESPIONAGE_MODULE_MK4) {
+      tmp = new ShipComponent(index, "Espionage module Mk4", 4, 1,
+          ShipComponentType.ESPIONAGE_MODULE);
+      tmp.setEnergyRequirement(1);
+      tmp.setEspionageBonus(4);
+    }
+    if (index == COMPONENT_ESPIONAGE_MODULE_MK5) {
+      tmp = new ShipComponent(index, "Espionage module Mk5", 6, 1,
+          ShipComponentType.ESPIONAGE_MODULE);
+      tmp.setEnergyRequirement(2);
+      tmp.setEspionageBonus(6);
     }
     return tmp;
 

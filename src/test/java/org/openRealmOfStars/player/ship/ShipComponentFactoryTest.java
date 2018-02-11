@@ -133,6 +133,26 @@ public class ShipComponentFactoryTest {
     assertEquals(1, electronics.getEnergyRequirement());
     assertEquals(3, electronics.getCost());
     assertEquals(1, electronics.getMetalCost());
+    electronics = ShipComponentFactory.createByName("Espionage module Mk2");
+    assertEquals(2, electronics.getEspionageBonus());
+    assertEquals(1, electronics.getEnergyRequirement());
+    assertEquals(3, electronics.getCost());
+    assertEquals(1, electronics.getMetalCost());
+    electronics = ShipComponentFactory.createByName("Espionage module Mk3");
+    assertEquals(3, electronics.getEspionageBonus());
+    assertEquals(1, electronics.getEnergyRequirement());
+    assertEquals(4, electronics.getCost());
+    assertEquals(1, electronics.getMetalCost());
+    electronics = ShipComponentFactory.createByName("Espionage module Mk4");
+    assertEquals(4, electronics.getEspionageBonus());
+    assertEquals(1, electronics.getEnergyRequirement());
+    assertEquals(4, electronics.getCost());
+    assertEquals(1, electronics.getMetalCost());
+    electronics = ShipComponentFactory.createByName("Espionage module Mk5");
+    assertEquals(6, electronics.getEspionageBonus());
+    assertEquals(2, electronics.getEnergyRequirement());
+    assertEquals(6, electronics.getCost());
+    assertEquals(1, electronics.getMetalCost());
   }
 
 }

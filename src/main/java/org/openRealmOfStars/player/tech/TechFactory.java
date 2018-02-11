@@ -108,7 +108,7 @@ public final class TechFactory {
    * Defense tech names for level 3
    */
   public static final String[] DEFENSE_TECH_LEVEL3_NAMES = {"Shield Mk3",
-      "Armor plating Mk3" };
+      "Armor plating Mk3", "Jammer Mk1" };
   /**
    * Defense tech names for level 4
    */
@@ -118,7 +118,7 @@ public final class TechFactory {
    * Defense tech names for level 5
    */
   public static final String[] DEFENSE_TECH_LEVEL5_NAMES = {"Shield Mk5",
-      "Armor plating Mk5", "Planetary defense turret Mk2" };
+      "Armor plating Mk5", "Planetary defense turret Mk2", "Jammer Mk2" };
   /**
    * Defense tech names for level 6
    */
@@ -128,7 +128,7 @@ public final class TechFactory {
    * Defense tech names for level 7
    */
   public static final String[] DEFENSE_TECH_LEVEL7_NAMES = {"Shield Mk7",
-      "Armor plating Mk7" };
+      "Armor plating Mk7", "Jammer Mk3" };
   /**
    * Defense tech names for level 8
    */
@@ -143,7 +143,7 @@ public final class TechFactory {
    * Defense tech names for level 10
    */
   public static final String[] DEFENSE_TECH_LEVEL10_NAMES = {"Shield Mk10",
-      "Armor plating Mk10" };
+      "Armor plating Mk10", "Jammer Mk4" };
 
   /**
    * Hull tech names for level 1
@@ -315,12 +315,12 @@ public final class TechFactory {
    * Electronics tech names for level 2
    */
   public static final String[] ELECTRONICS_TECH_LEVEL2_NAMES = {
-      "Cloaking device Mk2", "Targeting computer Mk1" };
+      "Cloaking device Mk2", "Targeting computer Mk1", "Espionage module Mk1" };
   /**
    * Electronics tech names for level 3
    */
   public static final String[] ELECTRONICS_TECH_LEVEL3_NAMES = {"Scanner Mk2",
-      "Planetary scanner Mk2", "Jammer Mk1" };
+      "Planetary scanner Mk2", "Espionage module Mk2" };
   /**
    * Electronics tech names for level 4
    */
@@ -330,7 +330,7 @@ public final class TechFactory {
    * Electronics tech names for level 5
    */
   public static final String[] ELECTRONICS_TECH_LEVEL5_NAMES = {"Scanner Mk3",
-      "Planetary scanner Mk3", "Jammer Mk2" };
+      "Planetary scanner Mk3", "Espionage module Mk3" };
   /**
    * Electronics tech names for level 6
    */
@@ -340,7 +340,7 @@ public final class TechFactory {
    * Electronics tech names for level 7
    */
   public static final String[] ELECTRONICS_TECH_LEVEL7_NAMES = {"Scanner Mk4",
-      "Jammer Mk3" };
+      "Espionage module Mk4" };
   /**
    * Electronics tech names for level 8
    */
@@ -350,12 +350,12 @@ public final class TechFactory {
    * Electronics tech names for level 9
    */
   public static final String[] ELECTRONICS_TECH_LEVEL9_NAMES = {"Scanner Mk5",
-      "Targeting computer Mk4" };
+      "Targeting computer Mk4"  };
   /**
    * Electronics tech names for level 10
    */
   public static final String[] ELECTRONICS_TECH_LEVEL10_NAMES = {
-      "Cloaking device Mk6", "Planetary scanner Mk5", "Jammer Mk4" };
+      "Cloaking device Mk6", "Planetary scanner Mk5", "Espionage module Mk5" };
 
   /**
    * Create combat tech with certain name and level
@@ -488,6 +488,8 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ARMOR));
         } else if (techName.startsWith("Planetary defense turret Mk")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANETARY_TURRET));
+        } else if (techName.startsWith("Jammer Mk")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_CIRCUIT_BOARD));
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_DEFENSE_TECH));
         }
@@ -774,7 +776,7 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_SCANNER));
         } else if (techName.startsWith("Cloaking device")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_CLOACKING_DEVICE));
-        } else if (techName.startsWith("Jammer Mk")) {
+        } else if (techName.startsWith("Espionage module Mk")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_CIRCUIT_BOARD));
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH));

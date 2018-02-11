@@ -1603,6 +1603,25 @@ private int increaseDefenseValueWithJammer() {
     }
     return CARGO_TYPE_NO_CARGO;
   }
+
+  /**
+   * Get the espionage bonus for ship.
+   * @return Espionage bonus
+   */
+  public int getEspionageBonus() {
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.ESPIONAGE_MODULE
+          && hasComponentEnergy(i)) {
+        // Since ships can have only one espionage module we can
+        // Stop looking here
+        return getEspionageBonus();
+      }
+    }
+    return 0;
+
+  }
   /**
    * Do trade with planet if trade ship.
    * Not this does not check diplomatic relationships.

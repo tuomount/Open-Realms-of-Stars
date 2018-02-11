@@ -4,7 +4,7 @@ package org.openRealmOfStars.player.ship.shipdesign;
 *
 * Open Realm of Stars game project
 * Copyright (C) 2017 wksdn18
-* Copyright (C) 2017 Tuomo Untinen
+* Copyright (C) 2017,2018 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -47,6 +47,11 @@ public final class ShipDesignConsts {
    * Message when ship contains more than one targeting computer
    */
   public static final String MANY_COMPUTERS = "Only one targeting computer"
+   + " is allowed!";
+  /**
+   * Message when ship contains more than one espionage module
+   */
+  public static final String MANY_ESPIONAGE = "Only one espionage module"
    + " is allowed!";
   /**
    * Message when ship contains starbase modules

@@ -549,6 +549,12 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    case ESPIONAGE_MODULE: {
+      sb.append("Espionage: +");
+      sb.append(getEspionageBonus());
+      sb.append("\n");
+      break;
+    }
     case TARGETING_COMPUTER: {
       sb.append("Targeting computer: +");
       sb.append(getDamage());

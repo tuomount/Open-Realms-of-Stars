@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -157,7 +157,8 @@ public class ShipDesignTest {
     ShipHull hull = ShipHullFactory.createByName("Probe", SpaceRace.CENTAURS);
     ShipDesign design = new ShipDesign(hull);
     ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
-    ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+    ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk2");
+    ShipComponent spyKit = ShipComponentFactory.createByName("Espionage module Mk1");
     
     
     assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
@@ -165,13 +166,17 @@ public class ShipDesignTest {
     design.addComponent(engine);
     assertEquals(true,design.getFlaws().startsWith(ShipDesignConsts.NO_WEAPONS_ALLOWED));
     design.removeComponent(0);
+    design.addComponent(spyKit);
+    design.addComponent(spyKit);
+    assertEquals(true,design.getFlaws().startsWith(ShipDesignConsts.MANY_ESPIONAGE));
+    design.removeComponent(1);
     assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
-    assertEquals(1,design.getNumberOfComponents());
+    assertEquals(2,design.getNumberOfComponents());
     assertEquals(0,design.getTotalMilitaryPower());
-    assertEquals(3,design.getFreeSlots());
+    assertEquals(2,design.getFreeSlots());
     assertEquals(3,design.getFtlSpeed());
     assertEquals(2,design.getSpeed());
-    assertEquals(1,design.getTacticSpeed());
+    assertEquals(2,design.getTacticSpeed());
   }
 
   @Test

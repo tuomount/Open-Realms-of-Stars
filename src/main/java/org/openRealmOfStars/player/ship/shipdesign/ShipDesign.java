@@ -663,6 +663,7 @@ public class ShipDesign {
     boolean targetingComputer = false;
     boolean jammer = false;
     boolean privateerModule = false;
+    boolean espionageModule = false;
     for (int i = 0; i < getNumberOfComponents(); i++) {
       ShipComponent comp = getComponent(i);
       if (comp.getType() == ShipComponentType.COLONY_MODULE
@@ -702,6 +703,16 @@ public class ShipDesign {
         sb.append(ShipDesignConsts.MANY_JAMMERS);
         sb.append("\n");
       }
+      if (comp.getType() == ShipComponentType.ESPIONAGE_MODULE
+          && !espionageModule) {
+        espionageModule = true;
+      } else if (comp.getType() == ShipComponentType.ESPIONAGE_MODULE
+          && espionageModule) {
+        designOk = false;
+        sb.append(ShipDesignConsts.MANY_ESPIONAGE);
+        sb.append("\n");
+      }
+
     }
     if (hull.getHullType() == ShipHullType.PRIVATEER && !privateerModule) {
       designOk = false;

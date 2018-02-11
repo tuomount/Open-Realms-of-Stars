@@ -293,6 +293,8 @@ public class ShipDesignView extends BlackPanel {
     componentTypes.add("Propulsion");
     componentTypes.add("Defense");
     componentTypes.add("Electronics");
+    componentTypes.add("Modules");
+    componentTypes.add("Invasion");
     for (int i = 0; i < ShipComponentType.values().length; i++) {
       componentTypes.add(ShipComponentType.getTypeByIndex(i).toString());
     }
@@ -454,7 +456,8 @@ public class ShipDesignView extends BlackPanel {
         }
         if (comp != null && filter.equalsIgnoreCase("Defense")
             && (comp.getType() == ShipComponentType.ARMOR
-                || comp.getType() == ShipComponentType.SHIELD)) {
+                || comp.getType() == ShipComponentType.SHIELD
+                || comp.getType() == ShipComponentType.JAMMER)) {
           components.add(comp);
           continue;
         }
@@ -466,10 +469,27 @@ public class ShipDesignView extends BlackPanel {
         }
         if (comp != null && filter.equalsIgnoreCase("Electronics")
             && (comp.getType() == ShipComponentType.CLOAKING_DEVICE
-                || comp.getType() == ShipComponentType.JAMMER
                 || comp.getType() == ShipComponentType.SCANNER
+                || comp.getType() == ShipComponentType.JAMMER
                 || comp.getType() == ShipComponentType.SHIELD_GENERATOR
-                || comp.getType() == ShipComponentType.TARGETING_COMPUTER)) {
+                || comp.getType() == ShipComponentType.TARGETING_COMPUTER
+                || comp.getType() == ShipComponentType.ESPIONAGE_MODULE)) {
+          components.add(comp);
+          continue;
+        }
+        if (comp != null && filter.equalsIgnoreCase("Invasion")
+            && (comp.getType() == ShipComponentType.ORBITAL_BOMBS
+                || comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE
+                || comp.getType() == ShipComponentType.ORBITAL_NUKE)) {
+          components.add(comp);
+          continue;
+        }
+        if (comp != null && filter.equalsIgnoreCase("Modules")
+            && (comp.getType() == ShipComponentType.COLONY_MODULE
+                || comp.getType() == ShipComponentType.ESPIONAGE_MODULE
+                || comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE
+                || comp.getType() == ShipComponentType.PRIVATEERING_MODULE
+                || comp.getType() == ShipComponentType.STARBASE_COMPONENT)) {
           components.add(comp);
           continue;
         }

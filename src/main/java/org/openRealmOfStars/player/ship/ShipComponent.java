@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.ship;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -124,6 +124,11 @@ public class ShipComponent {
   private int researchBonus;
 
   /**
+   * Espionage bonus from component
+   */
+  private int espionageBonus;
+
+  /**
    * Constructor for ship component
    * @param index Index for saving component
    * @param name Component name
@@ -153,6 +158,7 @@ public class ShipComponent {
     this.researchBonus = 0;
     this.creditBonus = 0;
     this.cultureBonus = 0;
+    this.setEspionageBonus(0);
   }
 
   /**
@@ -621,6 +627,28 @@ public class ShipComponent {
    */
   public void setResearchBonus(final int researchBonus) {
     this.researchBonus = researchBonus;
+  }
+
+  /**
+   * Get Espionage bonus
+   * @return the espionageBonus
+   */
+  public int getEspionageBonus() {
+    return espionageBonus;
+  }
+
+  /**
+   * Set Espionage bonus. Maximum bonus is 10.
+   * @param espionageBonus the espionageBonus to set
+   */
+  public void setEspionageBonus(final int espionageBonus) {
+    if (espionageBonus > 10) {
+      this.espionageBonus = 10;
+    } else if (espionageBonus < 0) {
+      this.espionageBonus = 0;
+    } else {
+      this.espionageBonus = espionageBonus;
+    }
   }
 
 }

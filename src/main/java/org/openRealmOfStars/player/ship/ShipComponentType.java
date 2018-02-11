@@ -5,7 +5,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -111,7 +111,11 @@ public enum ShipComponentType {
   /**
    * Component for starbases only
    */
-  STARBASE_COMPONENT;
+  STARBASE_COMPONENT,
+  /**
+   * Espionage module for spying other realms
+   */
+  ESPIONAGE_MODULE;
 
   /**
    * Get ShipComponentType index
@@ -159,6 +163,8 @@ public enum ShipComponentType {
       return 18;
     case STARBASE_COMPONENT:
       return 19;
+    case ESPIONAGE_MODULE:
+      return 20;
     default:
       return 0;
     }
@@ -211,6 +217,8 @@ public enum ShipComponentType {
       return ShipComponentType.ORBITAL_NUKE;
     case 19:
       return ShipComponentType.STARBASE_COMPONENT;
+    case 20:
+      return ShipComponentType.ESPIONAGE_MODULE;
     default:
       return ShipComponentType.WEAPON_BEAM;
     }
@@ -259,6 +267,8 @@ public enum ShipComponentType {
       return "Orbital nuke";
     case STARBASE_COMPONENT:
       return "Starbase module";
+    case ESPIONAGE_MODULE:
+      return "Espionage module";
     default:
       return "Error - Unknown";
     }
@@ -310,6 +320,8 @@ public enum ShipComponentType {
       return Icons.ICON_NUKE;
     case STARBASE_COMPONENT:
       return Icons.ICON_STARBASE;
+    case ESPIONAGE_MODULE:
+      return Icons.ICON_CIRCUIT_BOARD;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }

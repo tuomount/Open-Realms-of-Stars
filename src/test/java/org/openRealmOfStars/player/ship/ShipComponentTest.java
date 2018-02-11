@@ -197,10 +197,10 @@ public class ShipComponentTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testScannerAndCloack() {
-    ShipComponent component = new ShipComponent(0, "ScanCloack", 3, 3,
+  public void testScannerAndCloak() {
+    ShipComponent component = new ShipComponent(0, "ScanCloak", 3, 3,
         ShipComponentType.SCANNER);
-    assertEquals("ScanCloack", component.getName());
+    assertEquals("ScanCloak", component.getName());
     assertEquals(0, component.getIndex());
     assertEquals(3, component.getCost());
     assertEquals(3, component.getMetalCost());
@@ -214,6 +214,22 @@ public class ShipComponentTest {
     assertEquals(5, component.getScannerRange());
     assertEquals(40, component.getCloakDetection());
     assertEquals(20, component.getCloaking());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEspionageModule() {
+    ShipComponent component = new ShipComponent(0, "Spy kit", 3, 3,
+        ShipComponentType.ESPIONAGE_MODULE);
+    assertEquals("Spy kit", component.getName());
+    assertEquals(ShipComponentType.ESPIONAGE_MODULE, component.getType());
+    assertEquals(0, component.getEspionageBonus());
+    component.setEspionageBonus(-5);
+    assertEquals(0, component.getEspionageBonus());
+    component.setEspionageBonus(15);
+    assertEquals(10, component.getEspionageBonus());
+    component.setEspionageBonus(3);
+    assertEquals(3, component.getEspionageBonus());
   }
 
   @Test
@@ -241,8 +257,8 @@ public class ShipComponentTest {
         "Shield generator", "Engine", "Powersource", "Cloaking device",
         "Jammer", "Targeting computer", "Planetary invasion module",
         "Colony module", "Privateering module", "Orbital bombs",
-        "Orbital nuke", "Starbase module"};
-    for (int i = 0; i < 20; i++) {
+        "Orbital nuke", "Starbase module", "Espionage module"};
+    for (int i = 0; i < 21; i++) {
       ShipComponentType type = ShipComponentType.getTypeByIndex(i);
       assertNotEquals(null, type);
       assertEquals(expected[i], type.toString());

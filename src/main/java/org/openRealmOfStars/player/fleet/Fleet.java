@@ -20,7 +20,7 @@ import org.openRealmOfStars.utilities.repository.RouteRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -801,6 +801,18 @@ public class Fleet {
       for (Ship ship : ships) {
         result = result + ship.getTotalCultureBonus();
       }
+    }
+    return result;
+  }
+
+  /**
+   * Get total espionage bonus
+   * @return Total espionage bonus from ships in fleet
+   */
+  public int getEspionageBonus() {
+    int result = 0;
+    for (Ship ship : ships) {
+      result = result + ship.getEspionageBonus();
     }
     return result;
   }

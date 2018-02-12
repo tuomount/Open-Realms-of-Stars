@@ -17,7 +17,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -58,6 +58,34 @@ public class FleetTest {
     Mockito.when(ship.getName()).thenReturn("Scout");
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(15);
     Mockito.when(ship.isTrooperModule()).thenReturn(false);
+    Mockito.when(ship.getEspionageBonus()).thenReturn(0);
+    Mockito.when(ship.hasBombs()).thenReturn(false);
+    Mockito.when(ship.getCulture()).thenReturn(0);
+    return ship;
+  }
+
+  /**
+   * Create first ship
+   * @return First ship
+   */
+  private static Ship createEspionageShip() {
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getSize()).thenReturn(ShipSize.SMALL);
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getFtlSpeed()).thenReturn(2);
+    Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getScannerDetectionLvl()).thenReturn(40);
+    Mockito.when(ship.getScannerLvl()).thenReturn(2);
+    Mockito.when(ship.getSpeed()).thenReturn(1);
+    Mockito.when(ship.getFreeCargoColonists()).thenReturn(0);
+    Mockito.when(ship.getFreeCargoMetal()).thenReturn(0);
+    Mockito.when(ship.getHullPoints()).thenReturn(4);
+    Mockito.when(ship.getMaxHullPoints()).thenReturn(4);
+    Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
+    Mockito.when(ship.getName()).thenReturn("Scout");
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(15);
+    Mockito.when(ship.isTrooperModule()).thenReturn(false);
+    Mockito.when(ship.getEspionageBonus()).thenReturn(1);
     Mockito.when(ship.hasBombs()).thenReturn(false);
     Mockito.when(ship.getCulture()).thenReturn(0);
     return ship;
@@ -88,6 +116,7 @@ public class FleetTest {
     Mockito.when(ship.isTrooperModule()).thenReturn(false);
     Mockito.when(ship.hasBombs()).thenReturn(false);
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);
+    Mockito.when(ship.getEspionageBonus()).thenReturn(0);
     Mockito.when(ship.getCulture()).thenReturn(1);
     return ship;
   }
@@ -117,6 +146,7 @@ public class FleetTest {
     Mockito.when(ship.isTrooperModule()).thenReturn(true);
     Mockito.when(ship.hasBombs()).thenReturn(false);
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);
+    Mockito.when(ship.getEspionageBonus()).thenReturn(0);
     Mockito.when(ship.getCulture()).thenReturn(0);
     return ship;
   }
@@ -146,6 +176,7 @@ public class FleetTest {
     Mockito.when(ship.isTrooperModule()).thenReturn(true);
     Mockito.when(ship.hasBombs()).thenReturn(true);
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);
+    Mockito.when(ship.getEspionageBonus()).thenReturn(0);
     Mockito.when(ship.getCulture()).thenReturn(0);
     return ship;
   }
@@ -176,6 +207,7 @@ public class FleetTest {
     Mockito.when(ship.getCulture()).thenReturn(0);
     Mockito.when(ship.getTotalCreditBonus()).thenReturn(1);
     Mockito.when(ship.getTotalResearchBonus()).thenReturn(2);
+    Mockito.when(ship.getEspionageBonus()).thenReturn(0);
     Mockito.when(ship.getTotalCultureBonus()).thenReturn(3);
     Mockito.when(ship.isStarBase()).thenReturn(true);
     Mockito.when(ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)).thenReturn(true);
@@ -207,6 +239,7 @@ public class FleetTest {
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);
     Mockito.when(ship.getCulture()).thenReturn(0);
     Mockito.when(ship.isTrooperModule()).thenReturn(false);
+    Mockito.when(ship.getEspionageBonus()).thenReturn(0);
     Mockito.when(ship.hasBombs()).thenReturn(false);
     Mockito.when(ship.isTradeShip()).thenReturn(true);
     return ship;
@@ -234,6 +267,7 @@ public class FleetTest {
     Mockito.when(ship.getName()).thenReturn("Privateer");
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(20);
     Mockito.when(ship.isTrooperModule()).thenReturn(false);
+    Mockito.when(ship.getEspionageBonus()).thenReturn(0);
     Mockito.when(ship.hasBombs()).thenReturn(false);
     Mockito.when(ship.getCulture()).thenReturn(0);
     return ship;
@@ -344,6 +378,17 @@ public class FleetTest {
     assertEquals(1, fleet.getCulturalValue());
     assertEquals("Fleet #0\nSpeed: 1 FTL: 1\nMoves:0\nScout - 15\nColony - 0"
         + "\n", fleet.getInfoAsText(null));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFleetWithThreeShip() {
+    Ship ship = createShipOne();
+    Fleet fleet = new Fleet(ship, 2, 3);
+    Ship espionageShip = createEspionageShip();
+    fleet.addShip(espionageShip);
+    fleet.addShip(espionageShip);
+    assertEquals(2, fleet.getEspionageBonus());
   }
 
   @Test

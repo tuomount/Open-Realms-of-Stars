@@ -208,6 +208,10 @@ public class CreditsView extends BlackPanel {
       + "Space Theme by\n"
       + "Joshua Stephen Kartes\n"
       + "Licensed under CC BY 3.0 "
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Fight Music Theme01 by\n"
+      + "GTDStudio - Pavel Panferov\n"
+      + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n";
 
 

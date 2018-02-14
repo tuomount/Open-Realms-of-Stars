@@ -11,7 +11,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -140,6 +140,10 @@ public final class MusicPlayer {
   public static final MusicFileInfo SPACE_THEME = new MusicFileInfo(
       "Space Theme", "Joshua Stephen Kartes",
       "/resources/musics/spacetheme.ogg");
+  
+  public static final MusicFileInfo FIGHT_THEME01 = new MusicFileInfo(
+      "Fight Music Theme01","GTDStudio - Pavel Panferov",
+      "/resources/musics/Panferov_fight01.ogg");
 
   /**
    * List of music to played while playing
@@ -150,7 +154,7 @@ public final class MusicPlayer {
    * List of music to played while combat
    */
   protected static final MusicFileInfo[] COMBAT_MUSIC_LIST = {NEON_TRANSIT,
-      THRUST_SEQUENCE};
+      THRUST_SEQUENCE, FIGHT_THEME01};
   /**
    * What music file is currently playing
    */

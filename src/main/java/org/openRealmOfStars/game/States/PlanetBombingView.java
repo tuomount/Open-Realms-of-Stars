@@ -219,7 +219,7 @@ public class PlanetBombingView extends BlackPanel {
     this.fleet = fleet;
     this.attacker = attacker;
     this.attackPlayerIndex = attackerPlayerIndex;
-    MusicPlayer.playCombatMusic();
+    MusicPlayer.play(MusicPlayer.FIGHT_THEME01);
     aiControlled = false;
     allAi = false;
     nuked = false;

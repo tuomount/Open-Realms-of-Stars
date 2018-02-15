@@ -140,9 +140,12 @@ public final class MusicPlayer {
   public static final MusicFileInfo SPACE_THEME = new MusicFileInfo(
       "Space Theme", "Joshua Stephen Kartes",
       "/resources/musics/spacetheme.ogg");
-  
+
+  /**
+   * Fight Music Theme01 by GTDStudio - Pavel Panferov License CC-BY 3.0
+   */
   public static final MusicFileInfo FIGHT_THEME01 = new MusicFileInfo(
-      "Fight Music Theme01","GTDStudio - Pavel Panferov",
+      "Fight Music Theme01", "GTDStudio - Pavel Panferov",
       "/resources/musics/Panferov_fight01.ogg");
 
   /**

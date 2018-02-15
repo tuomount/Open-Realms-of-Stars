@@ -12,6 +12,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
+import org.openRealmOfStars.player.espionage.Espionage;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.message.MessageList;
@@ -33,7 +34,7 @@ import org.openRealmOfStars.utilities.repository.DiplomacyRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016, 2017, 2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -125,6 +126,12 @@ public class PlayerInfo {
   private Diplomacy diplomacy;
 
   /**
+   * Player's espionage to other players. This has no need
+   * to save it can always calculated.
+   */
+  private Espionage espionage;
+
+  /**
    * Attitude for AI player to be randomized.
    */
   private Attitude attitude;
@@ -157,6 +164,7 @@ public class PlayerInfo {
     setHuman(false);
     setRace(race);
     diplomacy = new Diplomacy(maxPlayers, index);
+    espionage = new Espionage(maxPlayers, index);
     attitude = Attitude.getRandom();
     switch (getRace()) {
     case HUMAN:
@@ -425,6 +433,8 @@ public class PlayerInfo {
           + mapOffset + " " + e.getMessage());
     }
     diplomacy = DiplomacyRepository.loadDiplomacy(dis);
+    espionage = new Espionage(diplomacy.getDiplomacySize(),
+        diplomacy.getPlayerIndex());
     human = dis.readBoolean();
     if (!human) {
       missions = new MissionList(dis);
@@ -473,6 +483,13 @@ public class PlayerInfo {
     return diplomacy;
   }
 
+  /**
+   * Get player espionage information to other players
+   * @return Espionage
+   */
+  public Espionage getEspionage() {
+    return espionage;
+  }
   /**
    * Get AI Attitude which can be one from which is randomized
    * and one which is from SpaceRace.

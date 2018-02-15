@@ -3,6 +3,7 @@ package org.openRealmOfStars.player.espionage;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 /**
 *
@@ -29,6 +30,7 @@ import org.junit.Test;
 public class EspionageBonusTest {
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     EspionageBonus bonus = new EspionageBonus(EspionageBonusType.TRADE, 2);
     assertEquals(EspionageBonusType.TRADE, bonus.getType());
@@ -39,6 +41,7 @@ public class EspionageBonusTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testDescription() {
     EspionageBonus bonus = new EspionageBonus(EspionageBonusType.TRADE, 2);
     bonus.setDescription("Test");

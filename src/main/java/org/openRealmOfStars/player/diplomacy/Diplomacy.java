@@ -119,6 +119,22 @@ public class Diplomacy {
   public int getDiplomacySize() {
     return diplomacyList.length;
   }
+
+  /**
+   * Get Player index by which diplomacy list is null.
+   * There should be only one null if real game. JUnits
+   * can have more than just one.
+   * @return Player index
+   */
+  public int getPlayerIndex() {
+    for (int i = 0; i < diplomacyList.length; i++) {
+      if (diplomacyList[i] == null) {
+        return i;
+      }
+    }
+    throw new IllegalStateException("Player should not have diplomacy with"
+        + " him/herself!");
+  }
   /**
    * Get diplomacy list for player index. This can return
    * null if player index is same as who's diplomacy object this is

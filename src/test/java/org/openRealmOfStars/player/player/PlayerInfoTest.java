@@ -449,6 +449,27 @@ public class PlayerInfoTest {
       assertNotEquals(null, info.getDiplomacy().getDiplomacyList(5));
       assertNotEquals(null, info.getDiplomacy().getDiplomacyList(6));
       assertNotEquals(null, info.getDiplomacy().getDiplomacyList(7));
+      assertEquals(0, info.getDiplomacy().getPlayerIndex());
+      info = new PlayerInfo(SpaceRace.HUMAN, 8, 5);
+      assertEquals(5, info.getDiplomacy().getPlayerIndex());
+    }
+
+    /**
+     * Tests espionage fetching from player info.
+     */
+    @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
+    public void testEspionage() {
+      PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 8, 0);
+      assertNotNull(info.getEspionage());
+      assertEquals(null, info.getEspionage().getByIndex(0));
+      assertNotEquals(null, info.getEspionage().getByIndex(1));
+      assertNotEquals(null, info.getEspionage().getByIndex(2));
+      assertNotEquals(null, info.getEspionage().getByIndex(3));
+      assertNotEquals(null, info.getEspionage().getByIndex(4));
+      assertNotEquals(null, info.getEspionage().getByIndex(5));
+      assertNotEquals(null, info.getEspionage().getByIndex(6));
+      assertNotEquals(null, info.getEspionage().getByIndex(7));
     }
 
     

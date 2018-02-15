@@ -3,6 +3,7 @@ package org.openRealmOfStars.player.espionage;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 /**
 *
@@ -29,6 +30,7 @@ import org.junit.Test;
 public class EspionageListTest {
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     EspionageList list = new EspionageList(3);
     assertEquals(0, list.getSize());

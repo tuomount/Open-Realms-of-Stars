@@ -22,6 +22,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
+import org.openRealmOfStars.player.espionage.EspionageBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
@@ -1447,6 +1448,7 @@ public class StarMap {
         doFleetScanUpdate(info, null, planet);
       }
     }
+    updateEspionage();
   }
 
   /**
@@ -1480,8 +1482,35 @@ public class StarMap {
         doFleetScanUpdate(info, null, planet);
       }
     }
+    updateEspionage();
   }
 
+  /**
+   * Update espionage bonuses. This should be called on load and
+   * after each turn.
+   */
+  public void updateEspionage() {
+    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
+      PlayerInfo info = players.getPlayerInfoByIndex(i);
+      if (info != null) {
+        for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
+          Fleet fleet = info.getFleets().getByIndex(j);
+          int sectorIndex = getSectorCulture(fleet.getX(),
+              fleet.getY()).getHighestCulture();
+          if (sectorIndex != -1 && sectorIndex != i) {
+            int espionageBonus = fleet.getEspionageBonus();
+            PlayerInfo spiedInfo = players.getPlayerInfoByIndex(sectorIndex);
+            if (spiedInfo != null) {
+              String description = "Fleet " + fleet.getName() + " spying "
+                  + spiedInfo.getEmpireName() + ".";
+              info.getEspionage().getByIndex(sectorIndex).addEspionageBonus(
+                  EspionageBonusType.SPY_FLEET, espionageBonus, description);
+            }
+          }
+        }
+      }
+    }
+  }
   /**
    * Culture level 1
    */

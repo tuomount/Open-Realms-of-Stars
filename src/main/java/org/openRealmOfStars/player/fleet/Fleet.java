@@ -595,6 +595,38 @@ public class Fleet {
   }
 
   /**
+   * Get fleet type. See FleetType enum.
+   * @return Fleet type.
+   */
+  public FleetType getFleetType() {
+    boolean nonMilitary = true;
+    boolean starbase = true;
+    boolean privateer = true;
+    for (Ship ship : ships) {
+      if (ship.getTotalMilitaryPower() > 0) {
+        nonMilitary = false;
+      }
+      if (!ship.isStarBase()) {
+        starbase = false;
+      }
+      if (!ship.isPrivateeringShip()) {
+        privateer = false;
+      }
+    }
+    FleetType result = FleetType.NON_MILITARY;
+    if (starbase) {
+      result = FleetType.STARBASE;
+    }
+    if (!nonMilitary) {
+      result = FleetType.MILITARY;
+    }
+    if (privateer) {
+      result = FleetType.PRIVATEER;
+    }
+    return result;
+  }
+
+  /**
    * Remove 10 metal for ship
    */
   public void removeMetal() {

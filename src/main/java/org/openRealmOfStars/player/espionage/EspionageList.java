@@ -3,6 +3,8 @@ package org.openRealmOfStars.player.espionage;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openRealmOfStars.player.fleet.FleetType;
+
 /**
 *
 * Open Realm of Stars game project
@@ -103,5 +105,27 @@ public class EspionageList {
     }
     // Zero is limited in EspionageBonus, there value cannot be negative.
     return result;
+  }
+
+  /**
+   * Is certain fleet type recognized by espionage bonus
+   * @param type Fleet Type
+   * @return True if recognized
+   */
+  public boolean isFleetTypeRecognized(final FleetType type) {
+    int bonus = getTotalBonus();
+    if (type == FleetType.NON_MILITARY && bonus >= 4) {
+      return true;
+    }
+    if (type == FleetType.STARBASE && bonus >= 6) {
+      return true;
+    }
+    if (type == FleetType.MILITARY && bonus >= 8) {
+      return true;
+    }
+    if (type == FleetType.PRIVATEER && bonus >= 10) {
+      return true;
+    }
+    return false;
   }
 }

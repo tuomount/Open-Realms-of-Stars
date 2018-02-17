@@ -25,7 +25,9 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatAnimation;
 import org.openRealmOfStars.player.combat.CombatShip;
+import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.fleet.FleetType;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipImage;
@@ -434,25 +436,47 @@ public class MapPanel extends JPanel {
         }
 
         // Draw fleet
-        if (info != null
-            && info.getSectorVisibility(new Coordinate(i + cx,
-                j + cy)) == PlayerInfo.VISIBLE
-            && fleetMap[i + cx][j + cy] != null) {
-          Fleet fleet = starMap.getFleetByFleetTileInfo(fleetMap[i + cx]
+        Fleet fleet = null;
+        PlayerInfo fleetOwner = null;
+        int fleetOwnerIndex = -1;
+        if (fleetMap[i + cx][j + cy] != null) {
+          fleet = starMap.getFleetByFleetTileInfo(fleetMap[i + cx]
               [j + cy]);
-          if (fleet != null && (info.getSectorCloakDetection(i + cx, j + cy)
-              >= fleet.getFleetCloackingValue()
-              || info.getFleets().isFleetOnList(fleet))) {
+          if (fleet != null) {
+            fleetOwner = starMap.getPlayerInfoByFleet(fleet);
+            fleetOwnerIndex = starMap.getPlayerList().getIndex(fleetOwner);
+          }
+        }
+        if (info != null && fleet != null) {
+          boolean drawShip = false;
+          boolean recognized = false;
+           if (info.getSectorVisibility(new Coordinate(i + cx,
+                j + cy)) == PlayerInfo.VISIBLE) {
+             if (fleet != null && (info.getSectorCloakDetection(i + cx, j + cy)
+                >= fleet.getFleetCloackingValue()
+                || info.getFleets().isFleetOnList(fleet))) {
+              drawShip = true;
+             }
             if (!fleet.isPrivateerFleet()) {
-              PlayerInfo fleetOwner = starMap.getPlayerInfoByFleet(fleet);
-              int index = starMap.getPlayerList().getIndex(fleetOwner);
-              if (index != -1) {
-                Tile fleetColor = Tiles.getTileByName("Player_Ship_" + index);
-                if (fleetColor != null) {
-                  fleetColor.draw(gr, pixelX, pixelY);
-                }
-              }
+              recognized = true;
             }
+          } else {
+            EspionageList espionage = info.getEspionage().getByIndex(
+                fleetOwnerIndex);
+            FleetType fleetType = fleet.getFleetType();
+            recognized = espionage.isFleetTypeRecognized(fleetType);
+            if (recognized) {
+              drawShip = true;
+            }
+          }
+          if (recognized && fleetOwnerIndex != -1) {
+            Tile fleetColor = Tiles.getTileByName("Player_Ship_"
+                + fleetOwnerIndex);
+            if (fleetColor != null) {
+              fleetColor.draw(gr, pixelX, pixelY);
+            }
+          }
+          if (drawShip) {
             BufferedImage img = ShipImages
                 .getByRace(fleetMap[i + cx][j + cy].getRace())
                 .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());

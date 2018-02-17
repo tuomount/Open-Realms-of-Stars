@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openRealmOfStars.player.fleet.FleetType;
 
 /**
 *
@@ -49,6 +50,51 @@ public class EspionageListTest {
     assertEquals(3, list.getSize());
     assertEquals(10, list.getTotalBonus());
     assertEquals("Fleet #2", list.getEspionage(2).getDescription());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testIsRecognized() {
+    EspionageList list = new EspionageList(3);
+    assertEquals(0, list.getSize());
+    assertEquals(null, list.getEspionage(0));
+    assertEquals(3, list.getPlayerIndex());
+    assertEquals(0, list.getTotalBonus());
+    list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 1, "Fleet #1");
+    assertEquals(1, list.getSize());
+    assertEquals(1, list.getTotalBonus());
+    assertEquals("Fleet #1", list.getEspionage(0).getDescription());
+    list.addEspionageBonus(EspionageBonusType.TRADE, 2, "Spy trade");
+    assertEquals(false, list.isFleetTypeRecognized(FleetType.NON_MILITARY));
+    assertEquals(false, list.isFleetTypeRecognized(FleetType.STARBASE));
+    assertEquals(false, list.isFleetTypeRecognized(FleetType.MILITARY));
+    assertEquals(false, list.isFleetTypeRecognized(FleetType.PRIVATEER));
+    assertEquals(2, list.getSize());
+    assertEquals(3, list.getTotalBonus());
+    assertEquals("Spy trade", list.getEspionage(1).getDescription());
+    list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 1, "Fleet #2");
+    assertEquals(3, list.getSize());
+    assertEquals(4, list.getTotalBonus());
+    assertEquals("Fleet #2", list.getEspionage(2).getDescription());
+    assertEquals(true, list.isFleetTypeRecognized(FleetType.NON_MILITARY));
+    assertEquals(false, list.isFleetTypeRecognized(FleetType.STARBASE));
+    assertEquals(false, list.isFleetTypeRecognized(FleetType.MILITARY));
+    assertEquals(false, list.isFleetTypeRecognized(FleetType.PRIVATEER));
+    list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Fleet #3");
+    assertEquals(true, list.isFleetTypeRecognized(FleetType.NON_MILITARY));
+    assertEquals(true, list.isFleetTypeRecognized(FleetType.STARBASE));
+    assertEquals(false, list.isFleetTypeRecognized(FleetType.MILITARY));
+    assertEquals(false, list.isFleetTypeRecognized(FleetType.PRIVATEER));
+    list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Fleet #4");
+    assertEquals(true, list.isFleetTypeRecognized(FleetType.NON_MILITARY));
+    assertEquals(true, list.isFleetTypeRecognized(FleetType.STARBASE));
+    assertEquals(true, list.isFleetTypeRecognized(FleetType.MILITARY));
+    assertEquals(false, list.isFleetTypeRecognized(FleetType.PRIVATEER));
+    list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Fleet #5");
+    assertEquals(true, list.isFleetTypeRecognized(FleetType.NON_MILITARY));
+    assertEquals(true, list.isFleetTypeRecognized(FleetType.STARBASE));
+    assertEquals(true, list.isFleetTypeRecognized(FleetType.MILITARY));
+    assertEquals(true, list.isFleetTypeRecognized(FleetType.PRIVATEER));
   }
 
 }

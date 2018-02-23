@@ -217,7 +217,10 @@ public class StarMapView extends BlackPanel {
     if (map.getNewsCorpData().getNewsList().length == 0) {
       viewNews.setEnabled(false);
     }
-    SpaceButton btn = new SpaceButton("Battle", GameCommands.COMMAND_BATTLE);
+    SpaceButton btn = new SpaceButton("Spying", GameCommands.COMMAND_SPY);
+    btn.addActionListener(game);
+    bottomBtnPanel.add(btn);
+    btn = new SpaceButton("Battle", GameCommands.COMMAND_BATTLE);
     btn.addActionListener(game);
     bottomBtnPanel.add(btn);
 

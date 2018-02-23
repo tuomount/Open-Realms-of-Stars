@@ -102,5 +102,10 @@ public enum GameState {
   /**
    * News corp view which will tell highlights of previous turn
    */
-  NEWS_CORP_VIEW
+  NEWS_CORP_VIEW,
+  /**
+   * Espionage view show spy information about other reals
+   * and add possibility to pay GNBC to create fake news
+   */
+  ESPIONAGE_VIEW
 }

@@ -56,6 +56,9 @@ public class EspionageView extends BlackPanel {
     InfoPanel topPanel = new InfoPanel();
     topPanel.setTitle("Faking the military size for GNBC");
 
+    InfoPanel centerPanel = new InfoPanel();
+    centerPanel.setTitle("Espionage");
+
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
@@ -68,6 +71,7 @@ public class EspionageView extends BlackPanel {
 
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
+    this.add(centerPanel, BorderLayout.CENTER);
     if (topPanel != null) {
       this.add(topPanel, BorderLayout.NORTH);
     }

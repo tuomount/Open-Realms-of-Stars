@@ -397,6 +397,11 @@ public final class GameCommands {
   public static final String COMMAND_BATTLE = "ViewBattle";
 
   /**
+   * Show espionage view
+   */
+  public static final String COMMAND_SPY = "ViewEspionage";
+
+  /**
    * View news
    */
   public static final String COMMAND_NEWS = "ViewNews";

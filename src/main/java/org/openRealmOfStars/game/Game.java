@@ -20,6 +20,7 @@ import org.openRealmOfStars.game.States.AITurnView;
 import org.openRealmOfStars.game.States.BattleView;
 import org.openRealmOfStars.game.States.CreditsView;
 import org.openRealmOfStars.game.States.DiplomacyView;
+import org.openRealmOfStars.game.States.EspionageView;
 import org.openRealmOfStars.game.States.FleetView;
 import org.openRealmOfStars.game.States.GalaxyCreationView;
 import org.openRealmOfStars.game.States.LoadGameView;
@@ -227,6 +228,11 @@ public class Game implements ActionListener {
    * News corporation view for the game
    */
   private NewsCorpView newsCorpView;
+
+  /**
+   * Espionage view for the game
+   */
+  private EspionageView espionageView;
 
   /**
    * Change Message Fleet or Planet
@@ -503,6 +509,14 @@ public class Game implements ActionListener {
     newsCorpView = new NewsCorpView(starMap.getNewsCorpData().getNewsList(),
         this);
     this.updateDisplay(newsCorpView);
+  }
+
+  /**
+   * Show espionage view
+   */
+  public void showEspionageView() {
+    espionageView = new EspionageView(starMap.getCurrentPlayerInfo(), this);
+    this.updateDisplay(espionageView);
   }
 
   /**
@@ -837,6 +851,10 @@ public class Game implements ActionListener {
     }
     case NEWS_CORP_VIEW: {
       showNewsCorpView();
+      break;
+    }
+    case ESPIONAGE_VIEW: {
+      showEspionageView();
       break;
     }
     case PLANETBOMBINGVIEW: {
@@ -1422,6 +1440,10 @@ public class Game implements ActionListener {
           SoundPlayer.playMenuSound();
           changeMessageForPlanet(planet);
         }
+      } else if (arg0.getActionCommand()
+          .equals(GameCommands.COMMAND_SPY)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.ESPIONAGE_VIEW);
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_NEXT_TARGET)) {
         if (starMapView.getStarMapMouseListener()

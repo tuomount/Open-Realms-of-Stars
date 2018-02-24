@@ -141,6 +141,20 @@ public final class GameCommands {
   public static final String COMMAND_PLUS_TAX = "PlusTax";
 
   /**
+   * Minus Fake military
+   */
+  public static final String COMMAND_MINUS_MILITARY = "MinusMilitary";
+  /**
+   * Plus Fake military
+   */
+  public static final String COMMAND_PLUS_MILITARY = "PlusMilitary";
+
+  /**
+   * Fake military
+   */
+  public static final String COMMAND_FAKE_MILITARY = "FakeMilitary";
+
+  /**
    * Minus Human credit in diplomacy view
    */
   public static final String COMMAND_MINUS_HUMAN_CREDIT = "MinusCreditHuman";

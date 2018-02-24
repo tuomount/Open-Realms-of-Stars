@@ -1,12 +1,23 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JScrollPane;
+
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.panels.SpaceSliderPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 
 
@@ -45,6 +56,16 @@ public class EspionageView extends BlackPanel {
   private PlayerInfo player;
 
   /**
+   * Fake military slider
+   */
+  private SpaceSliderPanel fakeMilitarySlider;
+
+  /**
+   * Explain fake military text
+   */
+  private InfoTextArea fakeMilitaryText;
+
+  /**
    * Espionage View constructor
    * @param info PlayerInfo who is doing the spying
    * @param listener Action Listener
@@ -55,6 +76,24 @@ public class EspionageView extends BlackPanel {
 
     InfoPanel topPanel = new InfoPanel();
     topPanel.setTitle("Faking the military size for GNBC");
+    topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+    fakeMilitarySlider = new SpaceSliderPanel(
+        GameCommands.COMMAND_MINUS_MILITARY,
+        GameCommands.COMMAND_PLUS_MILITARY, Icons.ICON_TROOPS,
+        "Lie military size (100%)", 50, 200, 100,
+        GameCommands.COMMAND_FAKE_MILITARY, listener);
+    fakeMilitarySlider.setSliderMinorTick(10);
+    fakeMilitarySlider.setSliderMajorTick(10);
+    topPanel.add(fakeMilitarySlider);
+    topPanel.add(Box.createRigidArea(new Dimension(15, 25)));
+    fakeMilitaryText = new InfoTextArea();
+    fakeMilitaryText.setEditable(false);
+    fakeMilitaryText.setFont(GuiStatics.getFontCubellanSmaller());
+    fakeMilitaryText.setCharacterWidth(8);
+    fakeMilitaryText.setLineWrap(true);
+    JScrollPane scroll = new JScrollPane(fakeMilitaryText);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    topPanel.add(scroll);
 
     InfoPanel centerPanel = new InfoPanel();
     centerPanel.setTitle("Espionage");
@@ -84,4 +123,60 @@ public class EspionageView extends BlackPanel {
   public PlayerInfo getPlayer() {
     return player;
   }
+
+  /**
+   * Update panel
+   */
+  public void updatePanel() {
+    fakeMilitarySlider.setText("Lie military size ("
+      + fakeMilitarySlider.getSliderValue() + "%)");
+    int value = fakeMilitarySlider.getSliderValue();
+    int cost = 0;
+    if (value >= 80 && value <= 120) {
+      cost = 0;
+    }
+    if (value >= 70 && value < 80) {
+      cost = 1;
+    }
+    if (value >= 60 && value < 70) {
+      cost = 2;
+    }
+    if (value >= 50 && value < 60) {
+      cost = 3;
+    }
+    if (value > 120) {
+      cost = (value - 120) / 10;
+    }
+    fakeMilitaryText.setText("Lying military power costs " + cost + " credits."
+        + "Lying military might cause other realms wrongly evalutate your "
+        + " military power and start war or not start war with you.");
+    this.repaint();
+  }
+  /**
+   * Handle actions for Espionage view.
+   * @param arg0 ActionEvent command what player did
+   */
+  public void handleAction(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_MINUS_MILITARY)
+        && fakeMilitarySlider.getSliderValue() > fakeMilitarySlider
+        .getMinimumValue()) {
+      fakeMilitarySlider.setSliderValue(fakeMilitarySlider.getSliderValue()
+          - 10);
+      SoundPlayer.playMenuSound();
+      updatePanel();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_PLUS_MILITARY)
+        && fakeMilitarySlider.getSliderValue() < fakeMilitarySlider
+        .getMaximumValue()) {
+      fakeMilitarySlider.setSliderValue(fakeMilitarySlider.getSliderValue()
+          + 10);
+      SoundPlayer.playMenuSound();
+      updatePanel();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_FAKE_MILITARY)) {
+      SoundPlayer.playMenuSound();
+      updatePanel();
+    }
+  }
+
 }

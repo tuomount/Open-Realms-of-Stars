@@ -108,7 +108,7 @@ public class SpaceSliderPanel extends SpaceGreyPanel {
       public void stateChanged(final ChangeEvent e) {
         if (e.getSource() instanceof JSlider) {
           JSlider slide = (JSlider) e.getSource();
-          if (slide.getValue() % 4 == 0) {
+          if (slide.getValue() % slide.getMinorTickSpacing() == 0) {
             listener.actionPerformed(new ActionEvent(e, 0, actionSlider));
           }
         }
@@ -194,6 +194,22 @@ public class SpaceSliderPanel extends SpaceGreyPanel {
    */
   public void setPlusToolTip(final String text) {
     btnPlus.setToolTipText(text);
+  }
+
+  /**
+   * Get minimum value for slider
+   * @return Minimum value
+   */
+  public int getMinimumValue() {
+    return slider.getMinimum();
+  }
+
+  /**
+   * Get maximum value for slider
+   * @return Maximum value
+   */
+  public int getMaximumValue() {
+    return slider.getMaximum();
   }
 
 }

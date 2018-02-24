@@ -41,6 +41,8 @@ public class SpaceSliderPanelTest {
     SpaceSliderPanel panel = new SpaceSliderPanel("Minus", "Plus",
         Icons.ICON_BATTERY, "Test", 0, 40, 20, "Sliding", listener);
     assertEquals(20, panel.getSliderValue());
+    assertEquals(0, panel.getMinimumValue());
+    assertEquals(40, panel.getMaximumValue());
     assertEquals(false, panel.isSliderChanged());
     panel.setSliderValue(60);
     assertEquals(40, panel.getSliderValue());

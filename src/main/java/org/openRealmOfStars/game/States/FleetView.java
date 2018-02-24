@@ -488,7 +488,7 @@ public class FleetView extends BlackPanel {
   }
 
   /**
-   * Handle actions for Planet view.
+   * Handle actions for Fleet view.
    * @param arg0 ActionEvent command what player did
    */
   public void handleAction(final ActionEvent arg0) {

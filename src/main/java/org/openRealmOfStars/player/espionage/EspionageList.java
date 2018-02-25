@@ -129,6 +129,11 @@ public class EspionageList {
     return false;
   }
 
+  /**
+   * Get espionage bonus effects as a text.
+   * @param bonus Bonus level between 0 to 10
+   * @return Description as a String.
+   */
   public static String getTotalBonusAsDescriptions(final int bonus) {
     StringBuilder sb = new StringBuilder();
     if (bonus == 0) {

@@ -67,7 +67,7 @@ public class EspionagePanel extends InfoPanel {
     this.setTitle(realmName);
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     IconLabel iconLabel = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_CIRCUIT_BOARD), "Espionage: "
+        Icons.getIconByName(Icons.ICON_SPY_GOGGLES), "Espionage: "
         + value);
     this.add(iconLabel);
     this.add(Box.createRigidArea(new Dimension(5, 5)));

@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 
 /**
 *
@@ -37,8 +38,9 @@ public class EspionageViewTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testBasic() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
     ActionListener listener = Mockito.mock(ActionListener.class);
-    EspionageView view = new EspionageView(info, listener);
+    EspionageView view = new EspionageView(playerList, info, listener);
     assertEquals(info, view.getPlayer());
   }
 

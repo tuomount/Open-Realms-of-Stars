@@ -10,7 +10,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -263,6 +263,10 @@ public final class Icons {
    * Checkbox tick icon
    */
   public static final String ICON_CHECKBOX_TICK = "IconCheckBoxTick";
+  /**
+   * Spy goggles icon
+   */
+  public static final String ICON_SPY_GOGGLES = "IconSpyGoggles";
 
   /**
    * List of Icon
@@ -467,6 +471,8 @@ public final class Icons {
     icon = new Icon16x16(image, 6, 6, ICON_CHECKBOX);
     addIcon(icon);
     icon = new Icon16x16(image, 7, 6, ICON_CHECKBOX_TICK);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 7, ICON_SPY_GOGGLES);
     addIcon(icon);
   }
 

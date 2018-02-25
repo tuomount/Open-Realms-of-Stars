@@ -2,6 +2,7 @@ package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,11 +15,14 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.infopanel.EspionagePanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceSliderPanel;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.espionage.EspionageList;
 
 
 /**
@@ -67,10 +71,12 @@ public class EspionageView extends BlackPanel {
 
   /**
    * Espionage View constructor
+   * @param playerList List of all players
    * @param info PlayerInfo who is doing the spying
    * @param listener Action Listener
    */
-  public EspionageView(final PlayerInfo info,  final ActionListener listener) {
+  public EspionageView(final PlayerList playerList, final PlayerInfo info,
+      final ActionListener listener) {
     player = info;
     this.setLayout(new BorderLayout());
 
@@ -97,6 +103,16 @@ public class EspionageView extends BlackPanel {
 
     InfoPanel centerPanel = new InfoPanel();
     centerPanel.setTitle("Espionage");
+    centerPanel.setLayout(new GridLayout(2, 4));
+    for (int i = 0; i < playerList.getCurrentMaxPlayers(); i++) {
+      PlayerInfo realmInfo = playerList.getPlayerInfoByIndex(i);
+      EspionageList espionageList = player.getEspionage().getByIndex(i);
+      if (espionageList != null) {
+        EspionagePanel panel = new EspionagePanel(realmInfo.getEmpireName(),
+            "Text ", player.getEspionage().getByIndex(i).getTotalBonus());
+        centerPanel.add(panel);
+      }
+    }
 
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();

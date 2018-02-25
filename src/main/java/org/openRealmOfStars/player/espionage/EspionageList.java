@@ -128,4 +128,47 @@ public class EspionageList {
     }
     return false;
   }
+
+  public static String getTotalBonusAsDescriptions(final int bonus) {
+    StringBuilder sb = new StringBuilder();
+    if (bonus == 0) {
+      sb.append("No espionage");
+    }
+    if (bonus >= 9) {
+      sb.append("Accurate knowledge of military power.");
+      sb.append("\n");
+    } else if (bonus >= 7) {
+      sb.append("+-10% military power estimation");
+      sb.append("\n");
+    } else if (bonus >= 5) {
+      sb.append("+-20% military power estimation");
+      sb.append("\n");
+    } else if (bonus >= 3) {
+      sb.append("+-30% military power estimation");
+      sb.append("\n");
+    } else if (bonus >= 1) {
+      sb.append("+-40% military power estimation");
+      sb.append("\n");
+    }
+    if (bonus >= 2) {
+      // TODO: Trading not available in this version
+      sb.append("Espionage trade");
+      sb.append("\n");
+    }
+    if (bonus == 10) {
+      sb.append("Visibility of all fleets.");
+    } else if (bonus >= 8) {
+      sb.append("Visibility of all fleets expect privateers.");
+    } else {
+      if (bonus >= 4) {
+        sb.append("Visibility of non military ships.");
+        sb.append("\n");
+      }
+      if (bonus >= 6) {
+        sb.append("Visibility of deployed starbases.");
+        sb.append("\n");
+      }
+    }
+    return sb.toString();
+  }
 }

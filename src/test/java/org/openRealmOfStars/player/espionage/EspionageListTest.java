@@ -97,4 +97,36 @@ public class EspionageListTest {
     assertEquals(true, list.isFleetTypeRecognized(FleetType.PRIVATEER));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testDescription() {
+    assertEquals("No espionage", EspionageList.getTotalBonusAsDescriptions(0));
+    assertEquals("+-40% military power estimation\n",
+        EspionageList.getTotalBonusAsDescriptions(1));
+    assertEquals("+-40% military power estimation\nEspionage trade\n",
+        EspionageList.getTotalBonusAsDescriptions(2));
+    assertEquals("+-30% military power estimation\nEspionage trade\n",
+        EspionageList.getTotalBonusAsDescriptions(3));
+    assertEquals("+-30% military power estimation\nEspionage trade"
+        + "\nVisibility of non military ships.\n",
+        EspionageList.getTotalBonusAsDescriptions(4));
+    assertEquals("+-20% military power estimation\nEspionage trade"
+        + "\nVisibility of non military ships.\n",
+        EspionageList.getTotalBonusAsDescriptions(5));
+    assertEquals("+-20% military power estimation\nEspionage trade"
+        + "\nVisibility of non military ships.\nVisibility of deployed starbases.\n",
+        EspionageList.getTotalBonusAsDescriptions(6));
+    assertEquals("+-10% military power estimation\nEspionage trade"
+        + "\nVisibility of non military ships.\nVisibility of deployed starbases.\n",
+        EspionageList.getTotalBonusAsDescriptions(7));
+    assertEquals("+-10% military power estimation\nEspionage trade"
+        + "\nVisibility of all fleets expect privateers.",
+        EspionageList.getTotalBonusAsDescriptions(8));
+    assertEquals("Accurate knowledge of military power.\nEspionage trade"
+        + "\nVisibility of all fleets expect privateers.",
+        EspionageList.getTotalBonusAsDescriptions(9));
+    assertEquals("Accurate knowledge of military power.\nEspionage trade"
+        + "\nVisibility of all fleets.",
+        EspionageList.getTotalBonusAsDescriptions(10));
+  }
 }

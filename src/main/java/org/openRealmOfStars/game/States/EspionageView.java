@@ -108,8 +108,10 @@ public class EspionageView extends BlackPanel {
       PlayerInfo realmInfo = playerList.getPlayerInfoByIndex(i);
       EspionageList espionageList = player.getEspionage().getByIndex(i);
       if (espionageList != null) {
+        int bonus = player.getEspionage().getByIndex(i).getTotalBonus();
+        String desc = EspionageList.getTotalBonusAsDescriptions(bonus);
         EspionagePanel panel = new EspionagePanel(realmInfo.getEmpireName(),
-            "Text ", player.getEspionage().getByIndex(i).getTotalBonus());
+            desc, bonus);
         centerPanel.add(panel);
       }
     }

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.awt.image.BufferedImage;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
 /**
@@ -32,6 +33,7 @@ import org.mockito.Mockito;
 public class ImagePanelTest {
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     BufferedImage picture = Mockito.mock(BufferedImage.class);
     Mockito.when(picture.getWidth()).thenReturn(100);

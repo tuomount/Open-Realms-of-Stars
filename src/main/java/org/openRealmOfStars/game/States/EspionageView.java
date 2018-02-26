@@ -181,6 +181,7 @@ public class EspionageView extends BlackPanel {
         .getMinimumValue()) {
       fakeMilitarySlider.setSliderValue(fakeMilitarySlider.getSliderValue()
           - 10);
+      player.setFakeMilitarySize(fakeMilitarySlider.getSliderValue());
       SoundPlayer.playMenuSound();
       updatePanel();
     }
@@ -189,10 +190,12 @@ public class EspionageView extends BlackPanel {
         .getMaximumValue()) {
       fakeMilitarySlider.setSliderValue(fakeMilitarySlider.getSliderValue()
           + 10);
+      player.setFakeMilitarySize(fakeMilitarySlider.getSliderValue());
       SoundPlayer.playMenuSound();
       updatePanel();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_FAKE_MILITARY)) {
+      player.setFakeMilitarySize(fakeMilitarySlider.getSliderValue());
       SoundPlayer.playMenuSound();
       updatePanel();
     }

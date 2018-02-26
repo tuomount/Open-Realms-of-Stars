@@ -132,6 +132,11 @@ public class PlayerInfo {
   private Espionage espionage;
 
   /**
+   * Fake military size for GBNC
+   */
+  private int fakeMilitarySize;
+
+  /**
    * Attitude for AI player to be randomized.
    */
   private Attitude attitude;
@@ -166,6 +171,7 @@ public class PlayerInfo {
     diplomacy = new Diplomacy(maxPlayers, index);
     espionage = new Espionage(maxPlayers, index);
     attitude = Attitude.getRandom();
+    setFakeMilitarySize(100);
     switch (getRace()) {
     case HUMAN:
     case MECHIONS:
@@ -435,6 +441,7 @@ public class PlayerInfo {
     diplomacy = DiplomacyRepository.loadDiplomacy(dis);
     espionage = new Espionage(diplomacy.getDiplomacySize(),
         diplomacy.getPlayerIndex());
+    setFakeMilitarySize(100);
     human = dis.readBoolean();
     if (!human) {
       missions = new MissionList(dis);
@@ -1138,6 +1145,26 @@ public class PlayerInfo {
       }
     }
     return false;
+  }
+
+  /**
+   * Get the fake military size. This value is in percents.
+   * 50 means half of the real military size.
+   * 200 mean double the military size.
+   * @return the fakeMilitarySize
+   */
+  public int getFakeMilitarySize() {
+    return fakeMilitarySize;
+  }
+
+  /**
+   * Set the fake military size. This value is in percents.
+   * 50 means half of the real military size.
+   * 200 mean double the military size.
+   * @param fakeMilitarySize the fakeMilitarySize to set
+   */
+  public void setFakeMilitarySize(final int fakeMilitarySize) {
+    this.fakeMilitarySize = fakeMilitarySize;
   }
 
 }

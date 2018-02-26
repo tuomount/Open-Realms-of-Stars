@@ -222,6 +222,7 @@ public class NewsCorpDataTest {
     Mockito.when(fleetList1.getByIndex(2)).thenReturn(militaryFleet);
     PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info1.getFleets()).thenReturn(fleetList1);
+    Mockito.when(info1.getFakeMilitarySize()).thenReturn(100);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info1);
     FleetList fleetList2 = Mockito.mock(FleetList.class);
     Mockito.when(fleetList2.getNumberOfFleets()).thenReturn(5);
@@ -232,19 +233,112 @@ public class NewsCorpDataTest {
     Mockito.when(fleetList2.getByIndex(4)).thenReturn(militaryFleet);
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info2.getFleets()).thenReturn(fleetList2);
+    Mockito.when(info2.getFakeMilitarySize()).thenReturn(100);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
     
     // Actual game has one stats created at start.
     assertEquals(false, data.isFirstStats());
     assertEquals(-1, data.getStatNumbers());
-    data.calculateMilitary(players);
+    data.calculateMilitary(players, false);
     int[][] value = data.getMilitary().getGalaxyData();
     assertEquals(20,value[0][0]);
     assertEquals(30,value[1][0]);
     assertEquals(-10, data.getMilitaryDifference(0, 1));
     assertEquals(false, data.isFirstStats());
     assertEquals(0, data.getStatNumbers());
-    data.calculateMilitary(players);
+    data.calculateMilitary(players, false);
+    assertEquals(true, data.isFirstStats());
+    assertEquals(1, data.getStatNumbers());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalaxyStatMilitaryFakeDouble() {
+    NewsCorpData data = new NewsCorpData(2);
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Fleet militaryFleet = Mockito.mock(Fleet.class);
+    Mockito.when(militaryFleet.getMilitaryValue()).thenReturn(10);
+    Fleet colonFleet = Mockito.mock(Fleet.class);
+    Mockito.when(colonFleet.getMilitaryValue()).thenReturn(0);
+    FleetList fleetList1 = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList1.getNumberOfFleets()).thenReturn(3);
+    Mockito.when(fleetList1.getByIndex(0)).thenReturn(militaryFleet);
+    Mockito.when(fleetList1.getByIndex(1)).thenReturn(colonFleet);
+    Mockito.when(fleetList1.getByIndex(2)).thenReturn(militaryFleet);
+    PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info1.getFleets()).thenReturn(fleetList1);
+    Mockito.when(info1.getFakeMilitarySize()).thenReturn(200);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info1);
+    FleetList fleetList2 = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList2.getNumberOfFleets()).thenReturn(5);
+    Mockito.when(fleetList2.getByIndex(0)).thenReturn(militaryFleet);
+    Mockito.when(fleetList2.getByIndex(1)).thenReturn(colonFleet);
+    Mockito.when(fleetList2.getByIndex(2)).thenReturn(militaryFleet);
+    Mockito.when(fleetList2.getByIndex(3)).thenReturn(colonFleet);
+    Mockito.when(fleetList2.getByIndex(4)).thenReturn(militaryFleet);
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info2.getFleets()).thenReturn(fleetList2);
+    Mockito.when(info2.getFakeMilitarySize()).thenReturn(200);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
+    
+    // Actual game has one stats created at start.
+    assertEquals(false, data.isFirstStats());
+    assertEquals(-1, data.getStatNumbers());
+    data.calculateMilitary(players, false);
+    int[][] value = data.getMilitary().getGalaxyData();
+    assertEquals(40,value[0][0]);
+    assertEquals(60,value[1][0]);
+    assertEquals(-20, data.getMilitaryDifference(0, 1));
+    assertEquals(false, data.isFirstStats());
+    assertEquals(0, data.getStatNumbers());
+    data.calculateMilitary(players, false);
+    assertEquals(true, data.isFirstStats());
+    assertEquals(1, data.getStatNumbers());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalaxyStatMilitaryFakeDoubleButLastTurn() {
+    NewsCorpData data = new NewsCorpData(2);
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Fleet militaryFleet = Mockito.mock(Fleet.class);
+    Mockito.when(militaryFleet.getMilitaryValue()).thenReturn(10);
+    Fleet colonFleet = Mockito.mock(Fleet.class);
+    Mockito.when(colonFleet.getMilitaryValue()).thenReturn(0);
+    FleetList fleetList1 = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList1.getNumberOfFleets()).thenReturn(3);
+    Mockito.when(fleetList1.getByIndex(0)).thenReturn(militaryFleet);
+    Mockito.when(fleetList1.getByIndex(1)).thenReturn(colonFleet);
+    Mockito.when(fleetList1.getByIndex(2)).thenReturn(militaryFleet);
+    PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info1.getFleets()).thenReturn(fleetList1);
+    Mockito.when(info1.getFakeMilitarySize()).thenReturn(200);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info1);
+    FleetList fleetList2 = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList2.getNumberOfFleets()).thenReturn(5);
+    Mockito.when(fleetList2.getByIndex(0)).thenReturn(militaryFleet);
+    Mockito.when(fleetList2.getByIndex(1)).thenReturn(colonFleet);
+    Mockito.when(fleetList2.getByIndex(2)).thenReturn(militaryFleet);
+    Mockito.when(fleetList2.getByIndex(3)).thenReturn(colonFleet);
+    Mockito.when(fleetList2.getByIndex(4)).thenReturn(militaryFleet);
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info2.getFleets()).thenReturn(fleetList2);
+    Mockito.when(info2.getFakeMilitarySize()).thenReturn(200);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
+    
+    // Actual game has one stats created at start.
+    assertEquals(false, data.isFirstStats());
+    assertEquals(-1, data.getStatNumbers());
+    data.calculateMilitary(players, true);
+    int[][] value = data.getMilitary().getGalaxyData();
+    assertEquals(20,value[0][0]);
+    assertEquals(30,value[1][0]);
+    assertEquals(-10, data.getMilitaryDifference(0, 1));
+    assertEquals(false, data.isFirstStats());
+    assertEquals(0, data.getStatNumbers());
+    data.calculateMilitary(players, true);
     assertEquals(true, data.isFirstStats());
     assertEquals(1, data.getStatNumbers());
   }
@@ -395,6 +489,7 @@ public class NewsCorpDataTest {
     PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info1.getFleets()).thenReturn(fleetList1);
     Mockito.when(info1.getTotalCredits()).thenReturn(34);
+    Mockito.when(info1.getFakeMilitarySize()).thenReturn(100);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info1);
     FleetList fleetList2 = Mockito.mock(FleetList.class);
     Mockito.when(fleetList2.getNumberOfFleets()).thenReturn(5);
@@ -406,6 +501,7 @@ public class NewsCorpDataTest {
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info2.getFleets()).thenReturn(fleetList2);
     Mockito.when(info2.getTotalCredits()).thenReturn(15);
+    Mockito.when(info2.getFakeMilitarySize()).thenReturn(100);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
 
     TechList techs = Mockito.mock(TechList.class);
@@ -440,7 +536,7 @@ public class NewsCorpDataTest {
     data.calculatePlanets(list);
     data.calculateCulture(list, players);
     data.calculatePopulation(list);
-    data.calculateMilitary(players);
+    data.calculateMilitary(players, false);
     data.calculateCredit(players);
     data.calculateResearch(players);
     GalaxyStat stat = data.generateScores();

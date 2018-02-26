@@ -1037,7 +1037,7 @@ public class Game implements ActionListener {
   private void calculateCorpData(final NewsCorpData corpData) {
       corpData.calculateCredit(players);
       corpData.calculateCulture(starMap.getPlanetList(), players);
-      corpData.calculateMilitary(players);
+      corpData.calculateMilitary(players, false);
       corpData.calculatePlanets(starMap.getPlanetList());
       corpData.calculatePopulation(starMap.getPlanetList());
       corpData.calculateResearch(players);

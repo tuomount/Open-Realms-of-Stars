@@ -251,6 +251,19 @@ public class NewsCorpData {
   }
 
   /**
+   * Calculate current military value for player
+   * @param player Player whos military to calculate
+   * @return Military power
+   */
+  public static int calculateMilitaryValue(final PlayerInfo player) {
+    int militaryValue = 0;
+    for (int j = 0; j < player.getFleets().getNumberOfFleets(); j++) {
+      Fleet fleet = player.getFleets().getByIndex(j);
+      militaryValue = militaryValue + fleet.getMilitaryValue();
+    }
+    return militaryValue;
+  }
+  /**
    * Calculate how much total military power players have
    * @param playerList from StarMap
    * @param lastTurn if true then fake military is not calculated
@@ -260,11 +273,7 @@ public class NewsCorpData {
     int[] data = new int[military.getMaxPlayers()];
     for (int i = 0; i < playerList.getCurrentMaxPlayers(); i++) {
       PlayerInfo player = playerList.getPlayerInfoByIndex(i);
-      int militaryValue = 0;
-      for (int j = 0; j < player.getFleets().getNumberOfFleets(); j++) {
-        Fleet fleet = player.getFleets().getByIndex(j);
-        militaryValue = militaryValue + fleet.getMilitaryValue();
-      }
+      int militaryValue = calculateMilitaryValue(player);
       if (!lastTurn) {
         data[i] = militaryValue * player.getFakeMilitarySize() / 100;
       } else {

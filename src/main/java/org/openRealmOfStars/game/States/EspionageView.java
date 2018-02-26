@@ -23,6 +23,7 @@ import org.openRealmOfStars.gui.panels.SpaceSliderPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.espionage.EspionageList;
+import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 
 
 /**
@@ -110,6 +111,11 @@ public class EspionageView extends BlackPanel {
       if (espionageList != null) {
         int bonus = player.getEspionage().getByIndex(i).getTotalBonus();
         String desc = EspionageList.getTotalBonusAsDescriptions(bonus);
+        int militaryValue = 0;
+        if (bonus > 0) {
+          militaryValue = NewsCorpData.calculateMilitaryValue(realmInfo);
+        }
+        desc = "Military value: " + militaryValue + ".\n" + desc;
         EspionagePanel panel = new EspionagePanel(realmInfo.getEmpireName(),
             desc, bonus);
         centerPanel.add(panel);

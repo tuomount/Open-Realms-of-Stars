@@ -970,7 +970,13 @@ public class AITurnView extends BlackPanel {
       newsData.calculateCredit(game.getStarMap().getPlayerList());
       newsData.calculateCulture(game.getStarMap().getPlanetList(),
           game.getStarMap().getPlayerList());
-      newsData.calculateMilitary(game.getStarMap().getPlayerList());
+      boolean lastTurn = false;
+      if (game.getStarMap().getTurn() == game.getStarMap()
+          .getScoreVictoryTurn()) {
+        lastTurn = true;
+      }
+      // TODO take the cost of faking military
+      newsData.calculateMilitary(game.getStarMap().getPlayerList(), lastTurn);
       newsData.calculateResearch(game.getStarMap().getPlayerList());
       newsData.calculatePlanets(game.getStarMap().getPlanetList());
       newsData.calculatePopulation(game.getStarMap().getPlanetList());

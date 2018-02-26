@@ -129,4 +129,35 @@ public class EspionageListTest {
         + "\nVisibility of all fleets.",
         EspionageList.getTotalBonusAsDescriptions(10));
   }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEspionageEstimate() {
+    EspionageList list = new EspionageList(5);
+    int value = list.getEspionageLevel1Estimate();
+    if (value < -40 || value > 40) {
+      assertTrue("Estimate level 1 out of scope", false);
+    }
+    value = list.getEspionageLevel3Estimate();
+    if (value < -30 || value > 30) {
+      assertTrue("Estimate level 3 out of scope", false);
+    }
+    value = list.getEspionageLevel5Estimate();
+    if (value < -20 || value > 20) {
+      assertTrue("Estimate level 5 out of scope", false);
+    }
+    value = list.getEspionageLevel7Estimate();
+    if (value < -10 || value > 10) {
+      assertTrue("Estimate level 7 out of scope", false);
+    }
+    list.setEspionageLevel7Estimate(-10);
+    assertEquals(-10, list.getEspionageLevel7Estimate());
+    list.setEspionageLevel5Estimate(18);
+    assertEquals(18, list.getEspionageLevel5Estimate());
+    list.setEspionageLevel3Estimate(-28);
+    assertEquals(-28, list.getEspionageLevel3Estimate());
+    list.setEspionageLevel1Estimate(38);
+    assertEquals(38, list.getEspionageLevel1Estimate());
+  }
+
 }

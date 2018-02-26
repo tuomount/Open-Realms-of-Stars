@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openRealmOfStars.player.fleet.FleetType;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
 *
@@ -35,6 +36,26 @@ public class EspionageList {
   private int playerIndex;
 
   /**
+   * Espionage level 1 estimate +-40
+   */
+  private int espionageLevel1Estimate;
+
+  /**
+   * Espionage level 3 estimate +-30
+   */
+  private int espionageLevel3Estimate;
+
+  /**
+   * Espionage level 5 estimate +-20
+   */
+  private int espionageLevel5Estimate;
+
+  /**
+   * Espionage level 7 estimate +-10
+   */
+  private int espionageLevel7Estimate;
+
+  /**
    * Espionage list
    */
   private List<EspionageBonus> list;
@@ -55,6 +76,10 @@ public class EspionageList {
   public EspionageList(final int index) {
     playerIndex = index;
     list = new ArrayList<>();
+    setEspionageLevel1Estimate(DiceGenerator.getRandom(-40, 40));
+    setEspionageLevel3Estimate(DiceGenerator.getRandom(-30, 30));
+    setEspionageLevel5Estimate(DiceGenerator.getRandom(-20, 20));
+    setEspionageLevel7Estimate(DiceGenerator.getRandom(-10, 10));
   }
 
   /**
@@ -175,5 +200,69 @@ public class EspionageList {
       }
     }
     return sb.toString();
+  }
+
+  /**
+   * Get Espionage estimate on level 7 +-10
+   * @return the espionageLevel7Estimate
+   */
+  public int getEspionageLevel7Estimate() {
+    return espionageLevel7Estimate;
+  }
+
+  /**
+   * Set the espionage estimate on level 7
+   * @param espionageLevel7Estimate the espionageLevel7Estimate to set
+   */
+  public void setEspionageLevel7Estimate(final int espionageLevel7Estimate) {
+    this.espionageLevel7Estimate = espionageLevel7Estimate;
+  }
+
+  /**
+   * Get Espionage estimate on level 5 +-20
+   * @return the espionageLevel5Estimate
+   */
+  public int getEspionageLevel5Estimate() {
+    return espionageLevel5Estimate;
+  }
+
+  /**
+   * Set the espionage estimate on level 5
+   * @param espionageLevel5Estimate the espionageLevel5Estimate to set
+   */
+  public void setEspionageLevel5Estimate(final int espionageLevel5Estimate) {
+    this.espionageLevel5Estimate = espionageLevel5Estimate;
+  }
+
+  /**
+   * Get Espionage estimate on level 3 +-30
+   * @return the espionageLevel3Estimate
+   */
+  public int getEspionageLevel3Estimate() {
+    return espionageLevel3Estimate;
+  }
+
+  /**
+   * Set the espionage estimate on level 3
+   * @param espionageLevel3Estimate the espionageLevel3Estimate to set
+   */
+  public void setEspionageLevel3Estimate(final int espionageLevel3Estimate) {
+    this.espionageLevel3Estimate = espionageLevel3Estimate;
+  }
+
+  /**
+   * Get Espionage estimate on level 1 +-40
+   * @return the espionageLevel1Estimate
+   */
+  public int getEspionageLevel1Estimate() {
+    return espionageLevel1Estimate;
+  }
+
+  /**
+   * Set the espionage estimate on level 1
+   * @param espionageLevel1Estimate the espionageLevel1Estimate to set
+   */
+  public void setEspionageLevel1Estimate(final int espionageLevel1Estimate) {
+    this.espionageLevel1Estimate = espionageLevel1Estimate;
   }
 }

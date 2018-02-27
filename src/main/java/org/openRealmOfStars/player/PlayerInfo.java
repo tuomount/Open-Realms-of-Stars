@@ -13,6 +13,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.espionage.Espionage;
+import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.message.MessageList;
@@ -441,7 +442,29 @@ public class PlayerInfo {
     diplomacy = DiplomacyRepository.loadDiplomacy(dis);
     espionage = new Espionage(diplomacy.getDiplomacySize(),
         diplomacy.getPlayerIndex());
-    setFakeMilitarySize(100);
+
+    int size = dis.readByte();
+    for (int i = 0; i < size; i++) {
+      EspionageList list = espionage.getByIndex(i);
+      boolean nonNull = dis.readBoolean();
+      int level1 = 0;
+      int level3 = 0;
+      int level5 = 0;
+      int level7 = 0;
+      if (nonNull) {
+        level1 = dis.readInt();
+        level3 = dis.readInt();
+        level5 = dis.readInt();
+        level7 = dis.readInt();
+      }
+      if (list != null && nonNull) {
+        list.setEspionageLevel1Estimate(level1);
+        list.setEspionageLevel3Estimate(level3);
+        list.setEspionageLevel5Estimate(level5);
+        list.setEspionageLevel7Estimate(level7);
+      }
+    }
+    setFakeMilitarySize(dis.readInt());
     human = dis.readBoolean();
     if (!human) {
       missions = new MissionList(dis);
@@ -476,6 +499,20 @@ public class PlayerInfo {
       }
     }
     DiplomacyRepository.saveDiplomacy(dos, diplomacy);
+    dos.writeByte(espionage.getSize());
+    for (int i = 0; i < espionage.getSize(); i++) {
+      EspionageList list = espionage.getByIndex(i);
+      if (list != null) {
+        dos.writeBoolean(true);
+        dos.writeInt(list.getEspionageLevel1Estimate());
+        dos.writeInt(list.getEspionageLevel3Estimate());
+        dos.writeInt(list.getEspionageLevel5Estimate());
+        dos.writeInt(list.getEspionageLevel7Estimate());
+      } else {
+        dos.writeBoolean(false);
+      }
+    }
+    dos.writeInt(fakeMilitarySize);
     dos.writeBoolean(human);
     if (!human) {
       missions.saveMissionList(dos);

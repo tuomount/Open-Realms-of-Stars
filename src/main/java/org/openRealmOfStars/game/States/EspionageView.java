@@ -22,6 +22,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceSliderPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.espionage.Espionage;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 
@@ -156,22 +157,7 @@ public class EspionageView extends BlackPanel {
     fakeMilitarySlider.setText("Lie military size ("
       + fakeMilitarySlider.getSliderValue() + "%)");
     int value = fakeMilitarySlider.getSliderValue();
-    int cost = 0;
-    if (value >= 80 && value <= 120) {
-      cost = 0;
-    }
-    if (value >= 70 && value < 80) {
-      cost = 1;
-    }
-    if (value >= 60 && value < 70) {
-      cost = 2;
-    }
-    if (value >= 50 && value < 60) {
-      cost = 3;
-    }
-    if (value > 120) {
-      cost = (value - 120) / 10;
-    }
+    int cost = Espionage.calculateEspionageCost(value);
     fakeMilitaryText.setText("Lying military power costs " + cost + " credits."
         + "Lying military might cause other realms wrongly evalutate your "
         + " military power and start war or not start war with you.");

@@ -42,4 +42,21 @@ public class EspionageTest {
     assertEquals(null, espionage.getByIndex(4));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCost() {
+    assertEquals(0, Espionage.calculateEspionageCost(100));
+    assertEquals(0, Espionage.calculateEspionageCost(80));
+    assertEquals(1, Espionage.calculateEspionageCost(79));
+    assertEquals(1, Espionage.calculateEspionageCost(70));
+    assertEquals(2, Espionage.calculateEspionageCost(60));
+    assertEquals(3, Espionage.calculateEspionageCost(50));
+    assertEquals(0, Espionage.calculateEspionageCost(110));
+    assertEquals(0, Espionage.calculateEspionageCost(120));
+    assertEquals(1, Espionage.calculateEspionageCost(130));
+    assertEquals(2, Espionage.calculateEspionageCost(140));
+    assertEquals(4, Espionage.calculateEspionageCost(160));
+    assertEquals(8, Espionage.calculateEspionageCost(200));
+  }
+
 }

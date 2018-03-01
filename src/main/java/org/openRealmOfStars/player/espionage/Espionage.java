@@ -63,4 +63,31 @@ public class Espionage {
     }
     return null;
   }
+
+  /**
+   *  Calculate espionage cost from fakeMilitarySize;
+   *  FakeMilitarySize should be from 50 to 200.
+   * @param fakeMilitarySize Fake military size between 50 to 200 percent.
+   * @return Cost of espionage
+   */
+  public static int calculateEspionageCost(final int fakeMilitarySize) {
+    int value = fakeMilitarySize;
+    int cost = 0;
+    if (value >= 80 && value <= 120) {
+      cost = 0;
+    }
+    if (value >= 70 && value < 80) {
+      cost = 1;
+    }
+    if (value >= 60 && value < 70) {
+      cost = 2;
+    }
+    if (value >= 50 && value < 60) {
+      cost = 3;
+    }
+    if (value > 120) {
+      cost = (value - 120) / 10;
+    }
+    return cost;
+  }
 }

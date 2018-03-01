@@ -187,6 +187,13 @@ public final class ShipGenerator {
         scores[i] = scores[i] + comp.getResearchBonus() * 5;
         break;
       }
+      case ESPIONAGE_MODULE: {
+        scores[i] = scores[i] + comp.getEspionageBonus() * 3;
+        if (design.getHull().getHullType() == ShipHullType.PRIVATEER) {
+          scores[i] = scores[i] + 10;
+        }
+        break;
+      }
       case TARGETING_COMPUTER: {
         if (!design.gotCertainType(ShipComponentType.TARGETING_COMPUTER)) {
           scores[i] = scores[i] + comp.getDamage();
@@ -346,6 +353,11 @@ public final class ShipGenerator {
             .add(ShipComponentFactory.createByName(weapTech.getComponent()));
       }
       Tech elecTech = TechList.getBestTech(electricsTechs, "Jammer");
+      if (elecTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(elecTech.getComponent()));
+      }
+      elecTech = TechList.getBestTech(electricsTechs, "Espionage module");
       if (elecTech != null) {
         components
             .add(ShipComponentFactory.createByName(elecTech.getComponent()));
@@ -691,6 +703,24 @@ public final class ShipGenerator {
           }
         }
       } // Every one else is keeping freighter as empty as possible
+      if (result.getFreeSlots() > 3 && (attitude == Attitude.AGGRESSIVE
+          || attitude == Attitude.MILITARISTIC
+          || attitude == Attitude.BACKSTABBING
+          || attitude == Attitude.LOGICAL)) {
+        // Adding espionage to freighters
+        Tech[] electricsTechs = player.getTechList()
+            .getListForType(TechType.Electrics);
+        Tech elecTech = TechList.getBestTech(electricsTechs,
+            "Espionage module");
+        if (elecTech != null) {
+          ShipComponent spyModule = ShipComponentFactory.createByName(
+              elecTech.getComponent());
+          if (spyModule.getEnergyRequirement() <= result.getFreeEnergy()) {
+            result.addComponent(spyModule);
+          }
+        }
+      }
+
     }
     return result;
   }

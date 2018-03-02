@@ -672,5 +672,20 @@ public class PlayerInfoTest {
       assertEquals(140, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
       assertEquals(150, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
       assertEquals(150, player.getFakeMilitarySetting(GameLengthState.END_GAME));
+      player = new PlayerInfo(SpaceRace.TEUTHIDAES, 2, 0);
+      player.setAttitude(Attitude.MILITARISTIC);
+      player.setFakeMilitarySize(160);
+      player.tuneFakeMilitarySetting(GameLengthState.END_GAME);
+      assertEquals(170, player.getFakeMilitarySize());
+      player.tuneFakeMilitarySetting(GameLengthState.END_GAME);
+      assertEquals(180, player.getFakeMilitarySize());
+      player.tuneFakeMilitarySetting(GameLengthState.END_GAME);
+      assertEquals(190, player.getFakeMilitarySize());
+      player.tuneFakeMilitarySetting(GameLengthState.END_GAME);
+      assertEquals(200, player.getFakeMilitarySize());
+      player.tuneFakeMilitarySetting(GameLengthState.END_GAME);
+      assertEquals(200, player.getFakeMilitarySize());
+      player.tuneFakeMilitarySetting(GameLengthState.START_GAME);
+      assertEquals(190, player.getFakeMilitarySize());
     }
 }

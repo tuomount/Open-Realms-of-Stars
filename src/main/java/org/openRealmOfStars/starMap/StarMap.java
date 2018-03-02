@@ -1314,6 +1314,18 @@ public class StarMap {
   }
 
   /**
+   * Handle faking the military size for single AI player
+   */
+  public void handleFakingMilitarySize() {
+    GameLengthState gameLengthState = GameLengthState.getGameLengthState(
+        getTurn(),  getScoreVictoryTurn());
+    PlayerInfo info = players.getPlayerInfoByIndex(aiTurnNumber);
+    if (info != null && !info.isHuman()) {
+      info.tuneFakeMilitarySetting(gameLengthState);
+    }
+
+  }
+  /**
    * Handle research and planets for single AI player
    */
   public void handleAIResearchAndPlanets() {

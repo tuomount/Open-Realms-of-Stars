@@ -550,7 +550,9 @@ public class PlayerInfo {
 
   /**
    * Get fake military setting for AI.
-   * This is not very good. It is just static values.
+   * This is not very good. It is just static values. This
+   * is used tuneFakeMilitarySetting which gives more dynamic
+   * values for AI players.
    * @param state Which game length state is on
    * @return Fakemilitary value between 50-200
    */
@@ -623,6 +625,20 @@ public class PlayerInfo {
     }
     // Default
     return 100;
+  }
+
+  /**
+   * Tune fake military size setting towards target.
+   * This should be called once at turn.
+   * @param state Game Length State.
+   */
+  public void tuneFakeMilitarySetting(final GameLengthState state) {
+    int targetValue = getFakeMilitarySetting(state);
+    if (targetValue > getFakeMilitarySize()) {
+      setFakeMilitarySize(getFakeMilitarySize() + 10);
+    } else if (targetValue < getFakeMilitarySize()) {
+      setFakeMilitarySize(getFakeMilitarySize() - 10);
+    }
   }
   /**
    * Get AI player's attitude
@@ -1279,7 +1295,9 @@ public class PlayerInfo {
    * @param fakeMilitarySize the fakeMilitarySize to set
    */
   public void setFakeMilitarySize(final int fakeMilitarySize) {
-    this.fakeMilitarySize = fakeMilitarySize;
+    if (fakeMilitarySize >= 50 && fakeMilitarySize <= 200) {
+      this.fakeMilitarySize = fakeMilitarySize;
+    }
   }
 
 }

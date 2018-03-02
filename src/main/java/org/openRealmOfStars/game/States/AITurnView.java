@@ -1018,6 +1018,7 @@ public class AITurnView extends BlackPanel {
       updateText();
       if (game.getStarMap().getAIFleet() == null) {
         game.getStarMap().handleAIResearchAndPlanets();
+        game.getStarMap().handleFakingMilitarySize();
       } else {
         handleAIFleet();
         if (game.getGameState() != GameState.AITURN) {

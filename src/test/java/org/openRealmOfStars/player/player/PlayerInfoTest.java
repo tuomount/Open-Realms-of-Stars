@@ -18,6 +18,7 @@ import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.mockito.Mockito;
 
 /**
@@ -612,4 +613,64 @@ public class PlayerInfoTest {
       assertEquals(false, player.duplicateShipDesignName("Ship 3"));
     }
 
+    @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
+    public void testFakeMilitarySetting() {
+      PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+      player.setAttitude(Attitude.DIPLOMATIC);
+      assertEquals(100, player.getFakeMilitarySetting(GameLengthState.START_GAME));
+      assertEquals(100, player.getFakeMilitarySetting(GameLengthState.EARLY_GAME));
+      assertEquals(100, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
+      assertEquals(100, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
+      assertEquals(100, player.getFakeMilitarySetting(GameLengthState.END_GAME));
+      player = new PlayerInfo(SpaceRace.MECHIONS, 2, 0);
+      player.setAttitude(Attitude.LOGICAL);
+      assertEquals(100, player.getFakeMilitarySetting(GameLengthState.START_GAME));
+      assertEquals(100, player.getFakeMilitarySetting(GameLengthState.EARLY_GAME));
+      assertEquals(90, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
+      assertEquals(80, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
+      assertEquals(50, player.getFakeMilitarySetting(GameLengthState.END_GAME));
+      player = new PlayerInfo(SpaceRace.SPORKS, 2, 0);
+      player.setAttitude(Attitude.AGGRESSIVE);
+      assertEquals(120, player.getFakeMilitarySetting(GameLengthState.START_GAME));
+      assertEquals(130, player.getFakeMilitarySetting(GameLengthState.EARLY_GAME));
+      assertEquals(80, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
+      assertEquals(70, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
+      assertEquals(100, player.getFakeMilitarySetting(GameLengthState.END_GAME));
+      player = new PlayerInfo(SpaceRace.GREYANS, 2, 0);
+      player.setAttitude(Attitude.SCIENTIFIC);
+      assertEquals(100, player.getFakeMilitarySetting(GameLengthState.START_GAME));
+      assertEquals(100, player.getFakeMilitarySetting(GameLengthState.EARLY_GAME));
+      assertEquals(100, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
+      assertEquals(100, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
+      assertEquals(100, player.getFakeMilitarySetting(GameLengthState.END_GAME));
+      player = new PlayerInfo(SpaceRace.MOTHOIDS, 2, 0);
+      player.setAttitude(Attitude.EXPANSIONIST);
+      assertEquals(100, player.getFakeMilitarySetting(GameLengthState.START_GAME));
+      assertEquals(130, player.getFakeMilitarySetting(GameLengthState.EARLY_GAME));
+      assertEquals(140, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
+      assertEquals(150, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
+      assertEquals(150, player.getFakeMilitarySetting(GameLengthState.END_GAME));
+      player = new PlayerInfo(SpaceRace.TEUTHIDAES, 2, 0);
+      player.setAttitude(Attitude.MILITARISTIC);
+      assertEquals(120, player.getFakeMilitarySetting(GameLengthState.START_GAME));
+      assertEquals(150, player.getFakeMilitarySetting(GameLengthState.EARLY_GAME));
+      assertEquals(170, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
+      assertEquals(200, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
+      assertEquals(200, player.getFakeMilitarySetting(GameLengthState.END_GAME));
+      player = new PlayerInfo(SpaceRace.SCAURIANS, 2, 0);
+      player.setAttitude(Attitude.MERCHANTICAL);
+      assertEquals(110, player.getFakeMilitarySetting(GameLengthState.START_GAME));
+      assertEquals(130, player.getFakeMilitarySetting(GameLengthState.EARLY_GAME));
+      assertEquals(130, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
+      assertEquals(140, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
+      assertEquals(140, player.getFakeMilitarySetting(GameLengthState.END_GAME));
+      player = new PlayerInfo(SpaceRace.HOMARIANS, 2, 0);
+      player.setAttitude(Attitude.PEACEFUL);
+      assertEquals(100, player.getFakeMilitarySetting(GameLengthState.START_GAME));
+      assertEquals(140, player.getFakeMilitarySetting(GameLengthState.EARLY_GAME));
+      assertEquals(140, player.getFakeMilitarySetting(GameLengthState.MIDDLE_GAME));
+      assertEquals(150, player.getFakeMilitarySetting(GameLengthState.LATE_GAME));
+      assertEquals(150, player.getFakeMilitarySetting(GameLengthState.END_GAME));
+    }
 }

@@ -588,7 +588,7 @@ public class PlayerInfo {
         case BACKSTABBING: return 110;
         case DIPLOMATIC: return 100;
         case EXPANSIONIST: return 140;
-        case LOGICAL: return 120;
+        case LOGICAL: return 90;
         case MERCHANTICAL: return 130;
         case PEACEFUL: return 140;
         case SCIENTIFIC: return 100;
@@ -601,7 +601,7 @@ public class PlayerInfo {
         case BACKSTABBING: return 70; //Luring someone to attack
         case DIPLOMATIC: return 100;
         case EXPANSIONIST: return 150;
-        case LOGICAL: return 130;
+        case LOGICAL: return 80;
         case MERCHANTICAL: return 140;
         case PEACEFUL: return 150;
         case SCIENTIFIC: return 100;
@@ -614,7 +614,7 @@ public class PlayerInfo {
         case BACKSTABBING: return 50; //Luring someone to attack
         case DIPLOMATIC: return 100;
         case EXPANSIONIST: return 150;
-        case LOGICAL: return 150;
+        case LOGICAL: return 50;
         case MERCHANTICAL: return 140;
         case PEACEFUL: return 150;
         case SCIENTIFIC: return 100;

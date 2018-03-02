@@ -27,6 +27,7 @@ import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -545,6 +546,83 @@ public class PlayerInfo {
       return race.getAttitude();
     }
     return getAttitude();
+  }
+
+  /**
+   * Get fake military setting for AI.
+   * This is not very good. It is just static values.
+   * @param state Which game length state is on
+   * @return Fakemilitary value between 50-200
+   */
+  public int getFakeMilitarySetting(final GameLengthState state) {
+    if (state == GameLengthState.START_GAME) {
+      switch (getAiAttitude()) {
+        case AGGRESSIVE: return 120;
+        case MILITARISTIC: return 120;
+        case BACKSTABBING: return 100;
+        case DIPLOMATIC: return 100;
+        case EXPANSIONIST: return 100;
+        case LOGICAL: return 100;
+        case MERCHANTICAL: return 110;
+        case PEACEFUL: return 100;
+        case SCIENTIFIC: return 100;
+        default: return 100;
+      }
+    } else if (state == GameLengthState.EARLY_GAME) {
+      switch (getAiAttitude()) {
+        case AGGRESSIVE: return 130;
+        case MILITARISTIC: return 150;
+        case BACKSTABBING: return 120;
+        case DIPLOMATIC: return 100;
+        case EXPANSIONIST: return 130;
+        case LOGICAL: return 100;
+        case MERCHANTICAL: return 130;
+        case PEACEFUL: return 140;
+        case SCIENTIFIC: return 100;
+        default: return 100;
+      }
+    } else if (state == GameLengthState.MIDDLE_GAME) {
+      switch (getAiAttitude()) {
+        case AGGRESSIVE: return 80; //Luring someone to attack
+        case MILITARISTIC: return 170;
+        case BACKSTABBING: return 110;
+        case DIPLOMATIC: return 100;
+        case EXPANSIONIST: return 140;
+        case LOGICAL: return 120;
+        case MERCHANTICAL: return 130;
+        case PEACEFUL: return 140;
+        case SCIENTIFIC: return 100;
+        default: return 100;
+      }
+    } else if (state == GameLengthState.LATE_GAME) {
+      switch (getAiAttitude()) {
+        case AGGRESSIVE: return 70; //Luring someone to attack
+        case MILITARISTIC: return 200;
+        case BACKSTABBING: return 70; //Luring someone to attack
+        case DIPLOMATIC: return 100;
+        case EXPANSIONIST: return 150;
+        case LOGICAL: return 130;
+        case MERCHANTICAL: return 140;
+        case PEACEFUL: return 150;
+        case SCIENTIFIC: return 100;
+        default: return 100;
+      }
+    } else if (state == GameLengthState.END_GAME) {
+      switch (getAiAttitude()) {
+        case AGGRESSIVE: return 100;
+        case MILITARISTIC: return 200;
+        case BACKSTABBING: return 50; //Luring someone to attack
+        case DIPLOMATIC: return 100;
+        case EXPANSIONIST: return 150;
+        case LOGICAL: return 150;
+        case MERCHANTICAL: return 140;
+        case PEACEFUL: return 150;
+        case SCIENTIFIC: return 100;
+        default: return 100;
+      }
+    }
+    // Default
+    return 100;
   }
   /**
    * Get AI player's attitude

@@ -688,4 +688,20 @@ public class PlayerInfoTest {
       player.tuneFakeMilitarySetting(GameLengthState.START_GAME);
       assertEquals(190, player.getFakeMilitarySize());
     }
+
+    @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
+    public void testFakeMilitaryCost() {
+      PlayerInfo player = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+      player.setTotalCredits(0);
+      player.setFakeMilitarySize(200);
+      player.handleFakeMilitarySizeCost();
+      assertEquals(120, player.getFakeMilitarySize());
+      player = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+      player.setTotalCredits(0);
+      player.setFakeMilitarySize(50);
+      player.handleFakeMilitarySizeCost();
+      assertEquals(80, player.getFakeMilitarySize());
+    }
+
 }

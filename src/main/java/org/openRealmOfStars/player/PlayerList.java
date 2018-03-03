@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -166,4 +166,15 @@ public class PlayerList {
     }
   }
 
+  /**
+   * Handle players fake military cost.
+   * This method can tune down fake military
+   * if player does not have enough credits.
+   */
+  public void handlePlayerFakeMilitaryCost() {
+    for (int i = 0; i < list.size(); i++) {
+      PlayerInfo info = list.get(i);
+      info.handleFakeMilitarySizeCost();
+    }
+  }
 }

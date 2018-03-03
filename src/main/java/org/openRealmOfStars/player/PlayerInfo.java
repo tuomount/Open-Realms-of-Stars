@@ -1300,4 +1300,31 @@ public class PlayerInfo {
     }
   }
 
+  /**
+   * Handle player's fake military cost.
+   * This method can tune down fake military
+   * if player does not have enough credits.
+   */
+  public void handleFakeMilitarySizeCost() {
+    int value = getFakeMilitarySize();
+    int cost = Espionage.calculateEspionageCost(value);
+    if (cost > getTotalCredits()) {
+      int direction = 0;
+      if (value > 100) {
+        direction = -10;
+      } else if (value < 100) {
+        direction = 10;
+      }
+      while (cost > getTotalCredits()) {
+        value = value + direction;
+        cost = Espionage.calculateEspionageCost(value);
+        if (cost == 0) {
+          break;
+        }
+      }
+      setFakeMilitarySize(value);
+    }
+    setTotalCredits(getTotalCredits() - cost);
+  }
+
 }

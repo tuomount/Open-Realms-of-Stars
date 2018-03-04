@@ -1092,7 +1092,7 @@ public class Game implements ActionListener {
   public static String printTech(final String[] techNames,
       final TechType type, final int level) {
     StringBuilder sb = new StringBuilder();
-    sb.append("### " + type.toString() + " - " + level + "\n");
+    sb.append("\n### " + type.toString() + " - " + level + "\n\n");
     for (int i = 0; i < techNames.length; i++) {
       Tech tech = TechFactory.createTech(type, level, techNames[i]);
       boolean noPrint = true;
@@ -1109,6 +1109,7 @@ public class Game implements ActionListener {
         sb.append(i + 1);
         sb.append(". ");
         sb.append(build.getFullDescription());
+        sb.append("\n");
         noPrint = false;
       }
       if (tech.getHull() != null) {
@@ -1116,7 +1117,8 @@ public class Game implements ActionListener {
             SpaceRace.HUMAN);
         sb.append(i + 1);
         sb.append(". ");
-        sb.append(hull.toString() + "\n");
+        sb.append(hull.toString());
+        sb.append("\n");
         noPrint = false;
       }
       if (noPrint) {
@@ -1132,7 +1134,7 @@ public class Game implements ActionListener {
    */
   public static String printTechWiki() {
     StringBuilder sb = new StringBuilder();
-    sb.append("## Combat technology\n");
+    sb.append("## Combat technology\n\n");
     sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL1_NAMES,
         TechType.Combat, 1));
     sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL2_NAMES,
@@ -1153,7 +1155,7 @@ public class Game implements ActionListener {
         TechType.Combat, 9));
     sb.append(printTech(TechFactory.COMBAT_TECH_LEVEL10_NAMES,
         TechType.Combat, 10));
-    sb.append("## Defense technology\n");
+    sb.append("## Defense technology\n\n");
     sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL1_NAMES,
         TechType.Defense, 1));
     sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL2_NAMES,
@@ -1174,7 +1176,7 @@ public class Game implements ActionListener {
         TechType.Defense, 9));
     sb.append(printTech(TechFactory.DEFENSE_TECH_LEVEL10_NAMES,
         TechType.Defense, 10));
-    sb.append("## Hull technology\n");
+    sb.append("## Hull technology\n\n");
     sb.append(printTech(TechFactory.HULL_TECH_LEVEL1_NAMES,
         TechType.Hulls, 1));
     sb.append(printTech(TechFactory.HULL_TECH_LEVEL2_NAMES,
@@ -1195,7 +1197,7 @@ public class Game implements ActionListener {
         TechType.Hulls, 9));
     sb.append(printTech(TechFactory.HULL_TECH_LEVEL10_NAMES,
         TechType.Hulls, 10));
-    sb.append("## Planetary Improvement technology\n");
+    sb.append("## Planetary Improvement technology\n\n");
     sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL1_NAMES,
         TechType.Improvements, 1));
     sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL2_NAMES,
@@ -1216,7 +1218,7 @@ public class Game implements ActionListener {
         TechType.Improvements, 9));
     sb.append(printTech(TechFactory.IMPROVEMENT_TECH_LEVEL10_NAMES,
         TechType.Improvements, 10));
-    sb.append("## Propulsion technology\n");
+    sb.append("## Propulsion technology\n\n");
     sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL1_NAMES,
         TechType.Propulsion, 1));
     sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL2_NAMES,
@@ -1237,7 +1239,7 @@ public class Game implements ActionListener {
         TechType.Propulsion, 9));
     sb.append(printTech(TechFactory.PROPULSION_TECH_LEVEL10_NAMES,
         TechType.Propulsion, 10));
-    sb.append("## Electronics technology\n");
+    sb.append("## Electronics technology\n\n");
     sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL1_NAMES,
         TechType.Electrics, 1));
     sb.append(printTech(TechFactory.ELECTRONICS_TECH_LEVEL2_NAMES,

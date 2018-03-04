@@ -91,7 +91,7 @@ public final class TechFactory {
    * Combat tech names for level 10
    */
   public static final String[] COMBAT_TECH_LEVEL10_NAMES = {
-      "Antimatter beam Mk1", "Massdrive Mk5", "Photon torpedo Mk10",
+      "Antimatter beam Mk2", "Massdrive Mk5", "Photon torpedo Mk10",
       "ECM torpedo Mk8", "HE missile Mk8" };
 
   /**

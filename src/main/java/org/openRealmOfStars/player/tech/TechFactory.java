@@ -777,7 +777,7 @@ public final class TechFactory {
         } else if (techName.startsWith("Cloaking device")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_CLOACKING_DEVICE));
         } else if (techName.startsWith("Espionage module Mk")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_CIRCUIT_BOARD));
+          tech.setIcon(Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH));
         }

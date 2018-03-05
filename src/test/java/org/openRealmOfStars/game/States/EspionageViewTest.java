@@ -38,6 +38,7 @@ public class EspionageViewTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testBasic() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getFakeMilitarySize()).thenReturn(100);
     PlayerList playerList = Mockito.mock(PlayerList.class);
     ActionListener listener = Mockito.mock(ActionListener.class);
     EspionageView view = new EspionageView(playerList, info, listener);

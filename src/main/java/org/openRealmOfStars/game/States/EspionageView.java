@@ -88,7 +88,7 @@ public class EspionageView extends BlackPanel {
     fakeMilitarySlider = new SpaceSliderPanel(
         GameCommands.COMMAND_MINUS_MILITARY,
         GameCommands.COMMAND_PLUS_MILITARY, Icons.ICON_TROOPS,
-        "Lie military size (100%)", 50, 200, 100,
+        "Lie military size (100%)", 50, 200, info.getFakeMilitarySize(),
         GameCommands.COMMAND_FAKE_MILITARY, listener);
     fakeMilitarySlider.setSliderMinorTick(10);
     fakeMilitarySlider.setSliderMajorTick(10);

@@ -212,7 +212,12 @@ public class CreditsView extends BlackPanel {
       + "Fight Music Theme01 by\n"
       + "GTDStudio - Pavel Panferov\n"
       + "Licensed under CC BY 3.0 "
-      + "http://creativecommons.org/licenses/by/3.0/\n\n";
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Trogl by\n"
+      + "oglsdl https://soundcloud.com/oglsdl\n"
+      + "Licensed under CC BY 4.0 "
+      + "http://creativecommons.org/licenses/by/4.0/\n\n";
+
 
 
 

@@ -149,6 +149,13 @@ public final class MusicPlayer {
       "/resources/musics/Panferov_fight01.ogg");
 
   /**
+   * Trogl by oglsdl Licence CC-BY 4.0
+   */
+  public static final MusicFileInfo TROGL = new MusicFileInfo(
+      "Trogl", "oglsdl",
+      "/resources/musics/trogl.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,

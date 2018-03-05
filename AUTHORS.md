@@ -186,4 +186,8 @@ Fight Music Theme01 by
 GTDStudio - Pavel Panferov
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
+Trogl by
+oglsdl https://soundcloud.com/oglsdl
+Licensed under CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
+
 

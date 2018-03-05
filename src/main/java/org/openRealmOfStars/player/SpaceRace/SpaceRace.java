@@ -699,8 +699,7 @@ public enum SpaceRace {
     case SPORKS:
       return MusicPlayer.CONQUERORS;
     case GREYANS:
-      //TODO change diplomacy music
-      return MusicPlayer.MILLION_LIGHT_YEARS;
+      return MusicPlayer.TROGL;
     case CENTAURS:
       return MusicPlayer.OVE_MELAA_DIPLOMACY;
     case MOTHOIDS:

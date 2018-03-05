@@ -614,14 +614,14 @@ public class Fleet {
       }
     }
     FleetType result = FleetType.NON_MILITARY;
-    if (starbase) {
-      result = FleetType.STARBASE;
-    }
     if (!nonMilitary) {
       result = FleetType.MILITARY;
     }
     if (privateer) {
       result = FleetType.PRIVATEER;
+    }
+    if (starbase && isStarBaseDeployed()) {
+      result = FleetType.STARBASE;
     }
     return result;
   }

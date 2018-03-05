@@ -463,10 +463,12 @@ public class MapPanel extends JPanel {
           } else {
             EspionageList espionage = info.getEspionage().getByIndex(
                 fleetOwnerIndex);
-            FleetType fleetType = fleet.getFleetType();
-            recognized = espionage.isFleetTypeRecognized(fleetType);
-            if (recognized) {
-              drawShip = true;
+            if (espionage != null && espionage.getTotalBonus() >= 4) {
+              FleetType fleetType = fleet.getFleetType();
+              recognized = espionage.isFleetTypeRecognized(fleetType);
+              if (recognized) {
+                drawShip = true;
+              }
             }
           }
           if (recognized && fleetOwnerIndex != -1) {

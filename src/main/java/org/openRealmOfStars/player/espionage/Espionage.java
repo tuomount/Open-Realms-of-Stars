@@ -65,6 +65,18 @@ public class Espionage {
   }
 
   /**
+   * Clear all espionage list bonus.
+   * This should be called after each turn.
+   */
+  public void clearAllEspionageBonuses() {
+    for (EspionageList list : espionageLists) {
+      if (list != null) {
+        list.clearList();
+      }
+    }
+  }
+
+  /**
    *  Calculate espionage cost from fakeMilitarySize;
    *  FakeMilitarySize should be from 50 to 200.
    * @param fakeMilitarySize Fake military size between 50 to 200 percent.

@@ -44,6 +44,19 @@ public class EspionageTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testClear() {
+    Espionage espionage = new Espionage(4, 0);
+    assertEquals(4, espionage.getSize());
+    EspionageList list = espionage.getByIndex(1);
+    list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test 1");
+    assertEquals(2, list.getTotalBonus());
+    espionage.clearAllEspionageBonuses();
+    list = espionage.getByIndex(1);
+    assertEquals(0, list.getTotalBonus());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testCost() {
     assertEquals(0, Espionage.calculateEspionageCost(100));
     assertEquals(0, Espionage.calculateEspionageCost(80));

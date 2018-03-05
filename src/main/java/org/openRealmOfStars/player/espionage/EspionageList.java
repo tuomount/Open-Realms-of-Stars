@@ -155,6 +155,13 @@ public class EspionageList {
   }
 
   /**
+   * Clear espionage list. This should be called after each turn.
+   */
+  public void clearList() {
+    list = new ArrayList<>();
+  }
+
+  /**
    * Get espionage bonus effects as a text.
    * @param bonus Bonus level between 0 to 10
    * @return Description as a String.

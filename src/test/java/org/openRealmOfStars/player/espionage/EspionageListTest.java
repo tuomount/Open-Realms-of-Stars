@@ -160,4 +160,40 @@ public class EspionageListTest {
     assertEquals(38, list.getEspionageLevel1Estimate());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEspionageOverTurn() {
+    EspionageList list = new EspionageList(2);
+    list.setEspionageLevel7Estimate(-5);
+    assertEquals(-5, list.getEspionageLevel7Estimate());
+    list.setEspionageLevel5Estimate(8);
+    assertEquals(8, list.getEspionageLevel5Estimate());
+    list.setEspionageLevel3Estimate(-8);
+    assertEquals(-8, list.getEspionageLevel3Estimate());
+    list.setEspionageLevel1Estimate(3);
+    assertEquals(3, list.getEspionageLevel1Estimate());
+    list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 1, "Fleet #1");
+    assertEquals(1, list.getSize());
+    assertEquals(1, list.getTotalBonus());
+    assertEquals("Fleet #1", list.getEspionage(0).getDescription());
+    list.addEspionageBonus(EspionageBonusType.TRADE, 5, "Spy trade");
+    assertEquals(2, list.getSize());
+    assertEquals(6, list.getTotalBonus());
+    assertEquals("Spy trade", list.getEspionage(1).getDescription());
+    list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 5, "Fleet #2");
+    assertEquals(3, list.getSize());
+    assertEquals(10, list.getTotalBonus());
+    assertEquals("Fleet #2", list.getEspionage(2).getDescription());
+    list.clearList();
+    assertEquals(-5, list.getEspionageLevel7Estimate());
+    assertEquals(8, list.getEspionageLevel5Estimate());
+    assertEquals(-8, list.getEspionageLevel3Estimate());
+    assertEquals(3, list.getEspionageLevel1Estimate());
+    assertEquals(0, list.getSize());
+    list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 1, "Fleet #1");
+    assertEquals(1, list.getSize());
+    assertEquals(1, list.getTotalBonus());
+    assertEquals("Fleet #1", list.getEspionage(0).getDescription());
+  }
+
 }

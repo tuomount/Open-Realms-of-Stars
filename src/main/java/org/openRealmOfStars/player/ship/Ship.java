@@ -1616,7 +1616,7 @@ private int increaseDefenseValueWithJammer() {
           && hasComponentEnergy(i)) {
         // Since ships can have only one espionage module we can
         // Stop looking here
-        return getEspionageBonus();
+        return comp.getEspionageBonus();
       }
     }
     return 0;

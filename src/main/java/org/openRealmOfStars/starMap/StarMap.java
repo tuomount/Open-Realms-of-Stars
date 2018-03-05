@@ -1512,7 +1512,7 @@ public class StarMap {
           if (sectorIndex != -1 && sectorIndex != i) {
             int espionageBonus = fleet.getEspionageBonus();
             PlayerInfo spiedInfo = players.getPlayerInfoByIndex(sectorIndex);
-            if (spiedInfo != null) {
+            if (spiedInfo != null && espionageBonus > 0) {
               String description = "Fleet " + fleet.getName() + " spying "
                   + spiedInfo.getEmpireName() + ".";
               info.getEspionage().getByIndex(sectorIndex).addEspionageBonus(

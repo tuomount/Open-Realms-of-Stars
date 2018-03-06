@@ -1835,7 +1835,7 @@ public class Planet {
         addBuilding(building);
         event = PlanetaryEvent.NONE;
         msgText.append(building.getName());
-        msgText.append(". It has been take in used now.");
+        msgText.append(". Colonists has taken it in use now.");
         Message msg = new Message(MessageType.PLANETARY, msgText.toString(),
             Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
         msg.setCoordinate(getCoordinate());

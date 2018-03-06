@@ -694,8 +694,7 @@ public enum SpaceRace {
     case HUMAN:
       return MusicPlayer.WALKING_WITH_POSEIDON;
     case MECHIONS:
-      //TODO change diplomacy music
-      return MusicPlayer.MILLION_LIGHT_YEARS;
+      return MusicPlayer.ABANDONED_STEEL_MILL;
     case SPORKS:
       return MusicPlayer.CONQUERORS;
     case GREYANS:

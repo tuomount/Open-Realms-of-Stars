@@ -156,6 +156,13 @@ public final class MusicPlayer {
       "/resources/musics/trogl.ogg");
 
   /**
+   * Abandoned Steel Mill by Spring Licence CC0
+   */
+  public static final MusicFileInfo ABANDONED_STEEL_MILL = new MusicFileInfo(
+      "Abandoned Steel Mill", "Spring",
+      "/resources/musics/Abandoned Steel Mill.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,
@@ -165,6 +172,7 @@ public final class MusicPlayer {
    */
   protected static final MusicFileInfo[] COMBAT_MUSIC_LIST = {NEON_TRANSIT,
       THRUST_SEQUENCE, FIGHT_THEME01};
+
   /**
    * What music file is currently playing
    */

@@ -216,7 +216,10 @@ public class CreditsView extends BlackPanel {
       + "Trogl by\n"
       + "oglsdl https://soundcloud.com/oglsdl\n"
       + "Licensed under CC BY 4.0 "
-      + "http://creativecommons.org/licenses/by/4.0/\n\n";
+      + "http://creativecommons.org/licenses/by/4.0/\n\n"
+      + "Abandoned Steel Mill by\n"
+      + "Spring (CC0)\n\n";
+
 
 
 

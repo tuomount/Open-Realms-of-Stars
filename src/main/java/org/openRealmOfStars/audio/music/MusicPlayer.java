@@ -163,6 +163,13 @@ public final class MusicPlayer {
       "/resources/musics/Abandoned Steel Mill.ogg");
 
   /**
+   * Interplanetary Odyssey by Patrick de Arteaga Licence CC-BY 4.0
+   */
+  public static final MusicFileInfo INTERPLANETARY_ODYSSEY = new MusicFileInfo(
+      "Interplanetary Odyssey", "Patrick de Arteaga",
+      "/resources/musics/Interplanetary Odyssey.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,

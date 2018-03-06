@@ -218,7 +218,12 @@ public class CreditsView extends BlackPanel {
       + "Licensed under CC BY 4.0 "
       + "http://creativecommons.org/licenses/by/4.0/\n\n"
       + "Abandoned Steel Mill by\n"
-      + "Spring (CC0)\n\n";
+      + "Spring (CC0)\n\n"
+      + "Interplanetary Odyssey by\n"
+      + "Patrick de Arteaga https://patrickdearteaga.com/\n"
+      + "Licensed under CC BY 4.0 "
+      + "http://creativecommons.org/licenses/by/4.0/\n\n";
+
 
 
 

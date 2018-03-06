@@ -706,8 +706,7 @@ public enum SpaceRace {
     case TEUTHIDAES:
       return MusicPlayer.PRESSURE;
     case SCAURIANS:
-      //TODO change diplomacy music
-      return MusicPlayer.MILLION_LIGHT_YEARS;
+      return MusicPlayer.INTERPLANETARY_ODYSSEY;
     case HOMARIANS:
       //TODO change diplomacy music
       return MusicPlayer.MILLION_LIGHT_YEARS;

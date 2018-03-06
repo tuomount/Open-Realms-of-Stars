@@ -542,11 +542,7 @@ public class DiplomacyView extends BlackPanel {
    */
   public void updatePanel(final SpeechType type) {
     int humanIndex = starMap.getPlayerList().getIndex(human);
-    String text = ai.getDiplomacy().getLikingAsString(humanIndex);
-    String relation = ai.getDiplomacy().getDiplomaticRelation(humanIndex);
-    if (!relation.isEmpty()) {
-      text = text + " " + relation;
-    }
+    String text = ai.getDiplomacy().generateRelationText(humanIndex);
     likenessLabel.setText(text);
     likenessLabel.setForeground(ai.getDiplomacy().getLikingAsColor(humanIndex));
     if (type == SpeechType.NEUTRAL_GREET) {

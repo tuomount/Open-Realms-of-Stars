@@ -2,8 +2,11 @@ package org.openRealmOfStars.gui.infopanel;
 
 import static org.junit.Assert.*;
 
+import java.awt.Color;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openRealmOfStars.gui.GuiStatics;
 
 /**
  * 
@@ -35,7 +38,10 @@ public class EspionagePanelTest {
     String realm = "Test realm";
     String desc = "Test description";
     int value = 5;
-    EspionagePanel panel = new EspionagePanel(realm, desc, value);
+    String relationText = "Neutral Peace";
+    Color color = GuiStatics.COLOR_GREEN_TEXT;
+    EspionagePanel panel = new EspionagePanel(realm, desc, value,
+        relationText, color);
     assertEquals(realm, panel.getRealmName());
     assertEquals(desc, panel.getDescription());
     assertEquals(value, panel.getValue());

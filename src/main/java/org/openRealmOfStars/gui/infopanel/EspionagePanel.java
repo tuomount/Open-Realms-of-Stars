@@ -1,5 +1,6 @@
 package org.openRealmOfStars.gui.infopanel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.Box;
@@ -10,6 +11,7 @@ import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 
 /**
 *
@@ -58,9 +60,12 @@ public class EspionagePanel extends InfoPanel {
    * @param realm Realm name to show
    * @param text Espionage text
    * @param espionageValue Espionage value
+   * @param relation Realm relation text
+   * @param relationColor what color is used to draw relation text.
    */
   public EspionagePanel(final String realm, final String text,
-      final int espionageValue) {
+      final int espionageValue, final String relation,
+      final Color relationColor) {
     realmName = realm;
     description = text;
     value = espionageValue;
@@ -70,6 +75,9 @@ public class EspionagePanel extends InfoPanel {
         Icons.getIconByName(Icons.ICON_SPY_GOGGLES), "Espionage: "
         + value);
     this.add(iconLabel);
+    SpaceLabel likenessLabel = new SpaceLabel(relation);
+    likenessLabel.setForeground(relationColor);
+    this.add(likenessLabel);
     this.add(Box.createRigidArea(new Dimension(5, 5)));
     InfoTextArea infoText = new InfoTextArea();
     infoText.setEditable(false);

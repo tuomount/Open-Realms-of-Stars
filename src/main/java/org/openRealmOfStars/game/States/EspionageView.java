@@ -1,6 +1,7 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -117,8 +118,13 @@ public class EspionageView extends BlackPanel {
           militaryValue = NewsCorpData.calculateMilitaryValue(realmInfo);
         }
         desc = "Military value: " + militaryValue + ".\n" + desc;
+        int humanIndex = playerList.getIndex(info);
+        String text = realmInfo.getDiplomacy().generateRelationText(
+            humanIndex);
+        Color relationColor = realmInfo.getDiplomacy().getLikingAsColor(
+            humanIndex);
         EspionagePanel panel = new EspionagePanel(realmInfo.getEmpireName(),
-            desc, bonus);
+            desc, bonus, text, relationColor);
         centerPanel.add(panel);
       }
     }

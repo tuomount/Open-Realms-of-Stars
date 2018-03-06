@@ -354,4 +354,18 @@ public class Diplomacy {
     return false;
   }
 
+  /**
+   * Generate relation text
+   * @param humanIndex Human relation index
+   * @return Relation text about two realms
+   */
+  public String generateRelationText(final int humanIndex) {
+    String text = getLikingAsString(humanIndex);
+    String relation = getDiplomaticRelation(humanIndex);
+    if (!relation.isEmpty()) {
+      text = text + " " + relation;
+    }
+    return text;
+  }
+
 }

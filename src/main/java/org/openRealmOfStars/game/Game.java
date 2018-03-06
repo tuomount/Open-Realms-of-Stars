@@ -516,7 +516,8 @@ public class Game implements ActionListener {
    */
   public void showEspionageView() {
     espionageView = new EspionageView(starMap.getPlayerList(),
-        starMap.getCurrentPlayerInfo(), this);
+        starMap.getCurrentPlayerInfo(),
+        starMap.getNewsCorpData().getMilitary(), this);
     this.updateDisplay(espionageView);
   }
 

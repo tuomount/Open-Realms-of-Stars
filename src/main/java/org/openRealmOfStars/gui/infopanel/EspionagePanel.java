@@ -73,7 +73,7 @@ public class EspionagePanel extends InfoPanel {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     IconLabel iconLabel = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_SPY_GOGGLES), "Espionage: "
-        + value);
+        + value + "/10");
     this.add(iconLabel);
     SpaceLabel likenessLabel = new SpaceLabel(relation);
     likenessLabel.setForeground(relationColor);

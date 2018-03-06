@@ -25,6 +25,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.espionage.Espionage;
 import org.openRealmOfStars.player.espionage.EspionageList;
+import org.openRealmOfStars.starMap.newsCorp.GalaxyStat;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 
 
@@ -73,13 +74,19 @@ public class EspionageView extends BlackPanel {
   private InfoTextArea fakeMilitaryText;
 
   /**
+   * How much military human player has according the news organization.
+   */
+  private int humanNewsMilitarySize;
+
+  /**
    * Espionage View constructor
    * @param playerList List of all players
    * @param info PlayerInfo who is doing the spying
+   * @param militaryNews Galaxy news about military stats
    * @param listener Action Listener
    */
   public EspionageView(final PlayerList playerList, final PlayerInfo info,
-      final ActionListener listener) {
+      final GalaxyStat militaryNews, final ActionListener listener) {
     player = info;
     this.setLayout(new BorderLayout());
 
@@ -103,6 +110,8 @@ public class EspionageView extends BlackPanel {
     JScrollPane scroll = new JScrollPane(fakeMilitaryText);
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     topPanel.add(scroll);
+    int humanIndex = playerList.getIndex(info);
+    humanNewsMilitarySize = militaryNews.getLatest(humanIndex);
 
     InfoPanel centerPanel = new InfoPanel();
     centerPanel.setTitle("Espionage");
@@ -117,8 +126,10 @@ public class EspionageView extends BlackPanel {
         if (bonus > 0) {
           militaryValue = NewsCorpData.calculateMilitaryValue(realmInfo);
         }
-        desc = "Military value: " + militaryValue + ".\n" + desc;
-        int humanIndex = playerList.getIndex(info);
+        int realmIndex = playerList.getIndex(realmInfo);
+        int newsValue = militaryNews.getLatest(realmIndex);
+        desc = "Military value: " + militaryValue + ".\n"
+             + "News value: " + newsValue + ".\n" + desc;
         String text = realmInfo.getDiplomacy().generateRelationText(
             humanIndex);
         Color relationColor = realmInfo.getDiplomacy().getLikingAsColor(
@@ -157,6 +168,15 @@ public class EspionageView extends BlackPanel {
   }
 
   /**
+   * How big military human player has according the
+   * news organization. Value of this does not
+   * tell if there has been faked the size or not.
+   * @return Human news military size.
+   */
+  public int getHumanNewsMilitarySize() {
+    return humanNewsMilitarySize;
+  }
+  /**
    * Update panel
    */
   public void updatePanel() {
@@ -166,7 +186,9 @@ public class EspionageView extends BlackPanel {
     int cost = Espionage.calculateEspionageCost(value);
     fakeMilitaryText.setText("Lying military power costs " + cost + " credits."
         + "Lying military might cause other realms wrongly evalutate your "
-        + " military power and start war or not start war with you.");
+        + " military power and start war or not start war with you.\n"
+        + "GNBC claimed that you had military size of "
+        + getHumanNewsMilitarySize() + ".");
     this.repaint();
   }
   /**

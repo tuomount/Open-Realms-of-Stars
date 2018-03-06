@@ -9,6 +9,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.starMap.newsCorp.GalaxyStat;
 
 /**
 *
@@ -41,8 +42,11 @@ public class EspionageViewTest {
     Mockito.when(info.getFakeMilitarySize()).thenReturn(100);
     PlayerList playerList = Mockito.mock(PlayerList.class);
     ActionListener listener = Mockito.mock(ActionListener.class);
-    EspionageView view = new EspionageView(playerList, info, listener);
+    GalaxyStat stat = Mockito.mock(GalaxyStat.class);
+    Mockito.when(stat.getLatest(Mockito.anyInt())).thenReturn(120);
+    EspionageView view = new EspionageView(playerList, info, stat, listener);
     assertEquals(info, view.getPlayer());
+    assertEquals(120, view.getHumanNewsMilitarySize());
   }
 
 }

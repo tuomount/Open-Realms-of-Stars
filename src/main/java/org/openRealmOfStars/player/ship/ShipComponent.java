@@ -509,7 +509,7 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append(" Range:");
       sb.append(getWeaponRange());
-      sb.append("\nHit: 50%, 50% penetrates shields");
+      sb.append("\nHit: 75%, 50% penetrates shields");
       sb.append("\n");
       break;
     }

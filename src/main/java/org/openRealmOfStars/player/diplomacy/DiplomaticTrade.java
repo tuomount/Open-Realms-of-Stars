@@ -1041,7 +1041,9 @@ public class DiplomaticTrade {
   public static int getWarChanceForDecline(final SpeechType type,
       final Attitude attitude, final int liking) {
     int warChance = 0;
-    if (type == SpeechType.DEMAND) {
+    if (type == SpeechType.MAKE_WAR) {
+      warChance = 100;
+    } else if (type == SpeechType.DEMAND) {
       warChance = 50;
       switch (attitude) {
         case AGGRESSIVE: {

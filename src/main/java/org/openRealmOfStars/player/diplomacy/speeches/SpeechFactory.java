@@ -600,6 +600,36 @@ public final class SpeechFactory {
    * @param race SpaceRace
    * @return SpeechLine or null if creating line fails
    */
+  public static SpeechLine createAgreeWithWarLine(final SpaceRace race) {
+    SpeechType type = SpeechType.AGREE;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "Very well, prepare to be stomped!");
+      case GREYANS: return new SpeechLine(type,
+          "Prepare to be anhilated!");
+      case HUMAN: return new SpeechLine(type,
+          "This means war then!");
+      case MECHIONS: return new SpeechLine(type,
+          "Initiating war protocol!");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We accept your war offer and kill all your kinds!");
+      case SPORKS: return new SpeechLine(type,
+          "WAR! SHIELDS UP AND FIRE!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Prepare to be dead!");
+      case SCAURIANS: return new SpeechLine(type,
+          "Agreed! Time to die!");
+      case HOMARIANS: return new SpeechLine(type,
+          "Let the war begin!");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Agree SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
   private static SpeechLine createAgreeLine(final SpaceRace race) {
     SpeechType type = SpeechType.AGREE;
     switch (race) {

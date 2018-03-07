@@ -377,6 +377,7 @@ public class DiplomacyView extends BlackPanel {
       endBtn.setEnabled(false);
       setOfferingList(startType);
       updatePanel(trade.getSpeechTypeByOffer());
+      humanLines.setListData(createOfferLines(AI_REGULAR));
       if (trade.getSpeechTypeByOffer() == SpeechType.NOTHING_TO_TRADE) {
         // AI did not have anything to trade, maybe human has
         resetChoices();
@@ -409,16 +410,22 @@ public class DiplomacyView extends BlackPanel {
     int humanIndex = starMap.getPlayerList().getIndex(human);
     ArrayList<SpeechLine> speechLines = new ArrayList<>();
     if (startType == AI_REGULAR) {
-      speechLines.add(SpeechFactory.createLine(SpeechType.AGREE,
-          human.getRace(), null));
-      speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE,
-          human.getRace(), null));
-      if (human.getRace() != SpaceRace.MECHIONS) {
-        speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_ANGER,
+      if (trade.getFirstOffer() != null
+          && trade.getFirstOffer().isWarInOffer()) {
+        speechLines.add(SpeechFactory.createAgreeWithWarLine(
+            human.getRace()));
+      } else {
+        speechLines.add(SpeechFactory.createLine(SpeechType.AGREE,
+            human.getRace(), null));
+        speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE,
+            human.getRace(), null));
+        if (human.getRace() != SpaceRace.MECHIONS) {
+          speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_ANGER,
+              human.getRace(), null));
+        }
+        speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
             human.getRace(), null));
       }
-      speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
-          human.getRace(), null));
     } else if (startType == AI_BORDER_CROSS) {
       speechLines.add(SpeechFactory.createLine(SpeechType.MOVE_FLEET,
           human.getRace(), null));

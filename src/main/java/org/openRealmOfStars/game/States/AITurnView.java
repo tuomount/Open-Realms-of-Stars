@@ -627,7 +627,7 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
-   * Search newly found uncolonized planets
+   * Search for fleets that have crossed the borders
    */
   public void searchForBorderCrossing() {
     PlayerInfo info = game.getPlayers()
@@ -649,15 +649,17 @@ public class AITurnView extends BlackPanel {
                   fleet.getX(), fleet.getY());
               if (culture.getHighestCulture() == game.getStarMap()
                   .getAiTurnNumber()) {
-                if (info.getDiplomacy().isTradeAlliance(0) && military == 0) {
+                if (info.getDiplomacy().isTradeAlliance(i) && military == 0) {
                   // Non military ship and trade alliance
                   continue;
                 }
-                if (info.getDiplomacy().isAlliance(0) && military >= 0) {
+                if ((info.getDiplomacy().isAlliance(i)
+                    || info.getDiplomacy().isDefensivePact(i))
+                    && military >= 0) {
                   // (non)military ship and alliance
                   continue;
                 }
-                if (info.getDiplomacy().isWar(0)) {
+                if (info.getDiplomacy().isWar(i)) {
                   // War no diplomacy screen then
                   continue;
                 }

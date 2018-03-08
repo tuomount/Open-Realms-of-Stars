@@ -305,7 +305,8 @@ public class Diplomacy {
   /**
    * Get diplomatic relations between two players
    * @param playerIndex PLayer index to check
-   * @return String choices: "", "War", "Trade alliance", "Alliance", "Peace"
+   * @return String choices: "", "War", "Trade alliance", "Alliance", "Peace",
+   *                         "Defensive pact
    */
   public String getDiplomaticRelation(final int playerIndex) {
     String result = "";
@@ -314,6 +315,9 @@ public class Diplomacy {
     }
     if (isTradeAlliance(playerIndex)) {
       result = TRADE_ALLIANCE;
+    }
+    if (isDefensivePact(playerIndex)) {
+      result = DEFENSIVE_PACT;
     }
     if (isAlliance(playerIndex)) {
       result = ALLIANCE;
@@ -333,6 +337,19 @@ public class Diplomacy {
         && diplomacyList[index] != null) {
       return diplomacyList[index].isBonusType(
           DiplomacyBonusType.IN_ALLIANCE);
+    }
+    return false;
+  }
+  /**
+   * Is certain player(index) with player who is asking in defensive pact?
+   * @param index Player index
+   * @return True if defensive is between two players
+   */
+  public boolean isDefensivePact(final int index) {
+    if (index > -1 && index < diplomacyList.length
+        && diplomacyList[index] != null) {
+      return diplomacyList[index].isBonusType(
+          DiplomacyBonusType.IN_DEFENSIVE_PACT);
     }
     return false;
   }

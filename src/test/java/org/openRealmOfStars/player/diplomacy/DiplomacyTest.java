@@ -89,6 +89,7 @@ public class DiplomacyTest {
     Diplomacy diplomacy = new Diplomacy(4, 1);
     assertNotEquals(null, diplomacy.getDiplomacyList(0));
     assertEquals(false, diplomacy.isWar(0));
+    assertEquals(false, diplomacy.isDefensivePact(0));
     assertEquals(false, diplomacy.isTradeAlliance(0));
     assertEquals(false, diplomacy.isAlliance(0));
     assertEquals("", diplomacy.getDiplomaticRelation(0));
@@ -96,6 +97,7 @@ public class DiplomacyTest {
         SpaceRace.SPORKS);
     assertEquals("War", diplomacy.getDiplomaticRelation(0));
     assertEquals(true, diplomacy.isWar(0));
+    assertEquals(false, diplomacy.isDefensivePact(0));
     assertEquals(false, diplomacy.isTradeAlliance(0));
     assertEquals(false, diplomacy.isAlliance(0));
     assertEquals(-30, diplomacy.getDiplomacyList(0).getDiplomacyBonus());
@@ -127,12 +129,14 @@ public class DiplomacyTest {
     assertEquals(Diplomacy.NEUTRAL, diplomacy.getLiking(0));
     assertNotEquals(null, diplomacy.getDiplomacyList(0));
     assertEquals(false, diplomacy.isTradeAlliance(0));
+    assertEquals(false, diplomacy.isDefensivePact(0));
     assertEquals(false, diplomacy.isWar(0));
     assertEquals(false, diplomacy.isAlliance(0));
     diplomacy.getDiplomacyList(0).addBonus(
         DiplomacyBonusType.IN_TRADE_ALLIANCE, SpaceRace.HUMAN);
     assertEquals("Trade alliance", diplomacy.getDiplomaticRelation(0));
     assertEquals(true, diplomacy.isTradeAlliance(0));
+    assertEquals(false, diplomacy.isDefensivePact(0));
     assertEquals(false, diplomacy.isWar(0));
     assertEquals(false, diplomacy.isAlliance(0));
     assertEquals(12, diplomacy.getDiplomacyList(0).getDiplomacyBonus());
@@ -148,6 +152,7 @@ public class DiplomacyTest {
     Diplomacy diplomacy = new Diplomacy(4, 1);
     assertNotEquals(null, diplomacy.getDiplomacyList(0));
     assertEquals(false, diplomacy.isTradeAlliance(0));
+    assertEquals(false, diplomacy.isDefensivePact(0));
     assertEquals(false, diplomacy.isAlliance(0));
     assertEquals(false, diplomacy.isWar(0));
     diplomacy.getDiplomacyList(0).addBonus(
@@ -161,6 +166,30 @@ public class DiplomacyTest {
     assertEquals(false, diplomacy.isTradeAlliance(0));
     assertEquals(false, diplomacy.isWar(0));
     assertEquals(false, diplomacy.isAlliance(256));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testInDefensivePact() {
+    Diplomacy diplomacy = new Diplomacy(4, 1);
+    assertNotEquals(null, diplomacy.getDiplomacyList(0));
+    assertEquals(false, diplomacy.isTradeAlliance(0));
+    assertEquals(false, diplomacy.isAlliance(0));
+    assertEquals(false, diplomacy.isDefensivePact(0));
+    assertEquals(false, diplomacy.isWar(0));
+    diplomacy.getDiplomacyList(0).addBonus(
+        DiplomacyBonusType.IN_DEFENSIVE_PACT, SpaceRace.CENTAURS);
+    assertEquals("Defensive pact", diplomacy.getDiplomaticRelation(0));
+    assertEquals(25, diplomacy.getDiplomacyList(0).getDiplomacyBonus());
+    assertEquals(Diplomacy.FRIENDS, diplomacy.getLiking(0));
+    assertEquals("Friends", diplomacy.getLikingAsString(0));
+    assertEquals(GuiStatics.COLOR_GREEN_TEXT, diplomacy.getLikingAsColor(0));
+    assertEquals(true, diplomacy.isDefensivePact(0));
+    assertEquals(false, diplomacy.isAlliance(0));
+    assertEquals(false, diplomacy.isTradeAlliance(0));
+    assertEquals(false, diplomacy.isWar(0));
+    assertEquals(false, diplomacy.isAlliance(256));
+    assertEquals(false, diplomacy.isDefensivePact(256));
   }
 
   @Test

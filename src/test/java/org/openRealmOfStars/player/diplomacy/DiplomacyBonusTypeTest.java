@@ -7,7 +7,7 @@ import org.junit.experimental.categories.Category;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2017,2018 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,7 +29,7 @@ public class DiplomacyBonusTypeTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testIndexes() {
-    for (int i = 0;i < 13; i++) {
+    for (int i = 0;i < 14; i++) {
       assertEquals(i,DiplomacyBonusType.getTypeByIndex(i).getIndex());
     }
   }

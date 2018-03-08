@@ -413,6 +413,11 @@ public final class GuiStatics {
   public static final BufferedImage RELATION_ALLIANCE = Icons.loadBigIcon(
       "/resources/images/bigicons.png", 0, 32, 32, 32);
   /**
+   * Defensive Pact icon
+   */
+  public static final BufferedImage DEFENSIVE_PACT = Icons.loadBigIcon(
+      "/resources/images/bigicons.png", 32, 32, 32, 32);
+  /**
    * Photon torpedo
    */
   public static final BufferedImage PHOTON_TORPEDO = IOUtilities

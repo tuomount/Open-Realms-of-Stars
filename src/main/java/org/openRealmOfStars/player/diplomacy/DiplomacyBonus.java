@@ -5,7 +5,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -201,6 +201,20 @@ public class DiplomacyBonus {
        onlyOne = true;
        bonusValue = 0;
        bonusLasting = 10;
+       break;
+     }
+     case IN_DEFENSIVE_PACT: {
+       onlyOne = true;
+       if (race == SpaceRace.HUMAN || race == SpaceRace.HOMARIANS) {
+         bonusValue = 30;
+         bonusLasting = 255;
+       } else if (race == SpaceRace.TEUTHIDAES || race == SpaceRace.SPORKS) {
+         bonusValue = 20;
+         bonusLasting = 255;
+       } else {
+         bonusValue = 25;
+         bonusLasting = 255;
+       }
        break;
      }
      default: {

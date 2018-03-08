@@ -71,6 +71,11 @@ public class Diplomacy {
   public static final String ALLIANCE = "Alliance";
 
   /**
+   * String for Defensive pact.
+   */
+  public static final String DEFENSIVE_PACT = "Defensive pact";
+
+  /**
    * String for War.
    */
   public static final String WAR = "War";

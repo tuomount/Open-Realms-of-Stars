@@ -23,7 +23,7 @@ import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2017  Tuomo Untinen
+ * Copyright (C) 2017,2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -182,6 +182,14 @@ public class StatView extends BlackPanel {
         String relation = info.getDiplomacy().getDiplomaticRelation(j);
         ImageLabel img = new ImageLabel(GuiStatics.RELATION_ALLIANCE, true);
         img.setImage(null);
+        if (relation.equals(Diplomacy.DEFENSIVE_PACT)) {
+          img = new ImageLabel(GuiStatics.DEFENSIVE_PACT, true);
+          img.setToolTipText(
+              "<html>Alliance allows all ships move on parties sectors.<br>"
+              + "This allows trading vessels to visit parties planets.<br>"
+              + "If member is being attacked then attacker also "
+              + "attacks other parties</html>");
+        }
         if (relation.equals(Diplomacy.ALLIANCE)) {
           img = new ImageLabel(GuiStatics.RELATION_ALLIANCE, true);
           img.setToolTipText(

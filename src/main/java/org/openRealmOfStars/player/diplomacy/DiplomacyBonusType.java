@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.diplomacy;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -79,12 +79,18 @@ public enum DiplomacyBonusType {
    * Last time player did not have nothing to trade so giving it
    * a cool down time
    */
-  NOTHING_TO_TRADE;
+  NOTHING_TO_TRADE,
+  /**
+   * Situation where all ships can travel on each other's space
+   * and same pact defend each other and can trade spy information.
+   */
+  IN_DEFENSIVE_PACT;
+
 
   /**
    * Number of Bonus type. This should be one larger than actual bonus types.
    */
-  public static final int MAX_BONUS_TYPE = 14;
+  public static final int MAX_BONUS_TYPE = 15;
 
   /**
    * Get ShipHullType index
@@ -106,6 +112,7 @@ public enum DiplomacyBonusType {
       case INSULT: return 11;
       case NUKED: return 12;
       case NOTHING_TO_TRADE: return 13;
+      case IN_DEFENSIVE_PACT: return 13;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -146,6 +153,8 @@ public enum DiplomacyBonusType {
       return DiplomacyBonusType.NUKED;
     case 13:
       return DiplomacyBonusType.NOTHING_TO_TRADE;
+    case 14:
+      return DiplomacyBonusType.IN_DEFENSIVE_PACT;
     default:
       throw new IllegalArgumentException("Unexpected diplomacy bonus type!");
     }

@@ -154,6 +154,11 @@ public class ImageInstruction {
    */
   public static final String ALLIANCE = "alliance";
   /**
+   * Relation defensive pact
+   */
+  public static final String DEFENSIVE_PACT = "defensive pact";
+
+  /**
    * GBNC Logo
    */
   public static final String LOGO = "logo";

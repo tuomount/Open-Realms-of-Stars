@@ -31,5 +31,10 @@ public enum EspionageBonusType {
   /**
    * Espionage from trade
    */
-  TRADE;
+  TRADE,
+  /**
+   * "Espionage" on own realm, bonus for this
+   * should be always 10.
+   */
+  OWN_REALM;
 }

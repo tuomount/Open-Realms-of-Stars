@@ -33,14 +33,11 @@ public class Espionage {
   /**
    * Constructor for Espionage
    * @param maxPlayers Maximum number of player
-   * @param playerIndex Player who is creating espionage
    */
-  public Espionage(final int maxPlayers, final int playerIndex) {
+  public Espionage(final int maxPlayers) {
     espionageLists = new EspionageList[maxPlayers];
     for (int i = 0; i < maxPlayers; i++) {
-      if (i != playerIndex) {
-        espionageLists[i] = new EspionageList(i);
-      }
+      espionageLists[i] = new EspionageList(i);
     }
   }
 

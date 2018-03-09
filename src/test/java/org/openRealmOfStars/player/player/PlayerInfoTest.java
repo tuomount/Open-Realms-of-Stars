@@ -463,7 +463,7 @@ public class PlayerInfoTest {
     public void testEspionage() {
       PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 8, 0);
       assertNotNull(info.getEspionage());
-      assertEquals(null, info.getEspionage().getByIndex(0));
+      assertNotNull(info.getEspionage().getByIndex(0));
       assertNotEquals(null, info.getEspionage().getByIndex(1));
       assertNotEquals(null, info.getEspionage().getByIndex(2));
       assertNotEquals(null, info.getEspionage().getByIndex(3));

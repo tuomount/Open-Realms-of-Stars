@@ -91,7 +91,7 @@ public class EspionageView extends BlackPanel {
     this.setLayout(new BorderLayout());
 
     InfoPanel topPanel = new InfoPanel();
-    topPanel.setTitle("Faking the military size for GNBC");
+    topPanel.setTitle("Faking the military size for GBNC");
     topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
     fakeMilitarySlider = new SpaceSliderPanel(
         GameCommands.COMMAND_MINUS_MILITARY,
@@ -130,10 +130,17 @@ public class EspionageView extends BlackPanel {
         int newsValue = militaryNews.getLatest(realmIndex);
         desc = "Military value: " + militaryValue + ".\n"
              + "News value: " + newsValue + ".\n" + desc;
-        String text = realmInfo.getDiplomacy().generateRelationText(
-            humanIndex);
-        Color relationColor = realmInfo.getDiplomacy().getLikingAsColor(
-            humanIndex);
+        String text;
+        Color relationColor = null;
+        if (i != humanIndex) {
+          text = realmInfo.getDiplomacy().generateRelationText(
+              humanIndex);
+          relationColor = realmInfo.getDiplomacy().getLikingAsColor(
+              humanIndex);
+        } else {
+          text = "Own Realm";
+          relationColor = GuiStatics.COLOR_GREEN_TEXT;
+        }
         EspionagePanel panel = new EspionagePanel(realmInfo.getEmpireName(),
             desc, bonus, text, relationColor);
         centerPanel.add(panel);
@@ -187,7 +194,7 @@ public class EspionageView extends BlackPanel {
     fakeMilitaryText.setText("Lying military power costs " + cost + " credits."
         + "Lying military might cause other realms wrongly evalutate your "
         + " military power and start war or not start war with you.\n"
-        + "GNBC claimed that you had military size of "
+        + "GBNC claimed that you had military size of "
         + getHumanNewsMilitarySize() + ".");
     this.repaint();
   }

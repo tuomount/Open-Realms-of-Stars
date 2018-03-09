@@ -171,7 +171,7 @@ public class PlayerInfo {
     setHuman(false);
     setRace(race);
     diplomacy = new Diplomacy(maxPlayers, index);
-    espionage = new Espionage(maxPlayers, index);
+    espionage = new Espionage(maxPlayers);
     attitude = Attitude.getRandom();
     setFakeMilitarySize(100);
     switch (getRace()) {
@@ -441,8 +441,7 @@ public class PlayerInfo {
           + mapOffset + " " + e.getMessage());
     }
     diplomacy = DiplomacyRepository.loadDiplomacy(dis);
-    espionage = new Espionage(diplomacy.getDiplomacySize(),
-        diplomacy.getPlayerIndex());
+    espionage = new Espionage(diplomacy.getDiplomacySize());
 
     int size = dis.readByte();
     for (int i = 0; i < size; i++) {

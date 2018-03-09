@@ -32,9 +32,9 @@ public class EspionageTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
-    Espionage espionage = new Espionage(4, 0);
+    Espionage espionage = new Espionage(4);
     assertEquals(4, espionage.getSize());
-    assertEquals(null, espionage.getByIndex(0));
+    assertNotNull(espionage.getByIndex(0));
     assertEquals(null, espionage.getByIndex(-1));
     assertNotNull(espionage.getByIndex(1));
     assertNotNull(espionage.getByIndex(2));
@@ -45,7 +45,7 @@ public class EspionageTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testClear() {
-    Espionage espionage = new Espionage(4, 0);
+    Espionage espionage = new Espionage(4);
     assertEquals(4, espionage.getSize());
     EspionageList list = espionage.getByIndex(1);
     list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test 1");

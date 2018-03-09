@@ -1506,6 +1506,8 @@ public class StarMap {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null) {
         info.getEspionage().clearAllEspionageBonuses();
+        info.getEspionage().getByIndex(i).addEspionageBonus(
+            EspionageBonusType.OWN_REALM, 10, "Own realm");
         for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
           Fleet fleet = info.getFleets().getByIndex(j);
           int sectorIndex = getSectorCulture(fleet.getX(),

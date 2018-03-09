@@ -85,7 +85,7 @@ public class DiplomaticTradeTest {
     tech2.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
     NewsCorpData newsData = Mockito.mock(NewsCorpData.class);
     Mockito.when(newsData.getMilitaryDifference(0, 1)).thenReturn(
-        powerDifference);
+        powerDifference);    
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(player1);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(player2);
@@ -93,6 +93,7 @@ public class DiplomaticTradeTest {
     Mockito.when(map.getPlayerByIndex(0)).thenReturn(player1);
     Mockito.when(map.getPlayerByIndex(1)).thenReturn(player2);
     Mockito.when(map.getNewsCorpData()).thenReturn(newsData);
+    Mockito.when(map.getMilitaryDifference(0, 1)).thenReturn(powerDifference);
     return map;
   }
 
@@ -239,6 +240,7 @@ public class DiplomaticTradeTest {
     Mockito.when(map.getPlayerByIndex(0)).thenReturn(player1);
     Mockito.when(map.getPlayerByIndex(1)).thenReturn(player2);
     Mockito.when(map.getNewsCorpData()).thenReturn(newsCorp);
+    Mockito.when(map.getMilitaryDifference(Mockito.anyInt(), Mockito.anyInt())).thenReturn(-100);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     NegotiationList offer = new NegotiationList();
     offer.add(new NegotiationOffer(NegotiationType.CREDIT, 80));
@@ -261,6 +263,7 @@ public class DiplomaticTradeTest {
     assertEquals(false, trade.isOfferGoodForBoth());
     
     Mockito.when(newsCorp.getMilitaryDifference(Mockito.anyInt(), Mockito.anyInt())).thenReturn(50);
+    Mockito.when(map.getMilitaryDifference(Mockito.anyInt(), Mockito.anyInt())).thenReturn(50);
     trade = new DiplomaticTrade(map, 0, 1);
     offer = new NegotiationList();
     offer.add(new NegotiationOffer(NegotiationType.CREDIT, 15));

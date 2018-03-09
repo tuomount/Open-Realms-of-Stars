@@ -125,6 +125,7 @@ public class EspionageView extends BlackPanel {
         int militaryValue = 0;
         if (bonus > 0) {
           militaryValue = NewsCorpData.calculateMilitaryValue(realmInfo);
+          militaryValue = espionageList.estimateMilitaryPower(militaryValue);
         }
         int realmIndex = playerList.getIndex(realmInfo);
         int newsValue = militaryNews.getLatest(realmIndex);

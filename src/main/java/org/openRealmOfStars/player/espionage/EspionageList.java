@@ -272,4 +272,31 @@ public class EspionageList {
   public void setEspionageLevel1Estimate(final int espionageLevel1Estimate) {
     this.espionageLevel1Estimate = espionageLevel1Estimate;
   }
+
+  /**
+   * Estimate military power using espionage level
+   * @param actualMilitaryPower Actual military power which is about to
+   *        be estimated.
+   * @return Estimation of military power.
+   */
+  public int estimateMilitaryPower(final int actualMilitaryPower) {
+    int result = 0;
+    int totalBonus = getTotalBonus();
+    if (totalBonus >= 9) {
+      result = actualMilitaryPower;
+    } else if (totalBonus >= 7) {
+      result = actualMilitaryPower
+          + (actualMilitaryPower * getEspionageLevel7Estimate() / 100);
+    } else if (totalBonus >= 5) {
+      result = actualMilitaryPower
+          + (actualMilitaryPower * getEspionageLevel5Estimate() / 100);
+    } else if (totalBonus >= 3) {
+      result = actualMilitaryPower
+          + (actualMilitaryPower * getEspionageLevel3Estimate() / 100);
+    } else if (totalBonus >= 1) {
+      result = actualMilitaryPower
+          + (actualMilitaryPower * getEspionageLevel1Estimate() / 100);
+    }
+    return result;
+  }
 }

@@ -23,6 +23,7 @@ import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.espionage.EspionageBonusType;
+import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
@@ -1525,6 +1526,41 @@ public class StarMap {
         }
       }
     }
+  }
+
+  /**
+   * Get latest military difference between two players, using espionage
+   * information and news corp.
+   * @param first First player index. This is where second one is compared.
+   * @param second Second player index.
+   * @return Positive number if first player has bigger military
+   */
+  public int getMilitaryDifference(final int first, final int second) {
+    int result = 0;
+    int newsCorpDiff = getNewsCorpData().getMilitaryDifference(first, second);
+    result = newsCorpDiff;
+    PlayerInfo firstInfo = players.getPlayerInfoByIndex(first);
+    PlayerInfo secondInfo = players.getPlayerInfoByIndex(second);
+    int actualMilitaryFirst = NewsCorpData.calculateMilitaryValue(firstInfo);
+    int actualMilitarySecond = NewsCorpData.calculateMilitaryValue(secondInfo);
+    EspionageList espionageList = firstInfo.getEspionage().getByIndex(second);
+    int estimateSecond = espionageList.estimateMilitaryPower(
+        actualMilitarySecond);
+    int estimateDiff = actualMilitaryFirst - estimateSecond;
+    if (espionageList.getTotalBonus() >= 7) {
+      // 90-100% accuracy
+      result = estimateDiff;
+    } else if (espionageList.getTotalBonus() >= 5) {
+      // 80% accuracy
+      result = estimateDiff * 90 / 100 + newsCorpDiff * 10 / 100;
+    } else if (espionageList.getTotalBonus() >= 3) {
+      // 70% accuracy
+      result = estimateDiff * 80 / 100 + newsCorpDiff * 20 / 100;
+    } else if (espionageList.getTotalBonus() >= 1) {
+      // 70% accuracy
+      result = estimateDiff * 70 / 100 + newsCorpDiff * 30 / 100;
+    }
+    return result;
   }
   /**
    * Culture level 1

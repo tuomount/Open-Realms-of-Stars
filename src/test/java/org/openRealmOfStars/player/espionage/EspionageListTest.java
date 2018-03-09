@@ -162,6 +162,27 @@ public class EspionageListTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEspionageEstimation() {
+    EspionageList list = new EspionageList(5);
+    list.setEspionageLevel7Estimate(-5);
+    list.setEspionageLevel5Estimate(18);
+    list.setEspionageLevel3Estimate(-28);
+    list.setEspionageLevel1Estimate(38);
+    assertEquals(0, list.estimateMilitaryPower(100));
+    list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 1, "Test");
+    assertEquals(138, list.estimateMilitaryPower(100));
+    list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
+    assertEquals(72, list.estimateMilitaryPower(100));
+    list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
+    assertEquals(118, list.estimateMilitaryPower(100));
+    list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
+    assertEquals(95, list.estimateMilitaryPower(100));
+    list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
+    assertEquals(100, list.estimateMilitaryPower(100));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testEspionageOverTurn() {
     EspionageList list = new EspionageList(2);
     list.setEspionageLevel7Estimate(-5);

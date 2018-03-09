@@ -1007,8 +1007,7 @@ public class DiplomaticTrade {
           break;
         }
       }
-      int militaryDifference = starMap.getNewsCorpData().getMilitaryDifference(
-          first, second);
+      int militaryDifference = starMap.getMilitaryDifference(first, second);
       if (militaryDifference > 0) {
         difference = difference - militaryDifference / divider;
       } else {

@@ -734,7 +734,8 @@ public class AITurnView extends BlackPanel {
               }
               if (list != null
                   && (list.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
-                  || list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE))) {
+                  || list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)
+                  || list.isBonusType(DiplomacyBonusType.IN_DEFENSIVE_PACT))) {
                 // Got new map part maybe in trade and found planet owned by
                 // player which is being in alliance
                 addTradeMission(planet, info);
@@ -757,7 +758,8 @@ public class AITurnView extends BlackPanel {
               }
               if (list != null
                   && (list.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
-                  || list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE))) {
+                  || list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)
+                  || list.isBonusType(DiplomacyBonusType.IN_DEFENSIVE_PACT))) {
                 // Got new map part maybe in trade and found planet owned by
                 // player which is being in alliance
                 addTradeMission(planet, info);

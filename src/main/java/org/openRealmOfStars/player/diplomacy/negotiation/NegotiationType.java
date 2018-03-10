@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.diplomacy.negotiation;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017-2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -66,6 +66,10 @@ public enum NegotiationType {
   /**
    * Recall fleet due border crossing
    */
-  RECALL_FLEET
+  RECALL_FLEET,
+  /**
+   * Defensive pact offering
+   */
+  DEFENSIVE_PACT
 
 }

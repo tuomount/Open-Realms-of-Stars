@@ -446,10 +446,10 @@ public class DiplomacyView extends BlackPanel {
           human.getRace(), null));
       if (ai.getDiplomacy().isTradeAlliance(humanIndex)
           && ai.getDiplomacy().isPeace(humanIndex)
-          && !ai.getDiplomacy().isAlliance(humanIndex)) {
-        speechLines.add(SpeechFactory.createLine(SpeechType.ALLIANCE,
+          && !ai.getDiplomacy().isDefensivePact(humanIndex)) {
+        speechLines.add(SpeechFactory.createLine(SpeechType.DEFESIVE_PACT,
             human.getRace(), null));
-      } else if (!ai.getDiplomacy().isAlliance(humanIndex)
+      } else if (!ai.getDiplomacy().isDefensivePact(humanIndex)
           && ai.getDiplomacy().isPeace(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.TRADE_ALLIANCE,
             human.getRace(), null));

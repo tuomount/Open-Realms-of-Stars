@@ -187,7 +187,8 @@ public final class StarMapUtilities {
       final Fleet fleet, final Planet planet, final PlayerInfo info) {
     if (diplomacy != null
         && (diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)
-        || diplomacy.isBonusType(DiplomacyBonusType.IN_ALLIANCE))) {
+        || diplomacy.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
+        || diplomacy.isBonusType(DiplomacyBonusType.IN_DEFENSIVE_PACT))) {
       int credits = fleet.doTrade(planet, info);
       if (credits > 1) {
         credits = credits / 2;

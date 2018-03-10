@@ -418,6 +418,11 @@ public class DiplomaticTradeTest {
         .getNegotiationType());
     assertEquals(NegotiationType.WAR, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
+    trade.generateEqualTrade(NegotiationType.DEFENSIVE_PACT);
+    assertEquals(NegotiationType.DEFENSIVE_PACT, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.DEFENSIVE_PACT, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
   }
 
   @Test

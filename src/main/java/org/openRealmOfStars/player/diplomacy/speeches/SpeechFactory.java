@@ -66,6 +66,7 @@ public final class SpeechFactory {
       case ASK_MOVE_FLEET: return createAskMoveFleetLine(race, dynamicContent);
       case MOVE_FLEET: return createMoveFleetLine(race);
       case NOTHING_TO_TRADE: return createNothingToTradeLine(race);
+      case DEFESIVE_PACT: return createDefensivePactLine(race);
       default: return null;
     }
   }
@@ -591,6 +592,36 @@ public final class SpeechFactory {
           "Let's build awesome alliance!");
       case HOMARIANS: return new SpeechLine(type,
           "Are you insterested in alliance?");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Defensive SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createDefensivePactLine(final SpaceRace race) {
+    SpeechType type = SpeechType.DEFESIVE_PACT;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "We should defend each others. What do you say?");
+      case GREYANS: return new SpeechLine(type,
+          "We should join our defending forces? ");
+      case HUMAN: return new SpeechLine(type,
+          "Let's make defensive pact together!");
+      case MECHIONS: return new SpeechLine(type,
+          "Defend together?");
+      case MOTHOIDS: return new SpeechLine(type,
+          "Join your drones with ours to defend!");
+      case SPORKS: return new SpeechLine(type,
+          "Join my military defense group!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Join my side defense organization!");
+      case SCAURIANS: return new SpeechLine(type,
+          "Let's build awesome defending power!");
+      case HOMARIANS: return new SpeechLine(type,
+          "Are you insterested in defensive pact?");
       default: return null;
     }
   }

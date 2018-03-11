@@ -934,6 +934,29 @@ public class DiplomacyView extends BlackPanel {
         }
       }
       if (speechSelected != null
+          && speechSelected.getType() == SpeechType.DEFESIVE_PACT) {
+        NegotiationList list1 = getOfferingList(humanTechListOffer,
+            humanMapOffer.isSelected(), humanFleetListOffer,
+            humanPlanetListOffer, humanCredits);
+        list1.add(new NegotiationOffer(NegotiationType.DEFENSIVE_PACT, null));
+        NegotiationList list2 = getOfferingList(aiTechListOffer,
+            aiMapOffer.isSelected(), aiFleetListOffer, aiPlanetListOffer,
+            aiCredits);
+        list2.add(new NegotiationOffer(NegotiationType.DEFENSIVE_PACT, null));
+        trade.setFirstOffer(list2);
+        trade.setSecondOffer(list1);
+        if (trade.isOfferGoodForBoth()) {
+          trade.doTrades();
+          tradeHappened = true;
+          updatePanel(SpeechType.AGREE);
+          resetChoices();
+          starMap.getNewsCorpData().addNews(
+              NewsFactory.makeAllianceNews(human, ai, meetingPlace));
+        } else {
+          updatePanel(SpeechType.DECLINE);
+        }
+      }
+      if (speechSelected != null
           && speechSelected.getType() == SpeechType.DEMAND) {
         NegotiationList list1 = new NegotiationList();
         NegotiationList list2 = getOfferingList(aiTechListOffer,

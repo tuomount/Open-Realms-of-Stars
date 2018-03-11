@@ -126,6 +126,24 @@ public class NewsFactoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testDefensivePactActivation() {
+    PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(aggressor.getAiAttitude()).thenReturn(Attitude.AGGRESSIVE);
+    String[] list = {"Empire of defense", "King of defense"};
+    NewsData news = NewsFactory.makeDefensiveActivation(aggressor, list);
+    assertEquals(true, news.getImageInstructions().contains(
+        aggressor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        aggressor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        "Empire of defense"));
+    assertEquals(true, news.getNewsText().contains(
+        "King of defense"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testWarWithAggressiveAggressor() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
@@ -402,6 +420,24 @@ public class NewsFactoryTest {
     PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
     Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
     NewsData news = NewsFactory.makeAllianceNews(peaceMaker, acceptor, null);
+    assertEquals(true, news.getImageInstructions().contains(
+        peaceMaker.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains(
+        acceptor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        peaceMaker.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        acceptor.getEmpireName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testDefensePact() {
+    PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
+    Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
+    PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
+    NewsData news = NewsFactory.makeDefensivePactNews(peaceMaker, acceptor, null);
     assertEquals(true, news.getImageInstructions().contains(
         peaceMaker.getEmpireName()));
     assertEquals(true, news.getImageInstructions().contains(

@@ -398,6 +398,13 @@ public class Game implements ActionListener {
           starMap.getNewsCorpData().addNews(NewsFactory.makeWarNews(info,
               combat.getPlayer2(), planet, starMap));
           trade.doTrades();
+          PlayerInfo defender = starMap.getPlayerByIndex(defenderIndex);
+          String[] list = defender.getDiplomacy().activateDefensivePact(
+              starMap, info);
+          if (list != null) {
+            starMap.getNewsCorpData().addNews(
+                NewsFactory.makeDefensiveActivation(info, list));
+          }
         }
         if (combat.isHumanPlayer()) {
           starMapView.setReadyToMove(false);

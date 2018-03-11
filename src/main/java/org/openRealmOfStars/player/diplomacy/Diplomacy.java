@@ -1,8 +1,13 @@
 package org.openRealmOfStars.player.diplomacy;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
+import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 
 /**
 *
@@ -388,6 +393,33 @@ public class Diplomacy {
       text = text + " " + relation;
     }
     return text;
+  }
+
+  /**
+   * Activate defensive pact.
+   * @param starMap Starmap for fetching empire names and playerinfos
+   * @param attacker Player who is attacking
+   * @return List of empire names being activated or null if no defensive pact
+   *         available.
+   */
+  public String[] activateDefensivePact(final StarMap starMap,
+      final PlayerInfo attacker) {
+    ArrayList<String> defesiveGroupMember = new ArrayList<>();
+    int attackerIndex = starMap.getPlayerList().getIndex(attacker);
+    for (int i = 0; i < diplomacyList.length; i++) {
+      if (isDefensivePact(i) && i != attackerIndex) {
+        DiplomaticTrade trade = new DiplomaticTrade(starMap, attackerIndex, i);
+        trade.generateEqualTrade(NegotiationType.WAR);
+        StarMapUtilities.addWarDeclatingRepuation(starMap, attacker);
+        trade.doTrades();
+        PlayerInfo defender = starMap.getPlayerByIndex(i);
+        defesiveGroupMember.add(defender.getEmpireName());
+      }
+    }
+    if (defesiveGroupMember.isEmpty()) {
+      return null;
+    }
+    return defesiveGroupMember.toArray(new String[defesiveGroupMember.size()]);
   }
 
 }

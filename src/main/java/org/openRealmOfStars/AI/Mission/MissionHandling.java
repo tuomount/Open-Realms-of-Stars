@@ -877,6 +877,12 @@ public final class MissionHandling {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         game.getStarMap().getNewsCorpData().addNews(
             NewsFactory.makeWarNews(info, defender, fleet, game.getStarMap()));
+        String[] defenseList = defender.getDiplomacy().activateDefensivePact(
+            game.getStarMap(), info);
+        if (defenseList != null) {
+          game.getStarMap().getNewsCorpData().addNews(
+              NewsFactory.makeDefensiveActivation(info, defenseList));
+        }
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.ALLIANCE)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
@@ -911,6 +917,12 @@ public final class MissionHandling {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         game.getStarMap().getNewsCorpData().addNews(
             NewsFactory.makeWarNews(info, defender, fleet, game.getStarMap()));
+        String[] defenseList = defender.getDiplomacy().activateDefensivePact(
+            game.getStarMap(), info);
+        if (defenseList != null) {
+          game.getStarMap().getNewsCorpData().addNews(
+              NewsFactory.makeDefensiveActivation(info, defenseList));
+        }
       }
     }
     trade.updateMeetingNumbers();

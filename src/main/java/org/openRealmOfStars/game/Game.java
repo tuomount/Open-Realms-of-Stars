@@ -544,11 +544,17 @@ public class Game implements ActionListener {
           players.getCurrentPlayer(), planet.getPlanetOwnerIndex());
       trade.generateEqualTrade(NegotiationType.WAR);
       trade.doTrades();
-      StarMapUtilities.addWarDeclatingRepuation(starMap,
-          starMap.getCurrentPlayerInfo());
+      PlayerInfo defender = planet.getPlanetPlayerInfo();
+      PlayerInfo attacker = starMap.getCurrentPlayerInfo();
+      StarMapUtilities.addWarDeclatingRepuation(starMap, attacker);
+      starMap.getNewsCorpData().addNews(
+          NewsFactory.makeWarNews(defender, attacker, planet, starMap));
+      String[] defenseList = defender.getDiplomacy().activateDefensivePact(
+          starMap, attacker);
+      if (defenseList != null) {
         starMap.getNewsCorpData().addNews(
-            NewsFactory.makeWarNews(starMap.getCurrentPlayerInfo(),
-                planet.getPlanetPlayerInfo(), planet, starMap));
+            NewsFactory.makeDefensiveActivation(attacker, defenseList));
+      }
     }
     planetBombingView = new PlanetBombingView(planet, fleet,
         starMap.getCurrentPlayerInfo(), players.getCurrentPlayer(), this);

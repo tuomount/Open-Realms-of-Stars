@@ -1529,6 +1529,25 @@ public class StarMap {
   }
 
   /**
+   * First one is doing military estimation on espionage or if
+   * not available then on newscorp.
+   * @param first Player index who is estimating
+   * @param second Second player who is being estimated
+   * @return Military value
+   */
+  protected int getMilitaryEstimation(final int first, final int second) {
+    PlayerInfo firstInfo = players.getPlayerInfoByIndex(first);
+    PlayerInfo secondInfo = players.getPlayerInfoByIndex(second);
+    int actualMilitarySecond = NewsCorpData.calculateMilitaryValue(secondInfo);
+    EspionageList espionageList = firstInfo.getEspionage().getByIndex(second);
+    int estimateSecond = espionageList.estimateMilitaryPower(
+        actualMilitarySecond);
+    if (estimateSecond == 0) {
+      estimateSecond = newsCorpData.getMilitary().getLatest(second);
+    }
+    return estimateSecond;
+  }
+  /**
    * Get latest military difference between two players, using espionage
    * information and news corp.
    * @param first First player index. This is where second one is compared.
@@ -1537,9 +1556,9 @@ public class StarMap {
    */
   public int getMilitaryDifference(final int first, final int second) {
     int result = 0;
+    PlayerInfo firstInfo = players.getPlayerInfoByIndex(first);
     int newsCorpDiff = getNewsCorpData().getMilitaryDifference(first, second);
     result = newsCorpDiff;
-    PlayerInfo firstInfo = players.getPlayerInfoByIndex(first);
     PlayerInfo secondInfo = players.getPlayerInfoByIndex(second);
     int actualMilitaryFirst = NewsCorpData.calculateMilitaryValue(firstInfo);
     int actualMilitarySecond = NewsCorpData.calculateMilitaryValue(secondInfo);

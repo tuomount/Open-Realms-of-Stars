@@ -360,6 +360,20 @@ public class Diplomacy {
   }
 
   /**
+   * Has this diplomacy with some one defensive pact?
+   * @return True if defensive pact is with some one, otherwise false.
+   */
+  public boolean hasDefensivePact() {
+    boolean result = false;
+    for (int i = 0; i < diplomacyList.length; i++) {
+      if (isDefensivePact(i)) {
+        result = true;
+      }
+    }
+    return result;
+  }
+
+  /**
    * Has certain player(index) multiple border crossing?
    * @param index Player index
    * @return True if there are multiple(more than 2) border crossing.

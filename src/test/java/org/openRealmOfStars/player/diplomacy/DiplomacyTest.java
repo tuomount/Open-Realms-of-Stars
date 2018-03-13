@@ -198,6 +198,21 @@ public class DiplomacyTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testHasDefensivePact() {
+    Diplomacy diplomacy = new Diplomacy(4, 1);
+    assertNotEquals(null, diplomacy.getDiplomacyList(0));
+    assertEquals(false, diplomacy.isTradeAlliance(0));
+    assertEquals(false, diplomacy.isAlliance(0));
+    assertEquals(false, diplomacy.isDefensivePact(0));
+    assertEquals(false, diplomacy.isWar(0));
+    assertEquals(false, diplomacy.hasDefensivePact());
+    diplomacy.getDiplomacyList(0).addBonus(
+        DiplomacyBonusType.IN_DEFENSIVE_PACT, SpaceRace.CENTAURS);
+    assertEquals(true, diplomacy.hasDefensivePact());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testInDefensivePactActivation() {
     Diplomacy diplomacy = new Diplomacy(4, 1);
     diplomacy.getDiplomacyList(0).addBonus(

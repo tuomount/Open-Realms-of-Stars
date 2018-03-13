@@ -1548,6 +1548,27 @@ public class StarMap {
     return estimateSecond;
   }
   /**
+   * First one is doing military estimation on espionage or if
+   * not available then on newscorp. This estimation is done
+   * for whole defesive pact
+   * @param first Player index who is estimating
+   * @param second Second player who is being estimated
+   *        and who belong to defensive pact
+   * @return Military value
+   */
+  protected int getMilitaryEstimationForDefensivePact(final int first,
+      final int second) {
+    int result = getMilitaryEstimation(first, second);
+    PlayerInfo secondInfo = players.getPlayerInfoByIndex(second);
+    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
+      if (i != first && i != second
+          && secondInfo.getDiplomacy().isDefensivePact(i)) {
+        result = result + getMilitaryEstimation(first, i);
+      }
+    }
+    return result;
+  }
+  /**
    * Get latest military difference between two players, using espionage
    * information and news corp.
    * @param first First player index. This is where second one is compared.

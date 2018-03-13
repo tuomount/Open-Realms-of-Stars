@@ -564,7 +564,7 @@ public class StarMapTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testMiltiaryEstimation() {
+  public void testMilitaryEstimation() {
     GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
     Mockito.when(config.getSizeX()).thenReturn(50);
     Mockito.when(config.getSizeY()).thenReturn(50);
@@ -604,6 +604,9 @@ public class StarMapTest {
     Mockito.when(info2.getFleets()).thenReturn(fleetList2);
     Mockito.when(info2.getFakeMilitarySize()).thenReturn(150);
     Mockito.when(info2.getEspionage()).thenReturn(espionage);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(diplomacy.hasDefensivePact()).thenReturn(false);
+    Mockito.when(info2.getDiplomacy()).thenReturn(diplomacy);
 
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
@@ -724,6 +727,7 @@ public class StarMapTest {
     espionage.getByIndex(3).setEspionageLevel7Estimate(-8);
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(diplomacy.isDefensivePact(3)).thenReturn(true);
+    Mockito.when(diplomacy.hasDefensivePact()).thenReturn(true);
     Fleet fleet = Mockito.mock(Fleet.class);
     Mockito.when(fleet.getMilitaryValue()).thenReturn(24);
     FleetList fleetList = Mockito.mock(FleetList.class);
@@ -756,21 +760,27 @@ public class StarMapTest {
     StarMap map = new StarMap(config, players);
     map.getNewsCorpData().calculateMilitary(players, false);
     assertEquals(144, map.getMilitaryEstimationForDefensivePact(0, 2));
+    assertEquals(-120, map.getMilitaryDifference(0, 2));
     espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 1, "Test");
     espionage.getByIndex(3).addEspionageBonus(EspionageBonusType.SPY_FLEET, 1, "Test");
     assertEquals(131, map.getMilitaryEstimationForDefensivePact(0, 2));
+    assertEquals(-107, map.getMilitaryDifference(0, 2));
     espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
     espionage.getByIndex(3).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
     assertEquals(94, map.getMilitaryEstimationForDefensivePact(0, 2));
+    assertEquals(-70, map.getMilitaryDifference(0, 2));
     espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
     espionage.getByIndex(3).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
     assertEquals(98, map.getMilitaryEstimationForDefensivePact(0, 2));
+    assertEquals(-74, map.getMilitaryDifference(0, 2));
     espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
     espionage.getByIndex(3).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
     assertEquals(89, map.getMilitaryEstimationForDefensivePact(0, 2));
+    assertEquals(-65, map.getMilitaryDifference(0, 2));
     espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
     espionage.getByIndex(3).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
     assertEquals(96, map.getMilitaryEstimationForDefensivePact(0, 2));
+    assertEquals(-72, map.getMilitaryDifference(0, 2));
   }
 
 }

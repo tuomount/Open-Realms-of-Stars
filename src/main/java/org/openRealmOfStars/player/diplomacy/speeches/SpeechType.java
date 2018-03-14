@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.diplomacy.speeches;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017-2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -106,7 +106,12 @@ public enum SpeechType {
   /**
    * AI notices that there weren't really anything for trade.
    */
-  NOTHING_TO_TRADE;
+  NOTHING_TO_TRADE,
+  /**
+   * LINE: Offer defensive pact
+   */
+  DEFESIVE_PACT;
+
 
 
   /**
@@ -137,6 +142,7 @@ public enum SpeechType {
       case ASK_MOVE_FLEET:   return "Ask move fleet";
       case MOVE_FLEET:       return "Move fleet";
       case NOTHING_TO_TRADE: return "Nothing to trade";
+      case DEFESIVE_PACT:    return "Defensive pact";
       default: return "Unknown";
     }
   }

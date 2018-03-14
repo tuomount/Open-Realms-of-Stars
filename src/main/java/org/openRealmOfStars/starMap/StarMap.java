@@ -1529,6 +1529,46 @@ public class StarMap {
   }
 
   /**
+   * First one is doing military estimation on espionage or if
+   * not available then on newscorp.
+   * @param first Player index who is estimating
+   * @param second Second player who is being estimated
+   * @return Military value
+   */
+  protected int getMilitaryEstimation(final int first, final int second) {
+    PlayerInfo firstInfo = players.getPlayerInfoByIndex(first);
+    PlayerInfo secondInfo = players.getPlayerInfoByIndex(second);
+    int actualMilitarySecond = NewsCorpData.calculateMilitaryValue(secondInfo);
+    EspionageList espionageList = firstInfo.getEspionage().getByIndex(second);
+    int estimateSecond = espionageList.estimateMilitaryPower(
+        actualMilitarySecond);
+    if (estimateSecond == 0) {
+      estimateSecond = newsCorpData.getMilitary().getLatest(second);
+    }
+    return estimateSecond;
+  }
+  /**
+   * First one is doing military estimation on espionage or if
+   * not available then on newscorp. This estimation is done
+   * for whole defesive pact
+   * @param first Player index who is estimating
+   * @param second Second player who is being estimated
+   *        and who belong to defensive pact
+   * @return Military value
+   */
+  protected int getMilitaryEstimationForDefensivePact(final int first,
+      final int second) {
+    int result = getMilitaryEstimation(first, second);
+    PlayerInfo secondInfo = players.getPlayerInfoByIndex(second);
+    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
+      if (i != first && i != second
+          && secondInfo.getDiplomacy().isDefensivePact(i)) {
+        result = result + getMilitaryEstimation(first, i);
+      }
+    }
+    return result;
+  }
+  /**
    * Get latest military difference between two players, using espionage
    * information and news corp.
    * @param first First player index. This is where second one is compared.
@@ -1537,28 +1577,37 @@ public class StarMap {
    */
   public int getMilitaryDifference(final int first, final int second) {
     int result = 0;
-    int newsCorpDiff = getNewsCorpData().getMilitaryDifference(first, second);
-    result = newsCorpDiff;
     PlayerInfo firstInfo = players.getPlayerInfoByIndex(first);
     PlayerInfo secondInfo = players.getPlayerInfoByIndex(second);
-    int actualMilitaryFirst = NewsCorpData.calculateMilitaryValue(firstInfo);
-    int actualMilitarySecond = NewsCorpData.calculateMilitaryValue(secondInfo);
-    EspionageList espionageList = firstInfo.getEspionage().getByIndex(second);
-    int estimateSecond = espionageList.estimateMilitaryPower(
-        actualMilitarySecond);
-    int estimateDiff = actualMilitaryFirst - estimateSecond;
-    if (espionageList.getTotalBonus() >= 7) {
-      // 90-100% accuracy
-      result = estimateDiff;
-    } else if (espionageList.getTotalBonus() >= 5) {
-      // 80% accuracy
-      result = estimateDiff * 90 / 100 + newsCorpDiff * 10 / 100;
-    } else if (espionageList.getTotalBonus() >= 3) {
-      // 70% accuracy
-      result = estimateDiff * 80 / 100 + newsCorpDiff * 20 / 100;
-    } else if (espionageList.getTotalBonus() >= 1) {
-      // 70% accuracy
-      result = estimateDiff * 70 / 100 + newsCorpDiff * 30 / 100;
+    if (!secondInfo.getDiplomacy().hasDefensivePact()) {
+      int newsCorpDiff = getNewsCorpData().getMilitaryDifference(first,
+          second);
+      result = newsCorpDiff;
+      int actualMilitaryFirst = NewsCorpData.calculateMilitaryValue(firstInfo);
+      int actualMilitarySecond = NewsCorpData.calculateMilitaryValue(
+          secondInfo);
+      EspionageList espionageList = firstInfo.getEspionage().getByIndex(
+          second);
+      int estimateSecond = espionageList.estimateMilitaryPower(
+          actualMilitarySecond);
+      int estimateDiff = actualMilitaryFirst - estimateSecond;
+      if (espionageList.getTotalBonus() >= 7) {
+        // 90-100% accuracy
+        result = estimateDiff;
+      } else if (espionageList.getTotalBonus() >= 5) {
+        // 80% accuracy
+        result = estimateDiff * 90 / 100 + newsCorpDiff * 10 / 100;
+      } else if (espionageList.getTotalBonus() >= 3) {
+        // 70% accuracy
+        result = estimateDiff * 80 / 100 + newsCorpDiff * 20 / 100;
+      } else if (espionageList.getTotalBonus() >= 1) {
+        // 70% accuracy
+        result = estimateDiff * 70 / 100 + newsCorpDiff * 30 / 100;
+      }
+    } else {
+      int actualMilitaryFirst = NewsCorpData.calculateMilitaryValue(firstInfo);
+      int estimate = getMilitaryEstimationForDefensivePact(first, second);
+      result = actualMilitaryFirst - estimate;
     }
     return result;
   }

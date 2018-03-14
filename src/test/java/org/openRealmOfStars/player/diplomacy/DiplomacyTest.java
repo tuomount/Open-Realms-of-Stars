@@ -2,12 +2,16 @@ package org.openRealmOfStars.player.diplomacy;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.starMap.StarMap;
 
 /**
  * 
@@ -190,6 +194,59 @@ public class DiplomacyTest {
     assertEquals(false, diplomacy.isWar(0));
     assertEquals(false, diplomacy.isAlliance(256));
     assertEquals(false, diplomacy.isDefensivePact(256));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testHasDefensivePact() {
+    Diplomacy diplomacy = new Diplomacy(4, 1);
+    assertNotEquals(null, diplomacy.getDiplomacyList(0));
+    assertEquals(false, diplomacy.isTradeAlliance(0));
+    assertEquals(false, diplomacy.isAlliance(0));
+    assertEquals(false, diplomacy.isDefensivePact(0));
+    assertEquals(false, diplomacy.isWar(0));
+    assertEquals(false, diplomacy.hasDefensivePact());
+    diplomacy.getDiplomacyList(0).addBonus(
+        DiplomacyBonusType.IN_DEFENSIVE_PACT, SpaceRace.CENTAURS);
+    assertEquals(true, diplomacy.hasDefensivePact());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testInDefensivePactActivation() {
+    Diplomacy diplomacy = new Diplomacy(4, 1);
+    diplomacy.getDiplomacyList(0).addBonus(
+        DiplomacyBonusType.IN_DEFENSIVE_PACT, SpaceRace.CENTAURS);
+    StarMap starMap = Mockito.mock(StarMap.class);
+    Diplomacy diplomacyCentaur = new Diplomacy(4, 0);
+    Diplomacy diplomacyAttacker = new Diplomacy(4, 2);
+    Diplomacy diplomacyByStander = new Diplomacy(4, 3);
+    PlayerInfo defender = Mockito.mock(PlayerInfo.class);
+    Mockito.when(defender.getDiplomacy()).thenReturn(diplomacy);
+    PlayerInfo byStander = Mockito.mock(PlayerInfo.class);
+    Mockito.when(byStander.getDiplomacy()).thenReturn(diplomacyByStander);
+    PlayerInfo centaur = Mockito.mock(PlayerInfo.class);
+    Mockito.when(centaur.getEmpireName()).thenReturn("Centaur empire");
+    Mockito.when(centaur.getDiplomacy()).thenReturn(diplomacyCentaur);
+    PlayerInfo attacker = Mockito.mock(PlayerInfo.class);
+    Mockito.when(attacker.getDiplomacy()).thenReturn(diplomacyAttacker);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(playerList.getIndex(byStander)).thenReturn(3);
+    Mockito.when(playerList.getIndex(attacker)).thenReturn(2);
+    Mockito.when(playerList.getIndex(centaur)).thenReturn(0);
+    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(starMap.getPlayerList()).thenReturn(playerList);
+    Mockito.when(starMap.getPlayerByIndex(0)).thenReturn(centaur);
+    Mockito.when(starMap.getPlayerByIndex(1)).thenReturn(defender);
+    Mockito.when(starMap.getPlayerByIndex(2)).thenReturn(attacker);
+    Mockito.when(starMap.getPlayerByIndex(3)).thenReturn(byStander);
+    String[] members = diplomacy.activateDefensivePact(starMap, attacker);
+    assertEquals(1, members.length);
+    assertEquals("Centaur empire", members[0]);
+    diplomacy = new Diplomacy(4, 1);
+    Mockito.when(defender.getDiplomacy()).thenReturn(diplomacy);
+    members = diplomacy.activateDefensivePact(starMap, attacker);
+    assertNull(members);
   }
 
   @Test

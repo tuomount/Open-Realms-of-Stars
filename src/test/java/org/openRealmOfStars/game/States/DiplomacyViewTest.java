@@ -151,7 +151,7 @@ public class DiplomacyViewTest {
     assertEquals("Trade alliance", human.getDiplomacy().getDiplomaticRelation(1));
     diplomacyView.getHumanLines().setSelectedIndex(2);
     diplomacyView.handleAction(action);
-    assertEquals("Alliance", human.getDiplomacy().getDiplomaticRelation(1));
+    assertEquals("Defensive pact", human.getDiplomacy().getDiplomaticRelation(1));
     diplomacyView.getHumanLines().setSelectedIndex(2);
     diplomacyView.handleAction(action);
     assertEquals("War", human.getDiplomacy().getDiplomaticRelation(1));

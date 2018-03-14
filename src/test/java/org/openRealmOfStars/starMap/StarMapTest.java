@@ -564,7 +564,80 @@ public class StarMapTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testMiltiaryEstimation() {
+  public void testMilitaryEstimation() {
+    GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
+    Mockito.when(config.getSizeX()).thenReturn(50);
+    Mockito.when(config.getSizeY()).thenReturn(50);
+    Mockito.when(config.getMaxPlayers()).thenReturn(4);
+    Mockito.when(config.getStartingPosition()).thenReturn(
+        GalaxyConfig.START_POSITION_BORDER);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
+    MessageList msgList = Mockito.mock(MessageList.class);
+    Mockito.when(info.getMsgList()).thenReturn(msgList);
+    ShipStat[] stats = new ShipStat[0];
+    Mockito.when(info.getShipStatList()).thenReturn(stats);
+    Espionage espionage = new Espionage(4);
+    espionage.getByIndex(2).setEspionageLevel1Estimate(40);
+    espionage.getByIndex(2).setEspionageLevel3Estimate(-30);
+    espionage.getByIndex(2).setEspionageLevel5Estimate(20);
+    espionage.getByIndex(2).setEspionageLevel7Estimate(-10);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getMilitaryValue()).thenReturn(24);
+    FleetList fleetList = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList.getNumberOfFleets()).thenReturn(1);
+    Mockito.when(fleetList.getByIndex(Mockito.anyInt())).thenReturn(fleet);
+    Mockito.when(info.getFleets()).thenReturn(fleetList);
+    Mockito.when(info.getFakeMilitarySize()).thenReturn(100);
+    Mockito.when(info.getEspionage()).thenReturn(espionage);
+
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info2.getEmpireName()).thenReturn("Empire of Centaurs");
+    Mockito.when(info2.getMsgList()).thenReturn(msgList);
+    Mockito.when(info2.getShipStatList()).thenReturn(stats);
+    FleetList fleetList2 = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList2.getNumberOfFleets()).thenReturn(2);
+    Mockito.when(fleetList2.getByIndex(Mockito.anyInt())).thenReturn(fleet);
+    Mockito.when(info2.getFleets()).thenReturn(fleetList2);
+    Mockito.when(info2.getFakeMilitarySize()).thenReturn(150);
+    Mockito.when(info2.getEspionage()).thenReturn(espionage);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(diplomacy.hasDefensivePact()).thenReturn(false);
+    Mockito.when(info2.getDiplomacy()).thenReturn(diplomacy);
+
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info2);
+    Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info2);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
+    StarMap map = new StarMap(config, players);
+    map.getNewsCorpData().calculateMilitary(players, false);
+    int diff = map.getMilitaryDifference(0, 2);
+    assertEquals(-48, diff);
+    espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 1, "Test");
+    diff = map.getMilitaryDifference(0, 2);
+    assertEquals(-44, diff);
+    espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
+    diff = map.getMilitaryDifference(0, 2);
+    assertEquals(-17, diff);
+    espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
+    diff = map.getMilitaryDifference(0, 2);
+    assertEquals(-33, diff);
+    espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
+    diff = map.getMilitaryDifference(0, 2);
+    assertEquals(-20, diff);
+    espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
+    diff = map.getMilitaryDifference(0, 2);
+    assertEquals(-24, diff);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMilitaryEstimation2() {
     GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
     Mockito.when(config.getSizeX()).thenReturn(50);
     Mockito.when(config.getSizeY()).thenReturn(50);
@@ -613,23 +686,101 @@ public class StarMapTest {
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
     StarMap map = new StarMap(config, players);
     map.getNewsCorpData().calculateMilitary(players, false);
-    int diff = map.getMilitaryDifference(0, 2);
-    assertEquals(-48, diff);
+    assertEquals(72, map.getMilitaryEstimation(0, 2));
     espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 1, "Test");
-    diff = map.getMilitaryDifference(0, 2);
-    assertEquals(-44, diff);
+    assertEquals(67, map.getMilitaryEstimation(0, 2));
     espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
-    diff = map.getMilitaryDifference(0, 2);
-    assertEquals(-17, diff);
+    assertEquals(34, map.getMilitaryEstimation(0, 2));
     espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
-    diff = map.getMilitaryDifference(0, 2);
-    assertEquals(-33, diff);
+    assertEquals(57, map.getMilitaryEstimation(0, 2));
     espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
-    diff = map.getMilitaryDifference(0, 2);
-    assertEquals(-20, diff);
+    assertEquals(44, map.getMilitaryEstimation(0, 2));
     espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
-    diff = map.getMilitaryDifference(0, 2);
-    assertEquals(-24, diff);
+    assertEquals(48, map.getMilitaryEstimation(0, 2));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testDefensivePactEstimation() {
+    GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
+    Mockito.when(config.getSizeX()).thenReturn(50);
+    Mockito.when(config.getSizeY()).thenReturn(50);
+    Mockito.when(config.getMaxPlayers()).thenReturn(4);
+    Mockito.when(config.getStartingPosition()).thenReturn(
+        GalaxyConfig.START_POSITION_BORDER);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
+    MessageList msgList = Mockito.mock(MessageList.class);
+    Mockito.when(info.getMsgList()).thenReturn(msgList);
+    ShipStat[] stats = new ShipStat[0];
+    Mockito.when(info.getShipStatList()).thenReturn(stats);
+    Espionage espionage = new Espionage(4);
+    espionage.getByIndex(2).setEspionageLevel1Estimate(40);
+    espionage.getByIndex(2).setEspionageLevel3Estimate(-30);
+    espionage.getByIndex(2).setEspionageLevel5Estimate(20);
+    espionage.getByIndex(2).setEspionageLevel7Estimate(-10);
+    espionage.getByIndex(3).setEspionageLevel1Estimate(35);
+    espionage.getByIndex(3).setEspionageLevel3Estimate(25);
+    espionage.getByIndex(3).setEspionageLevel5Estimate(-15);
+    espionage.getByIndex(3).setEspionageLevel7Estimate(-8);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(diplomacy.isDefensivePact(3)).thenReturn(true);
+    Mockito.when(diplomacy.hasDefensivePact()).thenReturn(true);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getMilitaryValue()).thenReturn(24);
+    FleetList fleetList = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList.getNumberOfFleets()).thenReturn(1);
+    Mockito.when(fleetList.getByIndex(Mockito.anyInt())).thenReturn(fleet);
+    Mockito.when(info.getFleets()).thenReturn(fleetList);
+    Mockito.when(info.getFakeMilitarySize()).thenReturn(100);
+    Mockito.when(info.getEspionage()).thenReturn(espionage);
+    Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
+
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info2.getEmpireName()).thenReturn("Empire of Centaurs");
+    Mockito.when(info2.getMsgList()).thenReturn(msgList);
+    Mockito.when(info2.getShipStatList()).thenReturn(stats);
+    FleetList fleetList2 = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList2.getNumberOfFleets()).thenReturn(2);
+    Mockito.when(fleetList2.getByIndex(Mockito.anyInt())).thenReturn(fleet);
+    Mockito.when(info2.getFleets()).thenReturn(fleetList2);
+    Mockito.when(info2.getFakeMilitarySize()).thenReturn(150);
+    Mockito.when(info2.getEspionage()).thenReturn(espionage);
+    Mockito.when(info2.getDiplomacy()).thenReturn(diplomacy);
+
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info2);
+    Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info2);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
+    StarMap map = new StarMap(config, players);
+    map.getNewsCorpData().calculateMilitary(players, false);
+    assertEquals(144, map.getMilitaryEstimationForDefensivePact(0, 2));
+    assertEquals(-120, map.getMilitaryDifference(0, 2));
+    espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 1, "Test");
+    espionage.getByIndex(3).addEspionageBonus(EspionageBonusType.SPY_FLEET, 1, "Test");
+    assertEquals(131, map.getMilitaryEstimationForDefensivePact(0, 2));
+    assertEquals(-107, map.getMilitaryDifference(0, 2));
+    espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
+    espionage.getByIndex(3).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
+    assertEquals(94, map.getMilitaryEstimationForDefensivePact(0, 2));
+    assertEquals(-70, map.getMilitaryDifference(0, 2));
+    espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
+    espionage.getByIndex(3).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
+    assertEquals(98, map.getMilitaryEstimationForDefensivePact(0, 2));
+    assertEquals(-74, map.getMilitaryDifference(0, 2));
+    espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
+    espionage.getByIndex(3).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
+    assertEquals(89, map.getMilitaryEstimationForDefensivePact(0, 2));
+    assertEquals(-65, map.getMilitaryDifference(0, 2));
+    espionage.getByIndex(2).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
+    espionage.getByIndex(3).addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test");
+    assertEquals(96, map.getMilitaryEstimationForDefensivePact(0, 2));
+    assertEquals(-72, map.getMilitaryDifference(0, 2));
   }
 
 }

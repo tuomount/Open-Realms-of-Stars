@@ -112,7 +112,7 @@ public enum DiplomacyBonusType {
       case INSULT: return 11;
       case NUKED: return 12;
       case NOTHING_TO_TRADE: return 13;
-      case IN_DEFENSIVE_PACT: return 13;
+      case IN_DEFENSIVE_PACT: return 14;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }

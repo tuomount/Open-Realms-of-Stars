@@ -398,6 +398,13 @@ public class Game implements ActionListener {
           starMap.getNewsCorpData().addNews(NewsFactory.makeWarNews(info,
               combat.getPlayer2(), planet, starMap));
           trade.doTrades();
+          PlayerInfo defender = starMap.getPlayerByIndex(defenderIndex);
+          String[] list = defender.getDiplomacy().activateDefensivePact(
+              starMap, info);
+          if (list != null) {
+            starMap.getNewsCorpData().addNews(
+                NewsFactory.makeDefensiveActivation(info, list));
+          }
         }
         if (combat.isHumanPlayer()) {
           starMapView.setReadyToMove(false);
@@ -537,11 +544,17 @@ public class Game implements ActionListener {
           players.getCurrentPlayer(), planet.getPlanetOwnerIndex());
       trade.generateEqualTrade(NegotiationType.WAR);
       trade.doTrades();
-      StarMapUtilities.addWarDeclatingRepuation(starMap,
-          starMap.getCurrentPlayerInfo());
+      PlayerInfo defender = planet.getPlanetPlayerInfo();
+      PlayerInfo attacker = starMap.getCurrentPlayerInfo();
+      StarMapUtilities.addWarDeclatingRepuation(starMap, attacker);
+      starMap.getNewsCorpData().addNews(
+          NewsFactory.makeWarNews(defender, attacker, planet, starMap));
+      String[] defenseList = defender.getDiplomacy().activateDefensivePact(
+          starMap, attacker);
+      if (defenseList != null) {
         starMap.getNewsCorpData().addNews(
-            NewsFactory.makeWarNews(starMap.getCurrentPlayerInfo(),
-                planet.getPlanetPlayerInfo(), planet, starMap));
+            NewsFactory.makeDefensiveActivation(attacker, defenseList));
+      }
     }
     planetBombingView = new PlanetBombingView(planet, fleet,
         starMap.getCurrentPlayerInfo(), players.getCurrentPlayer(), this);

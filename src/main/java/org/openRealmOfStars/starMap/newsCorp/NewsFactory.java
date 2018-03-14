@@ -152,6 +152,62 @@ public final class NewsFactory {
   }
 
   /**
+   * Make Defensive pact activation news. This news should be called
+   * if some one attacks against some who is in defensive pact.
+   * This activate list of members of that defensive pact.
+   * @param aggressor Player who is declaring the war
+   * @param defensiveMembers list of empire as member in defensive pact
+   * @return NewsData
+   */
+  public static NewsData makeDefensiveActivation(final PlayerInfo aggressor,
+      final String[] defensiveMembers) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("WAR OVER REALMS!");
+        break;
+      }
+      case 1: {
+        instructions.addText("WAR AGAINST PEACE!");
+        break;
+      }
+      case 2: {
+        instructions.addText("WAR STARTS!");
+        break;
+      }
+    }
+    instructions.addText(aggressor.getEmpireName());
+    instructions.addRelationSymbol(ImageInstruction.WAR);
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(aggressor.getEmpireName());
+    sb.append(" declares war against defensive group whose members are: ");
+    for (int i = 0; i < defensiveMembers.length; i++) {
+      sb.append(defensiveMembers[i]);
+      if (i + 1 < defensiveMembers.length) {
+        sb.append(", ");
+      }
+    }
+    sb.append("! ");
+    Attitude attitude = aggressor.getAiAttitude();
+    if (attitude == Attitude.AGGRESSIVE) {
+      sb.append(aggressor.getEmpireName());
+      sb.append(" is known about their aggressive behaviour, so ");
+      sb.append("this war was just about to happen, even against ");
+      sb.append("bigger group!");
+    }
+    if (attitude == Attitude.MILITARISTIC) {
+      sb.append(aggressor.getEmpireName());
+      sb.append(" militaristic actions has lead to this war to burst out. ");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
    * Make Peace news. PeaceMaker makes peace offer to acceptor.
    * This diplomatic meeting happened in meeting place which
    * can be planet or fleet.
@@ -365,7 +421,77 @@ public final class NewsFactory {
     if (attitude == Attitude.DIPLOMATIC) {
       sb.append(offerer.getEmpireName());
       sb.append(" diplomatic skills were surely effecting on "
-          + "this trade alliance! ");
+          + "this alliance! ");
+    }
+    if (attitude == Attitude.PEACEFUL) {
+      sb.append(offerer.getEmpireName());
+      sb.append(" is known about their peace loving. So this was expected! ");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
+   * Make defensive pact news. Offerer makes alliance offer to acceptor.
+   * This diplomatic meeting happened in meeting place which
+   * can be planet or fleet.
+   * @param offerer Player who is make trade alliance
+   * @param acceptor Player who is accepting
+   * @param meetingPlace Where meeting happened, fleet or planet
+   * @return NewsData
+   */
+  public static NewsData makeDefensivePactNews(final PlayerInfo offerer,
+      final PlayerInfo acceptor, final Object meetingPlace) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_NEBULAE);
+    if (meetingPlace instanceof Planet) {
+      Planet planet = (Planet) meetingPlace;
+      instructions.addPlanet(ImageInstruction.POSITION_CENTER,
+          planet.getImageInstructions(),
+          ImageInstruction.SIZE_FULL);
+    }
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("NEW DEFENSIVE PACT!");
+        break;
+      }
+      case 1: {
+        instructions.addText("DEFENSIVE PACT!");
+        break;
+      }
+      case 2: {
+        instructions.addText("DEFENSE ORGANIZATION IS CREATED!");
+        break;
+      }
+    }
+    instructions.addText(offerer.getEmpireName());
+    instructions.addRelationSymbol(ImageInstruction.DEFENSIVE_PACT);
+    instructions.addText(acceptor.getEmpireName());
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(offerer.getEmpireName());
+    sb.append(" made defensive pact with ");
+    sb.append(acceptor.getEmpireName());
+    sb.append("! ");
+    if (meetingPlace instanceof Planet) {
+      Planet planet = (Planet) meetingPlace;
+      sb.append("This meeting happened in ");
+      sb.append(planet.getName());
+      if (planet.getPlanetPlayerInfo() != null) {
+        sb.append(", which is owned by ");
+        sb.append(planet.getPlanetPlayerInfo().getEmpireName());
+        sb.append(". ");
+      }
+    } else {
+      sb.append("This meeting happened in deep space. ");
+    }
+    Attitude attitude = offerer.getAiAttitude();
+    if (attitude == Attitude.DIPLOMATIC) {
+      sb.append(offerer.getEmpireName());
+      sb.append(" diplomatic skills were surely effecting on "
+          + "this defensive  pact! ");
     }
     if (attitude == Attitude.PEACEFUL) {
       sb.append(offerer.getEmpireName());

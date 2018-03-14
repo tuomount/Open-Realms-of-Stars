@@ -89,7 +89,8 @@ public class DiplomacyBonusList {
       DiplomacyBonus diplomacyBonus = iterator.next();
       if (diplomacyBonus.getType() == DiplomacyBonusType.IN_ALLIANCE
           || diplomacyBonus.getType() == DiplomacyBonusType.IN_TRADE_ALLIANCE
-          || diplomacyBonus.getType() == DiplomacyBonusType.LONG_PEACE) {
+          || diplomacyBonus.getType() == DiplomacyBonusType.LONG_PEACE
+          || diplomacyBonus.getType() == DiplomacyBonusType.IN_DEFENSIVE_PACT) {
         iterator.remove();
       }
     }

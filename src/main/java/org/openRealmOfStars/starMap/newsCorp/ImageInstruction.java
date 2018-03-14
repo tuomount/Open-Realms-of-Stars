@@ -275,7 +275,8 @@ public class ImageInstruction {
     if (!PEACE.equals(symbol)
         && !WAR.equals(symbol)
         && !TRADE_ALLIANCE.equals(symbol)
-        && !ALLIANCE.equals(symbol)) {
+        && !ALLIANCE.equals(symbol)
+        && !DEFENSIVE_PACT.equals(symbol)) {
       throw new IllegalArgumentException("Illegal relation symbol: "
         + symbol);
     }

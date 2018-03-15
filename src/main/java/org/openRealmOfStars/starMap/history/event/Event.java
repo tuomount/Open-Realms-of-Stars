@@ -19,34 +19,30 @@ package org.openRealmOfStars.starMap.history.event;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 *
-* Event type for history information
+* Abstract Event
 *
 */
-public enum EventType {
-  /**
-   * Culture has changed in game map for single sector
-   */
-  CULTURE_CHANGE,
-  /**
-   * Realm colonized planet
-   */
-  PLANET_COLONIZED,
-  /**
-   * Planer conquered
-   */
-  PLANET_CONQUERED,
-  /**
-   * Space combat
-   */
-  SPACE_COMBAT,
-  /**
-   * Diplomatic relation changed between two realms
-   */
-  DIPLOMATIC_RELATION_CHANGE,
-  /**
-   * Galatic news like biggest militari, research etc.
-   */
-  GALATIC_NEWS
+public abstract class Event {
 
+  /**
+   * Event Type
+   */
+  private EventType type;
 
+  /**
+   * Get Event Type
+   * @return EventType
+   */
+  public EventType getType() {
+    return type;
+  }
+
+  /**
+   * Set Event type for event.
+   * This should be called only in constructors.
+   * @param eventType Event Type
+   */
+  public void setType(final EventType eventType) {
+    type = eventType;
+  }
 }

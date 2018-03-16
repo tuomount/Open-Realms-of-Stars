@@ -1,7 +1,6 @@
 package org.openRealmOfStars.starMap.history.event;
 
 import org.openRealmOfStars.starMap.Coordinate;
-import org.openRealmOfStars.starMap.StarMap;
 
 /**
 *
@@ -33,11 +32,6 @@ public class CultureEvent extends Event {
   private Coordinate coordinate;
 
   /**
-   * Culture player index, -1 is for empty culture
-   */
-  private byte playerIndex;
-
-  /**
    * Create culture change event
    * @param coord Coordinate where change culture
    * @param index Player index
@@ -45,13 +39,7 @@ public class CultureEvent extends Event {
   public CultureEvent(final Coordinate coord, final int index) {
     setType(EventType.CULTURE_CHANGE);
     coordinate = coord;
-    if (index >= StarMap.MAX_PLAYERS) {
-      playerIndex = 7;
-    } else if (index < -1) {
-      playerIndex = -1;
-    } else {
-      playerIndex = (byte) index;
-    }
+    setPlayerIndex(index);
   }
 
   /**
@@ -62,11 +50,4 @@ public class CultureEvent extends Event {
     return coordinate;
   }
 
-  /**
-   * Get Player Index. Index -1 means that culture is cleared.
-   * @return Player index for culture change.
-   */
-  public int getPlayerIndex() {
-    return playerIndex;
-  }
 }

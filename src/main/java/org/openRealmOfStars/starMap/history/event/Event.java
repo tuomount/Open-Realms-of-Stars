@@ -1,5 +1,7 @@
 package org.openRealmOfStars.starMap.history.event;
 
+import org.openRealmOfStars.starMap.StarMap;
+
 /**
 *
 * Open Realm of Stars game project
@@ -30,6 +32,11 @@ public abstract class Event {
   private EventType type;
 
   /**
+   * Player index, -1 is for no player
+   */
+  private byte playerIndex;
+
+  /**
    * Get Event Type
    * @return EventType
    */
@@ -44,5 +51,27 @@ public abstract class Event {
    */
   public void setType(final EventType eventType) {
     type = eventType;
+  }
+
+  /**
+   * Set Player Index. -1 is for no player index.
+   * @param index Player Index
+   */
+  public void setPlayerIndex(final int index) {
+    if (index >= StarMap.MAX_PLAYERS) {
+      playerIndex = 7;
+    } else if (index < -1) {
+      playerIndex = -1;
+    } else {
+      playerIndex = (byte) index;
+    }
+  }
+
+  /**
+   * Get Player Index. Index -1 means generic event or no player.
+   * @return Player index
+   */
+  public int getPlayerIndex() {
+    return playerIndex;
   }
 }

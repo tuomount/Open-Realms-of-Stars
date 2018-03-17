@@ -44,7 +44,7 @@ public enum EventType {
    */
   DIPLOMATIC_RELATION_CHANGE,
   /**
-   * Galatic news like biggest militari, research etc.
+   * Galatic news like biggest military, research etc.
    */
   GALATIC_NEWS
 

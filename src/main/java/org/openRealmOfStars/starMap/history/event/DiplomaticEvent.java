@@ -21,40 +21,38 @@ import org.openRealmOfStars.starMap.Coordinate;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 *
-* Combat Event
+* Diplomatic Event
 *
 */
-public class CombatEvent extends Event {
+public class DiplomaticEvent extends Event {
 
   /**
-   * Coordinate where combat happened
+   * Coordinate where diplomatic event happened
    */
   private Coordinate coordinate;
 
   /**
-   * Planet name if combat happened on planet. Null if on space
+   * Planet name if diplomatic event happened on planet. Null if on space
    */
   private String planetName;
 
   /**
-   * Text for combat
+   * Text for diplomatic event
    */
   private String text;
 
   /**
-   * Combat event on space or planet
-   * @param coord Coordinate where combat happened
-   * @param attackerIndex Player who attacked index
+   * Constructor for diplomatic event
+   * @param coord Coordinate for event
    */
-  public CombatEvent(final Coordinate coord, final int attackerIndex) {
-    setType(EventType.SPACE_COMBAT);
-    coordinate = coord;
-    setPlayerIndex(attackerIndex);
-    planetName = null;
+  public DiplomaticEvent(final Coordinate coord) {
+    setType(EventType.DIPLOMATIC_RELATION_CHANGE);
     setText("");
+    setPlanetName(null);
+    coordinate = coord;
   }
   /**
-   * Get coordinate where combat happened.
+   * Get coordinate where diplomatic happened.
    * @return Coordinate
    */
   public Coordinate getCoordinate() {
@@ -62,7 +60,7 @@ public class CombatEvent extends Event {
   }
 
   /**
-   * Get Planet name or null if combat happened in space
+   * Get Planet name or null if diplomatic happened in space
    * @return Planet name or null
    */
   public String getPlanetName() {
@@ -70,8 +68,8 @@ public class CombatEvent extends Event {
   }
 
   /**
-   * Set planet name where combat happened. Set null
-   * if combat happened in space
+   * Set planet name where diplomatic event happened. Set null
+   * if diplomatic happened in space
    * @param name Planet name or null
    */
   public void setPlanetName(final String name) {
@@ -87,7 +85,7 @@ public class CombatEvent extends Event {
   }
 
   /**
-   * Set historical text for combat
+   * Set historical text for diplomatic event
    * @param historicalText to set
    */
   public void setText(final String historicalText) {

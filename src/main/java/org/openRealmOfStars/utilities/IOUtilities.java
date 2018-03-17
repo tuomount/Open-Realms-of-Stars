@@ -8,10 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetEncoder;
 import java.nio.charset.StandardCharsets;
-import java.nio.charset.spi.CharsetProvider;
 import java.util.Calendar;
 
 import javax.imageio.ImageIO;
@@ -245,8 +242,8 @@ public final class IOUtilities {
       if (buffer.length > 65535) {
         throw new IOException("String is too long! " + buffer.length);
       }
-      lenBuffer[0] = (byte)((buffer.length & 0xff00) >> 8);
-      lenBuffer[1] = (byte)(buffer.length & 0x00ff);
+      lenBuffer[0] = (byte) ((buffer.length & 0xff00) >> 8);
+      lenBuffer[1] = (byte) (buffer.length & 0x00ff);
       os.write(lenBuffer);
       os.write(buffer);
     } else {
@@ -280,7 +277,7 @@ public final class IOUtilities {
       if (amount == -1) {
         int read = amount + offset;
         throw new IOException("Unexpected end of file! Could only read "
-            + read +" bytes!");
+            + read + " bytes!");
       }
       offset = offset + amount;
     } while (offset < len);

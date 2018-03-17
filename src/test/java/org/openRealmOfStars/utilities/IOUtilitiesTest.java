@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.junit.Test;
@@ -70,6 +71,18 @@ public class IOUtilitiesTest {
       k = k * 2; 
       assertEquals(true, IOUtilities.getFlag(value, i));
     }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUTF8String() throws IOException {
+    String test = "Hello world of Java! ÄÄ";
+    ByteArrayOutputStream os = new ByteArrayOutputStream();
+    IOUtilities.writeUTF8String(os, test);
+    byte[] buf = os.toByteArray();
+    ByteArrayInputStream is = new ByteArrayInputStream(buf);
+    String result = IOUtilities.readUTF8String(is);
+    assertEquals(test, result);
   }
 
 }

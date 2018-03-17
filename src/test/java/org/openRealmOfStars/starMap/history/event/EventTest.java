@@ -24,19 +24,19 @@ import org.junit.experimental.categories.Category;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 *
-* Galactic event Test
+* Generic event test
 *
 */
-public class GalacticEventTest {
+public class EventTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void test() {
-    GalacticEvent event = new GalacticEvent("Test text");
-    assertEquals("Test text", event.getText());
-    assertEquals(EventType.GALATIC_NEWS, event.getType());
-    event.setText("Historical");
-    assertEquals("Historical", event.getText());
+    int maxEvent = EventType.values().length;
+    for (int i = 0; i < maxEvent; i++) {
+      EventType type = EventType.getTypeByIndex(i);
+      assertEquals(i, type.getIndex());
+    }
   }
 
 }

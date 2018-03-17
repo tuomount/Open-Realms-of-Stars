@@ -3,6 +3,7 @@ package org.openRealmOfStars.starMap.history.event;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.starMap.Coordinate;
 
@@ -31,6 +32,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 public class DiplomaticEventTest {
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     Coordinate coord = Mockito.mock(Coordinate.class);
     DiplomaticEvent event = new DiplomaticEvent(coord);

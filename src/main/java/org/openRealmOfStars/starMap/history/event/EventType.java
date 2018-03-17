@@ -46,7 +46,41 @@ public enum EventType {
   /**
    * Galatic news like biggest military, research etc.
    */
-  GALATIC_NEWS
+  GALATIC_NEWS;
+
+  /**
+   * Get Event type index
+   * @return Index
+   */
+  public int getIndex() {
+    switch (this) {
+      case CULTURE_CHANGE: return 0;
+      case PLANET_COLONIZED: return 1;
+      case PLANET_CONQUERED: return 2;
+      case SPACE_COMBAT: return 3;
+      case DIPLOMATIC_RELATION_CHANGE: return 4;
+      case GALATIC_NEWS: return 5;
+      default: return 0;
+    }
+  }
+
+  /**
+   * Get Event type for index
+   * @param index Which index is used for fetching event type
+   * @return Event Type
+   */
+  public static EventType getTypeByIndex(final int index) {
+    switch (index) {
+      case 0: return EventType.CULTURE_CHANGE;
+      case 1: return EventType.PLANET_COLONIZED;
+      case 2: return EventType.PLANET_CONQUERED;
+      case 3: return EventType.SPACE_COMBAT;
+      case 4: return EventType.DIPLOMATIC_RELATION_CHANGE;
+      case 5: return EventType.GALATIC_NEWS;
+      default: throw new IllegalArgumentException(
+          "No event type found for index " + index);
+    }
+  }
 
 
 }

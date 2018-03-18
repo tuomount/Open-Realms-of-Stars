@@ -2,6 +2,8 @@ package org.openRealmOfStars.starMap.history.event;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
@@ -45,6 +47,36 @@ public class CombatEventTest {
     assertEquals("Test planet", event.getPlanetName());
     event.setText("Text");
     assertEquals("Text", event.getText());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEncodingAndParsing() throws IOException {
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mockito.when(coord.getX()).thenReturn(22);
+    Mockito.when(coord.getY()).thenReturn(11);
+    CombatEvent event = new CombatEvent(coord, 1);
+    event.setText("Historical");
+    event.setPlanetName("Test I");
+    byte[] buf = event.createByteArray();
+    CombatEvent event2 = CombatEvent.createCombatEvent(buf);
+    assertEquals(EventType.SPACE_COMBAT, event2.getType());
+    assertEquals(event.getText(), event2.getText());
+    assertEquals(event.getPlanetName(), event2.getPlanetName());
+    assertEquals(22, event2.getCoordinate().getX());
+    assertEquals(11, event2.getCoordinate().getY());
+    assertEquals(1, event2.getPlayerIndex());
+    event = new CombatEvent(coord, 1);
+    event.setText("Historical");
+    buf = event.createByteArray();
+    event2 = CombatEvent.createCombatEvent(buf);
+    assertEquals(EventType.SPACE_COMBAT, event2.getType());
+    assertEquals(event.getText(), event2.getText());
+    assertEquals(null, event2.getPlanetName());
+    assertEquals(22, event2.getCoordinate().getX());
+    assertEquals(11, event2.getCoordinate().getY());
+    assertEquals(1, event2.getPlayerIndex());
+    
   }
 
 }

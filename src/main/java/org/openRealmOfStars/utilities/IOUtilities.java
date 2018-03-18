@@ -235,6 +235,19 @@ public final class IOUtilities {
   public static int convert16BitsToInt(final int hi, final int lo) {
     return (hi << 8) + lo;
   }
+
+  /**
+   * Read 16 bits to int from input stream. It assumes that
+   * bits are in hi byte, then lo byte.
+   * @param is InputStream where to read
+   * @return Integer
+   * @throws IOException if reading fail
+   */
+  public static int read16BitsToInt(final InputStream is) throws IOException {
+    int hi = is.read();
+    int lo = is.read();
+    return convert16BitsToInt(hi, lo);
+  }
   /**
    * Converts Integer to 16 bit MSB byte array.
    * @param value Integer to convert

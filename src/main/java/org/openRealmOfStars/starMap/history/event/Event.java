@@ -1,6 +1,9 @@
 package org.openRealmOfStars.starMap.history.event;
 
+import java.io.IOException;
+
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
 *
@@ -82,6 +85,27 @@ public abstract class Event {
    * Next bytes contains the actual data. Length contains also length itself
    * and type byte.
    * @return Byte array of event
+   * @throws IOException if reading fails.
    */
   public abstract byte[] createByteArray();
+
+  /**
+   * Parses and verifies event type and length
+   * @param buffer Buffer which is used for parsing
+   * @return EventType if everything is succesful.
+   * @throws IOException If something fails on parsing.
+   */
+  protected static EventType readTypeAndLength(final byte[] buffer)
+      throws IOException {
+    if (buffer.length < 3) {
+      throw new IOException("Data is too short!");
+    }
+    int readType = buffer[0];
+    int bufferLength = IOUtilities.convert16BitsToInt(buffer[1], buffer[2]);
+    if (bufferLength != buffer.length) {
+      throw new IOException("Buffer length does not match with buffer length!");
+    }
+    return EventType.getTypeByIndex(readType);
+  }
+
 }

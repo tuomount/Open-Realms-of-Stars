@@ -1,7 +1,9 @@
 package org.openRealmOfStars.starMap.history.event;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.utilities.ErrorLogger;
@@ -58,6 +60,7 @@ public class CombatEvent extends Event {
     planetName = null;
     setText("");
   }
+
   /**
    * Get coordinate where combat happened.
    * @return Coordinate
@@ -125,4 +128,39 @@ public class CombatEvent extends Event {
     }
     return buffer;
   }
+
+  /**
+   * Tries to parse Combat event from byte buffer.
+   * Buffer should contain type byte, 16 bit length and full data.
+   * @param buffer Where to parse
+   * @throws IOException if parsing fails
+   */
+  protected static CombatEvent createCombatEvent(final byte[] buffer)
+      throws IOException {
+    EventType readType = Event.readTypeAndLength(buffer);
+    if (readType == EventType.SPACE_COMBAT) {
+      try (ByteArrayInputStream is = new ByteArrayInputStream(buffer)) {
+        is.skip(3);
+        int index = is.read();
+        if (index == 255) {
+          index = -1;
+        }
+        int x = IOUtilities.read16BitsToInt(is);
+        int y = IOUtilities.read16BitsToInt(is);
+        Coordinate coord = new Coordinate(x, y);
+        CombatEvent event = new CombatEvent(coord, index);
+        String str = IOUtilities.readUTF8String(is);
+        if (str != null && str.isEmpty()) {
+          str = null;
+        }
+        event.setPlanetName(str);
+        str = IOUtilities.readUTF8String(is);
+        event.setText(str);
+        return event;
+      }
+    }
+    throw new IOException("Event is not Space Combat as expected!");
+  }
+
+
 }

@@ -227,6 +227,26 @@ public final class IOUtilities {
   }
 
   /**
+   * Converts 16bits to integer
+   * @param hi Higher 8 bits
+   * @param lo Lower 8 bits
+   * @return integer
+   */
+  public static int convert16BitsToInt(final int hi, final int lo) {
+    return (hi << 8) + lo;
+  }
+  /**
+   * Converts Integer to 16 bit MSB byte array.
+   * @param value Integer to convert
+   * @return two byte byte array
+   */
+  public static byte[] convertIntTo16BitMsb(final int value) {
+    byte[] lenBuffer = new byte[2];
+    lenBuffer[0] = (byte) ((value & 0xff00) >> 8);
+    lenBuffer[1] = (byte) (value & 0x00ff);
+    return lenBuffer;
+  }
+  /**
    * Writes string(as UTF8) into DataOutputStream.
    * First 2 octets tells string length as bytes, MSB as first byte.
    * Then whole string is written as UTF8 encoded byte array.
@@ -237,20 +257,14 @@ public final class IOUtilities {
   public static void writeUTF8String(final OutputStream os, final String str)
       throws IOException {
     if (str != null) {
-      byte[] lenBuffer = new byte[2];
       byte[] buffer = str.getBytes(StandardCharsets.UTF_8);
       if (buffer.length > 65535) {
         throw new IOException("String is too long! " + buffer.length);
       }
-      lenBuffer[0] = (byte) ((buffer.length & 0xff00) >> 8);
-      lenBuffer[1] = (byte) (buffer.length & 0x00ff);
-      os.write(lenBuffer);
+      os.write(convertIntTo16BitMsb(buffer.length));
       os.write(buffer);
     } else {
-      byte[] lenBuffer = new byte[2];
-      lenBuffer[0] = 0;
-      lenBuffer[1] = 0;
-      os.write(lenBuffer);
+      os.write(convertIntTo16BitMsb(0));
     }
   }
 
@@ -269,7 +283,7 @@ public final class IOUtilities {
     if (amount != 2) {
       throw new IOException("Could only read " + amount + " bytes!");
     }
-    int len = (lenBuffer[0] << 8) + lenBuffer[1];
+    int len = convert16BitsToInt(lenBuffer[0], lenBuffer[1]);
     byte[] buffer = new byte[len];
     int offset = 0;
     do {

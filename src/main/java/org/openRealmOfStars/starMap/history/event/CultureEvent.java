@@ -1,6 +1,11 @@
 package org.openRealmOfStars.starMap.history.event;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
 *
@@ -48,6 +53,31 @@ public class CultureEvent extends Event {
    */
   public Coordinate getCoordinate() {
     return coordinate;
+  }
+
+  @Override
+  public byte[] createByteArray() {
+    byte[] buffer = null;
+    try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+      os.write(getType().getIndex());
+      // Just reserving space for length field
+      os.write(IOUtilities.convertIntTo16BitMsb(0));
+      int playerIndex = getPlayerIndex();
+      if (playerIndex == -1) {
+        os.write(255);
+      } else {
+        os.write(playerIndex);
+      }
+      os.write(IOUtilities.convertIntTo16BitMsb(coordinate.getX()));
+      os.write(IOUtilities.convertIntTo16BitMsb(coordinate.getY()));
+      buffer = os.toByteArray();
+      byte[] lenBuffer = IOUtilities.convertIntTo16BitMsb(buffer.length);
+      buffer[1] = lenBuffer[0];
+      buffer[2] = lenBuffer[1];
+    } catch (IOException e) {
+      ErrorLogger.log(e);
+    }
+    return buffer;
   }
 
 }

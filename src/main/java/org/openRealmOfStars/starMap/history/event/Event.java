@@ -74,4 +74,14 @@ public abstract class Event {
   public int getPlayerIndex() {
     return playerIndex;
   }
+
+  /**
+   * Create byte array from the event. Byte array will contain
+   * all the date for event including type and required length.
+   * First byte is reserved for type then, two bytes are for the length.
+   * Next bytes contains the actual data. Length contains also length itself
+   * and type byte.
+   * @return Byte array of event
+   */
+  public abstract byte[] createByteArray();
 }

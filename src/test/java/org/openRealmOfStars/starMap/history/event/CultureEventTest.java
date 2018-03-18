@@ -2,6 +2,8 @@ package org.openRealmOfStars.starMap.history.event;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
@@ -55,6 +57,25 @@ public class CultureEventTest {
     assertEquals(EventType.CULTURE_CHANGE, event.getType());
     assertEquals(coord, event.getCoordinate());
     assertEquals(-1, event.getPlayerIndex());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEncodingAndParsing() throws IOException {
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mockito.when(coord.getX()).thenReturn(22);
+    Mockito.when(coord.getY()).thenReturn(11);
+    CultureEvent event = new CultureEvent(coord, 0);
+    byte[] buf = event.createByteArray();
+    CultureEvent event2 = CultureEvent.createCultureEvent(buf);
+    assertEquals(EventType.CULTURE_CHANGE, event2.getType());
+    assertEquals(0, event2.getPlayerIndex());
+    assertEquals(22, event2.getCoordinate().getX());
+    assertEquals(11, event2.getCoordinate().getY());
+    event = new CultureEvent(coord, -1);
+    buf = event.createByteArray();
+    event2 = CultureEvent.createCultureEvent(buf);
+    assertEquals(-1, event2.getPlayerIndex());
   }
 
 }

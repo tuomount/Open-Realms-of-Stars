@@ -1,5 +1,6 @@
 package org.openRealmOfStars.starMap.history.event;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -78,6 +79,36 @@ public class CultureEvent extends Event {
       ErrorLogger.log(e);
     }
     return buffer;
+  }
+
+  /**
+   * Tries to parse Culture event from byte buffer.
+   * Buffer should contain type byte, 16 bit length and full data.
+   * @param buffer Where to parse
+   * @return CultureEvent parsed from buffer
+   * @throws IOException if parsing fails
+   */
+  protected static CultureEvent createCultureEvent(final byte[] buffer)
+      throws IOException {
+    EventType readType = Event.readTypeAndLength(buffer);
+    if (readType == EventType.CULTURE_CHANGE) {
+      try (ByteArrayInputStream is = new ByteArrayInputStream(buffer)) {
+        long skipped = is.skip(3);
+        if (skipped != 3) {
+          throw new IOException("Failed to skip 3 bytes!");
+        }
+        int index = is.read();
+        if (index == 255) {
+          index = -1;
+        }
+        int x = IOUtilities.read16BitsToInt(is);
+        int y = IOUtilities.read16BitsToInt(is);
+        Coordinate coord = new Coordinate(x, y);
+        CultureEvent event = new CultureEvent(coord, index);
+        return event;
+      }
+    }
+    throw new IOException("Event is not Culture event as expected!");
   }
 
 }

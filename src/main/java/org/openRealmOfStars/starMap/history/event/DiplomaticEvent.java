@@ -1,5 +1,6 @@
 package org.openRealmOfStars.starMap.history.event;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -104,12 +105,6 @@ public class DiplomaticEvent extends Event {
       os.write(getType().getIndex());
       // Just reserving space for length field
       os.write(IOUtilities.convertIntTo16BitMsb(0));
-      int playerIndex = getPlayerIndex();
-      if (playerIndex == -1) {
-        os.write(255);
-      } else {
-        os.write(playerIndex);
-      }
       os.write(IOUtilities.convertIntTo16BitMsb(coordinate.getX()));
       os.write(IOUtilities.convertIntTo16BitMsb(coordinate.getY()));
       IOUtilities.writeUTF8String(os, getPlanetName());
@@ -124,4 +119,37 @@ public class DiplomaticEvent extends Event {
     return buffer;
   }
 
+  /**
+   * Tries to parse Diplomatic event from byte buffer.
+   * Buffer should contain type byte, 16 bit length and full data.
+   * @param buffer Where to parse
+   * @return DiplomaticEvent parsed from buffer
+   * @throws IOException if parsing fails
+   */
+  protected static DiplomaticEvent createDiplomaticEvent(final byte[] buffer)
+      throws IOException {
+    EventType readType = Event.readTypeAndLength(buffer);
+    if (readType == EventType.DIPLOMATIC_RELATION_CHANGE) {
+      try (ByteArrayInputStream is = new ByteArrayInputStream(buffer)) {
+        long skipped = is.skip(3);
+        if (skipped != 3) {
+          throw new IOException("Failed to skip 3 bytes!");
+        }
+        int x = IOUtilities.read16BitsToInt(is);
+        int y = IOUtilities.read16BitsToInt(is);
+        Coordinate coord = new Coordinate(x, y);
+        DiplomaticEvent event = new DiplomaticEvent(coord);
+        String str = IOUtilities.readUTF8String(is);
+        if (str != null && str.isEmpty()) {
+          event.setPlanetName(null);
+        } else {
+          event.setPlanetName(str);
+        }
+        str = IOUtilities.readUTF8String(is);
+        event.setText(str);
+        return event;
+      }
+    }
+    throw new IOException("Event is not Diplomatic Event as expected!");
+  }
 }

@@ -2,6 +2,8 @@ package org.openRealmOfStars.starMap.history.event;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
@@ -44,6 +46,29 @@ public class DiplomaticEventTest {
     assertEquals("Historical", event.getText());
     event.setPlanetName("Test planet");
     assertEquals("Test planet", event.getPlanetName());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEncodingAndParsing() throws IOException {
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mockito.when(coord.getX()).thenReturn(22);
+    Mockito.when(coord.getY()).thenReturn(11);
+    DiplomaticEvent event = new DiplomaticEvent(coord);
+    event.setPlanetName("Test I");
+    event.setText("Historical");
+    byte[] buf = event.createByteArray();
+    DiplomaticEvent event2 = DiplomaticEvent.createDiplomaticEvent(buf);
+    assertEquals(EventType.DIPLOMATIC_RELATION_CHANGE, event2.getType());
+    assertEquals(22, event2.getCoordinate().getX());
+    assertEquals(11, event2.getCoordinate().getY());
+    assertEquals("Test I", event2.getPlanetName());
+    assertEquals("Historical", event2.getText());
+    event = new DiplomaticEvent(coord);
+    event.setText("Historical");
+    buf = event.createByteArray();
+    event2 = DiplomaticEvent.createDiplomaticEvent(buf);
+    assertEquals(null, event2.getPlanetName());
   }
 
 }

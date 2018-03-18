@@ -3,7 +3,6 @@ package org.openRealmOfStars.starMap.history.event;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.utilities.ErrorLogger;
@@ -133,6 +132,7 @@ public class CombatEvent extends Event {
    * Tries to parse Combat event from byte buffer.
    * Buffer should contain type byte, 16 bit length and full data.
    * @param buffer Where to parse
+   * @return CombatEvent parsed from buffer
    * @throws IOException if parsing fails
    */
   protected static CombatEvent createCombatEvent(final byte[] buffer)
@@ -140,7 +140,10 @@ public class CombatEvent extends Event {
     EventType readType = Event.readTypeAndLength(buffer);
     if (readType == EventType.SPACE_COMBAT) {
       try (ByteArrayInputStream is = new ByteArrayInputStream(buffer)) {
-        is.skip(3);
+        long skipped = is.skip(3);
+        if (skipped != 3) {
+          throw new IOException("Failed to skip 3 bytes!");
+        }
         int index = is.read();
         if (index == 255) {
           index = -1;

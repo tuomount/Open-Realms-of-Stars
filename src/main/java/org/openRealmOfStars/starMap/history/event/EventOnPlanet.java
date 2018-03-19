@@ -1,5 +1,6 @@
 package org.openRealmOfStars.starMap.history.event;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -53,9 +54,10 @@ public class EventOnPlanet extends Event {
    *                         or EventType.PLANET_CONQUERED
    * @param coord Coordinate where planet is.
    * @param planetName Planet name
+   * @param playerIndex Player index doing the event
    */
   public EventOnPlanet(final EventType type, final Coordinate coord,
-      final String planetName) {
+      final String planetName, final int playerIndex) {
     if (type == EventType.PLANET_COLONIZED
         || type == EventType.PLANET_CONQUERED) {
       setType(type);
@@ -65,6 +67,7 @@ public class EventOnPlanet extends Event {
     coordinate = coord;
     name = planetName;
     text = "";
+    setPlayerIndex(playerIndex);
   }
 
   /**
@@ -125,5 +128,41 @@ public class EventOnPlanet extends Event {
     }
     return buffer;
   }
+
+  /**
+   * Tries to parse EventOnPlanet from byte buffer.
+   * Buffer should contain type byte, 16 bit length and full data.
+   * @param buffer Where to parse
+   * @return EventOnPlanet parsed from buffer
+   * @throws IOException if parsing fails
+   */
+  protected static EventOnPlanet createEventOnPlanet(final byte[] buffer)
+      throws IOException {
+    EventType readType = Event.readTypeAndLength(buffer);
+    if (readType == EventType.PLANET_COLONIZED
+        || readType == EventType.PLANET_CONQUERED) {
+      try (ByteArrayInputStream is = new ByteArrayInputStream(buffer)) {
+        long skipped = is.skip(3);
+        if (skipped != 3) {
+          throw new IOException("Failed to skip 3 bytes!");
+        }
+        int index = is.read();
+        if (index == 255) {
+          index = -1;
+        }
+        int x = IOUtilities.read16BitsToInt(is);
+        int y = IOUtilities.read16BitsToInt(is);
+        Coordinate coord = new Coordinate(x, y);
+        String str = IOUtilities.readUTF8String(is);
+        EventOnPlanet event = new EventOnPlanet(readType, coord, str, index);
+        str = IOUtilities.readUTF8String(is);
+        event.setText(str);
+        return event;
+      }
+    }
+    throw new IOException("Event is not Planet Colonized"
+        + " or Planet Conquered as expected!");
+  }
+
 
 }

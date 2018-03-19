@@ -2,6 +2,8 @@ package org.openRealmOfStars.starMap.history.event;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
@@ -36,15 +38,17 @@ public class EventOnPlanetTest {
   public void testBasic() {
     Coordinate coord = Mockito.mock(Coordinate.class);
     EventOnPlanet event = new EventOnPlanet(EventType.PLANET_COLONIZED, coord,
-        "Test planet");
+        "Test planet", 0);
     assertEquals(EventType.PLANET_COLONIZED, event.getType());
     assertEquals(coord, event.getCoordinate());
     assertEquals("Test planet", event.getName());
     assertEquals("", event.getText());
+    assertEquals(0, event.getPlayerIndex());
     event.setText("Historical stuff");
     assertEquals("Historical stuff", event.getText());
     event = new EventOnPlanet(EventType.PLANET_CONQUERED, coord,
-        "Test planet");
+        "Test planet", 0);
+    assertEquals(0, event.getPlayerIndex());
     assertEquals(EventType.PLANET_CONQUERED, event.getType());
   }
 
@@ -53,8 +57,36 @@ public class EventOnPlanetTest {
   public void testFail() {
     Coordinate coord = Mockito.mock(Coordinate.class);
     EventOnPlanet event = new EventOnPlanet(EventType.CULTURE_CHANGE, coord,
-        "Test planet");
+        "Test planet", 0);
     assertEquals(EventType.CULTURE_CHANGE, event.getType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEncodingAndParsing() throws IOException {
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mockito.when(coord.getX()).thenReturn(22);
+    Mockito.when(coord.getY()).thenReturn(11);
+    EventOnPlanet event = new EventOnPlanet(EventType.PLANET_COLONIZED, coord, "Test I", 1);
+    event.setText("Historical");
+    byte[] buf = event.createByteArray();
+    EventOnPlanet event2 = EventOnPlanet.createEventOnPlanet(buf);
+    assertEquals(EventType.PLANET_COLONIZED, event2.getType());
+    assertEquals(event.getText(), event2.getText());
+    assertEquals(event.getName(), event2.getName());
+    assertEquals(22, event2.getCoordinate().getX());
+    assertEquals(11, event2.getCoordinate().getY());
+    assertEquals(1, event2.getPlayerIndex());
+    event = new EventOnPlanet(EventType.PLANET_CONQUERED, coord, "Test I", 2);
+    event.setText("Historical");
+    buf = event.createByteArray();
+    event2 = EventOnPlanet.createEventOnPlanet(buf);
+    assertEquals(EventType.PLANET_CONQUERED, event2.getType());
+    assertEquals(event.getText(), event2.getText());
+    assertEquals(event.getName(), event2.getName());
+    assertEquals(22, event2.getCoordinate().getX());
+    assertEquals(11, event2.getCoordinate().getY());
+    assertEquals(2, event2.getPlayerIndex());
   }
 
 }

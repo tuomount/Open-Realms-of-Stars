@@ -1,5 +1,6 @@
 package org.openRealmOfStars.starMap.history.event;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -67,12 +68,6 @@ public class GalacticEvent extends Event {
       os.write(getType().getIndex());
       // Just reserving space for length field
       os.write(IOUtilities.convertIntTo16BitMsb(0));
-      int playerIndex = getPlayerIndex();
-      if (playerIndex == -1) {
-        os.write(255);
-      } else {
-        os.write(playerIndex);
-      }
       IOUtilities.writeUTF8String(os, getText());
       buffer = os.toByteArray();
       byte[] lenBuffer = IOUtilities.convertIntTo16BitMsb(buffer.length);
@@ -82,6 +77,31 @@ public class GalacticEvent extends Event {
       ErrorLogger.log(e);
     }
     return buffer;
+  }
+
+  /**
+   * Tries to parse Galactic event from byte buffer.
+   * Buffer should contain type byte, 16 bit length and full data.
+   * @param buffer Where to parse
+   * @return GalacticEvent parsed from buffer
+   * @throws IOException if parsing fails
+   */
+  protected static GalacticEvent createGalacticEvent(final byte[] buffer)
+      throws IOException {
+    EventType readType = Event.readTypeAndLength(buffer);
+    if (readType == EventType.GALATIC_NEWS) {
+      try (ByteArrayInputStream is = new ByteArrayInputStream(buffer)) {
+        long skipped = is.skip(3);
+        if (skipped != 3) {
+          throw new IOException("Failed to skip 3 bytes!");
+        }
+        String str = IOUtilities.readUTF8String(is);
+        GalacticEvent event = new GalacticEvent(str);
+        event.setText(str);
+        return event;
+      }
+    }
+    throw new IOException("Event is not Galactic Event as expected!");
   }
 
 }

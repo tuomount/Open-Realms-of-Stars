@@ -2,6 +2,8 @@ package org.openRealmOfStars.starMap.history.event;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -39,4 +41,13 @@ public class GalacticEventTest {
     assertEquals("Historical", event.getText());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEncodingAndParsing() throws IOException {
+    GalacticEvent event = new GalacticEvent("Historical");
+    byte[] buf = event.createByteArray();
+    GalacticEvent event2 = GalacticEvent.createGalacticEvent(buf);
+    assertEquals(EventType.GALATIC_NEWS, event2.getType());
+    assertEquals(event.getText(), event2.getText());
+  }
 }

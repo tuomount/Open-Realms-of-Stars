@@ -1,8 +1,13 @@
 package org.openRealmOfStars.starMap.history;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.starMap.history.event.Event;
+import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
 *
@@ -82,4 +87,32 @@ public class HistoryTurn {
   public void addEvent(final Event event) {
     listOfEvents.add(event);
   }
+
+  /**
+   * Create byte array of list of events in turn
+   * @return Byte Array
+   */
+  public byte[] createByteArray() {
+    byte[] buffer = null;
+    try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+      // Writing the header first, word TURN and then turn number in 16 bits
+      byte[] turnBuffer = "TURN".getBytes(StandardCharsets.UTF_8);
+      os.write(turnBuffer);
+      turnBuffer = IOUtilities.convertIntTo16BitMsb(turnNumber);
+      os.write(turnBuffer);
+      // Next is write how many events turn has
+      turnBuffer = IOUtilities.convertIntTo16BitMsb(listOfEvents.size());
+      os.write(turnBuffer);
+      for (int i = 0; i < getNumberOfEvents(); i++) {
+        Event event = getEvent(i);
+        buffer = event.createByteArray();
+        os.write(buffer);
+      }
+      buffer = os.toByteArray();
+    } catch (IOException e) {
+      ErrorLogger.log(e);
+    }
+    return buffer;
+  }
+
 }

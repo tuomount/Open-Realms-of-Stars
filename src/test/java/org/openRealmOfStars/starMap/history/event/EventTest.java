@@ -2,8 +2,13 @@ package org.openRealmOfStars.starMap.history.event;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
+import org.openRealmOfStars.starMap.Coordinate;
 
 /**
 *
@@ -36,6 +41,22 @@ public class EventTest {
     for (int i = 0; i < maxEvent; i++) {
       EventType type = EventType.getTypeByIndex(i);
       assertEquals(i, type.getIndex());
+    }
+  }
+  
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEncodingAndParsing() throws IOException {
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mockito.when(coord.getX()).thenReturn(22);
+    Mockito.when(coord.getY()).thenReturn(11);
+    CombatEvent event = new CombatEvent(coord, 1);
+    event.setText("Historical");
+    event.setPlanetName("Test I");
+    byte[] buf = event.createByteArray();
+    try (ByteArrayInputStream is = new ByteArrayInputStream(buf)) {
+      Event result = Event.parseEvent(is);
+      assertEquals(EventType.SPACE_COMBAT, result.getType());
     }
   }
 

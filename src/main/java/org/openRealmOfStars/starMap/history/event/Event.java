@@ -1,6 +1,7 @@
 package org.openRealmOfStars.starMap.history.event;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -106,6 +107,57 @@ public abstract class Event {
       throw new IOException("Buffer length does not match with buffer length!");
     }
     return EventType.getTypeByIndex(readType);
+  }
+
+  /**
+   * Parse Event from InputStream. This is generic event parser.
+   * @param is InputStream where parse
+   * @return Event Parsed event
+   * @throws IOException If parsing or reading fails.
+   */
+  public static Event parseEvent(final InputStream is) throws IOException {
+    int type = is.read();
+    int lenHi = is.read();
+    int lenLo = is.read();
+    int len = IOUtilities.convert16BitsToInt(lenHi, lenLo);
+    byte[] buffer = new byte[len];
+    buffer[0] = (byte) (type & 0xff);
+    buffer[1] = (byte) (lenHi & 0xff);
+    buffer[2] = (byte) (lenLo & 0xff);
+    int offset = 3;
+    do {
+      int amount = is.read(buffer, offset, len - offset);
+      if (amount == -1) {
+        int read = amount + offset;
+        throw new IOException("Unexpected end of file! Could only read "
+            + read + " bytes!");
+      }
+      offset = offset + amount;
+    } while (offset < len);
+    EventType eventType = readTypeAndLength(buffer);
+    Event result = null;
+    switch (eventType) {
+      case CULTURE_CHANGE: {
+        result = CultureEvent.createCultureEvent(buffer); break;
+      }
+      case SPACE_COMBAT: {
+        result = CombatEvent.createCombatEvent(buffer); break;
+      }
+      case DIPLOMATIC_RELATION_CHANGE: {
+        result = DiplomaticEvent.createDiplomaticEvent(buffer); break;
+      }
+      case PLANET_CONQUERED:
+      case PLANET_COLONIZED: {
+        result = EventOnPlanet.createEventOnPlanet(buffer); break;
+      }
+      case GALATIC_NEWS: {
+        result = GalacticEvent.createGalacticEvent(buffer); break;
+      }
+      default: {
+        throw new IOException("Unexpected event type: " + type);
+      }
+    }
+    return result;
   }
 
 }

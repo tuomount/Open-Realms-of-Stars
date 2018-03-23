@@ -2,6 +2,7 @@ package org.openRealmOfStars.starMap.history;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -113,6 +114,38 @@ public class HistoryTurn {
       ErrorLogger.log(e);
     }
     return buffer;
+  }
+
+  /**
+   * Parse history turn from inputstream
+   * @param is InputStream
+   * @return Turn or null if no more turns found on stream.
+   * @throws IOException If parsing/reading fails
+   */
+  public static HistoryTurn parseHistoryTurn(final InputStream is)
+      throws IOException {
+    byte[] turnBuffer = "TURN".getBytes(StandardCharsets.UTF_8);
+    int check = 0;
+    do {
+      int value = is.read();
+      if (value == -1) {
+        return null;
+      }
+      byte byteValue = (byte) (value & 0xff);
+      if (byteValue == turnBuffer[check]) {
+        check++;
+      } else {
+        check = 0;
+      }
+    } while (check < turnBuffer.length);
+    int turnNumber = IOUtilities.read16BitsToInt(is);
+    int numberOfEvent = IOUtilities.read16BitsToInt(is);
+    HistoryTurn turn = new HistoryTurn(turnNumber);
+    for (int i = 0; i < numberOfEvent; i++) {
+      Event event = Event.parseEvent(is);
+      turn.addEvent(event);
+    }
+    return turn;
   }
 
 }

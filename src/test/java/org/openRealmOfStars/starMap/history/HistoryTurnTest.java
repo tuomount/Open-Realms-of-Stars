@@ -2,10 +2,19 @@ package org.openRealmOfStars.starMap.history;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.history.event.CombatEvent;
+import org.openRealmOfStars.starMap.history.event.CultureEvent;
 import org.openRealmOfStars.starMap.history.event.DiplomaticEvent;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
+import org.openRealmOfStars.starMap.history.event.GalacticEvent;
 
 /**
 *
@@ -41,6 +50,43 @@ public class HistoryTurnTest {
     historyTurn.addEvent(event);
     assertEquals(1, historyTurn.getNumberOfEvents());
     assertEquals(event, historyTurn.getEvent(0));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEncodingAndParsing() throws IOException {
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mockito.when(coord.getX()).thenReturn(22);
+    Mockito.when(coord.getY()).thenReturn(11);
+    CombatEvent combatEvent = new CombatEvent(coord, 1);
+    combatEvent.setText("Historical");
+    combatEvent.setPlanetName("Test I");
+    CultureEvent cultureEvent = new CultureEvent(coord, 0);
+    DiplomaticEvent diplomaticEvent = new DiplomaticEvent(coord);
+    diplomaticEvent.setText("Historical");
+    diplomaticEvent.setPlanetName("Test planet");
+    EventOnPlanet colonizedEvent = new EventOnPlanet(EventType.PLANET_COLONIZED, coord,
+        "Test planet", 0);
+    colonizedEvent.setText("Historical");
+    EventOnPlanet conqueredEvent = new EventOnPlanet(EventType.PLANET_CONQUERED, coord,
+        "Test planet", 0);
+    conqueredEvent.setText("Historical");
+    GalacticEvent event = new GalacticEvent("Test text");
+    HistoryTurn turn = new HistoryTurn(2);
+    turn.addEvent(combatEvent);
+    turn.addEvent(cultureEvent);
+    turn.addEvent(colonizedEvent);
+    turn.addEvent(conqueredEvent);
+    turn.addEvent(diplomaticEvent);
+    turn.addEvent(event);
+    byte[] buffer = turn.createByteArray();
+    ByteArrayInputStream bis = new ByteArrayInputStream(buffer);
+    HistoryTurn turn2 = HistoryTurn.parseHistoryTurn(bis);
+    assertEquals(turn.getTurn(), turn2.getTurn());
+    assertEquals(turn.getNumberOfEvents(), turn2.getNumberOfEvents());
+    for (int i = 0; i < turn.getNumberOfEvents(); i++) {
+      assertEquals(turn.getEvent(i).getType(), turn2.getEvent(i).getType());
+    }
   }
 
 }

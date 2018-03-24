@@ -153,6 +153,9 @@ public abstract class Event {
       case GALATIC_NEWS: {
         result = GalacticEvent.createGalacticEvent(buffer); break;
       }
+      case PLAYER_START: {
+        result = PlayerStartEvent.createStartEvent(buffer); break;
+      }
       default: {
         throw new IOException("Unexpected event type: " + type);
       }

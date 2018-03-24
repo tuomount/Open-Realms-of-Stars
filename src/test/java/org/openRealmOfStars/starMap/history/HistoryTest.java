@@ -16,6 +16,7 @@ import org.openRealmOfStars.starMap.history.event.DiplomaticEvent;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.history.event.GalacticEvent;
+import org.openRealmOfStars.starMap.history.event.PlayerStartEvent;
 
 /**
 *
@@ -82,6 +83,7 @@ public class HistoryTest {
         "Test planet", 0);
     conqueredEvent.setText("Historical");
     GalacticEvent event = new GalacticEvent("Test text");
+    PlayerStartEvent startEvent = new PlayerStartEvent(coord, "Test I", 1);
     History history = new History();
     history.addTurn(1);
     history.addEvent(conqueredEvent);
@@ -92,6 +94,8 @@ public class HistoryTest {
     history.addEvent(cultureEvent);
     history.addTurn(3);
     history.addEvent(combatEvent);
+    history.addTurn(5);
+    history.addEvent(startEvent);
     ByteArrayOutputStream bos = new ByteArrayOutputStream();
     history.writeToStream(bos);
     byte[] buffer = bos.toByteArray();
@@ -103,6 +107,8 @@ public class HistoryTest {
     assertEquals(2, history2.getByIndex(0).getNumberOfEvents());
     assertEquals(3, history2.getByIndex(1).getNumberOfEvents());
     assertEquals(1, history2.getByIndex(2).getNumberOfEvents());
+    assertEquals(1, history2.getByIndex(3).getNumberOfEvents());
+    assertEquals(5, history2.getByIndex(3).getTurn());
   }
 
 }

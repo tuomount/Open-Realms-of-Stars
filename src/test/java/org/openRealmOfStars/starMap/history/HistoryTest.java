@@ -2,9 +2,19 @@ package org.openRealmOfStars.starMap.history;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.history.event.CombatEvent;
+import org.openRealmOfStars.starMap.history.event.CultureEvent;
+import org.openRealmOfStars.starMap.history.event.DiplomaticEvent;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.history.event.GalacticEvent;
 
 /**
@@ -50,6 +60,49 @@ public class HistoryTest {
     assertEquals(history.getByIndex(0), history.getLatestTurn());
     history.addTurn(2);
     assertEquals(2, history.numberOfTurns());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEncodingAndParsing() throws IOException {
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mockito.when(coord.getX()).thenReturn(22);
+    Mockito.when(coord.getY()).thenReturn(11);
+    CombatEvent combatEvent = new CombatEvent(coord, 1);
+    combatEvent.setText("Historical");
+    combatEvent.setPlanetName("Test I");
+    CultureEvent cultureEvent = new CultureEvent(coord, 0);
+    DiplomaticEvent diplomaticEvent = new DiplomaticEvent(coord);
+    diplomaticEvent.setText("Historical");
+    diplomaticEvent.setPlanetName("Test planet");
+    EventOnPlanet colonizedEvent = new EventOnPlanet(EventType.PLANET_COLONIZED, coord,
+        "Test planet", 0);
+    colonizedEvent.setText("Historical");
+    EventOnPlanet conqueredEvent = new EventOnPlanet(EventType.PLANET_CONQUERED, coord,
+        "Test planet", 0);
+    conqueredEvent.setText("Historical");
+    GalacticEvent event = new GalacticEvent("Test text");
+    History history = new History();
+    history.addTurn(1);
+    history.addEvent(conqueredEvent);
+    history.addEvent(event);
+    history.addTurn(2);
+    history.addEvent(colonizedEvent);
+    history.addEvent(diplomaticEvent);
+    history.addEvent(cultureEvent);
+    history.addTurn(3);
+    history.addEvent(combatEvent);
+    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+    history.writeToStream(bos);
+    byte[] buffer = bos.toByteArray();
+    bos.close();
+    ByteArrayInputStream bis = new ByteArrayInputStream(buffer);
+    History history2 = History.readFromStream(bis);
+    bis.close();
+    assertEquals(history.numberOfTurns(), history2.numberOfTurns());
+    assertEquals(2, history2.getByIndex(0).getNumberOfEvents());
+    assertEquals(3, history2.getByIndex(1).getNumberOfEvents());
+    assertEquals(1, history2.getByIndex(2).getNumberOfEvents());
   }
 
 }

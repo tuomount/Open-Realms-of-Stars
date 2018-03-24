@@ -1,8 +1,12 @@
 package org.openRealmOfStars.starMap.history;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.starMap.history.event.Event;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
 *
@@ -32,6 +36,11 @@ public class History {
    * List of turns in history
    */
   private ArrayList<HistoryTurn> listOfTurns;
+
+  /**
+   * Magic string for history file
+   */
+  public static final String MAGIC_STRING = "OROS-HISTORY0.1";
 
   /**
    * Constructor for creating history for single game.
@@ -85,6 +94,14 @@ public class History {
   }
 
   /**
+   * Add history turn
+   * @param turn History turn to add.
+   */
+  public void addTurn(final HistoryTurn turn) {
+    listOfTurns.add(turn);
+  }
+
+  /**
    * Get historical turn by index. Can return null if no turn
    * found by index.
    * @param index Index to search
@@ -95,5 +112,47 @@ public class History {
       return listOfTurns.get(index);
     }
     return null;
+  }
+
+  /**
+   * Write history data into outputStream
+   * @param os OutputStream to write
+   * @throws IOException If reading fail
+   */
+  public void writeToStream(final OutputStream os) throws IOException {
+    IOUtilities.writeUTF8String(os, MAGIC_STRING);
+    byte[] buffer = IOUtilities.convertIntTo16BitMsb(numberOfTurns());
+    os.write(buffer);
+    for (int i = 0; i < numberOfTurns(); i++) {
+      HistoryTurn turn = getByIndex(i);
+      os.write(turn.createByteArray());
+    }
+  }
+
+  /**
+   * Parse history from input stream.
+   * @param is InputStream
+   * @return History
+   * @throws IOException If reading fails.
+   */
+  public static History readFromStream(final InputStream is)
+      throws IOException {
+    String magicStr = IOUtilities.readUTF8String(is);
+    if (!magicStr.equals(MAGIC_STRING)) {
+      throw new IOException("Stream does not seem to contain OROS history"
+          + " or contains older version!");
+    }
+    int hi = is.read();
+    int lo = is.read();
+    if (lo == -1 || hi == -1) {
+      throw new IOException("Stream does not contain valid count of turns!");
+    }
+    int count = IOUtilities.convert16BitsToInt(hi, lo);
+    History result = new History();
+    for (int i = 0; i < count; i++) {
+      HistoryTurn turn = HistoryTurn.parseHistoryTurn(is);
+      result.addTurn(turn);
+    }
+    return result;
   }
 }

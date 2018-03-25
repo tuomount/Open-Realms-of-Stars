@@ -29,6 +29,8 @@ import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -334,6 +336,12 @@ public final class MissionHandling {
           if (stat != null) {
             stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
           }
+          EventOnPlanet event = new EventOnPlanet(EventType.PLANET_COLONIZED,
+              planet.getCoordinate(),
+              planet.getName(), game.getStarMap().getAiTurnNumber());
+          event.setText(info.getEmpireName()
+              + " colonized planet " + planet.getName()
+              + ". ");
           planet.eventActivation();
         }
 

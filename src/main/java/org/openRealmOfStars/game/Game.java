@@ -66,6 +66,8 @@ import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
@@ -1363,6 +1365,13 @@ public class Game implements ActionListener {
       starMapView.getStarMapMouseListener().setLastClickedFleet(null);
       starMapView.getStarMapMouseListener()
           .setLastClickedPlanet(fleetView.getPlanet());
+      EventOnPlanet event = new EventOnPlanet(EventType.PLANET_COLONIZED,
+          fleetView.getPlanet().getCoordinate(),
+          fleetView.getPlanet().getName(), players.getCurrentPlayer());
+      event.setText(players.getCurrentPlayerInfo().getEmpireName()
+          + " colonized planet " + fleetView.getPlanet().getName()
+          + ". ");
+      starMap.getHistory().addEvent(event);
       fleetView.getPlanet().eventActivation();
       changeGameState(GameState.PLANETVIEW);
     }

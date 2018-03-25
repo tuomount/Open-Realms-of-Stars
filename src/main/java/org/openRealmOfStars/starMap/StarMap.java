@@ -30,6 +30,7 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.history.History;
+import org.openRealmOfStars.starMap.history.event.PlayerStartEvent;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
@@ -216,6 +217,7 @@ public class StarMap {
     nameGenerator = new RandomSystemNameGenerator();
     setScoreVictoryTurn(config.getScoringVictoryTurns());
     history = new History();
+    history.addTurn(0);
     maxX = config.getSizeX();
     maxY = config.getSizeY();
     chanceForPlanetaryEvent = config.getChanceForPlanetaryEvent();
@@ -696,6 +698,9 @@ public class StarMap {
               MessageType.PLANETARY, playerInfo.getEmpireName() + " starts at "
                   + planet.getName() + ".",
               Icons.getIconByName(Icons.ICON_CULTURE));
+          PlayerStartEvent event = new PlayerStartEvent(planet.getCoordinate(),
+              planet.getName(), playerIndex);
+          history.addEvent(event);
           msg.setCoordinate(planet.getCoordinate());
           msg.setMatchByString(planet.getName());
           playerInfo.getMsgList().addNewMessage(msg);

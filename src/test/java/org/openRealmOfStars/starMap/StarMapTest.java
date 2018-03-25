@@ -1,6 +1,7 @@
 package org.openRealmOfStars.starMap;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.starMap.history.History;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.repository.GameRepository;
@@ -61,6 +63,10 @@ public class StarMapTest {
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
 
     StarMap map = new StarMap(config, players);
+    assertNotNull(map.getHistory());
+    History history = Mockito.mock(History.class);
+    map.setHistory(history);
+    assertEquals(history, map.getHistory());
     assertEquals(400, map.getScoreVictoryTurn());
     assertEquals(50, map.getMaxX());
     assertEquals(50, map.getMaxY());

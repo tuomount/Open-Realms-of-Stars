@@ -2,7 +2,10 @@ package org.openRealmOfStars.starMap.newsCorp;
 
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.history.event.DiplomaticEvent;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.TextUtilities;
@@ -146,6 +149,24 @@ public final class NewsFactory {
         sb.append(defender.getEmpireName());
         sb.append(" has done lately. ");
       }
+    }
+    Coordinate coord = null;
+    String planetName = null;
+    if (meetingPlace instanceof Planet) {
+      Planet planet = (Planet) meetingPlace;
+      coord = planet.getCoordinate();
+      planetName = planet.getName();
+    } else if (meetingPlace instanceof Fleet) {
+      Fleet fleet = (Fleet) meetingPlace;
+      coord = fleet.getCoordinate();
+    } else {
+      coord = new Coordinate(0, 0);
+    }
+    DiplomaticEvent event = new DiplomaticEvent(coord);
+    event.setPlanetName(planetName);
+    event.setText(sb.toString());
+    if (map != null) {
+      map.getHistory().addEvent(event);
     }
     news.setNewsText(sb.toString());
     return news;

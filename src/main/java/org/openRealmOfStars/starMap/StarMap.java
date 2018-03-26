@@ -472,6 +472,8 @@ public class StarMap {
     String str = IOUtilities.readString(dis);
     if (str.equals(MAGIC_STRING)) {
       turn = dis.readInt();
+      // Just add single turn not to break not having turn
+      history.addTurn(turn);
       // Victory conditions
       setScoreVictoryTurn(dis.readInt());
       maxX = dis.readInt();

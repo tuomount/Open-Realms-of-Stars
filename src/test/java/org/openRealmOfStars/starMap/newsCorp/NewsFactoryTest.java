@@ -11,6 +11,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.history.History;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 
@@ -98,6 +99,8 @@ public class NewsFactoryTest {
     PlayerList playerList = Mockito.mock(PlayerList.class);
     Mockito.when(playerList.getIndex(defender)).thenReturn(1);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    History history = Mockito.mock(History.class);
+    Mockito.when(map.getHistory()).thenReturn(history);
     NewsData news = NewsFactory.makeWarNews(aggressor, defender, planet, null);
     assertEquals(true, news.getImageInstructions().contains(
         aggressor.getEmpireName()));

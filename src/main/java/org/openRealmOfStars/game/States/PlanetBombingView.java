@@ -40,6 +40,9 @@ import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -645,9 +648,15 @@ public class PlanetBombingView extends BlackPanel {
             // Planet conquered
             exitLoop = true;
             if (starMap != null) {
-              starMap.getNewsCorpData().addNews(
-                  NewsFactory.makePlanetConqueredNews(attacker, defender,
-                      planet, nuked));
+              NewsData news = NewsFactory.makePlanetConqueredNews(attacker,
+                  defender, planet, nuked);
+              starMap.getNewsCorpData().addNews(news);
+              EventOnPlanet event = new EventOnPlanet(
+                  EventType.PLANET_CONQUERED,
+                  planet.getCoordinate(), planet.getName(),
+                  starMap.getPlayerList().getIndex(attacker));
+              event.setText(news.getNewsText());
+              starMap.getHistory().addEvent(event);
             }
           }
           removeDestroyedShip();
@@ -681,9 +690,14 @@ public class PlanetBombingView extends BlackPanel {
         } else {
           PlayerInfo defender = planet.getPlanetPlayerInfo();
           if (attackBombOrTroops() && starMap != null) {
-            starMap.getNewsCorpData().addNews(
-                NewsFactory.makePlanetConqueredNews(attacker, defender,
-                    planet, nuked));
+            NewsData news = NewsFactory.makePlanetConqueredNews(attacker,
+                defender, planet, nuked);
+            starMap.getNewsCorpData().addNews(news);
+            EventOnPlanet event = new EventOnPlanet(EventType.PLANET_CONQUERED,
+                planet.getCoordinate(), planet.getName(),
+                starMap.getPlayerList().getIndex(attacker));
+            event.setText(news.getNewsText());
+            starMap.getHistory().addEvent(event);
           }
         }
         updatePanel();

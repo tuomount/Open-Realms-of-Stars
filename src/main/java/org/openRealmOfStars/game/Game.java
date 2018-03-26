@@ -69,6 +69,7 @@ import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -397,8 +398,11 @@ public class Game implements ActionListener {
               defenderIndex);
           trade.generateEqualTrade(NegotiationType.WAR);
           StarMapUtilities.addWarDeclatingRepuation(starMap, info);
-          starMap.getNewsCorpData().addNews(NewsFactory.makeWarNews(info,
-              combat.getPlayer2(), planet, starMap));
+          NewsData newsData = NewsFactory.makeWarNews(info,
+              combat.getPlayer2(), planet, starMap);
+          starMap.getNewsCorpData().addNews(newsData);
+          starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+              planet, newsData));
           trade.doTrades();
           PlayerInfo defender = starMap.getPlayerByIndex(defenderIndex);
           String[] list = defender.getDiplomacy().activateDefensivePact(
@@ -549,8 +553,11 @@ public class Game implements ActionListener {
       PlayerInfo defender = planet.getPlanetPlayerInfo();
       PlayerInfo attacker = starMap.getCurrentPlayerInfo();
       StarMapUtilities.addWarDeclatingRepuation(starMap, attacker);
-      starMap.getNewsCorpData().addNews(
-          NewsFactory.makeWarNews(defender, attacker, planet, starMap));
+      NewsData newsData = NewsFactory.makeWarNews(attacker, defender, fleet,
+          starMap);
+      starMap.getNewsCorpData().addNews(newsData);
+      starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+          fleet, newsData));
       String[] defenseList = defender.getDiplomacy().activateDefensivePact(
           starMap, attacker);
       if (defenseList != null) {

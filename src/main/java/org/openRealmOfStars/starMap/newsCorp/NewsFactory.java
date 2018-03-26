@@ -6,6 +6,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.history.event.DiplomaticEvent;
+import org.openRealmOfStars.starMap.history.event.Event;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.TextUtilities;
@@ -150,6 +151,18 @@ public final class NewsFactory {
         sb.append(" has done lately. ");
       }
     }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
+   * Make Diplomatic event based on newsdata.
+   * @param meetingPlace Planet or fleet or null
+   * @param newsData NewsData where to get the actual text
+   * @return Event
+   */
+  public static Event makeDiplomaticEvent(final Object meetingPlace,
+      final NewsData newsData) {
     Coordinate coord = null;
     String planetName = null;
     if (meetingPlace instanceof Planet) {
@@ -164,12 +177,8 @@ public final class NewsFactory {
     }
     DiplomaticEvent event = new DiplomaticEvent(coord);
     event.setPlanetName(planetName);
-    event.setText(sb.toString());
-    if (map != null) {
-      map.getHistory().addEvent(event);
-    }
-    news.setNewsText(sb.toString());
-    return news;
+    event.setText(newsData.getNewsText());
+    return event;
   }
 
   /**

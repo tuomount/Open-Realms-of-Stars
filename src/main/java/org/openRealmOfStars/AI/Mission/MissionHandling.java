@@ -31,6 +31,7 @@ import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -883,8 +884,11 @@ public final class MissionHandling {
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
         StarMapUtilities.addWarDeclatingRepuation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
-        game.getStarMap().getNewsCorpData().addNews(
-            NewsFactory.makeWarNews(info, defender, fleet, game.getStarMap()));
+        NewsData newsData = NewsFactory.makeWarNews(info, defender, fleet,
+            game.getStarMap());
+        game.getStarMap().getNewsCorpData().addNews(newsData);
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+            fleet, newsData));
         String[] defenseList = defender.getDiplomacy().activateDefensivePact(
             game.getStarMap(), info);
         if (defenseList != null) {
@@ -923,8 +927,11 @@ public final class MissionHandling {
         trade.doTrades();
         StarMapUtilities.addWarDeclatingRepuation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
-        game.getStarMap().getNewsCorpData().addNews(
-            NewsFactory.makeWarNews(info, defender, fleet, game.getStarMap()));
+        NewsData newsData = NewsFactory.makeWarNews(info, defender, fleet,
+            game.getStarMap());
+        game.getStarMap().getNewsCorpData().addNews(newsData);
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+            fleet, newsData));
         String[] defenseList = defender.getDiplomacy().activateDefensivePact(
             game.getStarMap(), info);
         if (defenseList != null) {

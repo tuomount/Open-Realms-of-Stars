@@ -51,6 +51,7 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -797,8 +798,11 @@ public class DiplomacyView extends BlackPanel {
         tradeHappened = true;
         if (trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
           StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
-          starMap.getNewsCorpData().addNews(
-              NewsFactory.makeWarNews(ai, human, meetingPlace, starMap));
+          NewsData newsData = NewsFactory.makeWarNews(ai, human,
+              meetingPlace, starMap);
+          starMap.getNewsCorpData().addNews(newsData);
+          starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+              meetingPlace, newsData));
           String[] list = human.getDiplomacy().activateDefensivePact(
               starMap, ai);
           if (list != null) {
@@ -862,8 +866,11 @@ public class DiplomacyView extends BlackPanel {
           updatePanel(SpeechType.MAKE_WAR);
           resetChoices();
           StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
-          starMap.getNewsCorpData().addNews(
-              NewsFactory.makeWarNews(ai, human, meetingPlace, starMap));
+          NewsData newsData = NewsFactory.makeWarNews(ai, human,
+              meetingPlace, starMap);
+          starMap.getNewsCorpData().addNews(newsData);
+          starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+              meetingPlace, newsData));
           String[] defenseList = human.getDiplomacy().activateDefensivePact(
               starMap, ai);
           if (defenseList != null) {
@@ -917,8 +924,11 @@ public class DiplomacyView extends BlackPanel {
           updatePanel(SpeechType.DECLINE_WAR);
           resetChoices();
           StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
-          starMap.getNewsCorpData().addNews(
-              NewsFactory.makeWarNews(ai, human, meetingPlace, starMap));
+          NewsData newsData = NewsFactory.makeWarNews(ai, human,
+              meetingPlace, starMap);
+          starMap.getNewsCorpData().addNews(newsData);
+          starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+              meetingPlace, newsData));
           String[] defenseList = human.getDiplomacy().activateDefensivePact(
               starMap, ai);
           if (defenseList != null) {
@@ -1002,8 +1012,11 @@ public class DiplomacyView extends BlackPanel {
             updatePanel(SpeechType.DECLINE_WAR);
             resetChoices();
             StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
-            starMap.getNewsCorpData().addNews(
-                NewsFactory.makeWarNews(ai, human, meetingPlace, starMap));
+            NewsData newsData = NewsFactory.makeWarNews(ai, human,
+                meetingPlace, starMap);
+            starMap.getNewsCorpData().addNews(newsData);
+            starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+                meetingPlace, newsData));
             String[] defenseList = human.getDiplomacy().activateDefensivePact(
                 starMap, ai);
             if (defenseList != null) {
@@ -1045,8 +1058,11 @@ public class DiplomacyView extends BlackPanel {
             DiplomacyBonusType.IN_WAR, human.getRace());
         updatePanel(SpeechType.MAKE_WAR);
         StarMapUtilities.addWarDeclatingRepuation(starMap, human);
-        starMap.getNewsCorpData().addNews(
-            NewsFactory.makeWarNews(human, ai, meetingPlace, starMap));
+        NewsData newsData = NewsFactory.makeWarNews(ai, human,
+            meetingPlace, starMap);
+        starMap.getNewsCorpData().addNews(newsData);
+        starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+            meetingPlace, newsData));
         String[] defenseList = ai.getDiplomacy().activateDefensivePact(
             starMap, human);
         if (defenseList != null) {

@@ -986,8 +986,11 @@ public class DiplomacyView extends BlackPanel {
           tradeHappened = true;
           updatePanel(SpeechType.AGREE);
           resetChoices();
-          starMap.getNewsCorpData().addNews(
-              NewsFactory.makeAllianceNews(human, ai, meetingPlace));
+          NewsData newsData = NewsFactory.makeDefensivePactNews(human, ai,
+              meetingPlace);
+          starMap.getNewsCorpData().addNews(newsData);
+          starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+              meetingPlace, newsData));
         } else {
           updatePanel(SpeechType.DECLINE);
         }

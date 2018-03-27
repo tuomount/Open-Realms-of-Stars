@@ -912,8 +912,11 @@ public class DiplomacyView extends BlackPanel {
           tradeHappened = true;
           updatePanel(SpeechType.AGREE);
           resetChoices();
-          starMap.getNewsCorpData().addNews(
-              NewsFactory.makeTradeAllianceNews(human, ai, meetingPlace));
+          NewsData newsData = NewsFactory.makeTradeAllianceNews(human, ai,
+              meetingPlace);
+          starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+              meetingPlace, newsData));
+          starMap.getNewsCorpData().addNews(newsData);
         } else {
           updatePanel(SpeechType.DECLINE);
         }
@@ -963,8 +966,11 @@ public class DiplomacyView extends BlackPanel {
           tradeHappened = true;
           updatePanel(SpeechType.AGREE);
           resetChoices();
-          starMap.getNewsCorpData().addNews(
-              NewsFactory.makeAllianceNews(human, ai, meetingPlace));
+          NewsData newsData = NewsFactory.makeAllianceNews(human, ai,
+              meetingPlace);
+          starMap.getNewsCorpData().addNews(newsData);
+          starMap.getHistory().addEvent(
+              NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
         } else {
           updatePanel(SpeechType.DECLINE);
         }
@@ -1100,8 +1106,11 @@ public class DiplomacyView extends BlackPanel {
           tradeHappened = true;
           updatePanel(SpeechType.AGREE);
           resetChoices();
-          starMap.getNewsCorpData().addNews(
-              NewsFactory.makePeaceNews(human, ai, meetingPlace));
+          NewsData newsData = NewsFactory.makePeaceNews(human, ai,
+              meetingPlace);
+          starMap.getNewsCorpData().addNews(newsData);
+          starMap.getHistory().addEvent(
+              NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
           ai.getMissions().removeAttackAgainstPlayer(human, starMap);
         } else {
           updatePanel(SpeechType.DECLINE);

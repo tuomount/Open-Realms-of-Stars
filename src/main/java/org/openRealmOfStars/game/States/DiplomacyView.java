@@ -820,8 +820,11 @@ public class DiplomacyView extends BlackPanel {
               NewsFactory.makeTradeAllianceNews(ai, human, meetingPlace));
         }
         if (trade.getFirstOffer().isTypeInOffer(NegotiationType.PEACE)) {
-          starMap.getNewsCorpData().addNews(
-              NewsFactory.makePeaceNews(ai, human, meetingPlace));
+          NewsData newsData = NewsFactory.makePeaceNews(ai, human,
+              meetingPlace);
+          starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+              meetingPlace, newsData));
+          starMap.getNewsCorpData().addNews(newsData);
           ai.getMissions().removeAttackAgainstPlayer(human, starMap);
         }
         updatePanel(SpeechType.OFFER_ACCEPTED);

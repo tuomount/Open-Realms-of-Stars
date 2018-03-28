@@ -5,6 +5,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.CulturePower;
+import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.history.event.CultureEvent;
 import org.openRealmOfStars.starMap.history.event.Event;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -154,5 +158,53 @@ public class History {
       result.addTurn(turn);
     }
     return result;
+  }
+
+  /**
+   * Method to update culture map according the newest changes.
+   * Adds multiple culture events in history if current
+   * culture map has changed in starmap.
+   * @param starMap Containing newest culture information.
+   */
+  public void updateCultureEventMap(final StarMap starMap) {
+    int maxX = starMap.getMaxX();
+    int maxY = starMap.getMaxY();
+    int[][] culture = new int[maxX][maxY];
+    // Clear the culture map
+    for (int i = 0; i < maxY; i++) {
+      for (int j = 0; j < maxX; j++) {
+        culture[j][i] = -1;
+      }
+    }
+    // Build culture map according the event
+    for (int i = 0; i < listOfTurns.size(); i++) {
+      HistoryTurn turn = listOfTurns.get(i);
+      for (int j = 0; j < turn.getNumberOfEvents(); j++) {
+        Event event = turn.getEvent(j);
+        if (event instanceof CultureEvent) {
+          CultureEvent cultureEvent = (CultureEvent) event;
+          int x = cultureEvent.getCoordinate().getX();
+          int y = cultureEvent.getCoordinate().getY();
+          if (x >= 0 && x < maxX && y >= 0 && y < maxY) {
+            culture[x][y] = cultureEvent.getPlayerIndex();
+          }
+        }
+      }
+    }
+    // Compare it to starmap and add missing culture
+    for (int y = 0; y < maxY; y++) {
+      for (int x = 0; x < maxX; x++) {
+        CulturePower culturePower = starMap.getSectorCulture(x, y);
+        int mapValue = -1;
+        if (culturePower != null) {
+          mapValue = culturePower.getHighestCulture();
+        }
+        if (culture[x][y] != mapValue) {
+          Coordinate coord = new Coordinate(x, y);
+          CultureEvent event = new CultureEvent(coord, mapValue);
+          addEvent(event);
+        }
+      }
+    }
   }
 }

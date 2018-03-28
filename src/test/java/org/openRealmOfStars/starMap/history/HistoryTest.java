@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.history.event.CombatEvent;
 import org.openRealmOfStars.starMap.history.event.CultureEvent;
 import org.openRealmOfStars.starMap.history.event.DiplomaticEvent;
@@ -109,6 +110,22 @@ public class HistoryTest {
     assertEquals(1, history2.getByIndex(2).getNumberOfEvents());
     assertEquals(1, history2.getByIndex(3).getNumberOfEvents());
     assertEquals(5, history2.getByIndex(3).getTurn());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCultureUpdateClearCulture() throws IOException {
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getMaxX()).thenReturn(5);
+    Mockito.when(map.getMaxY()).thenReturn(5);
+    History history = new History();
+    history.addTurn(0);
+    CultureEvent event = new CultureEvent(new Coordinate(1,1), 1);
+    history.addEvent(event);
+    history.addTurn(1);
+    assertEquals(0, history.getLatestTurn().getNumberOfEvents());
+    history.updateCultureEventMap(map);
+    assertEquals(1, history.getLatestTurn().getNumberOfEvents());
   }
 
 }

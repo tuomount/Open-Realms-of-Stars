@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.junit.Test;
@@ -72,4 +73,33 @@ public class IOUtilitiesTest {
     }
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUTF8String() throws IOException {
+    String test = "Hello world of Java! ÄÄ";
+    ByteArrayOutputStream os = new ByteArrayOutputStream();
+    IOUtilities.writeUTF8String(os, test);
+    byte[] buf = os.toByteArray();
+    ByteArrayInputStream is = new ByteArrayInputStream(buf);
+    String result = IOUtilities.readUTF8String(is);
+    assertEquals(test, result);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBitConversions() throws IOException {
+    byte[] buf = IOUtilities.convertIntTo16BitMsb(0);
+    assertEquals(0, buf[0]);
+    assertEquals(0, buf[1]);
+    buf = IOUtilities.convertIntTo16BitMsb(65535);
+    assertEquals(-1, buf[0]);
+    assertEquals(-1, buf[1]);
+    buf = IOUtilities.convertIntTo16BitMsb(255);
+    assertEquals(0, buf[0]);
+    assertEquals(-1, buf[1]);
+    buf = IOUtilities.convertIntTo16BitMsb(256);
+    assertEquals(1, buf[0]);
+    assertEquals(0, buf[1]);
+  }
+  
 }

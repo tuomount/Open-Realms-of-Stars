@@ -6,7 +6,9 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 
 import javax.imageio.ImageIO;
@@ -14,7 +16,7 @@ import javax.imageio.ImageIO;
 /**
  *
  * Open Realm of Stars Game Project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -222,6 +224,91 @@ public final class IOUtilities {
     } else {
       os.writeInt(0);
     }
+  }
+
+  /**
+   * Converts 16bits to integer
+   * @param hi Higher 8 bits
+   * @param lo Lower 8 bits
+   * @return integer
+   */
+  public static int convert16BitsToInt(final int hi, final int lo) {
+    return (hi << 8) + lo;
+  }
+
+  /**
+   * Read 16 bits to int from input stream. It assumes that
+   * bits are in hi byte, then lo byte.
+   * @param is InputStream where to read
+   * @return Integer
+   * @throws IOException if reading fail
+   */
+  public static int read16BitsToInt(final InputStream is) throws IOException {
+    int hi = is.read();
+    int lo = is.read();
+    return convert16BitsToInt(hi, lo);
+  }
+  /**
+   * Converts Integer to 16 bit MSB byte array.
+   * @param value Integer to convert
+   * @return two byte byte array
+   */
+  public static byte[] convertIntTo16BitMsb(final int value) {
+    byte[] lenBuffer = new byte[2];
+    lenBuffer[0] = (byte) ((value & 0xff00) >> 8);
+    lenBuffer[1] = (byte) (value & 0x00ff);
+    return lenBuffer;
+  }
+  /**
+   * Writes string(as UTF8) into DataOutputStream.
+   * First 2 octets tells string length as bytes, MSB as first byte.
+   * Then whole string is written as UTF8 encoded byte array.
+   * @param os the output stream
+   * @param str the string that os gets
+   * @throws IOException if there is any problem with OutputStream
+   */
+  public static void writeUTF8String(final OutputStream os, final String str)
+      throws IOException {
+    if (str != null) {
+      byte[] buffer = str.getBytes(StandardCharsets.UTF_8);
+      if (buffer.length > 65535) {
+        throw new IOException("String is too long! " + buffer.length);
+      }
+      os.write(convertIntTo16BitMsb(buffer.length));
+      os.write(buffer);
+    } else {
+      os.write(convertIntTo16BitMsb(0));
+    }
+  }
+
+  /**
+   * Reads string(as UTF8) from OutputStream.
+   * First 2 octets tells string length as bytes, MSB as first byte.
+   * Then whole string is read as UTF8 encoded byte array.
+   * @param is the input stream
+   * @return Read string
+   * @throws IOException if there is any problem with OutputStream
+   */
+  public static String readUTF8String(final InputStream is)
+      throws IOException {
+    byte[] lenBuffer = new byte[2];
+    int amount = is.read(lenBuffer);
+    if (amount != 2) {
+      throw new IOException("Could only read " + amount + " bytes!");
+    }
+    int len = convert16BitsToInt(lenBuffer[0], lenBuffer[1]);
+    byte[] buffer = new byte[len];
+    int offset = 0;
+    do {
+      amount = is.read(buffer, offset, len - offset);
+      if (amount == -1) {
+        int read = amount + offset;
+        throw new IOException("Unexpected end of file! Could only read "
+            + read + " bytes!");
+      }
+      offset = offset + amount;
+    } while (offset < len);
+    return new String(buffer, StandardCharsets.UTF_8);
   }
 
 }

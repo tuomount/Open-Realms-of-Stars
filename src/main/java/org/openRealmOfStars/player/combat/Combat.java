@@ -21,6 +21,7 @@ import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.history.event.CombatEvent;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.Logger;
@@ -173,6 +174,11 @@ public class Combat {
    * Escape position for defender.
    */
   private Coordinate escapePosition;
+
+  /**
+   * Textual description what happened in combat
+   */
+  private CombatEvent combatEvent;
   /**
    * Build shipList in initiative order
    * @param attackerFleet Attacking Player1 fleet
@@ -201,6 +207,21 @@ public class Combat {
     this.attackerInfo = attackerInfo;
     this.defenderInfo = defenderInfo;
     starbaseFleet = null;
+    combatEvent = new CombatEvent(defenderFleet.getCoordinate());
+    String combatText = attackerInfo.getEmpireName() + " attacked against "
+        + defenderInfo.getEmpireName() + " with ";
+    if (attackerFleet.getNumberOfShip() > 1) {
+      combatText = combatText + attackerFleet.getNumberOfShip()
+        + " ships against ";
+    } else {
+      combatText = combatText + " single ship against ";
+    }
+    if (defenderFleet.getNumberOfShip() > 1) {
+      combatText = combatText + defenderFleet.getNumberOfShip() + " ships.";
+    } else {
+      combatText = combatText + "one ship.";
+    }
+    combatEvent.setText(combatText);
     FleetList fleetList = defenderInfo.getFleets();
     for (int i = 0; i < fleetList.getNumberOfFleets(); i++) {
       Fleet ite = fleetList.getByIndex(i);
@@ -822,6 +843,35 @@ public boolean launchIntercept(final int distance,
           looserPlayer.getFleets().remove(looserIndex);
         }
       }
+      String combatText = combatEvent.getText();
+      if (planet != null) {
+        combatText = combatText + " Combat happened in orbit of "
+        + planet.getName() + ".";
+        combatEvent.setPlanetName(planet.getName());
+      }
+      if (winnerFleet.getNumberOfShip() > 1) {
+        combatText = combatText + " Combat was victorious for "
+            + winnerPlayer.getEmpireName() + ". "
+            + winnerFleet.getNumberOfShip()
+            + " ships in victorious fleet survived. ";
+      } else {
+        combatText = combatText + " Combat was victorious for "
+            + winnerPlayer.getEmpireName() + ". "
+            + "Single ship survived in victorious fleet. ";
+      }
+      if (loserEscaped && escapePosition != null) {
+        if (looserFleet.getNumberOfShip() > 1) {
+          combatText = combatText + "Defending fleet's "
+              + looserFleet.getNumberOfShip()
+              + "ships escaped from the combat.";
+        } else {
+          combatText = combatText + "Defending fleet's "
+              + "last ship escaped from the combat.";
+        }
+      } else {
+        combatText = combatText + "Defending fleet was totally destroyed!";
+      }
+      combatEvent.setText(combatText);
       if (isWinnerAttacker) {
         Coordinate loserPos = looserFleet.getCoordinate();
         if (looserPlayer.getFleets().getFleetByCoordinate(loserPos) == null) {
@@ -970,6 +1020,14 @@ public boolean launchIntercept(final int distance,
     this.animation = animation;
   }
 
+  /**
+   * Get combat event from combat. This should be called
+   * after end combat has been handled.
+   * @return Combat event containing historical data.
+   */
+  public CombatEvent getCombatEvent() {
+    return combatEvent;
+  }
   /**
    * Get planet where combat happens. If combat is in deep space
    * then null is returned.

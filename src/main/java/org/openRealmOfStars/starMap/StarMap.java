@@ -29,6 +29,8 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.starMap.history.History;
+import org.openRealmOfStars.starMap.history.event.PlayerStartEvent;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
@@ -189,6 +191,13 @@ public class StarMap {
   private RandomSystemNameGenerator nameGenerator;
 
   /**
+   * Game history containing important events.
+   * History information is not saved in to same save game as
+   * starmap. It is saved into separate file.
+   */
+  private History history;
+
+  /**
    * Magic string to save game files
    */
   public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.8";
@@ -207,6 +216,8 @@ public class StarMap {
     setDebug(false);
     nameGenerator = new RandomSystemNameGenerator();
     setScoreVictoryTurn(config.getScoringVictoryTurns());
+    history = new History();
+    history.addTurn(0);
     maxX = config.getSizeX();
     maxY = config.getSizeY();
     chanceForPlanetaryEvent = config.getChanceForPlanetaryEvent();
@@ -457,9 +468,12 @@ public class StarMap {
    */
   public StarMap(final DataInputStream dis) throws IOException {
     setDebug(false);
+    history = new History();
     String str = IOUtilities.readString(dis);
     if (str.equals(MAGIC_STRING)) {
       turn = dis.readInt();
+      // Just add single turn not to break not having turn
+      history.addTurn(turn);
       // Victory conditions
       setScoreVictoryTurn(dis.readInt());
       maxX = dis.readInt();
@@ -686,6 +700,9 @@ public class StarMap {
               MessageType.PLANETARY, playerInfo.getEmpireName() + " starts at "
                   + planet.getName() + ".",
               Icons.getIconByName(Icons.ICON_CULTURE));
+          PlayerStartEvent event = new PlayerStartEvent(planet.getCoordinate(),
+              planet.getName(), playerIndex);
+          history.addEvent(event);
           msg.setCoordinate(planet.getCoordinate());
           msg.setMatchByString(planet.getName());
           playerInfo.getMsgList().addNewMessage(msg);
@@ -2262,5 +2279,21 @@ public class StarMap {
   public GameLengthState getGameLengthState() {
     return GameLengthState.getGameLengthState(getTurn(),
         getScoreVictoryTurn());
+  }
+
+  /**
+   * Get history from starmap
+   * @return History
+   */
+  public History getHistory() {
+    return history;
+  }
+
+  /**
+   * Set new history
+   * @param newHistory History to set
+   */
+  public void setHistory(final History newHistory) {
+    history = newHistory;
   }
 }

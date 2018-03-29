@@ -66,7 +66,10 @@ import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -395,8 +398,11 @@ public class Game implements ActionListener {
               defenderIndex);
           trade.generateEqualTrade(NegotiationType.WAR);
           StarMapUtilities.addWarDeclatingRepuation(starMap, info);
-          starMap.getNewsCorpData().addNews(NewsFactory.makeWarNews(info,
-              combat.getPlayer2(), planet, starMap));
+          NewsData newsData = NewsFactory.makeWarNews(info,
+              combat.getPlayer2(), planet, starMap);
+          starMap.getNewsCorpData().addNews(newsData);
+          starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+              planet, newsData));
           trade.doTrades();
           PlayerInfo defender = starMap.getPlayerByIndex(defenderIndex);
           String[] list = defender.getDiplomacy().activateDefensivePact(
@@ -411,6 +417,7 @@ public class Game implements ActionListener {
           changeGameState(GameState.COMBAT, combat);
         } else {
           combat.doFastCombat();
+          getStarMap().getHistory().addEvent(combat.getCombatEvent());
         }
       } else {
         fleet.setPos(new Coordinate(nx, ny));
@@ -547,8 +554,11 @@ public class Game implements ActionListener {
       PlayerInfo defender = planet.getPlanetPlayerInfo();
       PlayerInfo attacker = starMap.getCurrentPlayerInfo();
       StarMapUtilities.addWarDeclatingRepuation(starMap, attacker);
-      starMap.getNewsCorpData().addNews(
-          NewsFactory.makeWarNews(defender, attacker, planet, starMap));
+      NewsData newsData = NewsFactory.makeWarNews(attacker, defender, fleet,
+          starMap);
+      starMap.getNewsCorpData().addNews(newsData);
+      starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+          fleet, newsData));
       String[] defenseList = defender.getDiplomacy().activateDefensivePact(
           starMap, attacker);
       if (defenseList != null) {
@@ -1363,6 +1373,13 @@ public class Game implements ActionListener {
       starMapView.getStarMapMouseListener().setLastClickedFleet(null);
       starMapView.getStarMapMouseListener()
           .setLastClickedPlanet(fleetView.getPlanet());
+      EventOnPlanet event = new EventOnPlanet(EventType.PLANET_COLONIZED,
+          fleetView.getPlanet().getCoordinate(),
+          fleetView.getPlanet().getName(), players.getCurrentPlayer());
+      event.setText(players.getCurrentPlayerInfo().getEmpireName()
+          + " colonized planet " + fleetView.getPlanet().getName()
+          + ". ");
+      starMap.getHistory().addEvent(event);
       fleetView.getPlanet().eventActivation();
       changeGameState(GameState.PLANETVIEW);
     }
@@ -1495,12 +1512,13 @@ public class Game implements ActionListener {
           .equals(GameCommands.COMMAND_END_BATTLE_ROUND)) {
         SoundPlayer.playMenuSound();
         MusicPlayer.playGameMusic();
+        Combat combat = combatView.getCombat();
+        getStarMap().getHistory().addEvent(combat.getCombatEvent());
         if (previousState == GameState.AITURN) {
           changeGameState(previousState);
           return;
         }
         changeGameState(GameState.STARMAP);
-        Combat combat = combatView.getCombat();
         if (combat.getWinnerFleet() != null) {
           getStarMap().doFleetScanUpdate(combat.getWinner(),
               combat.getWinnerFleet(), null);

@@ -29,6 +29,9 @@ import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -334,6 +337,12 @@ public final class MissionHandling {
           if (stat != null) {
             stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
           }
+          EventOnPlanet event = new EventOnPlanet(EventType.PLANET_COLONIZED,
+              planet.getCoordinate(),
+              planet.getName(), game.getStarMap().getAiTurnNumber());
+          event.setText(info.getEmpireName()
+              + " colonized planet " + planet.getName()
+              + ". ");
           planet.eventActivation();
         }
 
@@ -875,8 +884,11 @@ public final class MissionHandling {
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
         StarMapUtilities.addWarDeclatingRepuation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
-        game.getStarMap().getNewsCorpData().addNews(
-            NewsFactory.makeWarNews(info, defender, fleet, game.getStarMap()));
+        NewsData newsData = NewsFactory.makeWarNews(info, defender, fleet,
+            game.getStarMap());
+        game.getStarMap().getNewsCorpData().addNews(newsData);
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+            fleet, newsData));
         String[] defenseList = defender.getDiplomacy().activateDefensivePact(
             game.getStarMap(), info);
         if (defenseList != null) {
@@ -886,18 +898,35 @@ public final class MissionHandling {
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.ALLIANCE)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
-        game.getStarMap().getNewsCorpData().addNews(
-            NewsFactory.makeAllianceNews(info, defender, fleet));
+        NewsData newsData = NewsFactory.makeAllianceNews(info, defender,
+            fleet);
+        game.getStarMap().getHistory().addEvent(
+            NewsFactory.makeDiplomaticEvent(fleet, newsData));
+        game.getStarMap().getNewsCorpData().addNews(newsData);
+      }
+      if (trade.getFirstOffer().isTypeInOffer(NegotiationType.DEFENSIVE_PACT)) {
+        PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
+        NewsData newsData = NewsFactory.makeDefensivePactNews(info, defender,
+            fleet);
+        game.getStarMap().getHistory().addEvent(
+            NewsFactory.makeDiplomaticEvent(fleet, newsData));
+        game.getStarMap().getNewsCorpData().addNews(newsData);
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.TRADE_ALLIANCE)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
-        game.getStarMap().getNewsCorpData().addNews(
-            NewsFactory.makeTradeAllianceNews(info, defender, fleet));
+        NewsData newsData = NewsFactory.makeTradeAllianceNews(info, defender,
+            fleet);
+        game.getStarMap().getHistory().addEvent(
+            NewsFactory.makeDiplomaticEvent(fleet, newsData));
+        game.getStarMap().getNewsCorpData().addNews(newsData);
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.PEACE)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
-        game.getStarMap().getNewsCorpData().addNews(
-            NewsFactory.makePeaceNews(info, defender, fleet));
+        NewsData newsData = NewsFactory.makePeaceNews(info, defender,
+            fleet);
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+            fleet, newsData));
+        game.getStarMap().getNewsCorpData().addNews(newsData);
         info.getMissions().removeAttackAgainstPlayer(defender,
             game.getStarMap());
         defender.getMissions().removeAttackAgainstPlayer(info,
@@ -915,8 +944,11 @@ public final class MissionHandling {
         trade.doTrades();
         StarMapUtilities.addWarDeclatingRepuation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
-        game.getStarMap().getNewsCorpData().addNews(
-            NewsFactory.makeWarNews(info, defender, fleet, game.getStarMap()));
+        NewsData newsData = NewsFactory.makeWarNews(info, defender, fleet,
+            game.getStarMap());
+        game.getStarMap().getNewsCorpData().addNews(newsData);
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+            fleet, newsData));
         String[] defenseList = defender.getDiplomacy().activateDefensivePact(
             game.getStarMap(), info);
         if (defenseList != null) {

@@ -417,6 +417,7 @@ public class Game implements ActionListener {
           changeGameState(GameState.COMBAT, combat);
         } else {
           combat.doFastCombat();
+          getStarMap().getHistory().addEvent(combat.getCombatEvent());
         }
       } else {
         fleet.setPos(new Coordinate(nx, ny));
@@ -1511,12 +1512,13 @@ public class Game implements ActionListener {
           .equals(GameCommands.COMMAND_END_BATTLE_ROUND)) {
         SoundPlayer.playMenuSound();
         MusicPlayer.playGameMusic();
+        Combat combat = combatView.getCombat();
+        getStarMap().getHistory().addEvent(combat.getCombatEvent());
         if (previousState == GameState.AITURN) {
           changeGameState(previousState);
           return;
         }
         changeGameState(GameState.STARMAP);
-        Combat combat = combatView.getCombat();
         if (combat.getWinnerFleet() != null) {
           getStarMap().doFleetScanUpdate(combat.getWinner(),
               combat.getWinnerFleet(), null);

@@ -50,12 +50,10 @@ public class CombatEvent extends Event {
   /**
    * Combat event on space or planet
    * @param coord Coordinate where combat happened
-   * @param attackerIndex Player who attacked index
    */
-  public CombatEvent(final Coordinate coord, final int attackerIndex) {
+  public CombatEvent(final Coordinate coord) {
     setType(EventType.SPACE_COMBAT);
     coordinate = coord;
-    setPlayerIndex(attackerIndex);
     planetName = null;
     setText("");
   }
@@ -108,12 +106,6 @@ public class CombatEvent extends Event {
       os.write(getType().getIndex());
       // Just reserving space for length field
       os.write(IOUtilities.convertIntTo16BitMsb(0));
-      int playerIndex = getPlayerIndex();
-      if (playerIndex == -1) {
-        os.write(255);
-      } else {
-        os.write(playerIndex);
-      }
       os.write(IOUtilities.convertIntTo16BitMsb(coordinate.getX()));
       os.write(IOUtilities.convertIntTo16BitMsb(coordinate.getY()));
       IOUtilities.writeUTF8String(os, getPlanetName());
@@ -144,14 +136,10 @@ public class CombatEvent extends Event {
         if (skipped != 3) {
           throw new IOException("Failed to skip 3 bytes!");
         }
-        int index = is.read();
-        if (index == 255) {
-          index = -1;
-        }
         int x = IOUtilities.read16BitsToInt(is);
         int y = IOUtilities.read16BitsToInt(is);
         Coordinate coord = new Coordinate(x, y);
-        CombatEvent event = new CombatEvent(coord, index);
+        CombatEvent event = new CombatEvent(coord);
         String str = IOUtilities.readUTF8String(is);
         if (str != null && str.isEmpty()) {
           str = null;

@@ -168,6 +168,8 @@ public class CombatTest {
   public void testRealCombat() {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    info1.setEmpireName("Terran alliance");
+    info2.setEmpireName("Spork empire");
     ShipDesign design1 = ShipGenerator.createBattleShip(
         info1, ShipSize.SMALL, false);
     ShipDesign design2 = ShipGenerator.createColony(info2, false);
@@ -179,6 +181,11 @@ public class CombatTest {
     info2.getFleets().add(fleet2);
     Combat combat = new Combat(fleet1, fleet2, info1, info2);
     combat.doFastCombat();
+    assertEquals("Terran alliance attacked against Spork empire "
+        + "with  single ship against one ship. Combat was victorious"
+        + " for Terran alliance. Single ship survived in victorious "
+        + "fleet. Defending fleet was totally destroyed!"
+        ,combat.getCombatEvent().getText());
     assertEquals(info1, combat.getWinner());
   }
 

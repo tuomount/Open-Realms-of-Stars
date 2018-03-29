@@ -37,9 +37,8 @@ public class CombatEventTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     Coordinate coord = Mockito.mock(Coordinate.class);
-    CombatEvent event = new CombatEvent(coord, 0);
+    CombatEvent event = new CombatEvent(coord);
     assertEquals(EventType.SPACE_COMBAT, event.getType());
-    assertEquals(0, event.getPlayerIndex());
     assertEquals(coord, event.getCoordinate());
     assertEquals(null, event.getPlanetName());
     assertEquals("", event.getText());
@@ -55,7 +54,7 @@ public class CombatEventTest {
     Coordinate coord = Mockito.mock(Coordinate.class);
     Mockito.when(coord.getX()).thenReturn(22);
     Mockito.when(coord.getY()).thenReturn(11);
-    CombatEvent event = new CombatEvent(coord, 1);
+    CombatEvent event = new CombatEvent(coord);
     event.setText("Historical");
     event.setPlanetName("Test I");
     byte[] buf = event.createByteArray();
@@ -65,8 +64,7 @@ public class CombatEventTest {
     assertEquals(event.getPlanetName(), event2.getPlanetName());
     assertEquals(22, event2.getCoordinate().getX());
     assertEquals(11, event2.getCoordinate().getY());
-    assertEquals(1, event2.getPlayerIndex());
-    event = new CombatEvent(coord, 1);
+    event = new CombatEvent(coord);
     event.setText("Historical");
     buf = event.createByteArray();
     event2 = CombatEvent.createCombatEvent(buf);
@@ -75,8 +73,6 @@ public class CombatEventTest {
     assertEquals(null, event2.getPlanetName());
     assertEquals(22, event2.getCoordinate().getX());
     assertEquals(11, event2.getCoordinate().getY());
-    assertEquals(1, event2.getPlayerIndex());
-    
   }
 
 }

@@ -50,7 +50,7 @@ public class EventTest {
     Coordinate coord = Mockito.mock(Coordinate.class);
     Mockito.when(coord.getX()).thenReturn(22);
     Mockito.when(coord.getY()).thenReturn(11);
-    CombatEvent event = new CombatEvent(coord, 1);
+    CombatEvent event = new CombatEvent(coord);
     event.setText("Historical");
     event.setPlanetName("Test I");
     byte[] buf = event.createByteArray();

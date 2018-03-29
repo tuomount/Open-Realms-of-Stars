@@ -59,7 +59,7 @@ public class HistoryTurnTest {
     Coordinate coord = Mockito.mock(Coordinate.class);
     Mockito.when(coord.getX()).thenReturn(22);
     Mockito.when(coord.getY()).thenReturn(11);
-    CombatEvent combatEvent = new CombatEvent(coord, 1);
+    CombatEvent combatEvent = new CombatEvent(coord);
     combatEvent.setText("Historical");
     combatEvent.setPlanetName("Test I");
     CultureEvent cultureEvent = new CultureEvent(coord, 0);

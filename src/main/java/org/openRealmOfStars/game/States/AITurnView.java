@@ -970,6 +970,7 @@ public class AITurnView extends BlackPanel {
       }
     }
     game.getStarMap().updateEspionage();
+    game.getStarMap().getHistory().updateCultureEventMap(game.getStarMap());
     game.getStarMap().setTurn(game.getStarMap().getTurn() + 1);
     if (game.getStarMap().getTurn() % NewsCorpData.NEWS_PUBLISH_RATE == 0) {
       NewsCorpData newsData = game.getStarMap().getNewsCorpData();

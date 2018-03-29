@@ -1,6 +1,7 @@
 package org.openRealmOfStars.starMap.history;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,10 +11,12 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.history.event.CombatEvent;
 import org.openRealmOfStars.starMap.history.event.CultureEvent;
 import org.openRealmOfStars.starMap.history.event.DiplomaticEvent;
+import org.openRealmOfStars.starMap.history.event.Event;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.history.event.GalacticEvent;
@@ -126,6 +129,65 @@ public class HistoryTest {
     assertEquals(0, history.getLatestTurn().getNumberOfEvents());
     history.updateCultureEventMap(map);
     assertEquals(1, history.getLatestTurn().getNumberOfEvents());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCultureUpdate() throws IOException {
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getMaxX()).thenReturn(5);
+    Mockito.when(map.getMaxY()).thenReturn(5);
+    CulturePower culturePower = Mockito.mock(CulturePower.class);
+    Mockito.when(culturePower.getHighestCulture()).thenReturn(4);
+    Mockito.when(map.getSectorCulture(1, 1)).thenReturn(culturePower);
+    Mockito.when(map.getSectorCulture(2, 2)).thenReturn(culturePower);
+    Mockito.when(map.getSectorCulture(3, 3)).thenReturn(culturePower);
+    Mockito.when(map.getSectorCulture(4, 4)).thenReturn(culturePower);
+    History history = new History();
+    history.addTurn(0);
+    CultureEvent event = new CultureEvent(new Coordinate(1,1), 1);
+    history.addEvent(event);
+    event = new CultureEvent(new Coordinate(2,2), 2);
+    history.addEvent(event);
+    history.addTurn(1);
+    event = new CultureEvent(new Coordinate(3,3), 3);
+    history.addEvent(event);
+    history.addTurn(2);
+    assertEquals(0, history.getLatestTurn().getNumberOfEvents());
+    history.updateCultureEventMap(map);
+    assertEquals(4, history.getLatestTurn().getNumberOfEvents());
+    Event event2 = history.getLatestTurn().getEvent(0);
+    if (event2 instanceof CultureEvent) {
+      CultureEvent cultureEvent = (CultureEvent) event2;
+      assertEquals(4, cultureEvent.getPlayerIndex());
+      assertEquals(1, cultureEvent.getCoordinate().getX());
+    } else {
+      assertFalse(true);
+    }
+    event2 = history.getLatestTurn().getEvent(1);
+    if (event2 instanceof CultureEvent) {
+      CultureEvent cultureEvent = (CultureEvent) event2;
+      assertEquals(4, cultureEvent.getPlayerIndex());
+      assertEquals(2, cultureEvent.getCoordinate().getX());
+    } else {
+      assertFalse(true);
+    }
+    event2 = history.getLatestTurn().getEvent(2);
+    if (event2 instanceof CultureEvent) {
+      CultureEvent cultureEvent = (CultureEvent) event2;
+      assertEquals(4, cultureEvent.getPlayerIndex());
+      assertEquals(3, cultureEvent.getCoordinate().getX());
+    } else {
+      assertFalse(true);
+    }
+    event2 = history.getLatestTurn().getEvent(3);
+    if (event2 instanceof CultureEvent) {
+      CultureEvent cultureEvent = (CultureEvent) event2;
+      assertEquals(4, cultureEvent.getPlayerIndex());
+      assertEquals(4, cultureEvent.getCoordinate().getX());
+    } else {
+      assertFalse(true);
+    }
   }
 
 }

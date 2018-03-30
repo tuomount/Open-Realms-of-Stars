@@ -568,4 +568,14 @@ public final class GameCommands {
    */
   public static final String COMMAND_RUSH_WITH_POPULATION = "RushPopulation";
 
+  /**
+   * Command for showing history information
+   */
+  public static final String COMMAND_SHOW_HISTORY = "ShowHistory";
+
+  /**
+   * Command for end showing history information
+   */
+  public static final String COMMAND_DONE_HISTORY = "DoneHistory";
+
 }

@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.starMap.StarMap;
 
@@ -43,6 +44,11 @@ public class HistoryView extends BlackPanel {
   private StarMap map;
 
   /**
+   * Map Panel handling for map drawing
+   */
+  private MapPanel mapPanel;
+
+  /**
    * Constructor for history view
    * @param starMap StarMap containing the history
    * @param listener ActionListener
@@ -53,6 +59,8 @@ public class HistoryView extends BlackPanel {
     InfoPanel centerPanel = new InfoPanel();
     centerPanel.setLayout(new BorderLayout());
     centerPanel.setTitle("History at turn " + map.getTurn());
+    mapPanel = new MapPanel(false);
+    centerPanel.add(mapPanel, BorderLayout.CENTER);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());

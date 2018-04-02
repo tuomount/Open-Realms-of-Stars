@@ -1,6 +1,7 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.openRealmOfStars.game.GameCommands;
@@ -75,5 +76,15 @@ public class HistoryView extends BlackPanel {
     this.add(centerPanel, BorderLayout.CENTER);
     this.add(bottomPanel, BorderLayout.SOUTH);
 
+  }
+
+  /**
+   * Handle actions for History view
+   * @param arg0 ActionEvent command what player did
+   */
+  public void handleAction(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
+      mapPanel.drawMap(this.map);
+    }
   }
 }

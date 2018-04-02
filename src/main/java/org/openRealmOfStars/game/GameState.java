@@ -107,5 +107,9 @@ public enum GameState {
    * Espionage view show spy information about other reals
    * and add possibility to pay GNBC to create fake news
    */
-  ESPIONAGE_VIEW
+  ESPIONAGE_VIEW,
+  /**
+   * History view showing historical game events
+   */
+  HISTORY_VIEW
 }

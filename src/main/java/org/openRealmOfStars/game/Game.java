@@ -23,6 +23,7 @@ import org.openRealmOfStars.game.States.DiplomacyView;
 import org.openRealmOfStars.game.States.EspionageView;
 import org.openRealmOfStars.game.States.FleetView;
 import org.openRealmOfStars.game.States.GalaxyCreationView;
+import org.openRealmOfStars.game.States.HistoryView;
 import org.openRealmOfStars.game.States.LoadGameView;
 import org.openRealmOfStars.game.States.MainMenu;
 import org.openRealmOfStars.game.States.NewsCorpView;
@@ -236,6 +237,11 @@ public class Game implements ActionListener {
    * Espionage view for the game
    */
   private EspionageView espionageView;
+
+  /**
+   * History view for the game
+   */
+  private HistoryView historyView;
 
   /**
    * Change Message Fleet or Planet
@@ -616,6 +622,14 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Show History view
+   */
+  public void showHistoryView() {
+    historyView = new HistoryView(starMap, this);
+    this.updateDisplay(historyView);
+  }
+
+  /**
    * Show Diplomacy view
    * @param dataObject Object where PlayerInfo with whom diplomacy
    * is going to be started is need to find
@@ -880,6 +894,10 @@ public class Game implements ActionListener {
     }
     case ESPIONAGE_VIEW: {
       showEspionageView();
+      break;
+    }
+    case HISTORY_VIEW: {
+      showHistoryView();
       break;
     }
     case PLANETBOMBINGVIEW: {
@@ -1527,6 +1545,15 @@ public class Game implements ActionListener {
       }
       combatView.handleActions(arg0);
     }
+    if (gameState == GameState.HISTORY_VIEW && historyView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_DONE_HISTORY)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(previousState);
+        return;
+      }
+      historyView.handleAction(arg0);
+    }
     if (gameState == GameState.PLANETBOMBINGVIEW && planetBombingView != null) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
@@ -1573,6 +1600,11 @@ public class Game implements ActionListener {
         .equalsIgnoreCase(GameCommands.COMMAND_VIEW_RESEARCH)) {
       SoundPlayer.playMenuSound();
       changeGameState(GameState.RESEARCHVIEW);
+    }
+    if (arg0.getActionCommand().equalsIgnoreCase(
+        GameCommands.COMMAND_SHOW_HISTORY)) {
+      SoundPlayer.playMenuSound();
+      changeGameState(GameState.HISTORY_VIEW);
     }
     if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_SHIPS)) {
       SoundPlayer.playMenuSound();

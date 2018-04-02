@@ -142,6 +142,11 @@ public class MapPanel extends JPanel {
   private Route route;
 
   /**
+   * Map scaling
+   */
+  private int scale;
+
+  /**
    * Is this for battle panel or not
    */
   private boolean battle;
@@ -160,6 +165,7 @@ public class MapPanel extends JPanel {
     this.battle = battle;
     int width = WIDTH;
     int height = HEIGHT;
+    setScale(Tile.SCALED_NORMAL);
     if (battle) {
       width = BATTLE_VIEW_SIZE;
       height = BATTLE_VIEW_SIZE;
@@ -180,12 +186,14 @@ public class MapPanel extends JPanel {
    * Calculate view according the actual panel size;
    */
   private void calculateViewPoints() {
+    int tileWidth = Tile.maxWidth(scale);
+    int tileHeight = Tile.maxHeight(scale);
     if (battle) {
       viewPointX = (this.getWidth() / ShipImage.MAX_WIDTH - 1) / 2;
       viewPointY = (this.getHeight() / ShipImage.MAX_HEIGHT - 1) / 2;
     } else {
-      viewPointX = (this.getWidth() / Tile.MAX_WIDTH - 1) / 2;
-      viewPointY = (this.getHeight() / Tile.MAX_HEIGHT - 1) / 2;
+      viewPointX = (this.getWidth() / tileWidth - 1) / 2;
+      viewPointY = (this.getHeight() / tileHeight - 1) / 2;
     }
     if (viewPointX < 1) {
       viewPointX = 1;
@@ -202,10 +210,10 @@ public class MapPanel extends JPanel {
       viewPointOffsetY = viewPointOffsetY / 2;
     } else {
       viewPointOffsetX = this.getWidth()
-          - (2 * viewPointX * Tile.MAX_WIDTH + Tile.MAX_WIDTH);
+          - (2 * viewPointX * tileWidth + tileWidth);
       viewPointOffsetX = viewPointOffsetX / 2;
       viewPointOffsetY = this.getHeight()
-          - (2 * viewPointY * Tile.MAX_HEIGHT + Tile.MAX_HEIGHT);
+          - (2 * viewPointY * tileHeight + tileHeight);
       viewPointOffsetY = viewPointOffsetY / 2;
     }
   }
@@ -610,6 +618,203 @@ public class MapPanel extends JPanel {
   }
 
   /**
+   * Draw star map with history to Map panel
+   * @param starMap Star map to draw
+   */
+  public void drawHistoryMap(final StarMap starMap) {
+    if (screen == null) {
+      calculateViewPoints();
+      if (this.getWidth() > 0 && this.getHeight() > 0) {
+        screen = new BufferedImage(this.getWidth(), this.getHeight(),
+            BufferedImage.TYPE_INT_ARGB);
+      } else {
+        return;
+      }
+    }
+    int tileWidth = Tile.maxWidth(scale);
+    int tileHeight = Tile.maxHeight(scale);
+    Graphics2D gr = screen.createGraphics();
+    // Center coordinates
+    int cx = starMap.getDrawX();
+    int cy = starMap.getDrawY();
+    if (cx < viewPointX) {
+      cx = viewPointX;
+    }
+    if (cx > starMap.getMaxX() - viewPointX - 1) {
+      cx = starMap.getMaxX() - viewPointX - 1;
+    }
+    if (cy < viewPointY) {
+      cy = viewPointY;
+    }
+    if (cy > starMap.getMaxY() - viewPointY - 1) {
+      cy = starMap.getMaxY() - viewPointY - 1;
+    }
+    starMap.setDrawPos(cx, cy);
+    // -20 for safety
+    int speedX = (GuiStatics.NEBULAE_IMAGE.getWidth() - this.getWidth()
+        - SAFETY_OFFSET) / starMap.getMaxX();
+    int speedY = (GuiStatics.NEBULAE_IMAGE.getHeight() - this.getHeight()
+        - SAFETY_OFFSET) / starMap.getMaxY();
+    int speedStarX = (GuiStatics.STAR_FIELD_IMAGE.getWidth() - this.getWidth()
+        - SAFETY_OFFSET) / starMap.getMaxX();
+    int speedStarY = (GuiStatics.STAR_FIELD_IMAGE.getHeight() - this.getHeight()
+        - SAFETY_OFFSET) / starMap.getMaxY();
+    // Parallax Scrolling with just two lines!!!
+    gr.drawImage(GuiStatics.STAR_FIELD_IMAGE,
+        -PARALLAX_OFFSET - cx * speedStarX, -PARALLAX_OFFSET - cy * speedStarY,
+        null);
+    gr.drawImage(GuiStatics.NEBULAE_IMAGE, -PARALLAX_OFFSET - cx * speedX,
+        -PARALLAX_OFFSET - cy * speedY, null);
+
+    lastDrawnCenterX = cx;
+    lastDrawnCenterY = cy;
+    int scaled = 16 * (flickerBlue - COLOR_COMPONENT_HALF)
+        / COLOR_COMPONENT_DIVIDER;
+    Color colorDarkBlue = new Color(0, FLICKER_GREEN + scaled,
+        FLICKER_BLUE + scaled);
+    Color colorFlickerBlue = new Color(0, 0, 16);
+    if (flickerBlue < COLOR_COMPONENT_DIVIDER) {
+      colorFlickerBlue = new Color(0, 0, flickerBlue);
+    } else {
+      int above = flickerBlue - COLOR_COMPONENT_DIVIDER;
+      colorFlickerBlue = new Color(above, above, COLOR_COMPONENT_MAX);
+    }
+    if (flickerGoUp) {
+      flickerBlue = flickerBlue + 16;
+    } else {
+      flickerBlue = flickerBlue - 16;
+    }
+    if (flickerBlue > FLICKER_UPPER_LIMIT) {
+      flickerGoUp = false;
+    }
+    if (flickerBlue < COLOR_COMPONENT_HALF) {
+      flickerGoUp = true;
+    }
+
+    int pixelX = viewPointOffsetX;
+    int pixelY = viewPointOffsetY;
+    for (int j = -viewPointY; j < viewPointY + 1; j++) {
+      for (int i = -viewPointX; i < viewPointX + 1; i++) {
+        Stroke dashed = new BasicStroke(1, BasicStroke.CAP_SQUARE,
+            BasicStroke.JOIN_BEVEL, 1, new float[] {0.1f, 4.5f }, 0);
+        Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE,
+            BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
+        gr.setStroke(dashed);
+        gr.setColor(colorDarkBlue);
+        if (i != viewPointX && scale < Tile.SCALED_FIFTH) {
+          // Right line
+          gr.drawLine(pixelX + tileWidth - 1, pixelY,
+              pixelX + tileWidth - 1, pixelY + tileHeight - 1);
+        }
+        if (j != viewPointY && scale < Tile.SCALED_FIFTH) {
+          // Bottom line
+          gr.drawLine(pixelX, pixelY + tileHeight - 1,
+              pixelX + tileWidth - 1, pixelY + tileHeight - 1);
+        }
+        Tile tile = starMap.getTile(i + cx, j + cy);
+        if (tile == null) {
+          continue;
+        }
+        if (tile.getAnimationIndex() != tile.getIndex()) {
+          // Change map tile for next drawing
+          starMap.setTile(i + cx, j + cy,
+              Tiles.getTileByIndex(tile.getAnimationIndex()));
+        }
+        // Draw only non empty tiles
+        if (!tile.getName().equals(TileNames.EMPTY)) {
+          tile.drawScaled(gr, pixelX, pixelY, scale);
+        }
+
+
+        // Draw the map cursor
+        if (i + cx == starMap.getCursorX() && j + cy == starMap.getCursorY()) {
+          gr.setStroke(full);
+          gr.setColor(colorFlickerBlue);
+          // Top line
+          gr.drawLine(pixelX, pixelY, pixelX + tileWidth - 1, pixelY);
+          // Left line
+          gr.drawLine(pixelX, pixelY, pixelX, pixelY + tileHeight - 1);
+          // Right line
+          gr.drawLine(pixelX + tileWidth - 1, pixelY,
+              pixelX + tileWidth - 1, pixelY + tileHeight - 1);
+          // Bottom line
+          gr.drawLine(pixelX, pixelY + tileHeight - 1,
+              pixelX + tileWidth - 1, pixelY + tileHeight - 1);
+          gr.setStroke(dashed);
+          gr.setColor(colorDarkBlue);
+        }
+
+        // Draw sun's text
+        if (scale == Tile.SCALED_NORMAL
+            && tile.getName().equals(TileNames.SUN_E) && i > -viewPointX + 1) {
+          Sun sun = starMap.getSunByCoordinate(i + cx, j + cy);
+          if (sun != null) {
+            int textWidth = (int) GuiStatics.getFontCubellanSC()
+                .getStringBounds(sun.getName(), gr.getFontRenderContext())
+                .getWidth();
+            int offset = tileWidth / 2 + textWidth / 2 - 2;
+            gr.setStroke(GuiStatics.TEXT_LINE);
+            gr.setColor(GuiStatics.COLOR_GOLD_TRANS);
+            gr.drawLine(pixelX - offset, pixelY + tileHeight / 2 - 3,
+                pixelX - tileWidth + offset,
+                pixelY + tileHeight / 2 - 3);
+            gr.setColor(Color.BLACK);
+            gr.setFont(GuiStatics.getFontCubellanSC());
+            gr.drawString(sun.getName(),
+                pixelX - tileWidth / 2 - textWidth / 2,
+                pixelY + tileHeight / 2);
+          }
+        }
+
+        Planet planet = starMap.getPlanetByCoordinate(i + cx, j + cy);
+        // Draw Gas giant text
+        if ((tile.getName().equals(TileNames.GAS_GIANT_1_SE) && i > -viewPointX
+            || tile.getName().equals(TileNames.GAS_GIANT_2_SE)
+                && i > -viewPointX)
+            && planet != null && scale == Tile.SCALED_NORMAL) {
+          int textWidth = (int) GuiStatics.getFontCubellanSC()
+              .getStringBounds(RandomSystemNameGenerator.numberToRoman(
+                  planet.getOrderNumber()), gr.getFontRenderContext())
+              .getWidth();
+          int offset = textWidth / 2 - 2;
+          gr.setStroke(GuiStatics.TEXT_LINE);
+          gr.setColor(GuiStatics.COLOR_GREYBLUE);
+          gr.drawLine(pixelX - offset, pixelY - 3, pixelX + offset, pixelY - 3);
+          gr.setColor(Color.BLACK);
+          gr.setFont(GuiStatics.getFontCubellanSC());
+          gr.drawString(
+              RandomSystemNameGenerator.numberToRoman(planet.getOrderNumber()),
+              pixelX - textWidth / 2, pixelY);
+        }
+
+        // Draw planet text
+        if (planet != null && !planet.isGasGiant()
+            && scale == Tile.SCALED_NORMAL) {
+          int textWidth = (int) GuiStatics.getFontCubellanSC()
+              .getStringBounds(RandomSystemNameGenerator.numberToRoman(
+                  planet.getOrderNumber()), gr.getFontRenderContext())
+              .getWidth();
+          int offset = tileWidth / 2 - textWidth / 2 - 2;
+          gr.setStroke(GuiStatics.TEXT_LINE);
+          gr.setColor(GuiStatics.COLOR_GREYBLUE);
+          gr.drawLine(pixelX + offset, pixelY + tileHeight / 2 - 3,
+              pixelX + tileWidth - offset,
+              pixelY + tileHeight / 2 - 3);
+          gr.setColor(Color.BLACK);
+          gr.setFont(GuiStatics.getFontCubellanSC());
+          gr.drawString(
+              RandomSystemNameGenerator.numberToRoman(planet.getOrderNumber()),
+              pixelX + tileWidth / 2 - textWidth / 2,
+              pixelY + tileHeight / 2);
+        }
+        pixelX = pixelX + tileWidth;
+      }
+      pixelX = viewPointOffsetX;
+      pixelY = pixelY + tileHeight;
+    }
+  }
+
+  /**
    * Draw battle map to Map panel
    * @param combat to draw on map panel
    * @param info PlayerInfo
@@ -951,6 +1156,23 @@ public class MapPanel extends JPanel {
    */
   public void setRoute(final Route route) {
     this.route = route;
+  }
+
+  /**
+   * Get map scale value
+   * @return the scale
+   */
+  public int getScale() {
+    return scale;
+  }
+
+  /**
+   * Set map scale value
+   * @param mapScale the scale to set
+   */
+  public void setScale(final int mapScale) {
+    screen = null;
+    scale = mapScale;
   }
 
 }

@@ -9,6 +9,7 @@ import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.starMap.StarMap;
 
 /**
@@ -61,6 +62,7 @@ public class HistoryView extends BlackPanel {
     centerPanel.setLayout(new BorderLayout());
     centerPanel.setTitle("History at turn " + map.getTurn());
     mapPanel = new MapPanel(false);
+    mapPanel.setScale(Tile.SCALED_HALF);
     centerPanel.add(mapPanel, BorderLayout.CENTER);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
@@ -84,7 +86,8 @@ public class HistoryView extends BlackPanel {
    */
   public void handleAction(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
-      mapPanel.drawMap(this.map);
+      mapPanel.drawHistoryMap(this.map);
+      mapPanel.repaint();
     }
   }
 }

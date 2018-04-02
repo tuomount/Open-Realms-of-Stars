@@ -43,6 +43,8 @@ public class TileTest {
     Mockito.when(img.getHeight()).thenReturn(512);
     Mockito.when(img.getSubimage(0 * Tile.MAX_WIDTH, 0 * Tile.MAX_HEIGHT,
         Tile.MAX_WIDTH, Tile.MAX_HEIGHT)).thenReturn(img2);
+    Mockito.when(img.getType()).thenReturn(BufferedImage.TYPE_4BYTE_ABGR);
+    Mockito.when(img2.getType()).thenReturn(BufferedImage.TYPE_4BYTE_ABGR);
     
     Tile tile = new Tile(img, 0, 0, "Test");
     assertEquals("", tile.getDescription());

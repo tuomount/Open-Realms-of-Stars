@@ -62,7 +62,7 @@ public class HistoryView extends BlackPanel {
     centerPanel.setLayout(new BorderLayout());
     centerPanel.setTitle("History at turn " + map.getTurn());
     mapPanel = new MapPanel(false);
-    mapPanel.setScale(Tile.SCALED_HALF);
+    mapPanel.setScale(Tile.SCALED_NORMAL);
     centerPanel.add(mapPanel, BorderLayout.CENTER);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();

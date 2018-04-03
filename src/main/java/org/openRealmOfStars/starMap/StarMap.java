@@ -38,6 +38,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
 import org.openRealmOfStars.utilities.repository.NewsCorpRepository;
@@ -512,6 +513,12 @@ public class StarMap {
       NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
       newsCorpData = newsCorpRepo.restoreNewsCorp(dis,
           players.getCurrentMaxPlayers());
+      try {
+        history = History.readFromStream(dis);
+      } catch (IOException e) {
+        ErrorLogger.log("Failed reading history data,"
+            + " maybe save is missing it.");
+      }
     } else {
       if (str.startsWith("OROS-SAVE-GAME-")) {
         throw new IOException(
@@ -557,6 +564,7 @@ public class StarMap {
     }
     NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
     newsCorpRepo.saveNewsCorp(dos, newsCorpData);
+    history.writeToStream(dos);
   }
 
   /**

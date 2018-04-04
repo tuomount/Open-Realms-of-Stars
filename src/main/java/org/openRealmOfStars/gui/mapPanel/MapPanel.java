@@ -631,6 +631,9 @@ public class MapPanel extends JPanel {
         return;
       }
     }
+    int cursorPixelX = 0;
+    int cursorPixelY = 0;
+    Color colorRed = null;
     int tileWidth = Tile.maxWidth(scale);
     int tileHeight = Tile.maxHeight(scale);
     Graphics2D gr = screen.createGraphics();
@@ -675,9 +678,11 @@ public class MapPanel extends JPanel {
     Color colorFlickerBlue = new Color(0, 0, 16);
     if (flickerBlue < COLOR_COMPONENT_DIVIDER) {
       colorFlickerBlue = new Color(0, 0, flickerBlue);
+      colorRed = new Color(flickerBlue, 0, 0);
     } else {
       int above = flickerBlue - COLOR_COMPONENT_DIVIDER;
       colorFlickerBlue = new Color(above, above, COLOR_COMPONENT_MAX);
+      colorRed = new Color(COLOR_COMPONENT_MAX, above, above);
     }
     if (flickerGoUp) {
       flickerBlue = flickerBlue + 16;
@@ -730,6 +735,8 @@ public class MapPanel extends JPanel {
         if (i + cx == starMap.getCursorX() && j + cy == starMap.getCursorY()) {
           gr.setStroke(full);
           gr.setColor(colorFlickerBlue);
+          cursorPixelX = pixelX;
+          cursorPixelY = pixelY;
           // Top line
           gr.drawLine(pixelX, pixelY, pixelX + tileWidth - 1, pixelY);
           // Left line
@@ -812,6 +819,18 @@ public class MapPanel extends JPanel {
       pixelX = viewPointOffsetX;
       pixelY = pixelY + tileHeight;
     }
+    Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE,
+        BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
+    gr.setStroke(full);
+    gr.setColor(colorRed);
+    gr.drawLine(0, cursorPixelY + tileHeight / 2, cursorPixelX,
+        cursorPixelY + tileHeight / 2);
+    gr.drawLine(cursorPixelX + tileWidth, cursorPixelY + tileHeight / 2,
+        screen.getWidth(), cursorPixelY + tileHeight / 2);
+    gr.drawLine(cursorPixelX + tileWidth / 2, 0, cursorPixelX + tileWidth / 2,
+        cursorPixelY);
+    gr.drawLine(cursorPixelX + tileWidth / 2, cursorPixelY + tileHeight,
+        cursorPixelX + tileWidth / 2, screen.getHeight());
   }
 
   /**

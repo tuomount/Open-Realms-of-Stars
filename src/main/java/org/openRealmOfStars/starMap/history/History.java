@@ -161,12 +161,12 @@ public class History {
   }
 
   /**
-   * Method to update culture map according the newest changes.
-   * Adds multiple culture events in history if current
-   * culture map has changed in starmap.
-   * @param starMap Containing newest culture information.
+   * Calculate culture from history up to certain turn number.
+   * @param upToTurn Which turn number to calculate
+   * @param starMap Starmap to fetch map size
+   * @return Culture as interger array of arry.
    */
-  public void updateCultureEventMap(final StarMap starMap) {
+  public int[][] calculateCulture(final int upToTurn, final StarMap starMap) {
     int maxX = starMap.getMaxX();
     int maxY = starMap.getMaxY();
     int[][] culture = new int[maxX][maxY];
@@ -176,8 +176,12 @@ public class History {
         culture[j][i] = -1;
       }
     }
+    int max = upToTurn;
+    if (listOfTurns.size() < upToTurn) {
+      max = listOfTurns.size();
+    }
     // Build culture map according the event
-    for (int i = 0; i < listOfTurns.size(); i++) {
+    for (int i = 0; i < max; i++) {
       HistoryTurn turn = listOfTurns.get(i);
       for (int j = 0; j < turn.getNumberOfEvents(); j++) {
         Event event = turn.getEvent(j);
@@ -191,6 +195,18 @@ public class History {
         }
       }
     }
+    return culture;
+  }
+  /**
+   * Method to update culture map according the newest changes.
+   * Adds multiple culture events in history if current
+   * culture map has changed in starmap.
+   * @param starMap Containing newest culture information.
+   */
+  public void updateCultureEventMap(final StarMap starMap) {
+    int maxX = starMap.getMaxX();
+    int maxY = starMap.getMaxY();
+    int[][] culture = calculateCulture(listOfTurns.size(), starMap);
     // Compare it to starmap and add missing culture
     for (int y = 0; y < maxY; y++) {
       for (int x = 0; x < maxX; x++) {

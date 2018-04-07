@@ -157,6 +157,11 @@ public class MapPanel extends JPanel {
   private int wormHoleAnimation = 0;
 
   /**
+   * History cultural information
+   */
+  private int[][] historyCultures;
+
+  /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
    * @param battle True if drawing battle map.
@@ -166,6 +171,7 @@ public class MapPanel extends JPanel {
     int width = WIDTH;
     int height = HEIGHT;
     setScale(Tile.SCALED_NORMAL);
+    historyCultures = null;
     if (battle) {
       width = BATTLE_VIEW_SIZE;
       height = BATTLE_VIEW_SIZE;
@@ -720,6 +726,15 @@ public class MapPanel extends JPanel {
         if (tile == null) {
           continue;
         }
+        if (historyCultures != null) {
+          int index = historyCultures[i + cx][j + cy];
+          if (index != -1) {
+            Tile cultureTile = Tiles.getTileByName("Player_" + index);
+            if (cultureTile != null) {
+              cultureTile.drawScaled(gr, pixelX, pixelY, scale);
+            }
+          }
+        }
         if (tile.getAnimationIndex() != tile.getIndex()) {
           // Change map tile for next drawing
           starMap.setTile(i + cx, j + cy,
@@ -1194,4 +1209,11 @@ public class MapPanel extends JPanel {
     scale = mapScale;
   }
 
+  /**
+   * set historical culture information.
+   * @param culture as integer array
+   */
+  public void setHistoryCultures(final int[][] culture) {
+    historyCultures = culture;
+  }
 }

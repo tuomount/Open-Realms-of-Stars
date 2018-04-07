@@ -82,6 +82,14 @@ public class HistoryTurnTest {
     turn.addEvent(diplomaticEvent);
     turn.addEvent(event);
     turn.addEvent(startEvent);
+    assertEquals(6, turn.getNumberOfTextualEvents());
+    assertEquals(1, turn.getEventNumber(0));
+    assertEquals(1, turn.getEventNumber(1));
+    assertEquals(2, turn.getEventNumber(2));
+    assertEquals(3, turn.getEventNumber(3));
+    assertEquals(4, turn.getEventNumber(4));
+    assertEquals(5, turn.getEventNumber(5));
+    assertEquals(6, turn.getEventNumber(6));
     byte[] buffer = turn.createByteArray();
     ByteArrayInputStream bis = new ByteArrayInputStream(buffer);
     HistoryTurn turn2 = HistoryTurn.parseHistoryTurn(bis);

@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.starMap.history.event.Event;
+import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -69,6 +70,39 @@ public class HistoryTurn {
     return listOfEvents.size();
   }
 
+  /**
+   * Get Number of textual events
+   * @return Number of textual events, cultural events are dismissed.
+   */
+  public int getNumberOfTextualEvents() {
+    int result = 0;
+    for (int i = 0; i < listOfEvents.size(); i++) {
+      Event event = getEvent(i);
+      if (event.getType() != EventType.CULTURE_CHANGE) {
+        result++;
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Get Event Number in textual events.
+   * @param eventIndex Event index to fetch event number in textual events.
+   * @return Number in textual events, cultural events are dismissed.
+   */
+  public int getEventNumber(final int eventIndex) {
+    int result = 0;
+    for (int i = 0; i < listOfEvents.size(); i++) {
+      Event event = getEvent(i);
+      if (event.getType() != EventType.CULTURE_CHANGE) {
+        result++;
+      }
+      if (eventIndex == i) {
+        break;
+      }
+    }
+    return result;
+  }
   /**
    * Get Event by index.
    * @param index Index number for event

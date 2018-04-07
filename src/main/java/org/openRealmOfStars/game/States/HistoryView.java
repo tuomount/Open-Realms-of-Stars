@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.buttons.IconButton;
@@ -20,7 +21,16 @@ import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.history.HistoryTurn;
+import org.openRealmOfStars.starMap.history.event.CombatEvent;
+import org.openRealmOfStars.starMap.history.event.DiplomaticEvent;
+import org.openRealmOfStars.starMap.history.event.Event;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
+import org.openRealmOfStars.starMap.history.event.GalacticEvent;
+import org.openRealmOfStars.starMap.history.event.PlayerStartEvent;
 
 /**
  *
@@ -71,12 +81,24 @@ public class HistoryView extends BlackPanel {
   private SpaceLabel turnLabel;
 
   /**
+   * Turn Number
+   */
+  private int turnNumber;
+
+  /**
+   * Event number
+   */
+  private int eventNumber;
+
+  /**
    * Constructor for history view
    * @param starMap StarMap containing the history
    * @param listener ActionListener
    */
   public HistoryView(final StarMap starMap, final ActionListener listener) {
     map = starMap;
+    turnNumber = 0;
+    eventNumber = 0;
     this.setLayout(new BorderLayout());
     InfoPanel centerPanel = new InfoPanel();
     centerPanel.setLayout(new BorderLayout());
@@ -100,14 +122,14 @@ public class HistoryView extends BlackPanel {
     IconButton iBtn = new IconButton(GuiStatics.LEFT_ARROW,
         GuiStatics.LEFT_ARROW_PRESSED, false, GameCommands.COMMAND_PREV_YEAR,
         this);
-    iBtn.setToolTipText("Previous year");
+    iBtn.setToolTipText("Previous turn");
     iBtn.addActionListener(listener);
     panel.add(iBtn);
     panel.add(Box.createRigidArea(new Dimension(10, 10)));
     iBtn = new IconButton(GuiStatics.LEFT_ARROW,
         GuiStatics.LEFT_ARROW_PRESSED, false, GameCommands.COMMAND_PREV_EVENT,
         this);
-    iBtn.setToolTipText("Previous event");
+    iBtn.setToolTipText("Jump to first event on current turn.");
     iBtn.addActionListener(listener);
     panel.add(iBtn);
     panel.add(Box.createRigidArea(new Dimension(10, 10)));
@@ -117,14 +139,15 @@ public class HistoryView extends BlackPanel {
     iBtn = new IconButton(GuiStatics.RIGHT_ARROW,
         GuiStatics.RIGHT_ARROW_PRESSED, false, GameCommands.COMMAND_NEXT_EVENT,
         this);
-    iBtn.setToolTipText("Next event");
+    iBtn.setToolTipText("Move to next event or"
+        + " next turn if event is last event on this turn.");
     iBtn.addActionListener(listener);
     panel.add(iBtn);
     panel.add(Box.createRigidArea(new Dimension(10, 10)));
     iBtn = new IconButton(GuiStatics.RIGHT_ARROW,
         GuiStatics.RIGHT_ARROW_PRESSED, false, GameCommands.COMMAND_NEXT_YEAR,
         this);
-    iBtn.setToolTipText("Next year");
+    iBtn.setToolTipText("Next turn");
     iBtn.addActionListener(listener);
     panel.add(iBtn);
     EmptyInfoPanel panel2 = new EmptyInfoPanel();
@@ -146,9 +169,57 @@ public class HistoryView extends BlackPanel {
     // Add panels to base
     this.add(centerPanel, BorderLayout.CENTER);
     this.add(bottomPanel, BorderLayout.SOUTH);
+    // Update screen
+    updateTurnLabel();
+    updateTextArea();
 
   }
 
+  /**
+   * Update turn label with current turn number and event number.
+   */
+  public void updateTurnLabel() {
+    int historyTurns = map.getHistory().getLatestTurn().getTurn();
+    HistoryTurn turn = map.getHistory().getByIndex(turnNumber);
+    int events = turn.getNumberOfTextualEvents();
+    String text = "Turn " + turn.getTurn() + "/" + historyTurns;
+    text = text + " Event " + turn.getEventNumber(eventNumber) + "/" + events;
+    turnLabel.setText(text);
+  }
+
+  /**
+   * Update text area with historical information
+   */
+  public void updateTextArea() {
+    HistoryTurn turn = map.getHistory().getByIndex(turnNumber);
+    Event event = turn.getEvent(eventNumber);
+    if (event != null) {
+      if (event.getType() == EventType.DIPLOMATIC_RELATION_CHANGE) {
+        DiplomaticEvent diplomatic = (DiplomaticEvent) event;
+        textArea.setText(diplomatic.getText());
+      }
+      if (event.getType() == EventType.GALATIC_NEWS) {
+        GalacticEvent galactic = (GalacticEvent) event;
+        textArea.setText(galactic.getText());
+      }
+      if (event.getType() == EventType.PLANET_COLONIZED
+          || event.getType() == EventType.PLANET_CONQUERED) {
+        EventOnPlanet planetary = (EventOnPlanet) event;
+        textArea.setText(planetary.getText());
+      }
+      if (event.getType() == EventType.SPACE_COMBAT) {
+        CombatEvent combat = (CombatEvent) event;
+        textArea.setText(combat.getText());
+      }
+      if (event.getType() == EventType.PLAYER_START) {
+        PlayerStartEvent start = (PlayerStartEvent) event;
+        PlayerInfo info = map.getPlayerList().getPlayerInfoByIndex(
+            start.getPlayerIndex());
+        textArea.setText(info.getEmpireName() + " starts from "
+            + start.getName() + "!");
+      }
+    }
+  }
   /**
    * Handle actions for History view
    * @param arg0 ActionEvent command what player did
@@ -157,6 +228,64 @@ public class HistoryView extends BlackPanel {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
       mapPanel.drawHistoryMap(this.map);
       mapPanel.repaint();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_YEAR)
+        && turnNumber > 0) {
+      SoundPlayer.playMenuSound();
+      turnNumber--;
+      eventNumber = 0;
+      updateTurnLabel();
+      updateTextArea();
+      turnLabel.repaint();
+      textArea.repaint();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_YEAR)
+        && turnNumber < map.getHistory().numberOfTurns() - 1) {
+      SoundPlayer.playMenuSound();
+      turnNumber++;
+      eventNumber = 0;
+      updateTurnLabel();
+      updateTextArea();
+      turnLabel.repaint();
+      textArea.repaint();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_EVENT)) {
+      SoundPlayer.playMenuSound();
+      eventNumber = 0;
+      updateTurnLabel();
+      updateTextArea();
+      turnLabel.repaint();
+      textArea.repaint();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_EVENT)) {
+      SoundPlayer.playMenuSound();
+      HistoryTurn turn = map.getHistory().getByIndex(turnNumber);
+      int originalEventNumber = eventNumber;
+      if (turn != null) {
+        eventNumber++;
+        Event event = turn.getEvent(eventNumber);
+        while (event != null && event.getType() == EventType.CULTURE_CHANGE) {
+          eventNumber++;
+          event = turn.getEvent(eventNumber);
+        }
+        if (event == null) {
+          if (turnNumber < map.getHistory().numberOfTurns() - 1) {
+            turnNumber++;
+            eventNumber = 0;
+            updateTurnLabel();
+            updateTextArea();
+            turnLabel.repaint();
+            textArea.repaint();
+          } else {
+            eventNumber = originalEventNumber;
+          }
+        } else {
+          updateTurnLabel();
+          updateTextArea();
+          turnLabel.repaint();
+          textArea.repaint();
+        }
+      }
     }
   }
 }

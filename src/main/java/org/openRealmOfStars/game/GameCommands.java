@@ -578,4 +578,24 @@ public final class GameCommands {
    */
   public static final String COMMAND_DONE_HISTORY = "DoneHistory";
 
+  /**
+   * Command for previous year
+   */
+  public static final String COMMAND_PREV_YEAR = "PrevYear";
+
+  /**
+   * Command for next year
+   */
+  public static final String COMMAND_NEXT_YEAR = "NextYear";
+
+  /**
+   * Command for previous event
+   */
+  public static final String COMMAND_PREV_EVENT = "PrevEvent";
+
+  /**
+   * Command for next event
+   */
+  public static final String COMMAND_NEXT_EVENT = "NextEvent";
+
 }

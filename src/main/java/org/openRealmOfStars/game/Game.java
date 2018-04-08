@@ -1549,7 +1549,7 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_DONE_HISTORY)) {
         SoundPlayer.playMenuSound();
-        changeGameState(previousState);
+        changeGameState(GameState.MAIN_MENU);
         return;
       }
       historyView.handleAction(arg0);
@@ -1695,9 +1695,8 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
         if (starMap.getTurn() == starMap.getScoreVictoryTurn()) {
-          // TODO: Quick and ugly ending needs to be better
           SoundPlayer.playMenuSound();
-          changeGameState(GameState.MAIN_MENU);
+          changeGameState(GameState.HISTORY_VIEW);
           return;
         } else {
           SoundPlayer.playMenuSound();

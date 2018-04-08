@@ -3,7 +3,7 @@ package org.openRealmOfStars.starMap;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -121,5 +121,22 @@ public class Coordinate {
         return true;
       }
       return false;
+    }
+
+    /**
+     * Move coordinate towards target. Useful for map scrolling.
+     * @param target Coordinate
+     */
+    public void moveTowards(final Coordinate target) {
+      if (target.getX() > x) {
+        x++;
+      } else if (target.getX() < x) {
+        x--;
+      }
+      if (target.getY() > y) {
+        y++;
+      } else if (target.getY() < y) {
+        y--;
+      }
     }
 }

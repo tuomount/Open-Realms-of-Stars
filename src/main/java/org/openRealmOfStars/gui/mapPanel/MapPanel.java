@@ -162,6 +162,11 @@ public class MapPanel extends JPanel {
   private int[][] historyCultures;
 
   /**
+   * History map coordinate
+   */
+  private Coordinate historyCoordinates;
+
+  /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
    * @param battle True if drawing battle map.
@@ -172,6 +177,7 @@ public class MapPanel extends JPanel {
     int height = HEIGHT;
     setScale(Tile.SCALED_NORMAL);
     historyCultures = null;
+    historyCoordinates = null;
     if (battle) {
       width = BATTLE_VIEW_SIZE;
       height = BATTLE_VIEW_SIZE;
@@ -644,8 +650,13 @@ public class MapPanel extends JPanel {
     int tileHeight = Tile.maxHeight(scale);
     Graphics2D gr = screen.createGraphics();
     // Center coordinates
-    int cx = starMap.getDrawX();
-    int cy = starMap.getDrawY();
+    if (historyCoordinates == null) {
+      historyCoordinates = new Coordinate(starMap.getDrawX(),
+          starMap.getDrawY());
+    }
+    int cx = historyCoordinates.getX();
+    int cy = historyCoordinates.getY();
+    starMap.setCursorPos(cx, cy);
     if (cx < viewPointX) {
       cx = viewPointX;
     }
@@ -1215,5 +1226,16 @@ public class MapPanel extends JPanel {
    */
   public void setHistoryCultures(final int[][] culture) {
     historyCultures = culture;
+  }
+
+  /**
+   * Get history coordinates.
+   * @return Coordinates
+   */
+  public Coordinate getHistoryCoordinates() {
+    if (historyCoordinates == null) {
+      historyCoordinates = new Coordinate(15, 15);
+    }
+    return historyCoordinates;
   }
 }

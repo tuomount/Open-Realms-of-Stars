@@ -22,6 +22,7 @@ import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.history.HistoryTurn;
 import org.openRealmOfStars.starMap.history.event.CombatEvent;
@@ -91,6 +92,11 @@ public class HistoryView extends BlackPanel {
   private int eventNumber;
 
   /**
+   * Target coordinate
+   */
+  private Coordinate targetCoordinate;
+
+  /**
    * Constructor for history view
    * @param starMap StarMap containing the history
    * @param listener ActionListener
@@ -99,10 +105,11 @@ public class HistoryView extends BlackPanel {
     map = starMap;
     turnNumber = 0;
     eventNumber = 0;
+    targetCoordinate = null;
     this.setLayout(new BorderLayout());
     InfoPanel centerPanel = new InfoPanel();
     centerPanel.setLayout(new BorderLayout());
-    centerPanel.setTitle("History at turn " + map.getTurn());
+    centerPanel.setTitle("History");
     mapPanel = new MapPanel(false);
     mapPanel.setScale(Tile.SCALED_NORMAL);
     mapPanel.setHistoryCultures(starMap.getHistory().calculateCulture(0,
@@ -196,20 +203,44 @@ public class HistoryView extends BlackPanel {
     if (event != null) {
       if (event.getType() == EventType.DIPLOMATIC_RELATION_CHANGE) {
         DiplomaticEvent diplomatic = (DiplomaticEvent) event;
-        textArea.setText(diplomatic.getText());
+        String startText;
+        if (diplomatic.getCoordinate().getX() == 0
+            && diplomatic.getCoordinate().getY() == 0) {
+          targetCoordinate = null;
+          startText = "Diplomatic meeting happened somewhere in deep and"
+              + " cold space. ";
+        } else {
+          targetCoordinate = diplomatic.getCoordinate();
+          startText = "Diplomatic meeting happened somewhere in deep space. ";
+          if (diplomatic.getPlanetName() != null) {
+            startText = "Diplomatic meeting in planet called "
+                + diplomatic.getPlanetName() + ". ";
+          }
+        }
+        textArea.setText(startText + diplomatic.getText());
       }
       if (event.getType() == EventType.GALATIC_NEWS) {
         GalacticEvent galactic = (GalacticEvent) event;
         textArea.setText(galactic.getText());
+        targetCoordinate = null;
       }
       if (event.getType() == EventType.PLANET_COLONIZED
           || event.getType() == EventType.PLANET_CONQUERED) {
         EventOnPlanet planetary = (EventOnPlanet) event;
-        textArea.setText(planetary.getText());
+        textArea.setText("Event on planet called " + planetary.getName() + ": "
+            + planetary.getText());
+        targetCoordinate = planetary.getCoordinate();
       }
       if (event.getType() == EventType.SPACE_COMBAT) {
         CombatEvent combat = (CombatEvent) event;
-        textArea.setText(combat.getText());
+        if (combat.getPlanetName() != null) {
+          textArea.setText("Combat happened at orbit of "
+              + combat.getPlanetName() + ". " + combat.getText());
+        } else {
+          textArea.setText("Combat happened in deep space. "
+              + combat.getText());
+        }
+        targetCoordinate = combat.getCoordinate();
       }
       if (event.getType() == EventType.PLAYER_START) {
         PlayerStartEvent start = (PlayerStartEvent) event;
@@ -217,6 +248,7 @@ public class HistoryView extends BlackPanel {
             start.getPlayerIndex());
         textArea.setText(info.getEmpireName() + " starts from "
             + start.getName() + "!");
+        targetCoordinate = start.getCoordinate();
       }
     }
   }
@@ -226,6 +258,9 @@ public class HistoryView extends BlackPanel {
    */
   public void handleAction(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
+      if (targetCoordinate != null) {
+        mapPanel.getHistoryCoordinates().moveTowards(targetCoordinate);
+      }
       mapPanel.drawHistoryMap(this.map);
       mapPanel.repaint();
     }

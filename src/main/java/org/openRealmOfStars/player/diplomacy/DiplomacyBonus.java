@@ -217,6 +217,19 @@ public class DiplomacyBonus {
        }
        break;
      }
+     case ESPIONAGE_BORDER_CROSS: {
+       if (race == SpaceRace.SPORKS || race == SpaceRace.TEUTHIDAES) {
+         bonusValue = -2;
+         bonusLasting = 20;
+       } else if (race == SpaceRace.MECHIONS) {
+         bonusValue = -6;
+         bonusLasting = 20;
+       } else {
+         bonusValue = -4;
+         bonusLasting = 30;
+       }
+       break;
+     }
      default: {
        throw new IllegalArgumentException("Unknown bonus type!!");
      }

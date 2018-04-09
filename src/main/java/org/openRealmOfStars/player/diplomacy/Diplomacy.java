@@ -384,7 +384,8 @@ public class Diplomacy {
       int count = 0;
       for (int i = 0; i < diplomacyList[index].getListSize(); i++) {
         DiplomacyBonus bonus = diplomacyList[index].get(i);
-        if (bonus.getType() == DiplomacyBonusType.BORDER_CROSSED) {
+        if (bonus.getType() == DiplomacyBonusType.BORDER_CROSSED
+            || bonus.getType() == DiplomacyBonusType.ESPIONAGE_BORDER_CROSS) {
           count++;
         }
       }

@@ -46,6 +46,13 @@ import org.openRealmOfStars.utilities.IOUtilities;
 public class Ship extends Construction {
 
   /**
+   * Bonus for hiding espionage modules in ships.
+   * So finding espionage is more difficult than
+   * detecting cloacked ship. Cloaking device makes find espionage module
+   * more difficult.
+   */
+  public static final int ESPIONAGE_HIDE = 20;
+  /**
    * Ship's hull
    */
   private ShipHull hull;

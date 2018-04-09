@@ -977,6 +977,7 @@ public class DiplomaticTrade {
     if (info.getDiplomacy().isWar(first)
         || getSpeechTypeByOffer() == SpeechType.DEMAND
         || getSpeechTypeByOffer() == SpeechType.ASK_MOVE_FLEET
+        || getSpeechTypeByOffer() == SpeechType.ASK_MOVE_SPY
         && secondOffer.getByIndex(0).getFleet().getMilitaryValue() > 0) {
       Attitude attitude = info.getAiAttitude();
       int divider = 4;

@@ -103,6 +103,16 @@ public class DiplomacyView extends BlackPanel {
    */
   public static final int AI_BORDER_CROSS = 3;
   /**
+   * Human player starts diplomacy view so that AI's espionage ship
+   * has crossed the border
+   */
+  public static final int HUMAN_ESPIONAGE = 4;
+  /**
+   * AI player starts diplomacy view so that Human's espionage ship
+   * has crossed the border
+   */
+  public static final int AI_ESPIONAGE = 5;
+  /**
    * Player Info for human
    */
   private PlayerInfo human;
@@ -216,6 +226,8 @@ public class DiplomacyView extends BlackPanel {
    *        AI_REGULAR
    *        HUMAN_BORDER_CROSS
    *        AI_BORDER_CROSS
+   *        AI_ESPIONAGE
+   *        HUMAN_ESPIONAGE
    * @param fleet Fleet which has crossed the border. Can be null
    * @param planet Planet where meeting happended. Can be null
    * @param listener ActionListener
@@ -243,7 +255,8 @@ public class DiplomacyView extends BlackPanel {
     }
     int humanIndex = starMap.getPlayerList().getIndex(human);
     int aiIndex = starMap.getPlayerList().getIndex(ai);
-    if (startType == AI_REGULAR || startType == AI_BORDER_CROSS) {
+    if (startType == AI_REGULAR || startType == AI_BORDER_CROSS
+        || startType == AI_ESPIONAGE) {
       trade = new DiplomaticTrade(starMap, aiIndex, humanIndex);
     } else {
       trade = new DiplomaticTrade(starMap, humanIndex, aiIndex);
@@ -388,7 +401,16 @@ public class DiplomacyView extends BlackPanel {
       trade.generateOffer();
       setOfferingList(startType);
       updatePanel(SpeechType.ASK_MOVE_FLEET);
+    } else if (startType == AI_ESPIONAGE) {
+      endBtn.setEnabled(false);
+      trade.generateOffer();
+      setOfferingList(startType);
+      updatePanel(SpeechType.ASK_MOVE_SPY);
     } else if (startType == HUMAN_BORDER_CROSS) {
+      trade.generateOffer();
+      setOfferingList(startType);
+      updatePanel(getGreetLine());
+    } else if (startType == HUMAN_ESPIONAGE) {
       trade.generateOffer();
       setOfferingList(startType);
       updatePanel(getGreetLine());
@@ -432,6 +454,11 @@ public class DiplomacyView extends BlackPanel {
           human.getRace(), null));
       speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
           human.getRace(), null));
+    } else if (startType == AI_ESPIONAGE) {
+      speechLines.add(SpeechFactory.createLine(SpeechType.MOVE_FLEET,
+          human.getRace(), null));
+      speechLines.add(SpeechFactory.createLine(SpeechType.DECLINE_WAR,
+          human.getRace(), null));
     } else {
       if (!ai.getDiplomacy().isPeace(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.PEACE_OFFER,
@@ -439,6 +466,10 @@ public class DiplomacyView extends BlackPanel {
       }
       if (startType == HUMAN_BORDER_CROSS) {
         speechLines.add(SpeechFactory.createLine(SpeechType.ASK_MOVE_FLEET,
+            human.getRace(), borderCrossedFleet.getName()));
+      }
+      if (startType == HUMAN_ESPIONAGE) {
+        speechLines.add(SpeechFactory.createLine(SpeechType.ASK_MOVE_SPY,
             human.getRace(), borderCrossedFleet.getName()));
       }
       speechLines.add(SpeechFactory.createLine(SpeechType.TRADE,
@@ -724,9 +755,12 @@ public class DiplomacyView extends BlackPanel {
    *        AI_REGULAR
    *        HUMAN_BORDER_CROSS
    *        AI_BORDER_CROSS
+   *        HUMAN_ESPIONAGE
+   *        AI_ESPIONGE
    */
   public void setOfferingList(final int startType) {
-    if (startType == AI_REGULAR || startType == AI_BORDER_CROSS) {
+    if (startType == AI_REGULAR || startType == AI_BORDER_CROSS
+        || startType == AI_ESPIONAGE) {
       setHumanOfferingList(trade.getFirstOffer());
       setAiOfferingList(trade.getSecondOffer());
     } else {

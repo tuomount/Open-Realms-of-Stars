@@ -110,7 +110,11 @@ public enum SpeechType {
   /**
    * LINE: Offer defensive pact
    */
-  DEFESIVE_PACT;
+  DEFESIVE_PACT,
+  /**
+   * Demand move espionage fleet
+   */
+  ASK_MOVE_SPY;
 
 
 
@@ -143,6 +147,7 @@ public enum SpeechType {
       case MOVE_FLEET:       return "Move fleet";
       case NOTHING_TO_TRADE: return "Nothing to trade";
       case DEFESIVE_PACT:    return "Defensive pact";
+      case ASK_MOVE_SPY:     return "Ask move spy fleet";
       default: return "Unknown";
     }
   }

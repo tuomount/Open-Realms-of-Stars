@@ -67,6 +67,7 @@ public final class SpeechFactory {
       case MOVE_FLEET: return createMoveFleetLine(race);
       case NOTHING_TO_TRADE: return createNothingToTradeLine(race);
       case DEFESIVE_PACT: return createDefensivePactLine(race);
+      case ASK_MOVE_SPY: return createAskMoveSpyFleetLine(race, dynamicContent);
       default: return null;
     }
   }
@@ -104,6 +105,44 @@ public final class SpeechFactory {
           + " Move " + fleetName + " away now!");
       case HOMARIANS: return new SpeechLine(type,
           "Your fleet has enter on my sector."
+          + " Move " + fleetName + " it away, please!");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Ask move spy fleet SpeechLine according the race
+   * @param race SpaceRace
+   * @param fleetName Spy Fleet which should be moved.
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createAskMoveSpyFleetLine(final SpaceRace race,
+      final String fleetName) {
+    SpeechType type = SpeechType.ASK_MOVE_SPY;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "Hey, your SPY FLEET called " + fleetName + " is in our sector!");
+      case GREYANS: return new SpeechLine(type,
+          "Your espionage fleet " + fleetName + " is on my sector!");
+      case HUMAN: return new SpeechLine(type,
+          "Your espionage fleet " + fleetName
+          + " has crossed my sector. Please move it away!");
+      case MECHIONS: return new SpeechLine(type,
+          "Border crossed. Spy detected! Fleet " + fleetName + ". Move it!");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We have noticed your spy fleet " + fleetName
+          + " in our sector! Move it away immediately!");
+      case SPORKS: return new SpeechLine(type,
+          "Your spy ship has crossed our borders. Move fleet "
+          + fleetName + " now away!");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "My scanners has detected your espionage fleet "
+          + fleetName + " in our space. Move it away!");
+      case SCAURIANS: return new SpeechLine(type,
+          "Your espionage fleet has crossed my borders."
+          + " Move " + fleetName + " away now!");
+      case HOMARIANS: return new SpeechLine(type,
+          "Your spy fleet has enter on my sector."
           + " Move " + fleetName + " it away, please!");
       default: return null;
     }

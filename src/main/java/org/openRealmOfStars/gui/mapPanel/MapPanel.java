@@ -28,6 +28,7 @@ import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetType;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipImage;
@@ -480,7 +481,7 @@ public class MapPanel extends JPanel {
              }
              if (drawShip && fleet.getEspionageBonus() > 0
                  && info.getSectorCloakDetection(i + cx, j + cy)
-                    >= fleet.getFleetCloackingValue()) {
+                    >= fleet.getFleetCloackingValue() + Ship.ESPIONAGE_HIDE) {
                espionageDetected = true;
              }
             if (!fleet.isPrivateerFleet()) {

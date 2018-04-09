@@ -654,11 +654,18 @@ public class Game implements ActionListener {
           if (info.getDiplomacy().isTradeAlliance(0) && military == 0) {
             type = DiplomacyView.AI_REGULAR;
           }
+          if (info.getDiplomacy().isDefensivePact(0) && military >= 0) {
+            type = DiplomacyView.AI_REGULAR;
+          }
           if (info.getDiplomacy().isAlliance(0) && military >= 0) {
             type = DiplomacyView.AI_REGULAR;
           }
           if (info.getDiplomacy().isWar(0)) {
             type = DiplomacyView.AI_REGULAR;
+          }
+          if (info.getSectorCloakDetection(fleet.getX(), fleet.getY())
+                    >= fleet.getFleetCloackingValue() + Ship.ESPIONAGE_HIDE) {
+            type = DiplomacyView.AI_ESPIONAGE;
           }
           if (fleet.isPrivateerFleet()) {
             // TODO there should be different diplomacy for privateering ships
@@ -669,11 +676,18 @@ public class Game implements ActionListener {
           if (info.getDiplomacy().isTradeAlliance(0) && military == 0) {
             type = DiplomacyView.HUMAN_REGULAR;
           }
+          if (info.getDiplomacy().isDefensivePact(0) && military >= 0) {
+            type = DiplomacyView.HUMAN_REGULAR;
+          }
           if (info.getDiplomacy().isAlliance(0) && military >= 0) {
             type = DiplomacyView.HUMAN_REGULAR;
           }
           if (info.getDiplomacy().isWar(0)) {
             type = DiplomacyView.HUMAN_REGULAR;
+          }
+          if (info.getSectorCloakDetection(fleet.getX(), fleet.getY())
+              >= fleet.getFleetCloackingValue() + Ship.ESPIONAGE_HIDE) {
+            type = DiplomacyView.HUMAN_ESPIONAGE;
           }
           if (fleet.isPrivateerFleet()) {
             // TODO there should be different diplomacy for privateering ships

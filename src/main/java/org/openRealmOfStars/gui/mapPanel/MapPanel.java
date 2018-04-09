@@ -766,6 +766,20 @@ public class MapPanel extends JPanel {
         if (!tile.getName().equals(TileNames.EMPTY)) {
           tile.drawScaled(gr, pixelX, pixelY, scale);
         }
+        // Draw deep space anchor marker
+        if (tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
+            || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2)) {
+          Icon16x16 icon = Icons.getIconByName(Icons.ICON_STARBASE);
+          icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+              pixelY + Icon16x16.MAX_HEIGHT);
+        }
+        Planet planet = starMap.getPlanetByCoordinate(i + cx, j + cy);
+        if (planet != null && !planet.isGasGiant()
+            && planet.getHomeWorldIndex() != -1) {
+          Icon16x16 icon = Icons.getIconByName(Icons.ICON_CULTURE);
+          icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+              pixelY + Icon16x16.MAX_HEIGHT);
+        }
 
 
         // Draw the map cursor
@@ -810,7 +824,6 @@ public class MapPanel extends JPanel {
           }
         }
 
-        Planet planet = starMap.getPlanetByCoordinate(i + cx, j + cy);
         // Draw Gas giant text
         if ((tile.getName().equals(TileNames.GAS_GIANT_1_SE) && i > -viewPointX
             || tile.getName().equals(TileNames.GAS_GIANT_2_SE)

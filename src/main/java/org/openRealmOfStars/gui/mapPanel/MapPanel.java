@@ -470,12 +470,18 @@ public class MapPanel extends JPanel {
         if (info != null && fleet != null) {
           boolean drawShip = false;
           boolean recognized = false;
+          boolean espionageDetected = false;
            if (info.getSectorVisibility(new Coordinate(i + cx,
                 j + cy)) == PlayerInfo.VISIBLE) {
              if (fleet != null && (info.getSectorCloakDetection(i + cx, j + cy)
                 >= fleet.getFleetCloackingValue()
                 || info.getFleets().isFleetOnList(fleet))) {
               drawShip = true;
+             }
+             if (drawShip && fleet.getEspionageBonus() > 0
+                 && info.getSectorCloakDetection(i + cx, j + cy)
+                    >= fleet.getFleetCloackingValue()) {
+               espionageDetected = true;
              }
             if (!fleet.isPrivateerFleet()) {
               recognized = true;
@@ -503,6 +509,11 @@ public class MapPanel extends JPanel {
                 .getByRace(fleetMap[i + cx][j + cy].getRace())
                 .getSmallShipImage(fleetMap[i + cx][j + cy].getImageIndex());
             gr.drawImage(img, pixelX, pixelY, null);
+            if (espionageDetected) {
+              Icon16x16 icon = Icons.getIconByName(Icons.ICON_SPY_GOGGLES);
+              icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,
+                  pixelY + Icon16x16.MAX_HEIGHT);
+            }
           }
         }
 

@@ -7,10 +7,12 @@ import static org.junit.Assert.assertNull;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.game.States.DiplomacyView;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.StarMap;
 
 /**
@@ -279,6 +281,89 @@ public class DiplomacyTest {
     diplomacy.setList(list2, 2);
     diplomacy.setList(list3, 3);
     assertEquals(1, diplomacy.getLeastLiking());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBorderCrossing() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    int index = 0;
+    Mockito.when(diplomacy.isTradeAlliance(index)).thenReturn(false);
+    Mockito.when(diplomacy.isDefensivePact(index)).thenReturn(false);
+    Mockito.when(diplomacy.isAlliance(index)).thenReturn(false);
+    Mockito.when(diplomacy.isWar(index)).thenReturn(false);
+    Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    int type = Diplomacy.getBorderCrossingType(info, fleet, index);
+    assertEquals(DiplomacyView.AI_BORDER_CROSS, type);
+    Mockito.when(diplomacy.isTradeAlliance(index)).thenReturn(true);
+    type = Diplomacy.getBorderCrossingType(info, fleet, index);
+    assertEquals(DiplomacyView.AI_REGULAR, type);
+    Mockito.when(fleet.getMilitaryValue()).thenReturn(5);
+    type = Diplomacy.getBorderCrossingType(info, fleet, index);
+    assertEquals(DiplomacyView.AI_BORDER_CROSS, type);
+    Mockito.when(diplomacy.isDefensivePact(index)).thenReturn(true);
+    type = Diplomacy.getBorderCrossingType(info, fleet, index);
+    assertEquals(DiplomacyView.AI_REGULAR, type);
+    Mockito.when(diplomacy.isAlliance(index)).thenReturn(true);
+    type = Diplomacy.getBorderCrossingType(info, fleet, index);
+    assertEquals(DiplomacyView.AI_REGULAR, type);
+    Mockito.when(fleet.getFleetCloackingValue()).thenReturn(0);
+    Mockito.when(fleet.getEspionageBonus()).thenReturn(1);
+    Mockito.when(info.getSectorCloakDetection(Mockito.anyInt(),
+        Mockito.anyInt())).thenReturn(50);
+    type = Diplomacy.getBorderCrossingType(info, fleet, index);
+    assertEquals(DiplomacyView.AI_ESPIONAGE, type);
+    Mockito.when(diplomacy.isWar(index)).thenReturn(true);
+    type = Diplomacy.getBorderCrossingType(info, fleet, index);
+    assertEquals(DiplomacyView.AI_REGULAR, type);
+    Mockito.when(diplomacy.isWar(index)).thenReturn(false);
+    Mockito.when(fleet.isPrivateerFleet()).thenReturn(true);
+    type = Diplomacy.getBorderCrossingType(info, fleet, index);
+    assertEquals(DiplomacyView.AI_REGULAR, type);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBorderCrossingHuman() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.isHuman()).thenReturn(true);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    int index = 2;
+    Mockito.when(diplomacy.isTradeAlliance(index)).thenReturn(false);
+    Mockito.when(diplomacy.isDefensivePact(index)).thenReturn(false);
+    Mockito.when(diplomacy.isAlliance(index)).thenReturn(false);
+    Mockito.when(diplomacy.isWar(index)).thenReturn(false);
+    Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    int type = Diplomacy.getBorderCrossingType(info, fleet, index);
+    assertEquals(DiplomacyView.HUMAN_BORDER_CROSS, type);
+    Mockito.when(diplomacy.isTradeAlliance(index)).thenReturn(true);
+    type = Diplomacy.getBorderCrossingType(info, fleet, index);
+    assertEquals(DiplomacyView.HUMAN_REGULAR, type);
+    Mockito.when(fleet.getMilitaryValue()).thenReturn(5);
+    type = Diplomacy.getBorderCrossingType(info, fleet, index);
+    assertEquals(DiplomacyView.HUMAN_BORDER_CROSS, type);
+    Mockito.when(diplomacy.isDefensivePact(index)).thenReturn(true);
+    type = Diplomacy.getBorderCrossingType(info, fleet, index);
+    assertEquals(DiplomacyView.HUMAN_REGULAR, type);
+    Mockito.when(diplomacy.isAlliance(index)).thenReturn(true);
+    type = Diplomacy.getBorderCrossingType(info, fleet, index);
+    assertEquals(DiplomacyView.HUMAN_REGULAR, type);
+    Mockito.when(fleet.getFleetCloackingValue()).thenReturn(0);
+    Mockito.when(fleet.getEspionageBonus()).thenReturn(1);
+    Mockito.when(info.getSectorCloakDetection(Mockito.anyInt(),
+        Mockito.anyInt())).thenReturn(50);
+    type = Diplomacy.getBorderCrossingType(info, fleet, index);
+    assertEquals(DiplomacyView.HUMAN_ESPIONAGE, type);
+    Mockito.when(diplomacy.isWar(index)).thenReturn(true);
+    type = Diplomacy.getBorderCrossingType(info, fleet, index);
+    assertEquals(DiplomacyView.HUMAN_REGULAR, type);
+    Mockito.when(diplomacy.isWar(index)).thenReturn(false);
+    Mockito.when(fleet.isPrivateerFleet()).thenReturn(true);
+    type = Diplomacy.getBorderCrossingType(info, fleet, index);
+    assertEquals(DiplomacyView.HUMAN_REGULAR, type);
   }
 
 }

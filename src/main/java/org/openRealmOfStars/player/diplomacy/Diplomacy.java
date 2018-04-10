@@ -3,9 +3,12 @@ package org.openRealmOfStars.player.diplomacy;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.game.States.DiplomacyView;
 import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
+import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 
@@ -435,6 +438,57 @@ public class Diplomacy {
       return null;
     }
     return defesiveGroupMember.toArray(new String[defesiveGroupMember.size()]);
+  }
+
+  /**
+   * Get Border crossing type
+   * @param info PlayerInfo who owns the sector
+   * @param fleet Fleet crossing the border
+   * @param playerIndex Player index who owns the fleet
+   * @return DiplomacyView.AI_BORDER_CROSS,
+   *         DiplomacyView.AI_REGULAR,
+   *         DiplomacyView.AI_ESPIONAGE,
+   *         DiplomacyView.HUMAN_BORDER_CROSS,
+   *         DiplomacyView.HUMAN_REGULAR,
+   *         DiplomacyView.HUMAN_ESPIONAGE
+   */
+  public static int getBorderCrossingType(final PlayerInfo info,
+      final Fleet fleet, final int playerIndex) {
+    int military = fleet.getMilitaryValue();
+    int type = DiplomacyView.AI_BORDER_CROSS;
+    if (info.getDiplomacy().isTradeAlliance(playerIndex) && military == 0) {
+      type = DiplomacyView.AI_REGULAR;
+    }
+    if (info.getDiplomacy().isDefensivePact(playerIndex) && military >= 0) {
+      type = DiplomacyView.AI_REGULAR;
+    }
+    if (info.getDiplomacy().isAlliance(playerIndex) && military >= 0) {
+      type = DiplomacyView.AI_REGULAR;
+    }
+    if (info.getSectorCloakDetection(fleet.getX(), fleet.getY())
+        >= fleet.getFleetCloackingValue() + Ship.ESPIONAGE_HIDE
+        && fleet.getEspionageBonus() > 0) {
+      type = DiplomacyView.AI_ESPIONAGE;
+    }
+    if (info.getDiplomacy().isWar(playerIndex)) {
+      type = DiplomacyView.AI_REGULAR;
+    }
+    if (fleet.isPrivateerFleet()) {
+      // TODO there should be different diplomacy for privateering ships
+      type = DiplomacyView.AI_REGULAR;
+    }
+    if (info.isHuman()) {
+      if (type == DiplomacyView.AI_REGULAR) {
+        type = DiplomacyView.HUMAN_REGULAR;
+      }
+      if (type == DiplomacyView.AI_ESPIONAGE) {
+        type = DiplomacyView.HUMAN_ESPIONAGE;
+      }
+      if (type == DiplomacyView.AI_BORDER_CROSS) {
+        type = DiplomacyView.HUMAN_BORDER_CROSS;
+      }
+    }
+    return type;
   }
 
 }

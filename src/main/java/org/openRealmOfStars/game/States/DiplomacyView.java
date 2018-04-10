@@ -258,6 +258,14 @@ public class DiplomacyView extends BlackPanel {
     if (startType == AI_REGULAR || startType == AI_BORDER_CROSS
         || startType == AI_ESPIONAGE) {
       trade = new DiplomaticTrade(starMap, aiIndex, humanIndex);
+      if (startType == AI_BORDER_CROSS) {
+        ai.getDiplomacy().getDiplomacyList(humanIndex).addBonus(
+            DiplomacyBonusType.BORDER_CROSSED, ai.getRace());
+      }
+      if (startType == AI_ESPIONAGE) {
+        ai.getDiplomacy().getDiplomacyList(humanIndex).addBonus(
+            DiplomacyBonusType.ESPIONAGE_BORDER_CROSS, ai.getRace());
+      }
     } else {
       trade = new DiplomaticTrade(starMap, humanIndex, aiIndex);
     }

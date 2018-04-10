@@ -27,6 +27,7 @@ import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -673,6 +674,19 @@ public class AITurnView extends BlackPanel {
                   SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
                   game.changeGameState(GameState.DIPLOMACY_VIEW, fleet);
                   return;
+                }
+                int fleetOwnerIndex = game.getPlayers().getIndex(fleetOwner);
+                int type = Diplomacy.getBorderCrossingType(info, fleet,
+                    fleetOwnerIndex);
+                if (type == DiplomacyView.AI_ESPIONAGE) {
+                  info.getDiplomacy().getDiplomacyList(fleetOwnerIndex)
+                      .addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+                          info.getRace());
+                }
+                if (type == DiplomacyView.AI_BORDER_CROSS) {
+                  info.getDiplomacy().getDiplomacyList(fleetOwnerIndex)
+                      .addBonus(DiplomacyBonusType.BORDER_CROSSED,
+                          info.getRace());
                 }
                 MissionHandling.handleDiplomacyBetweenAis(game, info, i,
                    fleet);

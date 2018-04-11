@@ -30,7 +30,9 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
+import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.fleet.FleetType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -622,6 +624,23 @@ public class AITurnView extends BlackPanel {
                 if (list.isBonusType(DiplomacyBonusType.IN_WAR)) {
                   addDestroyStarbaseMission(new Coordinate(x, y), info);
                 }
+            }  else if (fleet.isStarBaseDeployed()
+                && info.getSectorVisibility(new Coordinate(x, y))
+                == PlayerInfo.FOG_OF_WAR && infoAt != info) {
+              // Anchor is under Fog of war, but Maybe espionage
+              // Will detect that is already occupied.
+              int index = fleetTiles[x][y].getPlayerIndex();
+              EspionageList espionage = info.getEspionage().getByIndex(index);
+              if (espionage.isFleetTypeRecognized(FleetType.STARBASE)) {
+                // There is already starbase know by espionage
+                DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
+                    index);
+                if (list.isBonusType(DiplomacyBonusType.IN_WAR)) {
+                  // AI already has war against that player so,
+                  // adding destroy mission
+                  addDestroyStarbaseMission(new Coordinate(x, y), info);
+                }
+              }
             }
           }
         }

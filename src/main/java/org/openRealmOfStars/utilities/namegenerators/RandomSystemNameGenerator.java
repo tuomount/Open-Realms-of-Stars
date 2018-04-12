@@ -7,7 +7,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -27,7 +27,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
  *
  */
 
-public class RandomSystemNameGenerator {
+public class RandomSystemNameGenerator extends NameGenerator {
 
   /**
    * List of all greek alphabets
@@ -69,48 +69,14 @@ public class RandomSystemNameGenerator {
   private static final int LIMIT_FOR_TWO_PARTS = 12;
 
   /**
-   * System names already used
-   */
-  private ArrayList<String> usedNames;
-
-  /**
    * Constructor for Random SystemNameGenerator.
    */
   public RandomSystemNameGenerator() {
-    usedNames = new ArrayList<>();
+    setUsedNames(new ArrayList<String>());
   }
 
-  /**
-   * Check if system name has previously generated.
-   * @param name Name to check
-   * @return True if name is already taken, otherwise false
-   */
-  private boolean previusMatch(final String name) {
-    for (String oldName : usedNames) {
-      if (oldName.equals(name)) {
-        return true;
-      }
-    }
-    return false;
-  }
-  /**
-   * Generate random system name which is unique inside same generator.
-   * @return Randomized System name
-   */
-  public String generate() {
-    String name;
-    do {
-      name = generateRandomName();
-    } while (previusMatch(name));
-    usedNames.add(name);
-    return name;
-  }
-
-  /**
-   * Generate random name from using fixed syllable tables.
-   * @return Randomized system name
-   */
-  private String generateRandomName() {
+  @Override
+  protected String generateRandomName() {
     StringBuilder sb = new StringBuilder();
     sb.append(
         GREEK_ALPHABET[DiceGenerator.getRandom(GREEK_ALPHABET.length - 1)]);

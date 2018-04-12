@@ -7,7 +7,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2016  Tuomo Untinen
+* Copyright (C) 2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -26,7 +26,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 * Random name Generator for rogue planet
 *
 */
-public class RoguePlanetNameGenerator {
+public class RoguePlanetNameGenerator extends NameGenerator {
 
   /**
    * First parts of name list
@@ -60,49 +60,14 @@ public class RoguePlanetNameGenerator {
       "zer", "wer", "per", "sium", "lion"};
 
   /**
-   * Planet names already used
-   */
-  private ArrayList<String> usedNames;
-
-  /**
    * Constructor for rogue planet name generator
    */
   public RoguePlanetNameGenerator() {
-    usedNames = new ArrayList<>();
+    setUsedNames(new ArrayList<String>());
   }
 
-  /**
-   * Check if system name has previously generated.
-   * @param name Name to check
-   * @return True if name is already taken, otherwise false
-   */
-  private boolean previusMatch(final String name) {
-    for (String oldName : usedNames) {
-      if (oldName.equals(name)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  /**
-   * Generate rogue planet name which is unique inside same generator.
-   * @return Randomized rogue planet name
-   */
-  public String generate() {
-    String name;
-    do {
-      name = generateRandomName();
-    } while (previusMatch(name));
-    usedNames.add(name);
-    return name;
-  }
-
-  /**
-   * Generate random name from using fixed syllable tables.
-   * @return Randomized system name
-   */
-  private String generateRandomName() {
+  @Override
+  protected String generateRandomName() {
     StringBuilder sb = new StringBuilder();
     int parts = 1;
     int random = DiceGenerator.getRandom(100);

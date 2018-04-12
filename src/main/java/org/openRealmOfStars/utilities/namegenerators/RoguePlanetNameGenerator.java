@@ -1,6 +1,8 @@
-package org.openRealmOfStars.utilities;
+package org.openRealmOfStars.utilities.namegenerators;
 
 import java.util.ArrayList;
+
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
 *

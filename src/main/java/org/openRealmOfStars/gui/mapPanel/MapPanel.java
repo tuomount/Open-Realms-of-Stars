@@ -41,7 +41,7 @@ import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.ErrorLogger;
-import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
+import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 
 /**
  *

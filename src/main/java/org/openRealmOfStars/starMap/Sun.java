@@ -1,6 +1,6 @@
 package org.openRealmOfStars.starMap;
 
-import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
+import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 
 /**
  *

@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
-import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
+import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 
 /**
  * 

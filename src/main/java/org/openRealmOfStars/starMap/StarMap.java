@@ -40,7 +40,7 @@ import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
-import org.openRealmOfStars.utilities.RandomSystemNameGenerator;
+import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 import org.openRealmOfStars.utilities.repository.NewsCorpRepository;
 import org.openRealmOfStars.utilities.repository.PlanetRepository;
 import org.openRealmOfStars.utilities.repository.SunRepository;

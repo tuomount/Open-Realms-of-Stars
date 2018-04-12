@@ -6,7 +6,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -62,6 +62,27 @@ public class GalaxyConfig {
   public static final int START_POSITION_BORDER = 0;
 
   /**
+   * Number of rogue planet none
+   */
+  public static final int ROGUE_PLANETS_NONE = 0;
+  /**
+   * Number of rogue planet very few
+   */
+  public static final int ROGUE_PLANETS_VERY_FEW = 2;
+  /**
+   * Number of rogue planet few
+   */
+  public static final int ROGUE_PLANETS_FEW = 4;
+  /**
+   * Number of rogue planet some
+   */
+  public static final int ROGUE_PLANETS_SOME = 6;
+  /**
+   * Number of rogue planet many
+   */
+  public static final int ROGUE_PLANETS_MANY = 8;
+
+  /**
    * Players start from random position
    */
   public static final int START_POSITION_RANDOM = 1;
@@ -87,6 +108,11 @@ public class GalaxyConfig {
   private int chanceForPlanetaryEvent;
 
   /**
+   * Number of Rogue planets
+   */
+  private int numberOfRoguePlanets;
+
+  /**
    * How many turns to get scoring victory
    */
   private int scoringVictoryTurns;
@@ -98,6 +124,7 @@ public class GalaxyConfig {
     sizeY = 75;
     this.galaxySizeIndex = 1;
     setChanceForPlanetaryEvent(10);
+    setNumberOfRoguePlanets(ROGUE_PLANETS_FEW);
     setScoringVictoryTurns(400);
     setMaxPlayers(4);
     setSolarSystemDistance(12, 0);
@@ -322,6 +349,23 @@ public class GalaxyConfig {
     } else {
       this.scoringVictoryTurns = scoringVictoryTurns;
     }
+  }
+
+  /**
+   * Get the number of rogue planets. This number is then
+   * multiplied by galaxy size.
+   * @return the numberOfRoguePlanets
+   */
+  public int getNumberOfRoguePlanets() {
+    return numberOfRoguePlanets;
+  }
+
+  /**
+   * Set the number of rogue planets.
+   * @param numberOfRoguePlanets the numberOfRoguePlanets to set
+   */
+  public void setNumberOfRoguePlanets(final int numberOfRoguePlanets) {
+    this.numberOfRoguePlanets = numberOfRoguePlanets;
   }
 
 }

@@ -84,6 +84,11 @@ public class GalaxyCreationView extends BlackPanel {
   private SpaceCombo<String> comboScoringVictory;
 
   /**
+   * ComboBox for rogue planet
+   */
+  private SpaceCombo<String> comboRoguePlanets;
+
+  /**
    * Galaxy config
    */
   private GalaxyConfig config;
@@ -177,6 +182,36 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlanetaryEvent.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboPlanetaryEvent.addActionListener(listener);
     info.add(comboPlanetaryEvent);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    label = new SpaceLabel("Rogue planets:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    String[] roguePlanets = new String[5];
+    roguePlanets[0] = "None";
+    roguePlanets[1] = "Very few";
+    roguePlanets[2] = "Few(Default)";
+    roguePlanets[3] = "Some";
+    roguePlanets[4] = "Many";
+    comboRoguePlanets = new SpaceCombo<>(roguePlanets);
+    switch (this.config.getNumberOfRoguePlanets()) {
+      case GalaxyConfig.ROGUE_PLANETS_NONE:
+        comboRoguePlanets.setSelectedIndex(0); break;
+      case GalaxyConfig.ROGUE_PLANETS_VERY_FEW:
+        comboRoguePlanets.setSelectedIndex(1); break;
+      case GalaxyConfig.ROGUE_PLANETS_FEW:
+        comboRoguePlanets.setSelectedIndex(2); break;
+      case GalaxyConfig.ROGUE_PLANETS_SOME:
+        comboRoguePlanets.setSelectedIndex(3); break;
+      case GalaxyConfig.ROGUE_PLANETS_MANY:
+        comboRoguePlanets.setSelectedIndex(4); break;
+      default: comboRoguePlanets.setSelectedIndex(2); break;
+    }
+    comboRoguePlanets.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboRoguePlanets.addActionListener(listener);
+    comboRoguePlanets.setToolTipText("Rogue planets are rare planet are outside"
+        + " of solar systems.");
+    info.add(comboRoguePlanets);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
 
     xinvis.add(info);
@@ -394,6 +429,38 @@ public class GalaxyCreationView extends BlackPanel {
       default: {
         // Default
         config.setChanceForPlanetaryEvent(0);
+        break;
+      }
+      }
+      switch (comboRoguePlanets.getSelectedIndex()) {
+      case 0: {
+        // None
+        config.setNumberOfRoguePlanets(GalaxyConfig.ROGUE_PLANETS_NONE);
+        break;
+      }
+      case 1: {
+        // Very few
+        config.setNumberOfRoguePlanets(GalaxyConfig.ROGUE_PLANETS_VERY_FEW);
+        break;
+      }
+      case 2: {
+        // Few
+        config.setNumberOfRoguePlanets(GalaxyConfig.ROGUE_PLANETS_FEW);
+        break;
+      }
+      case 3: {
+        // Some
+        config.setNumberOfRoguePlanets(GalaxyConfig.ROGUE_PLANETS_SOME);
+        break;
+      }
+      case 4: {
+        // MANY
+        config.setNumberOfRoguePlanets(GalaxyConfig.ROGUE_PLANETS_MANY);
+        break;
+      }
+      default: {
+        // Default
+        config.setNumberOfRoguePlanets(GalaxyConfig.ROGUE_PLANETS_FEW);
         break;
       }
       }

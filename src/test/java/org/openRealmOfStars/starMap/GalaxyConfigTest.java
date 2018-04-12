@@ -68,6 +68,11 @@ public class GalaxyConfigTest {
     assertEquals(50, config.getSizeX());
     assertEquals(50, config.getSizeY());
     assertEquals(0, config.getGalaxySizeIndex());
+    assertEquals(GalaxyConfig.ROGUE_PLANETS_FEW,
+        config.getNumberOfRoguePlanets());
+    config.setNumberOfRoguePlanets(GalaxyConfig.ROGUE_PLANETS_NONE);
+    assertEquals(GalaxyConfig.ROGUE_PLANETS_NONE,
+        config.getNumberOfRoguePlanets());
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
     assertEquals(GalaxyConfig.START_POSITION_RANDOM,
         config.getStartingPosition());

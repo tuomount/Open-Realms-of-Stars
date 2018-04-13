@@ -289,13 +289,29 @@ public class Planet {
   public Planet(final Coordinate coordinate, final String name,
     final int orderNumber, final boolean gasGiant) {
     this.setCoordinate(coordinate);
-    this.name = name + " "
-        + RandomSystemNameGenerator.numberToRoman(orderNumber);
+    if (orderNumber == 0) {
+      // Rogue planet
+      this.name = name;
+    } else {
+      this.name = name + " "
+          + RandomSystemNameGenerator.numberToRoman(orderNumber);
+    }
     this.setOrderNumber(orderNumber);
     this.setRadiationLevel(DiceGenerator.getRandom(1, 10));
-    this.setAmountMetalInGround(DiceGenerator.getRandom(MINIMUM_ORE,
-        MAXIMUM_ORE));
-    this.setGroundSize(DiceGenerator.getRandom(7, 16));
+    if (orderNumber == 0) {
+      // Rogue planet have more metal
+      this.setAmountMetalInGround(DiceGenerator.getRandom(MINIMUM_ORE + 2000,
+          MAXIMUM_ORE));
+    } else {
+      this.setAmountMetalInGround(DiceGenerator.getRandom(MINIMUM_ORE,
+          MAXIMUM_ORE));
+    }
+    if (orderNumber == 0) {
+      // Rogue planets are slightly bigger
+      this.setGroundSize(DiceGenerator.getRandom(9, 16));
+    } else {
+      this.setGroundSize(DiceGenerator.getRandom(7, 16));
+    }
     this.setMetal(0);
     this.gasGiant = gasGiant;
     this.planetOwner = -1;

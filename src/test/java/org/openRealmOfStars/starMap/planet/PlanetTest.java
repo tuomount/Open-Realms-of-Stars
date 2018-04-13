@@ -232,6 +232,14 @@ public class PlanetTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRoguePlanet() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test", 0, false);
+    assertEquals("Test", planet.getName());
+    assertEquals(0, planet.getOrderNumber());
+  }
+
+  @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testPlanetEventActivationMetalRichSurface() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);

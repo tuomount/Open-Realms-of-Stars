@@ -41,6 +41,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
+import org.openRealmOfStars.utilities.namegenerators.RoguePlanetNameGenerator;
 import org.openRealmOfStars.utilities.repository.NewsCorpRepository;
 import org.openRealmOfStars.utilities.repository.PlanetRepository;
 import org.openRealmOfStars.utilities.repository.SunRepository;
@@ -310,6 +311,38 @@ public class StarMap {
         }
       }
       loop++;
+    }
+    // Create rogue planets
+    if (config.getNumberOfRoguePlanets() != GalaxyConfig.ROGUE_PLANETS_NONE) {
+      loop = 0;
+      int roguePlanets = config.getNumberOfRoguePlanets()
+          * (config.getGalaxySizeIndex() + 1);
+      RoguePlanetNameGenerator ng = new RoguePlanetNameGenerator();
+      for (int i = 0; i < roguePlanets; i++) {
+        while (loop < MAX_LOOPS) {
+          int sx = DiceGenerator.getRandom(1,
+              maxX - 2);
+          int sy = DiceGenerator.getRandom(1,
+              maxX - 2);
+          if (Tiles.getTileByIndex(tiles[sx][sy]) == empty
+              && getPlanetByCoordinate(sx, sy) == null
+              && locateSolarSystem(sx, sy) == null) {
+            String name = ng.generate();
+            Planet planet = new Planet(new Coordinate(sx, sy), name, 0, false);
+            planet.setPlanetaryEvent(PlanetaryEvent.getRandomEvent(
+                planet.getPlanetType(), chanceForPlanetaryEvent));
+            planet.setEventActivation(false);
+            planetList.add(planet);
+            int planetNumber = planetList.size() - 1;
+            SquareInfo info = new SquareInfo(SquareInfo.TYPE_PLANET,
+                planetNumber);
+            tileInfo[sx][sy] = info;
+            tiles[sx][sy] = planet.getPlanetType().getTileIndex();
+            break;
+          }
+          loop++;
+        }
+      }
     }
     // Create random deep space anchors
     loop = 0;

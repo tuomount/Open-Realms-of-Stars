@@ -85,6 +85,8 @@ public class MissionRepository {
       return MissionType.TRADE_FLEET;
     case 9:
       return MissionType.PRIVATEER;
+    case 10:
+      return MissionType.COLONY_EXPLORE;
     default:
       System.err.println("Warning: Unknown mission type: " + index
           + ". Defaulting to explore.");

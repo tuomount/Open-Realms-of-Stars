@@ -66,7 +66,13 @@ public enum MissionType {
    * Fleet mostly moving quite randomly exploring the galaxy, tries to
    * rob trade ships
    */
-  PRIVATEER;
+  PRIVATEER,
+  /**
+   * Mission which could be done in very early of the game.
+   * Idea is to explore with colony ship before first
+   * colonized planet is found.
+   */
+  COLONY_EXPLORE;
 
   /**
    * Get Mission type with index
@@ -94,6 +100,8 @@ public enum MissionType {
       return 8;
     case PRIVATEER:
       return 9;
+    case COLONY_EXPLORE:
+      return 10;
     default:
       return 0;
     }
@@ -122,6 +130,8 @@ public enum MissionType {
       return "Trade fleet";
     case PRIVATEER:
       return "Privateer";
+    case COLONY_EXPLORE:
+      return "Colony Expolore";
     default:
       return "Unknown";
     }

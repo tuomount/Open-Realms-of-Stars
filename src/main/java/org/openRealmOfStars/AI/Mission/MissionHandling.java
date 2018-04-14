@@ -268,6 +268,59 @@ public final class MissionHandling {
   }
 
   /**
+   * Handle colony explore mission.
+   * Similar to regular exploration mission, except it only
+   * explores starting solar system.
+   * @param mission Colony explore mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleColonyExplore(final Mission mission,
+      final Fleet fleet, final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.COLONY_EXPLORE) {
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
+        // Target acquired, mission complete
+        info.getMissions().remove(mission);
+      } else if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+        makeReroute(game, fleet, info, mission);
+      }
+      if (mission.getPhase() == MissionPhase.EXECUTING) {
+        mission.setMissionTime(mission.getMissionTime() + 1);
+        boolean missionComplete = false;
+        if (mission.getMissionTime() >= info.getRace().getAIExploringAmount()) {
+          // Depending on race it decides enough is enough
+          fleet.setaStarSearch(null);
+          missionComplete = true;
+        }
+        if (fleet.getaStarSearch() == null) {
+          Sun sun = null;
+          if (missionComplete) {
+            // going back to home
+            mission.setPhase(MissionPhase.TREKKING);
+          } else {
+            sun = game.getStarMap().getSunByName(mission.getSunName());
+          }
+          PathPoint point = info.getUnchartedSector(sun, fleet);
+          if (point != null) {
+            mission.setTarget(new Coordinate(point.getX(), point.getY()));
+            AStarSearch search = new AStarSearch(game.getStarMap(),
+                fleet.getX(), fleet.getY(), mission.getX(), mission.getY());
+            search.doSearch();
+            search.doRoute();
+            fleet.setaStarSearch(search);
+            makeRegularMoves(game, fleet, info);
+          }
+        } else {
+          makeRegularMoves(game, fleet, info);
+        }
+      }
+    } // End Of Colony Explore
+  }
+
+  /**
    * Handle Colonize mission
    * @param mission Colonize mission, does nothing if type is wrong
    * @param fleet Fleet on mission

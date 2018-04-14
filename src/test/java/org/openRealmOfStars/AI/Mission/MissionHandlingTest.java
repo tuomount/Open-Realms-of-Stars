@@ -325,6 +325,34 @@ public class MissionHandlingTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testColonyExplore() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mission mission = new Mission(MissionType.COLONY_EXPLORE, MissionPhase.EXECUTING,
+        new Coordinate(2, 2));
+    Game game = Mockito.mock(Game.class);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getMaxX()).thenReturn(50);
+    Mockito.when(map.getMaxY()).thenReturn(50);
+    Mockito.when(game.getStarMap()).thenReturn(map);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Coordinate fleetCoord = new Coordinate(5, 7);
+    Mockito.when(fleet.getCoordinate()).thenReturn(fleetCoord);
+    Mockito.when(fleet.getX()).thenReturn(5);
+    Mockito.when(fleet.getY()).thenReturn(7);
+    Mockito.when(fleet.getMilitaryValue()).thenReturn(0);
+    Mockito.when(fleet.getMovesLeft()).thenReturn(1);
+    AStarSearch search = Mockito.mock(AStarSearch.class);
+    Mockito.when(fleet.getaStarSearch()).thenReturn(search);
+    MissionHandling.handleColonyExplore(mission, fleet, info, game);
+    assertEquals(MissionPhase.EXECUTING, mission.getPhase());
+    mission.setPhase(MissionPhase.TREKKING);
+    MissionHandling.handleColonyExplore(mission, fleet, info, game);
+    assertEquals(MissionPhase.TREKKING, mission.getPhase());
+  }
+
+  @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testPrivateeringNoMoreSunToExplore() {
     GameRepository repository = new GameRepository();

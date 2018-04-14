@@ -45,6 +45,7 @@ import org.openRealmOfStars.starMap.history.event.GalacticEvent;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
+import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -220,6 +221,9 @@ public class AITurnView extends BlackPanel {
       case PRIVATEER:
         MissionHandling.handlePrivateering(mission, fleet, info, game);
         break;
+      case COLONY_EXPLORE:
+        MissionHandling.handleColonyExplore(mission, fleet, info, game);
+        break;
       default:
         throw new IllegalArgumentException("Unknown mission type for AI!");
       }
@@ -236,6 +240,21 @@ public class AITurnView extends BlackPanel {
         info.getMissions().add(mission);
         fleet.setRoute(new Route(fleet.getX(), fleet.getY(), mission.getX(),
             mission.getY(), fleet.getFleetFtlSpeed()));
+        // Mission assigned continue...
+        return;
+      }
+      if (fleet.isColonyFleet()
+          && game.getStarMap().getGameLengthState()
+          == GameLengthState.START_GAME) {
+        // Colony fleet should go to explore
+        Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
+            fleet.getY(), info, fleet, null);
+        mission = new Mission(MissionType.COLONY_EXPLORE,
+            MissionPhase.EXECUTING, sun.getCenterCoordinate());
+        mission.setFleetName(fleet.getName());
+        mission.setSunName(sun.getName());
+        mission.setTarget(fleet.getCoordinate());
+        info.getMissions().add(mission);
         // Mission assigned continue...
         return;
       }
@@ -739,6 +758,12 @@ public class AITurnView extends BlackPanel {
               mission.getY()) == null) {
             // No colonize mission for this planet found, so adding it.
             info.getMissions().add(mission);
+            mission = info.getMissions().getMission(MissionType.COLONY_EXPLORE,
+                MissionPhase.EXECUTING);
+            if (mission != null) {
+              // Colony ship was exploring, calling it back to home
+              mission.setPhase(MissionPhase.TREKKING);
+            }
           }
 
         }

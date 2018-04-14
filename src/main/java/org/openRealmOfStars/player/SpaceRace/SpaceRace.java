@@ -708,8 +708,7 @@ public enum SpaceRace {
     case SCAURIANS:
       return MusicPlayer.INTERPLANETARY_ODYSSEY;
     case HOMARIANS:
-      //TODO change diplomacy music
-      return MusicPlayer.MILLION_LIGHT_YEARS;
+      return MusicPlayer.MALLOGA_BALLING;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
     }

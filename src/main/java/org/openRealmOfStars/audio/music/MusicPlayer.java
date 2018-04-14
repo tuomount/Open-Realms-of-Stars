@@ -170,6 +170,13 @@ public final class MusicPlayer {
       "/resources/musics/Interplanetary Odyssey.ogg");
 
   /**
+   * Malloga Balling by Joe Reynolds - Professorlamp Licence CC-BY 3.0
+   */
+  public static final MusicFileInfo MALLOGA_BALLING = new MusicFileInfo(
+      "Malloga Balling", "Joe Reynolds - Professorlamp",
+      "/resources/musics/Malloga_Ballinga_Mastered_mp.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,

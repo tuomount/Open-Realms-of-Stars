@@ -197,4 +197,8 @@ Interplanetary Odyssey by
 Patrick de Arteaga https://patrickdearteaga.com/
 Licensed under CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
 
+Malloga Balling by
+Joe Reynolds - Professorlamp  jrtheories.webs.com
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
 

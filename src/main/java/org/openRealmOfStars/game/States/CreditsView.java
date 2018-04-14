@@ -222,10 +222,11 @@ public class CreditsView extends BlackPanel {
       + "Interplanetary Odyssey by\n"
       + "Patrick de Arteaga https://patrickdearteaga.com/\n"
       + "Licensed under CC BY 4.0 "
-      + "http://creativecommons.org/licenses/by/4.0/\n\n";
-
-
-
+      + "http://creativecommons.org/licenses/by/4.0/\n\n"
+      + "Malloga Balling by\n"
+      + "Joe Reynolds - Professorlamp  jrtheories.webs.com\n"
+      + "Licensed under CC BY 3.0 "
+      + "http://creativecommons.org/licenses/by/3.0/\n\n";
 
 
 

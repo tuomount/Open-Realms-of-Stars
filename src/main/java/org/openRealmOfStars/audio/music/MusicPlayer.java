@@ -46,7 +46,7 @@ public final class MusicPlayer {
   /**
    * Is music enabled or not
    */
-  private static boolean musicEnabled = true;
+  private static boolean musicEnabled = false;
   /**
    * OggPlayer class, doing the actual Ogg parsing and playing
    */

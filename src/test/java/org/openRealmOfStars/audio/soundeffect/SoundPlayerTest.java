@@ -8,7 +8,7 @@ import org.junit.experimental.categories.Category;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,12 +36,14 @@ public class SoundPlayerTest {
     assertEquals(100, SoundPlayer.getSoundVolume());
     SoundPlayer.setSoundVolume(50);
     assertEquals(50, SoundPlayer.getSoundVolume());
+    SoundPlayer.setSoundVolume(0);
     SoundPlayer.setSoundEnabled(true);
     assertEquals(true, SoundPlayer.isSoundEnabled());
     SoundPlayer.setSoundEnabled(false);
     assertEquals(false, SoundPlayer.isSoundEnabled());
     SoundPlayer.setSoundEnabled(true);
     assertEquals(true, SoundPlayer.isSoundEnabled());
+    SoundPlayer.setSoundEnabled(false);
   }
 
 }

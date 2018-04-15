@@ -36,7 +36,7 @@ public class MusicPlayerTest {
     MusicPlayer.stop();
     Thread.sleep(1000);
     MusicPlayer.play(MusicPlayer.YD_OBSERVING_STAR);
-    Thread.sleep(3000);
+    Thread.sleep(1000);
     assertEquals(MusicPlayer.YD_OBSERVING_STAR, MusicPlayer.getNowPlaying());
     MusicPlayer.stop();
     Thread.sleep(1000);

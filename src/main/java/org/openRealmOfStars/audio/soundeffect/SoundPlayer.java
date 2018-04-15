@@ -167,7 +167,7 @@ public final class SoundPlayer {
   /**
    * Attribute if Sound is enabled or not
    */
-  private static boolean soundEnabled = true;
+  private static boolean soundEnabled = false;
 
   /**
    * List of Sound effect names going to SoundEffectManager. These sounds
@@ -199,7 +199,7 @@ public final class SoundPlayer {
   }
 
   /**
-   * Set General sound volume
+   * Set General sound volume. Volume is between 0-100.
    * @param soundVolume to set
    */
   public static void setSoundVolume(final int soundVolume) {

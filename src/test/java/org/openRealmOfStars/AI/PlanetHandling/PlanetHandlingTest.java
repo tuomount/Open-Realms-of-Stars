@@ -19,6 +19,7 @@ import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
@@ -422,8 +423,16 @@ public class PlanetHandlingTest {
     Mockito.when(ship.getMetalCost()).thenReturn(14);
     Mockito.when(ship.getProdCost()).thenReturn(22);
     
-    int score = PlanetHandling.scoreShip(ship);
+    int score = PlanetHandling.scoreShip(ship, GameLengthState.START_GAME);
     assertEquals(49, score);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.EARLY_GAME);
+    assertEquals(49, score);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.MIDDLE_GAME);
+    assertEquals(65, score);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.LATE_GAME);
+    assertEquals(81, score);
+    score = PlanetHandling.scoreShip(ship, GameLengthState.END_GAME);
+    assertEquals(97, score);
   }
 
   @Test
@@ -485,6 +494,7 @@ public class PlanetHandlingTest {
         MissionPhase.PLANNING)).thenReturn(mission);
     Mockito.when(info.getMissions()).thenReturn(missionList);
     StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.LATE_GAME);
     Mockito.when(map.getPlanetByCoordinate(Mockito.anyInt(),
         Mockito.anyInt())).thenReturn(planet);
     int score = PlanetHandling.scoreColonyShip(20, ship, info, map,
@@ -493,6 +503,18 @@ public class PlanetHandlingTest {
     score = PlanetHandling.scoreColonyShip(20, ship, info, map,
         Attitude.MERCHANTICAL);
     assertEquals(37, score);
+    Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.START_GAME);
+    score = PlanetHandling.scoreColonyShip(20, ship, info, map,
+        Attitude.EXPANSIONIST);
+    assertEquals(87, score);
+    Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.EARLY_GAME);
+    score = PlanetHandling.scoreColonyShip(20, ship, info, map,
+        Attitude.EXPANSIONIST);
+    assertEquals(77, score);
+    Mockito.when(map.getGameLengthState()).thenReturn(GameLengthState.MIDDLE_GAME);
+    score = PlanetHandling.scoreColonyShip(20, ship, info, map,
+        Attitude.EXPANSIONIST);
+    assertEquals(67, score);
     Mockito.when(missionList.getMission(MissionType.COLONIZE,
         MissionPhase.PLANNING)).thenReturn(null);
     score = PlanetHandling.scoreColonyShip(20, ship, info, map,

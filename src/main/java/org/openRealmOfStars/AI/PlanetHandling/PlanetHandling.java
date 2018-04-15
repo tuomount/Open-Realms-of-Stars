@@ -13,6 +13,7 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
@@ -652,13 +653,24 @@ public final class PlanetHandling {
   /**
    * Score ship, scoring also depends on missions under planning
    * @param ship Ship to score
+   * @param state Current gameLengthState
    * @return Ship score
    */
-  public static int scoreShip(final Ship ship) {
+  public static int scoreShip(final Ship ship, final GameLengthState state) {
     int score;
     // Does not take a planet space
     score = 20;
-    score = score + ship.getTotalMilitaryPower() * 2;
+    int militaryFocus = 2;
+    if (state == GameLengthState.MIDDLE_GAME) {
+      militaryFocus = 3;
+    }
+    if (state == GameLengthState.LATE_GAME) {
+      militaryFocus = 4;
+    }
+    if (state == GameLengthState.END_GAME) {
+      militaryFocus = 5;
+    }
+    score = score + ship.getTotalMilitaryPower() * militaryFocus;
     // High cost drops the value
     score = score - ship.getMetalCost() / 10;
     score = score - ship.getProdCost() / 10;
@@ -736,6 +748,15 @@ public final class PlanetHandling {
         if (attitude == Attitude.EXPANSIONIST) {
           score = score + 20;
         }
+        if (map.getGameLengthState() == GameLengthState.START_GAME) {
+          score = score + 30;
+        }
+        if (map.getGameLengthState() == GameLengthState.EARLY_GAME) {
+          score = score + 20;
+        }
+        if (map.getGameLengthState() == GameLengthState.MIDDLE_GAME) {
+          score = score + 10;
+        }
       } else {
         score = -1;
       }
@@ -771,7 +792,7 @@ public final class PlanetHandling {
       }
       if (constructions[i] instanceof Ship) {
         Ship ship = (Ship) constructions[i];
-        int score = scoreShip(ship);
+        int score = scoreShip(ship, map.getGameLengthState());
         if (ship.getTotalMilitaryPower() > 0) {
           Mission mission = info.getMissions()
               .getMissionForPlanet(planet.getName(), MissionType.DEFEND);

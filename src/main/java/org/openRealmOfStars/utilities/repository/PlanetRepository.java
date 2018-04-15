@@ -51,7 +51,9 @@ public class PlanetRepository {
       final PlayerList players) throws IOException {
     Coordinate coordinate = new Coordinate(dis.readInt(), dis.readInt());
     String name = IOUtilities.readString(dis);
-    name = name.substring(0, name.lastIndexOf(' '));
+    if (name.lastIndexOf(' ') != -1) {
+      name = name.substring(0, name.lastIndexOf(' '));
+    }
     int orderNumber = dis.readInt();
     int radiationLevel = dis.readInt();
     int groundSize = dis.readInt();

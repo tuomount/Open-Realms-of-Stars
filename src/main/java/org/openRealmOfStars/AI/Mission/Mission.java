@@ -246,7 +246,8 @@ public class Mission {
    * @return Sun name as a String
    */
   public String getSunName() {
-    if (type == MissionType.EXPLORE) {
+    if (type == MissionType.EXPLORE
+        || type == MissionType.COLONY_EXPLORE) {
       return parameter;
     }
     return "";
@@ -257,7 +258,8 @@ public class Mission {
    * @param name Sun Name
    */
   public void setSunName(final String name) {
-    if (type == MissionType.EXPLORE) {
+    if (type == MissionType.EXPLORE
+        || type == MissionType.COLONY_EXPLORE) {
       this.parameter = name;
     }
   }

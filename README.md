@@ -19,10 +19,14 @@ Open Realm of Stars can be compiled with Maven.
 Install maven and then run command:
 ``mvn install``
 
-Runnable Jar file can then located from target directory.
+In target directory there is zip file containing all dependecies to run the Game.
+Unzip and go to directory you just extracted and run ``Open-Realm-of-Stars-?.?.?.jar``
+with following command ``java -jar Open-Realm-of-Stars-?.?.?.jar``. Note that question
+marks needs to point correct build version.
 
 Git project also contains Eclipse project which should automatically compile it.
-All java files under src folder needs to be compiled.
+All java files under src folder needs to be compiled. Even when compiling Eclipse
+run first maven command (``mvn install``) to fetch all the dependencies.
 
 ## Running the game
 

@@ -30,7 +30,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -160,7 +160,8 @@ public class MapInfoPanel extends InfoPanel {
     routeBtn = new SpaceButton("Route", GameCommands.COMMAND_ROUTE_FLEET);
     routeBtn.addActionListener(listener);
     routeBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-    routeBtn.setToolTipText("R - Route fleet with FTL");
+    routeBtn.setToolTipText("R - Route fleet with FTL. Route is direct line"
+        + " from A to B using FTL speed.");
     defendBtn = new SpaceButton("Defend", GameCommands.COMMAND_DEFEND_SECTOR);
     defendBtn.addActionListener(listener);
     defendBtn.setAlignmentX(Component.CENTER_ALIGNMENT);

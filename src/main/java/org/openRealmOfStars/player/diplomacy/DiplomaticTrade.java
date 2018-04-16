@@ -168,6 +168,9 @@ public class DiplomaticTrade {
     if (firstOffer.isTypeInOffer(NegotiationType.ALLIANCE)) {
       return SpeechType.ALLIANCE;
     }
+    if (firstOffer.isTypeInOffer(NegotiationType.SPY_TRADE)) {
+      return SpeechType.OFFER_SPY_TRADE;
+    }
     if (firstOffer.isTypeInOffer(NegotiationType.TRADE_ALLIANCE)) {
       return SpeechType.TRADE_ALLIANCE;
     }
@@ -1256,6 +1259,12 @@ public class DiplomaticTrade {
         int index = starMap.getPlayerList().getIndex(giver);
         info.getDiplomacy().getDiplomacyList(index).addBonus(
             DiplomacyBonusType.IN_DEFENSIVE_PACT, info.getRace());
+        break;
+      }
+      case SPY_TRADE: {
+        int index = starMap.getPlayerList().getIndex(giver);
+        info.getDiplomacy().getDiplomacyList(index).addBonus(
+            DiplomacyBonusType.SPY_TRADE, info.getRace());
         break;
       }
       default:

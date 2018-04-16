@@ -230,6 +230,22 @@ public class DiplomacyBonus {
        }
        break;
      }
+     case SPY_TRADE: {
+       if (race == SpaceRace.TEUTHIDAES) {
+         bonusValue = 15;
+       } else if (race == SpaceRace.SPORKS) {
+         bonusValue = 13;
+       } else if (race == SpaceRace.HOMARIANS) {
+         bonusValue = 8;
+       } else if (race == SpaceRace.MECHIONS) {
+         bonusValue = 8;
+       } else {
+         bonusValue = 10;
+       }
+       bonusLasting = 20;
+       onlyOne = true;
+       break;
+     }
      default: {
        throw new IllegalArgumentException("Unknown bonus type!!");
      }

@@ -88,13 +88,17 @@ public enum DiplomacyBonusType {
   /**
    * Border has been crossed with espionage ship.
    */
-  ESPIONAGE_BORDER_CROSS;
+  ESPIONAGE_BORDER_CROSS,
+  /**
+   * Espionage trade
+   */
+  SPY_TRADE;
 
 
   /**
    * Number of Bonus type. This should be one larger than actual bonus types.
    */
-  public static final int MAX_BONUS_TYPE = 16;
+  public static final int MAX_BONUS_TYPE = 17;
 
   /**
    * Get ShipHullType index
@@ -118,6 +122,7 @@ public enum DiplomacyBonusType {
       case NOTHING_TO_TRADE: return 13;
       case IN_DEFENSIVE_PACT: return 14;
       case ESPIONAGE_BORDER_CROSS: return 15;
+      case SPY_TRADE: return 16;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -162,6 +167,8 @@ public enum DiplomacyBonusType {
       return DiplomacyBonusType.IN_DEFENSIVE_PACT;
     case 15:
       return DiplomacyBonusType.ESPIONAGE_BORDER_CROSS;
+    case 16:
+      return DiplomacyBonusType.SPY_TRADE;
     default:
       throw new IllegalArgumentException("Unexpected diplomacy bonus type!");
     }

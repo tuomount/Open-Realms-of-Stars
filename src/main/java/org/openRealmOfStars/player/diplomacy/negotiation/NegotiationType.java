@@ -70,6 +70,10 @@ public enum NegotiationType {
   /**
    * Defensive pact offering
    */
-  DEFENSIVE_PACT
+  DEFENSIVE_PACT,
+  /**
+   * Spy trade offering
+   */
+  SPY_TRADE
 
 }

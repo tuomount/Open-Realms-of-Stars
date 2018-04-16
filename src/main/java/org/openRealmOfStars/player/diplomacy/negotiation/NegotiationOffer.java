@@ -114,6 +114,10 @@ public class NegotiationOffer {
         offerValue = 0;
       }
       break;
+    case SPY_TRADE:
+      // Both sides get Spy trade so it's value to zero.
+      offerValue = 0;
+      break;
     default:
       offerValue = 0;
       break;

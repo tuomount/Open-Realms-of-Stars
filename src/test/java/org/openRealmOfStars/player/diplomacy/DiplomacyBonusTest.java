@@ -49,8 +49,10 @@ public class DiplomacyBonusTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testHuman() {
     //                 IN_WAR,WDEC,INTA,IN_A,DICA,BOCR,GVAL,DEMA,DTR,SRAC,LONG_PEACE 
-    int[] bonusValues =  {-30,  -8,  12,  25,  -5,  -2,   3,  -5,  5,   5,  5, -3, -6, 0, 30, -4};
-    int[] bonusLasting = {255, 255, 255, 255, 200,  20,  50, 80, 110, 255, 1, 70, 120, 10, 255, 30};
+    int[] bonusValues =  {-30,  -8,  12,  25,  -5,  -2,   3,  -5,  5,   5,  5, -3, -6, 0, 30, -4,
+        10};
+    int[] bonusLasting = {255, 255, 255, 255, 200,  20,  50, 80, 110, 255, 1, 70, 120, 10, 255, 30,
+        20};
     for (int i = 0; i < DiplomacyBonusType.MAX_BONUS_TYPE; i++) {
       DiplomacyBonus bonus = new DiplomacyBonus(
           DiplomacyBonusType.getTypeByIndex(i), SpaceRace.HUMAN);
@@ -70,9 +72,12 @@ public class DiplomacyBonusTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCentaurs() {
     //                 IN_WAR,WDEC,INTA,IN_A,DICA,BOCR,GVAL,DEMA,DTR,SRAC,LONG_PEACE 
-    int[] bonusValues =  {-30,  -8,  12,  25,  -8,  -2,   2,  -5,  4,   5,  5, -3, -8, 0, 25, -4};
-    int[] bonusLasting = {255, 255, 255, 255, 200,  20,  50, 80, 100, 255, 1, 70, 120, 10, 255, 30};
-    int[] bonusLasting2 = {255, 255, 255, 255, 199,  19,  49, 79, 99, 255, 2, 69, 119, 9, 255, 29};
+    int[] bonusValues =  {-30,  -8,  12,  25,  -8,  -2,   2,  -5,  4,   5,  5, -3, -8, 0, 25, -4,
+        10};
+    int[] bonusLasting = {255, 255, 255, 255, 200,  20,  50, 80, 100, 255, 1, 70, 120, 10, 255, 30,
+        20};
+    int[] bonusLasting2 = {255, 255, 255, 255, 199,  19,  49, 79, 99, 255, 2, 69, 119, 9, 255, 29,
+        19};
     for (int i = 0; i < DiplomacyBonusType.MAX_BONUS_TYPE; i++) {
       DiplomacyBonus bonus = new DiplomacyBonus(
           DiplomacyBonusType.getTypeByIndex(i), SpaceRace.CENTAURS);
@@ -87,8 +92,10 @@ public class DiplomacyBonusTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testGreyans() {
     //                 IN_WAR,WDEC,INTA,IN_A,DICA,BOCR,GVAL,DEMA,DTR,SRAC,LONG_PEACE 
-    int[] bonusValues =  {-40,  -8,  18,  30,  -5,  -2,   2,  -5,  4,   5,  5, -3, -5, 0, 25, -4};
-    int[] bonusLasting = {255, 255, 255, 255, 200,  20,  50, 80, 100, 255, 1, 70, 100, 10, 255, 30};
+    int[] bonusValues =  {-40,  -8,  18,  30,  -5,  -2,   2,  -5,  4,   5,  5, -3, -5, 0, 25, -4,
+        10};
+    int[] bonusLasting = {255, 255, 255, 255, 200,  20,  50, 80, 100, 255, 1, 70, 100, 10, 255, 30,
+        20};
     for (int i = 0; i < DiplomacyBonusType.MAX_BONUS_TYPE; i++) {
       DiplomacyBonus bonus = new DiplomacyBonus(
           DiplomacyBonusType.getTypeByIndex(i), SpaceRace.GREYANS);
@@ -101,8 +108,10 @@ public class DiplomacyBonusTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testSporks() {
     //                 IN_WAR,WDEC,INTA,IN_A,DICA,BOCR,GVAL,DEMA,DTR,SRAC,LONG_PEACE 
-    int[] bonusValues =  {-30,  -2,  12,  25,  -3,  -1,   2,  -10,  4,   2,  1, -2, -4, 0, 20, -2};
-    int[] bonusLasting = {255, 255, 255, 255, 200,  10,  50, 150, 100, 255, 1, 60, 100, 10, 255, 20};
+    int[] bonusValues =  {-30,  -2,  12,  25,  -3,  -1,   2,  -10,  4,   2,  1, -2, -4, 0, 20, -2,
+        13};
+    int[] bonusLasting = {255, 255, 255, 255, 200,  10,  50, 150, 100, 255, 1, 60, 100, 10, 255, 20,
+        20};
     for (int i = 0; i < DiplomacyBonusType.MAX_BONUS_TYPE; i++) {
       DiplomacyBonus bonus = new DiplomacyBonus(
           DiplomacyBonusType.getTypeByIndex(i), SpaceRace.SPORKS);
@@ -115,8 +124,10 @@ public class DiplomacyBonusTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMechions() {
     //                 IN_WAR,WDEC,INTA,IN_A,DICA,BOCR,GVAL,DEMA,DTR,SRAC,LONG_PEACE 
-    int[] bonusValues =  {-30,  -8,  12,  25,  -5,  -3,   2,  -5,  4,  -3,  5, -1, -3, 0, 25, -6};
-    int[] bonusLasting = {255, 255, 255, 255, 200,  10,  50, 80, 100, 255, 1, 20, 80, 10, 255, 20};
+    int[] bonusValues =  {-30,  -8,  12,  25,  -5,  -3,   2,  -5,  4,  -3,  5, -1, -3, 0, 25, -6,
+        8};
+    int[] bonusLasting = {255, 255, 255, 255, 200,  10,  50, 80, 100, 255, 1, 20, 80, 10, 255, 20,
+        20};
     for (int i = 0; i < DiplomacyBonusType.MAX_BONUS_TYPE; i++) {
       DiplomacyBonus bonus = new DiplomacyBonus(
           DiplomacyBonusType.getTypeByIndex(i), SpaceRace.MECHIONS);
@@ -130,8 +141,10 @@ public class DiplomacyBonusTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMothoids() {
     //                 IN_WAR,WDEC,INTA,IN_A,DICA,BOCR,GVAL,DEMA,DTR,SRAC,LONG_PEACE 
-    int[] bonusValues =  {-30,  -8,  12,  25,  -5,  -2,   2,  -5,  4,   5,  8, -3, -5, 0, 25, -4};
-    int[] bonusLasting = {255, 255, 255, 255, 200,  20,  50, 80, 100, 255, 1, 70, 100, 10, 255, 30};
+    int[] bonusValues =  {-30,  -8,  12,  25,  -5,  -2,   2,  -5,  4,   5,  8, -3, -5, 0, 25, -4,
+        10};
+    int[] bonusLasting = {255, 255, 255, 255, 200,  20,  50, 80, 100, 255, 1, 70, 100, 10, 255, 30,
+        20};
     for (int i = 0; i < DiplomacyBonusType.MAX_BONUS_TYPE; i++) {
       DiplomacyBonus bonus = new DiplomacyBonus(
           DiplomacyBonusType.getTypeByIndex(i), SpaceRace.MOTHOIDS);
@@ -144,8 +157,10 @@ public class DiplomacyBonusTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testTeuthidaes() {
     //                 IN_WAR,WDEC,INTA,IN_A,DICA,BOCR,GVAL,DEMA,DTR,SRAC,LONG_PEACE 
-    int[] bonusValues =  {-30,  -8,  12,  25,  -5,  -2,   2,  -5,  4,   -3,  5, -3, -6, 0, 20, -2};
-    int[] bonusLasting = {255, 255, 255, 255, 200,  20,  50, 80, 100, 255, 1, 70, 120, 10, 255, 20};
+    int[] bonusValues =  {-30,  -8,  12,  25,  -5,  -2,   2,  -5,  4,   -3,  5, -3, -6, 0, 20, -2,
+        15};
+    int[] bonusLasting = {255, 255, 255, 255, 200,  20,  50, 80, 100, 255, 1, 70, 120, 10, 255, 20,
+        20};
     for (int i = 0; i < DiplomacyBonusType.MAX_BONUS_TYPE; i++) {
       DiplomacyBonus bonus = new DiplomacyBonus(
           DiplomacyBonusType.getTypeByIndex(i), SpaceRace.TEUTHIDAES);
@@ -158,8 +173,10 @@ public class DiplomacyBonusTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testHomarians() {
     //                 IN_WAR,WDEC,INTA,IN_A,DICA,BOCR,GVAL,DEMA,DTR,SRAC,LONG_PEACE 
-    int[] bonusValues =  {-30,  -8,  12,  25,  -5,  -2,   2,  -5,  4,   5,  5, -3, -5, 0, 30, -4};
-    int[] bonusLasting = {255, 255, 255, 255, 200,  20,  50, 80, 100, 255, 1, 70, 100, 10, 255, 30};
+    int[] bonusValues =  {-30,  -8,  12,  25,  -5,  -2,   2,  -5,  4,   5,  5, -3, -5, 0, 30, -4,
+        8};
+    int[] bonusLasting = {255, 255, 255, 255, 200,  20,  50, 80, 100, 255, 1, 70, 100, 10, 255, 30,
+        20};
     for (int i = 0; i < DiplomacyBonusType.MAX_BONUS_TYPE; i++) {
       DiplomacyBonus bonus = new DiplomacyBonus(
           DiplomacyBonusType.getTypeByIndex(i), SpaceRace.HOMARIANS);

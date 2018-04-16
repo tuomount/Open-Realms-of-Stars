@@ -29,7 +29,7 @@ public class DiplomacyBonusTypeTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testIndexes() {
-    for (int i = 0;i < 15; i++) {
+    for (int i = 0;i < 16; i++) {
       assertEquals(i,DiplomacyBonusType.getTypeByIndex(i).getIndex());
     }
   }

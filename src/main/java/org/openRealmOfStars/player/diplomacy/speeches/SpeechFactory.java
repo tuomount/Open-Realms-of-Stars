@@ -68,6 +68,7 @@ public final class SpeechFactory {
       case NOTHING_TO_TRADE: return createNothingToTradeLine(race);
       case DEFESIVE_PACT: return createDefensivePactLine(race);
       case ASK_MOVE_SPY: return createAskMoveSpyFleetLine(race, dynamicContent);
+      case OFFER_SPY_TRADE: return createSpyTradeLine(race);
       default: return null;
     }
   }
@@ -571,6 +572,36 @@ public final class SpeechFactory {
           "Time to die!");
       case HOMARIANS: return new SpeechLine(type,
           "Time to get sliced and boiled!");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Espionage Trade SpeechLine according the race
+   * @param race SpaceRace
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createSpyTradeLine(final SpaceRace race) {
+    SpeechType type = SpeechType.OFFER_SPY_TRADE;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "Let's change information for 20 turns?");
+      case GREYANS: return new SpeechLine(type,
+          "Let's trade espionage information for 20 turns?");
+      case HUMAN: return new SpeechLine(type,
+          "How about some intelligence trades for 20 turns?");
+      case MECHIONS: return new SpeechLine(type,
+          "Espionage information? 20 turns?");
+      case MOTHOIDS: return new SpeechLine(type,
+          "Join your spies with our spies for 20 turns?");
+      case SPORKS: return new SpeechLine(type,
+          "How about share spy information for 20 turns?");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Are you interested in intellingece trading for 20 turns?");
+      case SCAURIANS: return new SpeechLine(type,
+          "Let's build together awesome spy network for 20 turns?");
+      case HOMARIANS: return new SpeechLine(type,
+          "Do you have spies? We should work together for 20 turns?");
       default: return null;
     }
   }

@@ -106,6 +106,8 @@ public class SpeechFactoryTest {
       assertNotEquals(null, line);
       assertEquals(SpeechType.ASK_MOVE_SPY, line.getType());
       assertEquals(true, line.getLine().contains("Fleet #1"));
+      line = SpeechFactory.createLine(SpeechType.OFFER_SPY_TRADE, race, null);
+      assertEquals(SpeechType.OFFER_SPY_TRADE, line.getType());
       line = SpeechFactory.createLine(SpeechType.NOTHING_TO_TRADE, race, null);
       assertNotEquals(null, line);
       assertEquals(SpeechType.NOTHING_TO_TRADE, line.getType());

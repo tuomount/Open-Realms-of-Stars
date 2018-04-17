@@ -74,6 +74,20 @@ public class Espionage {
   }
 
   /**
+   * At least one players espionage must be 2 or more to be able to espionage
+   * trade.
+   * @return True if spy trade is possible.
+   */
+  public boolean isSpyTradePossible() {
+    boolean result = false;
+    for (EspionageList list : espionageLists) {
+      if (list != null && list.getOwnBonus() >= 2) {
+        result = true;
+      }
+    }
+    return result;
+  }
+  /**
    *  Calculate espionage cost from fakeMilitarySize;
    *  FakeMilitarySize should be from 50 to 200.
    * @param fakeMilitarySize Fake military size between 50 to 200 percent.

@@ -47,8 +47,10 @@ public class EspionageTest {
   public void testClear() {
     Espionage espionage = new Espionage(4);
     assertEquals(4, espionage.getSize());
+    assertEquals(false, espionage.isSpyTradePossible());
     EspionageList list = espionage.getByIndex(1);
     list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 2, "Test 1");
+    assertEquals(true, espionage.isSpyTradePossible());
     assertEquals(2, list.getTotalBonus());
     espionage.clearAllEspionageBonuses();
     list = espionage.getByIndex(1);

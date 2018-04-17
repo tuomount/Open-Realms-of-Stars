@@ -41,14 +41,17 @@ public class EspionageListTest {
     list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 1, "Fleet #1");
     assertEquals(1, list.getSize());
     assertEquals(1, list.getTotalBonus());
+    assertEquals(1, list.getOwnBonus());
     assertEquals("Fleet #1", list.getEspionage(0).getDescription());
     list.addEspionageBonus(EspionageBonusType.TRADE, 5, "Spy trade");
     assertEquals(2, list.getSize());
     assertEquals(6, list.getTotalBonus());
+    assertEquals(1, list.getOwnBonus());
     assertEquals("Spy trade", list.getEspionage(1).getDescription());
     list.addEspionageBonus(EspionageBonusType.SPY_FLEET, 5, "Fleet #2");
     assertEquals(3, list.getSize());
     assertEquals(10, list.getTotalBonus());
+    assertEquals(6, list.getOwnBonus());
     assertEquals("Fleet #2", list.getEspionage(2).getDescription());
   }
 

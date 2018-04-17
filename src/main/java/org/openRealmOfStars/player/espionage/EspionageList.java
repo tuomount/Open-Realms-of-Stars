@@ -133,6 +133,25 @@ public class EspionageList {
   }
 
   /**
+   * Get own espionage bonus. This bonus is limited between
+   * 0 and 10. This does not count traded espionage
+   * @return Total espionage bonus
+   */
+  public int getOwnBonus() {
+    int result = 0;
+    for (EspionageBonus bonus : list) {
+      if (bonus.getType() == EspionageBonusType.SPY_FLEET) {
+        result = result + bonus.getValue();
+      }
+    }
+    if (result > 10) {
+      result = 10;
+    }
+    // Zero is limited in EspionageBonus, there value cannot be negative.
+    return result;
+  }
+
+  /**
    * Is certain fleet type recognized by espionage bonus
    * @param type Fleet Type
    * @return True if recognized

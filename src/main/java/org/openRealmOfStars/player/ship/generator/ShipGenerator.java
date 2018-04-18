@@ -146,6 +146,14 @@ public final class ShipGenerator {
         }
         break;
       }
+      case THRUSTERS: {
+        if (!design.gotCertainType(ShipComponentType.THRUSTERS)) {
+          scores[i] = scores[i] + 15;
+        } else {
+          scores[i] = -1;
+        }
+        break;
+      }
       case JAMMER: {
         if (!design.gotCertainType(ShipComponentType.JAMMER)) {
           scores[i] = scores[i] + comp.getDefenseValue() * 2;
@@ -303,6 +311,11 @@ public final class ShipGenerator {
       ShipComponent shieldGenComp = null;
       ShipComponent armorComp = null;
       ArrayList<ShipComponent> components = new ArrayList<>();
+      ShipComponent thrusters = null;
+      if (player.getTechList().isTech("Combat thrusters")) {
+        thrusters = ShipComponentFactory.createByName("Combat thrusters");
+        components.add(thrusters);
+      }
       if (shield != null) {
         shieldComp = ShipComponentFactory.createByName(shield.getComponent());
         components.add(shieldComp);

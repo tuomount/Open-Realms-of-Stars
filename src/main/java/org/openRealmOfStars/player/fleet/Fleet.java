@@ -256,13 +256,17 @@ public class Fleet {
   private static final int MAX_FTL_SPEED = 999;
 
   /**
-   * Get Fleet speed
-   * @return Speed
+   * Get fleet speed. Internally usage only.
+   * @param ftl True to get FTL speed, otherwise regular speed
+   * @return Speed of fleet
    */
-  public int getFleetSpeed() {
+  private int getFleetSpeed(final boolean ftl) {
     int speed = MAX_FTL_SPEED;
     for (Ship ship : ships) {
       int shipSpeed = ship.getSpeed();
+      if (ftl) {
+        shipSpeed = ship.getFtlSpeed();
+      }
       if (shipSpeed < speed) {
         speed = shipSpeed;
       }
@@ -272,23 +276,20 @@ public class Fleet {
     }
     return speed;
   }
+  /**
+   * Get Fleet speed
+   * @return Speed
+   */
+  public int getFleetSpeed() {
+    return getFleetSpeed(false);
+  }
 
   /**
    * Get Fleet FTL speed
    * @return Speed
    */
   public int getFleetFtlSpeed() {
-    int speed = MAX_FTL_SPEED;
-    for (Ship ship : ships) {
-      int shipSpeed = ship.getFtlSpeed();
-      if (shipSpeed < speed) {
-        speed = shipSpeed;
-      }
-    }
-    if (speed == MAX_FTL_SPEED) {
-      speed = 0;
-    }
-    return speed;
+    return getFleetSpeed(true);
   }
 
   /**

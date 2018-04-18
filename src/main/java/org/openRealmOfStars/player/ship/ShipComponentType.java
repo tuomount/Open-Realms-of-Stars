@@ -119,7 +119,11 @@ public enum ShipComponentType {
   /**
    * Combat thrusters
    */
-  THRUSTERS;
+  THRUSTERS,
+  /**
+   * Fighter bay for small and medium ships
+   */
+  FIGHTER_BAY;
 
   /**
    * Get ShipComponentType index
@@ -171,6 +175,8 @@ public enum ShipComponentType {
       return 20;
     case THRUSTERS:
       return 21;
+    case FIGHTER_BAY:
+      return 22;
     default:
       return 0;
     }
@@ -227,6 +233,8 @@ public enum ShipComponentType {
       return ShipComponentType.ESPIONAGE_MODULE;
     case 21:
       return ShipComponentType.THRUSTERS;
+    case 22:
+      return ShipComponentType.FIGHTER_BAY;
     default:
       return ShipComponentType.WEAPON_BEAM;
     }
@@ -279,6 +287,8 @@ public enum ShipComponentType {
       return "Espionage module";
     case THRUSTERS:
       return "Thrusters";
+    case FIGHTER_BAY:
+      return "Fighter bay";
     default:
       return "Error - Unknown";
     }
@@ -332,6 +342,10 @@ public enum ShipComponentType {
       return Icons.ICON_STARBASE;
     case ESPIONAGE_MODULE:
       return Icons.ICON_CIRCUIT_BOARD;
+    case THRUSTERS:
+      return Icons.ICON_PROPULSION_TECH;
+    case FIGHTER_BAY:
+      return Icons.ICON_HULL_TECH;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }

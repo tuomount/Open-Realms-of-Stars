@@ -226,13 +226,15 @@ public class ShipDesign {
    * @return Speed
    */
   public int getSpeed() {
+    int speed = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (comp.getType() == ShipComponentType.ENGINE) {
-        return comp.getSpeed();
+      if (comp.getType() == ShipComponentType.ENGINE
+          && comp.getSpeed() > speed) {
+        speed = comp.getSpeed();
       }
     }
-    return 0;
+    return speed;
   }
 
   /**
@@ -240,13 +242,22 @@ public class ShipDesign {
    * @return Speed
    */
   public int getTacticSpeed() {
+    int speed = 0;
+    boolean thrusters = false;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (comp.getType() == ShipComponentType.ENGINE) {
-        return comp.getTacticSpeed();
+      if (comp.getType() == ShipComponentType.ENGINE
+          && comp.getTacticSpeed() > speed) {
+        speed = comp.getTacticSpeed();
+      }
+      if (comp.getType() == ShipComponentType.THRUSTERS) {
+        thrusters = true;
       }
     }
-    return 0;
+    if (thrusters && speed > 0) {
+      speed = speed + 1;
+    }
+    return speed;
   }
 
   /**
@@ -257,9 +268,9 @@ public class ShipDesign {
     int result = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
-      if (comp.getType() == ShipComponentType.ENGINE) {
+      if (comp.getType() == ShipComponentType.ENGINE
+          && comp.getFtlSpeed() > result) {
         result = comp.getFtlSpeed();
-        break;
       }
     }
     if (hull.getHullType() == ShipHullType.PROBE) {

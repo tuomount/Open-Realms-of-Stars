@@ -1091,6 +1091,9 @@ public boolean launchIntercept(final int distance,
           int accuracy = ai.getShip().getHitChance(weapon)
               + ai.getBonusAccuracy();
           accuracy = accuracy - target.getShip().getDefenseValue();
+          if (accuracy < 5) {
+            accuracy = 5;
+          }
           ShipDamage shipDamage = new ShipDamage(1, "Attack missed!");
           if (DiceGenerator.getRandom(1, 100) <= accuracy) {
             shipDamage = target.getShip().damageBy(weapon);

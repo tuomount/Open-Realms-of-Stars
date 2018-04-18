@@ -150,6 +150,9 @@ public class CombatMapMouseListener extends MouseAdapter
             int accuracy = ship.getShip().getHitChance(weapon)
                 + ship.getBonusAccuracy();
             accuracy = accuracy - target.getShip().getDefenseValue();
+            if (accuracy < 5) {
+              accuracy = 5;
+            }
             shipDamage = new ShipDamage(1, "Attack missed!");
             if (DiceGenerator.getRandom(1, 100) <= accuracy) {
               shipDamage = target.getShip().damageBy(weapon);

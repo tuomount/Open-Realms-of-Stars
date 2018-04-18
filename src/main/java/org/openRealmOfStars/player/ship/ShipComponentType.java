@@ -115,7 +115,11 @@ public enum ShipComponentType {
   /**
    * Espionage module for spying other realms
    */
-  ESPIONAGE_MODULE;
+  ESPIONAGE_MODULE,
+  /**
+   * Combat thrusters
+   */
+  THRUSTERS;
 
   /**
    * Get ShipComponentType index
@@ -165,6 +169,8 @@ public enum ShipComponentType {
       return 19;
     case ESPIONAGE_MODULE:
       return 20;
+    case THRUSTERS:
+      return 21;
     default:
       return 0;
     }
@@ -219,6 +225,8 @@ public enum ShipComponentType {
       return ShipComponentType.STARBASE_COMPONENT;
     case 20:
       return ShipComponentType.ESPIONAGE_MODULE;
+    case 21:
+      return ShipComponentType.THRUSTERS;
     default:
       return ShipComponentType.WEAPON_BEAM;
     }
@@ -269,6 +277,8 @@ public enum ShipComponentType {
       return "Starbase module";
     case ESPIONAGE_MODULE:
       return "Espionage module";
+    case THRUSTERS:
+      return "Thrusters";
     default:
       return "Error - Unknown";
     }

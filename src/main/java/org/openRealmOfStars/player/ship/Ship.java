@@ -512,14 +512,15 @@ private int getRemainingEnergy(final int index) {
    * @return Speed
    */
   public int getSpeed() {
+    int speed = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
-          && hasComponentEnergy(i)) {
-        return comp.getSpeed();
+          && hasComponentEnergy(i) && comp.getSpeed() > speed) {
+        speed = comp.getSpeed();
       }
     }
-    return 0;
+    return speed;
   }
 
   /**
@@ -527,14 +528,23 @@ private int getRemainingEnergy(final int index) {
    * @return Speed
    */
   public int getTacticSpeed() {
+    int speed = 0;
+    boolean thrusters = false;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
+          && hasComponentEnergy(i) && comp.getTacticSpeed() > speed) {
+        speed = comp.getTacticSpeed();
+      }
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.THRUSTERS
           && hasComponentEnergy(i)) {
-        return comp.getTacticSpeed();
+        thrusters = true;
       }
     }
-    return 0;
+    if (thrusters && speed > 0) {
+      speed = speed + 1;
+    }
+    return speed;
   }
 
   /**
@@ -581,7 +591,7 @@ private int getRemainingEnergy(final int index) {
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
-          && hasComponentEnergy(i)) {
+          && hasComponentEnergy(i) && comp.getFtlSpeed() > ftlSpeed) {
           ftlSpeed = comp.getFtlSpeed();
         break;
       }
@@ -610,17 +620,24 @@ private int getRemainingEnergy(final int index) {
    */
   private int increaseInitivativeByComponent() {
     int increased = 0;
+    int speed = 0;
+    int tacticSpeed = 0;
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
-          && hasComponentEnergy(i)) {
-          increased = increased + comp.getSpeed() + comp.getTacticSpeed();
+          && hasComponentEnergy(i) && comp.getSpeed() > speed) {
+        speed = comp.getSpeed();
+      }
+      if (hullPoints[i] > 0 && comp.getType() == ShipComponentType.ENGINE
+          && hasComponentEnergy(i) && comp.getTacticSpeed() > tacticSpeed) {
+        tacticSpeed = comp.getTacticSpeed();
       }
       if (hullPoints[i] > 0 && hasComponentEnergy(i)
           && comp.getInitiativeBoost() > 0) {
           increased = increased + comp.getInitiativeBoost();
       }
     }
+    increased = increased + speed + tacticSpeed;
     return increased;
   }
 
@@ -955,6 +972,28 @@ private int increaseHitChanceByComponent() {
     defenseValue += increaseDefenseValueWithJammer();
     if (getTacticSpeed() == 0) {
         defenseValue = defenseValue - 15;
+    }
+    boolean cloak = false;
+    boolean thrusters = false;
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.THRUSTERS
+          && hasComponentEnergy(i)) {
+        thrusters = true;
+      }
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.CLOAKING_DEVICE
+          && hasComponentEnergy(i)
+          && comp.getCloaking() > 0) {
+        cloak = true;
+      }
+    }
+    if (cloak) {
+      defenseValue = defenseValue + 5;
+    }
+    if (thrusters) {
+      defenseValue = defenseValue + 5;
     }
     return defenseValue;
   }

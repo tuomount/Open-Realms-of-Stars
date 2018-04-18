@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 147;
+  private static final int MAX_SHIPCOMPONENT = 148;
 
   /**
    * Component Ion drive Mk1
@@ -776,6 +776,11 @@ public final class ShipComponentFactory {
    */
   public static final int COMPONENT_ESPIONAGE_MODULE_MK5 = 146;
 
+  /**
+   * Combat thrusters
+   */
+  public static final int COMPONENT_COMBAT_THRUSTERS = 147;
+
 /**
    * Create ShipComponent with matching name
    * @param name Ship component name
@@ -1251,6 +1256,9 @@ public final class ShipComponentFactory {
     case COMPONENT_ESPIONAGE_MODULE_MK5:
       tmp = createElectronics(index);
       break; // Espionage Module Mk5
+    case COMPONENT_COMBAT_THRUSTERS:
+      tmp = createEngine(index);
+      break; // Combat thrusters
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -1482,6 +1490,13 @@ public final class ShipComponentFactory {
       tmp.setFtlSpeed(7);
       tmp.setTacticSpeed(2);
       tmp.setEnergyRequirement(2);
+    }
+    if (index == COMPONENT_COMBAT_THRUSTERS) {
+      tmp = new ShipComponent(index, "Combat thrusters", 4, 4,
+          ShipComponentType.THRUSTERS);
+      tmp.setTacticSpeed(1);
+      tmp.setInitiativeBoost(1);
+      tmp.setEnergyResource(1);
     }
     return tmp;
 

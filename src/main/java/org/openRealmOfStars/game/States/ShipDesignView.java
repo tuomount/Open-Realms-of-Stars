@@ -463,7 +463,8 @@ public class ShipDesignView extends BlackPanel {
         }
         if (comp != null && filter.equalsIgnoreCase("Propulsion")
             && (comp.getType() == ShipComponentType.ENGINE
-                || comp.getType() == ShipComponentType.POWERSOURCE)) {
+                || comp.getType() == ShipComponentType.POWERSOURCE)
+                || comp.getType() == ShipComponentType.THRUSTERS) {
           components.add(comp);
           continue;
         }
@@ -489,7 +490,8 @@ public class ShipDesignView extends BlackPanel {
                 || comp.getType() == ShipComponentType.ESPIONAGE_MODULE
                 || comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE
                 || comp.getType() == ShipComponentType.PRIVATEERING_MODULE
-                || comp.getType() == ShipComponentType.STARBASE_COMPONENT)) {
+                || comp.getType() == ShipComponentType.STARBASE_COMPONENT
+                || comp.getType() == ShipComponentType.FIGHTER_BAY)) {
           components.add(comp);
           continue;
         }

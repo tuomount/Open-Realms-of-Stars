@@ -164,12 +164,12 @@ public final class TechFactory {
    * Hull tech names for level 4
    */
   public static final String[] HULL_TECH_LEVEL4_NAMES = {"Medium freighter",
-      "Medium starbase", "Scout Mk2" };
+      "Medium starbase", "Scout Mk2", "Fighter bay Mk1" };
   /**
    * Hull tech names for level 5
    */
   public static final String[] HULL_TECH_LEVEL5_NAMES = {"Cruiser",
-      "Battleship Mk1", "Privateer Mk1" };
+      "Battleship Mk1", "Privateer Mk1", "Fighter bay Mk2" };
   /**
    * Hull tech names for level 6
    */
@@ -179,7 +179,7 @@ public final class TechFactory {
    * Hull tech names for level 7
    */
   public static final String[] HULL_TECH_LEVEL7_NAMES = {"Battle cruiser Mk1",
-      "Privateer Mk2", "Scout Mk3" };
+      "Privateer Mk2", "Scout Mk3", "Fighter bay Mk3" };
   /**
    * Hull tech names for level 8
    */
@@ -189,7 +189,7 @@ public final class TechFactory {
    * Hull tech names for level 9
    */
   public static final String[] HULL_TECH_LEVEL9_NAMES = {"Battleship Mk2",
-      "Privateer Mk3", "Battle cruiser Mk2", "Scout Mk4" };
+      "Privateer Mk3", "Battle cruiser Mk2", "Scout Mk4", "Fighter bay Mk4" };
   /**
    * Hull tech names for level 10
    */
@@ -557,6 +557,8 @@ public final class TechFactory {
           tech.setHull(techName);
           tech.setComponent("Colonization module");
           tech.setIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
+        } else if (techName.startsWith("Fighter bay Mk")) {
+          tech.setComponent(techName);
         } else {
           tech.setHull(techName);
         }

@@ -365,6 +365,22 @@ public class ShipComponent {
   }
 
   /**
+   * Get Bay size for fighter bays.
+   * Small ship takes one, medium ship takes two size of bay.
+   * @return Bay size
+   */
+  public int getBaySize() {
+    return defenseValue;
+  }
+  /**
+   * Set Bay size for fighter bays.
+   * Small ship takes one, medium ship takes two size of bay.
+   * @param size Bay size to set
+   */
+  public void setBaySize(final int size) {
+    this.defenseValue = size;
+  }
+  /**
    * Set component defense value. This is used for both armor and shields.
    * @param defenseValue Defense value
    */

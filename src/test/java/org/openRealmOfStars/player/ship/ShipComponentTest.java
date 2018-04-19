@@ -59,6 +59,21 @@ public class ShipComponentTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFighterBay() {
+    ShipComponent component = new ShipComponent(0, "Bay", 2, 5,
+        ShipComponentType.FIGHTER_BAY);
+    assertEquals("Bay", component.getName());
+    assertEquals(0, component.getIndex());
+    assertEquals(2, component.getCost());
+    assertEquals(5, component.getMetalCost());
+    assertEquals(ShipComponentType.FIGHTER_BAY, component.getType());
+    assertEquals(0, component.getBaySize());
+    component.setBaySize(2);
+    assertEquals(2, component.getBaySize());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testWeapon() {
     ShipComponent component = new ShipComponent(0, "Laser Mk2", 3, 3,
         ShipComponentType.WEAPON_BEAM);

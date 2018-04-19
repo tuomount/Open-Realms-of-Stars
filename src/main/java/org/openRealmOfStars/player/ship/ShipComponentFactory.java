@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 148;
+  private static final int MAX_SHIPCOMPONENT = 152;
 
   /**
    * Component Ion drive Mk1
@@ -781,6 +781,26 @@ public final class ShipComponentFactory {
    */
   public static final int COMPONENT_COMBAT_THRUSTERS = 147;
 
+  /**
+   * Fighter bay Mk1
+   */
+  public static final int COMPONENT_FIGHTER_BAY_MK1 = 148;
+
+  /**
+   * Fighter bay Mk2
+   */
+  public static final int COMPONENT_FIGHTER_BAY_MK2 = 149;
+
+  /**
+   * Fighter bay Mk3
+   */
+  public static final int COMPONENT_FIGHTER_BAY_MK3 = 150;
+
+  /**
+   * Fighter bay Mk4
+   */
+  public static final int COMPONENT_FIGHTER_BAY_MK4 = 151;
+
 /**
    * Create ShipComponent with matching name
    * @param name Ship component name
@@ -1259,6 +1279,18 @@ public final class ShipComponentFactory {
     case COMPONENT_COMBAT_THRUSTERS:
       tmp = createEngine(index);
       break; // Combat thrusters
+    case COMPONENT_FIGHTER_BAY_MK1:
+      tmp = createOtherModule(index);
+      break; // Fighter bay Mk1
+    case COMPONENT_FIGHTER_BAY_MK2:
+      tmp = createOtherModule(index);
+      break; // Fighter bay Mk2
+    case COMPONENT_FIGHTER_BAY_MK3:
+      tmp = createOtherModule(index);
+      break; // Fighter bay Mk3
+    case COMPONENT_FIGHTER_BAY_MK4:
+      tmp = createOtherModule(index);
+      break; // Fighter bay Mk4
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -1492,11 +1524,11 @@ public final class ShipComponentFactory {
       tmp.setEnergyRequirement(2);
     }
     if (index == COMPONENT_COMBAT_THRUSTERS) {
-      tmp = new ShipComponent(index, "Combat thrusters", 4, 4,
+      tmp = new ShipComponent(index, "Combat thrusters", 1, 2,
           ShipComponentType.THRUSTERS);
       tmp.setTacticSpeed(1);
       tmp.setInitiativeBoost(1);
-      tmp.setEnergyResource(1);
+      tmp.setEnergyRequirement(1);
     }
     return tmp;
 
@@ -1544,6 +1576,39 @@ public final class ShipComponentFactory {
           ShipComponentType.STARBASE_COMPONENT);
       tmp.setCreditBonus(2);
       tmp.setEnergyRequirement(2);
+    }
+    return tmp;
+  }
+  /**
+   * Create other modules with index
+   * @param index Index to create
+   * @return ShipComponent or null if index is not found
+   */
+  private static ShipComponent createOtherModule(final int index) {
+    ShipComponent tmp = null;
+    if (index == COMPONENT_FIGHTER_BAY_MK1) {
+      tmp = new ShipComponent(index, "Fighter bay Mk1", 2, 5,
+          ShipComponentType.FIGHTER_BAY);
+      tmp.setEnergyRequirement(1);
+      tmp.setBaySize(1);
+    }
+    if (index == COMPONENT_FIGHTER_BAY_MK2) {
+      tmp = new ShipComponent(index, "Fighter bay Mk2", 2, 5,
+          ShipComponentType.FIGHTER_BAY);
+      tmp.setEnergyRequirement(1);
+      tmp.setBaySize(2);
+    }
+    if (index == COMPONENT_FIGHTER_BAY_MK3) {
+      tmp = new ShipComponent(index, "Fighter bay Mk3", 2, 6,
+          ShipComponentType.FIGHTER_BAY);
+      tmp.setEnergyRequirement(1);
+      tmp.setBaySize(3);
+    }
+    if (index == COMPONENT_FIGHTER_BAY_MK4) {
+      tmp = new ShipComponent(index, "Fighter bay Mk4", 3, 7,
+          ShipComponentType.FIGHTER_BAY);
+      tmp.setEnergyRequirement(1);
+      tmp.setBaySize(4);
     }
     return tmp;
   }

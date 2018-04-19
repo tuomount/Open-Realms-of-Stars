@@ -155,4 +155,34 @@ public class ShipComponentFactoryTest {
     assertEquals(1, electronics.getMetalCost());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testThrustersAndFighterBays() {
+    ShipComponent component = ShipComponentFactory.createByName("Combat thrusters");
+    assertEquals(1, component.getTacticSpeed());
+    assertEquals(1, component.getEnergyRequirement());
+    assertEquals(1, component.getCost());
+    assertEquals(2, component.getMetalCost());
+    component = ShipComponentFactory.createByName("Fighter bay Mk1");
+    assertEquals(1, component.getBaySize());
+    assertEquals(1, component.getEnergyRequirement());
+    assertEquals(2, component.getCost());
+    assertEquals(5, component.getMetalCost());
+    component = ShipComponentFactory.createByName("Fighter bay Mk2");
+    assertEquals(2, component.getBaySize());
+    assertEquals(1, component.getEnergyRequirement());
+    assertEquals(2, component.getCost());
+    assertEquals(5, component.getMetalCost());
+    component = ShipComponentFactory.createByName("Fighter bay Mk3");
+    assertEquals(3, component.getBaySize());
+    assertEquals(1, component.getEnergyRequirement());
+    assertEquals(2, component.getCost());
+    assertEquals(6, component.getMetalCost());
+    component = ShipComponentFactory.createByName("Fighter bay Mk4");
+    assertEquals(4, component.getBaySize());
+    assertEquals(1, component.getEnergyRequirement());
+    assertEquals(3, component.getCost());
+    assertEquals(7, component.getMetalCost());
+  }
+
 }

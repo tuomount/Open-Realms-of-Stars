@@ -13,7 +13,6 @@ import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
-import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
@@ -173,7 +172,7 @@ public class StarMapView extends BlackPanel {
     mapPanel.addMouseMotionListener(starMapMouseListener);
 
     // Bottom panel is created here
-    InfoPanel bottomPanel = new EmptyInfoPanel();
+    InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setTitle(players.getCurrentPlayerInfo().getEmpireName());
     bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
     bottomPanel.add(Box.createRigidArea(new Dimension(15, 25)));

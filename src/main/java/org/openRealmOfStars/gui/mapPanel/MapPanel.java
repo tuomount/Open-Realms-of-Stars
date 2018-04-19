@@ -143,11 +143,6 @@ public class MapPanel extends JPanel {
   private Route route;
 
   /**
-   * Map scaling
-   */
-  private int scale;
-
-  /**
    * Is this for battle panel or not
    */
   private boolean battle;
@@ -176,20 +171,19 @@ public class MapPanel extends JPanel {
     this.battle = battle;
     int width = WIDTH;
     int height = HEIGHT;
-    setScale(Tile.SCALED_NORMAL);
     historyCultures = null;
     historyCoordinates = null;
     if (battle) {
       width = BATTLE_VIEW_SIZE;
       height = BATTLE_VIEW_SIZE;
+      screen = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+      Dimension size = new Dimension(width, height);
+      this.setSize(size);
+      this.setPreferredSize(size);
+      this.setMinimumSize(size);
+      this.setMaximumSize(size);
+      calculateViewPoints();
     }
-    screen = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-    Dimension size = new Dimension(width, height);
-    this.setSize(size);
-    this.setPreferredSize(size);
-    this.setMinimumSize(size);
-    this.setMaximumSize(size);
-    calculateViewPoints();
     this.setBackground(Color.black);
     setRoute(null);
     wormHoleAnimation = 0;
@@ -199,8 +193,8 @@ public class MapPanel extends JPanel {
    * Calculate view according the actual panel size;
    */
   private void calculateViewPoints() {
-    int tileWidth = Tile.maxWidth(scale);
-    int tileHeight = Tile.maxHeight(scale);
+    int tileWidth = Tile.MAX_WIDTH;
+    int tileHeight = Tile.MAX_HEIGHT;
     if (battle) {
       viewPointX = (this.getWidth() / ShipImage.MAX_WIDTH - 1) / 2;
       viewPointY = (this.getHeight() / ShipImage.MAX_HEIGHT - 1) / 2;
@@ -658,8 +652,8 @@ public class MapPanel extends JPanel {
     int cursorPixelX = 0;
     int cursorPixelY = 0;
     Color colorRed = null;
-    int tileWidth = Tile.maxWidth(scale);
-    int tileHeight = Tile.maxHeight(scale);
+    int tileWidth = Tile.MAX_WIDTH;
+    int tileHeight = Tile.MAX_HEIGHT;
     Graphics2D gr = screen.createGraphics();
     // Center coordinates
     if (historyCoordinates == null) {
@@ -735,12 +729,12 @@ public class MapPanel extends JPanel {
             BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
         gr.setStroke(dashed);
         gr.setColor(colorDarkBlue);
-        if (i != viewPointX && scale < Tile.SCALED_FIFTH) {
+        if (i != viewPointX) {
           // Right line
           gr.drawLine(pixelX + tileWidth - 1, pixelY,
               pixelX + tileWidth - 1, pixelY + tileHeight - 1);
         }
-        if (j != viewPointY && scale < Tile.SCALED_FIFTH) {
+        if (j != viewPointY) {
           // Bottom line
           gr.drawLine(pixelX, pixelY + tileHeight - 1,
               pixelX + tileWidth - 1, pixelY + tileHeight - 1);
@@ -754,7 +748,7 @@ public class MapPanel extends JPanel {
           if (index != -1) {
             Tile cultureTile = Tiles.getTileByName("Player_" + index);
             if (cultureTile != null) {
-              cultureTile.drawScaled(gr, pixelX, pixelY, scale);
+              cultureTile.draw(gr, pixelX, pixelY);
             }
           }
         }
@@ -765,7 +759,7 @@ public class MapPanel extends JPanel {
         }
         // Draw only non empty tiles
         if (!tile.getName().equals(TileNames.EMPTY)) {
-          tile.drawScaled(gr, pixelX, pixelY, scale);
+          tile.draw(gr, pixelX, pixelY);
         }
         // Draw deep space anchor marker
         if (tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
@@ -804,8 +798,7 @@ public class MapPanel extends JPanel {
         }
 
         // Draw sun's text
-        if (scale == Tile.SCALED_NORMAL
-            && tile.getName().equals(TileNames.SUN_E) && i > -viewPointX + 1) {
+        if (tile.getName().equals(TileNames.SUN_E) && i > -viewPointX + 1) {
           Sun sun = starMap.getSunByCoordinate(i + cx, j + cy);
           if (sun != null) {
             int textWidth = (int) GuiStatics.getFontCubellanSC()
@@ -829,7 +822,7 @@ public class MapPanel extends JPanel {
         if ((tile.getName().equals(TileNames.GAS_GIANT_1_SE) && i > -viewPointX
             || tile.getName().equals(TileNames.GAS_GIANT_2_SE)
                 && i > -viewPointX)
-            && planet != null && scale == Tile.SCALED_NORMAL) {
+            && planet != null) {
           int textWidth = (int) GuiStatics.getFontCubellanSC()
               .getStringBounds(RandomSystemNameGenerator.numberToRoman(
                   planet.getOrderNumber()), gr.getFontRenderContext())
@@ -846,8 +839,7 @@ public class MapPanel extends JPanel {
         }
 
         // Draw planet text
-        if (planet != null && !planet.isGasGiant()
-            && scale == Tile.SCALED_NORMAL) {
+        if (planet != null && !planet.isGasGiant()) {
           int textWidth = (int) GuiStatics.getFontCubellanSC()
               .getStringBounds(RandomSystemNameGenerator.numberToRoman(
                   planet.getOrderNumber()), gr.getFontRenderContext())
@@ -1226,23 +1218,6 @@ public class MapPanel extends JPanel {
    */
   public void setRoute(final Route route) {
     this.route = route;
-  }
-
-  /**
-   * Get map scale value
-   * @return the scale
-   */
-  public int getScale() {
-    return scale;
-  }
-
-  /**
-   * Set map scale value
-   * @param mapScale the scale to set
-   */
-  public void setScale(final int mapScale) {
-    screen = null;
-    scale = mapScale;
   }
 
   /**

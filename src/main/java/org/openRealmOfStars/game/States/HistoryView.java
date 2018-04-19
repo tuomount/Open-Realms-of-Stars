@@ -20,7 +20,6 @@ import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
-import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
@@ -111,7 +110,6 @@ public class HistoryView extends BlackPanel {
     centerPanel.setLayout(new BorderLayout());
     centerPanel.setTitle("History");
     mapPanel = new MapPanel(false);
-    mapPanel.setScale(Tile.SCALED_NORMAL);
     mapPanel.setHistoryCultures(starMap.getHistory().calculateCulture(0,
         starMap));
     centerPanel.add(mapPanel, BorderLayout.CENTER);

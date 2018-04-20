@@ -266,7 +266,24 @@ public class ShipTest {
     assertEquals(55, ship.getTotalMilitaryPower());
     assertEquals(0, ship.getCloakingValue());
   }
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testCarrierShip() {
+    ShipHull hull = ShipHullFactory.createByName("Medium freighter", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
+    ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
+    ShipComponent fighterBay = ShipComponentFactory.createByName("Fighter bay Mk2");
+    design.addComponent(energy);
+    design.addComponent(engine);
+    design.addComponent(fighterBay);
+    design.addComponent(fighterBay);
+    design.addComponent(fighterBay);
+    Ship ship = new Ship(design);
+    assertEquals(6, ship.getFighterBaySize());
+  }
 
+  
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTradeShip() {

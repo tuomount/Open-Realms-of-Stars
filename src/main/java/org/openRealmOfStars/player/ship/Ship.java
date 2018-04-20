@@ -999,6 +999,23 @@ private int increaseHitChanceByComponent() {
   }
 
   /**
+   * Get fighter bay value for ship
+   * @return size of fighter bays in ship
+   */
+  public int getFighterBaySize() {
+    int size = 0;
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (hullPoints[i] > 0
+          && comp.getType() == ShipComponentType.FIGHTER_BAY
+          && hasComponentEnergy(i)) {
+        size = size + comp.getBaySize();
+      }
+    }
+    return size;
+  }
+
+  /**
    * @return defenseValue by ship hull size
    */
   private int getDefenseValueByShipHullSize() {

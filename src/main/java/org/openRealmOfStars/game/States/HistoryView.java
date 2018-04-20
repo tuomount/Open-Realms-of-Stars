@@ -321,4 +321,21 @@ public class HistoryView extends BlackPanel {
       }
     }
   }
+
+  /**
+   * Get Turn number from view
+   * @return Turn number
+   */
+  public int getTurn() {
+    return turnNumber;
+  }
+
+  /**
+   * Get Event number from view
+   * @return Turn number
+   */
+  public int getEventNumber() {
+    return eventNumber;
+  }
+
 }

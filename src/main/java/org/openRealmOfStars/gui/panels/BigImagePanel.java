@@ -223,6 +223,9 @@ public class BigImagePanel extends JPanel {
       if (planet.isGasGiant()) {
         offsetY = offsetY + 200;
       }
+      if (offsetY < 75) {
+        offsetY = 75;
+      }
       g.setFont(GuiStatics.getFontCubellanBold());
       drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS,
           GuiStatics.COLOR_COOL_SPACE_BLUE_TRANS, offsetX, offsetY, texts[0]);
@@ -256,8 +259,8 @@ public class BigImagePanel extends JPanel {
         if (planet.isGasGiant()) {
           offsetY = offsetY + 100;
         }
-        if (offsetY < 25) {
-          offsetY = 25;
+        if (offsetY < 75) {
+          offsetY = 75;
         }
       }
       drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK,

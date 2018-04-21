@@ -463,8 +463,8 @@ public class ShipDesignView extends BlackPanel {
         }
         if (comp != null && filter.equalsIgnoreCase("Propulsion")
             && (comp.getType() == ShipComponentType.ENGINE
-                || comp.getType() == ShipComponentType.POWERSOURCE)
-                || comp.getType() == ShipComponentType.THRUSTERS) {
+                || comp.getType() == ShipComponentType.POWERSOURCE
+                || comp.getType() == ShipComponentType.THRUSTERS)) {
           components.add(comp);
           continue;
         }

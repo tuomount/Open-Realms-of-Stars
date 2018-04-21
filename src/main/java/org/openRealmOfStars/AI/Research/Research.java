@@ -590,6 +590,7 @@ public final class Research {
     boolean warpTech = false;
     boolean hyperTech = false;
     boolean impulseTech = false;
+    boolean fighterBayTech = false;
     for (Tech missingTech : missingTechs) {
       if (missingTech.getName().contains("Nuclear")) {
         nuclearTech = true;
@@ -603,14 +604,17 @@ public final class Research {
       if (missingTech.getName().contains("Impulse")) {
         impulseTech = true;
       }
+      if (missingTech.getName().contains("Fighter bay")) {
+        fighterBayTech = true;
+      }
     }
     if (attitude == Attitude.AGGRESSIVE) {
-      if (missingTechs.length == 1) {
+      if (missingTechs.length == 1  && !fighterBayTech) {
         level = level + 1;
         info.getTechList().setTechLevel(TechType.Propulsion, level);
       }
     } else if (attitude == Attitude.MILITARISTIC) {
-      if (!nuclearTech) {
+      if (!nuclearTech && !fighterBayTech) {
         level = level + 1;
         info.getTechList().setTechLevel(TechType.Propulsion, level);
       }

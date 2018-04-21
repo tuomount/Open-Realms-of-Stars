@@ -154,6 +154,14 @@ public final class ShipGenerator {
         }
         break;
       }
+      case FIGHTER_BAY: {
+        if (comp.getBaySize() > 1) {
+          scores[i] = scores[i] + comp.getBaySize() * 7;
+        } else {
+          scores[i] = -1;
+        }
+        break;
+      }
       case JAMMER: {
         if (!design.gotCertainType(ShipComponentType.JAMMER)) {
           scores[i] = scores[i] + comp.getDefenseValue() * 2;
@@ -307,9 +315,11 @@ public final class ShipGenerator {
       Tech shield = TechList.getBestTech(defenseTechs, "Shield");
       Tech armor = TechList.getBestTech(defenseTechs, "Armor plating");
       Tech shieldGen = TechList.getBestTech(electricsTechs, "Shield generator");
+      Tech fighterBay = TechList.getBestTech(electricsTechs, "Fighter bay");
       ShipComponent shieldComp = null;
       ShipComponent shieldGenComp = null;
       ShipComponent armorComp = null;
+      ShipComponent fighterBayComp = null;
       ArrayList<ShipComponent> components = new ArrayList<>();
       ShipComponent thrusters = null;
       if (player.getTechList().isTech("Combat thrusters")) {
@@ -328,6 +338,11 @@ public final class ShipGenerator {
       if (armor != null) {
         armorComp = ShipComponentFactory.createByName(armor.getComponent());
         components.add(armorComp);
+      }
+      if (fighterBay != null) {
+        fighterBayComp = ShipComponentFactory.createByName(
+            fighterBay.getComponent());
+        components.add(fighterBayComp);
       }
       if (shieldComp != null
           && result.getFreeEnergy() >= shieldComp.getEnergyRequirement()) {

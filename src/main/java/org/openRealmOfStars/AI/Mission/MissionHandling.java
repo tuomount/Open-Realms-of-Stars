@@ -300,6 +300,7 @@ public final class MissionHandling {
           if (missionComplete) {
             // going back to home
             mission.setPhase(MissionPhase.TREKKING);
+            return;
           } else {
             sun = game.getStarMap().getSunByName(mission.getSunName());
           }

@@ -262,13 +262,40 @@ public class Fleet {
    */
   private int getFleetSpeed(final boolean ftl) {
     int speed = MAX_FTL_SPEED;
+    int smallShipSpeed = MAX_FTL_SPEED;
+    int bigShipSpeed = MAX_FTL_SPEED;
+    int fighterBaySize = 0;
+    int fighterSize = 0;
     for (Ship ship : ships) {
       int shipSpeed = ship.getSpeed();
       if (ftl) {
         shipSpeed = ship.getFtlSpeed();
       }
-      if (shipSpeed < speed) {
-        speed = shipSpeed;
+      if ((ship.getHull().getSize() == ShipSize.LARGE
+          || ship.getHull().getSize() == ShipSize.HUGE)
+          && shipSpeed < bigShipSpeed) {
+        bigShipSpeed = shipSpeed;
+        fighterBaySize = fighterBaySize + ship.getFighterBaySize();
+      }
+      if ((ship.getHull().getSize() == ShipSize.SMALL
+          || ship.getHull().getSize() == ShipSize.MEDIUM)
+          && shipSpeed < smallShipSpeed) {
+        smallShipSpeed = shipSpeed;
+        if (ship.getHull().getSize() == ShipSize.SMALL) {
+          fighterSize = fighterSize + 1;
+        }
+        if (ship.getHull().getSize() == ShipSize.MEDIUM) {
+          fighterSize = fighterSize + 2;
+        }
+      }
+    }
+    if (fighterBaySize >= fighterSize) {
+      speed = bigShipSpeed;
+    } else {
+      if (bigShipSpeed < smallShipSpeed) {
+        speed = bigShipSpeed;
+      } else {
+        speed = smallShipSpeed;
       }
     }
     if (speed == MAX_FTL_SPEED) {

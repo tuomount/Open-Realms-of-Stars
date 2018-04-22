@@ -100,6 +100,18 @@ public class IOUtilitiesTest {
     buf = IOUtilities.convertIntTo16BitMsb(256);
     assertEquals(1, buf[0]);
     assertEquals(0, buf[1]);
+    buf = IOUtilities.convertIntTo16BitMsb(180);
+    ByteArrayInputStream bais = new ByteArrayInputStream(buf);
+    int value = IOUtilities.read16BitsToInt(bais);
+    assertEquals(180, value);
+    buf = IOUtilities.convertIntTo16BitMsb(270);
+    bais = new ByteArrayInputStream(buf);
+    value = IOUtilities.read16BitsToInt(bais);
+    assertEquals(270, value);
+    buf = new byte[2];
+    buf[0] = 0;
+    buf[1] = -46;
+    value = IOUtilities.convert16BitsToInt(buf[0] & 0xff, buf[1]  & 0xff);
   }
   
 }

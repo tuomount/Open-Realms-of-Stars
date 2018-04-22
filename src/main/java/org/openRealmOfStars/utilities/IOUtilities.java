@@ -296,7 +296,7 @@ public final class IOUtilities {
     if (amount != 2) {
       throw new IOException("Could only read " + amount + " bytes!");
     }
-    int len = convert16BitsToInt(lenBuffer[0], lenBuffer[1]);
+    int len = convert16BitsToInt(lenBuffer[0] & 0xff, lenBuffer[1] & 0xff);
     byte[] buffer = new byte[len];
     int offset = 0;
     do {

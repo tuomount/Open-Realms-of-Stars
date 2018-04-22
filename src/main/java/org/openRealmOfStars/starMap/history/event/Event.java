@@ -102,7 +102,8 @@ public abstract class Event {
       throw new IOException("Data is too short!");
     }
     int readType = buffer[0];
-    int bufferLength = IOUtilities.convert16BitsToInt(buffer[1], buffer[2]);
+    int bufferLength = IOUtilities.convert16BitsToInt(buffer[1] & 0xff,
+        buffer[2] & 0xff);
     if (bufferLength != buffer.length) {
       throw new IOException("Buffer length does not match with buffer length!");
     }

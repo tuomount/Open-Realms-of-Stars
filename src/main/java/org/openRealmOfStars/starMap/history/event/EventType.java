@@ -88,5 +88,19 @@ public enum EventType {
     }
   }
 
+  @Override
+  public String toString() {
+    switch (this) {
+      case CULTURE_CHANGE: return "Culture change";
+      case PLANET_COLONIZED: return "Planet colonized";
+      case PLANET_CONQUERED: return "Planet conquered";
+      case SPACE_COMBAT: return "Space combat";
+      case DIPLOMATIC_RELATION_CHANGE: return "Diplomatic relation change";
+      case GALATIC_NEWS: return "Galactic news";
+      case PLAYER_START: return "Player start";
+      default: return "Default";
+    }
+  }
+
 
 }

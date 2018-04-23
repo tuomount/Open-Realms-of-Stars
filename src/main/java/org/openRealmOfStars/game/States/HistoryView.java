@@ -277,6 +277,8 @@ public class HistoryView extends BlackPanel {
       SoundPlayer.playMenuSound();
       turnNumber++;
       eventNumber = 0;
+      mapPanel.setHistoryCultures(map.getHistory().calculateCulture(
+          turnNumber, map));
       updateTurnLabel();
       updateTextArea();
       turnLabel.repaint();
@@ -305,6 +307,8 @@ public class HistoryView extends BlackPanel {
           if (turnNumber < map.getHistory().numberOfTurns() - 1) {
             turnNumber++;
             eventNumber = 0;
+            mapPanel.setHistoryCultures(map.getHistory().calculateCulture(
+                turnNumber, map));
             updateTurnLabel();
             updateTextArea();
             turnLabel.repaint();

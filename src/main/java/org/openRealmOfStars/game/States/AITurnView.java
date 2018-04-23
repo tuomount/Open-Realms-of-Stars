@@ -276,10 +276,29 @@ public class AITurnView extends BlackPanel {
         mission = info.getMissions().getMission(MissionType.COLONIZE,
             MissionPhase.PLANNING);
         if (mission != null) {
-          mission.setPhase(MissionPhase.LOADING);
-          mission.setFleetName(fleet.getName());
           Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
               fleet.getY());
+          if (planet == null) {
+            // Colony ship is not on home port
+            planet = game.getStarMap().getClosestHomePort(info,
+                fleet.getCoordinate());
+            if (planet != null) {
+              mission = new Mission(MissionType.MOVE, MissionPhase.PLANNING,
+                  planet.getCoordinate());
+              mission.setFleetName(fleet.getName());
+              mission.setTargetPlanet(planet.getName());
+              mission.setTarget(planet.getCoordinate());
+              info.getMissions().add(mission);
+              // Moving colony to nearest home port
+              return;
+            }
+            // Colony does not have colonist nor home port
+            // Odds look pretty bad now...
+            // Just returning
+            return;
+          }
+          mission.setPhase(MissionPhase.LOADING);
+          mission.setFleetName(fleet.getName());
           if (planet.getPlanetPlayerInfo() == info) {
             Ship[] ships = fleet.getShips();
             int colony = 0;

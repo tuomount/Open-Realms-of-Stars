@@ -245,7 +245,8 @@ public class AITurnView extends BlackPanel {
       }
       if (fleet.isColonyFleet()
           && game.getStarMap().getGameLengthState()
-          == GameLengthState.START_GAME) {
+          == GameLengthState.START_GAME
+          && game.getStarMap().getTurn() < 2) {
         // Colony fleet should go to explore
         Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
             fleet.getY(), info, fleet, null);

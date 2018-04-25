@@ -273,6 +273,15 @@ public class AITurnView extends BlackPanel {
         // Mission assigned continue...
         return;
       }
+      if (fleet.getColonyShip(false) != null && fleet.getNumberOfShip() > 1) {
+        Ship colonyShip = fleet.getColonyShip(false);
+        Fleet colonyFleet = new Fleet(colonyShip, fleet.getX(),
+            fleet.getY());
+        String str = info.getFleets().generateUniqueName("Colony");
+        colonyFleet.setName(str);
+        fleet.removeShip(colonyShip);
+        info.getFleets().add(colonyFleet);
+      }
       if (fleet.isColonyFleet()) {
         mission = info.getMissions().getMission(MissionType.COLONIZE,
             MissionPhase.PLANNING);

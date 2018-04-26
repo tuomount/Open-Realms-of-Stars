@@ -206,7 +206,7 @@ public final class PlanetHandling {
           }
         }
         if (!constructionSelected && info.getRace() == SpaceRace.MECHIONS
-            && planet.getTotalPopulation() < 5) {
+            && planet.getTotalPopulation() < 6) {
           int i = getConstruction(ConstructionFactory.MECHION_CITIZEN,
               constructions);
           if (i != -1) {
@@ -558,7 +558,7 @@ public final class PlanetHandling {
             sum = sum + scores[i];
           } else if (constructions[i].getName()
               .equals(ConstructionFactory.MECHION_CITIZEN) && freeSlot < 3
-              && planet.getTotalPopulation() < 20) {
+              && planet.getTotalPopulation() < planet.getGroundSize()) {
             list.add(constructions[i]);
             listScore.add(Integer.valueOf(scores[i]));
             sum = sum + scores[i];
@@ -781,9 +781,15 @@ public final class PlanetHandling {
       if (constructions[i].getName()
           .equals(ConstructionFactory.MECHION_CITIZEN)) {
         scores[i] = planet.getAmountMetalInGround() / 100
-            - 10 * planet.getTotalPopulation();
+            - 2 * planet.getTotalPopulation();
         // Does not take a planet space
         scores[i] = scores[i] + 20;
+        int index = map.getPlayerList().getIndex(info);
+        if (map.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
+            index) == 0) {
+          // No research so focusing on building more population
+          scores[i] = scores[i] + 50;
+        }
 
       }
       if (constructions[i] instanceof Building) {

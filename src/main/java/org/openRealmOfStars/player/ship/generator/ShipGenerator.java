@@ -258,6 +258,9 @@ public final class ShipGenerator {
     for (Tech tech : hullTechs) {
       ShipHull tempHull = ShipHullFactory.createByName(tech.getHull(),
           player.getRace());
+      if (tempHull == null) {
+        continue;
+      }
       if (tempHull.getHullType() == hullType && tempHull.getSize() == size) {
         int tempValue = tempHull.getMaxSlot() * tempHull.getSlotHull();
         if (tempValue > value) {
@@ -559,7 +562,7 @@ public final class ShipGenerator {
     for (Tech tech : hullTechs) {
       ShipHull hull = ShipHullFactory.createByName(tech.getHull(),
           player.getRace());
-      if (!troop && (hull.getSize() == ShipSize.LARGE
+      if (hull == null || !troop && (hull.getSize() == ShipSize.LARGE
           || hull.getSize() == ShipSize.HUGE)) {
         // Large and huge are too large for colony ships
         continue;
@@ -667,6 +670,9 @@ public final class ShipGenerator {
     for (Tech tech : hullTechs) {
       ShipHull hull = ShipHullFactory.createByName(tech.getHull(),
           player.getRace());
+      if (hull == null) {
+        continue;
+      }
       if (hull.getMaxSlot() > value
           && hull.getHullType() == ShipHullType.FREIGHTER) {
         hullTech = tech;
@@ -768,6 +774,9 @@ public final class ShipGenerator {
     for (Tech tech : hullTechs) {
       ShipHull tempHull = ShipHullFactory.createByName(tech.getHull(),
           player.getRace());
+      if (tempHull == null) {
+        continue;
+      }
       if (tempHull.getHullType() == ShipHullType.STARBASE
           && tempHull.getSize() == size) {
         int tempValue = tempHull.getMaxSlot() * tempHull.getSlotHull();

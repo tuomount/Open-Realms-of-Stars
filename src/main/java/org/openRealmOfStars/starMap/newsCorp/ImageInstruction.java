@@ -549,6 +549,9 @@ public class ImageInstruction {
         if (ALLIANCE.equals(parameters[0])) {
           symbol = GuiStatics.RELATION_ALLIANCE;
         }
+        if (DEFENSIVE_PACT.equals(parameters[0])) {
+          symbol = GuiStatics.DEFENSIVE_PACT;
+        }
         g.drawImage(symbol, workImage.getWidth() / 2 - symbol.getWidth() / 2,
             textY - symbol.getHeight() / 2, null);
         textY = textY + symbol.getHeight() * 2;

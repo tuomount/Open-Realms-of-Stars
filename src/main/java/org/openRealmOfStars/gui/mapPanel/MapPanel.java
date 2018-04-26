@@ -492,7 +492,7 @@ public class MapPanel extends JPanel {
               }
             }
           }
-          if (recognized && fleetOwnerIndex != -1) {
+          if (recognized && fleetOwnerIndex != -1 && drawShip) {
             Tile fleetColor = Tiles.getTileByName("Player_Ship_"
                 + fleetOwnerIndex);
             if (fleetColor != null) {

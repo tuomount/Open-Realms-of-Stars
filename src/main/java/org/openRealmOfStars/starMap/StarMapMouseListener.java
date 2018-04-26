@@ -262,9 +262,17 @@ public class StarMapMouseListener extends MouseAdapter
             FleetTileInfo[][] tiles = starMap.getFleetTiles();
             PlayerInfo owner = starMap.getPlayerByIndex(
                 tiles[fleet.getX()][fleet.getY()].getPlayerIndex());
-            setLastClickedFleet(fleet);
-            mapInfoPanel.showFleet(fleet, owner, starMap.isDebug());
-            handleFixTradeButton(fleet, owner);
+            PlayerInfo info = starMap.getCurrentPlayerInfo();
+            if (info.getSectorVisibility(coord.getMapCoordinate())
+                == PlayerInfo.VISIBLE
+                && (info.getSectorCloakDetection(
+                 coord.getMapX(), coord.getMapY()) >= fleet
+                     .getFleetCloackingValue()
+                 || info.getFleets().isFleetOnList(fleet))) {
+              setLastClickedFleet(fleet);
+              mapInfoPanel.showFleet(fleet, owner, starMap.isDebug());
+              handleFixTradeButton(fleet, owner);
+            }
           }
         } else if (e.getClickCount() == 1
             && e.getButton() == MouseEvent.BUTTON3) {

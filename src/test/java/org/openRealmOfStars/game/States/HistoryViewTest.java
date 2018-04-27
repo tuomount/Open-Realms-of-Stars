@@ -63,7 +63,7 @@ public class HistoryViewTest {
     Mockito.when(event.getActionCommand()).thenReturn(GameCommands
         .COMMAND_NEXT_YEAR);
     view.handleAction(event);
-    assertEquals(1, view.getTurn());
+    assertEquals(4, view.getTurn());
     Mockito.when(event.getActionCommand()).thenReturn(GameCommands
         .COMMAND_PREV_YEAR);
     view.handleAction(event);

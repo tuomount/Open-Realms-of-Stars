@@ -250,6 +250,38 @@ public class HistoryView extends BlackPanel {
       }
     }
   }
+
+  /**
+   * Change turn in history view. This method can increase and
+   * decrease the turn. It jumps to turn where happened
+   * something interesting.
+   * @param increase If true it will increase the turn.
+   *        With false it will decrease the turn.
+   */
+  private void changeTurn(final boolean increase) {
+    boolean done = false;
+    do {
+      if (increase) {
+        if (turnNumber < map.getHistory().numberOfTurns() - 1) {
+          turnNumber++;
+          eventNumber = 0;
+        } else {
+          done = true;
+        }
+      } else {
+        if (turnNumber > 0) {
+          turnNumber--;
+          eventNumber = 0;
+        } else {
+          done = true;
+        }
+      }
+      HistoryTurn turn = map.getHistory().getByIndex(turnNumber);
+      if (turn != null && turn.getNumberOfTextualEvents() > 0) {
+        done = true;
+      }
+    } while (!done);
+  }
   /**
    * Handle actions for History view
    * @param arg0 ActionEvent command what player did
@@ -265,8 +297,7 @@ public class HistoryView extends BlackPanel {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_YEAR)
         && turnNumber > 0) {
       SoundPlayer.playMenuSound();
-      turnNumber--;
-      eventNumber = 0;
+      changeTurn(false);
       mapPanel.setHistoryCultures(map.getHistory().calculateCulture(
           turnNumber, map));
       updateTurnLabel();
@@ -277,8 +308,7 @@ public class HistoryView extends BlackPanel {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_YEAR)
         && turnNumber < map.getHistory().numberOfTurns() - 1) {
       SoundPlayer.playMenuSound();
-      turnNumber++;
-      eventNumber = 0;
+      changeTurn(true);
       mapPanel.setHistoryCultures(map.getHistory().calculateCulture(
           turnNumber, map));
       updateTurnLabel();
@@ -307,8 +337,7 @@ public class HistoryView extends BlackPanel {
         }
         if (event == null) {
           if (turnNumber < map.getHistory().numberOfTurns() - 1) {
-            turnNumber++;
-            eventNumber = 0;
+            changeTurn(true);
             mapPanel.setHistoryCultures(map.getHistory().calculateCulture(
                 turnNumber, map));
             updateTurnLabel();

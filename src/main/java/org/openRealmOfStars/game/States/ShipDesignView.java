@@ -173,15 +173,22 @@ public class ShipDesignView extends BlackPanel {
 
     hullPanel.add(Box.createRigidArea(new Dimension(25, 25)));
     Tech[] hullTech = this.player.getTechList().getListForType(TechType.Hulls);
+    ArrayList<ShipHull> hullList = new ArrayList<>();
     ShipHull[] hulls = new ShipHull[hullTech.length];
     int hullIndex = 0;
+    int listLastIndex = 0;
     for (int i = 0; i < hulls.length; i++) {
-      hulls[i] = ShipHullFactory.createByName(hullTech[i].getHull(),
+      ShipHull hull = ShipHullFactory.createByName(hullTech[i].getHull(),
           this.player.getRace());
-      if (design.getHull().getName().equals(hulls[i].getName())) {
-        hullIndex = i;
+      if (hull != null) {
+        hullList.add(hull);
+        listLastIndex++;
+        if (design.getHull().getName().equals(hull.getName())) {
+          hullIndex = listLastIndex;
+        }
       }
     }
+    hulls = hullList.toArray(new ShipHull[hullList.size()]);
 
     hullSelect = new JComboBox<>(hulls);
     hullSelect.setSelectedIndex(hullIndex);

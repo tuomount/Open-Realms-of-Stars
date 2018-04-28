@@ -182,10 +182,10 @@ public class ShipDesignView extends BlackPanel {
           this.player.getRace());
       if (hull != null) {
         hullList.add(hull);
-        listLastIndex++;
         if (design.getHull().getName().equals(hull.getName())) {
           hullIndex = listLastIndex;
         }
+        listLastIndex++;
       }
     }
     hulls = hullList.toArray(new ShipHull[hullList.size()]);

@@ -279,8 +279,10 @@ public class ShipTest {
     design.addComponent(fighterBay);
     design.addComponent(fighterBay);
     design.addComponent(fighterBay);
+    assertEquals(true, design.getDesignInfo().contains("Fighter bay"));
     Ship ship = new Ship(design);
     assertEquals(6, ship.getFighterBaySize());
+    assertEquals(true, ship.getDescription().contains("Fighter bay"));
   }
 
   

@@ -350,6 +350,11 @@ public class Ship extends Construction {
       sb.append("Troops power ");
       sb.append(getTroopPower());
     }
+    int baySize = getTotalBaySize();
+    if (baySize > 0) {
+      sb.append("\nFighter bays: ");
+      sb.append(baySize);
+    }
     return sb.toString();
   }
 
@@ -1492,6 +1497,10 @@ private int increaseHitChanceByComponent() {
       if (comp.getType() == ShipComponentType.JAMMER && componentIsWorking(i)) {
         power = power + comp.getDefenseValue() / 10.0;
       }
+      if (comp.getType() == ShipComponentType.FIGHTER_BAY
+          && componentIsWorking(i)) {
+        power = power + comp.getBaySize();
+      }
     }
     if (!militaryShip) {
       power = 0;
@@ -1582,6 +1591,22 @@ private int increaseHitChanceByComponent() {
       }
     }
     return result;
+  }
+
+  /**
+   * Get Ship fighter bay size
+   * @return Fighter bay size
+   */
+  public int getTotalBaySize() {
+    int baySize = 0;
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.FIGHTER_BAY
+          && comp.getBaySize() > 0 && componentIsWorking(i)) {
+        baySize = baySize + comp.getBaySize();
+      }
+    }
+    return baySize;
   }
 
   /**

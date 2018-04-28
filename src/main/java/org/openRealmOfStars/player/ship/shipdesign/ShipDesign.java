@@ -484,6 +484,9 @@ public class ShipDesign {
       if (comp.getType() == ShipComponentType.JAMMER) {
         power = power + comp.getDamage() / 10;
       }
+      if (comp.getType() == ShipComponentType.FIGHTER_BAY) {
+        power = power + comp.getBaySize();
+      }
     }
     if (!militaryShip) {
       power = 0;
@@ -524,6 +527,22 @@ public class ShipDesign {
       power = 0;
     }
     return power;
+  }
+
+  /**
+   * Get Ship design fighter bay size
+   * @return Fighter bay size
+   */
+  public int getTotalBaySize() {
+    int baySize = 0;
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.FIGHTER_BAY
+          && comp.getBaySize() > 0) {
+        baySize = baySize + comp.getBaySize();
+      }
+    }
+    return baySize;
   }
 
   /**
@@ -642,12 +661,17 @@ public class ShipDesign {
       sb.append(getFreeSlots() * 2);
       sb.append(" population");
     }
+    int baySize = getTotalBaySize();
+    if (baySize > 0) {
+      sb.append("\nFighter bays: ");
+      sb.append(baySize);
+    }
     return sb.toString();
   }
 
   /**
    * Get ship design flaws as a string.
-   * @return Desing flaws in a string
+   * @return Design flaws in a string
    */
   public String getFlaws() {
     boolean designOk = true;

@@ -47,6 +47,7 @@ public class RandomSystemNameGeneratorNumberToRomanTest {
     @Parameterized.Parameters(name = "{index}: RandomSystemNameGenerator.numberToRoman({0}) = {1}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
+                {0, ""},
                 {1, "I"},
                 {2, "II"},
                 {3, "III"},

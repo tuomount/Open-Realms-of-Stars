@@ -106,6 +106,9 @@ public class RandomSystemNameGenerator extends NameGenerator {
   public static String numberToRoman(final int i) {
     String result = "I";
     switch (i) {
+    case 0:
+      result = "";
+      break;
     case 1:
       result = "I";
       break;

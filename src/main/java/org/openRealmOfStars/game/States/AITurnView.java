@@ -756,7 +756,7 @@ public class AITurnView extends BlackPanel {
                           info.getRace());
                 }
                 MissionHandling.handleDiplomacyBetweenAis(game, info, i,
-                   fleet);
+                   fleet, fleet);
               }
             }
           }
@@ -819,7 +819,7 @@ public class AITurnView extends BlackPanel {
                 }
               } else {
                 MissionHandling.handleDiplomacyBetweenAis(game, info,
-                    ownerIndex, null);
+                    ownerIndex, null, planet);
               }
               if (list != null
                   && (list.isBonusType(DiplomacyBonusType.IN_ALLIANCE)

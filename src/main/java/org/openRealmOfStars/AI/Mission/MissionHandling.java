@@ -397,6 +397,7 @@ public final class MissionHandling {
           event.setText(info.getEmpireName()
               + " colonized planet " + planet.getName()
               + ". ");
+          game.getStarMap().getHistory().addEvent(event);
           planet.eventActivation();
         }
 
@@ -918,9 +919,11 @@ public final class MissionHandling {
    * @param info First player as PlayerInfo
    * @param secondIndex Second player as a index
    * @param fleet Fleet which crossed then border
+   * @param meetingPlace can be planet or fleet where meeting happened
    */
   public static void handleDiplomacyBetweenAis(final Game game,
-      final PlayerInfo info, final int secondIndex, final Fleet fleet) {
+      final PlayerInfo info, final int secondIndex, final Fleet fleet,
+      final Object meetingPlace) {
     // For Ai players make offer
     int index = game.getStarMap().getPlayerList().getIndex(info);
     DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(),
@@ -941,7 +944,7 @@ public final class MissionHandling {
             game.getStarMap());
         game.getStarMap().getNewsCorpData().addNews(newsData);
         game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
-            fleet, newsData));
+            meetingPlace, newsData));
         String[] defenseList = defender.getDiplomacy().activateDefensivePact(
             game.getStarMap(), info);
         if (defenseList != null) {
@@ -954,7 +957,7 @@ public final class MissionHandling {
         NewsData newsData = NewsFactory.makeAllianceNews(info, defender,
             fleet);
         game.getStarMap().getHistory().addEvent(
-            NewsFactory.makeDiplomaticEvent(fleet, newsData));
+            NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
         game.getStarMap().getNewsCorpData().addNews(newsData);
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.DEFENSIVE_PACT)) {
@@ -962,7 +965,7 @@ public final class MissionHandling {
         NewsData newsData = NewsFactory.makeDefensivePactNews(info, defender,
             fleet);
         game.getStarMap().getHistory().addEvent(
-            NewsFactory.makeDiplomaticEvent(fleet, newsData));
+            NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
         game.getStarMap().getNewsCorpData().addNews(newsData);
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.TRADE_ALLIANCE)) {
@@ -970,7 +973,7 @@ public final class MissionHandling {
         NewsData newsData = NewsFactory.makeTradeAllianceNews(info, defender,
             fleet);
         game.getStarMap().getHistory().addEvent(
-            NewsFactory.makeDiplomaticEvent(fleet, newsData));
+            NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
         game.getStarMap().getNewsCorpData().addNews(newsData);
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.PEACE)) {
@@ -978,7 +981,7 @@ public final class MissionHandling {
         NewsData newsData = NewsFactory.makePeaceNews(info, defender,
             fleet);
         game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
-            fleet, newsData));
+            meetingPlace, newsData));
         game.getStarMap().getNewsCorpData().addNews(newsData);
         info.getMissions().removeAttackAgainstPlayer(defender,
             game.getStarMap());
@@ -1001,7 +1004,7 @@ public final class MissionHandling {
             game.getStarMap());
         game.getStarMap().getNewsCorpData().addNews(newsData);
         game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
-            fleet, newsData));
+            meetingPlace, newsData));
         String[] defenseList = defender.getDiplomacy().activateDefensivePact(
             game.getStarMap(), info);
         if (defenseList != null) {
@@ -1056,7 +1059,7 @@ public final class MissionHandling {
             game.changeGameState(GameState.DIPLOMACY_VIEW, info);
           }
         } else if (!info.isHuman()) {
-          handleDiplomacyBetweenAis(game, info, index, null);
+          handleDiplomacyBetweenAis(game, info, index, null, fleet);
         } else {
           Message msg = new Message(MessageType.FLEET,
               "Fleet encounter another fleet while moving in FTL!",
@@ -1107,7 +1110,7 @@ public final class MissionHandling {
             game.changeGameState(GameState.DIPLOMACY_VIEW, info);
           }
         } else if (!info.isHuman()) {
-          handleDiplomacyBetweenAis(game, info, index, null);
+          handleDiplomacyBetweenAis(game, info, index, null, fleet);
         } else {
           Message msg = new Message(MessageType.FLEET,
               "Fleet encounter another fleet while moving in FTL!",

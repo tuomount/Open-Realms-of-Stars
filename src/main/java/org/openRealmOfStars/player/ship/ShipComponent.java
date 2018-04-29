@@ -493,6 +493,12 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    case FIGHTER_BAY: {
+      sb.append("Bay size: ");
+      sb.append(getBaySize());
+      sb.append("\n");
+      break;
+    }
     case WEAPON_BEAM: {
       sb.append("Damage: ");
       sb.append(getDamage());

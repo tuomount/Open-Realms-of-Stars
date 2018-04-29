@@ -1152,6 +1152,33 @@ public final class PlanetHandling {
           }
         }
       }
+      if (food < 0) {
+        if (planet.getWorkers(Planet.CULTURE_ARTIST) > 0) {
+          planet.moveWorker(Planet.CULTURE_ARTIST, Planet.FOOD_FARMERS);
+        } else if (planet.getWorkers(Planet.METAL_MINERS) > 0) {
+          planet.moveWorker(Planet.METAL_MINERS, Planet.FOOD_FARMERS);
+        } else if (planet.getWorkers(Planet.PRODUCTION_WORKERS) > 0) {
+          planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.FOOD_FARMERS);
+        } else if (planet.getWorkers(Planet.RESEARCH_SCIENTIST) > 0) {
+          planet.moveWorker(Planet.RESEARCH_SCIENTIST, Planet.FOOD_FARMERS);
+        }
+      }
+      if (food > 0 && planet.getTotalPopulation() == planet.getGroundSize()) {
+        if (planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION) == 0) {
+          planet.moveWorker(Planet.FOOD_FARMERS, Planet.PRODUCTION_WORKERS);
+        } else if (planet.getWorkers(Planet.RESEARCH_SCIENTIST) * 2 >= planet
+            .getWorkers(Planet.PRODUCTION_WORKERS)) {
+          planet.moveWorker(Planet.FOOD_FARMERS, Planet.RESEARCH_SCIENTIST);
+        } else if (planet.getWorkers(Planet.METAL_MINERS) * 2 >= planet
+            .getWorkers(Planet.PRODUCTION_WORKERS)) {
+          planet.moveWorker(Planet.FOOD_FARMERS, Planet.METAL_MINERS);
+        } else if (planet.getWorkers(Planet.CULTURE_ARTIST) == 0) {
+          planet.moveWorker(Planet.FOOD_FARMERS, Planet.CULTURE_ARTIST);
+        } else {
+          planet.moveWorker(Planet.FOOD_FARMERS, Planet.PRODUCTION_WORKERS);
+        }
+
+      }
     }
   }
 

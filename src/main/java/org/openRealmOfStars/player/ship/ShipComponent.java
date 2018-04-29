@@ -484,6 +484,15 @@ public class ShipComponent {
       sb.append("\n");
       break;
     }
+    case THRUSTERS: {
+      sb.append("Initiative boost: +");
+      sb.append(getInitiativeBoost());
+      sb.append("\n");
+      sb.append("Combat Speed boost: +");
+      sb.append(getTacticSpeed());
+      sb.append("\n");
+      break;
+    }
     case WEAPON_BEAM: {
       sb.append("Damage: ");
       sb.append(getDamage());

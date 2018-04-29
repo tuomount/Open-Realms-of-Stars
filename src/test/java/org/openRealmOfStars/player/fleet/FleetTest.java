@@ -246,6 +246,38 @@ public class FleetTest {
   }
 
   /**
+   * Create Carrier ship
+   * @return Carrier ship
+   */
+  private static Ship createCarrierShip() {
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getSize()).thenReturn(ShipSize.LARGE);
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getFtlSpeed()).thenReturn(5);
+    Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getScannerDetectionLvl()).thenReturn(0);
+    Mockito.when(ship.getScannerLvl()).thenReturn(0);
+    Mockito.when(ship.getSpeed()).thenReturn(1);
+    Mockito.when(ship.getFreeCargoColonists()).thenReturn(0);
+    Mockito.when(ship.getFreeCargoMetal()).thenReturn(0);
+    Mockito.when(ship.getHullPoints()).thenReturn(12);
+    Mockito.when(ship.getMaxHullPoints()).thenReturn(12);
+    Mockito.when(ship.isColonyModule()).thenReturn(false);
+    Mockito.when(ship.isColonyShip()).thenReturn(false);
+    Mockito.when(ship.getColonist()).thenReturn(0);
+    Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
+    Mockito.when(ship.getName()).thenReturn("Carrier");
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);
+    Mockito.when(ship.getCulture()).thenReturn(0);
+    Mockito.when(ship.isTrooperModule()).thenReturn(false);
+    Mockito.when(ship.getEspionageBonus()).thenReturn(0);
+    Mockito.when(ship.hasBombs()).thenReturn(false);
+    Mockito.when(ship.isTradeShip()).thenReturn(true);
+    Mockito.when(ship.getFighterBaySize()).thenReturn(2);
+    return ship;
+  }
+
+  /**
    * Create privateer ship
    * @return Privateer ship
    */
@@ -423,6 +455,23 @@ public class FleetTest {
     assertEquals(35,fleet.getMilitaryValue());
     assertEquals(22, fleet.getFleetCloackingValue());
     assertEquals(false, fleet.isTradeFleet());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFleetWithFighterBay() {
+    Ship ship = createShipOne();
+    Ship carrier = createCarrierShip();
+    Fleet fleet = new Fleet(ship, 2, 3);
+    assertEquals(2, fleet.getFleetFtlSpeed());
+    assertEquals(0, fleet.getCulturalValue());
+    assertEquals(15,fleet.getMilitaryValue());
+    fleet.addShip(carrier);
+    assertEquals(5, fleet.getFleetFtlSpeed());
+    fleet.addShip(ship);
+    assertEquals(5, fleet.getFleetFtlSpeed());
+    fleet.addShip(ship);
+    assertEquals(2, fleet.getFleetFtlSpeed());
   }
 
   @Test

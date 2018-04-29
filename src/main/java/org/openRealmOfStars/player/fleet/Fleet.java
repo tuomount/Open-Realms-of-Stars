@@ -281,12 +281,12 @@ public class Fleet {
           || ship.getHull().getSize() == ShipSize.MEDIUM)
           && shipSpeed < smallShipSpeed) {
         smallShipSpeed = shipSpeed;
-        if (ship.getHull().getSize() == ShipSize.SMALL) {
-          fighterSize = fighterSize + 1;
-        }
-        if (ship.getHull().getSize() == ShipSize.MEDIUM) {
-          fighterSize = fighterSize + 2;
-        }
+      }
+      if (ship.getHull().getSize() == ShipSize.SMALL) {
+        fighterSize = fighterSize + 1;
+      }
+      if (ship.getHull().getSize() == ShipSize.MEDIUM) {
+        fighterSize = fighterSize + 2;
       }
     }
     if (fighterBaySize >= fighterSize) {

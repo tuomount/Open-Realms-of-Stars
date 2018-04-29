@@ -220,7 +220,9 @@ public class Mission {
     sb.append(getFleetName());
     sb.append("\nTime:");
     sb.append(getMissionTime());
-    if (type == MissionType.EXPLORE) {
+    if (type == MissionType.EXPLORE
+        || type == MissionType.COLONY_EXPLORE
+        || type == MissionType.PRIVATEER) {
       sb.append("\nSolar:");
       sb.append(getSunName());
     }
@@ -242,24 +244,28 @@ public class Mission {
   }
 
   /**
-   * Get sun name involved for the explore mission
+   * Get sun name involved for the explore mission including
+   * colony explore and privateering.
    * @return Sun name as a String
    */
   public String getSunName() {
     if (type == MissionType.EXPLORE
-        || type == MissionType.COLONY_EXPLORE) {
+        || type == MissionType.COLONY_EXPLORE
+        || type == MissionType.PRIVATEER) {
       return parameter;
     }
     return "";
   }
 
   /**
-   * Set sun name for the explore mission.
+   * Set sun name for the explore mission including
+   * colony explore and privateering.
    * @param name Sun Name
    */
   public void setSunName(final String name) {
     if (type == MissionType.EXPLORE
-        || type == MissionType.COLONY_EXPLORE) {
+        || type == MissionType.COLONY_EXPLORE
+        || type == MissionType.PRIVATEER) {
       this.parameter = name;
     }
   }

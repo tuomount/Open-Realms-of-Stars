@@ -168,16 +168,17 @@ public class PlanetTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testRemoveBuilding() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    planet.setRadiationLevel(6);
     assertEquals(0, planet.getNumberOfBuildings());
     Building building = Mockito.mock(Building.class);
     Mockito.when(building.getName()).thenReturn("Radiation well");
     Mockito.when(building.getProdCost()).thenReturn(10);
     planet.addBuilding(building);
+    assertEquals(5, planet.getTotalRadiationLevel());
     assertEquals(1, planet.getNumberOfBuildings());
-    planet.setRadiationLevel(5);
     planet.removeBuilding(building);
     assertEquals(0, planet.getNumberOfBuildings());
-    assertEquals(6, planet.getRadiationLevel());
+    assertEquals(6, planet.getTotalRadiationLevel());
     planet.setGroundSize(7);
     Mockito.when(building.getName()).thenReturn("Test building");
     planet.addBuilding(building);

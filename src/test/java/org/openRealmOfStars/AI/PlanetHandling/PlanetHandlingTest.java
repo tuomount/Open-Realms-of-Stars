@@ -485,7 +485,7 @@ public class PlanetHandlingTest {
     Mockito.when(ship.getProdCost()).thenReturn(22);
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getGroundSize()).thenReturn(12);
-    Mockito.when(planet.getRadiationLevel()).thenReturn(2);
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(2);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     MissionList missionList = Mockito.mock(MissionList.class);

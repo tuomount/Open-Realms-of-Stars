@@ -338,10 +338,6 @@ public class Planet {
    */
   public void addBuilding(final Building building) {
     if (building != null) {
-      if (building.getName().equals("Radiation dampener")
-          || building.getName().equals("Radiation well")) {
-        setRadiationLevel(getRadiationLevel() - 1);
-      }
       this.buildings.add(building);
     }
   }
@@ -357,10 +353,6 @@ public class Planet {
         Building temp = buildings.get(i);
         if (temp.getName().equals(building.getName())) {
           buildings.remove(i);
-          if (building.getName().equals("Radiation dampener")
-              || building.getName().equals("Radiation well")) {
-            setRadiationLevel(getRadiationLevel() + 1);
-          }
           if (recycleBonus > 0) {
             metal = metal + building.getMetalCost() * recycleBonus / 100;
           }
@@ -800,6 +792,22 @@ public class Planet {
   }
 
   /**
+   * Get planet's effective radiation level. Level is adjusted by
+   * buildings.
+   * @return radiation level
+   */
+  public int getTotalRadiationLevel() {
+    int value = getRadiationLevel();
+    for (Building building : buildings) {
+      if (building.getName().equals("Radiation dampener")
+        || building.getName().equals("Radiation well")) {
+        value = value - 1;
+      }
+    }
+    return value;
+  }
+
+  /**
    * Set planet's radiation level
    * @param radiationLevel Radiation level between 1 and 10
    */
@@ -951,7 +959,7 @@ public class Planet {
   public boolean exceedRadiation() {
     boolean exceedRad = false;
     if (planetOwnerInfo != null
-        && planetOwnerInfo.getRace().getMaxRad() < getRadiationLevel()) {
+        && planetOwnerInfo.getRace().getMaxRad() < getTotalRadiationLevel()) {
       // Planet's radiation exceeds owner max rad level
       exceedRad = true;
     }
@@ -1018,7 +1026,7 @@ public class Planet {
           .getBuildingListFromTech();
       for (int i = 0; i < buildingsNames.length; i++) {
         tmp = BuildingFactory.createByName(buildingsNames[i]);
-        if (getRadiationLevel() == 1
+        if (getTotalRadiationLevel() == 1
             && (tmp.getName().equals("Radiation dampener")
                 || tmp.getName().equals("Radiation well"))) {
           // No need for radiation well or dampener on small radiation planets
@@ -1155,7 +1163,7 @@ public class Planet {
         sb.append("\n");
       }
       sb.append("Radiation: ");
-      sb.append(getRadiationLevel());
+      sb.append(getTotalRadiationLevel());
       sb.append("\n");
       sb.append("Size: ");
       sb.append(getSizeAsString());

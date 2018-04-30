@@ -135,14 +135,14 @@ public class NegotiationOfferTest {
     Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
     Mockito.when(planet.getGroundSize()).thenReturn(13);
     Mockito.when(planet.getTotalPopulation()).thenReturn(6);
-    Mockito.when(planet.getRadiationLevel()).thenReturn(2);
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(2);
     offer = new NegotiationOffer(NegotiationType.PLANET, planet);
     assertEquals(13, offer.getOfferValue(SpaceRace.HUMAN));
     planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
     Mockito.when(planet.getGroundSize()).thenReturn(13);
     Mockito.when(planet.getTotalPopulation()).thenReturn(6);
-    Mockito.when(planet.getRadiationLevel()).thenReturn(10);
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(10);
     offer = new NegotiationOffer(NegotiationType.PLANET, planet);
     assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
 

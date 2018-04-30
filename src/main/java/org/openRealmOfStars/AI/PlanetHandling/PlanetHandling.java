@@ -743,7 +743,7 @@ public final class PlanetHandling {
         int colonyScore = (colonPlanet.getGroundSize() - 7) * 3
             + colonPlanet.getAmountMetalInGround() / 400;
         score = score + info.getRace().getMaxRad()
-            - colonPlanet.getRadiationLevel();
+            - colonPlanet.getTotalRadiationLevel();
         score = score + colonyScore;
         if (attitude == Attitude.EXPANSIONIST) {
           score = score + 20;

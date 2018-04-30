@@ -181,7 +181,7 @@ public class BigImagePanel extends JPanel {
       StringBuilder sb = new StringBuilder(planet.generateInfoText(true));
       if (player != null && planet.getPlanetPlayerInfo() != player
           && !planet.isGasGiant()) {
-        if (planet.getRadiationLevel() > player.getRace().getMaxRad()) {
+        if (planet.getTotalRadiationLevel() > player.getRace().getMaxRad()) {
           sb.append("High radiation! Maximum radiation is ");
           sb.append(player.getRace().getMaxRad());
         } else {

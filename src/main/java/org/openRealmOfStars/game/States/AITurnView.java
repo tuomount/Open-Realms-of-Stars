@@ -776,7 +776,7 @@ public class AITurnView extends BlackPanel {
     if (info != null && !info.isHuman()) {
       ArrayList<Planet> planets = game.getStarMap().getPlanetList();
       for (Planet planet : planets) {
-        if (planet.getRadiationLevel() <= info.getRace().getMaxRad()
+        if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
             && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
             && info.getSectorVisibility(planet.getCoordinate())
             == PlayerInfo.VISIBLE) {
@@ -796,7 +796,7 @@ public class AITurnView extends BlackPanel {
           }
 
         }
-        if (planet.getRadiationLevel() <= info.getRace().getMaxRad()
+        if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
             && planet.getPlanetPlayerInfo() != null
             && planet.getPlanetPlayerInfo() != info && !planet.isGasGiant()) {
           if (info.getSectorVisibility(planet.getCoordinate())
@@ -854,7 +854,7 @@ public class AITurnView extends BlackPanel {
                 addTradeMission(planet, info);
               }
             } else {
-              if (planet.getRadiationLevel() <= info.getRace().getMaxRad()
+              if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
                   && !planet.isGasGiant()) {
                 // New planet to colonize, adding it to mission list
                 Mission mission = new Mission(MissionType.COLONIZE,

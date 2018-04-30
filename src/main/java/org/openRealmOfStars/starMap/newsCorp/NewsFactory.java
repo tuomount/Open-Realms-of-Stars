@@ -698,7 +698,7 @@ public final class NewsFactory {
       sb.append(" All the population was killed by massive usage of"
           + " nuclear weapons. ");
       sb.append(" Radiation levels on planet has been raised to "
-          + planet.getRadiationLevel() + ". ");
+          + planet.getTotalRadiationLevel() + ". ");
     } else {
       sb.append(" Last remains of ");
       sb.append(defender.getRace().getNameSingle());

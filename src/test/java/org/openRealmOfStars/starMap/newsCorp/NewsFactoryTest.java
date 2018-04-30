@@ -716,7 +716,7 @@ public class NewsFactoryTest {
     Mockito.when(planet.getImageInstructions()).thenReturn(
         PlanetTypes.SILICONWORLD1.getImageInstructions());
     Mockito.when(planet.getName()).thenReturn("Planet I");
-    Mockito.when(planet.getRadiationLevel()).thenReturn(9);
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(9);
     PlayerInfo aggressor = Mockito.mock(PlayerInfo.class);
     Mockito.when(aggressor.getEmpireName()).thenReturn("Empire of Test");
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);

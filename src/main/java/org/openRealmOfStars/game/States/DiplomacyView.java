@@ -1000,6 +1000,34 @@ public class DiplomacyView extends BlackPanel {
         }
       }
       if (speechSelected != null
+          && speechSelected.getType() == SpeechType.ASK_MOVE_SPY) {
+        trade.generateRecallFleetOffer(borderCrossedFleet);
+        if (trade.isOfferGoodForBoth()) {
+          trade.doTrades();
+          tradeHappened = true;
+          updatePanel(SpeechType.MOVE_FLEET);
+          resetChoices();
+        } else {
+          trade.generateEqualTrade(NegotiationType.WAR);
+          trade.doTrades();
+          tradeHappened = true;
+          updatePanel(SpeechType.DECLINE_WAR);
+          resetChoices();
+          StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
+          NewsData newsData = NewsFactory.makeWarNews(ai, human,
+              meetingPlace, starMap);
+          starMap.getNewsCorpData().addNews(newsData);
+          starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+              meetingPlace, newsData));
+          String[] defenseList = human.getDiplomacy().activateDefensivePact(
+              starMap, ai);
+          if (defenseList != null) {
+            starMap.getNewsCorpData().addNews(
+                NewsFactory.makeDefensiveActivation(ai, defenseList));
+          }
+        }
+      }
+      if (speechSelected != null
           && speechSelected.getType() == SpeechType.ALLIANCE) {
         NegotiationList list1 = getOfferingList(humanTechListOffer,
             humanMapOffer.isSelected(), humanFleetListOffer,

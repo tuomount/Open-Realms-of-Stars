@@ -73,6 +73,7 @@ public final class ShipGenerator {
   private static int[] scoreComponents(final ShipDesign design,
       final PlayerInfo player, final ArrayList<ShipComponent> components) {
     int[] scores = new int[components.size()];
+    Attitude attitude = player.getAiAttitude();
     for (int i = 0; i < components.size(); i++) {
       ShipComponent comp = components.get(i);
       scores[i] = 0;
@@ -123,7 +124,7 @@ public final class ShipGenerator {
           }
           if (player.getRace() == SpaceRace.CENTAURS) {
             // Centaurs do not like nukes
-            scores[i] = scores[i] - 5;
+            scores[i] = scores[i] - 15;
           }
           if (player.getRace() == SpaceRace.MECHIONS) {
             // Mechions use nukes more likely
@@ -132,6 +133,15 @@ public final class ShipGenerator {
           if (player.getRace() == SpaceRace.GREYANS) {
             // Greyans use nukes more likely
             scores[i] = scores[i] + 2;
+          }
+          if (attitude == Attitude.AGGRESSIVE
+              || attitude == Attitude.MILITARISTIC) {
+            scores[i] = scores[i] + 5;
+          }
+          if (attitude == Attitude.DIPLOMATIC
+              || attitude == Attitude.PEACEFUL
+              || attitude == Attitude.MERCHANTICAL) {
+            scores[i] = scores[i] - 20;
           }
         } else {
           scores[i] = -1;
@@ -204,9 +214,19 @@ public final class ShipGenerator {
         break;
       }
       case ESPIONAGE_MODULE: {
-        scores[i] = scores[i] + comp.getEspionageBonus() * 3;
-        if (design.getHull().getHullType() == ShipHullType.PRIVATEER) {
-          scores[i] = scores[i] + 10;
+        if (!design.gotCertainType(ShipComponentType.ESPIONAGE_MODULE)) {
+          scores[i] = scores[i] + comp.getEspionageBonus() * 3;
+          if (design.getHull().getHullType() == ShipHullType.PRIVATEER) {
+            scores[i] = scores[i] + 10;
+          }
+          if (attitude == Attitude.AGGRESSIVE
+              || attitude == Attitude.MILITARISTIC
+              || attitude == Attitude.BACKSTABBING
+              || attitude == Attitude.LOGICAL) {
+            scores[i] = scores[i] + 10;
+          }
+        } else {
+          scores[i] = -1; // This would be second espionage module
         }
         break;
       }
@@ -737,7 +757,7 @@ public final class ShipGenerator {
           }
         }
       } // Every one else is keeping freighter as empty as possible
-      if (result.getFreeSlots() > 3 && (attitude == Attitude.AGGRESSIVE
+      if (result.getFreeSlots() > 2 && (attitude == Attitude.AGGRESSIVE
           || attitude == Attitude.MILITARISTIC
           || attitude == Attitude.BACKSTABBING
           || attitude == Attitude.LOGICAL)) {

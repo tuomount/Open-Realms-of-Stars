@@ -804,6 +804,9 @@ public class Planet {
         value = value - 1;
       }
     }
+    if (value < 1) {
+      value = 1;
+    }
     return value;
   }
 

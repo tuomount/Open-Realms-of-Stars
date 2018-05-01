@@ -161,10 +161,18 @@ public class StatView extends BlackPanel {
 
   /**
    * Set back button text
-   * @param text
+   * @param text New text for back button
    */
   public void setBackButtonText(final String text) {
     backBtn.setText(text);
+  }
+
+  /**
+   * Get back button text
+   * @return text
+   */
+  public String getBackButtonText() {
+    return backBtn.getText();
   }
 
   /**

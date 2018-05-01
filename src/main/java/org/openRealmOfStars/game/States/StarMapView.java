@@ -224,9 +224,9 @@ public class StarMapView extends BlackPanel {
     btn.addActionListener(game);
     bottomBtnPanel.add(btn);*/
     // Button for debugging history view
-    btn = new SpaceButton("History", GameCommands.COMMAND_SHOW_HISTORY);
+/*    btn = new SpaceButton("History", GameCommands.COMMAND_SHOW_HISTORY);
     btn.addActionListener(game);
-    bottomBtnPanel.add(btn);
+    bottomBtnPanel.add(btn);*/
 
     bottomPanel.add(bottomBtnPanel);
 

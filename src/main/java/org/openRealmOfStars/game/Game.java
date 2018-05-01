@@ -731,6 +731,9 @@ public class Game implements ActionListener {
    */
   public void showStatView() {
     statView = new StatView(starMap, this);
+    if (starMap.getTurn() == starMap.getScoreVictoryTurn()) {
+      statView.setBackButtonText("Back to main menu");
+    }
     this.updateDisplay(statView);
   }
 
@@ -1532,7 +1535,7 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_DONE_HISTORY)) {
         SoundPlayer.playMenuSound();
-        changeGameState(GameState.MAIN_MENU);
+        changeGameState(GameState.VIEWSTATS);
         return;
       }
       historyView.handleAction(arg0);
@@ -1690,6 +1693,17 @@ public class Game implements ActionListener {
     if (gameState == GameState.VIEWSTATS && statView != null) {
       // Stat View
       statView.handleAction(arg0);
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        if (starMap.getTurn() == starMap.getScoreVictoryTurn()) {
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.MAIN_MENU);
+          return;
+        } else {
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.STARMAP);
+        }
+      }
     }
     if (gameState == GameState.PLANETVIEW && planetView != null) {
       // Planet view

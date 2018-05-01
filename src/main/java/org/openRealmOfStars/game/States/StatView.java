@@ -51,6 +51,10 @@ public class StatView extends BlackPanel {
   private static final long serialVersionUID = 1L;
 
   /**
+   * Back button
+   */
+  private SpaceButton backBtn;
+  /**
    * Create new stat view
    * @param map StarMap which contains players and planet lists.
    * @param listener Action Listener
@@ -144,15 +148,23 @@ public class StatView extends BlackPanel {
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
     bottomPanel.setTitle(null);
-    SpaceButton btn = new SpaceButton("Back to star map",
+    backBtn = new SpaceButton("Back to star map",
         GameCommands.COMMAND_VIEW_STARMAP);
-    btn.addActionListener(listener);
-    bottomPanel.add(btn, BorderLayout.CENTER);
+    backBtn.addActionListener(listener);
+    bottomPanel.add(backBtn, BorderLayout.CENTER);
 
     // updatePanel();
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
 
+  }
+
+  /**
+   * Set back button text
+   * @param text
+   */
+  public void setBackButtonText(final String text) {
+    backBtn.setText(text);
   }
 
   /**

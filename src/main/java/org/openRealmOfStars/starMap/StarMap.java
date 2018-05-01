@@ -959,13 +959,16 @@ public class StarMap {
         }
       }
     }
+    Sun result = null;
     if (targetPlanet != null) {
-      return locateSolarSystem(targetPlanet.getX(), targetPlanet.getY());
+      result = locateSolarSystem(targetPlanet.getX(), targetPlanet.getY());
     }
-    Sun result = locateSolarSystem(x, y);
     if (result == null) {
-      int i = DiceGenerator.getRandom(sunList.size() - 1);
-      result = sunList.get(i);
+      result = locateSolarSystem(x, y);
+      if (result == null) {
+        int i = DiceGenerator.getRandom(sunList.size() - 1);
+        result = sunList.get(i);
+      }
     }
     return result;
   }

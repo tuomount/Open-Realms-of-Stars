@@ -177,4 +177,39 @@ public class PlayerList {
       info.handleFakeMilitarySizeCost();
     }
   }
+
+  /**
+   * Return player infos in order where their realm names are found
+   * from the text.
+   * @param text Containing player realm names
+   * @return PlayerInfo array
+   */
+  public PlayerInfo[] findRealmNamesFromText(final String text) {
+    ArrayList<PlayerInfo> result = new ArrayList<>();
+    int[] offsets = new int[list.size()];
+    for (int i = 0; i < list.size(); i++) {
+      PlayerInfo info = list.get(i);
+      offsets[i] = text.indexOf(info.getEmpireName());
+    }
+    boolean done;
+    do {
+      done = true;
+      int smallest = Integer.MAX_VALUE;
+      int index = -1;
+      for (int i = 0; i < offsets.length; i++) {
+        if (offsets[i] > -1) {
+          done = false;
+          if (offsets[i] < smallest) {
+            index = i;
+            smallest = offsets[i];
+          }
+        }
+      }
+      if (index != -1) {
+        result.add(list.get(index));
+        offsets[index] = -1;
+      }
+    } while (!done);
+    return result.toArray(new PlayerInfo[result.size()]);
+  }
 }

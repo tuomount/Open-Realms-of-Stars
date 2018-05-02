@@ -248,6 +248,30 @@ public class HistoryView extends BlackPanel {
             + start.getName() + "!");
         targetCoordinate = start.getCoordinate();
       }
+      PlayerInfo[] infos = map.getPlayerList().findRealmNamesFromText(
+          textArea.getText());
+      if (event.getType() == EventType.GALATIC_NEWS) {
+        if (infos.length == 1) {
+          mapPanel.setLeftSpaceImage(GuiStatics.IMAGE_ANDROID);
+          mapPanel.setRightSpaceImage(infos[0].getRace().getRaceImage());
+        } else if (infos.length >= 2) {
+          mapPanel.setLeftSpaceImage(infos[0].getRace().getRaceImage());
+          mapPanel.setRightSpaceImage(infos[1].getRace().getRaceImage());
+        } else {
+          mapPanel.setLeftSpaceImage(GuiStatics.IMAGE_ANDROID);
+        }
+      } else {
+        if (infos.length >= 1) {
+          mapPanel.setLeftSpaceImage(infos[0].getRace().getRaceImage());
+        } else {
+          mapPanel.setLeftSpaceImage(null);
+        }
+        if (infos.length >= 2) {
+          mapPanel.setRightSpaceImage(infos[1].getRace().getRaceImage());
+        } else {
+          mapPanel.setRightSpaceImage(null);
+        }
+      }
     }
   }
 

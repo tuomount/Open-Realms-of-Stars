@@ -163,6 +163,16 @@ public class MapPanel extends JPanel {
   private Coordinate historyCoordinates;
 
   /**
+   * Image to be drawn on lower left side of the map in history view
+   */
+  private BufferedImage leftSpaceImage;
+
+  /**
+   * Image to be drawn on lower right side of the map in history view
+   */
+  private BufferedImage rightSpaceImage;
+
+  /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
    * @param battle True if drawing battle map.
@@ -874,6 +884,15 @@ public class MapPanel extends JPanel {
         cursorPixelY);
     gr.drawLine(cursorPixelX + tileWidth / 2, cursorPixelY + tileHeight,
         cursorPixelX + tileWidth / 2, screen.getHeight());
+    if (getLeftSpaceImage() != null) {
+      gr.drawImage(leftSpaceImage, 10,
+          screen.getHeight() - leftSpaceImage.getHeight() - 10, null);
+    }
+    if (getRightSpaceImage() != null) {
+      gr.drawImage(rightSpaceImage,
+          screen.getWidth() - rightSpaceImage.getWidth() - 10,
+          screen.getHeight() - leftSpaceImage.getHeight() - 10, null);
+    }
   }
 
   /**
@@ -1238,4 +1257,37 @@ public class MapPanel extends JPanel {
     }
     return historyCoordinates;
   }
+
+  /**
+   * Get Left Space image from history map
+   * @return the leftSpaceImage
+   */
+  public BufferedImage getLeftSpaceImage() {
+    return leftSpaceImage;
+  }
+
+  /**
+   * Set Left Space image to history map
+   * @param leftSpaceImage the leftSpaceImage to set
+   */
+  public void setLeftSpaceImage(final BufferedImage leftSpaceImage) {
+    this.leftSpaceImage = leftSpaceImage;
+  }
+
+  /**
+   * Get Right Space image from history map
+   * @return the rightSpaceImage
+   */
+  public BufferedImage getRightSpaceImage() {
+    return rightSpaceImage;
+  }
+
+  /**
+   * Set Right Space image to history map
+   * @param rightSpaceImage the rightSpaceImage to set
+   */
+  public void setRightSpaceImage(final BufferedImage rightSpaceImage) {
+    this.rightSpaceImage = rightSpaceImage;
+  }
+
 }

@@ -361,6 +361,12 @@ public final class MissionHandling {
             ships[colony].setColonist(ships[colony].getColonist() + 1);
           }
         }
+        if (planet != null && planet.getPlanetPlayerInfo() == null
+            && planet.getRadiationLevel() <= info.getRace().getMaxRad()) {
+          // On top of planet waiting for colonization.
+          mission.setTarget(planet.getCoordinate());
+          mission.setPhase(MissionPhase.TREKKING);
+        }
       }
       if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {

@@ -450,13 +450,13 @@ public class ShipComponent {
     }
     switch (getType()) {
     case ARMOR: {
-      sb.append("Armor value:");
+      sb.append("Armor value: ");
       sb.append(getDefenseValue());
       sb.append("\n");
       break;
     }
     case SHIELD: {
-      sb.append("Shield value:");
+      sb.append("Shield value: ");
       sb.append(getDefenseValue());
       sb.append("\n");
       break;
@@ -465,6 +465,24 @@ public class ShipComponent {
       sb.append("Cloaking:");
       sb.append(getCloaking());
       sb.append("\n");
+      break;
+    }
+    case STARBASE_COMPONENT: {
+      if (getCultureBonus() > 0) {
+        sb.append("Culture bonus: ");
+        sb.append(getCultureBonus());
+        sb.append("\n");
+      }
+      if (getResearchBonus() > 0) {
+        sb.append("Research bonus: ");
+        sb.append(getResearchBonus());
+        sb.append("\n");
+      }
+      if (getCreditBonus() > 0) {
+        sb.append("Credit bonus: ");
+        sb.append(getCreditBonus());
+        sb.append("\n");
+      }
       break;
     }
     case COLONY_MODULE:
@@ -477,9 +495,9 @@ public class ShipComponent {
     case ENGINE: {
       sb.append("Speed: ");
       sb.append(getSpeed());
-      sb.append(" FTL:");
+      sb.append(" FTL: ");
       sb.append(getFtlSpeed());
-      sb.append(" Combat Speed:");
+      sb.append(" Combat Speed: ");
       sb.append(getTacticSpeed());
       sb.append("\n");
       break;
@@ -502,7 +520,7 @@ public class ShipComponent {
     case WEAPON_BEAM: {
       sb.append("Damage: ");
       sb.append(getDamage());
-      sb.append(" Range:");
+      sb.append(" Range: ");
       sb.append(getWeaponRange());
       sb.append("\nHit: 100%, 50% penetrates armor");
       sb.append("\n");
@@ -511,7 +529,7 @@ public class ShipComponent {
     case WEAPON_ECM_TORPEDO: {
       sb.append("Shield damage: ");
       sb.append(getDamage());
-      sb.append(" Range:");
+      sb.append(" Range: ");
       sb.append(getWeaponRange());
       sb.append("\nHit: 50%, damages only shields");
       sb.append("\n");
@@ -520,7 +538,7 @@ public class ShipComponent {
     case WEAPON_HE_MISSILE: {
       sb.append("Damage: ");
       sb.append(getDamage());
-      sb.append(" Range:");
+      sb.append(" Range: ");
       sb.append(getWeaponRange());
       sb.append("\nHit: 50%, 50% penetrates shields");
       sb.append("\n");
@@ -529,7 +547,7 @@ public class ShipComponent {
     case WEAPON_PHOTON_TORPEDO: {
       sb.append("Damage: ");
       sb.append(getDamage());
-      sb.append(" Range:");
+      sb.append(" Range: ");
       sb.append(getWeaponRange());
       sb.append("\nHit: 75%, 50% penetrates armor");
       sb.append("\n");
@@ -538,7 +556,7 @@ public class ShipComponent {
     case WEAPON_RAILGUN: {
       sb.append("Damage: ");
       sb.append(getDamage());
-      sb.append(" Range:");
+      sb.append(" Range: ");
       sb.append(getWeaponRange());
       sb.append("\nHit: 75%, 50% penetrates shields");
       sb.append("\n");
@@ -568,7 +586,7 @@ public class ShipComponent {
     case SCANNER: {
       sb.append("Range: ");
       sb.append(getScannerRange());
-      sb.append(" Cloak detection:");
+      sb.append(" Cloak detection: ");
       sb.append(getCloakDetection());
       sb.append(" %");
       sb.append("\n");

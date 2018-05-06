@@ -115,7 +115,7 @@ public class ShipComponentTest {
     component.setDamage(2);
     component.setWeaponRange(4);
     component.setEnergyRequirement(0);
-    assertEquals("ECM\nCost: 3 Metal: 3\nShield damage: 2 Range:4\nHit: 50%, damages only shields\n", component.toString());
+    assertEquals("ECM\nCost: 3 Metal: 3\nShield damage: 2 Range: 4\nHit: 50%, damages only shields\n", component.toString());
   }
 
   @Test
@@ -127,7 +127,7 @@ public class ShipComponentTest {
     component.setDamage(3);
     component.setWeaponRange(3);
     component.setEnergyRequirement(0);
-    assertEquals("HE missile\nCost: 3 Metal: 3\nDamage: 3 Range:3\nHit: 50%, 50% penetrates shields\n", component.toString());
+    assertEquals("HE missile\nCost: 3 Metal: 3\nDamage: 3 Range: 3\nHit: 50%, 50% penetrates shields\n", component.toString());
   }
 
   @Test
@@ -262,6 +262,9 @@ public class ShipComponentTest {
     assertEquals(1, component.getResearchBonus());
     assertEquals(2, component.getCreditBonus());
     assertEquals(3, component.getCultureBonus());
+    assertEquals("Module\nCost: 3 Metal: 3"
+        + "\nCulture bonus: 3\nResearch bonus: 1\nCredit bonus: 2\n",
+        component.toString());
   }
 
   @Test

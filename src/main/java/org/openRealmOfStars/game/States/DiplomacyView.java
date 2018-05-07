@@ -1174,7 +1174,7 @@ public class DiplomacyView extends BlackPanel {
             DiplomacyBonusType.IN_WAR, human.getRace());
         updatePanel(SpeechType.MAKE_WAR);
         StarMapUtilities.addWarDeclatingRepuation(starMap, human);
-        NewsData newsData = NewsFactory.makeWarNews(ai, human,
+        NewsData newsData = NewsFactory.makeWarNews(human, ai,
             meetingPlace, starMap);
         starMap.getNewsCorpData().addNews(newsData);
         starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(

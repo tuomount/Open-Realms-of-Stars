@@ -53,6 +53,9 @@ public class EspionageListTest {
     assertEquals(10, list.getTotalBonus());
     assertEquals(6, list.getOwnBonus());
     assertEquals("Fleet #2", list.getEspionage(2).getDescription());
+    assertEquals("SPY_FLEET - Fleet #1 : 1,"
+        + "TRADE - Spy trade : 5,"
+        + "SPY_FLEET - Fleet #2 : 5,", list.toString());
   }
 
   @Test

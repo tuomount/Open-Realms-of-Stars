@@ -318,4 +318,14 @@ public class EspionageList {
     }
     return result;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    for (EspionageBonus bonus : list) {
+      sb.append(bonus.toString());
+      sb.append(",");
+    }
+    return sb.toString();
+  }
 }

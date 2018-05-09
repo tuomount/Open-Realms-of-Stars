@@ -111,6 +111,9 @@ public class NegotiationOfferTest {
     offer = new NegotiationOffer(NegotiationType.PEACE, null);
     assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
 
+    offer = new NegotiationOffer(NegotiationType.SPY_TRADE, null);
+    assertEquals(0, offer.getOfferValue(SpaceRace.HUMAN));
+
     offer = new NegotiationOffer(NegotiationType.DIPLOMAT, null);
     assertEquals(5, offer.getOfferValue(SpaceRace.HUMAN));
 

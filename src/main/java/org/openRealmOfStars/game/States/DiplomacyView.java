@@ -1150,9 +1150,11 @@ public class DiplomacyView extends BlackPanel {
         NegotiationList list1 = getOfferingList(humanTechListOffer,
             humanMapOffer.isSelected(), humanFleetListOffer,
             humanPlanetListOffer, humanCredits);
+        list1.add(new NegotiationOffer(NegotiationType.SPY_TRADE, null));
         NegotiationList list2 = getOfferingList(aiTechListOffer,
             aiMapOffer.isSelected(), aiFleetListOffer, aiPlanetListOffer,
             aiCredits);
+        list2.add(new NegotiationOffer(NegotiationType.SPY_TRADE, null));
         trade.setFirstOffer(list2);
         trade.setSecondOffer(list1);
         if (trade.isOfferGoodForBoth()) {

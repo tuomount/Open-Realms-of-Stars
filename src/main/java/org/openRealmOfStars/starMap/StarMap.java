@@ -1598,7 +1598,7 @@ public class StarMap {
             PlayerInfo trader = players.getPlayerInfoByIndex(j);
             for (int k = 0; k < players.getCurrentMaxPlayers(); k++) {
               // Then go through all the trader's espionage
-              info.getEspionage().getByIndex(j).addEspionageBonus(
+              info.getEspionage().getByIndex(k).addEspionageBonus(
                   EspionageBonusType.TRADE,
                   trader.getEspionage().getByIndex(k).getOwnBonus(),
                   "Spy trade with " + trader.getEmpireName());

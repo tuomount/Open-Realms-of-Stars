@@ -50,7 +50,8 @@ public class NegotiationOffer {
         || type == NegotiationType.MAP
         || type == NegotiationType.DIPLOMAT
         || type == NegotiationType.WAR
-        || type == NegotiationType.DEFENSIVE_PACT) {
+        || type == NegotiationType.DEFENSIVE_PACT
+        || type == NegotiationType.SPY_TRADE) {
       negotiationType = type;
       offerObject = null;
     } else if (type == NegotiationType.CREDIT && offer instanceof Integer

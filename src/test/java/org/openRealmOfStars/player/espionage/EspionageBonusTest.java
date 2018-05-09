@@ -36,6 +36,7 @@ public class EspionageBonusTest {
     assertEquals(EspionageBonusType.TRADE, bonus.getType());
     assertEquals(2, bonus.getValue());
     bonus = new EspionageBonus(EspionageBonusType.SPY_FLEET, 3);
+    assertEquals("SPY_FLEET -  : 3", bonus.toString());
     assertEquals(EspionageBonusType.SPY_FLEET, bonus.getType());
     assertEquals(3, bonus.getValue());
     bonus = new EspionageBonus(EspionageBonusType.OWN_REALM, 10);

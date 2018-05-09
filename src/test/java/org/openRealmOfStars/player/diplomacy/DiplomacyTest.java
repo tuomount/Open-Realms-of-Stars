@@ -63,7 +63,7 @@ public class DiplomacyTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testIsMultipleBorderCrossong() {
+  public void testIsMultipleBorderCrossing() {
     Diplomacy diplomacy = new Diplomacy(4);
     assertEquals(4, diplomacy.getDiplomacySize());
     assertEquals(null, diplomacy.getDiplomacyList(0));
@@ -249,6 +249,18 @@ public class DiplomacyTest {
     Mockito.when(defender.getDiplomacy()).thenReturn(diplomacy);
     members = diplomacy.activateDefensivePact(starMap, attacker);
     assertNull(members);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSpyTrade() {
+    Diplomacy diplomacy = new Diplomacy(4, 1);
+    diplomacy.getDiplomacyList(0).addBonus(
+        DiplomacyBonusType.SPY_TRADE, SpaceRace.CENTAURS);
+    assertEquals(20, diplomacy.getSpyTradeLasting(0));
+    assertEquals(true, diplomacy.isSpyTrade(0));
+    assertEquals(0, diplomacy.getSpyTradeLasting(1));
+    assertEquals(false, diplomacy.isSpyTrade(1));
   }
 
   @Test

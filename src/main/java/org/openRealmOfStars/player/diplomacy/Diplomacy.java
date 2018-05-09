@@ -202,6 +202,20 @@ public class Diplomacy {
   }
 
   /**
+   * Is certain player(index) with player who is asking in spy trade?
+   * @param index Player index
+   * @return number of turns spy trade is lasting
+   */
+  public int getSpyTradeLasting(final int index) {
+    if (index > -1 && index < diplomacyList.length
+        && diplomacyList[index] != null) {
+      return diplomacyList[index].getBonusTypeLasting(
+          DiplomacyBonusType.SPY_TRADE);
+    }
+    return 0;
+  }
+
+  /**
    * Is certain player(index) with player who is asking in trade alliance?
    * @param index Player index
    * @return True if trade alliance is between two players

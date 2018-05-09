@@ -111,6 +111,22 @@ public class DiplomacyBonusList {
 
   /**
    * Checks if diplomacy bonus list contains certain bonus type.
+   * Returns number of turn bonus is lasting. Returns 0 if no bonus
+   * type is found
+   * @param type DiplomacyBonusType to find
+   * @return number of turns bonus is lasting
+   */
+  public int getBonusTypeLasting(final DiplomacyBonusType type) {
+    for (DiplomacyBonus tmp : list) {
+      if (tmp.getType() == type) {
+        return tmp.getBonusLasting();
+      }
+    }
+    return 0;
+  }
+
+  /**
+   * Checks if diplomacy bonus list contains certain bonus type.
    * Returns true if bonus type is found
    * @param type DiplomacyBonusType to find
    * @return True if type is found.

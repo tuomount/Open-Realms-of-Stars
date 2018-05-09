@@ -131,6 +131,10 @@ public class EspionageView extends BlackPanel {
         int newsValue = militaryNews.getLatest(realmIndex);
         desc = "Military value: " + militaryValue + ".\n"
              + "News value: " + newsValue + ".\n" + desc;
+        int spyTrade = player.getDiplomacy().getSpyTradeLasting(i);
+        if (spyTrade > 0) {
+          desc = desc + "\nSpy trading: " + spyTrade + " turns.";
+        }
         String text;
         Color relationColor = null;
         if (i != humanIndex) {

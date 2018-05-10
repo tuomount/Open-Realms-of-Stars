@@ -66,8 +66,16 @@ public final class DiplomacyRepository {
     int typeIndex = dis.readByte();
     DiplomacyBonus bonus = new DiplomacyBonus(DiplomacyBonusType
         .getTypeByIndex(typeIndex), SpaceRace.HUMAN);
-    bonus.setBonusValue(dis.readInt());
-    bonus.setBonusLasting(dis.readByte());
+    int bonusValue = dis.readInt();
+    int bonusLasting = dis.readByte();
+    if (bonusValue == 0 || bonusLasting == 0) {
+      System.err.println("Warning: DiplomacyBonus got zero value, Value: "
+          + bonusValue + " Lasting: " + bonusLasting);
+      System.err.println("Using default instead");
+    } else {
+      bonus.setBonusValue(bonusValue);
+      bonus.setBonusLasting(bonusLasting);
+    }
     return bonus;
   }
 

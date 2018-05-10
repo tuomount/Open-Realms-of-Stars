@@ -43,6 +43,13 @@ public class DiplomacyBonusTest {
     bonus.setBonusLasting(-1);
     assertEquals(0, bonus.getBonusLasting());
     assertEquals(0, bonus.getBonusValue());
+    bonus.setBonusLasting(10);
+    bonus.setBonusValue(12);
+    assertEquals(10, bonus.getBonusLasting());
+    assertEquals(12, bonus.getBonusValue());
+    bonus.setBonusLasting(0);
+    assertEquals(0, bonus.getBonusLasting());
+    assertEquals(0, bonus.getBonusValue());
   }
 
   @Test

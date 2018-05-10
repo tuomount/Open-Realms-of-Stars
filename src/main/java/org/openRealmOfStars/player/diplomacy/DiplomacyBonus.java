@@ -349,5 +349,10 @@ public class DiplomacyBonus {
     return type;
   }
 
+  @Override
+  public String toString() {
+    return type.name() + " Value: " + bonusValue + " Lasting: " + bonusLasting;
+  }
+
 
 }

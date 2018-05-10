@@ -261,6 +261,11 @@ public class DiplomacyTest {
     assertEquals(true, diplomacy.isSpyTrade(0));
     assertEquals(0, diplomacy.getSpyTradeLasting(1));
     assertEquals(false, diplomacy.isSpyTrade(1));
+    diplomacy.updateDiplomacyLastingForTurn();
+    assertEquals(19, diplomacy.getSpyTradeLasting(0));
+    assertEquals(true, diplomacy.isSpyTrade(0));
+    assertEquals(0, diplomacy.getSpyTradeLasting(1));
+    assertEquals(false, diplomacy.isSpyTrade(1));
   }
 
   @Test

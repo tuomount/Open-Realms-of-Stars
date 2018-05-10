@@ -216,6 +216,17 @@ public class Diplomacy {
   }
 
   /**
+   * Simply calls handleForTurn for each diplomacyBonusList.
+   * Should be called after end of each turn.
+   */
+  public void updateDiplomacyLastingForTurn() {
+    for (DiplomacyBonusList list : diplomacyList) {
+      if (list != null) {
+        list.handleForTurn();
+      }
+    }
+  }
+  /**
    * Is certain player(index) with player who is asking in trade alliance?
    * @param index Player index
    * @return True if trade alliance is between two players

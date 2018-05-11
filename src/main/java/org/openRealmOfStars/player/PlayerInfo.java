@@ -415,7 +415,7 @@ public class PlayerInfo {
     empireName = IOUtilities.readString(dis);
     race = SpaceRaceUtility.getRaceByIndex(dis.readInt());
     totalCredits = dis.readInt();
-    attitude = Attitude.getTypeByIndex(dis.readByte());
+    attitude = Attitude.getTypeByIndex(dis.read());
     techList = new TechList(dis);
     msgList = new MessageList(dis);
     int count = dis.readInt();
@@ -443,7 +443,7 @@ public class PlayerInfo {
     diplomacy = DiplomacyRepository.loadDiplomacy(dis);
     espionage = new Espionage(diplomacy.getDiplomacySize());
 
-    int size = dis.readByte();
+    int size = dis.read();
     for (int i = 0; i < size; i++) {
       EspionageList list = espionage.getByIndex(i);
       boolean nonNull = dis.readBoolean();

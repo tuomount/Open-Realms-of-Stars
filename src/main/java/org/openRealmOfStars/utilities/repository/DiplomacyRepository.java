@@ -63,13 +63,14 @@ public final class DiplomacyRepository {
    */
   public static DiplomacyBonus loadDiplomacyBonus(final DataInputStream dis)
       throws IOException {
-    int typeIndex = dis.readByte();
+    int typeIndex = dis.read();
     DiplomacyBonus bonus = new DiplomacyBonus(DiplomacyBonusType
         .getTypeByIndex(typeIndex), SpaceRace.HUMAN);
     int bonusValue = dis.readInt();
-    int bonusLasting = dis.readByte();
-    if (bonusValue == 0 || bonusLasting == 0) {
-      System.err.println("Warning: DiplomacyBonus got zero value, Value: "
+    int bonusLasting = dis.read();
+    if (bonusLasting == 0) {
+      System.err.println("Warning: Type: " + bonus.getType()
+          + " DiplomacyBonus got zero value, Value: "
           + bonusValue + " Lasting: " + bonusLasting);
       System.err.println("Using default instead");
     } else {
@@ -144,7 +145,7 @@ public final class DiplomacyRepository {
    */
   public static Diplomacy loadDiplomacy(final DataInputStream dis)
       throws IOException {
-    int size = dis.readByte();
+    int size = dis.read();
     Diplomacy diplomacy = new Diplomacy(size);
     for (int i = 0; i < size; i++) {
       DiplomacyBonusList list = loadDiplomacyBonusList(dis);

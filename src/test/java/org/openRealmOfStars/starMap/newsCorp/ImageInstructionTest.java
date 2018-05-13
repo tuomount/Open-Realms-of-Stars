@@ -13,7 +13,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -78,7 +78,7 @@ public class ImageInstructionTest {
     image = ImageInstruction.parseImageInstructions(image, instruction.build());
     assertEquals(100, image.getWidth());
     assertEquals(100, image.getHeight());
-    assertEquals(-16377056, image.getRGB(5, 5));
+    assertEquals(-15594676, image.getRGB(5, 5));
   }
 
   @Test

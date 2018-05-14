@@ -3,8 +3,8 @@ package org.openRealmOfStars.player.ship;
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
 
-import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**

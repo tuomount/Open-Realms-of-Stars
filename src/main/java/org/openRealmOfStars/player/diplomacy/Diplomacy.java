@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.game.States.DiplomacyView;
-import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.fleet.Fleet;

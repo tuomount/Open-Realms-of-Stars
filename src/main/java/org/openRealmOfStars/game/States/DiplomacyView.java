@@ -17,7 +17,6 @@ import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.game.GameCommands;
-import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.ListRenderers.FleetListRenderer;
 import org.openRealmOfStars.gui.ListRenderers.PlanetListRenderer;
 import org.openRealmOfStars.gui.ListRenderers.SpeechLineRenderer;
@@ -32,6 +31,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;

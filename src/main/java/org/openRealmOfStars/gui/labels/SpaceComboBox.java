@@ -4,7 +4,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JToolTip;
 
-import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
 *
 * Open Realm of Stars game project

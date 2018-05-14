@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
-import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 
 /**
  *

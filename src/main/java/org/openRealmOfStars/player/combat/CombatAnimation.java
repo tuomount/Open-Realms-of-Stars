@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
-import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.AnimatedImage;
 import org.openRealmOfStars.gui.mapPanel.ParticleEffect;
 import org.openRealmOfStars.gui.mapPanel.ParticleEffectType;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipImage;

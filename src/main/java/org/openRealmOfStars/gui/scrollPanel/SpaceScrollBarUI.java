@@ -13,9 +13,9 @@ import javax.swing.SwingConstants;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
-import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 
 /**
  *

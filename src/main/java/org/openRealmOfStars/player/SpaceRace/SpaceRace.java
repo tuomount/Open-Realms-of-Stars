@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.audio.music.MusicFileInfo;
 import org.openRealmOfStars.audio.music.MusicPlayer;
-import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 
 /**

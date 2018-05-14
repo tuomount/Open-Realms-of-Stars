@@ -11,8 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JToolTip;
 import javax.swing.border.EtchedBorder;
 
-import org.openRealmOfStars.gui.GuiStatics;
 import org.openRealmOfStars.gui.icons.Icon16x16;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 
 /**
  *

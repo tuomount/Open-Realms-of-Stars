@@ -1,4 +1,4 @@
-package org.openRealmOfStars.gui;
+package org.openRealmOfStars.gui.utilies;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

@@ -1,4 +1,4 @@
-package org.openRealmOfStars.gui;
+package org.openRealmOfStars.gui.utilities;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 
 /**
 *

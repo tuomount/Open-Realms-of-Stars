@@ -2,7 +2,7 @@ package org.openRealmOfStars.gui.panels;
 
 import javax.swing.JPanel;
 
-import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 
 /**
 *

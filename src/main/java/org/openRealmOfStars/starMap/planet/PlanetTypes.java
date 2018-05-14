@@ -3,7 +3,7 @@ package org.openRealmOfStars.starMap.planet;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;

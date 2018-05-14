@@ -2,7 +2,7 @@ package org.openRealmOfStars.gui.mapPanel;
 
 import java.awt.Color;
 
-import org.openRealmOfStars.gui.GuiStatics;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**

@@ -1,6 +1,7 @@
 package org.openRealmOfStars.game;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
@@ -338,7 +339,7 @@ public class Game implements ActionListener {
       musicTimer = new Timer(MUSIC_TIMER_DELAY, this);
       musicTimer.setActionCommand(GameCommands.COMMAND_MUSIC_TIMER);
       musicTimer.start();
-      gameFrame.setResizable(false);
+      gameFrame.setResizable(true);
       gameFrame.setVisible(true);
       // Adjusting JFrame size. Some OS take UI component space
       // from JFrame. This happens at least with Windows 7/10 and Java8.
@@ -351,6 +352,8 @@ public class Game implements ActionListener {
         ErrorLogger.log("Adjusting X: " + sizeX + " Adjusting Y: " + sizeY);
         gameFrame.setVisible(false);
         gameFrame.setSize(WINDOW_X_SIZE + sizeX, WINDOW_Y_SIZE + sizeY);
+        gameFrame.setMinimumSize(new Dimension(WINDOW_X_SIZE + sizeX,
+            WINDOW_Y_SIZE + sizeY));
         gameFrame.setVisible(true);
       }
       // Add new KeyEventDispatcher
@@ -449,10 +452,10 @@ public class Game implements ActionListener {
     if (gameFrame != null) {
       gameFrame.getContentPane().removeAll();
       layeredPane = new JLayeredPane();
-      view.setBounds(0, 0, WINDOW_X_SIZE, WINDOW_Y_SIZE);
+      view.setBounds(0, 0, gameFrame.getWidth(), gameFrame.getHeight());
       layeredPane.setLayer(view, JLayeredPane.DEFAULT_LAYER);
       layeredPane.add(view);
-      layeredPane.setBounds(0, 0, WINDOW_X_SIZE, WINDOW_Y_SIZE);
+      layeredPane.setBounds(0, 0, gameFrame.getWidth(), gameFrame.getHeight());
       int y = MUSIC_TEXT_TOP;
       if (view instanceof MainMenu || view instanceof ResearchView
           || view instanceof ShipView || view instanceof GalaxyCreationView

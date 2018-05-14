@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import org.openRealmOfStars.gui.mapPanel.ParticleEffect;
 import org.openRealmOfStars.gui.mapPanel.PlanetAnimation;
+import org.openRealmOfStars.gui.utilies.GraphRoutines;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.ShipImage;
@@ -292,7 +293,9 @@ public class BigImagePanel extends JPanel {
           + planet.getY();
     }
     if (drawStarField) {
-      g2d.drawImage(GuiStatics.STAR_FIELD_IMAGE, -sx, -sy, null);
+      //g2d.drawImage(GuiStatics.STAR_FIELD_IMAGE, -sx, -sy, null);
+      GraphRoutines.drawTiling(g2d, GuiStatics.STAR_FIELD_IMAGE, -sx, -sy,
+          this.getWidth(), this.getHeight());
     } else {
       this.setBackground(Color.black);
       g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
@@ -307,7 +310,9 @@ public class BigImagePanel extends JPanel {
         }
         g2d.drawImage(backgroundImg, offsetX, offsetY, null);
       } else {
-        g2d.drawImage(GuiStatics.NEBULAE_IMAGE, -sx, -sy, null);
+        //g2d.drawImage(GuiStatics.NEBULAE_IMAGE, -sx, -sy, null);
+        GraphRoutines.drawTiling(g2d, GuiStatics.NEBULAE_IMAGE, -sx, -sy,
+            this.getWidth(), this.getHeight());
         int offsetX = (this.getWidth() - backgroundImg.getWidth()) / 2;
         int offsetY = (PLANET_Y_OFFSET - backgroundImg.getHeight()) / 2;
         if (planet.isGasGiant()) {
@@ -317,7 +322,9 @@ public class BigImagePanel extends JPanel {
         g2d.drawImage(backgroundImg, offsetX, offsetY, null);
       }
     } else {
-      g2d.drawImage(GuiStatics.NEBULAE_IMAGE, -sx, -sy, null);
+      //g2d.drawImage(GuiStatics.NEBULAE_IMAGE, -sx, -sy, null);
+      GraphRoutines.drawTiling(g2d, GuiStatics.NEBULAE_IMAGE, -sx, -sy,
+          this.getWidth(), this.getHeight());
     }
     if (animation != null) {
       if (animation

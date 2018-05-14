@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.utilies.GraphRoutines;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
@@ -350,16 +351,30 @@ public class MapPanel extends JPanel {
         - SAFETY_OFFSET) / starMap.getMaxX();
     int speedY = (GuiStatics.NEBULAE_IMAGE.getHeight() - this.getHeight()
         - SAFETY_OFFSET) / starMap.getMaxY();
+    if (speedX < 5) {
+      speedX = 5;
+    }
+    if (speedY < 5) {
+      speedY = 5;
+    }
     int speedStarX = (GuiStatics.STAR_FIELD_IMAGE.getWidth() - this.getWidth()
         - SAFETY_OFFSET) / starMap.getMaxX();
     int speedStarY = (GuiStatics.STAR_FIELD_IMAGE.getHeight() - this.getHeight()
         - SAFETY_OFFSET) / starMap.getMaxY();
+    if (speedStarX < 3) {
+      speedStarX = 3;
+    }
+    if (speedStarY < 3) {
+      speedStarY = 3;
+    }
     // Parallax Scrolling with just two lines!!!
-    gr.drawImage(GuiStatics.STAR_FIELD_IMAGE,
+    GraphRoutines.drawTiling(gr, GuiStatics.STAR_FIELD_IMAGE,
         -PARALLAX_OFFSET - cx * speedStarX, -PARALLAX_OFFSET - cy * speedStarY,
-        null);
-    gr.drawImage(GuiStatics.NEBULAE_IMAGE, -PARALLAX_OFFSET - cx * speedX,
-        -PARALLAX_OFFSET - cy * speedY, null);
+        this.getWidth(), this.getHeight());
+    GraphRoutines.drawTiling(gr, GuiStatics.NEBULAE_IMAGE,
+        -PARALLAX_OFFSET - cx * speedX,
+        -PARALLAX_OFFSET - cy * speedY,
+        this.getWidth(), this.getHeight());
 
     lastDrawnCenterX = cx;
     lastDrawnCenterY = cy;

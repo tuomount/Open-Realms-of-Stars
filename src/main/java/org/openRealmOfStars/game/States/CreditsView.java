@@ -51,7 +51,7 @@ public class CreditsView extends BlackPanel {
   /**
    * Number of lines to show in text area
    */
-  private static final int NUMBER_OF_LINES = 45;
+  private static final int NUMBER_OF_LINES = 60;
 
   /**
    * Main Credits string

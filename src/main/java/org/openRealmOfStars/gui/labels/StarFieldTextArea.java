@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTextArea;
 
 import org.openRealmOfStars.gui.borders.SimpleBorder;
+import org.openRealmOfStars.gui.utilies.GraphRoutines;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 
 /**
@@ -228,8 +229,8 @@ public class StarFieldTextArea extends JTextArea {
     int height = getHeight() - inset.top - inset.bottom;
     g.fillRect(sx, sx, width, height);
     Graphics2D g2d = (Graphics2D) g;
-    g2d.drawImage(GuiStatics.STAR_FIELD_IMAGE, STAR_FIELD_OFFSET,
-        STAR_FIELD_OFFSET, null);
+    GraphRoutines.drawTiling(g2d, GuiStatics.STAR_FIELD_IMAGE,
+        STAR_FIELD_OFFSET, STAR_FIELD_OFFSET, width, height);
 
     g.setFont(GuiStatics.getFontCubellan());
     if (getText() != null) {

@@ -38,6 +38,7 @@ public class ConfigLineTest {
     assertEquals(null, line.getComment());
     assertEquals(null, line.getKey());
     assertEquals(null, line.getValue());
+    assertEquals("", line.toString());
     line.setValue("test");
     assertEquals(null, line.getComment());
     assertEquals(null, line.getKey());
@@ -52,6 +53,7 @@ public class ConfigLineTest {
     assertEquals("# Test comment", line.getComment());
     assertEquals(null, line.getKey());
     assertEquals(null, line.getValue());
+    assertEquals("# Test comment", line.toString());
     line.setValue("test");
     assertEquals("# Test comment", line.getComment());
     assertEquals(null, line.getKey());
@@ -66,6 +68,7 @@ public class ConfigLineTest {
     assertEquals(null, line.getComment());
     assertEquals("Key", line.getKey());
     assertEquals("value", line.getValue());
+    assertEquals("Key=value", line.toString());
     line.setValue("test");
     assertEquals(null, line.getComment());
     assertEquals("Key", line.getKey());

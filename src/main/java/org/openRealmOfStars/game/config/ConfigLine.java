@@ -118,4 +118,15 @@ public class ConfigLine {
     }
     return null;
   }
+
+  @Override
+  public String toString() {
+    switch (type) {
+      case COMMENT: return comment;
+      case EMPTY: return "";
+      case KEY_VALUE: return key + "=" + value;
+      default: return "Unknown line";
+    }
+  }
+
 }

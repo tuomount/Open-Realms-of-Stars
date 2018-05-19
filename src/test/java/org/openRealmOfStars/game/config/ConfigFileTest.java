@@ -75,4 +75,17 @@ public class ConfigFileTest {
     assertEquals(80, file.getMusicVolume());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testResolution() {
+    ConfigLine line = new ConfigLine(ConfigFile.CONFIG_RESOLUTION + "=1100x800");
+    ConfigFile file = new ConfigFile();
+    file.add(line);
+    assertEquals(1100, file.getResolutionWidth());
+    assertEquals(800, file.getResolutionHeight());
+    file.setResolution(1200, 900);
+    assertEquals(1200, file.getResolutionWidth());
+    assertEquals(900, file.getResolutionHeight());
+  }
+
 }

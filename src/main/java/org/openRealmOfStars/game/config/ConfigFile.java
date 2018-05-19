@@ -122,6 +122,71 @@ public class ConfigFile {
   }
 
   /**
+   * Get Resolution width or height.
+   * @param index 0 for width, 1 for height
+   * @return Resolution
+   */
+  private int getResolutionPart(final int index) {
+    int result = 1024;
+    int result2 = 0;
+    if (index < 0 || index > 1) {
+      throw new IllegalArgumentException("Index is not 0 or 1!");
+    }
+    if (index == 1) {
+      result = 768;
+    }
+    ConfigLine line = getLineByKey(CONFIG_RESOLUTION);
+    if (line != null) {
+      String value = line.getValue();
+      if (value != null) {
+        String[] parts = value.split("x");
+        if (parts.length == 2) {
+          try {
+            result2 = Integer.parseInt(parts[index]);
+          } catch (NumberFormatException e) {
+            ErrorLogger.log("Invalid " + CONFIG_RESOLUTION + " value: "
+                + value);
+          }
+        } else {
+          ErrorLogger.log("Invalid resolution: " + value);
+        }
+      }
+    }
+    if (result2 > result) {
+      result = result2;
+    }
+    return result;
+  }
+
+  /**
+   * Set resolution for config file. Minimum resolution is
+   * 1024x768.
+   * @param width Resolution width.
+   * @param height Resolution height.
+   */
+  public void setResolution(final int width, final int height) {
+    ConfigLine line = getLineByKey(CONFIG_RESOLUTION);
+    if (line != null && width >= 1024 && height >= 768) {
+      line.setValue(width + "x" + height);
+    }
+  }
+  /**
+   * Get Resolution width from config file
+   * @return Resolution width
+   */
+  public int getResolutionWidth() {
+    return getResolutionPart(0);
+  }
+
+  /**
+   * Get Resolution height from config file
+   * @return Resolution height
+   */
+  public int getResolutionHeight() {
+    return getResolutionPart(1);
+  }
+
+  /**
    * Set the generic volume for config file.
    * @param configVolume SoundVolume or MusicVolume
    * @param volume to set

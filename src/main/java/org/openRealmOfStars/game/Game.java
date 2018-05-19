@@ -332,6 +332,8 @@ public class Game implements ActionListener {
     readConfigFile();
     int musicVolume = configFile.getMusicVolume();
     int soundVolume = configFile.getSoundVolume();
+    int resolutionWidth = configFile.getResolutionWidth();
+    int resolutionHeight = configFile.getResolutionHeight();
     if (visible) {
       gameFrame = new JFrame();
       // Set look and feel match on CrossPlatform Look and feel
@@ -345,7 +347,7 @@ public class Game implements ActionListener {
       gameFrame.setTitle(GAME_TITLE + " " + GAME_VERSION);
       gameFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
       gameFrame.addWindowListener(new GameWindowListener());
-      gameFrame.setSize(WINDOW_X_SIZE, WINDOW_Y_SIZE);
+      gameFrame.setSize(resolutionWidth, resolutionHeight);
       gameFrame.setLocationRelativeTo(null);
       animationTimer = new Timer(ANIMATION_TIMER_DELAY, this);
       animationTimer.setActionCommand(GameCommands.COMMAND_ANIMATION_TIMER);
@@ -365,7 +367,7 @@ public class Game implements ActionListener {
             + " their own space from JFrame.");
         ErrorLogger.log("Adjusting X: " + sizeX + " Adjusting Y: " + sizeY);
         gameFrame.setVisible(false);
-        gameFrame.setSize(WINDOW_X_SIZE + sizeX, WINDOW_Y_SIZE + sizeY);
+        gameFrame.setSize(resolutionWidth + sizeX, resolutionHeight + sizeY);
         gameFrame.setMinimumSize(new Dimension(WINDOW_X_SIZE + sizeX,
             WINDOW_Y_SIZE + sizeY));
         gameFrame.setVisible(true);
@@ -1860,6 +1862,7 @@ public class Game implements ActionListener {
         SoundPlayer.playMenuSound();
         configFile.setMusicVolume(MusicPlayer.getVolume());
         configFile.setSoundVolume(SoundPlayer.getSoundVolume());
+        configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
         writeConfigFile();
         System.exit(0);
       }

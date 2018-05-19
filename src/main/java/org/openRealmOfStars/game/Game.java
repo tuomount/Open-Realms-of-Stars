@@ -6,6 +6,9 @@ import java.awt.Graphics;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -36,6 +39,8 @@ import org.openRealmOfStars.game.States.ShipDesignView;
 import org.openRealmOfStars.game.States.ShipView;
 import org.openRealmOfStars.game.States.StarMapView;
 import org.openRealmOfStars.game.States.StatView;
+import org.openRealmOfStars.game.config.ConfigFile;
+import org.openRealmOfStars.game.config.ConfigLine;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
@@ -77,6 +82,7 @@ import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.repository.ConfigFileRepository;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
@@ -265,6 +271,11 @@ public class Game implements ActionListener {
   private JLabel songText;
 
   /**
+   * Game ConfigFile
+   */
+  private ConfigFile configFile;
+
+  /**
    * Get Star map
    * @return StarMap
    */
@@ -318,6 +329,9 @@ public class Game implements ActionListener {
    * @param visible Is game actually visible or not
    */
   public Game(final boolean visible) {
+    readConfigFile();
+    int musicVolume = configFile.getMusicVolume();
+    int soundVolume = configFile.getSoundVolume();
     if (visible) {
       gameFrame = new JFrame();
       // Set look and feel match on CrossPlatform Look and feel
@@ -362,8 +376,50 @@ public class Game implements ActionListener {
       kfm.addKeyEventDispatcher(new GameKeyAdapter(this));
       MusicPlayer.play(MusicPlayer.MILLION_LIGHT_YEARS);
       MusicPlayer.setLoop(false);
+      MusicPlayer.setVolume(musicVolume);
+      SoundPlayer.setSoundVolume(soundVolume);
     }
     changeGameState(GameState.MAIN_MENU);
+  }
+
+  /**
+   * Read config file from oros.cfg or generate
+   * default config file.
+   */
+  private void readConfigFile() {
+    File file = new File("oros.cfg");
+    if (file.exists()) {
+      try (FileInputStream fis = new FileInputStream(file)) {
+        configFile = ConfigFileRepository.readConfigFile(fis);
+      } catch (IOException e) {
+        ErrorLogger.log("Failed reading the config file! \n"
+           + e.getMessage());
+      }
+    }
+    if (configFile == null) {
+      configFile = new ConfigFile();
+      configFile.add(new ConfigLine(ConfigFile.CONFIG_COMMENT));
+      ConfigLine line = new ConfigLine(ConfigFile.CONFIG_MUSIC_VOLUME + "=75");
+      configFile.add(line);
+      line = new ConfigLine(ConfigFile.CONFIG_SOUND_VOLUME + "=75");
+      configFile.add(line);
+      line = new ConfigLine(ConfigFile.CONFIG_RESOLUTION + "="
+          + WINDOW_X_SIZE + "x" + WINDOW_Y_SIZE);
+      configFile.add(line);
+    }
+  }
+
+  /**
+   * Write config file to oros.cfg.
+   */
+  private void writeConfigFile() {
+    File file = new File("oros.cfg");
+    try (FileOutputStream fos = new FileOutputStream(file)) {
+      ConfigFileRepository.writeConfigFile(fos, configFile);
+    } catch (IOException e) {
+      ErrorLogger.log("Failed reading the config file! \n"
+         + e.getMessage());
+    }
   }
 
   /**
@@ -1802,6 +1858,9 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_QUIT_GAME)) {
         SoundPlayer.playMenuSound();
+        configFile.setMusicVolume(MusicPlayer.getVolume());
+        configFile.setSoundVolume(SoundPlayer.getSoundVolume());
+        writeConfigFile();
         System.exit(0);
       }
     }

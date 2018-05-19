@@ -1065,7 +1065,7 @@ public class PlayerInfo {
             result = Integer.valueOf(parts[1]);
           } catch (NumberFormatException e) {
             // Just ignore this one
-            System.err.println("Not an number after Mk in design name:"
+            ErrorLogger.log("Not an number after Mk in design name:"
                + stat.getDesign().getName());
           }
         }

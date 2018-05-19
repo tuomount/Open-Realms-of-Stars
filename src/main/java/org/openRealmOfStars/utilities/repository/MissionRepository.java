@@ -4,6 +4,7 @@ import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 import java.io.DataInputStream;
@@ -88,7 +89,7 @@ public class MissionRepository {
     case 10:
       return MissionType.COLONY_EXPLORE;
     default:
-      System.err.println("Warning: Unknown mission type: " + index
+      ErrorLogger.log("Warning: Unknown mission type: " + index
           + ". Defaulting to explore.");
       return MissionType.EXPLORE;
     }
@@ -112,7 +113,7 @@ public class MissionRepository {
     case 4:
       return MissionPhase.LOADING;
     default:
-      System.err.println("Warning: Unknown mission phase: " + index
+      ErrorLogger.log("Warning: Unknown mission phase: " + index
           + ". Defaulting to building.");
       return MissionPhase.BUILDING;
     }

@@ -3,6 +3,8 @@
 /screenshots/
 # Game saves
 /saves/
+# OROS config
+oros.cfg
 
 # Backup files
 *~

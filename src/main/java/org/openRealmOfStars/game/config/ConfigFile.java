@@ -2,6 +2,8 @@ package org.openRealmOfStars.game.config;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.utilities.ErrorLogger;
+
 /**
 *
 * Open Realm of Stars game project
@@ -97,4 +99,71 @@ public class ConfigFile {
     }
     return null;
   }
+
+  /**
+   * Generic getter for sound and music volumes
+   * @param configVolume SoundVolume or MusicVolume
+   * @return Volume value
+   */
+  private int getVolume(final String configVolume) {
+    int result = 75;
+    ConfigLine line = getLineByKey(configVolume);
+    if (line != null) {
+      String value = line.getValue();
+      if (value != null) {
+        try {
+          result = Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+          ErrorLogger.log("Invalid " + configVolume + " value: " + value);
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Set the generic volume for config file.
+   * @param configVolume SoundVolume or MusicVolume
+   * @param volume to set
+   */
+  private void setVolume(final String configVolume, final int volume) {
+    ConfigLine line = getLineByKey(configVolume);
+    if (line != null && volume >= 0 && volume <= 100) {
+      String str = Integer.toString(volume);
+      line.setValue(str);
+    }
+  }
+
+  /**
+   * Get the music volume from config file.
+   * @return Music volume
+   */
+  public int getMusicVolume() {
+    return getVolume(CONFIG_MUSIC_VOLUME);
+  }
+
+  /**
+   * Get the sound volume from config file.
+   * @return Sound volume
+   */
+  public int getSoundVolume() {
+    return getVolume(CONFIG_SOUND_VOLUME);
+  }
+
+  /**
+   * Set the music volume for config file.
+   * @param volume Music volume
+   */
+  public void setMusicVolume(final int volume) {
+    setVolume(CONFIG_MUSIC_VOLUME, volume);
+  }
+
+  /**
+   * Set the music volume for config file.
+   * @param volume Music volume
+   */
+  public void setSoundVolume(final int volume) {
+    setVolume(CONFIG_SOUND_VOLUME, volume);
+  }
+
 }

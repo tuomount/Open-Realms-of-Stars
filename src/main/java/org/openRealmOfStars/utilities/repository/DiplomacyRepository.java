@@ -5,6 +5,7 @@ import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonus;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
+import org.openRealmOfStars.utilities.ErrorLogger;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -15,7 +16,7 @@ import java.io.IOException;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017,2018  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -69,10 +70,10 @@ public final class DiplomacyRepository {
     int bonusValue = dis.readInt();
     int bonusLasting = dis.read();
     if (bonusLasting == 0) {
-      System.err.println("Warning: Type: " + bonus.getType()
+      ErrorLogger.log("Warning: Type: " + bonus.getType()
           + " DiplomacyBonus got zero value, Value: "
           + bonusValue + " Lasting: " + bonusLasting);
-      System.err.println("Using default instead");
+      ErrorLogger.log("Using default instead");
     } else {
       bonus.setBonusValue(bonusValue);
       bonus.setBonusLasting(bonusLasting);

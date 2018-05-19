@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
 *
@@ -64,7 +65,7 @@ public class GameRepository {
           System.out.println(e.getMessage());
         }
       } catch (FileNotFoundException e) {
-        System.err.println("File could not be write: " + folderName + "/"
+        ErrorLogger.log("File could not be write: " + folderName + "/"
             + filename + "! " + e.getMessage());
       }
     }

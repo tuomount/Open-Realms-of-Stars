@@ -53,4 +53,26 @@ public class ConfigFileTest {
     assertEquals(line, file.getLineByKey("Key"));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testSoundVolume() {
+    ConfigLine line = new ConfigLine(ConfigFile.CONFIG_SOUND_VOLUME + "=50");
+    ConfigFile file = new ConfigFile();
+    file.add(line);
+    assertEquals(50, file.getSoundVolume());
+    file.setSoundVolume(80);
+    assertEquals(80, file.getSoundVolume());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testMusicVolume() {
+    ConfigLine line = new ConfigLine(ConfigFile.CONFIG_MUSIC_VOLUME + "=50");
+    ConfigFile file = new ConfigFile();
+    file.add(line);
+    assertEquals(50, file.getMusicVolume());
+    file.setMusicVolume(80);
+    assertEquals(80, file.getMusicVolume());
+  }
+
 }

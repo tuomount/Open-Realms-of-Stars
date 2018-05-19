@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.openRealmOfStars.game.config.ConfigFile;
 import org.openRealmOfStars.game.config.ConfigLine;
+import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -58,7 +59,7 @@ public final class ConfigFileRepository {
         ConfigLine configLine = new ConfigLine(line);
         config.add(configLine);
       } catch (IllegalArgumentException ex) {
-        System.err.println("Error while reading config: " + ex.getMessage());
+        ErrorLogger.log("Error while reading config: " + ex.getMessage());
       }
     }
     return config;

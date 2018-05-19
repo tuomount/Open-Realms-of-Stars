@@ -13,6 +13,7 @@ import java.io.InputStream;
 import org.openRealmOfStars.gui.icons.AnimatedImage;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -77,7 +78,7 @@ public final class GuiStatics {
         fontCubellan = Font.createFont(Font.TRUETYPE_FONT, is);
         fontCubellan = fontCubellan.deriveFont(16F);
       } catch (IOException | FontFormatException e) {
-        System.err.println("Error:" + e.getMessage());
+        ErrorLogger.log("Error:" + e.getMessage());
         return FONT_SMALL;
       }
     }
@@ -96,7 +97,7 @@ public final class GuiStatics {
         fontCubellanSmall = Font.createFont(Font.TRUETYPE_FONT, is);
         fontCubellanSmall = fontCubellanSmall.deriveFont(13F);
       } catch (IOException | FontFormatException e) {
-        System.err.println("Error:" + e.getMessage());
+        ErrorLogger.log("Error:" + e.getMessage());
         return FONT_SMALL;
       }
     }
@@ -120,7 +121,7 @@ public final class GuiStatics {
         fontCubellanBold = Font.createFont(Font.TRUETYPE_FONT, is);
         fontCubellanBold = fontCubellanBold.deriveFont(24F);
       } catch (IOException | FontFormatException e) {
-        System.err.println("Error:" + e.getMessage());
+        ErrorLogger.log("Error:" + e.getMessage());
         return FONT_SMALL;
       }
     }
@@ -144,7 +145,7 @@ public final class GuiStatics {
         fontCubellanBoldBig = Font.createFont(Font.TRUETYPE_FONT, is);
         fontCubellanBoldBig = fontCubellanBoldBig.deriveFont(35F);
       } catch (IOException | FontFormatException e) {
-        System.err.println("Error:" + e.getMessage());
+        ErrorLogger.log("Error:" + e.getMessage());
         return FONT_SMALL;
       }
     }
@@ -168,7 +169,7 @@ public final class GuiStatics {
         fontCubellanSC = Font.createFont(Font.TRUETYPE_FONT, is);
         fontCubellanSC = fontCubellanSC.deriveFont(13F);
       } catch (IOException | FontFormatException e) {
-        System.err.println("Error:" + e.getMessage());
+        ErrorLogger.log("Error:" + e.getMessage());
         return FONT_SMALL;
       }
     }

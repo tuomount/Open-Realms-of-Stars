@@ -122,7 +122,7 @@ public final class IOUtilities {
     try {
       ImageIO.write(image, "png", file);
     } catch (IOException e) {
-      System.err.println("Failing to write screenshot!");
+      ErrorLogger.log("Failing to write screenshot!");
       e.printStackTrace();
     }
   }

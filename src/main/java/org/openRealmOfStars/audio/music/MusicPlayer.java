@@ -385,4 +385,21 @@ public final class MusicPlayer {
       }
     }
   }
+
+  /**
+   * Set music volume. Default is 75.
+   * @param volume Music volume between 0-100.
+   */
+  public static void setVolume(final int volume) {
+    OggPlayer.setOggVolume(volume);
+  }
+
+  /**
+   * Get music volume.
+   * @return Music volume
+   */
+  public static int getVolume() {
+    return OggPlayer.getOggVolume();
+  }
+
 }

@@ -27,6 +27,23 @@ import java.util.ArrayList;
 public class ConfigFile {
 
   /**
+   * Config option SoundVolume
+   */
+  public static final String CONFIG_SOUND_VOLUME = "SoundVolume";
+  /**
+   * Config option MusicVolume
+   */
+  public static final String CONFIG_MUSIC_VOLUME = "MusicVolume";
+  /**
+   * Config option Resolution
+   */
+  public static final String CONFIG_RESOLUTION = "Resolution";
+  /**
+   * Config file default comment
+   */
+  public static final String CONFIG_COMMENT = "# Config file for "
+      + "Open Realm of Stars";
+  /**
    * ConfigFile lines
    */
   private ArrayList<ConfigLine> lines;

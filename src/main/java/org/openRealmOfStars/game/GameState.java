@@ -111,5 +111,9 @@ public enum GameState {
   /**
    * History view showing historical game events
    */
-  HISTORY_VIEW
+  HISTORY_VIEW,
+  /**
+   * Options view to configure sound/music volume and resolution.
+   */
+  OPTIONS_VIEW
 }

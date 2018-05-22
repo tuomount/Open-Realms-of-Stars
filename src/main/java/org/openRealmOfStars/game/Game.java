@@ -31,6 +31,7 @@ import org.openRealmOfStars.game.States.HistoryView;
 import org.openRealmOfStars.game.States.LoadGameView;
 import org.openRealmOfStars.game.States.MainMenu;
 import org.openRealmOfStars.game.States.NewsCorpView;
+import org.openRealmOfStars.game.States.OptionsView;
 import org.openRealmOfStars.game.States.PlanetBombingView;
 import org.openRealmOfStars.game.States.PlanetView;
 import org.openRealmOfStars.game.States.PlayerSetupView;
@@ -251,6 +252,11 @@ public class Game implements ActionListener {
   private HistoryView historyView;
 
   /**
+   * Options view for the game
+   */
+  private OptionsView optionsView;
+
+  /**
    * Change Message Fleet or Planet
    */
   private ChangeMessage changeMessage;
@@ -347,6 +353,7 @@ public class Game implements ActionListener {
       gameFrame.setTitle(GAME_TITLE + " " + GAME_VERSION);
       gameFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
       gameFrame.addWindowListener(new GameWindowListener());
+      gameFrame.setMinimumSize(new Dimension(WINDOW_X_SIZE, WINDOW_Y_SIZE));
       gameFrame.setSize(resolutionWidth, resolutionHeight);
       gameFrame.setLocationRelativeTo(null);
       animationTimer = new Timer(ANIMATION_TIMER_DELAY, this);
@@ -355,7 +362,7 @@ public class Game implements ActionListener {
       musicTimer = new Timer(MUSIC_TIMER_DELAY, this);
       musicTimer.setActionCommand(GameCommands.COMMAND_MUSIC_TIMER);
       musicTimer.start();
-      gameFrame.setResizable(true);
+      gameFrame.setResizable(false);
       gameFrame.setVisible(true);
       // Adjusting JFrame size. Some OS take UI component space
       // from JFrame. This happens at least with Windows 7/10 and Java8.
@@ -540,6 +547,15 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Set Game frame to be resizable.
+   * @param resizable True for resizable frame
+   */
+  public void setResizable(final boolean resizable) {
+    if (gameFrame != null) {
+      gameFrame.setResizable(resizable);
+    }
+  }
+  /**
    * Get width of Game frame
    * @return Width of game frame
    */
@@ -590,6 +606,14 @@ public class Game implements ActionListener {
     newsCorpView = new NewsCorpView(starMap.getNewsCorpData().getNewsList(),
         this);
     this.updateDisplay(newsCorpView);
+  }
+
+  /**
+   * Show Options view
+   */
+  public void showOptionsView() {
+    optionsView = new OptionsView(this, this);
+    this.updateDisplay(optionsView);
   }
 
   /**
@@ -928,6 +952,9 @@ public class Game implements ActionListener {
       break;
     case LOAD_GAME:
       showLoadGame();
+      break;
+    case OPTIONS_VIEW:
+      showOptionsView();
       break;
     case NEW_GAME: {
       makeNewGame();
@@ -1840,6 +1867,24 @@ public class Game implements ActionListener {
         changeGameState(GameState.STARMAP);
       }
     }
+    if (gameState == GameState.OPTIONS_VIEW) {
+      // Options
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_OK)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.MAIN_MENU);
+        setResizable(false);
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        //FIXME Does not recall settings
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.MAIN_MENU);
+        setResizable(false);
+        return;
+      }
+    }
     if (gameState == GameState.MAIN_MENU) {
       // Main menu
       if (arg0.getActionCommand()
@@ -1856,6 +1901,11 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_CREDITS)) {
         SoundPlayer.playMenuSound();
         changeGameState(GameState.CREDITS);
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_OPTIONS_VIEW)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.OPTIONS_VIEW);
       }
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_QUIT_GAME)) {

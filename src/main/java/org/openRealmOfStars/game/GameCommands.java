@@ -47,6 +47,16 @@ public final class GameCommands {
   public static final String COMMAND_OK = "OK";
 
   /**
+   * Apply command
+   */
+  public static final String COMMAND_APPLY = "Apply";
+
+  /**
+   * Options View command
+   */
+  public static final String COMMAND_OPTIONS_VIEW = "OptionsView";
+
+  /**
    * End Turn command
    */
   public static final String COMMAND_END_TURN = "EndTurn";

@@ -8,14 +8,17 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 
+import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.panels.SpaceSliderPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
 *
@@ -55,6 +58,17 @@ public class OptionsView extends BlackPanel {
    * Resolution selector
    */
   private JComboBox<String> resolutionSelection;
+
+  /**
+   * Music volume slider
+   */
+  private SpaceSliderPanel musicSlider;
+
+  /**
+   * Sound volume slider
+   */
+  private SpaceSliderPanel soundSlider;
+
   /**
    * Constructor for OptionsView
    * @param gameFrame Game frame
@@ -104,12 +118,59 @@ public class OptionsView extends BlackPanel {
     resolutionSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     resolutionSelection.setBorder(new SimpleBorder());
     resolutionSelection.setFont(GuiStatics.getFontCubellan());
+    String actualResolution = game.getWidth() + "x" + game.getHeight();
+    boolean found = false;
+    for (int i = 0; i < resolutions.length; i++) {
+      if (actualResolution.equals(resolutions[i])) {
+        resolutionSelection.setSelectedIndex(i);
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      resolutionSelection.setSelectedIndex(resolutions.length - 1);
+    }
     screenPanel.add(resolutionSelection);
     screenPanel.add(Box.createRigidArea(new Dimension(50, 10)));
     label = new SpaceLabel("NOTE: You can also resize game window here for"
         + " custom size.");
     screenPanel.add(label);
+    allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
     allOptions.add(screenPanel);
+    allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
+    InfoPanel musicPanel = new InfoPanel();
+    musicPanel.setTitle("Music Options");
+    musicPanel.setLayout(new BoxLayout(musicPanel, BoxLayout.X_AXIS));
+    label = new SpaceLabel("Music volume:");
+    musicPanel.add(label);
+    musicPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    musicSlider = new SpaceSliderPanel(
+        GameCommands.COMMAND_MUSIC_VOLUME_DN,
+        GameCommands.COMMAND_MUSIC_VOLUME_UP,
+        Icons.ICON_MUSIC, "Music volume", 0, 100, MusicPlayer.getVolume(),
+        GameCommands.COMMAND_MUSIC_VOLUME, listener);
+    musicSlider.setSliderMajorTick(10);
+    musicSlider.setSliderMinorTick(10);
+    musicPanel.add(musicSlider);
+    allOptions.add(musicPanel);
+    allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
+    InfoPanel soundPanel = new InfoPanel();
+    soundPanel.setTitle("Sound Options");
+    soundPanel.setLayout(new BoxLayout(soundPanel, BoxLayout.X_AXIS));
+    label = new SpaceLabel("Sound volume:");
+    soundPanel.add(label);
+    soundPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    soundSlider = new SpaceSliderPanel(
+        GameCommands.COMMAND_SOUND_VOLUME_DN,
+        GameCommands.COMMAND_SOUND_VOLUME_UP,
+        Icons.ICON_SOUND, "Sound volume", 0, 100, MusicPlayer.getVolume(),
+        GameCommands.COMMAND_SOUND_VOLUME, listener);
+    soundSlider.setSliderMajorTick(10);
+    soundSlider.setSliderMinorTick(10);
+    soundPanel.add(soundSlider);
+    allOptions.add(soundPanel);
+    allOptions.add(Box.createRigidArea(new Dimension(20,
+        game.getHeight() - 280)));
     base.add(allOptions, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
   }

@@ -269,6 +269,16 @@ public final class Icons {
   public static final String ICON_SPY_GOGGLES = "IconSpyGoggles";
 
   /**
+   * Music Icon
+   */
+  public static final String ICON_MUSIC = "IconMusic";
+
+  /**
+   * Sound icon
+   */
+  public static final String ICON_SOUND = "IconSound";
+
+  /**
    * List of Icon
    */
   private static ArrayList<Icon16x16> listOfIcons;
@@ -473,6 +483,10 @@ public final class Icons {
     icon = new Icon16x16(image, 7, 6, ICON_CHECKBOX_TICK);
     addIcon(icon);
     icon = new Icon16x16(image, 0, 7, ICON_SPY_GOGGLES);
+    addIcon(icon);
+    icon = new Icon16x16(image, 1, 7, ICON_MUSIC);
+    addIcon(icon);
+    icon = new Icon16x16(image, 2, 7, ICON_SOUND);
     addIcon(icon);
   }
 

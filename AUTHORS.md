@@ -68,6 +68,8 @@ Defense symbol modified to look like shield by Tuomo Untinen
 Original from 141 Military Icons Set by AngryMeteor.com 
 http://opengameart.org/content/140-military-icons-set-fixed
 
+Music note and Speaker icon by Tuomo Untinen
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

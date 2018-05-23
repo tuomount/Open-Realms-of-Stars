@@ -57,6 +57,36 @@ public final class GameCommands {
   public static final String COMMAND_OPTIONS_VIEW = "OptionsView";
 
   /**
+   * Music volume up
+   */
+  public static final String COMMAND_MUSIC_VOLUME_UP = "OptionsMusicVolumeUp";
+
+  /**
+   * Music volume Down
+   */
+  public static final String COMMAND_MUSIC_VOLUME_DN = "OptionsMusicVolumeDn";
+
+  /**
+   * Music volume
+   */
+  public static final String COMMAND_MUSIC_VOLUME = "OptionsMusicVolume";
+
+  /**
+   * Sound volume up
+   */
+  public static final String COMMAND_SOUND_VOLUME_UP = "OptionsSoundVolumeUp";
+
+  /**
+   * Sound volume Down
+   */
+  public static final String COMMAND_SOUND_VOLUME_DN = "OptionsSoundVolumeDn";
+
+  /**
+   * Sound volume
+   */
+  public static final String COMMAND_SOUND_VOLUME = "OptionsSoundVolume";
+
+  /**
    * End Turn command
    */
   public static final String COMMAND_END_TURN = "EndTurn";

@@ -6,12 +6,17 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JComboBox;
 
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
 *
 * Open Realm of Stars game project
@@ -47,6 +52,10 @@ public class OptionsView extends BlackPanel {
   private Game game;
 
   /**
+   * Resolution selector
+   */
+  private JComboBox<String> resolutionSelection;
+  /**
    * Constructor for OptionsView
    * @param gameFrame Game frame
    * @param listener ActionListener
@@ -80,6 +89,28 @@ public class OptionsView extends BlackPanel {
     btn.setToolTipText("Apply changes and exit");
     acceptPanel.add(btn);
     base.add(acceptPanel, BorderLayout.NORTH);
+    EmptyInfoPanel allOptions = new EmptyInfoPanel();
+    allOptions.setLayout(new BoxLayout(allOptions, BoxLayout.Y_AXIS));
+    InfoPanel screenPanel = new InfoPanel();
+    screenPanel.setTitle("Screen Options");
+    screenPanel.setLayout(new BoxLayout(screenPanel, BoxLayout.X_AXIS));
+    SpaceLabel label = new SpaceLabel("Screen resolution:");
+    screenPanel.add(label);
+    screenPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    String[] resolutions = {"1024x768", "1280x768", "1280x960", "1280x1024",
+        "1440x960", "1680x1050", "1920x1080", "Custom"};
+    resolutionSelection = new JComboBox<>(resolutions);
+    resolutionSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    resolutionSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    resolutionSelection.setBorder(new SimpleBorder());
+    resolutionSelection.setFont(GuiStatics.getFontCubellan());
+    screenPanel.add(resolutionSelection);
+    screenPanel.add(Box.createRigidArea(new Dimension(50, 10)));
+    label = new SpaceLabel("NOTE: You can also resize game window here for"
+        + " custom size.");
+    screenPanel.add(label);
+    allOptions.add(screenPanel);
+    base.add(allOptions, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
   }
 }

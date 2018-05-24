@@ -2,6 +2,7 @@ package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Box;
@@ -9,6 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 
 import org.openRealmOfStars.audio.music.MusicPlayer;
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
@@ -173,5 +175,75 @@ public class OptionsView extends BlackPanel {
         game.getHeight() - 280)));
     base.add(allOptions, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
+  }
+
+  /**
+   * Set volumes according the sliders
+   */
+  private void setVolumes() {
+    MusicPlayer.setVolume(musicSlider.getSliderValue());
+    SoundPlayer.setSoundVolume(soundSlider.getSliderValue());
+  }
+  /**
+   * Handle events for options view
+   * @param arg0 ActionEvent
+   */
+  public void handleAction(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_MUSIC_VOLUME_UP)
+        && musicSlider.getSliderValue() + 10 <= musicSlider.getMaximumValue()) {
+      musicSlider.setSliderValue(musicSlider.getSliderValue() + 10);
+      setVolumes();
+      SoundPlayer.playMenuSound();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_MUSIC_VOLUME_DN)
+        && musicSlider.getSliderValue() - 10 >= musicSlider.getMinimumValue()) {
+      musicSlider.setSliderValue(musicSlider.getSliderValue() - 10);
+      setVolumes();
+      SoundPlayer.playMenuSound();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SOUND_VOLUME_UP)
+        && soundSlider.getSliderValue() + 10 <= soundSlider.getMaximumValue()) {
+      soundSlider.setSliderValue(soundSlider.getSliderValue() + 10);
+      setVolumes();
+      SoundPlayer.playMenuSound();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SOUND_VOLUME_DN)
+        && soundSlider.getSliderValue() - 10 >= soundSlider.getMinimumValue()) {
+      soundSlider.setSliderValue(soundSlider.getSliderValue() - 10);
+      setVolumes();
+      SoundPlayer.playMenuSound();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_MUSIC_VOLUME)) {
+      setVolumes();
+      SoundPlayer.playMenuSound();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_SOUND_VOLUME)) {
+      setVolumes();
+      SoundPlayer.playMenuSound();
+    }
+  }
+
+  /**
+   * Get selected resolution.
+   * @return Resolution as String
+   */
+  public String getResolution() {
+    return (String) resolutionSelection.getSelectedItem();
+  }
+
+  /**
+   * Get Music slider value
+   * @return Music volume
+   */
+  public int getMusicVolume() {
+    return musicSlider.getSliderValue();
+  }
+
+  /**
+   * Get Sound slider value
+   * @return Music volume
+   */
+  public int getSoundVolume() {
+    return soundSlider.getSliderValue();
   }
 }

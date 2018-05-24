@@ -555,6 +555,34 @@ public class Game implements ActionListener {
       gameFrame.setResizable(resizable);
     }
   }
+
+  /**
+   * Set new resolution for game frame
+   * @param resolution Resolution as String NNNxMMM
+   */
+  public void setNewResolution(final String resolution) {
+    String[] resolutionParts = resolution.split("x");
+    int resolutionWidth = Integer.parseInt(resolutionParts[0]);
+    int resolutionHeight = Integer.parseInt(resolutionParts[1]);
+    gameFrame.setVisible(false);
+    gameFrame.setSize(resolutionWidth, resolutionHeight);
+    gameFrame.setVisible(true);
+    // Adjusting JFrame size. Some OS take UI component space
+    // from JFrame. This happens at least with Windows 7/10 and Java8.
+    int sizeX = gameFrame.getWidth() - gameFrame.getContentPane().getWidth();
+    int sizeY = gameFrame.getHeight()
+        - gameFrame.getContentPane().getHeight();
+    if (sizeX > 0 || sizeY > 0) {
+      ErrorLogger.log("Adjust frame, since OS's UI component require"
+          + " their own space from JFrame.");
+      ErrorLogger.log("Adjusting X: " + sizeX + " Adjusting Y: " + sizeY);
+      gameFrame.setVisible(false);
+      gameFrame.setSize(resolutionWidth + sizeX, resolutionHeight + sizeY);
+      gameFrame.setMinimumSize(new Dimension(WINDOW_X_SIZE + sizeX,
+          WINDOW_Y_SIZE + sizeY));
+      gameFrame.setVisible(true);
+    }
+  }
   /**
    * Get width of Game frame
    * @return Width of game frame
@@ -1872,18 +1900,27 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_OK)) {
         SoundPlayer.playMenuSound();
+        if (!optionsView.getResolution().equals("Custom")) {
+          setNewResolution(optionsView.getResolution());
+        }
         changeGameState(GameState.MAIN_MENU);
         setResizable(false);
+        configFile.setMusicVolume(optionsView.getMusicVolume());
+        configFile.setSoundVolume(optionsView.getSoundVolume());
         return;
       }
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
-        //FIXME Does not recall settings
+        MusicPlayer.setVolume(configFile.getMusicVolume());
+        SoundPlayer.setSoundVolume(configFile.getSoundVolume());
+        setNewResolution(configFile.getResolutionWidth() + "x"
+            + configFile.getResolutionHeight());
         SoundPlayer.playMenuSound();
         changeGameState(GameState.MAIN_MENU);
         setResizable(false);
         return;
       }
+      optionsView.handleAction(arg0);
     }
     if (gameState == GameState.MAIN_MENU) {
       // Main menu

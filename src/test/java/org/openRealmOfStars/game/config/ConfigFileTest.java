@@ -88,4 +88,36 @@ public class ConfigFileTest {
     assertEquals(900, file.getResolutionHeight());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testBorderless() {
+    ConfigLine line = new ConfigLine(ConfigFile.CONFIG_BORDERLESS + "=false");
+    ConfigFile file = new ConfigFile();
+    file.add(line);
+    assertEquals(false, file.getBorderless());
+    file.setBorderless(true);
+    assertEquals(true, file.getBorderless());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEmptyConfig() {
+    ConfigFile file = new ConfigFile();
+    assertEquals(false, file.getBorderless());
+    file.setBorderless(true);
+    assertEquals(true, file.getBorderless());
+    assertEquals(1024, file.getResolutionWidth());
+    assertEquals(768, file.getResolutionHeight());
+    file.setResolution(1280, 1024);
+    assertEquals(1280, file.getResolutionWidth());
+    assertEquals(1024, file.getResolutionHeight());
+    assertEquals(75, file.getMusicVolume());
+    file.setMusicVolume(100);
+    assertEquals(100, file.getMusicVolume());
+    assertEquals(75, file.getSoundVolume());
+    file.setSoundVolume(20);
+    assertEquals(20, file.getSoundVolume());
+  }
+
+
 }

@@ -41,10 +41,23 @@ public class ConfigFile {
    */
   public static final String CONFIG_RESOLUTION = "Resolution";
   /**
+   * Config option RemoveBorders
+   */
+  public static final String CONFIG_BORDERLESS = "Borderless";
+  /**
    * Config file default comment
    */
   public static final String CONFIG_COMMENT = "# Config file for "
       + "Open Realm of Stars";
+
+  /**
+   * String true
+   */
+  private static final String TRUE = "true";
+  /**
+   * String false
+   */
+  private static final String FALSE = "false";
   /**
    * ConfigFile lines
    */
@@ -159,6 +172,37 @@ public class ConfigFile {
   }
 
   /**
+   * Get boolean key value
+   * @param key Key to read
+   * @return boolean
+   */
+  private boolean getBoolean(final String key) {
+    ConfigLine line = getLineByKey(key);
+    if (line != null && line.getValue().equalsIgnoreCase(TRUE)) {
+        return true;
+    }
+    return false;
+  }
+
+  /**
+   * Set boolean key value
+   * @param key Key to read
+   * @param value boolean value to set.
+   */
+  private void setBoolean(final String key, final boolean value) {
+    ConfigLine line = getLineByKey(key);
+    if (line == null) {
+      line = new ConfigLine(key + "=" + FALSE);
+      add(line);
+    }
+    if (value) {
+      line.setValue(TRUE);
+    } else {
+      line.setValue(FALSE);
+    }
+  }
+
+  /**
    * Set resolution for config file. Minimum resolution is
    * 1024x768.
    * @param width Resolution width.
@@ -166,7 +210,11 @@ public class ConfigFile {
    */
   public void setResolution(final int width, final int height) {
     ConfigLine line = getLineByKey(CONFIG_RESOLUTION);
-    if (line != null && width >= 1024 && height >= 768) {
+    if (line == null) {
+      line = new ConfigLine(CONFIG_RESOLUTION + "=1024x768");
+      add(line);
+    }
+    if (width >= 1024 && height >= 768) {
       line.setValue(width + "x" + height);
     }
   }
@@ -176,6 +224,22 @@ public class ConfigFile {
    */
   public int getResolutionWidth() {
     return getResolutionPart(0);
+  }
+
+  /**
+   * Is borders enabled or disabled?
+   * @return true if disabled
+   */
+  public boolean getBorderless() {
+    return getBoolean(CONFIG_BORDERLESS);
+  }
+
+  /**
+   * Set or disable borders.
+   * @param borderless true to disable borders
+   */
+  public void setBorderless(final boolean borderless) {
+    setBoolean(CONFIG_BORDERLESS, borderless);
   }
 
   /**
@@ -193,7 +257,11 @@ public class ConfigFile {
    */
   private void setVolume(final String configVolume, final int volume) {
     ConfigLine line = getLineByKey(configVolume);
-    if (line != null && volume >= 0 && volume <= 100) {
+    if (line == null) {
+      line = new ConfigLine(configVolume + "=75");
+      add(line);
+    }
+    if (volume >= 0 && volume <= 100) {
       String str = Integer.toString(volume);
       line.setValue(str);
     }

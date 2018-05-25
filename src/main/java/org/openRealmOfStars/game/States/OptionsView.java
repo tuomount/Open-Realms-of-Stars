@@ -15,6 +15,7 @@ import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
@@ -72,6 +73,11 @@ public class OptionsView extends BlackPanel {
   private SpaceSliderPanel soundSlider;
 
   /**
+   * Borderless checkbox options
+   */
+  private SpaceCheckBox borderlessBox;
+
+  /**
    * Constructor for OptionsView
    * @param gameFrame Game frame
    * @param listener ActionListener
@@ -107,12 +113,15 @@ public class OptionsView extends BlackPanel {
     base.add(acceptPanel, BorderLayout.NORTH);
     EmptyInfoPanel allOptions = new EmptyInfoPanel();
     allOptions.setLayout(new BoxLayout(allOptions, BoxLayout.Y_AXIS));
+    EmptyInfoPanel xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
     InfoPanel screenPanel = new InfoPanel();
+    screenPanel.setLayout(new BoxLayout(screenPanel, BoxLayout.Y_AXIS));
     screenPanel.setTitle("Screen Options");
-    screenPanel.setLayout(new BoxLayout(screenPanel, BoxLayout.X_AXIS));
     SpaceLabel label = new SpaceLabel("Screen resolution:");
-    screenPanel.add(label);
-    screenPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    xPanel.add(label);
+    xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     String[] resolutions = {"1024x768", "1280x768", "1280x960", "1280x1024",
         "1440x960", "1680x1050", "1920x1080", "Custom"};
     resolutionSelection = new JComboBox<>(resolutions);
@@ -132,11 +141,23 @@ public class OptionsView extends BlackPanel {
     if (!found) {
       resolutionSelection.setSelectedIndex(resolutions.length - 1);
     }
-    screenPanel.add(resolutionSelection);
-    screenPanel.add(Box.createRigidArea(new Dimension(50, 10)));
+    xPanel.add(resolutionSelection);
+    xPanel.add(Box.createRigidArea(new Dimension(50, 10)));
     label = new SpaceLabel("NOTE: You can also resize game window here for"
         + " custom size.");
-    screenPanel.add(label);
+    xPanel.add(label);
+    screenPanel.add(xPanel);
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    borderlessBox = new SpaceCheckBox("Borderless frame");
+    borderlessBox.setToolTipText("Removes OS's borders from game frame.");
+    borderlessBox.createToolTip();
+    xPanel.add(borderlessBox);
+    label = new SpaceLabel("Changing this takes affect after restart.");
+    xPanel.add(label);
+    screenPanel.add(Box.createRigidArea(new Dimension(20, 20)));
+    screenPanel.add(xPanel);
     allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
     allOptions.add(screenPanel);
     allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
@@ -245,5 +266,13 @@ public class OptionsView extends BlackPanel {
    */
   public int getSoundVolume() {
     return soundSlider.getSliderValue();
+  }
+
+  /**
+   * Get borderless value
+   * @return Borderless value
+   */
+  public boolean getBorderless() {
+    return borderlessBox.isSelected();
   }
 }

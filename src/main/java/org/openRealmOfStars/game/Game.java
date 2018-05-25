@@ -362,6 +362,7 @@ public class Game implements ActionListener {
       musicTimer = new Timer(MUSIC_TIMER_DELAY, this);
       musicTimer.setActionCommand(GameCommands.COMMAND_MUSIC_TIMER);
       musicTimer.start();
+      gameFrame.setUndecorated(configFile.getBorderless());
       gameFrame.setResizable(false);
       gameFrame.setVisible(true);
       // Adjusting JFrame size. Some OS take UI component space
@@ -559,8 +560,10 @@ public class Game implements ActionListener {
   /**
    * Set new resolution for game frame
    * @param resolution Resolution as String NNNxMMM
+   * @param borderless True if not borders from OS
    */
-  public void setNewResolution(final String resolution) {
+  public void setNewResolution(final String resolution,
+      final boolean borderless) {
     String[] resolutionParts = resolution.split("x");
     int resolutionWidth = Integer.parseInt(resolutionParts[0]);
     int resolutionHeight = Integer.parseInt(resolutionParts[1]);
@@ -1901,7 +1904,8 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_OK)) {
         SoundPlayer.playMenuSound();
         if (!optionsView.getResolution().equals("Custom")) {
-          setNewResolution(optionsView.getResolution());
+          setNewResolution(optionsView.getResolution(),
+              optionsView.getBorderless());
         }
         changeGameState(GameState.MAIN_MENU);
         setResizable(false);
@@ -1914,7 +1918,7 @@ public class Game implements ActionListener {
         MusicPlayer.setVolume(configFile.getMusicVolume());
         SoundPlayer.setSoundVolume(configFile.getSoundVolume());
         setNewResolution(configFile.getResolutionWidth() + "x"
-            + configFile.getResolutionHeight());
+            + configFile.getResolutionHeight(), configFile.getBorderless());
         SoundPlayer.playMenuSound();
         changeGameState(GameState.MAIN_MENU);
         setResizable(false);

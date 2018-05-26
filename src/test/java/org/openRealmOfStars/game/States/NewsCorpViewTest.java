@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
@@ -38,6 +39,7 @@ import org.openRealmOfStars.starMap.newsCorp.NewsData;
 public class NewsCorpViewTest {
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     ActionListener listener = Mockito.mock(ActionListener.class);
     NewsData[] newsData = new NewsData[1];
@@ -53,6 +55,7 @@ public class NewsCorpViewTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testRepaintNewsReader() {
     ActionListener listener = Mockito.mock(ActionListener.class);
     NewsData[] newsData = new NewsData[1];
@@ -74,6 +77,7 @@ public class NewsCorpViewTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testTwoNews() {
     ActionListener listener = Mockito.mock(ActionListener.class);
     NewsData[] newsData = new NewsData[2];

@@ -186,9 +186,9 @@ public final class SoundPlayer {
   private static SoundEffectManager soundEffectManager = null;
 
   /**
-   * Sound Volume default is 75%
+   * Sound Volume default is 70%
    */
-  private static int soundVolume = 75;
+  private static int soundVolume = 70;
 
   /**
    * Get General Sound Volume

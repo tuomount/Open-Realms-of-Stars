@@ -190,7 +190,7 @@ public class OptionsView extends BlackPanel {
     soundSlider = new SpaceSliderPanel(
         GameCommands.COMMAND_SOUND_VOLUME_DN,
         GameCommands.COMMAND_SOUND_VOLUME_UP,
-        Icons.ICON_SOUND, "Sound volume", 0, 100, MusicPlayer.getVolume(),
+        Icons.ICON_SOUND, "Sound volume", 0, 100, SoundPlayer.getSoundVolume(),
         GameCommands.COMMAND_SOUND_VOLUME, listener);
     soundSlider.setSliderMajorTick(10);
     soundSlider.setSliderMinorTick(10);

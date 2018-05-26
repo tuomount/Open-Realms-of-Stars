@@ -387,7 +387,7 @@ public final class MusicPlayer {
   }
 
   /**
-   * Set music volume. Default is 75.
+   * Set music volume. Default is 50.
    * @param volume Music volume between 0-100.
    */
   public static void setVolume(final int volume) {

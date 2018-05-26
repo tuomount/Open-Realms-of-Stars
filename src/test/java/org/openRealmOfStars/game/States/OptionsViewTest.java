@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.audio.music.MusicPlayer;
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.config.ConfigFile;
@@ -44,6 +46,8 @@ public class OptionsViewTest {
     Mockito.when(game.getHeight()).thenReturn(768);
     Mockito.when(game.getWidth()).thenReturn(1024);
     ActionListener listener = Mockito.mock(ActionListener.class);
+    MusicPlayer.setVolume(50);
+    SoundPlayer.setSoundVolume(70);
     OptionsView view = new OptionsView(config, game, listener);
     assertEquals("1024x768", view.getResolution());
     assertEquals(50, view.getMusicVolume());
@@ -59,6 +63,8 @@ public class OptionsViewTest {
     Mockito.when(game.getHeight()).thenReturn(768);
     Mockito.when(game.getWidth()).thenReturn(1024);
     ActionListener listener = Mockito.mock(ActionListener.class);
+    MusicPlayer.setVolume(50);
+    SoundPlayer.setSoundVolume(70);
     OptionsView view = new OptionsView(config, game, listener);
     ActionEvent event = Mockito.mock(ActionEvent.class);
     Mockito.when(event.getActionCommand()).thenReturn(

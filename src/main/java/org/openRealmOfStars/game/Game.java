@@ -560,10 +560,8 @@ public class Game implements ActionListener {
   /**
    * Set new resolution for game frame
    * @param resolution Resolution as String NNNxMMM
-   * @param borderless True if not borders from OS
    */
-  public void setNewResolution(final String resolution,
-      final boolean borderless) {
+  public void setNewResolution(final String resolution) {
     String[] resolutionParts = resolution.split("x");
     int resolutionWidth = Integer.parseInt(resolutionParts[0]);
     int resolutionHeight = Integer.parseInt(resolutionParts[1]);
@@ -643,7 +641,7 @@ public class Game implements ActionListener {
    * Show Options view
    */
   public void showOptionsView() {
-    optionsView = new OptionsView(this, this);
+    optionsView = new OptionsView(configFile, this, this);
     this.updateDisplay(optionsView);
   }
 
@@ -1904,13 +1902,24 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_OK)) {
         SoundPlayer.playMenuSound();
         if (!optionsView.getResolution().equals("Custom")) {
-          setNewResolution(optionsView.getResolution(),
-              optionsView.getBorderless());
+          setNewResolution(optionsView.getResolution());
         }
         changeGameState(GameState.MAIN_MENU);
         setResizable(false);
         configFile.setMusicVolume(optionsView.getMusicVolume());
         configFile.setSoundVolume(optionsView.getSoundVolume());
+        configFile.setBorderless(optionsView.getBorderless());
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_APPLY)) {
+        SoundPlayer.playMenuSound();
+        if (!optionsView.getResolution().equals("Custom")) {
+          setNewResolution(optionsView.getResolution());
+        }
+        configFile.setMusicVolume(optionsView.getMusicVolume());
+        configFile.setSoundVolume(optionsView.getSoundVolume());
+        configFile.setBorderless(optionsView.getBorderless());
         return;
       }
       if (arg0.getActionCommand()
@@ -1918,7 +1927,7 @@ public class Game implements ActionListener {
         MusicPlayer.setVolume(configFile.getMusicVolume());
         SoundPlayer.setSoundVolume(configFile.getSoundVolume());
         setNewResolution(configFile.getResolutionWidth() + "x"
-            + configFile.getResolutionHeight(), configFile.getBorderless());
+            + configFile.getResolutionHeight());
         SoundPlayer.playMenuSound();
         changeGameState(GameState.MAIN_MENU);
         setResizable(false);

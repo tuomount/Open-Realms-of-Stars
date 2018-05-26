@@ -13,6 +13,7 @@ import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.game.config.ConfigFile;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
@@ -79,10 +80,12 @@ public class OptionsView extends BlackPanel {
 
   /**
    * Constructor for OptionsView
+   * @param config Current ConfigFile
    * @param gameFrame Game frame
    * @param listener ActionListener
    */
-  public OptionsView(final Game gameFrame, final ActionListener listener) {
+  public OptionsView(final ConfigFile config, final Game gameFrame,
+      final ActionListener listener) {
     game = gameFrame;
     game.setResizable(true);
     InfoPanel base = new InfoPanel();
@@ -153,6 +156,7 @@ public class OptionsView extends BlackPanel {
     borderlessBox = new SpaceCheckBox("Borderless frame");
     borderlessBox.setToolTipText("Removes OS's borders from game frame.");
     borderlessBox.createToolTip();
+    borderlessBox.setSelected(config.getBorderless());
     xPanel.add(borderlessBox);
     label = new SpaceLabel("Changing this takes affect after restart.");
     xPanel.add(label);

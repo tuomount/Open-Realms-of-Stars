@@ -161,6 +161,7 @@ public class DiplomacyTest {
     assertEquals(false, diplomacy.isDefensivePact(0));
     assertEquals(false, diplomacy.isAlliance(0));
     assertEquals(false, diplomacy.isWar(0));
+    assertEquals(false, diplomacy.hasAlliance());
     diplomacy.getDiplomacyList(0).addBonus(
         DiplomacyBonusType.IN_ALLIANCE, SpaceRace.CENTAURS);
     assertEquals("Alliance", diplomacy.getDiplomaticRelation(0));
@@ -172,6 +173,7 @@ public class DiplomacyTest {
     assertEquals(false, diplomacy.isTradeAlliance(0));
     assertEquals(false, diplomacy.isWar(0));
     assertEquals(false, diplomacy.isAlliance(256));
+    assertEquals(true, diplomacy.hasAlliance());
   }
 
   @Test

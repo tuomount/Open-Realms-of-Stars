@@ -45,6 +45,10 @@ public class ConfigFile {
    */
   public static final String CONFIG_BORDERLESS = "Borderless";
   /**
+   * Config option larger fonts
+   */
+  public static final String CONFIG_LARGER_FONTS = "LargerFonts";
+  /**
    * Config file default comment
    */
   public static final String CONFIG_COMMENT = "# Config file for "
@@ -232,6 +236,22 @@ public class ConfigFile {
    */
   public boolean getBorderless() {
     return getBoolean(CONFIG_BORDERLESS);
+  }
+
+  /**
+   * Is larger fonts enabled or disabled?
+   * @return true if larger fonts
+   */
+  public boolean getLargerFonts() {
+    return getBoolean(CONFIG_LARGER_FONTS);
+  }
+
+  /**
+   * Set or disable larger fonts.
+   * @param largerFonts true to set larger fonts
+   */
+  public void setLargerFonts(final boolean largerFonts) {
+    setBoolean(CONFIG_LARGER_FONTS, largerFonts);
   }
 
   /**

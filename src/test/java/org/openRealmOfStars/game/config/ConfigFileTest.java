@@ -100,6 +100,17 @@ public class ConfigFileTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testLargerFonts() {
+    ConfigLine line = new ConfigLine(ConfigFile.CONFIG_LARGER_FONTS + "=false");
+    ConfigFile file = new ConfigFile();
+    file.add(line);
+    assertEquals(false, file.getLargerFonts());
+    file.setLargerFonts(true);
+    assertEquals(true, file.getLargerFonts());
+  }
+
+  @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testEmptyConfig() {
     ConfigFile file = new ConfigFile();
@@ -117,6 +128,9 @@ public class ConfigFileTest {
     assertEquals(75, file.getSoundVolume());
     file.setSoundVolume(20);
     assertEquals(20, file.getSoundVolume());
+    assertEquals(false, file.getLargerFonts());
+    file.setLargerFonts(true);
+    assertEquals(true, file.getLargerFonts());
   }
 
 

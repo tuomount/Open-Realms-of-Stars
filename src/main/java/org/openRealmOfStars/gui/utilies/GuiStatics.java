@@ -412,7 +412,7 @@ public final class GuiStatics {
    * Relation alliance icon
    */
   public static final BufferedImage RELATION_ALLIANCE = Icons.loadBigIcon(
-      "/resources/images/bigicons.png", 0, 32, 32, 32);
+      "/resources/images/bigicons.png", 64, 32, 32, 32);
   /**
    * Defensive Pact icon
    */

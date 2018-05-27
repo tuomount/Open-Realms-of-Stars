@@ -205,7 +205,8 @@ public class StatView extends BlackPanel {
         if (relation.equals(Diplomacy.DEFENSIVE_PACT)) {
           img = new ImageLabel(GuiStatics.DEFENSIVE_PACT, true);
           img.setToolTipText(
-              "<html>Alliance allows all ships move on parties sectors.<br>"
+              "<html>Defensive pact allows all ships move on parties "
+              + "sectors.<br>"
               + "This allows trading vessels to visit parties planets.<br>"
               + "If member is being attacked then attacker also "
               + "attacks other parties</html>");
@@ -214,14 +215,19 @@ public class StatView extends BlackPanel {
           img = new ImageLabel(GuiStatics.RELATION_ALLIANCE, true);
           img.setToolTipText(
               "<html>Alliance allows all ships move on parties sectors.<br>"
-              + "This allows trading vessels to visit parties planets.</html>");
+              + "This allows trading vessels to visit parties planets.<br>"
+              + "Alliance also grants defensive pact protection and"
+              + " espionage trade.<br>"
+              + "Parties in alliance win the game together."
+              + "</html>");
         }
         if (relation.equals(Diplomacy.TRADE_ALLIANCE)) {
           img = new ImageLabel(GuiStatics.RELATION_TRADE_ALLIANCE, true);
           img.setToolTipText(
               "<html>Trade alliance allows all non military<br>"
               + "ships move on parties sectors.<br>"
-              + "This allows trading vessels to visit parties planets.</html>");
+              + "This allows trading vessels to visit parties planets."
+              + "</html>");
         }
         if (relation.equals(Diplomacy.WAR)) {
           img = new ImageLabel(GuiStatics.RELATION_WAR, true);

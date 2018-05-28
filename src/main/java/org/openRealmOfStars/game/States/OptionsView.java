@@ -79,6 +79,11 @@ public class OptionsView extends BlackPanel {
   private SpaceCheckBox borderlessBox;
 
   /**
+   * Larger fonts checkbox options
+   */
+  private SpaceCheckBox largerFontsBox;
+
+  /**
    * Constructor for OptionsView
    * @param config Current ConfigFile
    * @param gameFrame Game frame
@@ -161,6 +166,15 @@ public class OptionsView extends BlackPanel {
     label = new SpaceLabel("Changing this takes affect after restart.");
     xPanel.add(label);
     screenPanel.add(Box.createRigidArea(new Dimension(20, 20)));
+    screenPanel.add(xPanel);
+    xPanel = new EmptyInfoPanel();
+    xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
+    xPanel.setAlignmentX(LEFT_ALIGNMENT);
+    largerFontsBox = new SpaceCheckBox("Larger fonts");
+    largerFontsBox.setToolTipText("Makes all fonts slightly larger");
+    largerFontsBox.createToolTip();
+    largerFontsBox.setSelected(config.getLargerFonts());
+    xPanel.add(largerFontsBox);
     screenPanel.add(xPanel);
     allOptions.add(Box.createRigidArea(new Dimension(20, 20)));
     allOptions.add(screenPanel);
@@ -279,4 +293,13 @@ public class OptionsView extends BlackPanel {
   public boolean getBorderless() {
     return borderlessBox.isSelected();
   }
+
+  /**
+   * Get larger fonts value
+   * @return Larger fonts value
+   */
+  public boolean getLargerFonts() {
+    return largerFontsBox.isSelected();
+  }
+
 }

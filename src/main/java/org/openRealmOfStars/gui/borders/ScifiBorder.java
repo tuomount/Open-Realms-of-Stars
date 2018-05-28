@@ -73,6 +73,27 @@ public class ScifiBorder extends AbstractBorder {
       Tiles.class.getResource("/resources/images/panel-title-right.png"));
 
   /**
+   * Title left piece Hires
+   */
+  private static final BufferedImage TITLE_LEFT_IMAGE_HIRES =
+      IOUtilities.loadImage(Tiles.class.getResource(
+          "/resources/images/panel-title-left-hires.png"));
+
+  /**
+   * Title center piece Hires
+   */
+  private static final BufferedImage TITLE_CENTER_IMAGE_HIRES =
+      IOUtilities.loadImage(Tiles.class.getResource(
+          "/resources/images/panel-title-center-hires.png"));
+
+  /**
+   * Title right piece Hires
+   */
+  private static final BufferedImage TITLE_RIGHT_IMAGE_HIRES =
+      IOUtilities.loadImage(Tiles.class.getResource(
+          "/resources/images/panel-title-right-hires.png"));
+
+  /**
    * Gap on top
    */
   private int topGap;
@@ -94,6 +115,11 @@ public class ScifiBorder extends AbstractBorder {
    * Title text in border
    */
   private String title;
+
+  /**
+   * Hires images
+   */
+  private boolean hires;
 
   /**
    * Color Medium blue
@@ -129,17 +155,22 @@ public class ScifiBorder extends AbstractBorder {
   /**
    * Constructor for scifi border. Scifi border support optinal title text
    * @param title Optional title text. Null to disable title.
+   * @param hires Hires images for borders
    */
-  public ScifiBorder(final String title) {
+  public ScifiBorder(final String title, final boolean hires) {
     leftGap = DEFAULT_SIDE_GAP;
     rightGap = DEFAULT_SIDE_GAP;
     bottomGap = DEFAULT_BOTTOP_GAP;
+    this.hires = hires;
     if (title == null || title.isEmpty()) {
       topGap = DEFAULT_BOTTOP_GAP;
       this.title = null;
     } else {
       // Title is available making top gap bigger
       topGap = DEFAULT_BOTTOP_GAP + DEFAULT_SIDE_GAP;
+      if (this.hires) {
+        topGap = topGap + DEFAULT_SIDE_GAP;
+      }
       this.title = title;
     }
   }
@@ -222,30 +253,42 @@ public class ScifiBorder extends AbstractBorder {
         text = title.substring(0, textLen);
 
       }
+      BufferedImage centerImage = TITLE_CENTER_IMAGE;
+      BufferedImage leftImage = TITLE_LEFT_IMAGE;
+      BufferedImage rightImage = TITLE_RIGHT_IMAGE;
+      if (hires) {
+        centerImage = TITLE_CENTER_IMAGE_HIRES;
+        leftImage = TITLE_LEFT_IMAGE_HIRES;
+        rightImage = TITLE_RIGHT_IMAGE_HIRES;
+      }
       BufferedImage centerPiece = new BufferedImage(textWidth,
-          TITLE_CENTER_IMAGE.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
-      int repeats = textWidth / TITLE_CENTER_IMAGE.getWidth();
-      int lastPieceLen = textWidth % TITLE_CENTER_IMAGE.getWidth();
+          centerImage.getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+      int repeats = textWidth / centerImage.getWidth();
+      int lastPieceLen = textWidth % centerImage.getWidth();
       Graphics2D gr = centerPiece.createGraphics();
       for (int i = 0; i < repeats; i++) {
-        gr.drawImage(TITLE_CENTER_IMAGE, i * TITLE_CENTER_IMAGE.getWidth(), 0,
+        gr.drawImage(centerImage, i * centerImage.getWidth(), 0,
             null);
       }
       if (lastPieceLen > 0) {
         gr.drawImage(
-            TITLE_CENTER_IMAGE.getSubimage(0, 0, lastPieceLen,
-                TITLE_CENTER_IMAGE.getHeight()),
-            repeats * TITLE_CENTER_IMAGE.getWidth(), 0, null);
+            centerImage.getSubimage(0, 0, lastPieceLen,
+                centerImage.getHeight()),
+            repeats * centerImage.getWidth(), 0, null);
       }
-      g2d.drawImage(TITLE_LEFT_IMAGE,
-          x + width / 2 - textWidth / 2 - TITLE_LEFT_IMAGE.getWidth(), y, null);
+      g2d.drawImage(leftImage,
+          x + width / 2 - textWidth / 2 - leftImage.getWidth(), y, null);
       g2d.drawImage(centerPiece, x + width / 2 - textWidth / 2, y, null);
-      g2d.drawImage(TITLE_RIGHT_IMAGE,
+      g2d.drawImage(rightImage,
           x + width / 2 - textWidth / 2 + centerPiece.getWidth(), y, null);
 
       g2d.setColor(GuiStatics.COLOR_GOLD_TRANS);
       g2d.setFont(GuiStatics.getFontCubellanSC());
-      g2d.drawString(text, x + width / 2 - textWidth / 2, y + 15);
+      int offsetY = 0;
+      if (hires) {
+        offsetY = 6;
+      }
+      g2d.drawString(text, x + width / 2 - textWidth / 2, y + 15 + offsetY);
 
     }
   }

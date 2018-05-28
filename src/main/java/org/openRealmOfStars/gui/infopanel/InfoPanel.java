@@ -48,7 +48,7 @@ public class InfoPanel extends JPanel {
    */
   public InfoPanel() {
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    border = new ScifiBorder("Galactic Info");
+    border = new ScifiBorder("Galactic Info", GuiStatics.isLargerFonts());
     this.setBorder(border);
   }
 

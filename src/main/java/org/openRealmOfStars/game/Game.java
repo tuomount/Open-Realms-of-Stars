@@ -363,6 +363,7 @@ public class Game implements ActionListener {
       musicTimer.setActionCommand(GameCommands.COMMAND_MUSIC_TIMER);
       musicTimer.start();
       gameFrame.setUndecorated(configFile.getBorderless());
+      GuiStatics.setLargerFonts(configFile.getLargerFonts());
       gameFrame.setResizable(false);
       gameFrame.setVisible(true);
       // Adjusting JFrame size. Some OS take UI component space
@@ -1909,6 +1910,9 @@ public class Game implements ActionListener {
         configFile.setMusicVolume(optionsView.getMusicVolume());
         configFile.setSoundVolume(optionsView.getSoundVolume());
         configFile.setBorderless(optionsView.getBorderless());
+        configFile.setLargerFonts(optionsView.getLargerFonts());
+        GuiStatics.setLargerFonts(configFile.getLargerFonts());
+        writeConfigFile();
         return;
       }
       if (arg0.getActionCommand()
@@ -1920,6 +1924,8 @@ public class Game implements ActionListener {
         configFile.setMusicVolume(optionsView.getMusicVolume());
         configFile.setSoundVolume(optionsView.getSoundVolume());
         configFile.setBorderless(optionsView.getBorderless());
+        configFile.setLargerFonts(optionsView.getLargerFonts());
+        GuiStatics.setLargerFonts(configFile.getLargerFonts());
         return;
       }
       if (arg0.getActionCommand()

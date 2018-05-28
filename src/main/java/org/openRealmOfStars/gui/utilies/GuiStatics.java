@@ -81,16 +81,19 @@ public final class GuiStatics {
    * @return Cubellan font
    */
   public static Font getFontCubellan() {
-    if (isLargerFonts() && fontCubellanLarger == null) {
-      try (InputStream is = Tiles.class
-          .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan.ttf")
-          .openStream()) {
-        fontCubellan = Font.createFont(Font.TRUETYPE_FONT, is);
-        fontCubellan = fontCubellan.deriveFont(19F);
-      } catch (IOException | FontFormatException e) {
-        ErrorLogger.log("Error:" + e.getMessage());
-        return FONT_SMALL;
+    if (isLargerFonts()) {
+      if (fontCubellanLarger == null) {
+        try (InputStream is = Tiles.class
+            .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan.ttf")
+            .openStream()) {
+          fontCubellanLarger = Font.createFont(Font.TRUETYPE_FONT, is);
+          fontCubellanLarger = fontCubellanLarger.deriveFont(18F);
+        } catch (IOException | FontFormatException e) {
+          ErrorLogger.log("Error:" + e.getMessage());
+          return FONT_SMALL;
+        }
       }
+      return fontCubellanLarger;
     } else if (fontCubellan == null) {
       try (InputStream is = Tiles.class
           .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan.ttf")
@@ -110,16 +113,19 @@ public final class GuiStatics {
    * @return Cubellan font
    */
   public static Font getFontCubellanSmaller() {
-    if (isLargerFonts() && fontCubellanSmallLarger == null) {
-      try (InputStream is = Tiles.class
-          .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan.ttf")
-          .openStream()) {
-        fontCubellanSmall = Font.createFont(Font.TRUETYPE_FONT, is);
-        fontCubellanSmall = fontCubellanSmall.deriveFont(15F);
-      } catch (IOException | FontFormatException e) {
-        ErrorLogger.log("Error:" + e.getMessage());
-        return FONT_SMALL;
+    if (isLargerFonts()) {
+      if (fontCubellanSmallLarger == null) {
+        try (InputStream is = Tiles.class
+            .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan.ttf")
+            .openStream()) {
+          fontCubellanSmallLarger = Font.createFont(Font.TRUETYPE_FONT, is);
+          fontCubellanSmallLarger = fontCubellanSmallLarger.deriveFont(15F);
+        } catch (IOException | FontFormatException e) {
+          ErrorLogger.log("Error:" + e.getMessage());
+          return FONT_SMALL;
+        }
       }
+      return fontCubellanSmallLarger;
     } else if (fontCubellanSmall == null) {
       try (InputStream is = Tiles.class
           .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan.ttf")
@@ -149,16 +155,19 @@ public final class GuiStatics {
    * @return Cubellan font
    */
   public static Font getFontCubellanBold() {
-    if (isLargerFonts() && fontCubellanBoldLarger == null) {
-      try (InputStream is = Tiles.class
-          .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf")
-          .openStream()) {
-        fontCubellanBold = Font.createFont(Font.TRUETYPE_FONT, is);
-        fontCubellanBold = fontCubellanBold.deriveFont(28F);
-      } catch (IOException | FontFormatException e) {
-        ErrorLogger.log("Error:" + e.getMessage());
-        return FONT_SMALL;
+    if (isLargerFonts()) {
+      if (fontCubellanBoldLarger == null) {
+        try (InputStream is = Tiles.class
+            .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf")
+            .openStream()) {
+          fontCubellanBoldLarger = Font.createFont(Font.TRUETYPE_FONT, is);
+          fontCubellanBoldLarger = fontCubellanBoldLarger.deriveFont(28F);
+        } catch (IOException | FontFormatException e) {
+          ErrorLogger.log("Error:" + e.getMessage());
+          return FONT_SMALL;
+        }
       }
+      return fontCubellanBoldLarger;
     } else if (fontCubellanBold == null) {
       try (InputStream is = Tiles.class
           .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf")
@@ -188,16 +197,19 @@ public final class GuiStatics {
    * @return Cubellan font
    */
   public static Font getFontCubellanBoldBig() {
-    if (isLargerFonts() && fontCubellanBoldBigLarger == null) {
-      try (InputStream is = Tiles.class
-          .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf")
-          .openStream()) {
-        fontCubellanBoldBig = Font.createFont(Font.TRUETYPE_FONT, is);
-        fontCubellanBoldBig = fontCubellanBoldBig.deriveFont(40F);
-      } catch (IOException | FontFormatException e) {
-        ErrorLogger.log("Error:" + e.getMessage());
-        return FONT_SMALL;
+    if (isLargerFonts()) {
+      if (fontCubellanBoldBigLarger == null) {
+        try (InputStream is = Tiles.class
+            .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf")
+            .openStream()) {
+          fontCubellanBoldBigLarger = Font.createFont(Font.TRUETYPE_FONT, is);
+          fontCubellanBoldBigLarger = fontCubellanBoldBigLarger.deriveFont(40F);
+        } catch (IOException | FontFormatException e) {
+          ErrorLogger.log("Error:" + e.getMessage());
+          return FONT_SMALL;
+        }
       }
+      return fontCubellanBoldBigLarger;
     } else if (fontCubellanBoldBig == null) {
       try (InputStream is = Tiles.class
           .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_Bold.ttf")
@@ -227,16 +239,19 @@ public final class GuiStatics {
    * @return Cubellan font
    */
   public static Font getFontCubellanSC() {
-    if (isLargerFonts() && fontCubellanSCLarger == null) {
-      try (InputStream is = Tiles.class
-          .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_SC.ttf")
-          .openStream()) {
-        fontCubellanSC = Font.createFont(Font.TRUETYPE_FONT, is);
-        fontCubellanSC = fontCubellanSC.deriveFont(15F);
-      } catch (IOException | FontFormatException e) {
-        ErrorLogger.log("Error:" + e.getMessage());
-        return FONT_SMALL;
+    if (isLargerFonts()) {
+      if (fontCubellanSCLarger == null) {
+        try (InputStream is = Tiles.class
+            .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_SC.ttf")
+            .openStream()) {
+          fontCubellanSCLarger = Font.createFont(Font.TRUETYPE_FONT, is);
+          fontCubellanSCLarger = fontCubellanSCLarger.deriveFont(15F);
+        } catch (IOException | FontFormatException e) {
+          ErrorLogger.log("Error:" + e.getMessage());
+          return FONT_SMALL;
+        }
       }
+      return fontCubellanSCLarger;
     } else if (fontCubellanSC == null) {
       try (InputStream is = Tiles.class
           .getResource("/resources/fonts/Cubellan_v_0_7/Cubellan_SC.ttf")

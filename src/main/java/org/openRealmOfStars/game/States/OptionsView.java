@@ -131,7 +131,8 @@ public class OptionsView extends BlackPanel {
     xPanel.add(label);
     xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     String[] resolutions = {"1024x768", "1280x768", "1280x960", "1280x1024",
-        "1440x960", "1680x1050", "1920x1080", "Custom"};
+        "1440x960", "1680x1050", "1920x1080",
+        "Custom (" + game.getCurrentResolution() + ")"};
     resolutionSelection = new JComboBox<>(resolutions);
     resolutionSelection.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     resolutionSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
@@ -267,7 +268,11 @@ public class OptionsView extends BlackPanel {
    * @return Resolution as String
    */
   public String getResolution() {
-    return (String) resolutionSelection.getSelectedItem();
+    String result = (String) resolutionSelection.getSelectedItem();
+    if (result.startsWith("Custom ")) {
+      result = game.getCurrentResolution();
+    }
+    return result;
   }
 
   /**

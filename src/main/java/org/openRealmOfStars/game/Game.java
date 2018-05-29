@@ -585,6 +585,17 @@ public class Game implements ActionListener {
       gameFrame.setVisible(true);
     }
   }
+
+  /**
+   * Get Current Resolution NNNxMMM
+   * @return Current ConentPane resolution as string
+   */
+  public String getCurrentResolution() {
+    if (gameFrame != null) {
+      return getWidth() + "x" + getHeight();
+    }
+    return "1024x768";
+  }
   /**
    * Get width of Game frame
    * @return Width of game frame
@@ -1902,7 +1913,7 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_OK)) {
         SoundPlayer.playMenuSound();
-        if (!optionsView.getResolution().equals("Custom")) {
+        if (!optionsView.getResolution().equals(getCurrentResolution())) {
           setNewResolution(optionsView.getResolution());
         }
         changeGameState(GameState.MAIN_MENU);

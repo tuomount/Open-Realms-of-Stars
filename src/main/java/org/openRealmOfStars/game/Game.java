@@ -568,6 +568,7 @@ public class Game implements ActionListener {
     int resolutionHeight = Integer.parseInt(resolutionParts[1]);
     gameFrame.setVisible(false);
     gameFrame.setSize(resolutionWidth, resolutionHeight);
+    gameFrame.setLocationRelativeTo(null);
     gameFrame.setVisible(true);
     // Adjusting JFrame size. Some OS take UI component space
     // from JFrame. This happens at least with Windows 7/10 and Java8.
@@ -582,8 +583,10 @@ public class Game implements ActionListener {
       gameFrame.setSize(resolutionWidth + sizeX, resolutionHeight + sizeY);
       gameFrame.setMinimumSize(new Dimension(WINDOW_X_SIZE + sizeX,
           WINDOW_Y_SIZE + sizeY));
+      gameFrame.setLocationRelativeTo(null);
       gameFrame.setVisible(true);
     }
+    gameFrame.repaint();
   }
 
   /**

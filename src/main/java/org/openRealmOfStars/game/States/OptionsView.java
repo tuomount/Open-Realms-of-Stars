@@ -156,6 +156,9 @@ public class OptionsView extends BlackPanel {
         + " custom size.");
     xPanel.add(label);
     screenPanel.add(xPanel);
+    label = new SpaceLabel("NOTE: Restart is recommended if resolution is"
+        + " changed.");
+    screenPanel.add(label);
     xPanel = new EmptyInfoPanel();
     xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
     xPanel.setAlignmentX(LEFT_ALIGNMENT);

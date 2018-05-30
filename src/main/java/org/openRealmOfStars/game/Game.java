@@ -307,7 +307,7 @@ public class Game implements ActionListener {
   /**
    * Y coordinate when showing music text at bottom of screen
    */
-  private static final int MUSIC_TEXT_BOTTOM = 500;
+  private static final int MUSIC_TEXT_BOTTOM = 268;
 
   /**
    * Animation timer delay in milli seconds.
@@ -528,10 +528,10 @@ public class Game implements ActionListener {
           || view instanceof ShipView || view instanceof GalaxyCreationView
           || view instanceof PlayerSetupView
           || view instanceof DiplomacyView) {
-        y = MUSIC_TEXT_BOTTOM;
+        y = getHeight() - MUSIC_TEXT_BOTTOM;
       }
       songText = new JLabel("Test");
-      songText.setBounds(650, y, 350, 150);
+      songText.setBounds(getWidth() - 374, y, 350, 150);
       songText.setFont(GuiStatics.getFontCubellanBold());
       songText.setForeground(Color.white);
       MusicFileInfo info = MusicPlayer.getNowPlaying();

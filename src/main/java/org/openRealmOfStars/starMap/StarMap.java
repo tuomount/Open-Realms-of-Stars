@@ -1593,6 +1593,15 @@ public class StarMap {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null) {
         for (int j = 0; j < players.getCurrentMaxPlayers(); j++) {
+          if (j != i && info.getDiplomacy().isAlliance(j)
+              && !info.getDiplomacy().isSpyTrade(j)) {
+            // Alliance so automatic SPY trade
+            PlayerInfo info2 = players.getPlayerInfoByIndex(j);
+            info.getDiplomacy().getDiplomacyList(j).addBonus(
+                DiplomacyBonusType.SPY_TRADE, info.getRace());
+            info2.getDiplomacy().getDiplomacyList(i).addBonus(
+                DiplomacyBonusType.SPY_TRADE, info2.getRace());
+          }
           // Check if they have spy trade with some one else
           if (j != i && info.getDiplomacy().isSpyTrade(j)) {
             PlayerInfo trader = players.getPlayerInfoByIndex(j);

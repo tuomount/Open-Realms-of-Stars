@@ -485,7 +485,13 @@ public class DiplomacyView extends BlackPanel {
           human.getRace(), null));
       speechLines.add(SpeechFactory.createLine(SpeechType.DEMAND,
           human.getRace(), null));
-      if (ai.getDiplomacy().isTradeAlliance(humanIndex)
+      if (!ai.getDiplomacy().isAlliance(humanIndex)
+          && ai.getDiplomacy().isTradeAlliance(humanIndex)
+          && ai.getDiplomacy().isPeace(humanIndex)
+          && ai.getDiplomacy().isDefensivePact(humanIndex)) {
+        speechLines.add(SpeechFactory.createLine(SpeechType.ALLIANCE,
+            human.getRace(), null));
+      } else if (ai.getDiplomacy().isTradeAlliance(humanIndex)
           && ai.getDiplomacy().isPeace(humanIndex)
           && !ai.getDiplomacy().isDefensivePact(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.DEFESIVE_PACT,
@@ -496,6 +502,7 @@ public class DiplomacyView extends BlackPanel {
             human.getRace(), null));
       }
       if (ai.getDiplomacy().isTradeAlliance(humanIndex)
+          && !ai.getDiplomacy().isAlliance(humanIndex)
           && ai.getDiplomacy().isPeace(humanIndex)
           && !ai.getDiplomacy().isSpyTrade(humanIndex)
           && human.getEspionage().isSpyTradePossible()

@@ -408,6 +408,12 @@ public class DiplomaticTrade {
       int value = DiceGenerator.getRandom(100);
       if (value < 10) {
         if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.DEFENSIVE_PACT)
+            && !info.getDiplomacy().hasAlliance()) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        if (info.getDiplomacy().getDiplomaticRelation(second)
             .equals(Diplomacy.TRADE_ALLIANCE)) {
           generateEqualTrade(NegotiationType.DEFENSIVE_PACT);
           return;
@@ -420,6 +426,8 @@ public class DiplomaticTrade {
       }
       if (value < 25 && info.getDiplomacy().getDiplomaticRelation(second)
             .equals(Diplomacy.TRADE_ALLIANCE)
+            && !info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.ALLIANCE)
             && info.getEspionage().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
@@ -468,6 +476,12 @@ public class DiplomaticTrade {
       int value = DiceGenerator.getRandom(100);
       if (value < 25) {
         if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.DEFENSIVE_PACT)
+            && !info.getDiplomacy().hasAlliance()) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        if (info.getDiplomacy().getDiplomaticRelation(second)
             .equals(Diplomacy.TRADE_ALLIANCE)) {
           generateEqualTrade(NegotiationType.DEFENSIVE_PACT);
           return;
@@ -480,14 +494,18 @@ public class DiplomaticTrade {
       }
       if (value < 30 && info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.TRADE_ALLIANCE)
+          && !info.getDiplomacy().getDiplomaticRelation(second)
+          .equals(Diplomacy.ALLIANCE)
           && info.getEspionage().isSpyTradePossible()) {
-      generateEqualTrade(NegotiationType.SPY_TRADE);
-    }
+        generateEqualTrade(NegotiationType.SPY_TRADE);
+      }
     }
     if (info.getDiplomacy().getDiplomaticRelation(second)
         .equals(Diplomacy.TRADE_ALLIANCE)
         || info.getDiplomacy().getDiplomaticRelation(second)
-        .equals(Diplomacy.DEFENSIVE_PACT)) {
+        .equals(Diplomacy.DEFENSIVE_PACT)
+        || info.getDiplomacy().getDiplomaticRelation(second)
+        .equals(Diplomacy.ALLIANCE)) {
       int value = DiceGenerator.getRandom(100);
       if (value < 5) {
         generateEqualTrade(NegotiationType.WAR);
@@ -531,6 +549,12 @@ public class DiplomaticTrade {
       int value = DiceGenerator.getRandom(100);
       if (value < 50) {
         if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.DEFENSIVE_PACT)
+            && !info.getDiplomacy().hasAlliance()) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        if (info.getDiplomacy().getDiplomaticRelation(second)
             .equals(Diplomacy.TRADE_ALLIANCE)) {
           generateEqualTrade(NegotiationType.DEFENSIVE_PACT);
           return;
@@ -543,6 +567,8 @@ public class DiplomaticTrade {
       }
       if (value < 60 && info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.TRADE_ALLIANCE)
+          && !info.getDiplomacy().getDiplomaticRelation(second)
+          .equals(Diplomacy.ALLIANCE)
           && info.getEspionage().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
@@ -590,6 +616,12 @@ public class DiplomaticTrade {
       int value = DiceGenerator.getRandom(100);
       if (value < 25) {
         if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.DEFENSIVE_PACT)
+            && !info.getDiplomacy().hasAlliance()) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        if (info.getDiplomacy().getDiplomaticRelation(second)
             .equals(Diplomacy.TRADE_ALLIANCE)) {
           generateEqualTrade(NegotiationType.DEFENSIVE_PACT);
           return;
@@ -602,6 +634,8 @@ public class DiplomaticTrade {
       }
       if (value < 25 && info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.TRADE_ALLIANCE)
+          && !info.getDiplomacy().getDiplomaticRelation(second)
+          .equals(Diplomacy.ALLIANCE)
           && info.getEspionage().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
@@ -649,6 +683,12 @@ public class DiplomaticTrade {
       int value = DiceGenerator.getRandom(100);
       if (value < 40) {
         if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.DEFENSIVE_PACT)
+            && !info.getDiplomacy().hasAlliance()) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        if (info.getDiplomacy().getDiplomaticRelation(second)
             .equals(Diplomacy.TRADE_ALLIANCE)) {
           generateEqualTrade(NegotiationType.DEFENSIVE_PACT);
           return;
@@ -661,6 +701,8 @@ public class DiplomaticTrade {
       }
       if (value < 50 && info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.TRADE_ALLIANCE)
+          && !info.getDiplomacy().getDiplomaticRelation(second)
+          .equals(Diplomacy.ALLIANCE)
           && info.getEspionage().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
@@ -708,6 +750,12 @@ public class DiplomaticTrade {
       int value = DiceGenerator.getRandom(100);
       if (value < 35) {
         if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.DEFENSIVE_PACT)
+            && !info.getDiplomacy().hasAlliance()) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        if (info.getDiplomacy().getDiplomaticRelation(second)
             .equals(Diplomacy.TRADE_ALLIANCE)) {
           generateEqualTrade(NegotiationType.DEFENSIVE_PACT);
           return;
@@ -720,6 +768,8 @@ public class DiplomaticTrade {
       }
       if (value < 55 && info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.TRADE_ALLIANCE)
+          && !info.getDiplomacy().getDiplomaticRelation(second)
+          .equals(Diplomacy.ALLIANCE)
           && info.getEspionage().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
@@ -782,6 +832,12 @@ public class DiplomaticTrade {
       int value = DiceGenerator.getRandom(100);
       if (value < 25) {
         if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.DEFENSIVE_PACT)
+            && !info.getDiplomacy().hasAlliance()) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        if (info.getDiplomacy().getDiplomaticRelation(second)
             .equals(Diplomacy.TRADE_ALLIANCE)) {
           generateEqualTrade(NegotiationType.DEFENSIVE_PACT);
           return;
@@ -794,6 +850,8 @@ public class DiplomaticTrade {
       }
       if (value < 35 && info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.TRADE_ALLIANCE)
+          && !info.getDiplomacy().getDiplomaticRelation(second)
+          .equals(Diplomacy.ALLIANCE)
           && info.getEspionage().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
@@ -845,6 +903,12 @@ public class DiplomaticTrade {
       int value = DiceGenerator.getRandom(100);
       if (value < 25) {
         if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.DEFENSIVE_PACT)
+            && !info.getDiplomacy().hasAlliance()) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        if (info.getDiplomacy().getDiplomaticRelation(second)
             .equals(Diplomacy.TRADE_ALLIANCE)) {
           generateEqualTrade(NegotiationType.DEFENSIVE_PACT);
           return;
@@ -857,6 +921,8 @@ public class DiplomaticTrade {
       }
       if (value < 35 && info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.TRADE_ALLIANCE)
+          && !info.getDiplomacy().getDiplomaticRelation(second)
+          .equals(Diplomacy.ALLIANCE)
           && info.getEspionage().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
@@ -901,6 +967,12 @@ public class DiplomaticTrade {
       int value = DiceGenerator.getRandom(100);
       if (value < 50) {
         if (info.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.DEFENSIVE_PACT)
+            && !info.getDiplomacy().hasAlliance()) {
+          generateEqualTrade(NegotiationType.ALLIANCE);
+          return;
+        }
+        if (info.getDiplomacy().getDiplomaticRelation(second)
             .equals(Diplomacy.TRADE_ALLIANCE)) {
           generateEqualTrade(NegotiationType.DEFENSIVE_PACT);
           return;
@@ -913,6 +985,8 @@ public class DiplomaticTrade {
       }
       if (value < 60 && info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.TRADE_ALLIANCE)
+          && !info.getDiplomacy().getDiplomaticRelation(second)
+          .equals(Diplomacy.ALLIANCE)
           && info.getEspionage().isSpyTradePossible()) {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }

@@ -38,6 +38,9 @@ public class RowTest {
     Row a = new Row(5, 0);
     Row b = new Row(8, 1);
     Row c = new Row(10, 2, 3);
+    assertEquals("Realm: 0 Score: 5", a.toString());
+    assertEquals("Realm: 1 Score: 8", b.toString());
+    assertEquals("Realm: 2 Alliance: 3 Score: 10", c.toString());
     assertEquals(0, a.getRealm());
     assertEquals(5, a.getScore());
     assertEquals(false, a.isAlliance());
@@ -50,6 +53,8 @@ public class RowTest {
     assertEquals(10, c.getScore());
     assertEquals(true, c.isAlliance());
     assertEquals(3, c.getAllianceRealm());
+    assertEquals(false, c.isSameRealm(0));
+    assertEquals(true, c.isSameRealm(3));
   }
 
   @Test

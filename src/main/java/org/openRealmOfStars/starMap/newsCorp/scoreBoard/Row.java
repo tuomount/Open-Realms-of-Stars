@@ -101,4 +101,31 @@ public class Row implements Comparable<Row> {
     return -1;
   }
 
+  /**
+   * Is same realm already in row
+   * @param index Index to search
+   * @return True if index is found
+   */
+  public boolean isSameRealm(final int index) {
+    for (int i = 0; i < realmIndexes.length; i++) {
+      if (index == realmIndexes[i]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("Realm: ");
+    sb.append(realmIndexes[0]);
+    if (isAlliance()) {
+      sb.append(" Alliance: ");
+      sb.append(realmIndexes[1]);
+    }
+    sb.append(" Score: ");
+    sb.append(score);
+    return sb.toString();
+  }
 }

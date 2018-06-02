@@ -153,13 +153,19 @@ public final class PlanetHandling {
         Construction[] constructions = planet.getProductionList();
         boolean constructionSelected = false;
         int gotFactory = gotBuildings(
-            new String[] {"Basic factory", "Advanced factory"}, buildings);
+            new String[] {"Basic factory", "Advanced factory",
+                "Manufacturing center", "Nanobot manufacturing center",
+                "Ancient factory"}, buildings);
         int gotLabs = gotBuildings(
-            new String[] {"Basic lab", "Advanced laboratory"}, buildings);
+            new String[] {"Basic lab", "Advanced laboratory",
+                "Research center", "Neural research center",
+                "Ancient lab"}, buildings);
         int gotFarms = gotBuildings(
-            new String[] {"Basic farm", "Advanced farm"}, buildings);
+            new String[] {"Basic farm", "Advanced farm",
+                "Farming center", "Hydropodic farming center"}, buildings);
         int gotMines = gotBuildings(
-            new String[] {"Basic mine", "Advanced mine"}, buildings);
+            new String[] {"Basic mine", "Advanced mine",
+                "Mining center", "Nanobot mining center"}, buildings);
         int gotSpacePort = gotBuildings(new String[] {"Space port"},
             buildings);
         if (gotFactory == -1) {
@@ -454,15 +460,32 @@ public final class PlanetHandling {
    * @param planet Planet which to check
    * @param info PlayerInfo who owns the planet
    * @param attitude AI's attitude
+   * @param newBuilding new Building about to replace the old one.
+   *        Can be also null.
    * @return worst building or null if no buildings
    */
   public static Building getWorstBuilding(final Planet planet,
-      final PlayerInfo info, final Attitude attitude) {
+      final PlayerInfo info, final Attitude attitude, final Building newBuild) {
     int lowestScore = MAX_SLOT_SCORE;
     Building lowBuilding = null;
     Building[] buildings = planet.getBuildingList();
     for (Building building : buildings) {
       int score = scoreBuilding(building, planet, info, attitude);
+      if (newBuild != null && building.getType() == newBuild.getType()) {
+        // This should increase the chance for upgrading the building.
+        int newBonus = newBuild.getBattleBonus() + newBuild.getCredBonus()
+        + newBuild.getCultBonus() + newBuild.getDefenseDamage()
+        + newBuild.getFactBonus() + newBuild.getFarmBonus()
+        + newBuild.getMineBonus() + newBuild.getRecycleBonus()
+        + newBuild.getReseBonus() + newBuild.getScanRange();
+        int oldBonus = building.getBattleBonus() + building.getCredBonus()
+        + building.getCultBonus() + building.getDefenseDamage()
+        + building.getFactBonus() + building.getFarmBonus()
+        + building.getMineBonus() + building.getRecycleBonus()
+        + building.getReseBonus() + building.getScanRange();
+        int bonus = newBonus - oldBonus;
+        score = score - 80 * bonus;
+      }
       if (score < lowestScore) {
         lowestScore = score;
         lowBuilding = building;
@@ -573,7 +596,8 @@ public final class PlanetHandling {
           planet.setUnderConstruction(cons);
           constructionSelected = true;
           if (cons instanceof Building && needToRemoveWorst) {
-            Building worst = getWorstBuilding(planet, info, attitude);
+            Building newBuild = (Building) cons;
+            Building worst = getWorstBuilding(planet, info, attitude, newBuild);
             if  (worst != null) {
               // Removing the worst building
               planet.removeBuilding(worst);

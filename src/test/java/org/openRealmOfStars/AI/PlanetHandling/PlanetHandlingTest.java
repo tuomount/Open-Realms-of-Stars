@@ -99,6 +99,31 @@ public class PlanetHandlingTest {
   }
 
   /**
+   * Create advanced factory with mockito
+   * @return advanced factory building
+   */
+  private static Building createAdvancedFactory() {
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getBattleBonus()).thenReturn(0);
+    Mockito.when(building.getDefenseDamage()).thenReturn(0);
+    Mockito.when(building.getScanRange()).thenReturn(0);
+    Mockito.when(building.getScanCloakingDetection()).thenReturn(0);
+    Mockito.when(building.getType()).thenReturn(BuildingType.FACTORY);
+    Mockito.when(building.getFactBonus()).thenReturn(2);
+    Mockito.when(building.getMineBonus()).thenReturn(0);
+    Mockito.when(building.getFarmBonus()).thenReturn(0);
+    Mockito.when(building.getReseBonus()).thenReturn(0);
+    Mockito.when(building.getCultBonus()).thenReturn(0);
+    Mockito.when(building.getCredBonus()).thenReturn(0);
+    Mockito.when(building.getRecycleBonus()).thenReturn(0);
+    Mockito.when(building.getMaintenanceCost()).thenReturn(0.0);
+    Mockito.when(building.getMetalCost()).thenReturn(14);
+    Mockito.when(building.getProdCost()).thenReturn(20);
+    Mockito.when(building.getName()).thenReturn("Advanced factory");
+    return building;
+  }
+
+  /**
    * Create defense turret with mockito
    * @return defense turret building
    */
@@ -411,10 +436,35 @@ public class PlanetHandlingTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
 
     Building building = PlanetHandling.getWorstBuilding(planet, info,
-        Attitude.LOGICAL);
-    assertEquals(farm,building);
+        Attitude.LOGICAL, null);
+    assertEquals(farm, building);
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testWorstScoring2() {
+    Building farm = createBasicFarm();
+    Building factory = createBasicFactory();
+    Building lab = createBasicLab();
+    Building mine = createBasicMine();
+    Building advancedFactory = createAdvancedFactory();
+
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
+    Mockito.when(planet.howManyBuildings(farm.getName())).thenReturn(0);
+    Mockito.when(planet.exceedRadiation()).thenReturn(false);
+    Building[] list = {farm, factory, lab, mine};
+    Mockito.when(planet.getBuildingList()).thenReturn(list);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+
+    Building building = PlanetHandling.getWorstBuilding(planet, info,
+        Attitude.LOGICAL, advancedFactory);
+    assertEquals(factory, building);
+  }
+
+  
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testShipScoring() {

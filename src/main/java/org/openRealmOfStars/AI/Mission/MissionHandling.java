@@ -392,8 +392,7 @@ public final class MissionHandling {
             // Remove also empty fleet
             info.getFleets().recalculateList();
           }
-          ShipStat stat = game.getStarMap().getCurrentPlayerInfo()
-              .getShipStatByName(ship.getName());
+          ShipStat stat = info.getShipStatByName(ship.getName());
           if (stat != null) {
             stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
           }

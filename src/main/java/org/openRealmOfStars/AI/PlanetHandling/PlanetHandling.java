@@ -460,7 +460,7 @@ public final class PlanetHandling {
    * @param planet Planet which to check
    * @param info PlayerInfo who owns the planet
    * @param attitude AI's attitude
-   * @param newBuilding new Building about to replace the old one.
+   * @param newBuild new Building about to replace the old one.
    *        Can be also null.
    * @return worst building or null if no buildings
    */

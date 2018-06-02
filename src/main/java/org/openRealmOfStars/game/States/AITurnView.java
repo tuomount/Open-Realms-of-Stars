@@ -1071,7 +1071,6 @@ public class AITurnView extends BlackPanel {
           .getScoreVictoryTurn()) {
         lastTurn = true;
       }
-      // TODO take the cost of faking military
       game.getStarMap().getPlayerList().handlePlayerFakeMilitaryCost();
       newsData.calculateMilitary(game.getStarMap().getPlayerList(), lastTurn);
       newsData.calculateResearch(game.getStarMap().getPlayerList());

@@ -174,6 +174,7 @@ public class DiplomacyTest {
     assertEquals(false, diplomacy.isWar(0));
     assertEquals(false, diplomacy.isAlliance(256));
     assertEquals(true, diplomacy.hasAlliance());
+    assertEquals(0, diplomacy.getAllianceIndex());
   }
 
   @Test

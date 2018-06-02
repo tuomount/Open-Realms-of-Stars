@@ -245,14 +245,26 @@ public class Diplomacy {
    * @return True if has alliance with some
    */
   public boolean hasAlliance() {
-    for (int i = 0; i < diplomacyList.length; i++) {
-      if (diplomacyList[i] != null
-          && diplomacyList[i].isBonusType(DiplomacyBonusType.IN_ALLIANCE)) {
-        return true;
-      }
+    if (getAllianceIndex() != -1) {
+      return true;
     }
     return false;
   }
+
+  /**
+   * Is realm in alliance with someone
+   * @return Index or -1 if not alliance
+   */
+  public int getAllianceIndex() {
+    for (int i = 0; i < diplomacyList.length; i++) {
+      if (diplomacyList[i] != null
+          && diplomacyList[i].isBonusType(DiplomacyBonusType.IN_ALLIANCE)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   /**
    * Lowest value for neutral
    */

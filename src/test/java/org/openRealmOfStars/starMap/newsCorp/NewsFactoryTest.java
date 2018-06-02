@@ -595,6 +595,11 @@ public class NewsFactoryTest {
     PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info2.getEmpireName()).thenReturn("Alliance of Test");
     Mockito.when(info2.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(diplomacy.hasAlliance()).thenReturn(false);
+    Mockito.when(diplomacy.getAllianceIndex()).thenReturn(-1);
+    Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(info2.getDiplomacy()).thenReturn(diplomacy);
     GalaxyStat stat = Mockito.mock(GalaxyStat.class);
     Mockito.when(stat.getBiggest()).thenReturn(0);
     Mockito.when(stat.getSecond()).thenReturn(1);
@@ -611,6 +616,11 @@ public class NewsFactoryTest {
     Mockito.when(map.getNewsCorpData()).thenReturn(data);
     Mockito.when(map.getPlayerByIndex(0)).thenReturn(info);
     Mockito.when(map.getPlayerByIndex(1)).thenReturn(info2);
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
+    Mockito.when(map.getPlayerList()).thenReturn(players);
     NewsData news = NewsFactory.makeScoreNewsAtEnd(map);
     assertEquals(true, news.getImageInstructions().contains(
         "THE GREATEST REALM ALL TIME!"));

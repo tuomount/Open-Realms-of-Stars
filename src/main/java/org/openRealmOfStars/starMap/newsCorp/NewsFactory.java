@@ -1,12 +1,15 @@
 package org.openRealmOfStars.starMap.newsCorp;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.history.event.DiplomaticEvent;
 import org.openRealmOfStars.starMap.history.event.Event;
+import org.openRealmOfStars.starMap.newsCorp.scoreBoard.Row;
+import org.openRealmOfStars.starMap.newsCorp.scoreBoard.ScoreBoard;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.TextUtilities;
@@ -780,6 +783,31 @@ public final class NewsFactory {
   }
 
   /**
+   * Create score board according the galaxy score and player list.
+   * @param scores GalaxyStat for lastest score
+   * @param players PlayerList
+   * @return Scoreboard
+   */
+  private static ScoreBoard createScoreBoard(final GalaxyStat scores,
+      final PlayerList players) {
+    ScoreBoard board = new ScoreBoard();
+    // First let's do alliance rows
+    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
+      PlayerInfo info = players.getPlayerInfoByIndex(i);
+      int alliance = info.getDiplomacy().getAllianceIndex();
+      if (alliance != -1) {
+        int score = scores.getLatest(i) + scores.getLatest(alliance);
+        Row row = new Row(score, i, alliance);
+        board.add(row);
+      } else {
+        int score = scores.getLatest(i);
+        Row row = new Row(score, i);
+        board.add(row);
+      }
+    }
+    return board;
+  }
+  /**
    * Make News when game is in the end turn
    * @param map StarMap contains NewsCorpData and playerlist
    * @return NewsData
@@ -790,20 +818,57 @@ public final class NewsFactory {
     NewsCorpData data = map.getNewsCorpData();
     news.setImageInstructions(instructions.build());
     StringBuilder sb = new StringBuilder();
-    int index = data.generateScores().getBiggest();
-    if (index != -1) {
-      PlayerInfo info = map.getPlayerByIndex(index);
+    ScoreBoard board = createScoreBoard(data.generateScores(),
+        map.getPlayerList());
+    board.sort();
+    Row winner = board.getRow(0);
+    Row second = board.getRow(1);
+    if (!winner.isAlliance()) {
+      PlayerInfo info = map.getPlayerByIndex(winner.getRealm());
       instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
       instructions.addText("THE GREATEST REALM ALL TIME!");
       instructions.addText(info.getEmpireName());
       instructions.addImage(info.getRace().getNameSingle());
       sb.append(info.getEmpireName());
       sb.append(" is the greatest realm in whole galaxy! ");
-      index = data.generateScores().getSecond();
-      if (index != -1) {
-        info = map.getPlayerByIndex(index);
+      if (!second.isAlliance()) {
+        info = map.getPlayerByIndex(second.getRealm());
         sb.append("Second greatest realm is ");
         sb.append(info.getEmpireName());
+        sb.append(" !");
+      } else {
+        info = map.getPlayerByIndex(second.getRealm());
+        PlayerInfo info2 = map.getPlayerByIndex(second.getAllianceRealm());
+        sb.append("Second greatest is alliance of");
+        sb.append(info.getEmpireName());
+        sb.append("and");
+        sb.append(info2.getEmpireName());
+        sb.append(" !");
+      }
+    } else {
+      PlayerInfo info = map.getPlayerByIndex(winner.getRealm());
+      PlayerInfo info2 = map.getPlayerByIndex(winner.getAllianceRealm());
+      instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+      instructions.addText("THE GREATEST ALLIANCE ALL TIME!");
+      instructions.addText(info.getEmpireName());
+      instructions.addImage(info.getRace().getNameSingle());
+      sb.append("Alliance of ");
+      sb.append(info.getEmpireName());
+      sb.append("and");
+      sb.append(info2.getEmpireName());
+      sb.append(" is the greatest in whole galaxy! ");
+      if (!second.isAlliance()) {
+        info = map.getPlayerByIndex(second.getRealm());
+        sb.append("Second greatest realm is ");
+        sb.append(info.getEmpireName());
+        sb.append(" !");
+      } else {
+        info = map.getPlayerByIndex(second.getRealm());
+        info2 = map.getPlayerByIndex(second.getAllianceRealm());
+        sb.append("Second greatest is alliance of");
+        sb.append(info.getEmpireName());
+        sb.append("and");
+        sb.append(info2.getEmpireName());
         sb.append(" !");
       }
     }

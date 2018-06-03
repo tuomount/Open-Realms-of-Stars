@@ -92,7 +92,7 @@ public class OptionsView extends BlackPanel {
   public OptionsView(final ConfigFile config, final Game gameFrame,
       final ActionListener listener) {
     game = gameFrame;
-    game.setResizable(true);
+    //game.setResizable(true);
     InfoPanel base = new InfoPanel();
     base.setTitle("Options");
     this.setLayout(new BorderLayout());
@@ -152,9 +152,11 @@ public class OptionsView extends BlackPanel {
     }
     xPanel.add(resolutionSelection);
     xPanel.add(Box.createRigidArea(new Dimension(50, 10)));
-    label = new SpaceLabel("NOTE: You can also resize game window here for"
-        + " custom size.");
-    xPanel.add(label);
+    btn = new SpaceButton("Resize", GameCommands.COMMAND_RESIZE);
+    btn.addActionListener(listener);
+    btn.createToolTip();
+    btn.setToolTipText("You can also resize game window here for custom size.");
+    xPanel.add(btn);
     screenPanel.add(xPanel);
     label = new SpaceLabel("NOTE: Restart is recommended if resolution is"
         + " changed.");
@@ -232,6 +234,9 @@ public class OptionsView extends BlackPanel {
    * @param arg0 ActionEvent
    */
   public void handleAction(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_RESIZE)) {
+      game.setResizable(true);
+    }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_MUSIC_VOLUME_UP)
         && musicSlider.getSliderValue() + 10 <= musicSlider.getMaximumValue()) {
       musicSlider.setSliderValue(musicSlider.getSliderValue() + 10);

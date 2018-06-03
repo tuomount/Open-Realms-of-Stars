@@ -566,27 +566,30 @@ public class Game implements ActionListener {
     String[] resolutionParts = resolution.split("x");
     int resolutionWidth = Integer.parseInt(resolutionParts[0]);
     int resolutionHeight = Integer.parseInt(resolutionParts[1]);
-    gameFrame.setVisible(false);
-    gameFrame.setSize(resolutionWidth, resolutionHeight);
-    gameFrame.setLocationRelativeTo(null);
-    gameFrame.setVisible(true);
-    // Adjusting JFrame size. Some OS take UI component space
-    // from JFrame. This happens at least with Windows 7/10 and Java8.
-    int sizeX = gameFrame.getWidth() - gameFrame.getContentPane().getWidth();
-    int sizeY = gameFrame.getHeight()
-        - gameFrame.getContentPane().getHeight();
-    if (sizeX > 0 || sizeY > 0) {
-      ErrorLogger.log("Adjust frame, since OS's UI component require"
-          + " their own space from JFrame.");
-      ErrorLogger.log("Adjusting X: " + sizeX + " Adjusting Y: " + sizeY);
+    if (resolutionWidth != gameFrame.getWidth()
+        || resolutionHeight != gameFrame.getHeight()) {
       gameFrame.setVisible(false);
-      gameFrame.setSize(resolutionWidth + sizeX, resolutionHeight + sizeY);
-      gameFrame.setMinimumSize(new Dimension(WINDOW_X_SIZE + sizeX,
-          WINDOW_Y_SIZE + sizeY));
+      gameFrame.setSize(resolutionWidth, resolutionHeight);
       gameFrame.setLocationRelativeTo(null);
       gameFrame.setVisible(true);
+      // Adjusting JFrame size. Some OS take UI component space
+      // from JFrame. This happens at least with Windows 7/10 and Java8.
+      int sizeX = gameFrame.getWidth() - gameFrame.getContentPane().getWidth();
+      int sizeY = gameFrame.getHeight()
+          - gameFrame.getContentPane().getHeight();
+      if (sizeX > 0 || sizeY > 0) {
+        ErrorLogger.log("Adjust frame, since OS's UI component require"
+            + " their own space from JFrame.");
+        ErrorLogger.log("Adjusting X: " + sizeX + " Adjusting Y: " + sizeY);
+        gameFrame.setVisible(false);
+        gameFrame.setSize(resolutionWidth + sizeX, resolutionHeight + sizeY);
+        gameFrame.setMinimumSize(new Dimension(WINDOW_X_SIZE + sizeX,
+            WINDOW_Y_SIZE + sizeY));
+        gameFrame.setLocationRelativeTo(null);
+        gameFrame.setVisible(true);
+      }
+      gameFrame.repaint();
     }
-    gameFrame.repaint();
   }
 
   /**
@@ -1919,14 +1922,18 @@ public class Game implements ActionListener {
         if (!optionsView.getResolution().equals(getCurrentResolution())) {
           setNewResolution(optionsView.getResolution());
         }
-        changeGameState(GameState.MAIN_MENU);
-        setResizable(false);
+        if (gameFrame.isResizable()) {
+          setResizable(false);
+          setNewResolution(optionsView.getResolution());
+        }
         configFile.setMusicVolume(optionsView.getMusicVolume());
         configFile.setSoundVolume(optionsView.getSoundVolume());
         configFile.setBorderless(optionsView.getBorderless());
         configFile.setLargerFonts(optionsView.getLargerFonts());
+        configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
         writeConfigFile();
+        changeGameState(GameState.MAIN_MENU);
         return;
       }
       if (arg0.getActionCommand()
@@ -1939,6 +1946,7 @@ public class Game implements ActionListener {
         configFile.setSoundVolume(optionsView.getSoundVolume());
         configFile.setBorderless(optionsView.getBorderless());
         configFile.setLargerFonts(optionsView.getLargerFonts());
+        configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
         GuiStatics.setLargerFonts(configFile.getLargerFonts());
         return;
       }
@@ -1950,7 +1958,9 @@ public class Game implements ActionListener {
             + configFile.getResolutionHeight());
         SoundPlayer.playMenuSound();
         changeGameState(GameState.MAIN_MENU);
-        setResizable(false);
+        if (gameFrame.isResizable()) {
+          setResizable(false);
+        }
         return;
       }
       optionsView.handleAction(arg0);

@@ -52,6 +52,11 @@ public final class GameCommands {
   public static final String COMMAND_APPLY = "Apply";
 
   /**
+   * Resize command
+   */
+  public static final String COMMAND_RESIZE = "Resize";
+
+  /**
    * Options View command
    */
   public static final String COMMAND_OPTIONS_VIEW = "OptionsView";

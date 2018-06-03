@@ -76,9 +76,18 @@ public class GalaxyConfigTest {
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
     assertEquals(GalaxyConfig.START_POSITION_RANDOM,
         config.getStartingPosition());
-    assertEquals(1, config.getCultureScoreLimit());
-    config.setCultureScoreLimit(-1);
-    assertEquals(-1, config.getCultureScoreLimit());
+    assertEquals(1, config.getScoreLimitCulture());
+    config.setScoreLimitCulture(-1);
+    assertEquals(-1, config.getScoreLimitCulture());
+    assertEquals(1, config.getScoreLimitConquer());
+    assertEquals(0, config.getScoreLimitDiplomacy());
+    assertEquals(0, config.getScoreLimitReseach());
+    config.setScoreLimitConquer(0);
+    assertEquals(0, config.getScoreLimitConquer());
+    config.setScoreLimitDiplomacy(1);
+    config.setScoreLimitResearch(1);
+    assertEquals(1, config.getScoreLimitDiplomacy());
+    assertEquals(1, config.getScoreLimitReseach());
   }
 
 

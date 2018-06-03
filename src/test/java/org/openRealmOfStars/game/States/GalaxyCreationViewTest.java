@@ -47,7 +47,7 @@ public class GalaxyCreationViewTest {
     config = view.getConfig();
     assertEquals(75, config.getSizeX());
     assertEquals(75, config.getSizeY());
-    assertEquals(1, config.getCultureScoreLimit());
+    assertEquals(1, config.getScoreLimitCulture());
   }
 
 }

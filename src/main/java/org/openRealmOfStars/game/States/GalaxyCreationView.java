@@ -297,7 +297,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboScoringCulture = new SpaceCombo<>(scoringCulture);
     comboScoringCulture.setToolTipText("How much culture must gain before"
         + " winning by cultural domination.");
-    switch (this.config.getCultureScoreLimit()) {
+    switch (this.config.getScoreLimitCulture()) {
       case -1: comboScoringCulture.setSelectedIndex(0); break;
       case 0: comboScoringCulture.setSelectedIndex(1); break;
       case 1: comboScoringCulture.setSelectedIndex(2); break;
@@ -535,32 +535,32 @@ public class GalaxyCreationView extends BlackPanel {
       switch (comboScoringCulture.getSelectedIndex()) {
         case 0: {
           // Disabled
-          config.setCultureScoreLimit(-1);
+          config.setScoreLimitCulture(-1);
           break;
         }
         case 1: {
           // 75%
-          config.setCultureScoreLimit(0);
+          config.setScoreLimitCulture(0);
           break;
         }
         case 2: {
           // 100%
-          config.setCultureScoreLimit(1);
+          config.setScoreLimitCulture(1);
           break;
         }
         case 3: {
           // 150%
-          config.setCultureScoreLimit(2);
+          config.setScoreLimitCulture(2);
           break;
         }
         case 4: {
           // 200%
-          config.setCultureScoreLimit(3);
+          config.setScoreLimitCulture(3);
           break;
         }
         default: {
           // 100%
-          config.setCultureScoreLimit(1);
+          config.setScoreLimitCulture(1);
           break;
         }
       }

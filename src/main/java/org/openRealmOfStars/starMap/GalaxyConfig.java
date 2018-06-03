@@ -125,7 +125,31 @@ public class GalaxyConfig {
    * 3 200% of regular culture score limit
    */
   private int scoringCulture;
+
   /**
+   * Scoring by Conquer
+   * 0 Disabled victory by conquer
+   * 1 Enabled victory by conquer
+   */
+  private int scoringConquer;
+
+  /**
+   * Scoring by Research
+   * 0 Disabled victory by research
+   * NOTE THIS IS NOT IMPLEMENTED YET;
+   * Just reserving 4 bytes to save games
+   */
+  private int scoringResearch;
+
+  /**
+   * Scoring by Diplomacy
+   * 0 Disabled victory by diplomacy
+   * NOTE THIS IS NOT IMPLEMENTED YET;
+   * Just reserving 4 bytes to save games
+   */
+  private int scoringDiplomacy;
+
+/**
    * Constructor for galaxy config
    */
   public GalaxyConfig() {
@@ -135,7 +159,10 @@ public class GalaxyConfig {
     setChanceForPlanetaryEvent(10);
     setNumberOfRoguePlanets(ROGUE_PLANETS_FEW);
     setScoringVictoryTurns(400);
-    setCultureScoreLimit(1);
+    setScoreLimitCulture(1);
+    setScoreLimitConquer(1);
+    setScoreLimitResearch(0);
+    setScoreLimitDiplomacy(0);
     setMaxPlayers(4);
     setSolarSystemDistance(12, 0);
     playerRaces = new SpaceRace[StarMap.MAX_PLAYERS];
@@ -370,7 +397,7 @@ public class GalaxyConfig {
    * 3 200% of regular culture score limit
    * @return Culture score limit
    */
-  public int getCultureScoreLimit() {
+  public int getScoreLimitCulture() {
     return scoringCulture;
   }
 
@@ -383,10 +410,62 @@ public class GalaxyConfig {
    *        2 150% of regular culture score limit
    *        3 200% of regular culture score limit
    */
-  public void setCultureScoreLimit(final int limit) {
+  public void setScoreLimitCulture(final int limit) {
     if (limit >= -1 && limit <= 3) {
       scoringCulture = limit;
     }
+  }
+
+  /**
+   * Get Score limit for conquer
+   * @return 1 for enabled, 0 for disabled
+   */
+  public int getScoreLimitConquer() {
+    return scoringConquer;
+  }
+
+  /**
+   * Set score limit for conquer
+   * @param limit 1 For enabling, 0 for disabling
+   */
+  public void setScoreLimitConquer(final int limit) {
+    if (limit == 0 || limit == 1) {
+      scoringConquer = limit;
+    }
+  }
+
+  /**
+   * Get Scoring limit for research
+   * @return How many future techs must be research to win.
+   */
+  public int getScoreLimitReseach() {
+    return scoringResearch;
+  }
+
+  /**
+   * Set Scoring limit for research
+   * @param limit How many future techs must be research to win.
+   */
+  public void setScoreLimitResearch(final int limit) {
+    if (limit >= 0 && limit <= 6) {
+      scoringResearch = limit;
+    }
+  }
+
+  /**
+   * Get Scoring limit for diplomacy
+   * @return Scoring limit for diplomacy
+   */
+  public int getScoreLimitDiplomacy() {
+    return scoringDiplomacy;
+  }
+
+  /**
+   * Set scoring limit for diplomacy
+   * @param limit Limit for diplomacy victory condition
+   */
+  public void setScoreLimitDiplomacy(final int limit) {
+    scoringDiplomacy = limit;
   }
   /**
    * Get the number of rogue planets. This number is then

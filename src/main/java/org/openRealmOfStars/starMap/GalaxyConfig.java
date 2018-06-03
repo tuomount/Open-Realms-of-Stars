@@ -438,7 +438,7 @@ public class GalaxyConfig {
    * Get Scoring limit for research
    * @return How many future techs must be research to win.
    */
-  public int getScoreLimitReseach() {
+  public int getScoreLimitResearch() {
     return scoringResearch;
   }
 

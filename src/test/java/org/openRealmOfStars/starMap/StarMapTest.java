@@ -58,6 +58,10 @@ public class StarMapTest {
     Mockito.when(config.getStartingPosition()).thenReturn(
         GalaxyConfig.START_POSITION_BORDER);
     Mockito.when(config.getScoringVictoryTurns()).thenReturn(400);
+    Mockito.when(config.getScoreLimitCulture()).thenReturn(2);
+    Mockito.when(config.getScoreLimitConquer()).thenReturn(0);
+    Mockito.when(config.getScoreLimitResearch()).thenReturn(4);
+    Mockito.when(config.getScoreLimitDiplomacy()).thenReturn(1);
 
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
@@ -82,6 +86,18 @@ public class StarMapTest {
     map.setScoreVictoryTurn(600);
     assertEquals(600, map.getScoreVictoryTurn());
     assertEquals(GameLengthState.START_GAME, map.getGameLengthState());
+    assertEquals(2, map.getScoreCulture());
+    assertEquals(0, map.getScoreConquer());
+    assertEquals(4, map.getScoreResearch());
+    assertEquals(1, map.getScoreDiplomacy());
+    map.setScoreCulture(-1);
+    map.setScoreConquer(1);
+    map.setScoreResearch(3);
+    map.setScoreDiplomacy(0);
+    assertEquals(-1, map.getScoreCulture());
+    assertEquals(1, map.getScoreConquer());
+    assertEquals(3, map.getScoreResearch());
+    assertEquals(0, map.getScoreDiplomacy());
   }
 
   @Test

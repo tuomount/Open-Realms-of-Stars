@@ -81,13 +81,13 @@ public class GalaxyConfigTest {
     assertEquals(-1, config.getScoreLimitCulture());
     assertEquals(1, config.getScoreLimitConquer());
     assertEquals(0, config.getScoreLimitDiplomacy());
-    assertEquals(0, config.getScoreLimitReseach());
+    assertEquals(0, config.getScoreLimitResearch());
     config.setScoreLimitConquer(0);
     assertEquals(0, config.getScoreLimitConquer());
     config.setScoreLimitDiplomacy(1);
     config.setScoreLimitResearch(1);
     assertEquals(1, config.getScoreLimitDiplomacy());
-    assertEquals(1, config.getScoreLimitReseach());
+    assertEquals(1, config.getScoreLimitResearch());
   }
 
 

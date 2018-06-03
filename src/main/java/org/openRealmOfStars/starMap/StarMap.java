@@ -188,6 +188,26 @@ public class StarMap {
   private int scoreVictoryTurn;
 
   /**
+   * Conquer scoring setting
+   */
+  private int scoreConquer;
+
+  /**
+   * Culture scoring setting
+   */
+  private int scoreCulture;
+
+  /**
+   * Research scoring setting
+   */
+  private int scoreResearch;
+
+  /**
+   * Diplomacy scoring setting
+   */
+  private int scoreDiplomacy;
+
+  /**
    * System name generator.
    */
   private RandomSystemNameGenerator nameGenerator;
@@ -218,6 +238,10 @@ public class StarMap {
     setDebug(false);
     nameGenerator = new RandomSystemNameGenerator();
     setScoreVictoryTurn(config.getScoringVictoryTurns());
+    setScoreCulture(config.getScoreLimitCulture());
+    setScoreConquer(config.getScoreLimitConquer());
+    setScoreResearch(config.getScoreLimitResearch());
+    setScoreDiplomacy(config.getScoreLimitDiplomacy());
     history = new History();
     history.addTurn(0);
     maxX = config.getSizeX();
@@ -2343,6 +2367,80 @@ public class StarMap {
     }
   }
 
+  /**
+   * get Score culture. This return setting value for culture scoring.
+   * -1 Means that it is disabled
+   * 0 75% of regular limit
+   * 1 100% of regular limit
+   * 2 150% of regular limit
+   * 3 200% of regular limit
+   * @return Culture score setting limit
+   */
+  public int getScoreCulture() {
+    return scoreCulture;
+  }
+
+  /**
+   * Set culture score limit setting
+   * @param limit Culture score setting
+   */
+  public void setScoreCulture(final int limit) {
+    scoreCulture = limit;
+  }
+
+  /**
+   * Get Conquer score limit.
+   * 0 Disabled
+   * 1 Enabled
+   * @return Conquer score limit
+   */
+  public int getScoreConquer() {
+    return scoreConquer;
+  }
+
+  /**
+   * Set Conquer score limit
+   * @param limit 1 for enabling, 0 for disabling
+   */
+  public void setScoreConquer(final int limit) {
+    scoreConquer = limit;
+  }
+
+  /**
+   * Get Score limit for research
+   * THIS HAS NOT IMPLEMETED YET
+   * @return Score limit for research
+   */
+  public int getScoreResearch() {
+    return scoreResearch;
+  }
+
+  /**
+   * Set Score limit for research
+   * THIS HAS NOT IMPLEMETED YET
+   * @param limit Limit for research
+   */
+  public void setScoreResearch(final int limit) {
+    scoreResearch = limit;
+  }
+
+  /**
+   * Get Score limit for diplomacy
+   * THIS HAS NOT IMPLEMETED YET
+   * @return Score limit for diplomacy
+   */
+  public int getScoreDiplomacy() {
+    return scoreDiplomacy;
+  }
+
+  /**
+   * Set Score limit for diplomacy
+   * THIS HAS NOT IMPLEMETED YET
+   * @param limit Limit for diplomacy
+   */
+  public void setScoreDiplomacy(final int limit) {
+    scoreDiplomacy = limit;
+  }
   /**
    * Get Game length state. This checks current turn and
    * compares it score victory turn. Game is divided into

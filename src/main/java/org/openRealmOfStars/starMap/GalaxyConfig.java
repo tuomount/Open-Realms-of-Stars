@@ -117,6 +117,15 @@ public class GalaxyConfig {
    */
   private int scoringVictoryTurns;
   /**
+   * Scoring by culture
+   * -1 Disabled victory by culture
+   * 0 75% of regular culture score limit
+   * 1 100% of regular culture score limit
+   * 2 150% of regular culture score limit
+   * 3 200% of regular culture score limit
+   */
+  private int scoringCulture;
+  /**
    * Constructor for galaxy config
    */
   public GalaxyConfig() {
@@ -126,6 +135,7 @@ public class GalaxyConfig {
     setChanceForPlanetaryEvent(10);
     setNumberOfRoguePlanets(ROGUE_PLANETS_FEW);
     setScoringVictoryTurns(400);
+    setCultureScoreLimit(1);
     setMaxPlayers(4);
     setSolarSystemDistance(12, 0);
     playerRaces = new SpaceRace[StarMap.MAX_PLAYERS];
@@ -351,6 +361,33 @@ public class GalaxyConfig {
     }
   }
 
+  /**
+   * Get Culture score limits.
+   * -1 Disabled victory by culture
+   * 0 75% of regular culture score limit
+   * 1 100% of regular culture score limit
+   * 2 150% of regular culture score limit
+   * 3 200% of regular culture score limit
+   * @return Culture score limit
+   */
+  public int getCultureScoreLimit() {
+    return scoringCulture;
+  }
+
+  /**
+   * Set culture score limit
+   * @param limit Score limit
+   *        -1 Disabled victory by culture
+   *        0 75% of regular culture score limit
+   *        1 100% of regular culture score limit
+   *        2 150% of regular culture score limit
+   *        3 200% of regular culture score limit
+   */
+  public void setCultureScoreLimit(final int limit) {
+    if (limit >= -1 && limit <= 3) {
+      scoringCulture = limit;
+    }
+  }
   /**
    * Get the number of rogue planets. This number is then
    * multiplied by galaxy size.

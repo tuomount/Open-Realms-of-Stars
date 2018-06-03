@@ -84,6 +84,11 @@ public class GalaxyCreationView extends BlackPanel {
   private SpaceCombo<String> comboScoringVictory;
 
   /**
+   * ComboBox on scoring culture
+   */
+  private SpaceCombo<String> comboScoringCulture;
+
+  /**
    * ComboBox for rogue planet
    */
   private SpaceCombo<String> comboRoguePlanets;
@@ -277,6 +282,32 @@ public class GalaxyCreationView extends BlackPanel {
     comboScoringVictory.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboScoringVictory.addActionListener(listener);
     info.add(comboScoringVictory);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+
+    label = new SpaceLabel("Victory by culture:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    String[] scoringCulture = new String[5];
+    scoringCulture [0] = "Disable cultural victory";
+    scoringCulture [1] = "Faster (75% regular limit)";
+    scoringCulture [2] = "Normal (100% regular limit)";
+    scoringCulture [3] = "Slower (150% regular limit)";
+    scoringCulture [4] = "Very slow (200% regular limit)";
+    comboScoringCulture = new SpaceCombo<>(scoringCulture);
+    comboScoringCulture.setToolTipText("How much culture must gain before"
+        + " winning by cultural domination.");
+    switch (this.config.getCultureScoreLimit()) {
+      case -1: comboScoringCulture.setSelectedIndex(0); break;
+      case 0: comboScoringCulture.setSelectedIndex(1); break;
+      case 1: comboScoringCulture.setSelectedIndex(2); break;
+      case 2: comboScoringCulture.setSelectedIndex(3); break;
+      case 3: comboScoringCulture.setSelectedIndex(4); break;
+      default: comboScoringCulture.setSelectedIndex(2); break;
+    }
+    comboScoringCulture.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboScoringCulture.addActionListener(listener);
+    info.add(comboScoringCulture);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
 
     xinvis.add(info);
@@ -500,6 +531,38 @@ public class GalaxyCreationView extends BlackPanel {
         config.setChanceForPlanetaryEvent(400);
         break;
       }
+      }
+      switch (comboScoringCulture.getSelectedIndex()) {
+        case 0: {
+          // Disabled
+          config.setCultureScoreLimit(-1);
+          break;
+        }
+        case 1: {
+          // 75%
+          config.setCultureScoreLimit(0);
+          break;
+        }
+        case 2: {
+          // 100%
+          config.setCultureScoreLimit(1);
+          break;
+        }
+        case 3: {
+          // 150%
+          config.setCultureScoreLimit(2);
+          break;
+        }
+        case 4: {
+          // 200%
+          config.setCultureScoreLimit(3);
+          break;
+        }
+        default: {
+          // 100%
+          config.setCultureScoreLimit(1);
+          break;
+        }
       }
     }
   }

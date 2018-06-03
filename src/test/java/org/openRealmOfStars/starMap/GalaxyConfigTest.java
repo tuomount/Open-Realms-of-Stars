@@ -76,6 +76,9 @@ public class GalaxyConfigTest {
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
     assertEquals(GalaxyConfig.START_POSITION_RANDOM,
         config.getStartingPosition());
+    assertEquals(1, config.getCultureScoreLimit());
+    config.setCultureScoreLimit(-1);
+    assertEquals(-1, config.getCultureScoreLimit());
   }
 
 

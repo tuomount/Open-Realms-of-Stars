@@ -435,8 +435,6 @@ public final class PlanetHandling {
       score = -1;
     }
 
-    score = score / (planet.howManyBuildings(building.getName()) + 1);
-
     if (planet.exceedRadiation()) {
       if (building.getName().equals("Radiation dampener")
           || building.getName().equals("Radiation well")) {

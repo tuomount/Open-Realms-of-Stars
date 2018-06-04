@@ -222,7 +222,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.8";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.9";
 
   /**
    * Maximum amount of looping when finding free solar system spot.
@@ -534,6 +534,10 @@ public class StarMap {
       history.addTurn(turn);
       // Victory conditions
       setScoreVictoryTurn(dis.readInt());
+      setScoreCulture(dis.readInt());
+      setScoreConquer(dis.readInt());
+      setScoreResearch(dis.readInt());
+      setScoreDiplomacy(dis.readInt());
       maxX = dis.readInt();
       maxY = dis.readInt();
       culture = new CulturePower[maxX][maxY];
@@ -592,11 +596,15 @@ public class StarMap {
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(final DataOutputStream dos) throws IOException {
-    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.8");
+    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.9");
     // Turn number
     dos.writeInt(turn);
     // Victory conditions
     dos.writeInt(getScoreVictoryTurn());
+    dos.writeInt(getScoreCulture());
+    dos.writeInt(getScoreConquer());
+    dos.writeInt(getScoreResearch());
+    dos.writeInt(getScoreDiplomacy());
     // Map size
     dos.writeInt(maxX);
     dos.writeInt(maxY);

@@ -48,17 +48,19 @@ public class GameRepositoryTest {
     GameRepository repository = new GameRepository();
     StarMap starMap = repository.loadGame("src/test/resources/saves",
                                           "testStats.save");
-    assertEquals("Terran Empire",starMap.getPlayerByIndex(0).getEmpireName());
-    assertEquals(20,starMap.getTurn());
+    assertEquals("Hiearchy of Centaurs",starMap.getPlayerByIndex(0).getEmpireName());
+    assertEquals(199,starMap.getTurn());
     assertEquals(75,starMap.getMaxX());
     assertEquals(75,starMap.getMaxY());
     int[][] data = starMap.getNewsCorpData().getCredit().getGalaxyData();
-    assertEquals(2,data[0][1]);
+    assertEquals(0,data[0][1]);
     assertEquals(0,data[1][1]);
     data = starMap.getNewsCorpData().getMilitary().getGalaxyData();
     assertEquals(6,data[3][1]);
-    assertEquals(10,data[4][0]);
-    assertEquals(10,data[4][1]);
+    assertEquals(6,data[4][0]);
+    assertEquals(13,data[4][1]);
+    assertEquals(1, starMap.getHistory().getByIndex(20).getNumberOfEvents());
+    assertEquals(2, starMap.getHistory().getByIndex(40).getNumberOfEvents());
   }
 
 }

@@ -25,6 +25,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
@@ -430,8 +431,8 @@ public final class MissionHandling {
   }
 
   /**
-   * Handle Colonize mission
-   * @param mission Colonize mission, does nothing if type is wrong
+   * Handle Deploy starbase mission
+   * @param mission Deploy starbase mission, does nothing if type is wrong
    * @param fleet Fleet on mission
    * @param info PlayerInfo
    * @param game Game for getting star map and planet
@@ -653,7 +654,7 @@ public final class MissionHandling {
           && fleet.getRoute() == null) {
         makeReroute(game, fleet, info, mission);
       }
-    } // End of colonize
+    } // End of Gather
 
   }
 
@@ -827,6 +828,52 @@ public final class MissionHandling {
         makeReroute(game, fleet, info, mission);
       }
     }
+  }
+
+  /**
+   * Handle Spy mission
+   * @param mission Spy mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleSpyMission(final Mission mission, final Fleet fleet,
+      final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.SPY_MISSION) {
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+        // Fleet has encounter obstacle, taking a detour round it
+        Planet planet = game.getStarMap().getPlanetByName(
+            mission.getTargetPlanet());
+        CulturePower culture = game.getStarMap().getSectorCulture(
+            fleet.getX(), fleet.getY());
+        if (planet != null && culture != null
+            && planet.getPlanetOwnerIndex() == culture.getHighestCulture()
+            && culture.getHighestCulture() > -1) {
+          // Fleet has found correct player sector, start spying
+          mission.setPhase(MissionPhase.EXECUTING);
+          fleet.setaStarSearch(null);
+        } else {
+          makeReroute(game, fleet, info, mission);
+        }
+      }
+      if (mission.getPhase() == MissionPhase.EXECUTING) {
+        mission.setPhase(MissionPhase.TREKKING);
+        //FIXME Implement actual executing
+        /*for (int i = 0; i < fleet.getMovesLeft(); i++) {
+          CulturePower cultureUp = game.getStarMap().getSectorCulture(
+              fleet.getX(), fleet.getY() - 1);
+          CulturePower cultureDown = game.getStarMap().getSectorCulture(
+              fleet.getX(), fleet.getY() + 1);
+          CulturePower cultureLeft = game.getStarMap().getSectorCulture(
+              fleet.getX() - 1, fleet.getY());
+          CulturePower cultureRight = game.getStarMap().getSectorCulture(
+              fleet.getX() + 1, fleet.getY());
+          Planet planet = game.getStarMap().getPlanetByName(
+              mission.getTargetPlanet());
+        }*/
+      }
+    } // End Of Spy mission
   }
 
   /**

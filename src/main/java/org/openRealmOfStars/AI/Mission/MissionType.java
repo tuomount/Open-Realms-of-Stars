@@ -72,7 +72,12 @@ public enum MissionType {
    * Idea is to explore with colony ship before first
    * colonized planet is found.
    */
-  COLONY_EXPLORE;
+  COLONY_EXPLORE,
+  /**
+   * Mission which idea is focused on espionage. It tries to keep fleet
+   * inside enemy sector without being noticed.
+   */
+  SPY_MISSION;
 
   /**
    * Get Mission type with index
@@ -102,6 +107,8 @@ public enum MissionType {
       return 9;
     case COLONY_EXPLORE:
       return 10;
+    case SPY_MISSION:
+      return 11;
     default:
       return 0;
     }
@@ -132,6 +139,8 @@ public enum MissionType {
       return "Privateer";
     case COLONY_EXPLORE:
       return "Colony Expolore";
+    case SPY_MISSION:
+      return "Spy mission";
     default:
       return "Unknown";
     }

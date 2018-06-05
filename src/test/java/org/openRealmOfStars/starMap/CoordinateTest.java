@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -48,6 +48,50 @@ public class CoordinateTest {
 
         assertEquals(originalCoordinate.getX(), coordinate.getX());
         assertEquals(originalCoordinate.getY(), coordinate.getY());
+    }
+
+    @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
+    public void testCreateCoordinateUp() {
+        int x = 10;
+        int y = 15;
+        Coordinate coordinate = new Coordinate(x, y);
+        Coordinate target = coordinate.getDirection(Coordinate.UP);
+        assertEquals(x, target.getX());
+        assertEquals(y - 1, target.getY());
+    }
+
+    @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
+    public void testCreateCoordinateDown() {
+        int x = 10;
+        int y = 15;
+        Coordinate coordinate = new Coordinate(x, y);
+        Coordinate target = coordinate.getDirection(Coordinate.DOWN);
+        assertEquals(x, target.getX());
+        assertEquals(y + 1, target.getY());
+    }
+
+    @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
+    public void testCreateCoordinateRight() {
+        int x = 10;
+        int y = 15;
+        Coordinate coordinate = new Coordinate(x, y);
+        Coordinate target = coordinate.getDirection(Coordinate.RIGHT);
+        assertEquals(x + 1, target.getX());
+        assertEquals(y, target.getY());
+    }
+
+    @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
+    public void testCreateCoordinateLeft() {
+        int x = 10;
+        int y = 15;
+        Coordinate coordinate = new Coordinate(x, y);
+        Coordinate target = coordinate.getDirection(Coordinate.LEFT);
+        assertEquals(x - 1, target.getX());
+        assertEquals(y, target.getY());
     }
 
     @Test

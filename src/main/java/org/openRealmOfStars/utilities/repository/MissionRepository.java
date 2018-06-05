@@ -88,6 +88,8 @@ public class MissionRepository {
       return MissionType.PRIVATEER;
     case 10:
       return MissionType.COLONY_EXPLORE;
+    case 11:
+      return MissionType.SPY_MISSION;
     default:
       ErrorLogger.log("Warning: Unknown mission type: " + index
           + ". Defaulting to explore.");

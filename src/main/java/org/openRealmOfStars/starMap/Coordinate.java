@@ -24,10 +24,27 @@ package org.openRealmOfStars.starMap;
  */
 public class Coordinate {
 
-    /** The X value ot the coordinate */
+    /** The X value of the coordinate */
     private int x;
-    /** The Y value ot the coordinate */
+    /** The Y value of the coordinate */
     private int y;
+
+    /**
+     * Direction up
+     */
+    public static final int UP = 0;
+    /**
+     * Direction right
+     */
+    public static final int RIGHT = 2;
+    /**
+     * Direction down
+     */
+    public static final int DOWN = 4;
+    /**
+     * Direction left
+     */
+    public static final int LEFT = 6;
 
     /**
      * Constructor for Coordinate
@@ -47,6 +64,20 @@ public class Coordinate {
         this(coordinate.getX(), coordinate.getY());
     }
 
+    /**
+     * Get new coordinate from old one according the direction
+     * @param direction UP, RIGHT, DOWN, LEFT are allowd
+     * @return New coordinate according direction or old one
+     */
+    public Coordinate getDirection(final int direction) {
+      switch (direction) {
+        case UP: return new Coordinate(getX(), getY() - 1);
+        case RIGHT: return new Coordinate(getX() + 1, getY());
+        case DOWN: return new Coordinate(getX(), getY() + 1);
+        case LEFT: return new Coordinate(getX() - 1, getY());
+        default: return new Coordinate(this);
+      }
+    }
     /**
      * Get the X value ot the coordinate
      * @return the X value ot the coordinate

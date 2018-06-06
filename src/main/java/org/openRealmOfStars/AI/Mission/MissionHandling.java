@@ -859,8 +859,11 @@ public final class MissionHandling {
       }
       if (mission.getPhase() == MissionPhase.EXECUTING) {
         mission.setPhase(MissionPhase.TREKKING);
-        //FIXME Implement actual executing
-        /*for (int i = 0; i < fleet.getMovesLeft(); i++) {
+        // Trying to keep as away as possible from planet
+        // but staying on culture sector.
+        // Keeps moving a bit so it would look like
+        // exploration ship.
+        for (int i = 0; i < fleet.getMovesLeft(); i++) {
           CulturePower cultureUp = game.getStarMap().getSectorCulture(
               fleet.getX(), fleet.getY() - 1);
           CulturePower cultureDown = game.getStarMap().getSectorCulture(
@@ -871,7 +874,51 @@ public final class MissionHandling {
               fleet.getX() + 1, fleet.getY());
           Planet planet = game.getStarMap().getPlanetByName(
               mission.getTargetPlanet());
-        }*/
+          double distance = 0;
+          Coordinate target = null;
+          if (planet != null) {
+            if (cultureUp.getHighestCulture() == planet.getPlanetOwnerIndex()
+                && cultureUp.getHighestCulture() > -1
+                && planet.getCoordinate().calculateDistance(
+                    fleet.getCoordinate().getDirection(Coordinate.UP))
+                    > distance) {
+              distance = planet.getCoordinate().calculateDistance(
+                  fleet.getCoordinate().getDirection(Coordinate.UP));
+              target = fleet.getCoordinate().getDirection(Coordinate.UP);
+            }
+            if (cultureRight.getHighestCulture() == planet.getPlanetOwnerIndex()
+                && cultureRight.getHighestCulture() > -1
+                && planet.getCoordinate().calculateDistance(
+                    fleet.getCoordinate().getDirection(Coordinate.RIGHT))
+                    > distance) {
+              distance = planet.getCoordinate().calculateDistance(
+                  fleet.getCoordinate().getDirection(Coordinate.RIGHT));
+              target = fleet.getCoordinate().getDirection(Coordinate.RIGHT);
+            }
+            if (cultureDown.getHighestCulture() == planet.getPlanetOwnerIndex()
+                && cultureDown.getHighestCulture() > -1
+                && planet.getCoordinate().calculateDistance(
+                    fleet.getCoordinate().getDirection(Coordinate.DOWN))
+                    > distance) {
+              distance = planet.getCoordinate().calculateDistance(
+                  fleet.getCoordinate().getDirection(Coordinate.DOWN));
+              target = fleet.getCoordinate().getDirection(Coordinate.DOWN);
+            }
+            if (cultureLeft.getHighestCulture() == planet.getPlanetOwnerIndex()
+                && cultureLeft.getHighestCulture() > -1
+                && planet.getCoordinate().calculateDistance(
+                    fleet.getCoordinate().getDirection(Coordinate.LEFT))
+                    > distance) {
+              distance = planet.getCoordinate().calculateDistance(
+                  fleet.getCoordinate().getDirection(Coordinate.LEFT));
+              target = fleet.getCoordinate().getDirection(Coordinate.LEFT);
+            }
+          }
+          if (target != null) {
+            fleet.setPos(target);
+          }
+        }
+        fleet.setMovesLeft(0);
       }
     } // End Of Spy mission
   }

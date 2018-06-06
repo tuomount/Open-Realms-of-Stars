@@ -26,6 +26,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.repository.GameRepository;
@@ -350,6 +351,40 @@ public class MissionHandlingTest {
     mission.setPhase(MissionPhase.TREKKING);
     MissionHandling.handleColonyExplore(mission, fleet, info, game);
     assertEquals(MissionPhase.TREKKING, mission.getPhase());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSpyMission() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.TEUTHIDAES);
+    Mission mission = new Mission(MissionType.SPY_MISSION, MissionPhase.TREKKING,
+        new Coordinate(2, 2));
+    mission.setTargetPlanet("Planet I");
+    Game game = Mockito.mock(Game.class);
+    StarMap map = Mockito.mock(StarMap.class);
+    Coordinate coord = new Coordinate(2, 2);    
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getPlanetOwnerIndex()).thenReturn(3);
+    Mockito.when(planet.getCoordinate()).thenReturn(coord);
+    CulturePower culture = Mockito.mock(CulturePower.class);
+    Mockito.when(culture.getHighestCulture()).thenReturn(3);
+    Mockito.when(map.getMaxX()).thenReturn(50);
+    Mockito.when(map.getMaxY()).thenReturn(50);
+    Mockito.when(map.getPlanetByName(Mockito.anyString())).thenReturn(planet);
+    Mockito.when(map.getSectorCulture(Mockito.anyInt(), Mockito.anyInt())).thenReturn(culture);
+    Mockito.when(game.getStarMap()).thenReturn(map);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Coordinate fleetCoord = new Coordinate(5, 7);
+    Mockito.when(fleet.getCoordinate()).thenReturn(fleetCoord);
+    Mockito.when(fleet.getX()).thenReturn(5);
+    Mockito.when(fleet.getY()).thenReturn(7);
+    Mockito.when(fleet.getMilitaryValue()).thenReturn(0);
+    Mockito.when(fleet.getMovesLeft()).thenReturn(1);
+    AStarSearch search = Mockito.mock(AStarSearch.class);
+    Mockito.when(fleet.getaStarSearch()).thenReturn(search);
+    MissionHandling.handleSpyMission(mission, fleet, info, game);
+    assertEquals(MissionPhase.EXECUTING, mission.getPhase());
   }
 
   @Test

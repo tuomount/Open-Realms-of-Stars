@@ -858,7 +858,6 @@ public final class MissionHandling {
         }
       }
       if (mission.getPhase() == MissionPhase.EXECUTING) {
-        mission.setPhase(MissionPhase.TREKKING);
         // Trying to keep as away as possible from planet
         // but staying on culture sector.
         // Keeps moving a bit so it would look like

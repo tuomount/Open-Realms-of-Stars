@@ -548,6 +548,47 @@ public class PlayerInfo {
   }
 
   /**
+   * Check AI's attitude towards spy ships
+   * if it wants to build them. If attitudes
+   * are in threshold this decision varies if spy ships
+   * are wanted or not.
+   * @return True if wants to build spy ships.
+   */
+  public boolean researchSpyShips() {
+    int value = 0;
+    switch (race.getAttitude()) {
+      case BACKSTABBING: value = value + 9; break;
+      case AGGRESSIVE: value = value + 8; break;
+      case MILITARISTIC: value = value + 7; break;
+      case EXPANSIONIST: value = value + 6; break;
+      case DIPLOMATIC: value = value + 5; break;
+      case LOGICAL: value = value + 5; break;
+      case MERCHANTICAL: value = value + 4; break;
+      case SCIENTIFIC: value = value + 3; break;
+      case PEACEFUL: value = value + 2; break;
+      default: value = value + 5; break;
+    }
+    switch (getAttitude()) {
+      case BACKSTABBING: value = value + 9; break;
+      case AGGRESSIVE: value = value + 8; break;
+      case MILITARISTIC: value = value + 7; break;
+      case EXPANSIONIST: value = value + 6; break;
+      case DIPLOMATIC: value = value + 5; break;
+      case LOGICAL: value = value + 5; break;
+      case MERCHANTICAL: value = value + 4; break;
+      case SCIENTIFIC: value = value + 3; break;
+      case PEACEFUL: value = value + 2; break;
+      default: value = value + 5; break;
+    }
+    if (value > 10) {
+      return true;
+    }
+    if (value == 10 && DiceGenerator.getRandom(100) >= 50) {
+      return true;
+    }
+    return false;
+  }
+  /**
    * Get fake military setting for AI.
    * This is not very good. It is just static values. This
    * is used tuneFakeMilitarySetting which gives more dynamic

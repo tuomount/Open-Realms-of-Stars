@@ -530,6 +530,27 @@ public class ShipDesign {
   }
 
   /**
+   * Calculate Espionage power of design. Design needs to have at least single
+   * espionage module
+   * @return Espionage  power
+   */
+  public int getEspionagePower() {
+    int power = 0;
+    boolean spyShip = false;
+    for (int i = 0; i < components.size(); i++) {
+      ShipComponent comp = components.get(i);
+      if (comp.getType() == ShipComponentType.ESPIONAGE_MODULE) {
+        spyShip = true;
+        power = power + comp.getEspionageBonus();
+      }
+    }
+    if (!spyShip) {
+      power = 0;
+    }
+    return power;
+  }
+
+  /**
    * Get Ship design fighter bay size
    * @return Fighter bay size
    */

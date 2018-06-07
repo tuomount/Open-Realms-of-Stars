@@ -97,6 +97,10 @@ public class PlayerInfoTest {
         human.removeShipStat(expectedStat);
         statList = human.getShipStatList();
         assertEquals(1, statList.length);
+        human.setAttitude(Attitude.PEACEFUL);
+        assertEquals(false, human.researchSpyShips());
+        human.setAttitude(Attitude.BACKSTABBING);
+        assertEquals(true, human.researchSpyShips());
     }
 
     /**

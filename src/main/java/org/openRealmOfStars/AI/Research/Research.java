@@ -91,6 +91,7 @@ public final class Research {
     handleColonyShipDesign(info);
     handleFreighterShipDesign(info);
     handlePrivateerShipDesign(info);
+    handleSpyShipDesign(info);
   }
 
   /**
@@ -216,6 +217,37 @@ public final class Research {
       }
     }
 
+  }
+
+  /**
+   * Handle Spy ship design for AI
+   * @param info Player
+   */
+  private static void handleSpyShipDesign(final PlayerInfo info) {
+    ShipDesign design = ShipGenerator.createSpy(info);
+    if (design != null && info.researchSpyShips()) {
+      ShipStat[] stats = info.getShipStatList();
+      boolean notFound = true;
+      for (ShipStat stat : stats) {
+        if (stat.getDesign().getName().startsWith("Spy Mk")
+            && stat.getDesign()
+                .gotCertainType(ShipComponentType.ESPIONAGE_MODULE)
+            && !stat.isObsolete()) {
+          notFound = false;
+          if (design.getEspionagePower() > stat.getDesign()
+              .getEspionagePower()) {
+            stat.setObsolete(true);
+            ShipStat ship = new ShipStat(design);
+            info.addShipStat(ship);
+            break;
+          }
+        }
+      }
+      if (notFound) {
+        ShipStat ship = new ShipStat(design);
+        info.addShipStat(ship);
+      }
+    }
   }
 
   /**

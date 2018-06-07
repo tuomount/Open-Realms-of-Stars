@@ -566,6 +566,75 @@ public final class ShipGenerator {
   }
 
   /**
+   * Create spy ship with best possible technology.
+   * @param player whom is designing the new ship
+   * @return ShipDesign or null if fails
+   */
+  public static ShipDesign createSpy(final PlayerInfo player) {
+    ShipDesign result = null;
+    Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
+    Tech[] electronicTechs = player.getTechList().getListForType(
+        TechType.Electrics);
+    Tech spyTech = TechList.getBestTech(electronicTechs, "Espionage module");
+    Tech hullTech = TechList.getBestTech(hullTechs, "Corvette");
+    boolean probe = false;
+    if (hullTech == null) {
+      hullTech = TechList.getBestTech(hullTechs, "Probe");
+      probe = true;
+    }
+    if (hullTech != null && spyTech != null) {
+      ShipHull hull = ShipHullFactory.createByName(hullTech.getHull(),
+          player.getRace());
+      result = new ShipDesign(hull);
+      result.setName(
+           "Spy Mk" + (player.getShipStatHighestNumber(
+              "Spy ") + 1));
+      ShipComponent engine = ShipComponentFactory
+          .createByName(player.getTechList().getBestEngine().getComponent());
+      result.addComponent(engine);
+      ShipComponent power = ShipComponentFactory.createByName(
+          player.getTechList().getBestEnergySource().getComponent());
+      result.addComponent(power);
+      ShipComponent spyModule = ShipComponentFactory.createByName(
+          spyTech.getComponent());
+      result.addComponent(spyModule);
+      Tech scanner = TechList.getBestTech(electronicTechs, "Scanner");
+      Tech cloak = TechList.getBestTech(electronicTechs, "Cloaking device");
+      ShipComponent scannerComp = null;
+      ShipComponent cloakComp = null;
+      if (scanner != null) {
+        scannerComp = ShipComponentFactory.createByName(
+            scanner.getComponent());
+      }
+      if (cloak != null) {
+        cloakComp = ShipComponentFactory.createByName(cloak.getComponent());
+      }
+      if (probe) {
+        if (player.getRace() == SpaceRace.TEUTHIDAES && scannerComp != null) {
+          result.addComponent(scannerComp);
+        } else {
+          if (cloakComp != null
+              && result.getFreeEnergy() >= cloakComp.getEnergyRequirement()) {
+            result.addComponent(cloakComp);
+          } else if (scannerComp != null) {
+            result.addComponent(scannerComp);
+          }
+        }
+      } else {
+        if (cloakComp != null
+            && result.getFreeEnergy() >= cloakComp.getEnergyRequirement()) {
+          result.addComponent(cloakComp);
+        }
+        if (scannerComp != null
+            && result.getFreeEnergy() >= scannerComp.getEnergyRequirement()) {
+          result.addComponent(scannerComp);
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
    * Create colony/troop ship with best possible technology. This is used
    * for human players in beginning and AI every time they design
    * new colony/troop ship.

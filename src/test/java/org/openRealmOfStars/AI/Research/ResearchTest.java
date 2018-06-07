@@ -80,8 +80,23 @@ public class ResearchTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testShipDesignHandlingSpy() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    info.setAttitude(Attitude.BACKSTABBING);
+    assertEquals(2, info.getShipStatList().length);
+    Research.handleShipDesigns(info);
+    assertEquals(3, info.getShipStatList().length);
+    info.getTechList().addTech(TechFactory.createHullTech("Probe", 2));
+    info.getTechList().addTech(TechFactory.createElectronicsTech("Espionage module Mk1", 2));
+    Research.handleShipDesigns(info);
+    assertEquals(4, info.getShipStatList().length);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testShipDesignHandlingScaurians() {
     PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS);
+    info.setAttitude(Attitude.BACKSTABBING);
     assertEquals(2, info.getShipStatList().length);
     Research.handleShipDesigns(info);
     assertEquals(3, info.getShipStatList().length);
@@ -94,7 +109,9 @@ public class ResearchTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRemoveObsoleteDesigns() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 2, 0);
+    info.setAttitude(Attitude.BACKSTABBING);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS, 2, 1);
+    info.setAttitude(Attitude.BACKSTABBING);
     GalaxyConfig config = new GalaxyConfig();
     config.setMaxPlayers(2);
     PlayerList list = new PlayerList();
@@ -232,6 +249,7 @@ public class ResearchTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testResearchHandlingTeuthidaes() {
     PlayerInfo info = new PlayerInfo(SpaceRace.TEUTHIDAES);
+    info.setAttitude(Attitude.BACKSTABBING);
     Research.handle(info);
     assertEquals(Research.VERY_HIGH_FOCUS_LEVEL, 
         info.getTechList().getTechFocus(TechType.Improvements));
@@ -249,6 +267,11 @@ public class ResearchTest {
         info.getTechList().getTechFocus(TechType.Propulsion));
     assertEquals(Research.HIGH_FOCUS_LEVEL, 
         info.getTechList().getTechFocus(TechType.Electrics));
+    assertEquals(2, info.getShipStatList().length);
+    info.getTechList().addTech(TechFactory.createHullTech("Probe", 2));
+    info.getTechList().addTech(TechFactory.createElectronicsTech("Espionage module Mk1", 2));
+    Research.handleShipDesigns(info);
+    assertEquals(4, info.getShipStatList().length);
   }
 
   @Test

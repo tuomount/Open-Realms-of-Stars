@@ -1111,6 +1111,19 @@ private int increaseHitChanceByComponent() {
   }
 
   /**
+   * Is Ship spy ship or not
+   * @return True if spy ship otherwise false
+   */
+  public boolean isSpyShip() {
+    if (getEspionageBonus() > 0 && getTotalMilitaryPower() == 0
+        && (hull.getName().startsWith("Corvette")
+          || hull.getName().startsWith("Probe"))) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
    * Get Troop power
    * @return Get Total troop power where improvements are taken to count
    */

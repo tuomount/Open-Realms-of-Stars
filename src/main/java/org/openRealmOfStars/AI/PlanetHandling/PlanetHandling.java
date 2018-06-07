@@ -8,6 +8,8 @@ import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
+import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -714,7 +716,7 @@ public final class PlanetHandling {
       final Attitude attitude) {
     int score = preScore;
     if (ship.isTradeShip()) {
-      // Trooper ship should be built only on request
+      // Trade ship should be built only on request
       Mission mission = info.getMissions().getMission(
           MissionType.TRADE_FLEET, MissionPhase.PLANNING);
       if (mission != null) {
@@ -735,6 +737,50 @@ public final class PlanetHandling {
         } else if (attitude == Attitude.MILITARISTIC
             || attitude == Attitude.AGGRESSIVE) {
           score = score - 10;
+        }
+        if (ship.getEspionageBonus() > 0 && info.researchSpyShips()) {
+          // Spy trade is plus if AI likes spy ships
+          score = score + 10;
+        }
+      } else {
+        score = -1;
+      }
+    }
+    return score;
+  }
+
+  /**
+   * Score spy ship. Separating this makes easier to do JUnits.
+   * @param preScore Pre score from generic ship scoring.
+   * @param ship Trade ship to score
+   * @param info Player who is building
+   * @param map StarMap
+   * @param attitude Attitude for AI
+   * @return score for the ship
+   */
+  protected static int scoreSpyShip(final int preScore, final Ship ship,
+      final PlayerInfo info, final StarMap map, final Attitude attitude) {
+    int score = preScore;
+    if (ship.isSpyShip()) {
+      boolean moreIsRequired = false;
+      for (int i = 0; i < map.getPlayerList().getCurrentMaxPlayers(); i++) {
+        EspionageList espionage = info.getEspionage().getByIndex(i);
+        DiplomacyBonusList diplomacy = info.getDiplomacy().getDiplomacyList(i);
+        if (espionage != null && diplomacy != null
+            && diplomacy.getNumberOfMeetings() > 0
+            && espionage.getTotalBonus() < 8) {
+            moreIsRequired = true;
+            break;
+          }
+      }
+      if (moreIsRequired) {
+        score = score + ship.getEspionageBonus() * 10;
+        if (attitude == Attitude.BACKSTABBING) {
+          score = score + 10;
+        }
+        if (attitude == Attitude.AGGRESSIVE
+            || attitude == Attitude.MILITARISTIC) {
+          score = score + 5;
         }
       } else {
         score = -1;
@@ -936,6 +982,9 @@ public final class PlanetHandling {
         if (ship.isTradeShip()) {
           // Trade ship should be built only on request
           score = scoreTradeShip(score, ship, planet, info, map, attitude);
+        }
+        if (ship.isSpyShip()) {
+          score = scoreSpyShip(score, ship, info, map, attitude);
         }
         scores[i] = score;
       }

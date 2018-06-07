@@ -12,8 +12,13 @@ import org.openRealmOfStars.AI.Mission.MissionList;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.diplomacy.Diplomacy;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
+import org.openRealmOfStars.player.espionage.Espionage;
+import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.Ship;
@@ -522,6 +527,41 @@ public class PlanetHandlingTest {
     score = PlanetHandling.scoreTradeShip(20, ship, planet, info, map,
         Attitude.MERCHANTICAL);
     assertEquals(-1, score);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSpyShipScoring() {
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);
+    Mockito.when(ship.getEspionageBonus()).thenReturn(1);
+    Mockito.when(ship.isSpyShip()).thenReturn(true);
+    Mockito.when(ship.getMetalCost()).thenReturn(14);
+    Mockito.when(ship.getProdCost()).thenReturn(22);
+    Espionage espionage = Mockito.mock(Espionage.class);
+    EspionageList espionageList = Mockito.mock(EspionageList.class);
+    Mockito.when(espionageList.getTotalBonus()).thenReturn(2);
+    Mockito.when(espionage.getByIndex(Mockito.anyInt())).thenReturn(espionageList);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    DiplomacyBonusList diplomacyList = Mockito.mock(DiplomacyBonusList.class);
+    Mockito.when(diplomacy.getDiplomacyList(Mockito.anyInt())).thenReturn(diplomacyList);
+    Mockito.when(diplomacyList.getNumberOfMeetings()).thenReturn(1);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEspionage()).thenReturn(espionage);
+    Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
+    StarMap map = Mockito.mock(StarMap.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(8);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    int score = PlanetHandling.scoreSpyShip(20, ship, info, map,
+        Attitude.BACKSTABBING);
+    assertEquals(40, score);
+    score = PlanetHandling.scoreSpyShip(20, ship, info, map,
+        Attitude.AGGRESSIVE);
+    assertEquals(35, score);
+    score = PlanetHandling.scoreSpyShip(20, ship, info, map,
+        Attitude.EXPANSIONIST);
+    assertEquals(30, score);
   }
 
   @Test

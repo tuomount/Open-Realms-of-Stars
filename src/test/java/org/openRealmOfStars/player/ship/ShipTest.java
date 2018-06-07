@@ -516,11 +516,30 @@ public class ShipTest {
     design.addComponent(engine);
     design.addComponent(scanner);
     Ship ship = new Ship(design);
-    
+
     assertEquals(3,ship.getFtlSpeed());
     assertEquals(2,ship.getSpeed());
     assertEquals(1,ship.getTacticSpeed());
+    assertEquals(false, ship.isSpyShip());
 
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testSpyShip() {
+    ShipHull hull = ShipHullFactory.createByName("Probe", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk2");
+    ShipComponent scanner = ShipComponentFactory.createByName("Scanner Mk1");
+    ShipComponent spy = ShipComponentFactory.createByName("Espionage Module Mk1");
+    design.addComponent(engine);
+    design.addComponent(scanner);
+    design.addComponent(spy);
+    Ship ship = new Ship(design);
+    assertEquals(3,ship.getFtlSpeed());
+    assertEquals(2,ship.getSpeed());
+    assertEquals(2,ship.getTacticSpeed());
+    assertEquals(true, ship.isSpyShip());
   }
 
   @Test

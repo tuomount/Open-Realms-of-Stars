@@ -1441,6 +1441,9 @@ public class Planet {
               }
             }
           }
+          //if (ship.isSpyShip()) {
+            //FIXME DO spy mission assign
+          //}
           msg = new Message(MessageType.CONSTRUCTION,
               getName() + " built " + underConstruction.getName(),
               Icons.getIconByName(Icons.ICON_HULL_TECH));

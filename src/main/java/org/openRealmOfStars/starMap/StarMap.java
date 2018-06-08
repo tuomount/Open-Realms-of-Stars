@@ -1419,6 +1419,25 @@ public class StarMap {
     }
 
   }
+
+  /**
+   * Get List of planets owned by certain realm but which are
+   * known to seen realm.
+   * @param targetRealm Owner of the planet
+   * @param seen Realm which sees them
+   * @return Planets as an array
+   */
+  public Planet[] getPlanetListSeenByOther(final int targetRealm,
+      final PlayerInfo seen) {
+    ArrayList<Planet> list = new ArrayList<>();
+    for (Planet planet : planetList) {
+      if (planet.getPlanetOwnerIndex() == targetRealm
+          && seen.getSectorVisibility(planet.getCoordinate()) >= 1) {
+        list.add(planet);
+      }
+    }
+    return list.toArray(new Planet[0]);
+  }
   /**
    * Handle research and planets for single AI player
    */

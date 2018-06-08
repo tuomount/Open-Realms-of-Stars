@@ -566,6 +566,41 @@ public class PlanetHandlingTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSpyShipMissionCreation() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Espionage espionage = Mockito.mock(Espionage.class);
+    Mockito.when(diplomacy.getLeastLikingWithLowEspionage(espionage)).thenReturn(5);
+    Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(info.getEspionage()).thenReturn(espionage);
+    StarMap map = Mockito.mock(StarMap.class);
+    Planet target = Mockito.mock(Planet.class);
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mockito.when(target.getCoordinate()).thenReturn(coord);
+    Mockito.when(target.getName()).thenReturn("Target planet I");
+    Planet target2 = Mockito.mock(Planet.class);
+    Mockito.when(target2.getCoordinate()).thenReturn(coord);
+    Mockito.when(target2.getName()).thenReturn("Target planet II");
+    Planet[] planets = {target};
+    Planet[] planets2 = {target2};
+    Planet[] emptyPlanets = new Planet[0];
+    Mockito.when(map.getPlanetListSeenByOther(5, info)).thenReturn(planets);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(8);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Mockito.when(map.getPlanetListSeenByOther(0, info)).thenReturn(planets2);
+    Mission mission = PlanetHandling.createSpyShipMission(info, map);
+    assertEquals("Target planet I", mission.getTargetPlanet());
+    assertEquals(MissionType.SPY_MISSION, mission.getType());
+    Mockito.when(map.getPlanetListSeenByOther(5, info)).thenReturn(emptyPlanets);
+    mission = PlanetHandling.createSpyShipMission(info, map);
+    assertEquals("Target planet II", mission.getTargetPlanet());
+    assertEquals(MissionType.SPY_MISSION, mission.getType());
+  }
+
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testColonyShipScoring() {
     Ship ship = Mockito.mock(Ship.class);
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(0);

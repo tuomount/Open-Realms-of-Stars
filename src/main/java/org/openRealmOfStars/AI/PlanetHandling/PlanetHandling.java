@@ -614,7 +614,13 @@ public final class PlanetHandling {
               // Privateering ship show not assign any planned missions
               break;
             }
-            // TODO Do Spy ship missing adding here
+            if (ship.isSpyShip()) {
+              Mission mission = createSpyShipMission(info, map);
+              if (mission != null) {
+                info.getMissions().add(mission);
+              }
+              break;
+            }
             Mission mission = info.getMissions().getMissionForPlanet(
                 planet.getName(), MissionType.DEFEND);
             if (mission != null && ship.getTotalMilitaryPower() > 0
@@ -675,6 +681,42 @@ public final class PlanetHandling {
     return constructionSelected;
   }
 
+  /**
+   * Create Spy Ship mission
+   * @param info Player building spy ship
+   * @param map StarMap
+   * @return Mission if player knows some other realm otherwise null
+   */
+  public static Mission createSpyShipMission(final PlayerInfo info,
+      final StarMap map) {
+    Mission result = null;
+    int targetRealm = info.getDiplomacy()
+        .getLeastLikingWithLowEspionage(info.getEspionage());
+    Planet[] planets = map.getPlanetListSeenByOther(targetRealm, info);
+    if (planets.length > 0) {
+      Planet target = planets[DiceGenerator.getRandom(
+          planets.length - 1)];
+      Mission mission = new Mission(MissionType.SPY_MISSION,
+          MissionPhase.BUILDING, target.getCoordinate());
+      mission.setTargetPlanet(target.getName());
+      result = mission;
+    } else {
+      for (int j = 0; j < map.getPlayerList().getCurrentMaxPlayers();
+          j++) {
+        planets = map.getPlanetListSeenByOther(j, info);
+        if (planets.length > 0) {
+          Planet target = planets[DiceGenerator.getRandom(
+              planets.length - 1)];
+          Mission mission = new Mission(MissionType.SPY_MISSION,
+              MissionPhase.BUILDING, target.getCoordinate());
+          mission.setTargetPlanet(target.getName());
+          result = mission;
+          break;
+        }
+      }
+    }
+    return result;
+  }
   /**
    * Score ship, scoring also depends on missions under planning
    * @param ship Ship to score

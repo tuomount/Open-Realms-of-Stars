@@ -12,6 +12,8 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.espionage.Espionage;
+import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.StarMap;
 
@@ -285,6 +287,34 @@ public class DiplomacyTest {
     diplomacy.setList(list2, 2);
     diplomacy.setList(list3, 3);
     assertEquals(2, diplomacy.getLeastLiking());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testLeastLikingWithEspionage() {
+    Diplomacy diplomacy = new Diplomacy(4, 1);
+    DiplomacyBonusList list0 = Mockito.mock(DiplomacyBonusList.class);
+    Mockito.when(list0.getDiplomacyBonus()).thenReturn(5);
+    DiplomacyBonusList list2 = Mockito.mock(DiplomacyBonusList.class);
+    Mockito.when(list2.getDiplomacyBonus()).thenReturn(-7);
+    DiplomacyBonusList list3 = Mockito.mock(DiplomacyBonusList.class);
+    Mockito.when(list3.getDiplomacyBonus()).thenReturn(10);
+    diplomacy.setList(list0, 0);
+    diplomacy.setList(list2, 2);
+    diplomacy.setList(list3, 3);
+    Espionage espionage = Mockito.mock(Espionage.class);
+    EspionageList eList0 = Mockito.mock(EspionageList.class);
+    Mockito.when(eList0.getTotalBonus()).thenReturn(5);
+    Mockito.when(espionage.getByIndex(0)).thenReturn(eList0);
+    EspionageList eList2 = Mockito.mock(EspionageList.class);
+    Mockito.when(eList2.getTotalBonus()).thenReturn(2);
+    Mockito.when(espionage.getByIndex(2)).thenReturn(eList2);
+    EspionageList eList3 = Mockito.mock(EspionageList.class);
+    Mockito.when(eList3.getTotalBonus()).thenReturn(0);
+    Mockito.when(espionage.getByIndex(3)).thenReturn(eList3);
+    assertEquals(2, diplomacy.getLeastLikingWithLowEspionage(espionage));
+    Mockito.when(list3.getDiplomacyBonus()).thenReturn(-7);
+    assertEquals(3, diplomacy.getLeastLikingWithLowEspionage(espionage));
   }
 
   @Test

@@ -614,6 +614,7 @@ public final class PlanetHandling {
               // Privateering ship show not assign any planned missions
               break;
             }
+            // TODO Do Spy ship missing adding here
             Mission mission = info.getMissions().getMissionForPlanet(
                 planet.getName(), MissionType.DEFEND);
             if (mission != null && ship.getTotalMilitaryPower() > 0

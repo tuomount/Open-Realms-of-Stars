@@ -7,6 +7,8 @@ import org.openRealmOfStars.game.States.DiplomacyView;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
+import org.openRealmOfStars.player.espionage.Espionage;
+import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.starMap.StarMap;
@@ -340,6 +342,42 @@ public class Diplomacy {
     return index;
   }
 
+  /**
+   * Get Least liked realm with low espionage
+   * @param espionage Realm which is doing the comparison
+   * @return least liked realm index
+   */
+  public int getLeastLikingWithLowEspionage(final Espionage espionage) {
+    int index = -1;
+    int likingForIndex = VERY_HIGH_LIKE;
+    int bonus = 10;
+    for (int i = 0; i < diplomacyList.length; i++) {
+      if (diplomacyList[i] != null) {
+        int liking = getLiking(i);
+        EspionageList espionageList = espionage.getByIndex(i);
+        int espionageValue = 10;
+        if (espionageList != null) {
+          espionageValue = espionageList.getTotalBonus();
+        }
+        if (liking < likingForIndex && espionageValue <= 8) {
+          bonus = espionageValue;
+          index = i;
+          likingForIndex = liking;
+        }
+        if (liking == likingForIndex && espionageValue < bonus) {
+          bonus = espionageValue;
+          index = i;
+          likingForIndex = liking;
+        }
+        if (index == -1) {
+          bonus = espionageValue;
+          index = i;
+          likingForIndex = liking;
+        }
+      }
+    }
+    return index;
+  }
   /**
    * Get likess value as a String.
    * @param playerIndex whom to check

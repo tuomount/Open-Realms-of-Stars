@@ -1395,6 +1395,11 @@ public class Planet {
                       nameFleet));
                   mission.setFleetName(fleet.getName());
                 }
+                if (mission.getType() == MissionType.SPY_MISSION) {
+                  fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
+                      "Spy"));
+                  mission.setFleetName(fleet.getName());
+                }
               } else {
                 fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
                     mission.getFleetName()));
@@ -1421,7 +1426,14 @@ public class Planet {
               }
             } else {
               if (ship.getTotalMilitaryPower() > 0) {
-                if (fleet.isScoutFleet()) {
+                if (ship.isSpyShip()) {
+                  mission = new Mission(MissionType.SPY_MISSION,
+                      MissionPhase.LOADING, getCoordinate());
+                  planetOwnerInfo.getMissions().add(mission);
+                  fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
+                      "Spy"));
+                  mission.setFleetName(fleet.getName());
+                } else if (fleet.isScoutFleet()) {
                   if (DiceGenerator.getRandom(3) == 0) {
                     // Scout ship is for defending too
                     fleet.setName(planetOwnerInfo.getFleets()

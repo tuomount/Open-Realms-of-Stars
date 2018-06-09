@@ -617,6 +617,7 @@ public final class PlanetHandling {
             if (ship.isSpyShip()) {
               Mission mission = createSpyShipMission(info, map);
               if (mission != null) {
+                mission.setPlanetBuilding(planet.getName());
                 info.getMissions().add(mission);
               }
               break;

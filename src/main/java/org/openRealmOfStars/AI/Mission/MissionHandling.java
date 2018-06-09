@@ -2,6 +2,7 @@ package org.openRealmOfStars.AI.Mission;
 
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
+import org.openRealmOfStars.AI.PlanetHandling.PlanetHandling;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameState;
@@ -840,6 +841,16 @@ public final class MissionHandling {
   public static void handleSpyMission(final Mission mission, final Fleet fleet,
       final PlayerInfo info, final Game game) {
     if (mission != null && mission.getType() == MissionType.SPY_MISSION) {
+      if (mission.getPhase() == MissionPhase.LOADING) {
+        Mission newPlan = PlanetHandling.createSpyShipMission(info,
+            game.getStarMap());
+        if (newPlan != null) {
+          // New target to set up
+          mission.setTarget(new Coordinate(newPlan.getX(), newPlan.getY()));
+          mission.setTargetPlanet(newPlan.getTargetPlanet());
+          mission.setPhase(MissionPhase.TREKKING);
+        }
+      }
       if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getRoute() == null) {
         // Fleet has encounter obstacle, taking a detour round it

@@ -1756,6 +1756,10 @@ public class StarMap {
   /**
    * Culture level 1
    */
+  private static final int CULTURE_LEVEL_0 = 1;
+  /**
+   * Culture level 1
+   */
   private static final int CULTURE_LEVEL_1 = 5;
   /**
    * Culture level 2
@@ -1804,7 +1808,24 @@ public class StarMap {
   public void calculateCulture(final int cx, final int cy, final int value,
       final int index) {
     String mask = null;
-    if (value < CULTURE_LEVEL_1) {
+    if (value == CULTURE_LEVEL_0) {
+      //        765432101234567
+      mask = /* 7 */"...............\n"
+      + /* 6 */"...............\n"
+      + /* 5 */"...............\n"
+      + /* 4 */"...............\n"
+      + /* 3 */"...............\n"
+      + /* 2 */"...............\n"
+      + /* 1 */"...............\n"
+      + /* 0 */".......X.......\n"
+      + /* 1 */"...............\n"
+      + /* 2 */"...............\n"
+      + /* 3 */"...............\n"
+      + /* 4 */"...............\n"
+      + /* 5 */"...............\n"
+      + /* 6 */"...............\n"
+      + /* 7 */"...............\n";
+    } else if (value < CULTURE_LEVEL_1) {
       //        765432101234567
       mask = /* 7 */"...............\n"
       + /* 6 */"...............\n"

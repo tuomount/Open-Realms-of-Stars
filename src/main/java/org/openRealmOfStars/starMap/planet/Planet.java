@@ -1516,6 +1516,11 @@ public class Planet {
           }
         }
       }
+      if (getCulture() == 0) {
+        // Planet is owned but no culture
+        // Setting it to one
+        setCulture(1);
+      }
     }
   }
 

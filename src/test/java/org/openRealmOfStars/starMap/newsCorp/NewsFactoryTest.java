@@ -883,4 +883,80 @@ public class NewsFactoryTest {
     assertNull(data);
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCultureVictoryAlliance() {
+    StarMap map = Mockito.mock(StarMap.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getPlanetOwnerIndex()).thenReturn(0);
+    Mockito.when(planet.getCulture()).thenReturn(200);
+    Planet planet2 = Mockito.mock(Planet.class);
+    Mockito.when(planet2.getName()).thenReturn("Planet II");
+    Mockito.when(planet2.getPlanetOwnerIndex()).thenReturn(1);
+    Mockito.when(planet2.getCulture()).thenReturn(200);
+    Planet planet3 = Mockito.mock(Planet.class);
+    Mockito.when(planet3.getName()).thenReturn("Planet III");
+    Mockito.when(planet3.getPlanetOwnerIndex()).thenReturn(2);
+    Mockito.when(planet3.getCulture()).thenReturn(200);
+    Planet planet4 = Mockito.mock(Planet.class);
+    Mockito.when(planet4.getName()).thenReturn("Planet IV");
+    Mockito.when(planet4.getPlanetOwnerIndex()).thenReturn(3);
+    Mockito.when(planet4.getCulture()).thenReturn(200);
+    ArrayList<Planet> planets = new ArrayList<>();
+    planets.add(planet);
+    planets.add(planet2);
+    planets.add(planet3);
+    planets.add(planet4);
+    Fleet fleet1 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet1.getCulturalValue()).thenReturn(50);
+    Fleet fleet2 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet2.getCulturalValue()).thenReturn(100);
+    FleetList fleetList = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList.getByIndex(0)).thenReturn(fleet1);
+    Mockito.when(fleetList.getByIndex(1)).thenReturn(fleet2);
+    Mockito.when(fleetList.getNumberOfFleets()).thenReturn(2);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(diplomacy.getAllianceIndex()).thenReturn(1);
+    Diplomacy diplomacy2 = Mockito.mock(Diplomacy.class);
+    Mockito.when(diplomacy2.getAllianceIndex()).thenReturn(0);
+    Diplomacy diplomacy3 = Mockito.mock(Diplomacy.class);
+    Mockito.when(diplomacy3.getAllianceIndex()).thenReturn(-1);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire I");
+    Mockito.when(info.getFleets()).thenReturn(fleetList);
+    Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info2.getEmpireName()).thenReturn("Empire II");
+    Mockito.when(info2.getFleets()).thenReturn(fleetList);
+    Mockito.when(info2.getDiplomacy()).thenReturn(diplomacy2);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
+    PlayerInfo info3 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info3.getEmpireName()).thenReturn("Empire III");
+    Mockito.when(info3.getFleets()).thenReturn(fleetList);
+    Mockito.when(info3.getDiplomacy()).thenReturn(diplomacy3);
+    Mockito.when(info3.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    PlayerInfo info4 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info4.getEmpireName()).thenReturn("Empire IV");
+    Mockito.when(info4.getFleets()).thenReturn(fleetList);
+    Mockito.when(info4.getDiplomacy()).thenReturn(diplomacy3);
+    Mockito.when(map.getPlanetList()).thenReturn(planets);
+    Mockito.when(playerList.getPlayerInfoByIndex(0)).thenReturn(info);
+    Mockito.when(playerList.getPlayerInfoByIndex(1)).thenReturn(info2);
+    Mockito.when(playerList.getPlayerInfoByIndex(2)).thenReturn(info3);
+    Mockito.when(playerList.getPlayerInfoByIndex(3)).thenReturn(info4);
+    Mockito.when(map.getPlayerByIndex(0)).thenReturn(info);
+    Mockito.when(map.getPlayerByIndex(1)).thenReturn(info2);
+    Mockito.when(map.getPlayerByIndex(2)).thenReturn(info3);
+    Mockito.when(map.getPlayerByIndex(3)).thenReturn(info4);
+    NewsData data = NewsFactory.makeCulturalVictoryNewsAtEnd(map);
+    assertNotNull(data);
+    assertEquals(true, data.getNewsText().contains("Empire I"));
+    assertEquals(true, data.getNewsText().contains("Empire II"));
+  }
+
 }

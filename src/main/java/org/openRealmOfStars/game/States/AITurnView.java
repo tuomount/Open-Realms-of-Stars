@@ -1104,14 +1104,22 @@ public class AITurnView extends BlackPanel {
       GalacticEvent event = new GalacticEvent(news.getNewsText());
       game.getStarMap().getHistory().addEvent(event);
     }
+    NewsData news = NewsFactory.makeCulturalVictoryNewsAtEnd(
+        game.getStarMap());
+    if (news != null) {
+      GalacticEvent event = new GalacticEvent(news.getNewsText());
+      game.getStarMap().getHistory().addEvent(event);
+      game.getStarMap().setGameEnded(true);
+    }
     if (game.getStarMap().getTurn() == game.getStarMap()
         .getScoreVictoryTurn()) {
       // Game is in the end
       NewsCorpData newsData = game.getStarMap().getNewsCorpData();
-      NewsData news = NewsFactory.makeScoreNewsAtEnd(game.getStarMap());
+      news = NewsFactory.makeScoreNewsAtEnd(game.getStarMap());
       newsData.addNews(news);
       GalacticEvent event = new GalacticEvent(news.getNewsText());
       game.getStarMap().getHistory().addEvent(event);
+      game.getStarMap().setGameEnded(true);
     }
     game.getStarMap().getNewsCorpData().clearNewsList();
   }

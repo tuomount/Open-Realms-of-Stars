@@ -220,6 +220,11 @@ public class StarMap {
   private History history;
 
   /**
+   * Game has ended
+   */
+  private boolean gameEnd;
+
+  /**
    * Magic string to save game files
    */
   public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.9";
@@ -2515,5 +2520,22 @@ public class StarMap {
    */
   public void setHistory(final History newHistory) {
     history = newHistory;
+  }
+
+  /**
+   * Has game ended yet? This means has last news
+   * given already? This information is not saved into save game.
+   * @return True if game has ended
+   */
+  public boolean isGameEnded() {
+    return gameEnd;
+  }
+
+  /**
+   * Set game ended flag.
+   * @param end True to end game.
+   */
+  public void setGameEnded(final boolean end) {
+    gameEnd = end;
   }
 }

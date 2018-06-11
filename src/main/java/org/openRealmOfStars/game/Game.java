@@ -1815,7 +1815,7 @@ public class Game implements ActionListener {
       newsCorpView.handleAction(arg0);
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
-        if (starMap.getTurn() == starMap.getScoreVictoryTurn()) {
+        if (starMap.isGameEnded()) {
           SoundPlayer.playMenuSound();
           changeGameState(GameState.HISTORY_VIEW);
           return;

@@ -846,7 +846,7 @@ public class Game implements ActionListener {
     researchView = new ResearchView(players.getCurrentPlayerInfo(),
         starMap.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
             players.getCurrentPlayer()),
-        focusTech, this);
+        focusTech, starMap.getScoreVictoryTurn(), this);
     this.updateDisplay(researchView);
   }
 

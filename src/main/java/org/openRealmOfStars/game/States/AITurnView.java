@@ -1154,7 +1154,7 @@ public class AITurnView extends BlackPanel {
           PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(i);
           info.getTechList().updateResearchPointByTurn(game.getStarMap()
               .getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH, i),
-              info);
+              info, game.getStarMap().getScoreVictoryTurn());
         }
         game.getStarMap().clearAITurn();
         if (game.getStarMap().getNewsCorpData().isNewsToShow()) {

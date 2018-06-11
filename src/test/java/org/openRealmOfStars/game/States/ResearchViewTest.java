@@ -44,7 +44,7 @@ public class ResearchViewTest {
     int totalResearch = 5;
     String focusTech = null;
     ActionListener listener = Mockito.mock(ActionListener.class);
-    ResearchView view = new ResearchView(info, totalResearch, focusTech,
+    ResearchView view = new ResearchView(info, totalResearch, focusTech, 300,
         listener);
     view.updatePanel();
     ActionEvent event = Mockito.mock(ActionEvent.class);

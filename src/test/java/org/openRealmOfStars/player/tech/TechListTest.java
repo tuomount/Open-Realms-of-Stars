@@ -283,11 +283,11 @@ public class TechListTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTechResearch() {
     PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS, 2, 0);
-    info.getTechList().updateResearchPointByTurn(30, info);
+    info.getTechList().updateResearchPointByTurn(30, info, 300);
     assertEquals(1, info.getTechList().getTechLevel(TechType.Combat));
     assertEquals(MessageType.RESEARCH, info.getMsgList().getMsg().getType());
     info.getMsgList().clearMessages();
-    info.getTechList().updateResearchPointByTurn(30, info);
+    info.getTechList().updateResearchPointByTurn(30, info, 300);
     assertEquals(MessageType.RESEARCH, info.getMsgList().getMsg().getType());
     String msg = info.getMsgList().getMsg().getMessage();
     assertEquals(true, msg.contains(" has advenced"));

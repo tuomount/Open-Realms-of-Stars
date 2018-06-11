@@ -697,15 +697,17 @@ public class TechList {
    * Update Research points by turn. This will also grant a new technology
    * @param totalResearchPoints player makes per turn
    * @param info PlayerInfo for message information
+   * @param gameLength Maximum game length in turns
    */
   public void updateResearchPointByTurn(final int totalResearchPoints,
-      final PlayerInfo info) {
+      final PlayerInfo info, final int gameLength) {
     for (int i = 0; i < techFocus.length; i++) {
       techResearchPoint[i] = techResearchPoint[i]
           + techFocus[i] * totalResearchPoints / 100.0;
-      if (techResearchPoint[i] >= TechFactory.getTechCost(techLevels[i])) {
+      if (techResearchPoint[i] >= TechFactory.getTechCost(techLevels[i],
+          gameLength)) {
         techResearchPoint[i] = techResearchPoint[i]
-            - TechFactory.getTechCost(techLevels[i]);
+            - TechFactory.getTechCost(techLevels[i], gameLength);
         TechType type = TechType.getTypeByIndex(i);
         int lvl = techLevels[i];
         Tech tech = TechFactory.createRandomTech(type, lvl,
@@ -714,7 +716,7 @@ public class TechList {
           // Apparently tech level was already full,
           // so let's increase level and try again later.
           techResearchPoint[i] = techResearchPoint[i]
-              + TechFactory.getTechCost(techLevels[i]);
+              + TechFactory.getTechCost(techLevels[i], gameLength);
           if (lvl < 10) {
             techLevels[i] = techLevels[i] + 1;
           }

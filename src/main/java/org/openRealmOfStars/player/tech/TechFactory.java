@@ -914,32 +914,68 @@ public final class TechFactory {
   /**
    * Get tech level cost as research points
    * @param level Level to research
+   * @param gameLength Maximum game length in turns
    * @return Amount of research points required
    */
-  public static int getTechCost(final int level) {
+  public static int getTechCost(final int level, final int gameLength) {
+    int veryLowBonus = 0;
+    int lowBonus = 0;
+    int mediumBonus = 0;
+    int highBonus = 0;
+    if (gameLength <= 200) {
+      veryLowBonus = -2;
+      lowBonus = -5;
+      mediumBonus = -10;
+      highBonus = -15;
+    } else if (gameLength <= 300) {
+      veryLowBonus = 0;
+      lowBonus = 0;
+      mediumBonus = 0;
+      highBonus = 0;
+    } else if (gameLength <= 400) {
+      veryLowBonus = 0;
+      lowBonus = 2;
+      mediumBonus = 5;
+      highBonus = 8;
+    } else if (gameLength <= 600) {
+      veryLowBonus = 2;
+      lowBonus = 5;
+      mediumBonus = 10;
+      highBonus = 15;
+    } else if (gameLength <= 800) {
+      veryLowBonus = 4;
+      lowBonus = 8;
+      mediumBonus = 15;
+      highBonus = 20;
+    } else if (gameLength <= 1000) {
+      veryLowBonus = 6;
+      lowBonus = 15;
+      mediumBonus = 20;
+      highBonus = 30;
+    }
     switch (level) {
     case 1:
       return TECH_1_LEVEL_RP_COST;
     case 2:
       return TECH_2_LEVEL_RP_COST;
     case 3:
-      return TECH_3_LEVEL_RP_COST;
+      return TECH_3_LEVEL_RP_COST + veryLowBonus;
     case 4:
-      return TECH_4_LEVEL_RP_COST;
+      return TECH_4_LEVEL_RP_COST + veryLowBonus;
     case 5:
-      return TECH_5_LEVEL_RP_COST;
+      return TECH_5_LEVEL_RP_COST + lowBonus;
     case 6:
-      return TECH_6_LEVEL_RP_COST;
+      return TECH_6_LEVEL_RP_COST + lowBonus;
     case 7:
-      return TECH_7_LEVEL_RP_COST;
+      return TECH_7_LEVEL_RP_COST + mediumBonus;
     case 8:
-      return TECH_8_LEVEL_RP_COST;
+      return TECH_8_LEVEL_RP_COST + mediumBonus;
     case 9:
-      return TECH_9_LEVEL_RP_COST;
+      return TECH_9_LEVEL_RP_COST + highBonus;
     case 10:
-      return TECH_10_LEVEL_RP_COST;
+      return TECH_10_LEVEL_RP_COST + highBonus;
     default:
-      return TECH_FUTURE_LEVEL_RP_COST;
+      return TECH_FUTURE_LEVEL_RP_COST + highBonus;
     }
   }
 

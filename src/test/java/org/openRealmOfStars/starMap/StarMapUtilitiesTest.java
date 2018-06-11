@@ -78,4 +78,24 @@ public class StarMapUtilitiesTest {
     assertEquals(7, info2.getTotalCredits());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCultureScoreLimit() {
+    int limit = StarMapUtilities.calculateCultureScoreLimit(50, 50, 200, 0);
+    assertEquals(400, limit);
+    limit = StarMapUtilities.calculateCultureScoreLimit(75, 75, 200, 1);
+    assertEquals(600, limit);
+    limit = StarMapUtilities.calculateCultureScoreLimit(128, 128, 300, 1);
+    assertEquals(1050, limit);
+    limit = StarMapUtilities.calculateCultureScoreLimit(160, 160, 300, 1);
+    assertEquals(1200, limit);
+    limit = StarMapUtilities.calculateCultureScoreLimit(200, 200, 400, 1);
+    assertEquals(1650, limit);
+    limit = StarMapUtilities.calculateCultureScoreLimit(256, 256, 400, 1);
+    assertEquals(1800, limit);
+    limit = StarMapUtilities.calculateCultureScoreLimit(256, 256, 400, 2);
+    assertEquals(2700, limit);
+    limit = StarMapUtilities.calculateCultureScoreLimit(160, 160, 300, 3);
+    assertEquals(2400, limit);
+  }
 }

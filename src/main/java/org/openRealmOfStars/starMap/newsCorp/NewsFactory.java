@@ -6,6 +6,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.history.event.DiplomaticEvent;
 import org.openRealmOfStars.starMap.history.event.Event;
 import org.openRealmOfStars.starMap.newsCorp.scoreBoard.Row;
@@ -807,6 +808,85 @@ public final class NewsFactory {
     }
     return board;
   }
+  /**
+   * Make News when game is ending for culture victory.
+   * Returns null if cultural victory is not achieved
+   * @param map StarMap contains NewsCorpData and playerlist
+   * @return NewsData or null
+   */
+  public static NewsData makeCulturalVictoryNewsAtEnd(final StarMap map) {
+    NewsCorpData tmpData = new NewsCorpData(
+        map.getPlayerList().getCurrentMaxPlayers());
+    NewsData news = null;
+    tmpData.calculateCulture(map.getPlanetList(), map.getPlayerList());
+    ScoreBoard board = createScoreBoard(tmpData.getCultural(),
+        map.getPlayerList());
+    board.sort();
+    Row winner = board.getRow(0);
+    Row second = board.getRow(1);
+    int limit = StarMapUtilities.calculateCultureScoreLimit(
+        map.getMaxX(), map.getMaxY(), map.getScoreVictoryTurn(),
+        map.getScoreCulture());
+    if (winner.getScore() >= limit) {
+      news = new NewsData();
+      ImageInstruction instructions = new ImageInstruction();
+      news.setImageInstructions(instructions.build());
+      StringBuilder sb = new StringBuilder();
+      if (!winner.isAlliance()) {
+        PlayerInfo info = map.getPlayerByIndex(winner.getRealm());
+        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+        instructions.addText("THE CULTURAL DOMINATION!");
+        instructions.addText(info.getEmpireName());
+        instructions.addImage(info.getRace().getNameSingle());
+        sb.append(info.getEmpireName());
+        sb.append(" has the greatest culture in whole galaxy! ");
+        if (!second.isAlliance()) {
+          info = map.getPlayerByIndex(second.getRealm());
+          sb.append("Second greatest culture has ");
+          sb.append(info.getEmpireName());
+          sb.append(" !");
+        } else {
+          info = map.getPlayerByIndex(second.getRealm());
+          PlayerInfo info2 = map.getPlayerByIndex(second.getAllianceRealm());
+          sb.append("Second greatest culture has alliance of");
+          sb.append(info.getEmpireName());
+          sb.append("and");
+          sb.append(info2.getEmpireName());
+          sb.append(" !");
+        }
+      } else {
+        PlayerInfo info = map.getPlayerByIndex(winner.getRealm());
+        PlayerInfo info2 = map.getPlayerByIndex(winner.getAllianceRealm());
+        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+        instructions.addText("THE GREATEST CULTURAL ALLIANCE!");
+        instructions.addText(info.getEmpireName());
+        instructions.addImage(info.getRace().getNameSingle());
+        sb.append("Alliance of ");
+        sb.append(info.getEmpireName());
+        sb.append("and");
+        sb.append(info2.getEmpireName());
+        sb.append(" has the greatest culture in  whole galaxy! ");
+        if (!second.isAlliance()) {
+          info = map.getPlayerByIndex(second.getRealm());
+          sb.append("Second greatest culture has ");
+          sb.append(info.getEmpireName());
+          sb.append(" !");
+        } else {
+          info = map.getPlayerByIndex(second.getRealm());
+          info2 = map.getPlayerByIndex(second.getAllianceRealm());
+          sb.append("Second greatest culture has alliance of");
+          sb.append(info.getEmpireName());
+          sb.append("and");
+          sb.append(info2.getEmpireName());
+          sb.append(" !");
+        }
+      }
+      news.setImageInstructions(instructions.build());
+      news.setNewsText(sb.toString());
+    }
+    return news;
+  }
+
   /**
    * Make News when game is in the end turn
    * @param map StarMap contains NewsCorpData and playerlist

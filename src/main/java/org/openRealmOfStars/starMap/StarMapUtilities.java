@@ -226,4 +226,48 @@ public final class StarMapUtilities {
       }
     }
   }
+
+  /**
+   * Calculate culture score limit
+   * @param sizeX Map size in X coordinate
+   * @param sizeY Map size in Y coordinate
+   * @param lastTurn Which is the last turn when scoring is done
+   * @param multiplier Multiplier 0, 1, 2, 3
+   * @return Culture score limit
+   */
+  public static int calculateCultureScoreLimit(final int sizeX,
+      final int sizeY, final int lastTurn, final int multiplier) {
+    int totalSize = sizeX * sizeY;
+    int turnModifier = 0;
+    if (totalSize <= 50 * 50) {
+      turnModifier = -50;
+    } else if (totalSize <= 75 * 75) {
+      turnModifier = 0;
+    } else if (totalSize <= 128 * 128) {
+      turnModifier = 50;
+    } else if (totalSize <= 160 * 160) {
+      turnModifier = 100;
+    } else if (totalSize <= 200 * 200) {
+      turnModifier = 150;
+    } else if (totalSize <= 256 * 256) {
+      turnModifier = 200;
+    }
+    int result = (lastTurn + turnModifier) * 3;
+    // 75%
+    if (multiplier == 0) {
+      result = result * 3 / 4;
+    }
+    // 150%
+    if (multiplier == 2) {
+      result = result * 3 / 2;
+    }
+    // 200%
+    if (multiplier == 3) {
+      result = result * 2;
+    }
+    if (result < 400) {
+      result = 400;
+    }
+    return result;
+  }
 }

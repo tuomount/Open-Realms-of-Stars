@@ -18,6 +18,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 
 /**
@@ -108,6 +109,9 @@ public class StatView extends BlackPanel {
       names[i] = map.getPlayerByIndex(i).getEmpireName();
     }
     statPanel.setYDataNames(names);
+    statPanel.setVictoryScoreLimit(
+        StarMapUtilities.calculateCultureScoreLimit(map.getMaxX(),
+            map.getMaxY(), map.getScoreVictoryTurn(), map.getScoreCulture()));
     tabs.add(NewsCorpData.STAT_CULTURAL, statPanel);
 
     statPanel = new StatisticPanel();

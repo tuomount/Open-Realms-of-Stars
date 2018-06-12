@@ -232,7 +232,7 @@ public final class StarMapUtilities {
    * @param sizeX Map size in X coordinate
    * @param sizeY Map size in Y coordinate
    * @param lastTurn Which is the last turn when scoring is done
-   * @param multiplier Multiplier 0, 1, 2, 3
+   * @param multiplier Multiplier -1, 0, 1, 2, 3
    * @return Culture score limit
    */
   public static int calculateCultureScoreLimit(final int sizeX,
@@ -267,6 +267,9 @@ public final class StarMapUtilities {
     }
     if (result < 400) {
       result = 400;
+    }
+    if (multiplier == -1) {
+      result = -1;
     }
     return result;
   }

@@ -1,8 +1,10 @@
 package org.openRealmOfStars.gui.panels;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 
 import javax.swing.JPanel;
 
@@ -62,6 +64,11 @@ public class StatisticPanel extends JPanel {
    * How many turn is between each X coordinate value. Default is 10.
    */
   private int turnDistance = 10;
+
+  /**
+   * Victory scory limit
+   */
+  private int victoryScoreLimit;
 
   /**
    * Construct Statistics Panel.
@@ -183,6 +190,23 @@ public class StatisticPanel extends JPanel {
   }
 
   /**
+   * Get current victory score limit
+   * @return Victory score limit
+   */
+  public int getVictoryScoreLimit() {
+    return victoryScoreLimit;
+  }
+
+  /**
+   * Set current victory score limit. This will drawn as golde horizotal
+   * line in statistic panel. If limit is -1 then it is not drawn.
+   * @param limit score limit to set
+   */
+  public void setVictoryScoreLimit(final int limit) {
+    victoryScoreLimit = limit;
+  }
+
+  /**
    * Stat grid density, how long distance is about
    * to draw new lines
    */
@@ -259,7 +283,21 @@ public class StatisticPanel extends JPanel {
           (int) Math.round(this.getHeight() - offsetY - i * scaleY
               * mult));
     }
-
+    if (victoryScoreLimit > -1) {
+      Stroke dashed = new BasicStroke(1, BasicStroke.CAP_SQUARE,
+          BasicStroke.JOIN_BEVEL, 1, new float[] {0.1f, 4.5f }, 0);
+      Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE,
+          BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
+      g2d.setStroke(dashed);
+      g2d.setColor(GuiStatics.COLOR_GOLD);
+      g2d.drawLine(offsetX,
+          (int) Math.round(this.getHeight() - offsetY
+              - (int) Math.round(victoryScoreLimit * scaleY)),
+          offsetX + drawWidth,
+          (int) Math.round(this.getHeight() - offsetY
+              - (int) Math.round(victoryScoreLimit * scaleY)));
+      g2d.setStroke(full);
+    }
     //Draw the axis
     g2d.setColor(GuiStatics.COLOR_SPACE_GREY_BLUE);
     g2d.drawLine(offsetX, this.getHeight() - offsetY, offsetX + drawWidth,

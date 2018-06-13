@@ -143,6 +143,11 @@ public class StatisticPanel extends JPanel {
         }
       }
     }
+    if (victoryScoreLimit != -1
+        && largestY >= victoryScoreLimit / 2
+        && largestY < victoryScoreLimit) {
+      largestY = victoryScoreLimit;
+    }
     if (largestY == 0) {
       largestY = 1;
     }

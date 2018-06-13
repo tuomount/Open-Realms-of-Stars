@@ -11,6 +11,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.audio.music.MusicPlayer;
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -105,7 +106,14 @@ public class NewsCorpView extends BlackPanel {
     base.setLayout(new BorderLayout());
     base.setTitle("Galactic Broadcasting News Company");
     newsReaderPanel = new ImagePanel(GuiStatics.IMAGE_HUMAN_RACE);
-    newsReader = new BufferedImage(196, 700,
+    int heightNewsReader = 700;
+    int widthHeadline = 800;
+    if (listener instanceof Game) {
+      Game game = (Game) listener;
+      heightNewsReader = game.getHeight() - 50;
+      widthHeadline = game.getWidth() - 220;
+    }
+    newsReader = new BufferedImage(196, heightNewsReader,
         BufferedImage.TYPE_4BYTE_ABGR);
     animation = 0;
     newsReaderPanel.setImage(newsReader);
@@ -113,7 +121,7 @@ public class NewsCorpView extends BlackPanel {
     InfoPanel newsPanel = new InfoPanel();
     newsPanel.setLayout(new BoxLayout(newsPanel, BoxLayout.Y_AXIS));
     newsPanel.setTitle("News headline");
-    BufferedImage image = new BufferedImage(800, 400,
+    BufferedImage image = new BufferedImage(widthHeadline, 400,
         BufferedImage.TYPE_4BYTE_ABGR);
     image = ImageInstruction.parseImageInstructions(image,
         news[0].getImageInstructions());

@@ -91,6 +91,15 @@ public class NewsCorpView extends BlackPanel {
    * News list label
    */
   private SpaceLabel newsLabel;
+
+  /**
+   * Width of head line picture
+   */
+  private int widthHeadLine;
+  /**
+   * Height of head line picture
+   */
+  private int heightHeadLine;
   /**
    * Construtor for News Corp View.
    * @param news News Data
@@ -107,11 +116,12 @@ public class NewsCorpView extends BlackPanel {
     base.setTitle("Galactic Broadcasting News Company");
     newsReaderPanel = new ImagePanel(GuiStatics.IMAGE_HUMAN_RACE);
     int heightNewsReader = 700;
-    int widthHeadline = 800;
+    widthHeadLine = 800;
+    heightHeadLine = 400;
     if (listener instanceof Game) {
       Game game = (Game) listener;
       heightNewsReader = game.getHeight() - 50;
-      widthHeadline = game.getWidth() - 220;
+      widthHeadLine = game.getWidth() - 220;
     }
     newsReader = new BufferedImage(196, heightNewsReader,
         BufferedImage.TYPE_4BYTE_ABGR);
@@ -121,7 +131,7 @@ public class NewsCorpView extends BlackPanel {
     InfoPanel newsPanel = new InfoPanel();
     newsPanel.setLayout(new BoxLayout(newsPanel, BoxLayout.Y_AXIS));
     newsPanel.setTitle("News headline");
-    BufferedImage image = new BufferedImage(widthHeadline, 400,
+    BufferedImage image = new BufferedImage(widthHeadLine, heightHeadLine,
         BufferedImage.TYPE_4BYTE_ABGR);
     image = ImageInstruction.parseImageInstructions(image,
         news[0].getImageInstructions());
@@ -205,7 +215,7 @@ public class NewsCorpView extends BlackPanel {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_TARGET)
         && newsIndex < newsList.length - 1) {
       newsIndex++;
-      BufferedImage image = new BufferedImage(800, 400,
+      BufferedImage image = new BufferedImage(widthHeadLine, heightHeadLine,
           BufferedImage.TYPE_4BYTE_ABGR);
       image = ImageInstruction.parseImageInstructions(image,
           newsList[newsIndex].getImageInstructions());
@@ -217,7 +227,7 @@ public class NewsCorpView extends BlackPanel {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_TARGET)
         && newsIndex > 0) {
       newsIndex--;
-      BufferedImage image = new BufferedImage(800, 400,
+      BufferedImage image = new BufferedImage(widthHeadLine, heightHeadLine,
           BufferedImage.TYPE_4BYTE_ABGR);
       image = ImageInstruction.parseImageInstructions(image,
           newsList[newsIndex].getImageInstructions());

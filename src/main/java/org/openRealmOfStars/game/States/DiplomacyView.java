@@ -319,7 +319,7 @@ public class DiplomacyView extends BlackPanel {
     aiImg.setRaceToShow(ai.getRace().getNameSingle());
     aiImg.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(aiImg);
-    likenessLabel = new SpaceLabel("Friends Trade Alliance");
+    likenessLabel = new SpaceLabel("Friends for ever Defensive pact");
     likenessLabel.setForeground(ai.getDiplomacy().getLikingAsColor(humanIndex));
     likenessLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(likenessLabel);

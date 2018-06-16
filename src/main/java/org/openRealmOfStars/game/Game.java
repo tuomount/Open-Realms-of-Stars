@@ -1874,7 +1874,7 @@ public class Game implements ActionListener {
       }
       fleetView.handleAction(arg0);
     }
-    if (gameState == GameState.GALAXY_CREATION) {
+    if (gameState == GameState.GALAXY_CREATION && galaxyCreationView != null) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
         SoundPlayer.playMenuSound();

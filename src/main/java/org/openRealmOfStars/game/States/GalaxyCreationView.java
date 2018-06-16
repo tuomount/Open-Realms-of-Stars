@@ -89,6 +89,11 @@ public class GalaxyCreationView extends BlackPanel {
   private SpaceCombo<String> comboScoringCulture;
 
   /**
+   * ComboBox on scoring domination
+   */
+  private SpaceCombo<String> comboScoringDomination;
+
+  /**
    * ComboBox for rogue planet
    */
   private SpaceCombo<String> comboRoguePlanets;
@@ -310,6 +315,26 @@ public class GalaxyCreationView extends BlackPanel {
     info.add(comboScoringCulture);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
 
+    label = new SpaceLabel("Victory by domination:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    String[] scoringDomination = new String[2];
+    scoringDomination[0] = "Disabled";
+    scoringDomination[1] = "Enabled";
+    comboScoringDomination = new SpaceCombo<>(scoringDomination);
+    comboScoringDomination.setToolTipText("<html>Domination victory when all "
+        + "home planets are controlled by one realm or alliance.<br> This is "
+        + "enabled only if 4 or more realms in play.</html>");
+    comboScoringDomination.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboScoringDomination.addActionListener(listener);
+    info.add(comboScoringDomination);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    switch (this.config.getScoreLimitConquer()) {
+      case 0: comboScoringDomination.setSelectedIndex(0); break;
+      case 1: comboScoringDomination.setSelectedIndex(1); break;
+      default: comboScoringDomination.setSelectedIndex(1); break;
+    }
     xinvis.add(info);
     xinvis.add(Box.createRigidArea(new Dimension(200, 5)));
     invisible.add(xinvis);
@@ -560,6 +585,23 @@ public class GalaxyCreationView extends BlackPanel {
         }
         default: {
           // 100%
+          config.setScoreLimitCulture(1);
+          break;
+        }
+      }
+      switch (comboScoringDomination.getSelectedIndex()) {
+        case 0: {
+          // Disabled
+          config.setScoreLimitConquer(0);
+          break;
+        }
+        case 1: {
+          // enabled
+          config.setScoreLimitConquer(1);
+          break;
+        }
+        default: {
+          // enabled
           config.setScoreLimitCulture(1);
           break;
         }

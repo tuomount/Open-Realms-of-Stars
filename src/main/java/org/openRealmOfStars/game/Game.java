@@ -1914,7 +1914,7 @@ public class Game implements ActionListener {
         changeGameState(GameState.STARMAP);
       }
     }
-    if (gameState == GameState.OPTIONS_VIEW) {
+    if (gameState == GameState.OPTIONS_VIEW && optionsView != null) {
       // Options
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_OK)) {

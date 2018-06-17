@@ -1764,7 +1764,7 @@ public class Planet {
 
   /**
    * Get home world index. Index is matching for space race index who's
-   * home world planet is. -1 means that planet is now an home world.
+   * home world planet is. -1 means that planet is not an home world.
    * @return Space race index
    */
   public int getHomeWorldIndex() {

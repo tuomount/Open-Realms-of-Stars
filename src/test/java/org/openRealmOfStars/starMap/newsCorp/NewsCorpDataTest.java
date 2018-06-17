@@ -101,6 +101,44 @@ public class NewsCorpDataTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalaxyStatHomePlanets() {
+    NewsCorpData data = new NewsCorpData(3);
+    Planet unhabitated = Mockito.mock(Planet.class);
+    Mockito.when(unhabitated.getPlanetOwnerIndex()).thenReturn(-1);
+    Planet planet1 = Mockito.mock(Planet.class);
+    Mockito.when(planet1.getPlanetOwnerIndex()).thenReturn(0);
+    Mockito.when(planet1.getHomeWorldIndex()).thenReturn(0);
+    Planet planet2 = Mockito.mock(Planet.class);
+    Mockito.when(planet2.getPlanetOwnerIndex()).thenReturn(1);
+    Mockito.when(planet2.getHomeWorldIndex()).thenReturn(1);
+    Planet planet3 = Mockito.mock(Planet.class);
+    Mockito.when(planet3.getPlanetOwnerIndex()).thenReturn(2);
+    Mockito.when(planet3.getHomeWorldIndex()).thenReturn(2);
+
+    ArrayList<Planet> list = new ArrayList<>();
+    list.add(unhabitated);
+    list.add(unhabitated);
+    list.add(planet2);
+    list.add(planet1);
+    list.add(unhabitated);
+    list.add(planet3);
+    list.add(unhabitated);
+    list.add(planet2);
+    list.add(planet3);
+    list.add(unhabitated);
+    list.add(planet3);
+    list.add(planet2);
+    list.add(planet2);
+    list.add(unhabitated);
+    data.calculateHomePlanets(list);
+    int[][] value = data.getPlanets().getGalaxyData();
+    assertEquals(1,value[0][0]);
+    assertEquals(4,value[1][0]);
+    assertEquals(3,value[2][0]);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testGalaxyStatCultural() {
     NewsCorpData data = new NewsCorpData(3);
     Planet unhabitated = Mockito.mock(Planet.class);

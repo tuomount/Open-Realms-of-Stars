@@ -208,6 +208,23 @@ public class NewsCorpData {
   }
 
   /**
+   * Calculate how many home planet players have.
+   * @param planetList from StarMap
+   */
+  public void calculateHomePlanets(final ArrayList<Planet> planetList) {
+    int[] data = new int[planets.getMaxPlayers()];
+    for (Planet planet : planetList) {
+      int i = planet.getPlanetOwnerIndex();
+      if (planet.getHomeWorldIndex() != -1 && i != -1
+          && i < planets.getMaxPlayers()) {
+        data[i] = data[i] + 1;
+      }
+    }
+    for (int i = 0; i < planets.getMaxPlayers(); i++) {
+      planets.addStat(i, data[i]);
+    }
+  }
+  /**
    * Calculate how much culture players have
    * @param planetList from StarMap
    * @param playerList from StarMap

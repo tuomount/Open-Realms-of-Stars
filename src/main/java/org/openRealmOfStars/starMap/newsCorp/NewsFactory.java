@@ -891,6 +891,61 @@ public final class NewsFactory {
   }
 
   /**
+   * Make News when game is ending for domination victory.
+   * Returns null if domination victory is not achieved
+   * @param map StarMap contains Planet and playerlist
+   * @return NewsData or null
+   */
+  public static NewsData makeDominationVictoryNewsAtEnd(final StarMap map) {
+    int limit = map.getPlayerList().getCurrentMaxPlayers();
+    if (limit < 4) {
+      return null;
+    }
+    NewsCorpData tmpData = new NewsCorpData(
+        map.getPlayerList().getCurrentMaxPlayers());
+    NewsData news = null;
+    tmpData.calculateHomePlanets(map.getPlanetList());
+    ScoreBoard board = createScoreBoard(tmpData.getPlanets(),
+        map.getPlayerList());
+    board.sort();
+    Row winner = board.getRow(0);
+    if (winner.getScore() >= limit) {
+      news = new NewsData();
+      ImageInstruction instructions = new ImageInstruction();
+      news.setImageInstructions(instructions.build());
+      StringBuilder sb = new StringBuilder();
+      if (!winner.isAlliance()) {
+        PlayerInfo info = map.getPlayerByIndex(winner.getRealm());
+        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+        instructions.addText("THE DOMINATION VICTORY!");
+        instructions.addText(info.getEmpireName());
+        instructions.addImage(info.getRace().getNameSingle());
+        sb.append(info.getEmpireName());
+        sb.append(" has the all the home worlds in the galaxy! ");
+        sb.append("No other realm has power to challenge ");
+        sb.append(info.getEmpireName());
+        sb.append(".");
+      } else {
+        PlayerInfo info = map.getPlayerByIndex(winner.getRealm());
+        PlayerInfo info2 = map.getPlayerByIndex(winner.getAllianceRealm());
+        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+        instructions.addText("THE DOMINATING ALLIANCE!");
+        instructions.addText(info.getEmpireName());
+        instructions.addImage(info.getRace().getNameSingle());
+        sb.append("Alliance of ");
+        sb.append(info.getEmpireName());
+        sb.append("and");
+        sb.append(info2.getEmpireName());
+        sb.append(" has the all the home worlds in the galaxy! ");
+        sb.append("No other realm has power to challenge this alliance.");
+      }
+      news.setImageInstructions(instructions.build());
+      news.setNewsText(sb.toString());
+    }
+    return news;
+  }
+
+  /**
    * Make News when game is in the end turn
    * @param map StarMap contains NewsCorpData and playerlist
    * @return NewsData

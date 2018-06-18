@@ -1669,6 +1669,13 @@ public class StarMap {
                   "Spy trade with " + trader.getEmpireName());
             }
           }
+          if (j != i && info.getDiplomacy().isAlliance(j)) {
+            PlayerInfo trader = players.getPlayerInfoByIndex(j);
+            info.getEspionage().getByIndex(j).addEspionageBonus(
+                EspionageBonusType.TRADE,
+                trader.getEspionage().getByIndex(j).getTotalBonus(),
+                "Spy trade with " + trader.getEmpireName());
+          }
         }
       }
     }

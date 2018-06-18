@@ -797,7 +797,20 @@ public class AITurnView extends BlackPanel {
               mission.setPhase(MissionPhase.TREKKING);
             }
           }
-
+        }
+        if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
+            && !planet.isGasGiant()
+            && planet.getPlanetPlayerInfo() == null
+            && info.getSectorVisibility(planet.getCoordinate())
+            == PlayerInfo.FOG_OF_WAR) {
+          // New planet to colonize, adding it to mission list
+          Mission mission = new Mission(MissionType.COLONIZE,
+              MissionPhase.PLANNING, planet.getCoordinate());
+          if (info.getMissions().getColonizeMission(mission.getX(),
+              mission.getY()) == null) {
+            // No colonize mission for this planet found, so adding it.
+            info.getMissions().add(mission);
+          }
         }
         if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
             && planet.getPlanetPlayerInfo() != null
@@ -837,43 +850,28 @@ public class AITurnView extends BlackPanel {
           if (info.getSectorVisibility(planet.getCoordinate())
               == PlayerInfo.FOG_OF_WAR) {
             PlayerInfo owner = planet.getPlanetPlayerInfo();
-            if (owner != null) {
-              int ownerIndex = game.getStarMap().getPlayerList().getIndex(
-                  owner);
-              DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
-                  ownerIndex);
-              if (list != null
-                  && list.isBonusType(DiplomacyBonusType.IN_WAR)) {
-                // Got new map part maybe in trade and found planet owned by
-                // player which is being at war now.
-                addAttackMission(planet, info);
-              }
-              if (list != null
-                  && (list.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
-                  || list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)
-                  || list.isBonusType(DiplomacyBonusType.IN_DEFENSIVE_PACT))) {
-                // Got new map part maybe in trade and found planet owned by
-                // player which is being in alliance
-                addTradeMission(planet, info);
-              }
-            } else {
-              if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
-                  && !planet.isGasGiant()) {
-                // New planet to colonize, adding it to mission list
-                Mission mission = new Mission(MissionType.COLONIZE,
-                    MissionPhase.PLANNING, planet.getCoordinate());
-                if (info.getMissions().getColonizeMission(mission.getX(),
-                    mission.getY()) == null) {
-                  // No colonize mission for this planet found, so adding it.
-                  info.getMissions().add(mission);
-                }
-              }
+            int ownerIndex = game.getStarMap().getPlayerList().getIndex(
+                owner);
+            DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
+                ownerIndex);
+            if (list != null
+                && list.isBonusType(DiplomacyBonusType.IN_WAR)) {
+              // Got new map part maybe in trade and found planet owned by
+              // player which is being at war now.
+              addAttackMission(planet, info);
+            }
+            if (list != null
+                && (list.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
+                || list.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)
+                || list.isBonusType(DiplomacyBonusType.IN_DEFENSIVE_PACT))) {
+              // Got new map part maybe in trade and found planet owned by
+              // player which is being in alliance
+              addTradeMission(planet, info);
             }
           }
-        }
-      }
+        } // End of owned planet handling
+      } // End of for loop of planets
     }
-
   }
 
   /**

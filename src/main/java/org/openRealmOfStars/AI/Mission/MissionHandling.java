@@ -923,6 +923,9 @@ public final class MissionHandling {
                   fleet.getCoordinate().getDirection(Coordinate.LEFT));
               target = fleet.getCoordinate().getDirection(Coordinate.LEFT);
             }
+            if (planet.getPlanetPlayerInfo() == info) {
+              mission.setPhase(MissionPhase.LOADING);
+            }
           }
           if (target != null) {
             fleet.setPos(target);

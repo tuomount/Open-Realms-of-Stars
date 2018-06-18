@@ -230,7 +230,8 @@ public class Mission {
       sb.append("\nTarget planet:");
       sb.append(getTargetPlanet());
     }
-    if (type == MissionType.TRADE_FLEET) {
+    if (type == MissionType.TRADE_FLEET
+        || type == MissionType.SPY_MISSION) {
       sb.append("\nTarget planet:");
       sb.append(getTargetPlanet());
     }

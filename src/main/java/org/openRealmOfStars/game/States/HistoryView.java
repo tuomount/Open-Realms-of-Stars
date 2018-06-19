@@ -120,7 +120,8 @@ public class HistoryView extends BlackPanel {
     textArea.setEditable(false);
     textArea.setLineWrap(true);
     textArea.setAlignmentX(Component.CENTER_ALIGNMENT);
-    textArea.setCharacterWidth(7);
+    textArea.setFont(GuiStatics.getFontCubellanSmaller());
+    textArea.setCharacterWidth(8);
     infoPanel.add(textArea, BorderLayout.CENTER);
     EmptyInfoPanel panel = new EmptyInfoPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));

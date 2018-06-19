@@ -203,6 +203,9 @@ public class InfoTextArea extends JTextArea {
       customCharWidth = -1;
     } else {
       customCharWidth = width;
+      if (GuiStatics.isLargerFonts()) {
+        customCharWidth = customCharWidth + 2;
+      }
     }
   }
 
@@ -276,14 +279,16 @@ public class InfoTextArea extends JTextArea {
       String[] texts = sb.toString().split("\n");
       for (int i = 0; i < texts.length; i++) {
         g.setColor(GuiStatics.COLOR_GREEN_TEXT_DARK);
-
+        int yHeight = GuiStatics.getTextHeight(getFont(), texts[i]);
         if (!smoothScroll) {
-          g.drawString(texts[i], sx + 3, sy + i * Y_OFFSET + Y_OFFSET);
-          g.drawString(texts[i], sx + 1, sy + i * Y_OFFSET + Y_OFFSET);
-          g.drawString(texts[i], sx + 2, sy + i * Y_OFFSET - 1 + Y_OFFSET);
-          g.drawString(texts[i], sx + 2, sy + i * Y_OFFSET + 1 + Y_OFFSET);
+          g.drawString(texts[i], sx + 3, sy + i * yHeight + yHeight);
+          if (getFont() == GuiStatics.getFontCubellanSC()) {
+            g.drawString(texts[i], sx + 1, sy + i * yHeight + yHeight);
+            g.drawString(texts[i], sx + 2, sy + i * yHeight - 1 + yHeight);
+          }
+          g.drawString(texts[i], sx + 2, sy + i * yHeight + 1 + yHeight);
           g.setColor(GuiStatics.COLOR_GREEN_TEXT);
-          g.drawString(texts[i], sx + 2, sy + i * Y_OFFSET + Y_OFFSET);
+          g.drawString(texts[i], sx + 2, sy + i * yHeight + yHeight);
         } else {
           g.drawString(texts[i], sx + 3,
               sy + i * Y_OFFSET + Y_OFFSET - smoothScrollY);

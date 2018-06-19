@@ -21,6 +21,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.MessagePanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
+import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
@@ -141,7 +142,7 @@ public class StarMapView extends BlackPanel {
   /**
    * Amount space after research label in pixels.
    */
-  private static final int SPACE_AFTER_RESEARCH_LABEL = 124;
+  private static final int SPACE_AFTER_RESEARCH_LABEL = 100;
   /**
    * Star Map view
    * @param map Star map to view
@@ -189,8 +190,15 @@ public class StarMapView extends BlackPanel {
             Planet.PRODUCTION_RESEARCH, this.players.getCurrentPlayer()));
     panel.add(reseProd);
     bottomPanel.add(panel);
+    int panelHeight = SPACE_AFTER_RESEARCH_LABEL;
+    if (!game.getCurrentResolution().equals("1024x768")) {
+      int height = game.getHeight() - SPACE_AFTER_RESEARCH_LABEL;
+      int viewPointY = (height / Tile.MAX_HEIGHT - 1) / 2;
+      panelHeight = game.getHeight() - (viewPointY * 2 * Tile.MAX_HEIGHT
+          + Tile.MAX_HEIGHT);
+    }
     bottomPanel.add(Box.createRigidArea(new Dimension(10,
-        SPACE_AFTER_RESEARCH_LABEL)));
+        panelHeight)));
 
     SpaceGreyPanel bottomBtnPanel = new SpaceGreyPanel();
     bottomBtnPanel.setLayout(new GridLayout(3, 2));

@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -126,7 +127,21 @@ public class MapInfoPanel extends InfoPanel {
    * @param listener ActionListener
    */
   public MapInfoPanel(final ActionListener listener) {
-    this.add(Box.createRigidArea(new Dimension(RIGID_BOX_WIDTH,
+    int panelWidth = RIGID_BOX_WIDTH;
+    if (listener instanceof Game) {
+      Game game = (Game) listener;
+      if (!game.getCurrentResolution().equals("1024x768")) {
+        int width = game.getWidth() - RIGID_BOX_WIDTH;
+        int viewPointX = (width / Tile.MAX_WIDTH - 1) / 2;
+        panelWidth = game.getWidth() - (viewPointX * 2 * Tile.MAX_WIDTH
+            + Tile.MAX_WIDTH);
+        panelWidth = panelWidth - Tile.MAX_WIDTH;
+        if (panelWidth < RIGID_BOX_WIDTH) {
+          panelWidth = RIGID_BOX_WIDTH;
+        }
+      }
+    }
+    this.add(Box.createRigidArea(new Dimension(panelWidth,
         RIGID_BOX_HEIGHT)));
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH * 2,
         Tile.MAX_HEIGHT * 2, BufferedImage.TYPE_4BYTE_ABGR);

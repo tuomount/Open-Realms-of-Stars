@@ -843,19 +843,30 @@ public final class NewsFactory {
         instructions.addImage(info.getRace().getNameSingle());
         sb.append(info.getEmpireName());
         sb.append(" has the greatest culture in whole galaxy! ");
+        sb.append(info.getEmpireName());
+        sb.append(" gained culture of ");
+        sb.append(winner.getScore());
+        sb.append("! ");
         if (!second.isAlliance()) {
           info = map.getPlayerByIndex(second.getRealm());
           sb.append("Second greatest culture has ");
           sb.append(info.getEmpireName());
-          sb.append(" !");
+          sb.append(" ! ");
+          sb.append(info.getEmpireName());
+          sb.append(" gained culture of ");
+          sb.append(second.getScore());
+          sb.append("! ");
         } else {
           info = map.getPlayerByIndex(second.getRealm());
           PlayerInfo info2 = map.getPlayerByIndex(second.getAllianceRealm());
           sb.append("Second greatest culture has alliance of");
           sb.append(info.getEmpireName());
-          sb.append("and");
+          sb.append(" and ");
           sb.append(info2.getEmpireName());
-          sb.append(" !");
+          sb.append(" ! ");
+          sb.append("This alliance gained culture of ");
+          sb.append(second.getScore());
+          sb.append("! ");
         }
       } else {
         PlayerInfo info = map.getPlayerByIndex(winner.getRealm());
@@ -866,14 +877,21 @@ public final class NewsFactory {
         instructions.addImage(info.getRace().getNameSingle());
         sb.append("Alliance of ");
         sb.append(info.getEmpireName());
-        sb.append("and");
+        sb.append(" and ");
         sb.append(info2.getEmpireName());
         sb.append(" has the greatest culture in  whole galaxy! ");
+        sb.append("This alliance gained culture of ");
+        sb.append(winner.getScore());
+        sb.append("! ");
         if (!second.isAlliance()) {
           info = map.getPlayerByIndex(second.getRealm());
           sb.append("Second greatest culture has ");
           sb.append(info.getEmpireName());
-          sb.append(" !");
+          sb.append(" ! ");
+          sb.append(info.getEmpireName());
+          sb.append(" gained culture of ");
+          sb.append(second.getScore());
+          sb.append("! ");
         } else {
           info = map.getPlayerByIndex(second.getRealm());
           info2 = map.getPlayerByIndex(second.getAllianceRealm());
@@ -881,7 +899,10 @@ public final class NewsFactory {
           sb.append(info.getEmpireName());
           sb.append("and");
           sb.append(info2.getEmpireName());
-          sb.append(" !");
+          sb.append(" ! ");
+          sb.append("This alliance gained culture of ");
+          sb.append(second.getScore());
+          sb.append("! ");
         }
       }
       news.setImageInstructions(instructions.build());

@@ -998,7 +998,7 @@ public final class NewsFactory {
       } else {
         info = map.getPlayerByIndex(second.getRealm());
         PlayerInfo info2 = map.getPlayerByIndex(second.getAllianceRealm());
-        sb.append("Second greatest is alliance of");
+        sb.append("Second greatest is alliance of ");
         sb.append(info.getEmpireName());
         sb.append(" and ");
         sb.append(info2.getEmpireName());
@@ -1024,9 +1024,9 @@ public final class NewsFactory {
       } else {
         info = map.getPlayerByIndex(second.getRealm());
         info2 = map.getPlayerByIndex(second.getAllianceRealm());
-        sb.append("Second greatest is alliance of");
+        sb.append("Second greatest is alliance of ");
         sb.append(info.getEmpireName());
-        sb.append("and");
+        sb.append(" and ");
         sb.append(info2.getEmpireName());
         sb.append(" !");
       }

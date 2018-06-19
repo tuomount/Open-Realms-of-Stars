@@ -331,7 +331,11 @@ public class PlanetBombingView extends BlackPanel {
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
     bottomPanel.setTitle(null);
-    textArea = new InfoTextArea(10, 30);
+    int numberOfRows = 10;
+    if (GuiStatics.isLargerFonts()) {
+      numberOfRows = MAX_LOG_NUMBER;
+    }
+    textArea = new InfoTextArea(numberOfRows, 30);
     textArea.setEditable(false);
     textArea.setLineWrap(true);
     bottomPanel.add(textArea, BorderLayout.CENTER);

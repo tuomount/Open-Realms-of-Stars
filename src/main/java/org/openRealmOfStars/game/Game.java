@@ -1830,7 +1830,7 @@ public class Game implements ActionListener {
       statView.handleAction(arg0);
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
-        if (starMap.getTurn() == starMap.getScoreVictoryTurn()) {
+        if (starMap.isGameEnded()) {
           SoundPlayer.playMenuSound();
           changeGameState(GameState.MAIN_MENU);
           return;

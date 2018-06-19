@@ -879,7 +879,7 @@ public final class NewsFactory {
         sb.append(info.getEmpireName());
         sb.append(" and ");
         sb.append(info2.getEmpireName());
-        sb.append(" has the greatest culture in  whole galaxy! ");
+        sb.append(" has the greatest culture in whole galaxy! ");
         sb.append("This alliance gained culture of ");
         sb.append(winner.getScore());
         sb.append("! ");

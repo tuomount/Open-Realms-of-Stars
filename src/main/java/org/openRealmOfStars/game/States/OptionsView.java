@@ -177,7 +177,8 @@ public class OptionsView extends BlackPanel {
     xPanel.setLayout(new BoxLayout(xPanel, BoxLayout.X_AXIS));
     xPanel.setAlignmentX(LEFT_ALIGNMENT);
     largerFontsBox = new SpaceCheckBox("Larger fonts");
-    largerFontsBox.setToolTipText("Makes all fonts slightly larger");
+    largerFontsBox.setToolTipText("Makes all fonts slightly larger."
+        + " Y-Resolution should be higher than 768 pixels.");
     largerFontsBox.createToolTip();
     largerFontsBox.setSelected(config.getLargerFonts());
     xPanel.add(largerFontsBox);

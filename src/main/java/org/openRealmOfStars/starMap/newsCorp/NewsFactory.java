@@ -955,7 +955,7 @@ public final class NewsFactory {
         instructions.addImage(info.getRace().getNameSingle());
         sb.append("Alliance of ");
         sb.append(info.getEmpireName());
-        sb.append("and");
+        sb.append(" and ");
         sb.append(info2.getEmpireName());
         sb.append(" has the all the home worlds in the galaxy! ");
         sb.append("No other realm has power to challenge this alliance.");

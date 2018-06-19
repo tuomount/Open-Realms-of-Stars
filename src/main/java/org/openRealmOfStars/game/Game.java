@@ -1924,7 +1924,7 @@ public class Game implements ActionListener {
         }
         if (gameFrame.isResizable()) {
           setResizable(false);
-          setNewResolution(optionsView.getResolution());
+          setNewResolution(gameFrame.getWidth() + "x" + gameFrame.getHeight());
         }
         configFile.setMusicVolume(optionsView.getMusicVolume());
         configFile.setSoundVolume(optionsView.getSoundVolume());

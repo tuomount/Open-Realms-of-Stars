@@ -10,6 +10,7 @@ import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
@@ -178,7 +179,12 @@ public class BattleView extends BlackPanel {
    */
   private void initBattleView(final ActionListener listener) {
     BlackPanel base = new BlackPanel();
-    mapPanel = new MapPanel(true);
+    if (listener instanceof Game) {
+      Game game = (Game) listener;
+      mapPanel = new MapPanel(game);
+    } else {
+      mapPanel = new MapPanel(true);
+    }
     mapPanel.setSize(Combat.MAX_X * ShipImage.MAX_WIDTH,
         Combat.MAX_Y * ShipImage.MAX_HEIGHT);
     mapPanel.drawBattleMap(combat, combat.getPlayer1(), this.map);

@@ -2,12 +2,12 @@ package org.openRealmOfStars.gui.mapPanel;
 
 import static org.junit.Assert.*;
 
-import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
 /**
@@ -38,10 +38,7 @@ public class MapPanelTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testRegular() {
     MapPanel panel = new MapPanel(false);
-    Dimension dimension = Mockito.mock(Dimension.class);
-    panel.setPreferredSize(dimension);
-    panel.setMinimumSize(dimension);
-    panel.setSize(dimension);
+    panel.calculateViewPoints();
     assertEquals(0, panel.getLastDrawnX());
     assertEquals(0, panel.getLastDrawnY());
     assertEquals(-48, panel.getOffsetX());
@@ -69,23 +66,53 @@ public class MapPanelTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBattle() {
     MapPanel panel = new MapPanel(true);
-    Dimension dimension = Mockito.mock(Dimension.class);
-    panel.setPreferredSize(dimension);
-    panel.setMinimumSize(dimension);
-    panel.setSize(dimension);
+    panel.calculateViewPoints();
     assertEquals(0, panel.getLastDrawnX());
     assertEquals(0, panel.getLastDrawnY());
-    assertEquals(-96, panel.getOffsetX());
-    assertEquals(-96, panel.getOffsetY());
+    assertEquals(0, panel.getOffsetX());
+    assertEquals(0, panel.getOffsetY());
+    assertEquals(4, panel.getViewPointX());
+    assertEquals(4, panel.getViewPointY());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBattle2() {
+    Game game = Mockito.mock(Game.class);
+    Mockito.when(game.getHeight()).thenReturn(960);
+    Mockito.when(game.getWidth()).thenReturn(1440);
+    MapPanel panel = new MapPanel(game);
+    panel.calculateViewPoints();
+    assertEquals(0, panel.getLastDrawnX());
+    assertEquals(0, panel.getLastDrawnY());
+    assertEquals(197, panel.getOffsetX());
+    assertEquals(87, panel.getOffsetY());
+    assertEquals(4, panel.getViewPointX());
+    assertEquals(4, panel.getViewPointY());
+    assertEquals(null, panel.getRoute());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testHistory() {
+    MapPanel panel = new MapPanel(false);
+    panel.calculateViewPoints();
+    assertEquals(0, panel.getLastDrawnX());
+    assertEquals(0, panel.getLastDrawnY());
+    assertEquals(-48, panel.getOffsetX());
+    assertEquals(-48, panel.getOffsetY());
     assertEquals(1, panel.getViewPointX());
     assertEquals(1, panel.getViewPointY());
-    assertEquals(null, panel.getRoute());
-    Route route = Mockito.mock(Route.class);
-    panel.setRoute(route);
-    assertEquals(route, panel.getRoute());
-    Coordinate coord = panel.getHistoryCoordinates();
-    assertEquals(15, coord.getX());
-    assertEquals(15, coord.getY());
+    Coordinate coordinate = panel.getHistoryCoordinates();
+    assertEquals(15, coordinate.getX());
+    assertEquals(15, coordinate.getY());
+    BufferedImage image = Mockito.mock(BufferedImage.class);
+    assertNull(panel.getLeftSpaceImage());
+    panel.setLeftSpaceImage(image);
+    assertEquals(image, panel.getLeftSpaceImage());
+    assertNull(panel.getRightSpaceImage());
+    panel.setRightSpaceImage(image);
+    assertEquals(image, panel.getRightSpaceImage());
   }
 
 }

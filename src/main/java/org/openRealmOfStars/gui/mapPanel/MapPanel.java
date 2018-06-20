@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.utilies.GraphRoutines;
@@ -179,14 +180,42 @@ public class MapPanel extends JPanel {
    * @param battle True if drawing battle map.
    */
   public MapPanel(final boolean battle) {
-    this.battle = battle;
+    initMapPanel(null, battle);
+  }
+
+  /**
+   * Constructor for Map Panel. This can be used for drawing battle map
+   * @param game GameFrame containing frame size
+   */
+  public MapPanel(final Game game) {
+    initMapPanel(game, true);
+  }
+
+  /**
+   * Initialize actual map panel.
+   * @param game GameFrame for fetching frame size in battle mode
+   * @param battleMode True if drawing battle map.
+   */
+  private void initMapPanel(final Game game, final boolean battleMode) {
+    battle = battleMode;
     int width = WIDTH;
     int height = HEIGHT;
     historyCultures = null;
     historyCoordinates = null;
-    if (battle) {
+    if (battle && game == null) {
       width = BATTLE_VIEW_SIZE;
       height = BATTLE_VIEW_SIZE;
+    } else if (battle && game != null) {
+      width = game.getWidth() - 470;
+      height = game.getHeight() - 210;
+      if (width < BATTLE_VIEW_SIZE) {
+        width = BATTLE_VIEW_SIZE;
+      }
+      if (height < BATTLE_VIEW_SIZE) {
+        height = BATTLE_VIEW_SIZE;
+      }
+    }
+    if (battle) {
       screen = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
       Dimension size = new Dimension(width, height);
       this.setSize(size);
@@ -199,16 +228,16 @@ public class MapPanel extends JPanel {
     setRoute(null);
     wormHoleAnimation = 0;
   }
-
   /**
    * Calculate view according the actual panel size;
    */
-  private void calculateViewPoints() {
+  protected void calculateViewPoints() {
     int tileWidth = Tile.MAX_WIDTH;
     int tileHeight = Tile.MAX_HEIGHT;
     if (battle) {
-      viewPointX = (this.getWidth() / ShipImage.MAX_WIDTH - 1) / 2;
-      viewPointY = (this.getHeight() / ShipImage.MAX_HEIGHT - 1) / 2;
+      // Combat does not have scroll screen
+      viewPointX = (Combat.MAX_X - 1) / 2;
+      viewPointY = (Combat.MAX_Y - 1) / 2;
     } else {
       viewPointX = (this.getWidth() / tileWidth - 1) / 2;
       viewPointY = (this.getHeight() / tileHeight - 1) / 2;
@@ -220,10 +249,10 @@ public class MapPanel extends JPanel {
       viewPointY = 1;
     }
     if (battle) {
-      viewPointOffsetX = this.getWidth()
+      viewPointOffsetX = screen.getWidth()
           - (2 * viewPointX * ShipImage.MAX_WIDTH + ShipImage.MAX_WIDTH);
       viewPointOffsetX = viewPointOffsetX / 2;
-      viewPointOffsetY = this.getHeight()
+      viewPointOffsetY = screen.getHeight()
           - (2 * viewPointY * ShipImage.MAX_HEIGHT + ShipImage.MAX_HEIGHT);
       viewPointOffsetY = viewPointOffsetY / 2;
     } else {
@@ -234,38 +263,6 @@ public class MapPanel extends JPanel {
           - (2 * viewPointY * tileHeight + tileHeight);
       viewPointOffsetY = viewPointOffsetY / 2;
     }
-  }
-
-  @Override
-  public void setMaximumSize(final Dimension maximumSize) {
-    super.setMaximumSize(maximumSize);
-    screen = new BufferedImage(this.getWidth(), this.getHeight(),
-        BufferedImage.TYPE_INT_ARGB);
-    calculateViewPoints();
-  }
-
-  @Override
-  public void setMinimumSize(final Dimension minimumSize) {
-    super.setMinimumSize(minimumSize);
-    calculateViewPoints();
-  }
-
-  @Override
-  public void setPreferredSize(final Dimension preferredSize) {
-    super.setPreferredSize(preferredSize);
-    calculateViewPoints();
-  }
-
-  @Override
-  public void setSize(final Dimension d) {
-    super.setSize(d);
-    calculateViewPoints();
-  }
-
-  @Override
-  public void setSize(final int width, final int height) {
-    super.setSize(width, height);
-    calculateViewPoints();
   }
 
   @Override

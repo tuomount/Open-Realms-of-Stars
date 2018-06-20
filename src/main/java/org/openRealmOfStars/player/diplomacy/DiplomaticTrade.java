@@ -1333,6 +1333,7 @@ public class DiplomaticTrade {
             if (planet != null) {
               mission = new Mission(MissionType.MOVE, MissionPhase.PLANNING,
                   planet.getCoordinate());
+              mission.setFleetName(offer.getFleet().getName());
               info.getMissions().add(mission);
             }
 

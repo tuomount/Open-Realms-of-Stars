@@ -275,6 +275,9 @@ public class Fleet {
           || ship.getHull().getSize() == ShipSize.HUGE)
           && shipSpeed < bigShipSpeed) {
         bigShipSpeed = shipSpeed;
+      }
+      if (ship.getHull().getSize() == ShipSize.LARGE
+          || ship.getHull().getSize() == ShipSize.HUGE) {
         fighterBaySize = fighterBaySize + ship.getFighterBaySize();
       }
       if ((ship.getHull().getSize() == ShipSize.SMALL

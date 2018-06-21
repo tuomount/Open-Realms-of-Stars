@@ -933,7 +933,10 @@ public class StarMap {
   private static final double LONGEST_DISTANCE = 999999;
   /**
    * Get nearest uncharted Solar system for coordinate. This should never
-   * return null. Unless there are no suns in galaxy.
+   * return null. Unless there are no suns in galaxy. This might not always
+   * return same result. If there are two suns with more than 50% uncharted
+   * then it is randomized which one is returned. This allows creating
+   * more varying for AI's explore missions.
    * @param x coordinate
    * @param y coordinate
    * @param info Player who is doing the search
@@ -945,6 +948,7 @@ public class StarMap {
       final PlayerInfo info, final Fleet fleet, final String ignoreSun) {
     double distance = LONGEST_DISTANCE;
     Sun result = null;
+    Sun secondChoice = null;
     int leastChartedValue = 100;
     Sun leastCharted = null;
     for (Sun sun : sunList) {
@@ -955,11 +959,19 @@ public class StarMap {
       }
       if (dist < distance && info.getUnchartedValueSystem(sun, fleet) > 50) {
         distance = dist;
+        secondChoice = result;
         result = sun;
       }
       if (info.getUnchartedValueSystem(sun, fleet) < leastChartedValue) {
         leastCharted = sun;
         leastChartedValue = info.getUnchartedValueSystem(sun, fleet);
+      }
+    }
+    if (result != null && secondChoice != null) {
+      if (DiceGenerator.getRandom(1) == 0) {
+        return result;
+      } else {
+        return secondChoice;
       }
     }
     if (result != null) {

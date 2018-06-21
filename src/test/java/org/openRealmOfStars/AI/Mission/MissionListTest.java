@@ -106,7 +106,42 @@ public class MissionListTest {
     list.add(mission);
     list.add(mission2);
     list.add(mission3);
+    assertEquals(mission, list.getMissionByIndex(0));
+    assertEquals(mission2, list.getMissionByIndex(1));
+    assertEquals(mission3, list.getMissionByIndex(2));
     assertEquals(false, list.noMoreGatherMissions("Target I"));
+    assertEquals(mission, list.getGatherMission(Mission.ASSAULT_TYPE));
+    assertEquals(mission2, list.getGatherMission(Mission.BOMBER_TYPE));
+    assertEquals(mission3, list.getGatherMission(Mission.TROOPER_TYPE));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGatherMissions2() {
+    MissionList list = new MissionList();
+    Mission mission = Mockito.mock(Mission.class);
+    Mockito.when(mission.getType()).thenReturn(MissionType.GATHER);
+    Mockito.when(mission.getPhase()).thenReturn(MissionPhase.PLANNING);
+    Mockito.when(mission.getShipType()).thenReturn(Mission.ASSAULT_TYPE);
+    Mockito.when(mission.getTargetPlanet()).thenReturn("Target I");
+    Mission mission2 = Mockito.mock(Mission.class);
+    Mockito.when(mission2.getType()).thenReturn(MissionType.GATHER);
+    Mockito.when(mission2.getPhase()).thenReturn(MissionPhase.PLANNING);
+    Mockito.when(mission2.getShipType()).thenReturn(Mission.BOMBER_TYPE);
+    Mockito.when(mission2.getTargetPlanet()).thenReturn("Target I");
+    Mission mission3 = Mockito.mock(Mission.class);
+    Mockito.when(mission3.getType()).thenReturn(MissionType.GATHER);
+    Mockito.when(mission3.getPhase()).thenReturn(MissionPhase.PLANNING);
+    Mockito.when(mission3.getShipType()).thenReturn(Mission.TROOPER_TYPE);
+    Mockito.when(mission3.getTargetPlanet()).thenReturn("Target I");
+    assertEquals(true, list.noMoreGatherMissions("Target I"));
+    list.addPriorityAfter(mission, mission);
+    list.addPriorityAfter(mission2, mission);
+    list.addPriorityAfter(mission3, mission);
+    assertEquals(false, list.noMoreGatherMissions("Target I"));
+    assertEquals(mission, list.getMissionByIndex(0));
+    assertEquals(mission3, list.getMissionByIndex(1));
+    assertEquals(mission2, list.getMissionByIndex(2));
     assertEquals(mission, list.getGatherMission(Mission.ASSAULT_TYPE));
     assertEquals(mission2, list.getGatherMission(Mission.BOMBER_TYPE));
     assertEquals(mission3, list.getGatherMission(Mission.TROOPER_TYPE));

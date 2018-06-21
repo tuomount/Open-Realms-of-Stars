@@ -463,73 +463,73 @@ public class AITurnView extends BlackPanel {
       final Mission mission) {
     if (mission.getType() == MissionType.ATTACK) {
       Coordinate coord = new Coordinate(mission.getX(), mission.getY());
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.ASSAULT_TYPE));
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.ASSAULT_TYPE));
+      info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+          Mission.ASSAULT_TYPE), mission);
+      info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+          Mission.ASSAULT_TYPE), mission);
       if (info.bombersAvailable() && !info.bomberTrooperAvailable()) {
-        info.getMissions().add(createGatherMission(mission, coord,
-            Mission.BOMBER_TYPE));
+        info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+            Mission.BOMBER_TYPE), mission);
       }
-      info.getMissions().add(createGatherMission(mission, coord,
-          Mission.TROOPER_TYPE));
+      info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+          Mission.TROOPER_TYPE), mission);
       Attitude attitude = info.getAiAttitude();
       if (attitude == Attitude.AGGRESSIVE) {
-        info.getMissions().add(createGatherMission(mission, coord,
-            Mission.ASSAULT_TYPE));
-        info.getMissions().add(createGatherMission(mission, coord,
-            Mission.ASSAULT_TYPE));
-        info.getMissions().add(createGatherMission(mission, coord,
-            Mission.ASSAULT_TYPE));
+        info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE), mission);
+        info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE), mission);
+        info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE), mission);
         if (!info.bomberTrooperAvailable()) {
-          info.getMissions().add(createGatherMission(mission, coord,
-              Mission.TROOPER_TYPE));
+          info.getMissions().addPriorityAfter(createGatherMission(mission,
+              coord, Mission.TROOPER_TYPE), mission);
         }
       } else if (attitude == Attitude.MILITARISTIC) {
-        info.getMissions().add(createGatherMission(mission, coord,
-            Mission.ASSAULT_TYPE));
-        info.getMissions().add(createGatherMission(mission, coord,
-            Mission.ASSAULT_TYPE));
-        info.getMissions().add(createGatherMission(mission, coord,
-            Mission.ASSAULT_TYPE));
+        info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE), mission);
+        info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE), mission);
+        info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE), mission);
         if (info.bombersAvailable() && !info.bomberTrooperAvailable()) {
-          info.getMissions().add(createGatherMission(mission, coord,
-              Mission.BOMBER_TYPE));
+          info.getMissions().addPriorityAfter(createGatherMission(mission,
+              coord, Mission.BOMBER_TYPE), mission);
         }
       } else if (attitude == Attitude.EXPANSIONIST) {
-        info.getMissions().add(createGatherMission(mission, coord,
-            Mission.ASSAULT_TYPE));
-        info.getMissions().add(createGatherMission(mission, coord,
-            Mission.ASSAULT_TYPE));
+        info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE), mission);
+        info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE), mission);
         if (!info.bomberTrooperAvailable()) {
-          info.getMissions().add(createGatherMission(mission, coord,
-              Mission.TROOPER_TYPE));
+          info.getMissions().addPriorityAfter(createGatherMission(mission,
+              coord, Mission.TROOPER_TYPE), mission);
         }
       } else if (attitude == Attitude.BACKSTABBING) {
-        info.getMissions().add(createGatherMission(mission, coord,
-            Mission.ASSAULT_TYPE));
-        info.getMissions().add(createGatherMission(mission, coord,
-            Mission.ASSAULT_TYPE));
+        info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE), mission);
+        info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE), mission);
         if (info.bombersAvailable() && !info.bomberTrooperAvailable()) {
-          info.getMissions().add(createGatherMission(mission, coord,
-              Mission.BOMBER_TYPE));
+          info.getMissions().addPriorityAfter(createGatherMission(mission,
+              coord, Mission.BOMBER_TYPE), mission);
         }
       } else if (attitude == Attitude.LOGICAL) {
-        info.getMissions().add(createGatherMission(mission, coord,
-            Mission.ASSAULT_TYPE));
+        info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE), mission);
         if (!info.bomberTrooperAvailable()) {
-          info.getMissions().add(createGatherMission(mission, coord,
-              Mission.TROOPER_TYPE));
+          info.getMissions().addPriorityAfter(createGatherMission(mission,
+              coord, Mission.TROOPER_TYPE), mission);
         }
         if (info.bombersAvailable() && !info.bomberTrooperAvailable()) {
-          info.getMissions().add(createGatherMission(mission, coord,
-              Mission.BOMBER_TYPE));
+          info.getMissions().addPriorityAfter(createGatherMission(mission,
+              coord, Mission.BOMBER_TYPE), mission);
         }
       } else {
-        info.getMissions().add(createGatherMission(mission, coord,
-            Mission.ASSAULT_TYPE));
-        info.getMissions().add(createGatherMission(mission, coord,
-            Mission.ASSAULT_TYPE));
+        info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE), mission);
+        info.getMissions().addPriorityAfter(createGatherMission(mission, coord,
+            Mission.ASSAULT_TYPE), mission);
       }
     }
     if (mission.getType() == MissionType.DESTROY_STARBASE) {
@@ -578,7 +578,11 @@ public class AITurnView extends BlackPanel {
     }
     if (info.getMissions().getAttackMission(planet.getName()) == null) {
       // No attack mission for this planet found, so adding it.
-      info.getMissions().add(mission);
+      if (planet.getHomeWorldIndex() != -1) {
+        info.getMissions().addHighestPriority(mission);
+      } else {
+        info.getMissions().add(mission);
+      }
       addGatherMission(info, mission);
     }
   }
@@ -789,7 +793,7 @@ public class AITurnView extends BlackPanel {
           if (info.getMissions().getColonizeMission(mission.getX(),
               mission.getY()) == null) {
             // No colonize mission for this planet found, so adding it.
-            info.getMissions().add(mission);
+            info.getMissions().addHighestPriority(mission);
             mission = info.getMissions().getMission(MissionType.COLONY_EXPLORE,
                 MissionPhase.EXECUTING);
             if (mission != null) {
@@ -809,7 +813,7 @@ public class AITurnView extends BlackPanel {
           if (info.getMissions().getColonizeMission(mission.getX(),
               mission.getY()) == null) {
             // No colonize mission for this planet found, so adding it.
-            info.getMissions().add(mission);
+            info.getMissions().addHighestPriority(mission);
           }
         }
         if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()

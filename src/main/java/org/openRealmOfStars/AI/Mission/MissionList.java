@@ -331,6 +331,35 @@ public class MissionList {
   }
 
   /**
+   * Add new mission into mission list with highest priority.
+   * @param mission The mission to add to the list
+   */
+  public void addHighestPriority(final Mission mission) {
+    missions.add(0, mission);
+  }
+
+  /**
+   * Add new mission into mission list with priority.
+   * @param mission The mission to add to the list
+   * @param indexMission mission in list where new is added immediately
+   *         afterwards.
+   */
+  public void addPriorityAfter(final Mission mission,
+      final Mission indexMission) {
+    int priority = missions.size();
+    for (int i = 0; i < missions.size(); i++) {
+      if (missions.get(i) == indexMission) {
+        priority = i + 1;
+        if (priority > missions.size()) {
+          priority = missions.size();
+        }
+        break;
+      }
+    }
+    missions.add(priority, mission);
+  }
+
+  /**
    * Get number of missions
    * @return Number of missions
    */

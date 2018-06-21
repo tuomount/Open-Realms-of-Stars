@@ -933,6 +933,20 @@ public class StarMap {
   private static final double LONGEST_DISTANCE = 999999;
   /**
    * Get nearest uncharted Solar system for coordinate. This should never
+   * return null. Unless there are no suns in galaxy.
+   * @param x coordinate
+   * @param y coordinate
+   * @param info Player who is doing the search
+   * @param fleet doing the search
+   * @param ignoreSun Sun to ignore
+   * @return Nearest sun
+   */
+  public Sun getNearestSolarSystem(final int x, final int y,
+      final PlayerInfo info, final Fleet fleet, final String ignoreSun) {
+    return getNearestSolarSystem(x, y, info, fleet, ignoreSun, false);
+  }
+  /**
+   * Get nearest uncharted Solar system for coordinate. This should never
    * return null. Unless there are no suns in galaxy. This might not always
    * return same result. If there are two suns with more than 50% uncharted
    * then it is randomized which one is returned. This allows creating
@@ -944,11 +958,32 @@ public class StarMap {
    * @param ignoreSun Sun to ignore
    * @return Nearest sun
    */
-  public Sun getNearestSolarSystem(final int x, final int y,
+  public Sun getAboutNearestSolarSystem(final int x, final int y,
       final PlayerInfo info, final Fleet fleet, final String ignoreSun) {
+    return getNearestSolarSystem(x, y, info, fleet, ignoreSun, true);
+  }
+
+  /**
+   * Get nearest uncharted Solar system for coordinate. This should never
+   * return null. Unless there are no suns in galaxy. This might not always
+   * return same result. If there are two suns with more than 50% uncharted
+   * then it is randomized which one is returned. This allows creating
+   * more varying for AI's explore missions.
+   * @param x coordinate
+   * @param y coordinate
+   * @param info Player who is doing the search
+   * @param fleet doing the search
+   * @param ignoreSun Sun to ignore
+   * @param second true if possible to return second closest solar system
+   * @return Nearest sun
+   */
+  private Sun getNearestSolarSystem(final int x, final int y,
+      final PlayerInfo info, final Fleet fleet, final String ignoreSun,
+      final boolean second) {
     double distance = LONGEST_DISTANCE;
     Sun result = null;
     Sun secondChoice = null;
+    double secondDistance = LONGEST_DISTANCE;
     int leastChartedValue = 100;
     Sun leastCharted = null;
     for (Sun sun : sunList) {
@@ -958,16 +993,21 @@ public class StarMap {
         dist = LONGEST_DISTANCE;
       }
       if (dist < distance && info.getUnchartedValueSystem(sun, fleet) > 50) {
+        secondDistance = distance;
         distance = dist;
         secondChoice = result;
         result = sun;
+      } else if (dist < secondDistance
+          && info.getUnchartedValueSystem(sun, fleet) > 50) {
+        secondDistance = dist;
+        secondChoice = sun;
       }
       if (info.getUnchartedValueSystem(sun, fleet) < leastChartedValue) {
         leastCharted = sun;
         leastChartedValue = info.getUnchartedValueSystem(sun, fleet);
       }
     }
-    if (result != null && secondChoice != null) {
+    if (result != null && secondChoice != null && second) {
       if (DiceGenerator.getRandom(1) == 0) {
         return result;
       } else {
@@ -978,7 +1018,6 @@ public class StarMap {
       return result;
     }
     return leastCharted;
-
   }
 
   /**

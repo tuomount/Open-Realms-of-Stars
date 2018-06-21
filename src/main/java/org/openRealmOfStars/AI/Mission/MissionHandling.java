@@ -224,7 +224,7 @@ public final class MissionHandling {
         if (fleet.getaStarSearch() == null) {
           Sun sun = null;
           if (missionComplete) {
-            sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
+            sun = game.getStarMap().getAboutNearestSolarSystem(fleet.getX(),
                 fleet.getY(), info, fleet, ignoreSun);
             if (sun == null) {
               Planet home = game.getStarMap().getClosestHomePort(info,

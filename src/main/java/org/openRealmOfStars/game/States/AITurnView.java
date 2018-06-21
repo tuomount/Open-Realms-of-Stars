@@ -234,7 +234,7 @@ public class AITurnView extends BlackPanel {
       // No mission for fleet yet
       if (fleet.isScoutFleet()) {
         // Scout fleet should go to explore
-        Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
+        Sun sun = game.getStarMap().getAboutNearestSolarSystem(fleet.getX(),
             fleet.getY(), info, fleet, null);
         mission = new Mission(MissionType.EXPLORE, MissionPhase.TREKKING,
             sun.getCenterCoordinate());
@@ -264,7 +264,7 @@ public class AITurnView extends BlackPanel {
       }
       if (fleet.isPrivateerFleet()) {
         // Privateer fleet should go to explore and rob trade ships
-        Sun sun = game.getStarMap().getNearestSolarSystem(fleet.getX(),
+        Sun sun = game.getStarMap().getAboutNearestSolarSystem(fleet.getX(),
             fleet.getY(), info, fleet, null);
         mission = new Mission(MissionType.PRIVATEER, MissionPhase.TREKKING,
             sun.getCenterCoordinate());

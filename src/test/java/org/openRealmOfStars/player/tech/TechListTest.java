@@ -259,6 +259,8 @@ public class TechListTest {
         assertEquals(i, list.getTechLevel(TechType.Combat));
       }
     }
+    assertEquals(true, list.hasTech(TechType.Combat, "Photon torpedo Mk7"));
+    assertEquals(false, list.hasTech(TechType.Combat, "MyPiuPiu"));
   }
 
   @Test

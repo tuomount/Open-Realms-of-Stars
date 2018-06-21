@@ -22,6 +22,7 @@ import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
@@ -264,6 +265,8 @@ public class PlanetHandlingTest {
     Mockito.when(planet.exceedRadiation()).thenReturn(false);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList techList = Mockito.mock(TechList.class);
+    Mockito.when(info.getTechList()).thenReturn(techList);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
@@ -328,6 +331,8 @@ public class PlanetHandlingTest {
     Mockito.when(planet.exceedRadiation()).thenReturn(false);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList techList = Mockito.mock(TechList.class);
+    Mockito.when(info.getTechList()).thenReturn(techList);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
@@ -346,6 +351,8 @@ public class PlanetHandlingTest {
     Mockito.when(planet.exceedRadiation()).thenReturn(false);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList techList = Mockito.mock(TechList.class);
+    Mockito.when(info.getTechList()).thenReturn(techList);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
@@ -373,6 +380,8 @@ public class PlanetHandlingTest {
     Mockito.when(planet.exceedRadiation()).thenReturn(false);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList techList = Mockito.mock(TechList.class);
+    Mockito.when(info.getTechList()).thenReturn(techList);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
@@ -438,6 +447,8 @@ public class PlanetHandlingTest {
     Mockito.when(planet.getBuildingList()).thenReturn(list);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList techList = Mockito.mock(TechList.class);
+    Mockito.when(info.getTechList()).thenReturn(techList);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
 
     Building building = PlanetHandling.getWorstBuilding(planet, info,
@@ -462,6 +473,8 @@ public class PlanetHandlingTest {
     Mockito.when(planet.getBuildingList()).thenReturn(list);
 
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList techList = Mockito.mock(TechList.class);
+    Mockito.when(info.getTechList()).thenReturn(techList);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
 
     Building building = PlanetHandling.getWorstBuilding(planet, info,

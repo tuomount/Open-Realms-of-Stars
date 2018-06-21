@@ -254,6 +254,22 @@ public class TechList {
   }
 
   /**
+   * Has certain tech in tech list
+   * @param type Tech type
+   * @param techName Tech name to search
+   * @return True if tech is in the list otherwise false
+   */
+  public boolean hasTech(final TechType type, final String techName) {
+    Tech[] list = getListForType(type);
+    for (int i = 0; i < list.length; i++) {
+      if (list[i].getName().equals(techName)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Get component difference in techs
    * @param tech Tech that other one owns
    * @param ownTech Tech we own

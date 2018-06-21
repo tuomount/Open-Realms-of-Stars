@@ -14,6 +14,7 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
+import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -437,6 +438,26 @@ public final class PlanetHandling {
       score = -1;
     }
 
+    if (building.getName().equals("Basic factory")
+        && info.getTechList().hasTech(TechType.Improvements,
+            "Advanced factory")) {
+      score = -1;
+    }
+    if (building.getName().equals("Basic mine")
+        && info.getTechList().hasTech(TechType.Improvements,
+            "Advanced mine")) {
+      score = -1;
+    }
+    if (building.getName().equals("Basic farm")
+        && info.getTechList().hasTech(TechType.Improvements,
+            "Advanced farm")) {
+      score = -1;
+    }
+    if (building.getName().equals("Basic lab")
+        && info.getTechList().hasTech(TechType.Improvements,
+            "Advanced laboratory")) {
+      score = -1;
+    }
     if (planet.exceedRadiation()) {
       if (building.getName().equals("Radiation dampener")
           || building.getName().equals("Radiation well")) {

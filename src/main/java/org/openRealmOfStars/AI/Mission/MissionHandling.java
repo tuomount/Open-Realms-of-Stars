@@ -1,5 +1,7 @@
 package org.openRealmOfStars.AI.Mission;
 
+import java.util.ArrayList;
+
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.AI.PathFinding.PathPoint;
 import org.openRealmOfStars.AI.PlanetHandling.PlanetHandling;
@@ -323,6 +325,26 @@ public final class MissionHandling {
     } // End Of Colony Explore
   }
 
+  /**
+   * Clean mission which are assigned to fleet but fleet is no longer
+   * available.
+   * @param info Player whose mission are about to be clean
+   */
+  public static void cleanMissions(final PlayerInfo info) {
+    ArrayList<Mission> missionsDelete = new ArrayList<>();
+    for (int i = 0; i < info.getMissions().getSize(); i++) {
+      Mission mission = info.getMissions().getMissionByIndex(i);
+      if (mission.getFleetName() != null) {
+        Fleet fleet = info.getFleets().getByName(mission.getFleetName());
+        if (fleet == null) {
+          missionsDelete.add(mission);
+        }
+      }
+    }
+    for (Mission mission : missionsDelete) {
+      info.getMissions().remove(mission);
+    }
+  }
   /**
    * Handle Colonize mission
    * @param mission Colonize mission, does nothing if type is wrong

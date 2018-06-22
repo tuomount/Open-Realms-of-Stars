@@ -924,6 +924,7 @@ public class AITurnView extends BlackPanel {
       }
       game.getStarMap().setAIFleet(info.getFleets().getNext());
       if (info.getFleets().getIndex() == 0) {
+        MissionHandling.cleanMissions(info);
         // All fleets have moved. Checking the new possible planet
         searchPlanetsForMissions();
         // Searching for fleet which has crossed the borders

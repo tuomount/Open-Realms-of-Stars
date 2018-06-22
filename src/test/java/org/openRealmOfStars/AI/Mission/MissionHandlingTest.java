@@ -327,6 +327,38 @@ public class MissionHandlingTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCleaning() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
+    MissionList missionList = new MissionList();
+    Mockito.when(info.getMissions()).thenReturn(missionList);
+    FleetList fleetList = Mockito.mock(FleetList.class);
+    Mockito.when(info.getFleets()).thenReturn(fleetList);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleetList.getByName("Test fleet")).thenReturn(fleet);
+    Mission mission = new Mission(MissionType.PRIVATEER, MissionPhase.TREKKING,
+        new Coordinate(2, 2));
+    mission.setFleetName("Test fleet");
+    Mission missionPlan = new Mission(MissionType.COLONIZE, MissionPhase.PLANNING,
+        new Coordinate(2, 2));
+    Mission mission2 = new Mission(MissionType.COLONY_EXPLORE, MissionPhase.TREKKING,
+        new Coordinate(2, 2));
+    mission2.setFleetName("NoSuch");
+    missionList.add(mission);
+    missionList.add(missionPlan);
+    missionList.add(mission2);
+    assertEquals(3, missionList.getSize());
+    MissionHandling.cleanMissions(info);
+    assertEquals(2, missionList.getSize());
+    missionList.add(missionPlan);
+    missionList.add(mission2);
+    assertEquals(4, missionList.getSize());
+    MissionHandling.cleanMissions(info);
+    assertEquals(3, missionList.getSize());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testColonyExplore() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);

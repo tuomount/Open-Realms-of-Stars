@@ -1295,17 +1295,19 @@ public final class MissionHandling {
    */
   private static void makeReroute(final Game game, final Fleet fleet,
       final PlayerInfo info, final Mission mission) {
-    // Fleet has encounter obstacle, taking a detour round it
-    if (fleet.getaStarSearch() == null) {
-      // No A star search made yet, so let's do it
-      AStarSearch search = new AStarSearch(game.getStarMap(), fleet.getX(),
-          fleet.getY(), mission.getX(), mission.getY(), 7);
-      search.doSearch();
-      search.doRoute();
-      fleet.setaStarSearch(search);
-      makeRerouteBeforeFTLMoves(game, fleet, info, mission);
-    } else {
-      makeRerouteBeforeFTLMoves(game, fleet, info, mission);
+    if (fleet.getRoute() == null) {
+      // Fleet has encounter obstacle, taking a detour round it
+      if (fleet.getaStarSearch() == null) {
+        // No A star search made yet, so let's do it
+        AStarSearch search = new AStarSearch(game.getStarMap(), fleet.getX(),
+            fleet.getY(), mission.getX(), mission.getY(), 7);
+        search.doSearch();
+        search.doRoute();
+        fleet.setaStarSearch(search);
+        makeRerouteBeforeFTLMoves(game, fleet, info, mission);
+      } else {
+        makeRerouteBeforeFTLMoves(game, fleet, info, mission);
+      }
     }
   }
 
@@ -1319,11 +1321,15 @@ public final class MissionHandling {
   private static void makeRerouteBeforeFTLMoves(final Game game,
       final Fleet fleet, final PlayerInfo info, final Mission mission) {
     AStarSearch search = fleet.getaStarSearch();
-    for (int mv = 0; mv < fleet.getMovesLeft(); mv++) {
+    int moves = fleet.getMovesLeft();
+    for (int mv = 0; mv < moves; mv++) {
       PathPoint point = search.getMove();
       if (point != null
           && !game.getStarMap().isBlocked(point.getX(), point.getY())) {
         makeFleetMove(game, point, info, fleet);
+      }
+      if (fleet.getMovesLeft() == 0) {
+        break;
       }
     }
     fleet.setMovesLeft(0);

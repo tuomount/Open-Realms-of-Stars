@@ -899,7 +899,10 @@ public class AITurnView extends BlackPanel {
         MissionHandling.mergeFleets(fleet, info);
         Mission mission = info.getMissions().getMission(MissionType.COLONIZE,
             MissionPhase.PLANNING);
-        if (mission != null && fleet.getColonyShip() != null) {
+        Mission fleetMission = info.getMissions().getMissionForFleet(
+            fleet.getName());
+        if (mission != null && fleet.getColonyShip() != null
+            && fleetMission == null) {
           Ship ship = fleet.getColonyShip();
           Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
           fleet.removeShip(ship);
@@ -912,7 +915,8 @@ public class AITurnView extends BlackPanel {
         }
         mission = info.getMissions().getMission(MissionType.DEPLOY_STARBASE,
             MissionPhase.PLANNING);
-        if (mission != null && fleet.getStarbaseShip() != null) {
+        if (mission != null && fleet.getStarbaseShip() != null
+            && fleetMission == null) {
           Ship ship = fleet.getStarbaseShip();
           Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
           fleet.removeShip(ship);

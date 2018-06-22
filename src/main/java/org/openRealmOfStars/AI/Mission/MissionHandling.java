@@ -289,6 +289,12 @@ public final class MissionHandling {
         info.getMissions().remove(mission);
       } else if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getRoute() == null) {
+        Planet planet = game.getStarMap().getPlanetByName(
+            mission.getPlanetBuilding());
+        if (planet != null) {
+          // This should be always set
+          mission.setTarget(planet.getCoordinate());
+        }
         makeReroute(game, fleet, info, mission);
       }
       if (mission.getPhase() == MissionPhase.EXECUTING) {

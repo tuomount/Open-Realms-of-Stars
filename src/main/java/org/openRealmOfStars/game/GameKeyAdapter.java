@@ -101,6 +101,12 @@ public class GameKeyAdapter implements KeyEventDispatcher {
         game.getStarMap().nextPlayer();
         return true;
       }
+      if (arg0.getKeyCode() == KeyEvent.VK_C
+          && arg0.getID() == KeyEvent.KEY_PRESSED) {
+        System.out.println("Cursor X: " + game.getStarMap().getCursorX()
+            + " Y: " + game.getStarMap().getCursorY());
+        return true;
+      }
       if (arg0.getKeyCode() == KeyEvent.VK_M
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
         PlayerInfo info = game.getStarMap().getCurrentPlayerInfo();

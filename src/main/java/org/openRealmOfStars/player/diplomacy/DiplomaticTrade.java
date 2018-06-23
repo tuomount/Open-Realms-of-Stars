@@ -174,6 +174,9 @@ public class DiplomaticTrade {
     if (firstOffer.isTypeInOffer(NegotiationType.TRADE_ALLIANCE)) {
       return SpeechType.TRADE_ALLIANCE;
     }
+    if (firstOffer.isTypeInOffer(NegotiationType.DEFENSIVE_PACT)) {
+      return SpeechType.DEFESIVE_PACT;
+    }
     if (firstOffer.getSize() > 0
         && (secondOffer == null || secondOffer.getSize() == 0)) {
       return SpeechType.DEMAND;

@@ -681,6 +681,9 @@ public class Fleet {
       if (getName().startsWith("Defender")) {
         return false;
       }
+      if (getName().startsWith("Attacker")) {
+        return false;
+      }
       if (ship.getHull().getHullType() == ShipHullType.PROBE) {
         return true;
       }

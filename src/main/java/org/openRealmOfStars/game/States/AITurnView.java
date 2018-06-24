@@ -82,6 +82,22 @@ public class AITurnView extends BlackPanel {
   private static final long serialVersionUID = 1L;
 
   /**
+   * Limit for destroy starbases mission
+   */
+  private static final int LIMIT_DESTROY_STARBASES = 4;
+  /**
+   * Limit for deploy starbases mission
+   */
+  private static final int LIMIT_DEPLOY_STARBASES = 4;
+  /**
+   * Limit for attack missions
+   */
+  private static final int LIMIT_ATTACKS = 4;
+  /**
+   * Limit for colonization missions
+   */
+  private static final int LIMIT_COLONIZATIONS = 4;
+  /**
    * Text for showing human player
    */
   private TransparentLabel label;
@@ -644,7 +660,15 @@ public class AITurnView extends BlackPanel {
     StarMap map = game.getStarMap();
     PlayerInfo info = game.getPlayers()
         .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
+    int destroyStarbases = info.getMissions().getNumberOfMissionTypes(
+        MissionType.DESTROY_STARBASE);
+    int deployStarbases = info.getMissions().getNumberOfMissionTypes(
+        MissionType.DEPLOY_STARBASE);
     FleetTileInfo[][] fleetTiles = map.getFleetTiles();
+    if (deployStarbases >= LIMIT_DEPLOY_STARBASES
+        && destroyStarbases >= LIMIT_DESTROY_STARBASES) {
+      return;
+    }
     for (int y = 0; y < map.getMaxY(); y++) {
       for (int x = 0; x < map.getMaxX(); x++) {
         Tile tile = map.getTile(x, y);
@@ -655,7 +679,8 @@ public class AITurnView extends BlackPanel {
           if (fleetTiles[x][y] == null) {
             Mission mission = new Mission(MissionType.DEPLOY_STARBASE,
                 MissionPhase.PLANNING, new Coordinate(x, y));
-            if (info.getMissions().getDeployStarbaseMission(x, y) == null) {
+            if (info.getMissions().getDeployStarbaseMission(x, y) == null
+                && deployStarbases < LIMIT_DEPLOY_STARBASES) {
               // No deploy starbase mission for this planet found, so adding it.
               info.getMissions().add(mission);
             }
@@ -670,7 +695,8 @@ public class AITurnView extends BlackPanel {
                 == PlayerInfo.VISIBLE && infoAt != info) {
               Mission mission = new Mission(MissionType.DEPLOY_STARBASE,
                   MissionPhase.PLANNING, new Coordinate(x, y));
-              if (info.getMissions().getDeployStarbaseMission(x, y) == null) {
+              if (info.getMissions().getDeployStarbaseMission(x, y) == null
+                  && deployStarbases < LIMIT_DEPLOY_STARBASES) {
                 // No deploy starbase mission for this planet found,
                 // so adding it.
                 info.getMissions().add(mission);
@@ -681,7 +707,8 @@ public class AITurnView extends BlackPanel {
                 int index = fleetTiles[x][y].getPlayerIndex();
                 DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
                     index);
-                if (list.isBonusType(DiplomacyBonusType.IN_WAR)) {
+                if (list.isBonusType(DiplomacyBonusType.IN_WAR)
+                    && destroyStarbases < LIMIT_DESTROY_STARBASES) {
                   addDestroyStarbaseMission(new Coordinate(x, y), info);
                 }
             }  else if (fleet.isStarBaseDeployed()
@@ -695,7 +722,8 @@ public class AITurnView extends BlackPanel {
                 // There is already starbase know by espionage
                 DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
                     index);
-                if (list.isBonusType(DiplomacyBonusType.IN_WAR)) {
+                if (list.isBonusType(DiplomacyBonusType.IN_WAR)
+                    && destroyStarbases < LIMIT_DESTROY_STARBASES) {
                   // AI already has war against that player so,
                   // adding destroy mission
                   addDestroyStarbaseMission(new Coordinate(x, y), info);
@@ -787,6 +815,10 @@ public class AITurnView extends BlackPanel {
         .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
     if (info != null && !info.isHuman()) {
       ArrayList<Planet> planets = game.getStarMap().getPlanetList();
+      int colonizations = info.getMissions().getNumberOfMissionTypes(
+          MissionType.COLONIZE);
+      int attacks = info.getMissions().getNumberOfMissionTypes(
+          MissionType.ATTACK);
       for (Planet planet : planets) {
         if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
             && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
@@ -796,7 +828,7 @@ public class AITurnView extends BlackPanel {
           Mission mission = new Mission(MissionType.COLONIZE,
               MissionPhase.PLANNING, planet.getCoordinate());
           if (info.getMissions().getColonizeMission(mission.getX(),
-              mission.getY()) == null) {
+              mission.getY()) == null && colonizations < LIMIT_COLONIZATIONS) {
             // No colonize mission for this planet found, so adding it.
             info.getMissions().addHighestPriority(mission);
             mission = info.getMissions().getMission(MissionType.COLONY_EXPLORE,
@@ -816,7 +848,7 @@ public class AITurnView extends BlackPanel {
           Mission mission = new Mission(MissionType.COLONIZE,
               MissionPhase.PLANNING, planet.getCoordinate());
           if (info.getMissions().getColonizeMission(mission.getX(),
-              mission.getY()) == null) {
+              mission.getY()) == null && colonizations < LIMIT_COLONIZATIONS) {
             // No colonize mission for this planet found, so adding it.
             info.getMissions().addHighestPriority(mission);
           }
@@ -830,7 +862,8 @@ public class AITurnView extends BlackPanel {
             int ownerIndex = game.getStarMap().getPlayerList().getIndex(owner);
             DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
                 ownerIndex);
-            if (list != null && list.isBonusType(DiplomacyBonusType.IN_WAR)) {
+            if (list != null && list.isBonusType(DiplomacyBonusType.IN_WAR)
+                && attacks < LIMIT_ATTACKS) {
               addAttackMission(planet, info);
             } else {
               if (owner.isHuman()) {
@@ -864,7 +897,8 @@ public class AITurnView extends BlackPanel {
             DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(
                 ownerIndex);
             if (list != null
-                && list.isBonusType(DiplomacyBonusType.IN_WAR)) {
+                && list.isBonusType(DiplomacyBonusType.IN_WAR)
+                && attacks < LIMIT_ATTACKS) {
               // Got new map part maybe in trade and found planet owned by
               // player which is being at war now.
               addAttackMission(planet, info);

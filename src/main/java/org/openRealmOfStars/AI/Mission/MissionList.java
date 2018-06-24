@@ -211,6 +211,21 @@ public class MissionList {
   }
 
   /**
+   * Calculate number of certain mission types.
+   * @param type Mission types to count
+   * @return number of missions
+   */
+  public int getNumberOfMissionTypes(final MissionType type) {
+    int count = 0;
+    for (Mission mission : missions) {
+      if (mission.getType() == type) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  /**
    * Get mission where type is certain and phase is certain
    * @param type Mission type
    * @param phase Mission phase

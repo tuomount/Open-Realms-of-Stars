@@ -145,6 +145,8 @@ public class MissionListTest {
     assertEquals(mission, list.getGatherMission(Mission.ASSAULT_TYPE));
     assertEquals(mission2, list.getGatherMission(Mission.BOMBER_TYPE));
     assertEquals(mission3, list.getGatherMission(Mission.TROOPER_TYPE));
+    assertEquals(3, list.getNumberOfMissionTypes(MissionType.GATHER));
+    assertEquals(0, list.getNumberOfMissionTypes(MissionType.ATTACK));
   }
 
   @Test
@@ -184,6 +186,9 @@ public class MissionListTest {
     list.add(mission4);
     list.add(mission5);
     list.add(mission6);
+    assertEquals(4, list.getNumberOfMissionTypes(MissionType.GATHER));
+    assertEquals(1, list.getNumberOfMissionTypes(MissionType.DESTROY_STARBASE));
+    assertEquals(1, list.getNumberOfMissionTypes(MissionType.TRADE_FLEET));
     assertEquals(6, list.getSize());
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     StarMap map = Mockito.mock(StarMap.class);
@@ -196,6 +201,9 @@ public class MissionListTest {
     Mockito.when(map.getPlayerInfoByFleet(fleet)).thenReturn(info);
     list.removeAttackAgainstPlayer(info, map);
     assertEquals(1, list.getSize());
+    assertEquals(0, list.getNumberOfMissionTypes(MissionType.GATHER));
+    assertEquals(0, list.getNumberOfMissionTypes(MissionType.DESTROY_STARBASE));
+    assertEquals(1, list.getNumberOfMissionTypes(MissionType.TRADE_FLEET));
   }
 
 }

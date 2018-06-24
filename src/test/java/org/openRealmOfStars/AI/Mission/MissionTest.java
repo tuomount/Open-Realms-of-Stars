@@ -112,7 +112,8 @@ public class MissionTest {
         + "Fleet:Test Fleet\n"
         + "Time:1\n"
         + "Gather planet:Gather Test\n"
-        + "Shiptype:TestShip", mission.toString());
+        + "Shiptype:TestShip\n"
+        + "Target planet:Test target", mission.toString());
   }
 
   @Test

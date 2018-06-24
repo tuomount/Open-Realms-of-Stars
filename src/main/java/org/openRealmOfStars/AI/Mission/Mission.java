@@ -240,6 +240,8 @@ public class Mission {
       sb.append(getPlanetGathering());
       sb.append("\nShiptype:");
       sb.append(getShipType());
+      sb.append("\nTarget planet:");
+      sb.append(getTargetPlanet());
     }
     return sb.toString();
   }

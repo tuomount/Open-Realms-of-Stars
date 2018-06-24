@@ -84,6 +84,11 @@ public class OptionsView extends BlackPanel {
   private SpaceCheckBox largerFontsBox;
 
   /**
+   * Screen has been resized;
+   */
+  private boolean resized = false;
+
+  /**
    * Constructor for OptionsView
    * @param config Current ConfigFile
    * @param gameFrame Game frame
@@ -237,6 +242,7 @@ public class OptionsView extends BlackPanel {
   public void handleAction(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_RESIZE)) {
       game.setResizable(true);
+      resized = true;
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_MUSIC_VOLUME_UP)
         && musicSlider.getSliderValue() + 10 <= musicSlider.getMaximumValue()) {
@@ -278,7 +284,7 @@ public class OptionsView extends BlackPanel {
    */
   public String getResolution() {
     String result = (String) resolutionSelection.getSelectedItem();
-    if (result.startsWith("Custom ")) {
+    if (result.startsWith("Custom ") || resized) {
       result = game.getCurrentResolution();
     }
     return result;

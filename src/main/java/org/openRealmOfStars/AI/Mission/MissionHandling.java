@@ -342,7 +342,8 @@ public final class MissionHandling {
       Mission mission = info.getMissions().getMissionByIndex(i);
       if (mission.getFleetName() != null) {
         Fleet fleet = info.getFleets().getByName(mission.getFleetName());
-        if (fleet == null) {
+        if (fleet == null && mission.getPhase() != MissionPhase.PLANNING
+            && mission.getPhase() != MissionPhase.BUILDING) {
           missionsDelete.add(mission);
         }
       }

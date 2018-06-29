@@ -207,6 +207,10 @@ public final class TileNames {
    * Culture tile for player 7 (Overlay)
    */
   public static final String PLAYER_7 = "Player_7";
+  /**
+   * Culture tile for player 8 (Overlay)
+   */
+  public static final String PLAYER_8 = "Player_8";
 
   /**
    * Ship color tile for player 0 (Overlay)
@@ -240,6 +244,10 @@ public final class TileNames {
    * Ship color tile for player 7 (Overlay)
    */
   public static final String PLAYER_SHIP_7 = "Player_Ship_7";
+  /**
+   * Ship color tile for player 8 (Overlay)
+   */
+  public static final String PLAYER_SHIP_8 = "Player_Ship_8";
 
   /**
    * Description about deep space anchor

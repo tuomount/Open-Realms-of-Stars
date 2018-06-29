@@ -235,6 +235,10 @@ public final class Tiles {
     addTile(tile);
     tile = new Tile(tilesImage, 10, 3, TileNames.PLAYER_SHIP_7);
     addTile(tile);
+    tile = new Tile(tilesImage, 11, 3, TileNames.PLAYER_SHIP_8);
+    addTile(tile);
+    tile = new Tile(tilesImage, 11, 2, TileNames.PLAYER_8);
+    addTile(tile);
   }
 
 }

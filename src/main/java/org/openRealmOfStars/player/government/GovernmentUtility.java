@@ -41,10 +41,23 @@ public final class GovernmentUtility {
    */
   public static GovernmentType[] getGovernmentsForRace(
       final SpaceRace race) {
-    if (race == SpaceRace.HUMAN) {
+    if (race == SpaceRace.HUMAN
+        || race == SpaceRace.CENTAURS
+        || race == SpaceRace.GREYANS) {
       GovernmentType[] governments = {
         GovernmentType.ALLIANCE, GovernmentType.DEMOCRACY,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
+        GovernmentType.ENTERPRISE,
+        GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
+        GovernmentType.HIERARCHY, GovernmentType.KINGDOM
+      };
+      return governments;
+    }
+    if (race == SpaceRace.MECHIONS) {
+      GovernmentType[] governments = {
+        GovernmentType.ALLIANCE,
+        GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
+        GovernmentType.AI, GovernmentType.HORDE,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
         GovernmentType.HIERARCHY, GovernmentType.KINGDOM
       };

@@ -91,11 +91,99 @@ public class GovernmentUtilityTest {
     assertEquals(GovernmentType.FEDERATION, governments[1]);
     assertEquals(GovernmentType.REPUBLIC, governments[2]);
     assertEquals(GovernmentType.AI, governments[3]);
+    assertEquals(GovernmentType.MECHANICAL_HORDE, governments[4]);
+    assertEquals(GovernmentType.EMPIRE, governments[5]);
+    assertEquals(GovernmentType.HEGEMONY, governments[6]);
+    assertEquals(GovernmentType.HIERARCHY, governments[7]);
+    assertEquals(GovernmentType.KINGDOM, governments[8]);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSporksGovernments() {
+    GovernmentType[] governments = GovernmentUtility.getGovernmentsForRace(
+        SpaceRace.SPORKS);
+    assertEquals(9, governments.length);
+    assertEquals(GovernmentType.ALLIANCE, governments[0]);
+    assertEquals(GovernmentType.FEDERATION, governments[1]);
+    assertEquals(GovernmentType.REPUBLIC, governments[2]);
+    assertEquals(GovernmentType.CLAN, governments[3]);
     assertEquals(GovernmentType.HORDE, governments[4]);
     assertEquals(GovernmentType.EMPIRE, governments[5]);
     assertEquals(GovernmentType.HEGEMONY, governments[6]);
     assertEquals(GovernmentType.HIERARCHY, governments[7]);
     assertEquals(GovernmentType.KINGDOM, governments[8]);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testHomariansGovernments() {
+    GovernmentType[] governments = GovernmentUtility.getGovernmentsForRace(
+        SpaceRace.HOMARIANS);
+    assertEquals(9, governments.length);
+    assertEquals(GovernmentType.ALLIANCE, governments[0]);
+    assertEquals(GovernmentType.FEDERATION, governments[1]);
+    assertEquals(GovernmentType.REPUBLIC, governments[2]);
+    assertEquals(GovernmentType.CLAN, governments[3]);
+    assertEquals(GovernmentType.HORDE, governments[4]);
+    assertEquals(GovernmentType.EMPIRE, governments[5]);
+    assertEquals(GovernmentType.HEGEMONY, governments[6]);
+    assertEquals(GovernmentType.NEST, governments[7]);
+    assertEquals(GovernmentType.KINGDOM, governments[8]);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMothoidsGovernments() {
+    GovernmentType[] governments = GovernmentUtility.getGovernmentsForRace(
+        SpaceRace.MOTHOIDS);
+    assertEquals(10, governments.length);
+    assertEquals(GovernmentType.ALLIANCE, governments[0]);
+    assertEquals(GovernmentType.FEDERATION, governments[1]);
+    assertEquals(GovernmentType.REPUBLIC, governments[2]);
+    assertEquals(GovernmentType.CLAN, governments[3]);
+    assertEquals(GovernmentType.HORDE, governments[4]);
+    assertEquals(GovernmentType.EMPIRE, governments[5]);
+    assertEquals(GovernmentType.HEGEMONY, governments[6]);
+    assertEquals(GovernmentType.NEST, governments[7]);
+    assertEquals(GovernmentType.KINGDOM, governments[8]);
+    assertEquals(GovernmentType.HIVEMIND, governments[9]);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testScauriansGovernments() {
+    GovernmentType[] governments = GovernmentUtility.getGovernmentsForRace(
+        SpaceRace.SCAURIANS);
+    assertEquals(10, governments.length);
+    assertEquals(GovernmentType.ALLIANCE, governments[0]);
+    assertEquals(GovernmentType.FEDERATION, governments[1]);
+    assertEquals(GovernmentType.REPUBLIC, governments[2]);
+    assertEquals(GovernmentType.ENTERPRISE, governments[3]);
+    assertEquals(GovernmentType.GUILD, governments[4]);
+    assertEquals(GovernmentType.EMPIRE, governments[5]);
+    assertEquals(GovernmentType.HEGEMONY, governments[6]);
+    assertEquals(GovernmentType.HIERARCHY, governments[7]);
+    assertEquals(GovernmentType.KINGDOM, governments[8]);
+    assertEquals(GovernmentType.DEMOCRACY, governments[9]);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTeuthidaesGovernments() {
+    GovernmentType[] governments = GovernmentUtility.getGovernmentsForRace(
+        SpaceRace.TEUTHIDAES);
+    assertEquals(10, governments.length);
+    assertEquals(GovernmentType.ALLIANCE, governments[0]);
+    assertEquals(GovernmentType.FEDERATION, governments[1]);
+    assertEquals(GovernmentType.REPUBLIC, governments[2]);
+    assertEquals(GovernmentType.ENTERPRISE, governments[3]);
+    assertEquals(GovernmentType.HORDE, governments[4]);
+    assertEquals(GovernmentType.EMPIRE, governments[5]);
+    assertEquals(GovernmentType.HEGEMONY, governments[6]);
+    assertEquals(GovernmentType.HIERARCHY, governments[7]);
+    assertEquals(GovernmentType.KINGDOM, governments[8]);
+    assertEquals(GovernmentType.DEMOCRACY, governments[9]);
   }
 
 }

@@ -57,9 +57,62 @@ public final class GovernmentUtility {
       GovernmentType[] governments = {
         GovernmentType.ALLIANCE,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
-        GovernmentType.AI, GovernmentType.HORDE,
+        GovernmentType.AI, GovernmentType.MECHANICAL_HORDE,
         GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
         GovernmentType.HIERARCHY, GovernmentType.KINGDOM
+      };
+      return governments;
+    }
+    if (race == SpaceRace.SPORKS) {
+      GovernmentType[] governments = {
+        GovernmentType.ALLIANCE,
+        GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
+        GovernmentType.CLAN, GovernmentType.HORDE,
+        GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
+        GovernmentType.HIERARCHY, GovernmentType.KINGDOM
+      };
+      return governments;
+    }
+    if (race == SpaceRace.HOMARIANS) {
+      GovernmentType[] governments = {
+        GovernmentType.ALLIANCE,
+        GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
+        GovernmentType.CLAN, GovernmentType.HORDE,
+        GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
+        GovernmentType.NEST, GovernmentType.KINGDOM
+      };
+      return governments;
+    }
+    if (race == SpaceRace.MOTHOIDS) {
+      GovernmentType[] governments = {
+        GovernmentType.ALLIANCE,
+        GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
+        GovernmentType.CLAN, GovernmentType.HORDE,
+        GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
+        GovernmentType.NEST, GovernmentType.KINGDOM,
+        GovernmentType.HIVEMIND
+      };
+      return governments;
+    }
+    if (race == SpaceRace.SCAURIANS) {
+      GovernmentType[] governments = {
+        GovernmentType.ALLIANCE,
+        GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
+        GovernmentType.ENTERPRISE, GovernmentType.GUILD,
+        GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
+        GovernmentType.HIERARCHY, GovernmentType.KINGDOM,
+        GovernmentType.DEMOCRACY
+      };
+      return governments;
+    }
+    if (race == SpaceRace.TEUTHIDAES) {
+      GovernmentType[] governments = {
+        GovernmentType.ALLIANCE,
+        GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
+        GovernmentType.ENTERPRISE, GovernmentType.HORDE,
+        GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
+        GovernmentType.HIERARCHY, GovernmentType.KINGDOM,
+        GovernmentType.DEMOCRACY
       };
       return governments;
     }

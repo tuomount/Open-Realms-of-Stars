@@ -168,13 +168,14 @@ public class PlayerSetupView extends BlackPanel {
               false));
           config.setRace(i, race);
           raceImgs[i].setRaceToShow(raceStr);
-          // FIXME Needs to update government list before
-/*          int j = comboGovernmentSelect[i].getSelectedIndex();
-          GovernmentType[] govs = GovernmentUtility.getGovernmentsForRace(
-              race);
-          comboGovernmentSelect[i].setToolTipText(
-              governments[j].getDescription());*/
-
+          comboGovernmentSelect[i].removeAllItems();
+          GovernmentType[] govs = GovernmentUtility.getGovernmentsForRace(race);
+          for (GovernmentType gov : govs) {
+            comboGovernmentSelect[i].addItem(gov);
+          }
+          comboGovernmentSelect[i].setSelectedIndex(0);
+          comboGovernmentSelect[i].setToolTipText("<html>"
+              + govs[0].getDescription() + "</html>");
         }
       }
       String tmp = arg0.getActionCommand().substring(
@@ -183,6 +184,25 @@ public class PlayerSetupView extends BlackPanel {
       int index = Integer.parseInt(tmp);
       playerName[index].setText(SpaceRaceUtility.getRandomName(
           config.getRace(index)));
+    }
+    if (arg0.getActionCommand().startsWith(
+        GameCommands.COMMAND_GOVERNMENT_SETUP)) {
+      SoundPlayer.playMenuSound();
+      for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
+        if (comboRaceSelect[i].isEnabled()) {
+          GovernmentType gov = (GovernmentType) comboGovernmentSelect[i]
+              .getSelectedItem();
+          comboGovernmentSelect[i].setToolTipText("<html>"
+              + gov.getDescription() + "</html>");
+        }
+      }
+      String tmp = arg0.getActionCommand().substring(
+          GameCommands.COMMAND_GOVERNMENT_SETUP.length(),
+          arg0.getActionCommand().length());
+      int index = Integer.parseInt(tmp);
+      String raceStr = (String) comboRaceSelect[index].getSelectedItem();
+      SpaceRace race = SpaceRaceUtility.getRaceByName(raceStr);
+      playerName[index].setText(SpaceRaceUtility.getRandomName(race));
     }
   }
 
@@ -256,7 +276,7 @@ public class PlayerSetupView extends BlackPanel {
     comboGovernmentSelect[index].setRenderer(dlcr);
     comboGovernmentSelect[index].addActionListener(listener);
     comboGovernmentSelect[index]
-        .setActionCommand(GameCommands.COMMAND_GALAXY_SETUP + index);
+        .setActionCommand(GameCommands.COMMAND_GOVERNMENT_SETUP + index);
     if (config.getMaxPlayers() < (index + 1)) {
       comboGovernmentSelect[index].setEnabled(false);
     }

@@ -284,6 +284,14 @@ public enum GovernmentType {
 
   @Override
   public String toString() {
+    return name;
+  }
+
+  /**
+   * Get Government type description
+   * @return Description
+   */
+  public String getDescription() {
     StringBuilder sb = new StringBuilder();
     sb.append(getName());
     sb.append("\n");

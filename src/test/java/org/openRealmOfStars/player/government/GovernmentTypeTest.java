@@ -32,81 +32,87 @@ public class GovernmentTypeTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testToStrings() {
+  public void testDescriptions() {
     assertEquals("Democracy\n"
         + "Generic happiness: 1\n"
         + "Diplomatic bonus: 1\n"
         + "Trade bonus: 1\n"
         + "War resistance: -1\n"
-        + "Production bonus: 1\n", GovernmentType.DEMOCRACY.toString());
+        + "Production bonus: 1\n", GovernmentType.DEMOCRACY.getDescription());
     assertEquals("Alliance\n"
         + "Generic happiness: 1\n"
         + "Diplomatic bonus: 1\n"
         + "Trade bonus: 1\n"
         + "War resistance: -1\n"
-        + "Production bonus: 1\n", GovernmentType.ALLIANCE.toString());
+        + "Production bonus: 1\n", GovernmentType.ALLIANCE.getDescription());
     assertEquals("Federation\n"
         + "Generic happiness: 1\n"
         + "Diplomatic bonus: 1\n"
-        + "Trade bonus: 1\n", GovernmentType.FEDERATION.toString());
+        + "Trade bonus: 1\n", GovernmentType.FEDERATION.getDescription());
     assertEquals("Republic\n"
         + "Generic happiness: 1\n"
         + "Diplomatic bonus: 1\n"
-        + "Trade bonus: 1\n", GovernmentType.REPUBLIC.toString());
+        + "Trade bonus: 1\n", GovernmentType.REPUBLIC.getDescription());
     assertEquals("Guild\n"
         + "Trade bonus: 2\n"
         + "Credit bonus: 1\n"
-        + "Credit rush\n", GovernmentType.GUILD.toString());
+        + "Credit rush\n", GovernmentType.GUILD.getDescription());
     assertEquals("Enterprise\n"
         + "Trade bonus: 2\n"
         + "Credit bonus: 1\n"
-        + "Credit rush\n", GovernmentType.ENTERPRISE.toString());
+        + "Credit rush\n", GovernmentType.ENTERPRISE.getDescription());
     assertEquals("Hegemony\n"
         + "Generic happiness: -1\n"
         + "War resistance: 1\n"
-        + "Research bonus: 1\n", GovernmentType.HEGEMONY.toString());
+        + "Research bonus: 1\n", GovernmentType.HEGEMONY.getDescription());
     assertEquals("Nest\n"
         + "No effects on happines nor war fatigue",
-        GovernmentType.NEST.toString());
+        GovernmentType.NEST.getDescription());
     assertEquals("Hive-mind\n"
         + "No effects on happines nor war fatigue",
-        GovernmentType.HIVEMIND.toString());
+        GovernmentType.HIVEMIND.getDescription());
     assertEquals("AI\n"
         + "No effects on happines nor war fatigue",
-        GovernmentType.AI.toString());
+        GovernmentType.AI.getDescription());
     assertEquals("Empire\n"
         + "Generic happiness: -1\n"
         + "War resistance: 1\n"
         + "Production bonus: 1\n"
-        + "Population rush\n", GovernmentType.EMPIRE.toString());
+        + "Population rush\n", GovernmentType.EMPIRE.getDescription());
     assertEquals("Kingdom\n"
         + "Generic happiness: -1\n"
         + "War resistance: 1\n"
         + "Production bonus: 1\n"
-        + "Population rush\n", GovernmentType.KINGDOM.toString());
+        + "Population rush\n", GovernmentType.KINGDOM.getDescription());
     assertEquals("Hierarchy\n"
         + "Generic happiness: -1\n"
         + "War resistance: 1\n"
         + "Production bonus: 1\n"
-        + "Population rush\n", GovernmentType.HIERARCHY.toString());
+        + "Population rush\n", GovernmentType.HIERARCHY.getDescription());
     assertEquals("Horde\n"
         + "Generic happiness: -1\n"
         + "War resistance: 1\n"
         + "Food bonus: 1\n"
         + "War happiness\n"
-        + "Population rush\n", GovernmentType.HORDE.toString());
+        + "Population rush\n", GovernmentType.HORDE.getDescription());
     assertEquals("Horde\n"
         + "Generic happiness: -1\n"
         + "War resistance: 1\n"
         + "Production bonus: 1\n"
         + "War happiness\n"
-        + "Population rush\n", GovernmentType.MECHANICAL_HORDE.toString());
+        + "Population rush\n", GovernmentType.MECHANICAL_HORDE.getDescription());
     assertEquals("Clan\n"
         + "Generic happiness: -1\n"
         + "War resistance: 1\n"
         + "Food bonus: 1\n"
         + "War happiness\n"
-        + "Population rush\n", GovernmentType.CLAN.toString());
+        + "Population rush\n", GovernmentType.CLAN.getDescription());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testToString() {
+    assertEquals("Democracy", GovernmentType.DEMOCRACY.toString());
   }
 
 }

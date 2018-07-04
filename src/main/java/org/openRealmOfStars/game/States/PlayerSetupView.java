@@ -25,6 +25,8 @@ import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentUtility;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.StarMap;
@@ -68,9 +70,14 @@ public class PlayerSetupView extends BlackPanel {
       "Greyan", "Centaur", "Mothoid", "Teuthidae", "Scaurian", "Homarian" };
 
   /**
-   * ComboBox on galaxy size
+   * ComboBox on race
    */
   private SpaceComboBox<String>[] comboRaceSelect;
+
+  /**
+   * ComboBox on government
+   */
+  private SpaceComboBox<GovernmentType>[] comboGovernmentSelect;
 
   /**
    * Player name
@@ -117,6 +124,7 @@ public class PlayerSetupView extends BlackPanel {
     invisible.add(Box.createRigidArea(new Dimension(500, 100)));
 
     comboRaceSelect = new SpaceComboBox[StarMap.MAX_PLAYERS];
+    comboGovernmentSelect = new SpaceComboBox[StarMap.MAX_PLAYERS];
     raceImgs = new RaceImagePanel[StarMap.MAX_PLAYERS];
     playerName = new JTextField[StarMap.MAX_PLAYERS];
 
@@ -160,6 +168,13 @@ public class PlayerSetupView extends BlackPanel {
               false));
           config.setRace(i, race);
           raceImgs[i].setRaceToShow(raceStr);
+          // FIXME Needs to update government list before
+/*          int j = comboGovernmentSelect[i].getSelectedIndex();
+          GovernmentType[] govs = GovernmentUtility.getGovernmentsForRace(
+              race);
+          comboGovernmentSelect[i].setToolTipText(
+              governments[j].getDescription());*/
+
         }
       }
       String tmp = arg0.getActionCommand().substring(
@@ -225,6 +240,33 @@ public class PlayerSetupView extends BlackPanel {
     comboRaceSelect[index].setToolTipText(config.getRace(index)
         .getFullDescription(false, false));
     info.add(comboRaceSelect[index]);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    comboGovernmentSelect[index] = new SpaceComboBox<>(
+        GovernmentUtility.getGovernmentsForRace(config.getRace(index)));
+    comboGovernmentSelect[index].setBackground(
+        GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    comboGovernmentSelect[index].setForeground(
+        GuiStatics.COLOR_COOL_SPACE_BLUE);
+    comboGovernmentSelect[index].setBorder(new SimpleBorder());
+    comboGovernmentSelect[index].setFont(GuiStatics.getFontCubellan());
+    comboGovernmentSelect[index].getModel()
+        .setSelectedItem(config.getRace(index).getNameSingle());
+    dlcr = new DefaultListCellRenderer();
+    dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
+    comboGovernmentSelect[index].setRenderer(dlcr);
+    comboGovernmentSelect[index].addActionListener(listener);
+    comboGovernmentSelect[index]
+        .setActionCommand(GameCommands.COMMAND_GALAXY_SETUP + index);
+    if (config.getMaxPlayers() < (index + 1)) {
+      comboGovernmentSelect[index].setEnabled(false);
+    }
+    comboGovernmentSelect[index].setSelectedIndex(0);
+    int i = comboGovernmentSelect[index].getSelectedIndex();
+    GovernmentType[] governments = GovernmentUtility.getGovernmentsForRace(
+        config.getRace(index));
+    comboGovernmentSelect[index].setToolTipText(
+        governments[i].getDescription());
+    info.add(comboGovernmentSelect[index]);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     playerName[index] = new JTextField(
         "Empire of " + config.getRace(index).getName());

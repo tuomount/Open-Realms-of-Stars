@@ -1,6 +1,7 @@
 package org.openRealmOfStars.player.government;
 
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
 *
@@ -34,6 +35,16 @@ public final class GovernmentUtility {
     // Hiding the constructor
   }
 
+  /**
+   * Get Random government type for space race
+   * @param race Space race
+   * @return GovernmentType
+   */
+  public static GovernmentType getRandomGovernment(final SpaceRace race) {
+    GovernmentType[] govs = getGovernmentsForRace(race);
+    int index = DiceGenerator.getRandom(govs.length - 1);
+    return govs[index];
+  }
   /**
    * Get the GovernmentType for certain space race
    * @param race Space Race

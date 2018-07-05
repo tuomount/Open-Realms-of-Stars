@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.government.GovernmentType;
 
 /**
  * 
@@ -35,25 +36,9 @@ public class SpaceRaceUtilityTest {
   public void testRandomNameGeneratorHuman() {
     SpaceRace race = SpaceRace.HUMAN;
     assertEquals(Attitude.DIPLOMATIC, race.getAttitude());
-    for (int i=0;i<100;i++) {
-      String tmp = SpaceRaceUtility.getRandomName(race);
-      String[] parts = tmp.split(" ");
-      if (parts.length == 2) {
-        assertFalse(!parts[0].equals("Terran") && !parts[0].equals("Human"));
-        assertFalse(!parts[1].equals("Empire") && !parts[1].equals("Federation")
-            && !parts[1].equals("Republic") && !parts[1].equals("Alliance")
-            && !parts[1].equals("Kingdom") && !parts[1].equals("Democracy")
-            && !parts[1].equals("Hegemony") && !parts[1].equals("Hiearchy"));
-          
-      } else if (parts.length == 3) {
-        assertFalse(!parts[0].equals("Empire") && !parts[0].equals("Federation")
-            && !parts[0].equals("Republic") && !parts[0].equals("Alliance")
-            && !parts[0].equals("Kingdom") && !parts[0].equals("Democracy")
-            && !parts[0].equals("Hegemony") && !parts[0].equals("Hiearchy"));
-        assertEquals("of", parts[1]);
-        assertFalse(!parts[2].equals("Terran") && !parts[2].equals("Humans"));
-      }
-    }
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.DEMOCRACY);
+    assertEquals(true, str.contains("Terran") || str.contains("Human"));
+    assertEquals(true, str.contains("Democracy"));
   }
 
   @Test
@@ -61,25 +46,9 @@ public class SpaceRaceUtilityTest {
   public void testRandomNameGeneratorMechions() {
     SpaceRace race = SpaceRace.MECHIONS;
     assertEquals(Attitude.LOGICAL, race.getAttitude());
-    for (int i=0;i<100;i++) {
-      String tmp = SpaceRaceUtility.getRandomName(race);
-      String[] parts = tmp.split(" ");
-      if (parts.length == 2) {
-        assertEquals("Mechion", parts[0]);
-        assertFalse(!parts[1].equals("Empire") && !parts[1].equals("Federation")
-            && !parts[1].equals("Republic") && !parts[1].equals("Alliance")
-            && !parts[1].equals("Horde") && !parts[1].equals("AI")
-            && !parts[1].equals("Hegemony") && !parts[1].equals("Hiearchy"));
-          
-      } else if (parts.length == 3) {
-        assertFalse(!parts[0].equals("Empire") && !parts[0].equals("Federation")
-            && !parts[0].equals("Republic") && !parts[0].equals("Alliance")
-            && !parts[0].equals("Horde") && !parts[0].equals("AI")
-            && !parts[0].equals("Hegemony") && !parts[0].equals("Hiearchy"));
-        assertEquals("of", parts[1]);
-        assertEquals("Mechions", parts[2]);
-      }
-    }
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.AI);
+    assertEquals(true, str.contains("Mechion"));
+    assertEquals(true, str.contains("AI"));
   }
 
   @Test
@@ -87,25 +56,9 @@ public class SpaceRaceUtilityTest {
   public void testRandomNameGeneratorCentaurs() {
     SpaceRace race = SpaceRace.CENTAURS;
     assertEquals(Attitude.DIPLOMATIC, race.getAttitude());
-    for (int i=0;i<100;i++) {
-      String tmp = SpaceRaceUtility.getRandomName(race);
-      String[] parts = tmp.split(" ");
-      if (parts.length == 2) {
-        assertEquals("Centaur", parts[0]);
-        assertFalse(!parts[1].equals("Empire") && !parts[1].equals("Federation")
-            && !parts[1].equals("Republic") && !parts[1].equals("Alliance")
-            && !parts[1].equals("Kingdom") && !parts[1].equals("Democracy")
-            && !parts[1].equals("Hegemony") && !parts[1].equals("Hiearchy"));
-          
-      } else if (parts.length == 3) {
-        assertFalse(!parts[0].equals("Empire") && !parts[0].equals("Federation")
-            && !parts[0].equals("Republic") && !parts[0].equals("Alliance")
-            && !parts[0].equals("Kingdom") && !parts[0].equals("Democracy")
-            && !parts[0].equals("Hegemony") && !parts[0].equals("Hiearchy"));
-        assertEquals("of", parts[1]);
-        assertEquals("Centaurs", parts[2]);
-      }
-    }
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.ALLIANCE);
+    assertEquals(true, str.contains("Centaur"));
+    assertEquals(true, str.contains("Alliance"));
   }
 
   @Test
@@ -113,25 +66,9 @@ public class SpaceRaceUtilityTest {
   public void testRandomNameGeneratorGreyans() {
     SpaceRace race = SpaceRace.GREYANS;
     assertEquals(Attitude.SCIENTIFIC, race.getAttitude());
-    for (int i=0;i<100;i++) {
-      String tmp = SpaceRaceUtility.getRandomName(race);
-      String[] parts = tmp.split(" ");
-      if (parts.length == 2) {
-        assertEquals("Greyan", parts[0]);
-        assertFalse(!parts[1].equals("Empire") && !parts[1].equals("Federation")
-            && !parts[1].equals("Republic") && !parts[1].equals("Alliance")
-            && !parts[1].equals("Kingdom") && !parts[1].equals("Democracy")
-            && !parts[1].equals("Hegemony") && !parts[1].equals("Hiearchy"));
-          
-      } else if (parts.length == 3) {
-        assertFalse(!parts[0].equals("Empire") && !parts[0].equals("Federation")
-            && !parts[0].equals("Republic") && !parts[0].equals("Alliance")
-            && !parts[0].equals("Kingdom") && !parts[0].equals("Democracy")
-            && !parts[0].equals("Hegemony") && !parts[0].equals("Hiearchy"));
-        assertEquals("of", parts[1]);
-        assertEquals("Greyans", parts[2]);
-      }
-    }
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.KINGDOM);
+    assertEquals(true, str.contains("Greyan"));
+    assertEquals(true, str.contains("Kingdom"));
   }
 
   @Test
@@ -139,25 +76,9 @@ public class SpaceRaceUtilityTest {
   public void testRandomNameGeneratorHomarians() {
     SpaceRace race = SpaceRace.HOMARIANS;
     assertEquals(Attitude.PEACEFUL, race.getAttitude());
-    for (int i=0;i<100;i++) {
-      String tmp = SpaceRaceUtility.getRandomName(race);
-      String[] parts = tmp.split(" ");
-      if (parts.length == 2) {
-        assertEquals("Homarian", parts[0]);
-        assertFalse(!parts[1].equals("Empire") && !parts[1].equals("Federation")
-            && !parts[1].equals("Republic") && !parts[1].equals("Alliance")
-            && !parts[1].equals("Kingdom") && !parts[1].equals("Democracy")
-            && !parts[1].equals("Nest") && !parts[1].equals("Hiearchy"));
-          
-      } else if (parts.length == 3) {
-        assertFalse(!parts[0].equals("Empire") && !parts[0].equals("Federation")
-            && !parts[0].equals("Republic") && !parts[0].equals("Alliance")
-            && !parts[0].equals("Kingdom") && !parts[0].equals("Democracy")
-            && !parts[0].equals("Nest") && !parts[0].equals("Hiearchy"));
-        assertEquals("of", parts[1]);
-        assertEquals("Homarians", parts[2]);
-      }
-    }
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.NEST);
+    assertEquals(true, str.contains("Homarian"));
+    assertEquals(true, str.contains("Nest"));
   }
 
   @Test
@@ -165,25 +86,9 @@ public class SpaceRaceUtilityTest {
   public void testRandomNameGeneratorSporks() {
     SpaceRace race = SpaceRace.SPORKS;
     assertEquals(Attitude.AGGRESSIVE, race.getAttitude());
-    for (int i=0;i<100;i++) {
-      String tmp = SpaceRaceUtility.getRandomName(race);
-      String[] parts = tmp.split(" ");
-      if (parts.length == 2) {
-        assertEquals("Spork", parts[0]);
-        assertFalse(!parts[1].equals("Empire") && !parts[1].equals("Federation")
-            && !parts[1].equals("Republic") && !parts[1].equals("Alliance")
-            && !parts[1].equals("Horde") && !parts[1].equals("Democracy")
-            && !parts[1].equals("Clan") && !parts[1].equals("Hiearchy"));
-          
-      } else if (parts.length == 3) {
-        assertFalse(!parts[0].equals("Empire") && !parts[0].equals("Federation")
-            && !parts[0].equals("Republic") && !parts[0].equals("Alliance")
-            && !parts[0].equals("Horde") && !parts[0].equals("Democracy")
-            && !parts[0].equals("Clan") && !parts[0].equals("Hiearchy"));
-        assertEquals("of", parts[1]);
-        assertEquals("Sporks", parts[2]);
-      }
-    }
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.CLAN);
+    assertEquals(true, str.contains("Spork"));
+    assertEquals(true, str.contains("Clan"));
   }
 
   @Test
@@ -191,25 +96,9 @@ public class SpaceRaceUtilityTest {
   public void testRandomNameGeneratorMothoids() {
     SpaceRace race = SpaceRace.MOTHOIDS;
     assertEquals(Attitude.EXPANSIONIST, race.getAttitude());
-    for (int i=0;i<100;i++) {
-      String tmp = SpaceRaceUtility.getRandomName(race);
-      String[] parts = tmp.split(" ");
-      if (parts.length == 2) {
-        assertEquals("Mothoid", parts[0]);
-        assertFalse(!parts[1].equals("Empire") && !parts[1].equals("Federation")
-            && !parts[1].equals("Nest") && !parts[1].equals("Alliance")
-            && !parts[1].equals("Kingdom") && !parts[1].equals("Hive")
-            && !parts[1].equals("Hegemony") && !parts[1].equals("Hiearchy"));
-          
-      } else if (parts.length == 3) {
-        assertFalse(!parts[0].equals("Empire") && !parts[0].equals("Federation")
-            && !parts[0].equals("Nest") && !parts[0].equals("Alliance")
-            && !parts[0].equals("Kingdom") && !parts[0].equals("Hive")
-            && !parts[0].equals("Hegemony") && !parts[0].equals("Hiearchy"));
-        assertEquals("of", parts[1]);
-        assertEquals("Mothoids", parts[2]);
-      }
-    }
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.HIVEMIND);
+    assertEquals(true, str.contains("Mothoid"));
+    assertEquals(true, str.contains("Hive-mind"));
   }
 
   @Test
@@ -217,25 +106,9 @@ public class SpaceRaceUtilityTest {
   public void testRandomNameGeneratorTechtidae() {
     SpaceRace race = SpaceRace.TEUTHIDAES;
     assertEquals(Attitude.MILITARISTIC, race.getAttitude());
-    for (int i=0;i<100;i++) {
-      String tmp = SpaceRaceUtility.getRandomName(race);
-      String[] parts = tmp.split(" ");
-      if (parts.length == 2) {
-        assertEquals("Teuthidae", parts[0]);
-        assertFalse(!parts[1].equals("Empire") && !parts[1].equals("Federation")
-            && !parts[1].equals("Republic") && !parts[1].equals("Alliance")
-            && !parts[1].equals("Horde") && !parts[1].equals("Democracy")
-            && !parts[1].equals("Hegemony") && !parts[1].equals("Hiearchy"));
-          
-      } else if (parts.length == 3) {
-        assertFalse(!parts[0].equals("Empire") && !parts[0].equals("Federation")
-            && !parts[0].equals("Republic") && !parts[0].equals("Alliance")
-            && !parts[0].equals("Horde") && !parts[0].equals("Democracy")
-            && !parts[0].equals("Hegemony") && !parts[0].equals("Hiearchy"));
-        assertEquals("of", parts[1]);
-        assertEquals("Teuthidaes", parts[2]);
-      }
-    }
+    String str = SpaceRaceUtility.getRandomName(race, GovernmentType.FEDERATION);
+    assertEquals(true, str.contains("Teuthidae"));
+    assertEquals(true, str.contains("Federation"));
   }
 
   @Test

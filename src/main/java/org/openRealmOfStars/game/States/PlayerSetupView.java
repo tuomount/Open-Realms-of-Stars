@@ -95,6 +95,10 @@ public class PlayerSetupView extends BlackPanel {
   private GalaxyConfig config;
 
   /**
+   * Action Listener for combobox
+   */
+  private ActionListener actionListener;
+  /**
    * Constructor for Player Setup view
    * @param config Galaxy Configuration
    * @param listener ActionListener
@@ -102,6 +106,7 @@ public class PlayerSetupView extends BlackPanel {
   @SuppressWarnings("unchecked")
   public PlayerSetupView(final GalaxyConfig config,
       final ActionListener listener) {
+    this.actionListener = listener;
     this.config = config;
     if (this.config == null) {
       this.config = new GalaxyConfig();
@@ -159,6 +164,7 @@ public class PlayerSetupView extends BlackPanel {
    */
   public void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_GALAXY_SETUP)) {
+      System.out.println(arg0.getActionCommand());
       SoundPlayer.playMenuSound();
       for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
         if (comboRaceSelect[i].isEnabled()) {
@@ -168,25 +174,32 @@ public class PlayerSetupView extends BlackPanel {
               false));
           config.setRace(i, race);
           raceImgs[i].setRaceToShow(raceStr);
-          comboGovernmentSelect[i].removeAllItems();
-          GovernmentType[] govs = GovernmentUtility.getGovernmentsForRace(race);
-          for (GovernmentType gov : govs) {
-            comboGovernmentSelect[i].addItem(gov);
-          }
-          comboGovernmentSelect[i].setSelectedIndex(0);
-          comboGovernmentSelect[i].setToolTipText(
-              govs[0].getDescription(false));
         }
       }
       String tmp = arg0.getActionCommand().substring(
           GameCommands.COMMAND_GALAXY_SETUP.length(),
           arg0.getActionCommand().length());
       int index = Integer.parseInt(tmp);
-      playerName[index].setText(SpaceRaceUtility.getRandomName(
-          config.getRace(index)));
+      comboGovernmentSelect[index].removeActionListener(actionListener);
+      comboGovernmentSelect[index].removeAllItems();
+      SpaceRace race = config.getRace(index);
+      GovernmentType[] govs = GovernmentUtility.getGovernmentsForRace(race);
+      for (GovernmentType gov : govs) {
+        comboGovernmentSelect[index].addItem(gov);
+      }
+      config.setPlayerGovernment(index,
+          GovernmentUtility.getRandomGovernment(race));
+      comboGovernmentSelect[index].setSelectedItem(
+          config.getPlayerGovernment(index));
+      comboGovernmentSelect[index].setToolTipText(
+          config.getPlayerGovernment(index).getDescription(false));
+      playerName[index].setText(SpaceRaceUtility.getRandomName(race,
+          config.getPlayerGovernment(index)));
+      comboGovernmentSelect[index].addActionListener(actionListener);
     }
     if (arg0.getActionCommand().startsWith(
         GameCommands.COMMAND_GOVERNMENT_SETUP)) {
+      System.out.println(arg0.getActionCommand());
       SoundPlayer.playMenuSound();
       for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
         if (comboRaceSelect[i].isEnabled()) {
@@ -195,6 +208,7 @@ public class PlayerSetupView extends BlackPanel {
           if (gov != null) {
             comboGovernmentSelect[i].setToolTipText(
                 gov.getDescription(false));
+            config.setPlayerGovernment(i, gov);
           }
         }
       }
@@ -204,7 +218,8 @@ public class PlayerSetupView extends BlackPanel {
       int index = Integer.parseInt(tmp);
       String raceStr = (String) comboRaceSelect[index].getSelectedItem();
       SpaceRace race = SpaceRaceUtility.getRaceByName(raceStr);
-      playerName[index].setText(SpaceRaceUtility.getRandomName(race));
+      GovernmentType gov = config.getPlayerGovernment(index);
+      playerName[index].setText(SpaceRaceUtility.getRandomName(race, gov));
     }
   }
 
@@ -282,7 +297,8 @@ public class PlayerSetupView extends BlackPanel {
     if (config.getMaxPlayers() < (index + 1)) {
       comboGovernmentSelect[index].setEnabled(false);
     }
-    comboGovernmentSelect[index].setSelectedIndex(0);
+    comboGovernmentSelect[index].setSelectedItem(
+        config.getPlayerGovernment(index));
     int i = comboGovernmentSelect[index].getSelectedIndex();
     GovernmentType[] governments = GovernmentUtility.getGovernmentsForRace(
         config.getRace(index));

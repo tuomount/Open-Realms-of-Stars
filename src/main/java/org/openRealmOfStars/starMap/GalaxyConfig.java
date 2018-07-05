@@ -2,6 +2,8 @@ package org.openRealmOfStars.starMap;
 
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentUtility;
 
 /**
  *
@@ -103,6 +105,11 @@ public class GalaxyConfig {
   private String[] playerName;
 
   /**
+   * Player government
+   */
+  private GovernmentType[] playerGovernment;
+
+  /**
    * Chance for planetary event
    */
   private int chanceForPlanetaryEvent;
@@ -167,11 +174,15 @@ public class GalaxyConfig {
     setSolarSystemDistance(12, 0);
     playerRaces = new SpaceRace[StarMap.MAX_PLAYERS];
     playerName = new String[StarMap.MAX_PLAYERS];
+    playerGovernment = new GovernmentType[StarMap.MAX_PLAYERS];
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
 
       setRace(i, SpaceRaceUtility.getRandomRace());
       while (true) {
-        String tmp = SpaceRaceUtility.getRandomName(getRace(i));
+        GovernmentType gov = GovernmentUtility.getRandomGovernment(getRace(i));
+        setPlayerGovernment(i, gov);
+        String tmp = SpaceRaceUtility.getRandomName(getRace(i),
+            getPlayerGovernment(i));
         if (isUniqueName(tmp)) {
           setPlayerName(i, tmp);
           break;
@@ -241,6 +252,28 @@ public class GalaxyConfig {
     return null;
   }
 
+  /**
+   * Set Realm Government type
+   * @param index Player index
+   * @param government Government type
+   */
+  public void setPlayerGovernment(final int index,
+      final GovernmentType government) {
+    if (index >= 0 && index < StarMap.MAX_PLAYERS) {
+      playerGovernment[index] = government;
+    }
+  }
+  /**
+   * Get Realm Government type
+   * @param index Player index
+   * @return GovernmentType
+   */
+  public GovernmentType getPlayerGovernment(final int index) {
+    if (index >= 0 && index < StarMap.MAX_PLAYERS) {
+      return playerGovernment[index];
+    }
+    return null;
+  }
   /**
    * Set galaxy size. Galaxy is set for square size
    * @param size side length

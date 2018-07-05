@@ -10,6 +10,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 /**
 *
@@ -40,7 +41,9 @@ public class PlayerSetupViewTest {
   public void testBasic() {
     GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
     SpaceRace race = SpaceRace.HUMAN;
+    GovernmentType gov = GovernmentType.ALLIANCE;
     Mockito.when(config.getRace(Mockito.anyInt())).thenReturn(race);
+    Mockito.when(config.getPlayerGovernment(Mockito.anyInt())).thenReturn(gov);
     ActionListener listener = Mockito.mock(ActionListener.class);
     PlayerSetupView view = new PlayerSetupView(config, listener);
     assertEquals(config, view.getConfig());

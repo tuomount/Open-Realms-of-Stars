@@ -1,5 +1,6 @@
 package org.openRealmOfStars.player.SpaceRace;
 
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -94,11 +95,13 @@ public final class SpaceRaceUtility {
   }
 
   /**
-   * Get random empire name for player
+   * Get random empire name for realm
    * @param race SpaceRace for which random name is going to be generated
-   * @return player name
+   * @param government Government type for realm
+   * @return realm name
    */
-  public static String getRandomName(final SpaceRace race) {
+  public static String getRandomName(final SpaceRace race,
+      final GovernmentType government) {
     StringBuilder sb = new StringBuilder();
     if (DiceGenerator.getRandom(1) == 0) {
       if (race == SpaceRace.HUMAN) {
@@ -111,128 +114,21 @@ public final class SpaceRaceUtility {
         sb.append(race.getNameSingle());
       }
       sb.append(" ");
-      switch (DiceGenerator.getRandom(7)) {
-      case 0:
-        sb.append("Empire");
-        break;
-      case 1:
-        sb.append("Federation");
-        break;
-      case 2:
-        if (race == SpaceRace.MOTHOIDS) {
-          sb.append("Nest");
-        } else {
-          sb.append("Republic");
-        }
-        break;
-      case 3:
-        sb.append("Alliance");
-        break;
-      case 4: {
-        if (race == SpaceRace.SPORKS || race == SpaceRace.MECHIONS
-            || race == SpaceRace.TEUTHIDAES) {
-          sb.append("Horde");
-        } else {
-          sb.append("Kingdom");
-        }
-        break;
-      }
-      case 5: {
-        if (race == SpaceRace.SPORKS) {
-          sb.append("Clan");
-        } else if (race == SpaceRace.SCAURIANS) {
-          sb.append("Guild");
-        } else if (race == SpaceRace.HOMARIANS) {
-          sb.append("Nest");
-        } else {
-          sb.append("Hegemony");
-        }
-        break;
-      }
-      case 6: {
-        if (race == SpaceRace.MECHIONS) {
-          sb.append("AI");
-        } else if (race == SpaceRace.MOTHOIDS) {
-          sb.append("Hive");
-        } else {
-          sb.append("Democracy");
-        }
-        break;
-      }
-      case 7:
-        if (race == SpaceRace.SCAURIANS) {
-          sb.append("Enterprise");
-        } else {
-          sb.append("Hiearchy");
-        }
-        break;
-      default:
-        sb.append("Empire");
-      }
-
+      sb.append(government.getName());
     } else {
-      switch (DiceGenerator.getRandom(7)) {
-      case 0:
-        sb.append("Empire of ");
-        break;
-      case 1:
-        sb.append("Federation of ");
-        break;
-      case 2:
-        if (race == SpaceRace.MOTHOIDS) {
-          sb.append("Nest of ");
+      sb.append(government.getName());
+      sb.append(" of ");
+      if (race == SpaceRace.HUMAN) {
+        if (DiceGenerator.getRandom(1) == 0) {
+          sb.append("Terran");
         } else {
-          sb.append("Republic of ");
+          sb.append(race.getNameSingle());
         }
-        break;
-      case 3:
-        sb.append("Alliance of ");
-        break;
-      case 4: {
-        if (race == SpaceRace.SPORKS || race == SpaceRace.MECHIONS
-            || race == SpaceRace.TEUTHIDAES) {
-          sb.append("Horde of ");
-        } else {
-          sb.append("Kingdom of ");
-        }
-        break;
+      } else {
+        sb.append(race.getNameSingle());
       }
-      case 5: {
-        if (race == SpaceRace.SPORKS) {
-          sb.append("Clan of ");
-        } else if (race == SpaceRace.SCAURIANS) {
-          sb.append("Guild of ");
-        } else if (race == SpaceRace.HOMARIANS) {
-          sb.append("Nest of ");
-        } else {
-          sb.append("Hegemony of ");
-        }
-        break;
-      }
-      case 6: {
-        if (race == SpaceRace.MECHIONS) {
-          sb.append("AI of ");
-        } else if (race == SpaceRace.MOTHOIDS) {
-          sb.append("Hive of ");
-        } else {
-          sb.append("Democracy of ");
-        }
-        break;
-      }
-      case 7:
-        if (race == SpaceRace.SCAURIANS) {
-          sb.append("Enterprise of ");
-        } else {
-          sb.append("Hiearchy of ");
-        }
-        break;
-      default:
-        sb.append("Empire of ");
-      }
-      sb.append(race.getName());
     }
     return sb.toString();
   }
-
 
 }

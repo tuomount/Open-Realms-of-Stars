@@ -33,80 +33,80 @@ public class GovernmentTypeTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testDescriptions() {
-    assertEquals("Democracy\n"
-        + "Generic happiness: 1\n"
-        + "Diplomatic bonus: 1\n"
-        + "Trade bonus: 1\n"
-        + "War resistance: -1\n"
-        + "Production bonus: 1\n", GovernmentType.DEMOCRACY.getDescription());
-    assertEquals("Alliance\n"
-        + "Generic happiness: 1\n"
-        + "Diplomatic bonus: 1\n"
-        + "Trade bonus: 1\n"
-        + "War resistance: -1\n"
-        + "Production bonus: 1\n", GovernmentType.ALLIANCE.getDescription());
-    assertEquals("Federation\n"
-        + "Generic happiness: 1\n"
-        + "Diplomatic bonus: 1\n"
-        + "Trade bonus: 1\n", GovernmentType.FEDERATION.getDescription());
-    assertEquals("Republic\n"
-        + "Generic happiness: 1\n"
-        + "Diplomatic bonus: 1\n"
-        + "Trade bonus: 1\n", GovernmentType.REPUBLIC.getDescription());
-    assertEquals("Guild\n"
-        + "Trade bonus: 2\n"
-        + "Credit bonus: 1\n"
-        + "Credit rush\n", GovernmentType.GUILD.getDescription());
-    assertEquals("Enterprise\n"
-        + "Trade bonus: 2\n"
-        + "Credit bonus: 1\n"
-        + "Credit rush\n", GovernmentType.ENTERPRISE.getDescription());
-    assertEquals("Hegemony\n"
-        + "Generic happiness: -1\n"
-        + "War resistance: 1\n"
-        + "Research bonus: 1\n", GovernmentType.HEGEMONY.getDescription());
-    assertEquals("Nest\n"
-        + "No effects on happines nor war fatigue",
-        GovernmentType.NEST.getDescription());
-    assertEquals("Hive-mind\n"
-        + "No effects on happines nor war fatigue",
-        GovernmentType.HIVEMIND.getDescription());
-    assertEquals("AI\n"
-        + "No effects on happines nor war fatigue",
-        GovernmentType.AI.getDescription());
-    assertEquals("Empire\n"
-        + "Generic happiness: -1\n"
-        + "War resistance: 1\n"
-        + "Production bonus: 1\n"
-        + "Population rush\n", GovernmentType.EMPIRE.getDescription());
-    assertEquals("Kingdom\n"
-        + "Generic happiness: -1\n"
-        + "War resistance: 1\n"
-        + "Production bonus: 1\n"
-        + "Population rush\n", GovernmentType.KINGDOM.getDescription());
-    assertEquals("Hierarchy\n"
-        + "Generic happiness: -1\n"
-        + "War resistance: 1\n"
-        + "Production bonus: 1\n"
-        + "Population rush\n", GovernmentType.HIERARCHY.getDescription());
-    assertEquals("Horde\n"
-        + "Generic happiness: -1\n"
-        + "War resistance: 1\n"
-        + "Food bonus: 1\n"
-        + "War happiness\n"
-        + "Population rush\n", GovernmentType.HORDE.getDescription());
-    assertEquals("Horde\n"
-        + "Generic happiness: -1\n"
-        + "War resistance: 1\n"
-        + "Production bonus: 1\n"
-        + "War happiness\n"
-        + "Population rush\n", GovernmentType.MECHANICAL_HORDE.getDescription());
-    assertEquals("Clan\n"
-        + "Generic happiness: -1\n"
-        + "War resistance: 1\n"
-        + "Food bonus: 1\n"
-        + "War happiness\n"
-        + "Population rush\n", GovernmentType.CLAN.getDescription());
+    assertEquals("### Democracy\n"
+        + "* Generic happiness: 1\n"
+        + "* Diplomatic bonus: 1\n"
+        + "* Trade bonus: 1\n"
+        + "* War resistance: -1\n"
+        + "* Production bonus: 1\n", GovernmentType.DEMOCRACY.getDescription(true));
+    assertEquals("<html>Alliance<br>"
+        + "<li> Generic happiness: 1<br>"
+        + "<li> Diplomatic bonus: 1<br>"
+        + "<li> Trade bonus: 1<br>"
+        + "<li> War resistance: -1<br>"
+        + "<li> Production bonus: 1<br></html>", GovernmentType.ALLIANCE.getDescription(false));
+    assertEquals("### Federation\n"
+        + "* Generic happiness: 1\n"
+        + "* Diplomatic bonus: 1\n"
+        + "* Trade bonus: 1\n", GovernmentType.FEDERATION.getDescription(true));
+    assertEquals("### Republic\n"
+        + "* Generic happiness: 1\n"
+        + "* Diplomatic bonus: 1\n"
+        + "* Trade bonus: 1\n", GovernmentType.REPUBLIC.getDescription(true));
+    assertEquals("### Guild\n"
+        + "* Trade bonus: 2\n"
+        + "* Credit bonus: 1\n"
+        + "* Credit rush\n", GovernmentType.GUILD.getDescription(true));
+    assertEquals("### Enterprise\n"
+        + "* Trade bonus: 2\n"
+        + "* Credit bonus: 1\n"
+        + "* Credit rush\n", GovernmentType.ENTERPRISE.getDescription(true));
+    assertEquals("### Hegemony\n"
+        + "* Generic happiness: -1\n"
+        + "* War resistance: 1\n"
+        + "* Research bonus: 1\n", GovernmentType.HEGEMONY.getDescription(true));
+    assertEquals("### Nest\n"
+        + "* No effects on happines nor war fatigue",
+        GovernmentType.NEST.getDescription(true));
+    assertEquals("### Hive-mind\n"
+        + "* No effects on happines nor war fatigue",
+        GovernmentType.HIVEMIND.getDescription(true));
+    assertEquals("### AI\n"
+        + "* No effects on happines nor war fatigue",
+        GovernmentType.AI.getDescription(true));
+    assertEquals("### Empire\n"
+        + "* Generic happiness: -1\n"
+        + "* War resistance: 1\n"
+        + "* Production bonus: 1\n"
+        + "* Population rush\n", GovernmentType.EMPIRE.getDescription(true));
+    assertEquals("### Kingdom\n"
+        + "* Generic happiness: -1\n"
+        + "* War resistance: 1\n"
+        + "* Production bonus: 1\n"
+        + "* Population rush\n", GovernmentType.KINGDOM.getDescription(true));
+    assertEquals("### Hierarchy\n"
+        + "* Generic happiness: -1\n"
+        + "* War resistance: 1\n"
+        + "* Production bonus: 1\n"
+        + "* Population rush\n", GovernmentType.HIERARCHY.getDescription(true));
+    assertEquals("### Horde\n"
+        + "* Generic happiness: -1\n"
+        + "* War resistance: 1\n"
+        + "* Food bonus: 1\n"
+        + "* War happiness\n"
+        + "* Population rush\n", GovernmentType.HORDE.getDescription(true));
+    assertEquals("### Horde\n"
+        + "* Generic happiness: -1\n"
+        + "* War resistance: 1\n"
+        + "* Production bonus: 1\n"
+        + "* War happiness\n"
+        + "* Population rush\n", GovernmentType.MECHANICAL_HORDE.getDescription(true));
+    assertEquals("### Clan\n"
+        + "* Generic happiness: -1\n"
+        + "* War resistance: 1\n"
+        + "* Food bonus: 1\n"
+        + "* War happiness\n"
+        + "* Population rush\n", GovernmentType.CLAN.getDescription(true));
   }
 
   @Test

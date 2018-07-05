@@ -289,64 +289,92 @@ public enum GovernmentType {
 
   /**
    * Get Government type description
+   * @param markDown Is description on Markdown format or HTML.
    * @return Description
    */
-  public String getDescription() {
+  public String getDescription(final boolean markDown) {
+    String lf = "<br>";
+    String dot = "<li>";
+    if (markDown) {
+      lf = "\n";
+      dot = "*";
+    }
+
     StringBuilder sb = new StringBuilder();
+    if (!markDown) {
+      sb.append("<html>");
+    } else {
+      sb.append("### ");
+    }
     sb.append(getName());
-    sb.append("\n");
+    sb.append(lf);
     if (isImmuneToHappiness()) {
-      sb.append("No effects on happines nor war fatigue");
+      sb.append(dot);
+      sb.append(" No effects on happines nor war fatigue");
     } else {
       if (getGenericHappiness() != 0) {
-        sb.append("Generic happiness: ");
+        sb.append(dot);
+        sb.append(" Generic happiness: ");
         sb.append(getGenericHappiness());
-        sb.append("\n");
+        sb.append(lf);
       }
       if (getDiplomaticBonus() != 0) {
-        sb.append("Diplomatic bonus: ");
+        sb.append(dot);
+        sb.append(" Diplomatic bonus: ");
         sb.append(getDiplomaticBonus());
-        sb.append("\n");
+        sb.append(lf);
       }
       if (getTradeBonus() != 0) {
-        sb.append("Trade bonus: ");
+        sb.append(dot);
+        sb.append(" Trade bonus: ");
         sb.append(getTradeBonus());
-        sb.append("\n");
+        sb.append(lf);
       }
       if (getWarResistance() != 0) {
-        sb.append("War resistance: ");
+        sb.append(dot);
+        sb.append(" War resistance: ");
         sb.append(getWarResistance());
-        sb.append("\n");
+        sb.append(lf);
       }
       if (getProductionBonus() != 0) {
-        sb.append("Production bonus: ");
+        sb.append(dot);
+        sb.append(" Production bonus: ");
         sb.append(getProductionBonus());
-        sb.append("\n");
+        sb.append(lf);
       }
       if (getCreditBonus() != 0) {
-        sb.append("Credit bonus: ");
+        sb.append(dot);
+        sb.append(" Credit bonus: ");
         sb.append(getCreditBonus());
-        sb.append("\n");
+        sb.append(lf);
       }
       if (getResearchBonus() != 0) {
-        sb.append("Research bonus: ");
+        sb.append(dot);
+        sb.append(" Research bonus: ");
         sb.append(getResearchBonus());
-        sb.append("\n");
+        sb.append(lf);
       }
       if (getFoodBonus() != 0) {
-        sb.append("Food bonus: ");
+        sb.append(dot);
+        sb.append(" Food bonus: ");
         sb.append(getFoodBonus());
-        sb.append("\n");
+        sb.append(lf);
       }
       if (hasWarHappiness()) {
-        sb.append("War happiness\n");
+        sb.append(dot);
+        sb.append(" War happiness\n");
       }
       if (hasPopulationRush()) {
-        sb.append("Population rush\n");
+        sb.append(dot);
+        sb.append(" Population rush\n");
       }
       if (hasCreditRush()) {
-        sb.append("Credit rush\n");
+        sb.append(dot);
+        sb.append(" Credit rush\n");
       }
+    }
+    if (!markDown) {
+      sb.append("</html>");
     }
     return sb.toString();
   }

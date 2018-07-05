@@ -174,8 +174,8 @@ public class PlayerSetupView extends BlackPanel {
             comboGovernmentSelect[i].addItem(gov);
           }
           comboGovernmentSelect[i].setSelectedIndex(0);
-          comboGovernmentSelect[i].setToolTipText("<html>"
-              + govs[0].getDescription() + "</html>");
+          comboGovernmentSelect[i].setToolTipText(
+              govs[0].getDescription(false));
         }
       }
       String tmp = arg0.getActionCommand().substring(
@@ -192,8 +192,10 @@ public class PlayerSetupView extends BlackPanel {
         if (comboRaceSelect[i].isEnabled()) {
           GovernmentType gov = (GovernmentType) comboGovernmentSelect[i]
               .getSelectedItem();
-          comboGovernmentSelect[i].setToolTipText("<html>"
-              + gov.getDescription() + "</html>");
+          if (gov != null) {
+            comboGovernmentSelect[i].setToolTipText(
+                gov.getDescription(false));
+          }
         }
       }
       String tmp = arg0.getActionCommand().substring(
@@ -285,7 +287,7 @@ public class PlayerSetupView extends BlackPanel {
     GovernmentType[] governments = GovernmentUtility.getGovernmentsForRace(
         config.getRace(index));
     comboGovernmentSelect[index].setToolTipText(
-        governments[i].getDescription());
+        governments[i].getDescription(false));
     info.add(comboGovernmentSelect[index]);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     playerName[index] = new JTextField(

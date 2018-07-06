@@ -16,6 +16,7 @@ import org.openRealmOfStars.player.espionage.Espionage;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
@@ -63,6 +64,11 @@ public class PlayerInfo {
    * Player's space race
    */
   private SpaceRace race;
+
+  /**
+   * Player's Government
+   */
+  private GovernmentType government;
 
   /**
    * Player's empire name
@@ -174,6 +180,8 @@ public class PlayerInfo {
     espionage = new Espionage(maxPlayers);
     attitude = Attitude.getRandom();
     setFakeMilitarySize(100);
+    // This is the old way of government
+    setGovernment(GovernmentType.AI);
     switch (getRace()) {
     case HUMAN:
     case MECHIONS:
@@ -1187,6 +1195,21 @@ public class PlayerInfo {
     this.race = race;
   }
 
+  /**
+   * Get government type for player
+   * @return Government type
+   */
+  public GovernmentType getGovernment() {
+    return government;
+  }
+
+  /**
+   * Set government type for player
+   * @param government Government type
+   */
+  public void setGovernment(final GovernmentType government) {
+    this.government = government;
+  }
   /**
    * Get empire name for player
    * @return Empire name as a String

@@ -10,6 +10,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
@@ -457,6 +458,18 @@ public class PlayerInfoTest {
       assertEquals(0, info.getDiplomacy().getPlayerIndex());
       info = new PlayerInfo(SpaceRace.HUMAN, 8, 5);
       assertEquals(5, info.getDiplomacy().getPlayerIndex());
+    }
+
+    /**
+     * Tests Government
+     */
+    @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
+    public void testGovernment() {
+      PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS, 8, 0);
+      assertEquals(GovernmentType.AI, info.getGovernment());
+      info.setGovernment(GovernmentType.DEMOCRACY);
+      assertEquals(GovernmentType.DEMOCRACY, info.getGovernment());
     }
 
     /**

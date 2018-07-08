@@ -447,6 +447,7 @@ public final class BuildingFactory {
       tmp.setMetalCost(20);
       tmp.setDescription("Big and powerful defense turret");
       tmp.setDefenseDamage(3);
+      tmp.setHappiness(1);
       return tmp;
     }
     if (index == COMPONENT_PLANETARY_DEFENSE_TURRET_MK2) {
@@ -457,6 +458,7 @@ public final class BuildingFactory {
       tmp.setMetalCost(50);
       tmp.setDescription("Huge defense turret");
       tmp.setDefenseDamage(6);
+      tmp.setHappiness(1);
       return tmp;
     }
     if (index == COMPONENT_PLANETARY_DEFENSE_TURRET_MK3) {
@@ -467,6 +469,7 @@ public final class BuildingFactory {
       tmp.setMetalCost(70);
       tmp.setDescription("Biggest and meanest defense turret");
       tmp.setDefenseDamage(9);
+      tmp.setHappiness(1);
       return tmp;
     }
     if (index == COMPONENT_PLANETARY_SCANNER_MK1) {
@@ -754,6 +757,7 @@ public final class BuildingFactory {
       tmp.setMetalCost(20);
       tmp.setMaintenanceCost(0.5);
       tmp.setBattleBonus(50);
+      tmp.setHappiness(1);
       tmp.setSingleAllowed(true);
       return tmp;
     }
@@ -832,6 +836,7 @@ public final class BuildingFactory {
       tmp.setDescription("Decrease planet radiation by one.");
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
+      tmp.setHappiness(1);
       tmp.setMaintenanceCost(1);
       tmp.setSingleAllowed(true);
       return tmp;
@@ -913,6 +918,7 @@ public final class BuildingFactory {
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
       tmp.setMaintenanceCost(1);
+      tmp.setHappiness(1);
       tmp.setSingleAllowed(true);
       return tmp;
     }

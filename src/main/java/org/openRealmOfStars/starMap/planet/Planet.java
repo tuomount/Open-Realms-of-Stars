@@ -1911,4 +1911,23 @@ public class Planet {
     }
   }
 
+  /**
+   * Calculate happiness of the planet
+   * @return Happiness, positive number is happy and negative is unhappy.
+   */
+  public int calculateHappiness() {
+    if (planetOwnerInfo == null) {
+      return 0;
+    }
+    // FIXME: Get base happiness from playerinfo government;
+    int base = 0;
+    base = base - getTotalPopulation() / 5;
+    base = base + getWorkers(Planet.CULTURE_ARTIST);
+    for (Building building : buildings) {
+      if (building.getHappiness() > 0) {
+        base = base + building.getHappiness();
+      }
+    }
+    return base;
+  }
 }

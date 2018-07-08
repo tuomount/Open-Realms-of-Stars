@@ -155,19 +155,24 @@ public class PlanetTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testPlanetKillWorker() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    planet.setPlanetOwner(0, info);
     planet.setWorkers(Planet.FOOD_FARMERS, 2);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
     planet.setWorkers(Planet.METAL_MINERS, 1);
     planet.setWorkers(Planet.CULTURE_ARTIST, 1);
     assertEquals(5, planet.getTotalPopulation());
+    assertEquals(0, planet.calculateHappiness());
     planet.killOneWorker();
     assertEquals(4, planet.getTotalPopulation());
+    assertEquals(1, planet.calculateHappiness());
   }
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testRemoveBuilding() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    assertEquals(0, planet.calculateHappiness());
     planet.setRadiationLevel(6);
     assertEquals(0, planet.getNumberOfBuildings());
     Building building = Mockito.mock(Building.class);

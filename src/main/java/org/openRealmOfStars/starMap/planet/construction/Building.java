@@ -99,6 +99,11 @@ public class Building extends Construction {
   private int scanCloakingDetection;
 
   /**
+   * Happiness bonus
+   */
+  private int happinessBonus;
+
+  /**
    * Construct building for planet
    * @param index Unique number for building
    * @param name Building name
@@ -125,6 +130,7 @@ public class Building extends Construction {
     this.defenseDamage = 0;
     this.scanRange = 0;
     this.scanCloakingDetection = 0;
+    this.happinessBonus = 0;
   }
 
   /**
@@ -318,6 +324,15 @@ public class Building extends Construction {
       sb.append(value);
       space = true;
     }
+    if (getHappiness() > 0) {
+      if (space) {
+        sb.append(" ");
+      }
+      sb.append("Happiness: +");
+      int value = getHappiness();
+      sb.append(value);
+      space = true;
+    }
     if (getBattleBonus() > 0) {
       if (space) {
         sb.append(" ");
@@ -464,6 +479,21 @@ public class Building extends Construction {
     this.scanRange = scanRange;
   }
 
+  /**
+   * Set Building happiness bonus
+   * @param bonus for happiness
+   */
+  public void setHappiness(final int bonus) {
+    happinessBonus = bonus;
+  }
+
+  /**
+   * Get Building happiness bonus
+   * @return bonus for happiness
+   */
+  public int getHappiness() {
+    return happinessBonus;
+  }
   /**
    * Get cloaking detection power
    * @return cloaking detection power

@@ -92,4 +92,20 @@ public class BuildingTest {
     assertEquals(0, building.getFarmBonus());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBarracks() {
+    Building building = BuildingFactory.createByName("Barracks");
+    assertEquals("Barracks", building.getName());
+    assertEquals(0, building.getReseBonus());
+    assertEquals(0, building.getCredBonus());
+    assertEquals(0, building.getCultBonus());
+    assertEquals(0, building.getMineBonus());
+    assertEquals(0, building.getFactBonus());
+    assertEquals(0, building.getFactBonus());
+    assertEquals(0, building.getFarmBonus());
+    assertEquals(50, building.getBattleBonus());
+    assertEquals(1, building.getHappiness());
+  }
+
 }

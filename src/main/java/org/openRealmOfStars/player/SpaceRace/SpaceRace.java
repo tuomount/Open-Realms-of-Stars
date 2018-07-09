@@ -540,6 +540,40 @@ public enum SpaceRace {
   }
 
   /**
+   * Get war fatigue resistance.
+   * Very weak 30,
+   * Weak 40,
+   * Normal 50,
+   * Strong 60,
+   * Very Strong 70
+   * @return War fatigue resistance
+   */
+  public int getWarFatigueResistance() {
+    switch (this) {
+    case HUMAN:
+      return 60;
+    case MECHIONS:
+      return 50;
+    case SPORKS:
+      return 50;
+    case GREYANS:
+      return 40;
+    case CENTAURS:
+      return 70;
+    case MOTHOIDS:
+      return 30;
+    case TEUTHIDAES:
+      return 60;
+    case SCAURIANS:
+      return 40;
+    case HOMARIANS:
+      return 50;
+    default:
+      return 50;
+    }
+  }
+
+  /**
    * Get racial hull point if available
    * @return normal 0 or 1
    */
@@ -869,6 +903,10 @@ public enum SpaceRace {
     sb.append(dot);
     sb.append(" Diplomacy bonus: ");
     sb.append(getDiplomacyBonus());
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" War resistance: ");
+    sb.append(getWarFatigueResistance());
     sb.append(lf);
     sb.append(dot);
     sb.append(" Rush: ");

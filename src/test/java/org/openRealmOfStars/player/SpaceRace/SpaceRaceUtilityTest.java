@@ -127,6 +127,7 @@ public class SpaceRaceUtilityTest {
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: 2\n"+
+        "* War resistance: 60\n"+
         "* Rush: Credit\n"+
         "* Special: None";
     expectedResult[1] = "### Mechions\n"+
@@ -141,6 +142,7 @@ public class SpaceRaceUtilityTest {
         "* Food require: 0%\n"+
         "* Culture: 50%\n"+
         "* Diplomacy bonus: -2\n"+
+        "* War resistance: 50\n"+
         "* Rush: Population\n"+
         "* Special: Population needs to be built";
     expectedResult[2] = "### Sporks\n"+
@@ -155,6 +157,7 @@ public class SpaceRaceUtilityTest {
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: -3\n"+
+        "* War resistance: 50\n"+
         "* Rush: Credit and population\n"+
         "* Special: Extra scout ship and higher combat tech at start";
     expectedResult[3] = "### Greyans\n"+
@@ -169,6 +172,7 @@ public class SpaceRaceUtilityTest {
         "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: 0\n"+
+        "* War resistance: 40\n"+
         "* Rush: Credit\n"+
         "* Special: Electronics and propulsion techs are higher at start";
     expectedResult[4] = "### Centaurs\n"+
@@ -185,6 +189,7 @@ public class SpaceRaceUtilityTest {
         "* Food require: 125%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: -1\n"+
+        "* War resistance: 70\n"+
         "* Rush: Credit\n"+
         "* Special: Stronger ships";
     expectedResult[5] = "### Mothoids\n"+
@@ -202,6 +207,7 @@ public class SpaceRaceUtilityTest {
         "* Food require: 100%\n"+
         "* Culture: 150%\n"+
         "* Diplomacy bonus: 0\n"+
+        "* War resistance: 30\n"+
         "* Rush: Population\n"+
         "* Special: No defense tech but one Planetary improvement tech at start";
     expectedResult[6] = "### Teuthidaes\n"
@@ -218,6 +224,7 @@ public class SpaceRaceUtilityTest {
         + "* Food require: 125%\n"
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: -2\n"
+        + "* War resistance: 60\n"
         + "* Rush: Credit\n"
         + "* Special: Each ship has built-in cloaking device";
     expectedResult[7] = "### Scaurians\n"
@@ -234,6 +241,7 @@ public class SpaceRaceUtilityTest {
         + "* Food require: 100%\n"
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: 1\n"
+        + "* War resistance: 40\n"
         + "* Rush: Credit\n"
         + "* Special: Trade fleet gain 50% more credits and better trade buildings.";
     expectedResult[8] = "### Homarians\n"
@@ -251,6 +259,7 @@ public class SpaceRaceUtilityTest {
         + "* Food require: 100%\n"
         + "* Culture: 50%\n"
         + "* Diplomacy bonus: 1\n"
+        + "* War resistance: 50\n"
         + "* Rush: Population\n"
         + "* Special: Starts with 5 population";
     for (int i = 0; i <  SpaceRace.values().length; i++) {

@@ -1919,8 +1919,7 @@ public class Planet {
     if (planetOwnerInfo == null) {
       return 0;
     }
-    // FIXME: Get base happiness from playerinfo government;
-    int base = 0;
+    int base = planetOwnerInfo.getGovernment().getGenericHappiness();
     base = base - getTotalPopulation() / 5;
     base = base + getWorkers(Planet.CULTURE_ARTIST);
     for (Building building : buildings) {
@@ -1928,6 +1927,8 @@ public class Planet {
         base = base + building.getHappiness();
       }
     }
+    base = base - planetOwnerInfo.getWarFatigue()
+           / planetOwnerInfo.getRace().getWarFatigueResistance();
     return base;
   }
 }

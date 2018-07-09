@@ -10,6 +10,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -156,6 +157,9 @@ public class PlanetTest {
   public void testPlanetKillWorker() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.GUILD);
+    Mockito.when(info.getWarFatigue()).thenReturn(0);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     planet.setPlanetOwner(0, info);
     planet.setWorkers(Planet.FOOD_FARMERS, 2);
     planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);

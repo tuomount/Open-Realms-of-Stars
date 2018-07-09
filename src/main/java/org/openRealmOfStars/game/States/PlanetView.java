@@ -137,6 +137,10 @@ public class PlanetView extends BlackPanel {
    */
   private IconLabel metalOre;
   /**
+   * Label for happiness
+   */
+  private IconLabel happiness;
+  /**
    * JCombobox for selected construction for planet
    */
   private JComboBox<Construction> constructionSelect;
@@ -252,7 +256,8 @@ public class PlanetView extends BlackPanel {
     cultureLabel = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_CULTURE),
         ": " + planet.getWorkers(Planet.CULTURE_ARTIST));
-    cultureLabel.setToolTipText("Number of people producing culture.");
+    cultureLabel.setToolTipText(
+        "Number of people working as a culture artist.");
     cultureLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(cultureLabel);
     topPanel.add(panel);
@@ -340,6 +345,15 @@ public class PlanetView extends BlackPanel {
     metalOre.setToolTipText("Total metal ore to mine.");
     metalOre.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(metalOre);
+    happiness = new IconLabel(null, Icons.getIconByName(Icons.ICON_OKAY),
+        ": " + planet.calculateHappiness());
+    happiness.setToolTipText("<html>People happiness value on planet. "
+        + "Happy people are more productive. Angry people can cause anarchy."
+        + "<br>Happiness can be increased with certain buildings or increasing"
+        + "culture artists."
+        + "</html>");
+    happiness.setAlignmentX(Component.LEFT_ALIGNMENT);
+    panel.add(happiness);
     topPanel.add(panel);
     topPanel.add(Box.createRigidArea(new Dimension(25, 25)));
 
@@ -526,6 +540,16 @@ public class PlanetView extends BlackPanel {
     taxPanel.setText(": " + planet.getTax());
     metal.setText(": " + planet.getMetal());
     metalOre.setText(": " + planet.getAmountMetalInGround());
+    int happyValue = planet.calculateHappiness();
+    if (planet.getPlanetPlayerInfo() != null
+        && planet.getPlanetPlayerInfo().getGovernment().isImmuneToHappiness()) {
+      happiness.setText(": -");
+      happiness.setToolTipText(
+          "<html>Government is single minded, no happiness or sadness.</html>");
+    } else {
+      happiness.setText(": " + happyValue);
+    }
+    happiness.setLeftIcon(Icons.getHappyFace(happyValue));
     buildingLabel.setText("Buildings(" + planet.getUsedPlanetSize() + "/"
         + planet.getGroundSize() + "):");
 

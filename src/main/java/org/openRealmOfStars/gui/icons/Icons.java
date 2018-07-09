@@ -345,6 +345,30 @@ public final class Icons {
   }
 
   /**
+   * Get happy face icon by happiness.
+   * @param happyValue Happiness value
+   * @return Always returns an happy face icon.
+   */
+  public static Icon16x16 getHappyFace(final int happyValue) {
+    if (hashOfIcons == null) {
+      initIcons();
+    }
+    if (happyValue > 3) {
+      return hashOfIcons.get(ICON_VERY_HAPPY);
+    }
+    if (happyValue > 1) {
+      return hashOfIcons.get(ICON_HAPPY);
+    }
+    if (happyValue > -2) {
+      return hashOfIcons.get(ICON_OKAY);
+    }
+    if (happyValue > -4) {
+      return hashOfIcons.get(ICON_SAD);
+    }
+    return hashOfIcons.get(ICON_VERY_SAD);
+  }
+
+  /**
    * Get Maximum count of icons
    * @return Maximum count of icons
    */

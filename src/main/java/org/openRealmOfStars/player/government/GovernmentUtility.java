@@ -46,6 +46,19 @@ public final class GovernmentUtility {
     return govs[index];
   }
   /**
+   * Get government type by index
+   * @param index Index to fetch
+   * @return GovernmentType
+   */
+  public static GovernmentType getGovernmentByIndex(final int index) {
+    GovernmentType[] govs = GovernmentType.values();
+    if (index >= 0 && index < govs.length) {
+      return govs[index];
+    }
+    throw new IllegalArgumentException("Unknown government type index:"
+      + index);
+  }
+  /**
    * Get the GovernmentType for certain space race
    * @param race Space Race
    * @return GovernmentTypes as arrays for space race

@@ -227,7 +227,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.9";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.10";
 
   /**
    * Maximum amount of looping when finding free solar system spot.
@@ -601,7 +601,7 @@ public class StarMap {
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(final DataOutputStream dos) throws IOException {
-    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.9");
+    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.10");
     // Turn number
     dos.writeInt(turn);
     // Victory conditions

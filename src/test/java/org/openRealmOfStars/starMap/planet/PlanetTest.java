@@ -165,7 +165,12 @@ public class PlanetTest {
     assertEquals(0, planet.calculateHappiness());
     planet.killOneWorker();
     assertEquals(4, planet.getTotalPopulation());
-    assertEquals(1, planet.calculateHappiness());
+    // Kill One worker kills one worker as random
+    if (planet.getWorkers(Planet.CULTURE_ARTIST) == 1) {
+      assertEquals(1, planet.calculateHappiness());
+    } else {
+      assertEquals(0, planet.calculateHappiness());
+    }
   }
 
   @Test

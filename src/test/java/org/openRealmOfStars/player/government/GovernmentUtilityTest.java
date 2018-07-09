@@ -186,4 +186,19 @@ public class GovernmentUtilityTest {
     assertEquals(GovernmentType.DEMOCRACY, governments[9]);
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGovernmentIndexes() {
+    GovernmentType[] govs = GovernmentType.values();
+    for (int i = 0; i < govs.length; i++) {
+      assertEquals(govs[i], GovernmentUtility.getGovernmentByIndex(i));
+    }
+  }
+
+  @Test(expected=IllegalArgumentException.class)
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGovernmentIndexesBig() {
+    GovernmentUtility.getGovernmentByIndex(255);
+  }
+
 }

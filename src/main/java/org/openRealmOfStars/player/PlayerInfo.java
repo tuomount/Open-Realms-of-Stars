@@ -17,6 +17,7 @@ import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.government.GovernmentUtility;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
@@ -427,6 +428,8 @@ public class PlayerInfo {
   public PlayerInfo(final DataInputStream dis) throws IOException {
     empireName = IOUtilities.readString(dis);
     race = SpaceRaceUtility.getRaceByIndex(dis.readInt());
+    government = GovernmentUtility.getGovernmentByIndex(dis.readInt());
+    warFatigue = dis.readInt();
     totalCredits = dis.readInt();
     attitude = Attitude.getTypeByIndex(dis.read());
     techList = new TechList(dis);
@@ -492,6 +495,8 @@ public class PlayerInfo {
   public void savePlayerInfo(final DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, empireName);
     dos.writeInt(race.getIndex());
+    dos.writeInt(government.getIndex());
+    dos.writeInt(warFatigue);
     dos.writeInt(totalCredits);
     dos.writeByte(attitude.getIndex());
     techList.saveTechList(dos);

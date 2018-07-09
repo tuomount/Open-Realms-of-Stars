@@ -70,6 +70,8 @@ http://opengameart.org/content/140-military-icons-set-fixed
 
 Music note and Speaker icon by Tuomo Untinen
 
+Happy and Sad faces by Tuomo Untinen
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

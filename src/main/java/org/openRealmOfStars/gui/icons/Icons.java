@@ -279,6 +279,30 @@ public final class Icons {
   public static final String ICON_SOUND = "IconSound";
 
   /**
+   * Very happy face
+   */
+  public static final String ICON_VERY_HAPPY = "IconVeryHappy";
+
+  /**
+   * Happy face
+   */
+  public static final String ICON_HAPPY = "IconHappy";
+
+  /**
+   * Okay face
+   */
+  public static final String ICON_OKAY = "IconOkayFace";
+
+  /**
+   * Sad face
+   */
+  public static final String ICON_SAD = "IconSadFace";
+  /**
+   * Very sad face
+   */
+  public static final String ICON_VERY_SAD = "IconVerySadFace";
+
+  /**
    * List of Icon
    */
   private static ArrayList<Icon16x16> listOfIcons;
@@ -487,6 +511,16 @@ public final class Icons {
     icon = new Icon16x16(image, 1, 7, ICON_MUSIC);
     addIcon(icon);
     icon = new Icon16x16(image, 2, 7, ICON_SOUND);
+    addIcon(icon);
+    icon = new Icon16x16(image, 3, 7, ICON_VERY_HAPPY);
+    addIcon(icon);
+    icon = new Icon16x16(image, 4, 7, ICON_HAPPY);
+    addIcon(icon);
+    icon = new Icon16x16(image, 5, 7, ICON_OKAY);
+    addIcon(icon);
+    icon = new Icon16x16(image, 6, 7, ICON_SAD);
+    addIcon(icon);
+    icon = new Icon16x16(image, 7, 7, ICON_VERY_SAD);
     addIcon(icon);
   }
 

@@ -105,6 +105,7 @@ public class CreditsView extends BlackPanel {
       + "Original from 141 Military Icons Set by AngryMeteor.com \n"
       + "http://opengameart.org/content/140-military-icons-set-fixed\n\n"
       + "Music note and Speaker icon by Tuomo Untinen\n\n"
+      + "Happy and Sad faces by Tuomo Untinen\n\n"
       + "Fonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

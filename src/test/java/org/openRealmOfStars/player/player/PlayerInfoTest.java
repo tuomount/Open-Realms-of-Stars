@@ -461,7 +461,7 @@ public class PlayerInfoTest {
     }
 
     /**
-     * Tests Government
+     * Tests Government and war fatigue
      */
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
@@ -470,6 +470,9 @@ public class PlayerInfoTest {
       assertEquals(GovernmentType.AI, info.getGovernment());
       info.setGovernment(GovernmentType.DEMOCRACY);
       assertEquals(GovernmentType.DEMOCRACY, info.getGovernment());
+      assertEquals(0, info.getWarFatigue());
+      info.setWarFatigue(5);
+      assertEquals(5, info.getWarFatigue());
     }
 
     /**

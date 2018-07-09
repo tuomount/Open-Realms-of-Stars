@@ -69,6 +69,10 @@ public class PlayerInfo {
    * Player's Government
    */
   private GovernmentType government;
+  /**
+   * Realm's war fatigue value
+   */
+  private int warFatigue;
 
   /**
    * Player's empire name
@@ -182,6 +186,7 @@ public class PlayerInfo {
     setFakeMilitarySize(100);
     // This is the old way of government
     setGovernment(GovernmentType.AI);
+    setWarFatigue(0);
     switch (getRace()) {
     case HUMAN:
     case MECHIONS:
@@ -1209,6 +1214,20 @@ public class PlayerInfo {
    */
   public void setGovernment(final GovernmentType government) {
     this.government = government;
+  }
+  /**
+   * Set Realm's war fatigue.
+   * @param fatigue to set
+   */
+  public void setWarFatigue(final int fatigue) {
+    warFatigue = fatigue;
+  }
+  /**
+   * Get Realm's war fatigue.
+   * @return war fatigue
+   */
+  public int getWarFatigue() {
+    return warFatigue;
   }
   /**
    * Get empire name for player

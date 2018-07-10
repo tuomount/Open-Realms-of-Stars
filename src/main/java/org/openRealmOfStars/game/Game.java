@@ -1214,6 +1214,7 @@ public class Game implements ActionListener {
     for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
       PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i),
          galaxyConfig.getMaxPlayers(), i);
+      info.setGovernment(galaxyConfig.getPlayerGovernment(i));
       info.setEmpireName(galaxyConfig.getPlayerName(i));
       if (i == 0) {
         info.setHuman(true);

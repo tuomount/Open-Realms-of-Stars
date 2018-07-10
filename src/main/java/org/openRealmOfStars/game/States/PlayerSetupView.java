@@ -164,7 +164,6 @@ public class PlayerSetupView extends BlackPanel {
    */
   public void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand().startsWith(GameCommands.COMMAND_GALAXY_SETUP)) {
-      System.out.println(arg0.getActionCommand());
       SoundPlayer.playMenuSound();
       for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
         if (comboRaceSelect[i].isEnabled()) {
@@ -199,7 +198,6 @@ public class PlayerSetupView extends BlackPanel {
     }
     if (arg0.getActionCommand().startsWith(
         GameCommands.COMMAND_GOVERNMENT_SETUP)) {
-      System.out.println(arg0.getActionCommand());
       SoundPlayer.playMenuSound();
       for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
         if (comboRaceSelect[i].isEnabled()) {

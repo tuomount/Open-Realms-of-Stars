@@ -131,7 +131,7 @@ public class SpaceRaceUtilityTest {
         "* Rush: Credit\n"+
         "* Special: None";
     expectedResult[1] = "### Mechions\n"+
-        "Mechanical beings whom do not eat food. Each now population must be built.\n"+
+        "Mechanical beings whom do not eat food. Each population must be built.\n"+
         "* Max radiation: 8\n"+
         "* Troop power: 12\n"+
         "* Production: 100%\n"+
@@ -193,7 +193,8 @@ public class SpaceRaceUtilityTest {
         "* Rush: Credit\n"+
         "* Special: Stronger ships";
     expectedResult[5] = "### Mothoids\n"+
-        "Mothoids are sentient insects with hivemind. They are fast breeding "
+        "Mothoids are sentient insects with capability to hivemind."
+        + " They are fast breeding "
         + "race. Their song is hypnotic so cultural bonus is granted. "
       + "Mothoids exo-skeleton is weak and therefore get negative bonus on "
       + "mining and troop power.\n"+

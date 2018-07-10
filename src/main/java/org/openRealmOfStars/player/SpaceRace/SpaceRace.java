@@ -40,7 +40,7 @@ public enum SpaceRace {
    * Mechanical beings whom do not eat food. Each now population must be built.
    */
   MECHIONS(1, "Mechions", "Mechion", "Mechanical beings whom do not eat food."
-          + " Each now population must be built."),
+          + " Each population must be built."),
   /**
    * Aggressive and warmongering spieces.
    */
@@ -63,9 +63,10 @@ public enum SpaceRace {
    * Mothoids are sentient insects with hivemind. They are fast breeding race.
    */
   MOTHOIDS(5, "Mothoids", "Mothoid", "Mothoids are sentient insects with"
-      + " hivemind. They are fast breeding race. Their song is hypnotic "
-      + "so cultural bonus is granted. Mothoids exo-skeleton is weak and "
-      + "therefore get negative bonus on mining and troop power."),
+      + " capability to hivemind. They are fast breeding race. Their song"
+      + " is hypnotic so cultural bonus is granted. Mothoids exo-skeleton"
+      + " is weak and therefore get negative bonus on mining and troop"
+      + " power."),
   /**
    * Teuthidaes are octopus like creatures.
    * They are scientific and military focused race. Their ships have built-in

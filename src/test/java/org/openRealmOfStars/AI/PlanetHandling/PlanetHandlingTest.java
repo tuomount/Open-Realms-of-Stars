@@ -19,6 +19,7 @@ import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.espionage.Espionage;
 import org.openRealmOfStars.player.espionage.EspionageList;
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.Ship;
@@ -700,6 +701,7 @@ public class PlanetHandlingTest {
     ArrayList<Message> fullList = new ArrayList<>();
     Mockito.when(list.getFullList()).thenReturn(fullList);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
     Mockito.when(info.getTotalCredits()).thenReturn(500);
     Mockito.when(info.getMsgList()).thenReturn(list);
@@ -765,9 +767,9 @@ public class PlanetHandlingTest {
     planet.setWorkers(Planet.METAL_MINERS, 3);
     PlanetHandling.handlePlanetPopulation(planet, info);
     assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
   }
 
@@ -775,36 +777,42 @@ public class PlanetHandlingTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMechionHandling4Population() {
     PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
+    info.setGovernment(GovernmentType.HEGEMONY);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 4);
     PlanetHandling.handlePlanetPopulation(planet, info);
-    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
     assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
   }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMechionHandling5Population() {
     PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
+    info.setGovernment(GovernmentType.MECHANICAL_HORDE);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 5);
     PlanetHandling.handlePlanetPopulation(planet, info);
     assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
-    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
   }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMechionHandling6Population() {
     PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
+    info.setGovernment(GovernmentType.ENTERPRISE);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 6);
@@ -814,12 +822,16 @@ public class PlanetHandlingTest {
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(0, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
   }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testMechionHandling7Population() {
     PlayerInfo info = new PlayerInfo(SpaceRace.MECHIONS);
+    info.setGovernment(GovernmentType.AI);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 7);
@@ -829,6 +841,7 @@ public class PlanetHandlingTest {
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(-1, planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
   }
 
   @Test

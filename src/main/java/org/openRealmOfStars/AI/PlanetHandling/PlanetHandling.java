@@ -1119,22 +1119,22 @@ public final class PlanetHandling {
         }
         case 3: {
           planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-          planet.setWorkers(Planet.METAL_MINERS, 1);
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+          planet.setWorkers(Planet.METAL_MINERS, 0);
+          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
           planet.setWorkers(Planet.CULTURE_ARTIST, 0);
           break;
         }
         case 4: {
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
+          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
           planet.setWorkers(Planet.METAL_MINERS, 1);
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
           planet.setWorkers(Planet.CULTURE_ARTIST, 0);
           break;
         }
         case 5: {
           planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
-          planet.setWorkers(Planet.METAL_MINERS, 2);
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+          planet.setWorkers(Planet.METAL_MINERS, 1);
+          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
           planet.setWorkers(Planet.CULTURE_ARTIST, 0);
           break;
         }

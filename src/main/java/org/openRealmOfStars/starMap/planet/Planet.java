@@ -11,6 +11,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -673,6 +674,8 @@ public class Planet {
     if (gasGiant || planetOwnerInfo == null) {
       return 0;
     }
+    GovernmentType government = planetOwnerInfo.getGovernment();
+    int totalPopulation = getTotalPopulation();
     switch (prod) {
     case PRODUCTION_FOOD: {
       // Planet always produces +2 food
@@ -684,6 +687,9 @@ public class Planet {
       }
       if (eventFound && event == PlanetaryEvent.PARADISE) {
         result = result + 2;
+      }
+      if (totalPopulation >= 4) {
+        result = result + government.getFoodBonus();
       }
       break;
     }
@@ -705,6 +711,9 @@ public class Planet {
       // Planet always produces +1 production
       result = workers[PRODUCTION_PRODUCTION] * mult / div + 1
           + getTotalProductionFromBuildings(prod);
+      if (totalPopulation >= 4) {
+        result = result + government.getProductionBonus();
+      }
       result = result - getTax();
       break;
     }
@@ -713,6 +722,9 @@ public class Planet {
       // Planet does not have research bonus
       result = workers[PRODUCTION_RESEARCH] * mult / div
           + getTotalProductionFromBuildings(prod);
+      if (totalPopulation >= 4) {
+        result = result + government.getResearchBonus();
+      }
       break;
     }
     case PRODUCTION_CULTURE: {
@@ -731,6 +743,9 @@ public class Planet {
       // Planet does not have credit bonus
       result = getTotalProductionFromBuildings(prod) + getTax()
           - getMaintenanceCost();
+      if (totalPopulation >= 4) {
+        result = result + government.getCreditBonus();
+      }
       break;
     }
     case PRODUCTION_POPULATION: {

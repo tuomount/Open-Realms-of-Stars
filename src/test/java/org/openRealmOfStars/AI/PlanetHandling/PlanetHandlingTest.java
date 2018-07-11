@@ -26,6 +26,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
@@ -893,6 +894,7 @@ public class PlanetHandlingTest {
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling3Population() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    info.setGovernment(GovernmentType.NEST);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 3);
@@ -902,12 +904,16 @@ public class PlanetHandlingTest {
     assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling4Population() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    info.setGovernment(GovernmentType.NEST);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 4);
@@ -917,12 +923,35 @@ public class PlanetHandlingTest {
     assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testHomarianHandling4PopulationClan() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    info.setGovernment(GovernmentType.CLAN);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 4);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling5Population() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    info.setGovernment(GovernmentType.NEST);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
     planet.setPlanetOwner(1, info);
     planet.setWorkers(Planet.METAL_MINERS, 5);
@@ -932,6 +961,48 @@ public class PlanetHandlingTest {
     assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testHomarianHandling5PopulationClan() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    info.setGovernment(GovernmentType.CLAN);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 5);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testHomarianHandling5PopulationClanLab() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    info.setGovernment(GovernmentType.CLAN);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.addBuilding(BuildingFactory.createByName("Basic Lab"));
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 5);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(7, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
   @Test

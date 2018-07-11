@@ -10,6 +10,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.espionage.EspionageList;
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -1194,6 +1195,9 @@ public final class PlanetHandling {
             < planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)) {
           planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.METAL_MINERS);
         }
+        if (planet.calculateHappiness() < -1) {
+          planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.CULTURE_ARTIST);
+        }
       } else {
         // Fixed amount of population 5 or less
         planet.setWorkers(Planet.FOOD_FARMERS, 0);
@@ -1243,6 +1247,25 @@ public final class PlanetHandling {
           } else {
             planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
             planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          }
+          if (planet.calculateHappiness() < -1) {
+            GovernmentType government = planet.getPlanetPlayerInfo()
+                .getGovernment();
+            if (government.getResearchBonus() > 0) {
+              if (planet.getTotalProductionFromBuildings(
+                  Planet.PRODUCTION_RESEARCH) == 0) {
+                planet.moveWorker(Planet.RESEARCH_SCIENTIST,
+                    Planet.CULTURE_ARTIST);
+                planet.moveWorker(Planet.RESEARCH_SCIENTIST,
+                    Planet.PRODUCTION_PRODUCTION);
+              } else {
+                planet.moveWorker(Planet.PRODUCTION_PRODUCTION,
+                    Planet.CULTURE_ARTIST);
+              }
+            } else {
+              planet.moveWorker(Planet.PRODUCTION_PRODUCTION,
+                  Planet.CULTURE_ARTIST);
+            }
           }
           break;
         }

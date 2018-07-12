@@ -673,6 +673,7 @@ public class PlanetHandlingTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getTotalCredits()).thenReturn(500);
     Mockito.when(info.getMsgList()).thenReturn(list);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
     MissionList missionList = Mockito.mock(MissionList.class);
     Mockito.when(info.getMissions()).thenReturn(missionList);
     Planet planet = new Planet(new Coordinate(6, 6), "Test planet", 1, false);
@@ -1007,6 +1008,25 @@ public class PlanetHandlingTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testHomarianHandling5PopulationHegemony() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    info.setGovernment(GovernmentType.HEGEMONY);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 5);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHomarianHandling6Population() {
     PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
     Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
@@ -1021,6 +1041,50 @@ public class PlanetHandlingTest {
     assertEquals(3, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testGreyansHandling5PopulationHegemony() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    info.setGovernment(GovernmentType.HEGEMONY);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+    planet.setWorkers(Planet.FOOD_FARMERS, 3);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(3, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testGreyansHandling6PopulationKingdom() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    info.setGovernment(GovernmentType.KINGDOM);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+    planet.setWorkers(Planet.FOOD_FARMERS, 4);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(4, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
   }
 
 }

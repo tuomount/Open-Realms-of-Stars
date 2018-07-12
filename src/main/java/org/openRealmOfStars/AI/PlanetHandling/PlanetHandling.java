@@ -1336,7 +1336,22 @@ public final class PlanetHandling {
         } else {
           planet.moveWorker(Planet.FOOD_FARMERS, Planet.PRODUCTION_WORKERS);
         }
-
+      }
+      int happiness = planet.calculateHappiness();
+      if (happiness < -1) {
+        if (planet.getTotalProductionFromBuildings(
+            Planet.PRODUCTION_RESEARCH) > 0
+            && planet.getWorkers(Planet.RESEARCH_SCIENTIST) > 0) {
+          planet.moveWorker(Planet.RESEARCH_SCIENTIST, Planet.CULTURE_ARTIST);
+        } else if (planet.getPlanetPlayerInfo().getGovernment()
+            .getResearchBonus() > 0
+            && planet.getWorkers(Planet.RESEARCH_SCIENTIST) > 0) {
+          planet.moveWorker(Planet.RESEARCH_SCIENTIST, Planet.CULTURE_ARTIST);
+        } else if (planet.getWorkers(Planet.METAL_MINERS) > 0) {
+          planet.moveWorker(Planet.METAL_MINERS, Planet.CULTURE_ARTIST);
+        } else if (planet.getWorkers(Planet.PRODUCTION_WORKERS) > 0) {
+          planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.CULTURE_ARTIST);
+        }
       }
     }
   }

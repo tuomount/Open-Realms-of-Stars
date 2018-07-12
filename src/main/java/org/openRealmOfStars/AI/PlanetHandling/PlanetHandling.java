@@ -423,6 +423,19 @@ public final class PlanetHandling {
       score = score + 10;
     }
 
+    GovernmentType government = info.getGovernment();
+    if (!government.isImmuneToHappiness() && building.getHappiness() > 0) {
+      int happyness = planet.calculateHappiness();
+      int mult = 10 - (happyness - 1) * 5;
+      if (mult < 10) {
+        mult = 10;
+      }
+      if (mult > 40) {
+        mult = 40;
+      }
+      score = score + building.getHappiness() * mult;
+
+    }
     score = score - (int) Math.round(building.getMaintenanceCost() * 10);
     // High cost drops the value
     score = score - building.getMetalCost() / 10;

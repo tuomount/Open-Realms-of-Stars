@@ -755,7 +755,7 @@ public final class BuildingFactory {
       tmp.setDescription("Population fights better against invaders.");
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
-      tmp.setMaintenanceCost(0.5);
+      tmp.setMaintenanceCost(0.33);
       tmp.setBattleBonus(50);
       tmp.setHappiness(1);
       tmp.setSingleAllowed(true);
@@ -814,6 +814,7 @@ public final class BuildingFactory {
       tmp.setMaintenanceCost(0.5);
       tmp.setCultBonus(2);
       tmp.setBattleBonus(10);
+      tmp.setHappiness(1);
       tmp.setSingleAllowed(true);
       return tmp;
     }
@@ -862,6 +863,7 @@ public final class BuildingFactory {
       tmp.setMaintenanceCost(1);
       tmp.setCultBonus(3);
       tmp.setBattleBonus(20);
+      tmp.setHappiness(2);
       tmp.setSingleAllowed(true);
       return tmp;
     }
@@ -885,6 +887,7 @@ public final class BuildingFactory {
       tmp.setMetalCost(30);
       tmp.setCredBonus(2);
       tmp.setCultBonus(2);
+      tmp.setHappiness(1);
       tmp.setSingleAllowed(true);
       return tmp;
     }

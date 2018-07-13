@@ -1934,7 +1934,12 @@ public class Planet {
     if (planetOwnerInfo == null) {
       return 0;
     }
-    int base = planetOwnerInfo.getGovernment().getGenericHappiness();
+    GovernmentType government = planetOwnerInfo.getGovernment();
+    int base = government.getGenericHappiness();
+    if (government.hasWarHappiness()
+        && planetOwnerInfo.getDiplomacy().getNumberOfWar() > 0) {
+      base = base + 1;
+    }
     base = base - getTotalPopulation() / 5;
     base = base + getWorkers(Planet.CULTURE_ARTIST);
     for (Building building : buildings) {

@@ -101,8 +101,10 @@ public class DiplomacyTest {
     assertEquals(false, diplomacy.isTradeAlliance(0));
     assertEquals(false, diplomacy.isAlliance(0));
     assertEquals("", diplomacy.getDiplomaticRelation(0));
+    assertEquals(0, diplomacy.getNumberOfWar());
     diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.IN_WAR,
         SpaceRace.SPORKS);
+    assertEquals(1, diplomacy.getNumberOfWar());
     assertEquals("War", diplomacy.getDiplomaticRelation(0));
     assertEquals(true, diplomacy.isWar(0));
     assertEquals(false, diplomacy.isDefensivePact(0));

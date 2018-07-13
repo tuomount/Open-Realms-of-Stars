@@ -1221,6 +1221,7 @@ public class Game implements ActionListener {
       }
       players.addPlayer(info);
     }
+    players.calculateInitialDiplomacyBonuses();
   }
 
 

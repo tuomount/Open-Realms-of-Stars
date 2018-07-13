@@ -231,4 +231,20 @@ public class DiplomacyBonusList {
   public void setNumberOfMeetings(final int numberOfMeetings) {
     this.numberOfMeetings = numberOfMeetings;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("DiplomacyBonusList [playerIndex=");
+    sb.append(playerIndex);
+    sb.append("numberOfMeetings=");
+    sb.append(numberOfMeetings);
+    sb.append("]\n");
+    for (DiplomacyBonus bonus : list) {
+      sb.append(bonus.toString());
+      sb.append("\n");
+    }
+    return sb.toString();
+  }
+
 }

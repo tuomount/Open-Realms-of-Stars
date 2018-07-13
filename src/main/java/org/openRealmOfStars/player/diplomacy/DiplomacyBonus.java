@@ -246,6 +246,11 @@ public class DiplomacyBonus {
        onlyOne = true;
        break;
      }
+     case DIPLOMACY_BONUS: {
+       bonusValue = race.getDiplomacyBonus();
+       bonusLasting = 255;
+       break;
+     }
      default: {
        throw new IllegalArgumentException("Unknown bonus type!!");
      }

@@ -5,6 +5,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonus;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
+import org.openRealmOfStars.player.government.GovernmentType;
+
 /**
  *
  * Open Realm of Stars game project
@@ -211,5 +216,32 @@ public class PlayerList {
       }
     } while (!done);
     return result.toArray(new PlayerInfo[result.size()]);
+  }
+
+  /**
+   * Calculate initial diplomacy Bonuses for all players.
+   */
+  public void calculateInitialDiplomacyBonuses() {
+    for (int i = 0; i < getCurrentMaxPlayers(); i++) {
+      PlayerInfo info = getPlayerInfoByIndex(i);
+      for (int j = 0; j < getCurrentMaxPlayers(); j++) {
+        DiplomacyBonusList bonus = info.getDiplomacy().getDiplomacyList(j);
+        if (bonus != null) {
+          PlayerInfo info2 = getPlayerInfoByIndex(j);
+          bonus.addBonus(DiplomacyBonusType.DIPLOMACY_BONUS, info2.getRace());
+          GovernmentType government = info2.getGovernment();
+          DiplomacyBonus diplomacyBonus = new DiplomacyBonus(
+              DiplomacyBonusType.DIPLOMACY_BONUS, info2.getRace());
+          diplomacyBonus.setBonusValue(government.getDiplomaticBonus());
+          if (diplomacyBonus.getBonusValue() != 0) {
+            bonus.addBonus(diplomacyBonus);
+          }
+          if (info.getRace() == info2.getRace()) {
+            bonus.addBonus(DiplomacyBonusType.SAME_RACE, info2.getRace());
+          }
+        }
+      }
+    }
+
   }
 }

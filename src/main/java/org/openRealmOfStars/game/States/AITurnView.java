@@ -33,6 +33,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetType;
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -1214,6 +1215,16 @@ public class AITurnView extends BlackPanel {
           info.getTechList().updateResearchPointByTurn(game.getStarMap()
               .getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH, i),
               info, game.getStarMap().getScoreVictoryTurn());
+          // Handle war fatigue for player
+          GovernmentType government = info.getGovernment();
+          if (!government.isImmuneToHappiness()) {
+            int wars = info.getDiplomacy().getNumberOfWar();
+            if (wars > 0 && wars > government.getWarResistance()) {
+              int fatigue = info.getWarFatigue();
+              fatigue = fatigue - wars + government.getWarResistance();
+              info.setWarFatigue(fatigue);
+            }
+          }
         }
         game.getStarMap().clearAITurn();
         if (game.getStarMap().getNewsCorpData().isNewsToShow()) {

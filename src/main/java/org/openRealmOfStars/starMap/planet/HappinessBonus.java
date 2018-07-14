@@ -36,10 +36,6 @@ public enum HappinessBonus {
    */
   CREDIT,
   /**
-   * Bonus for food, negative value for sad bonus
-   */
-  FOOD,
-  /**
    * Bonus for Mined metal, negative value for sad bonus
    */
   METAL,

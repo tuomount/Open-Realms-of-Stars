@@ -1218,20 +1218,41 @@ public class AITurnView extends BlackPanel {
           // Handle war fatigue for player
           GovernmentType government = info.getGovernment();
           if (!government.isImmuneToHappiness()) {
+            boolean fatigued = false;
             int wars = info.getDiplomacy().getNumberOfWar();
+            int warFatigueValue = info.getWarFatigue()
+                / info.getRace().getWarFatigueResistance();
             if (wars > 0 && wars > government.getWarResistance()) {
               int fatigue = info.getWarFatigue();
               fatigue = fatigue - wars + government.getWarResistance();
+              fatigued = true;
               info.setWarFatigue(fatigue);
             }
             if (info.getTotalCredits() < 0) {
               int fatigue = info.getWarFatigue();
               fatigue = fatigue + info.getTotalCredits() * 5;
               info.setWarFatigue(fatigue);
+              fatigued = true;
               Message msg = new Message(MessageType.INFORMATION,
                   "Realm credits has run out. This increased unhappiness!",
                   Icons.getIconByName(Icons.ICON_CREDIT));
               info.getMsgList().addNewMessage(msg);
+            }
+            if (!fatigued && info.getWarFatigue() > 0) {
+              info.setWarFatigue(0);
+              Message msg = new Message(MessageType.INFORMATION,
+                  "War fatigue has ended!",
+                  Icons.getIconByName(Icons.ICON_HAPPY));
+              info.getMsgList().addNewMessage(msg);
+            } else {
+              int warFatigueValueAfter = info.getWarFatigue()
+                  / info.getRace().getWarFatigueResistance();
+              if (warFatigueValueAfter > warFatigueValue) {
+                Message msg = new Message(MessageType.INFORMATION,
+                    "People is getting more tired of war!",
+                    Icons.getIconByName(Icons.ICON_SAD));
+                info.getMsgList().addNewMessage(msg);
+              }
             }
           }
         }

@@ -1224,6 +1224,15 @@ public class AITurnView extends BlackPanel {
               fatigue = fatigue - wars + government.getWarResistance();
               info.setWarFatigue(fatigue);
             }
+            if (info.getTotalCredits() < 0) {
+              int fatigue = info.getWarFatigue();
+              fatigue = fatigue + info.getTotalCredits() * 5;
+              info.setWarFatigue(fatigue);
+              Message msg = new Message(MessageType.INFORMATION,
+                  "Realm credits has run out. This increased unhappiness!",
+                  Icons.getIconByName(Icons.ICON_CREDIT));
+              info.getMsgList().addNewMessage(msg);
+            }
           }
         }
         game.getStarMap().clearAITurn();

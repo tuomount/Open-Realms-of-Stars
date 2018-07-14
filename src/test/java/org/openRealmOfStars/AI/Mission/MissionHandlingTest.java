@@ -21,6 +21,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
@@ -236,6 +237,7 @@ public class MissionHandlingTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(info.getMsgList()).thenReturn(msgList);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
     Mission mission = new Mission(MissionType.TRADE_FLEET, MissionPhase.LOADING,
         new Coordinate(6, 5));
     mission.setTargetPlanet("Trader I");

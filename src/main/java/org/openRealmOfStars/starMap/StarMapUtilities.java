@@ -193,6 +193,7 @@ public final class StarMapUtilities {
       if (credits > 1) {
         credits = credits / 2;
       }
+      credits = credits + info.getGovernment().getTradeBonus();
       if (credits > 0) {
         if (info.getRace() == SpaceRace.SCAURIANS) {
           credits = credits * 3 / 2;
@@ -212,6 +213,7 @@ public final class StarMapUtilities {
       }
     } else if (diplomacy == null) {
       int credits = fleet.doTrade(planet, info);
+      credits = credits + info.getGovernment().getTradeBonus();
       if (credits > 0) {
         if (info.getRace() == SpaceRace.SCAURIANS) {
           credits = credits * 3 / 2;

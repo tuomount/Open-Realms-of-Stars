@@ -15,6 +15,7 @@ import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.GameState;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -184,6 +185,17 @@ public class AiTurnViewTest {
     assertEquals(MissionType.GATHER, listMission.getType());
     assertEquals(Mission.ASSAULT_SB_TYPE, listMission.getShipType());
     assertEquals(4, list.getSize());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testLowCreditFlow() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HOMARIANS);
+    assertEquals(0, info.getMsgList().getFullList().size());
+    int creditFlow = -1;
+    info.setTotalCredits(4);
+    AITurnView.handleLowCreditWarning(info, creditFlow);
+    assertEquals(1, info.getMsgList().getFullList().size());
   }
 
 }

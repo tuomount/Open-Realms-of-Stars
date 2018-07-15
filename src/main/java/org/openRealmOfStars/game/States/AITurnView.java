@@ -1185,6 +1185,20 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
+   * Handle warning about low credit flow
+   * @param info Player to war
+   * @param creditFlow Current credit flow
+   */
+  protected static void handleLowCreditWarning(final PlayerInfo info,
+      final int creditFlow) {
+    if (creditFlow < 0 && info.getTotalCredits() <= -5 * creditFlow) {
+      Message msg = new Message(MessageType.INFORMATION,
+          "Your realm is running low on credits!",
+          Icons.getIconByName(Icons.ICON_CREDIT));
+      info.getMsgList().addNewMessage(msg);
+    }
+  }
+  /**
    * Handle actions for AI Turn view
    * Since AI Turn View can be null while handling the all the AI. AI handling
    * variables are stored in StarMap. These variables are AIFleet and
@@ -1215,6 +1229,9 @@ public class AITurnView extends BlackPanel {
           info.getTechList().updateResearchPointByTurn(game.getStarMap()
               .getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH, i),
               info, game.getStarMap().getScoreVictoryTurn());
+          int creditFlow = game.getStarMap().getTotalProductionByPlayerPerTurn(
+              Planet.PRODUCTION_CREDITS, i);
+          handleLowCreditWarning(info, creditFlow);
           // Handle war fatigue for player
           GovernmentType government = info.getGovernment();
           if (!government.isImmuneToHappiness()) {
@@ -1261,6 +1278,17 @@ public class AITurnView extends BlackPanel {
                     Icons.getIconByName(Icons.ICON_SAD));
                 info.getMsgList().addNewMessage(msg);
               }
+            }
+          } else {
+            if (info.getTotalCredits() < 0) {
+              int fatigue = info.getWarFatigue();
+              fatigue = fatigue + info.getTotalCredits();
+              info.setWarFatigue(fatigue);
+              Message msg = new Message(MessageType.INFORMATION,
+                  "Realm credits has run out."
+                  + " This will cause building to collapse!",
+                  Icons.getIconByName(Icons.ICON_CREDIT));
+              info.getMsgList().addNewMessage(msg);
             }
           }
         }

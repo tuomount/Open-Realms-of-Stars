@@ -1239,11 +1239,19 @@ public class AITurnView extends BlackPanel {
               info.getMsgList().addNewMessage(msg);
             }
             if (!fatigued && info.getWarFatigue() > 0) {
-              info.setWarFatigue(0);
-              Message msg = new Message(MessageType.INFORMATION,
-                  "War fatigue has ended!",
-                  Icons.getIconByName(Icons.ICON_HAPPY));
-              info.getMsgList().addNewMessage(msg);
+              int fatigue = info.getWarFatigue();
+              int dec = fatigue / 4;
+              if (dec < 1) {
+                dec = 1;
+              }
+              fatigue = fatigue - dec;
+              info.setWarFatigue(fatigue);
+              if (info.getWarFatigue() == 0) {
+                Message msg = new Message(MessageType.INFORMATION,
+                    "War fatigue has ended!",
+                    Icons.getIconByName(Icons.ICON_HAPPY));
+                info.getMsgList().addNewMessage(msg);
+              }
             } else {
               int warFatigueValueAfter = info.getWarFatigue()
                   / info.getRace().getWarFatigueResistance();

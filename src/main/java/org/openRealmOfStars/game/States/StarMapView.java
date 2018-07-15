@@ -189,10 +189,14 @@ public class StarMapView extends BlackPanel {
             + this.map.getTotalProductionByPlayerPerTurn(
                 Planet.PRODUCTION_CREDITS, this.players.getCurrentPlayer())
             + ")");
+    credProd.setToolTipText("Amount of credit your realm has"
+        + " and how much it is producing in one turn.");
     panel.add(credProd);
     reseProd = new IconLabel(panel, Icons.getIconByName(Icons.ICON_RESEARCH),
         ": " + this.map.getTotalProductionByPlayerPerTurn(
             Planet.PRODUCTION_RESEARCH, this.players.getCurrentPlayer()));
+    reseProd.setToolTipText("Amount of research your realm produces in"
+        + " one turn.");
     panel.add(reseProd);
     String happiness = "-";
     if (!this.players.getCurrentPlayerInfo().getGovernment()
@@ -202,6 +206,7 @@ public class StarMapView extends BlackPanel {
     }
     happinessMeter = new IconLabel(panel, Icons.getIconByName(Icons.ICON_OKAY),
         ": " + happiness);
+    happinessMeter.setToolTipText("Average happiness of your people.");
     panel.add(happinessMeter);
     bottomPanel.add(panel);
     int panelHeight = SPACE_AFTER_RESEARCH_LABEL;

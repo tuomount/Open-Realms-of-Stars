@@ -575,7 +575,7 @@ public class PlanetBombingView extends BlackPanel {
             planet.killOneWorker();
             textLogger.addLog(ship.getName() + " bombs population!");
           } else {
-            if (planet.destroyOneBuilding()) {
+            if (planet.bombOneBuilding()) {
               textLogger.addLog(
                   ship.getName() + " misses population but hits building!");
             } else {

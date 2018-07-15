@@ -179,7 +179,7 @@ public class PlanetTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testRemoveBuilding() {
+  public void testBombBuilding() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     assertEquals(0, planet.calculateHappiness());
     planet.setRadiationLevel(6);
@@ -204,10 +204,57 @@ public class PlanetTest {
     planet.addBuilding(building);
     assertEquals(7, planet.getNumberOfBuildings());
     planet.setCulture(40);
-    planet.destroyOneBuilding();
+    planet.bombOneBuilding();
     assertEquals(6, planet.getNumberOfBuildings());
     assertEquals(30, planet.getCulture());
   }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testDestroyBuilding() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    assertEquals(0, planet.calculateHappiness());
+    planet.setRadiationLevel(6);
+    assertEquals(0, planet.getNumberOfBuildings());
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getName()).thenReturn("Radiation well");
+    Mockito.when(building.getProdCost()).thenReturn(10);
+    Mockito.when(building.getMaintenanceCost()).thenReturn(1.0);
+    planet.addBuilding(building);
+    assertEquals(5, planet.getTotalRadiationLevel());
+    assertEquals(1, planet.getNumberOfBuildings());
+    planet.removeBuilding(building);
+    assertEquals(0, planet.getNumberOfBuildings());
+    assertEquals(6, planet.getTotalRadiationLevel());
+    planet.setGroundSize(7);
+    Mockito.when(building.getName()).thenReturn("Test building");
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    assertEquals(7, planet.getNumberOfBuildings());
+    planet.setCulture(40);
+    planet.destroyOneBuilding();
+    assertEquals(6, planet.getNumberOfBuildings());
+    assertEquals(30, planet.getCulture());
+    for (Building build : planet.getBuildingList()) {
+      assertEquals("Test building", build.getName());
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testHappinessEffect() {
+    Planet planet = new Planet(new Coordinate(5,5), "Happy I", 1, false);
+    assertEquals(HappinessBonus.NONE, planet.getHappinessEffect().getType());
+    HappinessEffect effect = Mockito.mock(HappinessEffect.class);
+    planet.setHappinessEffect(effect);
+    assertEquals(effect, planet.getHappinessEffect());
+  }
+
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)

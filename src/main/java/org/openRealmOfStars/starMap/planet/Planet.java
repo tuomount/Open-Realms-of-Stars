@@ -151,6 +151,13 @@ public class Planet {
   private boolean eventFound;
 
   /**
+   * Happiness effect for planet. This can be also sadness effect.
+   * This is only used when planet is being update to next turn
+   * so no need to save this to file.
+   */
+  private HappinessEffect happinessEffect;
+
+  /**
    * Maximum number of different works
    */
   public static final int MAX_WORKER_TYPE = 5;
@@ -297,6 +304,7 @@ public class Planet {
       this.name = name + " "
           + RandomSystemNameGenerator.numberToRoman(orderNumber);
     }
+    happinessEffect = new HappinessEffect(HappinessBonus.NONE, 0);
     this.setOrderNumber(orderNumber);
     this.setRadiationLevel(DiceGenerator.getRandom(1, 10));
     if (orderNumber == 0) {
@@ -668,6 +676,9 @@ public class Planet {
    * @return amount of production in one turn
    */
   public int getTotalProduction(final int prod) {
+    if (happinessEffect == null) {
+      happinessEffect = new HappinessEffect(HappinessBonus.NONE, 0);
+    }
     int result = 0;
     int mult = 100;
     int div = 100;
@@ -704,6 +715,9 @@ public class Planet {
       if (result > getAmountMetalInGround()) {
         result = getAmountMetalInGround();
       }
+      if (happinessEffect.getType() == HappinessBonus.METAL) {
+        result = result + happinessEffect.getValue();
+      }
       break;
     }
     case PRODUCTION_PRODUCTION: {
@@ -715,6 +729,9 @@ public class Planet {
         result = result + government.getProductionBonus();
       }
       result = result - getTax();
+      if (happinessEffect.getType() == HappinessBonus.PRODUCTION) {
+        result = result + happinessEffect.getValue();
+      }
       break;
     }
     case PRODUCTION_RESEARCH: {
@@ -736,6 +753,9 @@ public class Planet {
         // Home worlds produce one extra culture
         result++;
       }
+      if (happinessEffect.getType() == HappinessBonus.CULTURE) {
+        result = result + happinessEffect.getValue();
+      }
       break;
     }
     case PRODUCTION_CREDITS: {
@@ -745,6 +765,9 @@ public class Planet {
           - getMaintenanceCost();
       if (totalPopulation >= 4) {
         result = result + government.getCreditBonus();
+      }
+      if (happinessEffect.getType() == HappinessBonus.CREDIT) {
+        result = result + happinessEffect.getValue();
       }
       break;
     }
@@ -1274,6 +1297,8 @@ public class Planet {
    */
   public void updateOneTurn(final boolean enemyOrbiting) {
     if (planetOwnerInfo != null) {
+      happinessEffect = HappinessEffect.createHappinessEffect(
+          calculateHappiness());
       int minedMetal = getTotalProduction(PRODUCTION_METAL);
       if (minedMetal <= amountMetalInGround) {
         amountMetalInGround = amountMetalInGround - minedMetal;
@@ -1531,11 +1556,38 @@ public class Planet {
           }
         }
       }
+      if (happinessEffect.getType() == HappinessBonus.DESTROY_BUILDING) {
+        Building destroyed = destroyOneBuilding();
+        if (destroyed != null) {
+          msg = new Message(MessageType.PLANETARY, getName()
+              + " population was so angry that they destroyed "
+              + destroyed.getName() + "!",
+              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+          msg.setCoordinate(getCoordinate());
+          msg.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+        }
+      }
+      if (planetOwnerInfo.getGovernment().isImmuneToHappiness()
+         && planetOwnerInfo.getWarFatigue() > 0) {
+        Building destroyed = destroyOneBuilding();
+        if (destroyed != null) {
+          planetOwnerInfo.setWarFatigue(planetOwnerInfo.getWarFatigue() - 1);
+          msg = new Message(MessageType.PLANETARY, getName()
+              + " building " + destroyed.getName()
+              + " collapsed due lack of funding!",
+              Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
+          msg.setCoordinate(getCoordinate());
+          msg.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(msg);
+        }
+      }
       if (getCulture() == 0) {
         // Planet is owned but no culture
         // Setting it to one
         setCulture(1);
       }
+      happinessEffect = new HappinessEffect(HappinessBonus.NONE, 0);
     }
   }
 
@@ -1709,11 +1761,42 @@ public class Planet {
   }
 
   /**
-   * Destroy randomly one building. This could be used for example on bombing.
+   * Destroy randomly one building.
+   * First try to destroy building with maintenance cost,
+   * if there aren't any then just destroy building.
+   * @return building which was destroyed or null
+   */
+  public Building destroyOneBuilding() {
+    if (buildings.size() > 0) {
+      Building buildingToDestory = null;
+      ArrayList<Building> list = new ArrayList<>();
+      for (Building building : getBuildingList()) {
+        if (building.getMaintenanceCost() > 0) {
+          list.add(building);
+        }
+      }
+      if (list.isEmpty()) {
+        int index = DiceGenerator.getRandom(buildings.size() - 1);
+        buildingToDestory = buildings.get(index);
+      } else {
+        int index = DiceGenerator.getRandom(list.size() - 1);
+        buildingToDestory = list.get(index);
+      }
+      // Destroying building affects on culture
+      setCulture(getCulture() - buildingToDestory.getCultBonus() * 50
+          - buildingToDestory.getProdCost());
+      removeBuilding(buildingToDestory);
+      return buildingToDestory;
+    }
+    return null;
+  }
+
+  /**
+   * Destroy randomly one building. This should be used on bombing.
    * There is chance than bomb misses the building.
    * @return true if building was hit
    */
-  public boolean destroyOneBuilding() {
+  public boolean bombOneBuilding() {
     if (buildings.size() > 0) {
       int index = DiceGenerator.getRandom(getGroundSize() - 1);
       if (index < buildings.size()) {
@@ -1950,5 +2033,21 @@ public class Planet {
     base = base - planetOwnerInfo.getWarFatigue()
            / planetOwnerInfo.getRace().getWarFatigueResistance();
     return base;
+  }
+
+  /**
+   * Get happiness effect from planet
+   * @return Happiness effect
+   */
+  public HappinessEffect getHappinessEffect() {
+    return happinessEffect;
+  }
+
+  /**
+   * Set Happiness effect for planet.
+   * @param effect HappinessEffect to set for planet
+   */
+  public void setHappinessEffect(final HappinessEffect effect) {
+    happinessEffect = effect;
   }
 }

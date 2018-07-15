@@ -1556,6 +1556,15 @@ public class Planet {
           }
         }
       }
+      if (happinessEffect.getType() == HappinessBonus.KILL_POPULATION) {
+        killOneWorker();
+        msg = new Message(MessageType.PLANETARY, "Population of " + getName()
+            + " has formed angry mob. This mob killed one population!",
+            Icons.getIconByName(Icons.ICON_DEATH));
+        msg.setCoordinate(getCoordinate());
+        msg.setMatchByString(getName());
+        planetOwnerInfo.getMsgList().addNewMessage(msg);
+      }
       if (happinessEffect.getType() == HappinessBonus.DESTROY_BUILDING) {
         Building destroyed = destroyOneBuilding();
         if (destroyed != null) {

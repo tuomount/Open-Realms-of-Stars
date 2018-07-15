@@ -199,12 +199,14 @@ public class StarMapView extends BlackPanel {
         + " one turn.");
     panel.add(reseProd);
     String happiness = "-";
+    int happyValue = 0;
     if (!this.players.getCurrentPlayerInfo().getGovernment()
         .isImmuneToHappiness()) {
-      happiness = Integer.toString(this.map.calculateAverageHappiness(
-          this.players.getCurrentPlayer()));
+      happyValue = this.map.calculateAverageHappiness(
+          this.players.getCurrentPlayer());
+      happiness = Integer.toString(happyValue);
     }
-    happinessMeter = new IconLabel(panel, Icons.getIconByName(Icons.ICON_OKAY),
+    happinessMeter = new IconLabel(panel, Icons.getHappyFace(happyValue),
         ": " + happiness);
     happinessMeter.setToolTipText("Average happiness of your people.");
     panel.add(happinessMeter);

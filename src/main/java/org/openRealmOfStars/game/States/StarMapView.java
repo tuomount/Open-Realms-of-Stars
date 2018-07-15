@@ -120,6 +120,11 @@ public class StarMapView extends BlackPanel {
   private IconLabel reseProd;
 
   /**
+   * Happiness average
+   */
+  private IconLabel happinessMeter;
+
+  /**
    * Is map ready to move with keys
    */
   private boolean readyToMove;
@@ -189,6 +194,15 @@ public class StarMapView extends BlackPanel {
         ": " + this.map.getTotalProductionByPlayerPerTurn(
             Planet.PRODUCTION_RESEARCH, this.players.getCurrentPlayer()));
     panel.add(reseProd);
+    String happiness = "-";
+    if (!this.players.getCurrentPlayerInfo().getGovernment()
+        .isImmuneToHappiness()) {
+      happiness = Integer.toString(this.map.calculateAverageHappiness(
+          this.players.getCurrentPlayer()));
+    }
+    happinessMeter = new IconLabel(panel, Icons.getIconByName(Icons.ICON_OKAY),
+        ": " + happiness);
+    panel.add(happinessMeter);
     bottomPanel.add(panel);
     int panelHeight = SPACE_AFTER_RESEARCH_LABEL;
     if (!game.getCurrentResolution().equals("1024x768")) {

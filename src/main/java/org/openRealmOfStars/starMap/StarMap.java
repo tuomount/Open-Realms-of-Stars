@@ -2163,6 +2163,29 @@ public class StarMap {
   }
 
   /**
+   * Calculate average happiness for whole realm
+   * @param playerIndex Realm or Player index
+   * @return Average Happiness by population
+   */
+  public int calculateAverageHappiness(final int playerIndex) {
+    int happiness = 0;
+    int population = 0;
+    for (int i = 0; i < planetList.size(); i++) {
+      Planet planet = planetList.get(i);
+      if (planet.getPlanetPlayerInfo() != null
+          && planet.getPlanetOwnerIndex() == playerIndex) {
+        int planetPopulation = planet.getTotalPopulation();
+        happiness = happiness + planet.calculateHappiness() * planetPopulation;
+        population = population + planetPopulation;
+      }
+    }
+    int result = 0;
+    if (population != 0) {
+      result = happiness / population;
+    }
+    return result;
+  }
+  /**
    * Get total production for one player per turn for certain production
    * @param production See Planet.PRODUCTION_*
    * @param playerIndex Player index to match

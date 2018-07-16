@@ -1141,6 +1141,25 @@ public final class MissionHandling {
       int liking = info.getDiplomacy().getLiking(secondIndex);
       int warChance = DiplomaticTrade.getWarChanceForDecline(type, attitude,
           liking);
+      if (info.getDiplomacy().getNumberOfWar() == 0
+          && info.getGovernment().hasWarHappiness()) {
+        // War monger governments like war
+        warChance = warChance + 20;
+      }
+      int totalWarFatigue =
+          info.getWarFatigue() / info.getRace().getWarFatigueResistance();
+      if (totalWarFatigue < -3) {
+        warChance = warChance - 30;
+      }
+      if (totalWarFatigue < -2) {
+        warChance = warChance - 20;
+      }
+      if (totalWarFatigue < -1) {
+        warChance = warChance - 10;
+      }
+      if (totalWarFatigue < 0) {
+        warChance = warChance - 5;
+      }
       int value = DiceGenerator.getRandom(99);
       if (value < warChance && !info.getDiplomacy().isWar(secondIndex)) {
         trade.generateEqualTrade(NegotiationType.WAR);

@@ -1074,6 +1074,12 @@ public final class MissionHandling {
     } else {
       trade.generateRecallFleetOffer(fleet);
     }
+    if (trade.getFirstOffer() != null
+      && trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)
+      && info.getDiplomacy().isWar(secondIndex)) {
+      // These two already has a war so just stopping here
+      return;
+    }
     if (trade.isOfferGoodForBoth()
         || trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
       // Another party accepts it or it is war
@@ -1136,7 +1142,7 @@ public final class MissionHandling {
       int warChance = DiplomaticTrade.getWarChanceForDecline(type, attitude,
           liking);
       int value = DiceGenerator.getRandom(99);
-      if (value < warChance) {
+      if (value < warChance && !info.getDiplomacy().isWar(secondIndex)) {
         trade.generateEqualTrade(NegotiationType.WAR);
         trade.doTrades();
         StarMapUtilities.addWarDeclatingRepuation(game.getStarMap(), info);

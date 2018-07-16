@@ -258,8 +258,7 @@ public enum GovernmentType {
   }
 
   /**
-   * GovernmentType has population rush which boosts
-   * happiness for a while.
+   * GovernmentType has population rush.
    * @return True if population rush available
    */
   public boolean hasPopulationRush() {
@@ -271,12 +270,12 @@ public enum GovernmentType {
   }
 
   /**
-   * GovernmentType has credit rush which boosts
-   * happiness for a while.
+   * GovernmentType has credit rush.
    * @return True if credit rush available
    */
   public boolean hasCreditRush() {
-    if (this == GUILD || this == ENTERPRISE) {
+    if (this == GUILD || this == ENTERPRISE || this == DEMOCRACY
+        || this == ALLIANCE || this == FEDERATION || this == REPUBLIC) {
       return true;
     }
     return false;
@@ -362,15 +361,18 @@ public enum GovernmentType {
       }
       if (hasWarHappiness()) {
         sb.append(dot);
-        sb.append(" War happiness\n");
+        sb.append(" War happiness");
+        sb.append(lf);
       }
       if (hasPopulationRush()) {
         sb.append(dot);
-        sb.append(" Population rush\n");
+        sb.append(" Population rush");
+        sb.append(lf);
       }
       if (hasCreditRush()) {
         sb.append(dot);
-        sb.append(" Credit rush\n");
+        sb.append(" Credit rush");
+        sb.append(lf);
       }
     }
     if (!markDown) {

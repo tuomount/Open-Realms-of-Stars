@@ -38,21 +38,25 @@ public class GovernmentTypeTest {
         + "* Diplomatic bonus: 1\n"
         + "* Trade bonus: 1\n"
         + "* War resistance: -1\n"
-        + "* Production bonus: 1\n", GovernmentType.DEMOCRACY.getDescription(true));
+        + "* Production bonus: 1\n"
+        + "* Credit rush\n", GovernmentType.DEMOCRACY.getDescription(true));
     assertEquals("<html>Alliance<br>"
         + "<li> Generic happiness: 1<br>"
         + "<li> Diplomatic bonus: 1<br>"
         + "<li> Trade bonus: 1<br>"
         + "<li> War resistance: -1<br>"
-        + "<li> Production bonus: 1<br></html>", GovernmentType.ALLIANCE.getDescription(false));
+        + "<li> Production bonus: 1<br>"
+        + "<li> Credit rush<br></html>", GovernmentType.ALLIANCE.getDescription(false));
     assertEquals("### Federation\n"
         + "* Generic happiness: 1\n"
         + "* Diplomatic bonus: 1\n"
-        + "* Trade bonus: 1\n", GovernmentType.FEDERATION.getDescription(true));
+        + "* Trade bonus: 1\n"
+        + "* Credit rush\n", GovernmentType.FEDERATION.getDescription(true));
     assertEquals("### Republic\n"
         + "* Generic happiness: 1\n"
         + "* Diplomatic bonus: 1\n"
-        + "* Trade bonus: 1\n", GovernmentType.REPUBLIC.getDescription(true));
+        + "* Trade bonus: 1\n"
+        + "* Credit rush\n", GovernmentType.REPUBLIC.getDescription(true));
     assertEquals("### Guild\n"
         + "* Trade bonus: 2\n"
         + "* Credit bonus: 1\n"

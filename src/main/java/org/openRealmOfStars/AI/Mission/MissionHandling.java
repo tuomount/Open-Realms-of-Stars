@@ -916,7 +916,8 @@ public final class MissionHandling {
           double distance = 0;
           Coordinate target = null;
           if (planet != null) {
-            if (cultureUp.getHighestCulture() == planet.getPlanetOwnerIndex()
+            if (cultureUp != null
+                && cultureUp.getHighestCulture() == planet.getPlanetOwnerIndex()
                 && cultureUp.getHighestCulture() > -1
                 && planet.getCoordinate().calculateDistance(
                     fleet.getCoordinate().getDirection(Coordinate.UP))
@@ -925,7 +926,9 @@ public final class MissionHandling {
                   fleet.getCoordinate().getDirection(Coordinate.UP));
               target = fleet.getCoordinate().getDirection(Coordinate.UP);
             }
-            if (cultureRight.getHighestCulture() == planet.getPlanetOwnerIndex()
+            if (cultureRight != null
+                && cultureRight.getHighestCulture()
+                == planet.getPlanetOwnerIndex()
                 && cultureRight.getHighestCulture() > -1
                 && planet.getCoordinate().calculateDistance(
                     fleet.getCoordinate().getDirection(Coordinate.RIGHT))
@@ -934,7 +937,9 @@ public final class MissionHandling {
                   fleet.getCoordinate().getDirection(Coordinate.RIGHT));
               target = fleet.getCoordinate().getDirection(Coordinate.RIGHT);
             }
-            if (cultureDown.getHighestCulture() == planet.getPlanetOwnerIndex()
+            if (cultureDown != null
+                && cultureDown.getHighestCulture()
+                == planet.getPlanetOwnerIndex()
                 && cultureDown.getHighestCulture() > -1
                 && planet.getCoordinate().calculateDistance(
                     fleet.getCoordinate().getDirection(Coordinate.DOWN))
@@ -943,7 +948,9 @@ public final class MissionHandling {
                   fleet.getCoordinate().getDirection(Coordinate.DOWN));
               target = fleet.getCoordinate().getDirection(Coordinate.DOWN);
             }
-            if (cultureLeft.getHighestCulture() == planet.getPlanetOwnerIndex()
+            if (cultureLeft != null
+                && cultureLeft.getHighestCulture()
+                == planet.getPlanetOwnerIndex()
                 && cultureLeft.getHighestCulture() > -1
                 && planet.getCoordinate().calculateDistance(
                     fleet.getCoordinate().getDirection(Coordinate.LEFT))

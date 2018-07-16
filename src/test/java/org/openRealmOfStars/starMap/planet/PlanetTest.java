@@ -167,13 +167,19 @@ public class PlanetTest {
     planet.setWorkers(Planet.CULTURE_ARTIST, 1);
     assertEquals(5, planet.getTotalPopulation());
     assertEquals(0, planet.calculateHappiness());
+    assertEquals("<html><li>Population -1<br><li>Artists +1<br></html>",
+        planet.getHappinessExplanation());
     planet.killOneWorker();
     assertEquals(4, planet.getTotalPopulation());
     // Kill One worker kills one worker as random
     if (planet.getWorkers(Planet.CULTURE_ARTIST) == 1) {
       assertEquals(1, planet.calculateHappiness());
+      assertEquals("<html><li>Artists +1<br></html>",
+          planet.getHappinessExplanation());
     } else {
       assertEquals(0, planet.calculateHappiness());
+      assertEquals("<html></html>",
+          planet.getHappinessExplanation());
     }
   }
 
@@ -214,6 +220,7 @@ public class PlanetTest {
   public void testDestroyBuilding() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     assertEquals(0, planet.calculateHappiness());
+    assertEquals("<html>Planet is not colonized!</html>", planet.getHappinessExplanation());
     planet.setRadiationLevel(6);
     assertEquals(0, planet.getNumberOfBuildings());
     Building building = Mockito.mock(Building.class);

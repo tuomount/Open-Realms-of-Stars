@@ -158,6 +158,10 @@ public class Planet {
   private HappinessEffect happinessEffect;
 
   /**
+   * String containg how happiness is calculated
+   */
+  private String happinessExplanation;
+  /**
    * Maximum number of different works
    */
   public static final int MAX_WORKER_TYPE = 5;
@@ -2019,28 +2023,77 @@ public class Planet {
   }
 
   /**
-   * Calculate happiness of the planet
+   * Calculate happiness of the planet. Also updates explanation how
+   * happiness is calculated.
    * @return Happiness, positive number is happy and negative is unhappy.
    */
   public int calculateHappiness() {
     if (planetOwnerInfo == null) {
+      happinessExplanation = "<html>Planet is not colonized!</html>";
       return 0;
     }
+    StringBuilder sb = new StringBuilder();
+    sb.append("<html>");
     GovernmentType government = planetOwnerInfo.getGovernment();
     int base = government.getGenericHappiness();
+    if (government.getGenericHappiness() != 0) {
+      sb.append("<li>");
+      sb.append("Government ");
+      if (government.getGenericHappiness() > 0) {
+        sb.append("+");
+      }
+      sb.append(government.getGenericHappiness());
+      sb.append("<br>");
+    }
     if (government.hasWarHappiness()
         && planetOwnerInfo.getDiplomacy().getNumberOfWar() > 0) {
       base = base + 1;
+      sb.append("<li>");
+      sb.append("War happiness +1");
+      sb.append("<br>");
     }
     base = base - getTotalPopulation() / 5;
-    base = base + getWorkers(Planet.CULTURE_ARTIST);
+    if (getTotalPopulation() / 5 > 0) {
+      sb.append("<li>");
+      sb.append("Population -");
+      sb.append(getTotalPopulation() / 5);
+      sb.append("<br>");
+    }
+    int artists = getWorkers(Planet.CULTURE_ARTIST);
+    base = base + artists;
+    if (artists > 0) {
+      sb.append("<li>");
+      sb.append("Artists +");
+      sb.append(artists);
+      sb.append("<br>");
+    }
+    int bonusBuildings = 0;
     for (Building building : buildings) {
-      if (building.getHappiness() > 0) {
+      if (building.getHappiness() != 0) {
         base = base + building.getHappiness();
+        bonusBuildings = bonusBuildings + building.getHappiness();
       }
     }
-    base = base - planetOwnerInfo.getWarFatigue()
-           / planetOwnerInfo.getRace().getWarFatigueResistance();
+    if (bonusBuildings != 0) {
+      sb.append("<li>");
+      sb.append("Buildings ");
+      if (bonusBuildings > 0) {
+        sb.append("+");
+      }
+      sb.append(bonusBuildings);
+      sb.append("<br>");
+    }
+    int totalWarFatigue = planetOwnerInfo.getWarFatigue()
+        / planetOwnerInfo.getRace().getWarFatigueResistance();
+    base = base + totalWarFatigue;
+    if (totalWarFatigue < 0) {
+      sb.append("<li>");
+      sb.append("War fatigue ");
+      sb.append(totalWarFatigue);
+      sb.append("<br>");
+    }
+    sb.append("</html>");
+    happinessExplanation = sb.toString();
     return base;
   }
 
@@ -2058,5 +2111,16 @@ public class Planet {
    */
   public void setHappinessEffect(final HappinessEffect effect) {
     happinessEffect = effect;
+  }
+
+  /**
+   * Get happiness explanation how it is calculated.
+   * @return Happiness explanation
+   */
+  public String getHappinessExplanation() {
+    if (happinessExplanation == null) {
+      calculateHappiness();
+    }
+    return happinessExplanation;
   }
 }

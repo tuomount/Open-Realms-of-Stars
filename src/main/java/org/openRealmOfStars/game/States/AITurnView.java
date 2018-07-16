@@ -1258,8 +1258,8 @@ public class AITurnView extends BlackPanel {
             if (!fatigued && info.getWarFatigue() > 0) {
               int fatigue = info.getWarFatigue();
               int dec = fatigue / 4;
-              if (dec < 1) {
-                dec = 1;
+              if (dec > 1) {
+                dec = -1;
               }
               fatigue = fatigue - dec;
               info.setWarFatigue(fatigue);
@@ -1272,7 +1272,7 @@ public class AITurnView extends BlackPanel {
             } else {
               int warFatigueValueAfter = info.getWarFatigue()
                   / info.getRace().getWarFatigueResistance();
-              if (warFatigueValueAfter > warFatigueValue) {
+              if (warFatigueValueAfter < warFatigueValue) {
                 Message msg = new Message(MessageType.INFORMATION,
                     "People is getting more tired of war!",
                     Icons.getIconByName(Icons.ICON_SAD));

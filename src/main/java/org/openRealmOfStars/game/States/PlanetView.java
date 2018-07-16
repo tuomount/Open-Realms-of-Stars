@@ -347,11 +347,7 @@ public class PlanetView extends BlackPanel {
     panel.add(metalOre);
     happiness = new IconLabel(null, Icons.getIconByName(Icons.ICON_OKAY),
         ": " + planet.calculateHappiness());
-    happiness.setToolTipText("<html>People happiness value on planet. "
-        + "Happy people are more productive. Angry people can cause anarchy."
-        + "<br>Happiness can be increased with certain buildings or increasing"
-        + "culture artists."
-        + "</html>");
+    happiness.setToolTipText(planet.getHappinessExplanation());
     happiness.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(happiness);
     topPanel.add(panel);
@@ -548,6 +544,7 @@ public class PlanetView extends BlackPanel {
           "<html>Government is single minded, no happiness or sadness.</html>");
     } else {
       happiness.setText(": " + happyValue);
+      happiness.setToolTipText(planet.getHappinessExplanation());
     }
     happiness.setLeftIcon(Icons.getHappyFace(happyValue));
     buildingLabel.setText("Buildings(" + planet.getUsedPlanetSize() + "/"

@@ -1249,6 +1249,7 @@ public class AITurnView extends BlackPanel {
               int fatigue = info.getWarFatigue();
               fatigue = fatigue + info.getTotalCredits() * 5;
               info.setWarFatigue(fatigue);
+              info.setTotalCredits(0);
               fatigued = true;
               Message msg = new Message(MessageType.INFORMATION,
                   "Realm credits has run out. This increased unhappiness!",
@@ -1284,6 +1285,7 @@ public class AITurnView extends BlackPanel {
               int fatigue = info.getWarFatigue();
               fatigue = fatigue + info.getTotalCredits();
               info.setWarFatigue(fatigue);
+              info.setTotalCredits(0);
               Message msg = new Message(MessageType.INFORMATION,
                   "Realm credits has run out."
                   + " This will cause building to collapse!",

@@ -1582,10 +1582,10 @@ public class Planet {
         }
       }
       if (planetOwnerInfo.getGovernment().isImmuneToHappiness()
-         && planetOwnerInfo.getWarFatigue() > 0) {
+         && planetOwnerInfo.getWarFatigue() < 0) {
         Building destroyed = destroyOneBuilding();
         if (destroyed != null) {
-          planetOwnerInfo.setWarFatigue(planetOwnerInfo.getWarFatigue() - 1);
+          planetOwnerInfo.setWarFatigue(planetOwnerInfo.getWarFatigue() + 1);
           msg = new Message(MessageType.PLANETARY, getName()
               + " building " + destroyed.getName()
               + " collapsed due lack of funding!",

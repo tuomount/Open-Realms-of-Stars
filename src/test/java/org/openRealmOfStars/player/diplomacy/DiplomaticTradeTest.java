@@ -20,6 +20,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -326,11 +327,13 @@ public class DiplomaticTradeTest {
   }
 
   @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testPlanetListGeneration() {
+    Coordinate coord = Mockito.mock(Coordinate.class);
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
     PlayerInfo player1 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(player1.getSectorVisibility(coord)).thenReturn((byte) 1);
     TechList tech1 = new TechList();
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -341,6 +344,7 @@ public class DiplomaticTradeTest {
     tech1.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
     Mockito.when(player1.getTechList()).thenReturn(tech1);
     PlayerInfo player2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(player2.getSectorVisibility(coord)).thenReturn((byte) 1);
     TechList tech2 = new TechList();
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -351,14 +355,16 @@ public class DiplomaticTradeTest {
     tech2.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech2.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
     Mockito.when(player2.getTechList()).thenReturn(tech2);
-    StarMap map = Mockito.mock(StarMap.class);
+    StarMap map = Mockito.mock(StarMap.class);    
     ArrayList<Planet> planets = new ArrayList<>();
     Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getCoordinate()).thenReturn(coord);
     Mockito.when(planet.getPlanetOwnerIndex()).thenReturn(0);
     planets.add(planet);
     planets.add(planet);
     Planet planet2 = Mockito.mock(Planet.class);
     Mockito.when(planet2.getPlanetOwnerIndex()).thenReturn(1);
+    Mockito.when(planet2.getCoordinate()).thenReturn(coord);
     planets.add(planet2);
     Mockito.when(map.getPlanetList()).thenReturn(planets);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(player1);
@@ -744,10 +750,69 @@ public class DiplomaticTradeTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testPlanetAndFleetNotGivingThemAway() {
-    GameRepository repository = new GameRepository();
-    StarMap map = repository.loadGame("src/test/resources/saves",
-                                          "testGame.save");
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    FleetList fleetList = new FleetList();
+    fleetList.add(fleet);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    PlayerInfo player1 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(player1.getSectorVisibility(coord)).thenReturn((byte) 1);
+    Mockito.when(player1.getFleets()).thenReturn(fleetList);
+    Mockito.when(player1.getDiplomacy()).thenReturn(diplomacy);
+    TechList tech1 = new TechList();
+    tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
+    tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
+    tech1.addTech(new Tech("MilTech3", TechType.Combat, 2));
+    tech1.addTech(new Tech("DefTech1", TechType.Defense, 1));
+    tech1.addTech(new Tech("Scout Mk1", TechType.Hulls, 1));
+    tech1.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
+    tech1.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
+    Mockito.when(player1.getTechList()).thenReturn(tech1);
+    Mockito.when(player1.getRace()).thenReturn(SpaceRace.HUMAN);
+    PlayerInfo player2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(player2.getSectorVisibility(coord)).thenReturn((byte) 1);
+    Mockito.when(player2.getFleets()).thenReturn(fleetList);
+    Mockito.when(player2.getDiplomacy()).thenReturn(diplomacy);
+    TechList tech2 = new TechList();
+    tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
+    tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
+    tech2.addTech(new Tech("EleTech1", TechType.Electrics, 1));
+    tech2.addTech(new Tech("DefTech1", TechType.Defense, 1));
+    tech2.addTech(new Tech("Scout Mk1", TechType.Hulls, 1));
+    tech2.addTech(new Tech("DefTech2", TechType.Defense, 1));
+    tech2.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
+    tech2.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
+    Mockito.when(player2.getTechList()).thenReturn(tech2);
+    Mockito.when(player2.getRace()).thenReturn(SpaceRace.HUMAN);
+    StarMap map = Mockito.mock(StarMap.class);    
+    ArrayList<Planet> planets = new ArrayList<>();
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getCoordinate()).thenReturn(coord);
+    Mockito.when(planet.getPlanetOwnerIndex()).thenReturn(0);
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(1);
+    planets.add(planet);
+    planets.add(planet);
+    Planet planet2 = Mockito.mock(Planet.class);
+    Mockito.when(planet2.getPlanetOwnerIndex()).thenReturn(1);
+    Mockito.when(planet2.getCoordinate()).thenReturn(coord);
+    Mockito.when(planet.getTotalRadiationLevel()).thenReturn(1);
+    planets.add(planet2);
+    Mockito.when(map.getPlanetList()).thenReturn(planets);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(player1);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(player2);
+    Mockito.when(map.getPlayerList()).thenReturn(players);
+    Mockito.when(map.getPlayerByIndex(0)).thenReturn(player1);
+    Mockito.when(map.getPlayerByIndex(1)).thenReturn(player2);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    Planet[] list = trade.getTradeablePlanetListForFirst();
+    assertEquals(2, list.length);
+    assertEquals(planet, list[0]);
+    assertEquals(planet, list[1]);
+    list = trade.getTradeablePlanetListForSecond();
+    assertEquals(1, list.length);
+    assertEquals(planet2, list[0]);
     NegotiationList offerList1 = new NegotiationList();
     offerList1.add(new NegotiationOffer(NegotiationType.PLANET, trade.getTradeablePlanetListForFirst()[0]));
     NegotiationList offerList2 = new NegotiationList();

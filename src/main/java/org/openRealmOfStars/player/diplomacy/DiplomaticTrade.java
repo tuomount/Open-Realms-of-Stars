@@ -1496,11 +1496,17 @@ public class DiplomaticTrade {
   private void generatePlanetList() {
     planetListForFirst = new ArrayList<>();
     planetListForSecond = new ArrayList<>();
+    PlayerInfo infoFirst = starMap.getPlayerByIndex(first);
+    PlayerInfo infoSecond = starMap.getPlayerByIndex(second);
     for (Planet planet : starMap.getPlanetList()) {
-      if (planet.getPlanetOwnerIndex() == first) {
+      if (planet.getPlanetOwnerIndex() == first
+          && infoSecond.getSectorVisibility(planet.getCoordinate())
+          > PlayerInfo.UNCHARTED) {
         planetListForFirst.add(planet);
       }
-      if (planet.getPlanetOwnerIndex() == second) {
+      if (planet.getPlanetOwnerIndex() == second
+          && infoFirst.getSectorVisibility(planet.getCoordinate())
+          > PlayerInfo.UNCHARTED) {
         planetListForSecond.add(planet);
       }
     }

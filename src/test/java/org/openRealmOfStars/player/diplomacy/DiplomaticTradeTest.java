@@ -14,9 +14,10 @@ import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationList;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
+import org.openRealmOfStars.player.espionage.Espionage;
+import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
-import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
@@ -29,7 +30,7 @@ import org.openRealmOfStars.utilities.repository.GameRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2017, 2018 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -277,11 +278,23 @@ public class DiplomaticTradeTest {
   }
 
   @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testFleetListGeneration() {
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mockito.when(coord.getX()).thenReturn(5);
+    Mockito.when(coord.getY()).thenReturn(5);
+    Coordinate coord2 = Mockito.mock(Coordinate.class);
+    Mockito.when(coord2.getX()).thenReturn(6);
+    Mockito.when(coord2.getY()).thenReturn(5);
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Espionage espionage = Mockito.mock(Espionage.class);
+    EspionageList espionageList = Mockito.mock(EspionageList.class);
+    Mockito.when(espionage.getByIndex(Mockito.anyInt())).thenReturn(espionageList);
     PlayerInfo player1 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(player1.getEspionage()).thenReturn(espionage);
+    Mockito.when(player1.getSectorVisibility(
+        (Coordinate)Mockito.anyObject())).thenReturn((byte) 2);
     TechList tech1 = new TechList();
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -292,6 +305,7 @@ public class DiplomaticTradeTest {
     tech1.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
     Mockito.when(player1.getTechList()).thenReturn(tech1);
     PlayerInfo player2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(player2.getEspionage()).thenReturn(espionage);
     TechList tech2 = new TechList();
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -302,14 +316,13 @@ public class DiplomaticTradeTest {
     tech2.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech2.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
     Mockito.when(player2.getTechList()).thenReturn(tech2);
+    Mockito.when(player2.getSectorVisibility(
+        (Coordinate)Mockito.anyObject())).thenReturn((byte) 2);
     FleetList fleetList = new FleetList();
-    Ship scout = Mockito.mock(Ship.class);
-    Fleet fleet = new Fleet(scout, 5, 5);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getCoordinate()).thenReturn(coord);
     fleetList.add(fleet);
     Mockito.when(player1.getFleets()).thenReturn(fleetList);
-    fleetList = new FleetList();
-    fleet = new Fleet(scout, 6, 5);
-    fleetList.add(fleet);
     Mockito.when(player2.getFleets()).thenReturn(fleetList);
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(player1);
@@ -320,10 +333,10 @@ public class DiplomaticTradeTest {
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     Fleet[] fleets = trade.getTradeableFleetListForFirst();
     assertEquals(1, fleets.length);
-    assertEquals(scout, fleets[0].getFirstShip());
+    assertEquals(fleet, fleets[0]);
     fleets = trade.getTradeableFleetListForSecond();
     assertEquals(1, fleets.length);
-    assertEquals(scout, fleets[0].getFirstShip());
+    assertEquals(fleet, fleets[0]);
   }
 
   @Test
@@ -754,13 +767,18 @@ public class DiplomaticTradeTest {
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
     Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getCoordinate()).thenReturn(coord);
     FleetList fleetList = new FleetList();
     fleetList.add(fleet);
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Espionage espionage = Mockito.mock(Espionage.class);
+    EspionageList espionageList = Mockito.mock(EspionageList.class);
+    Mockito.when(espionage.getByIndex(Mockito.anyInt())).thenReturn(espionageList);
     PlayerInfo player1 = Mockito.mock(PlayerInfo.class);
-    Mockito.when(player1.getSectorVisibility(coord)).thenReturn((byte) 1);
+    Mockito.when(player1.getSectorVisibility(coord)).thenReturn((byte) 2);
     Mockito.when(player1.getFleets()).thenReturn(fleetList);
     Mockito.when(player1.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(player1.getEspionage()).thenReturn(espionage);
     TechList tech1 = new TechList();
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech1.addTech(new Tech("MilTech2", TechType.Combat, 1));
@@ -772,9 +790,10 @@ public class DiplomaticTradeTest {
     Mockito.when(player1.getTechList()).thenReturn(tech1);
     Mockito.when(player1.getRace()).thenReturn(SpaceRace.HUMAN);
     PlayerInfo player2 = Mockito.mock(PlayerInfo.class);
-    Mockito.when(player2.getSectorVisibility(coord)).thenReturn((byte) 1);
+    Mockito.when(player2.getSectorVisibility(coord)).thenReturn((byte) 2);
     Mockito.when(player2.getFleets()).thenReturn(fleetList);
     Mockito.when(player2.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(player2.getEspionage()).thenReturn(espionage);
     TechList tech2 = new TechList();
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
     tech2.addTech(new Tech("MilTech2", TechType.Combat, 1));

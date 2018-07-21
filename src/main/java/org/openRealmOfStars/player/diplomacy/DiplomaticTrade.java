@@ -11,6 +11,7 @@ import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.fleet.FleetVisibility;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
@@ -22,7 +23,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2017, 2018 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1442,22 +1443,38 @@ public class DiplomaticTrade {
     }
   }
   /**
-   * Generate Fleet list containg all fleets from both players.
+   * Generate Fleet list containing all fleets from both players.
    */
   private void generateFleetList() {
     fleetListForFirst = new ArrayList<>();
     fleetListForSecond = new ArrayList<>();
     PlayerInfo info = starMap.getPlayerByIndex(first);
+    PlayerInfo viewer = starMap.getPlayerByIndex(second);
     int size = info.getFleets().getNumberOfFleets();
     for (int i = 0; i < size; i++) {
       Fleet fleet = info.getFleets().getByIndex(i);
-      fleetListForFirst.add(fleet);
+      FleetVisibility visiblity = new FleetVisibility(viewer, fleet, first);
+      if (visiblity.isFleetVisible()) {
+        if (fleet.isPrivateerFleet() && visiblity.isRecognized()) {
+          fleetListForFirst.add(fleet);
+        } else if (!fleet.isPrivateerFleet()) {
+          fleetListForFirst.add(fleet);
+        }
+      }
     }
     info = starMap.getPlayerByIndex(second);
+    viewer = starMap.getPlayerByIndex(first);
     size = info.getFleets().getNumberOfFleets();
     for (int i = 0; i < size; i++) {
       Fleet fleet = info.getFleets().getByIndex(i);
-      fleetListForSecond.add(fleet);
+      FleetVisibility visiblity = new FleetVisibility(viewer, fleet, second);
+      if (visiblity.isFleetVisible()) {
+        if (fleet.isPrivateerFleet() && visiblity.isRecognized()) {
+          fleetListForSecond.add(fleet);
+        }  else if (!fleet.isPrivateerFleet()) {
+          fleetListForSecond.add(fleet);
+        }
+      }
     }
   }
   /**

@@ -65,6 +65,13 @@ public class FleetVisibility {
      }
     if (!fleet.isPrivateerFleet()) {
       recognized = true;
+    } else {
+      EspionageList espionage = info.getEspionage().getByIndex(
+          fleetOwnerIndex);
+      if (espionage != null && espionage.getTotalBonus() >= 4) {
+        FleetType fleetType = fleet.getFleetType();
+        recognized = espionage.isFleetTypeRecognized(fleetType);
+      }
     }
   } else {
     EspionageList espionage = info.getEspionage().getByIndex(

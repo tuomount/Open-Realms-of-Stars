@@ -27,10 +27,8 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatAnimation;
 import org.openRealmOfStars.player.combat.CombatShip;
-import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
-import org.openRealmOfStars.player.fleet.FleetType;
-import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.fleet.FleetVisibility;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipImage;
@@ -485,35 +483,11 @@ public class MapPanel extends JPanel {
           }
         }
         if (info != null && fleet != null) {
-          boolean drawShip = false;
-          boolean recognized = false;
-          boolean espionageDetected = false;
-           if (info.getSectorVisibility(new Coordinate(i + cx,
-                j + cy)) == PlayerInfo.VISIBLE) {
-             if (fleet != null && (info.getSectorCloakDetection(i + cx, j + cy)
-                >= fleet.getFleetCloackingValue()
-                || info.getFleets().isFleetOnList(fleet))) {
-              drawShip = true;
-             }
-             if (drawShip && fleet.getEspionageBonus() > 0
-                 && info.getSectorCloakDetection(i + cx, j + cy)
-                    >= fleet.getFleetCloackingValue() + Ship.ESPIONAGE_HIDE) {
-               espionageDetected = true;
-             }
-            if (!fleet.isPrivateerFleet()) {
-              recognized = true;
-            }
-          } else {
-            EspionageList espionage = info.getEspionage().getByIndex(
-                fleetOwnerIndex);
-            if (espionage != null && espionage.getTotalBonus() >= 4) {
-              FleetType fleetType = fleet.getFleetType();
-              recognized = espionage.isFleetTypeRecognized(fleetType);
-              if (recognized) {
-                drawShip = true;
-              }
-            }
-          }
+          FleetVisibility visibility = new FleetVisibility(info, fleet,
+              fleetOwnerIndex);
+          boolean drawShip = visibility.isFleetVisible();
+          boolean recognized = visibility.isRecognized();
+          boolean espionageDetected = visibility.isEspionageDetected();
           if (recognized && fleetOwnerIndex != -1 && drawShip) {
             Tile fleetColor = Tiles.getTileByName("Player_Ship_"
                 + fleetOwnerIndex);

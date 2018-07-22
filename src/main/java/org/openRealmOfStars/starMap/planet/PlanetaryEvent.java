@@ -62,7 +62,12 @@ public enum PlanetaryEvent {
   /**
    * Building black monolith
    */
-  BLACK_MONOLITH;
+  BLACK_MONOLITH,
+  /**
+   * Molten lava
+   */
+  MOLTEN_LAVA;
+
 
 
 
@@ -88,6 +93,9 @@ public enum PlanetaryEvent {
     if (this == PlanetaryEvent.PARADISE) {
       return 1;
     }
+    if (this == PlanetaryEvent.MOLTEN_LAVA) {
+      return -1;
+    }
     return 0;
   }
 
@@ -104,6 +112,12 @@ public enum PlanetaryEvent {
       return true;
     }
     if (this == PlanetaryEvent.ANCIENT_FACTORY) {
+      return true;
+    }
+    if (this == PlanetaryEvent.ANCIENT_PALACE) {
+      return true;
+    }
+    if (this == PlanetaryEvent.BLACK_MONOLITH) {
       return true;
     }
     return false;
@@ -140,6 +154,20 @@ public enum PlanetaryEvent {
     if (this == PlanetaryEvent.METAL_RICH_SURFACE) {
       return 1;
     }
+    if (this == PlanetaryEvent.MOLTEN_LAVA) {
+      return 1;
+    }
+    return 0;
+  }
+
+  /**
+   * Extra production due the planetary event
+   * @return Extra production
+   */
+  public int getExtraProduction() {
+    if (this == PlanetaryEvent.MOLTEN_LAVA) {
+      return 1;
+    }
     return 0;
   }
 
@@ -158,6 +186,7 @@ public enum PlanetaryEvent {
       case ANCIENT_TEMPLE: return 6;
       case ANCIENT_PALACE: return 7;
       case BLACK_MONOLITH: return 8;
+      case MOLTEN_LAVA: return 9;
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -178,6 +207,7 @@ public enum PlanetaryEvent {
       case ANCIENT_TEMPLE: return "Ancient temple";
       case ANCIENT_PALACE: return "Ancient palace";
       case BLACK_MONOLITH: return "Black monolith";
+      case MOLTEN_LAVA: return "Molten lava";
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -198,6 +228,8 @@ public enum PlanetaryEvent {
       case ANCIENT_TEMPLE: return "Ancient temple building";
       case ANCIENT_PALACE: return "Ancient palace building";
       case BLACK_MONOLITH: return "Black monolith building";
+      case MOLTEN_LAVA: return "Molten lava +1 metal, +1 production,"
+          + " -1 happiness";
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -219,6 +251,7 @@ public enum PlanetaryEvent {
       case 6: return ANCIENT_TEMPLE;
       case 7: return ANCIENT_PALACE;
       case 8: return BLACK_MONOLITH;
+      case 9: return MOLTEN_LAVA;
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -290,12 +323,14 @@ public enum PlanetaryEvent {
         case IRONWORLD2:
         case IRONWORLD3:
           value = DiceGenerator.getRandom(99);
-          if (value < 25) {
+          if (value < 20) {
             return PlanetaryEvent.METAL_RICH_SURFACE;
-          } else if (value < 50) {
+          } else if (value < 40) {
             return PlanetaryEvent.ANCIENT_LAB;
-          } else if (value < 75) {
+          } else if (value < 60) {
             return PlanetaryEvent.ANCIENT_FACTORY;
+          } else if (value < 80) {
+            return PlanetaryEvent.MOLTEN_LAVA;
           } else if (value < 100) {
             return PlanetaryEvent.BLACK_MONOLITH;
           }

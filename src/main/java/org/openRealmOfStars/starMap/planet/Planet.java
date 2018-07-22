@@ -697,11 +697,8 @@ public class Planet {
       mult = planetOwnerInfo.getRace().getFoodSpeed();
       result = workers[FOOD_FARMERS] * mult / div + 2
           + getTotalProductionFromBuildings(prod);
-      if (eventFound && event == PlanetaryEvent.LUSH_VEGETATION) {
-        result = result + 1;
-      }
-      if (eventFound && event == PlanetaryEvent.PARADISE) {
-        result = result + 2;
+      if (eventFound && event.getExtraFoodProduction() != 0) {
+        result = result + event.getExtraFoodProduction();
       }
       if (totalPopulation >= 4) {
         result = result + government.getFoodBonus();
@@ -713,8 +710,8 @@ public class Planet {
       // Planet always produces +1 metal
       result = workers[METAL_MINERS] * mult / div + 1
           + getTotalProductionFromBuildings(prod);
-      if (eventFound && event == PlanetaryEvent.METAL_RICH_SURFACE) {
-        result = result + 1;
+      if (eventFound && event.getExtraMetalProduction() != 0) {
+        result = result + event.getExtraMetalProduction();
       }
       if (result > getAmountMetalInGround()) {
         result = getAmountMetalInGround();
@@ -729,6 +726,9 @@ public class Planet {
       // Planet always produces +1 production
       result = workers[PRODUCTION_PRODUCTION] * mult / div + 1
           + getTotalProductionFromBuildings(prod);
+      if (eventFound && event.getExtraProduction() != 0) {
+        result = result + event.getExtraProduction();
+      }
       if (totalPopulation >= 4) {
         result = result + government.getProductionBonus();
       }

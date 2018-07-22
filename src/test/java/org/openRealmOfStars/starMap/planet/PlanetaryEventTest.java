@@ -105,7 +105,7 @@ public class PlanetaryEventTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testGeneration() {
-    DiceGenerator.initializeGenerators(5L, 1234);
+    DiceGenerator.initializeGenerators(0, 55, 55);
     PlanetaryEvent event = PlanetaryEvent.getRandomEvent(PlanetTypes.CARBONWORLD1, 100);
     assertEquals(PlanetaryEvent.ANCIENT_LAB, event);
     DiceGenerator.initializeGenerators(6L, 1235);
@@ -114,7 +114,7 @@ public class PlanetaryEventTest {
     DiceGenerator.initializeGenerators(8L, 1237);
     event = PlanetaryEvent.getRandomEvent(PlanetTypes.ICEWORLD1, 100);
     assertEquals(PlanetaryEvent.METAL_RICH_SURFACE, event);
-    DiceGenerator.initializeGenerators(5L, 1234);
+    DiceGenerator.initializeGenerators(0, 50, 50);
     event = PlanetaryEvent.getRandomEvent(PlanetTypes.ICEWORLD1, 100);
     assertEquals(PlanetaryEvent.ANCIENT_FACTORY, event);
     DiceGenerator.initializeGenerators(5L, 1234);
@@ -125,7 +125,7 @@ public class PlanetaryEventTest {
     assertEquals(PlanetaryEvent.LUSH_VEGETATION, event);
     DiceGenerator.initializeGenerators(8L, 1238);
     event = PlanetaryEvent.getRandomEvent(PlanetTypes.WATERWORLD2, 100);
-    assertEquals(PlanetaryEvent.METAL_RICH_SURFACE, event);
+    assertEquals(PlanetaryEvent.ANCIENT_PALACE, event);
     DiceGenerator.initializeGenerators(9L, 1239);
     event = PlanetaryEvent.getRandomEvent(PlanetTypes.WATERWORLD2, 100);
     assertEquals(PlanetaryEvent.ANCIENT_TEMPLE, event);
@@ -141,9 +141,15 @@ public class PlanetaryEventTest {
     DiceGenerator.initializeGenerators(16L, 1246);
     event = PlanetaryEvent.getRandomEvent(PlanetTypes.IRONWORLD1, 100);
     assertEquals(PlanetaryEvent.METAL_RICH_SURFACE, event);
-    DiceGenerator.initializeGenerators(12L, 1242);
+    DiceGenerator.initializeGenerators(0, 40, 40);
     event = PlanetaryEvent.getRandomEvent(PlanetTypes.IRONWORLD2, 100);
     assertEquals(PlanetaryEvent.ANCIENT_LAB, event);
+    DiceGenerator.initializeGenerators(0, 97, 97);
+    event = PlanetaryEvent.getRandomEvent(PlanetTypes.SILICONWORLD1, 100);
+    assertEquals(PlanetaryEvent.BLACK_MONOLITH, event);
+    DiceGenerator.initializeGenerators(0, 90, 90);
+    event = PlanetaryEvent.getRandomEvent(PlanetTypes.SILICONWORLD1, 100);
+    assertEquals(PlanetaryEvent.ANCIENT_PALACE, event);
   }
 
 }

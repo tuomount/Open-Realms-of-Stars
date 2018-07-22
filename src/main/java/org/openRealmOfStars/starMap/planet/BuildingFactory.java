@@ -39,7 +39,7 @@ public final class BuildingFactory {
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 45;
+  private static final int MAX_BUILDING = 47;
 
   /**
    * Component Basic mine
@@ -267,6 +267,16 @@ public final class BuildingFactory {
   public static final int COMPONENT_ANCIENT_TEMPLE = 44;
 
   /**
+   * Component Ancient palace
+   */
+  public static final int COMPONENT_ANCIENT_PALACE = 45;
+
+  /**
+   * Component Black monolith
+   */
+  public static final int COMPONENT_BLACK_MONOLITH = 46;
+
+  /**
    * Create planetary building with index
    * @param index For creating a  new building
    * @return Building if index found otherwise null
@@ -409,6 +419,12 @@ public final class BuildingFactory {
     case COMPONENT_ANCIENT_TEMPLE:
       tmp = createProductionFacility(index);
       break; // Ancient temple
+    case COMPONENT_ANCIENT_PALACE:
+      tmp = createProductionFacility(index);
+      break; // Ancient palace
+    case COMPONENT_BLACK_MONOLITH:
+      tmp = createProductionFacility(index);
+      break; // Black Monolith
     default:
       throw new IllegalArgumentException("No building found with index "
       + index + "!");
@@ -726,6 +742,27 @@ public final class BuildingFactory {
       tmp.setProdCost(6);
       tmp.setMetalCost(2);
       tmp.setDescription("Ancient temple for creating culture.");
+      return tmp;
+    }
+    if (index == COMPONENT_ANCIENT_PALACE) {
+      tmp = new Building(index, "Ancient palace",
+          Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
+      tmp.setCultBonus(1);
+      tmp.setHappiness(1);
+      tmp.setProdCost(15);
+      tmp.setMetalCost(8);
+      tmp.setDescription("Ancient palace for ruling the planet");
+      return tmp;
+    }
+    if (index == COMPONENT_BLACK_MONOLITH) {
+      tmp = new Building(index, "Black monolith",
+          Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
+      tmp.setCultBonus(2);
+      tmp.setHappiness(-1);
+      tmp.setProdCost(15);
+      tmp.setMetalCost(30);
+      tmp.setDescription("Unknown origin of Black monolith."
+          + " Cause unhappiness in population.");
       return tmp;
     }
 

@@ -60,6 +60,15 @@ public final class DiceGenerator {
   private static long x;
 
   /**
+   * Static numbers to generate
+   */
+  private static int[] numbers;
+  /**
+   * Number index
+   */
+  private static int numberIndex;
+
+  /**
    * Get random number between 0 and maxValue.
    * This generates random by combining Java RNG, MultiplyWithCarry
    * and XORShift.
@@ -82,6 +91,7 @@ public final class DiceGenerator {
       mw = (int) System.currentTimeMillis();
       mw = mw >> 8;
       x = System.nanoTime();
+      numbers = null;
       initialized = true;
     }
   }
@@ -102,8 +112,18 @@ public final class DiceGenerator {
     mw = mw >> 8;
     x = seed;
     initialized = true;
+    numbers = null;
   }
 
+  /**
+   * Set fixed values for random generators.
+   * @param values Fixed values
+   */
+  public static void initializeGenerators(final int... values) {
+    numberIndex = 0;
+    numbers = values;
+    initialized = true;
+  }
   /**
    * Get Random result from three different pseudo random functions
    * @param maxValue inclusive
@@ -111,18 +131,27 @@ public final class DiceGenerator {
    */
   private static int getRandomResult(final int maxValue) {
     int result = 0;
-    switch (getRandomJava(3)) {
-    case 0:
-      result = getRandomJava(maxValue + 1);
-      break;
-    case 1:
-      result = getRandomMultiplyWithCarry(maxValue + 1);
-      break;
-    case 2:
-      result = getRandomXORShift(maxValue + 1);
-      break;
-    default:
-      throw new IllegalArgumentException("Bad behaving PRF!");
+    if (numbers == null) {
+      switch (getRandomJava(3)) {
+      case 0:
+        result = getRandomJava(maxValue + 1);
+        break;
+      case 1:
+        result = getRandomMultiplyWithCarry(maxValue + 1);
+        break;
+      case 2:
+        result = getRandomXORShift(maxValue + 1);
+        break;
+      default:
+        throw new IllegalArgumentException("Bad behaving PRF!");
+      }
+    } else {
+      result = numbers[numberIndex] % maxValue;
+      numberIndex++;
+      if (numberIndex >= numbers.length) {
+        // All fixed numbers have been used
+        initialized = false;
+      }
     }
     return result;
   }

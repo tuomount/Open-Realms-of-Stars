@@ -54,7 +54,17 @@ public enum PlanetaryEvent {
   /**
    * Building ancient temple
    */
-  ANCIENT_TEMPLE;
+  ANCIENT_TEMPLE,
+  /**
+   * Building ancient palace
+   */
+  ANCIENT_PALACE,
+  /**
+   * Building black monolith
+   */
+  BLACK_MONOLITH;
+
+
 
   /**
    * Extra food production due the planetary event
@@ -113,6 +123,12 @@ public enum PlanetaryEvent {
     if (this == ANCIENT_FACTORY) {
       return BuildingFactory.createByName("Ancient factory");
     }
+    if (this == ANCIENT_PALACE) {
+      return BuildingFactory.createByName("Ancient palace");
+    }
+    if (this == BLACK_MONOLITH) {
+      return BuildingFactory.createByName("Black monolith");
+    }
     return null;
   }
 
@@ -140,6 +156,8 @@ public enum PlanetaryEvent {
       case ANCIENT_LAB: return 4;
       case ANCIENT_FACTORY: return 5;
       case ANCIENT_TEMPLE: return 6;
+      case ANCIENT_PALACE: return 7;
+      case BLACK_MONOLITH: return 8;
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -155,9 +173,11 @@ public enum PlanetaryEvent {
       case LUSH_VEGETATION: return "Lush vegetation";
       case PARADISE: return "Paradise";
       case METAL_RICH_SURFACE: return "Metal rich surface";
-      case ANCIENT_LAB: return "Ancient lab building";
-      case ANCIENT_FACTORY: return "Ancient factory building";
-      case ANCIENT_TEMPLE: return "Ancient temple building";
+      case ANCIENT_LAB: return "Ancient lab";
+      case ANCIENT_FACTORY: return "Ancient factory";
+      case ANCIENT_TEMPLE: return "Ancient temple";
+      case ANCIENT_PALACE: return "Ancient palace";
+      case BLACK_MONOLITH: return "Black monolith";
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -176,6 +196,8 @@ public enum PlanetaryEvent {
       case ANCIENT_LAB: return "Ancient lab building";
       case ANCIENT_FACTORY: return "Ancient factory building";
       case ANCIENT_TEMPLE: return "Ancient temple building";
+      case ANCIENT_PALACE: return "Ancient palace building";
+      case BLACK_MONOLITH: return "Black monolith building";
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -195,6 +217,8 @@ public enum PlanetaryEvent {
       case 4: return ANCIENT_LAB;
       case 5: return ANCIENT_FACTORY;
       case 6: return ANCIENT_TEMPLE;
+      case 7: return ANCIENT_PALACE;
+      case 8: return BLACK_MONOLITH;
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -213,16 +237,20 @@ public enum PlanetaryEvent {
       switch (type) {
         case CARBONWORLD1:
           value = DiceGenerator.getRandom(99);
-          if (value < 33) {
+          if (value < 25) {
             return LUSH_VEGETATION;
-          } else if (value < 66) {
+          } else if (value < 50) {
             return PlanetaryEvent.METAL_RICH_SURFACE;
-          } else if (value < 78) {
+          } else if (value < 61) {
             return PlanetaryEvent.ANCIENT_LAB;
-          } else if (value < 89) {
+          } else if (value < 72) {
             return PlanetaryEvent.ANCIENT_FACTORY;
-          } else if (value < 100) {
+          } else if (value < 83) {
             return PlanetaryEvent.ANCIENT_TEMPLE;
+          } else if (value < 94) {
+            return PlanetaryEvent.ANCIENT_PALACE;
+          } else if (value < 100) {
+            return PlanetaryEvent.BLACK_MONOLITH;
           }
           break;
         case SILICONWORLD1:
@@ -231,14 +259,36 @@ public enum PlanetaryEvent {
             return PlanetaryEvent.METAL_RICH_SURFACE;
           } else if (value < 50) {
             return PlanetaryEvent.ANCIENT_LAB;
-          } else if (value < 75) {
+          } else if (value < 65) {
             return PlanetaryEvent.ANCIENT_FACTORY;
-          } else if (value < 100) {
+          } else if (value < 80) {
             return PlanetaryEvent.ANCIENT_TEMPLE;
+          } else if (value < 95) {
+            return PlanetaryEvent.ANCIENT_PALACE;
+          } else if (value < 100) {
+            return PlanetaryEvent.BLACK_MONOLITH;
           }
           break;
         case ICEWORLD1:
         case ICEWORLD2:
+          value = DiceGenerator.getRandom(99);
+          if (value < 20) {
+            return PlanetaryEvent.METAL_RICH_SURFACE;
+          } else if (value < 40) {
+            return PlanetaryEvent.ANCIENT_LAB;
+          } else if (value < 60) {
+            return PlanetaryEvent.ANCIENT_FACTORY;
+          } else if (value < 80) {
+            return PlanetaryEvent.ANCIENT_TEMPLE;
+          } else if (value < 95) {
+            return PlanetaryEvent.ANCIENT_PALACE;
+          } else if (value < 100) {
+            return PlanetaryEvent.BLACK_MONOLITH;
+          }
+          break;
+        case IRONWORLD1:
+        case IRONWORLD2:
+        case IRONWORLD3:
           value = DiceGenerator.getRandom(99);
           if (value < 25) {
             return PlanetaryEvent.METAL_RICH_SURFACE;
@@ -247,19 +297,7 @@ public enum PlanetaryEvent {
           } else if (value < 75) {
             return PlanetaryEvent.ANCIENT_FACTORY;
           } else if (value < 100) {
-            return PlanetaryEvent.ANCIENT_TEMPLE;
-          }
-          break;
-        case IRONWORLD1:
-        case IRONWORLD2:
-        case IRONWORLD3:
-          value = DiceGenerator.getRandom(99);
-          if (value < 34) {
-            return PlanetaryEvent.METAL_RICH_SURFACE;
-          } else if (value < 67) {
-            return PlanetaryEvent.ANCIENT_LAB;
-          } else if (value < 100) {
-            return PlanetaryEvent.ANCIENT_FACTORY;
+            return PlanetaryEvent.BLACK_MONOLITH;
           }
           break;
         case WATERWORLD1:
@@ -272,13 +310,15 @@ public enum PlanetaryEvent {
           } else if (value < 33) {
             return PlanetaryEvent.PARADISE;
           } else if (value < 49) {
-            return PlanetaryEvent.METAL_RICH_SURFACE;
+            return PlanetaryEvent.ANCIENT_PALACE;
           } else if (value < 66) {
             return PlanetaryEvent.ANCIENT_LAB;
           } else if (value < 82) {
             return PlanetaryEvent.ANCIENT_FACTORY;
-          } else if (value < 100) {
+          } else if (value < 95) {
             return PlanetaryEvent.ANCIENT_TEMPLE;
+          } else if (value < 100) {
+            return PlanetaryEvent.BLACK_MONOLITH;
           }
           break;
 

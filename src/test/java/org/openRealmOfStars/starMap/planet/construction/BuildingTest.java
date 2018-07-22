@@ -94,6 +94,36 @@ public class BuildingTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAncientPalace() {
+    Building building = BuildingFactory.createByName("Ancient palace");
+    assertEquals("Ancient palace", building.getName());
+    assertEquals(0, building.getReseBonus());
+    assertEquals(0, building.getCredBonus());
+    assertEquals(1, building.getCultBonus());
+    assertEquals(1, building.getHappiness());
+    assertEquals(0, building.getMineBonus());
+    assertEquals(0, building.getFactBonus());
+    assertEquals(0, building.getFactBonus());
+    assertEquals(0, building.getFarmBonus());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBlackMonolith() {
+    Building building = BuildingFactory.createByName("Black monolith");
+    assertEquals("Black monolith", building.getName());
+    assertEquals(0, building.getReseBonus());
+    assertEquals(0, building.getCredBonus());
+    assertEquals(2, building.getCultBonus());
+    assertEquals(-1, building.getHappiness());
+    assertEquals(0, building.getMineBonus());
+    assertEquals(0, building.getFactBonus());
+    assertEquals(0, building.getFactBonus());
+    assertEquals(0, building.getFarmBonus());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testBarracks() {
     Building building = BuildingFactory.createByName("Barracks");
     assertEquals("Barracks", building.getName());

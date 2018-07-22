@@ -2083,6 +2083,16 @@ public class Planet {
       sb.append(bonusBuildings);
       sb.append("<br>");
     }
+    if (event.getExtraHappiness() != 0) {
+      sb.append("<li>");
+      sb.append(event.getName());
+      if (event.getExtraHappiness() > 0) {
+        sb.append("+");
+      }
+      base = base + event.getExtraHappiness();
+      sb.append(event.getExtraHappiness());
+      sb.append("<br>");
+    }
     int totalWarFatigue = planetOwnerInfo.getWarFatigue()
         / planetOwnerInfo.getRace().getWarFatigueResistance();
     base = base + totalWarFatigue;

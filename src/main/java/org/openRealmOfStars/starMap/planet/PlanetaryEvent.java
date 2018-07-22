@@ -71,6 +71,17 @@ public enum PlanetaryEvent {
   }
 
   /**
+   * Extra happiness due the planetary event
+   * @return Extra happiness
+   */
+  public int getExtraHappiness() {
+    if (this == PlanetaryEvent.PARADISE) {
+      return 1;
+    }
+    return 0;
+  }
+
+  /**
    * Event is only one time event. If true event should be removed
    * from planet after triggering.
    * @return True for one time event
@@ -135,6 +146,24 @@ public enum PlanetaryEvent {
   }
 
   /**
+   * Get planetary event name
+   * @return String never null
+   */
+  public String getName() {
+    switch (this) {
+      case NONE: return "None";
+      case LUSH_VEGETATION: return "Lush vegetation";
+      case PARADISE: return "Paradise";
+      case METAL_RICH_SURFACE: return "Metal rich surface";
+      case ANCIENT_LAB: return "Ancient lab building";
+      case ANCIENT_FACTORY: return "Ancient factory building";
+      case ANCIENT_TEMPLE: return "Ancient temple building";
+      default:
+        throw new IllegalArgumentException("Unknown planetary event!!");
+    }
+  }
+
+  /**
    * Get planetary event explanation as String
    * @return String never null
    */
@@ -142,7 +171,7 @@ public enum PlanetaryEvent {
     switch (this) {
       case NONE: return "";
       case LUSH_VEGETATION: return "Lush vegetation +1 Food";
-      case PARADISE: return "Paradise +2 Food";
+      case PARADISE: return "Paradise +2 Food, +1 happiness";
       case METAL_RICH_SURFACE: return "Metal rich surface +1 Metal";
       case ANCIENT_LAB: return "Ancient lab building";
       case ANCIENT_FACTORY: return "Ancient factory building";

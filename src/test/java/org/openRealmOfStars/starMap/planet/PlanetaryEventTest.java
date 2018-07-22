@@ -50,6 +50,7 @@ public class PlanetaryEventTest {
         assertEquals(0, event.getExtraMetalProduction());
         assertEquals(0, event.getExtraHappiness());
         assertEquals(0, event.getExtraProduction());
+        assertEquals("Lush vegetation", event.getName());
         assertEquals(null, event.getBuilding());
         assertEquals(false, event.oneTimeOnly());
         assertEquals("Lush vegetation +1 Food", event.getExplanation());
@@ -59,6 +60,7 @@ public class PlanetaryEventTest {
         assertEquals(0, event.getExtraMetalProduction());
         assertEquals(1, event.getExtraHappiness());
         assertEquals(0, event.getExtraProduction());
+        assertEquals("Paradise", event.getName());
         assertEquals(null, event.getBuilding());
         assertEquals(false, event.oneTimeOnly());
         assertEquals("Paradise +2 Food, +1 happiness", event.getExplanation());
@@ -68,6 +70,7 @@ public class PlanetaryEventTest {
         assertEquals(1, event.getExtraMetalProduction());
         assertEquals(0, event.getExtraHappiness());
         assertEquals(0, event.getExtraProduction());
+        assertEquals("Metal rich surface", event.getName());
         assertEquals(null, event.getBuilding());
         assertEquals(false, event.oneTimeOnly());
         assertEquals("Metal rich surface +1 Metal", event.getExplanation());
@@ -77,6 +80,7 @@ public class PlanetaryEventTest {
         assertEquals(0, event.getExtraMetalProduction());
         assertEquals(0, event.getExtraHappiness());
         assertEquals(0, event.getExtraProduction());
+        assertEquals("Ancient lab", event.getName());
         assertEquals("Ancient lab", event.getBuilding().getName());
         assertEquals(true, event.oneTimeOnly());
         assertEquals("Ancient lab building", event.getExplanation());
@@ -86,6 +90,7 @@ public class PlanetaryEventTest {
         assertEquals(0, event.getExtraMetalProduction());
         assertEquals(0, event.getExtraHappiness());
         assertEquals(0, event.getExtraProduction());
+        assertEquals("Ancient factory", event.getName());
         assertEquals("Ancient factory", event.getBuilding().getName());
         assertEquals(true, event.oneTimeOnly());
         assertEquals("Ancient factory building", event.getExplanation());
@@ -95,6 +100,7 @@ public class PlanetaryEventTest {
         assertEquals(0, event.getExtraMetalProduction());
         assertEquals(0, event.getExtraHappiness());
         assertEquals(0, event.getExtraProduction());
+        assertEquals("Ancient temple", event.getName());
         assertEquals("Ancient temple", event.getBuilding().getName());
         assertEquals(true, event.oneTimeOnly());
         assertEquals("Ancient temple building", event.getExplanation());
@@ -104,6 +110,7 @@ public class PlanetaryEventTest {
         assertEquals(0, event.getExtraMetalProduction());
         assertEquals(0, event.getExtraHappiness());
         assertEquals(0, event.getExtraProduction());
+        assertEquals("Ancient palace", event.getName());
         assertEquals("Ancient palace", event.getBuilding().getName());
         assertEquals(true, event.oneTimeOnly());
         assertEquals("Ancient palace building", event.getExplanation());
@@ -113,6 +120,7 @@ public class PlanetaryEventTest {
         assertEquals(0, event.getExtraMetalProduction());
         assertEquals(0, event.getExtraHappiness());
         assertEquals(0, event.getExtraProduction());
+        assertEquals("Black monolith", event.getName());
         assertEquals("Black monolith", event.getBuilding().getName());
         assertEquals(true, event.oneTimeOnly());
         assertEquals("Black monolith building", event.getExplanation());

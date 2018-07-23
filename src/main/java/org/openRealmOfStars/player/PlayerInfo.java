@@ -180,6 +180,7 @@ public class PlayerInfo {
     shipStatList = new ArrayList<>();
     fleets = new FleetList();
     setHuman(false);
+    missions = new MissionList();
     setRace(race);
     diplomacy = new Diplomacy(maxPlayers, index);
     espionage = new Espionage(maxPlayers);
@@ -482,9 +483,7 @@ public class PlayerInfo {
     }
     setFakeMilitarySize(dis.readInt());
     human = dis.readBoolean();
-    if (!human) {
-      missions = new MissionList(dis);
-    }
+    missions = new MissionList(dis);
   }
 
   /**
@@ -532,9 +531,7 @@ public class PlayerInfo {
     }
     dos.writeInt(fakeMilitarySize);
     dos.writeBoolean(human);
-    if (!human) {
-      missions.saveMissionList(dos);
-    }
+    missions.saveMissionList(dos);
   }
 
   /**
@@ -1313,11 +1310,6 @@ public class PlayerInfo {
    */
   public void setHuman(final boolean human) {
     this.human = human;
-    if (this.human) {
-      missions = null;
-    } else {
-      missions = new MissionList();
-    }
   }
 
   /**

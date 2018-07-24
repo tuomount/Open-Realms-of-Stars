@@ -1723,6 +1723,34 @@ private int increaseHitChanceByComponent() {
     return 0;
 
   }
+
+  /**
+   * Calculate Trader credits for single ship. Does not
+   * have any kind of sanity check. Only two coordinates
+   * and calculates distance between those two.
+   * @param firstCoordinate Where trading began
+   * @param secondCoordinate Where trading ended
+   * @return Trade credits between two coordinates
+   */
+  public int calculateTradeCredits(final Coordinate firstCoordinate,
+      final Coordinate secondCoordinate) {
+    int credit = 0;
+    int distance = (int) Math.round(firstCoordinate.calculateDistance(
+        secondCoordinate));
+    credit = distance / 10;
+    if (credit < 1 && distance > 1) {
+      credit = 1;
+    }
+    if (credit > 5) {
+      credit = 5;
+    }
+    int freeCargo = hull.getMaxSlot() - getNumberOfComponents();
+    credit = credit * freeCargo;
+    if (credit > 25) {
+      credit = 25;
+    }
+    return credit;
+  }
   /**
    * Do trade with planet if trade ship.
    * Not this does not check diplomatic relationships.
@@ -1735,33 +1763,18 @@ private int increaseHitChanceByComponent() {
     if (isTradeShip() && planet.getPlanetPlayerInfo() != null) {
       if (tradeCoordinates != null
           && !tradeCoordinates.sameAs(planet.getCoordinate())) {
-        int distance = 0;
+        credit = calculateTradeCredits(tradeCoordinates,
+            planet.getCoordinate());
         if (getFlag(FLAG_MERCHANT_LEFT_HOMEWORLD)
             && trader != planet.getPlanetPlayerInfo()) {
-          distance = (int) Math.round(tradeCoordinates.calculateDistance(
-              planet.getCoordinate()));
           setFlag(FLAG_MERCHANT_LEFT_OPPONENWORLD, true);
           setFlag(FLAG_MERCHANT_LEFT_HOMEWORLD, false);
           tradeCoordinates = planet.getCoordinate();
         } else if (getFlag(FLAG_MERCHANT_LEFT_OPPONENWORLD)
             && trader == planet.getPlanetPlayerInfo()) {
-          distance = (int) Math.round(tradeCoordinates.calculateDistance(
-              planet.getCoordinate()));
           setFlag(FLAG_MERCHANT_LEFT_OPPONENWORLD, false);
           setFlag(FLAG_MERCHANT_LEFT_HOMEWORLD, true);
           tradeCoordinates = planet.getCoordinate();
-        }
-        credit = distance / 10;
-        if (credit < 1 && distance > 1) {
-          credit = 1;
-        }
-        if (credit > 5) {
-          credit = 5;
-        }
-        int freeCargo = hull.getMaxSlot() - getNumberOfComponents();
-        credit = credit * freeCargo;
-        if (credit > 25) {
-          credit = 25;
         }
       } else {
         tradeCoordinates = new Coordinate(planet.getCoordinate());

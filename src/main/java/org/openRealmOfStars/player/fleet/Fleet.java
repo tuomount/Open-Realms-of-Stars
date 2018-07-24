@@ -884,6 +884,21 @@ public class Fleet {
   }
 
   /**
+   * Calculate trade worth between fleet coordinate and
+   * target coordinate. This does not check that coordinates contain
+   * planets or diplomacy of realms.
+   * @param tradeCoordinate Target coordinate.
+   * @return Trade worth of credit
+   */
+  public int calculateTrade(final Coordinate tradeCoordinate) {
+    int result = 0;
+    for (Ship ship : ships) {
+      result = result + ship.calculateTradeCredits(getCoordinate(),
+          tradeCoordinate);
+    }
+    return result;
+  }
+  /**
    * Do trade with planet if fleet has trade ship(s).
    * Not this does not check diplomatic relationships.
    * @param planet Planet to do trade

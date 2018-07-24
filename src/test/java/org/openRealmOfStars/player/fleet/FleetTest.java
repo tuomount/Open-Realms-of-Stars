@@ -11,6 +11,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipSize;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.planet.Planet;
 
@@ -381,6 +382,23 @@ public class FleetTest {
     Mockito.when(ship.doTrade(planet, info)).thenReturn(2);
     assertEquals(2, fleet.doTrade(planet, info));
     assertEquals(true, fleet.isTradeFleet());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFleetWithTradeShip2() {
+    Ship ship = createTradeShip();
+    Fleet fleet = new Fleet(ship, 2, 3);
+    assertEquals(2, fleet.getCoordinate().getX());
+    assertEquals(3, fleet.getCoordinate().getY());
+    fleet.setName("Trader #1");
+    assertEquals("Trader #1",fleet.getName());
+    Coordinate tradeCoordinate = new Coordinate(15,16);
+    Mockito.when(ship.calculateTradeCredits((Coordinate) Mockito.any(),
+        (Coordinate) Mockito.any())).thenReturn(4);
+    assertEquals(4, fleet.calculateTrade(tradeCoordinate));
+    fleet.addShip(ship);
+    assertEquals(8, fleet.calculateTrade(tradeCoordinate));
   }
 
   @Test

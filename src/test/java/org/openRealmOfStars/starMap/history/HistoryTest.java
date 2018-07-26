@@ -100,19 +100,20 @@ public class HistoryTest {
     history.addEvent(combatEvent);
     history.addTurn(5);
     history.addEvent(startEvent);
-    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-    history.writeToStream(bos);
-    byte[] buffer = bos.toByteArray();
-    bos.close();
-    ByteArrayInputStream bis = new ByteArrayInputStream(buffer);
-    History history2 = History.readFromStream(bis);
-    bis.close();
-    assertEquals(history.numberOfTurns(), history2.numberOfTurns());
-    assertEquals(2, history2.getByIndex(0).getNumberOfEvents());
-    assertEquals(3, history2.getByIndex(1).getNumberOfEvents());
-    assertEquals(1, history2.getByIndex(2).getNumberOfEvents());
-    assertEquals(1, history2.getByIndex(3).getNumberOfEvents());
-    assertEquals(5, history2.getByIndex(3).getTurn());
+    byte[] buffer = null;
+    try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+      history.writeToStream(bos);
+      buffer = bos.toByteArray();
+    }
+    try (ByteArrayInputStream bis = new ByteArrayInputStream(buffer)) {
+      History history2 = History.readFromStream(bis);
+      assertEquals(history.numberOfTurns(), history2.numberOfTurns());
+      assertEquals(2, history2.getByIndex(0).getNumberOfEvents());
+      assertEquals(3, history2.getByIndex(1).getNumberOfEvents());
+      assertEquals(1, history2.getByIndex(2).getNumberOfEvents());
+      assertEquals(1, history2.getByIndex(3).getNumberOfEvents());
+      assertEquals(5, history2.getByIndex(3).getTurn());
+    }
   }
 
   @Test

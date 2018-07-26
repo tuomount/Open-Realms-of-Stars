@@ -2,10 +2,7 @@ package org.openRealmOfStars.player.combat;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -22,7 +19,7 @@ import static org.mockito.Mockito.*;
  *
  * Open Realm of Stars game project 
  * Copyright (C) 2017 Diocto
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2017, 2018 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -58,15 +55,6 @@ public class CombatTest2 {
     private Route dependerFleetRoute;
     private Ship[] attackerShips;
     private Ship[] dependerShips;
-
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception {
-
-    }
-
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception {
-    }
 
     @Before
     public void setUp() throws Exception {
@@ -106,10 +94,6 @@ public class CombatTest2 {
         when(attackerFleetRoute.isDefending()).thenReturn(false);
         when(dependerFleetRoute.isDefending()).thenReturn(true);
 
-    }
-
-    @After
-    public void tearDown() throws Exception {
     }
 
     @Test
@@ -458,7 +442,6 @@ public class CombatTest2 {
         combatTestItem.isCombatOver();
         combatTestItem.handleEndCombat();
         verify(attackerFleet, times(1)).setPos(dependerFleetCoordinate);
-        ;
         verify(dependerFleetList, times(1)).getIndexByName(anyString());
         verify(dependerFleetList, times(1)).remove(anyInt());
     }
@@ -486,7 +469,6 @@ public class CombatTest2 {
         combatTestItem.isCombatOver();
         combatTestItem.handleEndCombat();
         verify(attackerFleet, never()).setPos(dependerFleetCoordinate);
-        ;
         verify(attackerFleetList, times(1)).getIndexByName(anyString());
         verify(attackerFleetList, times(1)).remove(anyInt());
     }
@@ -516,7 +498,6 @@ public class CombatTest2 {
         combatTestItem.handleEndCombat();
 
         verify(attackerFleet, never()).setPos(dependerFleetCoordinate);
-        ;
         verify(dependerFleetList, never()).getIndexByName(anyString());
         verify(dependerFleetList, never()).remove(anyInt());
         verify(attackerFleetList, never()).getIndexByName(anyString());

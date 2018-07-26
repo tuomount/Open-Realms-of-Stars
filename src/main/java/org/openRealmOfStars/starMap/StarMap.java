@@ -1010,9 +1010,8 @@ public class StarMap {
     if (result != null && secondChoice != null && second) {
       if (DiceGenerator.getRandom(1) == 0) {
         return result;
-      } else {
-        return secondChoice;
       }
+      return secondChoice;
     }
     if (result != null) {
       return result;

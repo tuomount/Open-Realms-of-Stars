@@ -463,7 +463,7 @@ public class MapPanel extends JPanel {
         // Draw deep space anchor marker
         if ((tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
             || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2))
-            && info.getSectorVisibility(new Coordinate(i + cx,
+            && info != null && info.getSectorVisibility(new Coordinate(i + cx,
                 j + cy)) != PlayerInfo.UNCHARTED) {
           Icon16x16 icon = Icons.getIconByName(Icons.ICON_STARBASE);
           icon.draw(gr, pixelX + Icon16x16.MAX_WIDTH,

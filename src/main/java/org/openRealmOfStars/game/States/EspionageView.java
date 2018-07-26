@@ -165,9 +165,7 @@ public class EspionageView extends BlackPanel {
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
     this.add(centerPanel, BorderLayout.CENTER);
-    if (topPanel != null) {
-      this.add(topPanel, BorderLayout.NORTH);
-    }
+    this.add(topPanel, BorderLayout.NORTH);
     updatePanel();
   }
 

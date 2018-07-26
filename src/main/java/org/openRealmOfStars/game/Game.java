@@ -1821,10 +1821,9 @@ public class Game implements ActionListener {
           SoundPlayer.playMenuSound();
           changeGameState(GameState.HISTORY_VIEW);
           return;
-        } else {
-          SoundPlayer.playMenuSound();
-          changeGameState(GameState.STARMAP);
         }
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.STARMAP);
       }
     }
     if (gameState == GameState.VIEWSTATS && statView != null) {
@@ -1836,10 +1835,9 @@ public class Game implements ActionListener {
           SoundPlayer.playMenuSound();
           changeGameState(GameState.MAIN_MENU);
           return;
-        } else {
-          SoundPlayer.playMenuSound();
-          changeGameState(GameState.STARMAP);
         }
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.STARMAP);
       }
     }
     if (gameState == GameState.PLANETVIEW && planetView != null) {

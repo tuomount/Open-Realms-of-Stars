@@ -63,12 +63,12 @@ public class ConfigFileRepositoryTest {
     config.add(line);
     line = new ConfigLine("Resolution=1024x768");
     config.add(line);
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    ConfigFileRepository.writeConfigFile(baos, config);
-    byte[] buf = baos.toByteArray();
-    baos.close();
-    String str = new String(buf, StandardCharsets.UTF_8);
-    assertEquals("# Comment here\nResolution=1024x768\n", str);
+    try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+      ConfigFileRepository.writeConfigFile(baos, config);
+      byte[] buf = baos.toByteArray();
+      String str = new String(buf, StandardCharsets.UTF_8);
+      assertEquals("# Comment here\nResolution=1024x768\n", str);
+    }
   }
 
 }

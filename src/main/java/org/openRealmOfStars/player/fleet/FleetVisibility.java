@@ -53,9 +53,9 @@ public class FleetVisibility {
     int y = fleet.getCoordinate().getY();
     if (info.getSectorVisibility(fleet.getCoordinate())
         == PlayerInfo.VISIBLE) {
-     if (fleet != null && (info.getSectorCloakDetection(x, y)
+     if (info.getSectorCloakDetection(x, y)
         >= fleet.getFleetCloackingValue()
-        || info.getFleets().isFleetOnList(fleet))) {
+        || info.getFleets().isFleetOnList(fleet)) {
       drawShip = true;
      }
      if (drawShip && fleet.getEspionageBonus() > 0

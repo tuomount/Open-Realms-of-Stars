@@ -296,11 +296,11 @@ public class StatisticPanel extends JPanel {
       g2d.setStroke(dashed);
       g2d.setColor(GuiStatics.COLOR_GOLD);
       g2d.drawLine(offsetX,
-          (int) Math.round(this.getHeight() - offsetY
-              - (int) Math.round(victoryScoreLimit * scaleY)),
+          Math.round(this.getHeight() - offsetY
+              - Math.round(victoryScoreLimit * scaleY)),
           offsetX + drawWidth,
-          (int) Math.round(this.getHeight() - offsetY
-              - (int) Math.round(victoryScoreLimit * scaleY)));
+          Math.round(this.getHeight() - offsetY
+              - Math.round(victoryScoreLimit * scaleY)));
       g2d.setStroke(full);
     }
     //Draw the axis

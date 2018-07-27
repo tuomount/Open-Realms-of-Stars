@@ -571,6 +571,11 @@ public final class GameCommands {
   public static final String COMMAND_HAIL_FLEET_PLANET = "HailFleetPlanet";
 
   /**
+   * Start trade mission
+   */
+  public static final String COMMAND_START_TRADE_MISSION = "StartTradeMission";
+
+  /**
    * Split the fleet
    */
   public static final String COMMAND_DESTROY_THE_SHIP = "DestroyTheShip";

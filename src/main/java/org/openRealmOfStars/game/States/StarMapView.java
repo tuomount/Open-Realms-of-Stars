@@ -414,6 +414,7 @@ public class StarMapView extends BlackPanel {
         GameCommands.COMMAND_TRADE_FLEET)
         && getStarMapMouseListener().getLastClickedFleet() != null
         && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
+      //TODO: Remove this after Fleet Trade View works
       Fleet fleet = getStarMapMouseListener().getLastClickedFleet();
       PlayerInfo info = infoPanel.getFleetOwner();
       Planet planet = map.getPlanetNextToCoordinate(fleet.getCoordinate());

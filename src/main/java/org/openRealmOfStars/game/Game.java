@@ -25,6 +25,7 @@ import org.openRealmOfStars.game.States.BattleView;
 import org.openRealmOfStars.game.States.CreditsView;
 import org.openRealmOfStars.game.States.DiplomacyView;
 import org.openRealmOfStars.game.States.EspionageView;
+import org.openRealmOfStars.game.States.FleetTradeView;
 import org.openRealmOfStars.game.States.FleetView;
 import org.openRealmOfStars.game.States.GalaxyCreationView;
 import org.openRealmOfStars.game.States.HistoryView;
@@ -165,6 +166,11 @@ public class Game implements ActionListener {
    * Fleet view Panel and handling the fleet
    */
   private FleetView fleetView;
+
+  /**
+   * Fleet trade view Panel and handling the trade
+   */
+  private FleetTradeView fleetTradeView;
 
   /**
    * Main menu for the game
@@ -736,6 +742,17 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Show fleet trade view panel
+   * @param planet Planet to show
+   * @param fleet Fleet to show
+   */
+  public void showFleetTradeView(final Planet planet, final Fleet fleet) {
+    fleetTradeView = new FleetTradeView(starMap,
+        players.getCurrentPlayerInfo(), planet, fleet, this);
+    this.updateDisplay(fleetTradeView);
+  }
+
+  /**
    * Show Star Map panels
    * @param object to show on map, Currently work only with fleet.
    */
@@ -1060,6 +1077,10 @@ public class Game implements ActionListener {
       fleetView();
       break;
     }
+    case FLEET_TRADE_VIEW: {
+      fleetTradeView();
+      break;
+    }
     case DIPLOMACY_VIEW: {
       showDiplomacyView(dataObject);
       break;
@@ -1086,6 +1107,23 @@ public class Game implements ActionListener {
           interactive = true;
         }
         showFleetView(planet, fleet, interactive);
+      }
+  }
+
+  /**
+   * Show fleet Trade View
+   */
+  private void fleetTradeView() {
+    if (starMapView.getStarMapMouseListener()
+             .getLastClickedFleet() != null) {
+        Fleet fleet = starMapView.getStarMapMouseListener()
+                .getLastClickedFleet();
+        Planet planet = starMap.getPlanetByCoordinate(fleet.getX(),
+            fleet.getY());
+        if (starMap.getCurrentPlayerInfo()
+                == starMap.getPlayerInfoByFleet(fleet)) {
+          showFleetTradeView(planet, fleet);
+        }
       }
   }
 
@@ -1615,6 +1653,14 @@ public class Game implements ActionListener {
           SoundPlayer.playMenuSound();
           changeMessageForPlanet(planet);
         }
+      } else if (arg0.getActionCommand().equalsIgnoreCase(
+          GameCommands.COMMAND_TRADE_FLEET)
+          && starMapView.getStarMapMouseListener().getLastClickedFleet() != null
+          && starMap.getPlayerInfoByFleet(
+              starMapView.getStarMapMouseListener().getLastClickedFleet())
+              == players.getCurrentPlayerInfo()) {
+        changeGameState(GameState.FLEET_TRADE_VIEW);
+        SoundPlayer.playMenuSound();
       } else if (arg0.getActionCommand()
           .equals(GameCommands.COMMAND_SPY)) {
         SoundPlayer.playMenuSound();

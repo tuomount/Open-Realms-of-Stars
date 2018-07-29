@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.ListRenderers.TradeRouteListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
@@ -225,8 +226,8 @@ public class FleetTradeView extends BlackPanel {
     eastPanel.add(label);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     tradeRoutes = new JList<>();
-    //tradeRoutes.setListData(fleet.getShips());
-    //tradeRoutes.setCellRenderer(new ShipListRenderer());
+    tradeRoutes.setListData(getPossibleTradeRoutes());
+    tradeRoutes.setCellRenderer(new TradeRouteListRenderer());
     tradeRoutes.setBackground(Color.BLACK);
     tradeRoutes
         .setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);

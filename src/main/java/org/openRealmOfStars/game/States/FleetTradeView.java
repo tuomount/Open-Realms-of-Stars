@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -26,6 +27,8 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.fleet.TradeRoute;
@@ -254,6 +257,32 @@ public class FleetTradeView extends BlackPanel {
     this.add(imgBase, BorderLayout.CENTER);
   }
 
+  /**
+   * Get all the possible trade routes for planet and realm
+   * @return Array of tradeRoutes
+   */
+  protected TradeRoute[] getPossibleTradeRoutes() {
+    ArrayList<TradeRoute> list = new ArrayList<>();
+    for (Planet target : starMap.getPlanetList()) {
+      if (info.getSectorVisibility(target.getCoordinate())
+          > PlayerInfo.UNCHARTED) {
+        PlayerInfo targetOwner = target.getPlanetPlayerInfo();
+        if (targetOwner != null && targetOwner != info) {
+          int targetIndex = starMap.getPlayerList().getIndex(targetOwner);
+          DiplomacyBonusList diplomacy = info.getDiplomacy().getDiplomacyList(
+              targetIndex);
+          if (diplomacy != null
+              && (diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)
+              || diplomacy.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
+              || diplomacy.isBonusType(DiplomacyBonusType.IN_DEFENSIVE_PACT))) {
+            TradeRoute route = new TradeRoute(planet, target, info, fleet);
+            list.add(route);
+          }
+        }
+      }
+    }
+    return list.toArray(new TradeRoute[list.size()]);
+  }
   /**
    * Get StarMap
    * @return StarMap

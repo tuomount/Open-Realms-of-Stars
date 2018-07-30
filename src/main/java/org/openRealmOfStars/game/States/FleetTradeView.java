@@ -314,4 +314,12 @@ public class FleetTradeView extends BlackPanel {
   public PlayerInfo getPlayerInfo() {
     return info;
   }
+
+  /**
+   * Get Selected trade route.
+   * @return TradeRoute or null
+   */
+  public TradeRoute getTradeRoute() {
+    return tradeRoutes.getSelectedValue();
+  }
 }

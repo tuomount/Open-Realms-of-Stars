@@ -17,6 +17,9 @@ import javax.swing.JLayeredPane;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
+import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionPhase;
+import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.audio.music.MusicFileInfo;
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
@@ -55,6 +58,7 @@ import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.fleet.TradeRoute;
 import org.openRealmOfStars.player.message.ChangeMessage;
 import org.openRealmOfStars.player.message.ChangeMessageFleet;
 import org.openRealmOfStars.player.message.ChangeMessagePlanet;
@@ -1626,6 +1630,28 @@ public class Game implements ActionListener {
       }
       MusicPlayer.handleMusic(gameState);
       return;
+    }
+    if (gameState == GameState.FLEET_TRADE_VIEW && fleetTradeView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_START_TRADE_MISSION)
+          && fleetTradeView.getTradeRoute() != null) {
+        SoundPlayer.playMenuSound();
+        TradeRoute route = fleetTradeView.getTradeRoute();
+        Mission mission = new Mission(MissionType.TRADE_FLEET,
+            MissionPhase.LOADING, route.getTradeWorld().getCoordinate());
+        mission.setPlanetBuilding(route.getOriginWorld().getName());
+        mission.setTargetPlanet(route.getTradeWorld().getName());
+        mission.setFleetName(fleetTradeView.getFleet().getName());
+        fleetTradeView.getPlayerInfo().getMissions().add(mission);
+        fleetTradeView =  null;
+        changeGameState(GameState.STARMAP);
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.STARMAP);
+        return;
+      }
     }
     if (gameState == GameState.STARMAP && starMapView != null) {
       if (arg0.getActionCommand()

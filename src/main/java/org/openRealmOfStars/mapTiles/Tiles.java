@@ -239,6 +239,19 @@ public final class Tiles {
     addTile(tile);
     tile = new Tile(tilesImage, 11, 2, TileNames.PLAYER_8);
     addTile(tile);
+    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY);
+    addTile(tile);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    tile = new Tile(tilesImage, 10, 1, TileNames.WORM_HOLE1);
+    addTile(tile);
+    tile.setDescription(TileNames.WORM_HOLE_DESCRIPTION);
+    tile.setAnimationIndex(listOfTiles.size());
+    tile = new Tile(tilesImage, 11, 1, TileNames.WORM_HOLE2);
+    addTile(tile);
+    tile.setDescription(TileNames.WORM_HOLE_DESCRIPTION);
+    tile.setAnimationIndex(getTileByName(
+        TileNames.WORM_HOLE1).getIndex());
   }
 
 }

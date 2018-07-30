@@ -248,6 +248,18 @@ public final class TileNames {
    * Ship color tile for player 8 (Overlay)
    */
   public static final String PLAYER_SHIP_8 = "Player_Ship_8";
+  /**
+   * Space anomaly tile
+   */
+  public static final String SPACE_ANOMALY = "SpaceAnomaly";
+  /**
+   * Worm hole tile 1
+   */
+  public static final String WORM_HOLE1 = "WormHole1";
+  /**
+   * Worm hole tile 2
+   */
+  public static final String WORM_HOLE2 = "WormHole2";
 
   /**
    * Description about deep space anchor
@@ -263,5 +275,17 @@ public final class TileNames {
       + "objects which radiants energy into outer space. Energy is genereated"
       + " from thermonuclear fusion of hydrogen and helium in "
       + "core of the star.";
+  /**
+   * Description about space anomaly
+   */
+  public static final String SPACE_ANOMALY_DESCRIPTION = "Space anomalies are"
+      + " unknown objects floating in space. Space anomaly can be explored to"
+      + " reveal it's secrets.";
+  /**
+   * Description about space anomaly
+   */
+  public static final String WORM_HOLE_DESCRIPTION = "Worm hole is a tunnel"
+      + " between two locations in spacetime continuum. Since space is"
+      + " constantly moving also other end of tunnel is moving.";
 
 }

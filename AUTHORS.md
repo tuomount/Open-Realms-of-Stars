@@ -72,6 +72,11 @@ Music note and Speaker icon by Tuomo Untinen
 
 Happy and Sad faces by Tuomo Untinen
 
+Space anomaly cloud tile by Vyntershtoff
+
+Wormhole tiles modifications by Tuomo Untinen
+Original art by Vyntershtoff
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

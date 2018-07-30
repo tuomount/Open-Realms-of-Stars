@@ -1498,6 +1498,13 @@ public class StarMap {
    */
   public void handleAIResearchAndPlanets() {
     PlayerInfo info = players.getPlayerInfoByIndex(aiTurnNumber);
+    if (info != null && info.isHuman()) {
+      aiFleet = info.getFleets().getFirst();
+      if (aiFleet == null) {
+        aiTurnNumber++;
+      }
+      return;
+    }
     if (info != null && !info.isHuman()) {
       // Try to locate ships for gather missions
       for (int i = 0; i < info.getMissions().getSize(); i++) {

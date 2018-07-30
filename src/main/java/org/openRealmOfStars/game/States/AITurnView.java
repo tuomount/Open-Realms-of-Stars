@@ -199,13 +199,16 @@ public class AITurnView extends BlackPanel {
    * @param info PlayerInfo
    */
   private void handleMissions(final Fleet fleet, final PlayerInfo info) {
-    if (!fleet.allFixed()) {
+    if (!fleet.allFixed() && !info.isHuman()) {
       // Make fleet to fix itself
       fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
           fleet.getY(), Route.ROUTE_FIX));
       return;
     }
     Mission mission = info.getMissions().getMissionForFleet(fleet.getName());
+    if (mission == null && info.isHuman()) {
+      return;
+    }
     if (mission != null) {
       switch (mission.getType()) {
       case COLONIZE:
@@ -925,6 +928,18 @@ public class AITurnView extends BlackPanel {
   public void handleAIFleet() {
     PlayerInfo info = game.getPlayers()
         .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
+    if (info != null && info.isHuman()
+        && game.getStarMap().getAIFleet() != null) {
+      handleMissions(game.getStarMap().getAIFleet(), info);
+      game.getStarMap().setAIFleet(info.getFleets().getNext());
+      if (info.getFleets().getIndex() == 0) {
+        MissionHandling.cleanMissions(info);
+        game.getStarMap().setAIFleet(null);
+        game.getStarMap()
+            .setAiTurnNumber(game.getStarMap().getAiTurnNumber() + 1);
+      }
+
+    }
     if (info != null && !info.isHuman()
         && game.getStarMap().getAIFleet() != null) {
       // Handle fleet

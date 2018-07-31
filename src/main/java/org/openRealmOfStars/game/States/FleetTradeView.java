@@ -207,7 +207,9 @@ public class FleetTradeView extends BlackPanel {
       @Override
       public void keyReleased(final KeyEvent e) {
         if (fleetList.isUniqueName(fleetNameText.getText(), fleet)) {
+          String oldName = getFleet().getName();
           getFleet().setName(fleetNameText.getText());
+          info.getMissions().changeFleetName(oldName, getFleet().getName());
           fleetNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
         } else {
           fleetNameText.setForeground(GuiStatics.COLOR_RED_TEXT);

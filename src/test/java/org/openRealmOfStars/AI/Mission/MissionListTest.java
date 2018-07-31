@@ -7,6 +7,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 
@@ -70,6 +71,26 @@ public class MissionListTest {
     Mockito.when(mission.getTargetPlanet()).thenReturn("Target I");
     list.add(mission);
     assertEquals(mission, list.getAttackMission("Target I"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testChangeName() {
+    MissionList list = new MissionList();
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mission mission = new Mission(MissionType.COLONIZE, MissionPhase.LOADING,
+        coord);
+    mission.setFleetName("No name yet");
+    list.add(mission);
+    mission = new Mission(MissionType.TRADE_FLEET, MissionPhase.LOADING,
+        coord);
+    mission.setFleetName("Old name");
+    list.add(mission);
+    assertEquals("No name yet", list.getMissionByIndex(0).getFleetName());
+    assertEquals("Old name", list.getMissionByIndex(1).getFleetName());
+    list.changeFleetName("Old name", "new name");
+    assertEquals("No name yet", list.getMissionByIndex(0).getFleetName());
+    assertEquals("new name", list.getMissionByIndex(1).getFleetName());
   }
 
   @Test

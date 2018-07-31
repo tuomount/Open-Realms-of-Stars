@@ -92,6 +92,18 @@ public class MissionList {
   }
 
   /**
+   * Change Fleet name in mission
+   * @param oldName Old name to change
+   * @param newName New name where to change
+   */
+  public void changeFleetName(final String oldName, final String newName) {
+    for (Mission mission : missions) {
+      if (mission.getFleetName().equals(oldName)) {
+        mission.setFleetName(newName);
+      }
+    }
+  }
+  /**
    * Get mission for fleet name
    * @param fleetName The fleet name
    * @return Mission or null if not found

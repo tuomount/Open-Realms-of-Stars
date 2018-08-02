@@ -35,13 +35,20 @@ public final class SpaceRaceUtility {
   }
 
   /**
+   * List of selectable races
+   */
+  public static final String[] RACE_SELECTION = {"Human", "Mechion", "Spork",
+      "Greyan", "Centaur", "Mothoid", "Teuthidae", "Scaurian", "Homarian" };
+
+
+  /**
    * Get SpaceRace with indexed number
    * @param index Space Race index
    * @return SpaceRace, if index is out of bounds human is given
    */
   public static SpaceRace getRaceByIndex(final int index) {
-    if (index > -1 && index < SpaceRace.values().length) {
-      return SpaceRace.values()[index];
+    if (index > -1 && index < RACE_SELECTION.length) {
+      return getRaceByName(RACE_SELECTION[index]);
     }
     return SpaceRace.HUMAN;
   }
@@ -90,7 +97,7 @@ public final class SpaceRaceUtility {
    * @return SpaceRace
    */
   public static SpaceRace getRandomRace() {
-    int index = DiceGenerator.getRandom(SpaceRace.values().length - 1);
+    int index = DiceGenerator.getRandom(RACE_SELECTION.length - 1);
     return getRaceByIndex(index);
   }
 

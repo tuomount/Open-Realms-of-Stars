@@ -87,7 +87,9 @@ public final class SpeechFactory {
           "Hey, your fleet called " + fleetName + " is in our sector!");
       case GREYANS: return new SpeechLine(type,
           "Your fleet " + fleetName + " is on my sector!");
-      case HUMAN: return new SpeechLine(type,
+      case HUMAN:
+      case SPACE_PIRATE:
+        return new SpeechLine(type,
           "Your fleet " + fleetName
           + " has crossed my sector. Please move it away!");
       case MECHIONS: return new SpeechLine(type,
@@ -125,7 +127,8 @@ public final class SpeechFactory {
           "Hey, your SPY FLEET called " + fleetName + " is in our sector!");
       case GREYANS: return new SpeechLine(type,
           "Your espionage fleet " + fleetName + " is on my sector!");
-      case HUMAN: return new SpeechLine(type,
+      case HUMAN:
+        return new SpeechLine(type,
           "Your espionage fleet " + fleetName
           + " has crossed my sector. Please move it away!");
       case MECHIONS: return new SpeechLine(type,
@@ -145,6 +148,10 @@ public final class SpeechFactory {
       case HOMARIANS: return new SpeechLine(type,
           "Your spy fleet has enter on my sector."
           + " Move " + fleetName + " it away, please!");
+      case SPACE_PIRATE:
+        return new SpeechLine(type,
+          "Yarr! Your espionage fleet " + fleetName
+          + " has crossed my sector. Tow it away!");
       default: return null;
     }
   }
@@ -177,6 +184,8 @@ public final class SpeechFactory {
           + "I have excellent deals just for you.");
       case HOMARIANS: return new SpeechLine(type,
           "I am sorry, but I couldn't find anything to trade with you.");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, you got no loot!");
       default: return null;
     }
   }
@@ -207,6 +216,8 @@ public final class SpeechFactory {
           "I will call the fleet back!");
       case HOMARIANS: return new SpeechLine(type,
           "I am calling the fleet back!");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, I am towing my sails back!");
       default: return null;
     }
   }
@@ -239,6 +250,8 @@ public final class SpeechFactory {
           "Let's do some trading " +  raceName + "!");
       case HOMARIANS: return new SpeechLine(type,
           "Let's do excellent deals today " +  raceName + "!");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, Let's look some loot " +  raceName + "!");
       default: return null;
     }
   }
@@ -269,6 +282,8 @@ public final class SpeechFactory {
           "My friend, I have my pockets full of credits! Let's do business.");
       case HOMARIANS: return new SpeechLine(type,
           "My fellow, let's shake chelae!");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Matey, let's split some loot!");
       default: return null;
     }
   }
@@ -299,6 +314,8 @@ public final class SpeechFactory {
           "Fellow trade companion, nice to meet again!");
       case HOMARIANS: return new SpeechLine(type,
           "Nice to meet you again, my fellow!");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr!");
       default: return null;
     }
   }
@@ -329,6 +346,8 @@ public final class SpeechFactory {
           "Hmph, the one with no credits...");
       case HOMARIANS: return new SpeechLine(type,
           "Just be quick and tell your thing...");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Hmph, yarr...");
       default: return null;
     }
   }
@@ -359,6 +378,8 @@ public final class SpeechFactory {
           "This is going to be a fight, but...");
       case HOMARIANS: return new SpeechLine(type,
           "I really hate these meeting with you...");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, I'll be needing sum rum after this!");
       default: return null;
     }
   }
@@ -389,6 +410,8 @@ public final class SpeechFactory {
           "You better accept this deal or suffer!");
       case HOMARIANS: return new SpeechLine(type,
           "Accept this deal or prepare to be boiled!");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, Accept this or slice your throat!");
       default: return null;
     }
   }
@@ -419,6 +442,8 @@ public final class SpeechFactory {
           "I will take last credits from your cold body!");
       case HOMARIANS: return new SpeechLine(type,
           "Prepare to be sliced!");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, Prepate to be boarded and destroyed!");
       default: return null;
     }
   }
@@ -452,6 +477,8 @@ public final class SpeechFactory {
           "Your offer insults me!");
       case HOMARIANS: return new SpeechLine(type,
           "Your offer stinks ancient mold!");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, My socks smell better than your offer!");
       default: return null;
     }
   }
@@ -482,6 +509,8 @@ public final class SpeechFactory {
           "Insults do not help here!");
       case HOMARIANS: return new SpeechLine(type,
           "You are making fool of yourself with your insults!");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, You start getting my nerve!");
       default: return null;
     }
   }
@@ -512,6 +541,8 @@ public final class SpeechFactory {
           "Your offer isn't good enough!");
       case HOMARIANS: return new SpeechLine(type,
           "I have to turn down this offer.");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, I cannot accept this!");
       default: return null;
     }
   }
@@ -542,6 +573,8 @@ public final class SpeechFactory {
           "Do you have counter offer?");
       case HOMARIANS: return new SpeechLine(type,
           "Any counter offers then?");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, I'll wait your counter offer then...");
       default: return null;
     }
   }
@@ -572,6 +605,8 @@ public final class SpeechFactory {
           "Time to die!");
       case HOMARIANS: return new SpeechLine(type,
           "Time to get sliced and boiled!");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, Time to die!");
       default: return null;
     }
   }
@@ -602,6 +637,8 @@ public final class SpeechFactory {
           "Let's build together awesome spy network for 20 turns?");
       case HOMARIANS: return new SpeechLine(type,
           "Do you have spies? We should work together for 20 turns?");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, Are you interested in espionage trade for 20 turns?");
       default: return null;
     }
   }
@@ -632,7 +669,9 @@ public final class SpeechFactory {
           "Let's build magnificent trade alliance!");
       case HOMARIANS: return new SpeechLine(type,
           "Are you insterested in trade alliance?");
-      default: return null;
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, Are you interested in trade alliance?");
+ default: return null;
     }
   }
 
@@ -662,6 +701,8 @@ public final class SpeechFactory {
           "Let's build awesome alliance!");
       case HOMARIANS: return new SpeechLine(type,
           "Are you insterested in alliance?");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, Are you interested in alliance?");
       default: return null;
     }
   }
@@ -692,6 +733,8 @@ public final class SpeechFactory {
           "Let's build awesome defending power!");
       case HOMARIANS: return new SpeechLine(type,
           "Are you insterested in defensive pact?");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, Are you interested in defensive pact?");
       default: return null;
     }
   }
@@ -722,6 +765,8 @@ public final class SpeechFactory {
           "Agreed! Time to die!");
       case HOMARIANS: return new SpeechLine(type,
           "Let the war begin!");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, I agree! Now we fight!");
       default: return null;
     }
   }
@@ -738,7 +783,8 @@ public final class SpeechFactory {
           "Very well, agreed!");
       case GREYANS: return new SpeechLine(type,
           "Fantastic, agreed!");
-      case HUMAN: return new SpeechLine(type,
+      case HUMAN:
+        return new SpeechLine(type,
           "Glad to make business with you!");
       case MECHIONS: return new SpeechLine(type,
           "Acknowledge!");
@@ -752,6 +798,8 @@ public final class SpeechFactory {
           "Agreed!");
       case HOMARIANS: return new SpeechLine(type,
           "Let's shake chelae for this!");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, I agreed!");
       default: return null;
     }
   }
@@ -796,6 +844,8 @@ public final class SpeechFactory {
       }
       case HOMARIANS: return new SpeechLine(type,
           "I glad to shake chelae with you!");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, Most excellent deal!");
       default: return null;
     }
   }
@@ -826,6 +876,8 @@ public final class SpeechFactory {
           "What do you say about my offer?");
       case HOMARIANS: return new SpeechLine(type,
           "What do you think about my offer?");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, What say you about my loot?");
       default: return null;
     }
   }
@@ -856,6 +908,8 @@ public final class SpeechFactory {
           "Let's sign a peace contract?");
       case HOMARIANS: return new SpeechLine(type,
           "Interested to sign peace with me?");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Care to sign peace?");
       default: return null;
     }
   }

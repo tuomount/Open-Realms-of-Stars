@@ -64,12 +64,6 @@ public class PlayerSetupView extends BlackPanel {
   private static final long serialVersionUID = 1L;
 
   /**
-   * List of selectable races
-   */
-  private static final String[] RACE_SELECTION = {"Human", "Mechion", "Spork",
-      "Greyan", "Centaur", "Mothoid", "Teuthidae", "Scaurian", "Homarian" };
-
-  /**
    * ComboBox on race
    */
   private SpaceComboBox<String>[] comboRaceSelect;
@@ -255,7 +249,8 @@ public class PlayerSetupView extends BlackPanel {
     raceImgs[index].setRaceToShow(config.getRace(index).getNameSingle());
     info.add(raceImgs[index]);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    comboRaceSelect[index] = new SpaceComboBox<>(RACE_SELECTION);
+    comboRaceSelect[index] = new SpaceComboBox<>(
+        SpaceRaceUtility.RACE_SELECTION);
     comboRaceSelect[index]
         .setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     comboRaceSelect[index].setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);

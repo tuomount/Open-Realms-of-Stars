@@ -129,6 +129,10 @@ public class PlayerInfo {
   private boolean human;
 
   /**
+   * Board player if true
+   */
+  private boolean board;
+  /**
    * Missions list
    */
   private MissionList missions;
@@ -168,6 +172,22 @@ public class PlayerInfo {
   public static final byte VISIBLE = 2;
 
   /**
+   * Normal AI controlled player
+   */
+  private static final int AI_CONTROLLED = 0;
+
+  /**
+   * Human controlled player
+   */
+  private static final int HUMAN_CONTROLLED = 1;
+
+  /**
+   * AI controlled board player. Board player controls
+   * space pirates and space monsters
+   */
+  private static final int BOARD_CONTROLLED = 2;
+
+  /**
    * Constructor player info.
    * @param race Space Race for player
    * @param maxPlayers Maximum number of players when game is created
@@ -180,6 +200,7 @@ public class PlayerInfo {
     shipStatList = new ArrayList<>();
     fleets = new FleetList();
     setHuman(false);
+    setBoard(false);
     missions = new MissionList();
     setRace(race);
     diplomacy = new Diplomacy(maxPlayers, index);
@@ -482,7 +503,29 @@ public class PlayerInfo {
       }
     }
     setFakeMilitarySize(dis.readInt());
-    human = dis.readBoolean();
+    int value = dis.read();
+    switch (value) {
+      case AI_CONTROLLED: {
+        setHuman(false);
+        setBoard(false);
+        break;
+      }
+      case HUMAN_CONTROLLED: {
+        setHuman(true);
+        setBoard(false);
+        break;
+      }
+      case BOARD_CONTROLLED: {
+        setHuman(false);
+        setBoard(true);
+        break;
+      }
+      default: {
+        setHuman(false);
+        setBoard(false);
+        break;
+      }
+    }
     missions = new MissionList(dis);
   }
 
@@ -530,7 +573,15 @@ public class PlayerInfo {
       }
     }
     dos.writeInt(fakeMilitarySize);
-    dos.writeBoolean(human);
+    int value = 0;
+    if (isHuman()) {
+      value = 1;
+    } else if (isBoard()) {
+      value = 2;
+    } else {
+      value = 0;
+    }
+    dos.writeByte(value);
     missions.saveMissionList(dos);
   }
 
@@ -1310,6 +1361,22 @@ public class PlayerInfo {
    */
   public void setHuman(final boolean human) {
     this.human = human;
+  }
+
+  /**
+   * Is player board controlled or not
+   * @return True for board controlled
+   */
+  public boolean isBoard() {
+    return board;
+  }
+
+  /**
+   * Set if player is board controlled AI
+   * @param board True for board controlled
+   */
+  public void setBoard(final boolean board) {
+    this.board = board;
   }
 
   /**

@@ -460,6 +460,18 @@ public class PlayerInfoTest {
       assertEquals(5, info.getDiplomacy().getPlayerIndex());
     }
 
+    @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
+    public void testBoard() {
+      PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 8, 0);
+      assertEquals(false, info.isBoard());
+      assertEquals(false, info.isHuman());
+      info.setBoard(true);
+      assertEquals(true, info.isBoard());
+      info.setHuman(true);
+      assertEquals(true, info.isHuman());
+    }
+
     /**
      * Tests Government and war fatigue
      */

@@ -154,7 +154,8 @@ public class NewsCorpDataTest {
     Mockito.when(planet3.getCulture()).thenReturn(11);
 
     PlayerList players = Mockito.mock(PlayerList.class);
-    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(3);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(3);
     Fleet militaryFleet = Mockito.mock(Fleet.class);
     Mockito.when(militaryFleet.getCulturalValue()).thenReturn(0);
     Fleet colonFleet = Mockito.mock(Fleet.class);
@@ -248,6 +249,7 @@ public class NewsCorpDataTest {
   public void testGalaxyStatMilitary() {
     NewsCorpData data = new NewsCorpData(2);
     PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
     Fleet militaryFleet = Mockito.mock(Fleet.class);
     Mockito.when(militaryFleet.getMilitaryValue()).thenReturn(10);
@@ -294,7 +296,8 @@ public class NewsCorpDataTest {
   public void testGalaxyStatMilitaryFakeDouble() {
     NewsCorpData data = new NewsCorpData(2);
     PlayerList players = Mockito.mock(PlayerList.class);
-    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(3);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
     Fleet militaryFleet = Mockito.mock(Fleet.class);
     Mockito.when(militaryFleet.getMilitaryValue()).thenReturn(10);
     Fleet colonFleet = Mockito.mock(Fleet.class);
@@ -340,7 +343,8 @@ public class NewsCorpDataTest {
   public void testGalaxyStatMilitaryFakeDoubleButLastTurn() {
     NewsCorpData data = new NewsCorpData(2);
     PlayerList players = Mockito.mock(PlayerList.class);
-    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(3);
     Fleet militaryFleet = Mockito.mock(Fleet.class);
     Mockito.when(militaryFleet.getMilitaryValue()).thenReturn(10);
     Fleet colonFleet = Mockito.mock(Fleet.class);
@@ -393,7 +397,8 @@ public class NewsCorpDataTest {
   public void testGalaxyStatCredit() {
     NewsCorpData data = new NewsCorpData(5);
     PlayerList players = Mockito.mock(PlayerList.class);
-    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(5);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(6);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(5);
     PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
     Mockito.when(info1.getTotalCredits()).thenReturn(34);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info1);
@@ -425,6 +430,7 @@ public class NewsCorpDataTest {
     NewsCorpData data = new NewsCorpData(2);
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
     TechList techs = Mockito.mock(TechList.class);
     Mockito.when(techs.getTechLevel(TechType.Combat)).thenReturn(2);
     Mockito.when(techs.getTechLevel(TechType.Defense)).thenReturn(1);
@@ -513,6 +519,7 @@ public class NewsCorpDataTest {
 
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
     Fleet militaryFleet = Mockito.mock(Fleet.class);
     Mockito.when(militaryFleet.getMilitaryValue()).thenReturn(10);
     Mockito.when(militaryFleet.getCulturalValue()).thenReturn(0);

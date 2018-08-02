@@ -238,7 +238,8 @@ public class NewsCorpData {
         data[i] = data[i] + planet.getCulture();
       }
     }
-    for (int i = 0; i < playerList.getCurrentMaxPlayers(); i++) {
+    int maxPlayer = playerList.getCurrentMaxRealms();
+    for (int i = 0; i < maxPlayer; i++) {
       PlayerInfo player = playerList.getPlayerInfoByIndex(i);
       for (int j = 0; j < player.getFleets().getNumberOfFleets(); j++) {
         Fleet fleet = player.getFleets().getByIndex(j);
@@ -288,7 +289,8 @@ public class NewsCorpData {
   public void calculateMilitary(final PlayerList playerList,
       final boolean lastTurn) {
     int[] data = new int[military.getMaxPlayers()];
-    for (int i = 0; i < playerList.getCurrentMaxPlayers(); i++) {
+    int maxPlayer = playerList.getCurrentMaxRealms();
+    for (int i = 0; i < maxPlayer; i++) {
       PlayerInfo player = playerList.getPlayerInfoByIndex(i);
       int militaryValue = calculateMilitaryValue(player);
       if (!lastTurn) {
@@ -308,7 +310,8 @@ public class NewsCorpData {
    */
   public void calculateCredit(final PlayerList playerList) {
     int[] data = new int[credit.getMaxPlayers()];
-    for (int i = 0; i < playerList.getCurrentMaxPlayers(); i++) {
+    int maxPlayer = playerList.getCurrentMaxRealms();
+    for (int i = 0; i < maxPlayer; i++) {
       PlayerInfo player = playerList.getPlayerInfoByIndex(i);
       data[i] = player.getTotalCredits();
     }
@@ -322,8 +325,9 @@ public class NewsCorpData {
    * @param playerList from StarMap
    */
   public void calculateResearch(final PlayerList playerList) {
-    int[] data = new int[research.getMaxPlayers()];
-    for (int i = 0; i < playerList.getCurrentMaxPlayers(); i++) {
+    int maxPlayer = playerList.getCurrentMaxRealms();
+    int[] data = new int[maxPlayer];
+    for (int i = 0; i < maxPlayer; i++) {
       PlayerInfo player = playerList.getPlayerInfoByIndex(i);
       int sum = 0;
       sum = sum + player.getTechList().getTechLevel(TechType.Combat);

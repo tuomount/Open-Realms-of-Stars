@@ -737,8 +737,8 @@ public final class PlanetHandling {
       mission.setTargetPlanet(target.getName());
       result = mission;
     } else {
-      for (int j = 0; j < map.getPlayerList().getCurrentMaxPlayers();
-          j++) {
+      int maxPlayer = map.getPlayerList().getCurrentMaxRealms();
+      for (int j = 0; j < maxPlayer; j++) {
         planets = map.getPlanetListSeenByOther(j, info);
         if (planets.length > 0) {
           Planet target = planets[DiceGenerator.getRandom(
@@ -842,7 +842,8 @@ public final class PlanetHandling {
     int score = preScore;
     if (ship.isSpyShip()) {
       boolean moreIsRequired = false;
-      for (int i = 0; i < map.getPlayerList().getCurrentMaxPlayers(); i++) {
+      int maxPlayers = map.getPlayerList().getCurrentMaxRealms();
+      for (int i = 0; i < maxPlayers; i++) {
         EspionageList espionage = info.getEspionage().getByIndex(i);
         DiplomacyBonusList diplomacy = info.getDiplomacy().getDiplomacyList(i);
         if (espionage != null && diplomacy != null

@@ -271,7 +271,7 @@ public class StarMap {
         solarSystem[i][j] = 0;
       }
     }
-    newsCorpData = new NewsCorpData(players.getCurrentMaxPlayers());
+    newsCorpData = new NewsCorpData(players.getCurrentMaxRealms());
     turn = 0;
     aiTurnNumber = 0;
     aiFleet = null;
@@ -578,7 +578,7 @@ public class StarMap {
       }
       NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
       newsCorpData = newsCorpRepo.restoreNewsCorp(dis,
-          players.getCurrentMaxPlayers());
+          players.getCurrentMaxRealms());
       try {
         history = History.readFromStream(dis);
       } catch (IOException e) {
@@ -1677,7 +1677,8 @@ public class StarMap {
    * after each turn.
    */
   public void updateEspionage() {
-    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
+    int maxPlayers = players.getCurrentMaxRealms();
+    for (int i = 0; i < maxPlayers; i++) {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null) {
         info.getEspionage().clearAllEspionageBonuses();
@@ -1701,11 +1702,11 @@ public class StarMap {
       }
     }
     // Check for trade espionage aka spy trade
-    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
+    for (int i = 0; i < maxPlayers; i++) {
       // Go through all players
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null) {
-        for (int j = 0; j < players.getCurrentMaxPlayers(); j++) {
+        for (int j = 0; j < maxPlayers; j++) {
           if (j != i && info.getDiplomacy().isAlliance(j)
               && !info.getDiplomacy().isSpyTrade(j)) {
             // Alliance so automatic SPY trade
@@ -1771,7 +1772,8 @@ public class StarMap {
       final int second) {
     int result = getMilitaryEstimation(first, second);
     PlayerInfo secondInfo = players.getPlayerInfoByIndex(second);
-    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
+    int maxPlayer = players.getCurrentMaxRealms();
+    for (int i = 0; i < maxPlayer; i++) {
       if (i != first && i != second
           && secondInfo.getDiplomacy().isDefensivePact(i)) {
         result = result + getMilitaryEstimation(first, i);
@@ -2239,7 +2241,7 @@ public class StarMap {
    */
   public void nextPlayer() {
     if (players != null) {
-      if (players.getCurrentPlayer() + 1 == players.getCurrentMaxPlayers()) {
+      if (players.getCurrentPlayer() + 1 == players.getCurrentMaxRealms()) {
         players.setCurrentPlayer(0);
         setDebug(false);
       } else {
@@ -2410,8 +2412,8 @@ public class StarMap {
    * @return True if index player is stronger than compare
    */
   public boolean isPlayerStrongerThan(final int index, final int compare) {
-    if (index >= 0 && index < getPlayerList().getCurrentMaxPlayers()
-        && compare >= 0 && compare < getPlayerList().getCurrentMaxPlayers()
+    if (index >= 0 && index < getPlayerList().getCurrentMaxRealms()
+        && compare >= 0 && compare < getPlayerList().getCurrentMaxRealms()
         && compare != index) {
       int power = newsCorpData.getMilitary().getLatest(index);
       int powerCompare = newsCorpData.getMilitary().getLatest(compare);

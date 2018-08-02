@@ -243,7 +243,8 @@ public class DiplomacyTest {
     Mockito.when(playerList.getIndex(byStander)).thenReturn(3);
     Mockito.when(playerList.getIndex(attacker)).thenReturn(2);
     Mockito.when(playerList.getIndex(centaur)).thenReturn(0);
-    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(4);
+    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(3);
     Mockito.when(starMap.getPlayerList()).thenReturn(playerList);
     Mockito.when(starMap.getPlayerByIndex(0)).thenReturn(centaur);
     Mockito.when(starMap.getPlayerByIndex(1)).thenReturn(defender);

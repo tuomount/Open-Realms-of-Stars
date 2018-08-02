@@ -792,8 +792,9 @@ public final class NewsFactory {
   private static ScoreBoard createScoreBoard(final GalaxyStat scores,
       final PlayerList players) {
     ScoreBoard board = new ScoreBoard();
+    int maxPlayer = players.getCurrentMaxRealms();
     // First let's do alliance rows
-    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
+    for (int i = 0; i < maxPlayer; i++) {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       int alliance = info.getDiplomacy().getAllianceIndex();
       if (alliance != -1) {
@@ -822,7 +823,7 @@ public final class NewsFactory {
       return null;
     }
     NewsCorpData tmpData = new NewsCorpData(
-        map.getPlayerList().getCurrentMaxPlayers());
+        map.getPlayerList().getCurrentMaxRealms());
     NewsData news = null;
     tmpData.calculateCulture(map.getPlanetList(), map.getPlayerList());
     ScoreBoard board = createScoreBoard(tmpData.getCultural(),
@@ -918,12 +919,12 @@ public final class NewsFactory {
    * @return NewsData or null
    */
   public static NewsData makeDominationVictoryNewsAtEnd(final StarMap map) {
-    int limit = map.getPlayerList().getCurrentMaxPlayers();
+    int limit = map.getPlayerList().getCurrentMaxRealms();
     if (limit < 4) {
       return null;
     }
     NewsCorpData tmpData = new NewsCorpData(
-        map.getPlayerList().getCurrentMaxPlayers());
+        map.getPlayerList().getCurrentMaxRealms());
     NewsData news = null;
     tmpData.calculateHomePlanets(map.getPlanetList());
     ScoreBoard board = createScoreBoard(tmpData.getPlanets(),

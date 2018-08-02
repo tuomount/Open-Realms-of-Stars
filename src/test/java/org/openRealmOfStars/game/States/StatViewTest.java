@@ -44,7 +44,8 @@ public class StatViewTest {
     ActionListener listener = Mockito.mock(ActionListener.class);
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = Mockito.mock(PlayerList.class);
-    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(5);
+    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(6);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(5);
     PlayerInfo player = Mockito.mock(PlayerInfo.class);
     Mockito.when(player.getEmpireName()).thenReturn("Empire of Test");
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);

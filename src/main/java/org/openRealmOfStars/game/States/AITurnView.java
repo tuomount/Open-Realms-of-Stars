@@ -746,8 +746,9 @@ public class AITurnView extends BlackPanel {
   public void searchForBorderCrossing() {
     PlayerInfo info = game.getPlayers()
         .getPlayerInfoByIndex(game.getStarMap().getAiTurnNumber());
-    if (info != null && !info.isHuman()) {
-      for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
+    if (info != null && !info.isHuman() && !info.isBoard()) {
+      int maxPlayer = game.getPlayers().getCurrentMaxRealms();
+      for (int i = 0; i < maxPlayer; i++) {
         PlayerInfo fleetOwner = game.getPlayers().getPlayerInfoByIndex(i);
         if (fleetOwner != info) {
           int numberOfFleets = fleetOwner.getFleets().getNumberOfFleets();

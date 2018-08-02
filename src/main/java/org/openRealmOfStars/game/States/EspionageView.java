@@ -116,7 +116,8 @@ public class EspionageView extends BlackPanel {
     InfoPanel centerPanel = new InfoPanel();
     centerPanel.setTitle("Espionage");
     centerPanel.setLayout(new GridLayout(2, 4));
-    for (int i = 0; i < playerList.getCurrentMaxPlayers(); i++) {
+    int maxPlayer = playerList.getCurrentMaxRealms();
+    for (int i = 0; i < maxPlayer; i++) {
       PlayerInfo realmInfo = playerList.getPlayerInfoByIndex(i);
       EspionageList espionageList = player.getEspionage().getByIndex(i);
       if (espionageList != null) {

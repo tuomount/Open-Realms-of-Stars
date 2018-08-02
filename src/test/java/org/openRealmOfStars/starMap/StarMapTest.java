@@ -65,6 +65,7 @@ public class StarMapTest {
 
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
 
     StarMap map = new StarMap(config, players);
     assertNotNull(map.getHistory());
@@ -124,6 +125,7 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
 
     StarMap map = new StarMap(config, players);
     assertEquals(4,map.getNewsCorpData().getCredit().getMaxPlayers());
@@ -165,6 +167,7 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
 
     StarMap map = new StarMap(config, players);
     map.getPlanetList().clear();
@@ -205,6 +208,7 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
 
 
     StarMap map = new StarMap(config, players);
@@ -253,6 +257,7 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
 
     Planet planet1 = Mockito.mock(Planet.class);
     Mockito.when(planet1.getX()).thenReturn(5);
@@ -345,6 +350,7 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
 
     Planet planet1 = Mockito.mock(Planet.class);
     Coordinate coord1 = new Coordinate(5, 7);
@@ -431,6 +437,7 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
 
     Planet planet1 = Mockito.mock(Planet.class);
     Mockito.when(planet1.getX()).thenReturn(5);
@@ -494,6 +501,7 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
 
     StarMap map = new StarMap(config, players);
     assertEquals(0,map.getNewsCorpData().getMilitary().getLatest(0));
@@ -621,6 +629,7 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
     StarMap map = new StarMap(config, players);
     map.resetCulture();
     map.calculateCulture(5, 5, 4, 0);
@@ -763,7 +772,8 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info2);
     Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info2);
-    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(5);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
     StarMap map = new StarMap(config, players);
     map.getNewsCorpData().calculateMilitary(players, false);
     int diff = map.getMilitaryDifference(0, 2);
@@ -834,6 +844,7 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info2);
     Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info2);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
     StarMap map = new StarMap(config, players);
     map.getNewsCorpData().calculateMilitary(players, false);
     assertEquals(72, map.getMilitaryEstimation(0, 2));
@@ -906,7 +917,8 @@ public class StarMapTest {
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info2);
     Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info2);
-    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(5);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
     StarMap map = new StarMap(config, players);
     map.getNewsCorpData().calculateMilitary(players, false);
     assertEquals(144, map.getMilitaryEstimationForDefensivePact(0, 2));

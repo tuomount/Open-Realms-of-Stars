@@ -386,6 +386,10 @@ public class StarMap {
             && getPlanetByCoordinate(sx, sy) == null) {
           Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
           tiles[sx][sy] = anchor.getIndex();
+          PlayerInfo board = players.getBoardPlayer();
+          if (board != null) {
+            addSpacePirate(sx, sy, board);
+          }
           break;
         }
         loop++;
@@ -395,6 +399,34 @@ public class StarMap {
     nameGenerator = null;
   }
 
+  /**
+   * Adds one pirate ship into coordinate
+   * @param x X Coordinate
+   * @param y Y Coordinate
+   * @param playerInfo Board player info
+   */
+  private void addSpacePirate(final int x, final int y,
+      final PlayerInfo playerInfo) {
+    ShipStat[] stats = playerInfo.getShipStatList();
+    ArrayList<ShipStat> listStats = new ArrayList<>();
+    for (ShipStat stat : stats) {
+      Ship ship = new Ship(stat.getDesign());
+      if (ship.getTotalMilitaryPower() == 0) {
+        continue;
+      }
+      listStats.add(stat);
+    }
+    if (listStats.size() > 0) {
+      ShipStat stat = listStats.get(DiceGenerator.getRandom(
+          listStats.size() - 1));
+      Ship ship = new Ship(stat.getDesign());
+      stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+      stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+      Fleet fleet = new Fleet(ship, x, y);
+      playerInfo.getFleets().add(fleet);
+      fleet.setName(playerInfo.getFleets().generateUniqueName("pirate"));
+    }
+  }
   /**
    * Create border starting solar system
    * @param config Galaxy Config

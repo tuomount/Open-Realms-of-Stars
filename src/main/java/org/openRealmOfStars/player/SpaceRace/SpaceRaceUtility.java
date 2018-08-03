@@ -47,8 +47,8 @@ public final class SpaceRaceUtility {
    * @return SpaceRace, if index is out of bounds human is given
    */
   public static SpaceRace getRaceByIndex(final int index) {
-    if (index > -1 && index < RACE_SELECTION.length) {
-      return getRaceByName(RACE_SELECTION[index]);
+    if (index > -1 && index < SpaceRace.values().length) {
+      return SpaceRace.values()[index];
     }
     return SpaceRace.HUMAN;
   }

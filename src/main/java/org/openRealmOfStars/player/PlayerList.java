@@ -149,6 +149,20 @@ public class PlayerList {
   }
 
   /**
+   * Get board player info
+   * @return The board player info or null
+   */
+  public PlayerInfo getBoardPlayer() {
+    for (int i = list.size() - 1; i > -1; i--) {
+      PlayerInfo info = list.get(i);
+      if (info.isBoard()) {
+        return info;
+      }
+    }
+    return null;
+  }
+
+  /**
    * Get Current player info
    * @return PlayerInfo
    */

@@ -94,7 +94,7 @@ public enum SpaceRace {
   /**
    * Humans are about average in everything.
    */
-  SPACE_PIRATE(0, "Space Pirates", "Space pirate", "Generic space pirate which"
+  SPACE_PIRATE(9, "Space Pirates", "Space pirate", "Generic space pirate which"
       + "are aggressive and try cause trouble. Stats are identical to humans.");
 
 

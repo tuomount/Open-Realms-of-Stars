@@ -156,6 +156,11 @@ public class GalaxyConfig {
    */
   private int scoringDiplomacy;
 
+  /**
+   * Space pirates enabled
+   */
+  private boolean spacePiratesEnabled;
+
 /**
    * Constructor for galaxy config
    */
@@ -163,6 +168,7 @@ public class GalaxyConfig {
     sizeX = 75;
     sizeY = 75;
     this.galaxySizeIndex = 1;
+    this.spacePiratesEnabled = true;
     setChanceForPlanetaryEvent(10);
     setNumberOfRoguePlanets(ROGUE_PLANETS_FEW);
     setScoringVictoryTurns(400);
@@ -515,6 +521,22 @@ public class GalaxyConfig {
    */
   public void setNumberOfRoguePlanets(final int numberOfRoguePlanets) {
     this.numberOfRoguePlanets = numberOfRoguePlanets;
+  }
+
+  /**
+   * Enabled space pirates with true value
+   * @param value True to enable and false to disable
+   */
+  public void setSpacePiratesEnabled(final boolean value) {
+    this.spacePiratesEnabled = value;
+  }
+
+  /**
+   * Enabled space pirates with true value
+   * @return True if space pirates are enabled
+   */
+  public boolean isSpacePiratesEnabled() {
+    return this.spacePiratesEnabled;
   }
 
 }

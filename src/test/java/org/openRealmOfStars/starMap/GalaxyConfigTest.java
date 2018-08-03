@@ -34,6 +34,9 @@ public class GalaxyConfigTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testGalaxyConfig() {
     GalaxyConfig config = new GalaxyConfig();
+    assertEquals(true, config.isSpacePiratesEnabled());
+    config.setSpacePiratesEnabled(false);
+    assertEquals(false, config.isSpacePiratesEnabled());
     assertEquals(10, config.getChanceForPlanetaryEvent());
     config.setChanceForPlanetaryEvent(-5);
     assertEquals(0, config.getChanceForPlanetaryEvent());

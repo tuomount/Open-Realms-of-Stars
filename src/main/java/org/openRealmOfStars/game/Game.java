@@ -1222,13 +1222,13 @@ public class Game implements ActionListener {
    */
   private void makeNewGame() {
     setPlayerInfo();
-      starMap = new StarMap(galaxyConfig, players);
-      starMap.updateStarMapOnStartGame();
-      NewsCorpData corpData = starMap.getNewsCorpData();
-      players.setCurrentPlayer(0);
-      setNullView();
-      calculateCorpData(corpData);
-      changeGameState(GameState.STARMAP);
+    starMap = new StarMap(galaxyConfig, players);
+    starMap.updateStarMapOnStartGame();
+    NewsCorpData corpData = starMap.getNewsCorpData();
+    players.setCurrentPlayer(0);
+    setNullView();
+    calculateCorpData(corpData);
+    changeGameState(GameState.STARMAP);
 
   }
 
@@ -1238,13 +1238,12 @@ public class Game implements ActionListener {
    * @param corpData various calculations
    */
   private void calculateCorpData(final NewsCorpData corpData) {
-      corpData.calculateCredit(players);
-      corpData.calculateCulture(starMap.getPlanetList(), players);
-      corpData.calculateMilitary(players, false);
-      corpData.calculatePlanets(starMap.getPlanetList());
-      corpData.calculatePopulation(starMap.getPlanetList());
-      corpData.calculateResearch(players);
-
+    corpData.calculateCredit(players);
+    corpData.calculateCulture(starMap.getPlanetList(), players);
+    corpData.calculateMilitary(players, false);
+    corpData.calculatePlanets(starMap.getPlanetList());
+    corpData.calculatePopulation(starMap.getPlanetList());
+    corpData.calculateResearch(players);
   }
 
 

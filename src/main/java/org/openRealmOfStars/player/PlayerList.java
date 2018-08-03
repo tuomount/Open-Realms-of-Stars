@@ -236,7 +236,7 @@ public class PlayerList {
    * Calculate initial diplomacy Bonuses for all players.
    */
   public void calculateInitialDiplomacyBonuses() {
-    int maxPlayers = getCurrentMaxRealms();
+    int maxPlayers = getCurrentMaxPlayers();
     for (int i = 0; i < maxPlayers; i++) {
       PlayerInfo info = getPlayerInfoByIndex(i);
       for (int j = 0; j < maxPlayers; j++) {
@@ -244,6 +244,14 @@ public class PlayerList {
         if (bonus != null) {
           PlayerInfo info2 = getPlayerInfoByIndex(j);
           bonus.addBonus(DiplomacyBonusType.DIPLOMACY_BONUS, info2.getRace());
+          if (info2.isBoard()) {
+            // Board AI has war against every body
+            bonus.addBonus(DiplomacyBonusType.IN_WAR, info.getRace());
+          }
+          if (info.isBoard()) {
+            // Board AI has war against every body
+            bonus.addBonus(DiplomacyBonusType.IN_WAR, info.getRace());
+          }
           GovernmentType government = info2.getGovernment();
           DiplomacyBonus diplomacyBonus = new DiplomacyBonus(
               DiplomacyBonusType.DIPLOMACY_BONUS, info2.getRace());

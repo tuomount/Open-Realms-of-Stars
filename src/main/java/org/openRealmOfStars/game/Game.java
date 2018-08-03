@@ -59,6 +59,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.TradeRoute;
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.message.ChangeMessage;
 import org.openRealmOfStars.player.message.ChangeMessageFleet;
 import org.openRealmOfStars.player.message.ChangeMessagePlanet;
@@ -1252,14 +1253,25 @@ public class Game implements ActionListener {
    */
   private void setPlayerInfo() {
     players = new PlayerList();
+    int maxPlayers = galaxyConfig.getMaxPlayers();
+    if (galaxyConfig.isSpacePiratesEnabled()) {
+      maxPlayers++;
+    }
     for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
       PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i),
-         galaxyConfig.getMaxPlayers(), i);
+          maxPlayers, i);
       info.setGovernment(galaxyConfig.getPlayerGovernment(i));
       info.setEmpireName(galaxyConfig.getPlayerName(i));
       if (i == 0) {
         info.setHuman(true);
       }
+      players.addPlayer(info);
+    }
+    if (galaxyConfig.isSpacePiratesEnabled()) {
+      PlayerInfo info = new PlayerInfo(SpaceRace.SPACE_PIRATE, maxPlayers, 8);
+      info.setBoard(true);
+      info.setGovernment(GovernmentType.AI);
+      info.setEmpireName("Space pirates");
       players.addPlayer(info);
     }
     players.calculateInitialDiplomacyBonuses();

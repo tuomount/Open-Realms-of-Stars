@@ -99,6 +99,11 @@ public class GalaxyCreationView extends BlackPanel {
   private SpaceCombo<String> comboRoguePlanets;
 
   /**
+   * ComboBox for space pirates
+   */
+  private SpaceCombo<String> comboSpacePirates;
+
+  /**
    * Galaxy config
    */
   private GalaxyConfig config;
@@ -223,7 +228,27 @@ public class GalaxyCreationView extends BlackPanel {
         + " of solar systems.");
     info.add(comboRoguePlanets);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
+    xinvis.add(info);
 
+    label = new SpaceLabel("Space pirates:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    String[] spacePirates = new String[2];
+    spacePirates[0] = "Enabled";
+    spacePirates[1] = "Disabled";
+    comboSpacePirates = new SpaceCombo<>(spacePirates);
+    if (this.config.isSpacePiratesEnabled()) {
+      comboSpacePirates.setSelectedIndex(0);
+    } else {
+      comboSpacePirates.setSelectedIndex(1);
+    }
+    comboSpacePirates.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboSpacePirates.addActionListener(listener);
+    comboSpacePirates.setToolTipText("If space pirates are enabled"
+        + " they can roam in space and also found from space anomalies.");
+    info.add(comboSpacePirates);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
     xinvis.add(Box.createRigidArea(new Dimension(200, 5)));
 
@@ -519,6 +544,20 @@ public class GalaxyCreationView extends BlackPanel {
         config.setNumberOfRoguePlanets(GalaxyConfig.ROGUE_PLANETS_FEW);
         break;
       }
+      }
+      switch (comboSpacePirates.getSelectedIndex()) {
+        case 0: {
+          config.setSpacePiratesEnabled(true);
+          break;
+        }
+        case 1: {
+          config.setSpacePiratesEnabled(false);
+          break;
+        }
+        default: {
+          config.setSpacePiratesEnabled(true);
+          break;
+        }
       }
       switch (comboScoringVictory.getSelectedIndex()) {
       case 0: {

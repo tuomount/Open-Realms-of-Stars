@@ -1115,7 +1115,9 @@ public class AITurnView extends BlackPanel {
       addRandomPirateTech(pirates, TechType.Electrics, 8);
       addRandomPirateTech(pirates, TechType.Electrics, 8);
     }
-    Research.handleShipDesigns(pirates);
+    if (!justAddMore) {
+      Research.handleShipDesigns(pirates);
+    }
     for (int i = 0; i < pirates.getFleets().getNumberOfFleets(); i++) {
       Fleet fleet = pirates.getFleets().getByIndex(i);
       if (fleet.isStarBaseDeployed()) {

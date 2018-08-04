@@ -410,11 +410,13 @@ public class StarMap {
     ShipStat[] stats = playerInfo.getShipStatList();
     ArrayList<ShipStat> listStats = new ArrayList<>();
     for (ShipStat stat : stats) {
-      Ship ship = new Ship(stat.getDesign());
-      if (ship.getTotalMilitaryPower() == 0) {
-        continue;
+      if (!stat.isObsolete()) {
+        Ship ship = new Ship(stat.getDesign());
+        if (ship.getTotalMilitaryPower() == 0 || ship.isStarBase()) {
+          continue;
+        }
+        listStats.add(stat);
       }
-      listStats.add(stat);
     }
     if (listStats.size() > 0) {
       ShipStat stat = listStats.get(DiceGenerator.getRandom(
@@ -444,11 +446,13 @@ public class StarMap {
     ShipStat[] stats = playerInfo.getShipStatList();
     ArrayList<ShipStat> listStats = new ArrayList<>();
     for (ShipStat stat : stats) {
-      Ship ship = new Ship(stat.getDesign());
-      if (ship.getTotalMilitaryPower() == 0 || !ship.isStarBase()) {
-        continue;
+      if (!stat.isObsolete()) {
+        Ship ship = new Ship(stat.getDesign());
+        if (ship.getTotalMilitaryPower() == 0 || !ship.isStarBase()) {
+          continue;
+        }
+        listStats.add(stat);
       }
-      listStats.add(stat);
     }
     if (listStats.size() > 0) {
       ShipStat stat = listStats.get(DiceGenerator.getRandom(

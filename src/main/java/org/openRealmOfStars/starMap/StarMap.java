@@ -425,6 +425,12 @@ public class StarMap {
       Fleet fleet = new Fleet(ship, x, y);
       playerInfo.getFleets().add(fleet);
       fleet.setName(playerInfo.getFleets().generateUniqueName("pirate"));
+      Sun sun = getAboutNearestSolarSystem(x, y, playerInfo, fleet, null);
+      Mission mission = new Mission(MissionType.PRIVATEER,
+          MissionPhase.TREKKING, sun.getCenterCoordinate());
+      mission.setFleetName(fleet.getName());
+      mission.setSunName(sun.getName());
+      playerInfo.getMissions().add(mission);
     }
   }
   /**

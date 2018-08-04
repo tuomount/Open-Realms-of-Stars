@@ -1394,6 +1394,10 @@ public class AITurnView extends BlackPanel {
           if (!government.isImmuneToHappiness()) {
             boolean fatigued = false;
             int wars = info.getDiplomacy().getNumberOfWar();
+            if (game.getPlayers().getBoardPlayer() != null) {
+              // There is always war against board
+              wars = wars - 1;
+            }
             int warFatigueValue = info.getWarFatigue()
                 / info.getRace().getWarFatigueResistance();
             if (wars > 0 && wars > government.getWarResistance()) {
@@ -1413,10 +1417,10 @@ public class AITurnView extends BlackPanel {
                   Icons.getIconByName(Icons.ICON_CREDIT));
               info.getMsgList().addNewMessage(msg);
             }
-            if (!fatigued && info.getWarFatigue() > 0) {
+            if (!fatigued && info.getWarFatigue() < 0) {
               int fatigue = info.getWarFatigue();
               int dec = fatigue / 4;
-              if (dec > 1) {
+              if (dec > 0) {
                 dec = -1;
               }
               fatigue = fatigue - dec;

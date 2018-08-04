@@ -19,6 +19,7 @@ import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.GovernmentUtility;
 import org.openRealmOfStars.player.message.MessageList;
+import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
@@ -215,8 +216,7 @@ public class PlayerInfo {
     case MECHIONS:
     case CENTAURS:
     case TEUTHIDAES:
-    case HOMARIANS:
-    case SPACE_PIRATE: {
+    case HOMARIANS: {
       /*
        * Humans, Mechions and Centaurs get 1 Combat, 1 Defense, Scout and Colony
        */
@@ -250,6 +250,72 @@ public class PlayerInfo {
       ShipStat stat = new ShipStat(design);
       addShipStat(stat);
       design = ShipGenerator.createColony(this, false);
+      stat = new ShipStat(design);
+      addShipStat(stat);
+      break;
+    }
+    case SPACE_PIRATE: {
+      /*
+       * Space pirates get higher start tech
+       */
+      Tech tech = TechFactory.createRandomTech(TechType.Combat, 1,
+          techList.getListForTypeAndLevel(TechType.Combat, 1));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createRandomTech(TechType.Combat, 1,
+          techList.getListForTypeAndLevel(TechType.Combat, 1));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createRandomTech(TechType.Combat, 2,
+          techList.getListForTypeAndLevel(TechType.Combat, 2));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createRandomTech(TechType.Defense, 1,
+          techList.getListForTypeAndLevel(TechType.Defense, 1));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createRandomTech(TechType.Defense, 1,
+          techList.getListForTypeAndLevel(TechType.Defense, 1));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createRandomTech(TechType.Defense, 2,
+          techList.getListForTypeAndLevel(TechType.Defense, 2));
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createHullTech("Small starbase Mk1", 2);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createHullTech("Scout Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createPropulsionTech("Ion drive Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createPropulsionTech("Nuclear drive Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createPropulsionTech("Fission source Mk1", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      tech = TechFactory.createPropulsionTech("Fission source Mk2", 1);
+      if (tech != null) {
+        techList.addTech(tech);
+      }
+      ShipDesign design = ShipGenerator.createScout(this);
+      ShipStat stat = new ShipStat(design);
+      addShipStat(stat);
+      design = ShipGenerator.createStarbase(this, ShipSize.SMALL);
       stat = new ShipStat(design);
       addShipStat(stat);
       break;

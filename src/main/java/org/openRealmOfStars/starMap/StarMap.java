@@ -388,7 +388,7 @@ public class StarMap {
           tiles[sx][sy] = anchor.getIndex();
           PlayerInfo board = players.getBoardPlayer();
           if (board != null) {
-            addSpacePirate(sx, sy, board);
+            addSpacePirateLair(sx, sy, board);
           }
           break;
         }
@@ -405,7 +405,7 @@ public class StarMap {
    * @param y Y Coordinate
    * @param playerInfo Board player info
    */
-  private void addSpacePirate(final int x, final int y,
+  public void addSpacePirate(final int x, final int y,
       final PlayerInfo playerInfo) {
     ShipStat[] stats = playerInfo.getShipStatList();
     ArrayList<ShipStat> listStats = new ArrayList<>();
@@ -433,6 +433,39 @@ public class StarMap {
       playerInfo.getMissions().add(mission);
     }
   }
+  /**
+   * Adds one pirate starbase into coordinate
+   * @param x X Coordinate
+   * @param y Y Coordinate
+   * @param playerInfo Board player info
+   */
+  public void addSpacePirateLair(final int x, final int y,
+      final PlayerInfo playerInfo) {
+    ShipStat[] stats = playerInfo.getShipStatList();
+    ArrayList<ShipStat> listStats = new ArrayList<>();
+    for (ShipStat stat : stats) {
+      Ship ship = new Ship(stat.getDesign());
+      if (ship.getTotalMilitaryPower() == 0 || !ship.isStarBase()) {
+        continue;
+      }
+      listStats.add(stat);
+    }
+    if (listStats.size() > 0) {
+      ShipStat stat = listStats.get(DiceGenerator.getRandom(
+          listStats.size() - 1));
+      Ship ship = new Ship(stat.getDesign());
+      stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+      stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+      Fleet fleet = new Fleet(ship, x, y);
+      playerInfo.getFleets().add(fleet);
+      fleet.setName(playerInfo.getFleets().generateUniqueName("pirate lair"));
+      Mission mission = new Mission(MissionType.DEPLOY_STARBASE,
+          MissionPhase.TREKKING, new Coordinate(x, y));
+      mission.setFleetName(fleet.getName());
+      playerInfo.getMissions().add(mission);
+    }
+  }
+
   /**
    * Create border starting solar system
    * @param config Galaxy Config

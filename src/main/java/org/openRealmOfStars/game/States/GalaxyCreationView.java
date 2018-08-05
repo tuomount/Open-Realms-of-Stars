@@ -234,19 +234,22 @@ public class GalaxyCreationView extends BlackPanel {
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    String[] spacePirates = new String[2];
-    spacePirates[0] = "Enabled";
-    spacePirates[1] = "Disabled";
+    String[] spacePirates = new String[7];
+    spacePirates[0] = "Disabled pirates and monsters";
+    spacePirates[1] = "Very rare 10%";
+    spacePirates[2] = "Rare 20%";
+    spacePirates[3] = "Few 40%";
+    spacePirates[4] = "Common 60%";
+    spacePirates[5] = "Very common 80%";
+    spacePirates[6] = "All over 100%";
     comboSpacePirates = new SpaceCombo<>(spacePirates);
-    if (this.config.isSpacePiratesEnabled()) {
-      comboSpacePirates.setSelectedIndex(0);
-    } else {
-      comboSpacePirates.setSelectedIndex(1);
-    }
+    comboSpacePirates.setSelectedIndex(this.config.getSpacePiratesLevel());
     comboSpacePirates.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboSpacePirates.addActionListener(listener);
-    comboSpacePirates.setToolTipText("If space pirates are enabled"
-        + " they can roam in space and also found from space anomalies.");
+    comboSpacePirates.setToolTipText("<html>How many percent of deep space"
+        + " anchors contain space pirates lair.<br>"
+        + "If disable there are no space monster or space pirates in "
+        + "space anomalies either.<html>");
     info.add(comboSpacePirates);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
@@ -545,20 +548,7 @@ public class GalaxyCreationView extends BlackPanel {
         break;
       }
       }
-      switch (comboSpacePirates.getSelectedIndex()) {
-        case 0: {
-          config.setSpacePiratesEnabled(true);
-          break;
-        }
-        case 1: {
-          config.setSpacePiratesEnabled(false);
-          break;
-        }
-        default: {
-          config.setSpacePiratesEnabled(true);
-          break;
-        }
-      }
+      config.setSpacePiratesLevel(comboSpacePirates.getSelectedIndex());
       switch (comboScoringVictory.getSelectedIndex()) {
       case 0: {
         // 200 turns

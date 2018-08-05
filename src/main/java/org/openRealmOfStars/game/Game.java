@@ -1254,7 +1254,7 @@ public class Game implements ActionListener {
   private void setPlayerInfo() {
     players = new PlayerList();
     int maxPlayers = galaxyConfig.getMaxPlayers();
-    if (galaxyConfig.isSpacePiratesEnabled()) {
+    if (galaxyConfig.getSpacePiratesLevel() > 0) {
       maxPlayers++;
     }
     for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
@@ -1267,7 +1267,7 @@ public class Game implements ActionListener {
       }
       players.addPlayer(info);
     }
-    if (galaxyConfig.isSpacePiratesEnabled()) {
+    if (galaxyConfig.getSpacePiratesLevel() > 0) {
       PlayerInfo info = new PlayerInfo(SpaceRace.SPACE_PIRATE, maxPlayers, 8);
       info.setBoard(true);
       info.setGovernment(GovernmentType.AI);

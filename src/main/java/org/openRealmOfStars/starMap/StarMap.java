@@ -375,8 +375,51 @@ public class StarMap {
     }
     // Create random deep space anchors
     loop = 0;
-
-    for (int i = 0; i < config.getMaxPlayers() * 3; i++) {
+    int numberOfAnchors = config.getMaxPlayers() * 3;
+    int pirateLairs = 0;
+    switch (config.getSpacePiratesLevel()) {
+      case 0: {
+        pirateLairs = 0;
+        break;
+      }
+      case 1: {
+        // 10%
+        pirateLairs = numberOfAnchors * 10 / 100;
+        if (pirateLairs < 1) {
+          pirateLairs = 1;
+        }
+        break;
+      }
+      case 2: {
+        // 20%
+        pirateLairs = numberOfAnchors * 20 / 100;
+        break;
+      }
+      case 3: {
+        // 40%
+        pirateLairs = numberOfAnchors * 40 / 100;
+        break;
+      }
+      case 4: {
+        // 60%
+        pirateLairs = numberOfAnchors * 60 / 100;
+        break;
+      }
+      case 5: {
+        // 80%
+        pirateLairs = numberOfAnchors * 80 / 100;
+        break;
+      }
+      case 6: {
+        // 100%
+        pirateLairs = numberOfAnchors;
+        break;
+      }
+      default: {
+        pirateLairs = 0;
+      }
+    }
+    for (int i = 0; i < numberOfAnchors; i++) {
       while (loop < MAX_LOOPS) {
         int sx = DiceGenerator.getRandom(1,
             maxX - 2);
@@ -387,7 +430,7 @@ public class StarMap {
           Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
           tiles[sx][sy] = anchor.getIndex();
           PlayerInfo board = players.getBoardPlayer();
-          if (board != null) {
+          if (board != null && i < pirateLairs) {
             addSpacePirateLair(sx, sy, board);
           }
           break;

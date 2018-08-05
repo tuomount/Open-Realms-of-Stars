@@ -1024,6 +1024,43 @@ public class AITurnView extends BlackPanel {
   /**
    * Update and add more pirates to starmap
    * @param pirates Board player info
+   * @param level to update
+   * @param justAddMore If true this will add just pirate military ships
+   */
+  public void updateSpacePirates(final PlayerInfo pirates,
+      final int level, final boolean justAddMore) {
+    if (!justAddMore) {
+      addRandomPirateTech(pirates, TechType.Combat, level);
+      addRandomPirateTech(pirates, TechType.Combat, level);
+      addRandomPirateTech(pirates, TechType.Combat, level);
+      addRandomPirateTech(pirates, TechType.Defense, level);
+      addRandomPirateTech(pirates, TechType.Defense, level);
+      addRandomPirateTech(pirates, TechType.Propulsion, level);
+      addRandomPirateTech(pirates, TechType.Propulsion, level);
+      addRandomPirateTech(pirates, TechType.Improvements, level);
+      addRandomPirateTech(pirates, TechType.Improvements, level);
+      addRandomPirateTech(pirates, TechType.Hulls, level);
+      addRandomPirateTech(pirates, TechType.Hulls, level);
+      addRandomPirateTech(pirates, TechType.Electrics, level);
+      addRandomPirateTech(pirates, TechType.Electrics, level);
+      Research.handleShipDesigns(pirates);
+    }
+    for (int i = 0; i < pirates.getFleets().getNumberOfFleets(); i++) {
+      Fleet fleet = pirates.getFleets().getByIndex(i);
+      if (fleet.isStarBaseDeployed()) {
+        game.getStarMap().addSpacePirate(fleet.getX(), fleet.getY(), pirates);
+        int value = DiceGenerator.getRandom(100);
+        if (value < 50 && !justAddMore) {
+          game.getStarMap().addSpacePirateLair(fleet.getX(), fleet.getY(),
+              pirates);
+        }
+      }
+    }
+  }
+
+  /**
+   * Update and add more pirates to starmap
+   * @param pirates Board player info
    * @param newState Current state which
    * @param justAddMore If true this will add just pirate military ships
    */
@@ -1036,6 +1073,7 @@ public class AITurnView extends BlackPanel {
       addRandomPirateTech(pirates, TechType.Defense, 2);
       addRandomPirateTech(pirates, TechType.Defense, 3);
       addRandomPirateTech(pirates, TechType.Defense, 3);
+      addRandomPirateTech(pirates, TechType.Improvements, 2);
       addRandomPirateTech(pirates, TechType.Propulsion, 2);
       addRandomPirateTech(pirates, TechType.Propulsion, 2);
       addRandomPirateTech(pirates, TechType.Propulsion, 3);
@@ -1058,6 +1096,8 @@ public class AITurnView extends BlackPanel {
       addRandomPirateTech(pirates, TechType.Defense, 4);
       addRandomPirateTech(pirates, TechType.Defense, 5);
       addRandomPirateTech(pirates, TechType.Defense, 5);
+      addRandomPirateTech(pirates, TechType.Improvements, 2);
+      addRandomPirateTech(pirates, TechType.Improvements, 3);
       addRandomPirateTech(pirates, TechType.Propulsion, 4);
       addRandomPirateTech(pirates, TechType.Propulsion, 4);
       addRandomPirateTech(pirates, TechType.Propulsion, 5);
@@ -1079,6 +1119,8 @@ public class AITurnView extends BlackPanel {
       addRandomPirateTech(pirates, TechType.Defense, 5);
       addRandomPirateTech(pirates, TechType.Defense, 6);
       addRandomPirateTech(pirates, TechType.Defense, 6);
+      addRandomPirateTech(pirates, TechType.Improvements, 3);
+      addRandomPirateTech(pirates, TechType.Improvements, 4);
       addRandomPirateTech(pirates, TechType.Propulsion, 5);
       addRandomPirateTech(pirates, TechType.Propulsion, 6);
       addRandomPirateTech(pirates, TechType.Propulsion, 6);
@@ -1101,6 +1143,8 @@ public class AITurnView extends BlackPanel {
       addRandomPirateTech(pirates, TechType.Defense, 7);
       addRandomPirateTech(pirates, TechType.Defense, 8);
       addRandomPirateTech(pirates, TechType.Defense, 8);
+      addRandomPirateTech(pirates, TechType.Improvements, 6);
+      addRandomPirateTech(pirates, TechType.Improvements, 7);
       addRandomPirateTech(pirates, TechType.Propulsion, 7);
       addRandomPirateTech(pirates, TechType.Propulsion, 7);
       addRandomPirateTech(pirates, TechType.Propulsion, 8);
@@ -1263,9 +1307,20 @@ public class AITurnView extends BlackPanel {
     game.getStarMap().setTurn(game.getStarMap().getTurn() + 1);
     GameLengthState newState = game.getStarMap().getGameLengthState();
     PlayerInfo board = game.getPlayers().getBoardPlayer();
-    if (oldState != newState && board != null) {
+    if (oldState != newState && board != null && game.getStarMap()
+        .getScoreVictoryTurn() <= 400) {
       //FIXME Add news about pirates
       updateSpacePirates(board, newState, false);
+    }
+    if (game.getStarMap().getScoreVictoryTurn() % 100 == 0
+        && board != null && game.getStarMap().getScoreVictoryTurn() > 400) {
+      int level = game.getStarMap().getScoreVictoryTurn() / 100;
+      level++;
+      if (level >= 10) {
+        level = 10;
+      }
+      //FIXME Add news about pirates
+      updateSpacePirates(board, level, false);
     }
     if (game.getStarMap().getTurn() % 50 == 0) {
       // Just adding more pirates

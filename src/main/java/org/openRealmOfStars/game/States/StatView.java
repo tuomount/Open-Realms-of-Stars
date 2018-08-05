@@ -74,7 +74,7 @@ public class StatView extends BlackPanel {
     StatisticPanel statPanel = new StatisticPanel();
     statPanel.setData(map.getNewsCorpData().getMilitary().getGalaxyData());
     statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
-    String[] names = new String[map.getPlayerList().getCurrentMaxPlayers()];
+    String[] names = new String[map.getPlayerList().getCurrentMaxRealms()];
     for (int i = 0; i < names.length; i++) {
       names[i] = map.getPlayerByIndex(i).getEmpireName();
     }
@@ -84,7 +84,7 @@ public class StatView extends BlackPanel {
     statPanel = new StatisticPanel();
     statPanel.setData(map.getNewsCorpData().getPlanets().getGalaxyData());
     statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
-    names = new String[map.getPlayerList().getCurrentMaxPlayers()];
+    names = new String[map.getPlayerList().getCurrentMaxRealms()];
     for (int i = 0; i < names.length; i++) {
       names[i] = map.getPlayerByIndex(i).getEmpireName();
     }
@@ -94,7 +94,7 @@ public class StatView extends BlackPanel {
     statPanel = new StatisticPanel();
     statPanel.setData(map.getNewsCorpData().getPopulation().getGalaxyData());
     statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
-    names = new String[map.getPlayerList().getCurrentMaxPlayers()];
+    names = new String[map.getPlayerList().getCurrentMaxRealms()];
     for (int i = 0; i < names.length; i++) {
       names[i] = map.getPlayerByIndex(i).getEmpireName();
     }
@@ -104,7 +104,7 @@ public class StatView extends BlackPanel {
     statPanel = new StatisticPanel();
     statPanel.setData(map.getNewsCorpData().getCultural().getGalaxyData());
     statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
-    names = new String[map.getPlayerList().getCurrentMaxPlayers()];
+    names = new String[map.getPlayerList().getCurrentMaxRealms()];
     for (int i = 0; i < names.length; i++) {
       names[i] = map.getPlayerByIndex(i).getEmpireName();
     }
@@ -117,7 +117,7 @@ public class StatView extends BlackPanel {
     statPanel = new StatisticPanel();
     statPanel.setData(map.getNewsCorpData().getCredit().getGalaxyData());
     statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
-    names = new String[map.getPlayerList().getCurrentMaxPlayers()];
+    names = new String[map.getPlayerList().getCurrentMaxRealms()];
     for (int i = 0; i < names.length; i++) {
       names[i] = map.getPlayerByIndex(i).getEmpireName();
     }
@@ -127,7 +127,7 @@ public class StatView extends BlackPanel {
     statPanel = new StatisticPanel();
     statPanel.setData(map.getNewsCorpData().getResearch().getGalaxyData());
     statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
-    names = new String[map.getPlayerList().getCurrentMaxPlayers()];
+    names = new String[map.getPlayerList().getCurrentMaxRealms()];
     for (int i = 0; i < names.length; i++) {
       names[i] = map.getPlayerByIndex(i).getEmpireName();
     }
@@ -137,7 +137,7 @@ public class StatView extends BlackPanel {
     statPanel = new StatisticPanel();
     statPanel.setData(map.getNewsCorpData().generateScores().getGalaxyData());
     statPanel.setTurnDistance(NewsCorpData.NEWS_PUBLISH_RATE);
-    names = new String[map.getPlayerList().getCurrentMaxPlayers()];
+    names = new String[map.getPlayerList().getCurrentMaxRealms()];
     for (int i = 0; i < names.length; i++) {
       names[i] = map.getPlayerByIndex(i).getEmpireName();
     }
@@ -188,7 +188,7 @@ public class StatView extends BlackPanel {
   public BlackPanel createRelationPanel(final StarMap map,
       final String[] names) {
     BlackPanel panel = new BlackPanel();
-    int rowsNCols = map.getPlayerList().getCurrentMaxPlayers() + 1;
+    int rowsNCols = map.getPlayerList().getCurrentMaxRealms() + 1;
     panel.setLayout(new GridLayout(rowsNCols, rowsNCols));
     TransparentLabel label = new TransparentLabel(null, "", false, true);
     panel.add(label);

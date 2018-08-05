@@ -586,7 +586,8 @@ public class PlanetHandlingTest {
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = Mockito.mock(PlayerList.class);
-    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(8);
+    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(9);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(8);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     int score = PlanetHandling.scoreSpyShip(20, ship, info, map,
         Attitude.BACKSTABBING);
@@ -621,7 +622,8 @@ public class PlanetHandlingTest {
     Planet[] emptyPlanets = new Planet[0];
     Mockito.when(map.getPlanetListSeenByOther(5, info)).thenReturn(planets);
     PlayerList playerList = Mockito.mock(PlayerList.class);
-    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(8);
+    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(9);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(8);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     Mockito.when(map.getPlanetListSeenByOther(0, info)).thenReturn(planets2);
     Mission mission = PlanetHandling.createSpyShipMission(info, map);

@@ -271,7 +271,7 @@ public class StarMap {
         solarSystem[i][j] = 0;
       }
     }
-    newsCorpData = new NewsCorpData(players.getCurrentMaxPlayers());
+    newsCorpData = new NewsCorpData(players.getCurrentMaxRealms());
     turn = 0;
     aiTurnNumber = 0;
     aiFleet = null;
@@ -375,8 +375,51 @@ public class StarMap {
     }
     // Create random deep space anchors
     loop = 0;
-
-    for (int i = 0; i < config.getMaxPlayers() * 3; i++) {
+    int numberOfAnchors = config.getMaxPlayers() * 3;
+    int pirateLairs = 0;
+    switch (config.getSpacePiratesLevel()) {
+      case 0: {
+        pirateLairs = 0;
+        break;
+      }
+      case 1: {
+        // 10%
+        pirateLairs = numberOfAnchors * 10 / 100;
+        if (pirateLairs < 1) {
+          pirateLairs = 1;
+        }
+        break;
+      }
+      case 2: {
+        // 20%
+        pirateLairs = numberOfAnchors * 20 / 100;
+        break;
+      }
+      case 3: {
+        // 40%
+        pirateLairs = numberOfAnchors * 40 / 100;
+        break;
+      }
+      case 4: {
+        // 60%
+        pirateLairs = numberOfAnchors * 60 / 100;
+        break;
+      }
+      case 5: {
+        // 80%
+        pirateLairs = numberOfAnchors * 80 / 100;
+        break;
+      }
+      case 6: {
+        // 100%
+        pirateLairs = numberOfAnchors;
+        break;
+      }
+      default: {
+        pirateLairs = 0;
+      }
+    }
+    for (int i = 0; i < numberOfAnchors; i++) {
       while (loop < MAX_LOOPS) {
         int sx = DiceGenerator.getRandom(1,
             maxX - 2);
@@ -386,6 +429,10 @@ public class StarMap {
             && getPlanetByCoordinate(sx, sy) == null) {
           Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
           tiles[sx][sy] = anchor.getIndex();
+          PlayerInfo board = players.getBoardPlayer();
+          if (board != null && i < pirateLairs) {
+            addSpacePirateLair(sx, sy, board);
+          }
           break;
         }
         loop++;
@@ -393,6 +440,77 @@ public class StarMap {
     }
     // No need to have generator after creation
     nameGenerator = null;
+  }
+
+  /**
+   * Adds one pirate ship into coordinate
+   * @param x X Coordinate
+   * @param y Y Coordinate
+   * @param playerInfo Board player info
+   */
+  public void addSpacePirate(final int x, final int y,
+      final PlayerInfo playerInfo) {
+    ShipStat[] stats = playerInfo.getShipStatList();
+    ArrayList<ShipStat> listStats = new ArrayList<>();
+    for (ShipStat stat : stats) {
+      if (!stat.isObsolete()) {
+        Ship ship = new Ship(stat.getDesign());
+        if (ship.getTotalMilitaryPower() == 0 || ship.isStarBase()) {
+          continue;
+        }
+        listStats.add(stat);
+      }
+    }
+    if (listStats.size() > 0) {
+      ShipStat stat = listStats.get(DiceGenerator.getRandom(
+          listStats.size() - 1));
+      Ship ship = new Ship(stat.getDesign());
+      stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+      stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+      Fleet fleet = new Fleet(ship, x, y);
+      playerInfo.getFleets().add(fleet);
+      fleet.setName(playerInfo.getFleets().generateUniqueName("pirate"));
+      Sun sun = getAboutNearestSolarSystem(x, y, playerInfo, fleet, null);
+      Mission mission = new Mission(MissionType.PRIVATEER,
+          MissionPhase.TREKKING, sun.getCenterCoordinate());
+      mission.setFleetName(fleet.getName());
+      mission.setSunName(sun.getName());
+      playerInfo.getMissions().add(mission);
+    }
+  }
+  /**
+   * Adds one pirate starbase into coordinate
+   * @param x X Coordinate
+   * @param y Y Coordinate
+   * @param playerInfo Board player info
+   */
+  public void addSpacePirateLair(final int x, final int y,
+      final PlayerInfo playerInfo) {
+    ShipStat[] stats = playerInfo.getShipStatList();
+    ArrayList<ShipStat> listStats = new ArrayList<>();
+    for (ShipStat stat : stats) {
+      if (!stat.isObsolete()) {
+        Ship ship = new Ship(stat.getDesign());
+        if (ship.getTotalMilitaryPower() == 0 || !ship.isStarBase()) {
+          continue;
+        }
+        listStats.add(stat);
+      }
+    }
+    if (listStats.size() > 0) {
+      ShipStat stat = listStats.get(DiceGenerator.getRandom(
+          listStats.size() - 1));
+      Ship ship = new Ship(stat.getDesign());
+      stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+      stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+      Fleet fleet = new Fleet(ship, x, y);
+      playerInfo.getFleets().add(fleet);
+      fleet.setName(playerInfo.getFleets().generateUniqueName("pirate lair"));
+      Mission mission = new Mission(MissionType.DEPLOY_STARBASE,
+          MissionPhase.TREKKING, new Coordinate(x, y));
+      mission.setFleetName(fleet.getName());
+      playerInfo.getMissions().add(mission);
+    }
   }
 
   /**
@@ -578,7 +696,7 @@ public class StarMap {
       }
       NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
       newsCorpData = newsCorpRepo.restoreNewsCorp(dis,
-          players.getCurrentMaxPlayers());
+          players.getCurrentMaxRealms());
       try {
         history = History.readFromStream(dis);
       } catch (IOException e) {
@@ -1677,7 +1795,8 @@ public class StarMap {
    * after each turn.
    */
   public void updateEspionage() {
-    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
+    int maxPlayers = players.getCurrentMaxRealms();
+    for (int i = 0; i < maxPlayers; i++) {
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null) {
         info.getEspionage().clearAllEspionageBonuses();
@@ -1701,11 +1820,11 @@ public class StarMap {
       }
     }
     // Check for trade espionage aka spy trade
-    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
+    for (int i = 0; i < maxPlayers; i++) {
       // Go through all players
       PlayerInfo info = players.getPlayerInfoByIndex(i);
       if (info != null) {
-        for (int j = 0; j < players.getCurrentMaxPlayers(); j++) {
+        for (int j = 0; j < maxPlayers; j++) {
           if (j != i && info.getDiplomacy().isAlliance(j)
               && !info.getDiplomacy().isSpyTrade(j)) {
             // Alliance so automatic SPY trade
@@ -1771,7 +1890,8 @@ public class StarMap {
       final int second) {
     int result = getMilitaryEstimation(first, second);
     PlayerInfo secondInfo = players.getPlayerInfoByIndex(second);
-    for (int i = 0; i < players.getCurrentMaxPlayers(); i++) {
+    int maxPlayer = players.getCurrentMaxRealms();
+    for (int i = 0; i < maxPlayer; i++) {
       if (i != first && i != second
           && secondInfo.getDiplomacy().isDefensivePact(i)) {
         result = result + getMilitaryEstimation(first, i);
@@ -2239,7 +2359,7 @@ public class StarMap {
    */
   public void nextPlayer() {
     if (players != null) {
-      if (players.getCurrentPlayer() + 1 == players.getCurrentMaxPlayers()) {
+      if (players.getCurrentPlayer() + 1 == players.getCurrentMaxRealms()) {
         players.setCurrentPlayer(0);
         setDebug(false);
       } else {
@@ -2410,8 +2530,8 @@ public class StarMap {
    * @return True if index player is stronger than compare
    */
   public boolean isPlayerStrongerThan(final int index, final int compare) {
-    if (index >= 0 && index < getPlayerList().getCurrentMaxPlayers()
-        && compare >= 0 && compare < getPlayerList().getCurrentMaxPlayers()
+    if (index >= 0 && index < getPlayerList().getCurrentMaxRealms()
+        && compare >= 0 && compare < getPlayerList().getCurrentMaxRealms()
         && compare != index) {
       int power = newsCorpData.getMilitary().getLatest(index);
       int powerCompare = newsCorpData.getMilitary().getLatest(compare);

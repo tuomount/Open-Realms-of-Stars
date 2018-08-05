@@ -90,7 +90,13 @@ public enum SpaceRace {
   HOMARIANS(8, "Homarians", "Homarian", "Homarians are very strong creatures. "
       + "They have humanoid from but they have very thick and "
       + "hard exoskeleton. Due their strength they are good in "
-      + "physical tasks.");
+      + "physical tasks."),
+  /**
+   * Humans are about average in everything.
+   */
+  SPACE_PIRATE(9, "Space Pirates", "Space pirate", "Generic space pirate which"
+      + "are aggressive and try cause trouble. Stats are identical to humans.");
+
 
 
 
@@ -146,6 +152,7 @@ public enum SpaceRace {
   public int getResearchSpeed() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return 100;
     case MECHIONS:
       return 50;
@@ -181,6 +188,7 @@ public enum SpaceRace {
       case MECHIONS:
         return Attitude.LOGICAL;
       case SPORKS:
+      case SPACE_PIRATE:
         return Attitude.AGGRESSIVE;
       case GREYANS:
         return Attitude.SCIENTIFIC;
@@ -206,6 +214,7 @@ public enum SpaceRace {
   public int getMaxRad() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return 4;
     case MECHIONS:
       return 8;
@@ -252,6 +261,9 @@ public enum SpaceRace {
       return GuiStatics.IMAGE_SCAURIAN_RACE;
     case HOMARIANS:
       return GuiStatics.IMAGE_HOMARIAN_RACE;
+    case SPACE_PIRATE:
+      //FIXME
+      return GuiStatics.IMAGE_HUMAN_RACE;
     default:
       return GuiStatics.IMAGE_CENTAUR_RACE;
     }
@@ -283,6 +295,9 @@ public enum SpaceRace {
         return start + "resources/images/scaurian_race.png";
       case HOMARIANS:
         return start + "resources/images/homarian_race.png";
+      case SPACE_PIRATE:
+        //FIXME
+        return start + "resources/images/human_race.png";
       default:
         return start + "resources/images/centaur_race.png";
     }
@@ -315,6 +330,7 @@ public enum SpaceRace {
   public int getMiningSpeed() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return 100;
     case MECHIONS:
       return 150;
@@ -344,6 +360,7 @@ public enum SpaceRace {
   public int getCultureSpeed() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return 100;
     case MECHIONS:
       return 50;
@@ -373,6 +390,7 @@ public enum SpaceRace {
   public int getTrooperPower() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return 10;
     case MECHIONS:
       return 12;
@@ -402,6 +420,7 @@ public enum SpaceRace {
   public int getProductionSpeed() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return 100;
     case MECHIONS:
       return 100;
@@ -431,6 +450,7 @@ public enum SpaceRace {
   public int getGrowthSpeed() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return 100;
     case MECHIONS:
       return 0;
@@ -460,6 +480,7 @@ public enum SpaceRace {
   public int getFoodSpeed() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return 100;
     case MECHIONS:
       return 0;
@@ -489,6 +510,7 @@ public enum SpaceRace {
   public int getFoodRequire() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return 100;
     case MECHIONS:
       return 0;
@@ -518,6 +540,7 @@ public enum SpaceRace {
   public int getDiplomacyBonus() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return 2;
     case MECHIONS:
       return -2;
@@ -552,6 +575,7 @@ public enum SpaceRace {
   public int getWarFatigueResistance() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return 60;
     case MECHIONS:
       return 50;
@@ -581,6 +605,7 @@ public enum SpaceRace {
   public int getExtraHullPoint() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return 0;
     case MECHIONS:
       return 0;
@@ -610,6 +635,7 @@ public enum SpaceRace {
   public int getAIDefenseUpdate() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return 15;
     case MECHIONS:
       return 15;
@@ -639,6 +665,7 @@ public enum SpaceRace {
   public int getAIExploringAmount() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return 30;
     case MECHIONS:
       return 30;
@@ -668,6 +695,7 @@ public enum SpaceRace {
   public int getAIMinimumAttackShips() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return 3;
     case MECHIONS:
       return 3;
@@ -698,6 +726,7 @@ public enum SpaceRace {
   public int getAIMinimumConquerShips() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return 1;
     case MECHIONS:
       return 1;
@@ -744,6 +773,9 @@ public enum SpaceRace {
       return MusicPlayer.INTERPLANETARY_ODYSSEY;
     case HOMARIANS:
       return MusicPlayer.MALLOGA_BALLING;
+    case SPACE_PIRATE:
+      // FIXME
+      return MusicPlayer.MALLOGA_BALLING;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
     }
@@ -755,6 +787,7 @@ public enum SpaceRace {
   public boolean hasCreditRush() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return true;
     case MECHIONS:
       return false;
@@ -783,6 +816,7 @@ public enum SpaceRace {
   public boolean hasPopulationRush() {
     switch (this) {
     case HUMAN:
+    case SPACE_PIRATE:
       return false;
     case MECHIONS:
       return true;

@@ -99,6 +99,11 @@ public class GalaxyCreationView extends BlackPanel {
   private SpaceCombo<String> comboRoguePlanets;
 
   /**
+   * ComboBox for space pirates
+   */
+  private SpaceCombo<String> comboSpacePirates;
+
+  /**
    * Galaxy config
    */
   private GalaxyConfig config;
@@ -223,7 +228,30 @@ public class GalaxyCreationView extends BlackPanel {
         + " of solar systems.");
     info.add(comboRoguePlanets);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
+    xinvis.add(info);
 
+    label = new SpaceLabel("Space pirates:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    String[] spacePirates = new String[7];
+    spacePirates[0] = "Disabled pirates and monsters";
+    spacePirates[1] = "Very rare 10%";
+    spacePirates[2] = "Rare 20%";
+    spacePirates[3] = "Few 40%";
+    spacePirates[4] = "Common 60%";
+    spacePirates[5] = "Very common 80%";
+    spacePirates[6] = "All over 100%";
+    comboSpacePirates = new SpaceCombo<>(spacePirates);
+    comboSpacePirates.setSelectedIndex(this.config.getSpacePiratesLevel());
+    comboSpacePirates.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboSpacePirates.addActionListener(listener);
+    comboSpacePirates.setToolTipText("<html>How many percent of deep space"
+        + " anchors contain space pirates lair.<br>"
+        + "If disable there are no space monster or space pirates in "
+        + "space anomalies either.<html>");
+    info.add(comboSpacePirates);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
     xinvis.add(Box.createRigidArea(new Dimension(200, 5)));
 
@@ -520,6 +548,7 @@ public class GalaxyCreationView extends BlackPanel {
         break;
       }
       }
+      config.setSpacePiratesLevel(comboSpacePirates.getSelectedIndex());
       switch (comboScoringVictory.getSelectedIndex()) {
       case 0: {
         // 200 turns

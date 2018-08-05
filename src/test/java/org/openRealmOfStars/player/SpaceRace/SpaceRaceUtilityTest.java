@@ -114,7 +114,7 @@ public class SpaceRaceUtilityTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testFullDescriptions() {
-    String[] expectedResult = new String[SpaceRace.values().length];
+    String[] expectedResult = new String[SpaceRaceUtility.RACE_SELECTION.length];
     expectedResult[0] = "### Humans\n"+
         "Humans are great diplomats but they are about average in everything else.\n"+
         "* Max radiation: 4\n"+
@@ -263,7 +263,7 @@ public class SpaceRaceUtilityTest {
         + "* War resistance: 50\n"
         + "* Rush: Population\n"
         + "* Special: Starts with 5 population";
-    for (int i = 0; i <  SpaceRace.values().length; i++) {
+    for (int i = 0; i <  SpaceRaceUtility.RACE_SELECTION.length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByIndex(i);
       assertEquals(expectedResult[i],race.getFullDescription(true, false));
       if (i == 0) {

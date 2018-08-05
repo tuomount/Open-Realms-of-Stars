@@ -109,11 +109,25 @@ public class PlayerList {
   }
 
   /**
-   * Get maximum players
+   * Get maximum players, including humans and board players
    * @return The number of players
    */
   public int getCurrentMaxPlayers() {
     return list.size();
+  }
+
+  /**
+   * Get number of player including only human and AI players.
+   * @return The number of players
+   */
+  public int getCurrentMaxRealms() {
+    int count = 0;
+    for (PlayerInfo info : list) {
+      if (!info.isBoard()) {
+        count++;
+      }
+    }
+    return count;
   }
 
   /**
@@ -132,6 +146,20 @@ public class PlayerList {
    */
   public int getCurrentPlayer() {
     return currentPlayer;
+  }
+
+  /**
+   * Get board player info
+   * @return The board player info or null
+   */
+  public PlayerInfo getBoardPlayer() {
+    for (int i = list.size() - 1; i > -1; i--) {
+      PlayerInfo info = list.get(i);
+      if (info.isBoard()) {
+        return info;
+      }
+    }
+    return null;
   }
 
   /**
@@ -222,13 +250,22 @@ public class PlayerList {
    * Calculate initial diplomacy Bonuses for all players.
    */
   public void calculateInitialDiplomacyBonuses() {
-    for (int i = 0; i < getCurrentMaxPlayers(); i++) {
+    int maxPlayers = getCurrentMaxPlayers();
+    for (int i = 0; i < maxPlayers; i++) {
       PlayerInfo info = getPlayerInfoByIndex(i);
-      for (int j = 0; j < getCurrentMaxPlayers(); j++) {
+      for (int j = 0; j < maxPlayers; j++) {
         DiplomacyBonusList bonus = info.getDiplomacy().getDiplomacyList(j);
         if (bonus != null) {
           PlayerInfo info2 = getPlayerInfoByIndex(j);
           bonus.addBonus(DiplomacyBonusType.DIPLOMACY_BONUS, info2.getRace());
+          if (info2.isBoard()) {
+            // Board AI has war against every body
+            bonus.addBonus(DiplomacyBonusType.IN_WAR, info.getRace());
+          }
+          if (info.isBoard()) {
+            // Board AI has war against every body
+            bonus.addBonus(DiplomacyBonusType.IN_WAR, info.getRace());
+          }
           GovernmentType government = info2.getGovernment();
           DiplomacyBonus diplomacyBonus = new DiplomacyBonus(
               DiplomacyBonusType.DIPLOMACY_BONUS, info2.getRace());

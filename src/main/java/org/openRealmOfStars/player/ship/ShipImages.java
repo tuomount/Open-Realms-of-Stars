@@ -73,6 +73,11 @@ public final class ShipImages {
   private static ShipImage homarians;
 
   /**
+   * Space pirate ships
+   */
+  private static ShipImage spacePirate;
+
+  /**
    * Hiding the constructor
    */
   private ShipImages() {
@@ -92,6 +97,7 @@ public final class ShipImages {
     teuthidaes = new ShipImage("teuthidaeships.png");
     scaurians = new ShipImage("scaurianships.png");
     homarians = new ShipImage("homarianships.png");
+    spacePirate = new ShipImage("privateerships.png");
   }
 
   /**
@@ -194,6 +200,17 @@ public final class ShipImages {
   }
 
   /**
+   * Get Space pirate ship images
+   * @return Space pirate ship images
+   */
+  public static ShipImage spacePirates() {
+    if (spacePirate == null) {
+      initImages();
+    }
+    return spacePirate;
+  }
+
+  /**
    * Get ship images for certain race
    * @param race Space race which images to get
    * @return ShipImage
@@ -218,6 +235,8 @@ public final class ShipImages {
       return scaurians();
     case HOMARIANS:
       return homarians();
+    case SPACE_PIRATE:
+      return spacePirates();
     default:
       return humans();
     }

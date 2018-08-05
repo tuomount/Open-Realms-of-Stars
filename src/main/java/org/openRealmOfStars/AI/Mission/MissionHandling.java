@@ -156,6 +156,10 @@ public final class MissionHandling {
         if (fleet.getaStarSearch() == null) {
           Sun sun = null;
           int leastLiked = info.getDiplomacy().getLeastLiking();
+          if (info.isBoard()) {
+            leastLiked = DiceGenerator.getRandom(
+                game.getStarMap().getPlayerList().getCurrentMaxRealms() - 1);
+          }
           sun = game.getStarMap().getNearestSolarSystemForLeastLiked(
               fleet.getX(), fleet.getY(), info, leastLiked);
           if (!sun.getName().equals(mission.getSunName())) {

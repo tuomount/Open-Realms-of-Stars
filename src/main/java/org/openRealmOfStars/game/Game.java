@@ -59,6 +59,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.TradeRoute;
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.message.ChangeMessage;
 import org.openRealmOfStars.player.message.ChangeMessageFleet;
 import org.openRealmOfStars.player.message.ChangeMessagePlanet;
@@ -1222,13 +1223,13 @@ public class Game implements ActionListener {
    */
   private void makeNewGame() {
     setPlayerInfo();
-      starMap = new StarMap(galaxyConfig, players);
-      starMap.updateStarMapOnStartGame();
-      NewsCorpData corpData = starMap.getNewsCorpData();
-      players.setCurrentPlayer(0);
-      setNullView();
-      calculateCorpData(corpData);
-      changeGameState(GameState.STARMAP);
+    starMap = new StarMap(galaxyConfig, players);
+    starMap.updateStarMapOnStartGame();
+    NewsCorpData corpData = starMap.getNewsCorpData();
+    players.setCurrentPlayer(0);
+    setNullView();
+    calculateCorpData(corpData);
+    changeGameState(GameState.STARMAP);
 
   }
 
@@ -1238,13 +1239,12 @@ public class Game implements ActionListener {
    * @param corpData various calculations
    */
   private void calculateCorpData(final NewsCorpData corpData) {
-      corpData.calculateCredit(players);
-      corpData.calculateCulture(starMap.getPlanetList(), players);
-      corpData.calculateMilitary(players, false);
-      corpData.calculatePlanets(starMap.getPlanetList());
-      corpData.calculatePopulation(starMap.getPlanetList());
-      corpData.calculateResearch(players);
-
+    corpData.calculateCredit(players);
+    corpData.calculateCulture(starMap.getPlanetList(), players);
+    corpData.calculateMilitary(players, false);
+    corpData.calculatePlanets(starMap.getPlanetList());
+    corpData.calculatePopulation(starMap.getPlanetList());
+    corpData.calculateResearch(players);
   }
 
 
@@ -1253,14 +1253,25 @@ public class Game implements ActionListener {
    */
   private void setPlayerInfo() {
     players = new PlayerList();
+    int maxPlayers = galaxyConfig.getMaxPlayers();
+    if (galaxyConfig.getSpacePiratesLevel() > 0) {
+      maxPlayers++;
+    }
     for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
       PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i),
-         galaxyConfig.getMaxPlayers(), i);
+          maxPlayers, i);
       info.setGovernment(galaxyConfig.getPlayerGovernment(i));
       info.setEmpireName(galaxyConfig.getPlayerName(i));
       if (i == 0) {
         info.setHuman(true);
       }
+      players.addPlayer(info);
+    }
+    if (galaxyConfig.getSpacePiratesLevel() > 0) {
+      PlayerInfo info = new PlayerInfo(SpaceRace.SPACE_PIRATE, maxPlayers, 8);
+      info.setBoard(true);
+      info.setGovernment(GovernmentType.AI);
+      info.setEmpireName("Space pirates");
       players.addPlayer(info);
     }
     players.calculateInitialDiplomacyBonuses();

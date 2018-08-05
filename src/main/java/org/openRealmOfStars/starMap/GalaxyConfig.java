@@ -156,6 +156,18 @@ public class GalaxyConfig {
    */
   private int scoringDiplomacy;
 
+  /**
+   * Space pirates level
+   * 0 Disabled
+   * 1 Very rare 10%
+   * 2 Rare 20%
+   * 3 Few 40%
+   * 4 Common 60%
+   * 5 Very common 80%
+   * 6 All over 100%
+   */
+  private int spacePiratesLevel;
+
 /**
    * Constructor for galaxy config
    */
@@ -163,6 +175,7 @@ public class GalaxyConfig {
     sizeX = 75;
     sizeY = 75;
     this.galaxySizeIndex = 1;
+    this.spacePiratesLevel = 1;
     setChanceForPlanetaryEvent(10);
     setNumberOfRoguePlanets(ROGUE_PLANETS_FEW);
     setScoringVictoryTurns(400);
@@ -515,6 +528,24 @@ public class GalaxyConfig {
    */
   public void setNumberOfRoguePlanets(final int numberOfRoguePlanets) {
     this.numberOfRoguePlanets = numberOfRoguePlanets;
+  }
+
+  /**
+   * Set space pirates activity level
+   * @param value 0 to disable Up to 6
+   */
+  public void setSpacePiratesLevel(final int value) {
+    if (value >= 0 && value <= 6) {
+      this.spacePiratesLevel = value;
+    }
+  }
+
+  /**
+   * Get space pirates activity level
+   * @return Space pirates activity level
+   */
+  public int getSpacePiratesLevel() {
+    return this.spacePiratesLevel;
   }
 
 }

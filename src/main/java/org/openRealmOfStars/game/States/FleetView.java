@@ -343,7 +343,9 @@ public class FleetView extends BlackPanel {
     hailBtn.addActionListener(listener);
     hailBtn.setEnabled(!interactive);
     if (!interactiveView && this.fleet != null) {
-      if (this.fleet.isPrivateerFleet()) {
+      if (this.fleet.isPrivateerFleet()
+          || this.fleet.getFirstShip().getHull().getRace()
+          == SpaceRace.SPACE_PIRATE) {
         hailBtn.setEnabled(false);
       } else {
         hailBtn.setEnabled(true);
@@ -446,7 +448,9 @@ public class FleetView extends BlackPanel {
       }
     }
     if (!interactiveView && fleet != null) {
-      if (fleet.isPrivateerFleet()) {
+      if (fleet.isPrivateerFleet()
+          || this.fleet.getFirstShip().getHull().getRace()
+          == SpaceRace.SPACE_PIRATE) {
         hailBtn.setEnabled(false);
       } else {
         hailBtn.setEnabled(true);

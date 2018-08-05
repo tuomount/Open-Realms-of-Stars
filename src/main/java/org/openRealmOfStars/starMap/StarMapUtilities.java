@@ -139,7 +139,8 @@ public final class StarMapUtilities {
   private static void addRepuation(final StarMap starMap,
       final PlayerInfo actor, final DiplomacyBonusType bonusType) {
     int index = starMap.getPlayerList().getIndex(actor);
-    for (int i = 0; i < starMap.getPlayerList().getCurrentMaxPlayers(); i++) {
+    int maxPlayer = starMap.getPlayerList().getCurrentMaxRealms();
+    for (int i = 0; i < maxPlayer; i++) {
       PlayerInfo player = starMap.getPlayerByIndex(i);
       if (i != index) {
         DiplomacyBonusList list = player.getDiplomacy()

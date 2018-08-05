@@ -53,6 +53,7 @@ public class DiplomaticTradeTest {
   private StarMap generateMap(final int maxPlayer) {
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(maxPlayer);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(maxPlayer);
 
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(map.getPlayerList()).thenReturn(players);
@@ -67,6 +68,7 @@ public class DiplomaticTradeTest {
       final int powerDifference) {
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
     PlayerInfo player1 = new PlayerInfo(race,2,0);
     TechList tech1 = player1.getTechList();
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
@@ -129,6 +131,7 @@ public class DiplomaticTradeTest {
   public void testTechListGeneration() {
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
     PlayerInfo player1 = Mockito.mock(PlayerInfo.class);
     TechList tech1 = new TechList();
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
@@ -171,6 +174,7 @@ public class DiplomaticTradeTest {
   public void testFirstTradeGeneration() {
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(3);
     PlayerInfo player1 = new PlayerInfo(SpaceRace.HUMAN,2,0);
     TechList tech1 = player1.getTechList();
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
@@ -215,6 +219,7 @@ public class DiplomaticTradeTest {
   public void testCustomTradeGeneration() {
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
     PlayerInfo player1 = new PlayerInfo(SpaceRace.HUMAN, 0, 2);
     TechList tech1 = player1.getTechList();
     tech1.addTech(new Tech("MilTech1", TechType.Combat, 1));
@@ -287,7 +292,8 @@ public class DiplomaticTradeTest {
     Mockito.when(coord2.getX()).thenReturn(6);
     Mockito.when(coord2.getY()).thenReturn(5);
     PlayerList players = Mockito.mock(PlayerList.class);
-    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(3);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
     Espionage espionage = Mockito.mock(Espionage.class);
     EspionageList espionageList = Mockito.mock(EspionageList.class);
     Mockito.when(espionage.getByIndex(Mockito.anyInt())).thenReturn(espionageList);
@@ -345,6 +351,7 @@ public class DiplomaticTradeTest {
     Coordinate coord = Mockito.mock(Coordinate.class);
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
     PlayerInfo player1 = Mockito.mock(PlayerInfo.class);
     Mockito.when(player1.getSectorVisibility(coord)).thenReturn((byte) 1);
     TechList tech1 = new TechList();
@@ -766,6 +773,7 @@ public class DiplomaticTradeTest {
     Coordinate coord = Mockito.mock(Coordinate.class);
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
     Fleet fleet = Mockito.mock(Fleet.class);
     Mockito.when(fleet.getCoordinate()).thenReturn(coord);
     FleetList fleetList = new FleetList();

@@ -622,6 +622,7 @@ public class NewsFactoryTest {
     Mockito.when(map.getPlayerByIndex(1)).thenReturn(info2);
     PlayerList players = Mockito.mock(PlayerList.class);
     Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info2);
     Mockito.when(map.getPlayerList()).thenReturn(players);
@@ -752,6 +753,7 @@ public class NewsFactoryTest {
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = Mockito.mock(PlayerList.class);
     Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(4);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
@@ -820,6 +822,7 @@ public class NewsFactoryTest {
   public void testCultureVictoryDisabled() {
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(5);
     Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     Planet planet = Mockito.mock(Planet.class);
@@ -889,7 +892,8 @@ public class NewsFactoryTest {
   public void testCultureVictoryNoVictory() {
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = Mockito.mock(PlayerList.class);
-    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(4);
+    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(5);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
@@ -957,7 +961,8 @@ public class NewsFactoryTest {
   public void testCultureVictoryAlliance() {
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = Mockito.mock(PlayerList.class);
-    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(5);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(4);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
@@ -1034,6 +1039,7 @@ public class NewsFactoryTest {
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = Mockito.mock(PlayerList.class);
     Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(4);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");
@@ -1096,6 +1102,7 @@ public class NewsFactoryTest {
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = Mockito.mock(PlayerList.class);
     Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(4);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Planet I");

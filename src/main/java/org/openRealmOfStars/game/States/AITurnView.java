@@ -1049,8 +1049,7 @@ public class AITurnView extends BlackPanel {
       Fleet fleet = pirates.getFleets().getByIndex(i);
       if (fleet.isStarBaseDeployed()) {
         game.getStarMap().addSpacePirate(fleet.getX(), fleet.getY(), pirates);
-        int value = DiceGenerator.getRandom(100);
-        if (value < 50 && !justAddMore) {
+        if (!justAddMore) {
           game.getStarMap().addSpacePirateLair(fleet.getX(), fleet.getY(),
               pirates);
         }
@@ -1166,8 +1165,7 @@ public class AITurnView extends BlackPanel {
       Fleet fleet = pirates.getFleets().getByIndex(i);
       if (fleet.isStarBaseDeployed()) {
         game.getStarMap().addSpacePirate(fleet.getX(), fleet.getY(), pirates);
-        int value = DiceGenerator.getRandom(100);
-        if (value < 50 && !justAddMore) {
+        if (!justAddMore) {
           game.getStarMap().addSpacePirateLair(fleet.getX(), fleet.getY(),
               pirates);
         }

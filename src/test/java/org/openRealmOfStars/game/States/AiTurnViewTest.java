@@ -17,7 +17,9 @@ import org.openRealmOfStars.game.GameState;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
@@ -162,6 +164,46 @@ public class AiTurnViewTest {
     assertEquals(MissionType.GATHER, listMission.getType());
     assertEquals(Mission.ASSAULT_TYPE, listMission.getShipType());
     assertEquals(5, list.getSize());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUpdatePirate() {
+    Game game = Mockito.mock(Game.class);
+    AITurnView view = new AITurnView(game);
+    int level = 3;
+    PlayerInfo pirates = new PlayerInfo(SpaceRace.SPACE_PIRATE, 9, 8);
+    Tech tech = pirates.getTechList().getBestWeapon();
+    assertEquals(true, tech.getLevel() <= 2);
+    view.updateSpacePirates(pirates, level, false);
+    tech = pirates.getTechList().getBestWeapon();
+    assertEquals(true, tech.getLevel() == 3);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUpdatePirate2() {
+    Game game = Mockito.mock(Game.class);
+    AITurnView view = new AITurnView(game);
+    PlayerInfo pirates = new PlayerInfo(SpaceRace.SPACE_PIRATE, 9, 8);
+    Tech tech = pirates.getTechList().getBestWeapon();
+    assertEquals(true, tech.getLevel() <= 2);
+    GameLengthState state = GameLengthState.EARLY_GAME;
+    view.updateSpacePirates(pirates, state, false);
+    tech = pirates.getTechList().getBestWeapon();
+    assertEquals(true, tech.getLevel() == 3);
+    state = GameLengthState.MIDDLE_GAME;
+    view.updateSpacePirates(pirates, state, false);
+    tech = pirates.getTechList().getBestWeapon();
+    assertEquals(true, tech.getLevel() == 5);
+    state = GameLengthState.LATE_GAME;
+    view.updateSpacePirates(pirates, state, false);
+    tech = pirates.getTechList().getBestWeapon();
+    assertEquals(true, tech.getLevel() == 6);
+    state = GameLengthState.END_GAME;
+    view.updateSpacePirates(pirates, state, false);
+    tech = pirates.getTechList().getBestWeapon();
+    assertEquals(true, tech.getLevel() == 8);
   }
 
   @Test

@@ -95,6 +95,7 @@ public class CreditsView extends BlackPanel {
       + "GBNC logo by Tuomo Untinen\n\n"
       + "Worm hole by Tuomo Untinen\n\n"
       + "Privateering effect in combat by Tuomo Untinen\n\n"
+      + "Privateer race picture by Tuomo Untinen\n\n"
       + "Homarian ships are done with "
       + "BizmasterStudios's SpaceShip Building Kit\n"
       + "Licensed under CC BY 4.0\n"

@@ -262,8 +262,7 @@ public enum SpaceRace {
     case HOMARIANS:
       return GuiStatics.IMAGE_HOMARIAN_RACE;
     case SPACE_PIRATE:
-      //FIXME
-      return GuiStatics.IMAGE_HUMAN_RACE;
+      return GuiStatics.IMAGE_PRIVATEER_RACE;
     default:
       return GuiStatics.IMAGE_CENTAUR_RACE;
     }
@@ -296,8 +295,7 @@ public enum SpaceRace {
       case HOMARIANS:
         return start + "resources/images/homarian_race.png";
       case SPACE_PIRATE:
-        //FIXME
-        return start + "resources/images/human_race.png";
+        return start + "resources/images/privateer_race.png";
       default:
         return start + "resources/images/centaur_race.png";
     }
@@ -774,7 +772,8 @@ public enum SpaceRace {
     case HOMARIANS:
       return MusicPlayer.MALLOGA_BALLING;
     case SPACE_PIRATE:
-      // FIXME
+      // There is no diplomacy with space pirate so no
+      // need for own music.
       return MusicPlayer.MALLOGA_BALLING;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;

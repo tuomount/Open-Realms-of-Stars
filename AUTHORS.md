@@ -57,6 +57,8 @@ Worm hole by Tuomo Untinen
 
 Privateering effect in combat by Tuomo Untinen
 
+Privateer race picture by Tuomo Untinen
+
 Homarian ships are done with BizmasterStudios's SpaceShip Building Kit
 Licensed under CC BY 4.0
 https://creativecommons.org/licenses/by/4.0/

@@ -526,6 +526,23 @@ public class NewsFactoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPirateNews() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Space pirates");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.SPACE_PIRATE);
+    StarMap map = Mockito.mock(StarMap.class);
+    PlayerList list = Mockito.mock(PlayerList.class);
+    Mockito.when(list.getBoardPlayer()).thenReturn(info);
+    Mockito.when(map.getPlayerList()).thenReturn(list);
+    
+    NewsData news = NewsFactory.makeSpacePiratesNews(map);
+    assertEquals(true, news.getImageInstructions().contains(
+        "SPACE PIRATES"));
+    assertEquals(true, news.getNewsText().contains("space pirates"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testStatNewsHalfway() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");

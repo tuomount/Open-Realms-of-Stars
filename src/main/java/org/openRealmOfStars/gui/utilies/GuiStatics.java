@@ -749,6 +749,13 @@ public final class GuiStatics {
       GuiStatics.class.getResource("/resources/images/human_race.png"));
 
   /**
+   * Privateer race selection image
+   */
+  public static final BufferedImage IMAGE_PRIVATEER_RACE =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/privateer_race.png"));
+
+  /**
    * Android image for GBNC
    */
   public static final BufferedImage IMAGE_ANDROID = IOUtilities.loadImage(

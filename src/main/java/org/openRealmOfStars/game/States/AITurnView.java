@@ -1305,9 +1305,13 @@ public class AITurnView extends BlackPanel {
     game.getStarMap().setTurn(game.getStarMap().getTurn() + 1);
     GameLengthState newState = game.getStarMap().getGameLengthState();
     PlayerInfo board = game.getPlayers().getBoardPlayer();
+    boolean pirateNews = false;
     if (oldState != newState && board != null && game.getStarMap()
         .getScoreVictoryTurn() <= 400) {
-      //FIXME Add news about pirates
+      if (!pirateNews) {
+        NewsFactory.makeSpacePiratesNews(game.getStarMap());
+        pirateNews = true;
+      }
       updateSpacePirates(board, newState, false);
     }
     if (game.getStarMap().getScoreVictoryTurn() % 100 == 0
@@ -1317,12 +1321,18 @@ public class AITurnView extends BlackPanel {
       if (level >= 10) {
         level = 10;
       }
-      //FIXME Add news about pirates
+      if (!pirateNews) {
+        NewsFactory.makeSpacePiratesNews(game.getStarMap());
+        pirateNews = true;
+      }
       updateSpacePirates(board, level, false);
     }
     if (game.getStarMap().getTurn() % 50 == 0) {
       // Just adding more pirates
-      //FIXME Add news about pirates
+      if (!pirateNews) {
+        NewsFactory.makeSpacePiratesNews(game.getStarMap());
+        pirateNews = true;
+      }
       updateSpacePirates(board, newState, true);
     }
     game.getStarMap().getHistory().addTurn(game.getStarMap().getTurn());

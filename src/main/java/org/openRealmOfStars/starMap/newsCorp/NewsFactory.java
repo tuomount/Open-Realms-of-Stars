@@ -968,6 +968,45 @@ public final class NewsFactory {
   }
 
   /**
+   * Make News when more space pirates appear
+   * @param map StarMap contains NewsCorpData and playerlist
+   * @return NewsData
+   */
+  public static NewsData makeSpacePiratesNews(final StarMap map) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    StringBuilder sb = new StringBuilder();
+    PlayerInfo pirates = map.getPlayerList().getBoardPlayer();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    int value = DiceGenerator.getRandom(2);
+    switch (value) {
+      case 0: {
+        instructions.addText("SPACE PIRATES SEEN!");
+        break;
+      }
+      case 1: {
+        instructions.addText("SPACE PIRATES SPOTTED IN GALAXY!");
+        break;
+      }
+      case 2: {
+        instructions.addText("YARR! SPACE PIRATES!");
+        break;
+      }
+      default: {
+        instructions.addText("SPACE PIRATES SEEN!");
+        break;
+      }
+    }
+    instructions.addImage(pirates.getRace().getNameSingle());
+    sb.append("More and more space pirates are seen in galaxy attacking"
+        + " on cargo ships and destroying star bases. Where are privateers"
+        + " coming from?");
+    news.setImageInstructions(instructions.build());
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
    * Make News when game is in the end turn
    * @param map StarMap contains NewsCorpData and playerlist
    * @return NewsData

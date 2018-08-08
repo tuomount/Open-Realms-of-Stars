@@ -1026,8 +1026,9 @@ public class AITurnView extends BlackPanel {
    * @param pirates Board player info
    * @param level to update
    * @param justAddMore If true this will add just pirate military ships
+   * @return True if added pirates
    */
-  public void updateSpacePirates(final PlayerInfo pirates,
+  public boolean updateSpacePirates(final PlayerInfo pirates,
       final int level, final boolean justAddMore) {
     if (!justAddMore) {
       addRandomPirateTech(pirates, TechType.Combat, level);
@@ -1045,16 +1046,20 @@ public class AITurnView extends BlackPanel {
       addRandomPirateTech(pirates, TechType.Electrics, level);
       Research.handleShipDesigns(pirates);
     }
+    boolean added = false;
     for (int i = 0; i < pirates.getFleets().getNumberOfFleets(); i++) {
       Fleet fleet = pirates.getFleets().getByIndex(i);
       if (fleet.isStarBaseDeployed()) {
         game.getStarMap().addSpacePirate(fleet.getX(), fleet.getY(), pirates);
+        added = true;
         if (!justAddMore) {
           game.getStarMap().addSpacePirateLair(fleet.getX(), fleet.getY(),
               pirates);
+          added = true;
         }
       }
     }
+    return added;
   }
 
   /**
@@ -1062,8 +1067,9 @@ public class AITurnView extends BlackPanel {
    * @param pirates Board player info
    * @param newState Current state which
    * @param justAddMore If true this will add just pirate military ships
+   * @return True if added pirates
    */
-  public void updateSpacePirates(final PlayerInfo pirates,
+  public boolean updateSpacePirates(final PlayerInfo pirates,
       final GameLengthState newState, final boolean justAddMore) {
     if (newState == GameLengthState.EARLY_GAME && !justAddMore) {
       addRandomPirateTech(pirates, TechType.Combat, 2);
@@ -1161,16 +1167,20 @@ public class AITurnView extends BlackPanel {
     if (!justAddMore) {
       Research.handleShipDesigns(pirates);
     }
+    boolean added = false;
     for (int i = 0; i < pirates.getFleets().getNumberOfFleets(); i++) {
       Fleet fleet = pirates.getFleets().getByIndex(i);
       if (fleet.isStarBaseDeployed()) {
         game.getStarMap().addSpacePirate(fleet.getX(), fleet.getY(), pirates);
+        added = true;
         if (!justAddMore) {
           game.getStarMap().addSpacePirateLair(fleet.getX(), fleet.getY(),
               pirates);
+          added = true;
         }
       }
     }
+    return added;
   }
   /**
    * Update whole star map to next turn
@@ -1308,11 +1318,7 @@ public class AITurnView extends BlackPanel {
     boolean pirateNews = false;
     if (oldState != newState && board != null && game.getStarMap()
         .getScoreVictoryTurn() <= 400) {
-      if (!pirateNews) {
-        NewsFactory.makeSpacePiratesNews(game.getStarMap());
-        pirateNews = true;
-      }
-      updateSpacePirates(board, newState, false);
+      pirateNews = updateSpacePirates(board, newState, false);
     }
     if (game.getStarMap().getScoreVictoryTurn() % 100 == 0
         && board != null && game.getStarMap().getScoreVictoryTurn() > 400) {
@@ -1321,19 +1327,14 @@ public class AITurnView extends BlackPanel {
       if (level >= 10) {
         level = 10;
       }
-      if (!pirateNews) {
-        NewsFactory.makeSpacePiratesNews(game.getStarMap());
-        pirateNews = true;
-      }
-      updateSpacePirates(board, level, false);
+      pirateNews = updateSpacePirates(board, level, false);
     }
     if (game.getStarMap().getTurn() % 50 == 0) {
       // Just adding more pirates
-      if (!pirateNews) {
-        NewsFactory.makeSpacePiratesNews(game.getStarMap());
-        pirateNews = true;
-      }
-      updateSpacePirates(board, newState, true);
+      pirateNews = updateSpacePirates(board, newState, true);
+    }
+    if (pirateNews) {
+      NewsFactory.makeSpacePiratesNews(game.getStarMap());
     }
     game.getStarMap().getHistory().addTurn(game.getStarMap().getTurn());
     if (game.getStarMap().getTurn() % NewsCorpData.NEWS_PUBLISH_RATE == 0) {

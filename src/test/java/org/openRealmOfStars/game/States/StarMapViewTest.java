@@ -9,6 +9,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.mapPanel.PopupPanel;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
@@ -71,6 +72,10 @@ public class StarMapViewTest {
     view.handleActions(arg0);
     assertEquals(0, game.getPlayers().getCurrentPlayerInfo().getMsgList()
         .getCurrentMsgIndex());
+    assertEquals(null, view.getPopup());
+    PopupPanel popup = Mockito.mock(PopupPanel.class);
+    view.setPopup(popup);
+    assertEquals(popup, view.getPopup());
   }
 
 }

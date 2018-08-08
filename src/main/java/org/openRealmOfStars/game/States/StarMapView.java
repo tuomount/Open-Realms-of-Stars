@@ -17,6 +17,7 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
+import org.openRealmOfStars.gui.mapPanel.PopupPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.MessagePanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
@@ -498,6 +499,22 @@ public class StarMapView extends BlackPanel {
    */
   public void setReadyToMove(final boolean readyToMove) {
     this.readyToMove = readyToMove;
+  }
+
+  /**
+   * Set popup on top of map
+   * @param popup PopupPanel
+   */
+  public void setPopup(final PopupPanel popup) {
+    mapPanel.setPopup(popup);
+  }
+
+  /**
+   * Get popup panel.
+   * @return PopupPanel or null
+   */
+  public PopupPanel getPopup() {
+    return mapPanel.getPopup();
   }
 
 }

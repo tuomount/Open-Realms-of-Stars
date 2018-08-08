@@ -1,6 +1,8 @@
 package org.openRealmOfStars.gui.mapPanel;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+
 
 /**
 *
@@ -75,6 +77,19 @@ public class PopupPanel {
    */
   public BufferedImage getImage() {
     return this.image;
+  }
+
+  /**
+   * Draw popup with text and possible image
+   * @param screen Screen where to draw pop up
+   */
+  public void drawPopup(final BufferedImage screen) {
+    Graphics2D gr = screen.createGraphics();
+    int x = screen.getWidth() / 10;
+    int y = screen.getHeight() / 10;
+    int width = screen.getWidth() - (screen.getWidth() / 20);
+    int height = screen.getHeight() - (screen.getHeight() / 20);
+    gr.fillRect(x, y, width, height);
   }
 
 }

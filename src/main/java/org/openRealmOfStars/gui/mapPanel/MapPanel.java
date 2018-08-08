@@ -173,6 +173,11 @@ public class MapPanel extends JPanel {
   private BufferedImage rightSpaceImage;
 
   /**
+   * Popup to shown on top of map
+   */
+  private PopupPanel popup;
+
+  /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
    * @param battle True if drawing battle map.
@@ -267,6 +272,9 @@ public class MapPanel extends JPanel {
   public void paint(final Graphics arg0) {
     super.paint(arg0);
     if (screen != null) {
+      if (popup != null) {
+        popup.drawPopup(screen);
+      }
       arg0.drawImage(screen, 0, 0, null);
     }
   }
@@ -1289,6 +1297,22 @@ public class MapPanel extends JPanel {
    */
   public void setRightSpaceImage(final BufferedImage rightSpaceImage) {
     this.rightSpaceImage = rightSpaceImage;
+  }
+
+  /**
+   * Set popup on top of map
+   * @param popup PopupPanel
+   */
+  public void setPopup(final PopupPanel popup) {
+    this.popup = popup;
+  }
+
+  /**
+   * Get popup panel.
+   * @return PopupPanel or null
+   */
+  public PopupPanel getPopup() {
+    return popup;
   }
 
 }

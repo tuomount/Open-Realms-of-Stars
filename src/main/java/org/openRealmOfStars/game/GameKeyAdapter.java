@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.AI.Mission.MissionList;
+import org.openRealmOfStars.gui.mapPanel.PopupPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
@@ -70,6 +71,15 @@ public class GameKeyAdapter implements KeyEventDispatcher {
       if (arg0.getKeyCode() == KeyEvent.VK_R
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
         game.getStarMapView().getStarMapMouseListener().setRoutePlanning(true);
+      }
+      if (arg0.getKeyCode() == KeyEvent.VK_Q
+          && arg0.getID() == KeyEvent.KEY_PRESSED) {
+        if (game.getStarMapView().getPopup() == null) {
+          PopupPanel popup = new PopupPanel("Test");
+          game.getStarMapView().setPopup(popup);
+        } else {
+          game.getStarMapView().setPopup(null);
+        }
       }
       if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE
           && arg0.getID() == KeyEvent.KEY_PRESSED) {

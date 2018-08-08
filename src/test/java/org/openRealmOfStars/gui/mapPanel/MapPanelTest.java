@@ -60,6 +60,10 @@ public class MapPanelTest {
     assertEquals(null, panel.getRightSpaceImage());
     panel.setRightSpaceImage(right);
     assertEquals(right, panel.getRightSpaceImage());
+    PopupPanel popup = Mockito.mock(PopupPanel.class);
+    assertEquals(null, panel.getPopup());
+    panel.setPopup(popup);
+    assertEquals(popup, panel.getPopup());
   }
 
   @Test

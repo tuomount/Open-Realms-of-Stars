@@ -35,7 +35,7 @@ public class PopupPanelTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
-    PopupPanel panel = new PopupPanel("Test");
+    PopupPanel panel = new PopupPanel("Test", "Test title");
     BufferedImage image = Mockito.mock(BufferedImage.class);
     assertEquals("Test", panel.getText());
     assertEquals(null, panel.getImage());
@@ -43,6 +43,9 @@ public class PopupPanelTest {
     assertEquals(image, panel.getImage());
     panel.setText("Testing");
     assertEquals("Testing", panel.getText());
+    assertEquals("Test title", panel.getTitle());
+    panel.setTitle("Another");
+    assertEquals("Another", panel.getTitle());
   }
 
 }

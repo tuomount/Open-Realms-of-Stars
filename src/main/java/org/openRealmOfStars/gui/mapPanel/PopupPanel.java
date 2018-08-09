@@ -37,6 +37,11 @@ public class PopupPanel {
   private String text;
 
   /**
+   * Title to display on panel
+   */
+  private String title;
+
+  /**
    * Image to shop on panel
    */
   private BufferedImage image;
@@ -44,9 +49,11 @@ public class PopupPanel {
   /**
    * Constructor for PopupPanel
    * @param text Text to show
+   * @param title Title to show
    */
-  public PopupPanel(final String text) {
+  public PopupPanel(final String text, final String title) {
     this.text = text;
+    this.title = title;
     image = null;
   }
 
@@ -59,11 +66,27 @@ public class PopupPanel {
   }
 
   /**
-   * Change popup panel text.
+   * Get popup panel text.
    * @return Text of panel
    */
   public String getText() {
     return this.text;
+  }
+
+  /**
+   * Change popup panel title.
+   * @param title where to change.
+   */
+  public void setTitle(final String title) {
+    this.title = title;
+  }
+
+  /**
+   * Get popup panel title.
+   * @return Title of panel
+   */
+  public String getTitle() {
+    return this.title;
   }
 
   /**
@@ -105,6 +128,21 @@ public class PopupPanel {
         borderSize);
     gr.fillRect(x + width - borderSize, y + borderSize, borderSize,
         height - borderSize);
+    int textX = x + width / 20;
+    int textY = y + height / 5;
+    int textWidth = width - (width / 10);
+    int textHeight = height - (height / 4);
+    gr.fillRect(textX, textY, textWidth, borderSize);
+    gr.fillRect(textX, textY + borderSize, borderSize,
+        textHeight - borderSize);
+    gr.fillRect(textX + borderSize, textY + textHeight - borderSize,
+        textWidth - borderSize, borderSize);
+    gr.fillRect(textX + textWidth - borderSize, textY + borderSize, borderSize,
+        textHeight - borderSize);
+    gr.setPaint(GuiStatics.COLOR_VERY_DARK_GREY_TRANS);
+    gr.fillRect(textX + borderSize, textY + borderSize,
+        textWidth - borderSize * 2, textHeight - borderSize * 2);
+    gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE);
 
   }
 

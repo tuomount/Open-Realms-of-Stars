@@ -75,7 +75,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
       if (arg0.getKeyCode() == KeyEvent.VK_Q
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
         if (game.getStarMapView().getPopup() == null) {
-          PopupPanel popup = new PopupPanel("Test");
+          PopupPanel popup = new PopupPanel("Test", "Test title");
           game.getStarMapView().setPopup(popup);
         } else {
           game.getStarMapView().setPopup(null);

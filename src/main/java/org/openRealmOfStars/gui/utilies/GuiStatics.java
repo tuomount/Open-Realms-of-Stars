@@ -402,6 +402,12 @@ public final class GuiStatics {
       255, 128);
 
   /**
+   * Dark grey, opacity 128
+   */
+  public static final Color COLOR_VERY_DARK_GREY_TRANS = new Color(20, 20,
+      20, 128);
+
+  /**
    * Cool space blue dark, opacity 128
    */
   public static final Color COLOR_COOL_SPACE_BLUE_DARK_TRANS = new Color(25,

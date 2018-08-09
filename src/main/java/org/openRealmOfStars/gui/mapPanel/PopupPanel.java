@@ -1,5 +1,6 @@
 package org.openRealmOfStars.gui.mapPanel;
 
+import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -165,9 +166,30 @@ public class PopupPanel {
     gr.fillRect(x + width - borderSize, y + borderSize, borderSize,
         height - borderSize);
     int textX = x + width / 20;
-    int textY = y + height / 5;
+    int textY = y + height / 7;
     int textWidth = width - (width / 10);
     int textHeight = height - (height / 4);
+    if (image != null) {
+      int imageX = x + width / 20;
+      int imageY = textY;
+      int imageWidth = textWidth;
+      int imageHeight = textHeight * 2 / 3;
+      textHeight = textHeight / 3;
+      textY = textY + imageHeight + borderSize * 2;
+      gr.fillRect(imageX, imageY, imageWidth, borderSize);
+      gr.fillRect(imageX, imageY + borderSize, borderSize,
+          imageHeight - borderSize);
+      gr.fillRect(imageX + borderSize, imageY + imageHeight - borderSize,
+          imageWidth - borderSize, borderSize);
+      gr.fillRect(imageX + imageWidth - borderSize, imageY + borderSize,
+          borderSize, imageHeight - borderSize);
+      gr.setPaint(Color.BLACK);
+      gr.fillRect(imageX + borderSize, imageY + borderSize,
+          imageWidth - borderSize * 2, imageHeight - borderSize * 2);
+      gr.setPaint(gradient);
+      gr.drawImage(image, imageX + imageWidth / 2 - image.getWidth() / 2,
+          imageY + borderSize, null);
+    }
     gr.fillRect(textX, textY, textWidth, borderSize);
     gr.fillRect(textX, textY + borderSize, borderSize,
         textHeight - borderSize);
@@ -197,8 +219,8 @@ public class PopupPanel {
     gr.setColor(GuiStatics.COLOR_GREEN_TEXT);
     for (int i = 0; i < rows.length; i++) {
       w = GuiStatics.getTextWidth(gr.getFont(), rows[i]);
-      w = width / 2  - w / 2;
-      gr.drawString(rows[i], x + w, textY + h * 2 + h * i);
+      w = textWidth / 2  - w / 2;
+      gr.drawString(rows[i], textX + w, textY + h * 2 + h * i);
     }
 
   }

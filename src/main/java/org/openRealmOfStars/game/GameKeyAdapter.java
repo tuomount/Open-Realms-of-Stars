@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.AI.Mission.MissionList;
 import org.openRealmOfStars.gui.mapPanel.PopupPanel;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
@@ -85,6 +86,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
               + " random lorem ipsum text from the internet. Plus I would"
               + " need to check the license for that. This was just easier.",
               "Test title");
+          popup.setImage(GuiStatics.IMAGE_ANDROID);
           game.getStarMapView().setPopup(popup);
         } else {
           game.getStarMapView().setPopup(null);

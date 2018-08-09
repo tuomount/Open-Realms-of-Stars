@@ -142,7 +142,17 @@ public class PopupPanel {
     gr.setPaint(GuiStatics.COLOR_VERY_DARK_GREY_TRANS);
     gr.fillRect(textX + borderSize, textY + borderSize,
         textWidth - borderSize * 2, textHeight - borderSize * 2);
+    gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    gr.setFont(GuiStatics.getFontCubellanBoldBig());
+    int h = GuiStatics.getTextHeight(gr.getFont(), title);
+    int w = GuiStatics.getTextWidth(gr.getFont(), title);
+    w = width / 2  - w / 2;
+    gr.drawString(title, x + w - 1, y + h + borderSize);
+    gr.drawString(title, x + w + 1, y + h + borderSize);
+    gr.drawString(title, x + w, y + h + borderSize - 1);
+    gr.drawString(title, x + w, y + h + borderSize + 1);
     gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    gr.drawString(title, x + w, y + h + borderSize);
 
   }
 

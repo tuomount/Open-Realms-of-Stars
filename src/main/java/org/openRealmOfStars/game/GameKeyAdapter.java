@@ -75,7 +75,16 @@ public class GameKeyAdapter implements KeyEventDispatcher {
       if (arg0.getKeyCode() == KeyEvent.VK_Q
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
         if (game.getStarMapView().getPopup() == null) {
-          PopupPanel popup = new PopupPanel("Test", "Test title");
+          PopupPanel popup = new PopupPanel("This is just text to try out"
+              + " popup panel text drawing capabilities. There are no line"
+              + " changes here at all. Popup panel should automatically"
+              + " handle line changes without no hickup. Mostly this text"
+              + " is just text flow without any purpose. This could basicly"
+              + " contain whatever content, but it needs to be polite and"
+              + " correct. This is the reason I did not want to copy paste"
+              + " random lorem ipsum text from the internet. Plus I would"
+              + " need to check the license for that. This was just easier.",
+              "Test title");
           game.getStarMapView().setPopup(popup);
         } else {
           game.getStarMapView().setPopup(null);

@@ -48,4 +48,24 @@ public class PopupPanelTest {
     assertEquals("Another", panel.getTitle());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSplitting() {
+    PopupPanel panel = new PopupPanel("This is just text to try out"
+        + " popup panel text drawing capabilities. There are no line"
+        + " changes here at all. Popup panel should automatically"
+        + " handle line changes without no hickup. Mostly this text"
+        + " is just text flow without any purpose. This could basicly"
+        + " contain whatever content, but it needs to be polite and"
+        + " correct. This is the reason I did not want to copy paste"
+        + " random lorem ipsum text from the internet. Plus I would"
+        + " need to check the license for that. This was just easier.",
+        "Test title");
+    String[] rows = panel.splitText(400, 10);
+    assertEquals(13, rows.length);
+    assertEquals("This is just text to try out popup panel", rows[0]);
+    assertEquals("text drawing capabilities. There are no", rows[1]);
+    assertEquals("line changes here at all. Popup panel", rows[2]);
+  }
+
 }

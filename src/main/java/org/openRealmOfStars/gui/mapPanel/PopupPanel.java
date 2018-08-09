@@ -106,6 +106,42 @@ public class PopupPanel {
   }
 
   /**
+   * Split text to rows
+   * @param width Maximum row length in pixel
+   * @param charWidth Average character size in pixel
+   * @return Splitted rows
+   */
+  protected String[] splitText(final int width, final int charWidth) {
+    StringBuilder sb = new StringBuilder(text);
+    int lastSpace = -1;
+    int maxRowLen = width / charWidth;
+    int rowLen = 0;
+    for (int i = 0; i < sb.length(); i++) {
+      if (sb.charAt(i) == ' ') {
+        lastSpace = i;
+      }
+      if (sb.charAt(i) == '\n') {
+        lastSpace = -1;
+        rowLen = 0;
+      } else {
+        rowLen++;
+      }
+      if (rowLen > maxRowLen) {
+        if (lastSpace != -1) {
+          sb.setCharAt(lastSpace, '\n');
+          rowLen = i - lastSpace;
+          lastSpace = -1;
+
+        } else {
+          sb.setCharAt(i, '\n');
+          lastSpace = -1;
+          rowLen = 0;
+        }
+      }
+    }
+    return sb.toString().split("\n");
+  }
+  /**
    * Draw popup with text and possible image
    * @param screen Screen where to draw pop up
    */
@@ -153,6 +189,17 @@ public class PopupPanel {
     gr.drawString(title, x + w, y + h + borderSize + 1);
     gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE);
     gr.drawString(title, x + w, y + h + borderSize);
+    gr.setFont(GuiStatics.getFontCubellanSmaller());
+    w = GuiStatics.getTextWidth(gr.getFont(), "AveragemiuM");
+    w = w / 11;
+    h = GuiStatics.getTextHeight(gr.getFont(), "AveragemiuM");
+    String[] rows = splitText(textWidth, w);
+    gr.setColor(GuiStatics.COLOR_GREEN_TEXT);
+    for (int i = 0; i < rows.length; i++) {
+      w = GuiStatics.getTextWidth(gr.getFont(), rows[i]);
+      w = width / 2  - w / 2;
+      gr.drawString(rows[i], x + w, textY + h * 2 + h * i);
+    }
 
   }
 

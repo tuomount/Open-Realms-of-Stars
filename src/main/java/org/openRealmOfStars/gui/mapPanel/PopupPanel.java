@@ -1,7 +1,10 @@
 package org.openRealmOfStars.gui.mapPanel;
 
+import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 
 
 /**
@@ -87,9 +90,22 @@ public class PopupPanel {
     Graphics2D gr = screen.createGraphics();
     int x = screen.getWidth() / 10;
     int y = screen.getHeight() / 10;
-    int width = screen.getWidth() - (screen.getWidth() / 20);
-    int height = screen.getHeight() - (screen.getHeight() / 20);
+    int width = screen.getWidth() - (screen.getWidth() / 5);
+    int height = screen.getHeight() - (screen.getHeight() / 5);
+    gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS);
     gr.fillRect(x, y, width, height);
+    GradientPaint gradient = new GradientPaint(x, y,
+        GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER, x + width, y + width,
+        GuiStatics.COLOR_COOL_SPACE_BLUE, false);
+    gr.setPaint(gradient);
+    int borderSize = 3;
+    gr.fillRect(x, y, width, borderSize);
+    gr.fillRect(x, y + borderSize, borderSize, height - borderSize);
+    gr.fillRect(x + borderSize, y + height - borderSize, width - borderSize,
+        borderSize);
+    gr.fillRect(x + width - borderSize, y + borderSize, borderSize,
+        height - borderSize);
+
   }
 
 }

@@ -142,6 +142,29 @@ public class PopupPanel {
     }
     return sb.toString().split("\n");
   }
+
+  /**
+   * Draw gradient border
+   * @param gr Graphics2D used for drawing
+   * @param x X coordinate where to start
+   * @param y Y coordinate where to start
+   * @param width border width
+   * @param height border height
+   */
+  protected void drawGradientBorder(final Graphics2D gr, final int x,
+      final int y, final int width, final int height) {
+    GradientPaint gradient = new GradientPaint(x, y,
+        GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER, x + width, y + width,
+        GuiStatics.COLOR_COOL_SPACE_BLUE, false);
+    gr.setPaint(gradient);
+    int borderSize = 3;
+    gr.fillRect(x, y, width, borderSize);
+    gr.fillRect(x, y + borderSize, borderSize, height - borderSize);
+    gr.fillRect(x + borderSize, y + height - borderSize, width - borderSize,
+        borderSize);
+    gr.fillRect(x + width - borderSize, y + borderSize, borderSize,
+        height - borderSize);
+  }
   /**
    * Draw popup with text and possible image
    * @param screen Screen where to draw pop up
@@ -154,17 +177,8 @@ public class PopupPanel {
     int height = screen.getHeight() - (screen.getHeight() / 5);
     gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS);
     gr.fillRect(x, y, width, height);
-    GradientPaint gradient = new GradientPaint(x, y,
-        GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER, x + width, y + width,
-        GuiStatics.COLOR_COOL_SPACE_BLUE, false);
-    gr.setPaint(gradient);
     int borderSize = 3;
-    gr.fillRect(x, y, width, borderSize);
-    gr.fillRect(x, y + borderSize, borderSize, height - borderSize);
-    gr.fillRect(x + borderSize, y + height - borderSize, width - borderSize,
-        borderSize);
-    gr.fillRect(x + width - borderSize, y + borderSize, borderSize,
-        height - borderSize);
+    drawGradientBorder(gr, x, y, width, height);
     int textX = x + width / 20;
     int textY = y + height / 7;
     int textWidth = width - (width / 10);
@@ -176,27 +190,14 @@ public class PopupPanel {
       int imageHeight = textHeight * 2 / 3;
       textHeight = textHeight / 3;
       textY = textY + imageHeight + borderSize * 2;
-      gr.fillRect(imageX, imageY, imageWidth, borderSize);
-      gr.fillRect(imageX, imageY + borderSize, borderSize,
-          imageHeight - borderSize);
-      gr.fillRect(imageX + borderSize, imageY + imageHeight - borderSize,
-          imageWidth - borderSize, borderSize);
-      gr.fillRect(imageX + imageWidth - borderSize, imageY + borderSize,
-          borderSize, imageHeight - borderSize);
+      drawGradientBorder(gr, imageX, imageY, imageWidth, imageHeight);
       gr.setPaint(Color.BLACK);
       gr.fillRect(imageX + borderSize, imageY + borderSize,
           imageWidth - borderSize * 2, imageHeight - borderSize * 2);
-      gr.setPaint(gradient);
       gr.drawImage(image, imageX + imageWidth / 2 - image.getWidth() / 2,
           imageY + borderSize, null);
     }
-    gr.fillRect(textX, textY, textWidth, borderSize);
-    gr.fillRect(textX, textY + borderSize, borderSize,
-        textHeight - borderSize);
-    gr.fillRect(textX + borderSize, textY + textHeight - borderSize,
-        textWidth - borderSize, borderSize);
-    gr.fillRect(textX + textWidth - borderSize, textY + borderSize, borderSize,
-        textHeight - borderSize);
+    drawGradientBorder(gr, textX, textY, textWidth, textHeight);
     gr.setPaint(GuiStatics.COLOR_VERY_DARK_GREY_TRANS);
     gr.fillRect(textX + borderSize, textY + borderSize,
         textWidth - borderSize * 2, textHeight - borderSize * 2);

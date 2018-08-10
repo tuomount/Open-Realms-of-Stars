@@ -5,6 +5,7 @@ import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import org.openRealmOfStars.gui.utilies.GraphRoutines;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 
 
@@ -46,6 +47,10 @@ public class PopupPanel {
    * Image to shop on panel
    */
   private BufferedImage image;
+  /**
+   * Scaled down image
+   */
+  private BufferedImage scaledImage;
 
   /**
    * Constructor for PopupPanel
@@ -96,6 +101,7 @@ public class PopupPanel {
    */
   public void setImage(final BufferedImage image) {
     this.image = image;
+    this.scaledImage = null;
   }
 
   /**
@@ -194,7 +200,12 @@ public class PopupPanel {
       gr.setPaint(Color.BLACK);
       gr.fillRect(imageX + borderSize, imageY + borderSize,
           imageWidth - borderSize * 2, imageHeight - borderSize * 2);
-      gr.drawImage(image, imageX + imageWidth / 2 - image.getWidth() / 2,
+      if (scaledImage == null) {
+        scaledImage = GraphRoutines.scaleImage(image,
+            imageWidth - 2 * borderSize, imageHeight - 2 * borderSize);
+      }
+      gr.drawImage(scaledImage,
+          imageX + imageWidth / 2 - scaledImage.getWidth() / 2,
           imageY + borderSize, null);
     }
     drawGradientBorder(gr, textX, textY, textWidth, textHeight);

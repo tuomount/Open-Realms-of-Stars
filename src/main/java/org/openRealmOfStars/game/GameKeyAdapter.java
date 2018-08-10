@@ -86,7 +86,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
               + " random lorem ipsum text from the internet. Plus I would"
               + " need to check the license for that. This was just easier.",
               "Test title");
-          popup.setImage(GuiStatics.IMAGE_ANDROID);
+          popup.setImage(GuiStatics.BIG_PLANET_WATERWORLD1);
           game.getStarMapView().setPopup(popup);
         } else {
           game.getStarMapView().setPopup(null);

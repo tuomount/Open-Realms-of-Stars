@@ -1,6 +1,7 @@
 package org.openRealmOfStars.gui.utilies;
 
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 /**
@@ -71,5 +72,43 @@ public final class GraphRoutines {
             singleOffsetY + y * img.getHeight(), null);
       }
     }
+  }
+
+  /**
+   * Scale image and maintaing the aspect ration
+   * @param image Image to scale
+   * @param maxWidth New maximum width
+   * @param maxHeight New maximum height
+   * @return Scaled buffered image
+   */
+  public static BufferedImage scaleImage(final BufferedImage image,
+      final int maxWidth, final int maxHeight) {
+    if (image == null) {
+      return null;
+    }
+    int origWidth = image.getWidth();
+    int origHeight = image.getHeight();
+    int width = origHeight;
+    int height = origHeight;
+    if (origWidth > maxWidth) {
+      width = maxWidth;
+      height = width * origHeight / origWidth;
+    }
+    if (height > maxHeight) {
+      height = maxHeight;
+      width = height * origWidth / origHeight;
+    }
+    BufferedImage resizedImage = new BufferedImage(width, height,
+        image.getType());
+    Graphics2D gr2D = resizedImage.createGraphics();
+    gr2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+        RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+    gr2D.setRenderingHint(RenderingHints.KEY_RENDERING,
+        RenderingHints.VALUE_RENDER_QUALITY);
+    gr2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+        RenderingHints.VALUE_ANTIALIAS_ON);
+    gr2D.drawImage(image, 0, 0, width, height, null);
+    gr2D.dispose();
+    return resizedImage;
   }
 }

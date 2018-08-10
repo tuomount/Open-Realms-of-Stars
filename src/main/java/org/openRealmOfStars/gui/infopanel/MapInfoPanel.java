@@ -159,6 +159,7 @@ public class MapInfoPanel extends InfoPanel {
     Graphics2D g2d = img.createGraphics();
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
+    g2d.dispose();
     panel.add(imageLabel);
     iBtn = new IconButton(GuiStatics.RIGHT_ARROW,
         GuiStatics.RIGHT_ARROW_PRESSED, false, GameCommands.COMMAND_NEXT_TARGET,
@@ -330,6 +331,7 @@ public class MapInfoPanel extends InfoPanel {
         }
         }
       }
+      g2d.dispose();
       imageLabel.setImage(img);
       setTitle(planet.getName());
       textArea.setText(planet.generateInfoText(this.activeScanned));
@@ -340,6 +342,7 @@ public class MapInfoPanel extends InfoPanel {
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
+      g2d.dispose();
       if (fleet.getFirstShip() != null) {
         imageLabel.setImage(fleet.getFirstShip().getHull().getImage());
       } else {
@@ -371,6 +374,7 @@ public class MapInfoPanel extends InfoPanel {
         Icon16x16 icon = Icons.getIconByName(Icons.ICON_STARBASE);
         icon.draw(g2d, 32, 32);
       }
+      g2d.dispose();
       imageLabel.setImage(img);
       setTitle("Galatic info");
       textArea.setText(tile.getDescription());
@@ -382,6 +386,7 @@ public class MapInfoPanel extends InfoPanel {
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
+      g2d.dispose();
       imageLabel.setImage(img);
       textArea.setText("");
       this.repaint();

@@ -234,7 +234,7 @@ public class PopupPanel {
       w = textWidth / 2  - w / 2;
       gr.drawString(rows[i], textX + w, textY + h * 2 + h * i);
     }
-
+    gr.dispose();
   }
 
 }

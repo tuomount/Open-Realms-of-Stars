@@ -104,6 +104,7 @@ public class BattleInfoPanel extends InfoPanel {
     Graphics2D g2d = img.createGraphics();
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
+    g2d.dispose();
     this.add(imageLabel);
     this.add(Box.createRigidArea(new Dimension(10, 10)));
     textArea = new InfoTextArea();
@@ -179,6 +180,7 @@ public class BattleInfoPanel extends InfoPanel {
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
+      g2d.dispose();
       imageLabel.setImage(ship.getHull().getImage());
       setTitle(ship.getName());
       textArea.setText(ship.getDescription());
@@ -190,6 +192,7 @@ public class BattleInfoPanel extends InfoPanel {
       Graphics2D g2d = img.createGraphics();
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
+      g2d.dispose();
       imageLabel.setImage(img);
       textArea.setText("");
       this.repaint();

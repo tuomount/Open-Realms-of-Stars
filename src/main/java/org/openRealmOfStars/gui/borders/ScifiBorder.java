@@ -276,6 +276,7 @@ public class ScifiBorder extends AbstractBorder {
                 centerImage.getHeight()),
             repeats * centerImage.getWidth(), 0, null);
       }
+      gr.dispose();
       g2d.drawImage(leftImage,
           x + width / 2 - textWidth / 2 - leftImage.getWidth(), y, null);
       g2d.drawImage(centerPiece, x + width / 2 - textWidth / 2, y, null);

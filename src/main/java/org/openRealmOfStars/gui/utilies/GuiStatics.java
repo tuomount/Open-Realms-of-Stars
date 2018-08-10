@@ -782,8 +782,10 @@ public final class GuiStatics {
   public static int getTextWidth(final Font font, final String text) {
     if (font != null && text != null) {
       Graphics2D g2d = TEMP_IMAGE.createGraphics();
-      return (int) font.getStringBounds(text, g2d.getFontRenderContext())
+      int width = (int) font.getStringBounds(text, g2d.getFontRenderContext())
           .getWidth();
+      g2d.dispose();
+      return width;
     }
     return 0;
   }
@@ -797,8 +799,10 @@ public final class GuiStatics {
   public static int getTextHeight(final Font font, final String text) {
     if (font != null && text != null) {
       Graphics2D g2d = TEMP_IMAGE.createGraphics();
-      return (int) font.getStringBounds(text, g2d.getFontRenderContext())
+      int height = (int) font.getStringBounds(text, g2d.getFontRenderContext())
           .getHeight();
+      g2d.dispose();
+      return height;
     }
     return 0;
   }

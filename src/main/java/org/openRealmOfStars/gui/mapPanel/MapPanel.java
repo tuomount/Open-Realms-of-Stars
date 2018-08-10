@@ -637,6 +637,7 @@ public class MapPanel extends JPanel {
       pixelX = viewPointOffsetX;
       pixelY = pixelY + Tile.MAX_HEIGHT;
     }
+    gr.dispose();
   }
 
   /**
@@ -901,6 +902,7 @@ public class MapPanel extends JPanel {
           screen.getWidth() - rightSpaceImage.getWidth() - 10,
           screen.getHeight() - leftSpaceImage.getHeight() - 10, null);
     }
+    gr.dispose();
   }
 
   /**
@@ -1179,7 +1181,7 @@ public class MapPanel extends JPanel {
         combat.setAnimation(null);
       }
     }
-
+    gr.dispose();
   }
 
   /**

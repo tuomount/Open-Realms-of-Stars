@@ -109,6 +109,12 @@ public final class SoundPlayer {
   public static final String MENU4 = "/resources/sounds/menu4.wav";
 
   /**
+   * Sound effect for Menu disabled
+   */
+  public static final String MENU_DISABLED =
+      "/resources/sounds/menu_disabled.wav";
+
+  /**
    * Sound effect for space ship engine
    */
   public static final String ENGINE1 = "/resources/sounds/engine1.wav";

@@ -18,6 +18,7 @@ wksdn18
 
 All graphics under CC-BY-SA 3.0 license. Unless otherwise noted.
 See http://creativecommons.org/licenses/by-sa/3.0/
+
 # Graphics by
 
 Moons and planet made by Unnamed (Viktor.Hahn@web.de)
@@ -59,7 +60,7 @@ Privateering effect in combat by Tuomo Untinen
 
 Privateer race picture by Tuomo Untinen
 
-Homarian ships are done with BizmasterStudios's SpaceShip Building Kit
+Homarian and Scaurian ships are done with BizmasterStudios's SpaceShip Building Kit
 Licensed under CC BY 4.0
 https://creativecommons.org/licenses/by/4.0/
 
@@ -142,6 +143,9 @@ Muffled Distant Explosion by NenadSimic (CC0)
 Nuke Sound
 Adaptation by Tuomo Untinen, from
 Chunky Explosion by Joth(CC0)
+
+Disabled menu sound by
+Lokif(CC0)
 
 # Musics By
 

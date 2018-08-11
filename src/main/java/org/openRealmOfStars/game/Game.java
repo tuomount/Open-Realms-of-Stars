@@ -1664,7 +1664,12 @@ public class Game implements ActionListener {
         return;
       }
     }
-    if (gameState == GameState.STARMAP && starMapView != null) {
+    if (gameState == GameState.STARMAP && starMapView != null
+        && starMapView.getPopup() != null) {
+      starMapView.handleActions(arg0);
+    }
+    if (gameState == GameState.STARMAP && starMapView != null
+        && starMapView.getPopup() == null) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_END_TURN)) {
         SoundPlayer.playMenuSound();

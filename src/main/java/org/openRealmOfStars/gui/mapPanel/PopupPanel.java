@@ -234,6 +234,18 @@ public class PopupPanel {
       w = textWidth / 2  - w / 2;
       gr.drawString(rows[i], textX + w, textY + h * 2 + h * i);
     }
+    gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+    gr.setFont(GuiStatics.getFontCubellanSC());
+    String hint = "Press enter/space bar or click to continue";
+    h = GuiStatics.getTextHeight(gr.getFont(), hint);
+    w = GuiStatics.getTextWidth(gr.getFont(), hint);
+    w = width / 2  - w / 2;
+    gr.drawString(hint, x + w - 1, y + height - h - borderSize * 2);
+    gr.drawString(hint, x + w + 1, y + height - h - borderSize * 2);
+    gr.drawString(hint, x + w, y + 1 + height - h - borderSize * 2);
+    gr.drawString(hint, x + w, y - 1 + height - h - borderSize * 2);
+    gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE);
+    gr.drawString(hint, x + w,  y + height - h - borderSize * 2);
     gr.dispose();
   }
 

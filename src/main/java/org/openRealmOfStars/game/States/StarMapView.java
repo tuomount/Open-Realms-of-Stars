@@ -362,6 +362,10 @@ public class StarMapView extends BlackPanel {
       mapPanel.repaint();
       readyToMove = true;
     }
+    if (getPopup() != null) {
+      // Exit immediately if popup is visible
+      return;
+    }
     // Star map
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_MSG)) {
       Message msg = players.getCurrentPlayerInfo().getMsgList()

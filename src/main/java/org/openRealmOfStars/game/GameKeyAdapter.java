@@ -66,12 +66,31 @@ public class GameKeyAdapter implements KeyEventDispatcher {
   }
   @Override
   public boolean dispatchKeyEvent(final KeyEvent arg0) {
+    // Common keys that work every where
+    if (arg0.getKeyCode() == KeyEvent.VK_F10
+        && arg0.getID() == KeyEvent.KEY_PRESSED) {
+      BufferedImage result = new BufferedImage(game.getWidth(),
+          game.getHeight(), BufferedImage.TYPE_INT_RGB);
+      game.paint(result.getGraphics());
+      IOUtilities.saveScreenShot(result);
+      return true;
+    }
+
     if (game.getGameState() == GameState.STARMAP
         && game.getStarMapView() != null) {
+      if (game.getStarMapView().getPopup() != null) {
+        if (arg0.getID() == KeyEvent.KEY_PRESSED
+            && arg0.getKeyCode() == KeyEvent.VK_ENTER
+            || arg0.getKeyCode() == KeyEvent.VK_SPACE) {
+          game.getStarMapView().setPopup(null);
+        }
+        return true;
+      }
       // Star Map Keys
       if (arg0.getKeyCode() == KeyEvent.VK_R
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
         game.getStarMapView().getStarMapMouseListener().setRoutePlanning(true);
+        return true;
       }
       if (arg0.getKeyCode() == KeyEvent.VK_Q
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
@@ -88,9 +107,8 @@ public class GameKeyAdapter implements KeyEventDispatcher {
               "Test title");
           popup.setImage(GuiStatics.BIG_PLANET_WATERWORLD1);
           game.getStarMapView().setPopup(popup);
-        } else {
-          game.getStarMapView().setPopup(null);
         }
+        return true;
       }
       if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
@@ -190,16 +208,6 @@ public class GameKeyAdapter implements KeyEventDispatcher {
         handleMovement(0, -1);
         return true;
       }
-    }
-
-    // Common keys that work every where
-    if (arg0.getKeyCode() == KeyEvent.VK_F10
-        && arg0.getID() == KeyEvent.KEY_PRESSED) {
-      BufferedImage result = new BufferedImage(game.getWidth(),
-          game.getHeight(), BufferedImage.TYPE_INT_RGB);
-      game.paint(result.getGraphics());
-      IOUtilities.saveScreenShot(result);
-      return true;
     }
     return false;
   }

@@ -4,6 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.gui.infopanel.MapInfoPanel;
 import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
@@ -237,6 +238,11 @@ public class StarMapMouseListener extends MouseAdapter
         mapPanel.getOffsetX(), mapPanel.getOffsetY(), mapPanel.getViewPointX(),
         mapPanel.getViewPointY(), false);
     if (!coord.isOutOfPanel()) {
+      if (mapPanel.getPopup() != null) {
+        mapPanel.setPopup(null);
+        SoundPlayer.playMenuSound();
+        return;
+      }
       if (getLastClickedFleet() != null && mapPanel.getRoute() != null) {
         getLastClickedFleet().setRoute(mapPanel.getRoute());
         mapPanel.setRoute(null);

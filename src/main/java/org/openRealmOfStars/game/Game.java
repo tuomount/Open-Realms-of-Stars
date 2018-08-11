@@ -1747,7 +1747,8 @@ public class Game implements ActionListener {
           SoundPlayer.playMenuSound();
           changeGameState(GameState.HISTORY_VIEW);
         }
-        if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_SHIPS)) {
+        if (arg0.getActionCommand().equalsIgnoreCase(
+            GameCommands.COMMAND_SHIPS)) {
           SoundPlayer.playMenuSound();
           changeGameState(GameState.VIEWSHIPS);
         }
@@ -1756,11 +1757,13 @@ public class Game implements ActionListener {
           SoundPlayer.playMenuSound();
           changeGameState(GameState.VIEWSTATS);
         }
-        if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEWS)) {
+        if (arg0.getActionCommand().equalsIgnoreCase(
+            GameCommands.COMMAND_NEWS)) {
           SoundPlayer.playMenuSound();
           changeGameState(GameState.NEWS_CORP_VIEW);
         }
-        if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_BATTLE)) {
+        if (arg0.getActionCommand().equalsIgnoreCase(
+            GameCommands.COMMAND_BATTLE)) {
           // Debugging purposes
           SoundPlayer.playMenuSound();
           changeGameState(GameState.COMBAT);

@@ -774,6 +774,12 @@ public final class GuiStatics {
       GuiStatics.class.getResource("/resources/images/gbnc-logo.png"));
 
   /**
+   * ASTEROIDS
+   */
+  public static final BufferedImage IMAGE_ASTEROIDS = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/asteroids.png"));
+
+  /**
    * Get text width for certain font
    * @param font Font to use
    * @param text String

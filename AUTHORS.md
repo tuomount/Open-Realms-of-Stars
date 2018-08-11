@@ -80,6 +80,10 @@ Space anomaly cloud tile by Vyntershtoff
 Wormhole tiles modifications by Tuomo Untinen
 Original art by Vyntershtoff
 
+Asteroids image
+Asteroids by phaelax
+Background stars by Tuomo Untinen
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

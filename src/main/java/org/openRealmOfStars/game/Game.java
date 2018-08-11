@@ -1722,6 +1722,49 @@ public class Game implements ActionListener {
             .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
           handleDoubleClicksOnStarMap();
         }
+        if (arg0.getActionCommand()
+            .equalsIgnoreCase(GameCommands.COMMAND_VIEW_PLANET)
+            && starMapView.getStarMapMouseListener()
+                .getLastClickedPlanet() != null) {
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.PLANETVIEW);
+        }
+        if (arg0.getActionCommand()
+            .equalsIgnoreCase(GameCommands.COMMAND_VIEW_FLEET)
+            && starMapView.getStarMapMouseListener()
+                .getLastClickedFleet() != null) {
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.FLEETVIEW);
+        }
+        if (arg0.getActionCommand()
+            .equalsIgnoreCase(GameCommands.COMMAND_VIEW_RESEARCH)) {
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.RESEARCHVIEW);
+        }
+        if (arg0.getActionCommand().equalsIgnoreCase(
+            GameCommands.COMMAND_SHOW_HISTORY)) {
+          // Debugging purposes
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.HISTORY_VIEW);
+        }
+        if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_SHIPS)) {
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.VIEWSHIPS);
+        }
+        if (arg0.getActionCommand().equalsIgnoreCase(
+            GameCommands.COMMAND_VIEW_STATS)) {
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.VIEWSTATS);
+        }
+        if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEWS)) {
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.NEWS_CORP_VIEW);
+        }
+        if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_BATTLE)) {
+          // Debugging purposes
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.COMBAT);
+        }
         starMapView.handleActions(arg0);
         if (starMapView.isAutoFocus()
             && arg0.getActionCommand().equals(GameCommands.COMMAND_END_TURN)) {
@@ -1788,67 +1831,6 @@ public class Game implements ActionListener {
       }
       return;
     }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_VIEW_PLANET)
-        && starMapView.getStarMapMouseListener()
-            .getLastClickedPlanet() != null) {
-      SoundPlayer.playMenuSound();
-      changeGameState(GameState.PLANETVIEW);
-    }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_VIEW_FLEET)
-        && starMapView.getStarMapMouseListener()
-            .getLastClickedFleet() != null) {
-      SoundPlayer.playMenuSound();
-      changeGameState(GameState.FLEETVIEW);
-    }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_VIEW_RESEARCH)) {
-      SoundPlayer.playMenuSound();
-      changeGameState(GameState.RESEARCHVIEW);
-    }
-    if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_SHOW_HISTORY)) {
-      SoundPlayer.playMenuSound();
-      changeGameState(GameState.HISTORY_VIEW);
-    }
-    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_SHIPS)) {
-      SoundPlayer.playMenuSound();
-      changeGameState(GameState.VIEWSHIPS);
-    }
-    if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_VIEW_STATS)) {
-      SoundPlayer.playMenuSound();
-      changeGameState(GameState.VIEWSTATS);
-    }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN)) {
-      shipView.setCopyClicked(false);
-      SoundPlayer.playMenuSound();
-      changeGameState(GameState.SHIPDESIGN);
-    }
-    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_NEWS)) {
-      SoundPlayer.playMenuSound();
-      changeGameState(GameState.NEWS_CORP_VIEW);
-    }
-    if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_BATTLE)) {
-      // Debugging purposes
-      SoundPlayer.playMenuSound();
-      changeGameState(GameState.COMBAT);
-    }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN_DONE)
-        && shipDesignView != null && shipDesignView.isDesignOK()) {
-      SoundPlayer.playMenuSound();
-      shipDesignView.keepDesign();
-      changeGameState(GameState.VIEWSHIPS);
-    }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_COPY_SHIP)) {
-      SoundPlayer.playMenuSound();
-      shipView.setCopyClicked(true);
-      changeGameState(GameState.SHIPDESIGN);
-    }
     if (gameState == GameState.RESEARCHVIEW && researchView != null) {
       // Handle Research View
       researchView.handleAction(arg0);
@@ -1863,6 +1845,16 @@ public class Game implements ActionListener {
           SoundPlayer.playMenuSound();
           shipView.updateList();
         }
+      } else if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_COPY_SHIP)) {
+        SoundPlayer.playMenuSound();
+        shipView.setCopyClicked(true);
+        changeGameState(GameState.SHIPDESIGN);
+      } else if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN)) {
+        shipView.setCopyClicked(false);
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.SHIPDESIGN);
       } else {
         // Handle View Ship
         shipView.handleAction(arg0);
@@ -1888,8 +1880,16 @@ public class Game implements ActionListener {
       diplomacyView.handleAction(arg0);
     }
     if (gameState == GameState.SHIPDESIGN && shipDesignView != null) {
-      // Ship Design View
-      shipDesignView.handleAction(arg0);
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN_DONE)
+          && shipDesignView != null && shipDesignView.isDesignOK()) {
+        SoundPlayer.playMenuSound();
+        shipDesignView.keepDesign();
+        changeGameState(GameState.VIEWSHIPS);
+      } else {
+        // Ship Design View
+        shipDesignView.handleAction(arg0);
+      }
     }
     if (gameState == GameState.ESPIONAGE_VIEW && espionageView != null) {
       // Espionage  View

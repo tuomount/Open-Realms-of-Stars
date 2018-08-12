@@ -9,11 +9,12 @@ import java.awt.image.RasterFormatException;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -95,6 +96,20 @@ public class TileTest {
     tile = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR2);
     assertEquals(TileNames.DEEP_SPACE_ANCHOR_DESCRIPTION,
         tile.getDescription());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAnomalyTileNames() {
+    DiceGenerator.initializeGenerators(0,0,0,8,8);
+    String str = TileNames.getRandomSpaceAnomaly(true, true);
+    assertEquals(TileNames.SPACE_ANOMALY_CREDITS, str);
+    str = TileNames.getRandomSpaceAnomaly(true, false);
+    assertEquals(TileNames.SPACE_ANOMALY_CREDITS, str);
+    str = TileNames.getRandomSpaceAnomaly(false, false);
+    assertEquals(TileNames.SPACE_ANOMALY_CREDITS, str);
+    str = TileNames.getRandomSpaceAnomaly(true, true);
+    assertEquals(TileNames.SPACE_ANOMALY_PIRATE, str);
   }
 
 }

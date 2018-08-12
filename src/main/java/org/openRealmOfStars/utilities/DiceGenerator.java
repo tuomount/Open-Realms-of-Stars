@@ -146,7 +146,7 @@ public final class DiceGenerator {
         throw new IllegalArgumentException("Bad behaving PRF!");
       }
     } else {
-      result = numbers[numberIndex] % maxValue;
+      result = numbers[numberIndex] % (maxValue + 1);
       numberIndex++;
       if (numberIndex >= numbers.length) {
         // All fixed numbers have been used

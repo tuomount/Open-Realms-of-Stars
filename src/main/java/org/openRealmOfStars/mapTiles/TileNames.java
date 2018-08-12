@@ -1,5 +1,9 @@
 package org.openRealmOfStars.mapTiles;
 
+import java.util.ArrayList;
+
+import org.openRealmOfStars.utilities.DiceGenerator;
+
 /**
  *
  * Open Realm of Stars game project
@@ -293,6 +297,46 @@ public final class TileNames {
    */
   public static final String WORM_HOLE2 = "WormHole2";
 
+  /**
+   * List of non harmful space anomalies
+   */
+  public static final String[] NON_HARMULFUL_SPACE_ANOMALIES = {
+      SPACE_ANOMALY_CREDITS, SPACE_ANOMALY_TECH, SPACE_ANOMALY_DSA,
+      SPACE_ANOMALY_MAP, SPACE_ANOMALY_SHIP};
+
+  /**
+   * List of harmful space anomalies
+   */
+  public static final String[] HARMULFUL_SPACE_ANOMALIES = {
+      SPACE_ANOMALY_LAIR, SPACE_ANOMALY_MONSTER, SPACE_ANOMALY,
+      SPACE_ANOMALY_PIRATE};
+
+  /**
+   * Get random space anomaly
+   * @param harmful Is harmful anomalies allowd
+   * @param board Is board player present
+   * @return Space anomaly
+   */
+  public static String getRandomSpaceAnomaly(final boolean harmful,
+      final boolean board) {
+    ArrayList<String> list = new ArrayList<>();
+    for (String str : NON_HARMULFUL_SPACE_ANOMALIES) {
+      list.add(str);
+    }
+    if (harmful) {
+      for (String str : HARMULFUL_SPACE_ANOMALIES) {
+        if (!board) {
+          if (str.equals(SPACE_ANOMALY)) {
+            list.add(str);
+          }
+        } else {
+          list.add(str);
+        }
+      }
+    }
+    int value = DiceGenerator.getRandom(list.size() - 1);
+    return list.get(value);
+  }
   /**
    * Description about deep space anchor
    */

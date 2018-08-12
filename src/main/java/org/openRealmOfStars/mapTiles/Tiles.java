@@ -243,6 +243,34 @@ public final class Tiles {
     addTile(tile);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_CREDITS);
+    addTile(tile);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_TECH);
+    addTile(tile);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_DSA);
+    addTile(tile);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_MAP);
+    addTile(tile);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_MONSTER);
+    addTile(tile);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_PIRATE);
+    addTile(tile);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_LAIR);
+    addTile(tile);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
     tile = new Tile(tilesImage, 10, 1, TileNames.WORM_HOLE1);
     addTile(tile);
     tile.setDescription(TileNames.WORM_HOLE_DESCRIPTION);

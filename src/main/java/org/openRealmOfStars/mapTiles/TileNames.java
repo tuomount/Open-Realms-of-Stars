@@ -249,9 +249,41 @@ public final class TileNames {
    */
   public static final String PLAYER_SHIP_8 = "Player_Ship_8";
   /**
-   * Space anomaly tile
+   * Space anomaly tile: Credits
+   */
+  public static final String SPACE_ANOMALY_CREDITS = "SpaceAnomalyCredits";
+  /**
+   * Space anomaly tile: New tech
+   */
+  public static final String SPACE_ANOMALY_TECH = "SpaceAnomalyTech";
+  /**
+   * Space anomaly tile: Ship
+   */
+  public static final String SPACE_ANOMALY_SHIP = "SpaceAnomalyShip";
+  /**
+   * Space anomaly tile: Map
+   */
+  public static final String SPACE_ANOMALY_MAP = "SpaceAnomalyMap";
+  /**
+   * Space anomaly tile: DSA aka Deep Space Anchor
+   */
+  public static final String SPACE_ANOMALY_DSA = "SpaceAnomalyDSA";
+  /**
+   * Space anomaly tile: SpaceAnomaly
    */
   public static final String SPACE_ANOMALY = "SpaceAnomaly";
+  /**
+   * Space anomaly tile: Pirate Lair
+   */
+  public static final String SPACE_ANOMALY_LAIR = "SpaceAnomalyLair";
+  /**
+   * Space anomaly tile: Pirate
+   */
+  public static final String SPACE_ANOMALY_PIRATE = "SpaceAnomalyPirate";
+  /**
+   * Space anomaly tile: Monster
+   */
+  public static final String SPACE_ANOMALY_MONSTER = "SpaceAnomalyMonster";
   /**
    * Worm hole tile 1
    */

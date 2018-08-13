@@ -104,6 +104,11 @@ public class GalaxyCreationView extends BlackPanel {
   private SpaceCombo<String> comboSpacePirates;
 
   /**
+   * ComboBox for space anomalies
+   */
+  private SpaceCombo<String> comboSpaceAnomalies;
+
+  /**
    * Galaxy config
    */
   private GalaxyConfig config;
@@ -251,6 +256,24 @@ public class GalaxyCreationView extends BlackPanel {
         + "If disable there are no space monster or space pirates in "
         + "space anomalies either.<html>");
     info.add(comboSpacePirates);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    xinvis.add(info);
+    label = new SpaceLabel("Space pirates:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    String[] spaceAnomalies = new String[3];
+    spaceAnomalies[0] = "Disabled";
+    spaceAnomalies[1] = "Non-harmful";
+    spaceAnomalies[2] = "All";
+    comboSpaceAnomalies = new SpaceCombo<>(spaceAnomalies);
+    comboSpaceAnomalies.setSelectedIndex(this.config.getSpaceAnomaliesLevel());
+    comboSpaceAnomalies.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboSpaceAnomalies.addActionListener(listener);
+    comboSpaceAnomalies.setToolTipText("<html>Is there random space anomalies."
+        + "If disable there are no space anomalies. Space anomalies can"
+        + "contain small bonus or even harmful events.<html>");
+    info.add(comboSpaceAnomalies);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
     xinvis.add(Box.createRigidArea(new Dimension(200, 5)));

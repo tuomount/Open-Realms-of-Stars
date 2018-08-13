@@ -313,7 +313,7 @@ public final class TileNames {
 
   /**
    * Get random space anomaly
-   * @param harmful Is harmful anomalies allowd
+   * @param harmful Is harmful anomalies allowed
    * @param board Is board player present
    * @return Space anomaly
    */

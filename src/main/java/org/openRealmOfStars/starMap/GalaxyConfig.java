@@ -168,6 +168,13 @@ public class GalaxyConfig {
    */
   private int spacePiratesLevel;
 
+  /**
+   * Space anomaly level
+   * 0 Disabled
+   * 1 Non-harmful
+   * 2 All
+   */
+  private int spaceAnomaliesLevel;
 /**
    * Constructor for galaxy config
    */
@@ -176,6 +183,7 @@ public class GalaxyConfig {
     sizeY = 75;
     this.galaxySizeIndex = 1;
     this.spacePiratesLevel = 1;
+    this.spaceAnomaliesLevel = 1;
     setChanceForPlanetaryEvent(10);
     setNumberOfRoguePlanets(ROGUE_PLANETS_FEW);
     setScoringVictoryTurns(400);
@@ -546,6 +554,24 @@ public class GalaxyConfig {
    */
   public int getSpacePiratesLevel() {
     return this.spacePiratesLevel;
+  }
+
+  /**
+   * Set space anomalies level
+   * @param value 0 to disable Up to 2
+   */
+  public void setSpaceAnomaliesLevel(final int value) {
+    if (value >= 0 && value <= 2) {
+      this.spaceAnomaliesLevel = value;
+    }
+  }
+
+  /**
+   * Get space anomalies level
+   * @return Space anomalies level
+   */
+  public int getSpaceAnomaliesLevel() {
+    return this.spaceAnomaliesLevel;
   }
 
 }

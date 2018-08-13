@@ -438,6 +438,34 @@ public class StarMap {
         loop++;
       }
     }
+ // Create random deep space anchors
+    loop = 0;
+    int numberOfAnomalies = 0;
+    boolean harmful = false;
+    boolean board = players.getBoardPlayer() != null;
+    if (config.getSpaceAnomaliesLevel() == 1) {
+      numberOfAnomalies = config.getMaxPlayers() * 5;
+    }
+    if (config.getSpaceAnomaliesLevel() == 2) {
+      numberOfAnomalies = config.getMaxPlayers() * 7;
+      harmful = true;
+    }
+    for (int i = 0; i < numberOfAnomalies; i++) {
+      while (loop < MAX_LOOPS) {
+        int sx = DiceGenerator.getRandom(1,
+            maxX - 2);
+        int sy = DiceGenerator.getRandom(1,
+            maxX - 2);
+        if (Tiles.getTileByIndex(tiles[sx][sy]) == empty
+            && getPlanetByCoordinate(sx, sy) == null) {
+          String tileName = TileNames.getRandomSpaceAnomaly(harmful, board);
+          Tile anomaly = Tiles.getTileByName(tileName);
+          tiles[sx][sy] = anomaly.getIndex();
+          break;
+        }
+        loop++;
+      }
+    }
     // No need to have generator after creation
     nameGenerator = null;
   }

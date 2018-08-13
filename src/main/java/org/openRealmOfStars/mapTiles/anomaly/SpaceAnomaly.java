@@ -1,5 +1,7 @@
 package org.openRealmOfStars.mapTiles.anomaly;
 
+import java.awt.image.BufferedImage;
+
 /**
 *
 * Open Realm of Stars game project
@@ -33,6 +35,16 @@ public class SpaceAnomaly {
   private int value;
 
   /**
+   * Textual description what found or happened
+   */
+  private String text;
+
+  /**
+   * Image of Space anomaly
+   */
+  private BufferedImage image;
+
+  /**
    * Constructor for Space anomaly
    * @param type AnomalyType
    * @param value Space anomaly value
@@ -40,6 +52,8 @@ public class SpaceAnomaly {
   public SpaceAnomaly(final AnomalyType type, final int value) {
     this.type = type;
     this.value = value;
+    this.text = null;
+    this.image = null;
   }
 
   /**
@@ -56,5 +70,37 @@ public class SpaceAnomaly {
    */
   public int getValue() {
     return value;
+  }
+
+  /**
+   * Get textual description of space anomaly.
+   * @return Textual description
+   */
+  public String getText() {
+    return text;
+  }
+
+  /**
+   * Set textual description of space anomaly
+   * @param text To set
+   */
+  public void setText(final String text) {
+    this.text = text;
+  }
+
+  /**
+   * Set image of space anomaly
+   * @param image to set
+   */
+  public void setImage(final BufferedImage image) {
+    this.image = image;
+  }
+
+  /**
+   * Get image of space anomaly
+   * @return BufferedImage
+   */
+  public BufferedImage getImage() {
+    return image;
   }
 }

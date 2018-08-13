@@ -2,8 +2,11 @@ package org.openRealmOfStars.mapTiles.anomaly;
 
 import static org.junit.Assert.*;
 
+import java.awt.image.BufferedImage;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
 
 /**
 *
@@ -35,6 +38,13 @@ public class SpaceAnomalyTest {
     SpaceAnomaly anomaly = new SpaceAnomaly(AnomalyType.CREDIT, 5);
     assertEquals(AnomalyType.CREDIT, anomaly.getType());
     assertEquals(5, anomaly.getValue());
+    assertEquals(null, anomaly.getImage());
+    assertEquals(null, anomaly.getText());
+    anomaly.setText("Test");
+    assertEquals("Test", anomaly.getText());
+    BufferedImage image = Mockito.mock(BufferedImage.class);
+    anomaly.setImage(image);
+    assertEquals(image, anomaly.getImage());
   }
 
 }

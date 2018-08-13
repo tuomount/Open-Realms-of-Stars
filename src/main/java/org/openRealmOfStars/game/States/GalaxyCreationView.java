@@ -572,6 +572,7 @@ public class GalaxyCreationView extends BlackPanel {
       }
       }
       config.setSpacePiratesLevel(comboSpacePirates.getSelectedIndex());
+      config.setSpaceAnomaliesLevel(comboSpaceAnomalies.getSelectedIndex());
       switch (comboScoringVictory.getSelectedIndex()) {
       case 0: {
         // 200 turns

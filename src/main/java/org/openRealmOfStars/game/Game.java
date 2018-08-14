@@ -512,9 +512,10 @@ public class Game implements ActionListener {
         fleet.setPos(new Coordinate(nx, ny));
         SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(starMap,
             info, fleet);
-        PopupPanel popup = new PopupPanel(anomaly.getText(), "Space anomaly");
-        popup.setImage(anomaly.getImage());
-        starMapView.setPopup(popup);
+        if (anomaly != null && starMapView != null && info.isHuman()) {
+          PopupPanel popup = new PopupPanel(anomaly);
+          starMapView.setPopup(popup);
+        }
         starMap.clearFleetTiles();
         fleet.decMovesLeft();
         getStarMap().doFleetScanUpdate(info, fleet, null);

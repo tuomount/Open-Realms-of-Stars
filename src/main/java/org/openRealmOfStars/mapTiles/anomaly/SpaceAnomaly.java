@@ -138,10 +138,6 @@ public class SpaceAnomaly {
           break;
         }
         default: {
-          result = new SpaceAnomaly(AnomalyType.CREDIT, 0);
-          result.setText("This was just asteroids floating a round.");
-          result.setImage(GuiStatics.IMAGE_ASTEROIDS);
-          map.setTile(fleet.getX(), fleet.getY(), empty);
           break;
         }
       }

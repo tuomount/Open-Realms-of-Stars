@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.gui.utilies.GraphRoutines;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.mapTiles.anomaly.SpaceAnomaly;
 
 
 /**
@@ -61,6 +62,57 @@ public class PopupPanel {
     this.text = text;
     this.title = title;
     image = null;
+  }
+
+  /**
+   * Create Popup panel based on space anomaly
+   * @param anomaly Space anomaly
+   */
+  public PopupPanel(final SpaceAnomaly anomaly) {
+    text = anomaly.getText();
+    image = anomaly.getImage();
+    switch (anomaly.getType()) {
+      case CREDIT: {
+        title = "Credit cache!";
+        break;
+      }
+      case DEEP_SPACE_ANCHOR: {
+        title = "Deep space anchor!";
+        break;
+      }
+      case TECH: {
+        title = "Tech discovered!";
+        break;
+      }
+      case LAIR: {
+        title = "Pirate station found!";
+        break;
+      }
+      case PIRATE: {
+        title = "Pirate ship encoutered!";
+        break;
+      }
+      case MONSTER: {
+        title = "Monster encoutered!";
+        break;
+      }
+      case MAP: {
+        title = "Old probe found!";
+        break;
+      }
+      case SHIP: {
+        title = "Ship with crew!";
+        break;
+      }
+      case WORMHOLE: {
+        title = "Space anomaly!";
+        break;
+      }
+      default: {
+        title = "Space anomaly!";
+        break;
+      }
+    }
   }
 
   /**

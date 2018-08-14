@@ -46,10 +46,12 @@ import org.openRealmOfStars.game.States.StarMapView;
 import org.openRealmOfStars.game.States.StatView;
 import org.openRealmOfStars.game.config.ConfigFile;
 import org.openRealmOfStars.game.config.ConfigLine;
+import org.openRealmOfStars.gui.mapPanel.PopupPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
+import org.openRealmOfStars.mapTiles.anomaly.SpaceAnomaly;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
@@ -508,6 +510,11 @@ public class Game implements ActionListener {
         }
       } else {
         fleet.setPos(new Coordinate(nx, ny));
+        SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(starMap,
+            info, fleet);
+        PopupPanel popup = new PopupPanel(anomaly.getText(), "Space anomaly");
+        popup.setImage(anomaly.getImage());
+        starMapView.setPopup(popup);
         starMap.clearFleetTiles();
         fleet.decMovesLeft();
         getStarMap().doFleetScanUpdate(info, fleet, null);

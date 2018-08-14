@@ -7,6 +7,8 @@ import java.awt.image.BufferedImage;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.mapTiles.anomaly.AnomalyType;
+import org.openRealmOfStars.mapTiles.anomaly.SpaceAnomaly;
 
 /**
 *
@@ -66,6 +68,132 @@ public class PopupPanelTest {
     assertEquals("This is just text to try out popup panel", rows[0]);
     assertEquals("text drawing capabilities. There are no", rows[1]);
     assertEquals("line changes here at all. Popup panel", rows[2]);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSpaceAnomalyCredit() {
+    BufferedImage image = Mockito.mock(BufferedImage.class);
+    SpaceAnomaly anomaly = Mockito.mock(SpaceAnomaly.class);
+    Mockito.when(anomaly.getType()).thenReturn(AnomalyType.CREDIT);
+    Mockito.when(anomaly.getImage()).thenReturn(image);
+    Mockito.when(anomaly.getText()).thenReturn("Test");
+    PopupPanel panel = new PopupPanel(anomaly);
+    assertEquals("Test", panel.getText());
+    assertEquals(image, panel.getImage());
+    assertEquals("Credit cache!", panel.getTitle());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSpaceAnomalyDSA() {
+    BufferedImage image = Mockito.mock(BufferedImage.class);
+    SpaceAnomaly anomaly = Mockito.mock(SpaceAnomaly.class);
+    Mockito.when(anomaly.getType()).thenReturn(AnomalyType.DEEP_SPACE_ANCHOR);
+    Mockito.when(anomaly.getImage()).thenReturn(image);
+    Mockito.when(anomaly.getText()).thenReturn("Test");
+    PopupPanel panel = new PopupPanel(anomaly);
+    assertEquals("Test", panel.getText());
+    assertEquals(image, panel.getImage());
+    assertEquals("Deep space anchor!", panel.getTitle());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSpaceAnomalyTech() {
+    BufferedImage image = Mockito.mock(BufferedImage.class);
+    SpaceAnomaly anomaly = Mockito.mock(SpaceAnomaly.class);
+    Mockito.when(anomaly.getType()).thenReturn(AnomalyType.TECH);
+    Mockito.when(anomaly.getImage()).thenReturn(image);
+    Mockito.when(anomaly.getText()).thenReturn("Test");
+    PopupPanel panel = new PopupPanel(anomaly);
+    assertEquals("Test", panel.getText());
+    assertEquals(image, panel.getImage());
+    assertEquals("Tech discovered!", panel.getTitle());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSpaceAnomalyLair() {
+    BufferedImage image = Mockito.mock(BufferedImage.class);
+    SpaceAnomaly anomaly = Mockito.mock(SpaceAnomaly.class);
+    Mockito.when(anomaly.getType()).thenReturn(AnomalyType.LAIR);
+    Mockito.when(anomaly.getImage()).thenReturn(image);
+    Mockito.when(anomaly.getText()).thenReturn("Test");
+    PopupPanel panel = new PopupPanel(anomaly);
+    assertEquals("Test", panel.getText());
+    assertEquals(image, panel.getImage());
+    assertEquals("Pirate station found!", panel.getTitle());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSpaceAnomalyPirate() {
+    BufferedImage image = Mockito.mock(BufferedImage.class);
+    SpaceAnomaly anomaly = Mockito.mock(SpaceAnomaly.class);
+    Mockito.when(anomaly.getType()).thenReturn(AnomalyType.PIRATE);
+    Mockito.when(anomaly.getImage()).thenReturn(image);
+    Mockito.when(anomaly.getText()).thenReturn("Test");
+    PopupPanel panel = new PopupPanel(anomaly);
+    assertEquals("Test", panel.getText());
+    assertEquals(image, panel.getImage());
+    assertEquals("Pirate ship encoutered!", panel.getTitle());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSpaceAnomalyMonster() {
+    BufferedImage image = Mockito.mock(BufferedImage.class);
+    SpaceAnomaly anomaly = Mockito.mock(SpaceAnomaly.class);
+    Mockito.when(anomaly.getType()).thenReturn(AnomalyType.MONSTER);
+    Mockito.when(anomaly.getImage()).thenReturn(image);
+    Mockito.when(anomaly.getText()).thenReturn("Test");
+    PopupPanel panel = new PopupPanel(anomaly);
+    assertEquals("Test", panel.getText());
+    assertEquals(image, panel.getImage());
+    assertEquals("Monster encoutered!", panel.getTitle());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSpaceAnomalyMap() {
+    BufferedImage image = Mockito.mock(BufferedImage.class);
+    SpaceAnomaly anomaly = Mockito.mock(SpaceAnomaly.class);
+    Mockito.when(anomaly.getType()).thenReturn(AnomalyType.MAP);
+    Mockito.when(anomaly.getImage()).thenReturn(image);
+    Mockito.when(anomaly.getText()).thenReturn("Test");
+    PopupPanel panel = new PopupPanel(anomaly);
+    assertEquals("Test", panel.getText());
+    assertEquals(image, panel.getImage());
+    assertEquals("Old probe found!", panel.getTitle());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSpaceAnomalyShip() {
+    BufferedImage image = Mockito.mock(BufferedImage.class);
+    SpaceAnomaly anomaly = Mockito.mock(SpaceAnomaly.class);
+    Mockito.when(anomaly.getType()).thenReturn(AnomalyType.SHIP);
+    Mockito.when(anomaly.getImage()).thenReturn(image);
+    Mockito.when(anomaly.getText()).thenReturn("Test");
+    PopupPanel panel = new PopupPanel(anomaly);
+    assertEquals("Test", panel.getText());
+    assertEquals(image, panel.getImage());
+    assertEquals("Ship with crew!", panel.getTitle());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSpaceAnomalyWormhole() {
+    BufferedImage image = Mockito.mock(BufferedImage.class);
+    SpaceAnomaly anomaly = Mockito.mock(SpaceAnomaly.class);
+    Mockito.when(anomaly.getType()).thenReturn(AnomalyType.WORMHOLE);
+    Mockito.when(anomaly.getImage()).thenReturn(image);
+    Mockito.when(anomaly.getText()).thenReturn("Test");
+    PopupPanel panel = new PopupPanel(anomaly);
+    assertEquals("Test", panel.getText());
+    assertEquals(image, panel.getImage());
+    assertEquals("Space anomaly!", panel.getTitle());
   }
 
 }

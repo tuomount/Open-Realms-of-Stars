@@ -2,6 +2,15 @@ package org.openRealmOfStars.mapTiles.anomaly;
 
 import java.awt.image.BufferedImage;
 
+import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.mapTiles.TileNames;
+import org.openRealmOfStars.mapTiles.Tiles;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.utilities.DiceGenerator;
+
 /**
 *
 * Open Realm of Stars game project
@@ -102,5 +111,41 @@ public class SpaceAnomaly {
    */
   public BufferedImage getImage() {
     return image;
+  }
+
+  /**
+   * Create Space anomaly and handle space anomaly tile
+   * @param map StarMap
+   * @param info Player who found the anomaly
+   * @param fleet Fleet which found anomaly
+   * @return SpaceAnomaly or null if coordinates are illegal.
+   */
+  public static SpaceAnomaly createAnomalyEvent(final StarMap map,
+      final PlayerInfo info, final Fleet fleet) {
+    SpaceAnomaly result = null;
+    Tile tile = map.getTile(fleet.getX(), fleet.getY());
+    Tile empty = Tiles.getTileByName(TileNames.EMPTY);
+    if (tile != null) {
+      switch (tile.getName()) {
+        case TileNames.SPACE_ANOMALY_CREDITS: {
+          result = new SpaceAnomaly(AnomalyType.CREDIT,
+              DiceGenerator.getRandom(2, 10));
+          result.setText("There was hidden cache of credits hidden in"
+              + " asteroids. Cache contained " + result.getValue()
+              + " credits.");
+          result.setImage(GuiStatics.IMAGE_ASTEROIDS);
+          map.setTile(fleet.getX(), fleet.getY(), empty);
+          break;
+        }
+        default: {
+          result = new SpaceAnomaly(AnomalyType.CREDIT, 0);
+          result.setText("This was just asteroids floating a round.");
+          result.setImage(GuiStatics.IMAGE_ASTEROIDS);
+          map.setTile(fleet.getX(), fleet.getY(), empty);
+          break;
+        }
+      }
+    }
+    return result;
   }
 }

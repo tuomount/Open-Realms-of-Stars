@@ -7,6 +7,11 @@ import java.awt.image.BufferedImage;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.mapTiles.TileNames;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.starMap.StarMap;
 
 /**
 *
@@ -45,6 +50,24 @@ public class SpaceAnomalyTest {
     BufferedImage image = Mockito.mock(BufferedImage.class);
     anomaly.setImage(image);
     assertEquals(image, anomaly.getImage());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCreditAnomaly() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getX()).thenReturn(5);
+    Mockito.when(fleet.getY()).thenReturn(6);
+    Tile tile = Mockito.mock(Tile.class);
+    Mockito.when(tile.getName()).thenReturn(TileNames.SPACE_ANOMALY_CREDITS);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getTile(5, 6)).thenReturn(tile);
+    SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
+    assertEquals(AnomalyType.CREDIT, anomaly.getType());
+    assertNotNull(anomaly.getImage());
+    assertNotEquals(0, anomaly.getValue());
+    assertNotNull(anomaly.getText());
   }
 
 }

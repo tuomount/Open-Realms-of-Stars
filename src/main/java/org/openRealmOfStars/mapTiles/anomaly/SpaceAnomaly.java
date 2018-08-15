@@ -8,6 +8,7 @@ import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -162,6 +163,21 @@ public class SpaceAnomaly {
           result.setImage(null);
           Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
           map.setTile(fleet.getX(), fleet.getY(), anchor);
+          break;
+        }
+        case TileNames.SPACE_ANOMALY_TECH: {
+          result = new SpaceAnomaly(AnomalyType.TECH, 0);
+          Tech tech = info.getTechList().addNewRandomTech(info);
+          if (tech != null) {
+            result.setText("Found ancient ship floating around which contained"
+                + " schematics of " + tech.getName() + ". This invention"
+                + " is immediately taken to use.");
+            //FIXME with image
+            result.setImage(null);
+          } else {
+            result = null;
+          }
+          map.setTile(fleet.getX(), fleet.getY(), empty);
           break;
         }
         default: {

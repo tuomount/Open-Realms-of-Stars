@@ -4,8 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.message.MessageType;
 
 /**
@@ -241,6 +243,17 @@ public class TechListTest {
     assertEquals(2, list.getTechLevel(TechType.Combat));
     list.addTech(TechFactory.createCombatTech("Photon torpedo Mk2", 2));
     assertEquals(3, list.getTechLevel(TechType.Combat));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAddRandomTech() {
+    TechList list = new TechList();
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    MessageList msgList = Mockito.mock(MessageList.class);
+    Mockito.when(info.getMsgList()).thenReturn(msgList);
+    Tech tech = list.addNewRandomTech(info);
+    assertEquals(1, tech.getLevel());
   }
 
   @Test

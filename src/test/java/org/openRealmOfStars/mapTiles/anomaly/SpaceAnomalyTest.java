@@ -11,6 +11,8 @@ import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.tech.Tech;
+import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.starMap.StarMap;
 
 /**
@@ -85,6 +87,45 @@ public class SpaceAnomalyTest {
     assertEquals(AnomalyType.MAP, anomaly.getType());
     assertEquals(null, anomaly.getImage());
     assertEquals(7, anomaly.getValue());
+    assertNotNull(anomaly.getText());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTechAnomalyNoTech() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList techList = Mockito.mock(TechList.class);
+    Mockito.when(info.getTechList()).thenReturn(techList);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getX()).thenReturn(5);
+    Mockito.when(fleet.getY()).thenReturn(6);
+    Tile tile = Mockito.mock(Tile.class);
+    Mockito.when(tile.getName()).thenReturn(TileNames.SPACE_ANOMALY_TECH);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getTile(5, 6)).thenReturn(tile);
+    SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
+    assertEquals(null, anomaly);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTechAnomaly() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList techList = Mockito.mock(TechList.class);
+    Tech tech = Mockito.mock(Tech.class);
+    Mockito.when(techList.addNewRandomTech(info)).thenReturn(tech);
+    Mockito.when(info.getTechList()).thenReturn(techList);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getX()).thenReturn(5);
+    Mockito.when(fleet.getY()).thenReturn(6);
+    Tile tile = Mockito.mock(Tile.class);
+    Mockito.when(tile.getName()).thenReturn(TileNames.SPACE_ANOMALY_TECH);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getTile(5, 6)).thenReturn(tile);
+    SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
+    assertEquals(AnomalyType.TECH, anomaly.getType());
+    assertEquals(null, anomaly.getImage());
+    assertEquals(0, anomaly.getValue());
     assertNotNull(anomaly.getText());
   }
 

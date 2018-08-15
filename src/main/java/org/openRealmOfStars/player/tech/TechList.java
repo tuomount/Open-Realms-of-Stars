@@ -710,6 +710,49 @@ public class TechList {
   }
 
   /**
+   * Add new random tech to player tech list
+   * @param info PlayerInfo
+   * @return Added Tech or null if all tech has been invented
+   */
+  public Tech addNewRandomTech(final PlayerInfo info) {
+    Tech result = null;
+    int loop = 10;
+    while (result == null && loop > 0) {
+      loop--;
+      int index = DiceGenerator.getRandom(0, 5);
+      TechType type = TechType.getTypeByIndex(index);
+      int lvl = techLevels[index];
+      Tech tech = TechFactory.createRandomTech(type, lvl,
+          getListForTypeAndLevel(type, lvl));
+      if (tech == null) {
+        if (lvl < 10) {
+          techLevels[index] = techLevels[index] + 1;
+        }
+      } else {
+        addTech(tech);
+        StringBuilder sb = new StringBuilder();
+        sb.append(info.getEmpireName());
+        sb.append(" researched ");
+        sb.append(tech.getName());
+        sb.append(" in ");
+        sb.append(tech.getType().toString());
+        sb.append(" with level ");
+        sb.append(lvl);
+        sb.append(". ");
+        if (isTechListForLevelFull(type, lvl)) {
+          sb.append(tech.getType().toString());
+          sb.append(" has advenced to next level.");
+        }
+        Message msg = new Message(MessageType.RESEARCH, sb.toString(),
+            Icons.getIconByName(Icons.ICON_RESEARCH));
+        msg.setMatchByString(tech.getName());
+        info.getMsgList().addNewMessage(msg);
+        result = tech;
+      }
+    }
+    return result;
+  }
+  /**
    * Update Research points by turn. This will also grant a new technology
    * @param totalResearchPoints player makes per turn
    * @param info PlayerInfo for message information

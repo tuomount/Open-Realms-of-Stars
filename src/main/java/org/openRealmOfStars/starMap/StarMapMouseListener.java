@@ -239,7 +239,7 @@ public class StarMapMouseListener extends MouseAdapter
         mapPanel.getViewPointY(), false);
     if (!coord.isOutOfPanel()) {
       if (mapPanel.getPopup() != null) {
-        mapPanel.setPopup(null);
+        mapPanel.getPopup().dismiss();
         SoundPlayer.playMenuSound();
         return;
       }

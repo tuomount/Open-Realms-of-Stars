@@ -48,6 +48,9 @@ public class PopupPanelTest {
     assertEquals("Test title", panel.getTitle());
     panel.setTitle("Another");
     assertEquals("Another", panel.getTitle());
+    assertEquals(false, panel.isDismissed());
+    panel.dismiss();
+    assertEquals(true, panel.isDismissed());
   }
 
   @Test

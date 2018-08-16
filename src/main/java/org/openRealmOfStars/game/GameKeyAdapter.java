@@ -82,7 +82,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
         if (arg0.getID() == KeyEvent.KEY_PRESSED
             && arg0.getKeyCode() == KeyEvent.VK_ENTER
             || arg0.getKeyCode() == KeyEvent.VK_SPACE) {
-          game.getStarMapView().setPopup(null);
+          game.getStarMapView().getPopup().dismiss();
         }
         return true;
       }

@@ -1679,6 +1679,10 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
         SoundPlayer.playSound(SoundPlayer.MENU_DISABLED);
       }
+      if (starMapView.getPopup().isDismissed()) {
+        starMapView.setPopup(null);
+        return;
+      }
     }
     if (gameState == GameState.STARMAP && starMapView != null
         && starMapView.getPopup() == null) {

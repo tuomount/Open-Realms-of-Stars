@@ -54,6 +54,11 @@ public class PopupPanel {
   private BufferedImage scaledImage;
 
   /**
+   * Is popup panel dismissed and ready for state change.
+   */
+  private boolean dismissed;
+
+  /**
    * Constructor for PopupPanel
    * @param text Text to show
    * @param title Title to show
@@ -62,6 +67,7 @@ public class PopupPanel {
     this.text = text;
     this.title = title;
     image = null;
+    dismissed = false;
   }
 
   /**
@@ -301,4 +307,18 @@ public class PopupPanel {
     gr.dispose();
   }
 
+  /**
+   * Dismiss popup panel and ready for state change
+   */
+  public void dismiss() {
+    dismissed = true;
+  }
+
+  /**
+   * Is popup panel dismissed?
+   * @return True if ready to dismissing and state change.
+   */
+  public boolean isDismissed() {
+    return dismissed;
+  }
 }

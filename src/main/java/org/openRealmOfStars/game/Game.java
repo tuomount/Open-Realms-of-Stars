@@ -518,7 +518,8 @@ public class Game implements ActionListener {
         }
         if (anomaly != null && !info.isHuman() && anomaly.getCombat() != null) {
           anomaly.getCombat().doFastCombat();
-          getStarMap().getHistory().addEvent(anomaly.getCombat().getCombatEvent());
+          getStarMap().getHistory().addEvent(
+              anomaly.getCombat().getCombatEvent());
         }
         starMap.clearFleetTiles();
         fleet.decMovesLeft();

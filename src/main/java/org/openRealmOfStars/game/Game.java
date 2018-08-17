@@ -527,8 +527,8 @@ public class Game implements ActionListener {
         fleet.decMovesLeft();
         getStarMap().doFleetScanUpdate(info, fleet, null);
         Tile tile = getStarMap().getTile(fleet.getX(), fleet.getY());
-        if (tile.getName().equals(TileNames.WORM_HOLE1) ||
-            tile.getName().equals(TileNames.WORM_HOLE2)) {
+        if (tile.getName().equals(TileNames.WORM_HOLE1)
+            || tile.getName().equals(TileNames.WORM_HOLE2)) {
           Coordinate coord = getStarMap().getFreeRandomSpot();
           fleet.setPos(coord);
           getStarMap().doFleetScanUpdate(info, fleet, null);

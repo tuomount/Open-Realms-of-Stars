@@ -91,6 +91,19 @@ public class StarMap {
   public static final int SOLAR_SYSTEM_WIDTH = 7;
 
   /**
+   * Enemy type for pirate ship
+   */
+  public static final int ENEMY_PIRATE = 0;
+  /**
+   * Enemy type for pirate station
+   */
+  public static final int ENEMY_PIRATE_LAIR = 1;
+  /**
+   * Enemy type for space monster
+   */
+  public static final int ENEMY_MONSTER = 2;
+
+  /**
    * Star map's maximum X coordinate
    */
   private int maxX;
@@ -478,33 +491,7 @@ public class StarMap {
    */
   public void addSpacePirate(final int x, final int y,
       final PlayerInfo playerInfo) {
-    ShipStat[] stats = playerInfo.getShipStatList();
-    ArrayList<ShipStat> listStats = new ArrayList<>();
-    for (ShipStat stat : stats) {
-      if (!stat.isObsolete()) {
-        Ship ship = new Ship(stat.getDesign());
-        if (ship.getTotalMilitaryPower() == 0 || ship.isStarBase()) {
-          continue;
-        }
-        listStats.add(stat);
-      }
-    }
-    if (listStats.size() > 0) {
-      ShipStat stat = listStats.get(DiceGenerator.getRandom(
-          listStats.size() - 1));
-      Ship ship = new Ship(stat.getDesign());
-      stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
-      stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
-      Fleet fleet = new Fleet(ship, x, y);
-      playerInfo.getFleets().add(fleet);
-      fleet.setName(playerInfo.getFleets().generateUniqueName("pirate"));
-      Sun sun = getAboutNearestSolarSystem(x, y, playerInfo, fleet, null);
-      Mission mission = new Mission(MissionType.PRIVATEER,
-          MissionPhase.TREKKING, sun.getCenterCoordinate());
-      mission.setFleetName(fleet.getName());
-      mission.setSunName(sun.getName());
-      playerInfo.getMissions().add(mission);
-    }
+    addSpaceAnomalyEnemy(x, y, playerInfo, ENEMY_PIRATE);
   }
   /**
    * Adds one pirate starbase into coordinate
@@ -514,15 +501,32 @@ public class StarMap {
    */
   public void addSpacePirateLair(final int x, final int y,
       final PlayerInfo playerInfo) {
+    addSpaceAnomalyEnemy(x, y, playerInfo, ENEMY_PIRATE_LAIR);
+  }
+
+  /**
+   * Adds one enemy monster/pirate into coordinate
+   * @param x X Coordinate
+   * @param y Y Coordinate
+   * @param playerInfo Board player info
+   * @param type ENEMY_TYPE
+   * @return created fleet or null if fleet was not created.
+   */
+  public Fleet addSpaceAnomalyEnemy(final int x, final int y,
+      final PlayerInfo playerInfo, final int type) {
     ShipStat[] stats = playerInfo.getShipStatList();
     ArrayList<ShipStat> listStats = new ArrayList<>();
     for (ShipStat stat : stats) {
       if (!stat.isObsolete()) {
         Ship ship = new Ship(stat.getDesign());
-        if (ship.getTotalMilitaryPower() == 0 || !ship.isStarBase()) {
-          continue;
+        if (type == ENEMY_PIRATE_LAIR && ship.getTotalMilitaryPower() > 0
+            && ship.isStarBase()) {
+          listStats.add(stat);
         }
-        listStats.add(stat);
+        if (type == ENEMY_PIRATE && ship.getTotalMilitaryPower() > 0
+            && !ship.isStarBase()) {
+          listStats.add(stat);
+        }
       }
     }
     if (listStats.size() > 0) {
@@ -533,14 +537,23 @@ public class StarMap {
       stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
       Fleet fleet = new Fleet(ship, x, y);
       playerInfo.getFleets().add(fleet);
-      fleet.setName(playerInfo.getFleets().generateUniqueName("pirate lair"));
-      Mission mission = new Mission(MissionType.DEPLOY_STARBASE,
-          MissionPhase.TREKKING, new Coordinate(x, y));
-      mission.setFleetName(fleet.getName());
-      playerInfo.getMissions().add(mission);
+      if (type == ENEMY_PIRATE_LAIR) {
+        fleet.setName(playerInfo.getFleets().generateUniqueName("pirate lair"));
+        ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+      }
+      if (type == ENEMY_PIRATE) {
+        fleet.setName(playerInfo.getFleets().generateUniqueName("pirate"));
+        Sun sun = getAboutNearestSolarSystem(x, y, playerInfo, fleet, null);
+        Mission mission = new Mission(MissionType.PRIVATEER,
+            MissionPhase.TREKKING, sun.getCenterCoordinate());
+        mission.setFleetName(fleet.getName());
+        mission.setSunName(sun.getName());
+        playerInfo.getMissions().add(mission);
+      }
+      return fleet;
     }
+    return null;
   }
-
   /**
    * Create border starting solar system
    * @param config Galaxy Config

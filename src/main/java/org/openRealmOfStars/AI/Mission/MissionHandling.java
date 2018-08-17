@@ -484,14 +484,28 @@ public final class MissionHandling {
         Tile tile = game.getStarMap().getTile(fleet.getX(), fleet.getY());
         if (tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
             || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2)) {
+          Fleet starbaseFleet = null;
+          for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
+            Fleet ite = info.getFleets().getByIndex(i);
+            if (ite.isStarBaseDeployed()
+                && ite.getX() == fleet.getX() && ite.getY() == fleet.getY()) {
+              starbaseFleet = ite;
+            }
+          }
           for (Ship ship : fleet.getShips()) {
             if (ship.getHull().getHullType() == ShipHullType.STARBASE) {
               fleet.removeShip(ship);
-              Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
-              FleetList fleetList = info.getFleets();
-              ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
-              fleetList.add(newFleet);
-              newFleet.setName(fleetList.generateUniqueName("Deep Space"));
+              if (starbaseFleet != null) {
+                starbaseFleet.addShip(ship);
+                ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+              } else {
+                starbaseFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+                FleetList fleetList = info.getFleets();
+                ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+                fleetList.add(starbaseFleet);
+                starbaseFleet.setName(fleetList.generateUniqueName(
+                    "Deep Space"));
+              }
             }
           }
           // Remove the ship and AI just colonized planet
@@ -521,7 +535,6 @@ public final class MissionHandling {
         makeReroute(game, fleet, info, mission);
       }
     } // End of Deploy starbase
-
   }
 
   /**

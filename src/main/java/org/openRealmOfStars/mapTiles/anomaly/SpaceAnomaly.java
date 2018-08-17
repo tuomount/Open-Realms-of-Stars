@@ -165,6 +165,17 @@ public class SpaceAnomaly {
           map.setTile(fleet.getX(), fleet.getY(), anchor);
           break;
         }
+        case TileNames.SPACE_ANOMALY_LAIR: {
+          result = new SpaceAnomaly(AnomalyType.LAIR, 0);
+          result.setText("Pirate station was found on the deep space anchor."
+              + " Battle begins...");
+          //FIXME with image
+          result.setImage(null);
+          Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
+          //FIXME Add missing lair
+          map.setTile(fleet.getX(), fleet.getY(), anchor);
+          break;
+        }
         case TileNames.SPACE_ANOMALY_TECH: {
           result = new SpaceAnomaly(AnomalyType.TECH, 0);
           Tech tech = info.getTechList().addNewRandomTech(info);

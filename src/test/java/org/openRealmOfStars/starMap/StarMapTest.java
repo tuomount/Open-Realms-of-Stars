@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.AI.Mission.MissionList;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
@@ -19,7 +20,13 @@ import org.openRealmOfStars.player.espionage.EspionageBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.message.MessageList;
+import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipComponentType;
+import org.openRealmOfStars.player.ship.ShipHull;
+import org.openRealmOfStars.player.ship.ShipHullType;
+import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.starMap.history.History;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -184,6 +191,147 @@ public class StarMapTest {
     Mockito.when(planet.getTotalPopulation()).thenReturn(3);
     map.getPlanetList().add(planet);
     assertEquals(1, map.calculateAverageHappiness(0));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPirateCreation() {
+    GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
+    Mockito.when(config.getSizeX()).thenReturn(50);
+    Mockito.when(config.getSizeY()).thenReturn(50);
+    Mockito.when(config.getMaxPlayers()).thenReturn(4);
+    Mockito.when(config.getStartingPosition()).thenReturn(
+        GalaxyConfig.START_POSITION_BORDER);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
+    MessageList msgList = Mockito.mock(MessageList.class);
+    Mockito.when(info.getMsgList()).thenReturn(msgList);
+    ShipStat[] stats = new ShipStat[0];
+    Mockito.when(info.getShipStatList()).thenReturn(stats);
+    PlayerInfo board = Mockito.mock(PlayerInfo.class);
+    Mockito.when(board.getRace()).thenReturn(SpaceRace.SPACE_PIRATE);
+    Mockito.when(board.getEmpireName()).thenReturn("board");
+    Mockito.when(board.isBoard()).thenReturn(true);
+    FleetList fleetList = Mockito.mock(FleetList.class);
+    Mockito.when(board.getFleets()).thenReturn(fleetList);
+    MissionList missionList = Mockito.mock(MissionList.class);
+    Mockito.when(board.getMissions()).thenReturn(missionList);
+    ShipDesign design = Mockito.mock(ShipDesign.class);
+    ShipComponent[] components = new ShipComponent[4];
+    ShipComponent armor = Mockito.mock(ShipComponent.class);
+    Mockito.when(armor.getType()).thenReturn(ShipComponentType.ARMOR);
+    Mockito.when(armor.getEnergyResource()).thenReturn(0);
+    ShipComponent engine = Mockito.mock(ShipComponent.class);
+    Mockito.when(engine.getType()).thenReturn(ShipComponentType.ENGINE);
+    Mockito.when(engine.getEnergyResource()).thenReturn(0);
+    ShipComponent power = Mockito.mock(ShipComponent.class);
+    Mockito.when(power.getType()).thenReturn(ShipComponentType.POWERSOURCE);
+    Mockito.when(power.getEnergyResource()).thenReturn(5);
+    ShipComponent weapon = Mockito.mock(ShipComponent.class);
+    Mockito.when(weapon.getType()).thenReturn(ShipComponentType.WEAPON_RAILGUN);
+    Mockito.when(weapon.getEnergyResource()).thenReturn(0);
+    Mockito.when(weapon.getDamage()).thenReturn(2);
+    Mockito.when(weapon.getWeaponRange()).thenReturn(2);
+    Mockito.when(armor.getDefenseValue()).thenReturn(2);
+    components[0] = weapon;
+    components[1] = armor;
+    components[2] = engine;
+    components[3] = power;
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getSlotHull()).thenReturn(1);
+    Mockito.when(hull.getImage()).thenReturn(ShipImages.spacePirates().getShipImage(0));
+    Mockito.when(design.getHull()).thenReturn(hull);
+    Mockito.when(design.getComponentList()).thenReturn(components);
+    ShipStat stat = Mockito.mock(ShipStat.class);
+    Mockito.when(stat.getDesign()).thenReturn(design);
+    ShipStat[] stats2 = new ShipStat[1];
+    stats2[0] = stat;
+    Mockito.when(board.getShipStatList()).thenReturn(stats2);
+
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
+
+    StarMap map = new StarMap(config, players);
+    Fleet fleet = map.addSpaceAnomalyEnemy(5, 6, board, StarMap.ENEMY_PIRATE);
+    assertNotNull(fleet);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPirateLairCreation() {
+    GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
+    Mockito.when(config.getSizeX()).thenReturn(50);
+    Mockito.when(config.getSizeY()).thenReturn(50);
+    Mockito.when(config.getMaxPlayers()).thenReturn(4);
+    Mockito.when(config.getStartingPosition()).thenReturn(
+        GalaxyConfig.START_POSITION_BORDER);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
+    MessageList msgList = Mockito.mock(MessageList.class);
+    Mockito.when(info.getMsgList()).thenReturn(msgList);
+    ShipStat[] stats = new ShipStat[0];
+    Mockito.when(info.getShipStatList()).thenReturn(stats);
+    PlayerInfo board = Mockito.mock(PlayerInfo.class);
+    Mockito.when(board.getRace()).thenReturn(SpaceRace.SPACE_PIRATE);
+    Mockito.when(board.getEmpireName()).thenReturn("board");
+    Mockito.when(board.isBoard()).thenReturn(true);
+    FleetList fleetList = Mockito.mock(FleetList.class);
+    Mockito.when(board.getFleets()).thenReturn(fleetList);
+    MissionList missionList = Mockito.mock(MissionList.class);
+    Mockito.when(board.getMissions()).thenReturn(missionList);
+    ShipDesign design = Mockito.mock(ShipDesign.class);
+    ShipComponent[] components = new ShipComponent[4];
+    ShipComponent armor = Mockito.mock(ShipComponent.class);
+    Mockito.when(armor.getType()).thenReturn(ShipComponentType.ARMOR);
+    Mockito.when(armor.getEnergyResource()).thenReturn(0);
+    ShipComponent engine = Mockito.mock(ShipComponent.class);
+    Mockito.when(engine.getType()).thenReturn(ShipComponentType.ENGINE);
+    Mockito.when(engine.getEnergyResource()).thenReturn(0);
+    ShipComponent power = Mockito.mock(ShipComponent.class);
+    Mockito.when(power.getType()).thenReturn(ShipComponentType.POWERSOURCE);
+    Mockito.when(power.getEnergyResource()).thenReturn(5);
+    ShipComponent weapon = Mockito.mock(ShipComponent.class);
+    Mockito.when(weapon.getType()).thenReturn(ShipComponentType.WEAPON_RAILGUN);
+    Mockito.when(weapon.getEnergyResource()).thenReturn(0);
+    Mockito.when(weapon.getDamage()).thenReturn(2);
+    Mockito.when(weapon.getWeaponRange()).thenReturn(2);
+    Mockito.when(armor.getDefenseValue()).thenReturn(2);
+    components[0] = weapon;
+    components[1] = armor;
+    components[2] = engine;
+    components[3] = power;
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getSlotHull()).thenReturn(1);
+    Mockito.when(hull.getImage()).thenReturn(ShipImages.spacePirates().getShipImage(0));
+    Mockito.when(hull.getHullType()).thenReturn(ShipHullType.STARBASE);
+    Mockito.when(design.getHull()).thenReturn(hull);
+    Mockito.when(design.getComponentList()).thenReturn(components);
+    ShipStat stat = Mockito.mock(ShipStat.class);
+    Mockito.when(stat.getDesign()).thenReturn(design);
+    ShipStat[] stats2 = new ShipStat[1];
+    stats2[0] = stat;
+    Mockito.when(board.getShipStatList()).thenReturn(stats2);
+
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
+
+    StarMap map = new StarMap(config, players);
+    Fleet fleet = map.addSpaceAnomalyEnemy(5, 6, board, StarMap.ENEMY_PIRATE_LAIR);
+    assertNotNull(fleet);
   }
 
   @Test

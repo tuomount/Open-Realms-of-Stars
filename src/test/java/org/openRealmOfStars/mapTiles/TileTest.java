@@ -101,7 +101,7 @@ public class TileTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testAnomalyTileNames() {
-    DiceGenerator.initializeGenerators(0,0,0,8,8);
+    DiceGenerator.initializeGenerators(0,0,0,7,7);
     String str = TileNames.getRandomSpaceAnomaly(true, true);
     assertEquals(TileNames.SPACE_ANOMALY_CREDITS, str);
     str = TileNames.getRandomSpaceAnomaly(true, false);

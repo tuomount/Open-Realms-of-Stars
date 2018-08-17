@@ -308,8 +308,7 @@ public final class TileNames {
    * List of harmful space anomalies
    */
   public static final String[] HARMULFUL_SPACE_ANOMALIES = {
-      SPACE_ANOMALY_LAIR, SPACE_ANOMALY_MONSTER, SPACE_ANOMALY,
-      SPACE_ANOMALY_PIRATE};
+      SPACE_ANOMALY_LAIR, SPACE_ANOMALY, SPACE_ANOMALY_PIRATE};
 
   /**
    * Get random space anomaly

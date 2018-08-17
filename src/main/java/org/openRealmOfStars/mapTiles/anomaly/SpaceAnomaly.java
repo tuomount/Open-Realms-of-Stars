@@ -7,6 +7,7 @@ import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.StarMap;
@@ -55,6 +56,11 @@ public class SpaceAnomaly {
   private BufferedImage image;
 
   /**
+   * Combat about to happen in space anomaly
+   */
+  private Combat combat;
+
+  /**
    * Constructor for Space anomaly
    * @param type AnomalyType
    * @param value Space anomaly value
@@ -64,6 +70,7 @@ public class SpaceAnomaly {
     this.value = value;
     this.text = null;
     this.image = null;
+    this.combat = null;
   }
 
   /**
@@ -114,6 +121,21 @@ public class SpaceAnomaly {
     return image;
   }
 
+  /**
+   * Set combat for space anomaly
+   * @param combat Combat to happen
+   */
+  public void setCombat(final Combat combat) {
+    this.combat = combat;
+  }
+
+  /**
+   * Return combat about to happen in space anomly
+   * @return Combat or null
+   */
+  public Combat getCombat() {
+    return combat;
+  }
   /**
    * Create Space anomaly and handle space anomaly tile
    * @param map StarMap
@@ -172,8 +194,26 @@ public class SpaceAnomaly {
           //FIXME with image
           result.setImage(null);
           Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
-          //FIXME Add missing lair
+          PlayerInfo board = map.getPlayerList().getBoardPlayer();
+          Fleet lair = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
+              board, StarMap.ENEMY_PIRATE_LAIR);
+          Combat fight = new Combat(fleet, lair, info, board);
+          result.setCombat(fight);
           map.setTile(fleet.getX(), fleet.getY(), anchor);
+          break;
+        }
+        case TileNames.SPACE_ANOMALY_PIRATE: {
+          result = new SpaceAnomaly(AnomalyType.PIRATE, 0);
+          result.setText("Pirate ship was found in the nebulae."
+              + " Battle begins...");
+          //FIXME with image
+          result.setImage(null);
+          map.setTile(fleet.getX(), fleet.getY(), empty);
+          PlayerInfo board = map.getPlayerList().getBoardPlayer();
+          Fleet pirate = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),
+              board, StarMap.ENEMY_PIRATE);
+          Combat fight = new Combat(fleet, pirate, info, board);
+          result.setCombat(fight);
           break;
         }
         case TileNames.SPACE_ANOMALY_TECH: {

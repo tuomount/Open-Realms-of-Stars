@@ -10,9 +10,13 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 
 /**
@@ -70,6 +74,7 @@ public class SpaceAnomalyTest {
     assertNotNull(anomaly.getImage());
     assertNotEquals(0, anomaly.getValue());
     assertNotNull(anomaly.getText());
+    assertEquals(null, anomaly.getCombat());
   }
 
   @Test
@@ -88,6 +93,7 @@ public class SpaceAnomalyTest {
     assertEquals(null, anomaly.getImage());
     assertEquals(7, anomaly.getValue());
     assertNotNull(anomaly.getText());
+    assertEquals(null, anomaly.getCombat());
   }
 
   @Test
@@ -127,6 +133,7 @@ public class SpaceAnomalyTest {
     assertEquals(null, anomaly.getImage());
     assertEquals(0, anomaly.getValue());
     assertNotNull(anomaly.getText());
+    assertEquals(null, anomaly.getCombat());
   }
 
   @Test
@@ -145,6 +152,69 @@ public class SpaceAnomalyTest {
     assertEquals(null, anomaly.getImage());
     assertEquals(0, anomaly.getValue());
     assertNotNull(anomaly.getText());
+    assertEquals(null, anomaly.getCombat());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPirateLairAnomaly() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    PlayerInfo board = Mockito.mock(PlayerInfo.class);
+    FleetList fleetList = Mockito.mock(FleetList.class);
+    Mockito.when(board.getFleets()).thenReturn(fleetList);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getX()).thenReturn(5);
+    Mockito.when(fleet.getY()).thenReturn(6);
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mockito.when(fleet.getCoordinate()).thenReturn(coord);
+    Ship[] ships = new Ship[0];
+    Mockito.when(fleet.getShips()).thenReturn(ships);
+    Tile tile = Mockito.mock(Tile.class);
+    Mockito.when(tile.getName()).thenReturn(TileNames.SPACE_ANOMALY_LAIR);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getTile(5, 6)).thenReturn(tile);
+    Mockito.when(map.addSpaceAnomalyEnemy(Mockito.anyInt(), Mockito.anyInt(),
+        (PlayerInfo) Mockito.any(), Mockito.anyInt())).thenReturn(fleet);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Mockito.when(playerList.getBoardPlayer()).thenReturn(board);
+    SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
+    assertEquals(AnomalyType.LAIR, anomaly.getType());
+    assertEquals(null, anomaly.getImage());
+    assertEquals(0, anomaly.getValue());
+    assertNotNull(anomaly.getText());
+    assertNotNull(anomaly.getCombat());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPirateAnomaly() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    PlayerInfo board = Mockito.mock(PlayerInfo.class);
+    FleetList fleetList = Mockito.mock(FleetList.class);
+    Mockito.when(board.getFleets()).thenReturn(fleetList);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getX()).thenReturn(5);
+    Mockito.when(fleet.getY()).thenReturn(6);
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mockito.when(fleet.getCoordinate()).thenReturn(coord);
+    Ship[] ships = new Ship[0];
+    Mockito.when(fleet.getShips()).thenReturn(ships);
+    Tile tile = Mockito.mock(Tile.class);
+    Mockito.when(tile.getName()).thenReturn(TileNames.SPACE_ANOMALY_PIRATE);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getTile(5, 6)).thenReturn(tile);
+    Mockito.when(map.addSpaceAnomalyEnemy(Mockito.anyInt(), Mockito.anyInt(),
+        (PlayerInfo) Mockito.any(), Mockito.anyInt())).thenReturn(fleet);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Mockito.when(playerList.getBoardPlayer()).thenReturn(board);
+    SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
+    assertEquals(AnomalyType.PIRATE, anomaly.getType());
+    assertEquals(null, anomaly.getImage());
+    assertEquals(0, anomaly.getValue());
+    assertNotNull(anomaly.getText());
+    assertNotNull(anomaly.getCombat());
   }
 
 }

@@ -10,6 +10,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.tech.Tech;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
@@ -229,6 +230,19 @@ public class SpaceAnomaly {
             result = null;
           }
           map.setTile(fleet.getX(), fleet.getY(), empty);
+          break;
+        }
+        case TileNames.SPACE_ANOMALY: {
+          result = new SpaceAnomaly(AnomalyType.WORMHOLE, 0);
+          result.setText("Wormhole discover and it drags your ship through it...");
+          //FIXME with image
+          result.setImage(null);
+          Tile anchor = Tiles.getTileByName(TileNames.WORM_HOLE1);
+          map.setTile(fleet.getX(), fleet.getY(), anchor);
+          map.clearFleetTiles();
+          Coordinate coord = map.getFreeRandomSpot();
+          fleet.setPos(coord);
+          map.doFleetScanUpdate(info, fleet, null);
           break;
         }
         default: {

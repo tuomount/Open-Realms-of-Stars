@@ -157,6 +157,25 @@ public class SpaceAnomalyTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testWormholeAnomaly() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getX()).thenReturn(5);
+    Mockito.when(fleet.getY()).thenReturn(6);
+    Tile tile = Mockito.mock(Tile.class);
+    Mockito.when(tile.getName()).thenReturn(TileNames.SPACE_ANOMALY);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getTile(5, 6)).thenReturn(tile);
+    SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
+    assertEquals(AnomalyType.WORMHOLE, anomaly.getType());
+    assertEquals(null, anomaly.getImage());
+    assertEquals(0, anomaly.getValue());
+    assertNotNull(anomaly.getText());
+    assertEquals(null, anomaly.getCombat());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testPirateLairAnomaly() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     PlayerInfo board = Mockito.mock(PlayerInfo.class);

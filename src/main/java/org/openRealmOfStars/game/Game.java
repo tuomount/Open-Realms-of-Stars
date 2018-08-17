@@ -51,6 +51,8 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
+import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.anomaly.SpaceAnomaly;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
@@ -524,6 +526,13 @@ public class Game implements ActionListener {
         starMap.clearFleetTiles();
         fleet.decMovesLeft();
         getStarMap().doFleetScanUpdate(info, fleet, null);
+        Tile tile = getStarMap().getTile(fleet.getX(), fleet.getY());
+        if (tile.getName().equals(TileNames.WORM_HOLE1) ||
+            tile.getName().equals(TileNames.WORM_HOLE2)) {
+          Coordinate coord = getStarMap().getFreeRandomSpot();
+          fleet.setPos(coord);
+          getStarMap().doFleetScanUpdate(info, fleet, null);
+        }
         if (starMapView != null) {
           starMapView.updatePanels();
           if (info.isHuman()) {

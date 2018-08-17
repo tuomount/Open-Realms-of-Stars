@@ -2786,4 +2786,23 @@ public class StarMap {
   public void setGameEnded(final boolean end) {
     gameEnd = end;
   }
+
+  /**
+   * Get free random spot from galaxy
+   * @return Coordinate where is free or null
+   */
+  public Coordinate getFreeRandomSpot() {
+    int loop = 1000;
+    while (loop > 0) {
+      loop--;
+      int sx = DiceGenerator.getRandom(1,
+          maxX - 2);
+      int sy = DiceGenerator.getRandom(1,
+          maxX - 2);
+      if (!isBlocked(sx, sy) && isBlockedByFleet(sx, sy) == null) {
+        return new Coordinate(sx, sy);
+      }
+    }
+    return null;
+  }
 }

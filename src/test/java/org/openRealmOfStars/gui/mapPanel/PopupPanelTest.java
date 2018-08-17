@@ -9,6 +9,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.mapTiles.anomaly.AnomalyType;
 import org.openRealmOfStars.mapTiles.anomaly.SpaceAnomaly;
+import org.openRealmOfStars.player.combat.Combat;
 
 /**
 *
@@ -85,6 +86,7 @@ public class PopupPanelTest {
     assertEquals("Test", panel.getText());
     assertEquals(image, panel.getImage());
     assertEquals("Credit cache!", panel.getTitle());
+    assertEquals(null, panel.getCombat());
   }
 
   @Test
@@ -99,6 +101,7 @@ public class PopupPanelTest {
     assertEquals("Test", panel.getText());
     assertEquals(image, panel.getImage());
     assertEquals("Deep space anchor!", panel.getTitle());
+    assertEquals(null, panel.getCombat());
   }
 
   @Test
@@ -113,6 +116,7 @@ public class PopupPanelTest {
     assertEquals("Test", panel.getText());
     assertEquals(image, panel.getImage());
     assertEquals("Tech discovered!", panel.getTitle());
+    assertEquals(null, panel.getCombat());
   }
 
   @Test
@@ -123,10 +127,13 @@ public class PopupPanelTest {
     Mockito.when(anomaly.getType()).thenReturn(AnomalyType.LAIR);
     Mockito.when(anomaly.getImage()).thenReturn(image);
     Mockito.when(anomaly.getText()).thenReturn("Test");
+    Combat combat = Mockito.mock(Combat.class);
+    Mockito.when(anomaly.getCombat()).thenReturn(combat);
     PopupPanel panel = new PopupPanel(anomaly);
     assertEquals("Test", panel.getText());
     assertEquals(image, panel.getImage());
     assertEquals("Pirate station found!", panel.getTitle());
+    assertEquals(combat, panel.getCombat());
   }
 
   @Test
@@ -137,10 +144,13 @@ public class PopupPanelTest {
     Mockito.when(anomaly.getType()).thenReturn(AnomalyType.PIRATE);
     Mockito.when(anomaly.getImage()).thenReturn(image);
     Mockito.when(anomaly.getText()).thenReturn("Test");
+    Combat combat = Mockito.mock(Combat.class);
+    Mockito.when(anomaly.getCombat()).thenReturn(combat);
     PopupPanel panel = new PopupPanel(anomaly);
     assertEquals("Test", panel.getText());
     assertEquals(image, panel.getImage());
     assertEquals("Pirate ship encoutered!", panel.getTitle());
+    assertEquals(combat, panel.getCombat());
   }
 
   @Test
@@ -151,10 +161,13 @@ public class PopupPanelTest {
     Mockito.when(anomaly.getType()).thenReturn(AnomalyType.MONSTER);
     Mockito.when(anomaly.getImage()).thenReturn(image);
     Mockito.when(anomaly.getText()).thenReturn("Test");
+    Combat combat = Mockito.mock(Combat.class);
+    Mockito.when(anomaly.getCombat()).thenReturn(combat);
     PopupPanel panel = new PopupPanel(anomaly);
     assertEquals("Test", panel.getText());
     assertEquals(image, panel.getImage());
     assertEquals("Monster encoutered!", panel.getTitle());
+    assertEquals(combat, panel.getCombat());
   }
 
   @Test
@@ -169,6 +182,7 @@ public class PopupPanelTest {
     assertEquals("Test", panel.getText());
     assertEquals(image, panel.getImage());
     assertEquals("Old probe found!", panel.getTitle());
+    assertEquals(null, panel.getCombat());
   }
 
   @Test
@@ -183,6 +197,7 @@ public class PopupPanelTest {
     assertEquals("Test", panel.getText());
     assertEquals(image, panel.getImage());
     assertEquals("Ship with crew!", panel.getTitle());
+    assertEquals(null, panel.getCombat());
   }
 
   @Test
@@ -197,6 +212,7 @@ public class PopupPanelTest {
     assertEquals("Test", panel.getText());
     assertEquals(image, panel.getImage());
     assertEquals("Space anomaly!", panel.getTitle());
+    assertEquals(null, panel.getCombat());
   }
 
 }

@@ -516,6 +516,10 @@ public class Game implements ActionListener {
           PopupPanel popup = new PopupPanel(anomaly);
           starMapView.setPopup(popup);
         }
+        if (anomaly != null && !info.isHuman() && anomaly.getCombat() != null) {
+          anomaly.getCombat().doFastCombat();
+          getStarMap().getHistory().addEvent(anomaly.getCombat().getCombatEvent());
+        }
         starMap.clearFleetTiles();
         fleet.decMovesLeft();
         getStarMap().doFleetScanUpdate(info, fleet, null);
@@ -1680,6 +1684,11 @@ public class Game implements ActionListener {
         SoundPlayer.playSound(SoundPlayer.MENU_DISABLED);
       }
       if (starMapView.getPopup().isDismissed()) {
+        if (starMapView.getPopup().getCombat() != null) {
+          starMapView.setReadyToMove(false);
+          changeGameState(GameState.COMBAT,
+              starMapView.getPopup().getCombat());
+        }
         starMapView.setPopup(null);
         return;
       }

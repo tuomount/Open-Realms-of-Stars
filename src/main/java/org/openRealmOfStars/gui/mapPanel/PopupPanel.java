@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import org.openRealmOfStars.gui.utilies.GraphRoutines;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.anomaly.SpaceAnomaly;
+import org.openRealmOfStars.player.combat.Combat;
 
 
 /**
@@ -59,6 +60,10 @@ public class PopupPanel {
   private boolean dismissed;
 
   /**
+   * Combat after popup
+   */
+  private Combat combat;
+  /**
    * Constructor for PopupPanel
    * @param text Text to show
    * @param title Title to show
@@ -68,6 +73,7 @@ public class PopupPanel {
     this.title = title;
     image = null;
     dismissed = false;
+    combat = null;
   }
 
   /**
@@ -77,6 +83,7 @@ public class PopupPanel {
   public PopupPanel(final SpaceAnomaly anomaly) {
     text = anomaly.getText();
     image = anomaly.getImage();
+    this.combat = anomaly.getCombat();
     switch (anomaly.getType()) {
       case CREDIT: {
         title = "Credit cache!";
@@ -320,5 +327,13 @@ public class PopupPanel {
    */
   public boolean isDismissed() {
     return dismissed;
+  }
+
+  /**
+   * Get Combat after popup
+   * @return Combat or null
+   */
+  public Combat getCombat() {
+    return combat;
   }
 }

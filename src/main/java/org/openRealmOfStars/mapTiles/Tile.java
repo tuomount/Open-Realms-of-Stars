@@ -169,6 +169,27 @@ public class Tile {
     }
     return false;
   }
+
+  /**
+   * Is tile potentially dangerous
+   * @return True if dangerous
+   */
+  public boolean isDangerous() {
+    if (name.equals(TileNames.SPACE_ANOMALY)
+        || name.equals(TileNames.SPACE_ANOMALY_CREDITS)
+        || name.equals(TileNames.SPACE_ANOMALY_DSA)
+        || name.equals(TileNames.SPACE_ANOMALY_LAIR)
+        || name.equals(TileNames.SPACE_ANOMALY_MAP)
+        || name.equals(TileNames.SPACE_ANOMALY_MONSTER)
+        || name.equals(TileNames.SPACE_ANOMALY_PIRATE)
+        || name.equals(TileNames.SPACE_ANOMALY_SHIP)
+        || name.equals(TileNames.SPACE_ANOMALY_TECH)
+        || name.equals(TileNames.WORM_HOLE1)
+        || name.equals(TileNames.WORM_HOLE2)) {
+      return true;
+    }
+    return false;
+  }
   @Override
   public String toString() {
     return name + " (" + tileIndex + ")";

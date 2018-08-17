@@ -89,13 +89,22 @@ public class TileTest {
     assertEquals(true, tile.isStarTile());
     tile = Tiles.getTileByName(TileNames.IRONPLANET1);
     assertEquals(false, tile.isStarTile());
+    assertEquals(false, tile.isDangerous());
     assertEquals("", tile.getDescription());
     tile = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
+    assertEquals(false, tile.isDangerous());
     assertEquals(TileNames.DEEP_SPACE_ANCHOR_DESCRIPTION,
         tile.getDescription());
     tile = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR2);
+    assertEquals(false, tile.isDangerous());
     assertEquals(TileNames.DEEP_SPACE_ANCHOR_DESCRIPTION,
         tile.getDescription());
+    tile = Tiles.getTileByName(TileNames.SPACE_ANOMALY_LAIR);
+    assertEquals(true, tile.isDangerous());
+    tile = Tiles.getTileByName(TileNames.WORM_HOLE1);
+    assertEquals(true, tile.isDangerous());
+    tile = Tiles.getTileByName(TileNames.WORM_HOLE2);
+    assertEquals(true, tile.isDangerous());
   }
 
   @Test

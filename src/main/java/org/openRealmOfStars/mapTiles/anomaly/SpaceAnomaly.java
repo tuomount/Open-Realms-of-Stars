@@ -166,11 +166,22 @@ public class SpaceAnomaly {
           result.setText("There was floating very old probe. Probe had"
               + " explored near by space. Explored data was added your"
               + " realm's exploration data.");
-          //FIXME with image
-          result.setImage(null);
+          result.setImage(GuiStatics.IMAGE_OLD_PROBE);
           map.setTile(fleet.getX(), fleet.getY(), empty);
           for (int x = -3; x < 4; x++) {
             for (int y = -3; y < 4; y++) {
+              if (x == -3 && y == -3) {
+                continue;
+              }
+              if (x == -3 && y == 3) {
+                continue;
+              }
+              if (x == 3 && y == -3) {
+                continue;
+              }
+              if (x == 3 && y == 3) {
+                continue;
+              }
               if (map.isValidCoordinate(fleet.getX() + x, fleet.getY() + y)) {
                 info.setSectorVisibility(fleet.getX() + x, fleet.getY() + y,
                     PlayerInfo.VISIBLE);

@@ -792,6 +792,12 @@ public final class GuiStatics {
       GuiStatics.class.getResource("/resources/images/blackhole.png"));
 
   /**
+   * Old probe
+   */
+  public static final BufferedImage IMAGE_OLD_PROBE = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/oldprobe.png"));
+
+  /**
    * Get text width for certain font
    * @param font Font to use
    * @param text String

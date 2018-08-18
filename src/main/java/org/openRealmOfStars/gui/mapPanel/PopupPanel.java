@@ -258,8 +258,8 @@ public class PopupPanel {
       int imageX = x + width / 20;
       int imageY = textY;
       int imageWidth = textWidth;
-      int imageHeight = textHeight * 2 / 3;
-      textHeight = textHeight / 3;
+      int imageHeight = textHeight * 3 / 4;
+      textHeight = textHeight / 4;
       textY = textY + imageHeight + borderSize * 2;
       drawGradientBorder(gr, imageX, imageY, imageWidth, imageHeight);
       gr.setPaint(Color.BLACK);

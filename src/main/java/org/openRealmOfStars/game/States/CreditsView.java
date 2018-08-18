@@ -114,6 +114,7 @@ public class CreditsView extends BlackPanel {
       + "Asteroids by phaelax\n"
       + "Background stars by Tuomo Untinen\n\n"
       + "Pirate pilot image by Tuomo Untinen\n\n"
+      + "Blackhole image by Tuomo Untinen\n\n"
       + "Fonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

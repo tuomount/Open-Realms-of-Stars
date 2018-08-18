@@ -786,6 +786,12 @@ public final class GuiStatics {
       GuiStatics.class.getResource("/resources/images/pirate_pilot.png"));
 
   /**
+   * Blackhole pilot
+   */
+  public static final BufferedImage IMAGE_BLACKHOLE = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/blackhole.png"));
+
+  /**
    * Get text width for certain font
    * @param font Font to use
    * @param text String

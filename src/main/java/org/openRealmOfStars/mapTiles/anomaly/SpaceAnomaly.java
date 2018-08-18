@@ -235,8 +235,7 @@ public class SpaceAnomaly {
           result = new SpaceAnomaly(AnomalyType.WORMHOLE, 0);
           result.setText("Wormhole discover and it drags"
               + " your ship through it...");
-          //FIXME with image
-          result.setImage(null);
+          result.setImage(GuiStatics.IMAGE_BLACKHOLE);
           Tile anchor = Tiles.getTileByName(TileNames.WORM_HOLE1);
           map.setTile(fleet.getX(), fleet.getY(), anchor);
           map.clearFleetTiles();

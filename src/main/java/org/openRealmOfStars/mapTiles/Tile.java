@@ -190,6 +190,25 @@ public class Tile {
     }
     return false;
   }
+  /**
+   * Is tile space anomaly
+   * @return True if space anomaly
+   */
+  public boolean isSpaceAnomaly() {
+    if (name.equals(TileNames.SPACE_ANOMALY)
+        || name.equals(TileNames.SPACE_ANOMALY_CREDITS)
+        || name.equals(TileNames.SPACE_ANOMALY_DSA)
+        || name.equals(TileNames.SPACE_ANOMALY_LAIR)
+        || name.equals(TileNames.SPACE_ANOMALY_MAP)
+        || name.equals(TileNames.SPACE_ANOMALY_MONSTER)
+        || name.equals(TileNames.SPACE_ANOMALY_PIRATE)
+        || name.equals(TileNames.SPACE_ANOMALY_SHIP)
+        || name.equals(TileNames.SPACE_ANOMALY_TECH)) {
+      return true;
+    }
+    return false;
+  }
+
   @Override
   public String toString() {
     return name + " (" + tileIndex + ")";

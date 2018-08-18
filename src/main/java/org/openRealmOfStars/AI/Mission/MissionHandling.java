@@ -112,6 +112,45 @@ public final class MissionHandling {
     }
     return targetFleet;
   }
+
+  /**
+   * Search for nearby space anomaly. Search is
+   * done inside the distance.
+   * @param info Player who is doing the search
+   * @param game Game
+   * @param fleet Fleet whos is searching
+   * @param distance Maximum search distance
+   * @return Space anomaly coordinate or null
+   */
+  public static Coordinate getNearByAnomaly(final PlayerInfo info,
+      final Game game, final Fleet fleet, final int distance) {
+    StarMap starMap = game.getStarMap();
+    Coordinate center = fleet.getCoordinate();
+    Coordinate targetCoord = null;
+    for (int y = -distance; y <= distance; y++) {
+      for (int x = -distance; x <= distance; x++) {
+        if (x == 0 && y == 0) {
+          continue;
+        }
+        Tile tile = starMap.getTile(center.getX() + x, center.getY() + y);
+        if (tile != null && tile.isSpaceAnomaly()) {
+          if (targetCoord == null) {
+            targetCoord = new Coordinate(center.getX() + x, center.getY() + y);
+          } else {
+            Coordinate tmpCoord = new Coordinate(center.getX() + x,
+                center.getY() + y);
+            double tmpDist = center.calculateDistance(tmpCoord);
+            double targetDist = center.calculateDistance(targetCoord);
+            if (tmpDist < targetDist) {
+              targetCoord = tmpCoord;
+            }
+          }
+        }
+      }
+    }
+    return targetCoord;
+  }
+
   /**
    * Handle privateering mission
    * @param mission Privateering mission, does nothing if type is wrong
@@ -128,10 +167,24 @@ public final class MissionHandling {
         mission.setPhase(MissionPhase.EXECUTING);
         fleet.setRoute(null);
         AStarSearch search = new AStarSearch(game.getStarMap(),
-            fleet.getX(), fleet.getY(), targetFleet.getX(), targetFleet.getY());
+            fleet.getX(), fleet.getY(), targetFleet.getX(), targetFleet.getY(),
+            false);
         search.doSearch();
         search.doRoute();
         fleet.setaStarSearch(search);
+      } else {
+        Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
+            fleet.getMovesLeft());
+        if (targetAnomaly != null) {
+          mission.setPhase(MissionPhase.EXECUTING);
+          fleet.setRoute(null);
+          AStarSearch search = new AStarSearch(game.getStarMap(),
+              fleet.getX(), fleet.getY(), targetAnomaly.getX(),
+              targetAnomaly.getY(), false);
+          search.doSearch();
+          search.doRoute();
+          fleet.setaStarSearch(search);
+        }
       }
       if (mission.getPhase() == MissionPhase.TREKKING
           && fleet.getRoute() == null) {
@@ -181,7 +234,8 @@ public final class MissionHandling {
           if (point != null) {
             mission.setTarget(new Coordinate(point.getX(), point.getY()));
             AStarSearch search = new AStarSearch(game.getStarMap(),
-                fleet.getX(), fleet.getY(), mission.getX(), mission.getY());
+                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(),
+                false);
             search.doSearch();
             search.doRoute();
             fleet.setaStarSearch(search);
@@ -262,13 +316,26 @@ public final class MissionHandling {
           if (point != null) {
             mission.setTarget(new Coordinate(point.getX(), point.getY()));
             AStarSearch search = new AStarSearch(game.getStarMap(),
-                fleet.getX(), fleet.getY(), mission.getX(), mission.getY());
+                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(),
+                false);
             search.doSearch();
             search.doRoute();
             fleet.setaStarSearch(search);
             makeRegularMoves(game, fleet, info);
           }
         } else {
+          Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
+              fleet.getMovesLeft());
+          if (targetAnomaly != null) {
+            // Focus on anomalies
+            fleet.setRoute(null);
+            AStarSearch search = new AStarSearch(game.getStarMap(),
+                fleet.getX(), fleet.getY(), targetAnomaly.getX(),
+                targetAnomaly.getY(), false);
+            search.doSearch();
+            search.doRoute();
+            fleet.setaStarSearch(search);
+          }
           makeRegularMoves(game, fleet, info);
         }
       }
@@ -322,7 +389,8 @@ public final class MissionHandling {
           if (point != null) {
             mission.setTarget(new Coordinate(point.getX(), point.getY()));
             AStarSearch search = new AStarSearch(game.getStarMap(),
-                fleet.getX(), fleet.getY(), mission.getX(), mission.getY());
+                fleet.getX(), fleet.getY(), mission.getX(), mission.getY(),
+                true);
             search.doSearch();
             search.doRoute();
             fleet.setaStarSearch(search);
@@ -1350,7 +1418,7 @@ public final class MissionHandling {
       if (fleet.getaStarSearch() == null) {
         // No A star search made yet, so let's do it
         AStarSearch search = new AStarSearch(game.getStarMap(), fleet.getX(),
-            fleet.getY(), mission.getX(), mission.getY(), 7);
+            fleet.getY(), mission.getX(), mission.getY(), 7, true);
         search.doSearch();
         search.doRoute();
         fleet.setaStarSearch(search);

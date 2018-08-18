@@ -100,7 +100,7 @@ public class AStarTest {
     Mockito.when(map.getMaxX()).thenReturn(50);
     Mockito.when(map.getMaxY()).thenReturn(50);
     Mockito.when(map.isBlocked(Mockito.anyInt(), Mockito.anyInt())).thenReturn(false);
-    AStarSearch search = new AStarSearch(map, 10, 10, 12, 10, 5);
+    AStarSearch search = new AStarSearch(map, 10, 10, 12, 10, 5, false);
     assertEquals(true, search.doSearch());
     search.doRoute();
     int steps = 1;

@@ -178,15 +178,17 @@ public class AStarSearch {
    * @param tx Target X coordinate
    * @param ty Target Y coordinate
    * @param radius What is the search radius
+   * @param dangerousBlocked are dangerous tiles considered as blocked
    */
   public AStarSearch(final StarMap map, final int sx, final int sy,
-      final int tx, final int ty, final int radius) {
+      final int tx, final int ty, final int radius,
+      final boolean dangerousBlocked) {
     maxX = map.getMaxX();
     maxY = map.getMaxY();
     blockMap = new int[maxX][maxY];
     for (int y = 0; y < maxY; y++) {
       for (int x = 0; x < maxX; x++) {
-        if (map.isBlocked(x, y)) {
+        if (map.isBlocked(x, y) || dangerousBlocked && map.isDangerous(x, y)) {
           blockMap[x][y] = BLOCKED;
         } else {
           blockMap[x][y] = UNBLOCKED;
@@ -219,15 +221,16 @@ public class AStarSearch {
    * @param sy Starting point Y coordinate
    * @param tx Target X coordinate
    * @param ty Target Y coordinate
+   * @param dangerousBlocked are dangerous tiles considered as blocked
    */
   public AStarSearch(final StarMap map, final int sx, final int sy,
-      final int tx, final int ty) {
+      final int tx, final int ty, final boolean dangerousBlocked) {
     maxX = map.getMaxX();
     maxY = map.getMaxY();
     blockMap = new int[maxX][maxY];
     for (int y = 0; y < maxY; y++) {
       for (int x = 0; x < maxX; x++) {
-        if (map.isBlocked(x, y)) {
+        if (map.isBlocked(x, y) || dangerousBlocked && map.isDangerous(x, y)) {
           blockMap[x][y] = BLOCKED;
         } else {
           blockMap[x][y] = UNBLOCKED;

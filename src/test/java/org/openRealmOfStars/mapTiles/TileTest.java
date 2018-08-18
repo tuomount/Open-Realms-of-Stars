@@ -87,24 +87,32 @@ public class TileTest {
     Tile tile = Tiles.getTileByName(TileNames.SUN_C);
     assertEquals(TileNames.STAR_DESCRIPTION, tile.getDescription());
     assertEquals(true, tile.isStarTile());
+    assertEquals(false, tile.isDangerous());
+    assertEquals(false, tile.isSpaceAnomaly());
     tile = Tiles.getTileByName(TileNames.IRONPLANET1);
     assertEquals(false, tile.isStarTile());
     assertEquals(false, tile.isDangerous());
+    assertEquals(false, tile.isSpaceAnomaly());
     assertEquals("", tile.getDescription());
     tile = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
     assertEquals(false, tile.isDangerous());
+    assertEquals(false, tile.isSpaceAnomaly());
     assertEquals(TileNames.DEEP_SPACE_ANCHOR_DESCRIPTION,
         tile.getDescription());
     tile = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR2);
     assertEquals(false, tile.isDangerous());
+    assertEquals(false, tile.isSpaceAnomaly());
     assertEquals(TileNames.DEEP_SPACE_ANCHOR_DESCRIPTION,
         tile.getDescription());
     tile = Tiles.getTileByName(TileNames.SPACE_ANOMALY_LAIR);
+    assertEquals(true, tile.isSpaceAnomaly());
     assertEquals(true, tile.isDangerous());
     tile = Tiles.getTileByName(TileNames.WORM_HOLE1);
     assertEquals(true, tile.isDangerous());
+    assertEquals(false, tile.isSpaceAnomaly());
     tile = Tiles.getTileByName(TileNames.WORM_HOLE2);
     assertEquals(true, tile.isDangerous());
+    assertEquals(false, tile.isSpaceAnomaly());
   }
 
   @Test

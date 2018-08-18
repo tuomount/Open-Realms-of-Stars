@@ -2451,6 +2451,21 @@ public class StarMap {
   }
 
   /**
+   * Is tile dangerous or not
+   * @param x X coordinate
+   * @param y Y Coordinate
+   * @return true if tile is dangerous otherwise false. Also if
+   * coordinate is out of map then true is returned.
+   */
+  public boolean isDangerous(final int x, final int y) {
+    Tile tile = getTile(x, y);
+    if (tile != null) {
+      return tile.isDangerous();
+    }
+    return true;
+  }
+
+  /**
    * Is tile blocked or not
    * @param x X coordinate
    * @param y Y Coordinate

@@ -798,6 +798,12 @@ public final class GuiStatics {
       GuiStatics.class.getResource("/resources/images/oldprobe.png"));
 
   /**
+   * Old Ship
+   */
+  public static final BufferedImage IMAGE_OLD_SHIP = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/oldship.png"));
+
+  /**
    * Get text width for certain font
    * @param font Font to use
    * @param text String

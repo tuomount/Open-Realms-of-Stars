@@ -234,8 +234,7 @@ public class SpaceAnomaly {
             result.setText("Found ancient ship floating around which contained"
                 + " schematics of " + tech.getName() + ". This invention"
                 + " is immediately taken to use.");
-            //FIXME with image
-            result.setImage(null);
+            result.setImage(GuiStatics.IMAGE_OLD_SHIP);
           } else {
             result = null;
           }

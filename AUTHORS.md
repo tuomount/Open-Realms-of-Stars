@@ -92,6 +92,9 @@ Old Probe image contains 3D model of satellite by Grefuntor
  http://atmostatic.blogspot.com
 Background stars by Tuomo Untinen
 
+Old ship image contains 3D model of Scifi plane model and texture by Ulf
+Background stars by Tuomo Untinen
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

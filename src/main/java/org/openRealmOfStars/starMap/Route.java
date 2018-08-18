@@ -8,7 +8,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017  Tuomo Untinen
+ * Copyright (C) 2016-2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -157,14 +157,24 @@ public class Route {
    */
   public byte[][] getRouteOnMap(final int maxX, final int maxY) {
     byte[][] result = new byte[maxX][maxY];
-    double sx = startX;
-    double sy = startY;
+    double originalStartX = startX;
+    double originalStartY = startY;
+    double tmpX = startX;
+    double tmpY = startY;
     for (int i = 0; i < getDistance() + 1; i++) {
+      startX = tmpX;
+      startY = tmpY;
+      int sx = getX();
+      int sy = getY();
       if (sx >= 0 && sy >= 0 && sx < maxX && sy < maxY) {
-        result[(int) Math.round(sx)][(int) Math.round(sy)] = 1;
+        result[sx][sy] = 1;
       }
-      sx = sx + getMx();
-      sy = sy + getMy();
+      startX = startX + getMx();
+      startY = startY + getMy();
+      tmpX = startX;
+      tmpY = startY;
+      startX = originalStartX;
+      startY = originalStartY;
 
     }
     return result;

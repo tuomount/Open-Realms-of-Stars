@@ -51,4 +51,21 @@ public enum HappinessBonus {
    * Destroy building, sad bonus
    */
   DESTROY_BUILDING;
+
+  /**
+   * Get Happiness/Sad bonus name
+   * @return Name
+   */
+  public String getName() {
+    switch (this) {
+      case NONE: return "none";
+      case PRODUCTION: return "production";
+      case CREDIT: return "credit";
+      case CULTURE: return "culture";
+      case METAL: return "metal production";
+      case KILL_POPULATION: return "kill population";
+      case DESTROY_BUILDING: return "destroy building";
+      default: return "";
+    }
+  }
 }

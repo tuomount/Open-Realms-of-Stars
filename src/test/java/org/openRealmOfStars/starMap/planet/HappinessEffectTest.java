@@ -43,6 +43,7 @@ public class HappinessEffectTest {
   public void testRandomHappinessZero() {
     HappinessEffect effect = HappinessEffect.createHappinessEffect(0);
     assertEquals(HappinessBonus.NONE, effect.getType());
+    assertEquals("none", effect.getType().getName());
     assertEquals(0, effect.getValue());
   }
   @Test
@@ -52,9 +53,11 @@ public class HappinessEffectTest {
       HappinessEffect effect = HappinessEffect.createHappinessEffect(1);
       if (effect.getType() == HappinessBonus.PRODUCTION) {
         assertEquals(1, effect.getValue());
+        assertEquals("production", effect.getType().getName());
       }
       if (effect.getType() == HappinessBonus.NONE) {
         assertEquals(0, effect.getValue());
+        assertEquals("none", effect.getType().getName());
       }
     }
   }
@@ -80,12 +83,15 @@ public class HappinessEffectTest {
         assertEquals(1, effect.getValue());
       }
       if (effect.getType() == HappinessBonus.CREDIT) {
+        assertEquals("credit", effect.getType().getName());
         assertEquals(1, effect.getValue());
       }
       if (effect.getType() == HappinessBonus.METAL) {
+        assertEquals("metal production", effect.getType().getName());
         assertEquals(1, effect.getValue());
       }
       if (effect.getType() == HappinessBonus.CULTURE) {
+        assertEquals("culture", effect.getType().getName());
         assertEquals(1, effect.getValue());
       }
       if (effect.getType() == HappinessBonus.NONE) {
@@ -152,6 +158,7 @@ public class HappinessEffectTest {
         assertEquals(-2, effect.getValue());
       }
       if (effect.getType() == HappinessBonus.KILL_POPULATION) {
+        assertEquals("kill population", effect.getType().getName());
         assertEquals(1, effect.getValue());
       }
       if (effect.getType() == HappinessBonus.NONE) {
@@ -196,6 +203,7 @@ public class HappinessEffectTest {
         assertEquals(1, effect.getValue());
       }
       if (effect.getType() == HappinessBonus.DESTROY_BUILDING) {
+        assertEquals("destroy building", effect.getType().getName());
         assertEquals(1, effect.getValue());
       }
       if (effect.getType() == HappinessBonus.NONE) {

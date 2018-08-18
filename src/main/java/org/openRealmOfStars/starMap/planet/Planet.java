@@ -1303,6 +1303,31 @@ public class Planet {
     if (planetOwnerInfo != null) {
       happinessEffect = HappinessEffect.createHappinessEffect(
           calculateHappiness());
+      if (happinessEffect.getType() != HappinessBonus.KILL_POPULATION
+          && happinessEffect.getType() != HappinessBonus.DESTROY_BUILDING
+          && happinessEffect.getType() != HappinessBonus.NONE) {
+        if (happinessEffect.getValue() > 0) {
+          Message message = new Message(MessageType.PLANETARY,
+              "Population of " + getName() + " is working harder due "
+              + "the happiness. Planet's " + happinessEffect.getType().getName()
+              + " has increased by " + happinessEffect.getValue(),
+          Icons.getIconByName(Icons.ICON_VERY_HAPPY));
+          message.setCoordinate(getCoordinate());
+          message.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(message);
+        }
+        if (happinessEffect.getValue() < 0) {
+          Message message = new Message(MessageType.PLANETARY,
+              "Population of " + getName() + " is working less due "
+              + "the unhappiness. Planet's "
+              + happinessEffect.getType().getName()
+              + " has decreased by " + happinessEffect.getValue(),
+          Icons.getIconByName(Icons.ICON_VERY_HAPPY));
+          message.setCoordinate(getCoordinate());
+          message.setMatchByString(getName());
+          planetOwnerInfo.getMsgList().addNewMessage(message);
+        }
+      }
       int minedMetal = getTotalProduction(PRODUCTION_METAL);
       if (minedMetal <= amountMetalInGround) {
         amountMetalInGround = amountMetalInGround - minedMetal;

@@ -233,7 +233,7 @@ public class SpaceAnomaly {
         }
         case TileNames.SPACE_ANOMALY: {
           result = new SpaceAnomaly(AnomalyType.WORMHOLE, 0);
-          result.setText("Wormhole discover and it drags"
+          result.setText("Wormhole discovered and it drags"
               + " your ship through it...");
           result.setImage(GuiStatics.IMAGE_BLACKHOLE);
           Tile anchor = Tiles.getTileByName(TileNames.WORM_HOLE1);

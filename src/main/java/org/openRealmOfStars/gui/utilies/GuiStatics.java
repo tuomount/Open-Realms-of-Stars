@@ -780,6 +780,12 @@ public final class GuiStatics {
       GuiStatics.class.getResource("/resources/images/asteroids.png"));
 
   /**
+   * Pirate pilot
+   */
+  public static final BufferedImage IMAGE_PIRATE_PILOT = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/pirate_pilot.png"));
+
+  /**
    * Get text width for certain font
    * @param font Font to use
    * @param text String

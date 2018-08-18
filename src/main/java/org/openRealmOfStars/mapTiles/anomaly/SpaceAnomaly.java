@@ -207,8 +207,7 @@ public class SpaceAnomaly {
           result = new SpaceAnomaly(AnomalyType.PIRATE, 0);
           result.setText("Pirate ship was found in the nebulae."
               + " Battle begins...");
-          //FIXME with image
-          result.setImage(null);
+          result.setImage(GuiStatics.IMAGE_PIRATE_PILOT);
           map.setTile(fleet.getX(), fleet.getY(), empty);
           PlayerInfo board = map.getPlayerList().getBoardPlayer();
           Fleet pirate = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),

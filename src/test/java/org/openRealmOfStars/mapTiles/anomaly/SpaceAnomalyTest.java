@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -230,7 +231,7 @@ public class SpaceAnomalyTest {
     Mockito.when(playerList.getBoardPlayer()).thenReturn(board);
     SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
     assertEquals(AnomalyType.PIRATE, anomaly.getType());
-    assertEquals(null, anomaly.getImage());
+    assertEquals(GuiStatics.IMAGE_PIRATE_PILOT, anomaly.getImage());
     assertEquals(0, anomaly.getValue());
     assertNotNull(anomaly.getText());
     assertNotNull(anomaly.getCombat());

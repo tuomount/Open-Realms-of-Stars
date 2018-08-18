@@ -84,6 +84,8 @@ Asteroids image
 Asteroids by phaelax
 Background stars by Tuomo Untinen
 
+Pirate pilot image by Tuomo Untinen
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

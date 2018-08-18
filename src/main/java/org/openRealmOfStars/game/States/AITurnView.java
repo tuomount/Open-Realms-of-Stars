@@ -1325,7 +1325,8 @@ public class AITurnView extends BlackPanel {
       pirateNews = updateSpacePirates(board, newState, false);
     }
     if (game.getStarMap().getScoreVictoryTurn() % 100 == 0
-        && board != null && game.getStarMap().getScoreVictoryTurn() > 400) {
+        && board != null && game.getStarMap().getScoreVictoryTurn() > 400
+        && !pirateNews) {
       int level = game.getStarMap().getScoreVictoryTurn() / 100;
       level++;
       if (level >= 10) {
@@ -1333,12 +1334,16 @@ public class AITurnView extends BlackPanel {
       }
       pirateNews = updateSpacePirates(board, level, false);
     }
-    if (game.getStarMap().getTurn() % 50 == 0) {
+    if (game.getStarMap().getTurn() % 50 == 0 && !pirateNews) {
       // Just adding more pirates
       pirateNews = updateSpacePirates(board, newState, true);
     }
     if (pirateNews) {
-      NewsFactory.makeSpacePiratesNews(game.getStarMap());
+      NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+      NewsData news = NewsFactory.makeSpacePiratesNews(game.getStarMap());
+      newsData.addNews(news);
+      GalacticEvent event = new GalacticEvent(news.getNewsText());
+      game.getStarMap().getHistory().addEvent(event);
     }
     game.getStarMap().getHistory().addTurn(game.getStarMap().getTurn());
     if (game.getStarMap().getTurn() % NewsCorpData.NEWS_PUBLISH_RATE == 0) {

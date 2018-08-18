@@ -1310,7 +1310,8 @@ public class Planet {
           Message message = new Message(MessageType.PLANETARY,
               "Population of " + getName() + " is working harder due "
               + "the happiness. Planet's " + happinessEffect.getType().getName()
-              + " has increased by " + happinessEffect.getValue(),
+              + " has temporarily increased by " + happinessEffect.getValue()
+              + ".",
           Icons.getIconByName(Icons.ICON_VERY_HAPPY));
           message.setCoordinate(getCoordinate());
           message.setMatchByString(getName());
@@ -1321,8 +1322,9 @@ public class Planet {
               "Population of " + getName() + " is working less due "
               + "the unhappiness. Planet's "
               + happinessEffect.getType().getName()
-              + " has decreased by " + happinessEffect.getValue(),
-          Icons.getIconByName(Icons.ICON_VERY_HAPPY));
+              + " has temporarily decreased by " + happinessEffect.getValue()
+              + ".",
+          Icons.getIconByName(Icons.ICON_VERY_SAD));
           message.setCoordinate(getCoordinate());
           message.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(message);

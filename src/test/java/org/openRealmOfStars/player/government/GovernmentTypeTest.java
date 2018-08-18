@@ -71,11 +71,11 @@ public class GovernmentTypeTest {
         + "* War resistance: 1\n"
         + "* Research bonus: 1\n";
     expected[7] = "### Nest\n"
-        + "* No effects on happines nor war fatigue";
+        + "* No effects on happines nor war fatigue\n";
     expected[8] = "### Hive-mind\n"
-        + "* No effects on happines nor war fatigue";
+        + "* No effects on happines nor war fatigue\n";
     expected[9] = "### AI\n"
-        + "* No effects on happines nor war fatigue";
+        + "* No effects on happines nor war fatigue\n";
     expected[10] = "### Empire\n"
         + "* Generic happiness: -1\n"
         + "* War resistance: 1\n"

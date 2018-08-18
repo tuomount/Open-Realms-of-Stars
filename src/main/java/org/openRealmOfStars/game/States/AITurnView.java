@@ -1047,7 +1047,8 @@ public class AITurnView extends BlackPanel {
       Research.handleShipDesigns(pirates);
     }
     boolean added = false;
-    for (int i = 0; i < pirates.getFleets().getNumberOfFleets(); i++) {
+    int numberOfFleets = pirates.getFleets().getNumberOfFleets();
+    for (int i = 0; i < numberOfFleets; i++) {
       Fleet fleet = pirates.getFleets().getByIndex(i);
       if (fleet.isStarBaseDeployed()) {
         game.getStarMap().addSpacePirate(fleet.getX(), fleet.getY(), pirates);
@@ -1168,7 +1169,8 @@ public class AITurnView extends BlackPanel {
       Research.handleShipDesigns(pirates);
     }
     boolean added = false;
-    for (int i = 0; i < pirates.getFleets().getNumberOfFleets(); i++) {
+    int numberOfFleets = pirates.getFleets().getNumberOfFleets();
+    for (int i = 0; i < numberOfFleets; i++) {
       Fleet fleet = pirates.getFleets().getByIndex(i);
       if (fleet.isStarBaseDeployed()) {
         game.getStarMap().addSpacePirate(fleet.getX(), fleet.getY(), pirates);

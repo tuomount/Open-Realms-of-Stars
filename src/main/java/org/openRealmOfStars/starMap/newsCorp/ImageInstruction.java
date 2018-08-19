@@ -485,6 +485,9 @@ public class ImageInstruction {
     if (race != null) {
       drawImg = race.getRaceImage();
     }
+    if (SpaceRace.SPACE_PIRATE.getNameSingle().equals(image)) {
+      drawImg = SpaceRace.SPACE_PIRATE.getRaceImage();
+    }
     if (LOGO.equals(image)) {
       drawImg = GuiStatics.IMAGE_GBNC;
     }

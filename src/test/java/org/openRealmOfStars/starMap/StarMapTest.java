@@ -319,6 +319,7 @@ public class StarMapTest {
     Mockito.when(stat.getDesign()).thenReturn(design);
     ShipStat[] stats2 = new ShipStat[1];
     stats2[0] = stat;
+    Mockito.when(stat.isObsolete()).thenReturn(false);
     Mockito.when(board.getShipStatList()).thenReturn(stats2);
 
     PlayerList players = Mockito.mock(PlayerList.class);

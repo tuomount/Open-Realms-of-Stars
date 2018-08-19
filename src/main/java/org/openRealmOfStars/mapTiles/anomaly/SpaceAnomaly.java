@@ -1,6 +1,7 @@
 package org.openRealmOfStars.mapTiles.anomaly;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
@@ -9,6 +10,9 @@ import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipSize;
+import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
@@ -226,6 +230,43 @@ public class SpaceAnomaly {
               board, StarMap.ENEMY_PIRATE);
           Combat fight = new Combat(fleet, pirate, info, board);
           result.setCombat(fight);
+          break;
+        }
+        case TileNames.SPACE_ANOMALY_SHIP: {
+          ShipStat[] stats = info.getShipStatList();
+          ArrayList<ShipStat> listStats = new ArrayList<>();
+          for (ShipStat stat : stats) {
+            if (!stat.isObsolete()) {
+              Ship ship = new Ship(stat.getDesign());
+              if (ship.getHull().getSize() == ShipSize.SMALL
+                  && !ship.isStarBase()) {
+                listStats.add(stat);
+              }
+            }
+          }
+          if (listStats.size() > 0) {
+            ShipStat stat = listStats.get(DiceGenerator.getRandom(
+                listStats.size() - 1));
+            Ship ship = new Ship(stat.getDesign());
+            stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+            stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+            Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
+            result = new SpaceAnomaly(AnomalyType.SHIP, 0);
+            result.setText("Ship was found in the nebulae and"
+                + " it crew decides to join your forces...");
+            //FIXME with image
+            result.setImage(null);
+            map.setTile(fleet.getX(), fleet.getY(), empty);
+            info.getFleets().add(newFleet);
+          } else {
+            result = new SpaceAnomaly(AnomalyType.SHIP, 0);
+            result.setText("Ship was found in the nebulae but"
+                + " it crew was died long time ago"
+                + " and hull was rusted through...");
+            //FIXME with image
+            result.setImage(null);
+            map.setTile(fleet.getX(), fleet.getY(), empty);
+          }
           break;
         }
         case TileNames.SPACE_ANOMALY_TECH: {

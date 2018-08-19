@@ -15,6 +15,14 @@ import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipComponentType;
+import org.openRealmOfStars.player.ship.ShipHull;
+import org.openRealmOfStars.player.ship.ShipHullType;
+import org.openRealmOfStars.player.ship.ShipImages;
+import org.openRealmOfStars.player.ship.ShipSize;
+import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -89,6 +97,7 @@ public class SpaceAnomalyTest {
     Mockito.when(tile.getName()).thenReturn(TileNames.SPACE_ANOMALY_MAP);
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(map.getTile(5, 6)).thenReturn(tile);
+    Mockito.when(map.isValidCoordinate(Mockito.anyInt(), Mockito.anyInt())).thenReturn(true);
     SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
     assertEquals(AnomalyType.MAP, anomaly.getType());
     assertEquals(GuiStatics.IMAGE_OLD_PROBE, anomaly.getImage());
@@ -235,6 +244,98 @@ public class SpaceAnomalyTest {
     assertEquals(0, anomaly.getValue());
     assertNotNull(anomaly.getText());
     assertNotNull(anomaly.getCombat());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testShipAnomalyNoStats() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    ShipStat[] stats = new ShipStat[0];
+    Mockito.when(info.getShipStatList()).thenReturn(stats);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getX()).thenReturn(5);
+    Mockito.when(fleet.getY()).thenReturn(6);
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mockito.when(fleet.getCoordinate()).thenReturn(coord);
+    Ship[] ships = new Ship[0];
+    Mockito.when(fleet.getShips()).thenReturn(ships);
+    Tile tile = Mockito.mock(Tile.class);
+    Mockito.when(tile.getName()).thenReturn(TileNames.SPACE_ANOMALY_SHIP);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getTile(5, 6)).thenReturn(tile);
+    Mockito.when(map.addSpaceAnomalyEnemy(Mockito.anyInt(), Mockito.anyInt(),
+        (PlayerInfo) Mockito.any(), Mockito.anyInt())).thenReturn(fleet);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
+    assertEquals(AnomalyType.SHIP, anomaly.getType());
+    assertEquals(null, anomaly.getImage());
+    assertEquals(0, anomaly.getValue());
+    assertNotNull(anomaly.getText());
+    assertNull(anomaly.getCombat());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testShipAnomaly() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    FleetList fleetList = Mockito.mock(FleetList.class);
+    Mockito.when(info.getFleets()).thenReturn(fleetList);
+    ShipStat[] stats = new ShipStat[1];
+    ShipStat stat = Mockito.mock(ShipStat.class);
+    stats[0] = stat;
+    ShipDesign design = Mockito.mock(ShipDesign.class);
+    Mockito.when(stat.getDesign()).thenReturn(design);
+    Mockito.when(stat.isObsolete()).thenReturn(false);
+    ShipComponent[] components = new ShipComponent[4];
+    ShipComponent armor = Mockito.mock(ShipComponent.class);
+    Mockito.when(armor.getType()).thenReturn(ShipComponentType.ARMOR);
+    Mockito.when(armor.getEnergyResource()).thenReturn(0);
+    ShipComponent engine = Mockito.mock(ShipComponent.class);
+    Mockito.when(engine.getType()).thenReturn(ShipComponentType.ENGINE);
+    Mockito.when(engine.getEnergyResource()).thenReturn(0);
+    ShipComponent power = Mockito.mock(ShipComponent.class);
+    Mockito.when(power.getType()).thenReturn(ShipComponentType.POWERSOURCE);
+    Mockito.when(power.getEnergyResource()).thenReturn(5);
+    ShipComponent weapon = Mockito.mock(ShipComponent.class);
+    Mockito.when(weapon.getType()).thenReturn(ShipComponentType.WEAPON_RAILGUN);
+    Mockito.when(weapon.getEnergyResource()).thenReturn(0);
+    Mockito.when(weapon.getDamage()).thenReturn(2);
+    Mockito.when(weapon.getWeaponRange()).thenReturn(2);
+    Mockito.when(armor.getDefenseValue()).thenReturn(2);
+    components[0] = weapon;
+    components[1] = armor;
+    components[2] = engine;
+    components[3] = power;
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getSlotHull()).thenReturn(1);
+    Mockito.when(hull.getImage()).thenReturn(ShipImages.spacePirates().getShipImage(0));
+    Mockito.when(hull.getHullType()).thenReturn(ShipHullType.NORMAL);
+    Mockito.when(hull.getSize()).thenReturn(ShipSize.SMALL);
+    Mockito.when(design.getHull()).thenReturn(hull);
+    Mockito.when(design.getComponentList()).thenReturn(components);
+    Mockito.when(info.getShipStatList()).thenReturn(stats);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getX()).thenReturn(5);
+    Mockito.when(fleet.getY()).thenReturn(6);
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mockito.when(fleet.getCoordinate()).thenReturn(coord);
+    Ship[] ships = new Ship[0];
+    Mockito.when(fleet.getShips()).thenReturn(ships);
+    Tile tile = Mockito.mock(Tile.class);
+    Mockito.when(tile.getName()).thenReturn(TileNames.SPACE_ANOMALY_SHIP);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getTile(5, 6)).thenReturn(tile);
+    Mockito.when(map.addSpaceAnomalyEnemy(Mockito.anyInt(), Mockito.anyInt(),
+        (PlayerInfo) Mockito.any(), Mockito.anyInt())).thenReturn(fleet);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
+    assertEquals(AnomalyType.SHIP, anomaly.getType());
+    assertEquals(null, anomaly.getImage());
+    assertEquals(0, anomaly.getValue());
+    assertNotNull(anomaly.getText());
+    assertNull(anomaly.getCombat());
   }
 
 }

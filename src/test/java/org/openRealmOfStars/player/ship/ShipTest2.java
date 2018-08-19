@@ -1,6 +1,7 @@
 package org.openRealmOfStars.player.ship;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.ship.Ship;
@@ -17,7 +18,9 @@ import static org.junit.Assert.*;
 
 /**
  * 
- * Open Realm of Stars game project Copyright (C) 2017 Lucas
+ * Open Realm of Stars game project
+ * Copyright (C) 2018 Tuomo Untinen
+ * Copyright (C) 2017 Lucas
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -56,6 +59,7 @@ public class ShipTest2 {
      * == ship.getCost() design.getMetalCost() == ship.getMetalCost()
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestConstructorInheritedArgu() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -97,6 +101,7 @@ public class ShipTest2 {
      * design.getHull().getSlotHull() == ship.getHullPointForComponent(0)
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestConstructorShipHullInDesignArgu() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -135,6 +140,7 @@ public class ShipTest2 {
      * ship.getArmor()
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestConstructorDesignArgu() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -173,6 +179,7 @@ public class ShipTest2 {
      * ship.getCulture() == 0
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestConstructorVariables() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -210,6 +217,7 @@ public class ShipTest2 {
      * index < 0, index >= hullPoints.length Expected: return = 0
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestGetHullPointForComponentWithInvalidIndex() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -250,6 +258,7 @@ public class ShipTest2 {
      * shield = shield + 1(Shield generator Mk1) else shield = getTotalShield()
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestRegenerateShield() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -301,6 +310,7 @@ public class ShipTest2 {
      * Expected: shield = 0
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestRegenerateShieldWithoutShieldComponent() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -332,6 +342,7 @@ public class ShipTest2 {
      * Expected: getspeed = 2 getFtlSpeed = 2 getTacticSpeed = 1
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestGetSpeedWithEngine() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -365,6 +376,7 @@ public class ShipTest2 {
      * Expected: getspeed = 2 getFtlSpeed = 2 getTacticSpeed = 1
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestGetSpeedWithoutEngine() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -400,6 +412,7 @@ public class ShipTest2 {
      * 
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestHasWeapon() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -459,6 +472,7 @@ public class ShipTest2 {
      * 
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestHasWeaponWithoutWeapon() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -491,6 +505,7 @@ public class ShipTest2 {
      * 
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestHasWeaponWithoutEnergy() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -526,6 +541,7 @@ public class ShipTest2 {
      * 
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestHasComponentEnergy() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -564,6 +580,7 @@ public class ShipTest2 {
      * 
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestHasComponentEnergyWithoutComponent() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -593,6 +610,7 @@ public class ShipTest2 {
      * 
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestHasBombs() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -642,6 +660,7 @@ public class ShipTest2 {
      * 
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestGetInitiativeByShipHullSize() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -682,6 +701,7 @@ public class ShipTest2 {
      * Expected: return appropriate various result -> 0 1 2 3 4 0
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestGetInitiativeByEmptySpace() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -736,6 +756,7 @@ public class ShipTest2 {
      * Expected: 3
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestGetInitiativeByEngine() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -768,6 +789,7 @@ public class ShipTest2 {
      * Expected: 3
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestGetInitiativeByTargetingComputer() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -801,6 +823,7 @@ public class ShipTest2 {
      * return appropriate various result
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestGetDefenseValueByShipHullSize() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -844,6 +867,7 @@ public class ShipTest2 {
      * return appropriate various result
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestGetDefenseValueByShipHullSizeWithJammer() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -887,6 +911,7 @@ public class ShipTest2 {
      * return appropriate various result
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestGetDefenseValueByShipHullSizeWithEmptyEngine() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -932,6 +957,7 @@ public class ShipTest2 {
      * 
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestScanner() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -966,6 +992,7 @@ public class ShipTest2 {
      * targeting_computer = +10
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestGetHitChance() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -1028,6 +1055,7 @@ public class ShipTest2 {
      * hullpoint(5) = 30
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestDamageMethod() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -1074,6 +1102,7 @@ public class ShipTest2 {
      * 
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestFlag() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -1136,6 +1165,7 @@ public class ShipTest2 {
      * 
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestDamageBy() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -1239,6 +1269,7 @@ public class ShipTest2 {
      * Expected: power = 36
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestGetTotalMilitaryPower() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -1279,6 +1310,7 @@ public class ShipTest2 {
      * Expected: power = 14
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestGetTotalMilitaryPowerWithNuclearAndJammer() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class);
@@ -1315,6 +1347,7 @@ public class ShipTest2 {
      * Expected: result = 75
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestGetTroopPower() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class, Mockito.RETURNS_DEEP_STUBS);
@@ -1350,6 +1383,7 @@ public class ShipTest2 {
      * module ship has energy named Fission source Mk2 Expected: result = 0
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestGetTroopPowerWithoutPlanetaryInvasion() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class, Mockito.RETURNS_DEEP_STUBS);
@@ -1383,6 +1417,7 @@ public class ShipTest2 {
      * Expected: result = true
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestIsColonyModule() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class, Mockito.RETURNS_DEEP_STUBS);
@@ -1416,6 +1451,7 @@ public class ShipTest2 {
      * Expected: result = true
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestIsTrooperModule() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class, Mockito.RETURNS_DEEP_STUBS);
@@ -1456,6 +1492,7 @@ public class ShipTest2 {
      * true
      */
     @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void TestIsTypeShip() {
         ShipDesign shipdesign = Mockito.mock(ShipDesign.class, Mockito.RETURNS_DEEP_STUBS);
         ShipHull shiphull = Mockito.mock(ShipHull.class, Mockito.RETURNS_DEEP_STUBS);
@@ -1483,7 +1520,7 @@ public class ShipTest2 {
 
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponentWithColonyModule);
         Ship colonyShipWithoutColonist = new Ship(shipdesign);
-        assertFalse(colonyShipWithoutColonist.isColonyShip());
+        assertTrue(colonyShipWithoutColonist.isColonyShip());
 
         ShipComponent[] shipcomponentWithoutColonyModule = new ShipComponent[] {};
         Mockito.when(shipdesign.getComponentList()).thenReturn(shipcomponentWithoutColonyModule);

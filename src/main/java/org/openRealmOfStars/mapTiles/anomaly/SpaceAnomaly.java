@@ -158,6 +158,7 @@ public class SpaceAnomaly {
               + " asteroids. Cache contained " + result.getValue()
               + " credits.");
           result.setImage(GuiStatics.IMAGE_ASTEROIDS);
+          info.setTotalCredits(info.getTotalCredits() + result.value);
           map.setTile(fleet.getX(), fleet.getY(), empty);
           break;
         }

@@ -1700,6 +1700,7 @@ public class Game implements ActionListener {
               starMapView.getPopup().getCombat());
         }
         starMapView.setPopup(null);
+        starMapView.updatePanels();
         return;
       }
     }

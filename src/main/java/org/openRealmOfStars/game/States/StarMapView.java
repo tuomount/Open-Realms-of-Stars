@@ -327,6 +327,11 @@ public class StarMapView extends BlackPanel {
    * Update panels on StarMapView
    */
   public void updatePanels() {
+    credProd.setText(
+        ": " + this.players.getCurrentPlayerInfo().getTotalCredits() + "("
+        + this.map.getTotalProductionByPlayerPerTurn(
+            Planet.PRODUCTION_CREDITS, this.players.getCurrentPlayer())
+        + ")");
     infoPanel.updatePanel(map.isDebug());
   }
 

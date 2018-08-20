@@ -39,7 +39,7 @@ import static org.junit.Assert.*;
  * Test for Ship class using mock
  */
 
-public class ShipTest2 {
+public class Ship2Test {
 
     final String SHIP_DESIGN_NAME = "shipDesignNo1";
     final String SHIP_DESIGN_INFO = "DesignInfoNo1";

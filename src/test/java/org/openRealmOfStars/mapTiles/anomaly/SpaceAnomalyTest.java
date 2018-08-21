@@ -209,7 +209,7 @@ public class SpaceAnomalyTest {
     Mockito.when(playerList.getBoardPlayer()).thenReturn(board);
     SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
     assertEquals(AnomalyType.LAIR, anomaly.getType());
-    assertEquals(null, anomaly.getImage());
+    assertEquals(GuiStatics.IMAGE_PIRATE_LAIR, anomaly.getImage());
     assertEquals(0, anomaly.getValue());
     assertNotNull(anomaly.getText());
     assertNotNull(anomaly.getCombat());

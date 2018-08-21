@@ -802,6 +802,11 @@ public final class GuiStatics {
    */
   public static final BufferedImage IMAGE_OLD_SHIP = IOUtilities.loadImage(
       GuiStatics.class.getResource("/resources/images/oldship.png"));
+  /**
+   * Pirate lair
+   */
+  public static final BufferedImage IMAGE_PIRATE_LAIR = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/piratelair.png"));
 
   /**
    * Get text width for certain font

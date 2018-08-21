@@ -208,8 +208,7 @@ public class SpaceAnomaly {
           result = new SpaceAnomaly(AnomalyType.LAIR, 0);
           result.setText("Pirate station was found on the deep space anchor."
               + " Battle begins...");
-          //FIXME with image
-          result.setImage(null);
+          result.setImage(GuiStatics.IMAGE_PIRATE_LAIR);
           Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
           PlayerInfo board = map.getPlayerList().getBoardPlayer();
           Fleet lair = map.addSpaceAnomalyEnemy(fleet.getX(), fleet.getY(),

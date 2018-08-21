@@ -807,6 +807,11 @@ public final class GuiStatics {
    */
   public static final BufferedImage IMAGE_PIRATE_LAIR = IOUtilities.loadImage(
       GuiStatics.class.getResource("/resources/images/piratelair.png"));
+  /**
+   * Electron nebula
+   */
+  public static final BufferedImage IMAGE_DSA = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/electron nebula.png"));
 
   /**
    * Get text width for certain font

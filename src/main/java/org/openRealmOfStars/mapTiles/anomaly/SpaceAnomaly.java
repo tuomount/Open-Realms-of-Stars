@@ -198,8 +198,7 @@ public class SpaceAnomaly {
         case TileNames.SPACE_ANOMALY_DSA: {
           result = new SpaceAnomaly(AnomalyType.DEEP_SPACE_ANCHOR, 0);
           result.setText("Deep Space Anchor was found behind the nebulae.");
-          //FIXME with image
-          result.setImage(null);
+          result.setImage(GuiStatics.IMAGE_DSA);
           Tile anchor = Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1);
           map.setTile(fleet.getX(), fleet.getY(), anchor);
           break;

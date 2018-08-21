@@ -97,6 +97,8 @@ Background stars by Tuomo Untinen
 
 Black star ship by canisferus (CC0)
 
+Electron nebula by kitart360
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

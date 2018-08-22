@@ -139,7 +139,7 @@ public class DiplomaticTrade {
     int max = starMap.getPlayerList().getCurrentMaxRealms();
     if (first >= max || first < 0) {
       throw new IllegalArgumentException("First player index out of bounds("
-          + first +")!");
+          + first + ")!");
     }
     if (second >= max || second < 0) {
       throw new IllegalArgumentException("Second player index out of bounds("

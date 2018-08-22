@@ -812,6 +812,11 @@ public final class GuiStatics {
    */
   public static final BufferedImage IMAGE_DSA = IOUtilities.loadImage(
       GuiStatics.class.getResource("/resources/images/electron nebula.png"));
+  /**
+   * Space ship
+   */
+  public static final BufferedImage IMAGE_SPACE_SHIP = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/spaceship_final.png"));
 
   /**
    * Get text width for certain font

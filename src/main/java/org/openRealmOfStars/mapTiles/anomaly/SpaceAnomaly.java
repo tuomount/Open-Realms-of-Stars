@@ -252,17 +252,15 @@ public class SpaceAnomaly {
             result = new SpaceAnomaly(AnomalyType.SHIP, 0);
             result.setText("Ship was found in the nebulae and"
                 + " it crew decides to join your forces...");
-            //FIXME with image
-            result.setImage(null);
+            result.setImage(GuiStatics.IMAGE_SPACE_SHIP);
             map.setTile(fleet.getX(), fleet.getY(), empty);
             info.getFleets().add(newFleet);
           } else {
             result = new SpaceAnomaly(AnomalyType.SHIP, 0);
-            result.setText("Ship was found in the nebulae but"
-                + " it crew was died long time ago"
-                + " and hull was rusted through...");
-            //FIXME with image
-            result.setImage(null);
+            result.setText("Ship pieces were found in "
+                + "the asteroid field..."
+                + " There isn't anything useful to find...");
+            result.setImage(GuiStatics.IMAGE_ASTEROIDS);
             map.setTile(fleet.getX(), fleet.getY(), empty);
           }
           break;

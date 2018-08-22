@@ -99,6 +99,8 @@ Black star ship by canisferus (CC0)
 
 Electron nebula by kitart360
 
+Space ship with turrets by gfx0 (CC0)
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

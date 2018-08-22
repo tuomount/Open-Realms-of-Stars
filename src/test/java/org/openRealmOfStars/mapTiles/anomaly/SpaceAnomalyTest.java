@@ -269,7 +269,7 @@ public class SpaceAnomalyTest {
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
     assertEquals(AnomalyType.SHIP, anomaly.getType());
-    assertEquals(null, anomaly.getImage());
+    assertEquals(GuiStatics.IMAGE_ASTEROIDS, anomaly.getImage());
     assertEquals(0, anomaly.getValue());
     assertNotNull(anomaly.getText());
     assertNull(anomaly.getCombat());
@@ -332,7 +332,7 @@ public class SpaceAnomalyTest {
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     SpaceAnomaly anomaly = SpaceAnomaly.createAnomalyEvent(map, info, fleet);
     assertEquals(AnomalyType.SHIP, anomaly.getType());
-    assertEquals(null, anomaly.getImage());
+    assertEquals(GuiStatics.IMAGE_SPACE_SHIP, anomaly.getImage());
     assertEquals(0, anomaly.getValue());
     assertNotNull(anomaly.getText());
     assertNull(anomaly.getCombat());

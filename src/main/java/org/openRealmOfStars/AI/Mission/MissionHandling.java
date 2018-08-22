@@ -1124,8 +1124,10 @@ public final class MissionHandling {
   public static void mergeFleets(final Fleet fleet, final PlayerInfo info) {
     // Merging fleets
     String[] part = fleet.getName().split("#");
-    if (fleet.isScoutFleet() || fleet.isColonyFleet()) {
-      // Do not merge scout fleets or colony fleets.
+    if (fleet.isScoutFleet() || fleet.isColonyFleet()
+        || fleet.isStarBaseDeployed()) {
+      // Do not merge scout fleets or colony fleets or deployed starbase
+      // Starbases are merged while deploying.
       return;
     }
     for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {

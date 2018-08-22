@@ -538,7 +538,7 @@ public class StarMap {
       Fleet fleet = new Fleet(ship, x, y);
       playerInfo.getFleets().add(fleet);
       if (type == ENEMY_PIRATE_LAIR) {
-        fleet.setName(playerInfo.getFleets().generateUniqueName("pirate lair"));
+        fleet.setName(playerInfo.getFleets().generateUniqueName("space lair"));
         ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
       }
       if (type == ENEMY_PIRATE) {

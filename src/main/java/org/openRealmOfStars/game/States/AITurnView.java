@@ -991,11 +991,13 @@ public class AITurnView extends BlackPanel {
       game.getStarMap().setAIFleet(info.getFleets().getNext());
       if (info.getFleets().getIndex() == 0) {
         MissionHandling.cleanMissions(info);
-        // All fleets have moved. Checking the new possible planet
-        searchPlanetsForMissions();
-        // Searching for fleet which has crossed the borders
-        searchForBorderCrossing();
-        searchDeepSpaceAnchors();
+        if (!info.isBoard()) {
+          // All fleets have moved. Checking the new possible planet
+          searchPlanetsForMissions();
+          // Searching for fleet which has crossed the borders
+          searchForBorderCrossing();
+          searchDeepSpaceAnchors();
+        }
         game.getStarMap().setAIFleet(null);
         game.getStarMap()
             .setAiTurnNumber(game.getStarMap().getAiTurnNumber() + 1);

@@ -1290,7 +1290,9 @@ public class Game implements ActionListener {
       players.addPlayer(info);
     }
     if (galaxyConfig.getSpacePiratesLevel() > 0) {
-      PlayerInfo info = new PlayerInfo(SpaceRace.SPACE_PIRATE, maxPlayers, 8);
+      int index = galaxyConfig.getMaxPlayers();
+      PlayerInfo info = new PlayerInfo(SpaceRace.SPACE_PIRATE, maxPlayers,
+          index);
       info.setBoard(true);
       info.setGovernment(GovernmentType.AI);
       info.setEmpireName("Space pirates");

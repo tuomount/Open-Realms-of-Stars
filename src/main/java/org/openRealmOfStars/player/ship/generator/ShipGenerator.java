@@ -887,7 +887,7 @@ public final class ShipGenerator {
       ShipComponent power = ShipComponentFactory.createByName(
           player.getTechList().getBestEnergySource().getComponent());
       result.addComponent(power);
-      if (hull.getSize() != ShipSize.SMALL) {
+      if (hull.getSize() != ShipSize.SMALL || player.isBoard()) {
         ShipComponent weapon = ShipComponentFactory
             .createByName(player.getTechList().getBestWeapon().getComponent());
         result.addComponent(weapon);

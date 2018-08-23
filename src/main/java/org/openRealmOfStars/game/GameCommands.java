@@ -576,6 +576,11 @@ public final class GameCommands {
   public static final String COMMAND_START_TRADE_MISSION = "StartTradeMission";
 
   /**
+   * Stop trade mission
+   */
+  public static final String COMMAND_STOP_TRADE_MISSION = "StopTradeMission";
+
+  /**
    * Split the fleet
    */
   public static final String COMMAND_DESTROY_THE_SHIP = "DestroyTheShip";

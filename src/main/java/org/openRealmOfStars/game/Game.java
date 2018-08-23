@@ -1684,6 +1684,15 @@ public class Game implements ActionListener {
         changeGameState(GameState.STARMAP);
       }
       if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_STOP_TRADE_MISSION)) {
+        SoundPlayer.playMenuSound();
+        fleetTradeView.getPlayerInfo().getMissions().deleteMissionForFleet(
+            fleetTradeView.getFleet().getName());
+        fleetTradeView.getFleet().setRoute(null);
+        fleetTradeView =  null;
+        changeGameState(GameState.STARMAP);
+      }
+      if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
         SoundPlayer.playMenuSound();
         changeGameState(GameState.STARMAP);

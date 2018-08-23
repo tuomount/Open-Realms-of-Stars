@@ -241,7 +241,11 @@ public class FleetTradeView extends BlackPanel {
         GameCommands.COMMAND_START_TRADE_MISSION);
     acceptBtn.addActionListener(listener);
     eastPanel.add(acceptBtn);
-
+    eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    SpaceButton stopBtn = new SpaceButton("Stop trading",
+        GameCommands.COMMAND_STOP_TRADE_MISSION);
+    stopBtn.addActionListener(listener);
+    eastPanel.add(stopBtn);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
 
     // Bottom panel

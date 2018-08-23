@@ -1943,6 +1943,10 @@ public class Game implements ActionListener {
         SoundPlayer.playMenuSound();
         shipDesignView.keepDesign();
         changeGameState(GameState.VIEWSHIPS);
+      } else if (arg0.getActionCommand().equalsIgnoreCase(
+          GameCommands.COMMAND_SHIPS)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.VIEWSHIPS);
       } else {
         // Ship Design View
         shipDesignView.handleAction(arg0);

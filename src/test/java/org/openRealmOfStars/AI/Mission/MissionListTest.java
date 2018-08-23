@@ -95,6 +95,26 @@ public class MissionListTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testDeleteByName() {
+    MissionList list = new MissionList();
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mission mission = new Mission(MissionType.COLONIZE, MissionPhase.LOADING,
+        coord);
+    mission.setFleetName("No name yet");
+    list.add(mission);
+    mission = new Mission(MissionType.TRADE_FLEET, MissionPhase.LOADING,
+        coord);
+    mission.setFleetName("My mission");
+    list.add(mission);
+    assertEquals(2, list.getSize());
+    list.deleteMissionForFleet("No such");
+    assertEquals(2, list.getSize());
+    list.deleteMissionForFleet("My mission");
+    assertEquals(1, list.getSize());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testTradeMission() {
     MissionList list = new MissionList();
     Mission mission = Mockito.mock(Mission.class);

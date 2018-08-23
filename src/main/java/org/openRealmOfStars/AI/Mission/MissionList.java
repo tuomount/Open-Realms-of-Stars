@@ -314,6 +314,22 @@ public class MissionList {
   }
 
   /**
+   * Delete all missions for certain fleet name
+   * @param fleetName Fleet name to delete
+   */
+  public void deleteMissionForFleet(final String fleetName) {
+    ArrayList<Mission> deletableMissions = new ArrayList<>();
+    for (Mission mission : missions) {
+      if (mission.getFleetName().equals(fleetName)) {
+        deletableMissions.add(mission);
+      }
+    }
+    for (Mission mission : deletableMissions) {
+      missions.remove(mission);
+    }
+  }
+
+  /**
    * Remove attacks mission against player
    * @param info PlayerInfo whom not to attack
    * @param map Starmap

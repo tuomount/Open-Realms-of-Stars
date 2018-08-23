@@ -1677,6 +1677,8 @@ public class Game implements ActionListener {
         mission.setPlanetBuilding(route.getOriginWorld().getName());
         mission.setTargetPlanet(route.getTradeWorld().getName());
         mission.setFleetName(fleetTradeView.getFleet().getName());
+        fleetTradeView.getPlayerInfo().getMissions().deleteMissionForFleet(
+            fleetTradeView.getFleet().getName());
         fleetTradeView.getPlayerInfo().getMissions().add(mission);
         fleetTradeView =  null;
         changeGameState(GameState.STARMAP);

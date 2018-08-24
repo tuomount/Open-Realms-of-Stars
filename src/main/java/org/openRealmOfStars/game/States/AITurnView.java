@@ -1232,7 +1232,9 @@ public class AITurnView extends BlackPanel {
                 // Not blocked so fleet is moving
                 MissionHandling.makeFleetMove(game, fleet.getRoute().getX(),
                     fleet.getRoute().getY(), info, fleet);
-                if (fleet.getRoute().isEndReached()) {
+                if (fleet.getRoute().isEndReached()
+                    && info.getMissions().getMissionForFleet(
+                        fleet.getName()) == null) {
                   // End is reached giving a message
                   fleet.setRoute(null);
                   Message msg = new Message(MessageType.FLEET,
@@ -1243,7 +1245,8 @@ public class AITurnView extends BlackPanel {
                   msg.setCoordinate(fleet.getCoordinate());
                   info.getMsgList().addNewMessage(msg);
                 }
-              } else {
+              } else if (info.getMissions().getMissionForFleet(
+                        fleet.getName()) == null) {
                 // Movement was blocked, giving a message
                 fleet.setRoute(null);
                 Message msg = new Message(MessageType.FLEET,
@@ -1256,7 +1259,8 @@ public class AITurnView extends BlackPanel {
               }
             }
 
-          } else {
+          } else if (info.getMissions().getMissionForFleet(
+              fleet.getName()) == null) {
             Message msg = new Message(MessageType.FLEET,
                 fleet.getName() + " is waiting for orders.",
                 Icons.getIconByName(Icons.ICON_HULL_TECH));

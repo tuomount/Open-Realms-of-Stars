@@ -518,7 +518,8 @@ public class Game implements ActionListener {
           PopupPanel popup = new PopupPanel(anomaly);
           starMapView.setPopup(popup);
         }
-        if (anomaly != null && !info.isHuman() && anomaly.getCombat() != null) {
+        if (anomaly != null && !info.isHuman() && anomaly.getCombat() != null
+            && !info.isBoard()) {
           anomaly.getCombat().doFastCombat();
           getStarMap().getHistory().addEvent(
               anomaly.getCombat().getCombatEvent());

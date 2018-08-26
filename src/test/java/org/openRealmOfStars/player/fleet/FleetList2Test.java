@@ -28,7 +28,7 @@ import org.openRealmOfStars.player.fleet.FleetList;
  * Test for FleetList class
  */
 
-public class FleetListTest2 {
+public class FleetList2Test {
     /**
      * testing constructor of FleetList
      */

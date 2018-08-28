@@ -33,7 +33,7 @@ import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
  *
  */
 
-public class ShipDesignTest2 {
+public class ShipDesign2Test {
 
     /**
      * addComponentTest purpose : Make sure Component ADD input : ShipComponent

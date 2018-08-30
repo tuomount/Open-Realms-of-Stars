@@ -38,7 +38,7 @@ import static org.mockito.Mockito.*;
  * Test for Combat
  *
  */
-public class CombatTest2 {
+public class Combat2Test {
   private Fleet attackerFleet;
   private Fleet defenderFleet;
   private FleetList attackerFleetList;

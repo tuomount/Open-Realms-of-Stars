@@ -521,7 +521,7 @@ public final class PlanetHandling {
         int bonus = newBonus - oldBonus;
         score = score - 80 * bonus;
       }
-      if (score < lowestScore) {
+      if (score < lowestScore && !building.getName().equals("Space port")) {
         lowestScore = score;
         lowBuilding = building;
       }

@@ -280,6 +280,10 @@ public final class Tiles {
     tile.setDescription(TileNames.WORM_HOLE_DESCRIPTION);
     tile.setAnimationIndex(getTileByName(
         TileNames.WORM_HOLE1).getIndex());
+    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_SHIP);
+    addTile(tile);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
   }
 
 }

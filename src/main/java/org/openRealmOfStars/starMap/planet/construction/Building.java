@@ -324,12 +324,15 @@ public class Building extends Construction {
       sb.append(value);
       space = true;
     }
-    if (getHappiness() > 0) {
+    if (getHappiness() != 0) {
       if (space) {
         sb.append(" ");
       }
-      sb.append("Happiness: +");
+      sb.append("Happiness: ");
       int value = getHappiness();
+      if (value > 0) {
+        sb.append("+");
+      }
       sb.append(value);
       space = true;
     }

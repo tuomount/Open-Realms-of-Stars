@@ -11,6 +11,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
@@ -71,6 +72,7 @@ public class PlayerInfoTest {
     @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoHuman() {
         PlayerInfo human = new PlayerInfo(SpaceRace.HUMAN);
+        assertEquals(false, human.isBoard());
         TechList techList = human.getTechList();
         Tech[] tech = techList.getList();
         ShipStat[] statList = human.getShipStatList();
@@ -104,6 +106,16 @@ public class PlayerInfoTest {
         assertEquals(true, human.researchSpyShips());
     }
 
+    @Test
+    @Category(org.openRealmOfStars.BehaviourTest.class)
+    public void testPlayerInfoSpacePirate() {
+        PlayerInfo pirate = new PlayerInfo(SpaceRace.SPACE_PIRATE);
+        assertEquals(true, pirate.isBoard());
+        ShipStat[] statList = pirate.getShipStatList();
+        assertEquals("Scout Mk1", statList[0].getDesign().getName());
+        assertEquals("Small starbase Mk1", statList[1].getDesign().getName());
+    }
+
     /**
      * input : SpaceRace.HOMARIANS output : PlayerInfo's techList ={ one random
      * weapon in Combat TechType level 1, one random shield or armor in Defense
@@ -118,6 +130,7 @@ public class PlayerInfoTest {
     @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoHomarians() {
         PlayerInfo homarian = new PlayerInfo(SpaceRace.HOMARIANS);
+        assertEquals(false, homarian.isBoard());
         TechList techList = homarian.getTechList();
         Tech[] tech = techList.getList();
         ShipStat[] statList = homarian.getShipStatList();
@@ -162,6 +175,7 @@ public class PlayerInfoTest {
     public void testPlayerInfoMechions() {
         SpaceRace race = SpaceRace.MECHIONS;
         PlayerInfo mechion = new PlayerInfo(race);
+        assertEquals(false, mechion.isBoard());
         TechList techList = mechion.getTechList();
         Tech[] tech = techList.getList();
         ShipStat[] statList = mechion.getShipStatList();
@@ -203,6 +217,7 @@ public class PlayerInfoTest {
     public void testPlayerInfoCentaurs() {
         SpaceRace race = SpaceRace.CENTAURS;
         PlayerInfo centaur = new PlayerInfo(race);
+        assertEquals(false, centaur.isBoard());
         TechList techList = centaur.getTechList();
         Tech[] tech = techList.getList();
         ShipStat[] statList = centaur.getShipStatList();
@@ -244,6 +259,7 @@ public class PlayerInfoTest {
     public void testPlayerInfoSporks() {
         SpaceRace race = SpaceRace.SPORKS;
         PlayerInfo spork = new PlayerInfo(race);
+        assertEquals(false, spork.isBoard());
         TechList techList = spork.getTechList();
         Tech[] tech = techList.getList();
 
@@ -280,6 +296,7 @@ public class PlayerInfoTest {
     public void testPlayerInfoGreyans() {
         SpaceRace race = SpaceRace.GREYANS;
         PlayerInfo greyan = new PlayerInfo(race);
+        assertEquals(false, greyan.isBoard());
         TechList techList = greyan.getTechList();
         Tech[] tech = techList.getList();
         ShipStat[] statList = greyan.getShipStatList();
@@ -323,6 +340,7 @@ public class PlayerInfoTest {
     public void testPlayerInfoMothoids() {
         SpaceRace race = SpaceRace.MOTHOIDS;
         PlayerInfo mothoid = new PlayerInfo(race);
+        assertEquals(false, mothoid.isBoard());
         TechList techList = mothoid.getTechList();
         Tech[] tech = techList.getList();
         ShipStat[] statList = mothoid.getShipStatList();
@@ -361,6 +379,7 @@ public class PlayerInfoTest {
     @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoTeuthidae() {
         PlayerInfo teuthidae = new PlayerInfo(SpaceRace.TEUTHIDAES);
+        assertEquals(false, teuthidae.isBoard());
         TechList techList = teuthidae.getTechList();
         Tech[] tech = techList.getList();
         ShipStat[] statList = teuthidae.getShipStatList();
@@ -402,6 +421,7 @@ public class PlayerInfoTest {
     @Category(org.openRealmOfStars.BehaviourTest.class)
     public void testPlayerInfoScaurians() {
         PlayerInfo scaurian = new PlayerInfo(SpaceRace.SCAURIANS);
+        assertEquals(false, scaurian.isBoard());
         TechList techList = scaurian.getTechList();
         Tech[] tech = techList.getList();
         ShipStat[] statList = scaurian.getShipStatList();

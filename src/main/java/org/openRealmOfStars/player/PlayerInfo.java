@@ -255,6 +255,8 @@ public class PlayerInfo {
       break;
     }
     case SPACE_PIRATE: {
+      // Space pirate is always board player
+      setBoard(true);
       /*
        * Space pirates get higher start tech
        */

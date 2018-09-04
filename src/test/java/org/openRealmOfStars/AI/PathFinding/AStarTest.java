@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.starMap.StarMap;
@@ -97,6 +98,42 @@ public class AStarTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testAStarInStarMapCloseUp() {
     StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getMaxX()).thenReturn(50);
+    Mockito.when(map.getMaxY()).thenReturn(50);
+    Mockito.when(map.isBlocked(Mockito.anyInt(), Mockito.anyInt())).thenReturn(false);
+    AStarSearch search = new AStarSearch(map, 10, 10, 12, 10, 5, false);
+    assertEquals(true, search.doSearch());
+    search.doRoute();
+    int steps = 1;
+    while (!search.isLastMove()) {
+      assertNotEquals(null, search.getMove());
+      if (steps == 1) {
+        assertEquals(11, search.getMove().getX());
+        assertEquals(9, search.getMove().getY());
+      }
+      search.nextMove();
+      steps++;
+    }
+    if (steps == 2) {
+      assertEquals(12, search.getMove().getX());
+      assertEquals(10, search.getMove().getY());
+    }
+    assertEquals(0,search.getTargetDistance());
+    assertEquals(2,steps);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAStarInStarMapCloseUp2() {
+    StarMap map = Mockito.mock(StarMap.class);
+    FleetTileInfo fleetTile = Mockito.mock(FleetTileInfo.class);
+    Mockito.when(fleetTile.getPlayerIndex()).thenReturn(0);
+    FleetTileInfo fleetTile2 = Mockito.mock(FleetTileInfo.class);
+    Mockito.when(fleetTile2.getPlayerIndex()).thenReturn(1);
+    FleetTileInfo[][] fleetTiles = new FleetTileInfo[50][50];
+    fleetTiles[10][10] = fleetTile;
+    fleetTiles[11][10] = fleetTile;
+    Mockito.when(map.getFleetTiles()).thenReturn(fleetTiles);
     Mockito.when(map.getMaxX()).thenReturn(50);
     Mockito.when(map.getMaxY()).thenReturn(50);
     Mockito.when(map.isBlocked(Mockito.anyInt(), Mockito.anyInt())).thenReturn(false);

@@ -3,6 +3,7 @@ package org.openRealmOfStars.AI.PathFinding;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -186,12 +187,23 @@ public class AStarSearch {
     maxX = map.getMaxX();
     maxY = map.getMaxY();
     blockMap = new int[maxX][maxY];
+    FleetTileInfo[][] fleetTiles = map.getFleetTiles();
+    int ownerIndex = -1;
+    if (fleetTiles != null && fleetTiles[sx][sy] != null) {
+      ownerIndex = fleetTiles[sx][sy].getPlayerIndex();
+    }
     for (int y = 0; y < maxY; y++) {
       for (int x = 0; x < maxX; x++) {
         if (map.isBlocked(x, y) || dangerousBlocked && map.isDangerous(x, y)) {
           blockMap[x][y] = BLOCKED;
         } else {
           blockMap[x][y] = UNBLOCKED;
+        }
+        if (ownerIndex != -1) {
+          FleetTileInfo fleetTile = fleetTiles[x][y];
+          if (fleetTile != null && fleetTile.getPlayerIndex() != ownerIndex) {
+            blockMap[x][y] = BLOCKED;
+          }
         }
       }
     }

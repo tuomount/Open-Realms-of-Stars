@@ -1378,6 +1378,9 @@ public final class MissionHandling {
               Icons.getIconByName(Icons.ICON_HULL_TECH));
           msg.setCoordinate(fleet.getCoordinate());
           info.getMsgList().addNewMessage(msg);
+        } else {
+          // Making reroute
+          fleet.setRoute(null);
         }
       }
     }

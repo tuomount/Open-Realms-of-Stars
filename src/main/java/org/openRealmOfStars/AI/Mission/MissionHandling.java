@@ -1371,7 +1371,8 @@ public final class MissionHandling {
           }
         } else if (!info.isHuman()) {
           handleDiplomacyBetweenAis(game, info, index, null, fleet);
-        } else {
+        } else if (info.getMissions().getMissionForFleet(fleet.getName())
+            == null) {
           Message msg = new Message(MessageType.FLEET,
               "Fleet encounter another fleet while moving in FTL!",
               Icons.getIconByName(Icons.ICON_HULL_TECH));

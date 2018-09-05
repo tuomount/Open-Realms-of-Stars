@@ -238,7 +238,8 @@ public class Combat {
     addCombatShipList(defenderFleet, defenderInfo, topList, true);
     if (starbaseFleet != null && starbaseFleet != this.defenderFleet) {
       CombatPositionList starbaseList = new TopPositionList();
-      addCombatShipList(starbaseFleet, defenderInfo, starbaseList, true);
+      addCombatShipList(starbaseFleet, defenderInfo, starbaseList, true,
+          defenderFleet.getNumberOfShip());
     }
 
     Collections.sort(combatShipList, Collections.reverseOrder());
@@ -257,17 +258,31 @@ public class Combat {
     escapePosition = escapePos;
   }
 
+  /**
+   * Add combatShip to combatShipList where position index is zero.
+   * @param fleet Player's Fleet
+   * @param playerInfo Player's information
+   * @param positionList starting coordinate list
+   * @param flipY Should ship's image have flipped Y axel.
+   */
+  private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
+          final CombatPositionList positionList, final boolean flipY) {
+    addCombatShipList(fleet, playerInfo, positionList, flipY, 0);
+  }
+
 /**
  * Add combatShip to combatShipList
  * @param fleet Player's Fleet
  * @param playerInfo Player's information
  * @param positionList starting coordinate list
  * @param flipY Should ship's image have flipped Y axel.
+ * @param posIndex position index
  */
 private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
-        final CombatPositionList positionList, final boolean flipY) {
+        final CombatPositionList positionList, final boolean flipY,
+        final int posIndex) {
     Ship[] ships = fleet.getShips();
-    int index = 0;
+    int index = posIndex;
     for (Ship ship : ships) {
       ShipStat stat = playerInfo.getShipStatByName(ship.getName());
       if (stat != null) {
@@ -446,6 +461,9 @@ public boolean launchIntercept(final int distance,
       attackerInfo.getFleets().recalculateList();
     } else if (defenderFleet.isShipInFleet(ship.getShip())) {
       destroyShipFromFleet(ship, defenderFleet);
+      defenderInfo.getFleets().recalculateList();
+    } else if (starbaseFleet.isShipInFleet(ship.getShip())) {
+      destroyShipFromFleet(ship, starbaseFleet);
       defenderInfo.getFleets().recalculateList();
     }
   }

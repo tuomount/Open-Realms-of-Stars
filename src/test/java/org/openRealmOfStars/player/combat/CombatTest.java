@@ -459,6 +459,52 @@ public class CombatTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testStarbaseFleetWins() {
+    PlayerInfo defender = new PlayerInfo(SpaceRace.SPACE_PIRATE);
+    PlayerInfo attacker = new PlayerInfo(SpaceRace.SPORKS);
+    defender.getTechList().addTech(TechFactory.createCombatTech(
+        "Photon torpedo Mk5", 5));
+    defender.getTechList().addTech(TechFactory.createDefenseTech(
+        "Shield Mk5", 5));
+    defender.getTechList().addTech(TechFactory.createPropulsionTech(
+        "Tachyon source Mk2", 5));
+    ShipDesign design1 = ShipGenerator.createStarbase(defender, ShipSize.SMALL);
+    ShipDesign design2 = ShipGenerator.createBattleShip(
+        attacker, ShipSize.SMALL, false);
+    Ship starbase = new Ship(design1);
+    starbase.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+    Ship starbase2 = new Ship(design1);
+    starbase2.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+    Ship scout2 = new Ship(design2);
+    Fleet defenderFleet = new Fleet(starbase, 5, 5);
+    Fleet starbaseFleet = new Fleet(starbase2, 5, 5);
+    Fleet attackerFleet = new Fleet(scout2, 6, 5);
+    defender.getFleets().add(defenderFleet);
+    defender.getFleets().add(starbaseFleet);
+    attacker.getFleets().add(attackerFleet);
+    Combat combat = new Combat(attackerFleet, defenderFleet, attacker,
+        defender);
+    CombatShip first = combat.getCurrentShip();
+    int deployedBases = 0;
+    for (int i = 0; i < 3; i++) {
+      CombatShip ship = combat.getCurrentShip();
+      if (ship.getShip().getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
+        deployedBases++;
+      }
+      if (i == 0) {
+        assertEquals(first, ship);
+      } else {
+        assertNotEquals(first, ship);
+      }
+      combat.nextShip();
+    }
+    assertEquals(2, deployedBases);
+    combat.doFastCombat();
+    assertEquals(defender, combat.getWinner());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testHumanPlayer() {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     info1.setHuman(true);

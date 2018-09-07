@@ -25,6 +25,7 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.espionage.EspionageBonusType;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -535,13 +536,33 @@ public class StarMap {
       Ship ship = new Ship(stat.getDesign());
       stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
       stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
-      Fleet fleet = new Fleet(ship, x, y);
-      playerInfo.getFleets().add(fleet);
+      Fleet fleet = null;
       if (type == ENEMY_PIRATE_LAIR) {
-        fleet.setName(playerInfo.getFleets().generateUniqueName("space lair"));
-        ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+        Fleet starbaseFleet = null;
+        for (int i = 0; i < playerInfo.getFleets().getNumberOfFleets(); i++) {
+          Fleet ite = playerInfo.getFleets().getByIndex(i);
+          if (ite.isStarBaseDeployed()
+              && ite.getX() == x && ite.getY() == y) {
+            starbaseFleet = ite;
+            break;
+          }
+        }
+        if (starbaseFleet != null) {
+          starbaseFleet.addShip(ship);
+          ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+          fleet = starbaseFleet;
+        } else {
+          fleet = new Fleet(ship, x, y);
+          playerInfo.getFleets().add(fleet);
+          FleetList fleetList = playerInfo.getFleets();
+          ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+          fleetList.add(fleet);
+          fleet.setName(fleetList.generateUniqueName("Space lair"));
+        }
       }
       if (type == ENEMY_PIRATE) {
+        fleet = new Fleet(ship, x, y);
+        playerInfo.getFleets().add(fleet);
         fleet.setName(playerInfo.getFleets().generateUniqueName("pirate"));
         Sun sun = getAboutNearestSolarSystem(x, y, playerInfo, fleet, null);
         Mission mission = new Mission(MissionType.PRIVATEER,

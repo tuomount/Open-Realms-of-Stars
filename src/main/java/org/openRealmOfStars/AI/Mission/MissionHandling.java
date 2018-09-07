@@ -576,7 +576,7 @@ public final class MissionHandling {
               }
             }
           }
-          // Remove the ship and AI just colonized planet
+          // Remove the mission
           info.getMissions().remove(mission);
           if (fleet.getNumberOfShip() == 0) {
             // Remove also empty fleet

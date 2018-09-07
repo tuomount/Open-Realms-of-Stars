@@ -548,9 +548,11 @@ public class StarMap {
           }
         }
         if (starbaseFleet != null) {
-          starbaseFleet.addShip(ship);
-          ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
-          fleet = starbaseFleet;
+          if (starbaseFleet.getNumberOfShip() < 7) {
+            starbaseFleet.addShip(ship);
+            ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+            fleet = starbaseFleet;
+          }
         } else {
           fleet = new Fleet(ship, x, y);
           playerInfo.getFleets().add(fleet);

@@ -5,8 +5,6 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.AI.Mission.MissionList;
-import org.openRealmOfStars.gui.mapPanel.PopupPanel;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
@@ -90,24 +88,6 @@ public class GameKeyAdapter implements KeyEventDispatcher {
       if (arg0.getKeyCode() == KeyEvent.VK_R
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
         game.getStarMapView().getStarMapMouseListener().setRoutePlanning(true);
-        return true;
-      }
-      if (arg0.getKeyCode() == KeyEvent.VK_Q
-          && arg0.getID() == KeyEvent.KEY_PRESSED) {
-        if (game.getStarMapView().getPopup() == null) {
-          PopupPanel popup = new PopupPanel("This is just text to try out"
-              + " popup panel text drawing capabilities. There are no line"
-              + " changes here at all. Popup panel should automatically"
-              + " handle line changes without no hickup. Mostly this text"
-              + " is just text flow without any purpose. This could basicly"
-              + " contain whatever content, but it needs to be polite and"
-              + " correct. This is the reason I did not want to copy paste"
-              + " random lorem ipsum text from the internet. Plus I would"
-              + " need to check the license for that. This was just easier.",
-              "Test title");
-          popup.setImage(GuiStatics.IMAGE_ASTEROIDS);
-          game.getStarMapView().setPopup(popup);
-        }
         return true;
       }
       if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE

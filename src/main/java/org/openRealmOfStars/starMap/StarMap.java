@@ -452,7 +452,7 @@ public class StarMap {
         loop++;
       }
     }
- // Create random deep space anchors
+ // Create random space anomalies
     loop = 0;
     int numberOfAnomalies = 0;
     boolean harmful = false;
@@ -555,7 +555,6 @@ public class StarMap {
           }
         } else {
           fleet = new Fleet(ship, x, y);
-          playerInfo.getFleets().add(fleet);
           FleetList fleetList = playerInfo.getFleets();
           ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
           fleetList.add(fleet);

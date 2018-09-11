@@ -80,8 +80,8 @@ public class DiplomacyBonusList {
   }
 
   /**
-   * Make war so that Alliance, trade alliance and long peace
-   * are removed from the list
+   * Make war so that Alliance, trade alliance, defensive pact, long peace
+   * and trade fleet are removed from the list.
    */
   private void makeWar() {
     Iterator<DiplomacyBonus> iterator = list.iterator();
@@ -90,7 +90,8 @@ public class DiplomacyBonusList {
       if (diplomacyBonus.getType() == DiplomacyBonusType.IN_ALLIANCE
           || diplomacyBonus.getType() == DiplomacyBonusType.IN_TRADE_ALLIANCE
           || diplomacyBonus.getType() == DiplomacyBonusType.LONG_PEACE
-          || diplomacyBonus.getType() == DiplomacyBonusType.IN_DEFENSIVE_PACT) {
+          || diplomacyBonus.getType() == DiplomacyBonusType.IN_DEFENSIVE_PACT
+          || diplomacyBonus.getType() == DiplomacyBonusType.TRADE_FLEET) {
         iterator.remove();
       }
     }

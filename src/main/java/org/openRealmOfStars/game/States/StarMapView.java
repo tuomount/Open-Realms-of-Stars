@@ -25,13 +25,11 @@ import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
-import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
-import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -419,27 +417,6 @@ public class StarMapView extends BlackPanel {
       fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),
           fleet.getY(), Route.ROUTE_FIX));
       infoPanel.updatePanel(map.isDebug());
-    }
-    if (arg0.getActionCommand().equalsIgnoreCase(
-        GameCommands.COMMAND_TRADE_FLEET)
-        && getStarMapMouseListener().getLastClickedFleet() != null
-        && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
-      //TODO: Remove this after Fleet Trade View works
-      Fleet fleet = getStarMapMouseListener().getLastClickedFleet();
-      PlayerInfo info = infoPanel.getFleetOwner();
-      Planet planet = map.getPlanetNextToCoordinate(fleet.getCoordinate());
-      int playerIndex = planet.getPlanetOwnerIndex();
-      DiplomacyBonusList diplomacy = info.getDiplomacy().getDiplomacyList(
-          playerIndex);
-      StarMapUtilities.doTradeWithShips(diplomacy, fleet, planet, info);
-      credProd.setText(
-          ": " + this.players.getCurrentPlayerInfo().getTotalCredits() + "("
-          + this.map.getTotalProductionByPlayerPerTurn(
-              Planet.PRODUCTION_CREDITS, this.players.getCurrentPlayer())
-          + ")");
-      // TODO: Chaing menu sound later
-      SoundPlayer.playMenuSound();
-      infoPanel.disableFixTradeBtn();
     }
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_ROUTE_FLEET)

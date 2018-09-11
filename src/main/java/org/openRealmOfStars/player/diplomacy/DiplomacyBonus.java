@@ -251,6 +251,18 @@ public class DiplomacyBonus {
        bonusLasting = 255;
        break;
      }
+     case TRADE_FLEET: {
+       if (race == SpaceRace.SCAURIANS) {
+         bonusValue = 6;
+       } else if (race == SpaceRace.HUMAN) {
+         bonusValue = 4;
+       } else {
+         bonusValue = 3;
+       }
+       bonusLasting = 255;
+       onlyOne = true;
+       break;
+     }
      default: {
        throw new IllegalArgumentException("Unknown bonus type!!");
      }

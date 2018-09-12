@@ -194,6 +194,46 @@ public class ImageInstructionTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTextPlanetAndTrader() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instruction.addPlanet(ImageInstruction.POSITION_RIGHT, ImageInstruction.PLANET_ROCK1,
+        ImageInstruction.SIZE_FULL);
+    instruction.addTrader(ImageInstruction.POSITION_LEFT, ImageInstruction.TRADER2,
+        ImageInstruction.SIZE_FULL);
+    assertEquals(true, instruction.toString().contains("trader2"));
+    BufferedImage image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(800, image.getWidth());
+    assertEquals(400, image.getHeight());
+
+    instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instruction.addPlanet(ImageInstruction.POSITION_LEFT, ImageInstruction.PLANET_ROCK1,
+        ImageInstruction.SIZE_FULL);
+    instruction.addTrader(ImageInstruction.POSITION_RIGHT, ImageInstruction.TRADER1,
+        ImageInstruction.SIZE_HALF);
+    assertEquals(true, instruction.toString().contains("trader1"));
+    image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(800, image.getWidth());
+    assertEquals(400, image.getHeight());
+
+    instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instruction.addPlanet(ImageInstruction.POSITION_LEFT, ImageInstruction.PLANET_ROCK1,
+        ImageInstruction.SIZE_FULL);
+    instruction.addTrader(ImageInstruction.POSITION_CENTER, ImageInstruction.TRADER1,
+        ImageInstruction.SIZE_FULL);
+    assertEquals(true, instruction.toString().contains("trader1"));
+    image = new BufferedImage(800, 400, BufferedImage.TYPE_4BYTE_ABGR);
+    image = ImageInstruction.parseImageInstructions(image, instruction.build());
+    assertEquals(800, image.getWidth());
+    assertEquals(400, image.getHeight());
+  }
+
+  @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testTextPlanet() {
     ImageInstruction instruction = new ImageInstruction();

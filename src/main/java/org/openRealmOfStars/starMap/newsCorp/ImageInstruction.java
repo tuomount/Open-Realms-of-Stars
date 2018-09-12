@@ -62,6 +62,10 @@ public class ImageInstruction {
    */
   private static final String PLANET = "planet";
   /**
+   * Instructions for trader
+   */
+  private static final String TRADER = "trader";
+  /**
    * Planet position in image: left
    */
   public static final String POSITION_LEFT = "position left";
@@ -133,6 +137,14 @@ public class ImageInstruction {
    * Planet type gas giant 2
    */
   public static final String PLANET_GASGIANT2 = "gasgiant2";
+  /**
+   * Trader ship 1
+   */
+  public static final String TRADER1 = "trader1";
+  /**
+   * Trader ship 2
+   */
+  public static final String TRADER2 = "trader2";
   /**
    * Instructions for Relation symbol between two text
    */
@@ -356,6 +368,43 @@ public class ImageInstruction {
   }
 
   /**
+   * Adds Trader to the image.
+   * @param position Three choices: left, center and right
+   * @param trader Trader type. Choices are:
+   *        trader1, trader2
+   * @param size Two choices half or full
+   * @return ImageInstruction with text
+   * @throws IllegalArgumentException If position or planet type are illegal
+   */
+  public ImageInstruction addTrader(final String position,
+      final String trader, final String size)
+      throws IllegalArgumentException {
+    if (!POSITION_CENTER.equals(position)
+        && !POSITION_LEFT.equals(position)
+        && !POSITION_RIGHT.equals(position)) {
+      throw new IllegalArgumentException("Illegal trader position: "
+        + position);
+    }
+    if (!TRADER1.equals(trader) && !TRADER2.equals(trader)) {
+      throw new IllegalArgumentException("Illegal trader type: " + trader);
+    }
+    if (!SIZE_FULL.equals(size)
+        && !SIZE_HALF.equals(size)) {
+      throw new IllegalArgumentException("Illegal size: " + size);
+    }
+    checkDelim();
+    sb.append(TRADER);
+    sb.append(PARAM_START);
+    sb.append(sanitizeParameters(position));
+    sb.append(PARAMETER_DELIM);
+    sb.append(sanitizeParameters(trader));
+    sb.append(PARAMETER_DELIM);
+    sb.append(sanitizeParameters(size));
+    sb.append(PARAM_END);
+    return this;
+  }
+
+  /**
    * Build actual instructions
    * @return instruction string
    */
@@ -474,6 +523,43 @@ public class ImageInstruction {
     }
   }
   /**
+   * Draw trader on image
+   * @param workImage Image where to draw
+   * @param traderType Trader type to draw
+   * @param position LEFT, CENTER or RIGHT
+   * @param size HALF or FULL
+   */
+  private static void paintTrader(final BufferedImage workImage,
+      final String traderType, final String position, final String size) {
+    BufferedImage traderImg = GuiStatics.BIG_PLANET_ROCK1;
+    if (TRADER1.equals(traderType)) {
+      traderImg = GuiStatics.BIG_PLANET_ROCK1;
+    }
+    if (TRADER1.equals(traderType)) {
+      traderImg = GuiStatics.BIG_PLANET_ROCK1;
+    }
+    if (SIZE_HALF.equals(size)) {
+      traderImg = GuiStatics.scaleToHalf(traderImg);
+    }
+    Graphics2D g = (Graphics2D) workImage.getGraphics();
+    if (POSITION_CENTER.equals(position)) {
+      g.drawImage(traderImg,
+          workImage.getWidth() / 2 - traderImg.getWidth() / 2,
+          workImage.getHeight() / 2 - traderImg.getHeight() / 2, null);
+    }
+    if (POSITION_LEFT.equals(position)) {
+      g.drawImage(traderImg,
+          workImage.getWidth() / 5 - traderImg.getWidth() / 2,
+          workImage.getHeight() / 2 - traderImg.getHeight() / 2, null);
+    }
+    if (POSITION_RIGHT.equals(position)) {
+      g.drawImage(traderImg,
+          (workImage.getWidth() - workImage.getWidth() / 5)
+          - traderImg.getWidth() / 2,
+          workImage.getHeight() / 2 - traderImg.getHeight() / 2, null);
+    }
+  }
+  /**
    * Draw image on image
    * @param workImage Image where to draw
    * @param image image type to draw
@@ -534,6 +620,9 @@ public class ImageInstruction {
       }
       if (PLANET.equals(command)) {
         paintPlanet(workImage, parameters[1], parameters[0], parameters[2]);
+      }
+      if (TRADER.equals(command)) {
+        paintTrader(workImage, parameters[1], parameters[0], parameters[2]);
       }
       if (IMAGE.equals(command)) {
         paintImage(workImage, parameters[0]);

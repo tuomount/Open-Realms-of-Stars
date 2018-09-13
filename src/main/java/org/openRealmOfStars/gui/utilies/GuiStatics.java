@@ -817,6 +817,18 @@ public final class GuiStatics {
    */
   public static final BufferedImage IMAGE_SPACE_SHIP = IOUtilities.loadImage(
       GuiStatics.class.getResource("/resources/images/spaceship_final.png"));
+  /**
+   * Trade Space ship 1
+   */
+  public static final BufferedImage IMAGE_TRADE_SHIP = IOUtilities.loadImage(
+      GuiStatics.class.getResource(
+          "/resources/images/tradeship-learmarch.png"));
+  /**
+   * Trade Space ship 2
+   */
+  public static final BufferedImage IMAGE_TRADE_SHIP2 = IOUtilities.loadImage(
+      GuiStatics.class.getResource(
+          "/resources/images/tradeship-learmarch1.png"));
 
   /**
    * Get text width for certain font

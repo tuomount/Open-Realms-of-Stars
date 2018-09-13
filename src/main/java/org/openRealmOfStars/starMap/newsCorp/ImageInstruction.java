@@ -531,12 +531,12 @@ public class ImageInstruction {
    */
   private static void paintTrader(final BufferedImage workImage,
       final String traderType, final String position, final String size) {
-    BufferedImage traderImg = GuiStatics.BIG_PLANET_ROCK1;
+    BufferedImage traderImg = GuiStatics.IMAGE_TRADE_SHIP;
     if (TRADER1.equals(traderType)) {
-      traderImg = GuiStatics.BIG_PLANET_ROCK1;
+      traderImg = GuiStatics.IMAGE_TRADE_SHIP;
     }
-    if (TRADER1.equals(traderType)) {
-      traderImg = GuiStatics.BIG_PLANET_ROCK1;
+    if (TRADER2.equals(traderType)) {
+      traderImg = GuiStatics.IMAGE_TRADE_SHIP2;
     }
     if (SIZE_HALF.equals(size)) {
       traderImg = GuiStatics.scaleToHalf(traderImg);

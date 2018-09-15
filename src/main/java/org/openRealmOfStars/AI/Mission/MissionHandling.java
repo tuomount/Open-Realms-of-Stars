@@ -669,7 +669,7 @@ public final class MissionHandling {
         DiplomacyBonusList diplomacy = info.getDiplomacy().getDiplomacyList(
             playerIndex);
         StarMapUtilities.doTradeWithShips(diplomacy, fleet, previousTarget,
-            info);
+            info, game.getStarMap().getNewsCorpData());
         if (mission.getTargetPlanet().equals(previousTarget.getName())) {
           Planet homePlanet = game.getStarMap().getPlanetByName(
               mission.getPlanetBuilding());

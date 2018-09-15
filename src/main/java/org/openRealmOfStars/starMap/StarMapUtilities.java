@@ -8,6 +8,8 @@ import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
+import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
+import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -183,9 +185,11 @@ public final class StarMapUtilities {
    * @param fleet Fleet involved in trade
    * @param planet Planet where trade happens
    * @param info Player who is doing the trade.
+   * @param newsData NewsCorpData
    */
   public static void doTradeWithShips(final DiplomacyBonusList diplomacy,
-      final Fleet fleet, final Planet planet, final PlayerInfo info) {
+      final Fleet fleet, final Planet planet, final PlayerInfo info,
+      final NewsCorpData newsData) {
     if (diplomacy != null
         && (diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)
         || diplomacy.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
@@ -211,6 +215,11 @@ public final class StarMapUtilities {
         info.getMsgList().addUpcomingMessage(msg);
         planet.getPlanetPlayerInfo().getMsgList()
             .addUpcomingMessage(msg);
+        if (!diplomacy.isBonusType(DiplomacyBonusType.TRADE_FLEET)
+            && newsData != null) {
+          diplomacy.addBonus(DiplomacyBonusType.TRADE_FLEET, info.getRace());
+          newsData.addNews(NewsFactory.makeTradeNews(info, planet));
+        }
       }
     } else if (diplomacy == null) {
       int credits = fleet.doTrade(planet, info);

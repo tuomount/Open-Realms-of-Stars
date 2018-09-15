@@ -242,6 +242,123 @@ public final class NewsFactory {
   }
 
   /**
+   * Make Trade fleet news. Trader's ship arrives to another planet
+   * @param trader PlayerInfo who is trading
+   * @param planet Where to trader
+   * @return NewsData
+   */
+  public static NewsData makeTradeNews(final PlayerInfo trader,
+      final Planet planet) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    String position = ImageInstruction.POSITION_CENTER;
+    switch (DiceGenerator.getRandom(3)) {
+      case 0: {
+        position = ImageInstruction.POSITION_CENTER;
+        break;
+      }
+      case 1: {
+        position = ImageInstruction.POSITION_LEFT;
+        break;
+      }
+      case 2:
+      default: {
+        position = ImageInstruction.POSITION_RIGHT;
+        break;
+      }
+    }
+    String size = ImageInstruction.SIZE_FULL;
+    switch (DiceGenerator.getRandom(2)) {
+      case 0: {
+        size = ImageInstruction.SIZE_FULL;
+        break;
+      }
+      case 1:
+      default: {
+        size = ImageInstruction.SIZE_HALF;
+        break;
+      }
+    }
+    instructions.addPlanet(position, planet.getImageInstructions(), size);
+    position = ImageInstruction.POSITION_CENTER;
+    switch (DiceGenerator.getRandom(3)) {
+      case 0: {
+        position = ImageInstruction.POSITION_CENTER;
+        break;
+      }
+      case 1: {
+        position = ImageInstruction.POSITION_LEFT;
+        break;
+      }
+      case 2:
+      default: {
+        position = ImageInstruction.POSITION_RIGHT;
+        break;
+      }
+    }
+    size = ImageInstruction.SIZE_FULL;
+    switch (DiceGenerator.getRandom(2)) {
+      case 0: {
+        size = ImageInstruction.SIZE_FULL;
+        break;
+      }
+      case 1:
+      default: {
+        size = ImageInstruction.SIZE_HALF;
+        break;
+      }
+    }
+    String ship = ImageInstruction.TRADER1;
+    switch (DiceGenerator.getRandom(2)) {
+      case 0: {
+        ship = ImageInstruction.TRADER1;
+        break;
+      }
+      case 1:
+      default: {
+        ship = ImageInstruction.TRADER2;
+        break;
+      }
+    }
+    instructions.addTrader(position, ship, size);
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("TRADER ARRIVES!");
+        break;
+      }
+      case 1: {
+        instructions.addText("TRADER TO " + planet.getName().toUpperCase());
+        break;
+      }
+      case 2: {
+        instructions.addText("MERCHANT FROM "
+            + trader.getEmpireName().toUpperCase());
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(trader.getEmpireName());
+    sb.append(" trader fleet arrives to ");
+    sb.append(planet.getName());
+    sb.append("! ");
+    sb.append("Cargo hull was full of goods from distant world! ");
+    sb.append("This trade benefits both parties!");
+    Attitude attitude = trader.getAiAttitude();
+    if (attitude == Attitude.MERCHANTICAL) {
+      sb.append(trader.getEmpireName());
+      sb.append(" is known for good trader! ");
+    }
+    if (attitude == Attitude.DIPLOMATIC) {
+      sb.append(trader.getEmpireName());
+      sb.append(" is known trustworthy diplomatic skills! ");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+  /**
    * Make Peace news. PeaceMaker makes peace offer to acceptor.
    * This diplomatic meeting happened in meeting place which
    * can be planet or fleet.

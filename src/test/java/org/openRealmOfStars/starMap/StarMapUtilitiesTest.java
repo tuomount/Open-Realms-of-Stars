@@ -10,6 +10,8 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
+import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -49,10 +51,10 @@ public class StarMapUtilitiesTest {
     DiplomacyBonusList diplomacy = Mockito.mock(DiplomacyBonusList.class);
     Mockito.when(diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE))
         .thenReturn(true);
-    StarMapUtilities.doTradeWithShips(diplomacy, fleet, planet, info);
+    StarMapUtilities.doTradeWithShips(diplomacy, fleet, planet, info, null);
     assertEquals(5, info.getTotalCredits());
     assertEquals(5, info2.getTotalCredits());
-    StarMapUtilities.doTradeWithShips(null, fleet, planet, info);
+    StarMapUtilities.doTradeWithShips(null, fleet, planet, info, null);
     assertEquals(15, info.getTotalCredits());
     assertEquals(5, info2.getTotalCredits());
   }
@@ -70,14 +72,41 @@ public class StarMapUtilitiesTest {
     DiplomacyBonusList diplomacy = Mockito.mock(DiplomacyBonusList.class);
     Mockito.when(diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE))
         .thenReturn(true);
-    StarMapUtilities.doTradeWithShips(diplomacy, fleet, planet, info);
+    StarMapUtilities.doTradeWithShips(diplomacy, fleet, planet, info, null);
     assertEquals(7, info.getTotalCredits());
     assertEquals(7, info2.getTotalCredits());
-    StarMapUtilities.doTradeWithShips(null, fleet, planet, info);
+    StarMapUtilities.doTradeWithShips(null, fleet, planet, info, null);
     assertEquals(22, info.getTotalCredits());
     assertEquals(7, info2.getTotalCredits());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTrade3() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS, 2, 0);
+    info.setEmpireName("Traders of Universum");
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.GREYANS, 2, 1);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getCoordinate()).thenReturn(new Coordinate(5, 5));
+    Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info2);
+    Mockito.when(planet.getName()).thenReturn("Market");
+    Mockito.when(planet.getImageInstructions()).thenReturn(ImageInstruction.PLANET_IRONWORLD1);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.doTrade(planet, info)).thenReturn(10);
+    DiplomacyBonusList diplomacy = Mockito.mock(DiplomacyBonusList.class);
+    Mockito.when(diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE))
+        .thenReturn(true);
+    NewsCorpData newsData = new NewsCorpData(2);
+    assertEquals(0, newsData.getUpcomingNews().length);
+    StarMapUtilities.doTradeWithShips(diplomacy, fleet, planet, info, newsData);
+    assertEquals(7, info.getTotalCredits());
+    assertEquals(7, info2.getTotalCredits());
+    assertEquals(1, newsData.getUpcomingNews().length);
+    assertEquals(true, newsData.getUpcomingNews()[0].getNewsText().contains(
+        "Traders of Universum"));
+    assertEquals(true, newsData.getUpcomingNews()[0].getNewsText().contains(
+        "Market"));
+  }
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testCultureScoreLimit() {

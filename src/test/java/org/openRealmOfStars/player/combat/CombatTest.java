@@ -417,11 +417,13 @@ public class CombatTest {
     PlayerInfo defender = new PlayerInfo(SpaceRace.SPACE_PIRATE);
     PlayerInfo attacker = new PlayerInfo(SpaceRace.SPORKS);
     attacker.getTechList().addTech(TechFactory.createCombatTech(
-        "Photon torpedo Mk5", 5));
+        "Photon torpedo Mk8", 8));
     attacker.getTechList().addTech(TechFactory.createDefenseTech(
-        "Shield Mk5", 5));
+        "Shield Mk8", 8));
     attacker.getTechList().addTech(TechFactory.createPropulsionTech(
         "Tachyon source Mk2", 5));
+    attacker.getTechList().addTech(TechFactory.createHullTech(
+        "Corvette Mk3", 8));
     ShipDesign design1 = ShipGenerator.createStarbase(defender, ShipSize.SMALL);
     ShipDesign design2 = ShipGenerator.createBattleShip(
         attacker, ShipSize.SMALL, false);

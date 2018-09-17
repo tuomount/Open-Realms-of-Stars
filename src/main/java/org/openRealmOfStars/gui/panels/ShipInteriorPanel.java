@@ -95,7 +95,7 @@ public class ShipInteriorPanel extends JPanel {
 
     g2d.setPaint(gradient);
     g.fillRect(0, 0, this.getWidth(), this.getHeight());
-    g.drawImage(GuiStatics.STAR_FIELD_IMAGE, 0,0, null);
+    g.drawImage(GuiStatics.STAR_FIELD_IMAGE, 0, 0, null);
     if (planetImage != null) {
       g.drawImage(planetImage,
           this.getWidth() / 2 - planetImage.getWidth() / 2,

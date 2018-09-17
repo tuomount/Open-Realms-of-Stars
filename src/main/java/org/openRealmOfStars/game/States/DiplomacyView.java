@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
-import org.openRealmOfStars.gui.panels.RaceImagePanel;
+import org.openRealmOfStars.gui.panels.ShipInteriorPanel;
 import org.openRealmOfStars.gui.panels.SpaceGreyPanel;
 import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
@@ -315,8 +316,11 @@ public class DiplomacyView extends BlackPanel {
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-    RaceImagePanel aiImg = new RaceImagePanel();
-    aiImg.setRaceToShow(ai.getRace().getNameSingle());
+    BufferedImage planetImage = null;
+    if (planet != null) {
+      planetImage = planet.getBigImage();
+    }
+    ShipInteriorPanel aiImg = new ShipInteriorPanel(ai.getRace(), planetImage);
     aiImg.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(aiImg);
     likenessLabel = new SpaceLabel("Friends for ever Defensive pact");

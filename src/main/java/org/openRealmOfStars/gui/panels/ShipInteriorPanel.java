@@ -1,9 +1,16 @@
 package org.openRealmOfStars.gui.panels;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import org.openRealmOfStars.gui.borders.SimpleBorder;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 
 /**
@@ -56,6 +63,10 @@ public class ShipInteriorPanel extends JPanel {
     super();
     this.race = race;
     this.planetImage = planetBackground;
+    Dimension size = new Dimension(300, 400);
+    this.setMinimumSize(size);
+    this.setPreferredSize(size);
+    this.setBorder(new SimpleBorder());
   }
 
   /**
@@ -72,5 +83,43 @@ public class ShipInteriorPanel extends JPanel {
    */
   public BufferedImage getPlanetImage() {
     return planetImage;
+  }
+
+  @Override
+  protected void paintComponent(final Graphics g) {
+    GradientPaint gradient = new GradientPaint(this.getWidth() / 2, 0,
+        Color.BLACK, this.getWidth() / 2, this.getHeight(),
+        GuiStatics.COLOR_GREY_40, true);
+
+    Graphics2D g2d = (Graphics2D) g;
+
+    g2d.setPaint(gradient);
+    g.fillRect(0, 0, this.getWidth(), this.getHeight());
+    g.drawImage(GuiStatics.STAR_FIELD_IMAGE, 0,0, null);
+    if (planetImage != null) {
+      g.drawImage(planetImage,
+          this.getWidth() / 2 - planetImage.getWidth() / 2,
+          0, null);
+    }
+    g.drawImage(GuiStatics.IMAGE_INTERIOR1,
+        this.getWidth() / 2 - GuiStatics.IMAGE_INTERIOR1.getWidth() / 2,
+        this.getHeight() / 2 - GuiStatics.IMAGE_INTERIOR1.getHeight() / 2,
+        null);
+    if (race == SpaceRace.HUMAN) {
+      g.drawImage(race.getRaceImage(),
+          this.getWidth() / 2 - race.getRaceImage().getWidth() / 2,
+          this.getHeight() - race.getRaceImage().getHeight()
+          - GuiStatics.IMAGE_INTERIOR1_CONSOLE.getHeight() / 2, null);
+      g.drawImage(GuiStatics.IMAGE_INTERIOR1_CONSOLE,
+          this.getWidth() / 2 - GuiStatics.IMAGE_INTERIOR1_CONSOLE.getWidth()
+          / 2,
+          this.getHeight() - GuiStatics.IMAGE_INTERIOR1_CONSOLE.getHeight() - 5,
+          null);
+    } else {
+      g.drawImage(race.getRaceImage(),
+          this.getWidth() / 2 - race.getRaceImage().getWidth() / 2,
+          this.getHeight() - race.getRaceImage().getHeight()
+          - GuiStatics.IMAGE_INTERIOR1_CONSOLE.getHeight(), null);
+    }
   }
 }

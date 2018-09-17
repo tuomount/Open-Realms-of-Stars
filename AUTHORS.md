@@ -103,6 +103,8 @@ Space ship with turrets by gfx0 (CC0)
 
 Space ship trader vessels by gfx0
 
+Space ship bridge by Jani Mäkinen aka gfx0
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

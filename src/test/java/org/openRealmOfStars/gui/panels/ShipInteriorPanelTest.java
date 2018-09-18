@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  * 
@@ -43,9 +44,19 @@ public class ShipInteriorPanelTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNull() {
+    DiceGenerator.initializeGenerators(90,90,90);
     ShipInteriorPanel panel = new ShipInteriorPanel(SpaceRace.GREYANS, null);
     assertEquals(SpaceRace.GREYANS, panel.getRace());
     assertEquals(null, panel.getPlanetImage());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testNebulae() {
+    DiceGenerator.initializeGenerators(10,10,10);
+    ShipInteriorPanel panel = new ShipInteriorPanel(SpaceRace.GREYANS, null);
+    assertEquals(SpaceRace.GREYANS, panel.getRace());
+    assertEquals(GuiStatics.NEBULAE_IMAGE, panel.getPlanetImage());
   }
 
 }

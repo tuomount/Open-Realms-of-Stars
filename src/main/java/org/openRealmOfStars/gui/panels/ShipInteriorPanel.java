@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
 *
@@ -53,6 +54,24 @@ public class ShipInteriorPanel extends JPanel {
   private BufferedImage planetImage;
 
   /**
+   * Count for star field
+   */
+  private int x;
+
+  /**
+   * Speed
+   */
+  private int speed;
+  /**
+   * Private planet/nebula offset X
+   */
+  private int offsetX = 0;
+  /**
+   * Private planet/nebula offset Y
+   */
+  private int offsetY = 0;
+
+  /**
    * Ship Interior panel. Draws space ship interior with optional
    * planet in background and space race in front.
    * @param race Space to draw
@@ -67,6 +86,15 @@ public class ShipInteriorPanel extends JPanel {
     this.setMinimumSize(size);
     this.setPreferredSize(size);
     this.setBorder(new SimpleBorder());
+    x = -10;
+    speed = -1;
+    if (planetImage == null && DiceGenerator.getRandom(100) < 40) {
+      planetImage = GuiStatics.NEBULAE_IMAGE;
+    }
+    if (planetImage == GuiStatics.NEBULAE_IMAGE) {
+      offsetX = -DiceGenerator.getRandom(90);
+      offsetY = -DiceGenerator.getRandom(90);
+    }
   }
 
   /**
@@ -95,11 +123,23 @@ public class ShipInteriorPanel extends JPanel {
 
     g2d.setPaint(gradient);
     g.fillRect(0, 0, this.getWidth(), this.getHeight());
-    g.drawImage(GuiStatics.STAR_FIELD_IMAGE, 0, 0, null);
+    x = x + speed;
+    if (x <= -100) {
+      speed = 1;
+    }
+    if (x >= -2) {
+      speed = -1;
+    }
+    int starX = x;
+    if (planetImage != null) {
+      starX = x / 2;
+    }
+    g.drawImage(GuiStatics.STAR_FIELD_IMAGE, starX, 0, null);
     if (planetImage != null) {
       g.drawImage(planetImage,
-          this.getWidth() / 2 - planetImage.getWidth() / 2,
-          0, null);
+          this.getWidth() / 2 - planetImage.getWidth() / 2 + 50 + x
+          + offsetX,
+          offsetY, null);
     }
     g.drawImage(GuiStatics.IMAGE_INTERIOR1,
         this.getWidth() / 2 - GuiStatics.IMAGE_INTERIOR1.getWidth() / 2,

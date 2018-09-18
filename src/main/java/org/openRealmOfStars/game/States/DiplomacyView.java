@@ -217,6 +217,11 @@ public class DiplomacyView extends BlackPanel {
    * Trade actually happened
    */
   private boolean tradeHappened;
+
+  /**
+   * AI's image on diplomacy screen;
+   */
+  private ShipInteriorPanel aiImg;
   /**
    * Diplomacy View constructor
    * @param info1 Human player PlayerInfo
@@ -320,7 +325,7 @@ public class DiplomacyView extends BlackPanel {
     if (planet != null) {
       planetImage = planet.getBigImage();
     }
-    ShipInteriorPanel aiImg = new ShipInteriorPanel(ai.getRace(), planetImage);
+    aiImg = new ShipInteriorPanel(ai.getRace(), planetImage);
     aiImg.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(aiImg);
     likenessLabel = new SpaceLabel("Friends for ever Defensive pact");
@@ -827,6 +832,9 @@ public class DiplomacyView extends BlackPanel {
    * @param arg0 ActionEvent
    */
   public void handleAction(final ActionEvent arg0) {
+    if (GameCommands.COMMAND_ANIMATION_TIMER.equals(arg0.getActionCommand())) {
+      aiImg.repaint();
+    }
     if (GameCommands.COMMAND_MINUS_HUMAN_CREDIT.equals(
         arg0.getActionCommand())) {
       if (humanCredits > 0) {

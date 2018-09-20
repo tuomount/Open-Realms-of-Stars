@@ -48,6 +48,8 @@ Alien pictures by Surt - http://opengameart.org/forumtopic/cc0-scraps
 
 Scaurian trader picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
 
+Chiraloid race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
+
 Space Captain by Justin Nichol - http://opengameart.org/content/space-captain
 
 The Husk- Human Analog Android by Justin Nichol - https://opengameart.org/content/the-husk-human-analog-android

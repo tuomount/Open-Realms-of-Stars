@@ -88,6 +88,8 @@ public class CreditsView extends BlackPanel {
       + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
       + "Scaurian trader picture by Tuomo Untinen, original art by Surt - "
       + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
+      + "Chiraloid race picture by Tuomo Untinen, original art by Surt - "
+      + "http://opengameart.org/forumtopic/cc0-scraps\n\n"
       + "Space Captain by Justin Nichol - "
       + "http://opengameart.org/content/space-captain\n\n"
       + "The Husk- Human Analog Android by Justin Nichol - "

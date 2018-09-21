@@ -78,6 +78,11 @@ public final class ShipImages {
   private static ShipImage spacePirate;
 
   /**
+   * Chiraloid ships
+   */
+  private static ShipImage chiraloids;
+
+  /**
    * Hiding the constructor
    */
   private ShipImages() {
@@ -98,6 +103,7 @@ public final class ShipImages {
     scaurians = new ShipImage("scaurianships.png");
     homarians = new ShipImage("homarianships.png");
     spacePirate = new ShipImage("privateerships.png");
+    chiraloids = new ShipImage("chiraloidships.png");
   }
 
   /**
@@ -208,6 +214,17 @@ public final class ShipImages {
       initImages();
     }
     return spacePirate;
+  }
+
+  /**
+   * Get Chiraloid ship images
+   * @return chiraloid ship images
+   */
+  public static ShipImage chiraloids() {
+    if (chiraloids == null) {
+      initImages();
+    }
+    return chiraloids;
   }
 
   /**

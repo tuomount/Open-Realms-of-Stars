@@ -755,6 +755,13 @@ public final class GuiStatics {
       GuiStatics.class.getResource("/resources/images/human_race.png"));
 
   /**
+   * Chiraloid race selection image
+   */
+  public static final BufferedImage IMAGE_CHIRALOID_RACE =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/chiraloid_race.png"));
+
+  /**
    * Privateer race selection image
    */
   public static final BufferedImage IMAGE_PRIVATEER_RACE =

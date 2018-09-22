@@ -140,6 +140,16 @@ public final class GovernmentUtility {
       };
       return governments;
     }
+    if (race == SpaceRace.CHIRALOIDS) {
+      GovernmentType[] governments = {
+        GovernmentType.ALLIANCE,
+        GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
+        GovernmentType.CLAN, GovernmentType.HIVEMIND,
+        GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
+        GovernmentType.HIERARCHY, GovernmentType.KINGDOM
+      };
+      return governments;
+    }
     return null;
   }
 }

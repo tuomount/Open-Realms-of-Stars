@@ -254,6 +254,8 @@ public final class ShipImages {
       return homarians();
     case SPACE_PIRATE:
       return spacePirates();
+    case CHIRALOIDS:
+      return chiraloids();
     default:
       return humans();
     }

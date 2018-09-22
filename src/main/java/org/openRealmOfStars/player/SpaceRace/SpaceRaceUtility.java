@@ -38,7 +38,8 @@ public final class SpaceRaceUtility {
    * List of selectable races
    */
   public static final String[] RACE_SELECTION = {"Human", "Mechion", "Spork",
-      "Greyan", "Centaur", "Mothoid", "Teuthidae", "Scaurian", "Homarian" };
+      "Greyan", "Centaur", "Mothoid", "Teuthidae", "Scaurian", "Homarian",
+      "Chiraloid" };
 
 
   /**
@@ -89,6 +90,9 @@ public final class SpaceRaceUtility {
     if (name.equals(SpaceRace.HOMARIANS.getNameSingle())) {
       return SpaceRace.HOMARIANS;
     }
+    if (name.equals(SpaceRace.CHIRALOIDS.getNameSingle())) {
+      return SpaceRace.CHIRALOIDS;
+    }
     return null;
   }
 
@@ -98,7 +102,7 @@ public final class SpaceRaceUtility {
    */
   public static SpaceRace getRandomRace() {
     int index = DiceGenerator.getRandom(RACE_SELECTION.length - 1);
-    return getRaceByIndex(index);
+    return getRaceByName(RACE_SELECTION[index]);
   }
 
   /**

@@ -263,8 +263,27 @@ public class SpaceRaceUtilityTest {
         + "* War resistance: 50\n"
         + "* Rush: Population\n"
         + "* Special: Starts with 5 population";
+    expectedResult[9] = "### Chiraloids\n"
+        + "Chiraloids are creatures with four arms and two legs."
+        + " They have hard exoskeleton. They also have special"
+        + " gland which uses radioactivity to create nutrient."
+        + " This is called radiosynthesis.\n"
+        + "* Max radiation: 10\n"
+        + "* Troop power: 9\n"
+        + "* Production: 100%\n"
+        + "* Mining: 100%\n"
+        + "* Research: 50%\n"
+        + "* Food production: 100%\n"
+        + "* Growth: 50%\n"
+        + "* Food require: 100%\n"
+        + "* Culture: 100%\n"
+        + "* Diplomacy bonus: -4\n"
+        + "* War resistance: 50\n"
+        + "* Rush: None\n"
+        + "* Special: Radiosynthesis (+1 food per radiotion per population)";
     for (int i = 0; i <  SpaceRaceUtility.RACE_SELECTION.length; i++) {
-      SpaceRace race = SpaceRaceUtility.getRaceByIndex(i);
+      SpaceRace race = SpaceRaceUtility.getRaceByName(
+          SpaceRaceUtility.RACE_SELECTION[i]);
       assertEquals(expectedResult[i],race.getFullDescription(true, false));
       if (i == 0) {
         String result = race.getFullDescription(false, false);

@@ -700,6 +700,14 @@ public class Planet {
       if (eventFound && event.getExtraFoodProduction() != 0) {
         result = result + event.getExtraFoodProduction();
       }
+      if (planetOwnerInfo.getRace() == SpaceRace.CHIRALOIDS) {
+        // Chiraloids radiosynthesis
+        int rad = getRadiationLevel();
+        int currentPop = getTotalPopulation();
+        if (currentPop > 0) {
+          result = result + Math.min(rad, currentPop);
+        }
+      }
       if (totalPopulation >= 4) {
         result = result + government.getFoodBonus();
       }

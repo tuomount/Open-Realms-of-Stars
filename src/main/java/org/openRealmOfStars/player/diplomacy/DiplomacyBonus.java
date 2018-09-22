@@ -152,7 +152,7 @@ public class DiplomacyBonus {
        break;
      }
      case INSULT: {
-       if (race == SpaceRace.SPORKS) {
+       if (race == SpaceRace.SPORKS || race == SpaceRace.CHIRALOIDS) {
          bonusValue = -2;
          bonusLasting = 60;
        } else if (race == SpaceRace.MECHIONS) {
@@ -191,6 +191,9 @@ public class DiplomacyBonus {
        } else if (race == SpaceRace.MECHIONS) {
          bonusValue = -3;
          bonusLasting = 80;
+       } else if (race == SpaceRace.CHIRALOIDS) {
+         bonusValue = 2;
+         bonusLasting = 40;
        } else {
          bonusValue = -5;
          bonusLasting = 100;
@@ -218,7 +221,8 @@ public class DiplomacyBonus {
        break;
      }
      case ESPIONAGE_BORDER_CROSS: {
-       if (race == SpaceRace.SPORKS || race == SpaceRace.TEUTHIDAES) {
+       if (race == SpaceRace.SPORKS || race == SpaceRace.TEUTHIDAES
+           || race == SpaceRace.CHIRALOIDS) {
          bonusValue = -2;
          bonusLasting = 20;
        } else if (race == SpaceRace.MECHIONS) {
@@ -235,6 +239,8 @@ public class DiplomacyBonus {
          bonusValue = 15;
        } else if (race == SpaceRace.SPORKS) {
          bonusValue = 13;
+       } else if (race == SpaceRace.CHIRALOIDS) {
+         bonusValue = 12;
        } else if (race == SpaceRace.HOMARIANS) {
          bonusValue = 8;
        } else if (race == SpaceRace.MECHIONS) {

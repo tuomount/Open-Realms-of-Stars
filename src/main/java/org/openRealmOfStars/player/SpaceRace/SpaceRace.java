@@ -92,13 +92,20 @@ public enum SpaceRace {
       + "hard exoskeleton. Due their strength they are good in "
       + "physical tasks."),
   /**
-   * Humans are about average in everything.
+   * Humans are about average in everything and space pirates are probably
+   * humans or are just average.
    */
   SPACE_PIRATE(9, "Space Pirates", "Space pirate", "Generic space pirate which"
-      + "are aggressive and try cause trouble. Stats are identical to humans.");
-
-
-
+      + "are aggressive and try cause trouble. Stats are identical to humans."),
+  /**
+   * Chiraloids are creatures with four arms and two legs. They have hard
+   * exoskeleton. They also have special gland which uses radioactivity
+   * to create nutrient. This is called radiosynthesis.
+   */
+  CHIRALOIDS(10, "Chiraloids", "Chiraloid", "Chiraloids are creatures with"
+      + " four arms and two legs. They have hard exoskeleton. They also have"
+      + " special gland which uses radioactivity to create nutrient. This is"
+      + " called radiosynthesis.");
 
 
   /**
@@ -170,6 +177,8 @@ public enum SpaceRace {
       return 100;
     case HOMARIANS:
       return 50;
+    case CHIRALOIDS:
+      return 50;
     default:
       return 0;
     }
@@ -202,6 +211,8 @@ public enum SpaceRace {
         return Attitude.MERCHANTICAL;
       case HOMARIANS:
         return Attitude.PEACEFUL;
+      case CHIRALOIDS:
+        return Attitude.AGGRESSIVE;
       default:
         return Attitude.PEACEFUL;
     }
@@ -232,6 +243,8 @@ public enum SpaceRace {
       return 5;
     case HOMARIANS:
       return 3;
+    case CHIRALOIDS:
+      return 10;
     default:
       return -1;
     }
@@ -263,6 +276,8 @@ public enum SpaceRace {
       return GuiStatics.IMAGE_HOMARIAN_RACE;
     case SPACE_PIRATE:
       return GuiStatics.IMAGE_PRIVATEER_RACE;
+    case CHIRALOIDS:
+      return GuiStatics.IMAGE_CHIRALOID_RACE;
     default:
       return GuiStatics.IMAGE_CENTAUR_RACE;
     }
@@ -296,6 +311,8 @@ public enum SpaceRace {
         return start + "resources/images/homarian_race.png";
       case SPACE_PIRATE:
         return start + "resources/images/privateer_race.png";
+      case CHIRALOIDS:
+        return start + "resources/images/chiraloid_race.png";
       default:
         return start + "resources/images/centaur_race.png";
     }
@@ -346,6 +363,8 @@ public enum SpaceRace {
       return 50;
     case HOMARIANS:
       return 150;
+    case CHIRALOIDS:
+      return 100;
     default:
       return 0;
     }
@@ -376,6 +395,8 @@ public enum SpaceRace {
       return 100;
     case HOMARIANS:
       return 50;
+    case CHIRALOIDS:
+      return 100;
     default:
       return 0;
     }
@@ -406,6 +427,8 @@ public enum SpaceRace {
       return 12;
     case HOMARIANS:
       return 11;
+    case CHIRALOIDS:
+      return 9;
     default:
       return 0;
     }
@@ -436,6 +459,8 @@ public enum SpaceRace {
       return 100;
     case HOMARIANS:
       return 150;
+    case CHIRALOIDS:
+      return 100;
     default:
       return 0;
     }
@@ -466,6 +491,8 @@ public enum SpaceRace {
       return 50;
     case HOMARIANS:
       return 100;
+    case CHIRALOIDS:
+      return 50;
     default:
       return 0;
     }
@@ -496,6 +523,8 @@ public enum SpaceRace {
       return 100;
     case HOMARIANS:
       return 200;
+    case CHIRALOIDS:
+      return 100;
     default:
       return 100;
     }
@@ -525,6 +554,8 @@ public enum SpaceRace {
     case SCAURIANS:
       return 100;
     case HOMARIANS:
+      return 100;
+    case CHIRALOIDS:
       return 100;
     default:
       return 0;
@@ -556,6 +587,8 @@ public enum SpaceRace {
       return 1;
     case HOMARIANS:
       return 1;
+    case CHIRALOIDS:
+      return -4;
     default:
       return 0;
     }
@@ -591,6 +624,8 @@ public enum SpaceRace {
       return 40;
     case HOMARIANS:
       return 50;
+    case CHIRALOIDS:
+      return 50;
     default:
       return 50;
     }
@@ -620,6 +655,8 @@ public enum SpaceRace {
     case SCAURIANS:
       return 0;
     case HOMARIANS:
+      return 0;
+    case CHIRALOIDS:
       return 0;
     default:
       return 0;
@@ -651,6 +688,8 @@ public enum SpaceRace {
       return 15;
     case HOMARIANS:
       return 16;
+    case CHIRALOIDS:
+      return 12;
     default:
       return 15;
     }
@@ -681,6 +720,8 @@ public enum SpaceRace {
       return 35;
     case HOMARIANS:
       return 35;
+    case CHIRALOIDS:
+      return 33;
     default:
       return 30;
     }
@@ -711,6 +752,8 @@ public enum SpaceRace {
       return 3;
     case HOMARIANS:
       return 3;
+    case CHIRALOIDS:
+      return 4;
     default:
       return 3;
     }
@@ -741,6 +784,8 @@ public enum SpaceRace {
     case SCAURIANS:
       return 1;
     case HOMARIANS:
+      return 1;
+    case CHIRALOIDS:
       return 1;
     default:
       return 1;
@@ -775,6 +820,9 @@ public enum SpaceRace {
       // There is no diplomacy with space pirate so no
       // need for own music.
       return MusicPlayer.MALLOGA_BALLING;
+    case CHIRALOIDS:
+      //FIXME Change Chiraloids music
+      return MusicPlayer.MILLION_LIGHT_YEARS;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
     }
@@ -803,6 +851,8 @@ public enum SpaceRace {
     case SCAURIANS:
       return true;
     case HOMARIANS:
+      return false;
+    case CHIRALOIDS:
       return false;
     default:
       return true;
@@ -833,6 +883,8 @@ public enum SpaceRace {
       return false;
     case HOMARIANS:
       return true;
+    case CHIRALOIDS:
+      return false;
     default:
       return false;
     }
@@ -965,6 +1017,8 @@ public enum SpaceRace {
           + " buildings.");
     } else if (this == SpaceRace.HOMARIANS) {
       sb.append("Starts with 5 population");
+    } else if (this == SpaceRace.CHIRALOIDS) {
+      sb.append("Radiosynthesis (+1 food per radiotion per population)");
     } else {
       sb.append("None");
     }

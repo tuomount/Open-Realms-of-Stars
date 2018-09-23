@@ -1067,6 +1067,181 @@ public class PlanetHandlingTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testChiraloidHandling1Population() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 1);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testChiraloidHandling2PopulationWithoutLab() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 2);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testChiraloidHandling2PopulationWithLab() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 2);
+    planet.addBuilding(BuildingFactory.createByName("Basic Lab"));
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getTotalPopulation());
+    int workers = planet.getWorkers(Planet.PRODUCTION_WORKERS);
+    int miners = planet.getWorkers(Planet.METAL_MINERS);
+    int artists = planet.getWorkers(Planet.CULTURE_ARTIST);
+    if (workers < 1 || workers > 2) {
+      assertEquals(true, false);
+    }
+    if (miners < 0 || miners > 1) {
+      assertEquals(true, false);
+    }
+    if (artists < 0 || artists > 1) {
+      assertEquals(true, false);
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testChiraloidHandling3Population() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 3);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testChiraloidHandling4Population() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setRadiationLevel(1);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 4);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(4, planet.getTotalPopulation());
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(2, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testChiraloidHandling4PopulationHighRad() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setRadiationLevel(4);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 4);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(4, planet.getTotalPopulation());
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testChiraloidHandling4PopulationHighRadWithLab() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setRadiationLevel(4);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 4);
+    planet.addBuilding(BuildingFactory.createByName("Basic Lab"));
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(4, planet.getTotalPopulation());
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testChiraloidHandling5Population() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setRadiationLevel(1);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 5);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(5, planet.getTotalPopulation());
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(3, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testChiraloidHandling5PopulationHighRadWithLab() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setRadiationLevel(4);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 5);
+    planet.addBuilding(BuildingFactory.createByName("Basic Lab"));
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(5, planet.getTotalPopulation());
+    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(3, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testChiraloidHandling5PopulationHighRad() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setRadiationLevel(4);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 5);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(5, planet.getTotalPopulation());
+    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testGreyansHandling5PopulationHegemony() {
     PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
     info.setGovernment(GovernmentType.HEGEMONY);
@@ -1085,6 +1260,82 @@ public class PlanetHandlingTest {
     assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
     assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
     assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testChiraloidHandling10Population() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setGroundSize(12);
+    planet.setRadiationLevel(1);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 10);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(10, planet.getTotalPopulation());
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(8, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testChiraloidHandling10PopulationMediumRad() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setGroundSize(12);
+    planet.setRadiationLevel(5);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 10);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(10, planet.getTotalPopulation());
+    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(4, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(2, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testChiraloidHandling10PopulationMediumRadWithLabFactory() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setGroundSize(12);
+    planet.setRadiationLevel(5);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 10);
+    planet.addBuilding(BuildingFactory.createByName("Basic lab"));
+    planet.addBuilding(BuildingFactory.createByName("Basic factory"));
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(10, planet.getTotalPopulation());
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(3, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(4, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testChiraloidHandling10PopulationMediumRadWithLabMine() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setGroundSize(12);
+    planet.setRadiationLevel(5);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 10);
+    planet.addBuilding(BuildingFactory.createByName("Basic lab"));
+    planet.addBuilding(BuildingFactory.createByName("Basic mine"));
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(10, planet.getTotalPopulation());
+    assertEquals(3, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(4, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
   }
 
   @Test

@@ -290,6 +290,24 @@ public class PlanetTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFoodProduction() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    planet.setPlanetOwner(0, info);
+    assertEquals(0, planet.getNumberOfBuildings());
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getName()).thenReturn("Basic farm");
+    Mockito.when(building.getProdCost()).thenReturn(10);
+    Mockito.when(building.getFarmBonus()).thenReturn(1);
+    planet.addBuilding(building);
+    assertEquals(3, planet.getFoodProdByPlanetAndBuildings());
+    planet.setPlanetaryEvent(PlanetaryEvent.LUSH_VEGETATION);
+    assertEquals(4, planet.getFoodProdByPlanetAndBuildings());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testPlanetEvent() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     assertEquals(PlanetaryEvent.NONE, planet.getPlanetaryEvent());

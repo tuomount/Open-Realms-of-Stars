@@ -591,6 +591,15 @@ public class Planet {
   }
 
   /**
+   * Get total food production from planet and buildings
+   * @return Total food production from planet and buildings
+   */
+  public int getFoodProdByPlanetAndBuildings() {
+    int total = getTotalProductionFromBuildings(PRODUCTION_FOOD);
+    total = total + event.getExtraFoodProduction() + 2;
+    return total;
+  }
+  /**
    * Get total production from planetary improvements.
    * @param prod Production to get: See all PRODUCTION_*
    * @return amount of production in one turn

@@ -1082,264 +1082,353 @@ public final class PlanetHandling {
   }
 
   /**
-   * Handle planet population positions
-   * @param planet Planet to handle
-   * @param info Player who owns the planet
+   * Handle Mechion population on planet
+   * @param planet Which to handle
+   * @param info Planet owner
    */
-  protected static void handlePlanetPopulation(final Planet planet,
+  protected static void handleMechionPopulation(final Planet planet,
       final PlayerInfo info) {
-    if (info.getRace() == SpaceRace.MECHIONS) {
-      int total = planet.getTotalPopulation();
-      int quarter = total / 4;
-      int modulo = total % 4;
-      if (quarter > 1) {
-        int metalAdd = 0;
-        int prodAdd = 0;
-        int reseAdd = 0;
-        int cultAdd = 0;
-        if (modulo == 1) {
-          prodAdd = 1;
-        }
-        if (modulo == 2) {
-          prodAdd = 1;
-          metalAdd = 1;
-        }
-        if (modulo == 3) {
-          prodAdd = 2;
-          metalAdd = 1;
-        }
-        planet.setWorkers(Planet.METAL_MINERS, quarter + metalAdd);
-        planet.setWorkers(Planet.PRODUCTION_WORKERS, quarter + prodAdd);
-        if (quarter % 2 != 0) {
-          reseAdd = 1;
-          cultAdd = -1;
-        }
-        planet.setWorkers(Planet.RESEARCH_SCIENTIST, quarter + reseAdd);
-        planet.setWorkers(Planet.CULTURE_ARTIST, quarter + cultAdd);
-      } else {
-        switch (total) {
-        case 1: {
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-          planet.setWorkers(Planet.METAL_MINERS, 0);
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-          break;
-        }
-        case 2: {
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-          planet.setWorkers(Planet.METAL_MINERS, 1);
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-          break;
-        }
-        case 3: {
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-          planet.setWorkers(Planet.METAL_MINERS, 0);
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-          break;
-        }
-        case 4: {
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-          planet.setWorkers(Planet.METAL_MINERS, 1);
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-          break;
-        }
-        case 5: {
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
-          planet.setWorkers(Planet.METAL_MINERS, 1);
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-          break;
-        }
-        case 6: {
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
-          planet.setWorkers(Planet.METAL_MINERS, 2);
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-          break;
-        }
-        case 7: {
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 3);
-          planet.setWorkers(Planet.METAL_MINERS, 2);
-          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-          planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-          break;
-        }
-        default: {
-          // This happens only if there are no population or it is negative.
-          // There no works can be set.
-          throw new IllegalArgumentException("Planet(" + planet.getName()
-              + ") has no population but is still colonized!");
-        }
-        }
+    int total = planet.getTotalPopulation();
+    int quarter = total / 4;
+    int modulo = total % 4;
+    if (quarter > 1) {
+      int metalAdd = 0;
+      int prodAdd = 0;
+      int reseAdd = 0;
+      int cultAdd = 0;
+      if (modulo == 1) {
+        prodAdd = 1;
       }
-    } else if (info.getRace() == SpaceRace.HOMARIANS) {
-      int total = planet.getTotalPopulation();
-      if (total > 5) {
-        int food = planet.getTotalProduction(Planet.PRODUCTION_FOOD);
-        int foodReq = total * info.getRace().getFoodRequire() / 100;
+      if (modulo == 2) {
+        prodAdd = 1;
+        metalAdd = 1;
+      }
+      if (modulo == 3) {
+        prodAdd = 2;
+        metalAdd = 1;
+      }
+      planet.setWorkers(Planet.METAL_MINERS, quarter + metalAdd);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, quarter + prodAdd);
+      if (quarter % 2 != 0) {
+        reseAdd = 1;
+        cultAdd = -1;
+      }
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, quarter + reseAdd);
+      planet.setWorkers(Planet.CULTURE_ARTIST, quarter + cultAdd);
+    } else {
+      switch (total) {
+      case 1: {
+        planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+        planet.setWorkers(Planet.METAL_MINERS, 0);
+        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+        break;
+      }
+      case 2: {
+        planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+        planet.setWorkers(Planet.METAL_MINERS, 1);
+        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+        break;
+      }
+      case 3: {
+        planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+        planet.setWorkers(Planet.METAL_MINERS, 0);
+        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+        break;
+      }
+      case 4: {
+        planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+        planet.setWorkers(Planet.METAL_MINERS, 1);
+        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+        break;
+      }
+      case 5: {
+        planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
+        planet.setWorkers(Planet.METAL_MINERS, 1);
+        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+        break;
+      }
+      case 6: {
+        planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
+        planet.setWorkers(Planet.METAL_MINERS, 2);
+        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+        break;
+      }
+      case 7: {
+        planet.setWorkers(Planet.PRODUCTION_WORKERS, 3);
+        planet.setWorkers(Planet.METAL_MINERS, 2);
+        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+        break;
+      }
+      default: {
+        // This happens only if there are no population or it is negative.
+        // There no works can be set.
+        throw new IllegalArgumentException("Planet(" + planet.getName()
+            + ") has no population but is still colonized!");
+      }
+      }
+    }
+  }
+  /**
+   * Handle Homarian population planet
+   * @param planet Planet to handle
+   * @param info Planet owner
+   */
+  protected static void handleHomarianPopulation(final Planet planet,
+      final PlayerInfo info) {
+    int total = planet.getTotalPopulation();
+    if (total > 5) {
+      int food = planet.getTotalProduction(Planet.PRODUCTION_FOOD);
+      int foodReq = total * info.getRace().getFoodRequire() / 100;
+      food = food - foodReq;
+      if (food > 2) {
+        planet.moveWorker(Planet.FOOD_FARMERS, Planet.PRODUCTION_WORKERS);
+      } else if (food <= 0) {
+        planet.moveWorker(Planet.METAL_MINERS, Planet.FOOD_FARMERS);
+        food = planet.getTotalProduction(Planet.PRODUCTION_FOOD);
+        foodReq = total * info.getRace().getFoodRequire() / 100;
         food = food - foodReq;
-        if (food > 2) {
-          planet.moveWorker(Planet.FOOD_FARMERS, Planet.PRODUCTION_WORKERS);
-        } else if (food <= 0) {
-          planet.moveWorker(Planet.METAL_MINERS, Planet.FOOD_FARMERS);
+        if (food < 0) {
+          planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.FOOD_FARMERS);
           food = planet.getTotalProduction(Planet.PRODUCTION_FOOD);
           foodReq = total * info.getRace().getFoodRequire() / 100;
           food = food - foodReq;
           if (food < 0) {
-            planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.FOOD_FARMERS);
-            food = planet.getTotalProduction(Planet.PRODUCTION_FOOD);
-            foodReq = total * info.getRace().getFoodRequire() / 100;
-            food = food - foodReq;
-            if (food < 0) {
-              planet.moveWorker(Planet.RESEARCH_SCIENTIST, Planet.FOOD_FARMERS);
-            }
+            planet.moveWorker(Planet.RESEARCH_SCIENTIST, Planet.FOOD_FARMERS);
           }
         }
+      }
+      if (planet.getTotalProductionFromBuildings(
+          Planet.PRODUCTION_RESEARCH) == 0
+          && planet.getWorkers(Planet.RESEARCH_SCIENTIST) == 0) {
+        planet.moveWorker(Planet.PRODUCTION_WORKERS,
+            Planet.RESEARCH_SCIENTIST);
+        planet.moveWorker(Planet.METAL_MINERS, Planet.RESEARCH_SCIENTIST);
+      }
+      if (planet.getTotalProduction(Planet.PRODUCTION_METAL)
+          < planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)) {
+        planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.METAL_MINERS);
+      }
+      if (planet.calculateHappiness() < -1) {
+        planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.CULTURE_ARTIST);
+      }
+    } else {
+      // Fixed amount of population 5 or less
+      planet.setWorkers(Planet.FOOD_FARMERS, 0);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+      planet.setWorkers(Planet.METAL_MINERS, 0);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+      switch (total) {
+      case 1: {
+        planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+        break;
+      }
+      case 2: {
+        planet.setWorkers(Planet.FOOD_FARMERS, 1);
+        planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+        break;
+      }
+      case 3: {
         if (planet.getTotalProductionFromBuildings(
-            Planet.PRODUCTION_RESEARCH) == 0
-            && planet.getWorkers(Planet.RESEARCH_SCIENTIST) == 0) {
-          planet.moveWorker(Planet.PRODUCTION_WORKERS,
-              Planet.RESEARCH_SCIENTIST);
-          planet.moveWorker(Planet.METAL_MINERS, Planet.RESEARCH_SCIENTIST);
+            Planet.PRODUCTION_RESEARCH) > 0) {
+          planet.setWorkers(Planet.FOOD_FARMERS, 1);
+          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          planet.setWorkers(Planet.METAL_MINERS, 1);
+        } else {
+          planet.setWorkers(Planet.FOOD_FARMERS, 1);
+          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
         }
-        if (planet.getTotalProduction(Planet.PRODUCTION_METAL)
-            < planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)) {
-          planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.METAL_MINERS);
+        break;
+      }
+      case 4: {
+        planet.setWorkers(Planet.FOOD_FARMERS, 2);
+        if (planet.getTotalProductionFromBuildings(
+            Planet.PRODUCTION_RESEARCH) > 0) {
+          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          planet.setWorkers(Planet.METAL_MINERS, 1);
+        } else {
+          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+        }
+        break;
+      }
+      case 5: {
+        planet.setWorkers(Planet.PRODUCTION_FOOD, 2);
+        if (planet.getTotalProductionFromBuildings(
+            Planet.PRODUCTION_RESEARCH) > 0) {
+          planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
+          planet.setWorkers(Planet.METAL_MINERS, 1);
+        } else {
+          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
         }
         if (planet.calculateHappiness() < -1) {
-          planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.CULTURE_ARTIST);
+          GovernmentType government = planet.getPlanetPlayerInfo()
+              .getGovernment();
+          if (government.getResearchBonus() > 0) {
+            if (planet.getTotalProductionFromBuildings(
+                Planet.PRODUCTION_RESEARCH) == 0) {
+              planet.moveWorker(Planet.RESEARCH_SCIENTIST,
+                  Planet.CULTURE_ARTIST);
+              planet.moveWorker(Planet.RESEARCH_SCIENTIST,
+                  Planet.PRODUCTION_PRODUCTION);
+            } else {
+              planet.moveWorker(Planet.PRODUCTION_PRODUCTION,
+                  Planet.CULTURE_ARTIST);
+            }
+          } else {
+            planet.moveWorker(Planet.PRODUCTION_PRODUCTION,
+                Planet.CULTURE_ARTIST);
+          }
         }
+        break;
+      }
+      default: {
+        // This happens only if there are no population or it is negative.
+        // There no works can be set.
+        throw new IllegalArgumentException("Planet(" + planet.getName()
+            + ") has no population but is still colonized!");
+      }
+      }
+    }
+  }
+  /**
+   * Handle Chiraloid population on planet
+   * @param planet Planet to handle
+   * @param info Owner of the planet
+   */
+  protected static void handleChiraloidPopulation(final Planet planet,
+      final PlayerInfo info) {
+    int total = planet.getTotalPopulation();
+    if (total > 3) {
+      int rad = planet.getRadiationLevel();
+      int happy = planet.calculateHappiness();
+      int food = planet.getFoodProdByPlanetAndBuildings();
+      food = food + Math.min(rad, total);
+      int requiredFarmers = total - food;
+      if (total < planet.getGroundSize() && requiredFarmers >= 0) {
+        requiredFarmers++;
+      }
+      planet.setWorkers(Planet.FOOD_FARMERS, 0);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+      planet.setWorkers(Planet.METAL_MINERS, 0);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+      if (requiredFarmers > 0) {
+        planet.setWorkers(Planet.FOOD_FARMERS, requiredFarmers);
+        total = total - requiredFarmers;
+      }
+      if (planet.getTotalProductionFromBuildings(
+          Planet.PRODUCTION_RESEARCH) == 0 && total > 1) {
+        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+        total = total - 2;
+      }
+      int div = total / 3;
+      int part = total % 3;
+      int miners = div;
+      int workers = div;
+      int artist = div;
+      if (artist > 1) {
+        artist = artist - 1;
+        if (planet.getTotalProductionFromBuildings(
+            Planet.PRODUCTION_METAL)
+            > planet.getTotalProductionFromBuildings(
+                Planet.PRODUCTION_PRODUCTION)) {
+          workers = workers + artist;
+        } else {
+          miners = miners + artist;
+        }
+        artist = 1;
+      }
+      if (happy < 0) {
+        artist = artist + part;
       } else {
-        // Fixed amount of population 5 or less
-        planet.setWorkers(Planet.FOOD_FARMERS, 0);
-        planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
-        planet.setWorkers(Planet.METAL_MINERS, 0);
-        planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
-        planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-        switch (total) {
+        workers = workers + part;
+      }
+      planet.setWorkers(Planet.METAL_MINERS, miners);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, workers);
+      planet.setWorkers(Planet.CULTURE_ARTIST, artist);
+    } else {
+      planet.setWorkers(Planet.FOOD_FARMERS, 0);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+      planet.setWorkers(Planet.METAL_MINERS, 0);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+      switch (total) {
         case 1: {
           planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
           break;
         }
         case 2: {
-          planet.setWorkers(Planet.FOOD_FARMERS, 1);
-          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-          break;
-        }
-        case 3: {
           if (planet.getTotalProductionFromBuildings(
-              Planet.PRODUCTION_RESEARCH) > 0) {
-            planet.setWorkers(Planet.FOOD_FARMERS, 1);
-            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-            planet.setWorkers(Planet.METAL_MINERS, 1);
-          } else {
-            planet.setWorkers(Planet.FOOD_FARMERS, 1);
+              Planet.PRODUCTION_RESEARCH) == 0) {
             planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-          }
-          break;
-        }
-        case 4: {
-          planet.setWorkers(Planet.FOOD_FARMERS, 2);
-          if (planet.getTotalProductionFromBuildings(
-              Planet.PRODUCTION_RESEARCH) > 0) {
-            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-            planet.setWorkers(Planet.METAL_MINERS, 1);
           } else {
-            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-          }
-          break;
-        }
-        case 5: {
-          planet.setWorkers(Planet.PRODUCTION_FOOD, 2);
-          if (planet.getTotalProductionFromBuildings(
-              Planet.PRODUCTION_RESEARCH) > 0) {
-            planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
-            planet.setWorkers(Planet.METAL_MINERS, 1);
-          } else {
-            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
             planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-          }
-          if (planet.calculateHappiness() < -1) {
-            GovernmentType government = planet.getPlanetPlayerInfo()
-                .getGovernment();
-            if (government.getResearchBonus() > 0) {
-              if (planet.getTotalProductionFromBuildings(
-                  Planet.PRODUCTION_RESEARCH) == 0) {
-                planet.moveWorker(Planet.RESEARCH_SCIENTIST,
-                    Planet.CULTURE_ARTIST);
-                planet.moveWorker(Planet.RESEARCH_SCIENTIST,
-                    Planet.PRODUCTION_PRODUCTION);
-              } else {
-                planet.moveWorker(Planet.PRODUCTION_PRODUCTION,
-                    Planet.CULTURE_ARTIST);
+            switch (DiceGenerator.getRandom(2)) {
+              case 0: {
+                planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
+                break;
               }
-            } else {
-              planet.moveWorker(Planet.PRODUCTION_PRODUCTION,
-                  Planet.CULTURE_ARTIST);
+              case 1: {
+                planet.setWorkers(Planet.METAL_MINERS, 1);
+                break;
+              }
+              case 2: {
+                planet.setWorkers(Planet.CULTURE_ARTIST, 1);
+                break;
+              }
+              default: {
+                throw new IllegalArgumentException("Unexpected random value! ");
+              }
             }
           }
           break;
         }
+        case 3: {
+          planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+          planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+          break;
+        }
         default: {
-          // This happens only if there are no population or it is negative.
-          // There no works can be set.
-          throw new IllegalArgumentException("Planet(" + planet.getName()
-              + ") has no population but is still colonized!");
-        }
+          throw new IllegalArgumentException("This should not happen");
         }
       }
-    } else {
-      // Handle races whom need something to eat and have regular research
-      int food = planet.getTotalProduction(Planet.PRODUCTION_FOOD);
-      int total = planet.getTotalPopulation();
-      int foodReq = total * info.getRace().getFoodRequire() / 100;
-      food = food - foodReq;
-      if (food > 2) {
-        if (info.getRace() == SpaceRace.GREYANS
-            || info.getRace() == SpaceRace.TEUTHIDAES) {
-          if (planet.getWorkers(Planet.RESEARCH_SCIENTIST) <= planet
-              .getWorkers(Planet.PRODUCTION_WORKERS)) {
-            planet.moveWorker(Planet.FOOD_FARMERS, Planet.RESEARCH_SCIENTIST);
-          } else if (planet.getWorkers(Planet.METAL_MINERS) * 2 >= planet
-              .getWorkers(Planet.PRODUCTION_WORKERS)) {
-            planet.moveWorker(Planet.FOOD_FARMERS, Planet.METAL_MINERS);
-          } else if (planet.getWorkers(Planet.CULTURE_ARTIST) == 0) {
-            planet.moveWorker(Planet.FOOD_FARMERS, Planet.CULTURE_ARTIST);
-          } else {
-            planet.moveWorker(Planet.FOOD_FARMERS, Planet.PRODUCTION_WORKERS);
-          }
+    }
+  }
+  /**
+   * Handle generic population
+   * @param planet Planet to handle
+   * @param info Owner of the planet
+   */
+  protected static void handleGenericPopulation(final Planet planet,
+      final PlayerInfo info) {
+    int food = planet.getTotalProduction(Planet.PRODUCTION_FOOD);
+    int total = planet.getTotalPopulation();
+    int foodReq = total * info.getRace().getFoodRequire() / 100;
+    food = food - foodReq;
+    if (food > 2) {
+      if (info.getRace() == SpaceRace.GREYANS
+          || info.getRace() == SpaceRace.TEUTHIDAES) {
+        if (planet.getWorkers(Planet.RESEARCH_SCIENTIST) <= planet
+            .getWorkers(Planet.PRODUCTION_WORKERS)) {
+          planet.moveWorker(Planet.FOOD_FARMERS, Planet.RESEARCH_SCIENTIST);
+        } else if (planet.getWorkers(Planet.METAL_MINERS) * 2 >= planet
+            .getWorkers(Planet.PRODUCTION_WORKERS)) {
+          planet.moveWorker(Planet.FOOD_FARMERS, Planet.METAL_MINERS);
+        } else if (planet.getWorkers(Planet.CULTURE_ARTIST) == 0) {
+          planet.moveWorker(Planet.FOOD_FARMERS, Planet.CULTURE_ARTIST);
         } else {
-          if (planet.getWorkers(Planet.RESEARCH_SCIENTIST) * 2 >= planet
-              .getWorkers(Planet.PRODUCTION_WORKERS)) {
-            planet.moveWorker(Planet.FOOD_FARMERS, Planet.RESEARCH_SCIENTIST);
-          } else if (planet.getWorkers(Planet.METAL_MINERS) * 2 >= planet
-              .getWorkers(Planet.PRODUCTION_WORKERS)) {
-            planet.moveWorker(Planet.FOOD_FARMERS, Planet.METAL_MINERS);
-          } else if (planet.getWorkers(Planet.CULTURE_ARTIST) == 0) {
-            planet.moveWorker(Planet.FOOD_FARMERS, Planet.CULTURE_ARTIST);
-          } else {
-            planet.moveWorker(Planet.FOOD_FARMERS, Planet.PRODUCTION_WORKERS);
-          }
-        }
-      }
-      if (food < 0) {
-        if (planet.getWorkers(Planet.CULTURE_ARTIST) > 0) {
-          planet.moveWorker(Planet.CULTURE_ARTIST, Planet.FOOD_FARMERS);
-        } else if (planet.getWorkers(Planet.METAL_MINERS) > 0) {
-          planet.moveWorker(Planet.METAL_MINERS, Planet.FOOD_FARMERS);
-        } else if (planet.getWorkers(Planet.PRODUCTION_WORKERS) > 0) {
-          planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.FOOD_FARMERS);
-        } else if (planet.getWorkers(Planet.RESEARCH_SCIENTIST) > 0) {
-          planet.moveWorker(Planet.RESEARCH_SCIENTIST, Planet.FOOD_FARMERS);
-        }
-      }
-      if (food > 0 && planet.getTotalPopulation() == planet.getGroundSize()) {
-        if (planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION) == 0) {
           planet.moveWorker(Planet.FOOD_FARMERS, Planet.PRODUCTION_WORKERS);
-        } else if (planet.getWorkers(Planet.RESEARCH_SCIENTIST) * 2 >= planet
+        }
+      } else {
+        if (planet.getWorkers(Planet.RESEARCH_SCIENTIST) * 2 >= planet
             .getWorkers(Planet.PRODUCTION_WORKERS)) {
           planet.moveWorker(Planet.FOOD_FARMERS, Planet.RESEARCH_SCIENTIST);
         } else if (planet.getWorkers(Planet.METAL_MINERS) * 2 >= planet
@@ -1351,22 +1440,66 @@ public final class PlanetHandling {
           planet.moveWorker(Planet.FOOD_FARMERS, Planet.PRODUCTION_WORKERS);
         }
       }
-      int happiness = planet.calculateHappiness();
-      if (happiness < -1) {
-        if (planet.getTotalProductionFromBuildings(
-            Planet.PRODUCTION_RESEARCH) > 0
-            && planet.getWorkers(Planet.RESEARCH_SCIENTIST) > 0) {
-          planet.moveWorker(Planet.RESEARCH_SCIENTIST, Planet.CULTURE_ARTIST);
-        } else if (planet.getPlanetPlayerInfo().getGovernment()
-            .getResearchBonus() > 0
-            && planet.getWorkers(Planet.RESEARCH_SCIENTIST) > 0) {
-          planet.moveWorker(Planet.RESEARCH_SCIENTIST, Planet.CULTURE_ARTIST);
-        } else if (planet.getWorkers(Planet.METAL_MINERS) > 0) {
-          planet.moveWorker(Planet.METAL_MINERS, Planet.CULTURE_ARTIST);
-        } else if (planet.getWorkers(Planet.PRODUCTION_WORKERS) > 0) {
-          planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.CULTURE_ARTIST);
-        }
+    }
+    if (food < 0) {
+      if (planet.getWorkers(Planet.CULTURE_ARTIST) > 0) {
+        planet.moveWorker(Planet.CULTURE_ARTIST, Planet.FOOD_FARMERS);
+      } else if (planet.getWorkers(Planet.METAL_MINERS) > 0) {
+        planet.moveWorker(Planet.METAL_MINERS, Planet.FOOD_FARMERS);
+      } else if (planet.getWorkers(Planet.PRODUCTION_WORKERS) > 0) {
+        planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.FOOD_FARMERS);
+      } else if (planet.getWorkers(Planet.RESEARCH_SCIENTIST) > 0) {
+        planet.moveWorker(Planet.RESEARCH_SCIENTIST, Planet.FOOD_FARMERS);
       }
+    }
+    if (food > 0 && planet.getTotalPopulation() == planet.getGroundSize()) {
+      if (planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION) == 0) {
+        planet.moveWorker(Planet.FOOD_FARMERS, Planet.PRODUCTION_WORKERS);
+      } else if (planet.getWorkers(Planet.RESEARCH_SCIENTIST) * 2 >= planet
+          .getWorkers(Planet.PRODUCTION_WORKERS)) {
+        planet.moveWorker(Planet.FOOD_FARMERS, Planet.RESEARCH_SCIENTIST);
+      } else if (planet.getWorkers(Planet.METAL_MINERS) * 2 >= planet
+          .getWorkers(Planet.PRODUCTION_WORKERS)) {
+        planet.moveWorker(Planet.FOOD_FARMERS, Planet.METAL_MINERS);
+      } else if (planet.getWorkers(Planet.CULTURE_ARTIST) == 0) {
+        planet.moveWorker(Planet.FOOD_FARMERS, Planet.CULTURE_ARTIST);
+      } else {
+        planet.moveWorker(Planet.FOOD_FARMERS, Planet.PRODUCTION_WORKERS);
+      }
+    }
+    int happiness = planet.calculateHappiness();
+    if (happiness < -1) {
+      if (planet.getTotalProductionFromBuildings(
+          Planet.PRODUCTION_RESEARCH) > 0
+          && planet.getWorkers(Planet.RESEARCH_SCIENTIST) > 0) {
+        planet.moveWorker(Planet.RESEARCH_SCIENTIST, Planet.CULTURE_ARTIST);
+      } else if (planet.getPlanetPlayerInfo().getGovernment()
+          .getResearchBonus() > 0
+          && planet.getWorkers(Planet.RESEARCH_SCIENTIST) > 0) {
+        planet.moveWorker(Planet.RESEARCH_SCIENTIST, Planet.CULTURE_ARTIST);
+      } else if (planet.getWorkers(Planet.METAL_MINERS) > 0) {
+        planet.moveWorker(Planet.METAL_MINERS, Planet.CULTURE_ARTIST);
+      } else if (planet.getWorkers(Planet.PRODUCTION_WORKERS) > 0) {
+        planet.moveWorker(Planet.PRODUCTION_WORKERS, Planet.CULTURE_ARTIST);
+      }
+    }
+  }
+  /**
+   * Handle planet population positions
+   * @param planet Planet to handle
+   * @param info Player who owns the planet
+   */
+  protected static void handlePlanetPopulation(final Planet planet,
+      final PlayerInfo info) {
+    if (info.getRace() == SpaceRace.MECHIONS) {
+      handleMechionPopulation(planet, info);
+    } else if (info.getRace() == SpaceRace.HOMARIANS) {
+      handleHomarianPopulation(planet, info);
+    } else if (info.getRace() == SpaceRace.CHIRALOIDS) {
+      handleChiraloidPopulation(planet, info);
+    } else {
+      // Handle races whom need something to eat and have regular research
+      handleGenericPopulation(planet, info);
     }
   }
 

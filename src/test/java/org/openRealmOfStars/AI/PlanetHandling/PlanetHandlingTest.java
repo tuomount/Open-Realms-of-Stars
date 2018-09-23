@@ -1661,4 +1661,296 @@ public class PlanetHandlingTest {
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testGreyansHandling7PopulationFullFarms() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 7);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(3, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(7, planet.getTotalPopulation());
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(9, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTeuthidaesHandling9PopulationFullFarmers() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.TEUTHIDAES);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.setGroundSize(10);
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 9);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(3, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(4, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(6, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(12, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testHumansHandling9PopulationFullFarmers() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.setGroundSize(10);
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 9);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(4, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(11, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testHumansHandling7PopulationFullFarmers() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.setGroundSize(10);
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 7);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(3, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(11, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testHumansHandling8PopulationFullFarmers() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.setGroundSize(10);
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 8);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(3, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(11, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTeuthidaesHandling10PopulationFullFarmers() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.TEUTHIDAES);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.setGroundSize(10);
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 10);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(3, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(3, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(2, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(12, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testMothoidsHandling6PopulationFullFarms() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 6);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(2, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(6, planet.getTotalPopulation());
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(8, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testMothoidsHandling7PopulationFullFarms() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.MOTHOIDS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 7);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(3, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(2, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(7, planet.getTotalPopulation());
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(10, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(3, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testScaurianHandling7PopulationFullFarms() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 7);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(4, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(7, planet.getTotalPopulation());
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(5, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(10, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_METAL));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+  }
+
 }

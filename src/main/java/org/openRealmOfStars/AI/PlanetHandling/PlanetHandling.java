@@ -1410,11 +1410,16 @@ public final class PlanetHandling {
   protected static void handleGenericPopulation(final Planet planet,
       final PlayerInfo info) {
     int food = planet.getFoodProdByPlanetAndBuildings();
+    boolean startPlanet = false;
     int total = planet.getTotalPopulation();
+    if (food == 2 && total == 3) {
+      // Starting planet focus more on science than growth
+      startPlanet = true;
+    }
     int foodReq = total * info.getRace().getFoodRequire() / 100;
     int farmersReq = foodReq - food;
     int happy = planet.calculateHappiness();
-    if (total < planet.getGroundSize() && farmersReq >= 0 && total != 3) {
+    if (total < planet.getGroundSize() && farmersReq >= 0 && !startPlanet) {
       farmersReq++;
     }
     if (info.getRace().getFoodSpeed() == 200) {

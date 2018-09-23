@@ -1505,6 +1505,30 @@ public class PlanetHandlingTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testCentaursHandling3PopulationKingdomWithFarm() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CENTAURS);
+    info.setGovernment(GovernmentType.KINGDOM);
+    Planet planet = new Planet(new Coordinate(6, 7), "Planet Test", 1, false);
+    planet.setPlanetOwner(1, info);
+    planet.setWorkers(Planet.METAL_MINERS, 0);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 0);
+    planet.setWorkers(Planet.FOOD_FARMERS, 3);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
+    planet.addBuilding(BuildingFactory.createByName("Basic farm"));
+    PlanetHandling.handlePlanetPopulation(planet, info);
+    assertEquals(3, planet.getTotalPopulation());
+    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(0, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(1, planet.getWorkers(Planet.FOOD_FARMERS));
+    assertEquals(1, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
+    assertEquals(0, planet.getWorkers(Planet.CULTURE_ARTIST));
+    assertEquals(1, planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+    assertEquals(2, planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+    assertEquals(4, planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testScauriansHandling3PopulationKingdom() {
     PlayerInfo info = new PlayerInfo(SpaceRace.SCAURIANS);
     info.setGovernment(GovernmentType.KINGDOM);

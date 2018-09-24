@@ -548,7 +548,7 @@ public class StarMap {
           }
         }
         if (starbaseFleet != null) {
-          if (starbaseFleet.getNumberOfShip() < 7) {
+          if (starbaseFleet.getNumberOfShip() < Fleet.MAX_STARBASE_SIZE) {
             starbaseFleet.addShip(ship);
             ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
             fleet = starbaseFleet;

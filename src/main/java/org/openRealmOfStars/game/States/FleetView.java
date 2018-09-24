@@ -555,7 +555,9 @@ public class FleetView extends BlackPanel {
         && fleet != starbaseFleet) {
       for (int i = 0; i < fleetsInSpace.getSelectedIndices().length; i++) {
         Fleet mergeFleet = fleetsInSpace.getSelectedValuesList().get(i);
-        if (mergeFleet != starbaseFleet) {
+        if (mergeFleet != starbaseFleet
+            && fleet.getNumberOfShip() + mergeFleet.getNumberOfShip()
+            <= Fleet.MAX_FLEET_SIZE) {
           for (int j = 0; j < mergeFleet.getNumberOfShip(); j++) {
             Ship ship = mergeFleet.getShipByIndex(j);
             if (ship != null) {
@@ -624,7 +626,8 @@ public class FleetView extends BlackPanel {
                fleet.removeShip(ship);
                ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
                fleetList.recalculateList();
-            } else if (starbaseFleet.getNumberOfShip() < 7) {
+            } else if (starbaseFleet.getNumberOfShip()
+                < Fleet.MAX_STARBASE_SIZE) {
               starbaseFleet.addShip(ship);
               fleet.removeShip(ship);
               ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);

@@ -43,6 +43,14 @@ import org.openRealmOfStars.utilities.repository.RouteRepository;
 public class Fleet {
 
   /**
+   * Maximum fleet size 18 ships
+   */
+  public static final int MAX_FLEET_SIZE = 18;
+  /**
+   * Maximum fleet size 7 for starbase fleet
+   */
+  public static final int MAX_STARBASE_SIZE = 7;
+  /**
    * List of ships in fleet
    */
   private ArrayList<Ship> ships;

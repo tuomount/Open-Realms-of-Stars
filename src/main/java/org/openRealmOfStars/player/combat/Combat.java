@@ -237,9 +237,8 @@ public class Combat {
     addCombatShipList(attackerFleet, attackerInfo, bottomList, false);
     addCombatShipList(defenderFleet, defenderInfo, topList, true);
     if (starbaseFleet != null && starbaseFleet != this.defenderFleet) {
-      CombatPositionList starbaseList = new TopPositionList();
-      addCombatShipList(starbaseFleet, defenderInfo, starbaseList, true,
-          defenderFleet.getNumberOfShip());
+      CombatPositionList starbaseList = new StarbasePositionList();
+      addCombatShipList(starbaseFleet, defenderInfo, starbaseList, true);
     }
 
     Collections.sort(combatShipList, Collections.reverseOrder());
@@ -258,31 +257,17 @@ public class Combat {
     escapePosition = escapePos;
   }
 
-  /**
-   * Add combatShip to combatShipList where position index is zero.
-   * @param fleet Player's Fleet
-   * @param playerInfo Player's information
-   * @param positionList starting coordinate list
-   * @param flipY Should ship's image have flipped Y axel.
-   */
-  private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
-          final CombatPositionList positionList, final boolean flipY) {
-    addCombatShipList(fleet, playerInfo, positionList, flipY, 0);
-  }
-
 /**
  * Add combatShip to combatShipList
  * @param fleet Player's Fleet
  * @param playerInfo Player's information
  * @param positionList starting coordinate list
  * @param flipY Should ship's image have flipped Y axel.
- * @param posIndex position index
  */
 private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
-        final CombatPositionList positionList, final boolean flipY,
-        final int posIndex) {
+        final CombatPositionList positionList, final boolean flipY) {
     Ship[] ships = fleet.getShips();
-    int index = posIndex;
+    int index = 0;
     for (Ship ship : ships) {
       ShipStat stat = playerInfo.getShipStatByName(ship.getName());
       if (stat != null) {

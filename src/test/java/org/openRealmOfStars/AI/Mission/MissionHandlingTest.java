@@ -423,6 +423,54 @@ public class MissionHandlingTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testMergingFleets() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CENTAURS, 2, 0);
+    Fleet fleet1 = Mockito.mock(Fleet.class);
+    Coordinate fleetCoord = new Coordinate(5, 7);
+    Mockito.when(fleet1.getCoordinate()).thenReturn(fleetCoord);
+    Mockito.when(fleet1.getX()).thenReturn(5);
+    Mockito.when(fleet1.getY()).thenReturn(7);
+    Mockito.when(fleet1.getNumberOfShip()).thenReturn(2);
+    Mockito.when(fleet1.getName()).thenReturn("Defender #0");
+    Fleet fleet2 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet2.getCoordinate()).thenReturn(fleetCoord);
+    Mockito.when(fleet2.getX()).thenReturn(5);
+    Mockito.when(fleet2.getY()).thenReturn(7);
+    Mockito.when(fleet2.getNumberOfShip()).thenReturn(1);
+    Mockito.when(fleet2.getName()).thenReturn("Defender #1");
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(fleet2.getShipByIndex(0)).thenReturn(ship);
+    info.getFleets().add(fleet1);
+    info.getFleets().add(fleet2);
+    assertEquals(2, info.getFleets().getNumberOfFleets());
+    MissionHandling.mergeFleets(fleet1, info);
+    assertEquals(1, info.getFleets().getNumberOfFleets());
+  }
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testMergingFleetsTooBig() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CENTAURS, 2, 0);
+    Fleet fleet1 = Mockito.mock(Fleet.class);
+    Coordinate fleetCoord = new Coordinate(5, 7);
+    Mockito.when(fleet1.getCoordinate()).thenReturn(fleetCoord);
+    Mockito.when(fleet1.getX()).thenReturn(5);
+    Mockito.when(fleet1.getY()).thenReturn(7);
+    Mockito.when(fleet1.getNumberOfShip()).thenReturn(10);
+    Mockito.when(fleet1.getName()).thenReturn("Defender #0");
+    Fleet fleet2 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet2.getCoordinate()).thenReturn(fleetCoord);
+    Mockito.when(fleet2.getX()).thenReturn(5);
+    Mockito.when(fleet2.getY()).thenReturn(7);
+    Mockito.when(fleet2.getNumberOfShip()).thenReturn(11);
+    Mockito.when(fleet2.getName()).thenReturn("Defender #1");
+    info.getFleets().add(fleet1);
+    info.getFleets().add(fleet2);
+    assertEquals(2, info.getFleets().getNumberOfFleets());
+    MissionHandling.mergeFleets(fleet1, info);
+    assertEquals(2, info.getFleets().getNumberOfFleets());
+  }
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testPrivateeringNoMoreSunToExplore() {
     GameRepository repository = new GameRepository();
     StarMap starMap = repository.loadGame("src/test/resources/saves",

@@ -1135,7 +1135,9 @@ public final class MissionHandling {
       Fleet mergeFleet = info.getFleets().getByIndex(j);
       if (mergeFleet != fleet && mergeFleet.getX() == fleet.getX()
           && mergeFleet.getY() == fleet.getY()
-          && mergeFleet.getName().startsWith(part[0])) {
+          && mergeFleet.getName().startsWith(part[0])
+          && fleet.getNumberOfShip() + mergeFleet.getNumberOfShip()
+          <= Fleet.MAX_FLEET_SIZE) {
         for (int k = 0; k < mergeFleet.getNumberOfShip(); k++) {
           Ship ship = mergeFleet.getShipByIndex(k);
           if (ship != null) {

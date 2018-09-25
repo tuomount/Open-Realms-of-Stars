@@ -2,16 +2,12 @@ package org.openRealmOfStars.AI.Mission;
 
 import static org.junit.Assert.*;
 
-import java.awt.event.ActionEvent;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.game.Game;
-import org.openRealmOfStars.game.GameCommands;
-import org.openRealmOfStars.game.GameState;
-import org.openRealmOfStars.game.States.AITurnView;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -30,7 +26,6 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
 *

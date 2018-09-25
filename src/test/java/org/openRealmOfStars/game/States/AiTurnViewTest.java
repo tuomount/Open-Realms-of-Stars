@@ -2,7 +2,6 @@ package org.openRealmOfStars.game.States;
 
 import static org.junit.Assert.*;
 
-import java.awt.event.ActionEvent;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -12,8 +11,6 @@ import org.openRealmOfStars.AI.Mission.MissionList;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.game.Game;
-import org.openRealmOfStars.game.GameCommands;
-import org.openRealmOfStars.game.GameState;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
@@ -24,38 +21,28 @@ import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
+/**
+*
+* Open Realm of Stars game project
+* Copyright (C) 2017, 2018 Tuomo Untinen
+*
+* This program is free software; you can redistribute it and/or
+* modify it under the terms of the GNU General Public License
+* as published by the Free Software Foundation; either version 2
+* of the License, or (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, see http://www.gnu.org/licenses/
+*
+* AiTurnView tests
+*
+*/
 public class AiTurnViewTest {
-
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testRunningTestRoundForAI() {
-    GameRepository repository = new GameRepository();
-    StarMap starMap = repository.loadGame("src/test/resources/saves",
-                                          "testGame.save");
-    Game game = new Game(false);
-    game.setLoadedGame(starMap);
-    AITurnView aiTurnView = new AITurnView(game);
-    ActionEvent arg0 = Mockito.mock(ActionEvent.class);
-    Mockito.when(arg0.getActionCommand()).thenReturn(GameCommands.COMMAND_ANIMATION_TIMER);
-    game.changeGameState(GameState.AITURN);
-    int turnNumber = starMap.getTurn();
-    turnNumber++;
-    // Safety measure to end running the AI loop
-    int loopCount = 10000;
-    while (true) {
-      loopCount--;
-      if (loopCount == 0) {
-        assertFalse(true);
-      }
-      aiTurnView.handleActions(arg0);
-      if (game.getGameState() == GameState.DIPLOMACY_VIEW) {
-        game.changeGameState(GameState.AITURN);
-      } else if (game.getGameState() != GameState.AITURN) {
-        break;
-      }
-    }
-    assertEquals(turnNumber, starMap.getTurn());
-  }
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)

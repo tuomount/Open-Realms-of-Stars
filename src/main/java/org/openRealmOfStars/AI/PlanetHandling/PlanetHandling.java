@@ -1426,7 +1426,7 @@ public final class PlanetHandling {
       // This part of code is never run since Homarians
       // are only race with 200% food production
       int extra = 0;
-      if (farmersReq % 2 == 1) {
+      if (farmersReq % 2 != 0) {
         extra = 1;
       }
       farmersReq = farmersReq / 2;

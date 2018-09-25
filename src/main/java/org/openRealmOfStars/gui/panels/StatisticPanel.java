@@ -229,8 +229,8 @@ public class StatisticPanel extends JPanel {
     int drawWidth = this.getWidth() - offsetX - rightOffsetX;
     int drawHeigth = this.getHeight() - offsetY - topOffsetY;
 
-    double scaleY = (double) drawHeigth / (double) largestY;
-    double scaleX = (double) drawWidth / (double) largestX;
+    float scaleY = (float) drawHeigth / (float) largestY;
+    float scaleX = (float) drawWidth / (float) largestX;
     Graphics2D g2d = (Graphics2D) arg0;
     g2d.setColor(Color.black);
     g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
@@ -296,11 +296,11 @@ public class StatisticPanel extends JPanel {
       g2d.setStroke(dashed);
       g2d.setColor(GuiStatics.COLOR_GOLD);
       g2d.drawLine(offsetX,
-          Math.round(this.getHeight() - offsetY
-              - Math.round(victoryScoreLimit * scaleY)),
+          this.getHeight() - offsetY
+              - Math.round(victoryScoreLimit * scaleY),
           offsetX + drawWidth,
-          Math.round(this.getHeight() - offsetY
-              - Math.round(victoryScoreLimit * scaleY)));
+          this.getHeight() - offsetY
+              - Math.round(victoryScoreLimit * scaleY));
       g2d.setStroke(full);
     }
     //Draw the axis

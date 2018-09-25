@@ -160,21 +160,19 @@ public class HappinessEffect {
       }
       return new HappinessEffect(HappinessBonus.NONE, 0);
     }
-    if (happiness <= -4) {
-      int value = DiceGenerator.getRandom(99);
-      if (value < 2) {
-        return new HappinessEffect(HappinessBonus.PRODUCTION, -2);
-      }
-      if (value < 4) {
-        return new HappinessEffect(HappinessBonus.DESTROY_BUILDING, 1);
-      }
-      if (value < 6) {
-        return new HappinessEffect(HappinessBonus.CREDIT, -2);
-      }
-      if (value < 8) {
-        return new HappinessEffect(HappinessBonus.KILL_POPULATION, 1);
-      }
-      return new HappinessEffect(HappinessBonus.NONE, 0);
+    // Happiness is here -4 or less
+    int value = DiceGenerator.getRandom(99);
+    if (value < 2) {
+      return new HappinessEffect(HappinessBonus.PRODUCTION, -2);
+    }
+    if (value < 4) {
+      return new HappinessEffect(HappinessBonus.DESTROY_BUILDING, 1);
+    }
+    if (value < 6) {
+      return new HappinessEffect(HappinessBonus.CREDIT, -2);
+    }
+    if (value < 8) {
+      return new HappinessEffect(HappinessBonus.KILL_POPULATION, 1);
     }
     return new HappinessEffect(HappinessBonus.NONE, 0);
   }

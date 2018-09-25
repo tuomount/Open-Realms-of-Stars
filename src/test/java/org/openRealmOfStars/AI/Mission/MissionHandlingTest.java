@@ -469,38 +469,5 @@ public class MissionHandlingTest {
     MissionHandling.mergeFleets(fleet1, info);
     assertEquals(2, info.getFleets().getNumberOfFleets());
   }
-  @Test
-  @Category(org.openRealmOfStars.BehaviourTest.class)
-  public void testPrivateeringNoMoreSunToExplore() {
-    GameRepository repository = new GameRepository();
-    StarMap starMap = repository.loadGame("src/test/resources/saves",
-                                          "npePrivateer.save");
-    Game game = new Game(false);
-    game.setLoadedGame(starMap);
-    AITurnView aiTurnView = new AITurnView(game);
-    ActionEvent arg0 = Mockito.mock(ActionEvent.class);
-    Mockito.when(arg0.getActionCommand()).thenReturn(GameCommands.COMMAND_ANIMATION_TIMER);
-    game.changeGameState(GameState.STARMAP);
-    game.changeGameState(GameState.AITURN);
-    int turnNumber = starMap.getTurn();
-    turnNumber++;
-    // Safety measure to end running the AI loop
-    int loopCount = 10000;
-    while (true) {
-      loopCount--;
-      if (loopCount == 0) {
-        assertFalse(true);
-      }
-      aiTurnView.handleActions(arg0);
-      if (game.getGameState() == GameState.DIPLOMACY_VIEW) {
-        game.changeGameState(GameState.AITURN);
-      } else if (game.getGameState() == GameState.COMBAT) {
-        break;
-      } else if (game.getGameState() != GameState.AITURN) {
-        assertEquals(turnNumber, starMap.getTurn());
-      }
-    }
-    assertEquals(GameState.COMBAT, game.getGameState());
-  }
 
 }

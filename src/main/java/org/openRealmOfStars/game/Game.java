@@ -1244,7 +1244,7 @@ public class Game implements ActionListener {
   /**
    * Make new Game State
    */
-  private void makeNewGame() {
+  public void makeNewGame() {
     setPlayerInfo();
     starMap = new StarMap(galaxyConfig, players);
     starMap.updateStarMapOnStartGame();
@@ -1274,7 +1274,7 @@ public class Game implements ActionListener {
   /**
    * Set Player information when make new game
    */
-  private void setPlayerInfo() {
+  public void setPlayerInfo() {
     players = new PlayerList();
     int maxPlayers = galaxyConfig.getMaxPlayers();
     if (galaxyConfig.getSpacePiratesLevel() > 0) {
@@ -2210,4 +2210,28 @@ public class Game implements ActionListener {
     }
     return false;
   }
+
+  /**
+   * Get AI Turn view
+   * @return AITurnView
+   */
+  public AITurnView getAITurnView() {
+    return aiTurnView;
+  }
+  /**
+   * Set AI Turn view
+   * @param view AITurnVIew
+   */
+  public void setAITurnView(final AITurnView view) {
+    aiTurnView = view;
+  }
+
+  /**
+   * Set Galaxy config
+   * @param config Galaxy config
+   */
+  public void setGalaxyConfig(final GalaxyConfig config) {
+    galaxyConfig = config;
+  }
+
 }

@@ -1449,104 +1449,115 @@ public class Planet {
           prodResource = prodResource - underConstruction.getProdCost();
           ShipStat stat = planetOwnerInfo.getShipStatByName(
               underConstruction.getName());
-          // We need to create here a new instance
-          Ship ship = new Ship(stat.getDesign());
-          stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
-          stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
-          if (stat.getDesign().getTotalMilitaryPower() > 0) {
-            culture = culture + stat.getDesign().getTotalMilitaryPower() / 4;
-          }
-          Fleet fleet = new Fleet(ship, getX(), getY());
-          planetOwnerInfo.getFleets().add(fleet);
-          if (planetOwnerInfo.getMissions() != null) {
-            Mission mission = planetOwnerInfo.getMissions()
-                .getMissionForPlanet(getName(), MissionPhase.BUILDING);
-            if (mission != null) {
-              if (mission.getFleetName() == null) {
-                if (mission.getType() == MissionType.COLONIZE) {
-                  fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
-                      "Colony"));
-                  mission.setFleetName(fleet.getName());
-                }
-                if (mission.getType() == MissionType.DEPLOY_STARBASE
-                    && fleet.getStarbaseShip() != null) {
-                  fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
-                      "Space Station"));
-                  mission.setFleetName(fleet.getName());
-                }
-                if (mission.getType() == MissionType.TRADE_FLEET) {
-                  String nameFleet = "Trader";
-                  if (DiceGenerator.getRandom(1) == 0) {
-                    nameFleet = "Merchant";
+          if (stat == null) {
+            msg = new Message(MessageType.CONSTRUCTION,
+                getName() + " cannot built ship "
+            + underConstruction.getName()
+            + "due that blue prints are missing!",
+                Icons.getIconByName(Icons.ICON_HULL_TECH));
+            msg.setCoordinate(getCoordinate());
+            msg.setMatchByString(getName());
+            planetOwnerInfo.getMsgList().addNewMessage(msg);
+          } else {
+            // We need to create here a new instance
+            Ship ship = new Ship(stat.getDesign());
+            stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+            stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+            if (stat.getDesign().getTotalMilitaryPower() > 0) {
+              culture = culture + stat.getDesign().getTotalMilitaryPower() / 4;
+            }
+            Fleet fleet = new Fleet(ship, getX(), getY());
+            planetOwnerInfo.getFleets().add(fleet);
+            if (planetOwnerInfo.getMissions() != null) {
+              Mission mission = planetOwnerInfo.getMissions()
+                  .getMissionForPlanet(getName(), MissionPhase.BUILDING);
+              if (mission != null) {
+                if (mission.getFleetName() == null) {
+                  if (mission.getType() == MissionType.COLONIZE) {
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName("Colony"));
+                    mission.setFleetName(fleet.getName());
                   }
+                  if (mission.getType() == MissionType.DEPLOY_STARBASE
+                      && fleet.getStarbaseShip() != null) {
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName("Space Station"));
+                    mission.setFleetName(fleet.getName());
+                  }
+                  if (mission.getType() == MissionType.TRADE_FLEET) {
+                    String nameFleet = "Trader";
+                    if (DiceGenerator.getRandom(1) == 0) {
+                      nameFleet = "Merchant";
+                    }
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName(nameFleet));
+                    mission.setFleetName(fleet.getName());
+                  }
+                  if (mission.getType() == MissionType.SPY_MISSION) {
+                    fleet.setName(planetOwnerInfo.getFleets(
+                        ).generateUniqueName("Spy"));
+                    mission.setFleetName(fleet.getName());
+                  }
+                } else {
                   fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
-                      nameFleet));
-                  mission.setFleetName(fleet.getName());
+                      mission.getFleetName()));
                 }
-                if (mission.getType() == MissionType.SPY_MISSION) {
-                  fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
-                      "Spy"));
-                  mission.setFleetName(fleet.getName());
-                }
-              } else {
-                fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
-                    mission.getFleetName()));
-              }
-              if (mission.getType() == MissionType.DEFEND) {
-                // For now one ship is enough for defend
-                mission.setPhase(MissionPhase.EXECUTING);
-              } else if (mission.getType() == MissionType.COLONIZE) {
-                mission.setPhase(MissionPhase.LOADING);
-              } else if (mission.getType() == MissionType.TRADE_FLEET) {
-                mission.setPhase(MissionPhase.LOADING);
-              } else if (mission.getType() == MissionType.GATHER) {
-                if (ship.isTrooperModule()) {
-                  // Loads trooper first
+                if (mission.getType() == MissionType.DEFEND) {
+                  // For now one ship is enough for defend
+                  mission.setPhase(MissionPhase.EXECUTING);
+                } else if (mission.getType() == MissionType.COLONIZE) {
                   mission.setPhase(MissionPhase.LOADING);
+                } else if (mission.getType() == MissionType.TRADE_FLEET) {
+                  mission.setPhase(MissionPhase.LOADING);
+                } else if (mission.getType() == MissionType.GATHER) {
+                  if (ship.isTrooperModule()) {
+                    // Loads trooper first
+                    mission.setPhase(MissionPhase.LOADING);
+                  } else {
+                    mission.setPhase(MissionPhase.TREKKING);
+                  }
+                  fleet.setName(planetOwnerInfo.getFleets()
+                      .generateUniqueName("Gather"));
+                  mission.setFleetName(fleet.getName());
                 } else {
                   mission.setPhase(MissionPhase.TREKKING);
                 }
-                fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
-                    "Gather"));
-                mission.setFleetName(fleet.getName());
               } else {
-                mission.setPhase(MissionPhase.TREKKING);
-              }
-            } else {
-              if (ship.getTotalMilitaryPower() > 0) {
-                if (ship.isSpyShip()) {
-                  mission = new Mission(MissionType.SPY_MISSION,
-                      MissionPhase.LOADING, getCoordinate());
-                  planetOwnerInfo.getMissions().add(mission);
-                  fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
-                      "Spy"));
-                  mission.setFleetName(fleet.getName());
-                } else if (fleet.isScoutFleet()) {
-                  if (DiceGenerator.getRandom(3) == 0) {
-                    // Scout ship is for defending too
+                if (ship.getTotalMilitaryPower() > 0) {
+                  if (ship.isSpyShip()) {
+                    mission = new Mission(MissionType.SPY_MISSION,
+                        MissionPhase.LOADING, getCoordinate());
+                    planetOwnerInfo.getMissions().add(mission);
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName("Spy"));
+                    mission.setFleetName(fleet.getName());
+                  } else if (fleet.isScoutFleet()) {
+                    if (DiceGenerator.getRandom(3) == 0) {
+                      // Scout ship is for defending too
+                      fleet.setName(planetOwnerInfo.getFleets()
+                          .generateUniqueName("Defender"));
+                    } else {
+                      fleet.setName(planetOwnerInfo.getFleets()
+                          .generateUniqueName("Scout"));
+                    }
+                  } else if (fleet.isPrivateerFleet()) {
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName("Privateer"));
+                  } else {
+                    // No mission for planet, so just adding defender
                     fleet.setName(planetOwnerInfo.getFleets()
                         .generateUniqueName("Defender"));
-                  } else {
-                    fleet.setName(planetOwnerInfo.getFleets()
-                        .generateUniqueName("Scout"));
                   }
-                } else if (fleet.isPrivateerFleet()) {
-                  fleet.setName(planetOwnerInfo.getFleets()
-                      .generateUniqueName("Privateer"));
-                } else {
-                  // No mission for planet, so just adding defender
-                  fleet.setName(planetOwnerInfo.getFleets()
-                      .generateUniqueName("Defender"));
                 }
               }
             }
+            msg = new Message(MessageType.CONSTRUCTION,
+                getName() + " built " + underConstruction.getName(),
+                Icons.getIconByName(Icons.ICON_HULL_TECH));
+            msg.setCoordinate(getCoordinate());
+            msg.setMatchByString(getName());
+            planetOwnerInfo.getMsgList().addNewMessage(msg);
           }
-          msg = new Message(MessageType.CONSTRUCTION,
-              getName() + " built " + underConstruction.getName(),
-              Icons.getIconByName(Icons.ICON_HULL_TECH));
-          msg.setCoordinate(getCoordinate());
-          msg.setMatchByString(getName());
-          planetOwnerInfo.getMsgList().addNewMessage(msg);
         } else  if (underConstruction instanceof Building
             && groundSize <= buildings.size()) {
           msg = new Message(MessageType.PLANETARY, getName()

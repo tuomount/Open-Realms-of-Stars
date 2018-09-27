@@ -460,7 +460,7 @@ public enum SpaceRace {
     case HOMARIANS:
       return 150;
     case CHIRALOIDS:
-      return 100;
+      return 50;
     default:
       return 0;
     }
@@ -546,11 +546,11 @@ public enum SpaceRace {
     case GREYANS:
       return 100;
     case CENTAURS:
-      return 125;
+      return 100;
     case MOTHOIDS:
       return 100;
     case TEUTHIDAES:
-      return 125;
+      return 100;
     case SCAURIANS:
       return 100;
     case HOMARIANS:

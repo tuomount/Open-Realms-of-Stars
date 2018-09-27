@@ -1351,6 +1351,10 @@ public final class PlanetHandling {
       } else {
         workers = workers + part;
       }
+      if (workers % 2 != 0) {
+        workers--;
+        miners++;
+      }
       planet.setWorkers(Planet.METAL_MINERS, miners);
       planet.setWorkers(Planet.PRODUCTION_WORKERS, workers);
       planet.setWorkers(Planet.CULTURE_ARTIST, artist);

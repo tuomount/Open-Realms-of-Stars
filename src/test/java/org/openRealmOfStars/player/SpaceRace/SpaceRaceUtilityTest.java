@@ -186,7 +186,7 @@ public class SpaceRaceUtilityTest {
         "* Research: 100%\n"+
         "* Food production: 100%\n"+
         "* Growth: 50%\n"+
-        "* Food require: 125%\n"+
+        "* Food require: 100%\n"+
         "* Culture: 100%\n"+
         "* Diplomacy bonus: -1\n"+
         "* War resistance: 70\n"+
@@ -222,7 +222,7 @@ public class SpaceRaceUtilityTest {
         + "* Research: 150%\n"
         + "* Food production: 100%\n"
         + "* Growth: 100%\n"
-        + "* Food require: 125%\n"
+        + "* Food require: 100%\n"
         + "* Culture: 100%\n"
         + "* Diplomacy bonus: -2\n"
         + "* War resistance: 60\n"
@@ -270,7 +270,7 @@ public class SpaceRaceUtilityTest {
         + " This is called radiosynthesis.\n"
         + "* Max radiation: 10\n"
         + "* Troop power: 9\n"
-        + "* Production: 100%\n"
+        + "* Production: 50%\n"
         + "* Mining: 100%\n"
         + "* Research: 50%\n"
         + "* Food production: 100%\n"

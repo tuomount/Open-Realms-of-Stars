@@ -1,11 +1,16 @@
 package org.openRealmOfStars.game;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.game.States.AITurnView;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.starMap.GalaxyConfig;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
 
 /**
 *
@@ -109,6 +114,59 @@ public class GameTest {
       } while (!singleTurnEnd);
       assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
     } while (!game.getStarMap().isGameEnded());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRunFullGames() {
+    Game game = new Game(false);
+    int[] raceWins = new int[SpaceRace.values().length];
+    int[] govWins = new int[GovernmentType.values().length];
+    for (int i = 0; i < 2; i++) {
+      GalaxyConfig config = new GalaxyConfig();
+      config.setMaxPlayers(8);
+      config.setScoringVictoryTurns(200);
+      config.setSpacePiratesLevel(2);
+      config.setChanceForPlanetaryEvent(40);
+      config.setSize(128, 1);
+      config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+//      System.out.println("Game number " + i);
+      game.setGalaxyConfig(config);
+      game.makeNewGame();
+      game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
+      do {
+        game.setAITurnView(new AITurnView(game));
+        boolean singleTurnEnd = false;
+        do {
+          singleTurnEnd = game.getAITurnView().handleAiTurn();
+        } while (!singleTurnEnd);
+        assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
+      } while (!game.getStarMap().isGameEnded());
+      NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
+//      System.out.print("Done, ");
+      if (newsData.length > 0) {
+        String victoryText = newsData[newsData.length - 1].getNewsText();
+        for (int j = 0; j < 8; j++) {
+          PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(j);
+          if (victoryText.contains(info.getEmpireName())) {
+            raceWins[info.getRace().getIndex()] = raceWins[info.getRace().getIndex()] + 1;
+            govWins[info.getGovernment().getIndex()] = govWins[info.getGovernment().getIndex()] +1;
+          }
+        }
+        //System.out.println(newsData[newsData.length - 1].getNewsText());
+      } else {
+        //System.out.println("not sure who win!");
+      }
+    }
+/*    System.out.println("Wins for races:");
+    for (int i = 0; i < raceWins.length; i++) {
+      System.out.println(SpaceRace.values()[i].getName() + ": " +raceWins[i]);
+    }
+    System.out.println("---");
+    System.out.println("Wins for governments:");
+    for (int i = 0; i < govWins.length; i++) {
+      System.out.println(GovernmentType.values()[i].getName() + ": " +govWins[i]);
+    }*/
   }
 
 }

@@ -1288,8 +1288,8 @@ public class PlanetHandlingTest {
     planet.addBuilding(BuildingFactory.createByName("Basic Lab"));
     PlanetHandling.handlePlanetPopulation(planet, info);
     assertEquals(5, planet.getTotalPopulation());
-    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(3, planet.getWorkers(Planet.CULTURE_ARTIST));
@@ -1305,8 +1305,8 @@ public class PlanetHandlingTest {
     planet.setWorkers(Planet.METAL_MINERS, 5);
     PlanetHandling.handlePlanetPopulation(planet, info);
     assertEquals(5, planet.getTotalPopulation());
-    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(0, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));
@@ -1364,8 +1364,8 @@ public class PlanetHandlingTest {
     planet.setWorkers(Planet.METAL_MINERS, 10);
     PlanetHandling.handlePlanetPopulation(planet, info);
     assertEquals(10, planet.getTotalPopulation());
-    assertEquals(1, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(1, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(0, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(4, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(2, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(2, planet.getWorkers(Planet.CULTURE_ARTIST));
@@ -1404,8 +1404,8 @@ public class PlanetHandlingTest {
     planet.addBuilding(BuildingFactory.createByName("Basic mine"));
     PlanetHandling.handlePlanetPopulation(planet, info);
     assertEquals(10, planet.getTotalPopulation());
-    assertEquals(3, planet.getWorkers(Planet.PRODUCTION_WORKERS));
-    assertEquals(2, planet.getWorkers(Planet.METAL_MINERS));
+    assertEquals(2, planet.getWorkers(Planet.PRODUCTION_WORKERS));
+    assertEquals(3, planet.getWorkers(Planet.METAL_MINERS));
     assertEquals(4, planet.getWorkers(Planet.FOOD_FARMERS));
     assertEquals(0, planet.getWorkers(Planet.RESEARCH_SCIENTIST));
     assertEquals(1, planet.getWorkers(Planet.CULTURE_ARTIST));

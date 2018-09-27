@@ -218,7 +218,7 @@ public class HistoryView extends BlackPanel {
         }
         textArea.setText(startText + diplomatic.getText());
       }
-      if (event.getType() == EventType.GALATIC_NEWS) {
+      if (event.getType() == EventType.GALACTIC_NEWS) {
         GalacticEvent galactic = (GalacticEvent) event;
         textArea.setText(galactic.getText());
         targetCoordinate = null;
@@ -251,7 +251,7 @@ public class HistoryView extends BlackPanel {
       }
       PlayerInfo[] infos = map.getPlayerList().findRealmNamesFromText(
           textArea.getText());
-      if (event.getType() == EventType.GALATIC_NEWS) {
+      if (event.getType() == EventType.GALACTIC_NEWS) {
         if (infos.length == 1) {
           mapPanel.setLeftSpaceImage(GuiStatics.IMAGE_ANDROID);
           mapPanel.setRightSpaceImage(infos[0].getRace().getRaceImage());

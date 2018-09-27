@@ -151,7 +151,7 @@ public abstract class Event {
       case PLANET_COLONIZED: {
         result = EventOnPlanet.createEventOnPlanet(buffer); break;
       }
-      case GALATIC_NEWS: {
+      case GALACTIC_NEWS: {
         result = GalacticEvent.createGalacticEvent(buffer); break;
       }
       case PLAYER_START: {

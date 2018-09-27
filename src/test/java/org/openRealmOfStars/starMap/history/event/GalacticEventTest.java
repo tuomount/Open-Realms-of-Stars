@@ -36,7 +36,7 @@ public class GalacticEventTest {
   public void test() {
     GalacticEvent event = new GalacticEvent("Test text");
     assertEquals("Test text", event.getText());
-    assertEquals(EventType.GALATIC_NEWS, event.getType());
+    assertEquals(EventType.GALACTIC_NEWS, event.getType());
     event.setText("Historical");
     assertEquals("Historical", event.getText());
   }
@@ -47,7 +47,7 @@ public class GalacticEventTest {
     GalacticEvent event = new GalacticEvent("Historical");
     byte[] buf = event.createByteArray();
     GalacticEvent event2 = GalacticEvent.createGalacticEvent(buf);
-    assertEquals(EventType.GALATIC_NEWS, event2.getType());
+    assertEquals(EventType.GALACTIC_NEWS, event2.getType());
     assertEquals(event.getText(), event2.getText());
   }
 }

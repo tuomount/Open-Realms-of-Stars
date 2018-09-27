@@ -41,7 +41,7 @@ public class GalacticEvent extends Event {
    * @param text Text for galactic event
    */
   public GalacticEvent(final String text) {
-    setType(EventType.GALATIC_NEWS);
+    setType(EventType.GALACTIC_NEWS);
     setText(text);
   }
 
@@ -89,7 +89,7 @@ public class GalacticEvent extends Event {
   protected static GalacticEvent createGalacticEvent(final byte[] buffer)
       throws IOException {
     EventType readType = Event.readTypeAndLength(buffer);
-    if (readType == EventType.GALATIC_NEWS) {
+    if (readType == EventType.GALACTIC_NEWS) {
       try (ByteArrayInputStream is = new ByteArrayInputStream(buffer)) {
         long skipped = is.skip(3);
         if (skipped != 3) {

@@ -44,9 +44,9 @@ public enum EventType {
    */
   DIPLOMATIC_RELATION_CHANGE,
   /**
-   * Galatic news like biggest military, research etc.
+   * Galactic news like biggest military, research etc.
    */
-  GALATIC_NEWS,
+  GALACTIC_NEWS,
   /**
    * Player start event
    */
@@ -63,7 +63,7 @@ public enum EventType {
       case PLANET_CONQUERED: return 2;
       case SPACE_COMBAT: return 3;
       case DIPLOMATIC_RELATION_CHANGE: return 4;
-      case GALATIC_NEWS: return 5;
+      case GALACTIC_NEWS: return 5;
       case PLAYER_START: return 6;
       default: return 0;
     }
@@ -81,7 +81,7 @@ public enum EventType {
       case 2: return EventType.PLANET_CONQUERED;
       case 3: return EventType.SPACE_COMBAT;
       case 4: return EventType.DIPLOMATIC_RELATION_CHANGE;
-      case 5: return EventType.GALATIC_NEWS;
+      case 5: return EventType.GALACTIC_NEWS;
       case 6: return EventType.PLAYER_START;
       default: throw new IllegalArgumentException(
           "No event type found for index " + index);
@@ -96,7 +96,7 @@ public enum EventType {
       case PLANET_CONQUERED: return "Planet conquered";
       case SPACE_COMBAT: return "Space combat";
       case DIPLOMATIC_RELATION_CHANGE: return "Diplomatic relation change";
-      case GALATIC_NEWS: return "Galactic news";
+      case GALACTIC_NEWS: return "Galactic news";
       case PLAYER_START: return "Player start";
       default: return "Default";
     }

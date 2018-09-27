@@ -904,9 +904,10 @@ private int increaseHitChanceByComponent() {
         if (this.getShield() / 2 <= weapon.getDamage()
             || DiceGenerator.getRandom(99) < chance) {
           this.setShield(this.getShield() - 1);
-          return new ShipDamage(0, "Attack hit the shield!");
+          return new ShipDamage(ShipDamage.NO_DAMAGE, "Attack hit the shield!");
         }
-        return new ShipDamage(1, "Attack deflected to shield!");
+        return new ShipDamage(ShipDamage.NO_DAMAGE_NO_DENT,
+            "Attack deflected to shield!");
       }
       damage = damage - this.getArmor() / 2;
       if (damage >= 0) {
@@ -916,7 +917,8 @@ private int increaseHitChanceByComponent() {
         if (this.getArmor() / 4 <= damage
            || DiceGenerator.getRandom(99) < chance) {
           this.setArmor(this.getArmor() - 1);
-          return new ShipDamage(0, "Attack hit the armor!");
+          return new ShipDamage(ShipDamage.NO_DAMAGE,
+              "Attack hit the armor!");
         }
       }
       break;
@@ -931,9 +933,11 @@ private int increaseHitChanceByComponent() {
         if (this.getArmor() / 2 <= weapon.getDamage()
             || DiceGenerator.getRandom(99) < 5) {
           this.setArmor(this.getArmor() - 1);
-          return new ShipDamage(0, "Attack hit the armor!");
+          return new ShipDamage(ShipDamage.NO_DAMAGE,
+              "Attack hit the armor!");
         }
-        return new ShipDamage(1, "Attack deflected to armor!");
+        return new ShipDamage(ShipDamage.NO_DAMAGE_NO_DENT,
+            "Attack deflected to armor!");
       }
       damage = damage - this.getShield() / 2;
       if (damage >= 0) {
@@ -943,7 +947,8 @@ private int increaseHitChanceByComponent() {
         if (this.getShield() / 4 <= damage
             || DiceGenerator.getRandom(99) < 5) {
           this.setShield(this.getShield() - 1);
-          return new ShipDamage(0, "Attack hit the shield!");
+          return new ShipDamage(ShipDamage.NO_DAMAGE,
+              "Attack hit the shield!");
         }
       }
       break;
@@ -951,13 +956,20 @@ private int increaseHitChanceByComponent() {
     case WEAPON_ECM_TORPEDO: {
       damage = weapon.getDamage();
       this.setShield(this.getShield() - damage);
-      return new ShipDamage(0, "Attacked damage shield by " + damage + "!");
+      return new ShipDamage(ShipDamage.NO_DAMAGE,
+          "Attacked damage shield by " + damage + "!");
     }
     default:
       /* Not a weapon */break;
     }
-    ShipDamage shipDamage = new ShipDamage(-1,
+    ShipDamage shipDamage;
+    if (damage > 0) {
+      shipDamage = new ShipDamage(ShipDamage.DAMAGED,
         "Attack hit causing " + damage + " damage!");
+    } else {
+      shipDamage = new ShipDamage(ShipDamage.NO_DAMAGE,
+          "Attack hit but caused no damage!");
+    }
     while (damage > 0) {
       damage = damageComponent(damage, shipDamage);
     }

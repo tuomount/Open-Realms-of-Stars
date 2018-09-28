@@ -14,6 +14,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
+import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  *
@@ -213,6 +214,72 @@ public class PlanetTest {
     planet.bombOneBuilding();
     assertEquals(6, planet.getNumberOfBuildings());
     assertEquals(30, planet.getCulture());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testOrbitalNuke() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    planet.setGroundSize(8);
+    planet.setRadiationLevel(1);
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getName()).thenReturn("Random building");
+    Mockito.when(building.getProdCost()).thenReturn(10);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.setWorkers(Planet.FOOD_FARMERS, 8);
+    DiceGenerator.initializeGenerators(0, 1, 10);
+    String str = planet.nukem(20, "Orbital nuke");
+    assertEquals("Orbital nuke killed 2 population and destroyed 2 buildings!"
+        + " Radiation level rised on planet surface to 2.", str);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testOrbitalAntimaterBomb() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    planet.setGroundSize(8);
+    planet.setRadiationLevel(1);
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getName()).thenReturn("Random building");
+    Mockito.when(building.getProdCost()).thenReturn(10);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.setWorkers(Planet.FOOD_FARMERS, 8);
+    DiceGenerator.initializeGenerators(0, 0, 0, 0, 0, 10);
+    String str = planet.nukem(80, "Orbital antimatter bomb");
+    assertEquals("Orbital antimatter bomb killed 8 population and destroyed 5 buildings!"
+        + " Radiation level rised on planet surface to 2.", str);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testOrbitalNeutronBomb() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    planet.setGroundSize(8);
+    planet.setRadiationLevel(1);
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getName()).thenReturn("Random building");
+    Mockito.when(building.getProdCost()).thenReturn(10);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.setWorkers(Planet.FOOD_FARMERS, 8);
+    DiceGenerator.initializeGenerators(0, 0, 0, 0, 0, 10);
+    String str = planet.nukem(100, "Orbital neutron bomb");
+    assertEquals("Orbital neutron bomb killed 8 population and destroyed 4 buildings!"
+        + " Radiation level rised on planet surface to 2.", str);
   }
 
   @Test

@@ -202,9 +202,9 @@ public class PlanetBombingView extends BlackPanel {
   private StarMap starMap;
 
   /**
-   * Has nukes launched or not
+   * Text for nuking. Null if nukes were not used.
    */
-  private boolean nuked;
+  private String nukeText;
 
   /**
    * Constructor for PLanet bombing view. This view is used when
@@ -225,7 +225,7 @@ public class PlanetBombingView extends BlackPanel {
     MusicPlayer.play(MusicPlayer.FIGHT_THEME01);
     aiControlled = false;
     allAi = false;
-    nuked = false;
+    nukeText = null;
     // Background image
     imgBase = new BigImagePanel(planet, true, null);
     this.setLayout(new BorderLayout());
@@ -563,9 +563,8 @@ public class PlanetBombingView extends BlackPanel {
         if (comp.getType() == ShipComponentType.ORBITAL_NUKE) {
           imgBase.setAnimation(new PlanetAnimation(
               PlanetAnimation.ANIMATION_TYPE_NUKE_AIM, 0, 0, 1, 1));
-          planet.nukem();
+          nukeText = planet.nukem(comp.getDamage(), comp.getName());
           textLogger.addLog(ship.getName() + " nukes the planet!");
-          nuked = true;
         }
         if (comp.getType() == ShipComponentType.ORBITAL_BOMBS) {
           imgBase.setAnimation(new PlanetAnimation(
@@ -653,7 +652,7 @@ public class PlanetBombingView extends BlackPanel {
             exitLoop = true;
             if (starMap != null) {
               NewsData news = NewsFactory.makePlanetConqueredNews(attacker,
-                  defender, planet, nuked);
+                  defender, planet, nukeText);
               starMap.getNewsCorpData().addNews(news);
               EventOnPlanet event = new EventOnPlanet(
                   EventType.PLANET_CONQUERED,
@@ -695,7 +694,7 @@ public class PlanetBombingView extends BlackPanel {
           PlayerInfo defender = planet.getPlanetPlayerInfo();
           if (attackBombOrTroops() && starMap != null) {
             NewsData news = NewsFactory.makePlanetConqueredNews(attacker,
-                defender, planet, nuked);
+                defender, planet, nukeText);
             starMap.getNewsCorpData().addNews(news);
             EventOnPlanet event = new EventOnPlanet(EventType.PLANET_CONQUERED,
                 planet.getCoordinate(), planet.getName(),
@@ -733,7 +732,7 @@ public class PlanetBombingView extends BlackPanel {
               if (starMap != null) {
                 starMap.getNewsCorpData().addNews(
                     NewsFactory.makePlanetConqueredNews(attacker, defender,
-                        planet, nuked));
+                        planet, nukeText));
               }
             }
           }

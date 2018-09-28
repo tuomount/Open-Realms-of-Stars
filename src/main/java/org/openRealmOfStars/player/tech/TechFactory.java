@@ -50,13 +50,13 @@ public final class TechFactory {
    */
   public static final String[] COMBAT_TECH_LEVEL3_NAMES = {"Laser Mk3",
       "Railgun Mk3", "Photon torpedo Mk3", "ECM torpedo Mk1",
-      "HE missile Mk1" };
+      "HE missile Mk1", "Orbital bombs Mk1"};
   /**
    * Combat tech names for level 4
    */
   public static final String[] COMBAT_TECH_LEVEL4_NAMES = {"Laser Mk4",
       "Railgun Mk4", "Photon torpedo Mk4", "ECM torpedo Mk2", "HE missile Mk2",
-      "Orbital bombs Mk1" };
+      "Orbital nuke" };
   /**
    * Combat tech names for level 5
    */
@@ -68,25 +68,25 @@ public final class TechFactory {
    */
   public static final String[] COMBAT_TECH_LEVEL6_NAMES = {"Phasors Mk1",
       "Massdrive Mk1", "Photon torpedo Mk6", "ECM torpedo Mk4",
-      "HE missile Mk4" };
+      "HE missile Mk4", "Orbital fusion bomb" };
   /**
    * Combat tech names for level 7
    */
   public static final String[] COMBAT_TECH_LEVEL7_NAMES = {"Phasors Mk2",
       "Massdrive Mk2", "Photon torpedo Mk7", "ECM torpedo Mk5",
-      "HE missile Mk5", "Shock trooper module" };
+      "HE missile Mk5", "Shock trooper module", "Orbital antimatter bomb" };
   /**
    * Combat tech names for level 8
    */
   public static final String[] COMBAT_TECH_LEVEL8_NAMES = {"Phasors Mk3",
       "Massdrive Mk3", "Photon torpedo Mk8", "ECM torpedo Mk6",
-      "HE missile Mk6", "Orbital nuke" };
+      "HE missile Mk6", "Orbital smart bombs"};
   /**
    * Combat tech names for level 9
    */
   public static final String[] COMBAT_TECH_LEVEL9_NAMES = {
       "Antimatter beam Mk1", "Massdrive Mk4", "Photon torpedo Mk9",
-      "ECM torpedo Mk7", "HE missile Mk7", "Orbital smart bombs" };
+      "ECM torpedo Mk7", "HE missile Mk7", "Orbital neutron bomb" };
   /**
    * Combat tech names for level 10
    */
@@ -418,6 +418,8 @@ public final class TechFactory {
             || techName.startsWith("Orbital smart bomb")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_BOMB));
         } else if (techName.startsWith("Orbital nuke")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_NUKE));
+        } else if (techName.startsWith("Mini nuke")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_NUKE));
         } else if (techName.startsWith("Planetary invasion module")
             || techName.startsWith("Shock trooper module")) {

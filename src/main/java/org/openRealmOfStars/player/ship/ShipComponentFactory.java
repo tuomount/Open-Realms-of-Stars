@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 152;
+  private static final int MAX_SHIPCOMPONENT = 155;
 
   /**
    * Component Ion drive Mk1
@@ -801,6 +801,19 @@ public final class ShipComponentFactory {
    */
   public static final int COMPONENT_FIGHTER_BAY_MK4 = 151;
 
+  /**
+   * Orbital fusion bomb
+   */
+  public static final int COMPONENT_ORBITAL_FUSION_BOMB = 152;
+  /**
+   * Orbital antimatter bomb
+   */
+  public static final int COMPONENT_ORBITAL_ANTIMATTER_BOMB = 153;
+  /**
+   * Orbital neutron bomb
+   */
+  public static final int COMPONENT_ORBITAL_NEUTRON_BOMB = 154;
+
 /**
    * Create ShipComponent with matching name
    * @param name Ship component name
@@ -1291,6 +1304,15 @@ public final class ShipComponentFactory {
     case COMPONENT_FIGHTER_BAY_MK4:
       tmp = createOtherModule(index);
       break; // Fighter bay Mk4
+    case COMPONENT_ORBITAL_FUSION_BOMB:
+      tmp = createElectronics(index);
+      break; // ORBITAL FUSION BOMB
+    case COMPONENT_ORBITAL_ANTIMATTER_BOMB:
+      tmp = createElectronics(index);
+      break; // ORBITAL FISSION BOMB
+    case COMPONENT_ORBITAL_NEUTRON_BOMB:
+      tmp = createElectronics(index);
+      break; // ORBITAL NEUTRON BOMB
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -1795,10 +1817,10 @@ public final class ShipComponentFactory {
       tmp.setDamage(90); // 90% more better fighter
     }
     if (index == COMPONENT_ORBITAL_NUKE) {
-      tmp = new ShipComponent(index, "Orbital nuke", 10, 10,
+      tmp = new ShipComponent(index, "Orbital nuke", 8, 8,
           ShipComponentType.ORBITAL_NUKE);
       tmp.setEnergyRequirement(0);
-      tmp.setDamage(100);
+      tmp.setDamage(20);
     }
     if (index == COMPONENT_ANTIMATTER_SOURCE_MK2) {
       tmp = new ShipComponent(index, "Antimatter source Mk2", 11, 8,
@@ -1894,6 +1916,24 @@ public final class ShipComponentFactory {
           ShipComponentType.ESPIONAGE_MODULE);
       tmp.setEnergyRequirement(2);
       tmp.setEspionageBonus(6);
+    }
+    if (index == COMPONENT_ORBITAL_FUSION_BOMB) {
+      tmp = new ShipComponent(index, "Orbital fusion bomb", 9, 9,
+          ShipComponentType.ORBITAL_NUKE);
+      tmp.setEnergyRequirement(0);
+      tmp.setDamage(50);
+    }
+    if (index == COMPONENT_ORBITAL_ANTIMATTER_BOMB) {
+      tmp = new ShipComponent(index, "Orbital antimatter bomb", 11, 11,
+          ShipComponentType.ORBITAL_NUKE);
+      tmp.setEnergyRequirement(0);
+      tmp.setDamage(80);
+    }
+    if (index == COMPONENT_ORBITAL_NEUTRON_BOMB) {
+      tmp = new ShipComponent(index, "Orbital neutron bomb", 13, 13,
+          ShipComponentType.ORBITAL_NUKE);
+      tmp.setEnergyRequirement(0);
+      tmp.setDamage(100);
     }
     return tmp;
 

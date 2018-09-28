@@ -733,7 +733,7 @@ public class NewsFactoryTest {
     Mockito.when(defender.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(planet.getImageInstructions()).thenReturn(
         PlanetTypes.CARBONWORLD1.getImageInstructions());
-    NewsData news = NewsFactory.makePlanetConqueredNews(aggressor, defender, planet, false);
+    NewsData news = NewsFactory.makePlanetConqueredNews(aggressor, defender, planet, null);
     assertEquals(true, news.getNewsText().contains(
         aggressor.getEmpireName()));
     assertEquals(true, news.getNewsText().contains(
@@ -754,7 +754,8 @@ public class NewsFactoryTest {
     PlayerInfo defender = Mockito.mock(PlayerInfo.class);
     Mockito.when(defender.getEmpireName()).thenReturn("Democracy of Defender");
     Mockito.when(defender.getRace()).thenReturn(SpaceRace.HUMAN);
-    NewsData news = NewsFactory.makePlanetConqueredNews(aggressor, defender, planet, true);
+    NewsData news = NewsFactory.makePlanetConqueredNews(aggressor, defender, planet,
+        "nuclear bombs, raised to 9");
     assertEquals(true, news.getNewsText().contains(
         aggressor.getEmpireName()));
     assertEquals(true, news.getNewsText().contains(

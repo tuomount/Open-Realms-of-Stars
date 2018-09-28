@@ -122,13 +122,18 @@ public final class ShipGenerator {
           if (design.getHull().getSize() == ShipSize.SMALL) {
             scores[i] = scores[i] + comp.getDamage() / 20;
           }
-          if (player.getRace() == SpaceRace.CENTAURS) {
+          if (player.getRace() == SpaceRace.CENTAURS
+              || player.getRace() == SpaceRace.HOMARIANS) {
             // Centaurs do not like nukes
             scores[i] = scores[i] - 15;
           }
           if (player.getRace() == SpaceRace.MECHIONS) {
             // Mechions use nukes more likely
             scores[i] = scores[i] + 5;
+          }
+          if (player.getRace() == SpaceRace.CHIRALOIDS) {
+            // Chiraloids use nukes more likely
+            scores[i] = scores[i] + 25;
           }
           if (player.getRace() == SpaceRace.GREYANS) {
             // Greyans use nukes more likely
@@ -310,7 +315,19 @@ public final class ShipGenerator {
         Tech bombTech = TechList.getBestTech(combatTechs, "Orbital bombs");
         Tech  smartTech = TechList.getBestTech(combatTechs,
             "Orbital smart bombs");
-        Tech nukeTech = TechList.getBestTech(combatTechs, "Orbital nuke");
+        Tech nukeTech = TechList.getBestTech(combatTechs,
+            "Orbital neutron bomb");
+        if (nukeTech == null) {
+          nukeTech = TechList.getBestTech(combatTechs,
+              "Orbital antimatter bomb");
+        }
+        if (nukeTech == null) {
+          nukeTech = TechList.getBestTech(combatTechs,
+              "Orbital fusion bomb");
+        }
+        if (nukeTech == null) {
+          nukeTech = TechList.getBestTech(combatTechs, "Orbital nuke");
+        }
         if (smartTech != null) {
           result.addComponent(ShipComponentFactory.createByName(
                   smartTech.getComponent()));
@@ -443,6 +460,11 @@ public final class ShipGenerator {
             .add(ShipComponentFactory.createByName(elecTech.getComponent()));
       }
       weapTech = TechList.getBestTech(combatTechs, "Orbital nuke");
+      if (weapTech != null) {
+        components
+            .add(ShipComponentFactory.createByName(weapTech.getComponent()));
+      }
+      weapTech = TechList.getBestTech(combatTechs, "Mini nuke");
       if (weapTech != null) {
         components
             .add(ShipComponentFactory.createByName(weapTech.getComponent()));
@@ -730,6 +752,9 @@ public final class ShipGenerator {
         Tech  smartTech = TechList.getBestTech(combatTechs,
             "Orbital smart bombs");
         Tech nukeTech = TechList.getBestTech(combatTechs, "Orbital nuke");
+        if (nukeTech == null) {
+          nukeTech = TechList.getBestTech(combatTechs, "Mini nuke");
+        }
         if (smartTech != null) {
           result.addComponent(ShipComponentFactory.createByName(
                   smartTech.getComponent()));

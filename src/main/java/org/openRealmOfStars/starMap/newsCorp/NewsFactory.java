@@ -781,11 +781,12 @@ public final class NewsFactory {
    * @param attacker Player who is conquering
    * @param defender Player who is defending
    * @param planet Which planet was conquered
-   * @param nuked Was planet nuked or not
+   * @param nukeText Null if planet was not nuked.
+   *        Otherwise description about nuke.
    * @return NewsData
    */
   public static NewsData makePlanetConqueredNews(final PlayerInfo attacker,
-      final PlayerInfo defender, final Planet planet, final boolean nuked) {
+      final PlayerInfo defender, final Planet planet, final String nukeText) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
@@ -815,11 +816,9 @@ public final class NewsFactory {
     sb.append(". Defender ");
     sb.append(defender.getEmpireName());
     sb.append(" was defeated eventually. ");
-    if (nuked) {
-      sb.append(" All the population was killed by massive usage of"
-          + " nuclear weapons. ");
-      sb.append(" Radiation levels on planet has been raised to "
-          + planet.getTotalRadiationLevel() + ". ");
+    if (nukeText != null) {
+      sb.append(" ");
+      sb.append(nukeText);
     } else {
       sb.append(" Last remains of ");
       sb.append(defender.getRace().getNameSingle());

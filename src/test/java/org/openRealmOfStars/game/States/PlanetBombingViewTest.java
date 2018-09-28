@@ -82,7 +82,7 @@ public class PlanetBombingViewTest {
 
     PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRace.SPORKS, 2, 1);
     attackerPlayerInfo.getTechList().addTech(TechFactory.createCombatTech(
-        "Orbital bombs Mk1", 4));
+        "Orbital bombs Mk1", 3));
     attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
         "Destroyer Mk1", 1));
     Ship ship = null;
@@ -110,6 +110,39 @@ public class PlanetBombingViewTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testBombingNuke() {
+    Planet planet = Mockito.mock(Planet.class);
+
+    PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRace.SPORKS, 2, 1);
+    attackerPlayerInfo.getTechList().addTech(TechFactory.createCombatTech(
+        "Orbital nuke", 4));
+    attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
+        "Destroyer Mk1", 1));
+    Ship ship = null;
+    int loop = 0;
+    do {
+      ShipDesign design = ShipGenerator.createBattleShip(attackerPlayerInfo,
+          ShipSize.MEDIUM, true);
+      ship = new Ship(design);
+      loop++;
+      // There should be a bomber on first try
+      assertEquals(1, loop);
+    } while (!ship.hasBombs());
+    Fleet fleet = new Fleet(ship, 5, 5);
+    int attackerPlayerIndex = 0;
+    ActionListener listener = Mockito.mock(ActionListener.class);
+
+    planetBombingView = new PlanetBombingView(planet, fleet, 
+        attackerPlayerInfo, attackerPlayerIndex, listener);
+    for (int i = 0; i < ship.getNumberOfComponents(); i++) {
+       planetBombingView.shipComponentUsage(i);
+    }
+    int index = planetBombingView.getUsedComponentIndex();
+    assertEquals(ShipComponentType.ORBITAL_NUKE, ship.getComponent(index).getType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testAiConquering() {
     PlayerInfo defender = new PlayerInfo(SpaceRace.CENTAURS, 3, 2);
     Planet planet = new Planet(new Coordinate(5, 5), "Testopia", 1, false);
@@ -118,7 +151,7 @@ public class PlanetBombingViewTest {
 
     PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRace.SPORKS, 3, 1);
     attackerPlayerInfo.getTechList().addTech(TechFactory.createCombatTech(
-        "Orbital bombs Mk1", 4));
+        "Orbital bombs Mk1", 3));
     attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
         "Destroyer Mk1", 1));
     attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
@@ -156,7 +189,7 @@ public class PlanetBombingViewTest {
 
     PlayerInfo attackerPlayerInfo = new PlayerInfo(SpaceRace.SPORKS, 3, 1);
     attackerPlayerInfo.getTechList().addTech(TechFactory.createCombatTech(
-        "Orbital bombs Mk1", 4));
+        "Orbital bombs Mk1", 3));
     attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(
         "Destroyer Mk1", 1));
     attackerPlayerInfo.getTechList().addTech(TechFactory.createHullTech(

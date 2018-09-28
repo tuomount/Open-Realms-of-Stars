@@ -1885,18 +1885,104 @@ public class Planet {
   /**
    * Drop nuke on planet. Increased rad, kills all workers, makes planet
    * uncolonized. Culture drops to 1/10.
+   * @param strength Nuke strength from 0-100
+   * @param bombName Bomb name for different type of explosions
+   * @return Description about bombs destruction power.
    */
-  public void nukem() {
-    if (radiationLevel < 10) {
-      radiationLevel++;
+  public String nukem(final int strength, final String bombName) {
+    StringBuilder sb = new StringBuilder();
+    int dead = getGroundSize() * strength / 100;
+    if (dead < 2) {
+      dead = 2;
     }
-    for (int i = 0; i < workers.length; i++) {
-      workers[i] = 0;
+    int buildingsToDestroy = 0;
+    int buildingsDestroyed = 0;
+    if (bombName.equals("Orbital nuke")
+        || bombName.equals("Orbital fusion bomb")) {
+      buildingsToDestroy = getGroundSize() * strength / 100;
+      if (buildingsToDestroy < 2) {
+        buildingsToDestroy = 2;
+      }
+      // Dropping nukes on planet really drops the culture on planet
+      setCulture(getCulture() / 10 - strength);
+      buildingsDestroyed = 0;
+      for (int i = 0; i < buildingsToDestroy; i++) {
+        if (bombOneBuilding()) {
+          buildingsDestroyed++;
+        }
+      }
+      sb.append(bombName + " killed " + dead + " population");
+      if (buildingsDestroyed > 0) {
+        sb.append(" and destroyed " + buildingsDestroyed + " buildings!");
+      } else {
+        sb.append("!");
+      }
+      if (radiationLevel < 10 && DiceGenerator.getRandom(100) < strength) {
+        radiationLevel++;
+        sb.append(" Radiation level rised on planet surface to "
+        + radiationLevel + ".");
+      }
     }
-    planetOwnerInfo = null;
-    planetOwner = -1;
-    // Dropping nukes on planet really drops the culture on planet
-    setCulture(getCulture() / 10);
+    if (bombName.equals("Orbital antimatter bomb")) {
+      dead = getGroundSize();
+      buildingsToDestroy = getGroundSize() * strength / 100;
+      if (buildingsToDestroy < 2) {
+        buildingsToDestroy = 2;
+      }
+      // Dropping nukes on planet really drops the culture on planet
+      setCulture(getCulture() / 10 - strength);
+      buildingsDestroyed = 0;
+      for (int i = 0; i < buildingsToDestroy; i++) {
+        if (bombOneBuilding()) {
+          buildingsDestroyed++;
+        }
+      }
+      sb.append(bombName + " killed " + dead + " population");
+      if (buildingsDestroyed > 0) {
+        sb.append(" and destroyed " + buildingsDestroyed + " buildings!");
+      } else {
+        sb.append("!");
+      }
+      if (radiationLevel < 10) {
+        radiationLevel++;
+        sb.append(" Radiation level rised on planet surface to "
+        + radiationLevel + ".");
+      }
+    }
+    if (bombName.equals("Orbital neutron bomb")) {
+      dead = getGroundSize();
+      buildingsToDestroy = getGroundSize() / 2;
+      if (buildingsToDestroy < 2) {
+        buildingsToDestroy = 2;
+      }
+      // Dropping nukes on planet really drops the culture on planet
+      setCulture(getCulture() / 10 - strength / 2);
+      buildingsDestroyed = 0;
+      for (int i = 0; i < buildingsToDestroy; i++) {
+        if (bombOneBuilding()) {
+          buildingsDestroyed++;
+        }
+      }
+      sb.append(bombName + " killed " + dead + " population");
+      if (buildingsDestroyed > 0) {
+        sb.append(" and destroyed " + buildingsDestroyed + " buildings!");
+      } else {
+        sb.append("!");
+      }
+      if (radiationLevel < 10) {
+        radiationLevel++;
+        sb.append(" Radiation level rised on planet surface to "
+        + radiationLevel + ".");
+      }
+    }
+    for (int i = 0; i < dead; i++) {
+      killOneWorker();
+    }
+    if (getTotalPopulation() == 0) {
+      planetOwnerInfo = null;
+      planetOwner = -1;
+    }
+    return sb.toString();
   }
 
   /**

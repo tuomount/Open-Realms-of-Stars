@@ -452,7 +452,8 @@ public class Diplomacy {
     if (isWar(playerIndex)) {
       result = WAR;
     }
-    if (getDiplomacyList(playerIndex).isBonusType(
+    if (getDiplomacyList(playerIndex) != null
+        && getDiplomacyList(playerIndex).isBonusType(
         DiplomacyBonusType.BOARD_PLAYER)) {
       // Always war with board player
       result = WAR;

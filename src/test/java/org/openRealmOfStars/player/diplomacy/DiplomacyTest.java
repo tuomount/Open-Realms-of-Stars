@@ -51,6 +51,26 @@ public class DiplomacyTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBasicWithBoard() {
+    Diplomacy diplomacy = new Diplomacy(4, 1, 3);
+    assertNotEquals(null, diplomacy.getDiplomacyList(0));
+    assertNotEquals(null, diplomacy.getDiplomacyList(2));
+    assertNotEquals(null, diplomacy.getDiplomacyList(3));
+    assertEquals(null, diplomacy.getDiplomacyList(1));
+    assertEquals(false,
+        diplomacy.getDiplomacyList(0).isBonusType(DiplomacyBonusType.BOARD_PLAYER));
+    assertEquals(false,
+        diplomacy.getDiplomacyList(2).isBonusType(DiplomacyBonusType.BOARD_PLAYER));
+    assertEquals(true,
+        diplomacy.getDiplomacyList(3).isBonusType(DiplomacyBonusType.BOARD_PLAYER));
+    assertEquals(0, diplomacy.getNumberOfWar());
+    diplomacy.getDiplomacyList(2).addBonus(DiplomacyBonusType.IN_WAR,
+        SpaceRace.HUMAN);
+    assertEquals(1, diplomacy.getNumberOfWar());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic2() {
     Diplomacy diplomacy = new Diplomacy(4);
     assertEquals(4, diplomacy.getDiplomacySize());

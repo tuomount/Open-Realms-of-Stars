@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.openRealmOfStars.game.States.DiplomacyView;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.espionage.Espionage;
 import org.openRealmOfStars.player.espionage.EspionageList;
@@ -99,14 +100,29 @@ public class Diplomacy {
    * Constructor for Diplomacy for one player
    * @param maxPlayers Maximum number of players when game is created
    * @param playerIndex Which player is creating the list
+   * @param boardPlayerIndex Which player is board player
    */
-  public Diplomacy(final int maxPlayers, final int playerIndex) {
+  public Diplomacy(final int maxPlayers, final int playerIndex,
+      final int boardPlayerIndex) {
     diplomacyList = new DiplomacyBonusList[maxPlayers];
     for (int i = 0; i < maxPlayers; i++) {
       if (i != playerIndex) {
         diplomacyList[i] = new DiplomacyBonusList(i);
+        if (boardPlayerIndex != -1 && boardPlayerIndex == i) {
+          diplomacyList[i].addBonus(DiplomacyBonusType.BOARD_PLAYER,
+              SpaceRace.SPACE_PIRATE);
+        }
       }
     }
+  }
+
+  /**
+   * Constructor for Diplomacy for one player
+   * @param maxPlayers Maximum number of players when game is created
+   * @param playerIndex Which player is creating the list
+   */
+  public Diplomacy(final int maxPlayers, final int playerIndex) {
+    this(maxPlayers, playerIndex, -1);
   }
 
   /**
@@ -171,7 +187,9 @@ public class Diplomacy {
    */
   public boolean isWar(final int index) {
     if (index > -1 && index < diplomacyList.length
-        && diplomacyList[index] != null) {
+        && diplomacyList[index] != null
+        && !diplomacyList[index].isBonusType(
+            DiplomacyBonusType.BOARD_PLAYER)) {
       return diplomacyList[index].isBonusType(DiplomacyBonusType.IN_WAR);
     }
     return false;
@@ -432,6 +450,11 @@ public class Diplomacy {
       result = ALLIANCE;
     }
     if (isWar(playerIndex)) {
+      result = WAR;
+    }
+    if (getDiplomacyList(playerIndex).isBonusType(
+        DiplomacyBonusType.BOARD_PLAYER)) {
+      // Always war with board player
       result = WAR;
     }
     return result;

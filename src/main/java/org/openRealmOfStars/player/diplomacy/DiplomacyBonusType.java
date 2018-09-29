@@ -100,13 +100,17 @@ public enum DiplomacyBonusType {
   /**
    * Trade fleet arrived from another realm
    */
-  TRADE_FLEET;
+  TRADE_FLEET,
+  /**
+   * Special bonus for marking board player
+   */
+  BOARD_PLAYER;
 
 
   /**
    * Number of Bonus type. This should be one larger than actual bonus types.
    */
-  public static final int MAX_BONUS_TYPE = 19;
+  public static final int MAX_BONUS_TYPE = 20;
 
   /**
    * Get ShipHullType index
@@ -133,6 +137,7 @@ public enum DiplomacyBonusType {
       case SPY_TRADE: return 16;
       case DIPLOMACY_BONUS: return 17;
       case TRADE_FLEET: return 18;
+      case BOARD_PLAYER: return 19;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -183,6 +188,8 @@ public enum DiplomacyBonusType {
       return DiplomacyBonusType.DIPLOMACY_BONUS;
     case 18:
       return DiplomacyBonusType.TRADE_FLEET;
+    case 19:
+      return DiplomacyBonusType.BOARD_PLAYER;
     default:
       throw new IllegalArgumentException("Unexpected diplomacy bonus type!");
     }

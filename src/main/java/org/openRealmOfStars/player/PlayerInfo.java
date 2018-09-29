@@ -189,13 +189,24 @@ public class PlayerInfo {
   private static final int BOARD_CONTROLLED = 2;
 
   /**
-   * Constructor player info.
+   * Constructor player info. Use this only for JUnits.
    * @param race Space Race for player
    * @param maxPlayers Maximum number of players when game is created
    * @param index Player's index in list when creating the player
    */
   public PlayerInfo(final SpaceRace race, final int maxPlayers,
       final int index) {
+    this(race, maxPlayers, index, -1);
+  }
+  /**
+   * Constructor player info. This can be used for game playing.
+   * @param race Space Race for player
+   * @param maxPlayers Maximum number of players when game is created
+   * @param index Player's index in list when creating the player
+   * @param boardPlayerIndex Board player index
+   */
+  public PlayerInfo(final SpaceRace race, final int maxPlayers,
+      final int index, final int boardPlayerIndex) {
     setTechList(new TechList());
     this.msgList = new MessageList();
     shipStatList = new ArrayList<>();
@@ -204,7 +215,7 @@ public class PlayerInfo {
     setBoard(false);
     missions = new MissionList();
     setRace(race);
-    diplomacy = new Diplomacy(maxPlayers, index);
+    diplomacy = new Diplomacy(maxPlayers, index, boardPlayerIndex);
     espionage = new Espionage(maxPlayers);
     attitude = Attitude.getRandom();
     setFakeMilitarySize(100);

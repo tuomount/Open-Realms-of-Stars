@@ -1276,13 +1276,15 @@ public class Game implements ActionListener {
    */
   public void setPlayerInfo() {
     players = new PlayerList();
+    int boardIndex = -1;
     int maxPlayers = galaxyConfig.getMaxPlayers();
     if (galaxyConfig.getSpacePiratesLevel() > 0) {
       maxPlayers++;
+      boardIndex = galaxyConfig.getMaxPlayers();
     }
     for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
       PlayerInfo info = new PlayerInfo(galaxyConfig.getRace(i),
-          maxPlayers, i);
+          maxPlayers, i, boardIndex);
       info.setGovernment(galaxyConfig.getPlayerGovernment(i));
       info.setEmpireName(galaxyConfig.getPlayerName(i));
       if (i == 0) {
@@ -1293,7 +1295,7 @@ public class Game implements ActionListener {
     if (galaxyConfig.getSpacePiratesLevel() > 0) {
       int index = galaxyConfig.getMaxPlayers();
       PlayerInfo info = new PlayerInfo(SpaceRace.SPACE_PIRATE, maxPlayers,
-          index);
+          index, boardIndex);
       info.setBoard(true);
       info.setGovernment(GovernmentType.AI);
       info.setEmpireName("Space pirates");

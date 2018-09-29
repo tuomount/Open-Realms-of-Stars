@@ -269,6 +269,12 @@ public class DiplomacyBonus {
        onlyOne = true;
        break;
      }
+     case BOARD_PLAYER: {
+       onlyOne = true;
+       bonusValue = 0;
+       bonusLasting = 255;
+       break;
+     }
      default: {
        throw new IllegalArgumentException("Unknown bonus type!!");
      }

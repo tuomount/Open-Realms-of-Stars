@@ -223,6 +223,14 @@ public class DiplomacyView extends BlackPanel {
    */
   private ShipInteriorPanel aiImg;
   /**
+   * Text counter how many screen current text has been showed.
+   */
+  private int textCounter;
+  /**
+   * Last shown speech type.
+   */
+  private SpeechType lastSpeechType;
+  /**
    * Diplomacy View constructor
    * @param info1 Human player PlayerInfo
    * @param info2 AI player PlayerInfo
@@ -614,6 +622,7 @@ public class DiplomacyView extends BlackPanel {
    * @param type Speech Type
    */
   public void updatePanel(final SpeechType type) {
+    lastSpeechType = type;
     int humanIndex = starMap.getPlayerList().getIndex(human);
     String text = ai.getDiplomacy().generateRelationText(humanIndex);
     likenessLabel.setText(text);
@@ -628,6 +637,7 @@ public class DiplomacyView extends BlackPanel {
       text = SpeechFactory.createLine(type, ai.getRace(), null).getLine();
     }
     infoText.setText(text);
+    textCounter = 0;
     this.repaint();
   }
 
@@ -834,6 +844,18 @@ public class DiplomacyView extends BlackPanel {
   public void handleAction(final ActionEvent arg0) {
     if (GameCommands.COMMAND_ANIMATION_TIMER.equals(arg0.getActionCommand())) {
       aiImg.repaint();
+      textCounter++;
+      if (textCounter > 40) {
+        textCounter = 40;
+        if (lastSpeechType == SpeechType.AGREE
+            || lastSpeechType == SpeechType.DECLINE
+            || lastSpeechType == SpeechType.OFFER_ACCEPTED
+            || lastSpeechType == SpeechType.OFFER_REJECTED
+            || lastSpeechType == SpeechType.NOTHING_TO_TRADE) {
+          infoText.setText("");
+          infoText.repaint();
+        }
+      }
     }
     if (GameCommands.COMMAND_MINUS_HUMAN_CREDIT.equals(
         arg0.getActionCommand())) {

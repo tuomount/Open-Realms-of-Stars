@@ -453,14 +453,24 @@ public class Planet {
     if (prodReq < 0) {
       prodReq = 0;
     }
+    boolean hasCreditRush = false;
+    boolean hasPopulationRush = false;
+    if (info.getRace().hasCreditRush()
+        || info.getGovernment().hasCreditRush()) {
+      hasCreditRush = true;
+    }
+    if (info.getRace().hasPopulationRush()
+        || info.getGovernment().hasPopulationRush()) {
+      hasPopulationRush = true;
+    }
     int populationCost = rushCost / Planet.POPULATION_RUSH_COST + 1;
-    if (rushCost > 0 && creditRush && info.getRace().hasCreditRush()
+    if (rushCost > 0 && creditRush && hasCreditRush
           && rushCost <= info.getTotalCredits()) {
       info.setTotalCredits(info.getTotalCredits() - rushCost);
       prodResource = prodResource + prodReq;
       metal = metal + metalReq;
     }
-    if (rushCost > 0 && !creditRush && info.getRace().hasPopulationRush()
+    if (rushCost > 0 && !creditRush && hasPopulationRush
           && populationCost < getTotalPopulation()) {
       for (int i = 0; i < populationCost; i++) {
         killOneWorker();

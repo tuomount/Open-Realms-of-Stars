@@ -287,7 +287,17 @@ public final class PlanetHandling {
             planet.getUnderConstruction());
         int rushChange = 0;
         boolean creditRush = true;
+        boolean hasCreditRush = false;
+        boolean hasPopulationRush = false;
         if (info.getRace().hasCreditRush()
+            || info.getGovernment().hasCreditRush()) {
+          hasCreditRush = true;
+        }
+        if (info.getRace().hasPopulationRush()
+            || info.getGovernment().hasPopulationRush()) {
+          hasPopulationRush = true;
+        }
+        if (hasCreditRush
             && rushCost < info.getTotalCredits() && buildingTime > 1
             && rushCost > 0) {
           Mission mission = info.getMissions().getMissionForPlanet(
@@ -320,7 +330,7 @@ public final class PlanetHandling {
             rushChange = rushChange + 5;
           }
         }
-        if (info.getRace().hasPopulationRush()
+        if (hasPopulationRush
             && rushPopulation < planet.getTotalPopulation() && buildingTime > 1
             && rushChange == 0 && rushCost > 0) {
           creditRush = false;

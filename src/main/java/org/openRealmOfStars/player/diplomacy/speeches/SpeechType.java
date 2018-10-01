@@ -118,7 +118,11 @@ public enum SpeechType {
   /**
    * Offer espionage trade for 20 turns.
    */
-  OFFER_SPY_TRADE;
+  OFFER_SPY_TRADE,
+  /**
+   * Offer trade embargo for 20 turns
+   */
+  TRADE_EMBARGO;
 
 
 
@@ -153,6 +157,7 @@ public enum SpeechType {
       case DEFESIVE_PACT:    return "Defensive pact";
       case ASK_MOVE_SPY:     return "Ask move spy fleet";
       case OFFER_SPY_TRADE:  return "Offer spy trade";
+      case TRADE_EMBARGO:    return "Offer trade embargo";
       default: return "Unknown";
     }
   }

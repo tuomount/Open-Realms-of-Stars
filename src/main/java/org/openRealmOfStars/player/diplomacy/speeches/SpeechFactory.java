@@ -69,6 +69,7 @@ public final class SpeechFactory {
       case DEFESIVE_PACT: return createDefensivePactLine(race);
       case ASK_MOVE_SPY: return createAskMoveSpyFleetLine(race, dynamicContent);
       case OFFER_SPY_TRADE: return createSpyTradeLine(race);
+      case TRADE_EMBARGO: return createEmbargoLine(race, dynamicContent);
       default: return null;
     }
   }
@@ -675,6 +676,45 @@ public final class SpeechFactory {
           "Yarr, Are you interested in espionage trade for 20 turns?");
       case CHIRALOIDS: return new SpeechLine(type,
           "Are you willing to trade intel for 20 turns?");
+      default: return null;
+    }
+  }
+
+  /**
+   * Create Trade embargo SpeechLine according the race
+   * @param race SpaceRace
+   * @param empire Realm against who to make trade embargo.
+   * @return SpeechLine or null if creating line fails
+   */
+  private static SpeechLine createEmbargoLine(final SpaceRace race,
+      final String empire) {
+    SpeechType type = SpeechType.TRADE_EMBARGO;
+    switch (race) {
+      case CENTAURS: return new SpeechLine(type,
+          "Let's do trade embargo for 20 turns for " + empire + "?");
+      case GREYANS: return new SpeechLine(type,
+          "Let's make embargo for 20 turns against " + empire + "?");
+      case HUMAN: return new SpeechLine(type,
+          "How about trade embargo for 20 turns against " + empire + "?");
+      case MECHIONS: return new SpeechLine(type,
+          "Trade embargo? 20 turns? " + empire + "?");
+      case MOTHOIDS: return new SpeechLine(type,
+          "We should turn our backs for 20 turns against " + empire + ".");
+      case SPORKS: return new SpeechLine(type,
+          "How about embargo for 20 turns for " + empire + "?");
+      case TEUTHIDAES: return new SpeechLine(type,
+          "Are you interested in embargo for 20 against " + empire + "?");
+      case SCAURIANS: return new SpeechLine(type,
+          "Let's build embargo of trade for 20 turns for " + empire + "?");
+      case HOMARIANS: return new SpeechLine(type,
+          "We should work together embargo for 20 turns against " + empire
+              + "?");
+      case SPACE_PIRATE: return new SpeechLine(type,
+          "Yarr, Are you interested in trade emparbo for 20 turns against "
+              + empire + "?");
+      case CHIRALOIDS: return new SpeechLine(type,
+          "Are you willing make trade embargo for 20 turns against "
+              + empire + "?");
       default: return null;
     }
   }

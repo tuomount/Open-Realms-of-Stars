@@ -111,6 +111,9 @@ public class SpeechFactoryTest {
       line = SpeechFactory.createLine(SpeechType.NOTHING_TO_TRADE, race, null);
       assertNotEquals(null, line);
       assertEquals(SpeechType.NOTHING_TO_TRADE, line.getType());
+      line = SpeechFactory.createLine(SpeechType.TRADE_EMBARGO, race, "Empire of test");
+      assertEquals(SpeechType.TRADE_EMBARGO, line.getType());
+      assertEquals(true, line.getLine().contains("Empire of test"));
     }
   }
 

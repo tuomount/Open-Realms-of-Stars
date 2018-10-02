@@ -74,6 +74,10 @@ public enum NegotiationType {
   /**
    * Spy trade offering
    */
-  SPY_TRADE
+  SPY_TRADE,
+  /**
+   * Trade embargo offering
+   */
+  TRADE_EMBARGO
 
 }

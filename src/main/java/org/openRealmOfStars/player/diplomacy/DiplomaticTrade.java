@@ -324,6 +324,19 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Generate equal trade between two players.
+   * @param realm Realm who to cause trade embargo
+   */
+  public void generateTradeEmbargoOffer(final PlayerInfo realm) {
+    firstOffer = new NegotiationList();
+    firstOffer.add(new NegotiationOffer(NegotiationType.TRADE_EMBARGO,
+        realm));
+    secondOffer = new NegotiationList();
+    secondOffer.add(new NegotiationOffer(NegotiationType.TRADE_EMBARGO,
+        realm));
+  }
+
+  /**
    * Generate Recall fleet offer. Second player should
    * recall his or her fleet.
    * @param fleet Fleet which to recall
@@ -380,6 +393,21 @@ public class DiplomaticTrade {
     }
   }
 
+  /**
+   * Check if trade embargo is about to be possible
+   * @return Realm index with embargo is possible, -1 if not.
+   */
+  private int getPossibleTradeEmbargo() {
+    PlayerInfo info = starMap.getPlayerByIndex(first);
+    int leastLiked = info.getDiplomacy().getLeastLiking();
+    if (leastLiked != second
+        && info.getDiplomacy().getDiplomacyList(leastLiked) != null
+        && info.getDiplomacy().getDiplomacyList(leastLiked)
+           .getNumberOfMeetings() > 0) {
+      return leastLiked;
+    }
+    return -1;
+  }
   /**
    * Offer by aggressive attitude.
    * This makes war quite easily and can make demands.
@@ -440,12 +468,18 @@ public class DiplomaticTrade {
       }
     }
     int value = DiceGenerator.getRandom(100);
+    int embargoIndex = getPossibleTradeEmbargo();
     if (value < 25) {
       generateMapTrade(TRADE);
     } else if (value < 50) {
       generateTechTrade(TRADE);
     } else {
-      generateTechDemand(agree);
+      if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+        PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+        generateTradeEmbargoOffer(embagoed);
+      } else {
+        generateTechDemand(agree);
+      }
     }
   }
 

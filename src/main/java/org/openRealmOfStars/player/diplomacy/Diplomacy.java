@@ -339,13 +339,15 @@ public class Diplomacy {
 
   /**
    * Get least liked player index.
+   * Does not check board players.
    * @return Least liked player index
    */
   public int getLeastLiking() {
     int index = -1;
     int likingForIndex = VERY_HIGH_LIKE;
     for (int i = 0; i < diplomacyList.length; i++) {
-      if (diplomacyList[i] != null) {
+      if (diplomacyList[i] != null
+          && !diplomacyList[i].isBonusType(DiplomacyBonusType.BOARD_PLAYER)) {
         int liking = getLiking(i);
         if (liking < likingForIndex) {
           index = i;

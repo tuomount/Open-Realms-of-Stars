@@ -556,10 +556,18 @@ public class DiplomaticTrade {
       }
     }
     int value = DiceGenerator.getRandom(100);
-    if (value < 40) {
+    int embargoIndex = getPossibleTradeEmbargo();
+    if (value < 30) {
       generateMapTrade(TRADE);
-    } else {
+    } else if (value < 80) {
       generateTechTrade(TRADE);
+    } else {
+      if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+        PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+        generateTradeEmbargoOffer(embagoed);
+      } else {
+        generateTechDemand(agree);
+      }
     }
   }
   /**
@@ -618,8 +626,14 @@ public class DiplomaticTrade {
       }
     }
     int value = DiceGenerator.getRandom(100);
+    int embargoIndex = getPossibleTradeEmbargo();
     if (value < 45) {
-      generateMapTrade(TRADE);
+      if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+        PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+        generateTradeEmbargoOffer(embagoed);
+      } else {
+        generateMapTrade(TRADE);
+      }
     } else if (value < 90) {
       generateTechTrade(TRADE);
     } else {
@@ -687,12 +701,18 @@ public class DiplomaticTrade {
       }
     }
     int value = DiceGenerator.getRandom(100);
-    if (value < 40) {
+    int embargoIndex = getPossibleTradeEmbargo();
+    if (value < 30) {
       generateMapTrade(TRADE);
-    } else if (value < 80) {
+    } else if (value < 60) {
       generateMapTrade(BUY);
     } else {
-      generateTechTrade(TRADE);
+      if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+        PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+        generateTradeEmbargoOffer(embagoed);
+      } else {
+        generateTechTrade(TRADE);
+      }
     }
   }
 
@@ -756,12 +776,18 @@ public class DiplomaticTrade {
       }
     }
     int value = DiceGenerator.getRandom(100);
+    int embargoIndex = getPossibleTradeEmbargo();
     if (value < 40) {
       generateTechTrade(TRADE);
     } else if (value < 80) {
       generateTechTrade(BUY);
     } else {
-      generateMapTrade(TRADE);
+      if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+        PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+        generateTradeEmbargoOffer(embagoed);
+      } else {
+        generateMapTrade(TRADE);
+      }
     }
   }
 
@@ -824,7 +850,8 @@ public class DiplomaticTrade {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
     }
-    int value = DiceGenerator.getRandom(5);
+    int value = DiceGenerator.getRandom(6);
+    int embargoIndex = getPossibleTradeEmbargo();
     switch (value) {
       case 0:
       default: {
@@ -844,6 +871,15 @@ public class DiplomaticTrade {
       }
       case 5: {
         generateTechTrade(SELL); break;
+      }
+      case 6: {
+        if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+          PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+          generateTradeEmbargoOffer(embagoed);
+        } else {
+          generateTechTrade(SELL);
+        }
+        break;
       }
     }
   }
@@ -908,8 +944,14 @@ public class DiplomaticTrade {
       }
     }
     int value = DiceGenerator.getRandom(100);
+    int embargoIndex = getPossibleTradeEmbargo();
     if (value < 34) {
-      generateMapTrade(TRADE);
+      if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+        PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+        generateTradeEmbargoOffer(embagoed);
+      } else {
+        generateMapTrade(TRADE);
+      }
     } else if (value < 67) {
       generateTechTrade(TRADE);
     } else {
@@ -981,10 +1023,16 @@ public class DiplomaticTrade {
       }
     }
     int value = DiceGenerator.getRandom(100);
+    int embargoIndex = getPossibleTradeEmbargo();
     if (value < 50) {
       generateMapTrade(TRADE);
     } else {
-      generateTechTrade(TRADE);
+      if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+        PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+        generateTradeEmbargoOffer(embagoed);
+      } else {
+        generateTechTrade(TRADE);
+      }
     }
   }
   /**
@@ -1047,10 +1095,16 @@ public class DiplomaticTrade {
       }
     }
     int value = DiceGenerator.getRandom(100);
+    int embargoIndex = getPossibleTradeEmbargo();
     if (value < 50) {
       generateMapTrade(TRADE);
     } else {
-      generateTechTrade(TRADE);
+      if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+        PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+        generateTradeEmbargoOffer(embagoed);
+      } else {
+        generateTechTrade(TRADE);
+      }
     }
   }
   /**

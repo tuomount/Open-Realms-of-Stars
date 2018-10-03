@@ -104,13 +104,25 @@ public enum DiplomacyBonusType {
   /**
    * Special bonus for marking board player
    */
-  BOARD_PLAYER;
+  BOARD_PLAYER,
+  /**
+   * Diplomacy bonus marking for embargo between too players
+   */
+  EMBARGO,
+  /**
+   * Bonus for realm which liked the made embargo
+   */
+  LIKED_EMBARGO,
+  /**
+   * Bonus for realm which did not like the made embargo
+   */
+  DISLIKED_EMBARGO;
 
 
   /**
    * Number of Bonus type. This should be one larger than actual bonus types.
    */
-  public static final int MAX_BONUS_TYPE = 20;
+  public static final int MAX_BONUS_TYPE = 23;
 
   /**
    * Get ShipHullType index
@@ -138,6 +150,9 @@ public enum DiplomacyBonusType {
       case DIPLOMACY_BONUS: return 17;
       case TRADE_FLEET: return 18;
       case BOARD_PLAYER: return 19;
+      case EMBARGO: return 20;
+      case LIKED_EMBARGO: return 21;
+      case DISLIKED_EMBARGO: return 22;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -190,6 +205,12 @@ public enum DiplomacyBonusType {
       return DiplomacyBonusType.TRADE_FLEET;
     case 19:
       return DiplomacyBonusType.BOARD_PLAYER;
+    case 20:
+      return DiplomacyBonusType.EMBARGO;
+    case 21:
+      return DiplomacyBonusType.LIKED_EMBARGO;
+    case 22:
+      return DiplomacyBonusType.DISLIKED_EMBARGO;
     default:
       throw new IllegalArgumentException("Unexpected diplomacy bonus type!");
     }

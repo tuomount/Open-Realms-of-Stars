@@ -275,6 +275,45 @@ public class DiplomacyBonus {
        bonusLasting = 255;
        break;
      }
+     case EMBARGO: {
+       onlyOne = true;
+       if (race == SpaceRace.SCAURIANS
+           || race == SpaceRace.SPORKS
+           || race == SpaceRace.CHIRALOIDS) {
+         bonusValue = -8;
+         bonusLasting = 20;
+       } else {
+         bonusValue = -5;
+         bonusLasting = 20;
+       }
+       break;
+     }
+     case LIKED_EMBARGO: {
+       if (race == SpaceRace.SCAURIANS
+           || race == SpaceRace.HUMAN
+           || race == SpaceRace.GREYANS
+           || race == SpaceRace.CENTAURS) {
+         bonusValue = 4;
+         bonusLasting = 60;
+       } else {
+         bonusValue = 2;
+         bonusLasting = 60;
+       }
+       break;
+     }
+     case DISLIKED_EMBARGO: {
+       if (race == SpaceRace.SCAURIANS
+           || race == SpaceRace.HUMAN
+           || race == SpaceRace.GREYANS
+           || race == SpaceRace.CENTAURS) {
+         bonusValue = -4;
+         bonusLasting = 60;
+       } else {
+         bonusValue = -2;
+         bonusLasting = 60;
+       }
+       break;
+     }
      default: {
        throw new IllegalArgumentException("Unknown bonus type!!");
      }

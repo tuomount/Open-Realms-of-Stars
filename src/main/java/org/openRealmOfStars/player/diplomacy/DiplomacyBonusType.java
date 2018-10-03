@@ -110,11 +110,13 @@ public enum DiplomacyBonusType {
    */
   EMBARGO,
   /**
-   * Bonus for realm which liked the made embargo
+   * Bonus for realm which liked the made embargo.
+   * So this is positive bonus.
    */
   LIKED_EMBARGO,
   /**
-   * Bonus for realm which did not like the made embargo
+   * Bonus for realm which did not like the made embargo.
+   * So this is negative bonus.
    */
   DISLIKED_EMBARGO;
 

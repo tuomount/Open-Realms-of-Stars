@@ -488,7 +488,7 @@ public class Game implements ActionListener {
           DiplomaticTrade trade = new DiplomaticTrade(starMap, attackerIndex,
               defenderIndex);
           trade.generateEqualTrade(NegotiationType.WAR);
-          StarMapUtilities.addWarDeclatingRepuation(starMap, info);
+          StarMapUtilities.addWarDeclatingReputation(starMap, info);
           NewsData newsData = NewsFactory.makeWarNews(info,
               combat.getPlayer2(), planet, starMap);
           starMap.getNewsCorpData().addNews(newsData);
@@ -725,7 +725,7 @@ public class Game implements ActionListener {
       trade.doTrades();
       PlayerInfo defender = planet.getPlanetPlayerInfo();
       PlayerInfo attacker = starMap.getCurrentPlayerInfo();
-      StarMapUtilities.addWarDeclatingRepuation(starMap, attacker);
+      StarMapUtilities.addWarDeclatingReputation(starMap, attacker);
       NewsData newsData = NewsFactory.makeWarNews(attacker, defender, fleet,
           starMap);
       starMap.getNewsCorpData().addNews(newsData);

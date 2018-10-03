@@ -892,7 +892,7 @@ public class DiplomacyView extends BlackPanel {
         int aiIndex = starMap.getPlayerList().getIndex(ai);
         if (trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)
             && !human.getDiplomacy().isWar(aiIndex)) {
-          StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
+          StarMapUtilities.addWarDeclatingReputation(starMap, ai);
           NewsData newsData = NewsFactory.makeWarNews(ai, human,
               meetingPlace, starMap);
           starMap.getNewsCorpData().addNews(newsData);
@@ -971,7 +971,7 @@ public class DiplomacyView extends BlackPanel {
           resetChoices();
           int aiIndex = starMap.getPlayerList().getIndex(ai);
           if (!human.getDiplomacy().isWar(aiIndex)) {
-            StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
+            StarMapUtilities.addWarDeclatingReputation(starMap, ai);
             NewsData newsData = NewsFactory.makeWarNews(ai, human,
                 meetingPlace, starMap);
             starMap.getNewsCorpData().addNews(newsData);
@@ -1035,7 +1035,7 @@ public class DiplomacyView extends BlackPanel {
           resetChoices();
           int aiIndex = starMap.getPlayerList().getIndex(ai);
           if (!human.getDiplomacy().isWar(aiIndex)) {
-            StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
+            StarMapUtilities.addWarDeclatingReputation(starMap, ai);
             NewsData newsData = NewsFactory.makeWarNews(ai, human,
                 meetingPlace, starMap);
             starMap.getNewsCorpData().addNews(newsData);
@@ -1066,7 +1066,7 @@ public class DiplomacyView extends BlackPanel {
           resetChoices();
           int aiIndex = starMap.getPlayerList().getIndex(ai);
           if (!human.getDiplomacy().isWar(aiIndex)) {
-            StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
+            StarMapUtilities.addWarDeclatingReputation(starMap, ai);
             NewsData newsData = NewsFactory.makeWarNews(ai, human,
                 meetingPlace, starMap);
             starMap.getNewsCorpData().addNews(newsData);
@@ -1163,7 +1163,7 @@ public class DiplomacyView extends BlackPanel {
             resetChoices();
             int aiIndex = starMap.getPlayerList().getIndex(ai);
             if (!human.getDiplomacy().isWar(aiIndex)) {
-              StarMapUtilities.addWarDeclatingRepuation(starMap, ai);
+              StarMapUtilities.addWarDeclatingReputation(starMap, ai);
               NewsData newsData = NewsFactory.makeWarNews(ai, human,
                   meetingPlace, starMap);
               starMap.getNewsCorpData().addNews(newsData);
@@ -1232,7 +1232,7 @@ public class DiplomacyView extends BlackPanel {
             DiplomacyBonusType.IN_WAR, human.getRace());
         updatePanel(SpeechType.MAKE_WAR);
         if (!human.getDiplomacy().isWar(aiIndex)) {
-          StarMapUtilities.addWarDeclatingRepuation(starMap, human);
+          StarMapUtilities.addWarDeclatingReputation(starMap, human);
           NewsData newsData = NewsFactory.makeWarNews(human, ai,
               meetingPlace, starMap);
           starMap.getNewsCorpData().addNews(newsData);

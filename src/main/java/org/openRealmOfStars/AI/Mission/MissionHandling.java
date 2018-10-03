@@ -1181,7 +1181,7 @@ public final class MissionHandling {
       // Another party accepts it or it is war
       trade.doTrades();
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
-        StarMapUtilities.addWarDeclatingRepuation(game.getStarMap(), info);
+        StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         NewsData newsData = NewsFactory.makeWarNews(info, defender, fleet,
             game.getStarMap());
@@ -1260,7 +1260,7 @@ public final class MissionHandling {
       if (value < warChance && !info.getDiplomacy().isWar(secondIndex)) {
         trade.generateEqualTrade(NegotiationType.WAR);
         trade.doTrades();
-        StarMapUtilities.addWarDeclatingRepuation(game.getStarMap(), info);
+        StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         NewsData newsData = NewsFactory.makeWarNews(info, defender, fleet,
             game.getStarMap());

@@ -113,32 +113,68 @@ public final class StarMapUtilities {
   }
 
   /**
-   * Add player's repuation that he or she has dropped nuclear bombs
+   * Add player's reputation that he or she has dropped nuclear bombs
    * @param starMap StarMap containing all the diplomacies
    * @param nuker PlayerInfo who is nuking.
    */
-  public static void addNukeRepuation(final StarMap starMap,
+  public static void addNukeReputation(final StarMap starMap,
       final PlayerInfo nuker) {
-    addRepuation(starMap, nuker, DiplomacyBonusType.NUKED);
+    addReputation(starMap, nuker, DiplomacyBonusType.NUKED);
   }
 
   /**
-   * Add player's repuation that he or she has declared a war
+   * Add player's reputation that he or she has declared a war
    * @param starMap StarMap containing all the diplomacies
    * @param attacker PlayerInfo who is attacking.
    */
-  public static void addWarDeclatingRepuation(final StarMap starMap,
+  public static void addWarDeclatingReputation(final StarMap starMap,
       final PlayerInfo attacker) {
-    addRepuation(starMap, attacker, DiplomacyBonusType.WAR_DECLARTION);
+    addReputation(starMap, attacker, DiplomacyBonusType.WAR_DECLARTION);
   }
 
+  /**
+   * Add reputation of embargoImposer and embargoAgree depending of
+   * how much other realm's like or dislake embargoImposed
+   * @param starMap StarMap containig all the diplomacy information
+   * @param embargoImposer Realm who was imposer
+   * @param embargoAgree Realm who agreed on embargo
+   * @param embargoImposed Realm who were imposed to embargo
+   */
+  public static void addEmbargoReputation(final StarMap starMap,
+      final PlayerInfo embargoImposer, final PlayerInfo embargoAgree,
+      final PlayerInfo embargoImposed) {
+    int imposer = starMap.getPlayerList().getIndex(embargoImposer);
+    int imposed = starMap.getPlayerList().getIndex(embargoImposed);
+    int agree = starMap.getPlayerList().getIndex(embargoAgree);
+    int maxPlayer = starMap.getPlayerList().getCurrentMaxRealms();
+    for (int i = 0; i < maxPlayer; i++) {
+      PlayerInfo player = starMap.getPlayerList().getPlayerInfoByIndex(i);
+      if (i != imposed && i != imposer && i != agree) {
+        int liking = player.getDiplomacy().getLiking(imposed);
+        if (liking > 0) {
+          DiplomacyBonusList list = player.getDiplomacy()
+              .getDiplomacyList(imposer);
+          list.addBonus(DiplomacyBonusType.DISLIKED_EMBARGO, player.getRace());
+          list = player.getDiplomacy().getDiplomacyList(agree);
+          list.addBonus(DiplomacyBonusType.DISLIKED_EMBARGO, player.getRace());
+        }
+        if (liking < 0) {
+          DiplomacyBonusList list = player.getDiplomacy()
+              .getDiplomacyList(imposer);
+          list.addBonus(DiplomacyBonusType.LIKED_EMBARGO, player.getRace());
+          list = player.getDiplomacy().getDiplomacyList(agree);
+          list.addBonus(DiplomacyBonusType.LIKED_EMBARGO, player.getRace());
+        }
+      }
+    }
+  }
   /**
    * Add player's repuation that he or she has done something, usually bad.
    * @param starMap StarMap containing all the diplomacies
    * @param actor PlayerInfo who is acting.
    * @param bonusType Diplomacy Bonus which is being added to all players
    */
-  private static void addRepuation(final StarMap starMap,
+  private static void addReputation(final StarMap starMap,
       final PlayerInfo actor, final DiplomacyBonusType bonusType) {
     int index = starMap.getPlayerList().getIndex(actor);
     int maxPlayer = starMap.getPlayerList().getCurrentMaxRealms();

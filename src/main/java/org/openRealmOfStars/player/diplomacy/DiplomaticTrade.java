@@ -1496,6 +1496,12 @@ public class DiplomaticTrade {
             DiplomacyBonusType.SPY_TRADE, info.getRace());
         break;
       }
+      case TRADE_EMBARGO: {
+        int index = starMap.getPlayerList().getIndex(giver);
+        info.getDiplomacy().getDiplomacyList(index).addBonus(
+            DiplomacyBonusType.EMBARGO, info.getRace());
+        break;
+      }
       default:
         //DO nothing
         break;

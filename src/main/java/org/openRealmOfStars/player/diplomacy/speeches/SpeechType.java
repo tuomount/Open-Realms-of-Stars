@@ -122,7 +122,11 @@ public enum SpeechType {
   /**
    * Offer trade embargo for 20 turns
    */
-  TRADE_EMBARGO;
+  TRADE_EMBARGO,
+  /**
+   * Realm choice for embargo, not real speech line
+   */
+  TRADE_EMBARGO_REALM_CHOICE;
 
 
 
@@ -158,6 +162,7 @@ public enum SpeechType {
       case ASK_MOVE_SPY:     return "Ask move spy fleet";
       case OFFER_SPY_TRADE:  return "Offer spy trade";
       case TRADE_EMBARGO:    return "Offer trade embargo";
+      case TRADE_EMBARGO_REALM_CHOICE:    return "Embargo realm choice";
       default: return "Unknown";
     }
   }

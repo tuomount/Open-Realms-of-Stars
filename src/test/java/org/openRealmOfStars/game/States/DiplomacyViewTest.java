@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
+import org.openRealmOfStars.player.diplomacy.speeches.SpeechLine;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.StarMap;
@@ -187,6 +188,39 @@ public class DiplomacyViewTest {
     diplomacyView = new DiplomacyView(human, ai, starMap,
         DiplomacyView.HUMAN_REGULAR, fleet, planet, listener);
     assertEquals(planet, diplomacyView.getMeetingPlace());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testGettingRealmFromString() {
+    ActionListener listener = Mockito.mock(ActionListener.class);
+    GameRepository repository = new GameRepository();
+    StarMap starMap = repository.loadGame("src/test/resources/saves",
+                                          "testGame.save");
+    PlayerInfo human = starMap.getPlayerByIndex(0);
+    PlayerInfo ai = starMap.getPlayerByIndex(1);
+    DiplomacyView diplomacyView = new DiplomacyView(human, ai, starMap,
+        DiplomacyView.HUMAN_REGULAR, null, null, listener);
+    PlayerInfo info = diplomacyView.getRealmFromString("Spork Hiearchy");
+    assertEquals("Spork Hiearchy", info.getEmpireName());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testGetEmbargoLine() {
+    ActionListener listener = Mockito.mock(ActionListener.class);
+    GameRepository repository = new GameRepository();
+    StarMap starMap = repository.loadGame("src/test/resources/saves",
+                                          "testGame.save");
+    PlayerInfo human = starMap.getPlayerByIndex(0);
+    PlayerInfo ai = starMap.getPlayerByIndex(1);
+    DiplomacyView diplomacyView = new DiplomacyView(human, ai, starMap,
+        DiplomacyView.HUMAN_REGULAR, null, null, listener);
+    diplomacyView.createTradeEmbargoLine("Spork Hiearchy");
+    SpeechLine line = diplomacyView.getEmbargoLine();
+    assertEquals(SpeechType.TRADE_EMBARGO, line.getType());
+    assertEquals("How about trade embargo for 20 turns against Spork Hiearchy?",
+        line.getLine());
   }
 
 }

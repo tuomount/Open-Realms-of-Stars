@@ -35,6 +35,11 @@ public final class SpeechFactory {
   }
 
   /**
+   * String for suggesting trade embargo.
+   */
+  public static final String TRADE_EMBARGO_SUGGESTION =
+      "Suggest trade embargo (more)";
+  /**
    * Create SpeechLine according the type and race
    * @param type SpeechType
    * @param race SpaceRace
@@ -719,6 +724,15 @@ public final class SpeechFactory {
     }
   }
 
+  /**
+   * Create line for suggesting trade embargo, this is only
+   * for human UI.
+   * @return Speechline for suggesting trade embargo
+   */
+  public static SpeechLine createEmbargoSuggestion() {
+    SpeechType type = SpeechType.TRADE_EMBARGO;
+    return new SpeechLine(type, TRADE_EMBARGO_SUGGESTION);
+  }
   /**
    * Create Trade Alliance SpeechLine according the race
    * @param race SpaceRace

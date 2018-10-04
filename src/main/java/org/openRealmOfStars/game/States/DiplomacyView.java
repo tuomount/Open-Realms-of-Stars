@@ -528,6 +528,9 @@ public class DiplomacyView extends BlackPanel {
         speechLines.add(SpeechFactory.createLine(SpeechType.OFFER_SPY_TRADE,
             human.getRace(), null));
       }
+      if (ai.getDiplomacy().isPeace(humanIndex)) {
+        speechLines.add(SpeechFactory.createEmbargoSuggestion());
+      }
       if (!ai.getDiplomacy().isWar(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.MAKE_WAR,
             human.getRace(), null));
@@ -538,6 +541,13 @@ public class DiplomacyView extends BlackPanel {
       lines[i] = speechLines.get(i);
     }
     return lines;
+  }
+  /**
+   * Create trade embargo lines for human UI
+   * @return Trade embargo lines
+   */
+  private SpeechLine[] createTradeEmbargoLines() {
+    return new SpeechLine[0];
   }
   /**
    * Create Tech List from tech
@@ -854,6 +864,14 @@ public class DiplomacyView extends BlackPanel {
             || lastSpeechType == SpeechType.NOTHING_TO_TRADE) {
           infoText.setText("");
           infoText.repaint();
+        }
+      }
+      if (humanLines.getSelectedValue().getType() == SpeechType.TRADE_EMBARGO
+          && humanLines.getSelectedValue().getLine().equals(
+              SpeechFactory.TRADE_EMBARGO_SUGGESTION)) {
+        SpeechLine[] lines = createTradeEmbargoLines();
+        if (lines.length > 0) {
+          humanLines.setListData(lines);
         }
       }
     }

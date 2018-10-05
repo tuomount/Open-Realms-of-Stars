@@ -1204,8 +1204,6 @@ public class DiplomacyView extends BlackPanel {
           trade.setFirstOffer(list2);
           trade.setSecondOffer(list1);
           if (trade.isOfferGoodForBoth()) {
-            //FIXME Trade embargo is always accepted due that it is value
-            // as equal deal
             trade.doTrades();
             tradeHappened = true;
             updatePanel(SpeechType.AGREE);

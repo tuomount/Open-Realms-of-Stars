@@ -1166,6 +1166,48 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Get value for embargo
+   * @param info Realm valueing the embargo
+   * @param offer Embargo offer
+   * @return Value for embargo
+   */
+  public int getValueForEmbargo(final PlayerInfo info,
+      final NegotiationOffer offer) {
+    int value = 0;
+    PlayerInfo embargoedRealm = offer.getRealm();
+    int embargoed = starMap.getPlayerList().getIndex(embargoedRealm);
+    int liking = info.getDiplomacy().getLiking(embargoed);
+    if (liking == Diplomacy.NEUTRAL) {
+      value = 0;
+    }
+    if (liking == Diplomacy.DISLIKE) {
+      value = 2;
+    }
+    if (liking == Diplomacy.HATE) {
+      value = 4;
+    }
+    if (liking == Diplomacy.LIKE) {
+      value = -5;
+    }
+    if (liking == Diplomacy.FRIENDS) {
+      value = -10;
+    }
+    String relation = info.getDiplomacy().getDiplomaticRelation(embargoed);
+    if (Diplomacy.TRADE_ALLIANCE.equals(relation)) {
+      value = value - 1;
+    }
+    if (Diplomacy.DEFENSIVE_PACT.equals(relation)) {
+      value = value - 10;
+    }
+    if (Diplomacy.ALLIANCE.equals(relation)) {
+      value = value - 50;
+    }
+    if (Diplomacy.WAR.equals(relation)) {
+      value = value + 5;
+    }
+    return value;
+  }
+  /**
    * Is offer good for both. This assumes that first one is making the offer
    * and is okay with it. So it only checks that second one likes it.
    * Difference is integer value. Positive means that deal is good for first
@@ -1189,8 +1231,17 @@ public class DiplomaticTrade {
         .getRace());
     secondValue = secondOffer.getOfferValue(starMap.getPlayerByIndex(second)
         .getRace());
-    PlayerInfo info = starMap.getPlayerByIndex(second);
-    boolean isWar = info.getDiplomacy().isWar(first);
+    PlayerInfo info1 = starMap.getPlayerByIndex(first);
+    PlayerInfo info2 = starMap.getPlayerByIndex(second);
+    NegotiationOffer offer = firstOffer.getEmbargoOffer();
+    if (offer != null && Math.abs(firstValue - secondValue) < 10) {
+      firstValue = firstValue + getValueForEmbargo(info1, offer);
+      offer = secondOffer.getEmbargoOffer();
+      if (offer != null) {
+        secondValue = secondValue + getValueForEmbargo(info2, offer);
+      }
+    }
+    boolean isWar = info2.getDiplomacy().isWar(first);
     if ((firstOffer.isPlanetInOffer() || firstOffer.isFleetInOffer())
         && (!isWar || !firstOffer.isPeaceInOffer())) {
       // AI should never give up planet or fleet unless
@@ -1199,18 +1250,18 @@ public class DiplomaticTrade {
     }
     int difference = firstValue - secondValue;
     // Maybe good diplomatic relations help to get trade through
-    int bonus = info.getDiplomacy().getDiplomacyList(first)
+    int bonus = info2.getDiplomacy().getDiplomacyList(first)
         .getDiplomacyBonus();
     if (bonus > 20) {
       bonus = 20;
     }
     difference = difference - bonus;
-    if (info.getDiplomacy().isWar(first)
+    if (info2.getDiplomacy().isWar(first)
         || getSpeechTypeByOffer() == SpeechType.DEMAND
         || getSpeechTypeByOffer() == SpeechType.ASK_MOVE_FLEET
         || getSpeechTypeByOffer() == SpeechType.ASK_MOVE_SPY
         && secondOffer.getByIndex(0).getFleet().getMilitaryValue() > 0) {
-      Attitude attitude = info.getAiAttitude();
+      Attitude attitude = info2.getAiAttitude();
       int divider = 4;
       int ownDivider = 4;
       switch (attitude) {

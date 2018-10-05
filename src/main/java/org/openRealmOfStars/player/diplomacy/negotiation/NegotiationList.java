@@ -138,4 +138,17 @@ public class NegotiationList {
     return isTypeInOffer(NegotiationType.FLEET);
   }
 
+  /**
+   * Return possible trade embargo offer
+   * @return NegotiatioOffer or null
+   */
+  public NegotiationOffer getEmbargoOffer() {
+    for (NegotiationOffer offer : list) {
+      if (offer.getNegotiationType() == NegotiationType.TRADE_EMBARGO) {
+        return offer;
+      }
+    }
+    return null;
+  }
+
 }

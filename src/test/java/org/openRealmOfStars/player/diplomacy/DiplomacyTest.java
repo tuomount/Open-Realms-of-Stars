@@ -178,6 +178,32 @@ public class DiplomacyTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testInTradeEmbargo() {
+    Diplomacy diplomacy = new Diplomacy(4, 1);
+    assertEquals(Diplomacy.NEUTRAL, diplomacy.getLiking(0));
+    assertNotEquals(null, diplomacy.getDiplomacyList(0));
+    assertEquals(false, diplomacy.isTradeAlliance(0));
+    assertEquals(false, diplomacy.isDefensivePact(0));
+    assertEquals(false, diplomacy.isWar(0));
+    assertEquals(false, diplomacy.isAlliance(0));
+    assertEquals(false, diplomacy.isTradeEmbargo(0));
+    diplomacy.getDiplomacyList(0).addBonus(
+        DiplomacyBonusType.EMBARGO, SpaceRace.HUMAN);
+    assertEquals("Trade embargo", diplomacy.getDiplomaticRelation(0));
+    assertEquals(true, diplomacy.isTradeEmbargo(0));
+    assertEquals(false, diplomacy.isTradeAlliance(0));
+    assertEquals(false, diplomacy.isDefensivePact(0));
+    assertEquals(false, diplomacy.isWar(0));
+    assertEquals(false, diplomacy.isAlliance(0));
+    assertEquals(-5, diplomacy.getDiplomacyList(0).getDiplomacyBonus());
+    assertEquals(Diplomacy.NEUTRAL, diplomacy.getLiking(0));
+    assertEquals("Neutral", diplomacy.getLikingAsString(0));
+    assertEquals(GuiStatics.COLOR_DAMAGE_HALF, diplomacy.getLikingAsColor(0));
+    assertEquals(false, diplomacy.isTradeEmbargo(256));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testInAlliance() {
     Diplomacy diplomacy = new Diplomacy(4, 1);
     assertNotEquals(null, diplomacy.getDiplomacyList(0));

@@ -511,15 +511,18 @@ public class DiplomacyView extends BlackPanel {
           && !human.getDiplomacy().hasAlliance()
           && ai.getDiplomacy().isTradeAlliance(humanIndex)
           && ai.getDiplomacy().isPeace(humanIndex)
+          && !ai.getDiplomacy().isTradeEmbargo(humanIndex)
           && ai.getDiplomacy().isDefensivePact(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.ALLIANCE,
             human.getRace(), null));
       } else if (ai.getDiplomacy().isTradeAlliance(humanIndex)
           && ai.getDiplomacy().isPeace(humanIndex)
+          && !ai.getDiplomacy().isTradeEmbargo(humanIndex)
           && !ai.getDiplomacy().isDefensivePact(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.DEFESIVE_PACT,
             human.getRace(), null));
       } else if (!ai.getDiplomacy().isDefensivePact(humanIndex)
+          && !ai.getDiplomacy().isTradeEmbargo(humanIndex)
           && ai.getDiplomacy().isPeace(humanIndex)) {
         speechLines.add(SpeechFactory.createLine(SpeechType.TRADE_ALLIANCE,
             human.getRace(), null));
@@ -528,6 +531,7 @@ public class DiplomacyView extends BlackPanel {
           && !ai.getDiplomacy().isAlliance(humanIndex)
           && ai.getDiplomacy().isPeace(humanIndex)
           && !ai.getDiplomacy().isSpyTrade(humanIndex)
+          && !ai.getDiplomacy().isTradeEmbargo(humanIndex)
           && human.getEspionage().isSpyTradePossible()
           && ai.getEspionage().isSpyTradePossible()) {
         speechLines.add(SpeechFactory.createLine(SpeechType.OFFER_SPY_TRADE,

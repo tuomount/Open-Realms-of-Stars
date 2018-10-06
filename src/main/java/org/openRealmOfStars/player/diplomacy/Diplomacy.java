@@ -90,6 +90,10 @@ public class Diplomacy {
    * String for War.
    */
   public static final String WAR = "War";
+  /**
+   * String for Trade embargo
+   */
+  public static final String TRADE_EMBARGO = "Trade embargo";
 
   /**
    * Diplomacy Bonus list for each player
@@ -256,6 +260,20 @@ public class Diplomacy {
         && diplomacyList[index] != null) {
       return diplomacyList[index].isBonusType(
           DiplomacyBonusType.IN_TRADE_ALLIANCE);
+    }
+    return false;
+  }
+
+  /**
+   * Is certain player(index) with player who is asking in trade embargo?
+   * @param index Player index
+   * @return True if trade embargo is between two players
+   */
+  public boolean isTradeEmbargo(final int index) {
+    if (index > -1 && index < diplomacyList.length
+        && diplomacyList[index] != null) {
+      return diplomacyList[index].isBonusType(
+          DiplomacyBonusType.EMBARGO);
     }
     return false;
   }
@@ -435,7 +453,7 @@ public class Diplomacy {
    * Get diplomatic relations between two players
    * @param playerIndex PLayer index to check
    * @return String choices: "", "War", "Trade alliance", "Alliance", "Peace",
-   *                         "Defensive pact
+   *                         "Defensive pact", "Trade embargo"
    */
   public String getDiplomaticRelation(final int playerIndex) {
     String result = "";
@@ -453,6 +471,9 @@ public class Diplomacy {
     }
     if (isWar(playerIndex)) {
       result = WAR;
+    }
+    if (isTradeEmbargo(playerIndex)) {
+      result = TRADE_EMBARGO;
     }
     if (getDiplomacyList(playerIndex) != null
         && getDiplomacyList(playerIndex).isBonusType(

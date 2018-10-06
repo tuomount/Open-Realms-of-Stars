@@ -399,11 +399,13 @@ public class DiplomaticTrade {
    */
   private int getPossibleTradeEmbargo() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
+    PlayerInfo info2 = starMap.getPlayerByIndex(second);
     int leastLiked = info.getDiplomacy().getLeastLiking();
     if (leastLiked != second
         && info.getDiplomacy().getDiplomacyList(leastLiked) != null
         && info.getDiplomacy().getDiplomacyList(leastLiked)
-           .getNumberOfMeetings() > 0) {
+           .getNumberOfMeetings() > 0
+        && !info2.getDiplomacy().isTradeEmbargo(leastLiked)) {
       return leastLiked;
     }
     return -1;

@@ -18,6 +18,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
+import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -1229,6 +1230,18 @@ public final class MissionHandling {
             game.getStarMap());
         defender.getMissions().removeAttackAgainstPlayer(info,
             game.getStarMap());
+      }
+      if (trade.getFirstOffer().isTypeInOffer(NegotiationType.TRADE_EMBARGO)) {
+        NegotiationOffer offer = trade.getFirstOffer().getEmbargoOffer();
+        PlayerInfo realm = offer.getRealm();
+        PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
+        StarMapUtilities.addEmbargoReputation(game.getStarMap(), info,
+            defender, realm);
+        NewsData newsData = NewsFactory.makeTradeEmbargoNews(info, defender,
+            realm, meetingPlace);
+        game.getStarMap().getNewsCorpData().addNews(newsData);
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+            meetingPlace, newsData));
       }
     } else {
       SpeechType type = trade.getSpeechTypeByOffer();

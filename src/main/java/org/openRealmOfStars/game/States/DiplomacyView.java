@@ -1213,6 +1213,7 @@ public class DiplomacyView extends BlackPanel {
             starMap.getNewsCorpData().addNews(newsData);
             starMap.getHistory().addEvent(
                 NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
+            StarMapUtilities.addEmbargoReputation(starMap, human, ai, realm);
           } else {
             embargoLine = null;
             updatePanel(SpeechType.DECLINE);

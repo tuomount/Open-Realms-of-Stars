@@ -1208,13 +1208,13 @@ public class DiplomacyView extends BlackPanel {
             tradeHappened = true;
             updatePanel(SpeechType.AGREE);
             resetChoices();
-            //FIXME Trade embargo news
-            NewsData newsData = NewsFactory.makeAllianceNews(human, ai,
-                meetingPlace);
+            NewsData newsData = NewsFactory.makeTradeEmbargoNews(human, ai,
+                realm, meetingPlace);
             starMap.getNewsCorpData().addNews(newsData);
             starMap.getHistory().addEvent(
                 NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
           } else {
+            embargoLine = null;
             updatePanel(SpeechType.DECLINE);
           }
         }

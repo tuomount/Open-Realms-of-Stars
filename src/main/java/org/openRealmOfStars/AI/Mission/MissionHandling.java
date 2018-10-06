@@ -382,9 +382,8 @@ public final class MissionHandling {
             // going back to home
             mission.setPhase(MissionPhase.TREKKING);
             return;
-          } else {
-            sun = game.getStarMap().getSunByName(mission.getSunName());
           }
+          sun = game.getStarMap().getSunByName(mission.getSunName());
           PathPoint point = info.getUnchartedSector(sun, fleet);
           if (point != null) {
             mission.setTarget(new Coordinate(point.getX(), point.getY()));

@@ -98,6 +98,22 @@ public class DiplomacyBonusList {
   }
 
   /**
+   * Make embargo so that Alliance, trade alliance, defensive pact
+   * are removed from the list.
+   */
+  private void makeEmbargo() {
+    Iterator<DiplomacyBonus> iterator = list.iterator();
+    while (iterator.hasNext()) {
+      DiplomacyBonus diplomacyBonus = iterator.next();
+      if (diplomacyBonus.getType() == DiplomacyBonusType.IN_ALLIANCE
+          || diplomacyBonus.getType() == DiplomacyBonusType.IN_TRADE_ALLIANCE
+          || diplomacyBonus.getType() == DiplomacyBonusType.IN_DEFENSIVE_PACT) {
+        iterator.remove();
+      }
+    }
+  }
+
+  /**
    * Make peace so that IN_WAR is removed from the list.
    */
   private void makePeace() {
@@ -185,6 +201,9 @@ public class DiplomacyBonusList {
       added = true;
       if (bonus.getType() == DiplomacyBonusType.IN_WAR) {
         makeWar();
+      }
+      if (bonus.getType() == DiplomacyBonusType.EMBARGO) {
+        makeEmbargo();
       }
       if (bonus.getType() == DiplomacyBonusType.LONG_PEACE) {
         makePeace();

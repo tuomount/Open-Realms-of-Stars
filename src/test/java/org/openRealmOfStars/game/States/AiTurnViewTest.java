@@ -153,7 +153,7 @@ public class AiTurnViewTest {
     GameLengthState state = GameLengthState.EARLY_GAME;
     view.updateSpacePirates(pirates, state, false);
     tech = pirates.getTechList().getBestWeapon();
-    assertEquals(true, tech.getLevel() == 3);
+    assertEquals(true, tech.getLevel() >= 2);
     state = GameLengthState.MIDDLE_GAME;
     assertEquals(false, view.updateSpacePirates(pirates, state, false));
     tech = pirates.getTechList().getBestWeapon();

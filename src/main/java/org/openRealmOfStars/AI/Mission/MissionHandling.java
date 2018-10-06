@@ -18,6 +18,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
+import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -382,9 +383,8 @@ public final class MissionHandling {
             // going back to home
             mission.setPhase(MissionPhase.TREKKING);
             return;
-          } else {
-            sun = game.getStarMap().getSunByName(mission.getSunName());
           }
+          sun = game.getStarMap().getSunByName(mission.getSunName());
           PathPoint point = info.getUnchartedSector(sun, fleet);
           if (point != null) {
             mission.setTarget(new Coordinate(point.getX(), point.getY()));
@@ -1181,7 +1181,7 @@ public final class MissionHandling {
       // Another party accepts it or it is war
       trade.doTrades();
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.WAR)) {
-        StarMapUtilities.addWarDeclatingRepuation(game.getStarMap(), info);
+        StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         NewsData newsData = NewsFactory.makeWarNews(info, defender, fleet,
             game.getStarMap());
@@ -1231,6 +1231,18 @@ public final class MissionHandling {
         defender.getMissions().removeAttackAgainstPlayer(info,
             game.getStarMap());
       }
+      if (trade.getFirstOffer().isTypeInOffer(NegotiationType.TRADE_EMBARGO)) {
+        NegotiationOffer offer = trade.getFirstOffer().getEmbargoOffer();
+        PlayerInfo realm = offer.getRealm();
+        PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
+        StarMapUtilities.addEmbargoReputation(game.getStarMap(), info,
+            defender, realm);
+        NewsData newsData = NewsFactory.makeTradeEmbargoNews(info, defender,
+            realm, meetingPlace);
+        game.getStarMap().getNewsCorpData().addNews(newsData);
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+            meetingPlace, newsData));
+      }
     } else {
       SpeechType type = trade.getSpeechTypeByOffer();
       Attitude attitude = info.getAiAttitude();
@@ -1260,7 +1272,7 @@ public final class MissionHandling {
       if (value < warChance && !info.getDiplomacy().isWar(secondIndex)) {
         trade.generateEqualTrade(NegotiationType.WAR);
         trade.doTrades();
-        StarMapUtilities.addWarDeclatingRepuation(game.getStarMap(), info);
+        StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info);
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
         NewsData newsData = NewsFactory.makeWarNews(info, defender, fleet,
             game.getStarMap());

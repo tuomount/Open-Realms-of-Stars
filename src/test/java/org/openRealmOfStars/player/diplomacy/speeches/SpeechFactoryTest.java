@@ -117,4 +117,12 @@ public class SpeechFactoryTest {
     }
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTradeEmbargoSuggestion() {
+    SpeechLine line = SpeechFactory.createEmbargoSuggestion();
+    assertEquals(SpeechType.TRADE_EMBARGO, line.getType());
+    assertEquals(SpeechFactory.TRADE_EMBARGO_SUGGESTION, line.getLine());
+  }
+
 }

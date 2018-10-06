@@ -583,6 +583,85 @@ public final class NewsFactory {
   }
 
   /**
+   * Make trade embargo news
+   * @param offerer Realm which suggested the trade embargo
+   * @param acceptor Realm which agreed to the trade embargo
+   * @param embargoed Realm which was embargoed
+   * @param meetingPlace Where meeting happened
+   * @return NewsData with embargo news
+   */
+  public static NewsData makeTradeEmbargoNews(final PlayerInfo offerer,
+      final PlayerInfo acceptor, final PlayerInfo embargoed,
+      final Object meetingPlace) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    if (meetingPlace instanceof Planet) {
+      Planet planet = (Planet) meetingPlace;
+      instructions.addPlanet(ImageInstruction.POSITION_CENTER,
+          planet.getImageInstructions(),
+          ImageInstruction.SIZE_FULL);
+    }
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("TRADE WARS!");
+        break;
+      }
+      case 1: {
+        instructions.addText("TRADE EMBARGO!");
+        break;
+      }
+      case 2: {
+        instructions.addText("GALACTIC TRADE EMBARGO!");
+        break;
+      }
+    }
+    instructions.addText(embargoed.getEmpireName());
+    instructions.addRelationSymbol(ImageInstruction.TRADE_EMBARGO);
+    instructions.addText(offerer.getEmpireName());
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(embargoed.getEmpireName());
+    sb.append(" was placed on trade embargo by  ");
+    sb.append(offerer.getEmpireName());
+    sb.append(acceptor.getEmpireName());
+    sb.append("! Trade embargo bans all trades towards ");
+    sb.append(embargoed.getEmpireName());
+    sb.append("! ");
+    if (meetingPlace instanceof Planet) {
+      Planet planet = (Planet) meetingPlace;
+      sb.append("This meeting happened in ");
+      sb.append(planet.getName());
+      if (planet.getPlanetPlayerInfo() != null) {
+        sb.append(", which is owned by ");
+        sb.append(planet.getPlanetPlayerInfo().getEmpireName());
+        sb.append(". ");
+      }
+    } else {
+      sb.append("This meeting happened in deep space. ");
+    }
+    Attitude attitude = embargoed.getAiAttitude();
+    if (attitude == Attitude.AGGRESSIVE) {
+      sb.append(offerer.getEmpireName());
+      sb.append(" aggressive style was surely affect to this outcome! ");
+    }
+    if (attitude == Attitude.MILITARISTIC) {
+      sb.append(offerer.getEmpireName());
+      sb.append(" militaristic acts might have caused this outcome! ");
+    }
+    if (attitude == Attitude.DIPLOMATIC) {
+      sb.append(offerer.getEmpireName());
+      sb.append(" diplomatic skills were surely persuade ");
+      sb.append(acceptor.getEmpireName());
+      sb.append(" to accept this trade embargo! ");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+
+  }
+
+  /**
    * Make defensive pact news. Offerer makes alliance offer to acceptor.
    * This diplomatic meeting happened in meeting place which
    * can be planet or fleet.

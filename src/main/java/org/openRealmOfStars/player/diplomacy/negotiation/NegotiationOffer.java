@@ -1,5 +1,6 @@
 package org.openRealmOfStars.player.diplomacy.negotiation;
 
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.tech.Tech;
@@ -58,7 +59,9 @@ public class NegotiationOffer {
         || type == NegotiationType.FLEET && offer instanceof Fleet
         || type == NegotiationType.RECALL_FLEET && offer instanceof Fleet
         || type == NegotiationType.PLANET && offer instanceof Planet
-        || type == NegotiationType.TECH && offer instanceof Tech) {
+        || type == NegotiationType.TECH && offer instanceof Tech
+        || type == NegotiationType.TRADE_EMBARGO
+        && offer instanceof PlayerInfo) {
       negotiationType = type;
       offerObject = offer;
     } else {
@@ -183,6 +186,17 @@ public class NegotiationOffer {
     return null;
   }
 
+  /**
+   * Get Realm in offer
+   * @return Realm in offer
+   */
+  public PlayerInfo getRealm() {
+    if (negotiationType == NegotiationType.TRADE_EMBARGO
+        && offerObject instanceof PlayerInfo) {
+      return ((PlayerInfo) offerObject);
+    }
+    return null;
+  }
   /**
    * Get Negotiation type
    * @return Negotiation type

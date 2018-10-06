@@ -233,6 +233,13 @@ public class StatView extends BlackPanel {
               + "This allows trading vessels to visit parties planets."
               + "</html>");
         }
+        if (relation.equals(Diplomacy.TRADE_EMBARGO)) {
+          img = new ImageLabel(GuiStatics.RELATION_TRADE_EMBARGO, true);
+          img.setToolTipText(
+              "<html>Trade embargo forbids forming trade alliance.<br>"
+              + "Declaring trade embargo gives diplomatic bonuses"
+              + "towards third parties.</html>");
+        }
         if (relation.equals(Diplomacy.WAR)) {
           img = new ImageLabel(GuiStatics.RELATION_WAR, true);
           img.setToolTipText(

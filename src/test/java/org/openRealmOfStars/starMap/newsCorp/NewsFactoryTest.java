@@ -439,6 +439,29 @@ public class NewsFactoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTradeEmbargo() {
+    PlayerInfo offerer = Mockito.mock(PlayerInfo.class);
+    Mockito.when(offerer.getEmpireName()).thenReturn("Empire of Test");
+    PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
+    PlayerInfo embargoed = Mockito.mock(PlayerInfo.class);
+    Mockito.when(embargoed.getEmpireName()).thenReturn("Clan of Evil");
+    NewsData news = NewsFactory.makeTradeEmbargoNews(offerer, acceptor,
+        embargoed, null);
+    assertEquals(true, news.getImageInstructions().contains(
+        offerer.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains(
+        embargoed.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        offerer.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        acceptor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        embargoed.getEmpireName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testDefensePact() {
     PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
     Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");

@@ -324,6 +324,19 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Generate equal trade between two players.
+   * @param realm Realm who to cause trade embargo
+   */
+  public void generateTradeEmbargoOffer(final PlayerInfo realm) {
+    firstOffer = new NegotiationList();
+    firstOffer.add(new NegotiationOffer(NegotiationType.TRADE_EMBARGO,
+        realm));
+    secondOffer = new NegotiationList();
+    secondOffer.add(new NegotiationOffer(NegotiationType.TRADE_EMBARGO,
+        realm));
+  }
+
+  /**
    * Generate Recall fleet offer. Second player should
    * recall his or her fleet.
    * @param fleet Fleet which to recall
@@ -380,6 +393,23 @@ public class DiplomaticTrade {
     }
   }
 
+  /**
+   * Check if trade embargo is about to be possible
+   * @return Realm index with embargo is possible, -1 if not.
+   */
+  private int getPossibleTradeEmbargo() {
+    PlayerInfo info = starMap.getPlayerByIndex(first);
+    PlayerInfo info2 = starMap.getPlayerByIndex(second);
+    int leastLiked = info.getDiplomacy().getLeastLiking();
+    if (leastLiked != second
+        && info.getDiplomacy().getDiplomacyList(leastLiked) != null
+        && info.getDiplomacy().getDiplomacyList(leastLiked)
+           .getNumberOfMeetings() > 0
+        && !info2.getDiplomacy().isTradeEmbargo(leastLiked)) {
+      return leastLiked;
+    }
+    return -1;
+  }
   /**
    * Offer by aggressive attitude.
    * This makes war quite easily and can make demands.
@@ -440,12 +470,18 @@ public class DiplomaticTrade {
       }
     }
     int value = DiceGenerator.getRandom(100);
+    int embargoIndex = getPossibleTradeEmbargo();
     if (value < 25) {
       generateMapTrade(TRADE);
     } else if (value < 50) {
       generateTechTrade(TRADE);
     } else {
-      generateTechDemand(agree);
+      if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+        PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+        generateTradeEmbargoOffer(embagoed);
+      } else {
+        generateTechDemand(agree);
+      }
     }
   }
 
@@ -522,10 +558,18 @@ public class DiplomaticTrade {
       }
     }
     int value = DiceGenerator.getRandom(100);
-    if (value < 40) {
+    int embargoIndex = getPossibleTradeEmbargo();
+    if (value < 30) {
       generateMapTrade(TRADE);
-    } else {
+    } else if (value < 80) {
       generateTechTrade(TRADE);
+    } else {
+      if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+        PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+        generateTradeEmbargoOffer(embagoed);
+      } else {
+        generateTechDemand(agree);
+      }
     }
   }
   /**
@@ -584,8 +628,14 @@ public class DiplomaticTrade {
       }
     }
     int value = DiceGenerator.getRandom(100);
+    int embargoIndex = getPossibleTradeEmbargo();
     if (value < 45) {
-      generateMapTrade(TRADE);
+      if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+        PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+        generateTradeEmbargoOffer(embagoed);
+      } else {
+        generateMapTrade(TRADE);
+      }
     } else if (value < 90) {
       generateTechTrade(TRADE);
     } else {
@@ -653,12 +703,18 @@ public class DiplomaticTrade {
       }
     }
     int value = DiceGenerator.getRandom(100);
-    if (value < 40) {
+    int embargoIndex = getPossibleTradeEmbargo();
+    if (value < 30) {
       generateMapTrade(TRADE);
-    } else if (value < 80) {
+    } else if (value < 60) {
       generateMapTrade(BUY);
     } else {
-      generateTechTrade(TRADE);
+      if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+        PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+        generateTradeEmbargoOffer(embagoed);
+      } else {
+        generateTechTrade(TRADE);
+      }
     }
   }
 
@@ -722,12 +778,18 @@ public class DiplomaticTrade {
       }
     }
     int value = DiceGenerator.getRandom(100);
+    int embargoIndex = getPossibleTradeEmbargo();
     if (value < 40) {
       generateTechTrade(TRADE);
     } else if (value < 80) {
       generateTechTrade(BUY);
     } else {
-      generateMapTrade(TRADE);
+      if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+        PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+        generateTradeEmbargoOffer(embagoed);
+      } else {
+        generateMapTrade(TRADE);
+      }
     }
   }
 
@@ -790,7 +852,8 @@ public class DiplomaticTrade {
         generateEqualTrade(NegotiationType.SPY_TRADE);
       }
     }
-    int value = DiceGenerator.getRandom(5);
+    int value = DiceGenerator.getRandom(6);
+    int embargoIndex = getPossibleTradeEmbargo();
     switch (value) {
       case 0:
       default: {
@@ -810,6 +873,15 @@ public class DiplomaticTrade {
       }
       case 5: {
         generateTechTrade(SELL); break;
+      }
+      case 6: {
+        if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+          PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+          generateTradeEmbargoOffer(embagoed);
+        } else {
+          generateTechTrade(SELL);
+        }
+        break;
       }
     }
   }
@@ -874,8 +946,14 @@ public class DiplomaticTrade {
       }
     }
     int value = DiceGenerator.getRandom(100);
+    int embargoIndex = getPossibleTradeEmbargo();
     if (value < 34) {
-      generateMapTrade(TRADE);
+      if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+        PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+        generateTradeEmbargoOffer(embagoed);
+      } else {
+        generateMapTrade(TRADE);
+      }
     } else if (value < 67) {
       generateTechTrade(TRADE);
     } else {
@@ -947,10 +1025,16 @@ public class DiplomaticTrade {
       }
     }
     int value = DiceGenerator.getRandom(100);
+    int embargoIndex = getPossibleTradeEmbargo();
     if (value < 50) {
       generateMapTrade(TRADE);
     } else {
-      generateTechTrade(TRADE);
+      if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+        PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+        generateTradeEmbargoOffer(embagoed);
+      } else {
+        generateTechTrade(TRADE);
+      }
     }
   }
   /**
@@ -1013,10 +1097,16 @@ public class DiplomaticTrade {
       }
     }
     int value = DiceGenerator.getRandom(100);
+    int embargoIndex = getPossibleTradeEmbargo();
     if (value < 50) {
       generateMapTrade(TRADE);
     } else {
-      generateTechTrade(TRADE);
+      if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
+        PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
+        generateTradeEmbargoOffer(embagoed);
+      } else {
+        generateTechTrade(TRADE);
+      }
     }
   }
   /**
@@ -1078,6 +1168,48 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Get value for embargo
+   * @param info Realm valueing the embargo
+   * @param offer Embargo offer
+   * @return Value for embargo
+   */
+  public int getValueForEmbargo(final PlayerInfo info,
+      final NegotiationOffer offer) {
+    int value = 0;
+    PlayerInfo embargoedRealm = offer.getRealm();
+    int embargoed = starMap.getPlayerList().getIndex(embargoedRealm);
+    int liking = info.getDiplomacy().getLiking(embargoed);
+    if (liking == Diplomacy.NEUTRAL) {
+      value = 0;
+    }
+    if (liking == Diplomacy.DISLIKE) {
+      value = 2;
+    }
+    if (liking == Diplomacy.HATE) {
+      value = 4;
+    }
+    if (liking == Diplomacy.LIKE) {
+      value = -5;
+    }
+    if (liking == Diplomacy.FRIENDS) {
+      value = -10;
+    }
+    String relation = info.getDiplomacy().getDiplomaticRelation(embargoed);
+    if (Diplomacy.TRADE_ALLIANCE.equals(relation)) {
+      value = value - 1;
+    }
+    if (Diplomacy.DEFENSIVE_PACT.equals(relation)) {
+      value = value - 10;
+    }
+    if (Diplomacy.ALLIANCE.equals(relation)) {
+      value = value - 50;
+    }
+    if (Diplomacy.WAR.equals(relation)) {
+      value = value + 5;
+    }
+    return value;
+  }
+  /**
    * Is offer good for both. This assumes that first one is making the offer
    * and is okay with it. So it only checks that second one likes it.
    * Difference is integer value. Positive means that deal is good for first
@@ -1101,8 +1233,17 @@ public class DiplomaticTrade {
         .getRace());
     secondValue = secondOffer.getOfferValue(starMap.getPlayerByIndex(second)
         .getRace());
-    PlayerInfo info = starMap.getPlayerByIndex(second);
-    boolean isWar = info.getDiplomacy().isWar(first);
+    PlayerInfo info1 = starMap.getPlayerByIndex(first);
+    PlayerInfo info2 = starMap.getPlayerByIndex(second);
+    NegotiationOffer offer = firstOffer.getEmbargoOffer();
+    if (offer != null && Math.abs(firstValue - secondValue) < 10) {
+      firstValue = firstValue + getValueForEmbargo(info1, offer);
+      offer = secondOffer.getEmbargoOffer();
+      if (offer != null) {
+        secondValue = secondValue + getValueForEmbargo(info2, offer);
+      }
+    }
+    boolean isWar = info2.getDiplomacy().isWar(first);
     if ((firstOffer.isPlanetInOffer() || firstOffer.isFleetInOffer())
         && (!isWar || !firstOffer.isPeaceInOffer())) {
       // AI should never give up planet or fleet unless
@@ -1111,18 +1252,18 @@ public class DiplomaticTrade {
     }
     int difference = firstValue - secondValue;
     // Maybe good diplomatic relations help to get trade through
-    int bonus = info.getDiplomacy().getDiplomacyList(first)
+    int bonus = info2.getDiplomacy().getDiplomacyList(first)
         .getDiplomacyBonus();
     if (bonus > 20) {
       bonus = 20;
     }
     difference = difference - bonus;
-    if (info.getDiplomacy().isWar(first)
+    if (info2.getDiplomacy().isWar(first)
         || getSpeechTypeByOffer() == SpeechType.DEMAND
         || getSpeechTypeByOffer() == SpeechType.ASK_MOVE_FLEET
         || getSpeechTypeByOffer() == SpeechType.ASK_MOVE_SPY
         && secondOffer.getByIndex(0).getFleet().getMilitaryValue() > 0) {
-      Attitude attitude = info.getAiAttitude();
+      Attitude attitude = info2.getAiAttitude();
       int divider = 4;
       int ownDivider = 4;
       switch (attitude) {
@@ -1406,6 +1547,12 @@ public class DiplomaticTrade {
         int index = starMap.getPlayerList().getIndex(giver);
         info.getDiplomacy().getDiplomacyList(index).addBonus(
             DiplomacyBonusType.SPY_TRADE, info.getRace());
+        break;
+      }
+      case TRADE_EMBARGO: {
+        int index = starMap.getPlayerList().getIndex(giver);
+        info.getDiplomacy().getDiplomacyList(index).addBonus(
+            DiplomacyBonusType.EMBARGO, info.getRace());
         break;
       }
       default:

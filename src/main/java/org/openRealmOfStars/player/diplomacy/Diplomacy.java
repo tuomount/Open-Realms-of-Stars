@@ -90,6 +90,10 @@ public class Diplomacy {
    * String for War.
    */
   public static final String WAR = "War";
+  /**
+   * String for Trade embargo
+   */
+  public static final String TRADE_EMBARGO = "Trade embargo";
 
   /**
    * Diplomacy Bonus list for each player
@@ -261,6 +265,20 @@ public class Diplomacy {
   }
 
   /**
+   * Is certain player(index) with player who is asking in trade embargo?
+   * @param index Player index
+   * @return True if trade embargo is between two players
+   */
+  public boolean isTradeEmbargo(final int index) {
+    if (index > -1 && index < diplomacyList.length
+        && diplomacyList[index] != null) {
+      return diplomacyList[index].isBonusType(
+          DiplomacyBonusType.EMBARGO);
+    }
+    return false;
+  }
+
+  /**
    * Is realm in alliance with someone
    * @return True if has alliance with some
    */
@@ -339,13 +357,15 @@ public class Diplomacy {
 
   /**
    * Get least liked player index.
+   * Does not check board players.
    * @return Least liked player index
    */
   public int getLeastLiking() {
     int index = -1;
     int likingForIndex = VERY_HIGH_LIKE;
     for (int i = 0; i < diplomacyList.length; i++) {
-      if (diplomacyList[i] != null) {
+      if (diplomacyList[i] != null
+          && !diplomacyList[i].isBonusType(DiplomacyBonusType.BOARD_PLAYER)) {
         int liking = getLiking(i);
         if (liking < likingForIndex) {
           index = i;
@@ -433,7 +453,7 @@ public class Diplomacy {
    * Get diplomatic relations between two players
    * @param playerIndex PLayer index to check
    * @return String choices: "", "War", "Trade alliance", "Alliance", "Peace",
-   *                         "Defensive pact
+   *                         "Defensive pact", "Trade embargo"
    */
   public String getDiplomaticRelation(final int playerIndex) {
     String result = "";
@@ -451,6 +471,9 @@ public class Diplomacy {
     }
     if (isWar(playerIndex)) {
       result = WAR;
+    }
+    if (isTradeEmbargo(playerIndex)) {
+      result = TRADE_EMBARGO;
     }
     if (getDiplomacyList(playerIndex) != null
         && getDiplomacyList(playerIndex).isBonusType(
@@ -567,7 +590,7 @@ public class Diplomacy {
       if (isDefensivePact(i) && i != attackerIndex) {
         DiplomaticTrade trade = new DiplomaticTrade(starMap, attackerIndex, i);
         trade.generateEqualTrade(NegotiationType.WAR);
-        StarMapUtilities.addWarDeclatingRepuation(starMap, attacker);
+        StarMapUtilities.addWarDeclatingReputation(starMap, attacker);
         trade.doTrades();
         PlayerInfo defender = starMap.getPlayerByIndex(i);
         defesiveGroupMember.add(defender.getEmpireName());

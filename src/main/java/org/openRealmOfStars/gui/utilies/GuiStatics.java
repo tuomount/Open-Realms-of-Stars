@@ -510,6 +510,11 @@ public final class GuiStatics {
   public static final BufferedImage RELATION_TRADE_ALLIANCE = Icons.loadBigIcon(
       "/resources/images/bigicons.png", 96, 0, 32, 32);
   /**
+   * Relation trade embargo icon
+   */
+  public static final BufferedImage RELATION_TRADE_EMBARGO = Icons.loadBigIcon(
+      "/resources/images/bigicons.png", 96, 32, 32, 32);
+  /**
    * Relation alliance icon
    */
   public static final BufferedImage RELATION_ALLIANCE = Icons.loadBigIcon(

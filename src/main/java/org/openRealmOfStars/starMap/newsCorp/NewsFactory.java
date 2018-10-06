@@ -618,6 +618,7 @@ public final class NewsFactory {
       }
     }
     instructions.addText(embargoed.getEmpireName());
+    instructions.addRelationSymbol(ImageInstruction.TRADE_EMBARGO);
     instructions.addText(offerer.getEmpireName());
     news.setImageInstructions(instructions.build());
     StringBuilder sb = new StringBuilder(100);

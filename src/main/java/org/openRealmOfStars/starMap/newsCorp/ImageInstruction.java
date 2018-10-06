@@ -162,6 +162,10 @@ public class ImageInstruction {
    */
   public static final String TRADE_ALLIANCE = "trade alliance";
   /**
+   * Relation symbol trade embargo
+   */
+  public static final String TRADE_EMBARGO = "trade embargo";
+  /**
    * Relation symbol alliance
    */
   public static final String ALLIANCE = "alliance";
@@ -288,7 +292,8 @@ public class ImageInstruction {
         && !WAR.equals(symbol)
         && !TRADE_ALLIANCE.equals(symbol)
         && !ALLIANCE.equals(symbol)
-        && !DEFENSIVE_PACT.equals(symbol)) {
+        && !DEFENSIVE_PACT.equals(symbol)
+        && !TRADE_EMBARGO.equals(symbol)) {
       throw new IllegalArgumentException("Illegal relation symbol: "
         + symbol);
     }
@@ -639,6 +644,9 @@ public class ImageInstruction {
         }
         if (TRADE_ALLIANCE.equals(parameters[0])) {
           symbol = GuiStatics.RELATION_TRADE_ALLIANCE;
+        }
+        if (TRADE_EMBARGO.equals(parameters[0])) {
+          symbol = GuiStatics.RELATION_TRADE_EMBARGO;
         }
         if (ALLIANCE.equals(parameters[0])) {
           symbol = GuiStatics.RELATION_ALLIANCE;

@@ -45,6 +45,11 @@ public class RealmView extends BlackPanel {
   */
   private static final long serialVersionUID = 1L;
 
+  /**
+   * Realm view constructor
+   * @param realm Realm which is being shown
+   * @param listener ActionListener
+   */
   public RealmView(final PlayerInfo realm, final ActionListener listener) {
     this.setLayout(new BorderLayout());
     InfoPanel base = new InfoPanel();

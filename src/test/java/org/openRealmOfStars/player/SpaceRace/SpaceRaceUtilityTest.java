@@ -177,8 +177,8 @@ public class SpaceRaceUtilityTest {
         "* Special: Electronics and propulsion techs are higher at start";
     expectedResult[4] = "### Centaurs\n"+
         "Quadrupedal humanoid creatures which are big, about 5 meters tall."
-        + " Due their enormous size their space ships are more rigid."
-        + " Centaurs need more food to survive.\n"+
+        + " Due their enormous size their space ships are more rigid. "
+        + "\n"+
         "* Max radiation: 3\n"+
         "* Troop power: 14\n"+
         "* Production: 100%\n"+

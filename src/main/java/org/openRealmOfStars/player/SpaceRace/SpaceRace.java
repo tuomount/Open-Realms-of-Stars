@@ -53,12 +53,11 @@ public enum SpaceRace {
           + " big eyes. Greyan are excellent researchers."),
   /**
    * Quadrupedal humanoid creatures which are big, about 5 meters tall. Due
-   * their enormous size their space ships are must more rigid. Centaurs need
-   * more food to survive.
+   * their enormous size their space ships are must more rigid.
    */
   CENTAURS(4, "Centaurs", "Centaur", "Quadrupedal humanoid creatures which are"
           + " big, about 5 meters tall. Due their enormous size their space"
-          + " ships are more rigid. Centaurs need more food to survive."),
+          + " ships are more rigid. "),
   /**
    * Mothoids are sentient insects with hivemind. They are fast breeding race.
    */

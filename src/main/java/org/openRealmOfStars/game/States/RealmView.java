@@ -1,12 +1,19 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.panels.RaceImagePanel;
 import org.openRealmOfStars.player.PlayerInfo;
 
 /**
@@ -41,9 +48,31 @@ public class RealmView extends BlackPanel {
   public RealmView(final PlayerInfo realm, final ActionListener listener) {
     this.setLayout(new BorderLayout());
     InfoPanel base = new InfoPanel();
-    base.setLayout(new BorderLayout());
+    base.setLayout(new BoxLayout(base, BoxLayout.Y_AXIS));
     base.setTitle(realm.getEmpireName());
     this.add(base, BorderLayout.CENTER);
+    RaceImagePanel raceImage = new RaceImagePanel();
+    raceImage.setRaceToShow(realm.getRace().getNameSingle());
+    raceImage.setSize(220, 220);
+    raceImage.setMaximumSize(new Dimension(220, 220));
+    base.add(raceImage);
+    EmptyInfoPanel panelX = new EmptyInfoPanel();
+    panelX.setLayout(new GridLayout(1, 0));
+    InfoPanel info = new InfoPanel();
+    info.setTitle("Racial information");
+    info.setLayout(new BorderLayout());
+    SpaceLabel raceDescription = new SpaceLabel(
+        realm.getRace().getFullDescription(false, false));
+    info.add(raceDescription, BorderLayout.CENTER);
+    panelX.add(info);
+    info = new InfoPanel();
+    info.setTitle("Government information");
+    info.setLayout(new BorderLayout());
+    SpaceLabel governmentDescription = new SpaceLabel(
+        realm.getGovernment().getDescription(false));
+    info.add(governmentDescription, BorderLayout.CENTER);
+    panelX.add(info);
+    base.add(panelX);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());

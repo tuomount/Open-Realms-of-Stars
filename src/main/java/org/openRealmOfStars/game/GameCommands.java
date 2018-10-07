@@ -658,4 +658,9 @@ public final class GameCommands {
    */
   public static final String COMMAND_NEXT_EVENT = "NextEvent";
 
+  /**
+   * Command for realm view
+   */
+  public static final String COMMAND_REALM_VIEW = "RealmView";
+
 }

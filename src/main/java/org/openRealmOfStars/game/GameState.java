@@ -121,5 +121,8 @@ public enum GameState {
    * Fleet needs to be orbiting own planet.
    */
   FLEET_TRADE_VIEW,
-
+  /**
+   * Realm View
+   */
+  REALM_VIEW;
 }

@@ -39,6 +39,7 @@ import org.openRealmOfStars.game.States.OptionsView;
 import org.openRealmOfStars.game.States.PlanetBombingView;
 import org.openRealmOfStars.game.States.PlanetView;
 import org.openRealmOfStars.game.States.PlayerSetupView;
+import org.openRealmOfStars.game.States.RealmView;
 import org.openRealmOfStars.game.States.ResearchView;
 import org.openRealmOfStars.game.States.ShipDesignView;
 import org.openRealmOfStars.game.States.ShipView;
@@ -270,6 +271,10 @@ public class Game implements ActionListener {
    * Options view for the game
    */
   private OptionsView optionsView;
+  /**
+   * Realm view for showing all realm information
+   */
+  private RealmView realmView;
 
   /**
    * Change Message Fleet or Planet
@@ -931,6 +936,13 @@ public class Game implements ActionListener {
     mainMenu = new MainMenu(this);
     this.updateDisplay(mainMenu);
   }
+  /**
+   * Show Realm View
+   */
+  public void showRealmView() {
+    realmView = new RealmView(players.getCurrentPlayerInfo(), this);
+    this.updateDisplay(realmView);
+  }
 
   /**
    * Show Galaxy creation panel
@@ -1111,6 +1123,10 @@ public class Game implements ActionListener {
     }
     case DIPLOMACY_VIEW: {
       showDiplomacyView(dataObject);
+      break;
+    }
+    case REALM_VIEW: {
+      showRealmView();
       break;
     }
     default: {
@@ -1774,6 +1790,11 @@ public class Game implements ActionListener {
           SoundPlayer.playMenuSound();
           changeMessageForPlanet(planet);
         }
+      }else if (arg0.getActionCommand()
+          .equals(GameCommands.COMMAND_REALM_VIEW)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.REALM_VIEW);
+        return;
       } else {
         if (arg0.getActionCommand()
             .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
@@ -1862,6 +1883,14 @@ public class Game implements ActionListener {
         return;
       }
       historyView.handleAction(arg0);
+    }
+    if (gameState == GameState.REALM_VIEW && realmView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.STARMAP);
+        return;
+      }
     }
     if (gameState == GameState.PLANETBOMBINGVIEW && planetBombingView != null) {
       if (arg0.getActionCommand()

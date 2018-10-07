@@ -247,6 +247,9 @@ public class StarMapView extends BlackPanel {
     SpaceButton btn = new SpaceButton("Spying", GameCommands.COMMAND_SPY);
     btn.addActionListener(game);
     bottomBtnPanel.add(btn);
+    btn = new SpaceButton("Realm", GameCommands.COMMAND_REALM_VIEW);
+    btn.addActionListener(game);
+    bottomBtnPanel.add(btn);
     // Button for debugging battle, disabled for now
 /*    btn = new SpaceButton("Battle", GameCommands.COMMAND_BATTLE);
     btn.addActionListener(game);

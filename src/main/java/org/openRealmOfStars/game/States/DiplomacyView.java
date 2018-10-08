@@ -926,7 +926,8 @@ public class DiplomacyView extends BlackPanel {
           infoText.repaint();
         }
       }
-      if (humanLines.getSelectedValue().getType() == SpeechType.TRADE_EMBARGO
+      if (humanLines.getSelectedValue() != null
+          && humanLines.getSelectedValue().getType() == SpeechType.TRADE_EMBARGO
           && humanLines.getSelectedValue().getLine().equals(
               SpeechFactory.TRADE_EMBARGO_SUGGESTION)) {
         SpeechLine[] lines = createTradeEmbargoChoicesLines();
@@ -934,7 +935,8 @@ public class DiplomacyView extends BlackPanel {
           humanLines.setListData(lines);
         }
       }
-      if (humanLines.getSelectedValue().getType()
+      if (humanLines.getSelectedValue() != null
+          && humanLines.getSelectedValue().getType()
           == SpeechType.TRADE_EMBARGO_REALM_CHOICE) {
         createTradeEmbargoLine(humanLines.getSelectedValue().getLine());
         humanLines.setListData(createOfferLines(HUMAN_REGULAR));

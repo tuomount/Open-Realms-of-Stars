@@ -39,6 +39,7 @@ import org.openRealmOfStars.game.States.OptionsView;
 import org.openRealmOfStars.game.States.PlanetBombingView;
 import org.openRealmOfStars.game.States.PlanetView;
 import org.openRealmOfStars.game.States.PlayerSetupView;
+import org.openRealmOfStars.game.States.RealmView;
 import org.openRealmOfStars.game.States.ResearchView;
 import org.openRealmOfStars.game.States.ShipDesignView;
 import org.openRealmOfStars.game.States.ShipView;
@@ -270,6 +271,10 @@ public class Game implements ActionListener {
    * Options view for the game
    */
   private OptionsView optionsView;
+  /**
+   * Realm view for showing all realm information
+   */
+  private RealmView realmView;
 
   /**
    * Change Message Fleet or Planet
@@ -931,6 +936,13 @@ public class Game implements ActionListener {
     mainMenu = new MainMenu(this);
     this.updateDisplay(mainMenu);
   }
+  /**
+   * Show Realm View
+   */
+  public void showRealmView() {
+    realmView = new RealmView(players.getCurrentPlayerInfo(), this);
+    this.updateDisplay(realmView);
+  }
 
   /**
    * Show Galaxy creation panel
@@ -1111,6 +1123,10 @@ public class Game implements ActionListener {
     }
     case DIPLOMACY_VIEW: {
       showDiplomacyView(dataObject);
+      break;
+    }
+    case REALM_VIEW: {
+      showRealmView();
       break;
     }
     default: {
@@ -1652,56 +1668,11 @@ public class Game implements ActionListener {
     }
   }
 
-  @Override
-  public void actionPerformed(final ActionEvent arg0) {
-    if (arg0.getActionCommand() == GameCommands.COMMAND_MUSIC_TIMER) {
-      if (songText != null) {
-        if (MusicPlayer.isTextDisplayedEnough()) {
-          songText.setVisible(false);
-        } else {
-          MusicFileInfo info = MusicPlayer.getNowPlaying();
-          String text = "<html>Now playing:<br>" + info.getName() + "<br> by "
-              + info.getAuthor() + "</html>";
-          songText.setText(text);
-          songText.setVisible(true);
-        }
-      }
-      MusicPlayer.handleMusic(gameState);
-      return;
-    }
-    if (gameState == GameState.FLEET_TRADE_VIEW && fleetTradeView != null) {
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_START_TRADE_MISSION)
-          && fleetTradeView.getTradeRoute() != null) {
-        SoundPlayer.playMenuSound();
-        TradeRoute route = fleetTradeView.getTradeRoute();
-        Mission mission = new Mission(MissionType.TRADE_FLEET,
-            MissionPhase.LOADING, route.getTradeWorld().getCoordinate());
-        mission.setPlanetBuilding(route.getOriginWorld().getName());
-        mission.setTargetPlanet(route.getTradeWorld().getName());
-        mission.setFleetName(fleetTradeView.getFleet().getName());
-        fleetTradeView.getPlayerInfo().getMissions().deleteMissionForFleet(
-            fleetTradeView.getFleet().getName());
-        fleetTradeView.getPlayerInfo().getMissions().add(mission);
-        fleetTradeView =  null;
-        changeGameState(GameState.STARMAP);
-      }
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_STOP_TRADE_MISSION)) {
-        SoundPlayer.playMenuSound();
-        fleetTradeView.getPlayerInfo().getMissions().deleteMissionForFleet(
-            fleetTradeView.getFleet().getName());
-        fleetTradeView.getFleet().setRoute(null);
-        fleetTradeView =  null;
-        changeGameState(GameState.STARMAP);
-      }
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.STARMAP);
-        return;
-      }
-    }
+  /**
+   * Actions performed when state is star map
+   * @param arg0 ActionEvent which has occured
+   */
+  private void actionPerformedStarMap(final ActionEvent arg0) {
     if (gameState == GameState.STARMAP && starMapView != null
         && starMapView.getPopup() != null) {
       starMapView.handleActions(arg0);
@@ -1774,6 +1745,11 @@ public class Game implements ActionListener {
           SoundPlayer.playMenuSound();
           changeMessageForPlanet(planet);
         }
+      } else if (arg0.getActionCommand()
+          .equals(GameCommands.COMMAND_REALM_VIEW)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.REALM_VIEW);
+        return;
       } else {
         if (arg0.getActionCommand()
             .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
@@ -1834,6 +1810,61 @@ public class Game implements ActionListener {
         }
       }
     }
+  }
+  @Override
+  public void actionPerformed(final ActionEvent arg0) {
+    if (arg0.getActionCommand() == GameCommands.COMMAND_MUSIC_TIMER) {
+      if (songText != null) {
+        if (MusicPlayer.isTextDisplayedEnough()) {
+          songText.setVisible(false);
+        } else {
+          MusicFileInfo info = MusicPlayer.getNowPlaying();
+          String text = "<html>Now playing:<br>" + info.getName() + "<br> by "
+              + info.getAuthor() + "</html>";
+          songText.setText(text);
+          songText.setVisible(true);
+        }
+      }
+      MusicPlayer.handleMusic(gameState);
+      return;
+    }
+    if (gameState == GameState.FLEET_TRADE_VIEW && fleetTradeView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_START_TRADE_MISSION)
+          && fleetTradeView.getTradeRoute() != null) {
+        SoundPlayer.playMenuSound();
+        TradeRoute route = fleetTradeView.getTradeRoute();
+        Mission mission = new Mission(MissionType.TRADE_FLEET,
+            MissionPhase.LOADING, route.getTradeWorld().getCoordinate());
+        mission.setPlanetBuilding(route.getOriginWorld().getName());
+        mission.setTargetPlanet(route.getTradeWorld().getName());
+        mission.setFleetName(fleetTradeView.getFleet().getName());
+        fleetTradeView.getPlayerInfo().getMissions().deleteMissionForFleet(
+            fleetTradeView.getFleet().getName());
+        fleetTradeView.getPlayerInfo().getMissions().add(mission);
+        fleetTradeView =  null;
+        changeGameState(GameState.STARMAP);
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_STOP_TRADE_MISSION)) {
+        SoundPlayer.playMenuSound();
+        fleetTradeView.getPlayerInfo().getMissions().deleteMissionForFleet(
+            fleetTradeView.getFleet().getName());
+        fleetTradeView.getFleet().setRoute(null);
+        fleetTradeView =  null;
+        changeGameState(GameState.STARMAP);
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.STARMAP);
+        return;
+      }
+    }
+    if (gameState == GameState.STARMAP) {
+      actionPerformedStarMap(arg0);
+      return;
+    }
     if (gameState == GameState.COMBAT && combatView != null) {
       if (combatView.isCombatEnded() && arg0.getActionCommand()
           .equals(GameCommands.COMMAND_END_BATTLE_ROUND)) {
@@ -1862,6 +1893,13 @@ public class Game implements ActionListener {
         return;
       }
       historyView.handleAction(arg0);
+    }
+    if (gameState == GameState.REALM_VIEW && realmView != null
+        && arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+      SoundPlayer.playMenuSound();
+      changeGameState(GameState.STARMAP);
+      return;
     }
     if (gameState == GameState.PLANETBOMBINGVIEW && planetBombingView != null) {
       if (arg0.getActionCommand()

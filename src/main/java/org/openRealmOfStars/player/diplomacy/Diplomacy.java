@@ -469,11 +469,11 @@ public class Diplomacy {
     if (isAlliance(playerIndex)) {
       result = ALLIANCE;
     }
-    if (isWar(playerIndex)) {
-      result = WAR;
-    }
     if (isTradeEmbargo(playerIndex)) {
       result = TRADE_EMBARGO;
+    }
+    if (isWar(playerIndex)) {
+      result = WAR;
     }
     if (getDiplomacyList(playerIndex) != null
         && getDiplomacyList(playerIndex).isBonusType(

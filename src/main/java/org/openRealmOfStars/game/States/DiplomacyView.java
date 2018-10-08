@@ -564,7 +564,9 @@ public class DiplomacyView extends BlackPanel {
     int maxRealms = starMap.getPlayerList().getCurrentMaxRealms();
     for (int i = 0; i < maxRealms; i++) {
       PlayerInfo realm = starMap.getPlayerByIndex(i);
-      if (realm != human && realm != ai) {
+      if (realm != human && realm != ai
+          && (human.getDiplomacy().getDiplomacyList(i).getNumberOfMeetings() > 0
+              || !human.getDiplomacy().getDiplomaticRelation(i).isEmpty())) {
         listOfRealms.add(realm);
       }
     }

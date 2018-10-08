@@ -177,6 +177,12 @@ public final class MusicPlayer {
       "/resources/musics/Malloga_Ballinga_Mastered_mp.ogg");
 
   /**
+   * Menace By YD License CC0
+   */
+  public static final MusicFileInfo MENACE = new MusicFileInfo(
+      "Menace", "YD", "/resources/musics/Menace.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,

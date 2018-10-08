@@ -820,8 +820,7 @@ public enum SpaceRace {
       // need for own music.
       return MusicPlayer.MALLOGA_BALLING;
     case CHIRALOIDS:
-      //FIXME Change Chiraloids music
-      return MusicPlayer.MILLION_LIGHT_YEARS;
+      return MusicPlayer.MENACE;
     default:
       return MusicPlayer.MILLION_LIGHT_YEARS;
     }

@@ -623,8 +623,9 @@ public final class NewsFactory {
     news.setImageInstructions(instructions.build());
     StringBuilder sb = new StringBuilder(100);
     sb.append(embargoed.getEmpireName());
-    sb.append(" was placed on trade embargo by  ");
+    sb.append(" was placed on trade embargo by ");
     sb.append(offerer.getEmpireName());
+    sb.append(" and ");
     sb.append(acceptor.getEmpireName());
     sb.append("! Trade embargo bans all trades towards ");
     sb.append(embargoed.getEmpireName());
@@ -643,13 +644,14 @@ public final class NewsFactory {
     }
     Attitude attitude = embargoed.getAiAttitude();
     if (attitude == Attitude.AGGRESSIVE) {
-      sb.append(offerer.getEmpireName());
+      sb.append(embargoed.getEmpireName());
       sb.append(" aggressive style was surely affect to this outcome! ");
     }
     if (attitude == Attitude.MILITARISTIC) {
-      sb.append(offerer.getEmpireName());
+      sb.append(embargoed.getEmpireName());
       sb.append(" militaristic acts might have caused this outcome! ");
     }
+    attitude = offerer.getAiAttitude();
     if (attitude == Attitude.DIPLOMATIC) {
       sb.append(offerer.getEmpireName());
       sb.append(" diplomatic skills were surely persuade ");

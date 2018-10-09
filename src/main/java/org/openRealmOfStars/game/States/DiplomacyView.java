@@ -564,7 +564,9 @@ public class DiplomacyView extends BlackPanel {
     int maxRealms = starMap.getPlayerList().getCurrentMaxRealms();
     for (int i = 0; i < maxRealms; i++) {
       PlayerInfo realm = starMap.getPlayerByIndex(i);
-      if (realm != human && realm != ai) {
+      if (realm != human && realm != ai
+          && (human.getDiplomacy().getDiplomacyList(i).getNumberOfMeetings() > 0
+              || !human.getDiplomacy().getDiplomaticRelation(i).isEmpty())) {
         listOfRealms.add(realm);
       }
     }
@@ -926,7 +928,8 @@ public class DiplomacyView extends BlackPanel {
           infoText.repaint();
         }
       }
-      if (humanLines.getSelectedValue().getType() == SpeechType.TRADE_EMBARGO
+      if (humanLines.getSelectedValue() != null
+          && humanLines.getSelectedValue().getType() == SpeechType.TRADE_EMBARGO
           && humanLines.getSelectedValue().getLine().equals(
               SpeechFactory.TRADE_EMBARGO_SUGGESTION)) {
         SpeechLine[] lines = createTradeEmbargoChoicesLines();
@@ -934,7 +937,8 @@ public class DiplomacyView extends BlackPanel {
           humanLines.setListData(lines);
         }
       }
-      if (humanLines.getSelectedValue().getType()
+      if (humanLines.getSelectedValue() != null
+          && humanLines.getSelectedValue().getType()
           == SpeechType.TRADE_EMBARGO_REALM_CHOICE) {
         createTradeEmbargoLine(humanLines.getSelectedValue().getLine());
         humanLines.setListData(createOfferLines(HUMAN_REGULAR));

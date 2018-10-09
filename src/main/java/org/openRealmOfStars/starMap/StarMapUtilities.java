@@ -149,6 +149,24 @@ public final class StarMapUtilities {
     int maxPlayer = starMap.getPlayerList().getCurrentMaxRealms();
     for (int i = 0; i < maxPlayer; i++) {
       PlayerInfo player = starMap.getPlayerList().getPlayerInfoByIndex(i);
+      if (i == imposer) {
+        DiplomacyBonusList list = player.getDiplomacy()
+            .getDiplomacyList(imposed);
+        list.addBonus(DiplomacyBonusType.EMBARGO, player.getRace());
+      }
+      if (i == agree) {
+        DiplomacyBonusList list = player.getDiplomacy()
+            .getDiplomacyList(imposed);
+        list.addBonus(DiplomacyBonusType.EMBARGO, player.getRace());
+      }
+      if (i == imposed) {
+        DiplomacyBonusList list = player.getDiplomacy()
+            .getDiplomacyList(imposer);
+        list.addBonus(DiplomacyBonusType.EMBARGO, player.getRace());
+        list = player.getDiplomacy()
+            .getDiplomacyList(agree);
+        list.addBonus(DiplomacyBonusType.EMBARGO, player.getRace());
+      }
       if (i != imposed && i != imposer && i != agree) {
         int liking = player.getDiplomacy().getLiking(imposed);
         if (liking > 0) {

@@ -19,7 +19,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2016,2017 Tuomo Untinen
+* Copyright (C) 2016-2018 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -131,6 +131,37 @@ public class StarMapUtilitiesTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testEmbargo() {
+    PlayerInfo embargoImposer = new PlayerInfo(SpaceRace.HUMAN, 4, 0);
+    embargoImposer.setEmpireName("Empire of Imposer");
+    PlayerInfo embargoImposed = new PlayerInfo(SpaceRace.HUMAN, 4, 1);
+    embargoImposed.setEmpireName("Empire of Imposed");
+    PlayerInfo embargoAgree = new PlayerInfo(SpaceRace.HUMAN, 4, 2);
+    embargoAgree.setEmpireName("Empire of Agree");
+    PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 4, 3);
+    info.setEmpireName("Empire of Info");
+    PlayerList playerList = new PlayerList();
+    playerList.addPlayer(embargoImposer);
+    playerList.addPlayer(embargoImposed);
+    playerList.addPlayer(embargoAgree);
+    playerList.addPlayer(info);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    StarMapUtilities.addEmbargoReputation(map, embargoImposer, embargoAgree, embargoImposed);
+    assertEquals(true, embargoImposer.getDiplomacy().getDiplomacyList(1)
+        .isBonusType(DiplomacyBonusType.EMBARGO));
+    assertEquals(true, embargoAgree.getDiplomacy().getDiplomacyList(1)
+        .isBonusType(DiplomacyBonusType.EMBARGO));
+    assertEquals(true, embargoImposed.getDiplomacy().getDiplomacyList(0)
+        .isBonusType(DiplomacyBonusType.EMBARGO));
+    assertEquals(true, embargoImposed.getDiplomacy().getDiplomacyList(2)
+        .isBonusType(DiplomacyBonusType.EMBARGO));
+    assertEquals(false, embargoImposed.getDiplomacy().getDiplomacyList(3)
+        .isBonusType(DiplomacyBonusType.EMBARGO));
+  }
+
+  @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testEmbargoWithLike() {
     PlayerInfo embargoImposer = Mockito.mock(PlayerInfo.class);
@@ -142,7 +173,13 @@ public class StarMapUtilitiesTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Info");
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Diplomacy diplomacyImposer = Mockito.mock(Diplomacy.class);
+    Diplomacy diplomacyImposed = Mockito.mock(Diplomacy.class);
+    Diplomacy diplomacyAgree = Mockito.mock(Diplomacy.class);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(embargoAgree.getDiplomacy()).thenReturn(diplomacyAgree);
+    Mockito.when(embargoImposed.getDiplomacy()).thenReturn(diplomacyImposed);
+    Mockito.when(embargoImposer.getDiplomacy()).thenReturn(diplomacyImposer);
     Mockito.when(diplomacy.getLiking(1)).thenReturn(2);
     PlayerList playerList = new PlayerList();
     playerList.addPlayer(embargoAgree);
@@ -153,11 +190,19 @@ public class StarMapUtilitiesTest {
     DiplomacyBonusList bonusListAgree = new DiplomacyBonusList(0);
     Mockito.when(diplomacy.getDiplomacyList(0)).thenReturn(bonusListAgree);
     Mockito.when(diplomacy.getDiplomacyList(2)).thenReturn(bonusListImposer);
+    Mockito.when(diplomacyAgree.getDiplomacyList(1)).thenReturn(new DiplomacyBonusList(1));
+    Mockito.when(diplomacyImposed.getDiplomacyList(2)).thenReturn(new DiplomacyBonusList(2));
+    Mockito.when(diplomacyImposed.getDiplomacyList(0)).thenReturn(new DiplomacyBonusList(0));
+    Mockito.when(diplomacyImposer.getDiplomacyList(1)).thenReturn(new DiplomacyBonusList(1));
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     StarMapUtilities.addEmbargoReputation(map, embargoImposer, embargoAgree, embargoImposed);
     assertEquals(true, bonusListAgree.isBonusType(DiplomacyBonusType.DISLIKED_EMBARGO));
     assertEquals(true, bonusListImposer.isBonusType(DiplomacyBonusType.DISLIKED_EMBARGO));
+    assertEquals(true, diplomacyAgree.getDiplomacyList(1).isBonusType(DiplomacyBonusType.EMBARGO));
+    assertEquals(true, diplomacyImposer.getDiplomacyList(1).isBonusType(DiplomacyBonusType.EMBARGO));
+    assertEquals(true, diplomacyImposed.getDiplomacyList(2).isBonusType(DiplomacyBonusType.EMBARGO));
+    assertEquals(true, diplomacyImposed.getDiplomacyList(0).isBonusType(DiplomacyBonusType.EMBARGO));
   }
 
   @Test
@@ -172,7 +217,13 @@ public class StarMapUtilitiesTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Info");
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Diplomacy diplomacyImposer = Mockito.mock(Diplomacy.class);
+    Diplomacy diplomacyImposed = Mockito.mock(Diplomacy.class);
+    Diplomacy diplomacyAgree = Mockito.mock(Diplomacy.class);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(embargoAgree.getDiplomacy()).thenReturn(diplomacyAgree);
+    Mockito.when(embargoImposed.getDiplomacy()).thenReturn(diplomacyImposed);
+    Mockito.when(embargoImposer.getDiplomacy()).thenReturn(diplomacyImposer);
     Mockito.when(diplomacy.getLiking(Mockito.anyInt())).thenReturn(-2);
     PlayerList playerList = new PlayerList();
     playerList.addPlayer(embargoAgree);
@@ -183,11 +234,19 @@ public class StarMapUtilitiesTest {
     DiplomacyBonusList bonusListAgree = new DiplomacyBonusList(0);
     Mockito.when(diplomacy.getDiplomacyList(0)).thenReturn(bonusListAgree);
     Mockito.when(diplomacy.getDiplomacyList(2)).thenReturn(bonusListImposer);
+    Mockito.when(diplomacyAgree.getDiplomacyList(1)).thenReturn(new DiplomacyBonusList(1));
+    Mockito.when(diplomacyImposed.getDiplomacyList(2)).thenReturn(new DiplomacyBonusList(2));
+    Mockito.when(diplomacyImposed.getDiplomacyList(0)).thenReturn(new DiplomacyBonusList(0));
+    Mockito.when(diplomacyImposer.getDiplomacyList(1)).thenReturn(new DiplomacyBonusList(1));
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(map.getPlayerList()).thenReturn(playerList);
     StarMapUtilities.addEmbargoReputation(map, embargoImposer, embargoAgree, embargoImposed);
     assertEquals(true, bonusListAgree.isBonusType(DiplomacyBonusType.LIKED_EMBARGO));
     assertEquals(true, bonusListImposer.isBonusType(DiplomacyBonusType.LIKED_EMBARGO));
+    assertEquals(true, diplomacyAgree.getDiplomacyList(1).isBonusType(DiplomacyBonusType.EMBARGO));
+    assertEquals(true, diplomacyImposer.getDiplomacyList(1).isBonusType(DiplomacyBonusType.EMBARGO));
+    assertEquals(true, diplomacyImposed.getDiplomacyList(2).isBonusType(DiplomacyBonusType.EMBARGO));
+    assertEquals(true, diplomacyImposed.getDiplomacyList(0).isBonusType(DiplomacyBonusType.EMBARGO));
   }
 
 }

@@ -252,7 +252,10 @@ public class CreditsView extends BlackPanel {
       + "Malloga Balling by\n"
       + "Joe Reynolds - Professorlamp  jrtheories.webs.com\n"
       + "Licensed under CC BY 3.0 "
-      + "http://creativecommons.org/licenses/by/3.0/\n\n";
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Menace by\n"
+      + "YD (CC0)\n\n";
+
 
 
 

@@ -313,7 +313,12 @@ public final class MissionHandling {
           } else {
             sun = game.getStarMap().getSunByName(mission.getSunName());
           }
-          PathPoint point = info.getUnchartedSector(sun, fleet);
+          PathPoint point = info.getClosestUnchartedSector(sun, fleet);
+          if (DiceGenerator.getRandom(99) < 50) {
+            // Split exploring fleets a bit by selecting
+            // point by another method.
+            point = info.getUnchartedSector(sun, fleet);
+          }
           if (point != null) {
             mission.setTarget(new Coordinate(point.getX(), point.getY()));
             AStarSearch search = new AStarSearch(game.getStarMap(),

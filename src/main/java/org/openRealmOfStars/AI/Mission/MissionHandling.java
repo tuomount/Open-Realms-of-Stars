@@ -274,6 +274,19 @@ public final class MissionHandling {
         }
       }
       if (mission.getPhase() == MissionPhase.EXECUTING) {
+        Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
+            fleet.getMovesLeft());
+        if (targetAnomaly != null) {
+          // Focus on anomalies
+          fleet.setRoute(null);
+          AStarSearch search = new AStarSearch(game.getStarMap(),
+              fleet.getX(), fleet.getY(), targetAnomaly.getX(),
+              targetAnomaly.getY(), false);
+          search.doSearch();
+          search.doRoute();
+          fleet.setaStarSearch(search);
+          mission.setMissionTime(mission.getMissionTime() - 1);
+        }
         mission.setMissionTime(mission.getMissionTime() + 1);
         boolean missionComplete = false;
         if (mission.getMissionTime() >= info.getRace().getAIExploringAmount()) {
@@ -330,18 +343,6 @@ public final class MissionHandling {
             makeRegularMoves(game, fleet, info);
           }
         } else {
-          Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
-              fleet.getMovesLeft());
-          if (targetAnomaly != null) {
-            // Focus on anomalies
-            fleet.setRoute(null);
-            AStarSearch search = new AStarSearch(game.getStarMap(),
-                fleet.getX(), fleet.getY(), targetAnomaly.getX(),
-                targetAnomaly.getY(), false);
-            search.doSearch();
-            search.doRoute();
-            fleet.setaStarSearch(search);
-          }
           makeRegularMoves(game, fleet, info);
         }
       }

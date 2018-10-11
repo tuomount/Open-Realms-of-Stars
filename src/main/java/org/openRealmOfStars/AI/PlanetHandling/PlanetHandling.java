@@ -1411,7 +1411,8 @@ public final class PlanetHandling {
           break;
         }
         default: {
-          throw new IllegalArgumentException("This should not happen");
+          throw new IllegalArgumentException("This should not happen."
+              + " Planet population was " + total);
         }
       }
     }
@@ -1537,15 +1538,30 @@ public final class PlanetHandling {
    */
   protected static void handlePlanetPopulation(final Planet planet,
       final PlayerInfo info) {
+    int population = planet.getTotalPopulation();
+    if (population <= 0) {
+      throw new IllegalArgumentException("Population less than one!"
+          + " Population: " + population);
+    }
+    int branch = -1;
     if (info.getRace() == SpaceRace.MECHIONS) {
       handleMechionPopulation(planet, info);
+      branch = 0;
     } else if (info.getRace() == SpaceRace.HOMARIANS) {
       handleHomarianPopulation(planet, info);
+      branch = 1;
     } else if (info.getRace() == SpaceRace.CHIRALOIDS) {
       handleChiraloidPopulation(planet, info);
+      branch = 2;
     } else {
       // Handle races whom need something to eat and have regular research
       handleGenericPopulation(planet, info);
+      branch = 3;
+    }
+    if (population != planet.getTotalPopulation()) {
+      throw new IllegalArgumentException("Population changed original:"
+         + population + " current: " + planet.getTotalPopulation()
+         + " branch: " + branch);
     }
   }
 

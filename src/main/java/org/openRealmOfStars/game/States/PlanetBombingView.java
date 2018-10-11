@@ -673,6 +673,8 @@ public class PlanetBombingView extends BlackPanel {
         }
         if (planet.getTotalPopulation() == 0 && !troops) {
           // No attack force exiting
+          // Population was killed but no trooper so no owner either
+          planet.setPlanetOwner(-1, null);
           exitLoop = true;
         }
         oneAttackFound = false;
@@ -747,6 +749,8 @@ public class PlanetBombingView extends BlackPanel {
               }
               if (planet.getTotalPopulation() == 0 && !aiTroops) {
                 // No attack force exiting
+                // Population was killed but no trooper so no owner either
+                planet.setPlanetOwner(-1, null);
                 aiExitLoop = true;
               }
               aiOneAttackFound = false;

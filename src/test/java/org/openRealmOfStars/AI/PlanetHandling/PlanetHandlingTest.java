@@ -699,6 +699,7 @@ public class PlanetHandlingTest {
     MissionList missionList = Mockito.mock(MissionList.class);
     Mockito.when(info.getMissions()).thenReturn(missionList);
     Planet planet = new Planet(new Coordinate(6, 6), "Test planet", 1, false);
+    planet.setWorkers(Planet.FOOD_FARMERS, 1);
     planet.setPlanetOwner(1, info);
     planet.setUnderConstruction(building);
     boolean rushed = false;

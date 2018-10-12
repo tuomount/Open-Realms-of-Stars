@@ -1836,6 +1836,9 @@ public class Planet {
       int index = DiceGenerator.getRandom(list.size() - 1);
       workers[list.get(index)]--;
     }
+    if (getTotalPopulation() == 0) {
+      setPlanetOwner(-1, null);
+    }
   }
 
   /**

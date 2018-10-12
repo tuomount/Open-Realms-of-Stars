@@ -867,7 +867,8 @@ public final class MissionHandling {
         if (planet == null) {
           return;
         }
-        if (planet.getPlanetPlayerInfo().isHuman()) {
+        if (planet.getPlanetPlayerInfo() != null
+            && planet.getPlanetPlayerInfo().isHuman()) {
           // Bombing human planet
           int attackerIndex = game.getStarMap().getPlayerList().getIndex(info);
           PlanetBombingView bombView = new PlanetBombingView(planet, fleet,

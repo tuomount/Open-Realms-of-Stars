@@ -630,13 +630,14 @@ public class PlanetBombingView extends BlackPanel {
       Ship ship = fleet.getShipByIndex(shipIndex);
       for (int i = 0; i < ship.getNumberOfComponents(); i++) {
         ShipComponent component = ship.getComponent(i);
-        if (component.getType() == ShipComponentType.ORBITAL_BOMBS
-            || component.getType() == ShipComponentType.ORBITAL_NUKE) {
-          // Always bombing
+        if (planet.getTotalPopulation() > 0
+            && (component.getType() == ShipComponentType.ORBITAL_BOMBS
+            || component.getType() == ShipComponentType.ORBITAL_NUKE)) {
+          // Always bombing if population is more than 0
           shipComponentUsage(i);
         }
         if (component.getType() == ShipComponentType
-            .PLANETARY_INVASION_MODULE) {
+            .PLANETARY_INVASION_MODULE && ship.getColonist() > 0) {
           if (ship.getTroopPower() > planet.getTroopPower() || troops) {
             // Using troops if only going to win
             // Or there is at least two troop carriers

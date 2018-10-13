@@ -898,6 +898,8 @@ public final class NewsFactory {
       sb.append(". Defender ");
       sb.append(defender.getEmpireName());
       sb.append(" was defeated eventually. ");
+    } else {
+      sb.append(". ");
     }
     if (nukeText != null) {
       sb.append(" ");

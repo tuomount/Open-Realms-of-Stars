@@ -99,6 +99,12 @@ public class ComponentButton extends JButton {
    * Update button according the component
    */
   public void updateButton() {
+    if (ship == null) {
+      this.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE);
+      this.setEnabled(false);
+      this.setText("");
+      return;
+    }
     ShipComponent comp = ship.getComponent(index);
     boolean hasEnergy = ship.hasComponentEnergy(index);
     int hp = ship.getHullPointForComponent(index);

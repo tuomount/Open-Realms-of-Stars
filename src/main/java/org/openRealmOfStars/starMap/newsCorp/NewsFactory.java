@@ -894,18 +894,28 @@ public final class NewsFactory {
     sb.append(attacker.getEmpireName());
     sb.append(" made massive attack on ");
     sb.append(planet.getName());
-    sb.append(". Defender ");
-    sb.append(defender.getEmpireName());
-    sb.append(" was defeated eventually. ");
+    if (defender != null) {
+      sb.append(". Defender ");
+      sb.append(defender.getEmpireName());
+      sb.append(" was defeated eventually. ");
+    } else {
+      sb.append(". ");
+    }
     if (nukeText != null) {
       sb.append(" ");
       sb.append(nukeText);
     } else {
-      sb.append(" Last remains of ");
-      sb.append(defender.getRace().getNameSingle());
-      sb.append(" population was killed by ground troops of ");
-      sb.append(attacker.getEmpireName());
-      sb.append(". ");
+      if (defender == null) {
+        sb.append(" Planet population was killed by massive bombings by ");
+        sb.append(attacker.getEmpireName());
+        sb.append(". ");
+      } else {
+        sb.append(" Last remains of ");
+        sb.append(defender.getRace().getNameSingle());
+        sb.append(" population was killed by ground troops of ");
+        sb.append(attacker.getEmpireName());
+        sb.append(". ");
+      }
     }
     news.setNewsText(sb.toString());
     return news;

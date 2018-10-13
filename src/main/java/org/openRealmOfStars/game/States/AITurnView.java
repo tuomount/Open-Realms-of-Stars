@@ -1256,17 +1256,19 @@ public class AITurnView extends BlackPanel {
                   msg.setCoordinate(fleet.getCoordinate());
                   info.getMsgList().addNewMessage(msg);
                 }
-              } else if (info.getMissions().getMissionForFleet(
-                        fleet.getName()) == null) {
-                // Movement was blocked, giving a message
+              } else {
                 fleet.setRoute(null);
-                Message msg = new Message(MessageType.FLEET,
-                    fleet.getName()
-                        + " has encouter obstacle and waiting for more orders.",
-                    Icons.getIconByName(Icons.ICON_HULL_TECH));
-                msg.setMatchByString(fleet.getName());
-                msg.setCoordinate(fleet.getCoordinate());
-                info.getMsgList().addNewMessage(msg);
+                if (info.getMissions().getMissionForFleet(
+                    fleet.getName()) == null) {
+                  // Movement was blocked, giving a message
+                  Message msg = new Message(MessageType.FLEET,
+                      fleet.getName()
+                      + " has encouter obstacle and waiting for more orders.",
+                      Icons.getIconByName(Icons.ICON_HULL_TECH));
+                  msg.setMatchByString(fleet.getName());
+                  msg.setCoordinate(fleet.getCoordinate());
+                  info.getMsgList().addNewMessage(msg);
+                }
               }
             }
 

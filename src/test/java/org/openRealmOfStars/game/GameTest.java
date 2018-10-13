@@ -119,7 +119,7 @@ public class GameTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRunFullGames() {
-    Game game = new Game(false);
+    Game game;
     int[] raceWins = new int[SpaceRace.values().length];
     int[] govWins = new int[GovernmentType.values().length];
     for (int i = 0; i < 2; i++) {
@@ -131,6 +131,9 @@ public class GameTest {
       config.setSize(128, 1);
       config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
 //      System.out.println("Game number " + i);
+      System.gc();
+      game = null;
+      game = new Game(false);
       game.setGalaxyConfig(config);
       game.makeNewGame();
       game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);

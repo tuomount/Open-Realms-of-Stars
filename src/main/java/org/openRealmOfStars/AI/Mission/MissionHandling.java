@@ -274,6 +274,19 @@ public final class MissionHandling {
         }
       }
       if (mission.getPhase() == MissionPhase.EXECUTING) {
+        Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
+            fleet.getMovesLeft());
+        if (targetAnomaly != null) {
+          // Focus on anomalies
+          fleet.setRoute(null);
+          AStarSearch search = new AStarSearch(game.getStarMap(),
+              fleet.getX(), fleet.getY(), targetAnomaly.getX(),
+              targetAnomaly.getY(), false);
+          search.doSearch();
+          search.doRoute();
+          fleet.setaStarSearch(search);
+          mission.setMissionTime(mission.getMissionTime() - 1);
+        }
         mission.setMissionTime(mission.getMissionTime() + 1);
         boolean missionComplete = false;
         if (mission.getMissionTime() >= info.getRace().getAIExploringAmount()) {
@@ -313,7 +326,12 @@ public final class MissionHandling {
           } else {
             sun = game.getStarMap().getSunByName(mission.getSunName());
           }
-          PathPoint point = info.getUnchartedSector(sun, fleet);
+          PathPoint point = info.getClosestUnchartedSector(sun, fleet);
+          if (DiceGenerator.getRandom(99) < 50) {
+            // Split exploring fleets a bit by selecting
+            // point by another method.
+            point = info.getUnchartedSector(sun, fleet);
+          }
           if (point != null) {
             mission.setTarget(new Coordinate(point.getX(), point.getY()));
             AStarSearch search = new AStarSearch(game.getStarMap(),
@@ -325,18 +343,6 @@ public final class MissionHandling {
             makeRegularMoves(game, fleet, info);
           }
         } else {
-          Coordinate targetAnomaly = getNearByAnomaly(info, game, fleet,
-              fleet.getMovesLeft());
-          if (targetAnomaly != null) {
-            // Focus on anomalies
-            fleet.setRoute(null);
-            AStarSearch search = new AStarSearch(game.getStarMap(),
-                fleet.getX(), fleet.getY(), targetAnomaly.getX(),
-                targetAnomaly.getY(), false);
-            search.doSearch();
-            search.doRoute();
-            fleet.setaStarSearch(search);
-          }
           makeRegularMoves(game, fleet, info);
         }
       }
@@ -861,7 +867,8 @@ public final class MissionHandling {
         if (planet == null) {
           return;
         }
-        if (planet.getPlanetPlayerInfo().isHuman()) {
+        if (planet.getPlanetPlayerInfo() != null
+            && planet.getPlanetPlayerInfo().isHuman()) {
           // Bombing human planet
           int attackerIndex = game.getStarMap().getPlayerList().getIndex(info);
           PlanetBombingView bombView = new PlanetBombingView(planet, fleet,

@@ -960,7 +960,38 @@ public class PlayerInfo {
   }
 
   /**
-   * Get best sector to explore in this Solar system
+   * Get closest sector to explore in this Solar system.
+   * @param sun Solar System
+   * @param fleet Fleet doing the exploring
+   * @return PathPoint where to go next or null if no more exploring
+   */
+  public PathPoint getClosestUnchartedSector(final Sun sun,
+      final Fleet fleet) {
+    double distance = 999;
+    PathPoint bestPoint = null;
+    for (int x = -StarMap.SOLAR_SYSTEM_WIDTH;
+        x < StarMap.SOLAR_SYSTEM_WIDTH + 1; x++) {
+      for (int y = -StarMap.SOLAR_SYSTEM_WIDTH;
+          y < StarMap.SOLAR_SYSTEM_WIDTH + 1; y++) {
+        Coordinate coordinate = new Coordinate(sun.getCenterX() + x,
+            sun.getCenterY() + y);
+        if (coordinate.isValidCoordinate(maxCoordinate)
+            && (x > 1 || x < -1 || y > 1 || y < -1)
+            && mapData[sun.getCenterX() + x][sun.getCenterY()
+              + y] == UNCHARTED) {
+          double dist = coordinate.calculateDistance(fleet.getCoordinate());
+          if (dist < distance) {
+            distance = dist;
+            bestPoint = new PathPoint(coordinate.getX(), coordinate.getY(),
+                distance);
+          }
+        }
+      }
+    }
+    return bestPoint;
+  }
+  /**
+   * Get best sector to explore in this Solar system.
    * @param sun Solar System
    * @param fleet Fleet doing the exploring
    * @return PathPoint where to go next or null if no more exploring

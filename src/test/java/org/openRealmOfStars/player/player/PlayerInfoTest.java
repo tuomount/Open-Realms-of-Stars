@@ -11,7 +11,6 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentType;
-import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;

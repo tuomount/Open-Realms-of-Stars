@@ -628,42 +628,45 @@ public class PlanetBombingView extends BlackPanel {
     boolean troops = false;
     do {
       Ship ship = fleet.getShipByIndex(shipIndex);
-      for (int i = 0; i < ship.getNumberOfComponents(); i++) {
-        ShipComponent component = ship.getComponent(i);
-        if (component.getType() == ShipComponentType.ORBITAL_BOMBS
-            || component.getType() == ShipComponentType.ORBITAL_NUKE) {
-          // Always bombing
-          shipComponentUsage(i);
-        }
-        if (component.getType() == ShipComponentType
-            .PLANETARY_INVASION_MODULE) {
-          if (ship.getTroopPower() > planet.getTroopPower() || troops) {
-            // Using troops if only going to win
-            // Or there is at least two troop carriers
+      if (ship != null) {
+        for (int i = 0; i < ship.getNumberOfComponents(); i++) {
+          ShipComponent component = ship.getComponent(i);
+          if (planet.getTotalPopulation() > 0
+              && (component.getType() == ShipComponentType.ORBITAL_BOMBS
+              || component.getType() == ShipComponentType.ORBITAL_NUKE)) {
+            // Always bombing if population is more than 0
             shipComponentUsage(i);
           }
-          troops = true;
-        }
-        if (usedComponentIndex != -1) {
-          oneAttackFound = true;
-          PlayerInfo defender = planet.getPlanetPlayerInfo();
-          if (attackBombOrTroops()) {
-            // Planet conquered
-            exitLoop = true;
-            if (starMap != null) {
-              NewsData news = NewsFactory.makePlanetConqueredNews(attacker,
-                  defender, planet, nukeText);
-              starMap.getNewsCorpData().addNews(news);
-              EventOnPlanet event = new EventOnPlanet(
-                  EventType.PLANET_CONQUERED,
-                  planet.getCoordinate(), planet.getName(),
-                  starMap.getPlayerList().getIndex(attacker));
-              event.setText(news.getNewsText());
-              starMap.getHistory().addEvent(event);
+          if (component.getType() == ShipComponentType
+              .PLANETARY_INVASION_MODULE && ship.getColonist() > 0) {
+            if (ship.getTroopPower() > planet.getTroopPower() || troops) {
+              // Using troops if only going to win
+              // Or there is at least two troop carriers
+              shipComponentUsage(i);
             }
+            troops = true;
           }
-          removeDestroyedShip();
-          skipAnimation();
+          if (usedComponentIndex != -1) {
+            oneAttackFound = true;
+            PlayerInfo defender = planet.getPlanetPlayerInfo();
+            if (attackBombOrTroops()) {
+              // Planet conquered
+              exitLoop = true;
+              if (starMap != null) {
+                NewsData news = NewsFactory.makePlanetConqueredNews(attacker,
+                    defender, planet, nukeText);
+                starMap.getNewsCorpData().addNews(news);
+                EventOnPlanet event = new EventOnPlanet(
+                    EventType.PLANET_CONQUERED,
+                    planet.getCoordinate(), planet.getName(),
+                    starMap.getPlayerList().getIndex(attacker));
+                event.setText(news.getNewsText());
+                starMap.getHistory().addEvent(event);
+              }
+            }
+            removeDestroyedShip();
+            skipAnimation();
+          }
         }
       }
       nextShip();
@@ -673,6 +676,8 @@ public class PlanetBombingView extends BlackPanel {
         }
         if (planet.getTotalPopulation() == 0 && !troops) {
           // No attack force exiting
+          // Population was killed but no trooper so no owner either
+          planet.setPlanetOwner(-1, null);
           exitLoop = true;
         }
         oneAttackFound = false;
@@ -747,6 +752,8 @@ public class PlanetBombingView extends BlackPanel {
               }
               if (planet.getTotalPopulation() == 0 && !aiTroops) {
                 // No attack force exiting
+                // Population was killed but no trooper so no owner either
+                planet.setPlanetOwner(-1, null);
                 aiExitLoop = true;
               }
               aiOneAttackFound = false;

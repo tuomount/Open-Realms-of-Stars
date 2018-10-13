@@ -1626,13 +1626,18 @@ public class Planet {
         }
       }
       if (happinessEffect.getType() == HappinessBonus.KILL_POPULATION) {
+        // Need to remember owner if last population is killed
+        PlayerInfo oldOwner = planetOwnerInfo;
         killOneWorker();
         msg = new Message(MessageType.PLANETARY, "Population of " + getName()
             + " has formed angry mob. This mob killed one population!",
             Icons.getIconByName(Icons.ICON_DEATH));
         msg.setCoordinate(getCoordinate());
         msg.setMatchByString(getName());
-        planetOwnerInfo.getMsgList().addNewMessage(msg);
+        oldOwner.getMsgList().addNewMessage(msg);
+        if (planetOwnerInfo == null) {
+          return;
+        }
       }
       if (happinessEffect.getType() == HappinessBonus.DESTROY_BUILDING) {
         Building destroyed = destroyOneBuilding();
@@ -1835,6 +1840,9 @@ public class Planet {
       }
       int index = DiceGenerator.getRandom(list.size() - 1);
       workers[list.get(index)]--;
+    }
+    if (getTotalPopulation() == 0) {
+      setPlanetOwner(-1, null);
     }
   }
 

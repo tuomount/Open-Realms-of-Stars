@@ -304,21 +304,22 @@ public final class StarMapUtilities {
   public static int calculateCultureScoreLimit(final int sizeX,
       final int sizeY, final int lastTurn, final int multiplier) {
     int totalSize = sizeX * sizeY;
+    int turnMultiplier = lastTurn / 100;
     int turnModifier = 0;
     if (totalSize <= 50 * 50) {
-      turnModifier = -50;
-    } else if (totalSize <= 75 * 75) {
       turnModifier = 0;
-    } else if (totalSize <= 128 * 128) {
+    } else if (totalSize <= 75 * 75) {
       turnModifier = 50;
-    } else if (totalSize <= 160 * 160) {
+    } else if (totalSize <= 128 * 128) {
       turnModifier = 100;
-    } else if (totalSize <= 200 * 200) {
+    } else if (totalSize <= 160 * 160) {
       turnModifier = 150;
-    } else if (totalSize <= 256 * 256) {
+    } else if (totalSize <= 200 * 200) {
       turnModifier = 200;
+    } else if (totalSize <= 256 * 256) {
+      turnModifier = 250;
     }
-    int result = (lastTurn + turnModifier) * 3;
+    int result = (lastTurn + turnModifier) * turnMultiplier + lastTurn;
     // 75%
     if (multiplier == 0) {
       result = result * 3 / 4;
@@ -331,8 +332,8 @@ public final class StarMapUtilities {
     if (multiplier == 3) {
       result = result * 2;
     }
-    if (result < 400) {
-      result = 400;
+    if (result < 600) {
+      result = 600;
     }
     if (multiplier == -1) {
       result = -1;

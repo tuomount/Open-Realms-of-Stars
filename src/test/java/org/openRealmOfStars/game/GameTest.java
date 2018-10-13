@@ -128,7 +128,7 @@ public class GameTest {
       config.setScoringVictoryTurns(200);
       config.setSpacePiratesLevel(2);
       config.setChanceForPlanetaryEvent(40);
-      config.setSize(128, 1);
+      config.setSize(75, 1);
       config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
 //      System.out.println("Game number " + i);
       System.gc();
@@ -146,7 +146,7 @@ public class GameTest {
         assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
       } while (!game.getStarMap().isGameEnded());
       NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
-//      System.out.print("Done, ");
+//      System.out.print("Done, turn " + game.getStarMap().getTurn()+ ": ");
       if (newsData.length > 0) {
         String victoryText = newsData[newsData.length - 1].getNewsText();
         for (int j = 0; j < 8; j++) {
@@ -156,9 +156,9 @@ public class GameTest {
             govWins[info.getGovernment().getIndex()] = govWins[info.getGovernment().getIndex()] +1;
           }
         }
-        //System.out.println(newsData[newsData.length - 1].getNewsText());
+//        System.out.println(newsData[newsData.length - 1].getNewsText());
       } else {
-        //System.out.println("not sure who win!");
+//        System.out.println("not sure who win!");
       }
     }
 /*    System.out.println("Wins for races:");

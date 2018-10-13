@@ -430,6 +430,33 @@ public final class MissionHandling {
       info.getMissions().remove(mission);
     }
   }
+
+  /**
+   * Find free colonizable and closet planet.
+   * @param info Realm who is doing the search
+   * @param planets All Planet
+   * @param fleet Where fleet is
+   * @return Planet or null
+   */
+  public static Planet findFreeColonizablePlanet(final PlayerInfo info,
+      final ArrayList<Planet> planets, final Fleet fleet) {
+    Planet result = null;
+    double distance = 999;
+    for (Planet planet : planets) {
+      if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
+          && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
+          && info.getSectorVisibility(planet.getCoordinate())
+          >= PlayerInfo.FOG_OF_WAR) {
+        double dist = fleet.getCoordinate().calculateDistance(
+            planet.getCoordinate());
+        if (dist < distance) {
+          result = planet;
+          distance = dist;
+        }
+      }
+    }
+    return result;
+  }
   /**
    * Handle Colonize mission
    * @param mission Colonize mission, does nothing if type is wrong
@@ -477,7 +504,8 @@ public final class MissionHandling {
           mission.setPhase(MissionPhase.TREKKING);
         }
       }
-      if (mission.getPhase() == MissionPhase.TREKKING
+      if ((mission.getPhase() == MissionPhase.TREKKING
+          || mission.getPhase() == MissionPhase.EXECUTING)
           && fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
         // Target acquired
         mission.setPhase(MissionPhase.EXECUTING);
@@ -513,6 +541,25 @@ public final class MissionHandling {
               + ". ");
           game.getStarMap().getHistory().addEvent(event);
           planet.eventActivation();
+        } else {
+          Planet newTarget = findFreeColonizablePlanet(info,
+              game.getStarMap().getPlanetList(), fleet);
+          if (newTarget != null) {
+            mission.setTarget(newTarget.getCoordinate());
+            mission.setPhase(MissionPhase.TREKKING);
+            fleet.setRoute(null);
+          } else {
+            Planet homePort = game.getStarMap().getClosestHomePort(info,
+                fleet.getCoordinate());
+            if (homePort != null) {
+              fleet.setRoute(null);
+              mission.setTarget(homePort.getCoordinate());
+              mission.setTargetPlanet(homePort.getName());
+              mission.setMissionTime(0);
+              mission.setPhase(MissionPhase.PLANNING);
+              mission.setType(MissionType.MOVE);
+            }
+          }
         }
 
       } else if (mission.getPhase() == MissionPhase.TREKKING
@@ -525,11 +572,13 @@ public final class MissionHandling {
             // Planet has been colonized so no longer colonization mission.
             Planet homePort = game.getStarMap().getClosestHomePort(info,
                 fleet.getCoordinate());
-            mission.setTarget(homePort.getCoordinate());
-            mission.setTargetPlanet(homePort.getName());
-            mission.setMissionTime(0);
-            mission.setPhase(MissionPhase.PLANNING);
-            mission.setType(MissionType.MOVE);
+            if (homePort != null) {
+              mission.setTarget(homePort.getCoordinate());
+              mission.setTargetPlanet(homePort.getName());
+              mission.setMissionTime(0);
+              mission.setPhase(MissionPhase.PLANNING);
+              mission.setType(MissionType.MOVE);
+            }
           }
         }
         makeReroute(game, fleet, info, mission);

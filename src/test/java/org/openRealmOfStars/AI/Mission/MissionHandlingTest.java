@@ -2,6 +2,7 @@ package org.openRealmOfStars.AI.Mission;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -380,6 +381,52 @@ public class MissionHandlingTest {
     mission.setPhase(MissionPhase.TREKKING);
     MissionHandling.handleColonyExplore(mission, fleet, info, game);
     assertEquals(MissionPhase.TREKKING, mission.getPhase());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testClosetPlanet() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.GREYANS);
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Coordinate fleetCoord = new Coordinate(5, 7);
+    Mockito.when(fleet.getCoordinate()).thenReturn(fleetCoord);
+    Planet planet1 = Mockito.mock(Planet.class);
+    Coordinate planet1Coord = new Coordinate(15, 17);
+    Mockito.when(info.getSectorVisibility(planet1Coord)).thenReturn(
+        PlayerInfo.VISIBLE);
+    Mockito.when(planet1.getCoordinate()).thenReturn(planet1Coord);
+    Mockito.when(planet1.getPlanetPlayerInfo()).thenReturn(info);
+    Mockito.when(planet1.getRadiationLevel()).thenReturn(1);
+    Planet planet2 = Mockito.mock(Planet.class);
+    Coordinate planet2Coord = new Coordinate(8, 8);
+    Mockito.when(info.getSectorVisibility(planet2Coord)).thenReturn(
+        PlayerInfo.VISIBLE);
+    Mockito.when(planet2.getCoordinate()).thenReturn(planet2Coord);
+    Mockito.when(planet2.getPlanetPlayerInfo()).thenReturn(info2);
+    Mockito.when(planet2.getRadiationLevel()).thenReturn(1);
+    Planet planet3 = Mockito.mock(Planet.class);
+    Coordinate planet3Coord = new Coordinate(20, 20);
+    Mockito.when(info.getSectorVisibility(planet3Coord)).thenReturn(
+        PlayerInfo.VISIBLE);
+    Mockito.when(planet3.getCoordinate()).thenReturn(planet3Coord);
+    Mockito.when(planet3.getPlanetPlayerInfo()).thenReturn(null);
+    Mockito.when(planet3.getRadiationLevel()).thenReturn(1);
+    Planet planet4 = Mockito.mock(Planet.class);
+    Coordinate planet4Coord = new Coordinate(30, 30);
+    Mockito.when(info.getSectorVisibility(planet4Coord)).thenReturn(
+        PlayerInfo.VISIBLE);
+    Mockito.when(planet4.getCoordinate()).thenReturn(planet4Coord);
+    Mockito.when(planet4.getPlanetPlayerInfo()).thenReturn(null);
+    Mockito.when(planet4.getRadiationLevel()).thenReturn(1);
+    ArrayList<Planet> planets = new ArrayList<>();
+    planets.add(planet1);
+    planets.add(planet2);
+    planets.add(planet3);
+    planets.add(planet4);
+    Planet planet = MissionHandling.findFreeColonizablePlanet(info, planets, fleet);
+    assertEquals(planet, planet3);
   }
 
   @Test

@@ -807,7 +807,7 @@ public class NewsFactoryTest {
     Planet planet3 = Mockito.mock(Planet.class);
     Mockito.when(planet3.getName()).thenReturn("Planet III");
     Mockito.when(planet3.getPlanetOwnerIndex()).thenReturn(2);
-    Mockito.when(planet3.getCulture()).thenReturn(300);
+    Mockito.when(planet3.getCulture()).thenReturn(500);
     Planet planet4 = Mockito.mock(Planet.class);
     Mockito.when(planet4.getName()).thenReturn("Planet IV");
     Mockito.when(planet4.getPlanetOwnerIndex()).thenReturn(3);

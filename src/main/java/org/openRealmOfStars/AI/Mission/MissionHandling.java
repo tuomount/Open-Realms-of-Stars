@@ -1439,6 +1439,8 @@ public final class MissionHandling {
       game.fleetMakeMove(info, fleet, nx, ny);
     } else {
       fleet.setMovesLeft(0);
+      // Making reroute
+      fleet.setRoute(null);
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
       if (infoAtTarget != null) {
         int index = map.getPlayerList().getIndex(infoAtTarget);
@@ -1459,9 +1461,6 @@ public final class MissionHandling {
               Icons.getIconByName(Icons.ICON_HULL_TECH));
           msg.setCoordinate(fleet.getCoordinate());
           info.getMsgList().addNewMessage(msg);
-        } else {
-          // Making reroute
-          fleet.setRoute(null);
         }
       }
     }

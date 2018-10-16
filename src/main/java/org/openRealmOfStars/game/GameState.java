@@ -124,5 +124,9 @@ public enum GameState {
   /**
    * Realm View
    */
-  REALM_VIEW;
+  REALM_VIEW,
+  /**
+   * Planet list view containing all the planets in single list.
+   */
+  PLANET_LIST_VIEW;
 }

@@ -371,6 +371,10 @@ public final class GameCommands {
   public static final String COMMAND_PRODUCTION_LIST = "ProductionList";
 
   /**
+   * Command for showing planet list
+   */
+  public static final String COMMAND_SHOW_PLANET_LIST = "ShowPlanetList";
+  /**
    * Demolish/recycle building
    */
   public static final String COMMAND_DEMOLISH_BUILDING = "DemolishBuilding";

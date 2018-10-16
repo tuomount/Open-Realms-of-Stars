@@ -645,14 +645,25 @@ public final class MissionHandling {
           Fleet anotherFleet = game.getStarMap().getFleetByCoordinate(
               mission.getX(), mission.getY());
           if (anotherFleet != null) {
-            // Anchor has been taken, no more deploy starbase mission
-            Planet homePort = game.getStarMap().getClosestHomePort(info,
-                fleet.getCoordinate());
-            mission.setTarget(homePort.getCoordinate());
-            mission.setTargetPlanet(homePort.getName());
-            mission.setMissionTime(0);
-            mission.setPhase(MissionPhase.PLANNING);
-            mission.setType(MissionType.MOVE);
+            Mission newTarget = info.getMissions().getMission(
+                MissionType.DEPLOY_STARBASE, MissionPhase.PLANNING);
+            if (newTarget != null) {
+              newTarget.setFleetName(fleet.getName());
+              newTarget.setPhase(MissionPhase.TREKKING);
+              Route route = new Route(fleet.getX(), fleet.getY(),
+                  newTarget.getX(), newTarget.getY(), fleet.getFleetFtlSpeed());
+              fleet.setRoute(route);
+              info.getMissions().remove(mission);
+            } else {
+              // Anchor has been taken, no more deploy starbase mission
+              Planet homePort = game.getStarMap().getClosestHomePort(info,
+                  fleet.getCoordinate());
+              mission.setTarget(homePort.getCoordinate());
+              mission.setTargetPlanet(homePort.getName());
+              mission.setMissionTime(0);
+              mission.setPhase(MissionPhase.PLANNING);
+              mission.setType(MissionType.MOVE);
+            }
           }
         }
         makeReroute(game, fleet, info, mission);
@@ -1428,6 +1439,8 @@ public final class MissionHandling {
       game.fleetMakeMove(info, fleet, nx, ny);
     } else {
       fleet.setMovesLeft(0);
+      // Making reroute
+      fleet.setRoute(null);
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
       if (infoAtTarget != null) {
         int index = map.getPlayerList().getIndex(infoAtTarget);
@@ -1448,9 +1461,6 @@ public final class MissionHandling {
               Icons.getIconByName(Icons.ICON_HULL_TECH));
           msg.setCoordinate(fleet.getCoordinate());
           info.getMsgList().addNewMessage(msg);
-        } else {
-          // Making reroute
-          fleet.setRoute(null);
         }
       }
     }

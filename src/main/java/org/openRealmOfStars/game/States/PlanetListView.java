@@ -1,16 +1,19 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
-import javax.swing.JList;
+import javax.swing.JScrollPane;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.PlanetInfoLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -63,14 +66,27 @@ public class PlanetListView extends BlackPanel {
         tempList.add(planet);
       }
     }
+    if (tempList.size() < 30) {
+      for (int i = 0; i < 30 - tempList.size(); i++) {
+        tempList.add(null);
+      }
+    }
     planets = tempList.toArray(new Planet[tempList.size()]);
-    JList<Planet> listOfPlanets = new JList<>();
-    listOfPlanets.setListData(planets);
     this.setLayout(new BorderLayout());
-    InfoPanel base = new InfoPanel();
-    base.setLayout(new BoxLayout(base, BoxLayout.Y_AXIS));
-    base.setTitle(realm.getEmpireName());
-    this.add(base, BorderLayout.CENTER);
+    EmptyInfoPanel base = new EmptyInfoPanel();
+    base.setLayout(new GridLayout(0, 1));
+    for (Planet planet : planets) {
+      PlanetInfoLabel label = new PlanetInfoLabel(planet, listener);
+      base.add(label);
+    }
+    JScrollPane scroll = new JScrollPane(base);
+    scroll.setBorder(null);
+    scroll.setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
+    InfoPanel centerPanel = new InfoPanel();
+    centerPanel.setLayout(new BorderLayout());
+    centerPanel.setTitle(realm.getEmpireName());
+    centerPanel.add(scroll, BorderLayout.CENTER);
+    this.add(centerPanel, BorderLayout.CENTER);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());

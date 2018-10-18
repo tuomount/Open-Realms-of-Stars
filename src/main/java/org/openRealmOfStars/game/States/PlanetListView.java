@@ -53,6 +53,10 @@ public class PlanetListView extends BlackPanel {
    */
   private Planet[] planets;
   /**
+   * Realm whos planets are shown
+   */
+  private PlayerInfo info;
+  /**
    * Constructor for PlanetListView.
    * @param realm Realm information whose planets are in list
    * @param map StarMap for getting the planets
@@ -71,6 +75,7 @@ public class PlanetListView extends BlackPanel {
         tempList.add(null);
       }
     }
+    info = realm;
     planets = tempList.toArray(new Planet[tempList.size()]);
     this.setLayout(new BorderLayout());
     EmptyInfoPanel base = new EmptyInfoPanel();
@@ -97,5 +102,13 @@ public class PlanetListView extends BlackPanel {
     bottomPanel.add(btn, BorderLayout.CENTER);
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
+  }
+
+  /**
+   * Get Realm whose planet being shown.
+   * @return PlayerInfo
+   */
+  public PlayerInfo getRealm() {
+    return info;
   }
 }

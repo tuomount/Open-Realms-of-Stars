@@ -145,6 +145,7 @@ public class PlanetInfoLabel extends EmptyInfoPanel {
     this.add(buildingEstimate);
     SpaceButton btn = new SpaceButton("View", planet.getName() + "|"
         + GameCommands.COMMAND_VIEW_PLANET);
+    btn.addActionListener(listener);
     this.add(btn);
   }
 

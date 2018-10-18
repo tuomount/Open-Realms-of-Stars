@@ -1123,7 +1123,12 @@ public class Game implements ActionListener {
       break;
     }
     case PLANETVIEW: {
-      planetView(focusMessage);
+      if (dataObject == null) {
+        planetView(focusMessage);
+      } else if (dataObject instanceof Planet) {
+        Planet planet = (Planet) dataObject;
+        showPlanetView(planet, planet.getPlanetPlayerInfo(), true);
+      }
       break;
     }
     case FLEETVIEW: {
@@ -1918,12 +1923,23 @@ public class Game implements ActionListener {
       changeGameState(GameState.STARMAP);
       return;
     }
-    if (gameState == GameState.PLANET_LIST_VIEW && planetListView != null
-        && arg0.getActionCommand()
+    if (gameState == GameState.PLANET_LIST_VIEW && planetListView != null) {
+      if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
-      SoundPlayer.playMenuSound();
-      changeGameState(GameState.STARMAP);
-      return;
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.STARMAP);
+        return;
+      }
+      if (arg0.getActionCommand()
+          .contains(GameCommands.COMMAND_VIEW_PLANET)) {
+        String[] temp = arg0.getActionCommand().split("|");
+        Planet planet = starMap.getPlanetByName(temp[0]);
+        if (planet != null) {
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.PLANETVIEW, planet);
+          return;
+        }
+      }
     }
     if (gameState == GameState.PLANETBOMBINGVIEW && planetBombingView != null) {
       if (arg0.getActionCommand()

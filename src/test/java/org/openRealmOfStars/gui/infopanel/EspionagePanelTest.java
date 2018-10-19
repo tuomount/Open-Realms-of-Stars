@@ -3,9 +3,11 @@ package org.openRealmOfStars.gui.infopanel;
 import static org.junit.Assert.*;
 
 import java.awt.Color;
+import java.awt.event.ActionListener;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 
 /**
@@ -35,13 +37,14 @@ public class EspionagePanelTest {
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
+    ActionListener listener = Mockito.mock(ActionListener.class);
     String realm = "Test realm";
     String desc = "Test description";
     int value = 5;
     String relationText = "Neutral Peace";
     Color color = GuiStatics.COLOR_GREEN_TEXT;
     EspionagePanel panel = new EspionagePanel(realm, desc, value,
-        relationText, color);
+        relationText, color, listener);
     assertEquals(realm, panel.getRealmName());
     assertEquals(desc, panel.getDescription());
     assertEquals(value, panel.getValue());

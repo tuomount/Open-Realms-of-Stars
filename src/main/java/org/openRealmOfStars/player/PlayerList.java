@@ -189,6 +189,23 @@ public class PlayerList {
   }
 
   /**
+   * Get player/realm by name
+   * @param toMatch Realm name to match
+   * @return PlayerInfo or null if not found
+   */
+  public PlayerInfo findByName(final String toMatch) {
+    if (toMatch != null) {
+      for (int i = 0; i < list.size(); i++) {
+        PlayerInfo info = list.get(i);
+        if (info.getEmpireName().equals(toMatch)) {
+          return info;
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
    * Init players visibility maps
    * @param maxX Map x size
    * @param maxY Map y size

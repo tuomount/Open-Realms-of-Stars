@@ -1932,7 +1932,7 @@ public class Game implements ActionListener {
       }
       if (arg0.getActionCommand()
           .contains(GameCommands.COMMAND_VIEW_PLANET)) {
-        String[] temp = arg0.getActionCommand().split("|");
+        String[] temp = arg0.getActionCommand().split("\\|");
         Planet planet = starMap.getPlanetByName(temp[0]);
         if (planet != null) {
           SoundPlayer.playMenuSound();
@@ -2071,6 +2071,13 @@ public class Game implements ActionListener {
           GameCommands.COMMAND_HAIL_FLEET_PLANET)) {
         changeGameState(GameState.DIPLOMACY_VIEW, planetView);
         SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        SoundPlayer.playMenuSound();
+        planetView = null;
+        changeGameState(previousState);
+        return;
       }
       planetView.handleAction(arg0);
     }

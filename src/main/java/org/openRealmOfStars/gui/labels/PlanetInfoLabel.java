@@ -164,10 +164,13 @@ public class PlanetInfoLabel extends EmptyInfoPanel {
 
   /**
    * Get selected construction
-   * @return Construction
+   * @return Construction or null
    */
   public Construction getSelectedConstruction() {
-    return (Construction) constructionSelect.getSelectedItem();
+    if (constructionSelect != null) {
+      return (Construction) constructionSelect.getSelectedItem();
+    }
+    return null;
   }
 
   /**

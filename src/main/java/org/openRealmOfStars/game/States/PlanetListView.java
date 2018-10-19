@@ -148,9 +148,11 @@ public class PlanetListView extends BlackPanel {
       if (index != -1) {
         Planet planet = planets[index];
         Construction building = planetInfo[index].getSelectedConstruction();
-        planet.setUnderConstruction(building);
-        planetInfo[index].updateTimeEstimate();
-        SoundPlayer.playMenuSound();
+        if (building != null) {
+          planet.setUnderConstruction(building);
+          planetInfo[index].updateTimeEstimate();
+          SoundPlayer.playMenuSound();
+        }
       }
     }
   }

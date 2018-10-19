@@ -161,4 +161,20 @@ public class PlanetInfoLabel extends EmptyInfoPanel {
       this.add(Box.createRigidArea(new Dimension(textWidth, 25)));
     }
   }
+
+  /**
+   * Get selected construction
+   * @return Construction
+   */
+  public Construction getSelectedConstruction() {
+    return (Construction) constructionSelect.getSelectedItem();
+  }
+
+  /**
+   * Update time estimation for construction
+   */
+  public void updateTimeEstimate() {
+    buildingEstimate.setText(planet.getProductionTimeAsString(
+        (Construction) constructionSelect.getSelectedItem()));
+  }
 }

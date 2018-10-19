@@ -1940,6 +1940,7 @@ public class Game implements ActionListener {
           return;
         }
       }
+      planetListView.handleAction(arg0);
     }
     if (gameState == GameState.PLANETBOMBINGVIEW && planetBombingView != null) {
       if (arg0.getActionCommand()

@@ -2,11 +2,13 @@ package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
@@ -17,6 +19,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.construction.Construction;
 
 /**
 *
@@ -53,6 +56,10 @@ public class PlanetListView extends BlackPanel {
    */
   private Planet[] planets;
   /**
+   * List of planet info label matching to planets list.
+   */
+  private PlanetInfoLabel[] planetInfo;
+  /**
    * Realm whos planets are shown
    */
   private PlayerInfo info;
@@ -77,11 +84,14 @@ public class PlanetListView extends BlackPanel {
     }
     info = realm;
     planets = tempList.toArray(new Planet[tempList.size()]);
+    planetInfo = new PlanetInfoLabel[planets.length];
     this.setLayout(new BorderLayout());
     EmptyInfoPanel base = new EmptyInfoPanel();
     base.setLayout(new GridLayout(0, 1));
-    for (Planet planet : planets) {
+    for (int i = 0; i < planets.length; i++) {
+      Planet planet = planets[i];
       PlanetInfoLabel label = new PlanetInfoLabel(planet, listener);
+      planetInfo[i] = label;
       base.add(label);
     }
     JScrollPane scroll = new JScrollPane(base);
@@ -111,4 +121,38 @@ public class PlanetListView extends BlackPanel {
   public PlayerInfo getRealm() {
     return info;
   }
+
+  /**
+   * Get Planet by name
+   * @param name Planet name to search
+   * @return index, -1 if not found
+   */
+  private int getPlanetByName(final String name) {
+    for (int i = 0; i < planets.length; i++) {
+      Planet planet = planets[i];
+      if (planet != null && planet.getName().equals(name)) {
+        return i;
+      }
+    }
+    return -1;
+  }
+  /**
+   * Handle actions for Planet List view.
+   * @param arg0 ActionEvent command what player did
+   */
+  public void handleAction(final ActionEvent arg0) {
+    if (arg0.getActionCommand()
+        .contains(GameCommands.COMMAND_PRODUCTION_LIST)) {
+      String[] temp = arg0.getActionCommand().split("\\|");
+      int index = getPlanetByName(temp[0]);
+      if (index != -1) {
+        Planet planet = planets[index];
+        Construction building = planetInfo[index].getSelectedConstruction();
+        planet.setUnderConstruction(building);
+        planetInfo[index].updateTimeEstimate();
+        SoundPlayer.playMenuSound();
+      }
+    }
+  }
+
 }

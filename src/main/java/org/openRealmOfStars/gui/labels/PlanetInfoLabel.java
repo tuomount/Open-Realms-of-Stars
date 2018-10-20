@@ -119,7 +119,6 @@ public class PlanetInfoLabel extends EmptyInfoPanel {
         String.valueOf(happyValue));
     addIcon(icon);
     constructionSelect = new JComboBox<>(this.planet.getProductionList());
-    constructionSelect.addActionListener(listener);
     constructionSelect.setActionCommand(planet.getName() + "|"
         + GameCommands.COMMAND_PRODUCTION_LIST);
     constructionSelect.setBackground(GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
@@ -136,6 +135,7 @@ public class PlanetInfoLabel extends EmptyInfoPanel {
         }
       }
     }
+    constructionSelect.addActionListener(listener);
     constructionSelect.setEditable(false);
     this.add(constructionSelect);
     this.add(Box.createRigidArea(new Dimension(5, 25)));

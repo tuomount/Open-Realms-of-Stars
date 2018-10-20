@@ -2,11 +2,14 @@ package org.openRealmOfStars.gui.infopanel;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JScrollPane;
 
+import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
@@ -62,10 +65,11 @@ public class EspionagePanel extends InfoPanel {
    * @param espionageValue Espionage value
    * @param relation Realm relation text
    * @param relationColor what color is used to draw relation text.
+   * @param listener ActionListener for showing realm information button.
    */
   public EspionagePanel(final String realm, final String text,
       final int espionageValue, final String relation,
-      final Color relationColor) {
+      final Color relationColor, final ActionListener listener) {
     realmName = realm;
     description = text;
     value = espionageValue;
@@ -89,6 +93,10 @@ public class EspionagePanel extends InfoPanel {
     infoText.setText(description);
     this.add(scroll);
     this.add(Box.createRigidArea(new Dimension(5, 5)));
+    SpaceButton btn = new SpaceButton("Realm", realmName + "|"
+        + GameCommands.COMMAND_REALM_VIEW);
+    btn.addActionListener(listener);
+    this.add(btn);
   }
 
   /**

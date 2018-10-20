@@ -148,7 +148,7 @@ public class EspionageView extends BlackPanel {
           relationColor = GuiStatics.COLOR_GREEN_TEXT;
         }
         EspionagePanel panel = new EspionagePanel(realmInfo.getEmpireName(),
-            desc, bonus, text, relationColor);
+            desc, bonus, text, relationColor, listener);
         centerPanel.add(panel);
       }
     }

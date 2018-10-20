@@ -1,19 +1,20 @@
-package org.openRealmOfStars.gui.infopanel;
+package org.openRealmOfStars.gui.labels;
 
 import static org.junit.Assert.*;
 
-import java.awt.Color;
 import java.awt.event.ActionListener;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
-import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.construction.Construction;
 
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2018 Tuomo Untinen
+ * Copyright (C) 2018  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -29,25 +30,24 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
  * along with this program; if not, see http://www.gnu.org/licenses/
  * 
  * 
- * Espionage panel test
+ * Test for PlanetInfoLabel
  * 
  */
-public class EspionagePanelTest {
+public class PlanetInfoLabelTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     ActionListener listener = Mockito.mock(ActionListener.class);
-    String realm = "Test realm";
-    String desc = "Test description";
-    int value = 5;
-    String relationText = "Neutral Peace";
-    Color color = GuiStatics.COLOR_GREEN_TEXT;
-    EspionagePanel panel = new EspionagePanel(realm, desc, value,
-        relationText, color, listener);
-    assertEquals(realm, panel.getRealmName());
-    assertEquals(desc, panel.getDescription());
-    assertEquals(value, panel.getValue());
+    Planet target = Mockito.mock(Planet.class);
+    Mockito.when(target.getPlanetType()).thenReturn(PlanetTypes.ICEWORLD1);
+    Construction[] list = new Construction[1];
+    list[0] = Mockito.mock(Construction.class);
+    Mockito.when(list[0].getName()).thenReturn("Test building");
+    Mockito.when(target.getProductionList()).thenReturn(list);
+    Mockito.when(target.getUnderConstruction()).thenReturn(list[0]);
+    PlanetInfoLabel label = new PlanetInfoLabel(target, listener);
+    assertEquals(list[0], label.getSelectedConstruction());
   }
 
 }

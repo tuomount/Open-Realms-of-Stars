@@ -2094,7 +2094,11 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
         SoundPlayer.playMenuSound();
         planetView = null;
-        changeGameState(previousState);
+        if (previousState == GameState.PLANET_LIST_VIEW) {
+          changeGameState(previousState);
+        } else {
+          changeGameState(GameState.STARMAP);
+        }
         return;
       }
       planetView.handleAction(arg0);

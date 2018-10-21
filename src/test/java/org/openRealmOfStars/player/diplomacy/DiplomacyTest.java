@@ -154,6 +154,20 @@ public class DiplomacyTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testIsLost() {
+    Diplomacy diplomacy = new Diplomacy(4, 1);
+    assertEquals(false, diplomacy.isLost(0));
+    assertEquals(0, diplomacy.getNumberOfWar());
+    diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.IN_WAR,
+        SpaceRace.SPORKS);
+    assertEquals(1, diplomacy.getNumberOfWar());
+    diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.REALM_LOST,
+        SpaceRace.SPORKS);
+    assertEquals(0, diplomacy.getNumberOfWar());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testInTradeAlliance() {
     Diplomacy diplomacy = new Diplomacy(4, 1);
     assertEquals(Diplomacy.NEUTRAL, diplomacy.getLiking(0));

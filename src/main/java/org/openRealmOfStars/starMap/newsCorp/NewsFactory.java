@@ -242,6 +242,39 @@ public final class NewsFactory {
   }
 
   /**
+   * Make realm lost news. Realm lost it's final planet
+   * @param realm PlayerInfo who lost
+   * @return NewsData
+   */
+  public static NewsData makeLostNews(final PlayerInfo realm) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instructions.addImage(realm.getRace().getNameSingle());
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("REALM LOST!");
+        break;
+      }
+      case 1: {
+        instructions.addText("EXTERMINATION!");
+        break;
+      }
+      case 2: {
+        instructions.addText("ANHILATION!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(realm.getEmpireName());
+    sb.append(" has lost its last planet from the known galaxy! ");
+    sb.append("Galaxy now has one realm less...");
+    news.setNewsText(sb.toString());
+    return news;
+  }
+  /**
    * Make Trade fleet news. Trader's ship arrives to another planet
    * @param trader PlayerInfo who is trading
    * @param planet Where to trader

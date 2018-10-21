@@ -118,13 +118,22 @@ public enum DiplomacyBonusType {
    * Bonus for realm which did not like the made embargo.
    * So this is negative bonus.
    */
-  DISLIKED_EMBARGO;
+  DISLIKED_EMBARGO,
+  /**
+   * Realm has lost the game which means that
+   * all it's planets have been conquered.
+   * In theory realm still could have ships left and in theory
+   * could colonize new planets, but changes are slim.
+   * Most important purpose of this is that other realms
+   * do not get war bonus or fatigue against this realm anymore.
+   */
+  REALM_LOST;
 
 
   /**
    * Number of Bonus type. This should be one larger than actual bonus types.
    */
-  public static final int MAX_BONUS_TYPE = 23;
+  public static final int MAX_BONUS_TYPE = 24;
 
   /**
    * Get ShipHullType index
@@ -155,6 +164,7 @@ public enum DiplomacyBonusType {
       case EMBARGO: return 20;
       case LIKED_EMBARGO: return 21;
       case DISLIKED_EMBARGO: return 22;
+      case REALM_LOST: return 23;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -213,6 +223,8 @@ public enum DiplomacyBonusType {
       return DiplomacyBonusType.LIKED_EMBARGO;
     case 22:
       return DiplomacyBonusType.DISLIKED_EMBARGO;
+    case 23:
+      return DiplomacyBonusType.REALM_LOST;
     default:
       throw new IllegalArgumentException("Unexpected diplomacy bonus type!");
     }

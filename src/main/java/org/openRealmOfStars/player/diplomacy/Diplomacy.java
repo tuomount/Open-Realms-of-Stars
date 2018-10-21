@@ -200,6 +200,21 @@ public class Diplomacy {
   }
 
   /**
+   * Is certain player(index) with player who is asking lost?
+   * @param index Player index
+   * @return True if realm has lost
+   */
+  public boolean isLost(final int index) {
+    if (index > -1 && index < diplomacyList.length
+        && diplomacyList[index] != null
+        && !diplomacyList[index].isBonusType(
+            DiplomacyBonusType.BOARD_PLAYER)) {
+      return diplomacyList[index].isBonusType(DiplomacyBonusType.REALM_LOST);
+    }
+    return false;
+  }
+
+  /**
    * Is certain player(index) with player who is asking in peace?
    * @param index Player index
    * @return True if peace is between two players
@@ -531,7 +546,7 @@ public class Diplomacy {
   public int getNumberOfWar() {
     int result = 0;
     for (int i = 0; i < diplomacyList.length; i++) {
-      if (isWar(i)) {
+      if (isWar(i) && !isLost(i)) {
         result++;
       }
     }

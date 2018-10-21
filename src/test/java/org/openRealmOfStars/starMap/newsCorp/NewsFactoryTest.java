@@ -549,6 +549,18 @@ public class NewsFactoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testLostNews() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    NewsData news = NewsFactory.makeLostNews(info);
+    assertEquals(true, news.getImageInstructions().contains(
+        "Human"));
+    assertEquals(true, news.getNewsText().contains(info.getEmpireName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testPirateNews() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Space pirates");

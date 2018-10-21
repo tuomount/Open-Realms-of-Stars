@@ -487,8 +487,7 @@ public class ShipComponent {
     }
     case COLONY_MODULE:
     case POWERSOURCE:
-    case PRIVATEERING_MODULE:
-    case ORBITAL_NUKE: {
+    case PRIVATEERING_MODULE: {
       // Do nothing
       break;
     }
@@ -574,6 +573,25 @@ public class ShipComponent {
       sb.append(getDamage());
       sb.append("% hit chance");
       sb.append("\n");
+      break;
+    }
+    case ORBITAL_NUKE: {
+      sb.append("Orbital Nuke\n");
+      int dead = getDamage();
+      int buildingsDestroyed = getDamage();
+      if (getName().equals("Orbital antimatter bomb")) {
+        dead = 100;
+      }
+      if (getName().equals("Orbital neutron bomb")) {
+        dead = 100;
+        buildingsDestroyed = 50;
+      }
+      sb.append("Kill ratio: ");
+      sb.append(dead);
+      sb.append("%\n");
+      sb.append("Buildings destroyed: ");
+      sb.append(buildingsDestroyed);
+      sb.append("%\n");
       break;
     }
     case PLANETARY_INVASION_MODULE: {

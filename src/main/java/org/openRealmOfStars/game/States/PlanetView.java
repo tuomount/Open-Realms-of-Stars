@@ -21,6 +21,7 @@ import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.BaseInfoTextArea;
 import org.openRealmOfStars.gui.labels.IconLabel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
@@ -156,7 +157,7 @@ public class PlanetView extends BlackPanel {
   /**
    * New construction information text.
    */
-  private InfoTextArea productionInfo;
+  private BaseInfoTextArea productionInfo;
   /**
    * Building information text.
    */
@@ -409,10 +410,13 @@ public class PlanetView extends BlackPanel {
     topPanel.add(panel);
 
     topPanel.add(Box.createRigidArea(new Dimension(10, 25)));
-    productionInfo = new InfoTextArea(5, 35);
+    productionInfo = new BaseInfoTextArea(5, 35);
     productionInfo.setFont(GuiStatics.getFontCubellanSmaller());
     productionInfo.setEditable(false);
-    topPanel.add(productionInfo);
+    JScrollPane scroll = new JScrollPane(productionInfo);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    scroll.setBackground(Color.BLACK);
+    topPanel.add(scroll);
     topPanel.add(Box.createRigidArea(new Dimension(15, 25)));
 
     topPanel.setTitle(planet.getName());
@@ -428,7 +432,7 @@ public class PlanetView extends BlackPanel {
     buildingList.setAlignmentX(Component.LEFT_ALIGNMENT);
     buildingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     buildingList.setBackground(Color.BLACK);
-    JScrollPane scroll = new JScrollPane(buildingList);
+    scroll = new JScrollPane(buildingList);
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     scroll.setBackground(Color.BLACK);
     scroll.setPreferredSize(new Dimension(200, 200));

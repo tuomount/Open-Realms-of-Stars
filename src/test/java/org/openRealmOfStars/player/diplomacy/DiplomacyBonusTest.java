@@ -215,4 +215,20 @@ public class DiplomacyBonusTest {
     }
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testChiraloids() {
+    //                 IN_WAR,WDEC,INTA,IN_A,DICA,BOCR,GVAL,DEMA,DTR,SRAC,LONG_PEACE 
+    int[] bonusValues =  {-30,  -8,  12,  25,  -5,  -2,   2,  -5,  4,   5,  5, -2, 2, 0, 25, -2,
+        12, -4, 3, 0, -8, 2, -2, 0};
+    int[] bonusLasting = {255, 255, 255, 255, 200,  20,  50, 80, 100, 255, 1, 60, 40, 10, 255, 20,
+        20, 255, 255, 255, 20, 60, 60, 255};
+    for (int i = 0; i < DiplomacyBonusType.MAX_BONUS_TYPE; i++) {
+      DiplomacyBonus bonus = new DiplomacyBonus(
+          DiplomacyBonusType.getTypeByIndex(i), SpaceRace.CHIRALOIDS);
+      assertEquals(bonusValues[i], bonus.getBonusValue());
+      assertEquals(bonusLasting[i], bonus.getBonusLasting());
+    }
+  }
+
 }

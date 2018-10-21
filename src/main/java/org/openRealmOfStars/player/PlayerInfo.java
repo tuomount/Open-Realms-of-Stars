@@ -1424,6 +1424,7 @@ public class PlayerInfo {
   }
   /**
    * Set Realm's war fatigue.
+   * War fatigue is negative number.
    * @param fatigue to set
    */
   public void setWarFatigue(final int fatigue) {
@@ -1431,6 +1432,7 @@ public class PlayerInfo {
   }
   /**
    * Get Realm's war fatigue.
+   * War fatigue is negative number.
    * @return war fatigue
    */
   public int getWarFatigue() {

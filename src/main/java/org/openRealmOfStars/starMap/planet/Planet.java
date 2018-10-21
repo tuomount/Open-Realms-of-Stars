@@ -2254,6 +2254,10 @@ public class Planet {
     }
     int totalWarFatigue = planetOwnerInfo.getWarFatigue()
         / planetOwnerInfo.getRace().getWarFatigueResistance();
+    if (totalWarFatigue < -6) {
+      // Maximum war fatigue
+      totalWarFatigue = -6;
+    }
     base = base + totalWarFatigue;
     if (totalWarFatigue < 0) {
       sb.append("<li>");

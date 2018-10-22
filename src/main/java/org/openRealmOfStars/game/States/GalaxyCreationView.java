@@ -240,7 +240,7 @@ public class GalaxyCreationView extends BlackPanel {
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     String[] spacePirates = new String[7];
-    spacePirates[0] = "Disabled pirates and monsters";
+    spacePirates[0] = "Disabled pirates";
     spacePirates[1] = "Very rare 10%";
     spacePirates[2] = "Rare 20%";
     spacePirates[3] = "Few 40%";

@@ -1051,26 +1051,26 @@ public class DiplomacyView extends BlackPanel {
         }
         int value = DiceGenerator.getRandom(99);
         if (value < warChance) {
+          int aiIndex = starMap.getPlayerList().getIndex(ai);
+          if (!human.getDiplomacy().isWar(aiIndex)) {
+            StarMapUtilities.addWarDeclatingReputation(starMap, human);
+            NewsData newsData = NewsFactory.makeWarNews(human, ai,
+                meetingPlace, starMap);
+            starMap.getNewsCorpData().addNews(newsData);
+            starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+                meetingPlace, newsData));
+            String[] defenseList = ai.getDiplomacy().activateDefensivePact(
+                starMap, human);
+            if (defenseList != null) {
+              starMap.getNewsCorpData().addNews(
+                  NewsFactory.makeDefensiveActivation(human, defenseList));
+            }
+          }
           trade.generateEqualTrade(NegotiationType.WAR);
           trade.doTrades();
           tradeHappened = true;
           updatePanel(SpeechType.MAKE_WAR);
           resetChoices();
-          int aiIndex = starMap.getPlayerList().getIndex(ai);
-          if (!human.getDiplomacy().isWar(aiIndex)) {
-            StarMapUtilities.addWarDeclatingReputation(starMap, ai);
-            NewsData newsData = NewsFactory.makeWarNews(ai, human,
-                meetingPlace, starMap);
-            starMap.getNewsCorpData().addNews(newsData);
-            starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
-                meetingPlace, newsData));
-            String[] defenseList = human.getDiplomacy().activateDefensivePact(
-                starMap, ai);
-            if (defenseList != null) {
-              starMap.getNewsCorpData().addNews(
-                  NewsFactory.makeDefensiveActivation(ai, defenseList));
-            }
-          }
         } else {
           if (speechSelected.getType() == SpeechType.DECLINE_ANGER) {
             updatePanel(SpeechType.INSULT_RESPOND);

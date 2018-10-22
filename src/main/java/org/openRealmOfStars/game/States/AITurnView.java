@@ -1335,6 +1335,7 @@ public class AITurnView extends BlackPanel {
         game.getStarMap().doFleetScanUpdate(info, null, planet);
       }
     }
+    boolean terminateNews = false;
     for (int i = 0; i < numberOfPlanets.length; i++) {
       if (numberOfPlanets[i] == 0) {
         boolean lost = false;
@@ -1349,8 +1350,11 @@ public class AITurnView extends BlackPanel {
             if (lost) {
               PlayerInfo realm = game.getStarMap().getPlayerList()
                   .getPlayerInfoByIndex(i);
-              NewsData news = NewsFactory.makeLostNews(realm);
-              game.getStarMap().getNewsCorpData().addNews(news);
+              if (!terminateNews) {
+                terminateNews = true;
+                NewsData news = NewsFactory.makeLostNews(realm);
+                game.getStarMap().getNewsCorpData().addNews(news);
+              }
             }
           }
         }

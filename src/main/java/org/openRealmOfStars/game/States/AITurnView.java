@@ -1306,10 +1306,13 @@ public class AITurnView extends BlackPanel {
         }
       }
     }
+    int[] numberOfPlanets = new int[game.getStarMap().getPlayerList()
+                                    .getCurrentMaxRealms()];
     for (int i = 0; i < game.getStarMap().getPlanetList().size(); i++) {
       Planet planet = game.getStarMap().getPlanetList().get(i);
       if (planet.getPlanetPlayerInfo() != null) {
         PlayerInfo info = planet.getPlanetPlayerInfo();
+        numberOfPlanets[planet.getPlanetOwnerIndex()]++;
         boolean enemyOrbiting = false;
         Fleet fleetOrbiting = game.getStarMap().getFleetByCoordinate(
             planet.getX(), planet.getY());
@@ -1330,6 +1333,31 @@ public class AITurnView extends BlackPanel {
         }
         // Fleets and planets do the scan
         game.getStarMap().doFleetScanUpdate(info, null, planet);
+      }
+    }
+    boolean terminateNews = false;
+    for (int i = 0; i < numberOfPlanets.length; i++) {
+      if (numberOfPlanets[i] == 0) {
+        boolean lost = false;
+        for (int j = 0;
+            j < game.getStarMap().getPlayerList().getCurrentMaxRealms(); j++) {
+          PlayerInfo info = game.getStarMap().getPlayerList()
+              .getPlayerInfoByIndex(j);
+          DiplomacyBonusList list = info.getDiplomacy().getDiplomacyList(i);
+          if (list != null) {
+            lost = list.addBonus(DiplomacyBonusType.REALM_LOST,
+                info.getRace());
+            if (lost) {
+              PlayerInfo realm = game.getStarMap().getPlayerList()
+                  .getPlayerInfoByIndex(i);
+              if (!terminateNews) {
+                terminateNews = true;
+                NewsData news = NewsFactory.makeLostNews(realm);
+                game.getStarMap().getNewsCorpData().addNews(news);
+              }
+            }
+          }
+        }
       }
     }
     game.getStarMap().updateEspionage();

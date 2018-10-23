@@ -314,6 +314,12 @@ public class DiplomacyBonus {
        }
        break;
      }
+     case REALM_LOST: {
+       onlyOne = true;
+       bonusValue = 0;
+       bonusLasting = 255;
+       break;
+     }
      default: {
        throw new IllegalArgumentException("Unknown bonus type!!");
      }

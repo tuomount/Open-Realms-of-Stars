@@ -310,7 +310,6 @@ public class BattleView extends BlackPanel {
       }
       if (isCombatEnded()) {
         endButton.setText("End combat");
-        map.getFleetTiles(true);
       }
       if (combatMapMouseListener.getShipDamage() != null
           && combatMapMouseListener.getShipDamage().isReady()) {

@@ -55,7 +55,7 @@ public class AiThread extends Thread {
    * Has thread started yet
    * @return True if started
    */
-  public boolean isStarted() {
+  public synchronized boolean isStarted() {
     return started;
   }
 
@@ -63,19 +63,23 @@ public class AiThread extends Thread {
    * Is thread still running
    * @return True if running
    */
-  public boolean isRunning() {
+  public synchronized boolean isRunning() {
     return running;
   }
 
   @Override
   public void run() {
-    started = true;
-    running = true;
+    synchronized (this) {
+      started = true;
+      running = true;
+    }
     boolean turnEnd = false;
     do {
       turnEnd = view.handleAiTurn();
     } while (!turnEnd);
-    running = false;
+    synchronized (this) {
+      running = false;
+    }
   }
 
 }

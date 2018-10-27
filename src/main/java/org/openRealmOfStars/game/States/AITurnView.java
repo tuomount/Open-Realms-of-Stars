@@ -137,6 +137,15 @@ public class AITurnView extends BlackPanel {
    */
   private boolean readyToMove;
   /**
+   * Next State after thread is ready
+   */
+  private GameState nextState;
+
+  /**
+   * Next state object
+   */
+  private Object nextStateObject;
+  /**
    * Constructor for main menu
    * @param game Game used to get access star map and planet lists
    */
@@ -1487,6 +1496,9 @@ public class AITurnView extends BlackPanel {
       game.getStarMap().handleFakingMilitarySize();
     } else {
       handleAIFleet();
+      if (getNextState() != null) {
+        return true;
+      }
       if (game.getGameState() != GameState.AITURN) {
         // If last player is calling diplomacy screen
         // it is not run due the line 556. There fore
@@ -1586,14 +1598,58 @@ public class AITurnView extends BlackPanel {
       if (!aiThread.isStarted()) {
         aiThread.start();
       }
-      if (!aiThread.isRunning() && aiThread.isStarted() && readyToMove) {
-        if (game.getStarMap().getNewsCorpData().isNewsToShow()) {
-          game.changeGameState(GameState.NEWS_CORP_VIEW);
-        } else {
-          game.changeGameState(GameState.STARMAP);
+      if (!aiThread.isRunning() && aiThread.isStarted()) {
+        if (getNextState() != null) {
+          game.changeGameState(getNextState(), getNextStateObject());
+          setNextState(null, null);
+          return;
+        }
+        if (readyToMove) {
+          if (game.getStarMap().getNewsCorpData().isNewsToShow()) {
+            game.changeGameState(GameState.NEWS_CORP_VIEW);
+          } else {
+            game.changeGameState(GameState.STARMAP);
+          }
         }
       }
     }
+  }
+
+  /**
+   * Is AI Turn view's AI thread is running
+   * @return True if AI thread is being run, otherwise false
+   */
+  public boolean isThreaded() {
+    if (aiThread.isRunning() && aiThread.isStarted()) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Get next state.
+   * @return the nextState
+   */
+  public GameState getNextState() {
+    return nextState;
+  }
+
+  /**
+   * Get next state object
+   * @return the nextStateObject
+   */
+  public Object getNextStateObject() {
+    return nextStateObject;
+  }
+
+  /**
+   * Set next game state
+   * @param state the nextState to set
+   * @param dataObject the nextState data object
+   */
+  public void setNextState(final GameState state, final Object dataObject) {
+    this.nextState = state;
+    this.nextStateObject = dataObject;
   }
 
 }

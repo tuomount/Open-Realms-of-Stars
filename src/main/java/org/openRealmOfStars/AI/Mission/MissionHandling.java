@@ -1426,15 +1426,13 @@ public final class MissionHandling {
       final PlayerInfo info, final Fleet fleet) {
     StarMap map = game.getStarMap();
     Fleet fleetAtTarget = map.getFleetByCoordinate(nx, ny);
-    boolean war = false;
     if (fleetAtTarget != null) {
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
       if (info == infoAtTarget) {
         fleetAtTarget = null;
       }
-      war = map.isWarBetween(info, infoAtTarget);
     }
-    if (war || fleetAtTarget == null) {
+    if (fleetAtTarget == null) {
       // Not blocked so fleet is moving
       game.fleetMakeMove(info, fleet, nx, ny);
     } else {
@@ -1444,15 +1442,15 @@ public final class MissionHandling {
       PlayerInfo infoAtTarget = map.getPlayerInfoByFleet(fleetAtTarget);
       if (infoAtTarget != null) {
         int index = map.getPlayerList().getIndex(infoAtTarget);
-        boolean nothingToTrade = info.getDiplomacy().getDiplomacyList(index)
-            .isBonusType(DiplomacyBonusType.NOTHING_TO_TRADE);
         if (infoAtTarget.isHuman()) {
-          if (fleet.getRoute() == null && !nothingToTrade) {
-            // No diplomacy with players if FTL travelling
-            SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
-            game.changeGameState(GameState.DIPLOMACY_VIEW, info);
-          }
-        } else if (!info.isHuman()) {
+          Message msg = new Message(MessageType.FLEET,
+              "Fleet " + fleetAtTarget.getName() + " evaded bumping in FTL with"
+                  + " fleet " + fleet.getName() + "!",
+              Icons.getIconByName(Icons.ICON_HULL_TECH));
+          msg.setCoordinate(fleetAtTarget.getCoordinate());
+          infoAtTarget.getMsgList().addNewMessage(msg);
+        } else if (!info.isHuman() && !infoAtTarget.isBoard()
+            && !info.isBoard()) {
           handleDiplomacyBetweenAis(game, info, index, null, fleet);
         } else if (info.getMissions().getMissionForFleet(fleet.getName())
             == null) {

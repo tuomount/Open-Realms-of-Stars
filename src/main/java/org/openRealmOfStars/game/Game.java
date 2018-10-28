@@ -2061,23 +2061,24 @@ public class Game implements ActionListener {
         SoundPlayer.playMenuSound();
         changeGameState(GameState.STARMAP);
         return;
-      } else if (arg0.getActionCommand()
+      }
+      if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_SHIPDESIGN_DONE)
           && shipDesignView != null && shipDesignView.isDesignOK()) {
         SoundPlayer.playMenuSound();
         shipDesignView.keepDesign();
         changeGameState(GameState.VIEWSHIPS);
         return;
-      } else if (arg0.getActionCommand().equalsIgnoreCase(
+      }
+      if (arg0.getActionCommand().equalsIgnoreCase(
           GameCommands.COMMAND_SHIPS)) {
         SoundPlayer.playMenuSound();
         changeGameState(GameState.VIEWSHIPS);
         return;
-      } else {
-        // Ship Design View
-        shipDesignView.handleAction(arg0);
-        return;
       }
+      // Ship Design View
+      shipDesignView.handleAction(arg0);
+      return;
     }
     if (gameState == GameState.ESPIONAGE_VIEW && espionageView != null) {
       // Espionage  View
@@ -2086,7 +2087,8 @@ public class Game implements ActionListener {
         SoundPlayer.playMenuSound();
         changeGameState(GameState.STARMAP);
         return;
-      } else if (arg0.getActionCommand()
+      }
+      if (arg0.getActionCommand()
           .contains(GameCommands.COMMAND_REALM_VIEW)) {
         String[] temp = arg0.getActionCommand().split("\\|");
         PlayerInfo realm = starMap.getPlayerList().findByName(temp[0]);
@@ -2155,7 +2157,9 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
         SoundPlayer.playMenuSound();
-        changeGameState(GameState.STARMAP);
+        Fleet fleet = fleetView.getFleet();
+        fleetView = null;
+        changeGameState(GameState.STARMAP, fleet);
         return;
       }
       if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIZE)) {
@@ -2283,6 +2287,7 @@ public class Game implements ActionListener {
         return;
       }
       optionsView.handleAction(arg0);
+      return;
     }
     if (gameState == GameState.MAIN_MENU) {
       // Main menu
@@ -2320,27 +2325,6 @@ public class Game implements ActionListener {
         System.exit(0);
       }
     }
-    if (arg0.getActionCommand()
-        .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
-      // This is default action in many view so there fore this
-      // very last in commands
-      SoundPlayer.playMenuSound();
-      if (gameState == GameState.PLANETVIEW) {
-        planetView = null;
-      }
-      if (gameState == GameState.RESEARCHVIEW) {
-        researchView = null;
-      }
-      if (gameState == GameState.FLEETVIEW) {
-        Fleet fleet = fleetView.getFleet();
-        fleetView = null;
-        changeGameState(GameState.STARMAP, fleet);
-      } else {
-        changeGameState(GameState.STARMAP);
-      }
-      return;
-    }
-
   }
 
   /**

@@ -2044,7 +2044,6 @@ public class Game implements ActionListener {
           // Human and AI player had nothing to trade, so
           // adding nothing to trade bonus
           diplomacyView.addNothingToTrade();
-          return;
         }
         if (previousState == GameState.AITURN) {
           changeGameState(previousState);

@@ -109,6 +109,13 @@ public class ResearchView extends BlackPanel {
    */
   private int maximumGameLength;
   /**
+   * Choice whether to playe sound from sliders or not.
+   * -1 Never player sounds
+   * 0 Do not play sound, but set to 1 when timer occurs
+   * 1 Play sound
+   */
+  private int playSoundFromSliders = -1;
+  /**
    * Create new research for player
    * @param player whom clicked research button
    * @param totalResearch how much player is currently researching per turn
@@ -295,7 +302,9 @@ public class ResearchView extends BlackPanel {
     btn.addActionListener(listener);
     bottomPanel.add(btn, BorderLayout.CENTER);
 
+    playSoundFromSliders = -1;
     updatePanel();
+    playSoundFromSliders = 1;
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
 
@@ -306,21 +315,28 @@ public class ResearchView extends BlackPanel {
    * @param arg0 ActionEvent command what player did
    */
   public void handleAction(final ActionEvent arg0) {
-    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)
-        && techList.getSelectedIndex() != -1) {
-      Tech tech = techList.getSelectedValue();
-      String strTmp = tech.getTechInfo(player.getRace());
-      if (!strTmp.equals(infoText.getText())) {
-        infoText.setLineWrap(false);
-        infoText.setText(strTmp);
-        infoText.repaint();
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ANIMATION_TIMER)) {
+      if (playSoundFromSliders == 0) {
+        playSoundFromSliders = 1;
+      }
+      if (techList.getSelectedIndex() != -1) {
+        Tech tech = techList.getSelectedValue();
+        String strTmp = tech.getTechInfo(player.getRace());
+        if (!strTmp.equals(infoText.getText())) {
+          infoText.setLineWrap(false);
+          infoText.setText(strTmp);
+          infoText.repaint();
+        }
       }
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SLIDER_COMBAT_RESEARCH)) {
       int value = combatRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Combat, value);
-      SoundPlayer.playMenuSound();
+      if (playSoundFromSliders == 1) {
+        SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
+      }
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -331,6 +347,7 @@ public class ResearchView extends BlackPanel {
         player.getTechList().setTechFocus(TechType.Combat, value);
         updateTechInfo(TechType.Combat);
         SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
         updatePanel();
       }
     }
@@ -342,6 +359,7 @@ public class ResearchView extends BlackPanel {
         player.getTechList().setTechFocus(TechType.Combat, value);
         updateTechInfo(TechType.Combat);
         SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
         updatePanel();
       }
     }
@@ -360,7 +378,10 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_DEFENSE_RESEARCH)) {
       int value = defenseRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Defense, value);
-      SoundPlayer.playMenuSound();
+      if (playSoundFromSliders == 1) {
+        SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
+      }
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -371,6 +392,7 @@ public class ResearchView extends BlackPanel {
         player.getTechList().setTechFocus(TechType.Defense, value);
         updateTechInfo(TechType.Defense);
         SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
         updatePanel();
       }
     }
@@ -381,6 +403,7 @@ public class ResearchView extends BlackPanel {
         value = value - TechList.FINE_TUNE_VALUE;
         player.getTechList().setTechFocus(TechType.Defense, value);
         SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
         updatePanel();
       }
     }
@@ -399,7 +422,10 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_HULL_RESEARCH)) {
       int value = hullRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Hulls, value);
-      SoundPlayer.playMenuSound();
+      if (playSoundFromSliders == 1) {
+        SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
+      }
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -410,6 +436,7 @@ public class ResearchView extends BlackPanel {
         player.getTechList().setTechFocus(TechType.Hulls, value);
         updateTechInfo(TechType.Hulls);
         SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
         updatePanel();
       }
     }
@@ -421,6 +448,7 @@ public class ResearchView extends BlackPanel {
         player.getTechList().setTechFocus(TechType.Hulls, value);
         updateTechInfo(TechType.Hulls);
         SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
         updatePanel();
       }
     }
@@ -439,7 +467,10 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_IMPROVEMENT_RESEARCH)) {
       int value = improvementRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Improvements, value);
-      SoundPlayer.playMenuSound();
+      if (playSoundFromSliders == 1) {
+        SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
+      }
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -450,6 +481,7 @@ public class ResearchView extends BlackPanel {
         player.getTechList().setTechFocus(TechType.Improvements, value);
         updateTechInfo(TechType.Improvements);
         SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
         updatePanel();
       }
     }
@@ -461,6 +493,7 @@ public class ResearchView extends BlackPanel {
         player.getTechList().setTechFocus(TechType.Improvements, value);
         updateTechInfo(TechType.Improvements);
         SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
         updatePanel();
       }
     }
@@ -480,7 +513,10 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_PROPULSION_RESEARCH)) {
       int value = propulsionRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Propulsion, value);
-      SoundPlayer.playMenuSound();
+      if (playSoundFromSliders == 1) {
+        SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
+      }
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -491,6 +527,7 @@ public class ResearchView extends BlackPanel {
         player.getTechList().setTechFocus(TechType.Propulsion, value);
         updateTechInfo(TechType.Propulsion);
         SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
         updatePanel();
       }
     }
@@ -502,6 +539,7 @@ public class ResearchView extends BlackPanel {
         player.getTechList().setTechFocus(TechType.Propulsion, value);
         updateTechInfo(TechType.Propulsion);
         SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
         updatePanel();
       }
     }
@@ -521,7 +559,10 @@ public class ResearchView extends BlackPanel {
         .equals(GameCommands.COMMAND_SLIDER_ELECTRONICS_RESEARCH)) {
       int value = electronicsRese.getSliderValue();
       player.getTechList().setTechFocus(TechType.Electrics, value);
-      SoundPlayer.playMenuSound();
+      if (playSoundFromSliders == 1) {
+        SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
+      }
       updatePanel();
     }
     if (arg0.getActionCommand()
@@ -532,6 +573,7 @@ public class ResearchView extends BlackPanel {
         player.getTechList().setTechFocus(TechType.Electrics, value);
         updateTechInfo(TechType.Electrics);
         SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
         updatePanel();
       }
     }
@@ -543,6 +585,7 @@ public class ResearchView extends BlackPanel {
         player.getTechList().setTechFocus(TechType.Electrics, value);
         updateTechInfo(TechType.Electrics);
         SoundPlayer.playMenuSound();
+        playSoundFromSliders = 0;
         updatePanel();
       }
     }

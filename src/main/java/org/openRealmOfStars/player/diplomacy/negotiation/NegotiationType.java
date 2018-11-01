@@ -78,6 +78,10 @@ public enum NegotiationType {
   /**
    * Trade embargo offering
    */
-  TRADE_EMBARGO
+  TRADE_EMBARGO,
+  /**
+   * Map containing only realm's planets
+   */
+  MAP_PLANETS
 
 }

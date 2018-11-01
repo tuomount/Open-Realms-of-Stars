@@ -407,13 +407,30 @@ public class DiplomaticTradeTest {
   public void testMapTrade() {
     StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
-    trade.generateMapTrade(DiplomaticTrade.TRADE);
+    trade.generateMapTrade(DiplomaticTrade.TRADE, true);
     assertEquals(NegotiationType.MAP, trade.getFirstOffer().getByIndex(0)
         .getNegotiationType());
     assertEquals(NegotiationType.MAP, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
-    trade.generateMapTrade(DiplomaticTrade.BUY);
+    trade.generateMapTrade(DiplomaticTrade.BUY, true);
     assertEquals(NegotiationType.MAP, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.CREDIT, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMapPlanetTrade() {
+    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    trade.generateMapTrade(DiplomaticTrade.TRADE, false);
+    assertEquals(NegotiationType.MAP_PLANETS, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.MAP_PLANETS, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+    trade.generateMapTrade(DiplomaticTrade.BUY, false);
+    assertEquals(NegotiationType.MAP_PLANETS, trade.getFirstOffer().getByIndex(0)
         .getNegotiationType());
     assertEquals(NegotiationType.CREDIT, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
@@ -757,7 +774,7 @@ public class DiplomaticTradeTest {
         .getDiplomacyBonus();
     assertEquals(4, bonus);
     trade = new DiplomaticTrade(map, 0, 1);
-    trade.generateMapTrade(DiplomaticTrade.BUY);
+    trade.generateMapTrade(DiplomaticTrade.BUY, true);
     PlayerInfo buyer = map.getPlayerByIndex(0);
     PlayerInfo seller = map.getPlayerByIndex(1);
     int oldSellerCreds = seller.getTotalCredits();
@@ -925,7 +942,8 @@ public class DiplomaticTradeTest {
     NegotiationType type2 = trade.getSecondOffer().getByIndex(0)
         .getNegotiationType();
     if (type1 == type2 
-        && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH)) {
+        && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
+        || type1 == NegotiationType.MAP_PLANETS)) {
       return;
     }
     if (type1 == NegotiationType.TECH && type2 == NegotiationType.CREDIT) {
@@ -958,7 +976,8 @@ public class DiplomaticTradeTest {
     NegotiationType type2 = trade.getSecondOffer().getByIndex(0)
         .getNegotiationType();
     if (type1 == type2 
-        && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH)) {
+        && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
+        || type1 == NegotiationType.MAP_PLANETS)) {
       return;
     }
     assertFalse(true);
@@ -988,8 +1007,10 @@ public class DiplomaticTradeTest {
     NegotiationType type2 = trade.getSecondOffer().getByIndex(0)
         .getNegotiationType();
     if ((type2 == NegotiationType.CREDIT || type2 == NegotiationType.MAP
-        || type2 == NegotiationType.TECH) 
-        && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH)) {
+        || type2 == NegotiationType.TECH
+        || type2 == NegotiationType.MAP_PLANETS) 
+        && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
+        || type1 == NegotiationType.MAP_PLANETS)) {
       return;
     }
     assertFalse(true);
@@ -1019,8 +1040,10 @@ public class DiplomaticTradeTest {
     NegotiationType type2 = trade.getSecondOffer().getByIndex(0)
         .getNegotiationType();
     if ((type2 == NegotiationType.CREDIT || type2 == NegotiationType.MAP
+        || type2 == NegotiationType.MAP_PLANETS
         || type2 == NegotiationType.TECH) 
-        && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH)) {
+        && (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
+        || type1 == NegotiationType.MAP_PLANETS)) {
       return;
     }
     assertFalse(true);
@@ -1048,7 +1071,7 @@ public class DiplomaticTradeTest {
     NegotiationType type1 = trade.getFirstOffer().getByIndex(0)
         .getNegotiationType();
     if (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
-        || type1 == NegotiationType.CREDIT) {
+        || type1 == NegotiationType.CREDIT || type1 == NegotiationType.MAP_PLANETS) {
       return;
     }
     assertFalse(true);
@@ -1076,7 +1099,7 @@ public class DiplomaticTradeTest {
     NegotiationType type1 = trade.getFirstOffer().getByIndex(0)
         .getNegotiationType();
     if (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
-        || type1 == NegotiationType.CREDIT) {
+        || type1 == NegotiationType.CREDIT || type1 == NegotiationType.MAP_PLANETS) {
       return;
     }
     assertFalse(true);
@@ -1103,7 +1126,8 @@ public class DiplomaticTradeTest {
     trade.generateBackstabbingAttitudeOffer();
     NegotiationType type1 = trade.getFirstOffer().getByIndex(0)
         .getNegotiationType();
-    if (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH) {
+    if (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
+        || type1 == NegotiationType.MAP_PLANETS) {
     } else {
       assertFalse(true);
     }
@@ -1111,6 +1135,7 @@ public class DiplomaticTradeTest {
     .getDiplomacyList(1).addBonus(DiplomacyBonusType.IN_ALLIANCE,
             SpaceRace.SPORKS);
     if (type1 == NegotiationType.MAP
+        || type1 == NegotiationType.MAP_PLANETS
         || type1 == NegotiationType.TECH
         || type1 == NegotiationType.CREDIT
         || type1 == NegotiationType.WAR) {
@@ -1141,7 +1166,8 @@ public class DiplomaticTradeTest {
     if (trade.getFirstOffer().getByIndex(0) != null) {
       NegotiationType type1 = trade.getFirstOffer().getByIndex(0)
           .getNegotiationType();
-      if (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH) {
+      if (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
+          || type1 == NegotiationType.MAP_PLANETS) {
         return;
       }
       assertFalse(true);
@@ -1171,7 +1197,8 @@ public class DiplomaticTradeTest {
       NegotiationType type1 = trade.getFirstOffer().getByIndex(0)
           .getNegotiationType();
       if (type1 == NegotiationType.MAP || type1 == NegotiationType.TECH
-          || type1 == NegotiationType.CREDIT) {
+          || type1 == NegotiationType.CREDIT
+          || type1 == NegotiationType.MAP_PLANETS) {
         return;
       }
       assertFalse(true);

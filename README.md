@@ -64,6 +64,15 @@ Git project also contains an Eclipse project which should automatically compile 
 All java files under src folder needs to be compiled. Even when compiling Eclipse
 run first maven command (``mvn install``) to fetch all the dependencies.
 
+### Troubleshooting on compile
+
+If you encounter following error while running command ``mvn install``:
+``Error: Could not find or load main class org.apache.maven.surefire.booter.ForkedBooter``
+it is due bug in certain OpenJDK or Oracle Java version. See more information on Launchpad:
+https://bugs.launchpad.net/ubuntu/+source/openjdk-8/+bug/1800792
+
+Workaround is to use following command instead: (``mvn install -DforkCount=0``)
+
 ## Warning about using non stable version
 Compiling non-stable releases is not recommended.
 Non-stable versions of Open Realms of Stars may contain game breaking bugs that make the game unplayable.

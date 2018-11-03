@@ -667,4 +667,20 @@ public final class GameCommands {
    */
   public static final String COMMAND_REALM_VIEW = "RealmView";
 
+  /**
+   * Human full map trade
+   */
+  public static final String COMMAND_HUMAN_FULL_MAP = "HumanFullMap";
+  /**
+   * Human planet map trade
+   */
+  public static final String COMMAND_HUMAN_PLANET_MAP = "HumanPlanetMap";
+  /**
+   * AI full map trade
+   */
+  public static final String COMMAND_AI_FULL_MAP = "AiFullMap";
+  /**
+   * AI planet map trade
+   */
+  public static final String COMMAND_AI_PLANET_MAP = "AiPlanetMap";
 }

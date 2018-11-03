@@ -118,7 +118,7 @@ public class NegotiationOfferTest {
     assertEquals(5, offer.getOfferValue(SpaceRace.HUMAN));
 
     offer = new NegotiationOffer(NegotiationType.MAP, null);
-    assertEquals(10, offer.getOfferValue(SpaceRace.HUMAN));
+    assertEquals(12, offer.getOfferValue(SpaceRace.HUMAN));
 
     Integer credit = new Integer(7);
     offer = new NegotiationOffer(NegotiationType.CREDIT, credit);

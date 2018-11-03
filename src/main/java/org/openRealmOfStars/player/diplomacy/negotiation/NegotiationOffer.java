@@ -9,7 +9,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017  Tuomo Untinen
+* Copyright (C) 2017-2018 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -52,7 +52,8 @@ public class NegotiationOffer {
         || type == NegotiationType.DIPLOMAT
         || type == NegotiationType.WAR
         || type == NegotiationType.DEFENSIVE_PACT
-        || type == NegotiationType.SPY_TRADE) {
+        || type == NegotiationType.SPY_TRADE
+        || type == NegotiationType.MAP_PLANETS) {
       negotiationType = type;
       offerObject = null;
     } else if (type == NegotiationType.CREDIT && offer instanceof Integer
@@ -105,7 +106,7 @@ public class NegotiationOffer {
       offerValue = 5;
       break;
     case MAP:
-      offerValue = 10;
+      offerValue = 12;
       break;
     case TECH:
       offerValue = getTech().getLevel() * 2;
@@ -121,6 +122,9 @@ public class NegotiationOffer {
     case SPY_TRADE:
       // Both sides get Spy trade so it's value to zero.
       offerValue = 0;
+      break;
+    case MAP_PLANETS:
+      offerValue = 5;
       break;
     default:
       offerValue = 0;

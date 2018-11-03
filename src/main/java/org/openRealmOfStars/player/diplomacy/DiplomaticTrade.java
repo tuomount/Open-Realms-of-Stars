@@ -1354,7 +1354,13 @@ public class DiplomaticTrade {
       }
       int militaryDifference = starMap.getMilitaryDifference(first, second);
       if (militaryDifference > 0) {
-        difference = difference - militaryDifference / divider;
+        if (isWar) {
+          if (firstOffer.isPeaceInOffer()) {
+            difference = difference - militaryDifference / divider;
+          }
+        } else {
+          difference = difference - militaryDifference / divider;
+        }
       } else {
         difference = difference - militaryDifference / ownDivider;
       }

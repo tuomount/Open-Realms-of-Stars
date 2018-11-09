@@ -260,8 +260,7 @@ public class CreditsView extends BlackPanel {
       + "Licensed under CC BY 4.0 "
       + "http://creativecommons.org/licenses/by/4.0/\n\n"
       + "I Do Know You by\n"
-      + "Memoraphile @ You're Perfect Studio (CC0)\n\n"
-;
+      + "Memoraphile @ You're Perfect Studio (CC0)\n\n";
 
 
 

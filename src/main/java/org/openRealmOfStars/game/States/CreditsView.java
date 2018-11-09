@@ -254,7 +254,12 @@ public class CreditsView extends BlackPanel {
       + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n"
       + "Menace by\n"
-      + "YD (CC0)\n\n";
+      + "YD (CC0)\n\n"
+      + "Law In The City by\n"
+      + "Alexandr Zhelanov https://soundcloud.com/alexandr-zhelanov\n"
+      + "Licensed under CC BY 4.0 "
+      + "http://creativecommons.org/licenses/by/4.0/\n\n";
+
 
 
 

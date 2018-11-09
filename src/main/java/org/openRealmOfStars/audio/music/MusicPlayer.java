@@ -183,6 +183,13 @@ public final class MusicPlayer {
       "Menace", "YD", "/resources/musics/Menace.ogg");
 
   /**
+   * Law in the City By Alexandr Zhelanov CC-BY 4.0
+   */
+  public static final MusicFileInfo LAW_IN_THE_CITY = new MusicFileInfo(
+      "Law In The City", "Alexandr Zhelanov",
+      "/resources/musics/Law in the City.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,
@@ -191,7 +198,7 @@ public final class MusicPlayer {
    * List of music to played while combat
    */
   protected static final MusicFileInfo[] COMBAT_MUSIC_LIST = {NEON_TRANSIT,
-      THRUST_SEQUENCE, FIGHT_THEME01};
+      THRUST_SEQUENCE, FIGHT_THEME01, LAW_IN_THE_CITY};
 
   /**
    * What music file is currently playing

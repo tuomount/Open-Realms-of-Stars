@@ -190,10 +190,18 @@ public final class MusicPlayer {
       "/resources/musics/Law in the City.ogg");
 
   /**
+   * I Do Know You By Memoraphile by You're Perfect Studio
+   */
+  public static final MusicFileInfo I_DO_KNOW_YOU = new MusicFileInfo(
+      "I Do Know You", "Memoraphile @ You're Perfect Studio",
+      "/resources/musics/I_Do_Know_by_Memoraphile_CC0.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,
-      MILLION_LIGHT_YEARS, NAUTILUS, BRAVE_SPACE_EXPLORERS, LOST_SIGNAL};
+      MILLION_LIGHT_YEARS, NAUTILUS, BRAVE_SPACE_EXPLORERS, LOST_SIGNAL,
+      I_DO_KNOW_YOU};
   /**
    * List of music to played while combat
    */

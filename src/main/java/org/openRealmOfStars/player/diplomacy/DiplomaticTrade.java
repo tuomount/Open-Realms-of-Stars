@@ -193,6 +193,74 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Get Best tech for trading
+   * @param techList Tech list search for best tech
+   * @param attitude AI attitude
+   * @return Index for best tech
+   */
+  private int getBestTech(final ArrayList<Tech> techList,
+      final Attitude attitude) {
+    int bestIndex = 0;
+    for (int i = 0; i < techList.size(); i++) {
+      Tech tech = techList.get(i);
+      Tech currentBest = techList.get(bestIndex);
+      if (tech.getLevel() > currentBest.getLevel()) {
+        bestIndex = i;
+      }
+      if (tech.getLevel() == currentBest.getLevel()) {
+        switch (attitude) {
+          case AGGRESSIVE:
+          case MILITARISTIC:
+          case BACKSTABBING: {
+            if (tech.getType() == TechType.Combat
+                || tech.getType() == TechType.Hulls) {
+              bestIndex = i;
+            }
+            break;
+          }
+          case EXPANSIONIST: {
+            if (tech.getType() == TechType.Propulsion
+                || tech.getType() == TechType.Hulls) {
+              bestIndex = i;
+            }
+            break;
+          }
+          case MERCHANTICAL: {
+            if (tech.getType() == TechType.Hulls) {
+              bestIndex = i;
+            }
+            break;
+          }
+          case SCIENTIFIC: {
+            if (tech.getType() == TechType.Electrics
+                || tech.getType() == TechType.Improvements) {
+              bestIndex = i;
+            }
+            break;
+          }
+          case LOGICAL: {
+            if (tech.getType() == TechType.Defense) {
+              bestIndex = i;
+            }
+            break;
+          }
+          case DIPLOMATIC:
+          case PEACEFUL: {
+            if (tech.getType() == TechType.Improvements
+                || tech.getType() == TechType.Defense) {
+              bestIndex = i;
+            }
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      }
+    }
+    return bestIndex;
+  }
+  /**
    * Generate Tech trade between two players.
    * @param tradeType Choices are TRADE, BUY and SELL
    */
@@ -202,8 +270,9 @@ public class DiplomaticTrade {
     if (techListForFirst.size() > 0
         && (tradeType == BUY || tradeType == TRADE)) {
       firstOffer = new NegotiationList();
+      int index = getBestTech(techListForFirst, offerMaker.getAiAttitude());
       firstOffer.add(new NegotiationOffer(NegotiationType.TECH,
-          techListForFirst.get(0)));
+          techListForFirst.get(index)));
       int i = 0;
       secondOffer = new NegotiationList();
       do {
@@ -232,8 +301,9 @@ public class DiplomaticTrade {
       firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
           new Integer(value)));
       secondOffer = new NegotiationList();
+      int index = getBestTech(techListForSecond, offerMaker.getAiAttitude());
       secondOffer.add(new NegotiationOffer(NegotiationType.TECH,
-          techListForSecond.get(0)));
+          techListForSecond.get(index)));
     }
   }
   /**

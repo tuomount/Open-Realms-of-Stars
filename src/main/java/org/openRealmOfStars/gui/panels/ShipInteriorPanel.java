@@ -141,9 +141,15 @@ public class ShipInteriorPanel extends JPanel {
           + offsetX,
           offsetY, null);
     }
-    g.drawImage(GuiStatics.IMAGE_INTERIOR1,
-        this.getWidth() / 2 - GuiStatics.IMAGE_INTERIOR1.getWidth() / 2,
-        this.getHeight() / 2 - GuiStatics.IMAGE_INTERIOR1.getHeight() / 2,
+    BufferedImage interior = GuiStatics.IMAGE_INTERIOR1;
+    int yOffset = GuiStatics.IMAGE_INTERIOR1_CONSOLE.getHeight();
+    if (race == SpaceRace.CENTAURS) {
+      interior = GuiStatics.IMAGE_INTERIOR_CENTAUR;
+      yOffset = 20;
+    }
+    g.drawImage(interior,
+        this.getWidth() / 2 - interior.getWidth() / 2,
+        this.getHeight() / 2 - interior.getHeight() / 2,
         null);
     if (race == SpaceRace.HUMAN) {
       g.drawImage(race.getRaceImage(),
@@ -159,7 +165,7 @@ public class ShipInteriorPanel extends JPanel {
       g.drawImage(race.getRaceImage(),
           this.getWidth() / 2 - race.getRaceImage().getWidth() / 2,
           this.getHeight() - race.getRaceImage().getHeight()
-          - GuiStatics.IMAGE_INTERIOR1_CONSOLE.getHeight(), null);
+          - yOffset, null);
     }
   }
 }

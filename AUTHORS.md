@@ -107,6 +107,8 @@ Space ship trader vessels by gfx0
 
 Space ship bridge by Jani Mäkinen aka gfx0
 
+Centaur Space Ship Bridge by Tuomo Untinen
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

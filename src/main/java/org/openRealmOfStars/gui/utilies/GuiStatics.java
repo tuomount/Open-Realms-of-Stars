@@ -848,6 +848,12 @@ public final class GuiStatics {
       GuiStatics.class.getResource(
           "/resources/images/bridge1.png"));
   /**
+   * Ship centaur bridge interior
+   */
+  public static final BufferedImage IMAGE_INTERIOR_CENTAUR =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/centaur_bridge.png"));
+  /**
    * Ship bridge interior 1 Console
    */
   public static final BufferedImage IMAGE_INTERIOR1_CONSOLE =

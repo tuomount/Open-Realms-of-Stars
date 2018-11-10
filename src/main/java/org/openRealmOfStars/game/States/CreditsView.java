@@ -128,6 +128,7 @@ public class CreditsView extends BlackPanel {
       + "Space ship with turrets by gfx0 (CC0)\n\n"
       + "Space ship trader vessels by gfx0\n\n"
       + "Space ship bridge by Jani Mäkinen aka gfx0\n\n"
+      + "Centaur Space Ship Bridge by Tuomo Untinen\n\n"
       + "Fonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

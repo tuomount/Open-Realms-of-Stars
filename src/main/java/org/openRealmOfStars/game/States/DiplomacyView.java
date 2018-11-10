@@ -810,6 +810,7 @@ public class DiplomacyView extends BlackPanel {
     ArrayList<Planet> planetArray = new ArrayList<>();
     ArrayList<Tech> techArray = new ArrayList<>();
     aiMapOffer.setSelected(false);
+    aiMapPlanetsOffer.setSelected(false);
     if (offerList != null) {
       for (int i = 0; i < offerList.getSize(); i++) {
         NegotiationOffer offer = offerList.getByIndex(i);
@@ -821,6 +822,10 @@ public class DiplomacyView extends BlackPanel {
           }
           case FLEET: {
             fleetArray.add(offer.getFleet());
+            break;
+          }
+          case MAP_PLANETS: {
+            aiMapPlanetsOffer.setSelected(true);
             break;
           }
           case MAP: {
@@ -863,6 +868,7 @@ public class DiplomacyView extends BlackPanel {
     ArrayList<Planet> planetArray = new ArrayList<>();
     ArrayList<Tech> techArray = new ArrayList<>();
     humanMapOffer.setSelected(false);
+    humanMapPlanetsOffer.setSelected(false);
     if (offerList != null) {
       for (int i = 0; i < offerList.getSize(); i++) {
         NegotiationOffer offer = offerList.getByIndex(i);
@@ -874,6 +880,10 @@ public class DiplomacyView extends BlackPanel {
           }
           case FLEET: {
             fleetArray.add(offer.getFleet());
+            break;
+          }
+          case MAP_PLANETS: {
+            humanMapPlanetsOffer.setSelected(true);
             break;
           }
           case MAP: {

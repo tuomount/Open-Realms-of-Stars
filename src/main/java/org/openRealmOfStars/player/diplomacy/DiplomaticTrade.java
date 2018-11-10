@@ -162,6 +162,9 @@ public class DiplomaticTrade {
         && (secondOffer == null || secondOffer.getSize() == 0)) {
       return SpeechType.NOTHING_TO_TRADE;
     }
+    if (firstOffer.getEmbargoOffer() != null) {
+      return SpeechType.TRADE_EMBARGO;
+    }
     if (firstOffer.isPeaceInOffer()) {
       return SpeechType.PEACE_OFFER;
     }

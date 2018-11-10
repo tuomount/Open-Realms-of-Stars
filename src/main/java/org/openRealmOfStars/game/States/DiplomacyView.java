@@ -729,12 +729,19 @@ public class DiplomacyView extends BlackPanel {
     String text = ai.getDiplomacy().generateRelationText(humanIndex);
     likenessLabel.setText(text);
     likenessLabel.setForeground(ai.getDiplomacy().getLikingAsColor(humanIndex));
+    NegotiationOffer offer = null;
+    if (trade.getFirstOffer() != null) {
+      offer = trade.getFirstOffer().getEmbargoOffer();
+    }
     if (type == SpeechType.NEUTRAL_GREET) {
       text = SpeechFactory.createLine(type, ai.getRace(), human.getRace()
           .getNameSingle()).getLine();
     } else if (type == SpeechType.ASK_MOVE_FLEET) {
       text = SpeechFactory.createLine(type, ai.getRace(),
           borderCrossedFleet.getName()).getLine();
+    } else if (type == SpeechType.TRADE_EMBARGO && offer != null) {
+        text = SpeechFactory.createLine(type, ai.getRace(),
+            offer.getRealm().getEmpireName()).getLine();
     } else {
       text = SpeechFactory.createLine(type, ai.getRace(), null).getLine();
     }
@@ -998,6 +1005,18 @@ public class DiplomacyView extends BlackPanel {
             meetingPlace, newsData));
         starMap.getNewsCorpData().addNews(newsData);
         ai.getMissions().removeAttackAgainstPlayer(human, starMap);
+      }
+      NegotiationOffer offer = trade.getFirstOffer().getEmbargoOffer();
+      if (trade.getFirstOffer().isTypeInOffer(NegotiationType.TRADE_EMBARGO)
+          && offer != null) {
+        NewsData newsData = NewsFactory.makeTradeEmbargoNews(ai, human,
+            offer.getRealm(), meetingPlace);
+        starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+            meetingPlace, newsData));
+        starMap.getNewsCorpData().addNews(newsData);
+        ai.getMissions().removeAttackAgainstPlayer(human, starMap);
+        StarMapUtilities.addEmbargoReputation(starMap, human, ai,
+            offer.getRealm());
       }
       updatePanel(SpeechType.OFFER_ACCEPTED);
       resetChoices();

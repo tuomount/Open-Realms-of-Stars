@@ -51,6 +51,10 @@ public final class IOUtilities {
    */
   public static BufferedImage loadImage(final URL urlToImage) {
     try {
+      if (urlToImage == null) {
+        System.err.print("Null url, image cannot be loaded!");
+        return null;
+      }
       return ImageIO.read(urlToImage);
     } catch (IOException e) {
       System.err.print(urlToImage.toString() + " not found!");

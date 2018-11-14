@@ -104,7 +104,27 @@ public class ImageInstruction {
   /**
    * Planet type waterworld4
    */
-  public static final String PLANET_WATERWORLD4 = "waterworld3";
+  public static final String PLANET_WATERWORLD4 = "waterworld4";
+  /**
+   * Planet type waterworld5
+   */
+  public static final String PLANET_WATERWORLD5 = "waterworld5";
+  /**
+   * Planet type waterworld6
+   */
+  public static final String PLANET_WATERWORLD6 = "waterworld6";
+  /**
+   * Planet type waterworld7
+   */
+  public static final String PLANET_WATERWORLD7 = "waterworld7";
+  /**
+   * Planet type waterworld8
+   */
+  public static final String PLANET_WATERWORLD8 = "waterworld8";
+  /**
+   * Planet type waterworld9
+   */
+  public static final String PLANET_WATERWORLD9 = "waterworld9";
   /**
    * Planet type ironworld1
    */
@@ -118,6 +138,18 @@ public class ImageInstruction {
    */
   public static final String PLANET_IRONWORLD3 = "ironworld3";
   /**
+   * Planet type ironworld4
+   */
+  public static final String PLANET_IRONWORLD4 = "ironworld4";
+  /**
+   * Planet type ironworld5
+   */
+  public static final String PLANET_IRONWORLD5 = "ironworld5";
+  /**
+   * Planet type ironworld6
+   */
+  public static final String PLANET_IRONWORLD6 = "ironworld6";
+  /**
    * Planet type iceworld1
    */
   public static final String PLANET_ICEWORLD1 = "iceworld1";
@@ -126,9 +158,21 @@ public class ImageInstruction {
    */
   public static final String PLANET_ICEWORLD2 = "iceworld2";
   /**
+   * Planet type iceworld3
+   */
+  public static final String PLANET_ICEWORLD3 = "iceworld3";
+  /**
    * Planet type carbon world 1
    */
   public static final String PLANET_CARBONWORLD1 = "carbonworld1";
+  /**
+   * Planet type carbon world 2
+   */
+  public static final String PLANET_CARBONWORLD2 = "carbonworld2";
+  /**
+   * Planet type carbon world 3
+   */
+  public static final String PLANET_CARBONWORLD3 = "carbonworld3";
   /**
    * Planet type gas giant 1
    */
@@ -137,6 +181,22 @@ public class ImageInstruction {
    * Planet type gas giant 2
    */
   public static final String PLANET_GASGIANT2 = "gasgiant2";
+  /**
+   * Planet type gas giant 3
+   */
+  public static final String PLANET_GASGIANT3 = "gasgiant3";
+  /**
+   * Planet type desert world 1
+   */
+  public static final String PLANET_DESERTWORLD1 = "desertworld1";
+  /**
+   * Planet type desert world 2
+   */
+  public static final String PLANET_DESERTWORLD2 = "desertworld2";
+  /**
+   * Planet type desert world 3
+   */
+  public static final String PLANET_DESERTWORLD3 = "desertworld3";
   /**
    * Trader ship 1
    */

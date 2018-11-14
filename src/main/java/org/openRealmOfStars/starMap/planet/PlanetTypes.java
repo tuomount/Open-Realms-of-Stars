@@ -109,7 +109,25 @@ public enum PlanetTypes {
    */
   CARBONWORLD1(Tiles.getTileByName(TileNames.CARBONWORLD1).getIndex(),
       GuiStatics.BIG_PLANET_CARBONWORLD1, WorldType.CARBONWORLD,
-      ImageInstruction.PLANET_CARBONWORLD1, false);
+      ImageInstruction.PLANET_CARBONWORLD1, false),
+  /**
+   * Gas giant 3
+   */
+  GASGIANT3(Tiles.getTileByName(TileNames.GAS_GIANT_3_NE).getIndex(),
+      GuiStatics.BIG_GASWORLD3, WorldType.GASWORLD,
+      ImageInstruction.PLANET_GASGIANT3, true),
+  /**
+   * Third ice world images
+   */
+  ICEWORLD3(Tiles.getTileByName(TileNames.ICEWORLD3).getIndex(),
+      GuiStatics.BIG_PLANET_ICEWORLD3, WorldType.ICEWORLD,
+      ImageInstruction.PLANET_ICEWORLD3, false),
+  /**
+   * Fourth iron world images
+   */
+  IRONWORLD4(Tiles.getTileByName(TileNames.IRONPLANET4).getIndex(),
+      GuiStatics.BIG_PLANET_IRONPLANET4, WorldType.IRONWORLD,
+      ImageInstruction.PLANET_IRONWORLD4, false);
 
 
   /**
@@ -228,6 +246,9 @@ public enum PlanetTypes {
       case ICEWORLD2: return 8;
       case IRONWORLD3: return 9;
       case CARBONWORLD1: return 10;
+      case GASGIANT3: return 2;
+      case ICEWORLD3: return 11;
+      case IRONWORLD4: return 12;
       default:
         throw new IllegalArgumentException("Unknown planet index!!");
     }
@@ -246,6 +267,7 @@ public enum PlanetTypes {
       switch (index) {
         case  0: return GASGIANT1;
         case  1: return GASGIANT2;
+        case  2: return GASGIANT3;
         default:
           throw new IllegalArgumentException("No planet type available "
               + "for this index!!");
@@ -263,6 +285,8 @@ public enum PlanetTypes {
       case  8: return ICEWORLD2;
       case  9: return IRONWORLD3;
       case 10: return CARBONWORLD1;
+      case 11: return ICEWORLD3;
+      case 12: return IRONWORLD4;
       default:
         throw new IllegalArgumentException("No planet type available "
             + "for this index!!");
@@ -277,7 +301,8 @@ public enum PlanetTypes {
   public String getTypeAsString() {
     switch (this) {
       case GASGIANT1:
-      case GASGIANT2: return "Gas giant";
+      case GASGIANT2:
+      case GASGIANT3: return "Gas giant";
       case SILICONWORLD1: return "Silicon world";
       case WATERWORLD1:
       case WATERWORLD2:
@@ -285,9 +310,11 @@ public enum PlanetTypes {
       case WATERWORLD4: return "Water world";
       case IRONWORLD1:
       case IRONWORLD2:
-      case IRONWORLD3: return "Iron world";
+      case IRONWORLD3:
+      case IRONWORLD4: return "Iron world";
       case ICEWORLD1: return "Ice world";
-      case ICEWORLD2: return "Ice world";
+      case ICEWORLD2:
+      case ICEWORLD3: return "Ice world";
       case CARBONWORLD1: return "Carbon world";
       default:
         throw new IllegalArgumentException("Unknown planet type!!");

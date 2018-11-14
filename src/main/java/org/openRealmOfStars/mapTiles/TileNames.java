@@ -206,6 +206,42 @@ public final class TileNames {
    */
   public static final String WATERWORLD7 = "WATERWORLD7";
   /**
+   * Planet 19 Ice world 4
+   */
+  public static final String ICEWORLD4 = "ICEWORLD4";
+  /**
+   * Planet 20 water world 8
+   */
+  public static final String WATERWORLD8 = "WATERWORLD8";
+  /**
+   * Planet 21 desert world 2
+   */
+  public static final String DESERTWORLD2 = "DESERTWORLD2";
+  /**
+   * Planet 22 water world 9
+   */
+  public static final String WATERWORLD9 = "WATERWORLD9";
+  /**
+   * Planet 23 Iron world 5
+   */
+  public static final String IRONPLANET5 = "IRONPLANET5";
+  /**
+   * Planet 24 Iron world 6
+   */
+  public static final String IRONPLANET6 = "IRONPLANET6";
+  /**
+   * Planet 25 desert world 3
+   */
+  public static final String DESERTWORLD3 = "DESERTWORLD3";
+  /**
+   * Planet 26 carbon world 3
+   */
+  public static final String CARBONWORLD3 = "CARBONWORLD3";
+  /**
+   * Planet 27 artificial planet 1
+   */
+  public static final String ARTIFICIALWORLD1 = "ARTIFICIALWORLD1";
+  /**
    * Deep space anchor 1, place where starbase can be deploy
    */
   public static final String DEEP_SPACE_ANCHOR1 = "DEEPSPACEANCHOR1";

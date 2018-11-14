@@ -162,6 +162,10 @@ public class ImageInstruction {
    */
   public static final String PLANET_ICEWORLD3 = "iceworld3";
   /**
+   * Planet type iceworld4
+   */
+  public static final String PLANET_ICEWORLD4 = "iceworld3";
+  /**
    * Planet type carbon world 1
    */
   public static final String PLANET_CARBONWORLD1 = "carbonworld1";
@@ -197,6 +201,10 @@ public class ImageInstruction {
    * Planet type desert world 3
    */
   public static final String PLANET_DESERTWORLD3 = "desertworld3";
+  /**
+   * Planet type artificial world 1
+   */
+  public static final String PLANET_ARTIFICIALWORLD1 = "artificialtworld1";
   /**
    * Trader ship 1
    */
@@ -543,14 +551,53 @@ public class ImageInstruction {
     if (PLANET_WATERWORLD4.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_WATERWORLD4;
     }
+    if (PLANET_WATERWORLD5.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_WATERWORLD5;
+    }
+    if (PLANET_WATERWORLD6.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_WATERWORLD6;
+    }
+    if (PLANET_WATERWORLD7.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_WATERWORLD7;
+    }
+    if (PLANET_WATERWORLD8.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_WATERWORLD8;
+    }
+    if (PLANET_WATERWORLD9.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_WATERWORLD9;
+    }
     if (PLANET_ICEWORLD1.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_ICEWORLD1;
     }
     if (PLANET_ICEWORLD2.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_ICEWORLD2;
     }
+    if (PLANET_ICEWORLD3.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_ICEWORLD3;
+    }
+    if (PLANET_ICEWORLD4.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_ICEWORLD4;
+    }
     if (PLANET_CARBONWORLD1.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_CARBONWORLD1;
+    }
+    if (PLANET_CARBONWORLD2.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_CARBONWORLD2;
+    }
+    if (PLANET_CARBONWORLD3.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_CARBONWORLD3;
+    }
+    if (PLANET_DESERTWORLD1.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_DESERTWORLD1;
+    }
+    if (PLANET_DESERTWORLD2.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_DESERTPLANET2;
+    }
+    if (PLANET_DESERTWORLD3.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_DESERTPLANET3;
+    }
+    if (PLANET_ARTIFICIALWORLD1.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_ARTIFICIALPLANET1;
     }
     if (PLANET_IRONWORLD1.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_IRONPLANET1;
@@ -561,11 +608,23 @@ public class ImageInstruction {
     if (PLANET_IRONWORLD3.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_IRONPLANET3;
     }
+    if (PLANET_IRONWORLD4.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_IRONPLANET4;
+    }
+    if (PLANET_IRONWORLD5.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_IRONPLANET5;
+    }
+    if (PLANET_IRONWORLD6.equals(planetType)) {
+      planetImg = GuiStatics.BIG_PLANET_IRONPLANET6;
+    }
     if (PLANET_GASGIANT1.equals(planetType)) {
       planetImg = GuiStatics.BIG_GASWORLD1;
     }
     if (PLANET_GASGIANT2.equals(planetType)) {
       planetImg = GuiStatics.BIG_GASWORLD2;
+    }
+    if (PLANET_GASGIANT3.equals(planetType)) {
+      planetImg = GuiStatics.BIG_GASWORLD3;
     }
     if (SIZE_HALF.equals(size)) {
       planetImg = GuiStatics.scaleToHalf(planetImg);

@@ -746,7 +746,7 @@ public final class GuiStatics {
   /**
    * Big planet screen desert planet 1
    */
-  public static final BufferedImage BIG_PLANET_DESERTPLANET1 = IOUtilities
+  public static final BufferedImage BIG_PLANET_DESERTWORLD1 = IOUtilities
       .loadImage(Tiles.class.getResource(
           "/resources/images/desertplanet1.png"));
   /**

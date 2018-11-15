@@ -163,11 +163,25 @@ public enum PlanetTypes {
    */
   ICEWORLD4(Tiles.getTileByName(TileNames.ICEWORLD4).getIndex(),
       GuiStatics.BIG_PLANET_ICEWORLD4, WorldType.ICEWORLD,
-      ImageInstruction.PLANET_ICEWORLD4, false);
-
-
-
-
+      ImageInstruction.PLANET_ICEWORLD4, false),
+  /**
+   * Eigth water world images
+   */
+  WATERWORLD8(Tiles.getTileByName(TileNames.WATERWORLD8).getIndex(),
+      GuiStatics.BIG_PLANET_WATERWORLD8, WorldType.WATERWORLD,
+      ImageInstruction.PLANET_WATERWORLD8, false),
+  /**
+   * Second desert world images
+   */
+  DESERTWORLD2(Tiles.getTileByName(TileNames.DESERTWORLD2).getIndex(),
+      GuiStatics.BIG_PLANET_DESERTWORLD2, WorldType.DESERTWORLD,
+      ImageInstruction.PLANET_DESERTWORLD2, false),
+  /**
+   * Nineth water world images
+   */
+  WATERWORLD9(Tiles.getTileByName(TileNames.WATERWORLD9).getIndex(),
+      GuiStatics.BIG_PLANET_WATERWORLD9, WorldType.WATERWORLD,
+      ImageInstruction.PLANET_WATERWORLD9, false);
 
   /**
    * Get the number of planet types available
@@ -294,6 +308,9 @@ public enum PlanetTypes {
       case WATERWORLD6: return 16;
       case WATERWORLD7: return 17;
       case ICEWORLD4: return 18;
+      case WATERWORLD8: return 19;
+      case DESERTWORLD2: return 20;
+      case WATERWORLD9: return 21;
       default:
         throw new IllegalArgumentException("Unknown planet index!!");
     }
@@ -338,6 +355,9 @@ public enum PlanetTypes {
       case 16: return WATERWORLD6;
       case 17: return WATERWORLD7;
       case 18: return ICEWORLD4;
+      case 19: return WATERWORLD8;
+      case 20: return DESERTWORLD2;
+      case 21: return WATERWORLD9;
       default:
         throw new IllegalArgumentException("No planet type available "
             + "for this index!!");
@@ -361,7 +381,9 @@ public enum PlanetTypes {
       case WATERWORLD4:
       case WATERWORLD5:
       case WATERWORLD6:
-      case WATERWORLD7: return "Water world";
+      case WATERWORLD7:
+      case WATERWORLD8:
+      case WATERWORLD9: return "Water world";
       case IRONWORLD1:
       case IRONWORLD2:
       case IRONWORLD3:
@@ -372,7 +394,8 @@ public enum PlanetTypes {
       case ICEWORLD4: return "Ice world";
       case CARBONWORLD1:
       case CARBONWORLD2: return "Carbon world";
-      case DESERTWORLD1: return "Desert world";
+      case DESERTWORLD1:
+      case DESERTWORLD2: return "Desert world";
       default:
         throw new IllegalArgumentException("Unknown planet type!!");
     }

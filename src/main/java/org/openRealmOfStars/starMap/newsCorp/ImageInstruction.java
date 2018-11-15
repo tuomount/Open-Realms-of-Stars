@@ -591,10 +591,10 @@ public class ImageInstruction {
       planetImg = GuiStatics.BIG_PLANET_DESERTWORLD1;
     }
     if (PLANET_DESERTWORLD2.equals(planetType)) {
-      planetImg = GuiStatics.BIG_PLANET_DESERTPLANET2;
+      planetImg = GuiStatics.BIG_PLANET_DESERTWORLD2;
     }
     if (PLANET_DESERTWORLD3.equals(planetType)) {
-      planetImg = GuiStatics.BIG_PLANET_DESERTPLANET3;
+      planetImg = GuiStatics.BIG_PLANET_DESERTWORLD3;
     }
     if (PLANET_ARTIFICIALWORLD1.equals(planetType)) {
       planetImg = GuiStatics.BIG_PLANET_ARTIFICIALPLANET1;

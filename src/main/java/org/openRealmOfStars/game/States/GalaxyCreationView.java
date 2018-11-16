@@ -22,7 +22,6 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
-import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
  *
@@ -127,11 +126,9 @@ public class GalaxyCreationView extends BlackPanel {
     }
     Planet planet = new Planet(new Coordinate(1, 1), "Galaxy Creation Planet",
         1, false);
-    if (DiceGenerator.getRandom(100) < 10) {
-      planet.setPlanetType(PlanetTypes.getRandomPlanetType(true));
+    planet.setPlanetType(PlanetTypes.getRandomPlanetType(true, true, true));
+    if (planet.getPlanetType().isGasGiant()) {
       planet.setGasGiant(true);
-    } else {
-      planet.setPlanetType(PlanetTypes.getRandomPlanetType(false));
     }
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true, "Galaxy Creation");

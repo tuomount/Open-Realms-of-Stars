@@ -152,11 +152,9 @@ public class AITurnView extends BlackPanel {
   public AITurnView(final Game game) {
     this.game = game;
     Planet planet = new Planet(new Coordinate(1, 1), "Random Planet", 1, false);
-    if (DiceGenerator.getRandom(100) < 10) {
-      planet.setPlanetType(PlanetTypes.getRandomPlanetType(true));
+    planet.setPlanetType(PlanetTypes.getRandomPlanetType(true, true, true));
+    if (planet.getPlanetType().isGasGiant()) {
       planet.setGasGiant(true);
-    } else {
-      planet.setPlanetType(PlanetTypes.getRandomPlanetType(false));
     }
     // Background image
     BigImagePanel imgBase = new BigImagePanel(planet, true, "Enemy turn");

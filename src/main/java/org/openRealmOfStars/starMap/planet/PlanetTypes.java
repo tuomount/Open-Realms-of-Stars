@@ -181,7 +181,38 @@ public enum PlanetTypes {
    */
   WATERWORLD9(Tiles.getTileByName(TileNames.WATERWORLD9).getIndex(),
       GuiStatics.BIG_PLANET_WATERWORLD9, WorldType.WATERWORLD,
-      ImageInstruction.PLANET_WATERWORLD9, false);
+      ImageInstruction.PLANET_WATERWORLD9, false),
+  /**
+   * Fifth iron world images
+   */
+  IRONWORLD5(Tiles.getTileByName(TileNames.IRONPLANET5).getIndex(),
+      GuiStatics.BIG_PLANET_IRONPLANET5, WorldType.IRONWORLD,
+      ImageInstruction.PLANET_IRONWORLD5, false),
+  /**
+   * Sixth iron world images
+   */
+  IRONWORLD6(Tiles.getTileByName(TileNames.IRONPLANET6).getIndex(),
+      GuiStatics.BIG_PLANET_IRONPLANET6, WorldType.IRONWORLD,
+      ImageInstruction.PLANET_IRONWORLD6, false),
+  /**
+   * Third desert world images
+   */
+  DESERTWORLD3(Tiles.getTileByName(TileNames.DESERTWORLD3).getIndex(),
+      GuiStatics.BIG_PLANET_DESERTWORLD3, WorldType.DESERTWORLD,
+      ImageInstruction.PLANET_DESERTWORLD3, false),
+  /**
+   * Third carbon world images
+   */
+  CARBONWORLD3(Tiles.getTileByName(TileNames.CARBONWORLD3).getIndex(),
+      GuiStatics.BIG_PLANET_CARBONWORLD3, WorldType.CARBONWORLD,
+      ImageInstruction.PLANET_CARBONWORLD3, false),
+  /**
+   * First artificial world images
+   */
+  ARTIFICIALWORLD1(Tiles.getTileByName(TileNames.ARTIFICIALWORLD1).getIndex(),
+      GuiStatics.BIG_PLANET_ARTIFICIALPLANET1, WorldType.ARTIFICALWORLD,
+      ImageInstruction.PLANET_ARTIFICIALWORLD1, false);
+
 
   /**
    * Get the number of planet types available
@@ -193,13 +224,33 @@ public enum PlanetTypes {
 
   /**
    * Get random planet type.
-   * @param gasGiant True for Gas giant
+   * @param gasGiant True for Gas giant, false for normal planets
    * @return PlanetTypes
    */
   public static PlanetTypes getRandomPlanetType(final boolean gasGiant) {
+    if (gasGiant) {
+      return getRandomPlanetType(true, false, false);
+    } else {
+      return getRandomPlanetType(false, true, false);
+    }
+  }
+  /**
+   * Get random planet type
+   * @param gasGiant Include gas giants
+   * @param normalPlanet Include normal planets
+   * @param artificalPlanets Include articial planets
+   * @return Random planet type
+   */
+  public static PlanetTypes getRandomPlanetType(final boolean gasGiant,
+      final boolean normalPlanet, final boolean artificalPlanets) {
     ArrayList<PlanetTypes> list = new ArrayList<>();
     for (PlanetTypes type : PlanetTypes.values()) {
-      if (type.gasGiant == gasGiant) {
+      if (type.worldType == WorldType.ARTIFICALWORLD && artificalPlanets) {
+        list.add(type);
+      } else if (type.isGasGiant() && gasGiant) {
+        list.add(type);
+      } else if (normalPlanet && type.worldType != WorldType.ARTIFICALWORLD
+          && !type.isGasGiant()) {
         list.add(type);
       }
     }
@@ -311,6 +362,11 @@ public enum PlanetTypes {
       case WATERWORLD8: return 19;
       case DESERTWORLD2: return 20;
       case WATERWORLD9: return 21;
+      case IRONWORLD5: return 22;
+      case IRONWORLD6: return 23;
+      case DESERTWORLD3: return 24;
+      case CARBONWORLD3: return 25;
+      case ARTIFICIALWORLD1: return 26;
       default:
         throw new IllegalArgumentException("Unknown planet index!!");
     }
@@ -358,6 +414,11 @@ public enum PlanetTypes {
       case 19: return WATERWORLD8;
       case 20: return DESERTWORLD2;
       case 21: return WATERWORLD9;
+      case 22: return IRONWORLD5;
+      case 23: return IRONWORLD6;
+      case 24: return DESERTWORLD3;
+      case 25: return CARBONWORLD3;
+      case 26: return ARTIFICIALWORLD1;
       default:
         throw new IllegalArgumentException("No planet type available "
             + "for this index!!");
@@ -387,15 +448,20 @@ public enum PlanetTypes {
       case IRONWORLD1:
       case IRONWORLD2:
       case IRONWORLD3:
-      case IRONWORLD4: return "Iron world";
+      case IRONWORLD4:
+      case IRONWORLD5:
+      case IRONWORLD6: return "Iron world";
       case ICEWORLD1: return "Ice world";
       case ICEWORLD2:
       case ICEWORLD3:
       case ICEWORLD4: return "Ice world";
       case CARBONWORLD1:
-      case CARBONWORLD2: return "Carbon world";
+      case CARBONWORLD2:
+      case CARBONWORLD3: return "Carbon world";
       case DESERTWORLD1:
-      case DESERTWORLD2: return "Desert world";
+      case DESERTWORLD2:
+      case DESERTWORLD3: return "Desert world";
+      case ARTIFICIALWORLD1: return "Artificial world";
       default:
         throw new IllegalArgumentException("Unknown planet type!!");
     }
@@ -412,5 +478,12 @@ public enum PlanetTypes {
       }
     }
     return false;
+  }
+  /**
+   * Is planet type gas giant
+   * @return True if gasgiant
+   */
+  public boolean isGasGiant() {
+    return this.gasGiant;
   }
 }

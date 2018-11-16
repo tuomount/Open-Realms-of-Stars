@@ -50,5 +50,9 @@ public enum WorldType {
   /**
    * Desert world
    */
-  DESERTWORLD;
+  DESERTWORLD,
+  /**
+   * Artificial world
+   */
+  ARTIFICALWORLD;
 }

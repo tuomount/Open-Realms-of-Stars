@@ -112,6 +112,23 @@ public final class TileNames {
   public static final String GAS_GIANT_2_SW = "GAS_GIANT_2_SW";
 
   /**
+   * Gas Giant 3 North West
+   */
+  public static final String GAS_GIANT_3_NW = "GAS_GIANT_3_NW";
+  /**
+   * Gas Giant 3 North East
+   */
+  public static final String GAS_GIANT_3_NE = "GAS_GIANT_3_NE";
+  /**
+   * Gas Giant 3 South East
+   */
+  public static final String GAS_GIANT_3_SE = "GAS_GIANT_3_SE";
+  /**
+   * Gas Giant 3 South West
+   */
+  public static final String GAS_GIANT_3_SW = "GAS_GIANT_3_SW";
+
+  /**
    * Planet 1 Rock world 1
    */
   public static final String ROCK1 = "ROCK1";
@@ -160,7 +177,70 @@ public final class TileNames {
    * Planet 11 carbon world 1
    */
   public static final String CARBONWORLD1 = "CARBONWORLD1";
-
+  /**
+   * Planet 12 Ice world 3
+   */
+  public static final String ICEWORLD3 = "ICEWORLD3";
+  /**
+   * Planet 13 Iron world 4
+   */
+  public static final String IRONPLANET4 = "IRONPLANET4";
+  /**
+   * Planet 14 carbon world 2
+   */
+  public static final String CARBONWORLD2 = "CARBONWORLD2";
+  /**
+   * Planet 15 desert world 1
+   */
+  public static final String DESERTWORLD1 = "DESERTWORLD1";
+  /**
+   * Planet 16 water world 5
+   */
+  public static final String WATERWORLD5 = "WATERWORLD5";
+  /**
+   * Planet 17 water world 6
+   */
+  public static final String WATERWORLD6 = "WATERWORLD6";
+  /**
+   * Planet 18 water world 7
+   */
+  public static final String WATERWORLD7 = "WATERWORLD7";
+  /**
+   * Planet 19 Ice world 4
+   */
+  public static final String ICEWORLD4 = "ICEWORLD4";
+  /**
+   * Planet 20 water world 8
+   */
+  public static final String WATERWORLD8 = "WATERWORLD8";
+  /**
+   * Planet 21 desert world 2
+   */
+  public static final String DESERTWORLD2 = "DESERTWORLD2";
+  /**
+   * Planet 22 water world 9
+   */
+  public static final String WATERWORLD9 = "WATERWORLD9";
+  /**
+   * Planet 23 Iron world 5
+   */
+  public static final String IRONPLANET5 = "IRONPLANET5";
+  /**
+   * Planet 24 Iron world 6
+   */
+  public static final String IRONPLANET6 = "IRONPLANET6";
+  /**
+   * Planet 25 desert world 3
+   */
+  public static final String DESERTWORLD3 = "DESERTWORLD3";
+  /**
+   * Planet 26 carbon world 3
+   */
+  public static final String CARBONWORLD3 = "CARBONWORLD3";
+  /**
+   * Planet 27 artificial planet 1
+   */
+  public static final String ARTIFICIALWORLD1 = "ARTIFICIALWORLD1";
   /**
    * Deep space anchor 1, place where starbase can be deploy
    */

@@ -1087,6 +1087,21 @@ public class StarMap {
           tileInfo[px + 1][py + 1] = info;
           break;
         }
+        case 2: {
+          tiles[px][py] = Tiles.getTileByName(TileNames.GAS_GIANT_3_NW)
+              .getIndex();
+          tiles[px + 1][py] = Tiles.getTileByName(TileNames.GAS_GIANT_3_NE)
+              .getIndex();
+          tiles[px][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_3_SW)
+              .getIndex();
+          tiles[px + 1][py + 1] = Tiles.getTileByName(TileNames.GAS_GIANT_3_SE)
+              .getIndex();
+          tileInfo[px][py] = info;
+          tileInfo[px + 1][py] = info;
+          tileInfo[px][py + 1] = info;
+          tileInfo[px + 1][py + 1] = info;
+          break;
+        }
         default:
           throw new IllegalArgumentException("Unexpected gas giant type:"
              + planet.getPlanetTypeIndex());

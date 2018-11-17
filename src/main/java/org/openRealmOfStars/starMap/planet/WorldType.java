@@ -28,7 +28,7 @@ public enum WorldType {
    */
   SILICONWORLD,
   /**
-   * Irow world
+   * Iron world
    */
   IRONWORLD,
   /**
@@ -46,5 +46,13 @@ public enum WorldType {
   /**
    * Inhabitable gas world
    */
-  GASWORLD;
+  GASWORLD,
+  /**
+   * Desert world
+   */
+  DESERTWORLD,
+  /**
+   * Artificial world
+   */
+  ARTIFICALWORLD;
 }

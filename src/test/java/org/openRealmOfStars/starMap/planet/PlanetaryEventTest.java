@@ -135,6 +135,17 @@ public class PlanetaryEventTest {
         assertEquals("Molten lava +1 metal, +1 production,"
             + " -1 happiness", event.getExplanation());
       }
+      if (event == PlanetaryEvent.ARID) {
+        assertEquals(-1, event.getExtraFoodProduction());
+        assertEquals(0, event.getExtraMetalProduction());
+        assertEquals(0, event.getExtraHappiness());
+        assertEquals(0, event.getExtraProduction());
+        assertEquals("Arid climate", event.getName());
+        assertEquals(null, event.getBuilding());
+        assertEquals(false, event.oneTimeOnly());
+        assertEquals("Arid climate -1 Food", event.getExplanation());
+      }
+
     }
   }
 
@@ -196,6 +207,15 @@ public class PlanetaryEventTest {
     DiceGenerator.initializeGenerators(0, 75, 75);
     event = PlanetaryEvent.getRandomEvent(PlanetTypes.IRONWORLD3, 100);
     assertEquals(PlanetaryEvent.MOLTEN_LAVA, event);
+    DiceGenerator.initializeGenerators(55, 55, 55);
+    event = PlanetaryEvent.getRandomEvent(PlanetTypes.IRONWORLD6, 100);
+    assertEquals(PlanetaryEvent.ARID, event);
+    DiceGenerator.initializeGenerators(55, 55, 55);
+    event = PlanetaryEvent.getRandomEvent(PlanetTypes.DESERTWORLD1, 100);
+    assertEquals(PlanetaryEvent.ARID, event);
+    DiceGenerator.initializeGenerators(75, 75, 75);
+    event = PlanetaryEvent.getRandomEvent(PlanetTypes.DESERTWORLD2, 100);
+    assertEquals(PlanetaryEvent.ANCIENT_TEMPLE, event);
   }
 
 }

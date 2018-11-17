@@ -284,6 +284,47 @@ public final class Tiles {
     addTile(tile);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    // Reading the gas planet 2x2
+    tile = new Tile(tilesImage, 12, 1, TileNames.GAS_GIANT_2_NW);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 1, TileNames.GAS_GIANT_2_NE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 12, 2, TileNames.GAS_GIANT_2_SW);
+    addTile(tile);
+    tile = new Tile(tilesImage, 13, 2, TileNames.GAS_GIANT_2_SE);
+    addTile(tile);
+    tile = new Tile(tilesImage, 14, 1, TileNames.ICEWORLD3);
+    addTile(tile);
+    tile = new Tile(tilesImage, 15, 1, TileNames.IRONPLANET4);
+    addTile(tile);
+    tile = new Tile(tilesImage, 16, 1, TileNames.CARBONWORLD2);
+    addTile(tile);
+    tile = new Tile(tilesImage, 17, 1, TileNames.DESERTWORLD1);
+    addTile(tile);
+    tile = new Tile(tilesImage, 18, 1, TileNames.WATERWORLD5);
+    addTile(tile);
+    tile = new Tile(tilesImage, 19, 1, TileNames.WATERWORLD6);
+    addTile(tile);
+    tile = new Tile(tilesImage, 14, 2, TileNames.WATERWORLD7);
+    addTile(tile);
+    tile = new Tile(tilesImage, 15, 2, TileNames.ICEWORLD4);
+    addTile(tile);
+    tile = new Tile(tilesImage, 16, 2, TileNames.WATERWORLD8);
+    addTile(tile);
+    tile = new Tile(tilesImage, 17, 2, TileNames.DESERTWORLD2);
+    addTile(tile);
+    tile = new Tile(tilesImage, 18, 2, TileNames.WATERWORLD9);
+    addTile(tile);
+    tile = new Tile(tilesImage, 19, 2, TileNames.IRONPLANET5);
+    addTile(tile);
+    tile = new Tile(tilesImage, 14, 3, TileNames.IRONPLANET6);
+    addTile(tile);
+    tile = new Tile(tilesImage, 15, 3, TileNames.DESERTWORLD3);
+    addTile(tile);
+    tile = new Tile(tilesImage, 16, 3, TileNames.CARBONWORLD3);
+    addTile(tile);
+    tile = new Tile(tilesImage, 17, 3, TileNames.ARTIFICIALWORLD1);
+    addTile(tile);
   }
 
 }

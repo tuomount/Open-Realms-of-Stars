@@ -630,6 +630,31 @@ public final class GuiStatics {
    */
   public static final BufferedImage BIG_PLANET_WATERWORLD4 = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/waterworld4.png"));
+  /**
+   * Big planet screen water world 5
+   */
+  public static final BufferedImage BIG_PLANET_WATERWORLD5 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/waterworld5.png"));
+  /**
+   * Big planet screen water world 6
+   */
+  public static final BufferedImage BIG_PLANET_WATERWORLD6 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/waterworld6.png"));
+  /**
+   * Big planet screen water world 7
+   */
+  public static final BufferedImage BIG_PLANET_WATERWORLD7 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/waterworld7.png"));
+  /**
+   * Big planet screen water world 8
+   */
+  public static final BufferedImage BIG_PLANET_WATERWORLD8 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/waterworld8.png"));
+  /**
+   * Big planet screen water world 9
+   */
+  public static final BufferedImage BIG_PLANET_WATERWORLD9 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/waterworld9.png"));
 
   /**
    * Big planet screen ice world 1
@@ -642,12 +667,32 @@ public final class GuiStatics {
    */
   public static final BufferedImage BIG_PLANET_ICEWORLD2 = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/iceworld2.png"));
+  /**
+   * Big planet screen ice world 3
+   */
+  public static final BufferedImage BIG_PLANET_ICEWORLD3 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/iceworld3.png"));
+  /**
+   * Big planet screen ice world 4
+   */
+  public static final BufferedImage BIG_PLANET_ICEWORLD4 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/iceworld4.png"));
 
   /**
    * Big planet screen carbon world 1
    */
   public static final BufferedImage BIG_PLANET_CARBONWORLD1 = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/carbonworld1.png"));
+  /**
+   * Big planet screen carbon world 2
+   */
+  public static final BufferedImage BIG_PLANET_CARBONWORLD2 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/carbonworld2.png"));
+  /**
+   * Big planet screen carbon world 3
+   */
+  public static final BufferedImage BIG_PLANET_CARBONWORLD3 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/carbonworld3.png"));
 
   /**
    * Big planet screen iron planet 1
@@ -666,6 +711,21 @@ public final class GuiStatics {
    */
   public static final BufferedImage BIG_PLANET_IRONPLANET3 = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/ironplanet3.png"));
+  /**
+   * Big planet screen iron planet 4
+   */
+  public static final BufferedImage BIG_PLANET_IRONPLANET4 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/ironplanet4.png"));
+  /**
+   * Big planet screen iron planet 5
+   */
+  public static final BufferedImage BIG_PLANET_IRONPLANET5 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/ironplanet5.png"));
+  /**
+   * Big planet screen iron planet 6
+   */
+  public static final BufferedImage BIG_PLANET_IRONPLANET6 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/ironplanet6.png"));
 
   /**
    * Big planet gas world
@@ -678,6 +738,35 @@ public final class GuiStatics {
    */
   public static final BufferedImage BIG_GASWORLD2 = IOUtilities
       .loadImage(Tiles.class.getResource("/resources/images/gasworld2.png"));
+  /**
+   * Big planet screen gas world
+   */
+  public static final BufferedImage BIG_GASWORLD3 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/gasworld3.png"));
+  /**
+   * Big planet screen desert planet 1
+   */
+  public static final BufferedImage BIG_PLANET_DESERTWORLD1 = IOUtilities
+      .loadImage(Tiles.class.getResource(
+          "/resources/images/desertplanet1.png"));
+  /**
+   * Big planet screen desert planet 2
+   */
+  public static final BufferedImage BIG_PLANET_DESERTWORLD2 = IOUtilities
+      .loadImage(Tiles.class.getResource(
+          "/resources/images/desertplanet2.png"));
+  /**
+   * Big planet screen desert planet 3
+   */
+  public static final BufferedImage BIG_PLANET_DESERTWORLD3 = IOUtilities
+      .loadImage(Tiles.class.getResource(
+          "/resources/images/desertplanet3.png"));
+  /**
+   * Big planet screen artificial planet 1
+   */
+  public static final BufferedImage BIG_PLANET_ARTIFICIALPLANET1 = IOUtilities
+      .loadImage(Tiles.class.getResource(
+          "/resources/images/artificialworld1.png"));
 
   /**
    * Star field image for parallax scrolling

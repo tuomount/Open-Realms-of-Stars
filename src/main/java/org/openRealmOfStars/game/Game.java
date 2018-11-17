@@ -386,7 +386,6 @@ public class Game implements ActionListener {
       animationTimer.start();
       musicTimer = new Timer(MUSIC_TIMER_DELAY, this);
       musicTimer.setActionCommand(GameCommands.COMMAND_MUSIC_TIMER);
-      musicTimer.start();
       gameFrame.setUndecorated(configFile.getBorderless());
       GuiStatics.setLargerFonts(configFile.getLargerFonts());
       gameFrame.setResizable(false);
@@ -414,6 +413,7 @@ public class Game implements ActionListener {
       MusicPlayer.setLoop(false);
       MusicPlayer.setVolume(musicVolume);
       SoundPlayer.setSoundVolume(soundVolume);
+      musicTimer.start();
     }
     changeGameState(GameState.MAIN_MENU);
   }

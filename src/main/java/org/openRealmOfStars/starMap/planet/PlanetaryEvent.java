@@ -66,7 +66,11 @@ public enum PlanetaryEvent {
   /**
    * Molten lava
    */
-  MOLTEN_LAVA;
+  MOLTEN_LAVA,
+  /**
+   * Arid climate
+   */
+  ARID;
 
 
 
@@ -81,6 +85,9 @@ public enum PlanetaryEvent {
     }
     if (this == PlanetaryEvent.PARADISE) {
       return 2;
+    }
+    if (this == PlanetaryEvent.ARID) {
+      return -1;
     }
     return 0;
   }
@@ -187,6 +194,7 @@ public enum PlanetaryEvent {
       case ANCIENT_PALACE: return 7;
       case BLACK_MONOLITH: return 8;
       case MOLTEN_LAVA: return 9;
+      case ARID: return 10;
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -208,6 +216,7 @@ public enum PlanetaryEvent {
       case ANCIENT_PALACE: return "Ancient palace";
       case BLACK_MONOLITH: return "Black monolith";
       case MOLTEN_LAVA: return "Molten lava";
+      case ARID: return "Arid climate";
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -230,6 +239,7 @@ public enum PlanetaryEvent {
       case BLACK_MONOLITH: return "Black monolith building";
       case MOLTEN_LAVA: return "Molten lava +1 metal, +1 production,"
           + " -1 happiness";
+      case ARID: return "Arid climate -1 Food";
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -252,6 +262,7 @@ public enum PlanetaryEvent {
       case 7: return ANCIENT_PALACE;
       case 8: return BLACK_MONOLITH;
       case 9: return MOLTEN_LAVA;
+      case 10: return ARID;
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -269,6 +280,8 @@ public enum PlanetaryEvent {
     if (value < chance) {
       switch (type) {
         case CARBONWORLD1:
+        case CARBONWORLD2:
+        case CARBONWORLD3:
           value = DiceGenerator.getRandom(99);
           if (value < 25) {
             return LUSH_VEGETATION;
@@ -304,6 +317,8 @@ public enum PlanetaryEvent {
           break;
         case ICEWORLD1:
         case ICEWORLD2:
+        case ICEWORLD3:
+        case ICEWORLD4:
           value = DiceGenerator.getRandom(99);
           if (value < 20) {
             return PlanetaryEvent.METAL_RICH_SURFACE;
@@ -319,16 +334,39 @@ public enum PlanetaryEvent {
             return PlanetaryEvent.BLACK_MONOLITH;
           }
           break;
-        case IRONWORLD1:
-        case IRONWORLD2:
-        case IRONWORLD3:
+        case DESERTWORLD1:
+        case DESERTWORLD2:
+        case DESERTWORLD3:
           value = DiceGenerator.getRandom(99);
           if (value < 20) {
             return PlanetaryEvent.METAL_RICH_SURFACE;
           } else if (value < 40) {
             return PlanetaryEvent.ANCIENT_LAB;
           } else if (value < 60) {
+            return PlanetaryEvent.ARID;
+          } else if (value < 80) {
+            return PlanetaryEvent.ANCIENT_TEMPLE;
+          } else if (value < 95) {
+            return PlanetaryEvent.ANCIENT_PALACE;
+          } else if (value < 100) {
+            return PlanetaryEvent.BLACK_MONOLITH;
+          }
+          break;
+        case IRONWORLD1:
+        case IRONWORLD2:
+        case IRONWORLD3:
+        case IRONWORLD4:
+        case IRONWORLD5:
+        case IRONWORLD6:
+          value = DiceGenerator.getRandom(99);
+          if (value < 20) {
+            return PlanetaryEvent.METAL_RICH_SURFACE;
+          } else if (value < 35) {
+            return PlanetaryEvent.ANCIENT_LAB;
+          } else if (value < 50) {
             return PlanetaryEvent.ANCIENT_FACTORY;
+          } else if (value < 60) {
+            return PlanetaryEvent.ARID;
           } else if (value < 80) {
             return PlanetaryEvent.MOLTEN_LAVA;
           } else if (value < 100) {
@@ -339,6 +377,11 @@ public enum PlanetaryEvent {
         case WATERWORLD2:
         case WATERWORLD3:
         case WATERWORLD4:
+        case WATERWORLD5:
+        case WATERWORLD6:
+        case WATERWORLD7:
+        case WATERWORLD8:
+        case WATERWORLD9:
           value = DiceGenerator.getRandom(99);
           if (value < 16) {
             return LUSH_VEGETATION;

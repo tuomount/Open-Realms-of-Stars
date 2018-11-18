@@ -39,7 +39,7 @@ public final class BuildingFactory {
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 47;
+  private static final int MAX_BUILDING = 49;
 
   /**
    * Component Basic mine
@@ -277,6 +277,15 @@ public final class BuildingFactory {
   public static final int COMPONENT_BLACK_MONOLITH = 46;
 
   /**
+   * Component Orbital defense grid
+   */
+  public static final int COMPONENT_ORBITAL_DEFENSE_GRID = 47;
+  /**
+   * Component Orbital shield
+   */
+  public static final int COMPONENT_ORBITAL_SHIELD = 48;
+
+  /**
    * Create planetary building with index
    * @param index For creating a  new building
    * @return Building if index found otherwise null
@@ -425,6 +434,12 @@ public final class BuildingFactory {
     case COMPONENT_BLACK_MONOLITH:
       tmp = createProductionFacility(index);
       break; // Black Monolith
+    case COMPONENT_ORBITAL_DEFENSE_GRID:
+      tmp = createMilitaryFacility(index);
+      break; // Orbital defense grid
+    case COMPONENT_ORBITAL_SHIELD:
+      tmp = createMilitaryFacility(index);
+      break; // Orbital shield
     default:
       throw new IllegalArgumentException("No building found with index "
       + index + "!");
@@ -541,6 +556,32 @@ public final class BuildingFactory {
       tmp.setScanRange(7);
       tmp.setScanCloakingDetection(140);
       tmp.setSingleAllowed(true);
+      return tmp;
+    }
+    if (index == COMPONENT_ORBITAL_DEFENSE_GRID) {
+      tmp = new Building(index, "Orbital defense grid",
+          Icons.getIconByName(Icons.ICON_PLANETARY_TURRET),
+          BuildingType.MILITARY);
+      tmp.setProdCost(150);
+      tmp.setMetalCost(150);
+      tmp.setDescription("Laser defense system that shoot enemy ships"
+          + " on the orbit.");
+      tmp.setScientificAchievement(true);
+      tmp.setSingleAllowed(true);
+      tmp.setDefenseDamage(1);
+      tmp.setHappiness(2);
+      return tmp;
+    }
+    if (index == COMPONENT_ORBITAL_SHIELD) {
+      tmp = new Building(index, "Orbital shield",
+          Icons.getIconByName(Icons.ICON_SHIELD),
+          BuildingType.MILITARY);
+      tmp.setProdCost(150);
+      tmp.setMetalCost(50);
+      tmp.setDescription("Orbital shield that blocks bombs.");
+      tmp.setScientificAchievement(true);
+      tmp.setSingleAllowed(true);
+      tmp.setHappiness(1);
       return tmp;
     }
     return tmp;

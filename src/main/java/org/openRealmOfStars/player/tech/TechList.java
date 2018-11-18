@@ -422,19 +422,21 @@ public class TechList {
     for (Tech tech : list) {
       ShipComponent comp = ShipComponentFactory
           .createByName(tech.getComponent());
-      int compValue = -1;
-      if (comp.getType() == ShipComponentType.WEAPON_BEAM
-          || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
-          || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
-          || comp.getType() == ShipComponentType.WEAPON_RAILGUN) {
-        compValue = comp.getDamage();
-      }
-      if (compValue > bestValue) {
-        best = tech;
-        bestValue = compValue;
-      } else if (compValue == bestValue && DiceGenerator.getRandom(1) == 0) {
-        best = tech;
-        bestValue = compValue;
+      if (comp != null) {
+        int compValue = -1;
+        if (comp.getType() == ShipComponentType.WEAPON_BEAM
+            || comp.getType() == ShipComponentType.WEAPON_HE_MISSILE
+            || comp.getType() == ShipComponentType.WEAPON_PHOTON_TORPEDO
+            || comp.getType() == ShipComponentType.WEAPON_RAILGUN) {
+          compValue = comp.getDamage();
+        }
+        if (compValue > bestValue) {
+          best = tech;
+          bestValue = compValue;
+        } else if (compValue == bestValue && DiceGenerator.getRandom(1) == 0) {
+          best = tech;
+          bestValue = compValue;
+        }
       }
     }
     return best;
@@ -453,15 +455,18 @@ public class TechList {
     for (Tech tech : list) {
       ShipComponent comp = ShipComponentFactory
           .createByName(tech.getComponent());
-      int compValue = -1;
-      if (comp.getType() == type) {
-        compValue = comp.getDamage();
-        if (compValue > bestValue) {
-          best = tech;
-          bestValue = compValue;
-        } else if (compValue == bestValue && DiceGenerator.getRandom(1) == 0) {
-          best = tech;
-          bestValue = compValue;
+      if (comp != null) {
+        int compValue = -1;
+        if (comp.getType() == type) {
+          compValue = comp.getDamage();
+          if (compValue > bestValue) {
+            best = tech;
+            bestValue = compValue;
+          } else if (compValue == bestValue
+              && DiceGenerator.getRandom(1) == 0) {
+            best = tech;
+            bestValue = compValue;
+          }
         }
       }
     }

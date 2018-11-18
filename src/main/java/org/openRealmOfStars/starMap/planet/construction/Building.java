@@ -104,6 +104,11 @@ public class Building extends Construction {
   private int happinessBonus;
 
   /**
+   * Building is scientific achievement
+   */
+  private boolean scientificAchievement;
+
+  /**
    * Construct building for planet
    * @param index Unique number for building
    * @param name Building name
@@ -513,4 +518,19 @@ public class Building extends Construction {
     this.scanCloakingDetection = scanCloakingDetection;
   }
 
+  /**
+   * Set scientific achievement
+   * @param value True to set
+   */
+  public void setScientificAchievement(final boolean value) {
+    scientificAchievement = value;
+  }
+
+  /**
+   * Get scientic achievement
+   * @return True if building is scientic achievement
+   */
+  public boolean getScientificAchievement() {
+    return scientificAchievement;
+  }
 }

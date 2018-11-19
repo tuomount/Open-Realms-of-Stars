@@ -282,12 +282,12 @@ public final class TechFactory {
    * Propulsion tech names for level 6
    */
   public static final String[] PROPULSION_TECH_LEVEL6_NAMES = {"Warp drive Mk4",
-      "Hyper drive Mk4", "Nuclear drive Mk3", "Antimatter source Mk1" };
+      "Hyper drive Mk4", "Nuclear drive Mk3", "Antimatter source Mk1"};
   /**
    * Propulsion tech names for level 7
    */
   public static final String[] PROPULSION_TECH_LEVEL7_NAMES = {"Warp drive Mk5",
-      "Hyper drive Mk5", "Impulse engine Mk1" };
+      "Hyper drive Mk5", "Impulse engine Mk1", "Material replicator" };
   /**
    * Propulsion tech names for level 8
    */
@@ -718,11 +718,16 @@ public final class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Propulsion, level);
-        tech.setComponent(techName);
-        if (tech.getName().contains(" source Mk")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_POWERSOURCE));
+        if (tech.getName().equals("Material replicator")) {
+          tech.setImprovement(techName);
+          tech.setIcon(Icons.getIconByName(Icons.ICON_METAL_ORE));
         } else {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_PROPULSION_TECH));
+          tech.setComponent(techName);
+          if (tech.getName().contains(" source Mk")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_POWERSOURCE));
+          } else {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_PROPULSION_TECH));
+          }
         }
         return tech;
       }

@@ -39,7 +39,7 @@ public final class BuildingFactory {
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 49;
+  private static final int MAX_BUILDING = 50;
 
   /**
    * Component Basic mine
@@ -284,6 +284,10 @@ public final class BuildingFactory {
    * Component Orbital shield
    */
   public static final int COMPONENT_ORBITAL_SHIELD = 48;
+  /**
+   * Component Material replicator
+   */
+  public static final int COMPONENT_MATERIAL_REPLICATOR = 49;
 
   /**
    * Create planetary building with index
@@ -440,6 +444,9 @@ public final class BuildingFactory {
     case COMPONENT_ORBITAL_SHIELD:
       tmp = createMilitaryFacility(index);
       break; // Orbital shield
+    case COMPONENT_MATERIAL_REPLICATOR:
+      tmp = createProductionFacility(index);
+      break; // Material replicator
     default:
       throw new IllegalArgumentException("No building found with index "
       + index + "!");
@@ -804,6 +811,18 @@ public final class BuildingFactory {
       tmp.setMetalCost(30);
       tmp.setDescription("Unknown origin of Black monolith."
           + " Cause unhappiness in population.");
+      return tmp;
+    }
+    if (index == COMPONENT_MATERIAL_REPLICATOR) {
+      tmp = new Building(index, "Material replicator",
+          Icons.getIconByName(Icons.ICON_METAL_ORE), BuildingType.MINE);
+      tmp.setCultBonus(0);
+      tmp.setHappiness(0);
+      tmp.setProdCost(150);
+      tmp.setMetalCost(100);
+      tmp.setDescription("Massive material replicator");
+      tmp.setScientificAchievement(true);
+      tmp.setSingleAllowed(true);
       return tmp;
     }
 

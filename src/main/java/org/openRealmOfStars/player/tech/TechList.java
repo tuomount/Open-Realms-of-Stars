@@ -367,10 +367,9 @@ public class TechList {
     for (Tech tech : list) {
       ShipComponent comp = ShipComponentFactory
           .createByName(tech.getComponent());
-      if (comp.getEnergyResource() > bestValue) {
+      if (comp != null && comp.getEnergyResource() > bestValue) {
         best = tech;
         bestValue = comp.getEnergyResource();
-
       }
     }
     return best;
@@ -388,7 +387,7 @@ public class TechList {
     for (Tech tech : list) {
       ShipComponent comp = ShipComponentFactory
           .createByName(tech.getComponent());
-      if (comp.getType() == ShipComponentType.ENGINE) {
+      if (comp != null && comp.getType() == ShipComponentType.ENGINE) {
         int compValue = -1;
         if (comp.getFtlSpeed() > 1 && comp.getSpeed() == 1
             && comp.getTacticSpeed() == 1) {

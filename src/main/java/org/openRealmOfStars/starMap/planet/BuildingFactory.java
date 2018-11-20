@@ -39,7 +39,7 @@ public final class BuildingFactory {
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 50;
+  private static final int MAX_BUILDING = 51;
 
   /**
    * Component Basic mine
@@ -288,6 +288,10 @@ public final class BuildingFactory {
    * Component Material replicator
    */
   public static final int COMPONENT_MATERIAL_REPLICATOR = 49;
+  /**
+   * Component Deep space scanner
+   */
+  public static final int COMPONENT_DEEP_SPACE_SCANNER = 50;
 
   /**
    * Create planetary building with index
@@ -447,6 +451,9 @@ public final class BuildingFactory {
     case COMPONENT_MATERIAL_REPLICATOR:
       tmp = createProductionFacility(index);
       break; // Material replicator
+    case COMPONENT_DEEP_SPACE_SCANNER:
+      tmp = createMilitaryFacility(index);
+      break; // Deep space scanner
     default:
       throw new IllegalArgumentException("No building found with index "
       + index + "!");
@@ -589,6 +596,17 @@ public final class BuildingFactory {
       tmp.setScientificAchievement(true);
       tmp.setSingleAllowed(true);
       tmp.setHappiness(1);
+      return tmp;
+    }
+    if (index == COMPONENT_DEEP_SPACE_SCANNER) {
+      tmp = new Building(index, "Deep space scanner",
+          Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.RESEARCH);
+      tmp.setProdCost(150);
+      tmp.setMetalCost(150);
+      tmp.setDescription("Deep space scanner to reveal all the planets.");
+      tmp.setSingleAllowed(true);
+      tmp.setScientificAchievement(true);
+      tmp.setReseBonus(2);
       return tmp;
     }
     return tmp;

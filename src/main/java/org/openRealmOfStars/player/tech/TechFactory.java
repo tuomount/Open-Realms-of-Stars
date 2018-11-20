@@ -340,7 +340,7 @@ public final class TechFactory {
    * Electronics tech names for level 7
    */
   public static final String[] ELECTRONICS_TECH_LEVEL7_NAMES = {"Scanner Mk4",
-      "Espionage module Mk4" };
+      "Espionage module Mk4", "Deep space scanner" };
   /**
    * Electronics tech names for level 8
    */
@@ -781,13 +781,15 @@ public final class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Electrics, level);
-        if (techName.startsWith("Planetary scanner Mk")) {
+        if (techName.startsWith("Planetary scanner Mk")
+            || techName.startsWith("Deep space scanner")) {
           tech.setImprovement(techName);
         } else {
           tech.setComponent(techName);
         }
         if (techName.startsWith("Planetary scanner Mk")
-            || techName.startsWith("LR scanner Mk")) {
+            || techName.startsWith("LR scanner Mk")
+            || techName.startsWith("Deep space scanner")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_LR_SCANNER));
         } else if (techName.startsWith("Scanner Mk")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_SCANNER));

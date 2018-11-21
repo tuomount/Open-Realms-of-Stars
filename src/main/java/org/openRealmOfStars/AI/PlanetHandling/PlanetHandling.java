@@ -381,6 +381,7 @@ public final class PlanetHandling {
     score = score + building.getFactBonus() * 60;
     score = score + building.getMineBonus() * planet.getAmountMetalInGround()
         / METAL_AMOUNT_DIVIDER;
+    score = score + building.getMaterialBonus() * 60;
     if (info.getRace() == SpaceRace.MOTHOIDS) {
       score = score + building.getMineBonus() * 30;
     }
@@ -412,6 +413,9 @@ public final class PlanetHandling {
     }
     if (attitude == Attitude.SCIENTIFIC) {
       score = score + building.getReseBonus() * 15;
+      if (building.getScientificAchievement()) {
+        score = score + 50;
+      }
     }
     if (attitude == Attitude.MERCHANTICAL) {
       score = score + building.getCredBonus() * 15;

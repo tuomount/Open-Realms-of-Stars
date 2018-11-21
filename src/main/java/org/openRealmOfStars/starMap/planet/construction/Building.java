@@ -107,6 +107,10 @@ public class Building extends Construction {
    * Building is scientific achievement
    */
   private boolean scientificAchievement;
+  /**
+   * Building material bonus
+   */
+  private int materialBonus;
 
   /**
    * Construct building for planet
@@ -126,6 +130,7 @@ public class Building extends Construction {
     this.cultBonus = 0;
     this.credBonus = 0;
     this.reseBonus = 0;
+    this.materialBonus = 0;
     this.setProdCost(1);
     this.setMetalCost(1);
     this.maintenanceCost = 0;
@@ -291,6 +296,14 @@ public class Building extends Construction {
       }
       sb.append("Mine: +");
       sb.append(getMineBonus());
+      space = true;
+    }
+    if (getMaterialBonus() > 0) {
+      if (space) {
+        sb.append(" ");
+      }
+      sb.append("Material: +");
+      sb.append(getMaterialBonus());
       space = true;
     }
     if (getFactBonus() > 0) {
@@ -532,5 +545,23 @@ public class Building extends Construction {
    */
   public boolean getScientificAchievement() {
     return scientificAchievement;
+  }
+
+  /**
+   * Get building's material bonus which means metal generate
+   * from empty.
+   * @return the materialBonus
+   */
+  public int getMaterialBonus() {
+    return materialBonus;
+  }
+
+  /**
+   * Set building's material bonus which means metal generate
+   * from empty.
+   * @param materialBonus the materialBonus to set
+   */
+  public void setMaterialBonus(final int materialBonus) {
+    this.materialBonus = materialBonus;
   }
 }

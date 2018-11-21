@@ -841,6 +841,7 @@ public final class BuildingFactory {
       tmp.setDescription("Massive material replicator");
       tmp.setScientificAchievement(true);
       tmp.setSingleAllowed(true);
+      tmp.setMaterialBonus(2);
       return tmp;
     }
 

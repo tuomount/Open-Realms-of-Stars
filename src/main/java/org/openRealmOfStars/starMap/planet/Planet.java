@@ -283,6 +283,11 @@ public class Planet {
   public static final int PRODUCTION_POPULATION = 6;
 
   /**
+   * Material production from empty
+   */
+  public static final int PRODUCTION_MATERIAL = 7;
+
+  /**
    * Minimum amount of ore on planets
    */
   private static final int MINIMUM_ORE = 2000;
@@ -664,6 +669,12 @@ public class Planet {
     }
     case PRODUCTION_POPULATION: {
       result = 0;
+      break;
+    }
+    case PRODUCTION_MATERIAL: {
+      for (Building build : getBuildingList()) {
+        result = result + build.getMaterialBonus();
+      }
       break;
     }
     default: {
@@ -1365,6 +1376,7 @@ public class Planet {
         metal = metal + amountMetalInGround;
         amountMetalInGround = 0;
       }
+      metal = metal + getTotalProductionFromBuildings(PRODUCTION_MATERIAL);
       prodResource = prodResource + getTotalProduction(PRODUCTION_PRODUCTION);
       planetOwnerInfo.setTotalCredits(planetOwnerInfo.getTotalCredits()
           + getTotalProduction(PRODUCTION_CREDITS));

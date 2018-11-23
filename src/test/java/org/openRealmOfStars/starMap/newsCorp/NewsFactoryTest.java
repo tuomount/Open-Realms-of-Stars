@@ -18,6 +18,7 @@ import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.history.History;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.construction.Building;
 
 /**
 *
@@ -1215,6 +1216,27 @@ public class NewsFactoryTest {
     assertNotNull(data);
     assertEquals(true, data.getNewsText().contains("Empire Centaurs"));
     assertEquals(true, data.getNewsText().contains("Empire Homarians"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testScientificAchievement() {
+    PlayerInfo maker = Mockito.mock(PlayerInfo.class);
+    Mockito.when(maker.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(maker.getRace()).thenReturn(SpaceRace.HUMAN);
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getName()).thenReturn("Awesome building");
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getPlanetType()).thenReturn(PlanetTypes.IRONWORLD6);
+    Mockito.when(planet.getImageInstructions()).thenReturn(PlanetTypes.IRONWORLD6.getImageInstructions());
+    NewsData news = NewsFactory.makeScientificAchivementNews(maker, planet, building);
+    assertEquals(true, news.getNewsText().contains(
+        planet.getName()));
+    assertEquals(true, news.getNewsText().contains(
+        maker.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        building.getName()));
   }
 
 }

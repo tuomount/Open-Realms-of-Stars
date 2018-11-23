@@ -12,6 +12,7 @@ import org.openRealmOfStars.starMap.history.event.Event;
 import org.openRealmOfStars.starMap.newsCorp.scoreBoard.Row;
 import org.openRealmOfStars.starMap.newsCorp.scoreBoard.ScoreBoard;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.TextUtilities;
 
@@ -1312,6 +1313,86 @@ public final class NewsFactory {
       }
     }
     news.setImageInstructions(instructions.build());
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
+   * Make scientific achievement news. Realm builds scientific achievement
+   * building and thus is closer to win.
+   * @param realm PlayerInfo who is trading
+   * @param planet Where to building
+   * @param building Building itself
+   * @return NewsData
+   */
+  public static NewsData makeScientificAchivementNews(final PlayerInfo realm,
+      final Planet planet, final Building building) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    String position = ImageInstruction.POSITION_CENTER;
+    switch (DiceGenerator.getRandom(2)) {
+      case 0: {
+        position = ImageInstruction.POSITION_LEFT;
+        break;
+      }
+      case 1: {
+        position = ImageInstruction.POSITION_RIGHT;
+        break;
+      }
+      default: {
+        position = ImageInstruction.POSITION_RIGHT;
+        break;
+      }
+    }
+    String size = ImageInstruction.SIZE_FULL;
+    switch (DiceGenerator.getRandom(2)) {
+      case 0: {
+        size = ImageInstruction.SIZE_FULL;
+        break;
+      }
+      case 1:
+      default: {
+        size = ImageInstruction.SIZE_HALF;
+        break;
+      }
+    }
+    instructions.addPlanet(position, planet.getImageInstructions(), size);
+    position = ImageInstruction.POSITION_CENTER;
+    instructions.addImage(realm.getRace().getNameSingle());
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("SCIENTIFIC ACHIEVEMENT!");
+        break;
+      }
+      case 1: {
+        instructions.addText("SCIENTIFIC ACHIEVEMENT TO "
+          + planet.getName().toUpperCase());
+        break;
+      }
+      case 2: {
+        instructions.addText("MIRACULOUS "
+            + building.getName().toUpperCase());
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(realm.getEmpireName());
+    sb.append(" builds ");
+    sb.append(building.getName());
+    sb.append(" to ");
+    sb.append(planet.getName());
+    sb.append("! ");
+    sb.append("With this scientific achivement ");
+    sb.append(realm.getEmpireName());
+    sb.append("gain awe from other realms! ");
+    Attitude attitude = realm.getAiAttitude();
+    if (attitude == Attitude.SCIENTIFIC) {
+      sb.append(realm.getEmpireName());
+      sb.append(" is known to have excellent research team. ");
+    }
     news.setNewsText(sb.toString());
     return news;
   }

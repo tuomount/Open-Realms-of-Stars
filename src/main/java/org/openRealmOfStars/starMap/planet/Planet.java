@@ -17,6 +17,9 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
+import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -1336,8 +1339,9 @@ public class Planet {
    * Update planet for one turn
    * @param enemyOrbiting if true it means that other player,
    *        has fleet orbiting on planet.
+   * @param map StarMap can be null in tests
    */
-  public void updateOneTurn(final boolean enemyOrbiting) {
+  public void updateOneTurn(final boolean enemyOrbiting, final StarMap map) {
     if (planetOwnerInfo != null) {
       happinessEffect = HappinessEffect.createHappinessEffect(
           calculateHappiness());
@@ -1457,6 +1461,12 @@ public class Planet {
           && prodResource >= underConstruction.getProdCost()) {
         if (underConstruction instanceof Building
             && groundSize > buildings.size()) {
+          Building building = (Building) underConstruction;
+          if (building.getScientificAchievement() && map != null) {
+            NewsData news = NewsFactory.makeScientificAchivementNews(
+                planetOwnerInfo, this, building);
+            map.getNewsCorpData().addNews(news);
+          }
           metal = metal - underConstruction.getMetalCost();
           prodResource = prodResource - underConstruction.getProdCost();
           buildings.add((Building) underConstruction);

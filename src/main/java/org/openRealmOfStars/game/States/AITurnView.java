@@ -1331,7 +1331,7 @@ public class AITurnView extends BlackPanel {
           }
         }
         // Update each planet one by one
-        planet.updateOneTurn(enemyOrbiting);
+        planet.updateOneTurn(enemyOrbiting, game.getStarMap());
         int index = game.getPlayers().getIndex(info);
         if (index > -1) {
           // Recalculate culture for the map for each player

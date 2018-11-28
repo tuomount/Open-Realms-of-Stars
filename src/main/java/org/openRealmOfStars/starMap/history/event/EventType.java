@@ -32,7 +32,7 @@ public enum EventType {
    */
   PLANET_COLONIZED,
   /**
-   * Planer conquered
+   * Planet conquered
    */
   PLANET_CONQUERED,
   /**
@@ -50,7 +50,11 @@ public enum EventType {
   /**
    * Player start event
    */
-  PLAYER_START;
+  PLAYER_START,
+  /**
+   * Planet builds significant building
+   */
+  PLANET_BUILDING;
 
   /**
    * Get Event type index
@@ -65,6 +69,7 @@ public enum EventType {
       case DIPLOMATIC_RELATION_CHANGE: return 4;
       case GALACTIC_NEWS: return 5;
       case PLAYER_START: return 6;
+      case PLANET_BUILDING: return 7;
       default: return 0;
     }
   }
@@ -83,6 +88,7 @@ public enum EventType {
       case 4: return EventType.DIPLOMATIC_RELATION_CHANGE;
       case 5: return EventType.GALACTIC_NEWS;
       case 6: return EventType.PLAYER_START;
+      case 7: return EventType.PLANET_BUILDING;
       default: throw new IllegalArgumentException(
           "No event type found for index " + index);
     }
@@ -98,6 +104,7 @@ public enum EventType {
       case DIPLOMATIC_RELATION_CHANGE: return "Diplomatic relation change";
       case GALACTIC_NEWS: return "Galactic news";
       case PLAYER_START: return "Player start";
+      case PLANET_BUILDING: return "Planet build significant building";
       default: return "Default";
     }
   }

@@ -52,6 +52,7 @@ public class EventOnPlanet extends Event {
    * at constructor.
    * @param type Type should be EventType.PLANET_COLONIZED
    *                         or EventType.PLANET_CONQUERED
+   *                         or EventType.PLANET_BUILDING
    * @param coord Coordinate where planet is.
    * @param planetName Planet name
    * @param playerIndex Player index doing the event
@@ -59,7 +60,8 @@ public class EventOnPlanet extends Event {
   public EventOnPlanet(final EventType type, final Coordinate coord,
       final String planetName, final int playerIndex) {
     if (type == EventType.PLANET_COLONIZED
-        || type == EventType.PLANET_CONQUERED) {
+        || type == EventType.PLANET_CONQUERED
+        || type == EventType.PLANET_BUILDING) {
       setType(type);
     } else {
       throw new IllegalArgumentException("Type is not planetary event!");
@@ -140,7 +142,8 @@ public class EventOnPlanet extends Event {
       throws IOException {
     EventType readType = Event.readTypeAndLength(buffer);
     if (readType == EventType.PLANET_COLONIZED
-        || readType == EventType.PLANET_CONQUERED) {
+        || readType == EventType.PLANET_CONQUERED
+        || readType == EventType.PLANET_BUILDING) {
       try (ByteArrayInputStream is = new ByteArrayInputStream(buffer)) {
         long skipped = is.skip(3);
         if (skipped != 3) {
@@ -161,7 +164,7 @@ public class EventOnPlanet extends Event {
       }
     }
     throw new IOException("Event is not Planet Colonized"
-        + " or Planet Conquered as expected!");
+        + " or Planet Conquered or Planet building as expected!");
   }
 
 

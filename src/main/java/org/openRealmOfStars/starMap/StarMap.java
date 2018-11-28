@@ -2766,8 +2766,8 @@ public class StarMap {
   }
 
   /**
-   * Get Score limit for research
-   * THIS HAS NOT IMPLEMETED YET
+   * Get Score limit for research. How many scientific achievements
+   * must be on single planet.
    * @return Score limit for research
    */
   public int getScoreResearch() {
@@ -2775,8 +2775,8 @@ public class StarMap {
   }
 
   /**
-   * Set Score limit for research
-   * THIS HAS NOT IMPLEMETED YET
+   * Set Score limit for research. How many scientific achievements
+   * must be on single planet.
    * @param limit Limit for research
    */
   public void setScoreResearch(final int limit) {

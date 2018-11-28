@@ -12,6 +12,7 @@ import org.openRealmOfStars.starMap.history.event.Event;
 import org.openRealmOfStars.starMap.newsCorp.scoreBoard.Row;
 import org.openRealmOfStars.starMap.newsCorp.scoreBoard.ScoreBoard;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.TextUtilities;
@@ -1201,6 +1202,69 @@ public final class NewsFactory {
         sb.append(info2.getEmpireName());
         sb.append(" has the all the home worlds in the galaxy! ");
         sb.append("No other realm has power to challenge this alliance.");
+      }
+      news.setImageInstructions(instructions.build());
+      news.setNewsText(sb.toString());
+    }
+    return news;
+  }
+
+  /**
+   * Make News when game is ending for scientific victory.
+   * Returns null if scientific victory is not achieved
+   * @param map StarMap contains Planet and playerlist
+   * @return NewsData or null
+   */
+  public static NewsData makeScientificVictoryNewsAtEnd(final StarMap map) {
+    int limit = map.getScoreResearch();
+    if (limit == 0) {
+      return null;
+    }
+    PlayerInfo winner = null;
+    for (Planet planet : map.getPlanetList()) {
+      int count = 0;
+      if (planet.getPlanetType() == PlanetTypes.ARTIFICIALWORLD1) {
+        count++;
+      }
+      for (Building building : planet.getBuildingList()) {
+        if (building.getScientificAchievement()) {
+          count++;
+        }
+      }
+      if (count >= limit) {
+        winner = planet.getPlanetPlayerInfo();
+      }
+    }
+    NewsData news = null;
+    if (winner != null) {
+      news = new NewsData();
+      ImageInstruction instructions = new ImageInstruction();
+      news.setImageInstructions(instructions.build());
+      StringBuilder sb = new StringBuilder();
+      if (winner.getDiplomacy().getAllianceIndex() == -1) {
+        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+        instructions.addText("THE SCIENTIFIC VICTORY!");
+        instructions.addText(winner.getEmpireName());
+        instructions.addImage(winner.getRace().getNameSingle());
+        sb.append(winner.getEmpireName());
+        sb.append(" has created the most advanced world in the galaxy! ");
+        sb.append("No other realm technology to challenge ");
+        sb.append(winner.getEmpireName());
+        sb.append(".");
+      } else {
+        PlayerInfo info = winner;
+        PlayerInfo info2 = map.getPlayerByIndex(
+            winner.getDiplomacy().getAllianceIndex());
+        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+        instructions.addText("THE SCIENTIFIC ALLIANCE!");
+        instructions.addText(info.getEmpireName());
+        instructions.addImage(info.getRace().getNameSingle());
+        sb.append("Alliance of ");
+        sb.append(info.getEmpireName());
+        sb.append(" and ");
+        sb.append(info2.getEmpireName());
+        sb.append(" has created the most advanced world in the galaxy! ");
+        sb.append("No other realm technology to challenge this alliance.");
       }
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());

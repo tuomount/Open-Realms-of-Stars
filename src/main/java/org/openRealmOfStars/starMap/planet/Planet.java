@@ -18,6 +18,8 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.construction.Building;
@@ -1466,6 +1468,11 @@ public class Planet {
             NewsData news = NewsFactory.makeScientificAchivementNews(
                 planetOwnerInfo, this, building);
             map.getNewsCorpData().addNews(news);
+            EventOnPlanet eventOnPlanet = new EventOnPlanet(
+                EventType.PLANET_BUILDING, getCoordinate(),
+                getName(), getPlanetOwnerIndex());
+            eventOnPlanet.setText(news.getNewsText());
+            map.getHistory().addEvent(eventOnPlanet);
           }
           metal = metal - underConstruction.getMetalCost();
           prodResource = prodResource - underConstruction.getProdCost();

@@ -2325,4 +2325,18 @@ public class Planet {
     }
     return happinessExplanation;
   }
+
+  /**
+   * Does planet have Orbital shield and bombing is not possible.
+   * Orbital shield does not protect against invasion
+   * @return True if one of the building is orbital shield. Otherwise false.
+   */
+  public boolean isShieldForBombing() {
+    for (Building building : buildings) {
+      if (building.getName().equals("Orbital shield")) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

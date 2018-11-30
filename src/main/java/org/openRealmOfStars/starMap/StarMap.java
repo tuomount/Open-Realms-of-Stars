@@ -41,6 +41,7 @@ import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.namegenerators.UnrealPlanetNameGenerator;
 import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 import org.openRealmOfStars.utilities.namegenerators.RoguePlanetNameGenerator;
 import org.openRealmOfStars.utilities.repository.NewsCorpRepository;
@@ -2862,5 +2863,42 @@ public class StarMap {
       }
     }
     return null;
+  }
+
+  /**
+   * Generate name for artificial planet
+   * @return artificial planet name
+   */
+  public String generateNewArtificialPlanetName() {
+    int count = 1;
+    for (Planet planet : planetList) {
+      if (planet.getPlanetType() == PlanetTypes.ARTIFICIALWORLD1) {
+        count++;
+      }
+    }
+    UnrealPlanetNameGenerator unrealPlanetGenerator =
+        new UnrealPlanetNameGenerator();
+    StringBuilder sb = new StringBuilder();
+    sb.append(unrealPlanetGenerator.generate());
+    sb.append(count);
+    return sb.toString();
+  }
+  /**
+   * Create Artificial Planet. This will add the actual planet,
+   * update the history and add the news.
+   * @param starbaseFleet Starbase fleet where to create
+   * @param realm Player realm who is creating.
+   */
+  public void createArtificialPlanet(final Fleet starbaseFleet,
+      final PlayerInfo realm) {
+    for (Ship ship : starbaseFleet.getShips()) {
+      if (ship.getHull().getName().equals("Artificial planet")) {
+        String planetName = generateNewArtificialPlanetName();
+        Planet planet = new Planet(starbaseFleet.getCoordinate(),
+            planetName, 0, false);
+        planet.setPlanetType(PlanetTypes.ARTIFICIALWORLD1);
+        planetList.add(planet);
+      }
+    }
   }
 }

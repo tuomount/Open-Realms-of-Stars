@@ -20,9 +20,11 @@ import org.openRealmOfStars.player.espionage.EspionageBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.message.MessageList;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipHull;
+import org.openRealmOfStars.player.ship.ShipHullFactory;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipImages;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -1172,4 +1174,40 @@ public class StarMapTest {
     assertEquals(-72, map.getMilitaryDifference(0, 2));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStarMapCreateArtificialMap() {
+    GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
+    Mockito.when(config.getSizeX()).thenReturn(50);
+    Mockito.when(config.getSizeY()).thenReturn(50);
+    Mockito.when(config.getStartingPosition()).thenReturn(
+        GalaxyConfig.START_POSITION_BORDER);
+    Mockito.when(config.getScoringVictoryTurns()).thenReturn(400);
+    Mockito.when(config.getScoreLimitCulture()).thenReturn(2);
+    Mockito.when(config.getScoreLimitConquer()).thenReturn(0);
+    Mockito.when(config.getScoreLimitResearch()).thenReturn(4);
+    Mockito.when(config.getScoreLimitDiplomacy()).thenReturn(1);
+
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
+
+    StarMap map = new StarMap(config, players);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Coordinate coord = new Coordinate(5, 5);
+    Mockito.when(fleet.getCoordinate()).thenReturn(coord);
+    Ship[] ships = new Ship[1];
+    ships[0] = Mockito.mock(Ship.class);
+    ShipHull hull = ShipHullFactory.createByName("Artificial planet",
+        SpaceRace.HUMAN);
+    Mockito.when(ships[0].getHull()).thenReturn(hull);
+    Mockito.when(fleet.getShips()).thenReturn(ships);
+    PlayerInfo realm = Mockito.mock(PlayerInfo.class);
+    int size = map.getPlanetList().size();
+    size++;
+    map.createArtificialPlanet(fleet, realm);
+    assertEquals(size, map.getPlanetList().size());
+    String str = map.generateNewArtificialPlanetName();
+    assertEquals(true, str.contains(" 2"));
+  }
 }

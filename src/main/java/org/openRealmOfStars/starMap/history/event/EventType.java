@@ -54,7 +54,11 @@ public enum EventType {
   /**
    * Planet builds significant building
    */
-  PLANET_BUILDING;
+  PLANET_BUILDING,
+  /**
+   * Artificial planet has been created
+   */
+  ARTIFICAL_PLANET_CREATED;
 
   /**
    * Get Event type index
@@ -70,6 +74,7 @@ public enum EventType {
       case GALACTIC_NEWS: return 5;
       case PLAYER_START: return 6;
       case PLANET_BUILDING: return 7;
+      case ARTIFICAL_PLANET_CREATED: return 8;
       default: return 0;
     }
   }
@@ -89,6 +94,7 @@ public enum EventType {
       case 5: return EventType.GALACTIC_NEWS;
       case 6: return EventType.PLAYER_START;
       case 7: return EventType.PLANET_BUILDING;
+      case 8: return EventType.ARTIFICAL_PLANET_CREATED;
       default: throw new IllegalArgumentException(
           "No event type found for index " + index);
     }
@@ -105,6 +111,7 @@ public enum EventType {
       case GALACTIC_NEWS: return "Galactic news";
       case PLAYER_START: return "Player start";
       case PLANET_BUILDING: return "Planet build significant building";
+      case ARTIFICAL_PLANET_CREATED: return "Artificial planet created";
       default: return "Default";
     }
   }

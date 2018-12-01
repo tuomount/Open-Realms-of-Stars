@@ -31,8 +31,11 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.history.History;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.history.event.PlayerStartEvent;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
+import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -2891,14 +2894,83 @@ public class StarMap {
    */
   public void createArtificialPlanet(final Fleet starbaseFleet,
       final PlayerInfo realm) {
+    boolean startBuilding = false;
+    int labs = 0;
+    int factory = 0;
+    int metal = 0;
+    int credits = 0;
+    int cultureValue = 0;
     for (Ship ship : starbaseFleet.getShips()) {
       if (ship.getHull().getName().equals("Artificial planet")) {
-        String planetName = generateNewArtificialPlanetName();
-        Planet planet = new Planet(starbaseFleet.getCoordinate(),
-            planetName, 0, false);
-        planet.setPlanetType(PlanetTypes.ARTIFICIALWORLD1);
-        planetList.add(planet);
+        startBuilding = true;
       }
+      // Recycle all the metal
+      metal = metal + ship.getMetalCost();
+      // Each ship should be calculated as factory
+      factory++;
+      labs = labs + ship.getTotalResearchBonus();
+      credits = credits + ship.getTotalCreditBonus();
+      cultureValue = cultureValue + ship.getTotalCultureBonus();
+    }
+    if (startBuilding) {
+      String planetName = generateNewArtificialPlanetName();
+      Planet planet = new Planet(starbaseFleet.getCoordinate(),
+          planetName, 0, false);
+      planet.setPlanetType(PlanetTypes.ARTIFICIALWORLD1);
+      planet.setCulture(starbaseFleet.getCulturalValue());
+      planet.setAmountMetalInGround(0);
+      planet.setMetal(metal);
+      String[] buildingList = realm.getTechList().getBuildingListFromTech();
+      boolean lab = StarMapUtilities.listContains(buildingList, "Basic lab");
+      boolean taxCenter = StarMapUtilities.listContains(buildingList,
+          "Tax center");
+      boolean marketCenter = StarMapUtilities.listContains(buildingList,
+          "Market center");
+      boolean cultureCenter = StarMapUtilities.listContains(buildingList,
+          "Culture center");
+      int freeSpace = 10;
+      planet.setGroundSize(freeSpace);
+      int ownerIndex = getPlayerList().getIndex(realm);
+      planet.setPlanetOwner(ownerIndex, realm);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+      if (cultureValue > 0 && cultureCenter) {
+        planet.addBuilding(BuildingFactory.createByName("Culture center"));
+        freeSpace--;
+      }
+      if (credits > 0 && taxCenter) {
+        planet.addBuilding(BuildingFactory.createByName("Tax center"));
+        freeSpace--;
+        credits--;
+      }
+      if (credits > 0 && marketCenter) {
+        planet.addBuilding(BuildingFactory.createByName("Market center"));
+        freeSpace--;
+        credits--;
+      }
+      boolean done = false;
+      while (!done) {
+        if (factory > 0 && freeSpace > 0) {
+          planet.addBuilding(BuildingFactory.createByName("Basic factory"));
+          factory--;
+          freeSpace--;
+        }
+        if (labs > 0 && freeSpace > 0 && lab) {
+          planet.addBuilding(BuildingFactory.createByName("Basic lab"));
+          labs--;
+          freeSpace--;
+        }
+        if (factory == 0 || freeSpace == 0) {
+          done = true;
+        }
+      }
+      realm.getFleets().removeFleet(starbaseFleet);
+      getNewsCorpData().addNews(
+          NewsFactory.makeScientificAchivementNews(realm, planet, null));
+      EventOnPlanet event = new EventOnPlanet(
+          EventType.ARTIFICAL_PLANET_CREATED, planet.getCoordinate(),
+          planet.getName(), ownerIndex);
+      history.addEvent(event);
+      planetList.add(planet);
     }
   }
 }

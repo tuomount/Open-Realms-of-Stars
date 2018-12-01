@@ -1384,9 +1384,10 @@ public final class NewsFactory {
   /**
    * Make scientific achievement news. Realm builds scientific achievement
    * building and thus is closer to win.
-   * @param realm PlayerInfo who is trading
+   * @param realm PlayerInfo who is building
    * @param planet Where to building
-   * @param building Building itself
+   * @param building Building itself. Can be null. It means that planetis
+   * artificial planet then.
    * @return NewsData
    */
   public static NewsData makeScientificAchivementNews(final PlayerInfo realm,
@@ -1436,8 +1437,12 @@ public final class NewsFactory {
         break;
       }
       case 2: {
-        instructions.addText("MIRACULOUS "
-            + building.getName().toUpperCase());
+        if (building != null) {
+          instructions.addText("MIRACULOUS "
+              + building.getName().toUpperCase());
+        } else {
+          instructions.addText("ARTIFICIAL PLANET!");
+        }
         break;
       }
     }
@@ -1445,9 +1450,14 @@ public final class NewsFactory {
     StringBuilder sb = new StringBuilder(100);
     sb.append(realm.getEmpireName());
     sb.append(" builds ");
-    sb.append(building.getName());
-    sb.append(" to ");
-    sb.append(planet.getName());
+    if (building != null) {
+      sb.append(building.getName());
+      sb.append(" to ");
+      sb.append(planet.getName());
+    } else {
+      sb.append(" articial planet called ");
+      sb.append(planet.getName());
+    }
     sb.append("! ");
     sb.append("With this scientific achivement ");
     sb.append(realm.getEmpireName());

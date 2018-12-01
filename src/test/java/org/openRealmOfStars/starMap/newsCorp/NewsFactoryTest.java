@@ -1241,6 +1241,24 @@ public class NewsFactoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testScientificAchievement2() {
+    PlayerInfo maker = Mockito.mock(PlayerInfo.class);
+    Mockito.when(maker.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(maker.getRace()).thenReturn(SpaceRace.HUMAN);
+    Building building = null;
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getPlanetType()).thenReturn(PlanetTypes.IRONWORLD6);
+    Mockito.when(planet.getImageInstructions()).thenReturn(PlanetTypes.IRONWORLD6.getImageInstructions());
+    NewsData news = NewsFactory.makeScientificAchivementNews(maker, planet, building);
+    assertEquals(true, news.getNewsText().contains(
+        planet.getName()));
+    assertEquals(true, news.getNewsText().contains(
+        maker.getEmpireName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testScientificVictory() {
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = Mockito.mock(PlayerList.class);

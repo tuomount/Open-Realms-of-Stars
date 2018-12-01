@@ -305,6 +305,20 @@ public class FleetList {
   }
 
   /**
+   * Remove Fleet from the list
+   * @param toRemove Fleet to remove
+   */
+  public void removeFleet(final Fleet toRemove) {
+    for (int i = 0; i < fleetList.size(); i++) {
+      Fleet fleet = fleetList.get(i);
+      if (fleet.getName().equals(toRemove.getName())) {
+        fleetList.remove(i);
+        break;
+      }
+    }
+  }
+
+  /**
    * Get fleet by coordinate
    * @param coordinate Which is being matched
    * @return Fleet or null if no match

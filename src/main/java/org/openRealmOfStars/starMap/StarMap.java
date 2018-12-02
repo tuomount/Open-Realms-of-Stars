@@ -2971,6 +2971,12 @@ public class StarMap {
           planet.getName(), ownerIndex);
       history.addEvent(event);
       planetList.add(planet);
+      int planetNumber = planetList.size() - 1;
+      SquareInfo info = new SquareInfo(SquareInfo.TYPE_PLANET, planetNumber);
+      int px = planet.getCoordinate().getX();
+      int py = planet.getCoordinate().getY();
+      tileInfo[px][py] = info;
+      tiles[px][py] = planet.getPlanetType().getTileIndex();
     }
   }
 }

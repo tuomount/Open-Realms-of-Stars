@@ -1142,6 +1142,10 @@ public class AITurnView extends BlackPanel {
       addRandomPirateTech(pirates, TechType.Combat, 6);
       addRandomPirateTech(pirates, TechType.Combat, 6);
       addRandomPirateTech(pirates, TechType.Combat, 6);
+      Tech tech = pirates.getTechList().getBestWeapon();
+      if (tech.getLevel() < 6) {
+        addRandomPirateTech(pirates, TechType.Combat, 6);
+      }
       addRandomPirateTech(pirates, TechType.Defense, 5);
       addRandomPirateTech(pirates, TechType.Defense, 6);
       addRandomPirateTech(pirates, TechType.Defense, 6);

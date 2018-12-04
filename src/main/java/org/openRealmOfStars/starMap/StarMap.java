@@ -1804,6 +1804,16 @@ public class StarMap {
       cloakDetection = planet.getCloakingDetectionLvl();
       cx = planet.getX();
       cy = planet.getY();
+      if (planet.howManyBuildings("Deep space scanner") > 0) {
+        // Reveal all the planet
+        for (Planet iterator : getPlanetList()) {
+          if (info.getSectorVisibility(iterator.getCoordinate())
+              == PlayerInfo.UNCHARTED) {
+            info.setSectorVisibility(iterator.getX(), iterator.getY(),
+                PlayerInfo.FOG_OF_WAR);
+          }
+        }
+      }
     }
     if (scanRad != -1) {
       for (int y = -scanRad; y < scanRad + 1; y++) {

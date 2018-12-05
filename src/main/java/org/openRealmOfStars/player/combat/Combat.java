@@ -18,6 +18,7 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
+import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -496,16 +497,19 @@ public boolean launchIntercept(final int distance,
    */
   private void destroyShipFromFleet(final CombatShip ship, final Fleet fleet) {
     fleet.removeShip(ship.getShip());
-    ShipStat stat = animation.getShooter().getPlayer()
-        .getShipStatByName(animation.getShooter().getShip().getName());
-    Ship shooter = animation.getShooter().getShip();
-    if (shooter != null && shooter.getExperience() < 5) {
-      shooter.setExperience(shooter.getExperience() + 1);
+    if (animation.getShooter() != null) {
+      ShipStat stat = animation.getShooter().getPlayer()
+          .getShipStatByName(animation.getShooter().getShip().getName());
+      Ship shooter = animation.getShooter().getShip();
+      if (shooter != null && shooter.getExperience() < 5) {
+        shooter.setExperience(shooter.getExperience() + 1);
+      }
+      if (stat != null) {
+        stat.setNumberOfKills(stat.getNumberOfKills() + 1);
+      }
     }
-    if (stat != null) {
-      stat.setNumberOfKills(stat.getNumberOfKills() + 1);
-    }
-    stat = ship.getPlayer().getShipStatByName(ship.getShip().getName());
+    ShipStat stat = ship.getPlayer().getShipStatByName(
+        ship.getShip().getName());
     if (stat != null) {
       stat.setNumberOfLoses(stat.getNumberOfLoses() + 1);
       stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
@@ -702,13 +706,47 @@ public boolean launchIntercept(final int distance,
   }
 
   /**
+   * Handle Orbital defense Grid for defender.
+   * This method checks if planet has orbital defense grid
+   * and shoots first enemy ship.
+   * @param textLogger Text logger for printing the text
+   */
+  public void handleOrbitalDefenseGrid(final Logger textLogger) {
+    if (planet != null
+        && planet.howManyBuildings("Orbital defense grid") > 0) {
+      for (CombatShip ship : combatShipList) {
+        if (ship.getPlayer() == attackerInfo) {
+          ShipComponent weapon = new ShipComponent(0, "Orbital defense grid",
+              0, 0, ShipComponentType.PLASMA_BEAM);
+          weapon.setDamage(1);
+          ShipDamage shipDamage = ship.getShip().damageBy(weapon);
+          if (shipDamage.getValue() <= ShipDamage.DAMAGED) {
+            ship.setDamaged();
+          }
+          if (textLogger != null) {
+            String[] logs = shipDamage.getMessage().split("\n");
+            for (String log : logs) {
+              textLogger.addLog(log);
+            }
+          }
+          setAnimation(
+              new CombatAnimation(null, ship, weapon, shipDamage.getValue()));
+          // Shoot only one ship per turn
+          break;
+        }
+      }
+    }
+  }
+  /**
    * Get next ship is list. List contains both player's fleets
    * in initiative order. After this ship can be fetched with
    * getCurrentShip() method.
+   * @param textLogger where logging is added if not null
    */
-  public void nextShip() {
+  public void nextShip(final Logger textLogger) {
     shipIndex++;
     if (combatShipList.size() <= shipIndex) {
+      handleOrbitalDefenseGrid(textLogger);
       shipIndex = 0;
       totalRounds++;
       if (!isDamageOnAnyShip()) {
@@ -864,15 +902,15 @@ public boolean launchIntercept(final int distance,
       }
       if (loserEscaped && escapePosition != null) {
         if (looserFleet.getNumberOfShip() > 1) {
-          combatText = combatText + "Defending fleet's "
+          combatText = combatText + "Loser fleet's "
               + looserFleet.getNumberOfShip()
               + "ships escaped from the combat.";
         } else {
-          combatText = combatText + "Defending fleet's "
+          combatText = combatText + "Loser fleet's "
               + "last ship escaped from the combat.";
         }
       } else {
-        combatText = combatText + "Defending fleet was totally destroyed!";
+        combatText = combatText + "Loser's fleet was totally destroyed!";
       }
       combatEvent.setText(combatText);
       if (isWinnerAttacker) {
@@ -1055,16 +1093,17 @@ public boolean launchIntercept(final int distance,
 
   /**
    * End battle round
+   * @param textLogger where logging is added if not null
    * @return true if Combat is over, otherwise false.
    */
-  public boolean endRound() {
+  public boolean endRound(final Logger textLogger) {
     if (timerForWormHole > 0) {
       timerForWormHole--;
     } else if (wormHole == null) {
       createWormHole();
     }
     setComponentUse(-1);
-    nextShip();
+    nextShip(textLogger);
     boolean over = isCombatOver();
     if (over) {
       handleEndCombat();
@@ -1326,7 +1365,7 @@ public boolean launchIntercept(final int distance,
       aStar.doRoute();
     } else {
       // Could not found route for deadliest or closest one
-      endRound();
+      endRound(textLogger);
       return true;
     }
     PathPoint point = aStar.getMove();
@@ -1383,19 +1422,19 @@ public boolean launchIntercept(final int distance,
           if (!shot) {
             // Even closest was too far away, ending the turn now
             aStar = null;
-            endRound();
+            endRound(textLogger);
             return true;
           }
         }
       } else {
         aStar = null;
-        endRound();
+        endRound(textLogger);
         return true;
       }
     }
     if (getAnimation() == null && ai.getAiShotsLeft() == 0
         && ai.getMovesLeft() == 0) {
-      endRound();
+      endRound(textLogger);
     }
     return false;
   }
@@ -1427,7 +1466,7 @@ public boolean launchIntercept(final int distance,
       aStar.doRoute();
     } else {
       // Could not found route for faraway or wormhole
-      endRound();
+      endRound(textLogger);
       return true;
     }
     PathPoint point = aStar.getMove();
@@ -1460,11 +1499,11 @@ public boolean launchIntercept(final int distance,
     if ((ai.getMovesLeft() == 0 || aStar.isLastMove())
         && getAnimation() == null) {
       aStar = null;
-      endRound();
+      endRound(textLogger);
       return true;
     }
     if (getAnimation() == null && ai.getMovesLeft() == 0) {
-      endRound();
+      endRound(textLogger);
     }
     return false;
   }

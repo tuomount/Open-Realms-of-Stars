@@ -274,7 +274,7 @@ public class BattleView extends BlackPanel {
    * End battle round
    */
   private void endRound() {
-    if (combat.endRound()) {
+    if (combat.endRound(textLogger)) {
       endButton.setText("End combat");
       map.getFleetTiles(true);
     }

@@ -123,7 +123,12 @@ public enum ShipComponentType {
   /**
    * Fighter bay for small and medium ships
    */
-  FIGHTER_BAY;
+  FIGHTER_BAY,
+  /**
+   * Plasma beam always damages something,
+   * first shields, then armor and finally hull
+   */
+  PLASMA_BEAM;
 
   /**
    * Get ShipComponentType index
@@ -177,6 +182,8 @@ public enum ShipComponentType {
       return 21;
     case FIGHTER_BAY:
       return 22;
+    case PLASMA_BEAM:
+      return 23;
     default:
       return 0;
     }
@@ -235,6 +242,8 @@ public enum ShipComponentType {
       return ShipComponentType.THRUSTERS;
     case 22:
       return ShipComponentType.FIGHTER_BAY;
+    case 23:
+      return ShipComponentType.PLASMA_BEAM;
     default:
       return ShipComponentType.WEAPON_BEAM;
     }
@@ -289,6 +298,8 @@ public enum ShipComponentType {
       return "Thrusters";
     case FIGHTER_BAY:
       return "Fighter bay";
+    case PLASMA_BEAM:
+      return "Plasma beam";
     default:
       return "Error - Unknown";
     }
@@ -346,6 +357,8 @@ public enum ShipComponentType {
       return Icons.ICON_PROPULSION_TECH;
     case FIGHTER_BAY:
       return Icons.ICON_HULL_TECH;
+    case PLASMA_BEAM:
+      return Icons.ICON_LASERGUN;
     default:
       return Icons.ICON_CIRCUIT_BOARD;
     }
@@ -359,6 +372,8 @@ public enum ShipComponentType {
       switch (this) {
       case WEAPON_BEAM:
           return 100;
+      case PLASMA_BEAM:
+        return 100;
       case WEAPON_RAILGUN:
       case WEAPON_PHOTON_TORPEDO:
           return 75;

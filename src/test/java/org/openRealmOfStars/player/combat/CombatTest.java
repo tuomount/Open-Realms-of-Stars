@@ -210,7 +210,7 @@ public class CombatTest {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getName()).thenReturn("Test I");
     Coordinate coord = Mockito.mock(Coordinate.class);
-    Mockito.when(coord.sameAs(Mockito.any())).thenReturn(true);
+    Mockito.when(coord.sameAs((Coordinate)Mockito.any())).thenReturn(true);
     Mockito.when(planet.getCoordinate()).thenReturn(coord);
     Mockito.when(planet.howManyBuildings("Orbital defense grid")).thenReturn(1);
     combat.setPlanet(planet);

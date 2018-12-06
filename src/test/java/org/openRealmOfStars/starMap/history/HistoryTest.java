@@ -10,6 +10,8 @@ import java.io.IOException;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.mapTiles.TileNames;
+import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.StarMap;
@@ -190,5 +192,36 @@ public class HistoryTest {
       assertFalse(true);
     }
   }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTileOverrideUpdate() throws IOException {
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getMaxX()).thenReturn(5);
+    Mockito.when(map.getMaxY()).thenReturn(5);
+    History history = new History();
+    history.addTurn(0);
+    CultureEvent event = new CultureEvent(new Coordinate(1,1), 1);
+    history.addEvent(event);
+    event = new CultureEvent(new Coordinate(2,2), 2);
+    history.addEvent(event);
+    history.addTurn(1);
+    event = new CultureEvent(new Coordinate(3,3), 3);
+    history.addEvent(event);
+    history.addTurn(2);
+    EventOnPlanet planetEvent = new EventOnPlanet(
+        EventType.ARTIFICAL_PLANET_CREATED, new Coordinate(3,3),
+        "Steel sphere 1", 0);
+    history.addEvent(planetEvent);
+    history.addTurn(3);
+    int[][] tiles = history.calculateOverrideTiles(0, map);
+    assertEquals(0, tiles[3][3]);
+    tiles = history.calculateOverrideTiles(1, map);
+    assertEquals(0, tiles[3][3]);
+    tiles = history.calculateOverrideTiles(3, map);
+    assertEquals(Tiles.getTileByName(TileNames.ARTIFICIALWORLD1).getIndex(),
+        tiles[3][3]);
+  }
+
 
 }

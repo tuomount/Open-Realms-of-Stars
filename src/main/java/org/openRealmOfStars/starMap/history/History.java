@@ -5,11 +5,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.mapTiles.TileNames;
+import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.history.event.CultureEvent;
 import org.openRealmOfStars.starMap.history.event.Event;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
@@ -196,6 +200,41 @@ public class History {
       }
     }
     return culture;
+  }
+  /**
+   * Calculate tiles to override from history up to certain turn number.
+   * @param upToTurn Which turn number to calculate
+   * @param starMap Starmap to fetch map size
+   * @return tiles as integer array of array.
+   */
+  public int[][] calculateOverrideTiles(final int upToTurn,
+      final StarMap starMap) {
+    int maxX = starMap.getMaxX();
+    int maxY = starMap.getMaxY();
+    int[][] tiles = new int[maxX][maxY];
+    int max = upToTurn;
+    if (listOfTurns.size() < upToTurn) {
+      max = listOfTurns.size();
+    }
+    // Build culture map according the event
+    for (int i = 0; i < max; i++) {
+      HistoryTurn turn = listOfTurns.get(i);
+      for (int j = 0; j < turn.getNumberOfEvents(); j++) {
+        Event event = turn.getEvent(j);
+        if (event instanceof EventOnPlanet) {
+          EventOnPlanet eventOnPlanet = (EventOnPlanet) event;
+          if (eventOnPlanet.getType() == EventType.ARTIFICAL_PLANET_CREATED) {
+            int x = eventOnPlanet.getCoordinate().getX();
+            int y = eventOnPlanet.getCoordinate().getY();
+            if (x >= 0 && x < maxX && y >= 0 && y < maxY) {
+              tiles[x][y] = Tiles.getTileByName(
+                  TileNames.ARTIFICIALWORLD1).getIndex();
+            }
+          }
+        }
+      }
+    }
+    return tiles;
   }
   /**
    * Method to update culture map according the newest changes.

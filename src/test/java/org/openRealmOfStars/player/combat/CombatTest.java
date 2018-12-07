@@ -196,6 +196,7 @@ public class CombatTest {
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
     info1.setEmpireName("Terran alliance");
     info2.setEmpireName("Spork empire");
+    info2.getTechList().addTech(TechFactory.createDefenseTech("Shield Mk2", 2));
     ShipDesign design1 = ShipGenerator.createBattleShip(
         info1, ShipSize.SMALL, false);
     ShipDesign design2 = ShipGenerator.createBattleShip(

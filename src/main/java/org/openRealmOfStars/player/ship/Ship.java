@@ -923,6 +923,25 @@ private int increaseHitChanceByComponent() {
       }
       break;
     }
+    case PLASMA_BEAM: {
+      damage = weapon.getDamage();
+      damage = damage - this.getShield();
+      if (damage > 0) {
+        this.setShield(this.getShield() - 1);
+      } else {
+        this.setShield(this.getShield() - 1);
+        return new ShipDamage(ShipDamage.NO_DAMAGE, "Attack hit the shield!");
+      }
+      damage = damage - this.getArmor();
+      if (damage >= 0) {
+        this.setArmor(this.getArmor() - 1);
+      } else {
+        this.setArmor(this.getArmor() - 1);
+        return new ShipDamage(ShipDamage.NO_DAMAGE,
+            "Attack hit the armor!");
+      }
+      break;
+    }
     case WEAPON_RAILGUN:
     case WEAPON_HE_MISSILE: {
       damage = weapon.getDamage();

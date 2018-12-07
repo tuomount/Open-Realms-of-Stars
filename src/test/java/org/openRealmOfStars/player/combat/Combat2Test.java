@@ -122,10 +122,10 @@ public class Combat2Test {
     Combat combatTestItem = new Combat(attackerFleet, defenderFleet, attackerInfo, dependerInfo);
     assertNotNull(combatTestItem);
     assertEquals(0, combatTestItem.getCurrentShip().getBonusAccuracy());
-    combatTestItem.nextShip();
+    combatTestItem.nextShip(null);
     assertEquals(5, combatTestItem.getCurrentShip().getBonusAccuracy());
-    combatTestItem.nextShip();
-    combatTestItem.nextShip();
+    combatTestItem.nextShip(null);
+    combatTestItem.nextShip(null);
 
   }
 
@@ -435,9 +435,9 @@ public class Combat2Test {
 
     Combat combatTestItem = new Combat(attackerFleet, defenderFleet, attackerInfo, dependerInfo);
     CombatShip attackerCombatShip = combatTestItem.getCurrentShip();
-    combatTestItem.nextShip();
+    combatTestItem.nextShip(null);
     CombatShip dependerCombatShip = combatTestItem.getCurrentShip();
-    combatTestItem.nextShip();
+    combatTestItem.nextShip(null);
     CombatShip interruptCombatShip = combatTestItem.getCurrentShip();
     attackerCombatShip.setX(3);
     attackerCombatShip.setY(3);

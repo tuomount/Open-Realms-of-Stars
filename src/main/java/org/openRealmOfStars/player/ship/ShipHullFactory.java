@@ -5,7 +5,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2018 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -37,7 +37,7 @@ public final class ShipHullFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPHULL = 32;
+  private static final int MAX_SHIPHULL = 33;
 
   /**
    * Create ShipHull with matching name
@@ -215,6 +215,11 @@ public final class ShipHullFactory {
    * Hull for Corvette Mk4
    */
   public static final int HULL_CORVETTE_MK4 = 31;
+
+  /**
+   * Hull for Artificial planet
+   */
+  public static final int HULL_ARTICIAL_PLANET = 32;
 
   /**
    * Create ship hull with index
@@ -413,6 +418,12 @@ public final class ShipHullFactory {
       tmp = new ShipHull(index, "Corvette Mk4", 5, 4, ShipHullType.NORMAL,
           ShipSize.SMALL, 10, 10, race);
       tmp.setImageIndex(ShipImage.CORVETTE);
+      return tmp;
+    }
+    if (index == HULL_ARTICIAL_PLANET) {
+      tmp = new ShipHull(index, "Artificial planet", 10, 4,
+          ShipHullType.STARBASE, ShipSize.HUGE, 200, 300, race);
+      tmp.setImageIndex(ShipImage.MASSIVE_STARBASE);
       return tmp;
     }
 

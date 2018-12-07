@@ -18,6 +18,7 @@ import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.history.History;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.construction.Building;
 
 /**
 *
@@ -1215,6 +1216,120 @@ public class NewsFactoryTest {
     assertNotNull(data);
     assertEquals(true, data.getNewsText().contains("Empire Centaurs"));
     assertEquals(true, data.getNewsText().contains("Empire Homarians"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testScientificAchievement() {
+    PlayerInfo maker = Mockito.mock(PlayerInfo.class);
+    Mockito.when(maker.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(maker.getRace()).thenReturn(SpaceRace.HUMAN);
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getName()).thenReturn("Awesome building");
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getPlanetType()).thenReturn(PlanetTypes.IRONWORLD6);
+    Mockito.when(planet.getImageInstructions()).thenReturn(PlanetTypes.IRONWORLD6.getImageInstructions());
+    NewsData news = NewsFactory.makeScientificAchivementNews(maker, planet, building);
+    assertEquals(true, news.getNewsText().contains(
+        planet.getName()));
+    assertEquals(true, news.getNewsText().contains(
+        maker.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        building.getName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testScientificAchievement2() {
+    PlayerInfo maker = Mockito.mock(PlayerInfo.class);
+    Mockito.when(maker.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(maker.getRace()).thenReturn(SpaceRace.HUMAN);
+    Building building = null;
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Planet I");
+    Mockito.when(planet.getPlanetType()).thenReturn(PlanetTypes.IRONWORLD6);
+    Mockito.when(planet.getImageInstructions()).thenReturn(PlanetTypes.IRONWORLD6.getImageInstructions());
+    NewsData news = NewsFactory.makeScientificAchivementNews(maker, planet, building);
+    assertEquals(true, news.getNewsText().contains(
+        planet.getName()));
+    assertEquals(true, news.getNewsText().contains(
+        maker.getEmpireName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testScientificVictory() {
+    StarMap map = Mockito.mock(StarMap.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(4);
+    PlayerInfo winner = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(winner.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(winner.getEmpireName()).thenReturn("Empire of Homarian");
+    Mockito.when(winner.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(diplomacy.getAllianceIndex()).thenReturn(-1);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Planet planet = Mockito.mock(Planet.class);
+    Planet planet2 = Mockito.mock(Planet.class);
+    ArrayList<Planet> planets = new ArrayList<>();
+    planets.add(planet);
+    planets.add(planet2);
+    Mockito.when(planet.getPlanetType()).thenReturn(PlanetTypes.CARBONWORLD1);
+    Mockito.when(planet2.getPlanetType()).thenReturn(PlanetTypes.ARTIFICIALWORLD1);
+    Building[] buildings = new Building[2];
+    buildings[0] = Mockito.mock(Building.class);
+    buildings[1] = Mockito.mock(Building.class);
+    Mockito.when(buildings[1].getScientificAchievement()).thenReturn(true);
+    Mockito.when(planet.getBuildingList()).thenReturn(buildings);
+    Mockito.when(planet2.getBuildingList()).thenReturn(buildings);
+    Mockito.when(planet2.getPlanetPlayerInfo()).thenReturn(winner);
+    Mockito.when(map.getScoreResearch()).thenReturn(2);
+    Mockito.when(map.getPlanetList()).thenReturn(planets);
+    NewsData news = NewsFactory.makeScientificVictoryNewsAtEnd(map);
+    assertNotNull(news);
+    assertEquals(true, news.getNewsText().contains("Empire of Homarian"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testScientificVictoryAlliance() {
+    StarMap map = Mockito.mock(StarMap.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(4);
+    PlayerInfo winner = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(winner.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(winner.getEmpireName()).thenReturn("Empire of Homarian");
+    Mockito.when(winner.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    PlayerInfo ally = Mockito.mock(PlayerInfo.class);
+    Mockito.when(ally.getEmpireName()).thenReturn("Empire of Centaurs");
+    Mockito.when(ally.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(diplomacy.getAllianceIndex()).thenReturn(1);
+    Mockito.when(map.getPlayerByIndex(1)).thenReturn(ally);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Planet planet = Mockito.mock(Planet.class);
+    Planet planet2 = Mockito.mock(Planet.class);
+    ArrayList<Planet> planets = new ArrayList<>();
+    planets.add(planet);
+    planets.add(planet2);
+    Mockito.when(planet.getPlanetType()).thenReturn(PlanetTypes.CARBONWORLD1);
+    Mockito.when(planet2.getPlanetType()).thenReturn(PlanetTypes.ARTIFICIALWORLD1);
+    Building[] buildings = new Building[2];
+    buildings[0] = Mockito.mock(Building.class);
+    buildings[1] = Mockito.mock(Building.class);
+    Mockito.when(buildings[1].getScientificAchievement()).thenReturn(true);
+    Mockito.when(planet.getBuildingList()).thenReturn(buildings);
+    Mockito.when(planet2.getBuildingList()).thenReturn(buildings);
+    Mockito.when(planet2.getPlanetPlayerInfo()).thenReturn(winner);
+    Mockito.when(map.getScoreResearch()).thenReturn(2);
+    Mockito.when(map.getPlanetList()).thenReturn(planets);
+    NewsData news = NewsFactory.makeScientificVictoryNewsAtEnd(map);
+    assertNotNull(news);
+    assertEquals(true, news.getNewsText().contains("Empire of Homarian"));
+    assertEquals(true, news.getNewsText().contains("Empire of Centaurs"));
   }
 
 }

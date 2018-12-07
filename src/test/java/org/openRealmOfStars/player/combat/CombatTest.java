@@ -92,7 +92,7 @@ public class CombatTest {
     assertEquals(false, combat.isHumanPlayer());
     CombatShip shooter = combat.getCurrentShip();
     assertEquals(0, shooter.getShip().getExperience());
-    combat.nextShip();
+    combat.nextShip(null);
     CombatShip target = combat.getCurrentShip();
     ShipComponent weapon = null;
     for (int i = 0; i < 12; i++) {
@@ -157,7 +157,7 @@ public class CombatTest {
     assertEquals(null, combat.getWormHoleCoordinate());
     int rounds = combat.getTimerForWormHole() + 1;
     for (int i = 0; i < rounds; i++) {
-      combat.endRound();
+      combat.endRound(null);
     }
     assertNotEquals(null, combat.getWormHoleCoordinate());
     assertEquals(0, combat.getTimerForWormHole());
@@ -184,9 +184,44 @@ public class CombatTest {
     assertEquals("Terran alliance attacked against Spork empire "
         + "with  single ship against one ship. Combat was victorious"
         + " for Terran alliance. Single ship survived in victorious "
-        + "fleet. Defending fleet was totally destroyed!"
+        + "fleet. Loser's fleet was totally destroyed!"
         ,combat.getCombatEvent().getText());
     assertEquals(info1, combat.getWinner());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRealCombatWithOrbitalDefense() {
+    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
+    info1.setEmpireName("Terran alliance");
+    info2.setEmpireName("Spork empire");
+    info2.getTechList().addTech(TechFactory.createDefenseTech("Shield Mk2", 2));
+    ShipDesign design1 = ShipGenerator.createBattleShip(
+        info1, ShipSize.SMALL, false);
+    ShipDesign design2 = ShipGenerator.createBattleShip(
+        info2, ShipSize.SMALL, false);
+    Ship scout1 = new Ship(design1);
+    Ship scout2 = new Ship(design2);
+    Fleet fleet1 = new Fleet(scout1, 5, 5);
+    Fleet fleet2 = new Fleet(scout2, 6, 5);
+    info1.getFleets().add(fleet1);
+    info2.getFleets().add(fleet2);
+    Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Test I");
+    Coordinate coord = Mockito.mock(Coordinate.class);
+    Mockito.when(coord.sameAs((Coordinate)Mockito.any())).thenReturn(true);
+    Mockito.when(planet.getCoordinate()).thenReturn(coord);
+    Mockito.when(planet.howManyBuildings("Orbital defense grid")).thenReturn(1);
+    combat.setPlanet(planet);
+    combat.doFastCombat();
+    assertEquals("Terran alliance attacked against Spork empire with"
+        + "  single ship against one ship. Combat happened in orbit of Test I."
+        + " Combat was victorious for Spork empire. Single ship survived in"
+        + " victorious fleet. Loser's fleet was totally destroyed!"
+        ,combat.getCombatEvent().getText());
+    assertEquals(info2, combat.getWinner());
   }
 
   @Test
@@ -385,7 +420,7 @@ public class CombatTest {
     combat.setPlanet(planet);
     assertEquals(planet, combat.getPlanet());
     CombatShip target = combat.getCurrentShip();
-    combat.nextShip();
+    combat.nextShip(null);
     CombatShip shooter = combat.getCurrentShip();
     ShipComponent weapon = null;
     for (int i = 0; i < 12; i++) {
@@ -452,7 +487,7 @@ public class CombatTest {
       } else {
         assertNotEquals(first, ship);
       }
-      combat.nextShip();
+      combat.nextShip(null);
     }
     assertEquals(2, deployedBases);
     combat.doFastCombat();
@@ -498,7 +533,7 @@ public class CombatTest {
       } else {
         assertNotEquals(first, ship);
       }
-      combat.nextShip();
+      combat.nextShip(null);
     }
     assertEquals(2, deployedBases);
     combat.doFastCombat();

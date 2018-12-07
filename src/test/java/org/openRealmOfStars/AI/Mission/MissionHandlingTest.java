@@ -165,6 +165,37 @@ public class MissionHandlingTest {
     Mockito.when(starbase.getTotalMilitaryPower()).thenReturn(20);
     ShipHull hull = Mockito.mock(ShipHull.class);
     Mockito.when(hull.getHullType()).thenReturn(ShipHullType.STARBASE);
+    Mockito.when(hull.getName()).thenReturn("Large starbase");
+    Mockito.when(starbase.getHull()).thenReturn(hull);
+    Fleet fleet = new Fleet(starbase, 5, 5);
+    FleetList fleetList = new FleetList();
+    fleetList.add(fleet);
+    Mockito.when(info.getFleets()).thenReturn(fleetList);
+    Game game = Mockito.mock(Game.class);
+    Tile tile = Mockito.mock(Tile.class);
+    Mockito.when(tile.getName()).thenReturn(TileNames.DEEP_SPACE_ANCHOR2);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getTile(Mockito.anyInt(), Mockito.anyInt())).thenReturn(tile);
+    Mockito.when(game.getStarMap()).thenReturn(map);
+    MissionHandling.handleDeployStarbase(mission, fleet, info, game);
+    assertEquals(MissionPhase.EXECUTING, mission.getPhase());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testDeployStarbase2() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mission mission = new Mission(MissionType.DEPLOY_STARBASE, MissionPhase.LOADING,
+        new Coordinate(5, 5));
+    MissionList missionList = Mockito.mock(MissionList.class);
+    Mockito.when(missionList.getMissionForFleet(Mockito.anyString()))
+        .thenReturn(null);
+    Mockito.when(info.getMissions()).thenReturn(missionList);
+    Ship starbase = Mockito.mock(Ship.class);
+    Mockito.when(starbase.getTotalMilitaryPower()).thenReturn(20);
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getHullType()).thenReturn(ShipHullType.STARBASE);
+    Mockito.when(hull.getName()).thenReturn("Artificial planet");
     Mockito.when(starbase.getHull()).thenReturn(hull);
     Fleet fleet = new Fleet(starbase, 5, 5);
     FleetList fleetList = new FleetList();

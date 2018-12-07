@@ -615,8 +615,12 @@ public final class MissionHandling {
               starbaseFleet = ite;
             }
           }
+          boolean startBuilding = false;
           for (Ship ship : fleet.getShips()) {
             if (ship.getHull().getHullType() == ShipHullType.STARBASE) {
+              if (ship.getHull().getName().equals("Artificial planet")) {
+                startBuilding = true;
+              }
               fleet.removeShip(ship);
               if (starbaseFleet != null) {
                 starbaseFleet.addShip(ship);
@@ -630,6 +634,9 @@ public final class MissionHandling {
                     "Deep Space"));
               }
             }
+          }
+          if (startBuilding) {
+            game.getStarMap().createArtificialPlanet(starbaseFleet, info);
           }
           // Remove the mission
           info.getMissions().remove(mission);

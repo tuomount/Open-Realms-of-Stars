@@ -129,6 +129,26 @@ public class FleetListTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFleetRemove() {
+    Fleet fleet1 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet1.getName()).thenReturn("Fleet #1");
+    Fleet fleet2 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet2.getName()).thenReturn("Fleet #2");
+    Fleet fleet3 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet3.getName()).thenReturn("Fleet #3");
+    FleetList fleets = new FleetList();
+    fleets.add(fleet1);
+    fleets.add(fleet2);
+    fleets.add(fleet3);
+    assertEquals(3, fleets.getNumberOfFleets());
+    fleets.removeFleet(fleet2);
+    assertEquals(2, fleets.getNumberOfFleets());
+    assertEquals(fleet1, fleets.getByIndex(0));
+    assertEquals(fleet3, fleets.getByIndex(1));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testFleetListUniqueNameGeneration() {
     ShipHull hull = Mockito.mock(ShipHull.class);
     Mockito.when(hull.getName()).thenReturn("Test hull");

@@ -168,9 +168,10 @@ public class TechListTest {
     TechList list = new TechList();
     list.addTech(TechFactory.createHullTech("Large freighter", 6));
     Tech[] missing = list.getListMissingTech(TechType.Hulls, 6);
-    assertEquals(2, missing.length);
+    assertEquals(3, missing.length);
     assertEquals("Large starbase", missing[0].getName());
     assertEquals("Corvette Mk2", missing[1].getName());
+    assertEquals("Artificial planet", missing[2].getName());
   }
 
   @Test

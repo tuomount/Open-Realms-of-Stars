@@ -68,7 +68,7 @@ public final class TechFactory {
    */
   public static final String[] COMBAT_TECH_LEVEL6_NAMES = {"Phasors Mk1",
       "Massdrive Mk1", "Photon torpedo Mk6", "ECM torpedo Mk4",
-      "HE missile Mk4", "Orbital fusion bomb" };
+      "HE missile Mk4", "Orbital fusion bomb", "Orbital defense grid" };
   /**
    * Combat tech names for level 7
    */
@@ -128,7 +128,7 @@ public final class TechFactory {
    * Defense tech names for level 7
    */
   public static final String[] DEFENSE_TECH_LEVEL7_NAMES = {"Shield Mk7",
-      "Armor plating Mk7", "Jammer Mk3" };
+      "Armor plating Mk7", "Jammer Mk3", "Orbital shield" };
   /**
    * Defense tech names for level 8
    */
@@ -174,7 +174,7 @@ public final class TechFactory {
    * Hull tech names for level 6
    */
   public static final String[] HULL_TECH_LEVEL6_NAMES = {"Large freighter",
-      "Large starbase", "Corvette Mk2" };
+      "Large starbase", "Corvette Mk2", "Artificial planet" };
   /**
    * Hull tech names for level 7
    */
@@ -282,12 +282,12 @@ public final class TechFactory {
    * Propulsion tech names for level 6
    */
   public static final String[] PROPULSION_TECH_LEVEL6_NAMES = {"Warp drive Mk4",
-      "Hyper drive Mk4", "Nuclear drive Mk3", "Antimatter source Mk1" };
+      "Hyper drive Mk4", "Nuclear drive Mk3", "Antimatter source Mk1"};
   /**
    * Propulsion tech names for level 7
    */
   public static final String[] PROPULSION_TECH_LEVEL7_NAMES = {"Warp drive Mk5",
-      "Hyper drive Mk5", "Impulse engine Mk1" };
+      "Hyper drive Mk5", "Impulse engine Mk1", "Material replicator" };
   /**
    * Propulsion tech names for level 8
    */
@@ -340,7 +340,7 @@ public final class TechFactory {
    * Electronics tech names for level 7
    */
   public static final String[] ELECTRONICS_TECH_LEVEL7_NAMES = {"Scanner Mk4",
-      "Espionage module Mk4" };
+      "Espionage module Mk4", "Deep space scanner" };
   /**
    * Electronics tech names for level 8
    */
@@ -403,7 +403,11 @@ public final class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Combat, level);
-        tech.setComponent(techName);
+        if (techName.equals("Orbital defense grid")) {
+          tech.setImprovement(techName);
+        } else {
+          tech.setComponent(techName);
+        }
         if (techName.startsWith("Laser") || techName.startsWith("Phasor")
             || techName.startsWith("Antimatter beam")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_LASERGUN));
@@ -419,6 +423,8 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_BOMB));
         } else if (techName.startsWith("Orbital nuke")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_NUKE));
+        } else if (techName.startsWith("Orbital defense grid")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_PLANETARY_TURRET));
         } else if (techName.startsWith("Mini nuke")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_NUKE));
         } else if (techName.startsWith("Planetary invasion module")
@@ -479,7 +485,8 @@ public final class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Defense, level);
-        if (techName.startsWith("Planetary defense turret Mk")) {
+        if (techName.startsWith("Planetary defense turret Mk")
+            || techName.startsWith("Orbital shield")) {
           tech.setImprovement(techName);
         } else {
           tech.setComponent(techName);
@@ -547,7 +554,8 @@ public final class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Hulls, level);
-        if (techName.contains("starbase")) {
+        if (techName.contains("starbase")
+            || techName.contains("Artificial planet")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_HULL_TECH));
@@ -710,11 +718,16 @@ public final class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Propulsion, level);
-        tech.setComponent(techName);
-        if (tech.getName().contains(" source Mk")) {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_POWERSOURCE));
+        if (tech.getName().equals("Material replicator")) {
+          tech.setImprovement(techName);
+          tech.setIcon(Icons.getIconByName(Icons.ICON_METAL_ORE));
         } else {
-          tech.setIcon(Icons.getIconByName(Icons.ICON_PROPULSION_TECH));
+          tech.setComponent(techName);
+          if (tech.getName().contains(" source Mk")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_POWERSOURCE));
+          } else {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_PROPULSION_TECH));
+          }
         }
         return tech;
       }
@@ -768,13 +781,15 @@ public final class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Electrics, level);
-        if (techName.startsWith("Planetary scanner Mk")) {
+        if (techName.startsWith("Planetary scanner Mk")
+            || techName.startsWith("Deep space scanner")) {
           tech.setImprovement(techName);
         } else {
           tech.setComponent(techName);
         }
         if (techName.startsWith("Planetary scanner Mk")
-            || techName.startsWith("LR scanner Mk")) {
+            || techName.startsWith("LR scanner Mk")
+            || techName.startsWith("Deep space scanner")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_LR_SCANNER));
         } else if (techName.startsWith("Scanner Mk")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_SCANNER));

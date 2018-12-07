@@ -615,9 +615,13 @@ public class FleetView extends BlackPanel {
       Tile tile = starMap.getTile(fleet.getX(), fleet.getY());
       if (tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR1)
         || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2)) {
+        boolean startBuilding = false;
         for (Ship ship : fleet.getShips()) {
           if (ship.getHull().getHullType() == ShipHullType.STARBASE
               && !ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
+            if (ship.getHull().getName().equals("Artificial planet")) {
+              startBuilding = true;
+            }
             if (starbaseFleet == null) {
                starbaseFleet = new Fleet(ship, fleet.getX(), fleet.getY());
                starbaseFleet.setName(fleetList.generateUniqueName(
@@ -636,6 +640,9 @@ public class FleetView extends BlackPanel {
             SoundPlayer.playSound(SoundPlayer.STARBASE);
             updatePanel();
           }
+        }
+        if (startBuilding) {
+          starMap.createArtificialPlanet(starbaseFleet, info);
         }
       }
     }

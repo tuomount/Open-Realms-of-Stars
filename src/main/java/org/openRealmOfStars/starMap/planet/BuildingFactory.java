@@ -39,7 +39,7 @@ public final class BuildingFactory {
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 47;
+  private static final int MAX_BUILDING = 51;
 
   /**
    * Component Basic mine
@@ -277,6 +277,23 @@ public final class BuildingFactory {
   public static final int COMPONENT_BLACK_MONOLITH = 46;
 
   /**
+   * Component Orbital defense grid
+   */
+  public static final int COMPONENT_ORBITAL_DEFENSE_GRID = 47;
+  /**
+   * Component Orbital shield
+   */
+  public static final int COMPONENT_ORBITAL_SHIELD = 48;
+  /**
+   * Component Material replicator
+   */
+  public static final int COMPONENT_MATERIAL_REPLICATOR = 49;
+  /**
+   * Component Deep space scanner
+   */
+  public static final int COMPONENT_DEEP_SPACE_SCANNER = 50;
+
+  /**
    * Create planetary building with index
    * @param index For creating a  new building
    * @return Building if index found otherwise null
@@ -425,6 +442,18 @@ public final class BuildingFactory {
     case COMPONENT_BLACK_MONOLITH:
       tmp = createProductionFacility(index);
       break; // Black Monolith
+    case COMPONENT_ORBITAL_DEFENSE_GRID:
+      tmp = createMilitaryFacility(index);
+      break; // Orbital defense grid
+    case COMPONENT_ORBITAL_SHIELD:
+      tmp = createMilitaryFacility(index);
+      break; // Orbital shield
+    case COMPONENT_MATERIAL_REPLICATOR:
+      tmp = createProductionFacility(index);
+      break; // Material replicator
+    case COMPONENT_DEEP_SPACE_SCANNER:
+      tmp = createMilitaryFacility(index);
+      break; // Deep space scanner
     default:
       throw new IllegalArgumentException("No building found with index "
       + index + "!");
@@ -541,6 +570,43 @@ public final class BuildingFactory {
       tmp.setScanRange(7);
       tmp.setScanCloakingDetection(140);
       tmp.setSingleAllowed(true);
+      return tmp;
+    }
+    if (index == COMPONENT_ORBITAL_DEFENSE_GRID) {
+      tmp = new Building(index, "Orbital defense grid",
+          Icons.getIconByName(Icons.ICON_PLANETARY_TURRET),
+          BuildingType.MILITARY);
+      tmp.setProdCost(150);
+      tmp.setMetalCost(150);
+      tmp.setDescription("Laser defense system that shoot enemy ships"
+          + " on the orbit.");
+      tmp.setScientificAchievement(true);
+      tmp.setSingleAllowed(true);
+      tmp.setDefenseDamage(1);
+      tmp.setHappiness(2);
+      return tmp;
+    }
+    if (index == COMPONENT_ORBITAL_SHIELD) {
+      tmp = new Building(index, "Orbital shield",
+          Icons.getIconByName(Icons.ICON_SHIELD),
+          BuildingType.MILITARY);
+      tmp.setProdCost(150);
+      tmp.setMetalCost(50);
+      tmp.setDescription("Orbital shield that blocks bombs.");
+      tmp.setScientificAchievement(true);
+      tmp.setSingleAllowed(true);
+      tmp.setHappiness(1);
+      return tmp;
+    }
+    if (index == COMPONENT_DEEP_SPACE_SCANNER) {
+      tmp = new Building(index, "Deep space scanner",
+          Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.RESEARCH);
+      tmp.setProdCost(150);
+      tmp.setMetalCost(150);
+      tmp.setDescription("Deep space scanner to reveal all the planets.");
+      tmp.setSingleAllowed(true);
+      tmp.setScientificAchievement(true);
+      tmp.setReseBonus(2);
       return tmp;
     }
     return tmp;
@@ -763,6 +829,19 @@ public final class BuildingFactory {
       tmp.setMetalCost(30);
       tmp.setDescription("Unknown origin of Black monolith."
           + " Cause unhappiness in population.");
+      return tmp;
+    }
+    if (index == COMPONENT_MATERIAL_REPLICATOR) {
+      tmp = new Building(index, "Material replicator",
+          Icons.getIconByName(Icons.ICON_METAL_ORE), BuildingType.MINE);
+      tmp.setCultBonus(0);
+      tmp.setHappiness(0);
+      tmp.setProdCost(150);
+      tmp.setMetalCost(100);
+      tmp.setDescription("Massive material replicator");
+      tmp.setScientificAchievement(true);
+      tmp.setSingleAllowed(true);
+      tmp.setMaterialBonus(2);
       return tmp;
     }
 

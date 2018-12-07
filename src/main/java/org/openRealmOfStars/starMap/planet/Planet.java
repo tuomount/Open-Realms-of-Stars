@@ -17,6 +17,11 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
+import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
+import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -281,6 +286,11 @@ public class Planet {
    * Population growth
    */
   public static final int PRODUCTION_POPULATION = 6;
+
+  /**
+   * Material production from empty
+   */
+  public static final int PRODUCTION_MATERIAL = 7;
 
   /**
    * Minimum amount of ore on planets
@@ -664,6 +674,12 @@ public class Planet {
     }
     case PRODUCTION_POPULATION: {
       result = 0;
+      break;
+    }
+    case PRODUCTION_MATERIAL: {
+      for (Building build : getBuildingList()) {
+        result = result + build.getMaterialBonus();
+      }
       break;
     }
     default: {
@@ -1325,8 +1341,9 @@ public class Planet {
    * Update planet for one turn
    * @param enemyOrbiting if true it means that other player,
    *        has fleet orbiting on planet.
+   * @param map StarMap can be null in tests
    */
-  public void updateOneTurn(final boolean enemyOrbiting) {
+  public void updateOneTurn(final boolean enemyOrbiting, final StarMap map) {
     if (planetOwnerInfo != null) {
       happinessEffect = HappinessEffect.createHappinessEffect(
           calculateHappiness());
@@ -1365,6 +1382,7 @@ public class Planet {
         metal = metal + amountMetalInGround;
         amountMetalInGround = 0;
       }
+      metal = metal + getTotalProductionFromBuildings(PRODUCTION_MATERIAL);
       prodResource = prodResource + getTotalProduction(PRODUCTION_PRODUCTION);
       planetOwnerInfo.setTotalCredits(planetOwnerInfo.getTotalCredits()
           + getTotalProduction(PRODUCTION_CREDITS));
@@ -1445,6 +1463,17 @@ public class Planet {
           && prodResource >= underConstruction.getProdCost()) {
         if (underConstruction instanceof Building
             && groundSize > buildings.size()) {
+          Building building = (Building) underConstruction;
+          if (building.getScientificAchievement() && map != null) {
+            NewsData news = NewsFactory.makeScientificAchivementNews(
+                planetOwnerInfo, this, building);
+            map.getNewsCorpData().addNews(news);
+            EventOnPlanet eventOnPlanet = new EventOnPlanet(
+                EventType.PLANET_BUILDING, getCoordinate(),
+                getName(), getPlanetOwnerIndex());
+            eventOnPlanet.setText(news.getNewsText());
+            map.getHistory().addEvent(eventOnPlanet);
+          }
           metal = metal - underConstruction.getMetalCost();
           prodResource = prodResource - underConstruction.getProdCost();
           buildings.add((Building) underConstruction);
@@ -2295,5 +2324,19 @@ public class Planet {
       calculateHappiness();
     }
     return happinessExplanation;
+  }
+
+  /**
+   * Does planet have Orbital shield and bombing is not possible.
+   * Orbital shield does not protect against invasion
+   * @return True if one of the building is orbital shield. Otherwise false.
+   */
+  public boolean isShieldForBombing() {
+    for (Building building : buildings) {
+      if (building.getName().equals("Orbital shield")) {
+        return true;
+      }
+    }
+    return false;
   }
 }

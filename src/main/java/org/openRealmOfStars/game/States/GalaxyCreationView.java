@@ -91,6 +91,10 @@ public class GalaxyCreationView extends BlackPanel {
    * ComboBox on scoring domination
    */
   private SpaceCombo<String> comboScoringDomination;
+  /**
+   * ComboBox on scoring scientific
+   */
+  private SpaceCombo<String> comboScoringScientific;
 
   /**
    * ComboBox for rogue planet
@@ -383,6 +387,35 @@ public class GalaxyCreationView extends BlackPanel {
       case 1: comboScoringDomination.setSelectedIndex(1); break;
       default: comboScoringDomination.setSelectedIndex(1); break;
     }
+
+    label = new SpaceLabel("Victory by science:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    String[] scoringScience = new String[6];
+    scoringScience[0] = "Disabled";
+    scoringScience[1] = "1 Scientic achievement";
+    scoringScience[2] = "2 Scientic achievements";
+    scoringScience[3] = "3 Scientic achievements";
+    scoringScience[4] = "4 Scientic achievements";
+    scoringScience[5] = "5 Scientic achievements";
+    comboScoringScientific = new SpaceCombo<>(scoringScience);
+    comboScoringScientific.setToolTipText("<html>Single planet must have this"
+        + " amount of unique scientic achievements buildings to win.</html>");
+    comboScoringScientific.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboScoringScientific.addActionListener(listener);
+    info.add(comboScoringScientific);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    switch (this.config.getScoreLimitResearch()) {
+      case 0: comboScoringScientific.setSelectedIndex(0); break;
+      case 1: comboScoringScientific.setSelectedIndex(1); break;
+      case 2: comboScoringScientific.setSelectedIndex(2); break;
+      case 3: comboScoringScientific.setSelectedIndex(3); break;
+      case 4: comboScoringScientific.setSelectedIndex(4); break;
+      case 5: comboScoringScientific.setSelectedIndex(5); break;
+      default: comboScoringScientific.setSelectedIndex(2); break;
+    }
+
     xinvis.add(info);
     xinvis.add(Box.createRigidArea(new Dimension(200, 5)));
     invisible.add(xinvis);

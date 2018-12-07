@@ -31,8 +31,11 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.history.History;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.history.event.PlayerStartEvent;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
+import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -41,6 +44,7 @@ import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
+import org.openRealmOfStars.utilities.namegenerators.UnrealPlanetNameGenerator;
 import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 import org.openRealmOfStars.utilities.namegenerators.RoguePlanetNameGenerator;
 import org.openRealmOfStars.utilities.repository.NewsCorpRepository;
@@ -1800,6 +1804,16 @@ public class StarMap {
       cloakDetection = planet.getCloakingDetectionLvl();
       cx = planet.getX();
       cy = planet.getY();
+      if (planet.howManyBuildings("Deep space scanner") > 0) {
+        // Reveal all the planet
+        for (Planet iterator : getPlanetList()) {
+          if (info.getSectorVisibility(iterator.getCoordinate())
+              == PlayerInfo.UNCHARTED) {
+            info.setSectorVisibility(iterator.getX(), iterator.getY(),
+                PlayerInfo.FOG_OF_WAR);
+          }
+        }
+      }
     }
     if (scanRad != -1) {
       for (int y = -scanRad; y < scanRad + 1; y++) {
@@ -2766,8 +2780,8 @@ public class StarMap {
   }
 
   /**
-   * Get Score limit for research
-   * THIS HAS NOT IMPLEMETED YET
+   * Get Score limit for research. How many scientific achievements
+   * must be on single planet.
    * @return Score limit for research
    */
   public int getScoreResearch() {
@@ -2775,8 +2789,8 @@ public class StarMap {
   }
 
   /**
-   * Set Score limit for research
-   * THIS HAS NOT IMPLEMETED YET
+   * Set Score limit for research. How many scientific achievements
+   * must be on single planet.
    * @param limit Limit for research
    */
   public void setScoreResearch(final int limit) {
@@ -2862,5 +2876,117 @@ public class StarMap {
       }
     }
     return null;
+  }
+
+  /**
+   * Generate name for artificial planet
+   * @return artificial planet name
+   */
+  public String generateNewArtificialPlanetName() {
+    int count = 1;
+    for (Planet planet : planetList) {
+      if (planet.getPlanetType() == PlanetTypes.ARTIFICIALWORLD1) {
+        count++;
+      }
+    }
+    UnrealPlanetNameGenerator unrealPlanetGenerator =
+        new UnrealPlanetNameGenerator();
+    StringBuilder sb = new StringBuilder();
+    sb.append(unrealPlanetGenerator.generate());
+    sb.append(count);
+    return sb.toString();
+  }
+  /**
+   * Create Artificial Planet. This will add the actual planet,
+   * update the history and add the news.
+   * @param starbaseFleet Starbase fleet where to create
+   * @param realm Player realm who is creating.
+   */
+  public void createArtificialPlanet(final Fleet starbaseFleet,
+      final PlayerInfo realm) {
+    boolean startBuilding = false;
+    int labs = 0;
+    int factory = 0;
+    int metal = 0;
+    int credits = 0;
+    int cultureValue = 0;
+    for (Ship ship : starbaseFleet.getShips()) {
+      if (ship.getHull().getName().equals("Artificial planet")) {
+        startBuilding = true;
+      }
+      // Recycle all the metal
+      metal = metal + ship.getMetalCost();
+      // Each ship should be calculated as factory
+      factory++;
+      labs = labs + ship.getTotalResearchBonus();
+      credits = credits + ship.getTotalCreditBonus();
+      cultureValue = cultureValue + ship.getTotalCultureBonus();
+    }
+    if (startBuilding) {
+      String planetName = generateNewArtificialPlanetName();
+      Planet planet = new Planet(starbaseFleet.getCoordinate(),
+          planetName, 0, false);
+      planet.setPlanetType(PlanetTypes.ARTIFICIALWORLD1);
+      planet.setCulture(starbaseFleet.getCulturalValue());
+      planet.setAmountMetalInGround(0);
+      planet.setMetal(metal);
+      String[] buildingList = realm.getTechList().getBuildingListFromTech();
+      boolean lab = StarMapUtilities.listContains(buildingList, "Basic lab");
+      boolean taxCenter = StarMapUtilities.listContains(buildingList,
+          "Tax center");
+      boolean marketCenter = StarMapUtilities.listContains(buildingList,
+          "Market center");
+      boolean cultureCenter = StarMapUtilities.listContains(buildingList,
+          "Culture center");
+      int freeSpace = 10;
+      planet.setGroundSize(freeSpace);
+      int ownerIndex = getPlayerList().getIndex(realm);
+      planet.setPlanetOwner(ownerIndex, realm);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+      if (cultureValue > 0 && cultureCenter) {
+        planet.addBuilding(BuildingFactory.createByName("Culture center"));
+        freeSpace--;
+      }
+      if (credits > 0 && taxCenter) {
+        planet.addBuilding(BuildingFactory.createByName("Tax center"));
+        freeSpace--;
+        credits--;
+      }
+      if (credits > 0 && marketCenter) {
+        planet.addBuilding(BuildingFactory.createByName("Market center"));
+        freeSpace--;
+        credits--;
+      }
+      boolean done = false;
+      while (!done) {
+        if (factory > 0 && freeSpace > 0) {
+          planet.addBuilding(BuildingFactory.createByName("Basic factory"));
+          factory--;
+          freeSpace--;
+        }
+        if (labs > 0 && freeSpace > 0 && lab) {
+          planet.addBuilding(BuildingFactory.createByName("Basic lab"));
+          labs--;
+          freeSpace--;
+        }
+        if (factory == 0 || freeSpace == 0) {
+          done = true;
+        }
+      }
+      realm.getFleets().removeFleet(starbaseFleet);
+      getNewsCorpData().addNews(
+          NewsFactory.makeScientificAchivementNews(realm, planet, null));
+      EventOnPlanet event = new EventOnPlanet(
+          EventType.ARTIFICAL_PLANET_CREATED, planet.getCoordinate(),
+          planet.getName(), ownerIndex);
+      history.addEvent(event);
+      planetList.add(planet);
+      int planetNumber = planetList.size() - 1;
+      SquareInfo info = new SquareInfo(SquareInfo.TYPE_PLANET, planetNumber);
+      int px = planet.getCoordinate().getX();
+      int py = planet.getCoordinate().getY();
+      tileInfo[px][py] = info;
+      tiles[px][py] = planet.getPlanetType().getTileIndex();
+    }
   }
 }

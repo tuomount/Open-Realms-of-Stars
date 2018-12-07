@@ -1142,6 +1142,10 @@ public class AITurnView extends BlackPanel {
       addRandomPirateTech(pirates, TechType.Combat, 6);
       addRandomPirateTech(pirates, TechType.Combat, 6);
       addRandomPirateTech(pirates, TechType.Combat, 6);
+      Tech tech = pirates.getTechList().getBestWeapon();
+      if (tech.getLevel() < 6) {
+        addRandomPirateTech(pirates, TechType.Combat, 6);
+      }
       addRandomPirateTech(pirates, TechType.Defense, 5);
       addRandomPirateTech(pirates, TechType.Defense, 6);
       addRandomPirateTech(pirates, TechType.Defense, 6);
@@ -1331,7 +1335,7 @@ public class AITurnView extends BlackPanel {
           }
         }
         // Update each planet one by one
-        planet.updateOneTurn(enemyOrbiting);
+        planet.updateOneTurn(enemyOrbiting, game.getStarMap());
         int index = game.getPlayers().getIndex(info);
         if (index > -1) {
           // Recalculate culture for the map for each player
@@ -1450,6 +1454,14 @@ public class AITurnView extends BlackPanel {
       newsData.addNews(news);
     }
     news = NewsFactory.makeDominationVictoryNewsAtEnd(game.getStarMap());
+    if (news != null) {
+      GalacticEvent event = new GalacticEvent(news.getNewsText());
+      game.getStarMap().getHistory().addEvent(event);
+      game.getStarMap().setGameEnded(true);
+      NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+      newsData.addNews(news);
+    }
+    news = NewsFactory.makeScientificVictoryNewsAtEnd(game.getStarMap());
     if (news != null) {
       GalacticEvent event = new GalacticEvent(news.getNewsText());
       game.getStarMap().getHistory().addEvent(event);

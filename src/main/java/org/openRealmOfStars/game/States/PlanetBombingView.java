@@ -563,24 +563,32 @@ public class PlanetBombingView extends BlackPanel {
         if (comp.getType() == ShipComponentType.ORBITAL_NUKE) {
           imgBase.setAnimation(new PlanetAnimation(
               PlanetAnimation.ANIMATION_TYPE_NUKE_AIM, 0, 0, 1, 1));
-          nukeText = planet.nukem(comp.getDamage(), comp.getName());
-          textLogger.addLog(ship.getName() + " nukes the planet!");
+          if (!planet.isShieldForBombing()) {
+            nukeText = planet.nukem(comp.getDamage(), comp.getName());
+            textLogger.addLog(ship.getName() + " nukes the planet!");
+          } else {
+            textLogger.addLog("Orbital shield protects the planet!");
+          }
         }
         if (comp.getType() == ShipComponentType.ORBITAL_BOMBS) {
           imgBase.setAnimation(new PlanetAnimation(
               PlanetAnimation.ANIMATION_TYPE_BOMBING_AIM, 0, 0, 1, 1));
-          int hit = DiceGenerator.getRandom(1, 100);
-          if (hit <= comp.getDamage()) {
-            planet.killOneWorker();
-            textLogger.addLog(ship.getName() + " bombs population!");
-          } else {
-            if (planet.bombOneBuilding()) {
-              textLogger.addLog(
-                  ship.getName() + " misses population but hits building!");
+          if (!planet.isShieldForBombing()) {
+            int hit = DiceGenerator.getRandom(1, 100);
+            if (hit <= comp.getDamage()) {
+              planet.killOneWorker();
+              textLogger.addLog(ship.getName() + " bombs population!");
             } else {
-              textLogger.addLog(
-                  ship.getName() + " misses population and buildings...");
+              if (planet.bombOneBuilding()) {
+                textLogger.addLog(
+                    ship.getName() + " misses population but hits building!");
+              } else {
+                textLogger.addLog(
+                    ship.getName() + " misses population and buildings...");
+              }
             }
+          } else {
+            textLogger.addLog("Orbital shield protects the planet!");
           }
         }
         if (comp.getType() == ShipComponentType.PLANETARY_INVASION_MODULE) {

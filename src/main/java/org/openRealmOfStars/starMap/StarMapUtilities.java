@@ -340,4 +340,21 @@ public final class StarMapUtilities {
     }
     return result;
   }
+
+  /**
+   * Search string from a list. Returns true if list contains searched
+   * string.
+   * @param list List where to search.
+   * @param search String to search
+   * @return True if found
+   */
+  public static boolean listContains(final String[] list,
+      final String search) {
+    for (String str : list) {
+      if (str.equals(search)) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

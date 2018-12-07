@@ -189,7 +189,7 @@ public class GalaxyConfig {
     setScoringVictoryTurns(400);
     setScoreLimitCulture(1);
     setScoreLimitConquer(1);
-    setScoreLimitResearch(0);
+    setScoreLimitResearch(2);
     setScoreLimitDiplomacy(0);
     setMaxPlayers(4);
     setSolarSystemDistance(12, 0);
@@ -497,8 +497,10 @@ public class GalaxyConfig {
   }
 
   /**
-   * Set Scoring limit for research
-   * @param limit How many future techs must be research to win.
+   * Set Scoring limit for research. Scientific achievements are
+   * expensive building projects. To win with these certain number
+   * must be built on same planet.
+   * @param limit How many scientific achievements must be built to win
    */
   public void setScoreLimitResearch(final int limit) {
     if (limit >= 0 && limit <= 6) {

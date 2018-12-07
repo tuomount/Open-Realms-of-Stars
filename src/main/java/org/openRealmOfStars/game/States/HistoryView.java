@@ -325,6 +325,8 @@ public class HistoryView extends BlackPanel {
       changeTurn(false);
       mapPanel.setHistoryCultures(map.getHistory().calculateCulture(
           turnNumber, map));
+      mapPanel.setTileOverride(map.getHistory().calculateOverrideTiles(
+          turnNumber, map));
       updateTurnLabel();
       updateTextArea();
       turnLabel.repaint();
@@ -335,6 +337,8 @@ public class HistoryView extends BlackPanel {
       SoundPlayer.playMenuSound();
       changeTurn(true);
       mapPanel.setHistoryCultures(map.getHistory().calculateCulture(
+          turnNumber, map));
+      mapPanel.setTileOverride(map.getHistory().calculateOverrideTiles(
           turnNumber, map));
       updateTurnLabel();
       updateTextArea();
@@ -364,6 +368,8 @@ public class HistoryView extends BlackPanel {
           if (turnNumber < map.getHistory().numberOfTurns() - 1) {
             changeTurn(true);
             mapPanel.setHistoryCultures(map.getHistory().calculateCulture(
+                turnNumber, map));
+            mapPanel.setTileOverride(map.getHistory().calculateOverrideTiles(
                 turnNumber, map));
             updateTurnLabel();
             updateTextArea();

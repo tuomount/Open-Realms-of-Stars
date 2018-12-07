@@ -12,6 +12,8 @@ import org.openRealmOfStars.starMap.history.event.Event;
 import org.openRealmOfStars.starMap.newsCorp.scoreBoard.Row;
 import org.openRealmOfStars.starMap.newsCorp.scoreBoard.ScoreBoard;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.TextUtilities;
 
@@ -1208,6 +1210,69 @@ public final class NewsFactory {
   }
 
   /**
+   * Make News when game is ending for scientific victory.
+   * Returns null if scientific victory is not achieved
+   * @param map StarMap contains Planet and playerlist
+   * @return NewsData or null
+   */
+  public static NewsData makeScientificVictoryNewsAtEnd(final StarMap map) {
+    int limit = map.getScoreResearch();
+    if (limit == 0) {
+      return null;
+    }
+    PlayerInfo winner = null;
+    for (Planet planet : map.getPlanetList()) {
+      int count = 0;
+      if (planet.getPlanetType() == PlanetTypes.ARTIFICIALWORLD1) {
+        count++;
+      }
+      for (Building building : planet.getBuildingList()) {
+        if (building.getScientificAchievement()) {
+          count++;
+        }
+      }
+      if (count >= limit) {
+        winner = planet.getPlanetPlayerInfo();
+      }
+    }
+    NewsData news = null;
+    if (winner != null) {
+      news = new NewsData();
+      ImageInstruction instructions = new ImageInstruction();
+      news.setImageInstructions(instructions.build());
+      StringBuilder sb = new StringBuilder();
+      if (winner.getDiplomacy().getAllianceIndex() == -1) {
+        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+        instructions.addText("THE SCIENTIFIC VICTORY!");
+        instructions.addText(winner.getEmpireName());
+        instructions.addImage(winner.getRace().getNameSingle());
+        sb.append(winner.getEmpireName());
+        sb.append(" has created the most advanced world in the galaxy! ");
+        sb.append("No other realm technology to challenge ");
+        sb.append(winner.getEmpireName());
+        sb.append(".");
+      } else {
+        PlayerInfo info = winner;
+        PlayerInfo info2 = map.getPlayerByIndex(
+            winner.getDiplomacy().getAllianceIndex());
+        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+        instructions.addText("THE SCIENTIFIC ALLIANCE!");
+        instructions.addText(info.getEmpireName());
+        instructions.addImage(info.getRace().getNameSingle());
+        sb.append("Alliance of ");
+        sb.append(info.getEmpireName());
+        sb.append(" and ");
+        sb.append(info2.getEmpireName());
+        sb.append(" has created the most advanced world in the galaxy! ");
+        sb.append("No other realm technology to challenge this alliance.");
+      }
+      news.setImageInstructions(instructions.build());
+      news.setNewsText(sb.toString());
+    }
+    return news;
+  }
+
+  /**
    * Make News when more space pirates appear
    * @param map StarMap contains NewsCorpData and playerlist
    * @return NewsData
@@ -1312,6 +1377,96 @@ public final class NewsFactory {
       }
     }
     news.setImageInstructions(instructions.build());
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
+   * Make scientific achievement news. Realm builds scientific achievement
+   * building and thus is closer to win.
+   * @param realm PlayerInfo who is building
+   * @param planet Where to building
+   * @param building Building itself. Can be null. It means that planetis
+   * artificial planet then.
+   * @return NewsData
+   */
+  public static NewsData makeScientificAchivementNews(final PlayerInfo realm,
+      final Planet planet, final Building building) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    String position = ImageInstruction.POSITION_CENTER;
+    switch (DiceGenerator.getRandom(2)) {
+      case 0: {
+        position = ImageInstruction.POSITION_LEFT;
+        break;
+      }
+      case 1: {
+        position = ImageInstruction.POSITION_RIGHT;
+        break;
+      }
+      default: {
+        position = ImageInstruction.POSITION_RIGHT;
+        break;
+      }
+    }
+    String size = ImageInstruction.SIZE_FULL;
+    switch (DiceGenerator.getRandom(2)) {
+      case 0: {
+        size = ImageInstruction.SIZE_FULL;
+        break;
+      }
+      case 1:
+      default: {
+        size = ImageInstruction.SIZE_HALF;
+        break;
+      }
+    }
+    instructions.addPlanet(position, planet.getImageInstructions(), size);
+    position = ImageInstruction.POSITION_CENTER;
+    instructions.addImage(realm.getRace().getNameSingle());
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("SCIENTIFIC ACHIEVEMENT!");
+        break;
+      }
+      case 1: {
+        instructions.addText("SCIENTIFIC ACHIEVEMENT TO "
+          + planet.getName().toUpperCase());
+        break;
+      }
+      case 2: {
+        if (building != null) {
+          instructions.addText("MIRACULOUS "
+              + building.getName().toUpperCase());
+        } else {
+          instructions.addText("ARTIFICIAL PLANET!");
+        }
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(realm.getEmpireName());
+    sb.append(" builds ");
+    if (building != null) {
+      sb.append(building.getName());
+      sb.append(" to ");
+      sb.append(planet.getName());
+    } else {
+      sb.append(" articial planet called ");
+      sb.append(planet.getName());
+    }
+    sb.append("! ");
+    sb.append("With this scientific achivement ");
+    sb.append(realm.getEmpireName());
+    sb.append("gain awe from other realms! ");
+    Attitude attitude = realm.getAiAttitude();
+    if (attitude == Attitude.SCIENTIFIC) {
+      sb.append(realm.getEmpireName());
+      sb.append(" is known to have excellent research team. ");
+    }
     news.setNewsText(sb.toString());
     return news;
   }

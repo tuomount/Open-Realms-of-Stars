@@ -50,6 +50,14 @@ public class EventOnPlanetTest {
         "Test planet", 0);
     assertEquals(0, event.getPlayerIndex());
     assertEquals(EventType.PLANET_CONQUERED, event.getType());
+    event = new EventOnPlanet(EventType.PLANET_BUILDING, coord,
+        "Test planet", 0);
+    assertEquals(0, event.getPlayerIndex());
+    assertEquals(EventType.PLANET_BUILDING, event.getType());
+    event = new EventOnPlanet(EventType.ARTIFICAL_PLANET_CREATED, coord,
+        "Test planet", 0);
+    assertEquals(0, event.getPlayerIndex());
+    assertEquals(EventType.ARTIFICAL_PLANET_CREATED, event.getType());
   }
 
   @Test(expected=IllegalArgumentException.class)

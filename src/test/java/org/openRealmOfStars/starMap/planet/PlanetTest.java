@@ -76,12 +76,12 @@ public class PlanetTest {
     assertEquals("The production time should be 15 turns.", "15 turns", planet.getProductionTimeAsString(factory));
     for (int i=0;i<5;i++) {
       // 5 turns to grow one population
-      planet.updateOneTurn(false);
+      planet.updateOneTurn(false, null);
     }
     assertEquals("The population of the planet should be two.", 2, planet.getTotalPopulation());
     for (int i=0;i<10;i++) {
       // Total of 15 turns for basic factory
-      planet.updateOneTurn(false);
+      planet.updateOneTurn(false, null);
     }
     assertEquals("Planet should have only one building.", 1, planet.getBuildingList().length);
     assertEquals("Planet should have a Basic factory.", "Basic factory", planet.getBuildingList()[0].getName());
@@ -108,7 +108,7 @@ public class PlanetTest {
     assertEquals("The production time should be 15 turns.", "15 turns", planet.getProductionTimeAsString(shipConst));
     for (int i=0;i<15;i++) {
       // 5 turns to grow one population
-      planet.updateOneTurn(false);
+      planet.updateOneTurn(false, null);
     }
     list = planet.getProductionList();
     shipConst = list[list.length - 1];
@@ -117,7 +117,7 @@ public class PlanetTest {
     assertEquals("The production time should be 15 turns.", "15 turns", planet.getProductionTimeAsString(shipConst));
     for (int i=0;i<15;i++) {
       // 5 turns to grow one population
-      planet.updateOneTurn(true);
+      planet.updateOneTurn(true, null);
     }
     assertEquals(1, info.getFleets().getNumberOfFleets());
   }

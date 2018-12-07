@@ -178,6 +178,11 @@ public class MapPanel extends JPanel {
   private PopupPanel popup;
 
   /**
+   * Tile override. Currently used with Artificial planets
+   */
+  private int[][] tileOverride;
+
+  /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
    * @param battle True if drawing battle map.
@@ -205,6 +210,7 @@ public class MapPanel extends JPanel {
     int height = HEIGHT;
     historyCultures = null;
     historyCoordinates = null;
+    tileOverride = null;
     if (battle && game == null) {
       width = BATTLE_VIEW_SIZE;
       height = BATTLE_VIEW_SIZE;
@@ -762,6 +768,10 @@ public class MapPanel extends JPanel {
         if (tile == null) {
           continue;
         }
+        if (tile.getName().equals(TileNames.ARTIFICIALWORLD1)
+            && tileOverride != null) {
+          tile = Tiles.getTileByIndex(tileOverride[i + cx][j + cy]);
+        }
         if (historyCultures != null) {
           int index = historyCultures[i + cx][j + cy];
           if (index != -1) {
@@ -1267,6 +1277,14 @@ public class MapPanel extends JPanel {
       historyCoordinates = new Coordinate(15, 15);
     }
     return historyCoordinates;
+  }
+
+  /**
+   * set override tiles for history map drawing
+   * @param overrideTiles as integer array
+   */
+  public void setTileOverride(final int[][] overrideTiles) {
+    this.tileOverride = overrideTiles;
   }
 
   /**

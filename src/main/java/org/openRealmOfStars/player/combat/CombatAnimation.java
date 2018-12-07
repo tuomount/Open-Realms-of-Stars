@@ -155,8 +155,13 @@ public class CombatAnimation {
     } else {
       this.hit = false;
     }
-    sx = shooter.getX() * ShipImage.MAX_WIDTH + ShipImage.MAX_WIDTH / 2;
-    sy = shooter.getY() * ShipImage.MAX_HEIGHT + ShipImage.MAX_HEIGHT / 2;
+    if (shooter != null) {
+      sx = shooter.getX() * ShipImage.MAX_WIDTH + ShipImage.MAX_WIDTH / 2;
+      sy = shooter.getY() * ShipImage.MAX_HEIGHT + ShipImage.MAX_HEIGHT / 2;
+    } else {
+      sx = 4 * ShipImage.MAX_WIDTH + ShipImage.MAX_WIDTH / 2;
+      sy = 4 * ShipImage.MAX_HEIGHT + ShipImage.MAX_HEIGHT / 2;
+    }
     ex = target.getX() * ShipImage.MAX_WIDTH + ShipImage.MAX_WIDTH / 2;
     ey = target.getY() * ShipImage.MAX_HEIGHT + ShipImage.MAX_HEIGHT / 2;
     double dx = Math.abs(sx - ex);
@@ -196,6 +201,10 @@ public class CombatAnimation {
       }
     }
     switch (weapon.getType()) {
+    case PLASMA_BEAM: {
+      count = 40;
+      break;
+    }
     case WEAPON_BEAM: {
       count = 40;
       break;
@@ -273,7 +282,8 @@ public class CombatAnimation {
         particle.handleParticle();
       }
     }
-    if (weapon.getType() == ShipComponentType.WEAPON_BEAM) {
+    if (weapon.getType() == ShipComponentType.WEAPON_BEAM
+        || weapon.getType() == ShipComponentType.PLASMA_BEAM) {
       count--;
       if (count < FRAME_MARKER_WHEN_EXPLODE) {
         doAnimationHit(20);

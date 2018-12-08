@@ -23,6 +23,7 @@ See http://creativecommons.org/licenses/by-sa/3.0/
 
 Moons and planet made by Unnamed (Viktor.Hahn@web.de)
 (http://opengameart.org/content/16-planet-sprites)
+(https://opengameart.org/content/17-planet-sprites)
 
 SunRed by Priest865 (http://opengameart.org/content/space-assets)
 
@@ -108,6 +109,8 @@ Space ship trader vessels by gfx0
 Space ship bridge by Jani Mäkinen aka gfx0
 
 Centaur Space Ship Bridge by Tuomo Untinen
+
+Artificial Planet by Tuomo Untinen
 
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
@@ -254,5 +257,13 @@ Licensed under CC BY 4.0 http://creativecommons.org/licenses/by/4.0/
 
 I Do Know You by
 Memoraphile @ You're Perfect Studio (CC0)
+
+Out of Time by
+Hitctrl https://soundcloud.com/hitctrl
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
+Drifting Beyond the Stars by
+Hitctrl https://soundcloud.com/hitctrl
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
 

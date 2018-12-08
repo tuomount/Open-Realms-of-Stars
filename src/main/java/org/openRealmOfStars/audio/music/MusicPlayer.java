@@ -197,11 +197,25 @@ public final class MusicPlayer {
       "/resources/musics/I_Do_Know_by_Memoraphile_CC0.ogg");
 
   /**
+   * Out of Time by Hitctrl CC-BY 3.0
+   */
+  public static final MusicFileInfo OUT_OF_TIME = new MusicFileInfo(
+      "Out of Time", "Hitctrl",
+      "/resources/musics/Out_Of_Time.ogg");
+
+  /**
+   * Drifting Beyond the Stars by Hitctrl CC-BY 3.0
+   */
+  public static final MusicFileInfo DRIFTING_BEYOND_STARS = new MusicFileInfo(
+      "Drifting Beyond the Stars", "Hitctrl",
+      "/resources/musics/Drifting Beyond the Stars.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,
       MILLION_LIGHT_YEARS, NAUTILUS, BRAVE_SPACE_EXPLORERS, LOST_SIGNAL,
-      I_DO_KNOW_YOU};
+      I_DO_KNOW_YOU, OUT_OF_TIME, DRIFTING_BEYOND_STARS};
   /**
    * List of music to played while combat
    */

@@ -512,18 +512,22 @@ public class PlanetBombingView extends BlackPanel {
             ship.setArmor(ship.getArmor() - 1);
           } else {
             turret = turret - ship.getArmor();
-            ship.setShield(ship.getShield() - 1);
-            ShipDamage shipDamage = new ShipDamage(1, "NOT USED!");
+            ship.setArmor(ship.getArmor() - 1);
+            ShipDamage shipDamage = new ShipDamage(1,
+                "Planetary defense hit the ship.");
             while (turret > 0 && ship.getHullPoints() > 0) {
-              // FIXME SHIPDAMAGE is not really used
               turret = ship.damageComponent(turret, shipDamage);
             }
             if (ship.getHullPoints() <= 0) {
-              textLogger.addLog("Planetary defense damages " + ship.getName()
+              shipDamage.addText("Planetary defense damages " + ship.getName()
                   + " and destroys it.");
             } else {
-              textLogger
-                  .addLog("Planetary defense damages " + ship.getName() + ".");
+              shipDamage.addText("Planetary defense damages " + ship.getName()
+                 + ".");
+            }
+            String[] logs = shipDamage.getMessage().split("\n");
+            for (String log : logs) {
+              textLogger.addLog(log);
             }
           }
         }

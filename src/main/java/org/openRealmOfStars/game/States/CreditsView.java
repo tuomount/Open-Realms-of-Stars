@@ -193,6 +193,7 @@ public class CreditsView extends BlackPanel {
       + "Chunky Explosion by Joth(CC0)\n\n"
       + "Disabled menu sound by\n"
       + "Lokif(CC0)\n\n"
+      + "Shield sounds by Bart(CC0)\n\n"
       + "# Musics By\n\n"
       + "Observing The Star by\n"
       + "YD (CC0)\n\n"

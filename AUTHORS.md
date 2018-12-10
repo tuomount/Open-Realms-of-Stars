@@ -179,6 +179,8 @@ Chunky Explosion by Joth(CC0)
 Disabled menu sound by
 Lokif(CC0)
 
+Shield sounds by Bart(CC0)
+
 # Musics By
 
 Observing The Star by

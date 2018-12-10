@@ -403,8 +403,7 @@ public class StarMapView extends BlackPanel {
         .equalsIgnoreCase(GameCommands.COMMAND_DEFEND_SECTOR)
         && getStarMapMouseListener().getLastClickedFleet() != null
         && infoPanel.getFleetOwner() == players.getCurrentPlayerInfo()) {
-      // TODO: Chaing menu sound later
-      SoundPlayer.playMenuSound();
+      SoundPlayer.playShieldSound();
       Fleet fleet = getStarMapMouseListener().getLastClickedFleet();
       // Make fleet to defend
       fleet.setRoute(new Route(fleet.getX(), fleet.getY(), fleet.getX(),

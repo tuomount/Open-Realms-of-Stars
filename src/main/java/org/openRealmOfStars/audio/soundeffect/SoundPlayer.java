@@ -155,6 +155,19 @@ public final class SoundPlayer {
   public static final String WORMHOLE = "/resources/sounds/wormhole.wav";
 
   /**
+   * Sound effect for space ship shield
+   */
+  public static final String SHIELD1 = "/resources/sounds/shield1.wav";
+  /**
+   * Sound effect for space ship shield
+   */
+  public static final String SHIELD2 = "/resources/sounds/shield2.wav";
+  /**
+   * Sound effect for space ship shield
+   */
+  public static final String SHIELD3 = "/resources/sounds/shield3.wav";
+
+  /**
    * Is Sound enabled
    * @return True if sound enabled
    */
@@ -268,6 +281,28 @@ public final class SoundPlayer {
     default:
     case 2: {
       playSound(ENGINE3);
+      break;
+    }
+    }
+  }
+
+  /**
+   * Play Shield sound for space ships
+   */
+  public static void playShieldSound() {
+    int i = DiceGenerator.getRandom(2);
+    switch (i) {
+    case 0: {
+      playSound(SHIELD1);
+      break;
+    }
+    case 1: {
+      playSound(SHIELD2);
+      break;
+    }
+    default:
+    case 2: {
+      playSound(SHIELD3);
       break;
     }
     }

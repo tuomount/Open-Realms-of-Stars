@@ -112,6 +112,11 @@ Centaur Space Ship Bridge by Tuomo Untinen
 
 Artificial Planet by Tuomo Untinen
 
+Shield animation from Sci-fi effects by Skorpio
+https://opengameart.org/content/sci-fi-effects
+Licensed under CC BY 4.0
+https://creativecommons.org/licenses/by/4.0/
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

@@ -1169,6 +1169,14 @@ public class MapPanel extends JPanel {
                 - anim.getAnimFrame().getHeight() / 2,
             null);
       }
+      if (anim.getShieldAnimFrame() != null) {
+        gr.drawImage(anim.getShieldAnimFrame(),
+            anim.getEx() + viewPointOffsetX
+                - anim.getShieldAnimFrame().getWidth() / 2,
+            anim.getEy() + viewPointOffsetY
+                - anim.getShieldAnimFrame().getHeight() / 2,
+            null);
+      }
       List<ParticleEffect> particles = anim.getParticles();
       for (ParticleEffect part : particles) {
         int px = part.getX() + viewPointOffsetX;

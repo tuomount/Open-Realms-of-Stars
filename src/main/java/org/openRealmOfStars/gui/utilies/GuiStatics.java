@@ -555,6 +555,12 @@ public final class GuiStatics {
       "/resources/images/explosion4.png");
 
   /**
+   * Shield animation
+   */
+  public static final AnimatedImage SHIELD1 = new AnimatedImage(64, 64,
+      "/resources/images/shield.png");
+
+  /**
    * Privateering animation
    */
   public static final AnimatedImage PRIVATEER = new AnimatedImage(64, 64,

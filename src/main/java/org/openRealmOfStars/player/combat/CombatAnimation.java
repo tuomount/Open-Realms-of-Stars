@@ -123,6 +123,10 @@ public class CombatAnimation {
    * Explosion animation for combat animation
    */
   private AnimatedImage explosionAnim;
+  /**
+   * Shield animation, if shield in use
+   */
+  private AnimatedImage shieldAnim;
 
   /**
    * Is combat animation drawing first time and sound needs to played
@@ -188,6 +192,9 @@ public class CombatAnimation {
       // TODO Change better sound effect for privateering
       explosionSfx = SoundPlayer.REPAIR;
     } else {
+      if (target.getShip().getShield() > 0) {
+        shieldAnim = GuiStatics.SHIELD1;
+      }
       if (hit == 0) {
         explosionAnim = GuiStatics.EXPLOSION3;
         explosionSfx = SoundPlayer.EXPLOSION_SMALL;
@@ -289,7 +296,10 @@ public class CombatAnimation {
         doAnimationHit(20);
         if (animFrame < explosionAnim.getMaxFrames()) {
           if (animFrame == 0 && hit) {
-              SoundPlayer.playSound(explosionSfx);
+            SoundPlayer.playSound(explosionSfx);
+            if (getShieldAnimFrame() != null) {
+              SoundPlayer.playShieldSound();
+            }
           }
           animFrame++;
         } else {
@@ -323,6 +333,9 @@ public class CombatAnimation {
         if (animFrame < explosionAnim.getMaxFrames()) {
           if (animFrame == 0 && hit) {
             SoundPlayer.playSound(explosionSfx);
+            if (getShieldAnimFrame() != null) {
+              SoundPlayer.playShieldSound();
+            }
           }
           animFrame++;
         } else {
@@ -351,6 +364,9 @@ public class CombatAnimation {
         if (animFrame < explosionAnim.getMaxFrames()) {
           if (animFrame == 0 && hit) {
             SoundPlayer.playSound(explosionSfx);
+            if (getShieldAnimFrame() != null) {
+              SoundPlayer.playShieldSound();
+            }
           }
           animFrame++;
         } else {
@@ -390,6 +406,9 @@ public class CombatAnimation {
         if (animFrame < explosionAnim.getMaxFrames()) {
           if (animFrame == 0 && hit) {
             SoundPlayer.playSound(explosionSfx);
+            if (getShieldAnimFrame() != null) {
+              SoundPlayer.playShieldSound();
+            }
           }
           animFrame++;
         } else {
@@ -452,6 +471,18 @@ public class CombatAnimation {
   public BufferedImage getAnimFrame() {
     if (showAnim) {
       return explosionAnim.getFrame(animFrame);
+    }
+    return null;
+  }
+
+  /**
+   * Get shield Animation frame if it should be shown. Otherwise it is null
+   * @return BufferedImage
+   */
+  public BufferedImage getShieldAnimFrame() {
+    if (showAnim && shieldAnim != null
+        && animFrame < shieldAnim.getMaxFrames()) {
+      return shieldAnim.getFrame(animFrame);
     }
     return null;
   }

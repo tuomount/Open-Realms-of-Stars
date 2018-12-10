@@ -218,7 +218,6 @@ public class ShipDesignView extends BlackPanel {
 
       @Override
       public void focusGained(final FocusEvent e) {
-        // TODO Auto-generated method stub
       }
     });
     designNameText.addKeyListener(new KeyListener() {

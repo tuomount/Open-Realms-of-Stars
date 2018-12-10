@@ -803,7 +803,6 @@ public class AITurnView extends BlackPanel {
                   continue;
                 }
                 if (fleet.isPrivateerFleet()) {
-                  // TODO: Privateet should have a different diplomacy
                   continue;
                 }
                 if (fleetOwner.isHuman()) {

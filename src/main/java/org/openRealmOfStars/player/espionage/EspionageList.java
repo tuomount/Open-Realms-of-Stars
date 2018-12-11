@@ -207,7 +207,6 @@ public class EspionageList {
       sb.append("\n");
     }
     if (bonus >= 2) {
-      // TODO: Trading not available in this version
       sb.append("Espionage trade");
       sb.append("\n");
     }

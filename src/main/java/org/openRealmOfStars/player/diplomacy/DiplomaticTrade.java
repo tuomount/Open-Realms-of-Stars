@@ -1661,7 +1661,7 @@ public class DiplomaticTrade {
         break;
       }
       case DIPLOMAT: {
-        //TODO Make map trade
+        //There are no diplomats in the game
         break;
       }
       case TRADE_ALLIANCE: {

@@ -651,7 +651,7 @@ public class Diplomacy {
       type = DiplomacyView.AI_REGULAR;
     }
     if (fleet.isPrivateerFleet()) {
-      // TODO there should be different diplomacy for privateering ships
+      // There is no diplomacy for privateer fleets
       type = DiplomacyView.AI_REGULAR;
     }
     if (info.isHuman()) {

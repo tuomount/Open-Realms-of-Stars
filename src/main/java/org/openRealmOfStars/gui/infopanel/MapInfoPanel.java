@@ -329,6 +329,17 @@ public class MapInfoPanel extends InfoPanel {
           tmpTile.draw(g2d, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
           break;
         }
+        case 2: {
+          tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_3_NW);
+          tmpTile.draw(g2d, 0, 0);
+          tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_3_NE);
+          tmpTile.draw(g2d, Tile.MAX_WIDTH, 0);
+          tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_3_SW);
+          tmpTile.draw(g2d, 0, Tile.MAX_HEIGHT);
+          tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_3_SE);
+          tmpTile.draw(g2d, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+          break;
+        }
         }
       }
       g2d.dispose();

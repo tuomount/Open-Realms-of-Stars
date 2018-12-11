@@ -285,13 +285,13 @@ public final class Tiles {
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
     // Reading the gas planet 2x2
-    tile = new Tile(tilesImage, 12, 1, TileNames.GAS_GIANT_2_NW);
+    tile = new Tile(tilesImage, 12, 1, TileNames.GAS_GIANT_3_NW);
     addTile(tile);
-    tile = new Tile(tilesImage, 13, 1, TileNames.GAS_GIANT_2_NE);
+    tile = new Tile(tilesImage, 13, 1, TileNames.GAS_GIANT_3_NE);
     addTile(tile);
-    tile = new Tile(tilesImage, 12, 2, TileNames.GAS_GIANT_2_SW);
+    tile = new Tile(tilesImage, 12, 2, TileNames.GAS_GIANT_3_SW);
     addTile(tile);
-    tile = new Tile(tilesImage, 13, 2, TileNames.GAS_GIANT_2_SE);
+    tile = new Tile(tilesImage, 13, 2, TileNames.GAS_GIANT_3_SE);
     addTile(tile);
     tile = new Tile(tilesImage, 14, 1, TileNames.ICEWORLD3);
     addTile(tile);

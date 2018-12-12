@@ -186,6 +186,11 @@ Lokif(CC0)
 
 Shield sounds by Bart(CC0)
 
+Alarm loop by
+Little Robot Sound Factory
+www.littlerobotsoundfactory.com
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
 # Musics By
 
 Observing The Star by

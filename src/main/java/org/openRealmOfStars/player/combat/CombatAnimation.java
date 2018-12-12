@@ -189,8 +189,7 @@ public class CombatAnimation {
       explosionSfx = SoundPlayer.EXPLOSION_EMP;
     } else if (weapon.getType() == ShipComponentType.PRIVATEERING_MODULE) {
       explosionAnim = GuiStatics.PRIVATEER;
-      // TODO Change better sound effect for privateering
-      explosionSfx = SoundPlayer.REPAIR;
+      explosionSfx = SoundPlayer.ALARM;
     } else {
       if (target.getShip().getShield() > 0) {
         shieldAnim = GuiStatics.SHIELD1;

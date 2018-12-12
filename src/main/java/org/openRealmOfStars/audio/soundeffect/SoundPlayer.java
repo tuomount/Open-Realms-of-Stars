@@ -166,6 +166,10 @@ public final class SoundPlayer {
    * Sound effect for space ship shield
    */
   public static final String SHIELD3 = "/resources/sounds/shield3.wav";
+  /**
+   * Sound effect for alarm
+   */
+  public static final String ALARM = "/resources/sounds/alarm.wav";
 
   /**
    * Is Sound enabled

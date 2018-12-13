@@ -170,6 +170,11 @@ public final class SoundPlayer {
    * Sound effect for alarm
    */
   public static final String ALARM = "/resources/sounds/alarm.wav";
+  /**
+   * Sound effect for warp engine engage
+   */
+  public static final String WARP_ENGINE_ENGAGE =
+      "/resources/sounds/warp_engine_engage.wav";
 
   /**
    * Is Sound enabled

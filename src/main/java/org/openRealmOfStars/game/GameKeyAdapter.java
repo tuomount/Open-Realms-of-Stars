@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.AI.Mission.MissionList;
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.message.Message;
@@ -88,6 +89,7 @@ public class GameKeyAdapter implements KeyEventDispatcher {
       if (arg0.getKeyCode() == KeyEvent.VK_R
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
         game.getStarMapView().getStarMapMouseListener().setRoutePlanning(true);
+        SoundPlayer.playSound(SoundPlayer.WARP_ENGINE_ENGAGE);
         return true;
       }
       if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE

@@ -634,8 +634,9 @@ public class PlanetView extends BlackPanel {
       Building building = buildingList.getSelectedValue();
       if (building != null) {
         planet.removeBuilding(building);
-        //TODO change sound effect later for better one
         SoundPlayer.playMenuSound();
+        SoundPlayer.playSound(SoundPlayer.EXPLOSION_SMALL);
+        SoundPlayer.playSound(SoundPlayer.DESTROY_BUILDING);
         updatePanel();
       }
     }

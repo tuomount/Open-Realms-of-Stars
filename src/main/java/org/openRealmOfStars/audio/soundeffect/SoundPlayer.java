@@ -171,6 +171,11 @@ public final class SoundPlayer {
    */
   public static final String ALARM = "/resources/sounds/alarm.wav";
   /**
+   * Sound effect for destroying building
+   */
+  public static final String DESTROY_BUILDING =
+      "/resources/sounds/destroy_building.wav";
+  /**
    * Sound effect for warp engine engage
    */
   public static final String WARP_ENGINE_ENGAGE =

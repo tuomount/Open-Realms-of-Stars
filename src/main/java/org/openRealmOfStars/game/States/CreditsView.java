@@ -204,6 +204,7 @@ public class CreditsView extends BlackPanel {
       + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n"
       + "Warp engine engage by Bart(CC0)\n\n"
+      + "Destroy building sound from 100 CC0 SFX #2 by Rubberduck (CC0)\n\n"
       + "# Musics By\n\n"
       + "Observing The Star by\n"
       + "YD (CC0)\n\n"

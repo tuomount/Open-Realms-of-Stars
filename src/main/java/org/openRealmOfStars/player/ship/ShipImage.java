@@ -129,7 +129,7 @@ public class ShipImage {
   /**
    * Index for artificial planet
    */
-  public static final int ARTIFICIAL_PLANET = 10;
+  public static final int ARTIFICIAL_PLANET = 19;
 
   /**
    * Must be one bigger than last ship

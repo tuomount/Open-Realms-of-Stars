@@ -126,11 +126,15 @@ public class ShipImage {
    * Index for capital ship
    */
   public static final int CAPITAL_SHIP = 18;
+  /**
+   * Index for artificial planet
+   */
+  public static final int ARTIFICIAL_PLANET = 10;
 
   /**
    * Must be one bigger than last ship
    */
-  private static final int NUMBER_OF_IMAGES = 19;
+  private static final int NUMBER_OF_IMAGES = 20;
 
   /**
    * Initialize ship images
@@ -186,6 +190,9 @@ public class ShipImage {
         shipImages[MASSIVE_STARBASE]);
     shipImages[CAPITAL_SHIP] = image64x64(image, 3, 3);
     smallShipImages[CAPITAL_SHIP] = scaleTo32x32(shipImages[CAPITAL_SHIP]);
+    shipImages[ARTIFICIAL_PLANET] = image64x64(image, 4, 3);
+    smallShipImages[ARTIFICIAL_PLANET] = scaleTo32x32(
+        shipImages[ARTIFICIAL_PLANET]);
   }
 
   /**

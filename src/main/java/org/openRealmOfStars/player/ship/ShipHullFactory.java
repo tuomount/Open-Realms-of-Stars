@@ -423,7 +423,7 @@ public final class ShipHullFactory {
     if (index == HULL_ARTICIAL_PLANET) {
       tmp = new ShipHull(index, "Artificial planet", 10, 4,
           ShipHullType.STARBASE, ShipSize.HUGE, 200, 300, race);
-      tmp.setImageIndex(ShipImage.MASSIVE_STARBASE);
+      tmp.setImageIndex(ShipImage.ARTIFICIAL_PLANET);
       return tmp;
     }
 

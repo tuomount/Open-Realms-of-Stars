@@ -2928,8 +2928,8 @@ public class StarMap {
           planetName, 0, false);
       planet.setPlanetType(PlanetTypes.ARTIFICIALWORLD1);
       planet.setCulture(starbaseFleet.getCulturalValue());
-      planet.setAmountMetalInGround(0);
       planet.setMetal(metal);
+      planet.setRadiationLevel(1);
       String[] buildingList = realm.getTechList().getBuildingListFromTech();
       boolean lab = StarMapUtilities.listContains(buildingList, "Basic lab");
       boolean taxCenter = StarMapUtilities.listContains(buildingList,

@@ -394,6 +394,15 @@ public class PlanetTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testArtificialPlanet() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test", 0, false);
+    assertNotEquals(0, planet.getAmountMetalInGround());
+    planet.setPlanetType(PlanetTypes.ARTIFICIALWORLD1);
+    assertEquals(0, planet.getAmountMetalInGround());
+  }
+
+  @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testPlanetEventActivationMetalRichSurface() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);

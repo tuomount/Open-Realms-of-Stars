@@ -934,7 +934,9 @@ public class Planet {
   }
 
   /**
-   * Change amount of ore
+   * Change amount of ore.
+   * Amount of must be between MINIMUM_ORE and MAXIMUM_ORE to
+   * change actually the value.
    * @param amountMetalInGround New amount of metal on ground
    */
   public void setAmountMetalInGround(final int amountMetalInGround) {
@@ -2116,6 +2118,9 @@ public class Planet {
    */
   public void setPlanetType(final PlanetTypes newType) {
     this.planetType = newType;
+    if (this.planetType == PlanetTypes.ARTIFICIALWORLD1) {
+      amountMetalInGround = 0;
+    }
   }
 
   /**

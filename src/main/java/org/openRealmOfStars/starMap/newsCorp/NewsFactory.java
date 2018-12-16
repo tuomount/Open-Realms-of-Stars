@@ -1432,8 +1432,12 @@ public final class NewsFactory {
         break;
       }
       case 1: {
-        instructions.addText("SCIENTIFIC ACHIEVEMENT TO "
-          + planet.getName().toUpperCase());
+        if (building != null) {
+          instructions.addText("SCIENTIFIC ACHIEVEMENT TO "
+              + planet.getName().toUpperCase());
+        } else {
+          instructions.addText(planet.getName().toUpperCase() + "!");
+        }
         break;
       }
       case 2: {
@@ -1461,7 +1465,7 @@ public final class NewsFactory {
     sb.append("! ");
     sb.append("With this scientific achivement ");
     sb.append(realm.getEmpireName());
-    sb.append("gain awe from other realms! ");
+    sb.append(" gains awe from other realms! ");
     Attitude attitude = realm.getAiAttitude();
     if (attitude == Attitude.SCIENTIFIC) {
       sb.append(realm.getEmpireName());

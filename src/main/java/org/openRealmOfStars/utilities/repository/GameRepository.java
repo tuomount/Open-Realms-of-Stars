@@ -85,7 +85,8 @@ public class GameRepository {
       DataInputStream dis = new DataInputStream(bis);
       starMap = new StarMap(dis);
     } catch (IOException e) {
-      System.out.println(e.getMessage());
+      System.out.println("Error while reading save file '"
+          + filename + "': " + e.getMessage());
       return null;
     }
     return starMap;

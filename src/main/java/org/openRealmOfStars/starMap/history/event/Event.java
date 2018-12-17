@@ -148,6 +148,8 @@ public abstract class Event {
         result = DiplomaticEvent.createDiplomaticEvent(buffer); break;
       }
       case PLANET_CONQUERED:
+      case PLANET_BUILDING:
+      case ARTIFICAL_PLANET_CREATED:
       case PLANET_COLONIZED: {
         result = EventOnPlanet.createEventOnPlanet(buffer); break;
       }

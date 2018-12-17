@@ -35,6 +35,7 @@ import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.history.event.PlayerStartEvent;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
@@ -769,6 +770,7 @@ public class StarMap {
       } catch (IOException e) {
         ErrorLogger.log("Failed reading history data,"
             + " maybe save is missing it.");
+        throw e;
       }
     } else {
       if (str.startsWith("OROS-SAVE-GAME-")) {
@@ -2974,11 +2976,13 @@ public class StarMap {
         }
       }
       realm.getFleets().removeFleet(starbaseFleet);
-      getNewsCorpData().addNews(
-          NewsFactory.makeScientificAchivementNews(realm, planet, null));
+      NewsData newsData = NewsFactory.makeScientificAchivementNews(realm,
+          planet, null);
+      getNewsCorpData().addNews(newsData);
       EventOnPlanet event = new EventOnPlanet(
           EventType.ARTIFICAL_PLANET_CREATED, planet.getCoordinate(),
           planet.getName(), ownerIndex);
+      event.setText(newsData.getNewsText());
       history.addEvent(event);
       planetList.add(planet);
       int planetNumber = planetList.size() - 1;

@@ -95,6 +95,28 @@ public class EventOnPlanetTest {
     assertEquals(22, event2.getCoordinate().getX());
     assertEquals(11, event2.getCoordinate().getY());
     assertEquals(2, event2.getPlayerIndex());
+    event = new EventOnPlanet(EventType.PLANET_BUILDING, coord,
+        "Test planet", 0);
+    event.setText("Historical");
+    buf = event.createByteArray();
+    event2 = EventOnPlanet.createEventOnPlanet(buf);
+    assertEquals(EventType.PLANET_BUILDING, event2.getType());
+    assertEquals(event.getText(), event2.getText());
+    assertEquals(event.getName(), event2.getName());
+    assertEquals(22, event2.getCoordinate().getX());
+    assertEquals(11, event2.getCoordinate().getY());
+    assertEquals(0, event2.getPlayerIndex());
+    event = new EventOnPlanet(EventType.ARTIFICAL_PLANET_CREATED, coord,
+        "Test planet", 0);
+    event.setText("Historical");
+    buf = event.createByteArray();
+    event2 = EventOnPlanet.createEventOnPlanet(buf);
+    assertEquals(EventType.ARTIFICAL_PLANET_CREATED, event2.getType());
+    assertEquals(event.getText(), event2.getText());
+    assertEquals(event.getName(), event2.getName());
+    assertEquals(22, event2.getCoordinate().getX());
+    assertEquals(11, event2.getCoordinate().getY());
+    assertEquals(0, event2.getPlayerIndex());
   }
 
 }

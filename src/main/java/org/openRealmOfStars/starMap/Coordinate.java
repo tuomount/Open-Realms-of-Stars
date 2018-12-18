@@ -122,10 +122,11 @@ public class Coordinate {
     }
 
     /**
-     * Check if coordinates are valid for this StarMap
-     * @param maxCoordinate Tha maximum coordinate
+     * Check if coordinates are valid for this StarMap.
+     * Since maxCoordinate contains the map size so the maximum coordinate
+     * is one less that map size.
+     * @param maxCoordinate The maximum size of the StarMap
      * @return true if valid and false if invalid
-     * @TODO: A bit confusing that maxCoordinate is not a valid coordinate
      */
     public boolean isValidCoordinate(final Coordinate maxCoordinate) {
         if (getX() >= 0 && getY() >= 0

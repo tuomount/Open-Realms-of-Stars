@@ -237,11 +237,15 @@ public class RouteTest {
   public void testIsEndReachedShouldBeTrueWhenStartAndEndCoordinatesAreEquals() {
     assertTrue(route.isEndReached());
 
-    //@TODO: Why is not reached end when defending but Coordinates are equals?
+    // Why is not reached end when defending but Coordinates are equals?
+    // If route is ended it will set route to null when updating Starmap to next turn.
+    // This is checked before handling the defend or fix route
     route.setFtlSpeed(Route.ROUTE_DEFEND);
     assertFalse(route.isEndReached());
 
-    //@TODO: Why is not reached end when fixing but Coordinates are equals?
+    // Why is not reached end when defending but Coordinates are equals?
+    // If route is ended it will set route to null when updating Starmap to next turn.
+    // This is checked before handling the defend or fix route
     route.setFtlSpeed(Route.ROUTE_FIX);
     assertFalse(route.isEndReached());
 

@@ -112,6 +112,8 @@ public class HistoryView extends BlackPanel {
     mapPanel = new MapPanel(false);
     mapPanel.setHistoryCultures(starMap.getHistory().calculateCulture(0,
         starMap));
+    mapPanel.setTileOverride(map.getHistory().calculateOverrideTiles(
+        turnNumber, map));
     centerPanel.add(mapPanel, BorderLayout.CENTER);
     InfoPanel infoPanel = new InfoPanel();
     infoPanel.setLayout(new BorderLayout());

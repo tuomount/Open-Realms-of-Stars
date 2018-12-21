@@ -611,7 +611,8 @@ public class MapPanel extends JPanel {
         }
 
         // Draw planet text
-        if (planet != null && !planet.isGasGiant() && info != null && info
+        if (planet != null && !planet.isGasGiant()
+            && planet.getOrderNumber() != 0 && info != null && info
             .getSectorVisibility(new Coordinate(i + cx,
                 j + cy)) != PlayerInfo.UNCHARTED) {
           int textWidth = (int) GuiStatics.getFontCubellanSC()
@@ -870,7 +871,8 @@ public class MapPanel extends JPanel {
         }
 
         // Draw planet text
-        if (planet != null && !planet.isGasGiant()) {
+        if (planet != null && !planet.isGasGiant()
+            && planet.getOrderNumber() != 0) {
           int textWidth = (int) GuiStatics.getFontCubellanSC()
               .getStringBounds(RandomSystemNameGenerator.numberToRoman(
                   planet.getOrderNumber()), gr.getFontRenderContext())

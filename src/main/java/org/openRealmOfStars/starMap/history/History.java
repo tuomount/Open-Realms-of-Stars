@@ -212,7 +212,7 @@ public class History {
     int maxX = starMap.getMaxX();
     int maxY = starMap.getMaxY();
     int[][] tiles = new int[maxX][maxY];
-    int max = upToTurn;
+    int max = upToTurn + 1;
     if (listOfTurns.size() < upToTurn) {
       max = listOfTurns.size();
     }

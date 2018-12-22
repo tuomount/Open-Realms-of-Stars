@@ -226,7 +226,9 @@ public class HistoryView extends BlackPanel {
         targetCoordinate = null;
       }
       if (event.getType() == EventType.PLANET_COLONIZED
-          || event.getType() == EventType.PLANET_CONQUERED) {
+          || event.getType() == EventType.PLANET_CONQUERED
+          || event.getType() == EventType.ARTIFICAL_PLANET_CREATED
+          || event.getType() == EventType.PLANET_BUILDING) {
         EventOnPlanet planetary = (EventOnPlanet) event;
         textArea.setText("Event on planet called " + planetary.getName() + ": "
             + planetary.getText());

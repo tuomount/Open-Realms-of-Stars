@@ -10,6 +10,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
@@ -76,6 +77,38 @@ public class ResearchTest {
     info.getTechList().addTech(TechFactory.createCombatTech("Planetary invasion module", 2));
     Research.handleShipDesigns(info);
     assertEquals(7, info.getShipStatList().length);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testShipDesignHandlingObsoleteStarbases() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.CHIRALOIDS);
+    info.getTechList().addTech(TechFactory.createHullTech("Small starbase Mk1", 2));
+    Research.handleShipDesigns(info);
+    assertEquals(4, info.getShipStatList().length);
+    assertEquals(false, info.getShipStatList()[3].isObsolete());
+    info.getTechList().addTech(TechFactory.createHullTech("Medium starbase", 4));
+    Research.handleShipDesigns(info);
+    assertEquals(true, info.getShipStatList().length >= 5);
+    boolean oneSmallStarbase = false;
+    for (ShipStat stat : info.getShipStatList()) {
+      if (stat.getDesign().getHull().getHullType() == ShipHullType.STARBASE
+          && stat.getDesign().getHull().getSize() == ShipSize.SMALL
+          && !stat.isObsolete()) {
+        oneSmallStarbase = true;
+      }
+    }
+    assertEquals(true, oneSmallStarbase);
+    Research.handleShipDesigns(info);
+    boolean noSmallStarbases = false;
+    for (ShipStat stat : info.getShipStatList()) {
+      if (stat.getDesign().getHull().getHullType() == ShipHullType.STARBASE
+          && stat.getDesign().getHull().getSize() == ShipSize.SMALL
+          && !stat.isObsolete()) {
+        noSmallStarbases = true;
+      }
+    }
+    assertEquals(false, noSmallStarbases);
   }
 
   @Test

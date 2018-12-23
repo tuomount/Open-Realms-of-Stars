@@ -322,6 +322,18 @@ public final class Research {
    */
   private static void handleStarbaseDesign(final PlayerInfo info,
       final ShipSize size) {
+    if (size == ShipSize.SMALL && info.isBiggerStarbases()) {
+      ShipStat[] stats = info.getShipStatList();
+      for (ShipStat stat : stats) {
+        if (stat.getDesign().getHull().getSize() == ShipSize.SMALL
+            && stat.getDesign().getHull().getHullType()
+            == ShipHullType.STARBASE && !stat.isObsolete()) {
+          // Once bigger starbases are available, small once are obsolete
+          stat.setObsolete(true);
+        }
+      }
+      return;
+    }
     ShipDesign design = ShipGenerator.createStarbase(info, size);
     if (design != null) {
       ShipStat[] stats = info.getShipStatList();

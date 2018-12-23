@@ -739,7 +739,19 @@ public class AITurnView extends BlackPanel {
                     && destroyStarbases < LIMIT_DESTROY_STARBASES) {
                   addDestroyStarbaseMission(new Coordinate(x, y), info);
                 }
-            }  else if (fleet.isStarBaseDeployed()
+            } else if (fleet.isStarBaseDeployed()
+                && info.getSectorVisibility(new Coordinate(x, y))
+                == PlayerInfo.VISIBLE && infoAt == info) {
+              Mission mission = new Mission(MissionType.DEPLOY_STARBASE,
+                  MissionPhase.PLANNING, new Coordinate(x, y));
+              if (info.getMissions().getDeployStarbaseMission(x, y) == null
+                  && deployStarbases < LIMIT_DEPLOY_STARBASES
+                  && info.isBiggerStarbases()
+                  && fleet.getNumberOfShip() < Fleet.MAX_STARBASE_SIZE) {
+                // No secondary starbase deploy mission found for this anchor
+                info.getMissions().add(mission);
+              }
+            } else if (fleet.isStarBaseDeployed()
                 && info.getSectorVisibility(new Coordinate(x, y))
                 == PlayerInfo.FOG_OF_WAR && infoAt != info) {
               // Anchor is under Fog of war, but Maybe espionage

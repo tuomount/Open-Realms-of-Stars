@@ -19,6 +19,7 @@ import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.GovernmentUtility;
 import org.openRealmOfStars.player.message.MessageList;
+import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.generator.ShipGenerator;
@@ -1255,6 +1256,19 @@ public class PlayerInfo {
     return null;
   }
 
+  /**
+   * Does Player has starbase bigger than small. Returns true if has.
+   * @return True if player has starbase bigger than small.
+   */
+  public boolean isBiggerStarbases() {
+    for (ShipStat stat : shipStatList) {
+      if (stat.getDesign().getHull().getHullType() == ShipHullType.STARBASE
+          && stat.getDesign().getHull().getSize() != ShipSize.SMALL) {
+        return true;
+      }
+    }
+    return false;
+  }
   /**
    * Get Ship stat by name.
    * @param name for search

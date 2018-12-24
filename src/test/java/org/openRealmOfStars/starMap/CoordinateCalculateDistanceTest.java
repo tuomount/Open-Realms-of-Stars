@@ -52,7 +52,9 @@ public class CoordinateCalculateDistanceTest {
                 {new Coordinate(0, 0), new Coordinate(1, 0), 1},
                 {new Coordinate(0, 0), new Coordinate(0, 1), 1},
                 {new Coordinate(0, 0), new Coordinate(1, 1), 1.4142135623730951},
-                //@TODO: Add more test parameters to check the most critical part
+                {new Coordinate(1, 1), new Coordinate(0, 0), 1.4142135623730951},
+                {new Coordinate(8, 15), new Coordinate(3, 11), 6.4031242374328485},
+                {new Coordinate(128, 64), new Coordinate(64, 128), 90.50966799187809},
         });
     }
 

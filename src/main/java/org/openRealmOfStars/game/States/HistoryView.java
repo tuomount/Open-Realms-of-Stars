@@ -264,6 +264,7 @@ public class HistoryView extends BlackPanel {
           mapPanel.setRightSpaceImage(infos[1].getRace().getRaceImage());
         } else {
           mapPanel.setLeftSpaceImage(GuiStatics.IMAGE_ANDROID);
+          mapPanel.setRightSpaceImage(null);
         }
       } else {
         if (infos.length >= 1) {

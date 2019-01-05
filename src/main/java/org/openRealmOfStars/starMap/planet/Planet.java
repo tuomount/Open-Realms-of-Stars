@@ -1404,12 +1404,12 @@ public class Planet {
           extraFood = extraFood - require;
           workers[FOOD_FARMERS] = workers[FOOD_FARMERS] + 1;
           msg = new Message(MessageType.POPULATION,
-              getName() + " has population growth!" + "Population is now "
+              getName() + " has population growth! Population is now "
                   + getTotalPopulation(),
               Icons.getIconByName(Icons.ICON_PEOPLE));
           if (isFullOfPopulation()) {
             msg = new Message(MessageType.POPULATION,
-                getName() + " has population growth!" + "Population is now "
+                getName() + " has population growth! Population is now "
                     + getTotalPopulation() + ". Population limit has reached!",
                 Icons.getIconByName(Icons.ICON_PEOPLE));
           }
@@ -1450,7 +1450,7 @@ public class Planet {
             workerName = "Farmer";
           }
           msg = new Message(MessageType.POPULATION,
-              getName() + " has " + workerName + " died!\n"
+              getName() + " has " + workerName + " died! "
                   + "Population is now " + getTotalPopulation(),
               Icons.getIconByName(Icons.ICON_DEATH));
           msg.setCoordinate(getCoordinate());
@@ -1494,7 +1494,7 @@ public class Planet {
             msg = new Message(MessageType.CONSTRUCTION,
                 getName() + " cannot built ship "
             + underConstruction.getName()
-            + "due that blue prints are missing!",
+            + " due that blue prints are missing!",
                 Icons.getIconByName(Icons.ICON_HULL_TECH));
             msg.setCoordinate(getCoordinate());
             msg.setMatchByString(getName());
@@ -1536,7 +1536,7 @@ public class Planet {
                   }
                   if (mission.getType() == MissionType.SPY_MISSION) {
                     fleet.setName(planetOwnerInfo.getFleets(
-                        ).generateUniqueName("Spy"));
+                        ).generateUniqueName(ship.getName()));
                     mission.setFleetName(fleet.getName());
                   }
                 } else {
@@ -1568,9 +1568,11 @@ public class Planet {
                   if (ship.isSpyShip()) {
                     mission = new Mission(MissionType.SPY_MISSION,
                         MissionPhase.LOADING, getCoordinate());
-                    planetOwnerInfo.getMissions().add(mission);
+                    if (!planetOwnerInfo.isHuman()) {
+                      planetOwnerInfo.getMissions().add(mission);
+                    }
                     fleet.setName(planetOwnerInfo.getFleets()
-                        .generateUniqueName("Spy"));
+                        .generateUniqueName(ship.getName()));
                     mission.setFleetName(fleet.getName());
                   } else if (fleet.isScoutFleet()) {
                     if (DiceGenerator.getRandom(3) == 0) {
@@ -1586,8 +1588,15 @@ public class Planet {
                         .generateUniqueName("Privateer"));
                   } else {
                     // No mission for planet, so just adding defender
-                    fleet.setName(planetOwnerInfo.getFleets()
-                        .generateUniqueName("Defender"));
+                    // If not human player
+                    if (!planetOwnerInfo.isHuman()) {
+                      fleet.setName(planetOwnerInfo.getFleets()
+                          .generateUniqueName("Defender"));
+                    } else {
+                      // For humans just take the ship name for fleet name
+                      fleet.setName(planetOwnerInfo.getFleets()
+                          .generateUniqueName(ship.getName()));
+                    }
                   }
                 }
               }

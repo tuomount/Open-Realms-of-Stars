@@ -483,11 +483,30 @@ public final class GuiStatics {
   private static final Color BEAM_COLOR_5 = new Color(255, 115, 77);
 
   /**
-   * Beam color
+   * Red beam colors
    */
   public static final Color[] BEAM_COLORS = {BEAM_COLOR_1, BEAM_COLOR_2,
       BEAM_COLOR_3, BEAM_COLOR_4, BEAM_COLOR_5, };
 
+  /**
+   * Green beam colors
+   */
+  public static final Color[] GREEN_BEAM_COLORS = {
+      new Color(36, 255,  0),
+      new Color(96, 255, 0),
+      new Color(128, 255, 0),
+      new Color(18, 255, 0),
+      new Color(155, 255, 77)};
+
+  /**
+   * Blue beam colors
+   */
+  public static final Color[] BLUE_BEAM_COLORS = {
+      new Color(36, 0,  255),
+      new Color(96, 0, 255),
+      new Color(128, 0, 255),
+      new Color(18, 18, 255),
+      new Color(155, 77, 255)};
 
   /**
    * Relation unknown icon

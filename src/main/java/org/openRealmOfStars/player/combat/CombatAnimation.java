@@ -306,6 +306,8 @@ public class CombatAnimation {
         }
       }
       int parts = DiceGenerator.getRandom(5, 15);
+      boolean phasorsParticle = weapon.getName().startsWith("Phasors");
+      boolean antimatterParticle = weapon.getName().startsWith("Antimatter");
       for (int i = 0; i < parts; i++) {
         int dist = DiceGenerator.getRandom(distance);
         int px = (int) Math.round(dist * mx + sx);
@@ -320,9 +322,19 @@ public class CombatAnimation {
         }
         px = px + nx;
         py = py + ny;
-        ParticleEffect particle = new ParticleEffect(
-            ParticleEffectType.LASER_PARTICLE, px, py);
-        particles.add(particle);
+        if (phasorsParticle) {
+          ParticleEffect particle = new ParticleEffect(
+              ParticleEffectType.PHASOR_PARTICLE, px, py);
+          particles.add(particle);
+        } else if (antimatterParticle) {
+          ParticleEffect particle = new ParticleEffect(
+              ParticleEffectType.ANTIMATTER_PARTICLE, px, py);
+          particles.add(particle);
+        } else {
+          ParticleEffect particle = new ParticleEffect(
+              ParticleEffectType.LASER_PARTICLE, px, py);
+          particles.add(particle);
+        }
       }
     } else if (weapon.getType() == ShipComponentType.WEAPON_RAILGUN) {
       if (Math.round(sx) == Math.round(ex)
@@ -504,8 +516,16 @@ public class CombatAnimation {
    * @return Beam color
    */
   public Color getBeamColor() {
-    return new Color(COLOR_MAX - 2 * (BEAM_ANIM_COUNT - count), 2 * count,
-        2 * count);
+    if (weapon.getName().startsWith("Antimatter beam")) {
+      return new Color(2 * count, 2 * count,
+          COLOR_MAX - 2 * (BEAM_ANIM_COUNT - count));
+    } else if (weapon.getName().startsWith("Phasors")) {
+      return new Color(2 * count, COLOR_MAX - 2 * (BEAM_ANIM_COUNT - count),
+          2 * count);
+    } else {
+      return new Color(COLOR_MAX - 2 * (BEAM_ANIM_COUNT - count), 2 * count,
+          2 * count);
+    }
   }
 
   /**

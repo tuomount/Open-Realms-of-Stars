@@ -3,7 +3,7 @@ package org.openRealmOfStars.gui.mapPanel;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -43,4 +43,12 @@ public enum ParticleEffectType {
    * Rail gun ion trail
    */
   RAILGUN_TRAIL,
+  /**
+   * Short living particle next to the beam, not moving
+   */
+  PHASOR_PARTICLE,
+  /**
+   * Short living particle next to the beam, not moving
+   */
+  ANTIMATTER_PARTICLE;
 }

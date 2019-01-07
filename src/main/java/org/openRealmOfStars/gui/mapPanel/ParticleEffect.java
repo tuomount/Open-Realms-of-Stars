@@ -113,6 +113,22 @@ public class ParticleEffect {
           .getRandom(GuiStatics.BEAM_COLORS.length - 1)];
       break;
     }
+    case PHASOR_PARTICLE: {
+      mx = 0;
+      my = 0;
+      ttl = 2;
+      color = GuiStatics.GREEN_BEAM_COLORS[DiceGenerator
+          .getRandom(GuiStatics.GREEN_BEAM_COLORS.length - 1)];
+      break;
+    }
+    case ANTIMATTER_PARTICLE: {
+      mx = 0;
+      my = 0;
+      ttl = 2;
+      color = GuiStatics.BLUE_BEAM_COLORS[DiceGenerator
+          .getRandom(GuiStatics.BLUE_BEAM_COLORS.length - 1)];
+      break;
+    }
     case PHOTON_TORP_PARTICILE: {
       color = new Color(PHOTON_TORPEDO_RED, MAX_COLOR, 0);
       mx = DiceGenerator.getRandom(5, 20);

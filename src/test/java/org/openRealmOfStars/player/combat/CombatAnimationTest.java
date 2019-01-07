@@ -38,11 +38,102 @@ public class CombatAnimationTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testBeamWeaponAnimation() {
+  public void testLaserBeamWeaponAnimation() {
     CombatShip shooter = Mockito.mock(CombatShip.class);
     CombatShip target = Mockito.mock(CombatShip.class);
     ShipComponent weapon = Mockito.mock(ShipComponent.class);
     Mockito.when(weapon.getType()).thenReturn(ShipComponentType.WEAPON_BEAM);
+    Mockito.when(weapon.getName()).thenReturn("Laser Mk1");
+    Mockito.when(shooter.getX()).thenReturn(5);
+    Mockito.when(shooter.getY()).thenReturn(7);
+    Mockito.when(target.getX()).thenReturn(6);
+    Mockito.when(target.getY()).thenReturn(6);
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getHullPoints()).thenReturn(0);
+    Mockito.when(target.getShip()).thenReturn(ship);
+
+    CombatAnimation anim = new CombatAnimation(shooter, target, weapon, -2);
+    assertEquals(true,anim.isFirstDraw());
+    anim.setFirstDraw(false);
+    assertEquals(false,anim.isFirstDraw());
+    assertEquals(shooter,anim.getShooter());
+    assertEquals(target,anim.getTarget());
+    assertEquals(weapon,anim.getWeapon());
+    assertEquals(5*64+32,anim.getSx());
+    assertEquals(7*64+32,anim.getSy());
+    assertEquals(6*64+32,anim.getEx());
+    assertEquals(6*64+32,anim.getEy());
+    boolean gotParticles = false;
+    boolean gotFrame = false;
+    while (!anim.isAnimationFinished()) {
+      anim.doAnimation();
+      List<ParticleEffect> particles = anim.getParticles();
+      if (!particles.isEmpty()) {
+        gotParticles = true;
+      }
+      // Just calling the beam color
+      anim.getBeamColor();
+      if (anim.getAnimFrame() != null) {
+        gotFrame = true;
+      }
+    }
+    assertEquals("No particles!",true,gotParticles);
+    assertEquals("No frame!",true,gotFrame);
+    assertEquals("No Hit",true,anim.isHit());
+  }
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPhasorBeamWeaponAnimation() {
+    CombatShip shooter = Mockito.mock(CombatShip.class);
+    CombatShip target = Mockito.mock(CombatShip.class);
+    ShipComponent weapon = Mockito.mock(ShipComponent.class);
+    Mockito.when(weapon.getType()).thenReturn(ShipComponentType.WEAPON_BEAM);
+    Mockito.when(weapon.getName()).thenReturn("Phasors Mk1");
+    Mockito.when(shooter.getX()).thenReturn(5);
+    Mockito.when(shooter.getY()).thenReturn(7);
+    Mockito.when(target.getX()).thenReturn(6);
+    Mockito.when(target.getY()).thenReturn(6);
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getHullPoints()).thenReturn(0);
+    Mockito.when(target.getShip()).thenReturn(ship);
+
+    CombatAnimation anim = new CombatAnimation(shooter, target, weapon, -2);
+    assertEquals(true,anim.isFirstDraw());
+    anim.setFirstDraw(false);
+    assertEquals(false,anim.isFirstDraw());
+    assertEquals(shooter,anim.getShooter());
+    assertEquals(target,anim.getTarget());
+    assertEquals(weapon,anim.getWeapon());
+    assertEquals(5*64+32,anim.getSx());
+    assertEquals(7*64+32,anim.getSy());
+    assertEquals(6*64+32,anim.getEx());
+    assertEquals(6*64+32,anim.getEy());
+    boolean gotParticles = false;
+    boolean gotFrame = false;
+    while (!anim.isAnimationFinished()) {
+      anim.doAnimation();
+      List<ParticleEffect> particles = anim.getParticles();
+      if (!particles.isEmpty()) {
+        gotParticles = true;
+      }
+      // Just calling the beam color
+      anim.getBeamColor();
+      if (anim.getAnimFrame() != null) {
+        gotFrame = true;
+      }
+    }
+    assertEquals("No particles!",true,gotParticles);
+    assertEquals("No frame!",true,gotFrame);
+    assertEquals("No Hit",true,anim.isHit());
+  }
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAntimatterBeamWeaponAnimation() {
+    CombatShip shooter = Mockito.mock(CombatShip.class);
+    CombatShip target = Mockito.mock(CombatShip.class);
+    ShipComponent weapon = Mockito.mock(ShipComponent.class);
+    Mockito.when(weapon.getType()).thenReturn(ShipComponentType.WEAPON_BEAM);
+    Mockito.when(weapon.getName()).thenReturn("Antimatter beam Mk1");
     Mockito.when(shooter.getX()).thenReturn(5);
     Mockito.when(shooter.getY()).thenReturn(7);
     Mockito.when(target.getX()).thenReturn(6);
@@ -87,6 +178,7 @@ public class CombatAnimationTest {
     CombatShip target = Mockito.mock(CombatShip.class);
     ShipComponent weapon = Mockito.mock(ShipComponent.class);
     Mockito.when(weapon.getType()).thenReturn(ShipComponentType.WEAPON_RAILGUN);
+    Mockito.when(weapon.getName()).thenReturn("Railgun Mk1");
     Mockito.when(shooter.getX()).thenReturn(5);
     Mockito.when(shooter.getY()).thenReturn(7);
     Mockito.when(target.getX()).thenReturn(6);
@@ -130,6 +222,7 @@ public class CombatAnimationTest {
     ShipComponent weapon = Mockito.mock(ShipComponent.class);
     Mockito.when(weapon.getType()).thenReturn(
         ShipComponentType.WEAPON_PHOTON_TORPEDO);
+    Mockito.when(weapon.getName()).thenReturn("Photon torpedo Mk1");
     Mockito.when(shooter.getX()).thenReturn(5);
     Mockito.when(shooter.getY()).thenReturn(7);
     Mockito.when(target.getX()).thenReturn(6);
@@ -174,6 +267,7 @@ public class CombatAnimationTest {
     ShipComponent weapon = Mockito.mock(ShipComponent.class);
     Mockito.when(weapon.getType()).thenReturn(
         ShipComponentType.WEAPON_ECM_TORPEDO);
+    Mockito.when(weapon.getName()).thenReturn("ECM missile Mk1");
     Mockito.when(shooter.getX()).thenReturn(5);
     Mockito.when(shooter.getY()).thenReturn(7);
     Mockito.when(target.getX()).thenReturn(6);
@@ -218,6 +312,7 @@ public class CombatAnimationTest {
     ShipComponent weapon = Mockito.mock(ShipComponent.class);
     Mockito.when(weapon.getType()).thenReturn(
         ShipComponentType.WEAPON_HE_MISSILE);
+    Mockito.when(weapon.getName()).thenReturn("HE Missile Mk1");
     Mockito.when(shooter.getX()).thenReturn(5);
     Mockito.when(shooter.getY()).thenReturn(7);
     Mockito.when(target.getX()).thenReturn(6);

@@ -289,6 +289,17 @@ public class AITurnView extends BlackPanel {
         // Mission assigned continue...
         return;
       }
+      if (fleet.getStarbaseShip() != null && !fleet.isStarBaseDeployed()) {
+        // Unused starbase found, trying to find mission for it.
+        mission = info.getMissions().getMission(MissionType.DEPLOY_STARBASE,
+            MissionPhase.PLANNING);
+        if (mission != null) {
+          mission.setFleetName(fleet.getName());
+          mission.setPhase(MissionPhase.TREKKING);
+          // Mission assigned continue...
+          return;
+        }
+      }
       if (fleet.isColonyFleet()
           && game.getStarMap().getGameLengthState()
           == GameLengthState.START_GAME

@@ -1561,7 +1561,12 @@ public class Planet {
                       .generateUniqueName("Gather"));
                   mission.setFleetName(fleet.getName());
                 } else {
-                  mission.setPhase(MissionPhase.TREKKING);
+                  if (mission.getFleetName() != null) {
+                    mission.setPhase(MissionPhase.TREKKING);
+                  } else {
+                    // Failed to build the correct fleet.
+                    mission.setPhase(MissionPhase.PLANNING);
+                  }
                 }
               } else {
                 if (ship.getTotalMilitaryPower() > 0) {

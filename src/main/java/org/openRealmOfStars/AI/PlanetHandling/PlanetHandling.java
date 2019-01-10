@@ -465,7 +465,16 @@ public final class PlanetHandling {
       // Mechions do not build farms
       score = -1;
     }
-
+    int time = planet.getProductionTime(building);
+    if (time == -1) {
+      score = -1;
+    }
+    if (time > 15) {
+      score = score / 2;
+    }
+    if (time > 25) {
+      score = -1;
+    }
     if (building.getName().equals("Basic factory")
         && info.getTechList().hasTech(TechType.Improvements,
             "Advanced factory")) {

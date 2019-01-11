@@ -633,13 +633,15 @@ public final class PlanetHandling {
           listScore.add(Integer.valueOf(scores[i]));
           sum = sum + scores[i];
         } else {
-          if (constructions[i] instanceof Ship && freeSlot < 4) {
+          if (constructions[i] instanceof Ship && freeSlot < 4
+              && scores[i] > 0) {
             list.add(constructions[i]);
             listScore.add(Integer.valueOf(scores[i]));
             sum = sum + scores[i];
           } else if (constructions[i].getName()
               .equals(ConstructionFactory.MECHION_CITIZEN) && freeSlot < 3
-              && planet.getTotalPopulation() < planet.getGroundSize()) {
+              && planet.getTotalPopulation() < planet.getGroundSize()
+              && scores[i] > 0) {
             list.add(constructions[i]);
             listScore.add(Integer.valueOf(scores[i]));
             sum = sum + scores[i];
@@ -1088,6 +1090,16 @@ public final class PlanetHandling {
         }
         if (ship.isSpyShip()) {
           score = scoreSpyShip(score, ship, info, map, attitude);
+        }
+        int time = planet.getProductionTime(ship);
+        if (time == -1) {
+          score = -1;
+        }
+        if (time > 15 && score > 0) {
+          score = score / 2;
+        }
+        if (time > 25) {
+          score = -1;
         }
         scores[i] = score;
       }

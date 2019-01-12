@@ -461,6 +461,12 @@ public final class PlanetHandling {
     }
     int production = planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION);
     int metal = planet.getTotalProduction(Planet.PRODUCTION_METAL);
+    if (building.getFactBonus() > 0 && production < 5) {
+      score = score * 2;
+    }
+    if (building.getMineBonus() > 0 && metal < 5) {
+      score = score * 2;
+    }
     if (building.getFactBonus() > 0 && production >= metal * 3
         && production > 0) {
       // Planet has enough production production
@@ -488,12 +494,12 @@ public final class PlanetHandling {
     }
     if (building.getName().equals("Basic factory")
         && info.getTechList().hasTech(TechType.Improvements,
-            "Advanced factory")) {
+            "Advanced factory") && production > 3) {
       score = -1;
     }
     if (building.getName().equals("Basic mine")
         && info.getTechList().hasTech(TechType.Improvements,
-            "Advanced mine")) {
+            "Advanced mine") && metal > 3) {
       score = -1;
     }
     if (building.getName().equals("Basic farm")

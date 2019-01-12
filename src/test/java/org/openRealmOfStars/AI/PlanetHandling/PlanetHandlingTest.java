@@ -350,10 +350,58 @@ public class PlanetHandlingTest {
     Mockito.when(info.getTechList()).thenReturn(techList);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
+    Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)).thenReturn(5);
+    Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(5);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
         Attitude.LOGICAL);
     assertEquals(59,score);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBasicFactoryBuildingScoring2() {
+    Building building = createBasicFactory();
+
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
+    Mockito.when(planet.howManyBuildings(building.getName())).thenReturn(0);
+    Mockito.when(planet.exceedRadiation()).thenReturn(false);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList techList = Mockito.mock(TechList.class);
+    Mockito.when(info.getTechList()).thenReturn(techList);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
+    Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)).thenReturn(5);
+    Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(1);
+
+    int score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL);
+    assertEquals(-1,score);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBasicFactoryBuildingScoring3() {
+    Building building = createBasicFactory();
+
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
+    Mockito.when(planet.howManyBuildings(building.getName())).thenReturn(0);
+    Mockito.when(planet.exceedRadiation()).thenReturn(false);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList techList = Mockito.mock(TechList.class);
+    Mockito.when(info.getTechList()).thenReturn(techList);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
+    Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)).thenReturn(1);
+    Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(1);
+
+    int score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL);
+    assertEquals(118,score);
   }
 
   @Test
@@ -401,10 +449,58 @@ public class PlanetHandlingTest {
     Mockito.when(info.getTechList()).thenReturn(techList);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
+    Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)).thenReturn(5);
+    Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(5);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
         Attitude.LOGICAL);
     assertEquals(40,score);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBasicMineBuildingScoring2() {
+    Building building = createBasicMine();
+
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
+    Mockito.when(planet.howManyBuildings(building.getName())).thenReturn(0);
+    Mockito.when(planet.exceedRadiation()).thenReturn(false);
+    Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)).thenReturn(1);
+    Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(5);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList techList = Mockito.mock(TechList.class);
+    Mockito.when(info.getTechList()).thenReturn(techList);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
+
+    int score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL);
+    assertEquals(-1,score);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBasicMineBuildingScoring3() {
+    Building building = createBasicMine();
+
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
+    Mockito.when(planet.howManyBuildings(building.getName())).thenReturn(0);
+    Mockito.when(planet.exceedRadiation()).thenReturn(false);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    TechList techList = Mockito.mock(TechList.class);
+    Mockito.when(info.getTechList()).thenReturn(techList);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
+    Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)).thenReturn(2);
+    Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(2);
+
+    int score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL);
+    assertEquals(80,score);
   }
 
   @Test

@@ -459,7 +459,18 @@ public final class PlanetHandling {
         && building.getType() == BuildingType.RESEARCH) {
       score = score + GREYAN_RESEARCH_VALUE_SCORE;
     }
-
+    int production = planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION);
+    int metal = planet.getTotalProduction(Planet.PRODUCTION_METAL);
+    if (building.getFactBonus() > 0 && production >= metal * 3
+        && production > 0) {
+      // Planet has enough production production
+      score = -1;
+    }
+    if (building.getMineBonus() > 0 && metal >= production * 3
+        && metal > 0) {
+      // Planet has enough metal production
+      score = -1;
+    }
     if (info.getRace() == SpaceRace.MECHIONS
         && building.getType() == BuildingType.FARM) {
       // Mechions do not build farms

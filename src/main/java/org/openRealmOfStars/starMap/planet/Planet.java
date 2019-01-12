@@ -2239,6 +2239,11 @@ public class Planet {
       happinessExplanation = "<html>Planet is not colonized!</html>";
       return 0;
     }
+    if (getPlanetPlayerInfo().getGovernment().isImmuneToHappiness()) {
+      happinessExplanation = "<html>Government is single minded,"
+          + " no happiness or sadness.</html>";
+      return 0;
+    }
     StringBuilder sb = new StringBuilder();
     sb.append("<html>");
     GovernmentType government = planetOwnerInfo.getGovernment();

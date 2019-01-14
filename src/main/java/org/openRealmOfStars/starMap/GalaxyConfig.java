@@ -503,7 +503,7 @@ public class GalaxyConfig {
    * @param limit How many scientific achievements must be built to win
    */
   public void setScoreLimitResearch(final int limit) {
-    if (limit >= 0 && limit <= 6) {
+    if (limit >= 0 && limit <= 5) {
       scoringResearch = limit;
     }
   }

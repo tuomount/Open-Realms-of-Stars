@@ -689,6 +689,7 @@ public class GalaxyCreationView extends BlackPanel {
           break;
         }
       }
+      config.setScoreLimitResearch(comboScoringScientific.getSelectedIndex());
     }
   }
 

@@ -1414,7 +1414,8 @@ public class AITurnView extends BlackPanel {
       }
       pirateNews = updateSpacePirates(board, level, false);
     }
-    if (game.getStarMap().getTurn() % 50 == 0 && !pirateNews) {
+    if (game.getStarMap().getTurn() % 50 == 0 && !pirateNews
+        && board != null) {
       // Just adding more pirates
       pirateNews = updateSpacePirates(board, newState, true);
     }

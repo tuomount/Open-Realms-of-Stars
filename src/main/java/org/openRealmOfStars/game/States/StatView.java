@@ -238,7 +238,7 @@ public class StatView extends BlackPanel {
           img.setToolTipText(
               "<html>Trade embargo forbids forming trade alliance.<br>"
               + "Declaring trade embargo gives diplomatic bonuses"
-              + "towards third parties.</html>");
+              + " towards third parties.</html>");
         }
         if (relation.equals(Diplomacy.WAR)) {
           img = new ImageLabel(GuiStatics.RELATION_WAR, true);
@@ -250,8 +250,8 @@ public class StatView extends BlackPanel {
         if (relation.equals(Diplomacy.PEACE)) {
           img = new ImageLabel(GuiStatics.RELATION_PEACE, true);
           img.setToolTipText(
-              "<html>Two parties are in peace. This only allows diplomatic<br>"
-              + "freely travel on parties sector.</html>");
+              "<html>Two parties are in peace.<br>"
+              + "This does not allow ships move on parties sectors.</html>");
         }
         if (relation.isEmpty()
             && info.getDiplomacy().getDiplomacyList(j) != null) {

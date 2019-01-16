@@ -1128,11 +1128,6 @@ public class DiplomacyView extends BlackPanel {
         updatePanel(SpeechType.MOVE_FLEET);
         resetChoices();
       } else {
-        trade.generateEqualTrade(NegotiationType.WAR);
-        trade.doTrades();
-        tradeHappened = true;
-        updatePanel(SpeechType.DECLINE_WAR);
-        resetChoices();
         int aiIndex = starMap.getPlayerList().getIndex(ai);
         if (!human.getDiplomacy().isWar(aiIndex)) {
           StarMapUtilities.addWarDeclatingReputation(starMap, ai);
@@ -1148,6 +1143,11 @@ public class DiplomacyView extends BlackPanel {
                 NewsFactory.makeDefensiveActivation(ai, defenseList));
           }
         }
+        trade.generateEqualTrade(NegotiationType.WAR);
+        trade.doTrades();
+        tradeHappened = true;
+        updatePanel(SpeechType.DECLINE_WAR);
+        resetChoices();
       }
     }
     if (speechSelected != null

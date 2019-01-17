@@ -24,7 +24,7 @@ import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2017,2018  Tuomo Untinen
+ * Copyright (C) 2017-2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

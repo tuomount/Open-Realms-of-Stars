@@ -65,42 +65,28 @@ public final class PlanetHandling {
   /**
    * Score for zero available slot
    */
-  private static final int ZERO_SLOT_SCORE = 180;
+  private static final int ZERO_SLOT_SCORE = 20;
 
   /**
    * Score for one available slot
    */
-  private static final int ONE_SLOT_SCORE = 150;
+  private static final int ONE_SLOT_SCORE = 15;
 
   /**
    * Score for two available slot
    */
-  private static final int TWO_SLOT_SCORE = 120;
+  private static final int TWO_SLOT_SCORE = 10;
 
   /**
    * Score for three available slot
    */
-  private static final int THREE_SLOT_SCORE = 80;
+  private static final int THREE_SLOT_SCORE = 8;
 
-  /**
-   * Score for four available slot
-   */
-  private static final int FOUR_SLOT_SCORE = 40;
-
-  /**
-   * Score for five available slot
-   */
-  private static final int FIVE_SLOT_SCORE = 20;
-
-  /**
-   * Score for six available slot
-   */
-  private static final int SIX_SLOT_SCORE = 10;
 
   /**
    * High value score for construction
    */
-  private static final int HIGH_VALUE_SCORE = 400;
+  private static final int HIGH_VALUE_SCORE = 250;
 
   /**
    * Turret defense value score
@@ -589,28 +575,29 @@ public final class PlanetHandling {
     boolean needToRemoveWorst = false;
     int minimum = 0;
     int freeSlot = planet.getGroundSize() - planet.getUsedPlanetSize();
+    int chanceForHighest = 0;
+    if (attitude == Attitude.LOGICAL) {
+      chanceForHighest = chanceForHighest + 30;
+    }
+    if (attitude == Attitude.SCIENTIFIC) {
+      chanceForHighest = chanceForHighest + 20;
+    }
     switch (freeSlot) {
     case 0:
       minimum = ZERO_SLOT_SCORE;
       needToRemoveWorst = true;
+      chanceForHighest = chanceForHighest + 30;
       break;
     case 1:
       minimum = ONE_SLOT_SCORE;
+      chanceForHighest = chanceForHighest + 20;
       break;
     case 2:
       minimum = TWO_SLOT_SCORE;
+      chanceForHighest = chanceForHighest + 10;
       break;
     case 3:
       minimum = THREE_SLOT_SCORE;
-      break;
-    case 4:
-      minimum = FOUR_SLOT_SCORE;
-      break;
-    case 5:
-      minimum = FIVE_SLOT_SCORE;
-      break;
-    case 6:
-      minimum = SIX_SLOT_SCORE;
       break;
     default:
       minimum = 0;
@@ -625,11 +612,9 @@ public final class PlanetHandling {
         over400 = true;
       }
     }
-    if (highest == value) {
-      if (highest != -1) {
+    if (highest != -1 && DiceGenerator.getRandom(100) < chanceForHighest) {
         planet.setUnderConstruction(constructions[highest]);
         constructionSelected = true;
-      }
     } else if (over400) {
       ArrayList<Construction> list = new ArrayList<>();
       for (int i = 0; i < scores.length; i++) {
@@ -672,19 +657,6 @@ public final class PlanetHandling {
           Construction cons = list.get(i);
           planet.setUnderConstruction(cons);
           constructionSelected = true;
-          if (cons instanceof Building && needToRemoveWorst) {
-            Building newBuild = (Building) cons;
-            Building worst = getWorstBuilding(planet, info, attitude, newBuild);
-            if  (worst != null) {
-              // Removing the worst building
-              planet.removeBuilding(worst);
-            } else {
-              // Could not remove the worst building so no selection can be
-              // made
-              planet.setUnderConstruction(null);
-              constructionSelected = false;
-            }
-          }
           if (cons instanceof Ship) {
             Ship ship = (Ship) cons;
             if (ship.isPrivateeringShip()) {
@@ -756,6 +728,22 @@ public final class PlanetHandling {
         total = total + listScore.get(i).intValue();
       }
     }
+    if (constructionSelected
+        && planet.getUnderConstruction() instanceof Building
+        && needToRemoveWorst) {
+      Building newBuild = (Building) planet.getUnderConstruction();
+      Building worst = getWorstBuilding(planet, info, attitude, newBuild);
+      if  (worst != null) {
+        // Removing the worst building
+        planet.removeBuilding(worst);
+      } else {
+        // Could not remove the worst building so no selection can be
+        // made
+        planet.setUnderConstruction(null);
+        constructionSelected = false;
+      }
+    }
+
     return constructionSelected;
   }
 

@@ -1106,6 +1106,10 @@ public final class PlanetHandling {
         }
         if (time > 15 && score > 0) {
           score = score / 2;
+          if (constructions[i].getName()
+              .equals(ConstructionFactory.MECHION_CITIZEN)) {
+            score = score / 2;
+          }
         }
         if (time > 25) {
           score = -1;

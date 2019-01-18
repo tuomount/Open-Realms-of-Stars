@@ -60,7 +60,7 @@ public final class PlanetHandling {
   /**
    * Maximum score for slots
    */
-  private static final int MAX_SLOT_SCORE = 1000;
+  private static final int MAX_SLOT_SCORE = 275;
 
   /**
    * Score for zero available slot
@@ -958,10 +958,14 @@ public final class PlanetHandling {
       scores[i] = -1;
       if (constructions[i].getName()
           .equals(ConstructionFactory.MECHION_CITIZEN)) {
-        scores[i] = planet.getAmountMetalInGround() / 100
+        scores[i] = planet.getGroundSize() * 4
             - 2 * planet.getTotalPopulation();
-        // Does not take a planet space
-        scores[i] = scores[i] + 20;
+        if (planet.getBuildingList().length < 4) {
+          scores[i] = scores[i] + 5;
+        } else {
+          // Does not take a planet space
+          scores[i] = scores[i] + 20;
+        }
         int index = map.getPlayerList().getIndex(info);
         if (map.getTotalProductionByPlayerPerTurn(Planet.PRODUCTION_RESEARCH,
             index) == 0) {

@@ -1615,7 +1615,7 @@ public class Planet {
           }
         } else  if (underConstruction instanceof Building
             && groundSize <= buildings.size()) {
-          msg = new Message(MessageType.PLANETARY, getName()
+          msg = new Message(MessageType.CONSTRUCTION, getName()
               + " is already full of buildings! "
               + underConstruction.getName() + " cannot be complete!",
               Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));

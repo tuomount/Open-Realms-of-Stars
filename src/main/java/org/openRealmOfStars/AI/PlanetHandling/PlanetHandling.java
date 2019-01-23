@@ -246,6 +246,23 @@ public final class PlanetHandling {
         if (!constructionSelected) {
           constructionSelected = handleConstructions(constructions, planet,
               info, map, attitude);
+        } else {
+          int freeSlot = planet.getGroundSize() - planet.getUsedPlanetSize();
+          if (planet.getUnderConstruction() instanceof Building
+              && freeSlot == 0) {
+            Building newBuild = (Building) planet.getUnderConstruction();
+            Building worst = getWorstBuilding(planet, info, attitude, newBuild);
+            if  (worst != null) {
+              // Removing the worst building
+              planet.removeBuilding(worst);
+            } else {
+              // Could not remove the worst building so no selection can be
+              // made
+              planet.setUnderConstruction(null);
+              constructionSelected = false;
+            }
+
+          }
         }
         if (!constructionSelected) {
           // Nothing to select to let's select culture or credit

@@ -55,7 +55,7 @@ import org.openRealmOfStars.utilities.repository.SunRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -525,8 +525,7 @@ public class StarMap {
     for (ShipStat stat : stats) {
       if (!stat.isObsolete()) {
         Ship ship = new Ship(stat.getDesign());
-        if (type == ENEMY_PIRATE_LAIR && ship.getTotalMilitaryPower() > 0
-            && ship.isStarBase()) {
+        if (type == ENEMY_PIRATE_LAIR && ship.isStarBase()) {
           listStats.add(stat);
         }
         if (type == ENEMY_PIRATE && ship.getTotalMilitaryPower() > 0

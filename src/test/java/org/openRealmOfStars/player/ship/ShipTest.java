@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2017, 2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -571,7 +571,7 @@ public class ShipTest {
     assertEquals(0, ship.getScannerDetectionLvl());
     assertEquals(0, ship.getScannerLvl());
     assertEquals(10, ship.getDefenseValue());
-    assertEquals(6, ship.getTotalMilitaryPower());
+    assertEquals(0, ship.getTotalMilitaryPower());
     assertEquals(false, ship.isColonyShip());
     assertEquals(false, ship.isPrivateeringShip());
     assertEquals(false, ship.isTrooperShip());
@@ -604,7 +604,7 @@ public class ShipTest {
     assertNotEquals(null, design);
     ship = new Ship(design);
     assertNotEquals(null, ship);
-    assertEquals(true,ship.getTotalMilitaryPower() > 0);
+    assertEquals(0, ship.getTotalMilitaryPower());
     assertEquals(0, ship.getTotalCreditBonus());
     assertEquals(0, ship.getTotalCultureBonus());
     // Starbase lab is in component list so there might be a lab

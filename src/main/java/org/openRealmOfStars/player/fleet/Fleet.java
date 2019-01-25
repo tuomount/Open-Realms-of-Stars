@@ -20,7 +20,7 @@ import org.openRealmOfStars.utilities.repository.RouteRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -577,12 +577,13 @@ public class Fleet {
     return null;
   }
   /**
-   * Get first bomber ship from the fleet.
+   * Get first assault ship from the fleet.
    * @return Assault ship or null
    */
   public Ship getAssaultShip() {
     for (Ship ship : ships) {
-      if (ship.getTotalMilitaryPower() > 0) {
+      if (ship.getTotalMilitaryPower() > 0
+          && !ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)) {
           return ship;
       }
     }

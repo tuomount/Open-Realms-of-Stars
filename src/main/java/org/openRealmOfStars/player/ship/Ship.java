@@ -22,7 +22,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017  Tuomo Untinen
+ * Copyright (C) 2016,2017,2019  Tuomo Untinen
  * Copyright (C) 2017 Lucas
  *
  * This program is free software; you can redistribute it and/or
@@ -1545,6 +1545,10 @@ private int increaseHitChanceByComponent() {
           && componentIsWorking(i)) {
         power = power + comp.getBaySize();
       }
+    }
+    if (isStarBase() && !getFlag(FLAG_STARBASE_DEPLOYED)) {
+      // Only deployed starbases should have military power
+      power = 0;
     }
     if (!militaryShip) {
       power = 0;

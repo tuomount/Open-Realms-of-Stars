@@ -621,6 +621,27 @@ public final class GuiStatics {
       .loadImage(Tiles.class.getResource("/resources/images/crosshair.png"));
 
   /**
+   * ORoS icon 32x32
+   */
+  public static final BufferedImage LOGO32 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/oros-logo32.png"));
+  /**
+   * ORoS icon 48x48
+   */
+  public static final BufferedImage LOGO48 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/oros-logo48.png"));
+  /**
+   * ORoS icon 64x64
+   */
+  public static final BufferedImage LOGO64 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/oros-logo64.png"));
+  /**
+   * ORoS icon 128x128
+   */
+  public static final BufferedImage LOGO128 = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/oros-logo128.png"));
+
+  /**
    * Red Crosshair for combat
    */
   public static final BufferedImage RED_CROSSHAIR = IOUtilities.loadImage(

@@ -6,10 +6,12 @@ import java.awt.Graphics;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -376,6 +378,12 @@ public class Game implements ActionListener {
       }
       UIManager.put("ScrollBarUI", SpaceScrollBarUI.class.getName());
       gameFrame.setTitle(GAME_TITLE + " " + GAME_VERSION);
+      ArrayList<BufferedImage> icons = new ArrayList<>();
+      icons.add(GuiStatics.LOGO32);
+      icons.add(GuiStatics.LOGO48);
+      icons.add(GuiStatics.LOGO64);
+      icons.add(GuiStatics.LOGO128);
+      gameFrame.setIconImages(icons);
       gameFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
       gameFrame.addWindowListener(new GameWindowListener());
       gameFrame.setMinimumSize(new Dimension(WINDOW_X_SIZE, WINDOW_Y_SIZE));

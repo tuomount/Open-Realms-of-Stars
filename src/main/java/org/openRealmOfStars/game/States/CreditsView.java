@@ -16,7 +16,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2019  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -135,6 +135,7 @@ public class CreditsView extends BlackPanel {
       + "https://opengameart.org/content/sci-fi-effects\n"
       + "Licensed under CC BY 4.0\n"
       + "https://creativecommons.org/licenses/by/4.0/\n\n"
+      + "ORoS logos by Tuomo Untinen\n\n"
       + "Fonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

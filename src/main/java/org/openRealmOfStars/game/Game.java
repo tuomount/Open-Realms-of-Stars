@@ -501,7 +501,8 @@ public class Game implements ActionListener {
         int attackerIndex = starMap.getPlayerList().getIndex(
             combat.getPlayer1());
         if (!info.getDiplomacy().getDiplomaticRelation(defenderIndex).equals(
-            Diplomacy.WAR) && !fleet.isPrivateerFleet()) {
+            Diplomacy.WAR) && !fleet.isPrivateerFleet()
+            && !combat.getDefendingFleet().isPrivateerFleet()) {
           // Moving on towards another player's fleet is war declaration
           DiplomaticTrade trade = new DiplomaticTrade(starMap, attackerIndex,
               defenderIndex);

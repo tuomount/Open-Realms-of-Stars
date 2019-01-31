@@ -29,7 +29,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017, 2018  Tuomo Untinen
+* Copyright (C) 2017, 2018, 2019  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -180,6 +180,7 @@ public class CombatTest {
     info1.getFleets().add(fleet1);
     info2.getFleets().add(fleet2);
     Combat combat = new Combat(fleet1, fleet2, info1, info2);
+    assertEquals(fleet2, combat.getDefendingFleet());
     combat.doFastCombat();
     assertEquals("Terran alliance attacked against Spork empire "
         + "with  single ship against one ship. Combat was victorious"

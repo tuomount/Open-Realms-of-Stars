@@ -920,6 +920,8 @@ private int increaseHitChanceByComponent() {
           return new ShipDamage(ShipDamage.NO_DAMAGE,
               "Attack hit the armor!");
         }
+        return new ShipDamage(ShipDamage.NO_DAMAGE,
+            "Attack deflected to armor!");
       }
       break;
     }
@@ -969,6 +971,8 @@ private int increaseHitChanceByComponent() {
           return new ShipDamage(ShipDamage.NO_DAMAGE,
               "Attack hit the shield!");
         }
+        return new ShipDamage(ShipDamage.NO_DAMAGE,
+            "Attack deflected to shield!");
       }
       break;
     }

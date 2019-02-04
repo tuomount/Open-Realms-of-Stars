@@ -268,6 +268,56 @@ public class ShipTest {
   }
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTopFiringTestBeam() {
+    ShipHull hull = ShipHullFactory.createByName("Privateer Mk3", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent weapon = ShipComponentFactory.createByName("HE Missile Mk8");
+    ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
+    ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
+    ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk9");
+    ShipComponent shield = ShipComponentFactory.createByName("Shield Mk3");
+    ShipComponent scanner = ShipComponentFactory.createByName("Scanner Mk5");
+    design.addComponent(energy);
+    design.addComponent(engine);
+    design.addComponent(armor);
+    design.addComponent(weapon);
+    design.addComponent(shield);
+    design.addComponent(scanner);
+    design.addComponent(armor);
+    Ship ship = new Ship(design);
+    
+    weapon = ShipComponentFactory.createByName("Phasors Mk1");
+    ShipDamage shipDamage = ship.damageBy(weapon);
+    assertEquals(true, shipDamage.getValue() >= 0);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTopFiringTestRailgun() {
+    ShipHull hull = ShipHullFactory.createByName("Privateer Mk3", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent weapon = ShipComponentFactory.createByName("HE Missile Mk8");
+    ShipComponent engine = ShipComponentFactory.createByName("Impulse engine Mk4");
+    ShipComponent energy = ShipComponentFactory.createByName("Zero-point source Mk2");
+    ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk3");
+    ShipComponent shield = ShipComponentFactory.createByName("Shield Mk9");
+    ShipComponent scanner = ShipComponentFactory.createByName("Scanner Mk5");
+    design.addComponent(energy);
+    design.addComponent(engine);
+    design.addComponent(armor);
+    design.addComponent(weapon);
+    design.addComponent(shield);
+    design.addComponent(scanner);
+    design.addComponent(shield);
+    Ship ship = new Ship(design);
+    
+    weapon = ShipComponentFactory.createByName("Massdrive Mk1");
+    ShipDamage shipDamage = ship.damageBy(weapon);
+    assertEquals(true, shipDamage.getValue() >= 0);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testCarrierShip() {
     ShipHull hull = ShipHullFactory.createByName("Medium freighter", SpaceRace.HUMAN);
     ShipDesign design = new ShipDesign(hull);

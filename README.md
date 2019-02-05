@@ -3,6 +3,7 @@
 
 # Open Realm of Stars
 
+![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/src/main/resources/resources/images/oros-logo128.png)
 
 Open Realm of Stars is an open source 4X strategy game. Developed 
 using Java. The game requires at minimum Swing and Java 7 to run.

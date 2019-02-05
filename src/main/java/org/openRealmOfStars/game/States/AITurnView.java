@@ -1624,7 +1624,7 @@ public class AITurnView extends BlackPanel {
    * AITurnNumber.
    * @param arg0 ActionEvent
    */
-  public void handleActions(final ActionEvent arg0) {
+  public synchronized void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
       updateText();

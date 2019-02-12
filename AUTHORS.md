@@ -119,6 +119,8 @@ https://creativecommons.org/licenses/by/4.0/
 
 ORoS logos by Tuomo Untinen
 
+Scaurian Space Ship Bridge by Tuomo Untinen
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

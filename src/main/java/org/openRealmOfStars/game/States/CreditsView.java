@@ -136,6 +136,7 @@ public class CreditsView extends BlackPanel {
       + "Licensed under CC BY 4.0\n"
       + "https://creativecommons.org/licenses/by/4.0/\n\n"
       + "ORoS logos by Tuomo Untinen\n\n"
+      + "Scaurian Space Ship Bridge by Tuomo Untinen\n\n"
       + "Fonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

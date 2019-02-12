@@ -989,6 +989,12 @@ public final class GuiStatics {
       IOUtilities.loadImage(GuiStatics.class.getResource(
           "/resources/images/centaur_bridge.png"));
   /**
+   * Ship Scaurian bridge interior
+   */
+  public static final BufferedImage IMAGE_INTERIOR_SCAURIAN =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/scaurian_bridge.png"));
+  /**
    * Ship bridge interior 1 Console
    */
   public static final BufferedImage IMAGE_INTERIOR1_CONSOLE =

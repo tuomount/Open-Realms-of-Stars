@@ -8,7 +8,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -68,7 +68,7 @@ public final class TechFactory {
    */
   public static final String[] COMBAT_TECH_LEVEL6_NAMES = {"Phasors Mk1",
       "Massdrive Mk1", "Photon torpedo Mk6", "ECM torpedo Mk4",
-      "HE missile Mk4", "Orbital fusion bomb", "Orbital defense grid" };
+      "HE missile Mk4", "Orbital fusion bomb" };
   /**
    * Combat tech names for level 7
    */
@@ -128,7 +128,7 @@ public final class TechFactory {
    * Defense tech names for level 7
    */
   public static final String[] DEFENSE_TECH_LEVEL7_NAMES = {"Shield Mk7",
-      "Armor plating Mk7", "Jammer Mk3", "Orbital shield" };
+      "Armor plating Mk7", "Jammer Mk3" };
   /**
    * Defense tech names for level 8
    */
@@ -138,7 +138,7 @@ public final class TechFactory {
    * Defense tech names for level 9
    */
   public static final String[] DEFENSE_TECH_LEVEL9_NAMES = {"Shield Mk9",
-      "Armor plating Mk9", "Shield generator Mk2" };
+      "Armor plating Mk9", "Shield generator Mk2", "Orbital shield" };
   /**
    * Defense tech names for level 10
    */
@@ -239,7 +239,7 @@ public final class TechFactory {
    * Planetary Improvement tech names for level 8
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL8_NAMES = {"Galactic bank",
-      "Radiation well", "Starbase bank" };
+      "Radiation well", "Starbase bank", "Orbital defense grid" };
   /**
    * Planetary Improvement tech names for level 9
    */
@@ -403,11 +403,7 @@ public final class TechFactory {
       String techName = list[i];
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Combat, level);
-        if (techName.equals("Orbital defense grid")) {
-          tech.setImprovement(techName);
-        } else {
-          tech.setComponent(techName);
-        }
+        tech.setComponent(techName);
         if (techName.startsWith("Laser") || techName.startsWith("Phasor")
             || techName.startsWith("Antimatter beam")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_LASERGUN));
@@ -662,6 +658,8 @@ public final class TechFactory {
               || techName.startsWith("Galactic sports center")
               || techName.startsWith("VR movie center")) {
             tech.setIcon(Icons.getIconByName(Icons.ICON_CULTURE));
+          } else if (techName.equals("Orbital defense grid")) {
+            tech.setIcon(Icons.getIconByName(Icons.ICON_COMBAT_TECH));
           } else {
             tech.setIcon(Icons.getIconByName(Icons.ICON_IMPROVEMENT_TECH));
           }

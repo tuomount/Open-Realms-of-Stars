@@ -221,9 +221,9 @@ public class Mission {
     sb.append(" - ");
     sb.append(getPhase().toString());
     sb.append("\nCoordinate:");
-    sb.append(targetCoordinate.getX());
+    sb.append(getX());
     sb.append(",");
-    sb.append(targetCoordinate.getY());
+    sb.append(getY());
     sb.append("\nBuilding Planet:");
     sb.append(getPlanetBuilding());
     sb.append("\nFleet:");

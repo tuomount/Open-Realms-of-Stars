@@ -147,10 +147,11 @@ public class MissionTest {
     assertEquals(MissionPhase.PLANNING, mission.getPhase());
     assertEquals(-1, mission.getX());
     assertEquals(-1, mission.getY());
+    assertEquals(true, mission.toString().contains("-1,-1"));
     mission.setTarget(new Coordinate(5,6));
     assertEquals(5, mission.getX());
     assertEquals(6, mission.getY());
-    
+    assertEquals(true, mission.toString().contains("5,6"));
   }
 
 }

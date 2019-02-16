@@ -10,7 +10,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2019  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -137,6 +137,20 @@ public class MissionTest {
         + "Fleet:Test Fleet\n"
         + "Time:1\n"
         + "Target planet:Target I", mission.toString());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testExploreMission() {
+    Mission mission = new Mission(MissionType.EXPLORE, MissionPhase.PLANNING, null);
+    assertEquals(MissionType.EXPLORE, mission.getType());
+    assertEquals(MissionPhase.PLANNING, mission.getPhase());
+    assertEquals(-1, mission.getX());
+    assertEquals(-1, mission.getY());
+    mission.setTarget(new Coordinate(5,6));
+    assertEquals(5, mission.getX());
+    assertEquals(6, mission.getY());
+    
   }
 
 }

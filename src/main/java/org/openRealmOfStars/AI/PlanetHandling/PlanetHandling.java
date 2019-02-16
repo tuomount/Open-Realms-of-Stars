@@ -739,6 +739,12 @@ public final class PlanetHandling {
               mission.setPhase(MissionPhase.BUILDING);
               mission.setPlanetBuilding(planet.getName());
             }
+            mission = info.getMissions().getMission(MissionType.EXPLORE,
+                MissionPhase.PLANNING);
+            if (mission != null && ship.isScoutShip()) {
+              mission.setPhase(MissionPhase.BUILDING);
+              mission.setPlanetBuilding(planet.getName());
+            }
           }
           break;
         }
@@ -1047,6 +1053,15 @@ public final class PlanetHandling {
             }
           }
 
+        }
+        if (ship.isScoutShip()) {
+          if (info.getMissions().getMission(MissionType.EXPLORE,
+              MissionPhase.PLANNING) != null) {
+            score = score + 30;
+          }
+          if (attitude == Attitude.EXPANSIONIST) {
+            score = score + 10;
+          }
         }
         if (ship.isColonyModule()) {
           // Colony ship should be built only on request

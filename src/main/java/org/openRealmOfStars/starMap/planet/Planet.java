@@ -18,6 +18,7 @@ import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
@@ -1539,6 +1540,11 @@ public class Planet {
                         ).generateUniqueName(ship.getName()));
                     mission.setFleetName(fleet.getName());
                   }
+                  if (mission.getType() == MissionType.EXPLORE) {
+                    fleet.setName(planetOwnerInfo.getFleets()
+                        .generateUniqueName("Scout"));
+                    mission.setFleetName(fleet.getName());
+                  }
                 } else {
                   fleet.setName(planetOwnerInfo.getFleets().generateUniqueName(
                       mission.getFleetName()));
@@ -1560,6 +1566,12 @@ public class Planet {
                   fleet.setName(planetOwnerInfo.getFleets()
                       .generateUniqueName("Gather"));
                   mission.setFleetName(fleet.getName());
+                } else if (mission.getType() == MissionType.EXPLORE) {
+                  mission.setPhase(MissionPhase.TREKKING);
+                  Sun sun = map.getAboutNearestSolarSystem(fleet.getX(),
+                      fleet.getY(), getPlanetPlayerInfo(), fleet, null);
+                  mission.setTarget(sun.getCenterCoordinate());
+                  mission.setSunName(sun.getName());
                 } else {
                   if (mission.getFleetName() != null) {
                     mission.setPhase(MissionPhase.TREKKING);

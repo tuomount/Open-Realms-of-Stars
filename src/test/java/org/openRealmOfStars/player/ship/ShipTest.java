@@ -52,6 +52,7 @@ public class ShipTest {
     design.addComponent(weapon);
     Ship ship = new Ship(design);
     
+    assertEquals(true, ship.isScoutShip());
     assertEquals(1, ship.getWeaponRange(weapon));
     assertEquals(1,ship.getArmor());
     assertEquals(0,ship.getShield());
@@ -160,7 +161,7 @@ public class ShipTest {
     design.addComponent(scanner);
     design.addComponent(cloak);
     Ship ship = new Ship(design);
-    
+    assertEquals(false, ship.isScoutShip());
     assertEquals(0,ship.getExperience());
     ship.setExperience(5);
     assertEquals(5,ship.getExperience());
@@ -235,7 +236,7 @@ public class ShipTest {
     design.addComponent(scanner);
     design.addComponent(thrusters);
     Ship ship = new Ship(design);
-    
+    assertEquals(false, ship.isScoutShip());
     assertEquals(0,ship.getExperience());
     ship.setExperience(5);
     assertEquals(5,ship.getExperience());
@@ -331,6 +332,7 @@ public class ShipTest {
     design.addComponent(fighterBay);
     assertEquals(true, design.getDesignInfo().contains("Fighter bay"));
     Ship ship = new Ship(design);
+    assertEquals(false, ship.isScoutShip());
     assertEquals(6, ship.getFighterBaySize());
     assertEquals(true, ship.getDescription().contains("Fighter bay"));
   }
@@ -566,7 +568,7 @@ public class ShipTest {
     design.addComponent(engine);
     design.addComponent(scanner);
     Ship ship = new Ship(design);
-
+    assertEquals(true, ship.isScoutShip());
     assertEquals(3,ship.getFtlSpeed());
     assertEquals(2,ship.getSpeed());
     assertEquals(1,ship.getTacticSpeed());
@@ -586,6 +588,7 @@ public class ShipTest {
     design.addComponent(scanner);
     design.addComponent(spy);
     Ship ship = new Ship(design);
+    assertEquals(true, ship.isScoutShip());
     assertEquals(3,ship.getFtlSpeed());
     assertEquals(2,ship.getSpeed());
     assertEquals(2,ship.getTacticSpeed());
@@ -606,6 +609,7 @@ public class ShipTest {
     design.addComponent(armor);
     design.addComponent(weapon);
     Ship ship = new Ship(design);
+    assertEquals(false, ship.isScoutShip());
     assertEquals(0, ship.getWeaponRange(weapon));
     assertEquals(1,ship.getArmor());
     assertEquals(0,ship.getShield());

@@ -1713,6 +1713,7 @@ public class StarMap {
       return;
     }
     if (info != null && !info.isHuman()) {
+      int exploreMissions = 0;
       // Try to locate ships for gather missions
       for (int i = 0; i < info.getMissions().getSize(); i++) {
         Mission mission = info.getMissions().getMissionByIndex(i);
@@ -1720,6 +1721,42 @@ public class StarMap {
             && mission.getPhase() == MissionPhase.PLANNING) {
           MissionHandling.findGatheringShip(mission, info);
         }
+        if (mission.getType() == MissionType.EXPLORE) {
+          exploreMissions++;
+        }
+      }
+      /*
+       * Making sure that there are enough exploration ships
+       */
+      if (getGameLengthState() == GameLengthState.START_GAME
+          && exploreMissions < 2) {
+        Mission mission = new Mission(MissionType.EXPLORE,
+            MissionPhase.PLANNING, null);
+        info.getMissions().add(mission);
+      }
+      if (getGameLengthState() == GameLengthState.EARLY_GAME
+          && exploreMissions < 4) {
+        Mission mission = new Mission(MissionType.EXPLORE,
+            MissionPhase.PLANNING, null);
+        info.getMissions().add(mission);
+      }
+      if (getGameLengthState() == GameLengthState.MIDDLE_GAME
+          && exploreMissions < 3) {
+        Mission mission = new Mission(MissionType.EXPLORE,
+            MissionPhase.PLANNING, null);
+        info.getMissions().add(mission);
+      }
+      if (getGameLengthState() == GameLengthState.LATE_GAME
+          && exploreMissions < 2) {
+        Mission mission = new Mission(MissionType.EXPLORE,
+            MissionPhase.PLANNING, null);
+        info.getMissions().add(mission);
+      }
+      if (getGameLengthState() == GameLengthState.END_GAME
+          && exploreMissions < 1) {
+        Mission mission = new Mission(MissionType.EXPLORE,
+            MissionPhase.PLANNING, null);
+        info.getMissions().add(mission);
       }
       // Handle research
       Research.handle(info);

@@ -1829,4 +1829,19 @@ private int increaseHitChanceByComponent() {
     }
     return credit;
   }
+
+  /**
+   * Is ship scout ship? Probe or small miltary ship
+   * @return True for scout ships, false otherwise
+   */
+  public boolean isScoutShip() {
+    if (getHull().getHullType() == ShipHullType.PROBE) {
+      return true;
+    }
+    if (getHull().getSize() == ShipSize.SMALL
+        && !isColonyModule() && !isStarBase()) {
+      return true;
+    }
+    return false;
+  }
 }

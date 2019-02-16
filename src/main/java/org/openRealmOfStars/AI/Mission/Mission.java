@@ -119,7 +119,11 @@ public class Mission {
    * @param coordinate Target coordinate
    */
   public void setTarget(final Coordinate coordinate) {
-    targetCoordinate = new Coordinate(coordinate);
+    if (coordinate != null) {
+      targetCoordinate = new Coordinate(coordinate);
+    } else {
+      targetCoordinate = null;
+    }
   }
 
   /**
@@ -193,6 +197,9 @@ public class Mission {
    * @return X coordinate
    */
   public int getX() {
+    if (targetCoordinate == null) {
+      return -1;
+    }
     return targetCoordinate.getX();
   }
 
@@ -201,6 +208,9 @@ public class Mission {
    * @return Y coordinate
    */
   public int getY() {
+    if (targetCoordinate == null) {
+      return -1;
+    }
     return targetCoordinate.getY();
   }
 

@@ -860,6 +860,7 @@ public class Game implements ActionListener {
       }
       if (dataObject instanceof FleetView) {
         FleetView view = (FleetView) dataObject;
+        planet = view.getPlanet();
         info = starMap.getPlayerInfoByFleet(view.getFleet());
       }
       if (dataObject instanceof PlanetView) {

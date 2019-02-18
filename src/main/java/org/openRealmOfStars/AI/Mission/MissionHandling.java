@@ -44,7 +44,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2019  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1407,7 +1407,13 @@ public final class MissionHandling {
             game.changeGameState(GameState.DIPLOMACY_VIEW, info);
           }
         } else if (!info.isHuman()) {
-          handleDiplomacyBetweenAis(game, info, index, null, fleet);
+          Planet planet = map.getPlanetByCoordinate(point.getX(),
+              point.getY());
+          if (planet != null && planet.getPlanetOwnerIndex() == index) {
+            handleDiplomacyBetweenAis(game, info, index, null, planet);
+          } else {
+            handleDiplomacyBetweenAis(game, info, index, null, fleet);
+          }
         } else {
           Message msg = new Message(MessageType.FLEET,
               "Fleet encounter another fleet while moving in FTL!",
@@ -1458,7 +1464,12 @@ public final class MissionHandling {
           infoAtTarget.getMsgList().addNewMessage(msg);
         } else if (!info.isHuman() && !infoAtTarget.isBoard()
             && !info.isBoard()) {
-          handleDiplomacyBetweenAis(game, info, index, null, fleet);
+          Planet planet = map.getPlanetByCoordinate(nx, ny);
+          if (planet != null && planet.getPlanetOwnerIndex() == index) {
+            handleDiplomacyBetweenAis(game, info, index, null, planet);
+          } else {
+            handleDiplomacyBetweenAis(game, info, index, null, fleet);
+          }
         } else if (info.getMissions().getMissionForFleet(fleet.getName())
             == null) {
           Message msg = new Message(MessageType.FLEET,

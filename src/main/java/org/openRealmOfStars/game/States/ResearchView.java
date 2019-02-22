@@ -12,6 +12,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
@@ -34,7 +36,7 @@ import org.openRealmOfStars.player.tech.TechType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2019  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -53,7 +55,7 @@ import org.openRealmOfStars.player.tech.TechType;
  * Research view for handling researching technology for player
  *
  */
-public class ResearchView extends BlackPanel {
+public class ResearchView extends BlackPanel implements ListSelectionListener {
 
   /**
    *
@@ -269,6 +271,7 @@ public class ResearchView extends BlackPanel {
     Tech[] techs = player.getTechList().getList();
     techList = new JList<>(techs);
     techList.setCellRenderer(new TechListRenderer());
+    techList.addListSelectionListener(this);
     JScrollPane scroll = new JScrollPane(techList);
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     techList.setBackground(Color.BLACK);
@@ -319,15 +322,7 @@ public class ResearchView extends BlackPanel {
       if (playSoundFromSliders == 0) {
         playSoundFromSliders = 1;
       }
-      if (techList.getSelectedIndex() != -1) {
-        Tech tech = techList.getSelectedValue();
-        String strTmp = tech.getTechInfo(player.getRace());
-        if (!strTmp.equals(infoText.getText())) {
-          infoText.setLineWrap(false);
-          infoText.setText(strTmp);
-          infoText.repaint();
-        }
-      }
+      return;
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_SLIDER_COMBAT_RESEARCH)) {
@@ -338,6 +333,7 @@ public class ResearchView extends BlackPanel {
         playSoundFromSliders = 0;
       }
       updatePanel();
+      return;
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_PLUS_COMBAT_RESEARCH)) {
@@ -350,6 +346,7 @@ public class ResearchView extends BlackPanel {
         playSoundFromSliders = 0;
         updatePanel();
       }
+      return;
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_MINUS_COMBAT_RESEARCH)) {
@@ -362,6 +359,7 @@ public class ResearchView extends BlackPanel {
         playSoundFromSliders = 0;
         updatePanel();
       }
+      return;
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE_COMBAT)) {
       // Assuming that upgrade button is disabled so no need to make check here
@@ -372,6 +370,7 @@ public class ResearchView extends BlackPanel {
       updateTechInfo(TechType.Combat);
       SoundPlayer.playMenuSound();
       updatePanel();
+      return;
     }
 
     if (arg0.getActionCommand()
@@ -383,6 +382,7 @@ public class ResearchView extends BlackPanel {
         playSoundFromSliders = 0;
       }
       updatePanel();
+      return;
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_PLUS_DEFENSE_RESEARCH)) {
@@ -395,6 +395,7 @@ public class ResearchView extends BlackPanel {
         playSoundFromSliders = 0;
         updatePanel();
       }
+      return;
     }
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_MINUS_DEFENSE_RESEARCH)) {
@@ -406,6 +407,7 @@ public class ResearchView extends BlackPanel {
         playSoundFromSliders = 0;
         updatePanel();
       }
+      return;
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_UPGRADE_DEFENSE)) {
       // Assuming that upgrade button is disabled so no need to make check here
@@ -813,6 +815,19 @@ public class ResearchView extends BlackPanel {
     infoText.repaint();
     infoText.setLineWrap(true);
     infoText.setCharacterWidth(7);
+  }
+
+  @Override
+  public void valueChanged(final ListSelectionEvent e) {
+    if (techList.getSelectedIndex() != -1) {
+      Tech tech = techList.getSelectedValue();
+      String strTmp = tech.getTechInfo(player.getRace());
+      if (!strTmp.equals(infoText.getText())) {
+        infoText.setLineWrap(false);
+        infoText.setText(strTmp);
+        infoText.repaint();
+      }
+    }
   }
 
 }

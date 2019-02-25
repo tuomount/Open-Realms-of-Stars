@@ -276,6 +276,13 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     techList.setBackground(Color.BLACK);
     techList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    greyPanel.add(scroll);
+    greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
+    infoText = new InfoTextArea(20, 35);
+    infoText.setEditable(false);
+    infoText.setFont(GuiStatics.getFontCubellanSmaller());
+    greyPanel.add(infoText);
+    greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     if (focusTech != null) {
       for (int i = 0; i < techs.length; i++) {
         if (techs[i].getName().equals(focusTech)) {
@@ -284,13 +291,6 @@ public class ResearchView extends BlackPanel implements ListSelectionListener {
         }
       }
     }
-    greyPanel.add(scroll);
-    greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
-    infoText = new InfoTextArea(20, 35);
-    infoText.setEditable(false);
-    infoText.setFont(GuiStatics.getFontCubellanSmaller());
-    greyPanel.add(infoText);
-    greyPanel.add(Box.createRigidArea(new Dimension(10, 10)));
 
     base.add(greyPanel, BorderLayout.CENTER);
 

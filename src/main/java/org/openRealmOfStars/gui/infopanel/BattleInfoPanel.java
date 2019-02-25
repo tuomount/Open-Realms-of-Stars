@@ -98,6 +98,7 @@ public class BattleInfoPanel extends InfoPanel {
     BufferedImage img = new BufferedImage(Tile.MAX_WIDTH * 2,
         Tile.MAX_HEIGHT * 2, BufferedImage.TYPE_4BYTE_ABGR);
     this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    this.setTitle("Battle info");
     imageLabel = new ImageLabel(img, true);
     imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
     imageLabel.setFillColor(Color.black);

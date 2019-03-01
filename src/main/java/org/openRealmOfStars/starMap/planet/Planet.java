@@ -1486,6 +1486,9 @@ public class Planet {
           msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
+          if (building.isSingleAllowed()) {
+            setUnderConstruction(getProductionList()[0]);
+          }
         } else if (underConstruction instanceof Ship && !enemyOrbiting) {
           metal = metal - underConstruction.getMetalCost();
           prodResource = prodResource - underConstruction.getProdCost();

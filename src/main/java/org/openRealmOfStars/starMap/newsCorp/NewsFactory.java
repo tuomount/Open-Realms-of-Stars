@@ -1189,7 +1189,7 @@ public final class NewsFactory {
         instructions.addText(info.getEmpireName());
         instructions.addImage(info.getRace().getNameSingle());
         sb.append(info.getEmpireName());
-        sb.append(" has the all the home worlds in the galaxy! ");
+        sb.append(" has the half of the home worlds in the galaxy! ");
         sb.append("No other realm has power to challenge ");
         sb.append(info.getEmpireName());
         sb.append(".");
@@ -1204,7 +1204,7 @@ public final class NewsFactory {
         sb.append(info.getEmpireName());
         sb.append(" and ");
         sb.append(info2.getEmpireName());
-        sb.append(" has the all the home worlds in the galaxy! ");
+        sb.append(" has the half of the home worlds in the galaxy! ");
         sb.append("No other realm has power to challenge this alliance.");
       }
       news.setImageInstructions(instructions.build());

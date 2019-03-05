@@ -62,6 +62,10 @@ public class ImageInstruction {
    */
   private static final String PLANET = "planet";
   /**
+   * Instructions for draw logo
+   */
+  private static final String DRAW_LOGO = "drawLogo";
+  /**
    * Instructions for trader
    */
   private static final String TRADER = "trader";
@@ -205,6 +209,10 @@ public class ImageInstruction {
    * Planet type artificial world 1
    */
   public static final String PLANET_ARTIFICIALWORLD1 = "artificialtworld1";
+  /**
+   * Sports logo around the planet image
+   */
+  public static final String PLANET_SPORTS = "sportslogo";
   /**
    * Trader ship 1
    */
@@ -442,6 +450,42 @@ public class ImageInstruction {
   }
 
   /**
+   * Adds logo to the image.
+   * @param position Three choices: left, center and right
+   * @param logoType logo type. Choices are:
+   * @param size Two choices half or full
+   * @return ImageInstruction with text
+   * @throws IllegalArgumentException If position or planet type are illegal
+   */
+  public ImageInstruction addLogo(final String position,
+      final String logoType, final String size)
+      throws IllegalArgumentException {
+    if (!POSITION_CENTER.equals(position)
+        && !POSITION_LEFT.equals(position)
+        && !POSITION_RIGHT.equals(position)) {
+      throw new IllegalArgumentException("Illegal logo position: "
+        + position);
+    }
+    if (!PLANET_SPORTS.equals(logoType)) {
+      throw new IllegalArgumentException("Illegal logo type: " + logoType);
+    }
+    if (!SIZE_FULL.equals(size)
+        && !SIZE_HALF.equals(size)) {
+      throw new IllegalArgumentException("Illegal size: " + size);
+    }
+    checkDelim();
+    sb.append(DRAW_LOGO);
+    sb.append(PARAM_START);
+    sb.append(sanitizeParameters(position));
+    sb.append(PARAMETER_DELIM);
+    sb.append(sanitizeParameters(logoType));
+    sb.append(PARAMETER_DELIM);
+    sb.append(sanitizeParameters(size));
+    sb.append(PARAM_END);
+    return this;
+  }
+
+  /**
    * Adds Trader to the image.
    * @param position Three choices: left, center and right
    * @param trader Trader type. Choices are:
@@ -626,6 +670,12 @@ public class ImageInstruction {
     if (PLANET_GASGIANT3.equals(planetType)) {
       planetImg = GuiStatics.BIG_GASWORLD3;
     }
+    if (PLANET_GASGIANT3.equals(planetType)) {
+      planetImg = GuiStatics.BIG_GASWORLD3;
+    }
+    if (PLANET_SPORTS.equals(planetType)) {
+      planetImg = GuiStatics.BIG_SPORT_LOGO;
+    }
     if (SIZE_HALF.equals(size)) {
       planetImg = GuiStatics.scaleToHalf(planetImg);
     }
@@ -743,7 +793,7 @@ public class ImageInstruction {
             textY);
         textY = textY + height * 2;
       }
-      if (PLANET.equals(command)) {
+      if (PLANET.equals(command) || DRAW_LOGO.equals(command)) {
         paintPlanet(workImage, parameters[1], parameters[0], parameters[2]);
       }
       if (TRADER.equals(command)) {

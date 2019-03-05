@@ -344,6 +344,20 @@ public class NewsFactoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalacticSportsArena() {
+    PlayerInfo builder = Mockito.mock(PlayerInfo.class);
+    Mockito.when(builder.getEmpireName()).thenReturn("Empire of Test");
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.WATERWORLD2.getImageInstructions());
+    NewsData news = NewsFactory.makeGalacticSportsNews(builder, planet);
+    assertEquals(true, news.getImageInstructions().contains("SPORT"));
+    assertEquals(true, news.getNewsText().contains(
+        builder.getEmpireName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testTradeAllianceWithMerchanticalMaker() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getImageInstructions()).thenReturn(

@@ -394,6 +394,52 @@ public final class NewsFactory {
     return news;
   }
   /**
+   * Make Galactic sports news. New Galactic sports arena is being built.
+   * @param builder PlayerInfo who is building
+   * @param planet Where to build
+   * @return NewsData
+   */
+  public static NewsData makeGalacticSportsNews(final PlayerInfo builder,
+      final Planet planet) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    String position = ImageInstruction.POSITION_CENTER;
+    String size = ImageInstruction.SIZE_FULL;
+    instructions.addPlanet(position, planet.getImageInstructions(), size);
+    instructions.addLogo(position, ImageInstruction.PLANET_SPORTS, size);
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("UPCOMING GALACTIC SPORTS!");
+        break;
+      }
+      case 1: {
+        instructions.addText("GALACTIC SPORTS AT "
+            + planet.getName().toUpperCase());
+        break;
+      }
+      case 2: {
+        instructions.addText("GALACTIC SPORTS EVENT BY "
+            + builder.getEmpireName().toUpperCase());
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(builder.getEmpireName());
+    sb.append(" is building new Galactic Sports arena to ");
+    sb.append(planet.getName());
+    sb.append("! ");
+    String turns = planet.getProductionTimeAsString(
+        planet.getUnderConstruction());
+    sb.append("This arena should be ready in ");
+    sb.append(turns);
+    sb.append(". When finished there will be arrange galatic sports event! ");
+    news.setNewsText(sb.toString());
+    return news;
+  }
+  /**
    * Make Peace news. PeaceMaker makes peace offer to acceptor.
    * This diplomatic meeting happened in meeting place which
    * can be planet or fleet.

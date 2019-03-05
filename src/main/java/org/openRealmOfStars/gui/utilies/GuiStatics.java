@@ -815,6 +815,12 @@ public final class GuiStatics {
           "/resources/images/artificialworld1.png"));
 
   /**
+   * Big sports logo
+   */
+  public static final BufferedImage BIG_SPORT_LOGO = IOUtilities
+      .loadImage(Tiles.class.getResource("/resources/images/olympics.png"));
+
+  /**
    * Star field image for parallax scrolling
    */
   public static final BufferedImage STAR_FIELD_IMAGE = IOUtilities

@@ -348,6 +348,19 @@ public class ImageInstructionTest {
         ImageInstruction.SIZE_HALF);
     assertEquals("background(stars)+planet(position center,ironworld1,half)", instruction.build());
   }
+  
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBackgroundAndPlanetAndLogo() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instruction.addLogo(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_SPORTS,
+        ImageInstruction.SIZE_HALF);
+    instruction.addPlanet(ImageInstruction.POSITION_CENTER, ImageInstruction.PLANET_IRONWORLD1,
+        ImageInstruction.SIZE_HALF);
+    assertEquals("background(stars)+drawLogo(position center,sportslogo,half)"
+        + "+planet(position center,ironworld1,half)", instruction.build());
+  }
 
   @Test(expected=IllegalArgumentException.class)
   @Category(org.openRealmOfStars.UnitTest.class)

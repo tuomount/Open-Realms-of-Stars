@@ -350,6 +350,7 @@ public class NewsFactoryTest {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getImageInstructions()).thenReturn(
         PlanetTypes.WATERWORLD2.getImageInstructions());
+    Mockito.when(planet.getName()).thenReturn("Test planet");
     NewsData news = NewsFactory.makeGalacticSportsNews(builder, planet);
     assertEquals(true, news.getImageInstructions().contains("SPORT"));
     assertEquals(true, news.getNewsText().contains(

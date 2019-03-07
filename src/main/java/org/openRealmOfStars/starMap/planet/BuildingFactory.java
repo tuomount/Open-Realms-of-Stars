@@ -973,7 +973,8 @@ public final class BuildingFactory {
       tmp = new Building(index, "Galactic sports center",
           Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
       tmp.setDescription(
-          "Galactic sports stadium where \nbrutal football is played.");
+            "Galactic Olympics stadium where \n"
+          + "best atheletes compete each others.");
       tmp.setProdCost(40);
       tmp.setMetalCost(30);
       tmp.setMaintenanceCost(1);

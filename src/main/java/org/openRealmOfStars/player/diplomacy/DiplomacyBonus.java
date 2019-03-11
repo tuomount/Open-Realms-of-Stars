@@ -5,7 +5,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017,2018  Tuomo Untinen
+* Copyright (C) 2017-2019  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -318,6 +318,45 @@ public class DiplomacyBonus {
        onlyOne = true;
        bonusValue = 0;
        bonusLasting = 255;
+       break;
+     }
+     case OLYMPICS: {
+       if (race == SpaceRace.HUMAN || race == SpaceRace.SPORKS) {
+         bonusValue = 10;
+         bonusLasting = 110;
+       } else if (race == SpaceRace.MECHIONS) {
+         bonusValue = 5;
+         bonusLasting = 90;
+       } else {
+         bonusValue = 7;
+         bonusLasting = 100;
+       }
+       break;
+     }
+     case DNS_OLYMPICS: {
+       if (race == SpaceRace.SPORKS) {
+         bonusValue = -10;
+         bonusLasting = 110;
+       } else if (race == SpaceRace.MECHIONS) {
+         bonusValue = -5;
+         bonusLasting = 90;
+       } else {
+         bonusValue = -7;
+         bonusLasting = 100;
+       }
+       break;
+     }
+     case OLYMPICS_EMBARGO: {
+       if (race == SpaceRace.HUMAN) {
+         bonusValue = 8;
+         bonusLasting = 110;
+       } else if (race == SpaceRace.MECHIONS) {
+         bonusValue = 4;
+         bonusLasting = 90;
+       } else {
+         bonusValue = 6;
+         bonusLasting = 100;
+       }
        break;
      }
      default: {

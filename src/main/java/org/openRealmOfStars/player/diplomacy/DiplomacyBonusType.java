@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.diplomacy;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017,2018  Tuomo Untinen
+* Copyright (C) 2017-2019  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -127,13 +127,26 @@ public enum DiplomacyBonusType {
    * Most important purpose of this is that other realms
    * do not get war bonus or fatigue against this realm anymore.
    */
-  REALM_LOST;
+  REALM_LOST,
+  /**
+   * Between realms which participated or organized olympics.
+   */
+  OLYMPICS,
+  /**
+   * Organizer did not like if realm did not participate.
+   */
+  DNS_OLYMPICS,
+  /**
+   * If there are other realms which did not participate on same olympics
+   * this is bonus for them.
+   */
+  OLYMPICS_EMBARGO;
 
 
   /**
    * Number of Bonus type. This should be one larger than actual bonus types.
    */
-  public static final int MAX_BONUS_TYPE = 24;
+  public static final int MAX_BONUS_TYPE = 27;
 
   /**
    * Get ShipHullType index
@@ -165,6 +178,9 @@ public enum DiplomacyBonusType {
       case LIKED_EMBARGO: return 21;
       case DISLIKED_EMBARGO: return 22;
       case REALM_LOST: return 23;
+      case OLYMPICS: return 24;
+      case DNS_OLYMPICS: return 25;
+      case OLYMPICS_EMBARGO: return 26;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -225,6 +241,12 @@ public enum DiplomacyBonusType {
       return DiplomacyBonusType.DISLIKED_EMBARGO;
     case 23:
       return DiplomacyBonusType.REALM_LOST;
+    case 24:
+      return DiplomacyBonusType.OLYMPICS;
+    case 25:
+      return DiplomacyBonusType.DNS_OLYMPICS;
+    case 26:
+      return DiplomacyBonusType.OLYMPICS_EMBARGO;
     default:
       throw new IllegalArgumentException("Unexpected diplomacy bonus type!");
     }

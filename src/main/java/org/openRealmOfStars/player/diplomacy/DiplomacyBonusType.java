@@ -140,13 +140,29 @@ public enum DiplomacyBonusType {
    * If there are other realms which did not participate on same olympics
    * this is bonus for them.
    */
-  OLYMPICS_EMBARGO;
+  OLYMPICS_EMBARGO,
+  /**
+   * Realm has promised to vote for yes next important vote.
+   */
+  PROMISED_VOTE_YES,
+  /**
+   * Realm has promised to vote for no next important vote.
+   */
+  PROMISED_VOTE_NO,
+  /**
+   * Realm kept the voting promise.
+   */
+  PROMISE_KEPT,
+  /**
+   * Realm did not keep the voting promise.
+   */
+  PROMISE_BROKEN;
 
 
   /**
    * Number of Bonus type. This should be one larger than actual bonus types.
    */
-  public static final int MAX_BONUS_TYPE = 27;
+  public static final int MAX_BONUS_TYPE = 31;
 
   /**
    * Get ShipHullType index
@@ -181,6 +197,10 @@ public enum DiplomacyBonusType {
       case OLYMPICS: return 24;
       case DNS_OLYMPICS: return 25;
       case OLYMPICS_EMBARGO: return 26;
+      case PROMISED_VOTE_YES: return 27;
+      case PROMISED_VOTE_NO: return 28;
+      case PROMISE_KEPT: return 29;
+      case PROMISE_BROKEN: return 30;
       default: throw new IllegalArgumentException("No such Diplomacy Bonus"
           + " Type!");
     }
@@ -247,6 +267,14 @@ public enum DiplomacyBonusType {
       return DiplomacyBonusType.DNS_OLYMPICS;
     case 26:
       return DiplomacyBonusType.OLYMPICS_EMBARGO;
+    case 27:
+      return DiplomacyBonusType.PROMISED_VOTE_YES;
+    case 28:
+      return DiplomacyBonusType.PROMISED_VOTE_NO;
+    case 29:
+      return DiplomacyBonusType.PROMISE_KEPT;
+    case 30:
+      return DiplomacyBonusType.PROMISE_BROKEN;
     default:
       throw new IllegalArgumentException("Unexpected diplomacy bonus type!");
     }

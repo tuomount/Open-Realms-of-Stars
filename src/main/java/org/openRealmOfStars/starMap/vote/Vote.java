@@ -1,5 +1,9 @@
 package org.openRealmOfStars.starMap.vote;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 /**
 *
 * Open Realm of Stars game project
@@ -56,6 +60,29 @@ public class Vote {
     choices = new boolean[numberOfRealms];
     numberOfVotes = new int[numberOfRealms];
     setTurnsToVote(turns);
+  }
+
+  /**
+   * Constructor for vote by reading it from DataInputStream
+   * @param dis DataInputStream
+   * @param numberOfRealms Number of realms in game.
+   * @throws IOException if there is any problem with DataInputStream
+   */
+  public Vote(final DataInputStream dis, final int numberOfRealms)
+      throws IOException {
+    int typeValue = dis.readInt();
+    type = VotingType.getTypeByIndex(typeValue);
+    setTurnsToVote(dis.readInt());
+    choices = new boolean[numberOfRealms];
+    numberOfVotes = new int[numberOfRealms];
+    // Here should handle special vote specific information
+    if (turnsToVote == 0) {
+      // Vote has been done so reading the vote results
+      for (int i = 0; i < choices.length; i++) {
+        choices[i] = dis.readBoolean();
+        numberOfVotes[i] = dis.readInt();
+      }
+    }
   }
 
   /**
@@ -126,5 +153,23 @@ public class Vote {
       return numberOfVotes[index];
     }
     return 0;
+  }
+
+  /**
+   * Save vote to Data output stream
+   * @param dos DataOutputStream where to write
+   * @throws IOException If writing fails.
+   */
+  public void saveVote(final DataOutputStream dos) throws IOException {
+    dos.writeInt(type.getIndex());
+    dos.writeInt(turnsToVote);
+    // Here should handle special vote specific information
+    if (turnsToVote == 0) {
+      // Vote has been done so writing the vote results
+      for (int i = 0; i < choices.length; i++) {
+        dos.writeBoolean(choices[i]);
+        dos.writeInt(numberOfVotes[i]);
+      }
+    }
   }
 }

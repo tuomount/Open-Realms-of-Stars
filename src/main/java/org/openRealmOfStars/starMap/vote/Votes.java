@@ -1,5 +1,8 @@
 package org.openRealmOfStars.starMap.vote;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -39,6 +42,21 @@ public class Votes {
   }
 
   /**
+   * Read Votes from DataInputStream
+   * @param dis DataInputStream
+   * @param numberOfRealms Number of Realms in starmap.
+   * @throws IOException if there is any problem with DataInputStream
+   */
+  public Votes(final DataInputStream dis, final int numberOfRealms)
+      throws IOException {
+    listOfVotes = new ArrayList<>();
+    int count = dis.readInt();
+    for (int i = 0; i < count; i++) {
+      Vote vote = new Vote(dis, numberOfRealms);
+      listOfVotes.add(vote);
+    }
+  }
+  /**
    * Get Votes as a list
    * @return ArrayList of votes.
    */
@@ -58,5 +76,17 @@ public class Votes {
       }
     }
     return null;
+  }
+
+  /**
+   * Save votes to Data output stream
+   * @param dos DataOutputStream where to write
+   * @throws IOException If writing fails.
+   */
+  public void saveVotes(final DataOutputStream dos) throws IOException {
+    dos.writeInt(listOfVotes.size());
+    for (int i = 0; i < listOfVotes.size(); i++) {
+      listOfVotes.get(i).saveVote(dos);
+    }
   }
 }

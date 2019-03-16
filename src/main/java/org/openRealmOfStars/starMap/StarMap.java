@@ -42,6 +42,7 @@ import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
+import org.openRealmOfStars.starMap.vote.Votes;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -239,6 +240,10 @@ public class StarMap {
   private History history;
 
   /**
+   * Votes made in the galaxy.
+   */
+  private Votes votes;
+  /**
    * Game has ended
    */
   private boolean gameEnd;
@@ -246,7 +251,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.11";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.12";
 
   /**
    * Maximum amount of looping when finding free solar system spot.
@@ -267,6 +272,7 @@ public class StarMap {
     setScoreResearch(config.getScoreLimitResearch());
     setScoreDiplomacy(config.getScoreLimitDiplomacy());
     history = new History();
+    votes = new Votes();
     history.addTurn(0);
     maxX = config.getSizeX();
     maxY = config.getSizeY();
@@ -717,6 +723,7 @@ public class StarMap {
   public StarMap(final DataInputStream dis) throws IOException {
     setDebug(false);
     history = new History();
+    votes = new Votes();
     String str = IOUtilities.readString(dis);
     if (str.equals(MAGIC_STRING)) {
       turn = dis.readInt();
@@ -764,6 +771,7 @@ public class StarMap {
       NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
       newsCorpData = newsCorpRepo.restoreNewsCorp(dis,
           players.getCurrentMaxRealms());
+      votes = new Votes(dis, players.getCurrentMaxRealms());
       try {
         history = History.readFromStream(dis);
       } catch (IOException e) {
@@ -787,7 +795,7 @@ public class StarMap {
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(final DataOutputStream dos) throws IOException {
-    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.11");
+    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.12");
     // Turn number
     dos.writeInt(turn);
     // Victory conditions
@@ -820,6 +828,7 @@ public class StarMap {
     }
     NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
     newsCorpRepo.saveNewsCorp(dos, newsCorpData);
+    votes.saveVotes(dos);
     history.writeToStream(dos);
   }
 

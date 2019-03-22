@@ -42,6 +42,11 @@ public class Athlete {
   private PlayerInfo realm;
 
   /**
+   * Sporting value for games
+   */
+  private int sportingValue;
+
+  /**
    * Constructor for athlete
    * @param planet Planet name where athlete is from.
    * @param info Realm where atlete is from.
@@ -50,6 +55,7 @@ public class Athlete {
     this.planetName = planet;
     this.realm = info;
     bonus = 0;
+    sportingValue = 0;
   }
 
   /**
@@ -90,5 +96,21 @@ public class Athlete {
    */
   public int getBaseScore() {
     return realm.getRace().getTrooperPower() + bonus;
+  }
+
+  /**
+   * Get the sporting value of athlete.
+   * @return Sporting value
+   */
+  public int getSportingValue() {
+    return sportingValue;
+  }
+
+  /**
+   * Set sporting value of athelete.
+   * @param value Sporting value
+   */
+  public void setSportingValue(final int value) {
+    sportingValue = value;
   }
 }

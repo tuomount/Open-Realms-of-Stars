@@ -45,6 +45,17 @@ public class AthleteTest {
     athlete.setBonus(2);
     assertEquals(2, athlete.getBonus());
     assertEquals(12, athlete.getBaseScore());
+    assertEquals(0, athlete.getSportingValue());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSportingValue() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Athlete athlete = new Athlete("Test I", info);
+    athlete.setSportingValue(5);
+    assertEquals(5, athlete.getSportingValue());
   }
 
 }

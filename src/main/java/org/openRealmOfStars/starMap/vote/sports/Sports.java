@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import org.openRealmOfStars.utilities.DiceGenerator;
+
 /**
 *
 * Open Realm of Stars game project
@@ -67,5 +69,19 @@ public class Sports {
         return o2.getSportingValue() - o1.getSportingValue();
       }
     });
+  }
+
+  /**
+   * Makes athletes in list to do "sports" and they ordered
+   * then lowering sporting value where highest value is the first.
+   */
+  public void handleSports() {
+    for (Athlete athlete : athletes) {
+      int value = athlete.getBaseScore();
+      value = value + DiceGenerator.getRandom(athlete.getBaseScore());
+      value = value + DiceGenerator.getRandom(athlete.getBaseScore());
+      athlete.setSportingValue(value);
+    }
+    orderBySporting();
   }
 }

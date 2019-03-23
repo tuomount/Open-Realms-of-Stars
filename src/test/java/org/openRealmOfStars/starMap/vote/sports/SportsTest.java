@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
 *
 * Open Realm of Stars game project
@@ -62,6 +64,39 @@ public class SportsTest {
     assertEquals(athlete1, athletes[0]);
     assertEquals(athlete3, athletes[1]);
     assertEquals(athlete2, athletes[2]);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSporting() {
+    PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info1.getRace()).thenReturn(SpaceRace.HUMAN);
+    Athlete athlete1 = new Athlete("Planet I", info1);
+    athlete1.setBonus(0);
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Athlete athlete2 = new Athlete("Planet II", info2);
+    athlete2.setBonus(800);
+    PlayerInfo info3 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info3.getRace()).thenReturn(SpaceRace.GREYANS);
+    Athlete athlete3 = new Athlete("Planet III", info3);
+    athlete3.setBonus(100);
+    PlayerInfo info4 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info4.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Athlete athlete4 = new Athlete("Planet IV", info3);
+    athlete4.setBonus(30);
+    Sports sports = new Sports();
+    sports.add(athlete4);
+    sports.add(athlete3);
+    sports.add(athlete2);
+    sports.add(athlete1);
+    sports.handleSports();
+    Athlete[] athletes = sports.getAthletes();
+    assertEquals(4, athletes.length);
+    assertEquals(athlete2, athletes[0]);
+    assertEquals(athlete3, athletes[1]);
+    assertEquals(athlete4, athletes[2]);
+    assertEquals(athlete1, athletes[3]);
   }
 
 }

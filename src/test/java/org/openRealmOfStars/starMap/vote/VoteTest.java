@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 
 /**
 *
@@ -35,10 +36,10 @@ public class VoteTest {
     Vote vote = new Vote(VotingType.BAN_NUCLEAR_WEAPONS, 4, 10);
     assertEquals(VotingType.BAN_NUCLEAR_WEAPONS, vote.getType());
     assertEquals(10, vote.getTurnsToVote());
-    assertEquals(false, vote.getChoice(0));
-    assertEquals(false, vote.getChoice(1));
-    assertEquals(false, vote.getChoice(2));
-    assertEquals(false, vote.getChoice(3));
+    assertEquals(VotingChoice.NOT_VOTED, vote.getChoice(0));
+    assertEquals(VotingChoice.NOT_VOTED, vote.getChoice(1));
+    assertEquals(VotingChoice.NOT_VOTED, vote.getChoice(2));
+    assertEquals(VotingChoice.NOT_VOTED, vote.getChoice(3));
     assertEquals(0, vote.getNumberOfVotes(0));
     assertEquals(0, vote.getNumberOfVotes(1));
     assertEquals(0, vote.getNumberOfVotes(2));
@@ -47,18 +48,26 @@ public class VoteTest {
     vote.setNumberOfVotes(1, 4);
     vote.setNumberOfVotes(2, 6);
     vote.setNumberOfVotes(3, 8);
-    vote.setChoice(0, true);
-    vote.setChoice(1, true);
-    vote.setChoice(2, true);
-    vote.setChoice(3, true);
-    assertEquals(true, vote.getChoice(0));
-    assertEquals(true, vote.getChoice(1));
-    assertEquals(true, vote.getChoice(2));
-    assertEquals(true, vote.getChoice(3));
+    vote.setChoice(0, VotingChoice.VOTED_YES);
+    vote.setChoice(1, VotingChoice.VOTED_YES);
+    vote.setChoice(2, VotingChoice.VOTED_YES);
+    vote.setChoice(3, VotingChoice.VOTED_YES);
+    assertEquals(VotingChoice.VOTED_YES, vote.getChoice(0));
+    assertEquals(VotingChoice.VOTED_YES, vote.getChoice(1));
+    assertEquals(VotingChoice.VOTED_YES, vote.getChoice(2));
+    assertEquals(VotingChoice.VOTED_YES, vote.getChoice(3));
     assertEquals(2, vote.getNumberOfVotes(0));
     assertEquals(4, vote.getNumberOfVotes(1));
     assertEquals(6, vote.getNumberOfVotes(2));
     assertEquals(8, vote.getNumberOfVotes(3));
+    vote.setChoice(0, VotingChoice.VOTED_NO);
+    vote.setChoice(1, VotingChoice.VOTED_NO);
+    vote.setChoice(2, VotingChoice.VOTED_NO);
+    vote.setChoice(3, VotingChoice.VOTED_NO);
+    assertEquals(VotingChoice.VOTED_NO, vote.getChoice(0));
+    assertEquals(VotingChoice.VOTED_NO, vote.getChoice(1));
+    assertEquals(VotingChoice.VOTED_NO, vote.getChoice(2));
+    assertEquals(VotingChoice.VOTED_NO, vote.getChoice(3));
   }
 
   @Test
@@ -90,5 +99,16 @@ public class VoteTest {
     assertEquals(4, VotingType.TAXATION_OF_RICHEST_REALM.getIndex());
     assertEquals(5, VotingType.SECOND_CANDIDATE_MILITARY.getIndex());
     assertEquals(6, VotingType.RULER_OF_GALAXY.getIndex());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingChoices() {
+    assertEquals(0, VotingChoice.NOT_VOTED.getIndex());
+    assertEquals(1, VotingChoice.VOTED_YES.getIndex());
+    assertEquals(2, VotingChoice.VOTED_NO.getIndex());
+    assertEquals(VotingChoice.NOT_VOTED, VotingChoice.getTypeByIndex(0));
+    assertEquals(VotingChoice.VOTED_YES, VotingChoice.getTypeByIndex(1));
+    assertEquals(VotingChoice.VOTED_NO, VotingChoice.getTypeByIndex(2));
   }
 }

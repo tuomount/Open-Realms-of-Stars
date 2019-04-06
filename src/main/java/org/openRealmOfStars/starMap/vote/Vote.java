@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
+
 /**
 *
 * Open Realm of Stars game project
@@ -36,7 +38,7 @@ public class Vote {
   /**
    * Choices for each realm. True for supporting vote, false for negative vote.
    */
-  private boolean[] choices;
+  private VotingChoice[] choices;
 
   /**
    * Population of each realm at voting time.
@@ -57,7 +59,10 @@ public class Vote {
   public Vote(final VotingType type, final int numberOfRealms,
       final int turns) {
     this.type = type;
-    choices = new boolean[numberOfRealms];
+    choices = new VotingChoice[numberOfRealms];
+    for (int i = 0; i < choices.length; i++) {
+      choices[i] = VotingChoice.NOT_VOTED;
+    }
     numberOfVotes = new int[numberOfRealms];
     setTurnsToVote(turns);
   }
@@ -73,13 +78,14 @@ public class Vote {
     int typeValue = dis.readInt();
     type = VotingType.getTypeByIndex(typeValue);
     setTurnsToVote(dis.readInt());
-    choices = new boolean[numberOfRealms];
+    choices = new VotingChoice[numberOfRealms];
     numberOfVotes = new int[numberOfRealms];
     // Here should handle special vote specific information
     if (turnsToVote == 0) {
       // Vote has been done so reading the vote results
       for (int i = 0; i < choices.length; i++) {
-        choices[i] = dis.readBoolean();
+        int value = dis.read();
+        choices[i] = VotingChoice.getTypeByIndex(value);
         numberOfVotes[i] = dis.readInt();
       }
     }
@@ -114,7 +120,7 @@ public class Vote {
    * @param index Realm index
    * @param choice Choice for voting
    */
-  public void setChoice(final int index, final boolean choice) {
+  public void setChoice(final int index, final VotingChoice choice) {
     if (index >= 0 && index < choices.length) {
       choices[index] = choice;
     }
@@ -123,13 +129,13 @@ public class Vote {
   /**
    * Get Choice for realm.
    * @param index Realm index.
-   * @return Choice as a boolean
+   * @return Choice as a VotingChoice
    */
-  public boolean getChoice(final int index) {
+  public VotingChoice getChoice(final int index) {
     if (index >= 0 && index < choices.length) {
       return choices[index];
     }
-    return false;
+    return VotingChoice.NOT_VOTED;
   }
 
   /**
@@ -167,7 +173,7 @@ public class Vote {
     if (turnsToVote == 0) {
       // Vote has been done so writing the vote results
       for (int i = 0; i < choices.length; i++) {
-        dos.writeBoolean(choices[i]);
+        dos.writeByte(choices[i].getIndex());
         dos.writeInt(numberOfVotes[i]);
       }
     }

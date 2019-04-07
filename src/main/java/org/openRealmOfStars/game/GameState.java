@@ -128,5 +128,9 @@ public enum GameState {
   /**
    * Planet list view containing all the planets in single list.
    */
-  PLANET_LIST_VIEW;
+  PLANET_LIST_VIEW,
+  /**
+   * Voting view
+   */
+  VOTE_VIEW;
 }

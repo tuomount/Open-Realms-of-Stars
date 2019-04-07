@@ -48,6 +48,7 @@ import org.openRealmOfStars.game.States.ShipDesignView;
 import org.openRealmOfStars.game.States.ShipView;
 import org.openRealmOfStars.game.States.StarMapView;
 import org.openRealmOfStars.game.States.StatView;
+import org.openRealmOfStars.game.States.VoteView;
 import org.openRealmOfStars.game.config.ConfigFile;
 import org.openRealmOfStars.game.config.ConfigLine;
 import org.openRealmOfStars.gui.mapPanel.PopupPanel;
@@ -244,6 +245,11 @@ public class Game implements ActionListener {
    * Stat view for the game
    */
   private StatView statView;
+
+  /**
+   * Vote view for the game
+   */
+  private VoteView voteView;
 
   /**
    * Ship design view for the game
@@ -935,6 +941,14 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Show Voting panels
+   */
+  public void showVoteView() {
+    voteView = new VoteView(starMap, this);
+    this.updateDisplay(voteView);
+  }
+
+  /**
    * Show Ship design panels
    * @param oldDesign to copy to new one. Can be null.
    */
@@ -1136,6 +1150,9 @@ public class Game implements ActionListener {
       break;
     case VIEWSTATS:
       showStatView();
+      break;
+    case VOTE_VIEW:
+      showVoteView();
       break;
     case SHIPDESIGN: {
       shipDesign();
@@ -1834,6 +1851,11 @@ public class Game implements ActionListener {
           changeGameState(GameState.VIEWSTATS);
         }
         if (arg0.getActionCommand().equalsIgnoreCase(
+            GameCommands.COMMAND_VIEW_VOTING)) {
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.VOTE_VIEW);
+        }
+        if (arg0.getActionCommand().equalsIgnoreCase(
             GameCommands.COMMAND_NEWS)) {
           SoundPlayer.playMenuSound();
           changeGameState(GameState.NEWS_CORP_VIEW);
@@ -1939,6 +1961,16 @@ public class Game implements ActionListener {
         return;
       }
       historyView.handleAction(arg0);
+      return;
+    }
+    if (gameState == GameState.VOTE_VIEW && voteView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.STARMAP);
+        return;
+      }
+      //TODO Add action handling here for vote view
       return;
     }
     if (gameState == GameState.REALM_VIEW && realmView != null

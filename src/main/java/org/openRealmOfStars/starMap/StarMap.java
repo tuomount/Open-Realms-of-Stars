@@ -3038,4 +3038,12 @@ public class StarMap {
       tiles[px][py] = planet.getPlanetType().getTileIndex();
     }
   }
+
+  /**
+   * Get Starmap votes.
+   * @return Votes
+   */
+  public Votes getVotes() {
+    return votes;
+  }
 }

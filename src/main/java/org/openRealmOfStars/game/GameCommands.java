@@ -137,6 +137,11 @@ public final class GameCommands {
   public static final String COMMAND_VIEW_STARMAP = "ViewStarMap";
 
   /**
+   * View Voting view
+   */
+  public static final String COMMAND_VIEW_VOTING = "ViewVote";
+
+  /**
    * View Research view
    */
   public static final String COMMAND_VIEW_RESEARCH = "ViewResearch";

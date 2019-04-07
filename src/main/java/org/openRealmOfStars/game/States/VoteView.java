@@ -1,14 +1,23 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 
 import org.openRealmOfStars.game.GameCommands;
+import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.vote.Vote;
 
 /**
 *
@@ -40,6 +49,18 @@ public class VoteView extends BlackPanel {
   private static final long serialVersionUID = 1L;
 
   /**
+   * Label containing number of votes
+   */
+  private SpaceLabel voteLabel;
+  /**
+   * Voting index
+   */
+  private int voteIndex;
+  /**
+   * StarMap for whole starmap.
+   */
+  private StarMap map;
+  /**
    * Create new vote view
    * @param map StarMap which contains players and planet lists.
    * @param listener Action Listener
@@ -50,9 +71,39 @@ public class VoteView extends BlackPanel {
     base.setLayout(new BorderLayout());
     base.setTitle("Voting");
     this.add(base, BorderLayout.NORTH);
-    int numberOfVotes = map.getVotes().getVotes().size();
-    SpaceLabel label = new SpaceLabel("Votes: " + numberOfVotes);
-    base.add(label);
+
+    EmptyInfoPanel panel = new EmptyInfoPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+    IconButton iBtn = new IconButton(GuiStatics.LEFT_ARROW,
+        GuiStatics.LEFT_ARROW_PRESSED, false, GameCommands.COMMAND_PREV_VOTE,
+        this);
+    iBtn.setToolTipText("Previous vote");
+    iBtn.addActionListener(listener);
+    panel.add(iBtn);
+    panel.add(Box.createRigidArea(new Dimension(10, 10)));
+    ArrayList<Vote> votes = map.getVotes().getVotes();
+    voteIndex = votes.size() - 1;
+    for (int i = 0; i < votes.size(); i++) {
+      if (votes.get(i).getTurnsToVote() > 0) {
+        voteIndex = i;
+        break;
+      }
+    }
+    voteLabel = new SpaceLabel("Vote " + votes.size() + "/" + votes.size());
+    this.map = map;
+    panel.add(voteLabel);
+    panel.add(Box.createRigidArea(new Dimension(10, 10)));
+    iBtn = new IconButton(GuiStatics.RIGHT_ARROW,
+        GuiStatics.RIGHT_ARROW_PRESSED, false, GameCommands.COMMAND_NEXT_VOTE,
+        this);
+    iBtn.setToolTipText("Next vote");
+    iBtn.addActionListener(listener);
+    panel.add(iBtn);
+    panel.add(Box.createRigidArea(new Dimension(10, 10)));
+    EmptyInfoPanel panel2 = new EmptyInfoPanel();
+    panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
+    panel2.add(panel);
+    base.add(panel2, BorderLayout.CENTER);
 
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
@@ -63,5 +114,18 @@ public class VoteView extends BlackPanel {
     backBtn.addActionListener(listener);
     bottomPanel.add(backBtn, BorderLayout.CENTER);
     this.add(bottomPanel, BorderLayout.SOUTH);
+    updatePanels();
+  }
+
+  /**
+   * Update panels in view.
+   */
+  public void updatePanels() {
+    if (map.getVotes().getVotes().size() > 0) {
+      voteLabel.setText("Vote " + (voteIndex + 1) + "/"
+          + map.getVotes().getVotes().size());
+    } else {
+      voteLabel.setText("Vote 0/0");
+    }
   }
 }

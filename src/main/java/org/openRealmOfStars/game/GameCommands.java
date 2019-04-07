@@ -648,6 +648,15 @@ public final class GameCommands {
   public static final String COMMAND_DONE_HISTORY = "DoneHistory";
 
   /**
+   * Command for previous vote
+   */
+  public static final String COMMAND_PREV_VOTE = "PrevVote";
+  /**
+   * Command for next vote
+   */
+  public static final String COMMAND_NEXT_VOTE = "NextVote";
+
+  /**
    * Command for previous year
    */
   public static final String COMMAND_PREV_YEAR = "PrevYear";

@@ -18,6 +18,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.starMap.vote.VotingType;
 
 /**
 *
@@ -61,6 +62,14 @@ public class VoteView extends BlackPanel {
    */
   private StarMap map;
   /**
+   * Voting title label.
+   */
+  private SpaceLabel voteTitle;
+  /**
+   * Voting time label
+   */
+  private SpaceLabel votingTime;
+  /**
    * Create new vote view
    * @param map StarMap which contains players and planet lists.
    * @param listener Action Listener
@@ -69,7 +78,7 @@ public class VoteView extends BlackPanel {
     this.setLayout(new BorderLayout());
     InfoPanel base = new InfoPanel();
     base.setLayout(new BorderLayout());
-    base.setTitle("Voting");
+    base.setTitle("Voting list");
     this.add(base, BorderLayout.NORTH);
 
     EmptyInfoPanel panel = new EmptyInfoPanel();
@@ -104,7 +113,18 @@ public class VoteView extends BlackPanel {
     panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
     panel2.add(panel);
     base.add(panel2, BorderLayout.CENTER);
-
+    InfoPanel center = new InfoPanel();
+    center.setLayout(new BorderLayout());
+    center.setTitle("Voting");
+    panel = new EmptyInfoPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    voteTitle = new SpaceLabel("Participate to "
+        + VotingType.GALACTIC_OLYMPIC_PARTICIPATE.getDescription());
+    panel.add(voteTitle);
+    votingTime = new SpaceLabel("Voting time: 20 turns");
+    panel.add(votingTime);
+    center.add(panel, BorderLayout.NORTH);
+    this.add(center, BorderLayout.CENTER);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
@@ -124,8 +144,21 @@ public class VoteView extends BlackPanel {
     if (map.getVotes().getVotes().size() > 0) {
       voteLabel.setText("Vote " + (voteIndex + 1) + "/"
           + map.getVotes().getVotes().size());
+      Vote vote = map.getVotes().getVotes().get(voteIndex);
+      if (vote.getType() == VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
+        voteTitle.setText("Participate to " + vote.getType().getDescription());
+      } else {
+        voteTitle.setText("Vote for " + vote.getType().getDescription());
+      }
+      if (vote.getTurnsToVote() != 1) {
+        votingTime.setText("Voting time: " + vote.getTurnsToVote() + " turns");
+      } else {
+        votingTime.setText("Voting time: " + vote.getTurnsToVote() + " turn");
+      }
     } else {
       voteLabel.setText("Vote 0/0");
+      voteTitle.setText("No vote available!");
+      votingTime.setText("Voting time: 0 turns");
     }
   }
 }

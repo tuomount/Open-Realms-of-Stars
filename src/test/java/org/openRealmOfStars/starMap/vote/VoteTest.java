@@ -91,6 +91,25 @@ public class VoteTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testDescriptions() {
+    assertEquals(true, VotingType.GALACTIC_OLYMPIC_PARTICIPATE.
+        getDescription().contains("Galactic Olympic"));
+    assertEquals(true, VotingType.BAN_NUCLEAR_WEAPONS.
+        getDescription().contains("Ban nuclear"));
+    assertEquals(true, VotingType.BAN_PRIVATEER_SHIPS.
+        getDescription().contains("Ban privateer"));
+    assertEquals(true, VotingType.TAXATION_OF_RICHEST_REALM.
+        getDescription().contains("Taxation of"));
+    assertEquals(true, VotingType.GALACTIC_PEACE.
+        getDescription().contains("Galactic wide"));
+    assertEquals(true, VotingType.SECOND_CANDIDATE_MILITARY.
+        getDescription().contains("Second"));
+    assertEquals(true, VotingType.RULER_OF_GALAXY.
+        getDescription().contains("Ruler of Galaxy"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testTypes2() {
     assertEquals(0, VotingType.GALACTIC_OLYMPIC_PARTICIPATE.getIndex());
     assertEquals(1, VotingType.BAN_NUCLEAR_WEAPONS.getIndex());

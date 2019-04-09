@@ -87,4 +87,24 @@ public enum VotingType {
       default: return GALACTIC_OLYMPIC_PARTICIPATE;
     }
   }
+
+  /**
+   * Get index as int for voting type
+   * @return Voting type
+   */
+  public String getDescription() {
+    switch (this) {
+      case GALACTIC_OLYMPIC_PARTICIPATE: return "Galactic Olympic"
+          + " participation";
+      case BAN_NUCLEAR_WEAPONS: return "Ban nuclear weapons";
+      case BAN_PRIVATEER_SHIPS: return "Ban privateer ships";
+      case GALACTIC_PEACE: return "Galactic wide peace";
+      case TAXATION_OF_RICHEST_REALM: return "Taxation of richest realm";
+      case SECOND_CANDIDATE_MILITARY: return "Second candidate with military"
+          + " power";
+      case RULER_OF_GALAXY: return "Ruler of Galaxy";
+      default: return "Unknown";
+    }
+  }
+
 }

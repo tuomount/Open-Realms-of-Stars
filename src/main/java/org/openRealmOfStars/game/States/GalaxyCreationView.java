@@ -318,12 +318,12 @@ public class GalaxyCreationView extends BlackPanel {
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     String[] scoringVictory = new String[6];
-    scoringVictory [0] = "Very short (200 turns)";
-    scoringVictory [1] = "Short (300 turns)";
-    scoringVictory [2] = "Medium (400 turns)";
-    scoringVictory [3] = "Long (600 turns)";
-    scoringVictory [4] = "Very long (800 turns)";
-    scoringVictory [5] = "Massive (1000 turns)";
+    scoringVictory[0] = "Very short (200 turns)";
+    scoringVictory[1] = "Short (300 turns)";
+    scoringVictory[2] = "Medium (400 turns)";
+    scoringVictory[3] = "Long (600 turns)";
+    scoringVictory[4] = "Very long (800 turns)";
+    scoringVictory[5] = "Massive (1000 turns)";
     comboScoringVictory = new SpaceCombo<>(scoringVictory);
     comboScoringVictory.setToolTipText("How many turns game is played before"
         + " winner is decided by game score");
@@ -346,11 +346,11 @@ public class GalaxyCreationView extends BlackPanel {
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     String[] scoringCulture = new String[5];
-    scoringCulture [0] = "Disable cultural victory";
-    scoringCulture [1] = "Faster (75% regular limit)";
-    scoringCulture [2] = "Normal (100% regular limit)";
-    scoringCulture [3] = "Slower (150% regular limit)";
-    scoringCulture [4] = "Very slow (200% regular limit)";
+    scoringCulture[0] = "Disable cultural victory";
+    scoringCulture[1] = "Faster (75% regular limit)";
+    scoringCulture[2] = "Normal (100% regular limit)";
+    scoringCulture[3] = "Slower (150% regular limit)";
+    scoringCulture[4] = "Very slow (200% regular limit)";
     comboScoringCulture = new SpaceCombo<>(scoringCulture);
     comboScoringCulture.setToolTipText("How much culture must gain before"
         + " winning by cultural domination.");

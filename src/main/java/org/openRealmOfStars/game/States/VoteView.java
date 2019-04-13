@@ -66,9 +66,17 @@ public class VoteView extends BlackPanel {
    */
   private SpaceLabel voteTitle;
   /**
-   * Voting time label
+   * Voting time label.
    */
   private SpaceLabel votingTime;
+  /**
+   * Button for voting yes.
+   */
+  private SpaceButton voteYesBtn;
+  /**
+   * Button for voting no.
+   */
+  private SpaceButton voteNoBtn;
   /**
    * Create new vote view
    * @param map StarMap which contains players and planet lists.
@@ -123,7 +131,17 @@ public class VoteView extends BlackPanel {
     panel.add(voteTitle);
     votingTime = new SpaceLabel("Voting time: 20 turns");
     panel.add(votingTime);
+    EmptyInfoPanel panelx = new EmptyInfoPanel();
+    panelx.setLayout(new BorderLayout());
+    voteYesBtn = new SpaceButton("Participate", GameCommands.COMMAND_VOTE_YES);
+    voteYesBtn.addActionListener(listener);
+    panelx.add(voteYesBtn, BorderLayout.WEST);
+    panelx.add(Box.createRigidArea(new Dimension(50, 10)));
+    voteNoBtn = new SpaceButton("Boycott", GameCommands.COMMAND_VOTE_YES);
+    voteNoBtn.addActionListener(listener);
+    panelx.add(voteNoBtn, BorderLayout.EAST);
     center.add(panel, BorderLayout.NORTH);
+    center.add(panelx, BorderLayout.SOUTH);
     this.add(center, BorderLayout.CENTER);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();

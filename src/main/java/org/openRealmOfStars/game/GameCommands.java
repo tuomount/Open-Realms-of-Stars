@@ -655,6 +655,14 @@ public final class GameCommands {
    * Command for next vote
    */
   public static final String COMMAND_NEXT_VOTE = "NextVote";
+  /**
+   * Command for vote yes
+   */
+  public static final String COMMAND_VOTE_YES = "VoteYes";
+  /**
+   * Command for vote no
+   */
+  public static final String COMMAND_VOTE_NO = "VoteNo";
 
   /**
    * Command for previous year

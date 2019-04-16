@@ -13,6 +13,7 @@ import org.openRealmOfStars.gui.buttons.IconButton;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
@@ -78,6 +79,18 @@ public class VoteView extends BlackPanel {
    */
   private SpaceButton voteNoBtn;
   /**
+   * Info text area which shows how realms voted or not have voted yet.
+   */
+  private InfoTextArea votedText;
+  /**
+   * Info text area which shows informations about voting.
+   */
+  private InfoTextArea votingInfoText;
+  /**
+   * Infopanel for voting info, so that title can be changed.
+   */
+  private InfoPanel votingInfoTitle;
+  /**
    * Create new vote view
    * @param map StarMap which contains players and planet lists.
    * @param listener Action Listener
@@ -131,6 +144,22 @@ public class VoteView extends BlackPanel {
     panel.add(voteTitle);
     votingTime = new SpaceLabel("Voting time: 20 turns");
     panel.add(votingTime);
+    InfoPanel votingPanel = new InfoPanel();
+    votingPanel.setLayout(new BorderLayout());
+    votingPanel.setTitle("Voting results");
+    votedText = new InfoTextArea();
+    votedText.setEditable(false);
+    votedText.setFont(GuiStatics.getFontCubellanSmaller());
+    votingPanel.add(votedText, BorderLayout.CENTER);
+    center.add(votingPanel, BorderLayout.WEST);
+    votingInfoTitle = new InfoPanel();
+    votingInfoTitle.setLayout(new BorderLayout());
+    votingInfoTitle.setTitle("Your promises");
+    votingInfoText = new InfoTextArea();
+    votingInfoText.setEditable(false);
+    votingInfoText.setFont(GuiStatics.getFontCubellanSmaller());
+    votingInfoTitle.add(votingInfoText, BorderLayout.CENTER);
+    center.add(votingInfoTitle, BorderLayout.EAST);
     EmptyInfoPanel panelx = new EmptyInfoPanel();
     panelx.setLayout(new BorderLayout());
     voteYesBtn = new SpaceButton("Participate", GameCommands.COMMAND_VOTE_YES);
@@ -140,8 +169,11 @@ public class VoteView extends BlackPanel {
     voteNoBtn = new SpaceButton("Boycott", GameCommands.COMMAND_VOTE_YES);
     voteNoBtn.addActionListener(listener);
     panelx.add(voteNoBtn, BorderLayout.EAST);
-    center.add(panel, BorderLayout.NORTH);
-    center.add(panelx, BorderLayout.SOUTH);
+    EmptyInfoPanel north = new EmptyInfoPanel();
+    north.setLayout(new BorderLayout());
+    north.add(panel, BorderLayout.NORTH);
+    north.add(panelx, BorderLayout.SOUTH);
+    center.add(north, BorderLayout.NORTH);
     this.add(center, BorderLayout.CENTER);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();

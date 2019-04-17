@@ -2,6 +2,7 @@ package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
@@ -90,6 +91,7 @@ public class VoteView extends BlackPanel {
    * Infopanel for voting info, so that title can be changed.
    */
   private InfoPanel votingInfoTitle;
+
   /**
    * Create new vote view
    * @param map StarMap which contains players and planet lists.
@@ -97,11 +99,80 @@ public class VoteView extends BlackPanel {
    */
   public VoteView(final StarMap map, final ActionListener listener) {
     this.setLayout(new BorderLayout());
+    this.map = map;
+    this.add(createTopPanel(listener), BorderLayout.NORTH);
+    this.add(createCenterPanel(listener), BorderLayout.CENTER);
+    // Bottom panel
+    this.add(createBottomPanel(listener), BorderLayout.SOUTH);
+    updatePanels();
+  }
+
+  /**
+   * Create center panel for view.
+   * @param listener ActionListener
+   * @return Center panel
+   */
+  private InfoPanel createCenterPanel(final ActionListener listener) {
+    InfoPanel mainCenter = new InfoPanel();
+    mainCenter.setLayout(new BorderLayout());
+    mainCenter.setTitle("Voting");
+    InfoPanel center = new EmptyInfoPanel();
+    center.setLayout(new GridLayout(1, 0));
+    InfoPanel panel = new EmptyInfoPanel();
+    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    panel.add(Box.createRigidArea(new Dimension(10, 10)));
+    voteTitle = new SpaceLabel("Participate to "
+        + VotingType.GALACTIC_OLYMPIC_PARTICIPATE.getDescription());
+    voteTitle.setAlignmentX(CENTER_ALIGNMENT);
+    panel.add(voteTitle);
+    panel.add(Box.createRigidArea(new Dimension(5, 5)));
+    votingTime = new SpaceLabel("Voting time: 20 turns");
+    votingTime.setAlignmentX(CENTER_ALIGNMENT);
+    panel.add(votingTime);
+    panel.add(Box.createRigidArea(new Dimension(10, 10)));
+    panel.setAlignmentX(CENTER_ALIGNMENT);
+    InfoPanel votingPanel = new InfoPanel();
+    votingPanel.setLayout(new BorderLayout());
+    votingPanel.setTitle("Voting results");
+    votedText = new InfoTextArea();
+    votedText.setEditable(false);
+    votedText.setFont(GuiStatics.getFontCubellanSmaller());
+    votingPanel.add(votedText, BorderLayout.CENTER);
+    center.add(votingPanel);
+    votingInfoTitle = new InfoPanel();
+    votingInfoTitle.setLayout(new BorderLayout());
+    votingInfoTitle.setTitle("Your promises");
+    votingInfoText = new InfoTextArea();
+    votingInfoText.setEditable(false);
+    votingInfoText.setFont(GuiStatics.getFontCubellanSmaller());
+    votingInfoTitle.add(votingInfoText, BorderLayout.CENTER);
+    center.add(votingInfoTitle);
+    EmptyInfoPanel panelx = new EmptyInfoPanel();
+    panelx.setLayout(new BorderLayout());
+    voteYesBtn = new SpaceButton("Participate", GameCommands.COMMAND_VOTE_YES);
+    voteYesBtn.addActionListener(listener);
+    panelx.add(voteYesBtn, BorderLayout.WEST);
+    panelx.add(Box.createRigidArea(new Dimension(50, 10)));
+    voteNoBtn = new SpaceButton("Boycott", GameCommands.COMMAND_VOTE_YES);
+    voteNoBtn.addActionListener(listener);
+    panelx.add(voteNoBtn, BorderLayout.EAST);
+    EmptyInfoPanel north = new EmptyInfoPanel();
+    north.setLayout(new BoxLayout(north, BoxLayout.Y_AXIS));
+    north.add(panel);
+    mainCenter.add(north, BorderLayout.NORTH);
+    mainCenter.add(panelx, BorderLayout.SOUTH);
+    mainCenter.add(center, BorderLayout.CENTER);
+    return mainCenter;
+  }
+  /**
+   * Create top panel for view.
+   * @param listener ActionListener
+   * @return Top panel for view.
+   */
+  private InfoPanel createTopPanel(final ActionListener listener) {
     InfoPanel base = new InfoPanel();
     base.setLayout(new BorderLayout());
     base.setTitle("Voting list");
-    this.add(base, BorderLayout.NORTH);
-
     EmptyInfoPanel panel = new EmptyInfoPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
     IconButton iBtn = new IconButton(GuiStatics.LEFT_ARROW,
@@ -120,7 +191,6 @@ public class VoteView extends BlackPanel {
       }
     }
     voteLabel = new SpaceLabel("Vote " + votes.size() + "/" + votes.size());
-    this.map = map;
     panel.add(voteLabel);
     panel.add(Box.createRigidArea(new Dimension(10, 10)));
     iBtn = new IconButton(GuiStatics.RIGHT_ARROW,
@@ -134,48 +204,14 @@ public class VoteView extends BlackPanel {
     panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
     panel2.add(panel);
     base.add(panel2, BorderLayout.CENTER);
-    InfoPanel center = new InfoPanel();
-    center.setLayout(new BorderLayout());
-    center.setTitle("Voting");
-    panel = new EmptyInfoPanel();
-    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    voteTitle = new SpaceLabel("Participate to "
-        + VotingType.GALACTIC_OLYMPIC_PARTICIPATE.getDescription());
-    panel.add(voteTitle);
-    votingTime = new SpaceLabel("Voting time: 20 turns");
-    panel.add(votingTime);
-    InfoPanel votingPanel = new InfoPanel();
-    votingPanel.setLayout(new BorderLayout());
-    votingPanel.setTitle("Voting results");
-    votedText = new InfoTextArea();
-    votedText.setEditable(false);
-    votedText.setFont(GuiStatics.getFontCubellanSmaller());
-    votingPanel.add(votedText, BorderLayout.CENTER);
-    center.add(votingPanel, BorderLayout.WEST);
-    votingInfoTitle = new InfoPanel();
-    votingInfoTitle.setLayout(new BorderLayout());
-    votingInfoTitle.setTitle("Your promises");
-    votingInfoText = new InfoTextArea();
-    votingInfoText.setEditable(false);
-    votingInfoText.setFont(GuiStatics.getFontCubellanSmaller());
-    votingInfoTitle.add(votingInfoText, BorderLayout.CENTER);
-    center.add(votingInfoTitle, BorderLayout.EAST);
-    EmptyInfoPanel panelx = new EmptyInfoPanel();
-    panelx.setLayout(new BorderLayout());
-    voteYesBtn = new SpaceButton("Participate", GameCommands.COMMAND_VOTE_YES);
-    voteYesBtn.addActionListener(listener);
-    panelx.add(voteYesBtn, BorderLayout.WEST);
-    panelx.add(Box.createRigidArea(new Dimension(50, 10)));
-    voteNoBtn = new SpaceButton("Boycott", GameCommands.COMMAND_VOTE_YES);
-    voteNoBtn.addActionListener(listener);
-    panelx.add(voteNoBtn, BorderLayout.EAST);
-    EmptyInfoPanel north = new EmptyInfoPanel();
-    north.setLayout(new BorderLayout());
-    north.add(panel, BorderLayout.NORTH);
-    north.add(panelx, BorderLayout.SOUTH);
-    center.add(north, BorderLayout.NORTH);
-    this.add(center, BorderLayout.CENTER);
-    // Bottom panel
+    return base;
+  }
+  /**
+   * Create Bottom panel for view.
+   * @param listener ActionListener
+   * @return BottomPanel
+   */
+  private InfoPanel createBottomPanel(final ActionListener listener) {
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
     bottomPanel.setTitle(null);
@@ -183,10 +219,8 @@ public class VoteView extends BlackPanel {
         GameCommands.COMMAND_VIEW_STARMAP);
     backBtn.addActionListener(listener);
     bottomPanel.add(backBtn, BorderLayout.CENTER);
-    this.add(bottomPanel, BorderLayout.SOUTH);
-    updatePanels();
+    return bottomPanel;
   }
-
   /**
    * Update panels in view.
    */

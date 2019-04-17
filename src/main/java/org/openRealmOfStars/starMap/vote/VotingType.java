@@ -89,7 +89,7 @@ public enum VotingType {
   }
 
   /**
-   * Get index as int for voting type
+   * Get description for voting type.
    * @return Voting type
    */
   public String getDescription() {

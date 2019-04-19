@@ -21,6 +21,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
+import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 
 /**
 *
@@ -239,10 +240,47 @@ public class VoteView extends BlackPanel {
       } else {
         votingTime.setText("Voting time: " + vote.getTurnsToVote() + " turn");
       }
+      StringBuilder sb = new StringBuilder(80);
+      for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
+        VotingChoice choice = vote.getChoice(i);
+        sb.append(map.getPlayerList().getPlayerInfoByIndex(i).getEmpireName());
+        sb.append(": ");
+        sb.append(choice.getDescription());
+        sb.append("\n");
+      }
+      votedText.setText(sb.toString());
+      sb = new StringBuilder(80);
+      if (vote.getTurnsToVote() == 0) {
+        votingInfoTitle.setTitle("Voting results");
+        int yes = 0;
+        int no = 0;
+        for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
+          VotingChoice choice = vote.getChoice(i);
+          if (choice == VotingChoice.VOTED_YES) {
+            yes = yes + map.getTotalNumberOfPopulation(i);
+          }
+          if (choice == VotingChoice.VOTED_NO) {
+            no = no + map.getTotalNumberOfPopulation(i);
+          }
+        }
+        sb.append("Votes:\n");
+        sb.append("Yes: ");
+        sb.append(yes);
+        sb.append("\n");
+        sb.append("No: ");
+        sb.append(no);
+        sb.append("\n");
+      } else {
+        votingInfoTitle.setTitle("Promises");
+        sb.append("Voting promises you made to others:\n");
+      }
+      votingInfoText.setText(sb.toString());
     } else {
       voteLabel.setText("Vote 0/0");
       voteTitle.setText("No vote available!");
       votingTime.setText("Voting time: 0 turns");
+      votingInfoText.setText("No vote");
+      votedText.setText("No votes");
     }
   }
 }

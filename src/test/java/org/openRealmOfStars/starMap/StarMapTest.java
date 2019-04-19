@@ -453,6 +453,38 @@ public class StarMapTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStarMapPopulationCalculation() {
+    GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
+    Mockito.when(config.getSizeX()).thenReturn(75);
+    Mockito.when(config.getSizeY()).thenReturn(75);
+    Mockito.when(config.getMaxPlayers()).thenReturn(2);
+    Mockito.when(config.getStartingPosition()).thenReturn(
+        GalaxyConfig.START_POSITION_RANDOM);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
+    MessageList msgList = Mockito.mock(MessageList.class);
+    Mockito.when(info.getMsgList()).thenReturn(msgList);
+    ShipStat[] stats = new ShipStat[0];
+    Mockito.when(info.getShipStatList()).thenReturn(stats);
+    
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
+
+
+    StarMap map = new StarMap(config, players);
+    map.getPlanetList().get(1).setPlanetOwner(0, info);
+    map.getPlanetList().get(1).setWorkers(Planet.FOOD_FARMERS, 2);
+    assertEquals(5, map.getTotalNumberOfPopulation(0));
+    assertEquals(3, map.getTotalNumberOfPopulation(1));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testStarMapBrowsingThePlayerPlanets() {
     GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
     Mockito.when(config.getSizeX()).thenReturn(75);

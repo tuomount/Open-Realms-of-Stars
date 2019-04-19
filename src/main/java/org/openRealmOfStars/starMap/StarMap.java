@@ -3046,4 +3046,19 @@ public class StarMap {
   public Votes getVotes() {
     return votes;
   }
+
+  /**
+   * Get Total number of population for certain realm.
+   * @param index Realm index
+   * @return Total number of population
+   */
+  public int getTotalNumberOfPopulation(final int index) {
+    int result = 0;
+    for (Planet planet : planetList) {
+      if (planet.getPlanetOwnerIndex() == index) {
+        result = result + planet.getTotalPopulation();
+      }
+    }
+    return result;
+  }
 }

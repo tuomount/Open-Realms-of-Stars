@@ -18,6 +18,8 @@ import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
@@ -271,8 +273,46 @@ public class VoteView extends BlackPanel {
         sb.append(no);
         sb.append("\n");
       } else {
-        votingInfoTitle.setTitle("Promises");
-        sb.append("Voting promises you made to others:\n");
+        if (vote.getType() != VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
+          votingInfoTitle.setTitle("Promises");
+          sb.append("Voting promises you made to others:\n");
+          int currentRealmIndex = map.getPlayerList().getCurrentPlayer();
+          int count = 0;
+          for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
+            PlayerInfo info = map.getPlayerList().getPlayerInfoByIndex(i);
+            if (info != null
+                && info.getDiplomacy().getDiplomacyList(currentRealmIndex)
+                != null) {
+              if (info.getDiplomacy().getDiplomacyList(currentRealmIndex)
+                  .isBonusType(DiplomacyBonusType.PROMISED_VOTE_YES)) {
+                sb.append("You promised to vote YES for ");
+                sb.append(info.getEmpireName());
+                sb.append("\n");
+                count++;
+              } else if (info.getDiplomacy().getDiplomacyList(currentRealmIndex)
+                  .isBonusType(DiplomacyBonusType.PROMISED_VOTE_NO)) {
+                sb.append("You promised to vote NO for ");
+                sb.append(info.getEmpireName());
+                sb.append("\n");
+                count++;
+              }
+            }
+          }
+          if (count == 0) {
+            sb.append("You made no promises to anyone!");
+          }
+        } else {
+          votingInfoTitle.setTitle("Galactic Olympics");
+          sb.append("Galactic Olympics are being organized by");
+          PlayerInfo info = map.getPlayerList().getPlayerInfoByIndex(
+              vote.getOrganizerIndex());
+          if (info != null) {
+            sb.append(info.getEmpireName());
+          }
+          sb.append(" on planet called ");
+          sb.append(vote.getPlanetName());
+          sb.append(".\n");
+        }
       }
       votingInfoText.setText(sb.toString());
     } else {

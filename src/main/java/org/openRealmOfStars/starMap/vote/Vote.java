@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
 *
@@ -51,6 +52,16 @@ public class Vote {
   private int turnsToVote;
 
   /**
+   * Galactic olympic organizer index for realm.
+   */
+  private int organizerIndex;
+
+  /**
+   * Galactic olympic planet nane.
+   */
+  private String planetName;
+
+  /**
    * Constructor for vote. Contains all information for vote.
    * @param type Voting type
    * @param numberOfRealms Number of realms in game.
@@ -65,6 +76,8 @@ public class Vote {
     }
     numberOfVotes = new int[numberOfRealms];
     setTurnsToVote(turns);
+    organizerIndex = 0;
+    planetName = "";
   }
 
   /**
@@ -81,6 +94,11 @@ public class Vote {
     choices = new VotingChoice[numberOfRealms];
     numberOfVotes = new int[numberOfRealms];
     // Here should handle special vote specific information
+    if (type == VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
+      setOrganizerIndex(dis.read());
+      setPlanetName(IOUtilities.readString(dis));
+    }
+
     if (turnsToVote == 0) {
       // Vote has been done so reading the vote results
       for (int i = 0; i < choices.length; i++) {
@@ -170,6 +188,10 @@ public class Vote {
     dos.writeInt(type.getIndex());
     dos.writeInt(turnsToVote);
     // Here should handle special vote specific information
+    if (type == VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
+      dos.writeByte(getOrganizerIndex());
+      IOUtilities.writeString(dos, getPlanetName());
+    }
     if (turnsToVote == 0) {
       // Vote has been done so writing the vote results
       for (int i = 0; i < choices.length; i++) {
@@ -177,5 +199,37 @@ public class Vote {
         dos.writeInt(numberOfVotes[i]);
       }
     }
+  }
+
+  /**
+   * Get the galactic olympic organizer realm index.
+   * @return the organizerIndex
+   */
+  public int getOrganizerIndex() {
+    return organizerIndex;
+  }
+
+  /**
+   * Set the galactic olympics organizer realm index.
+   * @param organizerIndex the organizerIndex to set
+   */
+  public void setOrganizerIndex(final int organizerIndex) {
+    this.organizerIndex = organizerIndex;
+  }
+
+  /**
+   * Get the planet name where galactic olympics is being organized.
+   * @return the planetName
+   */
+  public String getPlanetName() {
+    return planetName;
+  }
+
+  /**
+   * Set the planet name where galactic olympics is being organized.
+   * @param planetName the planetName to set
+   */
+  public void setPlanetName(final String planetName) {
+    this.planetName = planetName;
   }
 }

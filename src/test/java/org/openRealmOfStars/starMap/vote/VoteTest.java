@@ -34,6 +34,8 @@ public class VoteTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     Vote vote = new Vote(VotingType.BAN_NUCLEAR_WEAPONS, 4, 10);
+    assertEquals(0, vote.getOrganizerIndex());
+    assertEquals("", vote.getPlanetName());
     assertEquals(VotingType.BAN_NUCLEAR_WEAPONS, vote.getType());
     assertEquals(10, vote.getTurnsToVote());
     assertEquals(VotingChoice.NOT_VOTED, vote.getChoice(0));
@@ -68,6 +70,18 @@ public class VoteTest {
     assertEquals(VotingChoice.VOTED_NO, vote.getChoice(1));
     assertEquals(VotingChoice.VOTED_NO, vote.getChoice(2));
     assertEquals(VotingChoice.VOTED_NO, vote.getChoice(3));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalacticOlympics() {
+    Vote vote = new Vote(VotingType.GALACTIC_OLYMPIC_PARTICIPATE, 4, 10);
+    assertEquals(0, vote.getOrganizerIndex());
+    assertEquals("", vote.getPlanetName());
+    vote.setOrganizerIndex(2);
+    assertEquals(2, vote.getOrganizerIndex());
+    vote.setPlanetName("Test I");
+    assertEquals("Test I", vote.getPlanetName());
   }
 
   @Test

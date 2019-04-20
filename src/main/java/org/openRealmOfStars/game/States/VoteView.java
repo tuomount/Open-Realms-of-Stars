@@ -3,6 +3,7 @@ package org.openRealmOfStars.game.States;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
@@ -254,6 +255,8 @@ public class VoteView extends BlackPanel {
       sb = new StringBuilder(80);
       if (vote.getTurnsToVote() == 0) {
         votingInfoTitle.setTitle("Voting results");
+        voteYesBtn.setEnabled(false);
+        voteNoBtn.setEnabled(false);
         int yes = 0;
         int no = 0;
         for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
@@ -273,6 +276,8 @@ public class VoteView extends BlackPanel {
         sb.append(no);
         sb.append("\n");
       } else {
+        voteYesBtn.setEnabled(true);
+        voteNoBtn.setEnabled(true);
         if (vote.getType() != VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
           votingInfoTitle.setTitle("Promises");
           sb.append("Voting promises you made to others:\n");
@@ -316,11 +321,34 @@ public class VoteView extends BlackPanel {
       }
       votingInfoText.setText(sb.toString());
     } else {
+      voteYesBtn.setEnabled(false);
+      voteNoBtn.setEnabled(false);
       voteLabel.setText("Vote 0/0");
       voteTitle.setText("No vote available!");
       votingTime.setText("Voting time: 0 turns");
       votingInfoText.setText("No vote");
       votedText.setText("No votes");
+    }
+  }
+
+  /**
+   * Handle actions in voting view
+   * @param arg0 ActionEvent
+   */
+  public void handleActions(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_VOTE_YES)) {
+      Vote vote = map.getVotes().getVotes().get(voteIndex);
+      int index = map.getPlayerList().getCurrentPlayer();
+      vote.setChoice(index, VotingChoice.VOTED_YES);
+      updatePanels();
+      return;
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_VOTE_NO)) {
+      Vote vote = map.getVotes().getVotes().get(voteIndex);
+      int index = map.getPlayerList().getCurrentPlayer();
+      vote.setChoice(index, VotingChoice.VOTED_NO);
+      updatePanels();
+      return;
     }
   }
 }

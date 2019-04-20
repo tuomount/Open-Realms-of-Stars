@@ -1970,7 +1970,7 @@ public class Game implements ActionListener {
         changeGameState(GameState.STARMAP);
         return;
       }
-      //TODO Add action handling here for vote view
+      voteView.handleActions(arg0);
       return;
     }
     if (gameState == GameState.REALM_VIEW && realmView != null

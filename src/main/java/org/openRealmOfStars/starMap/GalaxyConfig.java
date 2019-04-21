@@ -190,7 +190,7 @@ public class GalaxyConfig {
     setScoreLimitCulture(1);
     setScoreLimitConquer(1);
     setScoreLimitResearch(2);
-    setScoreLimitDiplomacy(0);
+    setScoreLimitDiplomacy(2);
     setMaxPlayers(4);
     setSolarSystemDistance(12, 0);
     playerRaces = new SpaceRace[StarMap.MAX_PLAYERS];
@@ -517,11 +517,19 @@ public class GalaxyConfig {
   }
 
   /**
-   * Set scoring limit for diplomacy
+   * Set scoring limit for diplomacy.
    * @param limit Limit for diplomacy victory condition
+   *              0 - Diplomacy victory disabled
+   *              1 - 2 diplomatic votes
+   *              2 - 3 diplomatic votes
+   *              3 - 4 diplomatic votes
+   *              4 - 5 diplomatic votes
+   *              5 - 6 diplomatic votes
    */
   public void setScoreLimitDiplomacy(final int limit) {
-    scoringDiplomacy = limit;
+    if (limit >= 0 && limit <= 5) {
+     scoringDiplomacy = limit;
+    }
   }
   /**
    * Get the number of rogue planets. This number is then

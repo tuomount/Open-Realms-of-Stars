@@ -95,6 +95,10 @@ public class GalaxyCreationView extends BlackPanel {
    * ComboBox on scoring scientific
    */
   private SpaceCombo<String> comboScoringScientific;
+  /**
+   * ComboBox on scoring diplomatic
+   */
+  private SpaceCombo<String> comboScoringDiplomatic;
 
   /**
    * ComboBox for rogue planet
@@ -164,6 +168,11 @@ public class GalaxyCreationView extends BlackPanel {
     comboGalaxySize.setSelectedIndex(this.config.getGalaxySizeIndex());
     comboGalaxySize.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboGalaxySize.addActionListener(listener);
+    comboGalaxySize.setToolTipText("<html>How many tiles galaxy has?"
+        + " This can affect also victory conditions.<br>"
+        + " Bigger galaxy needs more cultural score to win or more<br>"
+        + " United Galaxy Towers to build to start diplomatic victory path."
+        + "</html>");
     info.add(comboGalaxySize);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new SpaceLabel("Sun density:");
@@ -179,6 +188,10 @@ public class GalaxyCreationView extends BlackPanel {
     comboSunDensity.setSelectedIndex(this.config.getSunDensityIndex());
     comboSunDensity.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboSunDensity.addActionListener(listener);
+    comboSunDensity.setToolTipText("<html>How close solar system are to"
+        + " each others? Sparse creates more space between them <br>"
+        + "and overlap setting there can be solar system inside each others."
+        + "</html>");
     info.add(comboSunDensity);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new SpaceLabel("Planetary events:");
@@ -202,6 +215,8 @@ public class GalaxyCreationView extends BlackPanel {
     }
     comboPlanetaryEvent.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboPlanetaryEvent.addActionListener(listener);
+    comboPlanetaryEvent.setToolTipText("<html>How many of planets have"
+        + " special event when colonizing the planet.</html>");
     info.add(comboPlanetaryEvent);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new SpaceLabel("Rogue planets:");
@@ -230,8 +245,8 @@ public class GalaxyCreationView extends BlackPanel {
     }
     comboRoguePlanets.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboRoguePlanets.addActionListener(listener);
-    comboRoguePlanets.setToolTipText("Rogue planets are rare planet are outside"
-        + " of solar systems.");
+    comboRoguePlanets.setToolTipText("Rogue planets are rare planet are"
+        + " outside of solar systems.");
     info.add(comboRoguePlanets);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
@@ -254,8 +269,8 @@ public class GalaxyCreationView extends BlackPanel {
     comboSpacePirates.addActionListener(listener);
     comboSpacePirates.setToolTipText("<html>How many percent of deep space"
         + " anchors contain space pirates lair.<br>"
-        + "If disable there are no space monster or space pirates in "
-        + "space anomalies either.<html>");
+        + " If disable there are space pirates in"
+        + " space anomalies either.<html>");
     info.add(comboSpacePirates);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
@@ -272,8 +287,8 @@ public class GalaxyCreationView extends BlackPanel {
     comboSpaceAnomalies.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboSpaceAnomalies.addActionListener(listener);
     comboSpaceAnomalies.setToolTipText("<html>Is there random space anomalies."
-        + "If disable there are no space anomalies. Space anomalies can"
-        + "contain small bonus or even harmful events.<html>");
+        + " If disable there are no space anomalies.<br> Space anomalies can"
+        + " contain small bonus or even harmful events.<html>");
     info.add(comboSpaceAnomalies);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
@@ -414,6 +429,39 @@ public class GalaxyCreationView extends BlackPanel {
       case 4: comboScoringScientific.setSelectedIndex(4); break;
       case 5: comboScoringScientific.setSelectedIndex(5); break;
       default: comboScoringScientific.setSelectedIndex(2); break;
+    }
+
+    label = new SpaceLabel("Victory by diplomacy:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    String[] scoringDiplomacy = new String[6];
+    scoringDiplomacy[0] = "Disabled";
+    scoringDiplomacy[1] = "2 diplomatic votes";
+    scoringDiplomacy[2] = "3 diplomatic votes";
+    scoringDiplomacy[3] = "4 diplomatic votes";
+    scoringDiplomacy[4] = "5 diplomatic votes";
+    scoringDiplomacy[5] = "6 diplomatic votes";
+    comboScoringDiplomatic = new SpaceCombo<>(scoringDiplomacy);
+    comboScoringDiplomatic.setToolTipText("<html>Realm must minimum number of"
+        + " United Galaxy Towers. Minimum number varies of galaxy size."
+        + "<br>"
+        + " After minimum number of tower there are selected amount of"
+        + " diplomatic votes.<br>"
+        + " Two last votes are the most critical ones."
+        + "</html>");
+    comboScoringDiplomatic.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboScoringDiplomatic.addActionListener(listener);
+    info.add(comboScoringDiplomatic);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    switch (this.config.getScoreLimitDiplomacy()) {
+      case 0: comboScoringDiplomatic.setSelectedIndex(0); break;
+      case 1: comboScoringDiplomatic.setSelectedIndex(1); break;
+      case 2: comboScoringDiplomatic.setSelectedIndex(2); break;
+      case 3: comboScoringDiplomatic.setSelectedIndex(3); break;
+      case 4: comboScoringDiplomatic.setSelectedIndex(4); break;
+      case 5: comboScoringDiplomatic.setSelectedIndex(5); break;
+      default: comboScoringDiplomatic.setSelectedIndex(2); break;
     }
 
     xinvis.add(info);
@@ -690,6 +738,7 @@ public class GalaxyCreationView extends BlackPanel {
         }
       }
       config.setScoreLimitResearch(comboScoringScientific.getSelectedIndex());
+      config.setScoreLimitDiplomacy(comboScoringDiplomatic.getSelectedIndex());
     }
   }
 

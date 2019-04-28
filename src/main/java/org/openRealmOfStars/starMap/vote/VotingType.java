@@ -51,7 +51,19 @@ public enum VotingType {
   /**
    * Vote between second candidate and first candidate to be the ruler.
    */
-  RULER_OF_GALAXY;
+  RULER_OF_GALAXY,
+  /**
+   * Dummy voting for first candidate, this is the one who build required
+   *  number of United Galaxy Towers.
+   */
+  FIRST_CANDIDATE,
+  /**
+   * Dummy voting for second candidate, this is the one immediately
+   * after SECOND_CANDIATE_MILITARY has ended. It is either strongest military
+   * or most of the United Galaxy Towers. So building United Galaxy Towers
+   * is always useful.
+   */
+  SECOND_CANDIDATE;
 
   /**
    * Get index as int for voting type
@@ -66,6 +78,8 @@ public enum VotingType {
       case TAXATION_OF_RICHEST_REALM: return 4;
       case SECOND_CANDIDATE_MILITARY: return 5;
       case RULER_OF_GALAXY: return 6;
+      case FIRST_CANDIDATE: return 7;
+      case SECOND_CANDIDATE: return 8;
       default: return 0;
     }
   }
@@ -84,6 +98,8 @@ public enum VotingType {
       case 4: return TAXATION_OF_RICHEST_REALM;
       case 5: return SECOND_CANDIDATE_MILITARY;
       case 6: return RULER_OF_GALAXY;
+      case 7: return FIRST_CANDIDATE;
+      case 8: return SECOND_CANDIDATE;
       default: return GALACTIC_OLYMPIC_PARTICIPATE;
     }
   }
@@ -103,6 +119,8 @@ public enum VotingType {
       case SECOND_CANDIDATE_MILITARY: return "Second candidate with military"
           + " power";
       case RULER_OF_GALAXY: return "Ruler of Galaxy";
+      case FIRST_CANDIDATE: return "Secretary of United Galaxy";
+      case SECOND_CANDIDATE: return "Challenger of United Galaxy";
       default: return "Unknown";
     }
   }

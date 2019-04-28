@@ -98,7 +98,12 @@ public class Vote {
       setOrganizerIndex(dis.read());
       setPlanetName(IOUtilities.readString(dis));
     }
-
+    if (type == VotingType.FIRST_CANDIDATE) {
+      setOrganizerIndex(dis.read());
+    }
+    if (type == VotingType.SECOND_CANDIDATE) {
+      setOrganizerIndex(dis.read());
+    }
     if (turnsToVote == 0) {
       // Vote has been done so reading the vote results
       for (int i = 0; i < choices.length; i++) {
@@ -192,6 +197,12 @@ public class Vote {
       dos.writeByte(getOrganizerIndex());
       IOUtilities.writeString(dos, getPlanetName());
     }
+    if (type == VotingType.FIRST_CANDIDATE) {
+      dos.writeByte(getOrganizerIndex());
+    }
+    if (type == VotingType.SECOND_CANDIDATE) {
+      dos.writeByte(getOrganizerIndex());
+    }
     if (turnsToVote == 0) {
       // Vote has been done so writing the vote results
       for (int i = 0; i < choices.length; i++) {
@@ -202,7 +213,8 @@ public class Vote {
   }
 
   /**
-   * Get the galactic olympic organizer realm index.
+   * Get the galactic olympic organizer realm index. This method is also
+   * used for FIRST_CANDIDATE and SECOND_CANDIDATE.
    * @return the organizerIndex
    */
   public int getOrganizerIndex() {

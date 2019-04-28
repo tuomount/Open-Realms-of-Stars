@@ -101,6 +101,10 @@ public class VoteTest {
         VotingType.getTypeByIndex(5));
     assertEquals(VotingType.RULER_OF_GALAXY, 
         VotingType.getTypeByIndex(6));
+    assertEquals(VotingType.FIRST_CANDIDATE, 
+        VotingType.getTypeByIndex(7));
+    assertEquals(VotingType.SECOND_CANDIDATE, 
+        VotingType.getTypeByIndex(8));
   }
 
   @Test
@@ -120,6 +124,10 @@ public class VoteTest {
         getDescription().contains("Second"));
     assertEquals(true, VotingType.RULER_OF_GALAXY.
         getDescription().contains("Ruler of Galaxy"));
+    assertEquals(true, VotingType.FIRST_CANDIDATE.
+        getDescription().contains("Secretary of United Galaxy"));
+    assertEquals(true, VotingType.SECOND_CANDIDATE.
+        getDescription().contains("Challenger of United Galaxy"));
   }
 
   @Test
@@ -132,6 +140,8 @@ public class VoteTest {
     assertEquals(4, VotingType.TAXATION_OF_RICHEST_REALM.getIndex());
     assertEquals(5, VotingType.SECOND_CANDIDATE_MILITARY.getIndex());
     assertEquals(6, VotingType.RULER_OF_GALAXY.getIndex());
+    assertEquals(7, VotingType.FIRST_CANDIDATE.getIndex());
+    assertEquals(8, VotingType.SECOND_CANDIDATE.getIndex());
   }
 
   @Test

@@ -216,7 +216,8 @@ public final class TechFactory {
    * Planetary Improvement tech names for level 4
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL4_NAMES = {"Trade center",
-      "Extreme sports center", "Recycle center", "Starbase lab" };
+      "Extreme sports center", "Recycle center", "Starbase lab",
+      "United Galaxy Tower" };
   /**
    * Planetary Improvement tech names for level 5
    */

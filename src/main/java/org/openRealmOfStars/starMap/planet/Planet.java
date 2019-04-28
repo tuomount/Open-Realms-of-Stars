@@ -1834,17 +1834,32 @@ public class Planet {
   }
 
   /**
-   * Check if planet has Space port for building ships
-   * @return True if planet has space port, otherwise false.
+   * Does planet has certain building with specific name?
+   * @param buildingName Building name to look for-
+   * @return True if found, otherwise false.
    */
-  public boolean hasSpacePort() {
+  private boolean hasCertainBuilding(final String buildingName) {
     Building[] buildingsArray = getBuildingList();
     for (Building building : buildingsArray) {
-      if (building.getName().equals("Space port")) {
+      if (building.getName().equals(buildingName)) {
         return true;
       }
     }
     return false;
+  }
+  /**
+   * Check if planet has United Galaxy Tower?
+   * @return True if planet has United Galaxy Tower?
+   */
+  public boolean hasTower() {
+    return hasCertainBuilding("United Galaxy Tower");
+  }
+  /**
+   * Check if planet has Space port for building ships
+   * @return True if planet has space port, otherwise false.
+   */
+  public boolean hasSpacePort() {
+    return hasCertainBuilding("Space port");
   }
 
   /**

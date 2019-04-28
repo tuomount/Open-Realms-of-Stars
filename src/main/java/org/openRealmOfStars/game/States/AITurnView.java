@@ -1341,11 +1341,16 @@ public class AITurnView extends BlackPanel {
     }
     int[] numberOfPlanets = new int[game.getStarMap().getPlayerList()
                                     .getCurrentMaxRealms()];
+    int[] towers = new int[game.getStarMap().getPlayerList()
+                           .getCurrentMaxRealms()];
     for (int i = 0; i < game.getStarMap().getPlanetList().size(); i++) {
       Planet planet = game.getStarMap().getPlanetList().get(i);
       if (planet.getPlanetPlayerInfo() != null) {
         PlayerInfo info = planet.getPlanetPlayerInfo();
         numberOfPlanets[planet.getPlanetOwnerIndex()]++;
+        if (planet.hasTower()) {
+          towers[planet.getPlanetOwnerIndex()]++;
+        }
         boolean enemyOrbiting = false;
         Fleet fleetOrbiting = game.getStarMap().getFleetByCoordinate(
             planet.getX(), planet.getY());

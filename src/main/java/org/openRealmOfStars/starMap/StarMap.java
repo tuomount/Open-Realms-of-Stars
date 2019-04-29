@@ -2845,9 +2845,14 @@ public class StarMap {
   }
 
   /**
-   * Get Score limit for diplomacy
-   * THIS HAS NOT IMPLEMETED YET
+   * Get Score limit for diplomacy.
    * @return Score limit for diplomacy
+   *              0 - Diplomacy victory disabled
+   *              1 - 2 diplomatic votes
+   *              2 - 3 diplomatic votes
+   *              3 - 4 diplomatic votes
+   *              4 - 5 diplomatic votes
+   *              5 - 6 diplomatic votes
    */
   public int getScoreDiplomacy() {
     return scoreDiplomacy;
@@ -2855,8 +2860,13 @@ public class StarMap {
 
   /**
    * Set Score limit for diplomacy
-   * THIS HAS NOT IMPLEMETED YET
    * @param limit Limit for diplomacy
+   *              0 - Diplomacy victory disabled
+   *              1 - 2 diplomatic votes
+   *              2 - 3 diplomatic votes
+   *              3 - 4 diplomatic votes
+   *              4 - 5 diplomatic votes
+   *              5 - 6 diplomatic votes
    */
   public void setScoreDiplomacy(final int limit) {
     scoreDiplomacy = limit;

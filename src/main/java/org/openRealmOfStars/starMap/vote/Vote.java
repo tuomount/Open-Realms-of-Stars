@@ -57,6 +57,11 @@ public class Vote {
   private int organizerIndex;
 
   /**
+   * Second candidate index.
+   */
+  private int secondCandidateIndex;
+
+  /**
    * Galactic olympic planet nane.
    */
   private String planetName;
@@ -98,6 +103,11 @@ public class Vote {
       setOrganizerIndex(dis.read());
       setPlanetName(IOUtilities.readString(dis));
     }
+    if (type == VotingType.RULER_OF_GALAXY) {
+      setOrganizerIndex(dis.read());
+      setSecondCandidateIndex(dis.read());
+    }
+
     if (type == VotingType.FIRST_CANDIDATE) {
       setOrganizerIndex(dis.read());
     }
@@ -197,6 +207,10 @@ public class Vote {
       dos.writeByte(getOrganizerIndex());
       IOUtilities.writeString(dos, getPlanetName());
     }
+    if (type == VotingType.RULER_OF_GALAXY) {
+      dos.writeByte(getOrganizerIndex());
+      dos.writeByte(getSecondCandidateIndex());
+    }
     if (type == VotingType.FIRST_CANDIDATE) {
       dos.writeByte(getOrganizerIndex());
     }
@@ -243,5 +257,21 @@ public class Vote {
    */
   public void setPlanetName(final String planetName) {
     this.planetName = planetName;
+  }
+
+  /**
+   * Get Second candidate index
+   * @return the secondCandidateIndex
+   */
+  public int getSecondCandidateIndex() {
+    return secondCandidateIndex;
+  }
+
+  /**
+   * Set second candidate index.
+   * @param secondCandidateIndex the secondCandidateIndex to set
+   */
+  public void setSecondCandidateIndex(final int secondCandidateIndex) {
+    this.secondCandidateIndex = secondCandidateIndex;
   }
 }

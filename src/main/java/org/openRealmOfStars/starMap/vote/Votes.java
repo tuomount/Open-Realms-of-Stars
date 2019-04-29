@@ -5,6 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.utilities.DiceGenerator;
+
 /**
 *
 * Open Realm of Stars game project
@@ -78,6 +80,89 @@ public class Votes {
     return null;
   }
 
+  /**
+   * Generate next important vote
+   * @param maxNumberOfVotes Maximum number of votes
+   * @param numberOfRealms NUmber of realms in starmap
+   * @param turns When voting needs to be done.
+   * @return Vote if able to add new one, otherwise null
+   */
+  public Vote generateNextVote(final int maxNumberOfVotes,
+      final int numberOfRealms, final int turns) {
+    int count = 0;
+    for (Vote vote : listOfVotes) {
+      if (vote.getType() != VotingType.GALACTIC_OLYMPIC_PARTICIPATE
+          && vote.getType() != VotingType.FIRST_CANDIDATE
+          && vote.getType() != VotingType.SECOND_CANDIDATE) {
+        count++;
+      }
+    }
+    if (maxNumberOfVotes - count == 1) {
+      Vote vote = new Vote(VotingType.RULER_OF_GALAXY, numberOfRealms, turns);
+      vote.setOrganizerIndex(getFirstCandidate());
+      vote.setSecondCandidateIndex(getSecondCandidate());
+      listOfVotes.add(vote);
+      return vote;
+    }
+    if (maxNumberOfVotes - count == 2) {
+      Vote vote = new Vote(VotingType.SECOND_CANDIDATE_MILITARY,
+          numberOfRealms, turns);
+      listOfVotes.add(vote);
+      return vote;
+    }
+    if (maxNumberOfVotes - count > 2) {
+      ArrayList<VotingType> types = new ArrayList<>();
+      types.add(VotingType.BAN_NUCLEAR_WEAPONS);
+      types.add(VotingType.BAN_PRIVATEER_SHIPS);
+      types.add(VotingType.GALACTIC_PEACE);
+      types.add(VotingType.TAXATION_OF_RICHEST_REALM);
+      for (Vote vote : listOfVotes) {
+        types.remove(vote.getType());
+      }
+      int index = DiceGenerator.getRandom(types.size() - 1);
+      Vote vote = new Vote(types.get(index), numberOfRealms, turns);
+      listOfVotes.add(vote);
+      return vote;
+    }
+    return null;
+  }
+  /**
+   * Has first candidate selected or not.
+   * @return True if selected.
+   */
+  public boolean firstCandidateSelected() {
+    for (Vote vote : listOfVotes) {
+      if (vote.getType() == VotingType.FIRST_CANDIDATE) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Get First candidate realm index
+   * @return First candidate realm index or -1 if not set yet
+   */
+  public int getFirstCandidate() {
+    for (Vote vote : listOfVotes) {
+      if (vote.getType() == VotingType.FIRST_CANDIDATE) {
+        return vote.getOrganizerIndex();
+      }
+    }
+    return -1;
+  }
+  /**
+   * Get Second candidate realm index
+   * @return Second candidate realm index or -1 if not set yet
+   */
+  public int getSecondCandidate() {
+    for (Vote vote : listOfVotes) {
+      if (vote.getType() == VotingType.SECOND_CANDIDATE) {
+        return vote.getOrganizerIndex();
+      }
+    }
+    return -1;
+  }
   /**
    * Save votes to Data output stream
    * @param dos DataOutputStream where to write

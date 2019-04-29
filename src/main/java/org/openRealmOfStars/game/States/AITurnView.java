@@ -1231,6 +1231,39 @@ public class AITurnView extends BlackPanel {
     return added;
   }
   /**
+   * Handle diplomatic votes like arrange new votes and handle the end game.
+   * @param towers How many tower each realm has
+   */
+  private void handleDiplomaticVotes(final int[] towers) {
+    if (game.getStarMap().getScoreDiplomacy() == 0) {
+      // Diplomacy voting has been disabled.
+      return;
+    }
+    if (game.getStarMap().getVotes().firstCandidateSelected()) {
+      int turns = game.getStarMap().getScoreVictoryTurn() * 5 / 100;
+      game.getStarMap().getVotes().generateNextVote(
+          game.getStarMap().getScoreDiplomacy() + 1,
+          game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
+    } else {
+      int mostTowers = -1;
+      int towerCount = 0;
+      boolean tie = false;
+      for (int i = 0; i < towers.length; i++) {
+        if (towers[i] > towerCount && mostTowers != i) {
+          mostTowers = i;
+          towerCount = towers[i];
+          tie = false;
+        } else if (towers[i] == towerCount && mostTowers != -1) {
+          tie = true;
+        }
+      }
+      if (tie) {
+        //FIXME make news about tie
+        System.out.println("Tie!");
+      }
+    }
+  }
+  /**
    * Update whole star map to next turn
    */
   public void updateStarMapToNextTurn() {
@@ -1373,6 +1406,7 @@ public class AITurnView extends BlackPanel {
         game.getStarMap().doFleetScanUpdate(info, null, planet);
       }
     }
+    handleDiplomaticVotes(towers);
     boolean terminateNews = false;
     for (int i = 0; i < numberOfPlanets.length; i++) {
       if (numberOfPlanets[i] == 0) {

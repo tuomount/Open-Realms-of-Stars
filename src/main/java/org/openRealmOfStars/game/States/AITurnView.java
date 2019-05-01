@@ -1247,6 +1247,7 @@ public class AITurnView extends BlackPanel {
     } else {
       int mostTowers = -1;
       int towerCount = 0;
+      int secondIndex = -1;
       boolean tie = false;
       for (int i = 0; i < towers.length; i++) {
         if (towers[i] > towerCount && mostTowers != i) {
@@ -1255,11 +1256,16 @@ public class AITurnView extends BlackPanel {
           tie = false;
         } else if (towers[i] == towerCount && mostTowers != -1) {
           tie = true;
+          secondIndex = i;
         }
       }
-      if (tie) {
-        //FIXME make news about tie
-        System.out.println("Tie!");
+      if (tie && game.getStarMap().getTurn() % 10 == 0) {
+        PlayerInfo first = game.getPlayers().getPlayerInfoByIndex(mostTowers);
+        PlayerInfo second = game.getPlayers().getPlayerInfoByIndex(
+            secondIndex);
+        NewsData news = NewsFactory.makeUnitedGalaxyTowerRaceTie(first,
+            second);
+        game.getStarMap().getNewsCorpData().addNews(news);
       }
     }
   }

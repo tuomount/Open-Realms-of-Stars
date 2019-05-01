@@ -594,6 +594,45 @@ public final class NewsFactory {
   }
 
   /**
+   * Make tie news about united galaxy tower race.
+   * @param first First Realm
+   * @param second Second Realm
+   * @return NewsData
+   */
+  public static NewsData makeUnitedGalaxyTowerRaceTie(final PlayerInfo first,
+      final PlayerInfo second) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("TIE!");
+        break;
+      }
+      case 1: {
+        instructions.addText("EQUALLY STRONG!");
+        break;
+      }
+      case 2: {
+        instructions.addText("DRAW!");
+        break;
+      }
+    }
+    instructions.addText(first.getEmpireName());
+    instructions.addText(second.getEmpireName());
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(first.getEmpireName());
+    sb.append(" has equally same amount of United Galaxy Towers as ");
+    sb.append(second.getEmpireName());
+    sb.append("! ");
+    sb.append("Race of Galactic secretary is continuing...");
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
    * Make alliance news. Offerer makes alliance offer to acceptor.
    * This diplomatic meeting happened in meeting place which
    * can be planet or fleet.

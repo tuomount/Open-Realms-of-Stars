@@ -248,6 +248,24 @@ public class NewsFactoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUnitedGalaxyTowerRace() {
+    PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
+    Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
+    PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
+    NewsData news = NewsFactory.makeUnitedGalaxyTowerRaceTie(peaceMaker, acceptor);
+    assertEquals(true, news.getImageInstructions().contains(
+        peaceMaker.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains(
+        acceptor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        peaceMaker.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        acceptor.getEmpireName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testPeaceWithAggressiveMaker() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getImageInstructions()).thenReturn(

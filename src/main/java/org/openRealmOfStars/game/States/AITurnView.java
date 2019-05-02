@@ -47,6 +47,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.history.event.GalacticEvent;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
@@ -55,6 +56,8 @@ import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -1239,25 +1242,43 @@ public class AITurnView extends BlackPanel {
       // Diplomacy voting has been disabled.
       return;
     }
-    if (game.getStarMap().getVotes().firstCandidateSelected()) {
+    if (game.getStarMap().getVotes().firstCandidateSelected()
+        && game.getStarMap().getVotes().getNextImportantVote() == null) {
       int turns = game.getStarMap().getScoreVictoryTurn() * 5 / 100;
-      game.getStarMap().getVotes().generateNextVote(
+      Vote vote = game.getStarMap().getVotes().generateNextVote(
           game.getStarMap().getScoreDiplomacy() + 1,
           game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
+      game.getStarMap().getVotes().getVotes().add(vote);
     } else {
       int mostTowers = -1;
       int towerCount = 0;
       int secondIndex = -1;
+      int towerLimit = StarMapUtilities.calculateRequireTowerLimit(
+          game.getStarMap().getMaxX(), game.getStarMap().getMaxY());
       boolean tie = false;
       for (int i = 0; i < towers.length; i++) {
-        if (towers[i] > towerCount && mostTowers != i) {
-          mostTowers = i;
-          towerCount = towers[i];
-          tie = false;
-        } else if (towers[i] == towerCount && mostTowers != -1) {
-          tie = true;
-          secondIndex = i;
+        if (towers[i] >= towerLimit) {
+          if (towers[i] > towerCount && mostTowers != i) {
+            mostTowers = i;
+            towerCount = towers[i];
+            tie = false;
+          } else if (towers[i] == towerCount && mostTowers != -1) {
+            tie = true;
+            secondIndex = i;
+          }
         }
+      }
+      if (!tie && mostTowers != -1) {
+        // FIXME make news about secretary
+        Vote vote = new Vote(VotingType.FIRST_CANDIDATE,
+            game.getPlayers().getCurrentMaxRealms(), 0);
+        vote.setOrganizerIndex(mostTowers);
+        game.getStarMap().getVotes().getVotes().add(vote);
+        int turns = game.getStarMap().getScoreVictoryTurn() * 5 / 100;
+        vote = game.getStarMap().getVotes().generateNextVote(
+            game.getStarMap().getScoreDiplomacy() + 1,
+            game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
+        game.getStarMap().getVotes().getVotes().add(vote);
       }
       if (tie && game.getStarMap().getTurn() % 10 == 0) {
         PlayerInfo first = game.getPlayers().getPlayerInfoByIndex(mostTowers);

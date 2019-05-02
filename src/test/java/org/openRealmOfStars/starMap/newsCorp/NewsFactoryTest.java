@@ -266,6 +266,22 @@ public class NewsFactoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUnitedGalaxyTowerBuilding() {
+    PlayerInfo builder = Mockito.mock(PlayerInfo.class);
+    Mockito.when(builder.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(builder.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.WATERWORLD3.getImageInstructions());
+    Mockito.when(planet.getName()).thenReturn("Planet I");
+    NewsData news = NewsFactory.makeUnitedGalaxyTowerNews(builder, planet);
+    assertEquals(true, news.getImageInstructions().contains("UNITED GALAXY TOWER"));
+    assertEquals(true, news.getNewsText().contains("Empire of Test"));
+    assertEquals(true, news.getNewsText().contains("United Galaxy Tower"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testPeaceWithAggressiveMaker() {
     Planet planet = Mockito.mock(Planet.class);
     Mockito.when(planet.getImageInstructions()).thenReturn(

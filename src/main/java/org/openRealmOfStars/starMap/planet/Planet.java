@@ -1477,6 +1477,16 @@ public class Planet {
             eventOnPlanet.setText(news.getNewsText());
             map.getHistory().addEvent(eventOnPlanet);
           }
+          if (building.getName().equals("United Galaxy Tower") && map != null) {
+            NewsData news = NewsFactory.makeUnitedGalaxyTowerNews(
+                planetOwnerInfo, this);
+            map.getNewsCorpData().addNews(news);
+            EventOnPlanet eventOnPlanet = new EventOnPlanet(
+                EventType.PLANET_BUILDING, getCoordinate(),
+                getName(), getPlanetOwnerIndex());
+            eventOnPlanet.setText(news.getNewsText());
+            map.getHistory().addEvent(eventOnPlanet);
+          }
           metal = metal - underConstruction.getMetalCost();
           prodResource = prodResource - underConstruction.getProdCost();
           buildings.add((Building) underConstruction);

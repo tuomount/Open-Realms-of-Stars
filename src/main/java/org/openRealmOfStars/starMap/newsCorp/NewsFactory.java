@@ -1564,4 +1564,80 @@ public final class NewsFactory {
     return news;
   }
 
+  /**
+   * Make United Galaxy Tower news. Realm builds this building is closer
+   * to start path to diplomatic victory.
+   * @param realm PlayerInfo who is building
+   * @param planet Where to building
+   * @return NewsData
+   */
+  public static NewsData makeUnitedGalaxyTowerNews(final PlayerInfo realm,
+      final Planet planet) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    String position = ImageInstruction.POSITION_CENTER;
+    switch (DiceGenerator.getRandom(2)) {
+      case 0: {
+        position = ImageInstruction.POSITION_LEFT;
+        break;
+      }
+      case 1: {
+        position = ImageInstruction.POSITION_RIGHT;
+        break;
+      }
+      default: {
+        position = ImageInstruction.POSITION_RIGHT;
+        break;
+      }
+    }
+    String size = ImageInstruction.SIZE_FULL;
+    switch (DiceGenerator.getRandom(2)) {
+      case 0: {
+        size = ImageInstruction.SIZE_FULL;
+        break;
+      }
+      case 1:
+      default: {
+        size = ImageInstruction.SIZE_HALF;
+        break;
+      }
+    }
+    instructions.addPlanet(position, planet.getImageInstructions(), size);
+    position = ImageInstruction.POSITION_CENTER;
+    instructions.addImage(realm.getRace().getNameSingle());
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("UNITED GALAXY TOWER!");
+        break;
+      }
+      case 1: {
+        instructions.addText("UNITED GALAXY TOWER TO "
+              + planet.getName().toUpperCase());
+        break;
+      }
+      case 2: {
+        instructions.addText("UNITED GALAXY TOWER BUILT!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(realm.getEmpireName());
+    sb.append(" builds United Galaxy Tower to ");
+    sb.append(planet.getName());
+    sb.append("! ");
+    sb.append("With this great building ");
+    sb.append(realm.getEmpireName());
+    sb.append(" gains respect from other realms! ");
+    Attitude attitude = realm.getAiAttitude();
+    if (attitude == Attitude.DIPLOMATIC) {
+      sb.append(realm.getEmpireName());
+      sb.append(" is known to have diplomatic leaders. ");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
 }

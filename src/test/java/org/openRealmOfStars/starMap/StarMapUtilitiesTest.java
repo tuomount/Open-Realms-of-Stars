@@ -131,6 +131,23 @@ public class StarMapUtilitiesTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTowerLimit() {
+    int limit = StarMapUtilities.calculateRequireTowerLimit(50, 50);
+    assertEquals(1, limit);
+    limit = StarMapUtilities.calculateRequireTowerLimit(75, 75);
+    assertEquals(2, limit);
+    limit = StarMapUtilities.calculateRequireTowerLimit(128, 128);
+    assertEquals(3, limit);
+    limit = StarMapUtilities.calculateRequireTowerLimit(160, 160);
+    assertEquals(4, limit);
+    limit = StarMapUtilities.calculateRequireTowerLimit(200, 200);
+    assertEquals(5, limit);
+    limit = StarMapUtilities.calculateRequireTowerLimit(256, 256);
+    assertEquals(6, limit);
+  }
+
+  @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testEmbargo() {
     PlayerInfo embargoImposer = new PlayerInfo(SpaceRace.HUMAN, 4, 0);

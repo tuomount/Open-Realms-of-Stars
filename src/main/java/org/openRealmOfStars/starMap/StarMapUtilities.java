@@ -342,6 +342,32 @@ public final class StarMapUtilities {
   }
 
   /**
+   * Calculate required tower limit for diplomatic victory start.
+   * @param sizeX Map size in X coordinate
+   * @param sizeY Map size in Y coordinate
+   * @return Tower Limit
+   */
+  public static int calculateRequireTowerLimit(final int sizeX,
+      final int sizeY) {
+    int totalSize = sizeX * sizeY;
+    int limit = 0;
+    if (totalSize <= 50 * 50) {
+      limit = 1;
+    } else if (totalSize <= 75 * 75) {
+      limit = 2;
+    } else if (totalSize <= 128 * 128) {
+      limit = 3;
+    } else if (totalSize <= 160 * 160) {
+      limit = 4;
+    } else if (totalSize <= 200 * 200) {
+      limit = 5;
+    } else if (totalSize <= 256 * 256) {
+      limit = 6;
+    }
+    return limit;
+  }
+
+  /**
    * Search string from a list. Returns true if list contains searched
    * string.
    * @param list List where to search.

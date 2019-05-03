@@ -216,19 +216,18 @@ public final class TechFactory {
    * Planetary Improvement tech names for level 4
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL4_NAMES = {"Trade center",
-      "Extreme sports center", "Recycle center", "Starbase lab",
-      "United Galaxy Tower" };
+      "Extreme sports center", "Recycle center", "Starbase lab"};
   /**
    * Planetary Improvement tech names for level 5
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL5_NAMES = {
       "Farming center", "Mining center", "Manufacturing center",
-      "Radiation dampener" };
+      "Radiation dampener", "Galactic sports center" };
   /**
    * Planetary Improvement tech names for level 6
    */
   public static final String[] IMPROVEMENT_TECH_LEVEL6_NAMES = {
-      "Research center", "Stock market", "Galactic sports center",
+      "Research center", "Stock market", "United Galaxy Tower",
       "Starbase sports hall"};
   /**
    * Planetary Improvement tech names for level 7

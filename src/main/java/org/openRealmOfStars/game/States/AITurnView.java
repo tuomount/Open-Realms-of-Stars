@@ -1249,6 +1249,8 @@ public class AITurnView extends BlackPanel {
           game.getStarMap().getScoreDiplomacy() + 1,
           game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
       game.getStarMap().getVotes().getVotes().add(vote);
+      NewsData news = NewsFactory.makeVotingNews(vote);
+      game.getStarMap().getNewsCorpData().addNews(news);
     } else {
       int mostTowers = -1;
       int towerCount = 0;
@@ -1269,16 +1271,21 @@ public class AITurnView extends BlackPanel {
         }
       }
       if (!tie && mostTowers != -1) {
-        // FIXME make news about secretary
         Vote vote = new Vote(VotingType.FIRST_CANDIDATE,
             game.getPlayers().getCurrentMaxRealms(), 0);
         vote.setOrganizerIndex(mostTowers);
+        PlayerInfo secretary = game.getPlayers().getPlayerInfoByIndex(
+            mostTowers);
+        NewsData news = NewsFactory.makeSecretaryOfGalaxyNews(secretary);
+        game.getStarMap().getNewsCorpData().addNews(news);
         game.getStarMap().getVotes().getVotes().add(vote);
         int turns = game.getStarMap().getScoreVictoryTurn() * 5 / 100;
         vote = game.getStarMap().getVotes().generateNextVote(
             game.getStarMap().getScoreDiplomacy() + 1,
             game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
         game.getStarMap().getVotes().getVotes().add(vote);
+        news = NewsFactory.makeVotingNews(vote);
+        game.getStarMap().getNewsCorpData().addNews(news);
       }
       if (tie && game.getStarMap().getTurn() % 10 == 0) {
         PlayerInfo first = game.getPlayers().getPlayerInfoByIndex(mostTowers);

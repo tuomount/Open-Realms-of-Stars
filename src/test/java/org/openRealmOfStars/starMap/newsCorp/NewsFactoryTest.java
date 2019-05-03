@@ -19,6 +19,8 @@ import org.openRealmOfStars.starMap.history.History;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.starMap.vote.VotingType;
 
 /**
 *
@@ -1379,6 +1381,25 @@ public class NewsFactoryTest {
     assertNotNull(news);
     assertEquals(true, news.getNewsText().contains("Empire of Homarian"));
     assertEquals(true, news.getNewsText().contains("Empire of Centaurs"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingNews() {
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.BAN_NUCLEAR_WEAPONS);
+    Mockito.when(vote.getTurnsToVote()).thenReturn(20);
+    NewsData news = NewsFactory.makeVotingNews(vote);
+    assertEquals(true, news.getNewsText().contains(VotingType.BAN_NUCLEAR_WEAPONS.getDescription()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalacticSecretaryNes() {
+    PlayerInfo realm = Mockito.mock(PlayerInfo.class);
+    Mockito.when(realm.getEmpireName()).thenReturn("Empire of Test");
+    NewsData news = NewsFactory.makeSecretaryOfGalaxyNews(realm);
+    assertEquals(true, news.getNewsText().contains("Empire of Test"));
   }
 
 }

@@ -14,6 +14,7 @@ import org.openRealmOfStars.starMap.newsCorp.scoreBoard.ScoreBoard;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.TextUtilities;
 
@@ -632,6 +633,55 @@ public final class NewsFactory {
     return news;
   }
 
+  /**
+   * Make secretary of galaxy news.
+   * @param realm Realm which became secretary
+   * @return NewsData
+   */
+  public static NewsData makeSecretaryOfGalaxyNews(final PlayerInfo realm) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("NEW SECRETARY!");
+        break;
+      }
+      case 1: {
+        instructions.addText("GALAXY HAS THE SECRETARY!");
+        break;
+      }
+      case 2: {
+        instructions.addText("GALACTIC SECRETARY!");
+        break;
+      }
+    }
+    instructions.addText(realm.getEmpireName());
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(realm.getEmpireName());
+    sb.append(" has become the galactic secretary! ");
+    sb.append("Race of Galactic secretary is over,");
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        sb.append(" but who is going to be the second candidate?");
+        break;
+      }
+      case 1: {
+        sb.append(" but next thing is to focus on galactic politics.");
+        break;
+      }
+      case 2: {
+        sb.append(" but it is not sure yet who is going to be the ruler"
+            + " of the galaxy...");
+        break;
+      }
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
   /**
    * Make alliance news. Offerer makes alliance offer to acceptor.
    * This diplomatic meeting happened in meeting place which
@@ -1560,6 +1610,28 @@ public final class NewsFactory {
       sb.append(realm.getEmpireName());
       sb.append(" is known to have excellent research team. ");
     }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
+   * Make Voting news
+   * @param vote New vote to be organized
+   * @return NewsData
+   */
+  public static NewsData makeVotingNews(final Vote vote) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instructions.addImage(ImageInstruction.LOGO);
+    instructions.addText("NEW VOTE!");
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append("There is going to be new galactic voting about '");
+    sb.append(vote.getType().getDescription());
+    sb.append("'. This voting has time ");
+    sb.append(vote.getTurnsToVote());
+    sb.append(" turns.");
     news.setNewsText(sb.toString());
     return news;
   }

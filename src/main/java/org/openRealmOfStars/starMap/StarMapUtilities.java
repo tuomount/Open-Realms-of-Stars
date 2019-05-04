@@ -3,6 +3,7 @@ package org.openRealmOfStars.starMap;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -11,6 +12,8 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.starMap.vote.VotingType;
 
 /**
  *
@@ -206,6 +209,134 @@ public final class StarMapUtilities {
     }
   }
 
+  /**
+   * Get voting support attitude.
+   * @param attitude Attitude
+   * @param vote VotingType
+   * @return Voting support value
+   */
+  public static int getVotingSupportAccordingAttitude(final Attitude attitude,
+      final VotingType vote) {
+    if (vote == VotingType.RULER_OF_GALAXY) {
+      return 0;
+    }
+    int[] voteValues = null;
+    if (attitude == Attitude.AGGRESSIVE) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, -10, -10, -20, -5, 5};
+    }
+    if (attitude == Attitude.BACKSTABBING) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, -5, -5, -10, 5, 0};
+    }
+    if (attitude == Attitude.DIPLOMATIC) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, 10, 5, 10, 5, -5};
+    }
+    if (attitude == Attitude.EXPANSIONIST) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, 5, 5, 10, 5, -5};
+    }
+    if (attitude == Attitude.LOGICAL) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, 0, 0, 5, 5, 0};
+    }
+    if (attitude == Attitude.MERCHANTICAL) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, 0, 20, 10, -10, 0};
+    }
+    if (attitude == Attitude.MILITARISTIC) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, -10, -10, -5, 0, 10};
+    }
+    if (attitude == Attitude.PEACEFUL) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, 20, 10, 20, 5, -10};
+    }
+    if (attitude == Attitude.SCIENTIFIC) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, -5, -5, 5, 0, 0};
+    }
+    if (voteValues != null && vote.getIndex() > 0
+        && vote.getIndex() < voteValues.length) {
+      return voteValues[vote.getIndex()];
+    }
+    return 0;
+  }
+  /**
+   * Get Voting support value. Negative value is for
+   * NO and positive value is for yes.
+   * @param info PlayerInfo
+   * @param vote Voting
+   * @return Voting support value
+   */
+  public  static int getVotingSupport(final PlayerInfo info, final Vote vote) {
+    int result = 0;
+    return result;
+  }
   /**
    * Calculates escape coordinates for combat if defender escapes.
    * @param defender Defender's coordinate

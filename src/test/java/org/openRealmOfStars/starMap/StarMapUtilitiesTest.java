@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
@@ -15,6 +16,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.vote.VotingType;
 
 /**
 *
@@ -264,6 +266,116 @@ public class StarMapUtilitiesTest {
     assertEquals(true, diplomacyImposer.getDiplomacyList(1).isBonusType(DiplomacyBonusType.EMBARGO));
     assertEquals(true, diplomacyImposed.getDiplomacyList(2).isBonusType(DiplomacyBonusType.EMBARGO));
     assertEquals(true, diplomacyImposed.getDiplomacyList(0).isBonusType(DiplomacyBonusType.EMBARGO));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAttitudeVotingSupport() {
+    assertEquals(-10, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.AGGRESSIVE, VotingType.BAN_NUCLEAR_WEAPONS));
+    assertEquals(-10, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.AGGRESSIVE, VotingType.BAN_PRIVATEER_SHIPS));
+    assertEquals(-20, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.AGGRESSIVE, VotingType.GALACTIC_PEACE));
+    assertEquals(-5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.AGGRESSIVE, VotingType.TAXATION_OF_RICHEST_REALM));
+    assertEquals(5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.AGGRESSIVE, VotingType.SECOND_CANDIDATE_MILITARY));
+
+    assertEquals(-5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.BACKSTABBING, VotingType.BAN_NUCLEAR_WEAPONS));
+    assertEquals(-5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.BACKSTABBING, VotingType.BAN_PRIVATEER_SHIPS));
+    assertEquals(-10, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.BACKSTABBING, VotingType.GALACTIC_PEACE));
+    assertEquals(5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.BACKSTABBING, VotingType.TAXATION_OF_RICHEST_REALM));
+    assertEquals(0, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.BACKSTABBING, VotingType.SECOND_CANDIDATE_MILITARY));
+
+    assertEquals(10, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.DIPLOMATIC, VotingType.BAN_NUCLEAR_WEAPONS));
+    assertEquals(5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.DIPLOMATIC, VotingType.BAN_PRIVATEER_SHIPS));
+    assertEquals(10, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.DIPLOMATIC, VotingType.GALACTIC_PEACE));
+    assertEquals(5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.DIPLOMATIC, VotingType.TAXATION_OF_RICHEST_REALM));
+    assertEquals(-5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.DIPLOMATIC, VotingType.SECOND_CANDIDATE_MILITARY));
+
+    assertEquals(5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.EXPANSIONIST, VotingType.BAN_NUCLEAR_WEAPONS));
+    assertEquals(5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.EXPANSIONIST, VotingType.BAN_PRIVATEER_SHIPS));
+    assertEquals(10, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.EXPANSIONIST, VotingType.GALACTIC_PEACE));
+    assertEquals(5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.EXPANSIONIST, VotingType.TAXATION_OF_RICHEST_REALM));
+    assertEquals(-5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.EXPANSIONIST, VotingType.SECOND_CANDIDATE_MILITARY));
+
+    assertEquals(0, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.LOGICAL, VotingType.BAN_NUCLEAR_WEAPONS));
+    assertEquals(0, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.LOGICAL, VotingType.BAN_PRIVATEER_SHIPS));
+    assertEquals(5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.LOGICAL, VotingType.GALACTIC_PEACE));
+    assertEquals(5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.LOGICAL, VotingType.TAXATION_OF_RICHEST_REALM));
+    assertEquals(0, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.LOGICAL, VotingType.SECOND_CANDIDATE_MILITARY));
+
+    assertEquals(0, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.MERCHANTICAL, VotingType.BAN_NUCLEAR_WEAPONS));
+    assertEquals(20, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.MERCHANTICAL, VotingType.BAN_PRIVATEER_SHIPS));
+    assertEquals(10, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.MERCHANTICAL, VotingType.GALACTIC_PEACE));
+    assertEquals(-10, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.MERCHANTICAL, VotingType.TAXATION_OF_RICHEST_REALM));
+    assertEquals(0, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.MERCHANTICAL, VotingType.SECOND_CANDIDATE_MILITARY));
+
+    assertEquals(-10, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.MILITARISTIC, VotingType.BAN_NUCLEAR_WEAPONS));
+    assertEquals(-10, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.MILITARISTIC, VotingType.BAN_PRIVATEER_SHIPS));
+    assertEquals(-5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.MILITARISTIC, VotingType.GALACTIC_PEACE));
+    assertEquals(0, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.MILITARISTIC, VotingType.TAXATION_OF_RICHEST_REALM));
+    assertEquals(10, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.MILITARISTIC, VotingType.SECOND_CANDIDATE_MILITARY));
+
+    assertEquals(20, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.PEACEFUL, VotingType.BAN_NUCLEAR_WEAPONS));
+    assertEquals(10, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.PEACEFUL, VotingType.BAN_PRIVATEER_SHIPS));
+    assertEquals(20, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.PEACEFUL, VotingType.GALACTIC_PEACE));
+    assertEquals(5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.PEACEFUL, VotingType.TAXATION_OF_RICHEST_REALM));
+    assertEquals(-10, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.PEACEFUL, VotingType.SECOND_CANDIDATE_MILITARY));
+
+    assertEquals(-5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.SCIENTIFIC, VotingType.BAN_NUCLEAR_WEAPONS));
+    assertEquals(-5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.SCIENTIFIC, VotingType.BAN_PRIVATEER_SHIPS));
+    assertEquals(5, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.SCIENTIFIC, VotingType.GALACTIC_PEACE));
+    assertEquals(0, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.SCIENTIFIC, VotingType.TAXATION_OF_RICHEST_REALM));
+    assertEquals(0, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.SCIENTIFIC, VotingType.SECOND_CANDIDATE_MILITARY));
+
+    assertEquals(0, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.SCIENTIFIC, VotingType.RULER_OF_GALAXY));
+
+    assertEquals(0, StarMapUtilities.getVotingSupportAccordingAttitude(
+        Attitude.SCIENTIFIC, VotingType.FIRST_CANDIDATE));
+
   }
 
 }

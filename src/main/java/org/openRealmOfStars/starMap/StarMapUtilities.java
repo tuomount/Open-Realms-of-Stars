@@ -331,9 +331,11 @@ public final class StarMapUtilities {
    * NO and positive value is for yes.
    * @param info PlayerInfo
    * @param vote Voting
+   * @param map StarMap
    * @return Voting support value
    */
-  public  static int getVotingSupport(final PlayerInfo info, final Vote vote) {
+  public  static int getVotingSupport(final PlayerInfo info, final Vote vote,
+      final StarMap map) {
     int result = 0;
     result = getVotingSupportAccordingAttitude(info.getAttitude(),
         vote.getType());
@@ -389,7 +391,21 @@ public final class StarMapUtilities {
         result = result + 5;
       }
     }
-
+    if (vote.getType() == VotingType.TAXATION_OF_RICHEST_REALM) {
+      int index = map.getWealthyIndex(info);
+      int max = map.getPlayerList().getCurrentMaxRealms();
+      if (index == 1) {
+        result = result - 30;
+      } else if (index == max) {
+        result = result + 20;
+      } else if (index <= max / 2) {
+        int value = max / 2 - (index - 1);
+        int half = max / 2;
+        result = result - (30 * value / half);
+      } else {
+        result = result + (20 * index / max);
+      }
+    }
     return result;
   }
   /**

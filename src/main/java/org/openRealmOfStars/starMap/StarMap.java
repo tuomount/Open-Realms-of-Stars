@@ -3058,6 +3058,27 @@ public class StarMap {
   }
 
   /**
+   * Get Wealthy index. Which position realm has in order of credits.
+   * This is done by calculating how many wealthier realms there are.
+   * @param realm Realm to compare
+   * @return Wealthy index or -1 if cannot calculate.
+   */
+  public int getWealthyIndex(final PlayerInfo realm) {
+    int index = players.getIndex(realm);
+    if (index != -1) {
+      int biggerValue = 0;
+      int value = newsCorpData.getCredit().getLatest(index);
+      for (int i = 0; i < newsCorpData.getCredit().getMaxPlayers(); i++) {
+        if (i != index && newsCorpData.getCredit().getLatest(i) > value) {
+          biggerValue++;
+        }
+      }
+      index = biggerValue + 1;
+    }
+    return index;
+  }
+
+  /**
    * Get Total number of population for certain realm.
    * @param index Realm index
    * @return Total number of population

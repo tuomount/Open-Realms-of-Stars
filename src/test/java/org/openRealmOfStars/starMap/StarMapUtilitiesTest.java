@@ -13,9 +13,12 @@ import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
 
 /**
@@ -375,6 +378,166 @@ public class StarMapUtilitiesTest {
 
     assertEquals(0, StarMapUtilities.getVotingSupportAccordingAttitude(
         Attitude.SCIENTIFIC, VotingType.FIRST_CANDIDATE));
+
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingSupportBanNuclearWeapons() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getAttitude()).thenReturn(Attitude.PEACEFUL);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.GREYANS);
+    Vote vote = new Vote(VotingType.BAN_NUCLEAR_WEAPONS, 8, 20);
+    StarMap map = Mockito.mock(StarMap.class);
+    assertEquals(10, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getAttitude()).thenReturn(Attitude.PEACEFUL);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
+    assertEquals(50, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getAttitude()).thenReturn(Attitude.AGGRESSIVE);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.CHIRALOIDS);
+    assertEquals(-40, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getAttitude()).thenReturn(Attitude.SCIENTIFIC);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
+    assertEquals(-15, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getAttitude()).thenReturn(Attitude.MERCHANTICAL);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.TEUTHIDAES);
+    assertEquals(0, StarMapUtilities.getVotingSupport(info, vote, map));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingSupportBanPrivateerShips() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getAttitude()).thenReturn(Attitude.PEACEFUL);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    FleetList fleetList = Mockito.mock(FleetList.class);
+    Fleet fleet1 = Mockito.mock(Fleet.class);
+    Fleet fleet2 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet2.isPrivateerFleet()).thenReturn(true);
+    Mockito.when(fleetList.getNumberOfFleets()).thenReturn(2);
+    Mockito.when(fleetList.getByIndex(0)).thenReturn(fleet1);
+    Mockito.when(fleetList.getByIndex(1)).thenReturn(fleet1);
+    Mockito.when(info.getFleets()).thenReturn(fleetList);
+    Vote vote = new Vote(VotingType.BAN_PRIVATEER_SHIPS, 8, 20);
+    StarMap map = Mockito.mock(StarMap.class);
+    assertEquals(50, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(fleetList.getByIndex(1)).thenReturn(fleet2);
+    assertEquals(35, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(fleetList.getNumberOfFleets()).thenReturn(11);
+    Mockito.when(fleetList.getByIndex(0)).thenReturn(fleet2);
+    Mockito.when(fleetList.getByIndex(1)).thenReturn(fleet2);
+    Mockito.when(fleetList.getByIndex(2)).thenReturn(fleet2);
+    Mockito.when(fleetList.getByIndex(3)).thenReturn(fleet2);
+    Mockito.when(fleetList.getByIndex(4)).thenReturn(fleet2);
+    Mockito.when(fleetList.getByIndex(5)).thenReturn(fleet2);
+    Mockito.when(fleetList.getByIndex(6)).thenReturn(fleet2);
+    Mockito.when(fleetList.getByIndex(7)).thenReturn(fleet2);
+    Mockito.when(fleetList.getByIndex(8)).thenReturn(fleet2);
+    Mockito.when(fleetList.getByIndex(9)).thenReturn(fleet2);
+    Mockito.when(fleetList.getByIndex(10)).thenReturn(fleet2);
+    assertEquals(45, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.TEUTHIDAES);
+    assertEquals(-5, StarMapUtilities.getVotingSupport(info, vote, map));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingSupportGalacticPeace() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getAttitude()).thenReturn(Attitude.MILITARISTIC);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
+    Vote vote = new Vote(VotingType.GALACTIC_PEACE, 8, 20);
+    StarMap map = Mockito.mock(StarMap.class);
+    assertEquals(5, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(diplomacy.getNumberOfWar()).thenReturn(1);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.DEMOCRACY);
+    assertEquals(10, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(info.getWarFatigue()).thenReturn(-2);
+    assertEquals(15, StarMapUtilities.getVotingSupport(info, vote, map));
+
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingSupportTaxationOfRichest() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getAttitude()).thenReturn(Attitude.MILITARISTIC);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Vote vote = new Vote(VotingType.TAXATION_OF_RICHEST_REALM, 8, 20);
+    StarMap map = Mockito.mock(StarMap.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(8);
+    Mockito.when(map.getWealthyIndex(info)).thenReturn(1);
+    assertEquals(-25, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(map.getWealthyIndex(info)).thenReturn(2);
+    assertEquals(-17, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(map.getWealthyIndex(info)).thenReturn(3);
+    assertEquals(-10, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(map.getWealthyIndex(info)).thenReturn(4);
+    assertEquals(-2, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(map.getWealthyIndex(info)).thenReturn(5);
+    assertEquals(17, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(map.getWealthyIndex(info)).thenReturn(6);
+    assertEquals(20, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(map.getWealthyIndex(info)).thenReturn(7);
+    assertEquals(22, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(map.getWealthyIndex(info)).thenReturn(8);
+    assertEquals(25, StarMapUtilities.getVotingSupport(info, vote, map));
+
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingSupportTaxationOfRichest2() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getAttitude()).thenReturn(Attitude.DIPLOMATIC);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Vote vote = new Vote(VotingType.TAXATION_OF_RICHEST_REALM, 6, 20);
+    StarMap map = Mockito.mock(StarMap.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(6);
+    Mockito.when(map.getWealthyIndex(info)).thenReturn(1);
+    assertEquals(-20, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(map.getWealthyIndex(info)).thenReturn(2);
+    assertEquals(-10, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(map.getWealthyIndex(info)).thenReturn(3);
+    assertEquals(0, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(map.getWealthyIndex(info)).thenReturn(4);
+    assertEquals(23, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(map.getWealthyIndex(info)).thenReturn(5);
+    assertEquals(26, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(map.getWealthyIndex(info)).thenReturn(6);
+    assertEquals(30, StarMapUtilities.getVotingSupport(info, vote, map));
+
 
   }
 

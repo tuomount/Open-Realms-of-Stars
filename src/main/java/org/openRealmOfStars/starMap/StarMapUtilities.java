@@ -335,6 +335,61 @@ public final class StarMapUtilities {
    */
   public  static int getVotingSupport(final PlayerInfo info, final Vote vote) {
     int result = 0;
+    result = getVotingSupportAccordingAttitude(info.getAttitude(),
+        vote.getType());
+    result = result + getVotingSupportAccordingAttitude(
+        info.getRace().getAttitude(), vote.getType());
+    if (vote.getType() == VotingType.BAN_NUCLEAR_WEAPONS) {
+      if (info.getRace() == SpaceRace.CENTAURS
+          || info.getRace() == SpaceRace.HOMARIANS) {
+        result = result + 20;
+      } else if (info.getRace() == SpaceRace.CHIRALOIDS) {
+        result = result - 20;
+      } else if (info.getRace() == SpaceRace.MECHIONS) {
+        result = result - 10;
+      } else if (info.getRace() == SpaceRace.GREYANS
+          || info.getRace() == SpaceRace.MOTHOIDS) {
+        result = result - 5;
+      } else if (info.getRace() == SpaceRace.HUMAN
+          || info.getRace() == SpaceRace.TEUTHIDAES) {
+        result = result + 10;
+      }
+    }
+    if (vote.getType() == VotingType.BAN_PRIVATEER_SHIPS) {
+      if (info.getRace() == SpaceRace.SCAURIANS) {
+        result = result + 10;
+      }
+      if (info.getRace() == SpaceRace.TEUTHIDAES) {
+        result = result - 10;
+      }
+      int privateerFleets = 0;
+      for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
+        Fleet fleet = info.getFleets().getByIndex(i);
+        if (fleet.isPrivateerFleet()) {
+          privateerFleets++;
+        }
+      }
+      if (privateerFleets == 0) {
+        // Haven't got fleets yet, so banning is beneficial
+        result = result + 10;
+      } else if (privateerFleets < 5) {
+        // Got some but not much, more would be nice
+        result = result - 5;
+      } else if (privateerFleets > 10) {
+        // Got enough so those can be now banned
+        result = result + 5;
+      }
+    }
+    if (vote.getType() == VotingType.GALACTIC_PEACE) {
+      if (info.getDiplomacy().getNumberOfWar() > 0
+          && !info.getGovernment().isImmuneToHappiness()) {
+        result = result + 5;
+      }
+      if (info.getWarFatigue() < 0) {
+        result = result + 5;
+      }
+    }
+
     return result;
   }
   /**

@@ -405,6 +405,38 @@ public final class StarMapUtilities {
       } else {
         result = result + (20 * index / max);
       }
+      int richest = map.getWealthyIndex(true);
+      if (info.getDiplomacy().isAlliance(richest)) {
+        result = result - 20;
+      }
+      if (info.getDiplomacy().isDefensivePact(richest)) {
+        result = result - 15;
+      }
+      if (info.getDiplomacy().isTradeAlliance(richest)) {
+        result = result - 10;
+      }
+      if (info.getDiplomacy().isWar(richest)) {
+        result = result + 20;
+      }
+      if (info.getDiplomacy().isTradeEmbargo(richest)) {
+        result = result + 15;
+      }
+      int poorest = map.getWealthyIndex(false);
+      if (info.getDiplomacy().isAlliance(poorest)) {
+        result = result + 20;
+      }
+      if (info.getDiplomacy().isDefensivePact(poorest)) {
+        result = result + 15;
+      }
+      if (info.getDiplomacy().isTradeAlliance(poorest)) {
+        result = result + 10;
+      }
+      if (info.getDiplomacy().isWar(poorest)) {
+        result = result - 20;
+      }
+      if (info.getDiplomacy().isTradeEmbargo(poorest)) {
+        result = result - 15;
+      }
     }
     return result;
   }

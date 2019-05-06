@@ -3079,6 +3079,31 @@ public class StarMap {
   }
 
   /**
+   * Get wealthy index. This method can be used to look for richest realm
+   * or poorest real.
+   * @param highest True for richest and false for poorest
+   * @return Wealthy index or -1 if not found.
+   */
+  public int getWealthyIndex(final boolean highest) {
+    int index = -1;
+    int value = -1;
+    if (!highest) {
+      value = Integer.MAX_VALUE;
+    }
+    for (int i = 0; i < newsCorpData.getCredit().getMaxPlayers(); i++) {
+      if (highest && newsCorpData.getCredit().getLatest(i) > value) {
+        index = i;
+        value = newsCorpData.getCredit().getLatest(i);
+      }
+      if (!highest && newsCorpData.getCredit().getLatest(i) < value) {
+        index = i;
+        value = newsCorpData.getCredit().getLatest(i);
+      }
+    }
+    return index;
+  }
+
+  /**
    * Get Total number of population for certain realm.
    * @param index Realm index
    * @return Total number of population

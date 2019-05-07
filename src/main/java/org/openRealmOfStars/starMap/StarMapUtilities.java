@@ -438,6 +438,54 @@ public final class StarMapUtilities {
         result = result - 15;
       }
     }
+    if (vote.getType() == VotingType.SECOND_CANDIDATE_MILITARY) {
+      int mostMilitary = map.getMilitaryHighest();
+      int myIndex = map.getPlayerList().getIndex(info);
+      if (mostMilitary != -1) {
+        if (mostMilitary == myIndex) {
+          result = result + 40;
+        } else {
+          if (info.getDiplomacy().isAlliance(mostMilitary)) {
+            result = result + 30;
+          }
+          if (info.getDiplomacy().isDefensivePact(mostMilitary)) {
+            result = result + 20;
+          }
+          if (info.getDiplomacy().isTradeAlliance(mostMilitary)) {
+            result = result + 10;
+          }
+          if (info.getDiplomacy().isWar(mostMilitary)) {
+            result = result - 20;
+          }
+          if (info.getDiplomacy().isTradeEmbargo(mostMilitary)) {
+            result = result - 10;
+          }
+        }
+      }
+      int mostTower = map.getSecondCandidateForTower();
+      if (mostTower != -1) {
+        if (mostTower == myIndex) {
+          result = result - 40;
+        } else {
+          if (info.getDiplomacy().isAlliance(mostTower)) {
+            result = result - 30;
+          }
+          if (info.getDiplomacy().isDefensivePact(mostTower)) {
+            result = result - 20;
+          }
+          if (info.getDiplomacy().isTradeAlliance(mostTower)) {
+            result = result - 10;
+          }
+          if (info.getDiplomacy().isWar(mostTower)) {
+            result = result + 20;
+          }
+          if (info.getDiplomacy().isTradeEmbargo(mostTower)) {
+            result = result + 10;
+          }
+        }
+      }
+    }
+
     return result;
   }
   /**

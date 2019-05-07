@@ -3095,6 +3095,31 @@ public class StarMap {
   }
 
   /**
+   * Get second candidate for amount of United Galaxy Towers.
+   * @return Second candidate for amount of tower.
+   */
+  public int getSecondCandidateForTower() {
+    int[] towers = new int[getPlayerList().getCurrentMaxRealms()];
+    for (int i = 0; i < getPlanetList().size(); i++) {
+      Planet planet = getPlanetList().get(i);
+      if (planet.getPlanetPlayerInfo() != null && planet.hasTower()) {
+        towers[planet.getPlanetOwnerIndex()]++;
+      }
+    }
+    int first = -1;
+    int second = -1;
+    for (int i = 0; i < towers.length; i++) {
+      if (first == -1 && towers[i] > 0) {
+        first = i;
+      } else if (towers[i] > towers[first]) {
+        second = first;
+        first = i;
+      }
+    }
+    return second;
+  }
+
+  /**
    * Get wealthy index. This method can be used to look for richest realm
    * or poorest real.
    * @param highest True for richest and false for poorest

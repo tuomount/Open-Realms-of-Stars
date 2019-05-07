@@ -3079,6 +3079,22 @@ public class StarMap {
   }
 
   /**
+   * Get highest military index.
+   * @return Highest military index.
+   */
+  public int getMilitaryHighest() {
+    int index = -1;
+    int value = -1;
+    for (int i = 0; i < newsCorpData.getMilitary().getMaxPlayers(); i++) {
+      if (newsCorpData.getMilitary().getLatest(i) > value) {
+        index = i;
+        value = newsCorpData.getMilitary().getLatest(i);
+      }
+    }
+    return index;
+  }
+
+  /**
    * Get wealthy index. This method can be used to look for richest realm
    * or poorest real.
    * @param highest True for richest and false for poorest

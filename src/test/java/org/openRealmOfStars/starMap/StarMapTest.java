@@ -866,6 +866,45 @@ public class StarMapTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStarMapCreateWithMilitaryIndex() {
+    GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
+    Mockito.when(config.getSizeX()).thenReturn(50);
+    Mockito.when(config.getSizeY()).thenReturn(50);
+    Mockito.when(config.getMaxPlayers()).thenReturn(4);
+    Mockito.when(config.getStartingPosition()).thenReturn(
+        GalaxyConfig.START_POSITION_BORDER);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Human");
+    MessageList msgList = Mockito.mock(MessageList.class);
+    Mockito.when(info.getMsgList()).thenReturn(msgList);
+    ShipStat[] stats = new ShipStat[0];
+    Mockito.when(info.getShipStatList()).thenReturn(stats);
+    
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(2)).thenReturn(info);
+    Mockito.when(players.getPlayerInfoByIndex(3)).thenReturn(info);
+    Mockito.when(players.getIndex(info)).thenReturn(2);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(4);
+
+    StarMap map = new StarMap(config, players);
+    assertEquals(0,map.getNewsCorpData().getMilitary().getLatest(0));
+    assertEquals(0,map.getNewsCorpData().getMilitary().getLatest(1));
+    assertEquals(0,map.getNewsCorpData().getMilitary().getLatest(2));
+    assertEquals(0,map.getNewsCorpData().getMilitary().getLatest(3));
+    map.getNewsCorpData().getMilitary().addStat(0, 15);
+    map.getNewsCorpData().getMilitary().addStat(1, 20);
+    map.getNewsCorpData().getMilitary().addStat(2, 13);
+    map.getNewsCorpData().getMilitary().addStat(3, 10);
+    assertEquals(1, map.getMilitaryHighest());
+  }
+
+  @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testWarDeclarationReputation() {
     GameRepository repository = new GameRepository();

@@ -4,6 +4,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -421,6 +422,18 @@ public final class StarMapUtilities {
       if (info.getDiplomacy().isTradeEmbargo(richest)) {
         result = result + 15;
       }
+      if (info.getDiplomacy().getLiking(richest) == Diplomacy.LIKE) {
+        result = result - 5;
+      }
+      if (info.getDiplomacy().getLiking(richest) == Diplomacy.FRIENDS) {
+        result = result - 10;
+      }
+      if (info.getDiplomacy().getLiking(richest) == Diplomacy.DISLIKE) {
+        result = result + 5;
+      }
+      if (info.getDiplomacy().getLiking(richest) == Diplomacy.HATE) {
+        result = result + 10;
+      }
       int poorest = map.getWealthyIndex(false);
       if (info.getDiplomacy().isAlliance(poorest)) {
         result = result + 20;
@@ -436,6 +449,18 @@ public final class StarMapUtilities {
       }
       if (info.getDiplomacy().isTradeEmbargo(poorest)) {
         result = result - 15;
+      }
+      if (info.getDiplomacy().getLiking(poorest) == Diplomacy.LIKE) {
+        result = result + 5;
+      }
+      if (info.getDiplomacy().getLiking(poorest) == Diplomacy.FRIENDS) {
+        result = result + 10;
+      }
+      if (info.getDiplomacy().getLiking(poorest) == Diplomacy.DISLIKE) {
+        result = result - 5;
+      }
+      if (info.getDiplomacy().getLiking(poorest) == Diplomacy.HATE) {
+        result = result - 10;
       }
     }
     if (vote.getType() == VotingType.SECOND_CANDIDATE_MILITARY) {
@@ -460,6 +485,20 @@ public final class StarMapUtilities {
           if (info.getDiplomacy().isTradeEmbargo(mostMilitary)) {
             result = result - 10;
           }
+          if (info.getDiplomacy().getLiking(mostMilitary) == Diplomacy.LIKE) {
+            result = result + 5;
+          }
+          if (info.getDiplomacy().getLiking(mostMilitary)
+              == Diplomacy.FRIENDS) {
+            result = result + 10;
+          }
+          if (info.getDiplomacy().getLiking(mostMilitary)
+              == Diplomacy.DISLIKE) {
+            result = result - 5;
+          }
+          if (info.getDiplomacy().getLiking(mostMilitary) == Diplomacy.HATE) {
+            result = result - 10;
+          }
         }
       }
       int mostTower = map.getSecondCandidateForTower();
@@ -480,6 +519,20 @@ public final class StarMapUtilities {
             result = result + 20;
           }
           if (info.getDiplomacy().isTradeEmbargo(mostTower)) {
+            result = result + 10;
+          }
+          if (info.getDiplomacy().getLiking(mostTower) == Diplomacy.LIKE) {
+            result = result - 5;
+          }
+          if (info.getDiplomacy().getLiking(mostTower)
+              == Diplomacy.FRIENDS) {
+            result = result - 10;
+          }
+          if (info.getDiplomacy().getLiking(mostTower)
+              == Diplomacy.DISLIKE) {
+            result = result + 5;
+          }
+          if (info.getDiplomacy().getLiking(mostTower) == Diplomacy.HATE) {
             result = result + 10;
           }
         }

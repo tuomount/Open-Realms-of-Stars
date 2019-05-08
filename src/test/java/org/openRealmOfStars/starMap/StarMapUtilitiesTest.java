@@ -552,6 +552,8 @@ public class StarMapUtilitiesTest {
     Mockito.when(info.getAttitude()).thenReturn(Attitude.DIPLOMATIC);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.LIKE);
+    Mockito.when(diplomacy.getLiking(5)).thenReturn(Diplomacy.DISLIKE);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Vote vote = new Vote(VotingType.TAXATION_OF_RICHEST_REALM, 6, 20);
     StarMap map = Mockito.mock(StarMap.class);
@@ -562,31 +564,31 @@ public class StarMapUtilitiesTest {
     Mockito.when(map.getWealthyIndex(true)).thenReturn(0);
     Mockito.when(map.getWealthyIndex(false)).thenReturn(5);
     Mockito.when(diplomacy.isAlliance(0)).thenReturn(true);
-    assertEquals(-40, StarMapUtilities.getVotingSupport(info, vote, map));
+    assertEquals(-50, StarMapUtilities.getVotingSupport(info, vote, map));
 
     Mockito.when(map.getWealthyIndex(info)).thenReturn(2);
     Mockito.when(diplomacy.isAlliance(0)).thenReturn(false);
     Mockito.when(diplomacy.isTradeAlliance(0)).thenReturn(true);
-    assertEquals(-20, StarMapUtilities.getVotingSupport(info, vote, map));
+    assertEquals(-30, StarMapUtilities.getVotingSupport(info, vote, map));
 
     Mockito.when(diplomacy.isTradeAlliance(0)).thenReturn(false);
     Mockito.when(diplomacy.isTradeEmbargo(0)).thenReturn(true);
     Mockito.when(map.getWealthyIndex(info)).thenReturn(3);
-    assertEquals(15, StarMapUtilities.getVotingSupport(info, vote, map));
+    assertEquals(5, StarMapUtilities.getVotingSupport(info, vote, map));
 
     Mockito.when(diplomacy.isTradeEmbargo(0)).thenReturn(false);
     Mockito.when(diplomacy.isDefensivePact(0)).thenReturn(true);
     Mockito.when(map.getWealthyIndex(info)).thenReturn(4);
-    assertEquals(8, StarMapUtilities.getVotingSupport(info, vote, map));
+    assertEquals(-2, StarMapUtilities.getVotingSupport(info, vote, map));
 
     Mockito.when(diplomacy.isDefensivePact(0)).thenReturn(false);
     Mockito.when(diplomacy.isWar(0)).thenReturn(true);
     Mockito.when(map.getWealthyIndex(info)).thenReturn(5);
-    assertEquals(46, StarMapUtilities.getVotingSupport(info, vote, map));
+    assertEquals(36, StarMapUtilities.getVotingSupport(info, vote, map));
 
     Mockito.when(diplomacy.isWar(0)).thenReturn(false);
     Mockito.when(map.getWealthyIndex(info)).thenReturn(6);
-    assertEquals(30, StarMapUtilities.getVotingSupport(info, vote, map));
+    assertEquals(20, StarMapUtilities.getVotingSupport(info, vote, map));
   }
 
   @Test
@@ -597,6 +599,8 @@ public class StarMapUtilitiesTest {
     Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.FRIENDS);
+    Mockito.when(diplomacy.getLiking(5)).thenReturn(Diplomacy.HATE);
     Vote vote = new Vote(VotingType.TAXATION_OF_RICHEST_REALM, 6, 20);
     StarMap map = Mockito.mock(StarMap.class);
     PlayerList playerList = Mockito.mock(PlayerList.class);
@@ -606,31 +610,35 @@ public class StarMapUtilitiesTest {
     Mockito.when(map.getWealthyIndex(true)).thenReturn(0);
     Mockito.when(map.getWealthyIndex(false)).thenReturn(5);
     Mockito.when(diplomacy.isAlliance(5)).thenReturn(true);
-    assertEquals(-10, StarMapUtilities.getVotingSupport(info, vote, map));
+    assertEquals(-30, StarMapUtilities.getVotingSupport(info, vote, map));
 
     Mockito.when(map.getWealthyIndex(info)).thenReturn(2);
     Mockito.when(diplomacy.isAlliance(5)).thenReturn(false);
     Mockito.when(diplomacy.isTradeAlliance(5)).thenReturn(true);
-    assertEquals(-10, StarMapUtilities.getVotingSupport(info, vote, map));
+    assertEquals(-30, StarMapUtilities.getVotingSupport(info, vote, map));
 
     Mockito.when(diplomacy.isTradeAlliance(5)).thenReturn(false);
     Mockito.when(diplomacy.isTradeEmbargo(5)).thenReturn(true);
     Mockito.when(map.getWealthyIndex(info)).thenReturn(3);
-    assertEquals(-25, StarMapUtilities.getVotingSupport(info, vote, map));
+    assertEquals(-45, StarMapUtilities.getVotingSupport(info, vote, map));
 
     Mockito.when(diplomacy.isTradeEmbargo(5)).thenReturn(false);
     Mockito.when(diplomacy.isDefensivePact(5)).thenReturn(true);
     Mockito.when(map.getWealthyIndex(info)).thenReturn(4);
-    assertEquals(28, StarMapUtilities.getVotingSupport(info, vote, map));
+    assertEquals(8, StarMapUtilities.getVotingSupport(info, vote, map));
 
     Mockito.when(diplomacy.isDefensivePact(5)).thenReturn(false);
     Mockito.when(diplomacy.isWar(5)).thenReturn(true);
     Mockito.when(map.getWealthyIndex(info)).thenReturn(5);
-    assertEquals(-4, StarMapUtilities.getVotingSupport(info, vote, map));
+    Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.HATE);
+    Mockito.when(diplomacy.getLiking(5)).thenReturn(Diplomacy.LIKE);
+    assertEquals(11, StarMapUtilities.getVotingSupport(info, vote, map));
 
     Mockito.when(diplomacy.isWar(5)).thenReturn(false);
+    Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.DISLIKE);
+    Mockito.when(diplomacy.getLiking(5)).thenReturn(Diplomacy.FRIENDS);
     Mockito.when(map.getWealthyIndex(info)).thenReturn(6);
-    assertEquals(20, StarMapUtilities.getVotingSupport(info, vote, map));
+    assertEquals(35, StarMapUtilities.getVotingSupport(info, vote, map));
   }
 
 }

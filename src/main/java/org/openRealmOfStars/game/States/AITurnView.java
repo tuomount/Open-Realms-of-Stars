@@ -59,6 +59,7 @@ import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
  *
@@ -1248,9 +1249,13 @@ public class AITurnView extends BlackPanel {
       Vote vote = game.getStarMap().getVotes().generateNextVote(
           game.getStarMap().getScoreDiplomacy() + 1,
           game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
-      game.getStarMap().getVotes().getVotes().add(vote);
-      NewsData news = NewsFactory.makeVotingNews(vote);
-      game.getStarMap().getNewsCorpData().addNews(news);
+      if (vote != null) {
+        game.getStarMap().getVotes().getVotes().add(vote);
+        NewsData news = NewsFactory.makeVotingNews(vote);
+        game.getStarMap().getNewsCorpData().addNews(news);
+      } else {
+        ErrorLogger.log("Next vote was null!");
+      }
     } else {
       int mostTowers = -1;
       int towerCount = 0;
@@ -1283,9 +1288,13 @@ public class AITurnView extends BlackPanel {
         vote = game.getStarMap().getVotes().generateNextVote(
             game.getStarMap().getScoreDiplomacy() + 1,
             game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
-        game.getStarMap().getVotes().getVotes().add(vote);
-        news = NewsFactory.makeVotingNews(vote);
-        game.getStarMap().getNewsCorpData().addNews(news);
+        if (vote != null) {
+          game.getStarMap().getVotes().getVotes().add(vote);
+          news = NewsFactory.makeVotingNews(vote);
+          game.getStarMap().getNewsCorpData().addNews(news);
+        } else {
+          ErrorLogger.log("First vote was null!");
+        }
       }
       if (tie && game.getStarMap().getTurn() % 10 == 0) {
         PlayerInfo first = game.getPlayers().getPlayerInfoByIndex(mostTowers);

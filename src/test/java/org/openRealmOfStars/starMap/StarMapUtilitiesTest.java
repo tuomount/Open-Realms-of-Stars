@@ -794,4 +794,113 @@ public class StarMapUtilitiesTest {
   }
 
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingSupportRulerOfGalaxySelf() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getAttitude()).thenReturn(Attitude.AGGRESSIVE);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.FRIENDS);
+    Mockito.when(diplomacy.getLiking(5)).thenReturn(Diplomacy.HATE);
+    Vote vote = new Vote(VotingType.RULER_OF_GALAXY, 6, 20);
+    vote.setOrganizerIndex(1);
+    vote.setSecondCandidateIndex(5);
+    StarMap map = Mockito.mock(StarMap.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Mockito.when(playerList.getIndex(info)).thenReturn(1);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(6);
+    assertEquals(90, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    vote.setOrganizerIndex(0);
+    vote.setSecondCandidateIndex(1);
+    assertEquals(-70, StarMapUtilities.getVotingSupport(info, vote, map));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingSupportRulerOfGalaxy() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getAttitude()).thenReturn(Attitude.AGGRESSIVE);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.FRIENDS);
+    Mockito.when(diplomacy.getLiking(5)).thenReturn(Diplomacy.HATE);
+    Vote vote = new Vote(VotingType.RULER_OF_GALAXY, 6, 20);
+    vote.setOrganizerIndex(0);
+    vote.setSecondCandidateIndex(5);
+    StarMap map = Mockito.mock(StarMap.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Mockito.when(playerList.getIndex(info)).thenReturn(1);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(6);
+    Mockito.when(diplomacy.isAlliance(0)).thenReturn(true);
+    assertEquals(60, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(diplomacy.isAlliance(0)).thenReturn(false);
+    Mockito.when(diplomacy.isDefensivePact(0)).thenReturn(true);
+    assertEquals(40, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(diplomacy.isDefensivePact(0)).thenReturn(false);
+    Mockito.when(diplomacy.isTradeAlliance(0)).thenReturn(true);
+    Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.LIKE);
+    assertEquals(25, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(diplomacy.isTradeAlliance(0)).thenReturn(false);
+    Mockito.when(diplomacy.isTradeEmbargo(0)).thenReturn(true);
+    Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.DISLIKE);
+    assertEquals(-5, StarMapUtilities.getVotingSupport(info, vote, map));
+    
+    Mockito.when(diplomacy.isTradeEmbargo(0)).thenReturn(false);
+    Mockito.when(diplomacy.isWar(0)).thenReturn(true);
+    Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.HATE);
+    assertEquals(-30, StarMapUtilities.getVotingSupport(info, vote, map));
+
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingSupportRulerOfGalaxy2() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getAttitude()).thenReturn(Attitude.AGGRESSIVE);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(diplomacy.getLiking(0)).thenReturn(Diplomacy.DISLIKE);
+    Mockito.when(diplomacy.getLiking(5)).thenReturn(Diplomacy.FRIENDS);
+    Vote vote = new Vote(VotingType.RULER_OF_GALAXY, 6, 20);
+    vote.setOrganizerIndex(0);
+    vote.setSecondCandidateIndex(5);
+    StarMap map = Mockito.mock(StarMap.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Mockito.when(playerList.getIndex(info)).thenReturn(1);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(6);
+    Mockito.when(diplomacy.isAlliance(5)).thenReturn(true);
+    assertEquals(-55, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(diplomacy.isAlliance(5)).thenReturn(false);
+    Mockito.when(diplomacy.isDefensivePact(5)).thenReturn(true);
+    assertEquals(-35, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(diplomacy.isDefensivePact(5)).thenReturn(false);
+    Mockito.when(diplomacy.isTradeAlliance(5)).thenReturn(true);
+    Mockito.when(diplomacy.getLiking(5)).thenReturn(Diplomacy.LIKE);
+    assertEquals(-20, StarMapUtilities.getVotingSupport(info, vote, map));
+
+    Mockito.when(diplomacy.isTradeAlliance(5)).thenReturn(false);
+    Mockito.when(diplomacy.isTradeEmbargo(5)).thenReturn(true);
+    Mockito.when(diplomacy.getLiking(5)).thenReturn(Diplomacy.DISLIKE);
+    assertEquals(10, StarMapUtilities.getVotingSupport(info, vote, map));
+    
+    Mockito.when(diplomacy.isTradeEmbargo(5)).thenReturn(false);
+    Mockito.when(diplomacy.isWar(5)).thenReturn(true);
+    Mockito.when(diplomacy.getLiking(5)).thenReturn(Diplomacy.HATE);
+    assertEquals(35, StarMapUtilities.getVotingSupport(info, vote, map));
+
+  }
+
 }

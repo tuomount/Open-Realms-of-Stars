@@ -538,6 +538,72 @@ public final class StarMapUtilities {
         }
       }
     }
+    if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+      int first = vote.getOrganizerIndex();
+      int second = vote.getSecondCandidateIndex();
+      int myIndex = map.getPlayerList().getIndex(info);
+      if (first == myIndex) {
+        result = result + 80;
+      } else if (second == myIndex) {
+        result = result - 80;
+      }
+      if (info.getDiplomacy().isAlliance(first)) {
+        result = result + 40;
+      }
+      if (info.getDiplomacy().isAlliance(second)) {
+        result = result - 40;
+      }
+      if (info.getDiplomacy().isDefensivePact(first)) {
+        result = result + 20;
+      }
+      if (info.getDiplomacy().isDefensivePact(second)) {
+        result = result - 20;
+      }
+      if (info.getDiplomacy().isTradeAlliance(first)) {
+        result = result + 10;
+      }
+      if (info.getDiplomacy().isTradeAlliance(second)) {
+        result = result - 10;
+      }
+      if (info.getDiplomacy().isTradeEmbargo(first)) {
+        result = result - 10;
+      }
+      if (info.getDiplomacy().isTradeEmbargo(second)) {
+        result = result + 10;
+      }
+      if (info.getDiplomacy().isWar(first)) {
+        result = result - 30;
+      }
+      if (info.getDiplomacy().isWar(second)) {
+        result = result + 30;
+      }
+      if (info.getDiplomacy().getLiking(first) == Diplomacy.FRIENDS) {
+        result = result + 10;
+      }
+      if (info.getDiplomacy().getLiking(first) == Diplomacy.LIKE) {
+        result = result + 5;
+      }
+      if (info.getDiplomacy().getLiking(first) == Diplomacy.DISLIKE) {
+        result = result - 5;
+      }
+      if (info.getDiplomacy().getLiking(first) == Diplomacy.HATE) {
+        result = result - 10;
+      }
+      if (info.getDiplomacy().getLiking(second) == Diplomacy.FRIENDS) {
+        result = result - 10;
+      }
+      if (info.getDiplomacy().getLiking(second) == Diplomacy.LIKE) {
+        result = result - 5;
+      }
+      if (info.getDiplomacy().getLiking(second) == Diplomacy.DISLIKE) {
+        result = result + 5;
+      }
+      if (info.getDiplomacy().getLiking(second) == Diplomacy.HATE) {
+        result = result + 10;
+      }
+
+    }
+
 
     return result;
   }

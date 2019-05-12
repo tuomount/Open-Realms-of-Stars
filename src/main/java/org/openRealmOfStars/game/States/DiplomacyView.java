@@ -204,6 +204,24 @@ public class DiplomacyView extends BlackPanel {
   private SpaceCheckBox aiMapOffer;
 
   /**
+   * Human offering vote yes
+   */
+  private SpaceCheckBox humanVoteYes;
+  /**
+   * Human offering vote no
+   */
+  private SpaceCheckBox humanVoteNo;
+
+  /**
+   * Human offering vote yes
+   */
+  private SpaceCheckBox aiVoteYes;
+  /**
+   * Human offering vote no
+   */
+  private SpaceCheckBox aiVoteNo;
+
+  /**
    * Text area for AI talks
    */
   private InfoTextArea infoText;
@@ -326,6 +344,23 @@ public class DiplomacyView extends BlackPanel {
     humanMapOffer.addActionListener(listener);
     humanMapOffer.setToolTipText("Trade all your known space as a map.");
     humanOffer.add(humanMapOffer);
+    label = new SpaceLabel("Promise vote:");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    humanOffer.add(label);
+    humanVoteYes = new SpaceCheckBox("Vote Yes");
+    humanVoteYes.setAlignmentX(Component.LEFT_ALIGNMENT);
+    humanVoteYes.setActionCommand(GameCommands.COMMAND_HUMAN_VOTE_YES);
+    humanVoteYes.addActionListener(listener);
+    humanVoteYes.setToolTipText("Promise to vote yes for ...");
+    humanVoteYes.setEnabled(false);
+    humanOffer.add(humanVoteYes);
+    humanVoteNo = new SpaceCheckBox("Vote No");
+    humanVoteNo.setAlignmentX(Component.LEFT_ALIGNMENT);
+    humanVoteNo.setActionCommand(GameCommands.COMMAND_HUMAN_VOTE_NO);
+    humanVoteNo.addActionListener(listener);
+    humanVoteNo.setToolTipText("Promise to vote no for ...");
+    humanVoteNo.setEnabled(false);
+    humanOffer.add(humanVoteNo);
     label = new SpaceLabel("Fleets to trade:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(label);
@@ -411,6 +446,23 @@ public class DiplomacyView extends BlackPanel {
     aiMapOffer.setToolTipText("Trade all known space of other party.");
     aiMapOffer.addActionListener(listener);
     aiOffer.add(aiMapOffer);
+    label = new SpaceLabel("Promise vote:");
+    label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    aiOffer.add(label);
+    aiVoteYes = new SpaceCheckBox("Vote Yes");
+    aiVoteYes.setAlignmentX(Component.LEFT_ALIGNMENT);
+    aiVoteYes.setActionCommand(GameCommands.COMMAND_AI_VOTE_YES);
+    aiVoteYes.addActionListener(listener);
+    aiVoteYes.setToolTipText("Promise to vote yes for ...");
+    aiVoteYes.setEnabled(false);
+    aiOffer.add(aiVoteYes);
+    aiVoteNo = new SpaceCheckBox("Vote No");
+    aiVoteNo.setAlignmentX(Component.LEFT_ALIGNMENT);
+    aiVoteNo.setActionCommand(GameCommands.COMMAND_AI_VOTE_NO);
+    aiVoteNo.addActionListener(listener);
+    aiVoteNo.setToolTipText("Promise to vote no for ...");
+    aiVoteNo.setEnabled(false);
+    aiOffer.add(aiVoteNo);
     label = new SpaceLabel("Fleets to trade:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(label);

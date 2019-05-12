@@ -3,7 +3,7 @@ package org.openRealmOfStars.game;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018 Tuomo Untinen
+ * Copyright (C) 2016-2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -705,4 +705,21 @@ public final class GameCommands {
    * AI planet map trade
    */
   public static final String COMMAND_AI_PLANET_MAP = "AiPlanetMap";
+  /**
+   * Human Promise Vote Yes
+   */
+  public static final String COMMAND_HUMAN_VOTE_YES = "HumanVoteYes";
+  /**
+   * Human Promise Vote No
+   */
+  public static final String COMMAND_HUMAN_VOTE_NO = "HumanVoteNo";
+  /**
+   * AI Promise Vote Yes
+   */
+  public static final String COMMAND_AI_VOTE_YES = "AiVoteYes";
+  /**
+   * AI Promise Vote No
+   */
+  public static final String COMMAND_AI_VOTE_NO = "AiVoteNo";
+
 }

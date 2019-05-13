@@ -56,6 +56,7 @@ import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -346,20 +347,45 @@ public class DiplomacyView extends BlackPanel {
     humanOffer.add(humanMapOffer);
     label = new SpaceLabel("Promise vote:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
+    Vote vote = map.getVotes().getNextImportantVote();
+    int support = 0;
     humanOffer.add(label);
     humanVoteYes = new SpaceCheckBox("Vote Yes");
     humanVoteYes.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanVoteYes.setActionCommand(GameCommands.COMMAND_HUMAN_VOTE_YES);
     humanVoteYes.addActionListener(listener);
-    humanVoteYes.setToolTipText("Promise to vote yes for ...");
-    humanVoteYes.setEnabled(false);
+    if (vote != null) {
+      support = StarMapUtilities.getVotingSupport(ai, vote, map);
+      if (support > 0) {
+        humanVoteYes.setEnabled(true);
+        humanVoteYes.setToolTipText(vote.getDescription(map));
+      } else {
+        humanVoteYes.setEnabled(false);
+        humanVoteYes.setToolTipText(ai.getEmpireName()
+            + " does not want YES vote.");
+      }
+    } else {
+      humanVoteYes.setToolTipText("No ongoing vote available.");
+      humanVoteYes.setEnabled(false);
+    }
     humanOffer.add(humanVoteYes);
     humanVoteNo = new SpaceCheckBox("Vote No");
     humanVoteNo.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanVoteNo.setActionCommand(GameCommands.COMMAND_HUMAN_VOTE_NO);
     humanVoteNo.addActionListener(listener);
-    humanVoteNo.setToolTipText("Promise to vote no for ...");
-    humanVoteNo.setEnabled(false);
+    if (vote != null) {
+      if (support < 0) {
+        humanVoteNo.setEnabled(true);
+        humanVoteNo.setToolTipText(vote.getDescription(map));
+      } else {
+        humanVoteNo.setEnabled(false);
+        humanVoteNo.setToolTipText(ai.getEmpireName()
+            + " does not want NO vote.");
+      }
+    } else {
+      humanVoteNo.setToolTipText("No ongoing vote available.");
+      humanVoteNo.setEnabled(false);
+    }
     humanOffer.add(humanVoteNo);
     label = new SpaceLabel("Fleets to trade:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -453,15 +479,27 @@ public class DiplomacyView extends BlackPanel {
     aiVoteYes.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiVoteYes.setActionCommand(GameCommands.COMMAND_AI_VOTE_YES);
     aiVoteYes.addActionListener(listener);
-    aiVoteYes.setToolTipText("Promise to vote yes for ...");
-    aiVoteYes.setEnabled(false);
+    if (vote != null) {
+      aiVoteYes.setToolTipText("Ask " + ai.getEmpireName() + "vote YES for "
+          + vote.getDescription(map));
+      aiVoteYes.setEnabled(true);
+    } else {
+      aiVoteYes.setToolTipText("No ongoing vote available.");
+      aiVoteYes.setEnabled(false);
+    }
     aiOffer.add(aiVoteYes);
     aiVoteNo = new SpaceCheckBox("Vote No");
     aiVoteNo.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiVoteNo.setActionCommand(GameCommands.COMMAND_AI_VOTE_NO);
     aiVoteNo.addActionListener(listener);
-    aiVoteNo.setToolTipText("Promise to vote no for ...");
-    aiVoteNo.setEnabled(false);
+    if (vote != null) {
+      aiVoteNo.setToolTipText("Ask " + ai.getEmpireName() + "vote No for "
+          + vote.getDescription(map));
+      aiVoteNo.setEnabled(true);
+    } else {
+      aiVoteNo.setToolTipText("No ongoing vote available.");
+      aiVoteNo.setEnabled(false);
+    }
     aiOffer.add(aiVoteNo);
     label = new SpaceLabel("Fleets to trade:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);

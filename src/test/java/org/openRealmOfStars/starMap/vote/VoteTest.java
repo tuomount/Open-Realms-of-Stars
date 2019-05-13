@@ -4,6 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 
 /**
@@ -154,4 +158,45 @@ public class VoteTest {
     assertEquals(VotingChoice.VOTED_YES, VotingChoice.getTypeByIndex(1));
     assertEquals(VotingChoice.VOTED_NO, VotingChoice.getTypeByIndex(2));
   }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalacticPeaceDescription() {
+    Vote vote = new Vote(VotingType.GALACTIC_PEACE, 4, 10);
+    StarMap map = Mockito.mock(StarMap.class);
+    assertEquals("Galactic wide peace", vote.getDescription(map));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRulerOfGalaxyDescription() {
+    Vote vote = new Vote(VotingType.RULER_OF_GALAXY, 4, 10);
+    vote.setOrganizerIndex(0);
+    vote.setSecondCandidateIndex(1);
+    StarMap map = Mockito.mock(StarMap.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info1.getEmpireName()).thenReturn("Realm of Test");
+    Mockito.when(info2.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(playerList.getPlayerInfoByIndex(0)).thenReturn(info1);
+    Mockito.when(playerList.getPlayerInfoByIndex(1)).thenReturn(info2);
+    assertEquals("Ruler of Galaxy Realm of Test VS Empire of Test", vote.getDescription(map));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGamesParticipationDescription() {
+    Vote vote = new Vote(VotingType.GALACTIC_OLYMPIC_PARTICIPATE, 4, 10);
+    vote.setOrganizerIndex(0);
+    StarMap map = Mockito.mock(StarMap.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info1.getEmpireName()).thenReturn("Realm of Test");
+    Mockito.when(playerList.getPlayerInfoByIndex(0)).thenReturn(info1);
+    assertEquals("Galactic Olympic participation organized by Realm of Test", vote.getDescription(map));
+  }
+
 }

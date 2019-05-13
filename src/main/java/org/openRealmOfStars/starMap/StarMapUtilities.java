@@ -333,7 +333,7 @@ public final class StarMapUtilities {
    * @param info PlayerInfo
    * @param vote Voting
    * @param map StarMap
-   * @return Voting support value
+   * @return Voting support value Positive value for Yes and Negative for no.
    */
   public  static int getVotingSupport(final PlayerInfo info, final Vote vote,
       final StarMap map) {

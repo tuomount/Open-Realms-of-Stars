@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 import org.openRealmOfStars.utilities.IOUtilities;
 
@@ -226,6 +227,29 @@ public class Vote {
     }
   }
 
+  /**
+   * Get Description of voting. StarMap is used to fetch realm names.
+   * @param map StarMap
+   * @return Voting description
+   */
+  public String getDescription(final StarMap map) {
+    StringBuilder sb = new StringBuilder();
+    sb.append(getType().getDescription());
+    if (getType() == VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
+      sb.append(" organized by ");
+      sb.append(map.getPlayerList().getPlayerInfoByIndex(
+          getOrganizerIndex()).getEmpireName());
+    }
+    if (getType() == VotingType.RULER_OF_GALAXY) {
+      sb.append(" ");
+      sb.append(map.getPlayerList().getPlayerInfoByIndex(
+          getOrganizerIndex()).getEmpireName());
+      sb.append(" VS ");
+      sb.append(map.getPlayerList().getPlayerInfoByIndex(
+          getSecondCandidateIndex()).getEmpireName());
+    }
+    return sb.toString();
+  }
   /**
    * Get the galactic olympic organizer realm index. This method is also
    * used for FIRST_CANDIDATE and SECOND_CANDIDATE.

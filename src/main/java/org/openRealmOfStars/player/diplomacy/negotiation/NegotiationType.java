@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.diplomacy.negotiation;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2018  Tuomo Untinen
+* Copyright (C) 2017-2019  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -82,6 +82,14 @@ public enum NegotiationType {
   /**
    * Map containing only realm's planets
    */
-  MAP_PLANETS
+  MAP_PLANETS,
+  /**
+   * Promise to vote yes in next important voting.
+   */
+  PROMISE_VOTE_YES,
+  /**
+   * Promise to vote no in next important voting.
+   */
+  PROMISE_VOTE_NO,
 
 }

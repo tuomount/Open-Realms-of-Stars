@@ -9,7 +9,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017-2018 Tuomo Untinen
+* Copyright (C) 2017-2019 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -62,7 +62,11 @@ public class NegotiationOffer {
         || type == NegotiationType.PLANET && offer instanceof Planet
         || type == NegotiationType.TECH && offer instanceof Tech
         || type == NegotiationType.TRADE_EMBARGO
-        && offer instanceof PlayerInfo) {
+        && offer instanceof PlayerInfo
+        || type == NegotiationType.PROMISE_VOTE_YES
+        && offer instanceof Integer
+        || type == NegotiationType.PROMISE_VOTE_NO
+        && offer instanceof Integer) {
       negotiationType = type;
       offerObject = offer;
     } else {
@@ -125,6 +129,10 @@ public class NegotiationOffer {
       break;
     case MAP_PLANETS:
       offerValue = 5;
+      break;
+    case PROMISE_VOTE_NO:
+    case PROMISE_VOTE_YES:
+      offerValue = getPromiseValue();
       break;
     default:
       offerValue = 0;
@@ -200,6 +208,20 @@ public class NegotiationOffer {
       return ((PlayerInfo) offerObject);
     }
     return null;
+  }
+
+  /**
+   * Get value for voting promise.
+   * @return Value for voting promise.
+   */
+  public int getPromiseValue() {
+    if ((negotiationType == NegotiationType.PROMISE_VOTE_YES
+        || negotiationType == NegotiationType.PROMISE_VOTE_NO)
+        && offerObject instanceof Integer) {
+      Integer value = (Integer) offerObject;
+      return value.intValue();
+    }
+    return 0;
   }
   /**
    * Get Negotiation type

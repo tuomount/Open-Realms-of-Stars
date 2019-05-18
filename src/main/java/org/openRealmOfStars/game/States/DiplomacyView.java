@@ -845,6 +845,7 @@ public class DiplomacyView extends BlackPanel {
    * @param playerTechList Human or AI list
    * @param mapPlanetOffer Human or AI map of planets offering
    * @param mapFullOffer Human or AI map offering
+   * @param voteOffer Human or AI vote offer. Can be null.
    * @param playerFleetList Human or AI list
    * @param playerPlanetList Human or AI list
    * @param credits Human or AI credits
@@ -852,8 +853,8 @@ public class DiplomacyView extends BlackPanel {
    */
   private NegotiationList getOfferingList(final JList<Tech> playerTechList,
       final boolean mapPlanetOffer, final boolean mapFullOffer,
-      final JList<Fleet> playerFleetList, final JList<Planet> playerPlanetList,
-      final int credits) {
+      final NegotiationOffer voteOffer, final JList<Fleet> playerFleetList,
+      final JList<Planet> playerPlanetList, final int credits) {
     NegotiationList list = new NegotiationList();
     List<Tech> techList = playerTechList.getSelectedValuesList();
     for (Tech tech : techList) {
@@ -870,6 +871,9 @@ public class DiplomacyView extends BlackPanel {
       NegotiationOffer offer = new NegotiationOffer(NegotiationType.MAP,
           null);
       list.add(offer);
+    }
+    if (voteOffer != null) {
+      list.add(voteOffer);
     }
     List<Fleet> fleetList = playerFleetList.getSelectedValuesList();
     for (Fleet fleet : fleetList) {
@@ -930,6 +934,14 @@ public class DiplomacyView extends BlackPanel {
             techArray.add(offer.getTech());
             break;
           }
+          case PROMISE_VOTE_NO: {
+            aiVoteNo.setSelected(true);
+            break;
+          }
+          case PROMISE_VOTE_YES: {
+            aiVoteYes.setSelected(true);
+            break;
+          }
           case ALLIANCE:
           case TRADE_ALLIANCE:
           case DIPLOMAT:
@@ -988,6 +1000,14 @@ public class DiplomacyView extends BlackPanel {
             techArray.add(offer.getTech());
             break;
           }
+          case PROMISE_VOTE_NO: {
+            humanVoteNo.setSelected(true);
+            break;
+          }
+          case PROMISE_VOTE_YES: {
+            humanVoteYes.setSelected(true);
+            break;
+          }
           case ALLIANCE:
           case TRADE_ALLIANCE:
           case DIPLOMAT:
@@ -1043,6 +1063,8 @@ public class DiplomacyView extends BlackPanel {
     humanTechListOffer.setListData(trade.getTradeableTechListForSecond());
     humanMapOffer.setSelected(false);
     humanMapPlanetsOffer.setSelected(false);
+    humanVoteNo.setSelected(false);
+    humanVoteYes.setSelected(false);
     humanFleetListOffer.setListData(trade.getTradeableFleetListForFirst());
     humanPlanetListOffer.setListData(trade.getTradeablePlanetListForFirst());
     humanCreditOffer.setText("0 Credits");
@@ -1052,9 +1074,85 @@ public class DiplomacyView extends BlackPanel {
     aiTechListOffer.setListData(trade.getTradeableTechListForFirst());
     aiMapOffer.setSelected(false);
     aiMapPlanetsOffer.setSelected(false);
+    aiVoteNo.setSelected(false);
+    aiVoteYes.setSelected(false);
     aiFleetListOffer.setListData(trade.getTradeableFleetListForSecond());
     aiPlanetListOffer.setListData(trade.getTradeablePlanetListForSecond());
     aiCreditOffer.setText("0 Credits");
+  }
+
+  /**
+   * Create human vote offer. Requires that there is important vote
+   * and some promise has been selected.
+   * @return NegotiationOffer or null
+   */
+  private NegotiationOffer createHumanVoteOffer() {
+    Vote vote = starMap.getVotes().getNextImportantVote();
+    if (vote != null && humanVoteNo.isSelected() || humanVoteYes.isSelected()) {
+      int value = StarMapUtilities.getVotingSupport(human, vote, starMap);
+      if (humanVoteNo.isSelected()) {
+        if (value < 0) {
+          value = DiplomaticTrade.minFive(value);
+          return new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO,
+              new Integer(value));
+        } else {
+          value = DiplomaticTrade.minFive(value);
+          value = value * 2;
+          return new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO,
+              new Integer(value));
+        }
+      }
+      if (humanVoteYes.isSelected()) {
+        if (value < 0) {
+          value = DiplomaticTrade.minFive(value);
+          value = value * 2;
+          return new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES,
+              new Integer(value));
+        } else {
+          value = DiplomaticTrade.minFive(value);
+          return new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES,
+              new Integer(value));
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Create AI vote offer. Requires that there is important vote
+   * and some promise has been selected.
+   * @return NegotiationOffer or null
+   */
+  private NegotiationOffer createAiVoteOffer() {
+    Vote vote = starMap.getVotes().getNextImportantVote();
+    if (vote != null && aiVoteNo.isSelected() || aiVoteYes.isSelected()) {
+      int value = StarMapUtilities.getVotingSupport(ai, vote, starMap);
+      if (aiVoteNo.isSelected()) {
+        if (value < 0) {
+          value = DiplomaticTrade.minFive(value);
+          return new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO,
+              new Integer(value));
+        } else {
+          value = DiplomaticTrade.minFive(value);
+          value = value * 2;
+          return new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO,
+              new Integer(value));
+        }
+      }
+      if (aiVoteYes.isSelected()) {
+        if (value < 0) {
+          value = DiplomaticTrade.minFive(value);
+          value = value * 2;
+          return new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES,
+              new Integer(value));
+        } else {
+          value = DiplomaticTrade.minFive(value);
+          return new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES,
+              new Integer(value));
+        }
+      }
+    }
+    return null;
   }
 
   /**
@@ -1187,10 +1285,12 @@ public class DiplomacyView extends BlackPanel {
         && speechSelected.getType() == SpeechType.TRADE_ALLIANCE) {
       NegotiationList list1 = getOfferingList(humanTechListOffer,
           humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
+          createHumanVoteOffer(),
           humanFleetListOffer, humanPlanetListOffer, humanCredits);
       list1.add(new NegotiationOffer(NegotiationType.TRADE_ALLIANCE, null));
       NegotiationList list2 = getOfferingList(aiTechListOffer,
           aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
+          createAiVoteOffer(),
           aiFleetListOffer, aiPlanetListOffer, aiCredits);
       list2.add(new NegotiationOffer(NegotiationType.TRADE_ALLIANCE, null));
       trade.setFirstOffer(list2);
@@ -1275,10 +1375,12 @@ public class DiplomacyView extends BlackPanel {
         && speechSelected.getType() == SpeechType.ALLIANCE) {
       NegotiationList list1 = getOfferingList(humanTechListOffer,
           humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
+          createHumanVoteOffer(),
           humanFleetListOffer, humanPlanetListOffer, humanCredits);
       list1.add(new NegotiationOffer(NegotiationType.ALLIANCE, null));
       NegotiationList list2 = getOfferingList(aiTechListOffer,
           aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
+          createAiVoteOffer(),
           aiFleetListOffer, aiPlanetListOffer, aiCredits);
       list2.add(new NegotiationOffer(NegotiationType.ALLIANCE, null));
       trade.setFirstOffer(list2);
@@ -1305,11 +1407,13 @@ public class DiplomacyView extends BlackPanel {
       if (realm != null) {
         NegotiationList list1 = getOfferingList(humanTechListOffer,
             humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
+            createHumanVoteOffer(),
             humanFleetListOffer, humanPlanetListOffer, humanCredits);
         list1.add(new NegotiationOffer(NegotiationType.TRADE_EMBARGO,
             realm));
         NegotiationList list2 = getOfferingList(aiTechListOffer,
             aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
+            createAiVoteOffer(),
             aiFleetListOffer, aiPlanetListOffer, aiCredits);
         list2.add(new NegotiationOffer(NegotiationType.TRADE_EMBARGO, realm));
         trade.setFirstOffer(list2);
@@ -1335,10 +1439,12 @@ public class DiplomacyView extends BlackPanel {
         && speechSelected.getType() == SpeechType.DEFESIVE_PACT) {
       NegotiationList list1 = getOfferingList(humanTechListOffer,
           humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
+          createHumanVoteOffer(),
           humanFleetListOffer, humanPlanetListOffer, humanCredits);
       list1.add(new NegotiationOffer(NegotiationType.DEFENSIVE_PACT, null));
       NegotiationList list2 = getOfferingList(aiTechListOffer,
           aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
+          createAiVoteOffer(),
           aiFleetListOffer, aiPlanetListOffer, aiCredits);
       list2.add(new NegotiationOffer(NegotiationType.DEFENSIVE_PACT, null));
       trade.setFirstOffer(list2);
@@ -1362,6 +1468,7 @@ public class DiplomacyView extends BlackPanel {
       NegotiationList list1 = new NegotiationList();
       NegotiationList list2 = getOfferingList(aiTechListOffer,
           aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
+          createAiVoteOffer(),
           aiFleetListOffer, aiPlanetListOffer, aiCredits);
       trade.setFirstOffer(list2);
       trade.setSecondOffer(list1);
@@ -1410,9 +1517,11 @@ public class DiplomacyView extends BlackPanel {
         && speechSelected.getType() == SpeechType.TRADE) {
       NegotiationList list1 = getOfferingList(humanTechListOffer,
           humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
+          createHumanVoteOffer(),
           humanFleetListOffer, humanPlanetListOffer, humanCredits);
       NegotiationList list2 = getOfferingList(aiTechListOffer,
           aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
+          createAiVoteOffer(),
           aiFleetListOffer, aiPlanetListOffer, aiCredits);
       trade.setFirstOffer(list2);
       trade.setSecondOffer(list1);
@@ -1429,10 +1538,12 @@ public class DiplomacyView extends BlackPanel {
         && speechSelected.getType() == SpeechType.OFFER_SPY_TRADE) {
       NegotiationList list1 = getOfferingList(humanTechListOffer,
           humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
+          createHumanVoteOffer(),
           humanFleetListOffer, humanPlanetListOffer, humanCredits);
       list1.add(new NegotiationOffer(NegotiationType.SPY_TRADE, null));
       NegotiationList list2 = getOfferingList(aiTechListOffer,
           aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
+          createAiVoteOffer(),
           aiFleetListOffer, aiPlanetListOffer, aiCredits);
       list2.add(new NegotiationOffer(NegotiationType.SPY_TRADE, null));
       trade.setFirstOffer(list2);
@@ -1475,10 +1586,12 @@ public class DiplomacyView extends BlackPanel {
         && speechSelected.getType() == SpeechType.PEACE_OFFER) {
       NegotiationList list1 = getOfferingList(humanTechListOffer,
           humanMapPlanetsOffer.isSelected(), humanMapOffer.isSelected(),
+          createHumanVoteOffer(),
           humanFleetListOffer, humanPlanetListOffer, humanCredits);
       list1.add(new NegotiationOffer(NegotiationType.PEACE, null));
       NegotiationList list2 = getOfferingList(aiTechListOffer,
           aiMapPlanetsOffer.isSelected(), aiMapOffer.isSelected(),
+          createAiVoteOffer(),
           aiFleetListOffer, aiPlanetListOffer, aiCredits);
       list2.add(new NegotiationOffer(NegotiationType.PEACE, null));
       trade.setFirstOffer(list2);

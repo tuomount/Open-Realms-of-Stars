@@ -28,6 +28,7 @@ import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
@@ -58,6 +59,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
+import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 
@@ -1234,6 +1236,87 @@ public class AITurnView extends BlackPanel {
     }
     return added;
   }
+
+  /**
+   * Get Promise bonus for single vote.
+   * @param voter Realms who is voting
+   * @param realms All the realms
+   * @return Bonus for voting decision.
+   */
+  private int getPromiseBonus(final PlayerInfo voter, final PlayerList realms) {
+    int result = 0;
+    int voterIndex = realms.getIndex(voter);
+    for (int i = 0; i < realms.getCurrentMaxRealms(); i++) {
+      if (i != voterIndex) {
+        PlayerInfo info = realms.getPlayerInfoByIndex(i);
+        DiplomacyBonusList bonusList = info.getDiplomacy().getDiplomacyList(
+            voterIndex);
+        if (bonusList != null) {
+          if (bonusList.isBonusType(DiplomacyBonusType.PROMISED_VOTE_YES)) {
+            int bonus = voter.getDiplomacy().getLiking(i);
+            if (bonus > 0) {
+              if (voter.getDiplomacy().isAlliance(i)) {
+                bonus = bonus + 2;
+              }
+              if (voter.getDiplomacy().isDefensivePact(i)) {
+                bonus = bonus + 2;
+              }
+              if (voter.getDiplomacy().isTradeAlliance(i)) {
+                bonus = bonus + 1;
+              }
+              result = result + bonus * 5;
+            }
+          }
+          if (bonusList.isBonusType(DiplomacyBonusType.PROMISED_VOTE_NO)) {
+            int bonus = voter.getDiplomacy().getLiking(i);
+            if (bonus > 0) {
+              if (voter.getDiplomacy().isAlliance(i)) {
+                bonus = bonus + 2;
+              }
+              if (voter.getDiplomacy().isDefensivePact(i)) {
+                bonus = bonus + 2;
+              }
+              if (voter.getDiplomacy().isTradeAlliance(i)) {
+                bonus = bonus + 1;
+              }
+              result = result - bonus * 5;
+            }
+          }
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Do actual voting for AI players. Calculates vote for human player too.
+   * @param vote Vote
+   * @param realms All the realms
+   */
+  private void doVoting(final Vote vote, final PlayerList realms) {
+    for (int i = 0; i < realms.getCurrentMaxRealms(); i++) {
+      int numberOfVotes = game.getStarMap().getTotalNumberOfPopulation(i);
+      vote.setNumberOfVotes(i, numberOfVotes);
+      PlayerInfo info = realms.getPlayerInfoByIndex(i);
+      if (!info.isHuman()) {
+        int value = StarMapUtilities.getVotingSupport(info, vote,
+            game.getStarMap());
+        value = value + getPromiseBonus(info, realms);
+        if (value < 0) {
+          vote.setChoice(i, VotingChoice.VOTED_NO);
+        } else if (value > 0) {
+          vote.setChoice(i, VotingChoice.VOTED_YES);
+        } else {
+          value = DiceGenerator.getRandom(1);
+          if (value == 0) {
+            vote.setChoice(i, VotingChoice.VOTED_YES);
+          } else {
+            vote.setChoice(i, VotingChoice.VOTED_NO);
+          }
+        }
+      }
+    }
+  }
   /**
    * Handle diplomatic votes like arrange new votes and handle the end game.
    * @param towers How many tower each realm has
@@ -1289,7 +1372,7 @@ public class AITurnView extends BlackPanel {
             game.getStarMap().getScoreDiplomacy() + 1,
             game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
         if (vote != null) {
-          game.getStarMap().getVotes().getVotes().add(vote);
+          // Vote has been already added to list in generateNextVote()
           news = NewsFactory.makeVotingNews(vote);
           game.getStarMap().getNewsCorpData().addNews(news);
         } else {
@@ -1303,6 +1386,13 @@ public class AITurnView extends BlackPanel {
         NewsData news = NewsFactory.makeUnitedGalaxyTowerRaceTie(first,
             second);
         game.getStarMap().getNewsCorpData().addNews(news);
+      }
+    }
+    Vote vote = game.getStarMap().getVotes().getNextImportantVote();
+    if (vote != null && vote.getTurnsToVote() > 0) {
+      vote.setTurnsToVote(vote.getTurnsToVote() - 1);
+      if (vote.getTurnsToVote() == 0) {
+        doVoting(vote, game.getPlayers());
       }
     }
   }

@@ -81,7 +81,8 @@ public class Votes {
   }
 
   /**
-   * Generate next important vote
+   * Generate next important vote. This will add new vote
+   * to list of votes automatically.
    * @param maxNumberOfVotes Maximum number of votes
    * @param numberOfRealms NUmber of realms in starmap
    * @param turns When voting needs to be done.

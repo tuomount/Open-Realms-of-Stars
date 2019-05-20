@@ -1316,6 +1316,41 @@ public class AITurnView extends BlackPanel {
         }
       }
     }
+    if (vote.getType() == VotingType.SECOND_CANDIDATE_MILITARY) {
+      int drawRuler = game.getStarMap().getVotes().getFirstCandidate();
+      VotingChoice result = vote.getResult(drawRuler);
+      if (result == VotingChoice.VOTED_YES) {
+        int second = game.getStarMap().getNewsCorpData().getMilitary()
+            .getBiggest();
+        Vote voteSecond = new Vote(VotingType.SECOND_CANDIDATE,
+            game.getPlayers().getCurrentMaxRealms(), 0);
+        voteSecond.setOrganizerIndex(second);
+        game.getStarMap().getVotes().getVotes().add(voteSecond);
+      } else if (result == VotingChoice.VOTED_NO) {
+        int second = game.getStarMap().getSecondCandidateForTower();
+        Vote voteSecond = new Vote(VotingType.SECOND_CANDIDATE,
+            game.getPlayers().getCurrentMaxRealms(), 0);
+        voteSecond.setOrganizerIndex(second);
+        game.getStarMap().getVotes().getVotes().add(voteSecond);
+      }
+    }
+  }
+
+  /**
+   * Handle promises. This should be called after voting.
+   * @param vote Actual vote
+   * @param realms All the realms
+   */
+  private void handlePromises(final Vote vote, final PlayerList realms) {
+    for (int i = 0; i < realms.getCurrentMaxRealms(); i++) {
+      PlayerInfo info = realms.getPlayerInfoByIndex(i);
+      for (int j = 0; j < realms.getCurrentMaxRealms(); j++) {
+        DiplomacyBonusList bonusList = info.getDiplomacy().getDiplomacyList(j);
+        if (bonusList != null) {
+          bonusList.checkPromise(vote.getChoice(j), info.getRace());
+        }
+      }
+    }
   }
   /**
    * Handle diplomatic votes like arrange new votes and handle the end game.
@@ -1372,6 +1407,17 @@ public class AITurnView extends BlackPanel {
             game.getStarMap().getScoreDiplomacy() + 1,
             game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
         if (vote != null) {
+          if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+            // First vote is rule of galaxy,
+            // so second candidate is strongest military
+            int second = game.getStarMap().getNewsCorpData().getMilitary()
+                .getBiggest();
+            Vote voteSecond = new Vote(VotingType.SECOND_CANDIDATE,
+                game.getPlayers().getCurrentMaxRealms(), 0);
+            voteSecond.setOrganizerIndex(second);
+            game.getStarMap().getVotes().getVotes().add(voteSecond);
+            vote.setSecondCandidateIndex(second);
+          }
           // Vote has been already added to list in generateNextVote()
           news = NewsFactory.makeVotingNews(vote);
           game.getStarMap().getNewsCorpData().addNews(news);
@@ -1393,6 +1439,7 @@ public class AITurnView extends BlackPanel {
       vote.setTurnsToVote(vote.getTurnsToVote() - 1);
       if (vote.getTurnsToVote() == 0) {
         doVoting(vote, game.getPlayers());
+        handlePromises(vote, game.getPlayers());
       }
     }
   }

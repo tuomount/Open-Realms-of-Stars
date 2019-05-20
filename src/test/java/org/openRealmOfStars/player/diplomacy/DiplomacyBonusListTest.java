@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 
 /**
  * 
@@ -71,6 +72,50 @@ public class DiplomacyBonusListTest {
     assertEquals(DiplomacyBonusType.GIVEN_VALUABLE_FREE, bonus.getType());
     bonus = list.get(2);
     assertEquals(DiplomacyBonusType.LONG_PEACE, bonus.getType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCheckPromiseNoVoteNo() {
+    DiplomacyBonusList list = new DiplomacyBonusList(1);
+    boolean result = list.addBonus(DiplomacyBonusType.PROMISED_VOTE_NO, SpaceRace.HUMAN);
+    assertEquals(true, result);
+    assertEquals(3, list.getDiplomacyBonus());
+    list.checkPromise(VotingChoice.VOTED_NO, SpaceRace.HUMAN);
+    assertEquals(10, list.getDiplomacyBonus());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCheckPromiseNoVoteYes() {
+    DiplomacyBonusList list = new DiplomacyBonusList(1);
+    boolean result = list.addBonus(DiplomacyBonusType.PROMISED_VOTE_NO, SpaceRace.HUMAN);
+    assertEquals(true, result);
+    assertEquals(3, list.getDiplomacyBonus());
+    list.checkPromise(VotingChoice.VOTED_YES, SpaceRace.HUMAN);
+    assertEquals(-10, list.getDiplomacyBonus());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCheckPromiseYesVoteYes() {
+    DiplomacyBonusList list = new DiplomacyBonusList(1);
+    boolean result = list.addBonus(DiplomacyBonusType.PROMISED_VOTE_YES, SpaceRace.HUMAN);
+    assertEquals(true, result);
+    assertEquals(3, list.getDiplomacyBonus());
+    list.checkPromise(VotingChoice.VOTED_YES, SpaceRace.HUMAN);
+    assertEquals(10, list.getDiplomacyBonus());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCheckPromiseYesVoteNo() {
+    DiplomacyBonusList list = new DiplomacyBonusList(1);
+    boolean result = list.addBonus(DiplomacyBonusType.PROMISED_VOTE_YES, SpaceRace.HUMAN);
+    assertEquals(true, result);
+    assertEquals(3, list.getDiplomacyBonus());
+    list.checkPromise(VotingChoice.VOTED_NO, SpaceRace.HUMAN);
+    assertEquals(-10, list.getDiplomacyBonus());
   }
 
   @Test

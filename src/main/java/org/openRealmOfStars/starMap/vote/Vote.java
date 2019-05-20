@@ -87,6 +87,35 @@ public class Vote {
   }
 
   /**
+   * Get voting result
+   * @param drawRuler Index whom choice is used on draw result
+   * @return Voting result
+   */
+  public VotingChoice getResult(final int drawRuler) {
+    int yes = 0;
+    int no = 0;
+    for (int i = 0; i < choices.length; i++) {
+      if (choices[i] == VotingChoice.VOTED_YES) {
+        yes = yes + numberOfVotes[i];
+      }
+      if (choices[i] == VotingChoice.VOTED_NO) {
+        no = no + numberOfVotes[i];
+      }
+    }
+    if (yes > no) {
+      return VotingChoice.VOTED_YES;
+    }
+    if (yes < no) {
+      return VotingChoice.VOTED_NO;
+    }
+    if (yes == no) {
+      // First candidates voting wins on draw
+      return choices[drawRuler];
+    }
+    // This should not happen.
+    return VotingChoice.NOT_VOTED;
+  }
+  /**
    * Constructor for vote by reading it from DataInputStream
    * @param dis DataInputStream
    * @param numberOfRealms Number of realms in game.

@@ -161,6 +161,64 @@ public class VoteTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSimulatedVoteResultYes() {
+    Vote vote = new Vote(VotingType.BAN_PRIVATEER_SHIPS, 6, 10);
+    vote.setChoice(0, VotingChoice.VOTED_YES);
+    vote.setChoice(1, VotingChoice.VOTED_NO);
+    vote.setChoice(2, VotingChoice.VOTED_YES);
+    vote.setChoice(3, VotingChoice.VOTED_NO);
+    vote.setChoice(4, VotingChoice.VOTED_YES);
+    vote.setChoice(5, VotingChoice.VOTED_YES);
+    vote.setNumberOfVotes(0, 6);
+    vote.setNumberOfVotes(1, 12);
+    vote.setNumberOfVotes(2, 3);
+    vote.setNumberOfVotes(3, 8);
+    vote.setNumberOfVotes(4, 7);
+    vote.setNumberOfVotes(5, 9);
+    assertEquals(VotingChoice.VOTED_YES, vote.getResult(2));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSimulatedVoteResultNo() {
+    Vote vote = new Vote(VotingType.BAN_PRIVATEER_SHIPS, 6, 10);
+    vote.setChoice(0, VotingChoice.VOTED_YES);
+    vote.setChoice(1, VotingChoice.VOTED_NO);
+    vote.setChoice(2, VotingChoice.VOTED_YES);
+    vote.setChoice(3, VotingChoice.VOTED_NO);
+    vote.setChoice(4, VotingChoice.VOTED_YES);
+    vote.setChoice(5, VotingChoice.VOTED_YES);
+    vote.setNumberOfVotes(0, 6);
+    vote.setNumberOfVotes(1, 12);
+    vote.setNumberOfVotes(2, 3);
+    vote.setNumberOfVotes(3, 18);
+    vote.setNumberOfVotes(4, 7);
+    vote.setNumberOfVotes(5, 9);
+    assertEquals(VotingChoice.VOTED_NO, vote.getResult(2));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSimulatedVoteResultDraw() {
+    Vote vote = new Vote(VotingType.BAN_PRIVATEER_SHIPS, 6, 10);
+    vote.setChoice(0, VotingChoice.VOTED_YES);
+    vote.setChoice(1, VotingChoice.VOTED_NO);
+    vote.setChoice(2, VotingChoice.VOTED_YES);
+    vote.setChoice(3, VotingChoice.VOTED_NO);
+    vote.setChoice(4, VotingChoice.VOTED_YES);
+    vote.setChoice(5, VotingChoice.VOTED_YES);
+    vote.setNumberOfVotes(0, 5);
+    vote.setNumberOfVotes(1, 12);
+    vote.setNumberOfVotes(2, 5);
+    vote.setNumberOfVotes(3, 18);
+    vote.setNumberOfVotes(4, 10);
+    vote.setNumberOfVotes(5, 10);
+    assertEquals(VotingChoice.VOTED_YES, vote.getResult(2));
+  }
+
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testGalacticPeaceDescription() {
     Vote vote = new Vote(VotingType.GALACTIC_PEACE, 4, 10);
     StarMap map = Mockito.mock(StarMap.class);

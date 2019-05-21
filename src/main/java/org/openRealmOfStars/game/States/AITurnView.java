@@ -33,6 +33,8 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
+import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
+import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetType;
@@ -1332,6 +1334,29 @@ public class AITurnView extends BlackPanel {
             game.getPlayers().getCurrentMaxRealms(), 0);
         voteSecond.setOrganizerIndex(second);
         game.getStarMap().getVotes().getVotes().add(voteSecond);
+      }
+    }
+    if (vote.getType() == VotingType.GALACTIC_PEACE) {
+      for (int i = 0; i < realms.getCurrentMaxRealms(); i++) {
+        PlayerInfo info = realms.getPlayerInfoByIndex(i);
+        for (int j = 0; j < realms.getCurrentMaxRealms(); j++) {
+          if (info.getDiplomacy().isWar(j)) {
+            DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(), i,
+                j);
+            trade.generateEqualTrade(NegotiationType.PEACE);
+            trade.doTrades();
+            PlayerInfo defender = game.getStarMap().getPlayerByIndex(j);
+            NewsData newsData = NewsFactory.makePeaceNews(info, defender,
+                null);
+            game.getStarMap().getHistory().addEvent(
+                NewsFactory.makeDiplomaticEvent(null, newsData));
+            game.getStarMap().getNewsCorpData().addNews(newsData);
+            info.getMissions().removeAttackAgainstPlayer(defender,
+                game.getStarMap());
+            defender.getMissions().removeAttackAgainstPlayer(info,
+                game.getStarMap());
+          }
+        }
       }
     }
   }

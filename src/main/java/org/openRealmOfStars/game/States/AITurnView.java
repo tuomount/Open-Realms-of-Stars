@@ -1337,24 +1337,28 @@ public class AITurnView extends BlackPanel {
       }
     }
     if (vote.getType() == VotingType.GALACTIC_PEACE) {
-      for (int i = 0; i < realms.getCurrentMaxRealms(); i++) {
-        PlayerInfo info = realms.getPlayerInfoByIndex(i);
-        for (int j = 0; j < realms.getCurrentMaxRealms(); j++) {
-          if (info.getDiplomacy().isWar(j)) {
-            DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(), i,
-                j);
-            trade.generateEqualTrade(NegotiationType.PEACE);
-            trade.doTrades();
-            PlayerInfo defender = game.getStarMap().getPlayerByIndex(j);
-            NewsData newsData = NewsFactory.makePeaceNews(info, defender,
-                null);
-            game.getStarMap().getHistory().addEvent(
-                NewsFactory.makeDiplomaticEvent(null, newsData));
-            game.getStarMap().getNewsCorpData().addNews(newsData);
-            info.getMissions().removeAttackAgainstPlayer(defender,
-                game.getStarMap());
-            defender.getMissions().removeAttackAgainstPlayer(info,
-                game.getStarMap());
+      int drawRuler = game.getStarMap().getVotes().getFirstCandidate();
+      VotingChoice result = vote.getResult(drawRuler);
+      if (result == VotingChoice.VOTED_YES) {
+        for (int i = 0; i < realms.getCurrentMaxRealms(); i++) {
+          PlayerInfo info = realms.getPlayerInfoByIndex(i);
+          for (int j = 0; j < realms.getCurrentMaxRealms(); j++) {
+            if (info.getDiplomacy().isWar(j)) {
+              DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(), i,
+                 j);
+              trade.generateEqualTrade(NegotiationType.PEACE);
+              trade.doTrades();
+              PlayerInfo defender = game.getStarMap().getPlayerByIndex(j);
+              NewsData newsData = NewsFactory.makePeaceNews(info, defender,
+                  null);
+              game.getStarMap().getHistory().addEvent(
+                  NewsFactory.makeDiplomaticEvent(null, newsData));
+              game.getStarMap().getNewsCorpData().addNews(newsData);
+              info.getMissions().removeAttackAgainstPlayer(defender,
+                  game.getStarMap());
+              defender.getMissions().removeAttackAgainstPlayer(info,
+                  game.getStarMap());
+            }
           }
         }
       }

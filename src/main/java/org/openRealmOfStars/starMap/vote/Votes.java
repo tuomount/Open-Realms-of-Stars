@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -175,4 +176,46 @@ public class Votes {
       listOfVotes.get(i).saveVote(dos);
     }
   }
+
+  /**
+   * Is certain voting type passed or not.
+   * @param type Voting type
+   * @return True if passed
+   */
+  private boolean isVotingTypePassed(final VotingType type) {
+    int index = getFirstCandidate();
+    for (Vote vote : listOfVotes) {
+      if (vote.getType() == type) {
+        if (vote.getResult(index) == VotingChoice.VOTED_YES) {
+          return true;
+        }
+        return false;
+      }
+    }
+    return false;
+  }
+  /**
+   * Are privateer ships banned or not?
+   * @return True if they are banned
+   */
+  public boolean arePrivateersBanned() {
+    return isVotingTypePassed(VotingType.BAN_PRIVATEER_SHIPS);
+  }
+
+  /**
+   * Are nukes banned or not?
+   * @return True if they are banned
+   */
+  public boolean areNukesBanned() {
+    return isVotingTypePassed(VotingType.BAN_NUCLEAR_WEAPONS);
+  }
+
+  /**
+   * Is taxation of richest realm enabled?
+   * @return True if it is.
+   */
+  public boolean isTaxationOfRichestEnabled() {
+    return isVotingTypePassed(VotingType.TAXATION_OF_RICHEST_REALM);
+  }
+
 }

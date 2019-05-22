@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
+import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 
 /**
 *
@@ -137,6 +138,68 @@ public class VotesTest {
     assertEquals(VotingType.RULER_OF_GALAXY, result.getType());
     assertEquals(1, result.getOrganizerIndex());
     assertEquals(4, result.getSecondCandidateIndex());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingPassedForBanPrivateers() {
+    Votes votes = new Votes();
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.FIRST_CANDIDATE);
+    Mockito.when(vote.getTurnsToVote()).thenReturn(0);
+    Mockito.when(vote.getOrganizerIndex()).thenReturn(1);
+    votes.getVotes().add(vote);
+    Vote vote2 = Mockito.mock(Vote.class);
+    Mockito.when(vote2.getType()).thenReturn(VotingType.BAN_PRIVATEER_SHIPS);
+    Mockito.when(vote2.getTurnsToVote()).thenReturn(0);
+    Mockito.when(vote2.getResult(1)).thenReturn(VotingChoice.VOTED_YES);
+    votes.getVotes().add(vote2);
+    assertEquals(true, votes.arePrivateersBanned());
+    assertEquals(false, votes.isTaxationOfRichestEnabled());
+    assertEquals(false, votes.areNukesBanned());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingPassedForBanNukes() {
+    Votes votes = new Votes();
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.FIRST_CANDIDATE);
+    Mockito.when(vote.getTurnsToVote()).thenReturn(0);
+    Mockito.when(vote.getOrganizerIndex()).thenReturn(1);
+    votes.getVotes().add(vote);
+    Vote vote2 = Mockito.mock(Vote.class);
+    Mockito.when(vote2.getType()).thenReturn(VotingType.BAN_NUCLEAR_WEAPONS);
+    Mockito.when(vote2.getTurnsToVote()).thenReturn(0);
+    Mockito.when(vote2.getResult(1)).thenReturn(VotingChoice.VOTED_YES);
+    votes.getVotes().add(vote2);
+    assertEquals(false, votes.arePrivateersBanned());
+    assertEquals(false, votes.isTaxationOfRichestEnabled());
+    assertEquals(true, votes.areNukesBanned());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingPassedForTaxation() {
+    Votes votes = new Votes();
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.FIRST_CANDIDATE);
+    Mockito.when(vote.getTurnsToVote()).thenReturn(0);
+    Mockito.when(vote.getOrganizerIndex()).thenReturn(1);
+    votes.getVotes().add(vote);
+    Vote vote2 = Mockito.mock(Vote.class);
+    Mockito.when(vote2.getType()).thenReturn(VotingType.BAN_NUCLEAR_WEAPONS);
+    Mockito.when(vote2.getTurnsToVote()).thenReturn(0);
+    Mockito.when(vote2.getResult(1)).thenReturn(VotingChoice.VOTED_NO);
+    votes.getVotes().add(vote2);
+    Vote vote3 = Mockito.mock(Vote.class);
+    Mockito.when(vote3.getType()).thenReturn(VotingType.TAXATION_OF_RICHEST_REALM);
+    Mockito.when(vote3.getTurnsToVote()).thenReturn(0);
+    Mockito.when(vote3.getResult(1)).thenReturn(VotingChoice.VOTED_YES);
+    votes.getVotes().add(vote3);
+    assertEquals(false, votes.arePrivateersBanned());
+    assertEquals(true, votes.isTaxationOfRichestEnabled());
+    assertEquals(false, votes.areNukesBanned());
   }
 
 }

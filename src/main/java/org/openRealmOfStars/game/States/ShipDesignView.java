@@ -147,6 +147,14 @@ public class ShipDesignView extends BlackPanel {
    */
   private boolean illegalName;
   /**
+   * Are privateer ships banned?
+   */
+  private boolean banPrivateer;
+  /**
+   * Are nukes banned?
+   */
+  private boolean banNukes;
+  /**
    * Constructor for ShipDesignView
    * @param player Player whom is design the new ship design
    * @param oldDesign Possible old design which is being copied
@@ -656,5 +664,37 @@ public class ShipDesignView extends BlackPanel {
       ShipStat stat = new ShipStat(design);
       player.addShipStat(stat);
     }
+  }
+
+  /**
+   * Get flag for ban privateers.
+   * @return the banPrivateer
+   */
+  public boolean isBanPrivateer() {
+    return banPrivateer;
+  }
+
+  /**
+   * Set flag for ban privateers
+   * @param banPrivateer the banPrivateer to set
+   */
+  public void setBanPrivateer(final boolean banPrivateer) {
+    this.banPrivateer = banPrivateer;
+  }
+
+  /**
+   * Get flag for ban nukes.
+   * @return the banNukes
+   */
+  public boolean isBanNukes() {
+    return banNukes;
+  }
+
+  /**
+   * Set flag for ban nukes.
+   * @param banNukes the banNukes to set
+   */
+  public void setBanNukes(final boolean banNukes) {
+    this.banNukes = banNukes;
   }
 }

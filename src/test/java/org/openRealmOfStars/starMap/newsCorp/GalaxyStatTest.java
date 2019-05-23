@@ -126,4 +126,21 @@ public class GalaxyStatTest {
     assertEquals(1, stat.getSecond());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalaxyStatSmallest() {
+    GalaxyStat stat = new GalaxyStat(8, "Test stat");
+    assertEquals("Test stat",stat.getGalaxyStatisticsName());
+    assertEquals(8,stat.getMaxPlayers());
+    stat.addStat(0, 10);
+    stat.addStat(1, 20);
+    stat.addStat(2, 30);
+    stat.addStat(3, 25);
+    stat.addStat(4, 27);
+    stat.addStat(5, 15);
+    stat.addStat(6, 18);
+    stat.addStat(7, 12);
+    assertEquals(0, stat.getSmallest());
+  }
+
 }

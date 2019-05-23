@@ -2485,6 +2485,17 @@ public class StarMap {
         result = result + fleet.getTotalCultureBonus();
       }
     }
+    if (production == Planet.PRODUCTION_CREDITS) {
+      int richest = getNewsCorpData().getCredit().getBiggest();
+      int poorest = getNewsCorpData().getCredit().getSmallest();
+      if (richest == playerIndex && getVotes().isTaxationOfRichestEnabled()) {
+        result = result - 1;
+      }
+      if (poorest == playerIndex && getVotes().isTaxationOfRichestEnabled()) {
+        result = result + 1;
+      }
+
+    }
     return result;
   }
 

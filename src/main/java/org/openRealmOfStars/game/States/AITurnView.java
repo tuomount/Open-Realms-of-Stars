@@ -1500,6 +1500,8 @@ public class AITurnView extends BlackPanel {
    */
   public void updateStarMapToNextTurn() {
     game.getStarMap().resetCulture();
+    int richest = game.getStarMap().getNewsCorpData().getCredit().getBiggest();
+    int poorest = game.getStarMap().getNewsCorpData().getCredit().getSmallest();
     for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
       PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(i);
       if (info != null) {
@@ -1507,6 +1509,15 @@ public class AITurnView extends BlackPanel {
           removeBannedShipDesigns(info,
               game.getStarMap().getVotes().areNukesBanned(),
               game.getStarMap().getVotes().arePrivateersBanned());
+          if (richest == i
+              && game.getStarMap().getVotes().isTaxationOfRichestEnabled()) {
+            PlayerInfo poorInfo = game.getPlayers().getPlayerInfoByIndex(
+                poorest);
+            if (poorInfo != null && info.getTotalCredits() > 0) {
+              poorInfo.setTotalCredits(poorInfo.getTotalCredits() + 1);
+              info.setTotalCredits(info.getTotalCredits() - 1);
+            }
+          }
         }
         info.getDiplomacy().updateDiplomacyLastingForTurn();
         info.resetVisibilityDataAfterTurn();

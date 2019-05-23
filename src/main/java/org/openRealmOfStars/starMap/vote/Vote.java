@@ -87,6 +87,20 @@ public class Vote {
   }
 
   /**
+   * Get amount of voting number.
+   * @param choice Voting choice
+   * @return Numerical value of voting result
+   */
+  public int getVotingAmounts(final VotingChoice choice) {
+    int result = 0;
+    for (int i = 0; i < choices.length; i++) {
+      if (choices[i] == choice) {
+        result = result + numberOfVotes[i];
+      }
+    }
+    return result;
+  }
+  /**
    * Get voting result
    * @param drawRuler Index whom choice is used on draw result
    * @return Voting result

@@ -15,6 +15,8 @@ import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.starMap.vote.VotingType;
+import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.TextUtilities;
 
@@ -1404,6 +1406,101 @@ public final class NewsFactory {
         sb.append(info2.getEmpireName());
         sb.append(" has created the most advanced world in the galaxy! ");
         sb.append("No other realm technology to challenge this alliance.");
+      }
+      news.setImageInstructions(instructions.build());
+      news.setNewsText(sb.toString());
+    }
+    return news;
+  }
+
+  /**
+   * Make News when game is ending for diplomatic victory.
+   * Returns null if diplomatic victory is not achieved
+   * @param map StarMap contains Planet and playerlist
+   * @return NewsData or null
+   */
+  public static NewsData makeDiplomaticVictoryNewsAtEnd(final StarMap map) {
+    int limit = map.getScoreDiplomacy();
+    if (limit == 0) {
+      return null;
+    }
+    PlayerInfo winner = null;
+    PlayerInfo second = null;
+    int votedWinner = 0;
+    int votedSecond = 0;
+    for (Vote vote : map.getVotes().getVotes()) {
+      if (vote.getType() == VotingType.RULER_OF_GALAXY
+          && vote.getTurnsToVote() == 0) {
+        VotingChoice choice = vote.getResult(
+            map.getVotes().getFirstCandidate());
+        if (choice == VotingChoice.VOTED_YES) {
+          winner = map.getPlayerByIndex(map.getVotes().getFirstCandidate());
+          second = map.getPlayerByIndex(map.getVotes().getSecondCandidate());
+          votedWinner = vote.getVotingAmounts(VotingChoice.VOTED_YES);
+          votedSecond = vote.getVotingAmounts(VotingChoice.VOTED_NO);
+        } else {
+          int index = map.getVotes().getSecondCandidate();
+          winner = map.getPlayerByIndex(index);
+          second = map.getPlayerByIndex(map.getVotes().getFirstCandidate());
+          votedWinner = vote.getVotingAmounts(VotingChoice.VOTED_NO);
+          votedSecond = vote.getVotingAmounts(VotingChoice.VOTED_YES);
+        }
+      }
+    }
+    NewsData news = null;
+    if (winner != null) {
+      news = new NewsData();
+      ImageInstruction instructions = new ImageInstruction();
+      news.setImageInstructions(instructions.build());
+      StringBuilder sb = new StringBuilder();
+      if (winner.getDiplomacy().getAllianceIndex() == -1) {
+        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+        instructions.addText("THE DIPLOMATIC VICTORY!");
+        instructions.addText(winner.getEmpireName());
+        instructions.addImage(winner.getRace().getNameSingle());
+        sb.append(winner.getEmpireName());
+        sb.append(" has successfully win election to be Galactic ruler! ");
+        sb.append("This voting was arranged across the whole galaxy."
+            + " Second candidate for the Galactic rules was ");
+        sb.append(second.getEmpireName());
+        sb.append(".");
+        int winnerPerCent = votedWinner * 100 / (votedWinner + votedSecond);
+        int secondPerCent = votedSecond * 100 / (votedWinner + votedSecond);
+        sb.append(winner.getEmpireName());
+        sb.append(" got ");
+        sb.append(winnerPerCent);
+        sb.append("% of votes. ");
+        sb.append(second.getEmpireName());
+        sb.append(" got ");
+        sb.append(secondPerCent);
+        sb.append("% of votes. ");
+      } else {
+        PlayerInfo info = winner;
+        PlayerInfo info2 = map.getPlayerByIndex(
+            winner.getDiplomacy().getAllianceIndex());
+        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+        instructions.addText("THE DIPLOMATIC ALLIANCE!");
+        instructions.addText(info.getEmpireName());
+        instructions.addImage(info.getRace().getNameSingle());
+        sb.append("Alliance of ");
+        sb.append(info.getEmpireName());
+        sb.append(" and ");
+        sb.append(info2.getEmpireName());
+        sb.append(" has successfully win election to be Galactic ruler! ");
+        sb.append("This voting was arranged across the whole galaxy."
+            + " Second candidate for the Galactic rules was ");
+        sb.append(second.getEmpireName());
+        sb.append(".");
+        int winnerPerCent = votedWinner * 100 / (votedWinner + votedSecond);
+        int secondPerCent = votedSecond * 100 / (votedWinner + votedSecond);
+        sb.append(winner.getEmpireName());
+        sb.append(" got ");
+        sb.append(winnerPerCent);
+        sb.append("% of votes. ");
+        sb.append(second.getEmpireName());
+        sb.append(" got ");
+        sb.append(secondPerCent);
+        sb.append("% of votes. ");
       }
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());

@@ -42,6 +42,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
@@ -1472,6 +1473,28 @@ public class AITurnView extends BlackPanel {
       }
     }
   }
+
+  /**
+   * Remove banned ship desigsn
+   * @param info PlayerInfo
+   * @param banNukes True if nukes are banned
+   * @param banPrivateer true if privateers are banned
+   */
+  public void removeBannedShipDesigns(final PlayerInfo info,
+      final boolean banNukes, final boolean banPrivateer) {
+    if (!banNukes || !banPrivateer) {
+      return;
+    }
+    for (ShipStat stat : info.getShipStatList()) {
+      if (banNukes && stat.getDesign().isNuclearBomberShip()) {
+        stat.setObsolete(true);
+      }
+      if (banPrivateer && stat.getDesign().isPrivateer()) {
+        stat.setObsolete(true);
+      }
+    }
+
+  }
   /**
    * Update whole star map to next turn
    */
@@ -1480,6 +1503,11 @@ public class AITurnView extends BlackPanel {
     for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
       PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(i);
       if (info != null) {
+        if (!info.isBoard()) {
+          removeBannedShipDesigns(info,
+              game.getStarMap().getVotes().areNukesBanned(),
+              game.getStarMap().getVotes().arePrivateersBanned());
+        }
         info.getDiplomacy().updateDiplomacyLastingForTurn();
         info.resetVisibilityDataAfterTurn();
         info.getMsgList().clearMessages();

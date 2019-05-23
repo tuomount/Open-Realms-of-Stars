@@ -19,7 +19,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2018  Tuomo Untinen
+ * Copyright (C) 2016,2018,2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -376,6 +376,19 @@ public class ShipDesign {
   }
 
   /**
+   * Is design nuclear bomber ship? True if one orbital nuke is place.
+   * @return True if ship is NuclearBomberShip, otherwise false
+   */
+  public boolean isNuclearBomberShip() {
+    for (ShipComponent comp : components) {
+      if (comp.getType() == ShipComponentType.ORBITAL_NUKE) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Is design trooper ship? True if one planetary invasion module is place.
    * @return True if ship is trooper ship, otherwise false
    */
@@ -388,6 +401,16 @@ public class ShipDesign {
     return false;
   }
 
+  /**
+   * Is design privateer design.
+   * @return True if privateer design
+   */
+  public boolean isPrivateer() {
+    if (hull.getHullType() == ShipHullType.PRIVATEER) {
+      return true;
+    }
+    return false;
+  }
   /**
    * Get total value of starbase component bonus
    * @return Starbase component bonus value

@@ -229,6 +229,7 @@ public class ShipDesignTest {
     assertEquals(true, tmp.contains(ShipDesignConsts.PRIVATEER_MODULE_MISSING));
     design.addComponent(module);
     assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
+    assertEquals(false,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws(false, true)));
   }
 
   @Test
@@ -253,6 +254,31 @@ public class ShipDesignTest {
     assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
     assertEquals(true, design.isBomberShip());
     assertEquals(false, design.isTrooperShip());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testNuclearBomberShipDesign() {
+    ShipHull hull = ShipHullFactory.createByName("Battleship Mk1", SpaceRace.HUMAN);
+    ShipDesign design = new ShipDesign(hull);
+    ShipComponent weapon = ShipComponentFactory.createByName("Laser Mk1");
+    ShipComponent engine = ShipComponentFactory.createByName("Nuclear drive Mk1");
+    ShipComponent energy = ShipComponentFactory.createByName("Fission source Mk1");
+    ShipComponent armor = ShipComponentFactory.createByName("Armor plating Mk1");
+    ShipComponent comp = ShipComponentFactory.createByName("Targeting computer Mk1");
+    ShipComponent bomb = ShipComponentFactory.createByName("Orbital fusion bomb");
+    assertEquals(true,ShipDesignConsts.ENGINE_IS_MISSING.equals(design.getFlaws()));
+    design.addComponent(weapon);
+    design.addComponent(engine);
+    design.addComponent(energy);
+    design.addComponent(armor);
+    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
+    design.addComponent(bomb);
+    design.addComponent(comp);
+    assertEquals(true,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws()));
+    assertEquals(true, design.isBomberShip());
+    assertEquals(false, design.isTrooperShip());
+    assertEquals(false,ShipDesignConsts.DESIGN_OK.equals(design.getFlaws(true, false)));
   }
 
   @Test

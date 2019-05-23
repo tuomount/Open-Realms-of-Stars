@@ -69,6 +69,16 @@ public final class ShipDesignConsts {
   public static final String PRIVATEER_MODULE_MISSING = "No privateer"
       + " module in privateer ship!";
   /**
+   * Message when privateer ships are banned
+   */
+  public static final String PRIVATEERS_ARE_BANNED = "Privateer"
+      + " designs are banned!";
+  /**
+   * Message when ship contains orbital nukes and those are banned
+   */
+  public static final String NUKES_ARE_BANNED = "Orbital nuclear"
+      + " weapons are banned!";
+  /**
    * The caller references the constants using <tt>Consts.EMPTY_STRING</tt>,
    * and so on. Thus, the caller should be prevented from constructing objects
    * of this class, by declaring this private constructor.

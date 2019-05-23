@@ -530,7 +530,7 @@ public class ShipDesignView extends BlackPanel {
     }
     if (design != null) {
       designNameText.setText(design.getName());
-      String flaws = design.getFlaws();
+      String flaws = design.getFlaws(banNukes, banPrivateer);
       boolean duplicate = player.duplicateShipDesignName(design.getName());
       if (duplicate) {
         illegalName = true;
@@ -649,8 +649,8 @@ public class ShipDesignView extends BlackPanel {
   public boolean isDesignOK() {
     updatePanels();
      if (design != null
-            && design.getFlaws().equals(ShipDesignConsts.DESIGN_OK)
-            && !illegalName) {
+            && design.getFlaws(banNukes, banPrivateer).equals(
+                ShipDesignConsts.DESIGN_OK) && !illegalName) {
       return true;
     }
     return false;

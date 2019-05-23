@@ -692,9 +692,11 @@ public class ShipDesign {
 
   /**
    * Get ship design flaws as a string.
+   * @param banNukes True if nuclear weapons are banned.
+   * @param banPrivateer true if privateer ships are banned
    * @return Design flaws in a string
    */
-  public String getFlaws() {
+  public String getFlaws(final boolean banNukes, final boolean banPrivateer) {
     boolean designOk = true;
     StringBuilder sb = new StringBuilder();
     if (!hasEngine()) {
@@ -731,6 +733,11 @@ public class ShipDesign {
           && hull.getHullType() != ShipHullType.STARBASE) {
         designOk = false;
         sb.append(ShipDesignConsts.STARBASE_MODULE_IN_NOT_STARBASE);
+        sb.append("\n");
+      }
+      if (comp.getType() == ShipComponentType.ORBITAL_NUKE && banNukes) {
+        designOk = false;
+        sb.append(ShipDesignConsts.NUKES_ARE_BANNED);
         sb.append("\n");
       }
       if (comp.getType() == ShipComponentType.PRIVATEERING_MODULE) {
@@ -775,6 +782,12 @@ public class ShipDesign {
       sb.append(ShipDesignConsts.PRIVATEER_MODULE_MISSING);
       sb.append("\n");
     }
+    if (hull.getHullType() == ShipHullType.PRIVATEER && privateerModule
+        && banPrivateer) {
+      designOk = false;
+      sb.append(ShipDesignConsts.PRIVATEERS_ARE_BANNED);
+      sb.append("\n");
+    }
     if (getFreeEnergy() < 0) {
       designOk = false;
       sb.append("No enough energy resources!");
@@ -784,6 +797,16 @@ public class ShipDesign {
       sb.append(ShipDesignConsts.DESIGN_OK);
     }
     return sb.toString();
+
+  }
+
+  /**
+   * Get ship design flaws as a string. This will not check if
+   * privateer or nukes are banned.
+   * @return Design flaws in a string
+   */
+  public String getFlaws() {
+    return getFlaws(false, false);
   }
 
   /**

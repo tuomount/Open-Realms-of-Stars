@@ -279,6 +279,8 @@ public class VoteView extends BlackPanel {
         voteYesBtn.setEnabled(true);
         voteNoBtn.setEnabled(true);
         if (vote.getType() != VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
+          voteYesBtn.setText("Vote YES");
+          voteNoBtn.setText("Vote NO");
           votingInfoTitle.setTitle("Promises");
           sb.append("Voting promises you made to others:\n");
           int currentRealmIndex = map.getPlayerList().getCurrentPlayer();
@@ -307,6 +309,8 @@ public class VoteView extends BlackPanel {
             sb.append("You made no promises to anyone!");
           }
         } else {
+          voteYesBtn.setText("Participate");
+          voteNoBtn.setText("Boycott");
           votingInfoTitle.setTitle("Galactic Olympics");
           sb.append("Galactic Olympics are being organized by");
           PlayerInfo info = map.getPlayerList().getPlayerInfoByIndex(
@@ -347,6 +351,18 @@ public class VoteView extends BlackPanel {
       Vote vote = map.getVotes().getVotes().get(voteIndex);
       int index = map.getPlayerList().getCurrentPlayer();
       vote.setChoice(index, VotingChoice.VOTED_NO);
+      updatePanels();
+      return;
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_PREV_VOTE)
+        && voteIndex > 0) {
+      voteIndex--;
+      updatePanels();
+      return;
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_VOTE)
+        && voteIndex < map.getVotes().getVotes().size()) {
+      voteIndex++;
       updatePanels();
       return;
     }

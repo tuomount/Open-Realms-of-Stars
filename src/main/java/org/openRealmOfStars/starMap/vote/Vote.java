@@ -142,6 +142,9 @@ public class Vote {
     setTurnsToVote(dis.readInt());
     choices = new VotingChoice[numberOfRealms];
     numberOfVotes = new int[numberOfRealms];
+    for (int i = 0; i < choices.length; i++) {
+      choices[i] = VotingChoice.NOT_VOTED;
+    }
     // Here should handle special vote specific information
     if (type == VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
       setOrganizerIndex(dis.read());
@@ -164,6 +167,12 @@ public class Vote {
         int value = dis.read();
         choices[i] = VotingChoice.getTypeByIndex(value);
         numberOfVotes[i] = dis.readInt();
+      }
+    } else {
+   // Vote has not been done so reading the vote choices
+      for (int i = 0; i < choices.length; i++) {
+        int value = dis.read();
+        choices[i] = VotingChoice.getTypeByIndex(value);
       }
     }
   }
@@ -266,6 +275,11 @@ public class Vote {
       for (int i = 0; i < choices.length; i++) {
         dos.writeByte(choices[i].getIndex());
         dos.writeInt(numberOfVotes[i]);
+      }
+    } else {
+      // Vote has not been done so writing the vote just the choices
+      for (int i = 0; i < choices.length; i++) {
+        dos.writeByte(choices[i].getIndex());
       }
     }
   }

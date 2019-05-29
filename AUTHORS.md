@@ -123,6 +123,14 @@ Scaurian Space Ship Bridge by Tuomo Untinen
 
 Galactic Olympics logo by Tuomo Untinen
 
+Fat Man by Renderwahn
+
+Galaxy image by Tuomo Untinen
+
+Big Ban and peace logos by Tuomo Untinen
+
+Pirate ship (Night Raider) by dravenx
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

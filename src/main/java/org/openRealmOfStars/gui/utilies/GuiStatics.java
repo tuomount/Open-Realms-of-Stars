@@ -983,6 +983,36 @@ public final class GuiStatics {
       GuiStatics.class.getResource(
           "/resources/images/tradeship-learmarch1.png"));
   /**
+   * Big nuke image
+   */
+  public static final BufferedImage IMAGE_BIG_NUKE = IOUtilities.loadImage(
+      GuiStatics.class.getResource(
+          "/resources/images/bignuke.png"));
+  /**
+   * Big ban icon
+   */
+  public static final BufferedImage IMAGE_BIG_BAN_ICON = IOUtilities.loadImage(
+      GuiStatics.class.getResource(
+          "/resources/images/bigban.png"));
+  /**
+   * Big ban peace
+   */
+  public static final BufferedImage IMAGE_BIG_PEACE_ICON = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/bigpeace.png"));
+  /**
+   * Big ban peace
+   */
+  public static final BufferedImage IMAGE_PRIVATEER = IOUtilities.loadImage(
+      GuiStatics.class.getResource(
+          "/resources/images/pirateship.png"));
+  /**
+   * Galaxy image
+   */
+  public static final BufferedImage IMAGE_GALAXY = IOUtilities.loadImage(
+      GuiStatics.class.getResource(
+          "/resources/images/galaxy.png"));
+  /**
    * Ship bridge interior 1
    */
   public static final BufferedImage IMAGE_INTERIOR1 = IOUtilities.loadImage(

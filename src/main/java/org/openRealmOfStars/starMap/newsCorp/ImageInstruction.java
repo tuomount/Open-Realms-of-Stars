@@ -255,6 +255,26 @@ public class ImageInstruction {
    */
   public static final String LOGO = "logo";
   /**
+   * Big ban icon
+   */
+  public static final String BIG_BAN = "big ban";
+  /**
+   * Big peace icon
+   */
+  public static final String BIG_PEACE = "big peace";
+  /**
+   * Big nuke
+   */
+  public static final String BIG_NUKE = "big nuke";
+  /**
+   * Galaxy image
+   */
+  public static final String GALAXY = "galaxy";
+  /**
+   * Big privateer
+   */
+  public static final String BIG_PRIVATEER = "big privateer";
+  /**
    * Instructions for ship
    */
   public static final String SHIP = "ship";
@@ -399,7 +419,12 @@ public class ImageInstruction {
         && !SpaceRace.HOMARIANS.getNameSingle().equals(image)
         && !SpaceRace.SPACE_PIRATE.getNameSingle().equals(image)
         && !SpaceRace.CHIRALOIDS.getNameSingle().equals(image)
-        && !LOGO.equals(image)) {
+        && !LOGO.equals(image)
+        && !BIG_BAN.equals(image)
+        && !BIG_PEACE.equals(image)
+        && !BIG_NUKE.equals(image)
+        && !BIG_PRIVATEER.equals(image)
+        && !GALAXY.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }
@@ -751,6 +776,21 @@ public class ImageInstruction {
     }
     if (LOGO.equals(image)) {
       drawImg = GuiStatics.IMAGE_GBNC;
+    }
+    if (BIG_BAN.equals(image)) {
+      drawImg = GuiStatics.IMAGE_BIG_BAN_ICON;
+    }
+    if (BIG_PEACE.equals(image)) {
+      drawImg = GuiStatics.IMAGE_BIG_PEACE_ICON;
+    }
+    if (BIG_NUKE.equals(image)) {
+      drawImg = GuiStatics.IMAGE_BIG_NUKE;
+    }
+    if (GALAXY.equals(image)) {
+      drawImg = GuiStatics.IMAGE_GALAXY;
+    }
+    if (BIG_PRIVATEER.equals(image)) {
+      drawImg = GuiStatics.IMAGE_PRIVATEER;
     }
     Graphics2D g = (Graphics2D) workImage.getGraphics();
     g.drawImage(drawImg,

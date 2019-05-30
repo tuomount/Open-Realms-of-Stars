@@ -1720,8 +1720,68 @@ public final class NewsFactory {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
-    instructions.addImage(ImageInstruction.LOGO);
-    instructions.addText("NEW VOTE!");
+    if (vote.getType() == VotingType.BAN_NUCLEAR_WEAPONS) {
+      instructions.addImage(ImageInstruction.BIG_NUKE);
+      instructions.addImage(ImageInstruction.BIG_BAN);
+      int value = DiceGenerator.getRandom(2);
+      switch (value) {
+        case 0: {
+          instructions.addText("BAN OF NUKES?");
+          break;
+        }
+        case 1: {
+          instructions.addText("VOTE FOR BANNING NUKES!");
+          break;
+        }
+        case 2:
+        default: {
+          instructions.addText("NUKES TO BE BANNED?");
+          break;
+        }
+      }
+    } else if (vote.getType() == VotingType.BAN_PRIVATEER_SHIPS) {
+      instructions.addImage(ImageInstruction.BIG_PRIVATEER);
+      instructions.addImage(ImageInstruction.BIG_BAN);
+      int value = DiceGenerator.getRandom(2);
+      switch (value) {
+        case 0: {
+          instructions.addText("BAN OF PRIVATEERS?");
+          break;
+        }
+        case 1: {
+          instructions.addText("VOTE FOR BANNING PRIVATEERS!");
+          break;
+        }
+        case 2:
+        default: {
+          instructions.addText("PRIVATEERS TO BE BANNED?");
+          break;
+        }
+      }
+    } else if (vote.getType() == VotingType.GALACTIC_PEACE) {
+      instructions.addImage(ImageInstruction.GALAXY);
+      instructions.addImage(ImageInstruction.BIG_PEACE);
+      int value = DiceGenerator.getRandom(2);
+      switch (value) {
+        case 0: {
+          instructions.addText("PEACE FOR GALAXY?");
+          break;
+        }
+        case 1: {
+          instructions.addText("VOTE FOR PEACE IN GALAXY!");
+          break;
+        }
+        case 2:
+        default: {
+          instructions.addText("GALAXY WIDE PEACE?");
+          break;
+        }
+      }
+    } else {
+      // No image for all votes yet
+      instructions.addImage(ImageInstruction.LOGO);
+      instructions.addText("NEW VOTE!");
+    }
     news.setImageInstructions(instructions.build());
     StringBuilder sb = new StringBuilder(100);
     sb.append("There is going to be new galactic voting about '");

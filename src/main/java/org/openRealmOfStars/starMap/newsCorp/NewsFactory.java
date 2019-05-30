@@ -1721,8 +1721,15 @@ public final class NewsFactory {
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
     if (vote.getType() == VotingType.BAN_NUCLEAR_WEAPONS) {
-      instructions.addImage(ImageInstruction.BIG_NUKE);
-      instructions.addImage(ImageInstruction.BIG_BAN);
+      if (DiceGenerator.getRandom(1) == 0) {
+        instructions.addImage(ImageInstruction.BIG_NUKE);
+        instructions.addImage(ImageInstruction.BIG_BAN);
+      } else {
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.BIG_NUKE, ImageInstruction.SIZE_HALF);
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.BIG_BAN, ImageInstruction.SIZE_HALF);
+      }
       int value = DiceGenerator.getRandom(2);
       switch (value) {
         case 0: {
@@ -1740,8 +1747,10 @@ public final class NewsFactory {
         }
       }
     } else if (vote.getType() == VotingType.BAN_PRIVATEER_SHIPS) {
-      instructions.addImage(ImageInstruction.BIG_PRIVATEER);
-      instructions.addImage(ImageInstruction.BIG_BAN);
+      instructions.addLogo(ImageInstruction.POSITION_CENTER,
+          ImageInstruction.BIG_PRIVATEER, ImageInstruction.SIZE_FULL);
+      instructions.addLogo(ImageInstruction.POSITION_CENTER,
+          ImageInstruction.BIG_BAN, ImageInstruction.SIZE_HALF);
       int value = DiceGenerator.getRandom(2);
       switch (value) {
         case 0: {
@@ -1760,7 +1769,8 @@ public final class NewsFactory {
       }
     } else if (vote.getType() == VotingType.GALACTIC_PEACE) {
       instructions.addImage(ImageInstruction.GALAXY);
-      instructions.addImage(ImageInstruction.BIG_PEACE);
+      instructions.addLogo(ImageInstruction.POSITION_CENTER,
+          ImageInstruction.BIG_PEACE, ImageInstruction.SIZE_HALF);
       int value = DiceGenerator.getRandom(2);
       switch (value) {
         case 0: {

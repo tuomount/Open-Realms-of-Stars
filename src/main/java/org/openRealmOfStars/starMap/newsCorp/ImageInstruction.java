@@ -491,7 +491,12 @@ public class ImageInstruction {
       throw new IllegalArgumentException("Illegal logo position: "
         + position);
     }
-    if (!PLANET_SPORTS.equals(logoType)) {
+    if (!PLANET_SPORTS.equals(logoType)
+        && !BIG_BAN.equals(logoType)
+        && !BIG_PEACE.equals(logoType)
+        && !BIG_NUKE.equals(logoType)
+        && !BIG_PRIVATEER.equals(logoType)
+        && !GALAXY.equals(logoType)) {
       throw new IllegalArgumentException("Illegal logo type: " + logoType);
     }
     if (!SIZE_FULL.equals(size)
@@ -700,6 +705,21 @@ public class ImageInstruction {
     }
     if (PLANET_SPORTS.equals(planetType)) {
       planetImg = GuiStatics.BIG_SPORT_LOGO;
+    }
+    if (BIG_BAN.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_BIG_BAN_ICON;
+    }
+    if (BIG_PEACE.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_BIG_PEACE_ICON;
+    }
+    if (BIG_NUKE.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_BIG_NUKE;
+    }
+    if (GALAXY.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_GALAXY;
+    }
+    if (BIG_PRIVATEER.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_PRIVATEER;
     }
     if (SIZE_HALF.equals(size)) {
       planetImg = GuiStatics.scaleToHalf(planetImg);

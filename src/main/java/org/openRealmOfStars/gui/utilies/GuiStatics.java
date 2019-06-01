@@ -1019,6 +1019,18 @@ public final class GuiStatics {
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/unitedgalaxytower.png"));
   /**
+   * Big missile image
+   */
+  public static final BufferedImage IMAGE_BIG_MISSILE = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/bigmissile.png"));
+  /**
+   * Big money image
+   */
+  public static final BufferedImage IMAGE_BIG_MONEY = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/bigmoney.png"));
+  /**
    * Ship bridge interior 1
    */
   public static final BufferedImage IMAGE_INTERIOR1 = IOUtilities.loadImage(

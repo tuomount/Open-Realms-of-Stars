@@ -279,6 +279,14 @@ public class ImageInstruction {
    */
   public static final String UNITED_GALAXY_TOWER = "united galaxy tower";
   /**
+   * Big missile
+   */
+  public static final String BIG_MISSILE = "big missile";
+  /**
+   * Big money
+   */
+  public static final String BIG_MONEY = "big money";
+  /**
    * Instructions for ship
    */
   public static final String SHIP = "ship";
@@ -501,7 +509,9 @@ public class ImageInstruction {
         && !BIG_NUKE.equals(logoType)
         && !BIG_PRIVATEER.equals(logoType)
         && !GALAXY.equals(logoType)
-        && !UNITED_GALAXY_TOWER.equals(logoType)) {
+        && !UNITED_GALAXY_TOWER.equals(logoType)
+        && !BIG_MISSILE.equals(logoType)
+        && !BIG_MONEY.equals(logoType)) {
       throw new IllegalArgumentException("Illegal logo type: " + logoType);
     }
     if (!SIZE_FULL.equals(size)
@@ -728,6 +738,12 @@ public class ImageInstruction {
     }
     if (UNITED_GALAXY_TOWER.equals(planetType)) {
       planetImg = GuiStatics.IMAGE_UNITED_GALAXY_TOWER;
+    }
+    if (BIG_MISSILE.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_BIG_MISSILE;
+    }
+    if (BIG_MONEY.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_BIG_MONEY;
     }
     if (SIZE_HALF.equals(size)) {
       planetImg = GuiStatics.scaleToHalf(planetImg);

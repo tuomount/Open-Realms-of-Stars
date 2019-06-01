@@ -1791,6 +1791,46 @@ public final class NewsFactory {
           break;
         }
       }
+    } else if (vote.getType() == VotingType.TAXATION_OF_RICHEST_REALM) {
+      instructions.addLogo(ImageInstruction.POSITION_CENTER,
+          ImageInstruction.BIG_MONEY, ImageInstruction.SIZE_HALF);
+      int value = DiceGenerator.getRandom(2);
+      switch (value) {
+        case 0: {
+          instructions.addText("TAXATION?");
+          break;
+        }
+        case 1: {
+          instructions.addText("VOTE FOR TAX OF RICH!");
+          break;
+        }
+        case 2:
+        default: {
+          instructions.addText("TAXATION OF RICHEST REALM?");
+          break;
+        }
+      }
+    } else if (vote.getType() == VotingType.SECOND_CANDIDATE_MILITARY) {
+      instructions.addLogo(ImageInstruction.POSITION_LEFT,
+          ImageInstruction.UNITED_GALAXY_TOWER, ImageInstruction.SIZE_HALF);
+      instructions.addLogo(ImageInstruction.POSITION_RIGHT,
+          ImageInstruction.BIG_MISSILE, ImageInstruction.SIZE_HALF);
+      int value = DiceGenerator.getRandom(2);
+      switch (value) {
+        case 0: {
+          instructions.addText("DIPLOMACY OR MILITARY?");
+          break;
+        }
+        case 1: {
+          instructions.addText("MILITARY OVER DIPLOMACY?");
+          break;
+        }
+        case 2:
+        default: {
+          instructions.addText("DIPLOMACY OVER MILITARY?");
+          break;
+        }
+      }
     } else {
       // No image for all votes yet
       instructions.addImage(ImageInstruction.LOGO);

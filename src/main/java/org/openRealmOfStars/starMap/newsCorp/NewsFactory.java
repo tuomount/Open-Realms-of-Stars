@@ -1814,7 +1814,7 @@ public final class NewsFactory {
       instructions.addLogo(ImageInstruction.POSITION_LEFT,
           ImageInstruction.UNITED_GALAXY_TOWER, ImageInstruction.SIZE_HALF);
       instructions.addLogo(ImageInstruction.POSITION_RIGHT,
-          ImageInstruction.BIG_MISSILE, ImageInstruction.SIZE_HALF);
+          ImageInstruction.BIG_MISSILE, ImageInstruction.SIZE_FULL);
       int value = DiceGenerator.getRandom(2);
       switch (value) {
         case 0: {

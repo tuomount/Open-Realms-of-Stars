@@ -1391,18 +1391,19 @@ public class AITurnView extends BlackPanel {
       // Diplomacy voting has been disabled.
       return;
     }
-    if (game.getStarMap().getVotes().firstCandidateSelected()
-        && game.getStarMap().getVotes().getNextImportantVote() == null) {
-      int turns = game.getStarMap().getScoreVictoryTurn() * 5 / 100;
-      Vote vote = game.getStarMap().getVotes().generateNextVote(
-          game.getStarMap().getScoreDiplomacy() + 1,
-          game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
-      if (vote != null) {
-        game.getStarMap().getVotes().getVotes().add(vote);
-        NewsData news = NewsFactory.makeVotingNews(vote);
-        game.getStarMap().getNewsCorpData().addNews(news);
-      } else {
-        ErrorLogger.log("Next vote was null!");
+    if (game.getStarMap().getVotes().firstCandidateSelected()) {
+      if (game.getStarMap().getVotes().getNextImportantVote() == null) {
+        int turns = game.getStarMap().getScoreVictoryTurn() * 5 / 100;
+        Vote vote = game.getStarMap().getVotes().generateNextVote(
+            game.getStarMap().getScoreDiplomacy() + 1,
+            game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
+        if (vote != null) {
+          game.getStarMap().getVotes().getVotes().add(vote);
+          NewsData news = NewsFactory.makeVotingNews(vote);
+          game.getStarMap().getNewsCorpData().addNews(news);
+        } else {
+          ErrorLogger.log("Next vote was null!");
+        }
       }
     } else {
       int mostTowers = -1;

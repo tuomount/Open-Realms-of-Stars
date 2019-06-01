@@ -142,6 +142,7 @@ public class CreditsView extends BlackPanel {
       + "Galaxy image by Tuomo Untinen\n\n"
       + "Big Ban and peace logos by Tuomo Untinen\n\n"
       + "Pirate ship (Night Raider) by dravenx\n\n"
+      + "United Galaxy Tower by Tuomo Untinen\n\n"
       + "Fonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

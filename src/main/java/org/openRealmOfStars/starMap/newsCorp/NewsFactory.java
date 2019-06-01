@@ -607,6 +607,8 @@ public final class NewsFactory {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instructions.addLogo(ImageInstruction.POSITION_CENTER,
+        ImageInstruction.UNITED_GALAXY_TOWER, ImageInstruction.SIZE_HALF);
     switch (DiceGenerator.getRandom(2)) {
       case 0:
       default: {
@@ -643,7 +645,9 @@ public final class NewsFactory {
   public static NewsData makeSecretaryOfGalaxyNews(final PlayerInfo realm) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
-    instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
+    instructions.addLogo(ImageInstruction.POSITION_CENTER,
+        ImageInstruction.UNITED_GALAXY_TOWER, ImageInstruction.SIZE_FULL);
     switch (DiceGenerator.getRandom(2)) {
       case 0:
       default: {
@@ -1814,36 +1818,30 @@ public final class NewsFactory {
       final Planet planet) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
-    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
     String position = ImageInstruction.POSITION_CENTER;
-    switch (DiceGenerator.getRandom(2)) {
+    String position2 = ImageInstruction.POSITION_CENTER;
+    switch (DiceGenerator.getRandom(1)) {
       case 0: {
         position = ImageInstruction.POSITION_LEFT;
+        position2 = ImageInstruction.POSITION_RIGHT;
         break;
       }
       case 1: {
         position = ImageInstruction.POSITION_RIGHT;
+        position2 = ImageInstruction.POSITION_LEFT;
         break;
       }
       default: {
         position = ImageInstruction.POSITION_RIGHT;
+        position2 = ImageInstruction.POSITION_LEFT;
         break;
       }
     }
-    String size = ImageInstruction.SIZE_FULL;
-    switch (DiceGenerator.getRandom(2)) {
-      case 0: {
-        size = ImageInstruction.SIZE_FULL;
-        break;
-      }
-      case 1:
-      default: {
-        size = ImageInstruction.SIZE_HALF;
-        break;
-      }
-    }
+    String size = ImageInstruction.SIZE_HALF;
     instructions.addPlanet(position, planet.getImageInstructions(), size);
-    position = ImageInstruction.POSITION_CENTER;
+    instructions.addLogo(position2, ImageInstruction.UNITED_GALAXY_TOWER,
+        size);
     instructions.addImage(realm.getRace().getNameSingle());
     switch (DiceGenerator.getRandom(2)) {
       case 0:

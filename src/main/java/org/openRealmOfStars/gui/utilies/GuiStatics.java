@@ -1013,6 +1013,12 @@ public final class GuiStatics {
       GuiStatics.class.getResource(
           "/resources/images/galaxy.png"));
   /**
+   * United Galaxy Tower image
+   */
+  public static final BufferedImage IMAGE_UNITED_GALAXY_TOWER = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/unitedgalaxytower.png"));
+  /**
    * Ship bridge interior 1
    */
   public static final BufferedImage IMAGE_INTERIOR1 = IOUtilities.loadImage(

@@ -131,6 +131,8 @@ Big Ban and peace logos by Tuomo Untinen
 
 Pirate ship (Night Raider) by dravenx
 
+United Galaxy Tower by Tuomo Untinen
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

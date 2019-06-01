@@ -487,9 +487,10 @@ public class ImageInstruction {
   }
 
   /**
-   * Adds logo to the image.
+   * Adds logo to the image. Logo can be almost any image including
+   * space race, planet, or big icon.
    * @param position Three choices: left, center and right
-   * @param logoType logo type. Choices are:
+   * @param logoType logo type.
    * @param size Two choices half or full
    * @return ImageInstruction with text
    * @throws IllegalArgumentException If position or planet type are illegal
@@ -511,7 +512,18 @@ public class ImageInstruction {
         && !GALAXY.equals(logoType)
         && !UNITED_GALAXY_TOWER.equals(logoType)
         && !BIG_MISSILE.equals(logoType)
-        && !BIG_MONEY.equals(logoType)) {
+        && !BIG_MONEY.equals(logoType)
+        && !SpaceRace.CENTAURS.getNameSingle().equals(logoType)
+        && !SpaceRace.HUMAN.getNameSingle().equals(logoType)
+        && !SpaceRace.SPORKS.getNameSingle().equals(logoType)
+        && !SpaceRace.GREYANS.getNameSingle().equals(logoType)
+        && !SpaceRace.MOTHOIDS.getNameSingle().equals(logoType)
+        && !SpaceRace.TEUTHIDAES.getNameSingle().equals(logoType)
+        && !SpaceRace.MECHIONS.getNameSingle().equals(logoType)
+        && !SpaceRace.SCAURIANS.getNameSingle().equals(logoType)
+        && !SpaceRace.HOMARIANS.getNameSingle().equals(logoType)
+        && !SpaceRace.SPACE_PIRATE.getNameSingle().equals(logoType)
+        && !SpaceRace.CHIRALOIDS.getNameSingle().equals(logoType)) {
       throw new IllegalArgumentException("Illegal logo type: " + logoType);
     }
     if (!SIZE_FULL.equals(size)
@@ -744,6 +756,13 @@ public class ImageInstruction {
     }
     if (BIG_MONEY.equals(planetType)) {
       planetImg = GuiStatics.IMAGE_BIG_MONEY;
+    }
+    SpaceRace race = SpaceRaceUtility.getRaceByName(planetType);
+    if (race != null) {
+      planetImg = race.getRaceImage();
+    }
+    if (SpaceRace.SPACE_PIRATE.getNameSingle().equals(planetType)) {
+      planetImg = SpaceRace.SPACE_PIRATE.getRaceImage();
     }
     if (SIZE_HALF.equals(size)) {
       planetImg = GuiStatics.scaleToHalf(planetImg);

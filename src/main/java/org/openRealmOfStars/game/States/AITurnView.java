@@ -1399,7 +1399,17 @@ public class AITurnView extends BlackPanel {
             game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
         if (vote != null) {
           game.getStarMap().getVotes().getVotes().add(vote);
-          NewsData news = NewsFactory.makeVotingNews(vote);
+          NewsData news = null;
+          if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+            PlayerInfo firstCandidate = game.getStarMap().getPlayerByIndex(
+                game.getStarMap().getVotes().getFirstCandidate());
+            PlayerInfo secondCandidate = game.getStarMap().getPlayerByIndex(
+                game.getStarMap().getVotes().getSecondCandidate());
+            news = NewsFactory.makeVotingNews(vote, firstCandidate,
+                secondCandidate);
+          } else {
+            news = NewsFactory.makeVotingNews(vote, null, null);
+          }
           game.getStarMap().getNewsCorpData().addNews(news);
         } else {
           ErrorLogger.log("Next vote was null!");
@@ -1450,7 +1460,16 @@ public class AITurnView extends BlackPanel {
             vote.setSecondCandidateIndex(second);
           }
           // Vote has been already added to list in generateNextVote()
-          news = NewsFactory.makeVotingNews(vote);
+          if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+            PlayerInfo firstCandidate = game.getStarMap().getPlayerByIndex(
+                game.getStarMap().getVotes().getFirstCandidate());
+            PlayerInfo secondCandidate = game.getStarMap().getPlayerByIndex(
+                game.getStarMap().getVotes().getSecondCandidate());
+            news = NewsFactory.makeVotingNews(vote, firstCandidate,
+                secondCandidate);
+          } else {
+            news = NewsFactory.makeVotingNews(vote, null, null);
+          }
           game.getStarMap().getNewsCorpData().addNews(news);
         } else {
           ErrorLogger.log("First vote was null!");

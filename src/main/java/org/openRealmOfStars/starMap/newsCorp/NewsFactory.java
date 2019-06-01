@@ -1718,9 +1718,14 @@ public final class NewsFactory {
   /**
    * Make Voting news
    * @param vote New vote to be organized
+   * @param firstCandidate for ruler of galaxy.
+   *               If vote is something else this can be null.
+   * @param secondCandidate for ruler of galaxy.
+   *               If vote is something else this can be null.
    * @return NewsData
    */
-  public static NewsData makeVotingNews(final Vote vote) {
+  public static NewsData makeVotingNews(final Vote vote,
+      final PlayerInfo firstCandidate, final PlayerInfo secondCandidate) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
@@ -1828,6 +1833,32 @@ public final class NewsFactory {
         case 2:
         default: {
           instructions.addText("DIPLOMACY OVER MILITARY?");
+          break;
+        }
+      }
+    } else if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+      instructions.addLogo(ImageInstruction.POSITION_LEFT,
+          firstCandidate.getRace().getNameSingle(),
+          ImageInstruction.SIZE_FULL);
+      instructions.addLogo(ImageInstruction.POSITION_RIGHT,
+          secondCandidate.getRace().getNameSingle(),
+          ImageInstruction.SIZE_FULL);
+      int value = DiceGenerator.getRandom(2);
+      switch (value) {
+        case 0: {
+          instructions.addText(firstCandidate.getEmpireName() + " VS "
+              + secondCandidate.getEmpireName());
+          break;
+        }
+        case 1: {
+          instructions.addText("RULER OF THE GALAXY?");
+          break;
+        }
+        case 2:
+        default: {
+          instructions.addText("VOTE FOR RULER!");
+          instructions.addText(firstCandidate.getEmpireName() + " VS "
+              + secondCandidate.getEmpireName());
           break;
         }
       }

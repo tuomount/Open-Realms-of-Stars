@@ -1879,6 +1879,135 @@ public final class NewsFactory {
   }
 
   /**
+   * Make Voting ended news
+   * @param vote New vote to be organized
+   * @param choice Which choice won the voting
+   * @param firstCandidate for ruler of galaxy.
+   *               If vote is something else this can be null.
+   * @param secondCandidate for ruler of galaxy.
+   *               If vote is something else this can be null.
+   * @return NewsData
+   */
+  public static NewsData makeVotingEndedNews(final Vote vote,
+      final VotingChoice choice, final PlayerInfo firstCandidate,
+      final PlayerInfo secondCandidate) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    if (vote.getType() == VotingType.BAN_NUCLEAR_WEAPONS) {
+      if (DiceGenerator.getRandom(1) == 0) {
+        instructions.addImage(ImageInstruction.BIG_NUKE);
+        if (choice == VotingChoice.VOTED_YES) {
+          instructions.addImage(ImageInstruction.BIG_BAN);
+        }
+      } else {
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.BIG_NUKE, ImageInstruction.SIZE_HALF);
+        if (choice == VotingChoice.VOTED_YES) {
+          instructions.addLogo(ImageInstruction.POSITION_CENTER,
+              ImageInstruction.BIG_BAN, ImageInstruction.SIZE_HALF);
+        }
+      }
+      if (choice == VotingChoice.VOTED_YES) {
+        instructions.addText("NUKES ARE BANNED!");
+      } else {
+        instructions.addText("NUKES ARE ALLOWED!");
+      }
+    } else if (vote.getType() == VotingType.BAN_PRIVATEER_SHIPS) {
+      instructions.addLogo(ImageInstruction.POSITION_CENTER,
+          ImageInstruction.BIG_PRIVATEER, ImageInstruction.SIZE_FULL);
+      if (choice == VotingChoice.VOTED_YES) {
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.BIG_BAN, ImageInstruction.SIZE_HALF);
+      }
+      if (choice == VotingChoice.VOTED_YES) {
+        instructions.addText("PRIVATEERS ARE BANNED!");
+      } else {
+        instructions.addText("PRIVATEERS ARE ALLOWED!");
+      }
+    } else if (vote.getType() == VotingType.GALACTIC_PEACE) {
+      instructions.addImage(ImageInstruction.GALAXY);
+      instructions.addLogo(ImageInstruction.POSITION_CENTER,
+          ImageInstruction.BIG_PEACE, ImageInstruction.SIZE_HALF);
+      if (choice == VotingChoice.VOTED_NO) {
+        instructions.addImage(ImageInstruction.BIG_BAN);
+      }
+      if (choice == VotingChoice.VOTED_YES) {
+        instructions.addText("PEACE FOR WHOLE GALAXY!");
+      } else {
+        instructions.addText("NO PEACE FOR GALAXY!");
+      }
+    } else if (vote.getType() == VotingType.TAXATION_OF_RICHEST_REALM) {
+      instructions.addLogo(ImageInstruction.POSITION_CENTER,
+          ImageInstruction.BIG_MONEY, ImageInstruction.SIZE_HALF);
+      if (choice == VotingChoice.VOTED_NO) {
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.BIG_BAN, ImageInstruction.SIZE_HALF);
+      }
+      if (choice == VotingChoice.VOTED_YES) {
+        instructions.addText("TAXES FOR RICHEST REALM!");
+      } else {
+        instructions.addText("NO EXTRA TAXES FOR RICHEST REALM!");
+      }
+    } else if (vote.getType() == VotingType.SECOND_CANDIDATE_MILITARY) {
+      if (choice == VotingChoice.VOTED_YES) {
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.BIG_MISSILE, ImageInstruction.SIZE_FULL);
+      } else {
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.UNITED_GALAXY_TOWER, ImageInstruction.SIZE_FULL);
+      }
+      if (choice == VotingChoice.VOTED_YES) {
+        instructions.addText("MILITARY CANDIDATE!");
+      } else {
+        instructions.addText("DIPLOMATIC CANDIDATE!");
+      }
+    } else if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+      if (choice == VotingChoice.VOTED_YES) {
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            firstCandidate.getRace().getNameSingle(),
+            ImageInstruction.SIZE_FULL);
+      } else {
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            secondCandidate.getRace().getNameSingle(),
+            ImageInstruction.SIZE_FULL);
+      }
+      if (choice == VotingChoice.VOTED_YES) {
+        instructions.addText("RULER OF THE GALAXY");
+        instructions.addText("IS");
+        instructions.addText(firstCandidate.getEmpireName());
+      } else {
+        instructions.addText("RULER OF THE GALAXY");
+        instructions.addText("IS");
+        instructions.addText(secondCandidate.getEmpireName());
+      }
+    } else {
+      // No image for all votes yet
+      instructions.addImage(ImageInstruction.LOGO);
+      instructions.addText("NEW VOTE!");
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append("Voting for '");
+    sb.append(vote.getType().getDescription());
+    sb.append("' has ended. ");
+    sb.append(choice.getDescription());
+    sb.append("-votes won! ");
+    int yes = vote.getVotingAmounts(VotingChoice.VOTED_YES);
+    int no = vote.getVotingAmounts(VotingChoice.VOTED_NO);
+    int total = yes + no;
+    yes = yes * 100 / total;
+    no = no * 100 / total;
+    sb.append("YES: ");
+    sb.append(yes);
+    sb.append(" per cent and NO: ");
+    sb.append(no);
+    sb.append(" per cent.");
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
    * Make United Galaxy Tower news. Realm builds this building is closer
    * to start path to diplomatic victory.
    * @param realm PlayerInfo who is building

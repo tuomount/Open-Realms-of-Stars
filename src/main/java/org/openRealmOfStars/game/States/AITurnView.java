@@ -1490,6 +1490,22 @@ public class AITurnView extends BlackPanel {
       if (vote.getTurnsToVote() == 0) {
         doVoting(vote, game.getPlayers());
         handlePromises(vote, game.getPlayers());
+        NewsData news = null;
+        if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+          PlayerInfo firstCandidate = game.getStarMap().getPlayerByIndex(
+              game.getStarMap().getVotes().getFirstCandidate());
+          PlayerInfo secondCandidate = game.getStarMap().getPlayerByIndex(
+              game.getStarMap().getVotes().getSecondCandidate());
+          VotingChoice choice = vote.getResult(
+              game.getStarMap().getVotes().getFirstCandidate());
+          news = NewsFactory.makeVotingEndedNews(vote, choice, firstCandidate,
+              secondCandidate);
+        } else {
+          VotingChoice choice = vote.getResult(
+              game.getStarMap().getVotes().getFirstCandidate());
+          news = NewsFactory.makeVotingEndedNews(vote, choice, null, null);
+        }
+        game.getStarMap().getNewsCorpData().addNews(news);
       }
     }
   }

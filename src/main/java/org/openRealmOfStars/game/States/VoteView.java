@@ -186,7 +186,7 @@ public class VoteView extends BlackPanel {
     iBtn.addActionListener(listener);
     panel.add(iBtn);
     panel.add(Box.createRigidArea(new Dimension(10, 10)));
-    ArrayList<Vote> votes = map.getVotes().getVotes();
+    ArrayList<Vote> votes = map.getVotes().getVotableVotes();
     voteIndex = votes.size() - 1;
     for (int i = 0; i < votes.size(); i++) {
       if (votes.get(i).getTurnsToVote() > 0) {
@@ -229,10 +229,10 @@ public class VoteView extends BlackPanel {
    * Update panels in view.
    */
   public void updatePanels() {
-    if (map.getVotes().getVotes().size() > 0) {
+    if (map.getVotes().getVotableVotes().size() > 0) {
       voteLabel.setText("Vote " + (voteIndex + 1) + "/"
-          + map.getVotes().getVotes().size());
-      Vote vote = map.getVotes().getVotes().get(voteIndex);
+          + map.getVotes().getVotableVotes().size());
+      Vote vote = map.getVotes().getVotableVotes().get(voteIndex);
       if (vote.getType() == VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
         voteTitle.setText("Participate to " + vote.getType().getDescription());
       } else {

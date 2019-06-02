@@ -68,6 +68,21 @@ public class Votes {
   }
 
   /**
+   * Get votes that are voteable.
+   * @return ArrayList of votes
+   */
+  public ArrayList<Vote> getVotableVotes() {
+    ArrayList<Vote> list = new ArrayList<>();
+    for (Vote vote : listOfVotes) {
+      if (vote.getType() != VotingType.FIRST_CANDIDATE
+          && vote.getType() != VotingType.SECOND_CANDIDATE) {
+        list.add(vote);
+      }
+    }
+    return list;
+  }
+
+  /**
    * Get Next important vote, which isn't galactic olympic participation.
    * @return Vote or null
    */

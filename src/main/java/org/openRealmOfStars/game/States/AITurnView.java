@@ -1398,7 +1398,7 @@ public class AITurnView extends BlackPanel {
             game.getStarMap().getScoreDiplomacy() + 1,
             game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
         if (vote != null) {
-          game.getStarMap().getVotes().getVotes().add(vote);
+          // Vote has been already added to list in generateNextVote()
           NewsData news = null;
           if (vote.getType() == VotingType.RULER_OF_GALAXY) {
             PlayerInfo firstCandidate = game.getStarMap().getPlayerByIndex(

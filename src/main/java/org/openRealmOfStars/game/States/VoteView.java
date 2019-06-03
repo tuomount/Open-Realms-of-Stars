@@ -126,7 +126,7 @@ public class VoteView extends BlackPanel {
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.add(Box.createRigidArea(new Dimension(10, 10)));
     voteTitle = new SpaceLabel("Participate to "
-        + VotingType.GALACTIC_OLYMPIC_PARTICIPATE.getDescription());
+        + VotingType.SECOND_CANDIDATE_MILITARY.getDescription());
     voteTitle.setAlignmentX(CENTER_ALIGNMENT);
     panel.add(voteTitle);
     panel.add(Box.createRigidArea(new Dimension(5, 5)));

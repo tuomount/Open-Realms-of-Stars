@@ -341,14 +341,14 @@ public class VoteView extends BlackPanel {
    */
   public void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_VOTE_YES)) {
-      Vote vote = map.getVotes().getVotes().get(voteIndex);
+      Vote vote = map.getVotes().getVotableVotes().get(voteIndex);
       int index = map.getPlayerList().getCurrentPlayer();
       vote.setChoice(index, VotingChoice.VOTED_YES);
       updatePanels();
       return;
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_VOTE_NO)) {
-      Vote vote = map.getVotes().getVotes().get(voteIndex);
+      Vote vote = map.getVotes().getVotableVotes().get(voteIndex);
       int index = map.getPlayerList().getCurrentPlayer();
       vote.setChoice(index, VotingChoice.VOTED_NO);
       updatePanels();
@@ -361,7 +361,7 @@ public class VoteView extends BlackPanel {
       return;
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_VOTE)
-        && voteIndex < map.getVotes().getVotes().size()) {
+        && voteIndex < map.getVotes().getVotableVotes().size() - 1) {
       voteIndex++;
       updatePanels();
       return;

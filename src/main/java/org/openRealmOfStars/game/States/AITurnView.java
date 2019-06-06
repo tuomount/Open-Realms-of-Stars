@@ -1325,6 +1325,10 @@ public class AITurnView extends BlackPanel {
       if (result == VotingChoice.VOTED_YES) {
         int second = game.getStarMap().getNewsCorpData().getMilitary()
             .getBiggest();
+        if (game.getStarMap().getVotes().getFirstCandidate() == second) {
+          second = game.getStarMap().getNewsCorpData().getMilitary()
+              .getSecond();
+        }
         Vote voteSecond = new Vote(VotingType.SECOND_CANDIDATE,
             game.getPlayers().getCurrentMaxRealms(), 0);
         voteSecond.setOrganizerIndex(second);
@@ -1453,6 +1457,10 @@ public class AITurnView extends BlackPanel {
             // so second candidate is strongest military
             int second = game.getStarMap().getNewsCorpData().getMilitary()
                 .getBiggest();
+            if (game.getStarMap().getVotes().getFirstCandidate() == second) {
+              second = game.getStarMap().getNewsCorpData().getMilitary()
+                  .getSecond();
+            }
             Vote voteSecond = new Vote(VotingType.SECOND_CANDIDATE,
                 game.getPlayers().getCurrentMaxRealms(), 0);
             voteSecond.setOrganizerIndex(second);
@@ -1487,6 +1495,17 @@ public class AITurnView extends BlackPanel {
     Vote vote = game.getStarMap().getVotes().getNextImportantVote();
     if (vote != null && vote.getTurnsToVote() > 0) {
       vote.setTurnsToVote(vote.getTurnsToVote() - 1);
+      if (vote.getTurnsToVote() == 1) {
+        for (int i = 0;
+            i < game.getStarMap().getPlayerList().getCurrentMaxRealms(); i++) {
+          Message msg = new Message(MessageType.INFORMATION,
+              "One turn left for voting, remember make your vote.",
+              Icons.getIconByName(Icons.ICON_CULTURE));
+          PlayerInfo info = game.getStarMap().getPlayerList()
+              .getPlayerInfoByIndex(i);
+          info.getMsgList().addNewMessage(msg);
+        }
+      }
       if (vote.getTurnsToVote() == 0) {
         doVoting(vote, game.getPlayers());
         handlePromises(vote, game.getPlayers());

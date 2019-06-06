@@ -3127,6 +3127,13 @@ public class StarMap {
         first = i;
       }
     }
+    if (second == -1) {
+      // No other realm has tower choosing strongest military then
+      second = getNewsCorpData().getMilitary().getBiggest();
+      if (getVotes().getFirstCandidate() == second) {
+        second = getNewsCorpData().getMilitary().getSecond();
+      }
+    }
     return second;
   }
 

@@ -535,7 +535,8 @@ public class FleetView extends BlackPanel {
       updatePanel();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_SPLIT_THE_FLEET)
-        && shipsInFleet.getSelectedIndices().length > 0) {
+        && shipsInFleet.getSelectedIndices().length > 0
+        && fleet != starbaseFleet) {
       Fleet newFleet = null;
       for (int i = 0; i < shipsInFleet.getSelectedIndices().length; i++) {
         Ship ship = shipsInFleet.getSelectedValuesList().get(i);

@@ -275,7 +275,7 @@ public class ImageInstruction {
    */
   public static final String BIG_PRIVATEER = "big privateer";
   /**
-   * United galaxy tower
+   * United Galaxy Tower
    */
   public static final String UNITED_GALAXY_TOWER = "united galaxy tower";
   /**

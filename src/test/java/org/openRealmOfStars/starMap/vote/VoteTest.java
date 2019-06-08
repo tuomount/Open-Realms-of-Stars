@@ -157,6 +157,9 @@ public class VoteTest {
     assertEquals(VotingChoice.NOT_VOTED, VotingChoice.getTypeByIndex(0));
     assertEquals(VotingChoice.VOTED_YES, VotingChoice.getTypeByIndex(1));
     assertEquals(VotingChoice.VOTED_NO, VotingChoice.getTypeByIndex(2));
+    assertEquals("Not voted", VotingChoice.NOT_VOTED.getDescription());
+    assertEquals("Yes", VotingChoice.VOTED_YES.getDescription());
+    assertEquals("No", VotingChoice.VOTED_NO.getDescription());
   }
 
   @Test

@@ -443,8 +443,8 @@ public class GalaxyCreationView extends BlackPanel {
     scoringDiplomacy[4] = "5 diplomatic votes";
     scoringDiplomacy[5] = "6 diplomatic votes";
     comboScoringDiplomatic = new SpaceCombo<>(scoringDiplomacy);
-    comboScoringDiplomatic.setToolTipText("<html>Realm must minimum number of"
-        + " United Galaxy Towers. Minimum number varies of galaxy size."
+    comboScoringDiplomatic.setToolTipText("<html>Realm have must minimum number"
+        + " of United Galaxy Towers. Minimum number varies of galaxy size."
         + "<br>"
         + " After minimum number of tower there are selected amount of"
         + " diplomatic votes.<br>"

@@ -362,6 +362,19 @@ public class ImageInstructionTest {
         + "+planet(position center,ironworld1,half)", instruction.build());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testLogoSpaceRaces() {
+    for (SpaceRace race : SpaceRace.values()) {
+      ImageInstruction instruction = new ImageInstruction();
+      instruction.addBackground(ImageInstruction.BACKGROUND_STARS);
+      instruction.addLogo(ImageInstruction.POSITION_CENTER, race.getNameSingle(),
+          ImageInstruction.SIZE_HALF);
+      assertEquals("background(stars)+drawLogo(position center," + race.getNameSingle() + ",half)"
+          , instruction.build());
+    }
+  }
+
   @Test(expected=IllegalArgumentException.class)
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBackgroundAndPlanetPositionWeird() {

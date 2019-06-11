@@ -156,11 +156,12 @@ public class VoteView extends BlackPanel {
     center.add(votingInfoTitle);
     EmptyInfoPanel panelx = new EmptyInfoPanel();
     panelx.setLayout(new BorderLayout());
-    voteYesBtn = new SpaceButton("Participate", GameCommands.COMMAND_VOTE_YES);
+    voteYesBtn = new SpaceButton("Participate vote",
+        GameCommands.COMMAND_VOTE_YES);
     voteYesBtn.addActionListener(listener);
     panelx.add(voteYesBtn, BorderLayout.WEST);
     panelx.add(Box.createRigidArea(new Dimension(50, 10)));
-    voteNoBtn = new SpaceButton("Boycott", GameCommands.COMMAND_VOTE_YES);
+    voteNoBtn = new SpaceButton("Boycott voting", GameCommands.COMMAND_VOTE_NO);
     voteNoBtn.addActionListener(listener);
     panelx.add(voteNoBtn, BorderLayout.EAST);
     EmptyInfoPanel north = new EmptyInfoPanel();
@@ -252,7 +253,17 @@ public class VoteView extends BlackPanel {
         VotingChoice choice = vote.getChoice(i);
         sb.append(map.getPlayerList().getPlayerInfoByIndex(i).getEmpireName());
         sb.append(": ");
-        sb.append(choice.getDescription());
+        if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+          if (choice == VotingChoice.VOTED_YES) {
+            sb.append("1st candidate");
+          } else if (choice == VotingChoice.VOTED_NO) {
+            sb.append("2nd candidate");
+          } else {
+            sb.append("Not voted");
+          }
+        } else {
+          sb.append(choice.getDescription());
+        }
         sb.append("\n");
       }
       votedText.setText(sb.toString());
@@ -273,18 +284,31 @@ public class VoteView extends BlackPanel {
           }
         }
         sb.append("Votes:\n");
-        sb.append("Yes: ");
+        if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+          sb.append("1st candidate: ");
+        } else {
+          sb.append("Yes: ");
+        }
         sb.append(yes);
         sb.append("\n");
-        sb.append("No: ");
+        if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+          sb.append("2nd candidate: ");
+        } else {
+          sb.append("No: ");
+        }
         sb.append(no);
         sb.append("\n");
       } else {
         voteYesBtn.setEnabled(true);
         voteNoBtn.setEnabled(true);
         if (vote.getType() != VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
-          voteYesBtn.setText("Vote YES");
-          voteNoBtn.setText("Vote NO");
+          if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+            voteYesBtn.setText("1st Candidate");
+            voteNoBtn.setText("2nd Candiate");
+          } else {
+            voteYesBtn.setText("Vote YES");
+            voteNoBtn.setText("Vote NO");
+          }
           votingInfoTitle.setTitle("Promises");
           sb.append("Voting promises you made to others:\n");
           int currentRealmIndex = map.getPlayerList().getCurrentPlayer();
@@ -296,13 +320,21 @@ public class VoteView extends BlackPanel {
                 != null) {
               if (info.getDiplomacy().getDiplomacyList(currentRealmIndex)
                   .isBonusType(DiplomacyBonusType.PROMISED_VOTE_YES)) {
-                sb.append("You promised to vote YES for ");
+                if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+                  sb.append("You promised to vote 1st candidate for ");
+                } else {
+                  sb.append("You promised to vote YES for ");
+                }
                 sb.append(info.getEmpireName());
                 sb.append("\n");
                 count++;
               } else if (info.getDiplomacy().getDiplomacyList(currentRealmIndex)
                   .isBonusType(DiplomacyBonusType.PROMISED_VOTE_NO)) {
-                sb.append("You promised to vote NO for ");
+                if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+                  sb.append("You promised to vote 2nd candidate for ");
+                } else {
+                  sb.append("You promised to vote NO for ");
+                }
                 sb.append(info.getEmpireName());
                 sb.append("\n");
                 count++;

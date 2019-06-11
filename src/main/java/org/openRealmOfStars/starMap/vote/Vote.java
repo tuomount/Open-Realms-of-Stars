@@ -4,7 +4,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
 *
@@ -51,6 +53,21 @@ public class Vote {
   private int turnsToVote;
 
   /**
+   * Galactic olympic organizer index for realm.
+   */
+  private int organizerIndex;
+
+  /**
+   * Second candidate index.
+   */
+  private int secondCandidateIndex;
+
+  /**
+   * Galactic olympic planet nane.
+   */
+  private String planetName;
+
+  /**
    * Constructor for vote. Contains all information for vote.
    * @param type Voting type
    * @param numberOfRealms Number of realms in game.
@@ -65,8 +82,53 @@ public class Vote {
     }
     numberOfVotes = new int[numberOfRealms];
     setTurnsToVote(turns);
+    organizerIndex = 0;
+    planetName = "";
   }
 
+  /**
+   * Get amount of voting number.
+   * @param choice Voting choice
+   * @return Numerical value of voting result
+   */
+  public int getVotingAmounts(final VotingChoice choice) {
+    int result = 0;
+    for (int i = 0; i < choices.length; i++) {
+      if (choices[i] == choice) {
+        result = result + numberOfVotes[i];
+      }
+    }
+    return result;
+  }
+  /**
+   * Get voting result
+   * @param drawRuler Index whom choice is used on draw result
+   * @return Voting result
+   */
+  public VotingChoice getResult(final int drawRuler) {
+    int yes = 0;
+    int no = 0;
+    for (int i = 0; i < choices.length; i++) {
+      if (choices[i] == VotingChoice.VOTED_YES) {
+        yes = yes + numberOfVotes[i];
+      }
+      if (choices[i] == VotingChoice.VOTED_NO) {
+        no = no + numberOfVotes[i];
+      }
+    }
+    if (yes > no) {
+      return VotingChoice.VOTED_YES;
+    }
+    if (yes < no) {
+      return VotingChoice.VOTED_NO;
+    }
+    if (yes == no) {
+      // First candidates voting wins on draw
+      return choices[drawRuler];
+    }
+    // This should not happen.
+    return VotingChoice.NOT_VOTED;
+  }
   /**
    * Constructor for vote by reading it from DataInputStream
    * @param dis DataInputStream
@@ -80,13 +142,37 @@ public class Vote {
     setTurnsToVote(dis.readInt());
     choices = new VotingChoice[numberOfRealms];
     numberOfVotes = new int[numberOfRealms];
+    for (int i = 0; i < choices.length; i++) {
+      choices[i] = VotingChoice.NOT_VOTED;
+    }
     // Here should handle special vote specific information
+    if (type == VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
+      setOrganizerIndex(dis.read());
+      setPlanetName(IOUtilities.readString(dis));
+    }
+    if (type == VotingType.RULER_OF_GALAXY) {
+      setOrganizerIndex(dis.read());
+      setSecondCandidateIndex(dis.read());
+    }
+
+    if (type == VotingType.FIRST_CANDIDATE) {
+      setOrganizerIndex(dis.read());
+    }
+    if (type == VotingType.SECOND_CANDIDATE) {
+      setOrganizerIndex(dis.read());
+    }
     if (turnsToVote == 0) {
       // Vote has been done so reading the vote results
       for (int i = 0; i < choices.length; i++) {
         int value = dis.read();
         choices[i] = VotingChoice.getTypeByIndex(value);
         numberOfVotes[i] = dis.readInt();
+      }
+    } else {
+   // Vote has not been done so reading the vote choices
+      for (int i = 0; i < choices.length; i++) {
+        int value = dis.read();
+        choices[i] = VotingChoice.getTypeByIndex(value);
       }
     }
   }
@@ -170,12 +256,103 @@ public class Vote {
     dos.writeInt(type.getIndex());
     dos.writeInt(turnsToVote);
     // Here should handle special vote specific information
+    if (type == VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
+      dos.writeByte(getOrganizerIndex());
+      IOUtilities.writeString(dos, getPlanetName());
+    }
+    if (type == VotingType.RULER_OF_GALAXY) {
+      dos.writeByte(getOrganizerIndex());
+      dos.writeByte(getSecondCandidateIndex());
+    }
+    if (type == VotingType.FIRST_CANDIDATE) {
+      dos.writeByte(getOrganizerIndex());
+    }
+    if (type == VotingType.SECOND_CANDIDATE) {
+      dos.writeByte(getOrganizerIndex());
+    }
     if (turnsToVote == 0) {
       // Vote has been done so writing the vote results
       for (int i = 0; i < choices.length; i++) {
         dos.writeByte(choices[i].getIndex());
         dos.writeInt(numberOfVotes[i]);
       }
+    } else {
+      // Vote has not been done so writing the vote just the choices
+      for (int i = 0; i < choices.length; i++) {
+        dos.writeByte(choices[i].getIndex());
+      }
     }
+  }
+
+  /**
+   * Get Description of voting. StarMap is used to fetch realm names.
+   * @param map StarMap
+   * @return Voting description
+   */
+  public String getDescription(final StarMap map) {
+    StringBuilder sb = new StringBuilder();
+    sb.append(getType().getDescription());
+    if (getType() == VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
+      sb.append(" organized by ");
+      sb.append(map.getPlayerList().getPlayerInfoByIndex(
+          getOrganizerIndex()).getEmpireName());
+    }
+    if (getType() == VotingType.RULER_OF_GALAXY) {
+      sb.append(" ");
+      sb.append(map.getPlayerList().getPlayerInfoByIndex(
+          getOrganizerIndex()).getEmpireName());
+      sb.append(" VS ");
+      sb.append(map.getPlayerList().getPlayerInfoByIndex(
+          getSecondCandidateIndex()).getEmpireName());
+    }
+    return sb.toString();
+  }
+  /**
+   * Get the galactic olympic organizer realm index. This method is also
+   * used for FIRST_CANDIDATE and SECOND_CANDIDATE.
+   * @return the organizerIndex
+   */
+  public int getOrganizerIndex() {
+    return organizerIndex;
+  }
+
+  /**
+   * Set the galactic olympics organizer realm index.
+   * @param organizerIndex the organizerIndex to set
+   */
+  public void setOrganizerIndex(final int organizerIndex) {
+    this.organizerIndex = organizerIndex;
+  }
+
+  /**
+   * Get the planet name where galactic olympics is being organized.
+   * @return the planetName
+   */
+  public String getPlanetName() {
+    return planetName;
+  }
+
+  /**
+   * Set the planet name where galactic olympics is being organized.
+   * @param planetName the planetName to set
+   */
+  public void setPlanetName(final String planetName) {
+    this.planetName = planetName;
+  }
+
+  /**
+   * Get Second candidate index
+   * @return the secondCandidateIndex
+   */
+  public int getSecondCandidateIndex() {
+    return secondCandidateIndex;
+  }
+
+  /**
+   * Set second candidate index.
+   * @param secondCandidateIndex the secondCandidateIndex to set
+   */
+  public void setSecondCandidateIndex(final int secondCandidateIndex) {
+    this.secondCandidateIndex = secondCandidateIndex;
   }
 }

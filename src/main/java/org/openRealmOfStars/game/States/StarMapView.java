@@ -250,6 +250,9 @@ public class StarMapView extends BlackPanel {
     btn = new SpaceButton("Planets", GameCommands.COMMAND_SHOW_PLANET_LIST);
     btn.addActionListener(game);
     bottomBtnPanel.add(btn);
+    btn = new SpaceButton("Vote", GameCommands.COMMAND_VIEW_VOTING);
+    btn.addActionListener(game);
+    bottomBtnPanel.add(btn);
     // Button for debugging battle, disabled for now
 /*    btn = new SpaceButton("Battle", GameCommands.COMMAND_BATTLE);
     btn.addActionListener(game);

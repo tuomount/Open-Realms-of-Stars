@@ -59,6 +59,14 @@ public class ShipDesignViewTest {
     assertEquals(0, list.length);
     list = view.filterComponents("Colony module");
     assertEquals(1, list.length);
+    assertEquals(false, view.isBanNukes());
+    assertEquals(false, view.isBanPrivateer());
+    view.setBanNukes(true);
+    assertEquals(true, view.isBanNukes());
+    assertEquals(false, view.isBanPrivateer());
+    view.setBanPrivateer(true);
+    assertEquals(true, view.isBanNukes());
+    assertEquals(true, view.isBanPrivateer());
   }
 
 }

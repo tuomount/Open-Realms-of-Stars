@@ -255,6 +255,38 @@ public class ImageInstruction {
    */
   public static final String LOGO = "logo";
   /**
+   * Big ban icon
+   */
+  public static final String BIG_BAN = "big ban";
+  /**
+   * Big peace icon
+   */
+  public static final String BIG_PEACE = "big peace";
+  /**
+   * Big nuke
+   */
+  public static final String BIG_NUKE = "big nuke";
+  /**
+   * Galaxy image
+   */
+  public static final String GALAXY = "galaxy";
+  /**
+   * Big privateer
+   */
+  public static final String BIG_PRIVATEER = "big privateer";
+  /**
+   * United Galaxy Tower
+   */
+  public static final String UNITED_GALAXY_TOWER = "united galaxy tower";
+  /**
+   * Big missile
+   */
+  public static final String BIG_MISSILE = "big missile";
+  /**
+   * Big money
+   */
+  public static final String BIG_MONEY = "big money";
+  /**
    * Instructions for ship
    */
   public static final String SHIP = "ship";
@@ -399,7 +431,12 @@ public class ImageInstruction {
         && !SpaceRace.HOMARIANS.getNameSingle().equals(image)
         && !SpaceRace.SPACE_PIRATE.getNameSingle().equals(image)
         && !SpaceRace.CHIRALOIDS.getNameSingle().equals(image)
-        && !LOGO.equals(image)) {
+        && !LOGO.equals(image)
+        && !BIG_BAN.equals(image)
+        && !BIG_PEACE.equals(image)
+        && !BIG_NUKE.equals(image)
+        && !BIG_PRIVATEER.equals(image)
+        && !GALAXY.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }
@@ -450,9 +487,10 @@ public class ImageInstruction {
   }
 
   /**
-   * Adds logo to the image.
+   * Adds logo to the image. Logo can be almost any image including
+   * space race, planet, or big icon.
    * @param position Three choices: left, center and right
-   * @param logoType logo type. Choices are:
+   * @param logoType logo type.
    * @param size Two choices half or full
    * @return ImageInstruction with text
    * @throws IllegalArgumentException If position or planet type are illegal
@@ -466,7 +504,26 @@ public class ImageInstruction {
       throw new IllegalArgumentException("Illegal logo position: "
         + position);
     }
-    if (!PLANET_SPORTS.equals(logoType)) {
+    if (!PLANET_SPORTS.equals(logoType)
+        && !BIG_BAN.equals(logoType)
+        && !BIG_PEACE.equals(logoType)
+        && !BIG_NUKE.equals(logoType)
+        && !BIG_PRIVATEER.equals(logoType)
+        && !GALAXY.equals(logoType)
+        && !UNITED_GALAXY_TOWER.equals(logoType)
+        && !BIG_MISSILE.equals(logoType)
+        && !BIG_MONEY.equals(logoType)
+        && !SpaceRace.CENTAURS.getNameSingle().equals(logoType)
+        && !SpaceRace.HUMAN.getNameSingle().equals(logoType)
+        && !SpaceRace.SPORKS.getNameSingle().equals(logoType)
+        && !SpaceRace.GREYANS.getNameSingle().equals(logoType)
+        && !SpaceRace.MOTHOIDS.getNameSingle().equals(logoType)
+        && !SpaceRace.TEUTHIDAES.getNameSingle().equals(logoType)
+        && !SpaceRace.MECHIONS.getNameSingle().equals(logoType)
+        && !SpaceRace.SCAURIANS.getNameSingle().equals(logoType)
+        && !SpaceRace.HOMARIANS.getNameSingle().equals(logoType)
+        && !SpaceRace.SPACE_PIRATE.getNameSingle().equals(logoType)
+        && !SpaceRace.CHIRALOIDS.getNameSingle().equals(logoType)) {
       throw new IllegalArgumentException("Illegal logo type: " + logoType);
     }
     if (!SIZE_FULL.equals(size)
@@ -676,6 +733,37 @@ public class ImageInstruction {
     if (PLANET_SPORTS.equals(planetType)) {
       planetImg = GuiStatics.BIG_SPORT_LOGO;
     }
+    if (BIG_BAN.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_BIG_BAN_ICON;
+    }
+    if (BIG_PEACE.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_BIG_PEACE_ICON;
+    }
+    if (BIG_NUKE.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_BIG_NUKE;
+    }
+    if (GALAXY.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_GALAXY;
+    }
+    if (BIG_PRIVATEER.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_PRIVATEER;
+    }
+    if (UNITED_GALAXY_TOWER.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_UNITED_GALAXY_TOWER;
+    }
+    if (BIG_MISSILE.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_BIG_MISSILE;
+    }
+    if (BIG_MONEY.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_BIG_MONEY;
+    }
+    SpaceRace race = SpaceRaceUtility.getRaceByName(planetType);
+    if (race != null) {
+      planetImg = race.getRaceImage();
+    }
+    if (SpaceRace.SPACE_PIRATE.getNameSingle().equals(planetType)) {
+      planetImg = SpaceRace.SPACE_PIRATE.getRaceImage();
+    }
     if (SIZE_HALF.equals(size)) {
       planetImg = GuiStatics.scaleToHalf(planetImg);
     }
@@ -751,6 +839,21 @@ public class ImageInstruction {
     }
     if (LOGO.equals(image)) {
       drawImg = GuiStatics.IMAGE_GBNC;
+    }
+    if (BIG_BAN.equals(image)) {
+      drawImg = GuiStatics.IMAGE_BIG_BAN_ICON;
+    }
+    if (BIG_PEACE.equals(image)) {
+      drawImg = GuiStatics.IMAGE_BIG_PEACE_ICON;
+    }
+    if (BIG_NUKE.equals(image)) {
+      drawImg = GuiStatics.IMAGE_BIG_NUKE;
+    }
+    if (GALAXY.equals(image)) {
+      drawImg = GuiStatics.IMAGE_GALAXY;
+    }
+    if (BIG_PRIVATEER.equals(image)) {
+      drawImg = GuiStatics.IMAGE_PRIVATEER;
     }
     Graphics2D g = (Graphics2D) workImage.getGraphics();
     g.drawImage(drawImg,

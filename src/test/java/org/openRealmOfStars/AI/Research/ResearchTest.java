@@ -155,7 +155,7 @@ public class ResearchTest {
     Research.handleShipDesigns(info);
     assertEquals(3, info.getShipStatList().length);
     ShipDesign design = ShipGenerator.createBattleShip(info, ShipSize.SMALL,
-        false);
+        false, false);
     ShipStat stat = new ShipStat(design);
     info.addShipStat(stat);
     assertEquals(4, info.getShipStatList().length);

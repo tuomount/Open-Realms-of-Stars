@@ -4,6 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 
 /**
@@ -34,6 +38,8 @@ public class VoteTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     Vote vote = new Vote(VotingType.BAN_NUCLEAR_WEAPONS, 4, 10);
+    assertEquals(0, vote.getOrganizerIndex());
+    assertEquals("", vote.getPlanetName());
     assertEquals(VotingType.BAN_NUCLEAR_WEAPONS, vote.getType());
     assertEquals(10, vote.getTurnsToVote());
     assertEquals(VotingChoice.NOT_VOTED, vote.getChoice(0));
@@ -72,6 +78,18 @@ public class VoteTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalacticOlympics() {
+    Vote vote = new Vote(VotingType.GALACTIC_OLYMPIC_PARTICIPATE, 4, 10);
+    assertEquals(0, vote.getOrganizerIndex());
+    assertEquals("", vote.getPlanetName());
+    vote.setOrganizerIndex(2);
+    assertEquals(2, vote.getOrganizerIndex());
+    vote.setPlanetName("Test I");
+    assertEquals("Test I", vote.getPlanetName());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testTypes() {
     assertEquals(VotingType.GALACTIC_OLYMPIC_PARTICIPATE, 
         VotingType.getTypeByIndex(0));
@@ -87,6 +105,33 @@ public class VoteTest {
         VotingType.getTypeByIndex(5));
     assertEquals(VotingType.RULER_OF_GALAXY, 
         VotingType.getTypeByIndex(6));
+    assertEquals(VotingType.FIRST_CANDIDATE, 
+        VotingType.getTypeByIndex(7));
+    assertEquals(VotingType.SECOND_CANDIDATE, 
+        VotingType.getTypeByIndex(8));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testDescriptions() {
+    assertEquals(true, VotingType.GALACTIC_OLYMPIC_PARTICIPATE.
+        getDescription().contains("Galactic Olympic"));
+    assertEquals(true, VotingType.BAN_NUCLEAR_WEAPONS.
+        getDescription().contains("Ban nuclear"));
+    assertEquals(true, VotingType.BAN_PRIVATEER_SHIPS.
+        getDescription().contains("Ban privateer"));
+    assertEquals(true, VotingType.TAXATION_OF_RICHEST_REALM.
+        getDescription().contains("Taxation of"));
+    assertEquals(true, VotingType.GALACTIC_PEACE.
+        getDescription().contains("Galactic wide"));
+    assertEquals(true, VotingType.SECOND_CANDIDATE_MILITARY.
+        getDescription().contains("Second"));
+    assertEquals(true, VotingType.RULER_OF_GALAXY.
+        getDescription().contains("Ruler of Galaxy"));
+    assertEquals(true, VotingType.FIRST_CANDIDATE.
+        getDescription().contains("Secretary of United Galaxy"));
+    assertEquals(true, VotingType.SECOND_CANDIDATE.
+        getDescription().contains("Challenger of United Galaxy"));
   }
 
   @Test
@@ -99,6 +144,8 @@ public class VoteTest {
     assertEquals(4, VotingType.TAXATION_OF_RICHEST_REALM.getIndex());
     assertEquals(5, VotingType.SECOND_CANDIDATE_MILITARY.getIndex());
     assertEquals(6, VotingType.RULER_OF_GALAXY.getIndex());
+    assertEquals(7, VotingType.FIRST_CANDIDATE.getIndex());
+    assertEquals(8, VotingType.SECOND_CANDIDATE.getIndex());
   }
 
   @Test
@@ -110,5 +157,107 @@ public class VoteTest {
     assertEquals(VotingChoice.NOT_VOTED, VotingChoice.getTypeByIndex(0));
     assertEquals(VotingChoice.VOTED_YES, VotingChoice.getTypeByIndex(1));
     assertEquals(VotingChoice.VOTED_NO, VotingChoice.getTypeByIndex(2));
+    assertEquals("Not voted", VotingChoice.NOT_VOTED.getDescription());
+    assertEquals("Yes", VotingChoice.VOTED_YES.getDescription());
+    assertEquals("No", VotingChoice.VOTED_NO.getDescription());
   }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSimulatedVoteResultYes() {
+    Vote vote = new Vote(VotingType.BAN_PRIVATEER_SHIPS, 6, 10);
+    vote.setChoice(0, VotingChoice.VOTED_YES);
+    vote.setChoice(1, VotingChoice.VOTED_NO);
+    vote.setChoice(2, VotingChoice.VOTED_YES);
+    vote.setChoice(3, VotingChoice.VOTED_NO);
+    vote.setChoice(4, VotingChoice.VOTED_YES);
+    vote.setChoice(5, VotingChoice.VOTED_YES);
+    vote.setNumberOfVotes(0, 6);
+    vote.setNumberOfVotes(1, 12);
+    vote.setNumberOfVotes(2, 3);
+    vote.setNumberOfVotes(3, 8);
+    vote.setNumberOfVotes(4, 7);
+    vote.setNumberOfVotes(5, 9);
+    assertEquals(VotingChoice.VOTED_YES, vote.getResult(2));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSimulatedVoteResultNo() {
+    Vote vote = new Vote(VotingType.BAN_PRIVATEER_SHIPS, 6, 10);
+    vote.setChoice(0, VotingChoice.VOTED_YES);
+    vote.setChoice(1, VotingChoice.VOTED_NO);
+    vote.setChoice(2, VotingChoice.VOTED_YES);
+    vote.setChoice(3, VotingChoice.VOTED_NO);
+    vote.setChoice(4, VotingChoice.VOTED_YES);
+    vote.setChoice(5, VotingChoice.VOTED_YES);
+    vote.setNumberOfVotes(0, 6);
+    vote.setNumberOfVotes(1, 12);
+    vote.setNumberOfVotes(2, 3);
+    vote.setNumberOfVotes(3, 18);
+    vote.setNumberOfVotes(4, 7);
+    vote.setNumberOfVotes(5, 9);
+    assertEquals(VotingChoice.VOTED_NO, vote.getResult(2));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSimulatedVoteResultDraw() {
+    Vote vote = new Vote(VotingType.BAN_PRIVATEER_SHIPS, 6, 10);
+    vote.setChoice(0, VotingChoice.VOTED_YES);
+    vote.setChoice(1, VotingChoice.VOTED_NO);
+    vote.setChoice(2, VotingChoice.VOTED_YES);
+    vote.setChoice(3, VotingChoice.VOTED_NO);
+    vote.setChoice(4, VotingChoice.VOTED_YES);
+    vote.setChoice(5, VotingChoice.VOTED_YES);
+    vote.setNumberOfVotes(0, 5);
+    vote.setNumberOfVotes(1, 12);
+    vote.setNumberOfVotes(2, 5);
+    vote.setNumberOfVotes(3, 18);
+    vote.setNumberOfVotes(4, 10);
+    vote.setNumberOfVotes(5, 10);
+    assertEquals(VotingChoice.VOTED_YES, vote.getResult(2));
+  }
+
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalacticPeaceDescription() {
+    Vote vote = new Vote(VotingType.GALACTIC_PEACE, 4, 10);
+    StarMap map = Mockito.mock(StarMap.class);
+    assertEquals("Galactic wide peace", vote.getDescription(map));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRulerOfGalaxyDescription() {
+    Vote vote = new Vote(VotingType.RULER_OF_GALAXY, 4, 10);
+    vote.setOrganizerIndex(0);
+    vote.setSecondCandidateIndex(1);
+    StarMap map = Mockito.mock(StarMap.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info1.getEmpireName()).thenReturn("Realm of Test");
+    Mockito.when(info2.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(playerList.getPlayerInfoByIndex(0)).thenReturn(info1);
+    Mockito.when(playerList.getPlayerInfoByIndex(1)).thenReturn(info2);
+    assertEquals("Ruler of Galaxy Realm of Test VS Empire of Test", vote.getDescription(map));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGamesParticipationDescription() {
+    Vote vote = new Vote(VotingType.GALACTIC_OLYMPIC_PARTICIPATE, 4, 10);
+    vote.setOrganizerIndex(0);
+    StarMap map = Mockito.mock(StarMap.class);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info1.getEmpireName()).thenReturn("Realm of Test");
+    Mockito.when(playerList.getPlayerInfoByIndex(0)).thenReturn(info1);
+    assertEquals("Galactic Olympic participation organized by Realm of Test", vote.getDescription(map));
+  }
+
 }

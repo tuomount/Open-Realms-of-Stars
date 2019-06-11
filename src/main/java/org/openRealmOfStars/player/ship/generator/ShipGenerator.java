@@ -265,10 +265,11 @@ public final class ShipGenerator {
    * @param size Ship Size
    * @param shipType SHIP_TYPE_REGULAR, SHIP_TYPE_BOMBER
    *        or SHIP_TYPE_PRIVATEER}
+   * @param banNukes Are nucleare weapons banned?
    * @return ShipDesign if doable. Null if not doable for that size.
    */
   private static ShipDesign createMilitaryShip(final PlayerInfo player,
-      final ShipSize size, final int shipType) {
+      final ShipSize size, final int shipType, final boolean banNukes) {
     ShipDesign result = null;
     Tech[] hullTechs = player.getTechList().getListForType(TechType.Hulls);
     ShipHull hull = null;
@@ -331,7 +332,7 @@ public final class ShipGenerator {
         if (smartTech != null) {
           result.addComponent(ShipComponentFactory.createByName(
                   smartTech.getComponent()));
-        } else if (nukeTech != null) {
+        } else if (nukeTech != null && !banNukes) {
           result.addComponent(ShipComponentFactory.createByName(
               nukeTech.getComponent()));
         } else if (bombTech != null) {
@@ -511,14 +512,15 @@ public final class ShipGenerator {
    * @param player Player doing the design
    * @param size Ship Size
    * @param bomber Create bomber battle ship
+   * @param banNukes Are nuclear weapons banned?
    * @return ShipDesign if doable. Null if not doable for that size.
    */
   public static ShipDesign createBattleShip(final PlayerInfo player,
-      final ShipSize size, final boolean bomber) {
+      final ShipSize size, final boolean bomber, final boolean banNukes) {
     if (bomber) {
-      return createMilitaryShip(player, size, SHIP_TYPE_BOMBER);
+      return createMilitaryShip(player, size, SHIP_TYPE_BOMBER, banNukes);
     } else {
-      return createMilitaryShip(player, size, SHIP_TYPE_REGULAR);
+      return createMilitaryShip(player, size, SHIP_TYPE_REGULAR, banNukes);
     }
   }
 
@@ -530,7 +532,7 @@ public final class ShipGenerator {
    */
   public static ShipDesign createPrivateerShip(final PlayerInfo player,
       final ShipSize size) {
-    return createMilitaryShip(player, size, SHIP_TYPE_PRIVATEER);
+    return createMilitaryShip(player, size, SHIP_TYPE_PRIVATEER, false);
   }
 
   /**

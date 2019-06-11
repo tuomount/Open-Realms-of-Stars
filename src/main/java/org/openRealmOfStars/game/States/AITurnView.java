@@ -28,10 +28,13 @@ import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
+import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
+import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetType;
@@ -39,6 +42,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
@@ -47,6 +51,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.history.event.GalacticEvent;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
@@ -55,7 +60,11 @@ import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.starMap.vote.VotingType;
+import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 import org.openRealmOfStars.utilities.DiceGenerator;
+import org.openRealmOfStars.utilities.ErrorLogger;
 
 /**
  *
@@ -1230,14 +1239,341 @@ public class AITurnView extends BlackPanel {
     }
     return added;
   }
+
+  /**
+   * Get Promise bonus for single vote.
+   * @param voter Realms who is voting
+   * @param realms All the realms
+   * @return Bonus for voting decision.
+   */
+  private int getPromiseBonus(final PlayerInfo voter, final PlayerList realms) {
+    int result = 0;
+    int voterIndex = realms.getIndex(voter);
+    for (int i = 0; i < realms.getCurrentMaxRealms(); i++) {
+      if (i != voterIndex) {
+        PlayerInfo info = realms.getPlayerInfoByIndex(i);
+        DiplomacyBonusList bonusList = info.getDiplomacy().getDiplomacyList(
+            voterIndex);
+        if (bonusList != null) {
+          if (bonusList.isBonusType(DiplomacyBonusType.PROMISED_VOTE_YES)) {
+            int bonus = voter.getDiplomacy().getLiking(i);
+            if (bonus > 0) {
+              if (voter.getDiplomacy().isAlliance(i)) {
+                bonus = bonus + 2;
+              }
+              if (voter.getDiplomacy().isDefensivePact(i)) {
+                bonus = bonus + 2;
+              }
+              if (voter.getDiplomacy().isTradeAlliance(i)) {
+                bonus = bonus + 1;
+              }
+              result = result + bonus * 5;
+            }
+          }
+          if (bonusList.isBonusType(DiplomacyBonusType.PROMISED_VOTE_NO)) {
+            int bonus = voter.getDiplomacy().getLiking(i);
+            if (bonus > 0) {
+              if (voter.getDiplomacy().isAlliance(i)) {
+                bonus = bonus + 2;
+              }
+              if (voter.getDiplomacy().isDefensivePact(i)) {
+                bonus = bonus + 2;
+              }
+              if (voter.getDiplomacy().isTradeAlliance(i)) {
+                bonus = bonus + 1;
+              }
+              result = result - bonus * 5;
+            }
+          }
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Do actual voting for AI players. Calculates vote for human player too.
+   * @param vote Vote
+   * @param realms All the realms
+   */
+  private void doVoting(final Vote vote, final PlayerList realms) {
+    for (int i = 0; i < realms.getCurrentMaxRealms(); i++) {
+      int numberOfVotes = game.getStarMap().getTotalNumberOfPopulation(i);
+      vote.setNumberOfVotes(i, numberOfVotes);
+      PlayerInfo info = realms.getPlayerInfoByIndex(i);
+      if (!info.isHuman()) {
+        int value = StarMapUtilities.getVotingSupport(info, vote,
+            game.getStarMap());
+        value = value + getPromiseBonus(info, realms);
+        if (value < 0) {
+          vote.setChoice(i, VotingChoice.VOTED_NO);
+        } else if (value > 0) {
+          vote.setChoice(i, VotingChoice.VOTED_YES);
+        } else {
+          value = DiceGenerator.getRandom(1);
+          if (value == 0) {
+            vote.setChoice(i, VotingChoice.VOTED_YES);
+          } else {
+            vote.setChoice(i, VotingChoice.VOTED_NO);
+          }
+        }
+      }
+    }
+    if (vote.getType() == VotingType.SECOND_CANDIDATE_MILITARY) {
+      int drawRuler = game.getStarMap().getVotes().getFirstCandidate();
+      VotingChoice result = vote.getResult(drawRuler);
+      if (result == VotingChoice.VOTED_YES) {
+        int second = game.getStarMap().getNewsCorpData().getMilitary()
+            .getBiggest();
+        if (game.getStarMap().getVotes().getFirstCandidate() == second) {
+          second = game.getStarMap().getNewsCorpData().getMilitary()
+              .getSecond();
+        }
+        Vote voteSecond = new Vote(VotingType.SECOND_CANDIDATE,
+            game.getPlayers().getCurrentMaxRealms(), 0);
+        voteSecond.setOrganizerIndex(second);
+        game.getStarMap().getVotes().getVotes().add(voteSecond);
+      } else if (result == VotingChoice.VOTED_NO) {
+        int second = game.getStarMap().getSecondCandidateForTower();
+        Vote voteSecond = new Vote(VotingType.SECOND_CANDIDATE,
+            game.getPlayers().getCurrentMaxRealms(), 0);
+        voteSecond.setOrganizerIndex(second);
+        game.getStarMap().getVotes().getVotes().add(voteSecond);
+      }
+    }
+    if (vote.getType() == VotingType.GALACTIC_PEACE) {
+      int drawRuler = game.getStarMap().getVotes().getFirstCandidate();
+      VotingChoice result = vote.getResult(drawRuler);
+      if (result == VotingChoice.VOTED_YES) {
+        for (int i = 0; i < realms.getCurrentMaxRealms(); i++) {
+          PlayerInfo info = realms.getPlayerInfoByIndex(i);
+          for (int j = 0; j < realms.getCurrentMaxRealms(); j++) {
+            if (info.getDiplomacy().isWar(j)) {
+              DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(), i,
+                 j);
+              trade.generateEqualTrade(NegotiationType.PEACE);
+              trade.doTrades();
+              PlayerInfo defender = game.getStarMap().getPlayerByIndex(j);
+              NewsData newsData = NewsFactory.makePeaceNews(info, defender,
+                  null);
+              game.getStarMap().getHistory().addEvent(
+                  NewsFactory.makeDiplomaticEvent(null, newsData));
+              game.getStarMap().getNewsCorpData().addNews(newsData);
+              info.getMissions().removeAttackAgainstPlayer(defender,
+                  game.getStarMap());
+              defender.getMissions().removeAttackAgainstPlayer(info,
+                  game.getStarMap());
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Handle promises. This should be called after voting.
+   * @param vote Actual vote
+   * @param realms All the realms
+   */
+  private void handlePromises(final Vote vote, final PlayerList realms) {
+    for (int i = 0; i < realms.getCurrentMaxRealms(); i++) {
+      PlayerInfo info = realms.getPlayerInfoByIndex(i);
+      for (int j = 0; j < realms.getCurrentMaxRealms(); j++) {
+        DiplomacyBonusList bonusList = info.getDiplomacy().getDiplomacyList(j);
+        if (bonusList != null) {
+          bonusList.checkPromise(vote.getChoice(j), info.getRace());
+        }
+      }
+    }
+  }
+  /**
+   * Handle diplomatic votes like arrange new votes and handle the end game.
+   * @param towers How many tower each realm has
+   */
+  private void handleDiplomaticVotes(final int[] towers) {
+    if (game.getStarMap().getScoreDiplomacy() == 0) {
+      // Diplomacy voting has been disabled.
+      return;
+    }
+    if (game.getStarMap().getVotes().firstCandidateSelected()) {
+      if (game.getStarMap().getVotes().getNextImportantVote() == null) {
+        int turns = game.getStarMap().getScoreVictoryTurn() * 5 / 100;
+        Vote vote = game.getStarMap().getVotes().generateNextVote(
+            game.getStarMap().getScoreDiplomacy() + 1,
+            game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
+        if (vote != null) {
+          // Vote has been already added to list in generateNextVote()
+          NewsData news = null;
+          if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+            PlayerInfo firstCandidate = game.getStarMap().getPlayerByIndex(
+                game.getStarMap().getVotes().getFirstCandidate());
+            PlayerInfo secondCandidate = game.getStarMap().getPlayerByIndex(
+                game.getStarMap().getVotes().getSecondCandidate());
+            news = NewsFactory.makeVotingNews(vote, firstCandidate,
+                secondCandidate);
+          } else {
+            news = NewsFactory.makeVotingNews(vote, null, null);
+          }
+          game.getStarMap().getNewsCorpData().addNews(news);
+        } else {
+          ErrorLogger.log("Next vote was null!");
+        }
+      }
+    } else {
+      int mostTowers = -1;
+      int towerCount = 0;
+      int secondIndex = -1;
+      int towerLimit = StarMapUtilities.calculateRequireTowerLimit(
+          game.getStarMap().getMaxX(), game.getStarMap().getMaxY());
+      boolean tie = false;
+      for (int i = 0; i < towers.length; i++) {
+        if (towers[i] >= towerLimit) {
+          if (towers[i] > towerCount && mostTowers != i) {
+            mostTowers = i;
+            towerCount = towers[i];
+            tie = false;
+          } else if (towers[i] == towerCount && mostTowers != -1) {
+            tie = true;
+            secondIndex = i;
+          }
+        }
+      }
+      if (!tie && mostTowers != -1) {
+        Vote vote = new Vote(VotingType.FIRST_CANDIDATE,
+            game.getPlayers().getCurrentMaxRealms(), 0);
+        vote.setOrganizerIndex(mostTowers);
+        PlayerInfo secretary = game.getPlayers().getPlayerInfoByIndex(
+            mostTowers);
+        NewsData news = NewsFactory.makeSecretaryOfGalaxyNews(secretary);
+        game.getStarMap().getNewsCorpData().addNews(news);
+        game.getStarMap().getVotes().getVotes().add(vote);
+        int turns = game.getStarMap().getScoreVictoryTurn() * 5 / 100;
+        vote = game.getStarMap().getVotes().generateNextVote(
+            game.getStarMap().getScoreDiplomacy() + 1,
+            game.getStarMap().getPlayerList().getCurrentMaxRealms(), turns);
+        if (vote != null) {
+          if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+            // First vote is rule of galaxy,
+            // so second candidate is strongest military
+            int second = game.getStarMap().getNewsCorpData().getMilitary()
+                .getBiggest();
+            if (game.getStarMap().getVotes().getFirstCandidate() == second) {
+              second = game.getStarMap().getNewsCorpData().getMilitary()
+                  .getSecond();
+            }
+            Vote voteSecond = new Vote(VotingType.SECOND_CANDIDATE,
+                game.getPlayers().getCurrentMaxRealms(), 0);
+            voteSecond.setOrganizerIndex(second);
+            game.getStarMap().getVotes().getVotes().add(voteSecond);
+            vote.setSecondCandidateIndex(second);
+          }
+          // Vote has been already added to list in generateNextVote()
+          if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+            PlayerInfo firstCandidate = game.getStarMap().getPlayerByIndex(
+                game.getStarMap().getVotes().getFirstCandidate());
+            PlayerInfo secondCandidate = game.getStarMap().getPlayerByIndex(
+                game.getStarMap().getVotes().getSecondCandidate());
+            news = NewsFactory.makeVotingNews(vote, firstCandidate,
+                secondCandidate);
+          } else {
+            news = NewsFactory.makeVotingNews(vote, null, null);
+          }
+          game.getStarMap().getNewsCorpData().addNews(news);
+        } else {
+          ErrorLogger.log("First vote was null!");
+        }
+      }
+      if (tie && game.getStarMap().getTurn() % 10 == 0) {
+        PlayerInfo first = game.getPlayers().getPlayerInfoByIndex(mostTowers);
+        PlayerInfo second = game.getPlayers().getPlayerInfoByIndex(
+            secondIndex);
+        NewsData news = NewsFactory.makeUnitedGalaxyTowerRaceTie(first,
+            second);
+        game.getStarMap().getNewsCorpData().addNews(news);
+      }
+    }
+    Vote vote = game.getStarMap().getVotes().getNextImportantVote();
+    if (vote != null && vote.getTurnsToVote() > 0) {
+      vote.setTurnsToVote(vote.getTurnsToVote() - 1);
+      if (vote.getTurnsToVote() == 1) {
+        for (int i = 0;
+            i < game.getStarMap().getPlayerList().getCurrentMaxRealms(); i++) {
+          Message msg = new Message(MessageType.INFORMATION,
+              "One turn left for voting, remember make your vote.",
+              Icons.getIconByName(Icons.ICON_CULTURE));
+          PlayerInfo info = game.getStarMap().getPlayerList()
+              .getPlayerInfoByIndex(i);
+          info.getMsgList().addNewMessage(msg);
+        }
+      }
+      if (vote.getTurnsToVote() == 0) {
+        doVoting(vote, game.getPlayers());
+        handlePromises(vote, game.getPlayers());
+        NewsData news = null;
+        if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+          PlayerInfo firstCandidate = game.getStarMap().getPlayerByIndex(
+              game.getStarMap().getVotes().getFirstCandidate());
+          PlayerInfo secondCandidate = game.getStarMap().getPlayerByIndex(
+              game.getStarMap().getVotes().getSecondCandidate());
+          VotingChoice choice = vote.getResult(
+              game.getStarMap().getVotes().getFirstCandidate());
+          news = NewsFactory.makeVotingEndedNews(vote, choice, firstCandidate,
+              secondCandidate);
+        } else {
+          VotingChoice choice = vote.getResult(
+              game.getStarMap().getVotes().getFirstCandidate());
+          news = NewsFactory.makeVotingEndedNews(vote, choice, null, null);
+        }
+        game.getStarMap().getNewsCorpData().addNews(news);
+      }
+    }
+  }
+
+  /**
+   * Remove banned ship desigsn
+   * @param info PlayerInfo
+   * @param banNukes True if nukes are banned
+   * @param banPrivateer true if privateers are banned
+   */
+  public void removeBannedShipDesigns(final PlayerInfo info,
+      final boolean banNukes, final boolean banPrivateer) {
+    if (!banNukes || !banPrivateer) {
+      return;
+    }
+    for (ShipStat stat : info.getShipStatList()) {
+      if (banNukes && stat.getDesign().isNuclearBomberShip()) {
+        stat.setObsolete(true);
+      }
+      if (banPrivateer && stat.getDesign().isPrivateer()) {
+        stat.setObsolete(true);
+      }
+    }
+
+  }
   /**
    * Update whole star map to next turn
    */
   public void updateStarMapToNextTurn() {
     game.getStarMap().resetCulture();
+    int richest = game.getStarMap().getNewsCorpData().getCredit().getBiggest();
+    int poorest = game.getStarMap().getNewsCorpData().getCredit().getSmallest();
     for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
       PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(i);
       if (info != null) {
+        if (!info.isBoard()) {
+          removeBannedShipDesigns(info,
+              game.getStarMap().getVotes().areNukesBanned(),
+              game.getStarMap().getVotes().arePrivateersBanned());
+          if (richest == i
+              && game.getStarMap().getVotes().isTaxationOfRichestEnabled()) {
+            PlayerInfo poorInfo = game.getPlayers().getPlayerInfoByIndex(
+                poorest);
+            if (poorInfo != null && info.getTotalCredits() > 0) {
+              poorInfo.setTotalCredits(poorInfo.getTotalCredits() + 1);
+              info.setTotalCredits(info.getTotalCredits() - 1);
+            }
+          }
+        }
         info.getDiplomacy().updateDiplomacyLastingForTurn();
         info.resetVisibilityDataAfterTurn();
         info.getMsgList().clearMessages();
@@ -1341,11 +1677,16 @@ public class AITurnView extends BlackPanel {
     }
     int[] numberOfPlanets = new int[game.getStarMap().getPlayerList()
                                     .getCurrentMaxRealms()];
+    int[] towers = new int[game.getStarMap().getPlayerList()
+                           .getCurrentMaxRealms()];
     for (int i = 0; i < game.getStarMap().getPlanetList().size(); i++) {
       Planet planet = game.getStarMap().getPlanetList().get(i);
       if (planet.getPlanetPlayerInfo() != null) {
         PlayerInfo info = planet.getPlanetPlayerInfo();
         numberOfPlanets[planet.getPlanetOwnerIndex()]++;
+        if (planet.hasTower()) {
+          towers[planet.getPlanetOwnerIndex()]++;
+        }
         boolean enemyOrbiting = false;
         Fleet fleetOrbiting = game.getStarMap().getFleetByCoordinate(
             planet.getX(), planet.getY());
@@ -1368,6 +1709,7 @@ public class AITurnView extends BlackPanel {
         game.getStarMap().doFleetScanUpdate(info, null, planet);
       }
     }
+    handleDiplomaticVotes(towers);
     boolean terminateNews = false;
     for (int i = 0; i < numberOfPlanets.length; i++) {
       if (numberOfPlanets[i] == 0) {
@@ -1485,6 +1827,14 @@ public class AITurnView extends BlackPanel {
       newsData.addNews(news);
     }
     news = NewsFactory.makeScientificVictoryNewsAtEnd(game.getStarMap());
+    if (news != null) {
+      GalacticEvent event = new GalacticEvent(news.getNewsText());
+      game.getStarMap().getHistory().addEvent(event);
+      game.getStarMap().setGameEnded(true);
+      NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+      newsData.addNews(news);
+    }
+    news = NewsFactory.makeDiplomaticVictoryNewsAtEnd(game.getStarMap());
     if (news != null) {
       GalacticEvent event = new GalacticEvent(news.getNewsText());
       game.getStarMap().getHistory().addEvent(event);

@@ -19,6 +19,10 @@ import org.openRealmOfStars.starMap.history.History;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.starMap.vote.Votes;
+import org.openRealmOfStars.starMap.vote.VotingType;
+import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 
 /**
 *
@@ -244,6 +248,40 @@ public class NewsFactoryTest {
         peaceMaker.getEmpireName()));
     assertEquals(true, news.getNewsText().contains(
         acceptor.getEmpireName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUnitedGalaxyTowerRace() {
+    PlayerInfo peaceMaker = Mockito.mock(PlayerInfo.class);
+    Mockito.when(peaceMaker.getEmpireName()).thenReturn("Empire of Test");
+    PlayerInfo acceptor = Mockito.mock(PlayerInfo.class);
+    Mockito.when(acceptor.getEmpireName()).thenReturn("Democracy of Defender");
+    NewsData news = NewsFactory.makeUnitedGalaxyTowerRaceTie(peaceMaker, acceptor);
+    assertEquals(true, news.getImageInstructions().contains(
+        peaceMaker.getEmpireName()));
+    assertEquals(true, news.getImageInstructions().contains(
+        acceptor.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        peaceMaker.getEmpireName()));
+    assertEquals(true, news.getNewsText().contains(
+        acceptor.getEmpireName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUnitedGalaxyTowerBuilding() {
+    PlayerInfo builder = Mockito.mock(PlayerInfo.class);
+    Mockito.when(builder.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(builder.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.WATERWORLD3.getImageInstructions());
+    Mockito.when(planet.getName()).thenReturn("Planet I");
+    NewsData news = NewsFactory.makeUnitedGalaxyTowerNews(builder, planet);
+    assertEquals(true, news.getImageInstructions().contains("UNITED GALAXY TOWER"));
+    assertEquals(true, news.getNewsText().contains("Empire of Test"));
+    assertEquals(true, news.getNewsText().contains("United Galaxy Tower"));
   }
 
   @Test
@@ -1345,6 +1383,258 @@ public class NewsFactoryTest {
     assertNotNull(news);
     assertEquals(true, news.getNewsText().contains("Empire of Homarian"));
     assertEquals(true, news.getNewsText().contains("Empire of Centaurs"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testDiplomaticVictory() {
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getScoreDiplomacy()).thenReturn(2);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(4);
+    PlayerInfo winner = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(winner.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(winner.getEmpireName()).thenReturn("Empire of Homarian");
+    Mockito.when(winner.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(diplomacy.getAllianceIndex()).thenReturn(-1);
+    PlayerInfo second = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy2 = Mockito.mock(Diplomacy.class);
+    Mockito.when(second.getDiplomacy()).thenReturn(diplomacy2);
+    Mockito.when(second.getEmpireName()).thenReturn("Empire of Humans");
+    Mockito.when(second.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(diplomacy2.getAllianceIndex()).thenReturn(-1);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Mockito.when(map.getPlayerByIndex(2)).thenReturn(winner);
+    Mockito.when(map.getPlayerByIndex(3)).thenReturn(second);
+    
+    Votes votes = Mockito.mock(Votes.class);
+    Mockito.when(map.getVotes()).thenReturn(votes);
+    ArrayList<Vote> listVotes = new ArrayList<>();
+    Mockito.when(votes.getVotes()).thenReturn(listVotes);
+    Mockito.when(votes.getFirstCandidate()).thenReturn(2);
+    Mockito.when(votes.getSecondCandidate()).thenReturn(3);
+    Vote vote = Mockito.mock(Vote.class);
+    listVotes.add(vote);
+    Mockito.when(vote.getResult(2)).thenReturn(VotingChoice.VOTED_NO);
+    Mockito.when(vote.getType()).thenReturn(VotingType.RULER_OF_GALAXY);
+    Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_NO)).thenReturn(55);
+    Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_YES)).thenReturn(32);
+    NewsData news = NewsFactory.makeDiplomaticVictoryNewsAtEnd(map);
+    assertNotNull(news);
+    assertEquals(true, news.getNewsText().contains("Empire of Homarian"));
+    assertEquals(true, news.getNewsText().contains("63%"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testDiplomaticVictoryAlliance() {
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(map.getScoreDiplomacy()).thenReturn(2);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(playerList.getCurrentMaxPlayers()).thenReturn(4);
+    Mockito.when(playerList.getCurrentMaxRealms()).thenReturn(4);
+    PlayerInfo winner = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
+    Mockito.when(winner.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(winner.getEmpireName()).thenReturn("Empire of Homarian");
+    Mockito.when(winner.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    Mockito.when(diplomacy.getAllianceIndex()).thenReturn(1);
+    PlayerInfo alliance = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy3 = Mockito.mock(Diplomacy.class);
+    Mockito.when(alliance.getDiplomacy()).thenReturn(diplomacy);
+    Mockito.when(alliance.getEmpireName()).thenReturn("Empire of Centaurs");
+    Mockito.when(alliance.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(diplomacy3.getAllianceIndex()).thenReturn(2);
+    PlayerInfo second = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy2 = Mockito.mock(Diplomacy.class);
+    Mockito.when(second.getDiplomacy()).thenReturn(diplomacy2);
+    Mockito.when(second.getEmpireName()).thenReturn("Empire of Humans");
+    Mockito.when(second.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(diplomacy2.getAllianceIndex()).thenReturn(-1);
+    Mockito.when(map.getPlayerList()).thenReturn(playerList);
+    Mockito.when(map.getPlayerByIndex(1)).thenReturn(alliance);
+    Mockito.when(map.getPlayerByIndex(2)).thenReturn(winner);
+    Mockito.when(map.getPlayerByIndex(3)).thenReturn(second);
+    
+    Votes votes = Mockito.mock(Votes.class);
+    Mockito.when(map.getVotes()).thenReturn(votes);
+    ArrayList<Vote> listVotes = new ArrayList<>();
+    Mockito.when(votes.getVotes()).thenReturn(listVotes);
+    Mockito.when(votes.getFirstCandidate()).thenReturn(2);
+    Mockito.when(votes.getSecondCandidate()).thenReturn(3);
+    Vote vote = Mockito.mock(Vote.class);
+    listVotes.add(vote);
+    Mockito.when(vote.getResult(2)).thenReturn(VotingChoice.VOTED_YES);
+    Mockito.when(vote.getType()).thenReturn(VotingType.RULER_OF_GALAXY);
+    Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_NO)).thenReturn(22);
+    Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_YES)).thenReturn(42);
+    NewsData news = NewsFactory.makeDiplomaticVictoryNewsAtEnd(map);
+    assertNotNull(news);
+    assertEquals(true, news.getNewsText().contains("Empire of Homarian"));
+    assertEquals(true, news.getNewsText().contains("65%"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingNews() {
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.BAN_NUCLEAR_WEAPONS);
+    Mockito.when(vote.getTurnsToVote()).thenReturn(20);
+    NewsData news = NewsFactory.makeVotingNews(vote, null, null);
+    assertEquals(true, news.getNewsText().contains(VotingType.BAN_NUCLEAR_WEAPONS.getDescription()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingEndedNews() {
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.BAN_NUCLEAR_WEAPONS);
+    Mockito.when(vote.getTurnsToVote()).thenReturn(0);
+    Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_NO)).thenReturn(50);
+    Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_YES)).thenReturn(25);
+    NewsData news = NewsFactory.makeVotingEndedNews(vote, VotingChoice.VOTED_NO,
+        null, null);
+    assertEquals(true, news.getNewsText().contains(
+        VotingType.BAN_NUCLEAR_WEAPONS.getDescription()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingEndedNewsBanPrivateer() {
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.BAN_PRIVATEER_SHIPS);
+    Mockito.when(vote.getTurnsToVote()).thenReturn(0);
+    Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_YES)).thenReturn(50);
+    Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_NO)).thenReturn(25);
+    NewsData news = NewsFactory.makeVotingEndedNews(vote, VotingChoice.VOTED_YES,
+        null, null);
+    assertEquals(true, news.getNewsText().contains(
+        VotingType.BAN_PRIVATEER_SHIPS.getDescription()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingEndedNewsPeace() {
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.GALACTIC_PEACE);
+    Mockito.when(vote.getTurnsToVote()).thenReturn(0);
+    Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_YES)).thenReturn(50);
+    Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_NO)).thenReturn(25);
+    NewsData news = NewsFactory.makeVotingEndedNews(vote, VotingChoice.VOTED_YES,
+        null, null);
+    assertEquals(true, news.getNewsText().contains(
+        VotingType.GALACTIC_PEACE.getDescription()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingEndedNewsTax() {
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.TAXATION_OF_RICHEST_REALM);
+    Mockito.when(vote.getTurnsToVote()).thenReturn(0);
+    Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_YES)).thenReturn(50);
+    Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_NO)).thenReturn(25);
+    NewsData news = NewsFactory.makeVotingEndedNews(vote, VotingChoice.VOTED_YES,
+        null, null);
+    assertEquals(true, news.getNewsText().contains(
+        VotingType.TAXATION_OF_RICHEST_REALM.getDescription()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingEndedNewsMilitary() {
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.SECOND_CANDIDATE_MILITARY);
+    Mockito.when(vote.getTurnsToVote()).thenReturn(0);
+    Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_YES)).thenReturn(50);
+    Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_NO)).thenReturn(25);
+    NewsData news = NewsFactory.makeVotingEndedNews(vote, VotingChoice.VOTED_YES,
+        null, null);
+    assertEquals(true, news.getNewsText().contains(
+        VotingType.SECOND_CANDIDATE_MILITARY.getDescription()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingEndedNewsRuler() {
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.RULER_OF_GALAXY);
+    Mockito.when(vote.getTurnsToVote()).thenReturn(0);
+    Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_YES)).thenReturn(50);
+    Mockito.when(vote.getVotingAmounts(VotingChoice.VOTED_NO)).thenReturn(25);
+    PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info1.getRace()).thenReturn(SpaceRace.SPORKS);
+    Mockito.when(info1.getEmpireName()).thenReturn("Test of Sporks");
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info2.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info2.getEmpireName()).thenReturn("Monarcy of Centaurs");
+    NewsData news = NewsFactory.makeVotingEndedNews(vote, VotingChoice.VOTED_YES,
+        info1, info2);
+    assertEquals(true, news.getNewsText().contains(
+        VotingType.RULER_OF_GALAXY.getDescription()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingBanPrivateersNews() {
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.BAN_PRIVATEER_SHIPS);
+    Mockito.when(vote.getTurnsToVote()).thenReturn(20);
+    NewsData news = NewsFactory.makeVotingNews(vote, null, null);
+    assertEquals(true, news.getNewsText().contains(VotingType.BAN_PRIVATEER_SHIPS.getDescription()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingPeaceNews() {
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.GALACTIC_PEACE);
+    Mockito.when(vote.getTurnsToVote()).thenReturn(20);
+    NewsData news = NewsFactory.makeVotingNews(vote, null, null);
+    assertEquals(true, news.getNewsText().contains(VotingType.GALACTIC_PEACE.getDescription()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingTaxNews() {
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.TAXATION_OF_RICHEST_REALM);
+    Mockito.when(vote.getTurnsToVote()).thenReturn(20);
+    NewsData news = NewsFactory.makeVotingNews(vote, null, null);
+    assertEquals(true, news.getNewsText().contains(VotingType.TAXATION_OF_RICHEST_REALM.getDescription()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingSecondCanditdateNews() {
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.SECOND_CANDIDATE_MILITARY);
+    Mockito.when(vote.getTurnsToVote()).thenReturn(20);
+    NewsData news = NewsFactory.makeVotingNews(vote, null, null);
+    assertEquals(true, news.getNewsText().contains(VotingType.SECOND_CANDIDATE_MILITARY.getDescription()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testVotingNews2() {
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.RULER_OF_GALAXY);
+    Mockito.when(vote.getTurnsToVote()).thenReturn(20);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
+    NewsData news = NewsFactory.makeVotingNews(vote, info, info);
+    assertEquals(true, news.getNewsText().contains(VotingType.RULER_OF_GALAXY.getDescription()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalacticSecretaryNes() {
+    PlayerInfo realm = Mockito.mock(PlayerInfo.class);
+    Mockito.when(realm.getEmpireName()).thenReturn("Empire of Test");
+    NewsData news = NewsFactory.makeSecretaryOfGalaxyNews(realm);
+    assertEquals(true, news.getNewsText().contains("Empire of Test"));
   }
 
 }

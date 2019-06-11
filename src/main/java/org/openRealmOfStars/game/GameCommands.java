@@ -3,7 +3,7 @@ package org.openRealmOfStars.game;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018 Tuomo Untinen
+ * Copyright (C) 2016-2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -135,6 +135,11 @@ public final class GameCommands {
    * View Star map
    */
   public static final String COMMAND_VIEW_STARMAP = "ViewStarMap";
+
+  /**
+   * View Voting view
+   */
+  public static final String COMMAND_VIEW_VOTING = "ViewVote";
 
   /**
    * View Research view
@@ -643,6 +648,23 @@ public final class GameCommands {
   public static final String COMMAND_DONE_HISTORY = "DoneHistory";
 
   /**
+   * Command for previous vote
+   */
+  public static final String COMMAND_PREV_VOTE = "PrevVote";
+  /**
+   * Command for next vote
+   */
+  public static final String COMMAND_NEXT_VOTE = "NextVote";
+  /**
+   * Command for vote yes
+   */
+  public static final String COMMAND_VOTE_YES = "VoteYes";
+  /**
+   * Command for vote no
+   */
+  public static final String COMMAND_VOTE_NO = "VoteNo";
+
+  /**
    * Command for previous year
    */
   public static final String COMMAND_PREV_YEAR = "PrevYear";
@@ -683,4 +705,21 @@ public final class GameCommands {
    * AI planet map trade
    */
   public static final String COMMAND_AI_PLANET_MAP = "AiPlanetMap";
+  /**
+   * Human Promise Vote Yes
+   */
+  public static final String COMMAND_HUMAN_VOTE_YES = "HumanVoteYes";
+  /**
+   * Human Promise Vote No
+   */
+  public static final String COMMAND_HUMAN_VOTE_NO = "HumanVoteNo";
+  /**
+   * AI Promise Vote Yes
+   */
+  public static final String COMMAND_AI_VOTE_YES = "AiVoteYes";
+  /**
+   * AI Promise Vote No
+   */
+  public static final String COMMAND_AI_VOTE_NO = "AiVoteNo";
+
 }

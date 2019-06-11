@@ -495,6 +495,14 @@ public final class PlanetHandling {
     if (time > 25) {
       score = -1;
     }
+    if (building.getName().equals("United Galaxy Tower")) {
+      if (attitude == Attitude.DIPLOMATIC || attitude == Attitude.PEACEFUL) {
+        score = score + 20;
+      }
+      if (attitude == Attitude.LOGICAL) {
+        score = score + 15;
+      }
+    }
     if (building.getName().equals("Basic factory")
         && info.getTechList().hasTech(TechType.Improvements,
             "Advanced factory") && production > 3) {

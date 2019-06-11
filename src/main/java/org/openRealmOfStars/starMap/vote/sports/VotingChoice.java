@@ -51,6 +51,19 @@ public enum VotingChoice {
   }
 
   /**
+   * Get description for voting choice
+   * @return description as string
+   */
+  public String getDescription() {
+    switch (this) {
+      case NOT_VOTED: return "Not voted";
+      case VOTED_YES: return "Yes";
+      case VOTED_NO:  return "No";
+      default: return "Not voted";
+    }
+  }
+
+  /**
    * Get voting choice by given index.
    * @param index Voting choice index
    * @return VotingChoice

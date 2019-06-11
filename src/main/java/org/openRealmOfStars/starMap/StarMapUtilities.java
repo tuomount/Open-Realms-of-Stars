@@ -3,6 +3,8 @@ package org.openRealmOfStars.starMap;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
@@ -11,6 +13,8 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.starMap.vote.VotingType;
 
 /**
  *
@@ -207,6 +211,403 @@ public final class StarMapUtilities {
   }
 
   /**
+   * Get voting support attitude.
+   * @param attitude Attitude
+   * @param vote VotingType
+   * @return Voting support value
+   */
+  public static int getVotingSupportAccordingAttitude(final Attitude attitude,
+      final VotingType vote) {
+    if (vote == VotingType.RULER_OF_GALAXY) {
+      return 0;
+    }
+    int[] voteValues = null;
+    if (attitude == Attitude.AGGRESSIVE) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, -10, -10, -20, -5, 5};
+    }
+    if (attitude == Attitude.BACKSTABBING) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, -5, -5, -10, 5, 0};
+    }
+    if (attitude == Attitude.DIPLOMATIC) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, 10, 5, 10, 5, -5};
+    }
+    if (attitude == Attitude.EXPANSIONIST) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, 5, 5, 10, 5, -5};
+    }
+    if (attitude == Attitude.LOGICAL) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, 0, 0, 5, 5, 0};
+    }
+    if (attitude == Attitude.MERCHANTICAL) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, 0, 20, 10, -10, 0};
+    }
+    if (attitude == Attitude.MILITARISTIC) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, -10, -10, -5, 0, 10};
+    }
+    if (attitude == Attitude.PEACEFUL) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, 20, 10, 20, 5, -10};
+    }
+    if (attitude == Attitude.SCIENTIFIC) {
+      /*
+       * First is always zero
+       * BAN_NUCLEAR_WEAPONS
+       * BAN_PRIVATEER_SHIPS
+       * GALACTIC_PEACE
+       * TAXATION_OF_RICHEST_REALM
+       * SECOND_CANDIDATE_MILITARY
+       */
+      voteValues = new int[]{0, -5, -5, 5, 0, 0};
+    }
+    if (voteValues != null && vote.getIndex() > 0
+        && vote.getIndex() < voteValues.length) {
+      return voteValues[vote.getIndex()];
+    }
+    return 0;
+  }
+  /**
+   * Get Voting support value. Negative value is for
+   * NO and positive value is for yes.
+   * @param info PlayerInfo
+   * @param vote Voting
+   * @param map StarMap
+   * @return Voting support value Positive value for Yes and Negative for no.
+   */
+  public  static int getVotingSupport(final PlayerInfo info, final Vote vote,
+      final StarMap map) {
+    int result = 0;
+    result = getVotingSupportAccordingAttitude(info.getAttitude(),
+        vote.getType());
+    result = result + getVotingSupportAccordingAttitude(
+        info.getRace().getAttitude(), vote.getType());
+    if (vote.getType() == VotingType.BAN_NUCLEAR_WEAPONS) {
+      if (info.getRace() == SpaceRace.CENTAURS
+          || info.getRace() == SpaceRace.HOMARIANS) {
+        result = result + 20;
+      } else if (info.getRace() == SpaceRace.CHIRALOIDS) {
+        result = result - 20;
+      } else if (info.getRace() == SpaceRace.MECHIONS) {
+        result = result - 10;
+      } else if (info.getRace() == SpaceRace.GREYANS
+          || info.getRace() == SpaceRace.MOTHOIDS) {
+        result = result - 5;
+      } else if (info.getRace() == SpaceRace.HUMAN
+          || info.getRace() == SpaceRace.TEUTHIDAES) {
+        result = result + 10;
+      }
+    }
+    if (vote.getType() == VotingType.BAN_PRIVATEER_SHIPS) {
+      if (info.getRace() == SpaceRace.SCAURIANS) {
+        result = result + 10;
+      }
+      if (info.getRace() == SpaceRace.TEUTHIDAES) {
+        result = result - 10;
+      }
+      int privateerFleets = 0;
+      for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
+        Fleet fleet = info.getFleets().getByIndex(i);
+        if (fleet.isPrivateerFleet()) {
+          privateerFleets++;
+        }
+      }
+      if (privateerFleets == 0) {
+        // Haven't got fleets yet, so banning is beneficial
+        result = result + 10;
+      } else if (privateerFleets < 5) {
+        // Got some but not much, more would be nice
+        result = result - 5;
+      } else if (privateerFleets > 10) {
+        // Got enough so those can be now banned
+        result = result + 5;
+      }
+    }
+    if (vote.getType() == VotingType.GALACTIC_PEACE) {
+      if (info.getDiplomacy().getNumberOfWar() > 0
+          && !info.getGovernment().isImmuneToHappiness()) {
+        result = result + 5;
+      }
+      if (info.getWarFatigue() < 0) {
+        result = result + 5;
+      }
+    }
+    if (vote.getType() == VotingType.TAXATION_OF_RICHEST_REALM) {
+      int index = map.getWealthyIndex(info);
+      int max = map.getPlayerList().getCurrentMaxRealms();
+      if (index == 1) {
+        result = result - 30;
+      } else if (index == max) {
+        result = result + 20;
+      } else if (index <= max / 2) {
+        int value = max / 2 - (index - 1);
+        int half = max / 2;
+        result = result - (30 * value / half);
+      } else {
+        result = result + (20 * index / max);
+      }
+      int richest = map.getWealthyIndex(true);
+      if (info.getDiplomacy().isAlliance(richest)) {
+        result = result - 20;
+      }
+      if (info.getDiplomacy().isDefensivePact(richest)) {
+        result = result - 15;
+      }
+      if (info.getDiplomacy().isTradeAlliance(richest)) {
+        result = result - 10;
+      }
+      if (info.getDiplomacy().isWar(richest)) {
+        result = result + 20;
+      }
+      if (info.getDiplomacy().isTradeEmbargo(richest)) {
+        result = result + 15;
+      }
+      if (info.getDiplomacy().getLiking(richest) == Diplomacy.LIKE) {
+        result = result - 5;
+      }
+      if (info.getDiplomacy().getLiking(richest) == Diplomacy.FRIENDS) {
+        result = result - 10;
+      }
+      if (info.getDiplomacy().getLiking(richest) == Diplomacy.DISLIKE) {
+        result = result + 5;
+      }
+      if (info.getDiplomacy().getLiking(richest) == Diplomacy.HATE) {
+        result = result + 10;
+      }
+      int poorest = map.getWealthyIndex(false);
+      if (info.getDiplomacy().isAlliance(poorest)) {
+        result = result + 20;
+      }
+      if (info.getDiplomacy().isDefensivePact(poorest)) {
+        result = result + 15;
+      }
+      if (info.getDiplomacy().isTradeAlliance(poorest)) {
+        result = result + 10;
+      }
+      if (info.getDiplomacy().isWar(poorest)) {
+        result = result - 20;
+      }
+      if (info.getDiplomacy().isTradeEmbargo(poorest)) {
+        result = result - 15;
+      }
+      if (info.getDiplomacy().getLiking(poorest) == Diplomacy.LIKE) {
+        result = result + 5;
+      }
+      if (info.getDiplomacy().getLiking(poorest) == Diplomacy.FRIENDS) {
+        result = result + 10;
+      }
+      if (info.getDiplomacy().getLiking(poorest) == Diplomacy.DISLIKE) {
+        result = result - 5;
+      }
+      if (info.getDiplomacy().getLiking(poorest) == Diplomacy.HATE) {
+        result = result - 10;
+      }
+    }
+    if (vote.getType() == VotingType.SECOND_CANDIDATE_MILITARY) {
+      int mostMilitary = map.getMilitaryHighest();
+      int myIndex = map.getPlayerList().getIndex(info);
+      if (mostMilitary != -1) {
+        if (mostMilitary == myIndex) {
+          result = result + 40;
+        } else {
+          if (info.getDiplomacy().isAlliance(mostMilitary)) {
+            result = result + 30;
+          }
+          if (info.getDiplomacy().isDefensivePact(mostMilitary)) {
+            result = result + 20;
+          }
+          if (info.getDiplomacy().isTradeAlliance(mostMilitary)) {
+            result = result + 10;
+          }
+          if (info.getDiplomacy().isWar(mostMilitary)) {
+            result = result - 20;
+          }
+          if (info.getDiplomacy().isTradeEmbargo(mostMilitary)) {
+            result = result - 10;
+          }
+          if (info.getDiplomacy().getLiking(mostMilitary) == Diplomacy.LIKE) {
+            result = result + 5;
+          }
+          if (info.getDiplomacy().getLiking(mostMilitary)
+              == Diplomacy.FRIENDS) {
+            result = result + 10;
+          }
+          if (info.getDiplomacy().getLiking(mostMilitary)
+              == Diplomacy.DISLIKE) {
+            result = result - 5;
+          }
+          if (info.getDiplomacy().getLiking(mostMilitary) == Diplomacy.HATE) {
+            result = result - 10;
+          }
+        }
+      }
+      int mostTower = map.getSecondCandidateForTower();
+      if (mostTower != -1) {
+        if (mostTower == myIndex) {
+          result = result - 40;
+        } else {
+          if (info.getDiplomacy().isAlliance(mostTower)) {
+            result = result - 30;
+          }
+          if (info.getDiplomacy().isDefensivePact(mostTower)) {
+            result = result - 20;
+          }
+          if (info.getDiplomacy().isTradeAlliance(mostTower)) {
+            result = result - 10;
+          }
+          if (info.getDiplomacy().isWar(mostTower)) {
+            result = result + 20;
+          }
+          if (info.getDiplomacy().isTradeEmbargo(mostTower)) {
+            result = result + 10;
+          }
+          if (info.getDiplomacy().getLiking(mostTower) == Diplomacy.LIKE) {
+            result = result - 5;
+          }
+          if (info.getDiplomacy().getLiking(mostTower)
+              == Diplomacy.FRIENDS) {
+            result = result - 10;
+          }
+          if (info.getDiplomacy().getLiking(mostTower)
+              == Diplomacy.DISLIKE) {
+            result = result + 5;
+          }
+          if (info.getDiplomacy().getLiking(mostTower) == Diplomacy.HATE) {
+            result = result + 10;
+          }
+        }
+      }
+    }
+    if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+      int first = vote.getOrganizerIndex();
+      int second = vote.getSecondCandidateIndex();
+      int myIndex = map.getPlayerList().getIndex(info);
+      if (first == myIndex) {
+        result = result + 80;
+      } else if (second == myIndex) {
+        result = result - 80;
+      }
+      if (info.getDiplomacy().isAlliance(first)) {
+        result = result + 40;
+      }
+      if (info.getDiplomacy().isAlliance(second)) {
+        result = result - 40;
+      }
+      if (info.getDiplomacy().isDefensivePact(first)) {
+        result = result + 20;
+      }
+      if (info.getDiplomacy().isDefensivePact(second)) {
+        result = result - 20;
+      }
+      if (info.getDiplomacy().isTradeAlliance(first)) {
+        result = result + 10;
+      }
+      if (info.getDiplomacy().isTradeAlliance(second)) {
+        result = result - 10;
+      }
+      if (info.getDiplomacy().isTradeEmbargo(first)) {
+        result = result - 10;
+      }
+      if (info.getDiplomacy().isTradeEmbargo(second)) {
+        result = result + 10;
+      }
+      if (info.getDiplomacy().isWar(first)) {
+        result = result - 30;
+      }
+      if (info.getDiplomacy().isWar(second)) {
+        result = result + 30;
+      }
+      if (info.getDiplomacy().getLiking(first) == Diplomacy.FRIENDS) {
+        result = result + 10;
+      }
+      if (info.getDiplomacy().getLiking(first) == Diplomacy.LIKE) {
+        result = result + 5;
+      }
+      if (info.getDiplomacy().getLiking(first) == Diplomacy.DISLIKE) {
+        result = result - 5;
+      }
+      if (info.getDiplomacy().getLiking(first) == Diplomacy.HATE) {
+        result = result - 10;
+      }
+      if (info.getDiplomacy().getLiking(second) == Diplomacy.FRIENDS) {
+        result = result - 10;
+      }
+      if (info.getDiplomacy().getLiking(second) == Diplomacy.LIKE) {
+        result = result - 5;
+      }
+      if (info.getDiplomacy().getLiking(second) == Diplomacy.DISLIKE) {
+        result = result + 5;
+      }
+      if (info.getDiplomacy().getLiking(second) == Diplomacy.HATE) {
+        result = result + 10;
+      }
+
+    }
+
+
+    return result;
+  }
+  /**
    * Calculates escape coordinates for combat if defender escapes.
    * @param defender Defender's coordinate
    * @param attacker Attacker's coordinate
@@ -339,6 +740,32 @@ public final class StarMapUtilities {
       result = -1;
     }
     return result;
+  }
+
+  /**
+   * Calculate required tower limit for diplomatic victory start.
+   * @param sizeX Map size in X coordinate
+   * @param sizeY Map size in Y coordinate
+   * @return Tower Limit
+   */
+  public static int calculateRequireTowerLimit(final int sizeX,
+      final int sizeY) {
+    int totalSize = sizeX * sizeY;
+    int limit = 0;
+    if (totalSize <= 50 * 50) {
+      limit = 1;
+    } else if (totalSize <= 75 * 75) {
+      limit = 2;
+    } else if (totalSize <= 128 * 128) {
+      limit = 3;
+    } else if (totalSize <= 160 * 160) {
+      limit = 4;
+    } else if (totalSize <= 200 * 200) {
+      limit = 5;
+    } else if (totalSize <= 256 * 256) {
+      limit = 6;
+    }
+    return limit;
   }
 
   /**

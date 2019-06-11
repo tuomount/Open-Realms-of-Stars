@@ -2485,6 +2485,17 @@ public class StarMap {
         result = result + fleet.getTotalCultureBonus();
       }
     }
+    if (production == Planet.PRODUCTION_CREDITS) {
+      int richest = getNewsCorpData().getCredit().getBiggest();
+      int poorest = getNewsCorpData().getCredit().getSmallest();
+      if (richest == playerIndex && getVotes().isTaxationOfRichestEnabled()) {
+        result = result - 1;
+      }
+      if (poorest == playerIndex && getVotes().isTaxationOfRichestEnabled()) {
+        result = result + 1;
+      }
+
+    }
     return result;
   }
 
@@ -2845,9 +2856,14 @@ public class StarMap {
   }
 
   /**
-   * Get Score limit for diplomacy
-   * THIS HAS NOT IMPLEMETED YET
+   * Get Score limit for diplomacy.
    * @return Score limit for diplomacy
+   *              0 - Diplomacy victory disabled
+   *              1 - 2 diplomatic votes
+   *              2 - 3 diplomatic votes
+   *              3 - 4 diplomatic votes
+   *              4 - 5 diplomatic votes
+   *              5 - 6 diplomatic votes
    */
   public int getScoreDiplomacy() {
     return scoreDiplomacy;
@@ -2855,8 +2871,13 @@ public class StarMap {
 
   /**
    * Set Score limit for diplomacy
-   * THIS HAS NOT IMPLEMETED YET
    * @param limit Limit for diplomacy
+   *              0 - Diplomacy victory disabled
+   *              1 - 2 diplomatic votes
+   *              2 - 3 diplomatic votes
+   *              3 - 4 diplomatic votes
+   *              4 - 5 diplomatic votes
+   *              5 - 6 diplomatic votes
    */
   public void setScoreDiplomacy(final int limit) {
     scoreDiplomacy = limit;
@@ -3037,5 +3058,122 @@ public class StarMap {
       tileInfo[px][py] = info;
       tiles[px][py] = planet.getPlanetType().getTileIndex();
     }
+  }
+
+  /**
+   * Get Starmap votes.
+   * @return Votes
+   */
+  public Votes getVotes() {
+    return votes;
+  }
+
+  /**
+   * Get Wealthy index. Which position realm has in order of credits.
+   * This is done by calculating how many wealthier realms there are.
+   * @param realm Realm to compare
+   * @return Wealthy index or -1 if cannot calculate.
+   */
+  public int getWealthyIndex(final PlayerInfo realm) {
+    int index = players.getIndex(realm);
+    if (index != -1) {
+      int biggerValue = 0;
+      int value = newsCorpData.getCredit().getLatest(index);
+      for (int i = 0; i < newsCorpData.getCredit().getMaxPlayers(); i++) {
+        if (i != index && newsCorpData.getCredit().getLatest(i) > value) {
+          biggerValue++;
+        }
+      }
+      index = biggerValue + 1;
+    }
+    return index;
+  }
+
+  /**
+   * Get highest military index.
+   * @return Highest military index.
+   */
+  public int getMilitaryHighest() {
+    int index = -1;
+    int value = -1;
+    for (int i = 0; i < newsCorpData.getMilitary().getMaxPlayers(); i++) {
+      if (newsCorpData.getMilitary().getLatest(i) > value) {
+        index = i;
+        value = newsCorpData.getMilitary().getLatest(i);
+      }
+    }
+    return index;
+  }
+
+  /**
+   * Get second candidate for amount of United Galaxy Towers.
+   * @return Second candidate for amount of tower.
+   */
+  public int getSecondCandidateForTower() {
+    int[] towers = new int[getPlayerList().getCurrentMaxRealms()];
+    for (int i = 0; i < getPlanetList().size(); i++) {
+      Planet planet = getPlanetList().get(i);
+      if (planet.getPlanetPlayerInfo() != null && planet.hasTower()) {
+        towers[planet.getPlanetOwnerIndex()]++;
+      }
+    }
+    int first = -1;
+    int second = -1;
+    for (int i = 0; i < towers.length; i++) {
+      if (first == -1 && towers[i] > 0) {
+        first = i;
+      } else if (towers[i] > towers[first]) {
+        second = first;
+        first = i;
+      }
+    }
+    if (second == -1) {
+      // No other realm has tower choosing strongest military then
+      second = getNewsCorpData().getMilitary().getBiggest();
+      if (getVotes().getFirstCandidate() == second) {
+        second = getNewsCorpData().getMilitary().getSecond();
+      }
+    }
+    return second;
+  }
+
+  /**
+   * Get wealthy index. This method can be used to look for richest realm
+   * or poorest real.
+   * @param highest True for richest and false for poorest
+   * @return Wealthy index or -1 if not found.
+   */
+  public int getWealthyIndex(final boolean highest) {
+    int index = -1;
+    int value = -1;
+    if (!highest) {
+      value = Integer.MAX_VALUE;
+    }
+    for (int i = 0; i < newsCorpData.getCredit().getMaxPlayers(); i++) {
+      if (highest && newsCorpData.getCredit().getLatest(i) > value) {
+        index = i;
+        value = newsCorpData.getCredit().getLatest(i);
+      }
+      if (!highest && newsCorpData.getCredit().getLatest(i) < value) {
+        index = i;
+        value = newsCorpData.getCredit().getLatest(i);
+      }
+    }
+    return index;
+  }
+
+  /**
+   * Get Total number of population for certain realm.
+   * @param index Realm index
+   * @return Total number of population
+   */
+  public int getTotalNumberOfPopulation(final int index) {
+    int result = 0;
+    for (Planet planet : planetList) {
+      if (planet.getPlanetOwnerIndex() == index) {
+        result = result + planet.getTotalPopulation();
+      }
+    }
+    return result;
   }
 }

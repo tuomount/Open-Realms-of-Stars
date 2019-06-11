@@ -56,9 +56,9 @@ public class CombatTest {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
     ShipDesign design1 = ShipGenerator.createBattleShip(
-        info1, ShipSize.SMALL, false);
+        info1, ShipSize.SMALL, false, false);
     ShipDesign design2 = ShipGenerator.createBattleShip(
-        info2, ShipSize.SMALL, false);
+        info2, ShipSize.SMALL, false, false);
     Ship scout1 = new Ship(design1);
     Ship scout2 = new Ship(design2);
     Fleet fleet1 = new Fleet(scout1, 5, 5);
@@ -79,9 +79,9 @@ public class CombatTest {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
     ShipDesign design1 = ShipGenerator.createBattleShip(
-        info1, ShipSize.SMALL, false);
+        info1, ShipSize.SMALL, false, false);
     ShipDesign design2 = ShipGenerator.createBattleShip(
-        info2, ShipSize.SMALL, false);
+        info2, ShipSize.SMALL, false, false);
     Ship scout1 = new Ship(design1);
     Ship scout2 = new Ship(design2);
     Fleet fleet1 = new Fleet(scout1, 5, 5);
@@ -123,9 +123,9 @@ public class CombatTest {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
     ShipDesign design1 = ShipGenerator.createBattleShip(
-        info1, ShipSize.SMALL, false);
+        info1, ShipSize.SMALL, false, false);
     ShipDesign design2 = ShipGenerator.createBattleShip(
-        info2, ShipSize.SMALL, false);
+        info2, ShipSize.SMALL, false, false);
     Ship scout1 = new Ship(design1);
     Ship scout2 = new Ship(design2);
     Fleet fleet1 = new Fleet(scout1, 5, 5);
@@ -144,9 +144,9 @@ public class CombatTest {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
     ShipDesign design1 = ShipGenerator.createBattleShip(
-        info1, ShipSize.SMALL, false);
+        info1, ShipSize.SMALL, false, false);
     ShipDesign design2 = ShipGenerator.createBattleShip(
-        info2, ShipSize.SMALL, false);
+        info2, ShipSize.SMALL, false, false);
     Ship scout1 = new Ship(design1);
     Ship scout2 = new Ship(design2);
     Fleet fleet1 = new Fleet(scout1, 5, 5);
@@ -171,7 +171,7 @@ public class CombatTest {
     info1.setEmpireName("Terran alliance");
     info2.setEmpireName("Spork empire");
     ShipDesign design1 = ShipGenerator.createBattleShip(
-        info1, ShipSize.SMALL, false);
+        info1, ShipSize.SMALL, false, false);
     ShipDesign design2 = ShipGenerator.createColony(info2, false);
     Ship scout1 = new Ship(design1);
     Ship colony = new Ship(design2);
@@ -199,9 +199,9 @@ public class CombatTest {
     info2.setEmpireName("Spork empire");
     info2.getTechList().addTech(TechFactory.createDefenseTech("Shield Mk2", 2));
     ShipDesign design1 = ShipGenerator.createBattleShip(
-        info1, ShipSize.SMALL, false);
+        info1, ShipSize.SMALL, false, false);
     ShipDesign design2 = ShipGenerator.createBattleShip(
-        info2, ShipSize.SMALL, false);
+        info2, ShipSize.SMALL, false, false);
     Ship scout1 = new Ship(design1);
     Ship scout2 = new Ship(design2);
     Fleet fleet1 = new Fleet(scout1, 5, 5);
@@ -231,7 +231,7 @@ public class CombatTest {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
     ShipDesign design1 = ShipGenerator.createBattleShip(
-        info1, ShipSize.SMALL, false);
+        info1, ShipSize.SMALL, false, false);
     ShipDesign design2 = ShipGenerator.createColony(info2, false);
     Ship scout1 = new Ship(design1);
     Ship colony = new Ship(design2);
@@ -295,7 +295,8 @@ public class CombatTest {
   public void testRealCombatOnPlanet() {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
-    ShipDesign design1 = ShipGenerator.createBattleShip(info1, ShipSize.SMALL, false);
+    ShipDesign design1 = ShipGenerator.createBattleShip(info1, ShipSize.SMALL,
+        false, false);
     ShipDesign design2 = ShipGenerator.createColony(info2, false);
     Ship scout1 = new Ship(design1);
     Ship colony = new Ship(design2);
@@ -376,7 +377,7 @@ public class CombatTest {
         info1, ShipSize.MEDIUM);
     ShipDesign design2 = ShipGenerator.createFreighter(info2);
     ShipDesign design3 = ShipGenerator.createBattleShip(
-        info2, ShipSize.SMALL, false);
+        info2, ShipSize.SMALL, false, false);
     Ship privateer1 = new Ship(design1);
     Ship privateer2 = new Ship(design1);
     Ship privateer3 = new Ship(design1);
@@ -406,9 +407,9 @@ public class CombatTest {
     PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
     ShipDesign design1 = ShipGenerator.createBattleShip(
-        info1, ShipSize.SMALL, false);
+        info1, ShipSize.SMALL, false, false);
     ShipDesign design2 = ShipGenerator.createBattleShip(
-        info2, ShipSize.SMALL, false);
+        info2, ShipSize.SMALL, false, false);
     Ship scout1 = new Ship(design1);
     Ship scout2 = new Ship(design2);
     Fleet fleet1 = new Fleet(scout1, 5, 5);
@@ -462,7 +463,7 @@ public class CombatTest {
         "Corvette Mk3", 8));
     ShipDesign design1 = ShipGenerator.createStarbase(defender, ShipSize.SMALL);
     ShipDesign design2 = ShipGenerator.createBattleShip(
-        attacker, ShipSize.SMALL, false);
+        attacker, ShipSize.SMALL, false, false);
     Ship starbase = new Ship(design1);
     starbase.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
     Ship starbase2 = new Ship(design1);
@@ -508,7 +509,7 @@ public class CombatTest {
         "Tachyon source Mk2", 5));
     ShipDesign design1 = ShipGenerator.createStarbase(defender, ShipSize.SMALL);
     ShipDesign design2 = ShipGenerator.createBattleShip(
-        attacker, ShipSize.SMALL, false);
+        attacker, ShipSize.SMALL, false, false);
     Ship starbase = new Ship(design1);
     starbase.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
     Ship starbase2 = new Ship(design1);
@@ -548,9 +549,9 @@ public class CombatTest {
     info1.setHuman(true);
     PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS);
     ShipDesign design1 = ShipGenerator.createBattleShip(
-        info1, ShipSize.SMALL, false);
+        info1, ShipSize.SMALL, false, false);
     ShipDesign design2 = ShipGenerator.createBattleShip(
-        info2, ShipSize.SMALL, false);
+        info2, ShipSize.SMALL, false, false);
     Ship scout1 = new Ship(design1);
     Ship scout2 = new Ship(design2);
     Fleet fleet1 = new Fleet(scout1, 5, 5);

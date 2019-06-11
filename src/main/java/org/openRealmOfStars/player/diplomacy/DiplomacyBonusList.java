@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 
 /**
 *
@@ -212,6 +213,43 @@ public class DiplomacyBonusList {
     return added;
   }
 
+  /**
+   * Remove promises from the list.
+   */
+  private void removePromises() {
+    Iterator<DiplomacyBonus> iterator = list.iterator();
+    while (iterator.hasNext()) {
+      DiplomacyBonus diplomacyBonus = iterator.next();
+      if (diplomacyBonus.getType() == DiplomacyBonusType.PROMISED_VOTE_YES
+          || diplomacyBonus.getType() == DiplomacyBonusType.PROMISED_VOTE_NO) {
+        iterator.remove();
+      }
+    }
+  }
+
+  /**
+   * Check if promise where kept accordin the voting choice.
+   * @param choice Voting choice
+   * @param race Space race for owning the diplomacy.
+   */
+  public void checkPromise(final VotingChoice choice, final SpaceRace race) {
+    boolean promisedYes = isBonusType(DiplomacyBonusType.PROMISED_VOTE_YES);
+    boolean promisedNo = isBonusType(DiplomacyBonusType.PROMISED_VOTE_NO);
+    if (choice == VotingChoice.VOTED_YES && promisedYes) {
+      removePromises();
+      addBonus(DiplomacyBonusType.PROMISE_KEPT, race);
+    } else if (choice == VotingChoice.VOTED_YES && promisedNo) {
+      removePromises();
+      addBonus(DiplomacyBonusType.PROMISE_BROKEN, race);
+    } else if (choice == VotingChoice.VOTED_NO && promisedNo) {
+      removePromises();
+      addBonus(DiplomacyBonusType.PROMISE_KEPT, race);
+    } else if (choice == VotingChoice.VOTED_NO && promisedYes) {
+      removePromises();
+      addBonus(DiplomacyBonusType.PROMISE_BROKEN, race);
+    }
+
+  }
   /**
    * Adds diplomacy into bonus list
    * @param bonus to add into list

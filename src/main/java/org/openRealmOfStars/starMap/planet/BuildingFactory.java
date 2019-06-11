@@ -7,7 +7,7 @@ import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2018  Tuomo Untinen
+ * Copyright (C) 2016, 2018, 2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ public final class BuildingFactory {
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 51;
+  private static final int MAX_BUILDING = 52;
 
   /**
    * Component Basic mine
@@ -292,6 +292,10 @@ public final class BuildingFactory {
    * Component Deep space scanner
    */
   public static final int COMPONENT_DEEP_SPACE_SCANNER = 50;
+  /**
+   * Component United Galaxy Tower
+   */
+  public static final int COMPONENT_UNITED_GALAXY_TOWER = 51;
 
   /**
    * Create planetary building with index
@@ -454,6 +458,9 @@ public final class BuildingFactory {
     case COMPONENT_DEEP_SPACE_SCANNER:
       tmp = createMilitaryFacility(index);
       break; // Deep space scanner
+    case COMPONENT_UNITED_GALAXY_TOWER:
+      tmp = createPlanetaryImprovement(index);
+      break; // United Galaxy Tower
     default:
       throw new IllegalArgumentException("No building found with index "
       + index + "!");
@@ -1062,6 +1069,20 @@ public final class BuildingFactory {
       tmp.setMetalCost(40);
       tmp.setCredBonus(2);
       tmp.setFactBonus(2);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    }
+    if (index == COMPONENT_UNITED_GALAXY_TOWER) {
+      tmp = new Building(index, "United Galaxy Tower",
+          Icons.getIconByName(Icons.ICON_CULTURE), BuildingType.CULTURE);
+      tmp.setDescription("United Galaxy Tower to gain influence of Galaxy.\n"
+          + "Depending on galaxy size certain amount is required\n"
+          + "to start diplomatic voting.");
+      tmp.setProdCost(60);
+      tmp.setMetalCost(40);
+      tmp.setMaintenanceCost(1);
+      tmp.setCultBonus(1);
+      tmp.setHappiness(2);
       tmp.setSingleAllowed(true);
       return tmp;
     }

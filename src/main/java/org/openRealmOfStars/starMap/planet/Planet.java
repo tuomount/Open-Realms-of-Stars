@@ -1477,6 +1477,16 @@ public class Planet {
             eventOnPlanet.setText(news.getNewsText());
             map.getHistory().addEvent(eventOnPlanet);
           }
+          if (building.getName().equals("United Galaxy Tower") && map != null) {
+            NewsData news = NewsFactory.makeUnitedGalaxyTowerNews(
+                planetOwnerInfo, this);
+            map.getNewsCorpData().addNews(news);
+            EventOnPlanet eventOnPlanet = new EventOnPlanet(
+                EventType.PLANET_BUILDING, getCoordinate(),
+                getName(), getPlanetOwnerIndex());
+            eventOnPlanet.setText(news.getNewsText());
+            map.getHistory().addEvent(eventOnPlanet);
+          }
           metal = metal - underConstruction.getMetalCost();
           prodResource = prodResource - underConstruction.getProdCost();
           buildings.add((Building) underConstruction);
@@ -1834,17 +1844,32 @@ public class Planet {
   }
 
   /**
-   * Check if planet has Space port for building ships
-   * @return True if planet has space port, otherwise false.
+   * Does planet has certain building with specific name?
+   * @param buildingName Building name to look for-
+   * @return True if found, otherwise false.
    */
-  public boolean hasSpacePort() {
+  private boolean hasCertainBuilding(final String buildingName) {
     Building[] buildingsArray = getBuildingList();
     for (Building building : buildingsArray) {
-      if (building.getName().equals("Space port")) {
+      if (building.getName().equals(buildingName)) {
         return true;
       }
     }
     return false;
+  }
+  /**
+   * Check if planet has United Galaxy Tower?
+   * @return True if planet has United Galaxy Tower?
+   */
+  public boolean hasTower() {
+    return hasCertainBuilding("United Galaxy Tower");
+  }
+  /**
+   * Check if planet has Space port for building ships
+   * @return True if planet has space port, otherwise false.
+   */
+  public boolean hasSpacePort() {
+    return hasCertainBuilding("Space port");
   }
 
   /**

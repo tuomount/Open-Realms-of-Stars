@@ -25,6 +25,9 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.starMap.vote.Votes;
+import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
@@ -77,6 +80,7 @@ public class DiplomaticTradeTest {
     tech1.addTech(new Tech("DefTech1", TechType.Defense, 1));
     tech1.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech1.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
+    player1.setTotalCredits(15);
     
     PlayerInfo player2 = new PlayerInfo(SpaceRace.GREYANS, 2, 1);
     TechList tech2 = player2.getTechList();
@@ -87,6 +91,7 @@ public class DiplomaticTradeTest {
     tech2.addTech(new Tech("DefTech2", TechType.Defense, 1));
     tech2.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech2.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
+    player2.setTotalCredits(10);
     NewsCorpData newsData = Mockito.mock(NewsCorpData.class);
     Mockito.when(newsData.getMilitaryDifference(0, 1)).thenReturn(
         powerDifference);    
@@ -98,6 +103,8 @@ public class DiplomaticTradeTest {
     Mockito.when(map.getPlayerByIndex(1)).thenReturn(player2);
     Mockito.when(map.getNewsCorpData()).thenReturn(newsData);
     Mockito.when(map.getMilitaryDifference(0, 1)).thenReturn(powerDifference);
+    Votes votes = Mockito.mock(Votes.class);
+    Mockito.when(map.getVotes()).thenReturn(votes);
     return map;
   }
 
@@ -406,6 +413,8 @@ public class DiplomaticTradeTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testMapTrade() {
     StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    Votes votes = Mockito.mock(Votes.class);
+    Mockito.when(map.getVotes()).thenReturn(votes);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.generateMapTrade(DiplomaticTrade.TRADE, true);
     assertEquals(NegotiationType.MAP, trade.getFirstOffer().getByIndex(0)
@@ -416,6 +425,23 @@ public class DiplomaticTradeTest {
     assertEquals(NegotiationType.MAP, trade.getFirstOffer().getByIndex(0)
         .getNegotiationType());
     assertEquals(NegotiationType.CREDIT, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMapTradeWithVote() {
+    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    Votes votes = Mockito.mock(Votes.class);
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.BAN_NUCLEAR_WEAPONS);
+    Mockito.when(votes.getNextImportantVote()).thenReturn(vote);
+    Mockito.when(map.getVotes()).thenReturn(votes);
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    trade.generateMapTrade(DiplomaticTrade.BUY, true);
+    assertEquals(NegotiationType.MAP, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.PROMISE_VOTE_YES, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
   }
 
@@ -708,6 +734,7 @@ public class DiplomaticTradeTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testTechTrade() {
     StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     trade.getTradeableTechListForFirst();
     trade.getTradeableTechListForSecond();
@@ -720,6 +747,26 @@ public class DiplomaticTradeTest {
     assertEquals(NegotiationType.TECH, trade.getFirstOffer().getByIndex(0)
         .getNegotiationType());
     assertEquals(NegotiationType.CREDIT, trade.getSecondOffer().getByIndex(0)
+        .getNegotiationType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTechTradeWithVote() {
+    StarMap map = generateMapWithPlayer(SpaceRace.CHIRALOIDS);
+    Votes votes = Mockito.mock(Votes.class);
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getType()).thenReturn(VotingType.BAN_NUCLEAR_WEAPONS);
+    Mockito.when(votes.getNextImportantVote()).thenReturn(vote);
+    Mockito.when(map.getVotes()).thenReturn(votes);
+
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    trade.getTradeableTechListForFirst();
+    trade.getTradeableTechListForSecond();
+    trade.generateTechTrade(DiplomaticTrade.BUY);
+    assertEquals(NegotiationType.TECH, trade.getFirstOffer().getByIndex(0)
+        .getNegotiationType());
+    assertEquals(NegotiationType.PROMISE_VOTE_NO, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
   }
 

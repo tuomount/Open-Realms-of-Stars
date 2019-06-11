@@ -144,6 +144,21 @@ public class GalaxyStat {
     return bigIndex;
   }
   /**
+   * Get the smallest player index for stat
+   * @return Smallest Player index for stat or -1 if all are zeros.
+   */
+  public int getSmallest() {
+    int smallest = Integer.MAX_VALUE;
+    int smallIndex = -1;
+    for (int i = 0; i < maxPlayers; i++) {
+      if (getLatest(i) < smallest) {
+        smallIndex = i;
+        smallest = getLatest(i);
+      }
+    }
+    return smallIndex;
+  }
+  /**
    * Get the second biggest player index for stat
    * @return second Biggest Player index for stat or -1 if all are zeros.
    */

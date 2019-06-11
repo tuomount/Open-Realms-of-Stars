@@ -19,7 +19,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2018  Tuomo Untinen
+ * Copyright (C) 2016,2018,2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -376,6 +376,19 @@ public class ShipDesign {
   }
 
   /**
+   * Is design nuclear bomber ship? True if one orbital nuke is place.
+   * @return True if ship is NuclearBomberShip, otherwise false
+   */
+  public boolean isNuclearBomberShip() {
+    for (ShipComponent comp : components) {
+      if (comp.getType() == ShipComponentType.ORBITAL_NUKE) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * Is design trooper ship? True if one planetary invasion module is place.
    * @return True if ship is trooper ship, otherwise false
    */
@@ -388,6 +401,16 @@ public class ShipDesign {
     return false;
   }
 
+  /**
+   * Is design privateer design.
+   * @return True if privateer design
+   */
+  public boolean isPrivateer() {
+    if (hull.getHullType() == ShipHullType.PRIVATEER) {
+      return true;
+    }
+    return false;
+  }
   /**
    * Get total value of starbase component bonus
    * @return Starbase component bonus value
@@ -692,9 +715,11 @@ public class ShipDesign {
 
   /**
    * Get ship design flaws as a string.
+   * @param banNukes True if nuclear weapons are banned.
+   * @param banPrivateer true if privateer ships are banned
    * @return Design flaws in a string
    */
-  public String getFlaws() {
+  public String getFlaws(final boolean banNukes, final boolean banPrivateer) {
     boolean designOk = true;
     StringBuilder sb = new StringBuilder();
     if (!hasEngine()) {
@@ -731,6 +756,11 @@ public class ShipDesign {
           && hull.getHullType() != ShipHullType.STARBASE) {
         designOk = false;
         sb.append(ShipDesignConsts.STARBASE_MODULE_IN_NOT_STARBASE);
+        sb.append("\n");
+      }
+      if (comp.getType() == ShipComponentType.ORBITAL_NUKE && banNukes) {
+        designOk = false;
+        sb.append(ShipDesignConsts.NUKES_ARE_BANNED);
         sb.append("\n");
       }
       if (comp.getType() == ShipComponentType.PRIVATEERING_MODULE) {
@@ -775,6 +805,12 @@ public class ShipDesign {
       sb.append(ShipDesignConsts.PRIVATEER_MODULE_MISSING);
       sb.append("\n");
     }
+    if (hull.getHullType() == ShipHullType.PRIVATEER && privateerModule
+        && banPrivateer) {
+      designOk = false;
+      sb.append(ShipDesignConsts.PRIVATEERS_ARE_BANNED);
+      sb.append("\n");
+    }
     if (getFreeEnergy() < 0) {
       designOk = false;
       sb.append("No enough energy resources!");
@@ -784,6 +820,16 @@ public class ShipDesign {
       sb.append(ShipDesignConsts.DESIGN_OK);
     }
     return sb.toString();
+
+  }
+
+  /**
+   * Get ship design flaws as a string. This will not check if
+   * privateer or nukes are banned.
+   * @return Design flaws in a string
+   */
+  public String getFlaws() {
+    return getFlaws(false, false);
   }
 
   /**

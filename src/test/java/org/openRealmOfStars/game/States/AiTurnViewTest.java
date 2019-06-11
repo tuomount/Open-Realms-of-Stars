@@ -10,12 +10,15 @@ import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionList;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.AI.Research.Research;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.Tech;
+import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -140,6 +143,39 @@ public class AiTurnViewTest {
     assertEquals(true, view.updateSpacePirates(pirates, level, false));
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testBannedShips() {
+    Game game = Mockito.mock(Game.class);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(game.getStarMap()).thenReturn(map);
+    AITurnView view = new AITurnView(game);
+    PlayerInfo human = new PlayerInfo(SpaceRace.HUMAN, 9, 8);
+    human.getTechList().addTech(TechFactory.createHullTech("Privateer Mk1", 5));
+    human.getTechList().addTech(TechFactory.createHullTech("Cruiser", 5));
+    human.getTechList().addTech(TechFactory.createCombatTech("Orbital nuke", 4));
+    human.getTechList().addTech(TechFactory.createHullTech("Large freighter", 6));
+    Research.handleShipDesigns(human, false, false);
+    boolean privateer = false;
+    boolean nukeBomber = false;
+    for (ShipStat stat : human.getShipStatList()) {
+      if (stat.getDesign().isPrivateer() && !stat.isObsolete()) {
+        privateer = true;
+      }
+      if (stat.getDesign().isNuclearBomberShip() && !stat.isObsolete()) {
+        nukeBomber = true;
+      }
+    }
+    view.removeBannedShipDesigns(human, true, true);
+    for (ShipStat stat : human.getShipStatList()) {
+      if (privateer && !stat.isObsolete()) {
+        assertEquals(false, stat.getDesign().isPrivateer());
+      }
+      if (nukeBomber && !stat.isObsolete()) {
+        assertEquals(false, stat.getDesign().isNuclearBomberShip());
+      }
+    }
+  }
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testUpdatePirate2() {

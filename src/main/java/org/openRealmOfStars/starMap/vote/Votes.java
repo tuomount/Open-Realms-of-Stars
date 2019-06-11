@@ -5,6 +5,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
+import org.openRealmOfStars.utilities.DiceGenerator;
+
 /**
 *
 * Open Realm of Stars game project
@@ -65,6 +68,21 @@ public class Votes {
   }
 
   /**
+   * Get votes that are voteable.
+   * @return ArrayList of votes
+   */
+  public ArrayList<Vote> getVotableVotes() {
+    ArrayList<Vote> list = new ArrayList<>();
+    for (Vote vote : listOfVotes) {
+      if (vote.getType() != VotingType.FIRST_CANDIDATE
+          && vote.getType() != VotingType.SECOND_CANDIDATE) {
+        list.add(vote);
+      }
+    }
+    return list;
+  }
+
+  /**
    * Get Next important vote, which isn't galactic olympic participation.
    * @return Vote or null
    */
@@ -79,6 +97,90 @@ public class Votes {
   }
 
   /**
+   * Generate next important vote. This will add new vote
+   * to list of votes automatically.
+   * @param maxNumberOfVotes Maximum number of votes
+   * @param numberOfRealms NUmber of realms in starmap
+   * @param turns When voting needs to be done.
+   * @return Vote if able to add new one, otherwise null
+   */
+  public Vote generateNextVote(final int maxNumberOfVotes,
+      final int numberOfRealms, final int turns) {
+    int count = 0;
+    for (Vote vote : listOfVotes) {
+      if (vote.getType() != VotingType.GALACTIC_OLYMPIC_PARTICIPATE
+          && vote.getType() != VotingType.FIRST_CANDIDATE
+          && vote.getType() != VotingType.SECOND_CANDIDATE) {
+        count++;
+      }
+    }
+    if (maxNumberOfVotes - count == 1) {
+      Vote vote = new Vote(VotingType.RULER_OF_GALAXY, numberOfRealms, turns);
+      vote.setOrganizerIndex(getFirstCandidate());
+      vote.setSecondCandidateIndex(getSecondCandidate());
+      listOfVotes.add(vote);
+      return vote;
+    }
+    if (maxNumberOfVotes - count == 2) {
+      Vote vote = new Vote(VotingType.SECOND_CANDIDATE_MILITARY,
+          numberOfRealms, turns);
+      listOfVotes.add(vote);
+      return vote;
+    }
+    if (maxNumberOfVotes - count > 2) {
+      ArrayList<VotingType> types = new ArrayList<>();
+      types.add(VotingType.BAN_NUCLEAR_WEAPONS);
+      types.add(VotingType.BAN_PRIVATEER_SHIPS);
+      types.add(VotingType.GALACTIC_PEACE);
+      types.add(VotingType.TAXATION_OF_RICHEST_REALM);
+      for (Vote vote : listOfVotes) {
+        types.remove(vote.getType());
+      }
+      int index = DiceGenerator.getRandom(types.size() - 1);
+      Vote vote = new Vote(types.get(index), numberOfRealms, turns);
+      listOfVotes.add(vote);
+      return vote;
+    }
+    return null;
+  }
+  /**
+   * Has first candidate selected or not.
+   * @return True if selected.
+   */
+  public boolean firstCandidateSelected() {
+    for (Vote vote : listOfVotes) {
+      if (vote.getType() == VotingType.FIRST_CANDIDATE) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Get First candidate realm index
+   * @return First candidate realm index or -1 if not set yet
+   */
+  public int getFirstCandidate() {
+    for (Vote vote : listOfVotes) {
+      if (vote.getType() == VotingType.FIRST_CANDIDATE) {
+        return vote.getOrganizerIndex();
+      }
+    }
+    return -1;
+  }
+  /**
+   * Get Second candidate realm index
+   * @return Second candidate realm index or -1 if not set yet
+   */
+  public int getSecondCandidate() {
+    for (Vote vote : listOfVotes) {
+      if (vote.getType() == VotingType.SECOND_CANDIDATE) {
+        return vote.getOrganizerIndex();
+      }
+    }
+    return -1;
+  }
+  /**
    * Save votes to Data output stream
    * @param dos DataOutputStream where to write
    * @throws IOException If writing fails.
@@ -89,4 +191,46 @@ public class Votes {
       listOfVotes.get(i).saveVote(dos);
     }
   }
+
+  /**
+   * Is certain voting type passed or not.
+   * @param type Voting type
+   * @return True if passed
+   */
+  private boolean isVotingTypePassed(final VotingType type) {
+    int index = getFirstCandidate();
+    for (Vote vote : listOfVotes) {
+      if (vote.getType() == type) {
+        if (vote.getResult(index) == VotingChoice.VOTED_YES) {
+          return true;
+        }
+        return false;
+      }
+    }
+    return false;
+  }
+  /**
+   * Are privateer ships banned or not?
+   * @return True if they are banned
+   */
+  public boolean arePrivateersBanned() {
+    return isVotingTypePassed(VotingType.BAN_PRIVATEER_SHIPS);
+  }
+
+  /**
+   * Are nukes banned or not?
+   * @return True if they are banned
+   */
+  public boolean areNukesBanned() {
+    return isVotingTypePassed(VotingType.BAN_NUCLEAR_WEAPONS);
+  }
+
+  /**
+   * Is taxation of richest realm enabled?
+   * @return True if it is.
+   */
+  public boolean isTaxationOfRichestEnabled() {
+    return isVotingTypePassed(VotingType.TAXATION_OF_RICHEST_REALM);
+  }
+
 }

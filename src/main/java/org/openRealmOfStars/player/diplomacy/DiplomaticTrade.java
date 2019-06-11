@@ -17,7 +17,9 @@ import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -263,6 +265,91 @@ public class DiplomaticTrade {
     }
     return bestIndex;
   }
+
+  /**
+   * Minimum value of five. This method will take absolute
+   * value and make sure that it is at least five.
+   * @param value Value making sure that its minimum is 5.
+   * @return Five or bigger number.
+   */
+  public static int  minFive(final int value) {
+    int result = Math.abs(value);
+    if (result < 5) {
+      result = 5;
+    }
+    return result;
+  }
+
+  /**
+   * Create promise vote yes offer. Requires that there is important vote.
+   * @param agree PlayerInfo who makes the promise
+   * @return NegotiationOffer or null
+   */
+  private NegotiationOffer createPromiseYes(final PlayerInfo agree) {
+    Vote vote = starMap.getVotes().getNextImportantVote();
+    if (vote != null) {
+      int value = StarMapUtilities.getVotingSupport(agree, vote, starMap);
+        if (value < 0) {
+          value = minFive(value);
+          value = value * 2;
+          return new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES,
+              new Integer(value));
+        } else if (value > 0) {
+          value = minFive(value);
+          return new NegotiationOffer(NegotiationType.PROMISE_VOTE_YES,
+              new Integer(value));
+        }
+    }
+    return null;
+  }
+
+  /**
+   * Create promise vote no offer. Requires that there is important vote.
+   * @param agree PlayerInfo who makes the promise
+   * @return NegotiationOffer or null
+   */
+  private NegotiationOffer createPromiseNo(final PlayerInfo agree) {
+    Vote vote = starMap.getVotes().getNextImportantVote();
+    if (vote != null) {
+      int value = StarMapUtilities.getVotingSupport(agree, vote, starMap);
+        if (value < 0) {
+          value = minFive(value);
+          return new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO,
+              new Integer(value));
+        } else if (value > 0) {
+          value = minFive(value);
+          value = value * 2;
+          return new NegotiationOffer(NegotiationType.PROMISE_VOTE_NO,
+              new Integer(value));
+        }
+    }
+    return null;
+  }
+
+  /**
+   * Create vote promise offer. Requires that there is important vote.
+   * @param agree PlayerInfo who makes the promise
+   * @return NegotiationOffer or null
+   */
+  private NegotiationOffer createBestVotePromise(final PlayerInfo agree) {
+    NegotiationOffer voteNo = createPromiseNo(agree);
+    NegotiationOffer voteYes = createPromiseYes(agree);
+    if (voteNo != null && voteYes != null) {
+      if (voteNo.getOfferValue(agree.getRace()) < voteYes.getOfferValue(
+          agree.getRace())) {
+        return voteNo;
+      } else {
+        return voteYes;
+      }
+    }
+    if (voteYes != null) {
+      return voteYes;
+    }
+    if (voteNo != null) {
+      return voteNo;
+    }
+    return null;
+  }
   /**
    * Generate Tech trade between two players.
    * @param tradeType Choices are TRADE, BUY and SELL
@@ -283,12 +370,20 @@ public class DiplomaticTrade {
           secondOffer.add(new NegotiationOffer(NegotiationType.TECH,
               techListForSecond.get(i)));
         } else {
+          NegotiationOffer voteOffer = createBestVotePromise(offerMaker);
           int value = firstOffer.getOfferValue(offerMaker.getRace());
+          if (voteOffer != null && voteOffer.getOfferValue(
+              offerMaker.getRace()) >= value) {
+            secondOffer.add(voteOffer);
+            value = value - voteOffer.getOfferValue(offerMaker.getRace());
+          }
           if (offerMaker.getTotalCredits() < value) {
             value = offerMaker.getTotalCredits();
           }
-          secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-              new Integer(value)));
+          if (value > 0) {
+            secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+                new Integer(value)));
+          }
           break;
         }
         i++;
@@ -359,14 +454,21 @@ public class DiplomaticTrade {
     }
     if (tradeType == BUY) {
       int value = mapValue;
+      firstOffer = new NegotiationList();
+      secondOffer = new NegotiationList();
+      NegotiationOffer voteOffer = createBestVotePromise(offerMaker);
+      if (voteOffer != null) {
+        secondOffer.add(voteOffer);
+        value = value - voteOffer.getOfferValue(offerMaker.getRace());
+      }
       if (offerMaker.getTotalCredits() < value) {
         value = offerMaker.getTotalCredits();
       }
-      firstOffer = new NegotiationList();
       firstOffer.add(new NegotiationOffer(mapType, null));
-      secondOffer = new NegotiationList();
-      secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-          new Integer(value)));
+      if (value > 0) {
+        secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+            new Integer(value)));
+      }
     } else if (tradeType == TRADE) {
       firstOffer = new NegotiationList();
       firstOffer.add(new NegotiationOffer(mapType, null));
@@ -1708,6 +1810,18 @@ public class DiplomaticTrade {
       }
       case MAP_PLANETS: {
         doMapTrade(info, giver, false);
+        break;
+      }
+      case PROMISE_VOTE_NO: {
+        int index = starMap.getPlayerList().getIndex(giver);
+        info.getDiplomacy().getDiplomacyList(index).addBonus(
+            DiplomacyBonusType.PROMISED_VOTE_NO, info.getRace());
+        break;
+      }
+      case PROMISE_VOTE_YES: {
+        int index = starMap.getPlayerList().getIndex(giver);
+        info.getDiplomacy().getDiplomacyList(index).addBonus(
+            DiplomacyBonusType.PROMISED_VOTE_YES, info.getRace());
         break;
       }
       default:

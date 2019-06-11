@@ -19,7 +19,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -74,15 +74,18 @@ public final class Research {
   /**
    * Handle new ship designs for AI
    * @param info PlayerInfo
+   * @param banNukes Are nuclear weapons banned?
+   * @param banPrivateer Are privateer ships banned?
    */
-  public static void handleShipDesigns(final PlayerInfo info) {
-    handleBattleShipDesign(info, ShipSize.SMALL, false);
-    handleBattleShipDesign(info, ShipSize.MEDIUM, false);
-    handleBattleShipDesign(info, ShipSize.LARGE, false);
-    handleBattleShipDesign(info, ShipSize.HUGE, false);
-    handleBattleShipDesign(info, ShipSize.MEDIUM, true);
-    handleBattleShipDesign(info, ShipSize.LARGE, true);
-    handleBattleShipDesign(info, ShipSize.HUGE, true);
+  public static void handleShipDesigns(final PlayerInfo info,
+      final boolean banNukes, final boolean banPrivateer) {
+    handleBattleShipDesign(info, ShipSize.SMALL, false, banNukes);
+    handleBattleShipDesign(info, ShipSize.MEDIUM, false, banNukes);
+    handleBattleShipDesign(info, ShipSize.LARGE, false, banNukes);
+    handleBattleShipDesign(info, ShipSize.HUGE, false, banNukes);
+    handleBattleShipDesign(info, ShipSize.MEDIUM, true, banNukes);
+    handleBattleShipDesign(info, ShipSize.LARGE, true, banNukes);
+    handleBattleShipDesign(info, ShipSize.HUGE, true, banNukes);
     handleStarbaseDesign(info, ShipSize.SMALL);
     handleStarbaseDesign(info, ShipSize.MEDIUM);
     handleStarbaseDesign(info, ShipSize.LARGE);
@@ -90,8 +93,18 @@ public final class Research {
     handleTrooperShipDesign(info);
     handleColonyShipDesign(info);
     handleFreighterShipDesign(info);
-    handlePrivateerShipDesign(info);
+    if (!banPrivateer) {
+      handlePrivateerShipDesign(info);
+    }
     handleSpyShipDesign(info);
+  }
+
+  /**
+   * Handle new ship designs for AI. Nukes or privateers are not banned.
+   * @param info PlayerInfo
+   */
+  public static void handleShipDesigns(final PlayerInfo info) {
+    handleShipDesigns(info, false, false);
   }
 
   /**
@@ -119,10 +132,12 @@ public final class Research {
    * @param info Player
    * @param size ShipSize to handle
    * @param bomber Force bomber ship design
+   * @param banNukes Are nuclear weapons banned?
    */
   private static void handleBattleShipDesign(final PlayerInfo info,
-      final ShipSize size, final boolean bomber) {
-    ShipDesign design = ShipGenerator.createBattleShip(info, size, bomber);
+      final ShipSize size, final boolean bomber, final boolean banNukes) {
+    ShipDesign design = ShipGenerator.createBattleShip(info, size, bomber,
+        banNukes);
     if (design != null) {
       ShipStat[] stats = info.getShipStatList();
       boolean notFound = true;

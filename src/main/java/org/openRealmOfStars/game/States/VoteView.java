@@ -125,16 +125,19 @@ public class VoteView extends BlackPanel {
     InfoPanel panel = new EmptyInfoPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     panel.add(Box.createRigidArea(new Dimension(10, 10)));
-    voteTitle = new SpaceLabel("Participate to "
-        + VotingType.SECOND_CANDIDATE_MILITARY.getDescription());
-    voteTitle.setAlignmentX(CENTER_ALIGNMENT);
+    voteTitle = new SpaceLabel("<html>Participate to "
+        + VotingType.SECOND_CANDIDATE_MILITARY.getDescription()
+        + "\nAnother line</html>");
+    voteTitle.setAlignmentX(LEFT_ALIGNMENT);
     panel.add(voteTitle);
     panel.add(Box.createRigidArea(new Dimension(5, 5)));
-    votingTime = new SpaceLabel("Voting time: 20 turns");
-    votingTime.setAlignmentX(CENTER_ALIGNMENT);
+    votingTime = new SpaceLabel("<html>Participate to "
+        + VotingType.SECOND_CANDIDATE_MILITARY.getDescription()
+        + "\nAnother line</html>");
+    votingTime.setAlignmentX(LEFT_ALIGNMENT);
     panel.add(votingTime);
     panel.add(Box.createRigidArea(new Dimension(10, 10)));
-    panel.setAlignmentX(CENTER_ALIGNMENT);
+    panel.setAlignmentX(LEFT_ALIGNMENT);
     InfoPanel votingPanel = new InfoPanel();
     votingPanel.setLayout(new BorderLayout());
     votingPanel.setTitle("Voting results");
@@ -236,7 +239,8 @@ public class VoteView extends BlackPanel {
       if (vote.getType() == VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
         voteTitle.setText("Participate to " + vote.getType().getDescription());
       } else {
-        voteTitle.setText("Vote for " + vote.getType().getDescription());
+        voteTitle.setText("<html>Vote for " + vote.getDescription(map)
+            + "</htlm>");
       }
       if (vote.getTurnsToVote() != 1) {
         votingTime.setText("Voting time: " + vote.getTurnsToVote() + " turns");

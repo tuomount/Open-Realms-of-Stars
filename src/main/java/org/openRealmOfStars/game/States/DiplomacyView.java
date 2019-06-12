@@ -359,7 +359,17 @@ public class DiplomacyView extends BlackPanel {
       support = StarMapUtilities.getVotingSupport(ai, vote, map);
       if (support > 0) {
         humanVoteYes.setEnabled(true);
-        humanVoteYes.setToolTipText(vote.getDescription(map));
+        if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+          int index = map.getVotes().getFirstCandidate();
+          PlayerInfo candidate = map.getPlayerList().getPlayerInfoByIndex(
+              index);
+          if (candidate != null) {
+            humanVoteYes.setToolTipText("Promise to vote for "
+                + candidate.getEmpireName() + " for the Ruler of Galaxy.");
+          }
+        } else {
+          humanVoteYes.setToolTipText(vote.getDescription(map));
+        }
       } else {
         humanVoteYes.setEnabled(false);
         if (vote.getType() == VotingType.RULER_OF_GALAXY) {
@@ -388,7 +398,17 @@ public class DiplomacyView extends BlackPanel {
     if (vote != null) {
       if (support < 0) {
         humanVoteNo.setEnabled(true);
-        humanVoteNo.setToolTipText(vote.getDescription(map));
+        if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+          int index = map.getVotes().getSecondCandidate();
+          PlayerInfo candidate = map.getPlayerList().getPlayerInfoByIndex(
+              index);
+          if (candidate != null) {
+            humanVoteNo.setToolTipText("Promise to vote for "
+                + candidate.getEmpireName() + " for the Ruler of Galaxy.");
+          }
+        } else {
+          humanVoteNo.setToolTipText(vote.getDescription(map));
+        }
       } else {
         humanVoteNo.setEnabled(false);
         if (vote.getType() == VotingType.RULER_OF_GALAXY) {

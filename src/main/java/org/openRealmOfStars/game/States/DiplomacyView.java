@@ -57,6 +57,7 @@ import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -361,8 +362,19 @@ public class DiplomacyView extends BlackPanel {
         humanVoteYes.setToolTipText(vote.getDescription(map));
       } else {
         humanVoteYes.setEnabled(false);
-        humanVoteYes.setToolTipText(ai.getEmpireName()
-            + " does not want YES vote.");
+        if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+          int index = map.getVotes().getFirstCandidate();
+          PlayerInfo candidate = map.getPlayerList().getPlayerInfoByIndex(
+              index);
+          if (candidate != null) {
+            humanVoteYes.setToolTipText(ai.getEmpireName()
+                + " does not want vote " + candidate.getEmpireName()
+                + " for the Ruler of Galaxy.");
+          }
+        } else {
+          humanVoteYes.setToolTipText(ai.getEmpireName()
+              + " does not want YES vote.");
+        }
       }
     } else {
       humanVoteYes.setToolTipText("No ongoing vote available.");
@@ -379,8 +391,19 @@ public class DiplomacyView extends BlackPanel {
         humanVoteNo.setToolTipText(vote.getDescription(map));
       } else {
         humanVoteNo.setEnabled(false);
-        humanVoteNo.setToolTipText(ai.getEmpireName()
+        if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+          int index = map.getVotes().getSecondCandidate();
+          PlayerInfo candidate = map.getPlayerList().getPlayerInfoByIndex(
+              index);
+          if (candidate != null) {
+            humanVoteNo.setToolTipText(ai.getEmpireName()
+                + " does not want vote " + candidate.getEmpireName()
+                + " for the Ruler of Galaxy.");
+          }
+        } else {
+          humanVoteNo.setToolTipText(ai.getEmpireName()
             + " does not want NO vote.");
+        }
       }
     } else {
       humanVoteNo.setToolTipText("No ongoing vote available.");
@@ -480,8 +503,19 @@ public class DiplomacyView extends BlackPanel {
     aiVoteYes.setActionCommand(GameCommands.COMMAND_AI_VOTE_YES);
     aiVoteYes.addActionListener(listener);
     if (vote != null) {
-      aiVoteYes.setToolTipText("Ask " + ai.getEmpireName() + "vote YES for "
-          + vote.getDescription(map));
+      if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+        int index = map.getVotes().getFirstCandidate();
+        PlayerInfo candidate = map.getPlayerList().getPlayerInfoByIndex(
+            index);
+        if (candidate != null) {
+          aiVoteYes.setToolTipText("Ask " + ai.getEmpireName()
+              + " vote for " + candidate.getEmpireName()
+              + " as the Ruler of Galaxy.");
+        }
+      } else {
+        aiVoteYes.setToolTipText("Ask " + ai.getEmpireName() + "vote YES for "
+            + vote.getDescription(map));
+      }
       aiVoteYes.setEnabled(true);
     } else {
       aiVoteYes.setToolTipText("No ongoing vote available.");
@@ -493,8 +527,19 @@ public class DiplomacyView extends BlackPanel {
     aiVoteNo.setActionCommand(GameCommands.COMMAND_AI_VOTE_NO);
     aiVoteNo.addActionListener(listener);
     if (vote != null) {
-      aiVoteNo.setToolTipText("Ask " + ai.getEmpireName() + "vote No for "
-          + vote.getDescription(map));
+      if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+        int index = map.getVotes().getSecondCandidate();
+        PlayerInfo candidate = map.getPlayerList().getPlayerInfoByIndex(
+            index);
+        if (candidate != null) {
+          aiVoteNo.setToolTipText("Ask " + ai.getEmpireName()
+              + " vote for " + candidate.getEmpireName()
+              + " as the Ruler of Galaxy.");
+        }
+      } else {
+        aiVoteNo.setToolTipText("Ask " + ai.getEmpireName() + "vote No for "
+            + vote.getDescription(map));
+      }
       aiVoteNo.setEnabled(true);
     } else {
       aiVoteNo.setToolTipText("No ongoing vote available.");

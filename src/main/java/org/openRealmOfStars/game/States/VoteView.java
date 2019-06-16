@@ -342,7 +342,42 @@ public class VoteView extends BlackPanel {
             }
           }
           if (count == 0) {
-            sb.append("You made no promises to anyone!");
+            sb.append("You made no promises to anyone!\n");
+          }
+          sb.append("\nVoting promises others made to you:\n");
+          count = 0;
+          for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
+            PlayerInfo info = map.getPlayerList().getPlayerInfoByIndex(
+                currentRealmIndex);
+            PlayerInfo realm = map.getPlayerList().getPlayerInfoByIndex(i);
+            if (info != null && realm != null
+                && info.getDiplomacy().getDiplomacyList(i)
+                != null) {
+              if (info.getDiplomacy().getDiplomacyList(i)
+                  .isBonusType(DiplomacyBonusType.PROMISED_VOTE_YES)) {
+                sb.append(realm.getEmpireName());
+                if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+                  sb.append(" promised to vote 1st candidate for you.");
+                } else {
+                  sb.append(" promised to vote YES for you");
+                }
+                sb.append("\n");
+                count++;
+              } else if (info.getDiplomacy().getDiplomacyList(i)
+                  .isBonusType(DiplomacyBonusType.PROMISED_VOTE_NO)) {
+                sb.append(realm.getEmpireName());
+                if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+                  sb.append(" promised to vote 2nd candidate for you");
+                } else {
+                  sb.append(" promised to vote NO for you");
+                }
+                sb.append("\n");
+                count++;
+              }
+            }
+          }
+          if (count == 0) {
+            sb.append("Others made no promises to you!");
           }
         } else {
           voteYesBtn.setText("Participate");

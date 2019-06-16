@@ -1424,7 +1424,7 @@ public class NewsFactoryTest {
     NewsData news = NewsFactory.makeDiplomaticVictoryNewsAtEnd(map);
     assertNotNull(news);
     assertEquals(true, news.getNewsText().contains("Empire of Homarian"));
-    assertEquals(true, news.getNewsText().contains("63%"));
+    assertEquals(true, news.getNewsText().contains("63 per cent"));
   }
 
   @Test
@@ -1473,7 +1473,7 @@ public class NewsFactoryTest {
     NewsData news = NewsFactory.makeDiplomaticVictoryNewsAtEnd(map);
     assertNotNull(news);
     assertEquals(true, news.getNewsText().contains("Empire of Homarian"));
-    assertEquals(true, news.getNewsText().contains("65%"));
+    assertEquals(true, news.getNewsText().contains("65 per cent"));
   }
 
   @Test

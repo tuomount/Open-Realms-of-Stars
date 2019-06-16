@@ -1467,17 +1467,17 @@ public final class NewsFactory {
         sb.append("This voting was arranged across the whole galaxy."
             + " Second candidate for the Galactic rules was ");
         sb.append(second.getEmpireName());
-        sb.append(".");
+        sb.append(". ");
         int winnerPerCent = votedWinner * 100 / (votedWinner + votedSecond);
         int secondPerCent = votedSecond * 100 / (votedWinner + votedSecond);
         sb.append(winner.getEmpireName());
         sb.append(" got ");
         sb.append(winnerPerCent);
-        sb.append("% of votes. ");
+        sb.append(" per cent of votes. ");
         sb.append(second.getEmpireName());
         sb.append(" got ");
         sb.append(secondPerCent);
-        sb.append("% of votes. ");
+        sb.append(" per cent of votes. ");
       } else {
         PlayerInfo info = winner;
         PlayerInfo info2 = map.getPlayerByIndex(
@@ -1494,17 +1494,17 @@ public final class NewsFactory {
         sb.append("This voting was arranged across the whole galaxy."
             + " Second candidate for the Galactic rules was ");
         sb.append(second.getEmpireName());
-        sb.append(".");
+        sb.append(". ");
         int winnerPerCent = votedWinner * 100 / (votedWinner + votedSecond);
         int secondPerCent = votedSecond * 100 / (votedWinner + votedSecond);
         sb.append(winner.getEmpireName());
         sb.append(" got ");
         sb.append(winnerPerCent);
-        sb.append("% of votes. ");
+        sb.append(" per cent of votes. ");
         sb.append(second.getEmpireName());
         sb.append(" got ");
         sb.append(secondPerCent);
-        sb.append("% of votes. ");
+        sb.append(" per cent of votes. ");
       }
       news.setImageInstructions(instructions.build());
       news.setNewsText(sb.toString());
@@ -1991,18 +1991,39 @@ public final class NewsFactory {
     sb.append("Voting for '");
     sb.append(vote.getType().getDescription());
     sb.append("' has ended. ");
-    sb.append(choice.getDescription());
-    sb.append("-votes won! ");
+    if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+      if (choice == VotingChoice.VOTED_YES) {
+        sb.append(firstCandidate.getEmpireName());
+        sb.append(" won the voting! ");
+      } else {
+        sb.append(secondCandidate.getEmpireName());
+        sb.append(" won the voting! ");
+      }
+    } else {
+      sb.append(choice.getDescription());
+      sb.append("-votes won! ");
+    }
     int yes = vote.getVotingAmounts(VotingChoice.VOTED_YES);
     int no = vote.getVotingAmounts(VotingChoice.VOTED_NO);
     int total = yes + no;
     yes = yes * 100 / total;
     no = no * 100 / total;
-    sb.append("YES: ");
-    sb.append(yes);
-    sb.append(" per cent and NO: ");
-    sb.append(no);
-    sb.append(" per cent.");
+    if (vote.getType() == VotingType.RULER_OF_GALAXY) {
+      sb.append(firstCandidate.getEmpireName());
+      sb.append(": ");
+      sb.append(yes);
+      sb.append(" per cent and ");
+      sb.append(secondCandidate.getEmpireName());
+      sb.append(": ");
+      sb.append(no);
+      sb.append(" per cent.");
+    } else {
+      sb.append("YES: ");
+      sb.append(yes);
+      sb.append(" per cent and NO: ");
+      sb.append(no);
+      sb.append(" per cent.");
+    }
     news.setNewsText(sb.toString());
     return news;
   }

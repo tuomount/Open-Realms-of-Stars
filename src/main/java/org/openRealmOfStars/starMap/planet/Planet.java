@@ -27,6 +27,8 @@ import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.BuildingType;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
+import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
@@ -1486,6 +1488,22 @@ public class Planet {
                 getName(), getPlanetOwnerIndex());
             eventOnPlanet.setText(news.getNewsText());
             map.getHistory().addEvent(eventOnPlanet);
+          }
+          if (building.getName().equals("Galactic sports center")
+              && map != null) {
+            NewsData news = NewsFactory.makeGalacticSportsNews(
+                planetOwnerInfo, this);
+            map.getNewsCorpData().addNews(news);
+            EventOnPlanet eventOnPlanet = new EventOnPlanet(
+                EventType.PLANET_BUILDING, getCoordinate(),
+                getName(), getPlanetOwnerIndex());
+            eventOnPlanet.setText(news.getNewsText());
+            map.getHistory().addEvent(eventOnPlanet);
+            Vote vote = new Vote(VotingType.GALACTIC_OLYMPIC_PARTICIPATE,
+                map.getPlayerList().getCurrentMaxRealms(), 10);
+            vote.setOrganizerIndex(this.getPlanetOwnerIndex());
+            vote.setPlanetName(getName());
+            map.getVotes().getVotes().add(vote);
           }
           metal = metal - underConstruction.getMetalCost();
           prodResource = prodResource - underConstruction.getProdCost();

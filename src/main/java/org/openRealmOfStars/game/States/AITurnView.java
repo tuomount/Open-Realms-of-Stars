@@ -1550,6 +1550,81 @@ public class AITurnView extends BlackPanel {
     }
 
   }
+
+  /**
+   * Handle olympic participation voting
+   */
+  public void handleOlympicParticipation() {
+    for (Vote vote : game.getStarMap().getVotes().getVotableVotes()) {
+      if (vote.getTurnsToVote() > 0
+          && vote.getType() == VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
+        VotingChoice[] oldChoices = new VotingChoice[
+            game.getPlayers().getCurrentMaxRealms()];
+        for (int i = 0; i < game.getPlayers().getCurrentMaxRealms(); i++) {
+          oldChoices[i] = vote.getChoice(i);
+        }
+        int organizer = vote.getOrganizerIndex();
+        for (int i = 0; i < game.getPlayers().getCurrentMaxRealms(); i++) {
+          PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(i);
+          if (info != null) {
+            if (info.isHuman()) {
+              continue;
+            }
+            if (i == organizer) {
+              vote.setChoice(i, VotingChoice.VOTED_YES);
+              continue;
+            }
+            int participateBonus = info.getDiplomacy().getLiking(organizer)
+                * 10;
+            if (info.getDiplomacy().isWar(organizer)) {
+              participateBonus = participateBonus - 25;
+            }
+            if (info.getDiplomacy().isTradeEmbargo(organizer)) {
+              participateBonus = participateBonus - 20;
+            }
+            if (info.getDiplomacy().isTradeAlliance(organizer)) {
+              participateBonus = participateBonus + 10;
+            }
+            if (info.getDiplomacy().isDefensivePact(organizer)) {
+              participateBonus = participateBonus + 15;
+            }
+            if (info.getDiplomacy().isAlliance(organizer)) {
+              participateBonus = participateBonus + 20;
+            }
+            if (participateBonus == 0 && vote.getTurnsToVote() > 1
+              && DiceGenerator.getRandom(vote.getTurnsToVote()) > 0) {
+                continue;
+            }
+            for (int j = 0; j < oldChoices.length; j++) {
+              if (i != j) {
+                if (oldChoices[j] == VotingChoice.VOTED_YES) {
+                  participateBonus = participateBonus
+                      + info.getDiplomacy().getLiking(organizer) * 3;
+                }
+                if (oldChoices[j] == VotingChoice.VOTED_NO) {
+                  participateBonus = participateBonus
+                      - info.getDiplomacy().getLiking(organizer) * 3;
+                }
+              }
+            }
+            if (participateBonus > 0) {
+              vote.setChoice(i, VotingChoice.VOTED_YES);
+              continue;
+            }
+            if (participateBonus < 0) {
+              vote.setChoice(i, VotingChoice.VOTED_NO);
+              continue;
+            }
+            if (participateBonus == 0 && vote.getTurnsToVote() == 1) {
+              // AI couldn't decide if wants to participate,
+              // but no good reason not to join
+              vote.setChoice(i, VotingChoice.VOTED_YES);
+            }
+          }
+        }
+      }
+    }
+  }
   /**
    * Update whole star map to next turn
    */

@@ -61,6 +61,7 @@ import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.starMap.vote.Votes;
 import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -1552,20 +1553,25 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
-   * Handle olympic participation voting
+   * Handle olympic participation voting.
+   * This may alter voting choices in ongoing participation
+   * votes of galactic olympic games.
+   * @param votes Votes list
+   * @param players PlayerList
    */
-  public void handleOlympicParticipation() {
-    for (Vote vote : game.getStarMap().getVotes().getVotableVotes()) {
+  public static void handleOlympicParticipation(final Votes votes,
+      final PlayerList players) {
+    for (Vote vote : votes.getVotableVotes()) {
       if (vote.getTurnsToVote() > 0
           && vote.getType() == VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
         VotingChoice[] oldChoices = new VotingChoice[
-            game.getPlayers().getCurrentMaxRealms()];
-        for (int i = 0; i < game.getPlayers().getCurrentMaxRealms(); i++) {
+            players.getCurrentMaxRealms()];
+        for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
           oldChoices[i] = vote.getChoice(i);
         }
         int organizer = vote.getOrganizerIndex();
-        for (int i = 0; i < game.getPlayers().getCurrentMaxRealms(); i++) {
-          PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(i);
+        for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
+          PlayerInfo info = players.getPlayerInfoByIndex(i);
           if (info != null) {
             if (info.isHuman()) {
               continue;

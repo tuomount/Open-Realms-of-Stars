@@ -13,8 +13,10 @@ import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.AI.Research.Research;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.Tech;
@@ -22,6 +24,10 @@ import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.starMap.vote.Votes;
+import org.openRealmOfStars.starMap.vote.VotingType;
+import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
@@ -240,6 +246,78 @@ public class AiTurnViewTest {
     info.setTotalCredits(4);
     AITurnView.handleLowCreditWarning(info, creditFlow);
     assertEquals(1, info.getMsgList().getFullList().size());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalacticOlympicsParticipation() {
+    PlayerList players = new PlayerList();
+    PlayerInfo info0 = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info0.isHuman()).thenReturn(true);
+    players.addPlayer(info0);
+    PlayerInfo info1 = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy1 = Mockito.mock(Diplomacy.class);
+    Mockito.when(info1.getDiplomacy()).thenReturn(diplomacy1);
+    Mockito.when(diplomacy1.isWar(2)).thenReturn(true);
+    Mockito.when(diplomacy1.isTradeEmbargo(3)).thenReturn(true);
+    Mockito.when(diplomacy1.isTradeAlliance(5)).thenReturn(true);
+    players.addPlayer(info1);
+    PlayerInfo info2 = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy2 = Mockito.mock(Diplomacy.class);
+    Mockito.when(info2.getDiplomacy()).thenReturn(diplomacy2);
+    Mockito.when(diplomacy2.isWar(1)).thenReturn(true);
+    Mockito.when(diplomacy2.isTradeAlliance(3)).thenReturn(true);
+    players.addPlayer(info2);
+    PlayerInfo info3 = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy3 = Mockito.mock(Diplomacy.class);
+    Mockito.when(info3.getDiplomacy()).thenReturn(diplomacy3);
+    Mockito.when(diplomacy3.isTradeEmbargo(1)).thenReturn(true);
+    Mockito.when(diplomacy3.isAlliance(4)).thenReturn(true);
+    Mockito.when(diplomacy3.isTradeAlliance(2)).thenReturn(true);
+    players.addPlayer(info3);
+    PlayerInfo info4 = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy4 = Mockito.mock(Diplomacy.class);
+    Mockito.when(info4.getDiplomacy()).thenReturn(diplomacy4);
+    Mockito.when(diplomacy4.isAlliance(3)).thenReturn(true);
+    Mockito.when(diplomacy4.isTradeAlliance(5)).thenReturn(true);
+    players.addPlayer(info4);
+    PlayerInfo info5 = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy5 = Mockito.mock(Diplomacy.class);
+    Mockito.when(info5.getDiplomacy()).thenReturn(diplomacy5);
+    Mockito.when(diplomacy5.isTradeAlliance(4)).thenReturn(true);
+    players.addPlayer(info5);
+    PlayerInfo info6 = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy6 = Mockito.mock(Diplomacy.class);
+    Mockito.when(info6.getDiplomacy()).thenReturn(diplomacy6);
+    players.addPlayer(info6);
+    PlayerInfo info7 = Mockito.mock(PlayerInfo.class);
+    Diplomacy diplomacy7 = Mockito.mock(Diplomacy.class);
+    Mockito.when(info7.getDiplomacy()).thenReturn(diplomacy7);
+    players.addPlayer(info7);
+    Votes votes = new Votes();
+    Vote vote = new Vote(VotingType.GALACTIC_OLYMPIC_PARTICIPATE, 8, 10);
+    vote.setOrganizerIndex(1);
+    vote.setPlanetName("Planet of Games");
+    votes.getVotes().add(vote);
+    AITurnView.handleOlympicParticipation(votes, players);
+    assertEquals(VotingChoice.NOT_VOTED, vote.getChoice(0));
+    assertEquals(VotingChoice.VOTED_YES, vote.getChoice(1));
+    assertEquals(VotingChoice.VOTED_NO, vote.getChoice(2));
+    assertEquals(VotingChoice.VOTED_NO, vote.getChoice(3));
+    assertEquals(VotingChoice.NOT_VOTED, vote.getChoice(4));
+    assertEquals(VotingChoice.NOT_VOTED, vote.getChoice(5));
+    assertEquals(VotingChoice.NOT_VOTED, vote.getChoice(6));
+    assertEquals(VotingChoice.NOT_VOTED, vote.getChoice(7));
+    vote.setTurnsToVote(1);
+    AITurnView.handleOlympicParticipation(votes, players);
+    assertEquals(VotingChoice.NOT_VOTED, vote.getChoice(0));
+    assertEquals(VotingChoice.VOTED_YES, vote.getChoice(1));
+    assertEquals(VotingChoice.VOTED_NO, vote.getChoice(2));
+    assertEquals(VotingChoice.VOTED_NO, vote.getChoice(3));
+    assertEquals(VotingChoice.VOTED_YES, vote.getChoice(4));
+    assertEquals(VotingChoice.VOTED_YES, vote.getChoice(5));
+    assertEquals(VotingChoice.VOTED_YES, vote.getChoice(6));
+    assertEquals(VotingChoice.VOTED_YES, vote.getChoice(7));
   }
 
 }

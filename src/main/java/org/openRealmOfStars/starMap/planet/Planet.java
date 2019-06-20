@@ -571,6 +571,26 @@ public class Planet {
   }
 
   /**
+   * Get Troop power bonus
+   * @return Get Total troop power where improvements are taken to count
+   */
+  public int getTroopPowerBonus() {
+    if (planetOwnerInfo != null) {
+      int result = planetOwnerInfo.getRace().getTrooperPower();
+      int multiply = 100;
+      Building[] buildingsArray = getBuildingList();
+      for (Building building : buildingsArray) {
+        if (building.getBattleBonus() > 0) {
+          multiply = multiply + building.getBattleBonus();
+        }
+      }
+      result = result * multiply / 100;
+      return result;
+    }
+    return 0;
+  }
+
+  /**
    * Attack troops try to occupy planet by troops.
    * This will cause planet colonist to be decreased according by attacking
    * troops. If attacking troops win then left over must be calculated

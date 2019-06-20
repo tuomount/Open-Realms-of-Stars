@@ -63,6 +63,8 @@ import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.Votes;
 import org.openRealmOfStars.starMap.vote.VotingType;
+import org.openRealmOfStars.starMap.vote.sports.Athlete;
+import org.openRealmOfStars.starMap.vote.sports.Sports;
 import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
@@ -1553,6 +1555,47 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
+   * Handle olympic games.
+   * @param map StarMap
+   */
+  private static void handleOlympicGames(final StarMap map) {
+    for (Vote vote : map.getVotes().getVotableVotes()) {
+      if (vote.getTurnsToVote() > 0
+          && vote.getType() == VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
+        if (vote.getTurnsToVote() == 1) {
+          vote.setTurnsToVote(0);
+          Planet[] bestPlanets = new Planet[
+              map.getPlayerList().getCurrentMaxRealms()];
+          for (Planet planet : map.getPlanetList()) {
+            if (planet.getPlanetOwnerIndex() != -1) {
+              int index = planet.getPlanetOwnerIndex();
+                if (bestPlanets[index] == null) {
+                  bestPlanets[index] = planet;
+                } else if (planet.getTroopPower() > bestPlanets[index]
+                    .getTroopPower()) {
+                  bestPlanets[index] = planet;
+                }
+            }
+          }
+          Sports sports = new Sports();
+          for (int i = 0; i < bestPlanets.length; i++) {
+            if (vote.getChoice(i) == VotingChoice.VOTED_YES
+                && bestPlanets[i] != null) {
+              Athlete athlete = new Athlete(bestPlanets[i].getName(),
+                  bestPlanets[i].getPlanetPlayerInfo());
+              athlete.setBonus(bestPlanets[i].getTroopPowerBonus());
+              sports.add(athlete);
+            }
+          }
+          sports.handleSports();
+        } else {
+          vote.setTurnsToVote(vote.getTurnsToVote() - 1);
+        }
+      }
+    }
+  }
+
+  /**
    * Handle olympic participation voting.
    * This may alter voting choices in ongoing participation
    * votes of galactic olympic games.
@@ -1791,6 +1834,9 @@ public class AITurnView extends BlackPanel {
       }
     }
     handleDiplomaticVotes(towers);
+    handleOlympicParticipation(game.getStarMap().getVotes(),
+        game.getPlayers());
+    handleOlympicGames(game.getStarMap());
     boolean terminateNews = false;
     for (int i = 0; i < numberOfPlanets.length; i++) {
       if (numberOfPlanets[i] == 0) {

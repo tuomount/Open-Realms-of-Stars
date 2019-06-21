@@ -1588,6 +1588,12 @@ public class AITurnView extends BlackPanel {
             }
           }
           sports.handleSports();
+          Planet planet = map.getPlanetByName(vote.getPlanetName());
+          if (planet != null) {
+            map.getNewsCorpData().addNews(
+                NewsFactory.makeGalacticSportsEndingNews(vote, sports,
+                    planet));
+          }
         } else {
           vote.setTurnsToVote(vote.getTurnsToVote() - 1);
         }

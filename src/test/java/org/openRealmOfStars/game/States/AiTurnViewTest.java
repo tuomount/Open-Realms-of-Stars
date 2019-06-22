@@ -17,6 +17,7 @@ import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
+import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.Tech;
@@ -318,6 +319,57 @@ public class AiTurnViewTest {
     assertEquals(VotingChoice.VOTED_YES, vote.getChoice(5));
     assertEquals(VotingChoice.VOTED_YES, vote.getChoice(6));
     assertEquals(VotingChoice.VOTED_YES, vote.getChoice(7));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalacticOlympicsDiplomacy() {
+    PlayerList playerList = new PlayerList();
+    PlayerInfo info0 = new PlayerInfo(SpaceRace.CENTAURS, 8, 0);
+    playerList.addPlayer(info0);
+    PlayerInfo info1 = new PlayerInfo(SpaceRace.HUMAN, 8, 1);
+    playerList.addPlayer(info1);
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.SPORKS, 8, 2);
+    playerList.addPlayer(info2);
+    PlayerInfo info3 = new PlayerInfo(SpaceRace.GREYANS, 8, 3);
+    playerList.addPlayer(info3);
+    PlayerInfo info4 = new PlayerInfo(SpaceRace.MECHIONS, 8, 4);
+    playerList.addPlayer(info4);
+    PlayerInfo info5 = new PlayerInfo(SpaceRace.HOMARIANS, 8, 5);
+    playerList.addPlayer(info5);
+    PlayerInfo info6 = new PlayerInfo(SpaceRace.SCAURIANS, 8, 6);
+    playerList.addPlayer(info6);
+    PlayerInfo info7 = new PlayerInfo(SpaceRace.TEUTHIDAES, 8, 7);
+    playerList.addPlayer(info7);
+    Vote vote = new Vote(VotingType.GALACTIC_OLYMPIC_PARTICIPATE, 8, 0);
+    vote.setOrganizerIndex(2);
+    vote.setChoice(0, VotingChoice.VOTED_YES);
+    vote.setChoice(1, VotingChoice.VOTED_YES);
+    vote.setChoice(2, VotingChoice.VOTED_YES);
+    vote.setChoice(3, VotingChoice.VOTED_YES);
+    vote.setChoice(4, VotingChoice.VOTED_YES);
+    vote.setChoice(5, VotingChoice.VOTED_NO);
+    vote.setChoice(6, VotingChoice.VOTED_YES);
+    vote.setChoice(7, VotingChoice.VOTED_NO);
+    AITurnView.handleOlympicDiplomacyBonus(vote, playerList);
+    assertEquals(true, info7.getDiplomacy().getDiplomacyList(5).isBonusType(
+        DiplomacyBonusType.OLYMPICS_EMBARGO));
+    assertEquals(true, info5.getDiplomacy().getDiplomacyList(7).isBonusType(
+        DiplomacyBonusType.OLYMPICS_EMBARGO));
+    assertEquals(true, info2.getDiplomacy().getDiplomacyList(5).isBonusType(
+        DiplomacyBonusType.DNS_OLYMPICS));
+    assertEquals(true, info2.getDiplomacy().getDiplomacyList(7).isBonusType(
+        DiplomacyBonusType.DNS_OLYMPICS));
+    assertEquals(true, info0.getDiplomacy().getDiplomacyList(2).isBonusType(
+        DiplomacyBonusType.OLYMPICS));
+    assertEquals(true, info2.getDiplomacy().getDiplomacyList(1).isBonusType(
+        DiplomacyBonusType.OLYMPICS));
+    assertEquals(false, info2.getDiplomacy().getDiplomacyList(7).isBonusType(
+        DiplomacyBonusType.OLYMPICS));
+    assertEquals(false, info2.getDiplomacy().getDiplomacyList(5).isBonusType(
+        DiplomacyBonusType.OLYMPICS_EMBARGO));
+    assertEquals(false, info2.getDiplomacy().getDiplomacyList(5).isBonusType(
+        DiplomacyBonusType.OLYMPICS));
   }
 
 }

@@ -1594,6 +1594,7 @@ public class AITurnView extends BlackPanel {
                 NewsFactory.makeGalacticSportsEndingNews(vote, sports,
                     planet));
           }
+          handleOlympicDiplomacyBonus(vote, map.getPlayerList());
         } else {
           vote.setTurnsToVote(vote.getTurnsToVote() - 1);
         }
@@ -1601,6 +1602,53 @@ public class AITurnView extends BlackPanel {
     }
   }
 
+  /**
+   * Handle Olympic games diplomacy bonus.
+   * @param vote Olympic game vote
+   * @param playerList PlayerList
+   */
+  public static void handleOlympicDiplomacyBonus(final Vote vote,
+      final PlayerList playerList) {
+    PlayerInfo organizer = playerList.getPlayerInfoByIndex(
+        vote.getOrganizerIndex());
+    ArrayList<Integer> embargoList = new ArrayList<>();
+    if (organizer != null) {
+      for (int i = 0; i < playerList.getCurrentMaxRealms();
+          i++) {
+        if (i == vote.getOrganizerIndex()) {
+          continue;
+        }
+        if (vote.getChoice(i) == VotingChoice.VOTED_NO) {
+          organizer.getDiplomacy().getDiplomacyList(i).addBonus(
+              DiplomacyBonusType.DNS_OLYMPICS, organizer.getRace());
+          embargoList.add(i);
+        } else if (vote.getChoice(i) == VotingChoice.VOTED_YES) {
+          organizer.getDiplomacy().getDiplomacyList(i).addBonus(
+              DiplomacyBonusType.OLYMPICS, organizer.getRace());
+          PlayerInfo info = playerList.getPlayerInfoByIndex(i);
+          if (info != null) {
+            info.getDiplomacy().getDiplomacyList(
+                vote.getOrganizerIndex()).addBonus(
+                    DiplomacyBonusType.OLYMPICS, info.getRace());
+          }
+        }
+      }
+    }
+    if (embargoList.size() > 0) {
+      for (int i = 0; i < embargoList.size(); i++) {
+        PlayerInfo info = playerList.getPlayerInfoByIndex(embargoList.get(i));
+        if (info != null) {
+          for (int j = 0; j < embargoList.size(); j++) {
+            if (i != j) {
+              info.getDiplomacy().getDiplomacyList(embargoList.get(j)).addBonus(
+                  DiplomacyBonusType.OLYMPICS_EMBARGO, info.getRace());
+            }
+          }
+        }
+      }
+    }
+
+  }
   /**
    * Handle olympic participation voting.
    * This may alter voting choices in ongoing participation

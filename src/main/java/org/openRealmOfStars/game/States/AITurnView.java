@@ -1593,6 +1593,16 @@ public class AITurnView extends BlackPanel {
             map.getNewsCorpData().addNews(
                 NewsFactory.makeGalacticSportsEndingNews(vote, sports,
                     planet));
+            // Organizer gains culture 10 per each realm participated
+            planet.setCulture(
+                planet.getCulture() + sports.getAthletes().length * 10);
+          }
+          planet = map.getPlanetByName(
+              sports.getAthletes()[0].getPlanetName());
+          if (planet != null) {
+            // Winning planet gains culture 10
+            planet.setCulture(
+                planet.getCulture() + 10);
           }
           handleOlympicDiplomacyBonus(vote, map.getPlayerList());
         } else {

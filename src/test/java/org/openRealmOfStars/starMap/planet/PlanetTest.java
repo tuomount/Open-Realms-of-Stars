@@ -19,7 +19,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2017  Tuomo Untinen
+ * Copyright (C) 2016-2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -317,6 +317,22 @@ public class PlanetTest {
     for (Building build : planet.getBuildingList()) {
       assertEquals("Test building", build.getName());
     }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTroopPower() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    planet.setWorkers(Planet.FOOD_FARMERS, 2);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.GREYANS);
+    planet.setPlanetOwner(0, info);
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getBattleBonus()).thenReturn(15);
+    planet.addBuilding(building);
+    assertEquals(27, planet.getTroopPower());
+    assertEquals(9, planet.getTroopPowerBonus());
   }
 
   @Test

@@ -936,7 +936,7 @@ public final class BuildingFactory {
       tmp.setMetalCost(22);
       tmp.setMaintenanceCost(0.5);
       tmp.setCultBonus(2);
-      tmp.setBattleBonus(10);
+      tmp.setBattleBonus(15);
       tmp.setHappiness(1);
       tmp.setSingleAllowed(true);
       return tmp;
@@ -986,7 +986,7 @@ public final class BuildingFactory {
       tmp.setMetalCost(30);
       tmp.setMaintenanceCost(1);
       tmp.setCultBonus(3);
-      tmp.setBattleBonus(20);
+      tmp.setBattleBonus(25);
       tmp.setHappiness(2);
       tmp.setSingleAllowed(true);
       return tmp;

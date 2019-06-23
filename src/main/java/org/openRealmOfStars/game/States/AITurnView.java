@@ -61,7 +61,10 @@ import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.starMap.vote.Votes;
 import org.openRealmOfStars.starMap.vote.VotingType;
+import org.openRealmOfStars.starMap.vote.sports.Athlete;
+import org.openRealmOfStars.starMap.vote.sports.Sports;
 import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
@@ -1550,6 +1553,191 @@ public class AITurnView extends BlackPanel {
     }
 
   }
+
+  /**
+   * Handle olympic games.
+   * @param map StarMap
+   */
+  private static void handleOlympicGames(final StarMap map) {
+    for (Vote vote : map.getVotes().getVotableVotes()) {
+      if (vote.getTurnsToVote() > 0
+          && vote.getType() == VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
+        if (vote.getTurnsToVote() == 1) {
+          vote.setTurnsToVote(0);
+          Planet[] bestPlanets = new Planet[
+              map.getPlayerList().getCurrentMaxRealms()];
+          for (Planet planet : map.getPlanetList()) {
+            if (planet.getPlanetOwnerIndex() != -1) {
+              int index = planet.getPlanetOwnerIndex();
+                if (bestPlanets[index] == null) {
+                  bestPlanets[index] = planet;
+                } else if (planet.getTroopPower() > bestPlanets[index]
+                    .getTroopPower()) {
+                  bestPlanets[index] = planet;
+                }
+            }
+          }
+          Sports sports = new Sports();
+          for (int i = 0; i < bestPlanets.length; i++) {
+            if (vote.getChoice(i) == VotingChoice.VOTED_YES
+                && bestPlanets[i] != null) {
+              Athlete athlete = new Athlete(bestPlanets[i].getName(),
+                  bestPlanets[i].getPlanetPlayerInfo());
+              athlete.setBonus(bestPlanets[i].getTroopPowerBonus());
+              sports.add(athlete);
+            }
+          }
+          sports.handleSports();
+          Planet planet = map.getPlanetByName(vote.getPlanetName());
+          if (planet != null) {
+            map.getNewsCorpData().addNews(
+                NewsFactory.makeGalacticSportsEndingNews(vote, sports,
+                    planet));
+            // Organizer gains culture 10 per each realm participated
+            planet.setCulture(
+                planet.getCulture() + sports.getAthletes().length * 10);
+          }
+          planet = map.getPlanetByName(
+              sports.getAthletes()[0].getPlanetName());
+          if (planet != null) {
+            // Winning planet gains culture 10
+            planet.setCulture(
+                planet.getCulture() + 10);
+          }
+          handleOlympicDiplomacyBonus(vote, map.getPlayerList());
+        } else {
+          vote.setTurnsToVote(vote.getTurnsToVote() - 1);
+        }
+      }
+    }
+  }
+
+  /**
+   * Handle Olympic games diplomacy bonus.
+   * @param vote Olympic game vote
+   * @param playerList PlayerList
+   */
+  public static void handleOlympicDiplomacyBonus(final Vote vote,
+      final PlayerList playerList) {
+    PlayerInfo organizer = playerList.getPlayerInfoByIndex(
+        vote.getOrganizerIndex());
+    ArrayList<Integer> embargoList = new ArrayList<>();
+    if (organizer != null) {
+      for (int i = 0; i < playerList.getCurrentMaxRealms();
+          i++) {
+        if (i == vote.getOrganizerIndex()) {
+          continue;
+        }
+        if (vote.getChoice(i) == VotingChoice.VOTED_NO) {
+          organizer.getDiplomacy().getDiplomacyList(i).addBonus(
+              DiplomacyBonusType.DNS_OLYMPICS, organizer.getRace());
+          embargoList.add(i);
+        } else if (vote.getChoice(i) == VotingChoice.VOTED_YES) {
+          organizer.getDiplomacy().getDiplomacyList(i).addBonus(
+              DiplomacyBonusType.OLYMPICS, organizer.getRace());
+          PlayerInfo info = playerList.getPlayerInfoByIndex(i);
+          if (info != null) {
+            info.getDiplomacy().getDiplomacyList(
+                vote.getOrganizerIndex()).addBonus(
+                    DiplomacyBonusType.OLYMPICS, info.getRace());
+          }
+        }
+      }
+    }
+    if (embargoList.size() > 0) {
+      for (int i = 0; i < embargoList.size(); i++) {
+        PlayerInfo info = playerList.getPlayerInfoByIndex(embargoList.get(i));
+        if (info != null) {
+          for (int j = 0; j < embargoList.size(); j++) {
+            if (i != j) {
+              info.getDiplomacy().getDiplomacyList(embargoList.get(j)).addBonus(
+                  DiplomacyBonusType.OLYMPICS_EMBARGO, info.getRace());
+            }
+          }
+        }
+      }
+    }
+
+  }
+  /**
+   * Handle olympic participation voting.
+   * This may alter voting choices in ongoing participation
+   * votes of galactic olympic games.
+   * @param votes Votes list
+   * @param players PlayerList
+   */
+  public static void handleOlympicParticipation(final Votes votes,
+      final PlayerList players) {
+    for (Vote vote : votes.getVotableVotes()) {
+      if (vote.getTurnsToVote() > 0
+          && vote.getType() == VotingType.GALACTIC_OLYMPIC_PARTICIPATE) {
+        VotingChoice[] oldChoices = new VotingChoice[
+            players.getCurrentMaxRealms()];
+        for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
+          oldChoices[i] = vote.getChoice(i);
+        }
+        int organizer = vote.getOrganizerIndex();
+        for (int i = 0; i < players.getCurrentMaxRealms(); i++) {
+          PlayerInfo info = players.getPlayerInfoByIndex(i);
+          if (info != null) {
+            if (info.isHuman()) {
+              continue;
+            }
+            if (i == organizer) {
+              vote.setChoice(i, VotingChoice.VOTED_YES);
+              continue;
+            }
+            int participateBonus = info.getDiplomacy().getLiking(organizer)
+                * 10;
+            if (info.getDiplomacy().isWar(organizer)) {
+              participateBonus = participateBonus - 25;
+            }
+            if (info.getDiplomacy().isTradeEmbargo(organizer)) {
+              participateBonus = participateBonus - 20;
+            }
+            if (info.getDiplomacy().isTradeAlliance(organizer)) {
+              participateBonus = participateBonus + 10;
+            }
+            if (info.getDiplomacy().isDefensivePact(organizer)) {
+              participateBonus = participateBonus + 15;
+            }
+            if (info.getDiplomacy().isAlliance(organizer)) {
+              participateBonus = participateBonus + 20;
+            }
+            if (participateBonus == 0 && vote.getTurnsToVote() > 1
+              && DiceGenerator.getRandom(vote.getTurnsToVote()) > 0) {
+                continue;
+            }
+            for (int j = 0; j < oldChoices.length; j++) {
+              if (i != j) {
+                if (oldChoices[j] == VotingChoice.VOTED_YES) {
+                  participateBonus = participateBonus
+                      + info.getDiplomacy().getLiking(organizer) * 3;
+                }
+                if (oldChoices[j] == VotingChoice.VOTED_NO) {
+                  participateBonus = participateBonus
+                      - info.getDiplomacy().getLiking(organizer) * 3;
+                }
+              }
+            }
+            if (participateBonus > 0) {
+              vote.setChoice(i, VotingChoice.VOTED_YES);
+              continue;
+            }
+            if (participateBonus < 0) {
+              vote.setChoice(i, VotingChoice.VOTED_NO);
+              continue;
+            }
+            if (participateBonus == 0 && vote.getTurnsToVote() == 1) {
+              // AI couldn't decide if wants to participate,
+              // but no good reason not to join
+              vote.setChoice(i, VotingChoice.VOTED_YES);
+            }
+          }
+        }
+      }
+    }
+  }
   /**
    * Update whole star map to next turn
    */
@@ -1710,6 +1898,9 @@ public class AITurnView extends BlackPanel {
       }
     }
     handleDiplomaticVotes(towers);
+    handleOlympicParticipation(game.getStarMap().getVotes(),
+        game.getPlayers());
+    handleOlympicGames(game.getStarMap());
     boolean terminateNews = false;
     for (int i = 0; i < numberOfPlanets.length; i++) {
       if (numberOfPlanets[i] == 0) {

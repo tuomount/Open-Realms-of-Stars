@@ -22,6 +22,8 @@ import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.Votes;
 import org.openRealmOfStars.starMap.vote.VotingType;
+import org.openRealmOfStars.starMap.vote.sports.Athlete;
+import org.openRealmOfStars.starMap.vote.sports.Sports;
 import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 
 /**
@@ -393,6 +395,35 @@ public class NewsFactoryTest {
     assertEquals(true, news.getImageInstructions().contains("SPORT"));
     assertEquals(true, news.getNewsText().contains(
         builder.getEmpireName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalacticSportsEnding() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.WATERWORLD2.getImageInstructions());
+    Mockito.when(planet.getName()).thenReturn("Test planet");
+    Vote vote = Mockito.mock(Vote.class);
+    Mockito.when(vote.getPlanetName()).thenReturn("Test planet");
+    Sports sports = Mockito.mock(Sports.class);
+    Athlete[] atheletes = new Athlete[4];
+    atheletes[0] = Mockito.mock(Athlete.class);
+    Mockito.when(atheletes[0].getRealm()).thenReturn(info);
+    atheletes[1] = Mockito.mock(Athlete.class);
+    Mockito.when(atheletes[1].getRealm()).thenReturn(info);
+    atheletes[2] = Mockito.mock(Athlete.class);
+    Mockito.when(atheletes[2].getRealm()).thenReturn(info);
+    atheletes[3] = Mockito.mock(Athlete.class);
+    Mockito.when(atheletes[3].getRealm()).thenReturn(info);
+    Mockito.when(sports.getAthletes()).thenReturn(atheletes);
+    NewsData news = NewsFactory.makeGalacticSportsEndingNews(vote, sports, planet);
+    assertEquals(true, news.getImageInstructions().contains("OLYMPICS"));
+    assertEquals(true, news.getNewsText().contains(
+        planet.getName()));
   }
 
   @Test

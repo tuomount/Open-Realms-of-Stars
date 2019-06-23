@@ -16,6 +16,8 @@ import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
+import org.openRealmOfStars.starMap.vote.sports.Athlete;
+import org.openRealmOfStars.starMap.vote.sports.Sports;
 import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.TextUtilities;
@@ -392,6 +394,81 @@ public final class NewsFactory {
     if (attitude == Attitude.DIPLOMATIC) {
       sb.append(trader.getEmpireName());
       sb.append(" is known trustworthy diplomatic skills! ");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+  /**
+   * Make Galactic sports ending news. New Galactic Olympics has ended.
+   * @param vote Galactic sports vote
+   * @param sports Sports event containg athlete information
+   * @param planet Where sports event was held
+   * @return NewsData
+   */
+  public static NewsData makeGalacticSportsEndingNews(final Vote vote,
+      final Sports sports, final Planet planet) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    String position = ImageInstruction.POSITION_CENTER;
+    String size = ImageInstruction.SIZE_FULL;
+    instructions.addPlanet(position, planet.getImageInstructions(), size);
+    instructions.addLogo(position, ImageInstruction.PLANET_SPORTS, size);
+    Athlete[] athletes = sports.getAthletes();
+    instructions.addLogo(ImageInstruction.POSITION_LEFT,
+        athletes[0].getRealm().getRace().getNameSingle(),
+        ImageInstruction.SIZE_FULL);
+    if (athletes.length > 1) {
+      instructions.addLogo(ImageInstruction.POSITION_RIGHT,
+          athletes[1].getRealm().getRace().getNameSingle(),
+          ImageInstruction.SIZE_FULL);
+    }
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("GALACTIC OLYMPICS!");
+        break;
+      }
+      case 1: {
+        instructions.addText("GALACTIC OLYMPICS AT "
+            + planet.getName().toUpperCase());
+        break;
+      }
+      case 2: {
+        instructions.addText("GALACTIC OLYMPICS WON BY "
+            + athletes[0].getRealm().getEmpireName());
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append("Galactic Olympics were arranged in ");
+    sb.append(vote.getPlanetName());
+    sb.append(". ");
+    sb.append(athletes.length);
+    sb.append(" athletes were competing against each others. There were"
+        + " athletes from");
+    for (int i = 0; i < athletes.length; i++) {
+      sb.append(athletes[i].getPlanetName());
+      if (i < athletes.length - 1) {
+        sb.append(", ");
+      }
+    }
+    sb.append(". ");
+    sb.append("Winner of the Galactic Olympics was ");
+    sb.append(athletes[0].getRealm().getEmpireName());
+    sb.append("from ");
+    sb.append(athletes[0].getPlanetName());
+    sb.append(". ");
+    if (athletes.length > 1) {
+      sb.append("Second of the Galactic Olympics was ");
+      sb.append(athletes[1].getRealm().getEmpireName());
+      sb.append("from ");
+      sb.append(athletes[1].getPlanetName());
+      sb.append(". ");
+    } else {
+      sb.append("These Galactic Olympics were failure due that there were "
+          + "only single athlete. ");
     }
     news.setNewsText(sb.toString());
     return news;

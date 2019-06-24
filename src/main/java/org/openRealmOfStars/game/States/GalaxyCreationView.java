@@ -274,7 +274,7 @@ public class GalaxyCreationView extends BlackPanel {
     info.add(comboSpacePirates);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
-    label = new SpaceLabel("Space pirates:");
+    label = new SpaceLabel("Space anomalies:");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));

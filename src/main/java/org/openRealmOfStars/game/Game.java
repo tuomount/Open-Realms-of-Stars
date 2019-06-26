@@ -1222,10 +1222,12 @@ public class Game implements ActionListener {
              .getLastClickedFleet() != null) {
         Fleet fleet = starMapView.getStarMapMouseListener()
                 .getLastClickedFleet();
-        Planet planet = starMap.getPlanetByCoordinate(fleet.getX(),
-            fleet.getY());
+        Planet planet = starMap.getPlanetNextToCoordinate(
+            fleet.getCoordinate());
         if (starMap.getCurrentPlayerInfo()
-                == starMap.getPlayerInfoByFleet(fleet)) {
+                == starMap.getPlayerInfoByFleet(fleet) && planet != null
+                && planet.getPlanetPlayerInfo()
+                == starMap.getCurrentPlayerInfo()) {
           showFleetTradeView(planet, fleet);
         }
       }

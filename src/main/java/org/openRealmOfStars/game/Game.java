@@ -1225,9 +1225,7 @@ public class Game implements ActionListener {
         Planet planet = starMap.getPlanetNextToCoordinate(
             fleet.getCoordinate());
         if (starMap.getCurrentPlayerInfo()
-                == starMap.getPlayerInfoByFleet(fleet) && planet != null
-                && planet.getPlanetPlayerInfo()
-                == starMap.getCurrentPlayerInfo()) {
+                == starMap.getPlayerInfoByFleet(fleet) && planet != null) {
           showFleetTradeView(planet, fleet);
         }
       }

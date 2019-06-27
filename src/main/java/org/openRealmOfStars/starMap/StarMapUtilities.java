@@ -650,6 +650,9 @@ public final class StarMapUtilities {
         || diplomacy.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
         || diplomacy.isBonusType(DiplomacyBonusType.IN_DEFENSIVE_PACT))) {
       int credits = fleet.doTrade(planet, info);
+      if (credits == 0) {
+        return;
+      }
       if (credits > 1) {
         credits = credits / 2;
       }

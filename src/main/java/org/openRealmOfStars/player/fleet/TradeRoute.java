@@ -7,7 +7,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2019  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -60,7 +60,9 @@ public class TradeRoute {
     this.tradeWorld = tradeWorld;
     this.trader = trader;
     tradeValue = 0;
-    if (fleet.getCoordinate().sameAs(this.originWorld.getCoordinate())) {
+    double dist = fleet.getCoordinate().calculateDistance(
+        this.originWorld.getCoordinate());
+    if (dist <= 1) {
       tradeValue = fleet.calculateTrade(this.tradeWorld.getCoordinate());
       if (tradeValue > 1) {
         tradeValue = tradeValue / 2;
@@ -69,7 +71,21 @@ public class TradeRoute {
       if (tradeValue > 0 && this.trader.getRace() == SpaceRace.SCAURIANS) {
         tradeValue = tradeValue * 3 / 2;
       }
+    } else {
+      dist = fleet.getCoordinate().calculateDistance(
+          this.tradeWorld.getCoordinate());
+      if (dist <= 1) {
+        tradeValue = fleet.calculateTrade(this.originWorld.getCoordinate());
+        if (tradeValue > 1) {
+          tradeValue = tradeValue / 2;
+        }
+        tradeValue = tradeValue + this.trader.getGovernment().getTradeBonus();
+        if (tradeValue > 0 && this.trader.getRace() == SpaceRace.SCAURIANS) {
+          tradeValue = tradeValue * 3 / 2;
+        }
+      }
     }
+
   }
 
   /**

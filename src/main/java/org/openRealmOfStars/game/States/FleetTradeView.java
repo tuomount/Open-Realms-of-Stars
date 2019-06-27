@@ -270,20 +270,45 @@ public class FleetTradeView extends BlackPanel {
    */
   protected TradeRoute[] getPossibleTradeRoutes() {
     ArrayList<TradeRoute> list = new ArrayList<>();
-    for (Planet target : starMap.getPlanetList()) {
-      if (info.getSectorVisibility(target.getCoordinate())
-          > PlayerInfo.UNCHARTED) {
-        PlayerInfo targetOwner = target.getPlanetPlayerInfo();
-        if (targetOwner != null && targetOwner != info) {
-          int targetIndex = starMap.getPlayerList().getIndex(targetOwner);
-          DiplomacyBonusList diplomacy = info.getDiplomacy().getDiplomacyList(
-              targetIndex);
-          if (diplomacy != null
-              && (diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)
-              || diplomacy.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
-              || diplomacy.isBonusType(DiplomacyBonusType.IN_DEFENSIVE_PACT))) {
-            TradeRoute route = new TradeRoute(planet, target, info, fleet);
-            list.add(route);
+    if (planet.getPlanetPlayerInfo() == info) {
+      for (Planet target : starMap.getPlanetList()) {
+        if (info.getSectorVisibility(target.getCoordinate())
+            > PlayerInfo.UNCHARTED) {
+          PlayerInfo targetOwner = target.getPlanetPlayerInfo();
+          if (targetOwner != null && targetOwner != info) {
+            int targetIndex = starMap.getPlayerList().getIndex(targetOwner);
+            DiplomacyBonusList diplomacy = info.getDiplomacy()
+                .getDiplomacyList(targetIndex);
+            if (diplomacy != null
+                && (diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)
+                || diplomacy.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
+                || diplomacy.isBonusType(
+                    DiplomacyBonusType.IN_DEFENSIVE_PACT))) {
+              TradeRoute route = new TradeRoute(planet, target, info, fleet);
+              list.add(route);
+            }
+          }
+        }
+      }
+    } else if (planet.getPlanetPlayerInfo() != null) {
+      // Route is starting from non home planet
+      for (Planet target : starMap.getPlanetList()) {
+        if (info.getSectorVisibility(target.getCoordinate())
+            > PlayerInfo.UNCHARTED) {
+          PlayerInfo targetOwner = target.getPlanetPlayerInfo();
+          if (targetOwner != null && targetOwner == info) {
+            int targetIndex = starMap.getPlayerList().getIndex(
+                planet.getPlanetPlayerInfo());
+            DiplomacyBonusList diplomacy = info.getDiplomacy()
+                .getDiplomacyList(targetIndex);
+            if (diplomacy != null
+                && (diplomacy.isBonusType(DiplomacyBonusType.IN_TRADE_ALLIANCE)
+                || diplomacy.isBonusType(DiplomacyBonusType.IN_ALLIANCE)
+                || diplomacy.isBonusType(
+                    DiplomacyBonusType.IN_DEFENSIVE_PACT))) {
+              TradeRoute route = new TradeRoute(target, planet, info, fleet);
+              list.add(route);
+            }
           }
         }
       }

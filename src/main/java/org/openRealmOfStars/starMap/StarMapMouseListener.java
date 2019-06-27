@@ -211,6 +211,10 @@ public class StarMapMouseListener extends MouseAdapter
           && nearByPlanet.getPlanetPlayerInfo() != null
           && nearByPlanet.getPlanetPlayerInfo() == owner) {
         mapInfoPanel.setTradeBtn();
+      } else if (nearByPlanet != null
+          && nearByPlanet.getPlanetPlayerInfo() != null
+          && nearByPlanet.getPlanetPlayerInfo() != owner) {
+        mapInfoPanel.setTradeBtn();
         int index = nearByPlanet.getPlanetOwnerIndex();
         DiplomacyBonusList list = owner.getDiplomacy().getDiplomacyList(index);
         if (list != null && !list.isBonusType(DiplomacyBonusType.IN_ALLIANCE)

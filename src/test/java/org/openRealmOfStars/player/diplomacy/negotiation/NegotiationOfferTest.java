@@ -53,6 +53,11 @@ public class NegotiationOfferTest {
     assertEquals(null, offer.getOfferObject());
 
     offer = new NegotiationOffer(NegotiationType.MAP, null);
+    offer.setMapValue(12);
+    assertEquals(12, offer.getMapValue());
+    offer.setMapValue(18);
+    assertEquals(15, offer.getMapValue());
+    assertEquals(15, offer.getOfferValue(SpaceRace.HUMAN));
     assertEquals(NegotiationType.MAP, offer.getNegotiationType());
     assertEquals(null, offer.getOfferObject());
 
@@ -92,6 +97,11 @@ public class NegotiationOfferTest {
     assertEquals(tech, offer.getTech());
 
     offer = new NegotiationOffer(NegotiationType.MAP_PLANETS, null);
+    offer.setMapValue(5);
+    assertEquals(5, offer.getMapValue());
+    offer.setMapValue(18);
+    assertEquals(7, offer.getMapValue());
+    assertEquals(7, offer.getOfferValue(SpaceRace.HUMAN));
     assertEquals(NegotiationType.MAP_PLANETS, offer.getNegotiationType());
     assertEquals(null, offer.getOfferObject());
 

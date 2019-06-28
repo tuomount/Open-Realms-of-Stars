@@ -40,6 +40,10 @@ public class NegotiationOffer {
   private Object offerObject;
 
   /**
+   * Map Value. Used for valuing the map.
+   */
+  private int mapValue;
+  /**
    * Constructor for Negotiation offer
    * @param type Negotiation Type
    * @param offer Offer object
@@ -48,12 +52,10 @@ public class NegotiationOffer {
     if (type == NegotiationType.ALLIANCE
         || type == NegotiationType.PEACE
         || type == NegotiationType.TRADE_ALLIANCE
-        || type == NegotiationType.MAP
         || type == NegotiationType.DIPLOMAT
         || type == NegotiationType.WAR
         || type == NegotiationType.DEFENSIVE_PACT
-        || type == NegotiationType.SPY_TRADE
-        || type == NegotiationType.MAP_PLANETS) {
+        || type == NegotiationType.SPY_TRADE) {
       negotiationType = type;
       offerObject = null;
     } else if (type == NegotiationType.CREDIT && offer instanceof Integer
@@ -69,6 +71,14 @@ public class NegotiationOffer {
         && offer instanceof Integer) {
       negotiationType = type;
       offerObject = offer;
+    } else if (type == NegotiationType.MAP) {
+      negotiationType = type;
+      mapValue = 12;
+      offerObject = null;
+    } else if (type == NegotiationType.MAP_PLANETS) {
+      negotiationType = type;
+      mapValue = 5;
+      offerObject = null;
     } else {
       throw new IllegalArgumentException("Offer type is wrong for offer!");
     }
@@ -110,7 +120,7 @@ public class NegotiationOffer {
       offerValue = 5;
       break;
     case MAP:
-      offerValue = 12;
+      offerValue = getMapValue();
       break;
     case TECH:
       offerValue = getTech().getLevel() * 2;
@@ -128,7 +138,7 @@ public class NegotiationOffer {
       offerValue = 0;
       break;
     case MAP_PLANETS:
-      offerValue = 5;
+      offerValue = getMapValue();
       break;
     case PROMISE_VOTE_NO:
     case PROMISE_VOTE_YES:
@@ -237,6 +247,30 @@ public class NegotiationOffer {
    */
   public Object getOfferObject() {
     return offerObject;
+  }
+
+  /**
+   * Get the map Value.
+   * @return the mapValue
+   */
+  public int getMapValue() {
+    return mapValue;
+  }
+
+  /**
+   * Set the map value. Maximum value for map is 15. For map of planet maximum
+   * value is 7.
+   * @param mapValue the mapValue to set
+   */
+  public void setMapValue(final int mapValue) {
+    int limit = mapValue;
+    if (negotiationType == NegotiationType.MAP && limit > 15) {
+      limit = 15;
+    }
+    if (negotiationType == NegotiationType.MAP_PLANETS && limit > 7) {
+      limit = 7;
+    }
+    this.mapValue = limit;
   }
 
 }

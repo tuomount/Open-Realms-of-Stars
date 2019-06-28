@@ -81,7 +81,8 @@ public class DiplomaticTradeTest {
     tech1.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech1.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
     player1.setTotalCredits(15);
-    
+    player1.initMapData(5, 5);
+
     PlayerInfo player2 = new PlayerInfo(SpaceRace.GREYANS, 2, 1);
     TechList tech2 = player2.getTechList();
     tech2.addTech(new Tech("MilTech1", TechType.Combat, 1));
@@ -92,10 +93,19 @@ public class DiplomaticTradeTest {
     tech2.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech2.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
     player2.setTotalCredits(10);
+    player2.initMapData(5, 5);
+    player2.setSectorVisibility(0, 0, PlayerInfo.VISIBLE);
+
     NewsCorpData newsData = Mockito.mock(NewsCorpData.class);
     Mockito.when(newsData.getMilitaryDifference(0, 1)).thenReturn(
         powerDifference);    
     StarMap map = Mockito.mock(StarMap.class);
+    ArrayList<Planet> planetList = new ArrayList<>();
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(player2);
+    Mockito.when(planet.getCoordinate()).thenReturn(new Coordinate(0, 0));
+    planetList.add(planet);
+    Mockito.when(map.getPlanetList()).thenReturn(planetList);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(player1);
     Mockito.when(players.getPlayerInfoByIndex(1)).thenReturn(player2);
     Mockito.when(map.getPlayerList()).thenReturn(players);
@@ -103,6 +113,8 @@ public class DiplomaticTradeTest {
     Mockito.when(map.getPlayerByIndex(1)).thenReturn(player2);
     Mockito.when(map.getNewsCorpData()).thenReturn(newsData);
     Mockito.when(map.getMilitaryDifference(0, 1)).thenReturn(powerDifference);
+    Mockito.when(map.getMaxX()).thenReturn(5);
+    Mockito.when(map.getMaxY()).thenReturn(5);
     Votes votes = Mockito.mock(Votes.class);
     Mockito.when(map.getVotes()).thenReturn(votes);
     return map;
@@ -820,10 +832,10 @@ public class DiplomaticTradeTest {
     bonus = map.getPlayerByIndex(1).getDiplomacy().getDiplomacyList(0)
         .getDiplomacyBonus();
     assertEquals(4, bonus);
-    trade = new DiplomaticTrade(map, 0, 1);
+    trade = new DiplomaticTrade(map, 0, 2);
     trade.generateMapTrade(DiplomaticTrade.BUY, true);
     PlayerInfo buyer = map.getPlayerByIndex(0);
-    PlayerInfo seller = map.getPlayerByIndex(1);
+    PlayerInfo seller = map.getPlayerByIndex(2);
     int oldSellerCreds = seller.getTotalCredits();
     int oldBuyerCreds = buyer.getTotalCredits();
     trade.doTrades();

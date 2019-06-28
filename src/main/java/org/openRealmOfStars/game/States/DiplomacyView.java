@@ -930,11 +930,25 @@ public class DiplomacyView extends BlackPanel {
     if (mapPlanetOffer) {
       NegotiationOffer offer = new NegotiationOffer(
           NegotiationType.MAP_PLANETS, null);
+      if (playerTechList == humanTechListOffer) {
+        offer.setMapValue(DiplomaticTrade.calculateMapValue(starMap, ai,
+            human, false));
+      } else {
+        offer.setMapValue(DiplomaticTrade.calculateMapValue(starMap, human,
+            ai, false));
+      }
       list.add(offer);
     }
     if (mapFullOffer) {
       NegotiationOffer offer = new NegotiationOffer(NegotiationType.MAP,
           null);
+      if (playerTechList == humanTechListOffer) {
+        offer.setMapValue(DiplomaticTrade.calculateMapValue(starMap, ai,
+            human, true));
+      } else {
+        offer.setMapValue(DiplomaticTrade.calculateMapValue(starMap, human,
+            ai, true));
+      }
       list.add(offer);
     }
     if (voteOffer != null) {

@@ -449,11 +449,13 @@ public class DiplomaticTrade {
     int mapValue = 15;
     NegotiationType mapType = NegotiationType.MAP;
     if (!fullMap) {
-      mapValue = 7;
       mapType = NegotiationType.MAP_PLANETS;
     }
     if (tradeType == BUY) {
-      int value = mapValue;
+      NegotiationOffer offer = new NegotiationOffer(mapType, null);
+      int value = calculateMapValue(offerMaker, agree, fullMap);
+      offer.setMapValue(value);
+      value = offer.getMapValue();
       firstOffer = new NegotiationList();
       secondOffer = new NegotiationList();
       NegotiationOffer voteOffer = createBestVotePromise(offerMaker);
@@ -464,26 +466,32 @@ public class DiplomaticTrade {
       if (offerMaker.getTotalCredits() < value) {
         value = offerMaker.getTotalCredits();
       }
-      firstOffer.add(new NegotiationOffer(mapType, null));
+      firstOffer.add(offer);
       if (value > 0) {
         secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
             new Integer(value)));
       }
     } else if (tradeType == TRADE) {
       firstOffer = new NegotiationList();
-      firstOffer.add(new NegotiationOffer(mapType, null));
+      NegotiationOffer offer = new NegotiationOffer(mapType, null);
+      offer.setMapValue(calculateMapValue(offerMaker, agree, fullMap));
+      firstOffer.add(offer);
       secondOffer = new NegotiationList();
-      secondOffer.add(new NegotiationOffer(mapType, null));
+      offer = new NegotiationOffer(mapType, null);
+      offer.setMapValue(calculateMapValue(agree, offerMaker, fullMap));
+      secondOffer.add(offer);
     } else {
       int value = mapValue;
       if (agree.getTotalCredits() < value) {
         value = agree.getTotalCredits();
       }
+      NegotiationOffer offer = new NegotiationOffer(mapType, null);
+      offer.setMapValue(calculateMapValue(agree, offerMaker, fullMap));
       firstOffer = new NegotiationList();
       firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-          new Integer(value)));
+          new Integer(offer.getMapValue())));
       secondOffer = new NegotiationList();
-      secondOffer.add(new NegotiationOffer(mapType, null));
+      secondOffer.add(offer);
     }
   }
 
@@ -559,8 +567,14 @@ public class DiplomaticTrade {
       case EXPANSIONIST:
       case MERCHANTICAL: {
         generateEqualTrade(NegotiationType.PEACE);
-        firstOffer.add(new NegotiationOffer(NegotiationType.MAP, null));
-        secondOffer.add(new NegotiationOffer(NegotiationType.MAP, null));
+        PlayerInfo info2 = starMap.getPlayerByIndex(second);
+        NegotiationOffer offer = new NegotiationOffer(NegotiationType.MAP,
+            null);
+        offer.setMapValue(calculateMapValue(info, info2, true));
+        firstOffer.add(offer);
+        offer = new NegotiationOffer(NegotiationType.MAP, null);
+        offer.setMapValue(calculateMapValue(info2, info, true));
+        secondOffer.add(offer);
         break;
       }
       case BACKSTABBING:
@@ -1454,6 +1468,8 @@ public class DiplomaticTrade {
   public int getOfferDifferenceForBoth() {
     int firstValue = 0;
     int secondValue = 0;
+    boolean secondValueZero = false;
+    boolean militaryThreat = false;
     if (firstOffer == null) {
       // Just creating empty list
       firstOffer = new NegotiationList();
@@ -1483,12 +1499,15 @@ public class DiplomaticTrade {
       // is peace is being offered
       return DECLINE_INSULT;
     }
+    if (secondValue == 0 && firstValue > 0) {
+      secondValueZero = true;
+    }
     int difference = firstValue - secondValue;
     // Maybe good diplomatic relations help to get trade through
     int bonus = info2.getDiplomacy().getDiplomacyList(first)
-        .getDiplomacyBonus();
-    if (bonus > 20) {
-      bonus = 20;
+        .getDiplomacyBonus() / 2;
+    if (bonus > 10) {
+      bonus = 10;
     }
     difference = difference - bonus;
     if (info2.getDiplomacy().isWar(first)
@@ -1496,6 +1515,7 @@ public class DiplomaticTrade {
         || getSpeechTypeByOffer() == SpeechType.ASK_MOVE_FLEET
         || getSpeechTypeByOffer() == SpeechType.ASK_MOVE_SPY
         && secondOffer.getByIndex(0).getFleet().getMilitaryValue() > 0) {
+      militaryThreat = true;
       Attitude attitude = info2.getAiAttitude();
       int divider = 4;
       int ownDivider = 4;
@@ -1538,6 +1558,39 @@ public class DiplomaticTrade {
         }
       } else {
         difference = difference - militaryDifference / ownDivider;
+      }
+    }
+    if (!militaryThreat && secondValueZero && difference <= 0) {
+      Attitude attitude = info2.getAiAttitude();
+      switch (attitude) {
+        case AGGRESSIVE:
+        case MILITARISTIC:
+        case BACKSTABBING:
+        case LOGICAL:
+        default: {
+          difference = 1;
+          break;
+        }
+        case EXPANSIONIST:
+        case SCIENTIFIC: {
+          if (DiceGenerator.getRandom(3) > 0) {
+            difference = 1;
+          }
+          break;
+        }
+        case MERCHANTICAL: {
+          if (DiceGenerator.getRandom(2) > 0) {
+            difference = 1;
+          }
+          break;
+        }
+        case DIPLOMATIC:
+        case PEACEFUL: {
+          if (DiceGenerator.getRandom(1) == 0) {
+            difference = 1;
+          }
+          break;
+        }
       }
     }
     return difference;
@@ -1695,6 +1748,61 @@ public class DiplomaticTrade {
       }
     }
   }
+
+  /**
+   * Calculate map trade value. This will calculate how many
+   * sectors are unknown to receiver
+   * @param mapReceiver Receiver realm
+   * @param mapGiver Giver realm
+   * @param fullMap True for full map value, false for planets only
+   * @return Value of map.
+   */
+  private int calculateMapValue(final PlayerInfo mapReceiver,
+      final PlayerInfo mapGiver, final boolean fullMap) {
+    return calculateMapValue(starMap, mapReceiver, mapGiver, fullMap);
+  }
+
+  /**
+   * Calculate map trade value. This will calculate how many
+   * sectors are unknown to receiver
+   * @param starMap StarMap
+   * @param mapReceiver Receiver realm
+   * @param mapGiver Giver realm
+   * @param fullMap True for full map value, false for planets only
+   * @return Value of map.
+   */
+  public static int calculateMapValue(final StarMap starMap,
+      final PlayerInfo mapReceiver, final PlayerInfo mapGiver,
+      final boolean fullMap) {
+    int value = 0;
+    if (fullMap) {
+      for (int y = 0; y < starMap.getMaxY(); y++) {
+        for (int x = 0; x < starMap.getMaxX(); x++) {
+          Coordinate coord = new Coordinate(x, y);
+          byte visibility = mapGiver.getSectorVisibility(coord);
+          if (visibility == PlayerInfo.FOG_OF_WAR
+              || visibility == PlayerInfo.VISIBLE) {
+            byte origVisiblity = mapReceiver.getSectorVisibility(coord);
+            if (origVisiblity == PlayerInfo.UNCHARTED) {
+              value = value + 1;
+            }
+         }
+        }
+      }
+    } else {
+      for (Planet planet : starMap.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == mapGiver) {
+          byte origVisiblity = mapReceiver.getSectorVisibility(
+              planet.getCoordinate());
+          if (origVisiblity == PlayerInfo.UNCHARTED) {
+            value = value + 1;
+          }
+        }
+      }
+    }
+    return value;
+  }
+
   /**
    * Do trading for one player
    * @param offerList Trade goods aka offering list

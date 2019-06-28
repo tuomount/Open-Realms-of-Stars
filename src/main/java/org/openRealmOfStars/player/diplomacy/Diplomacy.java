@@ -321,22 +321,22 @@ public class Diplomacy {
   /**
    * Lowest value for neutral
    */
-  private static final int LOW_NEUTRAL = -5;
+  private static final int LOW_NEUTRAL = -10;
 
   /**
    * High value for neutral
    */
-  private static final int HIGH_NEUTRAL = 5;
+  private static final int HIGH_NEUTRAL = 10;
 
   /**
    * Low value for dislike
    */
-  private static final int LOW_DISLIKE = -15;
+  private static final int LOW_DISLIKE = -20;
 
   /**
    * High value for like
    */
-  private static final int HIGH_LIKE = 15;
+  private static final int HIGH_LIKE = 20;
 
   /**
    * Very High value for looking least liking

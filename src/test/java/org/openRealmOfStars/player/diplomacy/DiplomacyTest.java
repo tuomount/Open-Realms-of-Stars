@@ -147,6 +147,10 @@ public class DiplomacyTest {
         SpaceRace.SPORKS);
     diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.DIPLOMAT_CAPTURED,
         SpaceRace.SPORKS);
+    diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+        SpaceRace.SPORKS);
+    diplomacy.getDiplomacyList(0).addBonus(DiplomacyBonusType.INSULT,
+        SpaceRace.SPORKS);
     assertEquals(Diplomacy.DISLIKE, diplomacy.getLiking(0));
     assertEquals("Dislike", diplomacy.getLikingAsString(0));
     assertEquals(GuiStatics.COLOR_DAMAGE_MUCH, diplomacy.getLikingAsColor(0));
@@ -341,9 +345,9 @@ public class DiplomacyTest {
   public void testLeastLiking() {
     Diplomacy diplomacy = new Diplomacy(4, 1);
     DiplomacyBonusList list0 = Mockito.mock(DiplomacyBonusList.class);
-    Mockito.when(list0.getDiplomacyBonus()).thenReturn(5);
+    Mockito.when(list0.getDiplomacyBonus()).thenReturn(25);
     DiplomacyBonusList list2 = Mockito.mock(DiplomacyBonusList.class);
-    Mockito.when(list2.getDiplomacyBonus()).thenReturn(-7);
+    Mockito.when(list2.getDiplomacyBonus()).thenReturn(-11);
     DiplomacyBonusList list3 = Mockito.mock(DiplomacyBonusList.class);
     Mockito.when(list3.getDiplomacyBonus()).thenReturn(10);
     diplomacy.setList(list0, 0);
@@ -357,11 +361,11 @@ public class DiplomacyTest {
   public void testLeastLikingWithEspionage() {
     Diplomacy diplomacy = new Diplomacy(4, 1);
     DiplomacyBonusList list0 = Mockito.mock(DiplomacyBonusList.class);
-    Mockito.when(list0.getDiplomacyBonus()).thenReturn(5);
+    Mockito.when(list0.getDiplomacyBonus()).thenReturn(25);
     DiplomacyBonusList list2 = Mockito.mock(DiplomacyBonusList.class);
-    Mockito.when(list2.getDiplomacyBonus()).thenReturn(-7);
+    Mockito.when(list2.getDiplomacyBonus()).thenReturn(-11);
     DiplomacyBonusList list3 = Mockito.mock(DiplomacyBonusList.class);
-    Mockito.when(list3.getDiplomacyBonus()).thenReturn(10);
+    Mockito.when(list3.getDiplomacyBonus()).thenReturn(11);
     diplomacy.setList(list0, 0);
     diplomacy.setList(list2, 2);
     diplomacy.setList(list3, 3);
@@ -376,7 +380,7 @@ public class DiplomacyTest {
     Mockito.when(eList3.getTotalBonus()).thenReturn(0);
     Mockito.when(espionage.getByIndex(3)).thenReturn(eList3);
     assertEquals(2, diplomacy.getLeastLikingWithLowEspionage(espionage));
-    Mockito.when(list3.getDiplomacyBonus()).thenReturn(-7);
+    Mockito.when(list3.getDiplomacyBonus()).thenReturn(-13);
     assertEquals(3, diplomacy.getLeastLikingWithLowEspionage(espionage));
   }
 

@@ -446,7 +446,6 @@ public class DiplomaticTrade {
   protected void generateMapTrade(final int tradeType, final boolean fullMap) {
     PlayerInfo offerMaker = starMap.getPlayerByIndex(first);
     PlayerInfo agree = starMap.getPlayerByIndex(second);
-    int mapValue = 15;
     NegotiationType mapType = NegotiationType.MAP;
     if (!fullMap) {
       mapType = NegotiationType.MAP_PLANETS;
@@ -481,15 +480,16 @@ public class DiplomaticTrade {
       offer.setMapValue(calculateMapValue(agree, offerMaker, fullMap));
       secondOffer.add(offer);
     } else {
-      int value = mapValue;
+      int value = calculateMapValue(agree, offerMaker, fullMap);
+      NegotiationOffer offer = new NegotiationOffer(mapType, null);
+      offer.setMapValue(value);
+      value = offer.getMapValue();
       if (agree.getTotalCredits() < value) {
         value = agree.getTotalCredits();
       }
-      NegotiationOffer offer = new NegotiationOffer(mapType, null);
-      offer.setMapValue(calculateMapValue(agree, offerMaker, fullMap));
       firstOffer = new NegotiationList();
       firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
-          new Integer(offer.getMapValue())));
+          new Integer(value)));
       secondOffer = new NegotiationList();
       secondOffer.add(offer);
     }

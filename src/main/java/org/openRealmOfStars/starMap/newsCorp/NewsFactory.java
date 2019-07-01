@@ -485,7 +485,7 @@ public final class NewsFactory {
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
     String position = ImageInstruction.POSITION_CENTER;
-    String size = ImageInstruction.SIZE_FULL;
+    String size = ImageInstruction.SIZE_HALF;
     instructions.addPlanet(position, planet.getImageInstructions(), size);
     instructions.addLogo(position, ImageInstruction.PLANET_SPORTS, size);
     switch (DiceGenerator.getRandom(2)) {
@@ -511,11 +511,7 @@ public final class NewsFactory {
     sb.append(" is building new Galactic Sports arena to ");
     sb.append(planet.getName());
     sb.append("! ");
-    String turns = planet.getProductionTimeAsString(
-        planet.getUnderConstruction());
-    sb.append("This arena should be ready in ");
-    sb.append(turns);
-    sb.append(". When finished there will be arrange galatic sports event! ");
+    sb.append(" When finished there will be arrange galatic sports event! ");
     news.setNewsText(sb.toString());
     return news;
   }

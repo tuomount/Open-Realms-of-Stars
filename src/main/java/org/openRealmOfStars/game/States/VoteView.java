@@ -383,7 +383,7 @@ public class VoteView extends BlackPanel {
           voteYesBtn.setText("Participate");
           voteNoBtn.setText("Boycott");
           votingInfoTitle.setTitle("Galactic Olympics");
-          sb.append("Galactic Olympics are being organized by");
+          sb.append("Galactic Olympics are being organized by ");
           PlayerInfo info = map.getPlayerList().getPlayerInfoByIndex(
               vote.getOrganizerIndex());
           if (info != null) {

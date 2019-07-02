@@ -411,7 +411,7 @@ public final class NewsFactory {
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
     String position = ImageInstruction.POSITION_CENTER;
-    String size = ImageInstruction.SIZE_FULL;
+    String size = ImageInstruction.SIZE_HALF;
     instructions.addPlanet(position, planet.getImageInstructions(), size);
     instructions.addLogo(position, ImageInstruction.PLANET_SPORTS, size);
     Athlete[] athletes = sports.getAthletes();
@@ -447,9 +447,12 @@ public final class NewsFactory {
     sb.append(". ");
     sb.append(athletes.length);
     sb.append(" athletes were competing against each others. There were"
-        + " athletes from");
+        + " athletes from ");
     for (int i = 0; i < athletes.length; i++) {
       sb.append(athletes[i].getPlanetName());
+      sb.append(" (");
+      sb.append(athletes[i].getRealm().getEmpireName());
+      sb.append(")");
       if (i < athletes.length - 1) {
         sb.append(", ");
       }
@@ -457,13 +460,13 @@ public final class NewsFactory {
     sb.append(". ");
     sb.append("Winner of the Galactic Olympics was ");
     sb.append(athletes[0].getRealm().getEmpireName());
-    sb.append("from ");
+    sb.append(" from ");
     sb.append(athletes[0].getPlanetName());
     sb.append(". ");
     if (athletes.length > 1) {
       sb.append("Second of the Galactic Olympics was ");
       sb.append(athletes[1].getRealm().getEmpireName());
-      sb.append("from ");
+      sb.append(" from ");
       sb.append(athletes[1].getPlanetName());
       sb.append(". ");
     } else {

@@ -1,4 +1,4 @@
-# Authors of Open Reals Of Stars
+# Authors of Open Realm Of Stars
 
 # Programming and Design by
 

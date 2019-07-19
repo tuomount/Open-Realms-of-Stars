@@ -1590,7 +1590,7 @@ public class Game implements ActionListener {
     MusicPlayer.setMusicEnabled(true);
     SoundPlayer.setSoundEnabled(true);
     if (args.length > 0 && args[0].equals("--credits")) {
-      System.out.println("# Authors of Open Reals Of Stars\n");
+      System.out.println("# Authors of Open Realm Of Stars\n");
       System.out.println(CreditsView.MAIN_CREDITS);
     } else if (args.length > 0 && args[0].equals("--wiki-research")) {
       System.out.println(printTechWiki());

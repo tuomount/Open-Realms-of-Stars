@@ -38,6 +38,7 @@ public class VoteTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testBasic() {
     Vote vote = new Vote(VotingType.BAN_NUCLEAR_WEAPONS, 4, 10);
+    assertEquals(4, vote.getNumberOfRealms());
     assertEquals(0, vote.getOrganizerIndex());
     assertEquals("", vote.getPlanetName());
     assertEquals(VotingType.BAN_NUCLEAR_WEAPONS, vote.getType());

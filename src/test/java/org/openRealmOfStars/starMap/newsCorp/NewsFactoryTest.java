@@ -407,6 +407,7 @@ public class NewsFactoryTest {
     Mockito.when(planet.getImageInstructions()).thenReturn(
         PlanetTypes.WATERWORLD2.getImageInstructions());
     Mockito.when(planet.getName()).thenReturn("Test planet");
+    Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(info);
     Vote vote = Mockito.mock(Vote.class);
     Mockito.when(vote.getPlanetName()).thenReturn("Test planet");
     Sports sports = Mockito.mock(Sports.class);

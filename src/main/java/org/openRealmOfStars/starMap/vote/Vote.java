@@ -87,6 +87,13 @@ public class Vote {
   }
 
   /**
+   * Get the number of realms as integer.
+   * @return Number of realms
+   */
+  public int getNumberOfRealms() {
+    return choices.length;
+  }
+  /**
    * Get amount of voting number.
    * @param choice Voting choice
    * @return Numerical value of voting result

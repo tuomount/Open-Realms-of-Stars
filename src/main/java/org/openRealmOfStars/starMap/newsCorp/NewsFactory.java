@@ -444,6 +444,8 @@ public final class NewsFactory {
     StringBuilder sb = new StringBuilder(100);
     sb.append("Galactic Olympics were arranged in ");
     sb.append(vote.getPlanetName());
+    sb.append(". This event is organized by ");
+    sb.append(planet.getPlanetPlayerInfo().getEmpireName());
     sb.append(". ");
     sb.append(athletes.length);
     sb.append(" athletes were competing against each others. There were"
@@ -472,6 +474,16 @@ public final class NewsFactory {
     } else {
       sb.append("These Galactic Olympics were failure due that there were "
           + "only single athlete. ");
+    }
+    int noVotes = vote.getVotingAmounts(VotingChoice.VOTED_NO);
+    if (noVotes > 0) {
+      sb.append("There were ");
+      sb.append(noVotes);
+      sb.append(" realm");
+      if (noVotes > 1) {
+        sb.append("s");
+      }
+      sb.append(" which did not participate. ");
     }
     news.setNewsText(sb.toString());
     return news;

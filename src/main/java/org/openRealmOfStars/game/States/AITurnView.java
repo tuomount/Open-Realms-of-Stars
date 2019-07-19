@@ -1681,10 +1681,15 @@ public class AITurnView extends BlackPanel {
           PlayerInfo info = players.getPlayerInfoByIndex(i);
           if (info != null) {
             if (info.isHuman()) {
+              vote.setNumberOfVotes(i, 1);
+              if (vote.getChoice(i) == VotingChoice.NOT_VOTED) {
+                vote.setChoice(i, VotingChoice.VOTED_YES);
+              }
               continue;
             }
             if (i == organizer) {
               vote.setChoice(i, VotingChoice.VOTED_YES);
+              vote.setNumberOfVotes(i, 1);
               continue;
             }
             int participateBonus = info.getDiplomacy().getLiking(organizer)
@@ -1722,16 +1727,19 @@ public class AITurnView extends BlackPanel {
             }
             if (participateBonus > 0) {
               vote.setChoice(i, VotingChoice.VOTED_YES);
+              vote.setNumberOfVotes(i, 1);
               continue;
             }
             if (participateBonus < 0) {
               vote.setChoice(i, VotingChoice.VOTED_NO);
+              vote.setNumberOfVotes(i, 1);
               continue;
             }
             if (participateBonus == 0 && vote.getTurnsToVote() == 1) {
               // AI couldn't decide if wants to participate,
               // but no good reason not to join
               vote.setChoice(i, VotingChoice.VOTED_YES);
+              vote.setNumberOfVotes(i, 1);
             }
           }
         }

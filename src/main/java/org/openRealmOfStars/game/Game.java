@@ -557,6 +557,7 @@ public class Game implements ActionListener {
             || tile.getName().equals(TileNames.WORM_HOLE2)) {
           Coordinate coord = getStarMap().getFreeRandomSpot();
           fleet.setPos(coord);
+          starMap.clearFleetTiles();
           getStarMap().doFleetScanUpdate(info, fleet, null);
         }
         if (starMapView != null) {

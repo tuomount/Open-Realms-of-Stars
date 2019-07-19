@@ -232,13 +232,31 @@ public class Fleet {
 
   /**
    * Get first ship from the fleet
-   * @return Ship or null if new ships in fleet
+   * @return Ship or null if no ships in fleet
    */
   public Ship getFirstShip() {
     if (ships.size() > 0) {
       return ships.get(0);
     }
     return null;
+  }
+
+  /**
+   * Get ship with greatest military value
+   * @return Ship or null if no ships in fleet
+   */
+  public Ship getBiggestShip() {
+    Ship result = null;
+    for (Ship ship : ships) {
+      if (result == null) {
+        result = ship;
+        continue;
+      }
+      if (ship.getTotalMilitaryPower() > result.getTotalMilitaryPower()) {
+        result = ship;
+      }
+    }
+    return result;
   }
 
   /**

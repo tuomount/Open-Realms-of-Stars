@@ -25,13 +25,14 @@ import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipImage;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2019  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -354,8 +355,9 @@ public class MapInfoPanel extends InfoPanel {
       g2d.setColor(Color.black);
       g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
       g2d.dispose();
-      if (fleet.getFirstShip() != null) {
-        imageLabel.setImage(fleet.getFirstShip().getHull().getImage());
+      Ship ship = fleet.getBiggestShip();
+      if (ship != null) {
+        imageLabel.setImage(ship.getHull().getImage());
       } else {
         imageLabel.setImage(img);
       }

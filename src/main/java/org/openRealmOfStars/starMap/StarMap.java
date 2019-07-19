@@ -1363,9 +1363,10 @@ public class StarMap {
           Fleet fleet = player.getFleets().getByIndex(j);
           if (fleet != null && fleetTiles[fleet.getX()][fleet.getY()] == null
               && fleet.getFirstShip() != null) {
+            Ship ship = fleet.getBiggestShip();
             FleetTileInfo info = new FleetTileInfo(
-                fleet.getFirstShip().getHull().getRace(),
-                fleet.getFirstShip().getHull().getImageIndex(), i, j);
+                ship.getHull().getRace(),
+                ship.getHull().getImageIndex(), i, j);
             fleetTiles[fleet.getX()][fleet.getY()] = info;
           } else {
             for (int k = 0; k < player.getFleets().getNumberOfFleets(); k++) {
@@ -1373,21 +1374,33 @@ public class StarMap {
                 Fleet fleet2 = player.getFleets().getByIndex(k);
                 if (fleet2 != null &&  fleet != null
                     && fleet2.getX() == fleet.getX()
-                    && fleet2.getY() == fleet.getY()
-                    && fleet2.getMilitaryValue() > fleet.getMilitaryValue()) {
-                  FleetTileInfo info = new FleetTileInfo(
-                      fleet2.getFirstShip().getHull().getRace(),
-                      fleet2.getFirstShip().getHull().getImageIndex(), i, k);
-                  fleetTiles[fleet2.getX()][fleet2.getY()] = info;
-                }
-                if (fleet2 != null &&  fleet != null
-                    && fleet2.getX() == fleet.getX()
-                    && fleet2.getY() == fleet.getY()
-                    && fleet2.isStarBaseDeployed()) {
-                  FleetTileInfo info = new FleetTileInfo(
-                      fleet2.getFirstShip().getHull().getRace(),
-                      fleet2.getFirstShip().getHull().getImageIndex(), i, k);
-                  fleetTiles[fleet2.getX()][fleet2.getY()] = info;
+                    && fleet2.getY() == fleet.getY()) {
+                  if (fleet2.getMilitaryValue() > fleet.getMilitaryValue()) {
+                    Ship ship = fleet2.getBiggestShip();
+                    FleetTileInfo info = new FleetTileInfo(
+                        ship.getHull().getRace(),
+                        ship.getHull().getImageIndex(), i, k);
+                    fleetTiles[fleet2.getX()][fleet2.getY()] = info;
+                  } else {
+                    Ship ship = fleet.getBiggestShip();
+                    FleetTileInfo info = new FleetTileInfo(
+                        ship.getHull().getRace(),
+                        ship.getHull().getImageIndex(), i, j);
+                    fleetTiles[fleet.getX()][fleet.getY()] = info;
+                  }
+                  if (fleet2.isStarBaseDeployed()) {
+                    Ship ship = fleet2.getBiggestShip();
+                    FleetTileInfo info = new FleetTileInfo(
+                        ship.getHull().getRace(),
+                        ship.getHull().getImageIndex(), i, k);
+                    fleetTiles[fleet2.getX()][fleet2.getY()] = info;
+                  } else if (fleet.isStarBaseDeployed()) {
+                    Ship ship = fleet.getBiggestShip();
+                    FleetTileInfo info = new FleetTileInfo(
+                        ship.getHull().getRace(),
+                        ship.getHull().getImageIndex(), i, j);
+                    fleetTiles[fleet.getX()][fleet.getY()] = info;
+                  }
                 }
               }
             }

@@ -1590,9 +1590,11 @@ public class AITurnView extends BlackPanel {
           sports.handleSports();
           Planet planet = map.getPlanetByName(vote.getPlanetName());
           if (planet != null) {
-            map.getNewsCorpData().addNews(
-                NewsFactory.makeGalacticSportsEndingNews(vote, sports,
-                    planet));
+            NewsData newsData = NewsFactory.makeGalacticSportsEndingNews(vote,
+                sports, planet);
+            map.getNewsCorpData().addNews(newsData);
+            map.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+                planet, newsData));
             // Organizer gains culture 10 per each realm participated
             planet.setCulture(
                 planet.getCulture() + sports.getAthletes().length * 10);

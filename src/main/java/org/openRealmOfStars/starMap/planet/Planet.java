@@ -1514,6 +1514,9 @@ public class Planet {
             NewsData news = NewsFactory.makeGalacticSportsNews(
                 planetOwnerInfo, this);
             map.getNewsCorpData().addNews(news);
+            map.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+                this, news));
+
             EventOnPlanet eventOnPlanet = new EventOnPlanet(
                 EventType.PLANET_BUILDING, getCoordinate(),
                 getName(), getPlanetOwnerIndex());

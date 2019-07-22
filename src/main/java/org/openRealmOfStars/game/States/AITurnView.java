@@ -1414,10 +1414,14 @@ public class AITurnView extends BlackPanel {
                 game.getStarMap().getVotes().getSecondCandidate());
             news = NewsFactory.makeVotingNews(vote, firstCandidate,
                 secondCandidate);
+
           } else {
             news = NewsFactory.makeVotingNews(vote, null, null);
           }
           game.getStarMap().getNewsCorpData().addNews(news);
+          game.getStarMap().getHistory().addEvent(
+              NewsFactory.makeDiplomaticEvent(null, news));
+
         } else {
           ErrorLogger.log("Next vote was null!");
         }
@@ -1528,6 +1532,9 @@ public class AITurnView extends BlackPanel {
           news = NewsFactory.makeVotingEndedNews(vote, choice, null, null);
         }
         game.getStarMap().getNewsCorpData().addNews(news);
+        game.getStarMap().getHistory().addEvent(
+            NewsFactory.makeDiplomaticEvent(null, news));
+
       }
     }
   }

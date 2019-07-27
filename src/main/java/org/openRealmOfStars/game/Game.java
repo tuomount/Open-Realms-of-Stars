@@ -393,6 +393,7 @@ public class Game implements ActionListener {
       gameFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
       gameFrame.addWindowListener(new GameWindowListener());
       gameFrame.setMinimumSize(new Dimension(WINDOW_X_SIZE, WINDOW_Y_SIZE));
+      gameFrame.setSize(resolutionWidth, resolutionHeight);
       gameFrame.getContentPane().setSize(resolutionWidth, resolutionHeight);
       gameFrame.setPreferredSize(new Dimension(resolutionWidth,
           resolutionHeight));
@@ -408,17 +409,14 @@ public class Game implements ActionListener {
       gameFrame.setVisible(true);
       // Adjusting JFrame size. Some OS take UI component space
       // from JFrame. This happens at least with Windows 7/10 and Java8.
-      int sizeX = gameFrame.getWidth() - gameFrame.getContentPane().getWidth();
-      int sizeY = gameFrame.getHeight()
-          - gameFrame.getContentPane().getHeight();
+      int sizeX = resolutionWidth - gameFrame.getContentPane().getWidth();
+      int sizeY = resolutionHeight - gameFrame.getContentPane().getHeight();
       if (sizeX > 0 || sizeY > 0) {
         ErrorLogger.log("Adjust frame, since OS's UI component require"
             + " their own space from JFrame.");
         ErrorLogger.log("Adjusting X: " + sizeX + " Adjusting Y: " + sizeY);
         gameFrame.setVisible(false);
-        gameFrame.getContentPane().setSize(resolutionWidth + sizeX,
-            resolutionHeight + sizeY);
-        gameFrame.setPreferredSize(new Dimension(resolutionWidth + sizeX,
+        gameFrame.setSize(new Dimension(resolutionWidth + sizeX,
             resolutionHeight + sizeY));
         gameFrame.setMinimumSize(new Dimension(WINDOW_X_SIZE + sizeX,
             WINDOW_Y_SIZE + sizeY));
@@ -584,10 +582,10 @@ public class Game implements ActionListener {
     if (gameFrame != null) {
       gameFrame.getContentPane().removeAll();
       layeredPane = new JLayeredPane();
-      view.setBounds(0, 0, gameFrame.getWidth(), gameFrame.getHeight());
+      view.setBounds(0, 0, getWidth(), getHeight());
       layeredPane.setLayer(view, JLayeredPane.DEFAULT_LAYER);
       layeredPane.add(view);
-      layeredPane.setBounds(0, 0, gameFrame.getWidth(), gameFrame.getHeight());
+      layeredPane.setBounds(0, 0, getWidth(), getHeight());
       int y = MUSIC_TEXT_TOP;
       if (view instanceof MainMenu || view instanceof ResearchView
           || view instanceof ShipView || view instanceof GalaxyCreationView

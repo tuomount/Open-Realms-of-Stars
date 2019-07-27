@@ -393,7 +393,9 @@ public class Game implements ActionListener {
       gameFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
       gameFrame.addWindowListener(new GameWindowListener());
       gameFrame.setMinimumSize(new Dimension(WINDOW_X_SIZE, WINDOW_Y_SIZE));
-      gameFrame.setSize(resolutionWidth, resolutionHeight);
+      gameFrame.getContentPane().setSize(resolutionWidth, resolutionHeight);
+      gameFrame.setPreferredSize(new Dimension(resolutionWidth,
+          resolutionHeight));
       gameFrame.setLocationRelativeTo(null);
       animationTimer = new Timer(ANIMATION_TIMER_DELAY, this);
       animationTimer.setActionCommand(GameCommands.COMMAND_ANIMATION_TIMER);
@@ -414,7 +416,10 @@ public class Game implements ActionListener {
             + " their own space from JFrame.");
         ErrorLogger.log("Adjusting X: " + sizeX + " Adjusting Y: " + sizeY);
         gameFrame.setVisible(false);
-        gameFrame.setSize(resolutionWidth + sizeX, resolutionHeight + sizeY);
+        gameFrame.getContentPane().setSize(resolutionWidth + sizeX,
+            resolutionHeight + sizeY);
+        gameFrame.setPreferredSize(new Dimension(resolutionWidth + sizeX,
+            resolutionHeight + sizeY));
         gameFrame.setMinimumSize(new Dimension(WINDOW_X_SIZE + sizeX,
             WINDOW_Y_SIZE + sizeY));
         gameFrame.setVisible(true);

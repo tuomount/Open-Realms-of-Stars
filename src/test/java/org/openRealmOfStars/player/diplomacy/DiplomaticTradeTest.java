@@ -19,6 +19,7 @@ import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.tech.Tech;
+import org.openRealmOfStars.player.tech.TechFactory;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -438,6 +439,69 @@ public class DiplomaticTradeTest {
         .getNegotiationType());
     assertEquals(NegotiationType.CREDIT, trade.getSecondOffer().getByIndex(0)
         .getNegotiationType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUnEvenTrade() {
+    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    Votes votes = Mockito.mock(Votes.class);
+    Mockito.when(map.getVotes()).thenReturn(votes);
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    NegotiationList firstList = new NegotiationList();
+    firstList.add(new NegotiationOffer(NegotiationType.TECH,
+        TechFactory.createElectronicsTech("Scanner Mk1", 1)));
+    NegotiationList secondList = new NegotiationList();
+    secondList.add(new NegotiationOffer(NegotiationType.TECH,
+        TechFactory.createCombatTech("Laser Mk2", 2)));
+    secondList.add(new NegotiationOffer(NegotiationType.TECH,
+        TechFactory.createDefenseTech("Shield Mk2", 2)));
+    trade.setFirstOffer(firstList);
+    trade.setSecondOffer(secondList);
+    assertEquals(-6, trade.getOfferDifferenceForBoth());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUnEvenTradeFleet() {
+    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    Votes votes = Mockito.mock(Votes.class);
+    Mockito.when(map.getVotes()).thenReturn(votes);
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    NegotiationList firstList = new NegotiationList();
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getMilitaryValue()).thenReturn(16);
+    firstList.add(new NegotiationOffer(NegotiationType.FLEET,
+        fleet));
+    NegotiationList secondList = new NegotiationList();
+    secondList.add(new NegotiationOffer(NegotiationType.TECH,
+        TechFactory.createCombatTech("Laser Mk2", 2)));
+    secondList.add(new NegotiationOffer(NegotiationType.TECH,
+        TechFactory.createDefenseTech("Shield Mk2", 2)));
+    trade.setFirstOffer(firstList);
+    trade.setSecondOffer(secondList);
+    assertEquals(10000, trade.getOfferDifferenceForBoth());
+  }
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUnEvenTradeFleet2() {
+    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
+    Votes votes = Mockito.mock(Votes.class);
+    Mockito.when(map.getVotes()).thenReturn(votes);
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    NegotiationList firstList = new NegotiationList();
+    firstList.add(new NegotiationOffer(NegotiationType.TECH,
+        TechFactory.createCombatTech("Laser Mk2", 2)));
+    firstList.add(new NegotiationOffer(NegotiationType.TECH,
+        TechFactory.createDefenseTech("Shield Mk2", 2)));
+    NegotiationList secondList = new NegotiationList();
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getMilitaryValue()).thenReturn(32);
+    secondList.add(new NegotiationOffer(NegotiationType.FLEET,
+        fleet));
+    trade.setFirstOffer(firstList);
+    trade.setSecondOffer(secondList);
+    assertEquals(-8, trade.getOfferDifferenceForBoth());
   }
 
   @Test

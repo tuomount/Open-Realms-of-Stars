@@ -959,6 +959,9 @@ public class Game implements ActionListener {
   public void showShipDesignView(final ShipDesign oldDesign) {
     shipDesignView = new ShipDesignView(players.getCurrentPlayerInfo(),
         oldDesign, this);
+    shipDesignView.setBanNukes(getStarMap().getVotes().areNukesBanned());
+    shipDesignView.setBanPrivateer(
+        getStarMap().getVotes().arePrivateersBanned());
     this.updateDisplay(shipDesignView);
   }
 

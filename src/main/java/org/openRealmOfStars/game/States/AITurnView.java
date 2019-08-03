@@ -53,6 +53,8 @@ import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
+import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.history.event.GalacticEvent;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
@@ -1419,9 +1421,8 @@ public class AITurnView extends BlackPanel {
             news = NewsFactory.makeVotingNews(vote, null, null);
           }
           game.getStarMap().getNewsCorpData().addNews(news);
-          game.getStarMap().getHistory().addEvent(
-              NewsFactory.makeDiplomaticEvent(null, news));
-
+          GalacticEvent event = new GalacticEvent(news.getNewsText());
+          game.getStarMap().getHistory().addEvent(event);
         } else {
           ErrorLogger.log("Next vote was null!");
         }
@@ -1532,8 +1533,8 @@ public class AITurnView extends BlackPanel {
           news = NewsFactory.makeVotingEndedNews(vote, choice, null, null);
         }
         game.getStarMap().getNewsCorpData().addNews(news);
-        game.getStarMap().getHistory().addEvent(
-            NewsFactory.makeDiplomaticEvent(null, news));
+        GalacticEvent event = new GalacticEvent(news.getNewsText());
+        game.getStarMap().getHistory().addEvent(event);
 
       }
     }
@@ -1600,8 +1601,11 @@ public class AITurnView extends BlackPanel {
             NewsData newsData = NewsFactory.makeGalacticSportsEndingNews(vote,
                 sports, planet);
             map.getNewsCorpData().addNews(newsData);
-            map.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
-                planet, newsData));
+            EventOnPlanet event = new EventOnPlanet(EventType.PLANET_BUILDING,
+                planet.getCoordinate(), planet.getName(),
+                planet.getPlanetOwnerIndex());
+            event.setText(newsData.getNewsText());
+            map.getHistory().addEvent(event);
             // Organizer gains culture 10 per each realm participated
             planet.setCulture(
                 planet.getCulture() + sports.getAthletes().length * 10);

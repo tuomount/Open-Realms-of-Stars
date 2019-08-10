@@ -940,4 +940,15 @@ public class Fleet {
     return result;
   }
 
+  /**
+   * Calculate total fleet capacity for whole fleet.
+   * @return Fleet capacity.
+   */
+  public double getTotalFleetCapacity() {
+    double result = 0;
+    for (Ship ship : ships) {
+      result = result + ship.getFleetCapacity();
+    }
+    return result;
+  }
 }

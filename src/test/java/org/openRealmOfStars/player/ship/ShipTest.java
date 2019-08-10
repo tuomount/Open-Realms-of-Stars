@@ -51,7 +51,7 @@ public class ShipTest {
     design.addComponent(armor);
     design.addComponent(weapon);
     Ship ship = new Ship(design);
-    
+    assertEquals(0.1, ship.getFleetCapacity(), 0.01);
     assertEquals(true, ship.isScoutShip());
     assertEquals(1, ship.getWeaponRange(weapon));
     assertEquals(1,ship.getArmor());

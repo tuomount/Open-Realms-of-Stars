@@ -8,7 +8,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -75,6 +75,11 @@ public class ShipHull {
   private int imageIndex;
 
   /**
+   * Ship's required fleet capacity.
+   */
+  private double fleetCapacity;
+
+  /**
    * Get Image Index
    * @return Image index
    */
@@ -121,6 +126,8 @@ public class ShipHull {
     this.originalBuilder = race;
     // Default to Scout image
     this.imageIndex = ShipImage.SCOUT;
+    // Default for fleet capacity.
+    this.fleetCapacity = 0.1;
     // Centaur ships have extra hull point per slot
     // but hulls are more expensive.
     if (race == SpaceRace.CENTAURS) {
@@ -219,6 +226,21 @@ public class ShipHull {
   }
 
   /**
+   * @return the fleetCapacity
+   */
+  public double getFleetCapacity() {
+    return fleetCapacity;
+  }
+
+  /**
+   * Set ship hull's fleet capacity.
+   * @param fleetCapacity the fleetCapacity to set
+   */
+  public void setFleetCapacity(final double fleetCapacity) {
+    this.fleetCapacity = fleetCapacity;
+  }
+
+  /**
    * Line length for ship hull type description
    */
   private static final int LINE_LENGTH = 39;
@@ -228,6 +250,7 @@ public class ShipHull {
     return getName() + "\n" + "Cost: " + getCost() + " Metal: " + getMetalCost()
         + "\n" + "Slots:" + getMaxSlot() + " Hull:"
         + getMaxSlot() * getSlotHull() + "\n" + "Size:" + getSize().toString()
+        + "Fleet capacity: " + getFleetCapacity()
         + "\n" + IOUtilities.stringWrapper(getHullType().getDescription(),
         LINE_LENGTH);
   }

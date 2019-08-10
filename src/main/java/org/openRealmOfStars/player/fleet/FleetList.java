@@ -345,4 +345,16 @@ public class FleetList {
     }
     return false;
   }
+
+  /**
+   * Get total fleet capacity.
+   * @return Get Total fleet capacity.
+   */
+  public double getTotalFleetCapacity() {
+    double result = 0;
+    for (Fleet fleet : fleetList) {
+      result = result + fleet.getTotalFleetCapacity();
+    }
+    return result;
+  }
 }

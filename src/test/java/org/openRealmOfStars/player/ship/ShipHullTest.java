@@ -10,7 +10,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -35,6 +35,9 @@ public class ShipHullTest {
   public void testShipHull() {
     ShipHull hull = new ShipHull(0, "Test", 4, 1, ShipHullType.NORMAL,
         ShipSize.SMALL, 8, 10, SpaceRace.GREYANS);
+    assertEquals(0.1, hull.getFleetCapacity(), 0.01);
+    hull.setFleetCapacity(0.2);
+    assertEquals(0.2, hull.getFleetCapacity(), 0.01);
     assertEquals(8, hull.getCost());
     assertEquals(10, hull.getMetalCost());
     assertEquals(0, hull.getIndex());

@@ -1844,4 +1844,12 @@ private int increaseHitChanceByComponent() {
     }
     return false;
   }
+
+  /**
+   * Get fleet capacity which is based on hull.
+   * @return Fleet capacity.
+   */
+  public double getFleetCapacity() {
+    return getHull().getFleetCapacity();
+  }
 }

@@ -45,9 +45,11 @@ public class FleetTest {
   private static Ship createShipOne() {
     ShipHull hull = Mockito.mock(ShipHull.class);
     Mockito.when(hull.getSize()).thenReturn(ShipSize.SMALL);
+    Mockito.when(hull.getFleetCapacity()).thenReturn(0.1);
     Ship ship = Mockito.mock(Ship.class);
     Mockito.when(ship.getFtlSpeed()).thenReturn(2);
     Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getFleetCapacity()).thenReturn(0.1);
     Mockito.when(ship.getScannerDetectionLvl()).thenReturn(40);
     Mockito.when(ship.getScannerLvl()).thenReturn(2);
     Mockito.when(ship.getSpeed()).thenReturn(1);
@@ -72,8 +74,10 @@ public class FleetTest {
   private static Ship createEspionageShip() {
     ShipHull hull = Mockito.mock(ShipHull.class);
     Mockito.when(hull.getSize()).thenReturn(ShipSize.SMALL);
+    Mockito.when(hull.getFleetCapacity()).thenReturn(0.1);
     Ship ship = Mockito.mock(Ship.class);
     Mockito.when(ship.getFtlSpeed()).thenReturn(2);
+    Mockito.when(ship.getFleetCapacity()).thenReturn(0.1);
     Mockito.when(ship.getHull()).thenReturn(hull);
     Mockito.when(ship.getScannerDetectionLvl()).thenReturn(40);
     Mockito.when(ship.getScannerLvl()).thenReturn(2);
@@ -98,10 +102,12 @@ public class FleetTest {
    */
   private static Ship createShipTwo() {
     ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getFleetCapacity()).thenReturn(0.0);
     Mockito.when(hull.getSize()).thenReturn(ShipSize.MEDIUM);
     Ship ship = Mockito.mock(Ship.class);
     Mockito.when(ship.getFtlSpeed()).thenReturn(1);
     Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getFleetCapacity()).thenReturn(0.0);
     Mockito.when(ship.getScannerDetectionLvl()).thenReturn(0);
     Mockito.when(ship.getScannerLvl()).thenReturn(0);
     Mockito.when(ship.getSpeed()).thenReturn(1);
@@ -132,6 +138,7 @@ public class FleetTest {
     Ship ship = Mockito.mock(Ship.class);
     Mockito.when(ship.getFtlSpeed()).thenReturn(1);
     Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getFleetCapacity()).thenReturn(0.0);
     Mockito.when(ship.getScannerDetectionLvl()).thenReturn(0);
     Mockito.when(ship.getScannerLvl()).thenReturn(0);
     Mockito.when(ship.getSpeed()).thenReturn(1);
@@ -162,6 +169,7 @@ public class FleetTest {
     Ship ship = Mockito.mock(Ship.class);
     Mockito.when(ship.getFtlSpeed()).thenReturn(1);
     Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getFleetCapacity()).thenReturn(0.0);
     Mockito.when(ship.getScannerDetectionLvl()).thenReturn(0);
     Mockito.when(ship.getScannerLvl()).thenReturn(0);
     Mockito.when(ship.getSpeed()).thenReturn(1);
@@ -192,6 +200,7 @@ public class FleetTest {
     Ship ship = Mockito.mock(Ship.class);
     Mockito.when(ship.getFtlSpeed()).thenReturn(0);
     Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getFleetCapacity()).thenReturn(0.0);
     Mockito.when(ship.getScannerDetectionLvl()).thenReturn(0);
     Mockito.when(ship.getScannerLvl()).thenReturn(0);
     Mockito.when(ship.getSpeed()).thenReturn(1);
@@ -225,6 +234,7 @@ public class FleetTest {
     Ship ship = Mockito.mock(Ship.class);
     Mockito.when(ship.getFtlSpeed()).thenReturn(1);
     Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getFleetCapacity()).thenReturn(0.0);
     Mockito.when(ship.getScannerDetectionLvl()).thenReturn(0);
     Mockito.when(ship.getScannerLvl()).thenReturn(0);
     Mockito.when(ship.getSpeed()).thenReturn(1);
@@ -256,6 +266,7 @@ public class FleetTest {
     Ship ship = Mockito.mock(Ship.class);
     Mockito.when(ship.getFtlSpeed()).thenReturn(5);
     Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getFleetCapacity()).thenReturn(0.0);
     Mockito.when(ship.getScannerDetectionLvl()).thenReturn(0);
     Mockito.when(ship.getScannerLvl()).thenReturn(0);
     Mockito.when(ship.getSpeed()).thenReturn(1);
@@ -288,6 +299,7 @@ public class FleetTest {
     Ship ship = Mockito.mock(Ship.class);
     Mockito.when(ship.getFtlSpeed()).thenReturn(2);
     Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getFleetCapacity()).thenReturn(0.5);
     Mockito.when(ship.getScannerDetectionLvl()).thenReturn(40);
     Mockito.when(ship.getScannerLvl()).thenReturn(2);
     Mockito.when(ship.getCloakingValue()).thenReturn(40);
@@ -408,6 +420,7 @@ public class FleetTest {
     Fleet fleet = new Fleet(ship, 2, 3);
     Ship colony = createShipTwo();
     fleet.addShip(colony);
+    assertEquals(0.1, fleet.getTotalFleetCapacity(), 0.01);
     assertEquals(ship,fleet.getFirstShip());
     assertEquals(null, fleet.getColonyShip());
     assertEquals(colony, fleet.getColonyShip(false));

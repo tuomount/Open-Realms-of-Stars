@@ -124,6 +124,11 @@ public class StarMapView extends BlackPanel {
   private IconLabel happinessMeter;
 
   /**
+   * Amount of fleets.
+   */
+  private IconLabel fleetMeter;
+
+  /**
    * Is map ready to move with keys
    */
   private boolean readyToMove;
@@ -209,6 +214,13 @@ public class StarMapView extends BlackPanel {
         ": " + happiness);
     happinessMeter.setToolTipText("Average happiness of your people.");
     panel.add(happinessMeter);
+    fleetMeter = new IconLabel(panel,
+        Icons.getIconByName(Icons.ICON_HULL_TECH), ": "
+        + String.format("%.0f",
+            map.getCurrentPlayerInfo().getFleets().getTotalFleetCapacity()));
+    fleetMeter.setToolTipText("Amount of fleets in use."
+        + " This value is not used yet anywhere.");
+    panel.add(fleetMeter);
     bottomPanel.add(panel);
     int panelHeight = SPACE_AFTER_RESEARCH_LABEL;
     if (!game.getCurrentResolution().equals("1024x768")) {

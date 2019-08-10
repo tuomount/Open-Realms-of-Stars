@@ -136,7 +136,10 @@ United Galaxy Tower by Tuomo Untinen
 Big missile icon by qubodup (CC0)
 
 Big money icon by Tuomo Untinen
+
 Original money images done by photoshopwizard (CC0)
+
+Mechion Space Ship Bridge by Tuomo Untinen
 
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by

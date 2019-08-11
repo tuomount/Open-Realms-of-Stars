@@ -444,8 +444,10 @@ public final class NewsFactory {
     StringBuilder sb = new StringBuilder(100);
     sb.append("Galactic Olympics were arranged in ");
     sb.append(vote.getPlanetName());
-    sb.append(". This event is organized by ");
-    sb.append(planet.getPlanetPlayerInfo().getEmpireName());
+    if (planet.getPlanetPlayerInfo() != null) {
+      sb.append(". This event is organized by ");
+      sb.append(planet.getPlanetPlayerInfo().getEmpireName());
+    }
     sb.append(". ");
     sb.append(athletes.length);
     sb.append(" athletes were competing against each others. There were"

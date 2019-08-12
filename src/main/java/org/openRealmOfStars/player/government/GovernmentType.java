@@ -27,67 +27,67 @@ public enum GovernmentType {
   /**
    * Democracy government
    */
-  DEMOCRACY(0, "Democracy", 1, -1, false),
+  DEMOCRACY(0, "Democracy", 1, -1, false, 2),
   /**
    * Alliance government
    */
-  ALLIANCE(1, "Alliance", 1, -1, false),
+  ALLIANCE(1, "Alliance", 1, -1, false, 2),
   /**
    * Federation government
    */
-  FEDERATION(2, "Federation", 1, 0, false),
+  FEDERATION(2, "Federation", 1, 0, false, 3),
   /**
    * Republic government
    */
-  REPUBLIC(3, "Republic", 1, 0, false),
+  REPUBLIC(3, "Republic", 1, 0, false, 3),
   /**
    * Guild government
    */
-  GUILD(4, "Guild", 0, 0, false),
+  GUILD(4, "Guild", 0, 0, false, 3),
   /**
    * Enterprise government
    */
-  ENTERPRISE(5, "Enterprise", 0, 0, false),
+  ENTERPRISE(5, "Enterprise", 0, 0, false, 3),
   /**
    * Hegemony government
    */
-  HEGEMONY(6, "Hegemony", -1, 1, false),
+  HEGEMONY(6, "Hegemony", -1, 1, false, 4),
   /**
    * Nest government
    */
-  NEST(7, "Nest", 0, 0, true),
+  NEST(7, "Nest", 0, 0, true, 3),
   /**
    * Hivemind government
    */
-  HIVEMIND(8, "Hive-mind", 0, 0, true),
+  HIVEMIND(8, "Hive-mind", 0, 0, true, 3),
   /**
    * AI government
    */
-  AI(9, "AI", 0, 0, true),
+  AI(9, "AI", 0, 0, true, 3),
   /**
    * Empire government
    */
-  EMPIRE(10, "Empire", -1, 1, false),
+  EMPIRE(10, "Empire", -1, 1, false, 4),
   /**
    * Kingdom government
    */
-  KINGDOM(11, "Kingdom", -1, 1, false),
+  KINGDOM(11, "Kingdom", -1, 1, false, 4),
   /**
    * Hierarchy government
    */
-  HIERARCHY(12, "Hierarchy", -1, 1, false),
+  HIERARCHY(12, "Hierarchy", -1, 1, false, 4),
   /**
    * Horde government
    */
-  HORDE(13, "Horde", -1, 1, false),
+  HORDE(13, "Horde", -1, 1, false, 4),
   /**
    * Horde government for Mechions
    */
-  MECHANICAL_HORDE(14, "Horde", -1, 1, false),
+  MECHANICAL_HORDE(14, "Horde", -1, 1, false, 4),
   /**
    * Clan government
    */
-  CLAN(15, "Clan", -1, 1, false);
+  CLAN(15, "Clan", -1, 1, false, 4);
 
 
   /**
@@ -97,14 +97,17 @@ public enum GovernmentType {
    * @param happiness Generic happiness
    * @param warResistance War resistance for government
    * @param singleMind Is government single minded
+   * @param baseFleetCapacity Base fleet capacity based on government
    */
   GovernmentType(final int index, final String name, final int happiness,
-      final int warResistance, final boolean singleMind) {
+      final int warResistance, final boolean singleMind,
+      final int baseFleetCapacity) {
     this.index = index;
     this.name = name;
     genericHappiness = happiness;
     this.warResistance = warResistance;
     this.immuneToHappiness = singleMind;
+    this.fleetCapacity = baseFleetCapacity;
   }
 
   /**
@@ -130,6 +133,10 @@ public enum GovernmentType {
    * Immune to happiness
    */
   private boolean immuneToHappiness;
+  /**
+   * Fleet capacity from government.
+   */
+  private int fleetCapacity;
   /**
    * Get name of government type
    * @return Name of government type
@@ -287,6 +294,13 @@ public enum GovernmentType {
   }
 
   /**
+   * Get Fleet capacity base value.
+   * @return Fleet capacity base value.
+   */
+  public int getFleetCapacity() {
+    return fleetCapacity;
+  }
+  /**
    * Get Government type description
    * @param markDown Is description on Markdown format or HTML.
    * @return Description
@@ -306,6 +320,10 @@ public enum GovernmentType {
       sb.append("### ");
     }
     sb.append(getName());
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Base fleet capacity: ");
+    sb.append(getFleetCapacity());
     sb.append(lf);
     if (isImmuneToHappiness()) {
       sb.append(dot);

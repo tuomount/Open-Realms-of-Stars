@@ -50,6 +50,7 @@ public class BuildingTest {
     assertEquals(true, generic.contains("Food: +1"));
     assertEquals(false, scaurian.contains("Cred.: +2"));
     assertEquals(true, scaurian.contains("Food: +1"));
+    assertEquals(0, building.getFleetCapacityBonus());
   }
 
   @Test
@@ -63,6 +64,7 @@ public class BuildingTest {
     assertEquals(0, building.getMineBonus());
     assertEquals(0, building.getFactBonus());
     assertEquals(0, building.getFarmBonus());
+    assertEquals(0, building.getFleetCapacityBonus());
   }
 
   @Test
@@ -76,6 +78,7 @@ public class BuildingTest {
     assertEquals(0, building.getMineBonus());
     assertEquals(1, building.getFactBonus());
     assertEquals(0, building.getFarmBonus());
+    assertEquals(0, building.getFleetCapacityBonus());
   }
 
   @Test
@@ -90,6 +93,7 @@ public class BuildingTest {
     assertEquals(0, building.getFactBonus());
     assertEquals(0, building.getFactBonus());
     assertEquals(0, building.getFarmBonus());
+    assertEquals(0, building.getFleetCapacityBonus());
   }
 
   @Test
@@ -105,6 +109,7 @@ public class BuildingTest {
     assertEquals(0, building.getFactBonus());
     assertEquals(0, building.getFactBonus());
     assertEquals(0, building.getFarmBonus());
+    assertEquals(0, building.getFleetCapacityBonus());
   }
 
   @Test
@@ -120,6 +125,7 @@ public class BuildingTest {
     assertEquals(0, building.getFactBonus());
     assertEquals(0, building.getFactBonus());
     assertEquals(0, building.getFarmBonus());
+    assertEquals(0, building.getFleetCapacityBonus());
   }
 
   @Test
@@ -136,6 +142,12 @@ public class BuildingTest {
     assertEquals(0, building.getFarmBonus());
     assertEquals(50, building.getBattleBonus());
     assertEquals(1, building.getHappiness());
+    assertEquals(1, building.getFleetCapacityBonus());
+    assertEquals("Barracks - one per planet\n" + 
+        "Population fights better against\n" + 
+        "invaders.\n" + 
+        "Cost: Prod.:20 Metal:20 Mainte.: 0.33\n" + 
+        "Happiness: +1 Fleet capacity: +1 Battle: +50%", building.getFullDescription());
   }
 
 }

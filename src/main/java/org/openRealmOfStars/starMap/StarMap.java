@@ -3189,4 +3189,20 @@ public class StarMap {
     }
     return result;
   }
+
+  /**
+   * Get total fleet capacity for certain realm
+   * @param info Realm info
+   * @return Fleet capacity
+   */
+  public int getTotalFleetCapacity(final PlayerInfo info) {
+    int result = 0;
+    result = result + info.getGovernment().getFleetCapacity();
+    for (Planet planet : planetList) {
+      if (planet.getPlanetPlayerInfo() == info) {
+        result = result + planet.getFleetCapacityBonus();
+      }
+    }
+    return result;
+  }
 }

@@ -2441,4 +2441,16 @@ public class Planet {
     }
     return false;
   }
+
+  /**
+   * Get Fleet capacity bonus from planet
+   * @return Fleet capacity bonus.
+   */
+  public int getFleetCapacityBonus() {
+    int result = 0;
+    for (Building building : buildings) {
+      result = result + building.getFleetCapacityBonus();
+    }
+    return result;
+  }
 }

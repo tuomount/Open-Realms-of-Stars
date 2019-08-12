@@ -56,6 +56,11 @@ public class PlanetTest {
       getPlanetCoordinate.setY(10);
 
       assertNotEquals(planet.getCoordinate(), getPlanetCoordinate);
+      assertEquals(0, planet.getFleetCapacityBonus());
+      planet.addBuilding(BuildingFactory.createByName("Barracks"));
+      assertEquals(1, planet.getFleetCapacityBonus());
+      planet.addBuilding(BuildingFactory.createByName("Space port"));
+      assertEquals(2, planet.getFleetCapacityBonus());
   }
 
   @Test

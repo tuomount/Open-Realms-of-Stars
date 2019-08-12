@@ -869,6 +869,7 @@ public final class BuildingFactory {
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
       tmp.setMaintenanceCost(0.5);
+      tmp.setFleetCapacityBonus(1);
       tmp.setSingleAllowed(true);
       return tmp;
     }
@@ -881,6 +882,7 @@ public final class BuildingFactory {
       tmp.setMaintenanceCost(0.33);
       tmp.setBattleBonus(50);
       tmp.setHappiness(1);
+      tmp.setFleetCapacityBonus(1);
       tmp.setSingleAllowed(true);
       return tmp;
     }

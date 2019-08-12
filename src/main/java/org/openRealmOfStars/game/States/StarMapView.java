@@ -217,7 +217,8 @@ public class StarMapView extends BlackPanel {
     fleetMeter = new IconLabel(panel,
         Icons.getIconByName(Icons.ICON_HULL_TECH), ": "
         + String.format("%.0f",
-            map.getCurrentPlayerInfo().getFleets().getTotalFleetCapacity()));
+            map.getCurrentPlayerInfo().getFleets().getTotalFleetCapacity())
+        + "/" + map.getTotalFleetCapacity(map.getCurrentPlayerInfo()));
     fleetMeter.setToolTipText("Amount of fleets in use."
         + " This value is not used yet anywhere.");
     panel.add(fleetMeter);

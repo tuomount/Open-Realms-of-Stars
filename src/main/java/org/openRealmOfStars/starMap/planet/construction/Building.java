@@ -113,6 +113,10 @@ public class Building extends Construction {
   private int materialBonus;
 
   /**
+   * Fleet capacity bonus
+   */
+  private int fleetCapacityBonus;
+  /**
    * Construct building for planet
    * @param index Unique number for building
    * @param name Building name
@@ -141,6 +145,7 @@ public class Building extends Construction {
     this.scanRange = 0;
     this.scanCloakingDetection = 0;
     this.happinessBonus = 0;
+    this.fleetCapacityBonus = 0;
   }
 
   /**
@@ -354,6 +359,15 @@ public class Building extends Construction {
       sb.append(value);
       space = true;
     }
+    if (getFleetCapacityBonus() > 0) {
+      if (space) {
+        sb.append(" ");
+      }
+      sb.append("Fleet capacity: +");
+      int value = getFleetCapacityBonus();
+      sb.append(value);
+      space = true;
+    }
     if (getBattleBonus() > 0) {
       if (space) {
         sb.append(" ");
@@ -563,5 +577,21 @@ public class Building extends Construction {
    */
   public void setMaterialBonus(final int materialBonus) {
     this.materialBonus = materialBonus;
+  }
+
+  /**
+   * Get fleet capacity bonus.
+   * @return the fleetCapacityBonus
+   */
+  public int getFleetCapacityBonus() {
+    return fleetCapacityBonus;
+  }
+
+  /**
+   * Set building's fleet capacity bonus
+   * @param fleetCapacityBonus the fleetCapacityBonus to set
+   */
+  public void setFleetCapacityBonus(final int fleetCapacityBonus) {
+    this.fleetCapacityBonus = fleetCapacityBonus;
   }
 }

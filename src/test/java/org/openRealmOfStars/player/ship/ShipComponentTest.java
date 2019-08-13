@@ -256,14 +256,18 @@ public class ShipComponentTest {
     assertEquals(0, component.getResearchBonus());
     assertEquals(0, component.getCreditBonus());
     assertEquals(0, component.getCultureBonus());
+    assertEquals(0, component.getFleetCapacityBonus());
     component.setResearchBonus(1);
     component.setCreditBonus(2);
     component.setCultureBonus(3);
+    component.setFleetCapacityBonus(4);
     assertEquals(1, component.getResearchBonus());
     assertEquals(2, component.getCreditBonus());
     assertEquals(3, component.getCultureBonus());
+    assertEquals(4, component.getFleetCapacityBonus());
     assertEquals("Module\nCost: 3 Metal: 3"
-        + "\nCulture bonus: 3\nResearch bonus: 1\nCredit bonus: 2\n",
+        + "\nCulture bonus: 3\nResearch bonus: 1\nCredit bonus: 2\n"
+        + "Fleet capacity bonus: 4\n",
         component.toString());
   }
 

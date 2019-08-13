@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.ship;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2019  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -127,6 +127,11 @@ public class ShipComponent {
    * Espionage bonus from component
    */
   private int espionageBonus;
+
+  /**
+   * Fleet capacity bonus from component
+   */
+  private int fleetCapacityBonus;
 
   /**
    * Constructor for ship component
@@ -483,6 +488,11 @@ public class ShipComponent {
         sb.append(getCreditBonus());
         sb.append("\n");
       }
+      if (getFleetCapacityBonus() > 0) {
+        sb.append("Fleet capacity bonus: ");
+        sb.append(getFleetCapacityBonus());
+        sb.append("\n");
+      }
       break;
     }
     case COLONY_MODULE:
@@ -700,6 +710,22 @@ public class ShipComponent {
    */
   public void setResearchBonus(final int researchBonus) {
     this.researchBonus = researchBonus;
+  }
+
+  /**
+   * Get fleet capacity bonus
+   * @return the fleetCapacityBonus
+   */
+  public int getFleetCapacityBonus() {
+    return fleetCapacityBonus;
+  }
+
+  /**
+   * Set Fleet capacity bonus for starbase component
+   * @param fleetCapacityBonus the fleetCapacityBonus to set
+   */
+  public void setFleetCapacityBonus(final int fleetCapacityBonus) {
+    this.fleetCapacityBonus = fleetCapacityBonus;
   }
 
   /**

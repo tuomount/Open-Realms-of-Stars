@@ -1679,7 +1679,7 @@ private int increaseHitChanceByComponent() {
   }
 
   /**
-   * Get total culture bonus, does not check if starbase is deployed
+   * Get total culture bonus, requires deployed starbase
    * @return Culture bonus
    */
   public int getTotalCultureBonus() {
@@ -1695,6 +1695,22 @@ private int increaseHitChanceByComponent() {
     return result;
   }
 
+  /**
+   * Get total fleet capacity bonus, requires deployed starbase
+   * @return fleet capacity bonus
+   */
+  public int getTotalFleetCapacityBonus() {
+    int result = 0;
+    for (int k = 0; k < getNumberOfComponents(); k++) {
+      ShipComponent comp = getComponent(k);
+      if (comp != null
+          && comp.getType() == ShipComponentType.STARBASE_COMPONENT
+          && componentIsWorking(k) && comp.getFleetCapacityBonus() > 0) {
+        result = result + comp.getFleetCapacityBonus();
+      }
+    }
+    return result;
+  }
   /**
    * Get previous trade coordinate
    * @return Trade coordinates or null

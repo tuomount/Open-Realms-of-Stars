@@ -3203,6 +3203,10 @@ public class StarMap {
         result = result + planet.getFleetCapacityBonus();
       }
     }
+    for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
+      result = result + info.getFleets().getByIndex(i)
+          .getTotalFleetCapacityBonus();
+    }
     return result;
   }
 }

@@ -899,6 +899,20 @@ public class Fleet {
   }
 
   /**
+   * Get total fleet capacity bonus
+   * @return Total fleet capacity bonus from starbase components
+   */
+  public int getTotalFleetCapacityBonus() {
+    int result = 0;
+    if (isStarBaseDeployed()) {
+      for (Ship ship : ships) {
+        result = result + ship.getTotalFleetCapacityBonus();
+      }
+    }
+    return result;
+  }
+
+  /**
    * Get total espionage bonus
    * @return Total espionage bonus from ships in fleet
    */

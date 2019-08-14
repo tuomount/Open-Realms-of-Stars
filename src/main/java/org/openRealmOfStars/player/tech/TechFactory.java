@@ -108,7 +108,7 @@ public final class TechFactory {
    * Defense tech names for level 3
    */
   public static final String[] DEFENSE_TECH_LEVEL3_NAMES = {"Shield Mk3",
-      "Armor plating Mk3", "Jammer Mk1" };
+      "Armor plating Mk3", "Jammer Mk1", "Command outpost" };
   /**
    * Defense tech names for level 4
    */
@@ -123,12 +123,12 @@ public final class TechFactory {
    * Defense tech names for level 6
    */
   public static final String[] DEFENSE_TECH_LEVEL6_NAMES = {"Shield Mk6",
-      "Armor plating Mk6" };
+      "Armor plating Mk6", "Space academy" };
   /**
    * Defense tech names for level 7
    */
   public static final String[] DEFENSE_TECH_LEVEL7_NAMES = {"Shield Mk7",
-      "Armor plating Mk7", "Jammer Mk3" };
+      "Armor plating Mk7", "Jammer Mk3", "Command center" };
   /**
    * Defense tech names for level 8
    */
@@ -482,7 +482,8 @@ public final class TechFactory {
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Defense, level);
         if (techName.startsWith("Planetary defense turret Mk")
-            || techName.startsWith("Orbital shield")) {
+            || techName.startsWith("Orbital shield")
+            || techName.equals("Space academy")) {
           tech.setImprovement(techName);
         } else {
           tech.setComponent(techName);
@@ -495,6 +496,12 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_PLANETARY_TURRET));
         } else if (techName.startsWith("Jammer Mk")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_CIRCUIT_BOARD));
+        } else if (techName.startsWith("Space academy")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_TROOPS));
+        } else if (techName.startsWith("Command outpost")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
+        } else if (techName.startsWith("Command control")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_DEFENSE_TECH));
         }

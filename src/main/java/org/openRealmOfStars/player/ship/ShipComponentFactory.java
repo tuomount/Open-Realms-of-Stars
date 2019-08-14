@@ -5,7 +5,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2019  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,7 +39,7 @@ public final class ShipComponentFactory {
    * Remember to increase this when new ship hull is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_SHIPCOMPONENT = 155;
+  private static final int MAX_SHIPCOMPONENT = 157;
 
   /**
    * Component Ion drive Mk1
@@ -813,6 +813,14 @@ public final class ShipComponentFactory {
    * Orbital neutron bomb
    */
   public static final int COMPONENT_ORBITAL_NEUTRON_BOMB = 154;
+  /**
+   * Command outpost
+   */
+  public static final int COMPONENT_COMMAND_OUTPOST = 155;
+  /**
+   * Command control
+   */
+  public static final int COMPONENT_COMMAND_CENTER = 156;
 
 /**
    * Create ShipComponent with matching name
@@ -1313,6 +1321,12 @@ public final class ShipComponentFactory {
     case COMPONENT_ORBITAL_NEUTRON_BOMB:
       tmp = createElectronics(index);
       break; // ORBITAL NEUTRON BOMB
+    case COMPONENT_COMMAND_OUTPOST:
+      tmp = createStarbaseModule(index);
+      break; // COMMAND OUTPOST
+    case COMPONENT_COMMAND_CENTER:
+        tmp = createStarbaseModule(index);
+        break; // COMMAND Control
     default: {
       ErrorLogger.log("Unexpected component with index: " + index);
       throw new IllegalArgumentException("Unexpected component index: "
@@ -1599,6 +1613,19 @@ public final class ShipComponentFactory {
       tmp.setCreditBonus(2);
       tmp.setEnergyRequirement(2);
     }
+    if (index == COMPONENT_COMMAND_OUTPOST) {
+      tmp = new ShipComponent(index, "Command outpost", 20, 10,
+          ShipComponentType.STARBASE_COMPONENT);
+      tmp.setEnergyRequirement(2);
+      tmp.setFleetCapacityBonus(1);
+    }
+    if (index == COMPONENT_COMMAND_CENTER) {
+      tmp = new ShipComponent(index, "Command center", 30, 15,
+          ShipComponentType.STARBASE_COMPONENT);
+      tmp.setEnergyRequirement(2);
+      tmp.setFleetCapacityBonus(2);
+    }
+
     return tmp;
   }
   /**

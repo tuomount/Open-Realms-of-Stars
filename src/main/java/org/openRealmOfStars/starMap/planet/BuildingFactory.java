@@ -39,7 +39,7 @@ public final class BuildingFactory {
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 52;
+  private static final int MAX_BUILDING = 53;
 
   /**
    * Component Basic mine
@@ -296,6 +296,10 @@ public final class BuildingFactory {
    * Component United Galaxy Tower
    */
   public static final int COMPONENT_UNITED_GALAXY_TOWER = 51;
+  /**
+   * Component Space academy
+   */
+  public static final int COMPONENT_SPACE_ACADEMY = 52;
 
   /**
    * Create planetary building with index
@@ -461,6 +465,9 @@ public final class BuildingFactory {
     case COMPONENT_UNITED_GALAXY_TOWER:
       tmp = createPlanetaryImprovement(index);
       break; // United Galaxy Tower
+    case COMPONENT_SPACE_ACADEMY:
+      tmp = createPlanetaryImprovement(index);
+      break; // Space academy
     default:
       throw new IllegalArgumentException("No building found with index "
       + index + "!");
@@ -1085,6 +1092,20 @@ public final class BuildingFactory {
       tmp.setMaintenanceCost(1);
       tmp.setCultBonus(1);
       tmp.setHappiness(2);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    }
+    if (index == COMPONENT_SPACE_ACADEMY) {
+      tmp = new Building(index, "Space academy",
+          Icons.getIconByName(Icons.ICON_TROOPS), BuildingType.MILITARY);
+      tmp.setDescription("Increases training of military personels for\n"
+          + " space ships.");
+      tmp.setProdCost(30);
+      tmp.setMetalCost(20);
+      tmp.setMaintenanceCost(0.25);
+      tmp.setBattleBonus(25);
+      tmp.setHappiness(1);
+      tmp.setFleetCapacityBonus(2);
       tmp.setSingleAllowed(true);
       return tmp;
     }

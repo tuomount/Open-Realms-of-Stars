@@ -8,7 +8,7 @@ import org.junit.experimental.categories.Category;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017 Tuomo Untinen
+* Copyright (C) 2017,2019 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -104,11 +104,25 @@ public class ShipComponentFactoryTest {
     assertEquals(2, module.getEnergyRequirement());
     assertEquals(24, module.getCost());
     assertEquals(12, module.getMetalCost());
+    assertEquals(0, module.getFleetCapacityBonus());
     module = ShipComponentFactory.createByName("Starbase lab");
     assertEquals(1, module.getResearchBonus());
     assertEquals(2, module.getEnergyRequirement());
     assertEquals(12, module.getCost());
     assertEquals(4, module.getMetalCost());
+    assertEquals(0, module.getFleetCapacityBonus());
+    module = ShipComponentFactory.createByName("Command outpost");
+    assertEquals(0, module.getResearchBonus());
+    assertEquals(2, module.getEnergyRequirement());
+    assertEquals(20, module.getCost());
+    assertEquals(10, module.getMetalCost());
+    assertEquals(1, module.getFleetCapacityBonus());
+    module = ShipComponentFactory.createByName("Command center");
+    assertEquals(0, module.getResearchBonus());
+    assertEquals(2, module.getEnergyRequirement());
+    assertEquals(30, module.getCost());
+    assertEquals(15, module.getMetalCost());
+    assertEquals(2, module.getFleetCapacityBonus());
   }
 
   @Test

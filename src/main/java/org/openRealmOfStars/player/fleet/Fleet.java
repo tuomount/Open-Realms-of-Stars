@@ -11,6 +11,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
+import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -964,5 +965,43 @@ public class Fleet {
       result = result + ship.getFleetCapacity();
     }
     return result;
+  }
+
+  /**
+   * Get scarable ship based on obsolete models or just bigger fleet capacity.
+   * @param obsoleteModels List of ship design which are obsolete.
+   * @return Ship or null if nothing to scrap.
+   */
+  public Ship getScrableShip(final ShipStat[] obsoleteModels) {
+    Ship shipObsolete = null;
+    Ship shipNotObsolete = null;
+    for (Ship ship : ships) {
+      boolean obsolete = false;
+      for (int i = 0; i < obsoleteModels.length; i++) {
+        if (obsoleteModels[i].getDesign().getName().equals(ship.getName())) {
+          obsolete = true;
+          break;
+        }
+      }
+      if (obsolete) {
+        if (shipObsolete == null && ship.getFleetCapacity() > 0) {
+          shipObsolete = ship;
+        } else if (shipObsolete != null
+            && ship.getFleetCapacity() > shipObsolete.getFleetCapacity()) {
+          shipObsolete = ship;
+        }
+      } else {
+        if (shipNotObsolete == null && ship.getFleetCapacity() > 0) {
+          shipNotObsolete = ship;
+        } else if (shipNotObsolete != null
+            && ship.getFleetCapacity() > shipNotObsolete.getFleetCapacity()) {
+          shipNotObsolete = ship;
+        }
+      }
+    }
+    if (shipObsolete != null) {
+      return shipObsolete;
+    }
+    return shipNotObsolete;
   }
 }

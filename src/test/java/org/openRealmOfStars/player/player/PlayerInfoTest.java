@@ -103,6 +103,10 @@ public class PlayerInfoTest {
         assertEquals(false, human.researchSpyShips());
         human.setAttitude(Attitude.BACKSTABBING);
         assertEquals(true, human.researchSpyShips());
+
+        assertEquals(0, human.getObsoleteShips().length);
+        human.getShipStat(0).setObsolete(true);
+        assertEquals(1, human.getObsoleteShips().length);
     }
 
     @Test

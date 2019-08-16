@@ -246,6 +246,7 @@ public final class MissionHandling {
           makeRegularMoves(game, fleet, info);
         }
       }
+      scrapTooManyShips(fleet, info, game);
     } // End Of Privateering
   }
 
@@ -952,6 +953,7 @@ public final class MissionHandling {
           && fleet.getRoute() == null) {
         makeReroute(game, fleet, info, mission);
       }
+      scrapTooManyShips(fleet, info, game);
     } // End of Attack
   }
 
@@ -985,9 +987,37 @@ public final class MissionHandling {
         // Target acquired, mission completed!
         info.getMissions().remove(mission);
       }
+      scrapTooManyShips(fleet, info, game);
     } // End of destroy starbase
   }
 
+  /**
+   * Method to scrap ships. Checks if ships cost too much
+   * to maintain and then remove one from the fleet.
+   * @param fleet Fleet where to scrap
+   * @param info Player Info
+   * @param game Game itself.
+   */
+  public static void scrapTooManyShips(final Fleet fleet,
+      final PlayerInfo info, final Game game) {
+    int capacity = game.getStarMap().getTotalFleetCapacity(info);
+    double currentCapacity = info.getFleets().getTotalFleetCapacity();
+    if (currentCapacity > capacity) {
+      int shipCost = (int) Math.floor(currentCapacity - capacity);
+      int index = game.getPlayers().getIndex(info);
+      int credPlus = game.getStarMap().getTotalProductionByPlayerPerTurn(
+          Planet.PRODUCTION_CREDITS, index);
+      if (credPlus < shipCost
+          && info.getTotalCredits() / shipCost < 5) {
+        Ship ship = fleet.getScrableShip(info.getObsoleteShips());
+        fleet.removeShip(ship);
+        ShipStat stat = info.getShipStatByName(ship.getName());
+        if (stat != null) {
+          stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
+        }
+      }
+    }
+  }
   /**
    * Handle Defend mission
    * @param mission Defend mission, does nothing if type is wrong
@@ -1017,6 +1047,7 @@ public final class MissionHandling {
         makeReroute(game, fleet, info, mission);
       }
     }
+    scrapTooManyShips(fleet, info, game);
   }
 
   /**

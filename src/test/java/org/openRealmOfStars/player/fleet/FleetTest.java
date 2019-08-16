@@ -11,6 +11,8 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipSize;
+import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -486,6 +488,24 @@ public class FleetTest {
     assertEquals(35,fleet.getMilitaryValue());
     assertEquals(22, fleet.getFleetCloackingValue());
     assertEquals(false, fleet.isTradeFleet());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFleetGetScrabableShip() {
+    Ship ship = createShipOne();
+    Ship privateer = createPrivateerShipOne();
+    Ship colony = createShipTwo();
+    Fleet fleet = new Fleet(ship, 2, 3);
+    fleet.addShip(privateer);
+    fleet.addShip(colony);
+    ShipStat[] stats = new ShipStat[1];
+    stats[0] = Mockito.mock(ShipStat.class);
+    ShipDesign design = Mockito.mock(ShipDesign.class);
+    Mockito.when(design.getName()).thenReturn("Privateer");
+    Mockito.when(stats[0].getDesign()).thenReturn(design);
+    Ship ship2 = fleet.getScrableShip(stats);
+    assertEquals(privateer, ship2);
   }
 
   @Test

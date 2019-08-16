@@ -1643,4 +1643,17 @@ public class PlayerInfo {
     setTotalCredits(getTotalCredits() - cost);
   }
 
+  /**
+   * Get list of obsoleted ship design
+   * @return Obsolete ship designs.
+   */
+  public ShipStat[] getObsoleteShips() {
+    ArrayList<ShipStat> stats = new ArrayList<>();
+    for (ShipStat stat : shipStatList) {
+      if (stat.isObsolete()) {
+        stats.add(stat);
+      }
+    }
+    return stats.toArray(new ShipStat[stats.size()]);
+  }
 }

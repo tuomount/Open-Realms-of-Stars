@@ -235,6 +235,8 @@ public class MissionHandlingTest {
     fleetList.add(fleet);
     Mockito.when(info.getFleets()).thenReturn(fleetList);
     Game game = Mockito.mock(Game.class);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(game.getStarMap()).thenReturn(map);
     MissionHandling.handleDestroyStarbase(mission, fleet, info, game);
     assertEquals(MissionPhase.EXECUTING, mission.getPhase());
   }
@@ -328,6 +330,9 @@ public class MissionHandlingTest {
   public void testPrivateering() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
+    FleetList fleetList = Mockito.mock(FleetList.class);
+    Mockito.when(fleetList.getTotalFleetCapacity()).thenReturn(0d);
+    Mockito.when(info.getFleets()).thenReturn(fleetList);
     Mission mission = new Mission(MissionType.PRIVATEER, MissionPhase.TREKKING,
         new Coordinate(2, 2));
     Game game = Mockito.mock(Game.class);

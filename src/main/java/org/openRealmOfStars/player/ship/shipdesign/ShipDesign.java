@@ -421,6 +421,7 @@ public class ShipDesign {
       result = result + comp.getResearchBonus();
       result = result + comp.getCreditBonus();
       result = result + comp.getCultureBonus();
+      result = result + comp.getFleetCapacityBonus();
     }
     return result;
   }

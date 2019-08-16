@@ -158,6 +158,33 @@ public class PlanetHandlingTest {
   }
 
   /**
+   * Create defense turret with mockito
+   * @return defense turret building
+   */
+  private static Building createBarracks() {
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getBattleBonus()).thenReturn(50);
+    Mockito.when(building.getDefenseDamage()).thenReturn(0);
+    Mockito.when(building.getScanRange()).thenReturn(0);
+    Mockito.when(building.getScanCloakingDetection()).thenReturn(0);
+    Mockito.when(building.getType()).thenReturn(BuildingType.MILITARY);
+    Mockito.when(building.getFactBonus()).thenReturn(0);
+    Mockito.when(building.getMineBonus()).thenReturn(0);
+    Mockito.when(building.getFarmBonus()).thenReturn(0);
+    Mockito.when(building.getReseBonus()).thenReturn(0);
+    Mockito.when(building.getCultBonus()).thenReturn(0);
+    Mockito.when(building.getCredBonus()).thenReturn(0);
+    Mockito.when(building.getRecycleBonus()).thenReturn(0);
+    Mockito.when(building.getMaintenanceCost()).thenReturn(0.33);
+    Mockito.when(building.getMetalCost()).thenReturn(7);
+    Mockito.when(building.getProdCost()).thenReturn(14);
+    Mockito.when(building.getHappiness()).thenReturn(1);
+    Mockito.when(building.getFleetCapacityBonus()).thenReturn(1);
+    Mockito.when(building.getName()).thenReturn("Barracks");
+    return building;
+  }
+
+  /**
    * Create basic lab with mockito
    * @return basic lab building
    */
@@ -274,21 +301,21 @@ public class PlanetHandlingTest {
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(39,score);
 
     score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.EXPANSIONIST);
+        Attitude.EXPANSIONIST, false);
     assertEquals(49,score);
 
     Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
     score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(49,score);
 
     Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
     score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(-1,score);
 
   }
@@ -308,31 +335,80 @@ public class PlanetHandlingTest {
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(39,score);
 
     Mockito.when(info.getRace()).thenReturn(SpaceRace.SPORKS);
     score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(54,score);
     score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.MILITARISTIC);
+        Attitude.MILITARISTIC, false);
     assertEquals(69,score);
     score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.AGGRESSIVE);
+        Attitude.AGGRESSIVE, false);
     assertEquals(64,score);
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HEGEMONY);
     score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(69,score);
     Mockito.when(planet.calculateHappiness()).thenReturn(80);
     score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(64,score);
     Mockito.when(planet.calculateHappiness()).thenReturn(-80);
     score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(94,score);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBarracksScoring() {
+    Building building = createBarracks();
+
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getAmountMetalInGround()).thenReturn(5000);
+    Mockito.when(planet.howManyBuildings(building.getName())).thenReturn(0);
+    Mockito.when(planet.exceedRadiation()).thenReturn(false);
+
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
+
+    int score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL, false);
+    assertEquals(76,score);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL, true);
+    assertEquals(126,score);
+
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.SPORKS);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL, false);
+    assertEquals(91,score);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL, true);
+    assertEquals(141,score);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.MILITARISTIC, false);
+    assertEquals(106,score);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.MILITARISTIC, true);
+    assertEquals(156,score);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.AGGRESSIVE, false);
+    assertEquals(101,score);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.AGGRESSIVE, true);
+    assertEquals(151,score);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HEGEMONY);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL, false);
+    assertEquals(106,score);
+    score = PlanetHandling.scoreBuilding(building, planet, info,
+        Attitude.LOGICAL, true);
+    assertEquals(156,score);
   }
 
   @Test
@@ -354,7 +430,7 @@ public class PlanetHandlingTest {
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(5);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(59,score);
   }
 
@@ -377,7 +453,7 @@ public class PlanetHandlingTest {
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(1);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(-1,score);
   }
 
@@ -400,7 +476,7 @@ public class PlanetHandlingTest {
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(1);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(118,score);
   }
 
@@ -421,15 +497,15 @@ public class PlanetHandlingTest {
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(59,score);
     score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.SCIENTIFIC);
+        Attitude.SCIENTIFIC, false);
     assertEquals(74,score);
     
     Mockito.when(info.getRace()).thenReturn(SpaceRace.GREYANS);
     score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(74,score);
 
   }
@@ -453,7 +529,7 @@ public class PlanetHandlingTest {
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(5);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(40,score);
   }
 
@@ -476,7 +552,7 @@ public class PlanetHandlingTest {
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(-1,score);
   }
 
@@ -499,7 +575,7 @@ public class PlanetHandlingTest {
     Mockito.when(planet.getTotalProduction(Planet.PRODUCTION_METAL)).thenReturn(2);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(80,score);
   }
 
@@ -518,10 +594,10 @@ public class PlanetHandlingTest {
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(39,score);
     score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.DIPLOMATIC);
+        Attitude.DIPLOMATIC, false);
     assertEquals(54,score);
   }
 
@@ -540,10 +616,10 @@ public class PlanetHandlingTest {
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     int score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.LOGICAL);
+        Attitude.LOGICAL, false);
     assertEquals(79,score);
     score = PlanetHandling.scoreBuilding(building, planet, info,
-        Attitude.MERCHANTICAL);
+        Attitude.MERCHANTICAL, false);
     assertEquals(94,score);
   }
 
@@ -569,7 +645,7 @@ public class PlanetHandlingTest {
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     Building building = PlanetHandling.getWorstBuilding(planet, info,
-        Attitude.LOGICAL, null);
+        Attitude.LOGICAL, null, false);
     assertEquals(farm, building);
   }
 
@@ -596,7 +672,7 @@ public class PlanetHandlingTest {
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.AI);
 
     Building building = PlanetHandling.getWorstBuilding(planet, info,
-        Attitude.LOGICAL, advancedFactory);
+        Attitude.LOGICAL, advancedFactory, false);
     assertEquals(factory, building);
   }
 

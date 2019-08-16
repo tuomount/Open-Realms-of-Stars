@@ -930,6 +930,7 @@ public final class ShipGenerator {
       Tech starbaseLab = player.getTechList().getBestStarbaseLab();
       Tech starbaseCult = player.getTechList().getBestStarbaseCulture();
       Tech starbaseCred = player.getTechList().getBestStarbaseCredit();
+      Tech starbaseFleet = player.getTechList().getBestStarbaseFleetCap();
       ShipComponent shieldComp = null;
       ShipComponent shieldGenComp = null;
       ShipComponent armorComp = null;
@@ -970,6 +971,12 @@ public final class ShipGenerator {
         labComp = ShipComponentFactory
             .createByName(starbaseLab.getComponent());
         components.add(labComp);
+      }
+      ShipComponent fleetComp = null;
+      if (starbaseFleet != null) {
+        fleetComp = ShipComponentFactory
+            .createByName(starbaseFleet.getComponent());
+        components.add(fleetComp);
       }
       Tech weapTech = player.getTechList()
           .getBestWeapon(ShipComponentType.WEAPON_BEAM);

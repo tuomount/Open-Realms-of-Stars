@@ -250,8 +250,15 @@ public final class PlanetHandling {
           int freeSlot = planet.getGroundSize() - planet.getUsedPlanetSize();
           if (planet.getUnderConstruction() instanceof Building
               && freeSlot == 0) {
+            int fleetCap = map.getTotalFleetCapacity(info);
+            double fleetSize = info.getFleets().getTotalFleetCapacity();
+            boolean nearFleetLimit = false;
+            if (fleetSize + 1 > fleetCap) {
+              nearFleetLimit = true;
+            }
             Building newBuild = (Building) planet.getUnderConstruction();
-            Building worst = getWorstBuilding(planet, info, attitude, newBuild);
+            Building worst = getWorstBuilding(planet, info, attitude, newBuild,
+                nearFleetLimit);
             if  (worst != null) {
               // Removing the worst building
               planet.removeBuilding(worst);
@@ -366,10 +373,12 @@ public final class PlanetHandling {
    * @param planet Planet where building is placed or about to place
    * @param info PlayerInfo who's building is about to score
    * @param attitude AI's attitude
+   * @param nearFleetLimit Is Fleet capacity near the limit or even over.
    * @return Score of building, bigger is better
    */
   public static int scoreBuilding(final Building building, final Planet planet,
-      final PlayerInfo info, final Attitude attitude) {
+      final PlayerInfo info, final Attitude attitude,
+      final boolean nearFleetLimit) {
     // Military score
     int score = building.getBattleBonus()
         + building.getDefenseDamage() * TURRET_DEFENSE_VALUE_SCORE;
@@ -453,6 +462,13 @@ public final class PlanetHandling {
       score = score + building.getHappiness() * mult;
 
     }
+    if (building.getFleetCapacityBonus() > 0) {
+      score = score + 30 * building.getFleetCapacityBonus();
+      if (nearFleetLimit) {
+        score = score + 50;
+      }
+    }
+
     score = score - (int) Math.round(building.getMaintenanceCost() * 10);
     // High cost drops the value
     score = score - building.getMetalCost() / 10;
@@ -548,15 +564,18 @@ public final class PlanetHandling {
    * @param attitude AI's attitude
    * @param newBuild new Building about to replace the old one.
    *        Can be also null.
+   * @param nearFleetLimit Is fleet capacity over the limit or near it.
    * @return worst building or null if no buildings
    */
   public static Building getWorstBuilding(final Planet planet,
-      final PlayerInfo info, final Attitude attitude, final Building newBuild) {
+      final PlayerInfo info, final Attitude attitude, final Building newBuild,
+      final boolean nearFleetLimit) {
     int lowestScore = MAX_SLOT_SCORE;
     Building lowBuilding = null;
     Building[] buildings = planet.getBuildingList();
     for (Building building : buildings) {
-      int score = scoreBuilding(building, planet, info, attitude);
+      int score = scoreBuilding(building, planet, info, attitude,
+          nearFleetLimit);
       if (newBuild != null && building.getType() == newBuild.getType()) {
         // This should increase the chance for upgrading the building.
         int newBonus = newBuild.getBattleBonus() + newBuild.getCredBonus()
@@ -592,8 +611,14 @@ public final class PlanetHandling {
       final Planet planet, final PlayerInfo info, final StarMap map,
       final Attitude attitude) {
     boolean constructionSelected = false;
+    int fleetCap = map.getTotalFleetCapacity(info);
+    double fleetSize = info.getFleets().getTotalFleetCapacity();
+    boolean nearFleetLimit = false;
+    if (fleetSize + 1 > fleetCap) {
+      nearFleetLimit = true;
+    }
     int[] scores = scoreConstructions(constructions, planet, info, map,
-        attitude);
+        attitude, nearFleetLimit);
     int highest = -1;
     int value = -1;
     boolean over400 = false;
@@ -763,7 +788,8 @@ public final class PlanetHandling {
         && planet.getUnderConstruction() instanceof Building
         && needToRemoveWorst) {
       Building newBuild = (Building) planet.getUnderConstruction();
-      Building worst = getWorstBuilding(planet, info, attitude, newBuild);
+      Building worst = getWorstBuilding(planet, info, attitude, newBuild,
+          nearFleetLimit);
       if  (worst != null) {
         // Removing the worst building
         planet.removeBuilding(worst);
@@ -979,11 +1005,12 @@ public final class PlanetHandling {
    * @param info The planet info
    * @param map The star map
    * @param attitude AI's attitude
+   * @param nearFleetLimit Is fleet capacity near the limit or even over it.
    * @return The calculate scores
    */
   private static int[] scoreConstructions(final Construction[] constructions,
       final Planet planet, final PlayerInfo info, final StarMap map,
-      final Attitude attitude) {
+      final Attitude attitude, final boolean nearFleetLimit) {
     int[] scores = new int[constructions.length];
     for (int i = 0; i < constructions.length; i++) {
       scores[i] = -1;
@@ -1007,7 +1034,8 @@ public final class PlanetHandling {
       }
       if (constructions[i] instanceof Building) {
         Building building = (Building) constructions[i];
-        scores[i] = scoreBuilding(building, planet, info, attitude);
+        scores[i] = scoreBuilding(building, planet, info, attitude,
+            nearFleetLimit);
       }
       if (constructions[i] instanceof Ship) {
         Ship ship = (Ship) constructions[i];

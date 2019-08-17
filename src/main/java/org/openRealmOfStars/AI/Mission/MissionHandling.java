@@ -1010,10 +1010,12 @@ public final class MissionHandling {
       if (credPlus < shipCost
           && info.getTotalCredits() / shipCost < 5) {
         Ship ship = fleet.getScrableShip(info.getObsoleteShips());
-        fleet.removeShip(ship);
-        ShipStat stat = info.getShipStatByName(ship.getName());
-        if (stat != null) {
-          stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
+        if (ship != null) {
+          fleet.removeShip(ship);
+          ShipStat stat = info.getShipStatByName(ship.getName());
+          if (stat != null) {
+            stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
+          }
         }
       }
     }
@@ -1359,8 +1361,7 @@ public final class MissionHandling {
         // War monger governments like war
         warChance = warChance + 20;
       }
-      int totalWarFatigue =
-          info.getWarFatigue() / info.getRace().getWarFatigueResistance();
+      int totalWarFatigue = info.getTotalWarFatigue();
       if (totalWarFatigue < -3) {
         warChance = warChance - 30;
       }

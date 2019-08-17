@@ -2117,8 +2117,7 @@ public class AITurnView extends BlackPanel {
         if (!government.isImmuneToHappiness()) {
           boolean fatigued = false;
           int wars = info.getDiplomacy().getNumberOfWar();
-          int warFatigueValue = info.getWarFatigue()
-              / info.getRace().getWarFatigueResistance();
+          int warFatigueValue = info.getTotalWarFatigue();
           if (wars > 0 && wars > government.getWarResistance()) {
             int fatigue = info.getWarFatigue();
             fatigue = fatigue - wars + government.getWarResistance();
@@ -2151,8 +2150,7 @@ public class AITurnView extends BlackPanel {
               info.getMsgList().addNewMessage(msg);
             }
           } else {
-            int warFatigueValueAfter = info.getWarFatigue()
-                / info.getRace().getWarFatigueResistance();
+            int warFatigueValueAfter = info.getTotalWarFatigue();
             if (warFatigueValueAfter < warFatigueValue) {
               Message msg = new Message(MessageType.INFORMATION,
                   "People is getting more tired of war!",

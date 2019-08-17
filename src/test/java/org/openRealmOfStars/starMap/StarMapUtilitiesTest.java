@@ -467,7 +467,7 @@ public class StarMapUtilitiesTest {
     Mockito.when(info.getGovernment()).thenReturn(GovernmentType.DEMOCRACY);
     assertEquals(10, StarMapUtilities.getVotingSupport(info, vote, map));
 
-    Mockito.when(info.getWarFatigue()).thenReturn(-2);
+    Mockito.when(info.getTotalWarFatigue()).thenReturn(-2);
     assertEquals(15, StarMapUtilities.getVotingSupport(info, vote, map));
 
   }

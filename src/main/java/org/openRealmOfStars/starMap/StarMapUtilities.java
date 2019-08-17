@@ -388,7 +388,7 @@ public final class StarMapUtilities {
           && !info.getGovernment().isImmuneToHappiness()) {
         result = result + 5;
       }
-      if (info.getWarFatigue() < 0) {
+      if (info.getTotalWarFatigue() < 0) {
         result = result + 5;
       }
     }

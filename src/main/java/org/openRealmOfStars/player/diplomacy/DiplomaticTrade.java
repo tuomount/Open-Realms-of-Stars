@@ -538,6 +538,182 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Get best fleet to trade. Fleet has biggest obsolete value
+   * and then minimum military value.
+   * @param info Realm who owns the fleets
+   * @param fleets ArrayList of fleets
+   * @return Fleet or null
+   */
+  public Fleet getTradeableFleet(final PlayerInfo info,
+      final ArrayList<Fleet> fleets) {
+    Fleet bestFleetForTrade = null;
+    int bestObsoleteValue = 0;
+    for (Fleet fleet : fleets) {
+      if (bestFleetForTrade != null) {
+        int value = fleet.calculateFleetObsoleteValue(info);
+        if (fleet.getMilitaryValue() > 0 && value > bestObsoleteValue) {
+          bestFleetForTrade = fleet;
+          bestObsoleteValue = value;
+        } else if (fleet.getMilitaryValue()
+            < bestFleetForTrade.getMilitaryValue()
+            && value == bestObsoleteValue) {
+          bestFleetForTrade = fleet;
+          bestObsoleteValue = value;
+        }
+      } else {
+        int value = fleet.calculateFleetObsoleteValue(info);
+        if (fleet.getMilitaryValue() > 0 && value > 0) {
+          bestFleetForTrade = fleet;
+          bestObsoleteValue = value;
+        }
+      }
+    }
+    return bestFleetForTrade;
+  }
+
+  /**
+   * Calculate planet value for demander.
+   * @param demander PlayerInfo
+   * @param planet PLanet to calculate
+   * @return Planet value.
+   */
+  private int calculatePlanetValue(final PlayerInfo demander,
+      final Planet planet) {
+    int result = 0;
+    result = result + planet.getMetal() / 1000;
+    result = result + planet.getGroundSize() - 7;
+    result = result + planet.getTotalPopulation() / 3;
+    if (planet.getHomeWorldIndex() != -1) {
+      result = result + 3;
+    }
+    if (planet.getRadiationLevel() > demander.getRace().getMaxRad()) {
+      result = 0;
+    }
+    return result;
+  }
+
+  /**
+   * Get best tradeable planet.
+   * @param demander Realm who demands planet.
+   *        If null owner is trying to offer planet.
+   * @param planets ArrayList of planet
+   * @return Planet or null
+   */
+  public Planet getTradeablePlanet(final PlayerInfo demander,
+      final ArrayList<Planet> planets) {
+    Planet bestPlanet = null;
+    int value = 0;
+    PlayerInfo info = demander;
+    boolean biggest = true;
+    if (planets.get(0) == null
+        || planets.get(0).getPlanetPlayerInfo() == null) {
+      return null;
+    }
+    if (demander == null) {
+      info = planets.get(0).getPlanetPlayerInfo();
+      biggest = false;
+      value = 9999;
+    }
+    for (Planet planet : planets) {
+      if (biggest) {
+        if (calculatePlanetValue(info, planet) > value) {
+          bestPlanet = planet;
+          value = calculatePlanetValue(info, bestPlanet);
+        }
+      } else {
+        if (calculatePlanetValue(info, planet) < value) {
+          bestPlanet = planet;
+          value = calculatePlanetValue(info, bestPlanet);
+        }
+      }
+    }
+    return bestPlanet;
+  }
+  /**
+   * Generate peace offer depending on military power difference
+   * and war fatigue
+   */
+  public void generatePeaceOffer() {
+    PlayerInfo info = starMap.getPlayerByIndex(first);
+    PlayerInfo info2 = starMap.getPlayerByIndex(second);
+    Attitude attitude = info.getAiAttitude();
+    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+        second);
+    int fatigue = info.getTotalWarFatigue();
+    if (fleetListForFirst == null || fleetListForSecond == null) {
+      generateFleetList();
+    }
+    if (planetListForFirst == null || planetListForSecond == null) {
+      generatePlanetList();
+    }
+    generateEqualTrade(NegotiationType.PEACE);
+    if (power > 150) {
+      if (fatigue > -3 && techListForFirst.size() > 0) {
+        int index = getBestTech(techListForFirst, attitude);
+        firstOffer.add(new NegotiationOffer(NegotiationType.TECH,
+            techListForFirst.get(index)));
+      }
+      if (fatigue > -2) {
+        Fleet fleet = getTradeableFleet(info2, fleetListForSecond);
+        if (fleet != null) {
+          firstOffer.add(new NegotiationOffer(NegotiationType.FLEET, fleet));
+        }
+      }
+      if (fatigue == 0) {
+        Planet planet = getTradeablePlanet(info, planetListForSecond);
+        if (planet != null) {
+          firstOffer.add(new NegotiationOffer(NegotiationType.PLANET, planet));
+        }
+      }
+    } else if (power > 50) {
+      if (fatigue > -2 && techListForFirst.size() > 0) {
+        int index = getBestTech(techListForFirst, attitude);
+        firstOffer.add(new NegotiationOffer(NegotiationType.TECH,
+            techListForFirst.get(index)));
+      }
+      if (fatigue == 0) {
+        Fleet fleet = getTradeableFleet(info2, fleetListForSecond);
+        if (fleet != null) {
+          firstOffer.add(new NegotiationOffer(NegotiationType.FLEET, fleet));
+        }
+      }
+    } else if (power > -50) {
+      generateEqualTrade(NegotiationType.PEACE);
+    }  else if (power < -150) {
+      if (fatigue < -3) {
+        Planet planet = getTradeablePlanet(info2, planetListForSecond);
+        if (planet != null) {
+          secondOffer.add(new NegotiationOffer(NegotiationType.PLANET,
+              planet));
+        }
+      }
+      if (fatigue == -2) {
+        Fleet fleet = getTradeableFleet(info, fleetListForFirst);
+        if (fleet != null) {
+          secondOffer.add(new NegotiationOffer(NegotiationType.FLEET, fleet));
+        }
+      }
+      if (fatigue == -1 && techListForSecond.size() > 0) {
+        int index = getBestTech(techListForSecond, attitude);
+        secondOffer.add(new NegotiationOffer(NegotiationType.TECH,
+            techListForSecond.get(index)));
+      }
+    } else {
+      if (fatigue <= -2) {
+        Fleet fleet = getTradeableFleet(info, fleetListForFirst);
+        if (fleet != null) {
+          secondOffer.add(new NegotiationOffer(NegotiationType.FLEET, fleet));
+        }
+      }
+      if (fatigue == -1 && techListForSecond.size() > 0) {
+        int index = getBestTech(techListForSecond, attitude);
+        secondOffer.add(new NegotiationOffer(NegotiationType.TECH,
+            techListForSecond.get(index)));
+      }
+
+    }
+  }
+  /**
    * Generate first offer depending on AI's attitude.
    */
   public void generateFirstOffer() {
@@ -1367,6 +1543,9 @@ public class DiplomaticTrade {
     if (offerPlayer.getDiplomacy().getDiplomacyList(second)
         .getNumberOfMeetings() == 0) {
       generateFirstOffer();
+    } else if (offerPlayer.getDiplomacy().getDiplomaticRelation(second)
+        .equals(Diplomacy.WAR)) {
+      generatePeaceOffer();
     } else {
       Attitude attitude = offerPlayer.getAiAttitude();
       switch (attitude) {

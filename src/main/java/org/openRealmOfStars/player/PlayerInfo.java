@@ -1452,6 +1452,22 @@ public class PlayerInfo {
   public int getWarFatigue() {
     return warFatigue;
   }
+
+  /**
+   * Get total war fatigue. This is amount negative happiness
+   * is being given to planets. This is between -6 and 0.
+   * -6 is really bad, 0 is not war fatigue at all.
+   * @return Total war fatigue.
+   */
+  public int getTotalWarFatigue() {
+    int fatigue = getWarFatigue()
+        / getRace().getWarFatigueResistance();
+    if (fatigue < -6) {
+      // Maximum war fatigue
+      fatigue = -6;
+    }
+    return fatigue;
+  }
   /**
    * Get empire name for player
    * @return Empire name as a String

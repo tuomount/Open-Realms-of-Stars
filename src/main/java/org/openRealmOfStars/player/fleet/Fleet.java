@@ -1004,4 +1004,30 @@ public class Fleet {
     }
     return shipNotObsolete;
   }
+
+  /**
+   * Calculate Fleet obsolete value. How many ships in fleet are obsolete.
+   * Also foreign ships are counted as obsolete.
+   * @param info PlayerInfo who owns the fleet
+   * @return Obsolete value, positive more obsolete it is.
+   */
+  public int calculateFleetObsoleteValue(final PlayerInfo info) {
+    int result = 0;
+    for (Ship ship : ships) {
+      if (ship.getHull().getRace() == info.getRace()) {
+        for (ShipStat stat : info.getShipStatList()) {
+          if (stat.getDesign().getName().equals(ship.getName())) {
+            if (stat.isObsolete()) {
+              result = result + 1;
+            } else {
+              result = result - 1;
+            }
+          }
+        }
+      } else {
+        result = result + 1;
+      }
+    }
+    return result;
+  }
 }

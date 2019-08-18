@@ -485,6 +485,18 @@ public class PlayerInfoTest {
 
     @Test
     @Category(org.openRealmOfStars.UnitTest.class)
+    public void testWarFatigue() {
+      PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 8, 0);
+      info.setGovernment(GovernmentType.DEMOCRACY);
+      assertEquals(0, info.getTotalWarFatigue());
+      info.setWarFatigue(-80);
+      assertEquals(-1, info.getTotalWarFatigue());
+      info.setWarFatigue(-SpaceRace.HUMAN.getWarFatigueResistance() * 7);
+      assertEquals(-6, info.getTotalWarFatigue());
+    }
+
+    @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
     public void testBoard() {
       PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 8, 0);
       assertEquals(false, info.isBoard());

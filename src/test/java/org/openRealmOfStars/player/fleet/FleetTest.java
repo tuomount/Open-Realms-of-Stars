@@ -8,6 +8,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHull;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -61,6 +62,35 @@ public class FleetTest {
     Mockito.when(ship.getMaxHullPoints()).thenReturn(4);
     Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
     Mockito.when(ship.getName()).thenReturn("Scout");
+    Mockito.when(ship.getTotalMilitaryPower()).thenReturn(15);
+    Mockito.when(ship.isTrooperModule()).thenReturn(false);
+    Mockito.when(ship.getEspionageBonus()).thenReturn(0);
+    Mockito.when(ship.hasBombs()).thenReturn(false);
+    Mockito.when(ship.getCulture()).thenReturn(0);
+    return ship;
+  }
+
+  /**
+   * Create first ship
+   * @return First ship
+   */
+  private static Ship createObosoleteShipOne() {
+    ShipHull hull = Mockito.mock(ShipHull.class);
+    Mockito.when(hull.getSize()).thenReturn(ShipSize.SMALL);
+    Mockito.when(hull.getFleetCapacity()).thenReturn(0.1);
+    Ship ship = Mockito.mock(Ship.class);
+    Mockito.when(ship.getFtlSpeed()).thenReturn(2);
+    Mockito.when(ship.getHull()).thenReturn(hull);
+    Mockito.when(ship.getFleetCapacity()).thenReturn(0.1);
+    Mockito.when(ship.getScannerDetectionLvl()).thenReturn(40);
+    Mockito.when(ship.getScannerLvl()).thenReturn(2);
+    Mockito.when(ship.getSpeed()).thenReturn(1);
+    Mockito.when(ship.getFreeCargoColonists()).thenReturn(0);
+    Mockito.when(ship.getFreeCargoMetal()).thenReturn(0);
+    Mockito.when(ship.getHullPoints()).thenReturn(4);
+    Mockito.when(ship.getMaxHullPoints()).thenReturn(4);
+    Mockito.when(ship.isPrivateeringShip()).thenReturn(false);
+    Mockito.when(ship.getName()).thenReturn("Scout Mk0");
     Mockito.when(ship.getTotalMilitaryPower()).thenReturn(15);
     Mockito.when(ship.isTrooperModule()).thenReturn(false);
     Mockito.when(ship.getEspionageBonus()).thenReturn(0);
@@ -454,6 +484,49 @@ public class FleetTest {
     fleet.addShip(espionageShip);
     fleet.addShip(espionageShip);
     assertEquals(2, fleet.getEspionageBonus());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFleetObsoleteValueWithThreeShip() {
+    Ship ship = createShipOne();
+    Fleet fleet = new Fleet(ship, 2, 3);
+    Ship obsoleteShip = createObosoleteShipOne();
+    fleet.addShip(obsoleteShip);
+    fleet.addShip(obsoleteShip);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    ShipStat[] stats = new ShipStat[2];
+    stats[0] = Mockito.mock(ShipStat.class);
+    ShipDesign design1 = Mockito.mock(ShipDesign.class);
+    Mockito.when(design1.getName()).thenReturn("Scout");
+    Mockito.when(stats[0].getDesign()).thenReturn(design1);
+    Mockito.when(stats[0].isObsolete()).thenReturn(false);
+    stats[1] = Mockito.mock(ShipStat.class);
+    ShipDesign design2 = Mockito.mock(ShipDesign.class);
+    Mockito.when(design2.getName()).thenReturn("Scout Mk0");
+    Mockito.when(stats[1].getDesign()).thenReturn(design2);
+    Mockito.when(stats[1].isObsolete()).thenReturn(true);
+    Mockito.when(info.getShipStatList()).thenReturn(stats);
+    assertEquals(1, fleet.calculateFleetObsoleteValue(info));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testFleetObsoleteValueWithThreeShip2() {
+    Ship ship = createShipOne();
+    Fleet fleet = new Fleet(ship, 2, 3);
+    Ship obsoleteShip = createObosoleteShipOne();
+    fleet.addShip(obsoleteShip);
+    fleet.addShip(obsoleteShip);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HOMARIANS);
+    ShipStat[] stats = new ShipStat[1];
+    stats[0] = Mockito.mock(ShipStat.class);
+    ShipDesign design1 = Mockito.mock(ShipDesign.class);
+    Mockito.when(design1.getName()).thenReturn("Scout");
+    Mockito.when(stats[0].getDesign()).thenReturn(design1);
+    Mockito.when(stats[0].isObsolete()).thenReturn(false);
+    assertEquals(3, fleet.calculateFleetObsoleteValue(info));
   }
 
   @Test

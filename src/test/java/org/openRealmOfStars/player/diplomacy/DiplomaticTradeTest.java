@@ -994,6 +994,83 @@ public class DiplomaticTradeTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGetBestPlanet() {
+    StarMap map = generateMapWithPlayer(SpaceRace.SPORKS);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.SPORKS);
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    ArrayList<Planet> planets = new ArrayList<>();
+    Planet planetOne = Mockito.mock(Planet.class);
+    Mockito.when(planetOne.getAmountMetalInGround()).thenReturn(3463);
+    Mockito.when(planetOne.getGroundSize()).thenReturn(10);
+    Mockito.when(planetOne.getTotalPopulation()).thenReturn(4);
+    Mockito.when(planetOne.getHomeWorldIndex()).thenReturn(-1);
+    Mockito.when(planetOne.getRadiationLevel()).thenReturn(1);
+    Mockito.when(planetOne.getPlanetPlayerInfo()).thenReturn(info);
+    planets.add(planetOne);
+    Planet planetTwo = Mockito.mock(Planet.class);
+    Mockito.when(planetTwo.getAmountMetalInGround()).thenReturn(3463);
+    Mockito.when(planetTwo.getGroundSize()).thenReturn(10);
+    Mockito.when(planetTwo.getTotalPopulation()).thenReturn(4);
+    Mockito.when(planetTwo.getHomeWorldIndex()).thenReturn(0);
+    Mockito.when(planetTwo.getRadiationLevel()).thenReturn(1);
+    Mockito.when(planetTwo.getPlanetPlayerInfo()).thenReturn(info);
+    planets.add(planetTwo);
+    assertEquals(planetTwo, trade.getTradeablePlanet(info, planets));
+    Mockito.when(planetTwo.getRadiationLevel()).thenReturn(10);
+    assertEquals(planetOne, trade.getTradeablePlanet(info, planets));
+    Mockito.when(planetTwo.getRadiationLevel()).thenReturn(1);
+    assertEquals(planetOne, trade.getTradeablePlanet(null, planets));
+    Mockito.when(planetTwo.getRadiationLevel()).thenReturn(10);
+    assertEquals(planetTwo, trade.getTradeablePlanet(null, planets));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGetBestFleet() {
+    StarMap map = generateMapWithPlayer(SpaceRace.SPORKS);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    ArrayList<Fleet> fleets = new ArrayList<>();
+    Fleet fleet1 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet1.getMilitaryValue()).thenReturn(10);
+    Mockito.when(fleet1.calculateFleetObsoleteValue(info)).thenReturn(0);
+    fleets.add(fleet1);
+    Fleet fleet2 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet2.getMilitaryValue()).thenReturn(12);
+    Mockito.when(fleet2.calculateFleetObsoleteValue(info)).thenReturn(1);
+    fleets.add(fleet2);
+    Fleet fleet3 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet3.getMilitaryValue()).thenReturn(10);
+    Mockito.when(fleet3.calculateFleetObsoleteValue(info)).thenReturn(2);
+    fleets.add(fleet3);
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    assertEquals(fleet3, trade.getTradeableFleet(info, fleets));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGetBestFleet2() {
+    StarMap map = generateMapWithPlayer(SpaceRace.SPORKS);
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    ArrayList<Fleet> fleets = new ArrayList<>();
+    Fleet fleet1 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet1.getMilitaryValue()).thenReturn(10);
+    Mockito.when(fleet1.calculateFleetObsoleteValue(info)).thenReturn(1);
+    fleets.add(fleet1);
+    Fleet fleet2 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet2.getMilitaryValue()).thenReturn(8);
+    Mockito.when(fleet2.calculateFleetObsoleteValue(info)).thenReturn(1);
+    fleets.add(fleet2);
+    Fleet fleet3 = Mockito.mock(Fleet.class);
+    Mockito.when(fleet3.getMilitaryValue()).thenReturn(15);
+    Mockito.when(fleet3.calculateFleetObsoleteValue(info)).thenReturn(1);
+    fleets.add(fleet3);
+    DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
+    assertEquals(fleet2, trade.getTradeableFleet(info, fleets));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testFirstTrade() {
     StarMap map = generateMapWithPlayer(SpaceRace.SPORKS);
     map.getPlayerList().getPlayerInfoByIndex(0).setAttitude(Attitude.AGGRESSIVE);

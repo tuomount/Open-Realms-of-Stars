@@ -580,7 +580,7 @@ public class DiplomaticTrade {
   private int calculatePlanetValue(final PlayerInfo demander,
       final Planet planet) {
     int result = 0;
-    result = result + planet.getMetal() / 1000;
+    result = result + planet.getAmountMetalInGround() / 1000;
     result = result + planet.getGroundSize() - 7;
     result = result + planet.getTotalPopulation() / 3;
     if (planet.getHomeWorldIndex() != -1) {

@@ -350,6 +350,29 @@ public class DiplomaticTrade {
     }
     return null;
   }
+
+  /**
+   * Create vote demand offer. Requires that there is important vote.
+   * @param demander who is demanding the vote
+   * @param promiser who is promising to vote
+   * @return NegotiationOffer or null
+   */
+  private NegotiationOffer createVoteDemand(final PlayerInfo demander,
+      final PlayerInfo promiser) {
+    Vote vote = starMap.getVotes().getNextImportantVote();
+    if (vote != null) {
+      int value = StarMapUtilities.getVotingSupport(demander, vote, starMap);
+      if (value > 0) {
+        return createPromiseYes(promiser);
+      } else if (value < 0) {
+        return createPromiseNo(promiser);
+      } else {
+        return null;
+      }
+    }
+    return null;
+  }
+
   /**
    * Generate Tech trade between two players.
    * @param tradeType Choices are TRADE, BUY and SELL
@@ -605,7 +628,7 @@ public class DiplomaticTrade {
     int value = 0;
     PlayerInfo info = demander;
     boolean biggest = true;
-    if (planets.get(0) == null
+    if (planets.isEmpty()
         || planets.get(0).getPlanetPlayerInfo() == null) {
       return null;
     }
@@ -637,80 +660,214 @@ public class DiplomaticTrade {
     PlayerInfo info = starMap.getPlayerByIndex(first);
     PlayerInfo info2 = starMap.getPlayerByIndex(second);
     Attitude attitude = info.getAiAttitude();
-    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
-        second);
-    int fatigue = info.getTotalWarFatigue();
     if (fleetListForFirst == null || fleetListForSecond == null) {
       generateFleetList();
     }
     if (planetListForFirst == null || planetListForSecond == null) {
       generatePlanetList();
     }
+    int lowCredit = 0;
+    int mediumCredit = 0;
+    int highCredit = 0;
+    int credit = 0;
+    NegotiationOffer lowDemand = null;
+    NegotiationOffer mediumDemand = null;
+    NegotiationOffer highDemand = null;
+    NegotiationOffer lowGift = null;
+    NegotiationOffer mediumGift = null;
+    NegotiationOffer highGift = null;
+    int powerDiff = 30;
+    lowDemand = createVoteDemand(info, info2);
+    if (lowDemand == null && techListForFirst.size() > 0) {
+      int index = getBestTech(techListForFirst, attitude);
+      lowDemand = new NegotiationOffer(NegotiationType.TECH,
+          techListForFirst.get(index));
+    }
+    Fleet fleet = getTradeableFleet(info2, fleetListForSecond);
+    if (fleet != null) {
+      mediumDemand = new NegotiationOffer(NegotiationType.FLEET, fleet);
+    }
+    Planet planet = getTradeablePlanet(info, planetListForSecond);
+    if (planet != null) {
+      highDemand = new NegotiationOffer(NegotiationType.PLANET, planet);
+    }
+    planet = getTradeablePlanet(null, planetListForFirst);
+    if (planet != null) {
+      highGift = new NegotiationOffer(NegotiationType.PLANET,
+          planet);
+    }
+    fleet = getTradeableFleet(info, fleetListForFirst);
+    if (fleet != null) {
+      mediumGift = new NegotiationOffer(NegotiationType.FLEET, fleet);
+    }
+    lowGift = createVoteDemand(info2, info);
+    if (lowGift == null && techListForSecond.size() > 0) {
+      int index = getBestTech(techListForSecond, attitude);
+      lowGift = new NegotiationOffer(NegotiationType.TECH,
+        techListForSecond.get(index));
+    }
+    switch (attitude) {
+      case AGGRESSIVE: {
+        lowCredit = 8;
+        mediumCredit = 10;
+        highCredit = 12;
+        powerDiff = -30;
+        break;
+      }
+      case MILITARISTIC: {
+        lowCredit = 6;
+        mediumCredit = 8;
+        highCredit = 10;
+        powerDiff = -20;
+        break;
+      }
+      case BACKSTABBING: {
+        lowCredit = 6;
+        mediumCredit = 8;
+        highCredit = 10;
+        powerDiff = -10;
+        break;
+      }
+      case DIPLOMATIC:
+      case PEACEFUL: {
+        lowCredit = 4;
+        mediumCredit = 6;
+        highCredit = 8;
+        powerDiff = 30;
+        break;
+      }
+      case MERCHANTICAL: {
+        lowCredit = 7;
+        mediumCredit = 9;
+        highCredit = 11;
+        powerDiff = 20;
+        break;
+      }
+      case EXPANSIONIST: {
+        lowCredit = 5;
+        mediumCredit = 7;
+        highCredit = 9;
+        powerDiff = 10;
+        break;
+      }
+      case LOGICAL:
+      case SCIENTIFIC:
+      default: {
+        lowCredit = 5;
+        mediumCredit = 7;
+        highCredit = 9;
+        powerDiff = 0;
+        break;
+      }
+    }
+    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+        second);
+    int fatigue = info.getTotalWarFatigue();
     generateEqualTrade(NegotiationType.PEACE);
-    if (power > 150) {
-      if (fatigue > -3 && techListForFirst.size() > 0) {
-        int index = getBestTech(techListForFirst, attitude);
-        firstOffer.add(new NegotiationOffer(NegotiationType.TECH,
-            techListForFirst.get(index)));
+    if (power > 150 + powerDiff) {
+      if (fatigue > -3) {
+        if (lowDemand != null) {
+          firstOffer.add(lowDemand);
+        } else {
+          credit = credit + lowCredit;
+        }
       }
       if (fatigue > -2) {
-        Fleet fleet = getTradeableFleet(info2, fleetListForSecond);
-        if (fleet != null) {
-          firstOffer.add(new NegotiationOffer(NegotiationType.FLEET, fleet));
+        if (mediumDemand != null) {
+          firstOffer.add(mediumDemand);
+        } else {
+          credit = credit + mediumCredit;
         }
       }
       if (fatigue == 0) {
-        Planet planet = getTradeablePlanet(info, planetListForSecond);
-        if (planet != null) {
-          firstOffer.add(new NegotiationOffer(NegotiationType.PLANET, planet));
+        if (highDemand != null) {
+          firstOffer.add(highDemand);
+        } else {
+          credit = credit + highCredit;
         }
       }
-    } else if (power > 50) {
+      if (credit > 0) {
+        if (credit > info2.getTotalCredits()) {
+          credit = info2.getTotalCredits();
+        }
+        firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+            new Integer(credit)));
+      }
+    } else if (power > 50 + powerDiff) {
       if (fatigue > -2 && techListForFirst.size() > 0) {
-        int index = getBestTech(techListForFirst, attitude);
-        firstOffer.add(new NegotiationOffer(NegotiationType.TECH,
-            techListForFirst.get(index)));
-      }
-      if (fatigue == 0) {
-        Fleet fleet = getTradeableFleet(info2, fleetListForSecond);
-        if (fleet != null) {
-          firstOffer.add(new NegotiationOffer(NegotiationType.FLEET, fleet));
+        if (lowDemand != null) {
+          firstOffer.add(lowDemand);
+        } else {
+          credit = credit + lowCredit;
         }
       }
-    } else if (power > -50) {
+      if (fatigue == 0) {
+        if (mediumDemand != null) {
+          firstOffer.add(mediumDemand);
+        } else {
+          credit = credit + mediumCredit;
+        }
+      }
+      if (credit > 0) {
+        if (credit > info2.getTotalCredits()) {
+          credit = info2.getTotalCredits();
+        }
+        firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+            new Integer(credit)));
+      }
+    } else if (power > -50 + powerDiff) {
       generateEqualTrade(NegotiationType.PEACE);
-    }  else if (power < -150) {
+    }  else if (power < -150 + powerDiff) {
       if (fatigue < -3) {
-        Planet planet = getTradeablePlanet(info2, planetListForSecond);
-        if (planet != null) {
-          secondOffer.add(new NegotiationOffer(NegotiationType.PLANET,
-              planet));
+        if (highGift != null) {
+          secondOffer.add(highGift);
+        } else {
+          credit = credit + highCredit;
         }
       }
       if (fatigue == -2) {
-        Fleet fleet = getTradeableFleet(info, fleetListForFirst);
-        if (fleet != null) {
-          secondOffer.add(new NegotiationOffer(NegotiationType.FLEET, fleet));
+        if (mediumGift != null) {
+          secondOffer.add(mediumGift);
+        } else {
+          credit = credit + mediumCredit;
         }
       }
       if (fatigue == -1 && techListForSecond.size() > 0) {
-        int index = getBestTech(techListForSecond, attitude);
-        secondOffer.add(new NegotiationOffer(NegotiationType.TECH,
-            techListForSecond.get(index)));
+        if (lowGift != null) {
+          secondOffer.add(lowGift);
+        } else {
+          credit = credit + lowCredit;
+        }
+      }
+      if (credit > 0) {
+        if (credit > info.getTotalCredits()) {
+          credit = info.getTotalCredits();
+        }
+        secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+            new Integer(credit)));
       }
     } else {
       if (fatigue <= -2) {
-        Fleet fleet = getTradeableFleet(info, fleetListForFirst);
-        if (fleet != null) {
-          secondOffer.add(new NegotiationOffer(NegotiationType.FLEET, fleet));
+        if (mediumGift != null) {
+          secondOffer.add(mediumGift);
+        } else {
+          credit = credit + mediumCredit;
         }
       }
       if (fatigue == -1 && techListForSecond.size() > 0) {
-        int index = getBestTech(techListForSecond, attitude);
-        secondOffer.add(new NegotiationOffer(NegotiationType.TECH,
-            techListForSecond.get(index)));
+        if (lowGift != null) {
+          secondOffer.add(lowGift);
+        } else {
+          credit = credit + lowCredit;
+        }
       }
-
+      if (credit > 0) {
+        if (credit > info.getTotalCredits()) {
+          credit = info.getTotalCredits();
+        }
+        secondOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+            new Integer(credit)));
+      }
     }
   }
   /**

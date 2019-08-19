@@ -537,6 +537,38 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Generate fleet sell offer. Generates new offers for selling fleet.
+   * @param seller Realm who is selling
+   * @param buyer Realm who is buying
+   * @param fleets All sellable fleets for seller
+   * @return True if offer was made
+   */
+  public boolean generateFleetSellOffer(final PlayerInfo seller,
+      final PlayerInfo buyer, final ArrayList<Fleet> fleets) {
+    if (fleetListForFirst == null || fleetListForSecond == null) {
+      generateFleetList();
+    }
+    Fleet fleet = getTradeableFleet(seller, fleetListForFirst);
+    if (fleet != null) {
+      int originalValue = fleet.getMilitaryValue() / 2;
+      int credits = buyer.getTotalCredits();
+      int value = originalValue;
+      if (value > credits) {
+        value = credits;
+      }
+      if (value > 0 && value > originalValue / 2) {
+        firstOffer = new NegotiationList();
+        firstOffer.add(new NegotiationOffer(NegotiationType.CREDIT,
+            new Integer(value)));
+        secondOffer = new NegotiationList();
+        secondOffer.add(new NegotiationOffer(NegotiationType.FLEET,
+            fleet));
+        return true;
+      }
+    }
+    return false;
+  }
+  /**
    * Generate equal trade between two players.
    * @param realm Realm who to cause trade embargo
    */
@@ -1008,7 +1040,9 @@ public class DiplomaticTrade {
         generateMapTrade(TRADE, false);
       }
     } else if (value < 50) {
-      generateTechTrade(TRADE);
+      if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
+        generateTechTrade(TRADE);
+      }
     } else {
       if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
         PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
@@ -1101,7 +1135,9 @@ public class DiplomaticTrade {
           generateMapTrade(TRADE, false);
         }
     } else if (value < 80) {
-      generateTechTrade(TRADE);
+      if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
+        generateTechTrade(TRADE);
+      }
     } else {
       if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
         PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
@@ -1181,7 +1217,9 @@ public class DiplomaticTrade {
           }
       }
     } else if (value < 90) {
-      generateTechTrade(TRADE);
+      if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
+        generateTechTrade(TRADE);
+      }
     } else {
       generateGift(info);
     }
@@ -1262,7 +1300,9 @@ public class DiplomaticTrade {
         PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
         generateTradeEmbargoOffer(embagoed);
       } else {
-        generateTechTrade(TRADE);
+        if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
+          generateTechTrade(TRADE);
+        }
       }
     }
   }
@@ -1329,7 +1369,9 @@ public class DiplomaticTrade {
     int value = DiceGenerator.getRandom(100);
     int embargoIndex = getPossibleTradeEmbargo();
     if (value < 40) {
-      generateTechTrade(TRADE);
+      if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
+        generateTechTrade(TRADE);
+      }
     } else if (value < 80) {
       generateTechTrade(BUY);
     } else {
@@ -1423,7 +1465,9 @@ public class DiplomaticTrade {
         generateMapTrade(BUY, true); break;
       }
       case 2: {
-        generateMapTrade(SELL, true); break;
+        if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
+          generateMapTrade(SELL, true); break;
+        }
       }
       case 3: {
         generateTechTrade(TRADE); break;
@@ -1432,14 +1476,18 @@ public class DiplomaticTrade {
         generateTechTrade(BUY); break;
       }
       case 5: {
-        generateTechTrade(SELL); break;
+        if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
+          generateTechTrade(SELL); break;
+        }
       }
       case 6: {
         if (embargoIndex != -1 && DiceGenerator.getRandom(100) < 50) {
           PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
           generateTradeEmbargoOffer(embagoed);
         } else {
-          generateTechTrade(SELL);
+          if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
+            generateTechTrade(SELL);
+          }
         }
         break;
       }
@@ -1520,7 +1568,9 @@ public class DiplomaticTrade {
           }
       }
     } else if (value < 67) {
-      generateTechTrade(TRADE);
+      if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
+        generateTechTrade(TRADE);
+      }
     } else {
       if (!info.getDiplomacy().getDiplomaticRelation(second)
           .equals(Diplomacy.DEFENSIVE_PACT)) {
@@ -1603,11 +1653,8 @@ public class DiplomaticTrade {
         PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
         generateTradeEmbargoOffer(embagoed);
       } else {
-        if (info.getDiplomacy().isDefensivePact(second)
-          || info.getDiplomacy().isAlliance(second)) {
-          generateMapTrade(TRADE, true);
-        } else {
-          generateMapTrade(TRADE, false);
+        if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
+          generateTechTrade(TRADE);
         }
       }
     }
@@ -1685,7 +1732,9 @@ public class DiplomaticTrade {
         PlayerInfo embagoed = starMap.getPlayerByIndex(embargoIndex);
         generateTradeEmbargoOffer(embagoed);
       } else {
-        generateTechTrade(TRADE);
+        if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
+          generateTechTrade(TRADE);
+        }
       }
     }
   }

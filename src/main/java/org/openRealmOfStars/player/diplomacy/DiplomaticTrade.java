@@ -549,7 +549,9 @@ public class DiplomaticTrade {
       generateFleetList();
     }
     Fleet fleet = getTradeableFleet(seller, fleetListForFirst);
-    if (fleet != null) {
+    if (fleet != null
+        && seller.getFleets().getTotalFleetCapacity()
+        > starMap.getTotalFleetCapacity(seller)) {
       int originalValue = fleet.getMilitaryValue() / 2;
       int credits = buyer.getTotalCredits();
       int value = originalValue;

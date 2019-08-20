@@ -129,6 +129,12 @@ public class ShipTest {
         + "Military power: 6\n"
         + "Slots: 4/4";
     assertEquals(desc, ship.getDescription());
+    desc = "Design - Normal\n" + 
+        "Capacity: 0.1 Energy: 5 Init.: 15\n" + 
+        "Speed: 2 FTL: 2 Tactic: 1\n" + 
+        "Shield: 1/1 Armor: 0/0 Hull Points: 4\n" + 
+        "Military power: 6"; 
+    assertEquals(desc, ship.getTacticalInfo());
     ship.setExperience(3);
     assertEquals(3, ship.getExperience());
     desc = "Design - Normal\n"
@@ -290,6 +296,26 @@ public class ShipTest {
     weapon = ShipComponentFactory.createByName("Phasors Mk1");
     ShipDamage shipDamage = ship.damageBy(weapon);
     assertEquals(true, shipDamage.getValue() >= 0);
+    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon);
+    assertTrue(ship.getTacticalInfo().contains("Damaged:"));
+    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon);
+    shipDamage = ship.damageBy(weapon);
+    assertTrue(ship.getTacticalInfo().contains("Failures:"));
   }
 
   @Test

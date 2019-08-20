@@ -290,6 +290,96 @@ public class Ship extends Construction {
     }
   }
 
+  /**
+   * Get tactical info about the ship.
+   * @return String
+   */
+  public String getTacticalInfo() {
+    StringBuilder sb = new StringBuilder();
+    sb.append(getName());
+    sb.append(" - ");
+    sb.append(hull.getHullType().toString());
+    sb.append("\n");
+    sb.append("Capacity: ");
+    sb.append(String.format("%.1f", getFleetCapacity()));
+    sb.append(" Energy: ");
+    sb.append(getTotalEnergy());
+    sb.append(" Init.: ");
+    sb.append(getInitiative());
+    sb.append("\n");
+    sb.append("Speed: ");
+    sb.append(getSpeed());
+    sb.append(" FTL: ");
+    sb.append(getFtlSpeed());
+    sb.append(" Tactic: ");
+    sb.append(getTacticSpeed());
+    sb.append("\n");
+    sb.append("Shield: ");
+    sb.append(shield);
+    sb.append("/");
+    sb.append(getTotalShield());
+    sb.append(" Armor: ");
+    sb.append(armor);
+    sb.append("/");
+    sb.append(getTotalArmor());
+    sb.append(" Hull Points: ");
+    sb.append(hull.getSlotHull() * getNumberOfComponents());
+    if (getTotalMilitaryPower() > 0) {
+      sb.append("\n");
+      sb.append("Military power: ");
+      sb.append(getTotalMilitaryPower());
+      if (getExperience() > 0) {
+        sb.append(" Exp: ");
+        sb.append(getExperience());
+      }
+    }
+    if (hull.getHullType() == ShipHullType.FREIGHTER) {
+      sb.append("\n");
+      sb.append("Cargo: ");
+      sb.append(getMetal());
+      sb.append(" Units:");
+      sb.append(getColonist());
+    }
+    if (isTrooperShip()) {
+      sb.append("\n");
+      sb.append("Troops power ");
+      sb.append(getTroopPower());
+    }
+    int baySize = getTotalBaySize();
+    if (baySize > 0) {
+      sb.append("\nFighter bays: ");
+      sb.append(baySize);
+    }
+    StringBuilder sb2 = new StringBuilder();
+    sb2.append("\nFailures:");
+    boolean broken = false;
+    for (int i = 0; i < getNumberOfComponents(); i++) {
+      if (!componentIsWorking(i)) {
+        broken = true;
+        sb2.append("\n");
+        sb2.append(getComponent(i).getName());
+      }
+    }
+    if (broken) {
+      sb.append(sb2.toString());
+    }
+    sb2 = new StringBuilder();
+    sb2.append("\nDamaged:");
+    broken = false;
+    for (int i = 0; i < getNumberOfComponents(); i++) {
+      if (getHullPointForComponent(i) < getHull().getSlotHull()
+          && componentIsWorking(i)) {
+        broken = true;
+        sb2.append("\n");
+        sb2.append(getComponent(i).getName());
+      }
+    }
+    if (broken) {
+      sb.append(sb2.toString());
+    }
+    return sb.toString();
+  }
+
   @Override
   public String getDescription() {
     StringBuilder sb = new StringBuilder();

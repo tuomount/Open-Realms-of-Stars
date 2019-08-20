@@ -17,6 +17,8 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
@@ -46,7 +48,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -65,7 +67,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
  * Fleet view for handling single fleet orbiting on planet or deep space.
  *
  */
-public class FleetView extends BlackPanel {
+public class FleetView extends BlackPanel implements ListSelectionListener {
 
   /**
    *
@@ -314,6 +316,7 @@ public class FleetView extends BlackPanel {
     shipsInFleet.setBackground(Color.BLACK);
     shipsInFleet
         .setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    shipsInFleet.addListSelectionListener(this);
     JScrollPane scroll = new JScrollPane(shipsInFleet);
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     eastPanel.add(scroll);
@@ -709,6 +712,18 @@ public class FleetView extends BlackPanel {
         || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2)) {
         imgBase.setTitle("In Deep Space Anchor...");
       }
+    }
+  }
+
+  @Override
+  public void valueChanged(final ListSelectionEvent e) {
+    if (shipsInFleet.getSelectedIndex() !=  -1) {
+      Ship ship = shipsInFleet.getSelectedValue();
+      imgBase.setText(ship.getTacticalInfo());
+      imgBase.repaint();
+    } else {
+      imgBase.setText(null);
+      imgBase.repaint();
     }
   }
 }

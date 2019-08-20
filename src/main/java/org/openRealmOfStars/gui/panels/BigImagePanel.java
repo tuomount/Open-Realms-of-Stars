@@ -86,6 +86,11 @@ public class BigImagePanel extends JPanel {
   private PlayerInfo player;
 
   /**
+   * Textual information shown in screen.
+   */
+  private String textInformation;
+
+  /**
    * Create BigImagePanel
    * @param planet Planet to draw on background
    * @param starField Use star field or not
@@ -266,9 +271,27 @@ public class BigImagePanel extends JPanel {
       }
       drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK,
           GuiStatics.COLOR_COOL_SPACE_BLUE, offsetX, offsetY, title);
-
     }
 
+    if (textInformation != null) {
+      StringBuilder sb = new StringBuilder(textInformation);
+      String[] texts = sb.toString().split("\n");
+      g.setFont(GuiStatics.getFontCubellan());
+      int offsetX = 0;
+      for (int i = 0; i < texts.length; i++) {
+        int value = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
+            texts[i]);
+        if (value > offsetX) {
+          offsetX = value;
+        }
+      }
+      for (int i = 0; i < texts.length; i++) {
+        drawBoldText(g, GuiStatics.COLOR_COOL_SPACE_BLUE_DARK_TRANS,
+            GuiStatics.COLOR_COOL_SPACE_BLUE_TRANS, this.getWidth() - offsetX
+            - 20, this.getHeight() - (texts.length + 2) * 15 + i * 15,
+            texts[i]);
+      }
+    }
   }
 
   /**
@@ -513,5 +536,13 @@ public class BigImagePanel extends JPanel {
    */
   public void setTitle(final String text) {
     title = text;
+  }
+
+  /**
+   * Set Textual information to scren. Set to null to clear it.
+   * @param text String or null
+   */
+  public void setText(final String text) {
+    textInformation = text;
   }
 }

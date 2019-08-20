@@ -426,7 +426,9 @@ public class Fleet {
       sb.append(owner.getEmpireName());
       sb.append("\n");
     }
-    sb.append("Speed: ");
+    sb.append("Capacity: ");
+    sb.append(String.format("%.1f", getTotalFleetCapacity()));
+    sb.append("\nSpeed: ");
     sb.append(getFleetSpeed());
     sb.append(" FTL: ");
     sb.append(getFleetFtlSpeed());

@@ -1383,10 +1383,12 @@ public class StarMap {
                     fleetTiles[fleet2.getX()][fleet2.getY()] = info;
                   } else {
                     Ship ship = fleet.getBiggestShip();
-                    FleetTileInfo info = new FleetTileInfo(
-                        ship.getHull().getRace(),
-                        ship.getHull().getImageIndex(), i, j);
-                    fleetTiles[fleet.getX()][fleet.getY()] = info;
+                    if (ship != null) {
+                      FleetTileInfo info = new FleetTileInfo(
+                          ship.getHull().getRace(),
+                          ship.getHull().getImageIndex(), i, j);
+                      fleetTiles[fleet.getX()][fleet.getY()] = info;
+                    }
                   }
                   if (fleet2.isStarBaseDeployed()) {
                     Ship ship = fleet2.getBiggestShip();

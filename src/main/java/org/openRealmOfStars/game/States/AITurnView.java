@@ -412,6 +412,39 @@ public class AITurnView extends BlackPanel {
           return;
         }
       }
+      if (fleet.isTradeFleet()) {
+        mission = info.getMissions().getMission(MissionType.TRADE_FLEET,
+            MissionPhase.PLANNING);
+        if (mission != null) {
+          Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
+              fleet.getY());
+          if (planet == null) {
+            // Trade ship is not on home port
+            planet = game.getStarMap().getClosestHomePort(info,
+                fleet.getCoordinate());
+            if (planet != null) {
+              mission = new Mission(MissionType.MOVE, MissionPhase.PLANNING,
+                  planet.getCoordinate());
+              mission.setFleetName(fleet.getName());
+              mission.setTargetPlanet(planet.getName());
+              mission.setTarget(planet.getCoordinate());
+              info.getMissions().add(mission);
+              // Moving trade ship to nearest home port
+              return;
+            }
+            // Trade ship does not have home port
+            // Odds look pretty bad now...
+            // Just returning
+            return;
+          }
+          mission.setPhase(MissionPhase.LOADING);
+          mission.setFleetName(fleet.getName());
+          mission.setPlanetBuilding(planet.getName());
+          // Mission assigned continue...
+          return;
+        }
+      }
+
       mission = info.getMissions().getGatherMission(Mission.BOMBER_TYPE);
       Ship ship = fleet.getBomberShip();
       if (mission != null && ship != null) {

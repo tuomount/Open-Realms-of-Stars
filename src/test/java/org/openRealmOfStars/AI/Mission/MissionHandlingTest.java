@@ -263,6 +263,7 @@ public class MissionHandlingTest {
     Mockito.when(diplomacyList.isBonusType(DiplomacyBonusType.IN_ALLIANCE)).thenReturn(true);
     Diplomacy diplomacy = Mockito.mock(Diplomacy.class);
     Mockito.when(diplomacy.getDiplomacyList(Mockito.anyInt())).thenReturn(diplomacyList);
+    Mockito.when(diplomacy.getDiplomaticRelation(0)).thenReturn(Diplomacy.TRADE_ALLIANCE);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getDiplomacy()).thenReturn(diplomacy);
     Mockito.when(info.getMsgList()).thenReturn(msgList);

@@ -15,6 +15,7 @@ import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
@@ -716,6 +717,24 @@ public final class MissionHandling {
   public static void handleTrade(final Mission mission, final Fleet fleet,
       final PlayerInfo info, final Game game) {
     if (mission != null && mission.getType() == MissionType.TRADE_FLEET) {
+      Planet previousTarget = game.getStarMap()
+          .getPlanetByCoordinate(mission.getX(), mission.getY());
+      int playerIndex = previousTarget.getPlanetOwnerIndex();
+      if (playerIndex != -1
+          && info.getDiplomacy().getDiplomaticRelation(playerIndex).equals(
+              Diplomacy.WAR)) {
+        info.getMissions().remove(mission);
+        // Make fleet return to home
+        Planet homePlanet = game.getStarMap().getPlanetByName(
+            mission.getPlanetBuilding());
+        Mission moveBack = new Mission(MissionType.MOVE,
+            MissionPhase.TREKKING, homePlanet.getCoordinate());
+        moveBack.setPlanetBuilding(mission.getPlanetBuilding());
+        moveBack.setTargetPlanet(mission.getPlanetBuilding());
+        moveBack.setFleetName(fleet.getName());
+        info.getMissions().add(moveBack);
+        return;
+      }
       if (mission.getPhase() == MissionPhase.LOADING) {
         Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
             mission.getY(), fleet.getFleetFtlSpeed());
@@ -737,9 +756,9 @@ public final class MissionHandling {
         makeReroute(game, fleet, info, mission);
       }
       if (mission.getPhase() == MissionPhase.EXECUTING) {
-        Planet previousTarget = game.getStarMap()
+        previousTarget = game.getStarMap()
             .getPlanetByCoordinate(mission.getX(), mission.getY());
-        int playerIndex = previousTarget.getPlanetOwnerIndex();
+        playerIndex = previousTarget.getPlanetOwnerIndex();
         DiplomacyBonusList diplomacy = info.getDiplomacy().getDiplomacyList(
             playerIndex);
         StarMapUtilities.doTradeWithShips(diplomacy, fleet, previousTarget,

@@ -2501,6 +2501,12 @@ public class StarMap {
       }
     }
     if (production == Planet.PRODUCTION_CREDITS) {
+      int totalCapacity = getTotalFleetCapacity(info);
+      double capacity = info.getFleets().getTotalFleetCapacity();
+      totalCapacity = totalCapacity - (int) capacity;
+      if (totalCapacity < 0) {
+        result = result + totalCapacity;
+      }
       int richest = getNewsCorpData().getCredit().getBiggest();
       int poorest = getNewsCorpData().getCredit().getSmallest();
       if (richest == playerIndex && getVotes().isTaxationOfRichestEnabled()) {

@@ -219,8 +219,9 @@ public class StarMapView extends BlackPanel {
         + String.format("%.0f",
             map.getCurrentPlayerInfo().getFleets().getTotalFleetCapacity())
         + "/" + map.getTotalFleetCapacity(map.getCurrentPlayerInfo()));
-    fleetMeter.setToolTipText("Amount of fleets in use."
-        + " This value is not used yet anywhere.");
+    fleetMeter.setToolTipText("Fleet capacity in use."
+        + " If fleet size is bigger than capacity,"
+        + " over capacity is upkeep for the fleet.");
     panel.add(fleetMeter);
     bottomPanel.add(panel);
     int panelHeight = SPACE_AFTER_RESEARCH_LABEL;

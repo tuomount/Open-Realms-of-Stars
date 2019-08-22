@@ -532,6 +532,59 @@ public final class NewsFactory {
     news.setNewsText(sb.toString());
     return news;
   }
+
+  /**
+   * Make galactic sports news where event cannot be arranged
+   * @param planet Where this was suppose to organize
+   * @param buildingDestroyed True if building is no longer there
+   * @return NewsData
+   */
+  public static NewsData makeNoGalacticSportsNews(final Planet planet,
+      final boolean buildingDestroyed) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    String position = ImageInstruction.POSITION_CENTER;
+    String size = ImageInstruction.SIZE_HALF;
+    instructions.addPlanet(position, planet.getImageInstructions(), size);
+    instructions.addLogo(position, ImageInstruction.PLANET_SPORTS, size);
+    instructions.addLogo(position, ImageInstruction.BIG_BAN, size);
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("GALACTIC SPORTS CANCELED!");
+        break;
+      }
+      case 1: {
+        instructions.addText("CRISIS AT GALACTIC SPORTS EVENT!");
+        break;
+      }
+      case 2: {
+        instructions.addText("CANCELLATION!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append("Galactic sports event at ");
+    sb.append(planet.getName());
+    sb.append(" is cancelled! ");
+    if (planet.getPlanetPlayerInfo() == null) {
+      sb.append(" Main reason for this cancellation is that ");
+      sb.append("planet has no longer any population. ");
+    }
+    if (buildingDestroyed) {
+      if (planet.getPlanetPlayerInfo() == null) {
+        sb.append(" Also ");
+      }
+      sb.append(" Galactic sports center is no longer on ");
+      sb.append(planet.getName());
+      sb.append(". ");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
   /**
    * Make Peace news. PeaceMaker makes peace offer to acceptor.
    * This diplomatic meeting happened in meeting place which

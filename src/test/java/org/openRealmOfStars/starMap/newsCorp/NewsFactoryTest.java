@@ -399,6 +399,38 @@ public class NewsFactoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalacticSportsArenaDestroyed() {
+    PlayerInfo builder = Mockito.mock(PlayerInfo.class);
+    Mockito.when(builder.getEmpireName()).thenReturn("Empire of Test");
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.WATERWORLD2.getImageInstructions());
+    Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(builder);
+    Mockito.when(planet.getName()).thenReturn("Test planet");
+    NewsData news = NewsFactory.makeNoGalacticSportsNews(planet, true);
+    assertEquals(true, news.getImageInstructions().contains("SPORT"));
+    assertEquals(true, news.getNewsText().contains(
+        planet.getName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGalacticSportsArenaBombed() {
+    PlayerInfo builder = Mockito.mock(PlayerInfo.class);
+    Mockito.when(builder.getEmpireName()).thenReturn("Empire of Test");
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.WATERWORLD2.getImageInstructions());
+    Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(null);
+    Mockito.when(planet.getName()).thenReturn("Test planet");
+    NewsData news = NewsFactory.makeNoGalacticSportsNews(planet, false);
+    assertEquals(true, news.getImageInstructions().contains("SPORT"));
+    assertEquals(true, news.getNewsText().contains(
+        planet.getName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testGalacticSportsEnding() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getEmpireName()).thenReturn("Empire of Test");

@@ -1653,6 +1653,21 @@ public class AITurnView extends BlackPanel {
           handleOlympicDiplomacyBonus(vote, map.getPlayerList());
         } else {
           vote.setTurnsToVote(vote.getTurnsToVote() - 1);
+          Planet planet = map.getPlanetByName(vote.getPlanetName());
+          if (planet != null) {
+            NewsData newsData = null;
+            if (planet.howManyBuildings("Galactic sports center") == 0) {
+              newsData = NewsFactory.makeNoGalacticSportsNews(planet, true);
+            } else {
+              newsData = NewsFactory.makeNoGalacticSportsNews(planet, false);
+            }
+            map.getNewsCorpData().addNews(newsData);
+            EventOnPlanet event = new EventOnPlanet(EventType.PLANET_BUILDING,
+                planet.getCoordinate(), planet.getName(),
+                planet.getPlanetOwnerIndex());
+            event.setText(newsData.getNewsText());
+            map.getHistory().addEvent(event);
+          }
         }
       }
     }

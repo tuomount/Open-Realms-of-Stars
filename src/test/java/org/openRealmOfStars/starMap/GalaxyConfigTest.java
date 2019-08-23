@@ -9,7 +9,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2018,2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -93,5 +93,19 @@ public class GalaxyConfigTest {
     assertEquals(1, config.getScoreLimitResearch());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPirateDifficultyLevels() {
+    assertEquals("Easy", PirateDifficultLevel.EASY.toString());
+    assertEquals("Very easy", PirateDifficultLevel.VERY_EASY.toString());
+    assertEquals("Normal", PirateDifficultLevel.NORMAL.toString());
+    assertEquals("Hard", PirateDifficultLevel.HARD.toString());
+    assertEquals("Very hard", PirateDifficultLevel.VERY_HARD.toString());
+    assertEquals(PirateDifficultLevel.VERY_EASY, PirateDifficultLevel.getLevelByInt(0));
+    assertEquals(PirateDifficultLevel.EASY, PirateDifficultLevel.getLevelByInt(1));
+    assertEquals(PirateDifficultLevel.NORMAL, PirateDifficultLevel.getLevelByInt(2));
+    assertEquals(PirateDifficultLevel.HARD, PirateDifficultLevel.getLevelByInt(3));
+    assertEquals(PirateDifficultLevel.VERY_HARD, PirateDifficultLevel.getLevelByInt(4));
+  }
 
 }

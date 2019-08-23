@@ -408,7 +408,8 @@ public class NewsFactoryTest {
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(builder);
     Mockito.when(planet.getName()).thenReturn("Test planet");
     NewsData news = NewsFactory.makeNoGalacticSportsNews(planet, true);
-    assertEquals(true, news.getImageInstructions().contains("SPORT"));
+    assertEquals(true, news.getImageInstructions().contains("SPORT")
+        || news.getImageInstructions().contains("CANCELLATION!"));
     assertEquals(true, news.getNewsText().contains(
         planet.getName()));
   }
@@ -424,7 +425,8 @@ public class NewsFactoryTest {
     Mockito.when(planet.getPlanetPlayerInfo()).thenReturn(null);
     Mockito.when(planet.getName()).thenReturn("Test planet");
     NewsData news = NewsFactory.makeNoGalacticSportsNews(planet, false);
-    assertEquals(true, news.getImageInstructions().contains("SPORT"));
+    assertEquals(true, news.getImageInstructions().contains("SPORT")
+        || news.getImageInstructions().contains("CANCELLATION!"));
     assertEquals(true, news.getNewsText().contains(
         planet.getName()));
   }

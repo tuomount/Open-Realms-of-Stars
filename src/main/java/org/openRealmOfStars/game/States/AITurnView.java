@@ -2009,7 +2009,7 @@ public class AITurnView extends BlackPanel {
     if (game.getStarMap().getTurn() % 100 == 0
         && board != null && game.getStarMap().getScoreVictoryTurn() > 400
         && !pirateNews) {
-      int level = game.getStarMap().getScoreVictoryTurn() / 100;
+      int level = game.getStarMap().getTurn() / 100;
       level++;
       if (level >= 10) {
         level = 10;

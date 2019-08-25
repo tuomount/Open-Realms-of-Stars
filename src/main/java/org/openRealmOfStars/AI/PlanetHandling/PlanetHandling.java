@@ -1223,6 +1223,7 @@ public final class PlanetHandling {
         prodAdd = 2;
         metalAdd = 1;
       }
+      planet.setWorkers(Planet.FOOD_FARMERS, 0);
       planet.setWorkers(Planet.METAL_MINERS, quarter + metalAdd);
       planet.setWorkers(Planet.PRODUCTION_WORKERS, quarter + prodAdd);
       if (quarter % 2 != 0) {
@@ -1234,6 +1235,7 @@ public final class PlanetHandling {
     } else {
       switch (total) {
       case 1: {
+        planet.setWorkers(Planet.FOOD_FARMERS, 0);
         planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
         planet.setWorkers(Planet.METAL_MINERS, 0);
         planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
@@ -1241,6 +1243,7 @@ public final class PlanetHandling {
         break;
       }
       case 2: {
+        planet.setWorkers(Planet.FOOD_FARMERS, 0);
         planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
         planet.setWorkers(Planet.METAL_MINERS, 1);
         planet.setWorkers(Planet.RESEARCH_SCIENTIST, 0);
@@ -1248,6 +1251,7 @@ public final class PlanetHandling {
         break;
       }
       case 3: {
+        planet.setWorkers(Planet.FOOD_FARMERS, 0);
         planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
         planet.setWorkers(Planet.METAL_MINERS, 0);
         planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
@@ -1255,6 +1259,7 @@ public final class PlanetHandling {
         break;
       }
       case 4: {
+        planet.setWorkers(Planet.FOOD_FARMERS, 0);
         planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
         planet.setWorkers(Planet.METAL_MINERS, 1);
         planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
@@ -1262,6 +1267,7 @@ public final class PlanetHandling {
         break;
       }
       case 5: {
+        planet.setWorkers(Planet.FOOD_FARMERS, 0);
         planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
         planet.setWorkers(Planet.METAL_MINERS, 1);
         planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
@@ -1269,6 +1275,7 @@ public final class PlanetHandling {
         break;
       }
       case 6: {
+        planet.setWorkers(Planet.FOOD_FARMERS, 0);
         planet.setWorkers(Planet.PRODUCTION_WORKERS, 2);
         planet.setWorkers(Planet.METAL_MINERS, 2);
         planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
@@ -1276,6 +1283,7 @@ public final class PlanetHandling {
         break;
       }
       case 7: {
+        planet.setWorkers(Planet.FOOD_FARMERS, 0);
         planet.setWorkers(Planet.PRODUCTION_WORKERS, 3);
         planet.setWorkers(Planet.METAL_MINERS, 2);
         planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);

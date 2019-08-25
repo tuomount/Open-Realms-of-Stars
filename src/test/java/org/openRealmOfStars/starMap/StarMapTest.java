@@ -113,6 +113,42 @@ public class StarMapTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStarMapCreatePirateAndKarma() {
+    GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
+    Mockito.when(config.getSizeX()).thenReturn(50);
+    Mockito.when(config.getSizeY()).thenReturn(50);
+    Mockito.when(config.getStartingPosition()).thenReturn(
+        GalaxyConfig.START_POSITION_BORDER);
+    Mockito.when(config.getScoringVictoryTurns()).thenReturn(400);
+    Mockito.when(config.getScoreLimitCulture()).thenReturn(2);
+    Mockito.when(config.getScoreLimitConquer()).thenReturn(0);
+    Mockito.when(config.getScoreLimitResearch()).thenReturn(4);
+    Mockito.when(config.getScoreLimitDiplomacy()).thenReturn(1);
+
+    PlayerList players = Mockito.mock(PlayerList.class);
+    Mockito.when(players.getCurrentMaxPlayers()).thenReturn(2);
+    Mockito.when(players.getCurrentMaxRealms()).thenReturn(2);
+
+    StarMap map = new StarMap(config, players);
+    assertEquals(1, map.getKarmaSpeed());
+    assertEquals(PirateDifficultLevel.NORMAL, map.getPirateDifficulty());
+    assertEquals(0, map.getGoodKarmaCount());
+    assertEquals(0, map.getBadKarmaCount());
+    assertEquals(KarmaType.SECOND_FIRST_AND_LAST, map.getKarmaType());
+    map.setKarmaSpeed(2);
+    map.setPirateDifficulty(PirateDifficultLevel.EASY);
+    map.setKarmaType(KarmaType.RANDOM);
+    map.setGoodKarmaCount(5);
+    map.setBadKarmaCount(10);
+    assertEquals(2, map.getKarmaSpeed());
+    assertEquals(PirateDifficultLevel.EASY, map.getPirateDifficulty());
+    assertEquals(5, map.getGoodKarmaCount());
+    assertEquals(10, map.getBadKarmaCount());
+    assertEquals(KarmaType.RANDOM, map.getKarmaType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testStarMapCreateWithPlayers() {
     GalaxyConfig config = Mockito.mock(GalaxyConfig.class);
     Mockito.when(config.getSizeX()).thenReturn(50);

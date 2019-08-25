@@ -249,6 +249,32 @@ public class StarMap {
   private boolean gameEnd;
 
   /**
+   * Pirate difficulty level.
+   */
+  private PirateDifficultLevel pirateDifficulty;
+
+  /**
+   * Karma type for random events.
+   */
+  private KarmaType karmaType;
+
+  /**
+   * How fast karma speed is increased.
+   * This amount of karma counts are incresed each turn.
+   */
+  private int karmaSpeed;
+
+  /**
+   * Bad karma count. How likely bad stuff is going to happen.
+   */
+  private int badKarmaCount;
+
+  /***
+   * Good karma count. How likely good stuff is goint to happen.
+   */
+  private int goodKarmaCount;
+
+  /**
    * Magic string to save game files
    */
   public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.12";
@@ -271,6 +297,11 @@ public class StarMap {
     setScoreConquer(config.getScoreLimitConquer());
     setScoreResearch(config.getScoreLimitResearch());
     setScoreDiplomacy(config.getScoreLimitDiplomacy());
+    setPirateDifficulty(PirateDifficultLevel.NORMAL);
+    setKarmaType(KarmaType.SECOND_FIRST_AND_LAST);
+    setKarmaSpeed(1);
+    setGoodKarmaCount(0);
+    setBadKarmaCount(0);
     history = new History();
     votes = new Votes();
     history.addTurn(0);
@@ -1625,6 +1656,90 @@ public class StarMap {
     Fleet fleet = info.getFleets().getByIndex(fleetTile.getFleetIndex());
     return fleet;
   }
+
+  /**
+   * Get pirate difficulty level.
+   * @return Pirate difficulty level
+   */
+  public PirateDifficultLevel getPirateDifficulty() {
+    return pirateDifficulty;
+  }
+
+  /**
+   * Set pirate difficulty level.
+   * @param pirateDifficulty Difficulty level to set.
+   */
+  public void setPirateDifficulty(
+      final PirateDifficultLevel pirateDifficulty) {
+    this.pirateDifficulty = pirateDifficulty;
+  }
+
+  /**
+   * Get Karma type.
+   * @return Karma type
+   */
+  public KarmaType getKarmaType() {
+    return karmaType;
+  }
+
+  /**
+   * Set Karma type.
+   * @param karmaType to set.
+   */
+  public void setKarmaType(final KarmaType karmaType) {
+    this.karmaType = karmaType;
+  }
+
+  /**
+   * Get karma speed. How much karma counts are
+   * incresed per each turn.
+   * @return Karma speed
+   */
+  public int getKarmaSpeed() {
+    return karmaSpeed;
+  }
+
+  /**
+   * Set karma speed. How much karma counts are
+   * incresed per each turn.
+   * @param karmaSpeed to set.
+   */
+  public void setKarmaSpeed(final int karmaSpeed) {
+    this.karmaSpeed = karmaSpeed;
+  }
+
+  /**
+   * How likely bad random event is to happen.
+   * @return Bad karma count
+   */
+  public int getBadKarmaCount() {
+    return badKarmaCount;
+  }
+
+  /**
+   * Set bad karma count. How likely bad random event is to happen.
+   * @param badKarmaCount to set.
+   */
+  public void setBadKarmaCount(final int badKarmaCount) {
+    this.badKarmaCount = badKarmaCount;
+  }
+
+  /**
+   * How likely good random event is to happen.
+   * @return Good karma count
+   */
+  public int getGoodKarmaCount() {
+    return goodKarmaCount;
+  }
+
+  /**
+   * Set good karma count. How likely good random event is to happen.
+   * @param goodKarmaCount to set.
+   */
+  public void setGoodKarmaCount(final int goodKarmaCount) {
+    this.goodKarmaCount = goodKarmaCount;
+  }
+
   /**
    * Fight with two fleets
    * @param x X coordinate

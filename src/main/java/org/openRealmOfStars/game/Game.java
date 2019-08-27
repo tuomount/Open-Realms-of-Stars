@@ -98,6 +98,7 @@ import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.ErrorLogger;
+import org.openRealmOfStars.utilities.GenericFileFilter;
 import org.openRealmOfStars.utilities.repository.ConfigFileRepository;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
@@ -1590,6 +1591,31 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Update all save files in default save folder.
+   * This is dev tool, which is use to upgrade previous
+   * save format to new one.
+   */
+  public static void saveGameUpdate() {
+    File folder = new File("saves");
+    File[] files = folder.listFiles(new GenericFileFilter(".save"));
+    if (files == null) {
+      files = new File[0];
+    }
+    GameRepository repository = new GameRepository();
+    for (int i = 0; i < files.length; i++) {
+      Game game = new Game(false);
+      if (!game.loadSavedGame(files[i].getName())) {
+        System.err.println("Failed upgrade save file: "
+            + files[i].getName());
+      } else {
+        repository.saveGame(GameRepository.DEFAULT_SAVE_FOLDER,
+            files[i].getName(), game.getStarMap());
+        System.out.println(files[i].getName() + " saved!");
+      }
+    }
+  }
+
+  /**
    * Main method to run the game
    * @param args from Command line
    */
@@ -1601,6 +1627,8 @@ public class Game implements ActionListener {
       System.out.println(CreditsView.MAIN_CREDITS);
     } else if (args.length > 0 && args[0].equals("--wiki-research")) {
       System.out.println(printTechWiki());
+    } else if (args.length > 0 && args[0].equals("--save-update")) {
+      saveGameUpdate();
     } else {
       if (args.length > 0 && args[0].equals("--no-music")) {
         System.out.println("Disabling the music...");

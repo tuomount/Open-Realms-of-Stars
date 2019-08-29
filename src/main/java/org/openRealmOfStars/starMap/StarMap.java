@@ -277,7 +277,7 @@ public class StarMap {
   /**
    * Magic string to save game files
    */
-  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.12";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.13";
 
   /**
    * Maximum amount of looping when finding free solar system spot.
@@ -755,6 +755,11 @@ public class StarMap {
     setDebug(false);
     history = new History();
     votes = new Votes();
+    setPirateDifficulty(PirateDifficultLevel.NORMAL);
+    setKarmaType(KarmaType.DISABLED);
+    setKarmaSpeed(1);
+    setGoodKarmaCount(0);
+    setBadKarmaCount(0);
     String str = IOUtilities.readString(dis);
     if (str.equals(MAGIC_STRING)) {
       turn = dis.readInt();
@@ -766,6 +771,11 @@ public class StarMap {
       setScoreConquer(dis.readInt());
       setScoreResearch(dis.readInt());
       setScoreDiplomacy(dis.readInt());
+      setPirateDifficulty(PirateDifficultLevel.getLevelByInt(dis.read()));
+      setKarmaType(KarmaType.getTypeByInt(dis.read()));
+      setKarmaSpeed(dis.read());
+      setGoodKarmaCount(dis.readInt());
+      setBadKarmaCount(dis.readInt());
       maxX = dis.readInt();
       maxY = dis.readInt();
       culture = new CulturePower[maxX][maxY];
@@ -826,7 +836,7 @@ public class StarMap {
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(final DataOutputStream dos) throws IOException {
-    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.12");
+    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.13");
     // Turn number
     dos.writeInt(turn);
     // Victory conditions
@@ -835,6 +845,11 @@ public class StarMap {
     dos.writeInt(getScoreConquer());
     dos.writeInt(getScoreResearch());
     dos.writeInt(getScoreDiplomacy());
+    dos.writeByte(getPirateDifficulty().getIndex());
+    dos.writeByte(getKarmaType().getIndex());
+    dos.writeByte(getKarmaSpeed());
+    dos.writeInt(getGoodKarmaCount());
+    dos.writeInt(getBadKarmaCount());
     // Map size
     dos.writeInt(maxX);
     dos.writeInt(maxY);

@@ -91,6 +91,9 @@ public class GalaxyConfigTest {
     config.setScoreLimitResearch(1);
     assertEquals(1, config.getScoreLimitDiplomacy());
     assertEquals(1, config.getScoreLimitResearch());
+    assertEquals(PirateDifficultLevel.NORMAL, config.getSpacePiratesDifficulty());
+    config.setSpacePiratesDifficulty(PirateDifficultLevel.VERY_HARD);
+    assertEquals(PirateDifficultLevel.VERY_HARD, config.getSpacePiratesDifficulty());
   }
 
   @Test

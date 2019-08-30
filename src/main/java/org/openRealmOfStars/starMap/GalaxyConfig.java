@@ -169,6 +169,11 @@ public class GalaxyConfig {
   private int spacePiratesLevel;
 
   /**
+   * Space pirates difficulty level.
+   */
+  private PirateDifficultLevel spacePiratesDifficulty;
+
+  /**
    * Space anomaly level
    * 0 Disabled
    * 1 Non-harmful
@@ -183,6 +188,7 @@ public class GalaxyConfig {
     sizeY = 75;
     this.galaxySizeIndex = 1;
     this.spacePiratesLevel = 1;
+    this.setSpacePiratesDifficulty(PirateDifficultLevel.NORMAL);
     this.spaceAnomaliesLevel = 1;
     setChanceForPlanetaryEvent(10);
     setNumberOfRoguePlanets(ROGUE_PLANETS_FEW);
@@ -564,6 +570,22 @@ public class GalaxyConfig {
    */
   public int getSpacePiratesLevel() {
     return this.spacePiratesLevel;
+  }
+
+  /**
+   * Get Space pirate difficulty level.
+   * @return the spacePiratesDifficulty
+   */
+  public PirateDifficultLevel getSpacePiratesDifficulty() {
+    return spacePiratesDifficulty;
+  }
+
+  /**
+   * Set Space pirate difficulty level.
+   * @param difficult the spacePiratesDifficulty to set
+   */
+  public void setSpacePiratesDifficulty(final PirateDifficultLevel difficult) {
+    this.spacePiratesDifficulty = difficult;
   }
 
   /**

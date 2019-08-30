@@ -49,6 +49,7 @@ import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
+import org.openRealmOfStars.starMap.PirateDifficultLevel;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
@@ -1111,167 +1112,71 @@ public class AITurnView extends BlackPanel {
   }
 
   /**
-   * Update and add more pirates to starmap
+   * Update single pirate tech category
    * @param pirates Board player info
-   * @param level to update
-   * @param justAddMore If true this will add just pirate military ships
-   * @return True if added pirates
+   * @param difficulty Pirate difficulty level
+   * @param type Tech Type which to upgrade
    */
-  public boolean updateSpacePirates(final PlayerInfo pirates,
-      final int level, final boolean justAddMore) {
-    if (!justAddMore) {
-      addRandomPirateTech(pirates, TechType.Combat, level);
-      addRandomPirateTech(pirates, TechType.Combat, level);
-      addRandomPirateTech(pirates, TechType.Combat, level);
-      addRandomPirateTech(pirates, TechType.Defense, level);
-      addRandomPirateTech(pirates, TechType.Defense, level);
-      addRandomPirateTech(pirates, TechType.Propulsion, level);
-      addRandomPirateTech(pirates, TechType.Propulsion, level);
-      addRandomPirateTech(pirates, TechType.Improvements, level);
-      addRandomPirateTech(pirates, TechType.Improvements, level);
-      addRandomPirateTech(pirates, TechType.Hulls, level);
-      addRandomPirateTech(pirates, TechType.Hulls, level);
-      addRandomPirateTech(pirates, TechType.Electrics, level);
-      addRandomPirateTech(pirates, TechType.Electrics, level);
-      Research.handleShipDesigns(pirates);
-    }
-    boolean added = false;
-    int numberOfFleets = pirates.getFleets().getNumberOfFleets();
-    for (int i = 0; i < numberOfFleets; i++) {
-      Fleet fleet = pirates.getFleets().getByIndex(i);
-      if (fleet.isStarBaseDeployed()) {
-        game.getStarMap().addSpacePirate(fleet.getX(), fleet.getY(), pirates);
-        added = true;
-        if (!justAddMore) {
-          game.getStarMap().addSpacePirateLair(fleet.getX(), fleet.getY(),
-              pirates);
-          added = true;
-        }
+  private void updateSinglePirateTech(final PlayerInfo pirates,
+      final PirateDifficultLevel difficulty, final TechType type) {
+    int level = pirates.getTechList().getTechLevel(type);
+    if (pirates.getTechList().isUpgradeable(type)) {
+      level++;
+      if (level > 10) {
+        level = 10;
       }
     }
-    return added;
+    // Very easy does not get tech upgrades
+    if (difficulty == PirateDifficultLevel.EASY) {
+      addRandomPirateTech(pirates, type, level);
+    } else if (difficulty == PirateDifficultLevel.NORMAL) {
+      addRandomPirateTech(pirates, type, level);
+      addRandomPirateTech(pirates, type, level);
+    } else if (difficulty == PirateDifficultLevel.HARD) {
+      addRandomPirateTech(pirates, type, level);
+      addRandomPirateTech(pirates, type, level);
+      addRandomPirateTech(pirates, type, level);
+    } else if (difficulty == PirateDifficultLevel.VERY_HARD) {
+      addRandomPirateTech(pirates, type, level);
+      addRandomPirateTech(pirates, type, level);
+      addRandomPirateTech(pirates, type, level);
+      addRandomPirateTech(pirates, type, level);
+    }
   }
-
   /**
-   * Update and add more pirates to starmap
+   * Update and add more pirates to starmap.
    * @param pirates Board player info
-   * @param newState Current state which
-   * @param justAddMore If true this will add just pirate military ships
-   * @return True if added pirates
+   * @param justAddMore If true this will add just pirate military ships.
+   * @param difficulty Pirate Difficulty Level
+   * @param justTech If true this will add just tech for pirate.
+   * @return True if pirate ships were added.
    */
   public boolean updateSpacePirates(final PlayerInfo pirates,
-      final GameLengthState newState, final boolean justAddMore) {
-    if (newState == GameLengthState.EARLY_GAME && !justAddMore) {
-      addRandomPirateTech(pirates, TechType.Combat, 2);
-      addRandomPirateTech(pirates, TechType.Combat, 3);
-      addRandomPirateTech(pirates, TechType.Combat, 3);
-      addRandomPirateTech(pirates, TechType.Defense, 2);
-      addRandomPirateTech(pirates, TechType.Defense, 3);
-      addRandomPirateTech(pirates, TechType.Defense, 3);
-      addRandomPirateTech(pirates, TechType.Improvements, 2);
-      addRandomPirateTech(pirates, TechType.Propulsion, 2);
-      addRandomPirateTech(pirates, TechType.Propulsion, 2);
-      addRandomPirateTech(pirates, TechType.Propulsion, 3);
-      addRandomPirateTech(pirates, TechType.Propulsion, 3);
-      addRandomPirateTech(pirates, TechType.Hulls, 3);
-      addRandomPirateTech(pirates, TechType.Hulls, 3);
-      addRandomPirateTech(pirates, TechType.Electrics, 1);
-      addRandomPirateTech(pirates, TechType.Electrics, 1);
-      addRandomPirateTech(pirates, TechType.Electrics, 2);
-      addRandomPirateTech(pirates, TechType.Electrics, 2);
-    }
-    if (newState == GameLengthState.MIDDLE_GAME && !justAddMore) {
-      addRandomPirateTech(pirates, TechType.Combat, 4);
-      addRandomPirateTech(pirates, TechType.Combat, 4);
-      addRandomPirateTech(pirates, TechType.Combat, 4);
-      addRandomPirateTech(pirates, TechType.Combat, 5);
-      addRandomPirateTech(pirates, TechType.Combat, 5);
-      addRandomPirateTech(pirates, TechType.Combat, 5);
-      addRandomPirateTech(pirates, TechType.Defense, 4);
-      addRandomPirateTech(pirates, TechType.Defense, 4);
-      addRandomPirateTech(pirates, TechType.Defense, 5);
-      addRandomPirateTech(pirates, TechType.Defense, 5);
-      addRandomPirateTech(pirates, TechType.Improvements, 2);
-      addRandomPirateTech(pirates, TechType.Improvements, 3);
-      addRandomPirateTech(pirates, TechType.Propulsion, 4);
-      addRandomPirateTech(pirates, TechType.Propulsion, 4);
-      addRandomPirateTech(pirates, TechType.Propulsion, 5);
-      addRandomPirateTech(pirates, TechType.Propulsion, 5);
-      addRandomPirateTech(pirates, TechType.Hulls, 4);
-      addRandomPirateTech(pirates, TechType.Hulls, 4);
-      addRandomPirateTech(pirates, TechType.Hulls, 4);
-      addRandomPirateTech(pirates, TechType.Hulls, 5);
-      addRandomPirateTech(pirates, TechType.Electrics, 4);
-      addRandomPirateTech(pirates, TechType.Electrics, 4);
-      addRandomPirateTech(pirates, TechType.Electrics, 5);
-    }
-    if (newState == GameLengthState.LATE_GAME && !justAddMore) {
-      addRandomPirateTech(pirates, TechType.Combat, 5);
-      addRandomPirateTech(pirates, TechType.Combat, 5);
-      addRandomPirateTech(pirates, TechType.Combat, 6);
-      addRandomPirateTech(pirates, TechType.Combat, 6);
-      addRandomPirateTech(pirates, TechType.Combat, 6);
-      Tech tech = pirates.getTechList().getBestWeapon();
-      if (tech.getLevel() < 6) {
-        addRandomPirateTech(pirates, TechType.Combat, 6);
-      }
-      addRandomPirateTech(pirates, TechType.Defense, 5);
-      addRandomPirateTech(pirates, TechType.Defense, 6);
-      addRandomPirateTech(pirates, TechType.Defense, 6);
-      addRandomPirateTech(pirates, TechType.Improvements, 3);
-      addRandomPirateTech(pirates, TechType.Improvements, 4);
-      addRandomPirateTech(pirates, TechType.Propulsion, 5);
-      addRandomPirateTech(pirates, TechType.Propulsion, 6);
-      addRandomPirateTech(pirates, TechType.Propulsion, 6);
-      addRandomPirateTech(pirates, TechType.Propulsion, 6);
-      addRandomPirateTech(pirates, TechType.Hulls, 5);
-      addRandomPirateTech(pirates, TechType.Hulls, 5);
-      addRandomPirateTech(pirates, TechType.Hulls, 6);
-      addRandomPirateTech(pirates, TechType.Electrics, 5);
-      addRandomPirateTech(pirates, TechType.Electrics, 6);
-      addRandomPirateTech(pirates, TechType.Electrics, 6);
-    }
-    if (newState == GameLengthState.END_GAME && !justAddMore) {
-      addRandomPirateTech(pirates, TechType.Combat, 7);
-      addRandomPirateTech(pirates, TechType.Combat, 7);
-      addRandomPirateTech(pirates, TechType.Combat, 7);
-      addRandomPirateTech(pirates, TechType.Combat, 8);
-      addRandomPirateTech(pirates, TechType.Combat, 8);
-      addRandomPirateTech(pirates, TechType.Combat, 8);
-      addRandomPirateTech(pirates, TechType.Defense, 7);
-      addRandomPirateTech(pirates, TechType.Defense, 7);
-      addRandomPirateTech(pirates, TechType.Defense, 8);
-      addRandomPirateTech(pirates, TechType.Defense, 8);
-      addRandomPirateTech(pirates, TechType.Improvements, 6);
-      addRandomPirateTech(pirates, TechType.Improvements, 7);
-      addRandomPirateTech(pirates, TechType.Propulsion, 7);
-      addRandomPirateTech(pirates, TechType.Propulsion, 7);
-      addRandomPirateTech(pirates, TechType.Propulsion, 8);
-      addRandomPirateTech(pirates, TechType.Propulsion, 8);
-      addRandomPirateTech(pirates, TechType.Hulls, 6);
-      addRandomPirateTech(pirates, TechType.Hulls, 7);
-      addRandomPirateTech(pirates, TechType.Hulls, 7);
-      addRandomPirateTech(pirates, TechType.Hulls, 8);
-      addRandomPirateTech(pirates, TechType.Hulls, 8);
-      addRandomPirateTech(pirates, TechType.Electrics, 7);
-      addRandomPirateTech(pirates, TechType.Electrics, 7);
-      addRandomPirateTech(pirates, TechType.Electrics, 8);
-      addRandomPirateTech(pirates, TechType.Electrics, 8);
-    }
-    if (!justAddMore) {
+      final boolean justAddMore, final PirateDifficultLevel difficulty,
+      final boolean justTech) {
+    if (!justAddMore || justTech) {
+      updateSinglePirateTech(pirates, difficulty, TechType.Combat);
+      updateSinglePirateTech(pirates, difficulty, TechType.Defense);
+      updateSinglePirateTech(pirates, difficulty, TechType.Propulsion);
+      updateSinglePirateTech(pirates, difficulty, TechType.Improvements);
+      updateSinglePirateTech(pirates, difficulty, TechType.Hulls);
+      updateSinglePirateTech(pirates, difficulty, TechType.Electrics);
       Research.handleShipDesigns(pirates);
     }
     boolean added = false;
-    int numberOfFleets = pirates.getFleets().getNumberOfFleets();
-    for (int i = 0; i < numberOfFleets; i++) {
-      Fleet fleet = pirates.getFleets().getByIndex(i);
-      if (fleet.isStarBaseDeployed()) {
-        game.getStarMap().addSpacePirate(fleet.getX(), fleet.getY(), pirates);
-        added = true;
-        if (!justAddMore) {
-          game.getStarMap().addSpacePirateLair(fleet.getX(), fleet.getY(),
+    if (!justTech) {
+      int numberOfFleets = pirates.getFleets().getNumberOfFleets();
+      for (int i = 0; i < numberOfFleets; i++) {
+        Fleet fleet = pirates.getFleets().getByIndex(i);
+        if (fleet.isStarBaseDeployed()) {
+          game.getStarMap().addSpacePirate(fleet.getX(), fleet.getY(),
               pirates);
           added = true;
+          if (!justAddMore) {
+            game.getStarMap().addSpacePirateLair(fleet.getX(), fleet.getY(),
+                pirates);
+            added = true;
+          }
         }
       }
     }
@@ -2002,24 +1907,25 @@ public class AITurnView extends BlackPanel {
     GameLengthState newState = game.getStarMap().getGameLengthState();
     PlayerInfo board = game.getPlayers().getBoardPlayer();
     boolean pirateNews = false;
-    if (oldState != newState && board != null && game.getStarMap()
-        .getScoreVictoryTurn() <= 400) {
-      pirateNews = updateSpacePirates(board, newState, false);
+    if (oldState != newState && board != null) {
+      pirateNews = updateSpacePirates(board, false,
+          game.getStarMap().getPirateDifficulty(), false);
     }
     if (game.getStarMap().getTurn() % 100 == 0
         && board != null && game.getStarMap().getScoreVictoryTurn() > 400
         && !pirateNews) {
-      int level = game.getStarMap().getTurn() / 100;
-      level++;
-      if (level >= 10) {
-        level = 10;
-      }
-      pirateNews = updateSpacePirates(board, level, false);
+      pirateNews = updateSpacePirates(board, false,
+          game.getStarMap().getPirateDifficulty(), false);
     }
-    if (game.getStarMap().getTurn() % 50 == 0 && !pirateNews
-        && board != null) {
-      // Just adding more pirates
-      pirateNews = updateSpacePirates(board, newState, true);
+    if (game.getStarMap().getTurn() % 50 == 0 && board != null) {
+      if (pirateNews) {
+        updateSpacePirates(board, false,
+            game.getStarMap().getPirateDifficulty(), true);
+      } else {
+        // Just adding more pirates
+        pirateNews = updateSpacePirates(board, true,
+            game.getStarMap().getPirateDifficulty(), false);
+      }
     }
     if (pirateNews) {
       NewsCorpData newsData = game.getStarMap().getNewsCorpData();

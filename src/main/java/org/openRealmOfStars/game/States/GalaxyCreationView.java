@@ -20,6 +20,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
+import org.openRealmOfStars.starMap.PirateDifficultLevel;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 
@@ -109,6 +110,11 @@ public class GalaxyCreationView extends BlackPanel {
    * ComboBox for space pirates
    */
   private SpaceCombo<String> comboSpacePirates;
+
+  /**
+   * ComboBox for space pirate difficulty level
+   */
+  private SpaceCombo<String> comboSpacePirateDifficulty;
 
   /**
    * ComboBox for space anomalies
@@ -271,9 +277,40 @@ public class GalaxyCreationView extends BlackPanel {
         + " anchors contain space pirates lair.<br>"
         + " If disable there are space pirates in"
         + " space anomalies either.<html>");
+
     info.add(comboSpacePirates);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
+
+    label = new SpaceLabel("Space pirate difficulty:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    String[] spacePirateDifficulties = new String[5];
+    spacePirateDifficulties[0] = PirateDifficultLevel.VERY_EASY.toString();
+    spacePirateDifficulties[1] = PirateDifficultLevel.EASY.toString();
+    spacePirateDifficulties[2] = PirateDifficultLevel.NORMAL.toString();
+    spacePirateDifficulties[3] = PirateDifficultLevel.HARD.toString();
+    spacePirateDifficulties[4] = PirateDifficultLevel.VERY_HARD.toString();
+    comboSpacePirateDifficulty = new SpaceCombo<>(spacePirateDifficulties);
+    comboSpacePirateDifficulty.setSelectedIndex(
+        this.config.getSpacePiratesDifficulty().getIndex());
+    comboSpacePirateDifficulty.setActionCommand(
+        GameCommands.COMMAND_GALAXY_SETUP);
+    comboSpacePirateDifficulty.addActionListener(listener);
+    comboSpacePirateDifficulty.setToolTipText("<html>Difficulty level of"
+        + " space pirates. Difficulty level affects how fast"
+        + " space pirates gain new technology in game.<br>"
+        + " <li> Very easy - No technological advance"
+        + " <li> Easy      - Slow technological advance"
+        + " <li> Normal    - Normal technological advance"
+        + " <li> Hard      - Fast technological advance"
+        + " <li> Very hard - Unfairly fast technological advance"
+        + "<html>");
+    info.add(comboSpacePirateDifficulty);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    xinvis.add(info);
+
     label = new SpaceLabel("Space anomalies:");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
@@ -650,6 +687,8 @@ public class GalaxyCreationView extends BlackPanel {
       }
       }
       config.setSpacePiratesLevel(comboSpacePirates.getSelectedIndex());
+      config.setSpacePiratesDifficulty(PirateDifficultLevel.getLevelByInt(
+          comboSpacePirateDifficulty.getSelectedIndex()));
       config.setSpaceAnomaliesLevel(comboSpaceAnomalies.getSelectedIndex());
       switch (comboScoringVictory.getSelectedIndex()) {
       case 0: {

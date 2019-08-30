@@ -308,6 +308,7 @@ public class StarMap {
     maxX = config.getSizeX();
     maxY = config.getSizeY();
     chanceForPlanetaryEvent = config.getChanceForPlanetaryEvent();
+    pirateDifficulty = config.getSpacePiratesDifficulty();
     this.players = players;
     this.players.initVisibilityMaps(maxX, maxY);
     drawX = 0;

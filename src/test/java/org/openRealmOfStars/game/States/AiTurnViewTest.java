@@ -22,8 +22,8 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechFactory;
+import org.openRealmOfStars.starMap.PirateDifficultLevel;
 import org.openRealmOfStars.starMap.StarMap;
-import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.Votes;
@@ -137,17 +137,20 @@ public class AiTurnViewTest {
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(game.getStarMap()).thenReturn(map);
     AITurnView view = new AITurnView(game);
-    int level = 3;
     PlayerInfo pirates = new PlayerInfo(SpaceRace.SPACE_PIRATE, 9, 8);
     Tech tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() <= 2);
-    assertEquals(false, view.updateSpacePirates(pirates, level, false));
+    assertEquals(false, view.updateSpacePirates(pirates, false,
+        PirateDifficultLevel.HARD, true));
+    assertEquals(false, view.updateSpacePirates(pirates, false,
+        PirateDifficultLevel.HARD, false));
     tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() == 3);
     Fleet fleet = Mockito.mock(Fleet.class);
     Mockito.when(fleet.isStarBaseDeployed()).thenReturn(true);
     pirates.getFleets().add(fleet);
-    assertEquals(true, view.updateSpacePirates(pirates, level, false));
+    assertEquals(true, view.updateSpacePirates(pirates, false,
+        PirateDifficultLevel.NORMAL, false));
   }
 
   @Test
@@ -193,26 +196,39 @@ public class AiTurnViewTest {
     PlayerInfo pirates = new PlayerInfo(SpaceRace.SPACE_PIRATE, 9, 8);
     Tech tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() <= 2);
-    GameLengthState state = GameLengthState.EARLY_GAME;
-    view.updateSpacePirates(pirates, state, false);
+    view.updateSpacePirates(pirates, false,
+        PirateDifficultLevel.VERY_HARD, true);
     tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() >= 2);
-    state = GameLengthState.MIDDLE_GAME;
-    assertEquals(false, view.updateSpacePirates(pirates, state, false));
+    assertEquals(false, view.updateSpacePirates(pirates, false,
+        PirateDifficultLevel.VERY_HARD, false));
+    view.updateSpacePirates(pirates, false,
+        PirateDifficultLevel.HARD, true);
+    view.updateSpacePirates(pirates, false,
+        PirateDifficultLevel.HARD, true);
+    view.updateSpacePirates(pirates, false,
+        PirateDifficultLevel.HARD, true);
     tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() == 5);
-    state = GameLengthState.LATE_GAME;
-    view.updateSpacePirates(pirates, state, false);
+    view.updateSpacePirates(pirates, false,
+        PirateDifficultLevel.HARD, true);
     tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() == 6);
-    state = GameLengthState.END_GAME;
-    view.updateSpacePirates(pirates, state, false);
+    view.updateSpacePirates(pirates, false,
+        PirateDifficultLevel.VERY_HARD, true);
+    view.updateSpacePirates(pirates, false,
+        PirateDifficultLevel.VERY_HARD, true);
+    view.updateSpacePirates(pirates, false,
+        PirateDifficultLevel.HARD, true);
     tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() == 8);
     Fleet fleet = Mockito.mock(Fleet.class);
     Mockito.when(fleet.isStarBaseDeployed()).thenReturn(true);
     pirates.getFleets().add(fleet);
-    assertEquals(true, view.updateSpacePirates(pirates, state, false));
+    assertEquals(true, view.updateSpacePirates(pirates, false,
+        PirateDifficultLevel.EASY, false));
+    assertEquals(true, view.updateSpacePirates(pirates, false,
+        PirateDifficultLevel.VERY_EASY, false));
   }
 
   @Test

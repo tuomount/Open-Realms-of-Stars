@@ -1,5 +1,9 @@
 package org.openRealmOfStars.starMap.randomEvent;
 
+import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.planet.Planet;
+
 /**
 *
 * Open Realm of Stars game project
@@ -37,21 +41,43 @@ public class RandomEvent {
   private GoodRandomType goodType;
 
   /**
+   * Realm info who is getting the random event.
+   */
+  private PlayerInfo realm;
+
+  /**
+   * Planet where event happens. This can be null if
+   * event does not happen on certain planet.
+   */
+  private Planet planet;
+
+  /**
+   * Solar system where event happens. This can be null
+   * if event does not affect for the whole solar system.
+   */
+  private Sun sun;
+  /**
    * Constructor for Bad random event type.
    * @param badType Bad random event type
+   * @param info Realm info who is experiencing bad event.
    */
-  public RandomEvent(final BadRandomType badType) {
+  public RandomEvent(final BadRandomType badType, final PlayerInfo info) {
     this.badType = badType;
     this.goodType = null;
+    this.realm = info;
+    this.setPlanet(null);
+    this.setSun(null);
   }
 
   /**
    * Constructor for Good random event type.
    * @param goodType Good random event type
+   * @param info Realm info who is experiencing good event.
    */
-  public RandomEvent(final GoodRandomType goodType) {
+  public RandomEvent(final GoodRandomType goodType, final PlayerInfo info) {
     this.badType = null;
     this.goodType = goodType;
+    this.realm = info;
   }
 
   /**
@@ -68,5 +94,45 @@ public class RandomEvent {
    */
   public GoodRandomType getGoodType() {
     return goodType;
+  }
+
+  /**
+   * Get realm who is experiencing the random event.
+   * @return PlayerInfo
+   */
+  public PlayerInfo getRealm() {
+    return realm;
+  }
+
+  /**
+   * Get planet where event happens.
+   * @return the planet or null
+   */
+  public Planet getPlanet() {
+    return planet;
+  }
+
+  /**
+   * Set planet where event happens.
+   * @param planet the planet to set
+   */
+  public void setPlanet(final Planet planet) {
+    this.planet = planet;
+  }
+
+  /**
+   * Get the sun where event happens.
+   * @return the sun or null
+   */
+  public Sun getSun() {
+    return sun;
+  }
+
+  /**
+   * Set the sun where event happens.
+   * @param sun the sun to set
+   */
+  public void setSun(final Sun sun) {
+    this.sun = sun;
   }
 }

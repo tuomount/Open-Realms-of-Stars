@@ -44,5 +44,15 @@ public enum GoodRandomType {
   /**
    * All planets in system decrease radiation level.
    */
-  SOLAR_ACTIVITY_DIMISHED
+  SOLAR_ACTIVITY_DIMISHED,
+  /**
+   * Alien ship appears near the planet, but all crew is gone.
+   * Realm gain access a new ship.
+   */
+  DESERTED_SHIP,
+  /**
+   * Meteoroid just misses the planet, but scientist are able mine
+   * metal from it.
+   */
+  MISSED_METEOROID
 }

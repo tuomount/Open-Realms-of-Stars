@@ -25,6 +25,7 @@ package org.openRealmOfStars.starMap.randomEvent;
 public enum BadRandomType {
   /**
    * Meteor crashes into planet and can kill populations or destroy buildings.
+   * This provides a more metal to planet.
    * Defensive turret can shoot it down and then provide more metal to planet.
    */
   METEOR_HIT,
@@ -65,5 +66,9 @@ public enum BadRandomType {
    * Massive corruption scandal found in government.
    * Half of the credits are gone.
    */
-  CORRUPTION_SCANDAL;
+  CORRUPTION_SCANDAL,
+  /**
+   * One of planet's building explodes and kills one population.
+   */
+  CATASTROPHIC_ACCIDENT
 }

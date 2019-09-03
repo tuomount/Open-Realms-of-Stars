@@ -1,6 +1,7 @@
 package org.openRealmOfStars.starMap.randomEvent;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
 
@@ -57,6 +58,11 @@ public class RandomEvent {
    */
   private Sun sun;
   /**
+   * Fleet where event happens. This can be null if
+   * event does not happen on certain fleet.
+   */
+  private Fleet fleet;
+  /**
    * Constructor for Bad random event type.
    * @param badType Bad random event type
    * @param info Realm info who is experiencing bad event.
@@ -67,6 +73,7 @@ public class RandomEvent {
     this.realm = info;
     this.setPlanet(null);
     this.setSun(null);
+    this.setFleet(null);
   }
 
   /**
@@ -134,5 +141,21 @@ public class RandomEvent {
    */
   public void setSun(final Sun sun) {
     this.sun = sun;
+  }
+
+  /**
+   * Get the fleet where event happens.
+   * @return the fleet
+   */
+  public Fleet getFleet() {
+    return fleet;
+  }
+
+  /**
+   * Set the fleet where event happens.
+   * @param fleet the fleet to set
+   */
+  public void setFleet(final Fleet fleet) {
+    this.fleet = fleet;
   }
 }

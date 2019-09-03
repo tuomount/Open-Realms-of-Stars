@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
 
@@ -50,6 +51,10 @@ public class RandomEventTest {
     Sun sun = Mockito.mock(Sun.class);
     event.setSun(sun);
     assertEquals(sun, event.getSun());
+    assertEquals(null, event.getFleet());
+    Fleet fleet = Mockito.mock(Fleet.class);
+    event.setFleet(fleet);
+    assertEquals(fleet, event.getFleet());
   }
 
   @Test
@@ -65,6 +70,10 @@ public class RandomEventTest {
     Sun sun = Mockito.mock(Sun.class);
     event.setSun(sun);
     assertEquals(sun, event.getSun());
+    assertEquals(null, event.getFleet());
+    Fleet fleet = Mockito.mock(Fleet.class);
+    event.setFleet(fleet);
+    assertEquals(fleet, event.getFleet());
   }
 
 }

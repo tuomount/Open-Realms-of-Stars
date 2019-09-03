@@ -62,6 +62,17 @@ public class RandomEvent {
    * event does not happen on certain fleet.
    */
   private Fleet fleet;
+
+  /**
+   * Textual description about the event. This same text
+   * could be used with news if needed.
+   */
+  private String text;
+
+  /**
+   * Is event so big that it should get into galactic news.
+   */
+  private boolean newsWorthy;
   /**
    * Constructor for Bad random event type.
    * @param badType Bad random event type
@@ -74,6 +85,8 @@ public class RandomEvent {
     this.setPlanet(null);
     this.setSun(null);
     this.setFleet(null);
+    this.setText("");
+    this.setNewsWorthy(false);
   }
 
   /**
@@ -85,6 +98,11 @@ public class RandomEvent {
     this.badType = null;
     this.goodType = goodType;
     this.realm = info;
+    this.setPlanet(null);
+    this.setSun(null);
+    this.setFleet(null);
+    this.setText("");
+    this.setNewsWorthy(false);
   }
 
   /**
@@ -157,5 +175,37 @@ public class RandomEvent {
    */
   public void setFleet(final Fleet fleet) {
     this.fleet = fleet;
+  }
+
+  /**
+   * Get text descriptive text about the event.
+   * @return the text
+   */
+  public String getText() {
+    return text;
+  }
+
+  /**
+   * Set the descriptive text about the event.
+   * @param text the text to set
+   */
+  public void setText(final String text) {
+    this.text = text;
+  }
+
+  /**
+   * Is event so big/massive that it should get into news.
+   * @return the newsWorthy
+   */
+  public boolean isNewsWorthy() {
+    return newsWorthy;
+  }
+
+  /**
+   * Set true if event is news worthy.
+   * @param newsWorthy the newsWorthy to set
+   */
+  public void setNewsWorthy(final boolean newsWorthy) {
+    this.newsWorthy = newsWorthy;
   }
 }

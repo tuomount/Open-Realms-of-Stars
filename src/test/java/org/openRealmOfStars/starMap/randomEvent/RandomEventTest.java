@@ -55,6 +55,12 @@ public class RandomEventTest {
     Fleet fleet = Mockito.mock(Fleet.class);
     event.setFleet(fleet);
     assertEquals(fleet, event.getFleet());
+    assertEquals("", event.getText());
+    event.setText("Test text");
+    assertEquals("Test text", event.getText());
+    assertEquals(false, event.isNewsWorthy());
+    event.setNewsWorthy(true);
+    assertEquals(true, event.isNewsWorthy());
   }
 
   @Test
@@ -74,6 +80,12 @@ public class RandomEventTest {
     Fleet fleet = Mockito.mock(Fleet.class);
     event.setFleet(fleet);
     assertEquals(fleet, event.getFleet());
+    assertEquals("", event.getText());
+    event.setText("Test text");
+    assertEquals("Test text", event.getText());
+    assertEquals(false, event.isNewsWorthy());
+    event.setNewsWorthy(true);
+    assertEquals(true, event.isNewsWorthy());
   }
 
 }

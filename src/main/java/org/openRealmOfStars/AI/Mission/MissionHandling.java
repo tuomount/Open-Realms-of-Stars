@@ -1026,7 +1026,7 @@ public final class MissionHandling {
       int index = game.getPlayers().getIndex(info);
       int credPlus = game.getStarMap().getTotalProductionByPlayerPerTurn(
           Planet.PRODUCTION_CREDITS, index);
-      if (credPlus < shipCost
+      if (credPlus < shipCost && shipCost > 0
           && info.getTotalCredits() / shipCost < 5) {
         Ship ship = fleet.getScrableShip(info.getObsoleteShips());
         if (ship != null) {

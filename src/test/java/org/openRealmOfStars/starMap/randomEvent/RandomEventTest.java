@@ -88,4 +88,22 @@ public class RandomEventTest {
     assertEquals(true, event.isNewsWorthy());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBadEventCreation() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    RandomEvent event = RandomEventUtility.createBadRandomEvent(info);
+    assertEquals(null, event.getGoodType());
+    assertNotNull(event.getBadType());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGoodEventCreation() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    RandomEvent event = RandomEventUtility.createGoodRandomEvent(info);
+    assertEquals(null, event.getBadType());
+    assertNotNull(event.getGoodType());
+  }
+
 }

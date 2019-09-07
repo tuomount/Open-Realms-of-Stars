@@ -7,6 +7,8 @@ import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.utilities.repository.GameRepository;
 
 
 /**
@@ -44,6 +46,7 @@ public class RandomEventUtilityTest {
     info.getTechList().setTechResearchPoints(TechType.Improvements, 20);
     info.getTechList().setTechResearchPoints(TechType.Electrics, 20);
     RandomEvent event = new RandomEvent(BadRandomType.MASSIVE_DATA_LOST, info);
+    assertEquals("", event.getText());
     RandomEventUtility.handleMassiveDataLost(event);
     boolean found = false;
     for (TechType type : TechType.values()) {
@@ -52,6 +55,7 @@ public class RandomEventUtilityTest {
       }
     }
     assertEquals(true, found);
+    assertNotEquals("", event.getText());
   }
 
   @Test
@@ -60,6 +64,7 @@ public class RandomEventUtilityTest {
     PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
     RandomEvent event = new RandomEvent(GoodRandomType.TECHNICAL_BREAKTHROUGH,
         info);
+    assertEquals("", event.getText());
     RandomEventUtility.handleTechnicalBreakThrough(event);
     boolean found = false;
     for (TechType type : TechType.values()) {
@@ -68,6 +73,20 @@ public class RandomEventUtilityTest {
       }
     }
     assertEquals(true, found);
+    assertNotEquals("", event.getText());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testMeteorHit() {
+    GameRepository repository = new GameRepository();
+    StarMap starMap = repository.loadGame("src/test/resources/saves",
+                                          "npePrivateer.save");
+    PlayerInfo info = starMap.getPlayerByIndex(1);
+    RandomEvent event = new RandomEvent(BadRandomType.METEOR_HIT, info);
+    assertEquals("", event.getText());
+    RandomEventUtility.handleMeteorHit(event, starMap);
+    assertNotEquals("", event.getText());
   }
 
 }

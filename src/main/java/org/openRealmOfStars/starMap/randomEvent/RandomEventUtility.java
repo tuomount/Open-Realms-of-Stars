@@ -1,7 +1,12 @@
 package org.openRealmOfStars.starMap.randomEvent;
 
+import java.util.ArrayList;
+
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -100,6 +105,62 @@ public final class RandomEventUtility {
           + techName + " technology. "
           + "This will gains us to get faster new technology in "
           + techName + ".");
+    }
+  }
+
+  /**
+   * Handle meteor hit to planet.
+   * @param event Random Event must be meteor hit
+   * @param map Starmap for looking planet for realm.
+   */
+  public static void handleMeteorHit(final RandomEvent event,
+      final StarMap map) {
+    if (event.getBadType() == BadRandomType.METEOR_HIT) {
+      PlayerInfo info = event.getRealm();
+      ArrayList<Planet> planets = new ArrayList<>();
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info) {
+          planets.add(planet);
+        }
+      }
+      if (planets.size() > 0) {
+        int index = DiceGenerator.getRandom(planets.size() - 1);
+        Planet planet = planets.get(index);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Massive meteor hits the the atmosphere of ");
+        sb.append(planet.getName());
+        sb.append(". ");
+        if (planet.getTurretLvl() > 0) {
+          sb.append("Planet's defense turrets shoot the meteor to pieces ");
+          sb.append("and metal debris is being scattered around the planet.");
+          planet.setAmountMetalInGround(planet.getAmountMetalInGround()
+              + DiceGenerator.getRandom(80, 500));
+        } else {
+          planet.setMetal(planet.getMetal()
+              + DiceGenerator.getRandom(80, 500));
+          sb.append("Meteor hits the planet ");
+          boolean miss = true;
+          int hitSpot = DiceGenerator.getRandom(0, planet.getGroundSize() - 1);
+          if (hitSpot <= planet.getTotalPopulation()) {
+            sb.append("and kills one worker ");
+            planet.killOneWorker();
+            miss = false;
+          }
+          if (hitSpot < planet.getNumberOfBuildings()) {
+            sb.append("and destroyes ");
+            Building building = planet.getBuildingList()[hitSpot];
+            sb.append(building.getName());
+            planet.removeBuilding(building);
+            miss = false;
+          }
+          if (miss) {
+            sb.append(" but hits to unoccupied zone.");
+          } else {
+            sb.append(".");
+          }
+        }
+        event.setText(sb.toString());
+      }
     }
   }
 

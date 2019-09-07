@@ -13,7 +13,7 @@ import org.openRealmOfStars.player.message.MessageType;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017 Tuomo Untinen
+* Copyright (C) 2017, 2019 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -135,6 +135,9 @@ public class TechListTest {
     assertEquals(1, list.getTechLevel(TechType.Hulls));
     assertEquals(1, list.getTechLevel(TechType.Improvements));
     assertEquals(1, list.getTechLevel(TechType.Propulsion));
+    assertEquals(0, list.getTechResearchPoints(TechType.Combat), 0.5);
+    list.setTechResearchPoints(TechType.Combat, 5);
+    assertEquals(5, list.getTechResearchPoints(TechType.Combat), 0.5);
   }
 
   @Test

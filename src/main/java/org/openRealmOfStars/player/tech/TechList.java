@@ -18,7 +18,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2019  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -740,6 +740,14 @@ public class TechList {
     return techResearchPoint[type.getIndex()];
   }
 
+  /**
+   * Set Tech research points for certain type of tech.
+   * @param type TechType
+   * @param value Value where to set the points.
+   */
+  public void setTechResearchPoints(final TechType type, final double value) {
+    techResearchPoint[type.getIndex()] = value;
+  }
   /**
    * Add new random tech to player tech list
    * @param info PlayerInfo

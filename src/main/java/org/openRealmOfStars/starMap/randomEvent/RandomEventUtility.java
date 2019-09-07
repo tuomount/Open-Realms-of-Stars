@@ -1,6 +1,7 @@
 package org.openRealmOfStars.starMap.randomEvent;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -56,5 +57,24 @@ public final class RandomEventUtility {
     int index = DiceGenerator.getRandom(values.length - 1);
     RandomEvent event = new RandomEvent(values[index], realm);
     return event;
+  }
+
+  /**
+   * Handle massive data lost event.
+   * @param event Random event, must be Massive data lost.
+   */
+  public static void handleMassiveDataLost(final RandomEvent event) {
+    if (event.getBadType() == BadRandomType.MASSIVE_DATA_LOST) {
+      PlayerInfo info = event.getRealm();
+      int index = DiceGenerator.getRandom(TechType.values().length - 1);
+      info.getTechList().setTechResearchPoints(TechType.getTypeByIndex(index),
+          0);
+      String techName = TechType.getTypeByIndex(index).toString();
+      event.setText("A massive computer virus spreads in all labs which study "
+          + techName + " technology. "
+          + "This virus deletes all the data related to research. "
+          + "All work for next tech in " + techName + " is lost. "
+          + "Scientists need to start all over from the scratch.");
+    }
   }
 }

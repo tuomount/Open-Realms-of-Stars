@@ -77,4 +77,30 @@ public final class RandomEventUtility {
           + "Scientists need to start all over from the scratch.");
     }
   }
+
+  /**
+   * Handle techinical breakthrough
+   * @param event Random event, must be technical breakthrough
+   */
+  public static void handleTechnicalBreakThrough(final RandomEvent event) {
+    if (event.getGoodType() == GoodRandomType.TECHNICAL_BREAKTHROUGH) {
+      PlayerInfo info = event.getRealm();
+      int index = DiceGenerator.getRandom(TechType.values().length - 1);
+      double original = info.getTechList().getTechResearchPoints(
+          TechType.getTypeByIndex(index));
+      if (original < 10) {
+        original = 20;
+      } else {
+        original = original * 2;
+      }
+      info.getTechList().setTechResearchPoints(TechType.getTypeByIndex(index),
+          original);
+      String techName = TechType.getTypeByIndex(index).toString();
+      event.setText("Scientist make breakthrough which boost "
+          + techName + " technology. "
+          + "This will gains us to get faster new technology in "
+          + techName + ".");
+    }
+  }
+
 }

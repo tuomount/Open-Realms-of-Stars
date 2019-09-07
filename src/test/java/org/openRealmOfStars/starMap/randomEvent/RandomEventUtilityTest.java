@@ -54,4 +54,20 @@ public class RandomEventUtilityTest {
     assertEquals(true, found);
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTechBreakThrough() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    RandomEvent event = new RandomEvent(GoodRandomType.TECHNICAL_BREAKTHROUGH,
+        info);
+    RandomEventUtility.handleTechnicalBreakThrough(event);
+    boolean found = false;
+    for (TechType type : TechType.values()) {
+      if (info.getTechList().getTechResearchPoints(type) > 10) {
+        found = true;
+      }
+    }
+    assertEquals(true, found);
+  }
+
 }

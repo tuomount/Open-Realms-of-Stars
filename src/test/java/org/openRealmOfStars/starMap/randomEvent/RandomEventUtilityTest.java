@@ -87,6 +87,21 @@ public class RandomEventUtilityTest {
     assertEquals("", event.getText());
     RandomEventUtility.handleMeteorHit(event, starMap);
     assertNotEquals("", event.getText());
+    assertNotEquals(null, event.getPlanet());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testMissedMeteoroid() {
+    GameRepository repository = new GameRepository();
+    StarMap starMap = repository.loadGame("src/test/resources/saves",
+                                          "npePrivateer.save");
+    PlayerInfo info = starMap.getPlayerByIndex(1);
+    RandomEvent event = new RandomEvent(GoodRandomType.MISSED_METEOROID, info);
+    assertEquals("", event.getText());
+    RandomEventUtility.handleMissiedMeteoroid(event, starMap);
+    assertNotEquals("", event.getText());
+    assertNotEquals(null, event.getPlanet());
   }
 
 }

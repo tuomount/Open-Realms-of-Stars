@@ -126,6 +126,7 @@ public final class RandomEventUtility {
       if (planets.size() > 0) {
         int index = DiceGenerator.getRandom(planets.size() - 1);
         Planet planet = planets.get(index);
+        event.setPlanet(planet);
         StringBuilder sb = new StringBuilder();
         sb.append("Massive meteor hits the the atmosphere of ");
         sb.append(planet.getName());
@@ -159,6 +160,37 @@ public final class RandomEventUtility {
             sb.append(".");
           }
         }
+        event.setText(sb.toString());
+      }
+    }
+  }
+
+  /**
+   * Handle missed meteoroid .
+   * @param event Random Event must be missed meteoird
+   * @param map Starmap for looking planet for realm.
+   */
+  public static void handleMissiedMeteoroid(final RandomEvent event,
+      final StarMap map) {
+    if (event.getGoodType() == GoodRandomType.MISSED_METEOROID) {
+      PlayerInfo info = event.getRealm();
+      ArrayList<Planet> planets = new ArrayList<>();
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info) {
+          planets.add(planet);
+        }
+      }
+      if (planets.size() > 0) {
+        int index = DiceGenerator.getRandom(planets.size() - 1);
+        Planet planet = planets.get(index);
+        event.setPlanet(planet);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Massive meteoroid passes by");
+        sb.append(planet.getName());
+        sb.append(" very close. So close that planet scienties are able"
+            + "to mine metal from the meteoroid.");
+        planet.setAmountMetalInGround(planet.getAmountMetalInGround()
+            + DiceGenerator.getRandom(80, 400));
         event.setText(sb.toString());
       }
     }

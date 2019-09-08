@@ -104,4 +104,26 @@ public class RandomEventUtilityTest {
     assertNotEquals(null, event.getPlanet());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testVirusOutbreak() {
+    GameRepository repository = new GameRepository();
+    StarMap starMap = repository.loadGame("src/test/resources/saves",
+                                          "npePrivateer.save");
+    PlayerInfo info = starMap.getPlayerByIndex(1);
+    RandomEvent event = new RandomEvent(BadRandomType.DEADLY_VIRUS_OUTBREAK,
+        info);
+    assertEquals("", event.getText());
+    RandomEventUtility.handleDeadlyVirusOutbreak(event, starMap);
+    assertNotEquals("", event.getText());
+    assertNotEquals(null, event.getPlanet());
+    assertEquals(1, event.getPlanet().getTotalPopulation());
+    info = starMap.getPlayerByIndex(2);
+    event = new RandomEvent(BadRandomType.DEADLY_VIRUS_OUTBREAK,
+        info);
+    RandomEventUtility.handleDeadlyVirusOutbreak(event, starMap);
+    assertNotEquals("", event.getText());
+    assertNotEquals(null, event.getPlanet());
+  }
+
 }

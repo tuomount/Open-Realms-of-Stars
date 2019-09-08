@@ -3,6 +3,7 @@ package org.openRealmOfStars.starMap.randomEvent;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -191,6 +192,48 @@ public final class RandomEventUtility {
             + "to mine metal from the meteoroid.");
         planet.setAmountMetalInGround(planet.getAmountMetalInGround()
             + DiceGenerator.getRandom(80, 400));
+        event.setText(sb.toString());
+      }
+    }
+  }
+
+  /**
+   * Handle deadly virus outbreak.
+   * @param event Random event must be deadly virus outbreak.
+   * @param map Starmap for find a planet for realm.
+   */
+  public static void handleDeadlyVirusOutbreak(final RandomEvent event,
+      final StarMap map) {
+    if (event.getBadType() == BadRandomType.DEADLY_VIRUS_OUTBREAK) {
+      PlayerInfo info = event.getRealm();
+      ArrayList<Planet> planets = new ArrayList<>();
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info) {
+          planets.add(planet);
+        }
+      }
+      if (planets.size() > 0) {
+        int index = DiceGenerator.getRandom(planets.size() - 1);
+        Planet planet = planets.get(index);
+        event.setPlanet(planet);
+        StringBuilder sb = new StringBuilder();
+        sb.append("Deadly virus outbreaks at ");
+        sb.append(planet.getName());
+        sb.append(". ");
+        if (info.getRace() == SpaceRace.MECHIONS) {
+          sb.append("Luckly planet is occupied by Mechions which are"
+              + " immune to deadly viruses. This does not affect to"
+              + "planet in anyway.");
+        } else {
+          sb.append("Planet is immediately placed on guarantee to stop "
+              + "the virus spreading. Bad news is that only one population "
+              + "is immune to virus. Most of the population is dead.");
+          int pop = planet.getTotalPopulation();
+          pop = pop - 1;
+          for (int i = 0; i < pop; i++) {
+            planet.killOneWorker();
+          }
+        }
         event.setText(sb.toString());
       }
     }

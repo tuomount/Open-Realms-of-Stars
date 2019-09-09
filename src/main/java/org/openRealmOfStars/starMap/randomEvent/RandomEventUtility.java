@@ -6,6 +6,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -171,7 +172,7 @@ public final class RandomEventUtility {
    * @param event Random Event must be missed meteoird
    * @param map Starmap for looking planet for realm.
    */
-  public static void handleMissiedMeteoroid(final RandomEvent event,
+  public static void handleMissedMeteoroid(final RandomEvent event,
       final StarMap map) {
     if (event.getGoodType() == GoodRandomType.MISSED_METEOROID) {
       PlayerInfo info = event.getRealm();
@@ -252,4 +253,53 @@ public final class RandomEventUtility {
           + "the corruption requires half of the credits in treasury.");
     }
   }
+
+  /**
+   * Handle mysterious signal event.
+   * @param event Random event, must be mysterious signal.
+   * @param map Starmap to locate good signal source.
+   */
+  public static void handleMysteriousSignal(final RandomEvent event,
+      final StarMap map) {
+    if (event.getGoodType() == GoodRandomType.MYSTERIOUS_SIGNAL) {
+      PlayerInfo info = event.getRealm();
+      ArrayList<PlayerInfo> unknownRealms = new ArrayList<>();
+      for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
+        if (info.getDiplomacy().getDiplomacyList(i) != null
+          && info.getDiplomacy().getDiplomacyList(i)
+          .getNumberOfMeetings() == 0) {
+          PlayerInfo realm = map.getPlayerList().getPlayerInfoByIndex(i);
+          if (realm != null && realm != info) {
+            unknownRealms.add(realm);
+          }
+        }
+      }
+      if (unknownRealms.size() > 0) {
+        int index = DiceGenerator.getRandom(unknownRealms.size() - 1);
+        PlayerInfo realm = unknownRealms.get(index);
+        ArrayList<Planet> planets = new ArrayList<>();
+        for (Planet planet : map.getPlanetList()) {
+          if (planet.getPlanetPlayerInfo() == realm
+              && planet.getOrderNumber() > 0) {
+            planets.add(planet);
+          }
+        }
+        if (planets.size() > 0) {
+          index = DiceGenerator.getRandom(planets.size() - 1);
+          Planet planet = planets.get(index);
+          Sun sun = map.locateSolarSystem(planet.getCoordinate().getX(),
+              planet.getCoordinate().getY());
+          if (sun != null) {
+            event.setSun(sun);
+            event.setText("Scientiests have received mysterious signal from"
+                + " star called " + sun.getName() + ". This signal is very"
+                + " likely from intelligent source. This source should be"
+                + " studied further by making a visit in that system and"
+                + " try to locate origin of the signal.");
+          }
+        }
+      }
+    }
+  }
+
 }

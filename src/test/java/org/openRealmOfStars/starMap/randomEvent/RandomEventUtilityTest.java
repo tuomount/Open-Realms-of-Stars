@@ -99,7 +99,7 @@ public class RandomEventUtilityTest {
     PlayerInfo info = starMap.getPlayerByIndex(1);
     RandomEvent event = new RandomEvent(GoodRandomType.MISSED_METEOROID, info);
     assertEquals("", event.getText());
-    RandomEventUtility.handleMissiedMeteoroid(event, starMap);
+    RandomEventUtility.handleMissedMeteoroid(event, starMap);
     assertNotEquals("", event.getText());
     assertNotEquals(null, event.getPlanet());
   }
@@ -136,6 +136,22 @@ public class RandomEventUtilityTest {
     info.setTotalCredits(32);
     RandomEventUtility.handleCorruptionScandal(event);
     assertEquals(16, info.getTotalCredits());
+    assertNotEquals("", event.getText());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testMysteriousSignal() {
+    GameRepository repository = new GameRepository();
+    StarMap starMap = repository.loadGame("src/test/resources/saves",
+                                          "npePrivateer.save");
+    PlayerInfo info = starMap.getPlayerByIndex(1);
+    RandomEvent event = new RandomEvent(GoodRandomType.MYSTERIOUS_SIGNAL,
+        info);
+    assertEquals("", event.getText());
+    RandomEventUtility.handleMysteriousSignal(event, starMap);
+    System.out.println(event.getText());
+    assertNotEquals(null, event.getSun());
     assertNotEquals("", event.getText());
   }
 

@@ -2308,6 +2308,49 @@ public class Planet {
   }
 
   /**
+   * Planet has climate that could change.
+   * @return True if climate could change.
+   */
+  public boolean hasClimateEvent() {
+    if (event == PlanetaryEvent.DESERT
+        || event == PlanetaryEvent.ARID
+        || event == PlanetaryEvent.NONE
+        || event == PlanetaryEvent.LUSH_VEGETATION
+        || event == PlanetaryEvent.PARADISE) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Change climate on planet if possible.
+   * @param better True for change better climate, false for worse.
+   */
+  public void changeClimate(final boolean better) {
+    if (hasClimateEvent() && better) {
+      if (event == PlanetaryEvent.DESERT) {
+        event = PlanetaryEvent.ARID;
+      } else if (event == PlanetaryEvent.ARID) {
+        event = PlanetaryEvent.NONE;
+      } else if (event == PlanetaryEvent.NONE) {
+        event = PlanetaryEvent.LUSH_VEGETATION;
+      } else if (event == PlanetaryEvent.LUSH_VEGETATION) {
+        event = PlanetaryEvent.PARADISE;
+      }
+    }
+    if (hasClimateEvent() && !better) {
+      if (event == PlanetaryEvent.PARADISE) {
+        event = PlanetaryEvent.LUSH_VEGETATION;
+      } else if (event == PlanetaryEvent.LUSH_VEGETATION) {
+        event = PlanetaryEvent.NONE;
+      } else if (event == PlanetaryEvent.NONE) {
+        event = PlanetaryEvent.ARID;
+      } else if (event == PlanetaryEvent.ARID) {
+        event = PlanetaryEvent.DESERT;
+      }
+    }
+  }
+  /**
    * Calculate happiness of the planet. Also updates explanation how
    * happiness is calculated.
    * @return Happiness, positive number is happy and negative is unhappy.

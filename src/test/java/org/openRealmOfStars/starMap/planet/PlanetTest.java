@@ -408,6 +408,34 @@ public class PlanetTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testClimateChange() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    assertEquals(PlanetaryEvent.NONE, planet.getPlanetaryEvent());
+    assertEquals(true, planet.isEventActivated());
+    planet.changeClimate(true);
+    assertEquals(PlanetaryEvent.LUSH_VEGETATION, planet.getPlanetaryEvent());
+    planet.changeClimate(true);
+    assertEquals(PlanetaryEvent.PARADISE, planet.getPlanetaryEvent());
+    planet.changeClimate(true);
+    assertEquals(PlanetaryEvent.PARADISE, planet.getPlanetaryEvent());
+    planet.changeClimate(false);
+    assertEquals(PlanetaryEvent.LUSH_VEGETATION, planet.getPlanetaryEvent());
+    planet.changeClimate(false);
+    assertEquals(PlanetaryEvent.NONE, planet.getPlanetaryEvent());
+    planet.changeClimate(false);
+    assertEquals(PlanetaryEvent.ARID, planet.getPlanetaryEvent());
+    planet.changeClimate(false);
+    assertEquals(PlanetaryEvent.DESERT, planet.getPlanetaryEvent());
+    planet.changeClimate(false);
+    assertEquals(PlanetaryEvent.DESERT, planet.getPlanetaryEvent());
+    planet.changeClimate(true);
+    assertEquals(PlanetaryEvent.ARID, planet.getPlanetaryEvent());
+    planet.changeClimate(true);
+    assertEquals(PlanetaryEvent.NONE, planet.getPlanetaryEvent());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testRoguePlanet() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test", 0, false);
     assertEquals("Test", planet.getName());

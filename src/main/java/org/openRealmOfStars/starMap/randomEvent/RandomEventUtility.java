@@ -302,4 +302,58 @@ public final class RandomEventUtility {
     }
   }
 
+  /**
+   * Handle good climate change.
+   * @param event Random event must be climate change
+   * @param map Starmap to locate planet
+   */
+  public static void handleGoodClimateChange(final RandomEvent event,
+      final StarMap map) {
+    if (event.getGoodType() == GoodRandomType.CLIMATE_CHANGE) {
+      PlayerInfo info = event.getRealm();
+      ArrayList<Planet> planets = new ArrayList<>();
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info
+            && planet.hasClimateEvent()) {
+          planets.add(planet);
+        }
+      }
+      if (planets.size() > 0) {
+        int index = DiceGenerator.getRandom(planets.size() - 1);
+        Planet planet = planets.get(index);
+        planet.changeClimate(true);
+        event.setPlanet(planet);
+        event.setText(planet.getName() + " climate changes so that planet"
+            + " can provide more food naturally. This is a good progress.");
+      }
+    }
+  }
+
+  /**
+   * Handle bad climate change.
+   * @param event Random event must be climate change
+   * @param map Starmap to locate planet
+   */
+  public static void handleBadClimateChange(final RandomEvent event,
+      final StarMap map) {
+    if (event.getBadType() == BadRandomType.CLIMATE_CHANGE) {
+      PlayerInfo info = event.getRealm();
+      ArrayList<Planet> planets = new ArrayList<>();
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info
+            && planet.hasClimateEvent()) {
+          planets.add(planet);
+        }
+      }
+      if (planets.size() > 0) {
+        int index = DiceGenerator.getRandom(planets.size() - 1);
+        Planet planet = planets.get(index);
+        planet.changeClimate(false);
+        event.setPlanet(planet);
+        event.setText(planet.getName() + " climate changes so that planet"
+            + " provides less food naturally. This is very bad progress.");
+      }
+    }
+  }
+
 }

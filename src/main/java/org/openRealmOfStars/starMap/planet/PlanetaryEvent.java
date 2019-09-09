@@ -70,7 +70,11 @@ public enum PlanetaryEvent {
   /**
    * Arid climate
    */
-  ARID;
+  ARID,
+  /**
+   * Desert climate
+   */
+  DESERT;
 
 
 
@@ -88,6 +92,9 @@ public enum PlanetaryEvent {
     }
     if (this == PlanetaryEvent.ARID) {
       return -1;
+    }
+    if (this == PlanetaryEvent.DESERT) {
+      return -2;
     }
     return 0;
   }
@@ -195,6 +202,7 @@ public enum PlanetaryEvent {
       case BLACK_MONOLITH: return 8;
       case MOLTEN_LAVA: return 9;
       case ARID: return 10;
+      case DESERT: return 11;
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -217,6 +225,7 @@ public enum PlanetaryEvent {
       case BLACK_MONOLITH: return "Black monolith";
       case MOLTEN_LAVA: return "Molten lava";
       case ARID: return "Arid climate";
+      case DESERT: return "Desert climate";
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -240,6 +249,7 @@ public enum PlanetaryEvent {
       case MOLTEN_LAVA: return "Molten lava +1 metal, +1 production,"
           + " -1 happiness";
       case ARID: return "Arid climate -1 Food";
+      case DESERT: return "Desert climate -2 Food";
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }
@@ -263,6 +273,7 @@ public enum PlanetaryEvent {
       case 8: return BLACK_MONOLITH;
       case 9: return MOLTEN_LAVA;
       case 10: return ARID;
+      case 11: return DESERT;
       default:
         throw new IllegalArgumentException("Unknown planetary event!!");
     }

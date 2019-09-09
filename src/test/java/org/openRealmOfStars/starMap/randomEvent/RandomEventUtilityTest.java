@@ -126,4 +126,17 @@ public class RandomEventUtilityTest {
     assertNotEquals(null, event.getPlanet());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testCorruptionScandal() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    RandomEvent event = new RandomEvent(BadRandomType.CORRUPTION_SCANDAL,
+        info);
+    assertEquals("", event.getText());
+    info.setTotalCredits(32);
+    RandomEventUtility.handleCorruptionScandal(event);
+    assertEquals(16, info.getTotalCredits());
+    assertNotEquals("", event.getText());
+  }
+
 }

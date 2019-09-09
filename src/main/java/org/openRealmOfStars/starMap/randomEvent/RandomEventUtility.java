@@ -239,4 +239,17 @@ public final class RandomEventUtility {
     }
   }
 
+  /**
+   * Handle corruption scandal.
+   * @param event Random event must be corruption scandal.
+   */
+  public static void handleCorruptionScandal(final RandomEvent event) {
+    if (event.getBadType() == BadRandomType.CORRUPTION_SCANDAL) {
+      PlayerInfo info = event.getRealm();
+      info.setTotalCredits(info.getTotalCredits() / 2);
+      event.setText("Massive corruption scandal found in "
+      + info.getEmpireName() + " government. Cleanining and fixing"
+          + "the corruption requires half of the credits in treasury.");
+    }
+  }
 }

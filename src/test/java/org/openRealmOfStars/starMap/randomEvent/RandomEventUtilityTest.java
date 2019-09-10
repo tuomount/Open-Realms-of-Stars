@@ -156,7 +156,21 @@ public class RandomEventUtilityTest {
         info);
     assertEquals("", event.getText());
     RandomEventUtility.handleMysteriousSignal(event, starMap);
-    System.out.println(event.getText());
+    assertNotEquals(null, event.getSun());
+    assertNotEquals("", event.getText());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testSolarActivityDimished() {
+    GameRepository repository = new GameRepository();
+    StarMap starMap = repository.loadGame("src/test/resources/saves",
+                                          "npePrivateer.save");
+    PlayerInfo info = starMap.getPlayerByIndex(1);
+    RandomEvent event = new RandomEvent(GoodRandomType.SOLAR_ACTIVITY_DIMISHED,
+        info);
+    assertEquals("", event.getText());
+    RandomEventUtility.handleSolarActivityDecreased(event, starMap);
     assertNotEquals(null, event.getSun());
     assertNotEquals("", event.getText());
   }

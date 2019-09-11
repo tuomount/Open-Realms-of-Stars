@@ -2,8 +2,14 @@ package org.openRealmOfStars.starMap.randomEvent;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.AI.Research.Research;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipHullType;
+import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
@@ -146,6 +152,99 @@ public final class RandomEventUtility {
         sb.append(" worth of credits.");
         event.setText(sb.toString());
         info.setTotalCredits(info.getTotalCredits() + value);
+      }
+    }
+  }
+
+  /**
+   * Handle deserted ship event.
+   * @param event Random event must be deserted ship.
+   * @param map Starmap for looking good planet and free space.
+   */
+  public static void handleDesertedShip(final RandomEvent event,
+      final StarMap map) {
+    if (event.getGoodType() == GoodRandomType.DESERTED_SHIP) {
+      PlayerInfo info = event.getRealm();
+      ArrayList<Planet> planets = new ArrayList<>();
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info) {
+          planets.add(planet);
+        }
+      }
+      if (planets.size() > 0) {
+        int index = DiceGenerator.getRandom(planets.size() - 1);
+        Planet planet = planets.get(index);
+        event.setPlanet(planet);
+        PlayerInfo extraPlayer = new PlayerInfo(SpaceRace.SPACE_PIRATE);
+        int numberOfTechs = 5;
+        switch (map.getGameLengthState()) {
+          case START_GAME: {
+            numberOfTechs = DiceGenerator.getRandom(5, 18);
+            break;
+          }
+          case EARLY_GAME: {
+            numberOfTechs = DiceGenerator.getRandom(20, 36);
+            break;
+          }
+          case MIDDLE_GAME: {
+            numberOfTechs = DiceGenerator.getRandom(40, 60);
+            break;
+          }
+          case LATE_GAME: {
+            numberOfTechs = DiceGenerator.getRandom(70, 90);
+            break;
+          }
+          default:
+          case END_GAME: {
+            numberOfTechs = DiceGenerator.getRandom(100, 130);
+            break;
+          }
+        }
+        for (int i = 0; i < numberOfTechs; i++) {
+          extraPlayer.getTechList().addNewRandomTech(info);
+        }
+        Research.handleShipDesigns(extraPlayer);
+        ShipStat[] shipStats = extraPlayer.getShipStatList();
+        ArrayList<ShipStat> ships = new ArrayList<>();
+        for (ShipStat stat : shipStats) {
+          if (stat.getDesign().getTotalMilitaryPower() > 0
+              && stat.getDesign().getHull().getHullType()
+              == ShipHullType.NORMAL
+              && !stat.isObsolete()) {
+            ships.add(stat);
+          }
+        }
+        if (ships.size() > 0) {
+          index = DiceGenerator.getRandom(ships.size() - 1);
+          ShipDesign design = ships.get(index).getDesign();
+          design.setName("Alien vessel");
+          Ship ship = new Ship(design);
+          boolean exit = false;
+          for (int y = -1; y < 2; y++) {
+            for (int x = -1; x < 2; x++) {
+              int posX = planet.getCoordinate().getX() + x;
+              int posY = planet.getCoordinate().getY() + y;
+              if (!map.isBlocked(posX, posY)) {
+                PlayerInfo shipOwner = map.isBlockedByFleet(posX, posY);
+                if (shipOwner == null || shipOwner == info) {
+                  Fleet fleet = new Fleet(ship, posX, posY);
+                  fleet.setName(info.getFleets().generateUniqueName());
+                  info.getFleets().add(fleet);
+                  event.setText("Deserted ship appeared into space near "
+                      + planet.getName() + ". Ship was fully functional and "
+                      + "added to fleet of " + info.getEmpireName()
+                      + ".");
+                  event.setFleet(fleet);
+                  exit = true;
+                  break;
+                }
+              }
+            }
+            if (exit) {
+              break;
+            }
+          }
+        }
       }
     }
   }

@@ -192,6 +192,23 @@ public class RandomEventUtilityTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testDesertedShip() {
+    GameRepository repository = new GameRepository();
+    StarMap starMap = repository.loadGame("src/test/resources/saves",
+                                          "npePrivateer.save");
+    PlayerInfo info = starMap.getPlayerByIndex(1);
+    RandomEvent event = new RandomEvent(GoodRandomType.DESERTED_SHIP,
+        info);
+    assertEquals("", event.getText());
+    RandomEventUtility.handleDesertedShip(event, starMap);
+    assertNotEquals(null, event.getPlanet());
+    assertNotEquals(null, event.getFleet());
+    assertEquals("Alien vessel", event.getFleet().getFirstShip().getName());
+    assertNotEquals("", event.getText());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testGoodClimateChange() {
     PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);

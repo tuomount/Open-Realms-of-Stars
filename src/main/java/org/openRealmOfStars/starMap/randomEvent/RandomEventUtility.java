@@ -311,44 +311,29 @@ public final class RandomEventUtility {
       final StarMap map) {
     if (event.getGoodType() == GoodRandomType.SOLAR_ACTIVITY_DIMISHED) {
       PlayerInfo info = event.getRealm();
-      ArrayList<PlayerInfo> unknownRealms = new ArrayList<>();
-      for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
-        if (info.getDiplomacy().getDiplomacyList(i) != null
-          && info.getDiplomacy().getDiplomacyList(i)
-          .getNumberOfMeetings() == 0) {
-          PlayerInfo realm = map.getPlayerList().getPlayerInfoByIndex(i);
-          if (realm != null && realm != info) {
-            unknownRealms.add(realm);
-          }
+      ArrayList<Planet> planets = new ArrayList<>();
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info
+            && planet.getOrderNumber() > 0
+            && planet.getRadiationLevel() > 1) {
+          planets.add(planet);
         }
       }
-      if (unknownRealms.size() > 0) {
-        int index = DiceGenerator.getRandom(unknownRealms.size() - 1);
-        PlayerInfo realm = unknownRealms.get(index);
-        ArrayList<Planet> planets = new ArrayList<>();
-        for (Planet planet : map.getPlanetList()) {
-          if (planet.getPlanetPlayerInfo() == realm
-              && planet.getOrderNumber() > 0
-              && planet.getRadiationLevel() > 1) {
-            planets.add(planet);
-          }
-        }
-        if (planets.size() > 0) {
-          index = DiceGenerator.getRandom(planets.size() - 1);
-          Planet planet = planets.get(index);
-          Sun sun = map.locateSolarSystem(planet.getCoordinate().getX(),
-              planet.getCoordinate().getY());
-          if (sun != null) {
-            event.setSun(sun);
-            event.setText("Solar activity in " + sun.getName()
-                + " has dimished. This cause radiation level drop in planets"
-                + " which are in the same system.");
-            for (Planet orbiter : map.getPlanetList()) {
-              Sun solar = map.locateSolarSystem(orbiter.getCoordinate().getX(),
-                  orbiter.getCoordinate().getY());
-              if (solar == sun) {
-                orbiter.setRadiationLevel(orbiter.getRadiationLevel() - 1);
-              }
+      if (planets.size() > 0) {
+        int index = DiceGenerator.getRandom(planets.size() - 1);
+        Planet planet = planets.get(index);
+        Sun sun = map.locateSolarSystem(planet.getCoordinate().getX(),
+            planet.getCoordinate().getY());
+        if (sun != null) {
+          event.setSun(sun);
+          event.setText("Solar activity in " + sun.getName()
+              + " has dimished. This cause radiation level drop in planets"
+              + " which are in the same system.");
+          for (Planet orbiter : map.getPlanetList()) {
+            Sun solar = map.locateSolarSystem(orbiter.getCoordinate().getX(),
+                orbiter.getCoordinate().getY());
+            if (solar == sun) {
+              orbiter.setRadiationLevel(orbiter.getRadiationLevel() - 1);
             }
           }
         }
@@ -365,44 +350,29 @@ public final class RandomEventUtility {
       final StarMap map) {
     if (event.getBadType() == BadRandomType.SOLAR_ACTIVITY_INCREASE) {
       PlayerInfo info = event.getRealm();
-      ArrayList<PlayerInfo> unknownRealms = new ArrayList<>();
-      for (int i = 0; i < map.getPlayerList().getCurrentMaxRealms(); i++) {
-        if (info.getDiplomacy().getDiplomacyList(i) != null
-          && info.getDiplomacy().getDiplomacyList(i)
-          .getNumberOfMeetings() == 0) {
-          PlayerInfo realm = map.getPlayerList().getPlayerInfoByIndex(i);
-          if (realm != null && realm != info) {
-            unknownRealms.add(realm);
-          }
+      ArrayList<Planet> planets = new ArrayList<>();
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info
+            && planet.getOrderNumber() > 0
+            && planet.getRadiationLevel() > 1) {
+          planets.add(planet);
         }
       }
-      if (unknownRealms.size() > 0) {
-        int index = DiceGenerator.getRandom(unknownRealms.size() - 1);
-        PlayerInfo realm = unknownRealms.get(index);
-        ArrayList<Planet> planets = new ArrayList<>();
-        for (Planet planet : map.getPlanetList()) {
-          if (planet.getPlanetPlayerInfo() == realm
-              && planet.getOrderNumber() > 0
-              && planet.getRadiationLevel() > 1) {
-            planets.add(planet);
-          }
-        }
-        if (planets.size() > 0) {
-          index = DiceGenerator.getRandom(planets.size() - 1);
-          Planet planet = planets.get(index);
-          Sun sun = map.locateSolarSystem(planet.getCoordinate().getX(),
-              planet.getCoordinate().getY());
-          if (sun != null) {
-            event.setSun(sun);
-            event.setText("Solar activity in " + sun.getName()
-                + " has increased. This cause radiation level raise in planets"
-                + " which are in the same system.");
-            for (Planet orbiter : map.getPlanetList()) {
-              Sun solar = map.locateSolarSystem(orbiter.getCoordinate().getX(),
-                  orbiter.getCoordinate().getY());
-              if (solar == sun) {
-                orbiter.setRadiationLevel(orbiter.getRadiationLevel() + 1);
-              }
+      if (planets.size() > 0) {
+        int index = DiceGenerator.getRandom(planets.size() - 1);
+        Planet planet = planets.get(index);
+        Sun sun = map.locateSolarSystem(planet.getCoordinate().getX(),
+            planet.getCoordinate().getY());
+        if (sun != null) {
+          event.setSun(sun);
+          event.setText("Solar activity in " + sun.getName()
+              + " has increased. This cause radiation level raise in planets"
+              + " which are in the same system.");
+          for (Planet orbiter : map.getPlanetList()) {
+            Sun solar = map.locateSolarSystem(orbiter.getCoordinate().getX(),
+                orbiter.getCoordinate().getY());
+            if (solar == sun) {
+              orbiter.setRadiationLevel(orbiter.getRadiationLevel() + 1);
             }
           }
         }

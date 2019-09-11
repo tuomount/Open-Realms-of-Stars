@@ -3274,7 +3274,7 @@ public class StarMap {
     for (int i = 0; i < towers.length; i++) {
       if (first == -1 && towers[i] > 0) {
         first = i;
-      } else if (towers[i] > towers[first]) {
+      } else if (first != -1 && towers[i] > towers[first]) {
         second = first;
         first = i;
       }

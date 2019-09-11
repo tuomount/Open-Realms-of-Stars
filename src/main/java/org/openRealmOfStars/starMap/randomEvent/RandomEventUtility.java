@@ -110,6 +110,46 @@ public final class RandomEventUtility {
     }
   }
 
+
+  /**
+   * Handle lost treasure random event.
+   * @param event Random Event must be Lost treasure
+   * @param map Starmap for looking planet for realm.
+   */
+  public static void handleLostTreasure(final RandomEvent event,
+      final StarMap map) {
+    if (event.getGoodType() == GoodRandomType.LOST_TREASURE_FOUND) {
+      PlayerInfo info = event.getRealm();
+      ArrayList<Planet> planets = new ArrayList<>();
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info) {
+          planets.add(planet);
+        }
+      }
+      if (planets.size() > 0) {
+        int index = DiceGenerator.getRandom(planets.size() - 1);
+        Planet planet = planets.get(index);
+        event.setPlanet(planet);
+        StringBuilder sb = new StringBuilder();
+        int occupationIndex = DiceGenerator.getRandom(2);
+        switch (occupationIndex) {
+          case 0: sb.append("Archeologist "); break;
+          case 1: sb.append("Miner "); break;
+          default:
+          case 2: sb.append("Scientist "); break;
+        }
+        sb.append(" found a ancient treasure from ");
+        sb.append(planet.getName());
+        int value = DiceGenerator.getRandom(30, 60);
+        sb.append(". Treasure contained ");
+        sb.append(value);
+        sb.append(" worth of credits.");
+        event.setText(sb.toString());
+        info.setTotalCredits(info.getTotalCredits() + value);
+      }
+    }
+  }
+
   /**
    * Handle meteor hit to planet.
    * @param event Random Event must be meteor hit

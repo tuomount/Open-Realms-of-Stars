@@ -230,4 +230,24 @@ public class RandomEventUtilityTest {
     assertEquals(PlanetaryEvent.NONE, event.getPlanet().getPlanetaryEvent());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testLostTreasure() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    info.setTotalCredits(9);
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    planet.setPlanetOwner(0, info);
+    StarMap starMap = Mockito.mock(StarMap.class);
+    ArrayList<Planet> planets = new ArrayList<>();
+    planets.add(planet);
+    Mockito.when(starMap.getPlanetList()).thenReturn(planets);
+    RandomEvent event = new RandomEvent(GoodRandomType.LOST_TREASURE_FOUND,
+        info);
+    assertEquals("", event.getText());
+    RandomEventUtility.handleLostTreasure(event, starMap);
+    assertNotEquals("", event.getText());
+    assertEquals(planet, event.getPlanet());
+    assertEquals(true, info.getTotalCredits() > 10);
+  }
+
 }

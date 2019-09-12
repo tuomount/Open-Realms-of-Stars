@@ -157,6 +157,52 @@ public final class RandomEventUtility {
   }
 
   /**
+   * Handle catastrophic accident random event.
+   * @param event Random event must be Catastrophic accident
+   * @param map Starmap to locate planet.
+   */
+  public static void handleCatastrophicAccident(final RandomEvent event,
+      final StarMap map) {
+    if (event.getBadType() == BadRandomType.CATASTROPHIC_ACCIDENT) {
+      PlayerInfo info = event.getRealm();
+      ArrayList<Planet> planets = new ArrayList<>();
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info) {
+          planets.add(planet);
+        }
+      }
+      if (planets.size() > 0) {
+        int index = DiceGenerator.getRandom(planets.size() - 1);
+        Planet planet = planets.get(index);
+        event.setPlanet(planet);
+        Building[] buildings = planet.getBuildingList();
+        index = DiceGenerator.getRandom(buildings.length - 1);
+        StringBuilder sb = new StringBuilder();
+        int accidentIndex = DiceGenerator.getRandom(2);
+        switch (accidentIndex) {
+          case 0: sb.append("Massive fire "); break;
+          case 1: sb.append("Huge explosion "); break;
+          default:
+          case 2: sb.append("Deadly chemical leak "); break;
+        }
+        planet.removeBuilding(buildings[index]);
+        sb.append(" happened in ");
+        sb.append(buildings[index].getName());
+        if (accidentIndex < 2) {
+          sb.append(". This building was totally destroyed");
+        } else {
+          sb.append(". This building need to demolished due the chemical");
+        }
+        if (planet.getTotalPopulation() > 1) {
+          sb.append(" and one population died in accident.");
+          planet.killOneWorker();
+        }
+        event.setText(sb.toString());
+      }
+    }
+  }
+
+  /**
    * Handle deserted ship event.
    * @param event Random event must be deserted ship.
    * @param map Starmap for looking good planet and free space.

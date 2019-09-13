@@ -224,6 +224,21 @@ public class RandomEventUtilityTest {
 
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testAggresiveWildLife() {
+    GameRepository repository = new GameRepository();
+    StarMap starMap = repository.loadGame("src/test/resources/saves",
+                                          "npePrivateer.save");
+    PlayerInfo info = starMap.getPlayerByIndex(1);
+    RandomEvent event = new RandomEvent(BadRandomType.AGGRESSIVE_WILD_LIFE,
+        info);
+    assertEquals("", event.getText());
+    RandomEventUtility.handleAggressiveWildLife(event, starMap);
+    assertNotEquals(null, event.getPlanet());
+    assertNotEquals("", event.getText());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testGoodClimateChange() {
     PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);

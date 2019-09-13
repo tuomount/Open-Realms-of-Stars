@@ -619,4 +619,54 @@ public final class RandomEventUtility {
     }
   }
 
+  /**
+   * Handle bad climate change.
+   * @param event Random event must be climate change
+   * @param map Starmap to locate planet
+   */
+  public static void handleAggressiveWildLife(final RandomEvent event,
+      final StarMap map) {
+    if (event.getBadType() == BadRandomType.AGGRESSIVE_WILD_LIFE) {
+      PlayerInfo info = event.getRealm();
+      ArrayList<Planet> planets = new ArrayList<>();
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info) {
+          planets.add(planet);
+        }
+      }
+      if (planets.size() > 0) {
+        int index = DiceGenerator.getRandom(planets.size() - 1);
+        Planet planet = planets.get(index);
+        event.setPlanet(planet);
+        int value = DiceGenerator.getRandom(10, 15);
+        planet.fightAgainstAttacker(value);
+        StringBuilder sb = new StringBuilder();
+        sb.append(planet.getName());
+        sb.append(" has dangerous animals which usually"
+            + " are peaceful. Some reason these animals attack against "
+            + "planet's population.");
+        String animalType = "animal";
+        switch (value) {
+          default:
+          case 10: animalType = "big canine animals"; break;
+          case 11: animalType = "big feline animals"; break;
+          case 12: animalType = "big lizard animals"; break;
+          case 13: animalType = "massive herding pack animals"; break;
+          case 14: animalType = "ferocious bipedal reptiles"; break;
+          case 15: animalType = "massive bug like creature"; break;
+        }
+        if (planet.getTotalPopulation() > 0) {
+          sb.append(" Population however survived from the attack of ");
+          sb.append(animalType);
+          sb.append(". ");
+        } else {
+          sb.append(" All population died from the attack of ");
+          sb.append(animalType);
+          sb.append(". ");
+        }
+        event.setText(sb.toString());
+      }
+    }
+  }
+
 }

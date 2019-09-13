@@ -669,4 +669,34 @@ public final class RandomEventUtility {
     }
   }
 
+  /**
+   * Handle mutiny event. Requires that board player is enabled.
+   * @param event Random event must be mutiny.
+   * @param boardPlayer Board player or null if space pirates are disabled.
+   */
+  public static void handleMutiny(final RandomEvent event,
+      final PlayerInfo boardPlayer) {
+    if (event.getBadType() == BadRandomType.MUTINY
+        && boardPlayer != null) {
+      PlayerInfo info = event.getRealm();
+      ArrayList<Fleet> fleets = new ArrayList<>();
+      for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
+        Fleet fleet = info.getFleets().getByIndex(i);
+        if (fleet.getMilitaryValue() > 0) {
+          fleets.add(fleet);
+        }
+      }
+      if (fleets.size() > 0) {
+        int index = DiceGenerator.getRandom(fleets.size() - 1);
+        Fleet fleet = fleets.get(index);
+        event.setFleet(fleet);
+        info.getFleets().removeFleet(fleet);
+        boardPlayer.getFleets().add(fleet);
+        event.setText("Fleet called " + fleet.getName()
+            + " decided to start space pirating. " + info.getEmpireName()
+            + " lost control of that fleet.");
+      }
+    }
+  }
+
 }

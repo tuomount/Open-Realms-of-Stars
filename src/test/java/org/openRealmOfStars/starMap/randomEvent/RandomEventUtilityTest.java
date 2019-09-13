@@ -9,6 +9,7 @@ import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
@@ -297,4 +298,24 @@ public class RandomEventUtilityTest {
     assertEquals(true, info.getTotalCredits() > 10);
   }
 
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testMutiny() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    PlayerInfo board = new PlayerInfo(SpaceRace.SPACE_PIRATE);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.getMilitaryValue()).thenReturn(40);
+    Mockito.when(fleet.getName()).thenReturn("Test fleet");
+    info.getFleets().add(fleet);
+    RandomEvent event = new RandomEvent(BadRandomType.MUTINY,
+        info);
+    assertEquals("", event.getText());
+    assertEquals(1, info.getFleets().getNumberOfFleets());
+    assertEquals(0, board.getFleets().getNumberOfFleets());
+    RandomEventUtility.handleMutiny(event, board);
+    assertNotEquals("", event.getText());
+    assertEquals(fleet, event.getFleet());
+    assertEquals(0, info.getFleets().getNumberOfFleets());
+    assertEquals(1, board.getFleets().getNumberOfFleets());
+  }
 }

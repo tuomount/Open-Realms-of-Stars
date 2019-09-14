@@ -670,6 +670,51 @@ public final class RandomEventUtility {
   }
 
   /**
+   * Handle raiders random event.
+   * @param event Random event must be raiders
+   * @param map Starmap to locat planet.
+   */
+  public static void handleRaiders(final RandomEvent event,
+      final StarMap map) {
+    if (event.getBadType() == BadRandomType.RAIDERS) {
+      PlayerInfo info = event.getRealm();
+      ArrayList<Planet> planets = new ArrayList<>();
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == info) {
+          planets.add(planet);
+        }
+      }
+      if (planets.size() > 0 && map.getPlayerList().getBoardPlayer() != null) {
+        int index = DiceGenerator.getRandom(planets.size() - 1);
+        Planet planet = planets.get(index);
+        event.setPlanet(planet);
+        PlayerInfo board = map.getPlayerList().getBoardPlayer();
+        int x = planet.getCoordinate().getX();
+        int y = planet.getCoordinate().getY();
+        int count = DiceGenerator.getRandom(1, 4);
+        if (!map.isBlocked(x, y + 1)) {
+          map.addSpacePirate(x, y + 1, board);
+          count--;
+        }
+        if (!map.isBlocked(x, y - 1) && count > 0) {
+          map.addSpacePirate(x, y - 1, board);
+          count--;
+        }
+        if (!map.isBlocked(x - 1, y) && count > 0) {
+          map.addSpacePirate(x - 1, y, board);
+          count--;
+        }
+        if (!map.isBlocked(x + 1, y) && count > 0) {
+          map.addSpacePirate(x + 1, y, board);
+          count--;
+        }
+        event.setText("Space pirate raiders appear near " + planet.getName()
+           + ". Looks like this was surprise attack from space pirates.");
+      }
+    }
+  }
+
+  /**
    * Handle mutiny event. Requires that board player is enabled.
    * @param event Random event must be mutiny.
    * @param boardPlayer Board player or null if space pirates are disabled.

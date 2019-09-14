@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.tech.TechType;
@@ -318,4 +319,27 @@ public class RandomEventUtilityTest {
     assertEquals(0, info.getFleets().getNumberOfFleets());
     assertEquals(1, board.getFleets().getNumberOfFleets());
   }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRaiders() {
+    PlayerInfo info = new PlayerInfo(SpaceRace.GREYANS);
+    PlayerInfo board = new PlayerInfo(SpaceRace.SPACE_PIRATE);
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    planet.setPlanetOwner(0, info);
+    StarMap starMap = Mockito.mock(StarMap.class);
+    ArrayList<Planet> planets = new ArrayList<>();
+    planets.add(planet);
+    Mockito.when(starMap.getPlanetList()).thenReturn(planets);
+    PlayerList playerList = Mockito.mock(PlayerList.class);
+    Mockito.when(playerList.getBoardPlayer()).thenReturn(board);
+    Mockito.when(starMap.getPlayerList()).thenReturn(playerList);
+    RandomEvent event = new RandomEvent(BadRandomType.RAIDERS,
+        info);
+    assertEquals("", event.getText());
+    RandomEventUtility.handleRaiders(event, starMap);
+    assertNotEquals("", event.getText());
+    assertEquals(planet, event.getPlanet());
+  }
+
 }

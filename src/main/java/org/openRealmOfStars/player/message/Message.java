@@ -12,7 +12,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -242,6 +242,18 @@ public class Message {
   @Override
   public String toString() {
     return type.toString() + " - " + message;
+  }
+
+  /**
+   * Create a copy from message.
+   * @return Copy from the message.
+   */
+  public Message copy() {
+    Message msg = new Message(getType(), message, icon);
+    msg.coordinate = this.coordinate;
+    msg.index = this.index;
+    msg.matchByString = this.matchByString;
+    return msg;
   }
 
 }

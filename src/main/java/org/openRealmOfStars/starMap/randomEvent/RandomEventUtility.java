@@ -3,9 +3,12 @@ package org.openRealmOfStars.starMap.randomEvent;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.AI.Research.Research;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -88,6 +91,9 @@ public final class RandomEventUtility {
           + "This virus deletes all the data related to research. "
           + "All work for next tech in " + techName + " is lost. "
           + "Scientists need to start all over from the scratch.");
+      Message message = new Message(MessageType.INFORMATION, event.getText(),
+          Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH));
+      info.getMsgList().addNewMessage(message);
     }
   }
 
@@ -113,6 +119,9 @@ public final class RandomEventUtility {
           + techName + " technology. "
           + "This will gains us to get faster new technology in "
           + techName + ".");
+      Message message = new Message(MessageType.INFORMATION, event.getText(),
+          Icons.getIconByName(Icons.ICON_RESEARCH));
+      info.getMsgList().addNewMessage(message);
     }
   }
 
@@ -152,6 +161,10 @@ public final class RandomEventUtility {
         sb.append(" worth of credits.");
         event.setText(sb.toString());
         info.setTotalCredits(info.getTotalCredits() + value);
+        Message message = new Message(MessageType.PLANETARY, event.getText(),
+            Icons.getIconByName(Icons.ICON_CREDIT));
+        message.setCoordinate(planet.getCoordinate());
+        info.getMsgList().addNewMessage(message);
       }
     }
   }
@@ -198,6 +211,10 @@ public final class RandomEventUtility {
           planet.killOneWorker();
         }
         event.setText(sb.toString());
+        Message message = new Message(MessageType.PLANETARY, event.getText(),
+            Icons.getIconByName(Icons.ICON_DEATH));
+        message.setCoordinate(planet.getCoordinate());
+        info.getMsgList().addNewMessage(message);
       }
     }
   }
@@ -281,6 +298,12 @@ public final class RandomEventUtility {
                       + "added to fleet of " + info.getEmpireName()
                       + ".");
                   event.setFleet(fleet);
+                  Message message = new Message(MessageType.FLEET,
+                      event.getText(), Icons.getIconByName(
+                          Icons.ICON_HULL_TECH));
+                  message.setCoordinate(planet.getCoordinate());
+                  message.setMatchByString(fleet.getName());
+                  info.getMsgList().addNewMessage(message);
                   exit = true;
                   break;
                 }
@@ -348,6 +371,10 @@ public final class RandomEventUtility {
           }
         }
         event.setText(sb.toString());
+        Message message = new Message(MessageType.PLANETARY, event.getText(),
+            Icons.getIconByName(Icons.ICON_DEATH));
+        message.setCoordinate(planet.getCoordinate());
+        info.getMsgList().addNewMessage(message);
       }
     }
   }
@@ -379,6 +406,10 @@ public final class RandomEventUtility {
         planet.setAmountMetalInGround(planet.getAmountMetalInGround()
             + DiceGenerator.getRandom(80, 400));
         event.setText(sb.toString());
+        Message message = new Message(MessageType.PLANETARY, event.getText(),
+            Icons.getIconByName(Icons.ICON_METAL));
+        message.setCoordinate(planet.getCoordinate());
+        info.getMsgList().addNewMessage(message);
       }
     }
   }
@@ -421,6 +452,10 @@ public final class RandomEventUtility {
           }
         }
         event.setText(sb.toString());
+        Message message = new Message(MessageType.PLANETARY, event.getText(),
+            Icons.getIconByName(Icons.ICON_DEATH));
+        message.setCoordinate(planet.getCoordinate());
+        info.getMsgList().addNewMessage(message);
       }
     }
   }
@@ -436,6 +471,9 @@ public final class RandomEventUtility {
       event.setText("Massive corruption scandal found in "
       + info.getEmpireName() + " government. Cleanining and fixing"
           + "the corruption requires half of the credits in treasury.");
+      Message message = new Message(MessageType.INFORMATION, event.getText(),
+          Icons.getIconByName(Icons.ICON_CULTURE));
+      info.getMsgList().addNewMessage(message);
     }
   }
 
@@ -481,6 +519,10 @@ public final class RandomEventUtility {
                 + " likely from intelligent source. This source should be"
                 + " studied further by making a visit in that system and"
                 + " try to locate origin of the signal.");
+            Message message = new Message(MessageType.PLANETARY,
+                event.getText(), Icons.getIconByName(Icons.ICON_SCANNER));
+            message.setCoordinate(sun.getCenterCoordinate());
+            info.getMsgList().addNewMessage(message);
           }
         }
       }
@@ -514,6 +556,10 @@ public final class RandomEventUtility {
           event.setText("Solar activity in " + sun.getName()
               + " has dimished. This cause radiation level drop in planets"
               + " which are in the same system.");
+          Message message = new Message(MessageType.PLANETARY, event.getText(),
+              Icons.getIconByName(Icons.ICON_RADIATION));
+          message.setCoordinate(sun.getCenterCoordinate());
+          map.broadcastMessage(message);
           for (Planet orbiter : map.getPlanetList()) {
             Sun solar = map.locateSolarSystem(orbiter.getCoordinate().getX(),
                 orbiter.getCoordinate().getY());
@@ -553,6 +599,10 @@ public final class RandomEventUtility {
           event.setText("Solar activity in " + sun.getName()
               + " has increased. This cause radiation level raise in planets"
               + " which are in the same system.");
+          Message message = new Message(MessageType.PLANETARY, event.getText(),
+              Icons.getIconByName(Icons.ICON_RADIATION));
+          message.setCoordinate(sun.getCenterCoordinate());
+          map.broadcastMessage(message);
           for (Planet orbiter : map.getPlanetList()) {
             Sun solar = map.locateSolarSystem(orbiter.getCoordinate().getX(),
                 orbiter.getCoordinate().getY());
@@ -588,6 +638,10 @@ public final class RandomEventUtility {
         event.setPlanet(planet);
         event.setText(planet.getName() + " climate changes so that planet"
             + " can provide more food naturally. This is a good progress.");
+        Message message = new Message(MessageType.PLANETARY, event.getText(),
+            Icons.getIconByName(Icons.ICON_FARM));
+        message.setCoordinate(planet.getCoordinate());
+        info.getMsgList().addNewMessage(message);
       }
     }
   }
@@ -615,13 +669,17 @@ public final class RandomEventUtility {
         event.setPlanet(planet);
         event.setText(planet.getName() + " climate changes so that planet"
             + " provides less food naturally. This is very bad progress.");
+        Message message = new Message(MessageType.PLANETARY, event.getText(),
+            Icons.getIconByName(Icons.ICON_DEATH));
+        message.setCoordinate(planet.getCoordinate());
+        info.getMsgList().addNewMessage(message);
       }
     }
   }
 
   /**
-   * Handle bad climate change.
-   * @param event Random event must be climate change
+   * Handle aggressive wild life
+   * @param event Random event must be aggressive wild life
    * @param map Starmap to locate planet
    */
   public static void handleAggressiveWildLife(final RandomEvent event,
@@ -665,6 +723,10 @@ public final class RandomEventUtility {
           sb.append(". ");
         }
         event.setText(sb.toString());
+        Message message = new Message(MessageType.PLANETARY, event.getText(),
+            Icons.getIconByName(Icons.ICON_DEATH));
+        message.setCoordinate(planet.getCoordinate());
+        info.getMsgList().addNewMessage(message);
       }
     }
   }
@@ -710,6 +772,10 @@ public final class RandomEventUtility {
         }
         event.setText("Space pirate raiders appear near " + planet.getName()
            + ". Looks like this was surprise attack from space pirates.");
+        Message message = new Message(MessageType.PLANETARY, event.getText(),
+            Icons.getIconByName(Icons.ICON_HULL_TECH));
+        message.setCoordinate(planet.getCoordinate());
+        info.getMsgList().addNewMessage(message);
       }
     }
   }
@@ -740,6 +806,11 @@ public final class RandomEventUtility {
         event.setText("Fleet called " + fleet.getName()
             + " decided to start space pirating. " + info.getEmpireName()
             + " lost control of that fleet.");
+        Message message = new Message(MessageType.FLEET, event.getText(),
+            Icons.getIconByName(Icons.ICON_HULL_TECH));
+        message.setCoordinate(fleet.getCoordinate());
+        message.setMatchByString(fleet.getName());
+        info.getMsgList().addNewMessage(message);
       }
     }
   }

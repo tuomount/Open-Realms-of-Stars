@@ -307,6 +307,8 @@ public class RandomEventUtilityTest {
     Fleet fleet = Mockito.mock(Fleet.class);
     Mockito.when(fleet.getMilitaryValue()).thenReturn(40);
     Mockito.when(fleet.getName()).thenReturn("Test fleet");
+    Coordinate coord = new Coordinate(5,6);
+    Mockito.when(fleet.getCoordinate()).thenReturn(coord);
     info.getFleets().add(fleet);
     RandomEvent event = new RandomEvent(BadRandomType.MUTINY,
         info);

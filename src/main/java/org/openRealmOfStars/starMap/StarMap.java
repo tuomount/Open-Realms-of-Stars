@@ -3348,4 +3348,18 @@ public class StarMap {
     }
     return result;
   }
+
+  /**
+   * Broadcast one message to each realms.
+   * @param msg Message to broadcast
+   */
+  public void broadcastMessage(final Message msg) {
+    for (int i = 0; i < getPlayerList().getCurrentMaxRealms(); i++) {
+      Message message = msg.copy();
+      PlayerInfo info = getPlayerList().getPlayerInfoByIndex(i);
+      if (info != null) {
+        info.getMsgList().addNewMessage(message);
+      }
+    }
+  }
 }

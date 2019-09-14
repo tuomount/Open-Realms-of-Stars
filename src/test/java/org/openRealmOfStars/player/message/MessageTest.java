@@ -1,6 +1,7 @@
 package org.openRealmOfStars.player.message;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -11,7 +12,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -59,6 +60,28 @@ public class MessageTest {
     message.setType(MessageType.INFORMATION);
     assertEquals(MessageType.INFORMATION, message.getType());
     assertEquals("Information - Foobar", message.toString());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMessageCopy() {
+    Icon16x16 icon = Mockito.mock(Icon16x16.class);
+    Message message = new Message(MessageType.CONSTRUCTION,
+        "New construction is done!", icon);
+    Coordinate coordinate = Mockito.mock(Coordinate.class);
+    Mockito.when(coordinate.getX()).thenReturn(5);
+    Mockito.when(coordinate.getY()).thenReturn(6);
+    message.setCoordinate(coordinate);
+    message.setIndex(7);
+    message.setMatchByString("Should match");
+    Message msg = message.copy();
+    assertEquals(MessageType.CONSTRUCTION, msg.getType());
+    assertEquals("Should match", msg.getMatchByString());
+    assertEquals(5, msg.getX());
+    assertEquals(6, msg.getY());
+    assertEquals(7, msg.getIndex());
+    assertEquals("New construction is done!", msg.getMessage());
+    assertNotEquals(msg, message);
   }
 
 

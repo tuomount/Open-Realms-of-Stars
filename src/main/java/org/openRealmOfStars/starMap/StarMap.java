@@ -298,8 +298,8 @@ public class StarMap {
     setScoreResearch(config.getScoreLimitResearch());
     setScoreDiplomacy(config.getScoreLimitDiplomacy());
     setPirateDifficulty(PirateDifficultLevel.NORMAL);
-    setKarmaType(KarmaType.SECOND_FIRST_AND_LAST);
-    setKarmaSpeed(1);
+    setKarmaType(config.getKarmaType());
+    setKarmaSpeed(config.getKarmaSpeed());
     setGoodKarmaCount(0);
     setBadKarmaCount(0);
     history = new History();

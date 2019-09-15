@@ -174,6 +174,16 @@ public class GalaxyConfig {
   private PirateDifficultLevel spacePiratesDifficulty;
 
   /**
+   * Karma type for galaxy.
+   */
+  private KarmaType karmaType;
+
+  /**
+   * Karma speed for galaxy.
+   */
+  private int karmaSpeed;
+
+  /**
    * Space anomaly level
    * 0 Disabled
    * 1 Non-harmful
@@ -190,6 +200,8 @@ public class GalaxyConfig {
     this.spacePiratesLevel = 1;
     this.setSpacePiratesDifficulty(PirateDifficultLevel.NORMAL);
     this.spaceAnomaliesLevel = 1;
+    this.setKarmaType(KarmaType.SECOND_FIRST_AND_LAST);
+    this.setKarmaSpeed(2);
     setChanceForPlanetaryEvent(10);
     setNumberOfRoguePlanets(ROGUE_PLANETS_FEW);
     setScoringVictoryTurns(400);
@@ -604,6 +616,38 @@ public class GalaxyConfig {
    */
   public int getSpaceAnomaliesLevel() {
     return this.spaceAnomaliesLevel;
+  }
+
+  /**
+   * Get the karma type for galaxy.
+   * @return the karmaType
+   */
+  public KarmaType getKarmaType() {
+    return karmaType;
+  }
+
+  /**
+   * Set the karma type for galaxy.
+   * @param karmaType the karmaType to set
+   */
+  public void setKarmaType(final KarmaType karmaType) {
+    this.karmaType = karmaType;
+  }
+
+  /**
+   * Get the karma speed for galaxy
+   * @return the karmaSpeed
+   */
+  public int getKarmaSpeed() {
+    return karmaSpeed;
+  }
+
+  /**
+   * Set Karma speed for galaxy.
+   * @param karmaSpeed the karmaSpeed to set
+   */
+  public void setKarmaSpeed(final int karmaSpeed) {
+    this.karmaSpeed = karmaSpeed;
   }
 
 }

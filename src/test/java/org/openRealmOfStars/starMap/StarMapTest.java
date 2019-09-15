@@ -124,6 +124,8 @@ public class StarMapTest {
     Mockito.when(config.getScoreLimitConquer()).thenReturn(0);
     Mockito.when(config.getScoreLimitResearch()).thenReturn(4);
     Mockito.when(config.getScoreLimitDiplomacy()).thenReturn(1);
+    Mockito.when(config.getKarmaType()).thenReturn(KarmaType.SECOND_FIRST_AND_LAST);
+    Mockito.when(config.getKarmaSpeed()).thenReturn(1);
     Mockito.when(config.getSpacePiratesDifficulty()).thenReturn(PirateDifficultLevel.NORMAL);
 
     PlayerList players = Mockito.mock(PlayerList.class);

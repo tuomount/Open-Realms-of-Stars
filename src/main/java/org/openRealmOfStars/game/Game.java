@@ -589,7 +589,7 @@ public class Game implements ActionListener {
       layeredPane.setBounds(0, 0, getWidth(), getHeight());
       int y = MUSIC_TEXT_TOP;
       if (view instanceof MainMenu || view instanceof ResearchView
-          || view instanceof ShipView || view instanceof GalaxyCreationView
+          || view instanceof ShipView
           || view instanceof PlayerSetupView
           || view instanceof DiplomacyView) {
         y = getHeight() - MUSIC_TEXT_BOTTOM;

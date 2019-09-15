@@ -20,6 +20,7 @@ import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.panels.InvisiblePanel;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.GalaxyConfig;
+import org.openRealmOfStars.starMap.KarmaType;
 import org.openRealmOfStars.starMap.PirateDifficultLevel;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
@@ -122,6 +123,16 @@ public class GalaxyCreationView extends BlackPanel {
   private SpaceCombo<String> comboSpaceAnomalies;
 
   /**
+   * ComboBox for karma type
+   */
+  private SpaceCombo<String> comboKarmaType;
+
+  /**
+   * ComboBox for karma speed
+   */
+  private SpaceCombo<String> comboKarmaSpeed;
+
+  /**
    * Galaxy config
    */
   private GalaxyConfig config;
@@ -151,7 +162,7 @@ public class GalaxyCreationView extends BlackPanel {
 
     InvisiblePanel invisible = new InvisiblePanel(imgBase);
     invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
-    invisible.add(Box.createRigidArea(new Dimension(500, 250)));
+    invisible.add(Box.createRigidArea(new Dimension(500, 150)));
 
     InvisiblePanel xinvis = new InvisiblePanel(invisible);
     xinvis.setLayout(new BoxLayout(xinvis, BoxLayout.X_AXIS));
@@ -327,6 +338,45 @@ public class GalaxyCreationView extends BlackPanel {
         + " If disable there are no space anomalies.<br> Space anomalies can"
         + " contain small bonus or even harmful events.<html>");
     info.add(comboSpaceAnomalies);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+
+    label = new SpaceLabel("Random event karma:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    String[] karmaTypes = new String[5];
+    karmaTypes[0] = "Disabled random events";
+    karmaTypes[1] = "First and last";
+    karmaTypes[2] = "Two first and two last";
+    karmaTypes[3] = "Balanced";
+    karmaTypes[4] = "Random";
+    comboKarmaType = new SpaceCombo<>(karmaTypes);
+    comboKarmaType.setSelectedIndex(this.config.getKarmaType().getIndex());
+    comboKarmaType.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboKarmaType.addActionListener(listener);
+    comboKarmaType.setToolTipText("<html>Is there random events."
+        + " This settings decides which realms get the random events."
+        + "<br> There are good and bad random events. Usually those"
+        + " realms who are leading get bad events and losing realms"
+        + " get good events.<html>");
+    info.add(comboKarmaType);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    label = new SpaceLabel("Random event speed:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    String[] karmaSpeed = new String[3];
+    karmaSpeed[0] = "Slow";
+    karmaSpeed[1] = "Normal";
+    karmaSpeed[2] = "Fast";
+    comboKarmaSpeed = new SpaceCombo<>(karmaSpeed);
+    comboKarmaSpeed.setSelectedIndex(this.config.getKarmaSpeed() - 1);
+    comboKarmaSpeed.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboKarmaSpeed.addActionListener(listener);
+    comboKarmaSpeed.setToolTipText("<html>How often random events occur."
+        + " If random event karma is disable this setting does not do"
+        + " anything.<html>");
+    info.add(comboKarmaSpeed);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
     xinvis.add(Box.createRigidArea(new Dimension(200, 5)));
@@ -778,6 +828,9 @@ public class GalaxyCreationView extends BlackPanel {
       }
       config.setScoreLimitResearch(comboScoringScientific.getSelectedIndex());
       config.setScoreLimitDiplomacy(comboScoringDiplomatic.getSelectedIndex());
+      config.setKarmaType(KarmaType.getTypeByInt(
+          comboKarmaType.getSelectedIndex()));
+      config.setKarmaSpeed(comboKarmaSpeed.getSelectedIndex() + 1);
     }
   }
 

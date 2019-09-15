@@ -180,7 +180,8 @@ public final class RandomEventUtility {
       PlayerInfo info = event.getRealm();
       ArrayList<Planet> planets = new ArrayList<>();
       for (Planet planet : map.getPlanetList()) {
-        if (planet.getPlanetPlayerInfo() == info) {
+        if (planet.getPlanetPlayerInfo() == info
+            && planet.getBuildingList().length > 0) {
           planets.add(planet);
         }
       }
@@ -815,4 +816,96 @@ public final class RandomEventUtility {
     }
   }
 
+  /**
+   * Handle random event. This handles all random events including both
+   * good and bad events.
+   * @param event RandomEvent
+   * @param map StarMap
+   * @return True if event was handled succesfully, false otherwise.
+   */
+  public static boolean handleRandomEvent(final RandomEvent event,
+      final StarMap map) {
+    if (event.getBadType() != null) {
+      switch (event.getBadType()) {
+        case AGGRESSIVE_WILD_LIFE: {
+          handleAggressiveWildLife(event, map);
+          break;
+        }
+        case CATASTROPHIC_ACCIDENT: {
+          handleCatastrophicAccident(event, map);
+          break;
+        }
+        case CLIMATE_CHANGE: {
+          handleBadClimateChange(event, map);
+          break;
+        }
+        case CORRUPTION_SCANDAL: {
+          handleCorruptionScandal(event);
+          break;
+        }
+        case DEADLY_VIRUS_OUTBREAK: {
+          handleDeadlyVirusOutbreak(event, map);
+          break;
+        }
+        case MASSIVE_DATA_LOST: {
+          handleMassiveDataLost(event);
+          break;
+        }
+        case METEOR_HIT: {
+          handleMeteorHit(event, map);
+          break;
+        }
+        case MUTINY: {
+          handleMutiny(event, map.getPlayerList().getBoardPlayer());
+          break;
+        }
+        case RAIDERS: {
+          handleRaiders(event, map);
+          break;
+        }
+        default:
+        case SOLAR_ACTIVITY_INCREASE: {
+          handleSolarActivityIncreased(event, map);
+          break;
+        }
+      }
+    } else if (event.getGoodType() != null) {
+      switch (event.getGoodType()) {
+        case CLIMATE_CHANGE: {
+          handleGoodClimateChange(event, map);
+          break;
+        }
+        case DESERTED_SHIP: {
+          handleDesertedShip(event, map);
+          break;
+        }
+        case LOST_TREASURE_FOUND: {
+          handleLostTreasure(event, map);
+          break;
+        }
+        case MISSED_METEOROID: {
+          handleMissedMeteoroid(event, map);
+          break;
+        }
+        case MYSTERIOUS_SIGNAL: {
+          handleMysteriousSignal(event, map);
+          break;
+        }
+        case SOLAR_ACTIVITY_DIMISHED: {
+          handleSolarActivityDecreased(event, map);
+          break;
+        }
+        default:
+        case TECHNICAL_BREAKTHROUGH: {
+          handleTechnicalBreakThrough(event);
+          break;
+        }
+      }
+    }
+    if (!event.getText().isEmpty()) {
+      // Succeed to handle random event.
+      return true;
+    }
+    return false;
+  }
 }

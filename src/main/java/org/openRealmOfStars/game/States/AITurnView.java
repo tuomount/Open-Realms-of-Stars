@@ -49,6 +49,7 @@ import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
+import org.openRealmOfStars.starMap.KarmaType;
 import org.openRealmOfStars.starMap.PirateDifficultLevel;
 import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
@@ -57,12 +58,17 @@ import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.history.event.GalacticEvent;
+import org.openRealmOfStars.starMap.newsCorp.GalaxyStat;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
+import org.openRealmOfStars.starMap.newsCorp.scoreBoard.Row;
+import org.openRealmOfStars.starMap.newsCorp.scoreBoard.ScoreBoard;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.starMap.randomEvent.RandomEvent;
+import org.openRealmOfStars.starMap.randomEvent.RandomEventUtility;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.Votes;
 import org.openRealmOfStars.starMap.vote.VotingType;
@@ -2035,6 +2041,91 @@ public class AITurnView extends BlackPanel {
       info.getMsgList().addNewMessage(msg);
     }
   }
+
+  /**
+   * Get realm by karma.
+   * @param bad True for bad karma and false for good karma
+   * @return PlayerInfo or null if not able to find realm.
+   */
+  public PlayerInfo getRealmByKarma(final boolean bad) {
+    StarMap map = game.getStarMap();
+    GalaxyStat stat = map.getNewsCorpData().generateScores();
+    ScoreBoard scoreBoard = new ScoreBoard();
+    for (int i = 0; i < stat.getMaxPlayers(); i++) {
+      Row row = new Row(stat.getLatest(i), i);
+      scoreBoard.add(row);
+    }
+    scoreBoard.sort();
+    int index = -1;
+    if (map.getKarmaType() == KarmaType.FIRST_AND_LAST) {
+      if (bad) {
+        index = scoreBoard.getRow(0).getRealm();
+      } else {
+        index = scoreBoard.getRow(scoreBoard.getNumberOfRows() - 1).getRealm();
+      }
+    }
+    if (map.getKarmaType() == KarmaType.SECOND_FIRST_AND_LAST) {
+      if (bad) {
+        index = scoreBoard.getRow(DiceGenerator.getRandom(0, 1)).getRealm();
+      } else {
+        int minValue = scoreBoard.getNumberOfRows() - 2;
+        int maxValue = scoreBoard.getNumberOfRows() - 1;
+        index = scoreBoard.getRow(DiceGenerator.getRandom(minValue, maxValue))
+            .getRealm();
+      }
+    }
+    if (map.getKarmaType() == KarmaType.BALANCED) {
+      int half = scoreBoard.getNumberOfRows() / 2;
+      if (bad) {
+        index = scoreBoard.getRow(DiceGenerator.getRandom(0,
+            half - 1)).getRealm();
+      } else {
+        int minValue = half;
+        int maxValue = scoreBoard.getNumberOfRows() - 1;
+        index = scoreBoard.getRow(DiceGenerator.getRandom(minValue, maxValue))
+            .getRealm();
+      }
+    }
+    if (map.getKarmaType() == KarmaType.RANDOM) {
+      index = DiceGenerator.getRandom(0,
+          map.getPlayerList().getCurrentMaxRealms());
+    }
+    if (index != -1) {
+      return map.getPlayerByIndex(index);
+    }
+    return null;
+  }
+
+  /**
+   * Handle galaxy karma.
+   */
+  public void handleGalaxyKarma() {
+    StarMap map = game.getStarMap();
+    if (map.getKarmaType() != KarmaType.DISABLED) {
+      map.setBadKarmaCount(map.getBadKarmaCount() + map.getKarmaSpeed());
+      map.setGoodKarmaCount(map.getGoodKarmaCount() + map.getKarmaSpeed());
+      int badChance = map.getBadKarmaCount() / 10;
+      if (DiceGenerator.getRandom(1, 100) < badChance) {
+        PlayerInfo info = getRealmByKarma(true);
+        if (info != null) {
+          RandomEvent event = RandomEventUtility.createBadRandomEvent(info);
+          if (RandomEventUtility.handleRandomEvent(event, map)) {
+            map.setBadKarmaCount(map.getBadKarmaCount() / 2);
+          }
+        }
+      }
+      int goodChance = map.getBadKarmaCount() / 10;
+      if (DiceGenerator.getRandom(1, 100) < goodChance) {
+        PlayerInfo info = getRealmByKarma(false);
+        if (info != null) {
+          RandomEvent event = RandomEventUtility.createGoodRandomEvent(info);
+          if (RandomEventUtility.handleRandomEvent(event, map)) {
+            map.setGoodKarmaCount(map.getGoodKarmaCount() / 2);
+          }
+        }
+      }
+    }
+  }
   /**
    * Handle Ai Turn
    * @return True when turn has finished or need to change state
@@ -2057,6 +2148,7 @@ public class AITurnView extends BlackPanel {
     }
     if (game.getStarMap().isAllAIsHandled()) {
       updateStarMapToNextTurn();
+      handleGalaxyKarma();
       for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
         // Handle player research at end of turn
         PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(i);

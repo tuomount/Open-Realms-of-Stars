@@ -147,6 +147,7 @@ public class CreditsView extends BlackPanel {
       + "Big money icon by Tuomo Untinen\n\n"
       + "Original money images done by photoshopwizard (CC0)\n\n"
       + "Mechion Space Ship Bridge by Tuomo Untinen\n\n"
+      + "Sun with and without solar flares by Tuomo Untinen\n\n"
       + "Fonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

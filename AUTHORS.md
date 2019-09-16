@@ -141,6 +141,8 @@ Original money images done by photoshopwizard (CC0)
 
 Mechion Space Ship Bridge by Tuomo Untinen
 
+Sun with and without solar flares by Tuomo Untinen
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

@@ -1031,6 +1031,18 @@ public final class GuiStatics {
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/bigmoney.png"));
   /**
+   * Solar flares images
+   */
+  public static final BufferedImage IMAGE_SOLAR_FLARES = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/solar-flares.png"));
+  /**
+   * Solar no flares images
+   */
+  public static final BufferedImage IMAGE_SOLAR_NO_FLARES = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/solar-noflares.png"));
+  /**
    * Ship bridge interior 1
    */
   public static final BufferedImage IMAGE_INTERIOR1 = IOUtilities.loadImage(

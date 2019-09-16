@@ -17,6 +17,7 @@ import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -560,6 +561,9 @@ public final class RandomEventUtility {
           event.setText("Solar activity in " + sun.getName()
               + " has dimished. This cause radiation level drop in planets"
               + " which are in the same system.");
+          ImageInstruction instructions = new ImageInstruction();
+          instructions.addImage(ImageInstruction.SOLAR_NO_FLARES);
+          event.setImageInstructions(instructions.build());
           Message message = new Message(MessageType.PLANETARY, event.getText(),
               Icons.getIconByName(Icons.ICON_RADIATION));
           message.setCoordinate(sun.getCenterCoordinate());
@@ -603,6 +607,9 @@ public final class RandomEventUtility {
           event.setText("Solar activity in " + sun.getName()
               + " has increased. This cause radiation level raise in planets"
               + " which are in the same system.");
+          ImageInstruction instructions = new ImageInstruction();
+          instructions.addImage(ImageInstruction.SOLAR_FLARES);
+          event.setImageInstructions(instructions.build());
           Message message = new Message(MessageType.PLANETARY, event.getText(),
               Icons.getIconByName(Icons.ICON_RADIATION));
           message.setCoordinate(sun.getCenterCoordinate());

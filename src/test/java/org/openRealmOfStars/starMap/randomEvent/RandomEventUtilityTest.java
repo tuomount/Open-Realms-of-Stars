@@ -175,6 +175,7 @@ public class RandomEventUtilityTest {
     RandomEventUtility.handleSolarActivityDecreased(event, starMap);
     assertNotEquals(null, event.getSun());
     assertNotEquals("", event.getText());
+    assertEquals("image(solar no flares)", event.getImageInstructions());
   }
 
   @Test
@@ -190,6 +191,7 @@ public class RandomEventUtilityTest {
     RandomEventUtility.handleSolarActivityIncreased(event, starMap);
     assertNotEquals(null, event.getSun());
     assertNotEquals("", event.getText());
+    assertEquals("image(solar flares)", event.getImageInstructions());
   }
 
   @Test

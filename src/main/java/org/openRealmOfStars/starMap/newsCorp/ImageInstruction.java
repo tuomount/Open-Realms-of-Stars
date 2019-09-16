@@ -287,6 +287,14 @@ public class ImageInstruction {
    */
   public static final String BIG_MONEY = "big money";
   /**
+   * Solar with flares
+   */
+  public static final String SOLAR_FLARES = "solar flares";
+  /**
+   * Solar without flares
+   */
+  public static final String SOLAR_NO_FLARES = "solar no flares";
+  /**
    * Instructions for ship
    */
   public static final String SHIP = "ship";
@@ -436,7 +444,9 @@ public class ImageInstruction {
         && !BIG_PEACE.equals(image)
         && !BIG_NUKE.equals(image)
         && !BIG_PRIVATEER.equals(image)
-        && !GALAXY.equals(image)) {
+        && !GALAXY.equals(image)
+        && !SOLAR_FLARES.equals(image)
+        && !SOLAR_NO_FLARES.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }
@@ -854,6 +864,12 @@ public class ImageInstruction {
     }
     if (BIG_PRIVATEER.equals(image)) {
       drawImg = GuiStatics.IMAGE_PRIVATEER;
+    }
+    if (SOLAR_FLARES.equals(image)) {
+      drawImg = GuiStatics.IMAGE_SOLAR_FLARES;
+    }
+    if (SOLAR_NO_FLARES.equals(image)) {
+      drawImg = GuiStatics.IMAGE_SOLAR_NO_FLARES;
     }
     Graphics2D g = (Graphics2D) workImage.getGraphics();
     g.drawImage(drawImg,

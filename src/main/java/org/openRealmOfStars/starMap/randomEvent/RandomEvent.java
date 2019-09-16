@@ -70,6 +70,10 @@ public class RandomEvent {
   private String text;
 
   /**
+   * Image instructions
+   */
+  private String imageInstructions;
+  /**
    * Is event so big that it should get into galactic news.
    */
   private boolean newsWorthy;
@@ -87,6 +91,7 @@ public class RandomEvent {
     this.setFleet(null);
     this.setText("");
     this.setNewsWorthy(false);
+    this.setImageInstructions("");
   }
 
   /**
@@ -103,6 +108,7 @@ public class RandomEvent {
     this.setFleet(null);
     this.setText("");
     this.setNewsWorthy(false);
+    this.setImageInstructions("");
   }
 
   /**
@@ -207,5 +213,21 @@ public class RandomEvent {
    */
   public void setNewsWorthy(final boolean newsWorthy) {
     this.newsWorthy = newsWorthy;
+  }
+
+  /**
+   * Get image instructions
+   * @return the imageInstructions
+   */
+  public String getImageInstructions() {
+    return imageInstructions;
+  }
+
+  /**
+   * Set image instructions for event.
+   * @param imageInstructions the imageInstructions to set
+   */
+  public void setImageInstructions(final String imageInstructions) {
+    this.imageInstructions = imageInstructions;
   }
 }

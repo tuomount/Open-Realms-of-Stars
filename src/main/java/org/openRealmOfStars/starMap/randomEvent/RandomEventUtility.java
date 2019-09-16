@@ -3,6 +3,7 @@ package org.openRealmOfStars.starMap.randomEvent;
 import java.util.ArrayList;
 
 import org.openRealmOfStars.AI.Research.Research;
+import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
@@ -342,11 +343,13 @@ public final class RandomEventUtility {
         sb.append("Massive meteor hits the the atmosphere of ");
         sb.append(planet.getName());
         sb.append(". ");
+        Icon16x16 icon = Icons.getIconByName(Icons.ICON_DEATH);
         if (planet.getTurretLvl() > 0) {
           sb.append("Planet's defense turrets shoot the meteor to pieces ");
           sb.append("and metal debris is being scattered around the planet.");
           planet.setAmountMetalInGround(planet.getAmountMetalInGround()
               + DiceGenerator.getRandom(80, 500));
+          icon = Icons.getIconByName(Icons.ICON_PLANETARY_TURRET);
         } else {
           planet.setMetal(planet.getMetal()
               + DiceGenerator.getRandom(80, 500));
@@ -373,7 +376,7 @@ public final class RandomEventUtility {
         }
         event.setText(sb.toString());
         Message message = new Message(MessageType.PLANETARY, event.getText(),
-            Icons.getIconByName(Icons.ICON_DEATH));
+            icon);
         message.setCoordinate(planet.getCoordinate());
         info.getMsgList().addNewMessage(message);
       }

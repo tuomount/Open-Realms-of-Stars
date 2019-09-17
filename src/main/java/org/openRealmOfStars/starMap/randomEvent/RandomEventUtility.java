@@ -564,6 +564,7 @@ public final class RandomEventUtility {
           ImageInstruction instructions = new ImageInstruction();
           instructions.addImage(ImageInstruction.SOLAR_NO_FLARES);
           event.setImageInstructions(instructions.build());
+          event.setNewsWorthy(true);
           Message message = new Message(MessageType.PLANETARY, event.getText(),
               Icons.getIconByName(Icons.ICON_RADIATION));
           message.setCoordinate(sun.getCenterCoordinate());
@@ -610,6 +611,7 @@ public final class RandomEventUtility {
           ImageInstruction instructions = new ImageInstruction();
           instructions.addImage(ImageInstruction.SOLAR_FLARES);
           event.setImageInstructions(instructions.build());
+          event.setNewsWorthy(true);
           Message message = new Message(MessageType.PLANETARY, event.getText(),
               Icons.getIconByName(Icons.ICON_RADIATION));
           message.setCoordinate(sun.getCenterCoordinate());

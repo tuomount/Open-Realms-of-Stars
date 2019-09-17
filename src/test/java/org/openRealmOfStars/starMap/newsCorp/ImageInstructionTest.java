@@ -46,6 +46,17 @@ public class ImageInstructionTest {
   }
 
   @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAddInstruction() {
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
+    ImageInstruction instruction2 = new ImageInstruction();
+    instruction2.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instruction.addInstruction(instruction2.build());
+    assertEquals("background(grey gradient)+background(black)", instruction.build());
+  }
+
+  @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testBackgroundBlackDraw() {
     ImageInstruction instruction = new ImageInstruction();

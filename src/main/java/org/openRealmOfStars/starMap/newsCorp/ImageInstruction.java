@@ -316,6 +316,15 @@ public class ImageInstruction {
   }
 
   /**
+   * Add instruction from another string.
+   * This does not do sanitation.
+   * @param instruction Instruction coomands
+   */
+  public void addInstruction(final String instruction) {
+    checkDelim();
+    sb.append(instruction);
+  }
+  /**
    * Character for starting parameters
    */
   private static final char PARAM_START = '(';

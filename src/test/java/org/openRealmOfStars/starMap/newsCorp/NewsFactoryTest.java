@@ -19,6 +19,9 @@ import org.openRealmOfStars.starMap.history.History;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.randomEvent.BadRandomType;
+import org.openRealmOfStars.starMap.randomEvent.GoodRandomType;
+import org.openRealmOfStars.starMap.randomEvent.RandomEvent;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.Votes;
 import org.openRealmOfStars.starMap.vote.VotingType;
@@ -67,7 +70,20 @@ public class NewsFactoryTest {
     assertEquals(true, news.getNewsText().contains(
         defender.getEmpireName()));
   }
-  
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testRandomEvent() {
+    RandomEvent event = Mockito.mock(RandomEvent.class);
+    Mockito.when(event.getImageInstructions()).thenReturn("BACKGROUND(BLACK)");
+    Mockito.when(event.getBadType()).thenReturn(BadRandomType.SOLAR_ACTIVITY_INCREASE);
+    Mockito.when(event.getGoodType()).thenReturn(GoodRandomType.SOLAR_ACTIVITY_DIMISHED);
+    Mockito.when(event.getText()).thenReturn("Test event text");
+    NewsData news = NewsFactory.makeRandomEventNews(event);
+    assertEquals("Test event text", news.getNewsText());
+    assertNotEquals(null, news.getImageInstructions());
+  }
+
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testWarOnPlanet() {

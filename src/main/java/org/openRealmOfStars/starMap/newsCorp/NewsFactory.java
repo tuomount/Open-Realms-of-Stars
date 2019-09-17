@@ -14,6 +14,9 @@ import org.openRealmOfStars.starMap.newsCorp.scoreBoard.ScoreBoard;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.construction.Building;
+import org.openRealmOfStars.starMap.randomEvent.BadRandomType;
+import org.openRealmOfStars.starMap.randomEvent.GoodRandomType;
+import org.openRealmOfStars.starMap.randomEvent.RandomEvent;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.VotingType;
 import org.openRealmOfStars.starMap.vote.sports.Athlete;
@@ -248,6 +251,27 @@ public final class NewsFactory {
     return news;
   }
 
+  /**
+   * Make Random event news
+   * @param event Random event
+   * @return NewsData
+   */
+  public static NewsData makeRandomEventNews(final RandomEvent event) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addInstruction(event.getImageInstructions());
+    if (event.getGoodType() != null
+        && event.getGoodType() == GoodRandomType.SOLAR_ACTIVITY_DIMISHED) {
+      instructions.addText("SOLAR ACTIVITY DECREASED!");
+    }
+    if (event.getBadType() != null
+        && event.getBadType() == BadRandomType.SOLAR_ACTIVITY_INCREASE) {
+      instructions.addText("SOLAR ACTIVITY INCREASED!");
+    }
+    news.setImageInstructions(instructions.build());
+    news.setNewsText(event.getText());
+    return news;
+  }
   /**
    * Make realm lost news. Realm lost it's final planet
    * @param realm PlayerInfo who lost

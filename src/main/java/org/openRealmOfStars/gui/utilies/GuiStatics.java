@@ -1035,13 +1035,13 @@ public final class GuiStatics {
    */
   public static final BufferedImage IMAGE_SOLAR_FLARES = IOUtilities
       .loadImage(GuiStatics.class.getResource(
-          "/resources/images/solar-flares.png"));
+          "/resources/images/sun-flares.png"));
   /**
    * Solar no flares images
    */
   public static final BufferedImage IMAGE_SOLAR_NO_FLARES = IOUtilities
       .loadImage(GuiStatics.class.getResource(
-          "/resources/images/solar-noflares.png"));
+          "/resources/images/sun-noflares.png"));
   /**
    * Ship bridge interior 1
    */

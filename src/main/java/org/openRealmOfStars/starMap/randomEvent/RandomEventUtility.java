@@ -605,7 +605,7 @@ public final class RandomEventUtility {
       for (Planet planet : map.getPlanetList()) {
         if (planet.getPlanetPlayerInfo() == info
             && planet.getOrderNumber() > 0
-            && planet.getRadiationLevel() > 1) {
+            && planet.getRadiationLevel() < 10) {
           planets.add(planet);
         }
       }
@@ -617,7 +617,7 @@ public final class RandomEventUtility {
         if (sun != null) {
           event.setSun(sun);
           event.setText("Solar activity in " + sun.getName()
-              + " has increased. This cause radiation level raise in planets"
+              + " has increased. This causes radiation level raise in planets"
               + " which are in the same system.");
           ImageInstruction instructions = new ImageInstruction();
           instructions.addImage(ImageInstruction.SOLAR_FLARES);

@@ -38,6 +38,7 @@ public class MessageTest {
     Icon16x16 icon = Mockito.mock(Icon16x16.class);
     Message message = new Message(MessageType.CONSTRUCTION,
         "New construction is done!", icon);
+    assertEquals(false, message.isRandomEventPop());
     assertEquals(MessageType.CONSTRUCTION, message.getType());
     assertEquals(-1, message.getIndex());
     assertEquals(-1, message.getX());
@@ -60,6 +61,8 @@ public class MessageTest {
     message.setType(MessageType.INFORMATION);
     assertEquals(MessageType.INFORMATION, message.getType());
     assertEquals("Information - Foobar", message.toString());
+    message.setRandomEventPop(true);
+    assertEquals(true, message.isRandomEventPop());
   }
 
   @Test
@@ -74,6 +77,7 @@ public class MessageTest {
     message.setCoordinate(coordinate);
     message.setIndex(7);
     message.setMatchByString("Should match");
+    message.setRandomEventPop(true);
     Message msg = message.copy();
     assertEquals(MessageType.CONSTRUCTION, msg.getType());
     assertEquals("Should match", msg.getMatchByString());
@@ -81,6 +85,7 @@ public class MessageTest {
     assertEquals(6, msg.getY());
     assertEquals(7, msg.getIndex());
     assertEquals("New construction is done!", msg.getMessage());
+    assertEquals(true, message.isRandomEventPop());
     assertNotEquals(msg, message);
   }
 

@@ -40,6 +40,9 @@ public class RandomEventTest {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     RandomEvent event = new RandomEvent(GoodRandomType.MYSTERIOUS_SIGNAL,
         info);
+    assertEquals(false, event.isPopupShown());
+    event.setPopupShown(true);
+    assertEquals(true, event.isPopupShown());
     assertEquals(null, event.getBadType());
     assertEquals(GoodRandomType.MYSTERIOUS_SIGNAL, event.getGoodType());
     assertEquals(info, event.getRealm());
@@ -68,6 +71,9 @@ public class RandomEventTest {
   public void testBadType() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     RandomEvent event = new RandomEvent(BadRandomType.RAIDERS, info);
+    assertEquals(false, event.isPopupShown());
+    event.setPopupShown(true);
+    assertEquals(true, event.isPopupShown());
     assertEquals(BadRandomType.RAIDERS, event.getBadType());
     assertEquals(null, event.getGoodType());
     assertEquals(info, event.getRealm());

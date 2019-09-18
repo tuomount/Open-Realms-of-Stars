@@ -1668,6 +1668,20 @@ public class Game implements ActionListener {
         starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
       }
     }
+    if ((msg.getType() == MessageType.FLEET
+        || msg.getType() == MessageType.PLANETARY
+        || msg.getType() == MessageType.INFORMATION)
+        && players.getCurrentPlayerInfo().getRandomEventOccured() != null
+        && !players.getCurrentPlayerInfo().getRandomEventOccured()
+            .isPopupShown()
+        && msg.isRandomEventPop()) {
+      PopupPanel popupPanel = new PopupPanel(
+          players.getCurrentPlayerInfo().getRandomEventOccured());
+      starMapView.setPopup(popupPanel);
+      players.getCurrentPlayerInfo().getRandomEventOccured().setPopupShown(
+          true);
+      msg.setRandomEventPop(false);
+    }
     if ((msg.getType() == MessageType.CONSTRUCTION
         || msg.getType() == MessageType.POPULATION) && !mapOnly) {
       changeGameState(GameState.PLANETVIEW, msg);

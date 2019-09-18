@@ -65,6 +65,11 @@ public class Message {
    * Certain messages need to find match with string.
    */
   private String matchByString;
+  /**
+   * Flag for showing random event pop. This information
+   * is not saved.
+   */
+  private boolean randomEventPopup;
 
   /**
    * Create new message
@@ -80,6 +85,7 @@ public class Message {
     this.coordinate = new Coordinate(-1, -1);
     this.index = -1;
     this.matchByString = null;
+    this.setRandomEventPop(false);
   }
 
   /**
@@ -97,6 +103,7 @@ public class Message {
       this.matchByString = null;
     }
     this.icon = Icons.getIconByName(IOUtilities.readString(dis));
+    this.setRandomEventPop(false);
   }
 
   /**
@@ -253,7 +260,24 @@ public class Message {
     msg.coordinate = this.coordinate;
     msg.index = this.index;
     msg.matchByString = this.matchByString;
+    msg.randomEventPopup = this.randomEventPopup;
     return msg;
+  }
+
+  /**
+   * Is there random event popup?
+   * @return the randomEventPop
+   */
+  public boolean isRandomEventPop() {
+    return randomEventPopup;
+  }
+
+  /**
+   * Set random event popup flag.
+   * @param randomEventPop the randomEventPop to set
+   */
+  public void setRandomEventPop(final boolean randomEventPop) {
+    this.randomEventPopup = randomEventPop;
   }
 
 }

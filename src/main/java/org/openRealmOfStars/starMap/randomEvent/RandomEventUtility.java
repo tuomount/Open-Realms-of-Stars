@@ -579,6 +579,7 @@ public final class RandomEventUtility {
           Message message = new Message(MessageType.PLANETARY, event.getText(),
               Icons.getIconByName(Icons.ICON_RADIATION));
           message.setCoordinate(sun.getCenterCoordinate());
+          message.setRandomEventPop(true);
           map.broadcastMessage(message);
           for (Planet orbiter : map.getPlanetList()) {
             Sun solar = map.locateSolarSystem(orbiter.getCoordinate().getX(),
@@ -626,6 +627,7 @@ public final class RandomEventUtility {
           Message message = new Message(MessageType.PLANETARY, event.getText(),
               Icons.getIconByName(Icons.ICON_RADIATION));
           message.setCoordinate(sun.getCenterCoordinate());
+          message.setRandomEventPop(true);
           map.broadcastMessage(message);
           for (Planet orbiter : map.getPlanetList()) {
             Sun solar = map.locateSolarSystem(orbiter.getCoordinate().getX(),

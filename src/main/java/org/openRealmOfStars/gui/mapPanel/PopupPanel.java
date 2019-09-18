@@ -9,6 +9,8 @@ import org.openRealmOfStars.gui.utilies.GraphRoutines;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.anomaly.SpaceAnomaly;
 import org.openRealmOfStars.player.combat.Combat;
+import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
+import org.openRealmOfStars.starMap.randomEvent.RandomEvent;
 
 
 /**
@@ -35,6 +37,14 @@ import org.openRealmOfStars.player.combat.Combat;
 */
 public class PopupPanel {
 
+  /**
+   * Default image width.
+   */
+  private static final int DEFAULT_IMAGE_WIDTH = 960;
+  /**
+   * Default image height.
+   */
+  private static final int DEFAULT_IMAGE_HEIGHT = 600;
   /**
    * Text to display on panel
    */
@@ -76,6 +86,97 @@ public class PopupPanel {
     combat = null;
   }
 
+  /**
+   * Create popup based on random event.
+   * @param event Random event
+   */
+  public PopupPanel(final RandomEvent event) {
+    text = event.getText();
+    ImageInstruction instruction = new ImageInstruction();
+    instruction.addInstruction(event.getImageInstructions());
+    image = new BufferedImage(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT,
+        BufferedImage.TYPE_INT_ARGB);
+    ImageInstruction.parseImageInstructions(image, instruction.build());
+    combat = null;
+    dismissed = false;
+    if (event.getBadType() != null) {
+      switch (event.getBadType()) {
+        case AGGRESSIVE_WILD_LIFE: {
+          title = "Aggressive wild life";
+          break;
+        }
+        case CATASTROPHIC_ACCIDENT: {
+          title = "Catasrophic accident!";
+          break;
+        }
+        case CLIMATE_CHANGE: {
+          title = "Climate is drying!";
+          break;
+        }
+        case CORRUPTION_SCANDAL: {
+          title = "Gorrupted goverment!";
+          break;
+        }
+        case DEADLY_VIRUS_OUTBREAK: {
+          title = "Deadly virus outbreak!";
+          break;
+        }
+        case MASSIVE_DATA_LOST: {
+          title = "Research data lost";
+          break;
+        }
+        case METEOR_HIT: {
+          title = "Meteor strike!";
+          break;
+        }
+        case MUTINY: {
+          title = "Mutiny!";
+          break;
+        }
+        case RAIDERS: {
+          title = "Space pirates!";
+          break;
+        }
+        default:
+        case SOLAR_ACTIVITY_INCREASE: {
+          title = "Solar activity increased";
+          break;
+        }
+      }
+    } else {
+      switch (event.getGoodType()) {
+        case CLIMATE_CHANGE: {
+          title = "Climate is getting better!";
+          break;
+        }
+        case DESERTED_SHIP: {
+          title = "Deserted ship found!";
+          break;
+        }
+        case LOST_TREASURE_FOUND: {
+          title = "Lost treasure";
+          break;
+        }
+        case MISSED_METEOROID: {
+          title = "Meteoroid missed";
+          break;
+        }
+        case MYSTERIOUS_SIGNAL: {
+          title = "The Signal";
+          break;
+        }
+        case SOLAR_ACTIVITY_DIMISHED: {
+          title = "Solar activity decreased";
+          break;
+        }
+        default:
+        case TECHNICAL_BREAKTHROUGH: {
+          title = "Techical breakthrough";
+          break;
+        }
+      }
+    }
+  }
   /**
    * Create Popup panel based on space anomaly
    * @param anomaly Space anomaly

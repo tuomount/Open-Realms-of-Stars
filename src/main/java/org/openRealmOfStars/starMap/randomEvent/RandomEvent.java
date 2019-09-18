@@ -78,6 +78,10 @@ public class RandomEvent {
    */
   private boolean newsWorthy;
   /**
+   * Popup has been shown
+   */
+  private boolean popupShown;
+  /**
    * Constructor for Bad random event type.
    * @param badType Bad random event type
    * @param info Realm info who is experiencing bad event.
@@ -92,6 +96,7 @@ public class RandomEvent {
     this.setText("");
     this.setNewsWorthy(false);
     this.setImageInstructions("");
+    this.setPopupShown(false);
   }
 
   /**
@@ -109,6 +114,7 @@ public class RandomEvent {
     this.setText("");
     this.setNewsWorthy(false);
     this.setImageInstructions("");
+    this.setPopupShown(false);
   }
 
   /**
@@ -229,5 +235,21 @@ public class RandomEvent {
    */
   public void setImageInstructions(final String imageInstructions) {
     this.imageInstructions = imageInstructions;
+  }
+
+  /**
+   * Is popup shown for this event?
+   * @return the popupShown
+   */
+  public boolean isPopupShown() {
+    return popupShown;
+  }
+
+  /**
+   * Set popup shown flag.
+   * @param popupShown the popupShown to set
+   */
+  public void setPopupShown(final boolean popupShown) {
+    this.popupShown = popupShown;
   }
 }

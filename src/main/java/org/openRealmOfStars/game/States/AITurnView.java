@@ -1728,6 +1728,7 @@ public class AITurnView extends BlackPanel {
     for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
       PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(i);
       if (info != null) {
+        info.setRandomEventOccured(null);
         if (!info.isBoard()) {
           removeBannedShipDesigns(info,
               game.getStarMap().getVotes().areNukesBanned(),
@@ -2115,6 +2116,7 @@ public class AITurnView extends BlackPanel {
               NewsData news = NewsFactory.makeRandomEventNews(event);
               map.getNewsCorpData().addNews(news);
             }
+            info.setRandomEventOccured(event);
           }
         }
       }
@@ -2129,6 +2131,7 @@ public class AITurnView extends BlackPanel {
               NewsData news = NewsFactory.makeRandomEventNews(event);
               map.getNewsCorpData().addNews(news);
             }
+            info.setRandomEventOccured(event);
           }
         }
       }

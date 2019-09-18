@@ -2,6 +2,9 @@ package org.openRealmOfStars.starMap.randomEvent;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionPhase;
+import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.AI.Research.Research;
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
@@ -15,6 +18,7 @@ import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.ship.shipdesign.ShipDesign;
 import org.openRealmOfStars.player.tech.TechType;
+import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
@@ -528,6 +532,13 @@ public final class RandomEventUtility {
                 event.getText(), Icons.getIconByName(Icons.ICON_SCANNER));
             message.setCoordinate(sun.getCenterCoordinate());
             info.getMsgList().addNewMessage(message);
+            if (!info.isHuman()) {
+              Mission mission = new Mission(MissionType.EXPLORE,
+                  MissionPhase.PLANNING, new Coordinate(sun.getCenterX(),
+                      sun.getCenterY()));
+              mission.setSunName(sun.getName());
+              info.getMissions().add(mission);
+            }
           }
         }
       }

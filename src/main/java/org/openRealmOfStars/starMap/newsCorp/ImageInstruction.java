@@ -275,6 +275,14 @@ public class ImageInstruction {
    */
   public static final String BIG_PRIVATEER = "big privateer";
   /**
+   * Pirate pilot
+   */
+  public static final String PIRATE_PILOT = "pirate pilot";
+  /**
+   * Old ship
+   */
+  public static final String OLD_SHIP = "old ship";
+  /**
    * United Galaxy Tower
    */
   public static final String UNITED_GALAXY_TOWER = "united galaxy tower";
@@ -455,7 +463,9 @@ public class ImageInstruction {
         && !BIG_PRIVATEER.equals(image)
         && !GALAXY.equals(image)
         && !SOLAR_FLARES.equals(image)
-        && !SOLAR_NO_FLARES.equals(image)) {
+        && !SOLAR_NO_FLARES.equals(image)
+        && !PIRATE_PILOT.equals(image)
+        && !OLD_SHIP.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }
@@ -879,6 +889,12 @@ public class ImageInstruction {
     }
     if (SOLAR_NO_FLARES.equals(image)) {
       drawImg = GuiStatics.IMAGE_SOLAR_NO_FLARES;
+    }
+    if (PIRATE_PILOT.equals(image)) {
+      drawImg = GuiStatics.IMAGE_PIRATE_PILOT;
+    }
+    if (OLD_SHIP.equals(image)) {
+      drawImg = GuiStatics.IMAGE_OLD_SHIP;
     }
     Graphics2D g = (Graphics2D) workImage.getGraphics();
     g.drawImage(drawImg,

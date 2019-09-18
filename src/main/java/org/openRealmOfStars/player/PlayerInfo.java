@@ -32,6 +32,7 @@ import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
+import org.openRealmOfStars.starMap.randomEvent.RandomEvent;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.IOUtilities;
@@ -161,6 +162,12 @@ public class PlayerInfo {
   private Attitude attitude;
 
   /**
+   * Random event occured during end turn phase.
+   *  This information won't be saved.
+   */
+  private RandomEvent randomEventOccured;
+
+  /**
    * Uncharted map sector, only suns are visible
    */
   public static final byte UNCHARTED = 0;
@@ -212,6 +219,7 @@ public class PlayerInfo {
     this.msgList = new MessageList();
     shipStatList = new ArrayList<>();
     fleets = new FleetList();
+    setRandomEventOccured(null);
     setHuman(false);
     setBoard(false);
     missions = new MissionList();
@@ -572,6 +580,7 @@ public class PlayerInfo {
    * @throws IOException if there is any problem with DataInputStream
    */
   public PlayerInfo(final DataInputStream dis) throws IOException {
+    setRandomEventOccured(null);
     empireName = IOUtilities.readString(dis);
     race = SpaceRaceUtility.getRaceByIndex(dis.readInt());
     government = GovernmentUtility.getGovernmentByIndex(dis.readInt());
@@ -1671,5 +1680,19 @@ public class PlayerInfo {
       }
     }
     return stats.toArray(new ShipStat[stats.size()]);
+  }
+  /**
+   * Get random event which has occured.
+   * @return the randomEventOccured
+   */
+  public RandomEvent getRandomEventOccured() {
+    return randomEventOccured;
+  }
+  /**
+   * Set random event that occured.
+   * @param randomEventOccured the randomEventOccured to set
+   */
+  public void setRandomEventOccured(final RandomEvent randomEventOccured) {
+    this.randomEventOccured = randomEventOccured;
   }
 }

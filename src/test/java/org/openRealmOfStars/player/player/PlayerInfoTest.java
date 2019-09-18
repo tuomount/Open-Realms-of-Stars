@@ -20,13 +20,14 @@ import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.Sun;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
+import org.openRealmOfStars.starMap.randomEvent.RandomEvent;
 import org.mockito.Mockito;
 
 /**
  * 
  * Open Realm of Stars game project 
  * Copyright (C) 2017 GodBeom
- * Copyright (C) 2017,2018 Tuomo Untinen
+ * Copyright (C) 2017-2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -538,6 +539,21 @@ public class PlayerInfoTest {
       assertNotEquals(null, info.getEspionage().getByIndex(5));
       assertNotEquals(null, info.getEspionage().getByIndex(6));
       assertNotEquals(null, info.getEspionage().getByIndex(7));
+    }
+
+    /**
+     * Tests espionage fetching from player info.
+     */
+    @Test
+    @Category(org.openRealmOfStars.UnitTest.class)
+    public void testRandomEvent() {
+      PlayerInfo info = new PlayerInfo(SpaceRace.HUMAN, 8, 0);
+      assertNull(info.getRandomEventOccured());
+      RandomEvent event = Mockito.mock(RandomEvent.class);
+      info.setRandomEventOccured(event);
+      assertEquals(event, info.getRandomEventOccured());
+      info.setRandomEventOccured(null);
+      assertNull(info.getRandomEventOccured());
     }
 
     

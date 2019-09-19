@@ -307,6 +307,10 @@ public class ImageInstruction {
    */
   public static final String DESERT = "desert";
   /**
+   * Paradise image
+   */
+  public static final String PARADISE = "paradise";
+  /**
    * Instructions for ship
    */
   public static final String SHIP = "ship";
@@ -470,7 +474,8 @@ public class ImageInstruction {
         && !SOLAR_NO_FLARES.equals(image)
         && !PIRATE_PILOT.equals(image)
         && !OLD_SHIP.equals(image)
-        && !DESERT.equals(image)) {
+        && !DESERT.equals(image)
+        && !PARADISE.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }
@@ -860,8 +865,9 @@ public class ImageInstruction {
    * Draw image on image
    * @param workImage Image where to draw
    * @param image image type to draw
+   * @return Drawn image
    */
-  private static void paintImage(final BufferedImage workImage,
+  private static BufferedImage paintImage(final BufferedImage workImage,
       final String image) {
     BufferedImage drawImg = GuiStatics.BIG_PLANET_ROCK1;
     SpaceRace race = SpaceRaceUtility.getRaceByName(image);
@@ -904,10 +910,19 @@ public class ImageInstruction {
     if (DESERT.equals(image)) {
       drawImg = GuiStatics.IMAGE_DESERT;
     }
-    Graphics2D g = (Graphics2D) workImage.getGraphics();
+    if (PARADISE.equals(image)) {
+      drawImg = GuiStatics.IMAGE_PARADISE;
+    }
+    BufferedImage img = workImage;
+    if (img == null) {
+      img = new BufferedImage(drawImg.getWidth(), drawImg.getHeight(),
+          BufferedImage.TYPE_INT_ARGB);
+    }
+    Graphics2D g = (Graphics2D) img.getGraphics();
     g.drawImage(drawImg,
-        workImage.getWidth() / 2 - drawImg.getWidth() / 2,
-        workImage.getHeight() / 2 - drawImg.getHeight() / 2, null);
+        img.getWidth() / 2 - drawImg.getWidth() / 2,
+        img.getHeight() / 2 - drawImg.getHeight() / 2, null);
+    return img;
   }
   /**
    * Parse Image instruction string and draw image
@@ -952,7 +967,7 @@ public class ImageInstruction {
         paintTrader(workImage, parameters[1], parameters[0], parameters[2]);
       }
       if (IMAGE.equals(command)) {
-        paintImage(workImage, parameters[0]);
+        workImage = paintImage(workImage, parameters[0]);
       }
       if (RELATION_SYMBOL.equals(command)) {
         Graphics2D g = (Graphics2D) workImage.getGraphics();

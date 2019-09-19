@@ -94,9 +94,14 @@ public class PopupPanel {
     text = event.getText();
     ImageInstruction instruction = new ImageInstruction();
     instruction.addInstruction(event.getImageInstructions());
-    image = new BufferedImage(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT,
-        BufferedImage.TYPE_INT_ARGB);
-    ImageInstruction.parseImageInstructions(image, instruction.build());
+    if (event.getImageInstructions().startsWith("image(")) {
+      image = null;
+    } else {
+      image = new BufferedImage(DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT,
+          BufferedImage.TYPE_INT_ARGB);
+    }
+    image = ImageInstruction.parseImageInstructions(image,
+        instruction.build());
     combat = null;
     dismissed = false;
     if (event.getBadType() != null) {

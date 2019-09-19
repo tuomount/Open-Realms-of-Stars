@@ -271,7 +271,7 @@ public final class RandomEventUtility {
           }
         }
         for (int i = 0; i < numberOfTechs; i++) {
-          extraPlayer.getTechList().addNewRandomTech(info);
+          extraPlayer.getTechList().addNewRandomTech(extraPlayer);
         }
         Research.handleShipDesigns(extraPlayer);
         ShipStat[] shipStats = extraPlayer.getShipStatList();
@@ -668,9 +668,13 @@ public final class RandomEventUtility {
         event.setPlanet(planet);
         event.setText(planet.getName() + " climate changes so that planet"
             + " can provide more food naturally. This is a good progress.");
+        ImageInstruction instructions = new ImageInstruction();
+        instructions.addImage(ImageInstruction.PARADISE);
+        event.setImageInstructions(instructions.build());
         Message message = new Message(MessageType.PLANETARY, event.getText(),
             Icons.getIconByName(Icons.ICON_FARM));
         message.setCoordinate(planet.getCoordinate());
+        message.setRandomEventPop(true);
         info.getMsgList().addNewMessage(message);
       }
     }

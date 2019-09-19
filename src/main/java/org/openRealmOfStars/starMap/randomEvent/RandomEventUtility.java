@@ -699,9 +699,13 @@ public final class RandomEventUtility {
         event.setPlanet(planet);
         event.setText(planet.getName() + " climate changes so that planet"
             + " provides less food naturally. This is very bad progress.");
+        ImageInstruction instructions = new ImageInstruction();
+        instructions.addImage(ImageInstruction.DESERT);
+        event.setImageInstructions(instructions.build());
         Message message = new Message(MessageType.PLANETARY, event.getText(),
             Icons.getIconByName(Icons.ICON_DEATH));
         message.setCoordinate(planet.getCoordinate());
+        message.setRandomEventPop(true);
         info.getMsgList().addNewMessage(message);
       }
     }

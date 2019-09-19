@@ -303,6 +303,10 @@ public class ImageInstruction {
    */
   public static final String SOLAR_NO_FLARES = "solar no flares";
   /**
+   * Desert image
+   */
+  public static final String DESERT = "desert";
+  /**
    * Instructions for ship
    */
   public static final String SHIP = "ship";
@@ -465,7 +469,8 @@ public class ImageInstruction {
         && !SOLAR_FLARES.equals(image)
         && !SOLAR_NO_FLARES.equals(image)
         && !PIRATE_PILOT.equals(image)
-        && !OLD_SHIP.equals(image)) {
+        && !OLD_SHIP.equals(image)
+        && !DESERT.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }
@@ -895,6 +900,9 @@ public class ImageInstruction {
     }
     if (OLD_SHIP.equals(image)) {
       drawImg = GuiStatics.IMAGE_OLD_SHIP;
+    }
+    if (DESERT.equals(image)) {
+      drawImg = GuiStatics.IMAGE_DESERT;
     }
     Graphics2D g = (Graphics2D) workImage.getGraphics();
     g.drawImage(drawImg,

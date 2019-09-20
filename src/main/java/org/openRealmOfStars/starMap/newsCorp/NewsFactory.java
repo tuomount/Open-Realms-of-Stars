@@ -408,6 +408,13 @@ public final class NewsFactory {
     sb.append(" trader fleet arrives to ");
     sb.append(planet.getName());
     sb.append("! ");
+    if (planet.getPlanetPlayerInfo() != null
+        && trader != planet.getPlanetPlayerInfo()) {
+      sb.append(planet.getName());
+      sb.append(" belongs to ");
+      sb.append(planet.getPlanetPlayerInfo().getEmpireName());
+      sb.append(". ");
+    }
     sb.append("Cargo hull was full of goods from distant world! ");
     sb.append("This trade benefits both parties!");
     Attitude attitude = trader.getAiAttitude();

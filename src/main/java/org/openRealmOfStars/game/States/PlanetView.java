@@ -650,8 +650,7 @@ public class PlanetView extends BlackPanel {
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_RUSH_WITH_POPULATION)) {
       planet.doRush(false, info);
-      //TODO change sound effect later for better one
-      SoundPlayer.playMenuSound();
+      SoundPlayer.playSound(SoundPlayer.WHIP);
       updatePanel();
     }
     if (arg0.getActionCommand()

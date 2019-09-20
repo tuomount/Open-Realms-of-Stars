@@ -182,6 +182,11 @@ public final class SoundPlayer {
       "/resources/sounds/warp_engine_engage.wav";
 
   /**
+   * Sound effect for rushing building with population.
+   */
+  public static final String WHIP = "/resources/sounds/whip.wav";
+
+  /**
    * Is Sound enabled
    * @return True if sound enabled
    */

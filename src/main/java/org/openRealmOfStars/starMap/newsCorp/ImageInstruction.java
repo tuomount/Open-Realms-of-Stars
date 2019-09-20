@@ -311,6 +311,10 @@ public class ImageInstruction {
    */
   public static final String PARADISE = "paradise";
   /**
+   * Viruses image
+   */
+  public static final String VIRUSES = "viruses";
+  /**
    * Instructions for ship
    */
   public static final String SHIP = "ship";
@@ -475,7 +479,8 @@ public class ImageInstruction {
         && !PIRATE_PILOT.equals(image)
         && !OLD_SHIP.equals(image)
         && !DESERT.equals(image)
-        && !PARADISE.equals(image)) {
+        && !PARADISE.equals(image)
+        && !VIRUSES.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }
@@ -912,6 +917,9 @@ public class ImageInstruction {
     }
     if (PARADISE.equals(image)) {
       drawImg = GuiStatics.IMAGE_PARADISE;
+    }
+    if (VIRUSES.equals(image)) {
+      drawImg = GuiStatics.IMAGE_VIRUSES;
     }
     BufferedImage img = workImage;
     if (img == null) {

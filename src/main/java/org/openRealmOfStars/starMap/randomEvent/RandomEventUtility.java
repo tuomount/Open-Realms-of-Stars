@@ -465,9 +465,13 @@ public final class RandomEventUtility {
           }
         }
         event.setText(sb.toString());
+        ImageInstruction instructions = new ImageInstruction();
+        instructions.addImage(ImageInstruction.VIRUSES);
+        event.setImageInstructions(instructions.build());
         Message message = new Message(MessageType.PLANETARY, event.getText(),
             Icons.getIconByName(Icons.ICON_DEATH));
         message.setCoordinate(planet.getCoordinate());
+        message.setRandomEventPop(true);
         info.getMsgList().addNewMessage(message);
       }
     }

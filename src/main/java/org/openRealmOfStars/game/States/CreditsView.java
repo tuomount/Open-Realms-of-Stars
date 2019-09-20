@@ -151,6 +151,7 @@ public class CreditsView extends BlackPanel {
       + "Desert by Cethiel (CC0)\n\n"
       + "Prehistoric nature landscape by Pepper Racoon - "
       + "https://opengameart.org/content/landscape\n\n"
+      + "Viruses (Cold, Flu, Chicken Pox) by bart (CC0)\n\n"
       + "Fonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

@@ -147,6 +147,8 @@ Desert by Cethiel (CC0)
 
 Prehistoric nature landscape by Pepper Racoon - https://opengameart.org/content/landscape
 
+Viruses (Cold, Flu, Chicken Pox) by bart (CC0)
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

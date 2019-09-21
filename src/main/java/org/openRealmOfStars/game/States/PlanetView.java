@@ -643,8 +643,7 @@ public class PlanetView extends BlackPanel {
     if (arg0.getActionCommand()
         .equals(GameCommands.COMMAND_RUSH_WITH_CREDITS)) {
       planet.doRush(true, info);
-      //TODO change sound effect later for better one
-      SoundPlayer.playMenuSound();
+      SoundPlayer.playSound(SoundPlayer.COINS);
       updatePanel();
     }
     if (arg0.getActionCommand()

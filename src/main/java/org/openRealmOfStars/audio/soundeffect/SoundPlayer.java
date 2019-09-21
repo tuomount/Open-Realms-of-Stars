@@ -185,6 +185,10 @@ public final class SoundPlayer {
    * Sound effect for rushing building with population.
    */
   public static final String WHIP = "/resources/sounds/whip.wav";
+  /**
+   * Sound effect for rushing building with credits.
+   */
+  public static final String COINS = "/resources/sounds/coins.wav";
 
   /**
    * Is Sound enabled

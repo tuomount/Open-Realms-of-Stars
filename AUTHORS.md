@@ -231,6 +231,10 @@ Whipping sound by
 Tuomo Untinen
 Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
 
+Coins sound by
+Tuomo Untinen
+Licensed under CC BY 3.0 http://creativecommons.org/licenses/by/3.0/
+
 # Musics By
 
 Observing The Star by

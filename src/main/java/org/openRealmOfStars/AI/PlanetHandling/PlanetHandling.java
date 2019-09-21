@@ -1436,7 +1436,8 @@ public final class PlanetHandling {
       int food = planet.getFoodProdByPlanetAndBuildings();
       food = food + Math.min(rad, total);
       int requiredFarmers = total - food;
-      if (total < planet.getGroundSize() && requiredFarmers >= 0) {
+      if (total < planet.getGroundSize() && requiredFarmers >= 0
+          && requiredFarmers < total) {
         requiredFarmers++;
       }
       planet.setWorkers(Planet.FOOD_FARMERS, 0);
@@ -1548,7 +1549,8 @@ public final class PlanetHandling {
     int foodReq = total * info.getRace().getFoodRequire() / 100;
     int farmersReq = foodReq - food;
     int happy = planet.calculateHappiness();
-    if (total < planet.getGroundSize() && farmersReq >= 0 && !startPlanet) {
+    if (total < planet.getGroundSize() && farmersReq >= 0 && !startPlanet
+        && farmersReq < total) {
       farmersReq++;
     }
     if (info.getRace().getFoodSpeed() == 200) {
@@ -1673,9 +1675,17 @@ public final class PlanetHandling {
       branch = 3;
     }
     if (population != planet.getTotalPopulation()) {
+      StringBuilder sb = new StringBuilder();
+      for (Building building : planet.getBuildingList()) {
+        sb.append(building.getName());
+        sb.append(", ");
+      }
       throw new IllegalArgumentException("Population changed original:"
          + population + " current: " + planet.getTotalPopulation()
-         + " branch: " + branch);
+         + " branch: " + branch + " Planet Owner: "
+         + planet.getPlanetPlayerInfo().getRace().getName() + " Event: "
+         + planet.getPlanetaryEvent().getName() + "Buildings: "
+         + sb.toString());
     }
   }
 

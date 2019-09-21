@@ -10,6 +10,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.starMap.GalaxyConfig;
+import org.openRealmOfStars.starMap.KarmaType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 
 /**
@@ -53,6 +54,7 @@ public class GameTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRunFullGameVeryShort() {
+    System.gc();
     Game game = new Game(false);
     GalaxyConfig config = new GalaxyConfig();
     config.setMaxPlayers(8);
@@ -75,6 +77,7 @@ public class GameTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRunFullGameShort() {
+    System.gc();
     Game game = new Game(false);
     GalaxyConfig config = new GalaxyConfig();
     config.setMaxPlayers(8);
@@ -97,6 +100,7 @@ public class GameTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testRunFullGameMedium() {
+    System.gc();
     Game game = new Game(false);
     GalaxyConfig config = new GalaxyConfig();
     config.setMaxPlayers(4);
@@ -125,14 +129,16 @@ public class GameTest {
     for (int i = 0; i < 2; i++) {
       GalaxyConfig config = new GalaxyConfig();
       config.setMaxPlayers(8);
-      config.setScoringVictoryTurns(200);
+      config.setScoringVictoryTurns(400);
       config.setSpacePiratesLevel(2);
       config.setChanceForPlanetaryEvent(40);
+      config.setKarmaType(KarmaType.SECOND_FIRST_AND_LAST);
+      config.setKarmaSpeed(2);
       config.setSize(75, 1);
       config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
 //      System.out.println("Game number " + i);
-      System.gc();
       game = null;
+      System.gc();
       game = new Game(false);
       game.setGalaxyConfig(config);
       game.makeNewGame();

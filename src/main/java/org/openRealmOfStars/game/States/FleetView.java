@@ -611,7 +611,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
         }
       }
       // TODO Change should for something else
-      SoundPlayer.playMenuSound();
+      SoundPlayer.playSound(SoundPlayer.DISASSEMBLE);
       updatePanel();
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_DEPLOY_STARBASE)

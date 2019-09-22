@@ -189,6 +189,10 @@ public final class SoundPlayer {
    * Sound effect for rushing building with credits.
    */
   public static final String COINS = "/resources/sounds/coins.wav";
+  /**
+   * Sound effect for disassemble
+   */
+  public static final String DISASSEMBLE = "/resources/sounds/disassemble.wav";
 
   /**
    * Is Sound enabled

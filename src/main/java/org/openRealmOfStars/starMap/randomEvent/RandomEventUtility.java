@@ -99,7 +99,7 @@ public final class RandomEventUtility {
           + "Scientists need to start all over from the scratch.");
       Message message = new Message(MessageType.INFORMATION, event.getText(),
           Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH));
-      info.getMsgList().addNewMessage(message);
+      info.getMsgList().addFirstMessage(message);
     }
   }
 
@@ -127,7 +127,7 @@ public final class RandomEventUtility {
           + techName + ".");
       Message message = new Message(MessageType.INFORMATION, event.getText(),
           Icons.getIconByName(Icons.ICON_RESEARCH));
-      info.getMsgList().addNewMessage(message);
+      info.getMsgList().addFirstMessage(message);
     }
   }
 
@@ -170,7 +170,7 @@ public final class RandomEventUtility {
         Message message = new Message(MessageType.PLANETARY, event.getText(),
             Icons.getIconByName(Icons.ICON_CREDIT));
         message.setCoordinate(planet.getCoordinate());
-        info.getMsgList().addNewMessage(message);
+        info.getMsgList().addFirstMessage(message);
       }
     }
   }
@@ -221,7 +221,7 @@ public final class RandomEventUtility {
         Message message = new Message(MessageType.PLANETARY, event.getText(),
             Icons.getIconByName(Icons.ICON_DEATH));
         message.setCoordinate(planet.getCoordinate());
-        info.getMsgList().addNewMessage(message);
+        info.getMsgList().addFirstMessage(message);
       }
     }
   }
@@ -314,7 +314,7 @@ public final class RandomEventUtility {
                   message.setCoordinate(planet.getCoordinate());
                   message.setMatchByString(fleet.getName());
                   message.setRandomEventPop(true);
-                  info.getMsgList().addNewMessage(message);
+                  info.getMsgList().addFirstMessage(message);
                   exit = true;
                   break;
                 }
@@ -387,7 +387,7 @@ public final class RandomEventUtility {
         Message message = new Message(MessageType.PLANETARY, event.getText(),
             icon);
         message.setCoordinate(planet.getCoordinate());
-        info.getMsgList().addNewMessage(message);
+        info.getMsgList().addFirstMessage(message);
       }
     }
   }
@@ -422,7 +422,7 @@ public final class RandomEventUtility {
         Message message = new Message(MessageType.PLANETARY, event.getText(),
             Icons.getIconByName(Icons.ICON_METAL));
         message.setCoordinate(planet.getCoordinate());
-        info.getMsgList().addNewMessage(message);
+        info.getMsgList().addFirstMessage(message);
       }
     }
   }
@@ -472,7 +472,7 @@ public final class RandomEventUtility {
             Icons.getIconByName(Icons.ICON_DEATH));
         message.setCoordinate(planet.getCoordinate());
         message.setRandomEventPop(true);
-        info.getMsgList().addNewMessage(message);
+        info.getMsgList().addFirstMessage(message);
       }
     }
   }
@@ -490,7 +490,7 @@ public final class RandomEventUtility {
           + "the corruption requires half of the credits in treasury.");
       Message message = new Message(MessageType.INFORMATION, event.getText(),
           Icons.getIconByName(Icons.ICON_CULTURE));
-      info.getMsgList().addNewMessage(message);
+      info.getMsgList().addFirstMessage(message);
     }
   }
 
@@ -539,7 +539,7 @@ public final class RandomEventUtility {
             Message message = new Message(MessageType.PLANETARY,
                 event.getText(), Icons.getIconByName(Icons.ICON_SCANNER));
             message.setCoordinate(sun.getCenterCoordinate());
-            info.getMsgList().addNewMessage(message);
+            info.getMsgList().addFirstMessage(message);
             if (!info.isHuman()) {
               Mission mission = new Mission(MissionType.EXPLORE,
                   MissionPhase.PLANNING, new Coordinate(sun.getCenterX(),
@@ -588,7 +588,7 @@ public final class RandomEventUtility {
               Icons.getIconByName(Icons.ICON_RADIATION));
           message.setCoordinate(sun.getCenterCoordinate());
           message.setRandomEventPop(true);
-          map.broadcastMessage(message);
+          map.broadcastMessage(message, true);
           for (Planet orbiter : map.getPlanetList()) {
             Sun solar = map.locateSolarSystem(orbiter.getCoordinate().getX(),
                 orbiter.getCoordinate().getY());
@@ -636,7 +636,7 @@ public final class RandomEventUtility {
               Icons.getIconByName(Icons.ICON_RADIATION));
           message.setCoordinate(sun.getCenterCoordinate());
           message.setRandomEventPop(true);
-          map.broadcastMessage(message);
+          map.broadcastMessage(message, true);
           for (Planet orbiter : map.getPlanetList()) {
             Sun solar = map.locateSolarSystem(orbiter.getCoordinate().getX(),
                 orbiter.getCoordinate().getY());
@@ -679,7 +679,7 @@ public final class RandomEventUtility {
             Icons.getIconByName(Icons.ICON_FARM));
         message.setCoordinate(planet.getCoordinate());
         message.setRandomEventPop(true);
-        info.getMsgList().addNewMessage(message);
+        info.getMsgList().addFirstMessage(message);
       }
     }
   }
@@ -714,7 +714,7 @@ public final class RandomEventUtility {
             Icons.getIconByName(Icons.ICON_DEATH));
         message.setCoordinate(planet.getCoordinate());
         message.setRandomEventPop(true);
-        info.getMsgList().addNewMessage(message);
+        info.getMsgList().addFirstMessage(message);
       }
     }
   }
@@ -768,7 +768,7 @@ public final class RandomEventUtility {
         Message message = new Message(MessageType.PLANETARY, event.getText(),
             Icons.getIconByName(Icons.ICON_DEATH));
         message.setCoordinate(planet.getCoordinate());
-        info.getMsgList().addNewMessage(message);
+        info.getMsgList().addFirstMessage(message);
       }
     }
   }
@@ -821,7 +821,7 @@ public final class RandomEventUtility {
             Icons.getIconByName(Icons.ICON_HULL_TECH));
         message.setCoordinate(planet.getCoordinate());
         message.setRandomEventPop(true);
-        info.getMsgList().addNewMessage(message);
+        info.getMsgList().addFirstMessage(message);
       }
     }
   }
@@ -856,7 +856,7 @@ public final class RandomEventUtility {
             Icons.getIconByName(Icons.ICON_HULL_TECH));
         message.setCoordinate(fleet.getCoordinate());
         message.setMatchByString(fleet.getName());
-        info.getMsgList().addNewMessage(message);
+        info.getMsgList().addFirstMessage(message);
       }
     }
   }

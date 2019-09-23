@@ -3352,13 +3352,18 @@ public class StarMap {
   /**
    * Broadcast one message to each realms.
    * @param msg Message to broadcast
+   * @param first Add message as first
    */
-  public void broadcastMessage(final Message msg) {
+  public void broadcastMessage(final Message msg, final boolean first) {
     for (int i = 0; i < getPlayerList().getCurrentMaxRealms(); i++) {
       Message message = msg.copy();
       PlayerInfo info = getPlayerList().getPlayerInfoByIndex(i);
       if (info != null) {
-        info.getMsgList().addNewMessage(message);
+        if (first) {
+          info.getMsgList().addFirstMessage(message);
+        } else {
+          info.getMsgList().addNewMessage(message);
+        }
       }
     }
   }

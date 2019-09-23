@@ -55,6 +55,23 @@ public class MessageListTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMessageList2() {
+    Message msg1 = Mockito.mock(Message.class);
+    Message msg2 = Mockito.mock(Message.class);
+    MessageList list = new MessageList();
+    list.addFirstMessage(msg2);
+    assertEquals(0, list.getCurrentMsgIndex());
+    assertEquals(1, list.getMaxMsg());
+    assertEquals(msg2, list.getMsg());
+    list.addFirstMessage(msg1);
+    assertEquals(0, list.getCurrentMsgIndex());
+    assertEquals(2, list.getMaxMsg());
+    assertEquals(msg1, list.getMsg());
+    assertEquals(msg2, list.getNextMessage());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testUpcomingMessageList() {
     Message msg1 = Mockito.mock(Message.class);
     Message msg2 = Mockito.mock(Message.class);

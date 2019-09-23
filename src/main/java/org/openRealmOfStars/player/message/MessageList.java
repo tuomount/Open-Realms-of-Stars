@@ -108,6 +108,14 @@ public class MessageList {
   }
 
   /**
+   * Add new message to list as a first one.
+   * @param msg Message to add to the list
+   */
+  public void addFirstMessage(final Message msg) {
+    list.add(0, msg);
+  }
+
+  /**
    * Add upcoming new message to list
    * @param msg Message to add to the list
    */

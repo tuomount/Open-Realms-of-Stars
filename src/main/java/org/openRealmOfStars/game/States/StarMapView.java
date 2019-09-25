@@ -31,6 +31,8 @@ import org.openRealmOfStars.starMap.Route;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapMouseListener;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.vote.Vote;
+import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 
 /**
  *
@@ -266,6 +268,26 @@ public class StarMapView extends BlackPanel {
     bottomBtnPanel.add(btn);
     btn = new SpaceButton("Vote", GameCommands.COMMAND_VIEW_VOTING);
     btn.addActionListener(game);
+    boolean notVotedAll = false;
+    boolean noVotes = true;
+    for (Vote vote : map.getVotes().getVotableVotes()) {
+      if (vote.getTurnsToVote() > 0) {
+        noVotes = false;
+      }
+      if (vote.getTurnsToVote() > 0 && vote.getChoice(
+          players.getCurrentPlayer()) == VotingChoice.NOT_VOTED) {
+        notVotedAll = true;
+      }
+    }
+    btn.setToolTipText("No active votes");
+    if (notVotedAll) {
+      btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_CHECKBOX));
+      btn.setToolTipText("Voting in progress, click here to vote.");
+    }
+    if (!notVotedAll && !noVotes) {
+      btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_OK));
+      btn.setToolTipText("Your realm has already voted.");
+    }
     bottomBtnPanel.add(btn);
     // Button for debugging battle, disabled for now
 /*    btn = new SpaceButton("Battle", GameCommands.COMMAND_BATTLE);

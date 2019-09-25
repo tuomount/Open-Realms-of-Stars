@@ -2,6 +2,7 @@ package org.openRealmOfStars.gui.buttons;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -164,7 +165,8 @@ public class SpaceButton extends JButton {
     int offsetX = width / 2 - textWidth / 2 + sx;
     if (icon != null) {
       offsetX = offsetX + 16;
-      icon.draw(g2d, sx, sy);
+      int offsetY = getHeight() / 2 - icon.getIcon().getHeight() / 2;
+      icon.draw(g2d, sx, offsetY);
     }
     if (offsetX < 0) {
       offsetX = sx;
@@ -173,9 +175,16 @@ public class SpaceButton extends JButton {
       textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),
           texts[i]);
       offsetX = width / 2 - textWidth / 2 + sx;
-      g2d.drawString(texts[i], offsetX, textHeight * (i + 1) + sy);
+      int offsetY = textHeight * (i + 1) + sy;
+      if (texts.length == 1) {
+        int baseline = (int) g2d.getFont().getLineMetrics(texts[i],
+            g2d.getFontRenderContext()).getBaselineOffsets()
+            [Font.CENTER_BASELINE];
+        baseline = baseline - 5;
+        offsetY = getHeight() / 2 - textHeight / 2 - baseline;
+      }
+      g2d.drawString(texts[i], offsetX, offsetY);
     }
-
   }
 
 }

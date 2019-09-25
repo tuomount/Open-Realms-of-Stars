@@ -317,7 +317,7 @@ public class AiTurnViewTest {
     vote.setPlanetName("Planet of Games");
     votes.getVotes().add(vote);
     AITurnView.handleOlympicParticipation(votes, players);
-    assertEquals(VotingChoice.VOTED_YES, vote.getChoice(0));
+    assertEquals(VotingChoice.NOT_VOTED , vote.getChoice(0));
     assertEquals(VotingChoice.VOTED_YES, vote.getChoice(1));
     assertEquals(VotingChoice.VOTED_NO, vote.getChoice(2));
     assertEquals(VotingChoice.VOTED_NO, vote.getChoice(3));
@@ -327,7 +327,7 @@ public class AiTurnViewTest {
     assertEquals(VotingChoice.NOT_VOTED, vote.getChoice(7));
     vote.setTurnsToVote(1);
     AITurnView.handleOlympicParticipation(votes, players);
-    assertEquals(VotingChoice.VOTED_YES, vote.getChoice(0));
+    assertEquals(VotingChoice.NOT_VOTED , vote.getChoice(0));
     assertEquals(VotingChoice.VOTED_YES, vote.getChoice(1));
     assertEquals(VotingChoice.VOTED_NO, vote.getChoice(2));
     assertEquals(VotingChoice.VOTED_NO, vote.getChoice(3));

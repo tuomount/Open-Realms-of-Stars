@@ -1569,15 +1569,18 @@ public class AITurnView extends BlackPanel {
             NewsData newsData = null;
             if (planet.howManyBuildings("Galactic sports center") == 0) {
               newsData = NewsFactory.makeNoGalacticSportsNews(planet, true);
-            } else {
+            }
+            if (planet.getTotalPopulation() == 0) {
               newsData = NewsFactory.makeNoGalacticSportsNews(planet, false);
             }
-            map.getNewsCorpData().addNews(newsData);
-            EventOnPlanet event = new EventOnPlanet(EventType.PLANET_BUILDING,
-                planet.getCoordinate(), planet.getName(),
-                planet.getPlanetOwnerIndex());
-            event.setText(newsData.getNewsText());
-            map.getHistory().addEvent(event);
+            if (newsData != null) {
+              map.getNewsCorpData().addNews(newsData);
+              EventOnPlanet event = new EventOnPlanet(
+                  EventType.PLANET_BUILDING, planet.getCoordinate(),
+                  planet.getName(), planet.getPlanetOwnerIndex());
+              event.setText(newsData.getNewsText());
+              map.getHistory().addEvent(event);
+            }
           }
         }
       }
@@ -1654,9 +1657,6 @@ public class AITurnView extends BlackPanel {
           if (info != null) {
             if (info.isHuman()) {
               vote.setNumberOfVotes(i, 1);
-              if (vote.getChoice(i) == VotingChoice.NOT_VOTED) {
-                vote.setChoice(i, VotingChoice.VOTED_YES);
-              }
               continue;
             }
             if (i == organizer) {

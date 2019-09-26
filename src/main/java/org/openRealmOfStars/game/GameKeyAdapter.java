@@ -117,6 +117,11 @@ public class GameKeyAdapter implements KeyEventDispatcher {
         game.focusOnMessage(true);
         return true;
       }
+      if (arg0.getKeyCode() == KeyEvent.VK_F
+          && arg0.getID() == KeyEvent.KEY_PRESSED) {
+        game.getStarMapView().setCursorFocus(50);
+        return true;
+      }
       if (arg0.getKeyCode() == KeyEvent.VK_P
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
         game.getStarMap().nextPlayer();

@@ -545,4 +545,11 @@ public class StarMapView extends BlackPanel {
     return mapPanel.getPopup();
   }
 
+  /**
+   * Set cursor focus value
+   * @param cursorFocus the cursorFocus to set
+   */
+  public void setCursorFocus(final int cursorFocus) {
+    mapPanel.setCursorFocus(cursorFocus);
+  }
 }

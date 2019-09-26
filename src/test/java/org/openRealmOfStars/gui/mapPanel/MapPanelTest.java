@@ -13,7 +13,7 @@ import org.openRealmOfStars.starMap.Route;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018, 2019 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -38,6 +38,7 @@ public class MapPanelTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testRegular() {
     MapPanel panel = new MapPanel(false);
+    assertEquals(0, panel.getCursorFocus());
     panel.calculateViewPoints();
     assertEquals(0, panel.getLastDrawnX());
     assertEquals(0, panel.getLastDrawnY());
@@ -64,6 +65,10 @@ public class MapPanelTest {
     assertEquals(null, panel.getPopup());
     panel.setPopup(popup);
     assertEquals(popup, panel.getPopup());
+    panel.setCursorFocus(25);
+    assertEquals(25, panel.getCursorFocus());
+    panel.setCursorFocus(60);
+    assertEquals(50, panel.getCursorFocus());
   }
 
   @Test

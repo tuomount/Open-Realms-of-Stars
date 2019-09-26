@@ -46,7 +46,7 @@ import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2019  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -183,6 +183,11 @@ public class MapPanel extends JPanel {
   private int[][] tileOverride;
 
   /**
+   * Cursor focus. Over 0 it means to draw focus lines.
+   */
+  private int cursorFocus;
+
+  /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
    * @param battle True if drawing battle map.
@@ -205,6 +210,7 @@ public class MapPanel extends JPanel {
    * @param battleMode True if drawing battle map.
    */
   private void initMapPanel(final Game game, final boolean battleMode) {
+    cursorFocus = 0;
     battle = battleMode;
     int width = WIDTH;
     int height = HEIGHT;
@@ -339,6 +345,8 @@ public class MapPanel extends JPanel {
       routeData = route.getRouteOnMap(starMap.getMaxX(), starMap.getMaxY());
     }
     Graphics2D gr = screen.createGraphics();
+    int cursorPixelX = 0;
+    int cursorPixelY = 0;
     // Center coordinates
     int cx = starMap.getDrawX();
     int cy = starMap.getDrawY();
@@ -549,6 +557,8 @@ public class MapPanel extends JPanel {
 
         // Draw the map cursor
         if (i + cx == starMap.getCursorX() && j + cy == starMap.getCursorY()) {
+          cursorPixelX = pixelX;
+          cursorPixelY = pixelY;
           gr.setStroke(full);
           gr.setColor(colorFlickerBlue);
           // Top line
@@ -645,6 +655,23 @@ public class MapPanel extends JPanel {
       }
       pixelX = viewPointOffsetX;
       pixelY = pixelY + Tile.MAX_HEIGHT;
+    }
+    if (cursorFocus > 0) {
+      cursorFocus--;
+      Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE,
+          BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
+      gr.setStroke(full);
+      gr.setColor(new Color(255, 50, 50, cursorFocus * 5));
+      gr.drawLine(0, cursorPixelY + Tile.MAX_HEIGHT / 2, cursorPixelX,
+          cursorPixelY + Tile.MAX_HEIGHT / 2);
+      gr.drawLine(cursorPixelX + Tile.MAX_WIDTH, cursorPixelY
+          + Tile.MAX_HEIGHT / 2, screen.getWidth(), cursorPixelY
+          + Tile.MAX_HEIGHT / 2);
+      gr.drawLine(cursorPixelX + Tile.MAX_WIDTH / 2, 0, cursorPixelX
+          + Tile.MAX_WIDTH / 2, cursorPixelY);
+      gr.drawLine(cursorPixelX + Tile.MAX_WIDTH / 2, cursorPixelY
+          + Tile.MAX_HEIGHT, cursorPixelX + Tile.MAX_WIDTH / 2,
+          screen.getHeight());
     }
     gr.dispose();
   }
@@ -1345,6 +1372,26 @@ public class MapPanel extends JPanel {
    */
   public PopupPanel getPopup() {
     return popup;
+  }
+
+  /**
+   * Get cursor focus value
+   * @return the cursorFocus
+   */
+  public int getCursorFocus() {
+    return cursorFocus;
+  }
+
+  /**
+   * Set cursor focus value
+   * @param cursorFocus the cursorFocus to set
+   */
+  public void setCursorFocus(final int cursorFocus) {
+    if (cursorFocus > 50) {
+      this.cursorFocus = 50;
+    } else {
+      this.cursorFocus = cursorFocus;
+    }
   }
 
 }

@@ -1684,6 +1684,9 @@ public class Game implements ActionListener {
           true);
       msg.setRandomEventPop(false);
     }
+    if (mapOnly) {
+      starMapView.setCursorFocus(20);
+    }
     if ((msg.getType() == MessageType.CONSTRUCTION
         || msg.getType() == MessageType.POPULATION) && !mapOnly) {
       changeGameState(GameState.PLANETVIEW, msg);

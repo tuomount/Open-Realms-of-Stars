@@ -1654,6 +1654,7 @@ public class Game implements ActionListener {
       Planet planet = starMap.getPlanetByCoordinate(msg.getX(), msg.getY());
       if (planet != null) {
         starMapView.setShowPlanet(planet);
+        starMapView.setCursorFocus(20);
         starMapView.getStarMapMouseListener().setLastClickedPlanet(planet);
       }
     }
@@ -1664,6 +1665,7 @@ public class Game implements ActionListener {
           .getByName(msg.getMatchByString());
       if (fleet != null) {
         starMapView.setShowFleet(fleet);
+        starMapView.setCursorFocus(20);
         starMapView.getStarMapMouseListener().setLastClickedFleet(fleet);
         starMapView.getStarMapMouseListener().setLastClickedPlanet(null);
       }

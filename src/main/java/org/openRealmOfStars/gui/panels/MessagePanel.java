@@ -112,6 +112,8 @@ public class MessagePanel extends JPanel {
         GuiStatics.RIGHT_ARROW_PRESSED, false, nextCommand, pane);
     btnFocus = new SpaceButton("Focus", focusCommand);
     btnFocus.addActionListener(listener);
+    btnFocus.setToolTipText("<html>This will focus on selected message event."
+        + " <br>Pressing F will show where the cursor is in the map.</html>");
     pane.add(btnFocus);
     btnNext.addActionListener(listener);
     pane.add(btnNext);

@@ -1152,41 +1152,87 @@ public class AITurnView extends BlackPanel {
   /**
    * Update and add more pirates to starmap.
    * @param pirates Board player info
-   * @param justAddMore If true this will add just pirate military ships.
    * @param difficulty Pirate Difficulty Level
-   * @param justTech If true this will add just tech for pirate.
+   * @param addLairs add pirate lairs only
    * @return True if pirate ships were added.
    */
   public boolean updateSpacePirates(final PlayerInfo pirates,
-      final boolean justAddMore, final PirateDifficultLevel difficulty,
-      final boolean justTech) {
-    if (!justAddMore || justTech) {
-      updateSinglePirateTech(pirates, difficulty, TechType.Combat);
-      updateSinglePirateTech(pirates, difficulty, TechType.Defense);
-      updateSinglePirateTech(pirates, difficulty, TechType.Propulsion);
-      updateSinglePirateTech(pirates, difficulty, TechType.Improvements);
-      updateSinglePirateTech(pirates, difficulty, TechType.Hulls);
-      updateSinglePirateTech(pirates, difficulty, TechType.Electrics);
-      Research.handleShipDesigns(pirates);
-    }
+      final PirateDifficultLevel difficulty, final boolean addLairs) {
+    updateSinglePirateTech(pirates, difficulty, TechType.Combat);
+    updateSinglePirateTech(pirates, difficulty, TechType.Defense);
+    updateSinglePirateTech(pirates, difficulty, TechType.Propulsion);
+    updateSinglePirateTech(pirates, difficulty, TechType.Improvements);
+    updateSinglePirateTech(pirates, difficulty, TechType.Hulls);
+    updateSinglePirateTech(pirates, difficulty, TechType.Electrics);
+    Research.handleShipDesigns(pirates);
     boolean added = false;
-    if (!justTech) {
-      int numberOfFleets = pirates.getFleets().getNumberOfFleets();
-      for (int i = 0; i < numberOfFleets; i++) {
-        Fleet fleet = pirates.getFleets().getByIndex(i);
-        if (fleet.isStarBaseDeployed()) {
+    int numberOfFleets = pirates.getFleets().getNumberOfFleets();
+    for (int i = 0; i < numberOfFleets; i++) {
+      Fleet fleet = pirates.getFleets().getByIndex(i);
+      if (fleet.isStarBaseDeployed()) {
+        added = true;
+        if (addLairs) {
+          game.getStarMap().addSpacePirateLair(fleet.getX(), fleet.getY(),
+              pirates);
+        } else {
+          game.getStarMap().addSpacePirateLair(fleet.getX(), fleet.getY(),
+              pirates);
           game.getStarMap().addSpacePirate(fleet.getX(), fleet.getY(),
               pirates);
-          added = true;
-          if (!justAddMore) {
-            game.getStarMap().addSpacePirateLair(fleet.getX(), fleet.getY(),
-                pirates);
-            added = true;
-          }
         }
       }
     }
     return added;
+  }
+
+  /**
+   * Update and add more pirates to starmap.
+   * @param pirates Board player info
+   * @param difficulty Pirate Difficulty Level
+   * @param turnNumber Turn number
+   * @return True if pirate ships were added.
+   */
+  public boolean updateSpacePirates(final PlayerInfo pirates,
+      final PirateDifficultLevel difficulty, final int turnNumber) {
+    boolean result = false;
+    if (difficulty == PirateDifficultLevel.VERY_EASY) {
+      if (turnNumber == 50) {
+        result = updateSpacePirates(pirates, difficulty, true);
+      } else if (turnNumber % 50 == 0) {
+        result = updateSpacePirates(pirates, difficulty, false);
+      }
+    }
+    if (difficulty == PirateDifficultLevel.EASY) {
+      if (turnNumber == 50) {
+        result = updateSpacePirates(pirates, difficulty, true);
+      } else if (turnNumber % 50 == 0) {
+        result = updateSpacePirates(pirates, difficulty, false);
+      }
+    }
+    if (difficulty == PirateDifficultLevel.NORMAL) {
+      if (turnNumber == 50) {
+        result = updateSpacePirates(pirates, difficulty, true);
+      } else if (turnNumber == 100) {
+        result = updateSpacePirates(pirates, difficulty, false);
+      } else if (turnNumber > 100 && turnNumber % 40 == 0) {
+        result = updateSpacePirates(pirates, difficulty, false);
+      }
+    }
+    if (difficulty == PirateDifficultLevel.HARD) {
+      if (turnNumber % 50 == 0) {
+        result = updateSpacePirates(pirates, difficulty, true);
+      } else if (turnNumber > 40 && turnNumber % 40 == 0) {
+        result = updateSpacePirates(pirates, difficulty, false);
+      }
+    }
+    if (difficulty == PirateDifficultLevel.VERY_HARD) {
+      if (turnNumber % 50 == 0) {
+        result = updateSpacePirates(pirates, difficulty, false);
+      } else if (turnNumber % 40 == 0) {
+        result = updateSpacePirates(pirates, difficulty, true);
+      }
+    }
+    return result;
   }
 
   /**
@@ -1915,24 +1961,13 @@ public class AITurnView extends BlackPanel {
     PlayerInfo board = game.getPlayers().getBoardPlayer();
     boolean pirateNews = false;
     if (oldState != newState && board != null) {
-      pirateNews = updateSpacePirates(board, false,
+      pirateNews = updateSpacePirates(board,
           game.getStarMap().getPirateDifficulty(), false);
     }
-    if (game.getStarMap().getTurn() % 100 == 0
-        && board != null && game.getStarMap().getScoreVictoryTurn() > 400
-        && !pirateNews) {
-      pirateNews = updateSpacePirates(board, false,
-          game.getStarMap().getPirateDifficulty(), false);
-    }
-    if (game.getStarMap().getTurn() % 50 == 0 && board != null) {
-      if (pirateNews) {
-        updateSpacePirates(board, false,
-            game.getStarMap().getPirateDifficulty(), true);
-      } else {
-        // Just adding more pirates
-        pirateNews = updateSpacePirates(board, true,
-            game.getStarMap().getPirateDifficulty(), false);
-      }
+    if (board != null && !pirateNews) {
+      pirateNews = updateSpacePirates(board,
+          game.getStarMap().getPirateDifficulty(),
+          game.getStarMap().getTurn());
     }
     if (pirateNews) {
       NewsCorpData newsData = game.getStarMap().getNewsCorpData();

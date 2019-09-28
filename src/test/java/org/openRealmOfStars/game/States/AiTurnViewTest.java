@@ -140,16 +140,16 @@ public class AiTurnViewTest {
     PlayerInfo pirates = new PlayerInfo(SpaceRace.SPACE_PIRATE, 9, 8);
     Tech tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() <= 2);
-    assertEquals(false, view.updateSpacePirates(pirates, false,
+    assertEquals(false, view.updateSpacePirates(pirates,
         PirateDifficultLevel.HARD, true));
-    assertEquals(false, view.updateSpacePirates(pirates, false,
+    assertEquals(false, view.updateSpacePirates(pirates,
         PirateDifficultLevel.HARD, false));
     tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() == 3);
     Fleet fleet = Mockito.mock(Fleet.class);
     Mockito.when(fleet.isStarBaseDeployed()).thenReturn(true);
     pirates.getFleets().add(fleet);
-    assertEquals(true, view.updateSpacePirates(pirates, false,
+    assertEquals(true, view.updateSpacePirates(pirates,
         PirateDifficultLevel.NORMAL, false));
   }
 
@@ -196,39 +196,77 @@ public class AiTurnViewTest {
     PlayerInfo pirates = new PlayerInfo(SpaceRace.SPACE_PIRATE, 9, 8);
     Tech tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() <= 2);
-    view.updateSpacePirates(pirates, false,
+    view.updateSpacePirates(pirates,
         PirateDifficultLevel.VERY_HARD, true);
     tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() >= 2);
-    assertEquals(false, view.updateSpacePirates(pirates, false,
+    assertEquals(false, view.updateSpacePirates(pirates,
         PirateDifficultLevel.VERY_HARD, false));
-    view.updateSpacePirates(pirates, false,
+    view.updateSpacePirates(pirates,
         PirateDifficultLevel.HARD, true);
-    view.updateSpacePirates(pirates, false,
+    view.updateSpacePirates(pirates,
         PirateDifficultLevel.HARD, true);
-    view.updateSpacePirates(pirates, false,
+    view.updateSpacePirates(pirates,
         PirateDifficultLevel.HARD, true);
     tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() == 5);
-    view.updateSpacePirates(pirates, false,
+    view.updateSpacePirates(pirates,
         PirateDifficultLevel.HARD, true);
     tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() == 6);
-    view.updateSpacePirates(pirates, false,
+    view.updateSpacePirates(pirates,
         PirateDifficultLevel.VERY_HARD, true);
-    view.updateSpacePirates(pirates, false,
+    view.updateSpacePirates(pirates,
         PirateDifficultLevel.VERY_HARD, true);
-    view.updateSpacePirates(pirates, false,
+    view.updateSpacePirates(pirates,
         PirateDifficultLevel.HARD, true);
     tech = pirates.getTechList().getBestWeapon();
     assertEquals(true, tech.getLevel() == 8);
     Fleet fleet = Mockito.mock(Fleet.class);
     Mockito.when(fleet.isStarBaseDeployed()).thenReturn(true);
     pirates.getFleets().add(fleet);
-    assertEquals(true, view.updateSpacePirates(pirates, false,
+    assertEquals(true, view.updateSpacePirates(pirates,
         PirateDifficultLevel.EASY, false));
-    assertEquals(true, view.updateSpacePirates(pirates, false,
+    assertEquals(true, view.updateSpacePirates(pirates,
         PirateDifficultLevel.VERY_EASY, false));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUpdatePirate3() {
+    Game game = Mockito.mock(Game.class);
+    StarMap map = Mockito.mock(StarMap.class);
+    Mockito.when(game.getStarMap()).thenReturn(map);
+    AITurnView view = new AITurnView(game);
+    PlayerInfo pirates = new PlayerInfo(SpaceRace.SPACE_PIRATE, 9, 8);
+    Tech tech = pirates.getTechList().getBestWeapon();
+    assertEquals(true, tech.getLevel() <= 2);
+    Fleet fleet = Mockito.mock(Fleet.class);
+    Mockito.when(fleet.isStarBaseDeployed()).thenReturn(true);
+    pirates.getFleets().add(fleet);
+    assertEquals(true, view.updateSpacePirates(pirates,
+        PirateDifficultLevel.VERY_HARD, 40));
+    pirates.getFleets().add(fleet);
+    assertEquals(true, view.updateSpacePirates(pirates,
+        PirateDifficultLevel.VERY_HARD, 50));
+    assertEquals(true, view.updateSpacePirates(pirates,
+        PirateDifficultLevel.HARD, 50));
+    assertEquals(true, view.updateSpacePirates(pirates,
+        PirateDifficultLevel.HARD, 80));
+    assertEquals(true, view.updateSpacePirates(pirates,
+        PirateDifficultLevel.NORMAL, 50));
+    assertEquals(true, view.updateSpacePirates(pirates,
+        PirateDifficultLevel.NORMAL, 100));
+    assertEquals(true, view.updateSpacePirates(pirates,
+        PirateDifficultLevel.NORMAL, 120));
+    assertEquals(true, view.updateSpacePirates(pirates,
+        PirateDifficultLevel.EASY, 50));
+    assertEquals(true, view.updateSpacePirates(pirates,
+        PirateDifficultLevel.EASY, 100));
+    assertEquals(true, view.updateSpacePirates(pirates,
+        PirateDifficultLevel.VERY_EASY, 50));
+    assertEquals(true, view.updateSpacePirates(pirates,
+        PirateDifficultLevel.VERY_EASY, 100));
   }
 
   @Test

@@ -170,14 +170,14 @@ public class SpaceButton extends JButton {
         texts[longest]);
     int textHeight = GuiStatics.getTextHeight(GuiStatics.getFontCubellan(),
         texts[longest]);
-    int offsetX = width / 2 - textWidth / 2 + sx;
+    int offsetX = sx;
     if (icon != null) {
-      offsetX = offsetX + 16;
+      if (textWidth + icon.getIcon().getWidth() + sx + 6 < getWidth()) {
+        sx = sx + 6;
+        offsetX = offsetX + 4;
+      }
       int offsetY = getHeight() / 2 - icon.getIcon().getHeight() / 2;
-      icon.draw(g2d, sx, offsetY);
-    }
-    if (offsetX < 0) {
-      offsetX = sx;
+      icon.draw(g2d, offsetX, offsetY);
     }
     for (int i = 0; i < texts.length; i++) {
       textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellan(),

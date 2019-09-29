@@ -454,8 +454,9 @@ public class GalaxyCreationView extends BlackPanel {
     scoringCulture[3] = "Slower (150% regular limit)";
     scoringCulture[4] = "Very slow (200% regular limit)";
     comboScoringCulture = new SpaceCombo<>(scoringCulture);
-    comboScoringCulture.setToolTipText("How much culture must gain before"
-        + " winning by cultural domination.");
+    comboScoringCulture.setToolTipText("<html>How much culture must gain"
+        + " before winning by cultural domination.<br> Realm must "
+        + " have one broadcasting building.</html>");
     switch (this.config.getScoreLimitCulture()) {
       case -1: comboScoringCulture.setSelectedIndex(0); break;
       case 0: comboScoringCulture.setSelectedIndex(1); break;

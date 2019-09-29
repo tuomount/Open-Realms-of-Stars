@@ -39,7 +39,7 @@ public final class BuildingFactory {
    * Remember to increase this when new building is added to game.
    * It should be one bigger than last index.
    */
-  private static final int MAX_BUILDING = 53;
+  private static final int MAX_BUILDING = 55;
 
   /**
    * Component Basic mine
@@ -300,6 +300,14 @@ public final class BuildingFactory {
    * Component Space academy
    */
   public static final int COMPONENT_SPACE_ACADEMY = 52;
+  /**
+   * Component Broadcasting antenna
+   */
+  public static final int COMPONENT_BROADCASTING_ANTENNA = 53;
+  /**
+   * Component Broadcasting network
+   */
+  public static final int COMPONENT_BROADCASTING_NETWORK = 54;
 
   /**
    * Create planetary building with index
@@ -468,6 +476,12 @@ public final class BuildingFactory {
     case COMPONENT_SPACE_ACADEMY:
       tmp = createPlanetaryImprovement(index);
       break; // Space academy
+    case COMPONENT_BROADCASTING_ANTENNA:
+      tmp = createPlanetaryImprovement(index);
+      break; // Broadcasting antenna
+    case COMPONENT_BROADCASTING_NETWORK:
+      tmp = createPlanetaryImprovement(index);
+      break; // Broadcasting network
     default:
       throw new IllegalArgumentException("No building found with index "
       + index + "!");
@@ -617,9 +631,11 @@ public final class BuildingFactory {
           Icons.getIconByName(Icons.ICON_LR_SCANNER), BuildingType.RESEARCH);
       tmp.setProdCost(150);
       tmp.setMetalCost(150);
-      tmp.setDescription("Deep space scanner to reveal all the planets.");
+      tmp.setDescription("Deep space scanner to reveal all the planets.\n"
+          + "This scanner can be used also massive broadcastings.");
       tmp.setSingleAllowed(true);
       tmp.setScientificAchievement(true);
+      tmp.setBroadcaster(true);
       tmp.setReseBonus(2);
       return tmp;
     }
@@ -1106,6 +1122,31 @@ public final class BuildingFactory {
       tmp.setBattleBonus(25);
       tmp.setHappiness(1);
       tmp.setFleetCapacityBonus(2);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    }
+    if (index == COMPONENT_BROADCASTING_ANTENNA) {
+      tmp = new Building(index, "Broadcasting antenna",
+          Icons.getIconByName(Icons.ICON_ANTENNA), BuildingType.CULTURE);
+      tmp.setDescription("Broadcasting antenna for broadcasting culture.");
+      tmp.setProdCost(40);
+      tmp.setMetalCost(30);
+      tmp.setCultBonus(1);
+      tmp.setBroadcaster(true);
+      tmp.setSingleAllowed(true);
+      return tmp;
+    }
+    if (index == COMPONENT_BROADCASTING_NETWORK) {
+      tmp = new Building(index, "Broadcasting network",
+          Icons.getIconByName(Icons.ICON_ANTENNA), BuildingType.CULTURE);
+      tmp.setDescription("Broadcasting network for creating culture\n"
+          + "and happiness.");
+      tmp.setProdCost(60);
+      tmp.setMetalCost(40);
+      tmp.setMaintenanceCost(0.25);
+      tmp.setHappiness(1);
+      tmp.setCultBonus(3);
+      tmp.setBroadcaster(true);
       tmp.setSingleAllowed(true);
       return tmp;
     }

@@ -519,6 +519,9 @@ public final class PlanetHandling {
         score = score + 15;
       }
     }
+    if (building.isBroadcaster() && !planet.broadcaster()) {
+      score = score + 30;
+    }
     if (building.getName().equals("Basic factory")
         && info.getTechList().hasTech(TechType.Improvements,
             "Advanced factory") && production > 3) {

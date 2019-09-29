@@ -1902,6 +1902,20 @@ public class Planet {
   public boolean hasTower() {
     return hasCertainBuilding("United Galaxy Tower");
   }
+
+  /**
+   * Check if planet has broadcaster building.
+   * @return True if has, false if not.
+   */
+  public boolean broadcaster() {
+    Building[] buildingsArray = getBuildingList();
+    for (Building building : buildingsArray) {
+      if (building.isBroadcaster()) {
+        return true;
+      }
+    }
+    return false;
+  }
   /**
    * Check if planet has Space port for building ships
    * @return True if planet has space port, otherwise false.

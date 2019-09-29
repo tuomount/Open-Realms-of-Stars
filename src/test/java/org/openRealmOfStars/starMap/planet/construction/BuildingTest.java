@@ -51,6 +51,7 @@ public class BuildingTest {
     assertEquals(false, scaurian.contains("Cred.: +2"));
     assertEquals(true, scaurian.contains("Food: +1"));
     assertEquals(0, building.getFleetCapacityBonus());
+    assertEquals(false, building.isBroadcaster());
   }
 
   @Test
@@ -65,6 +66,7 @@ public class BuildingTest {
     assertEquals(0, building.getFactBonus());
     assertEquals(0, building.getFarmBonus());
     assertEquals(0, building.getFleetCapacityBonus());
+    assertEquals(false, building.isBroadcaster());
   }
 
   @Test
@@ -79,6 +81,7 @@ public class BuildingTest {
     assertEquals(1, building.getFactBonus());
     assertEquals(0, building.getFarmBonus());
     assertEquals(0, building.getFleetCapacityBonus());
+    assertEquals(false, building.isBroadcaster());
   }
 
   @Test
@@ -94,6 +97,7 @@ public class BuildingTest {
     assertEquals(0, building.getFactBonus());
     assertEquals(0, building.getFarmBonus());
     assertEquals(0, building.getFleetCapacityBonus());
+    assertEquals(false, building.isBroadcaster());
   }
 
   @Test
@@ -110,6 +114,7 @@ public class BuildingTest {
     assertEquals(0, building.getFactBonus());
     assertEquals(0, building.getFarmBonus());
     assertEquals(0, building.getFleetCapacityBonus());
+    assertEquals(false, building.isBroadcaster());
   }
 
   @Test
@@ -126,6 +131,7 @@ public class BuildingTest {
     assertEquals(0, building.getFactBonus());
     assertEquals(0, building.getFarmBonus());
     assertEquals(0, building.getFleetCapacityBonus());
+    assertEquals(false, building.isBroadcaster());
   }
 
   @Test
@@ -141,6 +147,7 @@ public class BuildingTest {
     assertEquals(0, building.getFactBonus());
     assertEquals(0, building.getFarmBonus());
     assertEquals(50, building.getBattleBonus());
+    assertEquals(false, building.isBroadcaster());
     assertEquals(1, building.getHappiness());
     assertEquals(1, building.getFleetCapacityBonus());
     assertEquals("Barracks - one per planet\n" + 
@@ -148,6 +155,28 @@ public class BuildingTest {
         "invaders.\n" + 
         "Cost: Prod.:20 Metal:20 Mainte.: 0.33\n" + 
         "Happiness: +1 Fleet capacity: +1 Battle: +50%", building.getFullDescription());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBroadcastingNetwork() {
+    Building building = BuildingFactory.createByName("Broadcasting network");
+    assertEquals(0, building.getReseBonus());
+    assertEquals(0, building.getCredBonus());
+    assertEquals(3, building.getCultBonus());
+    assertEquals(0, building.getMineBonus());
+    assertEquals(0, building.getFactBonus());
+    assertEquals(0, building.getFactBonus());
+    assertEquals(0, building.getFarmBonus());
+    assertEquals(0, building.getBattleBonus());
+    assertEquals(1, building.getHappiness());
+    assertEquals(0, building.getFleetCapacityBonus());
+    assertEquals(true, building.isBroadcaster());
+    assertEquals("Broadcasting network - one per planet\n" + 
+        "Broadcasting network for creating\n" +
+        "culture and happiness.\n" + 
+        "Cost: Prod.:60 Metal:40 Mainte.: 0.25\n" + 
+        "Cult.: +3 Happiness: +1 Broadcasting", building.getFullDescription());
   }
 
 }

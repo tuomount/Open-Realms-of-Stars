@@ -1370,9 +1370,12 @@ public final class NewsFactory {
    * Make News when game is ending for culture victory.
    * Returns null if cultural victory is not achieved
    * @param map StarMap contains NewsCorpData and playerlist
+   * @param broadcasters Boolean list of realms which are capable of
+   *        broadcasting their culture.
    * @return NewsData or null
    */
-  public static NewsData makeCulturalVictoryNewsAtEnd(final StarMap map) {
+  public static NewsData makeCulturalVictoryNewsAtEnd(final StarMap map,
+      final boolean[] broadcasters) {
     int limit = StarMapUtilities.calculateCultureScoreLimit(
         map.getMaxX(), map.getMaxY(), map.getScoreVictoryTurn(),
         map.getScoreCulture());
@@ -1388,7 +1391,11 @@ public final class NewsFactory {
     board.sort();
     Row winner = board.getRow(0);
     Row second = board.getRow(1);
-    if (winner.getScore() >= limit) {
+    boolean broadcaster = false;
+    if (winner.getRealm() >= 0 && winner.getRealm() < broadcasters.length) {
+      broadcaster = broadcasters[winner.getRealm()];
+    }
+    if (winner.getScore() >= limit && broadcaster) {
       news = new NewsData();
       ImageInstruction instructions = new ImageInstruction();
       news.setImageInstructions(instructions.build());

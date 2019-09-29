@@ -325,7 +325,8 @@ public final class TechFactory {
    * Electronics tech names for level 4
    */
   public static final String[] ELECTRONICS_TECH_LEVEL4_NAMES = {
-      "Cloaking device Mk3", "Targeting computer Mk2", "LR scanner Mk1" };
+      "Cloaking device Mk3", "Targeting computer Mk2", "LR scanner Mk1",
+      "Broadcasting antenna"};
   /**
    * Electronics tech names for level 5
    */
@@ -350,7 +351,7 @@ public final class TechFactory {
    * Electronics tech names for level 9
    */
   public static final String[] ELECTRONICS_TECH_LEVEL9_NAMES = {"Scanner Mk5",
-      "Targeting computer Mk4"  };
+      "Targeting computer Mk4", "Broadcasting network" };
   /**
    * Electronics tech names for level 10
    */
@@ -787,7 +788,8 @@ public final class TechFactory {
       if (name.equals(techName)) {
         Tech tech = new Tech(techName, TechType.Electrics, level);
         if (techName.startsWith("Planetary scanner Mk")
-            || techName.startsWith("Deep space scanner")) {
+            || techName.startsWith("Deep space scanner")
+            || techName.startsWith("Broadcasting")) {
           tech.setImprovement(techName);
         } else {
           tech.setComponent(techName);
@@ -798,6 +800,8 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_LR_SCANNER));
         } else if (techName.startsWith("Scanner Mk")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_SCANNER));
+        } else if (techName.startsWith("Broadcasting ")) {
+          tech.setIcon(Icons.getIconByName(Icons.ICON_ANTENNA));
         } else if (techName.startsWith("Cloaking device")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_CLOACKING_DEVICE));
         } else if (techName.startsWith("Espionage module Mk")) {

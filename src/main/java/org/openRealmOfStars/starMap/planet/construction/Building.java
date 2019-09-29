@@ -117,6 +117,10 @@ public class Building extends Construction {
    */
   private int fleetCapacityBonus;
   /**
+   * Broadcasting building. Required for cultural victory.
+   */
+  private boolean broadcaster;
+  /**
    * Construct building for planet
    * @param index Unique number for building
    * @param name Building name
@@ -146,6 +150,7 @@ public class Building extends Construction {
     this.scanCloakingDetection = 0;
     this.happinessBonus = 0;
     this.fleetCapacityBonus = 0;
+    this.setBroadcaster(false);
   }
 
   /**
@@ -411,6 +416,13 @@ public class Building extends Construction {
       sb.append("%");
       space = true;
     }
+    if (isBroadcaster()) {
+      if (space) {
+        sb.append(" ");
+      }
+      sb.append("Broadcasting");
+      space = true;
+    }
     return sb.toString();
   }
 
@@ -593,5 +605,23 @@ public class Building extends Construction {
    */
   public void setFleetCapacityBonus(final int fleetCapacityBonus) {
     this.fleetCapacityBonus = fleetCapacityBonus;
+  }
+
+  /**
+   * Is builder broadcaster. Means that this building
+   * is required for cultural victory and reveals the planet
+   * for every one.
+   * @return the broadcaster
+   */
+  public boolean isBroadcaster() {
+    return broadcaster;
+  }
+
+  /**
+   * Set broadcaster flag for building.
+   * @param broadcaster the broadcaster to set
+   */
+  public void setBroadcaster(final boolean broadcaster) {
+    this.broadcaster = broadcaster;
   }
 }

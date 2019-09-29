@@ -317,6 +317,10 @@ public final class Icons {
    * News icon
    */
   public static final String ICON_NEWS = "IconNews";
+  /**
+   * Antenna icon
+   */
+  public static final String ICON_ANTENNA = "IconAntenna";
 
   /**
    * List of Icon
@@ -571,6 +575,8 @@ public final class Icons {
     icon = new Icon16x16(image, 2, 0, ICON_CLOSED);
     addIcon(icon);
     icon = new Icon16x16(image, 3, 0, ICON_NEWS);
+    addIcon(icon);
+    icon = new Icon16x16(image, 4, 0, ICON_ANTENNA);
     addIcon(icon);
   }
 

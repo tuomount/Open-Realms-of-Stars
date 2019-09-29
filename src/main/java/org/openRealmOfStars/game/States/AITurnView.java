@@ -1587,7 +1587,7 @@ public class AITurnView extends BlackPanel {
           }
           sports.handleSports();
           Planet planet = map.getPlanetByName(vote.getPlanetName());
-          if (planet != null) {
+          if (planet != null && sports.getAthletes().length > 0) {
             NewsData newsData = NewsFactory.makeGalacticSportsEndingNews(vote,
                 sports, planet);
             map.getNewsCorpData().addNews(newsData);
@@ -1894,6 +1894,9 @@ public class AITurnView extends BlackPanel {
                                     .getCurrentMaxRealms()];
     int[] towers = new int[game.getStarMap().getPlayerList()
                            .getCurrentMaxRealms()];
+    // This information will be used later when checking the cultural winning
+    boolean[] broadcasters = new boolean[game.getStarMap().getPlayerList()
+                           .getCurrentMaxRealms()];
     for (int i = 0; i < game.getStarMap().getPlanetList().size(); i++) {
       Planet planet = game.getStarMap().getPlanetList().get(i);
       if (planet.getPlanetPlayerInfo() != null) {
@@ -1901,6 +1904,17 @@ public class AITurnView extends BlackPanel {
         numberOfPlanets[planet.getPlanetOwnerIndex()]++;
         if (planet.hasTower()) {
           towers[planet.getPlanetOwnerIndex()]++;
+        }
+        if (planet.broadcaster()) {
+          broadcasters[planet.getPlanetOwnerIndex()] = true;
+          for (int j = 0; j < game.getPlayers().getCurrentMaxRealms(); j++) {
+            PlayerInfo realm = game.getPlayers().getPlayerInfoByIndex(j);
+            if (realm != null) {
+              realm.setSectorVisibility(planet.getCoordinate().getX(),
+                  planet.getCoordinate().getY(),
+                  PlayerInfo.FOG_OF_WAR);
+            }
+          }
         }
         boolean enemyOrbiting = false;
         Fleet fleetOrbiting = game.getStarMap().getFleetByCoordinate(
@@ -2017,8 +2031,9 @@ public class AITurnView extends BlackPanel {
       GalacticEvent event = new GalacticEvent(news.getNewsText());
       game.getStarMap().getHistory().addEvent(event);
     }
+    // Using the broadcasters information here
     NewsData news = NewsFactory.makeCulturalVictoryNewsAtEnd(
-        game.getStarMap());
+        game.getStarMap(), broadcasters);
     if (news != null) {
       GalacticEvent event = new GalacticEvent(news.getNewsText());
       game.getStarMap().getHistory().addEvent(event);

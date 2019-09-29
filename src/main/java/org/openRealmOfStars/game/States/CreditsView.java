@@ -109,6 +109,7 @@ public class CreditsView extends BlackPanel {
       + "Original from 141 Military Icons Set by AngryMeteor.com \n"
       + "http://opengameart.org/content/140-military-icons-set-fixed\n\n"
       + "Music note and Speaker icon by Tuomo Untinen\n\n"
+      + "Antenna icon by Tuomo Untinen\n\n"
       + "Happy and Sad faces by Tuomo Untinen\n\n"
       + "Space anomaly cloud tile by Vyntershtoff\n\n"
       + "Wormhole tiles modifications by Tuomo Untinen\n"

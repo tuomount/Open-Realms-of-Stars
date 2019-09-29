@@ -301,6 +301,22 @@ public final class Icons {
    * Very sad face
    */
   public static final String ICON_VERY_SAD = "IconVerySadFace";
+  /**
+   * Planet icon
+   */
+  public static final String ICON_PLANET = "IconPlanet";
+  /**
+   * Stats icon
+   */
+  public static final String ICON_STATS = "IconStats";
+  /**
+   * Closed icon
+   */
+  public static final String ICON_CLOSED = "IconClosed";
+  /**
+   * News icon
+   */
+  public static final String ICON_NEWS = "IconNews";
 
   /**
    * List of Icon
@@ -545,6 +561,16 @@ public final class Icons {
     icon = new Icon16x16(image, 6, 7, ICON_SAD);
     addIcon(icon);
     icon = new Icon16x16(image, 7, 7, ICON_VERY_SAD);
+    addIcon(icon);
+    image = IOUtilities.loadImage(Icons.class.getResource(
+        "/resources/images/icons2.png"));
+    icon = new Icon16x16(image, 0, 0, ICON_PLANET);
+    addIcon(icon);
+    icon = new Icon16x16(image, 1, 0, ICON_STATS);
+    addIcon(icon);
+    icon = new Icon16x16(image, 2, 0, ICON_CLOSED);
+    addIcon(icon);
+    icon = new Icon16x16(image, 3, 0, ICON_NEWS);
     addIcon(icon);
   }
 

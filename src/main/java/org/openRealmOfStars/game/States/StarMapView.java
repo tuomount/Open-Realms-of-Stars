@@ -244,27 +244,33 @@ public class StarMapView extends BlackPanel {
     viewResearchButton = new SpaceButton("Research",
         GameCommands.COMMAND_VIEW_RESEARCH);
     viewResearchButton.addActionListener(game);
+    viewResearchButton.setSpaceIcon(Icons.getIconByName(Icons.ICON_RESEARCH));
     bottomBtnPanel.add(viewResearchButton);
 
     viewSpaceShips = new SpaceButton("Ships", GameCommands.COMMAND_SHIPS);
     viewSpaceShips.addActionListener(game);
+    viewSpaceShips.setSpaceIcon(Icons.getIconByName(Icons.ICON_HULL_TECH));
     bottomBtnPanel.add(viewSpaceShips);
 
     viewStats = new SpaceButton("Stats", GameCommands.COMMAND_VIEW_STATS);
     viewStats.addActionListener(game);
+    viewStats.setSpaceIcon(Icons.getIconByName(Icons.ICON_STATS));
     bottomBtnPanel.add(viewStats);
 
     viewNews = new SpaceButton("News", GameCommands.COMMAND_NEWS);
     viewNews.addActionListener(game);
+    viewNews.setSpaceIcon(Icons.getIconByName(Icons.ICON_NEWS));
     bottomBtnPanel.add(viewNews);
     if (map.getNewsCorpData().getNewsList().length == 0) {
       viewNews.setEnabled(false);
     }
     SpaceButton btn = new SpaceButton("Spying", GameCommands.COMMAND_SPY);
     btn.addActionListener(game);
+    btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
     bottomBtnPanel.add(btn);
     btn = new SpaceButton("Planets", GameCommands.COMMAND_SHOW_PLANET_LIST);
     btn.addActionListener(game);
+    btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_PLANET));
     bottomBtnPanel.add(btn);
     btn = new SpaceButton("Vote", GameCommands.COMMAND_VIEW_VOTING);
     btn.addActionListener(game);
@@ -287,6 +293,9 @@ public class StarMapView extends BlackPanel {
     if (!notVotedAll && !noVotes) {
       btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_OK));
       btn.setToolTipText("Your realm has already voted.");
+    }
+    if (btn.getSpaceIcon() == null) {
+      btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_CLOSED));
     }
     bottomBtnPanel.add(btn);
     // Button for debugging battle, disabled for now

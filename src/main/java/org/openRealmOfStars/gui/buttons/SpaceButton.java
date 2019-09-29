@@ -112,6 +112,14 @@ public class SpaceButton extends JButton {
     this.setMaximumSize(size);
   }
 
+  /**
+   * Get space icon, can be null
+   * @return Icon16x16 or null
+   */
+  public Icon16x16 getSpaceIcon() {
+    return icon;
+  }
+
   @Override
   protected void paintComponent(final Graphics g) {
     GradientPaint gradient = new GradientPaint(0, 0,

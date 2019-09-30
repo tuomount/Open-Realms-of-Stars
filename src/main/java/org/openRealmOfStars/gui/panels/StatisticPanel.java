@@ -75,6 +75,7 @@ public class StatisticPanel extends JPanel {
    */
   public StatisticPanel() {
     super();
+    victoryScoreLimit = -1;
     this.setBackground(Color.black);
   }
 
@@ -222,14 +223,18 @@ public class StatisticPanel extends JPanel {
     int offsetY = 30;
     int topOffsetY = 10;
     int rightOffsetX = 10;
+    int biggestY = largestY;
+    if (victoryScoreLimit > 0 && largestY >= victoryScoreLimit * 3 / 4) {
+      biggestY = victoryScoreLimit * 11 / 10;
+    }
     int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellanSC(),
-        String.valueOf(largestY));
+        String.valueOf(biggestY));
     textWidth = textWidth + 5;
     offsetX = offsetX + textWidth + getWidestDataName() + 5;
     int drawWidth = this.getWidth() - offsetX - rightOffsetX;
     int drawHeigth = this.getHeight() - offsetY - topOffsetY;
 
-    float scaleY = (float) drawHeigth / (float) largestY;
+    float scaleY = (float) drawHeigth / (float) biggestY;
     float scaleX = (float) drawWidth / (float) largestX;
     Graphics2D g2d = (Graphics2D) arg0;
     g2d.setColor(Color.black);
@@ -264,7 +269,7 @@ public class StatisticPanel extends JPanel {
     }
     amount = 1;
     if (GRID_DENSITY / scaleY < 1) {
-      amount = largestY;
+      amount = biggestY;
     } else {
       mult = (int) Math.round(GRID_DENSITY / scaleY);
       amount = (int) Math.ceil((double) drawHeigth / GRID_DENSITY);

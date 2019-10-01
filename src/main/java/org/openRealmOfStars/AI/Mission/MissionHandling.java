@@ -723,6 +723,12 @@ public final class MissionHandling {
       if (playerIndex != -1
           && info.getDiplomacy().getDiplomaticRelation(playerIndex).equals(
               Diplomacy.WAR)) {
+        Message msg = new Message(MessageType.FLEET,
+            fleet.getName() + " has stopped trade due war and returning to"
+                + " home planet.", Icons.getIconByName(Icons.ICON_TROOPS));
+        msg.setCoordinate(fleet.getCoordinate());
+        msg.setMatchByString(fleet.getName());
+        info.getMsgList().addNewMessage(msg);
         info.getMissions().remove(mission);
         // Make fleet return to home
         Planet homePlanet = game.getStarMap().getPlanetByName(

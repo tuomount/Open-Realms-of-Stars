@@ -126,7 +126,10 @@ public class Tile {
     for (int my = 0; my < sectorSize; my++) {
       for (int mx = 0; mx < sectorSize; mx++) {
         int color = img.getRGB(sx + mx * step, sy + my * step);
-        target.setRGB(x + mx, y + my, color);
+        int alpha = (color >> 24) & 0xff;
+        if (alpha > 30) {
+          target.setRGB(x + mx, y + my, color);
+        }
       }
     }
   }

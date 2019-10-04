@@ -440,7 +440,7 @@ public class StarMapView extends BlackPanel {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_VIEW_MINIMAP)) {
       SoundPlayer.playMenuSound();
       if (mapPanel.isShowMiniMap()) {
-        mapPanel.setShowMiniMap(true);
+        mapPanel.setShowMiniMap(false);
       } else {
         mapPanel.setShowMiniMap(true);
       }

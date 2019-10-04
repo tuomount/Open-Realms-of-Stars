@@ -293,6 +293,16 @@ public final class GuiStatics {
   public static final Color COLOR_SPACE_YELLOW = new Color(251, 255, 51);
 
   /**
+   * Bright white
+   */
+  public static final Color COLOR_BRIGHT_WHITE = new Color(241, 255, 241);
+
+  /**
+   * Space grey
+   */
+  public static final Color COLOR_SPACE_GREY = new Color(180, 180, 221);
+
+  /**
    * Dark space yellow
    */
   public static final Color COLOR_SPACE_YELLOW_DARK = new Color(134, 134, 33);

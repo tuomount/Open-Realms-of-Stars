@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -159,6 +160,22 @@ public class Minimap {
   }
 
   /**
+   * Draw sector with single color
+   * @param img Image where to draw
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @param color Color which to draw
+   */
+  public void drawSector(final BufferedImage img, final int x, final int y,
+      final Color color) {
+    for (int my = 0; my < sectorSize; my++) {
+      for (int mx = 0; mx < sectorSize; mx++) {
+        img.setRGB(x + mx, y + my, color.getRGB());
+      }
+    }
+  }
+
+  /**
    * Draw the minimap to buffered Image.
    */
   public void drawMinimap() {
@@ -181,6 +198,21 @@ public class Minimap {
                     sectorSize);
               }
             }
+          }
+          Tile tile = map.getTile(x + topX, y + topY);
+          if (map.getTileInfo(x + topX, y + topY)
+              .getType() == SquareInfo.TYPE_GAS_PLANET && sectorSize == 4) {
+            tile.drawMiniSector(img, x * sectorSize, y * sectorSize,
+                sectorSize);
+          } else if (map.getTileInfo(x + topX, y + topY)
+              .getType() == SquareInfo.TYPE_GAS_PLANET && sectorSize < 4) {
+            drawSector(img, x * sectorSize, y * sectorSize,
+                GuiStatics.COLOR_SPACE_GREY);
+          }
+          if (map.getTileInfo(x + topX, y + topY)
+              .getType() == SquareInfo.TYPE_PLANET) {
+            drawSector(img, x * sectorSize, y * sectorSize,
+                GuiStatics.COLOR_BRIGHT_WHITE);
           }
         }
         Tile tile = map.getTile(x + topX, y + topY);

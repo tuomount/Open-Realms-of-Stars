@@ -4,9 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
+import org.openRealmOfStars.starMap.SquareInfo;
 import org.openRealmOfStars.starMap.StarMap;
 
 /**
@@ -172,11 +175,34 @@ public class Minimap {
           if (culture != null) {
             int index = culture.getHighestCulture();
             if (index != -1) {
-              img.setRGB(x * sectorSize, y * sectorSize, Color.BLUE.getRGB());
+              Tile tile = Tiles.getTileByName("Player_" + index);
+              if (tile != null) {
+                tile.drawMiniSector(img, x * sectorSize, y * sectorSize,
+                    sectorSize);
+              }
             }
           }
         }
+        Tile tile = map.getTile(x + topX, y + topY);
+        if (tile == null) {
+          continue;
+        }
+        // Draw only non empty tiles
+        if (map.getTileInfo(x + topX, y + topY)
+                .getType() == SquareInfo.TYPE_SUN) {
+          tile.drawMiniSector(img, x * sectorSize, y * sectorSize,
+              sectorSize);
+        }
       }
     }
+    if (drawImage == 1) {
+      showImage = 1;
+      drawImage = 0;
+    } else {
+      showImage = 0;
+      drawImage = 1;
+    }
+    drawX = topX;
+    drawY = topY;
   }
 }

@@ -298,6 +298,9 @@ public class StarMapView extends BlackPanel {
       btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_CLOSED));
     }
     bottomBtnPanel.add(btn);
+    btn = new SpaceButton("Minimap", GameCommands.COMMAND_VIEW_MINIMAP);
+    btn.addActionListener(game);
+    bottomBtnPanel.add(btn);
     // Button for debugging battle, disabled for now
 /*    btn = new SpaceButton("Battle", GameCommands.COMMAND_BATTLE);
     btn.addActionListener(game);
@@ -433,6 +436,14 @@ public class StarMapView extends BlackPanel {
       msgPanel.updatePanel(msg,
           players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
           players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_VIEW_MINIMAP)) {
+      SoundPlayer.playMenuSound();
+      if (mapPanel.isShowMiniMap()) {
+        mapPanel.setShowMiniMap(true);
+      } else {
+        mapPanel.setShowMiniMap(true);
+      }
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_MSG)) {
       Message msg = players.getCurrentPlayerInfo().getMsgList()

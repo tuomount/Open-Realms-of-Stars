@@ -17,6 +17,7 @@ import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.mapPanel.Minimap.Minimap;
 import org.openRealmOfStars.gui.utilies.GraphRoutines;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
@@ -188,6 +189,16 @@ public class MapPanel extends JPanel {
   private int cursorFocus;
 
   /**
+   * Minimap handler/drawer
+   */
+  private Minimap minimap;
+
+  /**
+   * Flag for showing minimap
+   */
+  private boolean showMiniMap;
+
+  /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
    * @param battle True if drawing battle map.
@@ -216,6 +227,7 @@ public class MapPanel extends JPanel {
     int height = HEIGHT;
     historyCultures = null;
     historyCoordinates = null;
+    setShowMiniMap(false);
     tileOverride = null;
     if (battle && game == null) {
       width = BATTLE_VIEW_SIZE;
@@ -331,6 +343,11 @@ public class MapPanel extends JPanel {
    */
   public void drawMap(final StarMap starMap) {
     PlayerInfo info = starMap.getCurrentPlayerInfo();
+    if (minimap == null) {
+      minimap = new Minimap(starMap);
+      minimap.setDrawPoint(0, 0);
+      minimap.drawMinimap();
+    }
     if (screen == null) {
       calculateViewPoints();
       if (this.getWidth() > 0 && this.getHeight() > 0) {
@@ -655,6 +672,11 @@ public class MapPanel extends JPanel {
       }
       pixelX = viewPointOffsetX;
       pixelY = pixelY + Tile.MAX_HEIGHT;
+    }
+    if (isShowMiniMap() && minimap != null) {
+      BufferedImage miniMapImg = minimap.getDrawnImage();
+      gr.drawImage(miniMapImg, screen.getWidth() - 10 - miniMapImg.getWidth(),
+          screen.getHeight() - 10 - miniMapImg.getHeight(), null);
     }
     if (cursorFocus > 0) {
       cursorFocus--;
@@ -1392,6 +1414,22 @@ public class MapPanel extends JPanel {
     } else {
       this.cursorFocus = cursorFocus;
     }
+  }
+
+  /**
+   * Is minimap visible or not
+   * @return the showMiniMap
+   */
+  public boolean isShowMiniMap() {
+    return showMiniMap;
+  }
+
+  /**
+   * Set flag for showing minimap
+   * @param showMiniMap the showMiniMap to set
+   */
+  public void setShowMiniMap(final boolean showMiniMap) {
+    this.showMiniMap = showMiniMap;
   }
 
 }

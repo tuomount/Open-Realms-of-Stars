@@ -675,8 +675,40 @@ public class MapPanel extends JPanel {
     }
     if (isShowMiniMap() && minimap != null) {
       BufferedImage miniMapImg = minimap.getDrawnImage();
-      gr.drawImage(miniMapImg, screen.getWidth() - 10 - miniMapImg.getWidth(),
-          screen.getHeight() - 10 - miniMapImg.getHeight(), null);
+      int topX = screen.getWidth() - 10 - miniMapImg.getWidth();
+      int topY = screen.getHeight() - 10 - miniMapImg.getHeight();
+      int botX = topX + miniMapImg.getWidth();
+      int botY = topY + miniMapImg.getHeight();
+      gr.drawImage(miniMapImg, topX, topY, null);
+      gr.setColor(GuiStatics.COLOR_GOLD_TRANS);
+      Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE,
+          BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
+      gr.setStroke(full);
+      int sectorSize = minimap.getSectorSize();
+      int rtopX = topX + starMap.getDrawX() * sectorSize
+          - viewPointX * sectorSize;
+      int rtopY = topY + starMap.getDrawY() * sectorSize
+          - viewPointY * sectorSize;
+      int rbotX = topX + starMap.getDrawX() * sectorSize
+          + (viewPointX + 1) * sectorSize;
+      int rbotY = topY + starMap.getDrawY() * sectorSize
+          + (viewPointY + 1) * sectorSize;
+      if (rtopX < topX) {
+        rtopX = topX;
+      }
+      if (rtopY < topY) {
+        rtopY = topY;
+      }
+      if (rbotX > botX) {
+        rbotX = botX;
+      }
+      if (rbotY > botY) {
+        rbotY = botY;
+      }
+      gr.drawLine(rtopX, rtopY, rbotX, rtopY);
+      gr.drawLine(rtopX, rtopY, rtopX, rbotY);
+      gr.drawLine(rbotX, rtopY, rbotX, rbotY);
+      gr.drawLine(rtopX, rbotY, rbotX, rbotY);
     }
     if (cursorFocus > 0) {
       cursorFocus--;

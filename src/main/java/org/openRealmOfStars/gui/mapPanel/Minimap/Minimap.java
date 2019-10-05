@@ -161,6 +161,13 @@ public class Minimap {
   }
 
   /**
+   * Get single sector size in pixel in minimap.
+   * @return Sector size
+   */
+  public int getSectorSize() {
+    return sectorSize;
+  }
+  /**
    * Draw sector with single color
    * @param img Image where to draw
    * @param x X coordinate

@@ -92,6 +92,13 @@ public class Minimap {
    * Y-Coordinate where drawn image points
    */
   private int drawY;
+
+  /**
+   * Flag marking if map needs to be updated. Means basically that
+   * full map is not shown at once.
+   */
+  private boolean needsUpdate;
+
   /**
    * Minimap constructor.
    * @param starMap StarMap
@@ -102,18 +109,22 @@ public class Minimap {
       sectorSize = 4;
       size = map.getMaxX() * sectorSize;
       sectorsToShow = map.getMaxX();
+      needsUpdate = false;
     } else     if (map.getMaxX() <= 75) {
       sectorSize = 3;
       size = map.getMaxX() * sectorSize;
       sectorsToShow = map.getMaxX();
+      needsUpdate = false;
     } else     if (map.getMaxX() <= 128) {
       sectorSize = 2;
       size = map.getMaxX() * sectorSize;
       sectorsToShow = map.getMaxX();
+      needsUpdate = false;
     } else {
       sectorSize = 2;
       size = MAX_SIZE;
       sectorsToShow = 128;
+      needsUpdate = true;
     }
     images = new BufferedImage[2];
     images[0] = new BufferedImage(size, size, BufferedImage.TYPE_4BYTE_ABGR);
@@ -167,6 +178,7 @@ public class Minimap {
   public int getSectorSize() {
     return sectorSize;
   }
+
   /**
    * Draw sector with single color
    * @param img Image where to draw
@@ -270,5 +282,41 @@ public class Minimap {
     }
     drawX = topX;
     drawY = topY;
+  }
+
+  /**
+   * Force update map flag.
+   * @param x Update x coordinate
+   */
+  public void updateMapX(final int x) {
+    needsUpdate = true;
+    topX = topX + x;
+    if (topX < 0) {
+      topX = 0;
+    }
+    if (topX > map.getMaxX() - 1) {
+      topX = map.getMaxX() - 1;
+    }
+  }
+  /**
+   * Force update map flag.
+   * @param y Update y coordinate
+   */
+  public void updateMapY(final int y) {
+    needsUpdate = true;
+    topY = topY + y;
+    if (topY < 0) {
+      topY = 0;
+    }
+    if (topY > map.getMaxY() - 1) {
+      topY = map.getMaxY() - 1;
+    }
+  }
+  /**
+   * Return true if minimap needs to be update once and while.
+   * @return True if update is needed.
+   */
+  public boolean needUpdate() {
+    return needsUpdate;
   }
 }

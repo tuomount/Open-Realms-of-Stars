@@ -347,6 +347,10 @@ public class MapPanel extends JPanel {
       minimap = new Minimap(starMap);
       minimap.setDrawPoint(0, 0);
       minimap.drawMinimap();
+    } else {
+      if (minimap.needUpdate()) {
+        minimap.drawMinimap();
+      }
     }
     if (screen == null) {
       calculateViewPoints();
@@ -685,25 +689,31 @@ public class MapPanel extends JPanel {
           BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
       gr.setStroke(full);
       int sectorSize = minimap.getSectorSize();
-      int rtopX = topX + starMap.getDrawX() * sectorSize
+      int dx = minimap.getDrawPointX();
+      int dy = minimap.getDrawPointY();
+      int rtopX = topX + (starMap.getDrawX() - dx) * sectorSize
           - viewPointX * sectorSize;
-      int rtopY = topY + starMap.getDrawY() * sectorSize
+      int rtopY = topY + (starMap.getDrawY() - dy) * sectorSize
           - viewPointY * sectorSize;
-      int rbotX = topX + starMap.getDrawX() * sectorSize
+      int rbotX = topX + (starMap.getDrawX() - dx) * sectorSize
           + (viewPointX + 1) * sectorSize;
-      int rbotY = topY + starMap.getDrawY() * sectorSize
+      int rbotY = topY + (starMap.getDrawY() - dy) * sectorSize
           + (viewPointY + 1) * sectorSize;
       if (rtopX < topX) {
         rtopX = topX;
+        minimap.updateMapX(-1);
       }
       if (rtopY < topY) {
         rtopY = topY;
+        minimap.updateMapY(-1);
       }
       if (rbotX > botX) {
         rbotX = botX;
+        minimap.updateMapX(1);
       }
       if (rbotY > botY) {
         rbotY = botY;
+        minimap.updateMapY(1);
       }
       gr.drawLine(rtopX, rtopY, rbotX, rtopY);
       gr.drawLine(rtopX, rtopY, rtopX, rbotY);

@@ -295,7 +295,7 @@ public final class GuiStatics {
   /**
    * Bright white
    */
-  public static final Color COLOR_BRIGHT_WHITE = new Color(241, 255, 241);
+  public static final Color COLOR_BRIGHT_WHITE = new Color(241, 255, 241, 128);
   /**
    * Transparent black
    */

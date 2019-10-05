@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.Tile;
+import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.Coordinate;
@@ -181,7 +182,7 @@ public class Minimap {
   public void drawMinimap() {
     BufferedImage img = images[drawImage];
     Graphics2D g2d = (Graphics2D) img.getGraphics();
-    g2d.setColor(new Color(0, 0, 0, 128));
+    g2d.setColor(GuiStatics.COLOR_TRANSPARENT_GREY);
     g2d.fillRect(0, 0, img.getWidth(), img.getHeight());
     PlayerInfo info = map.getCurrentPlayerInfo();
     for (int y = 0; y < sectorsToShow; y++) {
@@ -206,14 +207,40 @@ public class Minimap {
                 sectorSize);
           } else if (map.getTileInfo(x + topX, y + topY)
               .getType() == SquareInfo.TYPE_GAS_PLANET && sectorSize < 4) {
-            drawSector(img, x * sectorSize, y * sectorSize,
-                GuiStatics.COLOR_SPACE_GREY);
+            if (tile.getName().contains("NE")) {
+              Tile tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_1_NE);
+              tmpTile.drawMiniSector(img, x * sectorSize, y * sectorSize,
+                  sectorSize);
+            }
+            if (tile.getName().contains("NW")) {
+              Tile tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_1_NW);
+              tmpTile.drawMiniSector(img, x * sectorSize, y * sectorSize,
+                  sectorSize);
+            }
+            if (tile.getName().contains("SW")) {
+              Tile tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_1_SW);
+              tmpTile.drawMiniSector(img, x * sectorSize, y * sectorSize,
+                  sectorSize);
+            }
+            if (tile.getName().contains("SE")) {
+              Tile tmpTile = Tiles.getTileByName(TileNames.GAS_GIANT_1_SE);
+              tmpTile.drawMiniSector(img, x * sectorSize, y * sectorSize,
+                  sectorSize);
+            }
           }
           if (map.getTileInfo(x + topX, y + topY)
-              .getType() == SquareInfo.TYPE_PLANET) {
+              .getType() == SquareInfo.TYPE_PLANET && sectorSize > 2) {
+            Tile tmpTile = Tiles.getTileByName(TileNames.ICEWORLD2);
+            tmpTile.drawMiniSector(img, x * sectorSize, y * sectorSize,
+                sectorSize);
+          } else if (map.getTileInfo(x + topX, y + topY)
+              .getType() == SquareInfo.TYPE_PLANET && sectorSize <= 2) {
             drawSector(img, x * sectorSize, y * sectorSize,
                 GuiStatics.COLOR_BRIGHT_WHITE);
           }
+        } else {
+          drawSector(img, x * sectorSize, y * sectorSize,
+              GuiStatics.COLOR_TRANSPARENT_BLACK);
         }
         Tile tile = map.getTile(x + topX, y + topY);
         if (tile == null) {

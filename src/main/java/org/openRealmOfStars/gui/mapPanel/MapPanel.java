@@ -348,6 +348,20 @@ public class MapPanel extends JPanel {
       minimap.setDrawPoint(0, 0);
       minimap.drawMinimap();
     } else {
+      if (starMap.getMaxX() > 128) {
+        // Quickly relocate minimap on scrolling minimap
+        int cx = starMap.getDrawX();
+        int cy = starMap.getDrawY();
+        int rx = minimap.getCenterX() - cx;
+        int ry = minimap.getCenterY() - cy;
+        if (rx > 64
+            || rx < -64
+            || ry > 64
+            || ry < -64) {
+          minimap.setCenterPoint(cx, cy);
+          minimap.drawMinimap();
+        }
+      }
       if (minimap.needUpdate()) {
         minimap.drawMinimap();
       }
@@ -678,7 +692,9 @@ public class MapPanel extends JPanel {
       pixelY = pixelY + Tile.MAX_HEIGHT;
     }
     if (isShowMiniMap() && minimap != null) {
+      // Draw minimap itself
       BufferedImage miniMapImg = minimap.getDrawnImage();
+      // Calculate viewport rectangle
       int topX = screen.getWidth() - 10 - miniMapImg.getWidth();
       int topY = screen.getHeight() - 10 - miniMapImg.getHeight();
       int botX = topX + miniMapImg.getWidth();
@@ -699,6 +715,7 @@ public class MapPanel extends JPanel {
           + (viewPointX + 1) * sectorSize;
       int rbotY = topY + (starMap.getDrawY() - dy) * sectorSize
           + (viewPointY + 1) * sectorSize;
+      // Limit rectangle and require update on minimap
       if (rtopX < topX) {
         rtopX = topX;
         minimap.updateMapX(-1);
@@ -715,6 +732,7 @@ public class MapPanel extends JPanel {
         rbotY = botY;
         minimap.updateMapY(1);
       }
+      // Draw rectangle
       gr.drawLine(rtopX, rtopY, rbotX, rtopY);
       gr.drawLine(rtopX, rtopY, rtopX, rbotY);
       gr.drawLine(rbotX, rtopY, rbotX, rbotY);

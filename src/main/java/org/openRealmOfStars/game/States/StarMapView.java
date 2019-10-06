@@ -300,6 +300,7 @@ public class StarMapView extends BlackPanel {
     bottomBtnPanel.add(btn);
     btn = new SpaceButton("Minimap", GameCommands.COMMAND_VIEW_MINIMAP);
     btn.addActionListener(game);
+    btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_MAP));
     bottomBtnPanel.add(btn);
     // Button for debugging battle, disabled for now
 /*    btn = new SpaceButton("Battle", GameCommands.COMMAND_BATTLE);

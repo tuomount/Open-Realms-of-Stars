@@ -303,7 +303,7 @@ public final class GuiStatics {
   /**
    * Transparent black
    */
-  public static final Color COLOR_TRANSPARENT_BLACK = new Color(0, 0, 0, 128);
+  public static final Color COLOR_TRANSPARENT_BLACK = new Color(5, 5, 5, 128);
 
   /**
    * Space grey

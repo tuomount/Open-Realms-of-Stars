@@ -41,7 +41,7 @@ public class Minimap {
   /**
    * Maximum minimap size in pixels. Minimap is always square shaped.
    */
-  private static final int MAX_SIZE = 256;
+  private static final int MAX_SIZE_PX = 256;
 
   /**
    * Minimap size in pixels.
@@ -122,7 +122,7 @@ public class Minimap {
       needsUpdate = false;
     } else {
       sectorSize = 2;
-      size = MAX_SIZE;
+      size = MAX_SIZE_PX;
       sectorsToShow = 128;
       needsUpdate = true;
     }
@@ -147,6 +147,36 @@ public class Minimap {
     topY = y;
   }
 
+  /**
+   * Set point where minimap should be drawn.
+   * @param x Center X coordinate
+   * @param y Center Y coordinate
+   */
+  public void setCenterPoint(final int x, final int y) {
+    topX = x - sectorsToShow / 2;
+    topY = y - sectorsToShow / 2;
+    if (topX < 0) {
+      topX = 0;
+    }
+    if (topY < 0) {
+      topY = 0;
+    }
+  }
+
+  /**
+   * Get center coordinate of minimap
+   * @return X coordinate
+   */
+  public int getCenterX() {
+    return drawX + size / 2;
+  }
+  /**
+   * Get center coordinate of minimap
+   * @return Y coordinate
+   */
+  public int getCenterY() {
+    return drawY + size / 2;
+  }
   /**
    * Get draw point to minimap X Coordinate
    * @return X coordinate
@@ -199,6 +229,8 @@ public class Minimap {
    * Draw the minimap to buffered Image.
    */
   public void drawMinimap() {
+    images[drawImage] = new BufferedImage(size, size,
+        BufferedImage.TYPE_4BYTE_ABGR);
     BufferedImage img = images[drawImage];
     Graphics2D g2d = (Graphics2D) img.getGraphics();
     g2d.setColor(GuiStatics.COLOR_TRANSPARENT_GREY);
@@ -282,6 +314,7 @@ public class Minimap {
     }
     drawX = topX;
     drawY = topY;
+    needsUpdate = false;
   }
 
   /**

@@ -161,6 +161,12 @@ public class Minimap {
     if (topY < 0) {
       topY = 0;
     }
+    if (topX > map.getMaxX() - sectorsToShow) {
+      topX = map.getMaxX() - sectorsToShow;
+    }
+    if (topY > map.getMaxY() - sectorsToShow) {
+      topY = map.getMaxY() - sectorsToShow;
+    }
   }
 
   /**
@@ -238,7 +244,9 @@ public class Minimap {
     PlayerInfo info = map.getCurrentPlayerInfo();
     for (int y = 0; y < sectorsToShow; y++) {
       for (int x = 0; x < sectorsToShow; x++) {
-        if (info != null && info.getSectorVisibility(new Coordinate(x + topX,
+        if (map.isValidCoordinate(x + topX, y + topY)
+            && info != null
+            && info.getSectorVisibility(new Coordinate(x + topX,
             y + topY)) != PlayerInfo.UNCHARTED) {
           CulturePower culture = map.getSectorCulture(x + topX, y + topY);
           if (culture != null) {

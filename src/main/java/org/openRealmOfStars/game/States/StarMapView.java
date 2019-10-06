@@ -169,6 +169,7 @@ public class StarMapView extends BlackPanel {
 
     BlackPanel base = new BlackPanel();
     mapPanel = new MapPanel(false);
+    mapPanel.setShowMiniMap(game.isShowMiniMapFlag());
     // Side panel
     infoPanel = new MapInfoPanel(game);
     mapPanel.drawMap(this.map);
@@ -442,8 +443,10 @@ public class StarMapView extends BlackPanel {
       SoundPlayer.playMenuSound();
       if (mapPanel.isShowMiniMap()) {
         mapPanel.setShowMiniMap(false);
+        game.setShowMiniMapFlag(false);
       } else {
         mapPanel.setShowMiniMap(true);
+        game.setShowMiniMapFlag(true);
       }
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_MSG)) {

@@ -316,6 +316,12 @@ public class Game implements ActionListener {
   private ConfigFile configFile;
 
   /**
+   * Show minimap flag for the whole game process.
+   * This will not be saved.
+   */
+  private boolean showMiniMapFlag;
+
+  /**
    * Get Star map
    * @return StarMap
    */
@@ -370,6 +376,7 @@ public class Game implements ActionListener {
    */
   public Game(final boolean visible) {
     readConfigFile();
+    setShowMiniMapFlag(false);
     int musicVolume = configFile.getMusicVolume();
     int soundVolume = configFile.getSoundVolume();
     int resolutionWidth = configFile.getResolutionWidth();
@@ -2491,6 +2498,22 @@ public class Game implements ActionListener {
    */
   public void setGalaxyConfig(final GalaxyConfig config) {
     galaxyConfig = config;
+  }
+
+  /**
+   * Is show minimap flag enabled
+   * @return True if minimap should be showing
+   */
+  public boolean isShowMiniMapFlag() {
+    return showMiniMapFlag;
+  }
+
+  /**
+   * Set minimap showing flag.
+   * @param showMiniMapFlag true to show minimap.
+   */
+  public void setShowMiniMapFlag(final boolean showMiniMapFlag) {
+    this.showMiniMapFlag = showMiniMapFlag;
   }
 
 }

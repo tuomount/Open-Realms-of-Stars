@@ -359,10 +359,9 @@ public class MapPanel extends JPanel {
             || ry > 64
             || ry < -64) {
           minimap.setCenterPoint(cx, cy);
-          minimap.drawMinimap();
         }
       }
-      if (minimap.needUpdate()) {
+      if (isShowMiniMap()) {
         minimap.drawMinimap();
       }
     }

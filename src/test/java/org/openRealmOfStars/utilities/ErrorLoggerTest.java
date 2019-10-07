@@ -51,8 +51,13 @@ public class ErrorLoggerTest {
         System.setErr(Mockito.mock(System.err.getClass()));
 
         ErrorLogger.log(exception);
-
-        Mockito.verify(System.err, Mockito.times(1)).println(exception.getMessage());
+        StackTraceElement stackTraceElement = exception.getStackTrace()[0];
+        Mockito.verify(System.err, Mockito.times(1))
+                .println(stackTraceElement.getClassName()
+                    + " - "
+                    + stackTraceElement.getLineNumber()
+                    + " - "
+                    +  exception.getMessage());
         System.setErr(err);
     }
 

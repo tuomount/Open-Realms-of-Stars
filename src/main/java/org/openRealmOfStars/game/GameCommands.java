@@ -140,6 +140,10 @@ public final class GameCommands {
    * View Voting view
    */
   public static final String COMMAND_VIEW_VOTING = "ViewVote";
+  /**
+   * View minimap command
+   */
+  public static final String COMMAND_VIEW_MINIMAP = "ViewMiniMap";
 
   /**
    * View Research view

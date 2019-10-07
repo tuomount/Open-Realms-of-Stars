@@ -7,7 +7,7 @@ import java.awt.image.RasterFormatException;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018 Tuomo Untinen
+ * Copyright (C) 2016-2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -93,6 +93,45 @@ public class Tile {
    */
   public void draw(final Graphics2D g, final int x, final int y) {
     g.drawImage(img, x, y, null);
+  }
+
+  /**
+   * Draw mini sector to target image.
+   * @param target Target image where to draw.
+   * @param x X coordinate
+   * @param y Y coordinate
+   * @param sectorSize Sector size in pixel.
+   *        Currently support sizes 2, 3 and 4.
+   */
+  public void drawMiniSector(final BufferedImage target, final int x,
+      final int y, final int sectorSize) {
+    int sx = 2;
+    int sy = 2;
+    int step = 6;
+    if (sectorSize == 2) {
+      sx = 8;
+      sy = 8;
+      step = 16;
+    }
+    if (sectorSize == 3) {
+      sx = 5;
+      sy = 5;
+      step = 10;
+    }
+    if (sectorSize == 4) {
+      sx = 4;
+      sy = 4;
+      step = 8;
+    }
+    for (int my = 0; my < sectorSize; my++) {
+      for (int mx = 0; mx < sectorSize; mx++) {
+        int color = img.getRGB(sx + mx * step, sy + my * step);
+        int alpha = (color >> 24) & 0xff;
+        if (alpha > 30) {
+          target.setRGB(x + mx, y + my, color);
+        }
+      }
+    }
   }
 
   /**

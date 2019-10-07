@@ -17,6 +17,7 @@ import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
+import org.openRealmOfStars.gui.mapPanel.Minimap.Minimap;
 import org.openRealmOfStars.gui.utilies.GraphRoutines;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
@@ -188,6 +189,16 @@ public class MapPanel extends JPanel {
   private int cursorFocus;
 
   /**
+   * Minimap handler/drawer
+   */
+  private Minimap minimap;
+
+  /**
+   * Flag for showing minimap
+   */
+  private boolean showMiniMap;
+
+  /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
    * @param battle True if drawing battle map.
@@ -216,6 +227,7 @@ public class MapPanel extends JPanel {
     int height = HEIGHT;
     historyCultures = null;
     historyCoordinates = null;
+    setShowMiniMap(false);
     tileOverride = null;
     if (battle && game == null) {
       width = BATTLE_VIEW_SIZE;
@@ -331,6 +343,28 @@ public class MapPanel extends JPanel {
    */
   public void drawMap(final StarMap starMap) {
     PlayerInfo info = starMap.getCurrentPlayerInfo();
+    if (minimap == null) {
+      minimap = new Minimap(starMap);
+      minimap.setDrawPoint(0, 0);
+      minimap.drawMinimap();
+    } else {
+      if (starMap.getMaxX() > 128) {
+        // Quickly relocate minimap on scrolling minimap
+        int cx = starMap.getDrawX();
+        int cy = starMap.getDrawY();
+        int rx = minimap.getCenterX() - cx;
+        int ry = minimap.getCenterY() - cy;
+        if (rx > 64
+            || rx < -64
+            || ry > 64
+            || ry < -64) {
+          minimap.setCenterPoint(cx, cy);
+        }
+      }
+      if (isShowMiniMap()) {
+        minimap.drawMinimap();
+      }
+    }
     if (screen == null) {
       calculateViewPoints();
       if (this.getWidth() > 0 && this.getHeight() > 0) {
@@ -655,6 +689,53 @@ public class MapPanel extends JPanel {
       }
       pixelX = viewPointOffsetX;
       pixelY = pixelY + Tile.MAX_HEIGHT;
+    }
+    if (isShowMiniMap() && minimap != null) {
+      // Draw minimap itself
+      BufferedImage miniMapImg = minimap.getDrawnImage();
+      // Calculate viewport rectangle
+      int topX = screen.getWidth() - 10 - miniMapImg.getWidth();
+      int topY = screen.getHeight() - 10 - miniMapImg.getHeight();
+      int botX = topX + miniMapImg.getWidth();
+      int botY = topY + miniMapImg.getHeight();
+      gr.drawImage(miniMapImg, topX, topY, null);
+      gr.setColor(GuiStatics.COLOR_GOLD_TRANS);
+      Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE,
+          BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
+      gr.setStroke(full);
+      int sectorSize = minimap.getSectorSize();
+      int dx = minimap.getDrawPointX();
+      int dy = minimap.getDrawPointY();
+      int rtopX = topX + (starMap.getDrawX() - dx) * sectorSize
+          - viewPointX * sectorSize;
+      int rtopY = topY + (starMap.getDrawY() - dy) * sectorSize
+          - viewPointY * sectorSize;
+      int rbotX = topX + (starMap.getDrawX() - dx) * sectorSize
+          + (viewPointX + 1) * sectorSize;
+      int rbotY = topY + (starMap.getDrawY() - dy) * sectorSize
+          + (viewPointY + 1) * sectorSize;
+      // Limit rectangle and require update on minimap
+      if (rtopX < topX) {
+        rtopX = topX;
+        minimap.updateMapX(-1);
+      }
+      if (rtopY < topY) {
+        rtopY = topY;
+        minimap.updateMapY(-1);
+      }
+      if (rbotX > botX) {
+        rbotX = botX;
+        minimap.updateMapX(1);
+      }
+      if (rbotY > botY) {
+        rbotY = botY;
+        minimap.updateMapY(1);
+      }
+      // Draw rectangle
+      gr.drawLine(rtopX, rtopY, rbotX, rtopY);
+      gr.drawLine(rtopX, rtopY, rtopX, rbotY);
+      gr.drawLine(rbotX, rtopY, rbotX, rbotY);
+      gr.drawLine(rtopX, rbotY, rbotX, rbotY);
     }
     if (cursorFocus > 0) {
       cursorFocus--;
@@ -1392,6 +1473,22 @@ public class MapPanel extends JPanel {
     } else {
       this.cursorFocus = cursorFocus;
     }
+  }
+
+  /**
+   * Is minimap visible or not
+   * @return the showMiniMap
+   */
+  public boolean isShowMiniMap() {
+    return showMiniMap;
+  }
+
+  /**
+   * Set flag for showing minimap
+   * @param showMiniMap the showMiniMap to set
+   */
+  public void setShowMiniMap(final boolean showMiniMap) {
+    this.showMiniMap = showMiniMap;
   }
 
 }

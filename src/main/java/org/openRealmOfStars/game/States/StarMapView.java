@@ -169,6 +169,7 @@ public class StarMapView extends BlackPanel {
 
     BlackPanel base = new BlackPanel();
     mapPanel = new MapPanel(false);
+    mapPanel.setShowMiniMap(game.isShowMiniMapFlag());
     // Side panel
     infoPanel = new MapInfoPanel(game);
     mapPanel.drawMap(this.map);
@@ -297,6 +298,10 @@ public class StarMapView extends BlackPanel {
     if (btn.getSpaceIcon() == null) {
       btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_CLOSED));
     }
+    bottomBtnPanel.add(btn);
+    btn = new SpaceButton("Minimap", GameCommands.COMMAND_VIEW_MINIMAP);
+    btn.addActionListener(game);
+    btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_MAP));
     bottomBtnPanel.add(btn);
     // Button for debugging battle, disabled for now
 /*    btn = new SpaceButton("Battle", GameCommands.COMMAND_BATTLE);
@@ -433,6 +438,16 @@ public class StarMapView extends BlackPanel {
       msgPanel.updatePanel(msg,
           players.getCurrentPlayerInfo().getMsgList().getCurrentMsgIndex(),
           players.getCurrentPlayerInfo().getMsgList().getMaxMsg());
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_VIEW_MINIMAP)) {
+      SoundPlayer.playMenuSound();
+      if (mapPanel.isShowMiniMap()) {
+        mapPanel.setShowMiniMap(false);
+        game.setShowMiniMapFlag(false);
+      } else {
+        mapPanel.setShowMiniMap(true);
+        game.setShowMiniMapFlag(true);
+      }
     }
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_NEXT_MSG)) {
       Message msg = players.getCurrentPlayerInfo().getMsgList()

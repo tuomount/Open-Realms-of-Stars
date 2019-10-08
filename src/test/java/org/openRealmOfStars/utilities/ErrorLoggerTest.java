@@ -55,7 +55,7 @@ public class ErrorLoggerTest {
         Mockito.verify(System.err, Mockito.times(1))
                 .println(stackTraceElement.getClassName()
                     + " - "
-                    + stackTraceElement.getLineNumber()
+                    + "Line " + stackTraceElement.getLineNumber()
                     + " - "
                     +  exception.getMessage());
         System.setErr(err);

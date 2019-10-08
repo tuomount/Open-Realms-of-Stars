@@ -46,12 +46,13 @@ public final class ErrorLogger {
     if (exception.getStackTrace().length == 0) {
       //This should never happens but you never know...
       ErrorLogger.log(exception.getMessage());
+    } else {
+      StackTraceElement stackTraceElement = exception.getStackTrace()[0];
+      ErrorLogger.log(stackTraceElement.getClassName()
+              + " - "
+              + "Line " + stackTraceElement.getLineNumber()
+              + " - "
+              + exception.getMessage());
     }
-    StackTraceElement stackTraceElement = exception.getStackTrace()[0];
-    ErrorLogger.log(stackTraceElement.getClassName()
-            + " - "
-            + stackTraceElement.getLineNumber()
-            + " - "
-            +  exception.getMessage());
   }
 }

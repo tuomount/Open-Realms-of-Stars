@@ -199,6 +199,22 @@ public class MapPanel extends JPanel {
   private boolean showMiniMap;
 
   /**
+   * Mini map top X coordinate in map panel.
+   */
+  private int miniMapTopX;
+  /**
+   * Mini map top Y coordinate in map panel.
+   */
+  private int miniMapTopY;
+  /**
+   * Mini map bottom X coordinate in map panel.
+   */
+  private int miniMapBotX;
+  /**
+   * Mini map bottom Y coordinate in map panel.
+   */
+  private int miniMapBotY;
+  /**
    * Constructor for Map Panel. This can be used for drawing star map
    * or battle map
    * @param battle True if drawing battle map.
@@ -698,6 +714,10 @@ public class MapPanel extends JPanel {
       int topY = screen.getHeight() - 10 - miniMapImg.getHeight();
       int botX = topX + miniMapImg.getWidth();
       int botY = topY + miniMapImg.getHeight();
+      miniMapTopX = topX;
+      miniMapTopY = topY;
+      miniMapBotX = botX;
+      miniMapBotY = botY;
       gr.drawImage(miniMapImg, topX, topY, null);
       gr.setColor(GuiStatics.COLOR_GOLD_TRANS);
       Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE,
@@ -1491,4 +1511,40 @@ public class MapPanel extends JPanel {
     this.showMiniMap = showMiniMap;
   }
 
+  /**
+   * Get minimap Top corner's x coordinate.
+   * @return X coordinate
+   */
+  public int getMiniMapTopX() {
+    return miniMapTopX;
+  }
+  /**
+   * Get minimap Top corner's y coordinate.
+   * @return Y coordinate
+   */
+  public int getMiniMapTopY() {
+    return miniMapTopY;
+  }
+  /**
+   * Get minimap Bottom corner's x coordinate.
+   * @return X coordinate
+   */
+  public int getMiniMapBotX() {
+    return miniMapBotX;
+  }
+  /**
+   * Get minimap Bottom corner's Y coordinate.
+   * @return Y coordinate
+   */
+  public int getMiniMapBotY() {
+    return miniMapBotY;
+  }
+
+  /**
+   * Get minimap.
+   * @return Minimap
+   */
+  public Minimap getMinimap() {
+    return minimap;
+  }
 }

@@ -44,6 +44,19 @@ public class Minimap {
   private static final int MAX_SIZE_PX = 256;
 
   /**
+   * Tiny map size in sectors
+   */
+  private static final int TINY_MAP = 50;
+  /**
+   * Small map size in sectors
+   */
+  private static final int SMALL_MAP = 75;
+  /**
+   * Medium map size in sectors
+   */
+  private static final int MEDIUM_MAP = 128;
+
+  /**
    * Minimap size in pixels.
    */
   private int size;
@@ -105,17 +118,17 @@ public class Minimap {
    */
   public Minimap(final StarMap starMap) {
     this.map = starMap;
-    if (map.getMaxX() <= 50) {
+    if (map.getMaxX() <= TINY_MAP) {
       sectorSize = 4;
       size = map.getMaxX() * sectorSize;
       sectorsToShow = map.getMaxX();
       needsUpdate = false;
-    } else     if (map.getMaxX() <= 75) {
+    } else if (map.getMaxX() <= SMALL_MAP) {
       sectorSize = 3;
       size = map.getMaxX() * sectorSize;
       sectorsToShow = map.getMaxX();
       needsUpdate = false;
-    } else     if (map.getMaxX() <= 128) {
+    } else if (map.getMaxX() <= MEDIUM_MAP) {
       sectorSize = 2;
       size = map.getMaxX() * sectorSize;
       sectorsToShow = map.getMaxX();
@@ -123,7 +136,7 @@ public class Minimap {
     } else {
       sectorSize = 2;
       size = MAX_SIZE_PX;
-      sectorsToShow = 128;
+      sectorsToShow = MEDIUM_MAP;
       needsUpdate = true;
     }
     images = new BufferedImage[2];
@@ -174,14 +187,14 @@ public class Minimap {
    * @return X coordinate
    */
   public int getCenterX() {
-    return drawX + size / 2;
+    return drawX + sectorsToShow / 2;
   }
   /**
    * Get center coordinate of minimap
    * @return Y coordinate
    */
   public int getCenterY() {
-    return drawY + size / 2;
+    return drawY + sectorsToShow / 2;
   }
   /**
    * Get draw point to minimap X Coordinate

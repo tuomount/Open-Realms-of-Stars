@@ -712,6 +712,10 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
         || tile.getName().equals(TileNames.DEEP_SPACE_ANCHOR2)) {
         imgBase.setTitle("In Deep Space Anchor...");
       }
+      PlayerInfo fleetInfo = starMap.getPlayerInfoByFleet(fleet);
+      if (fleetInfo != null && fleetInfo.isBoard()) {
+        hailBtn.setEnabled(false);
+      }
     }
   }
 

@@ -716,6 +716,9 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       if (fleetInfo != null && fleetInfo.isBoard()) {
         hailBtn.setEnabled(false);
       }
+      if (fleetInfo != info && conquerBtn != null) {
+        conquerBtn.setEnabled(false);
+      }
     }
   }
 

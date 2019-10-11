@@ -1384,14 +1384,16 @@ private int increaseHitChanceByComponent() {
   private static final int MAX_WEAPON_RANGE = 999;
 
   /**
-   * Get Weapon range for component index
+   * Get Weapon range for component index.
+   * ECM Torpedo is not counted for this.
    * @param componentIndex Ship's component index
    * @return Weapon range for component
    */
   private int getWeaponRange(final int componentIndex) {
     if (componentIndex >= 0 && componentIndex < components.size()) {
       ShipComponent comp = components.get(componentIndex);
-      if (comp.isWeapon()) {
+      if (comp.isWeapon()
+          && comp.getType() != ShipComponentType.WEAPON_ECM_TORPEDO) {
         int range = comp.getWeaponRange();
         if (isStarBase()) {
           if (getFlag(FLAG_STARBASE_DEPLOYED)) {

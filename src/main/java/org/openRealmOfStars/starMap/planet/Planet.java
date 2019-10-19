@@ -1479,6 +1479,17 @@ public class Planet {
           msg.setCoordinate(getCoordinate());
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
+          if (getTotalPopulation() < 1) {
+            setPlanetOwner(-1, null);
+            msg = new Message(MessageType.POPULATION,
+                getName() + " has lost last population. " + getName()
+                    + " is now uncolonized!",
+                Icons.getIconByName(Icons.ICON_DEATH));
+            msg.setCoordinate(getCoordinate());
+            msg.setMatchByString(getName());
+            planetOwnerInfo.getMsgList().addNewMessage(msg);
+            return;
+          }
         }
       }
 

@@ -728,7 +728,7 @@ public final class MissionHandling {
                 + " home planet.", Icons.getIconByName(Icons.ICON_TROOPS));
         msg.setCoordinate(fleet.getCoordinate());
         msg.setMatchByString(fleet.getName());
-        info.getMsgList().addNewMessage(msg);
+        info.getMsgList().addUpcomingMessage(msg);
         info.getMissions().remove(mission);
         // Make fleet return to home
         Planet homePlanet = game.getStarMap().getPlanetByName(

@@ -544,7 +544,7 @@ public final class SpeechFactory {
       case SPACE_PIRATE: return new SpeechLine(type,
           "Yarr, You start getting my nerve!");
       case CHIRALOIDS: return new SpeechLine(type,
-          "You seem quie mad... Are you?");
+          "You seem quiet mad... Are you?");
       default: return null;
     }
   }

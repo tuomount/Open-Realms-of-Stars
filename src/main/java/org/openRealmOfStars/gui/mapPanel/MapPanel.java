@@ -1223,6 +1223,31 @@ public class MapPanel extends JPanel {
                 && (combat.isClearShot(combat.getCurrentShip(), target)
                    || combat.canPrivateer(combat.getCurrentShip(), target))) {
               gr.drawImage(GuiStatics.CROSSHAIR, pixelX, pixelY, null);
+              int accuracy = combat.calculateAccuracy(combat.getCurrentShip(),
+                  weapon, target);
+              String accuracyStr = accuracy + "%";
+              int textWidth = (int) GuiStatics.getFontCubellan()
+                  .getStringBounds(accuracyStr, gr.getFontRenderContext())
+                  .getWidth();
+              gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER);
+              int offsetY = 3;
+              int offsetX = 2;
+              gr.drawString(accuracyStr,
+                  pixelX + ShipImage.MAX_WIDTH / 2 - textWidth / 2 + offsetX
+                  - 1, pixelY + ShipImage.MAX_HEIGHT / 2 + offsetY);
+              gr.drawString(accuracyStr,
+                  pixelX + ShipImage.MAX_WIDTH / 2 - textWidth / 2 + offsetX
+                  + 1, pixelY + ShipImage.MAX_HEIGHT / 2 + offsetY);
+              gr.drawString(accuracyStr,
+                  pixelX + ShipImage.MAX_WIDTH / 2 - textWidth / 2 + offsetX,
+                  pixelY + ShipImage.MAX_HEIGHT / 2 + offsetY + 1);
+              gr.drawString(accuracyStr,
+                  pixelX + ShipImage.MAX_WIDTH / 2 - textWidth / 2 + offsetX,
+                  pixelY + ShipImage.MAX_HEIGHT / 2 + offsetY - 1);
+              gr.setColor(GuiStatics.COLOR_COOL_SPACE_BLUE);
+              gr.drawString(accuracyStr,
+                  pixelX + ShipImage.MAX_WIDTH / 2 - textWidth / 2 + offsetX,
+                  pixelY + ShipImage.MAX_HEIGHT / 2 + offsetY);
             } else {
               gr.drawImage(GuiStatics.RED_CROSSHAIR, pixelX, pixelY, null);
             }

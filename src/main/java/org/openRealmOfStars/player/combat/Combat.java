@@ -1112,6 +1112,23 @@ public boolean launchIntercept(final int distance,
   }
 
   /**
+   * Calculate accuracy for certain weapons and by shooter and target.
+   * @param shooter CombatShip shooting
+   * @param weapon Weapon used
+   * @param target CombatShip which is being target
+   * @return Accuracy for weapon against certain target
+   */
+  public int calculateAccuracy(final CombatShip shooter,
+      final ShipComponent weapon, final CombatShip target) {
+    int accuracy = shooter.getShip().getHitChance(weapon)
+        + shooter.getBonusAccuracy();
+    accuracy = accuracy - target.getShip().getDefenseValue();
+    if (accuracy < 5) {
+      accuracy = 5;
+    }
+    return accuracy;
+  }
+  /**
    * Handle AI shooting
    * @param ai AI which is shooting
    * @param target shooting target
@@ -1130,12 +1147,7 @@ public boolean launchIntercept(final int distance,
         if (weapon != null && weapon.isWeapon() && !ai.isComponentUsed(i)
             && isClearShot(ai, target)
             && ai.getShip().componentIsWorking(i)) {
-          int accuracy = ai.getShip().getHitChance(weapon)
-              + ai.getBonusAccuracy();
-          accuracy = accuracy - target.getShip().getDefenseValue();
-          if (accuracy < 5) {
-            accuracy = 5;
-          }
+          int accuracy = calculateAccuracy(ai, weapon, target);
           ShipDamage shipDamage = new ShipDamage(1, "Attack missed!");
           if (DiceGenerator.getRandom(1, 100) <= accuracy) {
             shipDamage = target.getShip().damageBy(weapon);

@@ -143,7 +143,7 @@ public class Game implements ActionListener {
   private Timer animationTimer;
 
   /**
-   * Animation timer used for animation
+   * Music timer used for music
    */
   private Timer musicTimer;
 
@@ -1737,6 +1737,7 @@ public class Game implements ActionListener {
       event.setText(players.getCurrentPlayerInfo().getEmpireName()
           + " colonized planet " + fleetView.getPlanet().getName()
           + ". ");
+      SoundPlayer.playSound(SoundPlayer.COLONIZED);
       starMap.getHistory().addEvent(event);
       fleetView.getPlanet().eventActivation();
       changeGameState(GameState.PLANETVIEW);

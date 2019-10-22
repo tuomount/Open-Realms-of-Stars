@@ -180,7 +180,6 @@ public final class SoundPlayer {
    */
   public static final String WARP_ENGINE_ENGAGE =
       "/resources/sounds/warp_engine_engage.wav";
-
   /**
    * Sound effect for rushing building with population.
    */
@@ -193,6 +192,11 @@ public final class SoundPlayer {
    * Sound effect for disassemble
    */
   public static final String DISASSEMBLE = "/resources/sounds/disassemble.wav";
+  /**
+   * Sound effect for colonized planet
+   */
+  public static final String COLONIZED = "/resources/sounds/colonized.wav";
+
 
   /**
    * Is Sound enabled

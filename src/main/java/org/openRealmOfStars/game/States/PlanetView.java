@@ -561,13 +561,15 @@ public class PlanetView extends BlackPanel {
     if (rushCost > 0 && allowHandling && productionTime > 1) {
       if ((info.getRace().hasCreditRush()
           || info.getGovernment().hasCreditRush())
-          && rushCost <= info.getTotalCredits()) {
+          && rushCost <= info.getTotalCredits()
+          && planet.getUnderConstruction() != null) {
         rushWithCreditsBtn.setEnabled(true);
         rushWithCreditsBtn.setToolTipText("Rush construction with " + rushCost
             + " credits!");
       }
-      if (info.getRace().hasPopulationRush()
-          || info.getGovernment().hasPopulationRush()) {
+      if ((info.getRace().hasPopulationRush()
+          || info.getGovernment().hasPopulationRush())
+          && planet.getUnderConstruction() != null) {
         int populationCost = rushCost / Planet.POPULATION_RUSH_COST + 1;
         if (planet.getTotalPopulation() > populationCost) {
           rushWithPopulationBtn.setEnabled(true);

@@ -25,3 +25,7 @@ added new assets see paragram one below more instructions.
 Graphics should be licensed with CC-BY-SA and Sounds/Music with CC-BY. Also CC-BY-SA
 for music and sounds is okay, but the credits page must be then changed.
 Fonts needs to be licensed with SIL Open Font License.
+
+#### Adding the credits
+
+Add new credits information to CreditsView.java in ```MAIN_CREDITS``` String. ```AUTHORS.md``` will be generated when project is run with commandline argument --credits. This will be printed in STDOUT.

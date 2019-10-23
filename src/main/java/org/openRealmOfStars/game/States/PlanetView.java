@@ -391,16 +391,16 @@ public class PlanetView extends BlackPanel {
     panelX.setLayout(new BoxLayout(panelX, BoxLayout.X_AXIS));
     panelX.setAlignmentX(Component.LEFT_ALIGNMENT);
     label = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_CREDIT), "Rushing:");
+        Icons.getIconByName(Icons.ICON_CREDIT), "Rushing options:");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(label);
-    rushWithCreditsBtn = new SpaceButton("Credits",
+    rushWithCreditsBtn = new SpaceButton("Purchase",
         GameCommands.COMMAND_RUSH_WITH_CREDITS);
     rushWithCreditsBtn.addActionListener(listener);
     rushWithCreditsBtn.setEnabled(false);
     panelX.add(rushWithCreditsBtn);
     panelX.add(Box.createRigidArea(new Dimension(5, 5)));
-    rushWithPopulationBtn = new SpaceButton("Population",
+    rushWithPopulationBtn = new SpaceButton("Enslave",
         GameCommands.COMMAND_RUSH_WITH_POPULATION);
     rushWithPopulationBtn.addActionListener(listener);
     rushWithPopulationBtn.setEnabled(false);

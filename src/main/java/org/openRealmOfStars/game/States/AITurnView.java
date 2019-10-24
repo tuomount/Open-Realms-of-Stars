@@ -924,8 +924,15 @@ public class AITurnView extends BlackPanel {
           MissionType.COLONIZE);
       int attacks = info.getMissions().getNumberOfMissionTypes(
           MissionType.ATTACK);
+      int maxRad = info.getRace().getMaxRad();
+      if (info.getTechList().isTech("Radiation dampener")) {
+        maxRad++;
+      }
+      if (info.getTechList().isTech("Radiation well")) {
+        maxRad++;
+      }
       for (Planet planet : planets) {
-        if (planet.getTotalRadiationLevel() <= info.getRace().getMaxRad()
+        if (planet.getTotalRadiationLevel() <= maxRad
             && planet.getPlanetPlayerInfo() == null && !planet.isGasGiant()
             && info.getSectorVisibility(planet.getCoordinate())
             == PlayerInfo.VISIBLE) {

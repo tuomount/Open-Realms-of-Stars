@@ -219,7 +219,7 @@ public class PlanetView extends BlackPanel {
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     totalPeople = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_PEOPLE), ": 0");
+        Icons.getIconByName(Icons.ICON_PEOPLE), ": 00");
     totalPeople.setToolTipText("Total number of people on planet.");
     totalPeople.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(totalPeople);
@@ -252,7 +252,7 @@ public class PlanetView extends BlackPanel {
     resePanel.setInteractive(interactive);
     panel.add(resePanel);
     cultureLabel = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_CULTURE), ": 0");
+        Icons.getIconByName(Icons.ICON_CULTURE), ": 00");
     cultureLabel.setToolTipText(
         "Number of people working as a culture artist.");
     cultureLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -283,12 +283,12 @@ public class PlanetView extends BlackPanel {
     prodProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(prodProd);
     reseProd = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_RESEARCH), ": 0");
+        Icons.getIconByName(Icons.ICON_RESEARCH), ": 00");
     reseProd.setToolTipText("Total production of research");
     reseProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(reseProd);
     cultProd = new IconLabel(null, Icons.getIconByName(Icons.ICON_CULTURE),
-        ": 0");
+        ": 00");
     cultProd.setToolTipText("Total production of culture");
     cultProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(cultProd);
@@ -298,13 +298,13 @@ public class PlanetView extends BlackPanel {
     panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     credProd = new IconLabel(null, Icons.getIconByName(Icons.ICON_CREDIT),
-        ": 0");
+        ": 00");
     credProd.setToolTipText("Total production of credits");
     credProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(credProd);
 
     maintenance = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_MAINTENANCE), ": 0");
+        Icons.getIconByName(Icons.ICON_MAINTENANCE), ": 00");
     maintenance.setToolTipText("Maintenance cost of planet");
     maintenance.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(maintenance);
@@ -317,7 +317,8 @@ public class PlanetView extends BlackPanel {
     taxPanel.setInteractive(interactive);
     panel.add(taxPanel);
 
-    metal = new IconLabel(null, Icons.getIconByName(Icons.ICON_METAL), ": 0");
+    metal = new IconLabel(null, Icons.getIconByName(Icons.ICON_METAL),
+        ": 0000");
     metal.setToolTipText("Total metal on surface");
     metal.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(metal);
@@ -327,7 +328,7 @@ public class PlanetView extends BlackPanel {
     metalOre.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(metalOre);
     happiness = new IconLabel(null, Icons.getIconByName(Icons.ICON_OKAY),
-        ": 0");
+        ": 00");
     happiness.setToolTipText(planet.getHappinessExplanation());
     happiness.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(happiness);

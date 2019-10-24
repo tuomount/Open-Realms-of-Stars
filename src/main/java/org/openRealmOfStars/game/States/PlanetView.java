@@ -219,21 +219,20 @@ public class PlanetView extends BlackPanel {
     SpaceGreyPanel panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     totalPeople = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_PEOPLE),
-        ": " + planet.getTotalPopulation());
+        Icons.getIconByName(Icons.ICON_PEOPLE), ": 00");
     totalPeople.setToolTipText("Total number of people on planet.");
     totalPeople.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(totalPeople);
     farmPanel = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_FARM, GameCommands.COMMAND_PLUS_FARM,
-        Icons.ICON_FARM, ": " + planet.getWorkers(Planet.FOOD_FARMERS),
+        Icons.ICON_FARM, ": 0",
         "Number of people working as a farmers.", listener);
     farmPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     farmPanel.setInteractive(interactive);
     panel.add(farmPanel);
     minePanel = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_MINE, GameCommands.COMMAND_PLUS_MINE,
-        Icons.ICON_MINE, ": " + planet.getWorkers(Planet.METAL_MINERS),
+        Icons.ICON_MINE, ": 0",
         "Number of people working as a miners.", listener);
     minePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     minePanel.setInteractive(interactive);
@@ -241,22 +240,19 @@ public class PlanetView extends BlackPanel {
     factoryPanel = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_PRODUCTION,
         GameCommands.COMMAND_PLUS_PRODUCTION, Icons.ICON_FACTORY,
-        ": " + planet.getWorkers(Planet.PRODUCTION_WORKERS),
-        "Number of people working as a factory worker.", listener);
+        ": 0", "Number of people working as a factory worker.", listener);
     factoryPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     factoryPanel.setInteractive(interactive);
     panel.add(factoryPanel);
     resePanel = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_RESEARCH, GameCommands.COMMAND_PLUS_RESEARCH,
         Icons.ICON_RESEARCH,
-        ": " + planet.getWorkers(Planet.RESEARCH_SCIENTIST),
-        "Number of people working as a scientist.", listener);
+        ": 0", "Number of people working as a scientist.", listener);
     resePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     resePanel.setInteractive(interactive);
     panel.add(resePanel);
     cultureLabel = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_CULTURE),
-        ": " + planet.getWorkers(Planet.CULTURE_ARTIST));
+        Icons.getIconByName(Icons.ICON_CULTURE), ": 00");
     cultureLabel.setToolTipText(
         "Number of people working as a culture artist.");
     cultureLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -268,44 +264,31 @@ public class PlanetView extends BlackPanel {
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     peopleGrowth = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_PEOPLE), "1000 turns");
-    int peopleGrow = planet.getTotalProduction(Planet.PRODUCTION_POPULATION);
-    if (peopleGrow > 0) {
-      peopleGrowth.setText(peopleGrow + " turns.");
-      peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
-    } else if (peopleGrow < 0) {
-      peopleGrow = peopleGrow * -1;
-      peopleGrowth.setText(peopleGrow + " turns. ");
-      peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_DEATH));
-    } else {
-      peopleGrowth.setText("no growth ");
-      peopleGrowth.setLeftIcon(Icons.getIconByName(Icons.ICON_PEOPLE));
-    }
     peopleGrowth.setToolTipText("How many turns to population growth.");
     peopleGrowth.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(peopleGrowth);
     farmProd = new IconLabel(null, Icons.getIconByName(Icons.ICON_FARM),
-        ": " + planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+        ": 00");
     farmProd.setToolTipText("Total production of food");
     farmProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(farmProd);
     mineProd = new IconLabel(null, Icons.getIconByName(Icons.ICON_MINE),
-        ": " + planet.getTotalProduction(Planet.PRODUCTION_METAL));
+        ": 00");
     mineProd.setToolTipText("Total production of metal");
     mineProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(mineProd);
     prodProd = new IconLabel(null, Icons.getIconByName(Icons.ICON_FACTORY),
-        ": " + planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+        ": 00");
     prodProd.setToolTipText("Total production of production");
     prodProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(prodProd);
     reseProd = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_RESEARCH),
-        ": " + planet.getTotalProduction(Planet.PRODUCTION_RESEARCH));
+        Icons.getIconByName(Icons.ICON_RESEARCH), ": 00");
     reseProd.setToolTipText("Total production of research");
     reseProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(reseProd);
     cultProd = new IconLabel(null, Icons.getIconByName(Icons.ICON_CULTURE),
-        ": " + planet.getTotalProduction(Planet.PRODUCTION_CULTURE));
+        ": 00");
     cultProd.setToolTipText("Total production of culture");
     cultProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(cultProd);
@@ -315,39 +298,37 @@ public class PlanetView extends BlackPanel {
     panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     credProd = new IconLabel(null, Icons.getIconByName(Icons.ICON_CREDIT),
-        ": " + planet.getTotalProduction(Planet.PRODUCTION_CREDITS));
+        ": 00");
     credProd.setToolTipText("Total production of credits");
     credProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(credProd);
 
     maintenance = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_MAINTENANCE),
-        ": " + planet.getMaintenanceCost());
+        Icons.getIconByName(Icons.ICON_MAINTENANCE), ": 00");
     maintenance.setToolTipText("Maintenance cost of planet");
     maintenance.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(maintenance);
 
     taxPanel = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_TAX, GameCommands.COMMAND_PLUS_TAX,
-        Icons.ICON_TAX, ": " + planet.getTax(),
+        Icons.ICON_TAX, ": 0",
         "How many productions are converted to credits", listener);
     taxPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     taxPanel.setInteractive(interactive);
     panel.add(taxPanel);
 
     metal = new IconLabel(null, Icons.getIconByName(Icons.ICON_METAL),
-        ": " + planet.getMetal());
+        ": 0000");
     metal.setToolTipText("Total metal on surface");
     metal.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(metal);
     metalOre = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_METAL_ORE),
-        ": " + planet.getAmountMetalInGround());
+        Icons.getIconByName(Icons.ICON_METAL_ORE), ": 00000");
     metalOre.setToolTipText("Total metal ore to mine.");
     metalOre.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(metalOre);
     happiness = new IconLabel(null, Icons.getIconByName(Icons.ICON_OKAY),
-        ": " + planet.calculateHappiness());
+        ": 00");
     happiness.setToolTipText(planet.getHappinessExplanation());
     happiness.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(happiness);
@@ -383,8 +364,6 @@ public class PlanetView extends BlackPanel {
     panel.add(constructionSelect);
     panel.add(Box.createRigidArea(new Dimension(60, 5)));
     buildingEstimate = new SpaceLabel("1000 turns");
-    buildingEstimate.setText(planet.getProductionTimeAsString(
-        (Construction) constructionSelect.getSelectedItem()));
     buildingEstimate.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(buildingEstimate);
     SpaceGreyPanel panelX = new SpaceGreyPanel();
@@ -422,8 +401,7 @@ public class PlanetView extends BlackPanel {
     topPanel.setTitle(planet.getName());
 
     InvisiblePanel eastPanel = new InvisiblePanel(imgBase);
-    buildingLabel = new SpaceLabel("Buildings("
-        + planet.getUsedPlanetSize() + "/" + planet.getGroundSize() + "):");
+    buildingLabel = new SpaceLabel("Buildings(00/00):");
     buildingLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
     eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
     eastPanel.add(buildingLabel);

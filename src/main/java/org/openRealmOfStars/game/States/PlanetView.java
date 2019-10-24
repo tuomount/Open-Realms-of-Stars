@@ -268,17 +268,17 @@ public class PlanetView extends BlackPanel {
     peopleGrowth.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(peopleGrowth);
     farmProd = new IconLabel(null, Icons.getIconByName(Icons.ICON_FARM),
-        ": " + planet.getTotalProduction(Planet.PRODUCTION_FOOD));
+        ": 00");
     farmProd.setToolTipText("Total production of food");
     farmProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(farmProd);
     mineProd = new IconLabel(null, Icons.getIconByName(Icons.ICON_MINE),
-        ": " + planet.getTotalProduction(Planet.PRODUCTION_METAL));
+        ": 00");
     mineProd.setToolTipText("Total production of metal");
     mineProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(mineProd);
     prodProd = new IconLabel(null, Icons.getIconByName(Icons.ICON_FACTORY),
-        ": " + planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION));
+        ": 00");
     prodProd.setToolTipText("Total production of production");
     prodProd.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(prodProd);

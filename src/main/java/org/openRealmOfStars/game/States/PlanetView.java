@@ -311,7 +311,7 @@ public class PlanetView extends BlackPanel {
 
     taxPanel = new WorkerProductionPanel(
         GameCommands.COMMAND_MINUS_TAX, GameCommands.COMMAND_PLUS_TAX,
-        Icons.ICON_TAX, ": 0",
+        Icons.ICON_TAX, ": 10",
         "How many productions are converted to credits", listener);
     taxPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
     taxPanel.setInteractive(interactive);
@@ -673,10 +673,19 @@ public class PlanetView extends BlackPanel {
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_MINUS_PRODUCTION)
         && planet.getWorkers(Planet.PRODUCTION_WORKERS) > 0) {
+      int originalProd = planet.getTotalProduction(
+          Planet.PRODUCTION_PRODUCTION);
       planet.setWorkers(Planet.PRODUCTION_WORKERS,
           planet.getWorkers(Planet.PRODUCTION_WORKERS) - 1);
       planet.setWorkers(Planet.CULTURE_ARTIST,
           planet.getWorkers(Planet.CULTURE_ARTIST) + 1);
+      if (planet.getTax()
+          > planet.getTotalProduction(Planet.PRODUCTION_PRODUCTION)) {
+        int newProd = planet.getTotalProduction(
+            Planet.PRODUCTION_PRODUCTION);
+        int decrease = originalProd - newProd;
+        planet.setTax(planet.getTax() - decrease, false);
+      }
       SoundPlayer.playMenuSound();
       updatePanel();
     }

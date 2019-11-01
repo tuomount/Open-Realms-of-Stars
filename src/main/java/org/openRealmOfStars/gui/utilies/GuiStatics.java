@@ -1104,6 +1104,13 @@ public final class GuiStatics {
           "/resources/images/mechion_bridge.png"));
 
   /**
+   * Ship Human bridge interior
+   */
+  public static final BufferedImage IMAGE_INTERIOR_HUMAN =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/human_bridge.png"));
+
+  /**
    * Get text width for certain font
    * @param font Font to use
    * @param text String

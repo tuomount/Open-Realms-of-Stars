@@ -154,6 +154,7 @@ public class CreditsView extends BlackPanel {
       + "Prehistoric nature landscape by Pepper Racoon - "
       + "https://opengameart.org/content/landscape\n\n"
       + "Viruses (Cold, Flu, Chicken Pox) by bart (CC0)\n\n"
+      + "Human Space Ship Bridge by Tuomo Untinen\n\n"
       + "Fonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

@@ -1102,12 +1102,6 @@ public final class GuiStatics {
   public static final BufferedImage IMAGE_INTERIOR_MECHION =
       IOUtilities.loadImage(GuiStatics.class.getResource(
           "/resources/images/mechion_bridge.png"));
-  /**
-   * Ship bridge interior 1 Console
-   */
-  public static final BufferedImage IMAGE_INTERIOR1_CONSOLE =
-      IOUtilities.loadImage(GuiStatics.class.getResource(
-          "/resources/images/bridge1-console.png"));
 
   /**
    * Get text width for certain font

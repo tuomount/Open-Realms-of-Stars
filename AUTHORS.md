@@ -51,7 +51,8 @@ Scaurian trader picture by Tuomo Untinen, original art by Surt - http://opengame
 
 Chiraloid race picture by Tuomo Untinen, original art by Surt - http://opengameart.org/forumtopic/cc0-scraps
 
-Space Captain by Justin Nichol - http://opengameart.org/content/space-captain
+Space Captain by Justin Nichol 
+Tuomo Untinen added legs for the captain. -https://opengameart.org/content/space-captain-with-legs
 
 The Husk- Human Analog Android by Justin Nichol - https://opengameart.org/content/the-husk-human-analog-android
 

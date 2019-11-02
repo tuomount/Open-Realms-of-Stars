@@ -1572,7 +1572,8 @@ public class AITurnView extends BlackPanel {
           Planet[] bestPlanets = new Planet[
               map.getPlayerList().getCurrentMaxRealms()];
           for (Planet planet : map.getPlanetList()) {
-            if (planet.getPlanetOwnerIndex() != -1) {
+            if (planet.getPlanetOwnerIndex() != -1
+                && planet.getPlanetOwnerIndex() < bestPlanets.length) {
               int index = planet.getPlanetOwnerIndex();
                 if (bestPlanets[index] == null) {
                   bestPlanets[index] = planet;
@@ -1908,11 +1909,14 @@ public class AITurnView extends BlackPanel {
       Planet planet = game.getStarMap().getPlanetList().get(i);
       if (planet.getPlanetPlayerInfo() != null) {
         PlayerInfo info = planet.getPlanetPlayerInfo();
-        numberOfPlanets[planet.getPlanetOwnerIndex()]++;
-        if (planet.hasTower()) {
-          towers[planet.getPlanetOwnerIndex()]++;
+        if (planet.getPlanetOwnerIndex() < numberOfPlanets.length) {
+          numberOfPlanets[planet.getPlanetOwnerIndex()]++;
+          if (planet.hasTower()) {
+            towers[planet.getPlanetOwnerIndex()]++;
+          }
         }
-        if (planet.broadcaster()) {
+        if (planet.broadcaster()
+            && planet.getPlanetOwnerIndex() < broadcasters.length) {
           broadcasters[planet.getPlanetOwnerIndex()] = true;
           for (int j = 0; j < game.getPlayers().getCurrentMaxRealms(); j++) {
             PlayerInfo realm = game.getPlayers().getPlayerInfoByIndex(j);

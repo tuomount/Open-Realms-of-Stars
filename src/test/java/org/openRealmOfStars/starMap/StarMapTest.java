@@ -433,6 +433,7 @@ public class StarMapTest {
     Mockito.when(hull.getSlotHull()).thenReturn(1);
     Mockito.when(hull.getImage()).thenReturn(ShipImages.spacePirates().getShipImage(0));
     Mockito.when(hull.getHullType()).thenReturn(ShipHullType.STARBASE);
+    Mockito.when(hull.getName()).thenReturn("Large starbase");
     Mockito.when(design.getHull()).thenReturn(hull);
     Mockito.when(design.getComponentList()).thenReturn(components);
     ShipStat stat = Mockito.mock(ShipStat.class);

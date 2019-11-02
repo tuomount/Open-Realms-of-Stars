@@ -109,6 +109,11 @@ public class DiplomaticTrade {
   private ArrayList<Planet> planetListForSecond;
 
   /**
+   * Flag for indicating diplomacy with pirates.
+   */
+  private boolean diplomacyWithPirates = false;
+
+  /**
    * Difference between two parties which is considered as
    * insult;
    */
@@ -138,14 +143,21 @@ public class DiplomaticTrade {
     starMap = map;
     first = index1;
     second = index2;
+    diplomacyWithPirates = false;
     int max = starMap.getPlayerList().getCurrentMaxRealms();
-    if (first >= max || first < 0) {
-      throw new IllegalArgumentException("First player index out of bounds("
-          + first + ")!");
+    if (map.getPlayerList().getBoardPlayer() != null
+        && first == max || second == max) {
+      diplomacyWithPirates = true;
     }
-    if (second >= max || second < 0) {
-      throw new IllegalArgumentException("Second player index out of bounds("
-         + second + ")!");
+    if (!diplomacyWithPirates) {
+      if (first >= max || first < 0) {
+        throw new IllegalArgumentException("First player index out of bounds("
+            + first + ")!");
+      }
+      if (second >= max || second < 0) {
+        throw new IllegalArgumentException("Second player index out of bounds("
+           + second + ")!");
+      }
     }
   }
 
@@ -2571,4 +2583,11 @@ public class DiplomaticTrade {
     diplomacyList.setNumberOfMeetings(diplomacyList.getNumberOfMeetings() + 1);
   }
 
+  /**
+   * Check flag for diplomacy with pirates.
+   * @return True if having diplomacy with pirates.
+   */
+  public boolean isDiplomacyWithPirates() {
+    return diplomacyWithPirates;
+  }
 }

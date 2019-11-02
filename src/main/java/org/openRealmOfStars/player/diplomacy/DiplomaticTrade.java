@@ -408,7 +408,7 @@ public class DiplomaticTrade {
           NegotiationOffer voteOffer = createBestVotePromise(offerMaker);
           int value = firstOffer.getOfferValue(offerMaker.getRace());
           if (voteOffer != null && voteOffer.getOfferValue(
-              offerMaker.getRace()) >= value) {
+              offerMaker.getRace()) >= value && !isDiplomacyWithPirates()) {
             secondOffer.add(voteOffer);
             value = value - voteOffer.getOfferValue(offerMaker.getRace());
           }
@@ -493,7 +493,7 @@ public class DiplomaticTrade {
       firstOffer = new NegotiationList();
       secondOffer = new NegotiationList();
       NegotiationOffer voteOffer = createBestVotePromise(offerMaker);
-      if (voteOffer != null) {
+      if (voteOffer != null && !isDiplomacyWithPirates()) {
         secondOffer.add(voteOffer);
         value = value - voteOffer.getOfferValue(offerMaker.getRace());
       }
@@ -1322,6 +1322,30 @@ public class DiplomaticTrade {
   }
 
   /**
+   * Offer for space pirate.
+   * Tries to trade/buy tech or buy maps or sell ships
+   */
+  public void generatePirateOffer() {
+    PlayerInfo info = starMap.getPlayerByIndex(first);
+    PlayerInfo agree = starMap.getPlayerByIndex(second);
+    int value = DiceGenerator.getRandom(100);
+    if (value < 40) {
+      if (!generateFleetSellOffer(info, agree, fleetListForFirst)) {
+        generateTechTrade(TRADE);
+      }
+    } else if (value < 70) {
+      generateTechTrade(BUY);
+    } else if (value < 80) {
+      generateTechTrade(SELL);
+    } else {
+      if (DiceGenerator.getRandom(1) == 0) {
+        generateMapTrade(TRADE, true);
+      } else {
+        generateMapTrade(BUY, true);
+      }
+    }
+  }
+  /**
    * Offer by scientific attitude.
    * Tries to focus trading or buying the tech
    */
@@ -1760,7 +1784,9 @@ public class DiplomaticTrade {
     if (techListForFirst == null || techListForSecond == null) {
       generateTechList();
     }
-    if (offerPlayer.getDiplomacy().getDiplomacyList(second)
+    if (isDiplomacyWithPirates()) {
+      generatePirateOffer();
+    } else if (offerPlayer.getDiplomacy().getDiplomacyList(second)
         .getNumberOfMeetings() == 0) {
       generateFirstOffer();
     } else if (offerPlayer.getDiplomacy().getDiplomaticRelation(second)
@@ -1908,7 +1934,12 @@ public class DiplomaticTrade {
     if (bonus > 10) {
       bonus = 10;
     }
-    difference = difference - bonus;
+    if (!isDiplomacyWithPirates()) {
+      difference = difference - bonus;
+    } else {
+      // There is always war between pirates
+      return difference;
+    }
     if (info2.getDiplomacy().isWar(first)
         || getSpeechTypeByOffer() == SpeechType.DEMAND
         || getSpeechTypeByOffer() == SpeechType.ASK_MOVE_FLEET

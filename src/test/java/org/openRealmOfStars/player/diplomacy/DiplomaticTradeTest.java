@@ -71,6 +71,8 @@ public class DiplomaticTradeTest {
 
     StarMap map = Mockito.mock(StarMap.class);
     Mockito.when(map.getPlayerList()).thenReturn(players);
+    Mockito.when(map.getMaxX()).thenReturn(5);
+    Mockito.when(map.getMaxY()).thenReturn(5);
 
     PlayerInfo player1 = new PlayerInfo(SpaceRace.HOMARIANS,maxPlayer,0);
     TechList tech1 = player1.getTechList();
@@ -93,9 +95,13 @@ public class DiplomaticTradeTest {
     tech2.addTech(new Tech("DefTech2", TechType.Defense, 1));
     tech2.addTech(new Tech("ProTech2", TechType.Propulsion, 1));
     tech2.addTech(new Tech("ImpTech3", TechType.Improvements, 1));
-    player2.setTotalCredits(10);
+    player2.setTotalCredits(20);
     player2.initMapData(5, 5);
     player2.setSectorVisibility(0, 0, PlayerInfo.VISIBLE);
+    player2.setSectorVisibility(1, 0, PlayerInfo.VISIBLE);
+    player2.setSectorVisibility(2, 0, PlayerInfo.VISIBLE);
+    player2.setSectorVisibility(0, 1, PlayerInfo.VISIBLE);
+    player2.setSectorVisibility(0, 2, PlayerInfo.VISIBLE);
     Mockito.when(players.getPlayerInfoByIndex(0)).thenReturn(player1);
     Mockito.when(players.getPlayerInfoByIndex(maxPlayer))
         .thenReturn(player2);

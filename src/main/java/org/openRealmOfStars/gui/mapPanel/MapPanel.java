@@ -859,6 +859,7 @@ public class MapPanel extends JPanel {
     int cursorPixelX = 0;
     int cursorPixelY = 0;
     Color colorRed = null;
+    boolean blackholeUpdated = false;
     int tileWidth = Tile.MAX_WIDTH;
     int tileHeight = Tile.MAX_HEIGHT;
     Graphics2D gr = screen.createGraphics();
@@ -944,6 +945,11 @@ public class MapPanel extends JPanel {
     int pixelY = viewPointOffsetY;
     for (int j = -viewPointY; j < viewPointY + 1; j++) {
       for (int i = -viewPointX; i < viewPointX + 1; i++) {
+        Tile blackholeTile = starMap.getTile(i + cx, j + cy);
+        if (blackholeTile.isBlackhole() && !blackholeUpdated) {
+          updateBlackHoleEffect(pixelX, pixelY, i, j, blackholeTile);
+          blackholeUpdated = true;
+        }
         Stroke dashed = new BasicStroke(1, BasicStroke.CAP_SQUARE,
             BasicStroke.JOIN_BEVEL, 1, new float[] {0.1f, 4.5f }, 0);
         Stroke full = new BasicStroke(1, BasicStroke.CAP_SQUARE,

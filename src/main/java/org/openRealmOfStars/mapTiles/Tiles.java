@@ -9,7 +9,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2019  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -101,6 +101,22 @@ public final class Tiles {
     hashOfTiles.put(tile.getName(), tile);
   }
 
+  /**
+   * Black hole indexing 1st part start
+   */
+  private static int bhFirstStart;
+  /**
+   * Black hole indexing 1st part END
+   */
+  private static int bhFirstEnd;
+  /**
+   * Black hole indexing 2nd part start
+   */
+  private static int bhSecondStart;
+  /**
+   * Black hole indexing 2nd part END
+   */
+  private static int bhSecondEnd;
   /**
    * Initialize tiles
    */
@@ -325,6 +341,70 @@ public final class Tiles {
     addTile(tile);
     tile = new Tile(tilesImage, 17, 3, TileNames.ARTIFICIALWORLD1);
     addTile(tile);
+    // Reading the blackhole 3x3
+    tile = new Tile(tilesImage, 0, 3, TileNames.BLACKHOLE_NW);
+    tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
+    addTile(tile);
+    bhFirstStart = tile.getIndex();
+    tile = new Tile(tilesImage, 1, 3, TileNames.BLACKHOLE_N);
+    tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 2, 3, TileNames.BLACKHOLE_NE);
+    tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 0, 4, TileNames.BLACKHOLE_W);
+    tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
+    addTile(tile);
+    bhFirstEnd = tile.getIndex();
+    tile = new Tile(tilesImage, 1, 4, TileNames.BLACKHOLE_C);
+    tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 2, 4, TileNames.BLACKHOLE_E);
+    tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
+    addTile(tile);
+    bhSecondStart = tile.getIndex();
+    tile = new Tile(tilesImage, 0, 5, TileNames.BLACKHOLE_SW);
+    tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 1, 5, TileNames.BLACKHOLE_S);
+    tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
+    addTile(tile);
+    tile = new Tile(tilesImage, 2, 5, TileNames.BLACKHOLE_SE);
+    tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
+    addTile(tile);
+    bhSecondEnd = tile.getIndex();
+  }
+
+  /**
+   * Get Blackhole first index start
+   * @return Index
+   */
+  public static int getBhFirstStart() {
+    return bhFirstStart;
+  }
+
+  /**
+   * Get Blackhole first index end
+   * @return Index
+   */
+  public static int getBhFirstEnd() {
+    return bhFirstEnd;
+  }
+
+  /**
+   * Get Blackhole second index start
+   * @return Index
+   */
+  public static int getBhSecondStart() {
+    return bhSecondStart;
+  }
+
+  /**
+   * Get Blackhole second index end
+   * @return Index
+   */
+  public static int getBhSecondEnd() {
+    return bhSecondEnd;
   }
 
 }

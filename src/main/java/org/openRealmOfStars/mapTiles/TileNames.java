@@ -378,6 +378,43 @@ public final class TileNames {
   public static final String WORM_HOLE2 = "WormHole2";
 
   /**
+   * Black North West
+   */
+  public static final String BLACKHOLE_NW = "BLACKHOLE_NW";
+  /**
+   * Blackhole North
+   */
+  public static final String BLACKHOLE_N = "BLACKHOLE_N";
+  /**
+   * Blackhole North East
+   */
+  public static final String BLACKHOLE_NE = "BLACKHOLE_NE";
+  /**
+   * Blackhole East
+   */
+  public static final String BLACKHOLE_E = "BLACKHOLE_E";
+  /**
+   * Blackhole South East
+   */
+  public static final String BLACKHOLE_SE = "BLACKHOLE_SE";
+  /**
+   * Blackhole South
+   */
+  public static final String BLACKHOLE_S = "BLACKHOLE_S";
+  /**
+   * Blackhole South West
+   */
+  public static final String BLACKHOLE_SW = "BLACKHOLE_SW";
+  /**
+   * Blackhole West
+   */
+  public static final String BLACKHOLE_W = "BLACKHOLE_W";
+  /**
+   * Blackhole Center
+   */
+  public static final String BLACKHOLE_C = "BLACKHOLE_C";
+
+  /**
    * List of non harmful space anomalies
    */
   public static final String[] NON_HARMULFUL_SPACE_ANOMALIES = {
@@ -430,6 +467,12 @@ public final class TileNames {
       + "objects which radiants energy into outer space. Energy is genereated"
       + " from thermonuclear fusion of hydrogen and helium in "
       + "core of the star.";
+  /**
+   * Description about blackhole
+   */
+  public static final String BLACKHOLE_DESCRIPTION = "Super massive black holes"
+      + " have mass that is in order of one hundred thousands to billion times"
+      + " of star. There is super massive black hole in center of each galaxy.";
   /**
    * Description about space anomaly
    */

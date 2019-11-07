@@ -353,6 +353,63 @@ public class MapPanel extends JPanel {
    * Flicker upper limit
    */
   private static final int FLICKER_UPPER_LIMIT = 384;
+
+  /**
+   * Update black hole effect while drawing the map
+   * @param pixelX Pixel coordinate for X
+   * @param pixelY Pixel coordinate for Y
+   * @param i Map position in X coordinate
+   * @param j Map position in Y coordinate
+   * @param tile Black hole tile
+   */
+  public void updateBlackHoleEffect(final int pixelX, final int pixelY,
+      final int i, final int j, final Tile tile) {
+    if (tile.getName() == TileNames.BLACKHOLE_NW
+        && j + 1 < viewPointY && i + 1 < viewPointX) {
+      BufferedImage tmp = screen.getSubimage(pixelX + Tile.MAX_WIDTH,
+          pixelY + Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      Tile.updateBlackHoleEffect(tmp);
+    } else if (tile.getName() == TileNames.BLACKHOLE_N
+        && j + 1 < viewPointY && i < viewPointX) {
+      BufferedImage tmp = screen.getSubimage(pixelX,
+          pixelY + Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      Tile.updateBlackHoleEffect(tmp);
+    } else if (tile.getName() == TileNames.BLACKHOLE_NE
+        && j + 1 < viewPointY && i - 1 >= -viewPointX) {
+      BufferedImage tmp = screen.getSubimage(pixelX - Tile.MAX_WIDTH,
+          pixelY + Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      Tile.updateBlackHoleEffect(tmp);
+    } else if (tile.getName() == TileNames.BLACKHOLE_W
+        && j < viewPointY && i < viewPointX) {
+      BufferedImage tmp = screen.getSubimage(pixelX - Tile.MAX_WIDTH,
+          pixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      Tile.updateBlackHoleEffect(tmp);
+    } else if (tile.getName() == TileNames.BLACKHOLE_E
+        && j < viewPointY && i + 1 < viewPointX) {
+      BufferedImage tmp = screen.getSubimage(pixelX + Tile.MAX_WIDTH,
+          pixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      Tile.updateBlackHoleEffect(tmp);
+    } else if (tile.getName() == TileNames.BLACKHOLE_SW
+        && j - 1  >= -viewPointY && i + 1 < viewPointX) {
+      BufferedImage tmp = screen.getSubimage(pixelX + Tile.MAX_WIDTH,
+          pixelY - Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      Tile.updateBlackHoleEffect(tmp);
+    } else if (tile.getName() == TileNames.BLACKHOLE_SW
+        && j - 1  >= -viewPointY && i < viewPointX) {
+      BufferedImage tmp = screen.getSubimage(pixelX,
+          pixelY - Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      Tile.updateBlackHoleEffect(tmp);
+    } else if (tile.getName() == TileNames.BLACKHOLE_SE
+        && j - 1  >= -viewPointY && i - 1 >= -viewPointX) {
+      BufferedImage tmp = screen.getSubimage(pixelX - Tile.MAX_WIDTH,
+          pixelY - Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      Tile.updateBlackHoleEffect(tmp);
+    } else {
+      BufferedImage tmp = screen.getSubimage(pixelX,
+          pixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      Tile.updateBlackHoleEffect(tmp);
+    }
+  }
   /**
    * Draw star map to Map panel
    * @param starMap Star map to draw
@@ -390,6 +447,7 @@ public class MapPanel extends JPanel {
         return;
       }
     }
+    boolean blackholeUpdated = false;
     byte[][] routeData = null;
     if (route != null) {
       routeData = route.getRouteOnMap(starMap.getMaxX(), starMap.getMaxY());
@@ -480,6 +538,11 @@ public class MapPanel extends JPanel {
             BasicStroke.JOIN_BEVEL, 1, new float[] {1f }, 0);
         gr.setStroke(dashed);
         gr.setColor(colorDarkBlue);
+        Tile blackholeTile = starMap.getTile(i + cx, j + cy);
+        if (blackholeTile.isBlackhole() && !blackholeUpdated) {
+          updateBlackHoleEffect(pixelX, pixelY, i, j, blackholeTile);
+          blackholeUpdated = true;
+        }
         if (i != viewPointX) {
           // Right line
           gr.drawLine(pixelX + Tile.MAX_WIDTH - 1, pixelY,
@@ -517,7 +580,9 @@ public class MapPanel extends JPanel {
             && info.getSectorVisibility(new Coordinate(i + cx,
                 j + cy)) != PlayerInfo.UNCHARTED
             || starMap.getTileInfo(i + cx, j + cy)
-                .getType() == SquareInfo.TYPE_SUN) {
+                .getType() == SquareInfo.TYPE_SUN
+            || starMap.getTileInfo(i + cx, j + cy)
+                .getType() == SquareInfo.TYPE_BLACKHOLE_CENTER) {
           tile.draw(gr, pixelX, pixelY);
         }
 

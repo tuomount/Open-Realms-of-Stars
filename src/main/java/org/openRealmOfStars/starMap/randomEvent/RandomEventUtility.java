@@ -815,7 +815,7 @@ public final class RandomEventUtility {
         event.setText("Space pirate raiders appear near " + planet.getName()
            + ". Looks like this was surprise attack from space pirates.");
         ImageInstruction instructions = new ImageInstruction();
-        instructions.addImage(ImageInstruction.PIRATE_PILOT);
+        instructions.addImage(ImageInstruction.PIRATE_RAIDERS);
         event.setImageInstructions(instructions.build());
         Message message = new Message(MessageType.PLANETARY, event.getText(),
             Icons.getIconByName(Icons.ICON_HULL_TECH));
@@ -852,6 +852,9 @@ public final class RandomEventUtility {
         event.setText("Fleet called " + fleet.getName()
             + " decided to start space pirating. " + info.getEmpireName()
             + " lost control of that fleet.");
+        ImageInstruction instructions = new ImageInstruction();
+        instructions.addImage(ImageInstruction.MUTINY);
+        event.setImageInstructions(instructions.build());
         Message message = new Message(MessageType.FLEET, event.getText(),
             Icons.getIconByName(Icons.ICON_HULL_TECH));
         message.setCoordinate(fleet.getCoordinate());

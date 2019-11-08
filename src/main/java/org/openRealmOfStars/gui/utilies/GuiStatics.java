@@ -957,6 +957,19 @@ public final class GuiStatics {
       GuiStatics.class.getResource("/resources/images/pirate_pilot.png"));
 
   /**
+   * Pirate raiders
+   */
+  public static final BufferedImage IMAGE_PIRATE_RAIDERS =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/pirate_raiders.png"));
+
+  /**
+   * Mutiny
+   */
+  public static final BufferedImage IMAGE_MUTINY = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/mutiny.png"));
+
+  /**
    * Blackhole pilot
    */
   public static final BufferedImage IMAGE_BLACKHOLE = IOUtilities.loadImage(

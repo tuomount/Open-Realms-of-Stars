@@ -154,6 +154,11 @@ Viruses (Cold, Flu, Chicken Pox) by bart (CC0)
 
 Human Space Ship Bridge by Tuomo Untinen
 
+Space ship images by Viktor Hahn (Viktor.Hahn@web.de)
+using space ship models by greyoxide, Michael Davies, and Viktor Hahn,
+is licensed under the Creative Commons Attribution 3.0 Unported License.
+http://creativecommons.org/licenses/by/3.0/
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

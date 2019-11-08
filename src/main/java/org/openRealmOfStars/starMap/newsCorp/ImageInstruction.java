@@ -279,6 +279,14 @@ public class ImageInstruction {
    */
   public static final String PIRATE_PILOT = "pirate pilot";
   /**
+   * Pirate raiders
+   */
+  public static final String PIRATE_RAIDERS = "pirate raiders";
+  /**
+   * Mutiny
+   */
+  public static final String MUTINY = "mutiny";
+  /**
    * Old ship
    */
   public static final String OLD_SHIP = "old ship";
@@ -477,6 +485,8 @@ public class ImageInstruction {
         && !SOLAR_FLARES.equals(image)
         && !SOLAR_NO_FLARES.equals(image)
         && !PIRATE_PILOT.equals(image)
+        && !PIRATE_RAIDERS.equals(image)
+        && !MUTINY.equals(image)
         && !OLD_SHIP.equals(image)
         && !DESERT.equals(image)
         && !PARADISE.equals(image)
@@ -908,6 +918,12 @@ public class ImageInstruction {
     }
     if (PIRATE_PILOT.equals(image)) {
       drawImg = GuiStatics.IMAGE_PIRATE_PILOT;
+    }
+    if (PIRATE_RAIDERS.equals(image)) {
+      drawImg = GuiStatics.IMAGE_PIRATE_RAIDERS;
+    }
+    if (MUTINY.equals(image)) {
+      drawImg = GuiStatics.IMAGE_MUTINY;
     }
     if (OLD_SHIP.equals(image)) {
       drawImg = GuiStatics.IMAGE_OLD_SHIP;

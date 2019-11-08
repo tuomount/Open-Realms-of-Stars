@@ -242,6 +242,7 @@ public class CreditsView extends BlackPanel {
       + "www.littlerobotsoundfactory.com\n"
       + "Licensed under CC BY 3.0 "
       + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Glitch sound by Tuomo Untinen(CC0)\n\n"
       + "# Musics By\n\n"
       + "Observing The Star by\n"
       + "YD (CC0)\n\n"

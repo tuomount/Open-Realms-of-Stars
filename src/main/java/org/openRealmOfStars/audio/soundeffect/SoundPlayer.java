@@ -196,6 +196,10 @@ public final class SoundPlayer {
    * Sound effect for colonized planet
    */
   public static final String COLONIZED = "/resources/sounds/colonized.wav";
+  /**
+   * Sound effect for glitch in video feed
+   */
+  public static final String GLITCH = "/resources/sounds/glitch.wav";
 
 
   /**

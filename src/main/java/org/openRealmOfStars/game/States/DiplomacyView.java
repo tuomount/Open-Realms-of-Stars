@@ -649,7 +649,10 @@ public class DiplomacyView extends BlackPanel {
   private SpeechLine[] createOfferLines(final int startType) {
     int humanIndex = starMap.getPlayerList().getIndex(human);
     ArrayList<SpeechLine> speechLines = new ArrayList<>();
-    if (startType == AI_REGULAR) {
+    if (trade.isDiplomacyWithPirates()) {
+      speechLines.add(SpeechFactory.createLine(SpeechType.TRADE,
+          human.getRace(), null));
+    } else if (startType == AI_REGULAR) {
       if (trade.getFirstOffer() != null
           && trade.getFirstOffer().isWarInOffer()) {
         speechLines.add(SpeechFactory.createAgreeWithWarLine(
@@ -899,6 +902,12 @@ public class DiplomacyView extends BlackPanel {
             offer.getRealm().getEmpireName()).getLine();
     } else {
       text = SpeechFactory.createLine(type, ai.getRace(), null).getLine();
+    }
+    if (trade.isDiplomacyWithPirates()) {
+      aiVoteNo.setEnabled(false);
+      aiVoteYes.setEnabled(false);
+      humanVoteNo.setEnabled(false);
+      humanVoteYes.setEnabled(false);
     }
     infoText.setText(text);
     textCounter = 0;

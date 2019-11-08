@@ -211,6 +211,13 @@ public final class MusicPlayer {
       "/resources/musics/Drifting Beyond the Stars.ogg");
 
   /**
+   * Set Fire to Reality by Hitctrl CC-BY 3.0
+   */
+  public static final MusicFileInfo SET_FIRE_TO_REALITY = new MusicFileInfo(
+      "Set Fire to Reality - dark/electronic", "Justin Dalessandro(ColdOneK)",
+      "/resources/musics/SetFireToRealityV2.ogg");
+
+  /**
    * List of music to played while playing
    */
   protected static final MusicFileInfo[] GAME_MUSIC_LIST = {YD_OBSERVING_STAR,

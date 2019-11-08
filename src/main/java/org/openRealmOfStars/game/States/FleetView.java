@@ -346,9 +346,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     hailBtn.addActionListener(listener);
     hailBtn.setEnabled(!interactive);
     if (!interactiveView && this.fleet != null) {
-      if (this.fleet.isPrivateerFleet()
-          || this.fleet.getFirstShip().getHull().getRace()
-          == SpaceRace.SPACE_PIRATE) {
+      if (this.fleet.isPrivateerFleet()) {
         hailBtn.setEnabled(false);
       } else {
         hailBtn.setEnabled(true);
@@ -451,9 +449,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       }
     }
     if (!interactiveView && fleet != null) {
-      if (fleet.isPrivateerFleet()
-          || this.fleet.getFirstShip().getHull().getRace()
-          == SpaceRace.SPACE_PIRATE) {
+      if (fleet.isPrivateerFleet()) {
         hailBtn.setEnabled(false);
       } else {
         hailBtn.setEnabled(true);
@@ -713,9 +709,6 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
         imgBase.setTitle("In Deep Space Anchor...");
       }
       PlayerInfo fleetInfo = starMap.getPlayerInfoByFleet(fleet);
-      if (fleetInfo != null && fleetInfo.isBoard()) {
-        hailBtn.setEnabled(false);
-      }
       if (fleetInfo != info && conquerBtn != null) {
         conquerBtn.setEnabled(false);
       }

@@ -816,9 +816,7 @@ public enum SpaceRace {
     case HOMARIANS:
       return MusicPlayer.MALLOGA_BALLING;
     case SPACE_PIRATE:
-      // There is no diplomacy with space pirate so no
-      // need for own music.
-      return MusicPlayer.MALLOGA_BALLING;
+      return MusicPlayer.SET_FIRE_TO_REALITY;
     case CHIRALOIDS:
       return MusicPlayer.MENACE;
     default:

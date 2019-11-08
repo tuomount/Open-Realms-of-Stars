@@ -320,7 +320,11 @@ public class CreditsView extends BlackPanel {
       + "Drifting Beyond the Stars by\n"
       + "Hitctrl https://soundcloud.com/hitctrl\n"
       + "Licensed under CC BY 3.0 "
-      + "http://creativecommons.org/licenses/by/3.0/\n\n";
+      + "http://creativecommons.org/licenses/by/3.0/\n\n"
+      + "Set Fire to Reality - dark/electronic by \n"
+      + "Justin Dalessandro(ColdOneK)\n"
+      + "Licensed under CC BY 4.0 "
+      + "http://creativecommons.org/licenses/by/4.0/\n\n";
 
   /**
    * Constructor for Credits view

@@ -309,6 +309,14 @@ public class Minimap {
               .getType() == SquareInfo.TYPE_PLANET && sectorSize <= 2) {
             drawSector(img, x * sectorSize, y * sectorSize,
                 GuiStatics.COLOR_BRIGHT_WHITE);
+          } else if (map.getTileInfo(x + topX, y + topY)
+              .getType() == SquareInfo.TYPE_BLACKHOLE) {
+            drawSector(img, x * sectorSize, y * sectorSize,
+                Color.BLACK);
+          } else if (map.getTileInfo(x + topX, y + topY)
+              .getType() == SquareInfo.TYPE_BLACKHOLE_CENTER) {
+            drawSector(img, x * sectorSize, y * sectorSize,
+                Color.BLACK);
           }
         } else {
           drawSector(img, x * sectorSize, y * sectorSize,

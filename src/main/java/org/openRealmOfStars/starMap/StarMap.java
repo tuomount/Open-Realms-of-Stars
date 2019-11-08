@@ -328,6 +328,30 @@ public class StarMap {
         solarSystem[i][j] = 0;
       }
     }
+    int cx = maxX / 2;
+    int cy = maxY / 2;
+    tiles[cx][cy] = Tiles.getTileByName(TileNames.BLACKHOLE_C).getIndex();
+    tileInfo[cx][cy] = new SquareInfo(SquareInfo.TYPE_BLACKHOLE_CENTER, 0);
+    tiles[cx - 1][cy - 1] = Tiles.getTileByName(TileNames.BLACKHOLE_NW)
+        .getIndex();
+    tileInfo[cx - 1][cy - 1] = new SquareInfo(SquareInfo.TYPE_BLACKHOLE, 0);
+    tiles[cx][cy - 1] = Tiles.getTileByName(TileNames.BLACKHOLE_N).getIndex();
+    tileInfo[cx][cy - 1] = new SquareInfo(SquareInfo.TYPE_BLACKHOLE, 0);
+    tiles[cx + 1][cy - 1] = Tiles.getTileByName(TileNames.BLACKHOLE_NE)
+        .getIndex();
+    tileInfo[cx + 1][cy - 1] = new SquareInfo(SquareInfo.TYPE_BLACKHOLE, 0);
+    tiles[cx - 1][cy] = Tiles.getTileByName(TileNames.BLACKHOLE_W).getIndex();
+    tileInfo[cx - 1][cy] = new SquareInfo(SquareInfo.TYPE_BLACKHOLE, 0);
+    tiles[cx + 1][cy] = Tiles.getTileByName(TileNames.BLACKHOLE_E).getIndex();
+    tileInfo[cx + 1][cy] = new SquareInfo(SquareInfo.TYPE_BLACKHOLE, 0);
+    tiles[cx - 1][cy + 1] = Tiles.getTileByName(TileNames.BLACKHOLE_SW)
+        .getIndex();
+    tileInfo[cx - 1][cy + 1] = new SquareInfo(SquareInfo.TYPE_BLACKHOLE, 0);
+    tiles[cx][cy + 1] = Tiles.getTileByName(TileNames.BLACKHOLE_S).getIndex();
+    tileInfo[cx][cy + 1] = new SquareInfo(SquareInfo.TYPE_BLACKHOLE, 0);
+    tiles[cx + 1][cy + 1] = Tiles.getTileByName(TileNames.BLACKHOLE_SE)
+        .getIndex();
+    tileInfo[cx + 1][cy + 1] = new SquareInfo(SquareInfo.TYPE_BLACKHOLE, 0);
     newsCorpData = new NewsCorpData(players.getCurrentMaxRealms());
     turn = 0;
     aiTurnNumber = 0;

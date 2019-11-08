@@ -4,6 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
 
+import org.openRealmOfStars.gui.mapPanel.BlackHoleEffect;
+
 /**
  *
  * Open Realm of Stars game project
@@ -63,6 +65,11 @@ public class Tile {
   private String tileDescription;
 
   /**
+   * Static blackhole effect
+   */
+  private static BlackHoleEffect blackholeEffect;
+
+  /**
    * Get tile from tileset image, where x is number of tiles in X axel and
    * y is number of tiles in y axel.
    * @param tilesetImage BufferedImage
@@ -92,9 +99,28 @@ public class Tile {
    * @param y Coordinates on y axel
    */
   public void draw(final Graphics2D g, final int x, final int y) {
-    g.drawImage(img, x, y, null);
+    if (isBlackhole()) {
+      if (blackholeEffect == null) {
+        blackholeEffect = new BlackHoleEffect(new BufferedImage(MAX_WIDTH,
+            MAX_HEIGHT, BufferedImage.TYPE_INT_ARGB));
+      }
+      blackholeEffect.drawBlackholeTile(g, x, y, this);
+    } else {
+      g.drawImage(img, x, y, null);
+    }
   }
 
+  /**
+   * Update black hole effect for all tiles.
+   * @param img New background for blackhole.
+   */
+  public static void updateBlackHoleEffect(final BufferedImage img) {
+    if (blackholeEffect == null) {
+      blackholeEffect = new BlackHoleEffect(img);
+    } else {
+      blackholeEffect.updateBackground(img);
+    }
+  }
   /**
    * Draw mini sector to target image.
    * @param target Target image where to draw.
@@ -248,9 +274,30 @@ public class Tile {
     return false;
   }
 
+  /**
+   * Is tile black hole
+   * @return True if black hole
+   */
+  public boolean isBlackhole() {
+    if (tileIndex >= Tiles.getBhFirstStart()
+        && tileIndex <= Tiles.getBhFirstEnd()
+        || tileIndex >= Tiles.getBhSecondStart()
+        && tileIndex <= Tiles.getBhSecondEnd()) {
+      return true;
+    }
+    return false;
+  }
   @Override
   public String toString() {
     return name + " (" + tileIndex + ")";
+  }
+
+  /**
+   * Get raw image tile.
+   * @return Get actual raw tile
+   */
+  public BufferedImage getRawTile() {
+    return img;
   }
 
 }

@@ -806,7 +806,7 @@ public class DiplomaticTrade {
         break;
       }
     }
-    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+    int power = starMap.getMilitaryDifference(first,
         second);
     int fatigue = info.getTotalWarFatigue();
     generateEqualTrade(NegotiationType.PEACE);
@@ -924,7 +924,7 @@ public class DiplomaticTrade {
     Attitude attitude = info.getAiAttitude();
     switch (attitude) {
       case AGGRESSIVE: {
-        int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+        int power = starMap.getMilitaryDifference(first,
             second);
         if (power > 30) {
           generateEqualTrade(NegotiationType.WAR);
@@ -934,7 +934,7 @@ public class DiplomaticTrade {
         break;
       }
       case MILITARISTIC: {
-        int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+        int power = starMap.getMilitaryDifference(first,
             second);
         if (power > 60) {
           generateEqualTrade(NegotiationType.WAR);
@@ -992,7 +992,7 @@ public class DiplomaticTrade {
   public void generateAggressiveAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
     PlayerInfo agree = starMap.getPlayerByIndex(second);
-    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+    int power = starMap.getMilitaryDifference(first,
         second);
     if (power > 40 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
@@ -1074,7 +1074,7 @@ public class DiplomaticTrade {
   public void generateBackstabbingAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
     PlayerInfo agree = starMap.getPlayerByIndex(second);
-    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+    int power = starMap.getMilitaryDifference(first,
         second);
     if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
@@ -1173,7 +1173,7 @@ public class DiplomaticTrade {
   public void generateDiplomaticAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
     PlayerInfo agree = starMap.getPlayerByIndex(second);
-    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+    int power = starMap.getMilitaryDifference(first,
         second);
     if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
@@ -1246,7 +1246,7 @@ public class DiplomaticTrade {
   public void generateExpansionistAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
     PlayerInfo agree = starMap.getPlayerByIndex(second);
-    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+    int power = starMap.getMilitaryDifference(first,
         second);
     if (power > 60 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
@@ -1352,7 +1352,7 @@ public class DiplomaticTrade {
   public void generateScientificAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
     PlayerInfo agree = starMap.getPlayerByIndex(second);
-    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+    int power = starMap.getMilitaryDifference(first,
         second);
     if (power > 100 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
@@ -1434,7 +1434,7 @@ public class DiplomaticTrade {
   public void generateMerchanticalAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
     PlayerInfo agree = starMap.getPlayerByIndex(second);
-    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+    int power = starMap.getMilitaryDifference(first,
         second);
     if (power > 100 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
@@ -1539,7 +1539,7 @@ public class DiplomaticTrade {
   public void generateMilitaristicAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
     PlayerInfo agree = starMap.getPlayerByIndex(second);
-    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+    int power = starMap.getMilitaryDifference(first,
         second);
     if (power > 50 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
@@ -1625,7 +1625,7 @@ public class DiplomaticTrade {
   public void generateLogicalAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
     PlayerInfo agree = starMap.getPlayerByIndex(second);
-    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+    int power = starMap.getMilitaryDifference(first,
         second);
     if (power > 80 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {
@@ -1704,7 +1704,7 @@ public class DiplomaticTrade {
   public void generatePeacefulAttitudeOffer() {
     PlayerInfo info = starMap.getPlayerByIndex(first);
     PlayerInfo agree = starMap.getPlayerByIndex(second);
-    int power = starMap.getNewsCorpData().getMilitaryDifference(first,
+    int power = starMap.getMilitaryDifference(first,
         second);
     if (power > 200 && info.getDiplomacy().getDiplomaticRelation(second)
         .isEmpty()) {

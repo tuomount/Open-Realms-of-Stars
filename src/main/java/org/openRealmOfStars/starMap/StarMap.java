@@ -42,6 +42,7 @@ import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
+import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
 import org.openRealmOfStars.starMap.vote.Votes;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.ErrorLogger;
@@ -1059,6 +1060,11 @@ public class StarMap {
           planet.setAmountMetalInGround(HOMEWORLD_METAL);
           planet.addBuilding(BuildingFactory.createByName("Space port"));
           planet.setHomeWorldIndex(playerInfo.getRace().getIndex());
+          if (playerInfo.isHuman()) {
+            // Adding starting building for human.
+            planet.setUnderConstruction(ConstructionFactory.createByName(
+                "Extra credit"));
+          }
           if (playerInfo.getRace() == SpaceRace.MECHIONS) {
             planet.setWorkers(Planet.FOOD_FARMERS, 0);
             planet.setWorkers(Planet.METAL_MINERS, 0);

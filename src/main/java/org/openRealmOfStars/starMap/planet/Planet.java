@@ -1493,6 +1493,10 @@ public class Planet {
         }
       }
 
+      if (planetOwnerInfo.isHuman() && underConstruction == null) {
+        // Forcing planet to have something to construct if player is human.
+        setUnderConstruction(ConstructionFactory.createByName("Extra credit"));
+      }
       // Making building happens at the end
       if (underConstruction != null
           && metal >= underConstruction.getMetalCost()

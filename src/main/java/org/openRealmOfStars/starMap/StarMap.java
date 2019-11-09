@@ -18,6 +18,7 @@ import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.WinningStrategy;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
@@ -30,6 +31,7 @@ import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.history.History;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
@@ -2112,6 +2114,7 @@ public class StarMap {
       }
     }
     updateEspionage();
+    updateWinningStrategies();
   }
 
   /**
@@ -3400,4 +3403,34 @@ public class StarMap {
       }
     }
   }
+
+  /**
+   * Update winning strategies for AI.
+   */
+  public void updateWinningStrategies() {
+    if (getTurn() > 99) {
+      for (int i = 0; i < getPlayerList().getCurrentMaxRealms(); i++) {
+        if (getPlayerByIndex(i).isHuman()) {
+          continue;
+        }
+        if (getPlayerByIndex(i).getTechList().hasTech(TechType.Improvements,
+            "United Galaxy Tower") && getScoreDiplomacy() > 0) {
+          getPlayerByIndex(i).setStrategy(WinningStrategy.DIPLOMATIC);
+        }
+        if (getNewsCorpData().getResearch().getPosition(i) < 3
+            && getScoreResearch() > 0) {
+          getPlayerByIndex(i).setStrategy(WinningStrategy.SCIENCE);
+        } else if (getNewsCorpData().getCultural().getPosition(i) < 3
+            && getScoreCulture() > -1) {
+          getPlayerByIndex(i).setStrategy(WinningStrategy.CULTURAL);
+        } else if (getNewsCorpData().getMilitary().getPosition(i) < 3
+            && getScoreConquer() == 1) {
+          getPlayerByIndex(i).setStrategy(WinningStrategy.CONQUER);
+        } else {
+          getPlayerByIndex(i).setStrategy(WinningStrategy.GENERIC);
+        }
+      }
+    }
+  }
+
 }

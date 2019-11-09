@@ -168,6 +168,10 @@ public class PlayerInfo {
   private RandomEvent randomEventOccured;
 
   /**
+   * Winning strategy for AI.
+   */
+  private WinningStrategy strategy;
+  /**
    * Uncharted map sector, only suns are visible
    */
   public static final byte UNCHARTED = 0;
@@ -216,6 +220,7 @@ public class PlayerInfo {
   public PlayerInfo(final SpaceRace race, final int maxPlayers,
       final int index, final int boardPlayerIndex) {
     setTechList(new TechList());
+    strategy = WinningStrategy.GENERIC;
     this.msgList = new MessageList();
     shipStatList = new ArrayList<>();
     fleets = new FleetList();
@@ -581,6 +586,7 @@ public class PlayerInfo {
    */
   public PlayerInfo(final DataInputStream dis) throws IOException {
     setRandomEventOccured(null);
+    strategy = WinningStrategy.GENERIC;
     empireName = IOUtilities.readString(dis);
     race = SpaceRaceUtility.getRaceByIndex(dis.readInt());
     government = GovernmentUtility.getGovernmentByIndex(dis.readInt());
@@ -1694,5 +1700,17 @@ public class PlayerInfo {
    */
   public void setRandomEventOccured(final RandomEvent randomEventOccured) {
     this.randomEventOccured = randomEventOccured;
+  }
+  /**
+   * @return the strategy
+   */
+  public WinningStrategy getStrategy() {
+    return strategy;
+  }
+  /**
+   * @param strategy the strategy to set
+   */
+  public void setStrategy(final WinningStrategy strategy) {
+    this.strategy = strategy;
   }
 }

@@ -180,6 +180,22 @@ public class GalaxyStat {
     }
     return secondIndex;
   }
+
+  /**
+   * Calculate how many other realms are bigger than selected one.
+   * @param playerIndex Selected player index
+   * @return How many are bigger.
+   */
+  public int getPosition(final int playerIndex) {
+    int biggers = 0;
+    int myValue = getLatest(playerIndex);
+    for (int i = 0; i < maxPlayers; i++) {
+      if (i != playerIndex && myValue < getLatest(i)) {
+        biggers++;
+      }
+    }
+    return biggers;
+  }
   /**
    * Get Galaxy Statistics Data name
    * @return  Galaxy Statistics data name

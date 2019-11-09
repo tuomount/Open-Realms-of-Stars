@@ -6,6 +6,7 @@ import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.WinningStrategy;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
@@ -429,6 +430,10 @@ public final class PlanetHandling {
         score = score + 50;
       }
     }
+    if (building.getScientificAchievement()
+        && info.getStrategy() == WinningStrategy.SCIENCE) {
+      score = score + 80;
+    }
     if (attitude == Attitude.MERCHANTICAL) {
       score = score + building.getCredBonus() * 15;
     }
@@ -518,9 +523,15 @@ public final class PlanetHandling {
       if (attitude == Attitude.LOGICAL) {
         score = score + 15;
       }
+      if (info.getStrategy() == WinningStrategy.DIPLOMATIC) {
+        score = score + 80;
+      }
     }
     if (building.isBroadcaster() && !planet.broadcaster()) {
       score = score + 30;
+      if (info.getStrategy() == WinningStrategy.CULTURAL) {
+        score = score + 80;
+      }
     }
     if (building.getName().equals("Basic factory")
         && info.getTechList().hasTech(TechType.Improvements,

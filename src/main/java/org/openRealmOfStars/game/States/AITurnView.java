@@ -29,6 +29,7 @@ import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.WinningStrategy;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
@@ -1022,6 +1023,40 @@ public class AITurnView extends BlackPanel {
               // Got new map part maybe in trade and found planet owned by
               // player which is being in alliance
               addTradeMission(planet, info);
+            }
+          }
+          if (info.getStrategy() == WinningStrategy.CONQUER
+              && planet.getHomeWorldIndex() > -1) {
+            int index1 = game.getStarMap().getPlayerList().getIndex(info);
+            int index2 = planet.getPlanetOwnerIndex();
+            int neededDifference = 150;
+            if (info.getDiplomacy().isAlliance(index2)) {
+              neededDifference = 1200;
+            }
+            if (info.getDiplomacy().isDefensivePact(index2)) {
+              neededDifference = 600;
+            }
+            if (info.getDiplomacy().isTradeAlliance(index2)) {
+              neededDifference = 300;
+            }
+            switch (info.getAiAttitude()) {
+              case MILITARISTIC:
+              case BACKSTABBING:
+              case AGGRESSIVE: neededDifference = neededDifference / 4; break;
+              case EXPANSIONIST:
+              case LOGICAL: neededDifference = neededDifference / 2; break;
+              case DIPLOMATIC:
+              case MERCHANTICAL:
+              case PEACEFUL:
+              case SCIENTIFIC:
+              default: {
+                neededDifference = neededDifference - 10;
+                break;
+              }
+            }
+            if (game.getStarMap().getMilitaryDifference(
+                index1, index2) > neededDifference && attacks < LIMIT_ATTACKS) {
+              addAttackMission(planet, info);
             }
           }
         } // End of owned planet handling
@@ -2087,6 +2122,7 @@ public class AITurnView extends BlackPanel {
       game.getStarMap().setGameEnded(true);
     }
     game.getStarMap().getNewsCorpData().clearNewsList();
+    game.getStarMap().updateWinningStrategies();
   }
 
   /**

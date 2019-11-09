@@ -433,6 +433,29 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
   }
 
   /**
+   * Calculate total amount of metal space
+   * @return Metal space in fleet
+   */
+  private int calculateTotalMetalSpace() {
+    int result = fleet.getTotalCargoMetal() + fleet.getFreeSpaceForMetal();
+    return result;
+  }
+  /**
+   * Calculate total amount of trooper space
+   * @return Trooper space in fleet
+   */
+  private int calculateTotalTroopSpace() {
+    int result = fleet.getTotalCargoColonist();
+    if (result % 2 == 1) {
+      result = result - 1;
+      if (result < 0) {
+        result = 0;
+      }
+    }
+    result = result + fleet.getFreeSpaceForColonist();
+    return result;
+  }
+  /**
    * Update Planet view panels
    */
   public void updatePanel() {
@@ -457,11 +480,11 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     }
     if (colonistSelection != null) {
       colonistSelection.setText("Colonist: " + fleet.getTotalCargoColonist()
-          + "/" + fleet.getFreeSpaceForColonist());
+          + "/" + calculateTotalTroopSpace());
     }
     if (metalSelection != null) {
       metalSelection.setText("Metal: " + fleet.getTotalCargoMetal() + "/"
-          + fleet.getFreeSpaceForMetal());
+          + calculateTotalMetalSpace());
     }
     shipsInFleet.setListData(fleet.getShips());
     updateOtherFleet();

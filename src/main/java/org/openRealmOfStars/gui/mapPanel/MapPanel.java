@@ -381,12 +381,12 @@ public class MapPanel extends JPanel {
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_W
         && j < viewPointY && i < viewPointX) {
-      BufferedImage tmp = screen.getSubimage(pixelX - Tile.MAX_WIDTH,
+      BufferedImage tmp = screen.getSubimage(pixelX + Tile.MAX_WIDTH,
           pixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_E
         && j < viewPointY && i + 1 < viewPointX) {
-      BufferedImage tmp = screen.getSubimage(pixelX + Tile.MAX_WIDTH,
+      BufferedImage tmp = screen.getSubimage(pixelX - Tile.MAX_WIDTH,
           pixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_SW

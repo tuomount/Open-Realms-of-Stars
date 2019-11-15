@@ -1211,7 +1211,7 @@ public class AITurnView extends BlackPanel {
     int numberOfFleets = pirates.getFleets().getNumberOfFleets();
     for (int i = 0; i < numberOfFleets; i++) {
       Fleet fleet = pirates.getFleets().getByIndex(i);
-      if (fleet.isStarBaseDeployed()) {
+      if (fleet != null && fleet.isStarBaseDeployed()) {
         added = true;
         if (addLairs) {
           game.getStarMap().addSpacePirateLair(fleet.getX(), fleet.getY(),

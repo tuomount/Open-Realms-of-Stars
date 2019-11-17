@@ -44,6 +44,7 @@ import org.openRealmOfStars.game.States.PlanetView;
 import org.openRealmOfStars.game.States.PlayerSetupView;
 import org.openRealmOfStars.game.States.RealmView;
 import org.openRealmOfStars.game.States.ResearchView;
+import org.openRealmOfStars.game.States.SaveGameNameView;
 import org.openRealmOfStars.game.States.ShipDesignView;
 import org.openRealmOfStars.game.States.ShipView;
 import org.openRealmOfStars.game.States.StarMapView;
@@ -201,6 +202,11 @@ public class Game implements ActionListener {
    * Player Setup view
    */
   private PlayerSetupView playerSetupView;
+
+  /**
+   * Save Game View
+   */
+  private SaveGameNameView saveGameView;
 
   /**
    * Load Game View
@@ -1019,6 +1025,14 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Show Save Game save panel
+   */
+  public void showSaveGameSetup() {
+    saveGameView = new SaveGameNameView(this);
+    this.updateDisplay(saveGameView);
+  }
+
+  /**
    * Show Load Game view panel
    */
   public void showLoadGame() {
@@ -1114,6 +1128,9 @@ public class Game implements ActionListener {
       break;
     case PLAYER_SETUP:
       showPlayerSetup();
+      break;
+    case SAVE_GAME_NAME_VIEW:
+      showSaveGameSetup();
       break;
     case LOAD_GAME:
       showLoadGame();
@@ -2319,10 +2336,27 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
         SoundPlayer.playMenuSound();
         playerSetupView.getNamesToConfig();
-        changeGameState(GameState.NEW_GAME);
+        changeGameState(GameState.SAVE_GAME_NAME_VIEW);
         return;
       } else {
         playerSetupView.handleActions(arg0);
+        return;
+      }
+    } else if (gameState == GameState.SAVE_GAME_NAME_VIEW
+        && saveGameView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.PLAYER_SETUP);
+        return;
+      } else if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
+        SoundPlayer.playMenuSound();
+        playerSetupView.getNamesToConfig();
+        changeGameState(GameState.NEW_GAME);
+        return;
+      } else {
+        //TODO Save game name view actions
         return;
       }
     }

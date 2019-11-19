@@ -3,12 +3,15 @@ package org.openRealmOfStars.game.States;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -69,9 +72,11 @@ public class SaveGameNameView extends BlackPanel {
 
   /**
    * Constructor for save game file name view.
+   * @param fileName Filename to save.
    * @param listener ActionListener
    */
-  public SaveGameNameView(final ActionListener listener) {
+  public SaveGameNameView(final String fileName,
+      final ActionListener listener) {
     Planet planet = new Planet(new Coordinate(1, 1), "Save Game Planet",
         1, false);
     planet.setPlanetType(PlanetTypes.getRandomPlanetType(true, true, true));
@@ -94,11 +99,28 @@ public class SaveGameNameView extends BlackPanel {
     label.setAlignmentX(LEFT_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    saveGameField = new JTextField("savegame.save");
+    saveGameField = new JTextField(fileName + ".save");
     saveGameField.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     saveGameField.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     saveGameField.setFont(GuiStatics.getFontCubellanSmaller());
     saveGameField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 25));
+    saveGameField.getDocument().addDocumentListener(new DocumentListener() {
+
+      @Override
+      public void removeUpdate(final DocumentEvent arg0) {
+        updatePanel();
+      }
+
+      @Override
+      public void insertUpdate(final DocumentEvent arg0) {
+        updatePanel();
+      }
+
+      @Override
+      public void changedUpdate(final DocumentEvent arg0) {
+        updatePanel();
+      }
+    });
     info.add(saveGameField);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new SpaceLabel("Overwrite if save game file exists:");
@@ -108,6 +130,8 @@ public class SaveGameNameView extends BlackPanel {
     overWriteFile = new SpaceCheckBox("Overwrite existis save game");
     overWriteFile.addActionListener(listener);
     overWriteFile.setAlignmentX(LEFT_ALIGNMENT);
+    overWriteFile.addActionListener(listener);
+    overWriteFile.setActionCommand(GameCommands.COMMAND_FILE_OVERWRITE);
     info.add(overWriteFile);
     info.add(Box.createRigidArea(new Dimension(5, 25)));
     InvisiblePanel xinvis = new InvisiblePanel(invisible);
@@ -132,21 +156,47 @@ public class SaveGameNameView extends BlackPanel {
     invisible.add(startGameBtn, BorderLayout.EAST);
     imgBase.add(invisible, BorderLayout.SOUTH);
     this.add(imgBase, BorderLayout.CENTER);
+    updatePanel();
   }
 
+  /**
+   * Get Filename for save.
+   * @return Filename
+   */
+  public String getFilename() {
+    String filename = saveGameField.getText();
+    if (!saveGameField.getText().endsWith(".save")) {
+      filename = saveGameField.getText() + ".save";
+    }
+    filename = "saves/" + filename;
+    return filename;
+  }
   /**
    * Update panels.
    */
   public void updatePanel() {
-    if (!saveGameField.getText().endsWith(".save")) {
-      saveGameField.setText(saveGameField.getText() + ".save");
-    }
-    File file = new File("saves/" + saveGameField.getText());
+    File file = new File(getFilename());
     if (file.exists()) {
       overWriteFile.setEnabled(true);
+      if (overWriteFile.isSelected()) {
+        startGameBtn.setEnabled(true);
+      } else {
+        startGameBtn.setEnabled(false);
+      }
     } else {
       overWriteFile.setEnabled(false);
       overWriteFile.setSelected(false);
+      startGameBtn.setEnabled(true);
+    }
+  }
+
+  /**
+   * Handle actions for Save  view
+   * @param arg0 The event to handle
+   */
+  public void handleActions(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_FILE_OVERWRITE)) {
+      updatePanel();
     }
   }
 }

@@ -1028,7 +1028,12 @@ public class Game implements ActionListener {
    * Show Save Game save panel
    */
   public void showSaveGameSetup() {
-    saveGameView = new SaveGameNameView(this);
+    String filename = "savegame";
+    if (playerSetupView != null) {
+      filename = playerSetupView.getConfig().getPlayerName(0);
+      filename = filename.replace(' ', '_');
+    }
+    saveGameView = new SaveGameNameView(filename, this);
     this.updateDisplay(saveGameView);
   }
 
@@ -2356,7 +2361,7 @@ public class Game implements ActionListener {
         changeGameState(GameState.NEW_GAME);
         return;
       } else {
-        //TODO Save game name view actions
+        saveGameView.handleActions(arg0);
         return;
       }
     }

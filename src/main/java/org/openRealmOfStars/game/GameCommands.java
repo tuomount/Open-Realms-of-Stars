@@ -110,6 +110,10 @@ public final class GameCommands {
    */
   public static final String COMMAND_FIX_FLEET = "FixFleetCommand";
   /**
+   * Filename command
+   */
+  public static final String COMMAND_FILE_OVERWRITE = "FileOverwriteCommand";
+  /**
    * Trade fleet command
    */
   public static final String COMMAND_TRADE_FLEET = "TradeFleetCommand";

@@ -160,10 +160,11 @@ public class SaveGameNameView extends BlackPanel {
   }
 
   /**
-   * Get Filename for save.
+   * Get Filename for save. Result will contain relative path and
+   * correct file extension.
    * @return Filename
    */
-  public String getFilename() {
+  public String getFullFilename() {
     String filename = saveGameField.getText();
     if (!saveGameField.getText().endsWith(".save")) {
       filename = saveGameField.getText() + ".save";
@@ -171,11 +172,25 @@ public class SaveGameNameView extends BlackPanel {
     filename = "saves/" + filename;
     return filename;
   }
+
+  /**
+   * Get Filename for save. Result contains filename and
+   * correct file extension.
+   * @return Filename
+   */
+  public String getFilename() {
+    String filename = saveGameField.getText();
+    if (!saveGameField.getText().endsWith(".save")) {
+      filename = saveGameField.getText() + ".save";
+    }
+    return filename;
+  }
+
   /**
    * Update panels.
    */
   public void updatePanel() {
-    File file = new File(getFilename());
+    File file = new File(getFullFilename());
     if (file.exists()) {
       overWriteFile.setEnabled(true);
       if (overWriteFile.isSelected()) {

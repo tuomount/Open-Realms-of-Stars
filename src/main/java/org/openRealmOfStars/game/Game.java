@@ -328,6 +328,11 @@ public class Game implements ActionListener {
   private boolean showMiniMapFlag;
 
   /**
+   * Save filename.
+   */
+  private String saveFilename;
+
+  /**
    * Get Star map
    * @return StarMap
    */
@@ -2358,6 +2363,7 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
         SoundPlayer.playMenuSound();
         playerSetupView.getNamesToConfig();
+        saveFilename = saveGameView.getFilename();
         changeGameState(GameState.NEW_GAME);
         return;
       } else {
@@ -2375,6 +2381,7 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_NEXT)
           && loadGameView.getSelectedSaveFile() != null
           && loadSavedGame(loadGameView.getSelectedSaveFile())) {
+        saveFilename = loadGameView.getSelectedSaveFile();
         SoundPlayer.playMenuSound();
         changeGameState(GameState.STARMAP);
         return;
@@ -2556,4 +2563,11 @@ public class Game implements ActionListener {
     this.showMiniMapFlag = showMiniMapFlag;
   }
 
+  /**
+   * Get last set save game file name.
+   * @return Save game file name.
+   */
+  public String getSaveGameFile() {
+    return saveFilename;
+  }
 }

@@ -576,6 +576,22 @@ public class StarMap {
   }
 
   /**
+   * Calculate how many artificial planets player has.
+   * @param info PlayerInfo
+   * @return Number of artificial planets.
+   */
+  public int countArtificialPlanets(final PlayerInfo info) {
+    int result = 0;
+    for (int i = 0; i < planetList.size(); i++) {
+      Planet planet = planetList.get(i);
+      if (planet.getPlanetPlayerInfo() == info
+          && planet.getPlanetType() == PlanetTypes.ARTIFICIALWORLD1) {
+        result++;
+      }
+    }
+    return result;
+  }
+  /**
    * Adds one enemy monster/pirate into coordinate
    * @param x X Coordinate
    * @param y Y Coordinate
@@ -585,13 +601,20 @@ public class StarMap {
    */
   public Fleet addSpaceAnomalyEnemy(final int x, final int y,
       final PlayerInfo playerInfo, final int type) {
+    int artificialPlanets = countArtificialPlanets(playerInfo);
     ShipStat[] stats = playerInfo.getShipStatList();
     ArrayList<ShipStat> listStats = new ArrayList<>();
     for (ShipStat stat : stats) {
       if (!stat.isObsolete()) {
         Ship ship = new Ship(stat.getDesign());
         if (type == ENEMY_PIRATE_LAIR && ship.isStarBase()) {
-          listStats.add(stat);
+          if (ship.getHull().getName().equals("Artificial planet")
+              && artificialPlanets < 2) {
+            listStats.add(stat);
+          }
+          if (!ship.getHull().getName().equals("Artificial planet")) {
+            listStats.add(stat);
+          }
         }
         if (type == ENEMY_PIRATE && ship.getTotalMilitaryPower() > 0
             && !ship.isStarBase()) {

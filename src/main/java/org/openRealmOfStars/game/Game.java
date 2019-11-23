@@ -44,6 +44,7 @@ import org.openRealmOfStars.game.States.PlanetView;
 import org.openRealmOfStars.game.States.PlayerSetupView;
 import org.openRealmOfStars.game.States.RealmView;
 import org.openRealmOfStars.game.States.ResearchView;
+import org.openRealmOfStars.game.States.SaveGameNameView;
 import org.openRealmOfStars.game.States.ShipDesignView;
 import org.openRealmOfStars.game.States.ShipView;
 import org.openRealmOfStars.game.States.StarMapView;
@@ -203,6 +204,11 @@ public class Game implements ActionListener {
   private PlayerSetupView playerSetupView;
 
   /**
+   * Save Game View
+   */
+  private SaveGameNameView saveGameView;
+
+  /**
    * Load Game View
    */
   private LoadGameView loadGameView;
@@ -320,6 +326,11 @@ public class Game implements ActionListener {
    * This will not be saved.
    */
   private boolean showMiniMapFlag;
+
+  /**
+   * Save filename.
+   */
+  private String saveFilename;
 
   /**
    * Get Star map
@@ -1019,6 +1030,19 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Show Save Game save panel
+   */
+  public void showSaveGameSetup() {
+    String filename = "savegame";
+    if (playerSetupView != null) {
+      filename = playerSetupView.getConfig().getPlayerName(0);
+      filename = filename.replace(' ', '_');
+    }
+    saveGameView = new SaveGameNameView(filename, this);
+    this.updateDisplay(saveGameView);
+  }
+
+  /**
    * Show Load Game view panel
    */
   public void showLoadGame() {
@@ -1114,6 +1138,9 @@ public class Game implements ActionListener {
       break;
     case PLAYER_SETUP:
       showPlayerSetup();
+      break;
+    case SAVE_GAME_NAME_VIEW:
+      showSaveGameSetup();
       break;
     case LOAD_GAME:
       showLoadGame();
@@ -2319,10 +2346,28 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
         SoundPlayer.playMenuSound();
         playerSetupView.getNamesToConfig();
-        changeGameState(GameState.NEW_GAME);
+        changeGameState(GameState.SAVE_GAME_NAME_VIEW);
         return;
       } else {
         playerSetupView.handleActions(arg0);
+        return;
+      }
+    } else if (gameState == GameState.SAVE_GAME_NAME_VIEW
+        && saveGameView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.PLAYER_SETUP);
+        return;
+      } else if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
+        SoundPlayer.playMenuSound();
+        playerSetupView.getNamesToConfig();
+        saveFilename = saveGameView.getFilename();
+        changeGameState(GameState.NEW_GAME);
+        return;
+      } else {
+        saveGameView.handleActions(arg0);
         return;
       }
     }
@@ -2336,6 +2381,7 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_NEXT)
           && loadGameView.getSelectedSaveFile() != null
           && loadSavedGame(loadGameView.getSelectedSaveFile())) {
+        saveFilename = loadGameView.getSelectedSaveFile();
         SoundPlayer.playMenuSound();
         changeGameState(GameState.STARMAP);
         return;
@@ -2517,4 +2563,11 @@ public class Game implements ActionListener {
     this.showMiniMapFlag = showMiniMapFlag;
   }
 
+  /**
+   * Get last set save game file name.
+   * @return Save game file name.
+   */
+  public String getSaveGameFile() {
+    return saveFilename;
+  }
 }

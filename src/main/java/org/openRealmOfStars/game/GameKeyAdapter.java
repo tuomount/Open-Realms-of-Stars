@@ -94,8 +94,13 @@ public class GameKeyAdapter implements KeyEventDispatcher {
       }
       if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE
           && arg0.getID() == KeyEvent.KEY_PRESSED) {
+        String saveFilename = "current.save";
+        if (game.getSaveGameFile() != null
+            && !game.getSaveGameFile().equals("autosave.save")) {
+          saveFilename = game.getSaveGameFile();
+        }
         new GameRepository().saveGame(GameRepository.DEFAULT_SAVE_FOLDER,
-                                      "current.save", game.getStarMap());
+                                      saveFilename, game.getStarMap());
         game.changeGameState(GameState.MAIN_MENU);
         return true;
       }

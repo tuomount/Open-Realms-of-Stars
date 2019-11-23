@@ -3,7 +3,7 @@ package org.openRealmOfStars.game;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2019  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -132,5 +132,9 @@ public enum GameState {
   /**
    * Voting view
    */
-  VOTE_VIEW;
+  VOTE_VIEW,
+  /**
+   * View where save game file name is defined when starting new game.
+   */
+  SAVE_GAME_NAME_VIEW;
 }

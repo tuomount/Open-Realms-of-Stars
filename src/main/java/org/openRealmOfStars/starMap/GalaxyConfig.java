@@ -108,6 +108,10 @@ public class GalaxyConfig {
    * Player government
    */
   private GovernmentType[] playerGovernment;
+  /**
+   * Player ancient realm.
+   */
+  private boolean[] playerAncientRealm;
 
   /**
    * Chance for planetary event
@@ -214,6 +218,7 @@ public class GalaxyConfig {
     playerRaces = new SpaceRace[StarMap.MAX_PLAYERS];
     playerName = new String[StarMap.MAX_PLAYERS];
     playerGovernment = new GovernmentType[StarMap.MAX_PLAYERS];
+    playerAncientRealm = new boolean[StarMap.MAX_PLAYERS];
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
 
       setRace(i, SpaceRaceUtility.getRandomRace());
@@ -312,6 +317,30 @@ public class GalaxyConfig {
       return playerGovernment[index];
     }
     return null;
+  }
+
+  /**
+   * Set Ancient realm for player
+   * @param index Player Index
+   * @param ancientRealm Ancient realm flag
+   */
+  public void setPlayerAncientRealm(final int index,
+      final boolean ancientRealm) {
+    if (index >= 0 && index < StarMap.MAX_PLAYERS) {
+      playerAncientRealm[index] = ancientRealm;
+    }
+  }
+
+  /**
+   * Get Ancient realm for player
+   * @param index Player index
+   * @return True for ancient realm
+   */
+  public boolean getPlayerAncientRealm(final int index) {
+    if (index >= 0 && index < StarMap.MAX_PLAYERS) {
+      return playerAncientRealm[index];
+    }
+    return false;
   }
   /**
    * Set galaxy size. Galaxy is set for square size

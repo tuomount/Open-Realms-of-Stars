@@ -1405,6 +1405,7 @@ public class Game implements ActionListener {
           maxPlayers, i, boardIndex);
       info.setGovernment(galaxyConfig.getPlayerGovernment(i));
       info.setEmpireName(galaxyConfig.getPlayerName(i));
+      info.setAncientRealm(galaxyConfig.getPlayerAncientRealm(i));
       if (i == 0) {
         info.setHuman(true);
       }

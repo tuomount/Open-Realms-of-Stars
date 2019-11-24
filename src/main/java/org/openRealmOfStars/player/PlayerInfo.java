@@ -171,6 +171,11 @@ public class PlayerInfo {
    * Winning strategy for AI.
    */
   private WinningStrategy strategy;
+
+  /**
+   * Is player Ancient Realm or not
+   */
+  private boolean ancientRealm;
   /**
    * Uncharted map sector, only suns are visible
    */
@@ -224,6 +229,7 @@ public class PlayerInfo {
     this.msgList = new MessageList();
     shipStatList = new ArrayList<>();
     fleets = new FleetList();
+    ancientRealm = false;
     setRandomEventOccured(null);
     setHuman(false);
     setBoard(false);
@@ -594,6 +600,7 @@ public class PlayerInfo {
     totalCredits = dis.readInt();
     attitude = Attitude.getTypeByIndex(dis.read());
     techList = new TechList(dis);
+    ancientRealm = false;
     msgList = new MessageList(dis);
     int count = dis.readInt();
     shipStatList = new ArrayList<>();
@@ -1712,5 +1719,21 @@ public class PlayerInfo {
    */
   public void setStrategy(final WinningStrategy strategy) {
     this.strategy = strategy;
+  }
+
+  /**
+   * Is realm ancient or not ancient realm.
+   * @return True for ancient realm.
+   */
+  public boolean isAncientRealm() {
+    return ancientRealm;
+  }
+
+  /**
+   * Set Ancient realm flag.
+   * @param ancientRealm True for ancient realm.
+   */
+  public void setAncientRealm(final boolean ancientRealm) {
+    this.ancientRealm = ancientRealm;
   }
 }

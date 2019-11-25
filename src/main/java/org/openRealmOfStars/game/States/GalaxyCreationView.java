@@ -70,6 +70,10 @@ public class GalaxyCreationView extends BlackPanel {
   private SpaceCombo<String> comboPlayerPos;
 
   /**
+   * ComboBox for head start ancient realms.
+   */
+  private SpaceCombo<String> comboAncientTurns;
+  /**
    * ComboBox on sun density
    */
   private SpaceCombo<String> comboSunDensity;
@@ -414,6 +418,31 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlayerPos.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
     comboPlayerPos.addActionListener(listener);
     info.add(comboPlayerPos);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    label = new SpaceLabel("Ancient realm headstart:");
+    label.setAlignmentX(CENTER_ALIGNMENT);
+    info.add(label);
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    String[] headStarts = new String[5];
+    headStarts[0] = "40 turns";
+    headStarts[1] = "60 turns";
+    headStarts[2] = "80 turns";
+    headStarts[3] = "100 turns";
+    headStarts[4] = "120 turns";
+    comboAncientTurns = new SpaceCombo<>(headStarts);
+    comboAncientTurns.setToolTipText("How many turns Ancient Realms play"
+        + " before actual game begins.");
+    switch (this.config.getAncientHeadStart()) {
+      case 40: comboAncientTurns.setSelectedIndex(0); break;
+      case 60: comboAncientTurns.setSelectedIndex(1); break;
+      default:
+      case 80: comboAncientTurns.setSelectedIndex(2); break;
+      case 100: comboAncientTurns.setSelectedIndex(3); break;
+      case 120: comboAncientTurns.setSelectedIndex(4); break;
+    }
+    comboAncientTurns.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    comboAncientTurns.addActionListener(listener);
+    info.add(comboAncientTurns);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     label = new SpaceLabel("Victory by score:");
     label.setAlignmentX(CENTER_ALIGNMENT);

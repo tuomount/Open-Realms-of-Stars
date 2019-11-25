@@ -194,6 +194,11 @@ public class GalaxyConfig {
    * 2 All
    */
   private int spaceAnomaliesLevel;
+
+  /**
+   * How many turns ancient realms player before others start.
+   */
+  private int ancientHeadStart;
 /**
    * Constructor for galaxy config
    */
@@ -214,6 +219,7 @@ public class GalaxyConfig {
     setScoreLimitResearch(2);
     setScoreLimitDiplomacy(2);
     setMaxPlayers(4);
+    setAncientHeadStart(80);
     setSolarSystemDistance(12, 0);
     playerRaces = new SpaceRace[StarMap.MAX_PLAYERS];
     playerName = new String[StarMap.MAX_PLAYERS];
@@ -677,6 +683,22 @@ public class GalaxyConfig {
    */
   public void setKarmaSpeed(final int karmaSpeed) {
     this.karmaSpeed = karmaSpeed;
+  }
+
+  /**
+   * Get Ancient realm head start
+   * @return Ancient realm head start in turns.
+   */
+  public int getAncientHeadStart() {
+    return ancientHeadStart;
+  }
+
+  /**
+   * Set ancient realm head start
+   * @param ancientHeadStart in turns
+   */
+  public void setAncientHeadStart(final int ancientHeadStart) {
+    this.ancientHeadStart = ancientHeadStart;
   }
 
 }

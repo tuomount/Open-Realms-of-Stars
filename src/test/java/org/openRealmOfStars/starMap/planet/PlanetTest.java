@@ -46,6 +46,9 @@ public class PlanetTest {
       Coordinate planetCoordinate = new Coordinate(10, 15);
       Planet planet = new Planet(planetCoordinate, "Earth", 1, false);
 
+      assertEquals(-1, planet.getstartRealmIndex());
+      planet.setStartRealmIndex(2);
+      assertEquals(2, planet.getstartRealmIndex());
       planetCoordinate.setX(5);
       planetCoordinate.setY(10);
 

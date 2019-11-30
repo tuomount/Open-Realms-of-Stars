@@ -1149,7 +1149,7 @@ public class Game implements ActionListener {
       showOptionsView();
       break;
     case NEW_GAME: {
-      makeNewGame();
+      makeNewGame(true);
       break;
     }
     case NEWS_CORP_VIEW: {
@@ -1361,15 +1361,52 @@ public class Game implements ActionListener {
 
   /**
    * Make new Game State
+   * @param allowHumanAncientRealm Flag for allowing human player to be
+   *  ancient too.
    */
-  public void makeNewGame() {
+  public void makeNewGame(final boolean allowHumanAncientRealm) {
     setPlayerInfo();
     starMap = new StarMap(galaxyConfig, players);
     starMap.updateStarMapOnStartGame();
     NewsCorpData corpData = starMap.getNewsCorpData();
+    calculateCorpData(corpData);
+    boolean ancientRealmStart = false;
+    for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
+      if (galaxyConfig.getPlayerAncientRealm(i)) {
+        ancientRealmStart = true;
+      }
+    }
+    if (ancientRealmStart) {
+      if (allowHumanAncientRealm) {
+        starMap.getPlayerByIndex(0).setHuman(false);
+      }
+      starMap.setTurn(-galaxyConfig.getAncientHeadStart());
+      while (starMap.getTurn() < 0) {
+        setAITurnView(new AITurnView(this));
+        boolean singleTurnEnd = false;
+        do {
+          singleTurnEnd = getAITurnView().handleAiTurn();
+        } while (!singleTurnEnd);
+      }
+      for (Planet planet : starMap.getPlanetList()) {
+        if (planet.getstartRealmIndex() != -1) {
+          int index = planet.getstartRealmIndex();
+          PlayerInfo info = starMap.getPlayerByIndex(index);
+          if (!info.isAncientRealm()) {
+            starMap.createRealmToPlanet(planet, info, index);
+          }
+        }
+      }
+      if (allowHumanAncientRealm) {
+        starMap.getPlayerByIndex(0).setHuman(true);
+      }
+      starMap.clearNewsCorpData();
+      corpData = starMap.getNewsCorpData();
+      calculateCorpData(corpData);
+      starMap.updateStarMapOnStartGame();
+    }
     players.setCurrentPlayer(0);
     setNullView();
-    calculateCorpData(corpData);
     changeGameState(GameState.STARMAP);
 
   }

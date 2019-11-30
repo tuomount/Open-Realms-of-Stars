@@ -809,7 +809,8 @@ public class PlayerInfo {
    * @return Fakemilitary value between 50-200
    */
   public int getFakeMilitarySetting(final GameLengthState state) {
-    if (state == GameLengthState.START_GAME) {
+    if (state == GameLengthState.START_GAME
+        || state == GameLengthState.ANCIENT_HEAD_START) {
       switch (getAiAttitude()) {
         case AGGRESSIVE: return 120;
         case MILITARISTIC: return 120;

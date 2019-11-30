@@ -62,7 +62,7 @@ public class GameTest {
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
-    game.makeNewGame();
+    game.makeNewGame(false);
     game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
     do {
       game.setAITurnView(new AITurnView(game));
@@ -85,7 +85,7 @@ public class GameTest {
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
-    game.makeNewGame();
+    game.makeNewGame(false);
     game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
     do {
       game.setAITurnView(new AITurnView(game));
@@ -108,7 +108,7 @@ public class GameTest {
     config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
     game.setGalaxyConfig(config);
     game.setPlayerInfo();
-    game.makeNewGame();
+    game.makeNewGame(false);
     game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
     do {
       game.setAITurnView(new AITurnView(game));
@@ -141,7 +141,7 @@ public class GameTest {
       System.gc();
       game = new Game(false);
       game.setGalaxyConfig(config);
-      game.makeNewGame();
+      game.makeNewGame(false);
       game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
       do {
         game.setAITurnView(new AITurnView(game));
@@ -176,6 +176,49 @@ public class GameTest {
     for (int i = 0; i < govWins.length; i++) {
       System.out.println(GovernmentType.values()[i].getName() + ": " +govWins[i]);
     }*/
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testRunFullGameWithAncient() {
+    Game game;
+    GalaxyConfig config = new GalaxyConfig();
+    config.setMaxPlayers(8);
+    config.setScoringVictoryTurns(400);
+    config.setSpacePiratesLevel(1);
+    config.setChanceForPlanetaryEvent(40);
+    config.setKarmaType(KarmaType.SECOND_FIRST_AND_LAST);
+    config.setKarmaSpeed(2);
+    config.setAncientHeadStart(40);
+    config.setPlayerAncientRealm(1, true);
+    config.setPlayerAncientRealm(2, true);
+    config.setSize(75, 1);
+    config.setStartingPosition(GalaxyConfig.START_POSITION_RANDOM);
+    game = null;
+    System.gc();
+    game = new Game(false);
+    game.setGalaxyConfig(config);
+    game.makeNewGame(false);
+    game.getPlayers().getPlayerInfoByIndex(0).setHuman(false);
+    do {
+      game.setAITurnView(new AITurnView(game));
+      boolean singleTurnEnd = false;
+      do {
+        singleTurnEnd = game.getAITurnView().handleAiTurn();
+      } while (!singleTurnEnd);
+      assertFalse(game.getStarMap().getTurn() > config.getScoringVictoryTurns());
+    } while (!game.getStarMap().isGameEnded());
+    System.out.println("Game ended at turn: " + game.getStarMap().getTurn());
+    NewsData[] newsData = game.getStarMap().getNewsCorpData().getNewsList();
+    if (newsData.length > 0) {
+      System.out.println(newsData[newsData.length - 1].getNewsText());
+      for (int i = 0; i < game.getStarMap().getPlayerList().getCurrentMaxRealms(); i++) {
+        PlayerInfo info = game.getStarMap().getPlayerByIndex(i);
+        System.out.println(i + ": " + info.getEmpireName() + " - " + info.isAncientRealm());
+      }
+    } else {
+      System.out.println("not sure who win!");
+    }
   }
 
 }

@@ -373,7 +373,7 @@ public class StarMap {
           if (StarMapUtilities.isSolarSystem(solarSystem, sx, sy, maxX, maxY,
               config.getSolarSystemDistance()) == 0) {
             solarSystem = createSolarSystem(solarSystem, sx, sy, planets,
-                gasGiants, i);
+                gasGiants, i, config);
             break;
           }
           loop++;
@@ -416,7 +416,7 @@ public class StarMap {
       if (StarMapUtilities.isSolarSystem(solarSystem, sx, sy, maxX, maxY,
           config.getSolarSystemDistance()) == 0) {
         solarSystem = createSolarSystem(solarSystem, sx, sy, planets,
-            gasGiants);
+            gasGiants, config);
         int full = StarMapUtilities.getSystemFullness(solarSystem, maxX, maxY);
         if (full > 60) {
           // Enough solar systems
@@ -692,7 +692,7 @@ public class StarMap {
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
       mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
-          0);
+          0, config);
 
       // Second player
       sx = maxX / 2;
@@ -700,7 +700,7 @@ public class StarMap {
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
       mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
-          1);
+          1, config);
 
     } else if (config.getMaxPlayers() == 3) {
       // First player
@@ -709,7 +709,7 @@ public class StarMap {
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
       mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
-          0);
+          0, config);
 
       // Second player
       sx = maxX - SOLAR_SYSTEM_WIDTH;
@@ -717,7 +717,7 @@ public class StarMap {
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
       mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
-          1);
+          1, config);
 
       // Third player
       sx = maxX / 2;
@@ -725,7 +725,7 @@ public class StarMap {
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
       mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
-          2);
+          2, config);
 
     } else if (config.getMaxPlayers() >= 4) {
       // First player
@@ -734,7 +734,7 @@ public class StarMap {
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
       mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
-          0);
+          0, config);
 
       // Second player
       sx = maxX - SOLAR_SYSTEM_WIDTH;
@@ -742,7 +742,7 @@ public class StarMap {
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
       mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
-          1);
+          1, config);
 
       // Third player
       sx = SOLAR_SYSTEM_WIDTH;
@@ -750,7 +750,7 @@ public class StarMap {
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
       mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
-          2);
+          2, config);
 
       // Fourth player
       sx = maxX - SOLAR_SYSTEM_WIDTH;
@@ -758,7 +758,7 @@ public class StarMap {
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
       mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
-          3);
+          3, config);
     }
 
     if (config.getMaxPlayers() >= 5) {
@@ -768,7 +768,7 @@ public class StarMap {
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
       mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
-          4);
+          4, config);
     }
     if (config.getMaxPlayers() >= 6) {
       // Sixth player
@@ -777,7 +777,7 @@ public class StarMap {
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
       mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
-          5);
+          5, config);
     }
     if (config.getMaxPlayers() >= 7) {
       // Seventh player
@@ -786,7 +786,7 @@ public class StarMap {
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
       mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
-          6);
+          6, config);
     }
     if (config.getMaxPlayers() == 8) {
       // Eight player
@@ -795,7 +795,7 @@ public class StarMap {
       planets = DiceGenerator.getRandom(3, 5);
       gasGiants = DiceGenerator.getRandom(2);
       mapOfSolars = createSolarSystem(mapOfSolars, sx, sy, planets, gasGiants,
-          7);
+          7, config);
     }
     return mapOfSolars;
   }
@@ -993,18 +993,103 @@ public class StarMap {
    * @param sy Sun's about coordinates
    * @param numberOfPlanets Number of planets to Solar System
    * @param numberOfGasGiants Number of Gas Giants to Solar System
+   * @param config GalaxyConfig
    * @return Update map of solar systems
    */
   private int[][] createSolarSystem(final int[][] solarSystem, final int sx,
-      final int sy, final int numberOfPlanets, final int numberOfGasGiants) {
+      final int sy, final int numberOfPlanets, final int numberOfGasGiants,
+      final GalaxyConfig config) {
     return createSolarSystem(solarSystem, sx, sy, numberOfPlanets,
-        numberOfGasGiants, -1);
+        numberOfGasGiants, -1, config);
   }
 
   /**
    * Default amount of metal in home worlds.
    */
   private static final int HOMEWORLD_METAL = 8000;
+
+  /**
+   * Create realm to planet. This will add require buildings, workers
+   * and ships. This will also add message about new realm starting.
+   * Not this does not add home planet information.
+   * @param planet Planet where player starts.
+   * @param playerInfo Realm who is starting
+   * @param playerIndex Index for player
+   */
+  public void createRealmToPlanet(final Planet planet,
+      final PlayerInfo playerInfo, final int playerIndex) {
+    planet.setPlanetOwner(playerIndex, playerInfo);
+    Message msg = new Message(
+        MessageType.PLANETARY, playerInfo.getEmpireName() + " starts at "
+            + planet.getName() + ".",
+        Icons.getIconByName(Icons.ICON_CULTURE));
+    PlayerStartEvent event = new PlayerStartEvent(planet.getCoordinate(),
+        planet.getName(), playerIndex);
+    history.addEvent(event);
+    msg.setCoordinate(planet.getCoordinate());
+    msg.setMatchByString(planet.getName());
+    playerInfo.getMsgList().addNewMessage(msg);
+
+    planet.addBuilding(BuildingFactory.createByName("Space port"));
+    if (playerInfo.isHuman()) {
+      // Adding starting building for human.
+      planet.setUnderConstruction(ConstructionFactory.createByName(
+          "Extra credit"));
+    }
+    if (playerInfo.getRace() == SpaceRace.MECHIONS) {
+      planet.setWorkers(Planet.FOOD_FARMERS, 0);
+      planet.setWorkers(Planet.METAL_MINERS, 0);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+    } else if (playerInfo.getRace() == SpaceRace.HOMARIANS) {
+      planet.setWorkers(Planet.FOOD_FARMERS, 2);
+      planet.setWorkers(Planet.METAL_MINERS, 0);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+    } else if (playerInfo.getRace() == SpaceRace.CHIRALOIDS) {
+      planet.setWorkers(Planet.FOOD_FARMERS, 0);
+      planet.setWorkers(Planet.METAL_MINERS, 0);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+    } else {
+      planet.setWorkers(Planet.FOOD_FARMERS, 1);
+      planet.setWorkers(Planet.METAL_MINERS, 0);
+      planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
+      planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
+      planet.setWorkers(Planet.CULTURE_ARTIST, 0);
+    }
+    ShipStat[] stats = playerInfo.getShipStatList();
+    int count = 0;
+    for (ShipStat stat : stats) {
+      int numShip = 1;
+      if (playerInfo.getRace() == SpaceRace.SPORKS
+          && stat.getDesign().isMilitaryShip()) {
+        numShip = 2;
+      }
+      for (int j = 0; j < numShip; j++) {
+        Ship ship = new Ship(stat.getDesign());
+        stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
+        stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
+        Fleet fleet = new Fleet(ship, planet.getX(), planet.getY());
+        playerInfo.getFleets().add(fleet);
+        if (ship.isColonyModule()) {
+          fleet.setName("Colony #" + count);
+        } else {
+          fleet.setName("Scout #" + count);
+        }
+        msg = new Message(MessageType.FLEET,
+            fleet.getName() + " is waiting for orders.",
+            Icons.getIconByName(Icons.ICON_HULL_TECH));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(fleet.getName());
+        playerInfo.getMsgList().addNewMessage(msg);
+        count++;
+      }
+    }
+  }
 
   /**
    * Create Solar System
@@ -1015,11 +1100,12 @@ public class StarMap {
    * @param gasGiantsToCreate Number of Gas Giants to Solar System
    * @param playerIndex if Player index is else than -1 then SolarSystem
    * is created as home system for that player index.
+   * @param config GalaxyConfig
    * @return updated solarsystem map
    */
   private int[][] createSolarSystem(final int[][] solarSystem, final int sunx,
       final int suny, final int planetsToCreate, final int gasGiantsToCreate,
-      final int playerIndex) {
+      final int playerIndex, final GalaxyConfig config) {
     int[][] mapOfSolar = solarSystem;
     int numberOfPlanets = planetsToCreate;
     int numberOfGasGiants = gasGiantsToCreate;
@@ -1028,6 +1114,12 @@ public class StarMap {
     }
     if (numberOfGasGiants > 2) {
       numberOfGasGiants = 2;
+    }
+    boolean ancientRealmStart = false;
+    for (int i = 0; i < config.getMaxPlayers(); i++) {
+      if (config.getPlayerAncientRealm(i)) {
+        ancientRealmStart = true;
+      }
     }
     // The Sun
     int sx = sunx + DiceGenerator.getRandom(-1, 1);
@@ -1069,81 +1161,17 @@ public class StarMap {
         planet.setPlanetType(PlanetTypes.getRandomPlanetType(false));
         if (planets == 1 && playerIndex != -1) {
           PlayerInfo playerInfo = players.getPlayerInfoByIndex(playerIndex);
-          Message msg = new Message(
-              MessageType.PLANETARY, playerInfo.getEmpireName() + " starts at "
-                  + planet.getName() + ".",
-              Icons.getIconByName(Icons.ICON_CULTURE));
-          PlayerStartEvent event = new PlayerStartEvent(planet.getCoordinate(),
-              planet.getName(), playerIndex);
-          history.addEvent(event);
-          msg.setCoordinate(planet.getCoordinate());
-          msg.setMatchByString(planet.getName());
-          playerInfo.getMsgList().addNewMessage(msg);
-          planet.setPlanetOwner(playerIndex, playerInfo);
+          playerInfo.setAncientRealm(config.getPlayerAncientRealm(playerIndex));
           planet.setRadiationLevel(1);
           planet.setGroundSize(12);
           planet.setAmountMetalInGround(HOMEWORLD_METAL);
-          planet.addBuilding(BuildingFactory.createByName("Space port"));
           planet.setHomeWorldIndex(playerInfo.getRace().getIndex());
-          if (playerInfo.isHuman()) {
-            // Adding starting building for human.
-            planet.setUnderConstruction(ConstructionFactory.createByName(
-                "Extra credit"));
+          planet.setStartRealmIndex(playerIndex);
+          if (!ancientRealmStart) {
+            createRealmToPlanet(planet, playerInfo, playerIndex);
+          } else if (playerInfo.isAncientRealm()) {
+            createRealmToPlanet(planet, playerInfo, playerIndex);
           }
-          if (playerInfo.getRace() == SpaceRace.MECHIONS) {
-            planet.setWorkers(Planet.FOOD_FARMERS, 0);
-            planet.setWorkers(Planet.METAL_MINERS, 0);
-            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-            planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-          } else if (playerInfo.getRace() == SpaceRace.HOMARIANS) {
-            planet.setWorkers(Planet.FOOD_FARMERS, 2);
-            planet.setWorkers(Planet.METAL_MINERS, 0);
-            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-            planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-          } else if (playerInfo.getRace() == SpaceRace.CHIRALOIDS) {
-            planet.setWorkers(Planet.FOOD_FARMERS, 0);
-            planet.setWorkers(Planet.METAL_MINERS, 0);
-            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
-            planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-          } else {
-            planet.setWorkers(Planet.FOOD_FARMERS, 1);
-            planet.setWorkers(Planet.METAL_MINERS, 0);
-            planet.setWorkers(Planet.PRODUCTION_WORKERS, 1);
-            planet.setWorkers(Planet.RESEARCH_SCIENTIST, 1);
-            planet.setWorkers(Planet.CULTURE_ARTIST, 0);
-          }
-          ShipStat[] stats = playerInfo.getShipStatList();
-          int count = 0;
-          for (ShipStat stat : stats) {
-            int numShip = 1;
-            if (playerInfo.getRace() == SpaceRace.SPORKS
-                && stat.getDesign().isMilitaryShip()) {
-              numShip = 2;
-            }
-            for (int j = 0; j < numShip; j++) {
-              Ship ship = new Ship(stat.getDesign());
-              stat.setNumberOfBuilt(stat.getNumberOfBuilt() + 1);
-              stat.setNumberOfInUse(stat.getNumberOfInUse() + 1);
-              Fleet fleet = new Fleet(ship, planet.getX(), planet.getY());
-              playerInfo.getFleets().add(fleet);
-              if (ship.isColonyModule()) {
-                fleet.setName("Colony #" + count);
-              } else {
-                fleet.setName("Scout #" + count);
-              }
-              msg = new Message(MessageType.FLEET,
-                  fleet.getName() + " is waiting for orders.",
-                  Icons.getIconByName(Icons.ICON_HULL_TECH));
-              msg.setCoordinate(planet.getCoordinate());
-              msg.setMatchByString(fleet.getName());
-              playerInfo.getMsgList().addNewMessage(msg);
-              count++;
-            }
-          }
-
         } else {
             planet.setPlanetaryEvent(PlanetaryEvent.getRandomEvent(
                 planet.getPlanetType(), chanceForPlanetaryEvent));
@@ -1555,6 +1583,12 @@ public class StarMap {
   }
 
   /**
+   * Clear news corp data.
+   */
+  public void clearNewsCorpData() {
+    newsCorpData = new NewsCorpData(players.getCurrentMaxRealms());
+  }
+  /**
    * Get Draw X coordinate
    * @return x coordinate
    */
@@ -1942,6 +1976,7 @@ public class StarMap {
        * Making sure that there are enough exploration ships
        */
       if (getGameLengthState() == GameLengthState.START_GAME
+          || getGameLengthState() == GameLengthState.ANCIENT_HEAD_START
           && exploreMissions < 2) {
         Mission mission = new Mission(MissionType.EXPLORE,
             MissionPhase.PLANNING, null);

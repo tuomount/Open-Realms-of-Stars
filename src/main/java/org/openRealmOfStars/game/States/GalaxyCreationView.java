@@ -766,6 +766,34 @@ public class GalaxyCreationView extends BlackPanel {
         break;
       }
       }
+      switch (comboAncientTurns.getSelectedIndex()) {
+      case 0: {
+        // Head start 40 turns
+        config.setAncientHeadStart(40);
+        break;
+      }
+      case 1: {
+        // Head start 60 turns
+        config.setAncientHeadStart(60);
+        break;
+      }
+      default:
+      case 2: {
+        // Head start 80 turns
+        config.setAncientHeadStart(80);
+        break;
+      }
+      case 3: {
+        // Head start 100 turns
+        config.setAncientHeadStart(100);
+        break;
+      }
+      case 4: {
+        // Head start 120 turns
+        config.setAncientHeadStart(120);
+        break;
+      }
+      }
       config.setSpacePiratesLevel(comboSpacePirates.getSelectedIndex());
       config.setSpacePiratesDifficulty(PirateDifficultLevel.getLevelByInt(
           comboSpacePirateDifficulty.getSelectedIndex()));

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016-2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -48,6 +48,12 @@ public class MissionList {
     missions = new ArrayList<>();
   }
 
+  /**
+   * Clear all missions from the list.
+   */
+  public void clearMissions() {
+    missions = new ArrayList<>();
+  }
   /**
    * Read MissionList from DataInputStream
    * @param dis DataInputStream
@@ -98,7 +104,8 @@ public class MissionList {
    */
   public void changeFleetName(final String oldName, final String newName) {
     for (Mission mission : missions) {
-      if (mission.getFleetName().equals(oldName)) {
+      if (mission.getFleetName() != null
+          && mission.getFleetName().equals(oldName)) {
         mission.setFleetName(newName);
       }
     }

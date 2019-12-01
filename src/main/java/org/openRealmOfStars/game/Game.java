@@ -1399,6 +1399,7 @@ public class Game implements ActionListener {
       }
       if (allowHumanAncientRealm) {
         starMap.getPlayerByIndex(0).setHuman(true);
+        starMap.getPlayerByIndex(0).getMissions().clearMissions();
       }
       starMap.clearNewsCorpData();
       corpData = starMap.getNewsCorpData();

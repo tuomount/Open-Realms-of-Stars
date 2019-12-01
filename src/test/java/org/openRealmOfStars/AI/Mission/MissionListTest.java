@@ -14,7 +14,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017 Tuomo Untinen
+* Copyright (C) 2017-2019 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -49,6 +49,8 @@ public class MissionListTest {
         + "Mission 1 toString\n\n"
         + "Mission 1:\n"
         + "Mission 2 toString\n\n", list.toString());
+    list.clearMissions();
+    assertEquals("", list.toString());
   }
 
   @Test

@@ -430,8 +430,11 @@ public class GalaxyCreationView extends BlackPanel {
     headStarts[3] = "100 turns";
     headStarts[4] = "120 turns";
     comboAncientTurns = new SpaceCombo<>(headStarts);
-    comboAncientTurns.setToolTipText("How many turns Ancient Realms play"
-        + " before actual game begins.");
+    comboAncientTurns.setToolTipText("<html>How many turns Ancient Realms play"
+        + " before actual game begins.<br>AI will play ancient realms this"
+        + " amount of turns.<br>These ancient realms will be stronger than"
+        + "other realms.<br>This will also create totally unique starts"
+        + "for the game.</html>");
     switch (this.config.getAncientHeadStart()) {
       case 40: comboAncientTurns.setSelectedIndex(0); break;
       case 60: comboAncientTurns.setSelectedIndex(1); break;

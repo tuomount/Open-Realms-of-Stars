@@ -308,6 +308,11 @@ public class PlayerSetupView extends BlackPanel {
     info2.add(comboGovernmentSelect[index]);
     info2.add(Box.createRigidArea(new Dimension(5, 5)));
     checkAncientRealm[index] = new SpaceCheckBox("");
+    checkAncientRealm[index].setType(SpaceCheckBox.CHECKBOX_TYPE_ANCIENT);
+    checkAncientRealm[index].setToolTipText("<html>Select rune to mark Realm"
+        + " as an ancient realm.<br> This will allow realm ancient head"
+        + " start and will make realm more stronger than others.<br>"
+        + "Ancient realms are played by AI for amount of head start.</html>");
     info2.add(checkAncientRealm[index]);
     info.add(info2);
     info.add(Box.createRigidArea(new Dimension(5, 5)));

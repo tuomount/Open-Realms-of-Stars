@@ -264,6 +264,42 @@ public final class IOUtilities {
     return lenBuffer;
   }
   /**
+   * Converts Integer to signed 16 bit MSB byte array.
+   * @param value Integer to convert
+   * @return two byte byte array
+   */
+  public static byte[] convertShortTo16BitMsb(final int value) {
+    byte[] lenBuffer = new byte[2];
+    short temp = (short) value;
+    lenBuffer[0] = (byte) ((temp & 0xff00) >> 8);
+    lenBuffer[1] = (byte) (temp & 0x00ff);
+    return lenBuffer;
+  }
+  /**
+   * Converts signed 16bits to integer
+   * @param hi Higher 8 bits
+   * @param lo Lower 8 bits
+   * @return integer
+   */
+  public static int convertSigned16BitsToInt(final int hi, final int lo) {
+    int value = (hi << 8) + lo;
+    short temp = (short) value;
+    return (int) temp;
+  }
+  /**
+   * Read signed 16 bits to int from input stream. It assumes that
+   * bits are in hi byte, then lo byte.
+   * @param is InputStream where to read
+   * @return Integer
+   * @throws IOException if reading fail
+   */
+  public static int readSigned16BitsToInt(final InputStream is)
+      throws IOException {
+    int hi = is.read();
+    int lo = is.read();
+    return convertSigned16BitsToInt(hi, lo);
+  }
+  /**
    * Writes string(as UTF8) into DataOutputStream.
    * First 2 octets tells string length as bytes, MSB as first byte.
    * Then whole string is written as UTF8 encoded byte array.

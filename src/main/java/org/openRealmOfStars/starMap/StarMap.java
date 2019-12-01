@@ -307,7 +307,17 @@ public class StarMap {
     setBadKarmaCount(0);
     history = new History();
     votes = new Votes();
-    history.addTurn(0);
+    boolean ancientRealmStart = false;
+    for (int i = 0; i < config.getMaxPlayers(); i++) {
+      if (config.getPlayerAncientRealm(i)) {
+        ancientRealmStart = true;
+      }
+    }
+    if (ancientRealmStart) {
+      history.addTurn(-config.getAncientHeadStart());
+    } else {
+      history.addTurn(0);
+    }
     maxX = config.getSizeX();
     maxY = config.getSizeY();
     chanceForPlanetaryEvent = config.getChanceForPlanetaryEvent();

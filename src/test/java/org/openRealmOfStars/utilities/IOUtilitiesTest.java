@@ -113,5 +113,15 @@ public class IOUtilitiesTest {
     buf[1] = -46;
     value = IOUtilities.convert16BitsToInt(buf[0] & 0xff, buf[1]  & 0xff);
   }
-  
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSignedBitConversions() throws IOException {
+    byte[] buf = IOUtilities.convertShortTo16BitMsb(-5);
+    assertEquals(-1, buf[0]);
+    assertEquals(-5, buf[1]);
+    int value = IOUtilities.convertSigned16BitsToInt(buf[0] & 0xff, buf[1] & 0xff);
+    assertEquals(-5, value);
+  }
+
 }

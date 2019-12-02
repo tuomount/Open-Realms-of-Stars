@@ -1400,6 +1400,13 @@ public class Game implements ActionListener {
       if (allowHumanAncientRealm) {
         starMap.getPlayerByIndex(0).setHuman(true);
         starMap.getPlayerByIndex(0).getMissions().clearMissions();
+        PlayerInfo info = starMap.getPlayerByIndex(0);
+        info.getTechList().setTechFocus(TechType.Combat, 20);
+        info.getTechList().setTechFocus(TechType.Defense, 16);
+        info.getTechList().setTechFocus(TechType.Hulls, 16);
+        info.getTechList().setTechFocus(TechType.Improvements, 16);
+        info.getTechList().setTechFocus(TechType.Electrics, 16);
+        info.getTechList().setTechFocus(TechType.Propulsion, 16);
       }
       starMap.clearNewsCorpData();
       corpData = starMap.getNewsCorpData();

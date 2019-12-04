@@ -488,7 +488,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboScoringCulture = new SpaceCombo<>(scoringCulture);
     comboScoringCulture.setToolTipText("<html>How much culture must gain"
         + " before winning by cultural domination.<br> Realm must "
-        + " have one broadcasting building.</html>");
+        + " have one broadcasting building and highest culture.</html>");
     switch (this.config.getScoreLimitCulture()) {
       case -1: comboScoringCulture.setSelectedIndex(0); break;
       case 0: comboScoringCulture.setSelectedIndex(1); break;

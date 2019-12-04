@@ -71,6 +71,11 @@ public class SaveGameNameView extends BlackPanel {
   private SpaceButton startGameBtn;
 
   /**
+   * Continue game from autosave.
+   */
+  private boolean continueGame;
+
+  /**
    * Constructor for save game file name view.
    * @param fileName Filename to save.
    * @param listener ActionListener
@@ -92,6 +97,7 @@ public class SaveGameNameView extends BlackPanel {
     invisible.setLayout(new BoxLayout(invisible, BoxLayout.Y_AXIS));
     invisible.add(Box.createRigidArea(new Dimension(500, 150)));
 
+    continueGame = false;
     InfoPanel info = new InfoPanel();
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
     info.setTitle("Game Setup");
@@ -212,6 +218,28 @@ public class SaveGameNameView extends BlackPanel {
   public void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_FILE_OVERWRITE)) {
       updatePanel();
+    }
+  }
+
+  /**
+   * Is view for continue game from autosave?
+   * @return the continueGame
+   */
+  public boolean isContinueGame() {
+    return continueGame;
+  }
+
+  /**
+   * Set flag for continue autosave.
+   * This will also alter start game button text.
+   * @param continueGame the continueGame to set
+   */
+  public void setContinueGame(final boolean continueGame) {
+    this.continueGame = continueGame;
+    if (this.continueGame) {
+      startGameBtn.setText("Load game");
+    } else {
+      startGameBtn.setText("Start game");
     }
   }
 }

@@ -511,6 +511,9 @@ public class Game implements ActionListener {
     boolean isSamePlayer = false;
     if (fleetTile != null) {
       isSamePlayer = players.getIndex(info) == fleetTile.getPlayerIndex();
+      if (!isSamePlayer) {
+        isSamePlayer = players.getIndex(info) == fleetTile.getConflictIndex();
+      }
     }
     final boolean isValidCoordinate = getStarMap().isValidCoordinate(nx, ny);
     final boolean isMovesLeft = fleet.getMovesLeft() > 0;

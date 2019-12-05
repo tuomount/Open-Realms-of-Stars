@@ -1487,6 +1487,28 @@ public class StarMap {
   }
 
   /**
+   * Set Fleet tile for certain position. If position already contains fleet
+   * tile and realm is different then tile is being marked as conflict.
+   * @param x X coordinate
+   * @param y Y Coordinate
+   * @param info FleetTileInfo
+   */
+  private void setFleetTile(final int x, final int y,
+      final FleetTileInfo info) {
+    if (fleetTiles[x][y] != null) {
+      int oldIndex = fleetTiles[x][y].getConflictIndex();
+      if (oldIndex == -1) {
+        oldIndex = fleetTiles[x][y].getPlayerIndex();
+      }
+      fleetTiles[x][y] = info;
+      if (fleetTiles[x][y].getPlayerIndex() != oldIndex) {
+        fleetTiles[x][y].setConflict(oldIndex);
+      }
+    } else {
+      fleetTiles[x][y] = info;
+    }
+  }
+  /**
    * Get the fleet tiles from the map.
    * These fleet positions are always calculated
    * @param refresh If true new fleet tiles are always generated
@@ -1510,7 +1532,7 @@ public class StarMap {
             FleetTileInfo info = new FleetTileInfo(
                 ship.getHull().getRace(),
                 ship.getHull().getImageIndex(), i, j);
-            fleetTiles[fleet.getX()][fleet.getY()] = info;
+            setFleetTile(fleet.getX(), fleet.getY(), info);
           } else {
             for (int k = 0; k < player.getFleets().getNumberOfFleets(); k++) {
               if (j != k) {
@@ -1518,19 +1540,36 @@ public class StarMap {
                 if (fleet2 != null &&  fleet != null
                     && fleet2.getX() == fleet.getX()
                     && fleet2.getY() == fleet.getY()) {
-                  if (fleet2.getMilitaryValue() > fleet.getMilitaryValue()) {
+                  if (fleet2.getFleetCloackingValue()
+                      < fleet.getFleetCloackingValue()) {
                     Ship ship = fleet2.getBiggestShip();
                     FleetTileInfo info = new FleetTileInfo(
                         ship.getHull().getRace(),
                         ship.getHull().getImageIndex(), i, k);
-                    fleetTiles[fleet2.getX()][fleet2.getY()] = info;
+                    setFleetTile(fleet2.getX(), fleet2.getY(), info);
+                  } else if (fleet2.getFleetCloackingValue()
+                      > fleet.getFleetCloackingValue()) {
+                    Ship ship = fleet.getBiggestShip();
+                    if (ship != null) {
+                      FleetTileInfo info = new FleetTileInfo(
+                          ship.getHull().getRace(),
+                          ship.getHull().getImageIndex(), i, j);
+                      setFleetTile(fleet.getX(), fleet.getY(), info);
+                    }
+                  } else if (fleet2.getMilitaryValue()
+                      > fleet.getMilitaryValue()) {
+                    Ship ship = fleet2.getBiggestShip();
+                    FleetTileInfo info = new FleetTileInfo(
+                        ship.getHull().getRace(),
+                        ship.getHull().getImageIndex(), i, k);
+                    setFleetTile(fleet2.getX(), fleet2.getY(), info);
                   } else {
                     Ship ship = fleet.getBiggestShip();
                     if (ship != null) {
                       FleetTileInfo info = new FleetTileInfo(
                           ship.getHull().getRace(),
                           ship.getHull().getImageIndex(), i, j);
-                      fleetTiles[fleet.getX()][fleet.getY()] = info;
+                      setFleetTile(fleet.getX(), fleet.getY(), info);
                     }
                   }
                   if (fleet2.isStarBaseDeployed()) {
@@ -1538,13 +1577,13 @@ public class StarMap {
                     FleetTileInfo info = new FleetTileInfo(
                         ship.getHull().getRace(),
                         ship.getHull().getImageIndex(), i, k);
-                    fleetTiles[fleet2.getX()][fleet2.getY()] = info;
+                    setFleetTile(fleet2.getX(), fleet2.getY(), info);
                   } else if (fleet.isStarBaseDeployed()) {
                     Ship ship = fleet.getBiggestShip();
                     FleetTileInfo info = new FleetTileInfo(
                         ship.getHull().getRace(),
                         ship.getHull().getImageIndex(), i, j);
-                    fleetTiles[fleet.getX()][fleet.getY()] = info;
+                    setFleetTile(fleet.getX(), fleet.getY(), info);
                   }
                 }
               }

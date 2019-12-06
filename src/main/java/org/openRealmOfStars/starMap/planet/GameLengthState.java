@@ -24,6 +24,10 @@ package org.openRealmOfStars.starMap.planet;
 */
 public enum GameLengthState {
   /**
+   * Game start where ancients are playing alone.
+   */
+  ANCIENT_HEAD_START,
+  /**
    * Game length state: early game. First 25% of turns
    */
   START_GAME,
@@ -63,7 +67,7 @@ public enum GameLengthState {
           + " current turn!");
     }
     if (currentTurn < 0) {
-      throw new IllegalArgumentException("Current turn cannot be negative!");
+      return ANCIENT_HEAD_START;
     }
     int value = currentTurn * 100 / lastTurn;
     if (value <= 24) {

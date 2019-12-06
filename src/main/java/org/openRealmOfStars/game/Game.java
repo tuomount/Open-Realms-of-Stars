@@ -511,6 +511,9 @@ public class Game implements ActionListener {
     boolean isSamePlayer = false;
     if (fleetTile != null) {
       isSamePlayer = players.getIndex(info) == fleetTile.getPlayerIndex();
+      if (!isSamePlayer) {
+        isSamePlayer = players.getIndex(info) == fleetTile.getConflictIndex();
+      }
     }
     final boolean isValidCoordinate = getStarMap().isValidCoordinate(nx, ny);
     final boolean isMovesLeft = fleet.getMovesLeft() > 0;
@@ -1031,14 +1034,21 @@ public class Game implements ActionListener {
 
   /**
    * Show Save Game save panel
+   * @param loadedSaveFilename LoadedSaveFilename as a String
    */
-  public void showSaveGameSetup() {
+  public void showSaveGameSetup(final Object loadedSaveFilename) {
     String filename = "savegame";
     if (playerSetupView != null) {
       filename = playerSetupView.getConfig().getPlayerName(0);
-      filename = filename.replace(' ', '_');
     }
+    if (loadedSaveFilename != null && loadedSaveFilename instanceof String) {
+      filename = (String) loadedSaveFilename;
+    }
+    filename = filename.replace(' ', '_');
     saveGameView = new SaveGameNameView(filename, this);
+    if (loadedSaveFilename != null && loadedSaveFilename instanceof String) {
+      saveGameView.setContinueGame(true);
+    }
     this.updateDisplay(saveGameView);
   }
 
@@ -1140,7 +1150,7 @@ public class Game implements ActionListener {
       showPlayerSetup();
       break;
     case SAVE_GAME_NAME_VIEW:
-      showSaveGameSetup();
+      showSaveGameSetup(dataObject);
       break;
     case LOAD_GAME:
       showLoadGame();
@@ -1149,7 +1159,7 @@ public class Game implements ActionListener {
       showOptionsView();
       break;
     case NEW_GAME: {
-      makeNewGame();
+      makeNewGame(true);
       break;
     }
     case NEWS_CORP_VIEW: {
@@ -1361,15 +1371,60 @@ public class Game implements ActionListener {
 
   /**
    * Make new Game State
+   * @param allowHumanAncientRealm Flag for allowing human player to be
+   *  ancient too.
    */
-  public void makeNewGame() {
+  public void makeNewGame(final boolean allowHumanAncientRealm) {
     setPlayerInfo();
     starMap = new StarMap(galaxyConfig, players);
     starMap.updateStarMapOnStartGame();
     NewsCorpData corpData = starMap.getNewsCorpData();
+    calculateCorpData(corpData);
+    boolean ancientRealmStart = false;
+    for (int i = 0; i < galaxyConfig.getMaxPlayers(); i++) {
+      if (galaxyConfig.getPlayerAncientRealm(i)) {
+        ancientRealmStart = true;
+      }
+    }
+    if (ancientRealmStart) {
+      if (allowHumanAncientRealm) {
+        starMap.getPlayerByIndex(0).setHuman(false);
+      }
+      starMap.setTurn(-galaxyConfig.getAncientHeadStart());
+      while (starMap.getTurn() < 0) {
+        setAITurnView(new AITurnView(this));
+        boolean singleTurnEnd = false;
+        do {
+          singleTurnEnd = getAITurnView().handleAiTurn();
+        } while (!singleTurnEnd);
+      }
+      for (Planet planet : starMap.getPlanetList()) {
+        if (planet.getstartRealmIndex() != -1) {
+          int index = planet.getstartRealmIndex();
+          PlayerInfo info = starMap.getPlayerByIndex(index);
+          if (!info.isAncientRealm()) {
+            starMap.createRealmToPlanet(planet, info, index);
+          }
+        }
+      }
+      if (allowHumanAncientRealm) {
+        starMap.getPlayerByIndex(0).setHuman(true);
+        starMap.getPlayerByIndex(0).getMissions().clearMissions();
+        PlayerInfo info = starMap.getPlayerByIndex(0);
+        info.getTechList().setTechFocus(TechType.Combat, 20);
+        info.getTechList().setTechFocus(TechType.Defense, 16);
+        info.getTechList().setTechFocus(TechType.Hulls, 16);
+        info.getTechList().setTechFocus(TechType.Improvements, 16);
+        info.getTechList().setTechFocus(TechType.Electrics, 16);
+        info.getTechList().setTechFocus(TechType.Propulsion, 16);
+      }
+      starMap.clearNewsCorpData();
+      corpData = starMap.getNewsCorpData();
+      calculateCorpData(corpData);
+      starMap.updateStarMapOnStartGame();
+    }
     players.setCurrentPlayer(0);
     setNullView();
-    calculateCorpData(corpData);
     changeGameState(GameState.STARMAP);
 
   }
@@ -1405,6 +1460,7 @@ public class Game implements ActionListener {
           maxPlayers, i, boardIndex);
       info.setGovernment(galaxyConfig.getPlayerGovernment(i));
       info.setEmpireName(galaxyConfig.getPlayerName(i));
+      info.setAncientRealm(galaxyConfig.getPlayerAncientRealm(i));
       if (i == 0) {
         info.setHuman(true);
       }
@@ -1818,6 +1874,192 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Actions performed when state is menus and not exactly in game
+   * @param arg0 ActionEvent which has occured
+   */
+  private void actionPerformedMenus(final ActionEvent arg0) {
+    if (gameState == GameState.CREDITS) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
+        creditsView.updateTextArea();
+        return;
+      }
+      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_OK)) {
+        creditsView = null;
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.MAIN_MENU);
+      }
+      return;
+    }
+    if (gameState == GameState.GALAXY_CREATION && galaxyCreationView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.MAIN_MENU);
+        return;
+      } else if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.PLAYER_SETUP);
+        return;
+      } else {
+        galaxyCreationView.handleActions(arg0);
+        return;
+      }
+    } else if (gameState == GameState.PLAYER_SETUP && playerSetupView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        SoundPlayer.playMenuSound();
+        playerSetupView.getNamesToConfig();
+        changeGameState(GameState.GALAXY_CREATION);
+        return;
+      } else if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
+        SoundPlayer.playMenuSound();
+        playerSetupView.getNamesToConfig();
+        changeGameState(GameState.SAVE_GAME_NAME_VIEW);
+        return;
+      } else {
+        playerSetupView.handleActions(arg0);
+        return;
+      }
+    } else if (gameState == GameState.SAVE_GAME_NAME_VIEW
+        && saveGameView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.PLAYER_SETUP);
+        return;
+      } else if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
+        SoundPlayer.playMenuSound();
+        if (!saveGameView.isContinueGame()) {
+          playerSetupView.getNamesToConfig();
+          saveFilename = saveGameView.getFilename();
+          changeGameState(GameState.NEW_GAME);
+        } else {
+          saveFilename = saveGameView.getFilename();
+          changeGameState(GameState.STARMAP);
+        }
+        return;
+      } else {
+        saveGameView.handleActions(arg0);
+        return;
+      }
+    }
+    if (gameState == GameState.LOAD_GAME && loadGameView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.MAIN_MENU);
+        return;
+      } else if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_NEXT)
+          && loadGameView.getSelectedSaveFile() != null
+          && loadSavedGame(loadGameView.getSelectedSaveFile())) {
+        saveFilename = loadGameView.getSelectedSaveFile();
+        SoundPlayer.playMenuSound();
+        if (saveFilename.equals("autosave.save")) {
+          saveFilename = starMap.getPlayerByIndex(0).getEmpireName();
+          changeGameState(GameState.SAVE_GAME_NAME_VIEW, saveFilename);
+        } else {
+          changeGameState(GameState.STARMAP);
+        }
+        return;
+      }
+    }
+    if (gameState == GameState.OPTIONS_VIEW && optionsView != null) {
+      // Options
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_OK)) {
+        SoundPlayer.playMenuSound();
+        if (!optionsView.getResolution().equals(getCurrentResolution())) {
+          setNewResolution(optionsView.getResolution());
+        }
+        if (gameFrame.isResizable()) {
+          setResizable(false);
+          setNewResolution(gameFrame.getWidth() + "x" + gameFrame.getHeight());
+        }
+        configFile.setMusicVolume(optionsView.getMusicVolume());
+        configFile.setSoundVolume(optionsView.getSoundVolume());
+        configFile.setBorderless(optionsView.getBorderless());
+        configFile.setLargerFonts(optionsView.getLargerFonts());
+        configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
+        GuiStatics.setLargerFonts(configFile.getLargerFonts());
+        writeConfigFile();
+        changeGameState(GameState.MAIN_MENU);
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_APPLY)) {
+        SoundPlayer.playMenuSound();
+        if (!optionsView.getResolution().equals("Custom")) {
+          setNewResolution(optionsView.getResolution());
+        }
+        configFile.setMusicVolume(optionsView.getMusicVolume());
+        configFile.setSoundVolume(optionsView.getSoundVolume());
+        configFile.setBorderless(optionsView.getBorderless());
+        configFile.setLargerFonts(optionsView.getLargerFonts());
+        configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
+        GuiStatics.setLargerFonts(configFile.getLargerFonts());
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
+        MusicPlayer.setVolume(configFile.getMusicVolume());
+        SoundPlayer.setSoundVolume(configFile.getSoundVolume());
+        setNewResolution(configFile.getResolutionWidth() + "x"
+            + configFile.getResolutionHeight());
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.MAIN_MENU);
+        if (gameFrame.isResizable()) {
+          setResizable(false);
+        }
+        return;
+      }
+      optionsView.handleAction(arg0);
+      return;
+    }
+    if (gameState == GameState.MAIN_MENU) {
+      // Main menu
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CONTINUE_GAME)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.LOAD_GAME);
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_NEW_GAME)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.GALAXY_CREATION);
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_CREDITS)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.CREDITS);
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_OPTIONS_VIEW)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.OPTIONS_VIEW);
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_QUIT_GAME)) {
+        SoundPlayer.playMenuSound();
+        configFile.setMusicVolume(MusicPlayer.getVolume());
+        configFile.setSoundVolume(SoundPlayer.getSoundVolume());
+        configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
+        writeConfigFile();
+        System.exit(0);
+      }
+    }
+
+  }
+
+  /**
    * Actions performed when state is star map
    * @param arg0 ActionEvent which has occured
    */
@@ -2106,19 +2348,6 @@ public class Game implements ActionListener {
     if (gameState == GameState.AITURN && aiTurnView != null) {
       aiTurnView.handleActions(arg0);
     }
-    if (gameState == GameState.CREDITS) {
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
-        creditsView.updateTextArea();
-        return;
-      }
-      if (arg0.getActionCommand().equalsIgnoreCase(GameCommands.COMMAND_OK)) {
-        creditsView = null;
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.MAIN_MENU);
-      }
-      return;
-    }
     if (gameState == GameState.RESEARCHVIEW && researchView != null) {
       // Handle Research View
       if (arg0.getActionCommand()
@@ -2320,160 +2549,14 @@ public class Game implements ActionListener {
       fleetView.handleAction(arg0);
       return;
     }
-    if (gameState == GameState.GALAXY_CREATION && galaxyCreationView != null) {
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.MAIN_MENU);
-        return;
-      } else if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.PLAYER_SETUP);
-        return;
-      } else {
-        galaxyCreationView.handleActions(arg0);
-        return;
-      }
-    } else if (gameState == GameState.PLAYER_SETUP && playerSetupView != null) {
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
-        SoundPlayer.playMenuSound();
-        playerSetupView.getNamesToConfig();
-        changeGameState(GameState.GALAXY_CREATION);
-        return;
-      } else if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
-        SoundPlayer.playMenuSound();
-        playerSetupView.getNamesToConfig();
-        changeGameState(GameState.SAVE_GAME_NAME_VIEW);
-        return;
-      } else {
-        playerSetupView.handleActions(arg0);
-        return;
-      }
-    } else if (gameState == GameState.SAVE_GAME_NAME_VIEW
-        && saveGameView != null) {
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.PLAYER_SETUP);
-        return;
-      } else if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
-        SoundPlayer.playMenuSound();
-        playerSetupView.getNamesToConfig();
-        saveFilename = saveGameView.getFilename();
-        changeGameState(GameState.NEW_GAME);
-        return;
-      } else {
-        saveGameView.handleActions(arg0);
-        return;
-      }
-    }
-    if (gameState == GameState.LOAD_GAME && loadGameView != null) {
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.MAIN_MENU);
-        return;
-      } else if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_NEXT)
-          && loadGameView.getSelectedSaveFile() != null
-          && loadSavedGame(loadGameView.getSelectedSaveFile())) {
-        saveFilename = loadGameView.getSelectedSaveFile();
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.STARMAP);
-        return;
-      }
-    }
-    if (gameState == GameState.OPTIONS_VIEW && optionsView != null) {
-      // Options
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_OK)) {
-        SoundPlayer.playMenuSound();
-        if (!optionsView.getResolution().equals(getCurrentResolution())) {
-          setNewResolution(optionsView.getResolution());
-        }
-        if (gameFrame.isResizable()) {
-          setResizable(false);
-          setNewResolution(gameFrame.getWidth() + "x" + gameFrame.getHeight());
-        }
-        configFile.setMusicVolume(optionsView.getMusicVolume());
-        configFile.setSoundVolume(optionsView.getSoundVolume());
-        configFile.setBorderless(optionsView.getBorderless());
-        configFile.setLargerFonts(optionsView.getLargerFonts());
-        configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
-        GuiStatics.setLargerFonts(configFile.getLargerFonts());
-        writeConfigFile();
-        changeGameState(GameState.MAIN_MENU);
-        return;
-      }
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_APPLY)) {
-        SoundPlayer.playMenuSound();
-        if (!optionsView.getResolution().equals("Custom")) {
-          setNewResolution(optionsView.getResolution());
-        }
-        configFile.setMusicVolume(optionsView.getMusicVolume());
-        configFile.setSoundVolume(optionsView.getSoundVolume());
-        configFile.setBorderless(optionsView.getBorderless());
-        configFile.setLargerFonts(optionsView.getLargerFonts());
-        configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
-        GuiStatics.setLargerFonts(configFile.getLargerFonts());
-        return;
-      }
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
-        MusicPlayer.setVolume(configFile.getMusicVolume());
-        SoundPlayer.setSoundVolume(configFile.getSoundVolume());
-        setNewResolution(configFile.getResolutionWidth() + "x"
-            + configFile.getResolutionHeight());
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.MAIN_MENU);
-        if (gameFrame.isResizable()) {
-          setResizable(false);
-        }
-        return;
-      }
-      optionsView.handleAction(arg0);
-      return;
-    }
-    if (gameState == GameState.MAIN_MENU) {
-      // Main menu
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_CONTINUE_GAME)) {
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.LOAD_GAME);
-        return;
-      }
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_NEW_GAME)) {
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.GALAXY_CREATION);
-        return;
-      }
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_CREDITS)) {
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.CREDITS);
-        return;
-      }
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_OPTIONS_VIEW)) {
-        SoundPlayer.playMenuSound();
-        changeGameState(GameState.OPTIONS_VIEW);
-        return;
-      }
-      if (arg0.getActionCommand()
-          .equalsIgnoreCase(GameCommands.COMMAND_QUIT_GAME)) {
-        SoundPlayer.playMenuSound();
-        configFile.setMusicVolume(MusicPlayer.getVolume());
-        configFile.setSoundVolume(SoundPlayer.getSoundVolume());
-        configFile.setResolution(gameFrame.getWidth(), gameFrame.getHeight());
-        writeConfigFile();
-        System.exit(0);
-      }
+    if (gameState == GameState.GALAXY_CREATION
+        || gameState == GameState.PLAYER_SETUP
+        || gameState == GameState.SAVE_GAME_NAME_VIEW
+        || gameState == GameState.LOAD_GAME
+        || gameState == GameState.OPTIONS_VIEW
+        || gameState == GameState.MAIN_MENU
+        || gameState == GameState.CREDITS) {
+      actionPerformedMenus(arg0);
     }
   }
 

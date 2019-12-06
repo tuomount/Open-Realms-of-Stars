@@ -108,6 +108,10 @@ public class GalaxyConfig {
    * Player government
    */
   private GovernmentType[] playerGovernment;
+  /**
+   * Player ancient realm.
+   */
+  private boolean[] playerAncientRealm;
 
   /**
    * Chance for planetary event
@@ -190,6 +194,11 @@ public class GalaxyConfig {
    * 2 All
    */
   private int spaceAnomaliesLevel;
+
+  /**
+   * How many turns ancient realms player before others start.
+   */
+  private int ancientHeadStart;
 /**
    * Constructor for galaxy config
    */
@@ -210,10 +219,12 @@ public class GalaxyConfig {
     setScoreLimitResearch(2);
     setScoreLimitDiplomacy(2);
     setMaxPlayers(4);
+    setAncientHeadStart(80);
     setSolarSystemDistance(12, 0);
     playerRaces = new SpaceRace[StarMap.MAX_PLAYERS];
     playerName = new String[StarMap.MAX_PLAYERS];
     playerGovernment = new GovernmentType[StarMap.MAX_PLAYERS];
+    playerAncientRealm = new boolean[StarMap.MAX_PLAYERS];
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
 
       setRace(i, SpaceRaceUtility.getRandomRace());
@@ -312,6 +323,30 @@ public class GalaxyConfig {
       return playerGovernment[index];
     }
     return null;
+  }
+
+  /**
+   * Set Ancient realm for player
+   * @param index Player Index
+   * @param ancientRealm Ancient realm flag
+   */
+  public void setPlayerAncientRealm(final int index,
+      final boolean ancientRealm) {
+    if (index >= 0 && index < StarMap.MAX_PLAYERS) {
+      playerAncientRealm[index] = ancientRealm;
+    }
+  }
+
+  /**
+   * Get Ancient realm for player
+   * @param index Player index
+   * @return True for ancient realm
+   */
+  public boolean getPlayerAncientRealm(final int index) {
+    if (index >= 0 && index < StarMap.MAX_PLAYERS) {
+      return playerAncientRealm[index];
+    }
+    return false;
   }
   /**
    * Set galaxy size. Galaxy is set for square size
@@ -648,6 +683,22 @@ public class GalaxyConfig {
    */
   public void setKarmaSpeed(final int karmaSpeed) {
     this.karmaSpeed = karmaSpeed;
+  }
+
+  /**
+   * Get Ancient realm head start
+   * @return Ancient realm head start in turns.
+   */
+  public int getAncientHeadStart() {
+    return ancientHeadStart;
+  }
+
+  /**
+   * Set ancient realm head start
+   * @param ancientHeadStart in turns
+   */
+  public void setAncientHeadStart(final int ancientHeadStart) {
+    this.ancientHeadStart = ancientHeadStart;
   }
 
 }

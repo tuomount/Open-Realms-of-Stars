@@ -1984,7 +1984,9 @@ public class AITurnView extends BlackPanel {
         game.getStarMap().doFleetScanUpdate(info, null, planet);
       }
     }
-    handleDiplomaticVotes(towers);
+    if (game.getStarMap().getTurn() > 0) {
+      handleDiplomaticVotes(towers);
+    }
     handleOlympicParticipation(game.getStarMap().getVotes(),
         game.getPlayers());
     handleOlympicGames(game.getStarMap());
@@ -2018,23 +2020,25 @@ public class AITurnView extends BlackPanel {
     GameLengthState oldState = game.getStarMap().getGameLengthState();
     game.getStarMap().setTurn(game.getStarMap().getTurn() + 1);
     GameLengthState newState = game.getStarMap().getGameLengthState();
-    PlayerInfo board = game.getPlayers().getBoardPlayer();
-    boolean pirateNews = false;
-    if (oldState != newState && board != null) {
-      pirateNews = updateSpacePirates(board,
-          game.getStarMap().getPirateDifficulty(), false);
-    }
-    if (board != null && !pirateNews) {
-      pirateNews = updateSpacePirates(board,
-          game.getStarMap().getPirateDifficulty(),
-          game.getStarMap().getTurn());
-    }
-    if (pirateNews) {
-      NewsCorpData newsData = game.getStarMap().getNewsCorpData();
-      NewsData news = NewsFactory.makeSpacePiratesNews(game.getStarMap());
-      newsData.addNews(news);
-      GalacticEvent event = new GalacticEvent(news.getNewsText());
-      game.getStarMap().getHistory().addEvent(event);
+    if (game.getStarMap().getTurn() > 1) {
+      PlayerInfo board = game.getPlayers().getBoardPlayer();
+      boolean pirateNews = false;
+      if (oldState != newState && board != null) {
+        pirateNews = updateSpacePirates(board,
+            game.getStarMap().getPirateDifficulty(), false);
+      }
+      if (board != null && !pirateNews) {
+        pirateNews = updateSpacePirates(board,
+            game.getStarMap().getPirateDifficulty(),
+            game.getStarMap().getTurn());
+      }
+      if (pirateNews) {
+        NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+        NewsData news = NewsFactory.makeSpacePiratesNews(game.getStarMap());
+        newsData.addNews(news);
+        GalacticEvent event = new GalacticEvent(news.getNewsText());
+        game.getStarMap().getHistory().addEvent(event);
+      }
     }
     game.getStarMap().getHistory().addTurn(game.getStarMap().getTurn());
     if (game.getStarMap().getTurn() % NewsCorpData.NEWS_PUBLISH_RATE == 0) {
@@ -2057,69 +2061,71 @@ public class AITurnView extends BlackPanel {
       GalacticEvent event = new GalacticEvent(news.getNewsText());
       game.getStarMap().getHistory().addEvent(event);
     }
-    if (game.getStarMap().getTurn() == game.getStarMap()
-        .getScoreVictoryTurn() / 2) {
-      // Game is in halfway
-      NewsCorpData newsData = game.getStarMap().getNewsCorpData();
-      NewsData news = NewsFactory.makeScoreNewsHalf(
-          game.getStarMap());
-      newsData.addNews(news);
-      GalacticEvent event = new GalacticEvent(news.getNewsText());
-      game.getStarMap().getHistory().addEvent(event);
-    }
-    if (game.getStarMap().getTurn() == game.getStarMap()
-        .getScoreVictoryTurn() * 3 / 4) {
-      // Game is in last quarter
-      NewsCorpData newsData = game.getStarMap().getNewsCorpData();
-      NewsData news = NewsFactory.makeScoreNewsLastQuarter(
-          game.getStarMap());
-      newsData.addNews(news);
-      GalacticEvent event = new GalacticEvent(news.getNewsText());
-      game.getStarMap().getHistory().addEvent(event);
-    }
-    // Using the broadcasters information here
-    NewsData news = NewsFactory.makeCulturalVictoryNewsAtEnd(
-        game.getStarMap(), broadcasters);
-    if (news != null) {
-      GalacticEvent event = new GalacticEvent(news.getNewsText());
-      game.getStarMap().getHistory().addEvent(event);
-      game.getStarMap().setGameEnded(true);
-      NewsCorpData newsData = game.getStarMap().getNewsCorpData();
-      newsData.addNews(news);
-    }
-    news = NewsFactory.makeDominationVictoryNewsAtEnd(game.getStarMap());
-    if (news != null) {
-      GalacticEvent event = new GalacticEvent(news.getNewsText());
-      game.getStarMap().getHistory().addEvent(event);
-      game.getStarMap().setGameEnded(true);
-      NewsCorpData newsData = game.getStarMap().getNewsCorpData();
-      newsData.addNews(news);
-    }
-    news = NewsFactory.makeScientificVictoryNewsAtEnd(game.getStarMap());
-    if (news != null) {
-      GalacticEvent event = new GalacticEvent(news.getNewsText());
-      game.getStarMap().getHistory().addEvent(event);
-      game.getStarMap().setGameEnded(true);
-      NewsCorpData newsData = game.getStarMap().getNewsCorpData();
-      newsData.addNews(news);
-    }
-    news = NewsFactory.makeDiplomaticVictoryNewsAtEnd(game.getStarMap());
-    if (news != null) {
-      GalacticEvent event = new GalacticEvent(news.getNewsText());
-      game.getStarMap().getHistory().addEvent(event);
-      game.getStarMap().setGameEnded(true);
-      NewsCorpData newsData = game.getStarMap().getNewsCorpData();
-      newsData.addNews(news);
-    }
-    if (game.getStarMap().getTurn() == game.getStarMap()
-        .getScoreVictoryTurn()) {
-      // Game is in the end
-      NewsCorpData newsData = game.getStarMap().getNewsCorpData();
-      news = NewsFactory.makeScoreNewsAtEnd(game.getStarMap());
-      newsData.addNews(news);
-      GalacticEvent event = new GalacticEvent(news.getNewsText());
-      game.getStarMap().getHistory().addEvent(event);
-      game.getStarMap().setGameEnded(true);
+    if (game.getStarMap().getTurn() > 0) {
+      if (game.getStarMap().getTurn() == game.getStarMap()
+          .getScoreVictoryTurn() / 2) {
+        // Game is in halfway
+        NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+        NewsData news = NewsFactory.makeScoreNewsHalf(
+            game.getStarMap());
+        newsData.addNews(news);
+        GalacticEvent event = new GalacticEvent(news.getNewsText());
+        game.getStarMap().getHistory().addEvent(event);
+      }
+      if (game.getStarMap().getTurn() == game.getStarMap()
+          .getScoreVictoryTurn() * 3 / 4) {
+        // Game is in last quarter
+        NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+        NewsData news = NewsFactory.makeScoreNewsLastQuarter(
+            game.getStarMap());
+        newsData.addNews(news);
+        GalacticEvent event = new GalacticEvent(news.getNewsText());
+        game.getStarMap().getHistory().addEvent(event);
+      }
+      // Using the broadcasters information here
+      NewsData news = NewsFactory.makeCulturalVictoryNewsAtEnd(
+          game.getStarMap(), broadcasters);
+      if (news != null) {
+        GalacticEvent event = new GalacticEvent(news.getNewsText());
+        game.getStarMap().getHistory().addEvent(event);
+        game.getStarMap().setGameEnded(true);
+        NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+        newsData.addNews(news);
+      }
+      news = NewsFactory.makeDominationVictoryNewsAtEnd(game.getStarMap());
+      if (news != null) {
+        GalacticEvent event = new GalacticEvent(news.getNewsText());
+        game.getStarMap().getHistory().addEvent(event);
+        game.getStarMap().setGameEnded(true);
+        NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+        newsData.addNews(news);
+      }
+      news = NewsFactory.makeScientificVictoryNewsAtEnd(game.getStarMap());
+      if (news != null) {
+        GalacticEvent event = new GalacticEvent(news.getNewsText());
+        game.getStarMap().getHistory().addEvent(event);
+        game.getStarMap().setGameEnded(true);
+        NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+        newsData.addNews(news);
+      }
+      news = NewsFactory.makeDiplomaticVictoryNewsAtEnd(game.getStarMap());
+      if (news != null) {
+        GalacticEvent event = new GalacticEvent(news.getNewsText());
+        game.getStarMap().getHistory().addEvent(event);
+        game.getStarMap().setGameEnded(true);
+        NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+        newsData.addNews(news);
+      }
+      if (game.getStarMap().getTurn() == game.getStarMap()
+          .getScoreVictoryTurn()) {
+        // Game is in the end
+        NewsCorpData newsData = game.getStarMap().getNewsCorpData();
+        news = NewsFactory.makeScoreNewsAtEnd(game.getStarMap());
+        newsData.addNews(news);
+        GalacticEvent event = new GalacticEvent(news.getNewsText());
+        game.getStarMap().getHistory().addEvent(event);
+        game.getStarMap().setGameEnded(true);
+      }
     }
     game.getStarMap().getNewsCorpData().clearNewsList();
     game.getStarMap().updateWinningStrategies();
@@ -2256,7 +2262,9 @@ public class AITurnView extends BlackPanel {
     }
     if (game.getStarMap().isAllAIsHandled()) {
       updateStarMapToNextTurn();
-      handleGalaxyKarma();
+      if (game.getStarMap().getTurn() > 0) {
+        handleGalaxyKarma();
+      }
       for (int i = 0; i < game.getPlayers().getCurrentMaxPlayers(); i++) {
         // Handle player research at end of turn
         PlayerInfo info = game.getPlayers().getPlayerInfoByIndex(i);

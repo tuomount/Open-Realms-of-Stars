@@ -9,7 +9,7 @@ import org.openRealmOfStars.starMap.planet.GameLengthState;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018, 2019 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -39,6 +39,17 @@ public class GameLengthStateTest {
     assertEquals(GameLengthState.START_GAME, GameLengthState.getGameLengthState(100, 800));
     assertEquals(GameLengthState.START_GAME, GameLengthState.getGameLengthState(200, 1000));
     assertEquals(GameLengthState.START_GAME, GameLengthState.getGameLengthState(0, 10));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testAncientGameState() {
+    assertEquals(GameLengthState.ANCIENT_HEAD_START, GameLengthState.getGameLengthState(-1, 50));
+    assertEquals(GameLengthState.ANCIENT_HEAD_START, GameLengthState.getGameLengthState(-30, 200));
+    assertEquals(GameLengthState.ANCIENT_HEAD_START, GameLengthState.getGameLengthState(-50, 400));
+    assertEquals(GameLengthState.ANCIENT_HEAD_START, GameLengthState.getGameLengthState(-100, 800));
+    assertEquals(GameLengthState.ANCIENT_HEAD_START, GameLengthState.getGameLengthState(-200, 1000));
+    assertEquals(GameLengthState.ANCIENT_HEAD_START, GameLengthState.getGameLengthState(-1, 10));
   }
 
   @Test
@@ -87,10 +98,9 @@ public class GameLengthStateTest {
     assertEquals(GameLengthState.END_GAME, GameLengthState.getGameLengthState(880, 0));
   }
 
-  @Test(expected=IllegalArgumentException.class)
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testNegative() {
-    assertEquals(GameLengthState.END_GAME, GameLengthState.getGameLengthState(-10, 600));
+    assertEquals(GameLengthState.ANCIENT_HEAD_START, GameLengthState.getGameLengthState(-10, 600));
   }
 
   @Test(expected=IllegalArgumentException.class)

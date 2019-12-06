@@ -133,7 +133,7 @@ public class HistoryTurn {
       // Writing the header first, word TURN and then turn number in 16 bits
       byte[] turnBuffer = "TURN".getBytes(StandardCharsets.UTF_8);
       os.write(turnBuffer);
-      turnBuffer = IOUtilities.convertIntTo16BitMsb(turnNumber);
+      turnBuffer = IOUtilities.convertShortTo16BitMsb(turnNumber);
       os.write(turnBuffer);
       // Next is write how many events turn has
       turnBuffer = IOUtilities.convertIntTo16BitMsb(listOfEvents.size());
@@ -172,7 +172,7 @@ public class HistoryTurn {
         check = 0;
       }
     } while (check < turnBuffer.length);
-    int turnNumber = IOUtilities.read16BitsToInt(is);
+    int turnNumber = IOUtilities.readSigned16BitsToInt(is);
     int numberOfEvent = IOUtilities.read16BitsToInt(is);
     HistoryTurn turn = new HistoryTurn(turnNumber);
     for (int i = 0; i < numberOfEvent; i++) {

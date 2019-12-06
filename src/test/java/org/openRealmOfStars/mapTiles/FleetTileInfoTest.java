@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2019  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -48,6 +48,9 @@ public class FleetTileInfoTest {
     assertEquals("No matching image index", 1,tileInfo.getImageIndex());
     assertEquals("No matching player index", 2,tileInfo.getPlayerIndex());
     assertEquals("No matching fleet index", 3,tileInfo.getFleetIndex());
+    assertEquals(-1, tileInfo.getConflictIndex());
+    tileInfo.setConflict(2);
+    assertEquals(2, tileInfo.getConflictIndex());
   }
 
 }

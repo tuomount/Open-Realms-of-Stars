@@ -248,6 +248,7 @@ public final class RandomEventUtility {
         PlayerInfo extraPlayer = new PlayerInfo(SpaceRace.SPACE_PIRATE);
         int numberOfTechs = 5;
         switch (map.getGameLengthState()) {
+          case ANCIENT_HEAD_START:
           case START_GAME: {
             numberOfTechs = DiceGenerator.getRandom(5, 18);
             break;

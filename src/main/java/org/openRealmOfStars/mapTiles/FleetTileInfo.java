@@ -5,7 +5,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016, 2019  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -48,6 +48,12 @@ public class FleetTileInfo {
   private int fleetIndex;
 
   /**
+   * Flag for indicating that same tile contains fleets from two
+   * different realms.
+   */
+  private int conflictIndex;
+
+  /**
    * Constructor for Fleet Tile info
    * @param race Space Race information
    * @param index Ship's image index
@@ -60,6 +66,7 @@ public class FleetTileInfo {
     this.imageIndex = index;
     this.playerIndex = playerIndex;
     this.setFleetIndex(fleetIndex);
+    setConflict(-1);
   }
 
   /**
@@ -124,6 +131,23 @@ public class FleetTileInfo {
    */
   public void setFleetIndex(final int fleetIndex) {
     this.fleetIndex = fleetIndex;
+  }
+
+  /**
+   * Is there a conflict in tile between different realms.
+   * -1 Means that there is no conflict
+   * @return the conflictIndex Another realm index
+   */
+  public int getConflictIndex() {
+    return conflictIndex;
+  }
+
+  /**
+   * Set Conflict index for tile.
+   * @param conflict Original realm index in tile.
+   */
+  public void setConflict(final int conflict) {
+    this.conflictIndex = conflict;
   }
 
 }

@@ -224,7 +224,8 @@ public class StatisticPanel extends JPanel {
     int topOffsetY = 10;
     int rightOffsetX = 10;
     int biggestY = largestY;
-    if (victoryScoreLimit > 0 && largestY >= victoryScoreLimit * 3 / 4) {
+    if (victoryScoreLimit > 0 && largestY >= victoryScoreLimit * 2 / 3
+        && largestY < victoryScoreLimit) {
       biggestY = victoryScoreLimit * 11 / 10;
     }
     int textWidth = GuiStatics.getTextWidth(GuiStatics.getFontCubellanSC(),

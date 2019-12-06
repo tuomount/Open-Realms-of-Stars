@@ -43,20 +43,41 @@ public class SpaceCheckBox extends JCheckBox {
   private static final long serialVersionUID = 1L;
 
   /**
+   * Normal check box type
+   */
+  public static final int CHECKBOX_TYPE_NORMAL = 0;
+  /**
+   * Ancient check box type
+   */
+  public static final int CHECKBOX_TYPE_ANCIENT = 1;
+  /**
    * Space check icon
    */
   private Icon16x16 icon;
 
+  /**
+   * Checkbox type
+   */
+  private int type;
   /**
    * Construct check box with space style
    * @param text to shown in check box.
    */
   public SpaceCheckBox(final String text) {
     super(text);
+    type = CHECKBOX_TYPE_NORMAL;
     setSpaceIcon(Icons.getIconByName(Icons.ICON_CHECKBOX));
     setBackground(GuiStatics.COLOR_SPACE_GREY_BLUE);
     setForeground(GuiStatics.COLOR_GREY_40);
     setBorderPainted(true);
+  }
+
+  /**
+   * Set type for checkbox.
+   * @param type Checkbox type
+   */
+  public void setType(final int type) {
+    this.type = type;
   }
 
   @Override
@@ -134,9 +155,19 @@ public class SpaceCheckBox extends JCheckBox {
     if (icon != null) {
       offsetX = offsetX + 16;
       if (this.isSelected()) {
-        icon = Icons.getIconByName(Icons.ICON_CHECKBOX_TICK);
+        if (type == CHECKBOX_TYPE_NORMAL) {
+          icon = Icons.getIconByName(Icons.ICON_CHECKBOX_TICK);
+        }
+        if (type == CHECKBOX_TYPE_ANCIENT) {
+          icon = Icons.getIconByName(Icons.ICON_ANCIENT_BOX_TICK);
+        }
       } else {
-        icon = Icons.getIconByName(Icons.ICON_CHECKBOX);
+        if (type == CHECKBOX_TYPE_NORMAL) {
+          icon = Icons.getIconByName(Icons.ICON_CHECKBOX);
+        }
+        if (type == CHECKBOX_TYPE_ANCIENT) {
+          icon = Icons.getIconByName(Icons.ICON_ANCIENT_BOX);
+        }
       }
       icon.draw(g2d, sx, sy);
     }

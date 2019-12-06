@@ -16,6 +16,8 @@ import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.borders.SimpleBorder;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
+import org.openRealmOfStars.gui.infopanel.EmptyInfoPanel;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.SpaceComboBox;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
@@ -73,6 +75,11 @@ public class PlayerSetupView extends BlackPanel {
   private SpaceComboBox<GovernmentType>[] comboGovernmentSelect;
 
   /**
+   * Checkbox for ancient realm
+   */
+  private SpaceCheckBox[] checkAncientRealm;
+
+  /**
    * Player name
    */
   private JTextField[] playerName;
@@ -121,6 +128,7 @@ public class PlayerSetupView extends BlackPanel {
 
     comboRaceSelect = new SpaceComboBox[StarMap.MAX_PLAYERS];
     comboGovernmentSelect = new SpaceComboBox[StarMap.MAX_PLAYERS];
+    checkAncientRealm = new SpaceCheckBox[StarMap.MAX_PLAYERS];
     raceImgs = new RaceImagePanel[StarMap.MAX_PLAYERS];
     playerName = new JTextField[StarMap.MAX_PLAYERS];
 
@@ -218,6 +226,7 @@ public class PlayerSetupView extends BlackPanel {
   public void getNamesToConfig() {
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
       config.setPlayerName(i, playerName[i].getText());
+      config.setPlayerAncientRealm(i, checkAncientRealm[i].isSelected());
     }
 
   }
@@ -268,6 +277,8 @@ public class PlayerSetupView extends BlackPanel {
         .getFullDescription(false, false));
     info.add(comboRaceSelect[index]);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
+    EmptyInfoPanel info2 = new EmptyInfoPanel();
+    info2.setLayout(new BoxLayout(info2, BoxLayout.X_AXIS));
     comboGovernmentSelect[index] = new SpaceComboBox<>(
         GovernmentUtility.getGovernmentsForRace(config.getRace(index)));
     comboGovernmentSelect[index].setBackground(
@@ -294,7 +305,16 @@ public class PlayerSetupView extends BlackPanel {
         config.getRace(index));
     comboGovernmentSelect[index].setToolTipText(
         governments[i].getDescription(false));
-    info.add(comboGovernmentSelect[index]);
+    info2.add(comboGovernmentSelect[index]);
+    info2.add(Box.createRigidArea(new Dimension(5, 5)));
+    checkAncientRealm[index] = new SpaceCheckBox("");
+    checkAncientRealm[index].setType(SpaceCheckBox.CHECKBOX_TYPE_ANCIENT);
+    checkAncientRealm[index].setToolTipText("<html>Select rune to mark Realm"
+        + " as an ancient realm.<br> This will allow realm ancient head"
+        + " start and will make realm more stronger than others.<br>"
+        + "Ancient realms are played by AI for amount of head start.</html>");
+    info2.add(checkAncientRealm[index]);
+    info.add(info2);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     playerName[index] = new JTextField(
         "Empire of " + config.getRace(index).getName());

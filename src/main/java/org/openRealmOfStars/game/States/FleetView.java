@@ -386,7 +386,6 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     fleetBtns.add(Box.createRigidArea(new Dimension(5, 5)));
     btn = new SpaceButton("Switch", GameCommands.COMMAND_SWITCH_FLEETS);
     btn.addActionListener(listener);
-    btn.setEnabled(interactive);
     fleetBtns.add(btn);
     eastPanel.add(fleetBtns);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 175)));

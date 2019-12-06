@@ -169,6 +169,13 @@ public class Planet {
    * String containg how happiness is calculated
    */
   private String happinessExplanation;
+
+  /**
+   * Starting realm index for ancient realm start.
+   * This value is only used when creating galaxy.
+   * This will no be saved on file.
+   */
+  private int startRealmIndex;
   /**
    * Maximum number of different works
    */
@@ -349,6 +356,7 @@ public class Planet {
     this.tax = 0;
     this.culture = 0;
     this.homeWorldIndex = -1;
+    this.startRealmIndex = -1;
     if (this.gasGiant) {
       this.planetType = PlanetTypes.GASGIANT1;
     } else {
@@ -2195,10 +2203,27 @@ public class Planet {
 
   /**
    * Set space race home world index.
-   * @param homeWorldIndex Space race index. -1 for non home world.
+   * @param realmIndex Space race index. -1 for non home world.
    */
-  public void setHomeWorldIndex(final int homeWorldIndex) {
-    this.homeWorldIndex = homeWorldIndex;
+  public void setHomeWorldIndex(final int realmIndex) {
+    this.homeWorldIndex = realmIndex;
+  }
+
+  /**
+   * Get start realm index. Index is matching for realm's index.
+   * -1 means that planet is not a start world.
+   * @return Realm index or -1
+   */
+  public int getstartRealmIndex() {
+    return startRealmIndex;
+  }
+
+  /**
+   * Set start realm index.
+   * @param realmIndex realm index. -1 for non start world.
+   */
+  public void setStartRealmIndex(final int realmIndex) {
+    this.startRealmIndex = realmIndex;
   }
 
   /**

@@ -2279,4 +2279,52 @@ public final class NewsFactory {
     return news;
   }
 
+  /**
+   * Make Broadcaster building news. Realm builds this building is closer
+   * to cultural victory.
+   * @param realm PlayerInfo who is building
+   * @param planet Where to building
+   * @param building Building which was built
+   * @return NewsData
+   */
+  public static NewsData makeBroadcasterBuildingNews(final PlayerInfo realm,
+      final Planet planet, final Building building) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
+    String position = ImageInstruction.POSITION_CENTER;
+    String size = ImageInstruction.SIZE_FULL;
+    instructions.addPlanet(position, planet.getImageInstructions(), size);
+    instructions.addImage(realm.getRace().getNameSingle());
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("BROADCASTING!");
+        break;
+      }
+      case 1: {
+        instructions.addText(building.getName().toUpperCase() + " TO "
+              + planet.getName().toUpperCase());
+        break;
+      }
+      case 2: {
+        instructions.addText("CULTURAL SPREADING STARTS!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(realm.getEmpireName());
+    sb.append(" builds ");
+    sb.append(building.getName());
+    sb.append(" to ");
+    sb.append(planet.getName());
+    sb.append("! ");
+    sb.append("With this great building ");
+    sb.append(realm.getEmpireName());
+    sb.append(" is able to spread cultural information to other realms! ");
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
 }

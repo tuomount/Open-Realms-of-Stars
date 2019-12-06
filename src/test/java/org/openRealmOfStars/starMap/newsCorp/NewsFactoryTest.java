@@ -415,6 +415,24 @@ public class NewsFactoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBroadcasting() {
+    PlayerInfo builder = Mockito.mock(PlayerInfo.class);
+    Mockito.when(builder.getEmpireName()).thenReturn("Empire of Test");
+    Mockito.when(builder.getRace()).thenReturn(SpaceRace.CHIRALOIDS);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        PlanetTypes.WATERWORLD2.getImageInstructions());
+    Mockito.when(planet.getName()).thenReturn("Test planet");
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getName()).thenReturn("Broadcasting tower");
+    NewsData news = NewsFactory.makeBroadcasterBuildingNews(builder, planet,
+        building);
+    assertEquals(true, news.getNewsText().contains(
+        builder.getEmpireName()));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testGalacticSportsArenaDestroyed() {
     PlayerInfo builder = Mockito.mock(PlayerInfo.class);
     Mockito.when(builder.getEmpireName()).thenReturn("Empire of Test");
@@ -1806,7 +1824,7 @@ public class NewsFactoryTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
-  public void testGalacticSecretaryNes() {
+  public void testGalacticSecretaryNews() {
     PlayerInfo realm = Mockito.mock(PlayerInfo.class);
     Mockito.when(realm.getEmpireName()).thenReturn("Empire of Test");
     NewsData news = NewsFactory.makeSecretaryOfGalaxyNews(realm);

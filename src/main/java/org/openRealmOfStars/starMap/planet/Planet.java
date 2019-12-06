@@ -1532,6 +1532,16 @@ public class Planet {
             eventOnPlanet.setText(news.getNewsText());
             map.getHistory().addEvent(eventOnPlanet);
           }
+          if (building.isBroadcaster() && map != null) {
+            NewsData news = NewsFactory.makeBroadcasterBuildingNews(
+                planetOwnerInfo, this, building);
+            map.getNewsCorpData().addNews(news);
+            EventOnPlanet eventOnPlanet = new EventOnPlanet(
+                EventType.PLANET_BUILDING, getCoordinate(),
+                getName(), getPlanetOwnerIndex());
+            eventOnPlanet.setText(news.getNewsText());
+            map.getHistory().addEvent(eventOnPlanet);
+          }
           if (building.getName().equals("Galactic sports center")
               && map != null) {
             NewsData news = NewsFactory.makeGalacticSportsNews(

@@ -2350,8 +2350,10 @@ public class AITurnView extends BlackPanel {
     if (arg0.getActionCommand()
         .equalsIgnoreCase(GameCommands.COMMAND_ANIMATION_TIMER)) {
       updateText();
-      if (!aiThread.isStarted()) {
-        aiThread.start();
+      synchronized (aiThread) {
+        if (!aiThread.isStarted()) {
+          aiThread.start();
+        }
       }
       if (!aiThread.isRunning() && aiThread.isStarted()) {
         if (getNextState() != null) {

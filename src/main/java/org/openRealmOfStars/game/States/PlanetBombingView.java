@@ -747,9 +747,15 @@ public class PlanetBombingView extends BlackPanel {
               // Planet conquered
               aiExitLoop = true;
               if (starMap != null) {
-                starMap.getNewsCorpData().addNews(
-                    NewsFactory.makePlanetConqueredNews(attacker, defender,
-                        planet, nukeText));
+                NewsData news = NewsFactory.makePlanetConqueredNews(attacker,
+                    defender, planet, nukeText);
+                starMap.getNewsCorpData().addNews(news);
+                EventOnPlanet event = new EventOnPlanet(
+                    EventType.PLANET_CONQUERED, planet.getCoordinate(),
+                    planet.getName(),
+                    starMap.getPlayerList().getIndex(attacker));
+                event.setText(news.getNewsText());
+                starMap.getHistory().addEvent(event);
               }
             }
           }

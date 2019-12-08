@@ -1539,7 +1539,8 @@ public class StarMap {
                 Fleet fleet2 = player.getFleets().getByIndex(k);
                 if (fleet2 != null &&  fleet != null
                     && fleet2.getX() == fleet.getX()
-                    && fleet2.getY() == fleet.getY()) {
+                    && fleet2.getY() == fleet.getY()
+                    && fleet2.getNumberOfShip() > 0) {
                   if (fleet2.getFleetCloackingValue()
                       < fleet.getFleetCloackingValue()) {
                     Ship ship = fleet2.getBiggestShip();

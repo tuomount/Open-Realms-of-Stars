@@ -55,4 +55,20 @@ public class HelpLineTest {
     assertEquals("33: Test category - Test title", line.toString());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testParsing() {
+    HelpLine line = HelpLine.parseHelpline("00|Start|Start of Open Realm of Stars|Text");
+    assertEquals(0, line.getIndex());
+    assertEquals("0: Start - Start of Open Realm of Stars", line.toString());
+    assertEquals("Text", line.getText());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testParsingComment() {
+    HelpLine line = HelpLine.parseHelpline("#00|Start|Start of Open Realm of Stars|Text");
+    assertEquals(null, line);
+  }
+
 }

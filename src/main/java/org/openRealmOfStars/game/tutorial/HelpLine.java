@@ -56,6 +56,28 @@ public class HelpLine {
   }
 
   /**
+   * Parse help line
+   * @param tutorialLine Single line for tutorial text
+   * @return HelpLine if successfull or null
+   */
+  public static HelpLine parseHelpline(final String tutorialLine) {
+    HelpLine line = null;
+    if (!tutorialLine.startsWith("#")) {
+      // Not a comment
+      String[] parts = tutorialLine.split("\\|");
+      if (parts.length == 4) {
+        // Correct amount of parts
+        int lineIndex = Integer.parseInt(parts[0]);
+        line = new HelpLine(lineIndex);
+        line.setCategory(parts[1]);
+        line.setTitle(parts[2]);
+        line.setText(parts[3]);
+      }
+    }
+    return line;
+  }
+
+  /**
    * Get help line category
    * @return Category as String
    */

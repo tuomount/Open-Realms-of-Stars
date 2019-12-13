@@ -23,7 +23,7 @@ import org.junit.experimental.categories.Category;
 * You should have received a copy of the GNU General Public License
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
-* Test for Game class, mainly to test static methods
+* Test help line for tutorial.
 *
 */
 public class HelpLineTest {

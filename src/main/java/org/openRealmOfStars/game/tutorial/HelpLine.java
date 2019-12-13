@@ -1,4 +1,5 @@
 package org.openRealmOfStars.game.tutorial;
+
 /**
 *
 * Open Realm of Stars game project

@@ -3603,5 +3603,12 @@ public class StarMap {
     return shownTutorialIndexes;
   }
 
+  /**
+   * Set Shown tutorial indexes in list
+   * @param tutorialIndexes Array of indexes
+   */
+  public void setShownTutorial(final ArrayList<Integer> tutorialIndexes) {
+    shownTutorialIndexes = tutorialIndexes;
+  }
 
 }

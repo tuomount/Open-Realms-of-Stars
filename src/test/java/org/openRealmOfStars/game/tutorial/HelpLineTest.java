@@ -36,12 +36,15 @@ public class HelpLineTest {
     assertEquals("", line.getCategory());
     assertEquals("", line.getTitle());
     assertEquals("", line.getText());
+    assertEquals(false, line.isShown());
     line.setCategory("Test category");
     line.setText("Test text");
     line.setTitle("Test title");
+    line.setShown(true);
     assertEquals("Test category", line.getCategory());
     assertEquals("Test title", line.getTitle());
     assertEquals("Test text", line.getText());
+    assertEquals(true, line.isShown());
   }
 
   @Test

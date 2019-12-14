@@ -44,6 +44,10 @@ public class HelpLine {
    */
   private String text;
 
+  /**
+   * Flag for shown tutorial line.
+   */
+  private boolean shown;
 
   /**
    * Constructor for help line
@@ -54,6 +58,7 @@ public class HelpLine {
     category = "";
     title = "";
     text = "";
+    setShown(false);
   }
 
   /**
@@ -143,6 +148,22 @@ public class HelpLine {
     sb.append(" - ");
     sb.append(getTitle());
     return sb.toString();
+  }
+
+  /**
+   * Is tutorial line shown?
+   * @return the shown
+   */
+  public boolean isShown() {
+    return shown;
+  }
+
+  /**
+   * Set flag for shown tutorial line
+   * @param shown the shown to set
+   */
+  public void setShown(final boolean shown) {
+    this.shown = shown;
   }
 
 }

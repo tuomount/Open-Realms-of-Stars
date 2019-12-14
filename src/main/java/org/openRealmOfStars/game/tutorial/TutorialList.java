@@ -112,4 +112,33 @@ public class TutorialList {
     return sb.toString();
   }
 
+  /**
+   * Update shown tutorial based on array of indexes.
+   * @param shownIndexes Array of indexes.
+   */
+  public void updateShownTutorial(final ArrayList<Integer> shownIndexes) {
+    for (HelpLine line : list) {
+      line.setShown(false);
+    }
+    for (Integer value : shownIndexes) {
+      HelpLine line = getByIndex(value.intValue());
+      if (line != null) {
+        line.setShown(true);
+      }
+    }
+  }
+  /**
+   * Get Shown indexes in array list
+   * @return ArrayList of shown indexes.
+   */
+  public ArrayList<Integer> getShownIndexes() {
+    ArrayList<Integer> listIndexes = new ArrayList<>();
+    for (HelpLine line : list) {
+      if (line.isShown()) {
+        Integer value = new Integer(line.getIndex());
+        listIndexes.add(value);
+      }
+    }
+    return listIndexes;
+  }
 }

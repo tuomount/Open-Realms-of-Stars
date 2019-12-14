@@ -2,6 +2,8 @@ package org.openRealmOfStars.game.tutorial;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 /**
@@ -209,6 +211,66 @@ public class TutorialListTest {
     assertEquals(25, list.getByIndex(25).getIndex());
     assertEquals(21, list.getByIndex(21).getIndex());
     assertEquals(16, list.getByIndex(16).getIndex());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testShownIndexList() {
+    TutorialList list = new TutorialList();
+    HelpLine line = new HelpLine(5);
+    line.setShown(false);
+    list.add(line);
+    line = new HelpLine(7);
+    line.setShown(true);
+    list.add(line);
+    line = new HelpLine(2);
+    line.setShown(true);
+    list.add(line);
+    line = new HelpLine(3);
+    line.setShown(false);
+    list.add(line);
+    ArrayList<Integer> indexes = list.getShownIndexes();
+    assertEquals(2, indexes.size());
+    assertEquals(2, indexes.get(0).intValue());
+    assertEquals(7, indexes.get(1).intValue());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testUpdateShownIndexList() {
+    TutorialList list = new TutorialList();
+    HelpLine line = new HelpLine(5);
+    list.add(line);
+    line = new HelpLine(7);
+    list.add(line);
+    line = new HelpLine(2);
+    list.add(line);
+    line = new HelpLine(3);
+    list.add(line);
+    line = new HelpLine(12);
+    list.add(line);
+    line = new HelpLine(19);
+    list.add(line);
+    line = new HelpLine(11);
+    list.add(line);
+    ArrayList<Integer> indexes = new ArrayList<>();
+    Integer value = new Integer(7);
+    indexes.add(value);
+    value = new Integer(13);
+    indexes.add(value);
+    value = new Integer(12);
+    indexes.add(value);
+    value = new Integer(11);
+    indexes.add(value);
+    list.updateShownTutorial(indexes);
+    assertEquals(false, list.getByIndex(2).isShown());
+    assertEquals(false, list.getByIndex(3).isShown());
+    assertEquals(false, list.getByIndex(5).isShown());
+    assertEquals(true, list.getByIndex(7).isShown());
+    assertEquals(true, list.getByIndex(12).isShown());
+    assertEquals(true, list.getByIndex(11).isShown());
+    assertEquals(null, list.getByIndex(13));
+    assertEquals(false, list.getByIndex(19).isShown());
   }
 
 }

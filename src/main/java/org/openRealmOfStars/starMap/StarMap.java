@@ -278,9 +278,19 @@ public class StarMap {
   private int goodKarmaCount;
 
   /**
+   * Flag for tutorial enabled
+   */
+  private boolean tutorialEnabled;
+
+  /**
+   * List of shown tutorial index.
+   * This is place where they are loaded from when reading the save file.
+   */
+  private ArrayList<Integer> shownTutorialIndexes;
+  /**
    * Magic string to save game files
    */
-  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.13";
+  public static final String MAGIC_STRING = "OROS-SAVE-GAME-0.14";
 
   /**
    * Maximum amount of looping when finding free solar system spot.
@@ -307,6 +317,8 @@ public class StarMap {
     setBadKarmaCount(0);
     history = new History();
     votes = new Votes();
+    shownTutorialIndexes = new ArrayList<>();
+    tutorialEnabled = true;
     boolean ancientRealmStart = false;
     for (int i = 0; i < config.getMaxPlayers(); i++) {
       if (config.getPlayerAncientRealm(i)) {
@@ -819,6 +831,8 @@ public class StarMap {
     setDebug(false);
     history = new History();
     votes = new Votes();
+    shownTutorialIndexes = new ArrayList<>();
+    tutorialEnabled = false;
     setPirateDifficulty(PirateDifficultLevel.NORMAL);
     setKarmaType(KarmaType.DISABLED);
     setKarmaSpeed(1);
@@ -877,6 +891,18 @@ public class StarMap {
       newsCorpData = newsCorpRepo.restoreNewsCorp(dis,
           players.getCurrentMaxRealms());
       votes = new Votes(dis, players.getCurrentMaxRealms());
+      int value = dis.read();
+      if (value == 1) {
+        tutorialEnabled = true;
+      } else {
+        tutorialEnabled = false;
+      }
+      value = dis.readInt();
+      for (int i = 0; i < value; i++) {
+        int index = IOUtilities.read16BitsToInt(dis);
+        Integer intValue = new Integer(index);
+        shownTutorialIndexes.add(intValue);
+      }
       try {
         history = History.readFromStream(dis);
       } catch (IOException e) {
@@ -896,11 +922,13 @@ public class StarMap {
 
   /**
    * Save Game to DataOutputStream
+   * Before calling this remove to update shown tutorial indexes
+   * from tutorial.
    * @param dos DataOutputStream
    * @throws IOException if there is any problem with DataOutputStream
    */
   public void saveGame(final DataOutputStream dos) throws IOException {
-    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.13");
+    IOUtilities.writeString(dos, "OROS-SAVE-GAME-0.14");
     // Turn number
     dos.writeInt(turn);
     // Victory conditions
@@ -939,6 +967,16 @@ public class StarMap {
     NewsCorpRepository newsCorpRepo = new NewsCorpRepository();
     newsCorpRepo.saveNewsCorp(dos, newsCorpData);
     votes.saveVotes(dos);
+    if (tutorialEnabled) {
+      dos.writeByte(1);
+    } else {
+      dos.writeByte(0);
+    }
+    dos.writeInt(shownTutorialIndexes.size());
+    for (int i = 0; i < shownTutorialIndexes.size(); i++) {
+      Integer value = shownTutorialIndexes.get(i);
+      dos.write(IOUtilities.convertIntTo16BitMsb(value.intValue()));
+    }
     history.writeToStream(dos);
   }
 
@@ -3540,5 +3578,30 @@ public class StarMap {
       }
     }
   }
+
+  /**
+   * Is tutorial enabled or not
+   * @return true if tutorial is enabled
+   */
+  public boolean isTutorialEnabled() {
+    return tutorialEnabled;
+  }
+
+  /**
+   * Set tutorial enabled flag
+   * @param tutorialEnabled the tutorialEnabled to set
+   */
+  public void setTutorialEnabled(final boolean tutorialEnabled) {
+    this.tutorialEnabled = tutorialEnabled;
+  }
+
+  /**
+   * Get Shown tutorial indexes as list
+   * @return the shownTutorialIndexes
+   */
+  public ArrayList<Integer> getShownTutorialIndexes() {
+    return shownTutorialIndexes;
+  }
+
 
 }

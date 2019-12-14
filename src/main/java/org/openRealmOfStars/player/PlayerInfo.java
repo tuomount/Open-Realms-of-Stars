@@ -595,6 +595,12 @@ public class PlayerInfo {
     strategy = WinningStrategy.GENERIC;
     empireName = IOUtilities.readString(dis);
     race = SpaceRaceUtility.getRaceByIndex(dis.readInt());
+    int ancient = dis.read();
+    if (ancient == 1) {
+      ancientRealm = true;
+    } else {
+      ancientRealm = false;
+    }
     government = GovernmentUtility.getGovernmentByIndex(dis.readInt());
     warFatigue = dis.readInt();
     totalCredits = dis.readInt();
@@ -683,6 +689,11 @@ public class PlayerInfo {
   public void savePlayerInfo(final DataOutputStream dos) throws IOException {
     IOUtilities.writeString(dos, empireName);
     dos.writeInt(race.getIndex());
+    if (ancientRealm) {
+      dos.writeByte(1);
+    } else {
+      dos.writeByte(0);
+    }
     dos.writeInt(government.getIndex());
     dos.writeInt(warFatigue);
     dos.writeInt(totalCredits);

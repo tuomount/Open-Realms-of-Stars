@@ -3,9 +3,12 @@ package org.openRealmOfStars.game;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import java.io.IOException;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openRealmOfStars.game.States.AITurnView;
+import org.openRealmOfStars.game.tutorial.TutorialList;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.government.GovernmentType;
@@ -49,6 +52,15 @@ public class GameTest {
     assertEquals(true, wikiPage.contains("Improvement"));
     assertEquals(true, wikiPage.contains("Propulsion"));
     assertEquals(true, wikiPage.contains("Electronics"));
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testTutorialRead() throws IOException {
+    Game.readTutorial("src/test/resources/tutorial.txt");
+    TutorialList list = Game.getTutorial();
+    assertEquals("Text", list.get(0).getText());
+    assertEquals("Test Text", list.get(1).getText());
   }
 
   @Test

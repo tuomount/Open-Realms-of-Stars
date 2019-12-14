@@ -7,10 +7,13 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -52,6 +55,8 @@ import org.openRealmOfStars.game.States.StatView;
 import org.openRealmOfStars.game.States.VoteView;
 import org.openRealmOfStars.game.config.ConfigFile;
 import org.openRealmOfStars.game.config.ConfigLine;
+import org.openRealmOfStars.game.tutorial.HelpLine;
+import org.openRealmOfStars.game.tutorial.TutorialList;
 import org.openRealmOfStars.gui.mapPanel.PopupPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
@@ -333,6 +338,10 @@ public class Game implements ActionListener {
   private String saveFilename;
 
   /**
+   * Tutorial list of helps.
+   */
+  private static TutorialList tutorialList;
+  /**
    * Get Star map
    * @return StarMap
    */
@@ -394,6 +403,11 @@ public class Game implements ActionListener {
     int resolutionHeight = configFile.getResolutionHeight();
     if (visible) {
       gameFrame = new JFrame();
+      try {
+        readTutorial(null);
+      } catch (IOException e1) {
+        ErrorLogger.log(e1);
+      }
       // Set look and feel match on CrossPlatform Look and feel
       try {
       UIManager
@@ -454,6 +468,44 @@ public class Game implements ActionListener {
     changeGameState(GameState.MAIN_MENU);
   }
 
+  /**
+   * Read Tutorial information to list.
+   * @param filename Filename to tutorial
+   * @throws IOException IOException if reading fails.
+   */
+  public static void readTutorial(final String filename) throws IOException {
+    tutorialList = new TutorialList();
+    InputStream is;
+    if (filename == null) {
+      is = Game.class.getClassLoader().getResource(
+          "resources/tutorial.txt").openStream();
+    } else {
+      is = new FileInputStream(new File(filename));
+    }
+    try (BufferedInputStream bis = new BufferedInputStream(is)) {
+      // Two megabyte buffer
+      int bufferSize = 2 * 1024 * 1024;
+      byte[] buffer = new byte[bufferSize];
+      int offset = 0;
+      int readAmount = 0;
+      int left = bufferSize;
+      do {
+        readAmount = bis.read(buffer, offset, left);
+        if (readAmount > 0) {
+          offset = offset + readAmount;
+          left = left - readAmount;
+        }
+      } while (left > 0 && readAmount > 1);
+      String strBuffer = new String(buffer, 0, offset, StandardCharsets.UTF_8);
+      String[] lines = strBuffer.split("\n");
+      for (String line : lines) {
+        HelpLine helpLine = HelpLine.parseHelpline(line);
+        if (helpLine != null) {
+          tutorialList.add(helpLine);
+        }
+      }
+    }
+  }
   /**
    * Read config file from oros.cfg or generate
    * default config file.
@@ -2652,5 +2704,13 @@ public class Game implements ActionListener {
    */
   public String getSaveGameFile() {
     return saveFilename;
+  }
+
+  /**
+   * Get Tutorial list.
+   * @return Tutorial list
+   */
+  public static TutorialList getTutorial() {
+    return tutorialList;
   }
 }

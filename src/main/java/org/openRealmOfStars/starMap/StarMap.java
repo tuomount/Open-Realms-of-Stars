@@ -11,6 +11,7 @@ import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.AI.PlanetHandling.PlanetHandling;
 import org.openRealmOfStars.AI.Research.Research;
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.mapTiles.FleetTileInfo;
 import org.openRealmOfStars.mapTiles.Tile;
@@ -1067,6 +1068,30 @@ public class StarMap {
   public void createRealmToPlanet(final Planet planet,
       final PlayerInfo playerInfo, final int playerIndex) {
     planet.setPlanetOwner(playerIndex, playerInfo);
+    if (Game.getTutorial() != null) {
+      String tutorialText = Game.getTutorial().showTutorialText(0);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.INFORMATION, tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        playerInfo.getMsgList().addNewMessage(msg);
+      }
+      tutorialText = Game.getTutorial().showTutorialText(1);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.PLANETARY, tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(planet.getName());
+        playerInfo.getMsgList().addNewMessage(msg);
+      }
+      tutorialText = Game.getTutorial().showTutorialText(2);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.PLANETARY, tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(planet.getName());
+        playerInfo.getMsgList().addNewMessage(msg);
+      }
+    }
     Message msg = new Message(
         MessageType.PLANETARY, playerInfo.getEmpireName() + " starts at "
             + planet.getName() + ".",

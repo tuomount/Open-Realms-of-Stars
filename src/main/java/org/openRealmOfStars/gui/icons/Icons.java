@@ -333,6 +333,10 @@ public final class Icons {
    * Anceint Checkbox tick icon
    */
   public static final String ICON_ANCIENT_BOX_TICK = "IconAncientTick";
+  /**
+   * Tutorual icon
+   */
+  public static final String ICON_TUTORIAL = "IconTutorial";
 
   /**
    * List of Icon
@@ -595,6 +599,8 @@ public final class Icons {
     icon = new Icon16x16(image, 6, 0, ICON_ANCIENT_BOX_TICK);
     addIcon(icon);
     icon = new Icon16x16(image, 7, 0, ICON_ANCIENT_BOX);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 1, ICON_TUTORIAL);
     addIcon(icon);
   }
 

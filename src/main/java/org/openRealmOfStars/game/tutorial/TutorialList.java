@@ -141,4 +141,18 @@ public class TutorialList {
     }
     return listIndexes;
   }
+
+  /**
+   * Show tutorial text and set flag for shown.
+   * @param index Tutorial index
+   * @return Text or null
+   */
+  public String showTutorialText(final int index) {
+    HelpLine line = getByIndex(index);
+    if (line != null && !line.isShown()) {
+      line.setShown(true);
+      return line.getText();
+    }
+    return null;
+  }
 }

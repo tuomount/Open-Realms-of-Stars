@@ -159,6 +159,8 @@ using space ship models by greyoxide, Michael Davies, and Viktor Hahn,
 is licensed under the Creative Commons Attribution 3.0 Unported License.
 http://creativecommons.org/licenses/by/3.0/
 
+Tutorial icon by Tuomo Untinen
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

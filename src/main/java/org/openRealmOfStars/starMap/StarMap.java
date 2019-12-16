@@ -1150,8 +1150,37 @@ public class StarMap {
         playerInfo.getFleets().add(fleet);
         if (ship.isColonyModule()) {
           fleet.setName("Colony #" + count);
+          if (Game.getTutorial() != null) {
+            String tutorialText = Game.getTutorial().showTutorialText(7);
+            if (tutorialText != null) {
+              msg = new Message(MessageType.FLEET, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              msg.setCoordinate(planet.getCoordinate());
+              msg.setMatchByString(fleet.getName());
+              playerInfo.getMsgList().addNewMessage(msg);
+            }
+          }
         } else {
           fleet.setName("Scout #" + count);
+          if (Game.getTutorial() != null) {
+            String tutorialText = Game.getTutorial().showTutorialText(5);
+            if (tutorialText != null) {
+              msg = new Message(MessageType.FLEET, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              msg.setCoordinate(planet.getCoordinate());
+              msg.setMatchByString(fleet.getName());
+              playerInfo.getMsgList().addNewMessage(msg);
+            }
+            tutorialText = Game.getTutorial().showTutorialText(6);
+            if (tutorialText != null) {
+              msg = new Message(MessageType.FLEET, tutorialText,
+                  Icons.getIconByName(Icons.ICON_TUTORIAL));
+              msg.setCoordinate(planet.getCoordinate());
+              msg.setMatchByString(fleet.getName());
+              playerInfo.getMsgList().addNewMessage(msg);
+            }
+          }
+
         }
         msg = new Message(MessageType.FLEET,
             fleet.getName() + " is waiting for orders.",

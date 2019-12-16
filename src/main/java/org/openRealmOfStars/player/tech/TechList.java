@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.message.Message;
@@ -838,6 +839,15 @@ public class TechList {
             Icons.getIconByName(Icons.ICON_RESEARCH));
         msg.setMatchByString(tech.getName());
         info.getMsgList().addNewMessage(msg);
+        if (Game.getTutorial() != null) {
+          String tutorialText = Game.getTutorial().showTutorialText(13);
+          if (tutorialText != null) {
+            msg = new Message(MessageType.INFORMATION, tutorialText,
+                Icons.getIconByName(Icons.ICON_TUTORIAL));
+            info.getMsgList().addNewMessage(msg);
+          }
+        }
+
       }
     }
 

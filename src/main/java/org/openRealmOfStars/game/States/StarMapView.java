@@ -303,6 +303,9 @@ public class StarMapView extends BlackPanel {
     btn.addActionListener(game);
     btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_MAP));
     bottomBtnPanel.add(btn);
+    btn = new SpaceButton("Help", GameCommands.COMMAND_VIEW_HELP);
+    btn.addActionListener(game);
+    bottomBtnPanel.add(btn);
     // Button for debugging battle, disabled for now
 /*    btn = new SpaceButton("Battle", GameCommands.COMMAND_BATTLE);
     btn.addActionListener(game);

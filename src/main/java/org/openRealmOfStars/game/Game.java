@@ -36,6 +36,7 @@ import org.openRealmOfStars.game.States.EspionageView;
 import org.openRealmOfStars.game.States.FleetTradeView;
 import org.openRealmOfStars.game.States.FleetView;
 import org.openRealmOfStars.game.States.GalaxyCreationView;
+import org.openRealmOfStars.game.States.HelpView;
 import org.openRealmOfStars.game.States.HistoryView;
 import org.openRealmOfStars.game.States.LoadGameView;
 import org.openRealmOfStars.game.States.MainMenu;
@@ -212,6 +213,11 @@ public class Game implements ActionListener {
    * Save Game View
    */
   private SaveGameNameView saveGameView;
+
+  /**
+   * HelpView
+   */
+  private HelpView helpView;
 
   /**
    * Load Game View
@@ -1000,6 +1006,14 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Show Help panels
+   */
+  public void showHelp() {
+    helpView = new HelpView(tutorialList, this);
+    this.updateDisplay(helpView);
+  }
+
+  /**
    * Show Ship panels
    */
   public void showShipView() {
@@ -1220,6 +1234,10 @@ public class Game implements ActionListener {
     }
     case ESPIONAGE_VIEW: {
       showEspionageView();
+      break;
+    }
+    case HELP_VIEW: {
+      showHelp();
       break;
     }
     case HISTORY_VIEW: {
@@ -2217,6 +2235,11 @@ public class Game implements ActionListener {
           SoundPlayer.playMenuSound();
           changeGameState(GameState.RESEARCHVIEW);
         }
+        if (arg0.getActionCommand()
+            .equalsIgnoreCase(GameCommands.COMMAND_VIEW_HELP)) {
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.HELP_VIEW);
+        }
         if (arg0.getActionCommand().equalsIgnoreCase(
             GameCommands.COMMAND_SHOW_HISTORY)) {
           // Debugging purposes
@@ -2344,6 +2367,16 @@ public class Game implements ActionListener {
         return;
       }
       historyView.handleAction(arg0);
+      return;
+    }
+    if (gameState == GameState.HELP_VIEW && helpView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.STARMAP);
+        return;
+      }
+      //FIXME Do handling for help view
       return;
     }
     if (gameState == GameState.VOTE_VIEW && voteView != null) {

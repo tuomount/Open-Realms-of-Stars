@@ -69,6 +69,41 @@ public class TutorialList {
   }
 
   /**
+   * Get all categories in array.
+   * @return Array of categories
+   */
+  public String[] getCategories() {
+    ArrayList<String> categories = new ArrayList<>();
+    for (HelpLine line : list) {
+      String category = line.getCategory();
+      boolean found = false;
+      for (String temp : categories) {
+        if (category.equals(temp)) {
+          found = true;
+        }
+      }
+      if (!found) {
+        categories.add(category);
+      }
+    }
+    return categories.toArray(new String[categories.size()]);
+  }
+
+  /**
+   * Get help line topics for certain category
+   * @param category Category which to search.
+   * @return Array of help lines for category
+   */
+  public HelpLine[] getTopics(final String category) {
+    ArrayList<HelpLine> lines = new ArrayList<>();
+    for (HelpLine line : list) {
+      if (line.getCategory().equals(category)) {
+        lines.add(line);
+      }
+    }
+    return lines.toArray(new HelpLine[lines.size()]);
+  }
+  /**
    * Get HelpLine by list index. This method should be used
    * in for loops where each list index is fetched.
    * @param index List index

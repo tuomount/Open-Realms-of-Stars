@@ -58,6 +58,7 @@ import org.openRealmOfStars.game.config.ConfigFile;
 import org.openRealmOfStars.game.config.ConfigLine;
 import org.openRealmOfStars.game.tutorial.HelpLine;
 import org.openRealmOfStars.game.tutorial.TutorialList;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.mapPanel.PopupPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
@@ -422,6 +423,27 @@ public class Game implements ActionListener {
         e.printStackTrace();
       }
       UIManager.put("ScrollBarUI", SpaceScrollBarUI.class.getName());
+      UIManager.put("Tree.paintLines", false);
+      UIManager.put("Tree.line", GuiStatics.COLOR_GREEN_TEXT_DARK);
+      UIManager.put("Tree.closedIcon", Icons.getIconByName(
+          Icons.ICON_CLOSED).getAsIcon());
+      UIManager.put("Tree.openIcon", Icons.getIconByName(
+          Icons.ICON_AIRLOCK_OPEN).getAsIcon());
+      UIManager.put("Tree.expandedIcon", Icons.getIconByName(
+          Icons.ICON_EXPANDED).getAsIcon());
+      UIManager.put("Tree.collapsedIcon", Icons.getIconByName(
+          Icons.ICON_COLLAPSED).getAsIcon());
+      UIManager.put("Tree.leafIcon", Icons.getIconByName(
+          Icons.ICON_ARROW_RIGHT).getAsIcon());
+      UIManager.put("Tree.background", Color.BLACK);
+      UIManager.put("Tree.selectionBackground",
+          GuiStatics.COLOR_DEEP_SPACE_PURPLE);
+      UIManager.put("Tree.selectionForeground",
+          GuiStatics.COLOR_GREEN_TEXT);
+      UIManager.put("Tree.selectionBorderColor",
+          GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+      UIManager.put("Tree.textBackground", Color.BLACK);
+      UIManager.put("Tree.textForeground", GuiStatics.COLOR_GREEN_TEXT);
       gameFrame.setTitle(GAME_TITLE + " " + GAME_VERSION);
       ArrayList<BufferedImage> icons = new ArrayList<>();
       icons.add(GuiStatics.LOGO32);

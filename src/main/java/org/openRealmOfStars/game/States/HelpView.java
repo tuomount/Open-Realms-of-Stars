@@ -1,18 +1,22 @@
 package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionListener;
 
+import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.tutorial.HelpLine;
 import org.openRealmOfStars.game.tutorial.TutorialList;
+import org.openRealmOfStars.gui.ListRenderers.TutorialTreeCellRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.BlackPanel;
+import org.openRealmOfStars.gui.utilies.GuiStatics;
 
 /**
 *
@@ -77,9 +81,13 @@ public class HelpView extends BlackPanel {
       }
     }
     tutorialTree = new JTree(root);
-    base.add(tutorialTree, BorderLayout.WEST);
+    tutorialTree.setBackground(Color.BLACK);
+    tutorialTree.setCellRenderer(new TutorialTreeCellRenderer());
+    tutorialTree.setFont(GuiStatics.getFontCubellanSmaller());
+    JScrollPane scroll = new JScrollPane(tutorialTree);
+    base.add(scroll, BorderLayout.WEST);
     infoText = new InfoTextArea();
-    base.add(infoText, BorderLayout.EAST);
+    base.add(infoText, BorderLayout.CENTER);
     this.add(base, BorderLayout.CENTER);
 
     // Bottom panel

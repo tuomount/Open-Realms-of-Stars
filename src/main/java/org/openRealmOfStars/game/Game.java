@@ -1031,7 +1031,7 @@ public class Game implements ActionListener {
    * Show Help panels
    */
   public void showHelp() {
-    helpView = new HelpView(tutorialList, this);
+    helpView = new HelpView(tutorialList, starMap.isTutorialEnabled(), this);
     this.updateDisplay(helpView);
   }
 
@@ -2395,6 +2395,7 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
         SoundPlayer.playMenuSound();
+        starMap.setTutorialEnabled(helpView.isTutorialEnabled());
         changeGameState(GameState.STARMAP);
         return;
       }

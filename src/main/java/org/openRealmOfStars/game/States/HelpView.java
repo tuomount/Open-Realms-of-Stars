@@ -6,13 +6,18 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeSelectionModel;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.game.tutorial.HelpLine;
 import org.openRealmOfStars.game.tutorial.TutorialList;
 import org.openRealmOfStars.gui.ListRenderers.TutorialTreeCellRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.BlackPanel;
@@ -40,7 +45,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 * Help view for showing all the help/tutorial texts.
 *
 */
-public class HelpView extends BlackPanel {
+public class HelpView extends BlackPanel implements TreeSelectionListener {
 
   /**
   *
@@ -58,11 +63,17 @@ public class HelpView extends BlackPanel {
   private JTree tutorialTree;
 
   /**
+   * Check box for enabling the tutorial
+   */
+  private SpaceCheckBox checkBox;
+  /**
    * Constructor for help view.
    * @param tutorial Tutorial list of help lines
+   * @param tutorialEnabled Flag for if tutorial is enabled
    * @param listener ActionListener
    */
-  public HelpView(final TutorialList tutorial, final ActionListener listener) {
+  public HelpView(final TutorialList tutorial, final boolean tutorialEnabled,
+      final ActionListener listener) {
     InfoPanel base = new InfoPanel();
     base.setTitle("Game help");
     this.setLayout(new BorderLayout());
@@ -81,13 +92,26 @@ public class HelpView extends BlackPanel {
       }
     }
     tutorialTree = new JTree(root);
+    tutorialTree.getSelectionModel().setSelectionMode(
+        TreeSelectionModel.SINGLE_TREE_SELECTION);
     tutorialTree.setBackground(Color.BLACK);
     tutorialTree.setCellRenderer(new TutorialTreeCellRenderer());
     tutorialTree.setFont(GuiStatics.getFontCubellanSmaller());
+    tutorialTree.addTreeSelectionListener(this);
     JScrollPane scroll = new JScrollPane(tutorialTree);
     base.add(scroll, BorderLayout.WEST);
     infoText = new InfoTextArea();
+    infoText.setLineWrap(true);
+    infoText.setCharacterWidth(7);
+    infoText.setEditable(false);
+    infoText.setFont(GuiStatics.getFontCubellanSmaller());
     base.add(infoText, BorderLayout.CENTER);
+    checkBox = new SpaceCheckBox("Tutorial enabled");
+    checkBox.setToolTipText("If checked then tutorial is enabled in game.");
+    if (tutorialEnabled) {
+      checkBox.setSelected(true);
+    }
+    base.add(checkBox, BorderLayout.NORTH);
     this.add(base, BorderLayout.CENTER);
 
     // Bottom panel
@@ -101,5 +125,29 @@ public class HelpView extends BlackPanel {
 
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
+  }
+
+  @Override
+  public void valueChanged(final TreeSelectionEvent e) {
+    SoundPlayer.playMenuSound();
+    if (tutorialTree.getSelectionPath().getLastPathComponent()
+        instanceof DefaultMutableTreeNode) {
+      Object object = ((DefaultMutableTreeNode)
+          tutorialTree.getSelectionPath().getLastPathComponent())
+          .getUserObject();
+      if (object instanceof HelpLine) {
+        HelpLine line = (HelpLine) object;
+        infoText.setText(line.getText());
+        this.repaint();
+      }
+    }
+  }
+
+  /**
+   * Is Tutorial enabled or not
+   * @return True if tutorial is enabled.
+   */
+  public boolean isTutorialEnabled() {
+    return checkBox.isSelected();
   }
 }

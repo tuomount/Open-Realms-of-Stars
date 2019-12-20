@@ -2750,6 +2750,75 @@ public class StarMap {
   }
 
   /**
+   * Show tutorial based what has reveal from the map.
+   * @param info PlayerInfo who is exploring
+   * @param sx X coordinate
+   * @param sy Y coordinate
+   */
+  private void tutorialBasedOnTiles(final PlayerInfo info, final int sx,
+      final int sy) {
+    if (Game.getTutorial() != null) {
+      Tile tile = Tiles.getTileByIndex(tiles[sx][sy]);
+      SquareInfo square = tileInfo[sx][sy];
+      if (tile.isSpaceAnomaly()) {
+        String tutorialText = Game.getTutorial().showTutorialText(8);
+        if (tutorialText != null) {
+          Message msg = new Message(MessageType.INFORMATION, tutorialText,
+              Icons.getIconByName(Icons.ICON_TUTORIAL));
+          msg.setCoordinate(new Coordinate(sx, sy));
+          info.getMsgList().addNewMessage(msg);
+          return;
+        }
+      }
+      if (tile.isBlackhole()) {
+        String tutorialText = Game.getTutorial().showTutorialText(9);
+        if (tutorialText != null) {
+          Message msg = new Message(MessageType.INFORMATION, tutorialText,
+              Icons.getIconByName(Icons.ICON_TUTORIAL));
+          msg.setCoordinate(new Coordinate(sx, sy));
+          info.getMsgList().addNewMessage(msg);
+          return;
+        }
+      }
+      if (square.getType() == SquareInfo.TYPE_PLANET) {
+        Planet planet = planetList.get(square.getValue());
+        if (planet != null && planet.getPlanetPlayerInfo() != info) {
+          String tutorialText = Game.getTutorial().showTutorialText(20);
+          if (tutorialText != null) {
+            Message msg = new Message(MessageType.PLANETARY, tutorialText,
+                Icons.getIconByName(Icons.ICON_TUTORIAL));
+            msg.setCoordinate(new Coordinate(sx, sy));
+            msg.setMatchByString(planet.getName());
+            info.getMsgList().addNewMessage(msg);
+            return;
+          }
+        }
+      }
+      if (square.getType() == SquareInfo.TYPE_GAS_PLANET) {
+        String tutorialText = Game.getTutorial().showTutorialText(21);
+        if (tutorialText != null) {
+          Message msg = new Message(MessageType.PLANETARY, tutorialText,
+              Icons.getIconByName(Icons.ICON_TUTORIAL));
+          msg.setCoordinate(new Coordinate(sx, sy));
+          msg.setMatchByString(planetList.get(square.getValue()).getName());
+          info.getMsgList().addNewMessage(msg);
+          return;
+        }
+      }
+      if (tile == Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1)
+          || tile == Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR2)) {
+        String tutorialText = Game.getTutorial().showTutorialText(10);
+        if (tutorialText != null) {
+          Message msg = new Message(MessageType.INFORMATION, tutorialText,
+              Icons.getIconByName(Icons.ICON_TUTORIAL));
+          msg.setCoordinate(new Coordinate(sx, sy));
+          info.getMsgList().addNewMessage(msg);
+          return;
+        }
+      }
+    }
+  }
+  /**
    * Draw visibility line and set visibility info for one player
    * @param info PlayerInfo
    * @param sx Start X
@@ -2783,6 +2852,7 @@ public class StarMap {
     }
     int detectValue = cloakDetection;
     info.setSectorVisibility(sx, sy, PlayerInfo.VISIBLE);
+    tutorialBasedOnTiles(info, sx, sy);
     if (detectValue > 0) {
       info.setSectorCloakingDetection(sx, sy, detectValue);
     }
@@ -2800,6 +2870,7 @@ public class StarMap {
       }
       if (isValidCoordinate(nx, ny)) {
         info.setSectorVisibility(nx, ny, PlayerInfo.VISIBLE);
+        tutorialBasedOnTiles(info, nx, ny);
         if (detectValue > 0
             && info.getSectorCloakDetection(nx, ny) < detectValue) {
           info.setSectorCloakingDetection(nx, ny, detectValue);

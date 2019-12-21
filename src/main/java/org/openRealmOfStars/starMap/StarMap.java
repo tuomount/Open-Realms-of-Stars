@@ -483,6 +483,10 @@ public class StarMap {
     // Create random deep space anchors
     loop = 0;
     int numberOfAnchors = config.getMaxPlayers() * 3;
+    if (config.getGalaxySizeIndex() >= 2) {
+      numberOfAnchors = numberOfAnchors
+          + 2 * (config.getGalaxySizeIndex() - 1);
+    }
     int pirateLairs = 0;
     switch (config.getSpacePiratesLevel()) {
       case 0: {
@@ -545,7 +549,7 @@ public class StarMap {
         loop++;
       }
     }
- // Create random space anomalies
+    // Create random space anomalies
     loop = 0;
     int numberOfAnomalies = 0;
     boolean harmful = false;
@@ -556,6 +560,13 @@ public class StarMap {
     if (config.getSpaceAnomaliesLevel() == 2) {
       numberOfAnomalies = config.getMaxPlayers() * 7;
       harmful = true;
+    }
+    if (config.getGalaxySizeIndex() >= 2) {
+      numberOfAnomalies = numberOfAnomalies
+          + 10 * (config.getGalaxySizeIndex() - 1);
+    }
+    if (numberOfAnomalies < 20) {
+      numberOfAnomalies = 20;
     }
     for (int i = 0; i < numberOfAnomalies; i++) {
       while (loop < MAX_LOOPS) {

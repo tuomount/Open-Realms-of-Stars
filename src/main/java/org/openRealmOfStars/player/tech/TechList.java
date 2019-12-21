@@ -839,7 +839,7 @@ public class TechList {
             Icons.getIconByName(Icons.ICON_RESEARCH));
         msg.setMatchByString(tech.getName());
         info.getMsgList().addNewMessage(msg);
-        if (Game.getTutorial() != null) {
+        if (Game.getTutorial() != null  && info.isHuman()) {
           String tutorialText = Game.getTutorial().showTutorialText(13);
           if (tutorialText != null) {
             msg = new Message(MessageType.INFORMATION, tutorialText,

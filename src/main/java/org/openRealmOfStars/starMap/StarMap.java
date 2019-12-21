@@ -1079,7 +1079,7 @@ public class StarMap {
   public void createRealmToPlanet(final Planet planet,
       final PlayerInfo playerInfo, final int playerIndex) {
     planet.setPlanetOwner(playerIndex, playerInfo);
-    if (Game.getTutorial() != null) {
+    if (Game.getTutorial() != null && playerInfo.isHuman()) {
       String tutorialText = Game.getTutorial().showTutorialText(0);
       if (tutorialText != null) {
         Message msg = new Message(MessageType.INFORMATION, tutorialText,
@@ -1161,7 +1161,7 @@ public class StarMap {
         playerInfo.getFleets().add(fleet);
         if (ship.isColonyModule()) {
           fleet.setName("Colony #" + count);
-          if (Game.getTutorial() != null) {
+          if (Game.getTutorial() != null && playerInfo.isHuman()) {
             String tutorialText = Game.getTutorial().showTutorialText(7);
             if (tutorialText != null) {
               msg = new Message(MessageType.FLEET, tutorialText,
@@ -1173,7 +1173,7 @@ public class StarMap {
           }
         } else {
           fleet.setName("Scout #" + count);
-          if (Game.getTutorial() != null) {
+          if (Game.getTutorial() != null && playerInfo.isHuman()) {
             String tutorialText = Game.getTutorial().showTutorialText(5);
             if (tutorialText != null) {
               msg = new Message(MessageType.FLEET, tutorialText,
@@ -2768,7 +2768,8 @@ public class StarMap {
    */
   private void tutorialBasedOnTiles(final PlayerInfo info, final int sx,
       final int sy) {
-    if (Game.getTutorial() != null && isTutorialEnabled()) {
+    if (Game.getTutorial() != null && isTutorialEnabled()
+        && info.isHuman()) {
       Tile tile = Tiles.getTileByIndex(tiles[sx][sy]);
       SquareInfo square = tileInfo[sx][sy];
       if (tile.isSpaceAnomaly()) {

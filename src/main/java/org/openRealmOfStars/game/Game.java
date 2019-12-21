@@ -1490,15 +1490,6 @@ public class Game implements ActionListener {
           singleTurnEnd = getAITurnView().handleAiTurn();
         } while (!singleTurnEnd);
       }
-      for (Planet planet : starMap.getPlanetList()) {
-        if (planet.getstartRealmIndex() != -1) {
-          int index = planet.getstartRealmIndex();
-          PlayerInfo info = starMap.getPlayerByIndex(index);
-          if (!info.isAncientRealm()) {
-            starMap.createRealmToPlanet(planet, info, index);
-          }
-        }
-      }
       if (allowHumanAncientRealm) {
         starMap.getPlayerByIndex(0).setHuman(true);
         starMap.getPlayerByIndex(0).getMissions().clearMissions();
@@ -1509,6 +1500,15 @@ public class Game implements ActionListener {
         info.getTechList().setTechFocus(TechType.Improvements, 16);
         info.getTechList().setTechFocus(TechType.Electrics, 16);
         info.getTechList().setTechFocus(TechType.Propulsion, 16);
+      }
+      for (Planet planet : starMap.getPlanetList()) {
+        if (planet.getstartRealmIndex() != -1) {
+          int index = planet.getstartRealmIndex();
+          PlayerInfo info = starMap.getPlayerByIndex(index);
+          if (!info.isAncientRealm()) {
+            starMap.createRealmToPlanet(planet, info, index);
+          }
+        }
       }
       starMap.clearNewsCorpData();
       corpData = starMap.getNewsCorpData();

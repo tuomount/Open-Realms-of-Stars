@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -26,6 +28,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
+import org.openRealmOfStars.utilities.ErrorLogger;
 import org.openRealmOfStars.utilities.GenericFileFilter;
 import org.openRealmOfStars.utilities.repository.GameRepository;
 
@@ -98,15 +101,17 @@ public class LoadGameView extends BlackPanel {
       files = new File[0];
     }
 
-    SavedGame[] games = new SavedGame[files.length];
+    ArrayList<SavedGame> listOfGames = new ArrayList<>();
     for (int i = 0; i < files.length; i++) {
       try {
-        games[i] = new SavedGame(GameRepository.DEFAULT_SAVE_FOLDER,
-                                 files[i].getName());
+        listOfGames.add(new SavedGame(GameRepository.DEFAULT_SAVE_FOLDER,
+                                 files[i].getName()));
       } catch (IOException e) {
-        games[i] = null;
+        ErrorLogger.log("Failed reading save game " + files[i].getName());
       }
     }
+    Collections.sort(listOfGames);
+    SavedGame[] games = listOfGames.toArray(new SavedGame[listOfGames.size()]);
 
     saveGamesList = new JList<>(games);
 

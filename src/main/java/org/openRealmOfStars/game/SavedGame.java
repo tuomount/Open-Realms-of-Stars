@@ -13,7 +13,7 @@ import org.openRealmOfStars.utilities.repository.GameRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2017,2019 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -32,7 +32,7 @@ import org.openRealmOfStars.utilities.repository.GameRepository;
  * Saved game information
  *
  */
-public class SavedGame {
+public class SavedGame implements Comparable<SavedGame> {
 
   /**
    * Player's race
@@ -63,6 +63,10 @@ public class SavedGame {
    * File's creation time
    */
   private String creationTime;
+  /**
+   * File's creation time in milli seconds.
+   */
+  private long creationTimeMillis;
 
   /**
    * Load game from certain file name and get all information from saved
@@ -77,7 +81,8 @@ public class SavedGame {
     BasicFileAttributes attr = Files.readAttributes(file.toPath(),
         BasicFileAttributes.class);
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-    creationTime = dateFormat.format(attr.creationTime().toMillis());
+    creationTimeMillis = attr.creationTime().toMillis();
+    creationTime = dateFormat.format(creationTimeMillis);
     StarMap starMap = new GameRepository().loadGame(folderName, filename);
     if (starMap == null) {
       throw new IOException("Error while reading the saved game: "
@@ -138,6 +143,11 @@ public class SavedGame {
    */
   public String getTime() {
     return creationTime;
+  }
+
+  @Override
+  public int compareTo(final SavedGame arg0) {
+    return (int) (arg0.creationTimeMillis - this.creationTimeMillis);
   }
 
 }

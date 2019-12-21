@@ -2757,7 +2757,7 @@ public class StarMap {
    */
   private void tutorialBasedOnTiles(final PlayerInfo info, final int sx,
       final int sy) {
-    if (Game.getTutorial() != null) {
+    if (Game.getTutorial() != null && isTutorialEnabled()) {
       Tile tile = Tiles.getTileByIndex(tiles[sx][sy]);
       SquareInfo square = tileInfo[sx][sy];
       if (tile.isSpaceAnomaly()) {

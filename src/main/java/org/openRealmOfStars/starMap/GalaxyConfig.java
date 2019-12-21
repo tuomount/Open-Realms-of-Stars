@@ -199,6 +199,11 @@ public class GalaxyConfig {
    * How many turns ancient realms player before others start.
    */
   private int ancientHeadStart;
+
+  /**
+   * Flag for enabled tutorial
+   */
+  private boolean enableTutorial;
 /**
    * Constructor for galaxy config
    */
@@ -225,6 +230,7 @@ public class GalaxyConfig {
     playerName = new String[StarMap.MAX_PLAYERS];
     playerGovernment = new GovernmentType[StarMap.MAX_PLAYERS];
     playerAncientRealm = new boolean[StarMap.MAX_PLAYERS];
+    setEnableTutorial(true);
     for (int i = 0; i < StarMap.MAX_PLAYERS; i++) {
 
       setRace(i, SpaceRaceUtility.getRandomRace());
@@ -699,6 +705,22 @@ public class GalaxyConfig {
    */
   public void setAncientHeadStart(final int ancientHeadStart) {
     this.ancientHeadStart = ancientHeadStart;
+  }
+
+  /**
+   * Is tutorial enabled
+   * @return the enableTutorial
+   */
+  public boolean isEnableTutorial() {
+    return enableTutorial;
+  }
+
+  /**
+   * Set if tutorial is enabled.
+   * @param enableTutorial the enableTutorial to set
+   */
+  public void setEnableTutorial(final boolean enableTutorial) {
+    this.enableTutorial = enableTutorial;
   }
 
 }

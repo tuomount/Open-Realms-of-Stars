@@ -36,6 +36,7 @@ import org.openRealmOfStars.game.States.EspionageView;
 import org.openRealmOfStars.game.States.FleetTradeView;
 import org.openRealmOfStars.game.States.FleetView;
 import org.openRealmOfStars.game.States.GalaxyCreationView;
+import org.openRealmOfStars.game.States.HelpView;
 import org.openRealmOfStars.game.States.HistoryView;
 import org.openRealmOfStars.game.States.LoadGameView;
 import org.openRealmOfStars.game.States.MainMenu;
@@ -57,6 +58,7 @@ import org.openRealmOfStars.game.config.ConfigFile;
 import org.openRealmOfStars.game.config.ConfigLine;
 import org.openRealmOfStars.game.tutorial.HelpLine;
 import org.openRealmOfStars.game.tutorial.TutorialList;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.mapPanel.PopupPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.scrollPanel.SpaceScrollBarUI;
@@ -212,6 +214,11 @@ public class Game implements ActionListener {
    * Save Game View
    */
   private SaveGameNameView saveGameView;
+
+  /**
+   * HelpView
+   */
+  private HelpView helpView;
 
   /**
    * Load Game View
@@ -416,6 +423,27 @@ public class Game implements ActionListener {
         e.printStackTrace();
       }
       UIManager.put("ScrollBarUI", SpaceScrollBarUI.class.getName());
+      UIManager.put("Tree.paintLines", false);
+      UIManager.put("Tree.line", GuiStatics.COLOR_GREEN_TEXT_DARK);
+      UIManager.put("Tree.closedIcon", Icons.getIconByName(
+          Icons.ICON_CLOSED).getAsIcon());
+      UIManager.put("Tree.openIcon", Icons.getIconByName(
+          Icons.ICON_AIRLOCK_OPEN).getAsIcon());
+      UIManager.put("Tree.expandedIcon", Icons.getIconByName(
+          Icons.ICON_EXPANDED).getAsIcon());
+      UIManager.put("Tree.collapsedIcon", Icons.getIconByName(
+          Icons.ICON_COLLAPSED).getAsIcon());
+      UIManager.put("Tree.leafIcon", Icons.getIconByName(
+          Icons.ICON_ARROW_RIGHT).getAsIcon());
+      UIManager.put("Tree.background", Color.BLACK);
+      UIManager.put("Tree.selectionBackground",
+          GuiStatics.COLOR_DEEP_SPACE_PURPLE);
+      UIManager.put("Tree.selectionForeground",
+          GuiStatics.COLOR_GREEN_TEXT);
+      UIManager.put("Tree.selectionBorderColor",
+          GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+      UIManager.put("Tree.textBackground", Color.BLACK);
+      UIManager.put("Tree.textForeground", GuiStatics.COLOR_GREEN_TEXT);
       gameFrame.setTitle(GAME_TITLE + " " + GAME_VERSION);
       ArrayList<BufferedImage> icons = new ArrayList<>();
       icons.add(GuiStatics.LOGO32);
@@ -1000,6 +1028,14 @@ public class Game implements ActionListener {
   }
 
   /**
+   * Show Help panels
+   */
+  public void showHelp() {
+    helpView = new HelpView(tutorialList, starMap.isTutorialEnabled(), this);
+    this.updateDisplay(helpView);
+  }
+
+  /**
    * Show Ship panels
    */
   public void showShipView() {
@@ -1220,6 +1256,10 @@ public class Game implements ActionListener {
     }
     case ESPIONAGE_VIEW: {
       showEspionageView();
+      break;
+    }
+    case HELP_VIEW: {
+      showHelp();
       break;
     }
     case HISTORY_VIEW: {
@@ -2217,6 +2257,11 @@ public class Game implements ActionListener {
           SoundPlayer.playMenuSound();
           changeGameState(GameState.RESEARCHVIEW);
         }
+        if (arg0.getActionCommand()
+            .equalsIgnoreCase(GameCommands.COMMAND_VIEW_HELP)) {
+          SoundPlayer.playMenuSound();
+          changeGameState(GameState.HELP_VIEW);
+        }
         if (arg0.getActionCommand().equalsIgnoreCase(
             GameCommands.COMMAND_SHOW_HISTORY)) {
           // Debugging purposes
@@ -2344,6 +2389,17 @@ public class Game implements ActionListener {
         return;
       }
       historyView.handleAction(arg0);
+      return;
+    }
+    if (gameState == GameState.HELP_VIEW && helpView != null) {
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        SoundPlayer.playMenuSound();
+        starMap.setTutorialEnabled(helpView.isTutorialEnabled());
+        changeGameState(GameState.STARMAP);
+        return;
+      }
+      //FIXME Do handling for help view
       return;
     }
     if (gameState == GameState.VOTE_VIEW && voteView != null) {

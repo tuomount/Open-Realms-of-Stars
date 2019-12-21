@@ -303,6 +303,18 @@ public class StarMapView extends BlackPanel {
     btn.addActionListener(game);
     btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_MAP));
     bottomBtnPanel.add(btn);
+    btn = new SpaceButton("Help", GameCommands.COMMAND_VIEW_HELP);
+    if (map.isTutorialEnabled()) {
+      btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_CHECKBOX_TICK));
+      btn.setToolTipText("Tutorial is enabled,"
+          + " click here to disable it or read help");
+    } else {
+      btn.setSpaceIcon(Icons.getIconByName(Icons.ICON_TUTORIAL));
+      btn.setToolTipText("Tutorial is disabled,"
+          + " click here to enable it or read help");
+    }
+    btn.addActionListener(game);
+    bottomBtnPanel.add(btn);
     // Button for debugging battle, disabled for now
 /*    btn = new SpaceButton("Battle", GameCommands.COMMAND_BATTLE);
     btn.addActionListener(game);

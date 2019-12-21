@@ -148,6 +148,10 @@ public final class GameCommands {
    * View minimap command
    */
   public static final String COMMAND_VIEW_MINIMAP = "ViewMiniMap";
+  /**
+   * View help command
+   */
+  public static final String COMMAND_VIEW_HELP = "ViewHelp";
 
   /**
    * View Research view

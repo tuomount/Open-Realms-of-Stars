@@ -334,9 +334,25 @@ public final class Icons {
    */
   public static final String ICON_ANCIENT_BOX_TICK = "IconAncientTick";
   /**
-   * Tutorual icon
+   * Tutorial icon
    */
   public static final String ICON_TUTORIAL = "IconTutorial";
+  /**
+   * Arrow right icon
+   */
+  public static final String ICON_ARROW_RIGHT = "IconArrowRight";
+  /**
+   * Node expanded icon
+   */
+  public static final String ICON_EXPANDED = "IconExpanded";
+  /**
+   * Node collabsed icon
+   */
+  public static final String ICON_COLLAPSED = "IconCollabsed";
+  /**
+   * AirLock open icon
+   */
+  public static final String ICON_AIRLOCK_OPEN = "IconAirLockOpen";
 
   /**
    * List of Icon
@@ -601,6 +617,14 @@ public final class Icons {
     icon = new Icon16x16(image, 7, 0, ICON_ANCIENT_BOX);
     addIcon(icon);
     icon = new Icon16x16(image, 0, 1, ICON_TUTORIAL);
+    addIcon(icon);
+    icon = new Icon16x16(image, 1, 1, ICON_ARROW_RIGHT);
+    addIcon(icon);
+    icon = new Icon16x16(image, 2, 1, ICON_EXPANDED);
+    addIcon(icon);
+    icon = new Icon16x16(image, 3, 1, ICON_COLLAPSED);
+    addIcon(icon);
+    icon = new Icon16x16(image, 4, 1, ICON_AIRLOCK_OPEN);
     addIcon(icon);
   }
 

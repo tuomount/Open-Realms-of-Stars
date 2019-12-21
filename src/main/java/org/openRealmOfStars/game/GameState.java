@@ -136,5 +136,9 @@ public enum GameState {
   /**
    * View where save game file name is defined when starting new game.
    */
-  SAVE_GAME_NAME_VIEW;
+  SAVE_GAME_NAME_VIEW,
+  /**
+   * View where all tutorial/help text is being shown.
+   */
+  HELP_VIEW;
 }

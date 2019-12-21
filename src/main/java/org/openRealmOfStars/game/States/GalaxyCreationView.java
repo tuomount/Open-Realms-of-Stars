@@ -12,6 +12,7 @@ import javax.swing.BoxLayout;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.buttons.SpaceCheckBox;
 import org.openRealmOfStars.gui.buttons.SpaceCombo;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
@@ -135,6 +136,11 @@ public class GalaxyCreationView extends BlackPanel {
    * ComboBox for karma speed
    */
   private SpaceCombo<String> comboKarmaSpeed;
+
+  /**
+   * Checkbox for enabled tutorial.
+   */
+  private SpaceCheckBox tutorialEnabled;
 
   /**
    * Galaxy config
@@ -583,7 +589,16 @@ public class GalaxyCreationView extends BlackPanel {
       case 5: comboScoringDiplomatic.setSelectedIndex(5); break;
       default: comboScoringDiplomatic.setSelectedIndex(2); break;
     }
-
+    info.add(Box.createRigidArea(new Dimension(5, 5)));
+    tutorialEnabled = new SpaceCheckBox("Tutorial enabled");
+    tutorialEnabled.setSelected(this.config.isEnableTutorial());
+    tutorialEnabled.addActionListener(listener);
+    tutorialEnabled.setActionCommand(GameCommands.COMMAND_GALAXY_SETUP);
+    tutorialEnabled.setAlignmentX(CENTER_ALIGNMENT);
+    tutorialEnabled.setToolTipText("<html>If enabled tutorial texts will be"
+        + " shown as in-game messages.<br> Tutorial can be enabled or disabled"
+        + " while playing and helps can accessed from Star Map view.</html>");
+    info.add(tutorialEnabled);
     xinvis.add(info);
     xinvis.add(Box.createRigidArea(new Dimension(200, 5)));
     invisible.add(xinvis);
@@ -637,6 +652,7 @@ public class GalaxyCreationView extends BlackPanel {
   public void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_GALAXY_SETUP)) {
       SoundPlayer.playMenuSound();
+      config.setEnableTutorial(tutorialEnabled.isSelected());
       config.setMaxPlayers(comboPlayers.getSelectedIndex() + 2);
       config.setStartingPosition(comboPlayerPos.getSelectedIndex());
       switch (comboGalaxySize.getSelectedIndex()) {

@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.utilities.ErrorLogger;
 
@@ -60,6 +61,7 @@ public class GameRepository {
         FileOutputStream os = new FileOutputStream(file);
         BufferedOutputStream bos = new BufferedOutputStream(os);
         try (DataOutputStream dos = new DataOutputStream(bos)) {
+          starMap.setShownTutorial(Game.getTutorial().getShownIndexes());
           starMap.saveGame(dos);
         } catch (IOException e) {
           System.out.println(e.getMessage());

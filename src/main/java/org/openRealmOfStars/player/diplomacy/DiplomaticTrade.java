@@ -1787,7 +1787,9 @@ public class DiplomaticTrade {
     if (isDiplomacyWithPirates()) {
       generatePirateOffer();
     } else if (offerPlayer.getDiplomacy().getDiplomacyList(second)
-        .getNumberOfMeetings() == 0) {
+        .getNumberOfMeetings() == 0
+        || offerPlayer.getDiplomacy().getDiplomaticRelation(second)
+            .equals(Diplomacy.NO_RELATION)) {
       generateFirstOffer();
     } else if (offerPlayer.getDiplomacy().getDiplomaticRelation(second)
         .equals(Diplomacy.WAR)) {

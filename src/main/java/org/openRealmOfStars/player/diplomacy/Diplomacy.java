@@ -77,6 +77,10 @@ public class Diplomacy {
   public static final String PEACE = "Peace";
 
   /**
+   * No diplomatic relation yet.
+   */
+  public static final String NO_RELATION = "";
+  /**
    * String for Alliance.
    */
   public static final String ALLIANCE = "Alliance";

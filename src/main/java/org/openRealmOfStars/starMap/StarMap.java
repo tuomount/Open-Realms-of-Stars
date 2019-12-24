@@ -2273,7 +2273,9 @@ public class StarMap {
       if (info != null) {
         for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
           Fleet fleet = info.getFleets().getByIndex(j);
-          fleet.setMovesLeft(fleet.getFleetSpeed());
+          if (!fleet.isStarBaseDeployed()) {
+            fleet.setMovesLeft(fleet.getFleetSpeed());
+          }
           doFleetScanUpdate(info, fleet, null);
         }
       }

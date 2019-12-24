@@ -501,7 +501,7 @@ public final class TechFactory {
           tech.setIcon(Icons.getIconByName(Icons.ICON_TROOPS));
         } else if (techName.startsWith("Command outpost")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
-        } else if (techName.startsWith("Command control")) {
+        } else if (techName.startsWith("Command center")) {
           tech.setIcon(Icons.getIconByName(Icons.ICON_STARBASE));
         } else {
           tech.setIcon(Icons.getIconByName(Icons.ICON_DEFENSE_TECH));

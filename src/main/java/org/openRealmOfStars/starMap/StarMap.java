@@ -2773,7 +2773,7 @@ public class StarMap {
       Tile tile = Tiles.getTileByIndex(tiles[sx][sy]);
       SquareInfo square = tileInfo[sx][sy];
       if (tile.isSpaceAnomaly()) {
-        String tutorialText = Game.getTutorial().showTutorialText(8);
+        String tutorialText = Game.getTutorial().showTutorialText(30);
         if (tutorialText != null) {
           Message msg = new Message(MessageType.INFORMATION, tutorialText,
               Icons.getIconByName(Icons.ICON_TUTORIAL));
@@ -2783,7 +2783,7 @@ public class StarMap {
         }
       }
       if (tile.isBlackhole()) {
-        String tutorialText = Game.getTutorial().showTutorialText(9);
+        String tutorialText = Game.getTutorial().showTutorialText(31);
         if (tutorialText != null) {
           Message msg = new Message(MessageType.INFORMATION, tutorialText,
               Icons.getIconByName(Icons.ICON_TUTORIAL));
@@ -2819,7 +2819,18 @@ public class StarMap {
       }
       if (tile == Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR1)
           || tile == Tiles.getTileByName(TileNames.DEEP_SPACE_ANCHOR2)) {
-        String tutorialText = Game.getTutorial().showTutorialText(10);
+        String tutorialText = Game.getTutorial().showTutorialText(32);
+        if (tutorialText != null) {
+          Message msg = new Message(MessageType.INFORMATION, tutorialText,
+              Icons.getIconByName(Icons.ICON_TUTORIAL));
+          msg.setCoordinate(new Coordinate(sx, sy));
+          info.getMsgList().addNewMessage(msg);
+          return;
+        }
+      }
+      if (tile == Tiles.getTileByName(TileNames.WORM_HOLE1)
+          || tile == Tiles.getTileByName(TileNames.WORM_HOLE2)) {
+        String tutorialText = Game.getTutorial().showTutorialText(33);
         if (tutorialText != null) {
           Message msg = new Message(MessageType.INFORMATION, tutorialText,
               Icons.getIconByName(Icons.ICON_TUTORIAL));

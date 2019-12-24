@@ -364,49 +364,63 @@ public class MapPanel extends JPanel {
    */
   public void updateBlackHoleEffect(final int pixelX, final int pixelY,
       final int i, final int j, final Tile tile) {
+    int safePixelX = pixelX;
+    int safePixelY = pixelY;
+    if (safePixelX - Tile.MAX_WIDTH < 0) {
+      safePixelX = Tile.MAX_WIDTH;
+    }
+    if (safePixelX + Tile.MAX_WIDTH > screen.getWidth()) {
+      safePixelX = screen.getWidth() - Tile.MAX_WIDTH;
+    }
+    if (safePixelY - Tile.MAX_HEIGHT < 0) {
+      safePixelY = Tile.MAX_HEIGHT;
+    }
+    if (safePixelY + Tile.MAX_HEIGHT > screen.getHeight()) {
+      safePixelY = screen.getHeight() - Tile.MAX_HEIGHT;
+    }
     if (tile.getName() == TileNames.BLACKHOLE_NW
         && j + 1 < viewPointY && i + 1 < viewPointX) {
-      BufferedImage tmp = screen.getSubimage(pixelX + Tile.MAX_WIDTH,
-          pixelY + Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      BufferedImage tmp = screen.getSubimage(safePixelX + Tile.MAX_WIDTH,
+          safePixelY + Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_N
         && j + 1 < viewPointY && i < viewPointX) {
-      BufferedImage tmp = screen.getSubimage(pixelX,
-          pixelY + Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      BufferedImage tmp = screen.getSubimage(safePixelX,
+          safePixelY + Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_NE
         && j + 1 < viewPointY && i - 1 >= -viewPointX) {
-      BufferedImage tmp = screen.getSubimage(pixelX - Tile.MAX_WIDTH,
-          pixelY + Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      BufferedImage tmp = screen.getSubimage(safePixelX - Tile.MAX_WIDTH,
+          safePixelY + Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_W
         && j < viewPointY && i < viewPointX) {
-      BufferedImage tmp = screen.getSubimage(pixelX + Tile.MAX_WIDTH,
-          pixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      BufferedImage tmp = screen.getSubimage(safePixelX + Tile.MAX_WIDTH,
+          safePixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_E
         && j < viewPointY && i + 1 < viewPointX) {
-      BufferedImage tmp = screen.getSubimage(pixelX - Tile.MAX_WIDTH,
-          pixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      BufferedImage tmp = screen.getSubimage(safePixelX - Tile.MAX_WIDTH,
+          safePixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_SW
         && j - 1  >= -viewPointY && i + 1 < viewPointX) {
-      BufferedImage tmp = screen.getSubimage(pixelX + Tile.MAX_WIDTH,
-          pixelY - Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      BufferedImage tmp = screen.getSubimage(safePixelX + Tile.MAX_WIDTH,
+          safePixelY - Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_SW
         && j - 1  >= -viewPointY && i < viewPointX) {
-      BufferedImage tmp = screen.getSubimage(pixelX,
-          pixelY - Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      BufferedImage tmp = screen.getSubimage(safePixelX,
+          safePixelY - Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else if (tile.getName() == TileNames.BLACKHOLE_SE
         && j - 1  >= -viewPointY && i - 1 >= -viewPointX) {
-      BufferedImage tmp = screen.getSubimage(pixelX - Tile.MAX_WIDTH,
-          pixelY - Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      BufferedImage tmp = screen.getSubimage(safePixelX - Tile.MAX_WIDTH,
+          safePixelY - Tile.MAX_HEIGHT, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     } else {
-      BufferedImage tmp = screen.getSubimage(pixelX,
-          pixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
+      BufferedImage tmp = screen.getSubimage(safePixelX,
+          safePixelY, Tile.MAX_WIDTH, Tile.MAX_HEIGHT);
       Tile.updateBlackHoleEffect(tmp);
     }
   }

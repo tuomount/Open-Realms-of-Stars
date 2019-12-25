@@ -2709,7 +2709,9 @@ public class Game implements ActionListener {
     if (map != null) {
       starMap = map;
       players = starMap.getPlayerList();
-      tutorialList.updateShownTutorial(starMap.getShownTutorialIndexes());
+      if (tutorialList != null) {
+        tutorialList.updateShownTutorial(starMap.getShownTutorialIndexes());
+      }
       starMap.updateStarMapOnLoadGame();
       return true;
     }

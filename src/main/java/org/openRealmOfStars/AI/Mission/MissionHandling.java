@@ -849,11 +849,11 @@ public final class MissionHandling {
           && fleet.getX() == mission.getX()
           && fleet.getY() == mission.getY()) {
         // Target acquired, mission complete
-        String attackFleetName = "Attaker of " +  mission.getTargetPlanet();
+        String attackFleetName = "Attacker of " +  mission.getTargetPlanet();
         Fleet attackFleet = info.getFleets().getByName(attackFleetName);
         if (attackFleet == null) {
           if (info.getFleets().isUniqueName(attackFleetName, fleet)) {
-            fleet.setName("Attacker of " + mission.getTargetPlanet());
+            fleet.setName(attackFleetName);
           } else {
             fleet.setName(info.getFleets().generateUniqueName(
                 attackFleetName));

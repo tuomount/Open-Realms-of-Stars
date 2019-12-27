@@ -253,7 +253,7 @@ public final class SpeechFactory {
       case GREYANS: return new SpeechLine(type,
           "Interesting! " + raceName + " is sentient race!");
       case HUMAN: return new SpeechLine(type,
-          "Good day! Let's get know each others, " + raceName + ".");
+          "Good day! Let's get to know each others, " + raceName + ".");
       case MECHIONS: return new SpeechLine(type,
           "Initiating neutral encounter protocol with " + raceName + ".");
       case MOTHOIDS: return new SpeechLine(type,

@@ -1,5 +1,7 @@
 package org.openRealmOfStars.player.leader;
 
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+
 /**
 *
 * Open Realm of Stars game project
@@ -40,6 +42,31 @@ public class Leader {
   private int age;
 
   /**
+   * Leader's experience level
+   */
+  private int level;
+
+  /**
+   * Leaders experience in current level
+   */
+  private int experience;
+
+  /**
+   * Leader's military rank
+   */
+  private MilitaryRank militaryRank;
+
+  /**
+   * Leader's gender. This affects only for leader's title texts.
+   */
+  private Gender gender;
+
+  /**
+   * Leader race
+   */
+  private SpaceRace race;
+
+  /**
    * Highest title.
    * Examples:
    * empty just showing the military rank.
@@ -55,6 +82,12 @@ public class Leader {
    */
   public Leader(final String name) {
     this.name = name;
+    age = 28;
+    level = 1;
+    experience = 0;
+    militaryRank = MilitaryRank.CIVILIAN;
+    setRace(SpaceRace.HUMAN);
+    gender = Gender.NONE;
   }
 
   /**
@@ -111,6 +144,112 @@ public class Leader {
    */
   public String getName() {
     return name;
+  }
+
+  /**
+   * Get military rank for leader
+   * @return the militaryRank
+   */
+  public MilitaryRank getMilitaryRank() {
+    return militaryRank;
+  }
+
+  /**
+   * Set military rank for leader
+   * @param militaryRank the militaryRank to set
+   */
+  public void setMilitaryRank(final MilitaryRank militaryRank) {
+    this.militaryRank = militaryRank;
+  }
+
+  /**
+   * Get level of the leader
+   * @return Level
+   */
+  public int getLevel() {
+    return level;
+  }
+
+  /**
+   * Set level of the leader
+   * @param level Leader level
+   */
+  public void setLevel(final int level) {
+    this.level = level;
+  }
+
+  /**
+   * Get current experience for current level
+   * @return Experience
+   */
+  public int getExperience() {
+    return experience;
+  }
+
+  /**
+   * Set experience for current level
+   * @param experience for current level
+   */
+  public void setExperience(final int experience) {
+    this.experience = experience;
+  }
+
+  /**
+   * Get leader space race
+   * @return the race
+   */
+  public SpaceRace getRace() {
+    return race;
+  }
+
+  /**
+   * Set leader space race.
+   * @param race the race to set
+   */
+  public void setRace(final SpaceRace race) {
+    this.race = race;
+  }
+
+  /**
+   * Get the leader gender.
+   * @return the gender
+   */
+  public Gender getGender() {
+    return gender;
+  }
+
+  /**
+   * Set the leader gender. This will affect only for title that leader
+   * receives.
+   * @param gender the gender to set
+   */
+  public void setGender(final Gender gender) {
+    this.gender = gender;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("Leader [name=");
+    builder.append(name);
+    builder.append(", homeworld=");
+    builder.append(homeworld);
+    builder.append(", age=");
+    builder.append(age);
+    builder.append(", level=");
+    builder.append(level);
+    builder.append(", experience=");
+    builder.append(experience);
+    builder.append(", militaryRank=");
+    builder.append(militaryRank);
+    builder.append(", gender=");
+    builder.append(gender);
+    builder.append(", race=");
+    builder.append(race);
+    builder.append(", title=");
+    builder.append(title);
+    builder.append("]");
+    return builder.toString();
   }
 
 }

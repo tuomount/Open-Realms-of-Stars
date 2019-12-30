@@ -194,7 +194,12 @@ public enum Perk {
         || this == Perk.BEAM_WEAPON_MASTER
         || this == Perk.MISSILE_WEAPON_MASTER
         || this == Perk.PHOTON_TORPEDO_WEAPON_MASTER
-        || this == Perk.MASSDRIVE_WEAPON_MASTER) {
+        || this == Perk.MASSDRIVE_WEAPON_MASTER
+        || this == Perk.SHIELD_MASTER
+        || this == Perk.ARMOR_MASTER
+        || this == Perk.SPY_MASTER
+        || this == Perk.SECRET_AGENT
+        || this == Perk.TRADER) {
       return true;
     }
     return false;

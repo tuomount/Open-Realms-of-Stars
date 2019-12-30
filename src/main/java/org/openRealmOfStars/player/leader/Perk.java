@@ -84,10 +84,59 @@ public enum Perk {
   FTL_ENGINEER(12, "FTL Engineer",
       "+1 FTL Speed when leader is fleet commander"),
   /**
-   * Fleet commadner perk for combat initiative.
+   * Fleet commander perk for combat initiative.
    */
   COMBAT_TACTICIAN(13, "Combat tactician",
-      "+1 Combat initiative when leader is fleet commander");
+      "+1 Combat initiative when leader is fleet commander"),
+  /**
+   * Fleet commander perk for beam weapon damage
+   */
+  BEAM_WEAPON_MASTER(14, "Beam weapon master",
+      "+1 Beam weapon damage when leader is fleet commander"),
+  /**
+   * Fleet commander perk for missile weapon damage
+   */
+  MISSILE_WEAPON_MASTER(15, "Missile weapon master",
+      "+1 Missile weapon damage when leader is fleet commander"),
+  /**
+   * Fleet commander perk for photon torpedo damage
+   */
+  PHOTON_TORPEDO_WEAPON_MASTER(16, "Photon torpedo weapon master",
+      "+1 Photon torpedo damage when leader is fleet commander"),
+  /**
+   * Fleet commander perk for massdrive weapon damage
+   */
+  MASSDRIVE_WEAPON_MASTER(17, "Massdrive weapon master",
+      "+1 Massdrive damage when leader is fleet commander"),
+  /**
+   * Fleet commander perk for improving shield power.
+   */
+  SHIELD_MASTER(18, "Shield master",
+      "+1 Shield value when leader is fleet commander"),
+  /**
+   * Fleet commander perk for improving armor power.
+   */
+  ARMOR_MASTER(19, "Armor master",
+      "+1 Armor value when leader is fleet commander"),
+  /**
+   * Fleet commander perk for improving espionage.
+   */
+  SPY_MASTER(20, "Spy master",
+      "+1 Espionage value when leader is fleet commander"),
+  /**
+   * Fleet commander perk for improving cloacking value
+   */
+  SECRET_AGENT(21, "Secret agent",
+      "+5 Cloacking value when leader is fleet commander"),
+  /**
+   * Fleet commander perk for better trading
+   */
+  TRADER(22, "Trader",
+      "+1 extra credit from trading when leader is fleet commander");
+
+
+
+
 
   /**
    * Constructor of perk enumeration
@@ -141,7 +190,11 @@ public enum Perk {
     if (this == Perk.DISCIPLINE
         || this == Perk.EXPLORER
         || this == Perk.FTL_ENGINEER
-        || this == Perk.COMBAT_TACTICIAN) {
+        || this == Perk.COMBAT_TACTICIAN
+        || this == Perk.BEAM_WEAPON_MASTER
+        || this == Perk.MISSILE_WEAPON_MASTER
+        || this == Perk.PHOTON_TORPEDO_WEAPON_MASTER
+        || this == Perk.MASSDRIVE_WEAPON_MASTER) {
       return true;
     }
     return false;

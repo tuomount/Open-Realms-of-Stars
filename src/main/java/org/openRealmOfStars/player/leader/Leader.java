@@ -77,6 +77,11 @@ public class Leader {
   private String title;
 
   /**
+   * Leader's current job.
+   */
+  private Job job;
+
+  /**
    * Constructor for leader. Leader must have name.
    * @param name Leader name
    */
@@ -88,6 +93,7 @@ public class Leader {
     militaryRank = MilitaryRank.CIVILIAN;
     setRace(SpaceRace.HUMAN);
     gender = Gender.NONE;
+    job = Job.UNASSIGNED;
   }
 
   /**
@@ -234,6 +240,8 @@ public class Leader {
     builder.append(name);
     builder.append(", homeworld=");
     builder.append(homeworld);
+    builder.append(", job=");
+    builder.append(job.getName());
     builder.append(", age=");
     builder.append(age);
     builder.append(", level=");
@@ -250,6 +258,20 @@ public class Leader {
     builder.append(title);
     builder.append("]");
     return builder.toString();
+  }
+
+  /**
+   * @return the job
+   */
+  public Job getJob() {
+    return job;
+  }
+
+  /**
+   * @param job the job to set
+   */
+  public void setJob(final Job job) {
+    this.job = job;
   }
 
 }

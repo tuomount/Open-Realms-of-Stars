@@ -40,6 +40,7 @@ public class LeaderTest {
     assertEquals(SpaceRace.HUMAN, leader.getRace());
     assertEquals(1, leader.getLevel());
     assertEquals(0, leader.getExperience());
+    assertEquals(Job.UNASSIGNED, leader.getJob());
     leader.setTitle("King of the world");
     assertEquals("King of the world", leader.getTitle());
     leader.setExperience(50);
@@ -53,9 +54,11 @@ public class LeaderTest {
     leader.setHomeworld("Planet I");
     assertEquals("Planet I", leader.getHomeworld());
     leader.setMilitaryRank(MilitaryRank.COLONEL);
+    leader.setJob(Job.RULER);
     assertEquals(MilitaryRank.COLONEL, leader.getMilitaryRank());
-    assertEquals("Leader [name=Test, homeworld=Planet I, age=33,"
-        + " level=5, experience=50, militaryRank=Colonel, gender=female,"
-        + " race=HUMAN, title=King of the world]", leader.toString());
+    assertEquals("Leader [name=Test, homeworld=Planet I, job=Ruler,"
+        + " age=33, level=5, experience=50, militaryRank=Colonel,"
+        + " gender=female, race=HUMAN, title=King of the world]",
+        leader.toString());
   }
 }

@@ -155,10 +155,29 @@ public enum Perk {
    */
   PACIFIST(27, "Pacifist",
       "-1 Fleet capacity when leader is ruler and cannot be assigned as"
-      + " Fleet commander for military ships");
-
-
-
+      + " Fleet commander for military ships"),
+  /**
+   * Weak leader bad perk
+   */
+  WEAK_LEADER(28, "Weak leader", "-1 war resistance when leader is ruler"),
+  /**
+   * Slow learner bad perk.
+   */
+  SLOW_LEARNER(29, "Slow learner",
+      "Experience requirement is doubled for next level"),
+  /**
+   * Repulsive bad perk.
+   */
+  REPULSIVE(30, "Repulsive", "-1 Diplomatic when leader is ruler"),
+  /**
+   * Academic generic perk.
+   */
+  ACADEMIC(31, "Academic", "Experience requirement is halved for next level"),
+  /**
+   * Power hungry generic perk
+   */
+  POWER_HUNGRY(32, "Power hungry",
+      "Leader tries to get as ruler by any means.");
 
 
   /**
@@ -173,6 +192,17 @@ public enum Perk {
     this.description = desc;
   }
 
+  /**
+   * Get Perk by index;
+   * @param index Index to get perk
+   * @return Perk
+   */
+  public static Perk getByIndex(final int index) {
+    if (index > 0 && index < Perk.values().length) {
+      return Perk.values()[index];
+    }
+    return Perk.MILITARISTIC;
+  }
   /**
    * Is perk ruler perk or something else
    * @return True if ruler perk
@@ -236,7 +266,21 @@ public enum Perk {
         || this == Perk.MICRO_MANAGER
         || this == Perk.CORRUPTED
         || this == Perk.ADDICTED
-        || this == Perk.PACIFIST) {
+        || this == Perk.PACIFIST
+        || this == Perk.WEAK_LEADER
+        || this == Perk.SLOW_LEARNER
+        || this == Perk.REPULSIVE) {
+      return true;
+    }
+    return false;
+  }
+  /**
+   * Is perk generic perk or something else
+   * @return True if generic perk
+   */
+  public boolean isGenericPerk() {
+    if (this == Perk.ACADEMIC
+        || this == Perk.POWER_HUNGRY) {
       return true;
     }
     return false;

@@ -4,12 +4,13 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.mockito.Mockito;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2019 Tuomo Untinen
+ * Copyright (C) 2019,2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,6 +42,7 @@ public class LeaderTest {
     assertEquals(1, leader.getLevel());
     assertEquals(0, leader.getExperience());
     assertEquals(Job.UNASSIGNED, leader.getJob());
+    assertEquals(null, leader.getParent());
     leader.setTitle("King of the world");
     assertEquals("King of the world", leader.getTitle());
     leader.setExperience(50);
@@ -55,10 +57,13 @@ public class LeaderTest {
     assertEquals("Planet I", leader.getHomeworld());
     leader.setMilitaryRank(MilitaryRank.COLONEL);
     leader.setJob(Job.RULER);
+    Leader parent = Mockito.mock(Leader.class);
+    Mockito.when(parent.getName()).thenReturn("Parent");
+    leader.setParent(parent);
     assertEquals(MilitaryRank.COLONEL, leader.getMilitaryRank());
     assertEquals("Leader [name=Test, homeworld=Planet I, job=Ruler,"
         + " age=33, level=5, experience=50, militaryRank=Colonel,"
-        + " gender=female, race=HUMAN, title=King of the world]",
+        + " gender=female, race=HUMAN, title=King of the world, parent=Parent]",
         leader.toString());
   }
 }

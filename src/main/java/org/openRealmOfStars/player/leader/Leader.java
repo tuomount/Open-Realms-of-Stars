@@ -5,7 +5,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019  Tuomo Untinen
+* Copyright (C) 2019,2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -82,6 +82,14 @@ public class Leader {
   private Job job;
 
   /**
+   * Parent for heirs. Not sure how to use this in game yet
+   * but with this information family tree for rulers is
+   * possible to write but none of the leaders cannot be
+   * removed then.
+   */
+  private Leader parent;
+
+  /**
    * Constructor for leader. Leader must have name.
    * @param name Leader name
    */
@@ -94,6 +102,7 @@ public class Leader {
     setRace(SpaceRace.HUMAN);
     gender = Gender.NONE;
     job = Job.UNASSIGNED;
+    setParent(null);
   }
 
   /**
@@ -256,6 +265,10 @@ public class Leader {
     builder.append(race);
     builder.append(", title=");
     builder.append(title);
+    if (getParent() != null) {
+      builder.append(", parent=");
+      builder.append(parent.getName());
+    }
     builder.append("]");
     return builder.toString();
   }
@@ -272,6 +285,23 @@ public class Leader {
    */
   public void setJob(final Job job) {
     this.job = job;
+  }
+
+  /**
+   * Get the leader parent. This will be set
+   * only for heirs. Regular leaders this will be null.
+   * @return the parent or null.
+   */
+  public Leader getParent() {
+    return parent;
+  }
+
+  /**
+   * Set the leader's parent.
+   * @param parent the parent to set
+   */
+  public void setParent(final Leader parent) {
+    this.parent = parent;
   }
 
 }

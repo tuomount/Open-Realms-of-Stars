@@ -132,7 +132,30 @@ public enum Perk {
    * Fleet commander perk for better trading
    */
   TRADER(22, "Trader",
-      "+1 extra credit from trading when leader is fleet commander");
+      "+1 extra credit from trading when leader is fleet commander"),
+  /**
+   * Stupid perk
+   */
+  STUPID(23, "Stupid", "-1 Research when leader is governor or ruler"),
+  /**
+   * Micro manager perk for governors/rulers
+   */
+  MICRO_MANAGER(24, "Micro manager",
+      "-1 Production production when leader is governor or ruler"),
+  /**
+   * Corrupted leader steal credit from realm
+   */
+  CORRUPTED(25, "Corrupted", "-1 Credit when leader is on duty"),
+  /**
+   * Addicted leader dies earlier than other
+   */
+  ADDICTED(26, "Addicted", "Leader dies signifigantly younger than other"),
+  /**
+   * Pacifist leader
+   */
+  PACIFIST(27, "Pacifist",
+      "-1 Fleet capacity when leader is ruler and cannot be assigned as"
+      + " Fleet commander for military ships");
 
 
 
@@ -200,6 +223,20 @@ public enum Perk {
         || this == Perk.SPY_MASTER
         || this == Perk.SECRET_AGENT
         || this == Perk.TRADER) {
+      return true;
+    }
+    return false;
+  }
+  /**
+   * Is perk bad perk or something else
+   * @return True if bad perk
+   */
+  public boolean isBadPerk() {
+    if (this == Perk.STUPID
+        || this == Perk.MICRO_MANAGER
+        || this == Perk.CORRUPTED
+        || this == Perk.ADDICTED
+        || this == Perk.PACIFIST) {
       return true;
     }
     return false;

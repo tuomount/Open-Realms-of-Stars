@@ -32,6 +32,28 @@ public class NameGeneratorTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTeuthidaeMale() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(SpaceRace.TEUTHIDAES, Gender.MALE);
+      assertNotNull(name);
+      assertEquals(true, name.contains(" "));
+      assertEquals(false, name.contains("''"));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testTeuthidaeFemale() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(SpaceRace.TEUTHIDAES, Gender.FEMALE);
+      assertNotNull(name);
+      assertEquals(true, name.contains(" "));
+      assertEquals(false, name.contains("''"));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testSporkMale() {
     for (int i = 0; i < 50; i++) {
       String name = NameGenerator.generateName(SpaceRace.SPORKS, Gender.MALE);

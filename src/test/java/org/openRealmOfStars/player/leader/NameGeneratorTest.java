@@ -32,6 +32,16 @@ public class NameGeneratorTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSporkMale() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(SpaceRace.SPORKS, Gender.MALE);
+      assertNotNull(name);
+      assertEquals(true, name.contains(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testHumanMale() {
     for (int i = 0; i < 50; i++) {
       String name = NameGenerator.generateName(SpaceRace.HUMAN, Gender.MALE);

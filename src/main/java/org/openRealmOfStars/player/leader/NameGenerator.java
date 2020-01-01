@@ -33,6 +33,137 @@ public final class NameGenerator {
   private NameGenerator() {
     // Nothing to do.
   }
+
+  /**
+   * Generate human leader name
+   * @param gender Leader gender
+   * @return Human leader name
+   */
+  private static String generateSporkName(final Gender gender) {
+    StringBuilder sb = new StringBuilder();
+    if (gender == Gender.MALE) {
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("Bal"); break;
+        case 1: sb.append("Lum"); break;
+        case 2: sb.append("Rog"); break;
+        case 3: sb.append("Gor"); break;
+        case 4: sb.append("Bar"); break;
+        case 5: sb.append("Ush"); break;
+        case 6: sb.append("Mol"); break;
+        case 7: sb.append("Mug"); break;
+        case 8: sb.append("Ug"); break;
+        case 9: sb.append("Mag"); break;
+        case 10: sb.append("Yam"); break;
+        case 11: sb.append("Shur"); break;
+        case 12: sb.append("Kur"); break;
+        case 13: sb.append("Yak"); break;
+        case 14: sb.append("Sha"); break;
+        case 15: sb.append("Dur"); break;
+        case 16: sb.append("Gur"); break;
+        case 17: sb.append("Bam"); break;
+        case 18: sb.append("Mul"); break;
+        case 19: sb.append("Tug"); break;
+      }
+      if (DiceGenerator.getRandom(3) == 0) {
+        switch (DiceGenerator.getRandom(19)) {
+          default:
+          case 0: sb.append("al"); break;
+          case 1: sb.append("um"); break;
+          case 2: sb.append("og"); break;
+          case 3: sb.append("or"); break;
+          case 4: sb.append("ar"); break;
+          case 5: sb.append("sh"); break;
+          case 6: sb.append("ol"); break;
+          case 7: sb.append("ug"); break;
+          case 8: sb.append("or"); break;
+          case 9: sb.append("ag"); break;
+          case 10: sb.append("am"); break;
+          case 11: sb.append("hur"); break;
+          case 12: sb.append("ur"); break;
+          case 13: sb.append("ak"); break;
+          case 14: sb.append("ha"); break;
+          case 15: sb.append("er"); break;
+          case 16: sb.append("gur"); break;
+          case 17: sb.append("gor"); break;
+          case 18: sb.append("lum"); break;
+          case 19: sb.append("bug"); break;
+        }
+      }
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("dush"); break;
+        case 1: sb.append("bum"); break;
+        case 2: sb.append("nar"); break;
+        case 3: sb.append("lorz"); break;
+        case 4: sb.append("barz"); break;
+        case 5: sb.append("guk"); break;
+        case 6: sb.append("mol"); break;
+        case 7: sb.append("a"); break;
+        case 8: sb.append("oa"); break;
+        case 9: sb.append("song"); break;
+        case 10: sb.append("gorn"); break;
+        case 11: sb.append("zul"); break;
+        case 12: sb.append("hag"); break;
+        case 13: sb.append("on"); break;
+        case 14: sb.append("rub"); break;
+        case 15: sb.append("og"); break;
+        case 16: sb.append("zat"); break;
+        case 17: sb.append("mash"); break;
+        case 18: sb.append("long"); break;
+        case 19: sb.append("mog"); break;
+      }
+    }
+    sb.append(" ");
+    switch (DiceGenerator.getRandom(19)) {
+      default:
+      case 0: sb.append("Turbo"); break;
+      case 1: sb.append("Brave"); break;
+      case 2: sb.append("Muscle"); break;
+      case 3: sb.append("War"); break;
+      case 4: sb.append("Bane"); break;
+      case 5: sb.append("Blood"); break;
+      case 6: sb.append("Neon"); break;
+      case 7: sb.append("Red"); break;
+      case 8: sb.append("Blue"); break;
+      case 9: sb.append("Steel"); break;
+      case 10: sb.append("Pulse"); break;
+      case 11: sb.append("Radiant"); break;
+      case 12: sb.append("Waste"); break;
+      case 13: sb.append("Titanium"); break;
+      case 14: sb.append("Ash"); break;
+      case 15: sb.append("Rogue"); break;
+      case 16: sb.append("Golden"); break;
+      case 17: sb.append("Sulfur"); break;
+      case 18: sb.append("Rare"); break;
+      case 19: sb.append("Raw"); break;
+    }
+    switch (DiceGenerator.getRandom(19)) {
+      default:
+      case 0: sb.append("laser"); break;
+      case 1: sb.append("station"); break;
+      case 2: sb.append("destroyer"); break;
+      case 3: sb.append("hunter"); break;
+      case 4: sb.append("sword"); break;
+      case 5: sb.append("lane"); break;
+      case 6: sb.append("city"); break;
+      case 7: sb.append("moon"); break;
+      case 8: sb.append("solaris"); break;
+      case 9: sb.append("phasor"); break;
+      case 10: sb.append("rifle"); break;
+      case 11: sb.append("ripper"); break;
+      case 12: sb.append("land"); break;
+      case 13: sb.append("armor"); break;
+      case 14: sb.append("planet"); break;
+      case 15: sb.append("hammer"); break;
+      case 16: sb.append("gauntlet"); break;
+      case 17: sb.append("fighter"); break;
+      case 18: sb.append("metal"); break;
+      case 19: sb.append("beard"); break;
+    }
+    return sb.toString();
+  }
+
   /**
    * Generate human leader name
    * @param gender Leader gender
@@ -185,6 +316,9 @@ public final class NameGenerator {
   public static String generateName(final SpaceRace race, final Gender gender) {
     if (race == SpaceRace.HUMAN) {
       return generateHumanName(gender);
+    }
+    if (race == SpaceRace.SPORKS) {
+      return generateSporkName(gender);
     }
     return "Noname";
   }

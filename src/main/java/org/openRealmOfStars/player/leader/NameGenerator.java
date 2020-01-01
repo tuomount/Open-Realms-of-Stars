@@ -114,6 +114,79 @@ public final class NameGenerator {
         case 19: sb.append("mog"); break;
       }
     }
+    if (gender == Gender.FEMALE) {
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("Ba"); break;
+        case 1: sb.append("Lu"); break;
+        case 2: sb.append("Ro"); break;
+        case 3: sb.append("Go"); break;
+        case 4: sb.append("Bu"); break;
+        case 5: sb.append("Ush"); break;
+        case 6: sb.append("Mo"); break;
+        case 7: sb.append("Mu"); break;
+        case 8: sb.append("Ug"); break;
+        case 9: sb.append("Ma"); break;
+        case 10: sb.append("Ya"); break;
+        case 11: sb.append("Shu"); break;
+        case 12: sb.append("Ku"); break;
+        case 13: sb.append("Ya"); break;
+        case 14: sb.append("Sha"); break;
+        case 15: sb.append("Du"); break;
+        case 16: sb.append("Gu"); break;
+        case 17: sb.append("Ta"); break;
+        case 18: sb.append("Yo"); break;
+        case 19: sb.append("Wu"); break;
+      }
+      if (DiceGenerator.getRandom(3) == 0) {
+        switch (DiceGenerator.getRandom(19)) {
+          default:
+          case 0: sb.append("la"); break;
+          case 1: sb.append("mu"); break;
+          case 2: sb.append("go"); break;
+          case 3: sb.append("ro"); break;
+          case 4: sb.append("ra"); break;
+          case 5: sb.append("sh"); break;
+          case 6: sb.append("lo"); break;
+          case 7: sb.append("gu"); break;
+          case 8: sb.append("ro"); break;
+          case 9: sb.append("ga"); break;
+          case 10: sb.append("ma"); break;
+          case 11: sb.append("ruh"); break;
+          case 12: sb.append("ru"); break;
+          case 13: sb.append("ka"); break;
+          case 14: sb.append("ha"); break;
+          case 15: sb.append("re"); break;
+          case 16: sb.append("rug"); break;
+          case 17: sb.append("rog"); break;
+          case 18: sb.append("mul"); break;
+          case 19: sb.append("gub"); break;
+        }
+      }
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("dush"); break;
+        case 1: sb.append("bum"); break;
+        case 2: sb.append("nar"); break;
+        case 3: sb.append("lorz"); break;
+        case 4: sb.append("barz"); break;
+        case 5: sb.append("guk"); break;
+        case 6: sb.append("mol"); break;
+        case 7: sb.append("ta"); break;
+        case 8: sb.append("toa"); break;
+        case 9: sb.append("song"); break;
+        case 10: sb.append("gorn"); break;
+        case 11: sb.append("zul"); break;
+        case 12: sb.append("hag"); break;
+        case 13: sb.append("bon"); break;
+        case 14: sb.append("rub"); break;
+        case 15: sb.append("bog"); break;
+        case 16: sb.append("zat"); break;
+        case 17: sb.append("mash"); break;
+        case 18: sb.append("long"); break;
+        case 19: sb.append("mog"); break;
+      }
+    }
     sb.append(" ");
     switch (DiceGenerator.getRandom(19)) {
       default:

@@ -22,8 +22,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 * along with this program; if not, see http://www.gnu.org/licenses/
 *
 *
-* Leader Name Generator. This will generate only single name
-* which can be considered as a surname.
+* Leader Name Generator.
 *
 */
 public final class NameGenerator {
@@ -36,66 +35,156 @@ public final class NameGenerator {
   }
   /**
    * Generate human leader name
+   * @param gender Leader gender
    * @return Human leader name
    */
-  private static String generateHumanName() {
+  private static String generateHumanName(final Gender gender) {
+    StringBuilder sb = new StringBuilder();
+    if (gender == Gender.MALE) {
+      switch (DiceGenerator.getRandom(26)) {
+        default:
+        case 0: sb.append("Albert"); break;
+        case 1: sb.append("Bob"); break;
+        case 2: sb.append("Calvin"); break;
+        case 3: sb.append("Dylan"); break;
+        case 4: sb.append("William"); break;
+        case 5: sb.append("Jack"); break;
+        case 6: sb.append("Lee"); break;
+        case 7: sb.append("James"); break;
+        case 8: sb.append("John"); break;
+        case 9: sb.append("George"); break;
+        case 10: sb.append("Billy"); break;
+        case 11: sb.append("Joe"); break;
+        case 12: sb.append("Rodney"); break;
+        case 13: sb.append("Chuck"); break;
+        case 14: sb.append("Aaron"); break;
+        case 15: sb.append("Donald"); break;
+        case 16: sb.append("Barry"); break;
+        case 17: sb.append("Saul"); break;
+        case 18: sb.append("Seamus"); break;
+        case 19: sb.append("Walter"); break;
+        case 20: sb.append("Kevin"); break;
+        case 21: sb.append("Steve"); break;
+        case 22: sb.append("Eric"); break;
+        case 23: sb.append("Karl"); break;
+        case 24: sb.append("Malcom"); break;
+        case 25: sb.append("Alan"); break;
+        case 26: sb.append("Thomas"); break;
+      }
+    }
+    if (gender == Gender.FEMALE) {
+      switch (DiceGenerator.getRandom(22)) {
+        default:
+        case 0: sb.append("Samatha"); break;
+        case 1: sb.append("Kendra"); break;
+        case 2: sb.append("Elizabeth"); break;
+        case 3: sb.append("Helena"); break;
+        case 4: sb.append("Kara"); break;
+        case 5: sb.append("Sharon"); break;
+        case 6: sb.append("Diana"); break;
+        case 7: sb.append("Erin"); break;
+        case 8: sb.append("Cally"); break;
+        case 9: sb.append("Linda"); break;
+        case 10: sb.append("Marie"); break;
+        case 11: sb.append("Joana"); break;
+        case 12: sb.append("Lisa"); break;
+        case 13: sb.append("Anna"); break;
+        case 14: sb.append("Elsa"); break;
+        case 15: sb.append("Laura"); break;
+        case 16: sb.append("Nicki"); break;
+        case 17: sb.append("Grace"); break;
+        case 18: sb.append("Kaylee"); break;
+        case 19: sb.append("Gina"); break;
+        case 20: sb.append("Melinda"); break;
+        case 21: sb.append("Kimberly"); break;
+        case 22: sb.append("Tia"); break;
+      }
+    }
+    if (DiceGenerator.getRandom(3) == 0) {
+      sb.append(" ");
+      switch (DiceGenerator.getRandom(17)) {
+        default:
+        case 0: sb.append("A."); break;
+        case 1: sb.append("B."); break;
+        case 2: sb.append("C."); break;
+        case 3: sb.append("D."); break;
+        case 4: sb.append("W."); break;
+        case 5: sb.append("J."); break;
+        case 6: sb.append("L."); break;
+        case 7: sb.append("J."); break;
+        case 8: sb.append("G."); break;
+        case 9: sb.append("R."); break;
+        case 10: sb.append("S."); break;
+        case 11: sb.append("K."); break;
+        case 12: sb.append("E."); break;
+        case 13: sb.append("K."); break;
+        case 14: sb.append("M."); break;
+        case 15: sb.append("H."); break;
+        case 16: sb.append("N."); break;
+        case 17: sb.append("T."); break;
+      }
+    }
+    sb.append(" ");
+    //Surname
     switch (DiceGenerator.getRandom(43)) {
       default:
-      case 0: return "Adama";
-      case 1: return "Nagala";
-      case 2: return "Fisk";
-      case 3: return "Spencer";
-      case 4: return "Shaw";
-      case 5: return "Valerii";
-      case 6: return "Thrace";
-      case 7: return "Corman";
-      case 8: return "Cain";
-      case 9: return "Riker";
-      case 10: return "Kirk";
-      case 11: return "McCoy";
-      case 12: return "Hawkins";
-      case 13: return "Jameson";
-      case 14: return "Torres";
-      case 15: return "Armstrong";
-      case 16: return "O'Neil";
-      case 17: return "Rush";
-      case 18: return "Young";
-      case 19: return "Hunt";
-      case 20: return "Harper";
-      case 21: return "Hammond";
-      case 22: return "Carter";
-      case 23: return "Jackson";
-      case 24: return "Sheppard";
-      case 25: return "McKay";
-      case 26: return "Weir";
-      case 27: return "Crichton";
-      case 28: return "Reynolds";
-      case 29: return "Serra";
-      case 30: return "Cobb";
-      case 31: return "Tam";
-      case 32: return "Frye";
-      case 33: return "Zelnick";
-      case 34: return "Isamu";
-      case 35: return "Robinson";
-      case 36: return "Mercer";
-      case 37: return "Taylor";
-      case 38: return "Bridger";
-      case 39: return "Ford";
-      case 40: return "Brody";
-      case 41: return "Kovacs";
-      case 42: return "Kawahara";
-      case 43: return "Hideki";
+      case 0: sb.append("Adama"); break;
+      case 1: sb.append("Nagala"); break;
+      case 2: sb.append("Fisk"); break;
+      case 3: sb.append("Spencer"); break;
+      case 4: sb.append("Shaw"); break;
+      case 5: sb.append("Valerii"); break;
+      case 6: sb.append("Thrace"); break;
+      case 7: sb.append("Corman"); break;
+      case 8: sb.append("Cain"); break;
+      case 9: sb.append("Riker"); break;
+      case 10: sb.append("Kirk"); break;
+      case 11: sb.append("McCoy"); break;
+      case 12: sb.append("Hawkins"); break;
+      case 13: sb.append("Jameson"); break;
+      case 14: sb.append("Torres"); break;
+      case 15: sb.append("Armstrong"); break;
+      case 16: sb.append("O'Neil"); break;
+      case 17: sb.append("Rush"); break;
+      case 18: sb.append("Young"); break;
+      case 19: sb.append("Hunt"); break;
+      case 20: sb.append("Harper"); break;
+      case 21: sb.append("Hammond"); break;
+      case 22: sb.append("Carter"); break;
+      case 23: sb.append("Jackson"); break;
+      case 24: sb.append("Sheppard"); break;
+      case 25: sb.append("McKay"); break;
+      case 26: sb.append("Weir"); break;
+      case 27: sb.append("Crichton"); break;
+      case 28: sb.append("Reynolds"); break;
+      case 29: sb.append("Serra"); break;
+      case 30: sb.append("Cobb"); break;
+      case 31: sb.append("Tam"); break;
+      case 32: sb.append("Frye"); break;
+      case 33: sb.append("Zelnick"); break;
+      case 34: sb.append("Isamu"); break;
+      case 35: sb.append("Robinson"); break;
+      case 36: sb.append("Mercer"); break;
+      case 37: sb.append("Taylor"); break;
+      case 38: sb.append("Bridger"); break;
+      case 39: sb.append("Ford"); break;
+      case 40: sb.append("Brody"); break;
+      case 41: sb.append("Kovacs"); break;
+      case 42: sb.append("Kawahara"); break;
+      case 43: sb.append("Hideki"); break;
     }
+    return sb.toString();
   }
 
   /**
    * Generate Leader name.
    * @param race SpaceRace for which name will generated
+   * @param gender Leader gender
    * @return Leader name.
    */
-  public static String generateName(final SpaceRace race) {
+  public static String generateName(final SpaceRace race, final Gender gender) {
     if (race == SpaceRace.HUMAN) {
-      return generateHumanName();
+      return generateHumanName(gender);
     }
     return "Noname";
   }

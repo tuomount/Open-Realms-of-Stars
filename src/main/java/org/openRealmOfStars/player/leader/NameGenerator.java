@@ -314,6 +314,265 @@ public final class NameGenerator {
   }
 
   /**
+   * Generate Chiraloid leader name
+   * @param gender Leader gender
+   * @return Chiraloid leader name
+   */
+  private static String generateChiraloidName(final Gender gender) {
+    StringBuilder sb = new StringBuilder();
+    if (gender == Gender.MALE) {
+      switch (DiceGenerator.getRandom(49)) {
+        default:
+        case 0: sb.append("Ba"); break;
+        case 1: sb.append("Ca"); break;
+        case 2: sb.append("Da"); break;
+        case 3: sb.append("Fa"); break;
+        case 4: sb.append("Ga"); break;
+        case 5: sb.append("Ha"); break;
+        case 6: sb.append("Ja"); break;
+        case 7: sb.append("Ka"); break;
+        case 8: sb.append("La"); break;
+        case 9: sb.append("Ma"); break;
+        case 10: sb.append("Na"); break;
+        case 11: sb.append("Pa"); break;
+        case 12: sb.append("Ra"); break;
+        case 13: sb.append("Sa"); break;
+        case 14: sb.append("Ta"); break;
+        case 15: sb.append("Va"); break;
+        case 16: sb.append("Wa"); break;
+        case 17: sb.append("Xa"); break;
+        case 18: sb.append("Za"); break;
+        case 19: sb.append("Be"); break;
+        case 20: sb.append("Ce"); break;
+        case 21: sb.append("De"); break;
+        case 22: sb.append("Fe"); break;
+        case 23: sb.append("Ge"); break;
+        case 24: sb.append("He"); break;
+        case 25: sb.append("Je"); break;
+        case 26: sb.append("Ke"); break;
+        case 27: sb.append("Le"); break;
+        case 28: sb.append("Me"); break;
+        case 29: sb.append("Ne"); break;
+        case 30: sb.append("Pe"); break;
+        case 31: sb.append("Re"); break;
+        case 32: sb.append("Se"); break;
+        case 33: sb.append("Te"); break;
+        case 34: sb.append("Ve"); break;
+        case 35: sb.append("We"); break;
+        case 36: sb.append("Xe"); break;
+        case 37: sb.append("Ze"); break;
+        case 38: sb.append("Bro"); break;
+        case 39: sb.append("Cro"); break;
+        case 40: sb.append("Dro"); break;
+        case 41: sb.append("Fro"); break;
+        case 42: sb.append("Gro"); break;
+        case 43: sb.append("Kra"); break;
+        case 44: sb.append("Sra"); break;
+        case 45: sb.append("Tra"); break;
+        case 46: sb.append("Vra"); break;
+        case 47: sb.append("Wra"); break;
+        case 48: sb.append("Xra"); break;
+        case 49: sb.append("Zro"); break;
+      }
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("rd"); break;
+        case 1: sb.append("h"); break;
+        case 2: sb.append("zud"); break;
+        case 3: sb.append("kiot"); break;
+        case 4: sb.append("nilth"); break;
+        case 5: sb.append("vos"); break;
+        case 6: sb.append("vu"); break;
+        case 7: sb.append("l"); break;
+        case 8: sb.append("r"); break;
+        case 9: sb.append("dird"); break;
+        case 10: sb.append("geh"); break;
+        case 11: sb.append("nura"); break;
+        case 12: sb.append("los"); break;
+        case 13: sb.append("vad"); break;
+        case 14: sb.append("fi"); break;
+        case 15: sb.append("var"); break;
+        case 16: sb.append("st"); break;
+        case 17: sb.append("tal"); break;
+        case 18: sb.append("ka"); break;
+        case 19: sb.append("gon"); break;
+        case 20: sb.append("tu"); break;
+        case 21: sb.append("zard"); break;
+        case 22: sb.append("ria"); break;
+        case 23: sb.append("s"); break;
+        case 24: sb.append("dis"); break;
+        case 25: sb.append("fit"); break;
+        case 26: sb.append("dor"); break;
+        case 27: sb.append("dudor"); break;
+        case 28: sb.append("dador"); break;
+        case 29: sb.append("vudor"); break;
+        case 30: sb.append("xedar"); break;
+        case 31: sb.append("max"); break;
+        case 32: sb.append("vur"); break;
+        case 33: sb.append("cust"); break;
+        case 34: sb.append("rust"); break;
+      }
+    }
+    if (gender == Gender.FEMALE) {
+      switch (DiceGenerator.getRandom(54)) {
+        default:
+        case 0: sb.append("Ba"); break;
+        case 1: sb.append("Ca"); break;
+        case 2: sb.append("Da"); break;
+        case 3: sb.append("Fa"); break;
+        case 4: sb.append("Ga"); break;
+        case 5: sb.append("Ha"); break;
+        case 6: sb.append("Ja"); break;
+        case 7: sb.append("Ka"); break;
+        case 8: sb.append("La"); break;
+        case 9: sb.append("Ma"); break;
+        case 10: sb.append("Na"); break;
+        case 11: sb.append("Pa"); break;
+        case 12: sb.append("Ra"); break;
+        case 13: sb.append("Sa"); break;
+        case 14: sb.append("Ta"); break;
+        case 15: sb.append("Va"); break;
+        case 16: sb.append("Wa"); break;
+        case 17: sb.append("Xa"); break;
+        case 18: sb.append("Za"); break;
+        case 19: sb.append("Be"); break;
+        case 20: sb.append("Ce"); break;
+        case 21: sb.append("De"); break;
+        case 22: sb.append("Fe"); break;
+        case 23: sb.append("Ge"); break;
+        case 24: sb.append("He"); break;
+        case 25: sb.append("Je"); break;
+        case 26: sb.append("Ke"); break;
+        case 27: sb.append("Le"); break;
+        case 28: sb.append("Me"); break;
+        case 29: sb.append("Ne"); break;
+        case 30: sb.append("Pe"); break;
+        case 31: sb.append("Re"); break;
+        case 32: sb.append("Se"); break;
+        case 33: sb.append("Te"); break;
+        case 34: sb.append("Ve"); break;
+        case 35: sb.append("We"); break;
+        case 36: sb.append("Xe"); break;
+        case 37: sb.append("Ze"); break;
+        case 38: sb.append("Bo"); break;
+        case 39: sb.append("Co"); break;
+        case 40: sb.append("Do"); break;
+        case 41: sb.append("Fo"); break;
+        case 42: sb.append("Go"); break;
+        case 43: sb.append("Ki"); break;
+        case 44: sb.append("Si"); break;
+        case 45: sb.append("Te"); break;
+        case 46: sb.append("Vi"); break;
+        case 47: sb.append("Wi"); break;
+        case 48: sb.append("Xi"); break;
+        case 49: sb.append("Zi"); break;
+        case 50: sb.append("Bi"); break;
+        case 51: sb.append("Ci"); break;
+        case 52: sb.append("Di"); break;
+        case 53: sb.append("Fi"); break;
+        case 54: sb.append("Gi"); break;
+      }
+      if (DiceGenerator.getRandom(3) == 0) {
+        switch (DiceGenerator.getRandom(19)) {
+          default:
+          case 0: sb.append("wav"); break;
+          case 1: sb.append("var"); break;
+          case 2: sb.append("fov"); break;
+          case 3: sb.append("rek"); break;
+          case 4: sb.append("lag"); break;
+          case 5: sb.append("ser"); break;
+          case 6: sb.append("dev"); break;
+          case 7: sb.append("wuf"); break;
+          case 8: sb.append("vul"); break;
+          case 9: sb.append("ses"); break;
+          case 10: sb.append("nus"); break;
+          case 11: sb.append("ruh"); break;
+          case 12: sb.append("sef"); break;
+          case 13: sb.append("mak"); break;
+          case 14: sb.append("gir"); break;
+          case 15: sb.append("lov"); break;
+          case 16: sb.append("vir"); break;
+          case 17: sb.append("gal"); break;
+          case 18: sb.append("gad"); break;
+          case 19: sb.append("dus"); break;
+        }
+      }
+      switch (DiceGenerator.getRandom(19)) {
+        default:
+        case 0: sb.append("myl"); break;
+        case 1: sb.append("li"); break;
+        case 2: sb.append("ly"); break;
+        case 3: sb.append("ru"); break;
+        case 4: sb.append("ne"); break;
+        case 5: sb.append("ra"); break;
+        case 6: sb.append("wa"); break;
+        case 7: sb.append("nu"); break;
+        case 8: sb.append("reth"); break;
+        case 9: sb.append("lu"); break;
+        case 10: sb.append("ni"); break;
+        case 11: sb.append("zi"); break;
+        case 12: sb.append("le"); break;
+        case 13: sb.append("fe"); break;
+        case 14: sb.append("vun"); break;
+        case 15: sb.append("nu"); break;
+        case 16: sb.append("wa"); break;
+        case 17: sb.append("zash"); break;
+        case 18: sb.append("nish"); break;
+        case 19: sb.append("fru"); break;
+      }
+    }
+    sb.append(" ");
+    switch (DiceGenerator.getRandom(20)) {
+      default:
+      case 0: sb.append("Dark"); break;
+      case 1: sb.append("Evil"); break;
+      case 2: sb.append("Radical"); break;
+      case 3: sb.append("Wicked"); break;
+      case 4: sb.append("Wild"); break;
+      case 5: sb.append("Bloody"); break;
+      case 6: sb.append("Fierce"); break;
+      case 7: sb.append("Red"); break;
+      case 8: sb.append("Dead"); break;
+      case 9: sb.append("Odd"); break;
+      case 10: sb.append("Scary"); break;
+      case 11: sb.append("Flaming"); break;
+      case 12: sb.append("Blazing"); break;
+      case 13: sb.append("Tiny"); break;
+      case 14: sb.append("Massive"); break;
+      case 15: sb.append("Melted"); break;
+      case 16: sb.append("Sinful"); break;
+      case 17: sb.append("Spicy"); break;
+      case 18: sb.append("Shady"); break;
+      case 19: sb.append("Sour"); break;
+      case 20: sb.append("Soul"); break;
+    }
+    switch (DiceGenerator.getRandom(19)) {
+      default:
+      case 0: sb.append("ground"); break;
+      case 1: sb.append("hill"); break;
+      case 2: sb.append("plant"); break;
+      case 3: sb.append("rocket"); break;
+      case 4: sb.append("spear"); break;
+      case 5: sb.append("spirit"); break;
+      case 6: sb.append("torpedo"); break;
+      case 7: sb.append("bomb"); break;
+      case 8: sb.append("star"); break;
+      case 9: sb.append("engine"); break;
+      case 10: sb.append("scoop"); break;
+      case 11: sb.append("syntesis"); break;
+      case 12: sb.append("land"); break;
+      case 13: sb.append("armor"); break;
+      case 14: sb.append("planet"); break;
+      case 15: sb.append("sabre"); break;
+      case 16: sb.append("crown"); break;
+      case 17: sb.append("tool"); break;
+      case 18: sb.append("weapon"); break;
+      case 19: sb.append("scythe"); break;
+    }
+    return sb.toString();
+  }
+
+  /**
    * Generate spork leader name
    * @param gender Leader gender
    * @return Spork leader name
@@ -674,6 +933,9 @@ public final class NameGenerator {
     }
     if (race == SpaceRace.TEUTHIDAES) {
       return generateTeuthidaeName(gender);
+    }
+    if (race == SpaceRace.CHIRALOIDS) {
+      return generateChiraloidName(gender);
     }
     return "Noname";
   }

@@ -776,6 +776,168 @@ public final class NameGenerator {
   }
 
   /**
+   * Generate mothoid leader name
+   * @param gender Leader gender
+   * @return Mothoid leader name
+   */
+  private static String generateMothoidName(final Gender gender) {
+    StringBuilder sb = new StringBuilder();
+    if (gender == Gender.FEMALE) {
+      switch (DiceGenerator.getRandom(5)) {
+        default:
+        case 0: sb.append("A'"); break;
+        case 1: sb.append("E'"); break;
+        case 2: sb.append("I'"); break;
+        case 3: sb.append("O'"); break;
+        case 4: sb.append("U'"); break;
+        case 5: sb.append("Y'"); break;
+      }
+    }
+    switch (DiceGenerator.getRandom(22)) {
+      default:
+      case 0: sb.append("Szz"); break;
+      case 1: sb.append("Stzz"); break;
+      case 2: sb.append("Btzz"); break;
+      case 3: sb.append("Bzz"); break;
+      case 4: sb.append("Tzz"); break;
+      case 5: sb.append("Ttzz"); break;
+      case 6: sb.append("Btss"); break;
+      case 7: sb.append("Bss"); break;
+      case 8: sb.append("Tss"); break;
+      case 9: sb.append("Ttss"); break;
+      case 10: sb.append("Sss"); break;
+      case 11: sb.append("Buzz"); break;
+      case 12: sb.append("Bezz"); break;
+      case 13: sb.append("Bess"); break;
+      case 14: sb.append("Btez"); break;
+      case 15: sb.append("Btes"); break;
+      case 16: sb.append("Pzz"); break;
+      case 17: sb.append("Pss"); break;
+      case 18: sb.append("Ptzz"); break;
+      case 19: sb.append("Ptss"); break;
+      case 20: sb.append("Srzz"); break;
+      case 21: sb.append("Srss"); break;
+      case 22: sb.append("Surz"); break;
+      case 23: sb.append("Surs"); break;
+    }
+    if (DiceGenerator.getRandom(1) == 0) {
+      switch (DiceGenerator.getRandom(12)) {
+        default:
+        case 0: sb.append("s"); break;
+        case 1: sb.append("z"); break;
+        case 2: sb.append("sur"); break;
+        case 3: sb.append("zz"); break;
+        case 4: sb.append("zs"); break;
+        case 5: sb.append("zur"); break;
+        case 6: sb.append("buzz"); break;
+        case 7: sb.append("uzz"); break;
+        case 8: sb.append("uss"); break;
+        case 9: sb.append("utz"); break;
+        case 10: sb.append("uts"); break;
+        case 11: sb.append("etz"); break;
+        case 12: sb.append("ets"); break;
+      }
+    }
+    if (DiceGenerator.getRandom(3) == 0) {
+      sb.append("-");
+      switch (DiceGenerator.getRandom(22)) {
+        default:
+        case 0: sb.append("Szz"); break;
+        case 1: sb.append("Stzz"); break;
+        case 2: sb.append("Btzz"); break;
+        case 3: sb.append("Bzz"); break;
+        case 4: sb.append("Tzz"); break;
+        case 5: sb.append("Ttzz"); break;
+        case 6: sb.append("Btss"); break;
+        case 7: sb.append("Bss"); break;
+        case 8: sb.append("Tss"); break;
+        case 9: sb.append("Ttss"); break;
+        case 10: sb.append("Sss"); break;
+        case 11: sb.append("Buzz"); break;
+        case 12: sb.append("Bezz"); break;
+        case 13: sb.append("Bess"); break;
+        case 14: sb.append("Btez"); break;
+        case 15: sb.append("Btes"); break;
+        case 16: sb.append("Pzz"); break;
+        case 17: sb.append("Pss"); break;
+        case 18: sb.append("Ptzz"); break;
+        case 19: sb.append("Ptss"); break;
+        case 20: sb.append("Srzz"); break;
+        case 21: sb.append("Srss"); break;
+        case 22: sb.append("Surz"); break;
+        case 23: sb.append("Surs"); break;
+      }
+      if (DiceGenerator.getRandom(1) == 0) {
+        switch (DiceGenerator.getRandom(12)) {
+          default:
+          case 0: sb.append("s"); break;
+          case 1: sb.append("z"); break;
+          case 2: sb.append("sur"); break;
+          case 3: sb.append("zz"); break;
+          case 4: sb.append("zs"); break;
+          case 5: sb.append("zur"); break;
+          case 6: sb.append("buzz"); break;
+          case 7: sb.append("uzz"); break;
+          case 8: sb.append("uss"); break;
+          case 9: sb.append("utz"); break;
+          case 10: sb.append("uts"); break;
+          case 11: sb.append("etz"); break;
+          case 12: sb.append("ets"); break;
+        }
+      }
+    }
+    sb.append(" ");
+    //Surname
+    switch (DiceGenerator.getRandom(19)) {
+      default:
+      case 0: sb.append("Butter"); break;
+      case 1: sb.append("Dragon"); break;
+      case 2: sb.append("Silent"); break;
+      case 3: sb.append("Buzzing"); break;
+      case 4: sb.append("Mead"); break;
+      case 5: sb.append("Light"); break;
+      case 6: sb.append("Neon"); break;
+      case 7: sb.append("Blue"); break;
+      case 8: sb.append("Purple"); break;
+      case 9: sb.append("Rainbow"); break;
+      case 10: sb.append("Flower"); break;
+      case 11: sb.append("Bumble"); break;
+      case 12: sb.append("Wyvern"); break;
+      case 13: sb.append("Hydra"); break;
+      case 14: sb.append("Glowing"); break;
+      case 15: sb.append("Vivid"); break;
+      case 16: sb.append("Glitzy"); break;
+      case 17: sb.append("Blazing"); break;
+      case 18: sb.append("Radiant"); break;
+      case 19: sb.append("Honey"); break;
+    }
+    switch (DiceGenerator.getRandom(19)) {
+      default:
+      case 0: sb.append("fly"); break;
+      case 1: sb.append("bug"); break;
+      case 2: sb.append("flight"); break;
+      case 3: sb.append("bee"); break;
+      case 4: sb.append("moth"); break;
+      case 5: sb.append("hornet"); break;
+      case 6: sb.append("flower"); break;
+      case 7: sb.append("plant"); break;
+      case 8: sb.append("bud"); break;
+      case 9: sb.append("head"); break;
+      case 10: sb.append("cluster"); break;
+      case 11: sb.append("spike"); break;
+      case 12: sb.append("herb"); break;
+      case 13: sb.append("sprout"); break;
+      case 14: sb.append("thorn"); break;
+      case 15: sb.append("rose"); break;
+      case 16: sb.append("mantis"); break;
+      case 17: sb.append("locust"); break;
+      case 18: sb.append("cicada"); break;
+      case 19: sb.append("hopper"); break;
+    }
+    return sb.toString();
+  }
+
+  /**
    * Generate human leader name
    * @param gender Leader gender
    * @return Human leader name
@@ -936,6 +1098,9 @@ public final class NameGenerator {
     }
     if (race == SpaceRace.CHIRALOIDS) {
       return generateChiraloidName(gender);
+    }
+    if (race == SpaceRace.MOTHOIDS) {
+      return generateMothoidName(gender);
     }
     return "Noname";
   }

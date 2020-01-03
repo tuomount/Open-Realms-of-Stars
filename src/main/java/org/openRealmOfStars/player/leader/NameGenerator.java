@@ -938,6 +938,237 @@ public final class NameGenerator {
   }
 
   /**
+   * Is last character in string vowel or not
+   * @param str String to check
+   * @return True if last character is vowel.
+   */
+  private static boolean isLastVowel(final String str) {
+    char ch = str.toLowerCase().charAt(str.length() - 1);
+    if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u'
+        || ch == 'y') {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Method to generate Scaurian Male name.
+   * Scaurian surname is same as male name.
+   * @param longerChance Bigger number less chance to have third syllable
+   * @return Scaurian male name.
+   */
+  private static String generateScaurianMaleName(final int longerChance) {
+    StringBuilder sb = new StringBuilder();
+    switch (DiceGenerator.getRandom(33)) {
+      default:
+      case 0: sb.append("Au"); break;
+      case 1: sb.append("No"); break;
+      case 2: sb.append("Dru"); break;
+      case 3: sb.append("A"); break;
+      case 4: sb.append("Mar"); break;
+      case 5: sb.append("Ca"); break;
+      case 6: sb.append("Pro"); break;
+      case 7: sb.append("Max"); break;
+      case 8: sb.append("Ti"); break;
+      case 9: sb.append("Quin"); break;
+      case 10: sb.append("Pla"); break;
+      case 11: sb.append("Sep"); break;
+      case 12: sb.append("U"); break;
+      case 13: sb.append("Nu"); break;
+      case 14: sb.append("Po"); break;
+      case 15: sb.append("Op"); break;
+      case 16: sb.append("Hos"); break;
+      case 17: sb.append("Ap"); break;
+      case 18: sb.append("Ga"); break;
+      case 19: sb.append("Pu"); break;
+      case 20: sb.append("De"); break;
+      case 21: sb.append("Spu"); break;
+      case 22: sb.append("Gna"); break;
+      case 23: sb.append("Fla"); break;
+      case 24: sb.append("He"); break;
+      case 25: sb.append("Ser"); break;
+      case 26: sb.append("Sec"); break;
+      case 27: sb.append("Ka"); break;
+      case 28: sb.append("Vo"); break;
+      case 29: sb.append("Tul"); break;
+      case 30: sb.append("Pau"); break;
+      case 31: sb.append("Cae"); break;
+      case 32: sb.append("Ni"); break;
+      case 33: sb.append("Flo"); break;
+    }
+    if (DiceGenerator.getRandom(longerChance) == 0) {
+      if (isLastVowel(sb.toString())) {
+        switch (DiceGenerator.getRandom(19)) {
+          default:
+          case 0: sb.append("mu"); break;
+          case 1: sb.append("n"); break;
+          case 2: sb.append("me"); break;
+          case 3: sb.append("ti"); break;
+          case 4: sb.append("ci"); break;
+          case 5: sb.append("pis"); break;
+          case 6: sb.append("cel"); break;
+          case 7: sb.append("le"); break;
+          case 8: sb.append("tu"); break;
+          case 9: sb.append("cun"); break;
+          case 10: sb.append("ta"); break;
+          case 11: sb.append("gus"); break;
+          case 12: sb.append("pi"); break;
+          case 13: sb.append("mer"); break;
+          case 14: sb.append("lia"); break;
+          case 15: sb.append("s"); break;
+          case 16: sb.append("li"); break;
+          case 17: sb.append("re"); break;
+          case 18: sb.append("gi"); break;
+          case 19: sb.append("tri"); break;
+        }
+      } else {
+        switch (DiceGenerator.getRandom(10)) {
+          default:
+          case 0: sb.append("i"); break;
+          case 1: sb.append("e"); break;
+          case 2: sb.append("a"); break;
+          case 3: sb.append("ti"); break;
+          case 4: sb.append("ci"); break;
+          case 5: sb.append("le"); break;
+          case 6: sb.append("tu"); break;
+          case 7: sb.append("ta"); break;
+          case 8: sb.append("pi"); break;
+          case 9: sb.append("li"); break;
+          case 10: sb.append("to"); break;
+          case 11: sb.append("vi"); break;
+        }
+      }
+    }
+    switch (DiceGenerator.getRandom(13)) {
+      default:
+      case 0: sb.append("sus"); break;
+      case 1: sb.append("vius"); break;
+      case 2: sb.append("tis"); break;
+      case 3: sb.append("nus"); break;
+      case 4: {
+        if (sb.toString().endsWith("u")) {
+          sb.append("lius");
+        } else {
+          sb.append("us");
+        }
+        break;
+      }
+      case 5: sb.append("cus"); break;
+      case 6: sb.append("lus"); break;
+      case 7: sb.append("tus"); break;
+      case 8: sb.append("rius"); break;
+      case 9: sb.append("rus"); break;
+      case 10: sb.append("tius"); break;
+      case 11: sb.append("vius"); break;
+      case 12: sb.append("lius"); break;
+      case 13: sb.append("cius"); break;
+    }
+    return sb.toString();
+  }
+  /**
+   * Generate scaurian leader name
+   * @param gender Leader gender
+   * @return Scaurian leader name
+   */
+  private static String generateScaurianName(final Gender gender) {
+    StringBuilder sb = new StringBuilder();
+    if (gender == Gender.MALE) {
+      sb.append(generateScaurianMaleName(3));
+    }
+    if (gender == Gender.FEMALE) {
+      switch (DiceGenerator.getRandom(36)) {
+        default:
+        case 0: sb.append("Coc"); break;
+        case 1: sb.append("Ne"); break;
+        case 2: sb.append("Sta"); break;
+        case 3: sb.append("Fun"); break;
+        case 4: sb.append("Ar"); break;
+        case 5: sb.append("Lo"); break;
+        case 6: sb.append("Quinc"); break;
+        case 7: sb.append("Au"); break;
+        case 8: sb.append("Be"); break;
+        case 9: sb.append("Cor"); break;
+        case 10: sb.append("Al"); break;
+        case 11: sb.append("At"); break;
+        case 12: sb.append("Mi"); break;
+        case 13: sb.append("Mur"); break;
+        case 14: sb.append("Me"); break;
+        case 15: sb.append("Ac"); break;
+        case 16: sb.append("Max"); break;
+        case 17: sb.append("Mar"); break;
+        case 18: sb.append("Ni"); break;
+        case 19: sb.append("Bur"); break;
+        case 20: sb.append("Ser"); break;
+        case 21: sb.append("Bal"); break;
+        case 22: sb.append("Cis"); break;
+        case 23: sb.append("Fla"); break;
+        case 24: sb.append("Pu"); break;
+        case 25: sb.append("Lae"); break;
+        case 26: sb.append("Ta"); break;
+        case 27: sb.append("Co"); break;
+        case 28: sb.append("Hel"); break;
+        case 29: sb.append("Ru"); break;
+        case 30: sb.append("Ici"); break;
+        case 31: sb.append("Val"); break;
+        case 32: sb.append("Um"); break;
+        case 33: sb.append("Her"); break;
+        case 34: sb.append("Avi"); break;
+        case 35: sb.append("Fla"); break;
+        case 36: sb.append("Ti"); break;
+      }
+      if (DiceGenerator.getRandom(3) == 0) {
+        switch (DiceGenerator.getRandom(14)) {
+          default:
+          case 0: sb.append("vo"); break;
+          case 1: sb.append("do"); break;
+          case 2: sb.append("ti"); break;
+          case 3: sb.append("pi"); break;
+          case 4: sb.append("mi"); break;
+          case 5: sb.append("na"); break;
+          case 6: sb.append("se"); break;
+          case 7: sb.append("ga"); break;
+          case 8: sb.append("se"); break;
+          case 9: sb.append("lo"); break;
+          case 10: sb.append("gi"); break;
+          case 11: sb.append("pa"); break;
+          case 12: sb.append("ta"); break;
+          case 13: sb.append("pu"); break;
+          case 14: sb.append("ro"); break;
+        }
+      }
+      switch (DiceGenerator.getRandom(14)) {
+        default:
+        case 0: sb.append("tia"); break;
+        case 1: sb.append("ria"); break;
+        case 2: sb.append("nia"); break;
+        case 3: sb.append("dia"); break;
+        case 4: sb.append("leia"); break;
+        case 5: sb.append("mia"); break;
+        case 6: {
+          if (isLastVowel(sb.toString())) {
+            sb.append("lla");
+          } else {
+            sb.append("ia");
+          }
+          break;
+        }
+        case 7: sb.append("pia"); break;
+        case 8: sb.append("lia"); break;
+        case 9: sb.append("sia"); break;
+        case 10: sb.append("cia"); break;
+        case 11: sb.append("na"); break;
+        case 12: sb.append("ta"); break;
+        case 13: sb.append("lis"); break;
+        case 14: sb.append("via"); break;
+      }
+    }
+    sb.append(" ");
+    //Surname
+    sb.append(generateScaurianMaleName(1));
+    return sb.toString();
+  }
+
+  /**
    * Generate human leader name
    * @param gender Leader gender
    * @return Human leader name
@@ -1101,6 +1332,9 @@ public final class NameGenerator {
     }
     if (race == SpaceRace.MOTHOIDS) {
       return generateMothoidName(gender);
+    }
+    if (race == SpaceRace.SCAURIANS) {
+      return generateScaurianName(gender);
     }
     return "Noname";
   }

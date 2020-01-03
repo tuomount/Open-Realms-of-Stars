@@ -1169,6 +1169,261 @@ public final class NameGenerator {
   }
 
   /**
+   * Generate homarian leader name
+   * @param gender Leader gender
+   * @return Homarian leader name
+   */
+  private static String generateHomarianName(final Gender gender) {
+    StringBuilder sb = new StringBuilder();
+    if (gender == Gender.MALE) {
+      switch (DiceGenerator.getRandom(60)) {
+        default:
+        case 0: sb.append("Raz"); break;
+        case 1: sb.append("Coh"); break;
+        case 2: sb.append("Keh"); break;
+        case 3: sb.append("Min"); break;
+        case 4: sb.append("Dhar"); break;
+        case 5: sb.append("Ko"); break;
+        case 6: sb.append("Zum"); break;
+        case 7: sb.append("Zel"); break;
+        case 8: sb.append("Num"); break;
+        case 9: sb.append("Rim"); break;
+        case 10: sb.append("Kha"); break;
+        case 11: sb.append("Zuh"); break;
+        case 12: sb.append("Ke"); break;
+        case 13: sb.append("Khi"); break;
+        case 14: sb.append("Dih"); break;
+        case 15: sb.append("Car"); break;
+        case 16: sb.append("Do"); break;
+        case 17: sb.append("Zi"); break;
+        case 18: sb.append("Khul"); break;
+        case 19: sb.append("Dhim"); break;
+        case 20: sb.append("Dhan"); break;
+        case 21: sb.append("Mag"); break;
+        case 22: sb.append("Man"); break;
+        case 23: sb.append("De"); break;
+        case 24: sb.append("Mo"); break;
+        case 25: sb.append("Jo"); break;
+        case 26: sb.append("Jed"); break;
+        case 27: sb.append("Dem"); break;
+        case 28: sb.append("Nun"); break;
+        case 29: sb.append("Ril"); break;
+        case 30: sb.append("Mu"); break;
+        case 31: sb.append("Dhum"); break;
+        case 32: sb.append("Zeg"); break;
+        case 33: sb.append("Jhor"); break;
+        case 34: sb.append("Zel"); break;
+        case 35: sb.append("Riz"); break;
+        case 36: sb.append("Ki"); break;
+        case 37: sb.append("Ve"); break;
+        case 38: sb.append("Va"); break;
+        case 39: sb.append("Jar"); break;
+        case 40: sb.append("Dah"); break;
+        case 41: sb.append("Jom"); break;
+        case 42: sb.append("Rud"); break;
+        case 43: sb.append("Nel"); break;
+        case 44: sb.append("Cun"); break;
+        case 45: sb.append("Khir"); break;
+        case 46: sb.append("Dor"); break;
+        case 47: sb.append("Moh"); break;
+        case 48: sb.append("Du"); break;
+        case 49: sb.append("Cul"); break;
+        case 50: sb.append("Mil"); break;
+        case 51: sb.append("Jim"); break;
+        case 52: sb.append("Vun"); break;
+        case 53: sb.append("Ni"); break;
+        case 54: sb.append("Khog"); break;
+        case 55: sb.append("Jham"); break;
+        case 56: sb.append("Tul"); break;
+        case 57: sb.append("Tha"); break;
+        case 58: sb.append("Kha"); break;
+        case 59: sb.append("Bal"); break;
+        case 60: sb.append("Bha"); break;
+      }
+      switch (DiceGenerator.getRandom(16)) {
+        default:
+        case 0: sb.append("das"); break;
+        case 1: sb.append("gas"); break;
+        case 2: sb.append("nis"); break;
+        case 3: sb.append("las"); break;
+        case 4: sb.append("ris"); break;
+        case 5: sb.append("mus"); break;
+        case 6: sb.append("nus"); break;
+        case 7: sb.append("zos"); break;
+        case 8: sb.append("zes"); break;
+        case 9: sb.append("vos"); break;
+        case 10: sb.append("vus"); break;
+        case 11: sb.append("nos"); break;
+        case 12: sb.append("dos"); break;
+        case 13: sb.append("gus"); break;
+        case 14: sb.append("mos"); break;
+        case 15: sb.append("los"); break;
+        case 16: sb.append("lus"); break;
+      }
+    }
+    if (gender == Gender.FEMALE) {
+      switch (DiceGenerator.getRandom(30)) {
+        default:
+        case 0: sb.append("Ath"); break;
+        case 1: sb.append("Il"); break;
+        case 2: sb.append("When"); break;
+        case 3: sb.append("Us"); break;
+        case 4: sb.append("Shan"); break;
+        case 5: sb.append("Sid"); break;
+        case 6: sb.append("Buh"); break;
+        case 7: sb.append("Ar"); break;
+        case 8: sb.append("Dhen"); break;
+        case 9: sb.append("Do"); break;
+        case 10: sb.append("Vlis"); break;
+        case 11: sb.append("Ol"); break;
+        case 12: sb.append("El"); break;
+        case 13: sb.append("Fel"); break;
+        case 14: sb.append("Eh"); break;
+        case 15: sb.append("Om"); break;
+        case 16: sb.append("Dom"); break;
+        case 17: sb.append("Bhe"); break;
+        case 18: sb.append("Yom"); break;
+        case 19: sb.append("E"); break;
+        case 20: sb.append("Sil"); break;
+        case 21: sb.append("Fin"); break;
+        case 22: sb.append("Fas"); break;
+        case 23: sb.append("Her"); break;
+        case 24: sb.append("Hel"); break;
+        case 25: sb.append("Mar"); break;
+        case 26: sb.append("Wor"); break;
+        case 27: sb.append("Es"); break;
+        case 28: sb.append("Sig"); break;
+        case 29: sb.append("Mim"); break;
+        case 30: sb.append("Nin"); break;
+      }
+      if (DiceGenerator.getRandom(3) == 0) {
+        switch (DiceGenerator.getRandom(16)) {
+          default:
+          case 0: sb.append("ra"); break;
+          case 1: sb.append("ne"); break;
+          case 2: sb.append("di"); break;
+          case 3: sb.append("ri"); break;
+          case 4: sb.append("lo"); break;
+          case 5: sb.append("ro"); break;
+          case 6: sb.append("sha"); break;
+          case 7: sb.append("to"); break;
+          case 8: sb.append("na"); break;
+          case 9: sb.append("la"); break;
+          case 10: sb.append("no"); break;
+          case 11: sb.append("te"); break;
+          case 12: sb.append("lu"); break;
+          case 13: sb.append("hi"); break;
+          case 14: sb.append("ti"); break;
+          case 15: sb.append("hu"); break;
+          case 16: sb.append("tu"); break;
+        }
+      }
+      switch (DiceGenerator.getRandom(6)) {
+        default:
+        case 0: sb.append("ryn"); break;
+        case 1: sb.append("dyn"); break;
+        case 2: sb.append("lyn"); break;
+        case 3: sb.append("myn"); break;
+        case 4: sb.append("syn"); break;
+        case 5: sb.append("nyn"); break;
+        case 6: sb.append("tyn"); break;
+      }
+    }
+    sb.append(" ");
+    //Surname
+    switch (DiceGenerator.getRandom(40)) {
+      default:
+      case 0: sb.append("Eh"); break;
+      case 1: sb.append("Mu"); break;
+      case 2: sb.append("Da"); break;
+      case 3: sb.append("La"); break;
+      case 4: sb.append("Joh"); break;
+      case 5: sb.append("Dha"); break;
+      case 6: sb.append("Va"); break;
+      case 7: sb.append("Puh"); break;
+      case 8: sb.append("Doh"); break;
+      case 9: sb.append("Zuh"); break;
+      case 10: sb.append("Lu"); break;
+      case 11: sb.append("Juh"); break;
+      case 12: sb.append("Le"); break;
+      case 13: sb.append("Sa"); break;
+      case 14: sb.append("Bha"); break;
+      case 15: sb.append("Ne"); break;
+      case 16: sb.append("Nu"); break;
+      case 17: sb.append("Sa"); break;
+      case 18: sb.append("Su"); break;
+      case 19: sb.append("Ma"); break;
+      case 20: sb.append("Mo"); break;
+      case 21: sb.append("Pa"); break;
+      case 22: sb.append("Po"); break;
+      case 23: sb.append("Zug"); break;
+      case 24: sb.append("Za"); break;
+      case 25: sb.append("Ze"); break;
+      case 26: sb.append("Vo"); break;
+      case 27: sb.append("Jeh"); break;
+      case 28: sb.append("Ruh"); break;
+      case 29: sb.append("Ro"); break;
+      case 30: sb.append("U"); break;
+      case 31: sb.append("Ah"); break;
+      case 32: sb.append("Uh"); break;
+      case 33: sb.append("Oh"); break;
+      case 34: sb.append("Poh"); break;
+      case 35: sb.append("Bu"); break;
+      case 36: sb.append("Ba"); break;
+      case 37: sb.append("Taylor"); break;
+      case 38: sb.append("O"); break;
+      case 39: sb.append("Reh"); break;
+      case 40: sb.append("Luh"); break;
+    }
+    switch (DiceGenerator.getRandom(28)) {
+      default:
+      case 0: sb.append("ros"); break;
+      case 1: sb.append("de"); break;
+      case 2: sb.append("rur"); break;
+      case 3: sb.append("no"); break;
+      case 4: sb.append("la"); break;
+      case 5: sb.append("gu"); break;
+      case 6: sb.append("nol"); break;
+      case 7: sb.append("vo"); break;
+      case 8: sb.append("go"); break;
+      case 9: sb.append("ba"); break;
+      case 10: sb.append("rom"); break;
+      case 11: sb.append("bul"); break;
+      case 12: sb.append("ho"); break;
+      case 13: sb.append("hu"); break;
+      case 14: sb.append("ber"); break;
+      case 15: sb.append("mel"); break;
+      case 16: sb.append("mo"); break;
+      case 17: sb.append("ma"); break;
+      case 18: sb.append("do"); break;
+      case 19: sb.append("nul"); break;
+      case 20: sb.append("mul"); break;
+      case 21: sb.append("hem"); break;
+      case 22: sb.append("nan"); break;
+      case 23: sb.append("non"); break;
+      case 24: sb.append("nom"); break;
+      case 25: sb.append("las"); break;
+      case 26: sb.append("los"); break;
+      case 27: sb.append("Jeh"); break;
+      case 28: sb.append("hur"); break;
+    }
+    switch (DiceGenerator.getRandom(9)) {
+      default:
+      case 0: sb.append("dath"); break;
+      case 1: sb.append("gath"); break;
+      case 2: sb.append("sath"); break;
+      case 3: sb.append("zath"); break;
+      case 4: sb.append("vath"); break;
+      case 5: sb.append("lath"); break;
+      case 6: sb.append("rath"); break;
+      case 7: sb.append("nath"); break;
+      case 8: sb.append("math"); break;
+      case 9: sb.append("xath"); break;
+    }
+    return sb.toString();
+  }
+
+  /**
    * Generate human leader name
    * @param gender Leader gender
    * @return Human leader name
@@ -1335,6 +1590,9 @@ public final class NameGenerator {
     }
     if (race == SpaceRace.SCAURIANS) {
       return generateScaurianName(gender);
+    }
+    if (race == SpaceRace.HOMARIANS) {
+      return generateHomarianName(gender);
     }
     return "Noname";
   }

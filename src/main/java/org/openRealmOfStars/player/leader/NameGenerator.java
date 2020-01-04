@@ -1746,6 +1746,84 @@ public final class NameGenerator {
   }
 
   /**
+   * Generate mechion leader name
+   * @return Mechion leader name
+   */
+  private static String generateMechionName() {
+    StringBuilder sb = new StringBuilder();
+    switch (DiceGenerator.getRandom(14)) {
+      default:
+      case 0: sb.append("Model"); break;
+      case 1: sb.append("Drone"); break;
+      case 2: sb.append("Bot"); break;
+      case 3: sb.append("Droid"); break;
+      case 4: sb.append("Golem"); break;
+      case 5: sb.append("Android"); break;
+      case 6: sb.append("Entity"); break;
+      case 7: sb.append("Mechan"); break;
+      case 8: sb.append("Automaton"); break;
+      case 9: sb.append("Slug"); break;
+      case 10: sb.append("Atom"); break;
+      case 11: sb.append("Robo"); break;
+      case 12: sb.append("Roboid"); break;
+      case 13: sb.append("Tronic"); break;
+      case 14: {
+        sb.append("R");
+        sb.append(DiceGenerator.getRandom(1, 9));
+        break;
+      }
+    }
+    if (DiceGenerator.getRandom(1) == 0) {
+      sb.append("-");
+      switch (DiceGenerator.getRandom(9)) {
+        default:
+        case 0: sb.append("X-"); break;
+        case 1: sb.append("Y-"); break;
+        case 2: sb.append("Z-"); break;
+        case 3: sb.append("Q-"); break;
+        case 4: sb.append("A-"); break;
+        case 5: sb.append("B-"); break;
+        case 6: sb.append("E-"); break;
+        case 7: sb.append("G-"); break;
+        case 8: sb.append("W-"); break;
+        case 9: sb.append("K-"); break;
+      }
+      switch (DiceGenerator.getRandom(4)) {
+        default:
+        case 0: sb.append(DiceGenerator.getRandom(1, 10)); break;
+        case 1: sb.append(DiceGenerator.getRandom(20, 100)); break;
+        case 2: sb.append(DiceGenerator.getRandom(2, 9) * 100); break;
+        case 3: sb.append(DiceGenerator.getRandom(1, 9) * 1000); break;
+        case 4: sb.append(DiceGenerator.getRandom(1, 9) * 10000); break;
+      }
+    } else {
+      sb.append(" ");
+      switch (DiceGenerator.getRandom(4)) {
+        default:
+        case 0: sb.append(DiceGenerator.getRandom(1, 10)); break;
+        case 1: sb.append(DiceGenerator.getRandom(20, 100)); break;
+        case 2: sb.append(DiceGenerator.getRandom(2, 9) * 100); break;
+        case 3: sb.append(DiceGenerator.getRandom(1, 9) * 1000); break;
+        case 4: sb.append(DiceGenerator.getRandom(1, 9) * 10000); break;
+      }
+      switch (DiceGenerator.getRandom(9)) {
+        default:
+        case 0: sb.append("X"); break;
+        case 1: sb.append("Y"); break;
+        case 2: sb.append("Z"); break;
+        case 3: sb.append("Q"); break;
+        case 4: sb.append("K"); break;
+        case 5: sb.append("M"); break;
+        case 6: sb.append("E"); break;
+        case 7: sb.append("G"); break;
+        case 8: sb.append("W"); break;
+        case 9: sb.append("Y"); break;
+      }
+    }
+    return sb.toString();
+  }
+
+  /**
    * Generate human leader name
    * @param gender Leader gender
    * @return Human leader name
@@ -1921,6 +1999,9 @@ public final class NameGenerator {
     }
     if (race == SpaceRace.CENTAURS) {
       return generateCentaurName(gender);
+    }
+    if (race == SpaceRace.MECHIONS) {
+      return generateMechionName();
     }
     return "Noname";
   }

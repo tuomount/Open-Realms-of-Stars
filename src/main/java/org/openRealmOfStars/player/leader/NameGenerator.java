@@ -1424,6 +1424,146 @@ public final class NameGenerator {
   }
 
   /**
+   * Generate greyan leader name
+   * @param gender Leader gender
+   * @return Greyan leader name
+   */
+  private static String generateGreyanName(final Gender gender) {
+    StringBuilder sb = new StringBuilder();
+    if (gender == Gender.MALE) {
+      switch (DiceGenerator.getRandom(40)) {
+        default:
+        case 0: sb.append("Gunnar"); break;
+        case 1: sb.append("Sigmund"); break;
+        case 2: sb.append("Gudrik"); break;
+        case 3: sb.append("Swein"); break;
+        case 4: sb.append("Ornulf"); break;
+        case 5: sb.append("Asbjorn"); break;
+        case 6: sb.append("Sigfast"); break;
+        case 7: sb.append("Asvard"); break;
+        case 8: sb.append("Thorvid"); break;
+        case 9: sb.append("Thorkel"); break;
+        case 10: sb.append("Vegeir"); break;
+        case 11: sb.append("Thorolf"); break;
+        case 12: sb.append("Brodir"); break;
+        case 13: sb.append("Hermund"); break;
+        case 14: sb.append("Odinmund"); break;
+        case 15: sb.append("Moldof"); break;
+        case 16: sb.append("Karl"); break;
+        case 17: sb.append("Hakmund"); break;
+        case 18: sb.append("Bjorn"); break;
+        case 19: sb.append("Thorin"); break;
+        case 20: sb.append("Starolf"); break;
+        case 21: sb.append("Svindolf"); break;
+        case 22: sb.append("Asgeir"); break;
+        case 23: sb.append("Gunnbjorn"); break;
+        case 24: sb.append("Stormir"); break;
+        case 25: sb.append("Agnar"); break;
+        case 26: sb.append("Gunleif"); break;
+        case 27: sb.append("Thorleif"); break;
+        case 28: sb.append("Karleif"); break;
+        case 29: sb.append("Fargrim"); break;
+        case 30: sb.append("Knut"); break;
+        case 31: sb.append("Sigevarld"); break;
+        case 32: sb.append("Oswald"); break;
+        case 33: sb.append("Arngeir"); break;
+        case 34: sb.append("Thorberg"); break;
+        case 35: sb.append("Sigberg"); break;
+        case 36: sb.append("Steinberg"); break;
+        case 37: sb.append("Bothvar"); break;
+        case 38: sb.append("Eyjolf"); break;
+        case 39: sb.append("Asbrand"); break;
+        case 40: sb.append("Mord"); break;
+      }
+    }
+    if (gender == Gender.FEMALE) {
+      switch (DiceGenerator.getRandom(31)) {
+        default:
+        case 0: sb.append("Ingrid"); break;
+        case 1: sb.append("Astrid"); break;
+        case 2: sb.append("Gunnhild"); break;
+        case 3: sb.append("Jofrid"); break;
+        case 4: sb.append("Thorhild"); break;
+        case 5: sb.append("Thurid"); break;
+        case 6: sb.append("Solveig"); break;
+        case 7: sb.append("Inguld"); break;
+        case 8: sb.append("Brynhild"); break;
+        case 9: sb.append("Frida"); break;
+        case 10: sb.append("Ashild"); break;
+        case 11: sb.append("Ragneid"); break;
+        case 12: sb.append("Asa"); break;
+        case 13: sb.append("Matilda"); break;
+        case 14: sb.append("Ulfheid"); break;
+        case 15: sb.append("Gyda"); break;
+        case 16: sb.append("Katla"); break;
+        case 17: sb.append("Ingunn"); break;
+        case 18: sb.append("Gudrunn"); break;
+        case 19: sb.append("Freya"); break;
+        case 20: sb.append("Hilde"); break;
+        case 21: sb.append("Isgerd"); break;
+        case 22: sb.append("Yngvold"); break;
+        case 23: sb.append("Gyda"); break;
+        case 24: sb.append("Hildr"); break;
+        case 25: sb.append("Birka"); break;
+        case 26: sb.append("Skuld"); break;
+        case 27: sb.append("Geirny"); break;
+        case 28: sb.append("Hild"); break;
+        case 29: sb.append("Inghild"); break;
+        case 30: sb.append("Audhild"); break;
+        case 31: sb.append("Dotta"); break;
+      }
+    }
+    sb.append(" ");
+    //Surname
+    switch (DiceGenerator.getRandom(17)) {
+      default:
+      case 0: sb.append("Thunder"); break;
+      case 1: sb.append("Steel"); break;
+      case 2: sb.append("Bright"); break;
+      case 3: sb.append("Mighty"); break;
+      case 4: sb.append("Iron"); break;
+      case 5: sb.append("Titanium"); break;
+      case 6: sb.append("Icy"); break;
+      case 7: sb.append("Dusty"); break;
+      case 8: sb.append("White"); break;
+      case 9: sb.append("Blue"); break;
+      case 10: sb.append("Crystal"); break;
+      case 11: sb.append("Rainbow"); break;
+      case 12: sb.append("Windy"); break;
+      case 13: sb.append("Frenzy"); break;
+      case 14: sb.append("Magical"); break;
+      case 15: sb.append("Aurora"); break;
+      case 16: sb.append("Wild"); break;
+      case 17: sb.append("Old"); break;
+    }
+    switch (DiceGenerator.getRandom(20)) {
+      default:
+      case 0: sb.append("hammer"); break;
+      case 1: sb.append("spear"); break;
+      case 2: sb.append("sky"); break;
+      case 3: sb.append("star"); break;
+      case 4: sb.append("fist"); break;
+      case 5: sb.append("chariot"); break;
+      case 6: sb.append("wolf"); break;
+      case 7: sb.append("rune"); break;
+      case 8: sb.append("sword"); break;
+      case 9: sb.append("glory"); break;
+      case 10: sb.append("horn"); break;
+      case 11: sb.append("spell"); break;
+      case 12: sb.append("root"); break;
+      case 13: sb.append("riddle"); break;
+      case 14: sb.append("rock"); break;
+      case 15: sb.append("gate"); break;
+      case 16: sb.append("bridge"); break;
+      case 17: sb.append("cloud"); break;
+      case 18: sb.append("ship"); break;
+      case 19: sb.append("vessel"); break;
+      case 20: sb.append("peak"); break;
+    }
+    return sb.toString();
+  }
+
+  /**
    * Generate human leader name
    * @param gender Leader gender
    * @return Human leader name
@@ -1593,6 +1733,9 @@ public final class NameGenerator {
     }
     if (race == SpaceRace.HOMARIANS) {
       return generateHomarianName(gender);
+    }
+    if (race == SpaceRace.GREYANS) {
+      return generateGreyanName(gender);
     }
     return "Noname";
   }

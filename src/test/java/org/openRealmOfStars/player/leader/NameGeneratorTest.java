@@ -32,6 +32,26 @@ public class NameGeneratorTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCentaurMale() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(SpaceRace.CENTAURS, Gender.MALE);
+      assertNotNull(name);
+      assertEquals(true, name.contains(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testCentaurFemale() {
+    for (int i = 0; i < 50; i++) {
+      String name = NameGenerator.generateName(SpaceRace.CENTAURS, Gender.FEMALE);
+      assertNotNull(name);
+      assertEquals(true, name.contains(" "));
+    }
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testGreyanMale() {
     for (int i = 0; i < 50; i++) {
       String name = NameGenerator.generateName(SpaceRace.GREYANS, Gender.MALE);

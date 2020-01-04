@@ -1065,6 +1065,7 @@ public final class NameGenerator {
     }
     return sb.toString();
   }
+
   /**
    * Generate scaurian leader name
    * @param gender Leader gender
@@ -1165,6 +1166,187 @@ public final class NameGenerator {
     sb.append(" ");
     //Surname
     sb.append(generateScaurianMaleName(1));
+    return sb.toString();
+  }
+
+  /**
+   * Generate centaur male name
+   * @return Centaur male name
+   */
+  private static String generateCentaurMaleName() {
+    StringBuilder sb = new StringBuilder();
+    switch (DiceGenerator.getRandom(25)) {
+      default:
+      case 0: sb.append("Po"); break;
+      case 1: sb.append("Eu"); break;
+      case 2: sb.append("Te"); break;
+      case 3: sb.append("Kas"); break;
+      case 4: sb.append("Noe"); break;
+      case 5: sb.append("Phi"); break;
+      case 6: sb.append("Pla"); break;
+      case 7: sb.append("Ly"); break;
+      case 8: sb.append("Cha"); break;
+      case 9: sb.append("Co"); break;
+      case 10: sb.append("Kri"); break;
+      case 11: sb.append("Phe"); break;
+      case 12: sb.append("Ana"); break;
+      case 13: sb.append("Pe"); break;
+      case 14: sb.append("Aris"); break;
+      case 15: sb.append("Ni"); break;
+      case 16: sb.append("Ce"); break;
+      case 17: sb.append("Sop"); break;
+      case 18: sb.append("Eu"); break;
+      case 19: sb.append("Phy"); break;
+      case 20: sb.append("He"); break;
+      case 21: sb.append("Mae"); break;
+      case 22: sb.append("Hip"); break;
+      case 23: sb.append("Dio"); break;
+      case 24: sb.append("Pan"); break;
+      case 25: sb.append("Ther"); break;
+    }
+    switch (DiceGenerator.getRandom(21)) {
+      default:
+      case 0: sb.append("kra"); break;
+      case 1: sb.append("san"); break;
+      case 2: sb.append("me"); break;
+      case 3: sb.append("doc"); break;
+      case 4: sb.append("te"); break;
+      case 5: sb.append("dae"); break;
+      case 6: sb.append("re"); break;
+      case 7: sb.append("la"); break;
+      case 8: sb.append("pe"); break;
+      case 9: sb.append("le"); break;
+      case 10: sb.append("ti"); break;
+      case 11: sb.append("da"); break;
+      case 12: sb.append("me"); break;
+      case 13: sb.append("tu"); break;
+      case 14: sb.append("xe"); break;
+      case 15: sb.append("co"); break;
+      case 16: sb.append("to"); break;
+      case 17: sb.append("lo"); break;
+      case 18: sb.append("po"); break;
+      case 19: sb.append("ny"); break;
+      case 20: sb.append("ta"); break;
+      case 21: sb.append("hili"); break;
+    }
+    switch (DiceGenerator.getRandom(17)) {
+      default:
+      case 0: sb.append("mon"); break;
+      case 1: sb.append("nus"); break;
+      case 2: sb.append("hos"); break;
+      case 3: sb.append("tos"); break;
+      case 4: sb.append("hus"); break;
+      case 5: sb.append("les"); break;
+      case 6: sb.append("on"); break;
+      case 7: sb.append("us"); break;
+      case 8: sb.append("des"); break;
+      case 9: sb.append("das"); break;
+      case 10: sb.append("as"); break;
+      case 11: sb.append("os"); break;
+      case 12: sb.append("lus"); break;
+      case 13: sb.append("pos"); break;
+      case 14: sb.append("mus"); break;
+      case 15: sb.append("maios"); break;
+      case 16: sb.append("rios"); break;
+      case 17: sb.append("gus"); break;
+    }
+    return sb.toString();
+  }
+  /**
+   * Generate centaur leader name
+   * @param gender Leader gender
+   * @return centaur leader name
+   */
+  private static String generateCentaurName(final Gender gender) {
+    StringBuilder sb = new StringBuilder();
+    if (gender == Gender.MALE) {
+      sb.append(generateCentaurMaleName());
+    }
+    if (gender == Gender.FEMALE) {
+      switch (DiceGenerator.getRandom(25)) {
+        default:
+        case 0: sb.append("Per"); break;
+        case 1: sb.append("Se"); break;
+        case 2: sb.append("Leu"); break;
+        case 3: sb.append("Alt"); break;
+        case 4: sb.append("Aga"); break;
+        case 5: sb.append("Ne"); break;
+        case 6: sb.append("Ia"); break;
+        case 7: sb.append("Try"); break;
+        case 8: sb.append("Kleo"); break;
+        case 9: sb.append("Om"); break;
+        case 10: sb.append("Al"); break;
+        case 11: sb.append("Dia"); break;
+        case 12: sb.append("Aga"); break;
+        case 13: sb.append("My"); break;
+        case 14: sb.append("Phi"); break;
+        case 15: sb.append("Her"); break;
+        case 16: sb.append("Lao"); break;
+        case 17: sb.append("Ia"); break;
+        case 18: sb.append("He"); break;
+        case 19: sb.append("Io"); break;
+        case 20: sb.append("De"); break;
+        case 21: sb.append("Ampi"); break;
+        case 22: sb.append("Mol"); break;
+        case 23: sb.append("Pro"); break;
+        case 24: sb.append("Me"); break;
+        case 25: sb.append("Euph"); break;
+      }
+      switch (DiceGenerator.getRandom(21)) {
+        default:
+        case 0: sb.append("vi"); break;
+        case 1: sb.append("me"); break;
+        case 2: sb.append("cot"); break;
+        case 3: sb.append("re"); break;
+        case 4: sb.append("ni"); break;
+        case 5: sb.append("nei"); break;
+        case 6: sb.append("lan"); break;
+        case 7: sb.append("phy"); break;
+        case 8: sb.append("ro"); break;
+        case 9: sb.append("da"); break;
+        case 10: sb.append("vi"); break;
+        case 11: sb.append("he"); break;
+        case 12: sb.append("da"); break;
+        case 13: sb.append("pat"); break;
+        case 14: sb.append("lec"); break;
+        case 15: sb.append("pho"); break;
+        case 16: sb.append("ces"); break;
+        case 17: sb.append("li"); break;
+        case 18: sb.append("me"); break;
+        case 19: sb.append("ni"); break;
+        case 20: sb.append("a"); break;
+        case 21: sb.append("tho"); break;
+      }
+      switch (DiceGenerator.getRandom(17)) {
+        default:
+        case 0: sb.append("seis"); break;
+        case 1: sb.append("ce"); break;
+        case 2: sb.append("nessa"); break;
+        case 3: sb.append("nice"); break;
+        case 4: sb.append("pe"); break;
+        case 5: sb.append("ne"); break;
+        case 6: sb.append("na"); break;
+        case 7: sb.append("sia"); break;
+        case 8: sb.append("meia"); break;
+        case 9: sb.append("dria"); break;
+        case 10: sb.append("dora"); break;
+        case 11: sb.append("leia"); break;
+        case 12: sb.append("tra"); break;
+        case 13: sb.append("pia"); break;
+        case 14: sb.append("nia"); break;
+        case 15: sb.append("thia"); break;
+        case 16: sb.append("hae"); break;
+        case 17: sb.append("ra"); break;
+      }
+    }
+    sb.append(" ");
+    //Surname
+    if (gender == Gender.FEMALE) {
+      sb.append("Kori-");
+    } else {
+      sb.append("Yios-");
+    }
+    sb.append(generateCentaurMaleName());
     return sb.toString();
   }
 
@@ -1736,6 +1918,9 @@ public final class NameGenerator {
     }
     if (race == SpaceRace.GREYANS) {
       return generateGreyanName(gender);
+    }
+    if (race == SpaceRace.CENTAURS) {
+      return generateCentaurName(gender);
     }
     return "Noname";
   }

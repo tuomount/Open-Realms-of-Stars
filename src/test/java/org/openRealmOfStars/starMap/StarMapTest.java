@@ -950,18 +950,18 @@ public class StarMapTest {
   public void testWarDeclarationReputation() {
     GameRepository repository = new GameRepository();
     StarMap starMap = repository.loadGame("src/test/resources/saves",
-                                          "statsNews.save");
+        "testGame.save");
     PlayerInfo attacker = starMap.getPlayerByIndex(0);
     PlayerInfo info1 = starMap.getPlayerByIndex(1);
-    PlayerInfo info4 = starMap.getPlayerByIndex(4);
+    PlayerInfo info2 = starMap.getPlayerByIndex(2);
     assertEquals(false, info1.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.WAR_DECLARTION));
-    assertEquals(false, info4.getDiplomacy().getDiplomacyList(0).isBonusType(
+    assertEquals(false, info2.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.WAR_DECLARTION));
     StarMapUtilities.addWarDeclatingReputation(starMap, attacker);
     assertEquals(true, info1.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.WAR_DECLARTION));
-    assertEquals(true, info4.getDiplomacy().getDiplomacyList(0).isBonusType(
+    assertEquals(true, info2.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.WAR_DECLARTION));
   }
 
@@ -1011,18 +1011,18 @@ public class StarMapTest {
   public void testNukedReputation() {
     GameRepository repository = new GameRepository();
     StarMap starMap = repository.loadGame("src/test/resources/saves",
-                                          "statsNews.save");
+        "testGame.save");
     PlayerInfo attacker = starMap.getPlayerByIndex(0);
     PlayerInfo info1 = starMap.getPlayerByIndex(1);
-    PlayerInfo info4 = starMap.getPlayerByIndex(4);
+    PlayerInfo info2 = starMap.getPlayerByIndex(2);
     assertEquals(false, info1.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.NUKED));
-    assertEquals(false, info4.getDiplomacy().getDiplomacyList(0).isBonusType(
+    assertEquals(false, info2.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.NUKED));
     StarMapUtilities.addNukeReputation(starMap, attacker);
     assertEquals(true, info1.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.NUKED));
-    assertEquals(true, info4.getDiplomacy().getDiplomacyList(0).isBonusType(
+    assertEquals(true, info2.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.NUKED));
   }
 

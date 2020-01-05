@@ -18,6 +18,8 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.GovernmentUtility;
+import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -41,7 +43,7 @@ import org.openRealmOfStars.utilities.repository.DiplomacyRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017, 2018  Tuomo Untinen
+ * Copyright (C) 2016-2020  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -176,6 +178,16 @@ public class PlayerInfo {
    * Is player Ancient Realm or not
    */
   private boolean ancientRealm;
+
+  /**
+   * All the leaders realm has or have had.
+   */
+  private ArrayList<Leader> leaderPool;
+
+  /**
+   * Ruler of the realm.
+   */
+  private Leader ruler;
   /**
    * Uncharted map sector, only suns are visible
    */
@@ -230,6 +242,8 @@ public class PlayerInfo {
     shipStatList = new ArrayList<>();
     fleets = new FleetList();
     ancientRealm = false;
+    leaderPool = new ArrayList<>();
+    ruler = null;
     setRandomEventOccured(null);
     setHuman(false);
     setBoard(false);
@@ -1747,5 +1761,30 @@ public class PlayerInfo {
    */
   public void setAncientRealm(final boolean ancientRealm) {
     this.ancientRealm = ancientRealm;
+  }
+  /**
+   * Get current ruler of the realm
+   * @return the ruler
+   */
+  public Leader getRuler() {
+    return ruler;
+  }
+  /**
+   * Set the current leader of the realm
+   * @param ruler the ruler to set
+   */
+  public void setRuler(final Leader ruler) {
+    this.ruler = ruler;
+    if (this.ruler != null) {
+      this.ruler.setJob(Job.RULER);
+    }
+  }
+
+  /**
+   * Get leader pool.
+   * @return Array list of all leader for single realm.
+   */
+  public ArrayList<Leader> getLeaderPool() {
+    return leaderPool;
   }
 }

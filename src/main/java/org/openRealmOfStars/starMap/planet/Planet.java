@@ -12,6 +12,8 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -36,7 +38,7 @@ import org.openRealmOfStars.utilities.namegenerators.RandomSystemNameGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019  Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -176,6 +178,11 @@ public class Planet {
    * This will no be saved on file.
    */
   private int startRealmIndex;
+
+  /**
+   * Current governor of the planet.
+   */
+  private Leader governor;
   /**
    * Maximum number of different works
    */
@@ -321,6 +328,7 @@ public class Planet {
   public Planet(final Coordinate coordinate, final String name,
     final int orderNumber, final boolean gasGiant) {
     this.setCoordinate(coordinate);
+    governor = null;
     if (orderNumber == 0) {
       // Rogue planet
       this.name = name;
@@ -2555,4 +2563,23 @@ public class Planet {
     }
     return result;
   }
+
+  /**
+   * Get current governor of the planet
+   * @return the governor
+   */
+  public Leader getGovernor() {
+    return governor;
+  }
+  /**
+   * Set the current governor of the planet
+   * @param governor the governor to set
+   */
+  public void setGovernor(final Leader governor) {
+    this.governor = governor;
+    if (this.governor != null) {
+      this.governor.setJob(Job.GOVERNOR);
+    }
+  }
+
 }

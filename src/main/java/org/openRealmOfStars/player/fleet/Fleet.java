@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -21,7 +23,7 @@ import org.openRealmOfStars.utilities.repository.RouteRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019 Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -83,6 +85,11 @@ public class Fleet {
   private AStarSearch aStarSearch;
 
   /**
+   * Fleet commander.
+   */
+  private Leader commander;
+
+  /**
    * Constructor for fleet
    * @param firstShip The first ship in the fleet
    * @param x The fleet's X coordinate
@@ -94,6 +101,7 @@ public class Fleet {
     setPos(new Coordinate(x, y));
     setName("Fleet #0");
     setRoute(null);
+    commander = null;
   }
 
   /**
@@ -1032,4 +1040,23 @@ public class Fleet {
     }
     return result;
   }
+
+  /**
+   * Get current commander of the fleet
+   * @return the commander
+   */
+  public Leader getCommander() {
+    return commander;
+  }
+  /**
+   * Set the current commander of the fleet
+   * @param commander the commander to set
+   */
+  public void setCommander(final Leader commander) {
+    this.commander = commander;
+    if (this.commander != null) {
+      this.commander.setJob(Job.COMMANDER);
+    }
+  }
+
 }

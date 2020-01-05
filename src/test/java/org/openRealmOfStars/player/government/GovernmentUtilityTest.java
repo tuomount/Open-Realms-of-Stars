@@ -9,7 +9,7 @@ import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018, 2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -88,14 +88,14 @@ public class GovernmentUtilityTest {
         SpaceRace.MECHIONS);
     assertEquals(9, governments.length);
     assertEquals(GovernmentType.ALLIANCE, governments[0]);
-    assertEquals(GovernmentType.FEDERATION, governments[1]);
-    assertEquals(GovernmentType.REPUBLIC, governments[2]);
-    assertEquals(GovernmentType.AI, governments[3]);
-    assertEquals(GovernmentType.MECHANICAL_HORDE, governments[4]);
-    assertEquals(GovernmentType.EMPIRE, governments[5]);
-    assertEquals(GovernmentType.HEGEMONY, governments[6]);
-    assertEquals(GovernmentType.HIERARCHY, governments[7]);
-    assertEquals(GovernmentType.KINGDOM, governments[8]);
+    assertEquals(GovernmentType.DEMOCRACY, governments[1]);
+    assertEquals(GovernmentType.FEDERATION, governments[2]);
+    assertEquals(GovernmentType.REPUBLIC, governments[3]);
+    assertEquals(GovernmentType.ENTERPRISE, governments[4]);
+    assertEquals(GovernmentType.AI, governments[5]);
+    assertEquals(GovernmentType.MECHANICAL_HORDE, governments[6]);
+    assertEquals(GovernmentType.HEGEMONY, governments[7]);
+    assertEquals(GovernmentType.HIERARCHY, governments[8]);
   }
 
   @Test

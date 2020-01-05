@@ -43,6 +43,7 @@ public class LeaderTest {
     assertEquals(0, leader.getExperience());
     assertEquals(Job.UNASSIGNED, leader.getJob());
     assertEquals(null, leader.getParent());
+    assertEquals(0, leader.getPerkList().size());
     leader.setTitle("King of the world");
     assertEquals("King of the world", leader.getTitle());
     leader.setExperience(50);

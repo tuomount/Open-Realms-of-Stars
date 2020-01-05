@@ -1,6 +1,14 @@
 package org.openRealmOfStars.player.leader;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.SpaceRace.SpaceRaceUtility;
+import org.openRealmOfStars.utilities.IOUtilities;
 
 /**
 *
@@ -90,11 +98,23 @@ public class Leader {
   private Leader parent;
 
   /**
+   * This is only needed when loading the save game and not
+   * for anything else.
+   */
+  private int parentIndex;
+
+  /**
+   * Perks that leader has.
+   */
+  private ArrayList<Perk> perkList;
+
+  /**
    * Constructor for leader. Leader must have name.
    * @param name Leader name
    */
   public Leader(final String name) {
     this.name = name;
+    this.homeworld = "";
     age = 28;
     level = 1;
     experience = 0;
@@ -103,6 +123,60 @@ public class Leader {
     gender = Gender.NONE;
     job = Job.UNASSIGNED;
     setParent(null);
+    parentIndex = -1;
+    perkList = new ArrayList<>();
+  }
+
+  /**
+   * Read Leader from DataInputStream
+   * @param dis DataInputStream
+   * @throws IOException if there is any problem with DataInputStream
+   */
+  public Leader(final DataInputStream dis) throws IOException {
+    name = IOUtilities.readString(dis);
+    homeworld = IOUtilities.readString(dis);
+    age = dis.readInt();
+    level = dis.read();
+    experience = dis.readInt();
+    setMilitaryRank(MilitaryRank.getByIndex(dis.read()));
+    setRace(SpaceRaceUtility.getRaceByIndex(dis.read()));
+    setGender(Gender.getByIndex(dis.read()));
+    setJob(Job.getByIndex(dis.read()));
+    parentIndex = dis.readInt();
+    setParent(null);
+    int size = dis.readInt();
+    perkList = new ArrayList<>();
+    for (int i = 0; i < size; i++) {
+      perkList.add(Perk.getByIndex(dis.read()));
+    }
+  }
+
+  /**
+   * Save leader Info to DataOutputStream
+   * @param dos DataOutputStream
+   * @param realm Realm info aka PlayerInfo
+   * @throws IOException if there is any problem with DataOutputStream
+   */
+  public void saveLeader(final DataOutputStream dos,
+      final PlayerInfo realm) throws IOException {
+    IOUtilities.writeString(dos, name);
+    IOUtilities.writeString(dos, homeworld);
+    dos.writeInt(age);
+    dos.writeByte(level);
+    dos.writeInt(experience);
+    dos.writeByte(militaryRank.getIndex());
+    dos.writeByte(getRace().getIndex());
+    dos.writeByte(getGender().getIndex());
+    dos.writeByte(getJob().getIndex());
+    if (getParent() == null) {
+      dos.writeInt(-1);
+    } else {
+      dos.writeInt(realm.getLeaderIndex(parent));
+    }
+    dos.writeInt(perkList.size());
+    for (int i = 0; i < perkList.size(); i++) {
+      dos.writeByte(perkList.get(i).getIndex());
+    }
   }
 
   /**
@@ -304,4 +378,21 @@ public class Leader {
     this.parent = parent;
   }
 
+  /**
+   * Get Leader's perk list
+   * @return Perk list.
+   */
+  public ArrayList<Perk> getPerkList() {
+    return perkList;
+  }
+
+  /**
+   * Get parent index for leader.
+   * This is avaiable only if leader is created from reading saved game.
+   * This index should be used to make actual parent avaiable.
+   * @return Parent index.
+   */
+  public int getParentIndex() {
+    return parentIndex;
+  }
 }

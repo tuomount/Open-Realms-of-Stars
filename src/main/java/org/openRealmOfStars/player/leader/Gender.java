@@ -52,6 +52,17 @@ public enum Gender {
   private int index;
 
   /**
+   * Get gender by index
+   * @param index Gender index
+   * @return gender
+   */
+  public static Gender getByIndex(final int index) {
+    if (index > 0 && index < Gender.values().length) {
+      return Gender.values()[index];
+    }
+    return NONE;
+  }
+  /**
    * Return index of gender.
    * @return Index of gender
    */

@@ -1787,4 +1787,18 @@ public class PlayerInfo {
   public ArrayList<Leader> getLeaderPool() {
     return leaderPool;
   }
+
+  /**
+   * Get Leader index.
+   * @param leader Leader which index is searched for
+   * @return Leader index.
+   */
+  public int getLeaderIndex(final Leader leader) {
+    for (int i = 0; i < leaderPool.size(); i++) {
+      if (leader == leaderPool.get(i)) {
+        return i;
+      }
+    }
+    return -1;
+  }
 }

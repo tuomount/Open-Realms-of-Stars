@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.leader;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019  Tuomo Untinen
+* Copyright (C) 2019, 2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -62,6 +62,17 @@ public enum MilitaryRank {
     this.name = name;
   }
 
+  /**
+   * Get Perk by index;
+   * @param index Index to get perk
+   * @return Perk
+   */
+  public static MilitaryRank getByIndex(final int index) {
+    if (index > 0 && index < MilitaryRank.values().length) {
+      return MilitaryRank.values()[index];
+    }
+    return MilitaryRank.CIVILIAN;
+  }
   /**
    * Index number for military rank
    */

@@ -948,12 +948,22 @@ public class StarMapTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testWarDeclarationReputation() {
-    GameRepository repository = new GameRepository();
-    StarMap starMap = repository.loadGame("src/test/resources/saves",
-        "testGame.save");
+    GalaxyConfig config = new GalaxyConfig();
+    config.setMaxPlayers(3);
+    PlayerList players = new PlayerList();
+    PlayerInfo info1 = new PlayerInfo(SpaceRace.CENTAURS, 3, 0);
+    info1.setEmpireName("Empire of Centaurs");
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.GREYANS, 3, 1);
+    info2.setEmpireName("Empire of Greyans");
+    PlayerInfo info3 = new PlayerInfo(SpaceRace.CHIRALOIDS, 3, 2);
+    info3.setEmpireName("Empire of Chiraloids");
+    players.addPlayer(info1);
+    players.addPlayer(info2);
+    players.addPlayer(info3);
+    StarMap starMap = new StarMap(config, players);
     PlayerInfo attacker = starMap.getPlayerByIndex(0);
-    PlayerInfo info1 = starMap.getPlayerByIndex(1);
-    PlayerInfo info2 = starMap.getPlayerByIndex(2);
+    info1 = starMap.getPlayerByIndex(1);
+    info2 = starMap.getPlayerByIndex(2);
     assertEquals(false, info1.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.WAR_DECLARTION));
     assertEquals(false, info2.getDiplomacy().getDiplomacyList(0).isBonusType(
@@ -1009,12 +1019,22 @@ public class StarMapTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testNukedReputation() {
-    GameRepository repository = new GameRepository();
-    StarMap starMap = repository.loadGame("src/test/resources/saves",
-        "testGame.save");
+    GalaxyConfig config = new GalaxyConfig();
+    config.setMaxPlayers(3);
+    PlayerList players = new PlayerList();
+    PlayerInfo info1 = new PlayerInfo(SpaceRace.CENTAURS, 3, 0);
+    info1.setEmpireName("Empire of Centaurs");
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.GREYANS, 3, 1);
+    info2.setEmpireName("Empire of Greyans");
+    PlayerInfo info3 = new PlayerInfo(SpaceRace.CHIRALOIDS, 3, 2);
+    info3.setEmpireName("Empire of Chiraloids");
+    players.addPlayer(info1);
+    players.addPlayer(info2);
+    players.addPlayer(info3);
+    StarMap starMap = new StarMap(config, players);
     PlayerInfo attacker = starMap.getPlayerByIndex(0);
-    PlayerInfo info1 = starMap.getPlayerByIndex(1);
-    PlayerInfo info2 = starMap.getPlayerByIndex(2);
+    info1 = starMap.getPlayerByIndex(1);
+    info2 = starMap.getPlayerByIndex(2);
     assertEquals(false, info1.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.NUKED));
     assertEquals(false, info2.getDiplomacy().getDiplomacyList(0).isBonusType(

@@ -112,7 +112,7 @@ import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019  Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  * Copyright (C) 2017 God Beom
  *
  * This program is free software; you can redistribute it and/or
@@ -498,7 +498,7 @@ public class Game implements ActionListener {
 
   /**
    * Read Tutorial information to list.
-   * @param filename Filename to tutorial
+   * @param filename Filename to tutorial, null to read default tutorial.
    * @throws IOException IOException if reading fails.
    */
   public static void readTutorial(final String filename) throws IOException {
@@ -1778,6 +1778,11 @@ public class Game implements ActionListener {
    * save format to new one.
    */
   public static void saveGameUpdate() {
+    try {
+      readTutorial(null);
+    } catch (IOException e1) {
+      ErrorLogger.log(e1);
+    }
     File folder = new File("saves");
     File[] files = folder.listFiles(new GenericFileFilter(".save"));
     if (files == null) {

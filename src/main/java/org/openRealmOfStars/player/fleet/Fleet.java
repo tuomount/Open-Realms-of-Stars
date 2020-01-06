@@ -107,10 +107,18 @@ public class Fleet {
   /**
    * Read Fleet from Data Input Stream
    * @param dis DataInputStream
+   * @param info PlayerInfo for fleet commander loading.
    * @throws IOException if there is any problem with the DataInputStream
    */
-  public Fleet(final DataInputStream dis) throws IOException {
+  public Fleet(final DataInputStream dis,
+      final PlayerInfo info) throws IOException {
     name = IOUtilities.readString(dis);
+    int commanderIndex = dis.readInt();
+    if (commanderIndex != -1) {
+      Leader leader = info.getLeaderPool().get(commanderIndex);
+      setCommander(leader);
+    }
+    setCommander(null);
     coordinate = new Coordinate(dis.readInt(), dis.readInt());
     movesLeft = dis.readInt();
     String str = IOUtilities.readString(dis);
@@ -130,10 +138,13 @@ public class Fleet {
   /**
    * Save Fleet to DataOutputStream
    * @param dos DataOutputStream
+   * @param info PlayerInfo for fleet commander saving.
    * @throws IOException if there is any problem with the DataOutputStream
    */
-  public void saveFleet(final DataOutputStream dos) throws IOException {
+  public void saveFleet(final DataOutputStream dos,
+      final PlayerInfo info) throws IOException {
     IOUtilities.writeString(dos, name);
+    dos.writeInt(info.getLeaderIndex(commander));
     dos.writeInt(coordinate.getX());
     dos.writeInt(coordinate.getY());
     dos.writeInt(movesLeft);

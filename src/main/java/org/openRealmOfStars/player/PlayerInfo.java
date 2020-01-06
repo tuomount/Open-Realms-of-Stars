@@ -619,6 +619,24 @@ public class PlayerInfo {
     warFatigue = dis.readInt();
     totalCredits = dis.readInt();
     attitude = Attitude.getTypeByIndex(dis.read());
+    leaderPool = new ArrayList<>();
+    int poolSize = dis.readInt();
+    for (int i = 0; i < poolSize; i++) {
+      Leader leader = new Leader(dis);
+      leaderPool.add(leader);
+    }
+    for (int i = 0; i < leaderPool.size(); i++) {
+      Leader leader = leaderPool.get(i);
+      if (leader.getParentIndex() != -1) {
+        leader.setParent(leaderPool.get(leader.getParentIndex()));
+      }
+    }
+    int rulerIndex = dis.readInt();
+    if (rulerIndex != -1) {
+      setRuler(leaderPool.get(rulerIndex));
+    } else {
+      setRuler(null);
+    }
     techList = new TechList(dis);
     ancientRealm = false;
     msgList = new MessageList(dis);
@@ -628,7 +646,7 @@ public class PlayerInfo {
       ShipStat ship = new ShipStat(dis);
       shipStatList.add(ship);
     }
-    fleets = new FleetList(dis);
+    fleets = new FleetList(dis, this);
     int xSize = dis.readInt();
     int ySize = dis.readInt();
     initMapData(xSize, ySize);
@@ -712,13 +730,19 @@ public class PlayerInfo {
     dos.writeInt(warFatigue);
     dos.writeInt(totalCredits);
     dos.writeByte(attitude.getIndex());
+    dos.writeInt(leaderPool.size());
+    for (int i = 0; i < leaderPool.size(); i++) {
+      Leader leader = leaderPool.get(i);
+      leader.saveLeader(dos, this);
+    }
+    dos.writeInt(getLeaderIndex(ruler));
     techList.saveTechList(dos);
     msgList.saveMessageList(dos);
     dos.writeInt(shipStatList.size());
     for (int i = 0; i < shipStatList.size(); i++) {
       shipStatList.get(i).saveShipStat(dos);
     }
-    fleets.saveFleetList(dos);
+    fleets.saveFleetList(dos, this);
     dos.writeInt(maxCoordinate.getX());
     dos.writeInt(maxCoordinate.getY());
     if (mapData == null) {
@@ -1791,9 +1815,12 @@ public class PlayerInfo {
   /**
    * Get Leader index.
    * @param leader Leader which index is searched for
-   * @return Leader index.
+   * @return Leader index or -1 if not found or leader is null.
    */
   public int getLeaderIndex(final Leader leader) {
+    if (leader == null) {
+      return -1;
+    }
     for (int i = 0; i < leaderPool.size(); i++) {
       if (leader == leaderPool.get(i)) {
         return i;

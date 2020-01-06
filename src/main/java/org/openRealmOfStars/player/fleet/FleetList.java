@@ -5,12 +5,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.starMap.Coordinate;
 
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2017 Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -53,13 +54,15 @@ public class FleetList {
   /**
    * Read FleetList from DataInputStream
    * @param dis DataInputStream
+   * @param info PlayerInfo for loading fleet commanders.
    * @throws IOException if there is any problem with DataInputStream
    */
-  public FleetList(final DataInputStream dis) throws IOException {
+  public FleetList(final DataInputStream dis,
+      final PlayerInfo info) throws IOException {
     int count = dis.readInt();
     fleetList = new ArrayList<>();
     for (int i = 0; i < count; i++) {
-      Fleet fleet = new Fleet(dis);
+      Fleet fleet = new Fleet(dis, info);
       fleetList.add(fleet);
     }
     index = 0;
@@ -68,12 +71,14 @@ public class FleetList {
   /**
    * Save Fleet List to DataOutputStream
    * @param dos DataOutputStream
+   * @param info PlayerInfo for saving fleet commanders.
    * @throws IOException if there is any problem with DataOutputStream
    */
-  public void saveFleetList(final DataOutputStream dos) throws IOException {
+  public void saveFleetList(final DataOutputStream dos,
+      final PlayerInfo info) throws IOException {
     dos.writeInt(fleetList.size());
     for (Fleet fleet: fleetList) {
-      fleet.saveFleet(dos);
+      fleet.saveFleet(dos, info);
     }
   }
 

@@ -10,7 +10,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -883,6 +883,42 @@ public enum SpaceRace {
       return false;
     default:
       return false;
+    }
+  }
+
+  /**
+   * Get life span of leaders.
+   * This is amount the age leaders will always get.
+   * After this there is increasing 1% change over this age to get killed.
+   * @return Life span of leaders
+   */
+  public int getLifeSpan() {
+    switch (this) {
+    case HUMAN:
+    case SPACE_PIRATE:
+      return 80;
+    case MECHIONS:
+      // Robots can be always fixed and parts replaced.
+      // Game last maximum of 1120 turns so 2000 is more than enough.
+      return 2000;
+    case SPORKS:
+      return 70;
+    case GREYANS:
+      return 100;
+    case CENTAURS:
+      return 120;
+    case MOTHOIDS:
+      return 60;
+    case TEUTHIDAES:
+      return 70;
+    case SCAURIANS:
+      return 80;
+    case HOMARIANS:
+      return 70;
+    case CHIRALOIDS:
+      return 70;
+    default:
+      return 80;
     }
   }
   /**

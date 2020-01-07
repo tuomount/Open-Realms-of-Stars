@@ -33,12 +33,11 @@ import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.starMap.history.History;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018 Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -948,20 +947,30 @@ public class StarMapTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testWarDeclarationReputation() {
-    GameRepository repository = new GameRepository();
-    StarMap starMap = repository.loadGame("src/test/resources/saves",
-                                          "statsNews.save");
+    GalaxyConfig config = new GalaxyConfig();
+    config.setMaxPlayers(3);
+    PlayerList players = new PlayerList();
+    PlayerInfo info1 = new PlayerInfo(SpaceRace.CENTAURS, 3, 0);
+    info1.setEmpireName("Empire of Centaurs");
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.GREYANS, 3, 1);
+    info2.setEmpireName("Empire of Greyans");
+    PlayerInfo info3 = new PlayerInfo(SpaceRace.CHIRALOIDS, 3, 2);
+    info3.setEmpireName("Empire of Chiraloids");
+    players.addPlayer(info1);
+    players.addPlayer(info2);
+    players.addPlayer(info3);
+    StarMap starMap = new StarMap(config, players);
     PlayerInfo attacker = starMap.getPlayerByIndex(0);
-    PlayerInfo info1 = starMap.getPlayerByIndex(1);
-    PlayerInfo info4 = starMap.getPlayerByIndex(4);
+    info1 = starMap.getPlayerByIndex(1);
+    info2 = starMap.getPlayerByIndex(2);
     assertEquals(false, info1.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.WAR_DECLARTION));
-    assertEquals(false, info4.getDiplomacy().getDiplomacyList(0).isBonusType(
+    assertEquals(false, info2.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.WAR_DECLARTION));
     StarMapUtilities.addWarDeclatingReputation(starMap, attacker);
     assertEquals(true, info1.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.WAR_DECLARTION));
-    assertEquals(true, info4.getDiplomacy().getDiplomacyList(0).isBonusType(
+    assertEquals(true, info2.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.WAR_DECLARTION));
   }
 
@@ -1009,20 +1018,30 @@ public class StarMapTest {
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testNukedReputation() {
-    GameRepository repository = new GameRepository();
-    StarMap starMap = repository.loadGame("src/test/resources/saves",
-                                          "statsNews.save");
+    GalaxyConfig config = new GalaxyConfig();
+    config.setMaxPlayers(3);
+    PlayerList players = new PlayerList();
+    PlayerInfo info1 = new PlayerInfo(SpaceRace.CENTAURS, 3, 0);
+    info1.setEmpireName("Empire of Centaurs");
+    PlayerInfo info2 = new PlayerInfo(SpaceRace.GREYANS, 3, 1);
+    info2.setEmpireName("Empire of Greyans");
+    PlayerInfo info3 = new PlayerInfo(SpaceRace.CHIRALOIDS, 3, 2);
+    info3.setEmpireName("Empire of Chiraloids");
+    players.addPlayer(info1);
+    players.addPlayer(info2);
+    players.addPlayer(info3);
+    StarMap starMap = new StarMap(config, players);
     PlayerInfo attacker = starMap.getPlayerByIndex(0);
-    PlayerInfo info1 = starMap.getPlayerByIndex(1);
-    PlayerInfo info4 = starMap.getPlayerByIndex(4);
+    info1 = starMap.getPlayerByIndex(1);
+    info2 = starMap.getPlayerByIndex(2);
     assertEquals(false, info1.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.NUKED));
-    assertEquals(false, info4.getDiplomacy().getDiplomacyList(0).isBonusType(
+    assertEquals(false, info2.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.NUKED));
     StarMapUtilities.addNukeReputation(starMap, attacker);
     assertEquals(true, info1.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.NUKED));
-    assertEquals(true, info4.getDiplomacy().getDiplomacyList(0).isBonusType(
+    assertEquals(true, info2.getDiplomacy().getDiplomacyList(0).isBonusType(
         DiplomacyBonusType.NUKED));
   }
 

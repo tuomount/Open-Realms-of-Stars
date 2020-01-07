@@ -6,7 +6,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018, 2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -79,11 +79,11 @@ public final class GovernmentUtility {
     }
     if (race == SpaceRace.MECHIONS) {
       GovernmentType[] governments = {
-        GovernmentType.ALLIANCE,
+        GovernmentType.ALLIANCE, GovernmentType.DEMOCRACY,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
+        GovernmentType.ENTERPRISE,
         GovernmentType.AI, GovernmentType.MECHANICAL_HORDE,
-        GovernmentType.EMPIRE, GovernmentType.HEGEMONY,
-        GovernmentType.HIERARCHY, GovernmentType.KINGDOM
+        GovernmentType.HEGEMONY, GovernmentType.HIERARCHY
       };
       return governments;
     }

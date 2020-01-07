@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -21,7 +23,7 @@ import org.openRealmOfStars.utilities.repository.RouteRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019 Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -83,6 +85,11 @@ public class Fleet {
   private AStarSearch aStarSearch;
 
   /**
+   * Fleet commander.
+   */
+  private Leader commander;
+
+  /**
    * Constructor for fleet
    * @param firstShip The first ship in the fleet
    * @param x The fleet's X coordinate
@@ -94,15 +101,24 @@ public class Fleet {
     setPos(new Coordinate(x, y));
     setName("Fleet #0");
     setRoute(null);
+    commander = null;
   }
 
   /**
    * Read Fleet from Data Input Stream
    * @param dis DataInputStream
+   * @param info PlayerInfo for fleet commander loading.
    * @throws IOException if there is any problem with the DataInputStream
    */
-  public Fleet(final DataInputStream dis) throws IOException {
+  public Fleet(final DataInputStream dis,
+      final PlayerInfo info) throws IOException {
     name = IOUtilities.readString(dis);
+    int commanderIndex = dis.readInt();
+    if (commanderIndex != -1) {
+      Leader leader = info.getLeaderPool().get(commanderIndex);
+      setCommander(leader);
+    }
+    setCommander(null);
     coordinate = new Coordinate(dis.readInt(), dis.readInt());
     movesLeft = dis.readInt();
     String str = IOUtilities.readString(dis);
@@ -122,10 +138,13 @@ public class Fleet {
   /**
    * Save Fleet to DataOutputStream
    * @param dos DataOutputStream
+   * @param info PlayerInfo for fleet commander saving.
    * @throws IOException if there is any problem with the DataOutputStream
    */
-  public void saveFleet(final DataOutputStream dos) throws IOException {
+  public void saveFleet(final DataOutputStream dos,
+      final PlayerInfo info) throws IOException {
     IOUtilities.writeString(dos, name);
+    dos.writeInt(info.getLeaderIndex(commander));
     dos.writeInt(coordinate.getX());
     dos.writeInt(coordinate.getY());
     dos.writeInt(movesLeft);
@@ -1032,4 +1051,23 @@ public class Fleet {
     }
     return result;
   }
+
+  /**
+   * Get current commander of the fleet
+   * @return the commander
+   */
+  public Leader getCommander() {
+    return commander;
+  }
+  /**
+   * Set the current commander of the fleet
+   * @param commander the commander to set
+   */
+  public void setCommander(final Leader commander) {
+    this.commander = commander;
+    if (this.commander != null) {
+      this.commander.setJob(Job.COMMANDER);
+    }
+  }
+
 }

@@ -29,12 +29,11 @@ import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.vote.Vote;
 import org.openRealmOfStars.starMap.vote.Votes;
 import org.openRealmOfStars.starMap.vote.VotingType;
-import org.openRealmOfStars.utilities.repository.GameRepository;
 
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2017, 2018 Tuomo Untinen
+ * Copyright (C) 2017-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -912,9 +911,7 @@ return map;
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testGivingOutValuable() {
-    GameRepository repository = new GameRepository();
-    StarMap map = repository.loadGame("src/test/resources/saves",
-                                          "testGame.save");
+    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     NegotiationList offerList1 = new NegotiationList();
     offerList1.add(new NegotiationOffer(NegotiationType.CREDIT, new Integer(30)));
@@ -930,9 +927,7 @@ return map;
   @Test
   @Category(org.openRealmOfStars.BehaviourTest.class)
   public void testActualMapTrade() {
-    GameRepository repository = new GameRepository();
-    StarMap map = repository.loadGame("src/test/resources/saves",
-                                          "testGame.save");
+    StarMap map = generateMapWithPlayer(SpaceRace.HUMAN);
     DiplomaticTrade trade = new DiplomaticTrade(map, 0, 1);
     NegotiationList offerList1 = new NegotiationList();
     offerList1.add(new NegotiationOffer(NegotiationType.MAP, null));
@@ -947,10 +942,26 @@ return map;
     bonus = map.getPlayerByIndex(1).getDiplomacy().getDiplomacyList(0)
         .getDiplomacyBonus();
     assertEquals(4, bonus);
-    trade = new DiplomaticTrade(map, 0, 2);
-    trade.generateMapTrade(DiplomaticTrade.BUY, true);
     PlayerInfo buyer = map.getPlayerByIndex(0);
-    PlayerInfo seller = map.getPlayerByIndex(2);
+    PlayerInfo seller = map.getPlayerByIndex(1);
+    seller.setSectorVisibility(0, 0, PlayerInfo.VISIBLE);
+    seller.setSectorVisibility(1, 0, PlayerInfo.VISIBLE);
+    seller.setSectorVisibility(2, 0, PlayerInfo.VISIBLE);
+    seller.setSectorVisibility(3, 0, PlayerInfo.VISIBLE);
+    seller.setSectorVisibility(4, 0, PlayerInfo.VISIBLE);
+    seller.setSectorVisibility(0, 1, PlayerInfo.VISIBLE);
+    seller.setSectorVisibility(1, 1, PlayerInfo.VISIBLE);
+    seller.setSectorVisibility(2, 1, PlayerInfo.VISIBLE);
+    seller.setSectorVisibility(3, 1, PlayerInfo.VISIBLE);
+    seller.setSectorVisibility(4, 1, PlayerInfo.VISIBLE);
+    seller.setSectorVisibility(0, 2, PlayerInfo.VISIBLE);
+    seller.setSectorVisibility(1, 2, PlayerInfo.VISIBLE);
+    seller.setSectorVisibility(2, 2, PlayerInfo.VISIBLE);
+    seller.setSectorVisibility(3, 2, PlayerInfo.VISIBLE);
+    seller.setSectorVisibility(4, 2, PlayerInfo.VISIBLE);
+    seller.setSectorVisibility(0, 3, PlayerInfo.VISIBLE);
+    trade = new DiplomaticTrade(map, 0, 1);
+    trade.generateMapTrade(DiplomaticTrade.BUY, true);
     int oldSellerCreds = seller.getTotalCredits();
     int oldBuyerCreds = buyer.getTotalCredits();
     trade.doTrades();

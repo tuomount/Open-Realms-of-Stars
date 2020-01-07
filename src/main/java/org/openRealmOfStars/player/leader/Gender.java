@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.leader;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019  Tuomo Untinen
+* Copyright (C) 2019, 2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -51,6 +51,17 @@ public enum Gender {
    */
   private int index;
 
+  /**
+   * Get gender by index
+   * @param index Gender index
+   * @return gender
+   */
+  public static Gender getByIndex(final int index) {
+    if (index >= 0 && index < Gender.values().length) {
+      return Gender.values()[index];
+    }
+    return NONE;
+  }
   /**
    * Return index of gender.
    * @return Index of gender

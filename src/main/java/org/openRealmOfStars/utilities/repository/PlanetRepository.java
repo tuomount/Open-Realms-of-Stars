@@ -2,6 +2,7 @@ package org.openRealmOfStars.utilities.repository;
 
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.planet.BuildingFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -18,7 +19,7 @@ import java.io.IOException;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016, 2018  Tuomo Untinen
+ * Copyright (C) 2016, 2018, 2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -80,6 +81,13 @@ public class PlanetRepository {
       planetOwnerInfo = players.getPlayerInfoByIndex(planetOwner);
     }
     planet.setPlanetOwner(planetOwner, planetOwnerInfo);
+    int governorIndex = dis.readInt();
+    planet.setGovernor(null);
+    if (planet.getPlanetPlayerInfo() != null && governorIndex != -1) {
+      Leader leader = planet.getPlanetPlayerInfo().getLeaderPool()
+          .get(governorIndex);
+      planet.setGovernor(leader);
+    }
     planet.setExtraFood(dis.readInt());
     planet.setTax(dis.readInt(), true);
     planet.setCulture(dis.readInt());
@@ -132,6 +140,12 @@ public class PlanetRepository {
     dos.writeInt(planet.getPlanetTypeIndex());
     dos.writeInt(planet.getPlanetType().getPlanetTypeIndex());
     dos.writeInt(planet.getPlanetOwnerIndex());
+    if (planet.getPlanetPlayerInfo() != null) {
+      dos.writeInt(planet.getPlanetPlayerInfo().getLeaderIndex(
+          planet.getGovernor()));
+    } else {
+      dos.writeInt(-1);
+    }
     dos.writeInt(planet.getExtraFood());
     dos.writeInt(planet.getTax());
     dos.writeInt(planet.getCulture());

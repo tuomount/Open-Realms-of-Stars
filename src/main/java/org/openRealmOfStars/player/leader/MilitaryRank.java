@@ -68,7 +68,7 @@ public enum MilitaryRank {
    * @return Perk
    */
   public static MilitaryRank getByIndex(final int index) {
-    if (index > 0 && index < MilitaryRank.values().length) {
+    if (index >= 0 && index < MilitaryRank.values().length) {
       return MilitaryRank.values()[index];
     }
     return MilitaryRank.CIVILIAN;

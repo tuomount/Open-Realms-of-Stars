@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.leader;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019 Tuomo Untinen
+* Copyright (C) 2019, 2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -65,7 +65,7 @@ public enum Job {
    * @return Job
    */
   public static Job getByIndex(final int index) {
-    if (index > 0 && index < Job.values().length) {
+    if (index >= 0 && index < Job.values().length) {
       return Job.values()[index];
     }
     return UNASSIGNED;

@@ -1,5 +1,7 @@
 package org.openRealmOfStars.player.leader;
 
+import org.openRealmOfStars.utilities.DiceGenerator;
+
 /**
 *
 * Open Realm of Stars game project
@@ -61,6 +63,17 @@ public enum Gender {
       return Gender.values()[index];
     }
     return NONE;
+  }
+
+  /**
+   * Get random gender from female or male.
+   * @return Gender.
+   */
+  public static Gender getRandom() {
+    if (DiceGenerator.getRandom(1) == 0) {
+      return FEMALE;
+    }
+    return MALE;
   }
   /**
    * Return index of gender.

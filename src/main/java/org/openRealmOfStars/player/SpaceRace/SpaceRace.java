@@ -921,6 +921,39 @@ public enum SpaceRace {
       return 80;
     }
   }
+
+  /**
+   * Get social system for empires and kingdoms.
+   * @return SocialSystem
+   */
+  public SocialSystem getSocialSystem() {
+    switch (this) {
+    case HUMAN:
+    case SPACE_PIRATE:
+      return SocialSystem.EQUAL;
+    case MECHIONS:
+      // Mechions cannot have empires or kingdoms.
+      return SocialSystem.EQUAL;
+    case SPORKS:
+      return SocialSystem.PATRIARCHY;
+    case GREYANS:
+      return SocialSystem.PATRIARCHY;
+    case CENTAURS:
+      return SocialSystem.PATRIARCHY;
+    case MOTHOIDS:
+      return SocialSystem.MATRIARCHY;
+    case TEUTHIDAES:
+      return SocialSystem.PATRIARCHY;
+    case SCAURIANS:
+      return SocialSystem.EQUAL;
+    case HOMARIANS:
+      return SocialSystem.MATRIARCHY;
+    case CHIRALOIDS:
+      return SocialSystem.PATRIARCHY;
+    default:
+      return SocialSystem.EQUAL;
+    }
+  }
   /**
    * Get rush option as a String
    * @return String

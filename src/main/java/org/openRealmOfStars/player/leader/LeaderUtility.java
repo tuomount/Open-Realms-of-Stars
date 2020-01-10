@@ -1,5 +1,7 @@
 package org.openRealmOfStars.player.leader;
 
+import java.util.ArrayList;
+
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SocialSystem;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
@@ -35,6 +37,15 @@ public final class LeaderUtility {
    * Special level for marking start ruler for realm.
    */
   public static final int LEVEL_START_RULER = -1;
+
+  /**
+   * Good perk type
+   */
+  public static final int PERK_TYPE_GOOD = 0;
+  /**
+   * Bad perk type
+   */
+  public static final int PERK_TYPE_BAD = 1;
   /**
    * Hidden constructor.
    */
@@ -95,7 +106,46 @@ public final class LeaderUtility {
         // Mechion leaders are always almost brand new ones.
         leader.setAge(1);
       }
+      for (int i = 0; i < level; i++) {
+        Perk[] newPerks = getNewPerks(leader, PERK_TYPE_GOOD);
+        int index = DiceGenerator.getRandom(newPerks.length - 1);
+        leader.getPerkList().add(newPerks[index]);
+        if (DiceGenerator.getRandom(99)  < 10) {
+          newPerks = getNewPerks(leader, PERK_TYPE_BAD);
+          index = DiceGenerator.getRandom(newPerks.length - 1);
+          leader.getPerkList().add(newPerks[index]);
+        }
+      }
     }
     return leader;
+  }
+
+  /**
+   * Get list of new perks that leader is missing.
+   * @param leader Leader whose perks to check.
+   * @param perkType Perk type good, bad, ruler etc.
+   * @return Array of new perks.
+   */
+  public static Perk[] getNewPerks(final Leader leader, final int perkType) {
+    ArrayList<Perk> list = new ArrayList<>();
+    for (Perk perk : Perk.values()) {
+      if (perkType == PERK_TYPE_GOOD && perk.isBadPerk()) {
+        continue;
+      }
+      if (perkType == PERK_TYPE_BAD && !perk.isBadPerk()) {
+        continue;
+      }
+      boolean alreadyHas = false;
+      for (Perk leaderPerk : leader.getPerkList()) {
+        if (perk == leaderPerk) {
+          alreadyHas = true;
+          break;
+        }
+      }
+      if (!alreadyHas) {
+        list.add(perk);
+      }
+    }
+    return list.toArray(new Perk[list.size()]);
   }
 }

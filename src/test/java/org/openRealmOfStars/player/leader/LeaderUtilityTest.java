@@ -51,6 +51,38 @@ public class LeaderUtilityTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSLevel1HumanKingdom() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.KINGDOM);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Test Planet I");
+    Leader leader = LeaderUtility.createLeader(info, planet, 1);
+    assertEquals("Test Planet I", leader.getHomeworld());
+    assertNotEquals(null, leader.getName());
+    assertEquals(1, leader.getLevel());
+    assertEquals(0, leader.getExperience());
+    assertNotEquals(0, leader.getPerkList().size());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testSLevel2HumanKingdom() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.KINGDOM);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Test Planet I");
+    Leader leader = LeaderUtility.createLeader(info, planet, 2);
+    assertEquals("Test Planet I", leader.getHomeworld());
+    assertNotEquals(null, leader.getName());
+    assertEquals(2, leader.getLevel());
+    assertEquals(0, leader.getExperience());
+    assertNotEquals(0, leader.getPerkList().size());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testStartRulerMechionAi() {
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
     Mockito.when(info.getRace()).thenReturn(SpaceRace.MECHIONS);
@@ -95,6 +127,36 @@ public class LeaderUtilityTest {
     assertNotEquals(null, leader.getName());
     assertEquals(1, leader.getLevel());
     assertEquals(0, leader.getExperience());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testGoodPerks() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.KINGDOM);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Test Planet I");
+    Leader leader = LeaderUtility.createLeader(info, planet,
+        LeaderUtility.LEVEL_START_RULER);
+    Perk[] perks = LeaderUtility.getNewPerks(leader,
+        LeaderUtility.PERK_TYPE_GOOD);
+    assertEquals(25, perks.length);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testBadPerks() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.KINGDOM);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Test Planet I");
+    Leader leader = LeaderUtility.createLeader(info, planet,
+        LeaderUtility.LEVEL_START_RULER);
+    Perk[] perks = LeaderUtility.getNewPerks(leader,
+        LeaderUtility.PERK_TYPE_BAD);
+    assertEquals(8, perks.length);
   }
 
 }

@@ -264,6 +264,9 @@ public class StarMapView extends BlackPanel {
     bottomBtnPanel.add(viewNews);
     if (map.getNewsCorpData().getNewsList().length == 0) {
       viewNews.setEnabled(false);
+    } else {
+      PlayerInfo info = players.getCurrentPlayerInfo();
+      info.getMsgList().addNewsMessage();
     }
     SpaceButton btn = new SpaceButton("Spying", GameCommands.COMMAND_SPY);
     btn.addActionListener(game);

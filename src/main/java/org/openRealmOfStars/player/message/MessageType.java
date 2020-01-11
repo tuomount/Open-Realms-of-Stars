@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.message;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -47,7 +47,11 @@ public enum MessageType {
   /**
    * Fleet information, focus to fleet
    */
-  FLEET;
+  FLEET,
+  /**
+   * GBNC has news message
+   */
+  NEWS;
 
   /**
    * Get Message type index
@@ -67,6 +71,8 @@ public enum MessageType {
       return 4;
     case FLEET:
       return 5;
+    case NEWS:
+      return 6;
     default:
       return 0;
     }
@@ -91,6 +97,8 @@ public enum MessageType {
       return MessageType.PLANETARY;
     case 5:
       return MessageType.FLEET;
+    case 6:
+      return MessageType.NEWS;
     default:
       return MessageType.RESEARCH;
     }
@@ -111,6 +119,8 @@ public enum MessageType {
       return "Planetary";
     case FLEET:
       return "Fleet";
+    case NEWS:
+      return "News";
     default:
       return "Error - Unknown";
     }

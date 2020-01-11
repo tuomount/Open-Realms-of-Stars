@@ -10,7 +10,7 @@ import org.mockito.Mockito;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2016  Tuomo Untinen
+ * Copyright (C) 2016,2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -96,5 +96,26 @@ public class MessageListTest {
     assertEquals("MessageList 1 / 2", list.toString());
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testNewsMessage() {
+    Message msg1 = Mockito.mock(Message.class);
+    Message msg2 = Mockito.mock(Message.class);
+    MessageList list = new MessageList();
+    assertEquals(0, list.getCurrentMsgIndex());
+    assertEquals(1, list.getMaxMsg());
+    list.addNewMessage(msg1);
+    assertEquals(0, list.getCurrentMsgIndex());
+    assertEquals(1, list.getMaxMsg());
+    list.addNewMessage(msg2);
+    assertEquals(0, list.getCurrentMsgIndex());
+    assertEquals(2, list.getMaxMsg());
+    list.addNewsMessage();
+    assertEquals(0, list.getCurrentMsgIndex());
+    assertEquals(3, list.getMaxMsg());
+    list.addNewsMessage();
+    assertEquals(0, list.getCurrentMsgIndex());
+    assertEquals(3, list.getMaxMsg());
+  }
 
 }

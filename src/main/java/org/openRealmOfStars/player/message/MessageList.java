@@ -191,6 +191,24 @@ public class MessageList {
     return 1;
   }
 
+  /**
+   * Add News message as a first if not already in the list.
+   */
+  public void addNewsMessage() {
+    boolean newsAlreadyInList = false;
+    for (Message msg : list) {
+      if (msg.getType() == MessageType.NEWS) {
+        newsAlreadyInList = true;
+        break;
+      }
+    }
+    if (!newsAlreadyInList) {
+      Message msg = new Message(MessageType.NEWS,
+          "GBNC has made news. Review it by clicking focus button.",
+          Icons.getIconByName(Icons.ICON_NEWS));
+      addFirstMessage(msg);
+    }
+  }
   @Override
   public String toString() {
     return "MessageList " + (index + 1) + " / " + list.size();

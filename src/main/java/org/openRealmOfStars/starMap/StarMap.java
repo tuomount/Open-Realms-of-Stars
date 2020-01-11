@@ -319,7 +319,7 @@ public class StarMap {
     history = new History();
     votes = new Votes();
     shownTutorialIndexes = new ArrayList<>();
-    tutorialEnabled = true;
+    tutorialEnabled = config.isEnableTutorial();
     boolean ancientRealmStart = false;
     for (int i = 0; i < config.getMaxPlayers(); i++) {
       if (config.getPlayerAncientRealm(i)) {
@@ -1079,7 +1079,8 @@ public class StarMap {
   public void createRealmToPlanet(final Planet planet,
       final PlayerInfo playerInfo, final int playerIndex) {
     planet.setPlanetOwner(playerIndex, playerInfo);
-    if (Game.getTutorial() != null && playerInfo.isHuman()) {
+    if (Game.getTutorial() != null && playerInfo.isHuman()
+        && isTutorialEnabled()) {
       String tutorialText = Game.getTutorial().showTutorialText(0);
       if (tutorialText != null) {
         Message msg = new Message(MessageType.INFORMATION, tutorialText,

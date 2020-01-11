@@ -2019,7 +2019,8 @@ public class AITurnView extends BlackPanel {
     game.getStarMap().getHistory().updateCultureEventMap(game.getStarMap());
     GameLengthState oldState = game.getStarMap().getGameLengthState();
     game.getStarMap().setTurn(game.getStarMap().getTurn() + 1);
-    if (game.getStarMap().getTurn() == 1 && Game.getTutorial() != null) {
+    if (game.getStarMap().getTurn() == 1 && Game.getTutorial() != null
+        && game.getStarMap().isTutorialEnabled()) {
       String tutorialText = Game.getTutorial().showTutorialText(12);
       if (tutorialText != null) {
         Message msg = new Message(MessageType.INFORMATION, tutorialText,

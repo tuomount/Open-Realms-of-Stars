@@ -797,9 +797,11 @@ public class TechList {
    * @param totalResearchPoints player makes per turn
    * @param info PlayerInfo for message information
    * @param gameLength Maximum game length in turns
+   * @param tutorialEnabled Is tutorial enabled or not
    */
   public void updateResearchPointByTurn(final int totalResearchPoints,
-      final PlayerInfo info, final int gameLength) {
+      final PlayerInfo info, final int gameLength,
+      final boolean tutorialEnabled) {
     for (int i = 0; i < techFocus.length; i++) {
       techResearchPoint[i] = techResearchPoint[i]
           + techFocus[i] * totalResearchPoints / 100.0;
@@ -839,7 +841,7 @@ public class TechList {
             Icons.getIconByName(Icons.ICON_RESEARCH));
         msg.setMatchByString(tech.getName());
         info.getMsgList().addNewMessage(msg);
-        if (Game.getTutorial() != null  && info.isHuman()) {
+        if (Game.getTutorial() != null  && info.isHuman() && tutorialEnabled) {
           String tutorialText = Game.getTutorial().showTutorialText(13);
           if (tutorialText != null) {
             msg = new Message(MessageType.INFORMATION, tutorialText,

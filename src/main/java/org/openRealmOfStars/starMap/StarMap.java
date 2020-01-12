@@ -1162,7 +1162,8 @@ public class StarMap {
         playerInfo.getFleets().add(fleet);
         if (ship.isColonyModule()) {
           fleet.setName("Colony #" + count);
-          if (Game.getTutorial() != null && playerInfo.isHuman()) {
+          if (Game.getTutorial() != null && playerInfo.isHuman()
+              && isTutorialEnabled()) {
             String tutorialText = Game.getTutorial().showTutorialText(7);
             if (tutorialText != null) {
               msg = new Message(MessageType.FLEET, tutorialText,
@@ -1174,7 +1175,8 @@ public class StarMap {
           }
         } else {
           fleet.setName("Scout #" + count);
-          if (Game.getTutorial() != null && playerInfo.isHuman()) {
+          if (Game.getTutorial() != null && playerInfo.isHuman()
+              && isTutorialEnabled()) {
             String tutorialText = Game.getTutorial().showTutorialText(5);
             if (tutorialText != null) {
               msg = new Message(MessageType.FLEET, tutorialText,

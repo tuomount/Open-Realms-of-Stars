@@ -17,6 +17,7 @@ import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.Sun;
+import org.openRealmOfStars.starMap.newsCorp.ImageInstruction;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
 import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -90,6 +91,8 @@ public class RandomEventUtilityTest {
     Mockito.when(planet.getRadiationLevel()).thenReturn(2);
     Mockito.when(planet.getTotalPopulation()).thenReturn(1);
     Mockito.when(planet.getOrderNumber()).thenReturn(1);
+    Mockito.when(planet.getImageInstructions()).thenReturn(
+        ImageInstruction.PLANET_WATERWORLD1);
     Building[] buildingList = new Building[2];
     Building build = Mockito.mock(Building.class);
     Mockito.when(build.getName()).thenReturn("Test building");

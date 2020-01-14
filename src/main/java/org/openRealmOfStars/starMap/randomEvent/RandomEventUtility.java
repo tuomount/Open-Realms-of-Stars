@@ -420,9 +420,17 @@ public final class RandomEventUtility {
         planet.setAmountMetalInGround(planet.getAmountMetalInGround()
             + DiceGenerator.getRandom(80, 400));
         event.setText(sb.toString());
+        ImageInstruction instructions = new ImageInstruction();
+        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+        instructions.addPlanet(ImageInstruction.POSITION_LEFT,
+            planet.getImageInstructions(), ImageInstruction.SIZE_FULL);
+        instructions.addLogo(ImageInstruction.POSITION_RIGHT,
+            ImageInstruction.METEOR, ImageInstruction.SIZE_FULL);
+        event.setImageInstructions(instructions.build());
         Message message = new Message(MessageType.PLANETARY, event.getText(),
             Icons.getIconByName(Icons.ICON_METAL));
         message.setCoordinate(planet.getCoordinate());
+        message.setRandomEventPop(true);
         info.getMsgList().addFirstMessage(message);
       }
     }

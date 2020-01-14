@@ -161,6 +161,8 @@ http://creativecommons.org/licenses/by/3.0/
 
 Tutorial icon by Tuomo Untinen
 
+Meteor by Tuomo Untinen
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

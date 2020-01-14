@@ -323,6 +323,10 @@ public class ImageInstruction {
    */
   public static final String VIRUSES = "viruses";
   /**
+   * Meteor image
+   */
+  public static final String METEOR = "meteor";
+  /**
    * Instructions for ship
    */
   public static final String SHIP = "ship";
@@ -490,7 +494,8 @@ public class ImageInstruction {
         && !OLD_SHIP.equals(image)
         && !DESERT.equals(image)
         && !PARADISE.equals(image)
-        && !VIRUSES.equals(image)) {
+        && !VIRUSES.equals(image)
+        && !METEOR.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }
@@ -567,6 +572,7 @@ public class ImageInstruction {
         && !UNITED_GALAXY_TOWER.equals(logoType)
         && !BIG_MISSILE.equals(logoType)
         && !BIG_MONEY.equals(logoType)
+        && !METEOR.equals(logoType)
         && !SpaceRace.CENTAURS.getNameSingle().equals(logoType)
         && !SpaceRace.HUMAN.getNameSingle().equals(logoType)
         && !SpaceRace.SPORKS.getNameSingle().equals(logoType)
@@ -811,6 +817,9 @@ public class ImageInstruction {
     if (BIG_MONEY.equals(planetType)) {
       planetImg = GuiStatics.IMAGE_BIG_MONEY;
     }
+    if (METEOR.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_METEOR;
+    }
     SpaceRace race = SpaceRaceUtility.getRaceByName(planetType);
     if (race != null) {
       planetImg = race.getRaceImage();
@@ -897,6 +906,9 @@ public class ImageInstruction {
     }
     if (BIG_BAN.equals(image)) {
       drawImg = GuiStatics.IMAGE_BIG_BAN_ICON;
+    }
+    if (METEOR.equals(image)) {
+      drawImg = GuiStatics.IMAGE_METEOR;
     }
     if (BIG_PEACE.equals(image)) {
       drawImg = GuiStatics.IMAGE_BIG_PEACE_ICON;

@@ -163,6 +163,7 @@ public class CreditsView extends BlackPanel {
       + "http://creativecommons.org/licenses/by/3.0/\n\n"
       + "Tutorial icon by Tuomo Untinen\n\n"
       + "Meteor by Tuomo Untinen\n\n"
+      + "Mothoid Space Ship Bridge by Tuomo Untinen\n\n"
       + "Fonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

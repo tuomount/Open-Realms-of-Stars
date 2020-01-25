@@ -167,6 +167,10 @@ public class ShipInteriorPanel extends JPanel {
       interior = GuiStatics.IMAGE_INTERIOR_HUMAN;
       yOffset = 20;
     }
+    if (race == SpaceRace.MOTHOIDS) {
+      interior = GuiStatics.IMAGE_INTERIOR_MOTHOID;
+      yOffset = 35;
+    }
     g.drawImage(interior,
         this.getWidth() / 2 - interior.getWidth() / 2,
         this.getHeight() / 2 - interior.getHeight() / 2,

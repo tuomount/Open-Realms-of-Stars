@@ -10,7 +10,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -353,6 +353,10 @@ public final class Icons {
    * AirLock open icon
    */
   public static final String ICON_AIRLOCK_OPEN = "IconAirLockOpen";
+  /**
+   * Leader too young icon
+   */
+  public static final String ICON_TOO_YOUNG = "IconTooYoung";
 
   /**
    * List of Icon
@@ -625,6 +629,8 @@ public final class Icons {
     icon = new Icon16x16(image, 3, 1, ICON_COLLAPSED);
     addIcon(icon);
     icon = new Icon16x16(image, 4, 1, ICON_AIRLOCK_OPEN);
+    addIcon(icon);
+    icon = new Icon16x16(image, 5, 1, ICON_TOO_YOUNG);
     addIcon(icon);
   }
 

@@ -3,7 +3,7 @@ package org.openRealmOfStars.game;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019  Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -140,5 +140,9 @@ public enum GameState {
   /**
    * View where all tutorial/help text is being shown.
    */
-  HELP_VIEW;
+  HELP_VIEW,
+  /**
+   * Show all the leaders for realm.
+   */
+  LEADER_VIEW;
 }

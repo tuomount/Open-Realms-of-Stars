@@ -38,6 +38,7 @@ import org.openRealmOfStars.game.States.FleetView;
 import org.openRealmOfStars.game.States.GalaxyCreationView;
 import org.openRealmOfStars.game.States.HelpView;
 import org.openRealmOfStars.game.States.HistoryView;
+import org.openRealmOfStars.game.States.LeaderView;
 import org.openRealmOfStars.game.States.LoadGameView;
 import org.openRealmOfStars.game.States.MainMenu;
 import org.openRealmOfStars.game.States.NewsCorpView;
@@ -303,6 +304,10 @@ public class Game implements ActionListener {
    * Realm view for showing all realm information
    */
   private RealmView realmView;
+  /**
+   * Realm view for showing all realm information
+   */
+  private LeaderView leaderView;
   /**
    * Planet List view for showing all planets realm has
    */
@@ -1183,6 +1188,13 @@ public class Game implements ActionListener {
   }
 
   /**
+   * View Leaders view.
+   */
+  public void viewLeaders() {
+    leaderView = new LeaderView(starMap.getCurrentPlayerInfo(), starMap, this);
+    this.updateDisplay(leaderView);
+  }
+  /**
    * Change game state so that focus is also changed to target message
    * @param newState Game State where to change
    * @param focusMessage Focused message, can be also null
@@ -1248,6 +1260,10 @@ public class Game implements ActionListener {
       break;
     case NEW_GAME: {
       makeNewGame(true);
+      break;
+    }
+    case LEADER_VIEW: {
+      viewLeaders();
       break;
     }
     case NEWS_CORP_VIEW: {
@@ -2292,9 +2308,9 @@ public class Game implements ActionListener {
           changeGameState(GameState.VOTE_VIEW);
         }
         if (arg0.getActionCommand().equalsIgnoreCase(
-            GameCommands.COMMAND_NEWS)) {
+            GameCommands.COMMAND_VIEW_LEADERS)) {
           SoundPlayer.playMenuSound();
-          changeGameState(GameState.NEWS_CORP_VIEW);
+          changeGameState(GameState.LEADER_VIEW);
         }
         if (arg0.getActionCommand().equalsIgnoreCase(
             GameCommands.COMMAND_BATTLE)) {

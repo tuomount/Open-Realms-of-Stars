@@ -2491,6 +2491,17 @@ public class Game implements ActionListener {
       researchView.handleAction(arg0);
       return;
     }
+    if (gameState == GameState.LEADER_VIEW && leaderView != null) {
+      // Handle Research View
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.STARMAP);
+        return;
+      }
+      // TODO Handle actions on leader view.
+      return;
+    }
     if (gameState == GameState.VIEWSHIPS && shipView != null) {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {

@@ -15,6 +15,8 @@ import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.LeaderListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
+import org.openRealmOfStars.gui.labels.InfoTextArea;
+import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -65,6 +67,16 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
   private JList<Leader> leaderList;
 
   /**
+   * Info Text for Leader
+   */
+  private InfoTextArea infoText;
+
+  /**
+   * Map Panel for drawing small starmap where leader is assigned.
+   */
+  private MapPanel mapPanel;
+
+  /**
    * View Leader view.
    * @param info Player info
    * @param starMap Star map data
@@ -81,8 +93,6 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     InfoPanel center = new InfoPanel();
     center.setTitle("Leader");
     center.setLayout(new BorderLayout());
-    this.add(base, BorderLayout.WEST);
-    this.add(center, BorderLayout.CENTER);
     Leader[] leaders = sortLeaders(player.getLeaderPool());
     leaderList = new JList<>(leaders);
     leaderList.setCellRenderer(new LeaderListRenderer());
@@ -92,6 +102,13 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     leaderList.setBackground(Color.BLACK);
     leaderList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     base.add(scroll, BorderLayout.CENTER);
+    infoText = new InfoTextArea(20, 35);
+    infoText.setEditable(false);
+    infoText.setFont(GuiStatics.getFontCubellanSmaller());
+    center.add(infoText, BorderLayout.WEST);
+
+    mapPanel = new MapPanel(false);
+    center.add(mapPanel, BorderLayout.CENTER);
     // Bottom panel
     InfoPanel bottomPanel = new InfoPanel();
     bottomPanel.setLayout(new BorderLayout());
@@ -102,14 +119,15 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     bottomPanel.add(btn, BorderLayout.CENTER);
     // Add panels to base
     this.add(bottomPanel, BorderLayout.SOUTH);
+    this.add(base, BorderLayout.WEST);
+    this.add(center, BorderLayout.CENTER);
   }
 
   /**
-   * Get Starmap assigned to leaderview.
-   * @return StarMap.
+   * Update all panels.
    */
-  public StarMap getMap() {
-    return map;
+  public void updatePanel() {
+    mapPanel.drawMap(map);
   }
   /**
    * Sort all leaders in following order:
@@ -168,6 +186,6 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
 
   @Override
   public void valueChanged(final ListSelectionEvent arg0) {
-    // TODO Auto-generated method stub
+    updatePanel();
   }
 }

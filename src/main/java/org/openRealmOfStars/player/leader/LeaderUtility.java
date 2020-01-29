@@ -121,6 +121,115 @@ public final class LeaderUtility {
   }
 
   /**
+   * Create Title for leader
+   * @param leader Leader to whom to create title
+   * @param realm Realm where leader belongs to.
+   * @return Title name as string.
+   */
+  public static String createTitleForLeader(final Leader leader,
+      final PlayerInfo realm) {
+    StringBuilder sb = new StringBuilder();
+    if (leader.getJob() == Job.RULER) {
+      switch (realm.getGovernment()) {
+        default:
+        case DEMOCRACY:
+        case FEDERATION:
+        case REPUBLIC:
+        case ALLIANCE: {
+          sb.append("President");
+          break;
+        }
+        case EMPIRE: {
+          if (leader.getGender() == Gender.FEMALE) {
+            sb.append("Empiress");
+          } else {
+            sb.append("Emperor");
+          }
+          break;
+        }
+        case KINGDOM: {
+          if (leader.getGender() == Gender.FEMALE) {
+            sb.append("Queen");
+          } else {
+            sb.append("King");
+          }
+          break;
+        }
+        case HORDE:
+        case MECHANICAL_HORDE:
+        case CLAN: {
+          sb.append("Chief");
+          break;
+        }
+        case ENTERPRISE: {
+          sb.append("CEO");
+          break;
+        }
+        case GUILD:
+        case HEGEMONY: {
+          sb.append("Leader");
+          break;
+        }
+        case AI: {
+          sb.append("Main Process");
+          break;
+        }
+        case NEST:
+        case HIVEMIND: {
+          sb.append("Master");
+          break;
+        }
+        case HIERARCHY: {
+          if (leader.getGender() == Gender.FEMALE) {
+            sb.append("Lady");
+          } else {
+            sb.append("Lord");
+          }
+          break;
+        }
+      }
+    }
+    if (leader.getJob() == Job.COMMANDER) {
+      if (leader.getMilitaryRank() == MilitaryRank.CIVILIAN) {
+        leader.setMilitaryRank(MilitaryRank.ENSIGN);
+      }
+      sb.append(leader.getMilitaryRank().toString());
+    }
+    if (leader.getJob() == Job.GOVERNOR) {
+      if (leader.getParent() != null) {
+        if (leader.getGender() == Gender.FEMALE) {
+          sb.append("Princess");
+        } else {
+          sb.append("Prince");
+        }
+      } else {
+        sb.append("Governor");
+      }
+    }
+    if (leader.getJob() == Job.TOO_YOUNG) {
+      if (leader.getGender() == Gender.FEMALE) {
+        sb.append("Princess");
+      } else {
+        sb.append("Prince");
+      }
+    }
+    if (leader.getJob() == Job.UNASSIGNED) {
+      if (leader.getParent() != null) {
+        if (leader.getGender() == Gender.FEMALE) {
+          sb.append("Princess");
+        } else {
+          sb.append("Prince");
+        }
+      } else if (leader.getMilitaryRank() != MilitaryRank.CIVILIAN) {
+        sb.append(leader.getMilitaryRank().toString());
+      } else {
+       sb.append("");
+      }
+    }
+    // Dead leader keeps it previous title, no need to change it.
+    return sb.toString();
+  }
+  /**
    * Get list of new perks that leader is missing.
    * @param leader Leader whose perks to check.
    * @param perkType Perk type good, bad, ruler etc.

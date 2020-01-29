@@ -47,6 +47,154 @@ public class LeaderUtilityTest {
     assertNotEquals(null, leader.getName());
     assertEquals(1, leader.getLevel());
     assertEquals(0, leader.getExperience());
+    leader.setGender(Gender.FEMALE);
+    leader.setJob(Job.RULER);
+    String tmp = LeaderUtility.createTitleForLeader(leader, info);
+    assertEquals("Queen", tmp);
+    leader.setGender(Gender.MALE);
+    tmp = LeaderUtility.createTitleForLeader(leader, info);
+    assertEquals("King", tmp);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStartRulerHumanDemogracy() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.DEMOCRACY);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Test Planet I");
+    Leader leader = LeaderUtility.createLeader(info, planet,
+        LeaderUtility.LEVEL_START_RULER);
+    assertEquals("Test Planet I", leader.getHomeworld());
+    assertNotEquals(null, leader.getName());
+    assertEquals(1, leader.getLevel());
+    assertEquals(0, leader.getExperience());
+    leader.setJob(Job.RULER);
+    String tmp = LeaderUtility.createTitleForLeader(leader, info);
+    assertEquals("President", tmp);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStartRulerHumanEmpire() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.HUMAN);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.EMPIRE);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Test Planet I");
+    Leader leader = LeaderUtility.createLeader(info, planet,
+        LeaderUtility.LEVEL_START_RULER);
+    assertEquals("Test Planet I", leader.getHomeworld());
+    assertNotEquals(null, leader.getName());
+    assertEquals(1, leader.getLevel());
+    assertEquals(0, leader.getExperience());
+    leader.setJob(Job.RULER);
+    leader.setGender(Gender.FEMALE);
+    String tmp = LeaderUtility.createTitleForLeader(leader, info);
+    assertEquals("Empiress", tmp);
+    leader.setGender(Gender.MALE);
+    tmp = LeaderUtility.createTitleForLeader(leader, info);
+    assertEquals("Emperor", tmp);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStartRulerCentaurHiearchy() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.CENTAURS);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HIERARCHY);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Test Planet I");
+    Leader leader = LeaderUtility.createLeader(info, planet,
+        LeaderUtility.LEVEL_START_RULER);
+    assertEquals("Test Planet I", leader.getHomeworld());
+    assertNotEquals(null, leader.getName());
+    assertEquals(1, leader.getLevel());
+    assertEquals(0, leader.getExperience());
+    leader.setJob(Job.RULER);
+    leader.setGender(Gender.FEMALE);
+    String tmp = LeaderUtility.createTitleForLeader(leader, info);
+    assertEquals("Lady", tmp);
+    leader.setGender(Gender.MALE);
+    tmp = LeaderUtility.createTitleForLeader(leader, info);
+    assertEquals("Lord", tmp);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStartRulerScaurianEnterprise() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.SCAURIANS);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.ENTERPRISE);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Test Planet I");
+    Leader leader = LeaderUtility.createLeader(info, planet,
+        LeaderUtility.LEVEL_START_RULER);
+    assertEquals("Test Planet I", leader.getHomeworld());
+    assertNotEquals(null, leader.getName());
+    assertEquals(1, leader.getLevel());
+    assertEquals(0, leader.getExperience());
+    leader.setJob(Job.RULER);
+    String tmp = LeaderUtility.createTitleForLeader(leader, info);
+    assertEquals("CEO", tmp);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStartRulerSporkClan() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.SPORKS);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.CLAN);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Test Planet I");
+    Leader leader = LeaderUtility.createLeader(info, planet,
+        LeaderUtility.LEVEL_START_RULER);
+    assertEquals("Test Planet I", leader.getHomeworld());
+    assertNotEquals(null, leader.getName());
+    assertEquals(1, leader.getLevel());
+    assertEquals(0, leader.getExperience());
+    leader.setJob(Job.RULER);
+    String tmp = LeaderUtility.createTitleForLeader(leader, info);
+    assertEquals("Chief", tmp);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStartRulerGreyanHegemony() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.GREYANS);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HEGEMONY);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Test Planet I");
+    Leader leader = LeaderUtility.createLeader(info, planet,
+        LeaderUtility.LEVEL_START_RULER);
+    assertEquals("Test Planet I", leader.getHomeworld());
+    assertNotEquals(null, leader.getName());
+    assertEquals(1, leader.getLevel());
+    assertEquals(0, leader.getExperience());
+    leader.setJob(Job.RULER);
+    String tmp = LeaderUtility.createTitleForLeader(leader, info);
+    assertEquals("Leader", tmp);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testStartRulerMothoidHivemind() {
+    PlayerInfo info = Mockito.mock(PlayerInfo.class);
+    Mockito.when(info.getRace()).thenReturn(SpaceRace.MOTHOIDS);
+    Mockito.when(info.getGovernment()).thenReturn(GovernmentType.HIVEMIND);
+    Planet planet = Mockito.mock(Planet.class);
+    Mockito.when(planet.getName()).thenReturn("Test Planet I");
+    Leader leader = LeaderUtility.createLeader(info, planet,
+        LeaderUtility.LEVEL_START_RULER);
+    assertEquals("Test Planet I", leader.getHomeworld());
+    assertNotEquals(null, leader.getName());
+    assertEquals(1, leader.getLevel());
+    assertEquals(0, leader.getExperience());
+    leader.setJob(Job.RULER);
+    String tmp = LeaderUtility.createTitleForLeader(leader, info);
+    assertEquals("Master", tmp);
   }
 
   @Test
@@ -95,6 +243,9 @@ public class LeaderUtilityTest {
     assertNotEquals(null, leader.getName());
     assertEquals(1, leader.getLevel());
     assertEquals(0, leader.getExperience());
+    leader.setJob(Job.RULER);
+    String tmp = LeaderUtility.createTitleForLeader(leader, info);
+    assertEquals("Main Process", tmp);
   }
 
   @Test

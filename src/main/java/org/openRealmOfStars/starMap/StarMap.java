@@ -28,6 +28,9 @@ import org.openRealmOfStars.player.espionage.EspionageBonusType;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -1113,6 +1116,11 @@ public class StarMap {
     history.addEvent(event);
     msg.setCoordinate(planet.getCoordinate());
     msg.setMatchByString(planet.getName());
+    Leader ruler = LeaderUtility.createLeader(playerInfo, planet,
+        LeaderUtility.LEVEL_START_RULER);
+    ruler.setJob(Job.RULER);
+    ruler.setTitle(LeaderUtility.createTitleForLeader(ruler, playerInfo));
+    playerInfo.getLeaderPool().add(ruler);
     playerInfo.getMsgList().addNewMessage(msg);
 
     planet.addBuilding(BuildingFactory.createByName("Space port"));

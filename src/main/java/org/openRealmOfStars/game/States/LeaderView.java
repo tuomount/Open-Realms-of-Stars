@@ -127,7 +127,12 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
    * Update all panels.
    */
   public void updatePanel() {
-    mapPanel.drawMap(map);
+    Leader leader = leaderList.getSelectedValue();
+    if (leader != null) {
+      mapPanel.drawMap(map);
+      infoText.setText(leader.getDescription());
+    }
+    this.repaint();
   }
   /**
    * Sort all leaders in following order:

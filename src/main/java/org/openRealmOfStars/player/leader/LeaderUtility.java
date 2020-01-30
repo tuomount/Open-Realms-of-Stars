@@ -77,6 +77,8 @@ public final class LeaderUtility {
           if (info.getRace().getSocialSystem() == SocialSystem.EQUAL) {
             gender = Gender.getRandom();
           }
+        } else {
+          gender = Gender.getRandom();
         }
       } else {
         gender = Gender.getRandom();

@@ -135,6 +135,7 @@ public class Leader {
   public Leader(final DataInputStream dis) throws IOException {
     name = IOUtilities.readString(dis);
     homeworld = IOUtilities.readString(dis);
+    title = IOUtilities.readString(dis);
     age = dis.readInt();
     level = dis.read();
     experience = dis.readInt();
@@ -161,6 +162,7 @@ public class Leader {
       final PlayerInfo realm) throws IOException {
     IOUtilities.writeString(dos, name);
     IOUtilities.writeString(dos, homeworld);
+    IOUtilities.writeString(dos, title);
     dos.writeInt(age);
     dos.writeByte(level);
     dos.writeInt(experience);
@@ -316,6 +318,45 @@ public class Leader {
     this.gender = gender;
   }
 
+  /**
+   * Get Leader ingame description with all the details
+   * except perks.
+   * @return Description
+   */
+  public String getDescription() {
+    StringBuilder builder = new StringBuilder();
+    builder.append(getTitle());
+    builder.append(" ");
+    builder.append(getName());
+    builder.append("\n");
+    builder.append("Position: ");
+    builder.append(getJob().getName());
+    builder.append("\n");
+    builder.append("Military status: ");
+    builder.append(getMilitaryRank().toString());
+    builder.append("\n");
+    builder.append("Age: ");
+    builder.append(getAge());
+    builder.append("\n");
+    if (getParent() != null) {
+      builder.append("Parent: ");
+      builder.append(getParent().getTitle() + " " + getParent().getName());
+      builder.append("\n");
+    }
+    builder.append("Gender: ");
+    builder.append(getGender().toString());
+    builder.append("\n");
+    builder.append("Race: ");
+    builder.append(getRace().getNameSingle());
+    builder.append("\n");
+    builder.append("Level: ");
+    builder.append(getLevel());
+    builder.append("\n");
+    builder.append("Experience: ");
+    builder.append(getExperience());
+    builder.append("\n");
+    return builder.toString();
+  }
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();

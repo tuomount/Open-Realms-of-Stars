@@ -20,9 +20,12 @@ import org.openRealmOfStars.gui.mapPanel.MapPanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
 *
@@ -106,7 +109,6 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     infoText.setEditable(false);
     infoText.setFont(GuiStatics.getFontCubellanSmaller());
     center.add(infoText, BorderLayout.WEST);
-
     mapPanel = new MapPanel(false);
     center.add(mapPanel, BorderLayout.CENTER);
     // Bottom panel
@@ -129,8 +131,47 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
   public void updatePanel() {
     Leader leader = leaderList.getSelectedValue();
     if (leader != null) {
+      if (leader.getJob() == Job.RULER) {
+        for (Planet planet : map.getPlanetList()) {
+          if (planet.getPlanetPlayerInfo() == player) {
+            map.setDrawPos(planet.getX(), planet.getY());
+            break;
+          }
+        }
+      } else if (leader.getJob() == Job.GOVERNOR) {
+        for (Planet planet : map.getPlanetList()) {
+          if (planet.getGovernor() == leader) {
+            map.setDrawPos(planet.getX(), planet.getY());
+            break;
+          }
+        }
+      } else if (leader.getJob() == Job.COMMANDER) {
+        for (int i = 0; i < player.getFleets().getNumberOfFleets(); i++) {
+          Fleet fleet = player.getFleets().getByIndex(i);
+          if (fleet.getCommander() == leader) {
+            map.setDrawPos(fleet.getX(), fleet.getY());
+            break;
+          }
+        }
+      } else {
+        map.setDrawPos(map.getMaxX() / 2, map.getMaxY() / 2);
+      }
       mapPanel.drawMap(map);
-      infoText.setText(leader.getDescription());
+      StringBuilder sb = new StringBuilder();
+      sb.append(leader.getDescription());
+      sb.append("\n\nPerks\n");
+      if (leader.getPerkList().size() == 0) {
+        sb.append("None");
+      } else {
+        for (Perk perk : leader.getPerkList()) {
+          sb.append("* ");
+          sb.append(perk.getName());
+          sb.append(" ");
+          sb.append(perk.getDescription());
+          sb.append("\n");
+        }
+      }
+      infoText.setText(sb.toString());
     }
     this.repaint();
   }

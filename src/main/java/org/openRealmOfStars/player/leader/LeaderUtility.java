@@ -47,6 +47,18 @@ public final class LeaderUtility {
    */
   public static final int PERK_TYPE_BAD = 1;
   /**
+   * Governor type perk
+   */
+  public static final int PERK_TYPE_GOVERNOR = 2;
+  /**
+   * Ruler type perk
+   */
+  public static final int PERK_TYPE_RULER = 3;
+  /**
+   * Commander type perk
+   */
+  public static final int PERK_TYPE_COMMANDER = 4;
+  /**
    * Hidden constructor.
    */
   private LeaderUtility() {
@@ -122,6 +134,44 @@ public final class LeaderUtility {
     return leader;
   }
 
+  /**
+   * Adds random perks.
+   * 60% new perk is related to current job.
+   * 40% any good perk is added.
+   * After adding good perk there is 10% that also bad perk is added.
+   * @param leader who will get new perk
+   */
+  public static void addRandomPerks(final Leader leader) {
+    boolean jobBasedPerkAdded = false;
+    if (DiceGenerator.getRandom(99) < 60) {
+      // Add Perk based on job
+      Perk[] newPerks = null;
+      if (leader.getJob() == Job.RULER) {
+        newPerks = getNewPerks(leader, PERK_TYPE_RULER);
+      }
+      if (leader.getJob() == Job.GOVERNOR) {
+        newPerks = getNewPerks(leader, PERK_TYPE_GOVERNOR);
+      }
+      if (leader.getJob() == Job.COMMANDER) {
+        newPerks = getNewPerks(leader, PERK_TYPE_COMMANDER);
+      }
+      if (newPerks != null && newPerks.length > 0) {
+        int index = DiceGenerator.getRandom(newPerks.length - 1);
+        leader.getPerkList().add(newPerks[index]);
+        jobBasedPerkAdded = true;
+      }
+    }
+    if (!jobBasedPerkAdded) {
+      Perk[] newPerks = getNewPerks(leader, PERK_TYPE_GOOD);
+      int index = DiceGenerator.getRandom(newPerks.length - 1);
+      leader.getPerkList().add(newPerks[index]);
+    }
+    if (DiceGenerator.getRandom(99)  < 10) {
+      Perk[] newPerks = getNewPerks(leader, PERK_TYPE_BAD);
+      int index = DiceGenerator.getRandom(newPerks.length - 1);
+      leader.getPerkList().add(newPerks[index]);
+    }
+  }
   /**
    * Create Title for leader
    * @param leader Leader to whom to create title
@@ -244,6 +294,15 @@ public final class LeaderUtility {
         continue;
       }
       if (perkType == PERK_TYPE_BAD && !perk.isBadPerk()) {
+        continue;
+      }
+      if (perkType == PERK_TYPE_RULER && !perk.isRulerPerk()) {
+        continue;
+      }
+      if (perkType == PERK_TYPE_GOVERNOR && !perk.isGovernorPerk()) {
+        continue;
+      }
+      if (perkType == PERK_TYPE_COMMANDER && !perk.isFleetCommanderPerk()) {
         continue;
       }
       boolean alreadyHas = false;

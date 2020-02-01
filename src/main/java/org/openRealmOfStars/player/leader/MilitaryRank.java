@@ -71,6 +71,9 @@ public enum MilitaryRank {
     if (index >= 0 && index < MilitaryRank.values().length) {
       return MilitaryRank.values()[index];
     }
+    if (index > MilitaryRank.values().length) {
+      return MilitaryRank.ADMIRAL;
+    }
     return MilitaryRank.CIVILIAN;
   }
   /**

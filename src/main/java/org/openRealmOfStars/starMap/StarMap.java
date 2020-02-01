@@ -31,6 +31,7 @@ import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -63,7 +64,7 @@ import org.openRealmOfStars.utilities.repository.SunRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019 Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -3688,6 +3689,10 @@ public class StarMap {
     for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
       result = result + info.getFleets().getByIndex(i)
           .getTotalFleetCapacityBonus();
+    }
+    if (info.getRuler() != null
+        && info.getRuler().hasPerk(Perk.MILITARISTIC)) {
+      result = result + 1;
     }
     return result;
   }

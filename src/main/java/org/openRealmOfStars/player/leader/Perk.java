@@ -265,7 +265,7 @@ public enum Perk {
    * Is perk fleet commander perk or something else
    * @return True if fleet commander perk
    */
-  public boolean isFleetCommadnerPerk() {
+  public boolean isFleetCommanderPerk() {
     if (this == Perk.DISCIPLINE
         || this == Perk.EXPLORER
         || this == Perk.FTL_ENGINEER

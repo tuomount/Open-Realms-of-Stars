@@ -42,6 +42,8 @@ import org.openRealmOfStars.player.fleet.FleetType;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderUtility;
+import org.openRealmOfStars.player.leader.MilitaryRank;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
@@ -1839,6 +1841,9 @@ public class AITurnView extends BlackPanel {
                 Icons.getIconByName(Icons.ICON_DEATH));
             realm.getMsgList().addNewMessage(msg);
           }
+          if (realm.getRuler() == leader) {
+            realm.setRuler(null);
+          }
         }
       }
       if (leader.getJob() == Job.RULER) {
@@ -1861,7 +1866,16 @@ public class AITurnView extends BlackPanel {
         if (leader.getExperience() >= required) {
           leader.setLevel(leader.getLevel() + 1);
           leader.setExperience(leader.getExperience() - required);
-          // TODO Add perk gaining and leveling up here
+          LeaderUtility.addRandomPerks(leader);
+          Message msg = new Message(MessageType.LEADER,
+              leader.getTitle() + " " + leader.getName()
+                  + " has reached to a new level. ",
+              Icons.getIconByName(Icons.ICON_DEATH));
+          realm.getMsgList().addNewMessage(msg);
+          if (leader.getMilitaryRank() != MilitaryRank.CIVILIAN) {
+            leader.setMilitaryRank(MilitaryRank.getByIndex(
+                leader.getMilitaryRank().getIndex() + 1));
+          }
         }
       }
     }
@@ -1897,6 +1911,26 @@ public class AITurnView extends BlackPanel {
         info.getMsgList().clearMessages();
         for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
           Fleet fleet = info.getFleets().getByIndex(j);
+          if (fleet.getCommander() != null) {
+            if (fleet.getCommander().getJob() == Job.DEAD) {
+              fleet.setCommander(null);
+            } else {
+              CulturePower culture = game.getStarMap().getSectorCulture(
+                  fleet.getX(), fleet.getY());
+              int enemyIndex = culture.getHighestCulture();
+              if (enemyIndex > -1 && enemyIndex != i
+                  && !info.getDiplomacy().isAlliance(enemyIndex)
+                  && !info.getDiplomacy().isDefensivePact(enemyIndex)) {
+                fleet.getCommander().setExperience(
+                    fleet.getCommander().getExperience() + 10);
+              }
+              if (fleet.getRoute().isDefending()) {
+                fleet.getCommander().setExperience(
+                    fleet.getCommander().getExperience()
+                    + fleet.getNumberOfShip());
+              }
+            }
+          }
           if (fleet.getRoute() != null) {
             if (fleet.getRoute().isFixing()) {
               Planet planet = game.getStarMap()

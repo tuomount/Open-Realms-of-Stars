@@ -1386,6 +1386,14 @@ public class Planet {
    */
   public void updateOneTurn(final boolean enemyOrbiting, final StarMap map) {
     if (planetOwnerInfo != null) {
+      if (governor != null) {
+        if (governor.getJob() == Job.DEAD) {
+          governor = null;
+        } else {
+          governor.setExperience(governor.getExperience()
+              + getTotalPopulation());
+        }
+      }
       happinessEffect = HappinessEffect.createHappinessEffect(
           calculateHappiness());
       if (happinessEffect.getType() != HappinessBonus.KILL_POPULATION
@@ -1568,6 +1576,10 @@ public class Planet {
           }
           metal = metal - underConstruction.getMetalCost();
           prodResource = prodResource - underConstruction.getProdCost();
+          if (governor != null) {
+            governor.setExperience(governor.getExperience()
+                + underConstruction.getProdCost() / 2);
+          }
           buildings.add((Building) underConstruction);
           msg = new Message(MessageType.CONSTRUCTION,
               getName() + " built " + underConstruction.getName(),
@@ -1581,6 +1593,10 @@ public class Planet {
         } else if (underConstruction instanceof Ship && !enemyOrbiting) {
           metal = metal - underConstruction.getMetalCost();
           prodResource = prodResource - underConstruction.getProdCost();
+          if (governor != null) {
+            governor.setExperience(governor.getExperience()
+                + underConstruction.getProdCost() / 2);
+          }
           ShipStat stat = planetOwnerInfo.getShipStatByName(
               underConstruction.getName());
           if (stat == null) {

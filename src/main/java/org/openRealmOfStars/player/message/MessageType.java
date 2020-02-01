@@ -51,7 +51,11 @@ public enum MessageType {
   /**
    * GBNC has news message
    */
-  NEWS;
+  NEWS,
+  /**
+   * Leader information, focus to leader
+   */
+  LEADER;
 
   /**
    * Get Message type index
@@ -73,6 +77,8 @@ public enum MessageType {
       return 5;
     case NEWS:
       return 6;
+    case LEADER:
+      return 7;
     default:
       return 0;
     }
@@ -99,6 +105,8 @@ public enum MessageType {
       return MessageType.FLEET;
     case 6:
       return MessageType.NEWS;
+    case 7:
+      return MessageType.LEADER;
     default:
       return MessageType.RESEARCH;
     }
@@ -121,6 +129,8 @@ public enum MessageType {
       return "Fleet";
     case NEWS:
       return "News";
+    case LEADER:
+      return "Leader";
     default:
       return "Error - Unknown";
     }

@@ -25,11 +25,13 @@ package org.openRealmOfStars.player.leader;
 public enum Perk {
 
   /**
-   * Ruler perk for militaristic
+   * Ruler perk for militaristic.
+   * +1 Fleet capacity when leader is ruler.
    */
   MILITARISTIC(0, "Militaristic", "+1 Fleet capacity when leader is ruler."),
   /**
-   * Ruler perk for Warlord
+   * Ruler perk for Warlord.
+   * +1 war resistance when leader is ruler.
    */
   WARLORD(1, "Warlord", "+1 war resistance when leader is ruler."),
   /**
@@ -38,143 +40,167 @@ public enum Perk {
   CHARISMATIC(2, "Charismatic", "+1 Diplomacy bonus when leader is ruler."),
   /**
    * Governor perk for agricultural.
+   * +1 Food production when leader is governor
    */
   AGRICULTURAL(3, "Agricultural",
       "+1 Food production when leader is governor"),
   /**
    * Governor perk for mining.
+   * +1 Metal production when leader is governor
    */
   MINER(4, "Miner", "+1 Metal production when leader is governor"),
   /**
-   * Governor perk for industrial
+   * Governor perk for industrial.
+   * +1 Production production when leader is governor
    */
   INDUSTRIAL(5, "Industrial",
       "+1 Production production when leader is governor"),
   /**
    * Ruler/Governor perk for scientist.
+   * +1 Research production when leader is governor or ruler
    */
   SCIENTIST(6, "Scientist",
       "+1 Research production when leader is governor or ruler"),
   /**
-   * Governor perk for culture
+   * Governor perk for culture.
+   * +1 Culture production when leader is governor
    */
   ARTISTIC(7, "Artistic", "+1 Culture production when leader is governor"),
   /**
-   * Ruler/Governor perk for credit
+   * Ruler/Governor perk for credit.
+   * +1 Credit prodcution when leader is governor or ruler
    */
   MERCHANT(8, "Merchant",
       "+1 Credit prodcution when leader is governor or ruler"),
   /**
-   * Governor/Fleet commander perk for increasing troop power
+   * Governor/Fleet commander perk for increasing troop power.
+   * +25% troop power when leader is governor or fleet commander
    */
   DISCIPLINE(9, "Discipline",
       "+25% troop power when leader is governor or fleet commander"),
   /**
-   * Governor/ruler perk for happiness
+   * Governor/ruler perk for happiness.
+   * +1 Happiness when leader is governor or ruler
    */
   GOOD_LEADER(10, "Good leader",
       "+1 Happiness when leader is governor or ruler"),
   /**
-   * Fleet commander perk for regular speed
+   * Fleet commander perk for regular speed.
+   * +1 Speed when leader is fleet commander
    */
   EXPLORER(11, "Explorer", "+1 Speed when leader is fleet commander"),
   /**
-   * Fleet commander perk for FTL speed
+   * Fleet commander perk for FTL speed.
+   * +1 FTL Speed when leader is fleet commander
    */
   FTL_ENGINEER(12, "FTL Engineer",
       "+1 FTL Speed when leader is fleet commander"),
   /**
    * Fleet commander perk for combat initiative.
+   * +1 Combat initiative when leader is fleet commander
    */
   COMBAT_TACTICIAN(13, "Combat tactician",
       "+1 Combat initiative when leader is fleet commander"),
   /**
-   * Fleet commander perk for beam weapon damage
+   * Fleet commander perk for beam weapon damage.
+   * +1 Beam weapon damage when leader is fleet commander
    */
   BEAM_WEAPON_MASTER(14, "Beam weapon master",
       "+1 Beam weapon damage when leader is fleet commander"),
   /**
-   * Fleet commander perk for missile weapon damage
+   * Fleet commander perk for missile weapon damage.
+   * +1 Missile weapon damage when leader is fleet commander
    */
   MISSILE_WEAPON_MASTER(15, "Missile weapon master",
       "+1 Missile weapon damage when leader is fleet commander"),
   /**
-   * Fleet commander perk for photon torpedo damage
+   * Fleet commander perk for photon torpedo damage.
+   * +1 Photon torpedo damage when leader is fleet commander
    */
   PHOTON_TORPEDO_WEAPON_MASTER(16, "Photon torpedo weapon master",
       "+1 Photon torpedo damage when leader is fleet commander"),
   /**
-   * Fleet commander perk for massdrive weapon damage
+   * Fleet commander perk for massdrive weapon damage.
+   * +1 Massdrive damage when leader is fleet commander
    */
   MASSDRIVE_WEAPON_MASTER(17, "Massdrive weapon master",
       "+1 Massdrive damage when leader is fleet commander"),
   /**
    * Fleet commander perk for improving shield power.
+   * +1 Shield value when leader is fleet commander
    */
   SHIELD_MASTER(18, "Shield master",
       "+1 Shield value when leader is fleet commander"),
   /**
    * Fleet commander perk for improving armor power.
+   * +1 Armor value when leader is fleet commander
    */
   ARMOR_MASTER(19, "Armor master",
       "+1 Armor value when leader is fleet commander"),
   /**
    * Fleet commander perk for improving espionage.
+   * +1 Espionage value when leader is fleet commander
    */
   SPY_MASTER(20, "Spy master",
       "+1 Espionage value when leader is fleet commander"),
   /**
-   * Fleet commander perk for improving cloacking value
+   * Fleet commander perk for improving cloacking value.
+   *  +5 Cloacking value when leader is fleet commander
    */
   SECRET_AGENT(21, "Secret agent",
       "+5 Cloacking value when leader is fleet commander"),
   /**
-   * Fleet commander perk for better trading
+   * Fleet commander perk for better trading.
+   *  +1 extra credit from trading when leader is fleet commander
    */
   TRADER(22, "Trader",
       "+1 extra credit from trading when leader is fleet commander"),
   /**
-   * Stupid perk
+   * Stupid perk. -1 Research when leader is governor or ruler
    */
   STUPID(23, "Stupid", "-1 Research when leader is governor or ruler"),
   /**
-   * Micro manager perk for governors/rulers
+   * Micro manager perk for governors.
+   *  -1 Production production when leader is governor
    */
   MICRO_MANAGER(24, "Micro manager",
-      "-1 Production production when leader is governor or ruler"),
+      "-1 Production production when leader is governor"),
   /**
-   * Corrupted leader steal credit from realm
+   * Corrupted leader steal credit from realm.
+   *  -1 Credit when leader is on duty
    */
   CORRUPTED(25, "Corrupted", "-1 Credit when leader is on duty"),
   /**
-   * Addicted leader dies earlier than other
+   * Addicted leader dies earlier than other.
    */
   ADDICTED(26, "Addicted", "Leader dies signifigantly younger than other"),
   /**
-   * Pacifist leader
+   * Pacifist leader.
+   * -1 Fleet capacity when leader is ruler and cannot be assigned as
+   * Fleet commander for military ships
    */
   PACIFIST(27, "Pacifist",
       "-1 Fleet capacity when leader is ruler and cannot be assigned as"
       + " Fleet commander for military ships"),
   /**
-   * Weak leader bad perk
+   * Weak leader bad perk. -1 war resistance when leader is ruler
    */
   WEAK_LEADER(28, "Weak leader", "-1 war resistance when leader is ruler"),
   /**
-   * Slow learner bad perk.
+   * Slow learner bad perk. Experience requirement is doubled for next level
    */
   SLOW_LEARNER(29, "Slow learner",
       "Experience requirement is doubled for next level"),
   /**
-   * Repulsive bad perk.
+   * Repulsive bad perk. -1 Diplomatic when leader is ruler
    */
   REPULSIVE(30, "Repulsive", "-1 Diplomatic when leader is ruler"),
   /**
-   * Academic generic perk.
+   * Academic generic perk. Experience requirement is halved for next level
    */
   ACADEMIC(31, "Academic", "Experience requirement is halved for next level"),
   /**
-   * Power hungry generic perk
+   * Power hungry generic perk. Leader tries to get as ruler by any means.
    */
   POWER_HUNGRY(32, "Power hungry",
       "Leader tries to get as ruler by any means.");

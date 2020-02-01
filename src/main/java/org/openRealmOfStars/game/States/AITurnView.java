@@ -40,6 +40,9 @@ import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetType;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -1807,6 +1810,62 @@ public class AITurnView extends BlackPanel {
       }
     }
   }
+
+  /**
+   * Handle leaders getting older.
+   * Handle also ruler leader experience
+   * @param realm Realm whose leaders are being handled
+   */
+  public void handleLeaders(final PlayerInfo realm) {
+    for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getJob() != Job.DEAD) {
+        // First getting older
+        leader.setAge(leader.getAge() + 1);
+        if (leader.getJob() == Job.TOO_YOUNG && leader.getAge() >= 18) {
+          leader.setJob(Job.UNASSIGNED);
+        }
+        // Checking the mortality
+        int lifeExpection = leader.getRace().getLifeSpan();
+        if (leader.hasPerk(Perk.ADDICTED)) {
+          lifeExpection = lifeExpection - lifeExpection / 5;
+        }
+        if (leader.getAge() > lifeExpection) {
+          int chance = leader.getAge() - lifeExpection;
+          if (DiceGenerator.getRandom(1, 100) <= chance) {
+            leader.setJob(Job.DEAD);
+            Message msg = new Message(MessageType.LEADER,
+                leader.getTitle() + " " + leader.getName()
+                    + " has died at age of " + leader.getAge(),
+                Icons.getIconByName(Icons.ICON_DEATH));
+            realm.getMsgList().addNewMessage(msg);
+          }
+        }
+      }
+      if (leader.getJob() == Job.RULER) {
+        int numberOfPlanet = 0;
+        int numberOfStarbases = 0;
+        for (Planet planet : game.getStarMap().getPlanetList()) {
+          if (planet.getPlanetPlayerInfo() == realm) {
+            numberOfPlanet++;
+          }
+        }
+        for (int i = 0; i < realm.getFleets().getNumberOfFleets(); i++) {
+          Fleet fleet = realm.getFleets().getByIndex(i);
+          if (fleet.isStarBaseDeployed()) {
+            numberOfStarbases++;
+          }
+        }
+        leader.setExperience(
+            leader.getExperience() + numberOfPlanet * 4 + numberOfStarbases);
+        int required = leader.getRequiredExperience();
+        if (leader.getExperience() >= required) {
+          leader.setLevel(leader.getLevel() + 1);
+          leader.setExperience(leader.getExperience() - required);
+          // TODO Add perk gaining and leveling up here
+        }
+      }
+    }
+  }
   /**
    * Update whole star map to next turn
    */
@@ -1832,6 +1891,7 @@ public class AITurnView extends BlackPanel {
             }
           }
         }
+        handleLeaders(info);
         info.getDiplomacy().updateDiplomacyLastingForTurn();
         info.resetVisibilityDataAfterTurn();
         info.getMsgList().clearMessages();

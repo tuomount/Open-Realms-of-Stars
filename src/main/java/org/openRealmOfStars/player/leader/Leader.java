@@ -278,6 +278,20 @@ public class Leader {
   }
 
   /**
+   * Get amount of experience required for next level.
+   * @return Required experience.
+   */
+  public int getRequiredExperience() {
+    int result = getLevel() * 100;
+    if (hasPerk(Perk.ACADEMIC)) {
+      result = result / 2;
+    }
+    if (hasPerk(Perk.SLOW_LEARNER)) {
+      result = result * 2;
+    }
+    return result;
+  }
+  /**
    * Set experience for current level
    * @param experience for current level
    */
@@ -354,6 +368,8 @@ public class Leader {
     builder.append("\n");
     builder.append("Experience: ");
     builder.append(getExperience());
+    builder.append("/");
+    builder.append(getRequiredExperience());
     builder.append("\n");
     return builder.toString();
   }
@@ -427,6 +443,19 @@ public class Leader {
     return perkList;
   }
 
+  /**
+   * Check if leader has certain perk
+   * @param perk Perk to look for
+   * @return True if found
+   */
+  public boolean hasPerk(final Perk perk) {
+    for (Perk iterator : perkList) {
+      if (iterator == perk) {
+        return true;
+      }
+    }
+    return false;
+  }
   /**
    * Get parent index for leader.
    * This is avaiable only if leader is created from reading saved game.

@@ -108,7 +108,9 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     infoText = new InfoTextArea(20, 35);
     infoText.setEditable(false);
     infoText.setFont(GuiStatics.getFontCubellanSmaller());
-    center.add(infoText, BorderLayout.WEST);
+    scroll = new JScrollPane(infoText);
+    scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
+    center.add(scroll, BorderLayout.WEST);
     mapPanel = new MapPanel(false);
     center.add(mapPanel, BorderLayout.CENTER);
     // Bottom panel

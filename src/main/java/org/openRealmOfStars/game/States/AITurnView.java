@@ -2382,12 +2382,17 @@ public class AITurnView extends BlackPanel {
         // Handle war fatigue for player
         GovernmentType government = info.getGovernment();
         if (!government.isImmuneToHappiness()) {
+          int warResistance = government.getWarResistance();
+          if (info.getRuler() != null
+              && info.getRuler().hasPerk(Perk.WARLORD)) {
+            warResistance++;
+          }
           boolean fatigued = false;
           int wars = info.getDiplomacy().getNumberOfWar();
           int warFatigueValue = info.getTotalWarFatigue();
-          if (wars > 0 && wars > government.getWarResistance()) {
+          if (wars > 0 && wars > warResistance) {
             int fatigue = info.getWarFatigue();
-            fatigue = fatigue - wars + government.getWarResistance();
+            fatigue = fatigue - wars + warResistance;
             fatigued = true;
             info.setWarFatigue(fatigue);
           }

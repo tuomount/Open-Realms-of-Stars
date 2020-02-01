@@ -14,6 +14,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -580,6 +581,9 @@ public class Planet {
           multiply = multiply + building.getBattleBonus();
         }
       }
+      if (governor != null && governor.hasPerk(Perk.DISCIPLINE)) {
+        multiply = multiply + 25;
+      }
       result = result * multiply / 100;
       return result;
     }
@@ -599,6 +603,9 @@ public class Planet {
         if (building.getBattleBonus() > 0) {
           multiply = multiply + building.getBattleBonus();
         }
+      }
+      if (governor != null && governor.hasPerk(Perk.DISCIPLINE)) {
+        multiply = multiply + 25;
       }
       result = result * multiply / 100;
       return result;
@@ -785,6 +792,9 @@ public class Planet {
       if (totalPopulation >= 4) {
         result = result + government.getFoodBonus();
       }
+      if (governor != null && governor.hasPerk(Perk.AGRICULTURAL)) {
+        result = result + 1;
+      }
       break;
     }
     case PRODUCTION_METAL: {
@@ -800,6 +810,9 @@ public class Planet {
       }
       if (happinessEffect.getType() == HappinessBonus.METAL) {
         result = result + happinessEffect.getValue();
+      }
+      if (governor != null && governor.hasPerk(Perk.MINER)) {
+        result = result + 1;
       }
       break;
     }
@@ -818,6 +831,9 @@ public class Planet {
       if (happinessEffect.getType() == HappinessBonus.PRODUCTION) {
         result = result + happinessEffect.getValue();
       }
+      if (governor != null && governor.hasPerk(Perk.INDUSTRIAL)) {
+        result = result + 1;
+      }
       break;
     }
     case PRODUCTION_RESEARCH: {
@@ -827,6 +843,12 @@ public class Planet {
           + getTotalProductionFromBuildings(prod);
       if (totalPopulation >= 4) {
         result = result + government.getResearchBonus();
+      }
+      if (governor != null && governor.hasPerk(Perk.SCIENTIST)) {
+        result = result + 1;
+      }
+      if (governor != null && governor.hasPerk(Perk.STUPID)) {
+        result = result - 1;
       }
       break;
     }
@@ -842,6 +864,9 @@ public class Planet {
       if (happinessEffect.getType() == HappinessBonus.CULTURE) {
         result = result + happinessEffect.getValue();
       }
+      if (governor != null && governor.hasPerk(Perk.ARTISTIC)) {
+        result = result + 1;
+      }
       break;
     }
     case PRODUCTION_CREDITS: {
@@ -854,6 +879,9 @@ public class Planet {
       }
       if (happinessEffect.getType() == HappinessBonus.CREDIT) {
         result = result + happinessEffect.getValue();
+      }
+      if (governor != null && governor.hasPerk(Perk.MERCHANT)) {
+        result = result + 1;
       }
       break;
     }
@@ -2520,6 +2548,12 @@ public class Planet {
       sb.append("<li>");
       sb.append("War fatigue ");
       sb.append(totalWarFatigue);
+      sb.append("<br>");
+    }
+    if (governor != null && governor.hasPerk(Perk.GOOD_LEADER)) {
+      base = base + 1;
+      sb.append("<li>");
+      sb.append("Good leader +1");
       sb.append("<br>");
     }
     sb.append("</html>");

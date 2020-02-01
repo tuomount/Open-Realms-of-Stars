@@ -12,6 +12,7 @@ import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetVisibility;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
@@ -1935,6 +1936,10 @@ public class DiplomaticTrade {
         .getDiplomacyBonus() / 2;
     if (bonus > 10) {
       bonus = 10;
+    }
+    if (info1.getRuler() != null
+        && info1.getRuler().hasPerk(Perk.CHARISMATIC)) {
+      bonus = bonus + 1;
     }
     if (!isDiplomacyWithPirates()) {
       difference = difference - bonus;

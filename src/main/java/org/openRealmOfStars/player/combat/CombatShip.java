@@ -1,6 +1,7 @@
 package org.openRealmOfStars.player.combat;
 
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 
@@ -86,20 +87,26 @@ public class CombatShip implements Comparable<CombatShip> {
 
 
   /**
+   * Fleet's commander.
+   */
+  private Leader commander;
+  /**
    * Constructor for Combat ship
    * @param ship Ship to put in combat
    * @param player Player who owns the ship
    * @param x Ship's X coordinate in combat map
    * @param y Ship's Y coordinate in combat map
    * @param flip Ship's image on Y axel
+   * @param commander Fleet's commander
    */
   public CombatShip(final Ship ship, final PlayerInfo player, final int x,
-      final int y, final boolean flip) {
+      final int y, final boolean flip, final Leader commander) {
     this.ship = ship;
     this.x = x;
     this.y = y;
     this.player = player;
     this.flipY = flip;
+    this.commander = commander;
     this.movesLeft = ship.getTacticSpeed();
     this.setBonusAccuracy(0);
     this.setPrivateeredCredits(0);
@@ -380,4 +387,11 @@ public class CombatShip implements Comparable<CombatShip> {
     this.privateeredCredits = privateeredCredits;
   }
 
+  /**
+   * Get fleet's commander
+   * @return Leader
+   */
+  public Leader getCommander() {
+    return commander;
+  }
 }

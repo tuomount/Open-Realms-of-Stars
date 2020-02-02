@@ -14,6 +14,7 @@ import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -277,7 +278,7 @@ private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
       int combatShipX = positionList.getStartPosX(index);
       int combatShipY = positionList.getStartPosY(index);
       CombatShip combatShp = new CombatShip(ship, playerInfo,
-              combatShipX, combatShipY, flipY);
+              combatShipX, combatShipY, flipY, fleet.getCommander());
       if (fleet.getRoute() != null && fleet.getRoute().isDefending()) {
         combatShp.setBonusAccuracy(5);
       }
@@ -1122,6 +1123,10 @@ public boolean launchIntercept(final int distance,
       final ShipComponent weapon, final CombatShip target) {
     int accuracy = shooter.getShip().getHitChance(weapon)
         + shooter.getBonusAccuracy();
+    if (shooter.getCommander() !=  null
+        && shooter.getCommander().hasPerk(Perk.COMBAT_MASTER)) {
+      accuracy = accuracy + 5;
+    }
     accuracy = accuracy - target.getShip().getDefenseValue();
     if (accuracy < 5) {
       accuracy = 5;

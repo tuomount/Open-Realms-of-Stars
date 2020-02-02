@@ -389,6 +389,9 @@ public class Fleet {
         lvl = shipLvl;
       }
     }
+    if (commander != null && commander.hasPerk(Perk.SCANNER_EXPERT)) {
+      lvl++;
+    }
     return lvl;
   }
 
@@ -403,6 +406,9 @@ public class Fleet {
       if (shipLvl > lvl) {
         lvl = shipLvl;
       }
+    }
+    if (commander != null && commander.hasPerk(Perk.COUNTER_AGENT)) {
+      lvl++;
     }
     return lvl;
   }

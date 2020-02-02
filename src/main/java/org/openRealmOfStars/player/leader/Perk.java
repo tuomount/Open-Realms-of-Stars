@@ -102,107 +102,83 @@ public enum Perk {
   COMBAT_TACTICIAN(13, "Combat tactician",
       "+1 Combat initiative when leader is fleet commander"),
   /**
-   * Fleet commander perk for beam weapon damage.
-   * +1 Beam weapon damage when leader is fleet commander
+   * Fleet commander perk for increase scanning range.
    */
-  BEAM_WEAPON_MASTER(14, "Beam weapon master",
-      "+1 Beam weapon damage when leader is fleet commander"),
+  SCANNER_EXPERT(14, "Scanner expert", "+1 Scanning range"),
   /**
-   * Fleet commander perk for missile weapon damage.
-   * +1 Missile weapon damage when leader is fleet commander
+   * Fleet commander perk for detecting cloacked fleets.
    */
-  MISSILE_WEAPON_MASTER(15, "Missile weapon master",
-      "+1 Missile weapon damage when leader is fleet commander"),
+  COUNTER_AGENT(15, "Counter agent", "+5 Cloaking detection"),
   /**
-   * Fleet commander perk for photon torpedo damage.
-   * +1 Photon torpedo damage when leader is fleet commander
+   * Fleet commander perk for increased hit accuracy
    */
-  PHOTON_TORPEDO_WEAPON_MASTER(16, "Photon torpedo weapon master",
-      "+1 Photon torpedo damage when leader is fleet commander"),
-  /**
-   * Fleet commander perk for massdrive weapon damage.
-   * +1 Massdrive damage when leader is fleet commander
-   */
-  MASSDRIVE_WEAPON_MASTER(17, "Massdrive weapon master",
-      "+1 Massdrive damage when leader is fleet commander"),
-  /**
-   * Fleet commander perk for improving shield power.
-   * +1 Shield value when leader is fleet commander
-   */
-  SHIELD_MASTER(18, "Shield master",
-      "+1 Shield value when leader is fleet commander"),
-  /**
-   * Fleet commander perk for improving armor power.
-   * +1 Armor value when leader is fleet commander
-   */
-  ARMOR_MASTER(19, "Armor master",
-      "+1 Armor value when leader is fleet commander"),
+  COMBAT_MASTER(16, "Combat master", "+5 accuracy"),
   /**
    * Fleet commander perk for improving espionage.
    * +1 Espionage value when leader is fleet commander
    */
-  SPY_MASTER(20, "Spy master",
+  SPY_MASTER(17, "Spy master",
       "+1 Espionage value when leader is fleet commander"),
   /**
    * Fleet commander perk for improving cloacking value.
    *  +5 Cloacking value when leader is fleet commander
    */
-  SECRET_AGENT(21, "Secret agent",
+  SECRET_AGENT(18, "Secret agent",
       "+5 Cloacking value when leader is fleet commander"),
   /**
    * Fleet commander perk for better trading.
    *  +1 extra credit from trading when leader is fleet commander
    */
-  TRADER(22, "Trader",
+  TRADER(19, "Trader",
       "+1 extra credit from trading when leader is fleet commander"),
   /**
    * Stupid perk. -1 Research when leader is governor or ruler
    */
-  STUPID(23, "Stupid", "-1 Research when leader is governor or ruler"),
+  STUPID(20, "Stupid", "-1 Research when leader is governor or ruler"),
   /**
    * Micro manager perk for governors.
    *  -1 Production production when leader is governor
    */
-  MICRO_MANAGER(24, "Micro manager",
+  MICRO_MANAGER(21, "Micro manager",
       "-1 Production production when leader is governor"),
   /**
    * Corrupted leader steal credit from realm.
    *  -1 Credit when leader is on duty
    */
-  CORRUPTED(25, "Corrupted", "-1 Credit when leader is on duty"),
+  CORRUPTED(22, "Corrupted", "-1 Credit when leader is on duty"),
   /**
    * Addicted leader dies earlier than other.
    */
-  ADDICTED(26, "Addicted", "Leader dies signifigantly younger than other"),
+  ADDICTED(23, "Addicted", "Leader dies signifigantly younger than other"),
   /**
    * Pacifist leader.
    * -1 Fleet capacity when leader is ruler and cannot be assigned as
    * Fleet commander for military ships
    */
-  PACIFIST(27, "Pacifist",
+  PACIFIST(24, "Pacifist",
       "-1 Fleet capacity when leader is ruler and cannot be assigned as"
       + " Fleet commander for military ships"),
   /**
    * Weak leader bad perk. -1 war resistance when leader is ruler
    */
-  WEAK_LEADER(28, "Weak leader", "-1 war resistance when leader is ruler"),
+  WEAK_LEADER(25, "Weak leader", "-1 war resistance when leader is ruler"),
   /**
    * Slow learner bad perk. Experience requirement is doubled for next level
    */
-  SLOW_LEARNER(29, "Slow learner",
+  SLOW_LEARNER(26, "Slow learner",
       "Experience requirement is doubled for next level"),
   /**
    * Repulsive bad perk. -1 Diplomatic when leader is ruler
    */
-  REPULSIVE(30, "Repulsive", "-1 Diplomatic when leader is ruler"),
+  REPULSIVE(27, "Repulsive", "-1 Diplomatic when leader is ruler"),
   /**
    * Academic generic perk. Experience requirement is halved for next level
    */
-  ACADEMIC(31, "Academic", "Experience requirement is halved for next level"),
+  ACADEMIC(28, "Academic", "Experience requirement is halved for next level"),
   /**
    * Power hungry generic perk. Leader tries to get as ruler by any means.
    */
-  POWER_HUNGRY(32, "Power hungry",
+  POWER_HUNGRY(29, "Power hungry",
       "Leader tries to get as ruler by any means.");
 
 
@@ -270,12 +246,9 @@ public enum Perk {
         || this == Perk.EXPLORER
         || this == Perk.FTL_ENGINEER
         || this == Perk.COMBAT_TACTICIAN
-        || this == Perk.BEAM_WEAPON_MASTER
-        || this == Perk.MISSILE_WEAPON_MASTER
-        || this == Perk.PHOTON_TORPEDO_WEAPON_MASTER
-        || this == Perk.MASSDRIVE_WEAPON_MASTER
-        || this == Perk.SHIELD_MASTER
-        || this == Perk.ARMOR_MASTER
+        || this == Perk.COMBAT_MASTER
+        || this == Perk.COUNTER_AGENT
+        || this == Perk.SCANNER_EXPERT
         || this == Perk.SPY_MASTER
         || this == Perk.SECRET_AGENT
         || this == Perk.TRADER) {

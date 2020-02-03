@@ -834,6 +834,10 @@ public class Planet {
       if (governor != null && governor.hasPerk(Perk.INDUSTRIAL)) {
         result = result + 1;
       }
+      if (governor != null && governor.hasPerk(Perk.MICRO_MANAGER)
+          && result > 0) {
+        result = result - 1;
+      }
       break;
     }
     case PRODUCTION_RESEARCH: {
@@ -2553,7 +2557,14 @@ public class Planet {
     if (governor != null && governor.hasPerk(Perk.GOOD_LEADER)) {
       base = base + 1;
       sb.append("<li>");
-      sb.append("Good leader +1");
+      sb.append("Governor Good leader +1");
+      sb.append("<br>");
+    }
+    if (getPlanetPlayerInfo().getRuler() != null
+        && getPlanetPlayerInfo().getRuler().hasPerk(Perk.GOOD_LEADER)) {
+      base = base + 1;
+      sb.append("<li>");
+      sb.append("Ruler Good leader +1");
       sb.append("<br>");
     }
     sb.append("</html>");

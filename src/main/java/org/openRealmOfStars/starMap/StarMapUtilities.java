@@ -8,6 +8,7 @@ import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusType;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.newsCorp.NewsCorpData;
@@ -657,6 +658,10 @@ public final class StarMapUtilities {
         credits = credits / 2;
       }
       credits = credits + info.getGovernment().getTradeBonus();
+      if (fleet.getCommander() != null
+          && fleet.getCommander().hasPerk(Perk.TRADER)) {
+        credits++;
+      }
       if (credits > 0) {
         if (info.getRace() == SpaceRace.SCAURIANS) {
           credits = credits * 3 / 2;
@@ -682,6 +687,10 @@ public final class StarMapUtilities {
     } else if (diplomacy == null) {
       int credits = fleet.doTrade(planet, info);
       credits = credits + info.getGovernment().getTradeBonus();
+      if (fleet.getCommander() != null
+          && fleet.getCommander().hasPerk(Perk.TRADER)) {
+        credits++;
+      }
       if (credits > 0) {
         if (info.getRace() == SpaceRace.SCAURIANS) {
           credits = credits * 3 / 2;

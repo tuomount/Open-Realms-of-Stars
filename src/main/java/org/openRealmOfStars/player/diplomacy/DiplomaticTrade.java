@@ -1941,6 +1941,10 @@ public class DiplomaticTrade {
         && info1.getRuler().hasPerk(Perk.CHARISMATIC)) {
       bonus = bonus + 1;
     }
+    if (info1.getRuler() != null
+        && info1.getRuler().hasPerk(Perk.REPULSIVE)) {
+      bonus = bonus - 1;
+    }
     if (!isDiplomacyWithPirates()) {
       difference = difference - bonus;
     } else {

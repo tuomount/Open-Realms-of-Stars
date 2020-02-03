@@ -2967,9 +2967,28 @@ public class StarMap {
       Fleet fleet = info.getFleets().getByIndex(i);
       if (production == Planet.PRODUCTION_RESEARCH) {
         result = result + fleet.getTotalReseachBonus();
+        if (info.getRuler() != null
+            && info.getRuler().hasPerk(Perk.SCIENTIST)) {
+          result++;
+        }
+        if (info.getRuler() != null && info.getRuler().hasPerk(Perk.STUPID)
+            && result > 0) {
+          result--;
+        }
       }
       if (production == Planet.PRODUCTION_CREDITS) {
         result = result + fleet.getTotalCreditsBonus();
+        if (info.getRuler() != null
+            && info.getRuler().hasPerk(Perk.MERCHANT)) {
+          result++;
+        }
+        for (Leader leader : info.getLeaderPool()) {
+          if ((leader.getJob() == Job.RULER || leader.getJob() == Job.COMMANDER
+              || leader.getJob() == Job.GOVERNOR)
+              && leader.hasPerk(Perk.CORRUPTED)) {
+            result--;
+          }
+        }
       }
       if (production == Planet.PRODUCTION_CULTURE) {
         result = result + fleet.getTotalCultureBonus();
@@ -3693,6 +3712,10 @@ public class StarMap {
     if (info.getRuler() != null
         && info.getRuler().hasPerk(Perk.MILITARISTIC)) {
       result = result + 1;
+    }
+    if (info.getRuler() != null
+        && info.getRuler().hasPerk(Perk.PACIFIST)) {
+      result = result - 1;
     }
     return result;
   }

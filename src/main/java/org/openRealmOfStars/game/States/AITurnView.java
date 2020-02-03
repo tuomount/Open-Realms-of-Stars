@@ -2387,6 +2387,10 @@ public class AITurnView extends BlackPanel {
               && info.getRuler().hasPerk(Perk.WARLORD)) {
             warResistance++;
           }
+          if (info.getRuler() != null
+              && info.getRuler().hasPerk(Perk.WEAK_LEADER)) {
+            warResistance--;
+          }
           boolean fatigued = false;
           int wars = info.getDiplomacy().getNumberOfWar();
           int warFatigueValue = info.getTotalWarFatigue();

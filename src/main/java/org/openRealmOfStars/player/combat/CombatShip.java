@@ -2,6 +2,7 @@ package org.openRealmOfStars.player.combat;
 
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 
@@ -163,7 +164,17 @@ public class CombatShip implements Comparable<CombatShip> {
 
   @Override
   public int compareTo(final CombatShip o) {
-    return this.ship.getInitiative() - o.getShip().getInitiative();
+    int thisInit = this.ship.getInitiative();
+    int otherInit = o.getShip().getInitiative();
+    if (this.getCommander() != null
+        && this.getCommander().hasPerk(Perk.COMBAT_TACTICIAN)) {
+      thisInit++;
+    }
+    if (o.getCommander() != null
+        && o.getCommander().hasPerk(Perk.COMBAT_TACTICIAN)) {
+      otherInit++;
+    }
+    return thisInit - otherInit;
   }
 
   /**

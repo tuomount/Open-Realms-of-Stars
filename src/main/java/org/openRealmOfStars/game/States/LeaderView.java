@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -23,6 +24,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -80,6 +82,11 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
   private MapPanel mapPanel;
 
   /**
+   * Leader Cost for recruit
+   */
+  private int leaderCost;
+
+  /**
    * View Leader view.
    * @param info Player info
    * @param starMap Star map data
@@ -92,7 +99,7 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     InfoPanel base = new InfoPanel();
     base.setTitle("Leaders");
     this.setLayout(new BorderLayout());
-    base.setLayout(new BorderLayout());
+    base.setLayout(new BoxLayout(base, BoxLayout.Y_AXIS));
     InfoPanel center = new InfoPanel();
     center.setTitle("Leader");
     center.setLayout(new BorderLayout());
@@ -104,7 +111,17 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     leaderList.setBackground(Color.BLACK);
     leaderList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    base.add(scroll, BorderLayout.CENTER);
+    base.add(scroll);
+    scroll.setAlignmentX(CENTER_ALIGNMENT);
+    SpaceButton recruitBtn = new SpaceButton("Recruit leader",
+        GameCommands.COMMAND_RECRUIT_LEADER);
+    leaderCost = LeaderUtility.leaderRecruitCost(info);
+    recruitBtn.setToolTipText("<html>Recruit new leader with " + leaderCost
+        + " credits.<br> This will also use one population from planet."
+        + "</html>");
+    recruitBtn.addActionListener(listener);
+    recruitBtn.setAlignmentX(CENTER_ALIGNMENT);
+    base.add(recruitBtn);
     infoText = new InfoTextArea(20, 35);
     infoText.setEditable(false);
     infoText.setFont(GuiStatics.getFontCubellanSmaller());

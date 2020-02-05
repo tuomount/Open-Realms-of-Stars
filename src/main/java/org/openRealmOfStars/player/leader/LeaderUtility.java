@@ -172,6 +172,35 @@ public final class LeaderUtility {
       leader.getPerkList().add(newPerks[index]);
     }
   }
+
+  /**
+   * Calculate leader recruit cost.
+   * @param realm PlayerInfo
+   * @return Leader recruit cost.
+   */
+  public static int leaderRecruitCost(final PlayerInfo realm) {
+    int result = 0;
+    int leaders = 0;
+    for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getParent() == null && (leader.getJob() == Job.COMMANDER
+          || leader.getJob() == Job.GOVERNOR
+          || leader.getJob() == Job.RULER
+          || leader.getJob() == Job.UNASSIGNED)) {
+        leaders++;
+      }
+    }
+    int cost = realm.getGovernment().leaderRecruitCost();
+    if (leaders == 0) {
+      return cost;
+    }
+    if (leaders < realm.getGovernment().leaderPoolLimit()) {
+      return cost * leaders;
+    }
+    int leadersOverLimit = leaders - realm.getGovernment().leaderPoolLimit();
+    result = cost * realm.getGovernment().leaderPoolLimit();
+    result = result + leadersOverLimit * cost * cost;
+    return result;
+  }
   /**
    * Create Title for leader
    * @param leader Leader to whom to create title

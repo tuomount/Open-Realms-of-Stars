@@ -480,6 +480,10 @@ public final class GameCommands {
    * View leader view
    */
   public static final String COMMAND_VIEW_LEADERS = "ViewLeaders";
+  /**
+   * Recruit leader
+   */
+  public static final String COMMAND_RECRUIT_LEADER = "RecruitLeader";
 
   /**
    * Start combat for no reason. This is more like debug purposes

@@ -300,6 +300,79 @@ public enum GovernmentType {
   public int getFleetCapacity() {
     return fleetCapacity;
   }
+
+  /**
+   * Get Leader pool size where not calculating heirs.
+   * When leader pool is full recruit cost goes sky rocket.
+   * @return Leader Pool size.
+   */
+  public int leaderPoolLimit() {
+    switch (this) {
+      default:
+      case ALLIANCE:
+      case DEMOCRACY:
+      case FEDERATION:
+      case MECHANICAL_HORDE:
+      case REPUBLIC: {
+        return 10;
+      }
+      case AI:
+      case HIVEMIND:
+      case NEST: {
+        return 6;
+      }
+      case GUILD:
+      case ENTERPRISE: {
+        return 12;
+      }
+      case EMPIRE:
+      case KINGDOM: {
+        return 7;
+      }
+      case HORDE:
+      case CLAN: {
+        return 9;
+      }
+      case HEGEMONY:
+      case HIERARCHY: {
+        return 8;
+      }
+    }
+  }
+  /**
+   * Get regular leader recruit cost.
+   * Actual cost is multiplied by current leader pool size.
+   * @return single leader recruit cost
+   */
+  public int leaderRecruitCost() {
+    switch (this) {
+      default:
+      case ALLIANCE:
+      case DEMOCRACY:
+      case FEDERATION:
+      case MECHANICAL_HORDE:
+      case REPUBLIC:
+      case EMPIRE:
+      case KINGDOM:
+      case HORDE:
+      case CLAN: {
+        return 10;
+      }
+      case AI:
+      case HIVEMIND:
+      case NEST: {
+        return 5;
+      }
+      case GUILD:
+      case ENTERPRISE: {
+        return 12;
+      }
+      case HEGEMONY:
+      case HIERARCHY: {
+        return 8;
+      }
+    }
+  }
   /**
    * Get Government type description
    * @param markDown Is description on Markdown format or HTML.

@@ -2,6 +2,7 @@ package org.openRealmOfStars.game.States;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.construction.Building;
 
 /**
 *
@@ -90,6 +92,11 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
    * Planet where training happens
    */
   private Planet trainingPlanet;
+
+  /**
+   * Recruit button.
+   */
+  private SpaceButton recruitBtn;
   /**
    * View Leader view.
    * @param info Player info
@@ -117,22 +124,12 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     leaderList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     base.add(scroll);
     scroll.setAlignmentX(CENTER_ALIGNMENT);
-    SpaceButton recruitBtn = new SpaceButton("Recruit leader",
+    recruitBtn = new SpaceButton("Recruit leader",
         GameCommands.COMMAND_RECRUIT_LEADER);
     leaderCost = LeaderUtility.leaderRecruitCost(info);
     trainingPlanet = LeaderUtility.getBestLeaderTrainingPlanet(
         map.getPlanetList(), player);
-    if (trainingPlanet != null) {
-      recruitBtn.setToolTipText("<html>Recruit new leader with " + leaderCost
-          + " credits.<br> This will also use one population from planet "
-          + trainingPlanet.getName() + "."
-          + "</html>");
-    } else {
-      recruitBtn.setToolTipText("<html>Your realm does not have more than"
-          + "<br> 4 population on any of your planets."
-          + "</html>");
-      recruitBtn.setEnabled(false);
-    }
+    updateRecruitButtonToolTips();
     recruitBtn.addActionListener(listener);
     recruitBtn.setAlignmentX(CENTER_ALIGNMENT);
     base.add(recruitBtn);
@@ -158,6 +155,29 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     this.add(center, BorderLayout.CENTER);
   }
 
+  /**
+   * Update Recruit button tool tips.
+   */
+  private void updateRecruitButtonToolTips() {
+    if (trainingPlanet != null && leaderCost <= player.getTotalCredits()) {
+      recruitBtn.setToolTipText("<html>Recruit new leader with " + leaderCost
+          + " credits.<br> This will also use one population from planet "
+          + trainingPlanet.getName() + "."
+          + "</html>");
+    } else if (trainingPlanet == null) {
+      recruitBtn.setToolTipText("<html>Your realm does not have more than"
+          + "<br> 4 population on any of your planets."
+          + "</html>");
+      recruitBtn.setEnabled(false);
+    } else if (leaderCost > player.getTotalCredits()) {
+      recruitBtn.setToolTipText("<html>Your realm does not have enough"
+          + "credits to recruit leader.<br> Leader recruit costs "
+          + leaderCost + " credits. Your realm has " + player.getTotalCredits()
+          + " credits."
+          + "</html>");
+      recruitBtn.setEnabled(false);
+    }
+  }
   /**
    * Update all panels.
    */
@@ -206,6 +226,7 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
       }
       infoText.setText(sb.toString());
     }
+    updateRecruitButtonToolTips();
     this.repaint();
   }
   /**
@@ -266,5 +287,37 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
   @Override
   public void valueChanged(final ListSelectionEvent arg0) {
     updatePanel();
+  }
+
+  /**
+   * Handle actions in leader view.
+   * @param arg0 Action event to handle
+   */
+  public void handleActions(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_RECRUIT_LEADER)
+        && player.getTotalCredits() >= leaderCost) {
+      player.setTotalCredits(player.getTotalCredits() - leaderCost);
+      int level = 1;
+      int xp = 0;
+      for (Building building : trainingPlanet.getBuildingList()) {
+        if (building.getName().equals("Barracks")) {
+          xp = 50;
+        }
+        if (building.getName().equals("Space academy")) {
+          level++;
+        }
+      }
+      Leader leader = LeaderUtility.createLeader(player, trainingPlanet, level);
+      leader.setExperience(xp);
+      leader.setJob(Job.UNASSIGNED);
+      player.getLeaderPool().add(leader);
+      trainingPlanet.takeColonist();
+      Leader[] leaders = sortLeaders(player.getLeaderPool());
+      leaderList.setListData(leaders);
+      leaderCost = LeaderUtility.leaderRecruitCost(player);
+      trainingPlanet = LeaderUtility.getBestLeaderTrainingPlanet(
+          map.getPlanetList(), player);
+      updatePanel();
+    }
   }
 }

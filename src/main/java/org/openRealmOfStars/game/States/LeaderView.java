@@ -87,6 +87,10 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
   private int leaderCost;
 
   /**
+   * Planet where training happens
+   */
+  private Planet trainingPlanet;
+  /**
    * View Leader view.
    * @param info Player info
    * @param starMap Star map data
@@ -116,9 +120,19 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     SpaceButton recruitBtn = new SpaceButton("Recruit leader",
         GameCommands.COMMAND_RECRUIT_LEADER);
     leaderCost = LeaderUtility.leaderRecruitCost(info);
-    recruitBtn.setToolTipText("<html>Recruit new leader with " + leaderCost
-        + " credits.<br> This will also use one population from planet."
-        + "</html>");
+    trainingPlanet = LeaderUtility.getBestLeaderTrainingPlanet(
+        map.getPlanetList(), player);
+    if (trainingPlanet != null) {
+      recruitBtn.setToolTipText("<html>Recruit new leader with " + leaderCost
+          + " credits.<br> This will also use one population from planet "
+          + trainingPlanet.getName() + "."
+          + "</html>");
+    } else {
+      recruitBtn.setToolTipText("<html>Your realm does not have more than"
+          + "<br> 4 population on any of your planets."
+          + "</html>");
+      recruitBtn.setEnabled(false);
+    }
     recruitBtn.addActionListener(listener);
     recruitBtn.setAlignmentX(CENTER_ALIGNMENT);
     base.add(recruitBtn);

@@ -7,6 +7,7 @@ import org.openRealmOfStars.player.SpaceRace.SocialSystem;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -173,6 +174,37 @@ public final class LeaderUtility {
     }
   }
 
+  /**
+   * Get best leader training planet for realm
+   * @param planets Array of planet
+   * @param realm Realm who is about to train leader
+   * @return Best planet or null if nothing is available.
+   */
+  public static Planet getBestLeaderTrainingPlanet(
+      final ArrayList<Planet> planets, final PlayerInfo realm) {
+    Planet result = null;
+    int bestPlanetValue = 0;
+    for (Planet planet : planets) {
+      if (planet.getPlanetPlayerInfo() == realm) {
+        int value = planet.getTotalPopulation();
+        if (value > 4) {
+          for (Building building : planet.getBuildingList()) {
+            if (building.getName().equals("Barracks")) {
+              value = value + 20;
+            }
+            if (building.getName().equals("Space academy")) {
+              value = value + 40;
+            }
+          }
+          if (value > bestPlanetValue) {
+            bestPlanetValue = value;
+            result = planet;
+          }
+        }
+      }
+    }
+    return result;
+  }
   /**
    * Calculate leader recruit cost.
    * @param realm PlayerInfo

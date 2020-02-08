@@ -98,6 +98,18 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
    */
   private SpaceButton recruitBtn;
   /**
+   * Set leader button.
+   */
+  private SpaceButton setLeaderBtn;
+  /**
+   * Active planet from planet view
+   */
+  private Planet activePlanet;
+  /**
+   * Active fleet from fleet view
+   */
+  private Fleet activeFleet;
+  /**
    * View Leader view.
    * @param info Player info
    * @param starMap Star map data
@@ -107,6 +119,8 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
       final ActionListener listener) {
     player = info;
     map = starMap;
+    activeFleet = null;
+    activePlanet = null;
     InfoPanel base = new InfoPanel();
     base.setTitle("Leaders");
     this.setLayout(new BorderLayout());
@@ -129,7 +143,6 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     leaderCost = LeaderUtility.leaderRecruitCost(info);
     trainingPlanet = LeaderUtility.getBestLeaderTrainingPlanet(
         map.getPlanetList(), player);
-    updateRecruitButtonToolTips();
     recruitBtn.addActionListener(listener);
     recruitBtn.setAlignmentX(CENTER_ALIGNMENT);
     base.add(recruitBtn);
@@ -139,6 +152,9 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     scroll = new JScrollPane(infoText);
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     center.add(scroll, BorderLayout.WEST);
+    setLeaderBtn = new SpaceButton("Assign leader",
+        GameCommands.COMMAND_ASSIGN_LEADER);
+    updateButtonToolTips();
     mapPanel = new MapPanel(false);
     center.add(mapPanel, BorderLayout.CENTER);
     // Bottom panel
@@ -156,9 +172,23 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
   }
 
   /**
-   * Update Recruit button tool tips.
+   * Set active planet.
+   * @param planet Planet where to set leader
    */
-  private void updateRecruitButtonToolTips() {
+  public void setPlanet(final Planet planet) {
+    activePlanet = planet;
+  }
+  /**
+   * Set active fleet.
+   * @param fleet Fleet where to set leader
+   */
+  public void setFleet(final Fleet fleet) {
+    activeFleet = fleet;
+  }
+  /**
+   * Update button tool tips.
+   */
+  private void updateButtonToolTips() {
     if (trainingPlanet != null && leaderCost <= player.getTotalCredits()) {
       recruitBtn.setToolTipText("<html>Recruit new leader with " + leaderCost
           + " credits.<br> This will also use one population from planet "
@@ -176,6 +206,21 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
           + " credits."
           + "</html>");
       recruitBtn.setEnabled(false);
+    }
+    if (activeFleet != null || activePlanet != null) {
+      if (activeFleet != null) {
+        setLeaderBtn.setToolTipText("<html>"
+            + "Assign current leader as a commander to "
+            + activeFleet.getName() + ".</html>");
+      }
+      if (activePlanet != null) {
+        setLeaderBtn.setToolTipText("<html>"
+            + "Assign current leader as a govennor to "
+            + activePlanet.getName() + ".</html>");
+      }
+      setLeaderBtn.setEnabled(true);
+    } else {
+      setLeaderBtn.setEnabled(false);
     }
   }
   /**
@@ -226,7 +271,7 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
       }
       infoText.setText(sb.toString());
     }
-    updateRecruitButtonToolTips();
+    updateButtonToolTips();
     this.repaint();
   }
   /**

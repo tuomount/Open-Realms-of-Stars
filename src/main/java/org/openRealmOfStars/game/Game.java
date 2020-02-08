@@ -2641,6 +2641,10 @@ public class Game implements ActionListener {
         changeGameState(GameState.DIPLOMACY_VIEW, planetView);
         SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
       }
+      if (arg0.getActionCommand().equals(
+          GameCommands.COMMAND_VIEW_LEADERS)) {
+        changeGameState(GameState.LEADER_VIEW, planetView.getPlanet());
+      }
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
         SoundPlayer.playMenuSound();

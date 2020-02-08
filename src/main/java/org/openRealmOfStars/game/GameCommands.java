@@ -484,6 +484,10 @@ public final class GameCommands {
    * Recruit leader
    */
   public static final String COMMAND_RECRUIT_LEADER = "RecruitLeader";
+  /**
+   * Assign leader
+   */
+  public static final String COMMAND_ASSIGN_LEADER = "AssignLeader";
 
   /**
    * Start combat for no reason. This is more like debug purposes

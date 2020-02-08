@@ -357,6 +357,22 @@ public final class Icons {
    * Leader too young icon
    */
   public static final String ICON_TOO_YOUNG = "IconTooYoung";
+  /**
+   * Leaders icon
+   */
+  public static final String ICON_LEADERS = "IconLeaders";
+  /**
+   * Governor leader
+   */
+  public static final String ICON_GOVERNOR = "IconGovernor";
+  /**
+   * Commander leader
+   */
+  public static final String ICON_COMMANDER = "IconCommander";
+  /**
+   * Ruler leader
+   */
+  public static final String ICON_RULER = "IconRuler";
 
   /**
    * List of Icon
@@ -631,6 +647,14 @@ public final class Icons {
     icon = new Icon16x16(image, 4, 1, ICON_AIRLOCK_OPEN);
     addIcon(icon);
     icon = new Icon16x16(image, 5, 1, ICON_TOO_YOUNG);
+    addIcon(icon);
+    icon = new Icon16x16(image, 6, 1, ICON_GOVERNOR);
+    addIcon(icon);
+    icon = new Icon16x16(image, 7, 1, ICON_COMMANDER);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 2, ICON_LEADERS);
+    addIcon(icon);
+    icon = new Icon16x16(image, 1, 2, ICON_RULER);
     addIcon(icon);
   }
 

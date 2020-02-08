@@ -40,7 +40,7 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2020  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -155,6 +155,14 @@ public class PlanetView extends BlackPanel {
    */
   private SpaceLabel buildingEstimate;
   /**
+   * Label for current governor.
+   */
+  private IconLabel governorLabel;
+  /**
+   * Button to access leader view.
+   */
+  private SpaceButton leaderViewBtn;
+  /**
    * New construction information text.
    */
   private BaseInfoTextArea productionInfo;
@@ -212,7 +220,9 @@ public class PlanetView extends BlackPanel {
     this.setLayout(new BorderLayout());
 
     // Top Panel
-    InfoPanel topPanel = new InfoPanel();
+    InfoPanel northPanel = new InfoPanel();
+    northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
+    SpaceGreyPanel topPanel = new SpaceGreyPanel();
     topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 
     topPanel.add(Box.createRigidArea(new Dimension(15, 25)));
@@ -398,7 +408,30 @@ public class PlanetView extends BlackPanel {
     topPanel.add(scroll);
     topPanel.add(Box.createRigidArea(new Dimension(15, 25)));
 
-    topPanel.setTitle(planet.getName());
+    northPanel.add(topPanel);
+    northPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    SpaceGreyPanel governorPanel = new SpaceGreyPanel();
+    governorPanel.setLayout(new BoxLayout(governorPanel, BoxLayout.X_AXIS));
+    governorPanel.add(Box.createRigidArea(new Dimension(16, 5)));
+    governorLabel = new IconLabel(null,
+        Icons.getIconByName(Icons.ICON_GOVERNOR),
+        ": Planet's governor with very extra extra long name with surname");
+    if (getPlanet().getGovernor() == null) {
+      governorLabel.setText(": No governor");
+    } else {
+      governorLabel.setText(": " + getPlanet().getGovernor().getName());
+    }
+    governorLabel.setAlignmentX(RIGHT_ALIGNMENT);
+    governorPanel.add(governorLabel);
+    leaderViewBtn = new SpaceButton("Assign leader  ",
+        GameCommands.COMMAND_VIEW_LEADERS);
+    leaderViewBtn.addActionListener(listener);
+    leaderViewBtn.setAlignmentX(RIGHT_ALIGNMENT);
+    governorPanel.add(leaderViewBtn);
+    governorPanel.setAlignmentX(RIGHT_ALIGNMENT);
+    governorPanel.add(Box.createRigidArea(new Dimension(20, 5)));
+    northPanel.add(governorPanel);
+    northPanel.setTitle(planet.getName());
 
     InvisiblePanel eastPanel = new InvisiblePanel(imgBase);
     buildingLabel = new SpaceLabel("Buildings(00/00):");
@@ -458,7 +491,7 @@ public class PlanetView extends BlackPanel {
     this.add(bottomPanel, BorderLayout.SOUTH);
     this.add(imgBase, BorderLayout.CENTER);
     if (planet.getPlanetOwnerIndex() != -1) {
-      this.add(topPanel, BorderLayout.NORTH);
+      this.add(northPanel, BorderLayout.NORTH);
     }
 
   }

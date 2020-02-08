@@ -53,17 +53,17 @@ public class LeaderListRenderer implements ListCellRenderer<Leader> {
     renderer.setFont(GuiStatics.getFontCubellan());
     switch (value.getJob()) {
       case RULER: {
-        renderer.setIcon(Icons.getIconByName(Icons.ICON_CULTURE).getAsIcon());
+        renderer.setIcon(Icons.getIconByName(Icons.ICON_RULER).getAsIcon());
         break;
       }
       case COMMANDER: {
         renderer.setIcon(Icons.getIconByName(
-            Icons.ICON_HULL_TECH).getAsIcon());
+            Icons.ICON_COMMANDER).getAsIcon());
         break;
       }
       case GOVERNOR: {
         renderer.setIcon(Icons.getIconByName(
-            Icons.ICON_PLANET).getAsIcon());
+            Icons.ICON_GOVERNOR).getAsIcon());
         break;
       }
       case DEAD: {

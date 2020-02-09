@@ -40,6 +40,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.starMap.StarMap;
@@ -651,6 +652,11 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
         Ship ship = shipsInFleet.getSelectedValuesList().get(i);
         if (ship != null) {
           fleet.removeShip(ship);
+          if (fleet.getNumberOfShip() == 0
+              && fleet.getCommander() != null) {
+            fleet.getCommander().setJob(Job.UNASSIGNED);
+            fleet.setCommander(null);
+          }
           fleetList.recalculateList();
           if (planet != null && planet.getRecycleBonus() > 0) {
             int recycledMetal = ship.getMetalCost() * planet.getRecycleBonus()
@@ -682,12 +688,22 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
                fleetList.add(starbaseFleet);
                fleet.removeShip(ship);
                ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+               if (fleet.getNumberOfShip() == 0
+                   && fleet.getCommander() != null) {
+                 starbaseFleet.setCommander(fleet.getCommander());
+                 fleet.setCommander(null);
+               }
                fleetList.recalculateList();
             } else if (starbaseFleet.getNumberOfShip()
                 < Fleet.MAX_STARBASE_SIZE) {
               starbaseFleet.addShip(ship);
               fleet.removeShip(ship);
               ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+              if (fleet.getNumberOfShip() == 0
+                  && fleet.getCommander() != null) {
+                fleet.getCommander().setJob(Job.UNASSIGNED);
+                fleet.setCommander(null);
+              }
               fleetList.recalculateList();
             }
             SoundPlayer.playSound(SoundPlayer.STARBASE);

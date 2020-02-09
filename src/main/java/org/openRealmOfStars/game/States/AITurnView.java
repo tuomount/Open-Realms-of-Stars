@@ -502,6 +502,11 @@ public class AITurnView extends BlackPanel {
         info.getFleets().add(newFleet);
         // Created a new fleet with new mission, old one still might exists
       }
+      if (fleet.getNumberOfShip() == 0
+          && fleet.getCommander() != null) {
+        fleet.getCommander().setJob(Job.UNASSIGNED);
+        fleet.setCommander(null);
+      }
       // Just cleaning the old if needed
       info.getFleets().recalculateList();
     }
@@ -1102,6 +1107,11 @@ public class AITurnView extends BlackPanel {
         if (mission != null && fleet.getColonyShip() != null
             && fleetMission == null) {
           Ship ship = fleet.getColonyShip();
+          if (fleet.getNumberOfShip() == 0
+              && fleet.getCommander() != null) {
+            fleet.getCommander().setJob(Job.UNASSIGNED);
+            fleet.setCommander(null);
+          }
           Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
           fleet.removeShip(ship);
           info.getFleets().add(newFleet);
@@ -1116,6 +1126,11 @@ public class AITurnView extends BlackPanel {
         if (mission != null && fleet.getStarbaseShip() != null
             && fleetMission == null) {
           Ship ship = fleet.getStarbaseShip();
+          if (fleet.getNumberOfShip() == 0
+              && fleet.getCommander() != null) {
+            fleet.getCommander().setJob(Job.UNASSIGNED);
+            fleet.setCommander(null);
+          }
           Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
           fleet.removeShip(ship);
           info.getFleets().add(newFleet);

@@ -11,6 +11,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -869,6 +870,17 @@ public final class RandomEventUtility {
         message.setCoordinate(fleet.getCoordinate());
         message.setMatchByString(fleet.getName());
         info.getMsgList().addFirstMessage(message);
+        if (fleet.getCommander() != null) {
+          fleet.getCommander().setJob(Job.DEAD);
+          message = new Message(MessageType.FLEET,
+              fleet.getCommander().getMilitaryRank().toString()
+              + " " + fleet.getCommander().getName() + " died during mutiny.",
+              Icons.getIconByName(Icons.ICON_COMMANDER));
+          message.setCoordinate(fleet.getCoordinate());
+          message.setMatchByString(fleet.getName());
+          info.getMsgList().addNewMessage(message);
+          fleet.setCommander(null);
+        }
       }
     }
   }

@@ -78,6 +78,7 @@ import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.TradeRoute;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.message.ChangeMessage;
 import org.openRealmOfStars.player.message.ChangeMessageFleet;
 import org.openRealmOfStars.player.message.ChangeMessagePlanet;
@@ -669,6 +670,10 @@ public class Game implements ActionListener {
           fleet.setPos(coord);
           starMap.clearFleetTiles();
           getStarMap().doFleetScanUpdate(info, fleet, null);
+          if (fleet.getCommander() != null) {
+            fleet.getCommander().setExperience(
+                fleet.getCommander().getExperience() + 10);
+          }
         }
         if (starMapView != null) {
           starMapView.updatePanels();
@@ -1936,6 +1941,12 @@ public class Game implements ActionListener {
           .getShipStatByName(ship.getName());
       if (stat != null) {
         stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
+      }
+      if (fleetView.getFleet().getNumberOfShip() == 0
+          && fleetView.getFleet().getCommander() != null) {
+        fleetView.getFleet().getCommander().setJob(Job.GOVERNOR);
+        fleetView.getPlanet().setGovernor(fleetView.getFleet().getCommander());
+        fleetView.getFleet().setCommander(null);
       }
       fleetView.getFleetList().recalculateList();
       starMapView.getStarMapMouseListener().setLastClickedFleet(null);

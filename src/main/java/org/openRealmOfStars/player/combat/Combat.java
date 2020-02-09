@@ -14,6 +14,8 @@ import org.openRealmOfStars.gui.infopanel.BattleInfoPanel;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
@@ -182,6 +184,14 @@ public class Combat {
    */
   private CombatEvent combatEvent;
   /**
+   * Defender military value at start of combat
+   */
+  private int defenderMilitaryValue;
+  /**
+   * Attacker military value at start of combat
+   */
+  private int attackerMilitaryValue;
+  /**
    * Build shipList in initiative order
    * @param attackerFleet Attacking Player1 fleet
    * @param defenderFleet Defending Player2 fleet
@@ -238,9 +248,13 @@ public class Combat {
     CombatPositionList topList = new TopPositionList();
     addCombatShipList(attackerFleet, attackerInfo, bottomList, false);
     addCombatShipList(defenderFleet, defenderInfo, topList, true);
+    attackerMilitaryValue = attackerFleet.getMilitaryValue();
+    defenderMilitaryValue = defenderFleet.getMilitaryValue();
     if (starbaseFleet != null && starbaseFleet != this.defenderFleet) {
       CombatPositionList starbaseList = new StarbasePositionList();
       addCombatShipList(starbaseFleet, defenderInfo, starbaseList, true);
+      defenderMilitaryValue = defenderMilitaryValue
+          + starbaseFleet.getMilitaryValue();
     }
 
     Collections.sort(combatShipList, Collections.reverseOrder());
@@ -445,12 +459,30 @@ public boolean launchIntercept(final int distance,
   public void destroyShip(final CombatShip ship) {
     if (attackerFleet.isShipInFleet(ship.getShip())) {
       destroyShipFromFleet(ship, attackerFleet);
+      if (attackerFleet.getNumberOfShip() == 0
+          && attackerFleet.getCommander() != null) {
+        attackerFleet.getCommander().setJob(Job.DEAD);
+        attackerFleet.setCommander(null);
+        // TODO make news about dead commander
+      }
       attackerInfo.getFleets().recalculateList();
     } else if (defenderFleet.isShipInFleet(ship.getShip())) {
       destroyShipFromFleet(ship, defenderFleet);
+      if (defenderFleet.getNumberOfShip() == 0
+          && defenderFleet.getCommander() != null) {
+        defenderFleet.getCommander().setJob(Job.DEAD);
+        defenderFleet.setCommander(null);
+        // TODO make news about dead commander
+      }
       defenderInfo.getFleets().recalculateList();
     } else if (starbaseFleet.isShipInFleet(ship.getShip())) {
       destroyShipFromFleet(ship, starbaseFleet);
+      if (starbaseFleet.getNumberOfShip() == 0
+          && starbaseFleet.getCommander() != null) {
+        starbaseFleet.getCommander().setJob(Job.DEAD);
+        starbaseFleet.setCommander(null);
+        // TODO make news about dead commander
+      }
       defenderInfo.getFleets().recalculateList();
     }
   }
@@ -835,6 +867,10 @@ public boolean launchIntercept(final int distance,
         looserFleet = defenderFleet;
         loserEscaped = defenderHasEscaped();
         isWinnerAttacker = true;
+        if (attackerFleet.getCommander() != null) {
+          Leader leader = attackerFleet.getCommander();
+          leader.setExperience(leader.getExperience() + defenderMilitaryValue);
+        }
       } else {
         winnerPlayer = defenderInfo;
         looserPlayer = attackerInfo;
@@ -842,6 +878,10 @@ public boolean launchIntercept(final int distance,
         looserFleet = attackerFleet;
         loserEscaped = attackerHasEscaped();
         isWinnerAttacker = false;
+        if (defenderFleet.getCommander() != null) {
+          Leader leader = defenderFleet.getCommander();
+          leader.setExperience(leader.getExperience() + attackerMilitaryValue);
+        }
       }
       endCombatHandled = true;
       handleWinner(winnerFleet, winnerPlayer);

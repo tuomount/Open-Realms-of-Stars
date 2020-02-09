@@ -1189,9 +1189,20 @@ public class Game implements ActionListener {
 
   /**
    * View Leaders view.
+   * @param dataObject Planet or fleet where to assign leader.
    */
-  public void viewLeaders() {
+  public void viewLeaders(final Object dataObject) {
     leaderView = new LeaderView(starMap.getCurrentPlayerInfo(), starMap, this);
+    if (dataObject != null) {
+      if (dataObject instanceof Planet) {
+        Planet planet = (Planet) dataObject;
+        leaderView.setPlanet(planet);
+      }
+      if (dataObject instanceof Fleet) {
+        Fleet fleet = (Fleet) dataObject;
+        leaderView.setFleet(fleet);
+      }
+    }
     this.updateDisplay(leaderView);
   }
   /**
@@ -1263,7 +1274,7 @@ public class Game implements ActionListener {
       break;
     }
     case LEADER_VIEW: {
-      viewLeaders();
+      viewLeaders(dataObject);
       break;
     }
     case NEWS_CORP_VIEW: {
@@ -2499,7 +2510,7 @@ public class Game implements ActionListener {
         changeGameState(GameState.STARMAP);
         return;
       }
-      // TODO Handle actions on leader view.
+      leaderView.handleActions(arg0);
       return;
     }
     if (gameState == GameState.VIEWSHIPS && shipView != null) {
@@ -2644,6 +2655,7 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand().equals(
           GameCommands.COMMAND_VIEW_LEADERS)) {
         changeGameState(GameState.LEADER_VIEW, planetView.getPlanet());
+        SoundPlayer.playMenuSound();
       }
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
@@ -2668,6 +2680,11 @@ public class Game implements ActionListener {
         fleetView = null;
         changeGameState(GameState.STARMAP, fleet);
         return;
+      }
+      if (arg0.getActionCommand().equals(
+          GameCommands.COMMAND_VIEW_LEADERS)) {
+        changeGameState(GameState.LEADER_VIEW, fleetView.getFleet());
+        SoundPlayer.playMenuSound();
       }
       if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIZE)) {
         SoundPlayer.playMenuSound();

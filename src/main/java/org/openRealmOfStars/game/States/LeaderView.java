@@ -13,6 +13,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.LeaderListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -154,6 +155,8 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     center.add(scroll, BorderLayout.WEST);
     setLeaderBtn = new SpaceButton("Assign leader",
         GameCommands.COMMAND_ASSIGN_LEADER);
+    setLeaderBtn.addActionListener(listener);
+    center.add(setLeaderBtn, BorderLayout.SOUTH);
     updateButtonToolTips();
     mapPanel = new MapPanel(false);
     center.add(mapPanel, BorderLayout.CENTER);
@@ -362,7 +365,37 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
       leaderCost = LeaderUtility.leaderRecruitCost(player);
       trainingPlanet = LeaderUtility.getBestLeaderTrainingPlanet(
           map.getPlanetList(), player);
+      SoundPlayer.playMenuSound();
       updatePanel();
+    }
+    if (arg0.getActionCommand().equals(GameCommands.COMMAND_ASSIGN_LEADER)) {
+      boolean soundPlayed = false;
+      Leader leader = leaderList.getSelectedValue();
+      if (leader != null && (leader.getJob() == Job.UNASSIGNED
+          || leader.getJob() == Job.COMMANDER
+          || leader.getJob() == Job.GOVERNOR)) {
+        if (activePlanet != null) {
+          if (activePlanet.getGovernor() != null) {
+            activePlanet.getGovernor().setJob(Job.UNASSIGNED);
+          }
+          activePlanet.setGovernor(leader);
+          SoundPlayer.playMenuSound();
+          soundPlayed = true;
+        }
+        if (activeFleet != null) {
+          if (activeFleet.getCommander() != null) {
+            activeFleet.getCommander().setJob(Job.UNASSIGNED);
+          }
+          activeFleet.setCommander(leader);
+          SoundPlayer.playMenuSound();
+          soundPlayed = true;
+        }
+        leaderList.setListData(sortLeaders(player.getLeaderPool()));
+        updatePanel();
+      }
+      if (!soundPlayed) {
+        SoundPlayer.playMenuDisabled();
+      }
     }
   }
 }

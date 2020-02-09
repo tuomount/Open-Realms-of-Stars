@@ -48,7 +48,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019 Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -158,6 +158,16 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
    * Is view interactive or not
    */
   private boolean interactiveView;
+
+  /**
+   * Label for current commander.
+   */
+  private IconLabel commanderLabel;
+  /**
+   * Button to access leader view.
+   */
+  private SpaceButton leaderViewBtn;
+
   /**
    * Fleet view constructor. Fleet view is used when view fleet in deep space
    * or fleet is orbiting a planet.
@@ -306,6 +316,27 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     fleetNameText.setEnabled(interactive);
     eastPanel.add(fleetNameText);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    commanderLabel = new IconLabel(null,
+        Icons.getIconByName(Icons.ICON_COMMANDER),
+        ": Commander Firstname Surname");
+    if (fleet.getCommander() == null) {
+      commanderLabel.setText(": No commander");
+    } else {
+      commanderLabel.setText(": "
+          + fleet.getCommander().getMilitaryRank().toString()
+          + fleet.getCommander().getName());
+    }
+    commanderLabel.setAlignmentX(CENTER_ALIGNMENT);
+    eastPanel.add(commanderLabel);
+    eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    leaderViewBtn = new SpaceButton("Assign leader  ",
+        GameCommands.COMMAND_VIEW_LEADERS);
+    leaderViewBtn.addActionListener(listener);
+    leaderViewBtn.setAlignmentX(CENTER_ALIGNMENT);
+    leaderViewBtn.setEnabled(interactive);
+    eastPanel.add(leaderViewBtn);
+    eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+
     label = new SpaceLabel("Ships in fleet");
     label.setAlignmentX(CENTER_ALIGNMENT);
     eastPanel.add(label);

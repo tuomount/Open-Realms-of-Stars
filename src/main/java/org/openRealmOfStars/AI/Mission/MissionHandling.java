@@ -530,7 +530,7 @@ public final class MissionHandling {
           fleet.removeShip(ship);
           if (fleet.getNumberOfShip() == 0) {
             if (fleet.getCommander() != null) {
-              fleet.getCommander().setJob(Job.UNASSIGNED);
+              fleet.getCommander().assignJob(Job.UNASSIGNED, info);
               fleet.setCommander(null);
             }
             // Remove also empty fleet
@@ -649,7 +649,7 @@ public final class MissionHandling {
           info.getMissions().remove(mission);
           if (fleet.getNumberOfShip() == 0) {
             if (fleet.getCommander() != null) {
-              fleet.getCommander().setJob(Job.UNASSIGNED);
+              fleet.getCommander().assignJob(Job.UNASSIGNED, info);
               fleet.setCommander(null);
             }
            // Remove also empty fleet

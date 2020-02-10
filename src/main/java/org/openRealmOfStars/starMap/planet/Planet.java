@@ -2639,7 +2639,7 @@ public class Planet {
   public void setGovernor(final Leader governor) {
     this.governor = governor;
     if (this.governor != null) {
-      this.governor.setJob(Job.GOVERNOR);
+      this.governor.assignJob(Job.GOVERNOR, this.getPlanetPlayerInfo());
     }
   }
 

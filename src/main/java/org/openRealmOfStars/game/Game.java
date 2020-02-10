@@ -79,6 +79,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.TradeRoute;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.message.ChangeMessage;
 import org.openRealmOfStars.player.message.ChangeMessageFleet;
 import org.openRealmOfStars.player.message.ChangeMessagePlanet;
@@ -1946,6 +1947,10 @@ public class Game implements ActionListener {
           && fleetView.getFleet().getCommander() != null) {
         fleetView.getFleet().getCommander().setJob(Job.GOVERNOR);
         fleetView.getPlanet().setGovernor(fleetView.getFleet().getCommander());
+        fleetView.getPlanet().getGovernor().setTitle(
+            LeaderUtility.createTitleForLeader(
+                fleetView.getPlanet().getGovernor(),
+                players.getCurrentPlayerInfo()));
         fleetView.getFleet().setCommander(null);
       }
       fleetView.getFleetList().recalculateList();
@@ -2066,7 +2071,11 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
         SoundPlayer.playMenuSound();
-        changeGameState(GameState.PLAYER_SETUP);
+        if (!saveGameView.isContinueGame()) {
+          changeGameState(GameState.PLAYER_SETUP);
+        } else {
+          changeGameState(GameState.LOAD_GAME);
+        }
         return;
       } else if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {

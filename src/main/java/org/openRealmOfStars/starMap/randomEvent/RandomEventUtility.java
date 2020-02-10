@@ -871,7 +871,7 @@ public final class RandomEventUtility {
         message.setMatchByString(fleet.getName());
         info.getMsgList().addFirstMessage(message);
         if (fleet.getCommander() != null) {
-          fleet.getCommander().setJob(Job.DEAD);
+          fleet.getCommander().assignJob(Job.DEAD, info);
           message = new Message(MessageType.FLEET,
               fleet.getCommander().getMilitaryRank().toString()
               + " " + fleet.getCommander().getName() + " died during mutiny.",

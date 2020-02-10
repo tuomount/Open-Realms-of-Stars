@@ -419,6 +419,15 @@ public class Leader {
   }
 
   /**
+   * Assign Leader a job and title.
+   * @param work Job to assign
+   * @param realm Realm which leader belongs.
+   */
+  public void assignJob(final Job work, final PlayerInfo realm) {
+    setJob(work);
+    setTitle(LeaderUtility.createTitleForLeader(this, realm));
+  }
+  /**
    * Get the leader parent. This will be set
    * only for heirs. Regular leaders this will be null.
    * @return the parent or null.

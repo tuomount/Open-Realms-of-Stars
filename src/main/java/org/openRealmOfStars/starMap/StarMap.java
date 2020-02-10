@@ -3559,7 +3559,7 @@ public class StarMap {
       realm.getFleets().removeFleet(starbaseFleet);
       if (starbaseFleet.getCommander() != null) {
         planet.setGovernor(starbaseFleet.getCommander());
-        planet.getGovernor().setJob(Job.GOVERNOR);
+        planet.getGovernor().assignJob(Job.GOVERNOR, realm);
       }
       NewsData newsData = NewsFactory.makeScientificAchivementNews(realm,
           planet, null);

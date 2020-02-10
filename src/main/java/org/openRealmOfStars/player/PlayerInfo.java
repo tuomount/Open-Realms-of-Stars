@@ -1800,7 +1800,7 @@ public class PlayerInfo {
   public void setRuler(final Leader ruler) {
     this.ruler = ruler;
     if (this.ruler != null) {
-      this.ruler.setJob(Job.RULER);
+      this.ruler.assignJob(Job.RULER, this);
     }
   }
 

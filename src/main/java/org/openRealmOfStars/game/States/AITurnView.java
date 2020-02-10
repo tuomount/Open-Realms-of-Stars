@@ -504,7 +504,7 @@ public class AITurnView extends BlackPanel {
       }
       if (fleet.getNumberOfShip() == 0
           && fleet.getCommander() != null) {
-        fleet.getCommander().setJob(Job.UNASSIGNED);
+        fleet.getCommander().assignJob(Job.UNASSIGNED, info);
         fleet.setCommander(null);
       }
       // Just cleaning the old if needed
@@ -1109,7 +1109,7 @@ public class AITurnView extends BlackPanel {
           Ship ship = fleet.getColonyShip();
           if (fleet.getNumberOfShip() == 0
               && fleet.getCommander() != null) {
-            fleet.getCommander().setJob(Job.UNASSIGNED);
+            fleet.getCommander().assignJob(Job.UNASSIGNED, info);
             fleet.setCommander(null);
           }
           Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
@@ -1128,7 +1128,7 @@ public class AITurnView extends BlackPanel {
           Ship ship = fleet.getStarbaseShip();
           if (fleet.getNumberOfShip() == 0
               && fleet.getCommander() != null) {
-            fleet.getCommander().setJob(Job.UNASSIGNED);
+            fleet.getCommander().assignJob(Job.UNASSIGNED, info);
             fleet.setCommander(null);
           }
           Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
@@ -1839,7 +1839,7 @@ public class AITurnView extends BlackPanel {
         // First getting older
         leader.setAge(leader.getAge() + 1);
         if (leader.getJob() == Job.TOO_YOUNG && leader.getAge() >= 18) {
-          leader.setJob(Job.UNASSIGNED);
+          leader.assignJob(Job.UNASSIGNED, realm);
         }
         // Checking the mortality
         int lifeExpection = leader.getRace().getLifeSpan();
@@ -1939,7 +1939,7 @@ public class AITurnView extends BlackPanel {
                 fleet.getCommander().setExperience(
                     fleet.getCommander().getExperience() + 10);
               }
-              if (fleet.getRoute().isDefending()) {
+              if (fleet.getRoute() != null && fleet.getRoute().isDefending()) {
                 fleet.getCommander().setExperience(
                     fleet.getCommander().getExperience()
                     + fleet.getNumberOfShip());

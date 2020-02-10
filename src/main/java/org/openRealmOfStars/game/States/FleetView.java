@@ -325,7 +325,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     } else {
       commanderLabel.setText(": "
           + fleet.getCommander().getMilitaryRank().toString()
-          + fleet.getCommander().getName());
+          + " " + fleet.getCommander().getName());
     }
     commanderLabel.setAlignmentX(CENTER_ALIGNMENT);
     eastPanel.add(commanderLabel);
@@ -654,7 +654,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
           fleet.removeShip(ship);
           if (fleet.getNumberOfShip() == 0
               && fleet.getCommander() != null) {
-            fleet.getCommander().setJob(Job.UNASSIGNED);
+            fleet.getCommander().assignJob(Job.UNASSIGNED, info);
             fleet.setCommander(null);
           }
           fleetList.recalculateList();
@@ -701,7 +701,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
               ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
               if (fleet.getNumberOfShip() == 0
                   && fleet.getCommander() != null) {
-                fleet.getCommander().setJob(Job.UNASSIGNED);
+                fleet.getCommander().assignJob(Job.UNASSIGNED, info);
                 fleet.setCommander(null);
               }
               fleetList.recalculateList();

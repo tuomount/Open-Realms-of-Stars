@@ -104,6 +104,7 @@ public final class LeaderUtility {
     leader.setExperience(0);
     leader.setHomeworld(planet.getName());
     leader.setJob(Job.UNASSIGNED);
+    leader.setTitle("");
     if (level == LEVEL_START_RULER) {
       leader.setLevel(1);
       leader.setAge(30 + DiceGenerator.getRandom(20));

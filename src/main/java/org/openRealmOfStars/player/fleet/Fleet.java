@@ -118,8 +118,9 @@ public class Fleet {
     if (commanderIndex != -1) {
       Leader leader = info.getLeaderPool().get(commanderIndex);
       setCommander(leader);
+    } else {
+      setCommander(null);
     }
-    setCommander(null);
     coordinate = new Coordinate(dis.readInt(), dis.readInt());
     movesLeft = dis.readInt();
     String str = IOUtilities.readString(dis);

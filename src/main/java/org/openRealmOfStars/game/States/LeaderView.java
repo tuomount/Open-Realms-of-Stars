@@ -150,6 +150,9 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     infoText = new InfoTextArea(20, 35);
     infoText.setEditable(false);
     infoText.setFont(GuiStatics.getFontCubellanSmaller());
+    infoText.setWrapStyleWord(true);
+    infoText.setLineWrap(true);
+    infoText.setCharacterWidth(7);
     scroll = new JScrollPane(infoText);
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     center.add(scroll, BorderLayout.WEST);
@@ -357,7 +360,7 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
       }
       Leader leader = LeaderUtility.createLeader(player, trainingPlanet, level);
       leader.setExperience(xp);
-      leader.setJob(Job.UNASSIGNED);
+      leader.assignJob(Job.UNASSIGNED, player);
       player.getLeaderPool().add(leader);
       trainingPlanet.takeColonist();
       Leader[] leaders = sortLeaders(player.getLeaderPool());
@@ -374,9 +377,25 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
       if (leader != null && (leader.getJob() == Job.UNASSIGNED
           || leader.getJob() == Job.COMMANDER
           || leader.getJob() == Job.GOVERNOR)) {
+        if (leader.getJob() == Job.COMMANDER) {
+          for (int i = 0; i < player.getFleets().getNumberOfFleets(); i++) {
+            Fleet fleet = player.getFleets().getByIndex(i);
+            if (fleet.getCommander() == leader) {
+              fleet.setCommander(null);
+              break;
+            }
+          }
+        }
+        if (leader.getJob() == Job.GOVERNOR) {
+          for (Planet planet : map.getPlanetList()) {
+            if (planet.getGovernor() == leader) {
+              planet.setGovernor(null);
+            }
+          }
+        }
         if (activePlanet != null) {
           if (activePlanet.getGovernor() != null) {
-            activePlanet.getGovernor().setJob(Job.UNASSIGNED);
+            activePlanet.getGovernor().assignJob(Job.UNASSIGNED, player);
           }
           activePlanet.setGovernor(leader);
           SoundPlayer.playMenuSound();
@@ -384,9 +403,10 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
         }
         if (activeFleet != null) {
           if (activeFleet.getCommander() != null) {
-            activeFleet.getCommander().setJob(Job.UNASSIGNED);
+            activeFleet.getCommander().assignJob(Job.UNASSIGNED, player);
           }
           activeFleet.setCommander(leader);
+          leader.setTitle(LeaderUtility.createTitleForLeader(leader, player));
           SoundPlayer.playMenuSound();
           soundPlayed = true;
         }

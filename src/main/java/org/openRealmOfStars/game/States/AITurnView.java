@@ -1834,6 +1834,7 @@ public class AITurnView extends BlackPanel {
    * @param realm Realm whose leaders are being handled
    */
   public void handleLeaders(final PlayerInfo realm) {
+    Leader heir = null;
     for (Leader leader : realm.getLeaderPool()) {
       if (leader.getJob() != Job.DEAD) {
         // First getting older
@@ -1864,9 +1865,44 @@ public class AITurnView extends BlackPanel {
       if (leader.getJob() == Job.RULER) {
         int numberOfPlanet = 0;
         int numberOfStarbases = 0;
+        Planet firstPlanet = null;
         for (Planet planet : game.getStarMap().getPlanetList()) {
           if (planet.getPlanetPlayerInfo() == realm) {
             numberOfPlanet++;
+            if (firstPlanet == null) {
+              firstPlanet = planet;
+            }
+          }
+        }
+        int heirs = 0;
+        if (realm.getGovernment().hasHeirs()) {
+          for (Leader leaderAsHeir :realm.getLeaderPool()) {
+            if (leaderAsHeir.getParent() != null) {
+              heirs++;
+            }
+          }
+          int chance = 2;
+          if ((realm.getGovernment() == GovernmentType.CLAN
+               || realm.getGovernment() == GovernmentType.HORDE)
+              && heirs == 0) {
+            chance = 2;
+          }
+          if ((realm.getGovernment() == GovernmentType.EMPIRE
+              || realm.getGovernment() == GovernmentType.KINGDOM)
+              && heirs == 0) {
+            chance = 5;
+          }
+          if ((realm.getGovernment() == GovernmentType.EMPIRE
+              || realm.getGovernment() == GovernmentType.KINGDOM)
+              && heirs > 1) {
+            chance = 2;
+          }
+          if (DiceGenerator.getRandom(99) < chance && firstPlanet != null) {
+            heir = LeaderUtility.createLeader(realm, firstPlanet, 1);
+            heir.setAge(0);
+            heir.setParent(leader);
+            heir.setJob(Job.TOO_YOUNG);
+            // TODO Make news about heir
           }
         }
         for (int i = 0; i < realm.getFleets().getNumberOfFleets(); i++) {
@@ -1893,6 +1929,9 @@ public class AITurnView extends BlackPanel {
           }
         }
       }
+    }
+    if (heir != null) {
+      realm.getLeaderPool().add(heir);
     }
   }
   /**

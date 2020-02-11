@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.government;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018-2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -370,6 +370,36 @@ public enum GovernmentType {
       case HEGEMONY:
       case HIERARCHY: {
         return 8;
+      }
+    }
+  }
+
+  /**
+   * Goverment can have heirs.
+   * @return True or false
+   */
+  public boolean hasHeirs() {
+    switch (this) {
+      default:
+      case ALLIANCE:
+      case DEMOCRACY:
+      case FEDERATION:
+      case MECHANICAL_HORDE:
+      case AI:
+      case HIVEMIND:
+      case NEST:
+      case GUILD:
+      case ENTERPRISE:
+      case HEGEMONY:
+      case HIERARCHY:
+      case REPUBLIC: {
+        return false;
+      }
+      case EMPIRE:
+      case KINGDOM:
+      case HORDE:
+      case CLAN: {
+        return true;
       }
     }
   }

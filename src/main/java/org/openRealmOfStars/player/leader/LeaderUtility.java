@@ -122,15 +122,15 @@ public final class LeaderUtility {
         // Mechion leaders are always almost brand new ones.
         leader.setAge(1);
       }
-      for (int i = 0; i < level; i++) {
-        Perk[] newPerks = getNewPerks(leader, PERK_TYPE_GOOD);
-        int index = DiceGenerator.getRandom(newPerks.length - 1);
+    }
+    for (int i = 0; i < leader.getLevel(); i++) {
+      Perk[] newPerks = getNewPerks(leader, PERK_TYPE_GOOD);
+      int index = DiceGenerator.getRandom(newPerks.length - 1);
+      leader.getPerkList().add(newPerks[index]);
+      if (DiceGenerator.getRandom(99)  < 10) {
+        newPerks = getNewPerks(leader, PERK_TYPE_BAD);
+        index = DiceGenerator.getRandom(newPerks.length - 1);
         leader.getPerkList().add(newPerks[index]);
-        if (DiceGenerator.getRandom(99)  < 10) {
-          newPerks = getNewPerks(leader, PERK_TYPE_BAD);
-          index = DiceGenerator.getRandom(newPerks.length - 1);
-          leader.getPerkList().add(newPerks[index]);
-        }
       }
     }
     return leader;

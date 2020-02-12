@@ -380,4 +380,95 @@ public final class LeaderUtility {
     }
     return list.toArray(new Perk[list.size()]);
   }
+
+  /**
+   * Get How strong leader is.
+   * This is used in horde and clan goverments to determine how
+   * good candidate leader is for ruler.
+   * @param leader Leader to evaluate
+   * @return Strong score
+   */
+  private static int getStrongPoints(final Leader leader) {
+    int result = 0;
+    if (leader.getAge() > 17 && leader.getAge() < 25) {
+      result = 15 + leader.getAge();
+    }
+    if (leader.getAge() > 24 && leader.getAge() < 31) {
+      result = 70 - leader.getAge();
+    }
+    if (leader.getAge() > 30 && leader.getAge() < 40) {
+      result = 68 - leader.getAge();
+    }
+    if (leader.getAge() > 39 && leader.getAge() < 50) {
+      result = 65 - leader.getAge();
+    }
+    if (leader.getAge() > 49 && leader.getAge() < 60) {
+      result = 60 - leader.getAge();
+    }
+    if (leader.getAge() > 59) {
+      result = 0;
+    }
+    if (leader.getParent() != null) {
+      result = result + 20;
+    }
+    if (leader.hasPerk(Perk.COMBAT_MASTER)) {
+      result = result + 32;
+    }
+    if (leader.hasPerk(Perk.COMBAT_TACTICIAN)) {
+      result = result + 20;
+    }
+    if (leader.hasPerk(Perk.DISCIPLINE)) {
+      result = result + 22;
+    }
+    if (leader.hasPerk(Perk.CHARISMATIC)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.COUNTER_AGENT)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.CORRUPTED)) {
+      result = result + 20;
+    }
+    if (leader.hasPerk(Perk.MILITARISTIC)) {
+      result = result + 25;
+    }
+    if (leader.hasPerk(Perk.PACIFIST)) {
+      result = result - 40;
+    }
+    if (leader.hasPerk(Perk.POWER_HUNGRY)) {
+      result = result + 50;
+    }
+    if (leader.hasPerk(Perk.WARLORD)) {
+      result = result + 35;
+    }
+    if (leader.hasPerk(Perk.WEAK_LEADER)) {
+      result = result - 30;
+    }
+    if (leader.hasPerk(Perk.EXPLORER)) {
+      result = result + 7;
+    }
+    return result;
+  }
+
+  /**
+   * Get Strongest leader for ruler.
+   * @param realm PlayerInfo
+   * @return Strongest leader in realm.
+   */
+  public static Leader getStrongestLeader(final PlayerInfo realm) {
+    Leader bestLeader = null;
+    int value = 0;
+    for (Leader leader : realm.getLeaderPool()) {
+      int score = getStrongPoints(leader);
+      if (score > value) {
+        bestLeader = leader;
+        value = score;
+      }
+      if (bestLeader == null) {
+        bestLeader = leader;
+        value = score;
+      }
+    }
+    return bestLeader;
+  }
 }

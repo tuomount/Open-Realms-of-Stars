@@ -471,4 +471,75 @@ public final class LeaderUtility {
     }
     return bestLeader;
   }
+
+  /**
+   * Get heir leader for ruler.
+   * @param realm PlayerInfo
+   * @return heir leader in realm.
+   */
+  public static Leader getNextHeir(final PlayerInfo realm) {
+    Leader bestLeader = null;
+    int value = 0;
+    for (Leader leader : realm.getLeaderPool()) {
+      int score = getStrongHeirPoints(leader);
+      if (score > value) {
+        bestLeader = leader;
+        value = score;
+      }
+      if (bestLeader == null) {
+        bestLeader = leader;
+        value = score;
+      }
+    }
+    return bestLeader;
+  }
+
+  /**
+   * Get How strong heir is.
+   * This is used in kingdom and empire goverments to determine how
+   * good candidate leader is for ruler.
+   * @param leader Leader to evaluate
+   * @return Strong score
+   */
+  private static int getStrongHeirPoints(final Leader leader) {
+    int result = 0;
+    if (leader.getParent() != null) {
+      result = leader.getAge() * 4;
+      if (leader.hasPerk(Perk.COMBAT_MASTER)) {
+        result = result + 2;
+      }
+      if (leader.hasPerk(Perk.COMBAT_TACTICIAN)) {
+        result = result + 2;
+      }
+      if (leader.hasPerk(Perk.DISCIPLINE)) {
+        result = result + 2;
+      }
+      if (leader.hasPerk(Perk.CHARISMATIC)) {
+        result = result + 2;
+      }
+      if (leader.hasPerk(Perk.COUNTER_AGENT)) {
+        result = result + 2;
+      }
+      if (leader.hasPerk(Perk.CORRUPTED)) {
+        result = result + 3;
+      }
+      if (leader.hasPerk(Perk.MILITARISTIC)) {
+        result = result + 2;
+      }
+      if (leader.hasPerk(Perk.POWER_HUNGRY)) {
+        result = result + 10;
+      }
+      if (leader.hasPerk(Perk.WARLORD)) {
+        result = result + 3;
+      }
+      if (leader.hasPerk(Perk.WEAK_LEADER)) {
+        result = result - 10;
+      }
+      if (leader.hasPerk(Perk.EXPLORER)) {
+        result = result + 1;
+      }
+    }
+    return result;
+  }
+
 }

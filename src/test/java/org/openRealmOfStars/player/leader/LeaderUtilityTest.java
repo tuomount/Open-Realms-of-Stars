@@ -2,6 +2,8 @@ package org.openRealmOfStars.player.leader;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
@@ -308,6 +310,266 @@ public class LeaderUtilityTest {
     Perk[] perks = LeaderUtility.getNewPerks(leader,
         LeaderUtility.PERK_TYPE_BAD);
     assertEquals(true, perks.length == 7 || perks.length == 8);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testNextLeaderKingdom() {
+    PlayerInfo realm = Mockito.mock(PlayerInfo.class);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.KINGDOM);
+    ArrayList<Leader> pool = new ArrayList<>();
+    Mockito.when(realm.getLeaderPool()).thenReturn(pool);
+    Leader parent = new Leader("Test Parent");
+    parent.setAge(75);
+    parent.setJob(Job.DEAD);
+    pool.add(parent);
+    Leader leader = new Leader("Test Leader");
+    leader.setAge(50);
+    leader.setParent(parent);
+    leader.getPerkList().add(Perk.COMBAT_MASTER);
+    leader.getPerkList().add(Perk.COMBAT_TACTICIAN);
+    leader.getPerkList().add(Perk.DISCIPLINE);
+    leader.getPerkList().add(Perk.CHARISMATIC);
+    leader.getPerkList().add(Perk.COUNTER_AGENT);
+    leader.getPerkList().add(Perk.CORRUPTED);
+    leader.getPerkList().add(Perk.MICRO_MANAGER);
+    leader.getPerkList().add(Perk.MILITARISTIC);
+    leader.getPerkList().add(Perk.POWER_HUNGRY);
+    leader.getPerkList().add(Perk.WARLORD);
+    pool.add(leader);
+    Leader ruler = LeaderUtility.getNextRuler(realm);
+    assertEquals(leader, ruler);
+    Leader leader2 = new Leader("Test Leader2");
+    leader2.setAge(50);
+    leader2.setParent(null);
+    leader2.getPerkList().add(Perk.COMBAT_MASTER);
+    leader2.getPerkList().add(Perk.COMBAT_TACTICIAN);
+    leader2.getPerkList().add(Perk.DISCIPLINE);
+    leader2.getPerkList().add(Perk.CHARISMATIC);
+    leader2.getPerkList().add(Perk.COUNTER_AGENT);
+    leader2.getPerkList().add(Perk.CORRUPTED);
+    leader2.getPerkList().add(Perk.MICRO_MANAGER);
+    leader2.getPerkList().add(Perk.MILITARISTIC);
+    leader2.getPerkList().add(Perk.POWER_HUNGRY);
+    leader2.getPerkList().add(Perk.WARLORD);
+    pool.add(leader2);
+    leader.setJob(Job.DEAD);
+    ruler = LeaderUtility.getNextRuler(realm);
+    assertEquals(leader2, ruler);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testNextLeaderHorde() {
+    PlayerInfo realm = Mockito.mock(PlayerInfo.class);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.HORDE);
+    ArrayList<Leader> pool = new ArrayList<>();
+    Mockito.when(realm.getLeaderPool()).thenReturn(pool);
+    Leader parent = new Leader("Test Parent");
+    parent.setAge(75);
+    parent.setJob(Job.DEAD);
+    pool.add(parent);
+    Leader leader = new Leader("Test Leader");
+    leader.setAge(30);
+    leader.setParent(parent);
+    leader.getPerkList().add(Perk.COMBAT_MASTER);
+    leader.getPerkList().add(Perk.COMBAT_TACTICIAN);
+    leader.getPerkList().add(Perk.DISCIPLINE);
+    leader.getPerkList().add(Perk.CHARISMATIC);
+    leader.getPerkList().add(Perk.COUNTER_AGENT);
+    leader.getPerkList().add(Perk.CORRUPTED);
+    leader.getPerkList().add(Perk.MICRO_MANAGER);
+    leader.getPerkList().add(Perk.MILITARISTIC);
+    leader.getPerkList().add(Perk.POWER_HUNGRY);
+    leader.getPerkList().add(Perk.WARLORD);
+    pool.add(leader);
+    Leader leader2 = new Leader("Test Leader2");
+    leader2.setAge(50);
+    leader2.setParent(null);
+    leader2.getPerkList().add(Perk.COMBAT_MASTER);
+    leader2.getPerkList().add(Perk.COMBAT_TACTICIAN);
+    leader2.getPerkList().add(Perk.DISCIPLINE);
+    leader2.getPerkList().add(Perk.CHARISMATIC);
+    leader2.getPerkList().add(Perk.COUNTER_AGENT);
+    leader2.getPerkList().add(Perk.CORRUPTED);
+    leader2.getPerkList().add(Perk.MICRO_MANAGER);
+    leader2.getPerkList().add(Perk.MILITARISTIC);
+    leader2.getPerkList().add(Perk.POWER_HUNGRY);
+    leader2.getPerkList().add(Perk.WARLORD);
+    pool.add(leader2);
+    Leader ruler = LeaderUtility.getNextRuler(realm);
+    assertEquals(leader, ruler);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testNextLeaderCeo() {
+    PlayerInfo realm = Mockito.mock(PlayerInfo.class);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.ENTERPRISE);
+    ArrayList<Leader> pool = new ArrayList<>();
+    Mockito.when(realm.getLeaderPool()).thenReturn(pool);
+    Leader leader = new Leader("Test Leader");
+    leader.setAge(30);
+    leader.getPerkList().add(Perk.COMBAT_MASTER);
+    leader.getPerkList().add(Perk.COMBAT_TACTICIAN);
+    leader.getPerkList().add(Perk.DISCIPLINE);
+    leader.getPerkList().add(Perk.CHARISMATIC);
+    leader.getPerkList().add(Perk.COUNTER_AGENT);
+    leader.getPerkList().add(Perk.CORRUPTED);
+    leader.getPerkList().add(Perk.MICRO_MANAGER);
+    leader.getPerkList().add(Perk.MILITARISTIC);
+    leader.getPerkList().add(Perk.POWER_HUNGRY);
+    leader.getPerkList().add(Perk.WARLORD);
+    pool.add(leader);
+    Leader leader2 = new Leader("Test Leader2");
+    leader2.setAge(50);
+    leader2.getPerkList().add(Perk.COMBAT_MASTER);
+    leader2.getPerkList().add(Perk.COMBAT_TACTICIAN);
+    leader2.getPerkList().add(Perk.MERCHANT);
+    leader2.getPerkList().add(Perk.CHARISMATIC);
+    leader2.getPerkList().add(Perk.COUNTER_AGENT);
+    leader2.getPerkList().add(Perk.CORRUPTED);
+    leader2.getPerkList().add(Perk.MICRO_MANAGER);
+    leader2.getPerkList().add(Perk.TRADER);
+    leader2.getPerkList().add(Perk.POWER_HUNGRY);
+    leader2.getPerkList().add(Perk.ACADEMIC);
+    pool.add(leader2);
+    Leader ruler = LeaderUtility.getNextRuler(realm);
+    assertEquals(leader2, ruler);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testNextLeaderDemocracy() {
+    PlayerInfo realm = Mockito.mock(PlayerInfo.class);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.ALLIANCE);
+    ArrayList<Leader> pool = new ArrayList<>();
+    Mockito.when(realm.getLeaderPool()).thenReturn(pool);
+    Leader leader = new Leader("Test Leader");
+    leader.setAge(80);
+    leader.getPerkList().add(Perk.INDUSTRIAL);
+    leader.getPerkList().add(Perk.MINER);
+    leader.getPerkList().add(Perk.DISCIPLINE);
+    leader.getPerkList().add(Perk.CHARISMATIC);
+    leader.getPerkList().add(Perk.COUNTER_AGENT);
+    leader.getPerkList().add(Perk.CORRUPTED);
+    leader.getPerkList().add(Perk.PACIFIST);
+    leader.getPerkList().add(Perk.GOOD_LEADER);
+    leader.getPerkList().add(Perk.POWER_HUNGRY);
+    leader.getPerkList().add(Perk.ACADEMIC);
+    pool.add(leader);
+    Leader leader2 = new Leader("Test Leader2");
+    leader2.setAge(80);
+    leader2.getPerkList().add(Perk.COMBAT_MASTER);
+    leader2.getPerkList().add(Perk.COMBAT_TACTICIAN);
+    leader2.getPerkList().add(Perk.MERCHANT);
+    leader2.getPerkList().add(Perk.CHARISMATIC);
+    leader2.getPerkList().add(Perk.COUNTER_AGENT);
+    leader2.getPerkList().add(Perk.CORRUPTED);
+    leader2.getPerkList().add(Perk.MICRO_MANAGER);
+    leader2.getPerkList().add(Perk.TRADER);
+    leader2.getPerkList().add(Perk.ACADEMIC);
+    pool.add(leader2);
+    Leader ruler = LeaderUtility.getNextRuler(realm);
+    assertEquals(leader, ruler);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testNextLeaderFederation() {
+    PlayerInfo realm = Mockito.mock(PlayerInfo.class);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.FEDERATION);
+    ArrayList<Leader> pool = new ArrayList<>();
+    Mockito.when(realm.getLeaderPool()).thenReturn(pool);
+    Leader leader = new Leader("Test Leader");
+    leader.setAge(80);
+    leader.getPerkList().add(Perk.INDUSTRIAL);
+    leader.getPerkList().add(Perk.MINER);
+    leader.getPerkList().add(Perk.DISCIPLINE);
+    leader.getPerkList().add(Perk.CHARISMATIC);
+    leader.getPerkList().add(Perk.COUNTER_AGENT);
+    leader.getPerkList().add(Perk.CORRUPTED);
+    leader.getPerkList().add(Perk.PACIFIST);
+    leader.getPerkList().add(Perk.GOOD_LEADER);
+    leader.getPerkList().add(Perk.SLOW_LEARNER);
+    leader.getPerkList().add(Perk.STUPID);
+    pool.add(leader);
+    Leader leader2 = new Leader("Test Leader2");
+    leader2.setAge(80);
+    leader2.getPerkList().add(Perk.COMBAT_MASTER);
+    leader2.getPerkList().add(Perk.COMBAT_TACTICIAN);
+    leader2.getPerkList().add(Perk.MERCHANT);
+    leader2.getPerkList().add(Perk.CHARISMATIC);
+    leader2.getPerkList().add(Perk.COUNTER_AGENT);
+    leader2.getPerkList().add(Perk.CORRUPTED);
+    leader2.getPerkList().add(Perk.MICRO_MANAGER);
+    leader2.getPerkList().add(Perk.TRADER);
+    leader2.getPerkList().add(Perk.ACADEMIC);
+    leader2.getPerkList().add(Perk.MILITARISTIC);
+    leader2.getPerkList().add(Perk.WARLORD);
+    pool.add(leader2);
+    Leader ruler = LeaderUtility.getNextRuler(realm);
+    assertEquals(leader2, ruler);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testNextLeaderHegemony() {
+    PlayerInfo realm = Mockito.mock(PlayerInfo.class);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.HEGEMONY);
+    ArrayList<Leader> pool = new ArrayList<>();
+    Mockito.when(realm.getLeaderPool()).thenReturn(pool);
+    Leader leader = new Leader("Test Leader");
+    leader.setAge(80);
+    leader.getPerkList().add(Perk.SLOW_LEARNER);
+    leader.getPerkList().add(Perk.STUPID);
+    pool.add(leader);
+    Leader leader2 = new Leader("Test Leader2");
+    leader2.setAge(85);
+    leader2.getPerkList().add(Perk.SCIENTIST);
+    leader2.getPerkList().add(Perk.FTL_ENGINEER);
+    leader2.getPerkList().add(Perk.EXPLORER);
+    leader2.getPerkList().add(Perk.CHARISMATIC);
+    leader2.getPerkList().add(Perk.SCANNER_EXPERT);
+    leader2.getPerkList().add(Perk.CORRUPTED);
+    leader2.getPerkList().add(Perk.MICRO_MANAGER);
+    leader2.getPerkList().add(Perk.TRADER);
+    leader2.getPerkList().add(Perk.ACADEMIC);
+    leader2.getPerkList().add(Perk.MILITARISTIC);
+    leader2.getPerkList().add(Perk.WARLORD);
+    pool.add(leader2);
+    Leader ruler = LeaderUtility.getNextRuler(realm);
+    assertEquals(leader2, ruler);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testNextLeaderAi() {
+    PlayerInfo realm = Mockito.mock(PlayerInfo.class);
+    Mockito.when(realm.getGovernment()).thenReturn(GovernmentType.AI);
+    ArrayList<Leader> pool = new ArrayList<>();
+    Mockito.when(realm.getLeaderPool()).thenReturn(pool);
+    Leader leader = new Leader("Test Leader");
+    leader.setAge(18);
+    leader.getPerkList().add(Perk.SLOW_LEARNER);
+    leader.getPerkList().add(Perk.STUPID);
+    pool.add(leader);
+    Leader leader2 = new Leader("Test Leader2");
+    leader2.setAge(18);
+    leader2.getPerkList().add(Perk.SCIENTIST);
+    leader2.getPerkList().add(Perk.FTL_ENGINEER);
+    leader2.getPerkList().add(Perk.EXPLORER);
+    leader2.getPerkList().add(Perk.CHARISMATIC);
+    leader2.getPerkList().add(Perk.SCANNER_EXPERT);
+    leader2.getPerkList().add(Perk.CORRUPTED);
+    leader2.getPerkList().add(Perk.MICRO_MANAGER);
+    leader2.getPerkList().add(Perk.TRADER);
+    leader2.getPerkList().add(Perk.ACADEMIC);
+    leader2.getPerkList().add(Perk.MILITARISTIC);
+    leader2.getPerkList().add(Perk.WARLORD);
+    pool.add(leader2);
+    Leader ruler = LeaderUtility.getNextRuler(realm);
+    assertEquals(leader2, ruler);
   }
 
 }

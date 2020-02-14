@@ -459,6 +459,9 @@ public final class LeaderUtility {
     Leader bestLeader = null;
     int value = 0;
     for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG) {
+        continue;
+      }
       int score = getStrongPoints(leader);
       if (score > value) {
         bestLeader = leader;
@@ -481,6 +484,9 @@ public final class LeaderUtility {
     Leader bestLeader = null;
     int value = 0;
     for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG) {
+        continue;
+      }
       int score = getStrongHeirPoints(leader);
       if (score > value) {
         bestLeader = leader;
@@ -612,6 +618,9 @@ public final class LeaderUtility {
     Leader bestLeader = null;
     int value = 0;
     for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG) {
+        continue;
+      }
       int score = getBusinessPoints(leader);
       if (score > value) {
         bestLeader = leader;
@@ -707,6 +716,9 @@ public final class LeaderUtility {
     Leader bestLeader = null;
     int value = 0;
     for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG) {
+        continue;
+      }
       int score = getDemocraticPoints(leader);
       if (score > value) {
         bestLeader = leader;
@@ -805,6 +817,9 @@ public final class LeaderUtility {
     Leader bestLeader = null;
     int value = 0;
     for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG) {
+        continue;
+      }
       int score = getFederationPoints(leader);
       if (score > value) {
         bestLeader = leader;
@@ -897,6 +912,9 @@ public final class LeaderUtility {
     Leader bestLeader = null;
     int value = 0;
     for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG) {
+        continue;
+      }
       int score = getHegemonyPoints(leader);
       if (score > value) {
         bestLeader = leader;
@@ -974,6 +992,9 @@ public final class LeaderUtility {
     Leader bestLeader = null;
     int value = 0;
     for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getJob() == Job.DEAD || leader.getJob() == Job.TOO_YOUNG) {
+        continue;
+      }
       int score = getAiPoints(leader);
       if (score > value) {
         bestLeader = leader;
@@ -1016,20 +1037,25 @@ public final class LeaderUtility {
       case GUILD:
       case ENTERPRISE: {
         bestLeader = getNextCeo(realm);
+        break;
       }
       case DEMOCRACY:
       case ALLIANCE: {
         bestLeader = getNextDemocraticRuler(realm);
+        break;
       }
       case FEDERATION:
       case REPUBLIC: {
         bestLeader = getNextFederationRuler(realm);
+        break;
       }
       case HEGEMONY: {
         bestLeader = getNextHegemonyRuler(realm);
+        break;
       }
       case AI: {
         bestLeader = getNextAiRuler(realm);
+        break;
       }
     }
     return bestLeader;

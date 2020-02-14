@@ -625,4 +625,413 @@ public final class LeaderUtility {
     return bestLeader;
   }
 
+  /**
+   * Get democratic scores for ruler.
+   * @param leader Leader to evaluate
+   * @return Strong score
+   */
+  private static int getDemocraticPoints(final Leader leader) {
+    int result = 0;
+    if (leader.getAge() > 30) {
+      result = result + 2;
+    }
+    if (leader.getAge() > 40) {
+      result = result + 2;
+    }
+    if (leader.getAge() > 50) {
+      result = result + 2;
+    }
+    if (leader.getAge() > 60) {
+      result = result + 2;
+    }
+    if (leader.getAge() > 70) {
+      result = result - 2;
+    }
+    if (leader.getAge() > 80) {
+      result = result - 5;
+    }
+    if (leader.hasPerk(Perk.CHARISMATIC)) {
+      result = result + 20;
+    }
+    if (leader.hasPerk(Perk.GOOD_LEADER)) {
+      result = result + 20;
+    }
+    if (leader.hasPerk(Perk.INDUSTRIAL)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.MINER)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.MERCHANT)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.ACADEMIC)) {
+      result = result + 15;
+    }
+    if (leader.hasPerk(Perk.ADDICTED)) {
+      result = result - 5;
+    }
+    if (leader.hasPerk(Perk.POWER_HUNGRY)) {
+      result = result + 40;
+    }
+    if (leader.hasPerk(Perk.CORRUPTED)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.ARTISTIC)) {
+      result = result + 20;
+    }
+    if (leader.hasPerk(Perk.REPULSIVE)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.MICRO_MANAGER)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.SLOW_LEARNER)) {
+      result = result - 5;
+    }
+    if (leader.hasPerk(Perk.STUPID)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.PACIFIST)) {
+      result = result + 10;
+    }
+    return result;
+  }
+
+  /**
+   * Get best democratic ruler.
+   * @param realm Realm who is evaluating new ruler
+   * @return Democratic ruler
+   */
+  public static Leader getNextDemocraticRuler(final PlayerInfo realm) {
+    Leader bestLeader = null;
+    int value = 0;
+    for (Leader leader : realm.getLeaderPool()) {
+      int score = getDemocraticPoints(leader);
+      if (score > value) {
+        bestLeader = leader;
+        value = score;
+      }
+      if (bestLeader == null) {
+        bestLeader = leader;
+        value = score;
+      }
+    }
+    return bestLeader;
+  }
+
+  /**
+   * Get federation scores for ruler.
+   * @param leader Leader to evaluate
+   * @return Strong score
+   */
+  private static int getFederationPoints(final Leader leader) {
+    int result = 0;
+    if (leader.getAge() > 30) {
+      result = result + 1;
+    }
+    if (leader.getAge() > 40) {
+      result = result + 2;
+    }
+    if (leader.getAge() > 50) {
+      result = result + 2;
+    }
+    if (leader.getAge() > 60) {
+      result = result + 2;
+    }
+    if (leader.getAge() > 70) {
+      result = result + 2;
+    }
+    if (leader.getAge() > 80) {
+      result = result - 2;
+    }
+    if (leader.hasPerk(Perk.CHARISMATIC)) {
+      result = result + 20;
+    }
+    if (leader.hasPerk(Perk.GOOD_LEADER)) {
+      result = result + 20;
+    }
+    if (leader.hasPerk(Perk.INDUSTRIAL)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.MINER)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.MERCHANT)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.ACADEMIC)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.ADDICTED)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.POWER_HUNGRY)) {
+      result = result + 40;
+    }
+    if (leader.hasPerk(Perk.CORRUPTED)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.MILITARISTIC)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.REPULSIVE)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.MICRO_MANAGER)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.SLOW_LEARNER)) {
+      result = result - 5;
+    }
+    if (leader.hasPerk(Perk.STUPID)) {
+      result = result - 5;
+    }
+    if (leader.hasPerk(Perk.PACIFIST)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.WARLORD)) {
+      result = result + 10;
+    }
+    return result;
+  }
+
+  /**
+   * Get best federation ruler.
+   * @param realm Realm who is evaluating new ruler
+   * @return Federation ruler
+   */
+  public static Leader getNextFederationRuler(final PlayerInfo realm) {
+    Leader bestLeader = null;
+    int value = 0;
+    for (Leader leader : realm.getLeaderPool()) {
+      int score = getFederationPoints(leader);
+      if (score > value) {
+        bestLeader = leader;
+        value = score;
+      }
+      if (bestLeader == null) {
+        bestLeader = leader;
+        value = score;
+      }
+    }
+    return bestLeader;
+  }
+
+  /**
+   * Get hegemony scores for ruler.
+   * @param leader Leader to evaluate
+   * @return Strong score
+   */
+  private static int getHegemonyPoints(final Leader leader) {
+    int result = 0;
+    if (leader.getAge() > 30) {
+      result = result + 2;
+    }
+    if (leader.getAge() > 40) {
+      result = result + 2;
+    }
+    if (leader.getAge() > 50) {
+      result = result + 1;
+    }
+    if (leader.getAge() > 60) {
+      result = result - 1;
+    }
+    if (leader.getAge() > 70) {
+      result = result - 1;
+    }
+    if (leader.getAge() > 80) {
+      result = result - 2;
+    }
+    if (leader.hasPerk(Perk.CHARISMATIC)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.GOOD_LEADER)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.SCIENTIST)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.ACADEMIC)) {
+      result = result + 20;
+    }
+    if (leader.hasPerk(Perk.ADDICTED)) {
+      result = result - 5;
+    }
+    if (leader.hasPerk(Perk.POWER_HUNGRY)) {
+      result = result + 40;
+    }
+    if (leader.hasPerk(Perk.CORRUPTED)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.EXPLORER)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.FTL_ENGINEER)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.MICRO_MANAGER)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.SLOW_LEARNER)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.STUPID)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.SCANNER_EXPERT)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.WEAK_LEADER)) {
+      result = result - 20;
+    }
+    return result;
+  }
+
+  /**
+   * Get best hegemony ruler.
+   * @param realm Realm who is evaluating new ruler
+   * @return Hegemony ruler
+   */
+  public static Leader getNextHegemonyRuler(final PlayerInfo realm) {
+    Leader bestLeader = null;
+    int value = 0;
+    for (Leader leader : realm.getLeaderPool()) {
+      int score = getHegemonyPoints(leader);
+      if (score > value) {
+        bestLeader = leader;
+        value = score;
+      }
+      if (bestLeader == null) {
+        bestLeader = leader;
+        value = score;
+      }
+    }
+    return bestLeader;
+  }
+
+  /**
+   * Get air scores for ruler.
+   * @param leader Leader to evaluate
+   * @return Strong score
+   */
+  private static int getAiPoints(final Leader leader) {
+    int result = 0;
+    if (leader.hasPerk(Perk.CHARISMATIC)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.GOOD_LEADER)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.SCIENTIST)) {
+      result = result + 20;
+    }
+    if (leader.hasPerk(Perk.ACADEMIC)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.ADDICTED)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.POWER_HUNGRY)) {
+      result = result + 40;
+    }
+    if (leader.hasPerk(Perk.CORRUPTED)) {
+      result = result - 10;
+    }
+    if (leader.hasPerk(Perk.MERCHANT)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.MILITARISTIC)) {
+      result = result + 20;
+    }
+    if (leader.hasPerk(Perk.PACIFIST)) {
+      result = result - 20;
+    }
+    if (leader.hasPerk(Perk.SLOW_LEARNER)) {
+      result = result - 20;
+    }
+    if (leader.hasPerk(Perk.STUPID)) {
+      result = result - 20;
+    }
+    if (leader.hasPerk(Perk.REPULSIVE)) {
+      result = result - 15;
+    }
+    if (leader.hasPerk(Perk.WEAK_LEADER)) {
+      result = result - 20;
+    }
+    if (leader.hasPerk(Perk.WARLORD)) {
+      result = result + 20;
+    }
+    return result;
+  }
+
+  /**
+   * Get best ai ruler.
+   * @param realm Realm who is evaluating new ruler
+   * @return AI ruler
+   */
+  public static Leader getNextAiRuler(final PlayerInfo realm) {
+    Leader bestLeader = null;
+    int value = 0;
+    for (Leader leader : realm.getLeaderPool()) {
+      int score = getAiPoints(leader);
+      if (score > value) {
+        bestLeader = leader;
+        value = score;
+      }
+      if (bestLeader == null) {
+        bestLeader = leader;
+        value = score;
+      }
+    }
+    return bestLeader;
+  }
+
+  /**
+   * Get Next ruler from the leader pool.
+   * @param realm PlayerInfo
+   * @return Next leader or null if not available.
+   */
+  public static Leader getNextRuler(final PlayerInfo realm) {
+    Leader bestLeader = null;
+    switch (realm.getGovernment()) {
+      default:
+      case CLAN:
+      case HORDE:
+      case MECHANICAL_HORDE:
+      case HIERARCHY:
+      case HIVEMIND:
+      case NEST: {
+        bestLeader = getStrongestLeader(realm);
+        break;
+      }
+      case EMPIRE:
+      case KINGDOM: {
+        bestLeader = getNextHeir(realm);
+        if (bestLeader == null) {
+          bestLeader = getStrongestLeader(realm);
+        }
+        break;
+      }
+      case GUILD:
+      case ENTERPRISE: {
+        bestLeader = getNextCeo(realm);
+      }
+      case DEMOCRACY:
+      case ALLIANCE: {
+        bestLeader = getNextDemocraticRuler(realm);
+      }
+      case FEDERATION:
+      case REPUBLIC: {
+        bestLeader = getNextFederationRuler(realm);
+      }
+      case HEGEMONY: {
+        bestLeader = getNextHegemonyRuler(realm);
+      }
+      case AI: {
+        bestLeader = getNextAiRuler(realm);
+      }
+    }
+    return bestLeader;
+  }
 }

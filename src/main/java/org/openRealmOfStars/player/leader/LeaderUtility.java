@@ -542,4 +542,87 @@ public final class LeaderUtility {
     return result;
   }
 
+  /**
+   * Get best business man as leader. Used for enterprise and guild ruler.
+   * @param leader Leader to evaluate
+   * @return Strong score
+   */
+  private static int getBusinessPoints(final Leader leader) {
+    int result = 0;
+    if (leader.getAge() > 30) {
+      result = result + 2;
+    }
+    if (leader.getAge() > 40) {
+      result = result + 2;
+    }
+    if (leader.getAge() > 50) {
+      result = result + 2;
+    }
+    if (leader.hasPerk(Perk.CHARISMATIC)) {
+      result = result + 15;
+    }
+    if (leader.hasPerk(Perk.GOOD_LEADER)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.INDUSTRIAL)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.MINER)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.MERCHANT)) {
+      result = result + 20;
+    }
+    if (leader.hasPerk(Perk.ACADEMIC)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.ADDICTED)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.POWER_HUNGRY)) {
+      result = result + 40;
+    }
+    if (leader.hasPerk(Perk.CORRUPTED)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.TRADER)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.REPULSIVE)) {
+      result = result - 5;
+    }
+    if (leader.hasPerk(Perk.MICRO_MANAGER)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.SLOW_LEARNER)) {
+      result = result - 5;
+    }
+    if (leader.hasPerk(Perk.STUPID)) {
+      result = result - 10;
+    }
+    return result;
+  }
+
+  /**
+   * Get CEO leader for ruler.
+   * @param realm PlayerInfo
+   * @return ceo leader in realm.
+   */
+  public static Leader getNextCeo(final PlayerInfo realm) {
+    Leader bestLeader = null;
+    int value = 0;
+    for (Leader leader : realm.getLeaderPool()) {
+      int score = getBusinessPoints(leader);
+      if (score > value) {
+        bestLeader = leader;
+        value = score;
+      }
+      if (bestLeader == null) {
+        bestLeader = leader;
+        value = score;
+      }
+    }
+    return bestLeader;
+  }
+
 }

@@ -1848,6 +1848,7 @@ public class AITurnView extends BlackPanel {
         if (leader.getJob() == Job.TOO_YOUNG && leader.getAge() >= 18) {
           leader.assignJob(Job.UNASSIGNED, realm);
         }
+        leader.setTimeInJob(leader.getTimeInJob() + 1);
         // Checking the mortality
         int lifeExpection = leader.getRace().getLifeSpan();
         if (leader.hasPerk(Perk.ADDICTED)) {

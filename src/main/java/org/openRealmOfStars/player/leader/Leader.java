@@ -50,6 +50,11 @@ public class Leader {
   private int age;
 
   /**
+   * Time in job
+   */
+  private int timeInJob;
+
+  /**
    * Leader's experience level
    */
   private int level;
@@ -116,6 +121,7 @@ public class Leader {
     this.name = name;
     this.homeworld = "";
     age = 28;
+    setTimeInJob(0);
     level = 1;
     experience = 0;
     militaryRank = MilitaryRank.CIVILIAN;
@@ -136,7 +142,9 @@ public class Leader {
     name = IOUtilities.readString(dis);
     homeworld = IOUtilities.readString(dis);
     title = IOUtilities.readString(dis);
-    age = dis.readInt();
+    int value = dis.readInt();
+    age = value & 0x0000ffff;
+    timeInJob = (value & 0xffff0000) >> 16;
     level = dis.read();
     experience = dis.readInt();
     setMilitaryRank(MilitaryRank.getByIndex(dis.read()));
@@ -163,7 +171,8 @@ public class Leader {
     IOUtilities.writeString(dos, name);
     IOUtilities.writeString(dos, homeworld);
     IOUtilities.writeString(dos, title);
-    dos.writeInt(age);
+    int value = (getTimeInJob() << 16) + age;
+    dos.writeInt(value);
     dos.writeByte(level);
     dos.writeInt(experience);
     dos.writeByte(militaryRank.getIndex());
@@ -384,6 +393,8 @@ public class Leader {
     builder.append(job.getName());
     builder.append(", age=");
     builder.append(age);
+    builder.append(", TimeInJob=");
+    builder.append(timeInJob);
     builder.append(", level=");
     builder.append(level);
     builder.append(", experience=");
@@ -416,6 +427,7 @@ public class Leader {
    */
   public void setJob(final Job job) {
     this.job = job;
+    setTimeInJob(0);
   }
 
   /**
@@ -473,5 +485,21 @@ public class Leader {
    */
   public int getParentIndex() {
     return parentIndex;
+  }
+
+  /**
+   * How long leader has been in current job.
+   * @return the timeInJob
+   */
+  public int getTimeInJob() {
+    return timeInJob;
+  }
+
+  /**
+   * Set time in current job.
+   * @param timeInJob the timeInJob to set
+   */
+  public void setTimeInJob(final int timeInJob) {
+    this.timeInJob = timeInJob;
   }
 }

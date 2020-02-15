@@ -223,15 +223,16 @@ public final class LeaderUtility {
       }
     }
     int cost = realm.getGovernment().leaderRecruitCost();
-    if (leaders == 0) {
+    if (leaders < realm.getGovernment().leaderPoolLimit()) {
       return cost;
     }
-    if (leaders < realm.getGovernment().leaderPoolLimit()) {
+    if (leaders < 11) {
       return cost * leaders;
     }
-    int leadersOverLimit = leaders - realm.getGovernment().leaderPoolLimit();
-    result = cost * realm.getGovernment().leaderPoolLimit();
-    result = result + leadersOverLimit * cost * cost;
+    result = cost * leaders;
+    if (result < 100) {
+      result = result + 100;
+    }
     return result;
   }
   /**

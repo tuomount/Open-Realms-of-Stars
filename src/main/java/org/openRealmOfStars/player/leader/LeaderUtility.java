@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SocialSystem;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -1060,5 +1062,36 @@ public final class LeaderUtility {
       }
     }
     return bestLeader;
+  }
+
+  /**
+   * Assign Leader as a realm ruler.
+   * @param ruler Leader to assign as ruler
+   * @param realm Realm which is about to get new ruler.
+   * @param map StarMap for going through planets.
+   */
+  public static void assignLeaderAsRuler(final Leader ruler,
+      final PlayerInfo realm, final StarMap map) {
+    if (ruler != null && (ruler.getJob() == Job.UNASSIGNED
+        || ruler.getJob() == Job.COMMANDER
+        || ruler.getJob() == Job.GOVERNOR)) {
+      if (ruler.getJob() == Job.COMMANDER) {
+        for (int i = 0; i < realm.getFleets().getNumberOfFleets(); i++) {
+          Fleet fleet = realm.getFleets().getByIndex(i);
+          if (fleet.getCommander() == ruler) {
+            fleet.setCommander(null);
+            break;
+          }
+        }
+      }
+      if (ruler.getJob() == Job.GOVERNOR) {
+        for (Planet planet : map.getPlanetList()) {
+          if (planet.getGovernor() == ruler) {
+            planet.setGovernor(null);
+          }
+        }
+      }
+      realm.setRuler(ruler);
+    }
   }
 }

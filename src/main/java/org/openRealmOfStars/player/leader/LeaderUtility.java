@@ -2,6 +2,8 @@ package org.openRealmOfStars.player.leader;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.gui.icons.Icon16x16;
+import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SocialSystem;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
@@ -1092,6 +1094,35 @@ public final class LeaderUtility {
         }
       }
       realm.setRuler(ruler);
+    }
+  }
+
+  /**
+   * Get Icon for leader based on leader current job.
+   * @param leader Leader to get icon
+   * @return Icon16x16
+   */
+  public static Icon16x16 getIconBasedOnLeaderJob(final Leader leader) {
+    switch (leader.getJob()) {
+      case RULER: {
+        return Icons.getIconByName(Icons.ICON_RULER);
+      }
+      case COMMANDER: {
+        return Icons.getIconByName(Icons.ICON_COMMANDER);
+     }
+      case GOVERNOR: {
+        return Icons.getIconByName(Icons.ICON_GOVERNOR);
+      }
+      case DEAD: {
+        return Icons.getIconByName(Icons.ICON_DEATH);
+      }
+      default:
+      case UNASSIGNED: {
+        return Icons.getIconByName(Icons.ICON_AIRLOCK_OPEN);
+      }
+      case TOO_YOUNG: {
+        return Icons.getIconByName(Icons.ICON_TOO_YOUNG);
+      }
     }
   }
 }

@@ -1920,20 +1920,22 @@ public class AITurnView extends BlackPanel {
         }
         leader.setExperience(
             leader.getExperience() + numberOfPlanet * 4 + numberOfStarbases);
-        int required = leader.getRequiredExperience();
-        if (leader.getExperience() >= required) {
-          leader.setLevel(leader.getLevel() + 1);
-          leader.setExperience(leader.getExperience() - required);
-          LeaderUtility.addRandomPerks(leader);
-          Message msg = new Message(MessageType.LEADER,
-              leader.getTitle() + " " + leader.getName()
-                  + " has reached to a new level. ",
-              Icons.getIconByName(Icons.ICON_DEATH));
-          realm.getMsgList().addNewMessage(msg);
-          if (leader.getMilitaryRank() != MilitaryRank.CIVILIAN) {
-            leader.setMilitaryRank(MilitaryRank.getByIndex(
-                leader.getMilitaryRank().getIndex() + 1));
-          }
+      }
+      int required = leader.getRequiredExperience();
+      if (leader.getExperience() >= required) {
+        leader.setLevel(leader.getLevel() + 1);
+        leader.setExperience(leader.getExperience() - required);
+        LeaderUtility.addRandomPerks(leader);
+        Message msg = new Message(MessageType.LEADER,
+            leader.getTitle() + " " + leader.getName()
+                + " has reached to a new level. ",
+            LeaderUtility.getIconBasedOnLeaderJob(leader));
+        realm.getMsgList().addUpcomingMessage(msg);
+        if (leader.getJob() == Job.COMMANDER
+            && leader.getMilitaryRank() != MilitaryRank.CIVILIAN) {
+          leader.setMilitaryRank(MilitaryRank.getByIndex(
+              leader.getMilitaryRank().getIndex() + 1));
+          leader.setTitle(LeaderUtility.createTitleForLeader(leader, realm));
         }
       }
     }

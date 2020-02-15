@@ -8,9 +8,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderUtility;
 
 
 /**
@@ -51,38 +51,7 @@ public class LeaderListRenderer implements ListCellRenderer<Leader> {
         list, value, index, isSelected, cellHasFocus);
     renderer.setText(value.getTitle() + " " + value.getName());
     renderer.setFont(GuiStatics.getFontCubellan());
-    switch (value.getJob()) {
-      case RULER: {
-        renderer.setIcon(Icons.getIconByName(Icons.ICON_RULER).getAsIcon());
-        break;
-      }
-      case COMMANDER: {
-        renderer.setIcon(Icons.getIconByName(
-            Icons.ICON_COMMANDER).getAsIcon());
-        break;
-      }
-      case GOVERNOR: {
-        renderer.setIcon(Icons.getIconByName(
-            Icons.ICON_GOVERNOR).getAsIcon());
-        break;
-      }
-      case DEAD: {
-        renderer.setIcon(Icons.getIconByName(
-            Icons.ICON_DEATH).getAsIcon());
-        break;
-      }
-      default:
-      case UNASSIGNED: {
-        renderer.setIcon(Icons.getIconByName(
-            Icons.ICON_AIRLOCK_OPEN).getAsIcon());
-        break;
-      }
-      case TOO_YOUNG: {
-        renderer.setIcon(Icons.getIconByName(
-            Icons.ICON_TOO_YOUNG).getAsIcon());
-        break;
-      }
-    }
+    renderer.setIcon(LeaderUtility.getIconBasedOnLeaderJob(value).getAsIcon());
     if (isSelected) {
       renderer.setForeground(GuiStatics.COLOR_GREEN_TEXT);
       renderer.setBackground(Color.BLACK);

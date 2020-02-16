@@ -1921,6 +1921,25 @@ public class AITurnView extends BlackPanel {
         }
         leader.setExperience(
             leader.getExperience() + numberOfPlanet * 4 + numberOfStarbases);
+        if ((realm.getGovernment() == GovernmentType.ALLIANCE
+            || realm.getGovernment() == GovernmentType.DEMOCRACY
+            || realm.getGovernment() == GovernmentType.FEDERATION
+            || realm.getGovernment() == GovernmentType.REPUBLIC)
+            && leader.getTimeInJob() >= 20) {
+          leader.setJob(Job.UNASSIGNED);
+          // TODO makes new about new election
+        }
+        if ((realm.getGovernment() == GovernmentType.ENTERPRISE
+            || realm.getGovernment() == GovernmentType.GUILD)
+            && leader.getTimeInJob() >= 40) {
+          leader.setJob(Job.UNASSIGNED);
+          // TODO makes new about new election
+        }
+        if (realm.getGovernment() == GovernmentType.AI
+            && leader.getTimeInJob() >= 100) {
+          leader.setJob(Job.UNASSIGNED);
+          // TODO makes new about new election
+        }
       }
       int required = leader.getRequiredExperience();
       if (leader.getExperience() >= required) {

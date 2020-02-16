@@ -150,10 +150,6 @@ public class SpaceAnomaly {
    */
   public static SpaceAnomaly createAnomalyEvent(final StarMap map,
       final PlayerInfo info, final Fleet fleet) {
-    if (fleet.getCommander() != null) {
-      fleet.getCommander().setExperience(
-          fleet.getCommander().getExperience() + 50);
-    }
     SpaceAnomaly result = null;
     Tile tile = map.getTile(fleet.getX(), fleet.getY());
     Tile empty = Tiles.getTileByName(TileNames.EMPTY);
@@ -299,6 +295,10 @@ public class SpaceAnomaly {
         default: {
           break;
         }
+      }
+      if (fleet.getCommander() != null && result != null) {
+        fleet.getCommander().setExperience(
+            fleet.getCommander().getExperience() + 50);
       }
     }
     return result;

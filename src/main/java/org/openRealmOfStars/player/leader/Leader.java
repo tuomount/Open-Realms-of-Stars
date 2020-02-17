@@ -150,7 +150,7 @@ public class Leader {
     setMilitaryRank(MilitaryRank.getByIndex(dis.read()));
     setRace(SpaceRaceUtility.getRaceByIndex(dis.read()));
     setGender(Gender.getByIndex(dis.read()));
-    setJob(Job.getByIndex(dis.read()));
+    job = Job.getByIndex(dis.read());
     parentIndex = dis.readInt();
     setParent(null);
     int size = dis.readInt();
@@ -355,6 +355,11 @@ public class Leader {
     builder.append("Position: ");
     builder.append(getJob().getName());
     builder.append("\n");
+    if (getJob() == Job.RULER) {
+      builder.append("Ruler for ");
+      builder.append(getTimeInJob());
+      builder.append(" turns\n");
+    }
     builder.append("Military status: ");
     builder.append(getMilitaryRank().toString());
     builder.append("\n");
@@ -426,8 +431,10 @@ public class Leader {
    * @param job the job to set
    */
   public void setJob(final Job job) {
+    if (job != this.job) {
+      setTimeInJob(0);
+    }
     this.job = job;
-    setTimeInJob(0);
   }
 
   /**

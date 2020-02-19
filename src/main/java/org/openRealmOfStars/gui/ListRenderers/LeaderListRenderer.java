@@ -49,9 +49,12 @@ public class LeaderListRenderer implements ListCellRenderer<Leader> {
       final boolean isSelected, final boolean cellHasFocus) {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
-    renderer.setText(value.getTitle() + " " + value.getName());
-    renderer.setFont(GuiStatics.getFontCubellan());
-    renderer.setIcon(LeaderUtility.getIconBasedOnLeaderJob(value).getAsIcon());
+    if (value != null) {
+      renderer.setText(value.getTitle() + " " + value.getName());
+      renderer.setFont(GuiStatics.getFontCubellan());
+      renderer.setIcon(
+          LeaderUtility.getIconBasedOnLeaderJob(value).getAsIcon());
+    }
     if (isSelected) {
       renderer.setForeground(GuiStatics.COLOR_GREEN_TEXT);
       renderer.setBackground(Color.BLACK);

@@ -231,7 +231,7 @@ public class Leader {
   }
 
   /**
-   * Set the higheest title for leader
+   * Set the highest title for leader
    * @param title Highest title for leader
    */
   public void setTitle(final String title) {
@@ -246,6 +246,13 @@ public class Leader {
     return name;
   }
 
+  /**
+   * Set leader name.
+   * @param name Name as a string.
+   */
+  public void setName(final String name) {
+    this.name = name;
+  }
   /**
    * Get military rank for leader
    * @return the militaryRank

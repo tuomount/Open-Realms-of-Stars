@@ -1828,4 +1828,17 @@ public class PlayerInfo {
     }
     return -1;
   }
+
+  /**
+   * Are all leaders dead or not.
+   * @return True if all are dead.
+   */
+  public boolean areLeadersDead() {
+    for (Leader leader : leaderPool) {
+      if (leader.getJob() != Job.DEAD) {
+        return false;
+      }
+    }
+    return true;
+  }
 }

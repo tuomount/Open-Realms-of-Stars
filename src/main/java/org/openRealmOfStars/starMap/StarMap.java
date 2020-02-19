@@ -2190,7 +2190,7 @@ public class StarMap {
         }
       }
       // Handle Leaders
-      if (info.getRuler() == null && info.getLeaderPool().size() == 0) {
+      if (info.getRuler() == null && info.areLeadersDead()) {
         // No ruler and no leaders in pool
         Planet trainingPlanet = LeaderUtility.getBestLeaderTrainingPlanet(
             getPlanetList(), info);

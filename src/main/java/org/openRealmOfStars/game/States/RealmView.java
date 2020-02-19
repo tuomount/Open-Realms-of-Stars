@@ -19,7 +19,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -72,10 +72,17 @@ public class RealmView extends BlackPanel {
     panelX.add(info);
     info = new InfoPanel();
     info.setTitle("Government information");
-    info.setLayout(new BorderLayout());
+    info.setLayout(new GridLayout(0, 1));
     SpaceLabel governmentDescription = new SpaceLabel(
         realm.getGovernment().getDescription(false));
     info.add(governmentDescription, BorderLayout.CENTER);
+    String leaderDesc = "<html>No leader as ruler.</html>";
+    if (realm.getRuler() != null) {
+      leaderDesc = "<html>" + realm.getRuler().getDescription() + "</html>";
+      leaderDesc = leaderDesc.replace("\n", "<br>");
+    }
+    SpaceLabel leaderDescription = new SpaceLabel(leaderDesc);
+    info.add(leaderDescription);
     panelX.add(info);
     base.add(panelX);
     // Bottom panel

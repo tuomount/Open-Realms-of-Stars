@@ -30,7 +30,6 @@ import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
-import org.openRealmOfStars.starMap.planet.construction.Building;
 
 /**
 *
@@ -347,22 +346,7 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
   public void handleActions(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_RECRUIT_LEADER)
         && player.getTotalCredits() >= leaderCost) {
-      player.setTotalCredits(player.getTotalCredits() - leaderCost);
-      int level = 1;
-      int xp = 0;
-      for (Building building : trainingPlanet.getBuildingList()) {
-        if (building.getName().equals("Barracks")) {
-          xp = 50;
-        }
-        if (building.getName().equals("Space academy")) {
-          level++;
-        }
-      }
-      Leader leader = LeaderUtility.createLeader(player, trainingPlanet, level);
-      leader.setExperience(xp);
-      leader.assignJob(Job.UNASSIGNED, player);
-      player.getLeaderPool().add(leader);
-      trainingPlanet.takeColonist();
+      LeaderUtility.recruiteLeader(map.getPlanetList(), player);
       Leader[] leaders = sortLeaders(player.getLeaderPool());
       leaderList.setListData(leaders);
       leaderCost = LeaderUtility.leaderRecruitCost(player);

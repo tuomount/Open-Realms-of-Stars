@@ -49,7 +49,6 @@ import org.openRealmOfStars.starMap.planet.GameLengthState;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.PlanetTypes;
 import org.openRealmOfStars.starMap.planet.PlanetaryEvent;
-import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.ConstructionFactory;
 import org.openRealmOfStars.starMap.vote.Votes;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -2192,28 +2191,7 @@ public class StarMap {
       // Handle Leaders
       if (info.getRuler() == null && info.areLeadersDead()) {
         // No ruler and no leaders in pool
-        Planet trainingPlanet = LeaderUtility.getBestLeaderTrainingPlanet(
-            getPlanetList(), info);
-        int leaderCost = LeaderUtility.leaderRecruitCost(info);
-        if (trainingPlanet != null && info.getTotalCredits() >= leaderCost) {
-          info.setTotalCredits(info.getTotalCredits() - leaderCost);
-          int level = 1;
-          int xp = 0;
-          for (Building building : trainingPlanet.getBuildingList()) {
-            if (building.getName().equals("Barracks")) {
-              xp = 50;
-            }
-            if (building.getName().equals("Space academy")) {
-              level++;
-            }
-          }
-          Leader leader = LeaderUtility.createLeader(info, trainingPlanet,
-              level);
-          leader.setExperience(xp);
-          leader.assignJob(Job.UNASSIGNED, info);
-          info.getLeaderPool().add(leader);
-          trainingPlanet.takeColonist();
-        }
+        LeaderUtility.recruiteLeader(getPlanetList(), info);
       }
       aiFleet = info.getFleets().getFirst();
       if (aiFleet == null) {

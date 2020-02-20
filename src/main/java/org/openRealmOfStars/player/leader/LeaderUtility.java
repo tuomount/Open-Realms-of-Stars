@@ -141,6 +141,40 @@ public final class LeaderUtility {
   }
 
   /**
+   * Recruite leader to leader pool. This will find best planet to hire
+   * and cost for it. After this realm will have new leader ready to use.
+   * This method will also return hired leader or null if hire is not possible.
+   * @param planets Array of all planets
+   * @param info Realm who is doing the hire
+   * @return Leader or null
+   */
+  public static Leader recruiteLeader(final ArrayList<Planet> planets,
+      final PlayerInfo info) {
+    Leader leader = null;
+    Planet trainingPlanet = LeaderUtility.getBestLeaderTrainingPlanet(
+        planets, info);
+    int leaderCost = LeaderUtility.leaderRecruitCost(info);
+    if (trainingPlanet != null && info.getTotalCredits() >= leaderCost) {
+      info.setTotalCredits(info.getTotalCredits() - leaderCost);
+      int level = 1;
+      int xp = 0;
+      for (Building building : trainingPlanet.getBuildingList()) {
+        if (building.getName().equals("Barracks")) {
+          xp = 50;
+        }
+        if (building.getName().equals("Space academy")) {
+          level++;
+        }
+      }
+      leader = LeaderUtility.createLeader(info, trainingPlanet, level);
+      leader.setExperience(xp);
+      leader.assignJob(Job.UNASSIGNED, info);
+      info.getLeaderPool().add(leader);
+      trainingPlanet.takeColonist();
+    }
+    return leader;
+  }
+  /**
    * Adds random perks.
    * 60% new perk is related to current job.
    * 40% any good perk is added.

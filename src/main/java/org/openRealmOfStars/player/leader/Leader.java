@@ -516,4 +516,30 @@ public class Leader {
   public void setTimeInJob(final int timeInJob) {
     this.timeInJob = timeInJob;
   }
+
+  /**
+   * Tries to estimate best suitetable job for leader.
+   * Choices are Commander or governor. If leader is equakly fit
+   * for those then unassigned is returned.
+   * @return best suiteable job
+   */
+  public Job getMostSuitableJob() {
+    int commander = 0;
+    int governor = 0;
+    for (Perk perk : perkList) {
+      if (perk.isFleetCommanderPerk()) {
+        commander++;
+      }
+      if (perk.isGovernorPerk()) {
+        governor++;
+      }
+    }
+    if (commander > governor) {
+      return Job.COMMANDER;
+    }
+    if (commander < governor) {
+      return Job.GOVERNOR;
+    }
+    return Job.UNASSIGNED;
+  }
 }

@@ -2192,6 +2192,12 @@ public class StarMap {
       if (info.getRuler() == null && info.areLeadersDead()) {
         // No ruler and no leaders in pool
         LeaderUtility.recruiteLeader(getPlanetList(), info);
+        int openLeaderPositions = calculateMaxLeaders(info);
+        if (openLeaderPositions > 0
+            && DiceGenerator.getRandom(99) < openLeaderPositions * 5) {
+          LeaderUtility.recruiteLeader(getPlanetList(), info);
+        }
+        //TODO Go through leaders and assign unassigned leaders
       }
       aiFleet = info.getFleets().getFirst();
       if (aiFleet == null) {
@@ -3809,4 +3815,32 @@ public class StarMap {
     shownTutorialIndexes = tutorialIndexes;
   }
 
+  /**
+   * Calculate theoretical maximum for leaders by counting number of planets
+   * and fleet which do not have leader. Deployed starbase fleets are not
+   * count as fleet which should have leader.
+   * @param realm Realm whose max leader count is calculate
+   * @return Number of leaders still needed.
+   */
+  public int calculateMaxLeaders(final PlayerInfo realm) {
+    int result = 0;
+    for (Planet planet : planetList) {
+      if (planet.getPlanetPlayerInfo() == realm
+          && planet.getGovernor() == null) {
+        result++;
+      }
+    }
+    for (int i = 0; i < realm.getFleets().getNumberOfFleets(); i++) {
+      Fleet fleet = realm.getFleets().getByIndex(i);
+      if (fleet.getCommander() == null && !fleet.isStarBaseDeployed()) {
+        result++;
+      }
+    }
+    for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getJob() == Job.UNASSIGNED) {
+        result--;
+      }
+    }
+    return result;
+  }
 }

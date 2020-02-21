@@ -277,18 +277,18 @@ public final class NewsFactory {
   }
   /**
    * Make news when ruler dies
-   * @param killed Ruler who died
+   * @param leader Ruler who died
    * @param realm Realm where ruler belong
    * @param reason Reason for death
    * @return NewsData
    */
-  public static NewsData makeRulerDies(final Leader killed,
+  public static NewsData makeLeaderDies(final Leader leader,
       final PlayerInfo realm, final String reason) {
     NewsData news = new NewsData();
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
-    instructions.addImage(killed.getRace().getNameSingle());
-    instructions.addText(killed.getTitle() + " " + killed.getName());
+    instructions.addImage(leader.getRace().getNameSingle());
+    instructions.addText(leader.getTitle() + " " + leader.getName());
     switch (DiceGenerator.getRandom(2)) {
       case 0:
       default: {
@@ -296,7 +296,7 @@ public final class NewsFactory {
         break;
       }
       case 1: {
-        instructions.addText("DIES AT AGE " + killed.getAge() + "!");
+        instructions.addText("DIES AT AGE " + leader.getAge() + "!");
         break;
       }
       case 2: {
@@ -309,39 +309,42 @@ public final class NewsFactory {
     sb.append("Today is sad day for ");
     sb.append(realm.getEmpireName());
     sb.append(". ");
-    sb.append(killed.getTitle() + " " + killed.getName());
+    sb.append(leader.getTitle() + " " + leader.getName());
     sb.append(" has died at age of ");
-    sb.append(killed.getAge());
+    sb.append(leader.getAge());
     sb.append(".");
     sb.append("Reason for ");
-    sb.append(killed.getTitle() + " " + killed.getName());
+    sb.append(leader.getTitle() + " " + leader.getName());
     sb.append(" died because of ");
     sb.append(reason);
     sb.append(". ");
-    sb.append(killed.getTitle());
+    sb.append(leader.getTitle());
     sb.append(" was from ");
-    sb.append(killed.getHomeworld());
+    sb.append(leader.getHomeworld());
     sb.append(". ");
-    if (killed.getParent() != null) {
-      sb.append(killed.getTitle() + " " + killed.getName());
+    if (leader.getParent() != null) {
+      sb.append(leader.getTitle() + " " + leader.getName());
       sb.append(" was heir for ");
-      sb.append(killed.getParent().getTitle() + " "
-          + killed.getParent().getName());
+      sb.append(leader.getParent().getTitle() + " "
+          + leader.getParent().getName());
       sb.append(". ");
     }
     int heirs = 0;
     for (Leader heir : realm.getLeaderPool()) {
-      if (heir.getParent() == killed && heir.getJob() != Job.DEAD) {
+      if (heir.getParent() == leader && heir.getJob() != Job.DEAD) {
         heirs++;
       }
     }
     if (heirs > 0) {
-      sb.append(killed.getTitle() + " " + killed.getName());
+      sb.append(leader.getTitle() + " " + leader.getName());
       sb.append(" has ");
       sb.append(heirs);
-      sb.append(" heirs. Probably one of them will be the next ruler of");
-      sb.append(realm.getEmpireName());
-      sb.append(". ");
+      sb.append(" heirs.");
+      if (realm.getRuler() == null) {
+        sb.append("Probably one of them will be the next ruler of");
+        sb.append(realm.getEmpireName());
+        sb.append(". ");
+      }
     }
     news.setNewsText(sb.toString());
     return news;

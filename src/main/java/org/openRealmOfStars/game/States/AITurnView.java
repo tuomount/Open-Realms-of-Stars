@@ -1864,8 +1864,6 @@ public class AITurnView extends BlackPanel {
                     + " has died at age of " + leader.getAge(),
                 Icons.getIconByName(Icons.ICON_DEATH));
             realm.getMsgList().addNewMessage(msg);
-          }
-          if (realm.getRuler() == leader) {
             String reason;
             switch (DiceGenerator.getRandom(2)) {
               case 0:
@@ -1891,7 +1889,9 @@ public class AITurnView extends BlackPanel {
               }
             }
             game.getStarMap().getNewsCorpData().addNews(
-                NewsFactory.makeRulerDies(realm.getRuler(), realm, reason));
+                NewsFactory.makeLeaderDies(leader, realm, reason));
+          }
+          if (realm.getRuler() == leader) {
             realm.setRuler(null);
           }
         }

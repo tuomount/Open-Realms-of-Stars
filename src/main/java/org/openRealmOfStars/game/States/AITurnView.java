@@ -1938,7 +1938,8 @@ public class AITurnView extends BlackPanel {
             String[] heirNames = heir.getName().split(" ");
             String[] parentNames = leader.getName().split(" ");
             if (parentNames.length >= 2 && heirNames.length >= 2) {
-              heir.setName(heirNames[0] + " " + parentNames[parentNames.length - 1]);
+              heir.setName(heirNames[0] + " "
+                  + parentNames[parentNames.length - 1]);
             }
             heir.setJob(Job.TOO_YOUNG);
             // TODO Make news about heir

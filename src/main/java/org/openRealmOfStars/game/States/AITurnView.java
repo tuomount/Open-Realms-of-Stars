@@ -30,6 +30,7 @@ import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.WinningStrategy;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
@@ -1865,8 +1866,33 @@ public class AITurnView extends BlackPanel {
             realm.getMsgList().addNewMessage(msg);
           }
           if (realm.getRuler() == leader) {
+            String reason;
+            switch (DiceGenerator.getRandom(2)) {
+              case 0:
+              default: {
+                reason = "old age";
+                break;
+              }
+              case 1: {
+                if (leader.getRace() != SpaceRace.MECHIONS) {
+                  reason = "heart attack";
+                } else {
+                  reason = "burnt CPU";
+                }
+                break;
+              }
+              case 2: {
+                if (leader.hasPerk(Perk.ADDICTED)) {
+                  reason = "substance overdose";
+                } else {
+                  reason = "natural causes";
+                }
+                break;
+              }
+            }
+            game.getStarMap().getNewsCorpData().addNews(
+                NewsFactory.makeRulerDies(realm.getRuler(), realm, reason));
             realm.setRuler(null);
-            //TODO Make news about dead leader
           }
         }
       }

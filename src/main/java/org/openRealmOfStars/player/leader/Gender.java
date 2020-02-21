@@ -93,4 +93,16 @@ public enum Gender {
     }
   }
 
+  /**
+   * Get possessive pronominal adjective for gender.
+   * @return possessive pronominal adjective
+   */
+  public String getHisHer() {
+    switch (this) {
+      default:
+      case NONE: return "it's";
+      case MALE: return "his";
+      case FEMALE: return "her";
+    }
+  }
 }

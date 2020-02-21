@@ -26,6 +26,8 @@ import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.history.event.CombatEvent;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
+import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.utilities.DiceGenerator;
 import org.openRealmOfStars.utilities.Logger;
@@ -192,6 +194,10 @@ public class Combat {
    */
   private int attackerMilitaryValue;
   /**
+   * News for killed leader.
+   */
+  private NewsData leaderKilledNews;
+  /**
    * Build shipList in initiative order
    * @param attackerFleet Attacking Player1 fleet
    * @param defenderFleet Defending Player2 fleet
@@ -218,6 +224,7 @@ public class Combat {
     this.defenderFleet = defenderFleet;
     this.attackerInfo = attackerInfo;
     this.defenderInfo = defenderInfo;
+    leaderKilledNews = null;
     starbaseFleet = null;
     combatEvent = new CombatEvent(defenderFleet.getCoordinate());
     String combatText = attackerInfo.getEmpireName() + " attacked against "
@@ -273,33 +280,41 @@ public class Combat {
     escapePosition = escapePos;
   }
 
-/**
- * Add combatShip to combatShipList
- * @param fleet Player's Fleet
- * @param playerInfo Player's information
- * @param positionList starting coordinate list
- * @param flipY Should ship's image have flipped Y axel.
- */
-private void addCombatShipList(final Fleet fleet, final PlayerInfo playerInfo,
-        final CombatPositionList positionList, final boolean flipY) {
-    Ship[] ships = fleet.getShips();
-    int index = 0;
-    for (Ship ship : ships) {
-      ShipStat stat = playerInfo.getShipStatByName(ship.getName());
-      if (stat != null) {
-        stat.setNumberOfCombats(stat.getNumberOfCombats() + 1);
+  /**
+   * Get possible news if leader was killed in combat.
+   * @return NewsData or null.
+   */
+  public NewsData getLeaderKilledNews() {
+    return leaderKilledNews;
+  }
+  /**
+   * Add combatShip to combatShipList
+   * @param fleet Player's Fleet
+   * @param playerInfo Player's information
+   * @param positionList starting coordinate list
+   * @param flipY Should ship's image have flipped Y axel.
+   */
+  private void addCombatShipList(final Fleet fleet,
+          final PlayerInfo playerInfo, final CombatPositionList positionList,
+          final boolean flipY) {
+      Ship[] ships = fleet.getShips();
+      int index = 0;
+      for (Ship ship : ships) {
+        ShipStat stat = playerInfo.getShipStatByName(ship.getName());
+        if (stat != null) {
+          stat.setNumberOfCombats(stat.getNumberOfCombats() + 1);
+        }
+        int combatShipX = positionList.getStartPosX(index);
+        int combatShipY = positionList.getStartPosY(index);
+        CombatShip combatShp = new CombatShip(ship, playerInfo,
+                combatShipX, combatShipY, flipY, fleet.getCommander());
+        if (fleet.getRoute() != null && fleet.getRoute().isDefending()) {
+          combatShp.setBonusAccuracy(5);
+        }
+        combatShipList.add(combatShp);
+        index++;
       }
-      int combatShipX = positionList.getStartPosX(index);
-      int combatShipY = positionList.getStartPosY(index);
-      CombatShip combatShp = new CombatShip(ship, playerInfo,
-              combatShipX, combatShipY, flipY, fleet.getCommander());
-      if (fleet.getRoute() != null && fleet.getRoute().isDefending()) {
-        combatShp.setBonusAccuracy(5);
-      }
-      combatShipList.add(combatShp);
-      index++;
-    }
-}
+  }
 
   /**
    * Get first player's info which is the attacker
@@ -461,27 +476,33 @@ public boolean launchIntercept(final int distance,
       destroyShipFromFleet(ship, attackerFleet);
       if (attackerFleet.getNumberOfShip() == 0
           && attackerFleet.getCommander() != null) {
+        leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
+            attackerFleet.getCommander(), defenderFleet.getCommander(),
+            attackerInfo, defenderInfo);
         attackerFleet.getCommander().setJob(Job.DEAD);
         attackerFleet.setCommander(null);
-        // TODO make news about dead commander
       }
       attackerInfo.getFleets().recalculateList();
     } else if (defenderFleet.isShipInFleet(ship.getShip())) {
       destroyShipFromFleet(ship, defenderFleet);
       if (defenderFleet.getNumberOfShip() == 0
           && defenderFleet.getCommander() != null) {
+        leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
+            defenderFleet.getCommander(), attackerFleet.getCommander(),
+            defenderInfo, attackerInfo);
         defenderFleet.getCommander().setJob(Job.DEAD);
         defenderFleet.setCommander(null);
-        // TODO make news about dead commander
       }
       defenderInfo.getFleets().recalculateList();
     } else if (starbaseFleet.isShipInFleet(ship.getShip())) {
       destroyShipFromFleet(ship, starbaseFleet);
       if (starbaseFleet.getNumberOfShip() == 0
           && starbaseFleet.getCommander() != null) {
+        leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
+            starbaseFleet.getCommander(), attackerFleet.getCommander(),
+            defenderInfo, attackerInfo);
         starbaseFleet.getCommander().setJob(Job.DEAD);
         starbaseFleet.setCommander(null);
-        // TODO make news about dead commander
       }
       defenderInfo.getFleets().recalculateList();
     }

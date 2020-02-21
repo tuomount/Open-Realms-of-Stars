@@ -2,8 +2,11 @@ package org.openRealmOfStars.starMap.newsCorp;
 
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
@@ -270,6 +273,144 @@ public final class NewsFactory {
     }
     news.setImageInstructions(instructions.build());
     news.setNewsText(event.getText());
+    return news;
+  }
+  /**
+   * Make news when ruler dies
+   * @param killed Ruler who died
+   * @param realm Realm where ruler belong
+   * @param reason Reason for death
+   * @return NewsData
+   */
+  public static NewsData makeRulerDies(final Leader killed,
+      final PlayerInfo realm, final String reason) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
+    instructions.addImage(killed.getRace().getNameSingle());
+    instructions.addText(killed.getTitle() + " " + killed.getName());
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("DIES!");
+        break;
+      }
+      case 1: {
+        instructions.addText("DIES AT AGE " + killed.getAge() + "!");
+        break;
+      }
+      case 2: {
+        instructions.addText("FOUND DEAD!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append("Today is sad day for ");
+    sb.append(realm.getEmpireName());
+    sb.append(". ");
+    sb.append(killed.getTitle() + " " + killed.getName());
+    sb.append(" has died at age of ");
+    sb.append(killed.getAge());
+    sb.append(".");
+    sb.append("Reason for ");
+    sb.append(killed.getTitle() + " " + killed.getName());
+    sb.append(" died because of ");
+    sb.append(reason);
+    sb.append(". ");
+    sb.append(killed.getTitle());
+    sb.append(" was from ");
+    sb.append(killed.getHomeworld());
+    sb.append(". ");
+    if (killed.getParent() != null) {
+      sb.append(killed.getTitle() + " " + killed.getName());
+      sb.append(" was heir for ");
+      sb.append(killed.getParent().getTitle() + " "
+          + killed.getParent().getName());
+      sb.append(". ");
+    }
+    int heirs = 0;
+    for (Leader heir : realm.getLeaderPool()) {
+      if (heir.getParent() == killed && heir.getJob() != Job.DEAD) {
+        heirs++;
+      }
+    }
+    if (heirs > 0) {
+      sb.append(killed.getTitle() + " " + killed.getName());
+      sb.append(" has ");
+      sb.append(heirs);
+      sb.append(" heirs. Probably one of them will be the next ruler of");
+      sb.append(realm.getEmpireName());
+      sb.append(". ");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+  /**
+   * Make fleet command killed news.
+   * @param killed Commander which is killed
+   * @param killer Possible killer or null
+   * @param killedRealm Which realm killed belong
+   * @param killerRealm Which realm killed the commander
+   * @return NewsData
+   */
+  public static NewsData makeCommanderKilledInAction(final Leader killed,
+      final Leader killer, final PlayerInfo killedRealm,
+      final PlayerInfo killerRealm) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instructions.addImage(ImageInstruction.SHIP_DESTROYED);
+    if (killer != null) {
+      instructions.addText(killed.getTitle() + " " + killed.getName());
+      instructions.addText("VS");
+      instructions.addText(killer.getTitle() + " " + killer.getName());
+    } else {
+      instructions.addText(killed.getTitle() + " " + killed.getName());
+      switch (DiceGenerator.getRandom(2)) {
+        case 0:
+        default: {
+          instructions.addText("KILLED!");
+          break;
+        }
+        case 1: {
+          instructions.addText("KILLED IN ACTION!");
+          break;
+        }
+        case 2: {
+          instructions.addText("DIED IN BATTLE!");
+          break;
+        }
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(killedRealm.getEmpireName());
+    sb.append(" fought against ");
+    sb.append(killerRealm.getEmpireName());
+    sb.append(". ");
+    sb.append(killedRealm.getEmpireName());
+    sb.append(" lost the fight and ");
+    sb.append(killed.getTitle() + " " + killed.getName());
+    sb.append(" was killed in battle!");
+    if (killer != null) {
+      sb.append(killer.getTitle() + " " + killer.getName());
+      sb.append(" has ");
+      if (killed.getRace() == SpaceRace.MECHIONS) {
+        sb.append("oil");
+      } else {
+        sb.append("blood");
+      }
+      sb.append(" on ");
+      sb.append(killer.getGender().getHisHer());
+      sb.append(" hands.");
+    }
+    sb.append("Today is sad day for ");
+    sb.append(killedRealm.getEmpireName());
+    sb.append(" and for ");
+    sb.append(killed.getHomeworld());
+    sb.append(".");
+    news.setNewsText(sb.toString());
     return news;
   }
   /**

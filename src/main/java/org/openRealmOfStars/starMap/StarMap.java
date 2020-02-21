@@ -2236,7 +2236,6 @@ public class StarMap {
             }
           }
         }
-        //TODO Go through leaders and assign unassigned leaders
       }
       aiFleet = info.getFleets().getFirst();
       if (aiFleet == null) {

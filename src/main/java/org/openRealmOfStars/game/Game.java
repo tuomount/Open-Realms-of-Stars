@@ -646,6 +646,10 @@ public class Game implements ActionListener {
         } else {
           combat.doFastCombat();
           getStarMap().getHistory().addEvent(combat.getCombatEvent());
+          if (combat.getLeaderKilledNews() != null) {
+            getStarMap().getNewsCorpData().addNews(
+                combat.getLeaderKilledNews());
+          }
         }
       } else {
         fleet.setPos(new Coordinate(nx, ny));
@@ -660,6 +664,10 @@ public class Game implements ActionListener {
           anomaly.getCombat().doFastCombat();
           getStarMap().getHistory().addEvent(
               anomaly.getCombat().getCombatEvent());
+          if (anomaly.getCombat().getLeaderKilledNews() != null) {
+            getStarMap().getNewsCorpData().addNews(
+                anomaly.getCombat().getLeaderKilledNews());
+          }
         }
         starMap.clearFleetTiles();
         fleet.decMovesLeft();
@@ -2422,6 +2430,9 @@ public class Game implements ActionListener {
         getStarMap().getFleetTiles(true);
         Combat combat = combatView.getCombat();
         getStarMap().getHistory().addEvent(combat.getCombatEvent());
+        if (combat.getLeaderKilledNews() != null) {
+          getStarMap().getNewsCorpData().addNews(combat.getLeaderKilledNews());
+        }
         if (previousState == GameState.AITURN) {
           changeGameState(previousState);
           return;

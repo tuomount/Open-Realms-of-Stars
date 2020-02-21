@@ -1123,6 +1123,7 @@ public class StarMap {
     ruler.setTitle(LeaderUtility.createTitleForLeader(ruler, playerInfo));
     playerInfo.getLeaderPool().add(ruler);
     playerInfo.getMsgList().addNewMessage(msg);
+    playerInfo.setRuler(ruler);
 
     planet.addBuilding(BuildingFactory.createByName("Space port"));
     if (playerInfo.isHuman()) {

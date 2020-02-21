@@ -1168,7 +1168,8 @@ public final class LeaderUtility {
       final PlayerInfo realm, final StarMap map) {
     if (ruler != null && (ruler.getJob() == Job.UNASSIGNED
         || ruler.getJob() == Job.COMMANDER
-        || ruler.getJob() == Job.GOVERNOR)) {
+        || ruler.getJob() == Job.GOVERNOR
+        || ruler.getJob() == Job.RULER)) {
       if (ruler.getJob() == Job.COMMANDER) {
         for (int i = 0; i < realm.getFleets().getNumberOfFleets(); i++) {
           Fleet fleet = realm.getFleets().getByIndex(i);

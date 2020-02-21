@@ -358,46 +358,20 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ASSIGN_LEADER)) {
       boolean soundPlayed = false;
       Leader leader = leaderList.getSelectedValue();
-      if (leader != null && (leader.getJob() == Job.UNASSIGNED
-          || leader.getJob() == Job.COMMANDER
-          || leader.getJob() == Job.GOVERNOR)) {
-        if (leader.getJob() == Job.COMMANDER) {
-          for (int i = 0; i < player.getFleets().getNumberOfFleets(); i++) {
-            Fleet fleet = player.getFleets().getByIndex(i);
-            if (fleet.getCommander() == leader) {
-              fleet.setCommander(null);
-              break;
-            }
-          }
-        }
-        if (leader.getJob() == Job.GOVERNOR) {
-          for (Planet planet : map.getPlanetList()) {
-            if (planet.getGovernor() == leader) {
-              planet.setGovernor(null);
-            }
-          }
-        }
-        if (activePlanet != null) {
-          if (activePlanet.getGovernor() != null) {
-            activePlanet.getGovernor().assignJob(Job.UNASSIGNED, player);
-          }
-          activePlanet.setGovernor(leader);
-          SoundPlayer.playMenuSound();
-          soundPlayed = true;
-        }
-        if (activeFleet != null) {
-          if (activeFleet.getCommander() != null) {
-            activeFleet.getCommander().assignJob(Job.UNASSIGNED, player);
-          }
-          activeFleet.setCommander(leader);
-          leader.setTitle(LeaderUtility.createTitleForLeader(leader, player));
-          SoundPlayer.playMenuSound();
-          soundPlayed = true;
-        }
-        leaderList.setListData(sortLeaders(player.getLeaderPool()));
-        updatePanel();
+      Object target = null;
+      if (activePlanet != null) {
+        target = activePlanet;
       }
-      if (!soundPlayed) {
+      if (activeFleet != null) {
+        target = activeFleet;
+      }
+      soundPlayed = LeaderUtility.assignLeader(leader, player,
+          map.getPlanetList(), target);
+      leaderList.setListData(sortLeaders(player.getLeaderPool()));
+      updatePanel();
+      if (soundPlayed) {
+        SoundPlayer.playMenuSound();
+      } else {
         SoundPlayer.playMenuDisabled();
       }
     }

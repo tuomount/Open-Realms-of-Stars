@@ -174,6 +174,64 @@ public final class LeaderUtility {
     }
     return leader;
   }
+
+  /**
+   * Assign leader for target job.
+   * @param leader Leader to assign
+   * @param player Realm aka PlayerInfo
+   * @param planets List of all planets in starmap
+   * @param target Planet or fleet.
+   * @return True if assign was successful.
+   */
+  public static boolean assignLeader(final Leader leader,
+      final PlayerInfo player, final ArrayList<Planet> planets,
+      final Object target) {
+    boolean result = false;
+    Planet activePlanet = null;
+    Fleet activeFleet = null;
+    if (target instanceof Planet) {
+      activePlanet = (Planet) target;
+    }
+    if (target instanceof Fleet) {
+      activeFleet = (Fleet) target;
+    }
+    if (leader != null && (leader.getJob() == Job.UNASSIGNED
+        || leader.getJob() == Job.COMMANDER
+        || leader.getJob() == Job.GOVERNOR)) {
+      if (leader.getJob() == Job.COMMANDER) {
+        for (int i = 0; i < player.getFleets().getNumberOfFleets(); i++) {
+          Fleet fleet = player.getFleets().getByIndex(i);
+          if (fleet.getCommander() == leader) {
+            fleet.setCommander(null);
+            break;
+          }
+        }
+      }
+      if (leader.getJob() == Job.GOVERNOR) {
+        for (Planet planet : planets) {
+          if (planet.getGovernor() == leader) {
+            planet.setGovernor(null);
+          }
+        }
+      }
+      if (activePlanet != null) {
+        if (activePlanet.getGovernor() != null) {
+          activePlanet.getGovernor().assignJob(Job.UNASSIGNED, player);
+        }
+        activePlanet.setGovernor(leader);
+        result = true;
+      }
+      if (activeFleet != null) {
+        if (activeFleet.getCommander() != null) {
+          activeFleet.getCommander().assignJob(Job.UNASSIGNED, player);
+        }
+        activeFleet.setCommander(leader);
+        leader.setTitle(LeaderUtility.createTitleForLeader(leader, player));
+        result = true;
+      }
+    }
+    return result;
+  }
   /**
    * Adds random perks.
    * 60% new perk is related to current job.

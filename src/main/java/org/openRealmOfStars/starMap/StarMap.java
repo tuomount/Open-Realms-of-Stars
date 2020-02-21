@@ -2197,6 +2197,45 @@ public class StarMap {
             && DiceGenerator.getRandom(99) < openLeaderPositions * 5) {
           LeaderUtility.recruiteLeader(getPlanetList(), info);
         }
+        for (Leader leader : info.getLeaderPool()) {
+          if (leader.getJob() == Job.UNASSIGNED
+              || leader.getTimeInJob() > 20 && leader.getJob() == Job.COMMANDER
+              || leader.getTimeInJob() > 20
+              && leader.getJob() == Job.GOVERNOR) {
+            ArrayList<Object> targetJobPositions = new ArrayList<>();
+            Job bestJob = leader.getMostSuitableJob();
+            if (bestJob == Job.COMMANDER || bestJob == Job.UNASSIGNED) {
+              for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
+                Fleet fleet = info.getFleets().getByIndex(i);
+                if (fleet.getCommander() != null
+                    && fleet.getCommander().getTimeInJob() > 20) {
+                  targetJobPositions.add(fleet);
+                } else if (fleet.getCommander() == null
+                    && !fleet.isStarBaseDeployed()) {
+                  targetJobPositions.add(fleet);
+                }
+              }
+            }
+            if (bestJob == Job.GOVERNOR || bestJob == Job.UNASSIGNED) {
+              for (Planet planet : planetList) {
+                if (planet.getPlanetPlayerInfo() == info
+                    && planet.getGovernor() != null
+                    && planet.getGovernor().getTimeInJob() > 20) {
+                  targetJobPositions.add(planet);
+                } else if (planet.getPlanetPlayerInfo() == info
+                    && planet.getGovernor() == null) {
+                  targetJobPositions.add(planet);
+                }
+              }
+            }
+            if (targetJobPositions.size() > 0) {
+              int index = DiceGenerator.getRandom(
+                  targetJobPositions.size() - 1);
+              LeaderUtility.assignLeader(leader, info, planetList,
+                  targetJobPositions.get(index));
+            }
+          }
+        }
         //TODO Go through leaders and assign unassigned leaders
       }
       aiFleet = info.getFleets().getFirst();

@@ -333,7 +333,7 @@ public final class NewsFactory {
     sb.append(ruler.getCallName());
     sb.append(" is standing down for ruler of ");
     sb.append(realm.getEmpireName());
-    sb.append(".");
+    sb.append(". ");
     sb.append("Who will be the next ruler of ");
     sb.append(realm.getEmpireName());
     sb.append("?");
@@ -377,7 +377,7 @@ public final class NewsFactory {
     sb.append(leader.getCallName());
     sb.append(" has died at age of ");
     sb.append(leader.getAge());
-    sb.append(".");
+    sb.append(". ");
     sb.append("Reason for ");
     sb.append(leader.getCallName());
     sb.append(" died because of ");
@@ -463,7 +463,7 @@ public final class NewsFactory {
     sb.append(killedRealm.getEmpireName());
     sb.append(" lost the fight and ");
     sb.append(killed.getCallName());
-    sb.append(" was killed in battle!");
+    sb.append(" was killed in battle! ");
     if (killer != null) {
       sb.append(killer.getCallName());
       sb.append(" has ");

@@ -253,6 +253,20 @@ public class Leader {
   public void setName(final String name) {
     this.name = name;
   }
+
+  /**
+   * Get Title and name for leader if leader has title.
+   * @return Optional title + name.
+   */
+  public String getCallName() {
+    StringBuilder sb = new StringBuilder(50);
+    if (getTitle() != null && !getTitle().isEmpty()) {
+      sb.append(getTitle());
+      sb.append(" ");
+    }
+    sb.append(getName());
+    return sb.toString();
+  }
   /**
    * Get military rank for leader
    * @return the militaryRank

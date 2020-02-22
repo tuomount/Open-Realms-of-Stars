@@ -50,7 +50,7 @@ public class LeaderListRenderer implements ListCellRenderer<Leader> {
     JLabel renderer = (JLabel) defaultRenderer.getListCellRendererComponent(
         list, value, index, isSelected, cellHasFocus);
     if (value != null) {
-      renderer.setText(value.getTitle() + " " + value.getName());
+      renderer.setText(value.getCallName());
       renderer.setFont(GuiStatics.getFontCubellan());
       renderer.setIcon(
           LeaderUtility.getIconBasedOnLeaderJob(value).getAsIcon());

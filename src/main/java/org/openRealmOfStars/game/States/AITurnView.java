@@ -1860,7 +1860,7 @@ public class AITurnView extends BlackPanel {
           if (DiceGenerator.getRandom(1, 100) <= chance) {
             leader.setJob(Job.DEAD);
             Message msg = new Message(MessageType.LEADER,
-                leader.getTitle() + " " + leader.getName()
+                leader.getCallName()
                     + " has died at age of " + leader.getAge(),
                 Icons.getIconByName(Icons.ICON_DEATH));
             realm.getMsgList().addNewMessage(msg);
@@ -1919,19 +1919,20 @@ public class AITurnView extends BlackPanel {
           if ((realm.getGovernment() == GovernmentType.CLAN
                || realm.getGovernment() == GovernmentType.HORDE)
               && heirs == 0) {
-            chance = 2;
+            chance = 4;
           }
           if ((realm.getGovernment() == GovernmentType.EMPIRE
               || realm.getGovernment() == GovernmentType.KINGDOM)
               && heirs == 0) {
-            chance = 5;
+            chance = 10;
           }
           if ((realm.getGovernment() == GovernmentType.EMPIRE
               || realm.getGovernment() == GovernmentType.KINGDOM)
               && heirs > 1) {
-            chance = 2;
+            chance = 4;
           }
-          if (DiceGenerator.getRandom(99) < chance && firstPlanet != null) {
+          if (DiceGenerator.getRandom(99) < chance && firstPlanet != null
+              && heirs < 3) {
             heir = LeaderUtility.createLeader(realm, firstPlanet, 1);
             heir.setAge(0);
             heir.setParent(leader);
@@ -1942,7 +1943,9 @@ public class AITurnView extends BlackPanel {
                   + parentNames[parentNames.length - 1]);
             }
             heir.setJob(Job.TOO_YOUNG);
-            // TODO Make news about heir
+            heir.setTitle(LeaderUtility.createTitleForLeader(heir, realm));
+            game.getStarMap().getNewsCorpData().addNews(
+                NewsFactory.makeHeirNews(heir, realm));
           }
         }
         for (int i = 0; i < realm.getFleets().getNumberOfFleets(); i++) {
@@ -1959,18 +1962,21 @@ public class AITurnView extends BlackPanel {
             || realm.getGovernment() == GovernmentType.REPUBLIC)
             && leader.getTimeInJob() >= 20) {
           leader.setJob(Job.UNASSIGNED);
-          // TODO makes new about new election
+          game.getStarMap().getNewsCorpData().addNews(
+              NewsFactory.makeElectionNews(leader, realm));
         }
         if ((realm.getGovernment() == GovernmentType.ENTERPRISE
             || realm.getGovernment() == GovernmentType.GUILD)
             && leader.getTimeInJob() >= 40) {
           leader.setJob(Job.UNASSIGNED);
-          // TODO makes new about new election
+          game.getStarMap().getNewsCorpData().addNews(
+              NewsFactory.makeElectionNews(leader, realm));
         }
         if (realm.getGovernment() == GovernmentType.AI
             && leader.getTimeInJob() >= 100) {
           leader.setJob(Job.UNASSIGNED);
-          // TODO makes new about new election
+          game.getStarMap().getNewsCorpData().addNews(
+              NewsFactory.makeElectionNews(leader, realm));
         }
       }
       int required = leader.getRequiredExperience();
@@ -1979,7 +1985,7 @@ public class AITurnView extends BlackPanel {
         leader.setExperience(leader.getExperience() - required);
         LeaderUtility.addRandomPerks(leader);
         Message msg = new Message(MessageType.LEADER,
-            leader.getTitle() + " " + leader.getName()
+            leader.getCallName()
                 + " has reached to a new level. ",
             LeaderUtility.getIconBasedOnLeaderJob(leader));
         realm.getMsgList().addUpcomingMessage(msg);

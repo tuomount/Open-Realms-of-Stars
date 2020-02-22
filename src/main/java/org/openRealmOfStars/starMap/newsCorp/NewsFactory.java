@@ -276,6 +276,71 @@ public final class NewsFactory {
     return news;
   }
   /**
+   * Make news about new heir
+   * @param heir New heir
+   * @param realm PlayerInfo
+   * @return NewsData
+   */
+  public static NewsData makeHeirNews(final Leader heir,
+      final PlayerInfo realm) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
+    instructions.addImage(heir.getRace().getNameSingle());
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText(heir.getCallName());
+        instructions.addText("IS BORN!");
+        break;
+      }
+      case 1: {
+        instructions.addText("NEW HEIR!");
+        break;
+      }
+      case 2: {
+        instructions.addText(realm.getEmpireName());
+        instructions.addText("HAS NEW HEIR!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(heir.getParent().getCallName());
+    sb.append(" has born new heir. ");
+    sb.append("Heir is called ");
+    sb.append(heir.getCallName());
+    sb.append(". ");
+    news.setNewsText(sb.toString());
+    return news;
+  }
+  /**
+   * Make news about election
+   * @param ruler Old ruler
+   * @param realm PlayerInfo
+   * @return NewsData
+   */
+  public static NewsData makeElectionNews(final Leader ruler,
+      final PlayerInfo realm) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
+    instructions.addImage(ruler.getRace().getNameSingle());
+    instructions.addText(realm.getEmpireName());
+    instructions.addText("IS HAVING NEW ELECTIONS!");
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(ruler.getCallName());
+    sb.append(" is standing down for ruler of ");
+    sb.append(realm.getEmpireName());
+    sb.append(".");
+    sb.append("Who will be the next ruler of ");
+    sb.append(realm.getEmpireName());
+    sb.append("?");
+    news.setNewsText(sb.toString());
+    return news;
+  }
+  /**
    * Make news when ruler dies
    * @param leader Ruler who died
    * @param realm Realm where ruler belong
@@ -288,7 +353,7 @@ public final class NewsFactory {
     ImageInstruction instructions = new ImageInstruction();
     instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
     instructions.addImage(leader.getRace().getNameSingle());
-    instructions.addText(leader.getTitle() + " " + leader.getName());
+    instructions.addText(leader.getCallName());
     switch (DiceGenerator.getRandom(2)) {
       case 0:
       default: {
@@ -309,24 +374,27 @@ public final class NewsFactory {
     sb.append("Today is sad day for ");
     sb.append(realm.getEmpireName());
     sb.append(". ");
-    sb.append(leader.getTitle() + " " + leader.getName());
+    sb.append(leader.getCallName());
     sb.append(" has died at age of ");
     sb.append(leader.getAge());
     sb.append(".");
     sb.append("Reason for ");
-    sb.append(leader.getTitle() + " " + leader.getName());
+    sb.append(leader.getCallName());
     sb.append(" died because of ");
     sb.append(reason);
     sb.append(". ");
-    sb.append(leader.getTitle());
+    if (leader.getTitle() != null && !leader.getTitle().isEmpty()) {
+      sb.append(leader.getTitle());
+    } else {
+      sb.append(leader.getName());
+    }
     sb.append(" was from ");
     sb.append(leader.getHomeworld());
     sb.append(". ");
     if (leader.getParent() != null) {
-      sb.append(leader.getTitle() + " " + leader.getName());
+      sb.append(leader.getCallName());
       sb.append(" was heir for ");
-      sb.append(leader.getParent().getTitle() + " "
-          + leader.getParent().getName());
+      sb.append(leader.getParent().getCallName());
       sb.append(". ");
     }
     int heirs = 0;
@@ -336,7 +404,7 @@ public final class NewsFactory {
       }
     }
     if (heirs > 0) {
-      sb.append(leader.getTitle() + " " + leader.getName());
+      sb.append(leader.getCallName());
       sb.append(" has ");
       sb.append(heirs);
       sb.append(" heirs.");
@@ -365,11 +433,11 @@ public final class NewsFactory {
     instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
     instructions.addImage(ImageInstruction.SHIP_DESTROYED);
     if (killer != null) {
-      instructions.addText(killed.getTitle() + " " + killed.getName());
+      instructions.addText(killed.getCallName());
       instructions.addText("VS");
-      instructions.addText(killer.getTitle() + " " + killer.getName());
+      instructions.addText(killer.getCallName());
     } else {
-      instructions.addText(killed.getTitle() + " " + killed.getName());
+      instructions.addText(killed.getCallName());
       switch (DiceGenerator.getRandom(2)) {
         case 0:
         default: {
@@ -394,10 +462,10 @@ public final class NewsFactory {
     sb.append(". ");
     sb.append(killedRealm.getEmpireName());
     sb.append(" lost the fight and ");
-    sb.append(killed.getTitle() + " " + killed.getName());
+    sb.append(killed.getCallName());
     sb.append(" was killed in battle!");
     if (killer != null) {
-      sb.append(killer.getTitle() + " " + killer.getName());
+      sb.append(killer.getCallName());
       sb.append(" has ");
       if (killed.getRace() == SpaceRace.MECHIONS) {
         sb.append("oil");

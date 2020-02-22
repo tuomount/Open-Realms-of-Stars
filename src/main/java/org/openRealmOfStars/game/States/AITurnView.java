@@ -1888,8 +1888,12 @@ public class AITurnView extends BlackPanel {
                 break;
               }
             }
-            game.getStarMap().getNewsCorpData().addNews(
-                NewsFactory.makeLeaderDies(leader, realm, reason));
+            NewsData news = NewsFactory.makeLeaderDies(leader, realm, reason);
+            game.getStarMap().getNewsCorpData().addNews(news);
+            game.getStarMap().getHistory().addEvent(
+                NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
+                news));
+
           }
           if (realm.getRuler() == leader) {
             realm.setRuler(null);
@@ -1944,8 +1948,11 @@ public class AITurnView extends BlackPanel {
             }
             heir.setJob(Job.TOO_YOUNG);
             heir.setTitle(LeaderUtility.createTitleForLeader(heir, realm));
-            game.getStarMap().getNewsCorpData().addNews(
-                NewsFactory.makeHeirNews(heir, realm));
+            NewsData news = NewsFactory.makeHeirNews(heir, realm);
+            game.getStarMap().getNewsCorpData().addNews(news);
+            game.getStarMap().getHistory().addEvent(
+                NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
+                news));
           }
         }
         for (int i = 0; i < realm.getFleets().getNumberOfFleets(); i++) {

@@ -3032,12 +3032,13 @@ public class StarMap {
             && info.getRuler().hasPerk(Perk.MERCHANT)) {
           result++;
         }
-        for (Leader leader : info.getLeaderPool()) {
-          if ((leader.getJob() == Job.RULER || leader.getJob() == Job.COMMANDER
-              || leader.getJob() == Job.GOVERNOR)
-              && leader.hasPerk(Perk.CORRUPTED)) {
-            result--;
-          }
+        Leader leader = fleet.getCommander();
+        if (leader != null
+            && (leader.getJob() == Job.RULER
+            || leader.getJob() == Job.COMMANDER
+            || leader.getJob() == Job.GOVERNOR)
+            && leader.hasPerk(Perk.CORRUPTED)) {
+          result--;
         }
       }
       if (production == Planet.PRODUCTION_CULTURE) {
@@ -3045,6 +3046,9 @@ public class StarMap {
       }
     }
     if (production == Planet.PRODUCTION_CREDITS) {
+      if (info.getRuler() != null && info.getRuler().hasPerk(Perk.CORRUPTED)) {
+        result = result - 1;
+      }
       int totalCapacity = getTotalFleetCapacity(info);
       double capacity = info.getFleets().getTotalFleetCapacity();
       totalCapacity = totalCapacity - (int) capacity;

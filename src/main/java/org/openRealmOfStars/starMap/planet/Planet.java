@@ -887,6 +887,9 @@ public class Planet {
       if (governor != null && governor.hasPerk(Perk.MERCHANT)) {
         result = result + 1;
       }
+      if (governor != null && governor.hasPerk(Perk.CORRUPTED)) {
+        result = result - 1;
+      }
       break;
     }
     case PRODUCTION_POPULATION: {

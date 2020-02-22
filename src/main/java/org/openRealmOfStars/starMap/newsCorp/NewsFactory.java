@@ -12,6 +12,7 @@ import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.StarMapUtilities;
 import org.openRealmOfStars.starMap.history.event.DiplomaticEvent;
 import org.openRealmOfStars.starMap.history.event.Event;
+import org.openRealmOfStars.starMap.history.event.LeaderEvent;
 import org.openRealmOfStars.starMap.newsCorp.scoreBoard.Row;
 import org.openRealmOfStars.starMap.newsCorp.scoreBoard.ScoreBoard;
 import org.openRealmOfStars.starMap.planet.Planet;
@@ -416,6 +417,54 @@ public final class NewsFactory {
     }
     news.setNewsText(sb.toString());
     return news;
+  }
+  /**
+   * Make Leader event
+   * @param leader Leader who is experience the event
+   * @param realm Realm where leader belongs
+   * @param map StarMap
+   * @param news News about the leader
+   * @return Event
+   */
+  public static Event makeLeaderEvent(final Leader leader,
+      final PlayerInfo realm, final StarMap map, final NewsData news) {
+    int realmIndex = map.getPlayerList().getIndex(realm);
+    Coordinate coord = new Coordinate(map.getMaxX() / 2, map.getMaxY() / 2);
+    Planet firstPlanet = null;
+    if (leader.getJob() == Job.RULER || leader.getJob() == Job.TOO_YOUNG) {
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == realm && firstPlanet == null) {
+          firstPlanet = planet;
+          coord = firstPlanet.getCoordinate();
+          break;
+        }
+      }
+    }
+    if (leader.getJob() == Job.GOVERNOR) {
+      for (Planet planet : map.getPlanetList()) {
+        if (planet.getPlanetPlayerInfo() == realm
+            && planet.getGovernor() == leader && firstPlanet == null) {
+          firstPlanet = planet;
+          coord = firstPlanet.getCoordinate();
+          break;
+        }
+      }
+    }
+    if (leader.getJob() == Job.COMMANDER) {
+      for (int i = 0; i < realm.getFleets().getNumberOfFleets(); i++) {
+        Fleet fleet = realm.getFleets().getByIndex(i);
+        if (fleet.getCommander() == leader) {
+          coord = fleet.getCoordinate();
+          break;
+        }
+      }
+    }
+    LeaderEvent event = new LeaderEvent(leader, realm, realmIndex, coord);
+    if (firstPlanet != null) {
+      event.setPlanetName(firstPlanet.getName());
+      event.setText(news.getNewsText());
+    }
+    return event;
   }
   /**
    * Make fleet command killed news.

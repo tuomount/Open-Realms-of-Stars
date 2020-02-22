@@ -3,7 +3,7 @@ package org.openRealmOfStars.starMap.history.event;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -58,7 +58,11 @@ public enum EventType {
   /**
    * Artificial planet has been created
    */
-  ARTIFICAL_PLANET_CREATED;
+  ARTIFICAL_PLANET_CREATED,
+  /**
+   * Event for leader
+   */
+  LEADER_EVENT;
 
   /**
    * Get Event type index
@@ -75,6 +79,7 @@ public enum EventType {
       case PLAYER_START: return 6;
       case PLANET_BUILDING: return 7;
       case ARTIFICAL_PLANET_CREATED: return 8;
+      case LEADER_EVENT: return 9;
       default: return 0;
     }
   }
@@ -95,6 +100,7 @@ public enum EventType {
       case 6: return EventType.PLAYER_START;
       case 7: return EventType.PLANET_BUILDING;
       case 8: return EventType.ARTIFICAL_PLANET_CREATED;
+      case 9: return EventType.LEADER_EVENT;
       default: throw new IllegalArgumentException(
           "No event type found for index " + index);
     }
@@ -112,6 +118,7 @@ public enum EventType {
       case PLAYER_START: return "Player start";
       case PLANET_BUILDING: return "Planet build significant building";
       case ARTIFICAL_PLANET_CREATED: return "Artificial planet created";
+      case LEADER_EVENT: return "Leader event";
       default: return "Default";
     }
   }

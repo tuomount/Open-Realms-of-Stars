@@ -1539,7 +1539,6 @@ public class Planet {
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
           if (getTotalPopulation() < 1) {
-            setPlanetOwner(-1, null);
             msg = new Message(MessageType.POPULATION,
                 getName() + " has lost last population. " + getName()
                     + " is now uncolonized!",
@@ -1547,6 +1546,7 @@ public class Planet {
             msg.setCoordinate(getCoordinate());
             msg.setMatchByString(getName());
             planetOwnerInfo.getMsgList().addNewMessage(msg);
+            setPlanetOwner(-1, null);
             return;
           }
         }

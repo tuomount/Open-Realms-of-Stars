@@ -315,6 +315,44 @@ public final class NewsFactory {
     news.setNewsText(sb.toString());
     return news;
   }
+      /**
+       * Make news about new ruler
+       * @param ruler New ruler
+       * @param realm PlayerInfo
+       * @return NewsData
+       */
+  public static NewsData makeNewRulerNews(final Leader ruler,
+      final PlayerInfo realm) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_GREY_GRADIENT);
+    instructions.addImage(ruler.getRace().getNameSingle());
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText(ruler.getCallName());
+        instructions.addText("IS NEW RULER!");
+        break;
+      }
+      case 1: {
+        instructions.addText("NEW RULER!");
+        break;
+      }
+      case 2: {
+        instructions.addText(realm.getEmpireName());
+        instructions.addText("HAS NEW RULER!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    sb.append(ruler.getCallName());
+    sb.append(" is new for ruler of ");
+    sb.append(realm.getEmpireName());
+    sb.append(". ");
+    news.setNewsText(sb.toString());
+    return news;
+  }
   /**
    * Make news about election
    * @param ruler Old ruler

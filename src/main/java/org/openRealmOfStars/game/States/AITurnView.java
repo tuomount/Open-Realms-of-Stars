@@ -1840,6 +1840,13 @@ public class AITurnView extends BlackPanel {
       Leader ruler = LeaderUtility.getNextRuler(realm);
       if (ruler != null) {
         LeaderUtility.assignLeaderAsRuler(ruler, realm, game.getStarMap());
+        if (realm.getRuler() != null) {
+          NewsData news = NewsFactory.makeNewRulerNews(ruler, realm);
+          game.getStarMap().getNewsCorpData().addNews(news);
+          game.getStarMap().getHistory().addEvent(
+              NewsFactory.makeLeaderEvent(realm.getRuler(), realm,
+              game.getStarMap(), news));
+        }
       }
     }
     for (Leader leader : realm.getLeaderPool()) {

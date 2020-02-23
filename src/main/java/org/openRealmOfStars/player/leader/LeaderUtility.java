@@ -801,6 +801,8 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.PACIFIST)) {
       result = result + 10;
     }
+    // Simulates voting for leader
+    result = result + DiceGenerator.getRandom(20);
     return result;
   }
 
@@ -902,6 +904,8 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.WARLORD)) {
       result = result + 10;
     }
+    // Simulates voting for leader
+    result = result + DiceGenerator.getRandom(20);
     return result;
   }
 

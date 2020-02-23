@@ -1900,10 +1900,9 @@ public class AITurnView extends BlackPanel {
             game.getStarMap().getHistory().addEvent(
                 NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
                 news));
-
-          }
-          if (realm.getRuler() == leader) {
-            realm.setRuler(null);
+            if (realm.getRuler() == leader) {
+              realm.setRuler(null);
+            }
           }
         }
       }

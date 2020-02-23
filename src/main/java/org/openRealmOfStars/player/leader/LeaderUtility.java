@@ -1191,6 +1191,7 @@ public final class LeaderUtility {
         }
       }
       realm.setRuler(ruler);
+      ruler.setTimeInJob(0);
     }
   }
 

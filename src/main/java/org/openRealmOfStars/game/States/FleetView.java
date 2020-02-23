@@ -665,7 +665,6 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
           }
         }
       }
-      // TODO Change should for something else
       SoundPlayer.playSound(SoundPlayer.DISASSEMBLE);
       updatePanel();
     }

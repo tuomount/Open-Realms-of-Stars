@@ -12,6 +12,7 @@ import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetVisibility;
+import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
@@ -2304,6 +2305,10 @@ public class DiplomaticTrade {
       case PLANET: {
         Planet planet = starMap.getPlanetByName(offer.getPlanet().getName());
         int index = starMap.getPlayerList().getIndex(info);
+        if (planet.getGovernor() != null) {
+          planet.getGovernor().setJob(Job.UNASSIGNED);
+          planet.setGovernor(null);
+        }
         planet.setPlanetOwner(index, info);
         break;
       }

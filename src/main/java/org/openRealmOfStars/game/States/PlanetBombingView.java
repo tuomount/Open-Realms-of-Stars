@@ -34,6 +34,9 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
@@ -51,7 +54,7 @@ import org.openRealmOfStars.utilities.Logger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -553,6 +556,31 @@ public class PlanetBombingView extends BlackPanel {
   }
 
   /**
+   * Method to kill planet governor with reason explanation
+   * @param attackType conquest, bombing, nuking
+   * @param reason Explain why governor died
+   */
+  public void killGovernor(final String attackType, final String reason) {
+    if (planet.getTotalPopulation() == 0
+        && planet.getGovernor() != null) {
+      planet.getGovernor().setJob(Job.DEAD);
+      Message msg = new Message(MessageType.LEADER,
+          planet.getGovernor().getCallName()
+              + " has died at " + attackType + "of " + planet.getName() + ". ",
+          Icons.getIconByName(Icons.ICON_DEATH));
+      planet.getPlanetPlayerInfo().getMsgList().addNewMessage(msg);
+      NewsData news = NewsFactory.makeLeaderDies(planet.getGovernor(),
+          planet.getPlanetPlayerInfo(), reason);
+      if (starMap != null) {
+        starMap.getNewsCorpData().addNews(news);
+        starMap.getHistory().addEvent(
+            NewsFactory.makeLeaderEvent(planet.getGovernor(),
+                planet.getPlanetPlayerInfo(), starMap, news));
+      }
+      planet.setGovernor(null);
+    }
+  }
+  /**
    * Attack with bombs or troops. This handles killing/destroying
    * the buildings and animation.
    * @return true if planet was conquered
@@ -568,8 +596,11 @@ public class PlanetBombingView extends BlackPanel {
           imgBase.setAnimation(new PlanetAnimation(
               PlanetAnimation.ANIMATION_TYPE_NUKE_AIM, 0, 0, 1, 1));
           if (!planet.isShieldForBombing()) {
-            nukeText = planet.nukem(comp.getDamage(), comp.getName());
+            nukeText = planet.nukem(comp.getDamage(), comp.getName(), starMap);
             textLogger.addLog(ship.getName() + " nukes the planet!");
+            if (planet.getTotalPopulation() == 0) {
+              planet.setPlanetOwner(-1, null);
+            }
           } else {
             textLogger.addLog("Orbital shield protects the planet!");
           }
@@ -580,7 +611,7 @@ public class PlanetBombingView extends BlackPanel {
           if (!planet.isShieldForBombing()) {
             int hit = DiceGenerator.getRandom(1, 100);
             if (hit <= comp.getDamage()) {
-              planet.killOneWorker();
+              planet.killOneWorker("bombing", "massive bombing", starMap);
               textLogger.addLog(ship.getName() + " bombs population!");
             } else {
               if (planet.bombOneBuilding()) {
@@ -603,7 +634,7 @@ public class PlanetBombingView extends BlackPanel {
               * ship.getColonist() * (100 + comp.getDamage()) / 100;
           int planetTroops = planet.getTroopPower();
           if (shipTroops > planetTroops) {
-            planet.fightAgainstAttacker(shipTroops);
+            planet.fightAgainstAttacker(shipTroops, starMap);
             int left = shipTroops - planetTroops;
             left = left / shipTroop;
             if (left <= 0) {
@@ -619,7 +650,7 @@ public class PlanetBombingView extends BlackPanel {
             }
             textLogger.addLog("Your troops colonize the planet!");
           } else {
-            planet.fightAgainstAttacker(shipTroops);
+            planet.fightAgainstAttacker(shipTroops, starMap);
             ship.setColonist(0);
             textLogger.addLog("Your troops are killed during the attack!");
           }
@@ -687,6 +718,7 @@ public class PlanetBombingView extends BlackPanel {
           exitLoop = true;
         }
         if (planet.getTotalPopulation() == 0 && !troops) {
+          killGovernor("conquest", " conquest of planet");
           // No attack force exiting
           // Population was killed but no trooper so no owner either
           planet.setPlanetOwner(-1, null);
@@ -769,6 +801,7 @@ public class PlanetBombingView extends BlackPanel {
                 aiExitLoop = true;
               }
               if (planet.getTotalPopulation() == 0 && !aiTroops) {
+                killGovernor("conquest", " conquest of planet");
                 // No attack force exiting
                 // Population was killed but no trooper so no owner either
                 planet.setPlanetOwner(-1, null);

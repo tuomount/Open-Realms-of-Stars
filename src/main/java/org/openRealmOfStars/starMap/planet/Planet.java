@@ -619,8 +619,10 @@ public class Planet {
    * troops. If attacking troops win then left over must be calculated
    * somewhere else.
    * @param attackTroops Attacking troop power
+   * @param starMap StarMap for history writing
    */
-  public void fightAgainstAttacker(final int attackTroops) {
+  public void fightAgainstAttacker(final int attackTroops,
+      final StarMap starMap) {
     if (planetOwnerInfo != null) {
       int troop = planetOwnerInfo.getRace().getTrooperPower();
       int multiply = 100;
@@ -650,7 +652,7 @@ public class Planet {
         }
         int dies = getTotalPopulation() - left;
         for (int i = 0; i < dies; i++) {
-          killOneWorker();
+          killOneWorker("conquest", " conquest of planet", starMap);
         }
       }
     }
@@ -1546,6 +1548,10 @@ public class Planet {
             msg.setCoordinate(getCoordinate());
             msg.setMatchByString(getName());
             planetOwnerInfo.getMsgList().addNewMessage(msg);
+            if (getGovernor() != null) {
+              getGovernor().setJob(Job.UNASSIGNED);
+              setGovernor(null);
+            }
             setPlanetOwner(-1, null);
             return;
           }
@@ -1828,7 +1834,7 @@ public class Planet {
       if (happinessEffect.getType() == HappinessBonus.KILL_POPULATION) {
         // Need to remember owner if last population is killed
         PlayerInfo oldOwner = planetOwnerInfo;
-        killOneWorker();
+        killOneWorker("angry mob", "angry mob", null);
         msg = new Message(MessageType.PLANETARY, "Population of " + getName()
             + " has formed angry mob. This mob killed one population!",
             Icons.getIconByName(Icons.ICON_DEATH));
@@ -2055,11 +2061,18 @@ public class Planet {
   public int getCulture() {
     return culture;
   }
-
   /**
    * Kill randomly one worker. This could be used for example on bombing.
+   * This will also kill governor if one exists on planet.
+   * Kill governor requires attack type and reasons.
+   * Also StarMap is required for news and history events.
+   * @param attackType conquest, bombing, nuking
+   * @param reason Explain why governor died like "conquest of planet",
+   *               "nuclear blast"
+   * @param starMap StarMap add news and history event.
    */
-  public void killOneWorker() {
+  public void killOneWorker(final String attackType, final String reason, final
+      StarMap starMap) {
     if (getTotalPopulation() > 0) {
       ArrayList<Integer> list = new ArrayList<>();
       for (int i = 0; i < workers.length; i++) {
@@ -2071,8 +2084,15 @@ public class Planet {
       workers[list.get(index)]--;
     }
     if (getTotalPopulation() == 0) {
+      killGovernor(attackType, reason, starMap);
       setPlanetOwner(-1, null);
     }
+  }
+  /**
+   * Kill randomly one worker. This could be used for example on bombing.
+   */
+  public void killOneWorker() {
+    killOneWorker("attack", "attack", null);
   }
 
   /**
@@ -2134,9 +2154,11 @@ public class Planet {
    * uncolonized. Culture drops to 1/10.
    * @param strength Nuke strength from 0-100
    * @param bombName Bomb name for different type of explosions
+   * @param starMap StarMap for writing history
    * @return Description about bombs destruction power.
    */
-  public String nukem(final int strength, final String bombName) {
+  public String nukem(final int strength, final String bombName,
+      final StarMap starMap) {
     StringBuilder sb = new StringBuilder();
     int dead = getGroundSize() * strength / 100;
     if (dead < 2) {
@@ -2223,11 +2245,7 @@ public class Planet {
       }
     }
     for (int i = 0; i < dead; i++) {
-      killOneWorker();
-    }
-    if (getTotalPopulation() == 0) {
-      planetOwnerInfo = null;
-      planetOwner = -1;
+      killOneWorker("nuking", "nuclear blast", starMap);
     }
     return sb.toString();
   }
@@ -2643,6 +2661,34 @@ public class Planet {
     this.governor = governor;
     if (this.governor != null) {
       this.governor.assignJob(Job.GOVERNOR, this.getPlanetPlayerInfo());
+    }
+  }
+
+  /**
+   * Method to kill planet governor with reason explanation
+   * @param attackType conquest, bombing, nuking
+   * @param reason Explain why governor died
+   * @param starMap StarMap add news and history event.
+   */
+  public void killGovernor(final String attackType, final String reason, final
+      StarMap starMap) {
+    if (getTotalPopulation() == 0
+        && getGovernor() != null) {
+      getGovernor().setJob(Job.DEAD);
+      Message msg = new Message(MessageType.LEADER,
+          getGovernor().getCallName()
+              + " has died at " + attackType + "of " + getName() + ". ",
+          Icons.getIconByName(Icons.ICON_DEATH));
+      getPlanetPlayerInfo().getMsgList().addNewMessage(msg);
+      NewsData news = NewsFactory.makeLeaderDies(getGovernor(),
+          getPlanetPlayerInfo(), reason);
+      if (starMap != null) {
+        starMap.getNewsCorpData().addNews(news);
+        starMap.getHistory().addEvent(
+            NewsFactory.makeLeaderEvent(getGovernor(),
+                getPlanetPlayerInfo(), starMap, news));
+      }
+      setGovernor(null);
     }
   }
 

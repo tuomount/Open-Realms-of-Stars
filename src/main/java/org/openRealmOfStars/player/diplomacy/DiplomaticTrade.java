@@ -2296,6 +2296,10 @@ public class DiplomaticTrade {
         break;
       }
       case FLEET: {
+        if (offer.getFleet().getCommander() != null) {
+          offer.getFleet().getCommander().setJob(Job.UNASSIGNED);
+          offer.getFleet().setCommander(null);
+        }
         info.getFleets().add(offer.getFleet());
         int index = giver.getFleets().getIndexByName(offer.getFleet()
             .getName());

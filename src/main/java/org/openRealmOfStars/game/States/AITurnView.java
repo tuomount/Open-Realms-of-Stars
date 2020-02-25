@@ -1841,6 +1841,11 @@ public class AITurnView extends BlackPanel {
       if (ruler != null) {
         LeaderUtility.assignLeaderAsRuler(ruler, realm, game.getStarMap());
         if (realm.getRuler() != null) {
+          Message msg = new Message(MessageType.LEADER,
+              ruler.getCallName()
+                  + " has selected as ruler for " + realm.getEmpireName(),
+              Icons.getIconByName(Icons.ICON_RULER));
+          msg.setMatchByString("Index:" + realm.getLeaderIndex(ruler));
           NewsData news = NewsFactory.makeNewRulerNews(ruler, realm);
           game.getStarMap().getNewsCorpData().addNews(news);
           game.getStarMap().getHistory().addEvent(
@@ -1870,6 +1875,7 @@ public class AITurnView extends BlackPanel {
                 leader.getCallName()
                     + " has died at age of " + leader.getAge(),
                 Icons.getIconByName(Icons.ICON_DEATH));
+            msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
             realm.getMsgList().addNewMessage(msg);
             String reason;
             switch (DiceGenerator.getRandom(2)) {
@@ -2001,6 +2007,7 @@ public class AITurnView extends BlackPanel {
             leader.getCallName()
                 + " has reached to a new level. ",
             LeaderUtility.getIconBasedOnLeaderJob(leader));
+        msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
         realm.getMsgList().addUpcomingMessage(msg);
         if (leader.getJob() == Job.COMMANDER
             && leader.getMilitaryRank() != MilitaryRank.CIVILIAN) {

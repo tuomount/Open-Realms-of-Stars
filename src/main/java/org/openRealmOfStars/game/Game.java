@@ -1216,6 +1216,21 @@ public class Game implements ActionListener {
         Fleet fleet = (Fleet) dataObject;
         leaderView.setFleet(fleet);
       }
+      if (dataObject instanceof Message) {
+        Message message = (Message) dataObject;
+        if (message.getMatchByString() != null) {
+          String[] parts = message.getMatchByString().split(":");
+          if (parts.length == 2) {
+            try {
+              int index = Integer.valueOf(parts[1]);
+              leaderView.setFocusToIndex(index);
+            } catch (NumberFormatException e) {
+              ErrorLogger.log("Leader pool index is not a number! "
+                 + e.getMessage());
+            }
+          }
+        }
+      }
     }
     this.updateDisplay(leaderView);
   }
@@ -1288,7 +1303,11 @@ public class Game implements ActionListener {
       break;
     }
     case LEADER_VIEW: {
-      viewLeaders(dataObject);
+      if (focusMessage == null) {
+        viewLeaders(dataObject);
+      } else {
+        viewLeaders(focusMessage);
+      }
       break;
     }
     case NEWS_CORP_VIEW: {
@@ -1921,6 +1940,9 @@ public class Game implements ActionListener {
     if ((msg.getType() == MessageType.CONSTRUCTION
         || msg.getType() == MessageType.POPULATION) && !mapOnly) {
       changeGameState(GameState.PLANETVIEW, msg);
+    }
+    if (msg.getType() == MessageType.LEADER && !mapOnly) {
+      changeGameState(GameState.LEADER_VIEW, msg);
     }
   }
 

@@ -568,6 +568,8 @@ public class PlanetBombingView extends BlackPanel {
           planet.getGovernor().getCallName()
               + " has died at " + attackType + "of " + planet.getName() + ". ",
           Icons.getIconByName(Icons.ICON_DEATH));
+      msg.setMatchByString("Index:"
+          + planet.getPlanetPlayerInfo().getLeaderIndex(planet.getGovernor()));
       planet.getPlanetPlayerInfo().getMsgList().addNewMessage(msg);
       NewsData news = NewsFactory.makeLeaderDies(planet.getGovernor(),
           planet.getPlanetPlayerInfo(), reason);

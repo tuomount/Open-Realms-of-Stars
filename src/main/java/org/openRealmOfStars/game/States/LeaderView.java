@@ -191,6 +191,13 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     activeFleet = fleet;
   }
   /**
+   * Set selected by index
+   * @param index Leader pool index.
+   */
+  public void setFocusToIndex(final int index) {
+    leaderList.setSelectedIndex(index);
+  }
+  /**
    * Update button tool tips.
    */
   private void updateButtonToolTips() {

@@ -73,7 +73,14 @@ public class LeaderEventTest {
     assertEquals(coord.getY(), event2.getCoordinate().getY());
     assertEquals("Test Planet I", event2.getPlanetName());
     assertEquals("Text", event2.getText());
-   
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testParsingVeryShortLeaderEvent() throws IOException {
+    byte[] buffer = {9, 0, 14, 6, 0, 0, 0, 64, 0, 64, 0, 0, 0, 0};
+    LeaderEvent event = LeaderEvent.createLeaderEvent(buffer);
+    assertEquals(64, event.getCoordinate().getX());
   }
 
 }

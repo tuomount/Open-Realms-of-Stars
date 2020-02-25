@@ -202,6 +202,8 @@ public class LeaderEvent extends Event {
         str = IOUtilities.readUTF8String(is);
         event.setText(str);
         return event;
+      } catch (IOException e) {
+        throw new IOException("Failed parsing Leader event!", e);
       }
     }
     throw new IOException("Event is not Leader event as expected!");

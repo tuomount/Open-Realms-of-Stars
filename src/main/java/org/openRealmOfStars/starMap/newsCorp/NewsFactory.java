@@ -500,8 +500,8 @@ public final class NewsFactory {
     LeaderEvent event = new LeaderEvent(leader, realm, realmIndex, coord);
     if (firstPlanet != null) {
       event.setPlanetName(firstPlanet.getName());
-      event.setText(news.getNewsText());
     }
+    event.setText(news.getNewsText());
     return event;
   }
   /**

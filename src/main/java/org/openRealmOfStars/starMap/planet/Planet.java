@@ -2679,6 +2679,8 @@ public class Planet {
           getGovernor().getCallName()
               + " has died at " + attackType + "of " + getName() + ". ",
           Icons.getIconByName(Icons.ICON_DEATH));
+      msg.setMatchByString("Index:" + getPlanetPlayerInfo().getLeaderIndex(
+          getGovernor()));
       getPlanetPlayerInfo().getMsgList().addNewMessage(msg);
       NewsData news = NewsFactory.makeLeaderDies(getGovernor(),
           getPlanetPlayerInfo(), reason);

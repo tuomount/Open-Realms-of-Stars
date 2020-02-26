@@ -195,7 +195,16 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
    * @param index Leader pool index.
    */
   public void setFocusToIndex(final int index) {
-    leaderList.setSelectedIndex(index);
+    Leader leaderToFind = player.getLeaderPool().get(index);
+    if (leaderToFind != null) {
+      for (int i = 0; i < leaderList.getModel().getSize(); i++) {
+        Leader leader = leaderList.getModel().getElementAt(i);
+        if (leaderToFind == leader) {
+          leaderList.setSelectedIndex(i);
+          break;
+        }
+      }
+    }
   }
   /**
    * Update button tool tips.

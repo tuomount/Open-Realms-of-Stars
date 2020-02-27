@@ -1927,7 +1927,8 @@ public class AITurnView extends BlackPanel {
         int heirs = 0;
         if (realm.getGovernment().hasHeirs()) {
           for (Leader leaderAsHeir :realm.getLeaderPool()) {
-            if (leaderAsHeir.getParent() != null) {
+            if (leaderAsHeir.getParent() != null
+                && leaderAsHeir.getJob() != Job.DEAD) {
               heirs++;
             }
           }
@@ -2065,11 +2066,24 @@ public class AITurnView extends BlackPanel {
                 fleet.getCommander().setExperience(
                     fleet.getCommander().getExperience() + 10);
               }
-              if (fleet.getRoute() != null && fleet.getRoute().isDefending()) {
+              if (fleet.getCommander().getAge() == 50
+                  && fleet.getCommander().getMilitaryRank()
+                  == MilitaryRank.ENSIGN) {
+                fleet.getCommander().setMilitaryRank(MilitaryRank.LIEUTENANT);
                 fleet.getCommander().setExperience(
-                    fleet.getCommander().getExperience()
-                    + fleet.getNumberOfShip());
+                    fleet.getCommander().getExperience() + 50);
+                Message msg = new Message(MessageType.LEADER,
+                    fleet.getCommander().getCallName()
+                        + " has gained military rank lieutenant. ",
+                    LeaderUtility.getIconBasedOnLeaderJob(
+                        fleet.getCommander()));
+                msg.setMatchByString("Index:"
+                        + info.getLeaderIndex(fleet.getCommander()));
+                info.getMsgList().addUpcomingMessage(msg);
               }
+              fleet.getCommander().setExperience(
+                  fleet.getCommander().getExperience()
+                  + fleet.getNumberOfShip() * fleet.getCommander().getLevel());
             }
           }
           if (fleet.getRoute() != null) {

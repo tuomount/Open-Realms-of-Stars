@@ -374,17 +374,19 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ASSIGN_LEADER)) {
       boolean soundPlayed = false;
       Leader leader = leaderList.getSelectedValue();
-      Object target = null;
-      if (activePlanet != null) {
-        target = activePlanet;
+      if (leader.getTimeInJob() > 19) {
+        Object target = null;
+        if (activePlanet != null) {
+          target = activePlanet;
+        }
+        if (activeFleet != null) {
+          target = activeFleet;
+        }
+        soundPlayed = LeaderUtility.assignLeader(leader, player,
+            map.getPlanetList(), target);
+        leaderList.setListData(sortLeaders(player.getLeaderPool()));
+        updatePanel();
       }
-      if (activeFleet != null) {
-        target = activeFleet;
-      }
-      soundPlayed = LeaderUtility.assignLeader(leader, player,
-          map.getPlanetList(), target);
-      leaderList.setListData(sortLeaders(player.getLeaderPool()));
-      updatePanel();
       if (soundPlayed) {
         SoundPlayer.playMenuSound();
       } else {

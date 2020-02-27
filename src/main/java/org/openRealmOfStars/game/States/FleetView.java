@@ -612,6 +612,10 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
         if (mergeFleet != starbaseFleet
             && fleet.getNumberOfShip() + mergeFleet.getNumberOfShip()
             <= Fleet.MAX_FLEET_SIZE) {
+          if (mergeFleet.getCommander() != null) {
+            mergeFleet.getCommander().setJob(Job.UNASSIGNED);
+            mergeFleet.setCommander(null);
+          }
           for (int j = 0; j < mergeFleet.getNumberOfShip(); j++) {
             Ship ship = mergeFleet.getShipByIndex(j);
             if (ship != null) {

@@ -14,6 +14,7 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -580,6 +581,9 @@ public class Planet {
           multiply = multiply + building.getBattleBonus();
         }
       }
+      if (governor != null && governor.hasPerk(Perk.DISCIPLINE)) {
+        multiply = multiply + 25;
+      }
       result = result * multiply / 100;
       return result;
     }
@@ -600,6 +604,9 @@ public class Planet {
           multiply = multiply + building.getBattleBonus();
         }
       }
+      if (governor != null && governor.hasPerk(Perk.DISCIPLINE)) {
+        multiply = multiply + 25;
+      }
       result = result * multiply / 100;
       return result;
     }
@@ -612,8 +619,10 @@ public class Planet {
    * troops. If attacking troops win then left over must be calculated
    * somewhere else.
    * @param attackTroops Attacking troop power
+   * @param starMap StarMap for history writing
    */
-  public void fightAgainstAttacker(final int attackTroops) {
+  public void fightAgainstAttacker(final int attackTroops,
+      final StarMap starMap) {
     if (planetOwnerInfo != null) {
       int troop = planetOwnerInfo.getRace().getTrooperPower();
       int multiply = 100;
@@ -643,7 +652,7 @@ public class Planet {
         }
         int dies = getTotalPopulation() - left;
         for (int i = 0; i < dies; i++) {
-          killOneWorker();
+          killOneWorker("conquest", " conquest of planet", starMap);
         }
       }
     }
@@ -785,6 +794,9 @@ public class Planet {
       if (totalPopulation >= 4) {
         result = result + government.getFoodBonus();
       }
+      if (governor != null && governor.hasPerk(Perk.AGRICULTURAL)) {
+        result = result + 1;
+      }
       break;
     }
     case PRODUCTION_METAL: {
@@ -800,6 +812,9 @@ public class Planet {
       }
       if (happinessEffect.getType() == HappinessBonus.METAL) {
         result = result + happinessEffect.getValue();
+      }
+      if (governor != null && governor.hasPerk(Perk.MINER)) {
+        result = result + 1;
       }
       break;
     }
@@ -818,6 +833,13 @@ public class Planet {
       if (happinessEffect.getType() == HappinessBonus.PRODUCTION) {
         result = result + happinessEffect.getValue();
       }
+      if (governor != null && governor.hasPerk(Perk.INDUSTRIAL)) {
+        result = result + 1;
+      }
+      if (governor != null && governor.hasPerk(Perk.MICRO_MANAGER)
+          && result > 0) {
+        result = result - 1;
+      }
       break;
     }
     case PRODUCTION_RESEARCH: {
@@ -827,6 +849,12 @@ public class Planet {
           + getTotalProductionFromBuildings(prod);
       if (totalPopulation >= 4) {
         result = result + government.getResearchBonus();
+      }
+      if (governor != null && governor.hasPerk(Perk.SCIENTIST)) {
+        result = result + 1;
+      }
+      if (governor != null && governor.hasPerk(Perk.STUPID)) {
+        result = result - 1;
       }
       break;
     }
@@ -842,6 +870,9 @@ public class Planet {
       if (happinessEffect.getType() == HappinessBonus.CULTURE) {
         result = result + happinessEffect.getValue();
       }
+      if (governor != null && governor.hasPerk(Perk.ARTISTIC)) {
+        result = result + 1;
+      }
       break;
     }
     case PRODUCTION_CREDITS: {
@@ -854,6 +885,12 @@ public class Planet {
       }
       if (happinessEffect.getType() == HappinessBonus.CREDIT) {
         result = result + happinessEffect.getValue();
+      }
+      if (governor != null && governor.hasPerk(Perk.MERCHANT)) {
+        result = result + 1;
+      }
+      if (governor != null && governor.hasPerk(Perk.CORRUPTED)) {
+        result = result - 1;
       }
       break;
     }
@@ -1386,6 +1423,14 @@ public class Planet {
    */
   public void updateOneTurn(final boolean enemyOrbiting, final StarMap map) {
     if (planetOwnerInfo != null) {
+      if (governor != null) {
+        if (governor.getJob() == Job.DEAD) {
+          governor = null;
+        } else {
+          governor.setExperience(governor.getExperience()
+              + getTotalPopulation());
+        }
+      }
       happinessEffect = HappinessEffect.createHappinessEffect(
           calculateHappiness());
       if (happinessEffect.getType() != HappinessBonus.KILL_POPULATION
@@ -1496,7 +1541,6 @@ public class Planet {
           msg.setMatchByString(getName());
           planetOwnerInfo.getMsgList().addNewMessage(msg);
           if (getTotalPopulation() < 1) {
-            setPlanetOwner(-1, null);
             msg = new Message(MessageType.POPULATION,
                 getName() + " has lost last population. " + getName()
                     + " is now uncolonized!",
@@ -1504,6 +1548,11 @@ public class Planet {
             msg.setCoordinate(getCoordinate());
             msg.setMatchByString(getName());
             planetOwnerInfo.getMsgList().addNewMessage(msg);
+            if (getGovernor() != null) {
+              getGovernor().setJob(Job.UNASSIGNED);
+              setGovernor(null);
+            }
+            setPlanetOwner(-1, null);
             return;
           }
         }
@@ -1568,6 +1617,10 @@ public class Planet {
           }
           metal = metal - underConstruction.getMetalCost();
           prodResource = prodResource - underConstruction.getProdCost();
+          if (governor != null) {
+            governor.setExperience(governor.getExperience()
+                + underConstruction.getProdCost() / 2);
+          }
           buildings.add((Building) underConstruction);
           msg = new Message(MessageType.CONSTRUCTION,
               getName() + " built " + underConstruction.getName(),
@@ -1581,6 +1634,10 @@ public class Planet {
         } else if (underConstruction instanceof Ship && !enemyOrbiting) {
           metal = metal - underConstruction.getMetalCost();
           prodResource = prodResource - underConstruction.getProdCost();
+          if (governor != null) {
+            governor.setExperience(governor.getExperience()
+                + underConstruction.getProdCost() / 2);
+          }
           ShipStat stat = planetOwnerInfo.getShipStatByName(
               underConstruction.getName());
           if (stat == null) {
@@ -1777,7 +1834,7 @@ public class Planet {
       if (happinessEffect.getType() == HappinessBonus.KILL_POPULATION) {
         // Need to remember owner if last population is killed
         PlayerInfo oldOwner = planetOwnerInfo;
-        killOneWorker();
+        killOneWorker("angry mob", "angry mob", null);
         msg = new Message(MessageType.PLANETARY, "Population of " + getName()
             + " has formed angry mob. This mob killed one population!",
             Icons.getIconByName(Icons.ICON_DEATH));
@@ -2004,11 +2061,18 @@ public class Planet {
   public int getCulture() {
     return culture;
   }
-
   /**
    * Kill randomly one worker. This could be used for example on bombing.
+   * This will also kill governor if one exists on planet.
+   * Kill governor requires attack type and reasons.
+   * Also StarMap is required for news and history events.
+   * @param attackType conquest, bombing, nuking
+   * @param reason Explain why governor died like "conquest of planet",
+   *               "nuclear blast"
+   * @param starMap StarMap add news and history event.
    */
-  public void killOneWorker() {
+  public void killOneWorker(final String attackType, final String reason, final
+      StarMap starMap) {
     if (getTotalPopulation() > 0) {
       ArrayList<Integer> list = new ArrayList<>();
       for (int i = 0; i < workers.length; i++) {
@@ -2020,8 +2084,15 @@ public class Planet {
       workers[list.get(index)]--;
     }
     if (getTotalPopulation() == 0) {
+      killGovernor(attackType, reason, starMap);
       setPlanetOwner(-1, null);
     }
+  }
+  /**
+   * Kill randomly one worker. This could be used for example on bombing.
+   */
+  public void killOneWorker() {
+    killOneWorker("attack", "attack", null);
   }
 
   /**
@@ -2083,9 +2154,11 @@ public class Planet {
    * uncolonized. Culture drops to 1/10.
    * @param strength Nuke strength from 0-100
    * @param bombName Bomb name for different type of explosions
+   * @param starMap StarMap for writing history
    * @return Description about bombs destruction power.
    */
-  public String nukem(final int strength, final String bombName) {
+  public String nukem(final int strength, final String bombName,
+      final StarMap starMap) {
     StringBuilder sb = new StringBuilder();
     int dead = getGroundSize() * strength / 100;
     if (dead < 2) {
@@ -2172,11 +2245,7 @@ public class Planet {
       }
     }
     for (int i = 0; i < dead; i++) {
-      killOneWorker();
-    }
-    if (getTotalPopulation() == 0) {
-      planetOwnerInfo = null;
-      planetOwner = -1;
+      killOneWorker("nuking", "nuclear blast", starMap);
     }
     return sb.toString();
   }
@@ -2506,6 +2575,19 @@ public class Planet {
       sb.append(totalWarFatigue);
       sb.append("<br>");
     }
+    if (governor != null && governor.hasPerk(Perk.GOOD_LEADER)) {
+      base = base + 1;
+      sb.append("<li>");
+      sb.append("Governor Good leader +1");
+      sb.append("<br>");
+    }
+    if (getPlanetPlayerInfo().getRuler() != null
+        && getPlanetPlayerInfo().getRuler().hasPerk(Perk.GOOD_LEADER)) {
+      base = base + 1;
+      sb.append("<li>");
+      sb.append("Ruler Good leader +1");
+      sb.append("<br>");
+    }
     sb.append("</html>");
     happinessExplanation = sb.toString();
     return base;
@@ -2578,7 +2660,37 @@ public class Planet {
   public void setGovernor(final Leader governor) {
     this.governor = governor;
     if (this.governor != null) {
-      this.governor.setJob(Job.GOVERNOR);
+      this.governor.assignJob(Job.GOVERNOR, this.getPlanetPlayerInfo());
+    }
+  }
+
+  /**
+   * Method to kill planet governor with reason explanation
+   * @param attackType conquest, bombing, nuking
+   * @param reason Explain why governor died
+   * @param starMap StarMap add news and history event.
+   */
+  public void killGovernor(final String attackType, final String reason, final
+      StarMap starMap) {
+    if (getTotalPopulation() == 0
+        && getGovernor() != null) {
+      getGovernor().setJob(Job.DEAD);
+      Message msg = new Message(MessageType.LEADER,
+          getGovernor().getCallName()
+              + " has died at " + attackType + "of " + getName() + ". ",
+          Icons.getIconByName(Icons.ICON_DEATH));
+      msg.setMatchByString("Index:" + getPlanetPlayerInfo().getLeaderIndex(
+          getGovernor()));
+      getPlanetPlayerInfo().getMsgList().addNewMessage(msg);
+      NewsData news = NewsFactory.makeLeaderDies(getGovernor(),
+          getPlanetPlayerInfo(), reason);
+      if (starMap != null) {
+        starMap.getNewsCorpData().addNews(news);
+        starMap.getHistory().addEvent(
+            NewsFactory.makeLeaderEvent(getGovernor(),
+                getPlanetPlayerInfo(), starMap, news));
+      }
+      setGovernor(null);
     }
   }
 

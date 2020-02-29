@@ -114,7 +114,7 @@ public class NewsCorpView extends BlackPanel {
     }
     base.setLayout(new BorderLayout());
     base.setTitle("Galactic Broadcasting News Company");
-    newsReaderPanel = new ImagePanel(GuiStatics.IMAGE_HUMAN_RACE);
+    newsReaderPanel = new ImagePanel(GuiStatics.IMAGE_SCAURIAN_RACE);
     int heightNewsReader = 700;
     widthHeadLine = 800;
     heightHeadLine = 400;

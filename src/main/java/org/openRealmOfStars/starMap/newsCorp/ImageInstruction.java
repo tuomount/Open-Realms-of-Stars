@@ -13,7 +13,7 @@ import org.openRealmOfStars.starMap.planet.PlanetTypes;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017,2018  Tuomo Untinen
+* Copyright (C) 2017-2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -330,6 +330,10 @@ public class ImageInstruction {
    * Instructions for ship
    */
   public static final String SHIP = "ship";
+  /**
+   * Instructions for ship destroyed
+   */
+  public static final String SHIP_DESTROYED = "ship_destroyed";
 
   /**
    * Instruction to draw image
@@ -495,7 +499,8 @@ public class ImageInstruction {
         && !DESERT.equals(image)
         && !PARADISE.equals(image)
         && !VIRUSES.equals(image)
-        && !METEOR.equals(image)) {
+        && !METEOR.equals(image)
+        && !SHIP_DESTROYED.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }
@@ -948,6 +953,9 @@ public class ImageInstruction {
     }
     if (VIRUSES.equals(image)) {
       drawImg = GuiStatics.IMAGE_VIRUSES;
+    }
+    if (SHIP_DESTROYED.equals(image)) {
+      drawImg = GuiStatics.IMAGE_SHIP_DESTROYED;
     }
     BufferedImage img = workImage;
     if (img == null) {

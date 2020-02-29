@@ -274,6 +274,12 @@ public final class SoundPlayer {
   }
 
   /**
+   * Play menu sound indicating that something did not work.
+   */
+  public static void playMenuDisabled() {
+    playSound(MENU_DISABLED);
+  }
+  /**
    * Play menu sound. This should be called when button is pressed.
    */
   public static void playMenuSound() {

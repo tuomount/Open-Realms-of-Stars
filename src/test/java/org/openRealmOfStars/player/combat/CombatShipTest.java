@@ -49,7 +49,7 @@ public class CombatShipTest {
     Mockito.when(ship.getShield()).thenReturn(0);
     Mockito.when(ship.getTotalShield()).thenReturn(2);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    CombatShip combatShip = new CombatShip(ship, info, 5, 3, false);
+    CombatShip combatShip = new CombatShip(ship, info, 5, 3, false, null);
     assertEquals(ship, combatShip.getShip());
     assertEquals(info, combatShip.getPlayer());
     assertEquals(5, combatShip.getX());
@@ -88,7 +88,7 @@ public class CombatShipTest {
     Mockito.when(ship.getShield()).thenReturn(0);
     Mockito.when(ship.getTotalShield()).thenReturn(0);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    CombatShip combatShip = new CombatShip(ship, info, 5, 3, true);
+    CombatShip combatShip = new CombatShip(ship, info, 5, 3, true, null);
     assertEquals(ship, combatShip.getShip());
     assertEquals(info, combatShip.getPlayer());
     assertEquals(5, combatShip.getX());
@@ -129,7 +129,7 @@ public class CombatShipTest {
     Mockito.when(ship.isStarBase()).thenReturn(true);
     Mockito.when(ship.getFlag(Ship.FLAG_STARBASE_DEPLOYED)).thenReturn(false);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    CombatShip combatShip = new CombatShip(ship, info, 5, 3, true);
+    CombatShip combatShip = new CombatShip(ship, info, 5, 3, true, null);
     combatShip.setAiShotsLeft(1);
     assertEquals(ship, combatShip.getShip());
     assertEquals(info, combatShip.getPlayer());
@@ -165,7 +165,7 @@ public class CombatShipTest {
     Mockito.when(ship.getComponent(0)).thenReturn(weapon);
     Mockito.when(ship.componentIsWorking(0)).thenReturn(true);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    CombatShip combatShip = new CombatShip(ship, info, 5, 3, true);
+    CombatShip combatShip = new CombatShip(ship, info, 5, 3, true, null);
     combatShip.setAiShotsLeft(0);
     assertEquals(ship, combatShip.getShip());
     assertEquals(info, combatShip.getPlayer());
@@ -186,7 +186,7 @@ public class CombatShipTest {
     Ship ship = Mockito.mock(Ship.class);
     Mockito.when(ship.getTacticSpeed()).thenReturn(2);
     PlayerInfo info = Mockito.mock(PlayerInfo.class);
-    CombatShip combatShip = new CombatShip(ship, info, 5, 3, false);
+    CombatShip combatShip = new CombatShip(ship, info, 5, 3, false, null);
     assertEquals(0, combatShip.getPrivateeredCredits());
     combatShip.setPrivateeredCredits(2);
     assertEquals(2, combatShip.getPrivateeredCredits());

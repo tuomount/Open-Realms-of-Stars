@@ -24,6 +24,7 @@ import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -528,6 +529,10 @@ public final class MissionHandling {
           info.getMissions().remove(mission);
           fleet.removeShip(ship);
           if (fleet.getNumberOfShip() == 0) {
+            if (fleet.getCommander() != null) {
+              fleet.getCommander().assignJob(Job.UNASSIGNED, info);
+              fleet.setCommander(null);
+            }
             // Remove also empty fleet
             info.getFleets().recalculateList();
           }
@@ -643,7 +648,11 @@ public final class MissionHandling {
           // Remove the mission
           info.getMissions().remove(mission);
           if (fleet.getNumberOfShip() == 0) {
-            // Remove also empty fleet
+            if (fleet.getCommander() != null) {
+              fleet.getCommander().assignJob(Job.UNASSIGNED, info);
+              fleet.setCommander(null);
+            }
+           // Remove also empty fleet
             info.getFleets().recalculateList();
           }
         }

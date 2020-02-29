@@ -10,7 +10,7 @@ import org.openRealmOfStars.utilities.IOUtilities;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -353,6 +353,26 @@ public final class Icons {
    * AirLock open icon
    */
   public static final String ICON_AIRLOCK_OPEN = "IconAirLockOpen";
+  /**
+   * Leader too young icon
+   */
+  public static final String ICON_TOO_YOUNG = "IconTooYoung";
+  /**
+   * Leaders icon
+   */
+  public static final String ICON_LEADERS = "IconLeaders";
+  /**
+   * Governor leader
+   */
+  public static final String ICON_GOVERNOR = "IconGovernor";
+  /**
+   * Commander leader
+   */
+  public static final String ICON_COMMANDER = "IconCommander";
+  /**
+   * Ruler leader
+   */
+  public static final String ICON_RULER = "IconRuler";
 
   /**
    * List of Icon
@@ -625,6 +645,16 @@ public final class Icons {
     icon = new Icon16x16(image, 3, 1, ICON_COLLAPSED);
     addIcon(icon);
     icon = new Icon16x16(image, 4, 1, ICON_AIRLOCK_OPEN);
+    addIcon(icon);
+    icon = new Icon16x16(image, 5, 1, ICON_TOO_YOUNG);
+    addIcon(icon);
+    icon = new Icon16x16(image, 6, 1, ICON_GOVERNOR);
+    addIcon(icon);
+    icon = new Icon16x16(image, 7, 1, ICON_COMMANDER);
+    addIcon(icon);
+    icon = new Icon16x16(image, 0, 2, ICON_LEADERS);
+    addIcon(icon);
+    icon = new Icon16x16(image, 1, 2, ICON_RULER);
     addIcon(icon);
   }
 

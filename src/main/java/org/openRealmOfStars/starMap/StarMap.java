@@ -28,6 +28,10 @@ import org.openRealmOfStars.player.espionage.EspionageBonusType;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderUtility;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -60,7 +64,7 @@ import org.openRealmOfStars.utilities.repository.SunRepository;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019 Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -1113,7 +1117,13 @@ public class StarMap {
     history.addEvent(event);
     msg.setCoordinate(planet.getCoordinate());
     msg.setMatchByString(planet.getName());
+    Leader ruler = LeaderUtility.createLeader(playerInfo, planet,
+        LeaderUtility.LEVEL_START_RULER);
+    ruler.setJob(Job.RULER);
+    ruler.setTitle(LeaderUtility.createTitleForLeader(ruler, playerInfo));
+    playerInfo.getLeaderPool().add(ruler);
     playerInfo.getMsgList().addNewMessage(msg);
+    playerInfo.setRuler(ruler);
 
     planet.addBuilding(BuildingFactory.createByName("Space port"));
     if (playerInfo.isHuman()) {
@@ -2179,6 +2189,55 @@ public class StarMap {
           PlanetHandling.handlePlanet(this, planet, aiTurnNumber);
         }
       }
+      // Handle Leaders
+      if (info.getRuler() == null && info.areLeadersDead()) {
+        // No ruler and no leaders in pool
+        LeaderUtility.recruiteLeader(getPlanetList(), info);
+        int openLeaderPositions = calculateMaxLeaders(info);
+        if (openLeaderPositions > 0
+            && DiceGenerator.getRandom(99) < openLeaderPositions * 5) {
+          LeaderUtility.recruiteLeader(getPlanetList(), info);
+        }
+        for (Leader leader : info.getLeaderPool()) {
+          if (leader.getJob() == Job.UNASSIGNED
+              || leader.getTimeInJob() > 20 && leader.getJob() == Job.COMMANDER
+              || leader.getTimeInJob() > 20
+              && leader.getJob() == Job.GOVERNOR) {
+            ArrayList<Object> targetJobPositions = new ArrayList<>();
+            Job bestJob = leader.getMostSuitableJob();
+            if (bestJob == Job.COMMANDER || bestJob == Job.UNASSIGNED) {
+              for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
+                Fleet fleet = info.getFleets().getByIndex(i);
+                if (fleet.getCommander() != null
+                    && fleet.getCommander().getTimeInJob() > 20) {
+                  targetJobPositions.add(fleet);
+                } else if (fleet.getCommander() == null
+                    && !fleet.isStarBaseDeployed()) {
+                  targetJobPositions.add(fleet);
+                }
+              }
+            }
+            if (bestJob == Job.GOVERNOR || bestJob == Job.UNASSIGNED) {
+              for (Planet planet : planetList) {
+                if (planet.getPlanetPlayerInfo() == info
+                    && planet.getGovernor() != null
+                    && planet.getGovernor().getTimeInJob() > 20) {
+                  targetJobPositions.add(planet);
+                } else if (planet.getPlanetPlayerInfo() == info
+                    && planet.getGovernor() == null) {
+                  targetJobPositions.add(planet);
+                }
+              }
+            }
+            if (targetJobPositions.size() > 0) {
+              int index = DiceGenerator.getRandom(
+                  targetJobPositions.size() - 1);
+              LeaderUtility.assignLeader(leader, info, planetList,
+                  targetJobPositions.get(index));
+            }
+          }
+        }
+      }
       aiFleet = info.getFleets().getFirst();
       if (aiFleet == null) {
         aiTurnNumber++;
@@ -2958,15 +3017,38 @@ public class StarMap {
       Fleet fleet = info.getFleets().getByIndex(i);
       if (production == Planet.PRODUCTION_RESEARCH) {
         result = result + fleet.getTotalReseachBonus();
+        if (info.getRuler() != null
+            && info.getRuler().hasPerk(Perk.SCIENTIST)) {
+          result++;
+        }
+        if (info.getRuler() != null && info.getRuler().hasPerk(Perk.STUPID)
+            && result > 0) {
+          result--;
+        }
       }
       if (production == Planet.PRODUCTION_CREDITS) {
         result = result + fleet.getTotalCreditsBonus();
+        if (info.getRuler() != null
+            && info.getRuler().hasPerk(Perk.MERCHANT)) {
+          result++;
+        }
+        Leader leader = fleet.getCommander();
+        if (leader != null
+            && (leader.getJob() == Job.RULER
+            || leader.getJob() == Job.COMMANDER
+            || leader.getJob() == Job.GOVERNOR)
+            && leader.hasPerk(Perk.CORRUPTED)) {
+          result--;
+        }
       }
       if (production == Planet.PRODUCTION_CULTURE) {
         result = result + fleet.getTotalCultureBonus();
       }
     }
     if (production == Planet.PRODUCTION_CREDITS) {
+      if (info.getRuler() != null && info.getRuler().hasPerk(Perk.CORRUPTED)) {
+        result = result - 1;
+      }
       int totalCapacity = getTotalFleetCapacity(info);
       double capacity = info.getFleets().getTotalFleetCapacity();
       totalCapacity = totalCapacity - (int) capacity;
@@ -3529,6 +3611,10 @@ public class StarMap {
         }
       }
       realm.getFleets().removeFleet(starbaseFleet);
+      if (starbaseFleet.getCommander() != null) {
+        planet.setGovernor(starbaseFleet.getCommander());
+        planet.getGovernor().assignJob(Job.GOVERNOR, realm);
+      }
       NewsData newsData = NewsFactory.makeScientificAchivementNews(realm,
           planet, null);
       getNewsCorpData().addNews(newsData);
@@ -3681,6 +3767,14 @@ public class StarMap {
       result = result + info.getFleets().getByIndex(i)
           .getTotalFleetCapacityBonus();
     }
+    if (info.getRuler() != null
+        && info.getRuler().hasPerk(Perk.MILITARISTIC)) {
+      result = result + 1;
+    }
+    if (info.getRuler() != null
+        && info.getRuler().hasPerk(Perk.PACIFIST)) {
+      result = result - 1;
+    }
     return result;
   }
 
@@ -3764,4 +3858,32 @@ public class StarMap {
     shownTutorialIndexes = tutorialIndexes;
   }
 
+  /**
+   * Calculate theoretical maximum for leaders by counting number of planets
+   * and fleet which do not have leader. Deployed starbase fleets are not
+   * count as fleet which should have leader.
+   * @param realm Realm whose max leader count is calculate
+   * @return Number of leaders still needed.
+   */
+  public int calculateMaxLeaders(final PlayerInfo realm) {
+    int result = 0;
+    for (Planet planet : planetList) {
+      if (planet.getPlanetPlayerInfo() == realm
+          && planet.getGovernor() == null) {
+        result++;
+      }
+    }
+    for (int i = 0; i < realm.getFleets().getNumberOfFleets(); i++) {
+      Fleet fleet = realm.getFleets().getByIndex(i);
+      if (fleet.getCommander() == null && !fleet.isStarBaseDeployed()) {
+        result++;
+      }
+    }
+    for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getJob() == Job.UNASSIGNED) {
+        result--;
+      }
+    }
+    return result;
+  }
 }

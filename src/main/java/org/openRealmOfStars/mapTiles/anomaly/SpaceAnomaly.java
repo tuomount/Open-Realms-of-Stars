@@ -296,6 +296,10 @@ public class SpaceAnomaly {
           break;
         }
       }
+      if (fleet.getCommander() != null && result != null) {
+        fleet.getCommander().setExperience(
+            fleet.getCommander().getExperience() + 50);
+      }
     }
     return result;
   }

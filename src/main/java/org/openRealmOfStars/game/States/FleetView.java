@@ -40,6 +40,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.starMap.StarMap;
@@ -48,7 +49,7 @@ import org.openRealmOfStars.starMap.planet.Planet;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019 Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -158,6 +159,16 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
    * Is view interactive or not
    */
   private boolean interactiveView;
+
+  /**
+   * Label for current commander.
+   */
+  private IconLabel commanderLabel;
+  /**
+   * Button to access leader view.
+   */
+  private SpaceButton leaderViewBtn;
+
   /**
    * Fleet view constructor. Fleet view is used when view fleet in deep space
    * or fleet is orbiting a planet.
@@ -306,6 +317,27 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     fleetNameText.setEnabled(interactive);
     eastPanel.add(fleetNameText);
     eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    commanderLabel = new IconLabel(null,
+        Icons.getIconByName(Icons.ICON_COMMANDER),
+        ": Commander Firstname Surname");
+    if (fleet.getCommander() == null) {
+      commanderLabel.setText(": No commander");
+    } else {
+      commanderLabel.setText(": "
+          + fleet.getCommander().getMilitaryRank().toString()
+          + " " + fleet.getCommander().getName());
+    }
+    commanderLabel.setAlignmentX(CENTER_ALIGNMENT);
+    eastPanel.add(commanderLabel);
+    eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+    leaderViewBtn = new SpaceButton("Assign leader  ",
+        GameCommands.COMMAND_VIEW_LEADERS);
+    leaderViewBtn.addActionListener(listener);
+    leaderViewBtn.setAlignmentX(CENTER_ALIGNMENT);
+    leaderViewBtn.setEnabled(interactive);
+    eastPanel.add(leaderViewBtn);
+    eastPanel.add(Box.createRigidArea(new Dimension(5, 5)));
+
     label = new SpaceLabel("Ships in fleet");
     label.setAlignmentX(CENTER_ALIGNMENT);
     eastPanel.add(label);
@@ -580,6 +612,10 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
         if (mergeFleet != starbaseFleet
             && fleet.getNumberOfShip() + mergeFleet.getNumberOfShip()
             <= Fleet.MAX_FLEET_SIZE) {
+          if (mergeFleet.getCommander() != null) {
+            mergeFleet.getCommander().setJob(Job.UNASSIGNED);
+            mergeFleet.setCommander(null);
+          }
           for (int j = 0; j < mergeFleet.getNumberOfShip(); j++) {
             Ship ship = mergeFleet.getShipByIndex(j);
             if (ship != null) {
@@ -620,6 +656,11 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
         Ship ship = shipsInFleet.getSelectedValuesList().get(i);
         if (ship != null) {
           fleet.removeShip(ship);
+          if (fleet.getNumberOfShip() == 0
+              && fleet.getCommander() != null) {
+            fleet.getCommander().assignJob(Job.UNASSIGNED, info);
+            fleet.setCommander(null);
+          }
           fleetList.recalculateList();
           if (planet != null && planet.getRecycleBonus() > 0) {
             int recycledMetal = ship.getMetalCost() * planet.getRecycleBonus()
@@ -628,7 +669,6 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
           }
         }
       }
-      // TODO Change should for something else
       SoundPlayer.playSound(SoundPlayer.DISASSEMBLE);
       updatePanel();
     }
@@ -651,12 +691,22 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
                fleetList.add(starbaseFleet);
                fleet.removeShip(ship);
                ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+               if (fleet.getNumberOfShip() == 0
+                   && fleet.getCommander() != null) {
+                 starbaseFleet.setCommander(fleet.getCommander());
+                 fleet.setCommander(null);
+               }
                fleetList.recalculateList();
             } else if (starbaseFleet.getNumberOfShip()
                 < Fleet.MAX_STARBASE_SIZE) {
               starbaseFleet.addShip(ship);
               fleet.removeShip(ship);
               ship.setFlag(Ship.FLAG_STARBASE_DEPLOYED, true);
+              if (fleet.getNumberOfShip() == 0
+                  && fleet.getCommander() != null) {
+                fleet.getCommander().assignJob(Job.UNASSIGNED, info);
+                fleet.setCommander(null);
+              }
               fleetList.recalculateList();
             }
             SoundPlayer.playSound(SoundPlayer.STARBASE);

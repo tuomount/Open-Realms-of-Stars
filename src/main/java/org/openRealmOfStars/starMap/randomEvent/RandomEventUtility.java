@@ -11,6 +11,7 @@ import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -215,7 +216,7 @@ public final class RandomEventUtility {
         }
         if (planet.getTotalPopulation() > 1) {
           sb.append(" and one population died in accident.");
-          planet.killOneWorker();
+          planet.killOneWorker("accident", "accident", map);
         }
         event.setText(sb.toString());
         Message message = new Message(MessageType.PLANETARY, event.getText(),
@@ -368,7 +369,12 @@ public final class RandomEventUtility {
           int hitSpot = DiceGenerator.getRandom(0, planet.getGroundSize() - 1);
           if (hitSpot <= planet.getTotalPopulation()) {
             sb.append("and kills one worker ");
-            planet.killOneWorker();
+            planet.killOneWorker("meteor crash", "meteor crash", map);
+            if (planet.getTotalPopulation() == 0
+                && planet.getGovernor() != null) {
+              planet.getGovernor().setJob(Job.UNASSIGNED);
+              planet.setGovernor(null);
+            }
             miss = false;
           }
           if (hitSpot < planet.getNumberOfBuildings()) {
@@ -470,7 +476,7 @@ public final class RandomEventUtility {
           int pop = planet.getTotalPopulation();
           pop = pop - 1;
           for (int i = 0; i < pop; i++) {
-            planet.killOneWorker();
+            planet.killOneWorker("deadly virus", "deadly virus", map);
           }
         }
         event.setText(sb.toString());
@@ -748,7 +754,7 @@ public final class RandomEventUtility {
         Planet planet = planets.get(index);
         event.setPlanet(planet);
         int value = DiceGenerator.getRandom(10, 15);
-        planet.fightAgainstAttacker(value);
+        planet.fightAgainstAttacker(value, map);
         StringBuilder sb = new StringBuilder();
         sb.append(planet.getName());
         sb.append(" has dangerous animals which usually"
@@ -869,6 +875,17 @@ public final class RandomEventUtility {
         message.setCoordinate(fleet.getCoordinate());
         message.setMatchByString(fleet.getName());
         info.getMsgList().addFirstMessage(message);
+        if (fleet.getCommander() != null) {
+          fleet.getCommander().assignJob(Job.DEAD, info);
+          message = new Message(MessageType.FLEET,
+              fleet.getCommander().getMilitaryRank().toString()
+              + " " + fleet.getCommander().getName() + " died during mutiny.",
+              Icons.getIconByName(Icons.ICON_COMMANDER));
+          message.setCoordinate(fleet.getCoordinate());
+          message.setMatchByString(fleet.getName());
+          info.getMsgList().addNewMessage(message);
+          fleet.setCommander(null);
+        }
       }
     }
   }

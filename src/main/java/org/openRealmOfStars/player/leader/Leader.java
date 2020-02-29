@@ -50,6 +50,11 @@ public class Leader {
   private int age;
 
   /**
+   * Time in job
+   */
+  private int timeInJob;
+
+  /**
    * Leader's experience level
    */
   private int level;
@@ -116,6 +121,7 @@ public class Leader {
     this.name = name;
     this.homeworld = "";
     age = 28;
+    setTimeInJob(0);
     level = 1;
     experience = 0;
     militaryRank = MilitaryRank.CIVILIAN;
@@ -135,13 +141,16 @@ public class Leader {
   public Leader(final DataInputStream dis) throws IOException {
     name = IOUtilities.readString(dis);
     homeworld = IOUtilities.readString(dis);
-    age = dis.readInt();
+    title = IOUtilities.readString(dis);
+    int value = dis.readInt();
+    age = value & 0x0000ffff;
+    timeInJob = (value & 0xffff0000) >> 16;
     level = dis.read();
     experience = dis.readInt();
     setMilitaryRank(MilitaryRank.getByIndex(dis.read()));
     setRace(SpaceRaceUtility.getRaceByIndex(dis.read()));
     setGender(Gender.getByIndex(dis.read()));
-    setJob(Job.getByIndex(dis.read()));
+    job = Job.getByIndex(dis.read());
     parentIndex = dis.readInt();
     setParent(null);
     int size = dis.readInt();
@@ -161,7 +170,9 @@ public class Leader {
       final PlayerInfo realm) throws IOException {
     IOUtilities.writeString(dos, name);
     IOUtilities.writeString(dos, homeworld);
-    dos.writeInt(age);
+    IOUtilities.writeString(dos, title);
+    int value = (getTimeInJob() << 16) + age;
+    dos.writeInt(value);
     dos.writeByte(level);
     dos.writeInt(experience);
     dos.writeByte(militaryRank.getIndex());
@@ -220,7 +231,7 @@ public class Leader {
   }
 
   /**
-   * Set the higheest title for leader
+   * Set the highest title for leader
    * @param title Highest title for leader
    */
   public void setTitle(final String title) {
@@ -235,6 +246,27 @@ public class Leader {
     return name;
   }
 
+  /**
+   * Set leader name.
+   * @param name Name as a string.
+   */
+  public void setName(final String name) {
+    this.name = name;
+  }
+
+  /**
+   * Get Title and name for leader if leader has title.
+   * @return Optional title + name.
+   */
+  public String getCallName() {
+    StringBuilder sb = new StringBuilder(50);
+    if (getTitle() != null && !getTitle().isEmpty()) {
+      sb.append(getTitle());
+      sb.append(" ");
+    }
+    sb.append(getName());
+    return sb.toString();
+  }
   /**
    * Get military rank for leader
    * @return the militaryRank
@@ -276,6 +308,20 @@ public class Leader {
   }
 
   /**
+   * Get amount of experience required for next level.
+   * @return Required experience.
+   */
+  public int getRequiredExperience() {
+    int result = getLevel() * 100;
+    if (hasPerk(Perk.ACADEMIC)) {
+      result = result / 2;
+    }
+    if (hasPerk(Perk.SLOW_LEARNER)) {
+      result = result * 2;
+    }
+    return result;
+  }
+  /**
    * Set experience for current level
    * @param experience for current level
    */
@@ -316,6 +362,52 @@ public class Leader {
     this.gender = gender;
   }
 
+  /**
+   * Get Leader ingame description with all the details
+   * except perks.
+   * @return Description
+   */
+  public String getDescription() {
+    StringBuilder builder = new StringBuilder();
+    builder.append(getTitle());
+    builder.append(" ");
+    builder.append(getName());
+    builder.append("\n");
+    builder.append("Position: ");
+    builder.append(getJob().getName());
+    builder.append("\n");
+    if (getJob() == Job.RULER) {
+      builder.append("Ruler for ");
+      builder.append(getTimeInJob());
+      builder.append(" turns\n");
+    }
+    builder.append("Military status: ");
+    builder.append(getMilitaryRank().toString());
+    builder.append("\n");
+    builder.append("Age: ");
+    builder.append(getAge());
+    builder.append("\n");
+    if (getParent() != null) {
+      builder.append("Parent: ");
+      builder.append(getParent().getTitle() + " " + getParent().getName());
+      builder.append("\n");
+    }
+    builder.append("Gender: ");
+    builder.append(getGender().toString());
+    builder.append("\n");
+    builder.append("Race: ");
+    builder.append(getRace().getNameSingle());
+    builder.append("\n");
+    builder.append("Level: ");
+    builder.append(getLevel());
+    builder.append("\n");
+    builder.append("Experience: ");
+    builder.append(getExperience());
+    builder.append("/");
+    builder.append(getRequiredExperience());
+    builder.append("\n");
+    return builder.toString();
+  }
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();
@@ -327,6 +419,8 @@ public class Leader {
     builder.append(job.getName());
     builder.append(", age=");
     builder.append(age);
+    builder.append(", TimeInJob=");
+    builder.append(timeInJob);
     builder.append(", level=");
     builder.append(level);
     builder.append(", experience=");
@@ -358,9 +452,21 @@ public class Leader {
    * @param job the job to set
    */
   public void setJob(final Job job) {
+    if (job != this.job) {
+      setTimeInJob(0);
+    }
     this.job = job;
   }
 
+  /**
+   * Assign Leader a job and title.
+   * @param work Job to assign
+   * @param realm Realm which leader belongs.
+   */
+  public void assignJob(final Job work, final PlayerInfo realm) {
+    setJob(work);
+    setTitle(LeaderUtility.createTitleForLeader(this, realm));
+  }
   /**
    * Get the leader parent. This will be set
    * only for heirs. Regular leaders this will be null.
@@ -387,6 +493,19 @@ public class Leader {
   }
 
   /**
+   * Check if leader has certain perk
+   * @param perk Perk to look for
+   * @return True if found
+   */
+  public boolean hasPerk(final Perk perk) {
+    for (Perk iterator : perkList) {
+      if (iterator == perk) {
+        return true;
+      }
+    }
+    return false;
+  }
+  /**
    * Get parent index for leader.
    * This is avaiable only if leader is created from reading saved game.
    * This index should be used to make actual parent avaiable.
@@ -394,5 +513,47 @@ public class Leader {
    */
   public int getParentIndex() {
     return parentIndex;
+  }
+
+  /**
+   * How long leader has been in current job.
+   * @return the timeInJob
+   */
+  public int getTimeInJob() {
+    return timeInJob;
+  }
+
+  /**
+   * Set time in current job.
+   * @param timeInJob the timeInJob to set
+   */
+  public void setTimeInJob(final int timeInJob) {
+    this.timeInJob = timeInJob;
+  }
+
+  /**
+   * Tries to estimate best suitetable job for leader.
+   * Choices are Commander or governor. If leader is equakly fit
+   * for those then unassigned is returned.
+   * @return best suiteable job
+   */
+  public Job getMostSuitableJob() {
+    int commander = 0;
+    int governor = 0;
+    for (Perk perk : perkList) {
+      if (perk.isFleetCommanderPerk()) {
+        commander++;
+      }
+      if (perk.isGovernorPerk()) {
+        governor++;
+      }
+    }
+    if (commander > governor) {
+      return Job.COMMANDER;
+    }
+    if (commander < governor) {
+      return Job.GOVERNOR;
+    }
+    return Job.UNASSIGNED;
   }
 }

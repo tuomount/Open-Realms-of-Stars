@@ -159,6 +159,9 @@ public abstract class Event {
       case PLAYER_START: {
         result = PlayerStartEvent.createStartEvent(buffer); break;
       }
+      case LEADER_EVENT:  {
+        result = LeaderEvent.createLeaderEvent(buffer); break;
+      }
       default: {
         throw new IOException("Unexpected event type: " + type);
       }

@@ -38,6 +38,7 @@ import org.openRealmOfStars.game.States.FleetView;
 import org.openRealmOfStars.game.States.GalaxyCreationView;
 import org.openRealmOfStars.game.States.HelpView;
 import org.openRealmOfStars.game.States.HistoryView;
+import org.openRealmOfStars.game.States.LeaderView;
 import org.openRealmOfStars.game.States.LoadGameView;
 import org.openRealmOfStars.game.States.MainMenu;
 import org.openRealmOfStars.game.States.NewsCorpView;
@@ -77,6 +78,8 @@ import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.TradeRoute;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.message.ChangeMessage;
 import org.openRealmOfStars.player.message.ChangeMessageFleet;
 import org.openRealmOfStars.player.message.ChangeMessagePlanet;
@@ -303,6 +306,10 @@ public class Game implements ActionListener {
    * Realm view for showing all realm information
    */
   private RealmView realmView;
+  /**
+   * Realm view for showing all realm information
+   */
+  private LeaderView leaderView;
   /**
    * Planet List view for showing all planets realm has
    */
@@ -639,6 +646,10 @@ public class Game implements ActionListener {
         } else {
           combat.doFastCombat();
           getStarMap().getHistory().addEvent(combat.getCombatEvent());
+          if (combat.getLeaderKilledNews() != null) {
+            getStarMap().getNewsCorpData().addNews(
+                combat.getLeaderKilledNews());
+          }
         }
       } else {
         fleet.setPos(new Coordinate(nx, ny));
@@ -653,6 +664,10 @@ public class Game implements ActionListener {
           anomaly.getCombat().doFastCombat();
           getStarMap().getHistory().addEvent(
               anomaly.getCombat().getCombatEvent());
+          if (anomaly.getCombat().getLeaderKilledNews() != null) {
+            getStarMap().getNewsCorpData().addNews(
+                anomaly.getCombat().getLeaderKilledNews());
+          }
         }
         starMap.clearFleetTiles();
         fleet.decMovesLeft();
@@ -664,6 +679,10 @@ public class Game implements ActionListener {
           fleet.setPos(coord);
           starMap.clearFleetTiles();
           getStarMap().doFleetScanUpdate(info, fleet, null);
+          if (fleet.getCommander() != null) {
+            fleet.getCommander().setExperience(
+                fleet.getCommander().getExperience() + 10);
+          }
         }
         if (starMapView != null) {
           starMapView.updatePanels();
@@ -1183,6 +1202,39 @@ public class Game implements ActionListener {
   }
 
   /**
+   * View Leaders view.
+   * @param dataObject Planet or fleet where to assign leader.
+   */
+  public void viewLeaders(final Object dataObject) {
+    leaderView = new LeaderView(starMap.getCurrentPlayerInfo(), starMap, this);
+    if (dataObject != null) {
+      if (dataObject instanceof Planet) {
+        Planet planet = (Planet) dataObject;
+        leaderView.setPlanet(planet);
+      }
+      if (dataObject instanceof Fleet) {
+        Fleet fleet = (Fleet) dataObject;
+        leaderView.setFleet(fleet);
+      }
+      if (dataObject instanceof Message) {
+        Message message = (Message) dataObject;
+        if (message.getMatchByString() != null) {
+          String[] parts = message.getMatchByString().split(":");
+          if (parts.length == 2) {
+            try {
+              int index = Integer.valueOf(parts[1]);
+              leaderView.setFocusToIndex(index);
+            } catch (NumberFormatException e) {
+              ErrorLogger.log("Leader pool index is not a number! "
+                 + e.getMessage());
+            }
+          }
+        }
+      }
+    }
+    this.updateDisplay(leaderView);
+  }
+  /**
    * Change game state so that focus is also changed to target message
    * @param newState Game State where to change
    * @param focusMessage Focused message, can be also null
@@ -1248,6 +1300,14 @@ public class Game implements ActionListener {
       break;
     case NEW_GAME: {
       makeNewGame(true);
+      break;
+    }
+    case LEADER_VIEW: {
+      if (focusMessage == null) {
+        viewLeaders(dataObject);
+      } else {
+        viewLeaders(focusMessage);
+      }
       break;
     }
     case NEWS_CORP_VIEW: {
@@ -1881,6 +1941,9 @@ public class Game implements ActionListener {
         || msg.getType() == MessageType.POPULATION) && !mapOnly) {
       changeGameState(GameState.PLANETVIEW, msg);
     }
+    if (msg.getType() == MessageType.LEADER && !mapOnly) {
+      changeGameState(GameState.LEADER_VIEW, msg);
+    }
   }
 
 
@@ -1909,6 +1972,16 @@ public class Game implements ActionListener {
           .getShipStatByName(ship.getName());
       if (stat != null) {
         stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
+      }
+      if (fleetView.getFleet().getNumberOfShip() == 0
+          && fleetView.getFleet().getCommander() != null) {
+        fleetView.getFleet().getCommander().setJob(Job.GOVERNOR);
+        fleetView.getPlanet().setGovernor(fleetView.getFleet().getCommander());
+        fleetView.getPlanet().getGovernor().setTitle(
+            LeaderUtility.createTitleForLeader(
+                fleetView.getPlanet().getGovernor(),
+                players.getCurrentPlayerInfo()));
+        fleetView.getFleet().setCommander(null);
       }
       fleetView.getFleetList().recalculateList();
       starMapView.getStarMapMouseListener().setLastClickedFleet(null);
@@ -2028,7 +2101,11 @@ public class Game implements ActionListener {
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_CANCEL)) {
         SoundPlayer.playMenuSound();
-        changeGameState(GameState.PLAYER_SETUP);
+        if (!saveGameView.isContinueGame()) {
+          changeGameState(GameState.PLAYER_SETUP);
+        } else {
+          changeGameState(GameState.LOAD_GAME);
+        }
         return;
       } else if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_NEXT)) {
@@ -2292,9 +2369,9 @@ public class Game implements ActionListener {
           changeGameState(GameState.VOTE_VIEW);
         }
         if (arg0.getActionCommand().equalsIgnoreCase(
-            GameCommands.COMMAND_NEWS)) {
+            GameCommands.COMMAND_VIEW_LEADERS)) {
           SoundPlayer.playMenuSound();
-          changeGameState(GameState.NEWS_CORP_VIEW);
+          changeGameState(GameState.LEADER_VIEW);
         }
         if (arg0.getActionCommand().equalsIgnoreCase(
             GameCommands.COMMAND_BATTLE)) {
@@ -2375,6 +2452,9 @@ public class Game implements ActionListener {
         getStarMap().getFleetTiles(true);
         Combat combat = combatView.getCombat();
         getStarMap().getHistory().addEvent(combat.getCombatEvent());
+        if (combat.getLeaderKilledNews() != null) {
+          getStarMap().getNewsCorpData().addNews(combat.getLeaderKilledNews());
+        }
         if (previousState == GameState.AITURN) {
           changeGameState(previousState);
           return;
@@ -2473,6 +2553,17 @@ public class Game implements ActionListener {
         return;
       }
       researchView.handleAction(arg0);
+      return;
+    }
+    if (gameState == GameState.LEADER_VIEW && leaderView != null) {
+      // Handle Leader View
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
+        SoundPlayer.playMenuSound();
+        changeGameState(GameState.STARMAP);
+        return;
+      }
+      leaderView.handleActions(arg0);
       return;
     }
     if (gameState == GameState.VIEWSHIPS && shipView != null) {
@@ -2614,6 +2705,11 @@ public class Game implements ActionListener {
         changeGameState(GameState.DIPLOMACY_VIEW, planetView);
         SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
       }
+      if (arg0.getActionCommand().equals(
+          GameCommands.COMMAND_VIEW_LEADERS)) {
+        changeGameState(GameState.LEADER_VIEW, planetView.getPlanet());
+        SoundPlayer.playMenuSound();
+      }
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
         SoundPlayer.playMenuSound();
@@ -2637,6 +2733,11 @@ public class Game implements ActionListener {
         fleetView = null;
         changeGameState(GameState.STARMAP, fleet);
         return;
+      }
+      if (arg0.getActionCommand().equals(
+          GameCommands.COMMAND_VIEW_LEADERS)) {
+        changeGameState(GameState.LEADER_VIEW, fleetView.getFleet());
+        SoundPlayer.playMenuSound();
       }
       if (arg0.getActionCommand().equals(GameCommands.COMMAND_COLONIZE)) {
         SoundPlayer.playMenuSound();

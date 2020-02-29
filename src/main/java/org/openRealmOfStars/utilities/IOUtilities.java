@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 /**
  *
  * Open Realm of Stars Game Project
- * Copyright (C) 2016, 2018  Tuomo Untinen
+ * Copyright (C) 2016, 2018-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -339,15 +339,17 @@ public final class IOUtilities {
     int len = convert16BitsToInt(lenBuffer[0] & 0xff, lenBuffer[1] & 0xff);
     byte[] buffer = new byte[len];
     int offset = 0;
-    do {
-      amount = is.read(buffer, offset, len - offset);
-      if (amount == -1) {
-        int read = amount + offset;
-        throw new IOException("Unexpected end of file! Could only read "
-            + read + " bytes!");
-      }
-      offset = offset + amount;
-    } while (offset < len);
+    if (len > 0) {
+      do {
+        amount = is.read(buffer, offset, len - offset);
+        if (amount == -1) {
+          int read = amount + offset;
+          throw new IOException("Unexpected end of file! Could only read "
+              + read + " bytes!");
+        }
+        offset = offset + amount;
+      } while (offset < len);
+    }
     return new String(buffer, StandardCharsets.UTF_8);
   }
 

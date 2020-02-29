@@ -12,6 +12,8 @@ import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetVisibility;
+import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
 import org.openRealmOfStars.player.tech.TechType;
@@ -1936,6 +1938,14 @@ public class DiplomaticTrade {
     if (bonus > 10) {
       bonus = 10;
     }
+    if (info1.getRuler() != null
+        && info1.getRuler().hasPerk(Perk.CHARISMATIC)) {
+      bonus = bonus + 1;
+    }
+    if (info1.getRuler() != null
+        && info1.getRuler().hasPerk(Perk.REPULSIVE)) {
+      bonus = bonus - 1;
+    }
     if (!isDiplomacyWithPirates()) {
       difference = difference - bonus;
     } else {
@@ -2286,6 +2296,10 @@ public class DiplomaticTrade {
         break;
       }
       case FLEET: {
+        if (offer.getFleet().getCommander() != null) {
+          offer.getFleet().getCommander().setJob(Job.UNASSIGNED);
+          offer.getFleet().setCommander(null);
+        }
         info.getFleets().add(offer.getFleet());
         int index = giver.getFleets().getIndexByName(offer.getFleet()
             .getName());
@@ -2295,6 +2309,10 @@ public class DiplomaticTrade {
       case PLANET: {
         Planet planet = starMap.getPlanetByName(offer.getPlanet().getName());
         int index = starMap.getPlayerList().getIndex(info);
+        if (planet.getGovernor() != null) {
+          planet.getGovernor().setJob(Job.UNASSIGNED);
+          planet.setGovernor(null);
+        }
         planet.setPlanetOwner(index, info);
         break;
       }

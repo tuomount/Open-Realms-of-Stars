@@ -241,7 +241,7 @@ public class PlanetTest {
     planet.addBuilding(building);
     planet.setWorkers(Planet.FOOD_FARMERS, 8);
     DiceGenerator.initializeGenerators(0, 1, 10);
-    String str = planet.nukem(20, "Orbital nuke");
+    String str = planet.nukem(20, "Orbital nuke", null);
     assertEquals("Orbital nuke killed 2 population and destroyed 2 buildings!"
         + " Radiation level rised on planet surface to 2.", str);
   }
@@ -263,7 +263,7 @@ public class PlanetTest {
     planet.addBuilding(building);
     planet.setWorkers(Planet.FOOD_FARMERS, 8);
     DiceGenerator.initializeGenerators(0, 0, 0, 0, 0, 10);
-    String str = planet.nukem(80, "Orbital antimatter bomb");
+    String str = planet.nukem(80, "Orbital antimatter bomb", null);
     assertEquals("Orbital antimatter bomb killed 8 population and destroyed 5 buildings!"
         + " Radiation level rised on planet surface to 2.", str);
   }
@@ -285,7 +285,7 @@ public class PlanetTest {
     planet.addBuilding(building);
     planet.setWorkers(Planet.FOOD_FARMERS, 8);
     DiceGenerator.initializeGenerators(0, 0, 0, 0, 0, 10);
-    String str = planet.nukem(100, "Orbital neutron bomb");
+    String str = planet.nukem(100, "Orbital neutron bomb", null);
     assertEquals("Orbital neutron bomb killed 8 population and destroyed 4 buildings!"
         + " Radiation level rised on planet surface to 2.", str);
   }

@@ -10,6 +10,7 @@ import org.openRealmOfStars.AI.PathFinding.AStarSearch;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -117,8 +118,9 @@ public class Fleet {
     if (commanderIndex != -1) {
       Leader leader = info.getLeaderPool().get(commanderIndex);
       setCommander(leader);
+    } else {
+      setCommander(null);
     }
-    setCommander(null);
     coordinate = new Coordinate(dis.readInt(), dis.readInt());
     movesLeft = dis.readInt();
     String str = IOUtilities.readString(dis);
@@ -347,6 +349,14 @@ public class Fleet {
         speed = smallShipSpeed;
       }
     }
+    if (!ftl && commander != null
+        && commander.hasPerk(Perk.EXPLORER)) {
+      speed++;
+    }
+    if (ftl && commander != null
+        && commander.hasPerk(Perk.FTL_ENGINEER)) {
+      speed++;
+    }
     if (speed == MAX_FTL_SPEED) {
       speed = 0;
     }
@@ -380,6 +390,9 @@ public class Fleet {
         lvl = shipLvl;
       }
     }
+    if (commander != null && commander.hasPerk(Perk.SCANNER_EXPERT)) {
+      lvl++;
+    }
     return lvl;
   }
 
@@ -395,6 +408,9 @@ public class Fleet {
         lvl = shipLvl;
       }
     }
+    if (commander != null && commander.hasPerk(Perk.COUNTER_AGENT)) {
+      lvl++;
+    }
     return lvl;
   }
 
@@ -408,6 +424,11 @@ public class Fleet {
     int totalMass = 0;
     for (Ship ship : ships) {
       int shipLvl = ship.getCloakingValue();
+      if (commander != null
+          && commander.hasPerk(Perk.SECRET_AGENT)) {
+        shipLvl = shipLvl + 5;
+      }
+
       int mass = ship.getHull().getSize().getMass();
       lvl = lvl + shipLvl * mass;
       totalMass = totalMass + mass;
@@ -943,6 +964,11 @@ public class Fleet {
     for (Ship ship : ships) {
       result = result + ship.getEspionageBonus();
     }
+    if (commander != null
+        && commander.hasPerk(Perk.SPY_MASTER)) {
+      result = result + 1;
+    }
+
     return result;
   }
 

@@ -37,7 +37,7 @@ import org.openRealmOfStars.starMap.vote.sports.VotingChoice;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2020  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -109,7 +109,7 @@ public class StarMapView extends BlackPanel {
   /**
    * View news button
    */
-  private SpaceButton viewNews;
+  private SpaceButton viewLeader;
   /**
    * Credit production
    */
@@ -258,13 +258,11 @@ public class StarMapView extends BlackPanel {
     viewStats.setSpaceIcon(Icons.getIconByName(Icons.ICON_STATS));
     bottomBtnPanel.add(viewStats);
 
-    viewNews = new SpaceButton("News", GameCommands.COMMAND_NEWS);
-    viewNews.addActionListener(game);
-    viewNews.setSpaceIcon(Icons.getIconByName(Icons.ICON_NEWS));
-    bottomBtnPanel.add(viewNews);
-    if (map.getNewsCorpData().getNewsList().length == 0) {
-      viewNews.setEnabled(false);
-    } else {
+    viewLeader = new SpaceButton("Leaders", GameCommands.COMMAND_VIEW_LEADERS);
+    viewLeader.addActionListener(game);
+    viewLeader.setSpaceIcon(Icons.getIconByName(Icons.ICON_LEADERS));
+    bottomBtnPanel.add(viewLeader);
+    if (map.getNewsCorpData().getNewsList().length > 0) {
       PlayerInfo info = players.getCurrentPlayerInfo();
       info.getMsgList().addNewsMessage();
     }

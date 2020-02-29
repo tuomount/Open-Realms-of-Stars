@@ -30,6 +30,7 @@ import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.WinningStrategy;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.Diplomacy;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
@@ -40,6 +41,11 @@ import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetType;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderUtility;
+import org.openRealmOfStars.player.leader.MilitaryRank;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -82,7 +88,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2019 Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -496,6 +502,11 @@ public class AITurnView extends BlackPanel {
         mission.setPhase(MissionPhase.TREKKING);
         info.getFleets().add(newFleet);
         // Created a new fleet with new mission, old one still might exists
+      }
+      if (fleet.getNumberOfShip() == 0
+          && fleet.getCommander() != null) {
+        fleet.getCommander().assignJob(Job.UNASSIGNED, info);
+        fleet.setCommander(null);
       }
       // Just cleaning the old if needed
       info.getFleets().recalculateList();
@@ -1097,6 +1108,11 @@ public class AITurnView extends BlackPanel {
         if (mission != null && fleet.getColonyShip() != null
             && fleetMission == null) {
           Ship ship = fleet.getColonyShip();
+          if (fleet.getNumberOfShip() == 0
+              && fleet.getCommander() != null) {
+            fleet.getCommander().assignJob(Job.UNASSIGNED, info);
+            fleet.setCommander(null);
+          }
           Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
           fleet.removeShip(ship);
           info.getFleets().add(newFleet);
@@ -1111,6 +1127,11 @@ public class AITurnView extends BlackPanel {
         if (mission != null && fleet.getStarbaseShip() != null
             && fleetMission == null) {
           Ship ship = fleet.getStarbaseShip();
+          if (fleet.getNumberOfShip() == 0
+              && fleet.getCommander() != null) {
+            fleet.getCommander().assignJob(Job.UNASSIGNED, info);
+            fleet.setCommander(null);
+          }
           Fleet newFleet = new Fleet(ship, fleet.getX(), fleet.getY());
           fleet.removeShip(ship);
           info.getFleets().add(newFleet);
@@ -1807,6 +1828,200 @@ public class AITurnView extends BlackPanel {
       }
     }
   }
+
+  /**
+   * Handle leaders getting older.
+   * Handle also ruler leader experience
+   * @param realm Realm whose leaders are being handled
+   */
+  public void handleLeaders(final PlayerInfo realm) {
+    Leader heir = null;
+    if (realm.getRuler() == null) {
+      Leader ruler = LeaderUtility.getNextRuler(realm);
+      if (ruler != null) {
+        LeaderUtility.assignLeaderAsRuler(ruler, realm, game.getStarMap());
+        if (realm.getRuler() != null) {
+          Message msg = new Message(MessageType.LEADER,
+              ruler.getCallName()
+                  + " has selected as ruler for " + realm.getEmpireName(),
+              Icons.getIconByName(Icons.ICON_RULER));
+          msg.setMatchByString("Index:" + realm.getLeaderIndex(ruler));
+          NewsData news = NewsFactory.makeNewRulerNews(ruler, realm);
+          game.getStarMap().getNewsCorpData().addNews(news);
+          game.getStarMap().getHistory().addEvent(
+              NewsFactory.makeLeaderEvent(realm.getRuler(), realm,
+              game.getStarMap(), news));
+        }
+      }
+    }
+    for (Leader leader : realm.getLeaderPool()) {
+      if (leader.getJob() != Job.DEAD) {
+        // First getting older
+        leader.setAge(leader.getAge() + 1);
+        if (leader.getJob() == Job.TOO_YOUNG && leader.getAge() >= 18) {
+          leader.assignJob(Job.UNASSIGNED, realm);
+        }
+        leader.setTimeInJob(leader.getTimeInJob() + 1);
+        // Checking the mortality
+        int lifeExpection = leader.getRace().getLifeSpan();
+        if (leader.hasPerk(Perk.ADDICTED)) {
+          lifeExpection = lifeExpection - lifeExpection / 5;
+        }
+        if (leader.getAge() > lifeExpection) {
+          int chance = leader.getAge() - lifeExpection;
+          if (DiceGenerator.getRandom(1, 100) <= chance) {
+            leader.setJob(Job.DEAD);
+            Message msg = new Message(MessageType.LEADER,
+                leader.getCallName()
+                    + " has died at age of " + leader.getAge(),
+                Icons.getIconByName(Icons.ICON_DEATH));
+            msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
+            realm.getMsgList().addNewMessage(msg);
+            String reason;
+            switch (DiceGenerator.getRandom(2)) {
+              case 0:
+              default: {
+                reason = "old age";
+                break;
+              }
+              case 1: {
+                if (leader.getRace() != SpaceRace.MECHIONS) {
+                  reason = "heart attack";
+                } else {
+                  reason = "burnt CPU";
+                }
+                break;
+              }
+              case 2: {
+                if (leader.hasPerk(Perk.ADDICTED)) {
+                  reason = "substance overdose";
+                } else {
+                  reason = "natural causes";
+                }
+                break;
+              }
+            }
+            NewsData news = NewsFactory.makeLeaderDies(leader, realm, reason);
+            game.getStarMap().getNewsCorpData().addNews(news);
+            game.getStarMap().getHistory().addEvent(
+                NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
+                news));
+            if (realm.getRuler() == leader) {
+              realm.setRuler(null);
+            }
+          }
+        }
+      }
+      if (leader.getJob() == Job.RULER) {
+        int numberOfPlanet = 0;
+        int numberOfStarbases = 0;
+        Planet firstPlanet = null;
+        for (Planet planet : game.getStarMap().getPlanetList()) {
+          if (planet.getPlanetPlayerInfo() == realm) {
+            numberOfPlanet++;
+            if (firstPlanet == null) {
+              firstPlanet = planet;
+            }
+          }
+        }
+        int heirs = 0;
+        if (realm.getGovernment().hasHeirs()) {
+          for (Leader leaderAsHeir :realm.getLeaderPool()) {
+            if (leaderAsHeir.getParent() != null
+                && leaderAsHeir.getJob() != Job.DEAD) {
+              heirs++;
+            }
+          }
+          int chance = 2;
+          if ((realm.getGovernment() == GovernmentType.CLAN
+               || realm.getGovernment() == GovernmentType.HORDE)
+              && heirs == 0) {
+            chance = 4;
+          }
+          if ((realm.getGovernment() == GovernmentType.EMPIRE
+              || realm.getGovernment() == GovernmentType.KINGDOM)
+              && heirs == 0) {
+            chance = 10;
+          }
+          if ((realm.getGovernment() == GovernmentType.EMPIRE
+              || realm.getGovernment() == GovernmentType.KINGDOM)
+              && heirs > 1) {
+            chance = 4;
+          }
+          if (DiceGenerator.getRandom(99) < chance && firstPlanet != null
+              && heirs < 3) {
+            heir = LeaderUtility.createLeader(realm, firstPlanet, 1);
+            heir.setAge(0);
+            heir.setParent(leader);
+            String[] heirNames = heir.getName().split(" ");
+            String[] parentNames = leader.getName().split(" ");
+            if (parentNames.length >= 2 && heirNames.length >= 2) {
+              heir.setName(heirNames[0] + " "
+                  + parentNames[parentNames.length - 1]);
+            }
+            heir.setJob(Job.TOO_YOUNG);
+            heir.setTitle(LeaderUtility.createTitleForLeader(heir, realm));
+            NewsData news = NewsFactory.makeHeirNews(heir, realm);
+            game.getStarMap().getNewsCorpData().addNews(news);
+            game.getStarMap().getHistory().addEvent(
+                NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
+                news));
+          }
+        }
+        for (int i = 0; i < realm.getFleets().getNumberOfFleets(); i++) {
+          Fleet fleet = realm.getFleets().getByIndex(i);
+          if (fleet.isStarBaseDeployed()) {
+            numberOfStarbases++;
+          }
+        }
+        leader.setExperience(
+            leader.getExperience() + numberOfPlanet * 4 + numberOfStarbases);
+        if ((realm.getGovernment() == GovernmentType.ALLIANCE
+            || realm.getGovernment() == GovernmentType.DEMOCRACY
+            || realm.getGovernment() == GovernmentType.FEDERATION
+            || realm.getGovernment() == GovernmentType.REPUBLIC)
+            && leader.getTimeInJob() >= 20) {
+          leader.setJob(Job.UNASSIGNED);
+          game.getStarMap().getNewsCorpData().addNews(
+              NewsFactory.makeElectionNews(leader, realm));
+        }
+        if ((realm.getGovernment() == GovernmentType.ENTERPRISE
+            || realm.getGovernment() == GovernmentType.GUILD)
+            && leader.getTimeInJob() >= 40) {
+          leader.setJob(Job.UNASSIGNED);
+          game.getStarMap().getNewsCorpData().addNews(
+              NewsFactory.makeElectionNews(leader, realm));
+        }
+        if (realm.getGovernment() == GovernmentType.AI
+            && leader.getTimeInJob() >= 100) {
+          leader.setJob(Job.UNASSIGNED);
+          game.getStarMap().getNewsCorpData().addNews(
+              NewsFactory.makeElectionNews(leader, realm));
+        }
+      }
+      int required = leader.getRequiredExperience();
+      if (leader.getExperience() >= required) {
+        leader.setLevel(leader.getLevel() + 1);
+        leader.setExperience(leader.getExperience() - required);
+        LeaderUtility.addRandomPerks(leader);
+        Message msg = new Message(MessageType.LEADER,
+            leader.getCallName()
+                + " has reached to a new level. ",
+            LeaderUtility.getIconBasedOnLeaderJob(leader));
+        msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
+        realm.getMsgList().addUpcomingMessage(msg);
+        if (leader.getJob() == Job.COMMANDER
+            && leader.getMilitaryRank() != MilitaryRank.CIVILIAN) {
+          leader.setMilitaryRank(MilitaryRank.getByIndex(
+              leader.getMilitaryRank().getIndex() + 1));
+          leader.setTitle(LeaderUtility.createTitleForLeader(leader, realm));
+        }
+      }
+    }
+    if (heir != null) {
+      realm.getLeaderPool().add(heir);
+    }
+  }
   /**
    * Update whole star map to next turn
    */
@@ -1832,11 +2047,45 @@ public class AITurnView extends BlackPanel {
             }
           }
         }
+        handleLeaders(info);
         info.getDiplomacy().updateDiplomacyLastingForTurn();
         info.resetVisibilityDataAfterTurn();
         info.getMsgList().clearMessages();
         for (int j = 0; j < info.getFleets().getNumberOfFleets(); j++) {
           Fleet fleet = info.getFleets().getByIndex(j);
+          if (fleet.getCommander() != null) {
+            if (fleet.getCommander().getJob() == Job.DEAD) {
+              fleet.setCommander(null);
+            } else {
+              CulturePower culture = game.getStarMap().getSectorCulture(
+                  fleet.getX(), fleet.getY());
+              int enemyIndex = culture.getHighestCulture();
+              if (enemyIndex > -1 && enemyIndex != i
+                  && !info.getDiplomacy().isAlliance(enemyIndex)
+                  && !info.getDiplomacy().isDefensivePact(enemyIndex)) {
+                fleet.getCommander().setExperience(
+                    fleet.getCommander().getExperience() + 10);
+              }
+              if (fleet.getCommander().getAge() == 50
+                  && fleet.getCommander().getMilitaryRank()
+                  == MilitaryRank.ENSIGN) {
+                fleet.getCommander().setMilitaryRank(MilitaryRank.LIEUTENANT);
+                fleet.getCommander().setExperience(
+                    fleet.getCommander().getExperience() + 50);
+                Message msg = new Message(MessageType.LEADER,
+                    fleet.getCommander().getCallName()
+                        + " has gained military rank lieutenant. ",
+                    LeaderUtility.getIconBasedOnLeaderJob(
+                        fleet.getCommander()));
+                msg.setMatchByString("Index:"
+                        + info.getLeaderIndex(fleet.getCommander()));
+                info.getMsgList().addUpcomingMessage(msg);
+              }
+              fleet.getCommander().setExperience(
+                  fleet.getCommander().getExperience()
+                  + fleet.getNumberOfShip() * fleet.getCommander().getLevel());
+            }
+          }
           if (fleet.getRoute() != null) {
             if (fleet.getRoute().isFixing()) {
               Planet planet = game.getStarMap()
@@ -2288,12 +2537,21 @@ public class AITurnView extends BlackPanel {
         // Handle war fatigue for player
         GovernmentType government = info.getGovernment();
         if (!government.isImmuneToHappiness()) {
+          int warResistance = government.getWarResistance();
+          if (info.getRuler() != null
+              && info.getRuler().hasPerk(Perk.WARLORD)) {
+            warResistance++;
+          }
+          if (info.getRuler() != null
+              && info.getRuler().hasPerk(Perk.WEAK_LEADER)) {
+            warResistance--;
+          }
           boolean fatigued = false;
           int wars = info.getDiplomacy().getNumberOfWar();
           int warFatigueValue = info.getTotalWarFatigue();
-          if (wars > 0 && wars > government.getWarResistance()) {
+          if (wars > 0 && wars > warResistance) {
             int fatigue = info.getWarFatigue();
-            fatigue = fatigue - wars + government.getWarResistance();
+            fatigue = fatigue - wars + warResistance;
             fatigued = true;
             info.setWarFatigue(fatigue);
           }

@@ -12,6 +12,7 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.DiplomacyBonusList;
 import org.openRealmOfStars.player.espionage.EspionageList;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -130,6 +131,13 @@ public final class PlanetHandling {
         planet.setTax(planet.getTax() + 1, false);
       } else if (credit > 0 && planet.getTax() > 0) {
         planet.setTax(planet.getTax() - 1, false);
+      }
+      if (info.areLeadersDead() && credit == 0
+          && info.getTotalCredits() < LeaderUtility.leaderRecruitCost(info)
+          && planet.getTax() < planet.getTotalProduction(
+            Planet.PRODUCTION_PRODUCTION) + 2) {
+        // Set Planet text higher just for get new ruler
+        planet.setTax(planet.getTax() + 1, false);
       }
       ArrayList<Message> messages = info.getMsgList().getFullList();
       boolean changeConstruction = false;

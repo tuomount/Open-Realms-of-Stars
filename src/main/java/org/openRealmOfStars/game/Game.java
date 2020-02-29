@@ -2556,7 +2556,7 @@ public class Game implements ActionListener {
       return;
     }
     if (gameState == GameState.LEADER_VIEW && leaderView != null) {
-      // Handle Research View
+      // Handle Leader View
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_STARMAP)) {
         SoundPlayer.playMenuSound();

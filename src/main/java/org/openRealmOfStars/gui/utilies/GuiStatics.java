@@ -1098,6 +1098,12 @@ public final class GuiStatics {
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/meteor.png"));
   /**
+   * Image meteor hit explosion
+   */
+  public static final BufferedImage IMAGE_METEOR_HIT = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/meteorhit.png"));
+  /**
    * Image ship destroyed
    */
   public static final BufferedImage IMAGE_SHIP_DESTROYED = IOUtilities

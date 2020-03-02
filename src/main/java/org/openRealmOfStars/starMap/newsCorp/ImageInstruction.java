@@ -327,6 +327,10 @@ public class ImageInstruction {
    */
   public static final String METEOR = "meteor";
   /**
+   * Meteor image
+   */
+  public static final String METEOR_HIT = "meteor_hit";
+  /**
    * Instructions for ship
    */
   public static final String SHIP = "ship";
@@ -578,6 +582,7 @@ public class ImageInstruction {
         && !BIG_MISSILE.equals(logoType)
         && !BIG_MONEY.equals(logoType)
         && !METEOR.equals(logoType)
+        && !METEOR_HIT.equals(logoType)
         && !SpaceRace.CENTAURS.getNameSingle().equals(logoType)
         && !SpaceRace.HUMAN.getNameSingle().equals(logoType)
         && !SpaceRace.SPORKS.getNameSingle().equals(logoType)
@@ -824,6 +829,9 @@ public class ImageInstruction {
     }
     if (METEOR.equals(planetType)) {
       planetImg = GuiStatics.IMAGE_METEOR;
+    }
+    if (METEOR_HIT.equals(planetType)) {
+      planetImg = GuiStatics.IMAGE_METEOR_HIT;
     }
     SpaceRace race = SpaceRaceUtility.getRaceByName(planetType);
     if (race != null) {

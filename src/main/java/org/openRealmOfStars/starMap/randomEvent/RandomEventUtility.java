@@ -354,6 +354,13 @@ public final class RandomEventUtility {
         sb.append("Massive meteor hits the the atmosphere of ");
         sb.append(planet.getName());
         sb.append(". ");
+        ImageInstruction instructions = new ImageInstruction();
+        instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+        instructions.addPlanet(ImageInstruction.POSITION_CENTER,
+            planet.getImageInstructions(), ImageInstruction.SIZE_HALF);
+        instructions.addLogo(ImageInstruction.POSITION_CENTER,
+            ImageInstruction.METEOR_HIT, ImageInstruction.SIZE_FULL);
+        event.setImageInstructions(instructions.build());
         Icon16x16 icon = Icons.getIconByName(Icons.ICON_DEATH);
         if (planet.getTurretLvl() > 0) {
           sb.append("Planet's defense turrets shoot the meteor to pieces ");

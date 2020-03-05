@@ -127,6 +127,23 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
     this.add(bottomPanel, BorderLayout.SOUTH);
   }
 
+  /**
+   * Replace all "\n" character sequence with line feed chars.
+   * @param line String to handle
+   * @return String
+   */
+  private String addLineChanges(final String line) {
+    String result = line;
+    int index = result.indexOf("\\");
+    while (index > -1) {
+      if (result.length() > index + 2 && result.charAt(index + 1) == 'n') {
+        result = result.substring(0, index) + "\n"
+            + result.substring(index + 2, result.length());
+      }
+      index = result.indexOf("\\");
+    }
+    return result;
+  }
   @Override
   public void valueChanged(final TreeSelectionEvent e) {
     SoundPlayer.playMenuSound();
@@ -137,7 +154,7 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
           .getUserObject();
       if (object instanceof HelpLine) {
         HelpLine line = (HelpLine) object;
-        infoText.setText(line.getText());
+        infoText.setText(addLineChanges(line.getText()));
         this.repaint();
       }
     }

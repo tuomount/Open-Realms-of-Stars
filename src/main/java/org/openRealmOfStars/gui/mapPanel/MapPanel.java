@@ -30,6 +30,8 @@ import org.openRealmOfStars.player.combat.CombatAnimation;
 import org.openRealmOfStars.player.combat.CombatShip;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetVisibility;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.ShipComponent;
 import org.openRealmOfStars.player.ship.ShipComponentType;
 import org.openRealmOfStars.player.ship.ShipImage;
@@ -644,6 +646,17 @@ public class MapPanel extends JPanel {
                 + fleetOwnerIndex);
             if (fleetColor != null) {
               fleetColor.draw(gr, pixelX, pixelY);
+            }
+            if (fleetOwner != info && Game.getTutorial() != null
+                && starMap.isTutorialEnabled() && info.isHuman()) {
+              String tutorialText = Game.getTutorial().showTutorialText(50);
+              if (tutorialText != null) {
+                Message msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                msg.setCoordinate(new Coordinate(i + cx, j + cy));
+                info.getMsgList().addNewMessage(msg);
+                return;
+              }
             }
           }
           if (drawShip) {

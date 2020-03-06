@@ -38,7 +38,7 @@ public class OggPlayerTest {
   @Category(org.openRealmOfStars.UnitTest.class)
   public void testEscapePosition() throws IOException {
     InputStream stream = Mockito.mock(InputStream.class);
-    OggPlayer player = new OggPlayer(stream);
+    OggPlayer player = new OggPlayer(stream, -1);
     assertEquals(false, player.isStopped());
     player.stop();
     assertEquals(50, OggPlayer.getOggVolume());

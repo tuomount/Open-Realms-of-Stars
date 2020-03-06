@@ -121,17 +121,41 @@ public class OggPlayer {
   private static int oggVolume = 50;
 
   /**
+   * Number of packets decoded
+   */
+  private int numberOfPackets = 0;
+  /**
+   * Fadeout diviver for sample value
+   */
+  private int fadeoutDivider = 1;
+  /**
+   * Counter not to increase fadeout each packaet
+   */
+  private int slowFadeout = 0;
+  /**
+   * Limit for fadeout.
+   */
+  private int fadeoutLimit;
+  /**
+   * Is fadeout activated
+   */
+  private boolean activateFadeout;
+  /**
    * Initializes new OggPlayer from Inputstream
    * @param is InputStream containg Ogg Vorbis data
+   * @param limit Fadeout limit.
+   * If fadeout has been active and this limit has been reached then fading out
+   * -1 can be used not for limit.
    * @throws IOException if InputStream is null
    */
-  public OggPlayer(final InputStream is) throws IOException {
+  public OggPlayer(final InputStream is, final int limit) throws IOException {
     if (is == null) {
       throw new IOException("No OGG stream available!");
     }
     oggStream = new BufferedInputStream(is);
     oggStream.mark(Integer.MAX_VALUE);
     conversionBuffer = new byte[conversionSize];
+    fadeoutLimit = limit;
   }
 
   /**
@@ -223,6 +247,9 @@ public class OggPlayer {
     oggStream.reset();
     initializeJOrbis();
     stopPlay = false;
+    numberOfPackets = 0;
+    fadeoutDivider = 1;
+    slowFadeout = 0;
     boolean chained = false;
     int bytes;
     while (true) {
@@ -345,6 +372,19 @@ public class OggPlayer {
               }
               if (result != -1) {
                 // we have a packet.  Decode it
+                numberOfPackets++;
+                //System.out.println("Packet #" + numberOfPackets);
+                if (fadeoutLimit != -1 && numberOfPackets > fadeoutLimit
+                    && activateFadeout) {
+                  slowFadeout++;
+                  if (slowFadeout > 3) {
+                    slowFadeout = 0;
+                    fadeoutDivider++;
+                    if (fadeoutDivider > 100) {
+                      stop();
+                    }
+                  }
+                }
                 int samples;
                 if (jorbisBlock.synthesis(joggPacket) == 0) {
                   jorbisDspState.synthesis_blockin(jorbisBlock);
@@ -373,6 +413,9 @@ public class OggPlayer {
                       if (sampleValue < 0) {
                         // Making sample value to signed 16 bit
                         sampleValue = sampleValue | 0x8000;
+                      }
+                      if (fadeoutDivider > 1) {
+                        sampleValue = sampleValue / fadeoutDivider;
                       }
                       conversionBuffer[ptr] = (byte) (sampleValue);
                       conversionBuffer[ptr + 1] = (byte) (sampleValue >>> 8);
@@ -457,4 +500,11 @@ public class OggPlayer {
     this.loop = loop;
   }
 
+  /**
+   * Activate fadeout and actually do fadeout if
+   * limit has been reached.
+   */
+  public void fadeout() {
+    activateFadeout = true;
+  }
 }

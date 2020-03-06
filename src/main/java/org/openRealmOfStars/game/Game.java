@@ -1337,6 +1337,7 @@ public class Game implements ActionListener {
       showCredits();
       break;
     case STARMAP:
+      MusicPlayer.activeFadeout();
       showStarMap(dataObject);
       break;
     case COMBAT: {

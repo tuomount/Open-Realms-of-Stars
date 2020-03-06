@@ -139,7 +139,7 @@ public final class MusicPlayer {
    */
   public static final MusicFileInfo SPACE_THEME = new MusicFileInfo(
       "Space Theme", "Joshua Stephen Kartes",
-      "/resources/musics/spacetheme.ogg");
+      "/resources/musics/spacetheme.ogg", 1500);
 
   /**
    * Fight Music Theme01 by GTDStudio - Pavel Panferov License CC-BY 3.0
@@ -251,7 +251,7 @@ public final class MusicPlayer {
   public static void play(final MusicFileInfo musicFile) {
     nowPlaying = musicFile;
     textDisplayed = 0;
-    play(nowPlaying.getFilename());
+    play(nowPlaying.getFilename(), nowPlaying.getFadingLimit());
   }
 
   /**
@@ -275,9 +275,13 @@ public final class MusicPlayer {
   /**
    * Play the OGG file to the sound card
    * @param musicFile String
+   * @param limit Fadeout limit.
+   * If fadeout has been active and this limit has been reached then fading out
+   * -1 can be used not for limit.
    */
   @SuppressWarnings("resource")
-  public static synchronized void play(final String musicFile) {
+  public static synchronized void play(final String musicFile,
+      final int limit) {
     if (musicEnabled) {
       if (playing) {
         stop();
@@ -286,7 +290,7 @@ public final class MusicPlayer {
         InputStream is = MusicPlayer.class.getResource(musicFile).openStream();
         BufferedInputStream stream = new BufferedInputStream(is);
         if (player == null) {
-          player = new OggPlayer(stream);
+          player = new OggPlayer(stream, limit);
         } else {
           player.stop();
           int loop = 0;
@@ -297,7 +301,7 @@ public final class MusicPlayer {
               break;
             }
           }
-          player = new OggPlayer(stream);
+          player = new OggPlayer(stream, limit);
         }
       } catch (IOException | InterruptedException e) {
         ErrorLogger.log("Problem while playing OGG file ("
@@ -444,4 +448,12 @@ public final class MusicPlayer {
     return OggPlayer.getOggVolume();
   }
 
+  /**
+   * Activate fadeout when limit has reached.
+   */
+  public static void activeFadeout() {
+    if (player != null) {
+      player.fadeout();
+    }
+  }
 }

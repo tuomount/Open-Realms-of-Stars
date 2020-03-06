@@ -39,6 +39,11 @@ public class MusicFileInfo {
   private String fileName;
 
   /**
+   * Packet limit in OGG stream after fading out will be activated
+   */
+  private int fadingLimit;
+
+  /**
    * Constructor Music File Info
    * @param name Songname
    * @param composer Author or composer
@@ -49,6 +54,22 @@ public class MusicFileInfo {
     songName = name;
     author = composer;
     fileName = filename;
+    fadingLimit = -1;
+  }
+
+  /**
+   * Constructor Music File Info
+   * @param name Songname
+   * @param composer Author or composer
+   * @param filename File name inside jar
+   * @param limit Fading limit in packets
+   */
+  public MusicFileInfo(final String name, final String composer,
+      final String filename, final int limit) {
+    songName = name;
+    author = composer;
+    fileName = filename;
+    fadingLimit = limit;
   }
 
   /**
@@ -78,6 +99,14 @@ public class MusicFileInfo {
   @Override
   public String toString() {
     return songName + " by " + author;
+  }
+
+  /**
+   * Get fading limit for music file
+   * @return the fadingLimit
+   */
+  public int getFadingLimit() {
+    return fadingLimit;
   }
 
 }

@@ -46,9 +46,9 @@ public class GalaxyConfigTest {
     assertEquals(20, config.getChanceForPlanetaryEvent());
     assertEquals(75, config.getSizeX());
     assertEquals(75, config.getSizeY());
-    assertEquals(4, config.getMaxPlayers());
+    assertEquals(6, config.getMaxPlayers());
     assertEquals(12, config.getSolarSystemDistance());
-    assertEquals(400, config.getScoringVictoryTurns());
+    assertEquals(300, config.getScoringVictoryTurns());
     config.setScoringVictoryTurns(0);
     assertEquals(200, config.getScoringVictoryTurns());
     config.setScoringVictoryTurns(2000);
@@ -91,10 +91,10 @@ public class GalaxyConfigTest {
     config.setScoreLimitResearch(1);
     assertEquals(1, config.getScoreLimitDiplomacy());
     assertEquals(1, config.getScoreLimitResearch());
-    assertEquals(PirateDifficultLevel.NORMAL, config.getSpacePiratesDifficulty());
+    assertEquals(PirateDifficultLevel.EASY, config.getSpacePiratesDifficulty());
     config.setSpacePiratesDifficulty(PirateDifficultLevel.VERY_HARD);
     assertEquals(PirateDifficultLevel.VERY_HARD, config.getSpacePiratesDifficulty());
-    assertEquals(80, config.getAncientHeadStart());
+    assertEquals(60, config.getAncientHeadStart());
     config.setAncientHeadStart(40);
     assertEquals(40, config.getAncientHeadStart());
   }

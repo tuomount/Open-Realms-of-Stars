@@ -11,7 +11,7 @@ import org.openRealmOfStars.utilities.ErrorLogger;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017,2018  Tuomo Untinen
+* Copyright (C) 2017-2020  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -216,6 +216,12 @@ public final class MusicPlayer {
   public static final MusicFileInfo SET_FIRE_TO_REALITY = new MusicFileInfo(
       "Set Fire to Reality - dark/electronic", "Justin Dalessandro(ColdOneK)",
       "/resources/musics/SetFireToRealityV2.ogg");
+  /**
+   * Death Is Jut Another Path By Otto Halmén CC-BY 3.0
+   */
+  public static final MusicFileInfo DEATH_IS_JUST_ANOTHER_PATH =
+      new MusicFileInfo("Death Is Jut Another Path", "Otto Halmen",
+          "/resources/music/Death Is Just Another Path.ogg");
 
   /**
    * List of music to played while playing

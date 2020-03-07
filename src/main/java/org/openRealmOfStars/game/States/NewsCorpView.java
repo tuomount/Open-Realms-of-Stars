@@ -28,7 +28,7 @@ import org.openRealmOfStars.starMap.newsCorp.NewsData;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017,2018  Tuomo Untinen
+* Copyright (C) 2017,2018, 2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -109,7 +109,14 @@ public class NewsCorpView extends BlackPanel {
     this.setLayout(new BorderLayout());
     newsList = news;
     InfoPanel base = new InfoPanel();
-    if (MusicPlayer.getNowPlaying() != MusicPlayer.SPACE_THEME) {
+    boolean musicChanged = false;
+    if (news[0].getNewsText().contains("Today is sad day for ")
+        || news[0].getNewsText().contains("was killed in battle!")) {
+      MusicPlayer.play(MusicPlayer.DEATH_IS_JUST_ANOTHER_PATH);
+      musicChanged = true;
+    }
+    if (!musicChanged
+        && MusicPlayer.getNowPlaying() != MusicPlayer.SPACE_THEME) {
       MusicPlayer.play(MusicPlayer.SPACE_THEME);
     }
     base.setLayout(new BorderLayout());

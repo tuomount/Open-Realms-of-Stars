@@ -848,85 +848,87 @@ public class TechList {
                 Icons.getIconByName(Icons.ICON_TUTORIAL));
             info.getMsgList().addNewMessage(msg);
           }
-          if (tech.getType() == TechType.Defense
-              && tech.getComponent().startsWith("Shield")) {
-            tutorialText = Game.getTutorial().showTutorialText(56);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.INFORMATION, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              info.getMsgList().addNewMessage(msg);
+          if (tech.getComponent() != null) {
+            if (tech.getType() == TechType.Defense
+                && tech.getComponent().startsWith("Shield")) {
+              tutorialText = Game.getTutorial().showTutorialText(56);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
             }
-          }
-          if (tech.getType() == TechType.Defense
-              && tech.getComponent().startsWith("Armor")) {
-            tutorialText = Game.getTutorial().showTutorialText(57);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.INFORMATION, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              info.getMsgList().addNewMessage(msg);
+            if (tech.getType() == TechType.Defense
+                && tech.getComponent().startsWith("Armor")) {
+              tutorialText = Game.getTutorial().showTutorialText(57);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
             }
-          }
-          if (tech.getType() == TechType.Defense
-              && tech.getComponent().startsWith("Jammer")) {
-            tutorialText = Game.getTutorial().showTutorialText(58);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.INFORMATION, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              info.getMsgList().addNewMessage(msg);
+            if (tech.getType() == TechType.Defense
+                && tech.getComponent().startsWith("Jammer")) {
+              tutorialText = Game.getTutorial().showTutorialText(58);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
             }
-          }
-          if (tech.getType() == TechType.Combat
-              && tech.getComponent().startsWith("Laser")) {
-            tutorialText = Game.getTutorial().showTutorialText(51);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.INFORMATION, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              info.getMsgList().addNewMessage(msg);
+            if (tech.getType() == TechType.Combat
+                && tech.getComponent().startsWith("Laser")) {
+              tutorialText = Game.getTutorial().showTutorialText(51);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
             }
-          }
-          if (tech.getType() == TechType.Combat
-              && tech.getComponent().startsWith("Photon")) {
-            tutorialText = Game.getTutorial().showTutorialText(53);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.INFORMATION, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              info.getMsgList().addNewMessage(msg);
+            if (tech.getType() == TechType.Combat
+                && tech.getComponent().startsWith("Photon")) {
+              tutorialText = Game.getTutorial().showTutorialText(53);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
             }
-          }
-          if (tech.getType() == TechType.Combat
-              && tech.getComponent().startsWith("Railgun")) {
-            tutorialText = Game.getTutorial().showTutorialText(52);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.INFORMATION, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              info.getMsgList().addNewMessage(msg);
+            if (tech.getType() == TechType.Combat
+                && tech.getComponent().startsWith("Railgun")) {
+              tutorialText = Game.getTutorial().showTutorialText(52);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
             }
-          }
-          if (tech.getType() == TechType.Combat
-              && tech.getComponent().startsWith("HE missile")) {
-            tutorialText = Game.getTutorial().showTutorialText(54);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.INFORMATION, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              info.getMsgList().addNewMessage(msg);
+            if (tech.getType() == TechType.Combat
+                && tech.getComponent().startsWith("HE missile")) {
+              tutorialText = Game.getTutorial().showTutorialText(54);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
             }
-          }
-          if (tech.getType() == TechType.Combat
-              && tech.getComponent().startsWith("ECM torpedo")) {
-            tutorialText = Game.getTutorial().showTutorialText(55);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.INFORMATION, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              info.getMsgList().addNewMessage(msg);
+            if (tech.getType() == TechType.Combat
+                && tech.getComponent().startsWith("ECM torpedo")) {
+              tutorialText = Game.getTutorial().showTutorialText(55);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
             }
-          }
-          if (tech.getType() == TechType.Hulls
-              && tech.getComponent().startsWith("Privateering")) {
-            tutorialText = Game.getTutorial().showTutorialText(59);
-            if (tutorialText != null) {
-              msg = new Message(MessageType.INFORMATION, tutorialText,
-                  Icons.getIconByName(Icons.ICON_TUTORIAL));
-              info.getMsgList().addNewMessage(msg);
+            if (tech.getType() == TechType.Hulls
+                && tech.getComponent().startsWith("Privateering")) {
+              tutorialText = Game.getTutorial().showTutorialText(59);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                info.getMsgList().addNewMessage(msg);
+              }
             }
           }
         }

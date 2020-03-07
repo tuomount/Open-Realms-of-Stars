@@ -75,4 +75,34 @@ public final class TextUtilities {
     }
 
   }
+
+  /**
+   * Handle character escapes with one single loop.
+   * @param text Text to handle
+   * @return Handled text
+   */
+  public static String handleEscapes(final String text) {
+    StringBuilder sb = new StringBuilder(text.length() + 10);
+    for (int i = 0; i < text.length(); i++) {
+      char ch = text.charAt(i);
+      if (ch == '\\') {
+        i++;
+        ch = text.charAt(i);
+        switch (ch) {
+          case 'n': {
+            sb.append("\n");
+            break;
+          }
+          default: {
+            sb.append("\\");
+            sb.append(ch);
+          break;
+          }
+        }
+        continue;
+      }
+      sb.append(ch);
+    }
+    return sb.toString();
+  }
 }

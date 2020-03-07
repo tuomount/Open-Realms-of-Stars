@@ -109,4 +109,25 @@ public class TextUtilitiestTest {
     assertEquals("0", value);
   }
 
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEscaping() {
+    String value = TextUtilities.handleEscapes("Example text.\\n\\nContinue");
+    assertEquals("Example text.\n\nContinue", value);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEscaping2() {
+    String value = TextUtilities.handleEscapes("Example text. Continue");
+    assertEquals("Example text. Continue", value);
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testEscaping3() {
+    String value = TextUtilities.handleEscapes("Example text.\\Continue");
+    assertEquals("Example text.\\Continue", value);
+  }
+
 }

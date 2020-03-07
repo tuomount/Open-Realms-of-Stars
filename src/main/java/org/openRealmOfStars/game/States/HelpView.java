@@ -22,6 +22,7 @@ import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.panels.BlackPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
+import org.openRealmOfStars.utilities.TextUtilities;
 
 /**
 *
@@ -127,23 +128,6 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
     this.add(bottomPanel, BorderLayout.SOUTH);
   }
 
-  /**
-   * Replace all "\n" character sequence with line feed chars.
-   * @param line String to handle
-   * @return String
-   */
-  private String addLineChanges(final String line) {
-    String result = line;
-    int index = result.indexOf("\\");
-    while (index > -1) {
-      if (result.length() > index + 2 && result.charAt(index + 1) == 'n') {
-        result = result.substring(0, index) + "\n"
-            + result.substring(index + 2, result.length());
-      }
-      index = result.indexOf("\\");
-    }
-    return result;
-  }
   @Override
   public void valueChanged(final TreeSelectionEvent e) {
     SoundPlayer.playMenuSound();
@@ -154,7 +138,7 @@ public class HelpView extends BlackPanel implements TreeSelectionListener {
           .getUserObject();
       if (object instanceof HelpLine) {
         HelpLine line = (HelpLine) object;
-        infoText.setText(addLineChanges(line.getText()));
+        infoText.setText(TextUtilities.handleEscapes(line.getText()));
         this.repaint();
       }
     }

@@ -2,6 +2,8 @@ package org.openRealmOfStars.game.tutorial;
 
 import java.util.ArrayList;
 
+import org.openRealmOfStars.utilities.TextUtilities;
+
 /**
 *
 * Open Realm of Stars game project
@@ -186,7 +188,7 @@ public class TutorialList {
     HelpLine line = getByIndex(index);
     if (line != null && !line.isShown()) {
       line.setShown(true);
-      return line.getText();
+      return TextUtilities.handleEscapes(line.getText());
     }
     return null;
   }

@@ -221,7 +221,7 @@ public final class MusicPlayer {
    */
   public static final MusicFileInfo DEATH_IS_JUST_ANOTHER_PATH =
       new MusicFileInfo("Death Is Jut Another Path", "Otto Halmen",
-          "/resources/music/Death Is Just Another Path.ogg");
+          "/resources/musics/Death Is Just Another Path.ogg");
 
   /**
    * List of music to played while playing

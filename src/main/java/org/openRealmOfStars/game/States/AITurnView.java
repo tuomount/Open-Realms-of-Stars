@@ -1992,6 +1992,7 @@ public class AITurnView extends BlackPanel {
             || realm.getGovernment() == GovernmentType.REPUBLIC)
             && leader.getTimeInJob() >= 20) {
           leader.setJob(Job.UNASSIGNED);
+          realm.setRuler(null);
           game.getStarMap().getNewsCorpData().addNews(
               NewsFactory.makeElectionNews(leader, realm));
         }
@@ -1999,12 +2000,14 @@ public class AITurnView extends BlackPanel {
             || realm.getGovernment() == GovernmentType.GUILD)
             && leader.getTimeInJob() >= 40) {
           leader.setJob(Job.UNASSIGNED);
+          realm.setRuler(null);
           game.getStarMap().getNewsCorpData().addNews(
               NewsFactory.makeElectionNews(leader, realm));
         }
         if (realm.getGovernment() == GovernmentType.AI
             && leader.getTimeInJob() >= 100) {
           leader.setJob(Job.UNASSIGNED);
+          realm.setRuler(null);
           game.getStarMap().getNewsCorpData().addNews(
               NewsFactory.makeElectionNews(leader, realm));
         }

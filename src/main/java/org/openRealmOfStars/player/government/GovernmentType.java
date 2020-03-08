@@ -404,6 +404,39 @@ public enum GovernmentType {
     }
   }
   /**
+   * Get ruler reign time.
+   * @return Reign time in turns or -1 if life time
+   */
+  public int reignTime() {
+    switch (this) {
+      case ALLIANCE:
+      case DEMOCRACY:
+      case FEDERATION:
+      case REPUBLIC: {
+        return 20;
+      }
+      case GUILD:
+      case ENTERPRISE: {
+        return 40;
+      }
+      case AI: {
+        return 100;
+      }
+      default:
+      case HEGEMONY:
+      case KINGDOM:
+      case HIVEMIND:
+      case NEST:
+      case CLAN:
+      case HORDE:
+      case MECHANICAL_HORDE:
+      case EMPIRE:
+      case HIERARCHY: {
+        return -1;
+      }
+    }
+  }
+  /**
    * Get Government type description
    * @param markDown Is description on Markdown format or HTML.
    * @return Description
@@ -428,6 +461,29 @@ public enum GovernmentType {
     sb.append(" Base fleet capacity: ");
     sb.append(getFleetCapacity());
     sb.append(lf);
+    sb.append(dot);
+    sb.append(" Leader capacity: ");
+    sb.append(leaderPoolLimit());
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Leader cost: ");
+    sb.append(leaderRecruitCost());
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Reign length: ");
+    if (reignTime() == -1) {
+      sb.append("life time");
+      sb.append(lf);
+    } else {
+      sb.append(reignTime());
+      sb.append(" turns");
+      sb.append(lf);
+    }
+    if (hasHeirs()) {
+      sb.append(dot);
+      sb.append(" Rulers have heirs");
+      sb.append(lf);
+    }
     if (isImmuneToHappiness()) {
       sb.append(dot);
       sb.append(" No effects on happines nor war fatigue");

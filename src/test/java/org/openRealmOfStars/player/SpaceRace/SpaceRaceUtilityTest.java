@@ -119,6 +119,7 @@ public class SpaceRaceUtilityTest {
         "Humans are great diplomats but they are about average in everything else.\n"+
         "* Max radiation: 4\n"+
         "* Troop power: 10\n"+
+        "* Leader lifespan: 80\n"+
         "* Production: 100%\n"+
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
@@ -134,6 +135,7 @@ public class SpaceRaceUtilityTest {
         "Mechanical beings whom do not eat food. Each population must be built.\n"+
         "* Max radiation: 8\n"+
         "* Troop power: 12\n"+
+        "* Leader lifespan: 2000\n"+
         "* Production: 100%\n"+
         "* Mining: 150%\n"+
         "* Research: 50%\n"+
@@ -149,6 +151,7 @@ public class SpaceRaceUtilityTest {
         "Aggressive and warmongering species.\n"+
         "* Max radiation: 5\n"+
         "* Troop power: 12\n"+
+        "* Leader lifespan: 75\n"+
         "* Production: 100%\n"+
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
@@ -164,6 +167,7 @@ public class SpaceRaceUtilityTest {
         "Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers.\n"+
         "* Max radiation: 6\n"+
         "* Troop power: 8\n"+
+        "* Leader lifespan: 110\n"+
         "* Production: 100%\n"+
         "* Mining: 100%\n"+
         "* Research: 150%\n"+
@@ -181,6 +185,7 @@ public class SpaceRaceUtilityTest {
         + "\n"+
         "* Max radiation: 3\n"+
         "* Troop power: 14\n"+
+        "* Leader lifespan: 120\n"+
         "* Production: 100%\n"+
         "* Mining: 100%\n"+
         "* Research: 100%\n"+
@@ -200,6 +205,7 @@ public class SpaceRaceUtilityTest {
       + "mining and troop power.\n"+
         "* Max radiation: 6\n"+
         "* Troop power: 9\n"+
+        "* Leader lifespan: 70\n"+
         "* Production: 100%\n"+
         "* Mining: 50%\n"+
         "* Research: 100%\n"+
@@ -217,6 +223,7 @@ public class SpaceRaceUtilityTest {
         + "cloaking devices.\n"
         + "* Max radiation: 4\n"
         + "* Troop power: 10\n"
+        + "* Leader lifespan: 80\n"
         + "* Production: 100%\n"
         + "* Mining: 100%\n"
         + "* Research: 150%\n"
@@ -234,6 +241,7 @@ public class SpaceRaceUtilityTest {
         + "and gain more credits.\n"
         + "* Max radiation: 5\n"
         + "* Troop power: 12\n"
+        + "* Leader lifespan: 90\n"
         + "* Production: 100%\n"
         + "* Mining: 50%\n"
         + "* Research: 100%\n"
@@ -252,6 +260,7 @@ public class SpaceRaceUtilityTest {
         + "physical tasks.\n"
         + "* Max radiation: 3\n"
         + "* Troop power: 11\n"
+        + "* Leader lifespan: 70\n"
         + "* Production: 150%\n"
         + "* Mining: 150%\n"
         + "* Research: 50%\n"
@@ -270,6 +279,7 @@ public class SpaceRaceUtilityTest {
         + " This is called radiosynthesis.\n"
         + "* Max radiation: 10\n"
         + "* Troop power: 9\n"
+        + "* Leader lifespan: 100\n"
         + "* Production: 50%\n"
         + "* Mining: 100%\n"
         + "* Research: 50%\n"

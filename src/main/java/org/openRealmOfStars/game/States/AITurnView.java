@@ -1986,26 +1986,8 @@ public class AITurnView extends BlackPanel {
         }
         leader.setExperience(
             leader.getExperience() + numberOfPlanet * 4 + numberOfStarbases);
-        if ((realm.getGovernment() == GovernmentType.ALLIANCE
-            || realm.getGovernment() == GovernmentType.DEMOCRACY
-            || realm.getGovernment() == GovernmentType.FEDERATION
-            || realm.getGovernment() == GovernmentType.REPUBLIC)
-            && leader.getTimeInJob() >= 20) {
-          leader.setJob(Job.UNASSIGNED);
-          realm.setRuler(null);
-          game.getStarMap().getNewsCorpData().addNews(
-              NewsFactory.makeElectionNews(leader, realm));
-        }
-        if ((realm.getGovernment() == GovernmentType.ENTERPRISE
-            || realm.getGovernment() == GovernmentType.GUILD)
-            && leader.getTimeInJob() >= 40) {
-          leader.setJob(Job.UNASSIGNED);
-          realm.setRuler(null);
-          game.getStarMap().getNewsCorpData().addNews(
-              NewsFactory.makeElectionNews(leader, realm));
-        }
-        if (realm.getGovernment() == GovernmentType.AI
-            && leader.getTimeInJob() >= 100) {
+        if (realm.getGovernment().reignTime() > -1
+            && leader.getTimeInJob() >= realm.getGovernment().reignTime()) {
           leader.setJob(Job.UNASSIGNED);
           realm.setRuler(null);
           game.getStarMap().getNewsCorpData().addNews(

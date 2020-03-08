@@ -902,21 +902,21 @@ public enum SpaceRace {
       // Game last maximum of 1120 turns so 2000 is more than enough.
       return 2000;
     case SPORKS:
-      return 70;
+      return 75;
     case GREYANS:
-      return 100;
+      return 110;
     case CENTAURS:
       return 120;
     case MOTHOIDS:
-      return 60;
-    case TEUTHIDAES:
       return 70;
-    case SCAURIANS:
+    case TEUTHIDAES:
       return 80;
+    case SCAURIANS:
+      return 90;
     case HOMARIANS:
       return 70;
     case CHIRALOIDS:
-      return 70;
+      return 100;
     default:
       return 80;
     }
@@ -1015,6 +1015,10 @@ public enum SpaceRace {
     sb.append(dot);
     sb.append(" Troop power: ");
     sb.append(getTrooperPower());
+    sb.append(lf);
+    sb.append(dot);
+    sb.append(" Leader lifespan: ");
+    sb.append(getLifeSpan());
     sb.append(lf);
     sb.append(dot);
     sb.append(" Production: ");

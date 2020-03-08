@@ -3013,6 +3013,10 @@ public class StarMap {
       }
     }
     PlayerInfo info = getPlayerByIndex(playerIndex);
+    if (production == Planet.PRODUCTION_CREDITS && info.getRuler() != null
+        && info.getRuler().hasPerk(Perk.MERCHANT)) {
+      result++;
+    }
     for (int i = 0; i < info.getFleets().getNumberOfFleets(); i++) {
       Fleet fleet = info.getFleets().getByIndex(i);
       if (production == Planet.PRODUCTION_RESEARCH) {
@@ -3028,10 +3032,6 @@ public class StarMap {
       }
       if (production == Planet.PRODUCTION_CREDITS) {
         result = result + fleet.getTotalCreditsBonus();
-        if (info.getRuler() != null
-            && info.getRuler().hasPerk(Perk.MERCHANT)) {
-          result++;
-        }
         Leader leader = fleet.getCommander();
         if (leader != null
             && (leader.getJob() == Job.RULER

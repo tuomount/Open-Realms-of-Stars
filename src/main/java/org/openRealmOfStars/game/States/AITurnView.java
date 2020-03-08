@@ -1911,11 +1911,21 @@ public class AITurnView extends BlackPanel {
             }
           }
         }
+        if (leader.getJob() == Job.COMMANDER
+            && leader.hasPerk(Perk.CORRUPTED)) {
+          realm.setTotalCredits(realm.getTotalCredits() - 1);
+        }
       }
       if (leader.getJob() == Job.RULER) {
         int numberOfPlanet = 0;
         int numberOfStarbases = 0;
         Planet firstPlanet = null;
+        if (leader.hasPerk(Perk.MERCHANT)) {
+          realm.setTotalCredits(realm.getTotalCredits() + 1);
+        }
+        if (leader.hasPerk(Perk.CORRUPTED)) {
+          realm.setTotalCredits(realm.getTotalCredits() - 1);
+        }
         for (Planet planet : game.getStarMap().getPlanetList()) {
           if (planet.getPlanetPlayerInfo() == realm) {
             numberOfPlanet++;

@@ -466,6 +466,13 @@ public class Fleet {
       sb.append(owner.getEmpireName());
       sb.append("\n");
     }
+    if (getCommander() != null) {
+      sb.append("Commander:\n");
+      sb.append(getCommander().getTitle());
+      sb.append("\n");
+      sb.append(getCommander().getName());
+      sb.append("\n\n");
+    }
     sb.append("Capacity: ");
     sb.append(String.format("%.1f", getTotalFleetCapacity()));
     sb.append("\nSpeed: ");

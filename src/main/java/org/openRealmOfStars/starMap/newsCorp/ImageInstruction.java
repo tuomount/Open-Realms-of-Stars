@@ -323,6 +323,10 @@ public class ImageInstruction {
    */
   public static final String VIRUSES = "viruses";
   /**
+   * Signal image
+   */
+  public static final String SIGNAL = "signal";
+  /**
    * Meteor image
    */
   public static final String METEOR = "meteor";
@@ -504,6 +508,7 @@ public class ImageInstruction {
         && !PARADISE.equals(image)
         && !VIRUSES.equals(image)
         && !METEOR.equals(image)
+        && !SIGNAL.equals(image)
         && !SHIP_DESTROYED.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
@@ -961,6 +966,9 @@ public class ImageInstruction {
     }
     if (VIRUSES.equals(image)) {
       drawImg = GuiStatics.IMAGE_VIRUSES;
+    }
+    if (SIGNAL.equals(image)) {
+      drawImg = GuiStatics.IMAGE_SIGNAL;
     }
     if (SHIP_DESTROYED.equals(image)) {
       drawImg = GuiStatics.IMAGE_SHIP_DESTROYED;

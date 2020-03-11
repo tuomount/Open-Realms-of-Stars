@@ -1092,6 +1092,13 @@ public final class GuiStatics {
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/viruses.png"));
   /**
+   * Image mysterious signal
+   */
+  public static final BufferedImage IMAGE_SIGNAL = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/mysterious_signal.png"));
+
+  /**
    * Image meteor
    */
   public static final BufferedImage IMAGE_METEOR = IOUtilities

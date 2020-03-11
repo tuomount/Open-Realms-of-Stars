@@ -552,6 +552,9 @@ public final class RandomEventUtility {
           Sun sun = map.locateSolarSystem(planet.getCoordinate().getX(),
               planet.getCoordinate().getY());
           if (sun != null) {
+            ImageInstruction instructions = new ImageInstruction();
+            instructions.addImage(ImageInstruction.SIGNAL);
+            event.setImageInstructions(instructions.build());
             event.setSun(sun);
             event.setText("Scientiests have received mysterious signal from"
                 + " star called " + sun.getName() + ". This signal is very"

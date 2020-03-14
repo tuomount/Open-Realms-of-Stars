@@ -327,6 +327,10 @@ public class ImageInstruction {
    */
   public static final String SIGNAL = "signal";
   /**
+   * Technical breakthrough image
+   */
+  public static final String TECHNICAL_BREAKTHROUGH = "technical breakthrough";
+  /**
    * Meteor image
    */
   public static final String METEOR = "meteor";
@@ -509,6 +513,7 @@ public class ImageInstruction {
         && !VIRUSES.equals(image)
         && !METEOR.equals(image)
         && !SIGNAL.equals(image)
+        && !TECHNICAL_BREAKTHROUGH.equals(image)
         && !SHIP_DESTROYED.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
@@ -969,6 +974,9 @@ public class ImageInstruction {
     }
     if (SIGNAL.equals(image)) {
       drawImg = GuiStatics.IMAGE_SIGNAL;
+    }
+    if (TECHNICAL_BREAKTHROUGH.equals(image)) {
+      drawImg = GuiStatics.IMAGE_TECHNICAL_BREAKTHROUGH;
     }
     if (SHIP_DESTROYED.equals(image)) {
       drawImg = GuiStatics.IMAGE_SHIP_DESTROYED;

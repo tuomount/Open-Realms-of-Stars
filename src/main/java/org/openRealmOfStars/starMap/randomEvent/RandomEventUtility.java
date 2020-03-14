@@ -122,6 +122,9 @@ public final class RandomEventUtility {
       info.getTechList().setTechResearchPoints(TechType.getTypeByIndex(index),
           original);
       String techName = TechType.getTypeByIndex(index).toString();
+      ImageInstruction instructions = new ImageInstruction();
+      instructions.addImage(ImageInstruction.TECHNICAL_BREAKTHROUGH);
+      event.setImageInstructions(instructions.build());
       event.setText("Scientist make breakthrough which boost "
           + techName + " technology. "
           + "This will gains us to get faster new technology in "

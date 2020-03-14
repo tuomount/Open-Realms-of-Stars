@@ -1097,6 +1097,12 @@ public final class GuiStatics {
   public static final BufferedImage IMAGE_SIGNAL = IOUtilities
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/mysterious_signal.png"));
+  /**
+   * Image technical breakthrough
+   */
+  public static final BufferedImage IMAGE_TECHNICAL_BREAKTHROUGH = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/technical_breakthrough.png"));
 
   /**
    * Image meteor

@@ -374,7 +374,8 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
     if (arg0.getActionCommand().equals(GameCommands.COMMAND_ASSIGN_LEADER)) {
       boolean soundPlayed = false;
       Leader leader = leaderList.getSelectedValue();
-      if (leader.getTimeInJob() > 19 || leader.getJob() == Job.UNASSIGNED) {
+      if (leader != null && (leader.getTimeInJob() > 19
+          || leader.getJob() == Job.UNASSIGNED)) {
         Object target = null;
         if (activePlanet != null) {
           target = activePlanet;

@@ -60,11 +60,23 @@ public class LeaderTest {
     leader.setJob(Job.RULER);
     Leader parent = Mockito.mock(Leader.class);
     Mockito.when(parent.getName()).thenReturn("Parent");
+    Mockito.when(parent.getTitle()).thenReturn("Governor");
     leader.setParent(parent);
     assertEquals(MilitaryRank.COLONEL, leader.getMilitaryRank());
     assertEquals("Leader [name=Test, homeworld=Planet I, job=Ruler,"
         + " age=33, TimeInJob=0, level=5, experience=50, militaryRank=Colonel,"
         + " gender=female, race=HUMAN, title=King of the world, parent=Parent]",
         leader.toString());
+    assertEquals("King of the world Test\n" + 
+        "Position: Ruler\n" + 
+        "Ruler for 0 turns\n" + 
+        "Military status: Colonel\n" + 
+        "Age: 33\n" + 
+        "Parent: Governor Parent\n" + 
+        "Gender: female\n" + 
+        "Race: Human\n" + 
+        "Home world: Planet I\n" + 
+        "Level: 5\n" + 
+        "Experience: 50/500\n", leader.getDescription());
   }
 }

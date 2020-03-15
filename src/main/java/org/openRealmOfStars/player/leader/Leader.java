@@ -398,6 +398,9 @@ public class Leader {
     builder.append("Race: ");
     builder.append(getRace().getNameSingle());
     builder.append("\n");
+    builder.append("Home world: ");
+    builder.append(getHomeworld());
+    builder.append("\n");
     builder.append("Level: ");
     builder.append(getLevel());
     builder.append("\n");

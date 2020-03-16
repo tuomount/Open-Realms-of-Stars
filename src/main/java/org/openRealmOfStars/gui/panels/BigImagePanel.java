@@ -22,7 +22,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2020  Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -198,6 +198,9 @@ public class BigImagePanel extends JPanel {
       int lastSpace = -1;
       int rowLen = 0;
       int maxRowLen = this.getWidth() / 12;
+      if (maxRowLen == 0) {
+        maxRowLen = 15;
+      }
       for (int i = 0; i < sb.length(); i++) {
         if (sb.charAt(i) == ' ') {
           lastSpace = i;

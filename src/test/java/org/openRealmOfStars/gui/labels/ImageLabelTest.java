@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 /**
  * 
  * Open Realm of Stars game project
- * Copyright (C) 2017 Tuomo Untinen
+ * Copyright (C) 2017,2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -45,6 +45,9 @@ public class ImageLabelTest {
     assertEquals(false, label.isBorder());
     label = new ImageLabel(image, false);
     assertEquals(false, label.isBorder());
+    assertEquals(false, label.isCenter());
+    label.setCenter(true);
+    assertEquals(true, label.isCenter());
   }
 
   @Test
@@ -60,6 +63,24 @@ public class ImageLabelTest {
     label.paint(back.getGraphics());
     label.setBorder(false);
     label.paint(back.getGraphics());
+    label.paintComponent(back.getGraphics());
+    label.createToolTip();
+  }
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testDrawingImageLabelCenter() {
+    BufferedImage image = new BufferedImage(400, 400,
+        BufferedImage.TYPE_4BYTE_ABGR);
+    BufferedImage back = new BufferedImage(800, 800,
+        BufferedImage.TYPE_4BYTE_ABGR);
+    ImageLabel label = new ImageLabel(image, true);
+    label.setCenter(true);
+    label.setBorder(false);
+    label.paintComponent(back.getGraphics());
+    label.createToolTip();
+    label.setBorder(true);
+    label.paintComponent(back.getGraphics());
+    label.createToolTip();
   }
 
 }

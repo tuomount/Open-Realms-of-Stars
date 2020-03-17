@@ -1162,6 +1162,13 @@ public final class GuiStatics {
           "/resources/images/mothoid_bridge.png"));
 
   /**
+   * Ship Greyan bridge interior
+   */
+  public static final BufferedImage IMAGE_INTERIOR_GREYAN =
+      IOUtilities.loadImage(GuiStatics.class.getResource(
+          "/resources/images/greyan_bridge.png"));
+
+  /**
    * Get text width for certain font
    * @param font Font to use
    * @param text String

@@ -411,25 +411,30 @@ public class PlanetView extends BlackPanel {
     northPanel.add(topPanel);
     northPanel.add(Box.createRigidArea(new Dimension(5, 5)));
     SpaceGreyPanel governorPanel = new SpaceGreyPanel();
-    governorPanel.setLayout(new BoxLayout(governorPanel, BoxLayout.X_AXIS));
-    governorPanel.add(Box.createRigidArea(new Dimension(16, 5)));
+    governorPanel.setLayout(new BorderLayout());
     governorLabel = new IconLabel(null,
         Icons.getIconByName(Icons.ICON_GOVERNOR),
-        ": Planet's governor with very extra extra long name with surname");
+        ": Planet's governor with very long name");
     if (getPlanet().getGovernor() == null) {
       governorLabel.setText(": No governor");
     } else {
       governorLabel.setText(": " + getPlanet().getGovernor().getName());
     }
-    governorLabel.setAlignmentX(RIGHT_ALIGNMENT);
-    governorPanel.add(governorLabel);
-    leaderViewBtn = new SpaceButton("Assign leader  ",
+    SpaceGreyPanel governorLabelPanel = new SpaceGreyPanel();
+    governorLabelPanel.setLayout(new BoxLayout(governorLabelPanel,
+        BoxLayout.X_AXIS));
+    governorLabelPanel.add(Box.createRigidArea(new Dimension(15, 5)));
+    governorLabelPanel.add(governorLabel);
+    governorPanel.add(governorLabelPanel, BorderLayout.WEST);
+    leaderViewBtn = new SpaceButton("Assign governor  ",
         GameCommands.COMMAND_VIEW_LEADERS);
     leaderViewBtn.addActionListener(listener);
-    leaderViewBtn.setAlignmentX(RIGHT_ALIGNMENT);
-    governorPanel.add(leaderViewBtn);
-    governorPanel.setAlignmentX(RIGHT_ALIGNMENT);
-    governorPanel.add(Box.createRigidArea(new Dimension(20, 5)));
+    SpaceGreyPanel governorBtnPanel = new SpaceGreyPanel();
+    governorBtnPanel.setLayout(new BoxLayout(governorBtnPanel,
+        BoxLayout.X_AXIS));
+    governorBtnPanel.add(leaderViewBtn);
+    governorBtnPanel.add(Box.createRigidArea(new Dimension(15, 5)));
+    governorPanel.add(governorBtnPanel, BorderLayout.EAST);
     northPanel.add(governorPanel);
     northPanel.setTitle(planet.getName());
 

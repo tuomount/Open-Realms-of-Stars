@@ -899,7 +899,8 @@ public final class BuildingFactory {
     if (index == COMPONENT_BARRACKS) {
       tmp = new Building(index, "Barracks",
           Icons.getIconByName(Icons.ICON_TROOPS), BuildingType.MILITARY);
-      tmp.setDescription("Population fights better against invaders.");
+      tmp.setDescription("Population fights better against invaders."
+          + "\nRecruited leaders start with 50 experience.");
       tmp.setProdCost(20);
       tmp.setMetalCost(20);
       tmp.setMaintenanceCost(0.33);
@@ -1115,7 +1116,7 @@ public final class BuildingFactory {
       tmp = new Building(index, "Space academy",
           Icons.getIconByName(Icons.ICON_TROOPS), BuildingType.MILITARY);
       tmp.setDescription("Increases training of military personels for\n"
-          + " space ships.");
+          + " space ships.\nRecruited leaders start at level 2.");
       tmp.setProdCost(30);
       tmp.setMetalCost(20);
       tmp.setMaintenanceCost(0.25);

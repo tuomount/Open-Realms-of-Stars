@@ -152,7 +152,7 @@ public class BuildingTest {
     assertEquals(1, building.getFleetCapacityBonus());
     assertEquals("Barracks - one per planet\n" + 
         "Population fights better against\n" + 
-        "invaders.\n" + 
+        "invaders. Recruited leaders start with\n50 experience.\n" + 
         "Cost: Prod.:20 Metal:20 Mainte.: 0.33\n" + 
         "Happiness: +1 Fleet capacity: +1 Battle: +50%", building.getFullDescription());
   }

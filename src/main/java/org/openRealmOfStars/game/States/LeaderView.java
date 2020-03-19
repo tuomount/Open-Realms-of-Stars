@@ -201,6 +201,7 @@ public class LeaderView extends BlackPanel  implements ListSelectionListener {
         Leader leader = leaderList.getModel().getElementAt(i);
         if (leaderToFind == leader) {
           leaderList.setSelectedIndex(i);
+          updatePanel();
           break;
         }
       }

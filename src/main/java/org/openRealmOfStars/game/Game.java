@@ -146,7 +146,7 @@ public class Game implements ActionListener {
   /**
    * Game version number
    */
-  public static final String GAME_VERSION = "0.13.20Beta";
+  public static final String GAME_VERSION = "0.13.21Beta";
 
   /**
    * Animation timer used for animation
@@ -1233,6 +1233,7 @@ public class Game implements ActionListener {
       }
     }
     this.updateDisplay(leaderView);
+    leaderView.updatePanel();
   }
   /**
    * Change game state so that focus is also changed to target message

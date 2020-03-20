@@ -963,6 +963,10 @@ public final class MissionHandling {
           if (homePort != null) {
             mission.setType(MissionType.MOVE);
             mission.setTarget(homePort.getCoordinate());
+            mission.setPhase(MissionPhase.TREKKING);
+            Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
+                mission.getY(), fleet.getFleetFtlSpeed());
+            fleet.setRoute(route);
           } else {
             // No home port so just remove the mission
             info.getMissions().remove(mission);
@@ -994,6 +998,10 @@ public final class MissionHandling {
           if (homePort != null) {
             mission.setType(MissionType.MOVE);
             mission.setTarget(homePort.getCoordinate());
+            mission.setPhase(MissionPhase.TREKKING);
+            Route route = new Route(fleet.getX(), fleet.getY(), mission.getX(),
+                mission.getY(), fleet.getFleetFtlSpeed());
+            fleet.setRoute(route);
           } else {
             // No home port so just remove the mission
             info.getMissions().remove(mission);

@@ -68,9 +68,14 @@ public class AiThread extends Thread {
   }
 
   @Override
+  public synchronized void start() {
+    started = true;
+    super.start();
+  }
+
+  @Override
   public void run() {
     synchronized (this) {
-      started = true;
       running = true;
     }
     boolean turnEnd = false;

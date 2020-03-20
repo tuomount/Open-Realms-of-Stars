@@ -951,24 +951,57 @@ public final class MissionHandling {
           }
         }
       }
-      if (mission.getPhase() == MissionPhase.TREKKING
-          && fleet.getX() == mission.getX()
+      if (mission.getPhase() == MissionPhase.TREKKING) {
+        Planet planet = game.getStarMap().getPlanetByCoordinate(mission.getX(),
+            mission.getY());
+        if (planet != null && planet.getPlanetPlayerInfo() != null
+            && !info.getDiplomacy().isWar(planet.getPlanetOwnerIndex())) {
+          // Planet owner has been changed
+          // Return closest home port
+          Planet homePort = game.getStarMap().getClosestHomePort(info,
+              fleet.getCoordinate());
+          if (homePort != null) {
+            mission.setType(MissionType.MOVE);
+            mission.setTarget(homePort.getCoordinate());
+          } else {
+            // No home port so just remove the mission
+            info.getMissions().remove(mission);
+          }
+          return;
+        }
+        if (fleet.getX() == mission.getX()
           && fleet.getY() == mission.getY()) {
-        // Target acquired, initiating attack
-        mission.setPhase(MissionPhase.EXECUTING);
-      } else if (mission.getPhase() == MissionPhase.TREKKING
-          && fleet.getRoute() == null) {
-        makeReroute(game, fleet, info, mission);
+          // Target acquired, initiating attack
+          mission.setPhase(MissionPhase.EXECUTING);
+        } else if (mission.getPhase() == MissionPhase.TREKKING
+            && fleet.getRoute() == null) {
+          makeReroute(game, fleet, info, mission);
+        }
       }
       if (mission.getPhase() == MissionPhase.EXECUTING
           && fleet.getX() == mission.getX() && fleet.getY() == mission.getY()) {
-        // Target acquired, mission completed!
-        info.getMissions().remove(mission);
         Planet planet = game.getStarMap().getPlanetByCoordinate(fleet.getX(),
             fleet.getY());
         if (planet == null) {
           return;
         }
+        if (planet.getPlanetPlayerInfo() != null
+            && !info.getDiplomacy().isWar(planet.getPlanetOwnerIndex())) {
+          // Planet owner has been changed
+          // Return closest home port
+          Planet homePort = game.getStarMap().getClosestHomePort(info,
+              fleet.getCoordinate());
+          if (homePort != null) {
+            mission.setType(MissionType.MOVE);
+            mission.setTarget(homePort.getCoordinate());
+          } else {
+            // No home port so just remove the mission
+            info.getMissions().remove(mission);
+          }
+          return;
+        }
+        // Target acquired, mission completed!
+        info.getMissions().remove(mission);
         if (planet.getPlanetPlayerInfo() != null
             && planet.getPlanetPlayerInfo().isHuman()) {
           // Bombing human planet

@@ -79,4 +79,30 @@ public class LeaderTest {
         "Level: 5\n" + 
         "Experience: 50/500\n", leader.getDescription());
   }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
+  public void testMilitaryRankIncrease() {
+    Leader leader = new Leader("Test");
+    leader.setMilitaryRank(MilitaryRank.ENSIGN);
+    leader.setMilitaryRank(MilitaryRank.getByIndex(
+        leader.getMilitaryRank().getIndex() + 1));
+    assertEquals(MilitaryRank.LIEUTENANT, leader.getMilitaryRank());
+    leader.setMilitaryRank(MilitaryRank.getByIndex(
+        leader.getMilitaryRank().getIndex() + 1));
+    assertEquals(MilitaryRank.CAPTAIN, leader.getMilitaryRank());
+    leader.setMilitaryRank(MilitaryRank.getByIndex(
+        leader.getMilitaryRank().getIndex() + 1));
+    assertEquals(MilitaryRank.COLONEL, leader.getMilitaryRank());
+    leader.setMilitaryRank(MilitaryRank.getByIndex(
+        leader.getMilitaryRank().getIndex() + 1));
+    assertEquals(MilitaryRank.COMMANDER, leader.getMilitaryRank());
+    leader.setMilitaryRank(MilitaryRank.getByIndex(
+        leader.getMilitaryRank().getIndex() + 1));
+    assertEquals(MilitaryRank.ADMIRAL, leader.getMilitaryRank());
+    leader.setMilitaryRank(MilitaryRank.getByIndex(
+        leader.getMilitaryRank().getIndex() + 1));
+    assertEquals(MilitaryRank.ADMIRAL, leader.getMilitaryRank());
+  }
+
 }

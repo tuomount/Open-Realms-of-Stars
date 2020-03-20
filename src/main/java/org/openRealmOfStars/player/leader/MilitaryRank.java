@@ -63,7 +63,7 @@ public enum MilitaryRank {
   }
 
   /**
-   * Get Perk by index;
+   * Get military rank by index;
    * @param index Index to get perk
    * @return Perk
    */
@@ -71,7 +71,7 @@ public enum MilitaryRank {
     if (index >= 0 && index < MilitaryRank.values().length) {
       return MilitaryRank.values()[index];
     }
-    if (index > MilitaryRank.values().length) {
+    if (index >= MilitaryRank.values().length) {
       return MilitaryRank.ADMIRAL;
     }
     return MilitaryRank.CIVILIAN;

@@ -30,6 +30,7 @@ import org.openRealmOfStars.starMap.history.event.Event;
 import org.openRealmOfStars.starMap.history.event.EventOnPlanet;
 import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.history.event.GalacticEvent;
+import org.openRealmOfStars.starMap.history.event.LeaderEvent;
 import org.openRealmOfStars.starMap.history.event.PlayerStartEvent;
 
 /**
@@ -233,6 +234,17 @@ public class HistoryView extends BlackPanel {
         textArea.setText("Event on planet called " + planetary.getName() + ": "
             + planetary.getText());
         targetCoordinate = planetary.getCoordinate();
+      }
+      if (event.getType() == EventType.LEADER_EVENT) {
+        LeaderEvent leaderEvent = (LeaderEvent) event;
+        if (leaderEvent.getPlanetName() != null
+            && !leaderEvent.getPlanetName().isEmpty()) {
+          textArea.setText("Event on " + leaderEvent.getPlanetName() + ": "
+              + leaderEvent.getText());
+        } else {
+          textArea.setText(leaderEvent.getText());
+        }
+        targetCoordinate = leaderEvent.getCoordinate();
       }
       if (event.getType() == EventType.SPACE_COMBAT) {
         CombatEvent combat = (CombatEvent) event;

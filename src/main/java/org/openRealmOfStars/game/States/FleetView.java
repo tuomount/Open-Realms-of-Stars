@@ -517,6 +517,13 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       metalSelection.setText("Metal: " + fleet.getTotalCargoMetal() + "/"
           + calculateTotalMetalSpace());
     }
+    if (fleet.getCommander() == null) {
+      commanderLabel.setText(": No commander");
+    } else {
+      commanderLabel.setText(": "
+          + fleet.getCommander().getMilitaryRank().toString()
+          + " " + fleet.getCommander().getName());
+    }
     shipsInFleet.setListData(fleet.getShips());
     updateOtherFleet();
 

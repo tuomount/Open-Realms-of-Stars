@@ -2304,6 +2304,7 @@ public class DiplomaticTrade {
         int index = giver.getFleets().getIndexByName(offer.getFleet()
             .getName());
         giver.getFleets().remove(index);
+        giver.getMissions().deleteMissionForFleet(offer.getFleet().getName());
         break;
       }
       case PLANET: {

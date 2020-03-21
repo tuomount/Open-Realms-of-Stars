@@ -875,6 +875,7 @@ public final class RandomEventUtility {
         int index = DiceGenerator.getRandom(fleets.size() - 1);
         Fleet fleet = fleets.get(index);
         event.setFleet(fleet);
+        info.getMissions().deleteMissionForFleet(fleet.getName());
         info.getFleets().removeFleet(fleet);
         boardPlayer.getFleets().add(fleet);
         event.setText("Fleet called " + fleet.getName()

@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.openRealmOfStars.AI.Mission.MissionList;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.*;
  *
  * Open Realm of Stars game project 
  * Copyright (C) 2017 Diocto
- * Copyright (C) 2017, 2018 Tuomo Untinen
+ * Copyright (C) 2017, 2018, 2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the Free Software
@@ -66,6 +67,9 @@ public class Combat2Test {
     dependerFleetList = mock(FleetList.class);
     attackerInfo = mock(PlayerInfo.class);
     dependerInfo = mock(PlayerInfo.class);
+    MissionList missions = mock(MissionList.class);
+    when(attackerInfo.getMissions()).thenReturn(missions);
+    when(dependerInfo.getMissions()).thenReturn(missions);
     attackerShip = mock(Ship.class);
     defenderShip = mock(Ship.class);
     interruptShip = mock(Ship.class);
@@ -102,6 +106,8 @@ public class Combat2Test {
     when(dependerInfo.getFleets()).thenReturn(dependerFleetList);
     when(attackerFleetRoute.isDefending()).thenReturn(false);
     when(dependerFleetRoute.isDefending()).thenReturn(true);
+    when(attackerFleet.getName()).thenReturn("Attack #0");
+    when(defenderFleet.getName()).thenReturn("Defender #0");
 
   }
 

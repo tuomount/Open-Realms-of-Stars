@@ -1326,6 +1326,7 @@ public final class MissionHandling {
             fleet.addShip(ship);
           }
         }
+        info.getMissions().deleteMissionForFleet(mergeFleet.getName());
         info.getFleets().remove(j);
         break;
       }

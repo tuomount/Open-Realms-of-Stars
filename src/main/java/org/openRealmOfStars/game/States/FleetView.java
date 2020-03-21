@@ -625,6 +625,7 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
           int index = fleetList.getIndexByName(mergeFleet.getName());
           if (index > -1) {
             fleetList.remove(index);
+            info.getMissions().deleteMissionForFleet(mergeFleet.getName());
           }
         }
       }

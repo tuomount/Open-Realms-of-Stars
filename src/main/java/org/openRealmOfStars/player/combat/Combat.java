@@ -916,6 +916,7 @@ public boolean launchIntercept(final int distance,
       int looserIndex = looserPlayer.getFleets().
           getIndexByName(looserFleet.getName());
       if (looserIndex != -1 && !loserEscaped) {
+        looserPlayer.getMissions().deleteMissionForFleet(looserFleet.getName());
         looserPlayer.getFleets().remove(looserIndex);
       }
       if (loserEscaped && isWinnerAttacker) {
@@ -943,6 +944,8 @@ public boolean launchIntercept(final int distance,
               stat.setNumberOfInUse(stat.getNumberOfInUse() - 1);
             }
           }
+          looserPlayer.getMissions().deleteMissionForFleet(
+              looserFleet.getName());
           looserPlayer.getFleets().remove(looserIndex);
         }
       }

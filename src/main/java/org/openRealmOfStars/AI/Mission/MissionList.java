@@ -327,7 +327,7 @@ public class MissionList {
   public void deleteMissionForFleet(final String fleetName) {
     ArrayList<Mission> deletableMissions = new ArrayList<>();
     for (Mission mission : missions) {
-      if (mission.getFleetName().equals(fleetName)) {
+      if (fleetName.equals(mission.getFleetName())) {
         deletableMissions.add(mission);
       }
     }

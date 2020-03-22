@@ -255,7 +255,7 @@ public class SpaceRaceUtilityTest {
         + "* Special: Trade fleet gain 50% more credits and better trade buildings.";
     expectedResult[8] = "### Homarians\n"
         + "Homarians are very strong creatures. "
-        + "They have humanoid from but they have very thick and "
+        + "They have humanoid form but they have very thick and "
         + "hard exoskeleton. Due their strength they are good in "
         + "physical tasks.\n"
         + "* Max radiation: 3\n"

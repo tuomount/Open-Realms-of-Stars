@@ -83,11 +83,11 @@ public enum SpaceRace {
       + " humanoid. They are merchantical race. They focus make better"
       + " trades with other and gain more credits."),
   /**
-   * Homarians are very strong creatures. They have humanoid from but
+   * Homarians are very strong creatures. They have humanoid form but
    * they have very thick and hard exoskeleton.
    */
   HOMARIANS(8, "Homarians", "Homarian", "Homarians are very strong creatures. "
-      + "They have humanoid from but they have very thick and "
+      + "They have humanoid form but they have very thick and "
       + "hard exoskeleton. Due their strength they are good in "
       + "physical tasks."),
   /**

@@ -34,6 +34,11 @@ Strategize on what parts to target, it may be better to target shields and scann
 
 Conquer enemy planets. Drop bombs to clear out enemy troops, then deploy your own ground troops to seize control.
 
+### Leaders
+![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/leaders.png)
+
+Each realm can have unique characters called leaders. These leaders can act as governors, fleet commanders and rulers. Each of the leader will gain perks which give bonus(negative or positive) on task they are performing. Leaders have limited life span and they will die for old age, but new ones can be replace the old one. Some rulers can have heirs which will eventually replace parents.
+
 ### The history
 ![](https://github.com/tuomount/Open-Realms-of-Stars/raw/master/ArtModification/screenshots/history.png)
 

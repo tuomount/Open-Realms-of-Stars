@@ -57,6 +57,10 @@ public final class GuiStatics {
   public static final Font FONT_NORMAL = new Font("monospaced", Font.BOLD, 12);
 
   /**
+   * Text field height in pixels.
+   */
+  public static final int TEXT_FIELD_HEIGHT = 30;
+  /**
    * Regular cubellan font
    */
   private static Font fontCubellan;

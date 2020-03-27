@@ -38,7 +38,7 @@ import org.openRealmOfStars.starMap.planet.PlanetTypes;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -321,6 +321,8 @@ public class PlayerSetupView extends BlackPanel {
     playerName[index].setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     playerName[index].setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     playerName[index].setFont(GuiStatics.getFontCubellanSmaller());
+    playerName[index].setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
     if (config.getMaxPlayers() < (index + 1)) {
       playerName[index].setEnabled(false);
       raceImgs[index].setRaceToShow(null);

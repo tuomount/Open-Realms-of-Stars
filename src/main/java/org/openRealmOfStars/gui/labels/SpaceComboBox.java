@@ -1,5 +1,7 @@
 package org.openRealmOfStars.gui.labels;
 
+import java.awt.Dimension;
+
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JToolTip;
@@ -8,7 +10,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2017 Tuomo Untinen
+* Copyright (C) 2017,2018,2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -42,6 +44,8 @@ public class SpaceComboBox<E> extends JComboBox<E> {
    */
   public SpaceComboBox(final E[] items) {
     super(items);
+    this.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
   }
 
   @Override

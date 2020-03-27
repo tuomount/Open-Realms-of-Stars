@@ -29,7 +29,7 @@ import org.openRealmOfStars.starMap.planet.PlanetTypes;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2019  Tuomo Untinen
+* Copyright (C) 2019,2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -109,7 +109,8 @@ public class SaveGameNameView extends BlackPanel {
     saveGameField.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     saveGameField.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     saveGameField.setFont(GuiStatics.getFontCubellanSmaller());
-    saveGameField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 25));
+    saveGameField.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
     saveGameField.getDocument().addDocumentListener(new DocumentListener() {
 
       @Override

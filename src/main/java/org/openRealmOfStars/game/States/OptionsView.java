@@ -27,7 +27,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2020  Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -143,6 +143,8 @@ public class OptionsView extends BlackPanel {
     resolutionSelection.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     resolutionSelection.setBorder(new SimpleBorder());
     resolutionSelection.setFont(GuiStatics.getFontCubellan());
+    resolutionSelection.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
     String actualResolution = game.getWidth() + "x" + game.getHeight();
     boolean found = false;
     for (int i = 0; i < resolutions.length; i++) {

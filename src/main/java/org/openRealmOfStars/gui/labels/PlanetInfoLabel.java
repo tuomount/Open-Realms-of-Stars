@@ -22,7 +22,7 @@ import org.openRealmOfStars.starMap.planet.construction.Construction;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -126,6 +126,8 @@ public class PlanetInfoLabel extends EmptyInfoPanel {
     constructionSelect.setBorder(new SimpleBorder());
     constructionSelect.setFont(GuiStatics.getFontCubellan());
     constructionSelect.setRenderer(new ProductionListRenderer());
+    constructionSelect.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
     if (planet.getUnderConstruction() != null) {
       Construction[] list = this.planet.getProductionList();
       for (int i = 0; i < list.length; i++) {

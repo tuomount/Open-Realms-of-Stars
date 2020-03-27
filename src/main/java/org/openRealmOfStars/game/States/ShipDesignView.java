@@ -55,7 +55,7 @@ import org.openRealmOfStars.player.tech.TechType;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016,2018  Tuomo Untinen
+ * Copyright (C) 2016,2018-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -206,6 +206,8 @@ public class ShipDesignView extends BlackPanel {
     hullSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     hullSelect.setBorder(new SimpleBorder());
     hullSelect.setFont(GuiStatics.getFontCubellan());
+    hullSelect.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
     hullSelect.setRenderer(new ShipHullListRenderer());
     SpaceGreyPanel greyPanel = new SpaceGreyPanel();
     greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
@@ -217,6 +219,8 @@ public class ShipDesignView extends BlackPanel {
     designNameText.setFont(GuiStatics.getFontCubellan());
     designNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
     designNameText.setBackground(Color.BLACK);
+    designNameText.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
     designNameText.addFocusListener(new FocusListener() {
 
       @Override
@@ -320,6 +324,8 @@ public class ShipDesignView extends BlackPanel {
     componentFilter.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     componentFilter.setBorder(new SimpleBorder());
     componentFilter.setFont(GuiStatics.getFontCubellan());
+    componentFilter.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
     componentFilter.addActionListener(listener);
     greyPanel.add(componentFilter);
 
@@ -332,6 +338,8 @@ public class ShipDesignView extends BlackPanel {
     componentSelect.setBorder(new SimpleBorder());
     componentSelect.setFont(GuiStatics.getFontCubellan());
     componentSelect.setRenderer(new ShipComponentListRenderer());
+    componentSelect.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
     componentSelect.addActionListener(listener);
     greyPanel.add(componentSelect);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));

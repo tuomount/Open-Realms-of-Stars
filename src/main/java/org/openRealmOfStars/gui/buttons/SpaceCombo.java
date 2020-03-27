@@ -1,5 +1,7 @@
 package org.openRealmOfStars.gui.buttons;
 
+import java.awt.Dimension;
+
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
@@ -11,7 +13,7 @@ import org.openRealmOfStars.gui.utilies.GuiStatics;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -49,6 +51,8 @@ public class SpaceCombo<E> extends JComboBox<E> {
     setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     setBorder(new SimpleBorder());
     setFont(GuiStatics.getFontCubellan());
+    setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
     DefaultListCellRenderer dlcr = new DefaultListCellRenderer();
     dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER);
     setRenderer(dlcr);

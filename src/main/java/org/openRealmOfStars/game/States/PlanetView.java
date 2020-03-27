@@ -358,6 +358,8 @@ public class PlanetView extends BlackPanel {
     constructionSelect.setForeground(GuiStatics.COLOR_COOL_SPACE_BLUE);
     constructionSelect.setBorder(new SimpleBorder());
     constructionSelect.setFont(GuiStatics.getFontCubellan());
+    constructionSelect.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
     constructionSelect.setRenderer(new ProductionListRenderer());
     if (planet.getUnderConstruction() != null) {
       Construction[] list = this.planet.getProductionList();

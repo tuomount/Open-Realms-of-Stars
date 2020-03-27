@@ -290,6 +290,8 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
     fleetNameText.setForeground(GuiStatics.COLOR_GREEN_TEXT);
     fleetNameText.setBackground(Color.BLACK);
     fleetNameText.setText(getFleet().getName());
+    fleetNameText.setMaximumSize(new Dimension(Integer.MAX_VALUE,
+        GuiStatics.TEXT_FIELD_HEIGHT));
     fleetNameText.addKeyListener(new KeyListener() {
 
       @Override

@@ -211,7 +211,7 @@ public class ShipDesignView extends BlackPanel {
     hullSelect.setRenderer(new ShipHullListRenderer());
     SpaceGreyPanel greyPanel = new SpaceGreyPanel();
     greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
-    SpaceLabel label = new SpaceLabel("Design's Name: ");
+    SpaceLabel label = new SpaceLabel("Design's Name");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     greyPanel.add(label);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -253,7 +253,7 @@ public class ShipDesignView extends BlackPanel {
     });
     greyPanel.add(designNameText);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new SpaceLabel("Ship's hull: ");
+    label = new SpaceLabel("Ship's hull");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     greyPanel.add(label);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -277,7 +277,7 @@ public class ShipDesignView extends BlackPanel {
     hullImage.setFillColor(Color.BLACK);
     greyPanel.add(hullImage);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new SpaceLabel("Confirm hull change: ");
+    label = new SpaceLabel("Confirm hull change");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     greyPanel.add(label);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -301,7 +301,7 @@ public class ShipDesignView extends BlackPanel {
 
     greyPanel = new SpaceGreyPanel();
     greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
-    label = new SpaceLabel("Add components: ");
+    label = new SpaceLabel("Add components");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     greyPanel.add(label);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -360,7 +360,7 @@ public class ShipDesignView extends BlackPanel {
 
     greyPanel = new SpaceGreyPanel();
     greyPanel.setLayout(new BoxLayout(greyPanel, BoxLayout.Y_AXIS));
-    label = new SpaceLabel("Component's energy priority: ");
+    label = new SpaceLabel("Component's energy priority");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     greyPanel.add(label);
     greyPanel.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -403,7 +403,7 @@ public class ShipDesignView extends BlackPanel {
     designInfoText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(designInfoText);
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    label = new SpaceLabel("Design info:");
+    label = new SpaceLabel("Design info");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     greyPanel.add(label);
     greyPanel.add(scroll);
@@ -418,7 +418,7 @@ public class ShipDesignView extends BlackPanel {
     designFlawsText.setFont(GuiStatics.getFontCubellanSmaller());
     scroll = new JScrollPane(designFlawsText);
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
-    label = new SpaceLabel("Design flaws:");
+    label = new SpaceLabel("Design flaws");
     label.setAlignmentX(Component.CENTER_ALIGNMENT);
     greyPanel.add(label);
     greyPanel.add(scroll);

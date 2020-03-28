@@ -180,7 +180,7 @@ public class GalaxyCreationView extends BlackPanel {
     InfoPanel info = new InfoPanel();
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
     info.setTitle("Galaxy Creation");
-    SpaceLabel label = new SpaceLabel("Galaxy size:");
+    SpaceLabel label = new SpaceLabel("Galaxy size");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -202,7 +202,7 @@ public class GalaxyCreationView extends BlackPanel {
         + "</html>");
     info.add(comboGalaxySize);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new SpaceLabel("Sun density:");
+    label = new SpaceLabel("Sun density");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -221,7 +221,7 @@ public class GalaxyCreationView extends BlackPanel {
         + "</html>");
     info.add(comboSunDensity);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new SpaceLabel("Planetary events:");
+    label = new SpaceLabel("Planetary events");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -246,7 +246,7 @@ public class GalaxyCreationView extends BlackPanel {
         + " special event when colonizing the planet.</html>");
     info.add(comboPlanetaryEvent);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new SpaceLabel("Rogue planets:");
+    label = new SpaceLabel("Rogue planets");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -278,7 +278,7 @@ public class GalaxyCreationView extends BlackPanel {
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
 
-    label = new SpaceLabel("Space pirates:");
+    label = new SpaceLabel("Space pirates");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -303,7 +303,7 @@ public class GalaxyCreationView extends BlackPanel {
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
 
-    label = new SpaceLabel("Space pirate difficulty:");
+    label = new SpaceLabel("Space pirate difficulty");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -332,7 +332,7 @@ public class GalaxyCreationView extends BlackPanel {
     info.add(Box.createRigidArea(new Dimension(5, 5)));
     xinvis.add(info);
 
-    label = new SpaceLabel("Space anomalies:");
+    label = new SpaceLabel("Space anomalies");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -350,7 +350,7 @@ public class GalaxyCreationView extends BlackPanel {
     info.add(comboSpaceAnomalies);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
 
-    label = new SpaceLabel("Random event karma:");
+    label = new SpaceLabel("Random event karma");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -371,7 +371,7 @@ public class GalaxyCreationView extends BlackPanel {
         + " get good events.<html>");
     info.add(comboKarmaType);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new SpaceLabel("Random event speed:");
+    label = new SpaceLabel("Random event speed");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -394,7 +394,7 @@ public class GalaxyCreationView extends BlackPanel {
     info = new InfoPanel();
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
     info.setTitle("Player Setting");
-    label = new SpaceLabel("Number of players:");
+    label = new SpaceLabel("Number of players");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -412,7 +412,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlayers.addActionListener(listener);
     info.add(comboPlayers);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new SpaceLabel("Starting position:");
+    label = new SpaceLabel("Starting position");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 8)));
@@ -425,7 +425,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboPlayerPos.addActionListener(listener);
     info.add(comboPlayerPos);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new SpaceLabel("Ancient realm headstart:");
+    label = new SpaceLabel("Ancient realm headstart");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -453,7 +453,7 @@ public class GalaxyCreationView extends BlackPanel {
     comboAncientTurns.addActionListener(listener);
     info.add(comboAncientTurns);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new SpaceLabel("Victory by score:");
+    label = new SpaceLabel("Victory by score");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -481,7 +481,7 @@ public class GalaxyCreationView extends BlackPanel {
     info.add(comboScoringVictory);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
 
-    label = new SpaceLabel("Victory by culture:");
+    label = new SpaceLabel("Victory by culture");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -508,7 +508,7 @@ public class GalaxyCreationView extends BlackPanel {
     info.add(comboScoringCulture);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
 
-    label = new SpaceLabel("Victory by domination:");
+    label = new SpaceLabel("Victory by domination");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -529,7 +529,7 @@ public class GalaxyCreationView extends BlackPanel {
       default: comboScoringDomination.setSelectedIndex(1); break;
     }
 
-    label = new SpaceLabel("Victory by science:");
+    label = new SpaceLabel("Victory by science");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -557,7 +557,7 @@ public class GalaxyCreationView extends BlackPanel {
       default: comboScoringScientific.setSelectedIndex(2); break;
     }
 
-    label = new SpaceLabel("Victory by diplomacy:");
+    label = new SpaceLabel("Victory by diplomacy");
     label.setAlignmentX(CENTER_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));

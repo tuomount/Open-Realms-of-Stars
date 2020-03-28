@@ -132,7 +132,7 @@ public class OptionsView extends BlackPanel {
     InfoPanel screenPanel = new InfoPanel();
     screenPanel.setLayout(new BoxLayout(screenPanel, BoxLayout.Y_AXIS));
     screenPanel.setTitle("Screen Options");
-    SpaceLabel label = new SpaceLabel("Screen resolution:");
+    SpaceLabel label = new SpaceLabel("Screen resolution");
     xPanel.add(label);
     xPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     String[] resolutions = {"1024x768", "1280x768", "1280x960", "1280x1024",
@@ -196,7 +196,7 @@ public class OptionsView extends BlackPanel {
     InfoPanel musicPanel = new InfoPanel();
     musicPanel.setTitle("Music Options");
     musicPanel.setLayout(new BoxLayout(musicPanel, BoxLayout.X_AXIS));
-    label = new SpaceLabel("Music volume:");
+    label = new SpaceLabel("Music volume");
     musicPanel.add(label);
     musicPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     musicSlider = new SpaceSliderPanel(
@@ -212,7 +212,7 @@ public class OptionsView extends BlackPanel {
     InfoPanel soundPanel = new InfoPanel();
     soundPanel.setTitle("Sound Options");
     soundPanel.setLayout(new BoxLayout(soundPanel, BoxLayout.X_AXIS));
-    label = new SpaceLabel("Sound volume:");
+    label = new SpaceLabel("Sound volume");
     soundPanel.add(label);
     soundPanel.add(Box.createRigidArea(new Dimension(10, 10)));
     soundSlider = new SpaceSliderPanel(

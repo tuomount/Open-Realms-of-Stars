@@ -324,7 +324,7 @@ public class DiplomacyView extends BlackPanel {
     InfoPanel humanOffer = new InfoPanel();
     humanOffer.setTitle("Your offer");
     humanOffer.setLayout(new BoxLayout(humanOffer, BoxLayout.Y_AXIS));
-    SpaceLabel label = new SpaceLabel("Techs to trade:");
+    SpaceLabel label = new SpaceLabel("Techs to trade");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(label);
     humanTechListOffer = createTechList(trade.getTradeableTechListForSecond());
@@ -346,7 +346,7 @@ public class DiplomacyView extends BlackPanel {
     humanMapOffer.addActionListener(listener);
     humanMapOffer.setToolTipText("Trade all your known space as a map.");
     humanOffer.add(humanMapOffer);
-    label = new SpaceLabel("Promise vote:");
+    label = new SpaceLabel("Promise vote");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     Vote vote = map.getVotes().getNextImportantVote();
     int support = 0;
@@ -430,7 +430,7 @@ public class DiplomacyView extends BlackPanel {
       humanVoteNo.setEnabled(false);
     }
     humanOffer.add(humanVoteNo);
-    label = new SpaceLabel("Fleets to trade:");
+    label = new SpaceLabel("Fleets to trade");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(label);
     humanFleetListOffer = createFleetList(
@@ -439,7 +439,7 @@ public class DiplomacyView extends BlackPanel {
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(scroll);
-    label = new SpaceLabel("Planets to trade:");
+    label = new SpaceLabel("Planets to trade");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     humanOffer.add(label);
     humanPlanetListOffer = createPlanetList(
@@ -495,7 +495,7 @@ public class DiplomacyView extends BlackPanel {
     InfoPanel aiOffer = new InfoPanel();
     aiOffer.setTitle(ai.getEmpireName() + " offer");
     aiTechListOffer = createTechList(trade.getTradeableTechListForFirst());
-    label = new SpaceLabel("Techs to trade:");
+    label = new SpaceLabel("Techs to trade");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(label);
     scroll = new JScrollPane(aiTechListOffer);
@@ -515,7 +515,7 @@ public class DiplomacyView extends BlackPanel {
     aiMapOffer.setToolTipText("Trade all known space of other party.");
     aiMapOffer.addActionListener(listener);
     aiOffer.add(aiMapOffer);
-    label = new SpaceLabel("Promise vote:");
+    label = new SpaceLabel("Promise vote");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(label);
     aiVoteYes = new SpaceCheckBox("Vote Yes");
@@ -566,7 +566,7 @@ public class DiplomacyView extends BlackPanel {
       aiVoteNo.setEnabled(false);
     }
     aiOffer.add(aiVoteNo);
-    label = new SpaceLabel("Fleets to trade:");
+    label = new SpaceLabel("Fleets to trade");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(label);
     aiFleetListOffer = createFleetList(trade.getTradeableFleetListForSecond());
@@ -574,7 +574,7 @@ public class DiplomacyView extends BlackPanel {
     scroll.setBackground(GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
     scroll.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(scroll);
-    label = new SpaceLabel("Planets to trade:");
+    label = new SpaceLabel("Planets to trade");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     aiOffer.add(label);
     aiPlanetListOffer = createPlanetList(

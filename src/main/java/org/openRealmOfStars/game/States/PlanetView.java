@@ -348,7 +348,7 @@ public class PlanetView extends BlackPanel {
     panel = new SpaceGreyPanel();
     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
     IconLabel label = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_FACTORY), "Next project:");
+        Icons.getIconByName(Icons.ICON_FACTORY), "Next project");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(label);
     constructionSelect = new JComboBox<>(this.planet.getProductionList());
@@ -382,7 +382,7 @@ public class PlanetView extends BlackPanel {
     panelX.setLayout(new BoxLayout(panelX, BoxLayout.X_AXIS));
     panelX.setAlignmentX(Component.LEFT_ALIGNMENT);
     label = new IconLabel(null,
-        Icons.getIconByName(Icons.ICON_CREDIT), "Rushing options:");
+        Icons.getIconByName(Icons.ICON_CREDIT), "Rushing options");
     label.setAlignmentX(Component.LEFT_ALIGNMENT);
     panel.add(label);
     rushWithCreditsBtn = new SpaceButton("Purchase",
@@ -441,7 +441,7 @@ public class PlanetView extends BlackPanel {
     northPanel.setTitle(planet.getName());
 
     InvisiblePanel eastPanel = new InvisiblePanel(imgBase);
-    buildingLabel = new SpaceLabel("Buildings(00/00):");
+    buildingLabel = new SpaceLabel("Buildings(00/00)");
     buildingLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
     eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
     eastPanel.add(buildingLabel);
@@ -570,7 +570,7 @@ public class PlanetView extends BlackPanel {
     }
     happiness.setLeftIcon(Icons.getHappyFace(happyValue));
     buildingLabel.setText("Buildings(" + planet.getUsedPlanetSize() + "/"
-        + planet.getGroundSize() + "):");
+        + planet.getGroundSize() + ")");
 
     Construction building = (Construction) constructionSelect.getSelectedItem();
     buildingEstimate.setText(planet.getProductionTimeAsString(building));

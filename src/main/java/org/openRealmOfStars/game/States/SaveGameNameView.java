@@ -101,7 +101,7 @@ public class SaveGameNameView extends BlackPanel {
     InfoPanel info = new InfoPanel();
     info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
     info.setTitle("Game Setup");
-    SpaceLabel label = new SpaceLabel("Save game file:");
+    SpaceLabel label = new SpaceLabel("Save game file");
     label.setAlignmentX(LEFT_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -130,7 +130,7 @@ public class SaveGameNameView extends BlackPanel {
     });
     info.add(saveGameField);
     info.add(Box.createRigidArea(new Dimension(5, 5)));
-    label = new SpaceLabel("Overwrite if save game file exists:");
+    label = new SpaceLabel("Overwrite if save game file exists");
     label.setAlignmentX(LEFT_ALIGNMENT);
     info.add(label);
     info.add(Box.createRigidArea(new Dimension(5, 5)));

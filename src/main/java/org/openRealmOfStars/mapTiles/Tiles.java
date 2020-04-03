@@ -373,6 +373,11 @@ public final class Tiles {
     tile.setDescription(TileNames.BLACKHOLE_DESCRIPTION);
     addTile(tile);
     bhSecondEnd = tile.getIndex();
+    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_MECHION);
+    addTile(tile);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+
   }
 
   /**

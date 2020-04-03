@@ -8,8 +8,15 @@ import org.openRealmOfStars.mapTiles.Tile;
 import org.openRealmOfStars.mapTiles.TileNames;
 import org.openRealmOfStars.mapTiles.Tiles;
 import org.openRealmOfStars.player.PlayerInfo;
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.combat.Combat;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.leader.Gender;
+import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderUtility;
+import org.openRealmOfStars.player.leader.NameGenerator;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
@@ -290,6 +297,38 @@ public class SpaceAnomaly {
           Coordinate coord = map.getFreeRandomSpot();
           fleet.setPos(coord);
           map.doFleetScanUpdate(info, fleet, null);
+          break;
+        }
+        case TileNames.SPACE_ANOMALY_MECHION: {
+          result = new SpaceAnomaly(AnomalyType.ANCIENT_MECHION, 0);
+          result.setText("Ancient Mechion was in long lasting stasis in "
+              + "ancient ship floating in vastness of space. When entering "
+              + "the ship Mechion wakes and is willing to join your"
+              + "realm.");
+          result.setImage(GuiStatics.IMAGE_OLD_SHIP);
+          map.setTile(fleet.getX(), fleet.getY(), empty);
+          String name = NameGenerator.generateName(SpaceRace.MECHIONS,
+              Gender.NONE);
+          Leader leader = new Leader(name);
+          leader.setAge(DiceGenerator.getRandom(300, 1500));
+          leader.setHomeworld("Unknown");
+          leader.setLevel(DiceGenerator.getRandom(2, 5));
+          leader.setRace(SpaceRace.MECHIONS);
+          leader.setJob(Job.UNASSIGNED);
+          leader.setTitle("");
+          for (int i = 0; i < leader.getLevel(); i++) {
+            Perk[] newPerks = LeaderUtility.getNewPerks(leader,
+                LeaderUtility.PERK_TYPE_GOOD);
+            int index = DiceGenerator.getRandom(newPerks.length - 1);
+            leader.getPerkList().add(newPerks[index]);
+            if (DiceGenerator.getRandom(99)  < 10) {
+              newPerks = LeaderUtility.getNewPerks(leader,
+                  LeaderUtility.PERK_TYPE_BAD);
+              index = DiceGenerator.getRandom(newPerks.length - 1);
+              leader.getPerkList().add(newPerks[index]);
+            }
+          }
+          info.getLeaderPool().add(leader);
           break;
         }
         default: {

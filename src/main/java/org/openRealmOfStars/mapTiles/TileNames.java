@@ -7,7 +7,7 @@ import org.openRealmOfStars.utilities.DiceGenerator;
 /**
  *
  * Open Realm of Stars game project
- * Copyright (C) 2016-2018  Tuomo Untinen
+ * Copyright (C) 2016-2020 Tuomo Untinen
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -369,6 +369,10 @@ public final class TileNames {
    */
   public static final String SPACE_ANOMALY_MONSTER = "SpaceAnomalyMonster";
   /**
+   * Space anomaly tile: Ancient Mechion
+   */
+  public static final String SPACE_ANOMALY_MECHION = "SpaceAnomalyMechion";
+  /**
    * Worm hole tile 1
    */
   public static final String WORM_HOLE1 = "WormHole1";
@@ -419,7 +423,7 @@ public final class TileNames {
    */
   public static final String[] NON_HARMULFUL_SPACE_ANOMALIES = {
       SPACE_ANOMALY_CREDITS, SPACE_ANOMALY_TECH, SPACE_ANOMALY_DSA,
-      SPACE_ANOMALY_MAP, SPACE_ANOMALY_SHIP};
+      SPACE_ANOMALY_MAP, SPACE_ANOMALY_SHIP, SPACE_ANOMALY_MECHION};
 
   /**
    * List of harmful space anomalies

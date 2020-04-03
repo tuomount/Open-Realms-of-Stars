@@ -1958,6 +1958,10 @@ public class AITurnView extends BlackPanel {
               && heirs > 1) {
             chance = 4;
           }
+          if (leader.getRace() == SpaceRace.MECHIONS) {
+            // Mechions do not get heirs
+            chance = 0;
+          }
           if (DiceGenerator.getRandom(99) < chance && firstPlanet != null
               && heirs < 3) {
             heir = LeaderUtility.createLeader(realm, firstPlanet, 1);

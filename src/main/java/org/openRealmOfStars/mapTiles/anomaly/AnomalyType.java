@@ -63,5 +63,9 @@ public enum AnomalyType {
   /**
    * Space anomaly containing ancient mechion leader
    */
-  ANCIENT_MECHION;
+  ANCIENT_MECHION,
+  /**
+   * Space anomaly containing time warp.
+   */
+  TIME_WARP;
 }

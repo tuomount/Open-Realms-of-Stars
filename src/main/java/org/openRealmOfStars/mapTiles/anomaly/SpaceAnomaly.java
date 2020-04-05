@@ -18,9 +18,11 @@ import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.NameGenerator;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.ship.Ship;
+import org.openRealmOfStars.player.ship.ShipDamage;
 import org.openRealmOfStars.player.ship.ShipSize;
 import org.openRealmOfStars.player.ship.ShipStat;
 import org.openRealmOfStars.player.tech.Tech;
+import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -330,6 +332,73 @@ public class SpaceAnomaly {
           }
           info.getLeaderPool().add(leader);
           break;
+        }
+        case TileNames.SPACE_ANOMALY_TIME_WARP: {
+          result = new SpaceAnomaly(AnomalyType.TIME_WARP,
+              DiceGenerator.getRandom(20, 80));
+          StringBuilder sb = new StringBuilder();
+          sb.append("Space nebulae contained warpped time. Entering"
+              + " it has immediately increase time in this sector. Sector time"
+              + " has increased");
+          sb.append(result.getValue());
+          sb.append(" turns. After this"
+              + " time returns normal in sector. Your fleet ships have"
+              + " taken damage due the passing time.");
+          if (fleet.getCommander() != null) {
+            sb.append(" Fleet leader has also got older due the time warp. ");
+            fleet.getCommander().setAge(fleet.getCommander().getAge()
+                + result.value);
+            int rp = result.getValue() / 2;
+            int multiplier = 1;
+            if (fleet.getCommander().hasPerk(Perk.ACADEMIC)
+                || fleet.getCommander().hasPerk(Perk.SCIENTIST)
+                || fleet.getCommander().hasPerk(Perk.FTL_ENGINEER)) {
+              rp = rp * 2;
+              multiplier = multiplier * 2;
+            }
+            if (fleet.getCommander().hasPerk(Perk.STUPID)
+                || fleet.getCommander().hasPerk(Perk.SLOW_LEARNER)) {
+              rp = rp / 2;
+              multiplier = multiplier / 2;
+            }
+            switch (multiplier) {
+              case 2: {
+                sb.append(fleet.getCommander().getCallName());
+                sb.append(" was able to research event and propulsion research "
+                    + " rushes forward!");
+                break;
+              }
+              default:
+              case 1: {
+                sb.append(fleet.getCommander().getCallName());
+                sb.append(" was able to study event and propulsion research "
+                    + " moves forward!");
+                break;
+              }
+              case 0: {
+                sb.append(fleet.getCommander().getCallName());
+                sb.append(" was trying to learn the event but"
+                    + " results were not great. Propulsion research got some "
+                    + " new ideas.");
+                break;
+              }
+            }
+            info.getTechList().setTechResearchPoints(TechType.Propulsion,
+                info.getTechList().getTechResearchPoints(TechType.Propulsion)
+                + rp);
+          }
+          map.setTile(fleet.getX(), fleet.getY(), empty);
+          for (Ship ship : fleet.getShips()) {
+            int damage = ship.getHull().getSlotHull() / 2;
+            ShipDamage shipDamage = new ShipDamage(1, "Time wears the ship.");
+            while (damage > 0) {
+              damage = ship.damageComponent(damage, shipDamage);
+            }
+            sb.append(" ");
+            sb.append(shipDamage.getMessage());
+          }
+          result.setText(sb.toString());
+          result.setImage(GuiStatics.IMAGE_TIME_WARP);
         }
         default: {
           break;

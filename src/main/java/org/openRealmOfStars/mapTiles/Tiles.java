@@ -377,6 +377,10 @@ public final class Tiles {
     addTile(tile);
     // Read space anomaly
     tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
+    tile = new Tile(tilesImage, 9, 1, TileNames.SPACE_ANOMALY_TIME_WARP);
+    addTile(tile);
+    // Read space anomaly
+    tile.setDescription(TileNames.SPACE_ANOMALY_DESCRIPTION);
 
   }
 

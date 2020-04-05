@@ -991,6 +991,11 @@ public final class GuiStatics {
   public static final BufferedImage IMAGE_OLD_SHIP = IOUtilities.loadImage(
       GuiStatics.class.getResource("/resources/images/oldship.png"));
   /**
+   * Time Warp
+   */
+  public static final BufferedImage IMAGE_TIME_WARP = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/timewarp.png"));
+  /**
    * Pirate lair
    */
   public static final BufferedImage IMAGE_PIRATE_LAIR = IOUtilities.loadImage(

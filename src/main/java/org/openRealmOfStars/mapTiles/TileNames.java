@@ -373,6 +373,10 @@ public final class TileNames {
    */
   public static final String SPACE_ANOMALY_MECHION = "SpaceAnomalyMechion";
   /**
+   * Space anomaly tile: Time Warp
+   */
+  public static final String SPACE_ANOMALY_TIME_WARP = "SpaceAnomalyTimeWarp";
+  /**
    * Worm hole tile 1
    */
   public static final String WORM_HOLE1 = "WormHole1";
@@ -429,7 +433,8 @@ public final class TileNames {
    * List of harmful space anomalies
    */
   public static final String[] HARMULFUL_SPACE_ANOMALIES = {
-      SPACE_ANOMALY_LAIR, SPACE_ANOMALY, SPACE_ANOMALY_PIRATE};
+      SPACE_ANOMALY_LAIR, SPACE_ANOMALY, SPACE_ANOMALY_PIRATE,
+      SPACE_ANOMALY_TIME_WARP};
 
   /**
    * Get random space anomaly

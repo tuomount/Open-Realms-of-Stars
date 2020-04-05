@@ -167,6 +167,7 @@ public class CreditsView extends BlackPanel {
       + "Mysterious Signal by Tuomo Untinen\n\n"
       + "Technical Breakthrough by Tuomo Untinen\n\n"
       + "Greyan Space Ship Bridge by Tuomo Untinen\n\n"
+      + "Time warp by Tuomo Untinen\n\n"
       + "Fonts are under SIL Open Font License, Version 1.1.\n"
       + "# Fonts by\n\n"
       + "Cubellan font by Jyrki Ihalainen (yardan74@gmail.com)\n\n"

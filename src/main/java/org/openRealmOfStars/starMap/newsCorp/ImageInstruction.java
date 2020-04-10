@@ -346,6 +346,10 @@ public class ImageInstruction {
    * Instructions for ship destroyed
    */
   public static final String SHIP_DESTROYED = "ship_destroyed";
+  /**
+   * Instructions for shuttle
+   */
+  public static final String SHUTTLE = "shuttle";
 
   /**
    * Instruction to draw image
@@ -514,7 +518,8 @@ public class ImageInstruction {
         && !METEOR.equals(image)
         && !SIGNAL.equals(image)
         && !TECHNICAL_BREAKTHROUGH.equals(image)
-        && !SHIP_DESTROYED.equals(image)) {
+        && !SHIP_DESTROYED.equals(image)
+        && !SHUTTLE.equals(image)) {
       throw new IllegalArgumentException("Illegal image: "
         + image);
     }
@@ -980,6 +985,9 @@ public class ImageInstruction {
     }
     if (SHIP_DESTROYED.equals(image)) {
       drawImg = GuiStatics.IMAGE_SHIP_DESTROYED;
+    }
+    if (SHUTTLE.equals(image)) {
+      drawImg = GuiStatics.IMAGE_SHUTTLE;
     }
     BufferedImage img = workImage;
     if (img == null) {

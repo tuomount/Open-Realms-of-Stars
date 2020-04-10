@@ -476,33 +476,90 @@ public boolean launchIntercept(final int distance,
       destroyShipFromFleet(ship, attackerFleet);
       if (attackerFleet.getNumberOfShip() == 0
           && attackerFleet.getCommander() != null) {
-        leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
-            attackerFleet.getCommander(), defenderFleet.getCommander(),
-            attackerInfo, defenderInfo);
-        attackerFleet.getCommander().setJob(Job.DEAD);
-        attackerFleet.setCommander(null);
+        if (attackerFleet.getCommander().hasPerk(Perk.WEALTHY)) {
+          Message msg = new Message(MessageType.LEADER,
+              attackerFleet.getCommander().getCallName()
+                  + " has paid massive amount of credits to save "
+                  + attackerFleet.getCommander().getGender().getHisHer()
+                  + " life. Private shuttle was used to save "
+                  + attackerFleet.getCommander().getName() + ".",
+              Icons.getIconByName(Icons.ICON_DEATH));
+          msg.setMatchByString("Index:"
+              + attackerInfo.getLeaderIndex(attackerFleet.getCommander()));
+          attackerInfo.getMsgList().addNewMessage(msg);
+          leaderKilledNews = NewsFactory.makeLeaderEscape(
+              attackerFleet.getCommander(), attackerInfo, defenderInfo, "");
+
+          attackerFleet.getCommander().useWealth();
+          attackerFleet.getCommander().setJob(Job.UNASSIGNED);
+          attackerFleet.setCommander(null);
+        } else {
+          leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
+              attackerFleet.getCommander(), defenderFleet.getCommander(),
+              attackerInfo, defenderInfo);
+          attackerFleet.getCommander().setJob(Job.DEAD);
+          attackerFleet.setCommander(null);
+        }
       }
       attackerInfo.getFleets().recalculateList();
     } else if (defenderFleet.isShipInFleet(ship.getShip())) {
       destroyShipFromFleet(ship, defenderFleet);
       if (defenderFleet.getNumberOfShip() == 0
           && defenderFleet.getCommander() != null) {
-        leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
-            defenderFleet.getCommander(), attackerFleet.getCommander(),
-            defenderInfo, attackerInfo);
-        defenderFleet.getCommander().setJob(Job.DEAD);
-        defenderFleet.setCommander(null);
+        if (defenderFleet.getCommander().hasPerk(Perk.WEALTHY)) {
+          Message msg = new Message(MessageType.LEADER,
+              defenderFleet.getCommander().getCallName()
+                  + " has paid massive amount of credits to save "
+                  + defenderFleet.getCommander().getGender().getHisHer()
+                  + " life. Private shuttle was used to save "
+                  + defenderFleet.getCommander().getName() + ".",
+              Icons.getIconByName(Icons.ICON_DEATH));
+          msg.setMatchByString("Index:"
+              + defenderInfo.getLeaderIndex(defenderFleet.getCommander()));
+          defenderInfo.getMsgList().addNewMessage(msg);
+          leaderKilledNews = NewsFactory.makeLeaderEscape(
+              defenderFleet.getCommander(), defenderInfo, attackerInfo, "");
+
+          defenderFleet.getCommander().useWealth();
+          defenderFleet.getCommander().setJob(Job.UNASSIGNED);
+          defenderFleet.setCommander(null);
+        } else {
+          leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
+              defenderFleet.getCommander(), attackerFleet.getCommander(),
+              defenderInfo, attackerInfo);
+          defenderFleet.getCommander().setJob(Job.DEAD);
+          defenderFleet.setCommander(null);
+        }
       }
       defenderInfo.getFleets().recalculateList();
     } else if (starbaseFleet.isShipInFleet(ship.getShip())) {
       destroyShipFromFleet(ship, starbaseFleet);
       if (starbaseFleet.getNumberOfShip() == 0
           && starbaseFleet.getCommander() != null) {
-        leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
-            starbaseFleet.getCommander(), attackerFleet.getCommander(),
-            defenderInfo, attackerInfo);
-        starbaseFleet.getCommander().setJob(Job.DEAD);
-        starbaseFleet.setCommander(null);
+        if (starbaseFleet.getCommander().hasPerk(Perk.WEALTHY)) {
+          Message msg = new Message(MessageType.LEADER,
+              starbaseFleet.getCommander().getCallName()
+                  + " has paid massive amount of credits to save "
+                  + starbaseFleet.getCommander().getGender().getHisHer()
+                  + " life. Private shuttle was used to save "
+                  + starbaseFleet.getCommander().getName() + ".",
+              Icons.getIconByName(Icons.ICON_DEATH));
+          msg.setMatchByString("Index:"
+              + defenderInfo.getLeaderIndex(defenderFleet.getCommander()));
+          defenderInfo.getMsgList().addNewMessage(msg);
+          leaderKilledNews = NewsFactory.makeLeaderEscape(
+              starbaseFleet.getCommander(), defenderInfo, attackerInfo, "");
+
+          starbaseFleet.getCommander().useWealth();
+          starbaseFleet.getCommander().setJob(Job.UNASSIGNED);
+          starbaseFleet.setCommander(null);
+        } else {
+          leaderKilledNews = NewsFactory.makeCommanderKilledInAction(
+              starbaseFleet.getCommander(), attackerFleet.getCommander(),
+              defenderInfo, attackerInfo);
+          starbaseFleet.getCommander().setJob(Job.DEAD);
+          starbaseFleet.setCommander(null);
+        }
       }
       defenderInfo.getFleets().recalculateList();
     }

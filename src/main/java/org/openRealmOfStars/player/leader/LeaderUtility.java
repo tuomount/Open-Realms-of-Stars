@@ -535,6 +535,9 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.POWER_HUNGRY)) {
       result = result + 50;
     }
+    if (leader.hasPerk(Perk.WEALTHY)) {
+      result = result + 10;
+    }
     if (leader.hasPerk(Perk.WARLORD)) {
       result = result + 35;
     }
@@ -632,6 +635,9 @@ public final class LeaderUtility {
       if (leader.hasPerk(Perk.POWER_HUNGRY)) {
         result = result + 10;
       }
+      if (leader.hasPerk(Perk.WEALTHY)) {
+        result = result + 10;
+      }
       if (leader.hasPerk(Perk.WARLORD)) {
         result = result + 3;
       }
@@ -684,6 +690,9 @@ public final class LeaderUtility {
     }
     if (leader.hasPerk(Perk.POWER_HUNGRY)) {
       result = result + 40;
+    }
+    if (leader.hasPerk(Perk.WEALTHY)) {
+      result = result + 30;
     }
     if (leader.hasPerk(Perk.CORRUPTED)) {
       result = result + 10;
@@ -779,6 +788,9 @@ public final class LeaderUtility {
     }
     if (leader.hasPerk(Perk.POWER_HUNGRY)) {
       result = result + 40;
+    }
+    if (leader.hasPerk(Perk.WEALTHY)) {
+      result = result + 10;
     }
     if (leader.hasPerk(Perk.CORRUPTED)) {
       result = result - 10;
@@ -880,6 +892,9 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.POWER_HUNGRY)) {
       result = result + 40;
     }
+    if (leader.hasPerk(Perk.WEALTHY)) {
+      result = result + 15;
+    }
     if (leader.hasPerk(Perk.CORRUPTED)) {
       result = result + 5;
     }
@@ -977,6 +992,9 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.POWER_HUNGRY)) {
       result = result + 40;
     }
+    if (leader.hasPerk(Perk.WEALTHY)) {
+      result = result + 20;
+    }
     if (leader.hasPerk(Perk.CORRUPTED)) {
       result = result + 10;
     }
@@ -1053,6 +1071,9 @@ public final class LeaderUtility {
     }
     if (leader.hasPerk(Perk.POWER_HUNGRY)) {
       result = result + 40;
+    }
+    if (leader.hasPerk(Perk.WEALTHY)) {
+      result = result + 20;
     }
     if (leader.hasPerk(Perk.CORRUPTED)) {
       result = result - 10;

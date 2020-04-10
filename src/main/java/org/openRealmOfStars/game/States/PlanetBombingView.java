@@ -35,6 +35,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -563,23 +564,51 @@ public class PlanetBombingView extends BlackPanel {
   public void killGovernor(final String attackType, final String reason) {
     if (planet.getTotalPopulation() == 0
         && planet.getGovernor() != null) {
-      planet.getGovernor().setJob(Job.DEAD);
-      Message msg = new Message(MessageType.LEADER,
-          planet.getGovernor().getCallName()
-              + " has died at " + attackType + "of " + planet.getName() + ". ",
-          Icons.getIconByName(Icons.ICON_DEATH));
-      msg.setMatchByString("Index:"
-          + planet.getPlanetPlayerInfo().getLeaderIndex(planet.getGovernor()));
-      planet.getPlanetPlayerInfo().getMsgList().addNewMessage(msg);
-      NewsData news = NewsFactory.makeLeaderDies(planet.getGovernor(),
-          planet.getPlanetPlayerInfo(), reason);
-      if (starMap != null) {
-        starMap.getNewsCorpData().addNews(news);
-        starMap.getHistory().addEvent(
-            NewsFactory.makeLeaderEvent(planet.getGovernor(),
-                planet.getPlanetPlayerInfo(), starMap, news));
+      if (planet.getGovernor().hasPerk(Perk.WEALTHY)) {
+        Message msg = new Message(MessageType.LEADER,
+            planet.getGovernor().getCallName()
+                + " has paid massive amount of credits to save "
+                + planet.getGovernor().getGender().getHisHer() + " life."
+                + " Private shuttle was used to save "
+                + planet.getGovernor().getName() + ".",
+            Icons.getIconByName(Icons.ICON_DEATH));
+        msg.setMatchByString("Index:"
+            + planet.getPlanetPlayerInfo().getLeaderIndex(
+                planet.getGovernor()));
+        planet.getPlanetPlayerInfo().getMsgList().addNewMessage(msg);
+        NewsData news = NewsFactory.makeLeaderEscape(planet.getGovernor(),
+            planet.getPlanetPlayerInfo(), null, attackType);
+        if (starMap != null) {
+          starMap.getNewsCorpData().addNews(news);
+          starMap.getHistory().addEvent(
+              NewsFactory.makeLeaderEvent(planet.getGovernor(),
+                  planet.getPlanetPlayerInfo(), starMap, news));
+        }
+
+        planet.getGovernor().useWealth();
+        planet.getGovernor().setJob(Job.UNASSIGNED);
+        planet.setGovernor(null);
+      } else {
+        planet.getGovernor().setJob(Job.DEAD);
+        Message msg = new Message(MessageType.LEADER,
+            planet.getGovernor().getCallName()
+                + " has died at " + attackType + "of " + planet.getName()
+                + ". ",
+            Icons.getIconByName(Icons.ICON_DEATH));
+        msg.setMatchByString("Index:"
+            + planet.getPlanetPlayerInfo().getLeaderIndex(
+            planet.getGovernor()));
+        planet.getPlanetPlayerInfo().getMsgList().addNewMessage(msg);
+        NewsData news = NewsFactory.makeLeaderDies(planet.getGovernor(),
+            planet.getPlanetPlayerInfo(), reason);
+        if (starMap != null) {
+          starMap.getNewsCorpData().addNews(news);
+          starMap.getHistory().addEvent(
+              NewsFactory.makeLeaderEvent(planet.getGovernor(),
+                  planet.getPlanetPlayerInfo(), starMap, news));
+        }
+        planet.setGovernor(null);
       }
-      planet.setGovernor(null);
     }
   }
   /**

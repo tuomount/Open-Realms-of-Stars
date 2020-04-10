@@ -2674,23 +2674,39 @@ public class Planet {
       StarMap starMap) {
     if (getTotalPopulation() == 0
         && getGovernor() != null) {
-      getGovernor().setJob(Job.DEAD);
-      Message msg = new Message(MessageType.LEADER,
-          getGovernor().getCallName()
-              + " has died at " + attackType + "of " + getName() + ". ",
-          Icons.getIconByName(Icons.ICON_DEATH));
-      msg.setMatchByString("Index:" + getPlanetPlayerInfo().getLeaderIndex(
-          getGovernor()));
-      getPlanetPlayerInfo().getMsgList().addNewMessage(msg);
-      NewsData news = NewsFactory.makeLeaderDies(getGovernor(),
-          getPlanetPlayerInfo(), reason);
-      if (starMap != null) {
-        starMap.getNewsCorpData().addNews(news);
-        starMap.getHistory().addEvent(
-            NewsFactory.makeLeaderEvent(getGovernor(),
-                getPlanetPlayerInfo(), starMap, news));
+      if (getGovernor().hasPerk(Perk.WEALTHY)) {
+        Message msg = new Message(MessageType.LEADER,
+            getGovernor().getCallName()
+                + " has paid massive amount of credits to save "
+                + getGovernor().getGender().getHisHer() + " life."
+                + " Private shuttle was used to save "
+                + getGovernor().getName() + ".",
+            Icons.getIconByName(Icons.ICON_DEATH));
+        msg.setMatchByString("Index:" + getPlanetPlayerInfo().getLeaderIndex(
+            getGovernor()));
+        getPlanetPlayerInfo().getMsgList().addNewMessage(msg);
+        getGovernor().useWealth();
+        getGovernor().setJob(Job.UNASSIGNED);
+        setGovernor(null);
+      } else {
+        getGovernor().setJob(Job.DEAD);
+        Message msg = new Message(MessageType.LEADER,
+            getGovernor().getCallName()
+                + " has died at " + attackType + "of " + getName() + ". ",
+            Icons.getIconByName(Icons.ICON_DEATH));
+        msg.setMatchByString("Index:" + getPlanetPlayerInfo().getLeaderIndex(
+            getGovernor()));
+        getPlanetPlayerInfo().getMsgList().addNewMessage(msg);
+        NewsData news = NewsFactory.makeLeaderDies(getGovernor(),
+            getPlanetPlayerInfo(), reason);
+        if (starMap != null) {
+          starMap.getNewsCorpData().addNews(news);
+          starMap.getHistory().addEvent(
+              NewsFactory.makeLeaderEvent(getGovernor(),
+                  getPlanetPlayerInfo(), starMap, news));
+        }
+        setGovernor(null);
       }
-      setGovernor(null);
     }
   }
 

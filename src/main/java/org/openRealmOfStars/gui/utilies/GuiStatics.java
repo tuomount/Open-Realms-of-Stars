@@ -974,6 +974,12 @@ public final class GuiStatics {
       GuiStatics.class.getResource("/resources/images/mutiny.png"));
 
   /**
+   * Shuttle
+   */
+  public static final BufferedImage IMAGE_SHUTTLE = IOUtilities.loadImage(
+      GuiStatics.class.getResource("/resources/images/shuttle.png"));
+
+  /**
    * Blackhole pilot
    */
   public static final BufferedImage IMAGE_BLACKHOLE = IOUtilities.loadImage(

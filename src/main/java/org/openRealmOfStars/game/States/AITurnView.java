@@ -1870,44 +1870,56 @@ public class AITurnView extends BlackPanel {
         if (leader.getAge() > lifeExpection) {
           int chance = leader.getAge() - lifeExpection;
           if (DiceGenerator.getRandom(1, 100) <= chance) {
-            leader.setJob(Job.DEAD);
-            Message msg = new Message(MessageType.LEADER,
-                leader.getCallName()
-                    + " has died at age of " + leader.getAge(),
-                Icons.getIconByName(Icons.ICON_DEATH));
-            msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
-            realm.getMsgList().addNewMessage(msg);
-            String reason;
-            switch (DiceGenerator.getRandom(2)) {
-              case 0:
-              default: {
-                reason = "old age";
-                break;
-              }
-              case 1: {
-                if (leader.getRace() != SpaceRace.MECHIONS) {
-                  reason = "heart attack";
-                } else {
-                  reason = "burnt CPU";
+            if (leader.hasPerk(Perk.WEALTHY)) {
+              Message msg = new Message(MessageType.LEADER,
+                  leader.getCallName()
+                      + " has paid massive amount of credits to save "
+                      + leader.getGender().getHisHer() + " life.",
+                  Icons.getIconByName(Icons.ICON_DEATH));
+              msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
+              realm.getMsgList().addNewMessage(msg);
+              leader.useWealth();
+            } else {
+              leader.setJob(Job.DEAD);
+              Message msg = new Message(MessageType.LEADER,
+                  leader.getCallName()
+                      + " has died at age of " + leader.getAge(),
+                  Icons.getIconByName(Icons.ICON_DEATH));
+              msg.setMatchByString("Index:" + realm.getLeaderIndex(leader));
+              realm.getMsgList().addNewMessage(msg);
+              String reason;
+              switch (DiceGenerator.getRandom(2)) {
+                case 0:
+                default: {
+                  reason = "old age";
+                  break;
                 }
-                break;
-              }
-              case 2: {
-                if (leader.hasPerk(Perk.ADDICTED)) {
-                  reason = "substance overdose";
-                } else {
-                  reason = "natural causes";
+                case 1: {
+                  if (leader.getRace() != SpaceRace.MECHIONS) {
+                    reason = "heart attack";
+                  } else {
+                    reason = "burnt CPU";
+                  }
+                  break;
                 }
-                break;
+                case 2: {
+                  if (leader.hasPerk(Perk.ADDICTED)) {
+                    reason = "substance overdose";
+                  } else {
+                    reason = "natural causes";
+                  }
+                  break;
+                }
               }
-            }
-            NewsData news = NewsFactory.makeLeaderDies(leader, realm, reason);
-            game.getStarMap().getNewsCorpData().addNews(news);
-            game.getStarMap().getHistory().addEvent(
-                NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
-                news));
-            if (realm.getRuler() == leader) {
-              realm.setRuler(null);
+              NewsData news = NewsFactory.makeLeaderDies(leader, realm,
+                  reason);
+              game.getStarMap().getNewsCorpData().addNews(news);
+              game.getStarMap().getHistory().addEvent(
+                  NewsFactory.makeLeaderEvent(leader, realm, game.getStarMap(),
+                  news));
+              if (realm.getRuler() == leader) {
+                realm.setRuler(null);
+              }
             }
           }
         }

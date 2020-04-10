@@ -572,6 +572,61 @@ public final class NewsFactory {
     return news;
   }
   /**
+   * Make news about leader escaping.
+   * @param leader Leader which is escaped
+   * @param leaderRealm Which realm killed belong
+   * @param killerRealm Which realm tried to kill the leader
+   * @param attackType conquest, bombing, nuking
+   * @return NewsData
+   */
+  public static NewsData makeLeaderEscape(final Leader leader,
+      final PlayerInfo leaderRealm, final PlayerInfo killerRealm,
+      final String attackType) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_BLACK);
+    instructions.addImage(ImageInstruction.SHUTTLE);
+    instructions.addText(leader.getCallName());
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        instructions.addText("ESCAPE!");
+        break;
+      }
+      case 1: {
+        instructions.addText(leader.getTitle().toUpperCase()
+            + " STAYS ALIVE!");
+        break;
+      }
+      case 2: {
+        instructions.addText("SHUTTLE TO RESCUE!");
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    if (killerRealm != null) {
+      sb.append(leaderRealm.getEmpireName());
+      sb.append(" fought against ");
+      sb.append(killerRealm.getEmpireName());
+    } else {
+      sb.append(leaderRealm.getEmpireName());
+      sb.append(" encountered ");
+      sb.append(attackType);
+    }
+    sb.append(". ");
+    sb.append(leaderRealm.getEmpireName());
+    sb.append(" lost the fight but ");
+    sb.append(leader.getCallName());
+    sb.append(" was able to escape from certain death! ");
+    sb.append("Private shuttle took ");
+    sb.append(leader.getCallName());
+    sb.append(" to non hostile planet.");
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
    * Make realm lost news. Realm lost it's final planet
    * @param realm PlayerInfo who lost
    * @return NewsData

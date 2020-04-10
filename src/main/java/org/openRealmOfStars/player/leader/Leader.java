@@ -559,4 +559,17 @@ public class Leader {
     }
     return Job.UNASSIGNED;
   }
+
+  /**
+   * Remove Wealth perk from the list.
+   */
+  public void useWealth() {
+    for (int i = 0; i < perkList.size(); i++) {
+      Perk perk = perkList.get(i);
+      if (perk == Perk.WEALTHY) {
+        perkList.remove(i);
+        break;
+      }
+    }
+  }
 }

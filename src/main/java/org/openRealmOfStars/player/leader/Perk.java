@@ -179,7 +179,12 @@ public enum Perk {
    * Power hungry generic perk. Leader tries to get as ruler by any means.
    */
   POWER_HUNGRY(29, "Power hungry",
-      "Leader tries to get as ruler by any means.");
+      "Leader tries to get as ruler by any means."),
+  /**
+   * Wealthy generic perk. Leader can pay this to avoid his/her/its death.
+   */
+  WEALTHY(30, "Wealthy", "Leader has massive amount of riches. This helps"
+      + " leader to get away from tough situations.");
 
 
   /**
@@ -279,7 +284,8 @@ public enum Perk {
    */
   public boolean isGenericPerk() {
     if (this == Perk.ACADEMIC
-        || this == Perk.POWER_HUNGRY) {
+        || this == Perk.POWER_HUNGRY
+        || this == Perk.WEALTHY) {
       return true;
     }
     return false;

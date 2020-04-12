@@ -1138,6 +1138,12 @@ public final class GuiStatics {
       .loadImage(GuiStatics.class.getResource(
           "/resources/images/ship_destroyed.png"));
   /**
+   * Image spinosaurus
+   */
+  public static final BufferedImage IMAGE_SPINOSAURUS = IOUtilities
+      .loadImage(GuiStatics.class.getResource(
+          "/resources/images/spinosaurus.png"));
+  /**
    * Ship bridge interior 1
    */
   public static final BufferedImage IMAGE_INTERIOR1 = IOUtilities.loadImage(

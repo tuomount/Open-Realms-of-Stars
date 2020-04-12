@@ -12,6 +12,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -131,6 +132,7 @@ public final class RandomEventUtility {
           + techName + ".");
       Message message = new Message(MessageType.INFORMATION, event.getText(),
           Icons.getIconByName(Icons.ICON_RESEARCH));
+      message.setRandomEventPop(true);
       info.getMsgList().addFirstMessage(message);
     }
   }
@@ -404,6 +406,7 @@ public final class RandomEventUtility {
         Message message = new Message(MessageType.PLANETARY, event.getText(),
             icon);
         message.setCoordinate(planet.getCoordinate());
+        message.setRandomEventPop(true);
         info.getMsgList().addFirstMessage(message);
       }
     }
@@ -567,6 +570,7 @@ public final class RandomEventUtility {
             Message message = new Message(MessageType.PLANETARY,
                 event.getText(), Icons.getIconByName(Icons.ICON_SCANNER));
             message.setCoordinate(sun.getCenterCoordinate());
+            message.setRandomEventPop(true);
             info.getMsgList().addFirstMessage(message);
             if (!info.isHuman()) {
               Mission mission = new Mission(MissionType.EXPLORE,
@@ -793,9 +797,13 @@ public final class RandomEventUtility {
           sb.append(". ");
         }
         event.setText(sb.toString());
+        ImageInstruction instructions = new ImageInstruction();
+        instructions.addImage(ImageInstruction.SPINOSAURUS);
+        event.setImageInstructions(instructions.build());
         Message message = new Message(MessageType.PLANETARY, event.getText(),
             Icons.getIconByName(Icons.ICON_DEATH));
         message.setCoordinate(planet.getCoordinate());
+        message.setRandomEventPop(true);
         info.getMsgList().addFirstMessage(message);
       }
     }
@@ -888,17 +896,34 @@ public final class RandomEventUtility {
             Icons.getIconByName(Icons.ICON_HULL_TECH));
         message.setCoordinate(fleet.getCoordinate());
         message.setMatchByString(fleet.getName());
+        message.setRandomEventPop(true);
         info.getMsgList().addFirstMessage(message);
         if (fleet.getCommander() != null) {
-          fleet.getCommander().assignJob(Job.DEAD, info);
-          message = new Message(MessageType.FLEET,
-              fleet.getCommander().getMilitaryRank().toString()
-              + " " + fleet.getCommander().getName() + " died during mutiny.",
-              Icons.getIconByName(Icons.ICON_COMMANDER));
-          message.setCoordinate(fleet.getCoordinate());
-          message.setMatchByString(fleet.getName());
-          info.getMsgList().addNewMessage(message);
-          fleet.setCommander(null);
+          if (fleet.getCommander().hasPerk(Perk.WEALTHY)) {
+            message = new Message(MessageType.FLEET,
+                fleet.getCommander().getMilitaryRank().toString()
+                + " " + fleet.getCommander().getName()
+                + " has paid for crew to save "
+                + fleet.getCommander().getGender().getHisHer() + " life.",
+                Icons.getIconByName(Icons.ICON_COMMANDER));
+            message.setCoordinate(fleet.getCoordinate());
+            message.setMatchByString(fleet.getName());
+            info.getMsgList().addNewMessage(message);
+            fleet.getCommander().useWealth();
+            fleet.getCommander().setJob(Job.UNASSIGNED);
+            fleet.setCommander(null);
+          } else {
+            fleet.getCommander().assignJob(Job.DEAD, info);
+            message = new Message(MessageType.FLEET,
+                fleet.getCommander().getMilitaryRank().toString()
+                + " " + fleet.getCommander().getName()
+                + " died during mutiny.",
+                Icons.getIconByName(Icons.ICON_COMMANDER));
+            message.setCoordinate(fleet.getCoordinate());
+            message.setMatchByString(fleet.getName());
+            info.getMsgList().addNewMessage(message);
+            fleet.setCommander(null);
+          }
         }
       }
     }

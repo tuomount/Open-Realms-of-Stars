@@ -175,6 +175,8 @@ Time warp by Tuomo Untinen
 
 Homarian Space Ship Bridge by Tuomo Untinen
 
+Spinosaurus by Tuomo Untinen
+
 Fonts are under SIL Open Font License, Version 1.1.
 # Fonts by
 

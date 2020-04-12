@@ -184,7 +184,12 @@ public enum Perk {
    * Wealthy generic perk. Leader can pay this to avoid his/her/its death.
    */
   WEALTHY(30, "Wealthy", "Leader has massive amount of riches. This helps"
-      + " leader to get away from tough situations.");
+      + " leader to get away from tough situations."),
+  /**
+   * Perk which gives espionage bonus for other realms.
+   */
+  CHATTERBOX(31, "Chatterbox", "Ruler accidentaly tells about espionage"
+      + " information on own realm's fleets.");
 
 
   /**
@@ -273,7 +278,8 @@ public enum Perk {
         || this == Perk.PACIFIST
         || this == Perk.WEAK_LEADER
         || this == Perk.SLOW_LEARNER
-        || this == Perk.REPULSIVE) {
+        || this == Perk.REPULSIVE
+        || this == Perk.CHATTERBOX) {
       return true;
     }
     return false;

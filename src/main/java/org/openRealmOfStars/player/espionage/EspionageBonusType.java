@@ -3,7 +3,7 @@ package org.openRealmOfStars.player.espionage;
 /**
 *
 * Open Realm of Stars game project
-* Copyright (C) 2018  Tuomo Untinen
+* Copyright (C) 2018,2020 Tuomo Untinen
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public License
@@ -36,5 +36,9 @@ public enum EspionageBonusType {
    * "Espionage" on own realm, bonus for this
    * should be always 10.
    */
-  OWN_REALM;
+  OWN_REALM,
+  /**
+   * Ruler reveals espionage information.
+   */
+  CHATTERBOX;
 }

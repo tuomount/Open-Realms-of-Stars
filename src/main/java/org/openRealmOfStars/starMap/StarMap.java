@@ -2454,6 +2454,15 @@ public class StarMap {
                 trader.getEspionage().getByIndex(j).getTotalBonus(),
                 "Spy trade with " + trader.getEmpireName());
           }
+          if (j != i) {
+            PlayerInfo info2 = players.getPlayerInfoByIndex(j);
+            if (info2.getRuler() != null
+                && info2.getRuler().hasPerk(Perk.CHATTERBOX)) {
+              info.getEspionage().getByIndex(j).addEspionageBonus(
+                  EspionageBonusType.CHATTERBOX, 1,
+                  "Ruler has chatterbox perk");
+            }
+          }
         }
       }
     }

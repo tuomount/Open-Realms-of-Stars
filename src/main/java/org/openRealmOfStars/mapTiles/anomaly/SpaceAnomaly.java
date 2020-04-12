@@ -323,7 +323,7 @@ public class SpaceAnomaly {
                 LeaderUtility.PERK_TYPE_GOOD);
             int index = DiceGenerator.getRandom(newPerks.length - 1);
             leader.getPerkList().add(newPerks[index]);
-            if (DiceGenerator.getRandom(99)  < 10) {
+            if (DiceGenerator.getRandom(99) < 10) {
               newPerks = LeaderUtility.getNewPerks(leader,
                   LeaderUtility.PERK_TYPE_BAD);
               index = DiceGenerator.getRandom(newPerks.length - 1);
@@ -339,7 +339,7 @@ public class SpaceAnomaly {
           StringBuilder sb = new StringBuilder();
           sb.append("Space nebulae contained warpped time. Entering"
               + " it has immediately increase time in this sector. Sector time"
-              + " has increased");
+              + " has increased ");
           sb.append(result.getValue());
           sb.append(" turns. After this"
               + " time returns normal in sector. Your fleet ships have"
@@ -389,7 +389,8 @@ public class SpaceAnomaly {
           }
           map.setTile(fleet.getX(), fleet.getY(), empty);
           for (Ship ship : fleet.getShips()) {
-            int damage = ship.getHull().getSlotHull() / 2;
+            int damage = ship.getHull().getSlotHull()
+                * ship.getHull().getMaxSlot() / 2;
             ShipDamage shipDamage = new ShipDamage(1, "Time wears the ship.");
             while (damage > 0) {
               damage = ship.damageComponent(damage, shipDamage);

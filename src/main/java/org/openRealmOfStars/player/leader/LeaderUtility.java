@@ -471,6 +471,9 @@ public final class LeaderUtility {
           break;
         }
       }
+      if (!perk.isPerkAllowedForRace(leader.getRace())) {
+        alreadyHas = true;
+      }
       if (!alreadyHas) {
         list.add(perk);
       }

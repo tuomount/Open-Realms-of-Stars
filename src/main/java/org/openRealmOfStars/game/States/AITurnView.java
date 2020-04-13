@@ -1867,6 +1867,9 @@ public class AITurnView extends BlackPanel {
         if (leader.hasPerk(Perk.ADDICTED)) {
           lifeExpection = lifeExpection - lifeExpection / 5;
         }
+        if (leader.hasPerk(Perk.HEALTHY)) {
+          lifeExpection = lifeExpection + lifeExpection / 5;
+        }
         if (leader.getAge() > lifeExpection) {
           int chance = leader.getAge() - lifeExpection;
           if (DiceGenerator.getRandom(1, 100) <= chance) {

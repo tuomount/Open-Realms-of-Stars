@@ -1,5 +1,7 @@
 package org.openRealmOfStars.player.leader;
 
+import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+
 /**
 *
 * Open Realm of Stars game project
@@ -149,7 +151,7 @@ public enum Perk {
   /**
    * Addicted leader dies earlier than other.
    */
-  ADDICTED(23, "Addicted", "Leader dies signifigantly younger than other"),
+  ADDICTED(23, "Addicted", "Leader dies signifigantly younger than others."),
   /**
    * Pacifist leader.
    * -1 Fleet capacity when leader is ruler and cannot be assigned as
@@ -189,7 +191,11 @@ public enum Perk {
    * Perk which gives espionage bonus for other realms.
    */
   CHATTERBOX(31, "Chatterbox", "Ruler accidentaly tells about espionage"
-      + " information on own realm's fleets.");
+      + " information on own realm's fleets."),
+  /**
+   * Leader is exceptionally good health.
+   */
+  HEALTHY(32, "Healthy", "Leader lives significantly longer than others.");
 
 
   /**
@@ -267,6 +273,27 @@ public enum Perk {
     return false;
   }
   /**
+   * Is perk allowed for certain race.
+   * @param race SpaceRace
+   * @return True if perk is allowed
+   */
+  public boolean isPerkAllowedForRace(final SpaceRace race) {
+    boolean result = true;
+    if (this == Perk.AGRICULTURAL && race == SpaceRace.MECHIONS) {
+      // Agricultural perk has no use for mechions.
+      result = false;
+    }
+    if (this == Perk.ADDICTED && race == SpaceRace.MECHIONS) {
+      // Addicted is not allowed for mechions.
+      result = false;
+    }
+    if (this == Perk.HEALTHY && race == SpaceRace.MECHIONS) {
+      // Mechions are robots, and are not healthy
+      result = false;
+    }
+    return result;
+  }
+  /**
    * Is perk bad perk or something else
    * @return True if bad perk
    */
@@ -291,7 +318,8 @@ public enum Perk {
   public boolean isGenericPerk() {
     if (this == Perk.ACADEMIC
         || this == Perk.POWER_HUNGRY
-        || this == Perk.WEALTHY) {
+        || this == Perk.WEALTHY
+        || this == Perk.HEALTHY) {
       return true;
     }
     return false;

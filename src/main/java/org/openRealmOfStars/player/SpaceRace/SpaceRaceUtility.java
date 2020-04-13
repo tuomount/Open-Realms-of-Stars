@@ -121,6 +121,24 @@ public final class SpaceRaceUtility {
         } else {
           sb.append(race.getNameSingle());
         }
+      } else if (race == SpaceRace.MECHIONS) {
+        if (DiceGenerator.getRandom(1) == 0) {
+          sb.append("Steel");
+        } else {
+          sb.append(race.getNameSingle());
+        }
+      } else if (race == SpaceRace.TEUTHIDAES) {
+        if (DiceGenerator.getRandom(1) == 0) {
+          sb.append("Squiddan");
+        } else {
+          sb.append(race.getNameSingle());
+        }
+      } else if (race == SpaceRace.GREYANS) {
+        if (DiceGenerator.getRandom(1) == 0) {
+          sb.append("Aesir");
+        } else {
+          sb.append(race.getNameSingle());
+        }
       } else {
         sb.append(race.getNameSingle());
       }

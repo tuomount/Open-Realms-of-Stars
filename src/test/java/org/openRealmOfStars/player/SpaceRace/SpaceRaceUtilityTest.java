@@ -116,7 +116,7 @@ public class SpaceRaceUtilityTest {
   public void testFullDescriptions() {
     String[] expectedResult = new String[SpaceRaceUtility.RACE_SELECTION.length];
     expectedResult[0] = "### Humans\n"+
-        "Humans are great diplomats but they are about average in everything else.\n"+
+        "Humans are great diplomats but\nthey are about average in everything else.\n"+
         "* Max radiation: 4\n"+
         "* Troop power: 10\n"+
         "* Leader lifespan: 80\n"+
@@ -132,7 +132,7 @@ public class SpaceRaceUtilityTest {
         "* Rush: Credit\n"+
         "* Special: None";
     expectedResult[1] = "### Mechions\n"+
-        "Mechanical beings whom do not eat food. Each population must be built.\n"+
+        "Mechanical beings whom do not eat food.\nEach population must be built.\n"+
         "* Max radiation: 8\n"+
         "* Troop power: 12\n"+
         "* Leader lifespan: 2000\n"+
@@ -146,7 +146,7 @@ public class SpaceRaceUtilityTest {
         "* Diplomacy bonus: -2\n"+
         "* War resistance: 50\n"+
         "* Rush: Population\n"+
-        "* Special: Population needs to be built";
+        "* Special: Population needs to be built and no heirs";
     expectedResult[2] = "### Sporks\n"+
         "Aggressive and warmongering species.\n"+
         "* Max radiation: 5\n"+
@@ -164,7 +164,7 @@ public class SpaceRaceUtilityTest {
         "* Rush: Credit and population\n"+
         "* Special: Extra scout ship and higher combat tech at start";
     expectedResult[3] = "### Greyans\n"+
-        "Humanoid creatures with grey skin and big eyes. Greyan are excellent researchers.\n"+
+        "Humanoid creatures with grey skin and big eyes.\nGreyan are excellent researchers.\n"+
         "* Max radiation: 6\n"+
         "* Troop power: 8\n"+
         "* Leader lifespan: 110\n"+
@@ -180,8 +180,8 @@ public class SpaceRaceUtilityTest {
         "* Rush: Credit\n"+
         "* Special: Electronics and propulsion techs are higher at start";
     expectedResult[4] = "### Centaurs\n"+
-        "Quadrupedal humanoid creatures which are big, about 5 meters tall."
-        + " Due their enormous size their space ships are more rigid. "
+        "Quadrupedal humanoid creatures which are big,\nabout 5 meters tall."
+        + " Due their enormous size their space\nships are more rigid. "
         + "\n"+
         "* Max radiation: 3\n"+
         "* Troop power: 14\n"+
@@ -199,10 +199,9 @@ public class SpaceRaceUtilityTest {
         "* Special: Stronger ships";
     expectedResult[5] = "### Mothoids\n"+
         "Mothoids are sentient insects with capability to hivemind."
-        + " They are fast breeding "
-        + "race. Their song is hypnotic so cultural bonus is granted. "
-      + "Mothoids exo-skeleton is weak and therefore get negative bonus on "
-      + "mining and troop power.\n"+
+        + "\nThey are fast breeding race. Their song is hypnotic so\n"
+        + "cultural bonus is granted. Mothoids exo-skeleton is weak\n"
+        + "and therefore get negative bonus on mining and troop power.\n"+
         "* Max radiation: 6\n"+
         "* Troop power: 9\n"+
         "* Leader lifespan: 70\n"+
@@ -219,7 +218,7 @@ public class SpaceRaceUtilityTest {
         "* Special: No defense tech but one Planetary improvement tech at start";
     expectedResult[6] = "### Teuthidaes\n"
         + "Teuthidaes are octopus like creatures. They are "
-        + "scientific and military focused race. Their ships have built-in "
+        + "scientific\nand military focused race. Their ships have built-in\n"
         + "cloaking devices.\n"
         + "* Max radiation: 4\n"
         + "* Troop power: 10\n"
@@ -237,8 +236,8 @@ public class SpaceRaceUtilityTest {
         + "* Special: Each ship has built-in cloaking device";
     expectedResult[7] = "### Scaurians\n"
         + "Scaurians are small but wide humanoid. They are "
-        + "merchantical race. They focus make better trades with other "
-        + "and gain more credits.\n"
+        + "merchantical\nrace. They focus make better trades with other "
+        + "and gain more\ncredits.\n"
         + "* Max radiation: 5\n"
         + "* Troop power: 12\n"
         + "* Leader lifespan: 90\n"
@@ -255,8 +254,8 @@ public class SpaceRaceUtilityTest {
         + "* Special: Trade fleet gain 50% more credits and better trade buildings.";
     expectedResult[8] = "### Homarians\n"
         + "Homarians are very strong creatures. "
-        + "They have humanoid form but they have very thick and "
-        + "hard exoskeleton. Due their strength they are good in "
+        + "They have humanoid\nform but they have very thick and "
+        + "hard exoskeleton.\nDue their strength they are good in "
         + "physical tasks.\n"
         + "* Max radiation: 3\n"
         + "* Troop power: 11\n"
@@ -274,9 +273,9 @@ public class SpaceRaceUtilityTest {
         + "* Special: Starts with 5 population";
     expectedResult[9] = "### Chiraloids\n"
         + "Chiraloids are creatures with four arms and two legs."
-        + " They have hard exoskeleton. They also have special"
-        + " gland which uses radioactivity to create nutrient."
-        + " This is called radiosynthesis.\n"
+        + "\nThey have hard exoskeleton. They also have special"
+        + " gland\nwhich uses radioactivity to create nutrient."
+        + " This is called\nradiosynthesis.\n"
         + "* Max radiation: 10\n"
         + "* Troop power: 9\n"
         + "* Leader lifespan: 100\n"
@@ -290,7 +289,7 @@ public class SpaceRaceUtilityTest {
         + "* Diplomacy bonus: -4\n"
         + "* War resistance: 50\n"
         + "* Rush: None\n"
-        + "* Special: Radiosynthesis (+1 food per radiotion per population)";
+        + "* Special: Radiosynthesis (+1 food per radiation per population)";
     for (int i = 0; i <  SpaceRaceUtility.RACE_SELECTION.length; i++) {
       SpaceRace race = SpaceRaceUtility.getRaceByName(
           SpaceRaceUtility.RACE_SELECTION[i]);

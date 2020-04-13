@@ -34,13 +34,15 @@ public enum SpaceRace {
   /**
    * Humans are about average in everything.
    */
-  HUMAN(0, "Humans", "Human", "Humans are great diplomats but they are about "
-      + "average in everything else."),
+  HUMAN(0, "Humans", "Human",
+        "Humans are great diplomats but\n"
+      + "they are about average in everything else."),
   /**
    * Mechanical beings whom do not eat food. Each now population must be built.
    */
-  MECHIONS(1, "Mechions", "Mechion", "Mechanical beings whom do not eat food."
-          + " Each population must be built."),
+  MECHIONS(1, "Mechions", "Mechion",
+          "Mechanical beings whom do not eat food.\n"
+        + "Each population must be built."),
   /**
    * Aggressive and warmongering spieces.
    */
@@ -50,61 +52,66 @@ public enum SpaceRace {
    * Greyan are excellent researchers.
    */
   GREYANS(3, "Greyans", "Greyan", "Humanoid creatures with grey skin and"
-          + " big eyes. Greyan are excellent researchers."),
+          + " big eyes.\nGreyan are excellent researchers."),
   /**
    * Quadrupedal humanoid creatures which are big, about 5 meters tall. Due
    * their enormous size their space ships are must more rigid.
    */
-  CENTAURS(4, "Centaurs", "Centaur", "Quadrupedal humanoid creatures which are"
-          + " big, about 5 meters tall. Due their enormous size their space"
-          + " ships are more rigid. "),
+  CENTAURS(4, "Centaurs", "Centaur",
+            "Quadrupedal humanoid creatures which are big,\n"
+          + "about 5 meters tall. Due their enormous size their space\n"
+          + "ships are more rigid. "),
   /**
    * Mothoids are sentient insects with hivemind. They are fast breeding race.
    */
-  MOTHOIDS(5, "Mothoids", "Mothoid", "Mothoids are sentient insects with"
-      + " capability to hivemind. They are fast breeding race. Their song"
-      + " is hypnotic so cultural bonus is granted. Mothoids exo-skeleton"
-      + " is weak and therefore get negative bonus on mining and troop"
-      + " power."),
+  MOTHOIDS(5, "Mothoids", "Mothoid",
+        "Mothoids are sentient insects with capability to hivemind.\n"
+      + "They are fast breeding race. Their song is hypnotic so\n"
+      + "cultural bonus is granted. Mothoids exo-skeleton is weak\n"
+      + "and therefore get negative bonus on mining and troop power."),
   /**
    * Teuthidaes are octopus like creatures.
    * They are scientific and military focused race. Their ships have built-in
    * cloaking devices.
    */
-  TEUTHIDAES(6, "Teuthidaes", "Teuthidae", "Teuthidaes are octopus like "
-      + "creatures. They are scientific and military focused race. Their "
-      + "ships have built-in cloaking devices."),
+  TEUTHIDAES(6, "Teuthidaes", "Teuthidae",
+        "Teuthidaes are octopus like creatures. They are scientific\n"
+      + "and military focused race. Their ships have built-in\n"
+      + "cloaking devices."),
   /**
    * Scaurians are small but wide humanoid.
    * They are merchantical race. They focus make better trades with other and
    * gain more credits.
    */
-  SCAURIANS(7, "Scaurians", "Scaurian", "Scaurians are small but wide"
-      + " humanoid. They are merchantical race. They focus make better"
-      + " trades with other and gain more credits."),
+  SCAURIANS(7, "Scaurians", "Scaurian",
+          "Scaurians are small but wide humanoid. They are merchantical\n"
+        + "race. They focus make better trades with other and gain more\n"
+        + "credits."),
   /**
    * Homarians are very strong creatures. They have humanoid form but
    * they have very thick and hard exoskeleton.
    */
-  HOMARIANS(8, "Homarians", "Homarian", "Homarians are very strong creatures. "
-      + "They have humanoid form but they have very thick and "
-      + "hard exoskeleton. Due their strength they are good in "
-      + "physical tasks."),
+  HOMARIANS(8, "Homarians", "Homarian",
+          "Homarians are very strong creatures. They have humanoid\n"
+        + "form but they have very thick and hard exoskeleton.\n"
+        + "Due their strength they are good in physical tasks."),
   /**
    * Humans are about average in everything and space pirates are probably
    * humans or are just average.
    */
-  SPACE_PIRATE(9, "Space Pirates", "Space pirate", "Generic space pirate which"
-      + "are aggressive and try cause trouble. Stats are identical to humans."),
+  SPACE_PIRATE(9, "Space Pirates", "Space pirate",
+         "Generic space pirate which are aggressive and try cause\n"
+       + " trouble. Stats are identical to humans."),
   /**
    * Chiraloids are creatures with four arms and two legs. They have hard
    * exoskeleton. They also have special gland which uses radioactivity
    * to create nutrient. This is called radiosynthesis.
    */
-  CHIRALOIDS(10, "Chiraloids", "Chiraloid", "Chiraloids are creatures with"
-      + " four arms and two legs. They have hard exoskeleton. They also have"
-      + " special gland which uses radioactivity to create nutrient. This is"
-      + " called radiosynthesis.");
+  CHIRALOIDS(10, "Chiraloids", "Chiraloid",
+          "Chiraloids are creatures with four arms and two legs.\n"
+        + "They have hard exoskeleton. They also have special gland\n"
+        + "which uses radioactivity to create nutrient. This is called\n"
+        + "radiosynthesis.");
 
 
   /**
@@ -1072,7 +1079,7 @@ public enum SpaceRace {
     if (this == CENTAURS) {
       sb.append("Stronger ships");
     } else if (this == MECHIONS) {
-      sb.append("Population needs to be built");
+      sb.append("Population needs to be built and no heirs");
     } else if (this == SPORKS) {
       sb.append("Extra scout ship and higher combat tech at start");
     } else if (this == GREYANS) {
@@ -1087,7 +1094,7 @@ public enum SpaceRace {
     } else if (this == SpaceRace.HOMARIANS) {
       sb.append("Starts with 5 population");
     } else if (this == SpaceRace.CHIRALOIDS) {
-      sb.append("Radiosynthesis (+1 food per radiotion per population)");
+      sb.append("Radiosynthesis (+1 food per radiation per population)");
     } else {
       sb.append("None");
     }

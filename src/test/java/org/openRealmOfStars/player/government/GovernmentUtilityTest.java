@@ -86,16 +86,17 @@ public class GovernmentUtilityTest {
   public void testMechionsGovernments() {
     GovernmentType[] governments = GovernmentUtility.getGovernmentsForRace(
         SpaceRace.MECHIONS);
-    assertEquals(9, governments.length);
+    assertEquals(10, governments.length);
     assertEquals(GovernmentType.ALLIANCE, governments[0]);
     assertEquals(GovernmentType.DEMOCRACY, governments[1]);
     assertEquals(GovernmentType.FEDERATION, governments[2]);
     assertEquals(GovernmentType.REPUBLIC, governments[3]);
     assertEquals(GovernmentType.ENTERPRISE, governments[4]);
-    assertEquals(GovernmentType.AI, governments[5]);
-    assertEquals(GovernmentType.MECHANICAL_HORDE, governments[6]);
-    assertEquals(GovernmentType.HEGEMONY, governments[7]);
-    assertEquals(GovernmentType.HIERARCHY, governments[8]);
+    assertEquals(GovernmentType.EMPIRE, governments[5]);
+    assertEquals(GovernmentType.AI, governments[6]);
+    assertEquals(GovernmentType.MECHANICAL_HORDE, governments[7]);
+    assertEquals(GovernmentType.HEGEMONY, governments[8]);
+    assertEquals(GovernmentType.HIERARCHY, governments[9]);
   }
 
   @Test

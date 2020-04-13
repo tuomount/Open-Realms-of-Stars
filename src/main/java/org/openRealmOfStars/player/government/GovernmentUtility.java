@@ -81,7 +81,7 @@ public final class GovernmentUtility {
       GovernmentType[] governments = {
         GovernmentType.ALLIANCE, GovernmentType.DEMOCRACY,
         GovernmentType.FEDERATION, GovernmentType.REPUBLIC,
-        GovernmentType.ENTERPRISE,
+        GovernmentType.ENTERPRISE, GovernmentType.EMPIRE,
         GovernmentType.AI, GovernmentType.MECHANICAL_HORDE,
         GovernmentType.HEGEMONY, GovernmentType.HIERARCHY
       };

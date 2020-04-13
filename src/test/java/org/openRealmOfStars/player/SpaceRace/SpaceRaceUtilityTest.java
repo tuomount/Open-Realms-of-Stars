@@ -47,7 +47,7 @@ public class SpaceRaceUtilityTest {
     SpaceRace race = SpaceRace.MECHIONS;
     assertEquals(Attitude.LOGICAL, race.getAttitude());
     String str = SpaceRaceUtility.getRandomName(race, GovernmentType.AI);
-    assertEquals(true, str.contains("Mechion"));
+    assertEquals(true, str.contains("Mechion") || str.contains("Steel"));
     assertEquals(true, str.contains("AI"));
   }
 
@@ -67,7 +67,7 @@ public class SpaceRaceUtilityTest {
     SpaceRace race = SpaceRace.GREYANS;
     assertEquals(Attitude.SCIENTIFIC, race.getAttitude());
     String str = SpaceRaceUtility.getRandomName(race, GovernmentType.KINGDOM);
-    assertEquals(true, str.contains("Greyan"));
+    assertEquals(true, str.contains("Greyan") || str.contains("Aesir"));
     assertEquals(true, str.contains("Kingdom"));
   }
 
@@ -107,7 +107,7 @@ public class SpaceRaceUtilityTest {
     SpaceRace race = SpaceRace.TEUTHIDAES;
     assertEquals(Attitude.MILITARISTIC, race.getAttitude());
     String str = SpaceRaceUtility.getRandomName(race, GovernmentType.FEDERATION);
-    assertEquals(true, str.contains("Teuthidae"));
+    assertEquals(true, str.contains("Teuthidae") || str.contains("Squiddan"));
     assertEquals(true, str.contains("Federation"));
   }
 

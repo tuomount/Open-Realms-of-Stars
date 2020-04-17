@@ -833,7 +833,11 @@ public class PlayerInfo {
       case PEACEFUL: value = value + 2; break;
       default: value = value + 5; break;
     }
-    switch (getAttitude()) {
+    Attitude secondaryAttitude = attitude;
+    if (ruler != null) {
+      secondaryAttitude = LeaderUtility.getRulerAttitude(ruler, attitude);
+    }
+    switch (secondaryAttitude) {
       case BACKSTABBING: value = value + 9; break;
       case AGGRESSIVE: value = value + 8; break;
       case MILITARISTIC: value = value + 7; break;

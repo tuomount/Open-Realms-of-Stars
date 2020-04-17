@@ -144,12 +144,23 @@ public final class NewsFactory {
     }
     Attitude attitude = aggressor.getAiAttitude();
     if (attitude == Attitude.AGGRESSIVE) {
-      sb.append(aggressor.getEmpireName());
-      sb.append(" is known about their aggressive behaviour, so ");
+      if (aggressor.getRuler() == null) {
+        sb.append(aggressor.getEmpireName());
+        sb.append(" is known about their aggressive behaviour, so ");
+      } else {
+        sb.append(aggressor.getRuler().getCallName());
+        sb.append(" is known for ");
+        sb.append(aggressor.getRuler().getGender().getHisHer());
+        sb.append(" aggressive behaviour, so ");
+      }
       sb.append("this war was just about to happen. ");
     }
     if (attitude == Attitude.MILITARISTIC) {
-      sb.append(aggressor.getEmpireName());
+      if (aggressor.getRuler() == null) {
+        sb.append(aggressor.getEmpireName());
+      } else {
+        sb.append(aggressor.getRuler().getCallName());
+      }
       sb.append(" militaristic actions has lead to this war to burst out. ");
     }
     if (attitude == Attitude.PEACEFUL) {
@@ -242,13 +253,24 @@ public final class NewsFactory {
     sb.append("! ");
     Attitude attitude = aggressor.getAiAttitude();
     if (attitude == Attitude.AGGRESSIVE) {
-      sb.append(aggressor.getEmpireName());
-      sb.append(" is known about their aggressive behaviour, so ");
+      if (aggressor.getRuler() == null) {
+        sb.append(aggressor.getEmpireName());
+        sb.append(" is known about their aggressive behaviour, so ");
+      } else {
+        sb.append(aggressor.getRuler().getCallName());
+        sb.append(" is known for ");
+        sb.append(aggressor.getRuler().getGender().getHisHer());
+        sb.append(" aggressive behaviour, so ");
+      }
       sb.append("this war was just about to happen, even against ");
       sb.append("bigger group!");
     }
     if (attitude == Attitude.MILITARISTIC) {
-      sb.append(aggressor.getEmpireName());
+      if (aggressor.getRuler() == null) {
+        sb.append(aggressor.getEmpireName());
+      } else {
+        sb.append(aggressor.getRuler().getCallName());
+      }
       sb.append(" militaristic actions has lead to this war to burst out. ");
     }
     news.setNewsText(sb.toString());
@@ -1107,18 +1129,36 @@ public final class NewsFactory {
     }
     Attitude attitude = offerer.getAiAttitude();
     if (attitude == Attitude.MERCHANTICAL) {
-      sb.append(offerer.getEmpireName());
-      sb.append(" is known about their interest to trade, so ");
+      if (offerer.getRuler() == null) {
+        sb.append(offerer.getEmpireName());
+        sb.append(" is known about their interest to trade, so ");
+      } else {
+        sb.append(offerer.getRuler().getCallName());
+        sb.append(" is known for ");
+        sb.append(offerer.getRuler().getGender().getHisHer());
+        sb.append(" interest to trade, so ");
+      }
       sb.append("this trade alliance was expected! ");
     }
     if (attitude == Attitude.DIPLOMATIC) {
-      sb.append(offerer.getEmpireName());
+      if (offerer.getRuler() == null) {
+        sb.append(offerer.getEmpireName());
+      } else {
+        sb.append(offerer.getRuler().getCallName());
+      }
       sb.append(" diplomatic skills were surely effecting on "
           + "this trade alliance! ");
     }
     if (attitude == Attitude.PEACEFUL) {
-      sb.append(offerer.getEmpireName());
-      sb.append(" is known about their peace loving. So this was expected! ");
+      if (offerer.getRuler() == null) {
+        sb.append(offerer.getEmpireName());
+        sb.append(" is known about their peace loving. So this was expected! ");
+      } else {
+        sb.append(offerer.getRuler().getCallName());
+        sb.append(" is known for ");
+        sb.append(offerer.getRuler().getGender().getHisHer());
+        sb.append(" peace loving. So this was expected! ");
+      }
     }
     news.setNewsText(sb.toString());
     return news;
@@ -1274,7 +1314,11 @@ public final class NewsFactory {
     }
     Attitude attitude = offerer.getAiAttitude();
     if (attitude == Attitude.DIPLOMATIC) {
-      sb.append(offerer.getEmpireName());
+      if (offerer.getRuler() == null) {
+        sb.append(offerer.getEmpireName());
+      } else {
+        sb.append(offerer.getRuler().getCallName());
+      }
       sb.append(" diplomatic skills were surely effecting on "
           + "this alliance! ");
     }
@@ -1425,13 +1469,24 @@ public final class NewsFactory {
     }
     Attitude attitude = offerer.getAiAttitude();
     if (attitude == Attitude.DIPLOMATIC) {
-      sb.append(offerer.getEmpireName());
+      if (offerer.getRuler() == null) {
+        sb.append(offerer.getEmpireName());
+      } else {
+        sb.append(offerer.getRuler().getCallName());
+      }
       sb.append(" diplomatic skills were surely effecting on "
           + "this defensive  pact! ");
     }
     if (attitude == Attitude.PEACEFUL) {
-      sb.append(offerer.getEmpireName());
-      sb.append(" is known about their peace loving. So this was expected! ");
+      if (offerer.getRuler() == null) {
+        sb.append(offerer.getEmpireName());
+        sb.append(" is known about their peace loving. So this was expected! ");
+      } else {
+        sb.append(offerer.getRuler().getCallName());
+        sb.append(" is known for ");
+        sb.append(offerer.getRuler().getGender().getHisHer());
+        sb.append(" peace loving. So this was expected! ");
+      }
     }
     news.setNewsText(sb.toString());
     return news;

@@ -20,6 +20,7 @@ import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.government.GovernmentUtility;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.message.MessageList;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipSize;
@@ -804,6 +805,9 @@ public class PlayerInfo {
     int value = DiceGenerator.getRandom(1);
     if (value == 0) {
       return race.getAttitude();
+    }
+    if (ruler != null) {
+      return LeaderUtility.getRulerAttitude(ruler, attitude);
     }
     return getAttitude();
   }

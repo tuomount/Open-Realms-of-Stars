@@ -1,12 +1,15 @@
 package org.openRealmOfStars.player.leader;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SocialSystem;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.diplomacy.Attitude;
+import org.openRealmOfStars.player.diplomacy.AttitudeScore;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.starMap.StarMap;
@@ -673,6 +676,9 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.CHARISMATIC)) {
       result = result + 15;
     }
+    if (leader.hasPerk(Perk.DIPLOMATIC)) {
+      result = result + 20;
+    }
     if (leader.hasPerk(Perk.GOOD_LEADER)) {
       result = result + 5;
     }
@@ -714,6 +720,12 @@ public final class LeaderUtility {
     }
     if (leader.hasPerk(Perk.STUPID)) {
       result = result - 10;
+    }
+    if (leader.hasPerk(Perk.MAD)) {
+      result = result - 20;
+    }
+    if (leader.hasPerk(Perk.LOGICAL)) {
+      result = result + 10;
     }
     return result;
   }
@@ -771,6 +783,9 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.CHARISMATIC)) {
       result = result + 20;
     }
+    if (leader.hasPerk(Perk.DIPLOMATIC)) {
+      result = result + 20;
+    }
     if (leader.hasPerk(Perk.GOOD_LEADER)) {
       result = result + 20;
     }
@@ -816,6 +831,16 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.PACIFIST)) {
       result = result + 10;
     }
+    if (leader.hasPerk(Perk.PEACEFUL)) {
+      result = result + 10;
+    }
+    if (leader.hasPerk(Perk.LOGICAL)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.MAD)) {
+      result = result - 20;
+    }
+
     // Simulates voting for leader
     result = result + DiceGenerator.getRandom(20);
     return result;
@@ -874,6 +899,9 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.CHARISMATIC)) {
       result = result + 20;
     }
+    if (leader.hasPerk(Perk.DIPLOMATIC)) {
+      result = result + 20;
+    }
     if (leader.hasPerk(Perk.GOOD_LEADER)) {
       result = result + 20;
     }
@@ -918,6 +946,15 @@ public final class LeaderUtility {
     }
     if (leader.hasPerk(Perk.PACIFIST)) {
       result = result - 10;
+    }
+    if (leader.hasPerk(Perk.PEACEFUL)) {
+      result = result - 5;
+    }
+    if (leader.hasPerk(Perk.AGGRESSIVE)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.MAD)) {
+      result = result - 20;
     }
     if (leader.hasPerk(Perk.WARLORD)) {
       result = result + 10;
@@ -978,6 +1015,9 @@ public final class LeaderUtility {
       result = result - 2;
     }
     if (leader.hasPerk(Perk.CHARISMATIC)) {
+      result = result + 20;
+    }
+    if (leader.hasPerk(Perk.DIPLOMATIC)) {
       result = result + 10;
     }
     if (leader.hasPerk(Perk.GOOD_LEADER)) {
@@ -1021,6 +1061,12 @@ public final class LeaderUtility {
     }
     if (leader.hasPerk(Perk.WEAK_LEADER)) {
       result = result - 20;
+    }
+    if (leader.hasPerk(Perk.PEACEFUL)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.MAD)) {
+      result = result + 5;
     }
     return result;
   }
@@ -1090,6 +1136,15 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.PACIFIST)) {
       result = result - 20;
     }
+    if (leader.hasPerk(Perk.PEACEFUL)) {
+      result = result - 15;
+    }
+    if (leader.hasPerk(Perk.AGGRESSIVE)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.DIPLOMATIC)) {
+      result = result + 10;
+    }
     if (leader.hasPerk(Perk.SLOW_LEARNER)) {
       result = result - 20;
     }
@@ -1103,6 +1158,9 @@ public final class LeaderUtility {
       result = result - 20;
     }
     if (leader.hasPerk(Perk.WARLORD)) {
+      result = result + 20;
+    }
+    if (leader.hasPerk(Perk.LOGICAL)) {
       result = result + 20;
     }
     return result;
@@ -1246,5 +1304,149 @@ public final class LeaderUtility {
         return Icons.getIconByName(Icons.ICON_TOO_YOUNG);
       }
     }
+  }
+
+  /**
+   * Get ruler attitude
+   * @param leader Leader for getting the attitude
+   * @param secondary Backup for secondary realm attitude
+   * @return Attitude
+   */
+  public static Attitude getRulerAttitude(final Leader leader,
+      final Attitude secondary) {
+    AttitudeScore aggressive = new AttitudeScore(Attitude.AGGRESSIVE);
+    AttitudeScore backstabbing = new AttitudeScore(Attitude.BACKSTABBING);
+    AttitudeScore diplomatic = new AttitudeScore(Attitude.DIPLOMATIC);
+    AttitudeScore expansionist = new AttitudeScore(Attitude.EXPANSIONIST);
+    AttitudeScore logical = new AttitudeScore(Attitude.LOGICAL);
+    AttitudeScore merchantical = new AttitudeScore(Attitude.MERCHANTICAL);
+    AttitudeScore militaristic = new AttitudeScore(Attitude.MILITARISTIC);
+    AttitudeScore peaceful = new AttitudeScore(Attitude.PEACEFUL);
+    AttitudeScore scientific = new AttitudeScore(Attitude.SCIENTIFIC);
+    for (Perk perk : leader.getPerkList()) {
+      if (perk == Perk.ACADEMIC || perk == Perk.SCIENTIST) {
+        scientific.setValue(scientific.getValue() + 5);
+      }
+      if (perk == Perk.ARTISTIC) {
+        peaceful.setValue(peaceful.getValue() + 1);
+      }
+      if (perk == Perk.CHARISMATIC) {
+        peaceful.setValue(peaceful.getValue() + 1);
+        diplomatic.setValue(peaceful.getValue() + 5);
+      }
+      if (perk == Perk.CHATTERBOX) {
+        diplomatic.setValue(diplomatic.getValue() + 1);
+      }
+      if (perk == Perk.COMBAT_MASTER) {
+        aggressive.setValue(aggressive.getValue() + 3);
+        militaristic.setValue(militaristic.getValue() + 1);
+        peaceful.setValue(peaceful.getValue() - 1);
+      }
+      if (perk == Perk.COMBAT_TACTICIAN) {
+        aggressive.setValue(aggressive.getValue() + 3);
+        militaristic.setValue(militaristic.getValue() + 1);
+        peaceful.setValue(peaceful.getValue() - 1);
+      }
+      if (perk == Perk.CORRUPTED) {
+        backstabbing.setValue(backstabbing.getValue() + 1);
+      }
+      if (perk == Perk.COUNTER_AGENT || perk == Perk.DISCIPLINE) {
+        militaristic.setValue(militaristic.getValue() + 1);
+      }
+      if (perk == Perk.EXPLORER) {
+        expansionist.setValue(expansionist.getValue() + 5);
+        scientific.setValue(scientific.getValue() + 1);
+      }
+      if (perk == Perk.FTL_ENGINEER || perk == Perk.SCANNER_EXPERT) {
+        expansionist.setValue(expansionist.getValue() + 3);
+        scientific.setValue(scientific.getValue() + 1);
+      }
+      if (perk == Perk.GOOD_LEADER) {
+        logical.setValue(logical.getValue() + 3);
+        peaceful.setValue(peaceful.getValue() + 1);
+        diplomatic.setValue(peaceful.getValue() + 1);
+      }
+      if (perk == Perk.INDUSTRIAL) {
+        logical.setValue(logical.getValue() + 1);
+        merchantical.setValue(merchantical.getValue() + 1);
+      }
+      if (perk == Perk.AGRICULTURAL || perk == Perk.MINER) {
+        merchantical.setValue(merchantical.getValue() + 1);
+      }
+      if (perk == Perk.MERCHANT || perk == Perk.TRADER) {
+        merchantical.setValue(merchantical.getValue() + 5);
+      }
+      if (perk == Perk.MILITARISTIC) {
+        militaristic.setValue(militaristic.getValue() + 5);
+        peaceful.setValue(peaceful.getValue() - 5);
+      }
+      if (perk == Perk.PACIFIST) {
+        peaceful.setValue(peaceful.getValue() + 5);
+        diplomatic.setValue(diplomatic.getValue() + 1);
+        militaristic.setValue(militaristic.getValue() - 5);
+        aggressive.setValue(aggressive.getValue() - 5);
+      }
+      if (perk == Perk.POWER_HUNGRY) {
+        aggressive.setValue(aggressive.getValue() + 3);
+        backstabbing.setValue(backstabbing.getValue() + 1);
+      }
+      if (perk == Perk.REPULSIVE) {
+        backstabbing.setValue(backstabbing.getValue() + 5);
+        diplomatic.setValue(diplomatic.getValue() - 5);
+      }
+      if (perk == Perk.ADDICTED) {
+        backstabbing.setValue(backstabbing.getValue() + 3);
+      }
+      if (perk == Perk.WEAK_LEADER) {
+        aggressive.setValue(aggressive.getValue() - 5);
+        militaristic.setValue(militaristic.getValue() - 5);
+        peaceful.setValue(peaceful.getValue() + 5);
+      }
+      if (perk == Perk.SECRET_AGENT || perk == Perk.SPY_MASTER) {
+        logical.setValue(logical.getValue() + 3);
+      }
+      if (perk == Perk.SLOW_LEARNER || perk == Perk.STUPID) {
+        scientific.setValue(scientific.getValue() - 1);
+      }
+      if (perk == Perk.WARLORD) {
+        backstabbing.setValue(backstabbing.getValue() + 1);
+        aggressive.setValue(aggressive.getValue() + 5);
+      }
+      if (perk == Perk.WEALTHY) {
+        merchantical.setValue(merchantical.getValue() + 1);
+        diplomatic.setValue(diplomatic.getValue() + 1);
+      }
+      if (perk == Perk.PEACEFUL) {
+        peaceful.setValue(peaceful.getValue() + 5);
+        aggressive.setValue(aggressive.getValue() - 5);
+        militaristic.setValue(militaristic.getValue() - 5);
+      }
+      if (perk == Perk.LOGICAL) {
+        logical.setValue(logical.getValue() + 5);
+      }
+      if (perk == Perk.AGGRESSIVE) {
+        aggressive.setValue(aggressive.getValue() + 5);
+      }
+      if (perk == Perk.MAD) {
+        backstabbing.setValue(backstabbing.getValue() + 5);
+        peaceful.setValue(peaceful.getValue() - 5);
+        diplomatic.setValue(diplomatic.getValue() - 5);
+      }
+    }
+    ArrayList<AttitudeScore> scores = new ArrayList<>();
+    scores.add(scientific);
+    scores.add(peaceful);
+    scores.add(merchantical);
+    scores.add(expansionist);
+    scores.add(backstabbing);
+    scores.add(aggressive);
+    scores.add(militaristic);
+    scores.add(logical);
+    scores.add(diplomatic);
+    Collections.sort(scores, Collections.reverseOrder());
+    if (scores.get(0).getValue() > 0) {
+      return scores.get(0).getAttitude();
+    }
+    return secondary;
   }
 }

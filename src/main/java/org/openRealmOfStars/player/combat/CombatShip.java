@@ -170,9 +170,25 @@ public class CombatShip implements Comparable<CombatShip> {
         && this.getCommander().hasPerk(Perk.COMBAT_TACTICIAN)) {
       thisInit++;
     }
+    if (this.getCommander() != null
+        && this.getCommander().hasPerk(Perk.AGGRESSIVE)) {
+      thisInit++;
+    }
+    if (this.getCommander() != null
+        && this.getCommander().hasPerk(Perk.PEACEFUL)) {
+      thisInit--;
+    }
     if (o.getCommander() != null
         && o.getCommander().hasPerk(Perk.COMBAT_TACTICIAN)) {
       otherInit++;
+    }
+    if (o.getCommander() != null
+        && o.getCommander().hasPerk(Perk.AGGRESSIVE)) {
+      otherInit++;
+    }
+    if (o.getCommander() != null
+        && o.getCommander().hasPerk(Perk.PEACEFUL)) {
+      otherInit--;
     }
     return thisInit - otherInit;
   }

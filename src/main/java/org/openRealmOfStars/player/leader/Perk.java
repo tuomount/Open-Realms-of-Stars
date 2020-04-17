@@ -195,7 +195,30 @@ public enum Perk {
   /**
    * Leader is exceptionally good health.
    */
-  HEALTHY(32, "Healthy", "Leader lives significantly longer than others.");
+  HEALTHY(32, "Healthy", "Leader lives significantly longer than others."),
+  /**
+   * Leader has habit to be aggressive.
+   */
+  AGGRESSIVE(33, "Aggressive", "Leader is aggressive."
+      + " +1 Initiave when commander, -1 Diplomacy"),
+  /**
+   * Leader has habit to be peaceful.
+   */
+  PEACEFUL(34, "Peaceful", "Leader is peaceful."
+      + " -1 Initiave when commander, +1 Diplomacy when leader."),
+  /**
+   * Leader has habit to be logical.
+   */
+  LOGICAL(35, "Logical", "Leader is logical. No side effects."),
+  /**
+   * Leader has habit to be mad.
+   */
+  MAD(36, "Mad", "Leader is mad. -2 Diplomacy bonus when leader is ruler."),
+  /**
+   * Ruler perk for diplomatic. All diplomatic trades get +1.
+   */
+  DIPLOMATIC(37, "Diplomatic", "+1 Diplomacy bonus when leader is ruler.");
+
 
 
   /**
@@ -231,7 +254,8 @@ public enum Perk {
         || this == Perk.CHARISMATIC
         || this == Perk.SCIENTIST
         || this == Perk.MERCHANT
-        || this == Perk.GOOD_LEADER) {
+        || this == Perk.GOOD_LEADER
+        || this == Perk.DIPLOMATIC) {
       return true;
     }
     return false;
@@ -291,6 +315,26 @@ public enum Perk {
       // Mechions are robots, and are not healthy
       result = false;
     }
+    if (this == Perk.MAD && race == SpaceRace.MECHIONS) {
+      // Mechions are robots, they have no mental problems
+      result = false;
+    }
+    if (this == Perk.MAD && race == SpaceRace.MECHIONS) {
+      // Mechions are robots, they have no mental problems
+      result = false;
+    }
+    if (this == Perk.PEACEFUL && race == SpaceRace.SPORKS) {
+      // Sporks are not peaceful
+      result = false;
+    }
+    if (this == Perk.PEACEFUL && race == SpaceRace.TEUTHIDAES) {
+      // Teuthidaes are not peaceful
+      result = false;
+    }
+    if (this == Perk.CHARISMATIC && race == SpaceRace.MECHIONS) {
+      // Mechions cannot be charismatic
+      result = false;
+    }
     return result;
   }
   /**
@@ -306,7 +350,11 @@ public enum Perk {
         || this == Perk.WEAK_LEADER
         || this == Perk.SLOW_LEARNER
         || this == Perk.REPULSIVE
-        || this == Perk.CHATTERBOX) {
+        || this == Perk.CHATTERBOX
+        || this == Perk.AGGRESSIVE
+        || this == Perk.PEACEFUL
+        || this == Perk.LOGICAL
+        || this == Perk.MAD) {
       return true;
     }
     return false;

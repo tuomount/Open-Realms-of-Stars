@@ -217,7 +217,17 @@ public enum Perk {
   /**
    * Ruler perk for diplomatic. All diplomatic trades get +1.
    */
-  DIPLOMATIC(37, "Diplomatic", "+1 Diplomacy bonus when leader is ruler.");
+  DIPLOMATIC(37, "Diplomatic", "+1 Diplomacy bonus when leader is ruler."),
+  /**
+   * Perk which gives bonus on every job.
+   */
+  SKILLFUL(38, "Skillful", "+1 Diplomacy bonus, +5 accuracy,"
+      + " +1 credit when governor"),
+  /**
+   * Perk which gives negative bonus on every job.
+   */
+  INCOMPETENT(39, "Incompetent", "-1 Diplomacy bonus, -5 accuracy,"
+      + " -1 credit when governor");
 
 
 
@@ -255,7 +265,8 @@ public enum Perk {
         || this == Perk.SCIENTIST
         || this == Perk.MERCHANT
         || this == Perk.GOOD_LEADER
-        || this == Perk.DIPLOMATIC) {
+        || this == Perk.DIPLOMATIC
+        || this == Perk.SKILLFUL) {
       return true;
     }
     return false;
@@ -272,7 +283,8 @@ public enum Perk {
         || this == Perk.ARTISTIC
         || this == Perk.MERCHANT
         || this == Perk.DISCIPLINE
-        || this == Perk.GOOD_LEADER) {
+        || this == Perk.GOOD_LEADER
+        || this == Perk.SKILLFUL) {
       return true;
     }
     return false;
@@ -291,7 +303,8 @@ public enum Perk {
         || this == Perk.SCANNER_EXPERT
         || this == Perk.SPY_MASTER
         || this == Perk.SECRET_AGENT
-        || this == Perk.TRADER) {
+        || this == Perk.TRADER
+        || this == Perk.SKILLFUL) {
       return true;
     }
     return false;
@@ -335,6 +348,14 @@ public enum Perk {
       // Mechions cannot be charismatic
       result = false;
     }
+    if (this == Perk.SKILLFUL && race == SpaceRace.MECHIONS) {
+      // Mechions cannot be skillful
+      result = false;
+    }
+    if (this == Perk.INCOMPETENT && race == SpaceRace.MECHIONS) {
+      // Mechions cannot be incompetent
+      result = false;
+    }
     return result;
   }
   /**
@@ -354,7 +375,8 @@ public enum Perk {
         || this == Perk.AGGRESSIVE
         || this == Perk.PEACEFUL
         || this == Perk.LOGICAL
-        || this == Perk.MAD) {
+        || this == Perk.MAD
+        || this == Perk.INCOMPETENT) {
       return true;
     }
     return false;

@@ -553,6 +553,12 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.EXPLORER)) {
       result = result + 7;
     }
+    if (leader.hasPerk(Perk.SKILLFUL)) {
+      result = result + 3;
+    }
+    if (leader.hasPerk(Perk.INCOMPETENT)) {
+      result = result - 10;
+    }
     return result;
   }
 
@@ -653,6 +659,12 @@ public final class LeaderUtility {
       if (leader.hasPerk(Perk.EXPLORER)) {
         result = result + 1;
       }
+      if (leader.hasPerk(Perk.SKILLFUL)) {
+        result = result + 3;
+      }
+      if (leader.hasPerk(Perk.INCOMPETENT)) {
+        result = result - 10;
+      }
     }
     return result;
   }
@@ -726,6 +738,12 @@ public final class LeaderUtility {
     }
     if (leader.hasPerk(Perk.LOGICAL)) {
       result = result + 10;
+    }
+    if (leader.hasPerk(Perk.SKILLFUL)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.INCOMPETENT)) {
+      result = result - 10;
     }
     return result;
   }
@@ -840,7 +858,12 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.MAD)) {
       result = result - 20;
     }
-
+    if (leader.hasPerk(Perk.SKILLFUL)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.INCOMPETENT)) {
+      result = result - 10;
+    }
     // Simulates voting for leader
     result = result + DiceGenerator.getRandom(20);
     return result;
@@ -959,6 +982,12 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.WARLORD)) {
       result = result + 10;
     }
+    if (leader.hasPerk(Perk.SKILLFUL)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.INCOMPETENT)) {
+      result = result - 10;
+    }
     // Simulates voting for leader
     result = result + DiceGenerator.getRandom(20);
     return result;
@@ -1068,6 +1097,12 @@ public final class LeaderUtility {
     if (leader.hasPerk(Perk.MAD)) {
       result = result + 5;
     }
+    if (leader.hasPerk(Perk.SKILLFUL)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.INCOMPETENT)) {
+      result = result - 10;
+    }
     return result;
   }
 
@@ -1162,6 +1197,12 @@ public final class LeaderUtility {
     }
     if (leader.hasPerk(Perk.LOGICAL)) {
       result = result + 20;
+    }
+    if (leader.hasPerk(Perk.SKILLFUL)) {
+      result = result + 5;
+    }
+    if (leader.hasPerk(Perk.INCOMPETENT)) {
+      result = result - 10;
     }
     return result;
   }
@@ -1431,6 +1472,13 @@ public final class LeaderUtility {
         backstabbing.setValue(backstabbing.getValue() + 5);
         peaceful.setValue(peaceful.getValue() - 5);
         diplomatic.setValue(diplomatic.getValue() - 5);
+      }
+      if (perk == Perk.SKILLFUL) {
+        logical.setValue(logical.getValue() + 1);
+      }
+      if (perk == Perk.INCOMPETENT) {
+        backstabbing.setValue(backstabbing.getValue() + 1);
+        logical.setValue(logical.getValue() - 1);
       }
     }
     ArrayList<AttitudeScore> scores = new ArrayList<>();

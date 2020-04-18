@@ -1943,6 +1943,10 @@ public class DiplomaticTrade {
       bonus = bonus + 1;
     }
     if (info1.getRuler() != null
+        && info1.getRuler().hasPerk(Perk.SKILLFUL)) {
+      bonus = bonus + 1;
+    }
+    if (info1.getRuler() != null
         && info1.getRuler().hasPerk(Perk.DIPLOMATIC)) {
       bonus = bonus + 1;
     }
@@ -1952,6 +1956,10 @@ public class DiplomaticTrade {
     }
     if (info1.getRuler() != null
         && info1.getRuler().hasPerk(Perk.REPULSIVE)) {
+      bonus = bonus - 1;
+    }
+    if (info1.getRuler() != null
+        && info1.getRuler().hasPerk(Perk.INCOMPETENT)) {
       bonus = bonus - 1;
     }
     if (info1.getRuler() != null

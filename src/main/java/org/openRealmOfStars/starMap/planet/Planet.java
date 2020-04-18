@@ -889,7 +889,13 @@ public class Planet {
       if (governor != null && governor.hasPerk(Perk.MERCHANT)) {
         result = result + 1;
       }
+      if (governor != null && governor.hasPerk(Perk.SKILLFUL)) {
+        result = result + 1;
+      }
       if (governor != null && governor.hasPerk(Perk.CORRUPTED)) {
+        result = result - 1;
+      }
+      if (governor != null && governor.hasPerk(Perk.INCOMPETENT)) {
         result = result - 1;
       }
       break;

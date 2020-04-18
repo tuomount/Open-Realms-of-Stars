@@ -1248,6 +1248,14 @@ public boolean launchIntercept(final int distance,
         && shooter.getCommander().hasPerk(Perk.COMBAT_MASTER)) {
       accuracy = accuracy + 5;
     }
+    if (shooter.getCommander() !=  null
+        && shooter.getCommander().hasPerk(Perk.SKILLFUL)) {
+      accuracy = accuracy + 5;
+    }
+    if (shooter.getCommander() !=  null
+        && shooter.getCommander().hasPerk(Perk.INCOMPETENT)) {
+      accuracy = accuracy - 5;
+    }
     accuracy = accuracy - target.getShip().getDefenseValue();
     if (accuracy < 5) {
       accuracy = 5;

@@ -16,6 +16,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -451,6 +452,12 @@ public class Game implements ActionListener {
           GuiStatics.COLOR_DEEP_SPACE_PURPLE_DARK);
       UIManager.put("Tree.textBackground", Color.BLACK);
       UIManager.put("Tree.textForeground", GuiStatics.COLOR_GREEN_TEXT);
+      UIManager.put("ToolTip.background",
+          GuiStatics.COLOR_COOL_SPACE_BLUE_DARK);
+      UIManager.put("ToolTip.foreground",
+          GuiStatics.COLOR_COOL_SPACE_BLUE);
+      UIManager.put("ToolTip.border", BorderFactory
+          .createLineBorder(GuiStatics.COLOR_COOL_SPACE_BLUE_DARKER));
       gameFrame.setTitle(GAME_TITLE + " " + GAME_VERSION);
       ArrayList<BufferedImage> icons = new ArrayList<>();
       icons.add(GuiStatics.LOGO32);

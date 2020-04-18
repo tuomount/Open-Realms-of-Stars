@@ -305,7 +305,7 @@ public class SpaceAnomaly {
           result = new SpaceAnomaly(AnomalyType.ANCIENT_MECHION, 0);
           result.setText("Ancient Mechion was in long lasting stasis in "
               + "ancient ship floating in vastness of space. When entering "
-              + "the ship Mechion wakes and is willing to join your"
+              + "the ship Mechion wakes and is willing to join your "
               + "realm.");
           result.setImage(GuiStatics.IMAGE_OLD_SHIP);
           map.setTile(fleet.getX(), fleet.getY(), empty);

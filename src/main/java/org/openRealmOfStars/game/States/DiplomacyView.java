@@ -1167,7 +1167,7 @@ public class DiplomacyView extends BlackPanel {
     humanMapPlanetsOffer.setEnabled(true);
     humanVoteNo.setSelected(false);
     humanVoteYes.setSelected(false);
-    if (vote != null) {
+    if (vote != null && !trade.isDiplomacyWithPirates()) {
       int support = StarMapUtilities.getVotingSupport(ai, vote, starMap);
       if (support > 0) {
         humanVoteYes.setEnabled(true);
@@ -1190,7 +1190,7 @@ public class DiplomacyView extends BlackPanel {
     aiMapPlanetsOffer.setEnabled(true);
     aiVoteNo.setSelected(false);
     aiVoteYes.setSelected(false);
-    if (vote != null) {
+    if (vote != null && !trade.isDiplomacyWithPirates()) {
       aiVoteNo.setEnabled(true);
       aiVoteYes.setEnabled(true);
     }

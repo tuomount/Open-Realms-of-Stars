@@ -1047,6 +1047,12 @@ public class DiplomacyView extends BlackPanel {
         new Planet[planetArray.size()]));
     aiFleetListOffer.setListData(fleetArray.toArray(
         new Fleet[fleetArray.size()]));
+    aiMapOffer.setEnabled(false);
+    aiMapPlanetsOffer.setEnabled(false);
+    aiVoteNo.setEnabled(false);
+    aiVoteYes.setEnabled(false);
+    aiCreditOffer.setInteractive(false);
+
   }
 
   /**
@@ -1114,6 +1120,11 @@ public class DiplomacyView extends BlackPanel {
         new Planet[planetArray.size()]));
     humanFleetListOffer.setListData(fleetArray.toArray(
         new Fleet[fleetArray.size()]));
+    humanMapOffer.setEnabled(false);
+    humanMapPlanetsOffer.setEnabled(false);
+    humanVoteNo.setEnabled(false);
+    humanVoteYes.setEnabled(false);
+    humanCreditOffer.setInteractive(false);
   }
   /**
    * Set Offering list according the trade.
@@ -1147,26 +1158,46 @@ public class DiplomacyView extends BlackPanel {
     aiCredits = 0;
     int humanIndex = starMap.getPlayerList().getIndex(human);
     int aiIndex = starMap.getPlayerList().getIndex(ai);
+    Vote vote = starMap.getVotes().getNextImportantVote();
     trade = new DiplomaticTrade(starMap, humanIndex, aiIndex);
     humanTechListOffer.setListData(trade.getTradeableTechListForSecond());
     humanMapOffer.setSelected(false);
+    humanMapOffer.setEnabled(true);
     humanMapPlanetsOffer.setSelected(false);
+    humanMapPlanetsOffer.setEnabled(true);
     humanVoteNo.setSelected(false);
     humanVoteYes.setSelected(false);
+    if (vote != null) {
+      int support = StarMapUtilities.getVotingSupport(ai, vote, starMap);
+      if (support > 0) {
+        humanVoteYes.setEnabled(true);
+      }
+      if (support < 0) {
+        humanVoteNo.setEnabled(true);
+      }
+    }
     humanFleetListOffer.setListData(trade.getTradeableFleetListForFirst());
     humanPlanetListOffer.setListData(trade.getTradeablePlanetListForFirst());
     humanCreditOffer.setText("0 Credits");
+    humanCreditOffer.setInteractive(true);
 
     humanLines.setListData(createOfferLines(HUMAN_REGULAR));
 
     aiTechListOffer.setListData(trade.getTradeableTechListForFirst());
     aiMapOffer.setSelected(false);
+    aiMapOffer.setEnabled(true);
     aiMapPlanetsOffer.setSelected(false);
+    aiMapPlanetsOffer.setEnabled(true);
     aiVoteNo.setSelected(false);
     aiVoteYes.setSelected(false);
+    if (vote != null) {
+      aiVoteNo.setEnabled(true);
+      aiVoteYes.setEnabled(true);
+    }
     aiFleetListOffer.setListData(trade.getTradeableFleetListForSecond());
     aiPlanetListOffer.setListData(trade.getTradeablePlanetListForSecond());
     aiCreditOffer.setText("0 Credits");
+    aiCreditOffer.setInteractive(true);
   }
 
   /**

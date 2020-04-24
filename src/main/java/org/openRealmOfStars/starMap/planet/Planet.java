@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.openRealmOfStars.AI.Mission.Mission;
 import org.openRealmOfStars.AI.Mission.MissionPhase;
 import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
@@ -1620,6 +1621,16 @@ public class Planet {
             vote.setOrganizerIndex(this.getPlanetOwnerIndex());
             vote.setPlanetName(getName());
             map.getVotes().getVotes().add(vote);
+            if (Game.getTutorial() != null) {
+              String tutorialText = Game.getTutorial().showTutorialText(98);
+              if (tutorialText != null) {
+                msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                msg.setCoordinate(getCoordinate());
+                map.getPlayerList().getPlayerInfoByIndex(0).getMsgList()
+                   .addNewMessage(msg);
+              }
+            }
           }
           metal = metal - underConstruction.getMetalCost();
           prodResource = prodResource - underConstruction.getProdCost();

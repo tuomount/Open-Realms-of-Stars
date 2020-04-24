@@ -18,6 +18,7 @@ import javax.swing.ListSelectionModel;
 
 import org.openRealmOfStars.audio.music.MusicPlayer;
 import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.FleetListRenderer;
 import org.openRealmOfStars.gui.ListRenderers.PlanetListRenderer;
@@ -1275,6 +1276,29 @@ public class DiplomacyView extends BlackPanel {
   }
 
   /**
+   * Adds possible tutorial based on diplomatic agreements.
+   * @param tutorialIndex Tutorial index to add.
+   */
+  private void addPossibleTutorial(final int tutorialIndex) {
+    if (Game.getTutorial() != null) {
+      String tutorialText = Game.getTutorial().showTutorialText(tutorialIndex);
+      if (tutorialText != null) {
+        Message msg = new Message(MessageType.INFORMATION, tutorialText,
+            Icons.getIconByName(Icons.ICON_TUTORIAL));
+        if (meetingPlace instanceof Planet) {
+          Planet planet = (Planet) meetingPlace;
+          msg.setCoordinate(planet.getCoordinate());
+        }
+        if (meetingPlace instanceof Fleet) {
+          Fleet fleet = (Fleet) meetingPlace;
+          msg.setCoordinate(fleet.getCoordinate());
+        }
+        human.getMsgList().addNewMessage(msg);
+      }
+    }
+  }
+
+  /**
    * Handle Action Command OK.
    */
   private void handleActionCommandOK() {
@@ -1299,6 +1323,7 @@ public class DiplomacyView extends BlackPanel {
           starMap.getNewsCorpData().addNews(
               NewsFactory.makeDefensiveActivation(ai, list));
         }
+        addPossibleTutorial(105);
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.ALLIANCE)) {
         NewsData newsData = NewsFactory.makeAllianceNews(ai, human,
@@ -1306,6 +1331,15 @@ public class DiplomacyView extends BlackPanel {
         starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
             meetingPlace, newsData));
         starMap.getNewsCorpData().addNews(newsData);
+        addPossibleTutorial(103);
+      }
+      if (trade.getFirstOffer().isTypeInOffer(NegotiationType.DEFENSIVE_PACT)) {
+        NewsData newsData = NewsFactory.makeDefensivePactNews(ai, human,
+            meetingPlace);
+        starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+            meetingPlace, newsData));
+        starMap.getNewsCorpData().addNews(newsData);
+        addPossibleTutorial(102);
       }
       if (trade.getFirstOffer().isTypeInOffer(
           NegotiationType.TRADE_ALLIANCE)) {
@@ -1314,6 +1348,7 @@ public class DiplomacyView extends BlackPanel {
         starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
             meetingPlace, newsData));
         starMap.getNewsCorpData().addNews(newsData);
+        addPossibleTutorial(101);
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.PEACE)) {
         NewsData newsData = NewsFactory.makePeaceNews(ai, human,
@@ -1322,6 +1357,7 @@ public class DiplomacyView extends BlackPanel {
             meetingPlace, newsData));
         starMap.getNewsCorpData().addNews(newsData);
         ai.getMissions().removeAttackAgainstPlayer(human, starMap);
+        addPossibleTutorial(101);
       }
       NegotiationOffer offer = trade.getFirstOffer().getEmbargoOffer();
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.TRADE_EMBARGO)
@@ -1334,6 +1370,7 @@ public class DiplomacyView extends BlackPanel {
         ai.getMissions().removeAttackAgainstPlayer(human, starMap);
         StarMapUtilities.addEmbargoReputation(starMap, human, ai,
             offer.getRealm());
+        addPossibleTutorial(104);
       }
       updatePanel(SpeechType.OFFER_ACCEPTED);
       resetChoices();
@@ -1386,6 +1423,7 @@ public class DiplomacyView extends BlackPanel {
               starMap.getNewsCorpData().addNews(
                   NewsFactory.makeDefensiveActivation(human, defenseList));
             }
+            addPossibleTutorial(105);
           } else {
             StarMapUtilities.addWarDeclatingReputation(starMap, ai);
             NewsData newsData = NewsFactory.makeWarNews(ai, human,
@@ -1399,6 +1437,7 @@ public class DiplomacyView extends BlackPanel {
               starMap.getNewsCorpData().addNews(
                   NewsFactory.makeDefensiveActivation(ai, defenseList));
             }
+            addPossibleTutorial(105);
           }
         }
         trade.generateEqualTrade(NegotiationType.WAR);
@@ -1439,6 +1478,7 @@ public class DiplomacyView extends BlackPanel {
         starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
             meetingPlace, newsData));
         starMap.getNewsCorpData().addNews(newsData);
+        addPossibleTutorial(101);
       } else {
         updatePanel(SpeechType.DECLINE);
       }
@@ -1466,6 +1506,7 @@ public class DiplomacyView extends BlackPanel {
             starMap.getNewsCorpData().addNews(
                 NewsFactory.makeDefensiveActivation(ai, defenseList));
           }
+          addPossibleTutorial(105);
         }
         trade.generateEqualTrade(NegotiationType.WAR);
         trade.doTrades();
@@ -1502,6 +1543,7 @@ public class DiplomacyView extends BlackPanel {
             starMap.getNewsCorpData().addNews(
                 NewsFactory.makeDefensiveActivation(ai, defenseList));
           }
+          addPossibleTutorial(105);
         }
       }
     }
@@ -1529,6 +1571,7 @@ public class DiplomacyView extends BlackPanel {
         starMap.getNewsCorpData().addNews(newsData);
         starMap.getHistory().addEvent(
             NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
+        addPossibleTutorial(103);
       } else {
         updatePanel(SpeechType.DECLINE);
       }
@@ -1563,6 +1606,7 @@ public class DiplomacyView extends BlackPanel {
           starMap.getHistory().addEvent(
               NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
           StarMapUtilities.addEmbargoReputation(starMap, human, ai, realm);
+          addPossibleTutorial(104);
         } else {
           embargoLine = null;
           updatePanel(SpeechType.DECLINE);
@@ -1593,6 +1637,7 @@ public class DiplomacyView extends BlackPanel {
         starMap.getNewsCorpData().addNews(newsData);
         starMap.getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
             meetingPlace, newsData));
+        addPossibleTutorial(102);
       } else {
         updatePanel(SpeechType.DECLINE);
       }
@@ -1640,6 +1685,7 @@ public class DiplomacyView extends BlackPanel {
               starMap.getNewsCorpData().addNews(
                   NewsFactory.makeDefensiveActivation(ai, defenseList));
             }
+            addPossibleTutorial(105);
           }
         } else {
           updatePanel(SpeechType.DECLINE_ANGER);
@@ -1713,8 +1759,8 @@ public class DiplomacyView extends BlackPanel {
           starMap.getNewsCorpData().addNews(
               NewsFactory.makeDefensiveActivation(human, defenseList));
         }
+        addPossibleTutorial(105);
       }
-
     }
     if (speechSelected != null
         && speechSelected.getType() == SpeechType.PEACE_OFFER) {

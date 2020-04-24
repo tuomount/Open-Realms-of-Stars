@@ -655,7 +655,13 @@ public class MapPanel extends JPanel {
                     Icons.getIconByName(Icons.ICON_TUTORIAL));
                 msg.setCoordinate(new Coordinate(i + cx, j + cy));
                 info.getMsgList().addNewMessage(msg);
-                return;
+              }
+              tutorialText = Game.getTutorial().showTutorialText(90);
+              if (tutorialText != null) {
+                Message msg = new Message(MessageType.INFORMATION, tutorialText,
+                    Icons.getIconByName(Icons.ICON_TUTORIAL));
+                msg.setCoordinate(new Coordinate(i + cx, j + cy));
+                info.getMsgList().addNewMessage(msg);
               }
             }
           }

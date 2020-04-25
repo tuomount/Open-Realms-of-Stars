@@ -54,6 +54,22 @@ public class BigImagePanel extends JPanel {
   private BufferedImage backgroundImg;
 
   /**
+   * Image for north planet
+   */
+  private BufferedImage northPlanetImg;
+  /**
+   * Image for south planet
+   */
+  private BufferedImage southPlanetImg;
+  /**
+   * Image for west planet
+   */
+  private BufferedImage westPlanetImg;
+  /**
+   * Image for east planet
+   */
+  private BufferedImage eastPlanetImg;
+  /**
    * Ship images to draw
    */
   private BufferedImage[] shipImages;
@@ -326,6 +342,30 @@ public class BigImagePanel extends JPanel {
       this.setBackground(Color.black);
       g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
     }
+    //g2d.drawImage(GuiStatics.NEBULAE_IMAGE, -sx, -sy, null);
+    GraphRoutines.drawTiling(g2d, GuiStatics.NEBULAE_IMAGE, -sx, -sy,
+        this.getWidth(), this.getHeight());
+    if (northPlanetImg != null) {
+      int offsetX = 0;
+      int offsetY = 0;
+      g2d.drawImage(northPlanetImg, offsetX, offsetY, null);
+    }
+    if (eastPlanetImg != null) {
+      int offsetX = eastPlanetImg.getWidth();
+      int offsetY = 0;
+      g2d.drawImage(eastPlanetImg, this.getWidth() - offsetX, offsetY, null);
+    }
+    if (southPlanetImg != null) {
+      int offsetX = southPlanetImg.getWidth();
+      int offsetY = southPlanetImg.getHeight();
+      g2d.drawImage(southPlanetImg, this.getWidth() - offsetX,
+          this.getHeight() - offsetY, null);
+    }
+    if (westPlanetImg != null) {
+      int offsetX = 0;
+      int offsetY = westPlanetImg.getHeight();
+      g2d.drawImage(westPlanetImg, offsetX, this.getHeight() - offsetY, null);
+    }
     if (backgroundImg != null) {
       if (title == null) {
         int offsetX = (PLANET_X_OFFSET - backgroundImg.getWidth()) / 2;
@@ -336,9 +376,6 @@ public class BigImagePanel extends JPanel {
         }
         g2d.drawImage(backgroundImg, offsetX, offsetY, null);
       } else {
-        //g2d.drawImage(GuiStatics.NEBULAE_IMAGE, -sx, -sy, null);
-        GraphRoutines.drawTiling(g2d, GuiStatics.NEBULAE_IMAGE, -sx, -sy,
-            this.getWidth(), this.getHeight());
         int offsetX = (this.getWidth() - backgroundImg.getWidth()) / 2;
         int offsetY = (PLANET_Y_OFFSET - backgroundImg.getHeight()) / 2;
         if (planet.isGasGiant()) {
@@ -347,10 +384,6 @@ public class BigImagePanel extends JPanel {
         }
         g2d.drawImage(backgroundImg, offsetX, offsetY, null);
       }
-    } else {
-      //g2d.drawImage(GuiStatics.NEBULAE_IMAGE, -sx, -sy, null);
-      GraphRoutines.drawTiling(g2d, GuiStatics.NEBULAE_IMAGE, -sx, -sy,
-          this.getWidth(), this.getHeight());
     }
     if (animation != null) {
       if (animation
@@ -548,4 +581,56 @@ public class BigImagePanel extends JPanel {
   public void setText(final String text) {
     textInformation = text;
   }
+
+  /**
+   * Set distant planet image
+   * @param distantPlanet Planet to be in distant. Can be null.
+   * @return Distant planet image
+   */
+  private BufferedImage setDistantPlanet(final Planet distantPlanet) {
+    BufferedImage img = null;
+    if (distantPlanet != null) {
+      img = distantPlanet.getBigImage();
+      int imgWid = img.getWidth() / 2;
+      int screenWid = this.getWidth() / 3;
+      if (imgWid < screenWid) {
+        img = GraphRoutines.scaleImage(img, img.getWidth() / 2,
+            img.getHeight() / 2);
+      } else {
+        img = GraphRoutines.scaleImage(img, img.getWidth() / 3,
+            img.getHeight() / 3);
+      }
+    }
+    return img;
+  }
+
+  /**
+   * Set distant north planet.
+   * @param northPlanet Planet
+   */
+  public void setNorthPlanet(final Planet northPlanet) {
+    northPlanetImg = setDistantPlanet(northPlanet);
+  }
+  /**
+   * Set distant east planet.
+   * @param eastPlanet Planet
+   */
+  public void setEastPlanet(final Planet eastPlanet) {
+    eastPlanetImg = setDistantPlanet(eastPlanet);
+  }
+  /**
+   * Set distant south planet.
+   * @param southPlanet Planet
+   */
+  public void setSouthPlanet(final Planet southPlanet) {
+    southPlanetImg = setDistantPlanet(southPlanet);
+  }
+  /**
+   * Set distant west planet.
+   * @param westPlanet Planet
+   */
+  public void setWestPlanet(final Planet westPlanet) {
+    westPlanetImg = setDistantPlanet(westPlanet);
+  }
+
 }

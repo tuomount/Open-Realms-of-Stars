@@ -170,6 +170,22 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
   private SpaceButton leaderViewBtn;
 
   /**
+   * Planet at north from fleet.
+   */
+  private Planet northPlanet;
+  /**
+   * Planet at south from fleet.
+   */
+  private Planet southPlanet;
+  /**
+   * Planet at west from fleet.
+   */
+  private Planet westPlanet;
+  /**
+   * Planet at east from fleet.
+   */
+  private Planet eastPlanet;
+  /**
    * Fleet view constructor. Fleet view is used when view fleet in deep space
    * or fleet is orbiting a planet.
    * @param planet Planet where fleet is orbiting. If planet is null
@@ -794,6 +810,16 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       if (fleetInfo != info && conquerBtn != null) {
         conquerBtn.setEnabled(false);
       }
+      int x = fleet.getCoordinate().getX();
+      int y = fleet.getCoordinate().getY();
+      northPlanet = starMap.getPlanetByCoordinate(x, y - 1);
+      southPlanet = starMap.getPlanetByCoordinate(x, y + 1);
+      westPlanet = starMap.getPlanetByCoordinate(x - 1, y);
+      eastPlanet = starMap.getPlanetByCoordinate(x + 1, y);
+      imgBase.setNorthPlanet(northPlanet);
+      imgBase.setSouthPlanet(southPlanet);
+      imgBase.setWestPlanet(westPlanet);
+      imgBase.setEastPlanet(eastPlanet);
     }
   }
 

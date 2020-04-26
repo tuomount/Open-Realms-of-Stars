@@ -67,6 +67,10 @@ public final class LeaderUtility {
    */
   public static final int PERK_TYPE_COMMANDER = 4;
   /**
+   * Commander type perk
+   */
+  public static final int PERK_TYPE_MENTAL = 5;
+  /**
    * Hidden constructor.
    */
   private LeaderUtility() {

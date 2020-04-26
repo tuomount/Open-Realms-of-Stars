@@ -12,6 +12,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
@@ -102,6 +103,31 @@ public final class RandomEventUtility {
       Message message = new Message(MessageType.INFORMATION, event.getText(),
           Icons.getIconByName(Icons.ICON_ELECTRONICS_TECH));
       info.getMsgList().addFirstMessage(message);
+    }
+  }
+
+  /**
+   * Handle massive data lost event.
+   * @param event Random event, must be Massive data lost.
+   */
+  public static void handleRulerStress(final RandomEvent event) {
+    if (event.getBadType() == BadRandomType.RULER_STRESS) {
+      PlayerInfo info = event.getRealm();
+      if (info.getRuler() != null) {
+        Perk[] perks = LeaderUtility.getNewPerks(info.getRuler(),
+            LeaderUtility.PERK_TYPE_MENTAL);
+        if (perks.length > 0) {
+          Perk perk = perks[DiceGenerator.getRandom(perks.length - 1)];
+          info.getRuler().getPerkList().add(perk);
+          event.setText(info.getRuler().getCallName() + " has been on massive"
+              + " stress lately and got " + perk.getName().toLowerCase()
+              + ". This is terrible news for whole " + info.getEmpireName()
+              + ".");
+          Message message = new Message(MessageType.INFORMATION,
+              event.getText(), Icons.getIconByName(Icons.ICON_RULER));
+          info.getMsgList().addFirstMessage(message);
+        }
+      }
     }
   }
 
@@ -974,6 +1000,10 @@ public final class RandomEventUtility {
         }
         case RAIDERS: {
           handleRaiders(event, map);
+          break;
+        }
+        case RULER_STRESS: {
+          handleRulerStress(event);
           break;
         }
         default:

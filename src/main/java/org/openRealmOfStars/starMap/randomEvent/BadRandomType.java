@@ -70,5 +70,9 @@ public enum BadRandomType {
   /**
    * One of planet's building explodes and kills one population.
    */
-  CATASTROPHIC_ACCIDENT
+  CATASTROPHIC_ACCIDENT,
+  /**
+   * Ruler has too much stress and gets mental perk.
+   */
+  RULER_STRESS
 }

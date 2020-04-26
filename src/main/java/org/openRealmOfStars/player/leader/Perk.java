@@ -332,10 +332,6 @@ public enum Perk {
       // Mechions are robots, they have no mental problems
       result = false;
     }
-    if (this == Perk.MAD && race == SpaceRace.MECHIONS) {
-      // Mechions are robots, they have no mental problems
-      result = false;
-    }
     if (this == Perk.PEACEFUL && race == SpaceRace.SPORKS) {
       // Sporks are not peaceful
       result = false;
@@ -390,6 +386,21 @@ public enum Perk {
         || this == Perk.POWER_HUNGRY
         || this == Perk.WEALTHY
         || this == Perk.HEALTHY) {
+      return true;
+    }
+    return false;
+  }
+  /**
+   * Is perk mental perk or something else
+   * @return True if mental perk
+   */
+  public boolean isMentalPerk() {
+    if (this == Perk.AGGRESSIVE
+        || this == Perk.MAD
+        || this == Perk.PEACEFUL
+        || this == Perk.LOGICAL
+        || this == Perk.ADDICTED
+        || this == Perk.PACIFIST) {
       return true;
     }
     return false;

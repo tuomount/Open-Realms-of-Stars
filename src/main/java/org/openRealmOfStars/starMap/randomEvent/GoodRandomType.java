@@ -54,5 +54,9 @@ public enum GoodRandomType {
    * Meteoroid just misses the planet, but scientist are able mine
    * metal from it.
    */
-  MISSED_METEOROID
+  MISSED_METEOROID,
+  /**
+   * Leader gains level by getting his/hers achievements done earlier.
+   */
+  LEADER_LEVEL;
 }

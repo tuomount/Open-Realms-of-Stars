@@ -11,6 +11,7 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.PlayerList;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
 import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.player.tech.TechList;
@@ -95,11 +96,14 @@ public class RandomEventUtilityTest {
     Mockito.when(planet.getImageInstructions()).thenReturn(
         ImageInstruction.PLANET_WATERWORLD1);
     Mockito.when(planet.getName()).thenReturn("Planet I");
-    player1.setRuler(LeaderUtility.createLeader(player1, planet,
-        LeaderUtility.LEVEL_START_RULER));
-    player2.setRuler(LeaderUtility.createLeader(player2, planet,
-        LeaderUtility.LEVEL_START_RULER));
-    
+    Leader leader1 = LeaderUtility.createLeader(player1, planet,
+        LeaderUtility.LEVEL_START_RULER);
+    player1.setRuler(leader1);
+    player1.getLeaderPool().add(leader1);
+    Leader leader2 = LeaderUtility.createLeader(player2, planet,
+        LeaderUtility.LEVEL_START_RULER);
+    player2.setRuler(leader2);
+    player2.getLeaderPool().add(leader2);
     Building[] buildingList = new Building[2];
     Building build = Mockito.mock(Building.class);
     Mockito.when(build.getName()).thenReturn("Test building");
@@ -299,6 +303,18 @@ public class RandomEventUtilityTest {
         info);
     assertEquals("", event.getText());
     RandomEventUtility.handleRulerStress(event);
+    assertNotEquals("", event.getText());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.BehaviourTest.class)
+  public void testLeaderLevel() {
+    StarMap starMap = generateMapWithPlayer(SpaceRace.HUMAN);
+    PlayerInfo info = starMap.getPlayerByIndex(1);
+    RandomEvent event = new RandomEvent(GoodRandomType.LEADER_LEVEL,
+        info);
+    assertEquals("", event.getText());
+    RandomEventUtility.handleLeaderLevel(event);
     assertNotEquals("", event.getText());
   }
 

@@ -12,7 +12,9 @@ import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.LeaderUtility;
+import org.openRealmOfStars.player.leader.MilitaryRank;
 import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
@@ -107,8 +109,8 @@ public final class RandomEventUtility {
   }
 
   /**
-   * Handle massive data lost event.
-   * @param event Random event, must be Massive data lost.
+   * Handle ruler stress.
+   * @param event Random event, must be ruler stress
    */
   public static void handleRulerStress(final RandomEvent event) {
     if (event.getBadType() == BadRandomType.RULER_STRESS) {
@@ -126,6 +128,41 @@ public final class RandomEventUtility {
           Message message = new Message(MessageType.INFORMATION,
               event.getText(), Icons.getIconByName(Icons.ICON_RULER));
           info.getMsgList().addFirstMessage(message);
+        }
+      }
+    }
+  }
+
+  /**
+   * Handle leader level
+   * @param event Random event, must be leader level
+   */
+  public static void handleLeaderLevel(final RandomEvent event) {
+    if (event.getGoodType() == GoodRandomType.LEADER_LEVEL) {
+      PlayerInfo info = event.getRealm();
+      ArrayList<Leader> leaders = new ArrayList<>();
+      for (Leader leader : info.getLeaderPool()) {
+        if (leader.getJob() != Job.DEAD) {
+          leaders.add(leader);
+        }
+      }
+      if (leaders.size() > 0) {
+        int index = DiceGenerator.getRandom(leaders.size() - 1);
+        Leader leader = leaders.get(index);
+        leader.setLevel(leader.getLevel() + 1);
+        LeaderUtility.addRandomPerks(leader);
+        event.setText(leader.getCallName()
+            + " has reached " + leader.getGender().getHisHer()
+            + " achievements earlier and gains extra level.");
+        Message msg = new Message(MessageType.LEADER, event.getText(),
+            LeaderUtility.getIconBasedOnLeaderJob(leader));
+        msg.setMatchByString("Index:" + info.getLeaderIndex(leader));
+        info.getMsgList().addFirstMessage(msg);
+        if (leader.getJob() == Job.COMMANDER
+            && leader.getMilitaryRank() != MilitaryRank.CIVILIAN) {
+          leader.setMilitaryRank(MilitaryRank.getByIndex(
+              leader.getMilitaryRank().getIndex() + 1));
+          leader.setTitle(LeaderUtility.createTitleForLeader(leader, info));
         }
       }
     }
@@ -1036,6 +1073,10 @@ public final class RandomEventUtility {
         }
         case SOLAR_ACTIVITY_DIMISHED: {
           handleSolarActivityDecreased(event, map);
+          break;
+        }
+        case LEADER_LEVEL: {
+          handleLeaderLevel(event);
           break;
         }
         default:

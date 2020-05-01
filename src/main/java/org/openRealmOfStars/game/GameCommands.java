@@ -488,6 +488,10 @@ public final class GameCommands {
    * Assign leader
    */
   public static final String COMMAND_ASSIGN_LEADER = "AssignLeader";
+  /**
+   * View espionage mission view
+   */
+  public static final String COMMAND_ESPIONAGE_MISSIONS = "EspionageMissions";
 
   /**
    * Start combat for no reason. This is more like debug purposes

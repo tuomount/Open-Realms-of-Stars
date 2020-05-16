@@ -248,7 +248,8 @@ public final class LeaderUtility {
    */
   public static void addRandomPerks(final Leader leader) {
     boolean jobBasedPerkAdded = false;
-    if (DiceGenerator.getRandom(99) < 60) {
+    Perk[] goodPerks = getNewPerks(leader, PERK_TYPE_GOOD);
+    if (DiceGenerator.getRandom(99) < 60 || goodPerks.length == 0) {
       // Add Perk based on job
       Perk[] newPerks = null;
       if (leader.getJob() == Job.RULER) {
@@ -268,13 +269,17 @@ public final class LeaderUtility {
     }
     if (!jobBasedPerkAdded) {
       Perk[] newPerks = getNewPerks(leader, PERK_TYPE_GOOD);
-      int index = DiceGenerator.getRandom(newPerks.length - 1);
-      leader.getPerkList().add(newPerks[index]);
+      if (newPerks.length > 0) {
+        int index = DiceGenerator.getRandom(newPerks.length - 1);
+        leader.getPerkList().add(newPerks[index]);
+      }
     }
     if (DiceGenerator.getRandom(99)  < 10) {
       Perk[] newPerks = getNewPerks(leader, PERK_TYPE_BAD);
-      int index = DiceGenerator.getRandom(newPerks.length - 1);
-      leader.getPerkList().add(newPerks[index]);
+      if (newPerks.length > 0) {
+        int index = DiceGenerator.getRandom(newPerks.length - 1);
+        leader.getPerkList().add(newPerks[index]);
+      }
     }
   }
 

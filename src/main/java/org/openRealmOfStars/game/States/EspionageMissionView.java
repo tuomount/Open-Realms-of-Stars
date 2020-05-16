@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -15,9 +17,11 @@ import javax.swing.ListSelectionModel;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.ProductionListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
+import org.openRealmOfStars.gui.buttons.SpaceCombo;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.gui.infopanel.InfoPanel;
 import org.openRealmOfStars.gui.labels.IconLabel;
+import org.openRealmOfStars.gui.labels.InfoTextArea;
 import org.openRealmOfStars.gui.labels.SpaceLabel;
 import org.openRealmOfStars.gui.panels.BigImagePanel;
 import org.openRealmOfStars.gui.panels.BlackPanel;
@@ -27,9 +31,14 @@ import org.openRealmOfStars.gui.panels.WorkerProductionPanel;
 import org.openRealmOfStars.gui.utilies.GuiStatics;
 import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.SpaceRace.SpaceRace;
+import org.openRealmOfStars.player.espionage.EspionageUtility;
 import org.openRealmOfStars.player.fleet.Fleet;
+import org.openRealmOfStars.player.leader.EspionageMission;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.Perk;
+import org.openRealmOfStars.player.tech.Tech;
+import org.openRealmOfStars.player.tech.TechList;
+import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -175,6 +184,14 @@ public class EspionageMissionView extends BlackPanel {
    * Fleet near the planet
    */
   private Fleet fleet;
+  /**
+   * Mission type selection.
+   */
+  private SpaceCombo<EspionageMission> missionType;
+  /**
+   * Mission information text area.
+   */
+  private InfoTextArea missionInfo;
   /**
    * Planet view constructor. Planet view for viewing planet.
    * @param planet Planet to view
@@ -384,7 +401,25 @@ public class EspionageMissionView extends BlackPanel {
 
     InvisiblePanel eastPanel = new InvisiblePanel(imgBase);
     eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
-    SpaceButton btn = new SpaceButton("Hail",
+
+    missionType = new SpaceCombo<EspionageMission>(getAvailableMissionTypes());
+    missionType.setSelectedIndex(0);
+    missionType.addActionListener(listener);
+    missionType.setActionCommand(GameCommands.COMMAND_ESPIONAGE_MISSIONS);
+    eastPanel.add(missionType);
+    missionInfo = new InfoTextArea(5, 35);
+    missionInfo.setFont(GuiStatics.getFontCubellanSmaller());
+    missionInfo.setEditable(false);
+    missionInfo.setWrapStyleWord(true);
+    missionInfo.setLineWrap(true);
+    missionInfo.setCharacterWidth(7);
+    missionInfo.setMaximumSize(new Dimension(400, 200));
+    eastPanel.add(missionInfo);
+    SpaceButton btn = new SpaceButton("Execute mission",
+        GameCommands.COMMAND_EXECUTE_MISSION);
+    btn.addActionListener(listener);
+    eastPanel.add(btn);
+    btn = new SpaceButton("Hail Planet",
         GameCommands.COMMAND_HAIL_FLEET_PLANET);
     btn.addActionListener(listener);
     eastPanel.add(btn);
@@ -415,6 +450,43 @@ public class EspionageMissionView extends BlackPanel {
   }
 
   /**
+   * Get available mission types based on planet.
+   * @return Available mission types.
+   */
+  public EspionageMission[] getAvailableMissionTypes() {
+    ArrayList<EspionageMission> list = new ArrayList<>();
+    list.add(EspionageMission.GAIN_TRUST);
+    list.add(EspionageMission.SABOTAGE);
+    if (planet.getPlanetPlayerInfo() != null) {
+      if (planet.getPlanetPlayerInfo().getTotalCredits() > 0) {
+        list.add(EspionageMission.STEAL_CREDIT);
+      }
+      ArrayList<Tech> stealableTech = new ArrayList<>();
+      for (int type = 0; type < 6; type++) {
+        Tech[] tradeTechs = planet.getPlanetPlayerInfo()
+            .getTechList().getListForType(TechType
+                .getTypeByIndex(type));
+        Tech[] ownTechs = info.getTechList().getListForType(TechType
+                .getTypeByIndex(type));
+        Tech[] techs = TechList.getTechDifference(tradeTechs, ownTechs);
+        for (Tech tech : techs) {
+          stealableTech.add(tech);
+        }
+      }
+      if (stealableTech.size() > 0) {
+        list.add(EspionageMission.STEAL_TECH);
+      }
+      if (planet.getGovernor() != null) {
+        list.add(EspionageMission.ASSASSIN_GOVERNOR);
+      }
+      if (planet.getBuildingList().length > 0) {
+        list.add(EspionageMission.DEMOLISH_BUILDING);
+        list.add(EspionageMission.TERRORIST_ATTACK);
+      }
+    }
+    return list.toArray(new EspionageMission[list.size()]);
+  }
+  /**
    * Get Espionage stats.
    * @return Stats as a string
    */
@@ -439,6 +511,7 @@ public class EspionageMissionView extends BlackPanel {
     }
     return sb.toString();
   }
+
   /**
    * Update espionage mission view panels
    */
@@ -515,6 +588,15 @@ public class EspionageMissionView extends BlackPanel {
     }
 
     buildingList.setListData(planet.getBuildingList());
+    if (missionType.getSelectedItem() != null) {
+      EspionageMission mission =
+          (EspionageMission) missionType.getSelectedItem();
+      missionInfo.setText(mission.getDescription() + "\nDetection chance: "
+      + EspionageUtility.calculateDetectionSuccess(planet, fleet, mission)
+      + "%\nSuccess chance: "
+      + EspionageUtility.calculateSuccess(planet, fleet, mission)
+      + "%");
+    }
     this.repaint();
   }
 
@@ -544,6 +626,17 @@ public class EspionageMissionView extends BlackPanel {
    */
   public void setFleet(final Fleet fleet) {
     this.fleet = fleet;
+  }
+
+  /**
+   * Handle actions for espionage mission view.
+   * @param arg0 ActionEvent command what player did
+   */
+  public void handleAction(final ActionEvent arg0) {
+    if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_ESPIONAGE_MISSIONS)) {
+      updatePanel();
+    }
   }
 
 }

@@ -86,15 +86,12 @@ public enum EspionageMission {
     return baseDetection;
   }
 
-  /**
-   * Get Espionage mission name as a string.
-   * @return String
-   */
-  public String getName() {
+  @Override
+  public String toString() {
     switch (this) {
       default:
       case SABOTAGE: return "Sabotage";
-      case ASSASSIN_GOVERNOR: return "Assasin governor";
+      case ASSASSIN_GOVERNOR: return "Assassin governor";
       case DEMOLISH_BUILDING: return "Demolish";
       case GAIN_TRUST: return "Gain trust";
       case STEAL_CREDIT: return "Steal credit";

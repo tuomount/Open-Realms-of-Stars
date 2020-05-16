@@ -2001,7 +2001,7 @@ public class Planet {
    * @param buildingName Building name to look for-
    * @return True if found, otherwise false.
    */
-  private boolean hasCertainBuilding(final String buildingName) {
+  public boolean hasCertainBuilding(final String buildingName) {
     Building[] buildingsArray = getBuildingList();
     for (Building building : buildingsArray) {
       if (building.getName().equals(buildingName)) {

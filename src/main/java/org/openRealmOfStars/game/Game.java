@@ -2767,6 +2767,7 @@ public class Game implements ActionListener {
         changeGameState(GameState.FLEETVIEW, espionageMissionView.getFleet());
         SoundPlayer.playMenuSound();
       }
+      espionageMissionView.handleAction(arg0);
       return;
     }
     if (gameState == GameState.FLEETVIEW && fleetView != null) {

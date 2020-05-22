@@ -86,6 +86,54 @@ public enum EspionageMission {
     return baseDetection;
   }
 
+  /**
+   * Get Espionage mission name
+   * @return name as String.
+   */
+  public String getName() {
+    switch (this) {
+      default:
+      case SABOTAGE: return "SABOTAGE";
+      case ASSASSIN_GOVERNOR: return "ASSASIN";
+      case DEMOLISH_BUILDING: return "DEMOLISH";
+      case GAIN_TRUST: return "GAIN_TRUST";
+      case STEAL_CREDIT: return "STEAL_CREDIT";
+      case STEAL_TECH: return "STEAL_TECH";
+      case TERRORIST_ATTACK: return "TERRORIST_ATTACK";
+    }
+  }
+
+  /**
+   * Get Espionage mission based by string.
+   * If mission is not found this will then return gain trust.
+   * @param name Mission name as a String
+   * @return Espionage Mission.
+   */
+  public static EspionageMission getMission(final String name) {
+    if (name.equals(SABOTAGE.getName())) {
+      return SABOTAGE;
+    }
+    if (name.equals(ASSASSIN_GOVERNOR.getName())) {
+      return ASSASSIN_GOVERNOR;
+    }
+    if (name.equals(DEMOLISH_BUILDING.getName())) {
+      return DEMOLISH_BUILDING;
+    }
+    if (name.equals(GAIN_TRUST.getName())) {
+      return GAIN_TRUST;
+    }
+    if (name.equals(STEAL_CREDIT.getName())) {
+      return STEAL_CREDIT;
+    }
+    if (name.equals(STEAL_TECH.getName())) {
+      return STEAL_TECH;
+    }
+    if (name.equals(TERRORIST_ATTACK.getName())) {
+      return TERRORIST_ATTACK;
+    }
+    return EspionageMission.GAIN_TRUST;
+  }
+
   @Override
   public String toString() {
     switch (this) {

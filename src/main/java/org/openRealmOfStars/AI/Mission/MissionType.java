@@ -77,7 +77,11 @@ public enum MissionType {
    * Mission which idea is focused on espionage. It tries to keep fleet
    * inside enemy sector without being noticed.
    */
-  SPY_MISSION;
+  SPY_MISSION,
+  /**
+   * Espionage mission against one planet.
+   */
+  ESPIONAGE_MISSION;
 
   /**
    * Get Mission type with index
@@ -109,6 +113,8 @@ public enum MissionType {
       return 10;
     case SPY_MISSION:
       return 11;
+    case ESPIONAGE_MISSION:
+      return 12;
     default:
       return 0;
     }
@@ -141,6 +147,8 @@ public enum MissionType {
       return "Colony Expolore";
     case SPY_MISSION:
       return "Spy mission";
+    case ESPIONAGE_MISSION:
+      return "Espionage mission";
     default:
       return "Unknown";
     }

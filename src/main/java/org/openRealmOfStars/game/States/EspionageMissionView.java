@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -36,9 +35,6 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.EspionageMission;
 import org.openRealmOfStars.player.leader.Leader;
 import org.openRealmOfStars.player.leader.Perk;
-import org.openRealmOfStars.player.tech.Tech;
-import org.openRealmOfStars.player.tech.TechList;
-import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.starMap.planet.construction.Construction;
@@ -402,7 +398,8 @@ public class EspionageMissionView extends BlackPanel {
     InvisiblePanel eastPanel = new InvisiblePanel(imgBase);
     eastPanel.setLayout(new BoxLayout(eastPanel, BoxLayout.Y_AXIS));
 
-    missionType = new SpaceCombo<EspionageMission>(getAvailableMissionTypes());
+    missionType = new SpaceCombo<EspionageMission>(
+        EspionageUtility.getAvailableMissionTypes(planet, info));
     missionType.setSelectedIndex(0);
     missionType.addActionListener(listener);
     missionType.setActionCommand(GameCommands.COMMAND_ESPIONAGE_MISSIONS);
@@ -449,43 +446,6 @@ public class EspionageMissionView extends BlackPanel {
 
   }
 
-  /**
-   * Get available mission types based on planet.
-   * @return Available mission types.
-   */
-  public EspionageMission[] getAvailableMissionTypes() {
-    ArrayList<EspionageMission> list = new ArrayList<>();
-    list.add(EspionageMission.GAIN_TRUST);
-    list.add(EspionageMission.SABOTAGE);
-    if (planet.getPlanetPlayerInfo() != null) {
-      if (planet.getPlanetPlayerInfo().getTotalCredits() > 0) {
-        list.add(EspionageMission.STEAL_CREDIT);
-      }
-      ArrayList<Tech> stealableTech = new ArrayList<>();
-      for (int type = 0; type < 6; type++) {
-        Tech[] tradeTechs = planet.getPlanetPlayerInfo()
-            .getTechList().getListForType(TechType
-                .getTypeByIndex(type));
-        Tech[] ownTechs = info.getTechList().getListForType(TechType
-                .getTypeByIndex(type));
-        Tech[] techs = TechList.getTechDifference(tradeTechs, ownTechs);
-        for (Tech tech : techs) {
-          stealableTech.add(tech);
-        }
-      }
-      if (stealableTech.size() > 0) {
-        list.add(EspionageMission.STEAL_TECH);
-      }
-      if (planet.getGovernor() != null) {
-        list.add(EspionageMission.ASSASSIN_GOVERNOR);
-      }
-      if (planet.getBuildingList().length > 0) {
-        list.add(EspionageMission.DEMOLISH_BUILDING);
-        list.add(EspionageMission.TERRORIST_ATTACK);
-      }
-    }
-    return list.toArray(new EspionageMission[list.size()]);
-  }
   /**
    * Get Espionage stats.
    * @return Stats as a string

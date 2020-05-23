@@ -22,8 +22,10 @@ import org.openRealmOfStars.player.diplomacy.DiplomaticTrade;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationOffer;
 import org.openRealmOfStars.player.diplomacy.negotiation.NegotiationType;
 import org.openRealmOfStars.player.diplomacy.speeches.SpeechType;
+import org.openRealmOfStars.player.espionage.EspionageUtility;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
+import org.openRealmOfStars.player.leader.EspionageMission;
 import org.openRealmOfStars.player.leader.Job;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
@@ -1239,6 +1241,114 @@ public final class MissionHandling {
     } // End Of Spy mission
   }
 
+  /**
+   * Handle Espionage mission
+   * @param mission Espionage mission, does nothing if type is wrong
+   * @param fleet Fleet on mission
+   * @param info PlayerInfo
+   * @param game Game for getting star map and planet
+   */
+  public static void handleEspionageMission(final Mission mission,
+      final Fleet fleet, final PlayerInfo info, final Game game) {
+    if (mission != null && mission.getType() == MissionType.ESPIONAGE_MISSION) {
+      if (mission.getPhase() == MissionPhase.LOADING) {
+        Mission newPlan = PlanetHandling.createSpyShipMission(info,
+            game.getStarMap());
+        if (newPlan != null) {
+          // New target to set up
+          mission.setTarget(new Coordinate(newPlan.getX(), newPlan.getY()));
+          mission.setTargetPlanet(newPlan.getTargetPlanet());
+          mission.setPhase(MissionPhase.TREKKING);
+        }
+      }
+      Coordinate targetCoord = new Coordinate(mission.getX(), mission.getY());
+      if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getCoordinate().calculateDistance(targetCoord) <= 1) {
+        // Target acquired, let's do trade
+        mission.setPhase(MissionPhase.EXECUTING);
+      } else if (mission.getPhase() == MissionPhase.TREKKING
+          && fleet.getRoute() == null) {
+        makeReroute(game, fleet, info, mission);
+      }
+      if (mission.getPhase() == MissionPhase.EXECUTING) {
+        if (fleet.getCommander() != null) {
+          Planet planet = game.getStarMap().getPlanetByName(
+              mission.getTargetPlanet());
+          if (planet != null) {
+            EspionageMission[] allowedTypes =
+                EspionageUtility.getAvailableMissionTypes(planet, info);
+            EspionageMission selectedType = mission.getEspionageType();
+            boolean ok = false;
+            for (EspionageMission type : allowedTypes) {
+              if (selectedType == type) {
+                ok = true;
+              }
+            }
+            if (ok) {
+              int success = EspionageUtility.calculateSuccess(planet, fleet,
+                  selectedType);
+              if (DiceGenerator.getRandom(100) < success) {
+                // Succeed.
+                handleSuccessfullEspionage(selectedType, planet, fleet, info,
+                    game);
+              }
+            }
+          }
+        }
+        // Espionage has been done, removing it.
+        info.getMissions().remove(mission);
+      }
+    } // End Of Espionage mission
+  }
+
+  /**
+   * Handle successfull espionage mission.
+   * @param type EspionageMission type
+   * @param planet Planet where to do espionage
+   * @param fleet Fleet who is doing the espionage
+   * @param info Realm who is doing the espionage
+   * @param game Full game information.
+   */
+  private static void handleSuccessfullEspionage(final EspionageMission type,
+      final Planet planet, final Fleet fleet, final PlayerInfo info,
+      final Game game) {
+    int infoIndex = game.getStarMap().getPlayerList().getIndex(info);
+    if (type == EspionageMission.GAIN_TRUST) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.DIPLOMATIC_TRADE,
+            planet.getPlanetPlayerInfo().getRace());
+        Message msg = new Message(MessageType.LEADER,
+            fleet.getCommander().getCallName() + " has gained trust against "
+            + planet.getPlanetPlayerInfo().getEmpireName() + ". This was "
+            + "gained via espionage mission.",
+            Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(fleet.getCommander().getName());
+        info.getMsgList().addUpcomingMessage(msg);
+      }
+    }
+    if (type == EspionageMission.STEAL_CREDIT) {
+      int totalCredits = planet.getPlanetPlayerInfo().getTotalCredits();
+      if (totalCredits > 0) {
+        int stolen = totalCredits / 10;
+        if (stolen == 0) {
+          stolen = 1;
+          planet.getPlanetPlayerInfo().setTotalCredits(totalCredits - stolen);
+          info.setTotalCredits(info.getTotalCredits() + stolen);
+          Message msg = new Message(MessageType.LEADER,
+              fleet.getCommander().getCallName() + " has stolen credits from "
+              + planet.getPlanetPlayerInfo().getEmpireName() + ". This was "
+              + "gained via espionage mission.",
+              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+          msg.setCoordinate(planet.getCoordinate());
+          msg.setMatchByString(fleet.getCommander().getName());
+          info.getMsgList().addUpcomingMessage(msg);
+        }
+      }
+    }
+  }
   /**
    * Find ship for gathering mission
    * @param mission Gathering mission

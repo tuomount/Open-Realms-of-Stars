@@ -1,7 +1,13 @@
 package org.openRealmOfStars.player.espionage;
 
+import java.util.ArrayList;
+
+import org.openRealmOfStars.player.PlayerInfo;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.leader.EspionageMission;
+import org.openRealmOfStars.player.tech.Tech;
+import org.openRealmOfStars.player.tech.TechList;
+import org.openRealmOfStars.player.tech.TechType;
 import org.openRealmOfStars.starMap.planet.Planet;
 
 /**
@@ -85,4 +91,44 @@ public final class EspionageUtility {
     return result;
   }
 
+  /**
+   * Get available mission types based on planet.
+   * @param planet where to do espionage mission
+   * @param info Realm who is doing espionage mission.
+   * @return Available mission types.
+   */
+  public static EspionageMission[] getAvailableMissionTypes(
+      final Planet planet, final PlayerInfo info) {
+    ArrayList<EspionageMission> list = new ArrayList<>();
+    list.add(EspionageMission.GAIN_TRUST);
+    list.add(EspionageMission.SABOTAGE);
+    if (planet.getPlanetPlayerInfo() != null) {
+      if (planet.getPlanetPlayerInfo().getTotalCredits() > 0) {
+        list.add(EspionageMission.STEAL_CREDIT);
+      }
+      ArrayList<Tech> stealableTech = new ArrayList<>();
+      for (int type = 0; type < 6; type++) {
+        Tech[] tradeTechs = planet.getPlanetPlayerInfo()
+            .getTechList().getListForType(TechType
+                .getTypeByIndex(type));
+        Tech[] ownTechs = info.getTechList().getListForType(TechType
+                .getTypeByIndex(type));
+        Tech[] techs = TechList.getTechDifference(tradeTechs, ownTechs);
+        for (Tech tech : techs) {
+          stealableTech.add(tech);
+        }
+      }
+      if (stealableTech.size() > 0) {
+        list.add(EspionageMission.STEAL_TECH);
+      }
+      if (planet.getGovernor() != null) {
+        list.add(EspionageMission.ASSASSIN_GOVERNOR);
+      }
+      if (planet.getBuildingList().length > 0) {
+        list.add(EspionageMission.DEMOLISH_BUILDING);
+        list.add(EspionageMission.TERRORIST_ATTACK);
+      }
+    }
+    return list.toArray(new EspionageMission[list.size()]);
+  }
 }

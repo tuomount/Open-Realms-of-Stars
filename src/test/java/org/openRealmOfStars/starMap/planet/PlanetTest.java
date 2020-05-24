@@ -329,6 +329,36 @@ public class PlanetTest {
 
   @Test
   @Category(org.openRealmOfStars.UnitTest.class)
+  public void testPlanetValue() {
+    Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
+    planet.setGroundSize(10);
+    assertEquals(0, planet.getFullLevel());
+    Building building = Mockito.mock(Building.class);
+    Mockito.when(building.getName()).thenReturn("Radiation well");
+    Mockito.when(building.getProdCost()).thenReturn(10);
+    Mockito.when(building.getMaintenanceCost()).thenReturn(1.0);
+    planet.addBuilding(building);
+    planet.setWorkers(Planet.FOOD_FARMERS, 2);
+    assertEquals(15, planet.getFullLevel());
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.setWorkers(Planet.METAL_MINERS, 1);
+    assertEquals(30, planet.getFullLevel());
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.setWorkers(Planet.PRODUCTION_WORKERS, 5);
+    assertEquals(75, planet.getFullLevel());
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.addBuilding(building);
+    planet.setWorkers(Planet.RESEARCH_SCIENTIST, 2);
+    assertEquals(100, planet.getFullLevel());
+  }
+
+  @Test
+  @Category(org.openRealmOfStars.UnitTest.class)
   public void testTroopPower() {
     Planet planet = new Planet(new Coordinate(5, 5), "Test I", 1, false);
     planet.setWorkers(Planet.FOOD_FARMERS, 2);

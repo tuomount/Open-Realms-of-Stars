@@ -2727,4 +2727,18 @@ public class Planet {
     }
   }
 
+  /**
+   * Calculate how full planet is.
+   * This estimate can be then used how valueable planet is
+   * in certain cituations.
+   * @return Planet value in per cents.
+   */
+  public int getFullLevel() {
+    int result = 0;
+    result = getTotalPopulation() + getBuildingList().length;
+    result = result * 100;
+    result = result / (getGroundSize() * 2);
+    return result;
+  }
+
 }

@@ -1333,14 +1333,17 @@ public final class MissionHandling {
       int totalCredits = planet.getPlanetPlayerInfo().getTotalCredits();
       if (totalCredits > 0) {
         int stolen = totalCredits / 10;
+        // Planet full value affects how much credit is stolen.
+        int value = planet.getFullLevel();
+        stolen = stolen * 100 / value;
         if (stolen == 0) {
           stolen = 1;
           planet.getPlanetPlayerInfo().setTotalCredits(totalCredits - stolen);
           info.setTotalCredits(info.getTotalCredits() + stolen);
           Message msg = new Message(MessageType.LEADER,
-              fleet.getCommander().getCallName() + " has stolen credits from "
-              + planet.getPlanetPlayerInfo().getEmpireName() + ". This was "
-              + "gained via espionage mission.",
+              fleet.getCommander().getCallName() + " has stolen " + stolen
+              + " credits from " + planet.getPlanetPlayerInfo().getEmpireName()
+              + ". This was gained via espionage mission.",
               Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
           msg.setCoordinate(planet.getCoordinate());
           msg.setMatchByString(fleet.getCommander().getName());

@@ -27,6 +27,8 @@ import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.fleet.FleetList;
 import org.openRealmOfStars.player.leader.EspionageMission;
 import org.openRealmOfStars.player.leader.Job;
+import org.openRealmOfStars.player.leader.Leader;
+import org.openRealmOfStars.player.leader.Perk;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
@@ -1367,6 +1369,68 @@ public final class MissionHandling {
         msg.setCoordinate(planet.getCoordinate());
         msg.setMatchByString(fleet.getCommander().getName());
         info.getMsgList().addUpcomingMessage(msg);
+      }
+    }
+    if (type == EspionageMission.SABOTAGE) {
+      planet.setProdResource(planet.getProdResource() / 2);
+      Message msg = new Message(MessageType.LEADER,
+          fleet.getCommander().getCallName() + " sabotage "
+            + planet.getUnderConstruction().getName() + " project "
+            + " at planet " + planet.getName() + ". Planet is owned by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + ". This was done via espionage mission.",
+            Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(fleet.getCommander().getName());
+      info.getMsgList().addUpcomingMessage(msg);
+    }
+    if (type == EspionageMission.ASSASSIN_GOVERNOR) {
+      Leader governor = planet.getGovernor();
+      if (governor.hasPerk(Perk.WEALTHY)) {
+        governor.useWealth();
+        Message msg = new Message(MessageType.LEADER,
+            fleet.getCommander().getCallName() + " tried to assasins "
+              + governor.getCallName() + " at planet " + planet.getName()
+              + " but failed. Planet is owned by "
+              + planet.getPlanetPlayerInfo().getEmpireName()
+              + ". This was done via espionage mission.",
+              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(fleet.getCommander().getName());
+        info.getMsgList().addUpcomingMessage(msg);
+        msg = new Message(MessageType.LEADER,
+            governor.getCallName() + " was tried to  kill "
+              + " at planet " + planet.getName()
+              + ". Governor's expensive protection gear saved"
+              + governor.getGender().getHisHer() + " life.",
+              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(governor.getName());
+        planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+      } else {
+        planet.setGovernor(null);
+        governor.setJob(Job.DEAD);
+        Message msg = new Message(MessageType.LEADER,
+            fleet.getCommander().getCallName() + " assasins "
+              + governor.getCallName() + " at planet " + planet.getName()
+              + ". Planet is owned by "
+              + planet.getPlanetPlayerInfo().getEmpireName()
+              + ". This was done via espionage mission.",
+              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(fleet.getCommander().getName());
+        info.getMsgList().addUpcomingMessage(msg);
+        msg = new Message(MessageType.LEADER,
+            governor.getCallName() + " is killed "
+              + " at planet " + planet.getName()
+              + ". This was probably assasination.",
+              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(governor.getName());
+        planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+        NewsData news = NewsFactory.makeLeaderDies(governor,
+            planet.getPlanetPlayerInfo(), "assasination");
+        game.getStarMap().getNewsCorpData().addNews(news);
       }
     }
   }

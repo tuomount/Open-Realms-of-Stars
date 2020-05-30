@@ -92,6 +92,31 @@ public final class EspionageUtility {
   }
 
   /**
+   * Get Stealable tech based on planet value.
+   * @param planet Planet where to steal.
+   * @param info Realm who is stealing.
+   * @return Array of stealable techs.
+   */
+  public static Tech[] getStealableTech(final Planet planet,
+      final PlayerInfo info) {
+    int value = planet.getFullLevel() / 10;
+    ArrayList<Tech> stealableTech = new ArrayList<>();
+    for (int type = 0; type < 6; type++) {
+      Tech[] tradeTechs = planet.getPlanetPlayerInfo()
+          .getTechList().getListForType(TechType
+              .getTypeByIndex(type));
+      Tech[] ownTechs = info.getTechList().getListForType(TechType
+              .getTypeByIndex(type));
+      Tech[] techs = TechList.getTechDifference(tradeTechs, ownTechs);
+      for (Tech tech : techs) {
+        if (tech.getLevel() <= value) {
+          stealableTech.add(tech);
+        }
+      }
+    }
+    return stealableTech.toArray(new Tech[stealableTech.size()]);
+  }
+  /**
    * Get available mission types based on planet.
    * @param planet where to do espionage mission
    * @param info Realm who is doing espionage mission.
@@ -106,19 +131,7 @@ public final class EspionageUtility {
       if (planet.getPlanetPlayerInfo().getTotalCredits() > 0) {
         list.add(EspionageMission.STEAL_CREDIT);
       }
-      ArrayList<Tech> stealableTech = new ArrayList<>();
-      for (int type = 0; type < 6; type++) {
-        Tech[] tradeTechs = planet.getPlanetPlayerInfo()
-            .getTechList().getListForType(TechType
-                .getTypeByIndex(type));
-        Tech[] ownTechs = info.getTechList().getListForType(TechType
-                .getTypeByIndex(type));
-        Tech[] techs = TechList.getTechDifference(tradeTechs, ownTechs);
-        for (Tech tech : techs) {
-          stealableTech.add(tech);
-        }
-      }
-      if (stealableTech.size() > 0) {
+      if (getStealableTech(planet, info).length > 0) {
         list.add(EspionageMission.STEAL_TECH);
       }
       if (planet.getGovernor() != null) {

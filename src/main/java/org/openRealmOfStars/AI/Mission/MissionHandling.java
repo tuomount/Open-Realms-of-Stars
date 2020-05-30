@@ -32,6 +32,7 @@ import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.player.ship.Ship;
 import org.openRealmOfStars.player.ship.ShipHullType;
 import org.openRealmOfStars.player.ship.ShipStat;
+import org.openRealmOfStars.player.tech.Tech;
 import org.openRealmOfStars.starMap.Coordinate;
 import org.openRealmOfStars.starMap.CulturePower;
 import org.openRealmOfStars.starMap.Route;
@@ -1349,6 +1350,23 @@ public final class MissionHandling {
           msg.setMatchByString(fleet.getCommander().getName());
           info.getMsgList().addUpcomingMessage(msg);
         }
+      }
+    }
+    if (type == EspionageMission.STEAL_TECH) {
+      Tech[] stealableTechs = EspionageUtility.getStealableTech(planet, info);
+      if (stealableTechs.length > 0) {
+        int index = DiceGenerator.getRandom(0, stealableTechs.length - 1);
+        Tech tech = stealableTechs[index];
+        info.getTechList().addTech(stealableTechs[index]);
+        Message msg = new Message(MessageType.LEADER,
+            fleet.getCommander().getCallName() + " has stolen "
+              + tech.getName() + " from "
+              + planet.getPlanetPlayerInfo().getEmpireName()
+              + ". This was gained via espionage mission.",
+              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(fleet.getCommander().getName());
+        info.getMsgList().addUpcomingMessage(msg);
       }
     }
   }

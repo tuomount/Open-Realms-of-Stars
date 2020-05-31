@@ -46,6 +46,7 @@ import org.openRealmOfStars.starMap.history.event.EventType;
 import org.openRealmOfStars.starMap.newsCorp.NewsData;
 import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
+import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
 
 /**
@@ -1377,6 +1378,43 @@ public final class MissionHandling {
           fleet.getCommander().getCallName() + " sabotage "
             + planet.getUnderConstruction().getName() + " project "
             + " at planet " + planet.getName() + ". Planet is owned by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + ". This was done via espionage mission.",
+            Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(fleet.getCommander().getName());
+      info.getMsgList().addUpcomingMessage(msg);
+    }
+    if (type == EspionageMission.DEMOLISH_BUILDING) {
+      int index = DiceGenerator.getRandom(0,
+          planet.getBuildingList().length - 1);
+      Building building = planet.getBuildingList()[index];
+      planet.removeBuilding(building);
+      Message msg = new Message(MessageType.LEADER,
+          fleet.getCommander().getCallName() + " demolish "
+            + building.getName() + " at planet "
+            + planet.getName() + ". Planet is owned by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + ". This was done via espionage mission.",
+            Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(fleet.getCommander().getName());
+      info.getMsgList().addUpcomingMessage(msg);
+    }
+    if (type == EspionageMission.TERRORIST_ATTACK) {
+      int index = DiceGenerator.getRandom(0,
+          planet.getBuildingList().length - 1);
+      Building building = planet.getBuildingList()[index];
+      planet.removeBuilding(building);
+      String killedTxt = "";
+      if (planet.getTotalPopulation() > 1) {
+        planet.killOneWorker();
+        killedTxt = "Also population was killed during terrorist attack. ";
+      }
+      Message msg = new Message(MessageType.LEADER,
+          fleet.getCommander().getCallName() + " destroys "
+            + building.getName() + " at planet "
+            + planet.getName() + ". " + killedTxt + " Planet is owned by "
             + planet.getPlanetPlayerInfo().getEmpireName()
             + ". This was done via espionage mission.",
             Icons.getIconByName(Icons.ICON_SPY_GOGGLES));

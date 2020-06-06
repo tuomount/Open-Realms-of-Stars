@@ -1344,6 +1344,70 @@ public final class MissionHandling {
         planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
       }
     }
+    if (type == EspionageMission.STEAL_CREDIT) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+            planet.getPlanetPlayerInfo().getRace());
+      }
+      Attitude attitude = planet.getPlanetPlayerInfo().getAiAttitude();
+      if (attitude == Attitude.AGGRESSIVE
+          || attitude == Attitude.BACKSTABBING
+          || attitude == Attitude.MILITARISTIC
+          || attitude == Attitude.MERCHANTICAL) {
+        if (fleet.getCommander().hasPerk(Perk.WEALTHY)) {
+          fleet.getCommander().useWealth();
+          Message msg = new Message(MessageType.LEADER,
+              fleet.getCommander().getCallName() + " caught by "
+              + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+              + " espionage mission. Main goal was steal credits."
+              + fleet.getCommander().getCallName() + " was able to escape "
+              + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+              + " execution by using massive amount of credits.",
+              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+          msg.setCoordinate(planet.getCoordinate());
+          msg.setMatchByString(fleet.getCommander().getName());
+          info.getMsgList().addUpcomingMessage(msg);
+          msg.setMatchByString(planet.getName());
+          planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+        } else {
+          Message msg = new Message(MessageType.LEADER,
+              fleet.getCommander().getCallName() + " caught by "
+              + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+              + " espionage mission. Main goal was steal credits."
+              + fleet.getCommander().getCallName() + " was executed by "
+              + planet.getPlanetPlayerInfo().getEmpireName()
+              + ".",
+              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+          msg.setCoordinate(planet.getCoordinate());
+          msg.setMatchByString(fleet.getCommander().getName());
+          info.getMsgList().addUpcomingMessage(msg);
+          msg.setMatchByString(planet.getName());
+          planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+          NewsData news = NewsFactory.makeLeaderDies(fleet.getCommander(),
+              info, "execution by "
+              + planet.getPlanetPlayerInfo().getEmpireName());
+          game.getStarMap().getNewsCorpData().addNews(news);
+          fleet.getCommander().setJob(Job.DEAD);
+          fleet.setCommander(null);
+        }
+      } else {
+        Message msg = new Message(MessageType.LEADER,
+            fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was steal credits."
+            + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
+            + " release " + fleet.getCommander().getCallName()
+            + ".",
+            Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(fleet.getCommander().getName());
+        info.getMsgList().addUpcomingMessage(msg);
+        msg.setMatchByString(planet.getName());
+        planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+      }
+    }
   }
 
   /**

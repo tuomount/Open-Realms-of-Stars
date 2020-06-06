@@ -1293,7 +1293,14 @@ public final class MissionHandling {
                   selectedType);
               if (DiceGenerator.getRandom(100) < success) {
                 // Succeed.
-                handleSuccessfullEspionage(selectedType, planet, fleet, info,
+                handleSuccessfulEspionage(selectedType, planet, fleet, info,
+                    game);
+              }
+              int caught = EspionageUtility.calculateDetectionSuccess(planet,
+                  fleet, selectedType);
+              if (DiceGenerator.getRandom(100) < caught) {
+                // Caught
+                handleCaughtEspionage(selectedType, planet, fleet, info,
                     game);
               }
             }
@@ -1306,14 +1313,48 @@ public final class MissionHandling {
   }
 
   /**
-   * Handle successfull espionage mission.
+   * Handle caughtespionage mission.
    * @param type EspionageMission type
    * @param planet Planet where to do espionage
    * @param fleet Fleet who is doing the espionage
    * @param info Realm who is doing the espionage
    * @param game Full game information.
    */
-  private static void handleSuccessfullEspionage(final EspionageMission type,
+  private static void handleCaughtEspionage(final EspionageMission type,
+      final Planet planet, final Fleet fleet, final PlayerInfo info,
+      final Game game) {
+    int infoIndex = game.getStarMap().getPlayerList().getIndex(info);
+    if (type == EspionageMission.GAIN_TRUST) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+            planet.getPlanetPlayerInfo().getRace());
+        Message msg = new Message(MessageType.LEADER,
+            fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Since it espionage mission was gaining"
+            + " trust " + fleet.getCommander().getCallName()
+            + " was released.",
+            Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+        msg.setCoordinate(planet.getCoordinate());
+        msg.setMatchByString(fleet.getCommander().getName());
+        info.getMsgList().addUpcomingMessage(msg);
+        msg.setMatchByString(planet.getName());
+        planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+      }
+    }
+  }
+
+  /**
+   * Handle successful espionage mission.
+   * @param type EspionageMission type
+   * @param planet Planet where to do espionage
+   * @param fleet Fleet who is doing the espionage
+   * @param info Realm who is doing the espionage
+   * @param game Full game information.
+   */
+  private static void handleSuccessfulEspionage(final EspionageMission type,
       final Planet planet, final Fleet fleet, final PlayerInfo info,
       final Game game) {
     int infoIndex = game.getStarMap().getPlayerList().getIndex(info);
@@ -1400,6 +1441,7 @@ public final class MissionHandling {
       msg.setCoordinate(planet.getCoordinate());
       msg.setMatchByString(fleet.getCommander().getName());
       info.getMsgList().addUpcomingMessage(msg);
+      //FIXME: News about building destruction
     }
     if (type == EspionageMission.TERRORIST_ATTACK) {
       int index = DiceGenerator.getRandom(0,
@@ -1421,6 +1463,7 @@ public final class MissionHandling {
       msg.setCoordinate(planet.getCoordinate());
       msg.setMatchByString(fleet.getCommander().getName());
       info.getMsgList().addUpcomingMessage(msg);
+      //FIXME: News about terrorist attack
     }
     if (type == EspionageMission.ASSASSIN_GOVERNOR) {
       Leader governor = planet.getGovernor();

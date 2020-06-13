@@ -1351,41 +1351,19 @@ public final class MissionHandling {
           || attitude == Attitude.BACKSTABBING
           || attitude == Attitude.MILITARISTIC
           || attitude == Attitude.MERCHANTICAL) {
-        if (fleet.getCommander().hasPerk(Perk.WEALTHY)) {
-          fleet.getCommander().useWealth();
-          Message msg = new Message(MessageType.LEADER,
-              fleet.getCommander().getCallName() + " caught by "
-              + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-              + " espionage mission. Main goal was steal credits."
-              + fleet.getCommander().getCallName() + " was able to escape "
-              + " from " + planet.getPlanetPlayerInfo().getEmpireName()
-              + " execution by using massive amount of credits.",
-              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
-          msg.setCoordinate(planet.getCoordinate());
-          msg.setMatchByString(fleet.getCommander().getName());
-          info.getMsgList().addUpcomingMessage(msg);
-          msg.setMatchByString(planet.getName());
-          planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
-        } else {
-          Message msg = new Message(MessageType.LEADER,
-              fleet.getCommander().getCallName() + " caught by "
-              + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-              + " espionage mission. Main goal was steal credits."
-              + fleet.getCommander().getCallName() + " was executed by "
-              + planet.getPlanetPlayerInfo().getEmpireName()
-              + ".",
-              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
-          msg.setCoordinate(planet.getCoordinate());
-          msg.setMatchByString(fleet.getCommander().getName());
-          info.getMsgList().addUpcomingMessage(msg);
-          msg.setMatchByString(planet.getName());
-          planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
-          NewsData news = NewsFactory.makeLeaderDies(fleet.getCommander(),
-              info, "execution by "
-              + planet.getPlanetPlayerInfo().getEmpireName());
-          game.getStarMap().getNewsCorpData().addNews(news);
-          fleet.getCommander().setJob(Job.DEAD);
-          fleet.setCommander(null);
+        LeaderUtility.handleLeaderKilled(info, planet, fleet,
+            fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was steal credits."
+            + fleet.getCommander().getCallName() + " was able to escape "
+            + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+            + " execution by using massive amount of credits.",
+            fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was steal credits."
+            + fleet.getCommander().getCallName() + " was executed by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + ".", game);
         }
       } else {
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
@@ -1395,7 +1373,6 @@ public final class MissionHandling {
                 + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
                 + " release " + fleet.getCommander().getCallName()
                 + ".");
-      }
     }
     if (type == EspionageMission.STEAL_TECH) {
       DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
@@ -1409,42 +1386,19 @@ public final class MissionHandling {
           || attitude == Attitude.BACKSTABBING
           || attitude == Attitude.MILITARISTIC
           || attitude == Attitude.SCIENTIFIC) {
-        if (fleet.getCommander().hasPerk(Perk.WEALTHY)) {
-          fleet.getCommander().useWealth();
-          Message msg = new Message(MessageType.LEADER,
-              fleet.getCommander().getCallName() + " caught by "
-              + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-              + " espionage mission. Main goal was steal technology."
-              + fleet.getCommander().getCallName() + " was able to escape "
-              + " from " + planet.getPlanetPlayerInfo().getEmpireName()
-              + " execution by using massive amount of credits.",
-              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
-          msg.setCoordinate(planet.getCoordinate());
-          msg.setMatchByString(fleet.getCommander().getName());
-          info.getMsgList().addUpcomingMessage(msg);
-          msg.setMatchByString(planet.getName());
-          planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
-        } else {
-          Message msg = new Message(MessageType.LEADER,
-              fleet.getCommander().getCallName() + " caught by "
-              + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-              + " espionage mission. Main goal was steal technology."
-              + fleet.getCommander().getCallName() + " was executed by "
-              + planet.getPlanetPlayerInfo().getEmpireName()
-              + ".",
-              Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
-          msg.setCoordinate(planet.getCoordinate());
-          msg.setMatchByString(fleet.getCommander().getName());
-          info.getMsgList().addUpcomingMessage(msg);
-          msg.setMatchByString(planet.getName());
-          planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
-          NewsData news = NewsFactory.makeLeaderDies(fleet.getCommander(),
-              info, "execution by "
-              + planet.getPlanetPlayerInfo().getEmpireName());
-          game.getStarMap().getNewsCorpData().addNews(news);
-          fleet.getCommander().setJob(Job.DEAD);
-          fleet.setCommander(null);
-        }
+        LeaderUtility.handleLeaderKilled(info, planet, fleet,
+            fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was steal technology."
+            + fleet.getCommander().getCallName() + " was able to escape "
+            + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+            + " execution by using massive amount of credits.",
+            fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was steal technology."
+            + fleet.getCommander().getCallName() + " was executed by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + ".", game);
       } else {
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
             fleet.getCommander().getCallName() + " caught by "

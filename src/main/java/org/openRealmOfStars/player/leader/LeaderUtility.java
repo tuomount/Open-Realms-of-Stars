@@ -3,6 +3,7 @@ package org.openRealmOfStars.player.leader;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
 import org.openRealmOfStars.player.PlayerInfo;
@@ -15,6 +16,8 @@ import org.openRealmOfStars.player.government.GovernmentType;
 import org.openRealmOfStars.player.message.Message;
 import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.StarMap;
+import org.openRealmOfStars.starMap.newsCorp.NewsData;
+import org.openRealmOfStars.starMap.newsCorp.NewsFactory;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
 import org.openRealmOfStars.utilities.DiceGenerator;
@@ -1526,5 +1529,45 @@ public final class LeaderUtility {
     info.getMsgList().addUpcomingMessage(msg);
     msg.setMatchByString(planet.getName());
     planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+  }
+
+  /**
+   * Handle leader killed because of espionage mission.
+   * Leader may escaped due wealthy perk.
+   * @param info Realm who was trying espionage
+   * @param planet Planet where espionage was tried
+   * @param fleet Fleet which leader is commanding
+   * @param killedMsg Message visible if leader is killed
+   * @param escapedMsg Message visible if leader escapes
+   * @param game Games for adding news about killed leader.
+   */
+  public static void handleLeaderKilled(final PlayerInfo info,
+      final Planet planet, final Fleet fleet, final String killedMsg,
+      final String escapedMsg, final Game game) {
+    if (fleet.getCommander().hasPerk(Perk.WEALTHY)) {
+      fleet.getCommander().useWealth();
+      Message msg = new Message(MessageType.LEADER, escapedMsg,
+          Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(fleet.getCommander().getName());
+      info.getMsgList().addUpcomingMessage(msg);
+      msg.setMatchByString(planet.getName());
+      planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+    } else {
+      Message msg = new Message(MessageType.LEADER, killedMsg,
+          Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+      msg.setCoordinate(planet.getCoordinate());
+      msg.setMatchByString(fleet.getCommander().getName());
+      info.getMsgList().addUpcomingMessage(msg);
+      msg.setMatchByString(planet.getName());
+      planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+      NewsData news = NewsFactory.makeLeaderDies(fleet.getCommander(),
+          info, "execution by "
+          + planet.getPlanetPlayerInfo().getEmpireName());
+      game.getStarMap().getNewsCorpData().addNews(news);
+      fleet.getCommander().setJob(Job.DEAD);
+      fleet.setCommander(null);
+    }
+
   }
 }

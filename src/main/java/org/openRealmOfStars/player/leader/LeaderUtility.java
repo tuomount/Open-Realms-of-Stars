@@ -12,6 +12,8 @@ import org.openRealmOfStars.player.diplomacy.Attitude;
 import org.openRealmOfStars.player.diplomacy.AttitudeScore;
 import org.openRealmOfStars.player.fleet.Fleet;
 import org.openRealmOfStars.player.government.GovernmentType;
+import org.openRealmOfStars.player.message.Message;
+import org.openRealmOfStars.player.message.MessageType;
 import org.openRealmOfStars.starMap.StarMap;
 import org.openRealmOfStars.starMap.planet.Planet;
 import org.openRealmOfStars.starMap.planet.construction.Building;
@@ -1505,5 +1507,24 @@ public final class LeaderUtility {
       return scores.get(0).getAttitude();
     }
     return secondary;
+  }
+
+  /**
+   * Handle leader release from espionage missage.
+   * Leader was caught but realm decided to release leader.
+   * @param info Realm who was trying espionage
+   * @param planet Planet where espionage was tried
+   * @param fleet Fleet which leader is commanding
+   * @param message Message for two realms.
+   */
+  public static void handleLeaderReleased(final PlayerInfo info,
+      final Planet planet, final Fleet fleet, final String message) {
+    Message msg = new Message(MessageType.LEADER, message,
+        Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+    msg.setCoordinate(planet.getCoordinate());
+    msg.setMatchByString(fleet.getCommander().getName());
+    info.getMsgList().addUpcomingMessage(msg);
+    msg.setMatchByString(planet.getName());
+    planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
   }
 }

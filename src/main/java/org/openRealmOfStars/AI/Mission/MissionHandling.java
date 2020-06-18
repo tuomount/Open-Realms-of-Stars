@@ -1409,6 +1409,106 @@ public final class MissionHandling {
                 + ".");
       }
     }
+    if (type == EspionageMission.SABOTAGE) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+            planet.getPlanetPlayerInfo().getRace());
+      }
+      Attitude attitude = planet.getPlanetPlayerInfo().getAiAttitude();
+      if (attitude == Attitude.AGGRESSIVE
+          || attitude == Attitude.BACKSTABBING
+          || attitude == Attitude.MILITARISTIC) {
+        LeaderUtility.handleLeaderKilled(info, planet, fleet,
+            fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was sabotage."
+            + fleet.getCommander().getCallName() + " was able to escape "
+            + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+            + " execution by using massive amount of credits.",
+            fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was sabotage."
+            + fleet.getCommander().getCallName() + " was executed by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + ".", game);
+      } else {
+        LeaderUtility.handleLeaderReleased(info, planet, fleet,
+            fleet.getCommander().getCallName() + " caught by "
+                + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+                + " espionage mission. Main goal was sabotage."
+                + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
+                + " release " + fleet.getCommander().getCallName()
+                + ".");
+      }
+    }
+    if (type == EspionageMission.DEMOLISH_BUILDING) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+            planet.getPlanetPlayerInfo().getRace());
+      }
+      Attitude attitude = planet.getPlanetPlayerInfo().getAiAttitude();
+      if (attitude == Attitude.AGGRESSIVE
+          || attitude == Attitude.BACKSTABBING
+          || attitude == Attitude.MILITARISTIC) {
+        LeaderUtility.handleLeaderKilled(info, planet, fleet,
+            fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was demolish building."
+            + fleet.getCommander().getCallName() + " was able to escape "
+            + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+            + " execution by using massive amount of credits.",
+            fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was demolish building."
+            + fleet.getCommander().getCallName() + " was executed by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + ".", game);
+      } else {
+        LeaderUtility.handleLeaderReleased(info, planet, fleet,
+            fleet.getCommander().getCallName() + " caught by "
+                + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+                + " espionage mission. Main goal was demolish building."
+                + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
+                + " release " + fleet.getCommander().getCallName()
+                + ".");
+      }
+    }
+    if (type == EspionageMission.ASSASSIN_GOVERNOR) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+            planet.getPlanetPlayerInfo().getRace());
+      }
+      Attitude attitude = planet.getPlanetPlayerInfo().getAiAttitude();
+      if (attitude == Attitude.PEACEFUL) {
+        LeaderUtility.handleLeaderReleased(info, planet, fleet,
+            fleet.getCommander().getCallName() + " caught by "
+                + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+                + " espionage mission. Main goal was assassin governor."
+                + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
+                + " release " + fleet.getCommander().getCallName()
+                + ".");
+      } else {
+        LeaderUtility.handleLeaderKilled(info, planet, fleet,
+            fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was assassin governor."
+            + fleet.getCommander().getCallName() + " was able to escape "
+            + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+            + " execution by using massive amount of credits.",
+            fleet.getCommander().getCallName() + " caught by "
+            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+            + " espionage mission. Main goal was assassin governor."
+            + fleet.getCommander().getCallName() + " was executed by "
+            + planet.getPlanetPlayerInfo().getEmpireName()
+            + ".", game);
+      }
+    }
   }
 
   /**

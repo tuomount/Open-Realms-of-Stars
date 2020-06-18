@@ -1509,6 +1509,45 @@ public final class MissionHandling {
             + ".", game);
       }
     }
+    if (type == EspionageMission.TERRORIST_ATTACK) {
+      DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
+          .getDiplomacy().getDiplomacyList(infoIndex);
+      if (diplomacy != null) {
+        diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
+            planet.getPlanetPlayerInfo().getRace());
+      }
+      LeaderUtility.handleLeaderKilled(info, planet, fleet,
+          fleet.getCommander().getCallName() + " caught by "
+          + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+          + " espionage mission. Main goal was terrorist attack on planet."
+          + fleet.getCommander().getCallName() + " was able to escape "
+          + " from " + planet.getPlanetPlayerInfo().getEmpireName()
+          + " execution by using massive amount of credits.",
+          fleet.getCommander().getCallName() + " caught by "
+          + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
+          + " espionage mission. Main goal was terrorist attack on planet."
+          + fleet.getCommander().getCallName() + " was executed by "
+          + planet.getPlanetPlayerInfo().getEmpireName()
+          + ".", game);
+      DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(),
+          game.getPlayers().getIndex(info),
+          game.getPlayers().getIndex(planet.getPlanetPlayerInfo()));
+      trade.generateEqualTrade(NegotiationType.WAR);
+      StarMapUtilities.addWarDeclatingReputation(game.getStarMap(), info);
+      NewsData newsData = NewsFactory.makeWarNews(info,
+          planet.getPlanetPlayerInfo(), planet, game.getStarMap());
+      game.getStarMap().getNewsCorpData().addNews(newsData);
+      game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
+          planet, newsData));
+      trade.doTrades();
+      PlayerInfo defender = planet.getPlanetPlayerInfo();
+      String[] list = defender.getDiplomacy().activateDefensivePact(
+          game.getStarMap(), info);
+      if (list != null) {
+        game.getStarMap().getNewsCorpData().addNews(
+            NewsFactory.makeDefensiveActivation(info, list));
+      }
+    }
   }
 
   /**

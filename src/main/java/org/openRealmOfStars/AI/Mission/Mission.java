@@ -286,10 +286,10 @@ public class Mission {
 
   /**
    * Get Espionage Type.
-   * @return Espionage mission
+   * @return Espionage mission or null
    */
   public EspionageMission getEspionageType() {
-    if (type == MissionType.ESPIONAGE_MISSION) {
+    if (type == MissionType.ESPIONAGE_MISSION && parameter != null) {
       return EspionageMission.getMission(parameter);
     }
     return null;

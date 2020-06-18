@@ -298,6 +298,9 @@ public class AITurnView extends BlackPanel {
       case SPY_MISSION:
         MissionHandling.handleSpyMission(mission, fleet, info, game);
         break;
+      case ESPIONAGE_MISSION:
+        MissionHandling.handleEspionageMission(mission, fleet, info, game);
+        break;
       default:
         throw new IllegalArgumentException("Unknown mission type for AI!");
       }

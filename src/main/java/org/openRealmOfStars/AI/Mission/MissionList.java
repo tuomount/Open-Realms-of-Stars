@@ -89,7 +89,8 @@ public class MissionList {
   public Mission getMissionForFleet(final String fleetName,
       final MissionType type) {
     for (Mission mission : missions) {
-      if (mission.getFleetName().equals(fleetName)
+      if (mission.getFleetName() != null
+          && mission.getFleetName().equals(fleetName)
           && mission.getType() == type) {
         return mission;
       }

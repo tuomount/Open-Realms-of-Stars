@@ -1166,6 +1166,7 @@ public final class MissionHandling {
             && culture.getHighestCulture() > -1) {
           // Fleet has found correct player sector, start spying
           mission.setPhase(MissionPhase.EXECUTING);
+          mission.setMissionTime(0);
           fleet.setaStarSearch(null);
         } else {
           makeReroute(game, fleet, info, mission);
@@ -1242,6 +1243,13 @@ public final class MissionHandling {
           }
         }
         fleet.setMovesLeft(0);
+        mission.setMissionTime(mission.getMissionTime() + 1);
+        if (fleet.getCommander() != null
+            && DiceGenerator.getRandom(40) < mission.getMissionTime()) {
+          mission.setPhase(MissionPhase.TREKKING);
+          mission.setType(MissionType.ESPIONAGE_MISSION);
+          mission.setMissionTime(0);
+        }
       }
     } // End Of Spy mission
   }
@@ -1289,6 +1297,12 @@ public final class MissionHandling {
                 ok = true;
               }
             }
+            if (!info.isHuman() && selectedType == null
+                && allowedTypes.length > 0) {
+              selectedType = allowedTypes[DiceGenerator.getRandom(
+                  allowedTypes.length - 1)];
+              ok = true;
+            }
             if (ok) {
               int success = EspionageUtility.calculateSuccess(planet, fleet,
                   selectedType);
@@ -1309,6 +1323,15 @@ public final class MissionHandling {
         }
         // Espionage has been done, removing it.
         info.getMissions().remove(mission);
+        if (!info.isHuman()) {
+          Mission newPlan = PlanetHandling.createSpyShipMission(info,
+              game.getStarMap());
+          if (newPlan != null) {
+            newPlan.setPhase(MissionPhase.TREKKING);
+            newPlan.setFleetName(fleet.getName());
+            info.getMissions().add(newPlan);
+          }
+        }
       }
     } // End Of Espionage mission
   }

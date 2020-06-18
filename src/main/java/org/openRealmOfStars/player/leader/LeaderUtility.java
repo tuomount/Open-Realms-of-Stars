@@ -3,6 +3,9 @@ package org.openRealmOfStars.player.leader;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionPhase;
+import org.openRealmOfStars.AI.Mission.MissionType;
 import org.openRealmOfStars.game.Game;
 import org.openRealmOfStars.gui.icons.Icon16x16;
 import org.openRealmOfStars.gui.icons.Icons;
@@ -214,6 +217,12 @@ public final class LeaderUtility {
         for (int i = 0; i < player.getFleets().getNumberOfFleets(); i++) {
           Fleet fleet = player.getFleets().getByIndex(i);
           if (fleet.getCommander() == leader) {
+            Mission mission = player.getMissions().getMissionForFleet(
+                fleet.getName(), MissionType.ESPIONAGE_MISSION);
+            if (mission != null) {
+              // Espionage mission underwork, not changing
+              return false;
+            }
             fleet.setCommander(null);
             break;
           }
@@ -239,6 +248,14 @@ public final class LeaderUtility {
         }
         activeFleet.setCommander(leader);
         leader.setTitle(LeaderUtility.createTitleForLeader(leader, player));
+        if (!player.isHuman()) {
+          Mission mission = player.getMissions().getMissionForFleet(
+              activeFleet.getName());
+          if (mission != null && mission.getType() == MissionType.SPY_MISSION) {
+            mission.setType(MissionType.ESPIONAGE_MISSION);
+            mission.setPhase(MissionPhase.TREKKING);
+          }
+        }
         result = true;
       }
     }

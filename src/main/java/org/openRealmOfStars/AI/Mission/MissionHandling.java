@@ -1337,11 +1337,10 @@ public final class MissionHandling {
    * Adds possible tutorial text for player in index 0.
    * @param game Game class
    * @param meetingPlace can be planet or fleet where meeting happened
-   * @param fleet Fleet which crossed the border
    * @param tutorialIndex Tutorial index
    */
   public static void addPossibleTutorial(final Game game,
-      final Object meetingPlace, final Fleet fleet, final int tutorialIndex) {
+      final Object meetingPlace, final int tutorialIndex) {
     if (Game.getTutorial() != null) {
       String tutorialText = Game.getTutorial().showTutorialText(105);
       if (tutorialText != null) {
@@ -1352,6 +1351,7 @@ public final class MissionHandling {
           msg.setCoordinate(planet.getCoordinate());
         }
         if (meetingPlace instanceof Fleet) {
+          Fleet fleet = (Fleet) meetingPlace;
           msg.setCoordinate(fleet.getCoordinate());
         }
         game.getPlayers().getPlayerInfoByIndex(0).getMsgList()
@@ -1403,7 +1403,7 @@ public final class MissionHandling {
           game.getStarMap().getNewsCorpData().addNews(
               NewsFactory.makeDefensiveActivation(info, defenseList));
         }
-        addPossibleTutorial(game, meetingPlace, fleet, 105);
+        addPossibleTutorial(game, meetingPlace, 105);
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.ALLIANCE)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
@@ -1412,7 +1412,7 @@ public final class MissionHandling {
         game.getStarMap().getHistory().addEvent(
             NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
         game.getStarMap().getNewsCorpData().addNews(newsData);
-        addPossibleTutorial(game, meetingPlace, fleet, 103);
+        addPossibleTutorial(game, meetingPlace, 103);
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.DEFENSIVE_PACT)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
@@ -1421,7 +1421,7 @@ public final class MissionHandling {
         game.getStarMap().getHistory().addEvent(
             NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
         game.getStarMap().getNewsCorpData().addNews(newsData);
-        addPossibleTutorial(game, meetingPlace, fleet, 102);
+        addPossibleTutorial(game, meetingPlace, 102);
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.TRADE_ALLIANCE)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
@@ -1430,7 +1430,7 @@ public final class MissionHandling {
         game.getStarMap().getHistory().addEvent(
             NewsFactory.makeDiplomaticEvent(meetingPlace, newsData));
         game.getStarMap().getNewsCorpData().addNews(newsData);
-        addPossibleTutorial(game, meetingPlace, fleet, 101);
+        addPossibleTutorial(game, meetingPlace, 101);
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.PEACE)) {
         PlayerInfo defender = game.getStarMap().getPlayerByIndex(secondIndex);
@@ -1443,7 +1443,7 @@ public final class MissionHandling {
             game.getStarMap());
         defender.getMissions().removeAttackAgainstPlayer(info,
             game.getStarMap());
-        addPossibleTutorial(game, meetingPlace, fleet, 100);
+        addPossibleTutorial(game, meetingPlace, 100);
       }
       if (trade.getFirstOffer().isTypeInOffer(NegotiationType.TRADE_EMBARGO)) {
         NegotiationOffer offer = trade.getFirstOffer().getEmbargoOffer();
@@ -1456,7 +1456,7 @@ public final class MissionHandling {
         game.getStarMap().getNewsCorpData().addNews(newsData);
         game.getStarMap().getHistory().addEvent(NewsFactory.makeDiplomaticEvent(
             meetingPlace, newsData));
-        addPossibleTutorial(game, meetingPlace, fleet, 104);
+        addPossibleTutorial(game, meetingPlace, 104);
       }
     } else {
       SpeechType type = trade.getSpeechTypeByOffer();
@@ -1499,7 +1499,7 @@ public final class MissionHandling {
           game.getStarMap().getNewsCorpData().addNews(
               NewsFactory.makeDefensiveActivation(info, defenseList));
         }
-        addPossibleTutorial(game, meetingPlace, fleet, 105);
+        addPossibleTutorial(game, meetingPlace, 105);
       }
     }
     trade.updateMeetingNumbers();

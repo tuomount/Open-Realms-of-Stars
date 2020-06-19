@@ -2776,7 +2776,8 @@ public class Game implements ActionListener {
       }
       if (arg0.getActionCommand()
           .equalsIgnoreCase(GameCommands.COMMAND_HAIL_FLEET_PLANET)) {
-        changeGameState(GameState.DIPLOMACY_VIEW, espionageMissionView.getPlanet());
+        changeGameState(GameState.DIPLOMACY_VIEW,
+            espionageMissionView.getPlanet());
         SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
         return;
       }

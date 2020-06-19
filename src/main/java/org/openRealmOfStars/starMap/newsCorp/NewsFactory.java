@@ -993,6 +993,87 @@ public final class NewsFactory {
   }
 
   /**
+   * Make news about building destroyed at planet due espionage.
+   * This can be used also for terrorist attack new if killedPopulation
+   * is non empty string.
+   * @param planet Where this was suppose to organize
+   * @param building Building which was destroyed
+   * @param killedPopulation Text if population was killed.
+   * @return NewsData
+   */
+  public static NewsData makeBuildingDestroyedNews(final Planet planet,
+      final Building building, final String killedPopulation) {
+    NewsData news = new NewsData();
+    ImageInstruction instructions = new ImageInstruction();
+    instructions.addBackground(ImageInstruction.BACKGROUND_STARS);
+    String position = ImageInstruction.POSITION_CENTER;
+    String size = ImageInstruction.SIZE_FULL;
+    instructions.addPlanet(position, planet.getImageInstructions(), size);
+    boolean terroristAttack = false;
+    if (killedPopulation != null && !killedPopulation.isEmpty()) {
+      terroristAttack = true;
+    }
+    switch (DiceGenerator.getRandom(2)) {
+      case 0:
+      default: {
+        if (terroristAttack) {
+          instructions.addText("TERRORIST ATTACK!");
+        } else {
+          instructions.addText("BUILDING DESTROYED!");
+        }
+        break;
+      }
+      case 1: {
+        if (terroristAttack) {
+          instructions.addText(planet.getName().toUpperCase()
+              + " UNDER TERRORISM!");
+        } else {
+          instructions.addText(building.getName().toUpperCase()
+              + " DESTROYED!");
+        }
+        break;
+      }
+      case 2: {
+        if (terroristAttack) {
+          instructions.addText("TERRORIST ATTACK ON "
+              + planet.getName().toUpperCase());
+        } else {
+          instructions.addText("DESTRUCTION OF "
+             + building.getName().toUpperCase());
+        }
+        break;
+      }
+    }
+    news.setImageInstructions(instructions.build());
+    StringBuilder sb = new StringBuilder(100);
+    if (terroristAttack) {
+      sb.append("Terrorist attack on ");
+      sb.append(planet.getName());
+      sb.append("! ");
+      sb.append(building.getName());
+      sb.append(" was destroyed during attack! ");
+    } else {
+      sb.append(building.getName());
+      sb.append(" destroyed at ");
+      sb.append(planet.getName());
+      sb.append("! ");
+    }
+    if (planet.getPlanetPlayerInfo() != null) {
+      sb.append(planet.getPlanetPlayerInfo().getEmpireName());
+      sb.append(" suspects this was due foreign espionage. ");
+    }
+    if (terroristAttack) {
+      sb.append(killedPopulation);
+    } else {
+      sb.append("Non of the population of ");
+      sb.append(planet.getName());
+      sb.append(" were hurt during the destruction.");
+    }
+    news.setNewsText(sb.toString());
+    return news;
+  }
+
+  /**
    * Make Peace news. PeaceMaker makes peace offer to acceptor.
    * This diplomatic meeting happened in meeting place which
    * can be planet or fleet.

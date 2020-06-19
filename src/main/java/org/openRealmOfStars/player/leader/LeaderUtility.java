@@ -1544,6 +1544,7 @@ public final class LeaderUtility {
     msg.setCoordinate(planet.getCoordinate());
     msg.setMatchByString(fleet.getCommander().getName());
     info.getMsgList().addUpcomingMessage(msg);
+    msg = msg.copy();
     msg.setMatchByString(planet.getName());
     planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
   }
@@ -1576,6 +1577,7 @@ public final class LeaderUtility {
       msg.setCoordinate(planet.getCoordinate());
       msg.setMatchByString(fleet.getCommander().getName());
       info.getMsgList().addUpcomingMessage(msg);
+      msg = msg.copy();
       msg.setMatchByString(planet.getName());
       planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
       NewsData news = NewsFactory.makeLeaderDies(fleet.getCommander(),

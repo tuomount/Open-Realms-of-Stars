@@ -1287,7 +1287,8 @@ public final class MissionHandling {
         if (fleet.getCommander() != null) {
           Planet planet = game.getStarMap().getPlanetByName(
               mission.getTargetPlanet());
-          if (planet != null) {
+          if (planet != null && planet.getPlanetPlayerInfo() != null
+              && info != planet.getPlanetPlayerInfo()) {
             EspionageMission[] allowedTypes =
                 EspionageUtility.getAvailableMissionTypes(planet, info);
             EspionageMission selectedType = mission.getEspionageType();
@@ -1299,6 +1300,7 @@ public final class MissionHandling {
             }
             if (!info.isHuman() && selectedType == null
                 && allowedTypes.length > 0) {
+              // FIXME Add more intelligence for this later
               selectedType = allowedTypes[DiceGenerator.getRandom(
                   allowedTypes.length - 1)];
               ok = true;
@@ -1668,7 +1670,12 @@ public final class MissionHandling {
       msg.setCoordinate(planet.getCoordinate());
       msg.setMatchByString(fleet.getCommander().getName());
       info.getMsgList().addUpcomingMessage(msg);
-      //FIXME: News about building destruction
+      msg = msg.copy();
+      msg.setMatchByString(planet.getName());
+      planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+      NewsData news = NewsFactory.makeBuildingDestroyedNews(planet, building,
+          "");
+      game.getStarMap().getNewsCorpData().addNews(news);
     }
     if (type == EspionageMission.TERRORIST_ATTACK) {
       int index = DiceGenerator.getRandom(0,
@@ -1690,7 +1697,12 @@ public final class MissionHandling {
       msg.setCoordinate(planet.getCoordinate());
       msg.setMatchByString(fleet.getCommander().getName());
       info.getMsgList().addUpcomingMessage(msg);
-      //FIXME: News about terrorist attack
+      msg = msg.copy();
+      msg.setMatchByString(planet.getName());
+      planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+      NewsData news = NewsFactory.makeBuildingDestroyedNews(planet, building,
+          killedTxt);
+      game.getStarMap().getNewsCorpData().addNews(news);
     }
     if (type == EspionageMission.ASSASSIN_GOVERNOR) {
       Leader governor = planet.getGovernor();
@@ -1707,7 +1719,7 @@ public final class MissionHandling {
         msg.setMatchByString(fleet.getCommander().getName());
         info.getMsgList().addUpcomingMessage(msg);
         msg = new Message(MessageType.LEADER,
-            governor.getCallName() + " was tried to  kill "
+            governor.getCallName() + " was tried to kill "
               + " at planet " + planet.getName()
               + ". Governor's expensive protection gear saved"
               + governor.getGender().getHisHer() + " life.",

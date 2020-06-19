@@ -495,9 +495,9 @@ public final class RandomEventUtility {
         Planet planet = planets.get(index);
         event.setPlanet(planet);
         StringBuilder sb = new StringBuilder();
-        sb.append("Massive meteoroid passes by");
+        sb.append("Massive meteoroid passes by ");
         sb.append(planet.getName());
-        sb.append(" very close. So close that planet scienties are able"
+        sb.append(" very close. So close that planet scienties are able "
             + "to mine metal from the meteoroid.");
         planet.setAmountMetalInGround(planet.getAmountMetalInGround()
             + DiceGenerator.getRandom(80, 400));

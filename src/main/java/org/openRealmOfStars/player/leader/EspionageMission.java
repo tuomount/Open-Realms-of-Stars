@@ -156,13 +156,20 @@ public enum EspionageMission {
     switch (this) {
       default:
       case SABOTAGE: return "Sabotage current production. "
-          + "If succeed production loses half of the production.";
-      case ASSASSIN_GOVERNOR: return "Assasin the governor.";
-      case DEMOLISH_BUILDING: return "Demolish single building";
-      case GAIN_TRUST: return "Get diplomatic bonus if succeed";
-      case STEAL_CREDIT: return "Steal credit from the planet.";
-      case STEAL_TECH: return "Steal tech from the planet";
-      case TERRORIST_ATTACK: return "Destroying building and population.";
+          + "If succeed production loses half of the production. "
+          + "Worst case: Commander dies";
+      case ASSASSIN_GOVERNOR: return "Assasin the governor. "
+          + "Worst case: Commander dies";
+      case DEMOLISH_BUILDING: return "Demolish single building."
+          + "Worst case: Commander dies";
+      case GAIN_TRUST: return "Get diplomatic bonus if succeed. "
+          + "Worst case: Diplomatic reputation is losed.";
+      case STEAL_CREDIT: return "Steal credit from the planet."
+          + "Worst case: Commander dies";
+      case STEAL_TECH: return "Steal tech from the planet"
+          + "Worst case: Commander dies";
+      case TERRORIST_ATTACK: return "Destroying building and population."
+          + "Worst case: Commander dies and war starts";
     }
   }
 

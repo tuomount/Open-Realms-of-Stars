@@ -13,6 +13,10 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import org.openRealmOfStars.AI.Mission.Mission;
+import org.openRealmOfStars.AI.Mission.MissionPhase;
+import org.openRealmOfStars.AI.Mission.MissionType;
+import org.openRealmOfStars.audio.soundeffect.SoundPlayer;
 import org.openRealmOfStars.game.GameCommands;
 import org.openRealmOfStars.gui.ListRenderers.ProductionListRenderer;
 import org.openRealmOfStars.gui.buttons.SpaceButton;
@@ -557,6 +561,18 @@ public class EspionageMissionView extends BlackPanel {
       + EspionageUtility.calculateSuccess(planet, fleet, mission)
       + "%");
     }
+    Mission mission = info.getMissions().getMissionForFleet(
+        fleet.getName(), MissionType.ESPIONAGE_MISSION);
+    if (mission != null) {
+      EspionageMission espionage = mission.getEspionageType();
+      if (espionage != null) {
+        missionInfo.setText(espionage.getDescription() + "\nDetection chance: "
+            + EspionageUtility.calculateDetectionSuccess(planet, fleet,
+                espionage) + "%\nSuccess chance: "
+            + EspionageUtility.calculateSuccess(planet, fleet, espionage)
+            + "%\nEspionage activated");
+      }
+    }
     this.repaint();
   }
 
@@ -595,6 +611,23 @@ public class EspionageMissionView extends BlackPanel {
   public void handleAction(final ActionEvent arg0) {
     if (arg0.getActionCommand().equals(
         GameCommands.COMMAND_ESPIONAGE_MISSIONS)) {
+      updatePanel();
+    }
+    if (arg0.getActionCommand().equals(
+        GameCommands.COMMAND_EXECUTE_MISSION)) {
+      if (missionType.getSelectedItem() != null) {
+        SoundPlayer.playMenuSound();
+        EspionageMission espionage =
+            (EspionageMission) missionType.getSelectedItem();
+        Mission mission = new Mission(MissionType.ESPIONAGE_MISSION,
+            MissionPhase.EXECUTING, planet.getCoordinate());
+        mission.setFleetName(fleet.getName());
+        mission.setEspionageType(espionage);
+        info.getMissions().add(mission);
+        fleet.setMovesLeft(0);
+      } else {
+        SoundPlayer.playMenuDisabled();
+      }
       updatePanel();
     }
   }

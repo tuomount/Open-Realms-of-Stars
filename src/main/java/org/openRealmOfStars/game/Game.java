@@ -1028,6 +1028,12 @@ public class Game implements ActionListener {
           planet = view.getPlanet();
         }
       }
+      if (dataObject instanceof Planet) {
+        planet = (Planet) dataObject;
+        if (planet.getPlanetPlayerInfo() != null) {
+          info = planet.getPlanetPlayerInfo();
+        }
+      }
       if (dataObject instanceof PlayerInfo) {
         info = (PlayerInfo) dataObject;
         type = DiplomacyView.AI_REGULAR;
@@ -2766,6 +2772,13 @@ public class Game implements ActionListener {
           .equalsIgnoreCase(GameCommands.COMMAND_VIEW_FLEET)) {
         changeGameState(GameState.FLEETVIEW, espionageMissionView.getFleet());
         SoundPlayer.playMenuSound();
+        return;
+      }
+      if (arg0.getActionCommand()
+          .equalsIgnoreCase(GameCommands.COMMAND_HAIL_FLEET_PLANET)) {
+        changeGameState(GameState.DIPLOMACY_VIEW, espionageMissionView.getPlanet());
+        SoundPlayer.playSound(SoundPlayer.RADIO_CALL);
+        return;
       }
       espionageMissionView.handleAction(arg0);
       return;

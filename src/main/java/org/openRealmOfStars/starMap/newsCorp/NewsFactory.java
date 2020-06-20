@@ -488,6 +488,18 @@ public final class NewsFactory {
    */
   public static Event makeLeaderEvent(final Leader leader,
       final PlayerInfo realm, final StarMap map, final NewsData news) {
+    return makeLeaderEvent(leader, realm, map, news.getNewsText());
+  }
+  /**
+   * Make Leader event
+   * @param leader Leader who is experience the event
+   * @param realm Realm where leader belongs
+   * @param map StarMap
+   * @param text Textual description of event.
+   * @return Event
+   */
+  public static Event makeLeaderEvent(final Leader leader,
+      final PlayerInfo realm, final StarMap map, final String text) {
     int realmIndex = map.getPlayerList().getIndex(realm);
     Coordinate coord = new Coordinate(map.getMaxX() / 2, map.getMaxY() / 2);
     Planet firstPlanet = null;
@@ -523,7 +535,7 @@ public final class NewsFactory {
     if (firstPlanet != null) {
       event.setPlanetName(firstPlanet.getName());
     }
-    event.setText(news.getNewsText());
+    event.setText(text);
     return event;
   }
   /**

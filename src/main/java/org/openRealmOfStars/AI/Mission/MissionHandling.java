@@ -1306,12 +1306,14 @@ public final class MissionHandling {
               ok = true;
             }
             if (ok) {
+              boolean somethingHappened = false;
               int success = EspionageUtility.calculateSuccess(planet, fleet,
                   selectedType);
               if (DiceGenerator.getRandom(100) < success) {
                 // Succeed.
                 handleSuccessfulEspionage(selectedType, planet, fleet, info,
                     game);
+                somethingHappened = true;
               }
               int caught = EspionageUtility.calculateDetectionSuccess(planet,
                   fleet, selectedType);
@@ -1319,6 +1321,20 @@ public final class MissionHandling {
                 // Caught
                 handleCaughtEspionage(selectedType, planet, fleet, info,
                     game);
+                somethingHappened = true;
+              }
+              if (!somethingHappened) {
+                Message msg = new Message(MessageType.LEADER,
+                    fleet.getCommander().getCallName()
+                    + " failed during espionage mission against "
+                    + planet.getPlanetPlayerInfo().getEmpireName()
+                    + ". "
+                    + fleet.getCommander().getCallName()
+                    + " avoided being caught tough...",
+                    Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
+                msg.setCoordinate(planet.getCoordinate());
+                msg.setMatchByString(fleet.getCommander().getName());
+                info.getMsgList().addUpcomingMessage(msg);
               }
             }
           }
@@ -1361,7 +1377,7 @@ public final class MissionHandling {
                 + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
                 + " espionage mission. Since it espionage mission was gaining"
                 + " trust " + fleet.getCommander().getCallName()
-                + " was released.");
+                + " was released.", game.getStarMap());
       }
     }
     if (type == EspionageMission.STEAL_CREDIT) {
@@ -1397,7 +1413,7 @@ public final class MissionHandling {
                 + " espionage mission. Main goal was steal credits."
                 + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
                 + " release " + fleet.getCommander().getCallName()
-                + ".");
+                + ".", game.getStarMap());
     }
     if (type == EspionageMission.STEAL_TECH) {
       DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
@@ -1431,7 +1447,7 @@ public final class MissionHandling {
                 + " espionage mission. Main goal was steal technology."
                 + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
                 + " release " + fleet.getCommander().getCallName()
-                + ".");
+                + ".", game.getStarMap());
       }
     }
     if (type == EspionageMission.SABOTAGE) {
@@ -1465,7 +1481,7 @@ public final class MissionHandling {
                 + " espionage mission. Main goal was sabotage."
                 + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
                 + " release " + fleet.getCommander().getCallName()
-                + ".");
+                + ".", game.getStarMap());
       }
     }
     if (type == EspionageMission.DEMOLISH_BUILDING) {
@@ -1499,7 +1515,7 @@ public final class MissionHandling {
                 + " espionage mission. Main goal was demolish building."
                 + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
                 + " release " + fleet.getCommander().getCallName()
-                + ".");
+                + ".", game.getStarMap());
       }
     }
     if (type == EspionageMission.ASSASSIN_GOVERNOR) {
@@ -1517,7 +1533,7 @@ public final class MissionHandling {
                 + " espionage mission. Main goal was assassin governor."
                 + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
                 + " release " + fleet.getCommander().getCallName()
-                + ".");
+                + ".", game.getStarMap());
       } else {
         LeaderUtility.handleLeaderKilled(info, planet, fleet,
             fleet.getCommander().getCallName() + " caught by "
@@ -1603,6 +1619,8 @@ public final class MissionHandling {
         info.getMsgList().addUpcomingMessage(msg);
         fleet.getCommander().setExperience(
             fleet.getCommander().getExperience() + type.getExperienceReward());
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+            fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
       }
     }
     if (type == EspionageMission.STEAL_CREDIT) {
@@ -1627,6 +1645,8 @@ public final class MissionHandling {
           fleet.getCommander().setExperience(
               fleet.getCommander().getExperience()
               + type.getExperienceReward());
+          game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+              fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
         }
       }
     }
@@ -1647,6 +1667,8 @@ public final class MissionHandling {
         info.getMsgList().addUpcomingMessage(msg);
         fleet.getCommander().setExperience(
             fleet.getCommander().getExperience() + type.getExperienceReward());
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+            fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
       }
     }
     if (type == EspionageMission.SABOTAGE) {
@@ -1663,6 +1685,8 @@ public final class MissionHandling {
       info.getMsgList().addUpcomingMessage(msg);
       fleet.getCommander().setExperience(
           fleet.getCommander().getExperience() + type.getExperienceReward());
+      game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+          fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
     }
     if (type == EspionageMission.DEMOLISH_BUILDING) {
       int index = DiceGenerator.getRandom(0,
@@ -1687,6 +1711,8 @@ public final class MissionHandling {
       game.getStarMap().getNewsCorpData().addNews(news);
       fleet.getCommander().setExperience(
           fleet.getCommander().getExperience() + type.getExperienceReward());
+      game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+          fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
     }
     if (type == EspionageMission.TERRORIST_ATTACK) {
       int index = DiceGenerator.getRandom(0,
@@ -1716,6 +1742,8 @@ public final class MissionHandling {
       game.getStarMap().getNewsCorpData().addNews(news);
       fleet.getCommander().setExperience(
           fleet.getCommander().getExperience() + type.getExperienceReward());
+      game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+          fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
     }
     if (type == EspionageMission.ASSASSIN_GOVERNOR) {
       Leader governor = planet.getGovernor();
@@ -1731,6 +1759,8 @@ public final class MissionHandling {
         msg.setCoordinate(planet.getCoordinate());
         msg.setMatchByString(fleet.getCommander().getName());
         info.getMsgList().addUpcomingMessage(msg);
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+            fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
         msg = new Message(MessageType.LEADER,
             governor.getCallName() + " was tried to kill "
               + " at planet " + planet.getName()
@@ -1753,6 +1783,8 @@ public final class MissionHandling {
         msg.setCoordinate(planet.getCoordinate());
         msg.setMatchByString(fleet.getCommander().getName());
         info.getMsgList().addUpcomingMessage(msg);
+        game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+            fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
         msg = new Message(MessageType.LEADER,
             governor.getCallName() + " is killed "
               + " at planet " + planet.getName()

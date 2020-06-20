@@ -1536,9 +1536,11 @@ public final class LeaderUtility {
    * @param planet Planet where espionage was tried
    * @param fleet Fleet which leader is commanding
    * @param message Message for two realms.
+   * @param starMap StarMap
    */
   public static void handleLeaderReleased(final PlayerInfo info,
-      final Planet planet, final Fleet fleet, final String message) {
+      final Planet planet, final Fleet fleet, final String message,
+      final StarMap starMap) {
     Message msg = new Message(MessageType.LEADER, message,
         Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
     msg.setCoordinate(planet.getCoordinate());
@@ -1547,6 +1549,8 @@ public final class LeaderUtility {
     msg = msg.copy();
     msg.setMatchByString(planet.getName());
     planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+    starMap.getHistory().addEvent(NewsFactory.makeLeaderEvent(
+        fleet.getCommander(), info, starMap, msg.getMessage()));
   }
 
   /**
@@ -1571,6 +1575,8 @@ public final class LeaderUtility {
       info.getMsgList().addUpcomingMessage(msg);
       msg.setMatchByString(planet.getName());
       planet.getPlanetPlayerInfo().getMsgList().addUpcomingMessage(msg);
+      game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+          fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
     } else {
       Message msg = new Message(MessageType.LEADER, killedMsg,
           Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
@@ -1584,6 +1590,8 @@ public final class LeaderUtility {
           info, "execution by "
           + planet.getPlanetPlayerInfo().getEmpireName());
       game.getStarMap().getNewsCorpData().addNews(news);
+      game.getStarMap().getHistory().addEvent(NewsFactory.makeLeaderEvent(
+          fleet.getCommander(), info, game.getStarMap(), msg.getMessage()));
       fleet.getCommander().setJob(Job.DEAD);
       fleet.setCommander(null);
     }

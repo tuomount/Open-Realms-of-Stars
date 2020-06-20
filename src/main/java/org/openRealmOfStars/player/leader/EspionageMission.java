@@ -169,7 +169,7 @@ public enum EspionageMission {
       case STEAL_TECH: return "Steal tech from the planet"
           + "Worst case: Commander dies";
       case TERRORIST_ATTACK: return "Destroying building and population."
-          + "Worst case: Commander dies and war starts";
+          + "Worst case: Commander dies and war declaration";
     }
   }
 

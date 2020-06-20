@@ -1395,25 +1395,25 @@ public final class MissionHandling {
         LeaderUtility.handleLeaderKilled(info, planet, fleet,
             fleet.getCommander().getCallName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was steal credits."
+            + " espionage mission. Main goal was steal credits. "
             + fleet.getCommander().getCallName() + " was able to escape "
             + " from " + planet.getPlanetPlayerInfo().getEmpireName()
-            + " execution by using massive amount of credits.",
+            + " execution by using massive amount of credits. ",
             fleet.getCommander().getCallName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was steal credits."
+            + " espionage mission. Main goal was steal credits. "
             + fleet.getCommander().getCallName() + " was executed by "
             + planet.getPlanetPlayerInfo().getEmpireName()
             + ".", game);
-        }
       } else {
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
             fleet.getCommander().getCallName() + " caught by "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-                + " espionage mission. Main goal was steal credits."
+                + " espionage mission. Main goal was steal credits. "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
                 + " release " + fleet.getCommander().getCallName()
                 + ".", game.getStarMap());
+      }
     }
     if (type == EspionageMission.STEAL_TECH) {
       DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
@@ -1430,10 +1430,10 @@ public final class MissionHandling {
         LeaderUtility.handleLeaderKilled(info, planet, fleet,
             fleet.getCommander().getCallName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was steal technology."
+            + " espionage mission. Main goal was steal technology. "
             + fleet.getCommander().getCallName() + " was able to escape "
             + " from " + planet.getPlanetPlayerInfo().getEmpireName()
-            + " execution by using massive amount of credits.",
+            + " execution by using massive amount of credits. ",
             fleet.getCommander().getCallName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
             + " espionage mission. Main goal was steal technology."
@@ -1464,13 +1464,13 @@ public final class MissionHandling {
         LeaderUtility.handleLeaderKilled(info, planet, fleet,
             fleet.getCommander().getCallName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was sabotage."
+            + " espionage mission. Main goal was sabotage. "
             + fleet.getCommander().getCallName() + " was able to escape "
             + " from " + planet.getPlanetPlayerInfo().getEmpireName()
             + " execution by using massive amount of credits.",
             fleet.getCommander().getCallName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was sabotage."
+            + " espionage mission. Main goal was sabotage. "
             + fleet.getCommander().getCallName() + " was executed by "
             + planet.getPlanetPlayerInfo().getEmpireName()
             + ".", game);
@@ -1478,7 +1478,7 @@ public final class MissionHandling {
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
             fleet.getCommander().getCallName() + " caught by "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-                + " espionage mission. Main goal was sabotage."
+                + " espionage mission. Main goal was sabotage. "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
                 + " release " + fleet.getCommander().getCallName()
                 + ".", game.getStarMap());
@@ -1498,10 +1498,10 @@ public final class MissionHandling {
         LeaderUtility.handleLeaderKilled(info, planet, fleet,
             fleet.getCommander().getCallName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was demolish building."
+            + " espionage mission. Main goal was demolish building. "
             + fleet.getCommander().getCallName() + " was able to escape "
             + " from " + planet.getPlanetPlayerInfo().getEmpireName()
-            + " execution by using massive amount of credits.",
+            + " execution by using massive amount of credits. ",
             fleet.getCommander().getCallName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
             + " espionage mission. Main goal was demolish building."
@@ -1512,7 +1512,7 @@ public final class MissionHandling {
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
             fleet.getCommander().getCallName() + " caught by "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-                + " espionage mission. Main goal was demolish building."
+                + " espionage mission. Main goal was demolish building. "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
                 + " release " + fleet.getCommander().getCallName()
                 + ".", game.getStarMap());
@@ -1530,7 +1530,7 @@ public final class MissionHandling {
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
             fleet.getCommander().getCallName() + " caught by "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-                + " espionage mission. Main goal was assassin governor."
+                + " espionage mission. Main goal was assassin governor. "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " decided to"
                 + " release " + fleet.getCommander().getCallName()
                 + ".", game.getStarMap());
@@ -1538,13 +1538,13 @@ public final class MissionHandling {
         LeaderUtility.handleLeaderKilled(info, planet, fleet,
             fleet.getCommander().getCallName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was assassin governor."
+            + " espionage mission. Main goal was assassin governor. "
             + fleet.getCommander().getCallName() + " was able to escape "
             + " from " + planet.getPlanetPlayerInfo().getEmpireName()
             + " execution by using massive amount of credits.",
             fleet.getCommander().getCallName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was assassin governor."
+            + " espionage mission. Main goal was assassin governor. "
             + fleet.getCommander().getCallName() + " was executed by "
             + planet.getPlanetPlayerInfo().getEmpireName()
             + ".", game);
@@ -1560,13 +1560,13 @@ public final class MissionHandling {
       LeaderUtility.handleLeaderKilled(info, planet, fleet,
           fleet.getCommander().getCallName() + " caught by "
           + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-          + " espionage mission. Main goal was terrorist attack on planet."
+          + " espionage mission. Main goal was terrorist attack on planet. "
           + fleet.getCommander().getCallName() + " was able to escape "
           + " from " + planet.getPlanetPlayerInfo().getEmpireName()
           + " execution by using massive amount of credits.",
           fleet.getCommander().getCallName() + " caught by "
           + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-          + " espionage mission. Main goal was terrorist attack on planet."
+          + " espionage mission. Main goal was terrorist attack on planet. "
           + fleet.getCommander().getCallName() + " was executed by "
           + planet.getPlanetPlayerInfo().getEmpireName()
           + ".", game);
@@ -1658,7 +1658,7 @@ public final class MissionHandling {
         info.getTechList().addTech(stealableTechs[index]);
         Message msg = new Message(MessageType.LEADER,
             fleet.getCommander().getCallName() + " has stolen "
-              + tech.getName() + " from "
+              + tech.getName() + " technology from "
               + planet.getPlanetPlayerInfo().getEmpireName()
               + ". This was gained via espionage mission.",
               Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
@@ -1764,7 +1764,7 @@ public final class MissionHandling {
         msg = new Message(MessageType.LEADER,
             governor.getCallName() + " was tried to kill "
               + " at planet " + planet.getName()
-              + ". Governor's expensive protection gear saved"
+              + ". Governor's expensive protection gear saved "
               + governor.getGender().getHisHer() + " life.",
               Icons.getIconByName(Icons.ICON_SPY_GOGGLES));
         msg.setCoordinate(planet.getCoordinate());

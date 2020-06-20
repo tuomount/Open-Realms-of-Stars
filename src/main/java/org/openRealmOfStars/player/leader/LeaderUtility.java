@@ -1559,13 +1559,13 @@ public final class LeaderUtility {
    * @param info Realm who was trying espionage
    * @param planet Planet where espionage was tried
    * @param fleet Fleet which leader is commanding
-   * @param killedMsg Message visible if leader is killed
    * @param escapedMsg Message visible if leader escapes
+   * @param killedMsg Message visible if leader is killed
    * @param game Games for adding news about killed leader.
    */
   public static void handleLeaderKilled(final PlayerInfo info,
-      final Planet planet, final Fleet fleet, final String killedMsg,
-      final String escapedMsg, final Game game) {
+      final Planet planet, final Fleet fleet, final String escapedMsg,
+      final String killedMsg, final Game game) {
     if (fleet.getCommander().hasPerk(Perk.WEALTHY)) {
       fleet.getCommander().useWealth();
       Message msg = new Message(MessageType.LEADER, escapedMsg,

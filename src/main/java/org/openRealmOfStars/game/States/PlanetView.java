@@ -431,6 +431,7 @@ public class PlanetView extends BlackPanel {
     leaderViewBtn = new SpaceButton("Assign governor  ",
         GameCommands.COMMAND_VIEW_LEADERS);
     leaderViewBtn.addActionListener(listener);
+    leaderViewBtn.setEnabled(interactive);
     SpaceGreyPanel governorBtnPanel = new SpaceGreyPanel();
     governorBtnPanel.setLayout(new BoxLayout(governorBtnPanel,
         BoxLayout.X_AXIS));

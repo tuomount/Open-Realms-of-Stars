@@ -173,4 +173,21 @@ public enum EspionageMission {
     }
   }
 
+  /**
+   * Get experience reward for commander when successfully espionage
+   * done.
+   * @return experience reward
+   */
+  public int getExperienceReward() {
+    switch (this) {
+      default:
+      case SABOTAGE: return 40;
+      case ASSASSIN_GOVERNOR: return 150;
+      case DEMOLISH_BUILDING: return 100;
+      case GAIN_TRUST: return 10;
+      case STEAL_CREDIT: return 50;
+      case STEAL_TECH: return 50;
+      case TERRORIST_ATTACK: return 200;
+    }
+  }
 }

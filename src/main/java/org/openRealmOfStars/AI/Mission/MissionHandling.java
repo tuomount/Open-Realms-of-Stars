@@ -1601,6 +1601,8 @@ public final class MissionHandling {
         msg.setCoordinate(planet.getCoordinate());
         msg.setMatchByString(fleet.getCommander().getName());
         info.getMsgList().addUpcomingMessage(msg);
+        fleet.getCommander().setExperience(
+            fleet.getCommander().getExperience() + type.getExperienceReward());
       }
     }
     if (type == EspionageMission.STEAL_CREDIT) {
@@ -1622,6 +1624,9 @@ public final class MissionHandling {
           msg.setCoordinate(planet.getCoordinate());
           msg.setMatchByString(fleet.getCommander().getName());
           info.getMsgList().addUpcomingMessage(msg);
+          fleet.getCommander().setExperience(
+              fleet.getCommander().getExperience()
+              + type.getExperienceReward());
         }
       }
     }
@@ -1640,6 +1645,8 @@ public final class MissionHandling {
         msg.setCoordinate(planet.getCoordinate());
         msg.setMatchByString(fleet.getCommander().getName());
         info.getMsgList().addUpcomingMessage(msg);
+        fleet.getCommander().setExperience(
+            fleet.getCommander().getExperience() + type.getExperienceReward());
       }
     }
     if (type == EspionageMission.SABOTAGE) {
@@ -1654,6 +1661,8 @@ public final class MissionHandling {
       msg.setCoordinate(planet.getCoordinate());
       msg.setMatchByString(fleet.getCommander().getName());
       info.getMsgList().addUpcomingMessage(msg);
+      fleet.getCommander().setExperience(
+          fleet.getCommander().getExperience() + type.getExperienceReward());
     }
     if (type == EspionageMission.DEMOLISH_BUILDING) {
       int index = DiceGenerator.getRandom(0,
@@ -1676,6 +1685,8 @@ public final class MissionHandling {
       NewsData news = NewsFactory.makeBuildingDestroyedNews(planet, building,
           "");
       game.getStarMap().getNewsCorpData().addNews(news);
+      fleet.getCommander().setExperience(
+          fleet.getCommander().getExperience() + type.getExperienceReward());
     }
     if (type == EspionageMission.TERRORIST_ATTACK) {
       int index = DiceGenerator.getRandom(0,
@@ -1703,6 +1714,8 @@ public final class MissionHandling {
       NewsData news = NewsFactory.makeBuildingDestroyedNews(planet, building,
           killedTxt);
       game.getStarMap().getNewsCorpData().addNews(news);
+      fleet.getCommander().setExperience(
+          fleet.getCommander().getExperience() + type.getExperienceReward());
     }
     if (type == EspionageMission.ASSASSIN_GOVERNOR) {
       Leader governor = planet.getGovernor();
@@ -1751,6 +1764,8 @@ public final class MissionHandling {
         NewsData news = NewsFactory.makeLeaderDies(governor,
             planet.getPlanetPlayerInfo(), "assasination");
         game.getStarMap().getNewsCorpData().addNews(news);
+        fleet.getCommander().setExperience(
+            fleet.getCommander().getExperience() + type.getExperienceReward());
       }
     }
   }

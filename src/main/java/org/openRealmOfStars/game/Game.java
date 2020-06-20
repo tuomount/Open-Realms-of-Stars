@@ -1409,7 +1409,7 @@ public class Game implements ActionListener {
     case ESPIONAGE_MISSIONS_VIEW: {
       if (dataObject instanceof Planet) {
         Planet planet = (Planet) dataObject;
-        showEspionageMissionView(planet, planet.getPlanetPlayerInfo());
+        showEspionageMissionView(planet, getPlayers().getCurrentPlayerInfo());
       }
       break;
     }

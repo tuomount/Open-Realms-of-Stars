@@ -623,6 +623,7 @@ public class EspionageMissionView extends BlackPanel {
             MissionPhase.EXECUTING, planet.getCoordinate());
         mission.setFleetName(fleet.getName());
         mission.setEspionageType(espionage);
+        mission.setTargetPlanet(planet.getName());
         info.getMissions().add(mission);
         fleet.setMovesLeft(0);
       } else {

@@ -1621,7 +1621,7 @@ public class Planet {
             vote.setOrganizerIndex(this.getPlanetOwnerIndex());
             vote.setPlanetName(getName());
             map.getVotes().getVotes().add(vote);
-            if (Game.getTutorial() != null) {
+            if (Game.getTutorial() != null && map.isTutorialEnabled()) {
               String tutorialText = Game.getTutorial().showTutorialText(98);
               if (tutorialText != null) {
                 msg = new Message(MessageType.INFORMATION, tutorialText,

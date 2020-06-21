@@ -875,6 +875,9 @@ public class FleetView extends BlackPanel implements ListSelectionListener {
       imgBase.setSouthPlanet(southPlanet);
       imgBase.setWestPlanet(westPlanet);
       imgBase.setEastPlanet(eastPlanet);
+      if (getEspionagePlanet() == null) {
+        espionageMissonBtn.setEnabled(false);
+      }
     }
   }
 

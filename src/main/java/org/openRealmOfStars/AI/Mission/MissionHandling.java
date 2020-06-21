@@ -1369,6 +1369,9 @@ public final class MissionHandling {
       final Planet planet, final Fleet fleet, final PlayerInfo info,
       final Game game) {
     int infoIndex = game.getStarMap().getPlayerList().getIndex(info);
+    boolean war = planet.getPlanetPlayerInfo().getDiplomacy().isWar(infoIndex);
+    boolean tradeWar = planet.getPlanetPlayerInfo().getDiplomacy()
+        .isTradeEmbargo(infoIndex);
     if (type == EspionageMission.GAIN_TRUST) {
       DiplomacyBonusList diplomacy = planet.getPlanetPlayerInfo()
           .getDiplomacy().getDiplomacyList(infoIndex);
@@ -1394,20 +1397,26 @@ public final class MissionHandling {
       if (attitude == Attitude.AGGRESSIVE
           || attitude == Attitude.BACKSTABBING
           || attitude == Attitude.MILITARISTIC
-          || attitude == Attitude.MERCHANTICAL) {
-        LeaderUtility.handleLeaderKilled(info, planet, fleet,
-            fleet.getCommander().getCallName() + " caught by "
+          || attitude == Attitude.MERCHANTICAL
+          || war || tradeWar) {
+        String startText = fleet.getCommander().getCallName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was steal credits. "
+            + " espionage mission. Main goal was steal credits. ";
+        String endText = "";
+        if (war) {
+          endText = " Execution was done because of war times.";
+        } else if (tradeWar) {
+          endText = " Execution was done because of revenge of trade war.";
+        }
+        LeaderUtility.handleLeaderKilled(info, planet, fleet,
+            startText
             + fleet.getCommander().getCallName() + " was able to escape "
             + " from " + planet.getPlanetPlayerInfo().getEmpireName()
             + " execution by using massive amount of credits. ",
-            fleet.getCommander().getCallName() + " caught by "
-            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was steal credits. "
+            startText
             + fleet.getCommander().getCallName() + " was executed by "
             + planet.getPlanetPlayerInfo().getEmpireName()
-            + ".", game);
+            + "." + endText, game);
       } else {
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
             fleet.getCommander().getCallName() + " caught by "
@@ -1429,20 +1438,26 @@ public final class MissionHandling {
       if (attitude == Attitude.AGGRESSIVE
           || attitude == Attitude.BACKSTABBING
           || attitude == Attitude.MILITARISTIC
-          || attitude == Attitude.SCIENTIFIC) {
-        LeaderUtility.handleLeaderKilled(info, planet, fleet,
-            fleet.getCommander().getCallName() + " caught by "
+          || attitude == Attitude.SCIENTIFIC
+          || war || tradeWar) {
+        String startText = fleet.getCommander().getCallName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was steal technology. "
+            + " espionage mission. Main goal was steal technology. ";
+        String endText = "";
+        if (war) {
+          endText = " Execution was done because of war times.";
+        } else if (tradeWar) {
+          endText = " Execution was done because of revenge of trade war.";
+        }
+        LeaderUtility.handleLeaderKilled(info, planet, fleet,
+            startText
             + fleet.getCommander().getCallName() + " was able to escape "
             + " from " + planet.getPlanetPlayerInfo().getEmpireName()
             + " execution by using massive amount of credits. ",
-            fleet.getCommander().getCallName() + " caught by "
-            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was steal technology."
+            startText
             + fleet.getCommander().getCallName() + " was executed by "
             + planet.getPlanetPlayerInfo().getEmpireName()
-            + ".", game);
+            + "." + endText, game);
       } else {
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
             fleet.getCommander().getCallName() + " caught by "
@@ -1463,20 +1478,26 @@ public final class MissionHandling {
       Attitude attitude = planet.getPlanetPlayerInfo().getAiAttitude();
       if (attitude == Attitude.AGGRESSIVE
           || attitude == Attitude.BACKSTABBING
-          || attitude == Attitude.MILITARISTIC) {
-        LeaderUtility.handleLeaderKilled(info, planet, fleet,
-            fleet.getCommander().getCallName() + " caught by "
+          || attitude == Attitude.MILITARISTIC
+          || war || tradeWar) {
+        String startText = fleet.getCommander().getCallName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was sabotage. "
+            + " espionage mission. Main goal was sabotage. ";
+        String endText = "";
+        if (war) {
+          endText = " Execution was done because of war times.";
+        } else if (tradeWar) {
+          endText = " Execution was done because of revenge of trade war.";
+        }
+        LeaderUtility.handleLeaderKilled(info, planet, fleet,
+            startText
             + fleet.getCommander().getCallName() + " was able to escape "
             + " from " + planet.getPlanetPlayerInfo().getEmpireName()
             + " execution by using massive amount of credits.",
-            fleet.getCommander().getCallName() + " caught by "
-            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was sabotage. "
+            startText
             + fleet.getCommander().getCallName() + " was executed by "
             + planet.getPlanetPlayerInfo().getEmpireName()
-            + ".", game);
+            + "." + endText, game);
       } else {
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
             fleet.getCommander().getCallName() + " caught by "
@@ -1497,20 +1518,26 @@ public final class MissionHandling {
       Attitude attitude = planet.getPlanetPlayerInfo().getAiAttitude();
       if (attitude == Attitude.AGGRESSIVE
           || attitude == Attitude.BACKSTABBING
-          || attitude == Attitude.MILITARISTIC) {
-        LeaderUtility.handleLeaderKilled(info, planet, fleet,
-            fleet.getCommander().getCallName() + " caught by "
+          || attitude == Attitude.MILITARISTIC
+          || war || tradeWar) {
+        String startText = fleet.getCommander().getCallName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was demolish building. "
+            + " espionage mission. Main goal was demolish building. ";
+        String endText = "";
+        if (war) {
+          endText = " Execution was done because of war times.";
+        } else if (tradeWar) {
+          endText = " Execution was done because of revenge of trade war.";
+        }
+        LeaderUtility.handleLeaderKilled(info, planet, fleet,
+            startText
             + fleet.getCommander().getCallName() + " was able to escape "
             + " from " + planet.getPlanetPlayerInfo().getEmpireName()
             + " execution by using massive amount of credits. ",
-            fleet.getCommander().getCallName() + " caught by "
-            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was demolish building."
+            startText
             + fleet.getCommander().getCallName() + " was executed by "
             + planet.getPlanetPlayerInfo().getEmpireName()
-            + ".", game);
+            + "." + endText, game);
       } else {
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
             fleet.getCommander().getCallName() + " caught by "
@@ -1529,7 +1556,8 @@ public final class MissionHandling {
             planet.getPlanetPlayerInfo().getRace());
       }
       Attitude attitude = planet.getPlanetPlayerInfo().getAiAttitude();
-      if (attitude == Attitude.PEACEFUL) {
+      if (attitude == Attitude.PEACEFUL
+          && !war && !tradeWar) {
         LeaderUtility.handleLeaderReleased(info, planet, fleet,
             fleet.getCommander().getCallName() + " caught by "
                 + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
@@ -1538,19 +1566,24 @@ public final class MissionHandling {
                 + " release " + fleet.getCommander().getCallName()
                 + ".", game.getStarMap());
       } else {
-        LeaderUtility.handleLeaderKilled(info, planet, fleet,
-            fleet.getCommander().getCallName() + " caught by "
+        String startText = fleet.getCommander().getCallName() + " caught by "
             + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was assassin governor. "
+            + " espionage mission. Main goal was assassin governor. ";
+        String endText = "";
+        if (war) {
+          endText = " Execution was done because of war times.";
+        } else if (tradeWar) {
+          endText = " Execution was done because of revenge of trade war.";
+        }
+        LeaderUtility.handleLeaderKilled(info, planet, fleet,
+            startText
             + fleet.getCommander().getCallName() + " was able to escape "
             + " from " + planet.getPlanetPlayerInfo().getEmpireName()
             + " execution by using massive amount of credits.",
-            fleet.getCommander().getCallName() + " caught by "
-            + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-            + " espionage mission. Main goal was assassin governor. "
+            startText
             + fleet.getCommander().getCallName() + " was executed by "
             + planet.getPlanetPlayerInfo().getEmpireName()
-            + ".", game);
+            + "." + endText, game);
       }
     }
     if (type == EspionageMission.TERRORIST_ATTACK) {
@@ -1560,19 +1593,24 @@ public final class MissionHandling {
         diplomacy.addBonus(DiplomacyBonusType.ESPIONAGE_BORDER_CROSS,
             planet.getPlanetPlayerInfo().getRace());
       }
-      LeaderUtility.handleLeaderKilled(info, planet, fleet,
-          fleet.getCommander().getCallName() + " caught by "
+      String startText = fleet.getCommander().getCallName() + " caught by "
           + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-          + " espionage mission. Main goal was terrorist attack on planet. "
+          + " espionage mission. Main goal was terrorist attack on planet. ";
+      String endText = "";
+      if (war) {
+        endText = " Execution was done because of war times.";
+      } else if (tradeWar) {
+        endText = " Execution was done because of revenge of trade war.";
+      }
+      LeaderUtility.handleLeaderKilled(info, planet, fleet,
+          startText
           + fleet.getCommander().getCallName() + " was able to escape "
           + " from " + planet.getPlanetPlayerInfo().getEmpireName()
           + " execution by using massive amount of credits.",
-          fleet.getCommander().getCallName() + " caught by "
-          + planet.getPlanetPlayerInfo().getEmpireName() + " while doing"
-          + " espionage mission. Main goal was terrorist attack on planet. "
+          startText
           + fleet.getCommander().getCallName() + " was executed by "
           + planet.getPlanetPlayerInfo().getEmpireName()
-          + ".", game);
+          + "." + endText, game);
       DiplomaticTrade trade = new DiplomaticTrade(game.getStarMap(),
           game.getPlayers().getIndex(info),
           game.getPlayers().getIndex(planet.getPlanetPlayerInfo()));

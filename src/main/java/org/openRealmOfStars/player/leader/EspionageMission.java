@@ -39,7 +39,7 @@ public enum EspionageMission {
   /**
    * Steal credit from planet's cash
    */
-  STEAL_CREDIT(60, 40),
+  STEAL_CREDIT(60, 50),
   /**
    * Terrorist attack. This will kill both people and destroy
    * buildings.

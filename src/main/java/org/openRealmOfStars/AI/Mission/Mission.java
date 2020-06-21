@@ -292,7 +292,7 @@ public class Mission {
     if (type == MissionType.ESPIONAGE_MISSION && parameter != null) {
       return EspionageMission.getMission(parameter);
     }
-    return null;
+    return EspionageMission.NOT_SELECTED_YET;
   }
 
   /**

@@ -1248,6 +1248,7 @@ public final class MissionHandling {
             && DiceGenerator.getRandom(40) < mission.getMissionTime()) {
           mission.setPhase(MissionPhase.TREKKING);
           mission.setType(MissionType.ESPIONAGE_MISSION);
+          mission.setEspionageType(EspionageMission.NOT_SELECTED_YET);
           mission.setMissionTime(0);
         }
       }
@@ -1298,7 +1299,9 @@ public final class MissionHandling {
                 ok = true;
               }
             }
-            if (!info.isHuman() && selectedType == null
+            if (!info.isHuman()
+                && (selectedType == null
+                   || selectedType == EspionageMission.NOT_SELECTED_YET)
                 && allowedTypes.length > 0) {
               // FIXME Add more intelligence for this later
               selectedType = allowedTypes[DiceGenerator.getRandom(

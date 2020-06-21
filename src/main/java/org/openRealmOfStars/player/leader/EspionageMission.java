@@ -52,7 +52,11 @@ public enum EspionageMission {
   /**
    * If succeed diplomatic bonus is gained towards realm.
    */
-  GAIN_TRUST(80, 20);
+  GAIN_TRUST(80, 20),
+  /**
+   * Espionage mission has not been selected yet, this is for AI only.
+   */
+  NOT_SELECTED_YET(10, 10);
 
   /**
    * Create espionage mission
@@ -100,6 +104,7 @@ public enum EspionageMission {
       case STEAL_CREDIT: return "STEAL_CREDIT";
       case STEAL_TECH: return "STEAL_TECH";
       case TERRORIST_ATTACK: return "TERRORIST_ATTACK";
+      case NOT_SELECTED_YET: return "NOT SELECTED YET";
     }
   }
 
@@ -131,6 +136,9 @@ public enum EspionageMission {
     if (name.equals(TERRORIST_ATTACK.getName())) {
       return TERRORIST_ATTACK;
     }
+    if (name.equals(NOT_SELECTED_YET.getName())) {
+      return NOT_SELECTED_YET;
+    }
     return EspionageMission.GAIN_TRUST;
   }
 
@@ -145,6 +153,7 @@ public enum EspionageMission {
       case STEAL_CREDIT: return "Steal credit";
       case STEAL_TECH: return "Steal tech";
       case TERRORIST_ATTACK: return "Terrorist attack";
+      case NOT_SELECTED_YET: return "Not selected yet";
     }
   }
 
@@ -170,6 +179,8 @@ public enum EspionageMission {
           + "Worst case: Commander dies";
       case TERRORIST_ATTACK: return "Destroying building and population."
           + "Worst case: Commander dies and war declaration";
+      case NOT_SELECTED_YET: return "Not selected"
+      + "Worst case: Error in code";
     }
   }
 
@@ -188,6 +199,7 @@ public enum EspionageMission {
       case STEAL_CREDIT: return 50;
       case STEAL_TECH: return 50;
       case TERRORIST_ATTACK: return 200;
+      case NOT_SELECTED_YET: return 0;
     }
   }
 }
